@@ -496,6 +496,10 @@ def main1(path):
     with open(path, 'r') as f:
         text = f.read()
         text = text.replace('\r\n', '\n')
+        # FIXME: Dirty hack for labeling jmp/jsr with (pc)
+        text = re.sub(r'\s*; \(pc\)', '(pc)', text)
+        # FIXME: Dirty hack for multiline structures
+        text = re.sub(r'\s*\\\s*(;.*\n)?\s*', ' ', text)
 
         text = remove_globals(text)
 
