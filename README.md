@@ -16,6 +16,5 @@ Inspired by https://github.com/lab313ru/quackshot_src/
 
 2) create compressor for tiles (based on LZSS)
 3) map data structures
-4) find pointers to PCM sounds
-5) find pointers to main character art
-6) decompose data to separate files
+4) decompose data to separate files
+5) create data folder for mappings
