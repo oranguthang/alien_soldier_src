@@ -8,7 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-bin/
 build/
 develop-eggs/
 dist/
@@ -131,6 +130,7 @@ dmypy.json
 
 .idea/
 tmp/
+.claude/
 
 # Links to utils
 *.lnk
@@ -144,6 +144,7 @@ database.asm
 database.map
 database.lst
 database.p
+asbuilt.bin
 rom.bin
 temp.asm
 
