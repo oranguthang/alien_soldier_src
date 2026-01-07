@@ -105,9 +105,11 @@ def apply_renames(asm_file, procedures, dry_run=False):
         jsr_pattern = re.compile(r'\bjsr\s+\(' + re.escape(old_name) + r'\)\.l')
         content = jsr_pattern.sub(f'jsr ({new_name}).l', content)
 
-        # 5. Replace jump instructions: jmp (sub_XXXXX)
+        # 5. Replace jump instructions: jmp (sub_XXXXX) and jmp sub_XXXXX
         jmp_pattern = re.compile(r'\bjmp\s+\(' + re.escape(old_name) + r'\)')
         content = jmp_pattern.sub(f'jmp ({new_name})', content)
+        jmp_pattern2 = re.compile(r'\bjmp\s+' + re.escape(old_name) + r'\b')
+        content = jmp_pattern2.sub(f'jmp {new_name}', content)
 
         # 6. Replace branch instructions: bra.w/bra.s/bne.w/beq.w/etc sub_XXXXX
         # Matches: bXX.w sub_XXXX or bXX.s sub_XXXX (where XX is any branch condition)
@@ -118,14 +120,23 @@ def apply_renames(asm_file, procedures, dry_run=False):
         dcl_pattern = re.compile(r'\bdc\.l\s+' + re.escape(old_name) + r'\b')
         content = dcl_pattern.sub(f'dc.l {new_name}', content)
 
-        # 8. Replace in cross-reference comments
+        # 8. Replace dbf/dbra instructions: dbf dN,sub_XXXXX (with optional space after comma)
+        # db instructions can be: dbf, dbra, dbeq, dbne, etc (1-3 letter suffix)
+        dbf_pattern = re.compile(r'\b(db[a-z]{1,3})\s+(d\d+),\s*' + re.escape(old_name) + r'\b')
+        content = dbf_pattern.sub(rf'\1 \2,{new_name}', content)
+
+        # 9. Replace immediate address values: #sub_XXXXX
+        immediate_pattern = re.compile(r'#' + re.escape(old_name) + r'\b')
+        content = immediate_pattern.sub(f'#{new_name}', content)
+
+        # 10. Replace in cross-reference comments
         # ; CODE XREF: sub_XXXXX+XX
         xref_pattern = re.compile(
             r'(;\s*(?:CODE|DATA)\s+XREF:\s+)' + re.escape(old_name) + r'\b'
         )
         content = xref_pattern.sub(r'\1' + new_name, content)
 
-        # 9. Replace "End of function" markers
+        # 11. Replace "End of function" markers
         end_pattern = re.compile(
             r'^(;\s*End of function\s+)' + re.escape(old_name) + r'\s*$',
             re.MULTILINE

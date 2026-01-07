@@ -1,14 +1,14 @@
 old_name,scene,frame,new_name,description,category,status
 sub_E9C,Sega screen,180,Gfx_ApplyVDPSettings,Writes VDP register values from RAM buffer to hardware,Gfx,analyzed
-sub_2016,Sega screen,180,,,,pending
+sub_2016,Sega screen,180,Sys_ProcessObjectList,Main object processing loop - iterates through active objects,Sys,analyzed
 sub_21F0,Sega screen,180,Sys_InitObjectPointers,Initializes object pointer table in RAM,Sys,analyzed
 sub_2224,Sega screen,180,Sys_UpdateObjectList,Updates object list with new entries,Sys,analyzed
 sub_22C4,Sega screen,180,Sprite_PrepareOAM,Prepares sprite OAM entry with position and attributes,Sprite,analyzed
-sub_B9EA,Sega screen,180,,,,pending
-sub_111B4,Sega screen,180,,,,pending
-sub_1A29C,Sega screen,180,,,,pending
-sub_1C902,Sega screen,180,,,,pending
-sub_1D120,Sega screen,180,,,,pending
+sub_B9EA,Sega screen,180,Gfx_SyncPaletteBuffers,Synchronizes palette data across multiple RAM buffers,Gfx,analyzed
+sub_111B4,Sega screen,180,Gfx_UpdateTilemapIndices,Updates tilemap tile indices and palette bits with offset,Gfx,analyzed
+sub_1A29C,Sega screen,180,Sys_ProcessVisibleObjects,Processes all objects with screen bounds culling,Sys,analyzed
+sub_1C902,Sega screen,180,Sys_UpdateObjectCount,Calculates number of active visible objects from list pointer,Sys,analyzed
+sub_1D120,Sega screen,180,Gfx_CopyPaletteLines,Copies two palette lines between RAM buffers,Gfx,analyzed
 sub_BD4,Title screen,360,,,,pending
 sub_2D6C,Title screen,360,,,,pending
 sub_2D94,Title screen,360,,,,pending
