@@ -63,17 +63,52 @@ distclean: clean
 	@python $(SCRIPTS_DIR)/clean.py -q "$(DATA_DIR)/tiles_*.bin"
 	@echo "Deep clean complete!"
 
+# Analyze procedures for visual impact
+.PHONY: analyze
+analyze:
+	@echo "Analyzing procedures..."
+	python $(SCRIPTS_DIR)/analyze.py \
+		--project-dir . \
+		--source $(SRC) \
+		--rom $(ROM)
+
+# Gens emulator paths
+GENS_DIR = gens-rerecording/Gens-rr
+GENS_SLN = $(GENS_DIR)/gens_vc10.sln
+GENS_EXE = $(GENS_DIR)/Output/Gens.exe
+MSBUILD = C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe
+
+# Build Gens emulator
+.PHONY: build-gens
+build-gens:
+	@echo "Building Gens emulator..."
+	@if [ ! -f "$(MSBUILD)" ]; then \
+		echo "Error: Visual Studio 2022 not found at $(MSBUILD)"; \
+		echo "Please install Visual Studio 2022 with C++ development tools"; \
+		exit 1; \
+	fi
+	@if [ ! -f "$(GENS_SLN)" ]; then \
+		echo "Error: Gens solution not found at $(GENS_SLN)"; \
+		echo "Please clone the gens-rerecording repository into $(GENS_DIR)"; \
+		exit 1; \
+	fi
+	"$(MSBUILD)" "$(GENS_SLN)" -p:Configuration=Release -p:Platform=Win32 -p:PlatformToolset=v143 -t:Build -v:minimal
+	@echo ""
+	@echo "Build complete: $(GENS_EXE)"
+
 # Help
 .PHONY: help
 help:
 	@echo "Alien Soldier (J) Build System"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  make build     - Assemble and build ROM (default)"
-	@echo "  make split     - Extract data from original ROM"
-	@echo "  make clean     - Remove build artifacts"
-	@echo "  make distclean - Remove build artifacts and extracted data"
-	@echo "  make help      - Show this help message"
+	@echo "  make build      - Assemble and build ROM (default)"
+	@echo "  make split      - Extract data from original ROM"
+	@echo "  make clean      - Remove build artifacts"
+	@echo "  make distclean  - Remove build artifacts and extracted data"
+	@echo "  make analyze    - Analyze procedures for visual impact"
+	@echo "  make build-gens - Build Gens emulator (requires VS2022)"
+	@echo "  make help       - Show this help message"
 	@echo ""
 	@echo "Configuration:"
 	@echo "  Source:     $(SRC)"

@@ -155,3 +155,13 @@ temp.asm
 *.id1
 *.nam
 *.til
+
+# Gens emulator and analysis
+gens-rerecording/
+Gens.cfg
+language.dat
+test_screenshots/
+reference/
+diffs/
+analysis_results.csv
+tmp/
