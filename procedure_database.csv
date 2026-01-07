@@ -1,0 +1,2388 @@
+old_name,scene,frame,new_name,description,category,status
+sub_E9C,Sega screen,180,Gfx_ApplyVDPSettings,Writes VDP register values from RAM buffer to hardware,Gfx,analyzed
+sub_2016,Sega screen,180,,,,pending
+sub_21F0,Sega screen,180,Sys_InitObjectPointers,Initializes object pointer table in RAM,Sys,analyzed
+sub_2224,Sega screen,180,Sys_UpdateObjectList,Updates object list with new entries,Sys,analyzed
+sub_22C4,Sega screen,180,Sprite_PrepareOAM,Prepares sprite OAM entry with position and attributes,Sprite,analyzed
+sub_B9EA,Sega screen,180,,,,pending
+sub_111B4,Sega screen,180,,,,pending
+sub_1A29C,Sega screen,180,,,,pending
+sub_1C902,Sega screen,180,,,,pending
+sub_1D120,Sega screen,180,,,,pending
+sub_BD4,Title screen,360,,,,pending
+sub_2D6C,Title screen,360,,,,pending
+sub_2D94,Title screen,360,,,,pending
+sub_2DFE,Title screen,360,,,,pending
+sub_2EBC,Title screen,360,,,,pending
+sub_317C,Title screen,360,,,,pending
+sub_33BA,Title screen,360,,,,pending
+sub_33D8,Title screen,360,,,,pending
+sub_349A,Title screen,360,,,,pending
+sub_10AE4,Title screen,360,,,,pending
+sub_10AF4,Title screen,360,,,,pending
+sub_1F6A,Stage 1,540,,,,pending
+sub_208E,Stage 1,540,,,,pending
+sub_2160,Stage 1,540,,,,pending
+sub_2316,Stage 1,540,,,,pending
+sub_2384,Stage 1,540,,,,pending
+sub_27D8,Stage 1,540,,,,pending
+sub_2972,Stage 1,540,,,,pending
+sub_2A58,Stage 1,540,,,,pending
+sub_2C62,Stage 1,540,,,,pending
+sub_2DB4,Stage 1,540,,,,pending
+sub_2E32,Stage 1,540,,,,pending
+sub_2EF0,Stage 1,540,,,,pending
+sub_2F08,Stage 1,540,,,,pending
+sub_320C,Stage 1,540,,,,pending
+sub_326C,Stage 1,540,,,,pending
+sub_34EE,Stage 1,540,,,,pending
+sub_3B9A,Stage 1,540,,,,pending
+sub_4094,Stage 1,540,,,,pending
+sub_40C0,Stage 1,540,,,,pending
+sub_A970,Stage 1,540,,,,pending
+sub_AE9A,Stage 1,540,,,,pending
+sub_10DB2,Stage 1,540,,,,pending
+sub_11256,Stage 1,540,,,,pending
+sub_11DD2,Stage 1,540,,,,pending
+sub_11E1A,Stage 1,540,,,,pending
+sub_11E86,Stage 1,540,,,,pending
+sub_12B6A,Stage 1,540,,,,pending
+sub_12E50,Stage 1,540,,,,pending
+sub_12FBC,Stage 1,540,,,,pending
+sub_13178,Stage 1,540,,,,pending
+sub_1319E,Stage 1,540,,,,pending
+sub_131AE,Stage 1,540,,,,pending
+sub_131D6,Stage 1,540,,,,pending
+sub_146FC,Stage 1,540,,,,pending
+sub_148B0,Stage 1,540,,,,pending
+sub_14F06,Stage 1,540,,,,pending
+sub_14F98,Stage 1,540,,,,pending
+sub_15052,Stage 1,540,,,,pending
+sub_1521E,Stage 1,540,,,,pending
+sub_155B0,Stage 1,540,,,,pending
+sub_159E0,Stage 1,540,,,,pending
+sub_15A9C,Stage 1,540,,,,pending
+sub_15BB8,Stage 1,540,,,,pending
+sub_16B04,Stage 1,540,,,,pending
+sub_16B24,Stage 1,540,,,,pending
+sub_16C00,Stage 1,540,,,,pending
+sub_16C6E,Stage 1,540,,,,pending
+sub_16CE8,Stage 1,540,,,,pending
+sub_173FA,Stage 1,540,,,,pending
+sub_177B6,Stage 1,540,,,,pending
+sub_19188,Stage 1,540,,,,pending
+sub_19992,Stage 1,540,,,,pending
+sub_1B8CA,Stage 1,540,,,,pending
+sub_1C042,Stage 1,540,,,,pending
+sub_1C97A,Stage 1,540,,,,pending
+sub_1CE3A,Stage 1,540,,,,pending
+sub_1F05E,Stage 1,540,,,,pending
+sub_1F072,Stage 1,540,,,,pending
+sub_1F12C,Stage 1,540,,,,pending
+sub_1F14E,Stage 1,540,,,,pending
+sub_1F238,Stage 1,540,,,,pending
+sub_1F356,Stage 1,540,,,,pending
+sub_1F3B8,Stage 1,540,,,,pending
+sub_1F3E6,Stage 1,540,,,,pending
+sub_1F464,Stage 1,540,,,,pending
+sub_1F496,Stage 1,540,,,,pending
+sub_1F720,Stage 1,540,,,,pending
+sub_2A7BE,Stage 1,540,,,,pending
+sub_82324,Stage 1,540,,,,pending
+sub_8232C,Stage 1,540,,,,pending
+sub_82552,Stage 1,540,,,,pending
+sub_8257C,Stage 1,540,,,,pending
+sub_825B2,Stage 1,540,,,,pending
+sub_825E4,Stage 1,540,,,,pending
+sub_829AA,Stage 1,540,,,,pending
+sub_82A1A,Stage 1,540,,,,pending
+sub_82F6C,Stage 1,540,,,,pending
+sub_8329C,Stage 1,540,,,,pending
+sub_833AA,Stage 1,540,,,,pending
+sub_833BC,Stage 1,540,,,,pending
+sub_8342A,Stage 1,540,,,,pending
+sub_834D2,Stage 1,540,,,,pending
+sub_835B0,Stage 1,540,,,,pending
+sub_83820,Stage 1,540,,,,pending
+sub_838C4,Stage 1,540,,,,pending
+sub_838E0,Stage 1,540,,,,pending
+sub_839B8,Stage 1,540,,,,pending
+sub_83A8E,Stage 1,540,,,,pending
+sub_83B0A,Stage 1,540,,,,pending
+sub_2264,Stage 1,720,,,,pending
+sub_B326,Stage 1,720,,,,pending
+sub_C83E,Stage 1,720,,,,pending
+sub_C8C2,Stage 1,720,,,,pending
+sub_FF16,Stage 1,720,,,,pending
+sub_10060,Stage 1,720,,,,pending
+sub_102E0,Stage 1,720,,,,pending
+sub_102FC,Stage 1,720,,,,pending
+sub_103FA,Stage 1,720,,,,pending
+sub_10496,Stage 1,720,,,,pending
+sub_106F2,Stage 1,720,,,,pending
+sub_106FE,Stage 1,720,,,,pending
+sub_1344A,Stage 1,720,,,,pending
+sub_13CCA,Stage 1,720,,,,pending
+sub_13E9A,Stage 1,720,,,,pending
+sub_14760,Stage 1,720,,,,pending
+sub_149EE,Stage 1,720,,,,pending
+sub_14C72,Stage 1,720,,,,pending
+sub_151EE,Stage 1,720,,,,pending
+sub_15408,Stage 1,720,,,,pending
+sub_15502,Stage 1,720,,,,pending
+sub_15532,Stage 1,720,,,,pending
+sub_15AF4,Stage 1,720,,,,pending
+sub_15B20,Stage 1,720,,,,pending
+sub_15CE4,Stage 1,720,,,,pending
+sub_15E5E,Stage 1,720,,,,pending
+sub_15F04,Stage 1,720,,,,pending
+sub_15F6A,Stage 1,720,,,,pending
+sub_15FC4,Stage 1,720,,,,pending
+sub_16B74,Stage 1,720,,,,pending
+sub_16CFE,Stage 1,720,,,,pending
+sub_16D40,Stage 1,720,,,,pending
+sub_16D80,Stage 1,720,,,,pending
+sub_16EAA,Stage 1,720,,,,pending
+sub_171CA,Stage 1,720,,,,pending
+sub_171D6,Stage 1,720,,,,pending
+sub_17274,Stage 1,720,,,,pending
+sub_17514,Stage 1,720,,,,pending
+sub_17884,Stage 1,720,,,,pending
+sub_178FE,Stage 1,720,,,,pending
+sub_17952,Stage 1,720,,,,pending
+sub_1799A,Stage 1,720,,,,pending
+sub_17BFC,Stage 1,720,,,,pending
+sub_17E46,Stage 1,720,,,,pending
+sub_17ED8,Stage 1,720,,,,pending
+sub_18530,Stage 1,720,,,,pending
+sub_18EE8,Stage 1,720,,,,pending
+sub_18F06,Stage 1,720,,,,pending
+sub_18F58,Stage 1,720,,,,pending
+sub_199F4,Stage 1,720,,,,pending
+sub_19A10,Stage 1,720,,,,pending
+sub_19D5C,Stage 1,720,,,,pending
+sub_1A280,Stage 1,720,,,,pending
+sub_1A2FA,Stage 1,720,,,,pending
+sub_1A324,Stage 1,720,,,,pending
+sub_1A38A,Stage 1,720,,,,pending
+sub_1A3B0,Stage 1,720,,,,pending
+sub_1CA86,Stage 1,720,,,,pending
+sub_1CAE4,Stage 1,720,,,,pending
+sub_1F002,Stage 1,720,,,,pending
+sub_2A614,Stage 1,720,,,,pending
+sub_2A616,Stage 1,720,,,,pending
+sub_2A6D8,Stage 1,720,,,,pending
+sub_2A7DE,Stage 1,720,,,,pending
+sub_2BB70,Stage 1,720,,,,pending
+sub_2BB86,Stage 1,720,,,,pending
+sub_2BBC0,Stage 1,720,,,,pending
+sub_2BCEE,Stage 1,720,,,,pending
+sub_2C4DC,Stage 1,720,,,,pending
+sub_2C53C,Stage 1,720,,,,pending
+sub_2C564,Stage 1,720,,,,pending
+sub_2C5B4,Stage 1,720,,,,pending
+sub_2C6A8,Stage 1,720,,,,pending
+sub_2C6FE,Stage 1,720,,,,pending
+sub_2C71E,Stage 1,720,,,,pending
+sub_2C93A,Stage 1,720,,,,pending
+sub_2C970,Stage 1,720,,,,pending
+sub_2C990,Stage 1,720,,,,pending
+sub_2C9B4,Stage 1,720,,,,pending
+sub_2C9D0,Stage 1,720,,,,pending
+sub_2CA40,Stage 1,720,,,,pending
+sub_2CA7C,Stage 1,720,,,,pending
+sub_2CBF8,Stage 1,720,,,,pending
+sub_2CC12,Stage 1,720,,,,pending
+sub_2CC34,Stage 1,720,,,,pending
+sub_2CE1C,Stage 1,720,,,,pending
+sub_2CE34,Stage 1,720,,,,pending
+sub_2CE4E,Stage 1,720,,,,pending
+sub_2CF18,Stage 1,720,,,,pending
+sub_2CF40,Stage 1,720,,,,pending
+sub_2CF64,Stage 1,720,,,,pending
+sub_835A4,Stage 1,720,,,,pending
+sub_147D6,Jetsripper boss,900,,,,pending
+sub_1483A,Jetsripper boss,900,,,,pending
+sub_1490A,Jetsripper boss,900,,,,pending
+sub_14A48,Jetsripper boss,900,,,,pending
+sub_14AA2,Jetsripper boss,900,,,,pending
+sub_14C86,Jetsripper boss,900,,,,pending
+sub_14EEA,Jetsripper boss,900,,,,pending
+sub_1592E,Jetsripper boss,900,,,,pending
+sub_15C20,Jetsripper boss,900,,,,pending
+sub_15C72,Jetsripper boss,900,,,,pending
+sub_1652C,Jetsripper boss,900,,,,pending
+sub_1663A,Jetsripper boss,900,,,,pending
+sub_16670,Jetsripper boss,900,,,,pending
+sub_166EA,Jetsripper boss,900,,,,pending
+sub_16C62,Jetsripper boss,900,,,,pending
+sub_16D14,Jetsripper boss,900,,,,pending
+sub_16D2A,Jetsripper boss,900,,,,pending
+sub_1B410,Jetsripper boss,900,,,,pending
+sub_2A30E,Jetsripper boss,900,,,,pending
+sub_2A32A,Jetsripper boss,900,,,,pending
+sub_2B6D4,Jetsripper boss,900,,,,pending
+sub_2BD1E,Jetsripper boss,900,,,,pending
+sub_2BD2E,Jetsripper boss,900,,,,pending
+sub_2C33A,Jetsripper boss,900,,,,pending
+sub_2C360,Jetsripper boss,900,,,,pending
+sub_2C3BC,Jetsripper boss,900,,,,pending
+sub_2C3CE,Jetsripper boss,900,,,,pending
+sub_2C3F8,Jetsripper boss,900,,,,pending
+sub_2C41C,Jetsripper boss,900,,,,pending
+sub_2C4A2,Jetsripper boss,900,,,,pending
+sub_2C4C0,Jetsripper boss,900,,,,pending
+sub_2C622,Jetsripper boss,900,,,,pending
+sub_2C666,Jetsripper boss,900,,,,pending
+sub_2CA02,Jetsripper boss,900,,,,pending
+sub_C8DC,Jetsripper boss,1080,,,,pending
+sub_FF4A,Jetsripper boss,1080,,,,pending
+sub_10068,Jetsripper boss,1080,,,,pending
+sub_116A8,Jetsripper boss,1080,,,,pending
+sub_1400C,Jetsripper boss,1080,,,,pending
+sub_14ED2,Jetsripper boss,1080,,,,pending
+sub_152CA,Jetsripper boss,1080,,,,pending
+sub_15342,Jetsripper boss,1080,,,,pending
+sub_1539C,Jetsripper boss,1080,,,,pending
+sub_153BC,Jetsripper boss,1080,,,,pending
+sub_156B8,Jetsripper boss,1080,,,,pending
+sub_15C66,Jetsripper boss,1080,,,,pending
+sub_15E40,Jetsripper boss,1080,,,,pending
+sub_167EE,Jetsripper boss,1080,,,,pending
+sub_16E34,Jetsripper boss,1080,,,,pending
+sub_17386,Jetsripper boss,1080,,,,pending
+sub_174A8,Jetsripper boss,1080,,,,pending
+sub_1C050,Jetsripper boss,1080,,,,pending
+sub_1CAF2,Jetsripper boss,1080,,,,pending
+sub_2BDB0,Jetsripper boss,1080,,,,pending
+sub_2CB86,Jetsripper boss,1080,,,,pending
+sub_1609A,Jetsripper boss,1260,,,,pending
+sub_1615C,Jetsripper boss,1260,,,,pending
+sub_179C2,Jetsripper boss,1260,,,,pending
+sub_17AAC,Jetsripper boss,1260,,,,pending
+sub_17B8A,Jetsripper boss,1260,,,,pending
+sub_17C4E,Jetsripper boss,1260,,,,pending
+sub_1924C,Jetsripper boss,1260,,,,pending
+sub_1925A,Jetsripper boss,1260,,,,pending
+sub_3483E,Jetsripper boss,1260,,,,pending
+sub_35656,Jetsripper boss,1260,,,,pending
+sub_35682,Jetsripper boss,1260,,,,pending
+sub_356FA,Jetsripper boss,1260,,,,pending
+sub_3570E,Jetsripper boss,1260,,,,pending
+sub_357C8,Jetsripper boss,1260,,,,pending
+sub_357E8,Jetsripper boss,1260,,,,pending
+sub_359BC,Jetsripper boss,1260,,,,pending
+sub_35A02,Jetsripper boss,1260,,,,pending
+sub_35DF2,Jetsripper boss,1260,,,,pending
+sub_35E8C,Jetsripper boss,1260,,,,pending
+sub_35EBE,Jetsripper boss,1260,,,,pending
+sub_35EDC,Jetsripper boss,1260,,,,pending
+sub_35F2C,Jetsripper boss,1260,,,,pending
+sub_35FF6,Jetsripper boss,1260,,,,pending
+sub_36058,Jetsripper boss,1260,,,,pending
+sub_3610E,Jetsripper boss,1260,,,,pending
+sub_3619C,Jetsripper boss,1260,,,,pending
+sub_258C,Jetsripper boss,1440,,,,pending
+sub_AAA2,Jetsripper boss,1440,,,,pending
+sub_AAC6,Jetsripper boss,1440,,,,pending
+sub_AADC,Jetsripper boss,1440,,,,pending
+sub_AB14,Jetsripper boss,1440,,,,pending
+sub_B38C,Jetsripper boss,1440,,,,pending
+sub_B3E6,Jetsripper boss,1440,,,,pending
+sub_B40A,Jetsripper boss,1440,,,,pending
+sub_B44E,Jetsripper boss,1440,,,,pending
+sub_152FC,Jetsripper boss,1440,,,,pending
+sub_161A6,Jetsripper boss,1440,,,,pending
+sub_16EF2,Jetsripper boss,1440,,,,pending
+sub_357EC,Jetsripper boss,1440,,,,pending
+sub_35814,Jetsripper boss,1440,,,,pending
+sub_35A4E,Jetsripper boss,1440,,,,pending
+sub_361DE,Jetsripper boss,1440,,,,pending
+sub_3ABA,Jetsripper boss,1620,,,,pending
+sub_3AE4,Jetsripper boss,1620,,,,pending
+sub_3B32,Jetsripper boss,1620,,,,pending
+sub_3B66,Jetsripper boss,1620,,,,pending
+sub_15C34,Jetsripper boss,1620,,,,pending
+sub_16F36,Jetsripper boss,1620,,,,pending
+sub_1B980,Jetsripper boss,1620,,,,pending
+sub_1C16A,Jetsripper boss,1620,,,,pending
+sub_2A79E,Jetsripper boss,1620,,,,pending
+sub_2BD10,Jetsripper boss,1620,,,,pending
+sub_3583C,Jetsripper boss,1620,,,,pending
+sub_35D54,Jetsripper boss,1620,,,,pending
+sub_35DDC,Jetsripper boss,1620,,,,pending
+sub_361EE,Jetsripper boss,1620,,,,pending
+sub_362CE,Jetsripper boss,1620,,,,pending
+sub_36368,Jetsripper boss,1620,,,,pending
+sub_B026,Jetsripper boss,1800,,,,pending
+sub_B03A,Jetsripper boss,1800,,,,pending
+sub_B088,Jetsripper boss,1800,,,,pending
+sub_B0B6,Jetsripper boss,1800,,,,pending
+sub_B0D8,Jetsripper boss,1800,,,,pending
+sub_B1E0,Jetsripper boss,1800,,,,pending
+sub_B22C,Jetsripper boss,1800,,,,pending
+sub_B268,Jetsripper boss,1800,,,,pending
+sub_C910,Jetsripper boss,1800,,,,pending
+sub_10086,Jetsripper boss,1800,,,,pending
+sub_10114,Jetsripper boss,1800,,,,pending
+sub_103DC,Jetsripper boss,1800,,,,pending
+sub_1C288,Jetsripper boss,1800,,,,pending
+sub_AEE4,Stage 2,1980,,,,pending
+sub_B136,Stage 2,1980,,,,pending
+sub_B156,Stage 2,1980,,,,pending
+sub_B16C,Stage 2,1980,,,,pending
+sub_B18C,Stage 2,1980,,,,pending
+sub_C922,Stage 2,1980,,,,pending
+sub_C92E,Stage 2,1980,,,,pending
+sub_103B0,Stage 2,1980,,,,pending
+sub_11EAA,Stage 2,1980,,,,pending
+sub_15632,Stage 2,1980,,,,pending
+sub_163D2,Stage 2,1980,,,,pending
+sub_16402,Stage 2,1980,,,,pending
+sub_16782,Stage 2,1980,,,,pending
+sub_16B5C,Stage 2,1980,,,,pending
+sub_16BCE,Stage 2,1980,,,,pending
+sub_1716A,Stage 2,1980,,,,pending
+sub_1717A,Stage 2,1980,,,,pending
+sub_18328,Stage 2,1980,,,,pending
+sub_18C52,Stage 2,1980,,,,pending
+sub_1C8B2,Stage 2,1980,,,,pending
+sub_2A5B6,Stage 2,1980,,,,pending
+sub_2A7BC,Stage 2,1980,,,,pending
+sub_2B542,Stage 2,1980,,,,pending
+sub_2D27C,Stage 2,1980,,,,pending
+sub_2D2F0,Stage 2,1980,,,,pending
+sub_2D386,Stage 2,1980,,,,pending
+sub_2D3E8,Stage 2,1980,,,,pending
+sub_2D418,Stage 2,1980,,,,pending
+sub_2D432,Stage 2,1980,,,,pending
+sub_2D474,Stage 2,1980,,,,pending
+sub_2D55E,Stage 2,1980,,,,pending
+sub_2D61C,Stage 2,1980,,,,pending
+sub_2D640,Stage 2,1980,,,,pending
+sub_354A,Antroid boss,2160,,,,pending
+sub_3580,Antroid boss,2160,,,,pending
+sub_C944,Antroid boss,2160,,,,pending
+sub_11058,Antroid boss,2160,,,,pending
+sub_17CB4,Antroid boss,2160,,,,pending
+sub_1C014,Antroid boss,2160,,,,pending
+sub_2B206,Antroid boss,2160,,,,pending
+sub_2B298,Antroid boss,2160,,,,pending
+sub_2BAB4,Antroid boss,2160,,,,pending
+sub_2BB4C,Antroid boss,2160,,,,pending
+sub_2C8E4,Antroid boss,2160,,,,pending
+sub_2C8EA,Antroid boss,2160,,,,pending
+sub_2C902,Antroid boss,2160,,,,pending
+sub_2D5F0,Antroid boss,2160,,,,pending
+sub_2F396,Antroid boss,2160,,,,pending
+sub_2F39A,Antroid boss,2160,,,,pending
+sub_2F3E6,Antroid boss,2160,,,,pending
+sub_2F42A,Antroid boss,2160,,,,pending
+sub_2F46C,Antroid boss,2160,,,,pending
+sub_2F4C8,Antroid boss,2160,,,,pending
+sub_AF82,Antroid boss,2340,,,,pending
+sub_AFB8,Antroid boss,2340,,,,pending
+sub_14C12,Antroid boss,2340,,,,pending
+sub_153D4,Antroid boss,2340,,,,pending
+sub_1564C,Antroid boss,2340,,,,pending
+sub_1917A,Antroid boss,2340,,,,pending
+sub_2BCFE,Antroid boss,2340,,,,pending
+sub_374C6,Antroid boss,2340,,,,pending
+sub_37542,Antroid boss,2340,,,,pending
+sub_838F4,Antroid boss,2340,,,,pending
+sub_343CE,Antroid boss,2520,,,,pending
+sub_343EE,Antroid boss,2520,,,,pending
+sub_3450E,Antroid boss,2520,,,,pending
+sub_34838,Antroid boss,2520,,,,pending
+sub_348AA,Antroid boss,2520,,,,pending
+sub_348DC,Antroid boss,2520,,,,pending
+sub_37558,Antroid boss,2520,,,,pending
+sub_377C4,Antroid boss,2520,,,,pending
+sub_377CA,Antroid boss,2520,,,,pending
+sub_377F6,Antroid boss,2520,,,,pending
+sub_37892,Antroid boss,2520,,,,pending
+sub_378BE,Antroid boss,2520,,,,pending
+sub_3795A,Antroid boss,2520,,,,pending
+sub_37E8C,Antroid boss,2520,,,,pending
+sub_37EB0,Antroid boss,2520,,,,pending
+sub_37ED2,Antroid boss,2520,,,,pending
+sub_37EDC,Antroid boss,2520,,,,pending
+sub_37FA0,Antroid boss,2520,,,,pending
+sub_3811A,Antroid boss,2520,,,,pending
+sub_382BC,Antroid boss,2520,,,,pending
+sub_382F8,Antroid boss,2520,,,,pending
+sub_C978,Antroid boss,2700,,,,pending
+sub_1B9A0,Antroid boss,2700,,,,pending
+sub_2A39C,Antroid boss,2700,,,,pending
+sub_2A688,Antroid boss,2700,,,,pending
+sub_2A6B4,Antroid boss,2700,,,,pending
+sub_37D3A,Antroid boss,2700,,,,pending
+sub_37D9A,Antroid boss,2700,,,,pending
+sub_37E00,Antroid boss,2700,,,,pending
+sub_37E2A,Antroid boss,2700,,,,pending
+sub_37F26,Antroid boss,2700,,,,pending
+sub_37F7E,Antroid boss,2700,,,,pending
+sub_37E54,Antroid boss,2880,,,,pending
+sub_37E6C,Antroid boss,2880,,,,pending
+sub_B00E,Antroid boss,3060,,,,pending
+sub_B1F8,Antroid boss,3060,,,,pending
+sub_B2EA,Antroid boss,3060,,,,pending
+sub_C98E,Antroid boss,3060,,,,pending
+sub_103D4,Antroid boss,3060,,,,pending
+sub_16C40,Antroid boss,3060,,,,pending
+sub_17642,Antroid boss,3060,,,,pending
+sub_176A0,Antroid boss,3060,,,,pending
+sub_C99A,Stage 3,3240,,,,pending
+sub_11ECE,Stage 3,3240,,,,pending
+sub_2CF8A,Stage 3,3240,,,,pending
+sub_2D020,Stage 3,3240,,,,pending
+sub_2D046,Stage 3,3240,,,,pending
+sub_2D064,Stage 3,3240,,,,pending
+sub_164B0,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_165A4,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_165C2,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_16EA4,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_2BF58,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_2F48E,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_2F49A,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_33F30,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_34040,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_340B0,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_340DA,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_34178,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_34198,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_34274,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_3429E,Rolling mini-boss (Stage 3),3420,,,,pending
+sub_C9D4,Shellshogun boss,3600,,,,pending
+sub_C9E0,Shellshogun boss,3600,,,,pending
+sub_C9F8,Shellshogun boss,3600,,,,pending
+sub_2C0D6,Shellshogun boss,3600,,,,pending
+sub_33F84,Shellshogun boss,3600,,,,pending
+sub_34270,Shellshogun boss,3600,,,,pending
+sub_295C,Shellshogun boss,3780,,,,pending
+sub_104B0,Shellshogun boss,3780,,,,pending
+sub_35614,Shellshogun boss,3780,,,,pending
+sub_394D8,Shellshogun boss,3780,,,,pending
+sub_3954C,Shellshogun boss,3780,,,,pending
+sub_39572,Shellshogun boss,3780,,,,pending
+sub_396D2,Shellshogun boss,3780,,,,pending
+sub_39E20,Shellshogun boss,3780,,,,pending
+sub_39E5A,Shellshogun boss,3780,,,,pending
+sub_39E5E,Shellshogun boss,3780,,,,pending
+sub_39F3A,Shellshogun boss,3780,,,,pending
+sub_3A172,Shellshogun boss,3780,,,,pending
+sub_3A2CC,Shellshogun boss,3780,,,,pending
+sub_84A70,Shellshogun boss,3780,,,,pending
+sub_10F4E,Shellshogun boss,3960,,,,pending
+sub_13278,Shellshogun boss,3960,,,,pending
+sub_1546E,Shellshogun boss,3960,,,,pending
+sub_1548C,Shellshogun boss,3960,,,,pending
+sub_16EC8,Shellshogun boss,3960,,,,pending
+sub_1C03C,Shellshogun boss,3960,,,,pending
+sub_39720,Shellshogun boss,3960,,,,pending
+sub_398FE,Shellshogun boss,3960,,,,pending
+sub_39E90,Shellshogun boss,3960,,,,pending
+sub_39F58,Shellshogun boss,3960,,,,pending
+sub_39FF6,Shellshogun boss,3960,,,,pending
+sub_3A010,Shellshogun boss,3960,,,,pending
+sub_39758,Shellshogun boss,4140,,,,pending
+sub_39E76,Shellshogun boss,4140,,,,pending
+sub_39EA8,Shellshogun boss,4140,,,,pending
+sub_39F20,Shellshogun boss,4140,,,,pending
+sub_34E4,Shellshogun boss,4320,,,,pending
+sub_16116,Shellshogun boss,4320,,,,pending
+sub_2A390,Shellshogun boss,4320,,,,pending
+sub_39778,Shellshogun boss,4320,,,,pending
+sub_397C4,Shellshogun boss,4320,,,,pending
+sub_399E8,Shellshogun boss,4320,,,,pending
+sub_39EC0,Shellshogun boss,4320,,,,pending
+sub_3A122,Shellshogun boss,4320,,,,pending
+sub_CA2C,Shellshogun boss,4500,,,,pending
+sub_15610,Shellshogun boss,4500,,,,pending
+sub_1356,Shellshogun boss,4680,,,,pending
+sub_15BC,Shellshogun boss,4680,,,,pending
+sub_269E6,Shellshogun boss,4680,,,,pending
+sub_26A00,Shellshogun boss,4680,,,,pending
+sub_26A1A,Shellshogun boss,4680,,,,pending
+sub_26A34,Shellshogun boss,4680,,,,pending
+sub_26A58,Shellshogun boss,4680,,,,pending
+sub_26A8E,Shellshogun boss,4680,,,,pending
+sub_26A9E,Shellshogun boss,4680,,,,pending
+sub_26B8C,Shellshogun boss,4680,,,,pending
+sub_26BA6,Shellshogun boss,4680,,,,pending
+sub_26DD6,Shellshogun boss,4680,,,,pending
+sub_26DE0,Shellshogun boss,4680,,,,pending
+sub_26E4C,Shellshogun boss,4680,,,,pending
+sub_271BC,Shellshogun boss,4680,,,,pending
+sub_272BE,Shellshogun boss,4680,,,,pending
+sub_273BC,Shellshogun boss,4680,,,,pending
+sub_29E2E,Shellshogun boss,4680,,,,pending
+sub_29E66,Shellshogun boss,4680,,,,pending
+sub_29F36,Shellshogun boss,4680,,,,pending
+sub_29FF4,Shellshogun boss,4680,,,,pending
+sub_3987C,Shellshogun boss,4680,,,,pending
+sub_3989E,Shellshogun boss,4680,,,,pending
+sub_3E1AA,Shellshogun boss,4680,,,,pending
+sub_834AE,Shellshogun boss,4680,,,,pending
+sub_13BC,Shellshogun boss,4860,,,,pending
+sub_CA9A,Shellshogun boss,4860,,,,pending
+sub_398B4,Shellshogun boss,4860,,,,pending
+sub_CAB4,Stage 4,5040,,,,pending
+sub_2B77C,Stage 4,5040,,,,pending
+sub_2D0B2,Stage 4,5040,,,,pending
+sub_2A2A2,Shiper Honeyviper boss,5220,,,,pending
+sub_2A94C,Shiper Honeyviper boss,5220,,,,pending
+sub_CAE2,Shiper Honeyviper boss,5400,,,,pending
+sub_CB26,Shiper Honeyviper boss,5400,,,,pending
+sub_CB56,Shiper Honeyviper boss,5400,,,,pending
+sub_3641A,Shiper Honeyviper boss,5400,,,,pending
+sub_364C2,Shiper Honeyviper boss,5400,,,,pending
+sub_34DA,Shiper Honeyviper boss,5580,,,,pending
+sub_1B44C,Shiper Honeyviper boss,5580,,,,pending
+sub_36504,Shiper Honeyviper boss,5580,,,,pending
+sub_36544,Shiper Honeyviper boss,5580,,,,pending
+sub_36578,Shiper Honeyviper boss,5580,,,,pending
+sub_36804,Shiper Honeyviper boss,5580,,,,pending
+sub_36826,Shiper Honeyviper boss,5580,,,,pending
+sub_36A1A,Shiper Honeyviper boss,5580,,,,pending
+sub_36AAE,Shiper Honeyviper boss,5580,,,,pending
+sub_36B6E,Shiper Honeyviper boss,5580,,,,pending
+sub_36BB0,Shiper Honeyviper boss,5580,,,,pending
+sub_36CB0,Shiper Honeyviper boss,5580,,,,pending
+sub_36DD0,Shiper Honeyviper boss,5580,,,,pending
+sub_825FC,Shiper Honeyviper boss,5580,,,,pending
+sub_1546,Shiper Honeyviper boss,5760,,,,pending
+sub_1CB5A,Shiper Honeyviper boss,5760,,,,pending
+sub_29EC8,Shiper Honeyviper boss,5760,,,,pending
+sub_36A2A,Shiper Honeyviper boss,5760,,,,pending
+sub_36A5A,Shiper Honeyviper boss,5760,,,,pending
+sub_37048,Shiper Honeyviper boss,5760,,,,pending
+sub_368CC,Shiper Honeyviper boss,5940,,,,pending
+sub_368E8,Shiper Honeyviper boss,5940,,,,pending
+sub_36900,Shiper Honeyviper boss,5940,,,,pending
+sub_36A44,Shiper Honeyviper boss,5940,,,,pending
+sub_36A84,Shiper Honeyviper boss,5940,,,,pending
+sub_36AE2,Shiper Honeyviper boss,5940,,,,pending
+sub_144CC,Shiper Honeyviper boss,6120,,,,pending
+sub_144F2,Shiper Honeyviper boss,6120,,,,pending
+sub_15758,Shiper Honeyviper boss,6120,,,,pending
+sub_16FDC,Shiper Honeyviper boss,6120,,,,pending
+sub_16FEC,Shiper Honeyviper boss,6120,,,,pending
+sub_17086,Shiper Honeyviper boss,6120,,,,pending
+sub_17146,Shiper Honeyviper boss,6120,,,,pending
+sub_2BA5E,Shiper Honeyviper boss,6120,,,,pending
+sub_306EA,Shiper Honeyviper boss,6120,,,,pending
+sub_30A60,Shiper Honeyviper boss,6120,,,,pending
+sub_30A76,Shiper Honeyviper boss,6120,,,,pending
+sub_30ABA,Shiper Honeyviper boss,6120,,,,pending
+sub_366FC,Shiper Honeyviper boss,6120,,,,pending
+sub_3679A,Shiper Honeyviper boss,6120,,,,pending
+sub_36C4C,Shiper Honeyviper boss,6120,,,,pending
+sub_371E8,Shiper Honeyviper boss,6120,,,,pending
+sub_37276,Shiper Honeyviper boss,6120,,,,pending
+sub_82DC2,Shiper Honeyviper boss,6120,,,,pending
+sub_84B46,Shiper Honeyviper boss,6120,,,,pending
+sub_B82,Shiper Honeyviper boss,6300,,,,pending
+sub_3564,Shiper Honeyviper boss,6300,,,,pending
+sub_14190,Shiper Honeyviper boss,6300,,,,pending
+sub_142D8,Shiper Honeyviper boss,6300,,,,pending
+sub_144A6,Shiper Honeyviper boss,6300,,,,pending
+sub_14F8A,Shiper Honeyviper boss,6300,,,,pending
+sub_162A8,Shiper Honeyviper boss,6300,,,,pending
+sub_16344,Shiper Honeyviper boss,6300,,,,pending
+sub_1635A,Shiper Honeyviper boss,6300,,,,pending
+sub_17334,Shiper Honeyviper boss,6300,,,,pending
+sub_1C028,Shiper Honeyviper boss,6300,,,,pending
+sub_2A64C,Shiper Honeyviper boss,6300,,,,pending
+sub_2A6D0,Shiper Honeyviper boss,6300,,,,pending
+sub_2A79C,Shiper Honeyviper boss,6300,,,,pending
+sub_2B4BE,Shiper Honeyviper boss,6300,,,,pending
+sub_2B9C4,Shiper Honeyviper boss,6300,,,,pending
+sub_30A4E,Shiper Honeyviper boss,6300,,,,pending
+sub_36930,Shiper Honeyviper boss,6300,,,,pending
+sub_3694C,Shiper Honeyviper boss,6300,,,,pending
+sub_36982,Shiper Honeyviper boss,6300,,,,pending
+sub_36990,Shiper Honeyviper boss,6300,,,,pending
+sub_36C0A,Shiper Honeyviper boss,6300,,,,pending
+sub_36FEE,Shiper Honeyviper boss,6300,,,,pending
+sub_37370,Shiper Honeyviper boss,6300,,,,pending
+sub_37436,Shiper Honeyviper boss,6300,,,,pending
+sub_8264C,Shiper Honeyviper boss,6300,,,,pending
+sub_830BC,Shiper Honeyviper boss,6300,,,,pending
+sub_839DC,Shiper Honeyviper boss,6300,,,,pending
+sub_83C62,Shiper Honeyviper boss,6300,,,,pending
+sub_3B28,Shiper Honeyviper boss,6480,,,,pending
+sub_CB32,Shiper Honeyviper boss,6480,,,,pending
+sub_163BE,Shiper Honeyviper boss,6480,,,,pending
+sub_2690E,Shiper Honeyviper boss,6480,,,,pending
+sub_26928,Shiper Honeyviper boss,6480,,,,pending
+sub_26942,Shiper Honeyviper boss,6480,,,,pending
+sub_2695C,Shiper Honeyviper boss,6480,,,,pending
+sub_26980,Shiper Honeyviper boss,6480,,,,pending
+sub_269B4,Shiper Honeyviper boss,6480,,,,pending
+sub_269C4,Shiper Honeyviper boss,6480,,,,pending
+sub_272A8,Shiper Honeyviper boss,6480,,,,pending
+sub_369F6,Shiper Honeyviper boss,6480,,,,pending
+sub_82674,Shiper Honeyviper boss,6480,,,,pending
+sub_826C4,Shiper Honeyviper boss,6480,,,,pending
+sub_82714,Shiper Honeyviper boss,6480,,,,pending
+sub_8280A,Shiper Honeyviper boss,6480,,,,pending
+sub_83616,Shiper Honeyviper boss,6480,,,,pending
+sub_83618,Shiper Honeyviper boss,6480,,,,pending
+sub_83B40,Shiper Honeyviper boss,6480,,,,pending
+sub_84A96,Shiper Honeyviper boss,6480,,,,pending
+sub_CB78,Shiper Honeyviper boss,6660,,,,pending
+sub_CB8C,Shiper Honeyviper boss,6660,,,,pending
+sub_CB9E,Stage 4 to 5 transition,6840,,,,pending
+sub_10390,Stage 4 to 5 transition,6840,,,,pending
+sub_19A6C,Stage 4 to 5 transition,6840,,,,pending
+sub_19B14,Stage 4 to 5 transition,6840,,,,pending
+sub_19B34,Stage 4 to 5 transition,6840,,,,pending
+sub_19B40,Stage 4 to 5 transition,6840,,,,pending
+sub_19B80,Stage 4 to 5 transition,6840,,,,pending
+sub_19BB0,Stage 4 to 5 transition,6840,,,,pending
+sub_12E0,Stage 5,7020,,,,pending
+sub_218C,Stage 5,7020,,,,pending
+sub_2F66,Stage 5,7020,,,,pending
+sub_300C,Stage 5,7020,,,,pending
+sub_3104,Stage 5,7020,,,,pending
+sub_311C,Stage 5,7020,,,,pending
+sub_3134,Stage 5,7020,,,,pending
+sub_33A4,Stage 5,7020,,,,pending
+sub_33FA,Stage 5,7020,,,,pending
+sub_411C,Stage 5,7020,,,,pending
+sub_CBBA,Stage 5,7020,,,,pending
+sub_1176A,Stage 5,7020,,,,pending
+sub_11EEE,Stage 5,7020,,,,pending
+sub_11F0E,Stage 5,7020,,,,pending
+sub_17C1A,Stage 5,7020,,,,pending
+sub_1B746,Stage 5,7020,,,,pending
+sub_2A8EE,Stage 5,7020,,,,pending
+sub_2DA3A,Stage 5,7020,,,,pending
+sub_2DA8C,Stage 5,7020,,,,pending
+sub_2DACE,Stage 5,7020,,,,pending
+sub_2DB2E,Stage 5,7020,,,,pending
+sub_2DB5C,Stage 5,7020,,,,pending
+sub_2DBAE,Stage 5,7020,,,,pending
+sub_2DBE0,Stage 5,7020,,,,pending
+sub_2DC04,Stage 5,7020,,,,pending
+sub_2DC62,Stage 5,7020,,,,pending
+sub_2DC8C,Stage 5,7020,,,,pending
+sub_2DD16,Stage 5,7020,,,,pending
+sub_2DD2E,Stage 5,7020,,,,pending
+sub_82824,Stage 5,7020,,,,pending
+sub_83562,Stage 5,7020,,,,pending
+sub_8357E,Stage 5,7020,,,,pending
+sub_8358A,Stage 5,7020,,,,pending
+sub_835A0,Stage 5,7020,,,,pending
+sub_8367E,Stage 5,7020,,,,pending
+sub_836A0,Stage 5,7020,,,,pending
+sub_83938,Stage 5,7020,,,,pending
+sub_83C04,Stage 5,7020,,,,pending
+sub_83C7C,Stage 5,7020,,,,pending
+sub_84ACA,Stage 5,7020,,,,pending
+sub_84AFA,Stage 5,7020,,,,pending
+sub_84B98,Stage 5,7020,,,,pending
+sub_84BEA,Stage 5,7020,,,,pending
+sub_84BF0,Stage 5,7020,,,,pending
+sub_CBD0,Madam Barbar boss,7200,,,,pending
+sub_2DEC8,Madam Barbar boss,7200,,,,pending
+sub_2DEFE,Madam Barbar boss,7200,,,,pending
+sub_348CC,Madam Barbar boss,7380,,,,pending
+sub_3A47C,Madam Barbar boss,7380,,,,pending
+sub_3A4FE,Madam Barbar boss,7380,,,,pending
+sub_3A51C,Madam Barbar boss,7380,,,,pending
+sub_3A604,Madam Barbar boss,7380,,,,pending
+sub_3A9F2,Madam Barbar boss,7380,,,,pending
+sub_3AA86,Madam Barbar boss,7380,,,,pending
+sub_3AAF2,Madam Barbar boss,7380,,,,pending
+sub_3AB16,Madam Barbar boss,7380,,,,pending
+sub_3AB20,Madam Barbar boss,7380,,,,pending
+sub_3AB64,Madam Barbar boss,7380,,,,pending
+sub_3ABE4,Madam Barbar boss,7380,,,,pending
+sub_3AD8E,Madam Barbar boss,7380,,,,pending
+sub_3ADA4,Madam Barbar boss,7380,,,,pending
+sub_164FC,Madam Barbar boss,7560,,,,pending
+sub_1674A,Madam Barbar boss,7560,,,,pending
+sub_3A66A,Madam Barbar boss,7740,,,,pending
+sub_3B01E,Madam Barbar boss,7740,,,,pending
+sub_3C20,Madam Barbar boss,7920,,,,pending
+sub_3C26,Madam Barbar boss,7920,,,,pending
+sub_122A0,Madam Barbar boss,7920,,,,pending
+sub_170BA,Madam Barbar boss,7920,,,,pending
+sub_1B8B8,Madam Barbar boss,7920,,,,pending
+sub_3A79C,Madam Barbar boss,7920,,,,pending
+sub_3ADB0,Madam Barbar boss,7920,,,,pending
+sub_3AE36,Madam Barbar boss,7920,,,,pending
+sub_144EA,Madam Barbar boss,8100,,,,pending
+sub_14534,Madam Barbar boss,8100,,,,pending
+sub_3B014,Madam Barbar boss,8100,,,,pending
+sub_82328,Madam Barbar boss,8100,,,,pending
+sub_823D6,Madam Barbar boss,8100,,,,pending
+sub_834FC,Madam Barbar boss,8100,,,,pending
+sub_CC06,Madam Barbar boss,8280,,,,pending
+sub_3AB82,Madam Barbar boss,8280,,,,pending
+sub_3A6F6,Madam Barbar boss,8640,,,,pending
+sub_1497C,Madam Barbar boss,8820,,,,pending
+sub_EDC,Stage 6,9000,,,,pending
+sub_3462,Stage 6,9000,,,,pending
+sub_348C,Stage 6,9000,,,,pending
+sub_3954,Stage 6,9000,,,,pending
+sub_4316,Stage 6,9000,,,,pending
+sub_CC20,Stage 6,9000,,,,pending
+sub_CC3C,Stage 6,9000,,,,pending
+sub_11F32,Stage 6,9000,,,,pending
+sub_133D4,Stage 6,9000,,,,pending
+sub_1468A,Stage 6,9000,,,,pending
+sub_16CD8,Stage 6,9000,,,,pending
+sub_16D60,Stage 6,9000,,,,pending
+sub_16DF6,Stage 6,9000,,,,pending
+sub_23CBA,Stage 6,9000,,,,pending
+sub_2A8BA,Stage 6,9000,,,,pending
+sub_2BEBC,Stage 6,9000,,,,pending
+sub_2BFC0,Stage 6,9000,,,,pending
+sub_2BFD0,Stage 6,9000,,,,pending
+sub_2BFFE,Stage 6,9000,,,,pending
+sub_2CA1A,Stage 6,9000,,,,pending
+sub_CC4E,Joker boss,9180,,,,pending
+sub_2B80C,Joker boss,9180,,,,pending
+sub_2B88A,Joker boss,9180,,,,pending
+sub_2C008,Joker boss,9180,,,,pending
+sub_2C01A,Joker boss,9180,,,,pending
+sub_2C058,Joker boss,9180,,,,pending
+sub_2C07A,Joker boss,9180,,,,pending
+sub_2C08C,Joker boss,9180,,,,pending
+sub_2C0BC,Joker boss,9180,,,,pending
+sub_2CDA8,Joker boss,9180,,,,pending
+sub_3B29E,Joker boss,9360,,,,pending
+sub_3B30E,Joker boss,9360,,,,pending
+sub_3B330,Joker boss,9360,,,,pending
+sub_3B722,Joker boss,9360,,,,pending
+sub_3B748,Joker boss,9360,,,,pending
+sub_3B7E0,Joker boss,9360,,,,pending
+sub_3B7FA,Joker boss,9360,,,,pending
+sub_3B808,Joker boss,9360,,,,pending
+sub_3BA1A,Joker boss,9360,,,,pending
+sub_3BCB4,Joker boss,9360,,,,pending
+sub_3BDF4,Joker boss,9360,,,,pending
+sub_29EDE,Joker boss,9540,,,,pending
+sub_3B84E,Joker boss,9540,,,,pending
+sub_3BC8E,Joker boss,9540,,,,pending
+sub_3B40A,Joker boss,9720,,,,pending
+sub_3B420,Joker boss,9720,,,,pending
+sub_3B434,Joker boss,9720,,,,pending
+sub_CC84,Joker boss,10080,,,,pending
+sub_13C50,Joker boss,10080,,,,pending
+sub_14648,Joker boss,10080,,,,pending
+sub_16CC8,Joker boss,10080,,,,pending
+sub_3B69A,Joker boss,10080,,,,pending
+sub_3BE16,Joker boss,10080,,,,pending
+sub_3BE84,Joker boss,10080,,,,pending
+sub_8289A,Joker boss,10080,,,,pending
+sub_2A3E6,Joker boss,10260,,,,pending
+sub_2A85E,Joker boss,10260,,,,pending
+sub_2A8A2,Joker boss,10260,,,,pending
+sub_3B4D8,Joker boss,10260,,,,pending
+sub_3B56A,Joker boss,10260,,,,pending
+sub_3B5A0,Joker boss,10260,,,,pending
+sub_3B602,Joker boss,10260,,,,pending
+sub_3B89E,Joker boss,10260,,,,pending
+sub_3B8BE,Joker boss,10260,,,,pending
+sub_3B52E,Joker boss,10440,,,,pending
+sub_3B5D4,Joker boss,10440,,,,pending
+sub_3B68E,Joker boss,10440,,,,pending
+sub_83932,Joker boss,10440,,,,pending
+sub_CC96,Joker boss,10620,,,,pending
+sub_3B5E8,Joker boss,10620,,,,pending
+sub_CCA2,Stage 7,10800,,,,pending
+sub_CCC8,Stage 7,10800,,,,pending
+sub_11F56,Stage 7,10800,,,,pending
+sub_32EE0,Stage 7,10800,,,,pending
+sub_32F32,Stage 7,10800,,,,pending
+sub_32F60,Stage 7,10800,,,,pending
+sub_32F84,Stage 7,10800,,,,pending
+sub_32FF4,Stage 7,10800,,,,pending
+sub_33016,Stage 7,10800,,,,pending
+sub_3305A,Stage 7,10800,,,,pending
+sub_33082,Stage 7,10800,,,,pending
+sub_CD0A,ST-210-Terobuster boss,10980,,,,pending
+sub_D5BC,ST-210-Terobuster boss,10980,,,,pending
+sub_D5C8,ST-210-Terobuster boss,10980,,,,pending
+sub_D624,ST-210-Terobuster boss,10980,,,,pending
+sub_D654,ST-210-Terobuster boss,10980,,,,pending
+sub_33004,ST-210-Terobuster boss,10980,,,,pending
+sub_CD90,ST-210-Terobuster boss,11340,,,,pending
+sub_38518,ST-210-Terobuster boss,11340,,,,pending
+sub_385A4,ST-210-Terobuster boss,11340,,,,pending
+sub_385CA,ST-210-Terobuster boss,11340,,,,pending
+sub_389A2,ST-210-Terobuster boss,11340,,,,pending
+sub_389CA,ST-210-Terobuster boss,11340,,,,pending
+sub_389DC,ST-210-Terobuster boss,11340,,,,pending
+sub_393BE,ST-210-Terobuster boss,11340,,,,pending
+sub_38CF4,ST-210-Terobuster boss,11520,,,,pending
+sub_38D1C,ST-210-Terobuster boss,11520,,,,pending
+sub_38D4C,ST-210-Terobuster boss,11520,,,,pending
+sub_38DC4,ST-210-Terobuster boss,11520,,,,pending
+sub_38E08,ST-210-Terobuster boss,11520,,,,pending
+sub_391CC,ST-210-Terobuster boss,11520,,,,pending
+sub_3923E,ST-210-Terobuster boss,11520,,,,pending
+sub_392B0,ST-210-Terobuster boss,11520,,,,pending
+sub_392C6,ST-210-Terobuster boss,11520,,,,pending
+sub_B3F0,ST-210-Terobuster boss,11700,,,,pending
+sub_38A8C,ST-210-Terobuster boss,11700,,,,pending
+sub_38AB0,ST-210-Terobuster boss,11700,,,,pending
+sub_19244,ST-210-Terobuster boss,11880,,,,pending
+sub_386EE,ST-210-Terobuster boss,11880,,,,pending
+sub_14AF8,ST-210-Terobuster boss,12060,,,,pending
+sub_14BBC,ST-210-Terobuster boss,12060,,,,pending
+sub_38ACC,ST-210-Terobuster boss,12060,,,,pending
+sub_38B5C,ST-210-Terobuster boss,12060,,,,pending
+sub_38BA6,ST-210-Terobuster boss,12060,,,,pending
+sub_38BC0,ST-210-Terobuster boss,12060,,,,pending
+sub_390F0,ST-210-Terobuster boss,12060,,,,pending
+sub_38C66,ST-210-Terobuster boss,12240,,,,pending
+sub_38CBE,ST-210-Terobuster boss,12240,,,,pending
+sub_38CD2,ST-210-Terobuster boss,12240,,,,pending
+sub_CDBC,ST-210-Terobuster boss,12420,,,,pending
+sub_CDE2,Stage 7 to 8 transition,12600,,,,pending
+sub_19A90,Stage 7 to 8 transition,12780,,,,pending
+sub_3084,Train start (Stage 8),12960,,,,pending
+sub_32CC,Train start (Stage 8),12960,,,,pending
+sub_3E5A,Train start (Stage 8),12960,,,,pending
+sub_4132,Train start (Stage 8),12960,,,,pending
+sub_4336,Train start (Stage 8),12960,,,,pending
+sub_CE58,Train start (Stage 8),12960,,,,pending
+sub_CEBC,Train start (Stage 8),12960,,,,pending
+sub_CEFA,Train start (Stage 8),12960,,,,pending
+sub_D766,Train start (Stage 8),12960,,,,pending
+sub_10286,Train start (Stage 8),12960,,,,pending
+sub_11F7E,Train start (Stage 8),12960,,,,pending
+sub_2EFC8,Train start (Stage 8),12960,,,,pending
+sub_2EFEA,Train start (Stage 8),12960,,,,pending
+sub_2EF32,Train end (Stage 8),13140,,,,pending
+sub_2EF4E,Train end (Stage 8),13140,,,,pending
+sub_2EF7E,Train end (Stage 8),13140,,,,pending
+sub_2EFBA,Train end (Stage 8),13140,,,,pending
+sub_2F01A,Train end (Stage 8),13140,,,,pending
+sub_2F032,Train end (Stage 8),13140,,,,pending
+sub_2F06E,Train end (Stage 8),13140,,,,pending
+sub_CE2E,Flying-Neo boss,13500,,,,pending
+sub_CF6A,Flying-Neo boss,13500,,,,pending
+sub_102AE,Flying-Neo boss,13500,,,,pending
+sub_19C5E,Flying-Neo boss,13500,,,,pending
+sub_19D82,Flying-Neo boss,13500,,,,pending
+sub_CF9A,Flying-Neo boss,13680,,,,pending
+sub_CFDE,Flying-Neo boss,13680,,,,pending
+sub_D6D6,Flying-Neo boss,13680,,,,pending
+sub_D714,Flying-Neo boss,13680,,,,pending
+sub_D73E,Flying-Neo boss,13680,,,,pending
+sub_102B8,Flying-Neo boss,13680,,,,pending
+sub_1676E,Flying-Neo boss,13680,,,,pending
+sub_162C,Flying-Neo boss,13860,,,,pending
+sub_CFC2,Flying-Neo boss,13860,,,,pending
+sub_D01E,Flying-Neo boss,13860,,,,pending
+sub_D0AC,Flying-Neo boss,13860,,,,pending
+sub_D75A,Flying-Neo boss,13860,,,,pending
+sub_19CA6,Flying-Neo boss,13860,,,,pending
+sub_29ED0,Flying-Neo boss,13860,,,,pending
+sub_3BFF6,Flying-Neo boss,13860,,,,pending
+sub_3C0D0,Flying-Neo boss,13860,,,,pending
+sub_3C110,Flying-Neo boss,13860,,,,pending
+sub_3C156,Flying-Neo boss,13860,,,,pending
+sub_3C168,Flying-Neo boss,13860,,,,pending
+sub_3C29C,Flying-Neo boss,13860,,,,pending
+sub_3C9F0,Flying-Neo boss,13860,,,,pending
+sub_3CB98,Flying-Neo boss,13860,,,,pending
+sub_343D6,Flying-Neo boss,14040,,,,pending
+sub_3C2C0,Flying-Neo boss,14040,,,,pending
+sub_3C688,Flying-Neo boss,14040,,,,pending
+sub_3CA3C,Flying-Neo boss,14040,,,,pending
+sub_3CDAE,Flying-Neo boss,14040,,,,pending
+sub_3CE14,Flying-Neo boss,14040,,,,pending
+sub_3CECA,Flying-Neo boss,14040,,,,pending
+sub_3CF0A,Flying-Neo boss,14040,,,,pending
+sub_3CFE8,Flying-Neo boss,14040,,,,pending
+sub_3C55C,Flying-Neo boss,14220,,,,pending
+sub_3C592,Flying-Neo boss,14220,,,,pending
+sub_3C5BC,Flying-Neo boss,14220,,,,pending
+sub_3C660,Flying-Neo boss,14220,,,,pending
+sub_3C9E0,Flying-Neo boss,14220,,,,pending
+sub_3FB6,Flying-Neo boss,14400,,,,pending
+sub_3C2E4,Flying-Neo boss,14400,,,,pending
+sub_3C31C,Flying-Neo boss,14400,,,,pending
+sub_3C36A,Flying-Neo boss,14400,,,,pending
+sub_3C390,Flying-Neo boss,14400,,,,pending
+sub_3C3AE,Flying-Neo boss,14400,,,,pending
+sub_3C3E2,Flying-Neo boss,14400,,,,pending
+sub_3C428,Flying-Neo boss,14400,,,,pending
+sub_3CB40,Flying-Neo boss,14400,,,,pending
+sub_3CC56,Flying-Neo boss,14400,,,,pending
+sub_D08E,Flying-Neo boss,14580,,,,pending
+sub_3C4CA,Flying-Neo boss,14580,,,,pending
+sub_147E,Flies (Stage 9),14940,,,,pending
+sub_D0B4,Flies (Stage 9),14940,,,,pending
+sub_D140,Flies (Stage 9),14940,,,,pending
+sub_D166,Flies (Stage 9),14940,,,,pending
+sub_D538,Flies (Stage 9),14940,,,,pending
+sub_11FA2,Flies (Stage 9),14940,,,,pending
+sub_29EBA,Flies (Stage 9),14940,,,,pending
+sub_2D66C,Flies (Stage 9),14940,,,,pending
+sub_2D69C,Flies (Stage 9),14940,,,,pending
+sub_2D6B2,Flies (Stage 9),14940,,,,pending
+sub_2D8E8,Flies (Stage 9),14940,,,,pending
+sub_2D8FC,Flies (Stage 9),14940,,,,pending
+sub_2D91A,Flies (Stage 9),14940,,,,pending
+sub_2D92A,Flies (Stage 9),14940,,,,pending
+sub_2D954,Flies (Stage 9),14940,,,,pending
+sub_D1FE,Flies (Stage 9),15300,,,,pending
+sub_D1DA,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_D286,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_D2B6,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_D4BE,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_3D0AE,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_3D0C2,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_3D15A,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_3D16C,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_3D450,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_3D0CA,Caterpillar ship above train (Stage 9 ),15660,,,,pending
+sub_3D412,Caterpillar ship above train (Stage 9 ),15840,,,,pending
+sub_3D1F4,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_3D2F8,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_3D38A,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_3D4AC,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_3D4B6,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_3D562,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_3D630,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_3D654,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_3D78C,Caterpillar ship above train (Stage 9 ),16020,,,,pending
+sub_145F4,Caterpillar ship above train (Stage 9 ),16200,,,,pending
+sub_2A418,Caterpillar ship above train (Stage 9 ),16200,,,,pending
+sub_18846,Caterpillar ship above train (Stage 9 ),17100,,,,pending
+sub_188EE,Caterpillar ship above train (Stage 9 ),17100,,,,pending
+sub_2C0DE,Caterpillar ship above train (Stage 9 ),17280,,,,pending
+sub_3D6DA,Caterpillar ship above train (Stage 9 ),17280,,,,pending
+sub_3D726,Caterpillar ship above train (Stage 9 ),17280,,,,pending
+sub_2F08C,Xi-Tiger start,17640,,,,pending
+sub_2F0A8,Xi-Tiger start,17640,,,,pending
+sub_2F0BC,Xi-Tiger start,17640,,,,pending
+sub_2F0F6,Xi-Tiger start,17640,,,,pending
+sub_14B6,Xi-Tiger cutscene,18000,,,,pending
+sub_1E996,Xi-Tiger cutscene,18000,,,,pending
+sub_1EB66,Xi-Tiger cutscene,18000,,,,pending
+sub_1EB9E,Xi-Tiger cutscene,18000,,,,pending
+sub_1EBB6,Xi-Tiger cutscene,18000,,,,pending
+sub_1ED38,Xi-Tiger cutscene,18000,,,,pending
+sub_1ED3C,Xi-Tiger cutscene,18000,,,,pending
+sub_1ED62,Xi-Tiger cutscene,18000,,,,pending
+sub_1ED7C,Xi-Tiger cutscene,18000,,,,pending
+sub_260A2,Xi-Tiger cutscene,18000,,,,pending
+sub_260CE,Xi-Tiger cutscene,18000,,,,pending
+sub_29E58,Xi-Tiger cutscene,18000,,,,pending
+sub_1EC20,Xi-Tiger cutscene,18180,,,,pending
+sub_2DCA,Xi-Tiger cutscene,18360,,,,pending
+sub_30D4,Xi-Tiger cutscene,18360,,,,pending
+sub_10ADC,Xi-Tiger cutscene,18360,,,,pending
+sub_10AEC,Xi-Tiger cutscene,18360,,,,pending
+sub_1EC34,Xi-Tiger cutscene,18360,,,,pending
+sub_D422,Xi-Tiger boss fight,18720,,,,pending
+sub_D468,Xi-Tiger boss fight,18720,,,,pending
+sub_1219E,Xi-Tiger boss fight,18720,,,,pending
+sub_121DE,Xi-Tiger boss fight,18720,,,,pending
+sub_121F0,Xi-Tiger boss fight,18720,,,,pending
+sub_3D814,Xi-Tiger boss fight,18720,,,,pending
+sub_3D8B2,Xi-Tiger boss fight,18720,,,,pending
+sub_3D8CE,Xi-Tiger boss fight,18720,,,,pending
+sub_3DA3E,Xi-Tiger boss fight,18720,,,,pending
+sub_3E050,Xi-Tiger boss fight,18720,,,,pending
+sub_3E076,Xi-Tiger boss fight,18720,,,,pending
+sub_3E0F6,Xi-Tiger boss fight,18720,,,,pending
+sub_3E134,Xi-Tiger boss fight,18720,,,,pending
+sub_3E18C,Xi-Tiger boss fight,18720,,,,pending
+sub_3E21C,Xi-Tiger boss fight,18720,,,,pending
+sub_3E3B0,Xi-Tiger boss fight,18720,,,,pending
+sub_3E3C6,Xi-Tiger boss fight,18720,,,,pending
+sub_19D42,Xi-Tiger boss fight,18900,,,,pending
+sub_3DA72,Xi-Tiger boss fight,19080,,,,pending
+sub_3DA94,Xi-Tiger boss fight,19080,,,,pending
+sub_3DEBA,Xi-Tiger boss fight,19440,,,,pending
+sub_3DF12,Xi-Tiger boss fight,19440,,,,pending
+sub_3DF7C,Xi-Tiger boss fight,19440,,,,pending
+sub_3E1C0,Xi-Tiger boss fight,19440,,,,pending
+sub_3DFD2,Xi-Tiger boss fight,19620,,,,pending
+sub_3E014,Xi-Tiger boss fight,19620,,,,pending
+sub_3E02E,Xi-Tiger boss fight,19620,,,,pending
+sub_D594,Xi-Tiger boss fight,19800,,,,pending
+sub_3E042,Xi-Tiger boss fight,19800,,,,pending
+sub_1782,Stage 10,20340,,,,pending
+sub_D90E,Stage 10,20340,,,,pending
+sub_D9D2,Stage 10,20340,,,,pending
+sub_D9DC,Stage 10,20340,,,,pending
+sub_DE2E,Stage 10,20340,,,,pending
+sub_102EC,Stage 10,20340,,,,pending
+sub_11938,Stage 10,20340,,,,pending
+sub_11FBE,Stage 10,20340,,,,pending
+sub_1458A,Stage 10,20340,,,,pending
+sub_2DAB0,Stage 10,20340,,,,pending
+sub_2DBDA,Stage 10,20340,,,,pending
+sub_2DE70,Stage 10,20340,,,,pending
+sub_2DF7E,Stage 10,20340,,,,pending
+sub_2DF8E,Stage 10,20340,,,,pending
+sub_2E6C2,Stage 10,20340,,,,pending
+sub_2E6E2,Stage 10,20340,,,,pending
+sub_2E6EE,Stage 10,20340,,,,pending
+sub_2E770,Stage 10,20340,,,,pending
+sub_2E7CC,Stage 10,20340,,,,pending
+sub_2E806,Stage 10,20340,,,,pending
+sub_2E81C,Stage 10,20340,,,,pending
+sub_2F504,Stage 10,20340,,,,pending
+sub_2F516,Stage 10,20340,,,,pending
+sub_2F580,Stage 10,20340,,,,pending
+sub_14B5A,Stage 10,20520,,,,pending
+sub_14D08,Stage 10,20520,,,,pending
+sub_14D50,Stage 10,20520,,,,pending
+sub_2CF70,Stage 10,20520,,,,pending
+sub_2E048,Stage 10,20520,,,,pending
+sub_2E09A,Stage 10,20520,,,,pending
+sub_2E0BE,Stage 10,20520,,,,pending
+sub_2E11E,Stage 10,20520,,,,pending
+sub_2E13A,Stage 10,20520,,,,pending
+sub_2E16E,Stage 10,20520,,,,pending
+sub_2E1B0,Stage 10,20520,,,,pending
+sub_2E1DA,Stage 10,20520,,,,pending
+sub_2E1EC,Stage 10,20520,,,,pending
+sub_2E242,Stage 10,20520,,,,pending
+sub_2E282,Stage 10,20520,,,,pending
+sub_2E73C,Stage 10,20520,,,,pending
+sub_2E752,Stage 10,20520,,,,pending
+sub_D9F2,Deep Strider boss,20700,,,,pending
+sub_14D54,Deep Strider boss,20700,,,,pending
+sub_2E85C,Deep Strider boss,20700,,,,pending
+sub_2E8AA,Deep Strider boss,20700,,,,pending
+sub_14D3E,Deep Strider boss,20880,,,,pending
+sub_2A804,Deep Strider boss,20880,,,,pending
+sub_343DE,Deep Strider boss,20880,,,,pending
+sub_3E582,Deep Strider boss,20880,,,,pending
+sub_3E5F4,Deep Strider boss,20880,,,,pending
+sub_3E5FC,Deep Strider boss,20880,,,,pending
+sub_3E60A,Deep Strider boss,20880,,,,pending
+sub_3E700,Deep Strider boss,20880,,,,pending
+sub_3EDAA,Deep Strider boss,20880,,,,pending
+sub_3EDFC,Deep Strider boss,20880,,,,pending
+sub_3EE1A,Deep Strider boss,20880,,,,pending
+sub_3EED8,Deep Strider boss,20880,,,,pending
+sub_14DF8,Deep Strider boss,21060,,,,pending
+sub_14EAA,Deep Strider boss,21060,,,,pending
+sub_3E776,Deep Strider boss,21060,,,,pending
+sub_3E7F2,Deep Strider boss,21060,,,,pending
+sub_DA22,Deep Strider boss,21240,,,,pending
+sub_14CB2,Deep Strider boss,21240,,,,pending
+sub_14CEC,Deep Strider boss,21240,,,,pending
+sub_14D8A,Deep Strider boss,21240,,,,pending
+sub_14DFC,Deep Strider boss,21240,,,,pending
+sub_14EAE,Deep Strider boss,21240,,,,pending
+sub_14EB2,Deep Strider boss,21240,,,,pending
+sub_3E7E8,Deep Strider boss,21240,,,,pending
+sub_3EBCA,Deep Strider boss,21420,,,,pending
+sub_3EC7A,Deep Strider boss,21420,,,,pending
+sub_DA34,Deep Strider boss,21600,,,,pending
+sub_3ECB6,Deep Strider boss,21600,,,,pending
+sub_3ED18,Deep Strider boss,21600,,,,pending
+sub_DA40,Stage 11,21780,,,,pending
+sub_DA44,Stage 11,21780,,,,pending
+sub_11FE2,Stage 11,21780,,,,pending
+sub_14CCE,Stage 11,21780,,,,pending
+sub_14CE8,Stage 11,21780,,,,pending
+sub_1C304,Stage 11,21780,,,,pending
+sub_30D90,Stage 11,21780,,,,pending
+sub_30DCA,Stage 11,21780,,,,pending
+sub_30E1C,Stage 11,21780,,,,pending
+sub_30E3C,Stage 11,21780,,,,pending
+sub_30FA6,Stage 11,21780,,,,pending
+sub_30FB6,Stage 11,21780,,,,pending
+sub_31076,Stage 11,21780,,,,pending
+sub_30E86,Stage 11,21960,,,,pending
+sub_30EA2,Stage 11,21960,,,,pending
+sub_DA5A,Gusthead boss,22140,,,,pending
+sub_2E948,Gusthead boss,22140,,,,pending
+sub_2E99E,Gusthead boss,22140,,,,pending
+sub_310E6,Gusthead boss,22140,,,,pending
+sub_310FC,Gusthead boss,22140,,,,pending
+sub_3110E,Gusthead boss,22140,,,,pending
+sub_3116E,Gusthead boss,22140,,,,pending
+sub_31194,Gusthead boss,22140,,,,pending
+sub_311AE,Gusthead boss,22140,,,,pending
+sub_311CE,Gusthead boss,22140,,,,pending
+sub_31208,Gusthead boss,22140,,,,pending
+sub_31232,Gusthead boss,22140,,,,pending
+sub_3130E,Gusthead boss,22140,,,,pending
+sub_31352,Gusthead boss,22140,,,,pending
+sub_313C4,Gusthead boss,22140,,,,pending
+sub_3F1A0,Gusthead boss,22320,,,,pending
+sub_3F1A4,Gusthead boss,22320,,,,pending
+sub_3F2B8,Gusthead boss,22320,,,,pending
+sub_3F2D0,Gusthead boss,22320,,,,pending
+sub_3F3C8,Gusthead boss,22320,,,,pending
+sub_3F3D4,Gusthead boss,22320,,,,pending
+sub_3F3F6,Gusthead boss,22320,,,,pending
+sub_3F44C,Gusthead boss,22320,,,,pending
+sub_3F48A,Gusthead boss,22320,,,,pending
+sub_3F6AE,Gusthead boss,22320,,,,pending
+sub_40070,Gusthead boss,22320,,,,pending
+sub_405A8,Gusthead boss,22320,,,,pending
+sub_4065A,Gusthead boss,22320,,,,pending
+sub_15CAC,Gusthead boss,22500,,,,pending
+sub_3F4C2,Gusthead boss,22500,,,,pending
+sub_3F4EA,Gusthead boss,22680,,,,pending
+sub_3F564,Gusthead boss,22680,,,,pending
+sub_3F5EE,Gusthead boss,22680,,,,pending
+sub_3F62C,Gusthead boss,22680,,,,pending
+sub_3F6D2,Gusthead boss,22680,,,,pending
+sub_4019A,Gusthead boss,22680,,,,pending
+sub_4022E,Gusthead boss,22680,,,,pending
+sub_4051C,Gusthead boss,22680,,,,pending
+sub_4058A,Gusthead boss,22680,,,,pending
+sub_3F6F0,Gusthead boss,22860,,,,pending
+sub_3F718,Gusthead boss,22860,,,,pending
+sub_4028E,Gusthead boss,22860,,,,pending
+sub_402F8,Gusthead boss,22860,,,,pending
+sub_40328,Gusthead boss,22860,,,,pending
+sub_4036A,Gusthead boss,22860,,,,pending
+sub_40396,Gusthead boss,22860,,,,pending
+sub_DA94,Gusthead boss,23040,,,,pending
+sub_403D8,Gusthead boss,23040,,,,pending
+sub_4076E,Gusthead boss,23040,,,,pending
+sub_3FF00,Gusthead boss,23220,,,,pending
+sub_3FF1E,Gusthead boss,23220,,,,pending
+sub_40018,Gusthead boss,23220,,,,pending
+sub_40026,Gusthead boss,23220,,,,pending
+sub_DAA4,Gusthead boss,23400,,,,pending
+sub_3FEF2,Gusthead boss,23400,,,,pending
+sub_3FFE4,Gusthead boss,23400,,,,pending
+sub_40040,Gusthead boss,23400,,,,pending
+sub_40060,Gusthead boss,23400,,,,pending
+sub_DAF4,Stage 12,23580,,,,pending
+sub_E2F6,Stage 12,23580,,,,pending
+sub_12006,Stage 12,23580,,,,pending
+sub_2A7AE,Stage 12,23580,,,,pending
+sub_2A824,Stage 12,23580,,,,pending
+sub_2A834,Stage 12,23580,,,,pending
+sub_2E2BE,Stage 12,23580,,,,pending
+sub_2E30C,Stage 12,23580,,,,pending
+sub_2E328,Stage 12,23580,,,,pending
+sub_2E358,Stage 12,23580,,,,pending
+sub_2E376,Stage 12,23580,,,,pending
+sub_31254,Stage 12,23580,,,,pending
+sub_3133A,Stage 12,23580,,,,pending
+sub_31F8E,Stage 12,23580,,,,pending
+sub_DB2E,Ship start (Stage 12),23760,,,,pending
+sub_DB64,Ship start (Stage 12),23760,,,,pending
+sub_DB7E,Ship start (Stage 12),23760,,,,pending
+sub_1239A,Ship start (Stage 12),23760,,,,pending
+sub_142EC,Ship start (Stage 12),23760,,,,pending
+sub_14304,Ship start (Stage 12),23760,,,,pending
+sub_2A7F6,Ship start (Stage 12),23760,,,,pending
+sub_2CECA,Ship start (Stage 12),23760,,,,pending
+sub_2CEDE,Ship start (Stage 12),23760,,,,pending
+sub_2CEF6,Ship start (Stage 12),23760,,,,pending
+sub_2E3A2,Ship start (Stage 12),23760,,,,pending
+sub_2E3B0,Ship start (Stage 12),23760,,,,pending
+sub_2F5C0,Ship start (Stage 12),23760,,,,pending
+sub_2F5E8,Ship start (Stage 12),23760,,,,pending
+sub_2F90E,Ship start (Stage 12),23760,,,,pending
+sub_2F93E,Ship start (Stage 12),23760,,,,pending
+sub_2F9E2,Ship start (Stage 12),23940,,,,pending
+sub_2FA3E,Ship start (Stage 12),23940,,,,pending
+sub_11170,Ship battle (Stage 12),24300,,,,pending
+sub_13142,Ship battle (Stage 12),24300,,,,pending
+sub_1320C,Ship battle (Stage 12),24300,,,,pending
+sub_2F62E,Ship battle (Stage 12),24300,,,,pending
+sub_2F672,Ship battle (Stage 12),24300,,,,pending
+sub_2F73E,Ship battle (Stage 12),24300,,,,pending
+sub_2F790,Ship battle (Stage 12),24300,,,,pending
+sub_2F7D6,Ship battle (Stage 12),24300,,,,pending
+sub_2F894,Ship battle (Stage 12),24300,,,,pending
+sub_2FB10,Ship battle (Stage 12),24300,,,,pending
+sub_2FB4A,Ship battle (Stage 12),24300,,,,pending
+sub_2FBEA,Ship battle (Stage 12),24300,,,,pending
+sub_2E4DC,Ship battle (Stage 12),24480,,,,pending
+sub_2E4FE,Ship battle (Stage 12),24480,,,,pending
+sub_2E518,Ship battle (Stage 12),24480,,,,pending
+sub_2E524,Ship battle (Stage 12),24480,,,,pending
+sub_2E5A8,Ship battle (Stage 12),24480,,,,pending
+sub_2F82E,Ship battle (Stage 12),24480,,,,pending
+sub_2E43A,Ship battle (Stage 12),24660,,,,pending
+sub_2E540,Ship battle (Stage 12),24660,,,,pending
+sub_2E54C,Ship battle (Stage 12),24660,,,,pending
+sub_2E562,Ship battle (Stage 12),24660,,,,pending
+sub_2E58E,Ship battle (Stage 12),24660,,,,pending
+sub_2E59A,Ship battle (Stage 12),24660,,,,pending
+sub_2E5EA,Ship battle (Stage 12),24660,,,,pending
+sub_2E61A,Ship battle (Stage 12),24660,,,,pending
+sub_2E634,Ship battle (Stage 12),24660,,,,pending
+sub_2BFA6,Ship battle (Stage 12),25020,,,,pending
+sub_2E490,Ship battle (Stage 12),25020,,,,pending
+sub_2E672,Ship battle (Stage 12),25020,,,,pending
+sub_DBA0,Sharpsteel boss,25740,,,,pending
+sub_2E5E2,Sharpsteel boss,25920,,,,pending
+sub_34874,Sharpsteel boss,25920,,,,pending
+sub_47C1C,Sharpsteel boss,25920,,,,pending
+sub_47C96,Sharpsteel boss,25920,,,,pending
+sub_47CA6,Sharpsteel boss,25920,,,,pending
+sub_47D94,Sharpsteel boss,25920,,,,pending
+sub_47DE8,Sharpsteel boss,25920,,,,pending
+sub_48690,Sharpsteel boss,25920,,,,pending
+sub_48820,Sharpsteel boss,25920,,,,pending
+sub_489F0,Sharpsteel boss,25920,,,,pending
+sub_48B84,Sharpsteel boss,25920,,,,pending
+sub_47E02,Sharpsteel boss,26100,,,,pending
+sub_48856,Sharpsteel boss,26100,,,,pending
+sub_48940,Sharpsteel boss,26100,,,,pending
+sub_47E36,Sharpsteel boss,26460,,,,pending
+sub_47E98,Sharpsteel boss,26460,,,,pending
+sub_47F3E,Sharpsteel boss,26460,,,,pending
+sub_47FA2,Sharpsteel boss,26460,,,,pending
+sub_47FCA,Sharpsteel boss,26460,,,,pending
+sub_486A4,Sharpsteel boss,26460,,,,pending
+sub_486E6,Sharpsteel boss,26460,,,,pending
+sub_4871A,Sharpsteel boss,26460,,,,pending
+sub_488A0,Sharpsteel boss,26460,,,,pending
+sub_2FB54,Sharpsteel boss,26640,,,,pending
+sub_2FB68,Sharpsteel boss,26640,,,,pending
+sub_47F02,Sharpsteel boss,26640,,,,pending
+sub_47F24,Sharpsteel boss,26640,,,,pending
+sub_47F9C,Sharpsteel boss,26640,,,,pending
+sub_481AC,Sharpsteel boss,26640,,,,pending
+sub_48802,Sharpsteel boss,26640,,,,pending
+sub_4879C,Sharpsteel boss,26820,,,,pending
+sub_3ADE,Ship desctruction,27180,,,,pending
+sub_3B4C,Ship desctruction,27180,,,,pending
+sub_DBBC,Ship desctruction,27180,,,,pending
+sub_10EC6,Ship desctruction,27180,,,,pending
+sub_2F868,Ship desctruction,27180,,,,pending
+sub_2F8B8,Ship desctruction,27180,,,,pending
+sub_47D80,Ship desctruction,27180,,,,pending
+sub_48F62,Ship desctruction,27180,,,,pending
+sub_DBCE,Ship desctruction,27360,,,,pending
+sub_DBF4,Ship desctruction,27360,,,,pending
+sub_DCEE,Teleport after ship desctruction,27540,,,,pending
+sub_10E14,Teleport after ship desctruction,27540,,,,pending
+sub_119C8,Teleport after ship desctruction,27540,,,,pending
+sub_16942,Teleport after ship desctruction,27540,,,,pending
+sub_2667C,Teleport after ship desctruction,27540,,,,pending
+sub_DCC0,Snake (Stage 13),27720,,,,pending
+sub_DD0E,Snake (Stage 13),27720,,,,pending
+sub_DD2E,Snake (Stage 13),27720,,,,pending
+sub_E34E,Snake (Stage 13),27720,,,,pending
+sub_1B784,Snake (Stage 13),27720,,,,pending
+sub_4079E,Snake (Stage 13),27720,,,,pending
+sub_40854,Snake (Stage 13),27720,,,,pending
+sub_2686,Snake (Stage 13),27900,,,,pending
+sub_81B4,Snake (Stage 13),27900,,,,pending
+sub_1202A,Snake (Stage 13),27900,,,,pending
+sub_267CA,Snake (Stage 13),27900,,,,pending
+sub_268D8,Snake (Stage 13),27900,,,,pending
+sub_268E8,Snake (Stage 13),27900,,,,pending
+sub_40942,Snake (Stage 13),27900,,,,pending
+sub_4096C,Snake (Stage 13),27900,,,,pending
+sub_4098C,Snake (Stage 13),27900,,,,pending
+sub_409F0,Snake (Stage 13),27900,,,,pending
+sub_40AF6,Snake (Stage 13),27900,,,,pending
+sub_40B58,Snake (Stage 13),27900,,,,pending
+sub_40B9C,Snake (Stage 13),27900,,,,pending
+sub_40BAA,Snake (Stage 13),27900,,,,pending
+sub_40BFC,Snake (Stage 13),27900,,,,pending
+sub_40C82,Snake (Stage 13),27900,,,,pending
+sub_2BE60,Snake (Stage 13),28440,,,,pending
+sub_2BEF0,Snake (Stage 13),28440,,,,pending
+sub_2C100,Snake (Stage 13),28440,,,,pending
+sub_2C112,Snake (Stage 13),28440,,,,pending
+sub_2C15E,Snake (Stage 13),28440,,,,pending
+sub_2C17A,Snake (Stage 13),28440,,,,pending
+sub_2C1D6,Snake (Stage 13),28440,,,,pending
+sub_2C224,Snake (Stage 13),28440,,,,pending
+sub_40A6E,Snake (Stage 13),28440,,,,pending
+sub_40AB8,Snake (Stage 13),28440,,,,pending
+sub_84BC8,Snake (Stage 13),28440,,,,pending
+sub_DD5E,Bugmax boss,28800,,,,pending
+sub_DDA6,Bugmax boss,28980,,,,pending
+sub_DDE8,Bugmax boss,28980,,,,pending
+sub_4BEBC,Bugmax boss,28980,,,,pending
+sub_4BEF0,Bugmax boss,28980,,,,pending
+sub_4C43C,Bugmax boss,28980,,,,pending
+sub_4C5E6,Bugmax boss,28980,,,,pending
+sub_4DB7C,Bugmax boss,28980,,,,pending
+sub_4C602,Bugmax boss,29340,,,,pending
+sub_4C614,Bugmax boss,29340,,,,pending
+sub_4C644,Bugmax boss,29340,,,,pending
+sub_4C65E,Bugmax boss,29340,,,,pending
+sub_4C682,Bugmax boss,29340,,,,pending
+sub_4C6BE,Bugmax boss,29340,,,,pending
+sub_4C734,Bugmax boss,29340,,,,pending
+sub_4D444,Bugmax boss,29340,,,,pending
+sub_4D462,Bugmax boss,29340,,,,pending
+sub_4D47E,Bugmax boss,29340,,,,pending
+sub_4D53C,Bugmax boss,29340,,,,pending
+sub_4D8D4,Bugmax boss,29340,,,,pending
+sub_4D8FA,Bugmax boss,29340,,,,pending
+sub_4DA22,Bugmax boss,29340,,,,pending
+sub_2C280,Bugmax boss,29520,,,,pending
+sub_2C2A0,Bugmax boss,29520,,,,pending
+sub_2C2AC,Bugmax boss,29520,,,,pending
+sub_4C008,Bugmax boss,29520,,,,pending
+sub_4C778,Bugmax boss,29520,,,,pending
+sub_4C794,Bugmax boss,29520,,,,pending
+sub_4C7DC,Bugmax boss,29520,,,,pending
+sub_4C806,Bugmax boss,29520,,,,pending
+sub_4C82C,Bugmax boss,29520,,,,pending
+sub_4C884,Bugmax boss,29520,,,,pending
+sub_2C32C,Bugmax boss,29700,,,,pending
+sub_4C09A,Bugmax boss,29700,,,,pending
+sub_4C8C4,Bugmax boss,29700,,,,pending
+sub_4C8DE,Bugmax boss,29700,,,,pending
+sub_4C954,Bugmax boss,29700,,,,pending
+sub_4D1FE,Bugmax boss,29700,,,,pending
+sub_4D228,Bugmax boss,29700,,,,pending
+sub_4D27E,Bugmax boss,29700,,,,pending
+sub_4D304,Bugmax boss,29700,,,,pending
+sub_4D3C4,Bugmax boss,29700,,,,pending
+sub_4DBA4,Bugmax boss,29700,,,,pending
+sub_4DBB0,Bugmax boss,29700,,,,pending
+sub_4DCDC,Bugmax boss,29700,,,,pending
+sub_17B5E,Bugmax boss,29880,,,,pending
+sub_18906,Bugmax boss,29880,,,,pending
+sub_4D374,Bugmax boss,29880,,,,pending
+sub_4D380,Bugmax boss,29880,,,,pending
+sub_4D39E,Bugmax boss,29880,,,,pending
+sub_4DB50,Bugmax boss,29880,,,,pending
+sub_4DBDE,Bugmax boss,29880,,,,pending
+sub_4030,Stage 14,30420,,,,pending
+sub_41A8,Stage 14,30420,,,,pending
+sub_4360,Stage 14,30420,,,,pending
+sub_DE44,Stage 14,30420,,,,pending
+sub_12046,Stage 14,30420,,,,pending
+sub_19AE4,Stage 14,30420,,,,pending
+sub_19BF6,Stage 14,30420,,,,pending
+sub_19C30,Stage 14,30420,,,,pending
+sub_32584,Victor boss,30780,,,,pending
+sub_325C0,Victor boss,30780,,,,pending
+sub_326A0,Victor boss,30780,,,,pending
+sub_32C6C,Victor boss,30780,,,,pending
+sub_32CD2,Victor boss,30780,,,,pending
+sub_32CE4,Victor boss,30780,,,,pending
+sub_32CF6,Victor boss,30780,,,,pending
+sub_32D12,Victor boss,30780,,,,pending
+sub_314C2,Victor boss,30960,,,,pending
+sub_32344,Victor boss,30960,,,,pending
+sub_32382,Victor boss,30960,,,,pending
+sub_326D8,Victor boss,30960,,,,pending
+sub_32AFE,Victor boss,30960,,,,pending
+sub_32B12,Victor boss,30960,,,,pending
+sub_32B32,Victor boss,30960,,,,pending
+sub_32B92,Victor boss,30960,,,,pending
+sub_17052,Victor boss,31140,,,,pending
+sub_32DCC,Victor boss,31320,,,,pending
+sub_3FF46,Victor boss,31320,,,,pending
+sub_DEA2,Stage 15,31860,,,,pending
+sub_DEAA,Stage 15,31860,,,,pending
+sub_4368,Sunset Sting boss,32040,,,,pending
+sub_DEEE,Sunset Sting boss,32040,,,,pending
+sub_1035A,Sunset Sting boss,32040,,,,pending
+sub_30D20,Sunset Sting boss,32040,,,,pending
+sub_1662,Sunset Sting boss,32220,,,,pending
+sub_42882,Sunset Sting boss,32220,,,,pending
+sub_428A0,Sunset Sting boss,32220,,,,pending
+sub_428E0,Sunset Sting boss,32220,,,,pending
+sub_42A10,Sunset Sting boss,32220,,,,pending
+sub_42A8C,Sunset Sting boss,32220,,,,pending
+sub_42ADE,Sunset Sting boss,32220,,,,pending
+sub_42BE4,Sunset Sting boss,32220,,,,pending
+sub_42C74,Sunset Sting boss,32220,,,,pending
+sub_432C6,Sunset Sting boss,32220,,,,pending
+sub_432D0,Sunset Sting boss,32220,,,,pending
+sub_4333A,Sunset Sting boss,32220,,,,pending
+sub_43368,Sunset Sting boss,32220,,,,pending
+sub_43382,Sunset Sting boss,32220,,,,pending
+sub_43506,Sunset Sting boss,32220,,,,pending
+sub_43566,Sunset Sting boss,32220,,,,pending
+sub_43582,Sunset Sting boss,32220,,,,pending
+sub_DF26,Sunset Sting boss,32400,,,,pending
+sub_428B4,Sunset Sting boss,32400,,,,pending
+sub_42CC0,Sunset Sting boss,32400,,,,pending
+sub_42EC8,Sunset Sting boss,32400,,,,pending
+sub_42F6C,Sunset Sting boss,32400,,,,pending
+sub_42F82,Sunset Sting boss,32400,,,,pending
+sub_43430,Sunset Sting boss,32400,,,,pending
+sub_434D8,Sunset Sting boss,32400,,,,pending
+sub_4361A,Sunset Sting boss,32400,,,,pending
+sub_43738,Sunset Sting boss,32400,,,,pending
+sub_43858,Sunset Sting boss,32400,,,,pending
+sub_4389E,Sunset Sting boss,32400,,,,pending
+sub_438AE,Sunset Sting boss,32400,,,,pending
+sub_827F0,Sunset Sting boss,32400,,,,pending
+sub_434E2,Sunset Sting boss,32580,,,,pending
+sub_43816,Sunset Sting boss,32580,,,,pending
+sub_8399A,Sunset Sting boss,32760,,,,pending
+sub_4310C,Sunset Sting boss,32940,,,,pending
+sub_431A4,Sunset Sting boss,32940,,,,pending
+sub_431C2,Sunset Sting boss,32940,,,,pending
+sub_434F6,Sunset Sting boss,32940,,,,pending
+sub_43830,Sunset Sting boss,32940,,,,pending
+sub_43226,Sunset Sting boss,33300,,,,pending
+sub_43294,Sunset Sting boss,33300,,,,pending
+sub_432B0,Sunset Sting boss,33300,,,,pending
+sub_DF34,Sunset Sting boss,33480,,,,pending
+sub_DF3C,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_DF5E,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_DF6C,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_1019A,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_1119E,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_19D4E,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_4398C,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_439FC,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_43B28,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_43B84,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_43FE4,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_43FEA,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_440D0,Viblack mini-boss (Stage 16),33660,,,,pending
+sub_DF92,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_12090,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_14416,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_16928,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D77E,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D7AE,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D7C8,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D802,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D834,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D844,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D874,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D886,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_2D9BA,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_43BE2,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_43C46,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_442C2,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_44368,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_DFD2,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_DFDE,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_43D62,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_43DAA,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_43FBC,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_43FC4,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_44100,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_44128,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_4427C,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_443A4,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_444C2,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_44628,Viblack mini-boss (Stage 16),34020,,,,pending
+sub_E056,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_E0A2,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_E110,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_2D8CC,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_43DC0,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_43DDE,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_43E44,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_43FD4,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_4418E,Viblack mini-boss (Stage 16),34200,,,,pending
+sub_43EF0,Back Stringer boss,34380,,,,pending
+sub_43F66,Back Stringer boss,34560,,,,pending
+sub_343E6,Back Stringer boss,34740,,,,pending
+sub_43F74,Back Stringer boss,34740,,,,pending
+sub_441EC,Back Stringer boss,34740,,,,pending
+sub_446AE,Back Stringer boss,34740,,,,pending
+sub_44740,Back Stringer boss,34740,,,,pending
+sub_4475A,Back Stringer boss,34740,,,,pending
+sub_4484A,Back Stringer boss,34740,,,,pending
+sub_44F50,Back Stringer boss,34740,,,,pending
+sub_44F60,Back Stringer boss,34740,,,,pending
+sub_44FBE,Back Stringer boss,34740,,,,pending
+sub_44FDA,Back Stringer boss,34740,,,,pending
+sub_4522C,Back Stringer boss,34740,,,,pending
+sub_4526C,Back Stringer boss,34740,,,,pending
+sub_45410,Back Stringer boss,34740,,,,pending
+sub_83990,Back Stringer boss,34920,,,,pending
+sub_4506E,Back Stringer boss,35100,,,,pending
+sub_45696,Back Stringer boss,35100,,,,pending
+sub_44E6E,Back Stringer boss,35640,,,,pending
+sub_44ECC,Back Stringer boss,35640,,,,pending
+sub_45A90,Back Stringer boss,35640,,,,pending
+sub_44F12,Back Stringer boss,35820,,,,pending
+sub_E11C,Epsilon1 intro (Stage 17),36000,,,,pending
+sub_195C,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_415E,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_E1C0,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_E1F2,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_11046,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_46D68,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_46F62,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_46F80,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_46FE0,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_47068,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_472C0,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_472D8,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_472E4,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_472F6,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_4734A,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_47374,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_47382,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_4739E,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_473C8,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_47440,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_47B8E,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_47BA2,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_47BD4,Epsilon1 intro (Stage 17),36180,,,,pending
+sub_470BC,Epsilon1 intro (Stage 17),36540,,,,pending
+sub_47BEA,Epsilon1 intro (Stage 17),36540,,,,pending
+sub_E1D6,Epsilon1 boss,36900,,,,pending
+sub_E1E8,Epsilon1 boss,36900,,,,pending
+sub_47C0E,Epsilon1 boss,36900,,,,pending
+sub_45AD0,Epsilon1 boss,37080,,,,pending
+sub_45CE4,Epsilon1 boss,37080,,,,pending
+sub_45D70,Epsilon1 boss,37080,,,,pending
+sub_45D8E,Epsilon1 boss,37080,,,,pending
+sub_45D9A,Epsilon1 boss,37080,,,,pending
+sub_46016,Epsilon1 boss,37080,,,,pending
+sub_46032,Epsilon1 boss,37080,,,,pending
+sub_461A6,Epsilon1 boss,37080,,,,pending
+sub_461BC,Epsilon1 boss,37080,,,,pending
+sub_4607E,Epsilon1 boss,37260,,,,pending
+sub_460AA,Epsilon1 boss,37260,,,,pending
+sub_460D6,Epsilon1 boss,37260,,,,pending
+sub_46102,Epsilon1 boss,37260,,,,pending
+sub_46218,Epsilon1 boss,37260,,,,pending
+sub_4624A,Epsilon1 boss,37260,,,,pending
+sub_46B64,Epsilon1 boss,37260,,,,pending
+sub_46BF2,Epsilon1 boss,37260,,,,pending
+sub_46C08,Epsilon1 boss,37260,,,,pending
+sub_46C1A,Epsilon1 boss,37260,,,,pending
+sub_46C2C,Epsilon1 boss,37260,,,,pending
+sub_46C5C,Epsilon1 boss,37260,,,,pending
+sub_46C8E,Epsilon1 boss,37260,,,,pending
+sub_46CA6,Epsilon1 boss,37260,,,,pending
+sub_46CB8,Epsilon1 boss,37260,,,,pending
+sub_47906,Epsilon1 boss,37260,,,,pending
+sub_47A0E,Epsilon1 boss,37260,,,,pending
+sub_47B08,Epsilon1 boss,37260,,,,pending
+sub_46264,Epsilon1 boss,37440,,,,pending
+sub_4627A,Epsilon1 boss,37440,,,,pending
+sub_4640A,Epsilon1 boss,37440,,,,pending
+sub_4641A,Epsilon1 boss,37440,,,,pending
+sub_46432,Epsilon1 boss,37440,,,,pending
+sub_4645A,Epsilon1 boss,37440,,,,pending
+sub_4647E,Epsilon1 boss,37440,,,,pending
+sub_46496,Epsilon1 boss,37440,,,,pending
+sub_46674,Epsilon1 boss,37440,,,,pending
+sub_46B8A,Epsilon1 boss,37440,,,,pending
+sub_477F8,Epsilon1 boss,37440,,,,pending
+sub_47832,Epsilon1 boss,37440,,,,pending
+sub_478C2,Epsilon1 boss,37440,,,,pending
+sub_46094,Epsilon1 boss,37620,,,,pending
+sub_460C0,Epsilon1 boss,37620,,,,pending
+sub_464AE,Epsilon1 boss,37620,,,,pending
+sub_464BE,Epsilon1 boss,37620,,,,pending
+sub_464D6,Epsilon1 boss,37620,,,,pending
+sub_464FE,Epsilon1 boss,37620,,,,pending
+sub_4652E,Epsilon1 boss,37620,,,,pending
+sub_46560,Epsilon1 boss,37800,,,,pending
+sub_46590,Epsilon1 boss,37800,,,,pending
+sub_465E0,Epsilon1 boss,37800,,,,pending
+sub_4662E,Epsilon1 boss,37800,,,,pending
+sub_46692,Epsilon1 boss,37800,,,,pending
+sub_4669C,Epsilon1 boss,37800,,,,pending
+sub_46710,Epsilon1 boss,37800,,,,pending
+sub_4673E,Epsilon1 boss,37800,,,,pending
+sub_4676C,Epsilon1 boss,37800,,,,pending
+sub_4679C,Epsilon1 boss,37800,,,,pending
+sub_470C2,Epsilon1 boss,37800,,,,pending
+sub_4724E,Epsilon1 boss,37800,,,,pending
+sub_47486,Epsilon1 boss,37800,,,,pending
+sub_47508,Epsilon1 boss,37800,,,,pending
+sub_47532,Epsilon1 boss,37800,,,,pending
+sub_475C4,Epsilon1 boss,37800,,,,pending
+sub_475FA,Epsilon1 boss,37800,,,,pending
+sub_4765A,Epsilon1 boss,37800,,,,pending
+sub_4766C,Epsilon1 boss,37800,,,,pending
+sub_476F4,Epsilon1 boss,37800,,,,pending
+sub_477D8,Epsilon1 boss,38160,,,,pending
+sub_2A70A,Epsilon1 boss,38340,,,,pending
+sub_463D2,Epsilon1 boss,38340,,,,pending
+sub_468A0,Epsilon1 boss,38340,,,,pending
+sub_468BE,Epsilon1 boss,38340,,,,pending
+sub_46912,Epsilon1 boss,38340,,,,pending
+sub_46986,Epsilon1 boss,38340,,,,pending
+sub_469B0,Epsilon1 boss,38340,,,,pending
+sub_469D6,Epsilon1 boss,38340,,,,pending
+sub_46A36,Epsilon1 boss,38340,,,,pending
+sub_46CCC,Epsilon1 boss,38340,,,,pending
+sub_46CF0,Epsilon1 boss,38340,,,,pending
+sub_46D04,Epsilon1 boss,38340,,,,pending
+sub_46D5C,Epsilon1 boss,38340,,,,pending
+sub_47146,Epsilon1 boss,38340,,,,pending
+sub_4765C,Epsilon1 boss,38340,,,,pending
+sub_47700,Epsilon1 boss,38340,,,,pending
+sub_47754,Epsilon1 boss,38340,,,,pending
+sub_4779E,Epsilon1 boss,38340,,,,pending
+sub_46A54,Epsilon1 boss,38520,,,,pending
+sub_46A80,Epsilon1 boss,38520,,,,pending
+sub_46A92,Epsilon1 boss,38700,,,,pending
+sub_46ABC,Epsilon1 boss,38700,,,,pending
+sub_46AD8,Epsilon1 boss,38700,,,,pending
+sub_46AF2,Epsilon1 boss,38700,,,,pending
+sub_460EC,Epsilon1 boss,38880,,,,pending
+sub_46118,Epsilon1 boss,38880,,,,pending
+sub_46B12,Epsilon1 boss,38880,,,,pending
+sub_46B1E,Epsilon1 boss,38880,,,,pending
+sub_46B2A,Epsilon1 boss,38880,,,,pending
+sub_46B3C,Epsilon1 boss,38880,,,,pending
+sub_E256,Planet cutscene,39420,,,,pending
+sub_46B5A,Planet cutscene,39420,,,,pending
+sub_769A,Planet cutscene,40320,,,,pending
+sub_77BA,Planet cutscene,40320,,,,pending
+sub_81C8,Planet cutscene,40320,,,,pending
+sub_81DE,Planet cutscene,40320,,,,pending
+sub_81EC,Planet cutscene,40320,,,,pending
+sub_8206,Planet cutscene,40320,,,,pending
+sub_816E,Planet cutscene,40500,,,,pending
+sub_8182,Planet cutscene,40680,,,,pending
+sub_83A4,Stage 18,41220,,,,pending
+sub_E42C,Stage 18,41220,,,,pending
+sub_E4DE,Stage 18,41220,,,,pending
+sub_E67A,Stage 18,41220,,,,pending
+sub_10026,Stage 18,41220,,,,pending
+sub_11AF4,Stage 18,41220,,,,pending
+sub_120CC,Stage 18,41220,,,,pending
+sub_124AA,Stage 18,41220,,,,pending
+sub_2FED4,Stage 18,41220,,,,pending
+sub_2FF1C,Stage 18,41220,,,,pending
+sub_2FFE0,Stage 18,41220,,,,pending
+sub_2FFE4,Stage 18,41220,,,,pending
+sub_3015C,Stage 18,41220,,,,pending
+sub_30230,Stage 18,41220,,,,pending
+sub_30288,Stage 18,41220,,,,pending
+sub_303F0,Stage 18,41220,,,,pending
+sub_30402,Stage 18,41220,,,,pending
+sub_30438,Stage 18,41220,,,,pending
+sub_3048C,Stage 18,41220,,,,pending
+sub_30492,Stage 18,41220,,,,pending
+sub_304A4,Stage 18,41220,,,,pending
+sub_304A8,Stage 18,41220,,,,pending
+sub_304B0,Stage 18,41220,,,,pending
+sub_10894,Stage 18,41400,,,,pending
+sub_E4FC,Stage 18,41580,,,,pending
+sub_2D4B2,Stage 18,41580,,,,pending
+sub_E512,Destroyer-MK2 boss,41760,,,,pending
+sub_10044,Destroyer-MK2 boss,41760,,,,pending
+sub_1A39C,Destroyer-MK2 boss,41760,,,,pending
+sub_2FDAA,Destroyer-MK2 boss,41760,,,,pending
+sub_14CD6,Destroyer-MK2 boss,41940,,,,pending
+sub_14DD6,Destroyer-MK2 boss,41940,,,,pending
+sub_14DF0,Destroyer-MK2 boss,41940,,,,pending
+sub_14E04,Destroyer-MK2 boss,41940,,,,pending
+sub_4BD52,Destroyer-MK2 boss,41940,,,,pending
+sub_4BDFE,Destroyer-MK2 boss,41940,,,,pending
+sub_4A84E,Destroyer-MK2 boss,42120,,,,pending
+sub_4A938,Destroyer-MK2 boss,42120,,,,pending
+sub_4AB38,Destroyer-MK2 boss,42120,,,,pending
+sub_4AB44,Destroyer-MK2 boss,42120,,,,pending
+sub_4AB70,Destroyer-MK2 boss,42120,,,,pending
+sub_4AB90,Destroyer-MK2 boss,42120,,,,pending
+sub_4ABC6,Destroyer-MK2 boss,42120,,,,pending
+sub_4ABFC,Destroyer-MK2 boss,42120,,,,pending
+sub_4ACEA,Destroyer-MK2 boss,42120,,,,pending
+sub_4ADE0,Destroyer-MK2 boss,42120,,,,pending
+sub_4BBF0,Destroyer-MK2 boss,42120,,,,pending
+sub_4BC44,Destroyer-MK2 boss,42120,,,,pending
+sub_4AC12,Destroyer-MK2 boss,42300,,,,pending
+sub_4AC7C,Destroyer-MK2 boss,42300,,,,pending
+sub_E54E,Destroyer-MK2 boss,42480,,,,pending
+sub_4AC30,Destroyer-MK2 boss,42480,,,,pending
+sub_4AC5A,Destroyer-MK2 boss,42480,,,,pending
+sub_4ACAC,Destroyer-MK2 boss,42480,,,,pending
+sub_4AD4C,Destroyer-MK2 boss,42480,,,,pending
+sub_4AD9E,Destroyer-MK2 boss,42480,,,,pending
+sub_4AE0C,Destroyer-MK2 boss,42480,,,,pending
+sub_4AE42,Destroyer-MK2 boss,42480,,,,pending
+sub_4AE68,Destroyer-MK2 boss,42480,,,,pending
+sub_4AEAC,Destroyer-MK2 boss,42480,,,,pending
+sub_2B49E,Destroyer-MK2 boss,42660,,,,pending
+sub_4AEDE,Destroyer-MK2 boss,42660,,,,pending
+sub_4AEFA,Destroyer-MK2 boss,42660,,,,pending
+sub_4AF14,Destroyer-MK2 boss,42660,,,,pending
+sub_4AF4A,Destroyer-MK2 boss,42660,,,,pending
+sub_4AF5A,Destroyer-MK2 boss,42660,,,,pending
+sub_4AFE2,Destroyer-MK2 boss,42660,,,,pending
+sub_4B046,Destroyer-MK2 boss,42660,,,,pending
+sub_4B108,Destroyer-MK2 boss,42660,,,,pending
+sub_4B118,Destroyer-MK2 boss,42660,,,,pending
+sub_4B150,Destroyer-MK2 boss,42660,,,,pending
+sub_4B470,Destroyer-MK2 boss,42660,,,,pending
+sub_4B73C,Destroyer-MK2 boss,42660,,,,pending
+sub_4B74E,Destroyer-MK2 boss,42660,,,,pending
+sub_4B760,Destroyer-MK2 boss,42660,,,,pending
+sub_4B0E6,Destroyer-MK2 boss,42840,,,,pending
+sub_4B0F8,Destroyer-MK2 boss,42840,,,,pending
+sub_4B2E2,Destroyer-MK2 boss,42840,,,,pending
+sub_4B2F2,Destroyer-MK2 boss,42840,,,,pending
+sub_4B3FC,Destroyer-MK2 boss,42840,,,,pending
+sub_4B400,Destroyer-MK2 boss,42840,,,,pending
+sub_4B7A0,Destroyer-MK2 boss,42840,,,,pending
+sub_4BA50,Destroyer-MK2 boss,42840,,,,pending
+sub_4BA66,Destroyer-MK2 boss,42840,,,,pending
+sub_4BB2A,Destroyer-MK2 boss,42840,,,,pending
+sub_4BB3E,Destroyer-MK2 boss,42840,,,,pending
+sub_4BB56,Destroyer-MK2 boss,42840,,,,pending
+sub_4BB72,Destroyer-MK2 boss,42840,,,,pending
+sub_4B304,Destroyer-MK2 boss,43020,,,,pending
+sub_4B336,Destroyer-MK2 boss,43020,,,,pending
+sub_4BB0C,Destroyer-MK2 boss,43020,,,,pending
+sub_4BB1E,Destroyer-MK2 boss,43020,,,,pending
+sub_4BB88,Destroyer-MK2 boss,43020,,,,pending
+sub_4BE16,Destroyer-MK2 boss,43020,,,,pending
+sub_4B348,Destroyer-MK2 boss,43200,,,,pending
+sub_4B378,Destroyer-MK2 boss,43200,,,,pending
+sub_4B394,Destroyer-MK2 boss,43200,,,,pending
+sub_4B3B6,Destroyer-MK2 boss,43200,,,,pending
+sub_4B3D0,Destroyer-MK2 boss,43200,,,,pending
+sub_4B3EC,Destroyer-MK2 boss,43200,,,,pending
+sub_E562,Stage 19,43380,,,,pending
+sub_E570,Stage 19,43560,,,,pending
+sub_E5B6,Stage 19,43560,,,,pending
+sub_120F0,Stage 19,43560,,,,pending
+sub_E5D0,Jampan boss,43740,,,,pending
+sub_E5EA,Jampan boss,43740,,,,pending
+sub_E602,Jampan boss,43740,,,,pending
+sub_4912E,Jampan boss,43920,,,,pending
+sub_49138,Jampan boss,43920,,,,pending
+sub_49240,Jampan boss,43920,,,,pending
+sub_49258,Jampan boss,43920,,,,pending
+sub_49440,Jampan boss,43920,,,,pending
+sub_4953E,Jampan boss,43920,,,,pending
+sub_49570,Jampan boss,43920,,,,pending
+sub_495C6,Jampan boss,43920,,,,pending
+sub_4A368,Jampan boss,43920,,,,pending
+sub_4A3B8,Jampan boss,43920,,,,pending
+sub_4A3CA,Jampan boss,43920,,,,pending
+sub_4A3D8,Jampan boss,43920,,,,pending
+sub_4A6E0,Jampan boss,43920,,,,pending
+sub_4A6FA,Jampan boss,43920,,,,pending
+sub_4A78A,Jampan boss,43920,,,,pending
+sub_49610,Jampan boss,44100,,,,pending
+sub_4964A,Jampan boss,44100,,,,pending
+sub_4A0F8,Jampan boss,44100,,,,pending
+sub_4A432,Jampan boss,44100,,,,pending
+sub_4A464,Jampan boss,44100,,,,pending
+sub_4A478,Jampan boss,44100,,,,pending
+sub_4A48A,Jampan boss,44100,,,,pending
+sub_4A4A2,Jampan boss,44100,,,,pending
+sub_4A50C,Jampan boss,44100,,,,pending
+sub_49666,Jampan boss,44280,,,,pending
+sub_496AA,Jampan boss,44280,,,,pending
+sub_496CE,Jampan boss,44280,,,,pending
+sub_496EE,Jampan boss,44280,,,,pending
+sub_4A07E,Jampan boss,44280,,,,pending
+sub_4A08A,Jampan boss,44280,,,,pending
+sub_4A0C6,Jampan boss,44280,,,,pending
+sub_4A300,Jampan boss,44280,,,,pending
+sub_4A316,Jampan boss,44280,,,,pending
+sub_4A328,Jampan boss,44280,,,,pending
+sub_4A340,Jampan boss,44280,,,,pending
+sub_4A40C,Jampan boss,44280,,,,pending
+sub_4A53A,Jampan boss,44280,,,,pending
+sub_4A54E,Jampan boss,44280,,,,pending
+sub_4A56C,Jampan boss,44280,,,,pending
+sub_4A57E,Jampan boss,44280,,,,pending
+sub_E636,Jampan boss,44460,,,,pending
+sub_49930,Jampan boss,44460,,,,pending
+sub_49950,Jampan boss,44460,,,,pending
+sub_49992,Jampan boss,44460,,,,pending
+sub_4A5F0,Jampan boss,44460,,,,pending
+sub_49DB2,Jampan boss,44640,,,,pending
+sub_49E26,Jampan boss,44640,,,,pending
+sub_49E64,Jampan boss,44640,,,,pending
+sub_4A160,Jampan boss,44640,,,,pending
+sub_49E9A,Jampan boss,44820,,,,pending
+sub_49EB2,Jampan boss,44820,,,,pending
+sub_49ED2,Jampan boss,44820,,,,pending
+sub_49EEC,Jampan boss,44820,,,,pending
+sub_49F0E,Jampan boss,44820,,,,pending
+sub_4A034,Jampan boss,44820,,,,pending
+sub_4A044,Jampan boss,44820,,,,pending
+sub_4A078,Jampan boss,44820,,,,pending
+sub_49F22,Jampan boss,45000,,,,pending
+sub_49F40,Jampan boss,45000,,,,pending
+sub_4A018,Jampan boss,45000,,,,pending
+sub_49F88,Jampan boss,45180,,,,pending
+sub_49FEE,Jampan boss,45180,,,,pending
+sub_4A65E,Jampan boss,45180,,,,pending
+sub_E644,Jampan boss,45360,,,,pending
+sub_E656,Jampan boss,45360,,,,pending
+sub_19AB4,Jampan boss,45360,,,,pending
+sub_4A026,Jampan boss,45360,,,,pending
+sub_E7D8,7 forces intro (Stage 20),45540,,,,pending
+sub_E830,7 forces intro (Stage 20),45540,,,,pending
+sub_EFE8,7 forces intro (Stage 20),45540,,,,pending
+sub_11B9C,7 forces intro (Stage 20),45540,,,,pending
+sub_12112,7 forces intro (Stage 20),45540,,,,pending
+sub_19D6C,7 forces intro (Stage 20),45540,,,,pending
+sub_54B84,7 forces intro (Stage 20),45540,,,,pending
+sub_54BD8,7 forces intro (Stage 20),45540,,,,pending
+sub_54C3C,7 forces intro (Stage 20),45540,,,,pending
+sub_54C7E,7 forces intro (Stage 20),45540,,,,pending
+sub_54F24,7 forces intro (Stage 20),45540,,,,pending
+sub_54F48,7 forces intro (Stage 20),45720,,,,pending
+sub_54F6C,Valkirie force,45900,,,,pending
+sub_54F7E,Valkirie force,45900,,,,pending
+sub_54F9E,Valkirie force,45900,,,,pending
+sub_54FE4,Valkirie force,45900,,,,pending
+sub_55460,Valkirie force,45900,,,,pending
+sub_5575E,Valkirie force,45900,,,,pending
+sub_557E0,Valkirie force,45900,,,,pending
+sub_5604C,Valkirie force,45900,,,,pending
+sub_345B2,Valkirie force,46080,,,,pending
+sub_558B4,Valkirie force,46080,,,,pending
+sub_5590A,Valkirie force,46080,,,,pending
+sub_5605C,Valkirie force,46080,,,,pending
+sub_56190,Valkirie force,46080,,,,pending
+sub_561CA,Valkirie force,46080,,,,pending
+sub_56224,Valkirie force,46080,,,,pending
+sub_566B6,Valkirie force,46080,,,,pending
+sub_5671A,Valkirie force,46080,,,,pending
+sub_56924,Valkirie force,46080,,,,pending
+sub_5594E,Valkirie force,46260,,,,pending
+sub_55ED0,Valkirie force,46260,,,,pending
+sub_55EF0,Valkirie force,46260,,,,pending
+sub_55FE6,Valkirie force,46260,,,,pending
+sub_55FF2,Valkirie force,46260,,,,pending
+sub_55F34,Valkirie force,46440,,,,pending
+sub_55F96,Valkirie force,46440,,,,pending
+sub_2A092,Valkirie force,46620,,,,pending
+sub_55C8C,Valkirie force,46620,,,,pending
+sub_55CD6,Valkirie force,46620,,,,pending
+sub_55D74,Valkirie force,46620,,,,pending
+sub_55DD0,Valkirie force,46620,,,,pending
+sub_55EBA,Valkirie force,46620,,,,pending
+sub_5601A,Valkirie force,46620,,,,pending
+sub_56036,Valkirie force,46620,,,,pending
+sub_56942,Valkirie force,46620,,,,pending
+sub_E846,Medusa force,46800,,,,pending
+sub_EB9E,Medusa force,46800,,,,pending
+sub_54FFA,Medusa force,46800,,,,pending
+sub_5505A,Medusa force,46800,,,,pending
+sub_5547C,Medusa force,46800,,,,pending
+sub_55518,Medusa force,46800,,,,pending
+sub_555C8,Medusa force,46800,,,,pending
+sub_555DA,Medusa force,46800,,,,pending
+sub_55600,Medusa force,46800,,,,pending
+sub_5699C,Medusa force,46800,,,,pending
+sub_56A06,Medusa force,46800,,,,pending
+sub_56AE4,Medusa force,46800,,,,pending
+sub_56B16,Medusa force,46800,,,,pending
+sub_56EB4,Medusa force,46800,,,,pending
+sub_56EC4,Medusa force,46800,,,,pending
+sub_56FF6,Medusa force,46800,,,,pending
+sub_57044,Medusa force,46800,,,,pending
+sub_5707E,Medusa force,46800,,,,pending
+sub_570D8,Medusa force,46800,,,,pending
+sub_570EC,Medusa force,46800,,,,pending
+sub_5507A,Medusa force,46980,,,,pending
+sub_56B6C,Medusa force,46980,,,,pending
+sub_56E6E,Medusa force,46980,,,,pending
+sub_56E72,Medusa force,46980,,,,pending
+sub_56EAC,Medusa force,46980,,,,pending
+sub_5717A,Medusa force,46980,,,,pending
+sub_5719A,Medusa force,46980,,,,pending
+sub_5720C,Medusa force,46980,,,,pending
+sub_571CE,Medusa force,47160,,,,pending
+sub_571EA,Medusa force,47520,,,,pending
+sub_E858,Sylpheed force,47880,,,,pending
+sub_55094,Sylpheed force,47880,,,,pending
+sub_550F4,Sylpheed force,47880,,,,pending
+sub_5510C,Sylpheed force,47880,,,,pending
+sub_5562A,Sylpheed force,47880,,,,pending
+sub_593D4,Sylpheed force,47880,,,,pending
+sub_59460,Sylpheed force,47880,,,,pending
+sub_5951C,Sylpheed force,47880,,,,pending
+sub_599BC,Sylpheed force,47880,,,,pending
+sub_59A00,Sylpheed force,47880,,,,pending
+sub_59A10,Sylpheed force,47880,,,,pending
+sub_59B72,Sylpheed force,47880,,,,pending
+sub_59BAC,Sylpheed force,47880,,,,pending
+sub_59C06,Sylpheed force,47880,,,,pending
+sub_E876,Sylpheed force,48060,,,,pending
+sub_E892,Sylpheed force,48060,,,,pending
+sub_EC38,Sylpheed force,48060,,,,pending
+sub_595CA,Sylpheed force,48060,,,,pending
+sub_5960E,Sylpheed force,48060,,,,pending
+sub_5963E,Sylpheed force,48060,,,,pending
+sub_5966A,Sylpheed force,48060,,,,pending
+sub_E8AA,Sylpheed force,48240,,,,pending
+sub_E8C0,Sylpheed force,48240,,,,pending
+sub_EC86,Sylpheed force,48240,,,,pending
+sub_ECAA,Sylpheed force,48240,,,,pending
+sub_F02C,Sylpheed force,48240,,,,pending
+sub_F0B4,Sylpheed force,48240,,,,pending
+sub_19DAE,Sylpheed force,48240,,,,pending
+sub_19E06,Sylpheed force,48240,,,,pending
+sub_19E24,Sylpheed force,48240,,,,pending
+sub_19E56,Sylpheed force,48240,,,,pending
+sub_19E9A,Sylpheed force,48240,,,,pending
+sub_19F10,Sylpheed force,48240,,,,pending
+sub_19F36,Sylpheed force,48240,,,,pending
+sub_1A152,Sylpheed force,48240,,,,pending
+sub_1A1F2,Sylpheed force,48240,,,,pending
+sub_1A208,Sylpheed force,48240,,,,pending
+sub_5511C,Sylpheed force,48240,,,,pending
+sub_59696,Sylpheed force,48240,,,,pending
+sub_5997A,Sylpheed force,48240,,,,pending
+sub_19EE4,Sylpheed force,48420,,,,pending
+sub_1A074,Sylpheed force,48420,,,,pending
+sub_1A0BA,Sylpheed force,48420,,,,pending
+sub_59818,Sylpheed force,48420,,,,pending
+sub_59950,Sylpheed force,48420,,,,pending
+sub_E8DC,Artemis force,48600,,,,pending
+sub_E8FA,Artemis force,48600,,,,pending
+sub_EE62,Artemis force,48600,,,,pending
+sub_EED8,Artemis force,48600,,,,pending
+sub_EF28,Artemis force,48600,,,,pending
+sub_19F70,Artemis force,48600,,,,pending
+sub_1A01C,Artemis force,48600,,,,pending
+sub_55136,Artemis force,48600,,,,pending
+sub_551F6,Artemis force,48600,,,,pending
+sub_554C0,Artemis force,48600,,,,pending
+sub_5566C,Artemis force,48600,,,,pending
+sub_57EBE,Artemis force,48600,,,,pending
+sub_57F36,Artemis force,48600,,,,pending
+sub_58002,Artemis force,48600,,,,pending
+sub_5803C,Artemis force,48600,,,,pending
+sub_58486,Artemis force,48600,,,,pending
+sub_584EC,Artemis force,48600,,,,pending
+sub_586BA,Artemis force,48600,,,,pending
+sub_586F4,Artemis force,48600,,,,pending
+sub_58756,Artemis force,48600,,,,pending
+sub_E90A,Artemis force,48780,,,,pending
+sub_E916,Artemis force,48780,,,,pending
+sub_E930,Artemis force,48780,,,,pending
+sub_ECCC,Artemis force,48780,,,,pending
+sub_ECF4,Artemis force,48780,,,,pending
+sub_EF4C,Artemis force,48780,,,,pending
+sub_F040,Artemis force,48780,,,,pending
+sub_58102,Artemis force,48780,,,,pending
+sub_5844E,Artemis force,48780,,,,pending
+sub_58460,Artemis force,48780,,,,pending
+sub_5846E,Artemis force,48780,,,,pending
+sub_5847C,Artemis force,48780,,,,pending
+sub_F08C,Artemis force,48960,,,,pending
+sub_16A3E,Artemis force,48960,,,,pending
+sub_58136,Artemis force,48960,,,,pending
+sub_58162,Artemis force,48960,,,,pending
+sub_58184,Artemis force,48960,,,,pending
+sub_5818C,Artemis force,48960,,,,pending
+sub_584DC,Artemis force,48960,,,,pending
+sub_5826E,Artemis force,49140,,,,pending
+sub_58318,Artemis force,49140,,,,pending
+sub_58332,Artemis force,49140,,,,pending
+sub_58384,Artemis force,49140,,,,pending
+sub_5841A,Artemis force,49140,,,,pending
+sub_58430,Artemis force,49140,,,,pending
+sub_589E8,Artemis force,49140,,,,pending
+sub_58A5E,Artemis force,49140,,,,pending
+sub_582F4,Artemis force,49320,,,,pending
+sub_5523C,Sirene force,49500,,,,pending
+sub_55286,Sirene force,49500,,,,pending
+sub_556A8,Sirene force,49500,,,,pending
+sub_57498,Sirene force,49680,,,,pending
+sub_5750E,Sirene force,49680,,,,pending
+sub_57520,Sirene force,49680,,,,pending
+sub_5761C,Sirene force,49680,,,,pending
+sub_57A72,Sirene force,49680,,,,pending
+sub_57A82,Sirene force,49680,,,,pending
+sub_57BCA,Sirene force,49680,,,,pending
+sub_57BE6,Sirene force,49680,,,,pending
+sub_57C20,Sirene force,49680,,,,pending
+sub_57C7A,Sirene force,49680,,,,pending
+sub_57C8E,Sirene force,49680,,,,pending
+sub_E9A2,Sirene force,49860,,,,pending
+sub_ED32,Sirene force,49860,,,,pending
+sub_ED9A,Sirene force,49860,,,,pending
+sub_ED7E,Sirene force,50400,,,,pending
+sub_1A274,Sirene force,50400,,,,pending
+sub_576B0,Sirene force,50400,,,,pending
+sub_19D64,Sirene force,50580,,,,pending
+sub_552BA,Sirene force,50580,,,,pending
+sub_83C24,Sirene force,50580,,,,pending
+sub_EA24,Sirene force,50760,,,,pending
+sub_EA3C,Sirene force,50760,,,,pending
+sub_5783C,Sirene force,50760,,,,pending
+sub_579B2,Sirene force,50760,,,,pending
+sub_579F4,Sirene force,50760,,,,pending
+sub_57D88,Sirene force,50760,,,,pending
+sub_57DF4,Sirene force,50760,,,,pending
+sub_831D6,Sirene force,50760,,,,pending
+sub_1A250,Sirene force,50940,,,,pending
+sub_EA76,7 forces win cutscene,51120,,,,pending
+sub_EDE0,7 forces win cutscene,51120,,,,pending
+sub_5531A,7 forces win cutscene,51120,,,,pending
+sub_55716,7 forces win cutscene,51120,,,,pending
+sub_EAA4,7 forces win cutscene,51300,,,,pending
+sub_EABA,7 forces win cutscene,51300,,,,pending
+sub_EE0A,7 forces win cutscene,51300,,,,pending
+sub_553CC,7 forces win cutscene,51300,,,,pending
+sub_EADA,7 forces win cutscene,51840,,,,pending
+sub_EAF2,7 forces win cutscene,51840,,,,pending
+sub_EB1A,7 forces win cutscene,51840,,,,pending
+sub_EB48,7 forces win cutscene,51840,,,,pending
+sub_EE36,7 forces win cutscene,51840,,,,pending
+sub_EF7A,7 forces win cutscene,51840,,,,pending
+sub_EFE2,7 forces win cutscene,51840,,,,pending
+sub_19EF6,7 forces win cutscene,51840,,,,pending
+sub_553EE,7 forces win cutscene,52020,,,,pending
+sub_5540C,7 forces win cutscene,52020,,,,pending
+sub_5543A,7 forces win cutscene,52020,,,,pending
+sub_5554C,7 forces win cutscene,52020,,,,pending
+sub_F0F0,7 forces win cutscene,52560,,,,pending
+sub_F19A,7 forces win cutscene,52560,,,,pending
+sub_FB3A,7 forces win cutscene,52560,,,,pending
+sub_FB72,7 forces win cutscene,52560,,,,pending
+sub_FBA8,7 forces win cutscene,52560,,,,pending
+sub_12128,7 forces win cutscene,52560,,,,pending
+sub_125EE,7 forces win cutscene,52560,,,,pending
+sub_12648,7 forces win cutscene,52560,,,,pending
+sub_330A6,7 forces win cutscene,52560,,,,pending
+sub_332D0,7 forces win cutscene,52560,,,,pending
+sub_334B2,7 forces win cutscene,52560,,,,pending
+sub_334DC,7 forces win cutscene,52560,,,,pending
+sub_334FE,7 forces win cutscene,52560,,,,pending
+sub_1A06A,7 forces win cutscene,53280,,,,pending
+sub_330F2,Asteroids (Stage 21),53640,,,,pending
+sub_33124,Asteroids (Stage 21),53640,,,,pending
+sub_3313A,Asteroids (Stage 21),53640,,,,pending
+sub_3322E,Asteroids (Stage 21),53640,,,,pending
+sub_33258,Asteroids (Stage 21),53640,,,,pending
+sub_33358,Asteroids (Stage 21),53640,,,,pending
+sub_33402,Asteroids (Stage 21),53640,,,,pending
+sub_334D4,Asteroids (Stage 21),53640,,,,pending
+sub_335CA,Asteroids (Stage 21),53640,,,,pending
+sub_335EE,Asteroids (Stage 21),53640,,,,pending
+sub_33602,Asteroids (Stage 21),53640,,,,pending
+sub_33640,Asteroids (Stage 21),53640,,,,pending
+sub_F218,Asteroids (Stage 21),55080,,,,pending
+sub_F242,Asteroids (Stage 21),55080,,,,pending
+sub_FB24,Asteroids (Stage 21),55080,,,,pending
+sub_F26C,Destroyer Prototype boss,55260,,,,pending
+sub_F288,Destroyer Prototype boss,55440,,,,pending
+sub_314D8,Destroyer Prototype boss,55440,,,,pending
+sub_31540,Destroyer Prototype boss,55440,,,,pending
+sub_31594,Destroyer Prototype boss,55440,,,,pending
+sub_316C4,Destroyer Prototype boss,55440,,,,pending
+sub_316F8,Destroyer Prototype boss,55440,,,,pending
+sub_3171C,Destroyer Prototype boss,55440,,,,pending
+sub_31736,Destroyer Prototype boss,55440,,,,pending
+sub_31768,Destroyer Prototype boss,55440,,,,pending
+sub_31774,Destroyer Prototype boss,55440,,,,pending
+sub_317FE,Destroyer Prototype boss,55440,,,,pending
+sub_31F86,Destroyer Prototype boss,55440,,,,pending
+sub_31FB4,Destroyer Prototype boss,55440,,,,pending
+sub_31830,Destroyer Prototype boss,55620,,,,pending
+sub_318AC,Destroyer Prototype boss,55620,,,,pending
+sub_3178A,Destroyer Prototype boss,55800,,,,pending
+sub_317A8,Destroyer Prototype boss,55800,,,,pending
+sub_318EC,Destroyer Prototype boss,55800,,,,pending
+sub_31A28,Destroyer Prototype boss,55800,,,,pending
+sub_1A0C8,Destroyer Prototype boss,55980,,,,pending
+sub_1A122,Destroyer Prototype boss,55980,,,,pending
+sub_31A46,Destroyer Prototype boss,55980,,,,pending
+sub_31A7E,Destroyer Prototype boss,55980,,,,pending
+sub_31AA2,Destroyer Prototype boss,55980,,,,pending
+sub_31D9A,Destroyer Prototype boss,55980,,,,pending
+sub_31DF6,Destroyer Prototype boss,55980,,,,pending
+sub_31E9C,Destroyer Prototype boss,55980,,,,pending
+sub_32208,Destroyer Prototype boss,55980,,,,pending
+sub_1ADC,Destroyer Prototype boss,56160,,,,pending
+sub_F31C,Destroyer Prototype boss,56160,,,,pending
+sub_FCF4,Destroyer Prototype boss,56160,,,,pending
+sub_FD32,Destroyer Prototype boss,56160,,,,pending
+sub_29F08,Destroyer Prototype boss,56160,,,,pending
+sub_31F5E,Destroyer Prototype boss,56160,,,,pending
+sub_3231A,Destroyer Prototype boss,56160,,,,pending
+sub_F350,Destroyer Prototype boss,56340,,,,pending
+sub_2E9FC,Stage 22,56880,,,,pending
+sub_2EA0E,Stage 22,56880,,,,pending
+sub_2EA28,Stage 22,56880,,,,pending
+sub_2EA58,Stage 22,56880,,,,pending
+sub_2EABE,Stage 22,56880,,,,pending
+sub_2EB00,Stage 22,56880,,,,pending
+sub_2EB94,Stage 22,56880,,,,pending
+sub_2EBD2,Stage 22,56880,,,,pending
+sub_2EBE0,Stage 22,56880,,,,pending
+sub_2EBF4,Stage 22,56880,,,,pending
+sub_2EC14,Stage 22,56880,,,,pending
+sub_2EED6,Stage 22,56880,,,,pending
+sub_2EF1A,Stage 22,56880,,,,pending
+sub_33664,Stage 22,56880,,,,pending
+sub_3367A,Stage 22,56880,,,,pending
+sub_1213E,Stage 22,57060,,,,pending
+sub_2EA9A,Stage 22,57060,,,,pending
+sub_2EC34,Stage 22,57060,,,,pending
+sub_2EC84,Stage 22,57060,,,,pending
+sub_2EC9E,Stage 22,57060,,,,pending
+sub_2ED22,Stage 22,57060,,,,pending
+sub_2ED62,Stage 22,57060,,,,pending
+sub_2ED9C,Stage 22,57060,,,,pending
+sub_2EDD8,Stage 22,57060,,,,pending
+sub_336A8,Stage 22,57240,,,,pending
+sub_336B4,Stage 22,57240,,,,pending
+sub_336EA,Stage 22,57240,,,,pending
+sub_33976,Stage 22,57240,,,,pending
+sub_339DE,Stage 22,57240,,,,pending
+sub_33A66,Stage 22,57240,,,,pending
+sub_33BA4,Stage 22,57240,,,,pending
+sub_33BD0,Stage 22,57240,,,,pending
+sub_2EE0C,Stage 22,57420,,,,pending
+sub_2EE44,Stage 22,57420,,,,pending
+sub_2EE80,Stage 22,57420,,,,pending
+sub_33AE0,Stage 22,57420,,,,pending
+sub_33B14,Stage 22,57420,,,,pending
+sub_33BEC,Stage 22,57420,,,,pending
+sub_33C22,Stage 22,57420,,,,pending
+sub_2EEC0,Stage 22,57780,,,,pending
+sub_2EECC,Stage 22,57780,,,,pending
+sub_337D6,Stage 22,57780,,,,pending
+sub_FC8C,Stage 22,57960,,,,pending
+sub_1B7DC,Stage 22,57960,,,,pending
+sub_F3E0,Shield Viper boss,58680,,,,pending
+sub_F402,Shield Viper boss,58680,,,,pending
+sub_F42C,Shield Viper boss,58680,,,,pending
+sub_F448,Shield Viper boss,58680,,,,pending
+sub_FC74,Shield Viper boss,58680,,,,pending
+sub_4258,Shield Viper boss,58860,,,,pending
+sub_FE68,Shield Viper boss,58860,,,,pending
+sub_4DDD2,Shield Viper boss,58860,,,,pending
+sub_4E060,Shield Viper boss,58860,,,,pending
+sub_4E198,Shield Viper boss,58860,,,,pending
+sub_4E2A0,Shield Viper boss,58860,,,,pending
+sub_4E2CE,Shield Viper boss,58860,,,,pending
+sub_4E2F0,Shield Viper boss,58860,,,,pending
+sub_4F26E,Shield Viper boss,58860,,,,pending
+sub_4F37C,Shield Viper boss,58860,,,,pending
+sub_4F4CC,Shield Viper boss,58860,,,,pending
+sub_4F4F8,Shield Viper boss,58860,,,,pending
+sub_4F530,Shield Viper boss,58860,,,,pending
+sub_4F70C,Shield Viper boss,58860,,,,pending
+sub_4F794,Shield Viper boss,58860,,,,pending
+sub_4F83C,Shield Viper boss,58860,,,,pending
+sub_4F84E,Shield Viper boss,58860,,,,pending
+sub_4F886,Shield Viper boss,58860,,,,pending
+sub_4E64A,Shield Viper boss,59040,,,,pending
+sub_4ED96,Shield Viper boss,59040,,,,pending
+sub_4F090,Shield Viper boss,59040,,,,pending
+sub_4F38A,Shield Viper boss,59040,,,,pending
+sub_4F74A,Shield Viper boss,59040,,,,pending
+sub_4F75E,Shield Viper boss,59040,,,,pending
+sub_4F77A,Shield Viper boss,59040,,,,pending
+sub_4F78A,Shield Viper boss,59040,,,,pending
+sub_4EC5E,Shield Viper boss,59220,,,,pending
+sub_4F1A6,Shield Viper boss,59220,,,,pending
+sub_4F1B8,Shield Viper boss,59220,,,,pending
+sub_4F1FC,Shield Viper boss,59220,,,,pending
+sub_4F22C,Shield Viper boss,59220,,,,pending
+sub_4F7C0,Shield Viper boss,59220,,,,pending
+sub_4F7FE,Shield Viper boss,59220,,,,pending
+sub_4ED02,Shield Viper boss,59400,,,,pending
+sub_4ED14,Shield Viper boss,59400,,,,pending
+sub_4ED2A,Shield Viper boss,59400,,,,pending
+sub_F484,Shield Viper boss,59580,,,,pending
+sub_F4C6,Shield Viper boss,59580,,,,pending
+sub_F4E0,Shield Viper boss,59580,,,,pending
+sub_F528,Shield Viper boss,59580,,,,pending
+sub_4ED72,Shield Viper boss,59580,,,,pending
+sub_F560,Wolfgunblood Garopa boss,59760,,,,pending
+sub_F788,Wolfgunblood Garopa boss,59760,,,,pending
+sub_F7AC,Wolfgunblood Garopa boss,59760,,,,pending
+sub_42A4,Wolfgunblood Garopa boss,59940,,,,pending
+sub_F58E,Wolfgunblood Garopa boss,59940,,,,pending
+sub_F5EE,Wolfgunblood Garopa boss,60120,,,,pending
+sub_F624,Wolfgunblood Garopa boss,60120,,,,pending
+sub_F67C,Wolfgunblood Garopa boss,60120,,,,pending
+sub_F686,Wolfgunblood Garopa boss,60120,,,,pending
+sub_F6FA,Wolfgunblood Garopa boss,60120,,,,pending
+sub_F724,Wolfgunblood Garopa boss,60120,,,,pending
+sub_32DFE,Wolfgunblood Garopa boss,60120,,,,pending
+sub_32E10,Wolfgunblood Garopa boss,60120,,,,pending
+sub_32E3C,Wolfgunblood Garopa boss,60120,,,,pending
+sub_FEA0,Wolfgunblood Garopa boss,60480,,,,pending
+sub_FEC0,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4E602,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4F8F0,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4F956,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4FAEE,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4FB1C,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4FE62,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4FE82,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4FE94,Wolfgunblood Garopa boss,60480,,,,pending
+sub_4FFB0,Wolfgunblood Garopa boss,60480,,,,pending
+sub_50220,Wolfgunblood Garopa boss,60480,,,,pending
+sub_505D2,Wolfgunblood Garopa boss,60480,,,,pending
+sub_507C6,Wolfgunblood Garopa boss,60480,,,,pending
+sub_F6A6,Wolfgunblood Garopa boss,60660,,,,pending
+sub_504A0,Wolfgunblood Garopa boss,60660,,,,pending
+sub_509D2,Wolfgunblood Garopa boss,60660,,,,pending
+sub_50596,Wolfgunblood Garopa boss,60840,,,,pending
+sub_4FB3A,Wolfgunblood Garopa boss,61020,,,,pending
+sub_509B0,Wolfgunblood Garopa boss,61020,,,,pending
+sub_2B6B2,Wolfgunblood Garopa boss,61200,,,,pending
+sub_50A14,Wolfgunblood Garopa boss,61200,,,,pending
+sub_50AF0,Wolfgunblood Garopa boss,61200,,,,pending
+sub_50BEC,Wolfgunblood Garopa boss,61200,,,,pending
+sub_50E5E,Wolfgunblood Garopa boss,61200,,,,pending
+sub_50B7E,Wolfgunblood Garopa boss,61380,,,,pending
+sub_50C5C,Wolfgunblood Garopa boss,61380,,,,pending
+sub_50E3C,Wolfgunblood Garopa boss,61380,,,,pending
+sub_50F3E,Wolfgunblood Garopa boss,61380,,,,pending
+sub_50F54,Wolfgunblood Garopa boss,61380,,,,pending
+sub_FEDE,Wolfgunblood Garopa boss,61560,,,,pending
+sub_503AC,Wolfgunblood Garopa boss,61560,,,,pending
+sub_50F82,Wolfgunblood Garopa boss,61560,,,,pending
+sub_F6C4,Wolfgunblood Garopa boss,61740,,,,pending
+sub_F7FA,Stage 24,62100,,,,pending
+sub_F914,Stage 24,62100,,,,pending
+sub_F950,Stage 24,62100,,,,pending
+sub_12156,Stage 24,62100,,,,pending
+sub_33C4A,Stage 24,62100,,,,pending
+sub_33C72,Stage 24,62100,,,,pending
+sub_33CEE,Stage 24,62100,,,,pending
+sub_33D26,Stage 24,62100,,,,pending
+sub_F8B4,Missiray boss,62640,,,,pending
+sub_F8D0,Missiray boss,62640,,,,pending
+sub_537B8,Missiray boss,62640,,,,pending
+sub_538E6,Missiray boss,62640,,,,pending
+sub_53A82,Missiray boss,62640,,,,pending
+sub_53ADE,Missiray boss,62640,,,,pending
+sub_53B3A,Missiray boss,62640,,,,pending
+sub_53A90,Missiray boss,62820,,,,pending
+sub_53AEC,Missiray boss,62820,,,,pending
+sub_53B5C,Missiray boss,62820,,,,pending
+sub_53B88,Missiray boss,62820,,,,pending
+sub_53BB2,Missiray boss,62820,,,,pending
+sub_53C40,Missiray boss,62820,,,,pending
+sub_53C7A,Missiray boss,62820,,,,pending
+sub_54458,Missiray boss,62820,,,,pending
+sub_54472,Missiray boss,62820,,,,pending
+sub_54484,Missiray boss,62820,,,,pending
+sub_5448A,Missiray boss,62820,,,,pending
+sub_544CA,Missiray boss,62820,,,,pending
+sub_544F4,Missiray boss,62820,,,,pending
+sub_33956,Missiray boss,63000,,,,pending
+sub_53C8A,Missiray boss,63000,,,,pending
+sub_53C9A,Missiray boss,63000,,,,pending
+sub_53CAA,Missiray boss,63000,,,,pending
+sub_53E46,Missiray boss,63000,,,,pending
+sub_53E68,Missiray boss,63000,,,,pending
+sub_53E7C,Missiray boss,63000,,,,pending
+sub_53EBE,Missiray boss,63000,,,,pending
+sub_53EE0,Missiray boss,63000,,,,pending
+sub_53F44,Missiray boss,63000,,,,pending
+sub_54560,Missiray boss,63000,,,,pending
+sub_5457C,Missiray boss,63000,,,,pending
+sub_545D8,Missiray boss,63000,,,,pending
+sub_545FA,Missiray boss,63000,,,,pending
+sub_54616,Missiray boss,63000,,,,pending
+sub_54576,Missiray boss,63180,,,,pending
+sub_5463E,Missiray boss,63180,,,,pending
+sub_54832,Missiray boss,63180,,,,pending
+sub_54842,Missiray boss,63180,,,,pending
+sub_548E4,Missiray boss,63180,,,,pending
+sub_53CCC,Missiray boss,63360,,,,pending
+sub_5440C,Missiray boss,63360,,,,pending
+sub_5472E,Missiray boss,63360,,,,pending
+sub_547D8,Missiray boss,63360,,,,pending
+sub_53CE2,Missiray boss,63540,,,,pending
+sub_53D2A,Missiray boss,63540,,,,pending
+sub_53E3C,Missiray boss,63540,,,,pending
+sub_53F5C,Missiray boss,63540,,,,pending
+sub_53F70,Missiray boss,63540,,,,pending
+sub_53F8C,Missiray boss,63540,,,,pending
+sub_54006,Missiray boss,63540,,,,pending
+sub_5464A,Missiray boss,63540,,,,pending
+sub_5465C,Missiray boss,63540,,,,pending
+sub_5467C,Missiray boss,63540,,,,pending
+sub_546A6,Missiray boss,63540,,,,pending
+sub_53A6A,Missiray boss,63720,,,,pending
+sub_53AC4,Missiray boss,63720,,,,pending
+sub_53B20,Missiray boss,63720,,,,pending
+sub_53D50,Missiray boss,63720,,,,pending
+sub_53D7A,Missiray boss,63720,,,,pending
+sub_53DB8,Missiray boss,63720,,,,pending
+sub_53DD4,Missiray boss,63720,,,,pending
+sub_53DE8,Missiray boss,63720,,,,pending
+sub_53DFC,Missiray boss,63720,,,,pending
+sub_53E10,Missiray boss,63720,,,,pending
+sub_F8EA,Missiray boss,63900,,,,pending
+sub_53E32,Missiray boss,63900,,,,pending
+sub_FA8A,Stage 25,64080,,,,pending
+sub_FAF8,Stage 25,64260,,,,pending
+sub_2BAF2,Stage 25,64260,,,,pending
+sub_2BB5A,Stage 25,64260,,,,pending
+sub_FAAA,Z-Leo boss,64440,,,,pending
+sub_1B24,Z-Leo boss,64620,,,,pending
+sub_329C,Z-Leo boss,64620,,,,pending
+sub_29F24,Z-Leo boss,64620,,,,pending
+sub_51AD6,Z-Leo boss,64620,,,,pending
+sub_51B72,Z-Leo boss,64620,,,,pending
+sub_51BBE,Z-Leo boss,64620,,,,pending
+sub_51C32,Z-Leo boss,64620,,,,pending
+sub_51EB6,Z-Leo boss,64620,,,,pending
+sub_5279E,Z-Leo boss,64620,,,,pending
+sub_52806,Z-Leo boss,64620,,,,pending
+sub_5287A,Z-Leo boss,64620,,,,pending
+sub_52A80,Z-Leo boss,64620,,,,pending
+sub_52C34,Z-Leo boss,64620,,,,pending
+sub_14386,Z-Leo boss,65160,,,,pending
+sub_51EFE,Z-Leo boss,65160,,,,pending
+sub_52682,Z-Leo boss,65160,,,,pending
+sub_5293C,Z-Leo boss,65160,,,,pending
+sub_5294E,Z-Leo boss,65160,,,,pending
+sub_528B2,Z-Leo boss,65520,,,,pending
+sub_528D8,Z-Leo boss,65520,,,,pending
+sub_528FE,Z-Leo boss,65520,,,,pending
+sub_51FAA,Z-Leo boss,65700,,,,pending
+sub_51FE8,Z-Leo boss,65700,,,,pending
+sub_52766,Z-Leo boss,65700,,,,pending
+sub_527DE,Z-Leo boss,65700,,,,pending
+sub_52028,Z-Leo boss,65880,,,,pending
+sub_530EE,Z-Leo boss,66060,,,,pending
+sub_53182,Z-Leo boss,66060,,,,pending
+sub_5228A,Z-Leo boss,66240,,,,pending
+sub_52F32,Z-Leo boss,66240,,,,pending
+sub_5305A,Z-Leo boss,66240,,,,pending
+sub_521C2,Z-Leo boss,66420,,,,pending
+sub_52046,Z-Leo boss,66960,,,,pending
+sub_527F2,Z-Leo boss,66960,,,,pending
+sub_529CE,Z-Leo boss,66960,,,,pending
+sub_52A54,Z-Leo boss,66960,,,,pending
+sub_22466,Ending teleport,67500,,,,pending
+sub_2249A,Ending teleport,67500,,,,pending
+sub_223E2,Ending teleport,67680,,,,pending
+sub_16A4A,Ending teleport,68040,,,,pending
+sub_22216,Ending teleport,68040,,,,pending
+sub_2257C,Ending teleport,68040,,,,pending
+sub_2222E,Ending teleport,68220,,,,pending
+sub_22262,Ending teleport,68220,,,,pending
+sub_22278,Ending teleport,68220,,,,pending
+sub_22296,Ending teleport,68400,,,,pending
+sub_222BA,Ending teleport,68400,,,,pending
+sub_222DE,Ending teleport,68580,,,,pending
+sub_222FA,Ending teleport,68580,,,,pending
+sub_2230A,Ending teleport,68760,,,,pending
+sub_2231A,Ending teleport,68760,,,,pending
+sub_2232E,Ending teleport,68760,,,,pending
+sub_223CC,Ending teleport,68760,,,,pending
+sub_20ECC,Xi-Tiger (credits),83880,,,,pending
+sub_212D4,Computer designed by Treasure,87840,,,,pending
+sub_2130A,Computer designed by Treasure,87840,,,,pending
+sub_213F2,Presented by Sega,88380,,,,pending
+sub_4386,Results,89100,,,,pending
+sub_1DEA4,Results,89100,,,,pending
+sub_1DECC,Results,89100,,,,pending
+sub_1DF0E,Results,89100,,,,pending
+sub_1DF24,Results,89100,,,,pending
+sub_2CBC6,Results,89100,,,,pending
+sub_D3A6,Unknown scene,17460,,,,pending
+sub_2F0CA,Unknown scene,17460,,,,pending

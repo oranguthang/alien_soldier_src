@@ -166,3 +166,7 @@ diffs/
 analysis_results.csv
 analysis_report.txt
 tmp/
+
+# Documentation workflow
+rename_log.txt
+alien_soldier_j_backup_*.s
