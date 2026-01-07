@@ -63,14 +63,48 @@ distclean: clean
 	@python $(SCRIPTS_DIR)/clean.py -q "$(DATA_DIR)/tiles_*.bin"
 	@echo "Deep clean complete!"
 
+# Analysis configuration
+MOVIE = dammit,truncated-aliensoldier.gmv
+REFERENCE_DIR = reference
+ANALYSIS_WORKERS = 24
+ANALYSIS_GRID_COLS = 6
+ANALYSIS_FRAMESKIP = 8
+ANALYSIS_INTERVAL = 20
+ANALYSIS_MAX_FRAMES = 90000
+ANALYSIS_MAX_DIFFS = 10
+ANALYSIS_DIFF_COLOR = pink
+
+# Generate reference screenshots
+.PHONY: reference
+reference:
+	@echo "Generating reference screenshots..."
+	python -c "import os; os.makedirs('$(REFERENCE_DIR)', exist_ok=True)"
+	"$(GENS_EXE)" \
+		-rom $(ROM) \
+		-play $(MOVIE) \
+		-screenshot-interval $(ANALYSIS_INTERVAL) \
+		-screenshot-dir $(REFERENCE_DIR) \
+		-max-frames $(ANALYSIS_MAX_FRAMES) \
+		-turbo \
+		-frameskip 0 \
+		-nosound
+	@echo "Reference screenshots saved to $(REFERENCE_DIR)/"
+
 # Analyze procedures for visual impact
 .PHONY: analyze
 analyze:
-	@echo "Analyzing procedures..."
+	@echo "Analyzing procedures ($(ANALYSIS_WORKERS) workers, frameskip $(ANALYSIS_FRAMESKIP))..."
 	python $(SCRIPTS_DIR)/analyze.py \
 		--project-dir . \
 		--source $(SRC) \
-		--rom $(ROM)
+		--rom $(ROM) \
+		--workers $(ANALYSIS_WORKERS) \
+		--grid-cols $(ANALYSIS_GRID_COLS) \
+		--frameskip $(ANALYSIS_FRAMESKIP) \
+		--interval $(ANALYSIS_INTERVAL) \
+		--max-frames $(ANALYSIS_MAX_FRAMES) \
+		--max-diffs $(ANALYSIS_MAX_DIFFS) \
+		--diff-color $(ANALYSIS_DIFF_COLOR)
 
 # Gens emulator paths
 GENS_DIR = gens-rerecording/Gens-rr
@@ -78,22 +112,19 @@ GENS_SLN = $(GENS_DIR)/gens_vc10.sln
 GENS_EXE = $(GENS_DIR)/Output/Gens.exe
 MSBUILD = C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe
 
+# Stop all running emulators and analysis
+.PHONY: stop
+stop:
+	@echo "Stopping analysis and emulators..."
+	-taskkill /F /IM Gens.exe 2>nul
+	-taskkill /F /IM python.exe 2>nul
+	@echo "Done"
+
 # Build Gens emulator
 .PHONY: build-gens
 build-gens:
 	@echo "Building Gens emulator..."
-	@if [ ! -f "$(MSBUILD)" ]; then \
-		echo "Error: Visual Studio 2022 not found at $(MSBUILD)"; \
-		echo "Please install Visual Studio 2022 with C++ development tools"; \
-		exit 1; \
-	fi
-	@if [ ! -f "$(GENS_SLN)" ]; then \
-		echo "Error: Gens solution not found at $(GENS_SLN)"; \
-		echo "Please clone the gens-rerecording repository into $(GENS_DIR)"; \
-		exit 1; \
-	fi
 	"$(MSBUILD)" "$(GENS_SLN)" -p:Configuration=Release -p:Platform=Win32 -p:PlatformToolset=v143 -t:Build -v:minimal
-	@echo ""
 	@echo "Build complete: $(GENS_EXE)"
 
 # Help
@@ -106,12 +137,22 @@ help:
 	@echo "  make split      - Extract data from original ROM"
 	@echo "  make clean      - Remove build artifacts"
 	@echo "  make distclean  - Remove build artifacts and extracted data"
+	@echo "  make reference  - Generate reference screenshots for analysis"
 	@echo "  make analyze    - Analyze procedures for visual impact"
+	@echo "  make stop       - Stop all running Gens emulators"
 	@echo "  make build-gens - Build Gens emulator (requires VS2022)"
 	@echo "  make help       - Show this help message"
 	@echo ""
-	@echo "Configuration:"
+	@echo "Build configuration:"
 	@echo "  Source:     $(SRC)"
 	@echo "  Output ROM: $(ROM)"
 	@echo "  Assembler:  $(AS_BIN)"
-	@echo "  AS args:    $(AS_ARGS)"
+	@echo ""
+	@echo "Analysis configuration:"
+	@echo "  Workers:    $(ANALYSIS_WORKERS)"
+	@echo "  Grid cols:  $(ANALYSIS_GRID_COLS)"
+	@echo "  Frameskip:  $(ANALYSIS_FRAMESKIP)"
+	@echo "  Interval:   $(ANALYSIS_INTERVAL)"
+	@echo "  Max frames: $(ANALYSIS_MAX_FRAMES)"
+	@echo "  Max diffs:  $(ANALYSIS_MAX_DIFFS)"
+	@echo "  Diff color: $(ANALYSIS_DIFF_COLOR)"

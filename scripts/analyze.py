@@ -96,7 +96,8 @@ def build_rom(worker_dir):
 
 
 def run_comparison(gens_exe, rom_file, movie_file, reference_dir, diffs_dir,
-                   proc_name, interval=20, max_frames=90000, max_diffs=1):
+                   proc_name, interval=20, max_frames=90000, max_diffs=1, frameskip=0,
+                   window_x=None, window_y=None, diff_color=None):
     """Run emulator in comparison mode."""
     proc_diffs_dir = os.path.join(diffs_dir, proc_name)
     if os.path.exists(proc_diffs_dir):
@@ -118,9 +119,19 @@ def run_comparison(gens_exe, rom_file, movie_file, reference_dir, diffs_dir,
         '-max-frames', str(max_frames),
         '-max-diffs', str(max_diffs),
         '-turbo',
-        '-frameskip', '0',
+        '-frameskip', str(frameskip),
         '-nosound'
     ]
+
+    # Add window position if specified
+    if window_x is not None:
+        cmd.extend(['-window-x', str(window_x)])
+    if window_y is not None:
+        cmd.extend(['-window-y', str(window_y)])
+
+    # Add diff color if specified
+    if diff_color:
+        cmd.extend(['-diff-color', diff_color])
 
     subprocess.run(cmd, capture_output=True, cwd=gens_dir)
 
@@ -138,9 +149,16 @@ def run_comparison(gens_exe, rom_file, movie_file, reference_dir, diffs_dir,
 def analyze_single_procedure(args_tuple):
     """Analyze a single procedure (worker function)."""
     (proc, project_dir, temp_base, gens_exe, movie_file,
-     reference_dir, diffs_dir, interval, max_frames, max_diffs) = args_tuple
+     reference_dir, diffs_dir, interval, max_frames, max_diffs, frameskip,
+     worker_index, grid_cols, window_width, window_height, diff_color) = args_tuple
 
     proc_name = proc['name']
+
+    # Calculate window position based on worker index (grid layout)
+    col = worker_index % grid_cols
+    row = worker_index // grid_cols
+    window_x = col * window_width
+    window_y = row * window_height
 
     try:
         # Setup worker directory (unique per procedure)
@@ -165,7 +183,8 @@ def analyze_single_procedure(args_tuple):
         # Run comparison
         first_diff, diff_count = run_comparison(
             gens_exe, rom_file, movie_file, reference_dir, diffs_dir,
-            proc_name, interval, max_frames, max_diffs
+            proc_name, interval, max_frames, max_diffs, frameskip,
+            window_x, window_y, diff_color
         )
 
         if first_diff is not None:
@@ -242,15 +261,23 @@ def analyze_procedures(args):
         shutil.rmtree(temp_base)
     os.makedirs(temp_base)
 
+    # Grid layout for window positioning
+    grid_cols = args.grid_cols
+    window_width = 320
+    window_height = 240
+
     print(f"\nAnalyzing {len(procedures)} procedures with {args.workers} workers...")
+    print(f"Window grid: {grid_cols} columns, {window_width}x{window_height} per window")
     print("=" * 60)
 
-    # Prepare tasks
+    # Prepare tasks with worker index for window positioning
     tasks = []
-    for proc in procedures:
+    for i, proc in enumerate(procedures):
+        worker_index = i % args.workers  # Cycle through worker slots
         tasks.append((
             proc, project_dir, temp_base, gens_exe, movie_file,
-            reference_dir, diffs_dir, args.interval, args.max_frames, args.max_diffs
+            reference_dir, diffs_dir, args.interval, args.max_frames, args.max_diffs, args.frameskip,
+            worker_index, grid_cols, window_width, window_height, args.diff_color
         ))
 
     # Run in parallel
@@ -321,6 +348,9 @@ def main():
     parser.add_argument('--interval', type=int, default=20, help='Screenshot interval')
     parser.add_argument('--max-frames', type=int, default=90000, help='Max frames to analyze')
     parser.add_argument('--max-diffs', type=int, default=1, help='Stop after N diffs per procedure')
+    parser.add_argument('--frameskip', type=int, default=0, help='Frame skip for faster analysis')
+    parser.add_argument('--grid-cols', type=int, default=8, help='Number of columns in window grid')
+    parser.add_argument('--diff-color', default='pink', help='Color for diff highlighting (pink, red, green, blue, yellow, cyan, white, orange)')
     parser.add_argument('--limit', type=int, help='Limit number of procedures to analyze')
     parser.add_argument('--start-from', help='Start from specific procedure name')
     parser.add_argument('--workers', '-j', type=int, default=4, help='Number of parallel workers')
