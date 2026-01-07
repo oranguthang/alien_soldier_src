@@ -106,6 +106,13 @@ analyze:
 		--max-diffs $(ANALYSIS_MAX_DIFFS) \
 		--diff-color $(ANALYSIS_DIFF_COLOR)
 
+# Generate analysis report
+.PHONY: report
+report:
+	@echo "Generating analysis report..."
+	python $(SCRIPTS_DIR)/report.py --project-dir .
+	@echo "Report saved to analysis_report.txt"
+
 # Gens emulator paths
 GENS_DIR = gens-rerecording/Gens-rr
 GENS_SLN = $(GENS_DIR)/gens_vc10.sln
@@ -139,6 +146,7 @@ help:
 	@echo "  make distclean  - Remove build artifacts and extracted data"
 	@echo "  make reference  - Generate reference screenshots for analysis"
 	@echo "  make analyze    - Analyze procedures for visual impact"
+	@echo "  make report     - Generate analysis report from diffs"
 	@echo "  make stop       - Stop all running Gens emulators"
 	@echo "  make build-gens - Build Gens emulator (requires VS2022)"
 	@echo "  make help       - Show this help message"
