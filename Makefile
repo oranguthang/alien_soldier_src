@@ -121,6 +121,16 @@ compare:
 		--original $(ORIG_ROM) \
 		--project-dir .
 
+# Prepare next batch of procedures for documentation
+.PHONY: prepare-batch
+prepare-batch:
+	@python $(SCRIPTS_DIR)/prepare_batch.py \
+		--database procedure_database.csv \
+		--source $(SRC) \
+		--batch-size 40 \
+		--output batch_extract.txt \
+		--project-dir .
+
 # Gens emulator paths
 GENS_DIR = gens-rerecording/Gens-rr
 GENS_SLN = $(GENS_DIR)/gens_vc10.sln
@@ -148,17 +158,18 @@ help:
 	@echo "Alien Soldier (J) Build System"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  make build      - Assemble and build ROM (default)"
-	@echo "  make compare    - Compare built ROM with original"
-	@echo "  make split      - Extract data from original ROM"
-	@echo "  make clean      - Remove build artifacts"
-	@echo "  make distclean  - Remove build artifacts and extracted data"
-	@echo "  make reference  - Generate reference screenshots for analysis"
-	@echo "  make analyze    - Analyze procedures for visual impact"
-	@echo "  make report     - Generate analysis report from diffs"
-	@echo "  make stop       - Stop all running Gens emulators"
-	@echo "  make build-gens - Build Gens emulator (requires VS2022)"
-	@echo "  make help       - Show this help message"
+	@echo "  make build         - Assemble and build ROM (default)"
+	@echo "  make compare       - Compare built ROM with original"
+	@echo "  make prepare-batch - Extract next 40 procedures for documentation"
+	@echo "  make split         - Extract data from original ROM"
+	@echo "  make clean         - Remove build artifacts"
+	@echo "  make distclean     - Remove build artifacts and extracted data"
+	@echo "  make reference     - Generate reference screenshots for analysis"
+	@echo "  make analyze       - Analyze procedures for visual impact"
+	@echo "  make report        - Generate analysis report from diffs"
+	@echo "  make stop          - Stop all running Gens emulators"
+	@echo "  make build-gens    - Build Gens emulator (requires VS2022)"
+	@echo "  make help          - Show this help message"
 	@echo ""
 	@echo "Build configuration:"
 	@echo "  Source:     $(SRC)"
