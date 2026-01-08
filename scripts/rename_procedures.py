@@ -36,6 +36,67 @@ def load_database(csv_file):
     return procedures
 
 
+def get_existing_labels(asm_file):
+    """Extract all existing labels from assembly file."""
+    labels = set()
+    label_pattern = re.compile(r'^([A-Za-z_][A-Za-z0-9_]*):', re.MULTILINE)
+
+    with open(asm_file, 'r', encoding='utf-8', errors='ignore') as f:
+        content = f.read()
+
+    for match in label_pattern.finditer(content):
+        labels.add(match.group(1))
+
+    return labels
+
+
+def check_name_collisions(procedures, existing_labels):
+    """
+    Check for name collisions before renaming.
+
+    Returns tuple: (is_valid, errors)
+    - is_valid: True if no collisions found
+    - errors: List of error messages describing collisions
+    """
+    errors = []
+
+    # Get set of old names being renamed
+    old_names = {p['old_name'] for p in procedures}
+
+    # Check 1: Duplicate new names within the batch
+    new_names_count = {}
+    for proc in procedures:
+        new_name = proc['new_name']
+        if new_name not in new_names_count:
+            new_names_count[new_name] = []
+        new_names_count[new_name].append(proc['old_name'])
+
+    for new_name, old_names_list in new_names_count.items():
+        if len(old_names_list) > 1:
+            errors.append(
+                f"DUPLICATE: '{new_name}' is assigned to multiple procedures: {', '.join(old_names_list)}"
+            )
+
+    # Check 2: New name collides with existing label (that we're not renaming)
+    for proc in procedures:
+        new_name = proc['new_name']
+        old_name = proc['old_name']
+
+        # Skip if new name equals old name (no rename)
+        if new_name == old_name:
+            continue
+
+        # Check if new name already exists as a label
+        if new_name in existing_labels:
+            # It's only a collision if that label is not being renamed itself
+            if new_name not in old_names:
+                errors.append(
+                    f"COLLISION: '{old_name}' -> '{new_name}' conflicts with existing label '{new_name}'"
+                )
+
+    return len(errors) == 0, errors
+
+
 def create_backup(source_file):
     """Create timestamped backup of assembly file."""
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
@@ -218,6 +279,25 @@ def main():
         return 0
 
     print(f"Found {len(procedures)} procedures to rename")
+
+    # Check for name collisions BEFORE making any changes
+    print(f"\nChecking for name collisions...")
+    existing_labels = get_existing_labels(asm_file)
+    print(f"  Found {len(existing_labels)} existing labels in source file")
+
+    is_valid, collision_errors = check_name_collisions(procedures, existing_labels)
+
+    if not is_valid:
+        print("\n" + "=" * 80)
+        print("ERROR: Name collisions detected! Cannot proceed with renaming.")
+        print("=" * 80)
+        for error in collision_errors:
+            print(f"  {error}")
+        print("\nPlease fix these collisions in the database and try again.")
+        print("Each new name must be unique and not conflict with existing labels.")
+        return 1
+
+    print("  No collisions found - all new names are unique")
 
     if args.dry_run:
         print("\n*** DRY RUN MODE - No changes will be applied ***\n")

@@ -172,6 +172,7 @@ tmp/
 rename_log.txt
 alien_soldier_j_backup_*.s
 batch_extract.txt
+batch_analysis.csv
 
 # Uncompressed tile data (for reference only)
 data/uncompressed/

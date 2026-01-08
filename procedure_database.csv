@@ -1,263 +1,263 @@
 old_name,scene,frame,new_name,description,category,status
-sub_E9C,Sega screen,180,Gfx_ApplyVDPSettings,Writes VDP register values from RAM buffer to hardware,Gfx,analyzed
-sub_2016,Sega screen,180,Sys_ProcessObjectList,Main object processing loop - iterates through active objects,Sys,analyzed
-sub_21F0,Sega screen,180,Sys_InitObjectPointers,Initializes object pointer table in RAM,Sys,analyzed
-sub_2224,Sega screen,180,Sys_UpdateObjectList,Updates object list with new entries,Sys,analyzed
-sub_22C4,Sega screen,180,Sprite_PrepareOAM,Prepares sprite OAM entry with position and attributes,Sprite,analyzed
-sub_B9EA,Sega screen,180,Gfx_SyncPaletteBuffers,Synchronizes palette data across multiple RAM buffers,Gfx,analyzed
-sub_111B4,Sega screen,180,Gfx_UpdateTilemapIndices,Updates tilemap tile indices and palette bits with offset,Gfx,analyzed
-sub_1A29C,Sega screen,180,Sys_ProcessVisibleObjects,Processes all objects with screen bounds culling,Sys,analyzed
-sub_1C902,Sega screen,180,Sys_UpdateObjectCount,Calculates number of active visible objects from list pointer,Sys,analyzed
-sub_1D120,Sega screen,180,Gfx_CopyPaletteLines,Copies two palette lines between RAM buffers,Gfx,analyzed
-sub_BD4,Title screen,360,Sys_VBlankEventHandler,Handles timed events and callbacks during VBlank,Sys,analyzed
-sub_2D6C,Title screen,360,Sys_InitGameMode,Full game mode initialization sequence,Sys,analyzed
-sub_2D94,Title screen,360,Sys_InitSubsystems,Initializes core subsystems and memory structures,Sys,analyzed
-sub_2DFE,Title screen,360,Gfx_InitVideoMode,Initializes video mode and clears VRAM,Gfx,analyzed
-sub_2EBC,Title screen,360,Sys_ClearRAM,Clears 32KB RAM block to zero,Sys,analyzed
-sub_317C,Title screen,360,Gfx_ClearVRAM,Clears entire VRAM with interrupts disabled,Gfx,analyzed
-sub_33BA,Title screen,360,Sound_AcquireZ80Bus,Acquires Z80 bus for sound operations,Sound,analyzed
-sub_33D8,Title screen,360,Input_ReadController,Reads controller input from I/O ports,Input,analyzed
-sub_349A,Title screen,360,Input_ReadControllerPort,Low-level controller port bit reading,Input,analyzed
-sub_10AE4,Title screen,360,Data_LoadPointerTable1,Loads pointer to data table 1,Sys,analyzed
-sub_10AF4,Title screen,360,Data_LoadPointerTable2,Loads pointer to data table 2,Sys,analyzed
-sub_1F6A,Stage 1,540,Gfx_SetupDMATransfer,Configures VDP DMA registers for data transfer,Gfx,analyzed
-sub_208E,Stage 1,540,Sprite_ProcessDMAQueue,Processes sprite DMA queue for batch transfers,Sprite,analyzed
-sub_2160,Stage 1,540,Anim_UpdateFrame,Updates animation frame with timer and pointer management,Anim,analyzed
-sub_2316,Stage 1,540,Sprite_RenderTiles,Renders sprite tiles with position calculation,Sprite,analyzed
-sub_2384,Stage 1,540,Sprite_CalculatePosition,Calculates sprite screen position with bounds checking,Sprite,analyzed
-sub_27D8,Stage 1,540,Data_ProcessPointer,Processes data pointers with state bits,Sys,analyzed
-sub_2972,Stage 1,540,Data_DecompressLZSS,Decompresses LZSS data to RAM buffer,Sys,analyzed
-sub_2A58,Stage 1,540,Sys_ClearDMABuffer,Clears DMA buffer at FFB400,Sys,analyzed
-sub_2C62,Stage 1,540,Gfx_ExecuteDMATransfer,Executes DMA transfer with VDP register setup,Gfx,analyzed
-sub_2DB4,Stage 1,540,Sys_InitGraphicsChain,Initializes graphics subsystem chain,Sys,analyzed
-sub_2E32,Stage 1,540,Gfx_LoadVDPRegisters,Loads VDP register values from table,Gfx,analyzed
-sub_2EF0,Stage 1,540,Sys_ClearObjectRAM,Clears object RAM area at FF8000,Sys,analyzed
-sub_2F08,Stage 1,540,Sys_ClearSpriteBuffers,Clears sprite buffer areas,Sys,analyzed
-sub_320C,Stage 1,540,Gfx_ClearCRAM,Clears CRAM color RAM area,Gfx,analyzed
-sub_326C,Stage 1,540,Gfx_ClearVRAMPlane,Clears VRAM plane data,Gfx,analyzed
-sub_34EE,Stage 1,540,Input_ProcessButtons,Processes joypad button state,Input,analyzed
-sub_3B9A,Stage 1,540,Gfx_AdjustPaletteBits,Adjusts palette selection bits in tile data,Gfx,analyzed
-sub_4094,Stage 1,540,Player_StateDispatcher,Main player state machine dispatcher,Player,analyzed
-sub_40C0,Stage 1,540,Gfx_UpdatePaletteState,Updates palette state and positions,Gfx,analyzed
-sub_A970,Stage 1,540,Player_BehaviorDispatcher,Player behavior state dispatcher,Player,analyzed
-sub_AE9A,Stage 1,540,Player_Initialize,Initializes player object with default values,Player,analyzed
-sub_10DB2,Stage 1,540,Sprite_SetupDMA,Sets up VDP DMA for sprite data,Sprite,analyzed
-sub_11256,Stage 1,540,Gfx_WriteVDPCommand,Writes VDP command registers,Gfx,analyzed
-sub_11DD2,Stage 1,540,Stage_StateDispatcher,Stage state machine dispatcher,Stage,analyzed
-sub_11E1A,Stage 1,540,Gfx_LoadTileData,Loads tile data into tables,Gfx,analyzed
-sub_11E86,Stage 1,540,Gfx_LoadStagePalette,Loads stage palette data,Gfx,analyzed
-sub_12B6A,Stage 1,540,UI_RenderHUDElement1,Renders HUD element health or ammo,UI,analyzed
-sub_12E50,Stage 1,540,UI_RenderHUDElement2,Renders HUD element variant 2,UI,analyzed
-sub_12FBC,Stage 1,540,UI_RenderHUDElement3,Renders HUD element variant 3,UI,analyzed
-sub_13178,Stage 1,540,Gfx_ProcessPaletteSlots,Processes multiple palette slots,Gfx,analyzed
-sub_1319E,Stage 1,540,Gfx_LoadPaletteData,Loads palette data from offset table,Gfx,analyzed
-sub_131AE,Stage 1,540,Sprite_SetupTileVDP,Sets up VDP registers for sprite tiles,Sprite,analyzed
-sub_131D6,Stage 1,540,Gfx_SetupTileDMA,Sets up DMA for tile transfer,Gfx,analyzed
-sub_146FC,Stage 1,540,Player_ActionDispatcher,Dispatches player action handlers,Player,analyzed
-sub_148B0,Stage 1,540,Player_HandleCollision,Handles player collision states,Player,analyzed
-sub_14F06,Stage 1,540,Player_InitializeStats,Initializes player stats and parameters,Player,analyzed
-sub_14F98,Stage 1,540,Player_Update,Main player update routine,Player,analyzed
-sub_15052,Stage 1,540,Player_UpdateState,Updates player state machine,Player,analyzed
-sub_1521E,Stage 1,540,Player_HandleJump,Handles player jump mechanics,Player,analyzed
-sub_155B0,Stage 1,540,Player_HandleSpecialMove,Handles player special move action,Player,analyzed
-sub_159E0,Stage 1,540,Player_HandleDashCancel,Handles dash cancel state and timer management,Player,analyzed
-sub_15A9C,Stage 1,540,Player_ApplyHorizontalMovement,Applies horizontal movement with boundary checking,Player,analyzed
-sub_15BB8,Stage 1,540,Player_CheckSpecialMoveActivation,Checks and activates special move from state flags,Player,analyzed
-sub_16B04,Stage 1,540,Input_ReadPlayerInput,Reads controller input into player state bytes,Input,analyzed
-sub_16B24,Stage 1,540,Player_UpdateWeaponSwitchTimer,Updates weapon switch timer and cooldown,Player,analyzed
-sub_16C00,Stage 1,540,Player_UpdateInvulnerabilityTimer,Manages player invulnerability and flash timer,Player,analyzed
-sub_16C6E,Stage 1,540,Gfx_LoadPlayerPaletteData,Loads player sprite palette based on state,Gfx,analyzed
-sub_16CE8,Stage 1,540,Player_ProcessAction,Processes player action through dispatcher,Player,analyzed
-sub_173FA,Stage 1,540,Player_SpawnProjectile,Spawns player projectile with velocity and properties,Player,analyzed
-sub_177B6,Stage 1,540,Effect_CreateDashTrail,Creates visual dash trail effect behind player,Effect,analyzed
-sub_19188,Stage 1,540,Sprite_InitProjectile,Initializes projectile sprite with position and velocity,Sprite,analyzed
-sub_19992,Stage 1,540,Sys_ProcessProjectiles,Processes all active projectile objects,Sys,analyzed
-sub_1B8CA,Stage 1,540,Input_GetMappedButton,Maps button input based on game state,Input,analyzed
-sub_1C042,Stage 1,540,Sys_FindFreeObjectSlot,Finds free slot in object array,Sys,analyzed
-sub_1C97A,Stage 1,540,Gfx_UpdateScrollPosition,Updates camera scroll position based on player,Gfx,analyzed
-sub_1CE3A,Stage 1,540,Enemy_UpdateBehavior,Updates enemy AI behavior state,Enemy,analyzed
-sub_1F05E,Stage 1,540,Stage_InitializeState,Initializes stage state machine,Stage,analyzed
-sub_1F072,Stage 1,540,UI_UpdateMenuState,Updates UI menu state and rendering,UI,analyzed
-sub_1F12C,Stage 1,540,Stage_LoadAssets,Loads stage assets and data,Stage,analyzed
-sub_1F14E,Stage 1,540,Stage_HandleTransition,Handles stage state transitions,Stage,analyzed
-sub_1F238,Stage 1,540,UI_HandleMenuNavigation,Handles menu navigation with directional input,UI,analyzed
-sub_1F356,Stage 1,540,UI_HandleWeaponMenuNavigation,Handles weapon menu directional navigation,UI,analyzed
-sub_1F3B8,Stage 1,540,Sprite_ExecuteFadeTransition,Executes sprite fade with DMA transfers,Sprite,analyzed
-sub_1F3E6,Stage 1,540,Gfx_LoadMenuGraphics,Loads menu graphic elements in loop,Gfx,analyzed
-sub_1F464,Stage 1,540,UI_WaitForButtonPress,Waits for button press before proceeding,UI,analyzed
-sub_1F496,Stage 1,540,UI_HandleOptionSelection,Handles option selection with directional controls,UI,analyzed
-sub_1F720,Stage 1,540,Gfx_InterpolateScrollPosition,Smoothly interpolates scroll position to target,Gfx,analyzed
-sub_2A7BE,Stage 1,540,Sprite_InitializeProperties,Initializes sprite object properties at address,Sprite,analyzed
-sub_82324,Stage 1,540,Sound_UpdateThunk,Thunk to main sound driver update,Sound,analyzed
-sub_8232C,Stage 1,540,Sound_UpdateDriver,Main sound driver update loop,Sound,analyzed
-sub_82552,Stage 1,540,Sound_ProcessChannel,Processes individual sound channel state,Sound,analyzed
-sub_8257C,Stage 1,540,Sound_ParseTrackData,Parses and interprets sound track data,Sound,analyzed
-sub_825B2,Stage 1,540,Sound_CalculatePitch,Calculates note pitch and frequency,Sound,analyzed
-sub_825E4,Stage 1,540,Sound_CalculateDuration,Calculates note duration timing,Sound,analyzed
-sub_829AA,Stage 1,540,Sound_ProcessFade,Processes sound fade and volume changes,Sound,analyzed
-sub_82A1A,Stage 1,540,Sound_UpdateEnvelope,Updates sound envelope parameters,Sound,analyzed
-sub_82F6C,Stage 1,540,Sound_ProcessDAC,Processes DAC digital audio channel,Sound,analyzed
-sub_8329C,Stage 1,540,Sound_ProcessFM,Processes FM synthesis channels,Sound,analyzed
-sub_833AA,Stage 1,540,Sound_WriteRegister,Writes data to sound chip registers,Sound,analyzed
-sub_833BC,Stage 1,540,Sound_InitializeChannels,Initializes sound channel structures,Sound,analyzed
-sub_8342A,Stage 1,540,Sound_ProcessTempoTick,Processes sound tempo tick and increments channel timers,Sound,analyzed
-sub_834D2,Stage 1,540,Sound_ResetDriver,Resets sound driver state and clears RAM,Sound,analyzed
-sub_835B0,Stage 1,540,Sound_WriteYM2612,Writes data to YM2612 FM chip registers,Sound,analyzed
-sub_83820,Stage 1,540,Sound_CommandDispatcher,Dispatches sound commands via jump table,Sound,analyzed
-sub_838C4,Stage 1,540,Sound_SetChannelFlags,Sets sound channel control flags,Sound,analyzed
-sub_838E0,Stage 1,540,Sound_SetEnvelopeParam,Sets envelope parameter for channel,Sound,analyzed
-sub_839B8,Stage 1,540,Sound_SelectInstrument,Selects instrument for sound channel,Sound,analyzed
-sub_83A8E,Stage 1,540,Sound_ApplyVolume,Applies volume and pan to sound channel,Sound,analyzed
-sub_83B0A,Stage 1,540,Sound_SetupLFO,Sets up LFO modulation parameters,Sound,analyzed
-sub_2264,Stage 1,720,Sprite_CullOffscreen,Culls sprites outside visible screen area,Sprite,analyzed
-sub_B326,Stage 1,720,Gfx_LoadTileIndices,Loads tile indices from data table,Gfx,analyzed
-sub_C83E,Stage 1,720,Stage_Dispatcher,Main stage dispatcher jump table,Stage,analyzed
-sub_C8C2,Stage 1,720,Stage_UpdateLogic,Updates stage logic and scroll,Stage,analyzed
-sub_FF16,Stage 1,720,Stage_ProcessHandler,Processes stage handler entry point,Stage,analyzed
-sub_10060,Stage 1,720,Gfx_UpdateScroll,Updates scroll with player following,Gfx,analyzed
-sub_102E0,Stage 1,720,Gfx_CalculateScrollPosition,Calculates scroll position from camera,Gfx,analyzed
-sub_102FC,Stage 1,720,Gfx_AccelerateScroll,Accelerates scroll based on player position,Gfx,analyzed
-sub_103FA,Stage 1,720,Gfx_SetupScrollPlanes,Sets up VDP scroll plane registers,Gfx,analyzed
-sub_10496,Stage 1,720,Gfx_WriteScrollValue,Writes scroll value with flag checks,Gfx,analyzed
-sub_106F2,Stage 1,720,Gfx_GetCameraPosition,Gets camera position for rendering,Gfx,analyzed
-sub_106FE,Stage 1,720,Gfx_RenderTilemap,Renders tilemap tiles to VRAM planes,Gfx,analyzed
-sub_1344A,Stage 1,720,Gfx_SetupVDPDMA,Sets up VDP DMA transfer registers,Gfx,analyzed
-sub_13CCA,Stage 1,720,Enemy_DetectPlayerCollision,Detects collision between enemies and player,Enemy,analyzed
-sub_13E9A,Stage 1,720,Player_DetectProjectileHit,Detects player projectile hits on enemies,Player,analyzed
-sub_14760,Stage 1,720,Player_CheckTerrainCollision,Checks player collision with terrain,Player,analyzed
-sub_149EE,Stage 1,720,Player_HandleFloorCollision,Handles player collision with floor,Player,analyzed
-sub_14C72,Stage 1,720,Player_SnapToFloor,Snaps player position to floor surface,Player,analyzed
-sub_151EE,Stage 1,720,Player_InitAirState,Initializes player air movement state,Player,analyzed
-sub_15408,Stage 1,720,Player_HandleAirState,Handles player airborne state logic,Player,analyzed
-sub_15502,Stage 1,720,Player_InitLandingState,Initializes player landing state,Player,analyzed
-sub_15532,Stage 1,720,Player_HandleLandingState,Handles player landing state logic,Player,analyzed
-sub_15AF4,Stage 1,720,Player_InitSlideState,Initializes player slide knockback state,Player,analyzed
-sub_15B20,Stage 1,720,Player_HandleSlideState,Handles player slide knockback state,Player,analyzed
-sub_15CE4,Stage 1,720,Player_HandleFallingState,Handles player falling state with gravity,Player,analyzed
-sub_15E5E,Stage 1,720,Player_SelectFallAnimation,Selects animation based on falling velocity,Player,analyzed
-sub_15F04,Stage 1,720,Player_ApplyAirControl,Applies horizontal air control input,Player,analyzed
-sub_15F6A,Stage 1,720,Player_InitSpecialAttack,Initializes special attack state,Player,analyzed
-sub_15FC4,Stage 1,720,Player_HandleSpecialAttack,Handles special attack state logic,Player,analyzed
-sub_16B74,Stage 1,720,Player_SetHitbox,Sets player hit box collision boundaries with direction mirroring,Player,analyzed
-sub_16CFE,Stage 1,720,Player_UpdateTerrainCheck,Updates player state and checks terrain collision,Player,analyzed
-sub_16D40,Stage 1,720,Player_DirectionDispatcher,Dispatches player action based on facing direction,Player,analyzed
-sub_16D80,Stage 1,720,Input_ProcessDirectionInput,Processes D-pad input for character facing direction,Input,analyzed
-sub_16EAA,Stage 1,720,Player_DecelerateHorizontalVelocity,Decelerates horizontal velocity towards zero,Player,analyzed
-sub_171CA,Stage 1,720,Player_UpdateAnimationState,Updates player animation state and frame data,Player,analyzed
-sub_171D6,Stage 1,720,Anim_SelectFrameData,Selects animation frame data from table,Anim,analyzed
-sub_17274,Stage 1,720,Sprite_PrepareRendering,Prepares player sprite for rendering with palette,Sprite,analyzed
-sub_17514,Stage 1,720,Effect_SpawnParticle,Spawns particle effect with random velocity,Effect,analyzed
-sub_17884,Stage 1,720,Effect_UpdateDashTrail,Updates dash trail position with acceleration,Effect,analyzed
-sub_178FE,Stage 1,720,UI_UpdateWeaponDisplay,Updates weapon selection display counters,UI,analyzed
-sub_17952,Stage 1,720,UI_ProcessWeaponState,Processes weapon display state dispatcher,UI,analyzed
-sub_1799A,Stage 1,720,UI_GetWeaponIconData,Gets weapon icon data from table,UI,analyzed
-sub_17BFC,Stage 1,720,UI_IncrementWeaponSelection,Increments weapon selection index,UI,analyzed
-sub_17E46,Stage 1,720,Gfx_LoadWeaponIcon,Loads weapon icon graphics via DMA,Gfx,analyzed
-sub_17ED8,Stage 1,720,Sprite_RenderPlayer,Renders player sprite with position adjustments,Sprite,analyzed
-sub_18530,Stage 1,720,Player_SpawnCircleAttack,Spawns 8 projectiles in circular pattern,Player,analyzed
-sub_18EE8,Stage 1,720,Sprite_UpdateSeekingProjectile,Updates projectile seeking movement,Sprite,analyzed
-sub_18F06,Stage 1,720,Sprite_HandleProjectileCollision,Handles projectile collision and destruction,Sprite,analyzed
-sub_18F58,Stage 1,720,Effect_SpawnExplosion,Spawns explosion effect with random velocity,Effect,analyzed
-sub_199F4,Stage 1,720,Input_MergeButtonState,Merges button state from buffer into main register,Input,analyzed
-sub_19A10,Stage 1,720,Input_ClearAndDispatch,Clears button state and dispatches input handler,Input,analyzed
-sub_19D5C,Stage 1,720,Input_SetButtonFlag,Sets specific button flag in state register,Input,analyzed
-sub_1A280,Stage 1,720,Sys_UpdateObjectSpawner,Updates object spawner state and triggers,Sys,analyzed
-sub_1A2FA,Stage 1,720,Sys_ProcessSpawnList,Processes object spawn list based on scroll,Sys,analyzed
-sub_1A324,Stage 1,720,Sys_SpawnObject,Spawns object from spawn table entry,Sys,analyzed
-sub_1A38A,Stage 1,720,Sys_FindSlotInRange,Finds free slot in object array range,Sys,analyzed
-sub_1A3B0,Stage 1,720,Sys_ClearObjectSlot,Clears 96 bytes of object RAM,Sys,analyzed
-sub_1CA86,Stage 1,720,Physics_ApplyVelocityWithBounds,Applies velocity with boundary clamping,Physics,analyzed
-sub_1CAE4,Stage 1,720,Physics_ApplyPositionOffset,Applies position offset based on direction flags,Physics,analyzed
-sub_1F002,Stage 1,720,Gfx_InitColorTables,Initializes color lookup tables in RAM,Gfx,analyzed
-sub_2A614,Stage 1,720,Sys_PassObjectAddress,Passes object address from a5 to a0,Sys,analyzed
-sub_2A616,Stage 1,720,Sprite_InitFromTable,Initializes sprite object from data table,Sprite,analyzed
-sub_2A6D8,Stage 1,720,Anim_UpdateSpriteFrame,Updates sprite animation frame timer and data,Anim,analyzed
-sub_2A7DE,Stage 1,720,Physics_ApplyGravity,Applies gravity to vertical velocity,Physics,analyzed
-sub_2BB70,Stage 1,720,Enemy_PlayDeathSound,Plays enemy death sound and sets timer,Enemy,analyzed
-sub_2BB86,Stage 1,720,Enemy_InitializeState,Initializes enemy state flags and properties,Enemy,analyzed
-sub_2BBC0,Stage 1,720,Enemy_UpdateBossAI,Updates boss AI with weapon cycling logic,Enemy,analyzed
-sub_2BCEE,Stage 1,720,Enemy_InitializeBoss,Initializes boss object and state,Enemy,analyzed
-sub_2C4DC,Stage 1,720,Sprite_SetupBossSprite,Sets up boss sprite properties and palette,Sprite,analyzed
-sub_2C53C,Stage 1,720,Anim_UpdateAnimationState,Updates animation pointer based on current state index,Anim,analyzed
-sub_2C564,Stage 1,720,Physics_AccelerateHorizontal,Applies horizontal acceleration with speed limits,Physics,analyzed
-sub_2C5B4,Stage 1,720,Physics_DecelerateHorizontal,Applies horizontal deceleration and stops at threshold,Physics,analyzed
-sub_2C6A8,Stage 1,720,Enemy_BehaviorController,Main AI controller for enemy behavior and state management,Enemy,analyzed
-sub_2C6FE,Stage 1,720,Enemy_StateDispatcher,Dispatches enemy to appropriate state handler,Enemy,analyzed
-sub_2C71E,Stage 1,720,Enemy_MainStateMachine,Main enemy state machine with movement and attack patterns,Enemy,analyzed
-sub_2C93A,Stage 1,720,Sprite_InitializeEnemySprite,Initializes sprite properties for enemy object,Sprite,analyzed
-sub_2C970,Stage 1,720,Anim_UpdateEnemyAnimation,Updates enemy animation frame based on state,Anim,analyzed
-sub_2C990,Stage 1,720,Enemy_ProcessObject,Main processing routine for enemy object,Enemy,analyzed
-sub_2C9B4,Stage 1,720,Enemy_RunStateHandler,Executes current enemy state handler,Enemy,analyzed
-sub_2C9D0,Stage 1,720,Enemy_InitializeWithHealth,Initializes enemy with health value and sprite setup,Enemy,analyzed
-sub_2CA40,Stage 1,720,Sprite_InitializeProjectileSprite,Initializes sprite properties for projectile object,Sprite,analyzed
-sub_2CA7C,Stage 1,720,Anim_UpdateProjectileAnimation,Updates projectile animation frame,Anim,analyzed
-sub_2CBF8,Stage 1,720,Enemy_ProcessProjectile,Main processing routine for projectile object,Enemy,analyzed
-sub_2CC12,Stage 1,720,Enemy_ProjectileStateHandler,Dispatches projectile to state handler,Enemy,analyzed
-sub_2CC34,Stage 1,720,Enemy_ProjectileStateMachine,State machine for projectile movement and collision,Enemy,analyzed
-sub_2CE1C,Stage 1,720,Enemy_ProcessAltProjectile,Processing routine for alternative projectile type,Enemy,analyzed
-sub_2CE34,Stage 1,720,Enemy_AltProjectileStateHandler,Dispatches alternative projectile to state handler,Enemy,analyzed
-sub_2CE4E,Stage 1,720,Enemy_AltProjectileStateMachine,State machine for alternative projectile with difficulty scaling,Enemy,analyzed
-sub_2CF18,Stage 1,720,Enemy_FacePlayer,Updates enemy facing direction to track player,Enemy,analyzed
-sub_2CF40,Stage 1,720,Physics_AccelerateGravity,Applies gravity acceleration to vertical velocity with terminal velocity,Physics,analyzed
-sub_2CF64,Stage 1,720,Player_UpdatePhysics,Updates player physics and action state,Player,analyzed
-sub_835A4,Stage 1,720,Sound_ProcessChannelBits,Processes YM2612 sound chip channel bit flags,Sound,analyzed
-sub_147D6,Jetsripper boss,900,Physics_MultiPointTerrainCheck,Performs terrain collision checks at multiple points,Physics,analyzed
-sub_1483A,Jetsripper boss,900,Physics_TerrainCheckWithVelocity,Terrain collision check with vertical velocity validation,Physics,analyzed
-sub_1490A,Jetsripper boss,900,Physics_ProcessTerrainAngle,Processes terrain collision based on surface angle,Physics,analyzed
-sub_14A48,Jetsripper boss,900,Physics_HandleFloorCollision,Handles floor collision and sets ground state,Physics,analyzed
-sub_14AA2,Jetsripper boss,900,Physics_HandleCeilingCollision,Handles ceiling collision based on angle,Physics,analyzed
-sub_14C86,Jetsripper boss,900,Physics_SnapToSurface,Snaps player position to terrain surface,Physics,analyzed
-sub_14EEA,Jetsripper boss,900,Physics_HandleWallCollision,Handles wall collision and adjusts position,Physics,analyzed
-sub_1592E,Jetsripper boss,900,Player_InitiateDashAttack,Initializes player dash attack with direction and projectile,Player,analyzed
-sub_15C20,Jetsripper boss,900,Player_CheckDashInput,Checks controller input for dash attack activation,Player,analyzed
-sub_15C72,Jetsripper boss,900,Player_EndDashState,Ends dash attack and transitions to air state,Player,analyzed
-sub_1652C,Jetsripper boss,900,Player_ProcessAirState,Processes player state while airborne,Player,analyzed
-sub_1663A,Jetsripper boss,900,Player_InitiateLanding,Initializes player landing recovery state,Player,analyzed
-sub_16670,Jetsripper boss,900,Player_ProcessJumpState,Processes player state during jump,Player,analyzed
-sub_166EA,Jetsripper boss,900,Player_CheckCounterInput,Checks controller input for counter/parry activation,Player,analyzed
-sub_16C62,Jetsripper boss,900,Effect_FindDashTrailSlot,Finds free object slot for dash trail effect,Effect,analyzed
-sub_16D14,Jetsripper boss,900,Player_TerrainCheckStandard,Standard terrain collision check for player,Player,analyzed
-sub_16D2A,Jetsripper boss,900,Player_TerrainCheckAlternate,Alternative terrain collision check with velocity,Player,analyzed
-sub_1B410,Jetsripper boss,900,,,,pending
-sub_2A30E,Jetsripper boss,900,,,,pending
-sub_2A32A,Jetsripper boss,900,,,,pending
-sub_2B6D4,Jetsripper boss,900,,,,pending
-sub_2BD1E,Jetsripper boss,900,,,,pending
-sub_2BD2E,Jetsripper boss,900,,,,pending
-sub_2C33A,Jetsripper boss,900,,,,pending
-sub_2C360,Jetsripper boss,900,,,,pending
-sub_2C3BC,Jetsripper boss,900,,,,pending
-sub_2C3CE,Jetsripper boss,900,,,,pending
-sub_2C3F8,Jetsripper boss,900,,,,pending
-sub_2C41C,Jetsripper boss,900,,,,pending
-sub_2C4A2,Jetsripper boss,900,,,,pending
-sub_2C4C0,Jetsripper boss,900,,,,pending
-sub_2C622,Jetsripper boss,900,,,,pending
-sub_2C666,Jetsripper boss,900,,,,pending
-sub_2CA02,Jetsripper boss,900,,,,pending
-sub_C8DC,Jetsripper boss,1080,,,,pending
-sub_FF4A,Jetsripper boss,1080,,,,pending
-sub_10068,Jetsripper boss,1080,,,,pending
-sub_116A8,Jetsripper boss,1080,,,,pending
-sub_1400C,Jetsripper boss,1080,,,,pending
-sub_14ED2,Jetsripper boss,1080,,,,pending
-sub_152CA,Jetsripper boss,1080,,,,pending
-sub_15342,Jetsripper boss,1080,,,,pending
-sub_1539C,Jetsripper boss,1080,,,,pending
-sub_153BC,Jetsripper boss,1080,,,,pending
-sub_156B8,Jetsripper boss,1080,,,,pending
-sub_15C66,Jetsripper boss,1080,,,,pending
-sub_15E40,Jetsripper boss,1080,,,,pending
-sub_167EE,Jetsripper boss,1080,,,,pending
-sub_16E34,Jetsripper boss,1080,,,,pending
-sub_17386,Jetsripper boss,1080,,,,pending
-sub_174A8,Jetsripper boss,1080,,,,pending
-sub_1C050,Jetsripper boss,1080,,,,pending
-sub_1CAF2,Jetsripper boss,1080,,,,pending
-sub_2BDB0,Jetsripper boss,1080,,,,pending
-sub_2CB86,Jetsripper boss,1080,,,,pending
-sub_1609A,Jetsripper boss,1260,,,,pending
-sub_1615C,Jetsripper boss,1260,,,,pending
+sub_E9C,Sega screen,180,,Writes VDP register values from RAM buffer to hardware,Gfx,analyzed
+sub_2016,Sega screen,180,,Main object processing loop - iterates through active objects,Sys,analyzed
+sub_21F0,Sega screen,180,,Initializes object pointer table in RAM,Sys,analyzed
+sub_2224,Sega screen,180,,Updates object list with new entries,Sys,analyzed
+sub_22C4,Sega screen,180,,Prepares sprite OAM entry with position and attributes,Sprite,analyzed
+sub_B9EA,Sega screen,180,,Synchronizes palette data across multiple RAM buffers,Gfx,analyzed
+sub_111B4,Sega screen,180,,Updates tilemap tile indices and palette bits with offset,Gfx,analyzed
+sub_1A29C,Sega screen,180,,Processes all objects with screen bounds culling,Sys,analyzed
+sub_1C902,Sega screen,180,,Calculates number of active visible objects from list pointer,Sys,analyzed
+sub_1D120,Sega screen,180,,Copies two palette lines between RAM buffers,Gfx,analyzed
+sub_BD4,Title screen,360,,Handles timed events and callbacks during VBlank,Sys,analyzed
+sub_2D6C,Title screen,360,,Full game mode initialization sequence,Sys,analyzed
+sub_2D94,Title screen,360,,Initializes core subsystems and memory structures,Sys,analyzed
+sub_2DFE,Title screen,360,,Initializes video mode and clears VRAM,Gfx,analyzed
+sub_2EBC,Title screen,360,,Clears 32KB RAM block to zero,Sys,analyzed
+sub_317C,Title screen,360,,Clears entire VRAM with interrupts disabled,Gfx,analyzed
+sub_33BA,Title screen,360,,Acquires Z80 bus for sound operations,Sound,analyzed
+sub_33D8,Title screen,360,,Reads controller input from I/O ports,Input,analyzed
+sub_349A,Title screen,360,,Low-level controller port bit reading,Input,analyzed
+sub_10AE4,Title screen,360,,Loads pointer to data table 1,Sys,analyzed
+sub_10AF4,Title screen,360,,Loads pointer to data table 2,Sys,analyzed
+sub_1F6A,Stage 1,540,,Configures VDP DMA registers for data transfer,Gfx,analyzed
+sub_208E,Stage 1,540,,Processes sprite DMA queue for batch transfers,Sprite,analyzed
+sub_2160,Stage 1,540,,Updates animation frame with timer and pointer management,Anim,analyzed
+sub_2316,Stage 1,540,,Renders sprite tiles with position calculation,Sprite,analyzed
+sub_2384,Stage 1,540,,Calculates sprite screen position with bounds checking,Sprite,analyzed
+sub_27D8,Stage 1,540,,Processes data pointers with state bits,Sys,analyzed
+sub_2972,Stage 1,540,,Decompresses LZSS data to RAM buffer,Sys,analyzed
+sub_2A58,Stage 1,540,,Clears DMA buffer at FFB400,Sys,analyzed
+sub_2C62,Stage 1,540,,Executes DMA transfer with VDP register setup,Gfx,analyzed
+sub_2DB4,Stage 1,540,,Initializes graphics subsystem chain,Sys,analyzed
+sub_2E32,Stage 1,540,,Loads VDP register values from table,Gfx,analyzed
+sub_2EF0,Stage 1,540,,Clears object RAM area at FF8000,Sys,analyzed
+sub_2F08,Stage 1,540,,Clears sprite buffer areas,Sys,analyzed
+sub_320C,Stage 1,540,,Clears CRAM color RAM area,Gfx,analyzed
+sub_326C,Stage 1,540,,Clears VRAM plane data,Gfx,analyzed
+sub_34EE,Stage 1,540,,Processes joypad button state,Input,analyzed
+sub_3B9A,Stage 1,540,,Adjusts palette selection bits in tile data,Gfx,analyzed
+sub_4094,Stage 1,540,,Main player state machine dispatcher,Player,analyzed
+sub_40C0,Stage 1,540,,Updates palette state and positions,Gfx,analyzed
+sub_A970,Stage 1,540,,Player behavior state dispatcher,Player,analyzed
+sub_AE9A,Stage 1,540,,Initializes player object with default values,Player,analyzed
+sub_10DB2,Stage 1,540,,Sets up VDP DMA for sprite data,Sprite,analyzed
+sub_11256,Stage 1,540,,Writes VDP command registers,Gfx,analyzed
+sub_11DD2,Stage 1,540,,Stage state machine dispatcher,Stage,analyzed
+sub_11E1A,Stage 1,540,,Loads tile data into tables,Gfx,analyzed
+sub_11E86,Stage 1,540,,Loads stage palette data,Gfx,analyzed
+sub_12B6A,Stage 1,540,,Renders HUD element health or ammo,UI,analyzed
+sub_12E50,Stage 1,540,,Renders HUD element variant 2,UI,analyzed
+sub_12FBC,Stage 1,540,,Renders HUD element variant 3,UI,analyzed
+sub_13178,Stage 1,540,,Processes multiple palette slots,Gfx,analyzed
+sub_1319E,Stage 1,540,,Loads palette data from offset table,Gfx,analyzed
+sub_131AE,Stage 1,540,,Sets up VDP registers for sprite tiles,Sprite,analyzed
+sub_131D6,Stage 1,540,,Sets up DMA for tile transfer,Gfx,analyzed
+sub_146FC,Stage 1,540,,Dispatches player action handlers,Player,analyzed
+sub_148B0,Stage 1,540,,Handles player collision states,Player,analyzed
+sub_14F06,Stage 1,540,,Initializes player stats and parameters,Player,analyzed
+sub_14F98,Stage 1,540,,Main player update routine,Player,analyzed
+sub_15052,Stage 1,540,,Updates player state machine,Player,analyzed
+sub_1521E,Stage 1,540,,Handles player jump mechanics,Player,analyzed
+sub_155B0,Stage 1,540,,Handles player special move action,Player,analyzed
+sub_159E0,Stage 1,540,,Handles dash cancel state and timer management,Player,analyzed
+sub_15A9C,Stage 1,540,,Applies horizontal movement with boundary checking,Player,analyzed
+sub_15BB8,Stage 1,540,,Checks and activates special move from state flags,Player,analyzed
+sub_16B04,Stage 1,540,,Reads controller input into player state bytes,Input,analyzed
+sub_16B24,Stage 1,540,,Updates weapon switch timer and cooldown,Player,analyzed
+sub_16C00,Stage 1,540,,Manages player invulnerability and flash timer,Player,analyzed
+sub_16C6E,Stage 1,540,,Loads player sprite palette based on state,Gfx,analyzed
+sub_16CE8,Stage 1,540,,Processes player action through dispatcher,Player,analyzed
+sub_173FA,Stage 1,540,,Spawns player projectile with velocity and properties,Player,analyzed
+sub_177B6,Stage 1,540,,Creates visual dash trail effect behind player,Effect,analyzed
+sub_19188,Stage 1,540,,Initializes projectile sprite with position and velocity,Sprite,analyzed
+sub_19992,Stage 1,540,,Processes all active projectile objects,Sys,analyzed
+sub_1B8CA,Stage 1,540,,Maps button input based on game state,Input,analyzed
+sub_1C042,Stage 1,540,,Finds free slot in object array,Sys,analyzed
+sub_1C97A,Stage 1,540,,Updates camera scroll position based on player,Gfx,analyzed
+sub_1CE3A,Stage 1,540,,Updates enemy AI behavior state,Enemy,analyzed
+sub_1F05E,Stage 1,540,,Initializes stage state machine,Stage,analyzed
+sub_1F072,Stage 1,540,,Updates UI menu state and rendering,UI,analyzed
+sub_1F12C,Stage 1,540,,Loads stage assets and data,Stage,analyzed
+sub_1F14E,Stage 1,540,,Handles stage state transitions,Stage,analyzed
+sub_1F238,Stage 1,540,,Handles menu navigation with directional input,UI,analyzed
+sub_1F356,Stage 1,540,,Handles weapon menu directional navigation,UI,analyzed
+sub_1F3B8,Stage 1,540,,Executes sprite fade with DMA transfers,Sprite,analyzed
+sub_1F3E6,Stage 1,540,,Loads menu graphic elements in loop,Gfx,analyzed
+sub_1F464,Stage 1,540,,Waits for button press before proceeding,UI,analyzed
+sub_1F496,Stage 1,540,,Handles option selection with directional controls,UI,analyzed
+sub_1F720,Stage 1,540,,Smoothly interpolates scroll position to target,Gfx,analyzed
+sub_2A7BE,Stage 1,540,,Initializes sprite object properties at address,Sprite,analyzed
+sub_82324,Stage 1,540,,Thunk to main sound driver update,Sound,analyzed
+sub_8232C,Stage 1,540,,Main sound driver update loop,Sound,analyzed
+sub_82552,Stage 1,540,,Processes individual sound channel state,Sound,analyzed
+sub_8257C,Stage 1,540,,Parses and interprets sound track data,Sound,analyzed
+sub_825B2,Stage 1,540,,Calculates note pitch and frequency,Sound,analyzed
+sub_825E4,Stage 1,540,,Calculates note duration timing,Sound,analyzed
+sub_829AA,Stage 1,540,,Processes sound fade and volume changes,Sound,analyzed
+sub_82A1A,Stage 1,540,,Updates sound envelope parameters,Sound,analyzed
+sub_82F6C,Stage 1,540,,Processes DAC digital audio channel,Sound,analyzed
+sub_8329C,Stage 1,540,,Processes FM synthesis channels,Sound,analyzed
+sub_833AA,Stage 1,540,,Writes data to sound chip registers,Sound,analyzed
+sub_833BC,Stage 1,540,,Initializes sound channel structures,Sound,analyzed
+sub_8342A,Stage 1,540,,Processes sound tempo tick and increments channel timers,Sound,analyzed
+sub_834D2,Stage 1,540,,Resets sound driver state and clears RAM,Sound,analyzed
+sub_835B0,Stage 1,540,,Writes data to YM2612 FM chip registers,Sound,analyzed
+sub_83820,Stage 1,540,,Dispatches sound commands via jump table,Sound,analyzed
+sub_838C4,Stage 1,540,,Sets sound channel control flags,Sound,analyzed
+sub_838E0,Stage 1,540,,Sets envelope parameter for channel,Sound,analyzed
+sub_839B8,Stage 1,540,,Selects instrument for sound channel,Sound,analyzed
+sub_83A8E,Stage 1,540,,Applies volume and pan to sound channel,Sound,analyzed
+sub_83B0A,Stage 1,540,,Sets up LFO modulation parameters,Sound,analyzed
+sub_2264,Stage 1,720,,Culls sprites outside visible screen area,Sprite,analyzed
+sub_B326,Stage 1,720,,Loads tile indices from data table,Gfx,analyzed
+sub_C83E,Stage 1,720,,Main stage dispatcher jump table,Stage,analyzed
+sub_C8C2,Stage 1,720,,Updates stage logic and scroll,Stage,analyzed
+sub_FF16,Stage 1,720,,Processes stage handler entry point,Stage,analyzed
+sub_10060,Stage 1,720,,Updates scroll with player following,Gfx,analyzed
+sub_102E0,Stage 1,720,,Calculates scroll position from camera,Gfx,analyzed
+sub_102FC,Stage 1,720,,Accelerates scroll based on player position,Gfx,analyzed
+sub_103FA,Stage 1,720,,Sets up VDP scroll plane registers,Gfx,analyzed
+sub_10496,Stage 1,720,,Writes scroll value with flag checks,Gfx,analyzed
+sub_106F2,Stage 1,720,,Gets camera position for rendering,Gfx,analyzed
+sub_106FE,Stage 1,720,,Renders tilemap tiles to VRAM planes,Gfx,analyzed
+sub_1344A,Stage 1,720,,Sets up VDP DMA transfer registers,Gfx,analyzed
+sub_13CCA,Stage 1,720,,Detects collision between enemies and player,Enemy,analyzed
+sub_13E9A,Stage 1,720,,Detects player projectile hits on enemies,Player,analyzed
+sub_14760,Stage 1,720,,Checks player collision with terrain,Player,analyzed
+sub_149EE,Stage 1,720,,Handles player collision with floor,Player,analyzed
+sub_14C72,Stage 1,720,,Snaps player position to floor surface,Player,analyzed
+sub_151EE,Stage 1,720,,Initializes player air movement state,Player,analyzed
+sub_15408,Stage 1,720,,Handles player airborne state logic,Player,analyzed
+sub_15502,Stage 1,720,,Initializes player landing state,Player,analyzed
+sub_15532,Stage 1,720,,Handles player landing state logic,Player,analyzed
+sub_15AF4,Stage 1,720,,Initializes player slide knockback state,Player,analyzed
+sub_15B20,Stage 1,720,,Handles player slide knockback state,Player,analyzed
+sub_15CE4,Stage 1,720,,Handles player falling state with gravity,Player,analyzed
+sub_15E5E,Stage 1,720,,Selects animation based on falling velocity,Player,analyzed
+sub_15F04,Stage 1,720,,Applies horizontal air control input,Player,analyzed
+sub_15F6A,Stage 1,720,,Initializes special attack state,Player,analyzed
+sub_15FC4,Stage 1,720,,Handles special attack state logic,Player,analyzed
+sub_16B74,Stage 1,720,,Sets player hit box collision boundaries with direction mirroring,Player,analyzed
+sub_16CFE,Stage 1,720,,Updates player state and checks terrain collision,Player,analyzed
+sub_16D40,Stage 1,720,,Dispatches player action based on facing direction,Player,analyzed
+sub_16D80,Stage 1,720,,Processes D-pad input for character facing direction,Input,analyzed
+sub_16EAA,Stage 1,720,,Decelerates horizontal velocity towards zero,Player,analyzed
+sub_171CA,Stage 1,720,,Updates player animation state and frame data,Player,analyzed
+sub_171D6,Stage 1,720,,Selects animation frame data from table,Anim,analyzed
+sub_17274,Stage 1,720,,Prepares player sprite for rendering with palette,Sprite,analyzed
+sub_17514,Stage 1,720,,Spawns particle effect with random velocity,Effect,analyzed
+sub_17884,Stage 1,720,,Updates dash trail position with acceleration,Effect,analyzed
+sub_178FE,Stage 1,720,,Updates weapon selection display counters,UI,analyzed
+sub_17952,Stage 1,720,,Processes weapon display state dispatcher,UI,analyzed
+sub_1799A,Stage 1,720,,Gets weapon icon data from table,UI,analyzed
+sub_17BFC,Stage 1,720,,Increments weapon selection index,UI,analyzed
+sub_17E46,Stage 1,720,,Loads weapon icon graphics via DMA,Gfx,analyzed
+sub_17ED8,Stage 1,720,,Renders player sprite with position adjustments,Sprite,analyzed
+sub_18530,Stage 1,720,,Spawns 8 projectiles in circular pattern,Player,analyzed
+sub_18EE8,Stage 1,720,,Updates projectile seeking movement,Sprite,analyzed
+sub_18F06,Stage 1,720,,Handles projectile collision and destruction,Sprite,analyzed
+sub_18F58,Stage 1,720,,Spawns explosion effect with random velocity,Effect,analyzed
+sub_199F4,Stage 1,720,,Merges button state from buffer into main register,Input,analyzed
+sub_19A10,Stage 1,720,,Clears button state and dispatches input handler,Input,analyzed
+sub_19D5C,Stage 1,720,,Sets specific button flag in state register,Input,analyzed
+sub_1A280,Stage 1,720,,Updates object spawner state and triggers,Sys,analyzed
+sub_1A2FA,Stage 1,720,,Processes object spawn list based on scroll,Sys,analyzed
+sub_1A324,Stage 1,720,,Spawns object from spawn table entry,Sys,analyzed
+sub_1A38A,Stage 1,720,,Finds free slot in object array range,Sys,analyzed
+sub_1A3B0,Stage 1,720,,Clears 96 bytes of object RAM,Sys,analyzed
+sub_1CA86,Stage 1,720,,Applies velocity with boundary clamping,Physics,analyzed
+sub_1CAE4,Stage 1,720,,Applies position offset based on direction flags,Physics,analyzed
+sub_1F002,Stage 1,720,,Initializes color lookup tables in RAM,Gfx,analyzed
+sub_2A614,Stage 1,720,,Passes object address from a5 to a0,Sys,analyzed
+sub_2A616,Stage 1,720,,Initializes sprite object from data table,Sprite,analyzed
+sub_2A6D8,Stage 1,720,,Updates sprite animation frame timer and data,Anim,analyzed
+sub_2A7DE,Stage 1,720,,Applies gravity to vertical velocity,Physics,analyzed
+sub_2BB70,Stage 1,720,,Plays enemy death sound and sets timer,Enemy,analyzed
+sub_2BB86,Stage 1,720,,Initializes enemy state flags and properties,Enemy,analyzed
+sub_2BBC0,Stage 1,720,,Updates boss AI with weapon cycling logic,Enemy,analyzed
+sub_2BCEE,Stage 1,720,,Initializes boss object and state,Enemy,analyzed
+sub_2C4DC,Stage 1,720,,Sets up boss sprite properties and palette,Sprite,analyzed
+sub_2C53C,Stage 1,720,,Updates animation pointer based on current state index,Anim,analyzed
+sub_2C564,Stage 1,720,,Applies horizontal acceleration with speed limits,Physics,analyzed
+sub_2C5B4,Stage 1,720,,Applies horizontal deceleration and stops at threshold,Physics,analyzed
+sub_2C6A8,Stage 1,720,,Main AI controller for enemy behavior and state management,Enemy,analyzed
+sub_2C6FE,Stage 1,720,,Dispatches enemy to appropriate state handler,Enemy,analyzed
+sub_2C71E,Stage 1,720,,Main enemy state machine with movement and attack patterns,Enemy,analyzed
+sub_2C93A,Stage 1,720,,Initializes sprite properties for enemy object,Sprite,analyzed
+sub_2C970,Stage 1,720,,Updates enemy animation frame based on state,Anim,analyzed
+sub_2C990,Stage 1,720,,Main processing routine for enemy object,Enemy,analyzed
+sub_2C9B4,Stage 1,720,,Executes current enemy state handler,Enemy,analyzed
+sub_2C9D0,Stage 1,720,,Initializes enemy with health value and sprite setup,Enemy,analyzed
+sub_2CA40,Stage 1,720,,Initializes sprite properties for projectile object,Sprite,analyzed
+sub_2CA7C,Stage 1,720,,Updates projectile animation frame,Anim,analyzed
+sub_2CBF8,Stage 1,720,,Main processing routine for projectile object,Enemy,analyzed
+sub_2CC12,Stage 1,720,,Dispatches projectile to state handler,Enemy,analyzed
+sub_2CC34,Stage 1,720,,State machine for projectile movement and collision,Enemy,analyzed
+sub_2CE1C,Stage 1,720,,Processing routine for alternative projectile type,Enemy,analyzed
+sub_2CE34,Stage 1,720,,Dispatches alternative projectile to state handler,Enemy,analyzed
+sub_2CE4E,Stage 1,720,,State machine for alternative projectile with difficulty scaling,Enemy,analyzed
+sub_2CF18,Stage 1,720,,Updates enemy facing direction to track player,Enemy,analyzed
+sub_2CF40,Stage 1,720,,Applies gravity acceleration to vertical velocity with terminal velocity,Physics,analyzed
+sub_2CF64,Stage 1,720,,Updates player physics and action state,Player,analyzed
+sub_835A4,Stage 1,720,,Processes YM2612 sound chip channel bit flags,Sound,analyzed
+sub_147D6,Jetsripper boss,900,,Performs terrain collision checks at multiple points,Physics,analyzed
+sub_1483A,Jetsripper boss,900,,Terrain collision check with vertical velocity validation,Physics,analyzed
+sub_1490A,Jetsripper boss,900,,Processes terrain collision based on surface angle,Physics,analyzed
+sub_14A48,Jetsripper boss,900,,Handles floor collision and sets ground state,Physics,analyzed
+sub_14AA2,Jetsripper boss,900,,Handles ceiling collision based on angle,Physics,analyzed
+sub_14C86,Jetsripper boss,900,,Snaps player position to terrain surface,Physics,analyzed
+sub_14EEA,Jetsripper boss,900,,Handles wall collision and adjusts position,Physics,analyzed
+sub_1592E,Jetsripper boss,900,,Initializes player dash attack with direction and projectile,Player,analyzed
+sub_15C20,Jetsripper boss,900,,Checks controller input for dash attack activation,Player,analyzed
+sub_15C72,Jetsripper boss,900,,Ends dash attack and transitions to air state,Player,analyzed
+sub_1652C,Jetsripper boss,900,,Processes player state while airborne,Player,analyzed
+sub_1663A,Jetsripper boss,900,,Initializes player landing recovery state,Player,analyzed
+sub_16670,Jetsripper boss,900,,Processes player state during jump,Player,analyzed
+sub_166EA,Jetsripper boss,900,,Checks controller input for counter/parry activation,Player,analyzed
+sub_16C62,Jetsripper boss,900,,Finds free object slot for dash trail effect,Effect,analyzed
+sub_16D14,Jetsripper boss,900,,Standard terrain collision check for player,Player,analyzed
+sub_16D2A,Jetsripper boss,900,,Alternative terrain collision check with velocity,Player,analyzed
+sub_1B410,Jetsripper boss,900,,Calculates distance between two objects using position differences,Physics,analyzed
+sub_2A30E,Jetsripper boss,900,,Checks object visibility timer and sets flags,Boss,analyzed
+sub_2A32A,Jetsripper boss,900,,Spawns Jetsripper boss projectile with initial state,Boss,analyzed
+sub_2B6D4,Jetsripper boss,900,,Main update routine for Jetsripper boss,Boss,analyzed
+sub_2BD1E,Jetsripper boss,900,,Jetsripper attack pattern state handler,Boss,analyzed
+sub_2BD2E,Jetsripper boss,900,,Jetsripper second attack pattern state,Boss,analyzed
+sub_2C33A,Jetsripper boss,900,,Moves Jetsripper boss left with animation,Boss,analyzed
+sub_2C360,Jetsripper boss,900,,Moves Jetsripper boss right with animation,Boss,analyzed
+sub_2C3BC,Jetsripper boss,900,,Updates boss movement phase and direction,Boss,analyzed
+sub_2C3CE,Jetsripper boss,900,,Initializes boss attack sequence with timers,Boss,analyzed
+sub_2C3F8,Jetsripper boss,900,,Sets boss animation frame from lookup table,Boss,analyzed
+sub_2C41C,Jetsripper boss,900,,Updates attack timer and transitions states,Boss,analyzed
+sub_2C4A2,Jetsripper boss,900,,Checks player position relative to boss,Boss,analyzed
+sub_2C4C0,Jetsripper boss,900,,Adjusts boss position based on player location,Boss,analyzed
+sub_2C622,Jetsripper boss,900,,Fires projectiles in pattern based on attack state,Boss,analyzed
+sub_2C666,Jetsripper boss,900,,Spawns multiple projectiles in sequence,Boss,analyzed
+sub_2CA02,Jetsripper boss,900,,Handles Jetsripper boss death animation and cleanup,Boss,analyzed
+sub_C8DC,Jetsripper boss,1080,,Initializes boss introduction sequence,Stage,analyzed
+sub_FF4A,Jetsripper boss,1080,,Transitions stage to next phase or section,Stage,analyzed
+sub_10068,Jetsripper boss,1080,,Loads boss tile graphics into VRAM,Gfx,analyzed
+sub_116A8,Jetsripper boss,1080,,Updates boss palette with fade or flash effect,Gfx,analyzed
+sub_1400C,Jetsripper boss,1080,,Sets OAM sprite entry for boss graphics,Sprite,analyzed
+sub_14ED2,Jetsripper boss,1080,,Updates boss sprite animation frame,Sprite,analyzed
+sub_152CA,Jetsripper boss,1080,,Applies velocity to boss position with bounds,Physics,analyzed
+sub_15342,Jetsripper boss,1080,,Checks collision between boss and player shots,Physics,analyzed
+sub_1539C,Jetsripper boss,1080,,Processes damage to boss and updates health,Boss,analyzed
+sub_153BC,Jetsripper boss,1080,,Flashes boss sprite when taking damage,Boss,analyzed
+sub_156B8,Jetsripper boss,1080,,Updates boss health bar display,Boss,analyzed
+sub_15C66,Jetsripper boss,1080,,Positions multiple boss sprite parts,Sprite,analyzed
+sub_15E40,Jetsripper boss,1080,,Draws boss health UI elements,Gfx,analyzed
+sub_167EE,Jetsripper boss,1080,,Plays sound effect for boss taking damage,Sound,analyzed
+sub_16E34,Jetsripper boss,1080,,Applies vertical momentum deceleration based on direction flag,Physics,analyzed
+sub_17386,Jetsripper boss,1080,,Checks if boss is defeated (health depleted),Boss,analyzed
+sub_174A8,Jetsripper boss,1080,,Handles stage progression after boss defeat,Stage,analyzed
+sub_1C050,Jetsripper boss,1080,,Updates projectile trajectory and rotation,Enemy,analyzed
+sub_1CAF2,Jetsripper boss,1080,,Checks if projectile is out of bounds,Enemy,analyzed
+sub_2BDB0,Jetsripper boss,1080,,Dispatches to boss state handler based on state index,Boss,analyzed
+sub_2CB86,Jetsripper boss,1080,,Jetsripper idle state with hovering animation,Boss,analyzed
+sub_1609A,Jetsripper boss,1260,,Updates particle effects for explosions,Effect,analyzed
+sub_1615C,Jetsripper boss,1260,,Spawns debris particles from boss damage,Effect,analyzed
 sub_179C2,Jetsripper boss,1260,,,,pending
 sub_17AAC,Jetsripper boss,1260,,,,pending
 sub_17B8A,Jetsripper boss,1260,,,,pending
