@@ -62,8 +62,8 @@ def main():
         print(f"  Built:    {built_file.name} ({built_file.stat().st_size:,} bytes)")
         print(f"  Original: {original_file.name} ({original_file.stat().st_size:,} bytes)")
         print()
-        print("✓ Assembly source matches original ROM perfectly")
-        print("✓ All procedure renames preserve binary output")
+        print("[OK] Assembly source matches original ROM perfectly")
+        print("[OK] All procedure renames preserve binary output")
         return 0
     else:
         print("=" * 60)

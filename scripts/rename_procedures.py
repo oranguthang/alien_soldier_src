@@ -129,14 +129,27 @@ def apply_renames(asm_file, procedures, dry_run=False):
         immediate_pattern = re.compile(r'#' + re.escape(old_name) + r'\b')
         content = immediate_pattern.sub(f'#{new_name}', content)
 
-        # 10. Replace in cross-reference comments
+        # 10. Replace PC-relative addressing: jsr/jmp/lea sub_XXXXX(pc)
+        pcrel_pattern = re.compile(r'\b(jsr|jmp|lea)\s+' + re.escape(old_name) + r'\(pc\)')
+        content = pcrel_pattern.sub(rf'\1 {new_name}(pc)', content)
+
+        # 10a. Replace in arithmetic expressions: sub_XXXXX-label or sub_XXXXX+label
+        # Used in offset tables: dc.w label-base or label+base or base-label
+        # Right side: -sub_XXXXX or +sub_XXXXX
+        expr_right_pattern = re.compile(r'([-+])\s*' + re.escape(old_name) + r'\b')
+        content = expr_right_pattern.sub(rf'\1{new_name}', content)
+        # Left side: sub_XXXXX- or sub_XXXXX+
+        expr_left_pattern = re.compile(r'\b' + re.escape(old_name) + r'\s*([-+])')
+        content = expr_left_pattern.sub(rf'{new_name}\1', content)
+
+        # 11. Replace in cross-reference comments
         # ; CODE XREF: sub_XXXXX+XX
         xref_pattern = re.compile(
             r'(;\s*(?:CODE|DATA)\s+XREF:\s+)' + re.escape(old_name) + r'\b'
         )
         content = xref_pattern.sub(r'\1' + new_name, content)
 
-        # 11. Replace "End of function" markers
+        # 12. Replace "End of function" markers
         end_pattern = re.compile(
             r'^(;\s*End of function\s+)' + re.escape(old_name) + r'\s*$',
             re.MULTILINE

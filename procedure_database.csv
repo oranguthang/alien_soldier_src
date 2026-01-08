@@ -20,46 +20,46 @@ sub_33D8,Title screen,360,Input_ReadController,Reads controller input from I/O p
 sub_349A,Title screen,360,Input_ReadControllerPort,Low-level controller port bit reading,Input,analyzed
 sub_10AE4,Title screen,360,Data_LoadPointerTable1,Loads pointer to data table 1,Sys,analyzed
 sub_10AF4,Title screen,360,Data_LoadPointerTable2,Loads pointer to data table 2,Sys,analyzed
-sub_1F6A,Stage 1,540,,,,pending
-sub_208E,Stage 1,540,,,,pending
-sub_2160,Stage 1,540,,,,pending
-sub_2316,Stage 1,540,,,,pending
-sub_2384,Stage 1,540,,,,pending
-sub_27D8,Stage 1,540,,,,pending
-sub_2972,Stage 1,540,,,,pending
-sub_2A58,Stage 1,540,,,,pending
-sub_2C62,Stage 1,540,,,,pending
-sub_2DB4,Stage 1,540,,,,pending
-sub_2E32,Stage 1,540,,,,pending
-sub_2EF0,Stage 1,540,,,,pending
-sub_2F08,Stage 1,540,,,,pending
-sub_320C,Stage 1,540,,,,pending
-sub_326C,Stage 1,540,,,,pending
-sub_34EE,Stage 1,540,,,,pending
-sub_3B9A,Stage 1,540,,,,pending
-sub_4094,Stage 1,540,,,,pending
-sub_40C0,Stage 1,540,,,,pending
-sub_A970,Stage 1,540,,,,pending
-sub_AE9A,Stage 1,540,,,,pending
-sub_10DB2,Stage 1,540,,,,pending
-sub_11256,Stage 1,540,,,,pending
-sub_11DD2,Stage 1,540,,,,pending
-sub_11E1A,Stage 1,540,,,,pending
-sub_11E86,Stage 1,540,,,,pending
-sub_12B6A,Stage 1,540,,,,pending
-sub_12E50,Stage 1,540,,,,pending
-sub_12FBC,Stage 1,540,,,,pending
-sub_13178,Stage 1,540,,,,pending
-sub_1319E,Stage 1,540,,,,pending
-sub_131AE,Stage 1,540,,,,pending
-sub_131D6,Stage 1,540,,,,pending
-sub_146FC,Stage 1,540,,,,pending
-sub_148B0,Stage 1,540,,,,pending
-sub_14F06,Stage 1,540,,,,pending
-sub_14F98,Stage 1,540,,,,pending
-sub_15052,Stage 1,540,,,,pending
-sub_1521E,Stage 1,540,,,,pending
-sub_155B0,Stage 1,540,,,,pending
+sub_1F6A,Stage 1,540,Gfx_SetupDMATransfer,Configures VDP DMA registers for data transfer,Gfx,analyzed
+sub_208E,Stage 1,540,Sprite_ProcessDMAQueue,Processes sprite DMA queue for batch transfers,Sprite,analyzed
+sub_2160,Stage 1,540,Anim_UpdateFrame,Updates animation frame with timer and pointer management,Anim,analyzed
+sub_2316,Stage 1,540,Sprite_RenderTiles,Renders sprite tiles with position calculation,Sprite,analyzed
+sub_2384,Stage 1,540,Sprite_CalculatePosition,Calculates sprite screen position with bounds checking,Sprite,analyzed
+sub_27D8,Stage 1,540,Data_ProcessPointer,Processes data pointers with state bits,Sys,analyzed
+sub_2972,Stage 1,540,Data_DecompressLZSS,Decompresses LZSS data to RAM buffer,Sys,analyzed
+sub_2A58,Stage 1,540,Sys_ClearDMABuffer,Clears DMA buffer at FFB400,Sys,analyzed
+sub_2C62,Stage 1,540,Gfx_ExecuteDMATransfer,Executes DMA transfer with VDP register setup,Gfx,analyzed
+sub_2DB4,Stage 1,540,Sys_InitGraphicsChain,Initializes graphics subsystem chain,Sys,analyzed
+sub_2E32,Stage 1,540,Gfx_LoadVDPRegisters,Loads VDP register values from table,Gfx,analyzed
+sub_2EF0,Stage 1,540,Sys_ClearObjectRAM,Clears object RAM area at FF8000,Sys,analyzed
+sub_2F08,Stage 1,540,Sys_ClearSpriteBuffers,Clears sprite buffer areas,Sys,analyzed
+sub_320C,Stage 1,540,Gfx_ClearCRAM,Clears CRAM color RAM area,Gfx,analyzed
+sub_326C,Stage 1,540,Gfx_ClearVRAMPlane,Clears VRAM plane data,Gfx,analyzed
+sub_34EE,Stage 1,540,Input_ProcessButtons,Processes joypad button state,Input,analyzed
+sub_3B9A,Stage 1,540,Gfx_AdjustPaletteBits,Adjusts palette selection bits in tile data,Gfx,analyzed
+sub_4094,Stage 1,540,Player_StateDispatcher,Main player state machine dispatcher,Player,analyzed
+sub_40C0,Stage 1,540,Gfx_UpdatePaletteState,Updates palette state and positions,Gfx,analyzed
+sub_A970,Stage 1,540,Player_BehaviorDispatcher,Player behavior state dispatcher,Player,analyzed
+sub_AE9A,Stage 1,540,Player_Initialize,Initializes player object with default values,Player,analyzed
+sub_10DB2,Stage 1,540,Sprite_SetupDMA,Sets up VDP DMA for sprite data,Sprite,analyzed
+sub_11256,Stage 1,540,Gfx_WriteVDPCommand,Writes VDP command registers,Gfx,analyzed
+sub_11DD2,Stage 1,540,Stage_StateDispatcher,Stage state machine dispatcher,Stage,analyzed
+sub_11E1A,Stage 1,540,Gfx_LoadTileData,Loads tile data into tables,Gfx,analyzed
+sub_11E86,Stage 1,540,Gfx_LoadStagePalette,Loads stage palette data,Gfx,analyzed
+sub_12B6A,Stage 1,540,UI_RenderHUDElement1,Renders HUD element health or ammo,UI,analyzed
+sub_12E50,Stage 1,540,UI_RenderHUDElement2,Renders HUD element variant 2,UI,analyzed
+sub_12FBC,Stage 1,540,UI_RenderHUDElement3,Renders HUD element variant 3,UI,analyzed
+sub_13178,Stage 1,540,Gfx_ProcessPaletteSlots,Processes multiple palette slots,Gfx,analyzed
+sub_1319E,Stage 1,540,Gfx_LoadPaletteData,Loads palette data from offset table,Gfx,analyzed
+sub_131AE,Stage 1,540,Sprite_SetupTileVDP,Sets up VDP registers for sprite tiles,Sprite,analyzed
+sub_131D6,Stage 1,540,Gfx_SetupTileDMA,Sets up DMA for tile transfer,Gfx,analyzed
+sub_146FC,Stage 1,540,Player_ActionDispatcher,Dispatches player action handlers,Player,analyzed
+sub_148B0,Stage 1,540,Player_HandleCollision,Handles player collision states,Player,analyzed
+sub_14F06,Stage 1,540,Player_InitializeStats,Initializes player stats and parameters,Player,analyzed
+sub_14F98,Stage 1,540,Player_Update,Main player update routine,Player,analyzed
+sub_15052,Stage 1,540,Player_UpdateState,Updates player state machine,Player,analyzed
+sub_1521E,Stage 1,540,Player_HandleJump,Handles player jump mechanics,Player,analyzed
+sub_155B0,Stage 1,540,Player_HandleSpecialMove,Handles player special move action,Player,analyzed
 sub_159E0,Stage 1,540,,,,pending
 sub_15A9C,Stage 1,540,,,,pending
 sub_15BB8,Stage 1,540,,,,pending

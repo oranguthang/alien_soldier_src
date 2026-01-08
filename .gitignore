@@ -136,6 +136,7 @@ reports/
 # Links to utils
 *.lnk
 
+alien_soldier_j_*.bin
 alien_soldier_j.bin
 alien_soldier_j.asm
 alien_soldier_j.map
