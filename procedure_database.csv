@@ -60,46 +60,46 @@ sub_14F98,Stage 1,540,Player_Update,Main player update routine,Player,analyzed
 sub_15052,Stage 1,540,Player_UpdateState,Updates player state machine,Player,analyzed
 sub_1521E,Stage 1,540,Player_HandleJump,Handles player jump mechanics,Player,analyzed
 sub_155B0,Stage 1,540,Player_HandleSpecialMove,Handles player special move action,Player,analyzed
-sub_159E0,Stage 1,540,,,,pending
-sub_15A9C,Stage 1,540,,,,pending
-sub_15BB8,Stage 1,540,,,,pending
-sub_16B04,Stage 1,540,,,,pending
-sub_16B24,Stage 1,540,,,,pending
-sub_16C00,Stage 1,540,,,,pending
-sub_16C6E,Stage 1,540,,,,pending
-sub_16CE8,Stage 1,540,,,,pending
-sub_173FA,Stage 1,540,,,,pending
-sub_177B6,Stage 1,540,,,,pending
-sub_19188,Stage 1,540,,,,pending
-sub_19992,Stage 1,540,,,,pending
-sub_1B8CA,Stage 1,540,,,,pending
-sub_1C042,Stage 1,540,,,,pending
-sub_1C97A,Stage 1,540,,,,pending
-sub_1CE3A,Stage 1,540,,,,pending
-sub_1F05E,Stage 1,540,,,,pending
-sub_1F072,Stage 1,540,,,,pending
-sub_1F12C,Stage 1,540,,,,pending
-sub_1F14E,Stage 1,540,,,,pending
-sub_1F238,Stage 1,540,,,,pending
-sub_1F356,Stage 1,540,,,,pending
-sub_1F3B8,Stage 1,540,,,,pending
-sub_1F3E6,Stage 1,540,,,,pending
-sub_1F464,Stage 1,540,,,,pending
-sub_1F496,Stage 1,540,,,,pending
-sub_1F720,Stage 1,540,,,,pending
-sub_2A7BE,Stage 1,540,,,,pending
-sub_82324,Stage 1,540,,,,pending
-sub_8232C,Stage 1,540,,,,pending
-sub_82552,Stage 1,540,,,,pending
-sub_8257C,Stage 1,540,,,,pending
-sub_825B2,Stage 1,540,,,,pending
-sub_825E4,Stage 1,540,,,,pending
-sub_829AA,Stage 1,540,,,,pending
-sub_82A1A,Stage 1,540,,,,pending
-sub_82F6C,Stage 1,540,,,,pending
-sub_8329C,Stage 1,540,,,,pending
-sub_833AA,Stage 1,540,,,,pending
-sub_833BC,Stage 1,540,,,,pending
+sub_159E0,Stage 1,540,Player_HandleDashCancel,Handles dash cancel state and timer management,Player,analyzed
+sub_15A9C,Stage 1,540,Player_ApplyHorizontalMovement,Applies horizontal movement with boundary checking,Player,analyzed
+sub_15BB8,Stage 1,540,Player_CheckSpecialMoveActivation,Checks and activates special move from state flags,Player,analyzed
+sub_16B04,Stage 1,540,Input_ReadPlayerInput,Reads controller input into player state bytes,Input,analyzed
+sub_16B24,Stage 1,540,Player_UpdateWeaponSwitchTimer,Updates weapon switch timer and cooldown,Player,analyzed
+sub_16C00,Stage 1,540,Player_UpdateInvulnerabilityTimer,Manages player invulnerability and flash timer,Player,analyzed
+sub_16C6E,Stage 1,540,Gfx_LoadPlayerPaletteData,Loads player sprite palette based on state,Gfx,analyzed
+sub_16CE8,Stage 1,540,Player_ProcessAction,Processes player action through dispatcher,Player,analyzed
+sub_173FA,Stage 1,540,Player_SpawnProjectile,Spawns player projectile with velocity and properties,Player,analyzed
+sub_177B6,Stage 1,540,Effect_CreateDashTrail,Creates visual dash trail effect behind player,Effect,analyzed
+sub_19188,Stage 1,540,Sprite_InitProjectile,Initializes projectile sprite with position and velocity,Sprite,analyzed
+sub_19992,Stage 1,540,Sys_ProcessProjectiles,Processes all active projectile objects,Sys,analyzed
+sub_1B8CA,Stage 1,540,Input_GetMappedButton,Maps button input based on game state,Input,analyzed
+sub_1C042,Stage 1,540,Sys_FindFreeObjectSlot,Finds free slot in object array,Sys,analyzed
+sub_1C97A,Stage 1,540,Gfx_UpdateScrollPosition,Updates camera scroll position based on player,Gfx,analyzed
+sub_1CE3A,Stage 1,540,Enemy_UpdateBehavior,Updates enemy AI behavior state,Enemy,analyzed
+sub_1F05E,Stage 1,540,Stage_InitializeState,Initializes stage state machine,Stage,analyzed
+sub_1F072,Stage 1,540,UI_UpdateMenuState,Updates UI menu state and rendering,UI,analyzed
+sub_1F12C,Stage 1,540,Stage_LoadAssets,Loads stage assets and data,Stage,analyzed
+sub_1F14E,Stage 1,540,Stage_HandleTransition,Handles stage state transitions,Stage,analyzed
+sub_1F238,Stage 1,540,UI_HandleMenuNavigation,Handles menu navigation with directional input,UI,analyzed
+sub_1F356,Stage 1,540,UI_HandleWeaponMenuNavigation,Handles weapon menu directional navigation,UI,analyzed
+sub_1F3B8,Stage 1,540,Sprite_ExecuteFadeTransition,Executes sprite fade with DMA transfers,Sprite,analyzed
+sub_1F3E6,Stage 1,540,Gfx_LoadMenuGraphics,Loads menu graphic elements in loop,Gfx,analyzed
+sub_1F464,Stage 1,540,UI_WaitForButtonPress,Waits for button press before proceeding,UI,analyzed
+sub_1F496,Stage 1,540,UI_HandleOptionSelection,Handles option selection with directional controls,UI,analyzed
+sub_1F720,Stage 1,540,Gfx_InterpolateScrollPosition,Smoothly interpolates scroll position to target,Gfx,analyzed
+sub_2A7BE,Stage 1,540,Sprite_InitializeProperties,Initializes sprite object properties at address,Sprite,analyzed
+sub_82324,Stage 1,540,Sound_UpdateThunk,Thunk to main sound driver update,Sound,analyzed
+sub_8232C,Stage 1,540,Sound_UpdateDriver,Main sound driver update loop,Sound,analyzed
+sub_82552,Stage 1,540,Sound_ProcessChannel,Processes individual sound channel state,Sound,analyzed
+sub_8257C,Stage 1,540,Sound_ParseTrackData,Parses and interprets sound track data,Sound,analyzed
+sub_825B2,Stage 1,540,Sound_CalculatePitch,Calculates note pitch and frequency,Sound,analyzed
+sub_825E4,Stage 1,540,Sound_CalculateDuration,Calculates note duration timing,Sound,analyzed
+sub_829AA,Stage 1,540,Sound_ProcessFade,Processes sound fade and volume changes,Sound,analyzed
+sub_82A1A,Stage 1,540,Sound_UpdateEnvelope,Updates sound envelope parameters,Sound,analyzed
+sub_82F6C,Stage 1,540,Sound_ProcessDAC,Processes DAC digital audio channel,Sound,analyzed
+sub_8329C,Stage 1,540,Sound_ProcessFM,Processes FM synthesis channels,Sound,analyzed
+sub_833AA,Stage 1,540,Sound_WriteRegister,Writes data to sound chip registers,Sound,analyzed
+sub_833BC,Stage 1,540,Sound_InitializeChannels,Initializes sound channel structures,Sound,analyzed
 sub_8342A,Stage 1,540,,,,pending
 sub_834D2,Stage 1,540,,,,pending
 sub_835B0,Stage 1,540,,,,pending
