@@ -9,17 +9,17 @@ sub_111B4,Sega screen,180,Gfx_UpdateTilemapIndices,Updates tilemap tile indices 
 sub_1A29C,Sega screen,180,Sys_ProcessVisibleObjects,Processes all objects with screen bounds culling,Sys,analyzed
 sub_1C902,Sega screen,180,Sys_UpdateObjectCount,Calculates number of active visible objects from list pointer,Sys,analyzed
 sub_1D120,Sega screen,180,Gfx_CopyPaletteLines,Copies two palette lines between RAM buffers,Gfx,analyzed
-sub_BD4,Title screen,360,,,,pending
-sub_2D6C,Title screen,360,,,,pending
-sub_2D94,Title screen,360,,,,pending
-sub_2DFE,Title screen,360,,,,pending
-sub_2EBC,Title screen,360,,,,pending
-sub_317C,Title screen,360,,,,pending
-sub_33BA,Title screen,360,,,,pending
-sub_33D8,Title screen,360,,,,pending
-sub_349A,Title screen,360,,,,pending
-sub_10AE4,Title screen,360,,,,pending
-sub_10AF4,Title screen,360,,,,pending
+sub_BD4,Title screen,360,Sys_VBlankEventHandler,Handles timed events and callbacks during VBlank,Sys,analyzed
+sub_2D6C,Title screen,360,Sys_InitGameMode,Full game mode initialization sequence,Sys,analyzed
+sub_2D94,Title screen,360,Sys_InitSubsystems,Initializes core subsystems and memory structures,Sys,analyzed
+sub_2DFE,Title screen,360,Gfx_InitVideoMode,Initializes video mode and clears VRAM,Gfx,analyzed
+sub_2EBC,Title screen,360,Sys_ClearRAM,Clears 32KB RAM block to zero,Sys,analyzed
+sub_317C,Title screen,360,Gfx_ClearVRAM,Clears entire VRAM with interrupts disabled,Gfx,analyzed
+sub_33BA,Title screen,360,Sound_AcquireZ80Bus,Acquires Z80 bus for sound operations,Sound,analyzed
+sub_33D8,Title screen,360,Input_ReadController,Reads controller input from I/O ports,Input,analyzed
+sub_349A,Title screen,360,Input_ReadControllerPort,Low-level controller port bit reading,Input,analyzed
+sub_10AE4,Title screen,360,Data_LoadPointerTable1,Loads pointer to data table 1,Sys,analyzed
+sub_10AF4,Title screen,360,Data_LoadPointerTable2,Loads pointer to data table 2,Sys,analyzed
 sub_1F6A,Stage 1,540,,,,pending
 sub_208E,Stage 1,540,,,,pending
 sub_2160,Stage 1,540,,,,pending
