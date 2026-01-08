@@ -113,6 +113,14 @@ report:
 	python $(SCRIPTS_DIR)/report.py --project-dir .
 	@echo "Report saved to analysis_report.txt"
 
+# Compare built ROM with original
+.PHONY: compare
+compare:
+	@python $(SCRIPTS_DIR)/compare.py \
+		--built $(ROM) \
+		--original $(ORIG_ROM) \
+		--project-dir .
+
 # Gens emulator paths
 GENS_DIR = gens-rerecording/Gens-rr
 GENS_SLN = $(GENS_DIR)/gens_vc10.sln
@@ -141,6 +149,7 @@ help:
 	@echo ""
 	@echo "Available targets:"
 	@echo "  make build      - Assemble and build ROM (default)"
+	@echo "  make compare    - Compare built ROM with original"
 	@echo "  make split      - Extract data from original ROM"
 	@echo "  make clean      - Remove build artifacts"
 	@echo "  make distclean  - Remove build artifacts and extracted data"
