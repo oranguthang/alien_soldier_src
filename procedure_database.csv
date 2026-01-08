@@ -258,86 +258,86 @@ sub_2BDB0,Jetsripper boss,1080,,Dispatches to boss state handler based on state 
 sub_2CB86,Jetsripper boss,1080,,Jetsripper idle state with hovering animation,Boss,analyzed
 sub_1609A,Jetsripper boss,1260,,Updates particle effects for explosions,Effect,analyzed
 sub_1615C,Jetsripper boss,1260,,Spawns debris particles from boss damage,Effect,analyzed
-sub_179C2,Jetsripper boss,1260,UI_InitWeaponSelectScreen,Initializes weapon select UI with sprites and animation tables,UI,analyzed
-sub_17AAC,Jetsripper boss,1260,UI_HandleWeaponSelectInput,Handles rotation input on weapon select screen with sound,UI,analyzed
-sub_17B8A,Jetsripper boss,1260,UI_UpdateWeaponSelect,Main update loop for weapon select screen with collision check,UI,analyzed
-sub_17C4E,Jetsripper boss,1260,UI_SaveWeaponIndex,Saves current weapon selection index to RAM,UI,analyzed
-sub_1924C,Jetsripper boss,1260,Sys_ClearObjectBufferSmall,Clears object buffer at FFBFC0 with 16 iterations,Sys,analyzed
-sub_1925A,Jetsripper boss,1260,Sys_ClearMemoryBlock,Clears memory block with unrolled 96-byte loop per iteration,Sys,analyzed
-sub_3483E,Jetsripper boss,1260,Sprite_UpdateLinkedPositions,Updates positions of linked child objects from parent,Sprite,analyzed
-sub_35656,Jetsripper boss,1260,Boss_JetsripperMainHandler,Main handler checking boss state and HP thresholds,Boss,analyzed
-sub_35682,Jetsripper boss,1260,Boss_JetsripperUpdateState,Updates Jetsripper state machine and transition logic,Boss,analyzed
-sub_356FA,Jetsripper boss,1260,Boss_JetsripperInitState,Initializes boss state and spawns linked objects,Boss,analyzed
-sub_3570E,Jetsripper boss,1260,Boss_JetsripperInitBody,Initializes 18 body segments with physics parameters,Boss,analyzed
-sub_357C8,Jetsripper boss,1260,Boss_JetsripperEnterScreen,Handles boss entering screen until position threshold,Boss,analyzed
-sub_357E8,Jetsripper boss,1260,Boss_JetsripperStateThunk,Thunk routine jumping to alignment state handler,Boss,analyzed
-sub_359BC,Jetsripper boss,1260,Boss_JetsripperOscillate,Updates vertical oscillation movement pattern,Boss,analyzed
-sub_35A02,Jetsripper boss,1260,Boss_JetsripperAlignToCenter,Moves boss toward center alignment position,Boss,analyzed
-sub_35DF2,Jetsripper boss,1260,Boss_JetsripperAdjustRadius,Adjusts radius parameter toward target value 0xC0,Boss,analyzed
-sub_35E8C,Jetsripper boss,1260,Boss_JetsripperFindLowestSegment,Finds segment with highest Y position for targeting,Boss,analyzed
-sub_35EBE,Jetsripper boss,1260,Boss_JetsripperUpdateAllSprites,Updates sprites for all body segments,Boss,analyzed
-sub_35EDC,Jetsripper boss,1260,Boss_JetsripperUpdateHeadSprite,Updates head segment sprite with 4-direction facing,Boss,analyzed
-sub_35F2C,Jetsripper boss,1260,Boss_JetsripperUpdateBodySprite,Updates body segment sprites with 16-direction facing,Boss,analyzed
-sub_35FF6,Jetsripper boss,1260,Boss_JetsripperCalculateSegmentY,Calculates Y positions for all body segments,Boss,analyzed
-sub_36058,Jetsripper boss,1260,Boss_JetsripperCalcVelocity,Calculates vertical velocity from sine table,Boss,analyzed
-sub_3610E,Jetsripper boss,1260,Boss_JetsripperUpdateSegments,Updates all segment positions with wave motion,Boss,analyzed
-sub_3619C,Jetsripper boss,1260,Boss_JetsripperUpdatePalette,Updates palette colors for glow effect,Boss,analyzed
-sub_258C,Jetsripper boss,1440,Sprite_AddToOAMBuffer,Adds sprite entries to OAM buffer with priority,Sprite,analyzed
-sub_AAA2,Jetsripper boss,1440,Text_BeginVictorySequence,Starts victory text display sequence with sound,Text,analyzed
-sub_AAC6,Jetsripper boss,1440,Text_UpdateAnimation,Updates text animation with countdown timer,Text,analyzed
-sub_AADC,Jetsripper boss,1440,Text_AdvancePhase,Advances to next text phase with sound effect,Text,analyzed
-sub_AB14,Jetsripper boss,1440,Text_AnimateMovement,Animates text movement with deceleration,Text,analyzed
-sub_B38C,Jetsripper boss,1440,Text_DisplayCharacter,Loads font tile and queues DMA transfer,Text,analyzed
-sub_B3E6,Jetsripper boss,1440,Text_PrepareRenderParams,Prepares position parameters for text rendering,Text,analyzed
-sub_B40A,Jetsripper boss,1440,Sprite_RenderTextLine,Renders line of sprites for text display,Sprite,analyzed
-sub_B44E,Jetsripper boss,1440,UI_CheckVictoryCondition,Checks conditions for victory message display,UI,analyzed
-sub_152FC,Jetsripper boss,1440,Player_InitDeathKnockback,Initializes player death knockback state and velocity,Player,analyzed
-sub_161A6,Jetsripper boss,1440,Player_HandleBossVictory,Handles player state during boss defeat sequence,Player,analyzed
-sub_16EF2,Jetsripper boss,1440,Player_HandleDefeatByBoss,Handles player defeat state with direction check,Player,analyzed
-sub_357EC,Jetsripper boss,1440,Boss_JetsripperAttackTimer,Handles attack timer countdown and sound trigger,Boss,analyzed
-sub_35814,Jetsripper boss,1440,Boss_JetsripperEndAttack,Ends attack phase and resets state parameters,Boss,analyzed
-sub_35A4E,Jetsripper boss,1440,Boss_JetsripperUpdateMovement,Main movement update with direction oscillation,Boss,analyzed
-sub_361DE,Jetsripper boss,1440,Boss_JetsripperClampY,Clamps segment Y position to maximum 0x144,Boss,analyzed
-sub_3ABA,Jetsripper boss,1620,,,,pending
-sub_3AE4,Jetsripper boss,1620,,,,pending
-sub_3B32,Jetsripper boss,1620,,,,pending
-sub_3B66,Jetsripper boss,1620,,,,pending
-sub_15C34,Jetsripper boss,1620,,,,pending
-sub_16F36,Jetsripper boss,1620,,,,pending
-sub_1B980,Jetsripper boss,1620,,,,pending
-sub_1C16A,Jetsripper boss,1620,,,,pending
-sub_2A79E,Jetsripper boss,1620,,,,pending
-sub_2BD10,Jetsripper boss,1620,,,,pending
-sub_3583C,Jetsripper boss,1620,,,,pending
-sub_35D54,Jetsripper boss,1620,,,,pending
-sub_35DDC,Jetsripper boss,1620,,,,pending
-sub_361EE,Jetsripper boss,1620,,,,pending
-sub_362CE,Jetsripper boss,1620,,,,pending
-sub_36368,Jetsripper boss,1620,,,,pending
-sub_B026,Jetsripper boss,1800,,,,pending
-sub_B03A,Jetsripper boss,1800,,,,pending
-sub_B088,Jetsripper boss,1800,,,,pending
-sub_B0B6,Jetsripper boss,1800,,,,pending
-sub_B0D8,Jetsripper boss,1800,,,,pending
-sub_B1E0,Jetsripper boss,1800,,,,pending
-sub_B22C,Jetsripper boss,1800,,,,pending
-sub_B268,Jetsripper boss,1800,,,,pending
-sub_C910,Jetsripper boss,1800,,,,pending
-sub_10086,Jetsripper boss,1800,,,,pending
-sub_10114,Jetsripper boss,1800,,,,pending
-sub_103DC,Jetsripper boss,1800,,,,pending
-sub_1C288,Jetsripper boss,1800,,,,pending
-sub_AEE4,Stage 2,1980,,,,pending
-sub_B136,Stage 2,1980,,,,pending
-sub_B156,Stage 2,1980,,,,pending
-sub_B16C,Stage 2,1980,,,,pending
-sub_B18C,Stage 2,1980,,,,pending
-sub_C922,Stage 2,1980,,,,pending
-sub_C92E,Stage 2,1980,,,,pending
-sub_103B0,Stage 2,1980,,,,pending
-sub_11EAA,Stage 2,1980,,,,pending
-sub_15632,Stage 2,1980,,,,pending
-sub_163D2,Stage 2,1980,,,,pending
+sub_179C2,Jetsripper boss,1260,,Initializes weapon select UI with sprites and animation tables,UI,analyzed
+sub_17AAC,Jetsripper boss,1260,,Handles rotation input on weapon select screen with sound,UI,analyzed
+sub_17B8A,Jetsripper boss,1260,,Main update loop for weapon select screen with collision check,UI,analyzed
+sub_17C4E,Jetsripper boss,1260,,Saves current weapon selection index to RAM,UI,analyzed
+sub_1924C,Jetsripper boss,1260,,Clears object buffer at FFBFC0 with 16 iterations,Sys,analyzed
+sub_1925A,Jetsripper boss,1260,,Clears memory block with unrolled 96-byte loop per iteration,Sys,analyzed
+sub_3483E,Jetsripper boss,1260,,Updates positions of linked child objects from parent,Sprite,analyzed
+sub_35656,Jetsripper boss,1260,,Main handler checking boss state and HP thresholds,Boss,analyzed
+sub_35682,Jetsripper boss,1260,,Updates Jetsripper state machine and transition logic,Boss,analyzed
+sub_356FA,Jetsripper boss,1260,,Initializes boss state and spawns linked objects,Boss,analyzed
+sub_3570E,Jetsripper boss,1260,,Initializes 18 body segments with physics parameters,Boss,analyzed
+sub_357C8,Jetsripper boss,1260,,Handles boss entering screen until position threshold,Boss,analyzed
+sub_357E8,Jetsripper boss,1260,,Thunk routine jumping to alignment state handler,Boss,analyzed
+sub_359BC,Jetsripper boss,1260,,Updates vertical oscillation movement pattern,Boss,analyzed
+sub_35A02,Jetsripper boss,1260,,Moves boss toward center alignment position,Boss,analyzed
+sub_35DF2,Jetsripper boss,1260,,Adjusts radius parameter toward target value 0xC0,Boss,analyzed
+sub_35E8C,Jetsripper boss,1260,,Finds segment with highest Y position for targeting,Boss,analyzed
+sub_35EBE,Jetsripper boss,1260,,Updates sprites for all body segments,Boss,analyzed
+sub_35EDC,Jetsripper boss,1260,,Updates head segment sprite with 4-direction facing,Boss,analyzed
+sub_35F2C,Jetsripper boss,1260,,Updates body segment sprites with 16-direction facing,Boss,analyzed
+sub_35FF6,Jetsripper boss,1260,,Calculates Y positions for all body segments,Boss,analyzed
+sub_36058,Jetsripper boss,1260,,Calculates vertical velocity from sine table,Boss,analyzed
+sub_3610E,Jetsripper boss,1260,,Updates all segment positions with wave motion,Boss,analyzed
+sub_3619C,Jetsripper boss,1260,,Updates palette colors for glow effect,Boss,analyzed
+sub_258C,Jetsripper boss,1440,,Adds sprite entries to OAM buffer with priority,Sprite,analyzed
+sub_AAA2,Jetsripper boss,1440,,Starts victory text display sequence with sound,Text,analyzed
+sub_AAC6,Jetsripper boss,1440,,Updates text animation with countdown timer,Text,analyzed
+sub_AADC,Jetsripper boss,1440,,Advances to next text phase with sound effect,Text,analyzed
+sub_AB14,Jetsripper boss,1440,,Animates text movement with deceleration,Text,analyzed
+sub_B38C,Jetsripper boss,1440,,Loads font tile and queues DMA transfer,Text,analyzed
+sub_B3E6,Jetsripper boss,1440,,Prepares position parameters for text rendering,Text,analyzed
+sub_B40A,Jetsripper boss,1440,,Renders line of sprites for text display,Sprite,analyzed
+sub_B44E,Jetsripper boss,1440,,Checks conditions for victory message display,UI,analyzed
+sub_152FC,Jetsripper boss,1440,,Initializes player death knockback state and velocity,Player,analyzed
+sub_161A6,Jetsripper boss,1440,,Handles player state during boss defeat sequence,Player,analyzed
+sub_16EF2,Jetsripper boss,1440,,Handles player defeat state with direction check,Player,analyzed
+sub_357EC,Jetsripper boss,1440,,Handles attack timer countdown and sound trigger,Boss,analyzed
+sub_35814,Jetsripper boss,1440,,Ends attack phase and resets state parameters,Boss,analyzed
+sub_35A4E,Jetsripper boss,1440,,Main movement update with direction oscillation,Boss,analyzed
+sub_361DE,Jetsripper boss,1440,,Clamps segment Y position to maximum 0x144,Boss,analyzed
+sub_3ABA,Jetsripper boss,1620,Gfx_UpdatePaletteFade,Updates palette with fade effect using timer,Gfx,analyzed
+sub_3AE4,Jetsripper boss,1620,Gfx_CalculateFadeParams,Calculates fade parameters from timer and random,Gfx,analyzed
+sub_3B32,Jetsripper boss,1620,Gfx_ApplyPaletteFade,Applies fade to palette colors with RGB adjustment,Gfx,analyzed
+sub_3B66,Jetsripper boss,1620,Gfx_PrepareRGBComponents,Prepares RGB shift components for palette operations,Gfx,analyzed
+sub_15C34,Jetsripper boss,1620,Player_InitFallState,Initializes player falling state with parameters,Player,analyzed
+sub_16F36,Jetsripper boss,1620,Boss_AnimateDeathSequence,Handles boss death animation frame transitions,Boss,analyzed
+sub_1B980,Jetsripper boss,1620,Sprite_ClearObjectFlags,Clears specific flags from object buffer,Sprite,analyzed
+sub_1C16A,Jetsripper boss,1620,Projectile_FindFreeSlot,Finds free slot in projectile buffer unrolled search,Projectile,analyzed
+sub_2A79E,Jetsripper boss,1620,Projectile_InitType88,Initializes projectile with type 0x88,Projectile,analyzed
+sub_2BD10,Jetsripper boss,1620,Effect_SpawnDestructionBlast,Spawns destruction explosion effect,Effect,analyzed
+sub_3583C,Jetsripper boss,1620,Boss_JetsripperRotateState,Handles Jetsripper rotation state with angle check,Boss,analyzed
+sub_35D54,Jetsripper boss,1620,Boss_JetsripperDeathInit,Initializes Jetsripper death sequence with particles,Boss,analyzed
+sub_35DDC,Jetsripper boss,1620,Boss_JetsripperDeathFade,Handles Jetsripper death fade animation,Boss,analyzed
+sub_361EE,Jetsripper boss,1620,Boss_JetsripperSegmentPhysics,Updates body segment with gravity physics,Boss,analyzed
+sub_362CE,Jetsripper boss,1620,Boss_JetsripperSpawnProjectile,Creates Jetsripper projectile with trajectory,Boss,analyzed
+sub_36368,Jetsripper boss,1620,Boss_JetsripperProjectileUpdate,Updates projectile with bouncing logic,Boss,analyzed
+sub_B026,Jetsripper boss,1800,Text_InitVictoryMessage,Initializes victory text display sequence,Text,analyzed
+sub_B03A,Jetsripper boss,1800,Text_StartWeaponAcquired,Starts weapon acquired animation sequence,Text,analyzed
+sub_B088,Jetsripper boss,1800,Text_AnimateRotationFade,Animates rotating text with fade effect,Text,analyzed
+sub_B0B6,Jetsripper boss,1800,Text_AnimateRotationStop,Animates rotation stopping sequence,Text,analyzed
+sub_B0D8,Jetsripper boss,1800,Text_CompleteWithSound,Completes animation and plays appropriate sound,Text,analyzed
+sub_B1E0,Jetsripper boss,1800,Text_RenderRotatingSprites,Renders text sprites with tile loading,Text,analyzed
+sub_B22C,Jetsripper boss,1800,Text_PositionVerticalSprites,Positions vertical text sprite column,Text,analyzed
+sub_B268,Jetsripper boss,1800,Text_CalculateRotationCoords,Calculates coordinates for rotating text effect,Text,analyzed
+sub_C910,Jetsripper boss,1800,Camera_BossPhaseHandler,Camera handler checking boss presence,Camera,analyzed
+sub_10086,Jetsripper boss,1800,Camera_UpdateTowardsPlayer,Updates camera position towards player,Camera,analyzed
+sub_10114,Jetsripper boss,1800,Camera_SmoothFollowPlayer,Smoothly follows player with speed limits,Camera,analyzed
+sub_103DC,Jetsripper boss,1800,Stage_TriggerPhaseTransition,Triggers transition to next stage phase,Stage,analyzed
+sub_1C288,Jetsripper boss,1800,Sprite_ClearAllExcept,Clears all objects except specified types,Sprite,analyzed
+sub_AEE4,Stage 2,1980,UI_DisplayScoreAnimation,Displays score counter with animation,UI,analyzed
+sub_B136,Stage 2,1980,Text_AnimateRiseUp,Animates text rising upward,Text,analyzed
+sub_B156,Stage 2,1980,Text_PauseBeforeExit,Pauses before final exit animation,Text,analyzed
+sub_B16C,Stage 2,1980,Text_AnimateExitUp,Animates text exiting upward,Text,analyzed
+sub_B18C,Stage 2,1980,Text_FinalizeAndSaveScore,Finalizes animation and saves weapon score,Text,analyzed
+sub_C922,Stage 2,1980,Camera_Stage2PhaseHandler,Stage 2 camera with transition check,Camera,analyzed
+sub_C92E,Stage 2,1980,Camera_AutoScrollCheck,Camera with auto-scroll and phase transition,Camera,analyzed
+sub_103B0,Stage 2,1980,Stage_InitSectionChange,Initializes transition between stage sections,Stage,analyzed
+sub_11EAA,Stage 2,1980,Stage_LoadVisualAssets,Loads stage palette and tile data,Stage,analyzed
+sub_15632,Stage 2,1980,Player_ToggleDirectionFlag,Toggles player direction flag with sound,Player,analyzed
+sub_163D2,Stage 2,1980,Player_InitGroundedState,Initializes player landing state after air,Player,analyzed
 sub_16402,Stage 2,1980,,,,pending
 sub_16782,Stage 2,1980,,,,pending
 sub_16B5C,Stage 2,1980,,,,pending
