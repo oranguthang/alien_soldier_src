@@ -100,44 +100,44 @@ sub_82F6C,Stage 1,540,Sound_ProcessDAC,Processes DAC digital audio channel,Sound
 sub_8329C,Stage 1,540,Sound_ProcessFM,Processes FM synthesis channels,Sound,analyzed
 sub_833AA,Stage 1,540,Sound_WriteRegister,Writes data to sound chip registers,Sound,analyzed
 sub_833BC,Stage 1,540,Sound_InitializeChannels,Initializes sound channel structures,Sound,analyzed
-sub_8342A,Stage 1,540,,,,pending
-sub_834D2,Stage 1,540,,,,pending
-sub_835B0,Stage 1,540,,,,pending
-sub_83820,Stage 1,540,,,,pending
-sub_838C4,Stage 1,540,,,,pending
-sub_838E0,Stage 1,540,,,,pending
-sub_839B8,Stage 1,540,,,,pending
-sub_83A8E,Stage 1,540,,,,pending
-sub_83B0A,Stage 1,540,,,,pending
-sub_2264,Stage 1,720,,,,pending
-sub_B326,Stage 1,720,,,,pending
-sub_C83E,Stage 1,720,,,,pending
-sub_C8C2,Stage 1,720,,,,pending
-sub_FF16,Stage 1,720,,,,pending
-sub_10060,Stage 1,720,,,,pending
-sub_102E0,Stage 1,720,,,,pending
-sub_102FC,Stage 1,720,,,,pending
-sub_103FA,Stage 1,720,,,,pending
-sub_10496,Stage 1,720,,,,pending
-sub_106F2,Stage 1,720,,,,pending
-sub_106FE,Stage 1,720,,,,pending
-sub_1344A,Stage 1,720,,,,pending
-sub_13CCA,Stage 1,720,,,,pending
-sub_13E9A,Stage 1,720,,,,pending
-sub_14760,Stage 1,720,,,,pending
-sub_149EE,Stage 1,720,,,,pending
-sub_14C72,Stage 1,720,,,,pending
-sub_151EE,Stage 1,720,,,,pending
-sub_15408,Stage 1,720,,,,pending
-sub_15502,Stage 1,720,,,,pending
-sub_15532,Stage 1,720,,,,pending
-sub_15AF4,Stage 1,720,,,,pending
-sub_15B20,Stage 1,720,,,,pending
-sub_15CE4,Stage 1,720,,,,pending
-sub_15E5E,Stage 1,720,,,,pending
-sub_15F04,Stage 1,720,,,,pending
-sub_15F6A,Stage 1,720,,,,pending
-sub_15FC4,Stage 1,720,,,,pending
+sub_8342A,Stage 1,540,Sound_ProcessTempoTick,Processes sound tempo tick and increments channel timers,Sound,analyzed
+sub_834D2,Stage 1,540,Sound_ResetDriver,Resets sound driver state and clears RAM,Sound,analyzed
+sub_835B0,Stage 1,540,Sound_WriteYM2612,Writes data to YM2612 FM chip registers,Sound,analyzed
+sub_83820,Stage 1,540,Sound_CommandDispatcher,Dispatches sound commands via jump table,Sound,analyzed
+sub_838C4,Stage 1,540,Sound_SetChannelFlags,Sets sound channel control flags,Sound,analyzed
+sub_838E0,Stage 1,540,Sound_SetEnvelopeParam,Sets envelope parameter for channel,Sound,analyzed
+sub_839B8,Stage 1,540,Sound_SelectInstrument,Selects instrument for sound channel,Sound,analyzed
+sub_83A8E,Stage 1,540,Sound_ApplyVolume,Applies volume and pan to sound channel,Sound,analyzed
+sub_83B0A,Stage 1,540,Sound_SetupLFO,Sets up LFO modulation parameters,Sound,analyzed
+sub_2264,Stage 1,720,Sprite_CullOffscreen,Culls sprites outside visible screen area,Sprite,analyzed
+sub_B326,Stage 1,720,Gfx_LoadTileIndices,Loads tile indices from data table,Gfx,analyzed
+sub_C83E,Stage 1,720,Stage_Dispatcher,Main stage dispatcher jump table,Stage,analyzed
+sub_C8C2,Stage 1,720,Stage_UpdateLogic,Updates stage logic and scroll,Stage,analyzed
+sub_FF16,Stage 1,720,Stage_ProcessHandler,Processes stage handler entry point,Stage,analyzed
+sub_10060,Stage 1,720,Gfx_UpdateScroll,Updates scroll with player following,Gfx,analyzed
+sub_102E0,Stage 1,720,Gfx_CalculateScrollPosition,Calculates scroll position from camera,Gfx,analyzed
+sub_102FC,Stage 1,720,Gfx_AccelerateScroll,Accelerates scroll based on player position,Gfx,analyzed
+sub_103FA,Stage 1,720,Gfx_SetupScrollPlanes,Sets up VDP scroll plane registers,Gfx,analyzed
+sub_10496,Stage 1,720,Gfx_WriteScrollValue,Writes scroll value with flag checks,Gfx,analyzed
+sub_106F2,Stage 1,720,Gfx_GetCameraPosition,Gets camera position for rendering,Gfx,analyzed
+sub_106FE,Stage 1,720,Gfx_RenderTilemap,Renders tilemap tiles to VRAM planes,Gfx,analyzed
+sub_1344A,Stage 1,720,Gfx_SetupVDPDMA,Sets up VDP DMA transfer registers,Gfx,analyzed
+sub_13CCA,Stage 1,720,Enemy_DetectPlayerCollision,Detects collision between enemies and player,Enemy,analyzed
+sub_13E9A,Stage 1,720,Player_DetectProjectileHit,Detects player projectile hits on enemies,Player,analyzed
+sub_14760,Stage 1,720,Player_CheckTerrainCollision,Checks player collision with terrain,Player,analyzed
+sub_149EE,Stage 1,720,Player_HandleFloorCollision,Handles player collision with floor,Player,analyzed
+sub_14C72,Stage 1,720,Player_SnapToFloor,Snaps player position to floor surface,Player,analyzed
+sub_151EE,Stage 1,720,Player_InitAirState,Initializes player air movement state,Player,analyzed
+sub_15408,Stage 1,720,Player_HandleAirState,Handles player airborne state logic,Player,analyzed
+sub_15502,Stage 1,720,Player_InitLandingState,Initializes player landing state,Player,analyzed
+sub_15532,Stage 1,720,Player_HandleLandingState,Handles player landing state logic,Player,analyzed
+sub_15AF4,Stage 1,720,Player_InitSlideState,Initializes player slide knockback state,Player,analyzed
+sub_15B20,Stage 1,720,Player_HandleSlideState,Handles player slide knockback state,Player,analyzed
+sub_15CE4,Stage 1,720,Player_HandleFallingState,Handles player falling state with gravity,Player,analyzed
+sub_15E5E,Stage 1,720,Player_SelectFallAnimation,Selects animation based on falling velocity,Player,analyzed
+sub_15F04,Stage 1,720,Player_ApplyAirControl,Applies horizontal air control input,Player,analyzed
+sub_15F6A,Stage 1,720,Player_InitSpecialAttack,Initializes special attack state,Player,analyzed
+sub_15FC4,Stage 1,720,Player_HandleSpecialAttack,Handles special attack state logic,Player,analyzed
 sub_16B74,Stage 1,720,,,,pending
 sub_16CFE,Stage 1,720,,,,pending
 sub_16D40,Stage 1,720,,,,pending
