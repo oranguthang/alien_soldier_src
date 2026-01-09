@@ -618,86 +618,86 @@ sub_2690E,Shiper Honeyviper boss,6480,,Initializes boss defeat explosion sprite 
 sub_26928,Shiper Honeyviper boss,6480,,Boss defeat sequence state dispatcher using jump table,Boss,analyzed
 sub_26942,Shiper Honeyviper boss,6480,,Initializes boss defeat animation state and graphics mode,Boss,analyzed
 sub_2695C,Shiper Honeyviper boss,6480,,Loads boss defeat explosion animation graphics via DMA,Boss,analyzed
-sub_26980,Shiper Honeyviper boss,6480,Boss_DefeatSetupState,Sets up boss defeat state initializing scroll timers and playing sound,Boss,analyzed
-sub_269B4,Shiper Honeyviper boss,6480,Boss_DefeatScrollInit,Initializes boss defeat scroll animation with velocity parameters,Boss,analyzed
-sub_269C4,Shiper Honeyviper boss,6480,Boss_DefeatScrollUpdate,Updates boss defeat scroll position and checks for transition complete,Boss,analyzed
-sub_272A8,Shiper Honeyviper boss,6480,Effect_ClearPaletteBuffer,Clears palette effect buffer and resets state counters,Effect,analyzed
-sub_369F6,Shiper Honeyviper boss,6480,Boss_ShiperDefeatFadeOut,Handles boss defeat fade out countdown before final transition,Boss,analyzed
-sub_82674,Shiper Honeyviper boss,6480,Sound_ProcessVibrato,Processes sound vibrato effect modulating pitch with oscillation,Sound,analyzed
-sub_826C4,Shiper Honeyviper boss,6480,Sound_UpdateChannelFrequency,Updates FM channel frequency registers with calculated pitch,Sound,analyzed
-sub_82714,Shiper Honeyviper boss,6480,Sound_ApplyPitchEffects,Applies pitch effects including detune transpose and modulation to frequency,Sound,analyzed
-sub_8280A,Shiper Honeyviper boss,6480,Sound_ProcessModulation,Processes sound modulation effects using jump table dispatcher,Sound,analyzed
-sub_83616,Shiper Honeyviper boss,6480,Sound_AddChannelOffset,Adds channel offset to register address for FM operators,Sound,analyzed
-sub_83618,Shiper Honeyviper boss,6480,Sound_WriteYM2612Register,Writes data to YM2612 FM chip via Z80 bus with sync,Sound,analyzed
-sub_83B40,Shiper Honeyviper boss,6480,Sound_StopChannel,Stops sound channel clearing flags and sending key off commands,Sound,analyzed
-sub_84A96,Shiper Honeyviper boss,6480,Sound_ParseSequenceData,Parses sound sequence data processing note and command bytes,Sound,analyzed
-sub_CB78,Shiper Honeyviper boss,6660,Stage_ScrollWaitTransition,Waits for scroll position then advances stage phase,Stage,analyzed
-sub_CB8C,Shiper Honeyviper boss,6660,Camera_UpdateWithScroll,Updates camera position and calculates scroll registers,Camera,analyzed
-sub_CB9E,Stage 4 to 5 transition,6840,Stage_CheckTransitionReady,Checks if stage transition is ready based on enemy and boss state,Stage,analyzed
-sub_10390,Stage 4 to 5 transition,6840,Stage_InitTransitionState,Initializes stage transition state with cutscene parameters,Stage,analyzed
-sub_19A6C,Stage 4 to 5 transition,6840,Stage_InitCutscene,Initializes stage cutscene setting player position and state,Stage,analyzed
-sub_19B14,Stage 4 to 5 transition,6840,Stage_CutsceneWaitStart,Waits for button press then advances cutscene state,Stage,analyzed
-sub_19B34,Stage 4 to 5 transition,6840,Stage_CutsceneTimerWait,Waits for timer countdown before cutscene continuation,Stage,analyzed
-sub_19B40,Stage 4 to 5 transition,6840,Stage_CutsceneCheckPosition,Checks player position against scroll target for cutscene advance,Stage,analyzed
-sub_19B80,Stage 4 to 5 transition,6840,Stage_CutscenePlayAnim,Plays cutscene animation setting sprite states and flags,Stage,analyzed
-sub_19BB0,Stage 4 to 5 transition,6840,Stage_CutsceneReachPosition,Handles player reaching target position in cutscene,Stage,analyzed
-sub_12E0,Stage 5,7020,Gfx_ClearBackgroundColor,Clears VDP background color registers to black,Gfx,analyzed
-sub_218C,Stage 5,7020,Sprite_GetAnimPointer,Returns sprite animation data pointer from entity structure,Sprite,analyzed
-sub_2F66,Stage 5,7020,Sys_ClearObjectBuffer,Clears main object data buffer with zero fill,Sys,analyzed
-sub_300C,Stage 5,7020,Sys_ClearScrollBuffer,Clears scroll position buffer for stage initialization,Sys,analyzed
-sub_3104,Stage 5,7020,Sys_ClearEnemyBuffer,Clears enemy entity buffer resetting all slots,Sys,analyzed
-sub_311C,Stage 5,7020,Sys_ClearSpriteBuffer,Clears sprite metasprite buffer for new stage,Sys,analyzed
-sub_3134,Stage 5,7020,Sys_ClearVDPCommandBuffer,Clears VDP command queue buffer for DMA operations,Sys,analyzed
-sub_33A4,Stage 5,7020,Input_InitControllerState,Initializes controller input state clearing button flags,Input,analyzed
-sub_33FA,Stage 5,7020,Input_ReadSecondaryController,Reads secondary controller port processing button states,Input,analyzed
-sub_411C,Stage 5,7020,Stage_SetScrollOffset,Sets stage-specific scroll offset value based on frame counter,Stage,analyzed
-sub_CBBA,Stage 5,7020,Stage_AutoScrollUpdate,Updates automatic stage scrolling and checks for phase transition,Stage,analyzed
-sub_1176A,Stage 5,7020,Stage_LoadObjectData,Loads stage object spawn data from table pointer,Stage,analyzed
-sub_11EEE,Stage 5,7020,Stage_LoadPaletteAndTilesA,Loads stage 5 palette and first tileset via DMA,Stage,analyzed
-sub_11F0E,Stage 5,7020,Stage_LoadPaletteAndTilesB,Loads stage 5 palette and second tileset via DMA,Stage,analyzed
-sub_17C1A,Stage 5,7020,UI_UpdateWeaponSelection,Updates weapon selection index and clears object buffer,UI,analyzed
-sub_1B746,Stage 5,7020,Sys_ClearBossDataBuffer,Clears boss entity data buffer with zero fill,Sys,analyzed
-sub_2A8EE,Stage 5,7020,Enemy_InitSpriteGraphics,Initializes enemy sprite graphics mode and animation pointer,Enemy,analyzed
-sub_2DA3A,Stage 5,7020,,,,pending
-sub_2DA8C,Stage 5,7020,,,,pending
-sub_2DACE,Stage 5,7020,,,,pending
-sub_2DB2E,Stage 5,7020,,,,pending
-sub_2DB5C,Stage 5,7020,,,,pending
-sub_2DBAE,Stage 5,7020,,,,pending
-sub_2DBE0,Stage 5,7020,,,,pending
-sub_2DC04,Stage 5,7020,,,,pending
-sub_2DC62,Stage 5,7020,,,,pending
-sub_2DC8C,Stage 5,7020,,,,pending
-sub_2DD16,Stage 5,7020,,,,pending
-sub_2DD2E,Stage 5,7020,,,,pending
-sub_82824,Stage 5,7020,,,,pending
-sub_83562,Stage 5,7020,,,,pending
-sub_8357E,Stage 5,7020,,,,pending
-sub_8358A,Stage 5,7020,,,,pending
-sub_835A0,Stage 5,7020,,,,pending
-sub_8367E,Stage 5,7020,,,,pending
-sub_836A0,Stage 5,7020,,,,pending
-sub_83938,Stage 5,7020,,,,pending
-sub_83C04,Stage 5,7020,,,,pending
-sub_83C7C,Stage 5,7020,,,,pending
-sub_84ACA,Stage 5,7020,,,,pending
-sub_84AFA,Stage 5,7020,,,,pending
-sub_84B98,Stage 5,7020,,,,pending
-sub_84BEA,Stage 5,7020,,,,pending
-sub_84BF0,Stage 5,7020,,,,pending
-sub_CBD0,Madam Barbar boss,7200,,,,pending
-sub_2DEC8,Madam Barbar boss,7200,,,,pending
-sub_2DEFE,Madam Barbar boss,7200,,,,pending
-sub_348CC,Madam Barbar boss,7380,,,,pending
-sub_3A47C,Madam Barbar boss,7380,,,,pending
-sub_3A4FE,Madam Barbar boss,7380,,,,pending
-sub_3A51C,Madam Barbar boss,7380,,,,pending
-sub_3A604,Madam Barbar boss,7380,,,,pending
-sub_3A9F2,Madam Barbar boss,7380,,,,pending
-sub_3AA86,Madam Barbar boss,7380,,,,pending
-sub_3AAF2,Madam Barbar boss,7380,,,,pending
-sub_3AB16,Madam Barbar boss,7380,,,,pending
-sub_3AB20,Madam Barbar boss,7380,,,,pending
+sub_26980,Shiper Honeyviper boss,6480,,Sets up boss defeat state initializing scroll timers and playing sound,Boss,analyzed
+sub_269B4,Shiper Honeyviper boss,6480,,Initializes boss defeat scroll animation with velocity parameters,Boss,analyzed
+sub_269C4,Shiper Honeyviper boss,6480,,Updates boss defeat scroll position and checks for transition complete,Boss,analyzed
+sub_272A8,Shiper Honeyviper boss,6480,,Clears palette effect buffer and resets state counters,Effect,analyzed
+sub_369F6,Shiper Honeyviper boss,6480,,Handles boss defeat fade out countdown before final transition,Boss,analyzed
+sub_82674,Shiper Honeyviper boss,6480,,Processes sound vibrato effect modulating pitch with oscillation,Sound,analyzed
+sub_826C4,Shiper Honeyviper boss,6480,,Updates FM channel frequency registers with calculated pitch,Sound,analyzed
+sub_82714,Shiper Honeyviper boss,6480,,Applies pitch effects including detune transpose and modulation to frequency,Sound,analyzed
+sub_8280A,Shiper Honeyviper boss,6480,,Processes sound modulation effects using jump table dispatcher,Sound,analyzed
+sub_83616,Shiper Honeyviper boss,6480,,Adds channel offset to register address for FM operators,Sound,analyzed
+sub_83618,Shiper Honeyviper boss,6480,,Writes data to YM2612 FM chip via Z80 bus with sync,Sound,analyzed
+sub_83B40,Shiper Honeyviper boss,6480,,Stops sound channel clearing flags and sending key off commands,Sound,analyzed
+sub_84A96,Shiper Honeyviper boss,6480,,Parses sound sequence data processing note and command bytes,Sound,analyzed
+sub_CB78,Shiper Honeyviper boss,6660,,Waits for scroll position then advances stage phase,Stage,analyzed
+sub_CB8C,Shiper Honeyviper boss,6660,,Updates camera position and calculates scroll registers,Camera,analyzed
+sub_CB9E,Stage 4 to 5 transition,6840,,Checks if stage transition is ready based on enemy and boss state,Stage,analyzed
+sub_10390,Stage 4 to 5 transition,6840,,Initializes stage transition state with cutscene parameters,Stage,analyzed
+sub_19A6C,Stage 4 to 5 transition,6840,,Initializes stage cutscene setting player position and state,Stage,analyzed
+sub_19B14,Stage 4 to 5 transition,6840,,Waits for button press then advances cutscene state,Stage,analyzed
+sub_19B34,Stage 4 to 5 transition,6840,,Waits for timer countdown before cutscene continuation,Stage,analyzed
+sub_19B40,Stage 4 to 5 transition,6840,,Checks player position against scroll target for cutscene advance,Stage,analyzed
+sub_19B80,Stage 4 to 5 transition,6840,,Plays cutscene animation setting sprite states and flags,Stage,analyzed
+sub_19BB0,Stage 4 to 5 transition,6840,,Handles player reaching target position in cutscene,Stage,analyzed
+sub_12E0,Stage 5,7020,,Clears VDP background color registers to black,Gfx,analyzed
+sub_218C,Stage 5,7020,,Returns sprite animation data pointer from entity structure,Sprite,analyzed
+sub_2F66,Stage 5,7020,,Clears main object data buffer with zero fill,Sys,analyzed
+sub_300C,Stage 5,7020,,Clears scroll position buffer for stage initialization,Sys,analyzed
+sub_3104,Stage 5,7020,,Clears enemy entity buffer resetting all slots,Sys,analyzed
+sub_311C,Stage 5,7020,,Clears sprite metasprite buffer for new stage,Sys,analyzed
+sub_3134,Stage 5,7020,,Clears VDP command queue buffer for DMA operations,Sys,analyzed
+sub_33A4,Stage 5,7020,,Initializes controller input state clearing button flags,Input,analyzed
+sub_33FA,Stage 5,7020,,Reads secondary controller port processing button states,Input,analyzed
+sub_411C,Stage 5,7020,,Sets stage-specific scroll offset value based on frame counter,Stage,analyzed
+sub_CBBA,Stage 5,7020,,Updates automatic stage scrolling and checks for phase transition,Stage,analyzed
+sub_1176A,Stage 5,7020,,Loads stage object spawn data from table pointer,Stage,analyzed
+sub_11EEE,Stage 5,7020,,Loads stage 5 palette and first tileset via DMA,Stage,analyzed
+sub_11F0E,Stage 5,7020,,Loads stage 5 palette and second tileset via DMA,Stage,analyzed
+sub_17C1A,Stage 5,7020,,Updates weapon selection index and clears object buffer,UI,analyzed
+sub_1B746,Stage 5,7020,,Clears boss entity data buffer with zero fill,Sys,analyzed
+sub_2A8EE,Stage 5,7020,,Initializes enemy sprite graphics mode and animation pointer,Enemy,analyzed
+sub_2DA3A,Stage 5,7020,Enemy_InitBirdSprite,Initializes flying bird enemy sprite with graphics mode and collision parameters,Enemy,analyzed
+sub_2DA8C,Stage 5,7020,Enemy_UpdateBirdAnimation,Updates bird enemy animation pointer based on state index,Enemy,analyzed
+sub_2DACE,Stage 5,7020,Enemy_BirdMain,Main bird enemy update checking defeat conditions and player collision,Enemy,analyzed
+sub_2DB2E,Stage 5,7020,Enemy_BirdStateDispatcher,Bird enemy state machine dispatcher using jump table,Enemy,analyzed
+sub_2DB5C,Stage 5,7020,Enemy_BirdInit,Initializes bird enemy position direction and movement state,Enemy,analyzed
+sub_2DBAE,Stage 5,7020,Enemy_BirdStartDive,Starts bird dive attack setting velocity and animation,Enemy,analyzed
+sub_2DBE0,Stage 5,7020,Enemy_BirdFlyState,Bird flying state setting animation and timer parameters,Enemy,analyzed
+sub_2DC04,Stage 5,7020,Enemy_BirdDiveAttack,Bird dive attack with gravity and ground collision detection,Enemy,analyzed
+sub_2DC62,Stage 5,7020,Enemy_BirdWaitState,Bird waiting state with timer countdown before movement,Enemy,analyzed
+sub_2DC8C,Stage 5,7020,Enemy_BirdChasePlayer,Bird chases player calculating direction and dive distance,Enemy,analyzed
+sub_2DD16,Stage 5,7020,Enemy_BirdAccelerate,Bird accelerates upward with gravity until reaching threshold,Enemy,analyzed
+sub_2DD2E,Stage 5,7020,Enemy_BirdDecelerate,Bird decelerates downward with negative gravity and state change,Enemy,analyzed
+sub_82824,Stage 5,7020,Sound_ProcessTremolo,Processes sound tremolo effect with volume oscillation,Sound,analyzed
+sub_83562,Stage 5,7020,Sound_SendKeyOff,Sends key off command to FM channel stopping note,Sound,analyzed
+sub_8357E,Stage 5,7020,Sound_CheckChannelFlags,Checks sound channel flags before processing operations,Sound,analyzed
+sub_8358A,Stage 5,7020,Sound_SendKeyOn,Sends key on command to FM channel starting note,Sound,analyzed
+sub_835A0,Stage 5,7020,Sound_WriteYM2612Wrapper,Wrapper function redirecting to YM2612 register write,Sound,analyzed
+sub_8367E,Stage 5,7020,Sound_DelayNOP,Delay function with NOP instructions for timing,Sound,analyzed
+sub_836A0,Stage 5,7020,Sound_ProcessVolumeFade,Processes music volume fade in/out with Z80 sync and envelope control,Sound,analyzed
+sub_83938,Stage 5,7020,Sound_SetTimerValue,Sets sound channel timer value from sequence data,Sound,analyzed
+sub_83C04,Stage 5,7020,Sound_SetPSGTone,Sets PSG tone channel frequency and volume,Sound,analyzed
+sub_83C7C,Stage 5,7020,Sound_AddTranspose,Adds transpose value to sound channel pitch offset,Sound,analyzed
+sub_84ACA,Stage 5,7020,Sound_ProcessNoteData,Processes note data calculating pitch and duration,Sound,analyzed
+sub_84AFA,Stage 5,7020,Sound_UpdatePSGFrequency,Updates PSG channel frequency with pitch calculation,Sound,analyzed
+sub_84B98,Stage 5,7020,Sound_ApplyPSGVolume,Applies volume to PSG channel with mute check,Sound,analyzed
+sub_84BEA,Stage 5,7020,Sound_CheckPSGMute,Checks if PSG channel is muted before output,Sound,analyzed
+sub_84BF0,Stage 5,7020,Sound_MutePSGChannel,Mutes PSG channel by setting maximum attenuation,Sound,analyzed
+sub_CBD0,Madam Barbar boss,7200,Boss_MadamBarbarScrollInit,Initializes Madam Barbar boss scroll position and palette,Boss,analyzed
+sub_2DEC8,Madam Barbar boss,7200,Enemy_BirdBounceOff,Bird enemy bounces off with reversed velocity after hit,Enemy,analyzed
+sub_2DEFE,Madam Barbar boss,7200,Enemy_BirdProjectileSpawn,Bird spawns projectiles with gravity and explosion effect,Enemy,analyzed
+sub_348CC,Madam Barbar boss,7380,Anim_LoadFrameDelays,Loads animation frame delays converting bytes to words,Anim,analyzed
+sub_3A47C,Madam Barbar boss,7380,Boss_MadamBarbarMain,Main Madam Barbar boss handler checking defeat and state dispatch,Boss,analyzed
+sub_3A4FE,Madam Barbar boss,7380,Boss_MadamBarbarInit,Initializes Madam Barbar boss clearing sprites and setting flags,Boss,analyzed
+sub_3A51C,Madam Barbar boss,7380,Boss_MadamBarbarSetup,Sets up Madam Barbar boss metasprites tiles and animation,Boss,analyzed
+sub_3A604,Madam Barbar boss,7380,Boss_MadamBarbarIntro,Boss introduction sequence checking position for battle start,Boss,analyzed
+sub_3A9F2,Madam Barbar boss,7380,Boss_MadamBarbarUpdateParts,Updates all boss body parts positions with offset calculations,Boss,analyzed
+sub_3AA86,Madam Barbar boss,7380,Boss_MadamBarbarWobble,Applies wobble effect to boss sprite using sine wave,Boss,analyzed
+sub_3AAF2,Madam Barbar boss,7380,Boss_MadamBarbarSetCollision,Sets collision flags on specific boss body segments,Boss,analyzed
+sub_3AB16,Madam Barbar boss,7380,Boss_MadamBarbarRotateInit,Initializes boss rotation animation pointer updates,Boss,analyzed
+sub_3AB20,Madam Barbar boss,7380,Boss_MadamBarbarRotateUpdate,Updates boss rotation angle based on frame counter,Boss,analyzed
 sub_3AB64,Madam Barbar boss,7380,,,,pending
 sub_3ABE4,Madam Barbar boss,7380,,,,pending
 sub_3AD8E,Madam Barbar boss,7380,,,,pending
