@@ -298,86 +298,86 @@ sub_357EC,Jetsripper boss,1440,,Handles attack timer countdown and sound trigger
 sub_35814,Jetsripper boss,1440,,Ends attack phase and resets state parameters,Boss,analyzed
 sub_35A4E,Jetsripper boss,1440,,Main movement update with direction oscillation,Boss,analyzed
 sub_361DE,Jetsripper boss,1440,,Clamps segment Y position to maximum 0x144,Boss,analyzed
-sub_3ABA,Jetsripper boss,1620,Gfx_UpdatePaletteFade,Updates palette with fade effect using timer,Gfx,analyzed
-sub_3AE4,Jetsripper boss,1620,Gfx_CalculateFadeParams,Calculates fade parameters from timer and random,Gfx,analyzed
-sub_3B32,Jetsripper boss,1620,Gfx_ApplyPaletteFade,Applies fade to palette colors with RGB adjustment,Gfx,analyzed
-sub_3B66,Jetsripper boss,1620,Gfx_PrepareRGBComponents,Prepares RGB shift components for palette operations,Gfx,analyzed
-sub_15C34,Jetsripper boss,1620,Player_InitFallState,Initializes player falling state with parameters,Player,analyzed
-sub_16F36,Jetsripper boss,1620,Boss_AnimateDeathSequence,Handles boss death animation frame transitions,Boss,analyzed
-sub_1B980,Jetsripper boss,1620,Sprite_ClearObjectFlags,Clears specific flags from object buffer,Sprite,analyzed
-sub_1C16A,Jetsripper boss,1620,Projectile_FindFreeSlot,Finds free slot in projectile buffer unrolled search,Projectile,analyzed
-sub_2A79E,Jetsripper boss,1620,Projectile_InitType88,Initializes projectile with type 0x88,Projectile,analyzed
-sub_2BD10,Jetsripper boss,1620,Effect_SpawnDestructionBlast,Spawns destruction explosion effect,Effect,analyzed
-sub_3583C,Jetsripper boss,1620,Boss_JetsripperRotateState,Handles Jetsripper rotation state with angle check,Boss,analyzed
-sub_35D54,Jetsripper boss,1620,Boss_JetsripperDeathInit,Initializes Jetsripper death sequence with particles,Boss,analyzed
-sub_35DDC,Jetsripper boss,1620,Boss_JetsripperDeathFade,Handles Jetsripper death fade animation,Boss,analyzed
-sub_361EE,Jetsripper boss,1620,Boss_JetsripperSegmentPhysics,Updates body segment with gravity physics,Boss,analyzed
-sub_362CE,Jetsripper boss,1620,Boss_JetsripperSpawnProjectile,Creates Jetsripper projectile with trajectory,Boss,analyzed
-sub_36368,Jetsripper boss,1620,Boss_JetsripperProjectileUpdate,Updates projectile with bouncing logic,Boss,analyzed
-sub_B026,Jetsripper boss,1800,Text_InitVictoryMessage,Initializes victory text display sequence,Text,analyzed
-sub_B03A,Jetsripper boss,1800,Text_StartWeaponAcquired,Starts weapon acquired animation sequence,Text,analyzed
-sub_B088,Jetsripper boss,1800,Text_AnimateRotationFade,Animates rotating text with fade effect,Text,analyzed
-sub_B0B6,Jetsripper boss,1800,Text_AnimateRotationStop,Animates rotation stopping sequence,Text,analyzed
-sub_B0D8,Jetsripper boss,1800,Text_CompleteWithSound,Completes animation and plays appropriate sound,Text,analyzed
-sub_B1E0,Jetsripper boss,1800,Text_RenderRotatingSprites,Renders text sprites with tile loading,Text,analyzed
-sub_B22C,Jetsripper boss,1800,Text_PositionVerticalSprites,Positions vertical text sprite column,Text,analyzed
-sub_B268,Jetsripper boss,1800,Text_CalculateRotationCoords,Calculates coordinates for rotating text effect,Text,analyzed
-sub_C910,Jetsripper boss,1800,Camera_BossPhaseHandler,Camera handler checking boss presence,Camera,analyzed
-sub_10086,Jetsripper boss,1800,Camera_UpdateTowardsPlayer,Updates camera position towards player,Camera,analyzed
-sub_10114,Jetsripper boss,1800,Camera_SmoothFollowPlayer,Smoothly follows player with speed limits,Camera,analyzed
-sub_103DC,Jetsripper boss,1800,Stage_TriggerPhaseTransition,Triggers transition to next stage phase,Stage,analyzed
-sub_1C288,Jetsripper boss,1800,Sprite_ClearAllExcept,Clears all objects except specified types,Sprite,analyzed
-sub_AEE4,Stage 2,1980,UI_DisplayScoreAnimation,Displays score counter with animation,UI,analyzed
-sub_B136,Stage 2,1980,Text_AnimateRiseUp,Animates text rising upward,Text,analyzed
-sub_B156,Stage 2,1980,Text_PauseBeforeExit,Pauses before final exit animation,Text,analyzed
-sub_B16C,Stage 2,1980,Text_AnimateExitUp,Animates text exiting upward,Text,analyzed
-sub_B18C,Stage 2,1980,Text_FinalizeAndSaveScore,Finalizes animation and saves weapon score,Text,analyzed
-sub_C922,Stage 2,1980,Camera_Stage2PhaseHandler,Stage 2 camera with transition check,Camera,analyzed
-sub_C92E,Stage 2,1980,Camera_AutoScrollCheck,Camera with auto-scroll and phase transition,Camera,analyzed
-sub_103B0,Stage 2,1980,Stage_InitSectionChange,Initializes transition between stage sections,Stage,analyzed
-sub_11EAA,Stage 2,1980,Stage_LoadVisualAssets,Loads stage palette and tile data,Stage,analyzed
-sub_15632,Stage 2,1980,Player_ToggleDirectionFlag,Toggles player direction flag with sound,Player,analyzed
-sub_163D2,Stage 2,1980,Player_InitGroundedState,Initializes player landing state after air,Player,analyzed
-sub_16402,Stage 2,1980,,,,pending
-sub_16782,Stage 2,1980,,,,pending
-sub_16B5C,Stage 2,1980,,,,pending
-sub_16BCE,Stage 2,1980,,,,pending
-sub_1716A,Stage 2,1980,,,,pending
-sub_1717A,Stage 2,1980,,,,pending
-sub_18328,Stage 2,1980,,,,pending
-sub_18C52,Stage 2,1980,,,,pending
-sub_1C8B2,Stage 2,1980,,,,pending
-sub_2A5B6,Stage 2,1980,,,,pending
-sub_2A7BC,Stage 2,1980,,,,pending
-sub_2B542,Stage 2,1980,,,,pending
-sub_2D27C,Stage 2,1980,,,,pending
-sub_2D2F0,Stage 2,1980,,,,pending
-sub_2D386,Stage 2,1980,,,,pending
-sub_2D3E8,Stage 2,1980,,,,pending
-sub_2D418,Stage 2,1980,,,,pending
-sub_2D432,Stage 2,1980,,,,pending
-sub_2D474,Stage 2,1980,,,,pending
-sub_2D55E,Stage 2,1980,,,,pending
-sub_2D61C,Stage 2,1980,,,,pending
-sub_2D640,Stage 2,1980,,,,pending
-sub_354A,Antroid boss,2160,,,,pending
-sub_3580,Antroid boss,2160,,,,pending
-sub_C944,Antroid boss,2160,,,,pending
-sub_11058,Antroid boss,2160,,,,pending
-sub_17CB4,Antroid boss,2160,,,,pending
-sub_1C014,Antroid boss,2160,,,,pending
-sub_2B206,Antroid boss,2160,,,,pending
-sub_2B298,Antroid boss,2160,,,,pending
-sub_2BAB4,Antroid boss,2160,,,,pending
-sub_2BB4C,Antroid boss,2160,,,,pending
-sub_2C8E4,Antroid boss,2160,,,,pending
-sub_2C8EA,Antroid boss,2160,,,,pending
-sub_2C902,Antroid boss,2160,,,,pending
-sub_2D5F0,Antroid boss,2160,,,,pending
-sub_2F396,Antroid boss,2160,,,,pending
-sub_2F39A,Antroid boss,2160,,,,pending
-sub_2F3E6,Antroid boss,2160,,,,pending
-sub_2F42A,Antroid boss,2160,,,,pending
+sub_3ABA,Jetsripper boss,1620,,Updates palette with fade effect using timer,Gfx,analyzed
+sub_3AE4,Jetsripper boss,1620,,Calculates fade parameters from timer and random,Gfx,analyzed
+sub_3B32,Jetsripper boss,1620,,Applies fade to palette colors with RGB adjustment,Gfx,analyzed
+sub_3B66,Jetsripper boss,1620,,Prepares RGB shift components for palette operations,Gfx,analyzed
+sub_15C34,Jetsripper boss,1620,,Initializes player falling state with parameters,Player,analyzed
+sub_16F36,Jetsripper boss,1620,,Handles boss death animation frame transitions,Boss,analyzed
+sub_1B980,Jetsripper boss,1620,,Clears specific flags from object buffer,Sprite,analyzed
+sub_1C16A,Jetsripper boss,1620,,Finds free slot in projectile buffer unrolled search,Projectile,analyzed
+sub_2A79E,Jetsripper boss,1620,,Initializes projectile with type 0x88,Projectile,analyzed
+sub_2BD10,Jetsripper boss,1620,,Spawns destruction explosion effect,Effect,analyzed
+sub_3583C,Jetsripper boss,1620,,Handles Jetsripper rotation state with angle check,Boss,analyzed
+sub_35D54,Jetsripper boss,1620,,Initializes Jetsripper death sequence with particles,Boss,analyzed
+sub_35DDC,Jetsripper boss,1620,,Handles Jetsripper death fade animation,Boss,analyzed
+sub_361EE,Jetsripper boss,1620,,Updates body segment with gravity physics,Boss,analyzed
+sub_362CE,Jetsripper boss,1620,,Creates Jetsripper projectile with trajectory,Boss,analyzed
+sub_36368,Jetsripper boss,1620,,Updates projectile with bouncing logic,Boss,analyzed
+sub_B026,Jetsripper boss,1800,,Initializes victory text display sequence,Text,analyzed
+sub_B03A,Jetsripper boss,1800,,Starts weapon acquired animation sequence,Text,analyzed
+sub_B088,Jetsripper boss,1800,,Animates rotating text with fade effect,Text,analyzed
+sub_B0B6,Jetsripper boss,1800,,Animates rotation stopping sequence,Text,analyzed
+sub_B0D8,Jetsripper boss,1800,,Completes animation and plays appropriate sound,Text,analyzed
+sub_B1E0,Jetsripper boss,1800,,Renders text sprites with tile loading,Text,analyzed
+sub_B22C,Jetsripper boss,1800,,Positions vertical text sprite column,Text,analyzed
+sub_B268,Jetsripper boss,1800,,Calculates coordinates for rotating text effect,Text,analyzed
+sub_C910,Jetsripper boss,1800,,Camera handler checking boss presence,Camera,analyzed
+sub_10086,Jetsripper boss,1800,,Updates camera position towards player,Camera,analyzed
+sub_10114,Jetsripper boss,1800,,Smoothly follows player with speed limits,Camera,analyzed
+sub_103DC,Jetsripper boss,1800,,Triggers transition to next stage phase,Stage,analyzed
+sub_1C288,Jetsripper boss,1800,,Clears all objects except specified types,Sprite,analyzed
+sub_AEE4,Stage 2,1980,,Displays score counter with animation,UI,analyzed
+sub_B136,Stage 2,1980,,Animates text rising upward,Text,analyzed
+sub_B156,Stage 2,1980,,Pauses before final exit animation,Text,analyzed
+sub_B16C,Stage 2,1980,,Animates text exiting upward,Text,analyzed
+sub_B18C,Stage 2,1980,,Finalizes animation and saves weapon score,Text,analyzed
+sub_C922,Stage 2,1980,,Stage 2 camera with transition check,Camera,analyzed
+sub_C92E,Stage 2,1980,,Camera with auto-scroll and phase transition,Camera,analyzed
+sub_103B0,Stage 2,1980,,Initializes transition between stage sections,Stage,analyzed
+sub_11EAA,Stage 2,1980,,Loads stage palette and tile data,Stage,analyzed
+sub_15632,Stage 2,1980,,Toggles player direction flag with sound,Player,analyzed
+sub_163D2,Stage 2,1980,,Initializes player landing state after air,Player,analyzed
+sub_16402,Stage 2,1980,Player_HandleDashState,Main handler for player dash state with counter and input checks,Player,analyzed
+sub_16782,Stage 2,1980,Player_InitWallKickState,Initializes wall kick state from button input,Player,analyzed
+sub_16B5C,Stage 2,1980,Player_UpdateDirectionBit,Updates player direction bit from controller state,Player,analyzed
+sub_16BCE,Stage 2,1980,Player_CalculateCenterPosition,Calculates player center position from hitbox bounds,Player,analyzed
+sub_1716A,Stage 2,1980,Player_RenderDashEffect,Renders player dash sprite with offset and table,Player,analyzed
+sub_1717A,Stage 2,1980,Player_CycleDashAnimation,Cycles dash animation frames with sound effects,Player,analyzed
+sub_18328,Stage 2,1980,Weapon_FireBulletHandler,Handles player bullet firing with ammo check,Weapon,analyzed
+sub_18C52,Stage 2,1980,Sprite_SpawnParticleEffect,Spawns particle effect at sprite position with trajectory,Sprite,analyzed
+sub_1C8B2,Stage 2,1980,UI_SetWeaponIconIndex,Sets weapon icon index from weapon ID lookup,UI,analyzed
+sub_2A5B6,Stage 2,1980,Enemy_SpawnQuadProjectiles,Spawns 4 projectiles in pattern with sound,Enemy,analyzed
+sub_2A7BC,Stage 2,1980,Sprite_SetObjectPointer,Sets sprite object pointer from a5 to a0,Sprite,analyzed
+sub_2B542,Stage 2,1980,Enemy_BouncingProjectile,Bouncing enemy projectile with screen bounds check,Enemy,analyzed
+sub_2D27C,Stage 2,1980,Enemy_InitSpriteParams,Initializes sprite VDP flags and hitbox from table,Enemy,analyzed
+sub_2D2F0,Stage 2,1980,Enemy_UpdateRotationSprite,Updates sprite graphics based on rotation angle,Enemy,analyzed
+sub_2D386,Stage 2,1980,Enemy_CircularHomingMotion,Circular motion with periodic homing missile spawn,Enemy,analyzed
+sub_2D3E8,Stage 2,1980,Enemy_CircleMainHandler,Main update handler for circling enemy type,Enemy,analyzed
+sub_2D418,Stage 2,1980,Enemy_CircleStateDispatcher,Dispatches to circle enemy state handlers,Enemy,analyzed
+sub_2D432,Stage 2,1980,Enemy_ApproachPlayerState,Approach player until within distance threshold,Enemy,analyzed
+sub_2D474,Stage 2,1980,Enemy_CalculateTrajectoryToPlayer,Calculates velocity vector from random angle toward player,Enemy,analyzed
+sub_2D55E,Stage 2,1980,Enemy_CircleAttackState,Circles player with adaptive rotation speed,Enemy,analyzed
+sub_2D61C,Stage 2,1980,Enemy_ResetToIdleState,Resets enemy to idle state clearing velocities,Enemy,analyzed
+sub_2D640,Stage 2,1980,Enemy_SpawnParticleHardMode,Spawns particle effect only on hard difficulty,Enemy,analyzed
+sub_354A,Antroid boss,2160,Math_CalculateAngleToPlayer,Calculates angle from object to player center,Math,analyzed
+sub_3580,Antroid boss,2160,Math_Arctan2Lookup,Arctangent2 function using lookup table,Math,analyzed
+sub_C944,Antroid boss,2160,Camera_TransitionToBossArena,Transitions camera to boss arena with position lock,Camera,analyzed
+sub_11058,Antroid boss,2160,Gfx_DMATransferTiles,DMA transfers tile data to VRAM with VDP commands,Gfx,analyzed
+sub_17CB4,Antroid boss,2160,Enemy_CalculateVelocityFromPlayer,Calculates projectile velocity based on player X position,Enemy,analyzed
+sub_1C014,Antroid boss,2160,Sprite_FindFreeEnemySlot,Finds free enemy object slot with wraparound search,Sprite,analyzed
+sub_2B206,Antroid boss,2160,Enemy_InitHomingProjectile,Initializes homing projectile with trajectory calculation,Enemy,analyzed
+sub_2B298,Antroid boss,2160,Enemy_HomingProjectileMain,Main handler for homing projectile with reflect logic,Enemy,analyzed
+sub_2BAB4,Antroid boss,2160,Enemy_InitDestructionParticle,Initializes destruction particle sprite properties,Enemy,analyzed
+sub_2BB4C,Antroid boss,2160,Enemy_DestructionParticleMain,Main handler for destruction particle effect,Enemy,analyzed
+sub_2C8E4,Antroid boss,2160,Enemy_AnimationWrapper,Wrapper calling visibility check and animation update,Enemy,analyzed
+sub_2C8EA,Antroid boss,2160,Enemy_CheckBoundsVisibility,Checks if enemy is within visible screen bounds,Enemy,analyzed
+sub_2C902,Antroid boss,2160,Enemy_DestroyIfOffscreen,Marks enemy for destruction if beyond screen bounds,Enemy,analyzed
+sub_2D5F0,Antroid boss,2160,Enemy_DescendAttackState,Descending attack state with rotation sprite update,Enemy,analyzed
+sub_2F396,Antroid boss,2160,Enemy_TinyWrapper,Tiny wrapper calling state handler,Enemy,analyzed
+sub_2F39A,Antroid boss,2160,Enemy_SpawnMultiShot,Spawns multiple projectiles in spread pattern,Enemy,analyzed
+sub_2F3E6,Antroid boss,2160,Enemy_TwinProjectileHandler,Handles paired projectile spawn with symmetric angles,Enemy,analyzed
+sub_2F42A,Antroid boss,2160,Enemy_DestroyOnContact,Checks collision flags and destroys on player contact,Enemy,analyzed
 sub_2F46C,Antroid boss,2160,,,,pending
 sub_2F4C8,Antroid boss,2160,,,,pending
 sub_AF82,Antroid boss,2340,,,,pending
