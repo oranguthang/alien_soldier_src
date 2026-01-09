@@ -338,86 +338,86 @@ sub_103B0,Stage 2,1980,,Initializes transition between stage sections,Stage,anal
 sub_11EAA,Stage 2,1980,,Loads stage palette and tile data,Stage,analyzed
 sub_15632,Stage 2,1980,,Toggles player direction flag with sound,Player,analyzed
 sub_163D2,Stage 2,1980,,Initializes player landing state after air,Player,analyzed
-sub_16402,Stage 2,1980,Player_HandleDashState,Main handler for player dash state with counter and input checks,Player,analyzed
-sub_16782,Stage 2,1980,Player_InitWallKickState,Initializes wall kick state from button input,Player,analyzed
-sub_16B5C,Stage 2,1980,Player_UpdateDirectionBit,Updates player direction bit from controller state,Player,analyzed
-sub_16BCE,Stage 2,1980,Player_CalculateCenterPosition,Calculates player center position from hitbox bounds,Player,analyzed
-sub_1716A,Stage 2,1980,Player_RenderDashEffect,Renders player dash sprite with offset and table,Player,analyzed
-sub_1717A,Stage 2,1980,Player_CycleDashAnimation,Cycles dash animation frames with sound effects,Player,analyzed
-sub_18328,Stage 2,1980,Weapon_FireBulletHandler,Handles player bullet firing with ammo check,Weapon,analyzed
-sub_18C52,Stage 2,1980,Sprite_SpawnParticleEffect,Spawns particle effect at sprite position with trajectory,Sprite,analyzed
-sub_1C8B2,Stage 2,1980,UI_SetWeaponIconIndex,Sets weapon icon index from weapon ID lookup,UI,analyzed
-sub_2A5B6,Stage 2,1980,Enemy_SpawnQuadProjectiles,Spawns 4 projectiles in pattern with sound,Enemy,analyzed
-sub_2A7BC,Stage 2,1980,Sprite_SetObjectPointer,Sets sprite object pointer from a5 to a0,Sprite,analyzed
-sub_2B542,Stage 2,1980,Enemy_BouncingProjectile,Bouncing enemy projectile with screen bounds check,Enemy,analyzed
-sub_2D27C,Stage 2,1980,Enemy_InitSpriteParams,Initializes sprite VDP flags and hitbox from table,Enemy,analyzed
-sub_2D2F0,Stage 2,1980,Enemy_UpdateRotationSprite,Updates sprite graphics based on rotation angle,Enemy,analyzed
-sub_2D386,Stage 2,1980,Enemy_CircularHomingMotion,Circular motion with periodic homing missile spawn,Enemy,analyzed
-sub_2D3E8,Stage 2,1980,Enemy_CircleMainHandler,Main update handler for circling enemy type,Enemy,analyzed
-sub_2D418,Stage 2,1980,Enemy_CircleStateDispatcher,Dispatches to circle enemy state handlers,Enemy,analyzed
-sub_2D432,Stage 2,1980,Enemy_ApproachPlayerState,Approach player until within distance threshold,Enemy,analyzed
-sub_2D474,Stage 2,1980,Enemy_CalculateTrajectoryToPlayer,Calculates velocity vector from random angle toward player,Enemy,analyzed
-sub_2D55E,Stage 2,1980,Enemy_CircleAttackState,Circles player with adaptive rotation speed,Enemy,analyzed
-sub_2D61C,Stage 2,1980,Enemy_ResetToIdleState,Resets enemy to idle state clearing velocities,Enemy,analyzed
-sub_2D640,Stage 2,1980,Enemy_SpawnParticleHardMode,Spawns particle effect only on hard difficulty,Enemy,analyzed
-sub_354A,Antroid boss,2160,Math_CalculateAngleToPlayer,Calculates angle from object to player center,Math,analyzed
-sub_3580,Antroid boss,2160,Math_Arctan2Lookup,Arctangent2 function using lookup table,Math,analyzed
-sub_C944,Antroid boss,2160,Camera_TransitionToBossArena,Transitions camera to boss arena with position lock,Camera,analyzed
-sub_11058,Antroid boss,2160,Gfx_DMATransferTiles,DMA transfers tile data to VRAM with VDP commands,Gfx,analyzed
-sub_17CB4,Antroid boss,2160,Enemy_CalculateVelocityFromPlayer,Calculates projectile velocity based on player X position,Enemy,analyzed
-sub_1C014,Antroid boss,2160,Sprite_FindFreeEnemySlot,Finds free enemy object slot with wraparound search,Sprite,analyzed
-sub_2B206,Antroid boss,2160,Enemy_InitHomingProjectile,Initializes homing projectile with trajectory calculation,Enemy,analyzed
-sub_2B298,Antroid boss,2160,Enemy_HomingProjectileMain,Main handler for homing projectile with reflect logic,Enemy,analyzed
-sub_2BAB4,Antroid boss,2160,Enemy_InitDestructionParticle,Initializes destruction particle sprite properties,Enemy,analyzed
-sub_2BB4C,Antroid boss,2160,Enemy_DestructionParticleMain,Main handler for destruction particle effect,Enemy,analyzed
-sub_2C8E4,Antroid boss,2160,Enemy_AnimationWrapper,Wrapper calling visibility check and animation update,Enemy,analyzed
-sub_2C8EA,Antroid boss,2160,Enemy_CheckBoundsVisibility,Checks if enemy is within visible screen bounds,Enemy,analyzed
-sub_2C902,Antroid boss,2160,Enemy_DestroyIfOffscreen,Marks enemy for destruction if beyond screen bounds,Enemy,analyzed
-sub_2D5F0,Antroid boss,2160,Enemy_DescendAttackState,Descending attack state with rotation sprite update,Enemy,analyzed
-sub_2F396,Antroid boss,2160,Enemy_TinyWrapper,Tiny wrapper calling state handler,Enemy,analyzed
-sub_2F39A,Antroid boss,2160,Enemy_SpawnMultiShot,Spawns multiple projectiles in spread pattern,Enemy,analyzed
-sub_2F3E6,Antroid boss,2160,Enemy_TwinProjectileHandler,Handles paired projectile spawn with symmetric angles,Enemy,analyzed
-sub_2F42A,Antroid boss,2160,Enemy_DestroyOnContact,Checks collision flags and destroys on player contact,Enemy,analyzed
-sub_2F46C,Antroid boss,2160,,,,pending
-sub_2F4C8,Antroid boss,2160,,,,pending
-sub_AF82,Antroid boss,2340,,,,pending
-sub_AFB8,Antroid boss,2340,,,,pending
-sub_14C12,Antroid boss,2340,,,,pending
-sub_153D4,Antroid boss,2340,,,,pending
-sub_1564C,Antroid boss,2340,,,,pending
-sub_1917A,Antroid boss,2340,,,,pending
-sub_2BCFE,Antroid boss,2340,,,,pending
-sub_374C6,Antroid boss,2340,,,,pending
-sub_37542,Antroid boss,2340,,,,pending
-sub_838F4,Antroid boss,2340,,,,pending
-sub_343CE,Antroid boss,2520,,,,pending
-sub_343EE,Antroid boss,2520,,,,pending
-sub_3450E,Antroid boss,2520,,,,pending
-sub_34838,Antroid boss,2520,,,,pending
-sub_348AA,Antroid boss,2520,,,,pending
-sub_348DC,Antroid boss,2520,,,,pending
-sub_37558,Antroid boss,2520,,,,pending
-sub_377C4,Antroid boss,2520,,,,pending
-sub_377CA,Antroid boss,2520,,,,pending
-sub_377F6,Antroid boss,2520,,,,pending
-sub_37892,Antroid boss,2520,,,,pending
-sub_378BE,Antroid boss,2520,,,,pending
-sub_3795A,Antroid boss,2520,,,,pending
-sub_37E8C,Antroid boss,2520,,,,pending
-sub_37EB0,Antroid boss,2520,,,,pending
-sub_37ED2,Antroid boss,2520,,,,pending
-sub_37EDC,Antroid boss,2520,,,,pending
-sub_37FA0,Antroid boss,2520,,,,pending
-sub_3811A,Antroid boss,2520,,,,pending
-sub_382BC,Antroid boss,2520,,,,pending
-sub_382F8,Antroid boss,2520,,,,pending
-sub_C978,Antroid boss,2700,,,,pending
-sub_1B9A0,Antroid boss,2700,,,,pending
-sub_2A39C,Antroid boss,2700,,,,pending
-sub_2A688,Antroid boss,2700,,,,pending
-sub_2A6B4,Antroid boss,2700,,,,pending
-sub_37D3A,Antroid boss,2700,,,,pending
-sub_37D9A,Antroid boss,2700,,,,pending
+sub_16402,Stage 2,1980,,Main handler for player dash state with counter and input checks,Player,analyzed
+sub_16782,Stage 2,1980,,Initializes wall kick state from button input,Player,analyzed
+sub_16B5C,Stage 2,1980,,Updates player direction bit from controller state,Player,analyzed
+sub_16BCE,Stage 2,1980,,Calculates player center position from hitbox bounds,Player,analyzed
+sub_1716A,Stage 2,1980,,Renders player dash sprite with offset and table,Player,analyzed
+sub_1717A,Stage 2,1980,,Cycles dash animation frames with sound effects,Player,analyzed
+sub_18328,Stage 2,1980,,Handles player bullet firing with ammo check,Weapon,analyzed
+sub_18C52,Stage 2,1980,,Spawns particle effect at sprite position with trajectory,Sprite,analyzed
+sub_1C8B2,Stage 2,1980,,Sets weapon icon index from weapon ID lookup,UI,analyzed
+sub_2A5B6,Stage 2,1980,,Spawns 4 projectiles in pattern with sound,Enemy,analyzed
+sub_2A7BC,Stage 2,1980,,Sets sprite object pointer from a5 to a0,Sprite,analyzed
+sub_2B542,Stage 2,1980,,Bouncing enemy projectile with screen bounds check,Enemy,analyzed
+sub_2D27C,Stage 2,1980,,Initializes sprite VDP flags and hitbox from table,Enemy,analyzed
+sub_2D2F0,Stage 2,1980,,Updates sprite graphics based on rotation angle,Enemy,analyzed
+sub_2D386,Stage 2,1980,,Circular motion with periodic homing missile spawn,Enemy,analyzed
+sub_2D3E8,Stage 2,1980,,Main update handler for circling enemy type,Enemy,analyzed
+sub_2D418,Stage 2,1980,,Dispatches to circle enemy state handlers,Enemy,analyzed
+sub_2D432,Stage 2,1980,,Approach player until within distance threshold,Enemy,analyzed
+sub_2D474,Stage 2,1980,,Calculates velocity vector from random angle toward player,Enemy,analyzed
+sub_2D55E,Stage 2,1980,,Circles player with adaptive rotation speed,Enemy,analyzed
+sub_2D61C,Stage 2,1980,,Resets enemy to idle state clearing velocities,Enemy,analyzed
+sub_2D640,Stage 2,1980,,Spawns particle effect only on hard difficulty,Enemy,analyzed
+sub_354A,Antroid boss,2160,,Calculates angle from object to player center,Math,analyzed
+sub_3580,Antroid boss,2160,,Arctangent2 function using lookup table,Math,analyzed
+sub_C944,Antroid boss,2160,,Transitions camera to boss arena with position lock,Camera,analyzed
+sub_11058,Antroid boss,2160,,DMA transfers tile data to VRAM with VDP commands,Gfx,analyzed
+sub_17CB4,Antroid boss,2160,,Calculates projectile velocity based on player X position,Enemy,analyzed
+sub_1C014,Antroid boss,2160,,Finds free enemy object slot with wraparound search,Sprite,analyzed
+sub_2B206,Antroid boss,2160,,Initializes homing projectile with trajectory calculation,Enemy,analyzed
+sub_2B298,Antroid boss,2160,,Main handler for homing projectile with reflect logic,Enemy,analyzed
+sub_2BAB4,Antroid boss,2160,,Initializes destruction particle sprite properties,Enemy,analyzed
+sub_2BB4C,Antroid boss,2160,,Main handler for destruction particle effect,Enemy,analyzed
+sub_2C8E4,Antroid boss,2160,,Wrapper calling visibility check and animation update,Enemy,analyzed
+sub_2C8EA,Antroid boss,2160,,Checks if enemy is within visible screen bounds,Enemy,analyzed
+sub_2C902,Antroid boss,2160,,Marks enemy for destruction if beyond screen bounds,Enemy,analyzed
+sub_2D5F0,Antroid boss,2160,,Descending attack state with rotation sprite update,Enemy,analyzed
+sub_2F396,Antroid boss,2160,,Tiny wrapper calling state handler,Enemy,analyzed
+sub_2F39A,Antroid boss,2160,,Spawns multiple projectiles in spread pattern,Enemy,analyzed
+sub_2F3E6,Antroid boss,2160,,Handles paired projectile spawn with symmetric angles,Enemy,analyzed
+sub_2F42A,Antroid boss,2160,,Checks collision flags and destroys on player contact,Enemy,analyzed
+sub_2F46C,Antroid boss,2160,Boss_AntroidPhaseCounter,Increments phase counter until reaching 8 then advances state,Boss,analyzed
+sub_2F4C8,Antroid boss,2160,Boss_AntroidUpdateTiles,Updates boss tiles via DMA transfer based on state,Boss,analyzed
+sub_AF82,Antroid boss,2340,Text_InitGradeDisplay,Initializes grade text display with position and sound,Text,analyzed
+sub_AFB8,Antroid boss,2340,Text_AnimateGradeFlash,Animates flashing grade text with sprite rendering,Text,analyzed
+sub_14C12,Antroid boss,2340,Physics_DispatchSlopeHandler,Processes terrain collision angle for slope handling,Physics,analyzed
+sub_153D4,Antroid boss,2340,Player_InitJumpCancelState,Initializes jump cancel state clearing flags and timers,Player,analyzed
+sub_1564C,Antroid boss,2340,Player_CheckWallCollisionJump,Checks wall collision during jump and initiates wall states,Player,analyzed
+sub_1917A,Antroid boss,2340,Sprite_DestroyOnTimeout,Destroys sprite when timer expires,Sprite,analyzed
+sub_2BCFE,Antroid boss,2340,Sprite_SetPointerClearD7,Sets sprite pointer a0 from a5 and clears d7,Sprite,analyzed
+sub_374C6,Antroid boss,2340,Boss_AntroidMainHandler,Main Antroid boss handler dispatching to state routines,Boss,analyzed
+sub_37542,Antroid boss,2340,Boss_AntroidInitState,Initializes boss state clearing objects,Boss,analyzed
+sub_838F4,Antroid boss,2340,Sound_LoadChannelParams,Loads sound channel parameters from track data,Sound,analyzed
+sub_343CE,Antroid boss,2520,Sprite_InitMetaspriteSimple,Initializes metasprite with simple parameter setup,Sprite,analyzed
+sub_343EE,Antroid boss,2520,Sprite_InitMetaspriteComplex,Complex metasprite initialization with flags and rotation,Sprite,analyzed
+sub_3450E,Antroid boss,2520,Sprite_UpdateMetaspriteRotation,Updates metasprite rotation and sine-based positioning,Sprite,analyzed
+sub_34838,Antroid boss,2520,Sprite_IncrementMetaspriteCount,Increments metasprite object counter,Sprite,analyzed
+sub_348AA,Antroid boss,2520,Anim_CalculateInterpolationDeltas,Calculates interpolation deltas for animation blending,Anim,analyzed
+sub_348DC,Antroid boss,2520,Anim_ApplyInterpolationStep,Applies single interpolation step to animation values,Anim,analyzed
+sub_37558,Antroid boss,2520,Boss_AntroidInitPhase,Initializes Antroid boss phase with metasprite setup,Boss,analyzed
+sub_377C4,Antroid boss,2520,Boss_AntroidSetIdleAnim,Sets boss to idle animation with parameter 8,Boss,analyzed
+sub_377CA,Antroid boss,2520,Boss_AntroidAttackState1,Attack state checking phase and initializing attack,Boss,analyzed
+sub_377F6,Antroid boss,2520,Boss_AntroidFlyingAttack,Flying attack state with gravity and proximity checks,Boss,analyzed
+sub_37892,Antroid boss,2520,Boss_AntroidAttackState2,Second attack state variant with different animation,Boss,analyzed
+sub_378BE,Antroid boss,2520,Boss_AntroidDivingAttack,Diving attack state with vertical movement,Boss,analyzed
+sub_3795A,Antroid boss,2520,Boss_AntroidStartAnimation,Starts boss animation sequence with parameter,Boss,analyzed
+sub_37E8C,Antroid boss,2520,Boss_AntroidUpdateSprite,Updates boss sprite graphics and animation,Boss,analyzed
+sub_37EB0,Antroid boss,2520,Boss_AntroidSetupMetasprite,Sets up boss metasprite rendering,Boss,analyzed
+sub_37ED2,Antroid boss,2520,Boss_AntroidLoadAnimTable,Loads animation table pointer for boss,Boss,analyzed
+sub_37EDC,Antroid boss,2520,Boss_AntroidSetAnimIndex,Sets boss animation index from parameter,Boss,analyzed
+sub_37FA0,Antroid boss,2520,Boss_AntroidInitPhysics,Initializes boss physics and movement parameters,Boss,analyzed
+sub_3811A,Antroid boss,2520,Anim_InterpolateToTarget,Interpolates animation values toward target state,Anim,analyzed
+sub_382BC,Antroid boss,2520,Boss_AntroidResetAnimation,Resets boss animation to initial state,Boss,analyzed
+sub_382F8,Antroid boss,2520,Boss_AntroidEndAttack,Ends attack phase and returns to idle,Boss,analyzed
+sub_C978,Antroid boss,2700,Camera_AntroidBossInit,Initializes camera for Antroid boss fight,Camera,analyzed
+sub_1B9A0,Antroid boss,2700,Sprite_InitFromPointerTable,Initializes sprite from pointer table with offsets,Sprite,analyzed
+sub_2A39C,Antroid boss,2700,Projectile_InitTypeA4,Initializes projectile type 0xA4,Projectile,analyzed
+sub_2A688,Antroid boss,2700,Projectile_FindFreeSlotComplex,Finds free projectile slot with complex checks,Projectile,analyzed
+sub_2A6B4,Antroid boss,2700,Projectile_InitializeFromTable,Initializes projectile from data table,Projectile,analyzed
+sub_37D3A,Antroid boss,2700,Boss_AntroidChargeAttack,Boss charge attack with distance check,Boss,analyzed
+sub_37D9A,Antroid boss,2700,Boss_AntroidRamAttack,Boss ram attack with collision,Boss,analyzed
 sub_37E00,Antroid boss,2700,,,,pending
 sub_37E2A,Antroid boss,2700,,,,pending
 sub_37F26,Antroid boss,2700,,,,pending
