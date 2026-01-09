@@ -778,86 +778,86 @@ sub_16CC8,Joker boss,10080,,,Physics,analyzed
 sub_3B69A,Joker boss,10080,,,Boss,analyzed
 sub_3BE16,Joker boss,10080,,,Boss,analyzed
 sub_3BE84,Joker boss,10080,,,Projectile,analyzed
-sub_8289A,Joker boss,10080,Sound_SendPSGVolumeUpdate,Sends PSG volume update via Z80 bus with arbitration,Sound,analyzed
-sub_2A3E6,Joker boss,10260,Effect_PlayRandomExplosionSound,Plays random explosion sound effects with timer countdown,Effect,analyzed
-sub_2A85E,Joker boss,10260,Effect_InitDebrisSprite,Initializes debris sprite with velocity from RNG,Effect,analyzed
-sub_2A8A2,Joker boss,10260,Projectile_FallingDebris,Falling debris projectile with gravity acceleration,Projectile,analyzed
-sub_3B4D8,Joker boss,10260,Boss_JokerFallingInit,Initializes Joker boss falling state after defeat,Boss,analyzed
-sub_3B56A,Joker boss,10260,Boss_JokerFallingPhase1,First falling phase with palette fade and projectile spawn,Boss,analyzed
-sub_3B5A0,Joker boss,10260,Boss_JokerFallingPhase2,Second falling phase adjusting descent speed to ground,Boss,analyzed
-sub_3B602,Joker boss,10260,Boss_JokerSpawnDebris,Spawns falling debris and explosion sprites during defeat,Boss,analyzed
-sub_3B89E,Joker boss,10260,Boss_JokerLandingPrep,Prepares boss landing state after fall setting params,Boss,analyzed
-sub_3B8BE,Joker boss,10260,Boss_JokerLandingState,Boss landing state with screen shake and velocity adjustment,Boss,analyzed
-sub_3B52E,Joker boss,10440,Boss_JokerFadeOut,Boss fade out effect clearing sprites and spawning player,Boss,analyzed
-sub_3B5D4,Joker boss,10440,Boss_JokerFadeComplete,Completes fade out and transitions to final state,Boss,analyzed
-sub_3B68E,Joker boss,10440,Gfx_SetFadeLevel,Sets graphics fade level based on counter value,Gfx,analyzed
-sub_83932,Joker boss,10440,Sound_SetChannelSustain,Sets sound channel sustain flag for envelope control,Sound,analyzed
-sub_CC96,Joker boss,10620,Stage_PostJokerTransition,Post-Joker transition clearing flags and updating camera,Stage,analyzed
-sub_3B5E8,Joker boss,10620,Boss_JokerCleanup,Cleans up Joker boss removing entity and clearing flags,Boss,analyzed
-sub_CCA2,Stage 7,10800,Stage_InitStage7,Initializes Stage 7 with scroll setup and palette loading,Stage,analyzed
-sub_CCC8,Stage 7,10800,Stage_Stage7ScrollUpdate,Updates Stage 7 scroll checking transition boundaries,Stage,analyzed
-sub_11F56,Stage 7,10800,Stage_LoadStage7Graphics,Loads Stage 7 palette and tile graphics data to VRAM,Stage,analyzed
-sub_32EE0,Stage 7,10800,Enemy_TrackerMain,Tracker enemy main update with angle calculation and projectile,Enemy,analyzed
-sub_32F32,Stage 7,10800,Enemy_TrackerDispatcher,Tracker enemy state dispatcher using jump table,Enemy,analyzed
-sub_32F60,Stage 7,10800,Enemy_TrackerSpawnWave,Spawns wave of tracker projectiles in formation pattern,Enemy,analyzed
-sub_32F84,Stage 7,10800,Enemy_TrackerInitProjectile,Initializes individual tracker projectile with params,Enemy,analyzed
-sub_32FF4,Stage 7,10800,Enemy_TrackerFallState,Tracker falling state with upward negative velocity,Enemy,analyzed
-sub_33016,Stage 7,10800,Enemy_TrackerWaveMotion,Tracker wave motion with oscillating vertical acceleration,Enemy,analyzed
-sub_3305A,Stage 7,10800,Enemy_TrackerSineWave,Tracker sine wave motion with smooth oscillation,Enemy,analyzed
-sub_33082,Stage 7,10800,Enemy_TrackerReverse,Tracker reverse motion returning to wave pattern,Enemy,analyzed
-sub_CD0A,ST-210-Terobuster boss,10980,Stage_InitTerobusterBoss,Initializes Terobuster boss with scroll and graphics loading,Stage,analyzed
-sub_D5BC,ST-210-Terobuster boss,10980,Stage_InitProjectileSpawn,Initializes projectile spawn position for Terobuster intro,Stage,analyzed
-sub_D5C8,ST-210-Terobuster boss,10980,Stage_SpawnIntroProjectile,Spawns intro projectiles with timing and position,Stage,analyzed
-sub_D624,ST-210-Terobuster boss,10980,Projectile_IntroFalling,Intro falling projectile with screen position and flicker,Projectile,analyzed
-sub_D654,ST-210-Terobuster boss,10980,Stage_LoadTerobusterTiles,Loads Terobuster boss tile graphics progressively,Stage,analyzed
-sub_33004,ST-210-Terobuster boss,10980,Enemy_TrackerOffScreen,Tracker enemy off-screen check marking for removal,Enemy,analyzed
-sub_CD90,ST-210-Terobuster boss,11340,Stage_PostTerobusterIntro,Post-intro transition clearing flags and advancing phase,Stage,analyzed
-sub_38518,ST-210-Terobuster boss,11340,Boss_TerobusterMain,Main Terobuster boss handler with state dispatch,Boss,analyzed
-sub_385A4,ST-210-Terobuster boss,11340,Boss_TerobusterInit,Initializes Terobuster boss clearing sprites and setting flags,Boss,analyzed
-sub_385CA,ST-210-Terobuster boss,11340,Boss_TerobusterSetup,Sets up Terobuster boss with complex metasprite initialization,Boss,analyzed
-sub_389A2,ST-210-Terobuster boss,11340,Boss_TerobusterIntro,Terobuster boss intro positioning and animation setup,Boss,analyzed
-sub_389CA,ST-210-Terobuster boss,11340,Boss_TerobusterFadeIn,Boss fade in effect preparing for battle start,Boss,analyzed
-sub_389DC,ST-210-Terobuster boss,11340,Boss_TerobusterDescend,Boss descending animation with position interpolation,Boss,analyzed
-sub_393BE,ST-210-Terobuster boss,11340,,,,pending
-sub_38CF4,ST-210-Terobuster boss,11520,,,,pending
-sub_38D1C,ST-210-Terobuster boss,11520,,,,pending
-sub_38D4C,ST-210-Terobuster boss,11520,,,,pending
-sub_38DC4,ST-210-Terobuster boss,11520,,,,pending
-sub_38E08,ST-210-Terobuster boss,11520,,,,pending
-sub_391CC,ST-210-Terobuster boss,11520,,,,pending
-sub_3923E,ST-210-Terobuster boss,11520,,,,pending
-sub_392B0,ST-210-Terobuster boss,11520,,,,pending
-sub_392C6,ST-210-Terobuster boss,11520,,,,pending
-sub_B3F0,ST-210-Terobuster boss,11700,,,,pending
-sub_38A8C,ST-210-Terobuster boss,11700,,,,pending
-sub_38AB0,ST-210-Terobuster boss,11700,,,,pending
-sub_19244,ST-210-Terobuster boss,11880,,,,pending
-sub_386EE,ST-210-Terobuster boss,11880,,,,pending
-sub_14AF8,ST-210-Terobuster boss,12060,,,,pending
-sub_14BBC,ST-210-Terobuster boss,12060,,,,pending
-sub_38ACC,ST-210-Terobuster boss,12060,,,,pending
-sub_38B5C,ST-210-Terobuster boss,12060,,,,pending
-sub_38BA6,ST-210-Terobuster boss,12060,,,,pending
-sub_38BC0,ST-210-Terobuster boss,12060,,,,pending
-sub_390F0,ST-210-Terobuster boss,12060,,,,pending
-sub_38C66,ST-210-Terobuster boss,12240,,,,pending
-sub_38CBE,ST-210-Terobuster boss,12240,,,,pending
-sub_38CD2,ST-210-Terobuster boss,12240,,,,pending
-sub_CDBC,ST-210-Terobuster boss,12420,,,,pending
-sub_CDE2,Stage 7 to 8 transition,12600,,,,pending
-sub_19A90,Stage 7 to 8 transition,12780,,,,pending
-sub_3084,Train start (Stage 8),12960,,,,pending
-sub_32CC,Train start (Stage 8),12960,,,,pending
-sub_3E5A,Train start (Stage 8),12960,,,,pending
-sub_4132,Train start (Stage 8),12960,,,,pending
-sub_4336,Train start (Stage 8),12960,,,,pending
-sub_CE58,Train start (Stage 8),12960,,,,pending
-sub_CEBC,Train start (Stage 8),12960,,,,pending
-sub_CEFA,Train start (Stage 8),12960,,,,pending
-sub_D766,Train start (Stage 8),12960,,,,pending
-sub_10286,Train start (Stage 8),12960,,,,pending
-sub_11F7E,Train start (Stage 8),12960,,,,pending
-sub_2EFC8,Train start (Stage 8),12960,,,,pending
+sub_8289A,Joker boss,10080,,,Sound,analyzed
+sub_2A3E6,Joker boss,10260,,,Effect,analyzed
+sub_2A85E,Joker boss,10260,,,Effect,analyzed
+sub_2A8A2,Joker boss,10260,,,Projectile,analyzed
+sub_3B4D8,Joker boss,10260,,,Boss,analyzed
+sub_3B56A,Joker boss,10260,,,Boss,analyzed
+sub_3B5A0,Joker boss,10260,,,Boss,analyzed
+sub_3B602,Joker boss,10260,,,Boss,analyzed
+sub_3B89E,Joker boss,10260,,,Boss,analyzed
+sub_3B8BE,Joker boss,10260,,,Boss,analyzed
+sub_3B52E,Joker boss,10440,,,Boss,analyzed
+sub_3B5D4,Joker boss,10440,,,Boss,analyzed
+sub_3B68E,Joker boss,10440,,,Gfx,analyzed
+sub_83932,Joker boss,10440,,,Sound,analyzed
+sub_CC96,Joker boss,10620,,,Stage,analyzed
+sub_3B5E8,Joker boss,10620,,,Boss,analyzed
+sub_CCA2,Stage 7,10800,,,Stage,analyzed
+sub_CCC8,Stage 7,10800,,,Stage,analyzed
+sub_11F56,Stage 7,10800,,,Stage,analyzed
+sub_32EE0,Stage 7,10800,,,Enemy,analyzed
+sub_32F32,Stage 7,10800,,,Enemy,analyzed
+sub_32F60,Stage 7,10800,,,Enemy,analyzed
+sub_32F84,Stage 7,10800,,,Enemy,analyzed
+sub_32FF4,Stage 7,10800,,,Enemy,analyzed
+sub_33016,Stage 7,10800,,,Enemy,analyzed
+sub_3305A,Stage 7,10800,,,Enemy,analyzed
+sub_33082,Stage 7,10800,,,Enemy,analyzed
+sub_CD0A,ST-210-Terobuster boss,10980,,,Stage,analyzed
+sub_D5BC,ST-210-Terobuster boss,10980,,,Stage,analyzed
+sub_D5C8,ST-210-Terobuster boss,10980,,,Stage,analyzed
+sub_D624,ST-210-Terobuster boss,10980,,,Projectile,analyzed
+sub_D654,ST-210-Terobuster boss,10980,,,Stage,analyzed
+sub_33004,ST-210-Terobuster boss,10980,,,Enemy,analyzed
+sub_CD90,ST-210-Terobuster boss,11340,,,Stage,analyzed
+sub_38518,ST-210-Terobuster boss,11340,,,Boss,analyzed
+sub_385A4,ST-210-Terobuster boss,11340,,,Boss,analyzed
+sub_385CA,ST-210-Terobuster boss,11340,,,Boss,analyzed
+sub_389A2,ST-210-Terobuster boss,11340,,,Boss,analyzed
+sub_389CA,ST-210-Terobuster boss,11340,,,Boss,analyzed
+sub_389DC,ST-210-Terobuster boss,11340,,,Boss,analyzed
+sub_393BE,ST-210-Terobuster boss,11340,Boss_TerobusterLoadTilesByIndex,Loads compressed tiles by index with bounds checking,Boss,analyzed
+sub_38CF4,ST-210-Terobuster boss,11520,Boss_TerobusterOscillateValue,Calculates oscillating word values for animation effects,Boss,analyzed
+sub_38D1C,ST-210-Terobuster boss,11520,Boss_TerobusterInitBattleState,Initializes battle state with sound flag and timer setup,Boss,analyzed
+sub_38D4C,ST-210-Terobuster boss,11520,Boss_TerobusterUpdateBodyParts,Updates boss body part positions with offset calculations,Boss,analyzed
+sub_38DC4,ST-210-Terobuster boss,11520,Boss_TerobusterSpawnProjectile,Spawns projectiles with trajectory and velocity updates,Boss,analyzed
+sub_38E08,ST-210-Terobuster boss,11520,Boss_TerobusterInitMetasprite,Initializes metasprite and updates boss animation state,Boss,analyzed
+sub_391CC,ST-210-Terobuster boss,11520,Boss_TerobusterInterpolateAnimation,Interpolates animation frames with delay loading,Boss,analyzed
+sub_3923E,ST-210-Terobuster boss,11520,Boss_TerobusterApplyAngles,Applies animation angles to 9 boss body parts,Boss,analyzed
+sub_392B0,ST-210-Terobuster boss,11520,Boss_TerobusterCalculateDeltas,Calculates interpolation deltas for smooth animation,Boss,analyzed
+sub_392C6,ST-210-Terobuster boss,11520,Boss_TerobusterLoadFrameDelays,Loads animation frame delays for timing system,Boss,analyzed
+sub_B3F0,ST-210-Terobuster boss,11700,Text_RenderLine,Renders text line with sprite buffer and OAM update,Gfx,analyzed
+sub_38A8C,ST-210-Terobuster boss,11700,Boss_TerobusterBattleEnd,Boss battle end sequence with victory condition check,Boss,analyzed
+sub_38AB0,ST-210-Terobuster boss,11700,Boss_TerobusterPostBattleCleanup,Post-battle cleanup clearing flags and updating camera,Boss,analyzed
+sub_19244,ST-210-Terobuster boss,11880,Memory_ClearBlock,Clears memory block for system reset operations,System,analyzed
+sub_386EE,ST-210-Terobuster boss,11880,Boss_TerobusterMainAI,Complex boss AI state machine with attack patterns,Boss,analyzed
+sub_14AF8,ST-210-Terobuster boss,12060,Physics_UpdateVelocity,Updates entity velocity with acceleration application,Physics,analyzed
+sub_14BBC,ST-210-Terobuster boss,12060,Physics_ApplyAcceleration,Applies acceleration to entity physics state,Physics,analyzed
+sub_38ACC,ST-210-Terobuster boss,12060,Boss_TerobusterBattleState,Battle state management with phase transitions,Boss,analyzed
+sub_38B5C,ST-210-Terobuster boss,12060,Boss_TerobusterAttackPattern1,First attack pattern with projectile timing,Boss,analyzed
+sub_38BA6,ST-210-Terobuster boss,12060,Boss_TerobusterAttackPattern2,Second attack pattern with alternate timing,Boss,analyzed
+sub_38BC0,ST-210-Terobuster boss,12060,Boss_TerobusterAttackPattern3,Third attack pattern with combined attacks,Boss,analyzed
+sub_390F0,ST-210-Terobuster boss,12060,Boss_TerobusterMovementPhysics,Boss movement physics with acceleration and boundaries,Boss,analyzed
+sub_38C66,ST-210-Terobuster boss,12240,Boss_TerobusterDefeatInit,Initializes defeat sequence with explosion spawn,Boss,analyzed
+sub_38CBE,ST-210-Terobuster boss,12240,Boss_TerobusterDefeatTimer,Defeat timer countdown before final state,Boss,analyzed
+sub_38CD2,ST-210-Terobuster boss,12240,Boss_TerobusterDefeatComplete,Completes defeat sequence removing boss entity,Boss,analyzed
+sub_CDBC,ST-210-Terobuster boss,12420,Stage_PostTerobusterTransition,Post-Terobuster transition clearing flags and advancing,Stage,analyzed
+sub_CDE2,Stage 7 to 8 transition,12600,Stage_Stage7To8Transition,Stage 7 to 8 transition with scroll boundary check,Stage,analyzed
+sub_19A90,Stage 7 to 8 transition,12780,Cutscene_InitializeParams,Initializes cutscene parameters for transition,Cutscene,analyzed
+sub_3084,Train start (Stage 8),12960,Gfx_InitializeChain,Initializes graphics chain with RAM clear operations,Gfx,analyzed
+sub_32CC,Train start (Stage 8),12960,VDP_ClearData,Clears VDP data with status register disable,Gfx,analyzed
+sub_3E5A,Train start (Stage 8),12960,Gfx_FadeRGBColor,RGB color fade processing with channel clamping,Gfx,analyzed
+sub_4132,Train start (Stage 8),12960,Scroll_AnimateOffset,Animates scroll offset with timer countdown,Scroll,analyzed
+sub_4336,Train start (Stage 8),12960,Palette_FadeEffect,Palette fade effect system with RGB interpolation,Gfx,analyzed
+sub_CE58,Train start (Stage 8),12960,Stage_InitStage8Train,Initializes Stage 8 train with scroll and graphics,Stage,analyzed
+sub_CEBC,Train start (Stage 8),12960,Stage_TrainScrollPhysics,Train scroll physics with velocity updates,Stage,analyzed
+sub_CEFA,Train start (Stage 8),12960,Stage_TrainParallaxCalc,Train background parallax calculation for depth effect,Stage,analyzed
+sub_D766,Train start (Stage 8),12960,Effect_SpawnRandomLightning,Spawns random lightning effects with position variation,Effect,analyzed
+sub_10286,Train start (Stage 8),12960,Scroll_ApplyAcceleration,Applies scroll acceleration with boundary checking,Scroll,analyzed
+sub_11F7E,Train start (Stage 8),12960,Stage_LoadTrainGraphics,Loads train stage tile graphics to VRAM,Stage,analyzed
+sub_2EFC8,Train start (Stage 8),12960,Entity_TransitionAnimationState,Transitions entity animation state with frame update,Entity,analyzed
 sub_2EFEA,Train start (Stage 8),12960,,,,pending
 sub_2EF32,Train end (Stage 8),13140,,,,pending
 sub_2EF4E,Train end (Stage 8),13140,,,,pending
