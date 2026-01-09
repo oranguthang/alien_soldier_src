@@ -378,86 +378,86 @@ sub_2F396,Antroid boss,2160,,Tiny wrapper calling state handler,Enemy,analyzed
 sub_2F39A,Antroid boss,2160,,Spawns multiple projectiles in spread pattern,Enemy,analyzed
 sub_2F3E6,Antroid boss,2160,,Handles paired projectile spawn with symmetric angles,Enemy,analyzed
 sub_2F42A,Antroid boss,2160,,Checks collision flags and destroys on player contact,Enemy,analyzed
-sub_2F46C,Antroid boss,2160,Boss_AntroidPhaseCounter,Increments phase counter until reaching 8 then advances state,Boss,analyzed
-sub_2F4C8,Antroid boss,2160,Boss_AntroidUpdateTiles,Updates boss tiles via DMA transfer based on state,Boss,analyzed
-sub_AF82,Antroid boss,2340,Text_InitGradeDisplay,Initializes grade text display with position and sound,Text,analyzed
-sub_AFB8,Antroid boss,2340,Text_AnimateGradeFlash,Animates flashing grade text with sprite rendering,Text,analyzed
-sub_14C12,Antroid boss,2340,Physics_DispatchSlopeHandler,Processes terrain collision angle for slope handling,Physics,analyzed
-sub_153D4,Antroid boss,2340,Player_InitJumpCancelState,Initializes jump cancel state clearing flags and timers,Player,analyzed
-sub_1564C,Antroid boss,2340,Player_CheckWallCollisionJump,Checks wall collision during jump and initiates wall states,Player,analyzed
-sub_1917A,Antroid boss,2340,Sprite_DestroyOnTimeout,Destroys sprite when timer expires,Sprite,analyzed
-sub_2BCFE,Antroid boss,2340,Sprite_SetPointerClearD7,Sets sprite pointer a0 from a5 and clears d7,Sprite,analyzed
-sub_374C6,Antroid boss,2340,Boss_AntroidMainHandler,Main Antroid boss handler dispatching to state routines,Boss,analyzed
-sub_37542,Antroid boss,2340,Boss_AntroidInitState,Initializes boss state clearing objects,Boss,analyzed
-sub_838F4,Antroid boss,2340,Sound_LoadChannelParams,Loads sound channel parameters from track data,Sound,analyzed
-sub_343CE,Antroid boss,2520,Sprite_InitMetaspriteSimple,Initializes metasprite with simple parameter setup,Sprite,analyzed
-sub_343EE,Antroid boss,2520,Sprite_InitMetaspriteComplex,Complex metasprite initialization with flags and rotation,Sprite,analyzed
-sub_3450E,Antroid boss,2520,Sprite_UpdateMetaspriteRotation,Updates metasprite rotation and sine-based positioning,Sprite,analyzed
-sub_34838,Antroid boss,2520,Sprite_IncrementMetaspriteCount,Increments metasprite object counter,Sprite,analyzed
-sub_348AA,Antroid boss,2520,Anim_CalculateInterpolationDeltas,Calculates interpolation deltas for animation blending,Anim,analyzed
-sub_348DC,Antroid boss,2520,Anim_ApplyInterpolationStep,Applies single interpolation step to animation values,Anim,analyzed
-sub_37558,Antroid boss,2520,Boss_AntroidInitPhase,Initializes Antroid boss phase with metasprite setup,Boss,analyzed
-sub_377C4,Antroid boss,2520,Boss_AntroidSetIdleAnim,Sets boss to idle animation with parameter 8,Boss,analyzed
-sub_377CA,Antroid boss,2520,Boss_AntroidAttackState1,Attack state checking phase and initializing attack,Boss,analyzed
-sub_377F6,Antroid boss,2520,Boss_AntroidFlyingAttack,Flying attack state with gravity and proximity checks,Boss,analyzed
-sub_37892,Antroid boss,2520,Boss_AntroidAttackState2,Second attack state variant with different animation,Boss,analyzed
-sub_378BE,Antroid boss,2520,Boss_AntroidDivingAttack,Diving attack state with vertical movement,Boss,analyzed
-sub_3795A,Antroid boss,2520,Boss_AntroidStartAnimation,Starts boss animation sequence with parameter,Boss,analyzed
-sub_37E8C,Antroid boss,2520,Boss_AntroidUpdateSprite,Updates boss sprite graphics and animation,Boss,analyzed
-sub_37EB0,Antroid boss,2520,Boss_AntroidSetupMetasprite,Sets up boss metasprite rendering,Boss,analyzed
-sub_37ED2,Antroid boss,2520,Boss_AntroidLoadAnimTable,Loads animation table pointer for boss,Boss,analyzed
-sub_37EDC,Antroid boss,2520,Boss_AntroidSetAnimIndex,Sets boss animation index from parameter,Boss,analyzed
-sub_37FA0,Antroid boss,2520,Boss_AntroidInitPhysics,Initializes boss physics and movement parameters,Boss,analyzed
-sub_3811A,Antroid boss,2520,Anim_InterpolateToTarget,Interpolates animation values toward target state,Anim,analyzed
-sub_382BC,Antroid boss,2520,Boss_AntroidResetAnimation,Resets boss animation to initial state,Boss,analyzed
-sub_382F8,Antroid boss,2520,Boss_AntroidEndAttack,Ends attack phase and returns to idle,Boss,analyzed
-sub_C978,Antroid boss,2700,Camera_AntroidBossInit,Initializes camera for Antroid boss fight,Camera,analyzed
-sub_1B9A0,Antroid boss,2700,Sprite_InitFromPointerTable,Initializes sprite from pointer table with offsets,Sprite,analyzed
-sub_2A39C,Antroid boss,2700,Projectile_InitTypeA4,Initializes projectile type 0xA4,Projectile,analyzed
-sub_2A688,Antroid boss,2700,Projectile_FindFreeSlotComplex,Finds free projectile slot with complex checks,Projectile,analyzed
-sub_2A6B4,Antroid boss,2700,Projectile_InitializeFromTable,Initializes projectile from data table,Projectile,analyzed
-sub_37D3A,Antroid boss,2700,Boss_AntroidChargeAttack,Boss charge attack with distance check,Boss,analyzed
-sub_37D9A,Antroid boss,2700,Boss_AntroidRamAttack,Boss ram attack with collision,Boss,analyzed
-sub_37E00,Antroid boss,2700,,,,pending
-sub_37E2A,Antroid boss,2700,,,,pending
-sub_37F26,Antroid boss,2700,,,,pending
-sub_37F7E,Antroid boss,2700,,,,pending
-sub_37E54,Antroid boss,2880,,,,pending
-sub_37E6C,Antroid boss,2880,,,,pending
-sub_B00E,Antroid boss,3060,,,,pending
-sub_B1F8,Antroid boss,3060,,,,pending
-sub_B2EA,Antroid boss,3060,,,,pending
-sub_C98E,Antroid boss,3060,,,,pending
-sub_103D4,Antroid boss,3060,,,,pending
-sub_16C40,Antroid boss,3060,,,,pending
-sub_17642,Antroid boss,3060,,,,pending
-sub_176A0,Antroid boss,3060,,,,pending
-sub_C99A,Stage 3,3240,,,,pending
-sub_11ECE,Stage 3,3240,,,,pending
-sub_2CF8A,Stage 3,3240,,,,pending
-sub_2D020,Stage 3,3240,,,,pending
-sub_2D046,Stage 3,3240,,,,pending
-sub_2D064,Stage 3,3240,,,,pending
-sub_164B0,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_165A4,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_165C2,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_16EA4,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_2BF58,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_2F48E,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_2F49A,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_33F30,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_34040,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_340B0,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_340DA,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_34178,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_34198,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_34274,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_3429E,Rolling mini-boss (Stage 3),3420,,,,pending
-sub_C9D4,Shellshogun boss,3600,,,,pending
-sub_C9E0,Shellshogun boss,3600,,,,pending
-sub_C9F8,Shellshogun boss,3600,,,,pending
-sub_2C0D6,Shellshogun boss,3600,,,,pending
-sub_33F84,Shellshogun boss,3600,,,,pending
+sub_2F46C,Antroid boss,2160,,Increments phase counter until reaching 8 then advances state,Boss,analyzed
+sub_2F4C8,Antroid boss,2160,,Updates boss tiles via DMA transfer based on state,Boss,analyzed
+sub_AF82,Antroid boss,2340,,Initializes grade text display with position and sound,Text,analyzed
+sub_AFB8,Antroid boss,2340,,Animates flashing grade text with sprite rendering,Text,analyzed
+sub_14C12,Antroid boss,2340,,Processes terrain collision angle for slope handling,Physics,analyzed
+sub_153D4,Antroid boss,2340,,Initializes jump cancel state clearing flags and timers,Player,analyzed
+sub_1564C,Antroid boss,2340,,Checks wall collision during jump and initiates wall states,Player,analyzed
+sub_1917A,Antroid boss,2340,,Destroys sprite when timer expires,Sprite,analyzed
+sub_2BCFE,Antroid boss,2340,,Sets sprite pointer a0 from a5 and clears d7,Sprite,analyzed
+sub_374C6,Antroid boss,2340,,Main Antroid boss handler dispatching to state routines,Boss,analyzed
+sub_37542,Antroid boss,2340,,Initializes boss state clearing objects,Boss,analyzed
+sub_838F4,Antroid boss,2340,,Loads sound channel parameters from track data,Sound,analyzed
+sub_343CE,Antroid boss,2520,,Initializes metasprite with simple parameter setup,Sprite,analyzed
+sub_343EE,Antroid boss,2520,,Complex metasprite initialization with flags and rotation,Sprite,analyzed
+sub_3450E,Antroid boss,2520,,Updates metasprite rotation and sine-based positioning,Sprite,analyzed
+sub_34838,Antroid boss,2520,,Increments metasprite object counter,Sprite,analyzed
+sub_348AA,Antroid boss,2520,,Calculates interpolation deltas for animation blending,Anim,analyzed
+sub_348DC,Antroid boss,2520,,Applies single interpolation step to animation values,Anim,analyzed
+sub_37558,Antroid boss,2520,,Initializes Antroid boss phase with metasprite setup,Boss,analyzed
+sub_377C4,Antroid boss,2520,,Sets boss to idle animation with parameter 8,Boss,analyzed
+sub_377CA,Antroid boss,2520,,Attack state checking phase and initializing attack,Boss,analyzed
+sub_377F6,Antroid boss,2520,,Flying attack state with gravity and proximity checks,Boss,analyzed
+sub_37892,Antroid boss,2520,,Second attack state variant with different animation,Boss,analyzed
+sub_378BE,Antroid boss,2520,,Diving attack state with vertical movement,Boss,analyzed
+sub_3795A,Antroid boss,2520,,Starts boss animation sequence with parameter,Boss,analyzed
+sub_37E8C,Antroid boss,2520,,Updates boss sprite graphics and animation,Boss,analyzed
+sub_37EB0,Antroid boss,2520,,Sets up boss metasprite rendering,Boss,analyzed
+sub_37ED2,Antroid boss,2520,,Loads animation table pointer for boss,Boss,analyzed
+sub_37EDC,Antroid boss,2520,,Sets boss animation index from parameter,Boss,analyzed
+sub_37FA0,Antroid boss,2520,,Initializes boss physics and movement parameters,Boss,analyzed
+sub_3811A,Antroid boss,2520,,Interpolates animation values toward target state,Anim,analyzed
+sub_382BC,Antroid boss,2520,,Resets boss animation to initial state,Boss,analyzed
+sub_382F8,Antroid boss,2520,,Ends attack phase and returns to idle,Boss,analyzed
+sub_C978,Antroid boss,2700,,Initializes camera for Antroid boss fight,Camera,analyzed
+sub_1B9A0,Antroid boss,2700,,Initializes sprite from pointer table with offsets,Sprite,analyzed
+sub_2A39C,Antroid boss,2700,,Initializes projectile type 0xA4,Projectile,analyzed
+sub_2A688,Antroid boss,2700,,Finds free projectile slot with complex checks,Projectile,analyzed
+sub_2A6B4,Antroid boss,2700,,Initializes projectile from data table,Projectile,analyzed
+sub_37D3A,Antroid boss,2700,,Boss charge attack with distance check,Boss,analyzed
+sub_37D9A,Antroid boss,2700,,Boss ram attack with collision,Boss,analyzed
+sub_37E00,Antroid boss,2700,Boss_AntroidDeathFadeState,Boss death state with palette fade and timer progression,Boss,analyzed
+sub_37E2A,Antroid boss,2700,Boss_AntroidUpdateMetaspriteFlipped,Updates boss metasprite with horizontal flip toggle,Boss,analyzed
+sub_37F26,Antroid boss,2700,Boss_AntroidSpawnDebris,Spawns debris projectiles at random offsets,Boss,analyzed
+sub_37F7E,Antroid boss,2700,Boss_AntroidUpdateFlipDirection,Updates boss flip direction based on player position,Boss,analyzed
+sub_37E54,Antroid boss,2880,Boss_AntroidEnterDefeatedState,Transitions boss to defeated state clearing objects,Boss,analyzed
+sub_37E6C,Antroid boss,2880,Boss_AntroidDeathTimer,Death sequence timer with fade effect,Boss,analyzed
+sub_B00E,Antroid boss,3060,Text_InitPauseTimer,Initializes pause timer before text exit,Text,analyzed
+sub_B1F8,Antroid boss,3060,Text_RenderVerticalText,Renders vertical text sprites with positioning,Text,analyzed
+sub_B2EA,Antroid boss,3060,Text_ApplyDigitOffsets,Applies position offsets from two-digit value,Text,analyzed
+sub_C98E,Antroid boss,3060,Camera_Stage3Transition,Stage 3 camera with section transition,Camera,analyzed
+sub_103D4,Antroid boss,3060,UI_InitScoreTimer,Initializes score display timer to 0x5C,UI,analyzed
+sub_16C40,Antroid boss,3060,Player_UpdateHorizontalFacing,Updates player horizontal facing bit from input,Player,analyzed
+sub_17642,Antroid boss,3060,Player_SpawnTripleShot,Spawns three projectiles in spread pattern for special attack,Player,analyzed
+sub_176A0,Antroid boss,3060,Player_InitShotProjectile,Initializes shot projectile with angle and velocity,Player,analyzed
+sub_C99A,Stage 3,3240,Camera_Stage3ScrollLimit,Stage 3 camera with scroll update and position limit,Camera,analyzed
+sub_11ECE,Stage 3,3240,Stage_LoadStage3Assets,Loads Stage 3 palette and tile graphics,Stage,analyzed
+sub_2CF8A,Stage 3,3240,Enemy_SetVDPFlagHigh,Sets high bit in VDP control register,Enemy,analyzed
+sub_2D020,Stage 3,3240,Enemy_Phase2StateHandler,Enemy phase 2 state handler checking conditions,Enemy,analyzed
+sub_2D046,Stage 3,3240,Enemy_InitPhase2Attack,Initializes phase 2 attack state with parameters,Enemy,analyzed
+sub_2D064,Stage 3,3240,Enemy_Phase2Movement,Phase 2 movement with velocity and gravity,Enemy,analyzed
+sub_164B0,Rolling mini-boss (Stage 3),3420,Player_HandleAirDashState,Handles player air dash state with terrain check,Player,analyzed
+sub_165A4,Rolling mini-boss (Stage 3),3420,Player_InitCrouchState,Initializes player crouch state,Player,analyzed
+sub_165C2,Rolling mini-boss (Stage 3),3420,Player_HandleCrouchState,Main crouch state handler with input checks,Player,analyzed
+sub_16EA4,Rolling mini-boss (Stage 3),3420,Player_ApplyKnockbackVelocity,Applies knockback velocity with direction check,Player,analyzed
+sub_2BF58,Rolling mini-boss (Stage 3),3420,Enemy_UpdatePhasePattern,Updates enemy phase pattern based on timer,Enemy,analyzed
+sub_2F48E,Rolling mini-boss (Stage 3),3420,Boss_CheckPhaseTrigger,Checks if boss phase trigger condition met,Boss,analyzed
+sub_2F49A,Rolling mini-boss (Stage 3),3420,Boss_AdvanceToNextPhase,Advances boss to next phase state,Boss,analyzed
+sub_33F30,Rolling mini-boss (Stage 3),3420,Sprite_LoadAnimationFrame,Loads animation frame data into sprite,Sprite,analyzed
+sub_34040,Rolling mini-boss (Stage 3),3420,Sprite_SetTileProperties,Sets sprite tile VDP properties and flags,Sprite,analyzed
+sub_340B0,Rolling mini-boss (Stage 3),3420,Sprite_CalculateFrameOffset,Calculates animation frame offset from index,Sprite,analyzed
+sub_340DA,Rolling mini-boss (Stage 3),3420,Sprite_ApplyFrameData,Applies frame data to sprite object,Sprite,analyzed
+sub_34178,Rolling mini-boss (Stage 3),3420,Sprite_UpdateAnimationTimer,Updates sprite animation timer and frame,Sprite,analyzed
+sub_34198,Rolling mini-boss (Stage 3),3420,Sprite_AdvanceToNextFrame,Advances sprite to next animation frame,Sprite,analyzed
+sub_34274,Rolling mini-boss (Stage 3),3420,Sprite_LoadFrameTiles,Loads frame tile indices into sprite,Sprite,analyzed
+sub_3429E,Rolling mini-boss (Stage 3),3420,Sprite_ApplyTileMapping,Applies tile mapping to sprite object,Sprite,analyzed
+sub_C9D4,Shellshogun boss,3600,Camera_Stage3BossSetup,Sets up camera for Stage 3 boss encounter,Camera,analyzed
+sub_C9E0,Shellshogun boss,3600,Camera_UpdateBossPosition,Updates camera position during boss fight,Camera,analyzed
+sub_C9F8,Shellshogun boss,3600,Camera_LockToBossArena,Locks camera to boss arena boundaries,Camera,analyzed
+sub_2C0D6,Shellshogun boss,3600,Enemy_CheckHealthThreshold,Checks enemy health against threshold value,Enemy,analyzed
+sub_33F84,Shellshogun boss,3600,Sprite_InitializeObject,Initializes sprite object with default values,Sprite,analyzed
 sub_34270,Shellshogun boss,3600,,,,pending
 sub_295C,Shellshogun boss,3780,,,,pending
 sub_104B0,Shellshogun boss,3780,,,,pending
