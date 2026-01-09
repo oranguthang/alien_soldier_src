@@ -498,86 +498,86 @@ sub_399E8,Shellshogun boss,4320,,Spawns shell projectiles in pattern,Boss,analyz
 sub_39EC0,Shellshogun boss,4320,,Initializes boss palette colors,Boss,analyzed
 sub_3A122,Shellshogun boss,4320,,Flash boss sprite when taking damage,Boss,analyzed
 sub_CA2C,Shellshogun boss,4500,,Initializes camera for Shellshogun boss fight,Camera,analyzed
-sub_15610,Shellshogun boss,4500,Player_HandleGroundedState,Handles player grounded state with terrain and damage checks,Player,analyzed
-sub_1356,Shellshogun boss,4680,VBlank_EffectDispatcher,VBlank effect dispatcher routing to effect handlers,Sys,analyzed
-sub_15BC,Shellshogun boss,4680,Effect_InitTransitionFade,Initializes screen transition fade effect,Effect,analyzed
-sub_269E6,Shellshogun boss,4680,Effect_InitPlayerSpawn,Initializes player spawn effect with position,Effect,analyzed
-sub_26A00,Shellshogun boss,4680,Effect_StateDispatcher,Effect state machine dispatcher,Effect,analyzed
-sub_26A1A,Shellshogun boss,4680,Effect_TransitionInit,Initializes screen transition effect state,Effect,analyzed
-sub_26A34,Shellshogun boss,4680,Effect_LoadTransitionGraphics,Loads transition graphics data,Effect,analyzed
-sub_26A58,Shellshogun boss,4680,Effect_StartTransition,Starts screen transition with sound,Effect,analyzed
-sub_26A8E,Shellshogun boss,4680,Effect_SetupScroll,Sets up scroll parameters for transition,Effect,analyzed
-sub_26A9E,Shellshogun boss,4680,Effect_UpdateTransition,Updates transition effect with scroll and timer,Effect,analyzed
-sub_26B8C,Shellshogun boss,4680,Effect_PaletteDispatcher,Palette effect dispatcher,Effect,analyzed
-sub_26BA6,Shellshogun boss,4680,Effect_PaletteUpdateMain,Main palette update routine,Effect,analyzed
-sub_26DD6,Shellshogun boss,4680,Effect_InitPaletteBuffers,Initializes palette buffer pointers,Effect,analyzed
-sub_26DE0,Shellshogun boss,4680,Effect_CopyPaletteData,Copies palette data between buffers,Effect,analyzed
-sub_26E4C,Shellshogun boss,4680,Effect_UpdateScrollPosition,Updates scroll position for effect,Effect,analyzed
-sub_271BC,Shellshogun boss,4680,Effect_ApplyPaletteToVDP,Applies palette data to VDP during VBlank,Effect,analyzed
-sub_272BE,Shellshogun boss,4680,Effect_ScrollUpdate,Updates scroll values for transition,Effect,analyzed
-sub_273BC,Shellshogun boss,4680,Effect_ResetTransitionState,Resets transition effect state,Effect,analyzed
-sub_29E2E,Shellshogun boss,4680,Sys_InitVDPRegisters,Initializes VDP register settings,Sys,analyzed
-sub_29E66,Shellshogun boss,4680,Sys_LoadInitialPalette,Loads initial palette from ROM,Sys,analyzed
-sub_29F36,Shellshogun boss,4680,Sys_SetupVRAMLayout,Sets up VRAM layout and plane mappings,Sys,analyzed
-sub_29FF4,Shellshogun boss,4680,Sys_ClearVRAMRange,Clears specified VRAM address range,Sys,analyzed
-sub_3987C,Shellshogun boss,4680,Boss_InitPositionTracking,Initializes boss position tracking,Boss,analyzed
-sub_3989E,Shellshogun boss,4680,Boss_UpdatePositionDelta,Updates boss position delta for tracking,Boss,analyzed
-sub_3E1AA,Shellshogun boss,4680,Gfx_QueueDMATransfer,Queues DMA transfer to VRAM,Gfx,analyzed
-sub_834AE,Shellshogun boss,4680,Sound_UpdateFMEnvelope,Updates FM synthesis envelope parameters,Sound,analyzed
-sub_13BC,Shellshogun boss,4860,Effect_NullHandler,Null effect handler doing nothing,Effect,analyzed
-sub_CA9A,Shellshogun boss,4860,Camera_LockPosition,Locks camera to fixed position,Camera,analyzed
-sub_398B4,Shellshogun boss,4860,Boss_TrackPlayerPosition,Tracks player position for boss AI,Boss,analyzed
-sub_CAB4,Stage 4,5040,Camera_UpdateSmooth,Updates camera with smooth interpolation,Camera,analyzed
-sub_2B77C,Stage 4,5040,Enemy_InitProjectileType,Initializes enemy projectile type and flags,Enemy,analyzed
-sub_2D0B2,Stage 4,5040,Enemy_UpdateTrajectory,Updates enemy projectile trajectory,Enemy,analyzed
-sub_2A2A2,Shiper Honeyviper boss,5220,Projectile_CheckLifetime,Checks projectile lifetime timer,Projectile,analyzed
-sub_2A94C,Shiper Honeyviper boss,5220,Projectile_DestroyOffscreen,Destroys projectile if offscreen,Projectile,analyzed
-sub_CAE2,Shiper Honeyviper boss,5400,Camera_FollowTarget,Camera following target with offset,Camera,analyzed
-sub_CB26,Shiper Honeyviper boss,5400,Camera_SetBounds,Sets camera boundary limits,Camera,analyzed
-sub_CB56,Shiper Honeyviper boss,5400,Camera_ClampToBounds,Clamps camera position to boundaries,Camera,analyzed
-sub_3641A,Shiper Honeyviper boss,5400,Boss_CalculatePlayerDistance,Calculates distance to player for AI,Boss,analyzed
-sub_364C2,Shiper Honeyviper boss,5400,Boss_CheckPlayerProximity,Checks if player is within proximity range,Boss,analyzed
-sub_34DA,Shiper Honeyviper boss,5580,Sys_WaitVBlank,Waits for VBlank interrupt,Sys,analyzed
-sub_1B44C,Shiper Honeyviper boss,5580,,,,pending
-sub_36504,Shiper Honeyviper boss,5580,,,,pending
-sub_36544,Shiper Honeyviper boss,5580,,,,pending
-sub_36578,Shiper Honeyviper boss,5580,,,,pending
-sub_36804,Shiper Honeyviper boss,5580,,,,pending
-sub_36826,Shiper Honeyviper boss,5580,,,,pending
-sub_36A1A,Shiper Honeyviper boss,5580,,,,pending
-sub_36AAE,Shiper Honeyviper boss,5580,,,,pending
-sub_36B6E,Shiper Honeyviper boss,5580,,,,pending
-sub_36BB0,Shiper Honeyviper boss,5580,,,,pending
-sub_36CB0,Shiper Honeyviper boss,5580,,,,pending
-sub_36DD0,Shiper Honeyviper boss,5580,,,,pending
-sub_825FC,Shiper Honeyviper boss,5580,,,,pending
-sub_1546,Shiper Honeyviper boss,5760,,,,pending
-sub_1CB5A,Shiper Honeyviper boss,5760,,,,pending
-sub_29EC8,Shiper Honeyviper boss,5760,,,,pending
-sub_36A2A,Shiper Honeyviper boss,5760,,,,pending
-sub_36A5A,Shiper Honeyviper boss,5760,,,,pending
-sub_37048,Shiper Honeyviper boss,5760,,,,pending
-sub_368CC,Shiper Honeyviper boss,5940,,,,pending
-sub_368E8,Shiper Honeyviper boss,5940,,,,pending
-sub_36900,Shiper Honeyviper boss,5940,,,,pending
-sub_36A44,Shiper Honeyviper boss,5940,,,,pending
-sub_36A84,Shiper Honeyviper boss,5940,,,,pending
-sub_36AE2,Shiper Honeyviper boss,5940,,,,pending
-sub_144CC,Shiper Honeyviper boss,6120,,,,pending
-sub_144F2,Shiper Honeyviper boss,6120,,,,pending
-sub_15758,Shiper Honeyviper boss,6120,,,,pending
-sub_16FDC,Shiper Honeyviper boss,6120,,,,pending
-sub_16FEC,Shiper Honeyviper boss,6120,,,,pending
-sub_17086,Shiper Honeyviper boss,6120,,,,pending
-sub_17146,Shiper Honeyviper boss,6120,,,,pending
-sub_2BA5E,Shiper Honeyviper boss,6120,,,,pending
-sub_306EA,Shiper Honeyviper boss,6120,,,,pending
-sub_30A60,Shiper Honeyviper boss,6120,,,,pending
-sub_30A76,Shiper Honeyviper boss,6120,,,,pending
-sub_30ABA,Shiper Honeyviper boss,6120,,,,pending
-sub_366FC,Shiper Honeyviper boss,6120,,,,pending
-sub_3679A,Shiper Honeyviper boss,6120,,,,pending
-sub_36C4C,Shiper Honeyviper boss,6120,,,,pending
+sub_15610,Shellshogun boss,4500,,Handles player grounded state with terrain and damage checks,Player,analyzed
+sub_1356,Shellshogun boss,4680,,VBlank effect dispatcher routing to effect handlers,Sys,analyzed
+sub_15BC,Shellshogun boss,4680,,Initializes screen transition fade effect,Effect,analyzed
+sub_269E6,Shellshogun boss,4680,,Initializes player spawn effect with position,Effect,analyzed
+sub_26A00,Shellshogun boss,4680,,Effect state machine dispatcher,Effect,analyzed
+sub_26A1A,Shellshogun boss,4680,,Initializes screen transition effect state,Effect,analyzed
+sub_26A34,Shellshogun boss,4680,,Loads transition graphics data,Effect,analyzed
+sub_26A58,Shellshogun boss,4680,,Starts screen transition with sound,Effect,analyzed
+sub_26A8E,Shellshogun boss,4680,,Sets up scroll parameters for transition,Effect,analyzed
+sub_26A9E,Shellshogun boss,4680,,Updates transition effect with scroll and timer,Effect,analyzed
+sub_26B8C,Shellshogun boss,4680,,Palette effect dispatcher,Effect,analyzed
+sub_26BA6,Shellshogun boss,4680,,Main palette update routine,Effect,analyzed
+sub_26DD6,Shellshogun boss,4680,,Initializes palette buffer pointers,Effect,analyzed
+sub_26DE0,Shellshogun boss,4680,,Copies palette data between buffers,Effect,analyzed
+sub_26E4C,Shellshogun boss,4680,,Updates scroll position for effect,Effect,analyzed
+sub_271BC,Shellshogun boss,4680,,Applies palette data to VDP during VBlank,Effect,analyzed
+sub_272BE,Shellshogun boss,4680,,Updates scroll values for transition,Effect,analyzed
+sub_273BC,Shellshogun boss,4680,,Resets transition effect state,Effect,analyzed
+sub_29E2E,Shellshogun boss,4680,,Initializes VDP register settings,Sys,analyzed
+sub_29E66,Shellshogun boss,4680,,Loads initial palette from ROM,Sys,analyzed
+sub_29F36,Shellshogun boss,4680,,Sets up VRAM layout and plane mappings,Sys,analyzed
+sub_29FF4,Shellshogun boss,4680,,Clears specified VRAM address range,Sys,analyzed
+sub_3987C,Shellshogun boss,4680,,Initializes boss position tracking,Boss,analyzed
+sub_3989E,Shellshogun boss,4680,,Updates boss position delta for tracking,Boss,analyzed
+sub_3E1AA,Shellshogun boss,4680,,Queues DMA transfer to VRAM,Gfx,analyzed
+sub_834AE,Shellshogun boss,4680,,Updates FM synthesis envelope parameters,Sound,analyzed
+sub_13BC,Shellshogun boss,4860,,Null effect handler doing nothing,Effect,analyzed
+sub_CA9A,Shellshogun boss,4860,,Locks camera to fixed position,Camera,analyzed
+sub_398B4,Shellshogun boss,4860,,Tracks player position for boss AI,Boss,analyzed
+sub_CAB4,Stage 4,5040,,Updates camera with smooth interpolation,Camera,analyzed
+sub_2B77C,Stage 4,5040,,Initializes enemy projectile type and flags,Enemy,analyzed
+sub_2D0B2,Stage 4,5040,,Updates enemy projectile trajectory,Enemy,analyzed
+sub_2A2A2,Shiper Honeyviper boss,5220,,Checks projectile lifetime timer,Projectile,analyzed
+sub_2A94C,Shiper Honeyviper boss,5220,,Destroys projectile if offscreen,Projectile,analyzed
+sub_CAE2,Shiper Honeyviper boss,5400,,Camera following target with offset,Camera,analyzed
+sub_CB26,Shiper Honeyviper boss,5400,,Sets camera boundary limits,Camera,analyzed
+sub_CB56,Shiper Honeyviper boss,5400,,Clamps camera position to boundaries,Camera,analyzed
+sub_3641A,Shiper Honeyviper boss,5400,,Calculates distance to player for AI,Boss,analyzed
+sub_364C2,Shiper Honeyviper boss,5400,,Checks if player is within proximity range,Boss,analyzed
+sub_34DA,Shiper Honeyviper boss,5580,,Waits for VBlank interrupt,Sys,analyzed
+sub_1B44C,Shiper Honeyviper boss,5580,Math_CalculateSineCosineTable,Calculates sine/cosine values in all four quadrants and stores in lookup tables,Math,analyzed
+sub_36504,Shiper Honeyviper boss,5580,Boss_ShiperInit,Initializes Shiper Honeyviper boss by processing pointer data and setting up trigonometric tables,Boss,analyzed
+sub_36544,Shiper Honeyviper boss,5580,Boss_ShiperLoadGraphics,Waits for system ready then loads boss graphics via DMA transfer,Boss,analyzed
+sub_36578,Shiper Honeyviper boss,5580,Boss_ShiperSetupState,Sets up complete boss state machine with positions sprites and collision data,Boss,analyzed
+sub_36804,Shiper Honeyviper boss,5580,Boss_ShiperRiseState,Boss rising movement state with upward velocity accumulation,Boss,analyzed
+sub_36826,Shiper Honeyviper boss,5580,Boss_ShiperHoverState,Boss hovering state with conditional movement based on timer and flags,Boss,analyzed
+sub_36A1A,Shiper Honeyviper boss,5580,Boss_ShiperUpdateMain,Main boss update wrapper calling position collision animation and physics subsystems,Boss,analyzed
+sub_36AAE,Shiper Honeyviper boss,5580,Boss_ShiperPhysicsHandler,Boss physics handler managing velocity accumulation and state transitions,Boss,analyzed
+sub_36B6E,Shiper Honeyviper boss,5580,Boss_ShiperRotationAccel,Boss rotation/angle acceleration with velocity increase and upper limit,Boss,analyzed
+sub_36BB0,Shiper Honeyviper boss,5580,Boss_ShiperRotationLogic,Complex boss rotation logic with timer-based direction changes and limits,Boss,analyzed
+sub_36CB0,Shiper Honeyviper boss,5580,Boss_ShiperPositionUpdate,Updates boss position handling collision detection and sprite positioning,Boss,analyzed
+sub_36DD0,Shiper Honeyviper boss,5580,Boss_ShiperTentaclePosition,Calculates and positions boss tentacle appendages using trigonometric sine/cosine tables,Boss,analyzed
+sub_825FC,Shiper Honeyviper boss,5580,Sound_ClearChannelState,Clears sound channel state by setting flags and clearing registers,Sound,analyzed
+sub_1546,Shiper Honeyviper boss,5760,VBlank_LoadSpriteData,VBlank handler that loads sprite object data and updates VDP registers,Sys,analyzed
+sub_1CB5A,Shiper Honeyviper boss,5760,Effect_ScreenShakeUpdate,Updates screen shake effect by modifying scroll registers with decay timer,Effect,analyzed
+sub_29EC8,Shiper Honeyviper boss,5760,Sys_CopyStateValue,Copies system state value from backup to active register,Sys,analyzed
+sub_36A2A,Shiper Honeyviper boss,5760,Boss_ShiperStateDispatcher,Boss state dispatcher using jump table for movement mode selection,Boss,analyzed
+sub_36A5A,Shiper Honeyviper boss,5760,Boss_ShiperMoveHorizontalA,Boss horizontal movement handler applying velocity when grounded,Boss,analyzed
+sub_37048,Shiper Honeyviper boss,5760,Boss_ShiperScrollUpdate,Calculates and updates boss-related parallax scrolling and screen positioning,Boss,analyzed
+sub_368CC,Shiper Honeyviper boss,5940,Boss_ShiperWaitDescend,Boss state waiting for descent condition then transitioning to next state,Boss,analyzed
+sub_368E8,Shiper Honeyviper boss,5940,Boss_ShiperDefeatWait,Boss defeat state with timer counting down to victory check,Boss,analyzed
+sub_36900,Shiper Honeyviper boss,5940,Boss_ShiperDeathHandler,Boss death handler checking multiple conditions before triggering defeat sequence,Boss,analyzed
+sub_36A44,Shiper Honeyviper boss,5940,Boss_ShiperToggleDirection,Toggles boss horizontal movement direction flag when landing,Boss,analyzed
+sub_36A84,Shiper Honeyviper boss,5940,Boss_ShiperMoveHorizontalB,Boss horizontal movement in opposite direction when airborne,Boss,analyzed
+sub_36AE2,Shiper Honeyviper boss,5940,Boss_ShiperRotationInit,Initializes boss rotation state and manages continuous angle updates,Boss,analyzed
+sub_144CC,Shiper Honeyviper boss,6120,Collision_GetEntityPosition,Gets entity position coordinates for collision detection,Physics,analyzed
+sub_144F2,Shiper Honeyviper boss,6120,Collision_CheckTerrainTile,Checks collision with terrain by reading tilemap and height data,Physics,analyzed
+sub_15758,Shiper Honeyviper boss,6120,Player_AirAttackState,Player air attack state handler processing jump cancels and directional attacks,Player,analyzed
+sub_16FDC,Shiper Honeyviper boss,6120,Player_PrepareWeaponSprite,Prepares player weapon sprite for rendering with animation data,Player,analyzed
+sub_16FEC,Shiper Honeyviper boss,6120,Player_UpdateWeaponAnim,Updates player weapon animation cycle with sound effects on key frames,Player,analyzed
+sub_17086,Shiper Honeyviper boss,6120,Player_RenderSpecialWeapon,Renders player special weapon sprite with conditional positioning,Player,analyzed
+sub_17146,Shiper Honeyviper boss,6120,Player_RenderFallingSprite,Prepares player falling/airborne sprite for rendering,Player,analyzed
+sub_2BA5E,Shiper Honeyviper boss,6120,Projectile_TerrainCollision,Handles projectile collision with terrain changing state or destroying,Projectile,analyzed
+sub_306EA,Shiper Honeyviper boss,6120,Projectile_StateDispatcher,Projectile state dispatcher using jump table for behavior selection,Projectile,analyzed
+sub_30A60,Shiper Honeyviper boss,6120,Projectile_ApplyGravity,Applies gravity to projectile with hit detection and lifetime check,Projectile,analyzed
+sub_30A76,Shiper Honeyviper boss,6120,Projectile_HandleHit,Handles projectile hit changing sprite state and clearing collision flags,Projectile,analyzed
+sub_30ABA,Shiper Honeyviper boss,6120,Projectile_DeflectBounce,Handles projectile deflection and bounce with directional velocity,Projectile,analyzed
+sub_366FC,Shiper Honeyviper boss,6120,Boss_ShiperAttackDecision,Boss attack decision logic choosing between dive and ranged attacks,Boss,analyzed
+sub_3679A,Shiper Honeyviper boss,6120,Boss_ShiperRetreatState,Boss retreat state transition with timer based on remaining health,Boss,analyzed
+sub_36C4C,Shiper Honeyviper boss,6120,Boss_ShiperSpinAttack,Boss spin attack with rotation acceleration screen shake and damage,Boss,analyzed
 sub_371E8,Shiper Honeyviper boss,6120,,,,pending
 sub_37276,Shiper Honeyviper boss,6120,,,,pending
 sub_82DC2,Shiper Honeyviper boss,6120,,,,pending
