@@ -46,44 +46,21 @@ Read the extracted code and determine:
 Create `batch_analysis.csv` with analysis results:
 
 ```csv
-old_name,new_name,description,category
-sub_1234,Gfx_ClearScreen,Clears entire screen buffer,Gfx
-sub_5678,Boss_SpawnProjectile,Creates boss projectile with velocity,Boss
+old_name,scene,frame,new_name,description,category,status
+sub_1234,Sega screen,180,Gfx_ClearScreen,Clears entire screen buffer,Gfx,analyzed
+sub_5678,Stage 1,1800,Boss_SpawnProjectile,Creates boss projectile with velocity,Boss,analyzed
 ```
 
 Then update the database:
 
-```python
-python -c "
-import csv
-
-# Load analysis results
-with open('batch_analysis.csv', 'r', encoding='utf-8') as f:
-    reader = csv.DictReader(f)
-    updates = {row['old_name']: row for row in reader}
-
-# Load and update database
-with open('procedure_database.csv', 'r', encoding='utf-8') as f:
-    reader = csv.DictReader(f)
-    rows = list(reader)
-    fieldnames = reader.fieldnames
-
-for row in rows:
-    if row['old_name'] in updates:
-        update = updates[row['old_name']]
-        row['new_name'] = update['new_name']
-        row['description'] = update['description']
-        row['category'] = update['category']
-        row['status'] = 'analyzed'
-
-with open('procedure_database.csv', 'w', encoding='utf-8', newline='') as f:
-    writer = csv.DictWriter(f, fieldnames=fieldnames)
-    writer.writeheader()
-    writer.writerows(rows)
-
-print(f'Updated {len(updates)} procedures')
-"
+```bash
+python scripts/update_database.py --batch batch_analysis.csv
 ```
+
+This script:
+- Merges data from `batch_analysis.csv` into `procedure_database.csv`
+- Updates `new_name`, `description`, `category` for matching procedures
+- Marks procedures as `analyzed`
 
 ### Step 4: Apply Renames to Source
 
@@ -159,35 +136,23 @@ ERROR: Name collisions detected! Cannot proceed with renaming.
 
 ### Cleanup Script
 
+**IMPORTANT**: Run this before applying new renames if you get collision errors!
+
 Remove already-renamed procedures from pending renames:
 
-```python
-python -c "
-import csv
-import re
+```bash
+python scripts/cleanup_database.py
+```
 
-# Get existing labels from source
-with open('alien_soldier_j.s', 'r', encoding='utf-8', errors='ignore') as f:
-    content = f.read()
+This script:
+- Scans source file for existing labels
+- Finds procedures where `old_name` no longer exists but `new_name` does (= already renamed)
+- Clears `new_name` and `description` fields to prevent collision errors
+- Prevents attempting to rename procedures that were already renamed in previous batches
 
-labels = set(re.findall(r'^([A-Za-z_][A-Za-z0-9_]*):', content, re.MULTILINE))
-
-# Update database
-with open('procedure_database.csv', 'r', encoding='utf-8') as f:
-    reader = csv.DictReader(f)
-    rows = list(reader)
-    fieldnames = reader.fieldnames
-
-for row in rows:
-    # If old_name no longer exists, it was already renamed
-    if row['old_name'] not in labels and row.get('new_name'):
-        row['new_name'] = ''  # Clear to prevent re-rename attempt
-
-with open('procedure_database.csv', 'w', encoding='utf-8', newline='') as f:
-    writer = csv.DictWriter(f, fieldnames=fieldnames)
-    writer.writeheader()
-    writer.writerows(rows)
-"
+Run this whenever you see collision errors like:
+```
+COLLISION: 'sub_1234' -> 'Gfx_ClearVRAM' conflicts with existing label 'Gfx_ClearVRAM'
 ```
 
 ## Useful Commands
