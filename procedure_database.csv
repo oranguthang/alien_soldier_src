@@ -578,86 +578,86 @@ sub_30ABA,Shiper Honeyviper boss,6120,,Handles projectile deflection and bounce 
 sub_366FC,Shiper Honeyviper boss,6120,,Boss attack decision logic choosing between dive and ranged attacks,Boss,analyzed
 sub_3679A,Shiper Honeyviper boss,6120,,Boss retreat state transition with timer based on remaining health,Boss,analyzed
 sub_36C4C,Shiper Honeyviper boss,6120,,Boss spin attack with rotation acceleration screen shake and damage,Boss,analyzed
-sub_371E8,Shiper Honeyviper boss,6120,Boss_ShiperSpawnProjectile,Spawns boss projectiles periodically at random frame intervals,Boss,analyzed
-sub_37276,Shiper Honeyviper boss,6120,Enemy_BossProjectileMovement,Boss projectile movement with horizontal acceleration and vertical oscillation,Enemy,analyzed
-sub_82DC2,Shiper Honeyviper boss,6120,Sound_ReadEnvelopeData,Reads sound envelope data bytes from memory pointer into registers,Sound,analyzed
-sub_84B46,Shiper Honeyviper boss,6120,Sound_ProcessFMModulation,Processes FM channel frequency modulation from envelope table,Sound,analyzed
-sub_B82,Shiper Honeyviper boss,6300,Input_HandleControllerState,Handles controller port state changes and button press detection,Input,analyzed
-sub_3564,Shiper Honeyviper boss,6300,Math_CalculateAngleBetween,Calculates angle between two entities using arctan lookup,Math,analyzed
-sub_14190,Shiper Honeyviper boss,6300,Collision_PlayerWeaponVsEnemy,Detects player weapon projectile collision with enemies calculating damage,Physics,analyzed
-sub_142D8,Shiper Honeyviper boss,6300,Collision_CheckAllEnemies,Loops through all active enemies checking collision with projectiles,Physics,analyzed
-sub_144A6,Shiper Honeyviper boss,6300,UI_DecrementScoreBCD,Decrements score value using BCD arithmetic for display,UI,analyzed
-sub_14F8A,Shiper Honeyviper boss,6300,Player_SetInvincibilityFlag,Sets player invincibility flag bit based on game state,Player,analyzed
-sub_162A8,Shiper Honeyviper boss,6300,Player_InitKnockbackState,Initializes player knockback/damaged state with sound and velocity,Player,analyzed
-sub_16344,Shiper Honeyviper boss,6300,Player_SetKnockbackVelocity,Sets player horizontal knockback velocity based on facing direction,Player,analyzed
-sub_1635A,Shiper Honeyviper boss,6300,Player_DefeatState,Player death/defeat state handling gravity and landing detection,Player,analyzed
-sub_17334,Shiper Honeyviper boss,6300,Player_AnimateDefeatSprite,Animates player defeat sprite cycling through death animation frames,Player,analyzed
-sub_1C028,Shiper Honeyviper boss,6300,Sprite_FindFreeEffectSlot,Searches for free sprite slot in effect pool for explosions,Sprite,analyzed
-sub_2A64C,Shiper Honeyviper boss,6300,Sprite_InitWithDefaultState,Initializes sprite from table pointer and sets default state value,Sprite,analyzed
-sub_2A6D0,Shiper Honeyviper boss,6300,Physics_ApplyUpwardVelocity,Applies upward vertical velocity to entity for rising movement,Physics,analyzed
-sub_2A79C,Shiper Honeyviper boss,6300,Enemy_GetEntityAddress,Returns entity address in register A0 for manipulation,Enemy,analyzed
-sub_2B4BE,Shiper Honeyviper boss,6300,Enemy_InitDirectionalProjectile,Initializes projectile with angle calculation and directional velocity,Enemy,analyzed
-sub_2B9C4,Shiper Honeyviper boss,6300,Enemy_SpawnFallingHazard,Spawns falling hazard projectiles from top of screen at intervals,Enemy,analyzed
-sub_30A4E,Shiper Honeyviper boss,6300,Projectile_CheckAnimThreshold,Checks if animation frame counter exceeds threshold for state change,Projectile,analyzed
-sub_36930,Shiper Honeyviper boss,6300,Boss_ShiperInitDefeat,Sets boss defeat flags clears state and increments stage counter,Boss,analyzed
-sub_3694C,Shiper Honeyviper boss,6300,Boss_ShiperPhaseCheck,Checks boss phase transition conditions based on altitude and flags,Boss,analyzed
-sub_36982,Shiper Honeyviper boss,6300,Boss_ShiperUpdateWithFade,Updates boss with palette fade effect during phase transitions,Boss,analyzed
-sub_36990,Shiper Honeyviper boss,6300,Boss_ShiperDefeatSequence,Handles boss defeat sequence with sprite cleanup and screen effects,Boss,analyzed
-sub_36C0A,Shiper Honeyviper boss,6300,Boss_ShiperRotationAccelAlt,Alternative rotation acceleration mode with higher velocity limits,Boss,analyzed
-sub_36FEE,Shiper Honeyviper boss,6300,Boss_ShiperSpawnDebris,Spawns random debris particle sprites during boss destruction,Boss,analyzed
-sub_37370,Shiper Honeyviper boss,6300,Boss_ShiperSpawnCircleShot,Spawns four projectiles in circular pattern with angle calculation,Boss,analyzed
-sub_37436,Shiper Honeyviper boss,6300,Enemy_BounceRotateProjectile,Bouncing projectile with rotation animation gravity and deflection on collision,Enemy,analyzed
-sub_8264C,Shiper Honeyviper boss,6300,Sound_HandleNoteTimer,Handles sound channel note timer countdown and restarts playback,Sound,analyzed
-sub_830BC,Shiper Honeyviper boss,6300,Sound_LoadMusicTrack,Loads complete music track data initializing all sound channels,Sound,analyzed
-sub_839DC,Shiper Honeyviper boss,6300,Sound_SetFMInstrument,Sets FM channel instrument parameters registers and envelope data,Sound,analyzed
-sub_83C62,Shiper Honeyviper boss,6300,Sound_AdvanceSequence,Advances to next command in sound sequence incrementing pointer,Sound,analyzed
-sub_3B28,Shiper Honeyviper boss,6480,Gfx_SetFadeParams,Sets palette fade operation parameters for screen transitions,Gfx,analyzed
-sub_CB32,Shiper Honeyviper boss,6480,Stage_CameraTransitionCheck,Handles camera logic during stage transition checking boss state,Stage,analyzed
-sub_163BE,Shiper Honeyviper boss,6480,Player_ClearKnockbackState,Clears player knockback flag and resets sprite state after hit,Player,analyzed
-sub_2690E,Shiper Honeyviper boss,6480,Boss_InitDefeatExplosion,Initializes boss defeat explosion sprite at boss position,Boss,analyzed
-sub_26928,Shiper Honeyviper boss,6480,Boss_DefeatStateDispatcher,Boss defeat sequence state dispatcher using jump table,Boss,analyzed
-sub_26942,Shiper Honeyviper boss,6480,Boss_DefeatInitAnimation,Initializes boss defeat animation state and graphics mode,Boss,analyzed
-sub_2695C,Shiper Honeyviper boss,6480,Boss_DefeatLoadGraphics,Loads boss defeat explosion animation graphics via DMA,Boss,analyzed
-sub_26980,Shiper Honeyviper boss,6480,,,,pending
-sub_269B4,Shiper Honeyviper boss,6480,,,,pending
-sub_269C4,Shiper Honeyviper boss,6480,,,,pending
-sub_272A8,Shiper Honeyviper boss,6480,,,,pending
-sub_369F6,Shiper Honeyviper boss,6480,,,,pending
-sub_82674,Shiper Honeyviper boss,6480,,,,pending
-sub_826C4,Shiper Honeyviper boss,6480,,,,pending
-sub_82714,Shiper Honeyviper boss,6480,,,,pending
-sub_8280A,Shiper Honeyviper boss,6480,,,,pending
-sub_83616,Shiper Honeyviper boss,6480,,,,pending
-sub_83618,Shiper Honeyviper boss,6480,,,,pending
-sub_83B40,Shiper Honeyviper boss,6480,,,,pending
-sub_84A96,Shiper Honeyviper boss,6480,,,,pending
-sub_CB78,Shiper Honeyviper boss,6660,,,,pending
-sub_CB8C,Shiper Honeyviper boss,6660,,,,pending
-sub_CB9E,Stage 4 to 5 transition,6840,,,,pending
-sub_10390,Stage 4 to 5 transition,6840,,,,pending
-sub_19A6C,Stage 4 to 5 transition,6840,,,,pending
-sub_19B14,Stage 4 to 5 transition,6840,,,,pending
-sub_19B34,Stage 4 to 5 transition,6840,,,,pending
-sub_19B40,Stage 4 to 5 transition,6840,,,,pending
-sub_19B80,Stage 4 to 5 transition,6840,,,,pending
-sub_19BB0,Stage 4 to 5 transition,6840,,,,pending
-sub_12E0,Stage 5,7020,,,,pending
-sub_218C,Stage 5,7020,,,,pending
-sub_2F66,Stage 5,7020,,,,pending
-sub_300C,Stage 5,7020,,,,pending
-sub_3104,Stage 5,7020,,,,pending
-sub_311C,Stage 5,7020,,,,pending
-sub_3134,Stage 5,7020,,,,pending
-sub_33A4,Stage 5,7020,,,,pending
-sub_33FA,Stage 5,7020,,,,pending
-sub_411C,Stage 5,7020,,,,pending
-sub_CBBA,Stage 5,7020,,,,pending
-sub_1176A,Stage 5,7020,,,,pending
-sub_11EEE,Stage 5,7020,,,,pending
-sub_11F0E,Stage 5,7020,,,,pending
-sub_17C1A,Stage 5,7020,,,,pending
-sub_1B746,Stage 5,7020,,,,pending
-sub_2A8EE,Stage 5,7020,,,,pending
+sub_371E8,Shiper Honeyviper boss,6120,,Spawns boss projectiles periodically at random frame intervals,Boss,analyzed
+sub_37276,Shiper Honeyviper boss,6120,,Boss projectile movement with horizontal acceleration and vertical oscillation,Enemy,analyzed
+sub_82DC2,Shiper Honeyviper boss,6120,,Reads sound envelope data bytes from memory pointer into registers,Sound,analyzed
+sub_84B46,Shiper Honeyviper boss,6120,,Processes FM channel frequency modulation from envelope table,Sound,analyzed
+sub_B82,Shiper Honeyviper boss,6300,,Handles controller port state changes and button press detection,Input,analyzed
+sub_3564,Shiper Honeyviper boss,6300,,Calculates angle between two entities using arctan lookup,Math,analyzed
+sub_14190,Shiper Honeyviper boss,6300,,Detects player weapon projectile collision with enemies calculating damage,Physics,analyzed
+sub_142D8,Shiper Honeyviper boss,6300,,Loops through all active enemies checking collision with projectiles,Physics,analyzed
+sub_144A6,Shiper Honeyviper boss,6300,,Decrements score value using BCD arithmetic for display,UI,analyzed
+sub_14F8A,Shiper Honeyviper boss,6300,,Sets player invincibility flag bit based on game state,Player,analyzed
+sub_162A8,Shiper Honeyviper boss,6300,,Initializes player knockback/damaged state with sound and velocity,Player,analyzed
+sub_16344,Shiper Honeyviper boss,6300,,Sets player horizontal knockback velocity based on facing direction,Player,analyzed
+sub_1635A,Shiper Honeyviper boss,6300,,Player death/defeat state handling gravity and landing detection,Player,analyzed
+sub_17334,Shiper Honeyviper boss,6300,,Animates player defeat sprite cycling through death animation frames,Player,analyzed
+sub_1C028,Shiper Honeyviper boss,6300,,Searches for free sprite slot in effect pool for explosions,Sprite,analyzed
+sub_2A64C,Shiper Honeyviper boss,6300,,Initializes sprite from table pointer and sets default state value,Sprite,analyzed
+sub_2A6D0,Shiper Honeyviper boss,6300,,Applies upward vertical velocity to entity for rising movement,Physics,analyzed
+sub_2A79C,Shiper Honeyviper boss,6300,,Returns entity address in register A0 for manipulation,Enemy,analyzed
+sub_2B4BE,Shiper Honeyviper boss,6300,,Initializes projectile with angle calculation and directional velocity,Enemy,analyzed
+sub_2B9C4,Shiper Honeyviper boss,6300,,Spawns falling hazard projectiles from top of screen at intervals,Enemy,analyzed
+sub_30A4E,Shiper Honeyviper boss,6300,,Checks if animation frame counter exceeds threshold for state change,Projectile,analyzed
+sub_36930,Shiper Honeyviper boss,6300,,Sets boss defeat flags clears state and increments stage counter,Boss,analyzed
+sub_3694C,Shiper Honeyviper boss,6300,,Checks boss phase transition conditions based on altitude and flags,Boss,analyzed
+sub_36982,Shiper Honeyviper boss,6300,,Updates boss with palette fade effect during phase transitions,Boss,analyzed
+sub_36990,Shiper Honeyviper boss,6300,,Handles boss defeat sequence with sprite cleanup and screen effects,Boss,analyzed
+sub_36C0A,Shiper Honeyviper boss,6300,,Alternative rotation acceleration mode with higher velocity limits,Boss,analyzed
+sub_36FEE,Shiper Honeyviper boss,6300,,Spawns random debris particle sprites during boss destruction,Boss,analyzed
+sub_37370,Shiper Honeyviper boss,6300,,Spawns four projectiles in circular pattern with angle calculation,Boss,analyzed
+sub_37436,Shiper Honeyviper boss,6300,,Bouncing projectile with rotation animation gravity and deflection on collision,Enemy,analyzed
+sub_8264C,Shiper Honeyviper boss,6300,,Handles sound channel note timer countdown and restarts playback,Sound,analyzed
+sub_830BC,Shiper Honeyviper boss,6300,,Loads complete music track data initializing all sound channels,Sound,analyzed
+sub_839DC,Shiper Honeyviper boss,6300,,Sets FM channel instrument parameters registers and envelope data,Sound,analyzed
+sub_83C62,Shiper Honeyviper boss,6300,,Advances to next command in sound sequence incrementing pointer,Sound,analyzed
+sub_3B28,Shiper Honeyviper boss,6480,,Sets palette fade operation parameters for screen transitions,Gfx,analyzed
+sub_CB32,Shiper Honeyviper boss,6480,,Handles camera logic during stage transition checking boss state,Stage,analyzed
+sub_163BE,Shiper Honeyviper boss,6480,,Clears player knockback flag and resets sprite state after hit,Player,analyzed
+sub_2690E,Shiper Honeyviper boss,6480,,Initializes boss defeat explosion sprite at boss position,Boss,analyzed
+sub_26928,Shiper Honeyviper boss,6480,,Boss defeat sequence state dispatcher using jump table,Boss,analyzed
+sub_26942,Shiper Honeyviper boss,6480,,Initializes boss defeat animation state and graphics mode,Boss,analyzed
+sub_2695C,Shiper Honeyviper boss,6480,,Loads boss defeat explosion animation graphics via DMA,Boss,analyzed
+sub_26980,Shiper Honeyviper boss,6480,Boss_DefeatSetupState,Sets up boss defeat state initializing scroll timers and playing sound,Boss,analyzed
+sub_269B4,Shiper Honeyviper boss,6480,Boss_DefeatScrollInit,Initializes boss defeat scroll animation with velocity parameters,Boss,analyzed
+sub_269C4,Shiper Honeyviper boss,6480,Boss_DefeatScrollUpdate,Updates boss defeat scroll position and checks for transition complete,Boss,analyzed
+sub_272A8,Shiper Honeyviper boss,6480,Effect_ClearPaletteBuffer,Clears palette effect buffer and resets state counters,Effect,analyzed
+sub_369F6,Shiper Honeyviper boss,6480,Boss_ShiperDefeatFadeOut,Handles boss defeat fade out countdown before final transition,Boss,analyzed
+sub_82674,Shiper Honeyviper boss,6480,Sound_ProcessVibrato,Processes sound vibrato effect modulating pitch with oscillation,Sound,analyzed
+sub_826C4,Shiper Honeyviper boss,6480,Sound_UpdateChannelFrequency,Updates FM channel frequency registers with calculated pitch,Sound,analyzed
+sub_82714,Shiper Honeyviper boss,6480,Sound_ApplyPitchEffects,Applies pitch effects including detune transpose and modulation to frequency,Sound,analyzed
+sub_8280A,Shiper Honeyviper boss,6480,Sound_ProcessModulation,Processes sound modulation effects using jump table dispatcher,Sound,analyzed
+sub_83616,Shiper Honeyviper boss,6480,Sound_AddChannelOffset,Adds channel offset to register address for FM operators,Sound,analyzed
+sub_83618,Shiper Honeyviper boss,6480,Sound_WriteYM2612Register,Writes data to YM2612 FM chip via Z80 bus with sync,Sound,analyzed
+sub_83B40,Shiper Honeyviper boss,6480,Sound_StopChannel,Stops sound channel clearing flags and sending key off commands,Sound,analyzed
+sub_84A96,Shiper Honeyviper boss,6480,Sound_ParseSequenceData,Parses sound sequence data processing note and command bytes,Sound,analyzed
+sub_CB78,Shiper Honeyviper boss,6660,Stage_ScrollWaitTransition,Waits for scroll position then advances stage phase,Stage,analyzed
+sub_CB8C,Shiper Honeyviper boss,6660,Camera_UpdateWithScroll,Updates camera position and calculates scroll registers,Camera,analyzed
+sub_CB9E,Stage 4 to 5 transition,6840,Stage_CheckTransitionReady,Checks if stage transition is ready based on enemy and boss state,Stage,analyzed
+sub_10390,Stage 4 to 5 transition,6840,Stage_InitTransitionState,Initializes stage transition state with cutscene parameters,Stage,analyzed
+sub_19A6C,Stage 4 to 5 transition,6840,Stage_InitCutscene,Initializes stage cutscene setting player position and state,Stage,analyzed
+sub_19B14,Stage 4 to 5 transition,6840,Stage_CutsceneWaitStart,Waits for button press then advances cutscene state,Stage,analyzed
+sub_19B34,Stage 4 to 5 transition,6840,Stage_CutsceneTimerWait,Waits for timer countdown before cutscene continuation,Stage,analyzed
+sub_19B40,Stage 4 to 5 transition,6840,Stage_CutsceneCheckPosition,Checks player position against scroll target for cutscene advance,Stage,analyzed
+sub_19B80,Stage 4 to 5 transition,6840,Stage_CutscenePlayAnim,Plays cutscene animation setting sprite states and flags,Stage,analyzed
+sub_19BB0,Stage 4 to 5 transition,6840,Stage_CutsceneReachPosition,Handles player reaching target position in cutscene,Stage,analyzed
+sub_12E0,Stage 5,7020,Gfx_ClearBackgroundColor,Clears VDP background color registers to black,Gfx,analyzed
+sub_218C,Stage 5,7020,Sprite_GetAnimPointer,Returns sprite animation data pointer from entity structure,Sprite,analyzed
+sub_2F66,Stage 5,7020,Sys_ClearObjectBuffer,Clears main object data buffer with zero fill,Sys,analyzed
+sub_300C,Stage 5,7020,Sys_ClearScrollBuffer,Clears scroll position buffer for stage initialization,Sys,analyzed
+sub_3104,Stage 5,7020,Sys_ClearEnemyBuffer,Clears enemy entity buffer resetting all slots,Sys,analyzed
+sub_311C,Stage 5,7020,Sys_ClearSpriteBuffer,Clears sprite metasprite buffer for new stage,Sys,analyzed
+sub_3134,Stage 5,7020,Sys_ClearVDPCommandBuffer,Clears VDP command queue buffer for DMA operations,Sys,analyzed
+sub_33A4,Stage 5,7020,Input_InitControllerState,Initializes controller input state clearing button flags,Input,analyzed
+sub_33FA,Stage 5,7020,Input_ReadSecondaryController,Reads secondary controller port processing button states,Input,analyzed
+sub_411C,Stage 5,7020,Stage_SetScrollOffset,Sets stage-specific scroll offset value based on frame counter,Stage,analyzed
+sub_CBBA,Stage 5,7020,Stage_AutoScrollUpdate,Updates automatic stage scrolling and checks for phase transition,Stage,analyzed
+sub_1176A,Stage 5,7020,Stage_LoadObjectData,Loads stage object spawn data from table pointer,Stage,analyzed
+sub_11EEE,Stage 5,7020,Stage_LoadPaletteAndTilesA,Loads stage 5 palette and first tileset via DMA,Stage,analyzed
+sub_11F0E,Stage 5,7020,Stage_LoadPaletteAndTilesB,Loads stage 5 palette and second tileset via DMA,Stage,analyzed
+sub_17C1A,Stage 5,7020,UI_UpdateWeaponSelection,Updates weapon selection index and clears object buffer,UI,analyzed
+sub_1B746,Stage 5,7020,Sys_ClearBossDataBuffer,Clears boss entity data buffer with zero fill,Sys,analyzed
+sub_2A8EE,Stage 5,7020,Enemy_InitSpriteGraphics,Initializes enemy sprite graphics mode and animation pointer,Enemy,analyzed
 sub_2DA3A,Stage 5,7020,,,,pending
 sub_2DA8C,Stage 5,7020,,,,pending
 sub_2DACE,Stage 5,7020,,,,pending
