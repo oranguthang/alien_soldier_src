@@ -418,86 +418,86 @@ sub_2A688,Antroid boss,2700,,Finds free projectile slot with complex checks,Proj
 sub_2A6B4,Antroid boss,2700,,Initializes projectile from data table,Projectile,analyzed
 sub_37D3A,Antroid boss,2700,,Boss charge attack with distance check,Boss,analyzed
 sub_37D9A,Antroid boss,2700,,Boss ram attack with collision,Boss,analyzed
-sub_37E00,Antroid boss,2700,Boss_AntroidDeathFadeState,Boss death state with palette fade and timer progression,Boss,analyzed
-sub_37E2A,Antroid boss,2700,Boss_AntroidUpdateMetaspriteFlipped,Updates boss metasprite with horizontal flip toggle,Boss,analyzed
-sub_37F26,Antroid boss,2700,Boss_AntroidSpawnDebris,Spawns debris projectiles at random offsets,Boss,analyzed
-sub_37F7E,Antroid boss,2700,Boss_AntroidUpdateFlipDirection,Updates boss flip direction based on player position,Boss,analyzed
-sub_37E54,Antroid boss,2880,Boss_AntroidEnterDefeatedState,Transitions boss to defeated state clearing objects,Boss,analyzed
-sub_37E6C,Antroid boss,2880,Boss_AntroidDeathTimer,Death sequence timer with fade effect,Boss,analyzed
-sub_B00E,Antroid boss,3060,Text_InitPauseTimer,Initializes pause timer before text exit,Text,analyzed
-sub_B1F8,Antroid boss,3060,Text_RenderVerticalText,Renders vertical text sprites with positioning,Text,analyzed
-sub_B2EA,Antroid boss,3060,Text_ApplyDigitOffsets,Applies position offsets from two-digit value,Text,analyzed
-sub_C98E,Antroid boss,3060,Camera_Stage3Transition,Stage 3 camera with section transition,Camera,analyzed
-sub_103D4,Antroid boss,3060,UI_InitScoreTimer,Initializes score display timer to 0x5C,UI,analyzed
-sub_16C40,Antroid boss,3060,Player_UpdateHorizontalFacing,Updates player horizontal facing bit from input,Player,analyzed
-sub_17642,Antroid boss,3060,Player_SpawnTripleShot,Spawns three projectiles in spread pattern for special attack,Player,analyzed
-sub_176A0,Antroid boss,3060,Player_InitShotProjectile,Initializes shot projectile with angle and velocity,Player,analyzed
-sub_C99A,Stage 3,3240,Camera_Stage3ScrollLimit,Stage 3 camera with scroll update and position limit,Camera,analyzed
-sub_11ECE,Stage 3,3240,Stage_LoadStage3Assets,Loads Stage 3 palette and tile graphics,Stage,analyzed
-sub_2CF8A,Stage 3,3240,Enemy_SetVDPFlagHigh,Sets high bit in VDP control register,Enemy,analyzed
-sub_2D020,Stage 3,3240,Enemy_Phase2StateHandler,Enemy phase 2 state handler checking conditions,Enemy,analyzed
-sub_2D046,Stage 3,3240,Enemy_InitPhase2Attack,Initializes phase 2 attack state with parameters,Enemy,analyzed
-sub_2D064,Stage 3,3240,Enemy_Phase2Movement,Phase 2 movement with velocity and gravity,Enemy,analyzed
-sub_164B0,Rolling mini-boss (Stage 3),3420,Player_HandleAirDashState,Handles player air dash state with terrain check,Player,analyzed
-sub_165A4,Rolling mini-boss (Stage 3),3420,Player_InitCrouchState,Initializes player crouch state,Player,analyzed
-sub_165C2,Rolling mini-boss (Stage 3),3420,Player_HandleCrouchState,Main crouch state handler with input checks,Player,analyzed
-sub_16EA4,Rolling mini-boss (Stage 3),3420,Player_ApplyKnockbackVelocity,Applies knockback velocity with direction check,Player,analyzed
-sub_2BF58,Rolling mini-boss (Stage 3),3420,Enemy_UpdatePhasePattern,Updates enemy phase pattern based on timer,Enemy,analyzed
-sub_2F48E,Rolling mini-boss (Stage 3),3420,Boss_CheckPhaseTrigger,Checks if boss phase trigger condition met,Boss,analyzed
-sub_2F49A,Rolling mini-boss (Stage 3),3420,Boss_AdvanceToNextPhase,Advances boss to next phase state,Boss,analyzed
-sub_33F30,Rolling mini-boss (Stage 3),3420,Sprite_LoadAnimationFrame,Loads animation frame data into sprite,Sprite,analyzed
-sub_34040,Rolling mini-boss (Stage 3),3420,Sprite_SetTileProperties,Sets sprite tile VDP properties and flags,Sprite,analyzed
-sub_340B0,Rolling mini-boss (Stage 3),3420,Sprite_CalculateFrameOffset,Calculates animation frame offset from index,Sprite,analyzed
-sub_340DA,Rolling mini-boss (Stage 3),3420,Sprite_ApplyFrameData,Applies frame data to sprite object,Sprite,analyzed
-sub_34178,Rolling mini-boss (Stage 3),3420,Sprite_UpdateAnimationTimer,Updates sprite animation timer and frame,Sprite,analyzed
-sub_34198,Rolling mini-boss (Stage 3),3420,Sprite_AdvanceToNextFrame,Advances sprite to next animation frame,Sprite,analyzed
-sub_34274,Rolling mini-boss (Stage 3),3420,Sprite_LoadFrameTiles,Loads frame tile indices into sprite,Sprite,analyzed
-sub_3429E,Rolling mini-boss (Stage 3),3420,Sprite_ApplyTileMapping,Applies tile mapping to sprite object,Sprite,analyzed
-sub_C9D4,Shellshogun boss,3600,Camera_Stage3BossSetup,Sets up camera for Stage 3 boss encounter,Camera,analyzed
-sub_C9E0,Shellshogun boss,3600,Camera_UpdateBossPosition,Updates camera position during boss fight,Camera,analyzed
-sub_C9F8,Shellshogun boss,3600,Camera_LockToBossArena,Locks camera to boss arena boundaries,Camera,analyzed
-sub_2C0D6,Shellshogun boss,3600,Enemy_CheckHealthThreshold,Checks enemy health against threshold value,Enemy,analyzed
-sub_33F84,Shellshogun boss,3600,Sprite_InitializeObject,Initializes sprite object with default values,Sprite,analyzed
-sub_34270,Shellshogun boss,3600,,,,pending
-sub_295C,Shellshogun boss,3780,,,,pending
-sub_104B0,Shellshogun boss,3780,,,,pending
-sub_35614,Shellshogun boss,3780,,,,pending
-sub_394D8,Shellshogun boss,3780,,,,pending
-sub_3954C,Shellshogun boss,3780,,,,pending
-sub_39572,Shellshogun boss,3780,,,,pending
-sub_396D2,Shellshogun boss,3780,,,,pending
-sub_39E20,Shellshogun boss,3780,,,,pending
-sub_39E5A,Shellshogun boss,3780,,,,pending
-sub_39E5E,Shellshogun boss,3780,,,,pending
-sub_39F3A,Shellshogun boss,3780,,,,pending
-sub_3A172,Shellshogun boss,3780,,,,pending
-sub_3A2CC,Shellshogun boss,3780,,,,pending
-sub_84A70,Shellshogun boss,3780,,,,pending
-sub_10F4E,Shellshogun boss,3960,,,,pending
-sub_13278,Shellshogun boss,3960,,,,pending
-sub_1546E,Shellshogun boss,3960,,,,pending
-sub_1548C,Shellshogun boss,3960,,,,pending
-sub_16EC8,Shellshogun boss,3960,,,,pending
-sub_1C03C,Shellshogun boss,3960,,,,pending
-sub_39720,Shellshogun boss,3960,,,,pending
-sub_398FE,Shellshogun boss,3960,,,,pending
-sub_39E90,Shellshogun boss,3960,,,,pending
-sub_39F58,Shellshogun boss,3960,,,,pending
-sub_39FF6,Shellshogun boss,3960,,,,pending
-sub_3A010,Shellshogun boss,3960,,,,pending
-sub_39758,Shellshogun boss,4140,,,,pending
-sub_39E76,Shellshogun boss,4140,,,,pending
-sub_39EA8,Shellshogun boss,4140,,,,pending
-sub_39F20,Shellshogun boss,4140,,,,pending
-sub_34E4,Shellshogun boss,4320,,,,pending
-sub_16116,Shellshogun boss,4320,,,,pending
-sub_2A390,Shellshogun boss,4320,,,,pending
-sub_39778,Shellshogun boss,4320,,,,pending
-sub_397C4,Shellshogun boss,4320,,,,pending
-sub_399E8,Shellshogun boss,4320,,,,pending
-sub_39EC0,Shellshogun boss,4320,,,,pending
-sub_3A122,Shellshogun boss,4320,,,,pending
-sub_CA2C,Shellshogun boss,4500,,,,pending
+sub_37E00,Antroid boss,2700,,Boss death state with palette fade and timer progression,Boss,analyzed
+sub_37E2A,Antroid boss,2700,,Updates boss metasprite with horizontal flip toggle,Boss,analyzed
+sub_37F26,Antroid boss,2700,,Spawns debris projectiles at random offsets,Boss,analyzed
+sub_37F7E,Antroid boss,2700,,Updates boss flip direction based on player position,Boss,analyzed
+sub_37E54,Antroid boss,2880,,Transitions boss to defeated state clearing objects,Boss,analyzed
+sub_37E6C,Antroid boss,2880,,Death sequence timer with fade effect,Boss,analyzed
+sub_B00E,Antroid boss,3060,,Initializes pause timer before text exit,Text,analyzed
+sub_B1F8,Antroid boss,3060,,Renders vertical text sprites with positioning,Text,analyzed
+sub_B2EA,Antroid boss,3060,,Applies position offsets from two-digit value,Text,analyzed
+sub_C98E,Antroid boss,3060,,Stage 3 camera with section transition,Camera,analyzed
+sub_103D4,Antroid boss,3060,,Initializes score display timer to 0x5C,UI,analyzed
+sub_16C40,Antroid boss,3060,,Updates player horizontal facing bit from input,Player,analyzed
+sub_17642,Antroid boss,3060,,Spawns three projectiles in spread pattern for special attack,Player,analyzed
+sub_176A0,Antroid boss,3060,,Initializes shot projectile with angle and velocity,Player,analyzed
+sub_C99A,Stage 3,3240,,Stage 3 camera with scroll update and position limit,Camera,analyzed
+sub_11ECE,Stage 3,3240,,Loads Stage 3 palette and tile graphics,Stage,analyzed
+sub_2CF8A,Stage 3,3240,,Sets high bit in VDP control register,Enemy,analyzed
+sub_2D020,Stage 3,3240,,Enemy phase 2 state handler checking conditions,Enemy,analyzed
+sub_2D046,Stage 3,3240,,Initializes phase 2 attack state with parameters,Enemy,analyzed
+sub_2D064,Stage 3,3240,,Phase 2 movement with velocity and gravity,Enemy,analyzed
+sub_164B0,Rolling mini-boss (Stage 3),3420,,Handles player air dash state with terrain check,Player,analyzed
+sub_165A4,Rolling mini-boss (Stage 3),3420,,Initializes player crouch state,Player,analyzed
+sub_165C2,Rolling mini-boss (Stage 3),3420,,Main crouch state handler with input checks,Player,analyzed
+sub_16EA4,Rolling mini-boss (Stage 3),3420,,Applies knockback velocity with direction check,Player,analyzed
+sub_2BF58,Rolling mini-boss (Stage 3),3420,,Updates enemy phase pattern based on timer,Enemy,analyzed
+sub_2F48E,Rolling mini-boss (Stage 3),3420,,Checks if boss phase trigger condition met,Boss,analyzed
+sub_2F49A,Rolling mini-boss (Stage 3),3420,,Advances boss to next phase state,Boss,analyzed
+sub_33F30,Rolling mini-boss (Stage 3),3420,,Loads animation frame data into sprite,Sprite,analyzed
+sub_34040,Rolling mini-boss (Stage 3),3420,,Sets sprite tile VDP properties and flags,Sprite,analyzed
+sub_340B0,Rolling mini-boss (Stage 3),3420,,Calculates animation frame offset from index,Sprite,analyzed
+sub_340DA,Rolling mini-boss (Stage 3),3420,,Applies frame data to sprite object,Sprite,analyzed
+sub_34178,Rolling mini-boss (Stage 3),3420,,Updates sprite animation timer and frame,Sprite,analyzed
+sub_34198,Rolling mini-boss (Stage 3),3420,,Advances sprite to next animation frame,Sprite,analyzed
+sub_34274,Rolling mini-boss (Stage 3),3420,,Loads frame tile indices into sprite,Sprite,analyzed
+sub_3429E,Rolling mini-boss (Stage 3),3420,,Applies tile mapping to sprite object,Sprite,analyzed
+sub_C9D4,Shellshogun boss,3600,,Sets up camera for Stage 3 boss encounter,Camera,analyzed
+sub_C9E0,Shellshogun boss,3600,,Updates camera position during boss fight,Camera,analyzed
+sub_C9F8,Shellshogun boss,3600,,Locks camera to boss arena boundaries,Camera,analyzed
+sub_2C0D6,Shellshogun boss,3600,,Checks enemy health against threshold value,Enemy,analyzed
+sub_33F84,Shellshogun boss,3600,,Initializes sprite object with default values,Sprite,analyzed
+sub_34270,Shellshogun boss,3600,Sprite_DestroyObject,Clears sprite object flag destroying it,Sprite,analyzed
+sub_295C,Shellshogun boss,3780,Gfx_DecompressLZSS,Decompresses LZSS data to VRAM in loop,Gfx,analyzed
+sub_104B0,Shellshogun boss,3780,Gfx_WriteScrollValues,Writes scroll values to VRAM with various modes,Gfx,analyzed
+sub_35614,Shellshogun boss,3780,Boss_CheckScreenBounds,Checks if boss position is within valid screen bounds,Boss,analyzed
+sub_394D8,Shellshogun boss,3780,Boss_ShellshogunMainHandler,Main Shellshogun boss handler with state dispatch,Boss,analyzed
+sub_3954C,Shellshogun boss,3780,Boss_ShellshogunInitState,Initializes Shellshogun boss state and clears objects,Boss,analyzed
+sub_39572,Shellshogun boss,3780,Boss_ShellshogunSetupPhase,Sets up boss phase with metasprite initialization,Boss,analyzed
+sub_396D2,Shellshogun boss,3780,Boss_ShellshogunPhaseCheck,Checks phase conditions and advances state,Boss,analyzed
+sub_39E20,Shellshogun boss,3780,Boss_ShellshogunSetParams,Sets boss parameters and sprite properties,Boss,analyzed
+sub_39E5A,Shellshogun boss,3780,Boss_ShellshogunUpdateWrapper,Wrapper calling boss update routine,Boss,analyzed
+sub_39E5E,Shellshogun boss,3780,Boss_ShellshogunRenderSprites,Renders boss metasprites and updates display,Boss,analyzed
+sub_39F3A,Shellshogun boss,3780,Boss_ShellshogunBoundsCheck,Boss screen bounds validation before rendering,Boss,analyzed
+sub_3A172,Shellshogun boss,3780,Boss_ShellshogunAnimUpdate,Updates boss animation frame and interpolation,Boss,analyzed
+sub_3A2CC,Shellshogun boss,3780,Boss_ShellshogunCollisionCheck,Checks collision with player projectiles,Boss,analyzed
+sub_84A70,Shellshogun boss,3780,Sound_SetFMFrequency,Sets FM synthesis frequency for channel,Sound,analyzed
+sub_10F4E,Shellshogun boss,3960,Gfx_LoadCompressedTiles,Loads compressed tile data to VRAM,Gfx,analyzed
+sub_13278,Shellshogun boss,3960,Physics_ApplyFriction,Applies friction to velocity reducing speed,Physics,analyzed
+sub_1546E,Shellshogun boss,3960,Player_InitAirJumpState,Initializes player air state with parameters,Player,analyzed
+sub_1548C,Shellshogun boss,3960,Player_HandleAirMovement,Handles player movement while airborne,Player,analyzed
+sub_16EC8,Shellshogun boss,3960,Player_ProcessCollisionDamage,Processes collision damage and knockback,Player,analyzed
+sub_1C03C,Shellshogun boss,3960,Sprite_AllocateSlot,Allocates free sprite slot with buffer search,Sprite,analyzed
+sub_39720,Shellshogun boss,3960,Boss_ShellshogunMoveLeft,Boss movement left with velocity update,Boss,analyzed
+sub_398FE,Shellshogun boss,3960,Boss_ShellshogunAttackPattern,Boss attack pattern with projectile spawn,Boss,analyzed
+sub_39E90,Shellshogun boss,3960,Boss_ShellshogunInitSprites,Initializes boss sprite objects,Boss,analyzed
+sub_39F58,Shellshogun boss,3960,Boss_ShellshogunUpdatePosition,Updates boss position from velocity,Boss,analyzed
+sub_39FF6,Shellshogun boss,3960,Boss_ShellshogunPhysicsUpdate,Updates boss physics and collision,Boss,analyzed
+sub_3A010,Shellshogun boss,3960,Boss_ShellshogunSetTileData,Sets boss tile data and graphics,Boss,analyzed
+sub_39758,Shellshogun boss,4140,Boss_ShellshogunMoveRight,Boss movement right with velocity update,Boss,analyzed
+sub_39E76,Shellshogun boss,4140,Boss_ShellshogunCheckDefeat,Checks boss defeat condition and triggers end,Boss,analyzed
+sub_39EA8,Shellshogun boss,4140,Boss_ShellshogunDeathSequence,Boss death sequence with explosion effects,Boss,analyzed
+sub_39F20,Shellshogun boss,4140,Boss_ShellshogunUpdateSprite,Updates boss sprite graphics and palette,Boss,analyzed
+sub_34E4,Shellshogun boss,4320,Sound_PlaySFX,Plays sound effect with ID parameter,Sound,analyzed
+sub_16116,Shellshogun boss,4320,Player_CheckSpecialAttack,Checks if player can use special attack,Player,analyzed
+sub_2A390,Shellshogun boss,4320,Projectile_SpawnAtPosition,Spawns projectile at specified position,Projectile,analyzed
+sub_39778,Shellshogun boss,4320,Boss_ShellshogunIdleState,Boss idle state with position tracking,Boss,analyzed
+sub_397C4,Shellshogun boss,4320,Boss_ShellshogunChargeAttack,Boss charge attack with velocity buildup,Boss,analyzed
+sub_399E8,Shellshogun boss,4320,Boss_ShellshogunSpawnShells,Spawns shell projectiles in pattern,Boss,analyzed
+sub_39EC0,Shellshogun boss,4320,Boss_ShellshogunInitPalette,Initializes boss palette colors,Boss,analyzed
+sub_3A122,Shellshogun boss,4320,Boss_ShellshogunFlashOnHit,Flash boss sprite when taking damage,Boss,analyzed
+sub_CA2C,Shellshogun boss,4500,Camera_ShellshogunBossInit,Initializes camera for Shellshogun boss fight,Camera,analyzed
 sub_15610,Shellshogun boss,4500,,,,pending
 sub_1356,Shellshogun boss,4680,,,,pending
 sub_15BC,Shellshogun boss,4680,,,,pending
