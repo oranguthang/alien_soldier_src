@@ -858,86 +858,86 @@ sub_D766,Train start (Stage 8),12960,,,Effect,analyzed
 sub_10286,Train start (Stage 8),12960,,,Scroll,analyzed
 sub_11F7E,Train start (Stage 8),12960,,,Stage,analyzed
 sub_2EFC8,Train start (Stage 8),12960,,,Entity,analyzed
-sub_2EFEA,Train start (Stage 8),12960,Entity_TrainJumpPrep,Prepares entity for train jump with animation setup,Entity,analyzed
-sub_2EF32,Train end (Stage 8),13140,Entity_TrainEndDispatcher,Dispatches train end entity state using jump table,Entity,analyzed
-sub_2EF4E,Train end (Stage 8),13140,Entity_TrainEndInit,Initializes train end entity with animation and position,Entity,analyzed
-sub_2EF7E,Train end (Stage 8),13140,Entity_TrainEndLoadPalette,Loads palette and sprite parameters for train end,Entity,analyzed
-sub_2EFBA,Train end (Stage 8),13140,Entity_TrainUpdateYPosition,Updates entity Y position based on train scroll,Entity,analyzed
-sub_2F01A,Train end (Stage 8),13140,Entity_TrainJumpWait,Waits for timer then changes to falling animation,Entity,analyzed
-sub_2F032,Train end (Stage 8),13140,Entity_TrainJumpFall,Handles player falling from train with gravity,Entity,analyzed
-sub_2F06E,Train end (Stage 8),13140,Entity_TrainJumpComplete,Completes train jump restoring palette and flags,Entity,analyzed
-sub_CE2E,Flying-Neo boss,13500,Stage_WriteBossParams,Writes boss parameter bytes to RAM structure,Stage,analyzed
-sub_CF6A,Flying-Neo boss,13500,Stage_TrainToFlyingNeoTransition,Transitions from train to Flying-Neo boss battle,Stage,analyzed
-sub_102AE,Flying-Neo boss,13500,Scroll_IncrementHorizontalFast,Increments horizontal scroll by 65536 fixed point,Scroll,analyzed
-sub_19C5E,Flying-Neo boss,13500,Player_FlyingNeoIntro,Player intro state for Flying-Neo boss battle,Player,analyzed
-sub_19D82,Flying-Neo boss,13500,Player_CheckHorizontalDistance,Checks horizontal distance setting movement direction,Player,analyzed
-sub_CF9A,Flying-Neo boss,13680,Stage_FlyingNeoScrollUpdate,Updates scroll positions for Flying-Neo battle,Stage,analyzed
-sub_CFDE,Flying-Neo boss,13680,Stage_FlyingNeoVerticalScroll,Handles vertical scroll acceleration with boundaries,Stage,analyzed
-sub_D6D6,Flying-Neo boss,13680,Stage_InitFlyingNeoEntity,Initializes Flying-Neo entity with sprite and position,Stage,analyzed
-sub_D714,Flying-Neo boss,13680,Stage_FlyingNeoSpawn,Spawns Flying-Neo boss with DMA tile transfer,Stage,analyzed
-sub_D73E,Flying-Neo boss,13680,Entity_FlyingNeoGravityAccel,Applies gravity acceleration to Flying-Neo entity,Entity,analyzed
-sub_102B8,Flying-Neo boss,13680,Scroll_UpdateCameraPositions,Updates camera scroll positions with offset calculation,Scroll,analyzed
-sub_1676E,Flying-Neo boss,13680,Player_ToggleScreenSide,Toggles player screen side flag with sound effect,Player,analyzed
-sub_162C,Flying-Neo boss,13860,VBlank_InitFlyingNeoEffect,Initializes VBlank effect for Flying-Neo battle,VBlank,analyzed
-sub_CFC2,Flying-Neo boss,13860,Stage_FlyingNeoScrollDecel,Decelerates vertical scroll to zero,Stage,analyzed
-sub_D01E,Flying-Neo boss,13860,Stage_FlyingNeoBattleStart,Starts Flying-Neo battle with palette and params,Stage,analyzed
-sub_D0AC,Flying-Neo boss,13860,Stage_FlyingNeoBattleUpdate,Updates Flying-Neo battle with vertical oscillation,Stage,analyzed
-sub_D75A,Flying-Neo boss,13860,Stage_FlyingNeoInitBoss,Initializes Flying-Neo boss entity for battle,Stage,analyzed
-sub_19CA6,Flying-Neo boss,13860,Cutscene_FlyingNeoIntro,Cutscene parameters for Flying-Neo boss intro,Cutscene,analyzed
-sub_29ED0,Flying-Neo boss,13860,Sys_InitFlyingNeoVRAM,Initializes VRAM layout for Flying-Neo boss,System,analyzed
-sub_3BFF6,Flying-Neo boss,13860,Boss_FlyingNeoMain,Main Flying-Neo boss handler with state dispatch,Boss,analyzed
-sub_3C0D0,Flying-Neo boss,13860,Boss_FlyingNeoInit,Initializes Flying-Neo boss clearing sprites,Boss,analyzed
-sub_3C110,Flying-Neo boss,13860,Boss_FlyingNeoClearPalettes,Clears boss palette entries for initialization,Boss,analyzed
-sub_3C156,Flying-Neo boss,13860,Boss_FlyingNeoWaitStart,Waits for battle start checking player ready,Boss,analyzed
-sub_3C168,Flying-Neo boss,13860,Boss_FlyingNeoSetup,Complex setup with metasprite and palette initialization,Boss,analyzed
-sub_3C29C,Flying-Neo boss,13860,Boss_FlyingNeoIntroWait,Intro wait state decrementing timer,Boss,analyzed
-sub_3C9F0,Flying-Neo boss,13860,Boss_FlyingNeoUpdateSprites,Updates boss sprite positions and rendering,Boss,analyzed
-sub_3CB98,Flying-Neo boss,13860,Boss_FlyingNeoUpdateScroll,Updates scroll offsets for boss parallax,Boss,analyzed
-sub_343D6,Flying-Neo boss,14040,Sprite_UpdateMetaspriteAngles,Updates metasprite part angles from table,Sprite,analyzed
-sub_3C2C0,Flying-Neo boss,14040,Boss_FlyingNeoBattleActive,Active battle state with attack pattern dispatch,Boss,analyzed
-sub_3C688,Flying-Neo boss,14040,Boss_FlyingNeoMovementAI,Movement AI with position tracking and boundaries,Boss,analyzed
-sub_3CA3C,Flying-Neo boss,14040,Boss_FlyingNeoAnimationUpdate,Updates boss animation frame with interpolation,Boss,analyzed
-sub_3CDAE,Flying-Neo boss,14040,Boss_FlyingNeoCollisionCheck,Checks collision between boss and player attacks,Boss,analyzed
-sub_3CE14,Flying-Neo boss,14040,,,,pending
-sub_3CECA,Flying-Neo boss,14040,,,,pending
-sub_3CF0A,Flying-Neo boss,14040,,,,pending
-sub_3CFE8,Flying-Neo boss,14040,,,,pending
-sub_3C55C,Flying-Neo boss,14220,,,,pending
-sub_3C592,Flying-Neo boss,14220,,,,pending
-sub_3C5BC,Flying-Neo boss,14220,,,,pending
-sub_3C660,Flying-Neo boss,14220,,,,pending
-sub_3C9E0,Flying-Neo boss,14220,,,,pending
-sub_3FB6,Flying-Neo boss,14400,,,,pending
-sub_3C2E4,Flying-Neo boss,14400,,,,pending
-sub_3C31C,Flying-Neo boss,14400,,,,pending
-sub_3C36A,Flying-Neo boss,14400,,,,pending
-sub_3C390,Flying-Neo boss,14400,,,,pending
-sub_3C3AE,Flying-Neo boss,14400,,,,pending
-sub_3C3E2,Flying-Neo boss,14400,,,,pending
-sub_3C428,Flying-Neo boss,14400,,,,pending
-sub_3CB40,Flying-Neo boss,14400,,,,pending
-sub_3CC56,Flying-Neo boss,14400,,,,pending
-sub_D08E,Flying-Neo boss,14580,,,,pending
-sub_3C4CA,Flying-Neo boss,14580,,,,pending
-sub_147E,Flies (Stage 9),14940,,,,pending
-sub_D0B4,Flies (Stage 9),14940,,,,pending
-sub_D140,Flies (Stage 9),14940,,,,pending
-sub_D166,Flies (Stage 9),14940,,,,pending
-sub_D538,Flies (Stage 9),14940,,,,pending
-sub_11FA2,Flies (Stage 9),14940,,,,pending
-sub_29EBA,Flies (Stage 9),14940,,,,pending
-sub_2D66C,Flies (Stage 9),14940,,,,pending
-sub_2D69C,Flies (Stage 9),14940,,,,pending
-sub_2D6B2,Flies (Stage 9),14940,,,,pending
-sub_2D8E8,Flies (Stage 9),14940,,,,pending
-sub_2D8FC,Flies (Stage 9),14940,,,,pending
-sub_2D91A,Flies (Stage 9),14940,,,,pending
-sub_2D92A,Flies (Stage 9),14940,,,,pending
-sub_2D954,Flies (Stage 9),14940,,,,pending
-sub_D1FE,Flies (Stage 9),15300,,,,pending
-sub_D1DA,Caterpillar ship above train (Stage 9 ),15480,,,,pending
-sub_D286,Caterpillar ship above train (Stage 9 ),15480,,,,pending
-sub_D2B6,Caterpillar ship above train (Stage 9 ),15480,,,,pending
+sub_2EFEA,Train start (Stage 8),12960,,,Entity,analyzed
+sub_2EF32,Train end (Stage 8),13140,,,Entity,analyzed
+sub_2EF4E,Train end (Stage 8),13140,,,Entity,analyzed
+sub_2EF7E,Train end (Stage 8),13140,,,Entity,analyzed
+sub_2EFBA,Train end (Stage 8),13140,,,Entity,analyzed
+sub_2F01A,Train end (Stage 8),13140,,,Entity,analyzed
+sub_2F032,Train end (Stage 8),13140,,,Entity,analyzed
+sub_2F06E,Train end (Stage 8),13140,,,Entity,analyzed
+sub_CE2E,Flying-Neo boss,13500,,,Stage,analyzed
+sub_CF6A,Flying-Neo boss,13500,,,Stage,analyzed
+sub_102AE,Flying-Neo boss,13500,,,Scroll,analyzed
+sub_19C5E,Flying-Neo boss,13500,,,Player,analyzed
+sub_19D82,Flying-Neo boss,13500,,,Player,analyzed
+sub_CF9A,Flying-Neo boss,13680,,,Stage,analyzed
+sub_CFDE,Flying-Neo boss,13680,,,Stage,analyzed
+sub_D6D6,Flying-Neo boss,13680,,,Stage,analyzed
+sub_D714,Flying-Neo boss,13680,,,Stage,analyzed
+sub_D73E,Flying-Neo boss,13680,,,Entity,analyzed
+sub_102B8,Flying-Neo boss,13680,,,Scroll,analyzed
+sub_1676E,Flying-Neo boss,13680,,,Player,analyzed
+sub_162C,Flying-Neo boss,13860,,,VBlank,analyzed
+sub_CFC2,Flying-Neo boss,13860,,,Stage,analyzed
+sub_D01E,Flying-Neo boss,13860,,,Stage,analyzed
+sub_D0AC,Flying-Neo boss,13860,,,Stage,analyzed
+sub_D75A,Flying-Neo boss,13860,,,Stage,analyzed
+sub_19CA6,Flying-Neo boss,13860,,,Cutscene,analyzed
+sub_29ED0,Flying-Neo boss,13860,,,System,analyzed
+sub_3BFF6,Flying-Neo boss,13860,,,Boss,analyzed
+sub_3C0D0,Flying-Neo boss,13860,,,Boss,analyzed
+sub_3C110,Flying-Neo boss,13860,,,Boss,analyzed
+sub_3C156,Flying-Neo boss,13860,,,Boss,analyzed
+sub_3C168,Flying-Neo boss,13860,,,Boss,analyzed
+sub_3C29C,Flying-Neo boss,13860,,,Boss,analyzed
+sub_3C9F0,Flying-Neo boss,13860,,,Boss,analyzed
+sub_3CB98,Flying-Neo boss,13860,,,Boss,analyzed
+sub_343D6,Flying-Neo boss,14040,,,Sprite,analyzed
+sub_3C2C0,Flying-Neo boss,14040,,,Boss,analyzed
+sub_3C688,Flying-Neo boss,14040,,,Boss,analyzed
+sub_3CA3C,Flying-Neo boss,14040,,,Boss,analyzed
+sub_3CDAE,Flying-Neo boss,14040,,,Boss,analyzed
+sub_3CE14,Flying-Neo boss,14040,Boss_FlyingNeoFlipDirection,Flips boss direction loading corresponding tile graphics,Boss,analyzed
+sub_3CECA,Flying-Neo boss,14040,Boss_FlyingNeoInitSprites,Initializes enemy sprite parameters from table,Boss,analyzed
+sub_3CF0A,Flying-Neo boss,14040,Boss_FlyingNeoProcessAnimation,Processes animation with interpolation and angle updates,Boss,analyzed
+sub_3CFE8,Flying-Neo boss,14040,Boss_FlyingNeoCalculateDeltas,Calculates interpolation deltas for animation system,Boss,analyzed
+sub_3C55C,Flying-Neo boss,14220,Boss_FlyingNeoInitAttackPattern,Initializes attack pattern state with timer,Boss,analyzed
+sub_3C592,Flying-Neo boss,14220,Boss_FlyingNeoAttackPatternUpdate,Updates attack pattern with movement and animations,Boss,analyzed
+sub_3C5BC,Flying-Neo boss,14220,Boss_FlyingNeoAttackMovement,Handles attack movement with horizontal acceleration,Boss,analyzed
+sub_3C660,Flying-Neo boss,14220,Boss_FlyingNeoCheckAttackCondition,Checks conditions to trigger attack state,Boss,analyzed
+sub_3C9E0,Flying-Neo boss,14220,Boss_FlyingNeoCalculateDistance,Calculates distance to enemy entity,Boss,analyzed
+sub_3FB6,Flying-Neo boss,14400,Palette_ProcessFadeEffect,Processes palette fade effect with timing,Gfx,analyzed
+sub_3C2E4,Flying-Neo boss,14400,Boss_FlyingNeoDefeatInit,Initializes boss defeat sequence clearing flags,Boss,analyzed
+sub_3C31C,Flying-Neo boss,14400,Boss_FlyingNeoDefeatState1,Defeat state spawning parts upward with timer,Boss,analyzed
+sub_3C36A,Flying-Neo boss,14400,Boss_FlyingNeoSpawnDefeatParticle,Spawns defeat particle with velocity and sound,Boss,analyzed
+sub_3C390,Flying-Neo boss,14400,Boss_FlyingNeoCalculateCenter,Calculates boss center position for collision,Boss,analyzed
+sub_3C3AE,Flying-Neo boss,14400,Boss_FlyingNeoDefeatState2,Defeat state spawning parts downward,Boss,analyzed
+sub_3C3E2,Flying-Neo boss,14400,Boss_FlyingNeoDefeatState3,Defeat state preparing final explosion effects,Boss,analyzed
+sub_3C428,Flying-Neo boss,14400,Boss_FlyingNeoDefeatState4,Defeat state firing particle rain with sound,Boss,analyzed
+sub_3CB40,Flying-Neo boss,14400,Boss_FlyingNeoUpdatePaletteFade,Updates palette fade effect for boss,Boss,analyzed
+sub_3CC56,Flying-Neo boss,14400,Boss_FlyingNeoDMAScrollWrite,Writes scroll values to VDP via DMA,Boss,analyzed
+sub_D08E,Flying-Neo boss,14580,Stage_PostFlyingNeoTransition,Transitions to next stage after Flying-Neo defeat,Stage,analyzed
+sub_3C4CA,Flying-Neo boss,14580,Boss_FlyingNeoDefeatFinal,Final defeat state advancing to next stage,Boss,analyzed
+sub_147E,Flies (Stage 9),14940,VBlank_InitFliesEffect,Initializes VBlank effect for flies stage,VBlank,analyzed
+sub_D0B4,Flies (Stage 9),14940,Stage_InitStage9Flies,Initializes Stage 9 with scroll and parameters,Stage,analyzed
+sub_D140,Flies (Stage 9),14940,Stage_FliesCheckTransition,Checks transition condition to next stage segment,Stage,analyzed
+sub_D166,Flies (Stage 9),14940,Stage_FliesScrollUpdate,Updates Stage 9 scroll with parallax and lightning,Stage,analyzed
+sub_D538,Flies (Stage 9),14940,Stage_FliesVerticalScroll,Updates vertical scroll positions for parallax,Stage,analyzed
+sub_11FA2,Flies (Stage 9),14940,Stage_LoadFliesGraphics,Loads palette and tile graphics for flies stage,Stage,analyzed
+sub_29EBA,Flies (Stage 9),14940,Sys_InitFliesVRAM,Initializes VRAM layout for flies stage,System,analyzed
+sub_2D66C,Flies (Stage 9),14940,Enemy_FlyMain,Main fly enemy handler with spawn conditions,Enemy,analyzed
+sub_2D69C,Flies (Stage 9),14940,Enemy_FlyDispatcher,Fly enemy state dispatcher using jump table,Enemy,analyzed
+sub_2D6B2,Flies (Stage 9),14940,Enemy_FlyInit,Initializes fly enemy with position and animation,Enemy,analyzed
+sub_2D8E8,Flies (Stage 9),14940,Enemy_FlyMovement,Fly enemy movement with wave pattern,Enemy,analyzed
+sub_2D8FC,Flies (Stage 9),14940,Enemy_FlyUpdateState,Updates fly state with animation transitions,Enemy,analyzed
+sub_2D91A,Flies (Stage 9),14940,Enemy_FlyAttack,Fly attack behavior with velocity changes,Enemy,analyzed
+sub_2D92A,Flies (Stage 9),14940,Enemy_FlyReturnPattern,Fly return pattern after attack,Enemy,analyzed
+sub_2D954,Flies (Stage 9),14940,Enemy_FlyDeath,Fly death animation and cleanup,Enemy,analyzed
+sub_D1FE,Flies (Stage 9),15300,Stage_FliesSpawnEnemies,Spawns fly enemies with formation pattern,Stage,analyzed
+sub_D1DA,Caterpillar ship above train (Stage 9 ),15480,Stage_InitCaterpillarShip,Initializes caterpillar ship entity,Stage,analyzed
+sub_D286,Caterpillar ship above train (Stage 9 ),15480,Stage_CaterpillarShipUpdate,Updates caterpillar ship scroll and position,Stage,analyzed
+sub_D2B6,Caterpillar ship above train (Stage 9 ),15480,Stage_CaterpillarShipMovement,Handles caterpillar ship movement physics,Stage,analyzed
 sub_D4BE,Caterpillar ship above train (Stage 9 ),15480,,,,pending
 sub_3D0AE,Caterpillar ship above train (Stage 9 ),15480,,,,pending
 sub_3D0C2,Caterpillar ship above train (Stage 9 ),15480,,,,pending
