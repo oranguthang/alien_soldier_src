@@ -738,86 +738,86 @@ sub_16CD8,Stage 6,9000,,,Physics,analyzed
 sub_16D60,Stage 6,9000,,,Player,analyzed
 sub_16DF6,Stage 6,9000,,,Player,analyzed
 sub_23CBA,Stage 6,9000,,,Sys,analyzed
-sub_2A8BA,Stage 6,9000,Sprite_ClearInactiveObjects,Clears sprites for inactive objects with specific IDs checking flags,Sprite,analyzed
-sub_2BEBC,Stage 6,9000,Projectile_ExplodeWithSound,Projectile explosion creating sprite with sound effect playback,Projectile,analyzed
-sub_2BFC0,Stage 6,9000,Enemy_PhaseStateDispatcher,Enemy phase state dispatcher using jump table for substates,Enemy,analyzed
-sub_2BFD0,Stage 6,9000,Enemy_TargetPlayer,Calculates angle to player and sets velocity with upward trajectory,Enemy,analyzed
-sub_2BFFE,Stage 6,9000,Physics_ApplyPositiveGravity,Applies positive gravity acceleration to vertical velocity,Physics,analyzed
-sub_2CA1A,Stage 6,9000,Boss_SpawnPeriodicShots,Boss spawns periodic projectiles based on timer countdown,Boss,analyzed
-sub_CC4E,Joker boss,9180,Stage_InitJokerBoss,Initializes Joker boss fight with scroll check and palette update,Stage,analyzed
-sub_2B80C,Joker boss,9180,Boss_SpawnTargetedProjectile,Spawns projectile with trajectory calculation towards player position,Boss,analyzed
-sub_2B88A,Joker boss,9180,Projectile_GravityBounce,Projectile with gravity physics deflection and ground bounce,Projectile,analyzed
-sub_2C008,Joker boss,9180,Projectile_PhaseDispatcher,Projectile phase state dispatcher using jump table pattern,Projectile,analyzed
-sub_2C01A,Joker boss,9180,Projectile_RandomAngleInit,Initializes projectile with random angle from RNG table,Projectile,analyzed
-sub_2C058,Joker boss,9180,Projectile_SpiralMotion,Projectile spiral motion pattern decreasing angle each frame,Projectile,analyzed
-sub_2C07A,Joker boss,9180,Enemy_PhaseHandler,Enemy phase handler dispatcher for multi-phase attack patterns,Enemy,analyzed
-sub_2C08C,Joker boss,9180,Enemy_SpawnHelperSprite,Spawns helper sprite for enemy with position and state init,Enemy,analyzed
-sub_2C0BC,Joker boss,9180,Enemy_HelperTimer,Helper sprite timer countdown looping or advancing phase,Enemy,analyzed
-sub_2CDA8,Joker boss,9180,Boss_JokerRecoilAttack,Boss recoil attack launching upward then spawning projectile,Boss,analyzed
-sub_3B29E,Joker boss,9360,Boss_JokerMain,Main Joker boss update handler with state dispatching and fade,Boss,analyzed
-sub_3B30E,Joker boss,9360,Boss_JokerInit,Initializes Joker boss clearing sprites and setting scroll position,Boss,analyzed
-sub_3B330,Joker boss,9360,Boss_JokerSetup,Sets up Joker boss with metasprites tiles animation and music,Boss,analyzed
-sub_3B722,Joker boss,9360,Boss_JokerAttackState,Sets Joker boss attack state with collision and animation params,Boss,analyzed
-sub_3B748,Joker boss,9360,Boss_JokerDivePrep,Joker boss dive preparation with sound and velocity initialization,Boss,analyzed
-sub_3B7E0,Joker boss,9360,Boss_JokerApplySpinGravity,Applies spinning gravity acceleration and rotation to boss,Boss,analyzed
-sub_3B7FA,Joker boss,9360,Boss_JokerDiveComplete,Completes dive attack transitioning to next phase,Boss,analyzed
-sub_3B808,Joker boss,9360,Boss_JokerSpinDive,Joker boss spinning dive attack with gravity and projectile spawn,Boss,analyzed
-sub_3BA1A,Joker boss,9360,Boss_JokerRenderBody,Renders Joker boss body parts with complex metasprite positioning,Boss,analyzed
-sub_3BCB4,Joker boss,9360,Boss_JokerUpdateAnimation,Updates Joker boss animation with interpolation for body parts,Boss,analyzed
-sub_3BDF4,Joker boss,9360,Boss_JokerCalcDeltas,Calculates interpolation deltas for smooth boss animation transitions,Boss,analyzed
-sub_29EDE,Joker boss,9540,Sys_SetupScrollVRAM,Sets up VRAM layout with scroll buffer pointers for stage,Sys,analyzed
-sub_3B84E,Joker boss,9540,Boss_JokerStretchState,Joker boss stretch state adjusting hitbox size dynamically,Boss,analyzed
-sub_3BC8E,Joker boss,9540,Boss_JokerSlowHorizontal,Slows Joker boss horizontal velocity towards zero with fixed rate,Boss,analyzed
-sub_3B40A,Joker boss,9720,Boss_JokerDefeatInit,Initializes boss defeat sequence with state and timer setup,Boss,analyzed
-sub_3B420,Joker boss,9720,Boss_JokerDefeatWait,Defeat sequence timer countdown checking victory condition,Boss,analyzed
-sub_3B434,Joker boss,9720,Boss_JokerDefeatAnim,Defeat animation with hitbox adjustment and metasprite flipping,Boss,analyzed
-sub_CC84,Joker boss,10080,Stage_PostJokerBoss,Post-boss initialization triggering stage phase transition,Stage,analyzed
-sub_13C50,Joker boss,10080,Collision_CheckTerrainTiles,Multi-point terrain tile collision check for multiple entities,Collision,analyzed
-sub_14648,Joker boss,10080,Physics_EntityWallCheck,Entity wall collision detection checking left and right sides,Physics,analyzed
-sub_16CC8,Joker boss,10080,Physics_EntityTerrainWrapper,Terrain collision wrapper checking flag before testing walls,Physics,analyzed
-sub_3B69A,Joker boss,10080,Boss_JokerSelectAttack,Selects boss attack pattern based on health and RNG value,Boss,analyzed
-sub_3BE16,Joker boss,10080,Boss_JokerSpawnBomb,Spawns bomb projectile during special attack with damage value,Boss,analyzed
-sub_3BE84,Joker boss,10080,Projectile_JokerBomb,Joker bomb projectile descending then firing directional shots,Projectile,analyzed
-sub_8289A,Joker boss,10080,,,,pending
-sub_2A3E6,Joker boss,10260,,,,pending
-sub_2A85E,Joker boss,10260,,,,pending
-sub_2A8A2,Joker boss,10260,,,,pending
-sub_3B4D8,Joker boss,10260,,,,pending
-sub_3B56A,Joker boss,10260,,,,pending
-sub_3B5A0,Joker boss,10260,,,,pending
-sub_3B602,Joker boss,10260,,,,pending
-sub_3B89E,Joker boss,10260,,,,pending
-sub_3B8BE,Joker boss,10260,,,,pending
-sub_3B52E,Joker boss,10440,,,,pending
-sub_3B5D4,Joker boss,10440,,,,pending
-sub_3B68E,Joker boss,10440,,,,pending
-sub_83932,Joker boss,10440,,,,pending
-sub_CC96,Joker boss,10620,,,,pending
-sub_3B5E8,Joker boss,10620,,,,pending
-sub_CCA2,Stage 7,10800,,,,pending
-sub_CCC8,Stage 7,10800,,,,pending
-sub_11F56,Stage 7,10800,,,,pending
-sub_32EE0,Stage 7,10800,,,,pending
-sub_32F32,Stage 7,10800,,,,pending
-sub_32F60,Stage 7,10800,,,,pending
-sub_32F84,Stage 7,10800,,,,pending
-sub_32FF4,Stage 7,10800,,,,pending
-sub_33016,Stage 7,10800,,,,pending
-sub_3305A,Stage 7,10800,,,,pending
-sub_33082,Stage 7,10800,,,,pending
-sub_CD0A,ST-210-Terobuster boss,10980,,,,pending
-sub_D5BC,ST-210-Terobuster boss,10980,,,,pending
-sub_D5C8,ST-210-Terobuster boss,10980,,,,pending
-sub_D624,ST-210-Terobuster boss,10980,,,,pending
-sub_D654,ST-210-Terobuster boss,10980,,,,pending
-sub_33004,ST-210-Terobuster boss,10980,,,,pending
-sub_CD90,ST-210-Terobuster boss,11340,,,,pending
-sub_38518,ST-210-Terobuster boss,11340,,,,pending
-sub_385A4,ST-210-Terobuster boss,11340,,,,pending
-sub_385CA,ST-210-Terobuster boss,11340,,,,pending
-sub_389A2,ST-210-Terobuster boss,11340,,,,pending
-sub_389CA,ST-210-Terobuster boss,11340,,,,pending
-sub_389DC,ST-210-Terobuster boss,11340,,,,pending
+sub_2A8BA,Stage 6,9000,,,Sprite,analyzed
+sub_2BEBC,Stage 6,9000,,,Projectile,analyzed
+sub_2BFC0,Stage 6,9000,,,Enemy,analyzed
+sub_2BFD0,Stage 6,9000,,,Enemy,analyzed
+sub_2BFFE,Stage 6,9000,,,Physics,analyzed
+sub_2CA1A,Stage 6,9000,,,Boss,analyzed
+sub_CC4E,Joker boss,9180,,,Stage,analyzed
+sub_2B80C,Joker boss,9180,,,Boss,analyzed
+sub_2B88A,Joker boss,9180,,,Projectile,analyzed
+sub_2C008,Joker boss,9180,,,Projectile,analyzed
+sub_2C01A,Joker boss,9180,,,Projectile,analyzed
+sub_2C058,Joker boss,9180,,,Projectile,analyzed
+sub_2C07A,Joker boss,9180,,,Enemy,analyzed
+sub_2C08C,Joker boss,9180,,,Enemy,analyzed
+sub_2C0BC,Joker boss,9180,,,Enemy,analyzed
+sub_2CDA8,Joker boss,9180,,,Boss,analyzed
+sub_3B29E,Joker boss,9360,,,Boss,analyzed
+sub_3B30E,Joker boss,9360,,,Boss,analyzed
+sub_3B330,Joker boss,9360,,,Boss,analyzed
+sub_3B722,Joker boss,9360,,,Boss,analyzed
+sub_3B748,Joker boss,9360,,,Boss,analyzed
+sub_3B7E0,Joker boss,9360,,,Boss,analyzed
+sub_3B7FA,Joker boss,9360,,,Boss,analyzed
+sub_3B808,Joker boss,9360,,,Boss,analyzed
+sub_3BA1A,Joker boss,9360,,,Boss,analyzed
+sub_3BCB4,Joker boss,9360,,,Boss,analyzed
+sub_3BDF4,Joker boss,9360,,,Boss,analyzed
+sub_29EDE,Joker boss,9540,,,Sys,analyzed
+sub_3B84E,Joker boss,9540,,,Boss,analyzed
+sub_3BC8E,Joker boss,9540,,,Boss,analyzed
+sub_3B40A,Joker boss,9720,,,Boss,analyzed
+sub_3B420,Joker boss,9720,,,Boss,analyzed
+sub_3B434,Joker boss,9720,,,Boss,analyzed
+sub_CC84,Joker boss,10080,,,Stage,analyzed
+sub_13C50,Joker boss,10080,,,Collision,analyzed
+sub_14648,Joker boss,10080,,,Physics,analyzed
+sub_16CC8,Joker boss,10080,,,Physics,analyzed
+sub_3B69A,Joker boss,10080,,,Boss,analyzed
+sub_3BE16,Joker boss,10080,,,Boss,analyzed
+sub_3BE84,Joker boss,10080,,,Projectile,analyzed
+sub_8289A,Joker boss,10080,Sound_SendPSGVolumeUpdate,Sends PSG volume update via Z80 bus with arbitration,Sound,analyzed
+sub_2A3E6,Joker boss,10260,Effect_PlayRandomExplosionSound,Plays random explosion sound effects with timer countdown,Effect,analyzed
+sub_2A85E,Joker boss,10260,Effect_InitDebrisSprite,Initializes debris sprite with velocity from RNG,Effect,analyzed
+sub_2A8A2,Joker boss,10260,Projectile_FallingDebris,Falling debris projectile with gravity acceleration,Projectile,analyzed
+sub_3B4D8,Joker boss,10260,Boss_JokerFallingInit,Initializes Joker boss falling state after defeat,Boss,analyzed
+sub_3B56A,Joker boss,10260,Boss_JokerFallingPhase1,First falling phase with palette fade and projectile spawn,Boss,analyzed
+sub_3B5A0,Joker boss,10260,Boss_JokerFallingPhase2,Second falling phase adjusting descent speed to ground,Boss,analyzed
+sub_3B602,Joker boss,10260,Boss_JokerSpawnDebris,Spawns falling debris and explosion sprites during defeat,Boss,analyzed
+sub_3B89E,Joker boss,10260,Boss_JokerLandingPrep,Prepares boss landing state after fall setting params,Boss,analyzed
+sub_3B8BE,Joker boss,10260,Boss_JokerLandingState,Boss landing state with screen shake and velocity adjustment,Boss,analyzed
+sub_3B52E,Joker boss,10440,Boss_JokerFadeOut,Boss fade out effect clearing sprites and spawning player,Boss,analyzed
+sub_3B5D4,Joker boss,10440,Boss_JokerFadeComplete,Completes fade out and transitions to final state,Boss,analyzed
+sub_3B68E,Joker boss,10440,Gfx_SetFadeLevel,Sets graphics fade level based on counter value,Gfx,analyzed
+sub_83932,Joker boss,10440,Sound_SetChannelSustain,Sets sound channel sustain flag for envelope control,Sound,analyzed
+sub_CC96,Joker boss,10620,Stage_PostJokerTransition,Post-Joker transition clearing flags and updating camera,Stage,analyzed
+sub_3B5E8,Joker boss,10620,Boss_JokerCleanup,Cleans up Joker boss removing entity and clearing flags,Boss,analyzed
+sub_CCA2,Stage 7,10800,Stage_InitStage7,Initializes Stage 7 with scroll setup and palette loading,Stage,analyzed
+sub_CCC8,Stage 7,10800,Stage_Stage7ScrollUpdate,Updates Stage 7 scroll checking transition boundaries,Stage,analyzed
+sub_11F56,Stage 7,10800,Stage_LoadStage7Graphics,Loads Stage 7 palette and tile graphics data to VRAM,Stage,analyzed
+sub_32EE0,Stage 7,10800,Enemy_TrackerMain,Tracker enemy main update with angle calculation and projectile,Enemy,analyzed
+sub_32F32,Stage 7,10800,Enemy_TrackerDispatcher,Tracker enemy state dispatcher using jump table,Enemy,analyzed
+sub_32F60,Stage 7,10800,Enemy_TrackerSpawnWave,Spawns wave of tracker projectiles in formation pattern,Enemy,analyzed
+sub_32F84,Stage 7,10800,Enemy_TrackerInitProjectile,Initializes individual tracker projectile with params,Enemy,analyzed
+sub_32FF4,Stage 7,10800,Enemy_TrackerFallState,Tracker falling state with upward negative velocity,Enemy,analyzed
+sub_33016,Stage 7,10800,Enemy_TrackerWaveMotion,Tracker wave motion with oscillating vertical acceleration,Enemy,analyzed
+sub_3305A,Stage 7,10800,Enemy_TrackerSineWave,Tracker sine wave motion with smooth oscillation,Enemy,analyzed
+sub_33082,Stage 7,10800,Enemy_TrackerReverse,Tracker reverse motion returning to wave pattern,Enemy,analyzed
+sub_CD0A,ST-210-Terobuster boss,10980,Stage_InitTerobusterBoss,Initializes Terobuster boss with scroll and graphics loading,Stage,analyzed
+sub_D5BC,ST-210-Terobuster boss,10980,Stage_InitProjectileSpawn,Initializes projectile spawn position for Terobuster intro,Stage,analyzed
+sub_D5C8,ST-210-Terobuster boss,10980,Stage_SpawnIntroProjectile,Spawns intro projectiles with timing and position,Stage,analyzed
+sub_D624,ST-210-Terobuster boss,10980,Projectile_IntroFalling,Intro falling projectile with screen position and flicker,Projectile,analyzed
+sub_D654,ST-210-Terobuster boss,10980,Stage_LoadTerobusterTiles,Loads Terobuster boss tile graphics progressively,Stage,analyzed
+sub_33004,ST-210-Terobuster boss,10980,Enemy_TrackerOffScreen,Tracker enemy off-screen check marking for removal,Enemy,analyzed
+sub_CD90,ST-210-Terobuster boss,11340,Stage_PostTerobusterIntro,Post-intro transition clearing flags and advancing phase,Stage,analyzed
+sub_38518,ST-210-Terobuster boss,11340,Boss_TerobusterMain,Main Terobuster boss handler with state dispatch,Boss,analyzed
+sub_385A4,ST-210-Terobuster boss,11340,Boss_TerobusterInit,Initializes Terobuster boss clearing sprites and setting flags,Boss,analyzed
+sub_385CA,ST-210-Terobuster boss,11340,Boss_TerobusterSetup,Sets up Terobuster boss with complex metasprite initialization,Boss,analyzed
+sub_389A2,ST-210-Terobuster boss,11340,Boss_TerobusterIntro,Terobuster boss intro positioning and animation setup,Boss,analyzed
+sub_389CA,ST-210-Terobuster boss,11340,Boss_TerobusterFadeIn,Boss fade in effect preparing for battle start,Boss,analyzed
+sub_389DC,ST-210-Terobuster boss,11340,Boss_TerobusterDescend,Boss descending animation with position interpolation,Boss,analyzed
 sub_393BE,ST-210-Terobuster boss,11340,,,,pending
 sub_38CF4,ST-210-Terobuster boss,11520,,,,pending
 sub_38D1C,ST-210-Terobuster boss,11520,,,,pending
