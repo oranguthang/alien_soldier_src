@@ -458,86 +458,86 @@ sub_C9E0,Shellshogun boss,3600,,Updates camera position during boss fight,Camera
 sub_C9F8,Shellshogun boss,3600,,Locks camera to boss arena boundaries,Camera,analyzed
 sub_2C0D6,Shellshogun boss,3600,,Checks enemy health against threshold value,Enemy,analyzed
 sub_33F84,Shellshogun boss,3600,,Initializes sprite object with default values,Sprite,analyzed
-sub_34270,Shellshogun boss,3600,Sprite_DestroyObject,Clears sprite object flag destroying it,Sprite,analyzed
-sub_295C,Shellshogun boss,3780,Gfx_DecompressLZSS,Decompresses LZSS data to VRAM in loop,Gfx,analyzed
-sub_104B0,Shellshogun boss,3780,Gfx_WriteScrollValues,Writes scroll values to VRAM with various modes,Gfx,analyzed
-sub_35614,Shellshogun boss,3780,Boss_CheckScreenBounds,Checks if boss position is within valid screen bounds,Boss,analyzed
-sub_394D8,Shellshogun boss,3780,Boss_ShellshogunMainHandler,Main Shellshogun boss handler with state dispatch,Boss,analyzed
-sub_3954C,Shellshogun boss,3780,Boss_ShellshogunInitState,Initializes Shellshogun boss state and clears objects,Boss,analyzed
-sub_39572,Shellshogun boss,3780,Boss_ShellshogunSetupPhase,Sets up boss phase with metasprite initialization,Boss,analyzed
-sub_396D2,Shellshogun boss,3780,Boss_ShellshogunPhaseCheck,Checks phase conditions and advances state,Boss,analyzed
-sub_39E20,Shellshogun boss,3780,Boss_ShellshogunSetParams,Sets boss parameters and sprite properties,Boss,analyzed
-sub_39E5A,Shellshogun boss,3780,Boss_ShellshogunUpdateWrapper,Wrapper calling boss update routine,Boss,analyzed
-sub_39E5E,Shellshogun boss,3780,Boss_ShellshogunRenderSprites,Renders boss metasprites and updates display,Boss,analyzed
-sub_39F3A,Shellshogun boss,3780,Boss_ShellshogunBoundsCheck,Boss screen bounds validation before rendering,Boss,analyzed
-sub_3A172,Shellshogun boss,3780,Boss_ShellshogunAnimUpdate,Updates boss animation frame and interpolation,Boss,analyzed
-sub_3A2CC,Shellshogun boss,3780,Boss_ShellshogunCollisionCheck,Checks collision with player projectiles,Boss,analyzed
-sub_84A70,Shellshogun boss,3780,Sound_SetFMFrequency,Sets FM synthesis frequency for channel,Sound,analyzed
-sub_10F4E,Shellshogun boss,3960,Gfx_LoadCompressedTiles,Loads compressed tile data to VRAM,Gfx,analyzed
-sub_13278,Shellshogun boss,3960,Physics_ApplyFriction,Applies friction to velocity reducing speed,Physics,analyzed
-sub_1546E,Shellshogun boss,3960,Player_InitAirJumpState,Initializes player air state with parameters,Player,analyzed
-sub_1548C,Shellshogun boss,3960,Player_HandleAirMovement,Handles player movement while airborne,Player,analyzed
-sub_16EC8,Shellshogun boss,3960,Player_ProcessCollisionDamage,Processes collision damage and knockback,Player,analyzed
-sub_1C03C,Shellshogun boss,3960,Sprite_AllocateSlot,Allocates free sprite slot with buffer search,Sprite,analyzed
-sub_39720,Shellshogun boss,3960,Boss_ShellshogunMoveLeft,Boss movement left with velocity update,Boss,analyzed
-sub_398FE,Shellshogun boss,3960,Boss_ShellshogunAttackPattern,Boss attack pattern with projectile spawn,Boss,analyzed
-sub_39E90,Shellshogun boss,3960,Boss_ShellshogunInitSprites,Initializes boss sprite objects,Boss,analyzed
-sub_39F58,Shellshogun boss,3960,Boss_ShellshogunUpdatePosition,Updates boss position from velocity,Boss,analyzed
-sub_39FF6,Shellshogun boss,3960,Boss_ShellshogunPhysicsUpdate,Updates boss physics and collision,Boss,analyzed
-sub_3A010,Shellshogun boss,3960,Boss_ShellshogunSetTileData,Sets boss tile data and graphics,Boss,analyzed
-sub_39758,Shellshogun boss,4140,Boss_ShellshogunMoveRight,Boss movement right with velocity update,Boss,analyzed
-sub_39E76,Shellshogun boss,4140,Boss_ShellshogunCheckDefeat,Checks boss defeat condition and triggers end,Boss,analyzed
-sub_39EA8,Shellshogun boss,4140,Boss_ShellshogunDeathSequence,Boss death sequence with explosion effects,Boss,analyzed
-sub_39F20,Shellshogun boss,4140,Boss_ShellshogunUpdateSprite,Updates boss sprite graphics and palette,Boss,analyzed
-sub_34E4,Shellshogun boss,4320,Sound_PlaySFX,Plays sound effect with ID parameter,Sound,analyzed
-sub_16116,Shellshogun boss,4320,Player_CheckSpecialAttack,Checks if player can use special attack,Player,analyzed
-sub_2A390,Shellshogun boss,4320,Projectile_SpawnAtPosition,Spawns projectile at specified position,Projectile,analyzed
-sub_39778,Shellshogun boss,4320,Boss_ShellshogunIdleState,Boss idle state with position tracking,Boss,analyzed
-sub_397C4,Shellshogun boss,4320,Boss_ShellshogunChargeAttack,Boss charge attack with velocity buildup,Boss,analyzed
-sub_399E8,Shellshogun boss,4320,Boss_ShellshogunSpawnShells,Spawns shell projectiles in pattern,Boss,analyzed
-sub_39EC0,Shellshogun boss,4320,Boss_ShellshogunInitPalette,Initializes boss palette colors,Boss,analyzed
-sub_3A122,Shellshogun boss,4320,Boss_ShellshogunFlashOnHit,Flash boss sprite when taking damage,Boss,analyzed
-sub_CA2C,Shellshogun boss,4500,Camera_ShellshogunBossInit,Initializes camera for Shellshogun boss fight,Camera,analyzed
-sub_15610,Shellshogun boss,4500,,,,pending
-sub_1356,Shellshogun boss,4680,,,,pending
-sub_15BC,Shellshogun boss,4680,,,,pending
-sub_269E6,Shellshogun boss,4680,,,,pending
-sub_26A00,Shellshogun boss,4680,,,,pending
-sub_26A1A,Shellshogun boss,4680,,,,pending
-sub_26A34,Shellshogun boss,4680,,,,pending
-sub_26A58,Shellshogun boss,4680,,,,pending
-sub_26A8E,Shellshogun boss,4680,,,,pending
-sub_26A9E,Shellshogun boss,4680,,,,pending
-sub_26B8C,Shellshogun boss,4680,,,,pending
-sub_26BA6,Shellshogun boss,4680,,,,pending
-sub_26DD6,Shellshogun boss,4680,,,,pending
-sub_26DE0,Shellshogun boss,4680,,,,pending
-sub_26E4C,Shellshogun boss,4680,,,,pending
-sub_271BC,Shellshogun boss,4680,,,,pending
-sub_272BE,Shellshogun boss,4680,,,,pending
-sub_273BC,Shellshogun boss,4680,,,,pending
-sub_29E2E,Shellshogun boss,4680,,,,pending
-sub_29E66,Shellshogun boss,4680,,,,pending
-sub_29F36,Shellshogun boss,4680,,,,pending
-sub_29FF4,Shellshogun boss,4680,,,,pending
-sub_3987C,Shellshogun boss,4680,,,,pending
-sub_3989E,Shellshogun boss,4680,,,,pending
-sub_3E1AA,Shellshogun boss,4680,,,,pending
-sub_834AE,Shellshogun boss,4680,,,,pending
-sub_13BC,Shellshogun boss,4860,,,,pending
-sub_CA9A,Shellshogun boss,4860,,,,pending
-sub_398B4,Shellshogun boss,4860,,,,pending
-sub_CAB4,Stage 4,5040,,,,pending
-sub_2B77C,Stage 4,5040,,,,pending
-sub_2D0B2,Stage 4,5040,,,,pending
-sub_2A2A2,Shiper Honeyviper boss,5220,,,,pending
-sub_2A94C,Shiper Honeyviper boss,5220,,,,pending
-sub_CAE2,Shiper Honeyviper boss,5400,,,,pending
-sub_CB26,Shiper Honeyviper boss,5400,,,,pending
-sub_CB56,Shiper Honeyviper boss,5400,,,,pending
-sub_3641A,Shiper Honeyviper boss,5400,,,,pending
-sub_364C2,Shiper Honeyviper boss,5400,,,,pending
-sub_34DA,Shiper Honeyviper boss,5580,,,,pending
+sub_34270,Shellshogun boss,3600,,Clears sprite object flag destroying it,Sprite,analyzed
+sub_295C,Shellshogun boss,3780,,Decompresses LZSS data to VRAM in loop,Gfx,analyzed
+sub_104B0,Shellshogun boss,3780,,Writes scroll values to VRAM with various modes,Gfx,analyzed
+sub_35614,Shellshogun boss,3780,,Checks if boss position is within valid screen bounds,Boss,analyzed
+sub_394D8,Shellshogun boss,3780,,Main Shellshogun boss handler with state dispatch,Boss,analyzed
+sub_3954C,Shellshogun boss,3780,,Initializes Shellshogun boss state and clears objects,Boss,analyzed
+sub_39572,Shellshogun boss,3780,,Sets up boss phase with metasprite initialization,Boss,analyzed
+sub_396D2,Shellshogun boss,3780,,Checks phase conditions and advances state,Boss,analyzed
+sub_39E20,Shellshogun boss,3780,,Sets boss parameters and sprite properties,Boss,analyzed
+sub_39E5A,Shellshogun boss,3780,,Wrapper calling boss update routine,Boss,analyzed
+sub_39E5E,Shellshogun boss,3780,,Renders boss metasprites and updates display,Boss,analyzed
+sub_39F3A,Shellshogun boss,3780,,Boss screen bounds validation before rendering,Boss,analyzed
+sub_3A172,Shellshogun boss,3780,,Updates boss animation frame and interpolation,Boss,analyzed
+sub_3A2CC,Shellshogun boss,3780,,Checks collision with player projectiles,Boss,analyzed
+sub_84A70,Shellshogun boss,3780,,Sets FM synthesis frequency for channel,Sound,analyzed
+sub_10F4E,Shellshogun boss,3960,,Loads compressed tile data to VRAM,Gfx,analyzed
+sub_13278,Shellshogun boss,3960,,Applies friction to velocity reducing speed,Physics,analyzed
+sub_1546E,Shellshogun boss,3960,,Initializes player air state with parameters,Player,analyzed
+sub_1548C,Shellshogun boss,3960,,Handles player movement while airborne,Player,analyzed
+sub_16EC8,Shellshogun boss,3960,,Processes collision damage and knockback,Player,analyzed
+sub_1C03C,Shellshogun boss,3960,,Allocates free sprite slot with buffer search,Sprite,analyzed
+sub_39720,Shellshogun boss,3960,,Boss movement left with velocity update,Boss,analyzed
+sub_398FE,Shellshogun boss,3960,,Boss attack pattern with projectile spawn,Boss,analyzed
+sub_39E90,Shellshogun boss,3960,,Initializes boss sprite objects,Boss,analyzed
+sub_39F58,Shellshogun boss,3960,,Updates boss position from velocity,Boss,analyzed
+sub_39FF6,Shellshogun boss,3960,,Updates boss physics and collision,Boss,analyzed
+sub_3A010,Shellshogun boss,3960,,Sets boss tile data and graphics,Boss,analyzed
+sub_39758,Shellshogun boss,4140,,Boss movement right with velocity update,Boss,analyzed
+sub_39E76,Shellshogun boss,4140,,Checks boss defeat condition and triggers end,Boss,analyzed
+sub_39EA8,Shellshogun boss,4140,,Boss death sequence with explosion effects,Boss,analyzed
+sub_39F20,Shellshogun boss,4140,,Updates boss sprite graphics and palette,Boss,analyzed
+sub_34E4,Shellshogun boss,4320,,Plays sound effect with ID parameter,Sound,analyzed
+sub_16116,Shellshogun boss,4320,,Checks if player can use special attack,Player,analyzed
+sub_2A390,Shellshogun boss,4320,,Spawns projectile at specified position,Projectile,analyzed
+sub_39778,Shellshogun boss,4320,,Boss idle state with position tracking,Boss,analyzed
+sub_397C4,Shellshogun boss,4320,,Boss charge attack with velocity buildup,Boss,analyzed
+sub_399E8,Shellshogun boss,4320,,Spawns shell projectiles in pattern,Boss,analyzed
+sub_39EC0,Shellshogun boss,4320,,Initializes boss palette colors,Boss,analyzed
+sub_3A122,Shellshogun boss,4320,,Flash boss sprite when taking damage,Boss,analyzed
+sub_CA2C,Shellshogun boss,4500,,Initializes camera for Shellshogun boss fight,Camera,analyzed
+sub_15610,Shellshogun boss,4500,Player_HandleGroundedState,Handles player grounded state with terrain and damage checks,Player,analyzed
+sub_1356,Shellshogun boss,4680,VBlank_EffectDispatcher,VBlank effect dispatcher routing to effect handlers,Sys,analyzed
+sub_15BC,Shellshogun boss,4680,Effect_InitTransitionFade,Initializes screen transition fade effect,Effect,analyzed
+sub_269E6,Shellshogun boss,4680,Effect_InitPlayerSpawn,Initializes player spawn effect with position,Effect,analyzed
+sub_26A00,Shellshogun boss,4680,Effect_StateDispatcher,Effect state machine dispatcher,Effect,analyzed
+sub_26A1A,Shellshogun boss,4680,Effect_TransitionInit,Initializes screen transition effect state,Effect,analyzed
+sub_26A34,Shellshogun boss,4680,Effect_LoadTransitionGraphics,Loads transition graphics data,Effect,analyzed
+sub_26A58,Shellshogun boss,4680,Effect_StartTransition,Starts screen transition with sound,Effect,analyzed
+sub_26A8E,Shellshogun boss,4680,Effect_SetupScroll,Sets up scroll parameters for transition,Effect,analyzed
+sub_26A9E,Shellshogun boss,4680,Effect_UpdateTransition,Updates transition effect with scroll and timer,Effect,analyzed
+sub_26B8C,Shellshogun boss,4680,Effect_PaletteDispatcher,Palette effect dispatcher,Effect,analyzed
+sub_26BA6,Shellshogun boss,4680,Effect_PaletteUpdateMain,Main palette update routine,Effect,analyzed
+sub_26DD6,Shellshogun boss,4680,Effect_InitPaletteBuffers,Initializes palette buffer pointers,Effect,analyzed
+sub_26DE0,Shellshogun boss,4680,Effect_CopyPaletteData,Copies palette data between buffers,Effect,analyzed
+sub_26E4C,Shellshogun boss,4680,Effect_UpdateScrollPosition,Updates scroll position for effect,Effect,analyzed
+sub_271BC,Shellshogun boss,4680,Effect_ApplyPaletteToVDP,Applies palette data to VDP during VBlank,Effect,analyzed
+sub_272BE,Shellshogun boss,4680,Effect_ScrollUpdate,Updates scroll values for transition,Effect,analyzed
+sub_273BC,Shellshogun boss,4680,Effect_ResetTransitionState,Resets transition effect state,Effect,analyzed
+sub_29E2E,Shellshogun boss,4680,Sys_InitVDPRegisters,Initializes VDP register settings,Sys,analyzed
+sub_29E66,Shellshogun boss,4680,Sys_LoadInitialPalette,Loads initial palette from ROM,Sys,analyzed
+sub_29F36,Shellshogun boss,4680,Sys_SetupVRAMLayout,Sets up VRAM layout and plane mappings,Sys,analyzed
+sub_29FF4,Shellshogun boss,4680,Sys_ClearVRAMRange,Clears specified VRAM address range,Sys,analyzed
+sub_3987C,Shellshogun boss,4680,Boss_InitPositionTracking,Initializes boss position tracking,Boss,analyzed
+sub_3989E,Shellshogun boss,4680,Boss_UpdatePositionDelta,Updates boss position delta for tracking,Boss,analyzed
+sub_3E1AA,Shellshogun boss,4680,Gfx_QueueDMATransfer,Queues DMA transfer to VRAM,Gfx,analyzed
+sub_834AE,Shellshogun boss,4680,Sound_UpdateFMEnvelope,Updates FM synthesis envelope parameters,Sound,analyzed
+sub_13BC,Shellshogun boss,4860,Effect_NullHandler,Null effect handler doing nothing,Effect,analyzed
+sub_CA9A,Shellshogun boss,4860,Camera_LockPosition,Locks camera to fixed position,Camera,analyzed
+sub_398B4,Shellshogun boss,4860,Boss_TrackPlayerPosition,Tracks player position for boss AI,Boss,analyzed
+sub_CAB4,Stage 4,5040,Camera_UpdateSmooth,Updates camera with smooth interpolation,Camera,analyzed
+sub_2B77C,Stage 4,5040,Enemy_InitProjectileType,Initializes enemy projectile type and flags,Enemy,analyzed
+sub_2D0B2,Stage 4,5040,Enemy_UpdateTrajectory,Updates enemy projectile trajectory,Enemy,analyzed
+sub_2A2A2,Shiper Honeyviper boss,5220,Projectile_CheckLifetime,Checks projectile lifetime timer,Projectile,analyzed
+sub_2A94C,Shiper Honeyviper boss,5220,Projectile_DestroyOffscreen,Destroys projectile if offscreen,Projectile,analyzed
+sub_CAE2,Shiper Honeyviper boss,5400,Camera_FollowTarget,Camera following target with offset,Camera,analyzed
+sub_CB26,Shiper Honeyviper boss,5400,Camera_SetBounds,Sets camera boundary limits,Camera,analyzed
+sub_CB56,Shiper Honeyviper boss,5400,Camera_ClampToBounds,Clamps camera position to boundaries,Camera,analyzed
+sub_3641A,Shiper Honeyviper boss,5400,Boss_CalculatePlayerDistance,Calculates distance to player for AI,Boss,analyzed
+sub_364C2,Shiper Honeyviper boss,5400,Boss_CheckPlayerProximity,Checks if player is within proximity range,Boss,analyzed
+sub_34DA,Shiper Honeyviper boss,5580,Sys_WaitVBlank,Waits for VBlank interrupt,Sys,analyzed
 sub_1B44C,Shiper Honeyviper boss,5580,,,,pending
 sub_36504,Shiper Honeyviper boss,5580,,,,pending
 sub_36544,Shiper Honeyviper boss,5580,,,,pending
