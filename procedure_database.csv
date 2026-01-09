@@ -658,86 +658,86 @@ sub_11F0E,Stage 5,7020,,Loads stage 5 palette and second tileset via DMA,Stage,a
 sub_17C1A,Stage 5,7020,,Updates weapon selection index and clears object buffer,UI,analyzed
 sub_1B746,Stage 5,7020,,Clears boss entity data buffer with zero fill,Sys,analyzed
 sub_2A8EE,Stage 5,7020,,Initializes enemy sprite graphics mode and animation pointer,Enemy,analyzed
-sub_2DA3A,Stage 5,7020,Enemy_InitBirdSprite,Initializes flying bird enemy sprite with graphics mode and collision parameters,Enemy,analyzed
-sub_2DA8C,Stage 5,7020,Enemy_UpdateBirdAnimation,Updates bird enemy animation pointer based on state index,Enemy,analyzed
-sub_2DACE,Stage 5,7020,Enemy_BirdMain,Main bird enemy update checking defeat conditions and player collision,Enemy,analyzed
-sub_2DB2E,Stage 5,7020,Enemy_BirdStateDispatcher,Bird enemy state machine dispatcher using jump table,Enemy,analyzed
-sub_2DB5C,Stage 5,7020,Enemy_BirdInit,Initializes bird enemy position direction and movement state,Enemy,analyzed
-sub_2DBAE,Stage 5,7020,Enemy_BirdStartDive,Starts bird dive attack setting velocity and animation,Enemy,analyzed
-sub_2DBE0,Stage 5,7020,Enemy_BirdFlyState,Bird flying state setting animation and timer parameters,Enemy,analyzed
-sub_2DC04,Stage 5,7020,Enemy_BirdDiveAttack,Bird dive attack with gravity and ground collision detection,Enemy,analyzed
-sub_2DC62,Stage 5,7020,Enemy_BirdWaitState,Bird waiting state with timer countdown before movement,Enemy,analyzed
-sub_2DC8C,Stage 5,7020,Enemy_BirdChasePlayer,Bird chases player calculating direction and dive distance,Enemy,analyzed
-sub_2DD16,Stage 5,7020,Enemy_BirdAccelerate,Bird accelerates upward with gravity until reaching threshold,Enemy,analyzed
-sub_2DD2E,Stage 5,7020,Enemy_BirdDecelerate,Bird decelerates downward with negative gravity and state change,Enemy,analyzed
-sub_82824,Stage 5,7020,Sound_ProcessTremolo,Processes sound tremolo effect with volume oscillation,Sound,analyzed
-sub_83562,Stage 5,7020,Sound_SendKeyOff,Sends key off command to FM channel stopping note,Sound,analyzed
-sub_8357E,Stage 5,7020,Sound_CheckChannelFlags,Checks sound channel flags before processing operations,Sound,analyzed
-sub_8358A,Stage 5,7020,Sound_SendKeyOn,Sends key on command to FM channel starting note,Sound,analyzed
-sub_835A0,Stage 5,7020,Sound_WriteYM2612Wrapper,Wrapper function redirecting to YM2612 register write,Sound,analyzed
-sub_8367E,Stage 5,7020,Sound_DelayNOP,Delay function with NOP instructions for timing,Sound,analyzed
-sub_836A0,Stage 5,7020,Sound_ProcessVolumeFade,Processes music volume fade in/out with Z80 sync and envelope control,Sound,analyzed
-sub_83938,Stage 5,7020,Sound_SetTimerValue,Sets sound channel timer value from sequence data,Sound,analyzed
-sub_83C04,Stage 5,7020,Sound_SetPSGTone,Sets PSG tone channel frequency and volume,Sound,analyzed
-sub_83C7C,Stage 5,7020,Sound_AddTranspose,Adds transpose value to sound channel pitch offset,Sound,analyzed
-sub_84ACA,Stage 5,7020,Sound_ProcessNoteData,Processes note data calculating pitch and duration,Sound,analyzed
-sub_84AFA,Stage 5,7020,Sound_UpdatePSGFrequency,Updates PSG channel frequency with pitch calculation,Sound,analyzed
-sub_84B98,Stage 5,7020,Sound_ApplyPSGVolume,Applies volume to PSG channel with mute check,Sound,analyzed
-sub_84BEA,Stage 5,7020,Sound_CheckPSGMute,Checks if PSG channel is muted before output,Sound,analyzed
-sub_84BF0,Stage 5,7020,Sound_MutePSGChannel,Mutes PSG channel by setting maximum attenuation,Sound,analyzed
-sub_CBD0,Madam Barbar boss,7200,Boss_MadamBarbarScrollInit,Initializes Madam Barbar boss scroll position and palette,Boss,analyzed
-sub_2DEC8,Madam Barbar boss,7200,Enemy_BirdBounceOff,Bird enemy bounces off with reversed velocity after hit,Enemy,analyzed
-sub_2DEFE,Madam Barbar boss,7200,Enemy_BirdProjectileSpawn,Bird spawns projectiles with gravity and explosion effect,Enemy,analyzed
-sub_348CC,Madam Barbar boss,7380,Anim_LoadFrameDelays,Loads animation frame delays converting bytes to words,Anim,analyzed
-sub_3A47C,Madam Barbar boss,7380,Boss_MadamBarbarMain,Main Madam Barbar boss handler checking defeat and state dispatch,Boss,analyzed
-sub_3A4FE,Madam Barbar boss,7380,Boss_MadamBarbarInit,Initializes Madam Barbar boss clearing sprites and setting flags,Boss,analyzed
-sub_3A51C,Madam Barbar boss,7380,Boss_MadamBarbarSetup,Sets up Madam Barbar boss metasprites tiles and animation,Boss,analyzed
-sub_3A604,Madam Barbar boss,7380,Boss_MadamBarbarIntro,Boss introduction sequence checking position for battle start,Boss,analyzed
-sub_3A9F2,Madam Barbar boss,7380,Boss_MadamBarbarUpdateParts,Updates all boss body parts positions with offset calculations,Boss,analyzed
-sub_3AA86,Madam Barbar boss,7380,Boss_MadamBarbarWobble,Applies wobble effect to boss sprite using sine wave,Boss,analyzed
-sub_3AAF2,Madam Barbar boss,7380,Boss_MadamBarbarSetCollision,Sets collision flags on specific boss body segments,Boss,analyzed
-sub_3AB16,Madam Barbar boss,7380,Boss_MadamBarbarRotateInit,Initializes boss rotation animation pointer updates,Boss,analyzed
-sub_3AB20,Madam Barbar boss,7380,Boss_MadamBarbarRotateUpdate,Updates boss rotation angle based on frame counter,Boss,analyzed
-sub_3AB64,Madam Barbar boss,7380,,,,pending
-sub_3ABE4,Madam Barbar boss,7380,,,,pending
-sub_3AD8E,Madam Barbar boss,7380,,,,pending
-sub_3ADA4,Madam Barbar boss,7380,,,,pending
-sub_164FC,Madam Barbar boss,7560,,,,pending
-sub_1674A,Madam Barbar boss,7560,,,,pending
-sub_3A66A,Madam Barbar boss,7740,,,,pending
-sub_3B01E,Madam Barbar boss,7740,,,,pending
-sub_3C20,Madam Barbar boss,7920,,,,pending
-sub_3C26,Madam Barbar boss,7920,,,,pending
-sub_122A0,Madam Barbar boss,7920,,,,pending
-sub_170BA,Madam Barbar boss,7920,,,,pending
-sub_1B8B8,Madam Barbar boss,7920,,,,pending
-sub_3A79C,Madam Barbar boss,7920,,,,pending
-sub_3ADB0,Madam Barbar boss,7920,,,,pending
-sub_3AE36,Madam Barbar boss,7920,,,,pending
-sub_144EA,Madam Barbar boss,8100,,,,pending
-sub_14534,Madam Barbar boss,8100,,,,pending
-sub_3B014,Madam Barbar boss,8100,,,,pending
-sub_82328,Madam Barbar boss,8100,,,,pending
-sub_823D6,Madam Barbar boss,8100,,,,pending
-sub_834FC,Madam Barbar boss,8100,,,,pending
-sub_CC06,Madam Barbar boss,8280,,,,pending
-sub_3AB82,Madam Barbar boss,8280,,,,pending
-sub_3A6F6,Madam Barbar boss,8640,,,,pending
-sub_1497C,Madam Barbar boss,8820,,,,pending
-sub_EDC,Stage 6,9000,,,,pending
-sub_3462,Stage 6,9000,,,,pending
-sub_348C,Stage 6,9000,,,,pending
-sub_3954,Stage 6,9000,,,,pending
-sub_4316,Stage 6,9000,,,,pending
-sub_CC20,Stage 6,9000,,,,pending
-sub_CC3C,Stage 6,9000,,,,pending
-sub_11F32,Stage 6,9000,,,,pending
-sub_133D4,Stage 6,9000,,,,pending
-sub_1468A,Stage 6,9000,,,,pending
-sub_16CD8,Stage 6,9000,,,,pending
-sub_16D60,Stage 6,9000,,,,pending
-sub_16DF6,Stage 6,9000,,,,pending
-sub_23CBA,Stage 6,9000,,,,pending
+sub_2DA3A,Stage 5,7020,,,Enemy,analyzed
+sub_2DA8C,Stage 5,7020,,,Enemy,analyzed
+sub_2DACE,Stage 5,7020,,,Enemy,analyzed
+sub_2DB2E,Stage 5,7020,,,Enemy,analyzed
+sub_2DB5C,Stage 5,7020,,,Enemy,analyzed
+sub_2DBAE,Stage 5,7020,,,Enemy,analyzed
+sub_2DBE0,Stage 5,7020,,,Enemy,analyzed
+sub_2DC04,Stage 5,7020,,,Enemy,analyzed
+sub_2DC62,Stage 5,7020,,,Enemy,analyzed
+sub_2DC8C,Stage 5,7020,,,Enemy,analyzed
+sub_2DD16,Stage 5,7020,,,Enemy,analyzed
+sub_2DD2E,Stage 5,7020,,,Enemy,analyzed
+sub_82824,Stage 5,7020,,,Sound,analyzed
+sub_83562,Stage 5,7020,,,Sound,analyzed
+sub_8357E,Stage 5,7020,,,Sound,analyzed
+sub_8358A,Stage 5,7020,,,Sound,analyzed
+sub_835A0,Stage 5,7020,,,Sound,analyzed
+sub_8367E,Stage 5,7020,,,Sound,analyzed
+sub_836A0,Stage 5,7020,,,Sound,analyzed
+sub_83938,Stage 5,7020,,,Sound,analyzed
+sub_83C04,Stage 5,7020,,,Sound,analyzed
+sub_83C7C,Stage 5,7020,,,Sound,analyzed
+sub_84ACA,Stage 5,7020,,,Sound,analyzed
+sub_84AFA,Stage 5,7020,,,Sound,analyzed
+sub_84B98,Stage 5,7020,,,Sound,analyzed
+sub_84BEA,Stage 5,7020,,,Sound,analyzed
+sub_84BF0,Stage 5,7020,,,Sound,analyzed
+sub_CBD0,Madam Barbar boss,7200,,,Boss,analyzed
+sub_2DEC8,Madam Barbar boss,7200,,,Enemy,analyzed
+sub_2DEFE,Madam Barbar boss,7200,,,Enemy,analyzed
+sub_348CC,Madam Barbar boss,7380,,,Anim,analyzed
+sub_3A47C,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3A4FE,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3A51C,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3A604,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3A9F2,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3AA86,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3AAF2,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3AB16,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3AB20,Madam Barbar boss,7380,,,Boss,analyzed
+sub_3AB64,Madam Barbar boss,7380,Boss_MadamBarbarCheckBounds,Calculates boss screen bounds with camera offset for boundary checking,Boss,analyzed
+sub_3ABE4,Madam Barbar boss,7380,Boss_MadamBarbarUpdateAnimation,Updates boss animation sequence with interpolation and body part rotation,Boss,analyzed
+sub_3AD8E,Madam Barbar boss,7380,Boss_MadamBarbarCalcDeltas,Calculates interpolation deltas for smooth boss animation transitions,Boss,analyzed
+sub_3ADA4,Madam Barbar boss,7380,Boss_MadamBarbarLoadFrameDelays,Loads frame delay values for boss animation timing,Boss,analyzed
+sub_164FC,Madam Barbar boss,7560,Player_InitDashState,Initializes player dash state with animation and counter setup,Player,analyzed
+sub_1674A,Madam Barbar boss,7560,Player_CheckDashCounter,Checks dash counter and transitions to grounded or damage state,Player,analyzed
+sub_3A66A,Madam Barbar boss,7740,Boss_MadamBarbarAttackPhase,Boss attack phase with timer countdown and collision enabling,Boss,analyzed
+sub_3B01E,Madam Barbar boss,7740,Boss_MadamBarbarSpawnProjectile,Spawns boss projectiles with random position offset calculations,Boss,analyzed
+sub_3C20,Madam Barbar boss,7920,Gfx_InitPaletteFade,Initializes palette fade system loading fade table pointer,Gfx,analyzed
+sub_3C26,Madam Barbar boss,7920,Gfx_ProcessColorFade,Processes RGB color channel fading with clamping and interpolation,Gfx,analyzed
+sub_122A0,Madam Barbar boss,7920,Sys_ClearRAMBuffer,Clears 4-word RAM buffer used for temporary data storage,Sys,analyzed
+sub_170BA,Madam Barbar boss,7920,Player_RenderWithWeapon,Renders player sprite with weapon state and metasprite selection,Player,analyzed
+sub_1B8B8,Madam Barbar boss,7920,Input_CheckButtonMode,Checks button mode flag before processing input buttons,Input,analyzed
+sub_3A79C,Madam Barbar boss,7920,Boss_MadamBarbarAIState,Boss AI state machine tracking player position and attack patterns,Boss,analyzed
+sub_3ADB0,Madam Barbar boss,7920,Boss_MadamBarbarSpawnDebris,Spawns debris projectiles with random velocity and trajectory,Boss,analyzed
+sub_3AE36,Madam Barbar boss,7920,Projectile_MadamBarbarDebris,Debris projectile physics with gravity bounce and screen bounds,Projectile,analyzed
+sub_144EA,Madam Barbar boss,8100,Physics_AddEntityOffset,Adds offset to entity position for collision coordinate calculation,Physics,analyzed
+sub_14534,Madam Barbar boss,8100,Physics_AlignToTerrain,Aligns entity Y position to terrain surface clearing velocity,Physics,analyzed
+sub_3B014,Madam Barbar boss,8100,Boss_MadamBarbarCheckCollision,Checks collision at boss center position for projectile spawning,Boss,analyzed
+sub_82328,Madam Barbar boss,8100,Sound_InitDriverThunk,Sound driver initialization thunk jumping to Z80 loader,Sound,analyzed
+sub_823D6,Madam Barbar boss,8100,Sound_PlayPSGSequence,Plays PSG sequence with Z80 bus arbitration and priority checking,Sound,analyzed
+sub_834FC,Madam Barbar boss,8100,Sound_LoadZ80Driver,Loads Z80 sound driver code with bus request and reset sequence,Sound,analyzed
+sub_CC06,Madam Barbar boss,8280,Stage_InitPostBoss,Initializes stage after boss defeat with score timer and camera,Stage,analyzed
+sub_3AB82,Madam Barbar boss,8280,Boss_MadamBarbarSpawnBullet,Spawns boss bullet projectile with random velocity calculation,Boss,analyzed
+sub_3A6F6,Madam Barbar boss,8640,Boss_MadamBarbarDefeatSequence,Boss defeat sequence clearing sprites and disabling collision,Boss,analyzed
+sub_1497C,Madam Barbar boss,8820,Player_TerrainAngleDispatcher,Dispatches player terrain collision handler based on angle range,Player,analyzed
+sub_EDC,Stage 6,9000,Gfx_UpdateVDPDisplay,Updates VDP display register handling display enable flag,Gfx,analyzed
+sub_3462,Stage 6,9000,Input_MapSecondaryButtons,Maps secondary controller button bits to standard input format,Input,analyzed
+sub_348C,Stage 6,9000,Input_TestAndSetBit,Tests input bit and sets or clears corresponding output bit,Input,analyzed
+sub_3954,Stage 6,9000,UI_AddScoreBCD,Adds BCD value to score with overflow check and clamping,UI,analyzed
+sub_4316,Stage 6,9000,Effect_SystemDispatcher,Dispatches effect system handler based on current effect mode,Effect,analyzed
+sub_CC20,Stage 6,9000,Stage_TransitionWithVBlank,Stage section transition waiting for VBlank and updating camera,Stage,analyzed
+sub_CC3C,Stage 6,9000,Stage_CheckScrollTransition,Checks scroll position for stage phase transition trigger,Stage,analyzed
+sub_11F32,Stage 6,9000,Stage_LoadStage6Graphics,Loads Stage 6 palette and tile graphics data to VRAM,Stage,analyzed
+sub_133D4,Stage 6,9000,UI_SetupScoreDMA,Sets up DMA transfer for score display rendering to VDP,UI,analyzed
+sub_1468A,Stage 6,9000,Physics_BossTerrainCheck,Multi-point terrain collision check for boss with wall detection,Physics,analyzed
+sub_16CD8,Stage 6,9000,Physics_BossTerrainWrapper,Boss terrain collision wrapper checking flag before testing terrain,Physics,analyzed
+sub_16D60,Stage 6,9000,Player_TerrainCheckFlipped,Player terrain collision check with flipped hitbox offset direction,Player,analyzed
+sub_16DF6,Stage 6,9000,Player_AutoFlipDirection,Auto-flips player direction based on weapon aim angle constraints,Player,analyzed
+sub_23CBA,Stage 6,9000,Demo_PlaybackSystem,Demo playback system with input recording and VDP state management,Sys,analyzed
 sub_2A8BA,Stage 6,9000,,,,pending
 sub_2BEBC,Stage 6,9000,,,,pending
 sub_2BFC0,Stage 6,9000,,,,pending
