@@ -1298,86 +1298,86 @@ sub_2C100,Snake (Stage 13),28440,,,Projectile,analyzed
 sub_2C112,Snake (Stage 13),28440,,,Projectile,analyzed
 sub_2C15E,Snake (Stage 13),28440,,,Projectile,analyzed
 sub_2C17A,Snake (Stage 13),28440,,,Projectile,analyzed
-sub_2C1D6,Snake (Stage 13),28440,Projectile_SnakeSpawn6Way,Spawns 6-way projectile pattern,Projectile,analyzed
-sub_2C224,Snake (Stage 13),28440,Projectile_SnakeSpawn8Way,Spawns 8-way projectile pattern,Projectile,analyzed
-sub_40A6E,Snake (Stage 13),28440,Boss_SnakeSegmentDestroy,Segment destroyed with explosion,Boss,analyzed
-sub_40AB8,Snake (Stage 13),28440,Boss_SnakeSegmentDestroyLoop,Destroys snake segments sequentially,Boss,analyzed
-sub_84BC8,Snake (Stage 13),28440,Sound_ProcessPSGModulation,PSG modulation processing,Sound,analyzed
-sub_DD5E,Bugmax boss,28800,Stage_BugmaxTransition,Transitions to Bugmax boss,Stage,analyzed
-sub_DDA6,Bugmax boss,28980,Stage_BugmaxWaitDMA,Waits for DMA before boss intro,Stage,analyzed
-sub_DDE8,Bugmax boss,28980,Stage_BugmaxStartBattle,Starts Bugmax battle phase,Stage,analyzed
-sub_4BEBC,Bugmax boss,28980,Boss_BugmaxMain,Main handler for Bugmax boss,Boss,analyzed
-sub_4BEF0,Bugmax boss,28980,Boss_BugmaxUpdateLegs,Updates all leg positions,Boss,analyzed
-sub_4C43C,Bugmax boss,28980,Boss_BugmaxInit,Initializes Bugmax with 7 parts,Boss,analyzed
-sub_4C5E6,Bugmax boss,28980,Boss_BugmaxLoadGfx,Loads Bugmax graphics,Boss,analyzed
-sub_4DB7C,Bugmax boss,28980,Math_CalculatePolarPosition,Calculates polar coordinates to position,Math,analyzed
-sub_4C602,Bugmax boss,29340,Boss_BugmaxShakeInit,Initializes shake animation,Boss,analyzed
-sub_4C614,Bugmax boss,29340,Boss_BugmaxShaking,Shake animation state,Boss,analyzed
-sub_4C644,Bugmax boss,29340,Boss_BugmaxVictoryCheck,Checks victory condition,Boss,analyzed
-sub_4C65E,Bugmax boss,29340,Boss_BugmaxDefeatStart,Starts defeat sequence,Boss,analyzed
-sub_4C682,Bugmax boss,29340,Boss_BugmaxDefeatRise,Boss rises during defeat,Boss,analyzed
-sub_4C6BE,Bugmax boss,29340,Boss_BugmaxSpawnDebris,Spawns debris during defeat,Boss,analyzed
-sub_4C734,Bugmax boss,29340,Boss_BugmaxDefeatExplode,Explosion during defeat,Boss,analyzed
-sub_4D444,Bugmax boss,29340,Enemy_BugmaxDebrisMain,Bugmax debris handler,Enemy,analyzed
-sub_4D462,Bugmax boss,29340,Enemy_BugmaxDebrisInit,Initializes debris piece,Enemy,analyzed
-sub_4D47E,Bugmax boss,29340,Enemy_BugmaxDebrisBounce,Debris bouncing physics,Enemy,analyzed
-sub_4D53C,Bugmax boss,29340,Boss_BugmaxAnimateFlip,Animates sprite flip,Boss,analyzed
-sub_4D8D4,Bugmax boss,29340,Boss_BugmaxUpdateAllParts,Updates all boss parts,Boss,analyzed
-sub_4D8FA,Bugmax boss,29340,Boss_BugmaxSpawnProjectile,Spawns projectile from boss,Boss,analyzed
-sub_4DA22,Bugmax boss,29340,Boss_BugmaxAI,AI and movement control,Boss,analyzed
-sub_2C280,Bugmax boss,29520,Projectile_BugmaxMain,Main Bugmax projectile handler,Projectile,analyzed
-sub_2C2A0,Bugmax boss,29520,Projectile_BugmaxWait,Wait before spawning,Projectile,analyzed
-sub_2C2AC,Bugmax boss,29520,Projectile_BugmaxSpawn,Spawns child projectiles,Projectile,analyzed
-sub_4C008,Bugmax boss,29520,Boss_BugmaxRotateParts1,Rotation pattern 1 for parts,Boss,analyzed
-sub_4C778,Bugmax boss,29520,Boss_BugmaxSpinInit,Initializes spin attack,Boss,analyzed
-sub_4C794,Bugmax boss,29520,Boss_BugmaxSpinning,Spinning attack state,Boss,analyzed
-sub_4C7DC,Bugmax boss,29520,Boss_BugmaxSetLegOffsets,Sets leg rotation offsets,Boss,analyzed
-sub_4C806,Bugmax boss,29520,Boss_BugmaxSyncLegRotation,Synchronizes leg rotations,Boss,analyzed
-sub_4C82C,Bugmax boss,29520,Boss_BugmaxUpdateLegSprite,Updates leg sprite based on angle,Boss,analyzed
-sub_4C884,Bugmax boss,29520,Boss_BugmaxSpinReverse,Reverse spin attack,Boss,analyzed
-sub_2C32C,Bugmax boss,29700,Projectile_BugmaxWaitLoop,Wait loop state,Projectile,analyzed
-sub_4C09A,Bugmax boss,29700,Boss_BugmaxRotateParts2,Rotation pattern 2 for parts,Boss,analyzed
-sub_4C8C4,Bugmax boss,29700,Boss_BugmaxSpinSlowdown,Slows down spin attack,Boss,analyzed
-sub_4C8DE,Bugmax boss,29700,,,,pending
-sub_4C954,Bugmax boss,29700,,,,pending
-sub_4D1FE,Bugmax boss,29700,,,,pending
-sub_4D228,Bugmax boss,29700,,,,pending
-sub_4D27E,Bugmax boss,29700,,,,pending
-sub_4D304,Bugmax boss,29700,,,,pending
-sub_4D3C4,Bugmax boss,29700,,,,pending
-sub_4DBA4,Bugmax boss,29700,,,,pending
-sub_4DBB0,Bugmax boss,29700,,,,pending
-sub_4DCDC,Bugmax boss,29700,,,,pending
-sub_17B5E,Bugmax boss,29880,,,,pending
-sub_18906,Bugmax boss,29880,,,,pending
-sub_4D374,Bugmax boss,29880,,,,pending
-sub_4D380,Bugmax boss,29880,,,,pending
-sub_4D39E,Bugmax boss,29880,,,,pending
-sub_4DB50,Bugmax boss,29880,,,,pending
-sub_4DBDE,Bugmax boss,29880,,,,pending
-sub_4030,Stage 14,30420,,,,pending
-sub_41A8,Stage 14,30420,,,,pending
-sub_4360,Stage 14,30420,,,,pending
-sub_DE44,Stage 14,30420,,,,pending
-sub_12046,Stage 14,30420,,,,pending
-sub_19AE4,Stage 14,30420,,,,pending
-sub_19BF6,Stage 14,30420,,,,pending
-sub_19C30,Stage 14,30420,,,,pending
-sub_32584,Victor boss,30780,,,,pending
-sub_325C0,Victor boss,30780,,,,pending
-sub_326A0,Victor boss,30780,,,,pending
-sub_32C6C,Victor boss,30780,,,,pending
-sub_32CD2,Victor boss,30780,,,,pending
-sub_32CE4,Victor boss,30780,,,,pending
-sub_32CF6,Victor boss,30780,,,,pending
-sub_32D12,Victor boss,30780,,,,pending
-sub_314C2,Victor boss,30960,,,,pending
-sub_32344,Victor boss,30960,,,,pending
-sub_32382,Victor boss,30960,,,,pending
-sub_326D8,Victor boss,30960,,,,pending
-sub_32AFE,Victor boss,30960,,,,pending
-sub_32B12,Victor boss,30960,,,,pending
-sub_32B32,Victor boss,30960,,,,pending
+sub_2C1D6,Snake (Stage 13),28440,,,Projectile,analyzed
+sub_2C224,Snake (Stage 13),28440,,,Projectile,analyzed
+sub_40A6E,Snake (Stage 13),28440,,,Boss,analyzed
+sub_40AB8,Snake (Stage 13),28440,,,Boss,analyzed
+sub_84BC8,Snake (Stage 13),28440,,,Sound,analyzed
+sub_DD5E,Bugmax boss,28800,,,Stage,analyzed
+sub_DDA6,Bugmax boss,28980,,,Stage,analyzed
+sub_DDE8,Bugmax boss,28980,,,Stage,analyzed
+sub_4BEBC,Bugmax boss,28980,,,Boss,analyzed
+sub_4BEF0,Bugmax boss,28980,,,Boss,analyzed
+sub_4C43C,Bugmax boss,28980,,,Boss,analyzed
+sub_4C5E6,Bugmax boss,28980,,,Boss,analyzed
+sub_4DB7C,Bugmax boss,28980,,,Math,analyzed
+sub_4C602,Bugmax boss,29340,,,Boss,analyzed
+sub_4C614,Bugmax boss,29340,,,Boss,analyzed
+sub_4C644,Bugmax boss,29340,,,Boss,analyzed
+sub_4C65E,Bugmax boss,29340,,,Boss,analyzed
+sub_4C682,Bugmax boss,29340,,,Boss,analyzed
+sub_4C6BE,Bugmax boss,29340,,,Boss,analyzed
+sub_4C734,Bugmax boss,29340,,,Boss,analyzed
+sub_4D444,Bugmax boss,29340,,,Enemy,analyzed
+sub_4D462,Bugmax boss,29340,,,Enemy,analyzed
+sub_4D47E,Bugmax boss,29340,,,Enemy,analyzed
+sub_4D53C,Bugmax boss,29340,,,Boss,analyzed
+sub_4D8D4,Bugmax boss,29340,,,Boss,analyzed
+sub_4D8FA,Bugmax boss,29340,,,Boss,analyzed
+sub_4DA22,Bugmax boss,29340,,,Boss,analyzed
+sub_2C280,Bugmax boss,29520,,,Projectile,analyzed
+sub_2C2A0,Bugmax boss,29520,,,Projectile,analyzed
+sub_2C2AC,Bugmax boss,29520,,,Projectile,analyzed
+sub_4C008,Bugmax boss,29520,,,Boss,analyzed
+sub_4C778,Bugmax boss,29520,,,Boss,analyzed
+sub_4C794,Bugmax boss,29520,,,Boss,analyzed
+sub_4C7DC,Bugmax boss,29520,,,Boss,analyzed
+sub_4C806,Bugmax boss,29520,,,Boss,analyzed
+sub_4C82C,Bugmax boss,29520,,,Boss,analyzed
+sub_4C884,Bugmax boss,29520,,,Boss,analyzed
+sub_2C32C,Bugmax boss,29700,,,Projectile,analyzed
+sub_4C09A,Bugmax boss,29700,,,Boss,analyzed
+sub_4C8C4,Bugmax boss,29700,,,Boss,analyzed
+sub_4C8DE,Bugmax boss,29700,Boss_BugmaxJumpPrepare,Prepares jump attack,Boss,analyzed
+sub_4C954,Bugmax boss,29700,Boss_BugmaxJumpInit,Initializes jump attack phase,Boss,analyzed
+sub_4D1FE,Bugmax boss,29700,Boss_BugmaxLandCheck,Checks landing condition,Boss,analyzed
+sub_4D228,Bugmax boss,29700,Boss_BugmaxLandFlash,Flash effect on landing,Boss,analyzed
+sub_4D27E,Bugmax boss,29700,Boss_BugmaxScatterParts,Scatters all boss parts,Boss,analyzed
+sub_4D304,Bugmax boss,29700,Boss_BugmaxFallOffScreen,Boss falls off screen,Boss,analyzed
+sub_4D3C4,Bugmax boss,29700,Enemy_BugmaxDebrisFall,Falling debris with trail,Enemy,analyzed
+sub_4DBA4,Bugmax boss,29700,Boss_BugmaxUpdateMovement,Updates boss movement,Boss,analyzed
+sub_4DBB0,Bugmax boss,29700,Boss_BugmaxCalculateWave,Calculates wave motion,Boss,analyzed
+sub_4DCDC,Bugmax boss,29700,Boss_BugmaxVerticalControl,Vertical movement control,Boss,analyzed
+sub_17B5E,Bugmax boss,29880,UI_ClearWeaponCounters,Clears weapon use counters,UI,analyzed
+sub_18906,Bugmax boss,29880,Player_UpdateTargetSight,Updates target sight position,Player,analyzed
+sub_4D374,Bugmax boss,29880,Boss_BugmaxWaitTimer,Wait timer state,Boss,analyzed
+sub_4D380,Bugmax boss,29880,Boss_BugmaxRiseUp,Boss rises up,Boss,analyzed
+sub_4D39E,Bugmax boss,29880,Boss_BugmaxFallDown,Boss falls down,Boss,analyzed
+sub_4DB50,Bugmax boss,29880,Boss_BugmaxToggleMouthSprite,Toggles mouth open/close sprite,Boss,analyzed
+sub_4DBDE,Bugmax boss,29880,Boss_BugmaxHorizontalAI,Horizontal AI and player tracking,Boss,analyzed
+sub_4030,Stage 14,30420,Gfx_ApplyRGBColorAdjust,Applies RGB color adjustment,Graphics,analyzed
+sub_41A8,Stage 14,30420,Gfx_UpdateStage14Palette,Updates Stage 14 palette effects,Graphics,analyzed
+sub_4360,Stage 14,30420,Gfx_Stage14PaletteMain,Main Stage 14 palette handler,Graphics,analyzed
+sub_DE44,Stage 14,30420,Stage_Stage14Scroll,Stage 14 scroll handler,Stage,analyzed
+sub_12046,Stage 14,30420,Stage_LoadStage14Graphics,Loads Stage 14 graphics,Stage,analyzed
+sub_19AE4,Stage 14,30420,Enemy_Stage14DebrisMain,Stage 14 debris handler,Enemy,analyzed
+sub_19BF6,Stage 14,30420,Enemy_Stage14DebrisInit,Initializes debris,Enemy,analyzed
+sub_19C30,Stage 14,30420,Enemy_Stage14DebrisAnimate,Animates debris,Enemy,analyzed
+sub_32584,Victor boss,30780,Enemy_Stage14FlierMain,Flying enemy main handler,Enemy,analyzed
+sub_325C0,Victor boss,30780,Enemy_Stage14FlierInit,Initializes flying enemy,Enemy,analyzed
+sub_326A0,Victor boss,30780,Enemy_Stage14FlierMove,Flying enemy movement,Enemy,analyzed
+sub_32C6C,Victor boss,30780,Enemy_Stage14FlierAttack,Flying enemy attack,Enemy,analyzed
+sub_32CD2,Victor boss,30780,Enemy_Stage14FlierCheckBounds,Checks if flier in bounds,Enemy,analyzed
+sub_32CE4,Victor boss,30780,Enemy_Stage14FlierOutOfBounds,Handles flier out of bounds,Enemy,analyzed
+sub_32CF6,Victor boss,30780,Enemy_Stage14FlierDespawn,Despawns flying enemy,Enemy,analyzed
+sub_32D12,Victor boss,30780,Enemy_Stage14FlierSpawnBullet,Spawns bullet from flier,Enemy,analyzed
+sub_314C2,Victor boss,30960,Enemy_UpdateEntitySlot,Updates entity slot,Enemy,analyzed
+sub_32344,Victor boss,30960,Enemy_Stage14TurretMain,Turret enemy main handler,Enemy,analyzed
+sub_32382,Victor boss,30960,Enemy_Stage14TurretInit,Initializes turret,Enemy,analyzed
+sub_326D8,Victor boss,30960,Enemy_Stage14TurretFire,Turret fire state,Enemy,analyzed
+sub_32AFE,Victor boss,30960,Projectile_Stage14BulletMain,Bullet projectile handler,Projectile,analyzed
+sub_32B12,Victor boss,30960,Projectile_Stage14BulletInit,Initializes bullet,Projectile,analyzed
+sub_32B32,Victor boss,30960,Projectile_Stage14BulletMove,Bullet movement,Projectile,analyzed
 sub_32B92,Victor boss,30960,,,,pending
 sub_17052,Victor boss,31140,,,,pending
 sub_32DCC,Victor boss,31320,,,,pending
