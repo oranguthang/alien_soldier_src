@@ -2258,131 +2258,131 @@ sub_53ADE,Missiray boss,62640,,,Boss,analyzed
 sub_53B3A,Missiray boss,62640,,,Boss,analyzed
 sub_53A90,Missiray boss,62820,,,Boss,analyzed
 sub_53AEC,Missiray boss,62820,,,Boss,analyzed
-sub_53B5C,Missiray boss,62820,Boss_MissirayAttackState1,Attack state 1 handler,Boss,analyzed
-sub_53B88,Missiray boss,62820,Boss_MissirayAttackState2,Attack state 2 handler,Boss,analyzed
-sub_53BB2,Missiray boss,62820,Boss_MissiraySegmentsInit,Initialize 8 segments,Boss,analyzed
-sub_53C40,Missiray boss,62820,Boss_MissiraySegmentsCheck,Check segments ready,Boss,analyzed
-sub_53C7A,Missiray boss,62820,Boss_MissirayCheckVictory,Check victory condition,Boss,analyzed
-sub_54458,Missiray boss,62820,Segment_MissirayPartMain,Segment part main handler,Boss,analyzed
-sub_54472,Missiray boss,62820,Segment_MissirayPartDispatcher,Segment part dispatcher,Boss,analyzed
-sub_54484,Missiray boss,62820,Segment_MissirayPartInit,Segment part init,Boss,analyzed
-sub_5448A,Missiray boss,62820,Segment_MissirayPartRotate,Segment part rotation,Boss,analyzed
-sub_544CA,Missiray boss,62820,Segment_MissirayPartRetract,Segment part retract,Boss,analyzed
-sub_544F4,Missiray boss,62820,Segment_MissirayPartMoveToTarget,Move segment to target,Boss,analyzed
-sub_33956,Missiray boss,63000,Projectile_MissirayBulletInit,Bullet projectile init,Projectile,analyzed
-sub_53C8A,Missiray boss,63000,Boss_MissirayWaitDefeatCheck,Wait for defeat check,Boss,analyzed
-sub_53C9A,Missiray boss,63000,Boss_MissirayResetCounters,Reset attack counters,Boss,analyzed
-sub_53CAA,Missiray boss,63000,Boss_MissirayMainAttackLoop,Main attack loop handler,Boss,analyzed
-sub_53E46,Missiray boss,63000,Boss_MissirayUpdatePalette,Update boss palette,Boss,analyzed
-sub_53E68,Missiray boss,63000,Boss_MissirayAttackDispatcher,Attack pattern dispatcher,Boss,analyzed
-sub_53E7C,Missiray boss,63000,Boss_MissirayWaitSegmentsReady,Wait for segments ready,Boss,analyzed
-sub_53EBE,Missiray boss,63000,Boss_MissirayShootPattern1,Shooting pattern 1,Boss,analyzed
-sub_53EE0,Missiray boss,63000,Boss_MissirayShootPattern2,Shooting pattern 2,Boss,analyzed
-sub_53F44,Missiray boss,63000,Boss_MissirayAttackDelay,Attack delay timer,Boss,analyzed
-sub_54560,Missiray boss,63000,Segment_MissirayType1Main,Segment type 1 main,Boss,analyzed
-sub_5457C,Missiray boss,63000,Segment_MissirayType1Fire,Segment type 1 fire,Boss,analyzed
-sub_545D8,Missiray boss,63000,Segment_MissirayType1Rotate1,Segment type 1 rotate 1,Boss,analyzed
-sub_545FA,Missiray boss,63000,Segment_MissirayCalculateAngle,Calculate angle from sine,Boss,analyzed
-sub_54616,Missiray boss,63000,Segment_MissirayType1Rotate2,Segment type 1 rotate 2,Boss,analyzed
-sub_54576,Missiray boss,63180,Segment_MissirayType1Idle,Segment type 1 idle,Boss,analyzed
-sub_5463E,Missiray boss,63180,Segment_MissirayType1WaitEnd,Segment type 1 wait end,Boss,analyzed
-sub_54832,Missiray boss,63180,Projectile_MissirayMissileMain,Missile projectile main,Projectile,analyzed
-sub_54842,Missiray boss,63180,Projectile_MissirayMissileTrack,Missile tracking state,Projectile,analyzed
-sub_548E4,Missiray boss,63180,Projectile_MissirayMissileFly,Missile flying state,Projectile,analyzed
-sub_53CCC,Missiray boss,63360,Boss_MissirayLoopAttacks,Loop through attacks,Boss,analyzed
-sub_5440C,Missiray boss,63360,Boss_MissiraySpawnBulletRing,Spawn ring of bullets,Boss,analyzed
-sub_5472E,Missiray boss,63360,Boss_MissirayCheckPlayerProximity,Check player proximity,Boss,analyzed
-sub_547D8,Missiray boss,63360,Boss_MissiraySpawnMissile,Spawn missile projectile,Boss,analyzed
-sub_53CE2,Missiray boss,63540,Boss_MissirayDefeatInit,Defeat sequence init,Boss,analyzed
-sub_53D2A,Missiray boss,63540,Boss_MissirayDefeatExplosions,Defeat explosion effects,Boss,analyzed
-sub_53E3C,Missiray boss,63540,Boss_MissirayResetAttackState,Reset attack state,Boss,analyzed
-sub_53F5C,Missiray boss,63540,Boss_MissirayAttackPattern3,Attack pattern 3 dispatcher,Boss,analyzed
-sub_53F70,Missiray boss,63540,Boss_MissirayAttackPattern3Init,Attack pattern 3 init,Boss,analyzed
-sub_53F8C,Missiray boss,63540,Boss_MissirayAttackPattern3Fire,Attack pattern 3 fire,Boss,analyzed
-sub_54006,Missiray boss,63540,Boss_MissirayAttackPattern3Delay,Attack pattern 3 delay,Boss,analyzed
-sub_5464A,Missiray boss,63540,Segment_MissirayType2Main,Segment type 2 main,Boss,analyzed
-sub_5465C,Missiray boss,63540,Segment_MissirayType2Delay,Segment type 2 delay,Boss,analyzed
-sub_5467C,Missiray boss,63540,Segment_MissirayType2Rise,Segment type 2 rise up,Boss,analyzed
-sub_546A6,Missiray boss,63540,Segment_MissirayType2SpawnDebris,Segment type 2 spawn debris,Boss,analyzed
-sub_53A6A,Missiray boss,63720,Boss_MissirayLoadTiles1,Load boss tiles 1,Graphics,analyzed
-sub_53AC4,Missiray boss,63720,Boss_MissirayLoadTiles2,Load boss tiles 2,Graphics,analyzed
-sub_53B20,Missiray boss,63720,Boss_MissirayLoadTiles3,Load boss tiles 3,Graphics,analyzed
-sub_53D50,Missiray boss,63720,Boss_MissirayGraphicsUpdate1,Graphics update handler 1,Boss,analyzed
-sub_53D7A,Missiray boss,63720,Boss_MissirayGraphicsUpdate2,Graphics update handler 2,Boss,analyzed
-sub_53DB8,Missiray boss,63720,Boss_MissirayGraphicsUpdate3,Graphics update handler 3,Boss,analyzed
-sub_53DD4,Missiray boss,63720,Boss_MissirayGraphicsUpdate4,Graphics update handler 4,Boss,analyzed
-sub_53DE8,Missiray boss,63720,Boss_MissirayGraphicsUpdate5,Graphics update handler 5,Boss,analyzed
-sub_53DFC,Missiray boss,63720,Boss_MissirayGraphicsUpdate6,Graphics update handler 6,Boss,analyzed
-sub_53E10,Missiray boss,63720,Boss_MissirayGraphicsUpdate7,Graphics update handler 7,Boss,analyzed
-sub_F8EA,Missiray boss,63900,Boss_MissirayPaletteUpdate,Palette update handler,Boss,analyzed
-sub_53E32,Missiray boss,63900,Boss_MissirayCleanup,Cleanup after defeat,Boss,analyzed
-sub_FA8A,Stage 25,64080,Stage25_TransitionInit,Stage transition init,Stage,analyzed
-sub_FAF8,Stage 25,64260,Stage25_CameraUpdate,Camera update handler,Stage,analyzed
-sub_2BAF2,Stage 25,64260,Stage25_DestructionParticle,Destruction particle handler,Stage,analyzed
-sub_2BB5A,Stage 25,64260,Stage25_ScreenShake,Screen shake effect,Stage,analyzed
-sub_FAAA,Z-Leo boss,64440,Boss_ZLeoTransition,Transition to Z-Leo boss,Boss,analyzed
-sub_1B24,Z-Leo boss,64620,Boss_ZLeoVBlankEffect,VBlank effect handler,Boss,analyzed
-sub_329C,Z-Leo boss,64620,Boss_ZLeoClearVRAM,Clear VRAM plane,Graphics,analyzed
-sub_29F24,Z-Leo boss,64620,Boss_ZLeoCopySprites,Copy sprite data,Graphics,analyzed
-sub_51AD6,Z-Leo boss,64620,Boss_ZLeoMain,Main boss handler,Boss,analyzed
-sub_51B72,Z-Leo boss,64620,Boss_ZLeoDispatcher,Boss state dispatcher,Boss,analyzed
-sub_51BBE,Z-Leo boss,64620,Boss_ZLeoInit,Boss initialization,Boss,analyzed
-sub_51C32,Z-Leo boss,64620,Boss_ZLeoIntroInit,Intro sequence init,Boss,analyzed
-sub_51EB6,Z-Leo boss,64620,Boss_ZLeoIntroMove,Intro movement sequence,Boss,analyzed
-sub_5279E,Z-Leo boss,64620,Boss_ZLeoGraphicsInit1,Graphics init handler 1,Boss,analyzed
-sub_52806,Z-Leo boss,64620,Boss_ZLeoGraphicsInit2,Graphics init handler 2,Boss,analyzed
-sub_5287A,Z-Leo boss,64620,Boss_ZLeoGraphicsInit3,Graphics init handler 3,Boss,analyzed
-sub_52A80,Z-Leo boss,64620,Boss_ZLeoUpdateSegments,Update boss segments,Boss,analyzed
-sub_52C34,Z-Leo boss,64620,Boss_ZLeoAnimationCalc,Animation calculation,Boss,analyzed
-sub_14386,Z-Leo boss,65160,Boss_ZLeoPlayerCollision,Player collision handler,Boss,analyzed
-sub_51EFE,Z-Leo boss,65160,Boss_ZLeoBattleStart,Battle start handler,Boss,analyzed
-sub_52682,Z-Leo boss,65160,Boss_ZLeoTileUpdate,Tile update handler,Boss,analyzed
-sub_5293C,Z-Leo boss,65160,Boss_ZLeoSpriteUpdate,Sprite update handler,Boss,analyzed
-sub_5294E,Z-Leo boss,65160,,,,pending
-sub_528B2,Z-Leo boss,65520,,,,pending
-sub_528D8,Z-Leo boss,65520,,,,pending
-sub_528FE,Z-Leo boss,65520,,,,pending
-sub_51FAA,Z-Leo boss,65700,,,,pending
-sub_51FE8,Z-Leo boss,65700,,,,pending
-sub_52766,Z-Leo boss,65700,,,,pending
-sub_527DE,Z-Leo boss,65700,,,,pending
-sub_52028,Z-Leo boss,65880,,,,pending
-sub_530EE,Z-Leo boss,66060,,,,pending
-sub_53182,Z-Leo boss,66060,,,,pending
-sub_5228A,Z-Leo boss,66240,,,,pending
-sub_52F32,Z-Leo boss,66240,,,,pending
-sub_5305A,Z-Leo boss,66240,,,,pending
-sub_521C2,Z-Leo boss,66420,,,,pending
-sub_52046,Z-Leo boss,66960,,,,pending
-sub_527F2,Z-Leo boss,66960,,,,pending
-sub_529CE,Z-Leo boss,66960,,,,pending
-sub_52A54,Z-Leo boss,66960,,,,pending
-sub_22466,Ending teleport,67500,,,,pending
-sub_2249A,Ending teleport,67500,,,,pending
-sub_223E2,Ending teleport,67680,,,,pending
-sub_16A4A,Ending teleport,68040,,,,pending
-sub_22216,Ending teleport,68040,,,,pending
-sub_2257C,Ending teleport,68040,,,,pending
-sub_2222E,Ending teleport,68220,,,,pending
-sub_22262,Ending teleport,68220,,,,pending
-sub_22278,Ending teleport,68220,,,,pending
-sub_22296,Ending teleport,68400,,,,pending
-sub_222BA,Ending teleport,68400,,,,pending
-sub_222DE,Ending teleport,68580,,,,pending
-sub_222FA,Ending teleport,68580,,,,pending
-sub_2230A,Ending teleport,68760,,,,pending
-sub_2231A,Ending teleport,68760,,,,pending
-sub_2232E,Ending teleport,68760,,,,pending
-sub_223CC,Ending teleport,68760,,,,pending
-sub_20ECC,Xi-Tiger (credits),83880,,,,pending
-sub_212D4,Computer designed by Treasure,87840,,,,pending
-sub_2130A,Computer designed by Treasure,87840,,,,pending
-sub_213F2,Presented by Sega,88380,,,,pending
-sub_4386,Results,89100,,,,pending
-sub_1DEA4,Results,89100,,,,pending
-sub_1DECC,Results,89100,,,,pending
-sub_1DF0E,Results,89100,,,,pending
-sub_1DF24,Results,89100,,,,pending
-sub_2CBC6,Results,89100,,,,pending
-sub_D3A6,Unknown scene,17460,,,,pending
-sub_2F0CA,Unknown scene,17460,,,,pending
+sub_53B5C,Missiray boss,62820,,,Boss,analyzed
+sub_53B88,Missiray boss,62820,,,Boss,analyzed
+sub_53BB2,Missiray boss,62820,,,Boss,analyzed
+sub_53C40,Missiray boss,62820,,,Boss,analyzed
+sub_53C7A,Missiray boss,62820,,,Boss,analyzed
+sub_54458,Missiray boss,62820,,,Boss,analyzed
+sub_54472,Missiray boss,62820,,,Boss,analyzed
+sub_54484,Missiray boss,62820,,,Boss,analyzed
+sub_5448A,Missiray boss,62820,,,Boss,analyzed
+sub_544CA,Missiray boss,62820,,,Boss,analyzed
+sub_544F4,Missiray boss,62820,,,Boss,analyzed
+sub_33956,Missiray boss,63000,,,Projectile,analyzed
+sub_53C8A,Missiray boss,63000,,,Boss,analyzed
+sub_53C9A,Missiray boss,63000,,,Boss,analyzed
+sub_53CAA,Missiray boss,63000,,,Boss,analyzed
+sub_53E46,Missiray boss,63000,,,Boss,analyzed
+sub_53E68,Missiray boss,63000,,,Boss,analyzed
+sub_53E7C,Missiray boss,63000,,,Boss,analyzed
+sub_53EBE,Missiray boss,63000,,,Boss,analyzed
+sub_53EE0,Missiray boss,63000,,,Boss,analyzed
+sub_53F44,Missiray boss,63000,,,Boss,analyzed
+sub_54560,Missiray boss,63000,,,Boss,analyzed
+sub_5457C,Missiray boss,63000,,,Boss,analyzed
+sub_545D8,Missiray boss,63000,,,Boss,analyzed
+sub_545FA,Missiray boss,63000,,,Boss,analyzed
+sub_54616,Missiray boss,63000,,,Boss,analyzed
+sub_54576,Missiray boss,63180,,,Boss,analyzed
+sub_5463E,Missiray boss,63180,,,Boss,analyzed
+sub_54832,Missiray boss,63180,,,Projectile,analyzed
+sub_54842,Missiray boss,63180,,,Projectile,analyzed
+sub_548E4,Missiray boss,63180,,,Projectile,analyzed
+sub_53CCC,Missiray boss,63360,,,Boss,analyzed
+sub_5440C,Missiray boss,63360,,,Boss,analyzed
+sub_5472E,Missiray boss,63360,,,Boss,analyzed
+sub_547D8,Missiray boss,63360,,,Boss,analyzed
+sub_53CE2,Missiray boss,63540,,,Boss,analyzed
+sub_53D2A,Missiray boss,63540,,,Boss,analyzed
+sub_53E3C,Missiray boss,63540,,,Boss,analyzed
+sub_53F5C,Missiray boss,63540,,,Boss,analyzed
+sub_53F70,Missiray boss,63540,,,Boss,analyzed
+sub_53F8C,Missiray boss,63540,,,Boss,analyzed
+sub_54006,Missiray boss,63540,,,Boss,analyzed
+sub_5464A,Missiray boss,63540,,,Boss,analyzed
+sub_5465C,Missiray boss,63540,,,Boss,analyzed
+sub_5467C,Missiray boss,63540,,,Boss,analyzed
+sub_546A6,Missiray boss,63540,,,Boss,analyzed
+sub_53A6A,Missiray boss,63720,,,Graphics,analyzed
+sub_53AC4,Missiray boss,63720,,,Graphics,analyzed
+sub_53B20,Missiray boss,63720,,,Graphics,analyzed
+sub_53D50,Missiray boss,63720,,,Boss,analyzed
+sub_53D7A,Missiray boss,63720,,,Boss,analyzed
+sub_53DB8,Missiray boss,63720,,,Boss,analyzed
+sub_53DD4,Missiray boss,63720,,,Boss,analyzed
+sub_53DE8,Missiray boss,63720,,,Boss,analyzed
+sub_53DFC,Missiray boss,63720,,,Boss,analyzed
+sub_53E10,Missiray boss,63720,,,Boss,analyzed
+sub_F8EA,Missiray boss,63900,,,Boss,analyzed
+sub_53E32,Missiray boss,63900,,,Boss,analyzed
+sub_FA8A,Stage 25,64080,,,Stage,analyzed
+sub_FAF8,Stage 25,64260,,,Stage,analyzed
+sub_2BAF2,Stage 25,64260,,,Stage,analyzed
+sub_2BB5A,Stage 25,64260,,,Stage,analyzed
+sub_FAAA,Z-Leo boss,64440,,,Boss,analyzed
+sub_1B24,Z-Leo boss,64620,,,Boss,analyzed
+sub_329C,Z-Leo boss,64620,,,Graphics,analyzed
+sub_29F24,Z-Leo boss,64620,,,Graphics,analyzed
+sub_51AD6,Z-Leo boss,64620,,,Boss,analyzed
+sub_51B72,Z-Leo boss,64620,,,Boss,analyzed
+sub_51BBE,Z-Leo boss,64620,,,Boss,analyzed
+sub_51C32,Z-Leo boss,64620,,,Boss,analyzed
+sub_51EB6,Z-Leo boss,64620,,,Boss,analyzed
+sub_5279E,Z-Leo boss,64620,,,Boss,analyzed
+sub_52806,Z-Leo boss,64620,,,Boss,analyzed
+sub_5287A,Z-Leo boss,64620,,,Boss,analyzed
+sub_52A80,Z-Leo boss,64620,,,Boss,analyzed
+sub_52C34,Z-Leo boss,64620,,,Boss,analyzed
+sub_14386,Z-Leo boss,65160,,,Boss,analyzed
+sub_51EFE,Z-Leo boss,65160,,,Boss,analyzed
+sub_52682,Z-Leo boss,65160,,,Boss,analyzed
+sub_5293C,Z-Leo boss,65160,,,Boss,analyzed
+sub_5294E,Z-Leo boss,65160,Boss_ZLeoUpdateHeadPosition,Update head sprite positions,Boss,analyzed
+sub_528B2,Z-Leo boss,65520,Boss_ZLeoUpdateBladeSprite,Update blade sprite,Boss,analyzed
+sub_528D8,Z-Leo boss,65520,Boss_ZLeoUpdateWingSprites,Update wing sprites,Boss,analyzed
+sub_528FE,Z-Leo boss,65520,Boss_ZLeoUpdateWingPositions,Calculate wing positions,Boss,analyzed
+sub_51FAA,Z-Leo boss,65700,Boss_ZLeoBattleState1,Battle state 1 handler,Boss,analyzed
+sub_51FE8,Z-Leo boss,65700,Boss_ZLeoBattleState2,Battle state 2 handler,Boss,analyzed
+sub_52766,Z-Leo boss,65700,Boss_ZLeoEnableParts,Enable boss parts flags,Boss,analyzed
+sub_527DE,Z-Leo boss,65700,Boss_ZLeoLoadDefeatTiles,Load defeat tiles,Graphics,analyzed
+sub_52028,Z-Leo boss,65880,Boss_ZLeoDefeatCheck,Check defeat condition,Boss,analyzed
+sub_530EE,Z-Leo boss,66060,Boss_ZLeoSpawnLaser,Spawn laser projectile,Boss,analyzed
+sub_53182,Z-Leo boss,66060,Projectile_ZLeoLaserMain,Laser projectile main,Projectile,analyzed
+sub_5228A,Z-Leo boss,66240,Boss_ZLeoAttackState1,Attack state 1 handler,Boss,analyzed
+sub_52F32,Z-Leo boss,66240,Boss_ZLeoSpawnOrb,Spawn orb projectile,Boss,analyzed
+sub_5305A,Z-Leo boss,66240,Projectile_ZLeoOrbMain,Orb projectile main,Projectile,analyzed
+sub_521C2,Z-Leo boss,66420,Boss_ZLeoAttackPattern1,Attack pattern 1 handler,Boss,analyzed
+sub_52046,Z-Leo boss,66960,Boss_ZLeoAttackPattern2,Attack pattern 2 handler,Boss,analyzed
+sub_527F2,Z-Leo boss,66960,Boss_ZLeoAnimationUpdate1,Animation update handler 1,Boss,analyzed
+sub_529CE,Z-Leo boss,66960,Boss_ZLeoAnimationUpdate2,Animation update handler 2,Boss,analyzed
+sub_52A54,Z-Leo boss,66960,Boss_ZLeoAnimationUpdate3,Animation update handler 3,Boss,analyzed
+sub_22466,Ending teleport,67500,Boss_ZLeoPaletteEffect1,Palette effect handler 1,Boss,analyzed
+sub_2249A,Ending teleport,67500,Boss_ZLeoPaletteEffect2,Palette effect handler 2,Boss,analyzed
+sub_223E2,Ending teleport,67680,Boss_ZLeoPaletteUpdate,Palette update handler,Boss,analyzed
+sub_16A4A,Ending teleport,68040,Credits_VBlankHandler,VBlank handler for credits,Credits,analyzed
+sub_22216,Ending teleport,68040,Credits_PaletteInit,Initialize credits palette,Credits,analyzed
+sub_2257C,Ending teleport,68040,Credits_UpdateTilemap,Update credits tilemap,Credits,analyzed
+sub_2222E,Ending teleport,68220,Credits_ScrollUpdate1,Credits scroll update 1,Credits,analyzed
+sub_22262,Ending teleport,68220,Credits_ScrollUpdate2,Credits scroll update 2,Credits,analyzed
+sub_22278,Ending teleport,68220,Credits_ScrollUpdate3,Credits scroll update 3,Credits,analyzed
+sub_22296,Ending teleport,68400,Credits_ScrollUpdate4,Credits scroll update 4,Credits,analyzed
+sub_222BA,Ending teleport,68400,Credits_ScrollUpdate5,Credits scroll update 5,Credits,analyzed
+sub_222DE,Ending teleport,68580,Credits_UpdateGraphics1,Credits graphics update 1,Credits,analyzed
+sub_222FA,Ending teleport,68580,Credits_UpdateGraphics2,Credits graphics update 2,Credits,analyzed
+sub_2230A,Ending teleport,68760,Credits_UpdateGraphics3,Credits graphics update 3,Credits,analyzed
+sub_2231A,Ending teleport,68760,Credits_UpdateGraphics4,Credits graphics update 4,Credits,analyzed
+sub_2232E,Ending teleport,68760,Credits_LoadTiles,Load credits tiles,Credits,analyzed
+sub_223CC,Ending teleport,68760,Credits_FadeOut,Credits fade out effect,Credits,analyzed
+sub_20ECC,Xi-Tiger (credits),83880,Credits_XiTigerVBlankSync,Xi-Tiger VBlank sync,Credits,analyzed
+sub_212D4,Computer designed by Treasure,87840,Credits_TreasureScreen1,Treasure screen handler 1,Credits,analyzed
+sub_2130A,Computer designed by Treasure,87840,Credits_TreasureScreen2,Treasure screen handler 2,Credits,analyzed
+sub_213F2,Presented by Sega,88380,Credits_SegaScreen,Sega presentation screen,Credits,analyzed
+sub_4386,Results,89100,Results_UpdateNumbers,Update result numbers,Results,analyzed
+sub_1DEA4,Results,89100,Results_DisplayTime,Display completion time,Results,analyzed
+sub_1DECC,Results,89100,Results_DisplayScore,Display score value,Results,analyzed
+sub_1DF0E,Results,89100,Results_DisplayContinues,Display continues used,Results,analyzed
+sub_1DF24,Results,89100,Results_DisplayBonus,Display bonus points,Results,analyzed
+sub_2CBC6,Results,89100,Projectile_JetsripperFalling,Falling projectile handler,Projectile,analyzed
+sub_D3A6,Unknown scene,17460,Stage_CaterpillarScrollHandler,Caterpillar scroll handler,Stage,analyzed
+sub_2F0CA,Unknown scene,17460,Entity_XiTigerIntroStartState,Xi-Tiger intro start state,Entity,analyzed
