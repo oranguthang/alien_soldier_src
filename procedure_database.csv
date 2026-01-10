@@ -1378,86 +1378,86 @@ sub_326D8,Victor boss,30960,,,Enemy,analyzed
 sub_32AFE,Victor boss,30960,,,Projectile,analyzed
 sub_32B12,Victor boss,30960,,,Projectile,analyzed
 sub_32B32,Victor boss,30960,,,Projectile,analyzed
-sub_32B92,Victor boss,30960,Enemy_Stage14SpawnSplitBullet,Spawns split bullet from dying enemy,Enemy,analyzed
-sub_17052,Victor boss,31140,Player_UpdateDashSprite,Updates player dash sprite,Player,analyzed
-sub_32DCC,Victor boss,31320,Enemy_DeathExplode,Enemy death with explosion effect,Enemy,analyzed
-sub_3FF46,Victor boss,31320,Boss_SpawnExplosionDebris,Spawns debris during boss explosion,Boss,analyzed
-sub_DEA2,Stage 15,31860,Stage_Stage15Transition,Transitions to Stage 15,Stage,analyzed
-sub_DEAA,Stage 15,31860,Stage_Stage15Scroll,Stage 15 scroll handler,Stage,analyzed
-sub_4368,Sunset Sting boss,32040,Gfx_PaletteFadeEffect,Palette fade effect handler,Graphics,analyzed
-sub_DEEE,Sunset Sting boss,32040,Stage_SunsetStingTransition,Transitions to Sunset Sting boss,Stage,analyzed
-sub_1035A,Sunset Sting boss,32040,Scroll_UpdateVerticalScroll,Updates vertical scroll,Scroll,analyzed
-sub_30D20,Sunset Sting boss,32040,Enemy_BounceOnGround,Enemy bouncing on ground,Enemy,analyzed
-sub_1662,Sunset Sting boss,32220,VBlank_InitSunsetStingEffect,Initializes Sunset Sting VBlank effect,VBlank,analyzed
-sub_42882,Sunset Sting boss,32220,Math_GetSinCos,Gets sine and cosine values,Math,analyzed
-sub_428A0,Sunset Sting boss,32220,Math_GetScaledSinCos,Gets scaled sine and cosine,Math,analyzed
-sub_428E0,Sunset Sting boss,32220,Boss_SunsetStingUpdateWaveScreen,Updates wave distortion screen effect,Boss,analyzed
-sub_42A10,Sunset Sting boss,32220,Boss_SunsetStingMain,Main Sunset Sting boss handler,Boss,analyzed
-sub_42A8C,Sunset Sting boss,32220,Boss_SunsetStingDispatcher,State dispatcher for boss,Boss,analyzed
-sub_42ADE,Sunset Sting boss,32220,Boss_SunsetStingInit,Initializes Sunset Sting boss with 16 segments,Boss,analyzed
-sub_42BE4,Sunset Sting boss,32220,Boss_SunsetStingIntro,Boss intro sequence,Boss,analyzed
-sub_42C74,Sunset Sting boss,32220,Boss_SunsetStingVictoryCheck,Checks victory condition,Boss,analyzed
-sub_432C6,Sunset Sting boss,32220,Boss_SunsetStingNextState,Advances to next state,Boss,analyzed
-sub_432D0,Sunset Sting boss,32220,Boss_SunsetStingUpdateSegmentSprite,Updates segment sprite based on angle,Boss,analyzed
-sub_4333A,Sunset Sting boss,32220,Boss_SunsetStingSegmentMain,Main segment handler,Boss,analyzed
-sub_43368,Sunset Sting boss,32220,Boss_SunsetStingSegmentDispatcher,Segment state dispatcher,Boss,analyzed
-sub_43382,Sunset Sting boss,32220,Boss_SunsetStingSegmentInit,Initializes segment,Boss,analyzed
-sub_43506,Sunset Sting boss,32220,Boss_SunsetStingSegmentDestroyed,Destroyed segment handler,Boss,analyzed
-sub_43566,Sunset Sting boss,32220,Boss_SunsetStingSegmentStateDispatch,Segment state dispatch wrapper,Boss,analyzed
-sub_43582,Sunset Sting boss,32220,Boss_SunsetStingSegmentFall,Segment falls after destruction,Boss,analyzed
-sub_DF26,Sunset Sting boss,32400,Stage_SunsetStingWaitBattle,Waits for battle to start,Stage,analyzed
-sub_428B4,Sunset Sting boss,32400,Boss_SunsetStingUpdateCore,Updates boss core position,Boss,analyzed
-sub_42CC0,Sunset Sting boss,32400,Boss_SunsetStingBattleActive,Active battle state,Boss,analyzed
-sub_42EC8,Sunset Sting boss,32400,Boss_SunsetStingSegmentAttack,Segment attack state,Boss,analyzed
-sub_42F6C,Sunset Sting boss,32400,Boss_SunsetStingSegmentWait,Segment wait state,Boss,analyzed
-sub_42F82,Sunset Sting boss,32400,Boss_SunsetStingSegmentRotate,Segment rotation during attack,Boss,analyzed
-sub_43430,Sunset Sting boss,32400,Boss_SunsetStingSegmentMove,Segment movement logic,Boss,analyzed
-sub_434D8,Sunset Sting boss,32400,Boss_SunsetStingSegmentFallInit,Initializes falling segment,Boss,analyzed
-sub_4361A,Sunset Sting boss,32400,Boss_SunsetStingSegmentHit,Segment hit reaction,Boss,analyzed
-sub_43738,Sunset Sting boss,32400,Boss_SunsetStingDefeatStart,Starts defeat sequence,Boss,analyzed
-sub_43858,Sunset Sting boss,32400,Boss_SunsetStingDefeatFall,Boss falls during defeat,Boss,analyzed
-sub_4389E,Sunset Sting boss,32400,Boss_SunsetStingDefeatExplode,Boss explosion during defeat,Boss,analyzed
-sub_438AE,Sunset Sting boss,32400,Boss_SunsetStingDefeatEnd,Ends defeat sequence,Boss,analyzed
-sub_827F0,Sunset Sting boss,32400,,,,pending
-sub_434E2,Sunset Sting boss,32580,,,,pending
-sub_43816,Sunset Sting boss,32580,,,,pending
-sub_8399A,Sunset Sting boss,32760,,,,pending
-sub_4310C,Sunset Sting boss,32940,,,,pending
-sub_431A4,Sunset Sting boss,32940,,,,pending
-sub_431C2,Sunset Sting boss,32940,,,,pending
-sub_434F6,Sunset Sting boss,32940,,,,pending
-sub_43830,Sunset Sting boss,32940,,,,pending
-sub_43226,Sunset Sting boss,33300,,,,pending
-sub_43294,Sunset Sting boss,33300,,,,pending
-sub_432B0,Sunset Sting boss,33300,,,,pending
-sub_DF34,Sunset Sting boss,33480,,,,pending
-sub_DF3C,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_DF5E,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_DF6C,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_1019A,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_1119E,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_19D4E,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_4398C,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_439FC,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_43B28,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_43B84,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_43FE4,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_43FEA,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_440D0,Viblack mini-boss (Stage 16),33660,,,,pending
-sub_DF92,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_12090,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_14416,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_16928,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D77E,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D7AE,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D7C8,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D802,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D834,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D844,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D874,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D886,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_2D9BA,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_43BE2,Viblack mini-boss (Stage 16),33840,,,,pending
+sub_32B92,Victor boss,30960,,,Enemy,analyzed
+sub_17052,Victor boss,31140,,,Player,analyzed
+sub_32DCC,Victor boss,31320,,,Enemy,analyzed
+sub_3FF46,Victor boss,31320,,,Boss,analyzed
+sub_DEA2,Stage 15,31860,,,Stage,analyzed
+sub_DEAA,Stage 15,31860,,,Stage,analyzed
+sub_4368,Sunset Sting boss,32040,,,Graphics,analyzed
+sub_DEEE,Sunset Sting boss,32040,,,Stage,analyzed
+sub_1035A,Sunset Sting boss,32040,,,Scroll,analyzed
+sub_30D20,Sunset Sting boss,32040,,,Enemy,analyzed
+sub_1662,Sunset Sting boss,32220,,,VBlank,analyzed
+sub_42882,Sunset Sting boss,32220,,,Math,analyzed
+sub_428A0,Sunset Sting boss,32220,,,Math,analyzed
+sub_428E0,Sunset Sting boss,32220,,,Boss,analyzed
+sub_42A10,Sunset Sting boss,32220,,,Boss,analyzed
+sub_42A8C,Sunset Sting boss,32220,,,Boss,analyzed
+sub_42ADE,Sunset Sting boss,32220,,,Boss,analyzed
+sub_42BE4,Sunset Sting boss,32220,,,Boss,analyzed
+sub_42C74,Sunset Sting boss,32220,,,Boss,analyzed
+sub_432C6,Sunset Sting boss,32220,,,Boss,analyzed
+sub_432D0,Sunset Sting boss,32220,,,Boss,analyzed
+sub_4333A,Sunset Sting boss,32220,,,Boss,analyzed
+sub_43368,Sunset Sting boss,32220,,,Boss,analyzed
+sub_43382,Sunset Sting boss,32220,,,Boss,analyzed
+sub_43506,Sunset Sting boss,32220,,,Boss,analyzed
+sub_43566,Sunset Sting boss,32220,,,Boss,analyzed
+sub_43582,Sunset Sting boss,32220,,,Boss,analyzed
+sub_DF26,Sunset Sting boss,32400,,,Stage,analyzed
+sub_428B4,Sunset Sting boss,32400,,,Boss,analyzed
+sub_42CC0,Sunset Sting boss,32400,,,Boss,analyzed
+sub_42EC8,Sunset Sting boss,32400,,,Boss,analyzed
+sub_42F6C,Sunset Sting boss,32400,,,Boss,analyzed
+sub_42F82,Sunset Sting boss,32400,,,Boss,analyzed
+sub_43430,Sunset Sting boss,32400,,,Boss,analyzed
+sub_434D8,Sunset Sting boss,32400,,,Boss,analyzed
+sub_4361A,Sunset Sting boss,32400,,,Boss,analyzed
+sub_43738,Sunset Sting boss,32400,,,Boss,analyzed
+sub_43858,Sunset Sting boss,32400,,,Boss,analyzed
+sub_4389E,Sunset Sting boss,32400,,,Boss,analyzed
+sub_438AE,Sunset Sting boss,32400,,,Boss,analyzed
+sub_827F0,Sunset Sting boss,32400,Sound_ProcessChannelCommand,Processes sound channel command,Sound,analyzed
+sub_434E2,Sunset Sting boss,32580,Boss_SunsetStingSegmentWobble,Segment wobble before fall,Boss,analyzed
+sub_43816,Sunset Sting boss,32580,Boss_SunsetStingSegmentDestroyInit,Initializes segment destruction,Boss,analyzed
+sub_8399A,Sunset Sting boss,32760,Sound_SetTempoCommand,Sets music tempo,Sound,analyzed
+sub_4310C,Sunset Sting boss,32940,Boss_SunsetStingDefeatPhase,Defeat phase with screen clear,Boss,analyzed
+sub_431A4,Sunset Sting boss,32940,Boss_SunsetStingDefeatWobble,Wobble effect during defeat,Boss,analyzed
+sub_431C2,Sunset Sting boss,32940,Boss_SunsetStingSpawnDebrisRain,Spawns debris rain projectiles,Boss,analyzed
+sub_434F6,Sunset Sting boss,32940,Boss_SunsetStingSegmentConvertToProjectile,Converts segment to projectile,Boss,analyzed
+sub_43830,Sunset Sting boss,32940,Boss_SunsetStingSegmentFalling,Segment falling state,Boss,analyzed
+sub_43226,Sunset Sting boss,33300,Boss_SunsetStingFinalDefeat,Final defeat sequence,Boss,analyzed
+sub_43294,Sunset Sting boss,33300,Boss_SunsetStingDefeatFadeOut,Fade out after defeat,Boss,analyzed
+sub_432B0,Sunset Sting boss,33300,Gfx_ApplyDefeatFade,Applies defeat palette fade,Graphics,analyzed
+sub_DF34,Sunset Sting boss,33480,Stage_PostSunsetStingTransition,Transition after Sunset Sting,Stage,analyzed
+sub_DF3C,Viblack mini-boss (Stage 16),33660,Stage_ViblackScroll,Viblack stage scroll handler,Stage,analyzed
+sub_DF5E,Viblack mini-boss (Stage 16),33660,Stage_ViblackStartBattle,Starts Viblack battle,Stage,analyzed
+sub_DF6C,Viblack mini-boss (Stage 16),33660,Stage_ViblackInit,Initializes Viblack mini-boss,Stage,analyzed
+sub_1019A,Viblack mini-boss (Stage 16),33660,Camera_ConstrainToScreenBounds,Constrains camera to screen bounds,Camera,analyzed
+sub_1119E,Viblack mini-boss (Stage 16),33660,Gfx_AdjustTileIndices,Adjusts tile pattern indices,Graphics,analyzed
+sub_19D4E,Viblack mini-boss (Stage 16),33660,Player_ViblackIntro,Player setup for Viblack intro,Player,analyzed
+sub_4398C,Viblack mini-boss (Stage 16),33660,Boss_ViblackMain,Main Viblack mini-boss handler,Boss,analyzed
+sub_439FC,Viblack mini-boss (Stage 16),33660,Boss_ViblackInit,Initializes Viblack mini-boss,Boss,analyzed
+sub_43B28,Viblack mini-boss (Stage 16),33660,Boss_ViblackDescend,Viblack descends from top,Boss,analyzed
+sub_43B84,Viblack mini-boss (Stage 16),33660,Boss_ViblackFallOffScreen,Viblack falls off screen,Boss,analyzed
+sub_43FE4,Viblack mini-boss (Stage 16),33660,Boss_ViblackUpdatePosition,Updates Viblack position,Boss,analyzed
+sub_43FEA,Viblack mini-boss (Stage 16),33660,Boss_ViblackUpdateAngle,Updates rotation angle,Boss,analyzed
+sub_440D0,Viblack mini-boss (Stage 16),33660,Boss_ViblackSpawnRing,Spawns ring projectile,Boss,analyzed
+sub_DF92,Viblack mini-boss (Stage 16),33840,Stage_Stage17Transition,Transitions to Stage 17,Stage,analyzed
+sub_12090,Viblack mini-boss (Stage 16),33840,Stage_LoadStage17Graphics,Loads Stage 17 graphics,Stage,analyzed
+sub_14416,Viblack mini-boss (Stage 16),33840,Enemy_Stage17Init,Initializes Stage 17 enemies,Enemy,analyzed
+sub_16928,Viblack mini-boss (Stage 16),33840,Player_UpdateForceWeapon,Updates force weapon sprite,Player,analyzed
+sub_2D77E,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerMain,Stage 17 walker enemy main handler,Enemy,analyzed
+sub_2D7AE,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerInit,Initializes walker enemy,Enemy,analyzed
+sub_2D7C8,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerWalk,Walker walking state,Enemy,analyzed
+sub_2D802,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerTurn,Walker turning state,Enemy,analyzed
+sub_2D834,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerAttack,Walker attack state,Enemy,analyzed
+sub_2D844,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerCheckEdge,Checks if at edge,Enemy,analyzed
+sub_2D874,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerDeath,Walker death state,Enemy,analyzed
+sub_2D886,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerUpdateSprite,Updates walker sprite,Enemy,analyzed
+sub_2D9BA,Viblack mini-boss (Stage 16),33840,Projectile_Stage17WalkerShot,Walker projectile handler,Projectile,analyzed
+sub_43BE2,Viblack mini-boss (Stage 16),33840,Boss_ViblackDefeatCheck,Checks defeat condition,Boss,analyzed
 sub_43C46,Viblack mini-boss (Stage 16),33840,,,,pending
 sub_442C2,Viblack mini-boss (Stage 16),33840,,,,pending
 sub_44368,Viblack mini-boss (Stage 16),33840,,,,pending
