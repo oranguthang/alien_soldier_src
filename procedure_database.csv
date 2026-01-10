@@ -1698,166 +1698,166 @@ sub_4AC5A,Destroyer-MK2 boss,42480,,,Projectile,analyzed
 sub_4ACAC,Destroyer-MK2 boss,42480,,,Projectile,analyzed
 sub_4AD4C,Destroyer-MK2 boss,42480,,,Boss,analyzed
 sub_4AD9E,Destroyer-MK2 boss,42480,,,Boss,analyzed
-sub_4AE0C,Destroyer-MK2 boss,42480,Boss_DestroyerMK2HitReaction,Boss hit reaction animation,Boss,analyzed
-sub_4AE42,Destroyer-MK2 boss,42480,Boss_DestroyerMK2StunState,Stun state after heavy damage,Boss,analyzed
-sub_4AE68,Destroyer-MK2 boss,42480,Boss_DestroyerMK2RecoverFromStun,Recovery from stun state,Boss,analyzed
-sub_4AEAC,Destroyer-MK2 boss,42480,Boss_DestroyerMK2Enrage,Enrage mode at low health,Boss,analyzed
-sub_2B49E,Destroyer-MK2 boss,42660,Boss_DestroyerMK2UpdateSprite,Updates boss sprite graphics,Boss,analyzed
-sub_4AEDE,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimIdle,Idle animation state,Boss,analyzed
-sub_4AEFA,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimWalk,Walk animation state,Boss,analyzed
-sub_4AF14,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimAttack,Attack animation state,Boss,analyzed
-sub_4AF4A,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimJump,Jump animation state,Boss,analyzed
-sub_4AF5A,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimLand,Landing animation state,Boss,analyzed
-sub_4AFE2,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimDamage,Damage animation state,Boss,analyzed
-sub_4B046,Destroyer-MK2 boss,42660,Boss_DestroyerMK2UpdatePalette,Updates boss palette,Boss,analyzed
-sub_4B108,Destroyer-MK2 boss,42660,Boss_DestroyerMK2FlashDamage,Flash effect on damage,Boss,analyzed
-sub_4B118,Destroyer-MK2 boss,42660,Boss_DestroyerMK2ShakeOnLand,Screen shake on landing,Boss,analyzed
-sub_4B150,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlaySFX,Plays boss sound effects,Boss,analyzed
-sub_4B470,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlayFootstep,Plays footstep sound,Boss,analyzed
-sub_4B73C,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlayRoar,Plays roar sound,Boss,analyzed
-sub_4B74E,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlayJump,Plays jump sound,Boss,analyzed
-sub_4B760,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlayLand,Plays landing sound,Boss,analyzed
-sub_4B0E6,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatInit,Defeat sequence initialization,Boss,analyzed
-sub_4B0F8,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatStagger,Staggering during defeat,Boss,analyzed
-sub_4B2E2,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatFall,Falling during defeat,Boss,analyzed
-sub_4B2F2,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatExplosion1,First explosion in defeat,Boss,analyzed
-sub_4B3FC,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatExplosion2,Second explosion in defeat,Boss,analyzed
-sub_4B400,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatExplosion3,Third explosion in defeat,Boss,analyzed
-sub_4B7A0,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatShake,Screen shake during defeat,Boss,analyzed
-sub_4BA50,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatFlash,Flash effect during defeat,Boss,analyzed
-sub_4BA66,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatBreakup,Boss breaking up,Boss,analyzed
-sub_4BB2A,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatDebris,Spawns defeat debris,Boss,analyzed
-sub_4BB3E,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatSparks,Spawns defeat sparks,Boss,analyzed
-sub_4BB56,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatSmoke,Spawns defeat smoke,Boss,analyzed
-sub_4BB72,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatCleanup,Cleanup after defeat,Boss,analyzed
-sub_4B304,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Explosion1,Explosion effect 1,Effect,analyzed
-sub_4B336,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Explosion2,Explosion effect 2,Effect,analyzed
-sub_4BB0C,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Spark,Spark effect,Effect,analyzed
-sub_4BB1E,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Debris,Debris effect,Effect,analyzed
-sub_4BB88,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Smoke,Smoke effect,Effect,analyzed
-sub_4BE16,Destroyer-MK2 boss,43020,Projectile_DestroyerMK2DebrisMain,Debris projectile handler,Projectile,analyzed
-sub_4B348,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkAttack1,Berserk attack pattern 1,Boss,analyzed
-sub_4B378,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkAttack2,Berserk attack pattern 2,Boss,analyzed
-sub_4B394,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkRush,Berserk rush attack,Boss,analyzed
-sub_4B3B6,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkSpin,Berserk spin attack,Boss,analyzed
-sub_4B3D0,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkJump,Berserk jump attack,Boss,analyzed
-sub_4B3EC,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkRoar,Berserk roar attack,Boss,analyzed
-sub_E562,Stage 19,43380,Stage_Stage19Init,Stage 19 initialization,Stage,analyzed
-sub_E570,Stage 19,43560,Stage_Stage19Scroll,Stage 19 scroll handler,Stage,analyzed
-sub_E5B6,Stage 19,43560,Stage_Stage19Transition,Stage transition to boss,Stage,analyzed
-sub_120F0,Stage 19,43560,Gfx_LoadStage19Graphics,Loads Stage 19 graphics,Graphics,analyzed
-sub_E5D0,Jampan boss,43740,Stage_JampanInit,Jampan boss initialization,Stage,analyzed
-sub_E5EA,Jampan boss,43740,Stage_JampanBattleStart,Jampan battle start,Stage,analyzed
-sub_E602,Jampan boss,43740,Stage_JampanPostBattle,Post-battle cleanup,Stage,analyzed
-sub_4912E,Jampan boss,43920,Boss_JampanMain,Main boss handler,Boss,analyzed
-sub_49138,Jampan boss,43920,Boss_JampanDispatcher,Boss state dispatcher,Boss,analyzed
-sub_49240,Jampan boss,43920,Boss_JampanIdleState,Idle state handler,Boss,analyzed
-sub_49258,Jampan boss,43920,Boss_JampanMoveState,Movement state handler,Boss,analyzed
-sub_49440,Jampan boss,43920,Boss_JampanAttackState,Attack state handler,Boss,analyzed
-sub_4953E,Jampan boss,43920,Boss_JampanDefendState,Defense state handler,Boss,analyzed
-sub_49570,Jampan boss,43920,Boss_JampanJumpState,Jump state handler,Boss,analyzed
-sub_495C6,Jampan boss,43920,Boss_JampanDashState,Dash attack state,Boss,analyzed
-sub_4A368,Jampan boss,43920,Boss_JampanUpdatePosition,Updates boss position,Boss,analyzed
-sub_4A3B8,Jampan boss,43920,Boss_JampanUpdateAnimation,Updates boss animation,Boss,analyzed
-sub_4A3CA,Jampan boss,43920,Boss_JampanUpdateSprite,Updates boss sprite,Boss,analyzed
-sub_4A3D8,Jampan boss,43920,Boss_JampanUpdatePalette,Updates boss palette,Boss,analyzed
-sub_4A6E0,Jampan boss,43920,Boss_JampanCheckHealth,Checks boss health,Boss,analyzed
-sub_4A6FA,Jampan boss,43920,Boss_JampanDamageHandler,Handles damage taken,Boss,analyzed
-sub_4A78A,Jampan boss,43920,Boss_JampanFlashOnDamage,Flash effect on damage,Boss,analyzed
-sub_49610,Jampan boss,44100,Boss_JampanShootProjectile,Shoots projectile,Boss,analyzed
-sub_4964A,Jampan boss,44100,Boss_JampanSpawnMinion,Spawns minion enemy,Boss,analyzed
-sub_4A0F8,Jampan boss,44100,Boss_JampanTeleportInit,Teleport attack init,Boss,analyzed
-sub_4A432,Jampan boss,44100,Boss_JampanTeleportFadeOut,Teleport fade out,Boss,analyzed
-sub_4A464,Jampan boss,44100,Boss_JampanTeleportMove,Teleport movement,Boss,analyzed
-sub_4A478,Jampan boss,44100,Boss_JampanTeleportFadeIn,Teleport fade in,Boss,analyzed
-sub_4A48A,Jampan boss,44100,Boss_JampanTeleportComplete,Teleport completion,Boss,analyzed
-sub_4A4A2,Jampan boss,44100,Boss_JampanComboAttack,Combo attack sequence,Boss,analyzed
-sub_4A50C,Jampan boss,44100,Boss_JampanSpecialAttack,Special attack pattern,Boss,analyzed
-sub_49666,Jampan boss,44280,Projectile_JampanBullet,Bullet projectile handler,Projectile,analyzed
-sub_496AA,Jampan boss,44280,Projectile_JampanWave,Wave projectile handler,Projectile,analyzed
-sub_496CE,Jampan boss,44280,Projectile_JampanHoming,Homing projectile handler,Projectile,analyzed
-sub_496EE,Jampan boss,44280,Enemy_JampanMinion,Minion enemy handler,Enemy,analyzed
-sub_4A07E,Jampan boss,44280,Boss_JampanAIController,Boss AI controller,Boss,analyzed
-sub_4A08A,Jampan boss,44280,,,,pending
-sub_4A0C6,Jampan boss,44280,,,,pending
-sub_4A300,Jampan boss,44280,,,,pending
-sub_4A316,Jampan boss,44280,,,,pending
-sub_4A328,Jampan boss,44280,,,,pending
-sub_4A340,Jampan boss,44280,,,,pending
-sub_4A40C,Jampan boss,44280,,,,pending
-sub_4A53A,Jampan boss,44280,,,,pending
-sub_4A54E,Jampan boss,44280,,,,pending
-sub_4A56C,Jampan boss,44280,,,,pending
-sub_4A57E,Jampan boss,44280,,,,pending
-sub_E636,Jampan boss,44460,,,,pending
-sub_49930,Jampan boss,44460,,,,pending
-sub_49950,Jampan boss,44460,,,,pending
-sub_49992,Jampan boss,44460,,,,pending
-sub_4A5F0,Jampan boss,44460,,,,pending
-sub_49DB2,Jampan boss,44640,,,,pending
-sub_49E26,Jampan boss,44640,,,,pending
-sub_49E64,Jampan boss,44640,,,,pending
-sub_4A160,Jampan boss,44640,,,,pending
-sub_49E9A,Jampan boss,44820,,,,pending
-sub_49EB2,Jampan boss,44820,,,,pending
-sub_49ED2,Jampan boss,44820,,,,pending
-sub_49EEC,Jampan boss,44820,,,,pending
-sub_49F0E,Jampan boss,44820,,,,pending
-sub_4A034,Jampan boss,44820,,,,pending
-sub_4A044,Jampan boss,44820,,,,pending
-sub_4A078,Jampan boss,44820,,,,pending
-sub_49F22,Jampan boss,45000,,,,pending
-sub_49F40,Jampan boss,45000,,,,pending
-sub_4A018,Jampan boss,45000,,,,pending
-sub_49F88,Jampan boss,45180,,,,pending
-sub_49FEE,Jampan boss,45180,,,,pending
-sub_4A65E,Jampan boss,45180,,,,pending
-sub_E644,Jampan boss,45360,,,,pending
-sub_E656,Jampan boss,45360,,,,pending
-sub_19AB4,Jampan boss,45360,,,,pending
-sub_4A026,Jampan boss,45360,,,,pending
-sub_E7D8,7 forces intro (Stage 20),45540,,,,pending
-sub_E830,7 forces intro (Stage 20),45540,,,,pending
-sub_EFE8,7 forces intro (Stage 20),45540,,,,pending
-sub_11B9C,7 forces intro (Stage 20),45540,,,,pending
-sub_12112,7 forces intro (Stage 20),45540,,,,pending
-sub_19D6C,7 forces intro (Stage 20),45540,,,,pending
-sub_54B84,7 forces intro (Stage 20),45540,,,,pending
-sub_54BD8,7 forces intro (Stage 20),45540,,,,pending
-sub_54C3C,7 forces intro (Stage 20),45540,,,,pending
-sub_54C7E,7 forces intro (Stage 20),45540,,,,pending
-sub_54F24,7 forces intro (Stage 20),45540,,,,pending
-sub_54F48,7 forces intro (Stage 20),45720,,,,pending
-sub_54F6C,Valkirie force,45900,,,,pending
-sub_54F7E,Valkirie force,45900,,,,pending
-sub_54F9E,Valkirie force,45900,,,,pending
-sub_54FE4,Valkirie force,45900,,,,pending
-sub_55460,Valkirie force,45900,,,,pending
-sub_5575E,Valkirie force,45900,,,,pending
-sub_557E0,Valkirie force,45900,,,,pending
-sub_5604C,Valkirie force,45900,,,,pending
-sub_345B2,Valkirie force,46080,,,,pending
-sub_558B4,Valkirie force,46080,,,,pending
-sub_5590A,Valkirie force,46080,,,,pending
-sub_5605C,Valkirie force,46080,,,,pending
-sub_56190,Valkirie force,46080,,,,pending
-sub_561CA,Valkirie force,46080,,,,pending
-sub_56224,Valkirie force,46080,,,,pending
-sub_566B6,Valkirie force,46080,,,,pending
-sub_5671A,Valkirie force,46080,,,,pending
-sub_56924,Valkirie force,46080,,,,pending
-sub_5594E,Valkirie force,46260,,,,pending
-sub_55ED0,Valkirie force,46260,,,,pending
-sub_55EF0,Valkirie force,46260,,,,pending
-sub_55FE6,Valkirie force,46260,,,,pending
-sub_55FF2,Valkirie force,46260,,,,pending
-sub_55F34,Valkirie force,46440,,,,pending
-sub_55F96,Valkirie force,46440,,,,pending
-sub_2A092,Valkirie force,46620,,,,pending
-sub_55C8C,Valkirie force,46620,,,,pending
-sub_55CD6,Valkirie force,46620,,,,pending
-sub_55D74,Valkirie force,46620,,,,pending
-sub_55DD0,Valkirie force,46620,,,,pending
+sub_4AE0C,Destroyer-MK2 boss,42480,,,Boss,analyzed
+sub_4AE42,Destroyer-MK2 boss,42480,,,Boss,analyzed
+sub_4AE68,Destroyer-MK2 boss,42480,,,Boss,analyzed
+sub_4AEAC,Destroyer-MK2 boss,42480,,,Boss,analyzed
+sub_2B49E,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4AEDE,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4AEFA,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4AF14,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4AF4A,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4AF5A,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4AFE2,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B046,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B108,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B118,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B150,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B470,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B73C,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B74E,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B760,Destroyer-MK2 boss,42660,,,Boss,analyzed
+sub_4B0E6,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4B0F8,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4B2E2,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4B2F2,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4B3FC,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4B400,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4B7A0,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4BA50,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4BA66,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4BB2A,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4BB3E,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4BB56,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4BB72,Destroyer-MK2 boss,42840,,,Boss,analyzed
+sub_4B304,Destroyer-MK2 boss,43020,,,Effect,analyzed
+sub_4B336,Destroyer-MK2 boss,43020,,,Effect,analyzed
+sub_4BB0C,Destroyer-MK2 boss,43020,,,Effect,analyzed
+sub_4BB1E,Destroyer-MK2 boss,43020,,,Effect,analyzed
+sub_4BB88,Destroyer-MK2 boss,43020,,,Effect,analyzed
+sub_4BE16,Destroyer-MK2 boss,43020,,,Projectile,analyzed
+sub_4B348,Destroyer-MK2 boss,43200,,,Boss,analyzed
+sub_4B378,Destroyer-MK2 boss,43200,,,Boss,analyzed
+sub_4B394,Destroyer-MK2 boss,43200,,,Boss,analyzed
+sub_4B3B6,Destroyer-MK2 boss,43200,,,Boss,analyzed
+sub_4B3D0,Destroyer-MK2 boss,43200,,,Boss,analyzed
+sub_4B3EC,Destroyer-MK2 boss,43200,,,Boss,analyzed
+sub_E562,Stage 19,43380,,,Stage,analyzed
+sub_E570,Stage 19,43560,,,Stage,analyzed
+sub_E5B6,Stage 19,43560,,,Stage,analyzed
+sub_120F0,Stage 19,43560,,,Graphics,analyzed
+sub_E5D0,Jampan boss,43740,,,Stage,analyzed
+sub_E5EA,Jampan boss,43740,,,Stage,analyzed
+sub_E602,Jampan boss,43740,,,Stage,analyzed
+sub_4912E,Jampan boss,43920,,,Boss,analyzed
+sub_49138,Jampan boss,43920,,,Boss,analyzed
+sub_49240,Jampan boss,43920,,,Boss,analyzed
+sub_49258,Jampan boss,43920,,,Boss,analyzed
+sub_49440,Jampan boss,43920,,,Boss,analyzed
+sub_4953E,Jampan boss,43920,,,Boss,analyzed
+sub_49570,Jampan boss,43920,,,Boss,analyzed
+sub_495C6,Jampan boss,43920,,,Boss,analyzed
+sub_4A368,Jampan boss,43920,,,Boss,analyzed
+sub_4A3B8,Jampan boss,43920,,,Boss,analyzed
+sub_4A3CA,Jampan boss,43920,,,Boss,analyzed
+sub_4A3D8,Jampan boss,43920,,,Boss,analyzed
+sub_4A6E0,Jampan boss,43920,,,Boss,analyzed
+sub_4A6FA,Jampan boss,43920,,,Boss,analyzed
+sub_4A78A,Jampan boss,43920,,,Boss,analyzed
+sub_49610,Jampan boss,44100,,,Boss,analyzed
+sub_4964A,Jampan boss,44100,,,Boss,analyzed
+sub_4A0F8,Jampan boss,44100,,,Boss,analyzed
+sub_4A432,Jampan boss,44100,,,Boss,analyzed
+sub_4A464,Jampan boss,44100,,,Boss,analyzed
+sub_4A478,Jampan boss,44100,,,Boss,analyzed
+sub_4A48A,Jampan boss,44100,,,Boss,analyzed
+sub_4A4A2,Jampan boss,44100,,,Boss,analyzed
+sub_4A50C,Jampan boss,44100,,,Boss,analyzed
+sub_49666,Jampan boss,44280,,,Projectile,analyzed
+sub_496AA,Jampan boss,44280,,,Projectile,analyzed
+sub_496CE,Jampan boss,44280,,,Projectile,analyzed
+sub_496EE,Jampan boss,44280,,,Enemy,analyzed
+sub_4A07E,Jampan boss,44280,,,Boss,analyzed
+sub_4A08A,Jampan boss,44280,Boss_JampanUpdateFacing,Updates boss facing direction,Boss,analyzed
+sub_4A0C6,Jampan boss,44280,Boss_JampanAimAtPlayer,Calculates angle and aims at player,Boss,analyzed
+sub_4A300,Jampan boss,44280,Boss_JampanShadowMain,Shadow effect main handler,Boss,analyzed
+sub_4A316,Jampan boss,44280,Boss_JampanShadowDispatcher,Shadow effect dispatcher,Boss,analyzed
+sub_4A328,Jampan boss,44280,Boss_JampanShadowInit,Shadow effect initialization,Boss,analyzed
+sub_4A340,Jampan boss,44280,Boss_JampanShadowAnimate,Shadow animation handler,Boss,analyzed
+sub_4A40C,Jampan boss,44280,Boss_JampanAimTracking,Smooth aim tracking at player,Boss,analyzed
+sub_4A53A,Jampan boss,44280,Boss_JampanFormationMain,Formation attack main handler,Boss,analyzed
+sub_4A54E,Jampan boss,44280,Boss_JampanFormationInit,Formation attack initialization,Boss,analyzed
+sub_4A56C,Jampan boss,44280,Boss_JampanFormationWait,Formation wait for trigger,Boss,analyzed
+sub_4A57E,Jampan boss,44280,Boss_JampanFormationUpdate,Updates formation positions,Boss,analyzed
+sub_E636,Jampan boss,44460,Stage_JampanDefeatCamera,Camera during defeat sequence,Stage,analyzed
+sub_49930,Jampan boss,44460,Boss_JampanDefeatInit,Defeat sequence initialization,Boss,analyzed
+sub_49950,Jampan boss,44460,Boss_JampanDefeatTeleport,Defeat teleport effect,Boss,analyzed
+sub_49992,Jampan boss,44460,Boss_JampanDefeatFade,Defeat fade out animation,Boss,analyzed
+sub_4A5F0,Jampan boss,44460,Boss_JampanDefeatExplosion,Defeat explosion effect,Boss,analyzed
+sub_49DB2,Jampan boss,44640,Boss_JampanDefeatFlash,Flash effect during defeat,Boss,analyzed
+sub_49E26,Jampan boss,44640,Boss_JampanDefeatShake,Screen shake during defeat,Boss,analyzed
+sub_49E64,Jampan boss,44640,Boss_JampanDefeatBreakup,Boss breaking up animation,Boss,analyzed
+sub_4A160,Jampan boss,44640,Boss_JampanDefeatDebris,Spawns defeat debris,Boss,analyzed
+sub_49E9A,Jampan boss,44820,Boss_JampanDefeatSparkInit,Defeat spark initialization,Boss,analyzed
+sub_49EB2,Jampan boss,44820,Boss_JampanDefeatSparkMove,Defeat spark movement,Boss,analyzed
+sub_49ED2,Jampan boss,44820,Boss_JampanDefeatSparkUpdate,Defeat spark update,Boss,analyzed
+sub_49EEC,Jampan boss,44820,Boss_JampanDefeatSparkFade,Defeat spark fade effect,Boss,analyzed
+sub_49F0E,Jampan boss,44820,Boss_JampanDefeatSparkWait,Defeat spark wait timer,Boss,analyzed
+sub_4A034,Jampan boss,44820,Boss_JampanDefeatFinalMain,Final defeat phase main,Boss,analyzed
+sub_4A044,Jampan boss,44820,Boss_JampanDefeatFinalInit,Final defeat phase init,Boss,analyzed
+sub_4A078,Jampan boss,44820,Boss_JampanDefeatFinalLoop,Final defeat phase loop,Boss,analyzed
+sub_49F22,Jampan boss,45000,Boss_JampanDefeatEndInit,End of defeat initialization,Boss,analyzed
+sub_49F40,Jampan boss,45000,Boss_JampanDefeatEndFade,End fade to white,Boss,analyzed
+sub_4A018,Jampan boss,45000,Boss_JampanDefeatEndWait,Wait before transition,Boss,analyzed
+sub_49F88,Jampan boss,45180,Boss_JampanDefeatCleanupInit,Cleanup initialization,Boss,analyzed
+sub_49FEE,Jampan boss,45180,Boss_JampanDefeatCleanupWait,Cleanup wait timer,Boss,analyzed
+sub_4A65E,Jampan boss,45180,Boss_JampanDebugController,Debug controller input handler,Boss,analyzed
+sub_E644,Jampan boss,45360,Stage_JampanPostDefeatInit,Post-defeat stage init,Stage,analyzed
+sub_E656,Jampan boss,45360,Stage_JampanPostDefeatCheck,Post-defeat checks and transition,Stage,analyzed
+sub_19AB4,Jampan boss,45360,Cutscene_JampanInitParams,Cutscene parameter initialization,Cutscene,analyzed
+sub_4A026,Jampan boss,45360,Boss_JampanDefeatTimerCheck,Defeat timer countdown check,Boss,analyzed
+sub_E7D8,7 forces intro (Stage 20),45540,Stage_Stage20Init,Stage 20 initialization,Stage,analyzed
+sub_E830,7 forces intro (Stage 20),45540,Stage_Stage20Scroll,Stage 20 scroll handler,Stage,analyzed
+sub_EFE8,7 forces intro (Stage 20),45540,Gfx_Stage20InitPlanes,Initializes Stage 20 planes,Graphics,analyzed
+sub_11B9C,7 forces intro (Stage 20),45540,Gfx_LoadStage20Tiles,Loads Stage 20 tiles,Graphics,analyzed
+sub_12112,7 forces intro (Stage 20),45540,Gfx_LoadStage20Graphics,Loads Stage 20 graphics,Graphics,analyzed
+sub_19D6C,7 forces intro (Stage 20),45540,Cutscene_Stage20ClearFlag,Clears cutscene flag,Cutscene,analyzed
+sub_54B84,7 forces intro (Stage 20),45540,Entity_SevenForcesMain,Seven Forces entity main handler,Entity,analyzed
+sub_54BD8,7 forces intro (Stage 20),45540,Entity_SevenForcesDispatcher,Seven Forces dispatcher,Entity,analyzed
+sub_54C3C,7 forces intro (Stage 20),45540,Entity_SevenForcesIntro,Seven Forces intro animation,Entity,analyzed
+sub_54C7E,7 forces intro (Stage 20),45540,Entity_SevenForcesIntroMove,Seven Forces intro movement,Entity,analyzed
+sub_54F24,7 forces intro (Stage 20),45540,Entity_SevenForcesTextDisplay,Text display handler,Entity,analyzed
+sub_54F48,7 forces intro (Stage 20),45720,Entity_SevenForcesTextInit,Text initialization,Entity,analyzed
+sub_54F6C,Valkirie force,45900,Entity_SevenForcesTextUpdate,Text update handler,Entity,analyzed
+sub_54F7E,Valkirie force,45900,Entity_SevenForcesTransform,Transformation sequence,Entity,analyzed
+sub_54F9E,Valkirie force,45900,Boss_ValkirieMain,Main boss handler,Boss,analyzed
+sub_54FE4,Valkirie force,45900,Boss_ValkirieDispatcher,Boss state dispatcher,Boss,analyzed
+sub_55460,Valkirie force,45900,Boss_ValkirieIntroInit,Intro animation init,Boss,analyzed
+sub_5575E,Valkirie force,45900,Boss_ValkirieIntroMove,Intro movement,Boss,analyzed
+sub_557E0,Valkirie force,45900,Boss_ValkirieIntroStop,Intro stop position,Boss,analyzed
+sub_5604C,Valkirie force,45900,Boss_ValkirieBattleStart,Battle start initialization,Boss,analyzed
+sub_345B2,Valkirie force,46080,Boss_ValkiriePlayIntroSFX,Plays intro sound effects,Boss,analyzed
+sub_558B4,Valkirie force,46080,Boss_ValkirieIdleState,Idle state handler,Boss,analyzed
+sub_5590A,Valkirie force,46080,Boss_ValkirieAttackState1,Attack state 1 handler,Boss,analyzed
+sub_5605C,Valkirie force,46080,Boss_ValkirieUpdateSprites,Updates boss sprites,Boss,analyzed
+sub_56190,Valkirie force,46080,Boss_ValkirieAnimationScript,Animation script interpreter,Boss,analyzed
+sub_561CA,Valkirie force,46080,Boss_ValkirieAnimationLoop,Animation loop handler,Boss,analyzed
+sub_56224,Valkirie force,46080,Boss_ValkirieAnimationUpdate,Animation frame update,Boss,analyzed
+sub_566B6,Valkirie force,46080,Boss_ValkirieMovePattern1,Movement pattern 1,Boss,analyzed
+sub_5671A,Valkirie force,46080,Boss_ValkirieMovePattern2,Movement pattern 2,Boss,analyzed
+sub_56924,Valkirie force,46080,Boss_ValkirieMovePattern3,Movement pattern 3,Boss,analyzed
+sub_5594E,Valkirie force,46260,Boss_ValkirieShootPattern1,Shooting pattern 1,Boss,analyzed
+sub_55ED0,Valkirie force,46260,Boss_ValkirieShootPattern2,Shooting pattern 2,Boss,analyzed
+sub_55EF0,Valkirie force,46260,Boss_ValkirieShootPattern3,Shooting pattern 3,Boss,analyzed
+sub_55FE6,Valkirie force,46260,Boss_ValkirieSpawnProjectile1,Spawns projectile type 1,Boss,analyzed
+sub_55FF2,Valkirie force,46260,Boss_ValkirieSpawnProjectile2,Spawns projectile type 2,Boss,analyzed
+sub_55F34,Valkirie force,46440,Boss_ValkirieSpawnProjectile3,Spawns projectile type 3,Boss,analyzed
+sub_55F96,Valkirie force,46440,Boss_ValkirieSpawnProjectile4,Spawns projectile type 4,Boss,analyzed
+sub_2A092,Valkirie force,46620,Projectile_ValkirieMain,Projectile main handler,Projectile,analyzed
+sub_55C8C,Valkirie force,46620,Projectile_ValkirieBullet,Bullet projectile handler,Projectile,analyzed
+sub_55CD6,Valkirie force,46620,Boss_ValkirieDamageCheck,Checks if boss takes damage,Boss,analyzed
+sub_55D74,Valkirie force,46620,Boss_ValkirieCollisionCheck,Collision detection with player,Boss,analyzed
+sub_55DD0,Valkirie force,46620,Boss_ValkirieUpdateHealth,Updates boss health,Boss,analyzed
 sub_55EBA,Valkirie force,46620,,,,pending
 sub_5601A,Valkirie force,46620,,,,pending
 sub_56036,Valkirie force,46620,,,,pending
