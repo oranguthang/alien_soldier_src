@@ -938,86 +938,86 @@ sub_D1FE,Flies (Stage 9),15300,,,Stage,analyzed
 sub_D1DA,Caterpillar ship above train (Stage 9 ),15480,,,Stage,analyzed
 sub_D286,Caterpillar ship above train (Stage 9 ),15480,,,Stage,analyzed
 sub_D2B6,Caterpillar ship above train (Stage 9 ),15480,,,Stage,analyzed
-sub_D4BE,Caterpillar ship above train (Stage 9 ),15480,Stage_CaterpillarScrollUpdate,Updates caterpillar stage scroll with oscillation,Stage,analyzed
-sub_3D0AE,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarMain,Main caterpillar boss handler with state dispatch,Boss,analyzed
-sub_3D0C2,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarInit,Initializes caterpillar boss entity,Boss,analyzed
-sub_3D15A,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarInitSegments,Initializes caterpillar body segments from table,Boss,analyzed
-sub_3D16C,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarInitSegment,Initializes single segment with sprite parameters,Boss,analyzed
-sub_3D450,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarUpdateSegmentPos,Updates segment position with sine wave calculation,Boss,analyzed
-sub_3D0CA,Caterpillar ship above train (Stage 9 ),15660,Boss_CaterpillarAnimateWave,Animates wave pattern for caterpillar movement,Boss,analyzed
-sub_3D412,Caterpillar ship above train (Stage 9 ),15840,Boss_CaterpillarPart1,Caterpillar part 1 entity with timer,Boss,analyzed
-sub_3D1F4,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarPart2,Caterpillar part 2 with projectile firing,Boss,analyzed
-sub_3D2F8,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarPart3,Caterpillar part 3 with attack patterns,Boss,analyzed
-sub_3D38A,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarPart4,Caterpillar part 4 with animation states,Boss,analyzed
-sub_3D4AC,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarCheckFreeSlot,Checks for free projectile slot,Boss,analyzed
-sub_3D4B6,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarShootingStar,Shooting star entity with state machine,Boss,analyzed
-sub_3D562,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarShipInit,Initializes caterpillar ship with body parts,Boss,analyzed
-sub_3D630,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarShipState1,Ship state 1 with rotation initialization,Boss,analyzed
-sub_3D654,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarShipState2,Ship state 2 with altitude oscillation,Boss,analyzed
-sub_3D78C,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarUpdateRotation,Updates ship rotation with sine calculation,Boss,analyzed
-sub_145F4,Caterpillar ship above train (Stage 9 ),16200,Collision_CheckProjectileTile,Checks projectile collision with terrain tile map,Physics,analyzed
-sub_2A418,Caterpillar ship above train (Stage 9 ),16200,Boss_CaterpillarSpawnExplosion,Spawns explosion projectile with sound,Boss,analyzed
-sub_18846,Caterpillar ship above train (Stage 9 ),17100,Effect_SpawnRandomDebris,Spawns random debris particle with velocity,Effect,analyzed
-sub_188EE,Caterpillar ship above train (Stage 9 ),17100,Enemy_CheckDamageThreshold,Checks if enemy damage exceeds threshold,Enemy,analyzed
-sub_2C0DE,Caterpillar ship above train (Stage 9 ),17280,Enemy_BossPartDispatcher,Boss part state dispatcher using jump table,Enemy,analyzed
-sub_3D6DA,Caterpillar ship above train (Stage 9 ),17280,Boss_CaterpillarShipState3,Ship state 3 defeating boss sequence,Boss,analyzed
-sub_3D726,Caterpillar ship above train (Stage 9 ),17280,Boss_CaterpillarShipState4,Ship state 4 final defeat cleanup,Boss,analyzed
-sub_2F08C,Xi-Tiger start,17640,Entity_XiTigerIntro,Xi-Tiger intro entity initialization,Entity,analyzed
-sub_2F0A8,Xi-Tiger start,17640,Entity_XiTigerIntroDispatcher,Dispatcher for Xi-Tiger intro states,Entity,analyzed
-sub_2F0BC,Xi-Tiger start,17640,Entity_XiTigerIntroState1,Xi-Tiger intro state with animation,Entity,analyzed
-sub_2F0F6,Xi-Tiger start,17640,Entity_XiTigerIntroState2,Xi-Tiger intro state advancing to cutscene,Entity,analyzed
-sub_14B6,Xi-Tiger cutscene,18000,VBlank_InitXiTigerEffect,Initializes VBlank effect for Xi-Tiger cutscene,VBlank,analyzed
-sub_1E996,Xi-Tiger cutscene,18000,Cutscene_XiTigerInit,Initializes Xi-Tiger cutscene with graphics,Cutscene,analyzed
-sub_1EB66,Xi-Tiger cutscene,18000,Cutscene_XiTigerFrameUpdate,Updates cutscene frame with timing,Cutscene,analyzed
-sub_1EB9E,Xi-Tiger cutscene,18000,Cutscene_XiTigerLoadFrame,Loads cutscene frame data to VRAM,Cutscene,analyzed
-sub_1EBB6,Xi-Tiger cutscene,18000,Cutscene_XiTigerProcessCommands,Processes cutscene command sequence,Cutscene,analyzed
-sub_1ED38,Xi-Tiger cutscene,18000,Cutscene_XiTigerWaitForInput,Waits for player input to continue,Cutscene,analyzed
-sub_1ED3C,Xi-Tiger cutscene,18000,Cutscene_XiTigerSkipCheck,Checks if player wants to skip cutscene,Cutscene,analyzed
-sub_1ED62,Xi-Tiger cutscene,18000,Cutscene_XiTigerFadeOut,Fades out cutscene graphics,Cutscene,analyzed
-sub_1ED7C,Xi-Tiger cutscene,18000,Cutscene_XiTigerComplete,Completes cutscene advancing to gameplay,Cutscene,analyzed
-sub_260A2,Xi-Tiger cutscene,18000,Gfx_DecompressCutsceneData,Decompresses cutscene graphics data,Gfx,analyzed
-sub_260CE,Xi-Tiger cutscene,18000,Gfx_LoadCutsceneFrame,Loads cutscene frame to video memory,Gfx,analyzed
-sub_29E58,Xi-Tiger cutscene,18000,Sys_InitXiTigerVRAM,Initializes VRAM layout for Xi-Tiger cutscene,System,analyzed
-sub_1EC20,Xi-Tiger cutscene,18180,,,,pending
-sub_2DCA,Xi-Tiger cutscene,18360,,,,pending
-sub_30D4,Xi-Tiger cutscene,18360,,,,pending
-sub_10ADC,Xi-Tiger cutscene,18360,,,,pending
-sub_10AEC,Xi-Tiger cutscene,18360,,,,pending
-sub_1EC34,Xi-Tiger cutscene,18360,,,,pending
-sub_D422,Xi-Tiger boss fight,18720,,,,pending
-sub_D468,Xi-Tiger boss fight,18720,,,,pending
-sub_1219E,Xi-Tiger boss fight,18720,,,,pending
-sub_121DE,Xi-Tiger boss fight,18720,,,,pending
-sub_121F0,Xi-Tiger boss fight,18720,,,,pending
-sub_3D814,Xi-Tiger boss fight,18720,,,,pending
-sub_3D8B2,Xi-Tiger boss fight,18720,,,,pending
-sub_3D8CE,Xi-Tiger boss fight,18720,,,,pending
-sub_3DA3E,Xi-Tiger boss fight,18720,,,,pending
-sub_3E050,Xi-Tiger boss fight,18720,,,,pending
-sub_3E076,Xi-Tiger boss fight,18720,,,,pending
-sub_3E0F6,Xi-Tiger boss fight,18720,,,,pending
-sub_3E134,Xi-Tiger boss fight,18720,,,,pending
-sub_3E18C,Xi-Tiger boss fight,18720,,,,pending
-sub_3E21C,Xi-Tiger boss fight,18720,,,,pending
-sub_3E3B0,Xi-Tiger boss fight,18720,,,,pending
-sub_3E3C6,Xi-Tiger boss fight,18720,,,,pending
-sub_19D42,Xi-Tiger boss fight,18900,,,,pending
-sub_3DA72,Xi-Tiger boss fight,19080,,,,pending
-sub_3DA94,Xi-Tiger boss fight,19080,,,,pending
-sub_3DEBA,Xi-Tiger boss fight,19440,,,,pending
-sub_3DF12,Xi-Tiger boss fight,19440,,,,pending
-sub_3DF7C,Xi-Tiger boss fight,19440,,,,pending
-sub_3E1C0,Xi-Tiger boss fight,19440,,,,pending
-sub_3DFD2,Xi-Tiger boss fight,19620,,,,pending
-sub_3E014,Xi-Tiger boss fight,19620,,,,pending
-sub_3E02E,Xi-Tiger boss fight,19620,,,,pending
-sub_D594,Xi-Tiger boss fight,19800,,,,pending
-sub_3E042,Xi-Tiger boss fight,19800,,,,pending
-sub_1782,Stage 10,20340,,,,pending
-sub_D90E,Stage 10,20340,,,,pending
-sub_D9D2,Stage 10,20340,,,,pending
-sub_D9DC,Stage 10,20340,,,,pending
-sub_DE2E,Stage 10,20340,,,,pending
+sub_D4BE,Caterpillar ship above train (Stage 9 ),15480,,,Stage,analyzed
+sub_3D0AE,Caterpillar ship above train (Stage 9 ),15480,,,Boss,analyzed
+sub_3D0C2,Caterpillar ship above train (Stage 9 ),15480,,,Boss,analyzed
+sub_3D15A,Caterpillar ship above train (Stage 9 ),15480,,,Boss,analyzed
+sub_3D16C,Caterpillar ship above train (Stage 9 ),15480,,,Boss,analyzed
+sub_3D450,Caterpillar ship above train (Stage 9 ),15480,,,Boss,analyzed
+sub_3D0CA,Caterpillar ship above train (Stage 9 ),15660,,,Boss,analyzed
+sub_3D412,Caterpillar ship above train (Stage 9 ),15840,,,Boss,analyzed
+sub_3D1F4,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_3D2F8,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_3D38A,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_3D4AC,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_3D4B6,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_3D562,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_3D630,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_3D654,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_3D78C,Caterpillar ship above train (Stage 9 ),16020,,,Boss,analyzed
+sub_145F4,Caterpillar ship above train (Stage 9 ),16200,,,Physics,analyzed
+sub_2A418,Caterpillar ship above train (Stage 9 ),16200,,,Boss,analyzed
+sub_18846,Caterpillar ship above train (Stage 9 ),17100,,,Effect,analyzed
+sub_188EE,Caterpillar ship above train (Stage 9 ),17100,,,Enemy,analyzed
+sub_2C0DE,Caterpillar ship above train (Stage 9 ),17280,,,Enemy,analyzed
+sub_3D6DA,Caterpillar ship above train (Stage 9 ),17280,,,Boss,analyzed
+sub_3D726,Caterpillar ship above train (Stage 9 ),17280,,,Boss,analyzed
+sub_2F08C,Xi-Tiger start,17640,,,Entity,analyzed
+sub_2F0A8,Xi-Tiger start,17640,,,Entity,analyzed
+sub_2F0BC,Xi-Tiger start,17640,,,Entity,analyzed
+sub_2F0F6,Xi-Tiger start,17640,,,Entity,analyzed
+sub_14B6,Xi-Tiger cutscene,18000,,,VBlank,analyzed
+sub_1E996,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
+sub_1EB66,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
+sub_1EB9E,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
+sub_1EBB6,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
+sub_1ED38,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
+sub_1ED3C,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
+sub_1ED62,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
+sub_1ED7C,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
+sub_260A2,Xi-Tiger cutscene,18000,,,Gfx,analyzed
+sub_260CE,Xi-Tiger cutscene,18000,,,Gfx,analyzed
+sub_29E58,Xi-Tiger cutscene,18000,,,System,analyzed
+sub_1EC20,Xi-Tiger cutscene,18180,Cutscene_XiTigerApplyFade,Applies palette fade effect to cutscene,Cutscene,analyzed
+sub_2DCA,Xi-Tiger cutscene,18360,Sys_ClearPaletteBuffer,Wrapper to clear palette buffer,System,analyzed
+sub_30D4,Xi-Tiger cutscene,18360,Palette_ClearBuffer,Clears palette buffer to black,Gfx,analyzed
+sub_10ADC,Xi-Tiger cutscene,18360,Scroll_GetBackgroundPosition,Gets background scroll position,Scroll,analyzed
+sub_10AEC,Xi-Tiger cutscene,18360,Scroll_GetForegroundPosition,Gets foreground scroll position,Scroll,analyzed
+sub_1EC34,Xi-Tiger cutscene,18360,Cutscene_XiTigerUpdateScroll,Updates scroll with wave distortion effect,Cutscene,analyzed
+sub_D422,Xi-Tiger boss fight,18720,Stage_InitXiTigerBoss,Initializes Xi-Tiger boss stage parameters,Stage,analyzed
+sub_D468,Xi-Tiger boss fight,18720,Stage_XiTigerBossWait,Waits for boss spawn with palette setup,Stage,analyzed
+sub_1219E,Xi-Tiger boss fight,18720,Stage_LoadXiTigerGraphics,Loads Xi-Tiger boss tile graphics,Stage,analyzed
+sub_121DE,Xi-Tiger boss fight,18720,Stage_LoadXiTigerPalette,Loads Xi-Tiger boss palette,Stage,analyzed
+sub_121F0,Xi-Tiger boss fight,18720,Stage_LoadXiTigerSprites,Loads Xi-Tiger sprite data to VRAM,Stage,analyzed
+sub_3D814,Xi-Tiger boss fight,18720,Boss_XiTigerMain,Main Xi-Tiger boss handler with state dispatch,Boss,analyzed
+sub_3D8B2,Xi-Tiger boss fight,18720,Boss_XiTigerInit,Initializes Xi-Tiger boss clearing sprites,Boss,analyzed
+sub_3D8CE,Xi-Tiger boss fight,18720,Boss_XiTigerSetup,Complex setup with metasprite initialization,Boss,analyzed
+sub_3DA3E,Xi-Tiger boss fight,18720,Boss_XiTigerBattleStart,Starts battle activating boss movement,Boss,analyzed
+sub_3E050,Xi-Tiger boss fight,18720,Boss_XiTigerUpdateSprites,Updates boss sprite rendering,Boss,analyzed
+sub_3E076,Xi-Tiger boss fight,18720,Boss_XiTigerFlipDirection,Flips boss sprite direction,Boss,analyzed
+sub_3E0F6,Xi-Tiger boss fight,18720,Boss_XiTigerUpdateClaws,Updates claw sprites based on state,Boss,analyzed
+sub_3E134,Xi-Tiger boss fight,18720,Boss_XiTigerSetClawSprite,Sets claw sprite graphics pointer,Boss,analyzed
+sub_3E18C,Xi-Tiger boss fight,18720,Boss_XiTigerUpdateBody,Updates boss body metasprite positions,Boss,analyzed
+sub_3E21C,Xi-Tiger boss fight,18720,Boss_XiTigerProcessAnimation,Processes boss animation with interpolation,Boss,analyzed
+sub_3E3B0,Xi-Tiger boss fight,18720,Boss_XiTigerCalculateDeltas,Calculates animation interpolation deltas,Boss,analyzed
+sub_3E3C6,Xi-Tiger boss fight,18720,Boss_XiTigerLoadAnimData,Loads animation data from table,Boss,analyzed
+sub_19D42,Xi-Tiger boss fight,18900,Player_XiTigerBossIntro,Player intro state for Xi-Tiger boss,Player,analyzed
+sub_3DA72,Xi-Tiger boss fight,19080,Boss_XiTigerBattleActive,Active battle state with AI update,Boss,analyzed
+sub_3DA94,Xi-Tiger boss fight,19080,Boss_XiTigerMovementAI,Movement AI with position tracking,Boss,analyzed
+sub_3DEBA,Xi-Tiger boss fight,19440,Boss_XiTigerAttackPattern1,Attack pattern 1 with claw strikes,Boss,analyzed
+sub_3DF12,Xi-Tiger boss fight,19440,Boss_XiTigerAttackPattern2,Attack pattern 2 with jumping,Boss,analyzed
+sub_3DF7C,Xi-Tiger boss fight,19440,Boss_XiTigerAttackPattern3,Attack pattern 3 with projectiles,Boss,analyzed
+sub_3E1C0,Xi-Tiger boss fight,19440,Boss_XiTigerSpawnProjectile,Spawns boss projectile with trajectory,Boss,analyzed
+sub_3DFD2,Xi-Tiger boss fight,19620,Boss_XiTigerDefeatInit,Initializes boss defeat sequence,Boss,analyzed
+sub_3E014,Xi-Tiger boss fight,19620,Boss_XiTigerDefeatUpdate,Updates defeat animation and effects,Boss,analyzed
+sub_3E02E,Xi-Tiger boss fight,19620,Boss_XiTigerDefeatComplete,Completes defeat clearing boss entity,Boss,analyzed
+sub_D594,Xi-Tiger boss fight,19800,Stage_PostXiTigerTransition,Transitions to next stage after defeat,Stage,analyzed
+sub_3E042,Xi-Tiger boss fight,19800,Boss_XiTigerDefeatFinal,Final defeat state cleanup,Boss,analyzed
+sub_1782,Stage 10,20340,VBlank_InitStage10Effect,Initializes VBlank effect for Stage 10,VBlank,analyzed
+sub_D90E,Stage 10,20340,Stage_InitStage10,Initializes Stage 10 with scroll and enemies,Stage,analyzed
+sub_D9D2,Stage 10,20340,Stage_Stage10ScrollUpdate,Updates Stage 10 scroll positions,Stage,analyzed
+sub_D9DC,Stage 10,20340,Stage_Stage10CheckTransition,Checks transition to next segment,Stage,analyzed
+sub_DE2E,Stage 10,20340,Stage_LoadStage10Graphics,Loads Stage 10 tile graphics and palette,Stage,analyzed
 sub_102EC,Stage 10,20340,,,,pending
 sub_11938,Stage 10,20340,,,,pending
 sub_11FBE,Stage 10,20340,,,,pending
