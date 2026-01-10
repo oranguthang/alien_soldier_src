@@ -1218,86 +1218,86 @@ sub_2E58E,Ship battle (Stage 12),24660,,,Enemy,analyzed
 sub_2E59A,Ship battle (Stage 12),24660,,,Enemy,analyzed
 sub_2E5EA,Ship battle (Stage 12),24660,,,Enemy,analyzed
 sub_2E61A,Ship battle (Stage 12),24660,,,Enemy,analyzed
-sub_2E634,Ship battle (Stage 12),24660,Enemy_Stage12LauncherWait,Launcher wait state with position update,Enemy,analyzed
-sub_2BFA6,Ship battle (Stage 12),25020,Projectile_SetFallVelocity,Sets falling velocity based on flag,Projectile,analyzed
-sub_2E490,Ship battle (Stage 12),25020,Enemy_Stage12LauncherExplode,Launcher explosion with flicker,Enemy,analyzed
-sub_2E672,Ship battle (Stage 12),25020,Enemy_Stage12LauncherUpdatePosition,Updates launcher position relative to ship,Enemy,analyzed
-sub_DBA0,Sharpsteel boss,25740,Stage_SharpssteelTransition,Transitions to Sharpsteel boss,Stage,analyzed
-sub_2E5E2,Sharpsteel boss,25920,Enemy_Stage12TurretHide,Hides turret enemy,Enemy,analyzed
-sub_34874,Sharpsteel boss,25920,Sprite_UpdateBossBladeSprite,Updates boss blade sprite and flip,Sprite,analyzed
-sub_47C1C,Sharpsteel boss,25920,Boss_SharpssteelMain,Main Sharpsteel boss handler,Boss,analyzed
-sub_47C96,Sharpsteel boss,25920,Boss_SharpssteelWaitPlayerReady,Waits for player ready,Boss,analyzed
-sub_47CA6,Sharpsteel boss,25920,Boss_SharpssteelInit,Initializes Sharpsteel boss parts,Boss,analyzed
-sub_47D94,Sharpsteel boss,25920,Boss_SharpssteelBattleActive,Active battle state,Boss,analyzed
-sub_47DE8,Sharpsteel boss,25920,Boss_SharpssteelUpdateBlades,Updates all blade positions,Boss,analyzed
-sub_48690,Sharpsteel boss,25920,Boss_SharpssteelBladeMain,Main handler for blade part,Boss,analyzed
-sub_48820,Sharpsteel boss,25920,Boss_SharpssteelCoreMain,Main handler for boss core,Boss,analyzed
-sub_489F0,Sharpsteel boss,25920,Boss_SharpssteelCoreInit,Initializes boss core,Boss,analyzed
-sub_48B84,Sharpsteel boss,25920,Boss_SharpssteelCoreDefeat,Core defeat sequence,Boss,analyzed
-sub_47E02,Sharpsteel boss,26100,Boss_SharpssteelSpawnBlades,Spawns blade entities,Boss,analyzed
-sub_48856,Sharpsteel boss,26100,Boss_SharpssteelCoreDispatcher,State dispatcher for core,Boss,analyzed
-sub_48940,Sharpsteel boss,26100,Boss_SharpssteelCoreIdle,Core idle state,Boss,analyzed
-sub_47E36,Sharpsteel boss,26460,Boss_SharpssteelInitBattle,Initializes battle phase,Boss,analyzed
-sub_47E98,Sharpsteel boss,26460,Boss_SharpssteelSetRotation,Sets rotation parameters,Boss,analyzed
-sub_47F3E,Sharpsteel boss,26460,Boss_SharpssteelUpdateRotation,Updates rotation speed,Boss,analyzed
-sub_47FA2,Sharpsteel boss,26460,Boss_SharpssteelIncreaseSpeed,Increases rotation speed,Boss,analyzed
-sub_47FCA,Sharpsteel boss,26460,Boss_SharpssteelUpdateCore,Updates core position,Boss,analyzed
-sub_486A4,Sharpsteel boss,26460,Boss_SharpssteelBladeInit,Initializes single blade,Boss,analyzed
-sub_486E6,Sharpsteel boss,26460,Boss_SharpssteelBladeUpdate,Updates blade position,Boss,analyzed
-sub_4871A,Sharpsteel boss,26460,Boss_SharpssteelBladeCheckHit,Checks blade collision,Boss,analyzed
-sub_488A0,Sharpsteel boss,26460,Boss_SharpssteelCoreActive,Core active state,Boss,analyzed
-sub_2FB54,Sharpsteel boss,26640,Enemy_ShipCannon2Dispatcher,State dispatcher for cannon 2,Enemy,analyzed
-sub_2FB68,Sharpsteel boss,26640,Enemy_ShipCannon2Wait,Cannon 2 wait state,Enemy,analyzed
-sub_47F02,Sharpsteel boss,26640,Boss_SharpssteelAttackPattern1,Attack pattern 1,Boss,analyzed
-sub_47F24,Sharpsteel boss,26640,Boss_SharpssteelAttackPattern2,Attack pattern 2,Boss,analyzed
-sub_47F9C,Sharpsteel boss,26640,Boss_SharpssteelDefeatStart,Starts defeat sequence,Boss,analyzed
-sub_481AC,Sharpsteel boss,26640,Boss_SharpssteelBladeDefeat,Blade defeat state,Boss,analyzed
-sub_48802,Sharpsteel boss,26640,Boss_SharpssteelCoreDamage,Core damage state,Boss,analyzed
-sub_4879C,Sharpsteel boss,26820,Boss_SharpssteelCoreFlash,Core damage flash effect,Boss,analyzed
-sub_3ADE,Ship desctruction,27180,VBlank_UpdateSharpssteelPalette,Updates Sharpsteel palette in VBlank,VBlank,analyzed
-sub_3B4C,Ship desctruction,27180,VBlank_SharpssteelPaletteEffect,Sharpsteel palette effect,VBlank,analyzed
-sub_DBBC,Ship desctruction,27180,Stage_Stage14Init,Initializes Stage 14,Stage,analyzed
-sub_10EC6,Ship desctruction,27180,Scroll_UpdateStage14Scroll,Updates Stage 14 scroll,Scroll,analyzed
-sub_2F868,Ship desctruction,27180,,,,pending
-sub_2F8B8,Ship desctruction,27180,,,,pending
-sub_47D80,Ship desctruction,27180,,,,pending
-sub_48F62,Ship desctruction,27180,,,,pending
-sub_DBCE,Ship desctruction,27360,,,,pending
-sub_DBF4,Ship desctruction,27360,,,,pending
-sub_DCEE,Teleport after ship desctruction,27540,,,,pending
-sub_10E14,Teleport after ship desctruction,27540,,,,pending
-sub_119C8,Teleport after ship desctruction,27540,,,,pending
-sub_16942,Teleport after ship desctruction,27540,,,,pending
-sub_2667C,Teleport after ship desctruction,27540,,,,pending
-sub_DCC0,Snake (Stage 13),27720,,,,pending
-sub_DD0E,Snake (Stage 13),27720,,,,pending
-sub_DD2E,Snake (Stage 13),27720,,,,pending
-sub_E34E,Snake (Stage 13),27720,,,,pending
-sub_1B784,Snake (Stage 13),27720,,,,pending
-sub_4079E,Snake (Stage 13),27720,,,,pending
-sub_40854,Snake (Stage 13),27720,,,,pending
-sub_2686,Snake (Stage 13),27900,,,,pending
-sub_81B4,Snake (Stage 13),27900,,,,pending
-sub_1202A,Snake (Stage 13),27900,,,,pending
-sub_267CA,Snake (Stage 13),27900,,,,pending
-sub_268D8,Snake (Stage 13),27900,,,,pending
-sub_268E8,Snake (Stage 13),27900,,,,pending
-sub_40942,Snake (Stage 13),27900,,,,pending
-sub_4096C,Snake (Stage 13),27900,,,,pending
-sub_4098C,Snake (Stage 13),27900,,,,pending
-sub_409F0,Snake (Stage 13),27900,,,,pending
-sub_40AF6,Snake (Stage 13),27900,,,,pending
-sub_40B58,Snake (Stage 13),27900,,,,pending
-sub_40B9C,Snake (Stage 13),27900,,,,pending
-sub_40BAA,Snake (Stage 13),27900,,,,pending
-sub_40BFC,Snake (Stage 13),27900,,,,pending
-sub_40C82,Snake (Stage 13),27900,,,,pending
-sub_2BE60,Snake (Stage 13),28440,,,,pending
-sub_2BEF0,Snake (Stage 13),28440,,,,pending
-sub_2C100,Snake (Stage 13),28440,,,,pending
-sub_2C112,Snake (Stage 13),28440,,,,pending
-sub_2C15E,Snake (Stage 13),28440,,,,pending
-sub_2C17A,Snake (Stage 13),28440,,,,pending
+sub_2E634,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2BFA6,Ship battle (Stage 12),25020,,,Projectile,analyzed
+sub_2E490,Ship battle (Stage 12),25020,,,Enemy,analyzed
+sub_2E672,Ship battle (Stage 12),25020,,,Enemy,analyzed
+sub_DBA0,Sharpsteel boss,25740,,,Stage,analyzed
+sub_2E5E2,Sharpsteel boss,25920,,,Enemy,analyzed
+sub_34874,Sharpsteel boss,25920,,,Sprite,analyzed
+sub_47C1C,Sharpsteel boss,25920,,,Boss,analyzed
+sub_47C96,Sharpsteel boss,25920,,,Boss,analyzed
+sub_47CA6,Sharpsteel boss,25920,,,Boss,analyzed
+sub_47D94,Sharpsteel boss,25920,,,Boss,analyzed
+sub_47DE8,Sharpsteel boss,25920,,,Boss,analyzed
+sub_48690,Sharpsteel boss,25920,,,Boss,analyzed
+sub_48820,Sharpsteel boss,25920,,,Boss,analyzed
+sub_489F0,Sharpsteel boss,25920,,,Boss,analyzed
+sub_48B84,Sharpsteel boss,25920,,,Boss,analyzed
+sub_47E02,Sharpsteel boss,26100,,,Boss,analyzed
+sub_48856,Sharpsteel boss,26100,,,Boss,analyzed
+sub_48940,Sharpsteel boss,26100,,,Boss,analyzed
+sub_47E36,Sharpsteel boss,26460,,,Boss,analyzed
+sub_47E98,Sharpsteel boss,26460,,,Boss,analyzed
+sub_47F3E,Sharpsteel boss,26460,,,Boss,analyzed
+sub_47FA2,Sharpsteel boss,26460,,,Boss,analyzed
+sub_47FCA,Sharpsteel boss,26460,,,Boss,analyzed
+sub_486A4,Sharpsteel boss,26460,,,Boss,analyzed
+sub_486E6,Sharpsteel boss,26460,,,Boss,analyzed
+sub_4871A,Sharpsteel boss,26460,,,Boss,analyzed
+sub_488A0,Sharpsteel boss,26460,,,Boss,analyzed
+sub_2FB54,Sharpsteel boss,26640,,,Enemy,analyzed
+sub_2FB68,Sharpsteel boss,26640,,,Enemy,analyzed
+sub_47F02,Sharpsteel boss,26640,,,Boss,analyzed
+sub_47F24,Sharpsteel boss,26640,,,Boss,analyzed
+sub_47F9C,Sharpsteel boss,26640,,,Boss,analyzed
+sub_481AC,Sharpsteel boss,26640,,,Boss,analyzed
+sub_48802,Sharpsteel boss,26640,,,Boss,analyzed
+sub_4879C,Sharpsteel boss,26820,,,Boss,analyzed
+sub_3ADE,Ship desctruction,27180,,,VBlank,analyzed
+sub_3B4C,Ship desctruction,27180,,,VBlank,analyzed
+sub_DBBC,Ship desctruction,27180,,,Stage,analyzed
+sub_10EC6,Ship desctruction,27180,,,Scroll,analyzed
+sub_2F868,Ship desctruction,27180,Stage_ShipDestructionCheckInput,Checks input flags for scroll updates,Stage,analyzed
+sub_2F8B8,Ship desctruction,27180,Enemy_ShipSpawnDebrisProjectile,Spawns debris projectile with random offset,Enemy,analyzed
+sub_47D80,Ship desctruction,27180,Boss_SharpssteelDefeatFade,Palette fade during defeat sequence,Boss,analyzed
+sub_48F62,Ship desctruction,27180,Boss_SharpssteelSpawnDebris,Spawns 14 debris particles during defeat,Boss,analyzed
+sub_DBCE,Ship desctruction,27360,Stage_TeleportTransition,Transitions to teleport after ship destruction,Stage,analyzed
+sub_DBF4,Ship desctruction,27360,Stage_TeleportFadeIn,Fade in and setup for teleport scene,Stage,analyzed
+sub_DCEE,Teleport after ship desctruction,27540,Stage_TeleportUpdateScroll,Updates scroll position during teleport,Stage,analyzed
+sub_10E14,Teleport after ship desctruction,27540,VDP_SetupDMA,Sets up VDP DMA for VRAM transfer,VDP,analyzed
+sub_119C8,Teleport after ship desctruction,27540,Stage_LoadTeleportGraphics,Loads graphics for teleport scene,Stage,analyzed
+sub_16942,Teleport after ship desctruction,27540,Player_TeleportDash,Player dash effect during teleport,Player,analyzed
+sub_2667C,Teleport after ship desctruction,27540,Gfx_LoadTilesLoop,Main loop for loading tiles to VRAM,Graphics,analyzed
+sub_DCC0,Snake (Stage 13),27720,Stage_SnakeTransition,Transitions to Snake boss stage,Stage,analyzed
+sub_DD0E,Snake (Stage 13),27720,Stage_InitStage13,Initializes Stage 13 (Snake boss),Stage,analyzed
+sub_DD2E,Snake (Stage 13),27720,Stage_SnakeWaitScroll,Waits for scroll position before boss,Stage,analyzed
+sub_E34E,Snake (Stage 13),27720,Scroll_UpdateSnakeBackground,Updates background scroll for Snake stage,Scroll,analyzed
+sub_1B784,Snake (Stage 13),27720,VDP_QueueCommand,Queues VDP command for DMA,VDP,analyzed
+sub_4079E,Snake (Stage 13),27720,Boss_SnakeMain,Main handler for Snake boss,Boss,analyzed
+sub_40854,Snake (Stage 13),27720,Boss_SnakeInit,Initializes Snake boss with 23 segments,Boss,analyzed
+sub_2686,Snake (Stage 13),27900,Gfx_LoadDataToVRAM,Loads graphics data to VRAM,Graphics,analyzed
+sub_81B4,Snake (Stage 13),27900,Sprite_SetGraphicsPointer,Sets sprite graphics pointer from table,Sprite,analyzed
+sub_1202A,Snake (Stage 13),27900,Gfx_LoadSnakePalette,Loads Snake boss palette,Graphics,analyzed
+sub_267CA,Snake (Stage 13),27900,Gfx_TileLoadDispatcher,Dispatches tile loading based on count,Graphics,analyzed
+sub_268D8,Snake (Stage 13),27900,Gfx_LoadObjectData,Loads object data wrapper,Graphics,analyzed
+sub_268E8,Snake (Stage 13),27900,Memory_ClearTileBuffer,Clears tile buffer in RAM,Memory,analyzed
+sub_40942,Snake (Stage 13),27900,Boss_SnakeStartBattle,Starts Snake boss battle phase,Boss,analyzed
+sub_4096C,Snake (Stage 13),27900,Boss_SnakeBattleActive,Active battle state for Snake boss,Boss,analyzed
+sub_4098C,Snake (Stage 13),27900,Boss_SnakeUpdateHeadPosition,Updates Snake head position with wave,Boss,analyzed
+sub_409F0,Snake (Stage 13),27900,Boss_SnakeRandomizeSegments,Randomizes segment sizes,Boss,analyzed
+sub_40AF6,Snake (Stage 13),27900,Boss_SnakeSegmentMain,Main handler for Snake segment,Boss,analyzed
+sub_40B58,Snake (Stage 13),27900,Boss_SnakeSegmentWait,Segment waits to attack,Boss,analyzed
+sub_40B9C,Snake (Stage 13),27900,Boss_SnakeSegmentAttackDelay,Delay after segment attack,Boss,analyzed
+sub_40BAA,Snake (Stage 13),27900,Boss_SnakeSetupProjectile,Sets up projectile from segment,Boss,analyzed
+sub_40BFC,Snake (Stage 13),27900,Boss_SnakeAI,Snake boss AI and movement control,Boss,analyzed
+sub_40C82,Snake (Stage 13),27900,Boss_SnakeUpdateAnimation,Updates Snake animation frame,Boss,analyzed
+sub_2BE60,Snake (Stage 13),28440,Projectile_SpawnMultiPattern,Spawns multiple projectiles in pattern,Projectile,analyzed
+sub_2BEF0,Snake (Stage 13),28440,Projectile_ExplodeOnImpact,Explosion effect when projectile hits,Projectile,analyzed
+sub_2C100,Snake (Stage 13),28440,Projectile_SnakeDispatcher,State dispatcher for Snake projectile,Projectile,analyzed
+sub_2C112,Snake (Stage 13),28440,Projectile_SnakeInit,Initializes Snake projectile,Projectile,analyzed
+sub_2C15E,Snake (Stage 13),28440,Projectile_SnakeWait,Snake projectile wait state,Projectile,analyzed
+sub_2C17A,Snake (Stage 13),28440,Projectile_SnakeSpawn3Way,Spawns 3-way projectile pattern,Projectile,analyzed
 sub_2C1D6,Snake (Stage 13),28440,,,,pending
 sub_2C224,Snake (Stage 13),28440,,,,pending
 sub_40A6E,Snake (Stage 13),28440,,,,pending
