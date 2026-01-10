@@ -1938,166 +1938,166 @@ sub_1A0BA,Sylpheed force,48420,,,Boss,analyzed
 sub_59818,Sylpheed force,48420,,,Boss,analyzed
 sub_59950,Sylpheed force,48420,,,Boss,analyzed
 sub_E8DC,Artemis force,48600,,,Stage,analyzed
-sub_E8FA,Artemis force,48600,Stage_ArtemisCamera,Camera control for Artemis,Stage,analyzed
-sub_EE62,Artemis force,48600,Stage_ArtemisCameraUpdate,Camera position update,Stage,analyzed
-sub_EED8,Artemis force,48600,Stage_ArtemisCameraLock,Camera lock handler,Stage,analyzed
-sub_EF28,Artemis force,48600,Stage_ArtemisGraphicsInit,Graphics initialization,Stage,analyzed
-sub_19F70,Artemis force,48600,Gfx_LoadArtemisTiles,Loads Artemis tiles,Graphics,analyzed
-sub_1A01C,Artemis force,48600,Gfx_LoadArtemisPalette,Loads Artemis palette,Graphics,analyzed
-sub_55136,Artemis force,48600,Boss_ArtemisMain,Main boss handler,Boss,analyzed
-sub_551F6,Artemis force,48600,Boss_ArtemisDispatcher,Boss state dispatcher,Boss,analyzed
-sub_554C0,Artemis force,48600,Boss_ArtemisIntroInit,Intro animation init,Boss,analyzed
-sub_5566C,Artemis force,48600,Boss_ArtemisIntroMove,Intro movement,Boss,analyzed
-sub_57EBE,Artemis force,48600,Boss_ArtemisIntroStop,Intro stop position,Boss,analyzed
-sub_57F36,Artemis force,48600,Boss_ArtemisBattleStart,Battle start initialization,Boss,analyzed
-sub_58002,Artemis force,48600,Boss_ArtemisIdleState,Idle state handler,Boss,analyzed
-sub_5803C,Artemis force,48600,Boss_ArtemisAttackState1,Attack state 1 handler,Boss,analyzed
-sub_58486,Artemis force,48600,Boss_ArtemisAttackState2,Attack state 2 handler,Boss,analyzed
-sub_584EC,Artemis force,48600,Boss_ArtemisAttackState3,Attack state 3 handler,Boss,analyzed
-sub_586BA,Artemis force,48600,Boss_ArtemisMovePattern1,Movement pattern 1,Boss,analyzed
-sub_586F4,Artemis force,48600,Boss_ArtemisMovePattern2,Movement pattern 2,Boss,analyzed
-sub_58756,Artemis force,48600,Boss_ArtemisMovePattern3,Movement pattern 3,Boss,analyzed
-sub_E90A,Artemis force,48780,Stage_ArtemisGraphicsUpdate,Graphics update handler,Stage,analyzed
-sub_E916,Artemis force,48780,Gfx_ArtemisBackground,Background graphics setup,Graphics,analyzed
-sub_E930,Artemis force,48780,Gfx_ArtemisForeground,Foreground graphics setup,Graphics,analyzed
-sub_ECCC,Artemis force,48780,Gfx_ArtemisPlaneUpdate,Plane update handler,Graphics,analyzed
-sub_ECF4,Artemis force,48780,Gfx_ArtemisTileUpdate,Tile update handler,Graphics,analyzed
-sub_EF4C,Artemis force,48780,Gfx_ArtemisPaletteUpdate,Palette update handler,Graphics,analyzed
-sub_F040,Artemis force,48780,Boss_ArtemisShootPattern1,Shooting pattern 1,Boss,analyzed
-sub_58102,Artemis force,48780,Boss_ArtemisShootPattern2,Shooting pattern 2,Boss,analyzed
-sub_5844E,Artemis force,48780,Boss_ArtemisShootPattern3,Shooting pattern 3,Boss,analyzed
-sub_58460,Artemis force,48780,Boss_ArtemisShootPattern4,Shooting pattern 4,Boss,analyzed
-sub_5846E,Artemis force,48780,Boss_ArtemisShootPattern5,Shooting pattern 5,Boss,analyzed
-sub_5847C,Artemis force,48780,Boss_ArtemisShootPattern6,Shooting pattern 6,Boss,analyzed
-sub_F08C,Artemis force,48960,Boss_ArtemisSpawnProjectile1,Spawns projectile type 1,Boss,analyzed
-sub_16A3E,Artemis force,48960,Boss_ArtemisSpawnProjectile2,Spawns projectile type 2,Boss,analyzed
-sub_58136,Artemis force,48960,Boss_ArtemisSpawnProjectile3,Spawns projectile type 3,Boss,analyzed
-sub_58162,Artemis force,48960,Boss_ArtemisSpawnProjectile4,Spawns projectile type 4,Boss,analyzed
-sub_58184,Artemis force,48960,Boss_ArtemisSpawnProjectile5,Spawns projectile type 5,Boss,analyzed
-sub_5818C,Artemis force,48960,Boss_ArtemisSpawnProjectile6,Spawns projectile type 6,Boss,analyzed
-sub_584DC,Artemis force,48960,Projectile_ArtemisMain,Projectile main handler,Projectile,analyzed
-sub_5826E,Artemis force,49140,Projectile_ArtemisBullet1,Bullet projectile type 1,Projectile,analyzed
-sub_58318,Artemis force,49140,Projectile_ArtemisBullet2,Bullet projectile type 2,Projectile,analyzed
-sub_58332,Artemis force,49140,Projectile_ArtemisLaser,Laser projectile handler,Projectile,analyzed
-sub_58384,Artemis force,49140,Projectile_ArtemisHoming,Homing projectile handler,Projectile,analyzed
-sub_5841A,Artemis force,49140,Projectile_ArtemisWave,Wave projectile handler,Projectile,analyzed
-sub_58430,Artemis force,49140,Projectile_ArtemisSpread,Spread projectile handler,Projectile,analyzed
-sub_589E8,Artemis force,49140,Boss_ArtemisUpdateSprites,Updates boss sprites,Boss,analyzed
-sub_58A5E,Artemis force,49140,Boss_ArtemisAnimationScript,Animation script interpreter,Boss,analyzed
-sub_582F4,Artemis force,49320,Boss_ArtemisAnimationUpdate,Animation frame update,Boss,analyzed
-sub_5523C,Sirene force,49500,Stage_SireneTransition,Transition to Sirene form,Stage,analyzed
-sub_55286,Sirene force,49500,Boss_SireneMain,Main boss handler,Boss,analyzed
-sub_556A8,Sirene force,49500,Boss_SireneDispatcher,Boss state dispatcher,Boss,analyzed
-sub_57498,Sirene force,49680,Boss_SireneIntroInit,Intro animation init,Boss,analyzed
-sub_5750E,Sirene force,49680,Boss_SireneIntroMove,Intro movement,Boss,analyzed
-sub_57520,Sirene force,49680,Boss_SireneIntroStop,Intro stop position,Boss,analyzed
-sub_5761C,Sirene force,49680,Boss_SireneBattleStart,Battle start initialization,Boss,analyzed
-sub_57A72,Sirene force,49680,Boss_SireneIdleState,Idle state handler,Boss,analyzed
-sub_57A82,Sirene force,49680,Boss_SireneAttackState1,Attack state 1 handler,Boss,analyzed
-sub_57BCA,Sirene force,49680,Boss_SireneAttackState2,Attack state 2 handler,Boss,analyzed
-sub_57BE6,Sirene force,49680,Boss_SireneAttackState3,Attack state 3 handler,Boss,analyzed
-sub_57C20,Sirene force,49680,Boss_SireneMovePattern1,Movement pattern 1,Boss,analyzed
-sub_57C7A,Sirene force,49680,Boss_SireneMovePattern2,Movement pattern 2,Boss,analyzed
-sub_57C8E,Sirene force,49680,Boss_SireneMovePattern3,Movement pattern 3,Boss,analyzed
-sub_E9A2,Sirene force,49860,Stage_SireneCamera,Camera control for Sirene,Stage,analyzed
-sub_ED32,Sirene force,49860,Stage_SireneGraphicsInit,Graphics initialization,Stage,analyzed
-sub_ED9A,Sirene force,49860,Gfx_LoadSireneTiles,Loads Sirene tiles,Graphics,analyzed
-sub_ED7E,Sirene force,50400,Gfx_LoadSirenePalette,Loads Sirene palette,Graphics,analyzed
-sub_1A274,Sirene force,50400,Gfx_SireneBackground,Background graphics setup,Graphics,analyzed
-sub_576B0,Sirene force,50400,Boss_SireneShootPattern1,Shooting pattern 1,Boss,analyzed
-sub_19D64,Sirene force,50580,Boss_SireneShootPattern2,Shooting pattern 2,Boss,analyzed
-sub_552BA,Sirene force,50580,Boss_SireneShootPattern3,Shooting pattern 3,Boss,analyzed
-sub_83C24,Sirene force,50580,Boss_SireneShootPattern4,Shooting pattern 4,Boss,analyzed
-sub_EA24,Sirene force,50760,Boss_SireneSpawnProjectile1,Spawns projectile type 1,Boss,analyzed
-sub_EA3C,Sirene force,50760,Boss_SireneSpawnProjectile2,Spawns projectile type 2,Boss,analyzed
-sub_5783C,Sirene force,50760,Boss_SireneSpawnProjectile3,Spawns projectile type 3,Boss,analyzed
-sub_579B2,Sirene force,50760,Projectile_SireneMain,Projectile main handler,Projectile,analyzed
-sub_579F4,Sirene force,50760,Projectile_SireneBullet,Bullet projectile handler,Projectile,analyzed
-sub_57D88,Sirene force,50760,Projectile_SireneLaser,Laser projectile handler,Projectile,analyzed
-sub_57DF4,Sirene force,50760,Projectile_SireneHoming,Homing projectile handler,Projectile,analyzed
-sub_831D6,Sirene force,50760,Boss_SireneUpdateSprites,Updates boss sprites,Boss,analyzed
-sub_1A250,Sirene force,50940,Boss_SireneAnimationScript,Animation script interpreter,Boss,analyzed
-sub_EA76,7 forces win cutscene,51120,Cutscene_SevenForcesWinInit,Win cutscene initialization,Cutscene,analyzed
-sub_EDE0,7 forces win cutscene,51120,,,,pending
-sub_5531A,7 forces win cutscene,51120,,,,pending
-sub_55716,7 forces win cutscene,51120,,,,pending
-sub_EAA4,7 forces win cutscene,51300,,,,pending
-sub_EABA,7 forces win cutscene,51300,,,,pending
-sub_EE0A,7 forces win cutscene,51300,,,,pending
-sub_553CC,7 forces win cutscene,51300,,,,pending
-sub_EADA,7 forces win cutscene,51840,,,,pending
-sub_EAF2,7 forces win cutscene,51840,,,,pending
-sub_EB1A,7 forces win cutscene,51840,,,,pending
-sub_EB48,7 forces win cutscene,51840,,,,pending
-sub_EE36,7 forces win cutscene,51840,,,,pending
-sub_EF7A,7 forces win cutscene,51840,,,,pending
-sub_EFE2,7 forces win cutscene,51840,,,,pending
-sub_19EF6,7 forces win cutscene,51840,,,,pending
-sub_553EE,7 forces win cutscene,52020,,,,pending
-sub_5540C,7 forces win cutscene,52020,,,,pending
-sub_5543A,7 forces win cutscene,52020,,,,pending
-sub_5554C,7 forces win cutscene,52020,,,,pending
-sub_F0F0,7 forces win cutscene,52560,,,,pending
-sub_F19A,7 forces win cutscene,52560,,,,pending
-sub_FB3A,7 forces win cutscene,52560,,,,pending
-sub_FB72,7 forces win cutscene,52560,,,,pending
-sub_FBA8,7 forces win cutscene,52560,,,,pending
-sub_12128,7 forces win cutscene,52560,,,,pending
-sub_125EE,7 forces win cutscene,52560,,,,pending
-sub_12648,7 forces win cutscene,52560,,,,pending
-sub_330A6,7 forces win cutscene,52560,,,,pending
-sub_332D0,7 forces win cutscene,52560,,,,pending
-sub_334B2,7 forces win cutscene,52560,,,,pending
-sub_334DC,7 forces win cutscene,52560,,,,pending
-sub_334FE,7 forces win cutscene,52560,,,,pending
-sub_1A06A,7 forces win cutscene,53280,,,,pending
-sub_330F2,Asteroids (Stage 21),53640,,,,pending
-sub_33124,Asteroids (Stage 21),53640,,,,pending
-sub_3313A,Asteroids (Stage 21),53640,,,,pending
-sub_3322E,Asteroids (Stage 21),53640,,,,pending
-sub_33258,Asteroids (Stage 21),53640,,,,pending
-sub_33358,Asteroids (Stage 21),53640,,,,pending
-sub_33402,Asteroids (Stage 21),53640,,,,pending
-sub_334D4,Asteroids (Stage 21),53640,,,,pending
-sub_335CA,Asteroids (Stage 21),53640,,,,pending
-sub_335EE,Asteroids (Stage 21),53640,,,,pending
-sub_33602,Asteroids (Stage 21),53640,,,,pending
-sub_33640,Asteroids (Stage 21),53640,,,,pending
-sub_F218,Asteroids (Stage 21),55080,,,,pending
-sub_F242,Asteroids (Stage 21),55080,,,,pending
-sub_FB24,Asteroids (Stage 21),55080,,,,pending
-sub_F26C,Destroyer Prototype boss,55260,,,,pending
-sub_F288,Destroyer Prototype boss,55440,,,,pending
-sub_314D8,Destroyer Prototype boss,55440,,,,pending
-sub_31540,Destroyer Prototype boss,55440,,,,pending
-sub_31594,Destroyer Prototype boss,55440,,,,pending
-sub_316C4,Destroyer Prototype boss,55440,,,,pending
-sub_316F8,Destroyer Prototype boss,55440,,,,pending
-sub_3171C,Destroyer Prototype boss,55440,,,,pending
-sub_31736,Destroyer Prototype boss,55440,,,,pending
-sub_31768,Destroyer Prototype boss,55440,,,,pending
-sub_31774,Destroyer Prototype boss,55440,,,,pending
-sub_317FE,Destroyer Prototype boss,55440,,,,pending
-sub_31F86,Destroyer Prototype boss,55440,,,,pending
-sub_31FB4,Destroyer Prototype boss,55440,,,,pending
-sub_31830,Destroyer Prototype boss,55620,,,,pending
-sub_318AC,Destroyer Prototype boss,55620,,,,pending
-sub_3178A,Destroyer Prototype boss,55800,,,,pending
-sub_317A8,Destroyer Prototype boss,55800,,,,pending
-sub_318EC,Destroyer Prototype boss,55800,,,,pending
-sub_31A28,Destroyer Prototype boss,55800,,,,pending
-sub_1A0C8,Destroyer Prototype boss,55980,,,,pending
-sub_1A122,Destroyer Prototype boss,55980,,,,pending
-sub_31A46,Destroyer Prototype boss,55980,,,,pending
-sub_31A7E,Destroyer Prototype boss,55980,,,,pending
-sub_31AA2,Destroyer Prototype boss,55980,,,,pending
-sub_31D9A,Destroyer Prototype boss,55980,,,,pending
-sub_31DF6,Destroyer Prototype boss,55980,,,,pending
-sub_31E9C,Destroyer Prototype boss,55980,,,,pending
-sub_32208,Destroyer Prototype boss,55980,,,,pending
-sub_1ADC,Destroyer Prototype boss,56160,,,,pending
-sub_F31C,Destroyer Prototype boss,56160,,,,pending
-sub_FCF4,Destroyer Prototype boss,56160,,,,pending
+sub_E8FA,Artemis force,48600,,,Stage,analyzed
+sub_EE62,Artemis force,48600,,,Stage,analyzed
+sub_EED8,Artemis force,48600,,,Stage,analyzed
+sub_EF28,Artemis force,48600,,,Stage,analyzed
+sub_19F70,Artemis force,48600,,,Graphics,analyzed
+sub_1A01C,Artemis force,48600,,,Graphics,analyzed
+sub_55136,Artemis force,48600,,,Boss,analyzed
+sub_551F6,Artemis force,48600,,,Boss,analyzed
+sub_554C0,Artemis force,48600,,,Boss,analyzed
+sub_5566C,Artemis force,48600,,,Boss,analyzed
+sub_57EBE,Artemis force,48600,,,Boss,analyzed
+sub_57F36,Artemis force,48600,,,Boss,analyzed
+sub_58002,Artemis force,48600,,,Boss,analyzed
+sub_5803C,Artemis force,48600,,,Boss,analyzed
+sub_58486,Artemis force,48600,,,Boss,analyzed
+sub_584EC,Artemis force,48600,,,Boss,analyzed
+sub_586BA,Artemis force,48600,,,Boss,analyzed
+sub_586F4,Artemis force,48600,,,Boss,analyzed
+sub_58756,Artemis force,48600,,,Boss,analyzed
+sub_E90A,Artemis force,48780,,,Stage,analyzed
+sub_E916,Artemis force,48780,,,Graphics,analyzed
+sub_E930,Artemis force,48780,,,Graphics,analyzed
+sub_ECCC,Artemis force,48780,,,Graphics,analyzed
+sub_ECF4,Artemis force,48780,,,Graphics,analyzed
+sub_EF4C,Artemis force,48780,,,Graphics,analyzed
+sub_F040,Artemis force,48780,,,Boss,analyzed
+sub_58102,Artemis force,48780,,,Boss,analyzed
+sub_5844E,Artemis force,48780,,,Boss,analyzed
+sub_58460,Artemis force,48780,,,Boss,analyzed
+sub_5846E,Artemis force,48780,,,Boss,analyzed
+sub_5847C,Artemis force,48780,,,Boss,analyzed
+sub_F08C,Artemis force,48960,,,Boss,analyzed
+sub_16A3E,Artemis force,48960,,,Boss,analyzed
+sub_58136,Artemis force,48960,,,Boss,analyzed
+sub_58162,Artemis force,48960,,,Boss,analyzed
+sub_58184,Artemis force,48960,,,Boss,analyzed
+sub_5818C,Artemis force,48960,,,Boss,analyzed
+sub_584DC,Artemis force,48960,,,Projectile,analyzed
+sub_5826E,Artemis force,49140,,,Projectile,analyzed
+sub_58318,Artemis force,49140,,,Projectile,analyzed
+sub_58332,Artemis force,49140,,,Projectile,analyzed
+sub_58384,Artemis force,49140,,,Projectile,analyzed
+sub_5841A,Artemis force,49140,,,Projectile,analyzed
+sub_58430,Artemis force,49140,,,Projectile,analyzed
+sub_589E8,Artemis force,49140,,,Boss,analyzed
+sub_58A5E,Artemis force,49140,,,Boss,analyzed
+sub_582F4,Artemis force,49320,,,Boss,analyzed
+sub_5523C,Sirene force,49500,,,Stage,analyzed
+sub_55286,Sirene force,49500,,,Boss,analyzed
+sub_556A8,Sirene force,49500,,,Boss,analyzed
+sub_57498,Sirene force,49680,,,Boss,analyzed
+sub_5750E,Sirene force,49680,,,Boss,analyzed
+sub_57520,Sirene force,49680,,,Boss,analyzed
+sub_5761C,Sirene force,49680,,,Boss,analyzed
+sub_57A72,Sirene force,49680,,,Boss,analyzed
+sub_57A82,Sirene force,49680,,,Boss,analyzed
+sub_57BCA,Sirene force,49680,,,Boss,analyzed
+sub_57BE6,Sirene force,49680,,,Boss,analyzed
+sub_57C20,Sirene force,49680,,,Boss,analyzed
+sub_57C7A,Sirene force,49680,,,Boss,analyzed
+sub_57C8E,Sirene force,49680,,,Boss,analyzed
+sub_E9A2,Sirene force,49860,,,Stage,analyzed
+sub_ED32,Sirene force,49860,,,Stage,analyzed
+sub_ED9A,Sirene force,49860,,,Graphics,analyzed
+sub_ED7E,Sirene force,50400,,,Graphics,analyzed
+sub_1A274,Sirene force,50400,,,Graphics,analyzed
+sub_576B0,Sirene force,50400,,,Boss,analyzed
+sub_19D64,Sirene force,50580,,,Boss,analyzed
+sub_552BA,Sirene force,50580,,,Boss,analyzed
+sub_83C24,Sirene force,50580,,,Boss,analyzed
+sub_EA24,Sirene force,50760,,,Boss,analyzed
+sub_EA3C,Sirene force,50760,,,Boss,analyzed
+sub_5783C,Sirene force,50760,,,Boss,analyzed
+sub_579B2,Sirene force,50760,,,Projectile,analyzed
+sub_579F4,Sirene force,50760,,,Projectile,analyzed
+sub_57D88,Sirene force,50760,,,Projectile,analyzed
+sub_57DF4,Sirene force,50760,,,Projectile,analyzed
+sub_831D6,Sirene force,50760,,,Boss,analyzed
+sub_1A250,Sirene force,50940,,,Boss,analyzed
+sub_EA76,7 forces win cutscene,51120,,,Cutscene,analyzed
+sub_EDE0,7 forces win cutscene,51120,Cutscene_SevenForcesCamera1,Camera scroll handler 1,Cutscene,analyzed
+sub_5531A,7 forces win cutscene,51120,Cutscene_SevenForcesExplosions,Spawns explosion effects,Cutscene,analyzed
+sub_55716,7 forces win cutscene,51120,Cutscene_SevenForcesTransition,Transition after victory,Cutscene,analyzed
+sub_EAA4,7 forces win cutscene,51300,Cutscene_SevenForcesState1,Cutscene state handler 1,Cutscene,analyzed
+sub_EABA,7 forces win cutscene,51300,Cutscene_SevenForcesState2,Cutscene state handler 2,Cutscene,analyzed
+sub_EE0A,7 forces win cutscene,51300,Cutscene_SevenForcesCamera2,Camera scroll handler 2,Cutscene,analyzed
+sub_553CC,7 forces win cutscene,51300,Cutscene_SevenForcesWaitState,Wait state with timer,Cutscene,analyzed
+sub_EADA,7 forces win cutscene,51840,Cutscene_SevenForcesState3,Cutscene state handler 3,Cutscene,analyzed
+sub_EAF2,7 forces win cutscene,51840,Cutscene_SevenForcesState4,Cutscene state handler 4,Cutscene,analyzed
+sub_EB1A,7 forces win cutscene,51840,Cutscene_SevenForcesState5,Cutscene state handler 5,Cutscene,analyzed
+sub_EB48,7 forces win cutscene,51840,Cutscene_SevenForcesState6,Cutscene state handler 6,Cutscene,analyzed
+sub_EE36,7 forces win cutscene,51840,Cutscene_SevenForcesCamera3,Camera scroll handler 3,Cutscene,analyzed
+sub_EF7A,7 forces win cutscene,51840,Cutscene_SevenForcesLoadGraphics,Loads cutscene graphics,Graphics,analyzed
+sub_EFE2,7 forces win cutscene,51840,Cutscene_SevenForcesCheckComplete,Checks cutscene completion,Cutscene,analyzed
+sub_19EF6,7 forces win cutscene,51840,Cutscene_SevenForcesSoundEffect,Plays victory sound effect,Cutscene,analyzed
+sub_553EE,7 forces win cutscene,52020,Cutscene_SevenForcesEffect1,Visual effect handler 1,Cutscene,analyzed
+sub_5540C,7 forces win cutscene,52020,Cutscene_SevenForcesEffect2,Visual effect handler 2,Cutscene,analyzed
+sub_5543A,7 forces win cutscene,52020,Cutscene_SevenForcesEffect3,Visual effect handler 3,Cutscene,analyzed
+sub_5554C,7 forces win cutscene,52020,Cutscene_SevenForcesEffect4,Visual effect handler 4,Cutscene,analyzed
+sub_F0F0,7 forces win cutscene,52560,Stage_TransitionInit,Stage transition initialization,Stage,analyzed
+sub_F19A,7 forces win cutscene,52560,Stage_TransitionGraphics,Transition graphics handler,Stage,analyzed
+sub_FB3A,7 forces win cutscene,52560,Stage_ScrollUpdate1,Scroll update handler 1,Stage,analyzed
+sub_FB72,7 forces win cutscene,52560,Stage_ScrollUpdate2,Scroll update handler 2,Stage,analyzed
+sub_FBA8,7 forces win cutscene,52560,Stage_ScrollUpdate3,Scroll update handler 3,Stage,analyzed
+sub_12128,7 forces win cutscene,52560,Stage_LoadTiles1,Loads stage tiles 1,Graphics,analyzed
+sub_125EE,7 forces win cutscene,52560,Stage_LoadTiles2,Loads stage tiles 2,Graphics,analyzed
+sub_12648,7 forces win cutscene,52560,Stage_LoadPalette,Loads stage palette,Graphics,analyzed
+sub_330A6,7 forces win cutscene,52560,Enemy_TrackerWinMain,Tracker enemy main (win cutscene),Enemy,analyzed
+sub_332D0,7 forces win cutscene,52560,Enemy_TrackerWinMovement,Tracker movement (win cutscene),Enemy,analyzed
+sub_334B2,7 forces win cutscene,52560,Enemy_TrackerWinFollow,Tracker follow player (win cutscene),Enemy,analyzed
+sub_334DC,7 forces win cutscene,52560,Enemy_TrackerWinInitSprite,Initialize tracker sprite (win),Enemy,analyzed
+sub_334FE,7 forces win cutscene,52560,Enemy_TrackerWinSpawnBullet,Spawns tracker bullets (win),Enemy,analyzed
+sub_1A06A,7 forces win cutscene,53280,Gfx_UpdateTrackerSprites,Updates tracker sprites,Graphics,analyzed
+sub_330F2,Asteroids (Stage 21),53640,Enemy_TrackerSt21State1,Tracker state 1 (Stage 21),Enemy,analyzed
+sub_33124,Asteroids (Stage 21),53640,Enemy_TrackerSt21State2,Tracker state 2 (Stage 21),Enemy,analyzed
+sub_3313A,Asteroids (Stage 21),53640,Enemy_TrackerSt21SpawnInit,Tracker spawn init (Stage 21),Enemy,analyzed
+sub_3322E,Asteroids (Stage 21),53640,Enemy_TrackerSt21Attack1,Tracker attack 1 (Stage 21),Enemy,analyzed
+sub_33258,Asteroids (Stage 21),53640,Enemy_TrackerSt21Attack2,Tracker attack 2 (Stage 21),Enemy,analyzed
+sub_33358,Asteroids (Stage 21),53640,Enemy_TrackerSt21Damage,Tracker damage (Stage 21),Enemy,analyzed
+sub_33402,Asteroids (Stage 21),53640,Enemy_TrackerSt21Destroy,Tracker destroy (Stage 21),Enemy,analyzed
+sub_334D4,Asteroids (Stage 21),53640,Enemy_TrackerSt21OffScreen,Tracker off-screen (Stage 21),Enemy,analyzed
+sub_335CA,Asteroids (Stage 21),53640,Enemy_TrackerSt21Collision,Tracker collision (Stage 21),Enemy,analyzed
+sub_335EE,Asteroids (Stage 21),53640,Projectile_TrackerSt21Bullet,Tracker bullet (Stage 21),Projectile,analyzed
+sub_33602,Asteroids (Stage 21),53640,Enemy_TrackerSt21UpdateAI,Tracker AI update (Stage 21),Enemy,analyzed
+sub_33640,Asteroids (Stage 21),53640,Enemy_TrackerSt21Animation,Tracker animation (Stage 21),Enemy,analyzed
+sub_F218,Asteroids (Stage 21),55080,Stage_AsteroidsTransition,Transition to asteroids,Stage,analyzed
+sub_F242,Asteroids (Stage 21),55080,Stage_AsteroidsScrollHandler,Asteroids scroll handler,Stage,analyzed
+sub_FB24,Asteroids (Stage 21),55080,Stage_AsteroidsGraphicsUpdate,Graphics update handler,Stage,analyzed
+sub_F26C,Destroyer Prototype boss,55260,Boss_DestroyerProtoTransition,Transition to boss,Boss,analyzed
+sub_F288,Destroyer Prototype boss,55440,Boss_DestroyerProtoInit,Boss initialization,Boss,analyzed
+sub_314D8,Destroyer Prototype boss,55440,Boss_DestroyerProtoMain,Main boss handler,Boss,analyzed
+sub_31540,Destroyer Prototype boss,55440,Boss_DestroyerProtoGfxUpdate,Boss graphics update,Boss,analyzed
+sub_31594,Destroyer Prototype boss,55440,Boss_DestroyerProtoIntroInit,Intro animation init,Boss,analyzed
+sub_316C4,Destroyer Prototype boss,55440,Boss_DestroyerProtoIntroMove,Intro movement,Boss,analyzed
+sub_316F8,Destroyer Prototype boss,55440,Boss_DestroyerProtoCollision,Boss collision handler,Boss,analyzed
+sub_3171C,Destroyer Prototype boss,55440,Boss_DestroyerProtoBounds,Boss boundary check,Boss,analyzed
+sub_31736,Destroyer Prototype boss,55440,Boss_DestroyerProtoVelocity,Boss velocity handler,Boss,analyzed
+sub_31768,Destroyer Prototype boss,55440,Boss_DestroyerProtoState1,Boss state handler 1,Boss,analyzed
+sub_31774,Destroyer Prototype boss,55440,Boss_DestroyerProtoState2,Boss state handler 2,Boss,analyzed
+sub_317FE,Destroyer Prototype boss,55440,Boss_DestroyerProtoState3,Boss state handler 3,Boss,analyzed
+sub_31F86,Destroyer Prototype boss,55440,Boss_DestroyerProtoState4,Boss state handler 4,Boss,analyzed
+sub_31FB4,Destroyer Prototype boss,55440,Boss_DestroyerProtoState5,Boss state handler 5,Boss,analyzed
+sub_31830,Destroyer Prototype boss,55620,Boss_DestroyerProtoAttack1,Attack pattern 1,Boss,analyzed
+sub_318AC,Destroyer Prototype boss,55620,Boss_DestroyerProtoAttack2,Attack pattern 2,Boss,analyzed
+sub_3178A,Destroyer Prototype boss,55800,Boss_DestroyerProtoTurretClose,Close turret hatches,Boss,analyzed
+sub_317A8,Destroyer Prototype boss,55800,Boss_DestroyerProtoTurretOpen,Open turret hatches,Boss,analyzed
+sub_318EC,Destroyer Prototype boss,55800,Boss_DestroyerProtoAttack3,Attack pattern 3,Boss,analyzed
+sub_31A28,Destroyer Prototype boss,55800,Boss_DestroyerProtoAttack4,Attack pattern 4,Boss,analyzed
+sub_1A0C8,Destroyer Prototype boss,55980,Boss_DestroyerProtoDefeatInit,Defeat sequence init,Boss,analyzed
+sub_1A122,Destroyer Prototype boss,55980,Boss_DestroyerProtoDefeatAnim,Defeat animation handler,Boss,analyzed
+sub_31A46,Destroyer Prototype boss,55980,Boss_DestroyerProtoShootPattern1,Shooting pattern 1,Boss,analyzed
+sub_31A7E,Destroyer Prototype boss,55980,Boss_DestroyerProtoShootPattern2,Shooting pattern 2,Boss,analyzed
+sub_31AA2,Destroyer Prototype boss,55980,Boss_DestroyerProtoShootPattern3,Shooting pattern 3,Boss,analyzed
+sub_31D9A,Destroyer Prototype boss,55980,Boss_DestroyerProtoSpawnProjectile1,Spawns projectile type 1,Boss,analyzed
+sub_31DF6,Destroyer Prototype boss,55980,Boss_DestroyerProtoSpawnProjectile2,Spawns projectile type 2,Boss,analyzed
+sub_31E9C,Destroyer Prototype boss,55980,Boss_DestroyerProtoSpawnProjectile3,Spawns projectile type 3,Boss,analyzed
+sub_32208,Destroyer Prototype boss,55980,Projectile_DestroyerProtoMain,Projectile main handler,Projectile,analyzed
+sub_1ADC,Destroyer Prototype boss,56160,Boss_DestroyerProtoUpdateSprites,Updates boss sprites,Boss,analyzed
+sub_F31C,Destroyer Prototype boss,56160,Boss_DestroyerProtoAnimationScript,Animation script interpreter,Boss,analyzed
+sub_FCF4,Destroyer Prototype boss,56160,Boss_DestroyerProtoPaletteInit,Palette initialization,Boss,analyzed
 sub_FD32,Destroyer Prototype boss,56160,,,,pending
 sub_29F08,Destroyer Prototype boss,56160,,,,pending
 sub_31F5E,Destroyer Prototype boss,56160,,,,pending
