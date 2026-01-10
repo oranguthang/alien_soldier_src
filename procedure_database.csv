@@ -1418,126 +1418,126 @@ sub_43738,Sunset Sting boss,32400,,,Boss,analyzed
 sub_43858,Sunset Sting boss,32400,,,Boss,analyzed
 sub_4389E,Sunset Sting boss,32400,,,Boss,analyzed
 sub_438AE,Sunset Sting boss,32400,,,Boss,analyzed
-sub_827F0,Sunset Sting boss,32400,Sound_ProcessChannelCommand,Processes sound channel command,Sound,analyzed
-sub_434E2,Sunset Sting boss,32580,Boss_SunsetStingSegmentWobble,Segment wobble before fall,Boss,analyzed
-sub_43816,Sunset Sting boss,32580,Boss_SunsetStingSegmentDestroyInit,Initializes segment destruction,Boss,analyzed
-sub_8399A,Sunset Sting boss,32760,Sound_SetTempoCommand,Sets music tempo,Sound,analyzed
-sub_4310C,Sunset Sting boss,32940,Boss_SunsetStingDefeatPhase,Defeat phase with screen clear,Boss,analyzed
-sub_431A4,Sunset Sting boss,32940,Boss_SunsetStingDefeatWobble,Wobble effect during defeat,Boss,analyzed
-sub_431C2,Sunset Sting boss,32940,Boss_SunsetStingSpawnDebrisRain,Spawns debris rain projectiles,Boss,analyzed
-sub_434F6,Sunset Sting boss,32940,Boss_SunsetStingSegmentConvertToProjectile,Converts segment to projectile,Boss,analyzed
-sub_43830,Sunset Sting boss,32940,Boss_SunsetStingSegmentFalling,Segment falling state,Boss,analyzed
-sub_43226,Sunset Sting boss,33300,Boss_SunsetStingFinalDefeat,Final defeat sequence,Boss,analyzed
-sub_43294,Sunset Sting boss,33300,Boss_SunsetStingDefeatFadeOut,Fade out after defeat,Boss,analyzed
-sub_432B0,Sunset Sting boss,33300,Gfx_ApplyDefeatFade,Applies defeat palette fade,Graphics,analyzed
-sub_DF34,Sunset Sting boss,33480,Stage_PostSunsetStingTransition,Transition after Sunset Sting,Stage,analyzed
-sub_DF3C,Viblack mini-boss (Stage 16),33660,Stage_ViblackScroll,Viblack stage scroll handler,Stage,analyzed
-sub_DF5E,Viblack mini-boss (Stage 16),33660,Stage_ViblackStartBattle,Starts Viblack battle,Stage,analyzed
-sub_DF6C,Viblack mini-boss (Stage 16),33660,Stage_ViblackInit,Initializes Viblack mini-boss,Stage,analyzed
-sub_1019A,Viblack mini-boss (Stage 16),33660,Camera_ConstrainToScreenBounds,Constrains camera to screen bounds,Camera,analyzed
-sub_1119E,Viblack mini-boss (Stage 16),33660,Gfx_AdjustTileIndices,Adjusts tile pattern indices,Graphics,analyzed
-sub_19D4E,Viblack mini-boss (Stage 16),33660,Player_ViblackIntro,Player setup for Viblack intro,Player,analyzed
-sub_4398C,Viblack mini-boss (Stage 16),33660,Boss_ViblackMain,Main Viblack mini-boss handler,Boss,analyzed
-sub_439FC,Viblack mini-boss (Stage 16),33660,Boss_ViblackInit,Initializes Viblack mini-boss,Boss,analyzed
-sub_43B28,Viblack mini-boss (Stage 16),33660,Boss_ViblackDescend,Viblack descends from top,Boss,analyzed
-sub_43B84,Viblack mini-boss (Stage 16),33660,Boss_ViblackFallOffScreen,Viblack falls off screen,Boss,analyzed
-sub_43FE4,Viblack mini-boss (Stage 16),33660,Boss_ViblackUpdatePosition,Updates Viblack position,Boss,analyzed
-sub_43FEA,Viblack mini-boss (Stage 16),33660,Boss_ViblackUpdateAngle,Updates rotation angle,Boss,analyzed
-sub_440D0,Viblack mini-boss (Stage 16),33660,Boss_ViblackSpawnRing,Spawns ring projectile,Boss,analyzed
-sub_DF92,Viblack mini-boss (Stage 16),33840,Stage_Stage17Transition,Transitions to Stage 17,Stage,analyzed
-sub_12090,Viblack mini-boss (Stage 16),33840,Stage_LoadStage17Graphics,Loads Stage 17 graphics,Stage,analyzed
-sub_14416,Viblack mini-boss (Stage 16),33840,Enemy_Stage17Init,Initializes Stage 17 enemies,Enemy,analyzed
-sub_16928,Viblack mini-boss (Stage 16),33840,Player_UpdateForceWeapon,Updates force weapon sprite,Player,analyzed
-sub_2D77E,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerMain,Stage 17 walker enemy main handler,Enemy,analyzed
-sub_2D7AE,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerInit,Initializes walker enemy,Enemy,analyzed
-sub_2D7C8,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerWalk,Walker walking state,Enemy,analyzed
-sub_2D802,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerTurn,Walker turning state,Enemy,analyzed
-sub_2D834,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerAttack,Walker attack state,Enemy,analyzed
-sub_2D844,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerCheckEdge,Checks if at edge,Enemy,analyzed
-sub_2D874,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerDeath,Walker death state,Enemy,analyzed
-sub_2D886,Viblack mini-boss (Stage 16),33840,Enemy_Stage17WalkerUpdateSprite,Updates walker sprite,Enemy,analyzed
-sub_2D9BA,Viblack mini-boss (Stage 16),33840,Projectile_Stage17WalkerShot,Walker projectile handler,Projectile,analyzed
-sub_43BE2,Viblack mini-boss (Stage 16),33840,Boss_ViblackDefeatCheck,Checks defeat condition,Boss,analyzed
-sub_43C46,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_442C2,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_44368,Viblack mini-boss (Stage 16),33840,,,,pending
-sub_DFD2,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_DFDE,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_43D62,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_43DAA,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_43FBC,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_43FC4,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_44100,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_44128,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_4427C,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_443A4,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_444C2,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_44628,Viblack mini-boss (Stage 16),34020,,,,pending
-sub_E056,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_E0A2,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_E110,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_2D8CC,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_43DC0,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_43DDE,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_43E44,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_43FD4,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_4418E,Viblack mini-boss (Stage 16),34200,,,,pending
-sub_43EF0,Back Stringer boss,34380,,,,pending
-sub_43F66,Back Stringer boss,34560,,,,pending
-sub_343E6,Back Stringer boss,34740,,,,pending
-sub_43F74,Back Stringer boss,34740,,,,pending
-sub_441EC,Back Stringer boss,34740,,,,pending
-sub_446AE,Back Stringer boss,34740,,,,pending
-sub_44740,Back Stringer boss,34740,,,,pending
-sub_4475A,Back Stringer boss,34740,,,,pending
-sub_4484A,Back Stringer boss,34740,,,,pending
-sub_44F50,Back Stringer boss,34740,,,,pending
-sub_44F60,Back Stringer boss,34740,,,,pending
-sub_44FBE,Back Stringer boss,34740,,,,pending
-sub_44FDA,Back Stringer boss,34740,,,,pending
-sub_4522C,Back Stringer boss,34740,,,,pending
-sub_4526C,Back Stringer boss,34740,,,,pending
-sub_45410,Back Stringer boss,34740,,,,pending
-sub_83990,Back Stringer boss,34920,,,,pending
-sub_4506E,Back Stringer boss,35100,,,,pending
-sub_45696,Back Stringer boss,35100,,,,pending
-sub_44E6E,Back Stringer boss,35640,,,,pending
-sub_44ECC,Back Stringer boss,35640,,,,pending
-sub_45A90,Back Stringer boss,35640,,,,pending
-sub_44F12,Back Stringer boss,35820,,,,pending
-sub_E11C,Epsilon1 intro (Stage 17),36000,,,,pending
-sub_195C,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_415E,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_E1C0,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_E1F2,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_11046,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_46D68,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_46F62,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_46F80,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_46FE0,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_47068,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_472C0,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_472D8,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_472E4,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_472F6,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_4734A,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_47374,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_47382,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_4739E,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_473C8,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_47440,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_47B8E,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_47BA2,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_47BD4,Epsilon1 intro (Stage 17),36180,,,,pending
-sub_470BC,Epsilon1 intro (Stage 17),36540,,,,pending
-sub_47BEA,Epsilon1 intro (Stage 17),36540,,,,pending
-sub_E1D6,Epsilon1 boss,36900,,,,pending
-sub_E1E8,Epsilon1 boss,36900,,,,pending
-sub_47C0E,Epsilon1 boss,36900,,,,pending
-sub_45AD0,Epsilon1 boss,37080,,,,pending
-sub_45CE4,Epsilon1 boss,37080,,,,pending
-sub_45D70,Epsilon1 boss,37080,,,,pending
-sub_45D8E,Epsilon1 boss,37080,,,,pending
+sub_827F0,Sunset Sting boss,32400,,,Sound,analyzed
+sub_434E2,Sunset Sting boss,32580,,,Boss,analyzed
+sub_43816,Sunset Sting boss,32580,,,Boss,analyzed
+sub_8399A,Sunset Sting boss,32760,,,Sound,analyzed
+sub_4310C,Sunset Sting boss,32940,,,Boss,analyzed
+sub_431A4,Sunset Sting boss,32940,,,Boss,analyzed
+sub_431C2,Sunset Sting boss,32940,,,Boss,analyzed
+sub_434F6,Sunset Sting boss,32940,,,Boss,analyzed
+sub_43830,Sunset Sting boss,32940,,,Boss,analyzed
+sub_43226,Sunset Sting boss,33300,,,Boss,analyzed
+sub_43294,Sunset Sting boss,33300,,,Boss,analyzed
+sub_432B0,Sunset Sting boss,33300,,,Graphics,analyzed
+sub_DF34,Sunset Sting boss,33480,,,Stage,analyzed
+sub_DF3C,Viblack mini-boss (Stage 16),33660,,,Stage,analyzed
+sub_DF5E,Viblack mini-boss (Stage 16),33660,,,Stage,analyzed
+sub_DF6C,Viblack mini-boss (Stage 16),33660,,,Stage,analyzed
+sub_1019A,Viblack mini-boss (Stage 16),33660,,,Camera,analyzed
+sub_1119E,Viblack mini-boss (Stage 16),33660,,,Graphics,analyzed
+sub_19D4E,Viblack mini-boss (Stage 16),33660,,,Player,analyzed
+sub_4398C,Viblack mini-boss (Stage 16),33660,,,Boss,analyzed
+sub_439FC,Viblack mini-boss (Stage 16),33660,,,Boss,analyzed
+sub_43B28,Viblack mini-boss (Stage 16),33660,,,Boss,analyzed
+sub_43B84,Viblack mini-boss (Stage 16),33660,,,Boss,analyzed
+sub_43FE4,Viblack mini-boss (Stage 16),33660,,,Boss,analyzed
+sub_43FEA,Viblack mini-boss (Stage 16),33660,,,Boss,analyzed
+sub_440D0,Viblack mini-boss (Stage 16),33660,,,Boss,analyzed
+sub_DF92,Viblack mini-boss (Stage 16),33840,,,Stage,analyzed
+sub_12090,Viblack mini-boss (Stage 16),33840,,,Stage,analyzed
+sub_14416,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_16928,Viblack mini-boss (Stage 16),33840,,,Player,analyzed
+sub_2D77E,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_2D7AE,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_2D7C8,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_2D802,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_2D834,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_2D844,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_2D874,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_2D886,Viblack mini-boss (Stage 16),33840,,,Enemy,analyzed
+sub_2D9BA,Viblack mini-boss (Stage 16),33840,,,Projectile,analyzed
+sub_43BE2,Viblack mini-boss (Stage 16),33840,,,Boss,analyzed
+sub_43C46,Viblack mini-boss (Stage 16),33840,Boss_ViblackAttackState,Attack state with timer and projectile spawning,Boss,analyzed
+sub_442C2,Viblack mini-boss (Stage 16),33840,Boss_ViblackMoveToTarget,Calculates movement toward target using arctan2,Boss,analyzed
+sub_44368,Viblack mini-boss (Stage 16),33840,Boss_ViblackSpawnWalkerShot,Periodically spawns walker shot projectiles,Boss,analyzed
+sub_DFD2,Viblack mini-boss (Stage 16),34020,Stage_ViblackPostBattleScroll1,Post-Viblack scroll handler,Stage,analyzed
+sub_DFDE,Viblack mini-boss (Stage 16),34020,Stage_ViblackPostBattleScroll2,Scroll with screen transition and palette fade,Stage,analyzed
+sub_43D62,Viblack mini-boss (Stage 16),34020,Boss_ViblackDefeatInit,Initializes defeat sequence,Boss,analyzed
+sub_43DAA,Viblack mini-boss (Stage 16),34020,Boss_ViblackDefeatWait,Waiting state with timer countdown,Boss,analyzed
+sub_43FBC,Viblack mini-boss (Stage 16),34020,Boss_ViblackUpdateSpriteAndSpawn,Updates sprite and spawns projectiles,Boss,analyzed
+sub_43FC4,Viblack mini-boss (Stage 16),34020,Boss_ViblackUpdateAll,"Updates position, palette and spawns rings",Boss,analyzed
+sub_44100,Viblack mini-boss (Stage 16),34020,Boss_ViblackSetRandomTarget,Sets random target position,Boss,analyzed
+sub_44128,Viblack mini-boss (Stage 16),34020,Boss_ViblackSpawnRandomRings,Spawns ring projectiles at random positions,Boss,analyzed
+sub_4427C,Viblack mini-boss (Stage 16),34020,Boss_ViblackSpawnRandomProjectiles,Spawns random projectiles periodically,Boss,analyzed
+sub_443A4,Viblack mini-boss (Stage 16),34020,Boss_ViblackSpawnChain,Spawns chain of connected projectiles,Boss,analyzed
+sub_444C2,Viblack mini-boss (Stage 16),34020,Projectile_ViblackChainMain,Chain projectile main handler,Projectile,analyzed
+sub_44628,Viblack mini-boss (Stage 16),34020,Projectile_ViblackChainSegment,Chain segment handler,Projectile,analyzed
+sub_E056,Viblack mini-boss (Stage 16),34200,Stage_PostViblackTransition,Stage transition after Viblack,Stage,analyzed
+sub_E0A2,Viblack mini-boss (Stage 16),34200,Stage_PostViblackFade,Palette fade transition,Stage,analyzed
+sub_E110,Viblack mini-boss (Stage 16),34200,Stage_PostViblackScrollDecel,Scroll speed deceleration,Stage,analyzed
+sub_2D8CC,Viblack mini-boss (Stage 16),34200,Enemy_ClearAndSpawnQuadProjectiles,Clears state and spawns quad projectiles,Enemy,analyzed
+sub_43DC0,Viblack mini-boss (Stage 16),34200,Boss_ViblackDefeatMoveUp,Move up state with acceleration,Boss,analyzed
+sub_43DDE,Viblack mini-boss (Stage 16),34200,Boss_ViblackDefeatMoveDown,Move down with deceleration and stage setup,Boss,analyzed
+sub_43E44,Viblack mini-boss (Stage 16),34200,Boss_ViblackRopePhysics,Boss rope/tentacle physics calculation,Boss,analyzed
+sub_43FD4,Viblack mini-boss (Stage 16),34200,Boss_ViblackUpdatePosAndPalette,Updates position and palette,Boss,analyzed
+sub_4418E,Viblack mini-boss (Stage 16),34200,Boss_ViblackSpawnRandomProjectile2,Spawns random projectiles,Boss,analyzed
+sub_43EF0,Back Stringer boss,34380,Boss_BackStringerTimerState,Timer-based state with stage transition,Boss,analyzed
+sub_43F66,Back Stringer boss,34560,Boss_BackStringerSetDownVelocity,Sets downward velocity,Boss,analyzed
+sub_343E6,Back Stringer boss,34740,Boss_BackStringerUpdateMetasprite,Updates metasprite parts,Boss,analyzed
+sub_43F74,Back Stringer boss,34740,Boss_BackStringerTransitionFinish,Final state transition with palette load,Boss,analyzed
+sub_441EC,Back Stringer boss,34740,Boss_BackStringerSpawnDebris,Spawns random projectiles and debris,Boss,analyzed
+sub_446AE,Back Stringer boss,34740,Boss_BackStringerMain,Main boss handler dispatcher,Boss,analyzed
+sub_44740,Back Stringer boss,34740,Boss_BackStringerInit,Initial state waiting for start,Boss,analyzed
+sub_4475A,Back Stringer boss,34740,Boss_BackStringerSpawn,Boss initialization with metasprite setup,Boss,analyzed
+sub_4484A,Back Stringer boss,34740,Boss_BackStringerAttackStateMachine,Complex multi-phase attack state machine,Boss,analyzed
+sub_44F50,Back Stringer boss,34740,Boss_BackStringerUpdateRender,Updates boss rendering,Boss,analyzed
+sub_44F60,Back Stringer boss,34740,Boss_BackStringerUpdatePalette,Updates palette cycling,Boss,analyzed
+sub_44FBE,Back Stringer boss,34740,Boss_BackStringerUpdateArms,Updates arm sprite orientation,Boss,analyzed
+sub_44FDA,Back Stringer boss,34740,Boss_BackStringerCalcSpriteAngle,Calculates sprite angle and graphics,Boss,analyzed
+sub_4522C,Back Stringer boss,34740,Boss_BackStringerApplyCircularMotion,Applies circular motion,Boss,analyzed
+sub_4526C,Back Stringer boss,34740,Boss_BackStringerAnimatePose,Animates boss pose from script,Boss,analyzed
+sub_45410,Back Stringer boss,34740,Anim_BackStringerCalcInterpolation,Calculates animation interpolation,Animation,analyzed
+sub_83990,Back Stringer boss,34920,Sound_SetRegisterValue,Sets sound register value,Sound,analyzed
+sub_4506E,Back Stringer boss,35100,Boss_BackStringerInitProjectileSlots,Initializes projectile slots,Boss,analyzed
+sub_45696,Back Stringer boss,35100,Projectile_BackStringerRopeSegment,Rope/chain segment handler,Projectile,analyzed
+sub_44E6E,Back Stringer boss,35640,Boss_BackStringerDefeatInit,Defeat sequence initialization,Boss,analyzed
+sub_44ECC,Back Stringer boss,35640,Boss_BackStringerInitChainSegments,Initializes chain segments with velocity,Boss,analyzed
+sub_45A90,Back Stringer boss,35640,Projectile_BackStringerChainFalling,Chain segment falling state,Projectile,analyzed
+sub_44F12,Back Stringer boss,35820,Boss_BackStringerDefeatFadeOut,Defeat fade out with timer,Boss,analyzed
+sub_E11C,Epsilon1 intro (Stage 17),36000,Stage_Epsilon1Init,Stage initialization and transition,Stage,analyzed
+sub_195C,Epsilon1 intro (Stage 17),36180,VBlank_Epsilon1ScrollEffect,VBlank effect handler for scroll,VBlank,analyzed
+sub_415E,Epsilon1 intro (Stage 17),36180,Gfx_Epsilon1UpdatePalette,Updates palette colors,Graphics,analyzed
+sub_E1C0,Epsilon1 intro (Stage 17),36180,Stage_Epsilon1Scroll,Stage scroll handler,Stage,analyzed
+sub_E1F2,Epsilon1 intro (Stage 17),36180,Stage_Epsilon1UpdateScrollParallax,Updates scroll position and parallax,Stage,analyzed
+sub_11046,Epsilon1 intro (Stage 17),36180,Gfx_SetSpritePattern,Sets sprite pattern index,Graphics,analyzed
+sub_46D68,Epsilon1 intro (Stage 17),36180,Boss_Epsilon1IntroMain,Boss intro main handler,Boss,analyzed
+sub_46F62,Epsilon1 intro (Stage 17),36180,Boss_Epsilon1IntroDispatcher,Boss intro state dispatcher,Boss,analyzed
+sub_46F80,Epsilon1 intro (Stage 17),36180,Boss_Epsilon1ShuffleArray,Shuffles array elements,Boss,analyzed
+sub_46FE0,Epsilon1 intro (Stage 17),36180,Boss_Epsilon1SpawnProjectile,Spawns projectile and calculates position,Boss,analyzed
+sub_47068,Epsilon1 intro (Stage 17),36180,Boss_Epsilon1InitProjectileSprite,Initializes projectile sprite,Boss,analyzed
+sub_472C0,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1IntroMain,Projectile main handler,Projectile,analyzed
+sub_472D8,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1SetTimer,Sets initial timer,Projectile,analyzed
+sub_472E4,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1CountdownTimer,Counts down timer,Projectile,analyzed
+sub_472F6,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1SpawnPattern,Spawns multiple projectiles in pattern,Projectile,analyzed
+sub_4734A,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1InitProperties,Initializes projectile properties,Projectile,analyzed
+sub_47374,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1Cleanup,Timer countdown with cleanup,Projectile,analyzed
+sub_47382,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1StateHandler,Projectile state handler,Projectile,analyzed
+sub_4739E,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1DescentState,Projectile descent state,Projectile,analyzed
+sub_473C8,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1AnimationState,Projectile animation state,Projectile,analyzed
+sub_47440,Epsilon1 intro (Stage 17),36180,Projectile_Epsilon1OffscreenHandler,Projectile offscreen handler,Projectile,analyzed
+sub_47B8E,Epsilon1 intro (Stage 17),36180,Boss_Epsilon1IntroController,Intro controller state dispatcher,Boss,analyzed
+sub_47BA2,Epsilon1 intro (Stage 17),36180,Boss_Epsilon1SpawnIntroProjectile,Spawns boss intro projectile,Boss,analyzed
+sub_47BD4,Epsilon1 intro (Stage 17),36180,Boss_Epsilon1WaitForProjectile,Waits for projectile completion,Boss,analyzed
+sub_470BC,Epsilon1 intro (Stage 17),36540,Boss_Epsilon1ResetIntro,Resets boss intro state,Boss,analyzed
+sub_47BEA,Epsilon1 intro (Stage 17),36540,Boss_Epsilon1RepeatIntro,Repeats intro sequence,Boss,analyzed
+sub_E1D6,Epsilon1 boss,36900,Stage_Epsilon1BattleStart,Battle start with palette update,Stage,analyzed
+sub_E1E8,Epsilon1 boss,36900,Stage_Epsilon1WaitIntroComplete,Waits for boss intro completion,Stage,analyzed
+sub_47C0E,Epsilon1 boss,36900,Boss_Epsilon1IntroFadeOut,Timer countdown with fade out,Boss,analyzed
+sub_45AD0,Epsilon1 boss,37080,Boss_Epsilon1Main,Main boss handler,Boss,analyzed
+sub_45CE4,Epsilon1 boss,37080,Boss_Epsilon1Dispatcher,Boss state dispatcher,Boss,analyzed
+sub_45D70,Epsilon1 boss,37080,Boss_Epsilon1BattleInit,Battle start state,Boss,analyzed
+sub_45D8E,Epsilon1 boss,37080,Boss_Epsilon1InitTimer,Initial timer countdown,Boss,analyzed
 sub_45D9A,Epsilon1 boss,37080,,,,pending
 sub_46016,Epsilon1 boss,37080,,,,pending
 sub_46032,Epsilon1 boss,37080,,,,pending
