@@ -1098,86 +1098,86 @@ sub_30DCA,Stage 11,21780,,,Enemy,analyzed
 sub_30E1C,Stage 11,21780,,,Enemy,analyzed
 sub_30E3C,Stage 11,21780,,,Enemy,analyzed
 sub_30FA6,Stage 11,21780,,,Enemy,analyzed
-sub_30FB6,Stage 11,21780,Enemy_Stage11BossPartState1,Boss part state 1 initialization,Enemy,analyzed
-sub_31076,Stage 11,21780,Enemy_Stage11BossPartUpdatePalette,Updates boss part palette cycle,Enemy,analyzed
-sub_30E86,Stage 11,21960,Enemy_Stage11BossPartFallInit,Initializes falling state,Enemy,analyzed
-sub_30EA2,Stage 11,21960,Enemy_Stage11BossPartFallDelay,Delays before next fall iteration,Enemy,analyzed
-sub_DA5A,Gusthead boss,22140,Stage_GustheadTransition,Transitions to Gusthead boss,Stage,analyzed
-sub_2E948,Gusthead boss,22140,Enemy_Stage10BeetleDefeat,Handles beetle enemy defeat,Enemy,analyzed
-sub_2E99E,Gusthead boss,22140,Enemy_Stage10BeetleFall,Falling beetle with explosion,Enemy,analyzed
-sub_310E6,Gusthead boss,22140,Enemy_GustheadEyeMain,Main handler for Gusthead eye enemy,Enemy,analyzed
-sub_310FC,Gusthead boss,22140,Enemy_GustheadEyeInit,Initializes Gusthead eye sprite,Enemy,analyzed
-sub_3110E,Gusthead boss,22140,Enemy_GustheadEyeSpawnChain,Spawns chain of 8 projectiles,Enemy,analyzed
-sub_3116E,Gusthead boss,22140,Enemy_GustheadEyeDestroy,Destroys eye and projectile chain,Enemy,analyzed
-sub_31194,Gusthead boss,22140,Enemy_GustheadSmallEyeMain,Main dispatcher for small eye,Enemy,analyzed
-sub_311AE,Gusthead boss,22140,Enemy_GustheadSmallEyeInit,Initializes small eye enemy,Enemy,analyzed
-sub_311CE,Gusthead boss,22140,Enemy_GustheadSmallEyeWait,Wait state before spawning,Enemy,analyzed
-sub_31208,Gusthead boss,22140,Enemy_GustheadSmallEyeSpawn,Spawns projectile with sound,Enemy,analyzed
-sub_31232,Gusthead boss,22140,Enemy_GustheadSmallEyeAttack,Attack state with projectile spawn,Enemy,analyzed
-sub_3130E,Gusthead boss,22140,Enemy_GustheadSmallEyeCheckSpawn,Checks if should spawn projectile,Enemy,analyzed
-sub_31352,Gusthead boss,22140,Enemy_GustheadEyeChainMain,Main handler for eye chain projectile,Enemy,analyzed
-sub_313C4,Gusthead boss,22140,Enemy_GustheadEyeChainInit,Initializes eye chain segment,Enemy,analyzed
-sub_3F1A0,Gusthead boss,22320,Boss_GustheadMainWrapper,Wrapper for Gusthead boss main,Boss,analyzed
-sub_3F1A4,Gusthead boss,22320,Boss_GustheadMain,Main Gusthead boss handler,Boss,analyzed
-sub_3F2B8,Gusthead boss,22320,Boss_GustheadInitBattle,Initializes Gusthead battle,Boss,analyzed
-sub_3F2D0,Gusthead boss,22320,Boss_GustheadSetupParts,Sets up boss parts and tentacles,Boss,analyzed
-sub_3F3C8,Gusthead boss,22320,Boss_GustheadStartIntro,Starts boss intro sequence,Boss,analyzed
-sub_3F3D4,Gusthead boss,22320,Boss_GustheadIntroFlicker,Intro flicker animation,Boss,analyzed
-sub_3F3F6,Gusthead boss,22320,Boss_GustheadIntroReveal,Reveals boss with tentacle setup,Boss,analyzed
-sub_3F44C,Gusthead boss,22320,Boss_GustheadBattleStart,Starts active battle phase,Boss,analyzed
-sub_3F48A,Gusthead boss,22320,Boss_GustheadDefeatSequence,Boss defeat animation sequence,Boss,analyzed
-sub_3F6AE,Gusthead boss,22320,Boss_GustheadUpdateBounce,Updates boss vertical bounce,Boss,analyzed
-sub_40070,Gusthead boss,22320,Boss_GustheadDefeatComplete,Completes boss defeat,Boss,analyzed
-sub_405A8,Gusthead boss,22320,Boss_GustheadUpdateTentacles,Updates tentacle positions,Boss,analyzed
-sub_4065A,Gusthead boss,22320,Boss_GustheadUpdateTentacleAngles,Updates tentacle rotation angles,Boss,analyzed
-sub_15CAC,Gusthead boss,22500,Player_GustheadBossIntro,Player intro state for Gusthead,Player,analyzed
-sub_3F4C2,Gusthead boss,22500,Boss_GustheadTentacleMain,Main handler for tentacle part,Boss,analyzed
-sub_3F4EA,Gusthead boss,22680,Boss_GustheadTentacleUpdate,Updates single tentacle position,Boss,analyzed
-sub_3F564,Gusthead boss,22680,Boss_GustheadTentacleDamage,Handles tentacle damage,Boss,analyzed
-sub_3F5EE,Gusthead boss,22680,Boss_GustheadTentacleDefeat,Tentacle defeat sequence,Boss,analyzed
-sub_3F62C,Gusthead boss,22680,Boss_GustheadTentacleRetract,Retracts defeated tentacle,Boss,analyzed
-sub_3F6D2,Gusthead boss,22680,Boss_GustheadCoreMain,Main handler for boss core,Boss,analyzed
-sub_4019A,Gusthead boss,22680,Boss_GustheadCoreDefeat,Boss core defeat state,Boss,analyzed
-sub_4022E,Gusthead boss,22680,,,,pending
-sub_4051C,Gusthead boss,22680,,,,pending
-sub_4058A,Gusthead boss,22680,,,,pending
-sub_3F6F0,Gusthead boss,22860,,,,pending
-sub_3F718,Gusthead boss,22860,,,,pending
-sub_4028E,Gusthead boss,22860,,,,pending
-sub_402F8,Gusthead boss,22860,,,,pending
-sub_40328,Gusthead boss,22860,,,,pending
-sub_4036A,Gusthead boss,22860,,,,pending
-sub_40396,Gusthead boss,22860,,,,pending
-sub_DA94,Gusthead boss,23040,,,,pending
-sub_403D8,Gusthead boss,23040,,,,pending
-sub_4076E,Gusthead boss,23040,,,,pending
-sub_3FF00,Gusthead boss,23220,,,,pending
-sub_3FF1E,Gusthead boss,23220,,,,pending
-sub_40018,Gusthead boss,23220,,,,pending
-sub_40026,Gusthead boss,23220,,,,pending
-sub_DAA4,Gusthead boss,23400,,,,pending
-sub_3FEF2,Gusthead boss,23400,,,,pending
-sub_3FFE4,Gusthead boss,23400,,,,pending
-sub_40040,Gusthead boss,23400,,,,pending
-sub_40060,Gusthead boss,23400,,,,pending
-sub_DAF4,Stage 12,23580,,,,pending
-sub_E2F6,Stage 12,23580,,,,pending
-sub_12006,Stage 12,23580,,,,pending
-sub_2A7AE,Stage 12,23580,,,,pending
-sub_2A824,Stage 12,23580,,,,pending
-sub_2A834,Stage 12,23580,,,,pending
-sub_2E2BE,Stage 12,23580,,,,pending
-sub_2E30C,Stage 12,23580,,,,pending
-sub_2E328,Stage 12,23580,,,,pending
-sub_2E358,Stage 12,23580,,,,pending
-sub_2E376,Stage 12,23580,,,,pending
-sub_31254,Stage 12,23580,,,,pending
-sub_3133A,Stage 12,23580,,,,pending
-sub_31F8E,Stage 12,23580,,,,pending
-sub_DB2E,Ship start (Stage 12),23760,,,,pending
-sub_DB64,Ship start (Stage 12),23760,,,,pending
-sub_DB7E,Ship start (Stage 12),23760,,,,pending
-sub_1239A,Ship start (Stage 12),23760,,,,pending
+sub_30FB6,Stage 11,21780,,,Enemy,analyzed
+sub_31076,Stage 11,21780,,,Enemy,analyzed
+sub_30E86,Stage 11,21960,,,Enemy,analyzed
+sub_30EA2,Stage 11,21960,,,Enemy,analyzed
+sub_DA5A,Gusthead boss,22140,,,Stage,analyzed
+sub_2E948,Gusthead boss,22140,,,Enemy,analyzed
+sub_2E99E,Gusthead boss,22140,,,Enemy,analyzed
+sub_310E6,Gusthead boss,22140,,,Enemy,analyzed
+sub_310FC,Gusthead boss,22140,,,Enemy,analyzed
+sub_3110E,Gusthead boss,22140,,,Enemy,analyzed
+sub_3116E,Gusthead boss,22140,,,Enemy,analyzed
+sub_31194,Gusthead boss,22140,,,Enemy,analyzed
+sub_311AE,Gusthead boss,22140,,,Enemy,analyzed
+sub_311CE,Gusthead boss,22140,,,Enemy,analyzed
+sub_31208,Gusthead boss,22140,,,Enemy,analyzed
+sub_31232,Gusthead boss,22140,,,Enemy,analyzed
+sub_3130E,Gusthead boss,22140,,,Enemy,analyzed
+sub_31352,Gusthead boss,22140,,,Enemy,analyzed
+sub_313C4,Gusthead boss,22140,,,Enemy,analyzed
+sub_3F1A0,Gusthead boss,22320,,,Boss,analyzed
+sub_3F1A4,Gusthead boss,22320,,,Boss,analyzed
+sub_3F2B8,Gusthead boss,22320,,,Boss,analyzed
+sub_3F2D0,Gusthead boss,22320,,,Boss,analyzed
+sub_3F3C8,Gusthead boss,22320,,,Boss,analyzed
+sub_3F3D4,Gusthead boss,22320,,,Boss,analyzed
+sub_3F3F6,Gusthead boss,22320,,,Boss,analyzed
+sub_3F44C,Gusthead boss,22320,,,Boss,analyzed
+sub_3F48A,Gusthead boss,22320,,,Boss,analyzed
+sub_3F6AE,Gusthead boss,22320,,,Boss,analyzed
+sub_40070,Gusthead boss,22320,,,Boss,analyzed
+sub_405A8,Gusthead boss,22320,,,Boss,analyzed
+sub_4065A,Gusthead boss,22320,,,Boss,analyzed
+sub_15CAC,Gusthead boss,22500,,,Player,analyzed
+sub_3F4C2,Gusthead boss,22500,,,Boss,analyzed
+sub_3F4EA,Gusthead boss,22680,,,Boss,analyzed
+sub_3F564,Gusthead boss,22680,,,Boss,analyzed
+sub_3F5EE,Gusthead boss,22680,,,Boss,analyzed
+sub_3F62C,Gusthead boss,22680,,,Boss,analyzed
+sub_3F6D2,Gusthead boss,22680,,,Boss,analyzed
+sub_4019A,Gusthead boss,22680,,,Boss,analyzed
+sub_4022E,Gusthead boss,22680,Enemy_GustheadDebrisMain,Main handler for Gusthead debris,Enemy,analyzed
+sub_4051C,Gusthead boss,22680,Boss_GustheadUpdateRotation,Updates boss rotation animation,Boss,analyzed
+sub_4058A,Gusthead boss,22680,Boss_GustheadUpdateScroll,Updates scroll based on boss movement,Boss,analyzed
+sub_3F6F0,Gusthead boss,22860,Boss_GustheadDefeatPhase1,Defeat phase 1 with tentacles,Boss,analyzed
+sub_3F718,Gusthead boss,22860,Boss_GustheadDefeatPhase2,Defeat phase 2 delay loop,Boss,analyzed
+sub_4028E,Gusthead boss,22860,Boss_GustheadSpawnDebris,Spawns falling debris projectiles,Boss,analyzed
+sub_402F8,Gusthead boss,22860,Enemy_GustheadDebrisSetSprite,Sets random debris sprite,Enemy,analyzed
+sub_40328,Gusthead boss,22860,Enemy_GustheadDebrisPhysicsMain,Main physics handler for debris,Enemy,analyzed
+sub_4036A,Gusthead boss,22860,Enemy_GustheadDebrisInit,Initializes debris with velocity,Enemy,analyzed
+sub_40396,Gusthead boss,22860,Enemy_GustheadDebrisUpdate,Updates debris position with gravity,Enemy,analyzed
+sub_DA94,Gusthead boss,23040,Stage_GustheadDefeatTransition,Transitions after Gusthead defeat,Stage,analyzed
+sub_403D8,Gusthead boss,23040,Enemy_GustheadDebrisFlip,Flips debris sprite based on velocity,Enemy,analyzed
+sub_4076E,Gusthead boss,23040,Enemy_GustheadDebrisExplode,Debris explosion with particle spawn,Enemy,analyzed
+sub_3FF00,Gusthead boss,23220,Boss_GustheadDefeatSlowScroll,Slows scroll during defeat,Boss,analyzed
+sub_3FF1E,Gusthead boss,23220,Boss_GustheadDefeatFall,Boss falling defeat animation,Boss,analyzed
+sub_40018,Gusthead boss,23220,Boss_GustheadDefeatCheck,Checks if defeat sequence complete,Boss,analyzed
+sub_40026,Gusthead boss,23220,Boss_GustheadDefeatExit,Exits defeat sequence,Boss,analyzed
+sub_DAA4,Gusthead boss,23400,Stage_Stage12Init,Initializes Stage 12,Stage,analyzed
+sub_3FEF2,Gusthead boss,23400,Boss_GustheadDefeatInitPhase,Initializes defeat phase,Boss,analyzed
+sub_3FFE4,Gusthead boss,23400,Boss_GustheadDefeatStopScroll,Stops scroll for defeat,Boss,analyzed
+sub_40040,Gusthead boss,23400,Boss_GustheadDefeatWait,Waits during defeat sequence,Boss,analyzed
+sub_40060,Gusthead boss,23400,Boss_GustheadDefeatFinalize,Finalizes defeat and cleanup,Boss,analyzed
+sub_DAF4,Stage 12,23580,Stage_Stage12ScrollUpdate,Updates Stage 12 scroll,Stage,analyzed
+sub_E2F6,Stage 12,23580,Enemy_SpawnProjectileAtAngle,Spawns projectile at calculated angle,Enemy,analyzed
+sub_12006,Stage 12,23580,Stage_LoadStage12Assets,Loads Stage 12 palette and tiles,Stage,analyzed
+sub_2A7AE,Stage 12,23580,Projectile_InitType2A,Initializes projectile type 2A,Projectile,analyzed
+sub_2A824,Stage 12,23580,Projectile_SetVelocityFromAngle,Sets velocity from angle table,Projectile,analyzed
+sub_2A834,Stage 12,23580,Projectile_GetVelocityComponents,Gets X/Y velocity from angle,Projectile,analyzed
+sub_2E2BE,Stage 12,23580,Enemy_Stage12FloaterInit,Initializes Stage 12 floater enemy,Enemy,analyzed
+sub_2E30C,Stage 12,23580,Enemy_Stage12FloaterMain,Main handler for floater enemy,Enemy,analyzed
+sub_2E328,Stage 12,23580,Enemy_Stage12FloaterDispatcher,State dispatcher for floater,Enemy,analyzed
+sub_2E358,Stage 12,23580,Enemy_Stage12FloaterState1,Floater state 1 movement,Enemy,analyzed
+sub_2E376,Stage 12,23580,Enemy_Stage12FloaterAttack,Floater attack with projectile,Enemy,analyzed
+sub_31254,Stage 12,23580,Enemy_GustheadSmallEyeUpdate,Updates small eye position,Enemy,analyzed
+sub_3133A,Stage 12,23580,Enemy_GustheadGetAngleToPlayer,Calculates angle to player,Enemy,analyzed
+sub_31F8E,Stage 12,23580,Enemy_GustheadUpdatePosition,Updates enemy position with bounds,Enemy,analyzed
+sub_DB2E,Ship start (Stage 12),23760,Stage_Stage13Init,Initializes Stage 13,Stage,analyzed
+sub_DB64,Ship start (Stage 12),23760,Stage_Stage13ScrollUpdate,Updates Stage 13 scroll,Stage,analyzed
+sub_DB7E,Ship start (Stage 12),23760,Stage_Stage13CheckTransition,Checks transition to next segment,Stage,analyzed
+sub_1239A,Ship start (Stage 12),23760,Stage_LoadStage13Graphics,Loads Stage 13 tile graphics,Stage,analyzed
 sub_142EC,Ship start (Stage 12),23760,,,,pending
 sub_14304,Ship start (Stage 12),23760,,,,pending
 sub_2A7F6,Ship start (Stage 12),23760,,,,pending
