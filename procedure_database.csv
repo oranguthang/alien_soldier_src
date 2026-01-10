@@ -978,86 +978,86 @@ sub_1ED7C,Xi-Tiger cutscene,18000,,,Cutscene,analyzed
 sub_260A2,Xi-Tiger cutscene,18000,,,Gfx,analyzed
 sub_260CE,Xi-Tiger cutscene,18000,,,Gfx,analyzed
 sub_29E58,Xi-Tiger cutscene,18000,,,System,analyzed
-sub_1EC20,Xi-Tiger cutscene,18180,Cutscene_XiTigerApplyFade,Applies palette fade effect to cutscene,Cutscene,analyzed
-sub_2DCA,Xi-Tiger cutscene,18360,Sys_ClearPaletteBuffer,Wrapper to clear palette buffer,System,analyzed
-sub_30D4,Xi-Tiger cutscene,18360,Palette_ClearBuffer,Clears palette buffer to black,Gfx,analyzed
-sub_10ADC,Xi-Tiger cutscene,18360,Scroll_GetBackgroundPosition,Gets background scroll position,Scroll,analyzed
-sub_10AEC,Xi-Tiger cutscene,18360,Scroll_GetForegroundPosition,Gets foreground scroll position,Scroll,analyzed
-sub_1EC34,Xi-Tiger cutscene,18360,Cutscene_XiTigerUpdateScroll,Updates scroll with wave distortion effect,Cutscene,analyzed
-sub_D422,Xi-Tiger boss fight,18720,Stage_InitXiTigerBoss,Initializes Xi-Tiger boss stage parameters,Stage,analyzed
-sub_D468,Xi-Tiger boss fight,18720,Stage_XiTigerBossWait,Waits for boss spawn with palette setup,Stage,analyzed
-sub_1219E,Xi-Tiger boss fight,18720,Stage_LoadXiTigerGraphics,Loads Xi-Tiger boss tile graphics,Stage,analyzed
-sub_121DE,Xi-Tiger boss fight,18720,Stage_LoadXiTigerPalette,Loads Xi-Tiger boss palette,Stage,analyzed
-sub_121F0,Xi-Tiger boss fight,18720,Stage_LoadXiTigerSprites,Loads Xi-Tiger sprite data to VRAM,Stage,analyzed
-sub_3D814,Xi-Tiger boss fight,18720,Boss_XiTigerMain,Main Xi-Tiger boss handler with state dispatch,Boss,analyzed
-sub_3D8B2,Xi-Tiger boss fight,18720,Boss_XiTigerInit,Initializes Xi-Tiger boss clearing sprites,Boss,analyzed
-sub_3D8CE,Xi-Tiger boss fight,18720,Boss_XiTigerSetup,Complex setup with metasprite initialization,Boss,analyzed
-sub_3DA3E,Xi-Tiger boss fight,18720,Boss_XiTigerBattleStart,Starts battle activating boss movement,Boss,analyzed
-sub_3E050,Xi-Tiger boss fight,18720,Boss_XiTigerUpdateSprites,Updates boss sprite rendering,Boss,analyzed
-sub_3E076,Xi-Tiger boss fight,18720,Boss_XiTigerFlipDirection,Flips boss sprite direction,Boss,analyzed
-sub_3E0F6,Xi-Tiger boss fight,18720,Boss_XiTigerUpdateClaws,Updates claw sprites based on state,Boss,analyzed
-sub_3E134,Xi-Tiger boss fight,18720,Boss_XiTigerSetClawSprite,Sets claw sprite graphics pointer,Boss,analyzed
-sub_3E18C,Xi-Tiger boss fight,18720,Boss_XiTigerUpdateBody,Updates boss body metasprite positions,Boss,analyzed
-sub_3E21C,Xi-Tiger boss fight,18720,Boss_XiTigerProcessAnimation,Processes boss animation with interpolation,Boss,analyzed
-sub_3E3B0,Xi-Tiger boss fight,18720,Boss_XiTigerCalculateDeltas,Calculates animation interpolation deltas,Boss,analyzed
-sub_3E3C6,Xi-Tiger boss fight,18720,Boss_XiTigerLoadAnimData,Loads animation data from table,Boss,analyzed
-sub_19D42,Xi-Tiger boss fight,18900,Player_XiTigerBossIntro,Player intro state for Xi-Tiger boss,Player,analyzed
-sub_3DA72,Xi-Tiger boss fight,19080,Boss_XiTigerBattleActive,Active battle state with AI update,Boss,analyzed
-sub_3DA94,Xi-Tiger boss fight,19080,Boss_XiTigerMovementAI,Movement AI with position tracking,Boss,analyzed
-sub_3DEBA,Xi-Tiger boss fight,19440,Boss_XiTigerAttackPattern1,Attack pattern 1 with claw strikes,Boss,analyzed
-sub_3DF12,Xi-Tiger boss fight,19440,Boss_XiTigerAttackPattern2,Attack pattern 2 with jumping,Boss,analyzed
-sub_3DF7C,Xi-Tiger boss fight,19440,Boss_XiTigerAttackPattern3,Attack pattern 3 with projectiles,Boss,analyzed
-sub_3E1C0,Xi-Tiger boss fight,19440,Boss_XiTigerSpawnProjectile,Spawns boss projectile with trajectory,Boss,analyzed
-sub_3DFD2,Xi-Tiger boss fight,19620,Boss_XiTigerDefeatInit,Initializes boss defeat sequence,Boss,analyzed
-sub_3E014,Xi-Tiger boss fight,19620,Boss_XiTigerDefeatUpdate,Updates defeat animation and effects,Boss,analyzed
-sub_3E02E,Xi-Tiger boss fight,19620,Boss_XiTigerDefeatComplete,Completes defeat clearing boss entity,Boss,analyzed
-sub_D594,Xi-Tiger boss fight,19800,Stage_PostXiTigerTransition,Transitions to next stage after defeat,Stage,analyzed
-sub_3E042,Xi-Tiger boss fight,19800,Boss_XiTigerDefeatFinal,Final defeat state cleanup,Boss,analyzed
-sub_1782,Stage 10,20340,VBlank_InitStage10Effect,Initializes VBlank effect for Stage 10,VBlank,analyzed
-sub_D90E,Stage 10,20340,Stage_InitStage10,Initializes Stage 10 with scroll and enemies,Stage,analyzed
-sub_D9D2,Stage 10,20340,Stage_Stage10ScrollUpdate,Updates Stage 10 scroll positions,Stage,analyzed
-sub_D9DC,Stage 10,20340,Stage_Stage10CheckTransition,Checks transition to next segment,Stage,analyzed
-sub_DE2E,Stage 10,20340,Stage_LoadStage10Graphics,Loads Stage 10 tile graphics and palette,Stage,analyzed
-sub_102EC,Stage 10,20340,,,,pending
-sub_11938,Stage 10,20340,,,,pending
-sub_11FBE,Stage 10,20340,,,,pending
-sub_1458A,Stage 10,20340,,,,pending
-sub_2DAB0,Stage 10,20340,,,,pending
-sub_2DBDA,Stage 10,20340,,,,pending
-sub_2DE70,Stage 10,20340,,,,pending
-sub_2DF7E,Stage 10,20340,,,,pending
-sub_2DF8E,Stage 10,20340,,,,pending
-sub_2E6C2,Stage 10,20340,,,,pending
-sub_2E6E2,Stage 10,20340,,,,pending
-sub_2E6EE,Stage 10,20340,,,,pending
-sub_2E770,Stage 10,20340,,,,pending
-sub_2E7CC,Stage 10,20340,,,,pending
-sub_2E806,Stage 10,20340,,,,pending
-sub_2E81C,Stage 10,20340,,,,pending
-sub_2F504,Stage 10,20340,,,,pending
-sub_2F516,Stage 10,20340,,,,pending
-sub_2F580,Stage 10,20340,,,,pending
-sub_14B5A,Stage 10,20520,,,,pending
-sub_14D08,Stage 10,20520,,,,pending
-sub_14D50,Stage 10,20520,,,,pending
-sub_2CF70,Stage 10,20520,,,,pending
-sub_2E048,Stage 10,20520,,,,pending
-sub_2E09A,Stage 10,20520,,,,pending
-sub_2E0BE,Stage 10,20520,,,,pending
-sub_2E11E,Stage 10,20520,,,,pending
-sub_2E13A,Stage 10,20520,,,,pending
-sub_2E16E,Stage 10,20520,,,,pending
-sub_2E1B0,Stage 10,20520,,,,pending
-sub_2E1DA,Stage 10,20520,,,,pending
-sub_2E1EC,Stage 10,20520,,,,pending
-sub_2E242,Stage 10,20520,,,,pending
-sub_2E282,Stage 10,20520,,,,pending
-sub_2E73C,Stage 10,20520,,,,pending
-sub_2E752,Stage 10,20520,,,,pending
-sub_D9F2,Deep Strider boss,20700,,,,pending
-sub_14D54,Deep Strider boss,20700,,,,pending
-sub_2E85C,Deep Strider boss,20700,,,,pending
-sub_2E8AA,Deep Strider boss,20700,,,,pending
+sub_1EC20,Xi-Tiger cutscene,18180,,,Cutscene,analyzed
+sub_2DCA,Xi-Tiger cutscene,18360,,,System,analyzed
+sub_30D4,Xi-Tiger cutscene,18360,,,Gfx,analyzed
+sub_10ADC,Xi-Tiger cutscene,18360,,,Scroll,analyzed
+sub_10AEC,Xi-Tiger cutscene,18360,,,Scroll,analyzed
+sub_1EC34,Xi-Tiger cutscene,18360,,,Cutscene,analyzed
+sub_D422,Xi-Tiger boss fight,18720,,,Stage,analyzed
+sub_D468,Xi-Tiger boss fight,18720,,,Stage,analyzed
+sub_1219E,Xi-Tiger boss fight,18720,,,Stage,analyzed
+sub_121DE,Xi-Tiger boss fight,18720,,,Stage,analyzed
+sub_121F0,Xi-Tiger boss fight,18720,,,Stage,analyzed
+sub_3D814,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3D8B2,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3D8CE,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3DA3E,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3E050,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3E076,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3E0F6,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3E134,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3E18C,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3E21C,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3E3B0,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_3E3C6,Xi-Tiger boss fight,18720,,,Boss,analyzed
+sub_19D42,Xi-Tiger boss fight,18900,,,Player,analyzed
+sub_3DA72,Xi-Tiger boss fight,19080,,,Boss,analyzed
+sub_3DA94,Xi-Tiger boss fight,19080,,,Boss,analyzed
+sub_3DEBA,Xi-Tiger boss fight,19440,,,Boss,analyzed
+sub_3DF12,Xi-Tiger boss fight,19440,,,Boss,analyzed
+sub_3DF7C,Xi-Tiger boss fight,19440,,,Boss,analyzed
+sub_3E1C0,Xi-Tiger boss fight,19440,,,Boss,analyzed
+sub_3DFD2,Xi-Tiger boss fight,19620,,,Boss,analyzed
+sub_3E014,Xi-Tiger boss fight,19620,,,Boss,analyzed
+sub_3E02E,Xi-Tiger boss fight,19620,,,Boss,analyzed
+sub_D594,Xi-Tiger boss fight,19800,,,Stage,analyzed
+sub_3E042,Xi-Tiger boss fight,19800,,,Boss,analyzed
+sub_1782,Stage 10,20340,,,VBlank,analyzed
+sub_D90E,Stage 10,20340,,,Stage,analyzed
+sub_D9D2,Stage 10,20340,,,Stage,analyzed
+sub_D9DC,Stage 10,20340,,,Stage,analyzed
+sub_DE2E,Stage 10,20340,,,Stage,analyzed
+sub_102EC,Stage 10,20340,Scroll_AddDeltaToScroll,Adds scroll delta to main scroll position,Scroll,analyzed
+sub_11938,Stage 10,20340,Stage_LoadStage10Enemies,Loads Stage 10 enemy configuration,Stage,analyzed
+sub_11FBE,Stage 10,20340,Stage_LoadStage10Assets,Loads palette and tile graphics for Stage 10,Stage,analyzed
+sub_1458A,Stage 10,20340,Collision_InitBufferPointers,Initializes collision buffer pointers,Collision,analyzed
+sub_2DAB0,Stage 10,20340,Enemy_UpdateSpriteFlip,Updates sprite horizontal flip based on velocity,Enemy,analyzed
+sub_2DBDA,Stage 10,20340,Enemy_BirdFireWrapper,Wrapper for bird enemy projectile firing,Enemy,analyzed
+sub_2DE70,Stage 10,20340,Enemy_BirdFireProjectile,Spawns bird projectile with direction,Enemy,analyzed
+sub_2DF7E,Stage 10,20340,Enemy_Stage10FlyMain,Main dispatcher for Stage 10 fly enemy,Enemy,analyzed
+sub_2DF8E,Stage 10,20340,Enemy_Stage10FlyInit,Initializes Stage 10 fly enemy with physics,Enemy,analyzed
+sub_2E6C2,Stage 10,20340,Enemy_Stage10BomberMain,Main dispatcher for Stage 10 bomber enemy,Enemy,analyzed
+sub_2E6E2,Stage 10,20340,Enemy_Stage10BomberInit,Initializes Stage 10 bomber sprite,Enemy,analyzed
+sub_2E6EE,Stage 10,20340,Enemy_Stage10BomberSpawn,Spawns bomber projectile at random position,Enemy,analyzed
+sub_2E770,Stage 10,20340,Enemy_Stage10BeetleInit,Initializes Stage 10 beetle enemy sprite,Enemy,analyzed
+sub_2E7CC,Stage 10,20340,Enemy_Stage10BeetleMain,Main handler for Stage 10 beetle enemy,Enemy,analyzed
+sub_2E806,Stage 10,20340,Enemy_Stage10BeetleDispatcher,State dispatcher for beetle enemy,Enemy,analyzed
+sub_2E81C,Stage 10,20340,Enemy_Stage10BeetleState1,Beetle state 1 initialization with delay,Enemy,analyzed
+sub_2F504,Stage 10,20340,Enemy_InitStage10Debris,Initializes 6 debris entities in loop,Enemy,analyzed
+sub_2F516,Stage 10,20340,Enemy_InitDebrisEntity,Initializes single debris entity with position,Enemy,analyzed
+sub_2F580,Stage 10,20340,Enemy_DebrisUpdate,Updates debris position with screen bounds,Enemy,analyzed
+sub_14B5A,Stage 10,20520,Physics_CheckAngleRange,Checks angle range for terrain slope,Physics,analyzed
+sub_14D08,Stage 10,20520,Physics_ApplyVerticalOffset4,Applies vertical offset of 4 pixels,Physics,analyzed
+sub_14D50,Stage 10,20520,Physics_PrepareVerticalOffset,Prepares d3=4 for vertical offset,Physics,analyzed
+sub_2CF70,Stage 10,20520,Enemy_ToggleSpriteVisibility,Toggles sprite visibility flag,Enemy,analyzed
+sub_2E048,Stage 10,20520,Enemy_Stage10WaspInit,Initializes Stage 10 wasp enemy sprite,Enemy,analyzed
+sub_2E09A,Stage 10,20520,Enemy_UpdateAnimationFrame,Updates animation frame from table,Enemy,analyzed
+sub_2E0BE,Stage 10,20520,Enemy_Stage10WaspMain,Main handler for Stage 10 wasp enemy,Enemy,analyzed
+sub_2E11E,Stage 10,20520,Enemy_Stage10WaspDispatcher,State dispatcher for wasp enemy,Enemy,analyzed
+sub_2E13A,Stage 10,20520,Enemy_Stage10WaspState1,Wasp state 1 initialization,Enemy,analyzed
+sub_2E16E,Stage 10,20520,Enemy_Stage10WaspState2,Wasp state 2 flight with physics,Enemy,analyzed
+sub_2E1B0,Stage 10,20520,Enemy_Stage10WaspState3,Wasp state 3 delay timer,Enemy,analyzed
+sub_2E1DA,Stage 10,20520,Enemy_Stage10WaspState4,Wasp state 4 animation setup,Enemy,analyzed
+sub_2E1EC,Stage 10,20520,Enemy_Stage10WaspState5,Wasp state 5 attack dive,Enemy,analyzed
+sub_2E242,Stage 10,20520,Enemy_Stage10WaspDeath,Handles wasp enemy death,Enemy,analyzed
+sub_2E282,Stage 10,20520,Enemy_Stage10WaspExplode,Wasp explosion with gravity and sound,Enemy,analyzed
+sub_2E73C,Stage 10,20520,Enemy_Stage10BomberWait,Waits for spawned projectile destruction,Enemy,analyzed
+sub_2E752,Stage 10,20520,Enemy_Stage10BomberComplete,Completes bomber sequence,Enemy,analyzed
+sub_D9F2,Deep Strider boss,20700,Stage_DeepStriderTransition,Transitions to Deep Strider boss,Stage,analyzed
+sub_14D54,Deep Strider boss,20700,Physics_SnapToFloorNoOffset,Snaps entity to floor without offset,Physics,analyzed
+sub_2E85C,Deep Strider boss,20700,Enemy_Stage10BeetleState2,Beetle state 2 movement pattern,Enemy,analyzed
+sub_2E8AA,Deep Strider boss,20700,Enemy_Stage10BeetleDelayTable,Gets delay value from timing table,Enemy,analyzed
 sub_14D3E,Deep Strider boss,20880,,,,pending
 sub_2A804,Deep Strider boss,20880,,,,pending
 sub_343DE,Deep Strider boss,20880,,,,pending
