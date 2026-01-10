@@ -898,86 +898,86 @@ sub_3C2C0,Flying-Neo boss,14040,,,Boss,analyzed
 sub_3C688,Flying-Neo boss,14040,,,Boss,analyzed
 sub_3CA3C,Flying-Neo boss,14040,,,Boss,analyzed
 sub_3CDAE,Flying-Neo boss,14040,,,Boss,analyzed
-sub_3CE14,Flying-Neo boss,14040,Boss_FlyingNeoFlipDirection,Flips boss direction loading corresponding tile graphics,Boss,analyzed
-sub_3CECA,Flying-Neo boss,14040,Boss_FlyingNeoInitSprites,Initializes enemy sprite parameters from table,Boss,analyzed
-sub_3CF0A,Flying-Neo boss,14040,Boss_FlyingNeoProcessAnimation,Processes animation with interpolation and angle updates,Boss,analyzed
-sub_3CFE8,Flying-Neo boss,14040,Boss_FlyingNeoCalculateDeltas,Calculates interpolation deltas for animation system,Boss,analyzed
-sub_3C55C,Flying-Neo boss,14220,Boss_FlyingNeoInitAttackPattern,Initializes attack pattern state with timer,Boss,analyzed
-sub_3C592,Flying-Neo boss,14220,Boss_FlyingNeoAttackPatternUpdate,Updates attack pattern with movement and animations,Boss,analyzed
-sub_3C5BC,Flying-Neo boss,14220,Boss_FlyingNeoAttackMovement,Handles attack movement with horizontal acceleration,Boss,analyzed
-sub_3C660,Flying-Neo boss,14220,Boss_FlyingNeoCheckAttackCondition,Checks conditions to trigger attack state,Boss,analyzed
-sub_3C9E0,Flying-Neo boss,14220,Boss_FlyingNeoCalculateDistance,Calculates distance to enemy entity,Boss,analyzed
-sub_3FB6,Flying-Neo boss,14400,Palette_ProcessFadeEffect,Processes palette fade effect with timing,Gfx,analyzed
-sub_3C2E4,Flying-Neo boss,14400,Boss_FlyingNeoDefeatInit,Initializes boss defeat sequence clearing flags,Boss,analyzed
-sub_3C31C,Flying-Neo boss,14400,Boss_FlyingNeoDefeatState1,Defeat state spawning parts upward with timer,Boss,analyzed
-sub_3C36A,Flying-Neo boss,14400,Boss_FlyingNeoSpawnDefeatParticle,Spawns defeat particle with velocity and sound,Boss,analyzed
-sub_3C390,Flying-Neo boss,14400,Boss_FlyingNeoCalculateCenter,Calculates boss center position for collision,Boss,analyzed
-sub_3C3AE,Flying-Neo boss,14400,Boss_FlyingNeoDefeatState2,Defeat state spawning parts downward,Boss,analyzed
-sub_3C3E2,Flying-Neo boss,14400,Boss_FlyingNeoDefeatState3,Defeat state preparing final explosion effects,Boss,analyzed
-sub_3C428,Flying-Neo boss,14400,Boss_FlyingNeoDefeatState4,Defeat state firing particle rain with sound,Boss,analyzed
-sub_3CB40,Flying-Neo boss,14400,Boss_FlyingNeoUpdatePaletteFade,Updates palette fade effect for boss,Boss,analyzed
-sub_3CC56,Flying-Neo boss,14400,Boss_FlyingNeoDMAScrollWrite,Writes scroll values to VDP via DMA,Boss,analyzed
-sub_D08E,Flying-Neo boss,14580,Stage_PostFlyingNeoTransition,Transitions to next stage after Flying-Neo defeat,Stage,analyzed
-sub_3C4CA,Flying-Neo boss,14580,Boss_FlyingNeoDefeatFinal,Final defeat state advancing to next stage,Boss,analyzed
-sub_147E,Flies (Stage 9),14940,VBlank_InitFliesEffect,Initializes VBlank effect for flies stage,VBlank,analyzed
-sub_D0B4,Flies (Stage 9),14940,Stage_InitStage9Flies,Initializes Stage 9 with scroll and parameters,Stage,analyzed
-sub_D140,Flies (Stage 9),14940,Stage_FliesCheckTransition,Checks transition condition to next stage segment,Stage,analyzed
-sub_D166,Flies (Stage 9),14940,Stage_FliesScrollUpdate,Updates Stage 9 scroll with parallax and lightning,Stage,analyzed
-sub_D538,Flies (Stage 9),14940,Stage_FliesVerticalScroll,Updates vertical scroll positions for parallax,Stage,analyzed
-sub_11FA2,Flies (Stage 9),14940,Stage_LoadFliesGraphics,Loads palette and tile graphics for flies stage,Stage,analyzed
-sub_29EBA,Flies (Stage 9),14940,Sys_InitFliesVRAM,Initializes VRAM layout for flies stage,System,analyzed
-sub_2D66C,Flies (Stage 9),14940,Enemy_FlyMain,Main fly enemy handler with spawn conditions,Enemy,analyzed
-sub_2D69C,Flies (Stage 9),14940,Enemy_FlyDispatcher,Fly enemy state dispatcher using jump table,Enemy,analyzed
-sub_2D6B2,Flies (Stage 9),14940,Enemy_FlyInit,Initializes fly enemy with position and animation,Enemy,analyzed
-sub_2D8E8,Flies (Stage 9),14940,Enemy_FlyMovement,Fly enemy movement with wave pattern,Enemy,analyzed
-sub_2D8FC,Flies (Stage 9),14940,Enemy_FlyUpdateState,Updates fly state with animation transitions,Enemy,analyzed
-sub_2D91A,Flies (Stage 9),14940,Enemy_FlyAttack,Fly attack behavior with velocity changes,Enemy,analyzed
-sub_2D92A,Flies (Stage 9),14940,Enemy_FlyReturnPattern,Fly return pattern after attack,Enemy,analyzed
-sub_2D954,Flies (Stage 9),14940,Enemy_FlyDeath,Fly death animation and cleanup,Enemy,analyzed
-sub_D1FE,Flies (Stage 9),15300,Stage_FliesSpawnEnemies,Spawns fly enemies with formation pattern,Stage,analyzed
-sub_D1DA,Caterpillar ship above train (Stage 9 ),15480,Stage_InitCaterpillarShip,Initializes caterpillar ship entity,Stage,analyzed
-sub_D286,Caterpillar ship above train (Stage 9 ),15480,Stage_CaterpillarShipUpdate,Updates caterpillar ship scroll and position,Stage,analyzed
-sub_D2B6,Caterpillar ship above train (Stage 9 ),15480,Stage_CaterpillarShipMovement,Handles caterpillar ship movement physics,Stage,analyzed
-sub_D4BE,Caterpillar ship above train (Stage 9 ),15480,,,,pending
-sub_3D0AE,Caterpillar ship above train (Stage 9 ),15480,,,,pending
-sub_3D0C2,Caterpillar ship above train (Stage 9 ),15480,,,,pending
-sub_3D15A,Caterpillar ship above train (Stage 9 ),15480,,,,pending
-sub_3D16C,Caterpillar ship above train (Stage 9 ),15480,,,,pending
-sub_3D450,Caterpillar ship above train (Stage 9 ),15480,,,,pending
-sub_3D0CA,Caterpillar ship above train (Stage 9 ),15660,,,,pending
-sub_3D412,Caterpillar ship above train (Stage 9 ),15840,,,,pending
-sub_3D1F4,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_3D2F8,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_3D38A,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_3D4AC,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_3D4B6,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_3D562,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_3D630,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_3D654,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_3D78C,Caterpillar ship above train (Stage 9 ),16020,,,,pending
-sub_145F4,Caterpillar ship above train (Stage 9 ),16200,,,,pending
-sub_2A418,Caterpillar ship above train (Stage 9 ),16200,,,,pending
-sub_18846,Caterpillar ship above train (Stage 9 ),17100,,,,pending
-sub_188EE,Caterpillar ship above train (Stage 9 ),17100,,,,pending
-sub_2C0DE,Caterpillar ship above train (Stage 9 ),17280,,,,pending
-sub_3D6DA,Caterpillar ship above train (Stage 9 ),17280,,,,pending
-sub_3D726,Caterpillar ship above train (Stage 9 ),17280,,,,pending
-sub_2F08C,Xi-Tiger start,17640,,,,pending
-sub_2F0A8,Xi-Tiger start,17640,,,,pending
-sub_2F0BC,Xi-Tiger start,17640,,,,pending
-sub_2F0F6,Xi-Tiger start,17640,,,,pending
-sub_14B6,Xi-Tiger cutscene,18000,,,,pending
-sub_1E996,Xi-Tiger cutscene,18000,,,,pending
-sub_1EB66,Xi-Tiger cutscene,18000,,,,pending
-sub_1EB9E,Xi-Tiger cutscene,18000,,,,pending
-sub_1EBB6,Xi-Tiger cutscene,18000,,,,pending
-sub_1ED38,Xi-Tiger cutscene,18000,,,,pending
-sub_1ED3C,Xi-Tiger cutscene,18000,,,,pending
-sub_1ED62,Xi-Tiger cutscene,18000,,,,pending
-sub_1ED7C,Xi-Tiger cutscene,18000,,,,pending
-sub_260A2,Xi-Tiger cutscene,18000,,,,pending
-sub_260CE,Xi-Tiger cutscene,18000,,,,pending
-sub_29E58,Xi-Tiger cutscene,18000,,,,pending
+sub_3CE14,Flying-Neo boss,14040,,,Boss,analyzed
+sub_3CECA,Flying-Neo boss,14040,,,Boss,analyzed
+sub_3CF0A,Flying-Neo boss,14040,,,Boss,analyzed
+sub_3CFE8,Flying-Neo boss,14040,,,Boss,analyzed
+sub_3C55C,Flying-Neo boss,14220,,,Boss,analyzed
+sub_3C592,Flying-Neo boss,14220,,,Boss,analyzed
+sub_3C5BC,Flying-Neo boss,14220,,,Boss,analyzed
+sub_3C660,Flying-Neo boss,14220,,,Boss,analyzed
+sub_3C9E0,Flying-Neo boss,14220,,,Boss,analyzed
+sub_3FB6,Flying-Neo boss,14400,,,Gfx,analyzed
+sub_3C2E4,Flying-Neo boss,14400,,,Boss,analyzed
+sub_3C31C,Flying-Neo boss,14400,,,Boss,analyzed
+sub_3C36A,Flying-Neo boss,14400,,,Boss,analyzed
+sub_3C390,Flying-Neo boss,14400,,,Boss,analyzed
+sub_3C3AE,Flying-Neo boss,14400,,,Boss,analyzed
+sub_3C3E2,Flying-Neo boss,14400,,,Boss,analyzed
+sub_3C428,Flying-Neo boss,14400,,,Boss,analyzed
+sub_3CB40,Flying-Neo boss,14400,,,Boss,analyzed
+sub_3CC56,Flying-Neo boss,14400,,,Boss,analyzed
+sub_D08E,Flying-Neo boss,14580,,,Stage,analyzed
+sub_3C4CA,Flying-Neo boss,14580,,,Boss,analyzed
+sub_147E,Flies (Stage 9),14940,,,VBlank,analyzed
+sub_D0B4,Flies (Stage 9),14940,,,Stage,analyzed
+sub_D140,Flies (Stage 9),14940,,,Stage,analyzed
+sub_D166,Flies (Stage 9),14940,,,Stage,analyzed
+sub_D538,Flies (Stage 9),14940,,,Stage,analyzed
+sub_11FA2,Flies (Stage 9),14940,,,Stage,analyzed
+sub_29EBA,Flies (Stage 9),14940,,,System,analyzed
+sub_2D66C,Flies (Stage 9),14940,,,Enemy,analyzed
+sub_2D69C,Flies (Stage 9),14940,,,Enemy,analyzed
+sub_2D6B2,Flies (Stage 9),14940,,,Enemy,analyzed
+sub_2D8E8,Flies (Stage 9),14940,,,Enemy,analyzed
+sub_2D8FC,Flies (Stage 9),14940,,,Enemy,analyzed
+sub_2D91A,Flies (Stage 9),14940,,,Enemy,analyzed
+sub_2D92A,Flies (Stage 9),14940,,,Enemy,analyzed
+sub_2D954,Flies (Stage 9),14940,,,Enemy,analyzed
+sub_D1FE,Flies (Stage 9),15300,,,Stage,analyzed
+sub_D1DA,Caterpillar ship above train (Stage 9 ),15480,,,Stage,analyzed
+sub_D286,Caterpillar ship above train (Stage 9 ),15480,,,Stage,analyzed
+sub_D2B6,Caterpillar ship above train (Stage 9 ),15480,,,Stage,analyzed
+sub_D4BE,Caterpillar ship above train (Stage 9 ),15480,Stage_CaterpillarScrollUpdate,Updates caterpillar stage scroll with oscillation,Stage,analyzed
+sub_3D0AE,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarMain,Main caterpillar boss handler with state dispatch,Boss,analyzed
+sub_3D0C2,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarInit,Initializes caterpillar boss entity,Boss,analyzed
+sub_3D15A,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarInitSegments,Initializes caterpillar body segments from table,Boss,analyzed
+sub_3D16C,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarInitSegment,Initializes single segment with sprite parameters,Boss,analyzed
+sub_3D450,Caterpillar ship above train (Stage 9 ),15480,Boss_CaterpillarUpdateSegmentPos,Updates segment position with sine wave calculation,Boss,analyzed
+sub_3D0CA,Caterpillar ship above train (Stage 9 ),15660,Boss_CaterpillarAnimateWave,Animates wave pattern for caterpillar movement,Boss,analyzed
+sub_3D412,Caterpillar ship above train (Stage 9 ),15840,Boss_CaterpillarPart1,Caterpillar part 1 entity with timer,Boss,analyzed
+sub_3D1F4,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarPart2,Caterpillar part 2 with projectile firing,Boss,analyzed
+sub_3D2F8,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarPart3,Caterpillar part 3 with attack patterns,Boss,analyzed
+sub_3D38A,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarPart4,Caterpillar part 4 with animation states,Boss,analyzed
+sub_3D4AC,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarCheckFreeSlot,Checks for free projectile slot,Boss,analyzed
+sub_3D4B6,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarShootingStar,Shooting star entity with state machine,Boss,analyzed
+sub_3D562,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarShipInit,Initializes caterpillar ship with body parts,Boss,analyzed
+sub_3D630,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarShipState1,Ship state 1 with rotation initialization,Boss,analyzed
+sub_3D654,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarShipState2,Ship state 2 with altitude oscillation,Boss,analyzed
+sub_3D78C,Caterpillar ship above train (Stage 9 ),16020,Boss_CaterpillarUpdateRotation,Updates ship rotation with sine calculation,Boss,analyzed
+sub_145F4,Caterpillar ship above train (Stage 9 ),16200,Collision_CheckProjectileTile,Checks projectile collision with terrain tile map,Physics,analyzed
+sub_2A418,Caterpillar ship above train (Stage 9 ),16200,Boss_CaterpillarSpawnExplosion,Spawns explosion projectile with sound,Boss,analyzed
+sub_18846,Caterpillar ship above train (Stage 9 ),17100,Effect_SpawnRandomDebris,Spawns random debris particle with velocity,Effect,analyzed
+sub_188EE,Caterpillar ship above train (Stage 9 ),17100,Enemy_CheckDamageThreshold,Checks if enemy damage exceeds threshold,Enemy,analyzed
+sub_2C0DE,Caterpillar ship above train (Stage 9 ),17280,Enemy_BossPartDispatcher,Boss part state dispatcher using jump table,Enemy,analyzed
+sub_3D6DA,Caterpillar ship above train (Stage 9 ),17280,Boss_CaterpillarShipState3,Ship state 3 defeating boss sequence,Boss,analyzed
+sub_3D726,Caterpillar ship above train (Stage 9 ),17280,Boss_CaterpillarShipState4,Ship state 4 final defeat cleanup,Boss,analyzed
+sub_2F08C,Xi-Tiger start,17640,Entity_XiTigerIntro,Xi-Tiger intro entity initialization,Entity,analyzed
+sub_2F0A8,Xi-Tiger start,17640,Entity_XiTigerIntroDispatcher,Dispatcher for Xi-Tiger intro states,Entity,analyzed
+sub_2F0BC,Xi-Tiger start,17640,Entity_XiTigerIntroState1,Xi-Tiger intro state with animation,Entity,analyzed
+sub_2F0F6,Xi-Tiger start,17640,Entity_XiTigerIntroState2,Xi-Tiger intro state advancing to cutscene,Entity,analyzed
+sub_14B6,Xi-Tiger cutscene,18000,VBlank_InitXiTigerEffect,Initializes VBlank effect for Xi-Tiger cutscene,VBlank,analyzed
+sub_1E996,Xi-Tiger cutscene,18000,Cutscene_XiTigerInit,Initializes Xi-Tiger cutscene with graphics,Cutscene,analyzed
+sub_1EB66,Xi-Tiger cutscene,18000,Cutscene_XiTigerFrameUpdate,Updates cutscene frame with timing,Cutscene,analyzed
+sub_1EB9E,Xi-Tiger cutscene,18000,Cutscene_XiTigerLoadFrame,Loads cutscene frame data to VRAM,Cutscene,analyzed
+sub_1EBB6,Xi-Tiger cutscene,18000,Cutscene_XiTigerProcessCommands,Processes cutscene command sequence,Cutscene,analyzed
+sub_1ED38,Xi-Tiger cutscene,18000,Cutscene_XiTigerWaitForInput,Waits for player input to continue,Cutscene,analyzed
+sub_1ED3C,Xi-Tiger cutscene,18000,Cutscene_XiTigerSkipCheck,Checks if player wants to skip cutscene,Cutscene,analyzed
+sub_1ED62,Xi-Tiger cutscene,18000,Cutscene_XiTigerFadeOut,Fades out cutscene graphics,Cutscene,analyzed
+sub_1ED7C,Xi-Tiger cutscene,18000,Cutscene_XiTigerComplete,Completes cutscene advancing to gameplay,Cutscene,analyzed
+sub_260A2,Xi-Tiger cutscene,18000,Gfx_DecompressCutsceneData,Decompresses cutscene graphics data,Gfx,analyzed
+sub_260CE,Xi-Tiger cutscene,18000,Gfx_LoadCutsceneFrame,Loads cutscene frame to video memory,Gfx,analyzed
+sub_29E58,Xi-Tiger cutscene,18000,Sys_InitXiTigerVRAM,Initializes VRAM layout for Xi-Tiger cutscene,System,analyzed
 sub_1EC20,Xi-Tiger cutscene,18180,,,,pending
 sub_2DCA,Xi-Tiger cutscene,18360,,,,pending
 sub_30D4,Xi-Tiger cutscene,18360,,,,pending
