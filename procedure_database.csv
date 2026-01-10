@@ -1258,86 +1258,86 @@ sub_3ADE,Ship desctruction,27180,,,VBlank,analyzed
 sub_3B4C,Ship desctruction,27180,,,VBlank,analyzed
 sub_DBBC,Ship desctruction,27180,,,Stage,analyzed
 sub_10EC6,Ship desctruction,27180,,,Scroll,analyzed
-sub_2F868,Ship desctruction,27180,Stage_ShipDestructionCheckInput,Checks input flags for scroll updates,Stage,analyzed
-sub_2F8B8,Ship desctruction,27180,Enemy_ShipSpawnDebrisProjectile,Spawns debris projectile with random offset,Enemy,analyzed
-sub_47D80,Ship desctruction,27180,Boss_SharpssteelDefeatFade,Palette fade during defeat sequence,Boss,analyzed
-sub_48F62,Ship desctruction,27180,Boss_SharpssteelSpawnDebris,Spawns 14 debris particles during defeat,Boss,analyzed
-sub_DBCE,Ship desctruction,27360,Stage_TeleportTransition,Transitions to teleport after ship destruction,Stage,analyzed
-sub_DBF4,Ship desctruction,27360,Stage_TeleportFadeIn,Fade in and setup for teleport scene,Stage,analyzed
-sub_DCEE,Teleport after ship desctruction,27540,Stage_TeleportUpdateScroll,Updates scroll position during teleport,Stage,analyzed
-sub_10E14,Teleport after ship desctruction,27540,VDP_SetupDMA,Sets up VDP DMA for VRAM transfer,VDP,analyzed
-sub_119C8,Teleport after ship desctruction,27540,Stage_LoadTeleportGraphics,Loads graphics for teleport scene,Stage,analyzed
-sub_16942,Teleport after ship desctruction,27540,Player_TeleportDash,Player dash effect during teleport,Player,analyzed
-sub_2667C,Teleport after ship desctruction,27540,Gfx_LoadTilesLoop,Main loop for loading tiles to VRAM,Graphics,analyzed
-sub_DCC0,Snake (Stage 13),27720,Stage_SnakeTransition,Transitions to Snake boss stage,Stage,analyzed
-sub_DD0E,Snake (Stage 13),27720,Stage_InitStage13,Initializes Stage 13 (Snake boss),Stage,analyzed
-sub_DD2E,Snake (Stage 13),27720,Stage_SnakeWaitScroll,Waits for scroll position before boss,Stage,analyzed
-sub_E34E,Snake (Stage 13),27720,Scroll_UpdateSnakeBackground,Updates background scroll for Snake stage,Scroll,analyzed
-sub_1B784,Snake (Stage 13),27720,VDP_QueueCommand,Queues VDP command for DMA,VDP,analyzed
-sub_4079E,Snake (Stage 13),27720,Boss_SnakeMain,Main handler for Snake boss,Boss,analyzed
-sub_40854,Snake (Stage 13),27720,Boss_SnakeInit,Initializes Snake boss with 23 segments,Boss,analyzed
-sub_2686,Snake (Stage 13),27900,Gfx_LoadDataToVRAM,Loads graphics data to VRAM,Graphics,analyzed
-sub_81B4,Snake (Stage 13),27900,Sprite_SetGraphicsPointer,Sets sprite graphics pointer from table,Sprite,analyzed
-sub_1202A,Snake (Stage 13),27900,Gfx_LoadSnakePalette,Loads Snake boss palette,Graphics,analyzed
-sub_267CA,Snake (Stage 13),27900,Gfx_TileLoadDispatcher,Dispatches tile loading based on count,Graphics,analyzed
-sub_268D8,Snake (Stage 13),27900,Gfx_LoadObjectData,Loads object data wrapper,Graphics,analyzed
-sub_268E8,Snake (Stage 13),27900,Memory_ClearTileBuffer,Clears tile buffer in RAM,Memory,analyzed
-sub_40942,Snake (Stage 13),27900,Boss_SnakeStartBattle,Starts Snake boss battle phase,Boss,analyzed
-sub_4096C,Snake (Stage 13),27900,Boss_SnakeBattleActive,Active battle state for Snake boss,Boss,analyzed
-sub_4098C,Snake (Stage 13),27900,Boss_SnakeUpdateHeadPosition,Updates Snake head position with wave,Boss,analyzed
-sub_409F0,Snake (Stage 13),27900,Boss_SnakeRandomizeSegments,Randomizes segment sizes,Boss,analyzed
-sub_40AF6,Snake (Stage 13),27900,Boss_SnakeSegmentMain,Main handler for Snake segment,Boss,analyzed
-sub_40B58,Snake (Stage 13),27900,Boss_SnakeSegmentWait,Segment waits to attack,Boss,analyzed
-sub_40B9C,Snake (Stage 13),27900,Boss_SnakeSegmentAttackDelay,Delay after segment attack,Boss,analyzed
-sub_40BAA,Snake (Stage 13),27900,Boss_SnakeSetupProjectile,Sets up projectile from segment,Boss,analyzed
-sub_40BFC,Snake (Stage 13),27900,Boss_SnakeAI,Snake boss AI and movement control,Boss,analyzed
-sub_40C82,Snake (Stage 13),27900,Boss_SnakeUpdateAnimation,Updates Snake animation frame,Boss,analyzed
-sub_2BE60,Snake (Stage 13),28440,Projectile_SpawnMultiPattern,Spawns multiple projectiles in pattern,Projectile,analyzed
-sub_2BEF0,Snake (Stage 13),28440,Projectile_ExplodeOnImpact,Explosion effect when projectile hits,Projectile,analyzed
-sub_2C100,Snake (Stage 13),28440,Projectile_SnakeDispatcher,State dispatcher for Snake projectile,Projectile,analyzed
-sub_2C112,Snake (Stage 13),28440,Projectile_SnakeInit,Initializes Snake projectile,Projectile,analyzed
-sub_2C15E,Snake (Stage 13),28440,Projectile_SnakeWait,Snake projectile wait state,Projectile,analyzed
-sub_2C17A,Snake (Stage 13),28440,Projectile_SnakeSpawn3Way,Spawns 3-way projectile pattern,Projectile,analyzed
-sub_2C1D6,Snake (Stage 13),28440,,,,pending
-sub_2C224,Snake (Stage 13),28440,,,,pending
-sub_40A6E,Snake (Stage 13),28440,,,,pending
-sub_40AB8,Snake (Stage 13),28440,,,,pending
-sub_84BC8,Snake (Stage 13),28440,,,,pending
-sub_DD5E,Bugmax boss,28800,,,,pending
-sub_DDA6,Bugmax boss,28980,,,,pending
-sub_DDE8,Bugmax boss,28980,,,,pending
-sub_4BEBC,Bugmax boss,28980,,,,pending
-sub_4BEF0,Bugmax boss,28980,,,,pending
-sub_4C43C,Bugmax boss,28980,,,,pending
-sub_4C5E6,Bugmax boss,28980,,,,pending
-sub_4DB7C,Bugmax boss,28980,,,,pending
-sub_4C602,Bugmax boss,29340,,,,pending
-sub_4C614,Bugmax boss,29340,,,,pending
-sub_4C644,Bugmax boss,29340,,,,pending
-sub_4C65E,Bugmax boss,29340,,,,pending
-sub_4C682,Bugmax boss,29340,,,,pending
-sub_4C6BE,Bugmax boss,29340,,,,pending
-sub_4C734,Bugmax boss,29340,,,,pending
-sub_4D444,Bugmax boss,29340,,,,pending
-sub_4D462,Bugmax boss,29340,,,,pending
-sub_4D47E,Bugmax boss,29340,,,,pending
-sub_4D53C,Bugmax boss,29340,,,,pending
-sub_4D8D4,Bugmax boss,29340,,,,pending
-sub_4D8FA,Bugmax boss,29340,,,,pending
-sub_4DA22,Bugmax boss,29340,,,,pending
-sub_2C280,Bugmax boss,29520,,,,pending
-sub_2C2A0,Bugmax boss,29520,,,,pending
-sub_2C2AC,Bugmax boss,29520,,,,pending
-sub_4C008,Bugmax boss,29520,,,,pending
-sub_4C778,Bugmax boss,29520,,,,pending
-sub_4C794,Bugmax boss,29520,,,,pending
-sub_4C7DC,Bugmax boss,29520,,,,pending
-sub_4C806,Bugmax boss,29520,,,,pending
-sub_4C82C,Bugmax boss,29520,,,,pending
-sub_4C884,Bugmax boss,29520,,,,pending
-sub_2C32C,Bugmax boss,29700,,,,pending
-sub_4C09A,Bugmax boss,29700,,,,pending
-sub_4C8C4,Bugmax boss,29700,,,,pending
+sub_2F868,Ship desctruction,27180,,,Stage,analyzed
+sub_2F8B8,Ship desctruction,27180,,,Enemy,analyzed
+sub_47D80,Ship desctruction,27180,,,Boss,analyzed
+sub_48F62,Ship desctruction,27180,,,Boss,analyzed
+sub_DBCE,Ship desctruction,27360,,,Stage,analyzed
+sub_DBF4,Ship desctruction,27360,,,Stage,analyzed
+sub_DCEE,Teleport after ship desctruction,27540,,,Stage,analyzed
+sub_10E14,Teleport after ship desctruction,27540,,,VDP,analyzed
+sub_119C8,Teleport after ship desctruction,27540,,,Stage,analyzed
+sub_16942,Teleport after ship desctruction,27540,,,Player,analyzed
+sub_2667C,Teleport after ship desctruction,27540,,,Graphics,analyzed
+sub_DCC0,Snake (Stage 13),27720,,,Stage,analyzed
+sub_DD0E,Snake (Stage 13),27720,,,Stage,analyzed
+sub_DD2E,Snake (Stage 13),27720,,,Stage,analyzed
+sub_E34E,Snake (Stage 13),27720,,,Scroll,analyzed
+sub_1B784,Snake (Stage 13),27720,,,VDP,analyzed
+sub_4079E,Snake (Stage 13),27720,,,Boss,analyzed
+sub_40854,Snake (Stage 13),27720,,,Boss,analyzed
+sub_2686,Snake (Stage 13),27900,,,Graphics,analyzed
+sub_81B4,Snake (Stage 13),27900,,,Sprite,analyzed
+sub_1202A,Snake (Stage 13),27900,,,Graphics,analyzed
+sub_267CA,Snake (Stage 13),27900,,,Graphics,analyzed
+sub_268D8,Snake (Stage 13),27900,,,Graphics,analyzed
+sub_268E8,Snake (Stage 13),27900,,,Memory,analyzed
+sub_40942,Snake (Stage 13),27900,,,Boss,analyzed
+sub_4096C,Snake (Stage 13),27900,,,Boss,analyzed
+sub_4098C,Snake (Stage 13),27900,,,Boss,analyzed
+sub_409F0,Snake (Stage 13),27900,,,Boss,analyzed
+sub_40AF6,Snake (Stage 13),27900,,,Boss,analyzed
+sub_40B58,Snake (Stage 13),27900,,,Boss,analyzed
+sub_40B9C,Snake (Stage 13),27900,,,Boss,analyzed
+sub_40BAA,Snake (Stage 13),27900,,,Boss,analyzed
+sub_40BFC,Snake (Stage 13),27900,,,Boss,analyzed
+sub_40C82,Snake (Stage 13),27900,,,Boss,analyzed
+sub_2BE60,Snake (Stage 13),28440,,,Projectile,analyzed
+sub_2BEF0,Snake (Stage 13),28440,,,Projectile,analyzed
+sub_2C100,Snake (Stage 13),28440,,,Projectile,analyzed
+sub_2C112,Snake (Stage 13),28440,,,Projectile,analyzed
+sub_2C15E,Snake (Stage 13),28440,,,Projectile,analyzed
+sub_2C17A,Snake (Stage 13),28440,,,Projectile,analyzed
+sub_2C1D6,Snake (Stage 13),28440,Projectile_SnakeSpawn6Way,Spawns 6-way projectile pattern,Projectile,analyzed
+sub_2C224,Snake (Stage 13),28440,Projectile_SnakeSpawn8Way,Spawns 8-way projectile pattern,Projectile,analyzed
+sub_40A6E,Snake (Stage 13),28440,Boss_SnakeSegmentDestroy,Segment destroyed with explosion,Boss,analyzed
+sub_40AB8,Snake (Stage 13),28440,Boss_SnakeSegmentDestroyLoop,Destroys snake segments sequentially,Boss,analyzed
+sub_84BC8,Snake (Stage 13),28440,Sound_ProcessPSGModulation,PSG modulation processing,Sound,analyzed
+sub_DD5E,Bugmax boss,28800,Stage_BugmaxTransition,Transitions to Bugmax boss,Stage,analyzed
+sub_DDA6,Bugmax boss,28980,Stage_BugmaxWaitDMA,Waits for DMA before boss intro,Stage,analyzed
+sub_DDE8,Bugmax boss,28980,Stage_BugmaxStartBattle,Starts Bugmax battle phase,Stage,analyzed
+sub_4BEBC,Bugmax boss,28980,Boss_BugmaxMain,Main handler for Bugmax boss,Boss,analyzed
+sub_4BEF0,Bugmax boss,28980,Boss_BugmaxUpdateLegs,Updates all leg positions,Boss,analyzed
+sub_4C43C,Bugmax boss,28980,Boss_BugmaxInit,Initializes Bugmax with 7 parts,Boss,analyzed
+sub_4C5E6,Bugmax boss,28980,Boss_BugmaxLoadGfx,Loads Bugmax graphics,Boss,analyzed
+sub_4DB7C,Bugmax boss,28980,Math_CalculatePolarPosition,Calculates polar coordinates to position,Math,analyzed
+sub_4C602,Bugmax boss,29340,Boss_BugmaxShakeInit,Initializes shake animation,Boss,analyzed
+sub_4C614,Bugmax boss,29340,Boss_BugmaxShaking,Shake animation state,Boss,analyzed
+sub_4C644,Bugmax boss,29340,Boss_BugmaxVictoryCheck,Checks victory condition,Boss,analyzed
+sub_4C65E,Bugmax boss,29340,Boss_BugmaxDefeatStart,Starts defeat sequence,Boss,analyzed
+sub_4C682,Bugmax boss,29340,Boss_BugmaxDefeatRise,Boss rises during defeat,Boss,analyzed
+sub_4C6BE,Bugmax boss,29340,Boss_BugmaxSpawnDebris,Spawns debris during defeat,Boss,analyzed
+sub_4C734,Bugmax boss,29340,Boss_BugmaxDefeatExplode,Explosion during defeat,Boss,analyzed
+sub_4D444,Bugmax boss,29340,Enemy_BugmaxDebrisMain,Bugmax debris handler,Enemy,analyzed
+sub_4D462,Bugmax boss,29340,Enemy_BugmaxDebrisInit,Initializes debris piece,Enemy,analyzed
+sub_4D47E,Bugmax boss,29340,Enemy_BugmaxDebrisBounce,Debris bouncing physics,Enemy,analyzed
+sub_4D53C,Bugmax boss,29340,Boss_BugmaxAnimateFlip,Animates sprite flip,Boss,analyzed
+sub_4D8D4,Bugmax boss,29340,Boss_BugmaxUpdateAllParts,Updates all boss parts,Boss,analyzed
+sub_4D8FA,Bugmax boss,29340,Boss_BugmaxSpawnProjectile,Spawns projectile from boss,Boss,analyzed
+sub_4DA22,Bugmax boss,29340,Boss_BugmaxAI,AI and movement control,Boss,analyzed
+sub_2C280,Bugmax boss,29520,Projectile_BugmaxMain,Main Bugmax projectile handler,Projectile,analyzed
+sub_2C2A0,Bugmax boss,29520,Projectile_BugmaxWait,Wait before spawning,Projectile,analyzed
+sub_2C2AC,Bugmax boss,29520,Projectile_BugmaxSpawn,Spawns child projectiles,Projectile,analyzed
+sub_4C008,Bugmax boss,29520,Boss_BugmaxRotateParts1,Rotation pattern 1 for parts,Boss,analyzed
+sub_4C778,Bugmax boss,29520,Boss_BugmaxSpinInit,Initializes spin attack,Boss,analyzed
+sub_4C794,Bugmax boss,29520,Boss_BugmaxSpinning,Spinning attack state,Boss,analyzed
+sub_4C7DC,Bugmax boss,29520,Boss_BugmaxSetLegOffsets,Sets leg rotation offsets,Boss,analyzed
+sub_4C806,Bugmax boss,29520,Boss_BugmaxSyncLegRotation,Synchronizes leg rotations,Boss,analyzed
+sub_4C82C,Bugmax boss,29520,Boss_BugmaxUpdateLegSprite,Updates leg sprite based on angle,Boss,analyzed
+sub_4C884,Bugmax boss,29520,Boss_BugmaxSpinReverse,Reverse spin attack,Boss,analyzed
+sub_2C32C,Bugmax boss,29700,Projectile_BugmaxWaitLoop,Wait loop state,Projectile,analyzed
+sub_4C09A,Bugmax boss,29700,Boss_BugmaxRotateParts2,Rotation pattern 2 for parts,Boss,analyzed
+sub_4C8C4,Bugmax boss,29700,Boss_BugmaxSpinSlowdown,Slows down spin attack,Boss,analyzed
 sub_4C8DE,Bugmax boss,29700,,,,pending
 sub_4C954,Bugmax boss,29700,,,,pending
 sub_4D1FE,Bugmax boss,29700,,,,pending
