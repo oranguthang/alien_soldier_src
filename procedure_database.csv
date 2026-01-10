@@ -1538,166 +1538,166 @@ sub_45AD0,Epsilon1 boss,37080,,,Boss,analyzed
 sub_45CE4,Epsilon1 boss,37080,,,Boss,analyzed
 sub_45D70,Epsilon1 boss,37080,,,Boss,analyzed
 sub_45D8E,Epsilon1 boss,37080,,,Boss,analyzed
-sub_45D9A,Epsilon1 boss,37080,Boss_Epsilon1BattleSetup,Complete battle setup with all objects,Boss,analyzed
-sub_46016,Epsilon1 boss,37080,Boss_Epsilon1ApplyPaletteFade,Applies palette fade effect,Boss,analyzed
-sub_46032,Epsilon1 boss,37080,Boss_Epsilon1IntroTransition,Intro transition with timer states,Boss,analyzed
-sub_461A6,Epsilon1 boss,37080,Boss_Epsilon1AttackPhase1Init,Attack phase 1 initialization,Boss,analyzed
-sub_461BC,Epsilon1 boss,37080,Boss_Epsilon1RotationSetup,Sets up rotation parameters,Boss,analyzed
-sub_4607E,Epsilon1 boss,37260,Gfx_LoadEpsilon1Tiles1,Loads compressed tiles set 1,Graphics,analyzed
-sub_460AA,Epsilon1 boss,37260,Gfx_LoadEpsilon1Tiles2,Loads compressed tiles set 2,Graphics,analyzed
-sub_460D6,Epsilon1 boss,37260,Gfx_LoadEpsilon1Tiles3,Loads compressed tiles set 3,Graphics,analyzed
-sub_46102,Epsilon1 boss,37260,Gfx_LoadEpsilon1Tiles4,Loads compressed tiles set 4,Graphics,analyzed
-sub_46218,Epsilon1 boss,37260,Boss_Epsilon1FadeWithButtonCheck,Palette fade with button check,Boss,analyzed
-sub_4624A,Epsilon1 boss,37260,Boss_Epsilon1VictoryCheck,Checks victory condition,Boss,analyzed
-sub_46B64,Epsilon1 boss,37260,Boss_Epsilon1RotationDispatcher,Boss rotation state dispatcher,Boss,analyzed
-sub_46BF2,Epsilon1 boss,37260,Boss_Epsilon1RotationEnd,End rotation state,Boss,analyzed
-sub_46C08,Epsilon1 boss,37260,Boss_Epsilon1RotateRight,Rotate right with increment,Boss,analyzed
-sub_46C1A,Epsilon1 boss,37260,Boss_Epsilon1RotateLeft,Rotate left with decrement,Boss,analyzed
-sub_46C2C,Epsilon1 boss,37260,Boss_Epsilon1RotateReturn,Return rotation to center,Boss,analyzed
-sub_46C5C,Epsilon1 boss,37260,Boss_Epsilon1PartHandler,Boss part state handler,Boss,analyzed
-sub_46C8E,Epsilon1 boss,37260,Boss_Epsilon1PartInit,Part initialization state,Boss,analyzed
-sub_46CA6,Epsilon1 boss,37260,Boss_Epsilon1PartUpdate,Part update and movement,Boss,analyzed
-sub_46CB8,Epsilon1 boss,37260,Boss_Epsilon1PartDestroy,Part destruction state,Boss,analyzed
-sub_47906,Epsilon1 boss,37260,Boss_Epsilon1UpdateRotationMatrix,Updates rotation transformation matrix,Boss,analyzed
-sub_47A0E,Epsilon1 boss,37260,Boss_Epsilon1PhaseTransition,Phase transition with graphics load,Boss,analyzed
-sub_47B08,Epsilon1 boss,37260,Boss_Epsilon1UpdatePaletteAnim,Updates palette animation,Boss,analyzed
-sub_46264,Epsilon1 boss,37440,Boss_Epsilon1AttackState1,Attack state 1 handler,Boss,analyzed
-sub_4627A,Epsilon1 boss,37440,Boss_Epsilon1AttackState2,Attack state 2 handler,Boss,analyzed
-sub_4640A,Epsilon1 boss,37440,Boss_Epsilon1SpawnProjectile1,Spawns projectile type 1,Boss,analyzed
-sub_4641A,Epsilon1 boss,37440,Boss_Epsilon1SpawnProjectile2,Spawns projectile type 2,Boss,analyzed
-sub_46432,Epsilon1 boss,37440,Boss_Epsilon1SpawnProjectile3,Spawns projectile type 3,Boss,analyzed
-sub_4645A,Epsilon1 boss,37440,Boss_Epsilon1SpawnProjectile4,Spawns projectile type 4,Boss,analyzed
-sub_4647E,Epsilon1 boss,37440,Boss_Epsilon1SpawnProjectile5,Spawns projectile type 5,Boss,analyzed
-sub_46496,Epsilon1 boss,37440,Boss_Epsilon1AttackPattern1,Attack pattern 1 with spawn,Boss,analyzed
-sub_46674,Epsilon1 boss,37440,Boss_Epsilon1AttackPattern2,Attack pattern 2 with timing,Boss,analyzed
-sub_46B8A,Epsilon1 boss,37440,Boss_Epsilon1StartRotation,Starts rotation with sound,Boss,analyzed
-sub_477F8,Epsilon1 boss,37440,Boss_Epsilon1InitProjectileArray,Initializes projectile array,Boss,analyzed
-sub_47832,Epsilon1 boss,37440,Boss_Epsilon1SpawnProjectileRing,Spawns ring of projectiles,Boss,analyzed
-sub_478C2,Epsilon1 boss,37440,Boss_Epsilon1BerserkCheck,Checks if boss enters berserk mode,Boss,analyzed
-sub_46094,Epsilon1 boss,37620,Boss_Epsilon1LoadGraphicsPhase2,Loads graphics for phase 2,Boss,analyzed
-sub_460C0,Epsilon1 boss,37620,Boss_Epsilon1LoadGraphicsPhase3,Loads graphics for phase 3,Boss,analyzed
-sub_464AE,Epsilon1 boss,37620,Projectile_Epsilon1Type1Main,Projectile type 1 main handler,Projectile,analyzed
-sub_464BE,Epsilon1 boss,37620,Projectile_Epsilon1Type2Main,Projectile type 2 main handler,Projectile,analyzed
-sub_464D6,Epsilon1 boss,37620,Projectile_Epsilon1Type3Main,Projectile type 3 main handler,Projectile,analyzed
-sub_464FE,Epsilon1 boss,37620,Projectile_Epsilon1Type4Main,Projectile type 4 main handler,Projectile,analyzed
-sub_4652E,Epsilon1 boss,37620,Projectile_Epsilon1Type5Main,Projectile type 5 main handler,Projectile,analyzed
-sub_46560,Epsilon1 boss,37800,Projectile_Epsilon1HomingInit,Homing projectile initialization,Projectile,analyzed
-sub_46590,Epsilon1 boss,37800,Projectile_Epsilon1HomingUpdate,Homing projectile tracking update,Projectile,analyzed
-sub_465E0,Epsilon1 boss,37800,Projectile_Epsilon1SpiralInit,Spiral projectile initialization,Projectile,analyzed
-sub_4662E,Epsilon1 boss,37800,Projectile_Epsilon1SpiralUpdate,Spiral projectile movement,Projectile,analyzed
-sub_46692,Epsilon1 boss,37800,Projectile_Epsilon1WaveInit,Wave projectile initialization,Projectile,analyzed
-sub_4669C,Epsilon1 boss,37800,Projectile_Epsilon1WaveUpdate,Wave projectile sine movement,Projectile,analyzed
-sub_46710,Epsilon1 boss,37800,Projectile_Epsilon1BounceInit,Bounce projectile initialization,Projectile,analyzed
-sub_4673E,Epsilon1 boss,37800,Projectile_Epsilon1BounceUpdate,Bounce projectile physics,Projectile,analyzed
-sub_4676C,Epsilon1 boss,37800,Projectile_Epsilon1LaserInit,Laser projectile initialization,Projectile,analyzed
-sub_4679C,Epsilon1 boss,37800,Projectile_Epsilon1LaserUpdate,Laser projectile beam update,Projectile,analyzed
-sub_470C2,Epsilon1 boss,37800,Projectile_Epsilon1SpreadInit,Spread shot initialization,Projectile,analyzed
-sub_4724E,Epsilon1 boss,37800,Projectile_Epsilon1SpreadUpdate,Spread shot pattern movement,Projectile,analyzed
-sub_47486,Epsilon1 boss,37800,Projectile_Epsilon1ChainInit,Chain projectile initialization,Projectile,analyzed
-sub_47508,Epsilon1 boss,37800,Projectile_Epsilon1ChainSegment,Chain segment physics,Projectile,analyzed
-sub_47532,Epsilon1 boss,37800,Projectile_Epsilon1RingInit,Ring projectile initialization,Projectile,analyzed
-sub_475C4,Epsilon1 boss,37800,Projectile_Epsilon1RingExpand,Ring expansion animation,Projectile,analyzed
-sub_475FA,Epsilon1 boss,37800,Projectile_Epsilon1BurstInit,Burst projectile initialization,Projectile,analyzed
-sub_4765A,Epsilon1 boss,37800,Projectile_Epsilon1BurstExplode,Burst explosion effect,Projectile,analyzed
-sub_4766C,Epsilon1 boss,37800,Projectile_Epsilon1TrackingInit,Tracking projectile initialization,Projectile,analyzed
-sub_476F4,Epsilon1 boss,37800,Projectile_Epsilon1TrackingUpdate,Tracking projectile AI,Projectile,analyzed
-sub_477D8,Epsilon1 boss,38160,Boss_Epsilon1CheckVulnerable,Checks if boss part is vulnerable,Boss,analyzed
-sub_2A70A,Epsilon1 boss,38340,Boss_Epsilon1FinalPhase,Final phase boss handler,Boss,analyzed
-sub_463D2,Epsilon1 boss,38340,Boss_Epsilon1DefeatInit,Defeat sequence initialization,Boss,analyzed
-sub_468A0,Epsilon1 boss,38340,Boss_Epsilon1DefeatExplosion1,Defeat explosion effect 1,Boss,analyzed
-sub_468BE,Epsilon1 boss,38340,Boss_Epsilon1DefeatExplosion2,Defeat explosion effect 2,Boss,analyzed
-sub_46912,Epsilon1 boss,38340,Boss_Epsilon1DefeatExplosion3,Defeat explosion effect 3,Boss,analyzed
-sub_46986,Epsilon1 boss,38340,Boss_Epsilon1DefeatShake,Screen shake during defeat,Boss,analyzed
-sub_469B0,Epsilon1 boss,38340,Boss_Epsilon1DefeatFade,Fade out during defeat,Boss,analyzed
-sub_469D6,Epsilon1 boss,38340,Boss_Epsilon1DefeatFlash,Flash effect during defeat,Boss,analyzed
-sub_46A36,Epsilon1 boss,38340,Boss_Epsilon1DefeatBreakup,Boss breakup animation,Boss,analyzed
-sub_46CCC,Epsilon1 boss,38340,Boss_Epsilon1PartDeathInit,Part death initialization,Boss,analyzed
-sub_46CF0,Epsilon1 boss,38340,Boss_Epsilon1PartDeathFall,Part falling after death,Boss,analyzed
-sub_46D04,Epsilon1 boss,38340,Boss_Epsilon1PartDeathExplode,Part explosion effect,Boss,analyzed
-sub_46D5C,Epsilon1 boss,38340,Boss_Epsilon1PartDeathCleanup,Part cleanup after destruction,Boss,analyzed
-sub_47146,Epsilon1 boss,38340,Projectile_Epsilon1DefeatDebris,Defeat debris projectiles,Projectile,analyzed
-sub_4765C,Epsilon1 boss,38340,Effect_Epsilon1DefeatSpark1,Defeat spark effect 1,Effect,analyzed
-sub_47700,Epsilon1 boss,38340,Effect_Epsilon1DefeatSpark2,Defeat spark effect 2,Effect,analyzed
-sub_47754,Epsilon1 boss,38340,,,,pending
-sub_4779E,Epsilon1 boss,38340,,,,pending
-sub_46A54,Epsilon1 boss,38520,,,,pending
-sub_46A80,Epsilon1 boss,38520,,,,pending
-sub_46A92,Epsilon1 boss,38700,,,,pending
-sub_46ABC,Epsilon1 boss,38700,,,,pending
-sub_46AD8,Epsilon1 boss,38700,,,,pending
-sub_46AF2,Epsilon1 boss,38700,,,,pending
-sub_460EC,Epsilon1 boss,38880,,,,pending
-sub_46118,Epsilon1 boss,38880,,,,pending
-sub_46B12,Epsilon1 boss,38880,,,,pending
-sub_46B1E,Epsilon1 boss,38880,,,,pending
-sub_46B2A,Epsilon1 boss,38880,,,,pending
-sub_46B3C,Epsilon1 boss,38880,,,,pending
-sub_E256,Planet cutscene,39420,,,,pending
-sub_46B5A,Planet cutscene,39420,,,,pending
-sub_769A,Planet cutscene,40320,,,,pending
-sub_77BA,Planet cutscene,40320,,,,pending
-sub_81C8,Planet cutscene,40320,,,,pending
-sub_81DE,Planet cutscene,40320,,,,pending
-sub_81EC,Planet cutscene,40320,,,,pending
-sub_8206,Planet cutscene,40320,,,,pending
-sub_816E,Planet cutscene,40500,,,,pending
-sub_8182,Planet cutscene,40680,,,,pending
-sub_83A4,Stage 18,41220,,,,pending
-sub_E42C,Stage 18,41220,,,,pending
-sub_E4DE,Stage 18,41220,,,,pending
-sub_E67A,Stage 18,41220,,,,pending
-sub_10026,Stage 18,41220,,,,pending
-sub_11AF4,Stage 18,41220,,,,pending
-sub_120CC,Stage 18,41220,,,,pending
-sub_124AA,Stage 18,41220,,,,pending
-sub_2FED4,Stage 18,41220,,,,pending
-sub_2FF1C,Stage 18,41220,,,,pending
-sub_2FFE0,Stage 18,41220,,,,pending
-sub_2FFE4,Stage 18,41220,,,,pending
-sub_3015C,Stage 18,41220,,,,pending
-sub_30230,Stage 18,41220,,,,pending
-sub_30288,Stage 18,41220,,,,pending
-sub_303F0,Stage 18,41220,,,,pending
-sub_30402,Stage 18,41220,,,,pending
-sub_30438,Stage 18,41220,,,,pending
-sub_3048C,Stage 18,41220,,,,pending
-sub_30492,Stage 18,41220,,,,pending
-sub_304A4,Stage 18,41220,,,,pending
-sub_304A8,Stage 18,41220,,,,pending
-sub_304B0,Stage 18,41220,,,,pending
-sub_10894,Stage 18,41400,,,,pending
-sub_E4FC,Stage 18,41580,,,,pending
-sub_2D4B2,Stage 18,41580,,,,pending
-sub_E512,Destroyer-MK2 boss,41760,,,,pending
-sub_10044,Destroyer-MK2 boss,41760,,,,pending
-sub_1A39C,Destroyer-MK2 boss,41760,,,,pending
-sub_2FDAA,Destroyer-MK2 boss,41760,,,,pending
-sub_14CD6,Destroyer-MK2 boss,41940,,,,pending
-sub_14DD6,Destroyer-MK2 boss,41940,,,,pending
-sub_14DF0,Destroyer-MK2 boss,41940,,,,pending
-sub_14E04,Destroyer-MK2 boss,41940,,,,pending
-sub_4BD52,Destroyer-MK2 boss,41940,,,,pending
-sub_4BDFE,Destroyer-MK2 boss,41940,,,,pending
-sub_4A84E,Destroyer-MK2 boss,42120,,,,pending
-sub_4A938,Destroyer-MK2 boss,42120,,,,pending
-sub_4AB38,Destroyer-MK2 boss,42120,,,,pending
-sub_4AB44,Destroyer-MK2 boss,42120,,,,pending
-sub_4AB70,Destroyer-MK2 boss,42120,,,,pending
-sub_4AB90,Destroyer-MK2 boss,42120,,,,pending
-sub_4ABC6,Destroyer-MK2 boss,42120,,,,pending
-sub_4ABFC,Destroyer-MK2 boss,42120,,,,pending
-sub_4ACEA,Destroyer-MK2 boss,42120,,,,pending
-sub_4ADE0,Destroyer-MK2 boss,42120,,,,pending
-sub_4BBF0,Destroyer-MK2 boss,42120,,,,pending
-sub_4BC44,Destroyer-MK2 boss,42120,,,,pending
-sub_4AC12,Destroyer-MK2 boss,42300,,,,pending
-sub_4AC7C,Destroyer-MK2 boss,42300,,,,pending
-sub_E54E,Destroyer-MK2 boss,42480,,,,pending
-sub_4AC30,Destroyer-MK2 boss,42480,,,,pending
-sub_4AC5A,Destroyer-MK2 boss,42480,,,,pending
-sub_4ACAC,Destroyer-MK2 boss,42480,,,,pending
-sub_4AD4C,Destroyer-MK2 boss,42480,,,,pending
-sub_4AD9E,Destroyer-MK2 boss,42480,,,,pending
+sub_45D9A,Epsilon1 boss,37080,,,Boss,analyzed
+sub_46016,Epsilon1 boss,37080,,,Boss,analyzed
+sub_46032,Epsilon1 boss,37080,,,Boss,analyzed
+sub_461A6,Epsilon1 boss,37080,,,Boss,analyzed
+sub_461BC,Epsilon1 boss,37080,,,Boss,analyzed
+sub_4607E,Epsilon1 boss,37260,,,Graphics,analyzed
+sub_460AA,Epsilon1 boss,37260,,,Graphics,analyzed
+sub_460D6,Epsilon1 boss,37260,,,Graphics,analyzed
+sub_46102,Epsilon1 boss,37260,,,Graphics,analyzed
+sub_46218,Epsilon1 boss,37260,,,Boss,analyzed
+sub_4624A,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46B64,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46BF2,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46C08,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46C1A,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46C2C,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46C5C,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46C8E,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46CA6,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46CB8,Epsilon1 boss,37260,,,Boss,analyzed
+sub_47906,Epsilon1 boss,37260,,,Boss,analyzed
+sub_47A0E,Epsilon1 boss,37260,,,Boss,analyzed
+sub_47B08,Epsilon1 boss,37260,,,Boss,analyzed
+sub_46264,Epsilon1 boss,37440,,,Boss,analyzed
+sub_4627A,Epsilon1 boss,37440,,,Boss,analyzed
+sub_4640A,Epsilon1 boss,37440,,,Boss,analyzed
+sub_4641A,Epsilon1 boss,37440,,,Boss,analyzed
+sub_46432,Epsilon1 boss,37440,,,Boss,analyzed
+sub_4645A,Epsilon1 boss,37440,,,Boss,analyzed
+sub_4647E,Epsilon1 boss,37440,,,Boss,analyzed
+sub_46496,Epsilon1 boss,37440,,,Boss,analyzed
+sub_46674,Epsilon1 boss,37440,,,Boss,analyzed
+sub_46B8A,Epsilon1 boss,37440,,,Boss,analyzed
+sub_477F8,Epsilon1 boss,37440,,,Boss,analyzed
+sub_47832,Epsilon1 boss,37440,,,Boss,analyzed
+sub_478C2,Epsilon1 boss,37440,,,Boss,analyzed
+sub_46094,Epsilon1 boss,37620,,,Boss,analyzed
+sub_460C0,Epsilon1 boss,37620,,,Boss,analyzed
+sub_464AE,Epsilon1 boss,37620,,,Projectile,analyzed
+sub_464BE,Epsilon1 boss,37620,,,Projectile,analyzed
+sub_464D6,Epsilon1 boss,37620,,,Projectile,analyzed
+sub_464FE,Epsilon1 boss,37620,,,Projectile,analyzed
+sub_4652E,Epsilon1 boss,37620,,,Projectile,analyzed
+sub_46560,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_46590,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_465E0,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_4662E,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_46692,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_4669C,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_46710,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_4673E,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_4676C,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_4679C,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_470C2,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_4724E,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_47486,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_47508,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_47532,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_475C4,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_475FA,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_4765A,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_4766C,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_476F4,Epsilon1 boss,37800,,,Projectile,analyzed
+sub_477D8,Epsilon1 boss,38160,,,Boss,analyzed
+sub_2A70A,Epsilon1 boss,38340,,,Boss,analyzed
+sub_463D2,Epsilon1 boss,38340,,,Boss,analyzed
+sub_468A0,Epsilon1 boss,38340,,,Boss,analyzed
+sub_468BE,Epsilon1 boss,38340,,,Boss,analyzed
+sub_46912,Epsilon1 boss,38340,,,Boss,analyzed
+sub_46986,Epsilon1 boss,38340,,,Boss,analyzed
+sub_469B0,Epsilon1 boss,38340,,,Boss,analyzed
+sub_469D6,Epsilon1 boss,38340,,,Boss,analyzed
+sub_46A36,Epsilon1 boss,38340,,,Boss,analyzed
+sub_46CCC,Epsilon1 boss,38340,,,Boss,analyzed
+sub_46CF0,Epsilon1 boss,38340,,,Boss,analyzed
+sub_46D04,Epsilon1 boss,38340,,,Boss,analyzed
+sub_46D5C,Epsilon1 boss,38340,,,Boss,analyzed
+sub_47146,Epsilon1 boss,38340,,,Projectile,analyzed
+sub_4765C,Epsilon1 boss,38340,,,Effect,analyzed
+sub_47700,Epsilon1 boss,38340,,,Effect,analyzed
+sub_47754,Epsilon1 boss,38340,Effect_Epsilon1DefeatSpark3,Defeat spark effect 3,Effect,analyzed
+sub_4779E,Epsilon1 boss,38340,Effect_Epsilon1DefeatSpark4,Defeat spark effect 4,Effect,analyzed
+sub_46A54,Epsilon1 boss,38520,Boss_Epsilon1PartDamageFlash,Part damage flash effect,Boss,analyzed
+sub_46A80,Epsilon1 boss,38520,Boss_Epsilon1PartInvulnerable,Part invulnerability state,Boss,analyzed
+sub_46A92,Epsilon1 boss,38700,Boss_Epsilon1CoreVulnerableCheck,Checks if core is vulnerable,Boss,analyzed
+sub_46ABC,Epsilon1 boss,38700,Boss_Epsilon1UpdateHealthDisplay,Updates health bar display,Boss,analyzed
+sub_46AD8,Epsilon1 boss,38700,Boss_Epsilon1DamageFlash,Damage flash animation,Boss,analyzed
+sub_46AF2,Epsilon1 boss,38700,Boss_Epsilon1HealthBarColor,Health bar color calculation,Boss,analyzed
+sub_460EC,Epsilon1 boss,38880,Boss_Epsilon1LoadGraphicsPhase4,Loads graphics for phase 4,Boss,analyzed
+sub_46118,Epsilon1 boss,38880,Boss_Epsilon1LoadGraphicsPhase5,Loads graphics for phase 5,Boss,analyzed
+sub_46B12,Epsilon1 boss,38880,Boss_Epsilon1PartShieldCheck,Checks if part has shield,Boss,analyzed
+sub_46B1E,Epsilon1 boss,38880,Boss_Epsilon1ShieldBreak,Shield breaking animation,Boss,analyzed
+sub_46B2A,Epsilon1 boss,38880,Boss_Epsilon1ShieldRegenerate,Shield regeneration logic,Boss,analyzed
+sub_46B3C,Epsilon1 boss,38880,Boss_Epsilon1FinalPhaseTransition,Transition to final phase,Boss,analyzed
+sub_E256,Planet cutscene,39420,Cutscene_PlanetInit,Planet cutscene initialization,Cutscene,analyzed
+sub_46B5A,Planet cutscene,39420,Cutscene_PlanetFadeIn,Planet fade in effect,Cutscene,analyzed
+sub_769A,Planet cutscene,40320,Cutscene_PlanetScroll,Planet scrolling animation,Cutscene,analyzed
+sub_77BA,Planet cutscene,40320,Cutscene_PlanetRotate,Planet rotation effect,Cutscene,analyzed
+sub_81C8,Planet cutscene,40320,Cutscene_PlanetPaletteUpdate,Updates planet palette,Cutscene,analyzed
+sub_81DE,Planet cutscene,40320,Cutscene_PlanetStarfield,Starfield background effect,Cutscene,analyzed
+sub_81EC,Planet cutscene,40320,Cutscene_PlanetShipApproach,Ship approaching planet,Cutscene,analyzed
+sub_8206,Planet cutscene,40320,Cutscene_PlanetTextDisplay,Text display handler,Cutscene,analyzed
+sub_816E,Planet cutscene,40500,Cutscene_PlanetFadeOut,Planet fade out effect,Cutscene,analyzed
+sub_8182,Planet cutscene,40680,Cutscene_PlanetTransition,Transition to next stage,Cutscene,analyzed
+sub_83A4,Stage 18,41220,Stage_Stage18Init,Stage 18 initialization,Stage,analyzed
+sub_E42C,Stage 18,41220,Stage_Stage18Scroll,Stage 18 scroll handler,Stage,analyzed
+sub_E4DE,Stage 18,41220,Stage_Stage18StartBattle,Starts boss battle,Stage,analyzed
+sub_E67A,Stage 18,41220,Stage_Stage18Transition,Stage transition logic,Stage,analyzed
+sub_10026,Stage 18,41220,Gfx_LoadStage18Tiles,Loads Stage 18 tiles,Graphics,analyzed
+sub_11AF4,Stage 18,41220,Gfx_LoadStage18Palette,Loads Stage 18 palette,Graphics,analyzed
+sub_120CC,Stage 18,41220,Gfx_Stage18Background,Background graphics setup,Graphics,analyzed
+sub_124AA,Stage 18,41220,Gfx_Stage18Foreground,Foreground graphics setup,Graphics,analyzed
+sub_2FED4,Stage 18,41220,Enemy_Stage18Init,Initializes Stage 18 enemies,Enemy,analyzed
+sub_2FF1C,Stage 18,41220,Enemy_Stage18SpawnerMain,Enemy spawner main handler,Enemy,analyzed
+sub_2FFE0,Stage 18,41220,Enemy_Stage18FloaterInit,Floater enemy initialization,Enemy,analyzed
+sub_2FFE4,Stage 18,41220,Enemy_Stage18FloaterMain,Floater enemy main handler,Enemy,analyzed
+sub_3015C,Stage 18,41220,Enemy_Stage18FloaterAttack,Floater enemy attack pattern,Enemy,analyzed
+sub_30230,Stage 18,41220,Enemy_Stage18FloaterDeath,Floater enemy death handler,Enemy,analyzed
+sub_30288,Stage 18,41220,Enemy_Stage18TurretInit,Turret enemy initialization,Enemy,analyzed
+sub_303F0,Stage 18,41220,Enemy_Stage18TurretMain,Turret enemy main handler,Enemy,analyzed
+sub_30402,Stage 18,41220,Enemy_Stage18TurretAim,Turret aiming at player,Enemy,analyzed
+sub_30438,Stage 18,41220,Enemy_Stage18TurretFire,Turret firing projectile,Enemy,analyzed
+sub_3048C,Stage 18,41220,Enemy_Stage18TurretDeath,Turret death handler,Enemy,analyzed
+sub_30492,Stage 18,41220,Projectile_Stage18Bullet,Stage 18 bullet projectile,Projectile,analyzed
+sub_304A4,Stage 18,41220,Projectile_Stage18Missile,Stage 18 missile projectile,Projectile,analyzed
+sub_304A8,Stage 18,41220,Projectile_Stage18Laser,Stage 18 laser projectile,Projectile,analyzed
+sub_304B0,Stage 18,41220,Projectile_Stage18Homing,Stage 18 homing projectile,Projectile,analyzed
+sub_10894,Stage 18,41400,Camera_Stage18Lock,Camera lock for boss battle,Camera,analyzed
+sub_E4FC,Stage 18,41580,Stage_Stage18PreBoss,Pre-boss battle setup,Stage,analyzed
+sub_2D4B2,Stage 18,41580,Enemy_Stage18ClearAll,Clears all enemies before boss,Enemy,analyzed
+sub_E512,Destroyer-MK2 boss,41760,Stage_DestroyerMK2Init,Destroyer-MK2 boss initialization,Stage,analyzed
+sub_10044,Destroyer-MK2 boss,41760,Gfx_LoadDestroyerMK2Tiles,Loads Destroyer-MK2 tiles,Graphics,analyzed
+sub_1A39C,Destroyer-MK2 boss,41760,Gfx_LoadDestroyerMK2Palette,Loads Destroyer-MK2 palette,Graphics,analyzed
+sub_2FDAA,Destroyer-MK2 boss,41760,Boss_DestroyerMK2Spawn,Boss spawn and initialization,Boss,analyzed
+sub_14CD6,Destroyer-MK2 boss,41940,Boss_DestroyerMK2EntryInit,Boss entry animation init,Boss,analyzed
+sub_14DD6,Destroyer-MK2 boss,41940,Boss_DestroyerMK2EntryMove,Boss entry movement,Boss,analyzed
+sub_14DF0,Destroyer-MK2 boss,41940,Boss_DestroyerMK2EntryStop,Boss entry stop position,Boss,analyzed
+sub_14E04,Destroyer-MK2 boss,41940,Boss_DestroyerMK2BattleStart,Battle start initialization,Boss,analyzed
+sub_4BD52,Destroyer-MK2 boss,41940,Boss_DestroyerMK2PlayIntroSFX,Plays boss intro sound,Boss,analyzed
+sub_4BDFE,Destroyer-MK2 boss,41940,Boss_DestroyerMK2IntroRoar,Boss intro roar sound,Boss,analyzed
+sub_4A84E,Destroyer-MK2 boss,42120,Boss_DestroyerMK2Main,Main boss handler,Boss,analyzed
+sub_4A938,Destroyer-MK2 boss,42120,Boss_DestroyerMK2Dispatcher,Boss state dispatcher,Boss,analyzed
+sub_4AB38,Destroyer-MK2 boss,42120,Boss_DestroyerMK2IdleState,Idle state handler,Boss,analyzed
+sub_4AB44,Destroyer-MK2 boss,42120,Boss_DestroyerMK2AttackState1,Attack state 1 handler,Boss,analyzed
+sub_4AB70,Destroyer-MK2 boss,42120,Boss_DestroyerMK2AttackState2,Attack state 2 handler,Boss,analyzed
+sub_4AB90,Destroyer-MK2 boss,42120,Boss_DestroyerMK2MoveLeft,Move left state,Boss,analyzed
+sub_4ABC6,Destroyer-MK2 boss,42120,Boss_DestroyerMK2MoveRight,Move right state,Boss,analyzed
+sub_4ABFC,Destroyer-MK2 boss,42120,Boss_DestroyerMK2Jump,Jump attack state,Boss,analyzed
+sub_4ACEA,Destroyer-MK2 boss,42120,Boss_DestroyerMK2Land,Landing after jump,Boss,analyzed
+sub_4ADE0,Destroyer-MK2 boss,42120,Boss_DestroyerMK2ShootPattern1,Shooting pattern 1,Boss,analyzed
+sub_4BBF0,Destroyer-MK2 boss,42120,Boss_DestroyerMK2ShootPattern2,Shooting pattern 2,Boss,analyzed
+sub_4BC44,Destroyer-MK2 boss,42120,Boss_DestroyerMK2ShootPattern3,Shooting pattern 3,Boss,analyzed
+sub_4AC12,Destroyer-MK2 boss,42300,Boss_DestroyerMK2SpawnMissile,Spawns missile projectile,Boss,analyzed
+sub_4AC7C,Destroyer-MK2 boss,42300,Boss_DestroyerMK2SpawnLaser,Spawns laser projectile,Boss,analyzed
+sub_E54E,Destroyer-MK2 boss,42480,Boss_DestroyerMK2UpdateHealth,Updates boss health,Boss,analyzed
+sub_4AC30,Destroyer-MK2 boss,42480,Projectile_DestroyerMK2Missile,Missile projectile handler,Projectile,analyzed
+sub_4AC5A,Destroyer-MK2 boss,42480,Projectile_DestroyerMK2Laser,Laser projectile handler,Projectile,analyzed
+sub_4ACAC,Destroyer-MK2 boss,42480,Projectile_DestroyerMK2Spread,Spread shot projectile,Projectile,analyzed
+sub_4AD4C,Destroyer-MK2 boss,42480,Boss_DestroyerMK2DamageCheck,Checks if boss takes damage,Boss,analyzed
+sub_4AD9E,Destroyer-MK2 boss,42480,Boss_DestroyerMK2CollisionCheck,Collision detection with player,Boss,analyzed
 sub_4AE0C,Destroyer-MK2 boss,42480,,,,pending
 sub_4AE42,Destroyer-MK2 boss,42480,,,,pending
 sub_4AE68,Destroyer-MK2 boss,42480,,,,pending
