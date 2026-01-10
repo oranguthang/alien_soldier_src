@@ -1058,86 +1058,86 @@ sub_D9F2,Deep Strider boss,20700,,,Stage,analyzed
 sub_14D54,Deep Strider boss,20700,,,Physics,analyzed
 sub_2E85C,Deep Strider boss,20700,,,Enemy,analyzed
 sub_2E8AA,Deep Strider boss,20700,,,Enemy,analyzed
-sub_14D3E,Deep Strider boss,20880,Physics_SnapAndSubtract4,Snaps to floor and subtracts 4 pixels,Physics,analyzed
-sub_2A804,Deep Strider boss,20880,Projectile_FallWithGravity,Projectile with gravity physics,Projectile,analyzed
-sub_343DE,Deep Strider boss,20880,Sprite_UpdateMetaspriteParts,Updates metasprite part angles,Sprite,analyzed
-sub_3E582,Deep Strider boss,20880,Boss_DeepStriderMain,Main Deep Strider boss dispatcher,Boss,analyzed
-sub_3E5F4,Deep Strider boss,20880,Boss_DeepStriderInit,Initializes Deep Strider boss state,Boss,analyzed
-sub_3E5FC,Deep Strider boss,20880,Boss_DeepStriderClearSprites,Clears sprites except boss,Boss,analyzed
-sub_3E60A,Deep Strider boss,20880,Boss_DeepStriderIntroRise,Boss intro rise sequence,Boss,analyzed
-sub_3E700,Deep Strider boss,20880,Boss_DeepStriderIntroDive,Boss intro dive sequence,Boss,analyzed
-sub_3EDAA,Deep Strider boss,20880,Boss_DeepStriderSetupPosition,Sets up boss position and velocity,Boss,analyzed
-sub_3EDFC,Deep Strider boss,20880,Boss_DeepStriderCalculateX,Calculates boss X coordinate,Boss,analyzed
-sub_3EE1A,Deep Strider boss,20880,Boss_DeepStriderDiveSequence,Boss dive attack sequence,Boss,analyzed
-sub_3EED8,Deep Strider boss,20880,Boss_DeepStriderUpdateParts,Updates boss metasprite parts,Boss,analyzed
-sub_14DF8,Deep Strider boss,21060,Physics_PrepareVerticalOffset8,Prepares d3=8 for vertical offset,Physics,analyzed
-sub_14EAA,Deep Strider boss,21060,Physics_PrepareVerticalOffset5,Prepares d3=5 for vertical offset,Physics,analyzed
-sub_3E776,Deep Strider boss,21060,Boss_DeepStriderDeathStart,Starts boss death sequence,Boss,analyzed
-sub_3E7F2,Deep Strider boss,21060,Boss_DeepStriderDeathSequence,Boss death animation sequence,Boss,analyzed
-sub_DA22,Deep Strider boss,21240,Stage_DeepStriderBattle,Deep Strider battle stage handler,Stage,analyzed
-sub_14CB2,Deep Strider boss,21240,Physics_SnapAndAdd4,Snaps to floor and adds 4 pixels,Physics,analyzed
-sub_14CEC,Deep Strider boss,21240,Physics_CalculateFloorOffset4,Calculates floor offset d3=4 base,Physics,analyzed
-sub_14D8A,Deep Strider boss,21240,Physics_SnapAndAdd2,Snaps to floor and adds 2 pixels,Physics,analyzed
-sub_14DFC,Deep Strider boss,21240,Physics_PrepareVerticalOffset6,Prepares d3=6 for vertical offset,Physics,analyzed
-sub_14EAE,Deep Strider boss,21240,Physics_PrepareVerticalOffset3,Prepares d3=3 for vertical offset,Physics,analyzed
-sub_14EB2,Deep Strider boss,21240,Physics_PrepareVerticalOffset1,Prepares d3=1 for vertical offset,Physics,analyzed
-sub_3E7E8,Deep Strider boss,21240,Boss_DeepStriderDefeatDelay,Delay timer before defeat,Boss,analyzed
-sub_3EBCA,Deep Strider boss,21420,Boss_DeepStriderReviveInit,Initializes boss revival sequence,Boss,analyzed
-sub_3EC7A,Deep Strider boss,21420,Boss_DeepStriderReviveRise,Boss rises during revival,Boss,analyzed
-sub_DA34,Deep Strider boss,21600,Stage_DeepStriderBattleInit,Initializes Deep Strider battle,Stage,analyzed
-sub_3ECB6,Deep Strider boss,21600,Boss_DeepStriderReviveComplete,Completes boss revival with debris,Boss,analyzed
-sub_3ED18,Deep Strider boss,21600,Boss_DeepStriderDefeatFinal,Final defeat of Deep Strider,Boss,analyzed
-sub_DA40,Stage 11,21780,Stage_Stage11Transition,Transitions to Stage 11,Stage,analyzed
-sub_DA44,Stage 11,21780,Stage_Stage11ScrollUpdate,Updates Stage 11 scroll and check,Stage,analyzed
-sub_11FE2,Stage 11,21780,Stage_LoadStage11Assets,Loads palette and tile assets,Stage,analyzed
-sub_14CCE,Stage 11,21780,Physics_CalcFloorOffsetSubtract4,Calculates floor offset and subtracts 4,Physics,analyzed
-sub_14CE8,Stage 11,21780,Physics_PrepareFloorOffset8,Prepares d3=8 for floor offset,Physics,analyzed
-sub_1C304,Stage 11,21780,Projectile_FindFreeSlotAndClear,Finds free projectile slot and clears,Projectile,analyzed
-sub_30D90,Stage 11,21780,Enemy_Stage11BossPartMain,Main handler for Stage 11 boss part,Enemy,analyzed
-sub_30DCA,Stage 11,21780,Enemy_Stage11BossPartInit,Initializes Stage 11 boss part,Enemy,analyzed
-sub_30E1C,Stage 11,21780,Enemy_Stage11BossPartFloat,Boss part floating state,Enemy,analyzed
-sub_30E3C,Stage 11,21780,Enemy_Stage11BossPartSpawn,Boss part spawns projectile,Enemy,analyzed
-sub_30FA6,Stage 11,21780,Enemy_Stage11BossPartDispatcher,State dispatcher for boss part,Enemy,analyzed
-sub_30FB6,Stage 11,21780,,,,pending
-sub_31076,Stage 11,21780,,,,pending
-sub_30E86,Stage 11,21960,,,,pending
-sub_30EA2,Stage 11,21960,,,,pending
-sub_DA5A,Gusthead boss,22140,,,,pending
-sub_2E948,Gusthead boss,22140,,,,pending
-sub_2E99E,Gusthead boss,22140,,,,pending
-sub_310E6,Gusthead boss,22140,,,,pending
-sub_310FC,Gusthead boss,22140,,,,pending
-sub_3110E,Gusthead boss,22140,,,,pending
-sub_3116E,Gusthead boss,22140,,,,pending
-sub_31194,Gusthead boss,22140,,,,pending
-sub_311AE,Gusthead boss,22140,,,,pending
-sub_311CE,Gusthead boss,22140,,,,pending
-sub_31208,Gusthead boss,22140,,,,pending
-sub_31232,Gusthead boss,22140,,,,pending
-sub_3130E,Gusthead boss,22140,,,,pending
-sub_31352,Gusthead boss,22140,,,,pending
-sub_313C4,Gusthead boss,22140,,,,pending
-sub_3F1A0,Gusthead boss,22320,,,,pending
-sub_3F1A4,Gusthead boss,22320,,,,pending
-sub_3F2B8,Gusthead boss,22320,,,,pending
-sub_3F2D0,Gusthead boss,22320,,,,pending
-sub_3F3C8,Gusthead boss,22320,,,,pending
-sub_3F3D4,Gusthead boss,22320,,,,pending
-sub_3F3F6,Gusthead boss,22320,,,,pending
-sub_3F44C,Gusthead boss,22320,,,,pending
-sub_3F48A,Gusthead boss,22320,,,,pending
-sub_3F6AE,Gusthead boss,22320,,,,pending
-sub_40070,Gusthead boss,22320,,,,pending
-sub_405A8,Gusthead boss,22320,,,,pending
-sub_4065A,Gusthead boss,22320,,,,pending
-sub_15CAC,Gusthead boss,22500,,,,pending
-sub_3F4C2,Gusthead boss,22500,,,,pending
-sub_3F4EA,Gusthead boss,22680,,,,pending
-sub_3F564,Gusthead boss,22680,,,,pending
-sub_3F5EE,Gusthead boss,22680,,,,pending
-sub_3F62C,Gusthead boss,22680,,,,pending
-sub_3F6D2,Gusthead boss,22680,,,,pending
-sub_4019A,Gusthead boss,22680,,,,pending
+sub_14D3E,Deep Strider boss,20880,,,Physics,analyzed
+sub_2A804,Deep Strider boss,20880,,,Projectile,analyzed
+sub_343DE,Deep Strider boss,20880,,,Sprite,analyzed
+sub_3E582,Deep Strider boss,20880,,,Boss,analyzed
+sub_3E5F4,Deep Strider boss,20880,,,Boss,analyzed
+sub_3E5FC,Deep Strider boss,20880,,,Boss,analyzed
+sub_3E60A,Deep Strider boss,20880,,,Boss,analyzed
+sub_3E700,Deep Strider boss,20880,,,Boss,analyzed
+sub_3EDAA,Deep Strider boss,20880,,,Boss,analyzed
+sub_3EDFC,Deep Strider boss,20880,,,Boss,analyzed
+sub_3EE1A,Deep Strider boss,20880,,,Boss,analyzed
+sub_3EED8,Deep Strider boss,20880,,,Boss,analyzed
+sub_14DF8,Deep Strider boss,21060,,,Physics,analyzed
+sub_14EAA,Deep Strider boss,21060,,,Physics,analyzed
+sub_3E776,Deep Strider boss,21060,,,Boss,analyzed
+sub_3E7F2,Deep Strider boss,21060,,,Boss,analyzed
+sub_DA22,Deep Strider boss,21240,,,Stage,analyzed
+sub_14CB2,Deep Strider boss,21240,,,Physics,analyzed
+sub_14CEC,Deep Strider boss,21240,,,Physics,analyzed
+sub_14D8A,Deep Strider boss,21240,,,Physics,analyzed
+sub_14DFC,Deep Strider boss,21240,,,Physics,analyzed
+sub_14EAE,Deep Strider boss,21240,,,Physics,analyzed
+sub_14EB2,Deep Strider boss,21240,,,Physics,analyzed
+sub_3E7E8,Deep Strider boss,21240,,,Boss,analyzed
+sub_3EBCA,Deep Strider boss,21420,,,Boss,analyzed
+sub_3EC7A,Deep Strider boss,21420,,,Boss,analyzed
+sub_DA34,Deep Strider boss,21600,,,Stage,analyzed
+sub_3ECB6,Deep Strider boss,21600,,,Boss,analyzed
+sub_3ED18,Deep Strider boss,21600,,,Boss,analyzed
+sub_DA40,Stage 11,21780,,,Stage,analyzed
+sub_DA44,Stage 11,21780,,,Stage,analyzed
+sub_11FE2,Stage 11,21780,,,Stage,analyzed
+sub_14CCE,Stage 11,21780,,,Physics,analyzed
+sub_14CE8,Stage 11,21780,,,Physics,analyzed
+sub_1C304,Stage 11,21780,,,Projectile,analyzed
+sub_30D90,Stage 11,21780,,,Enemy,analyzed
+sub_30DCA,Stage 11,21780,,,Enemy,analyzed
+sub_30E1C,Stage 11,21780,,,Enemy,analyzed
+sub_30E3C,Stage 11,21780,,,Enemy,analyzed
+sub_30FA6,Stage 11,21780,,,Enemy,analyzed
+sub_30FB6,Stage 11,21780,Enemy_Stage11BossPartState1,Boss part state 1 initialization,Enemy,analyzed
+sub_31076,Stage 11,21780,Enemy_Stage11BossPartUpdatePalette,Updates boss part palette cycle,Enemy,analyzed
+sub_30E86,Stage 11,21960,Enemy_Stage11BossPartFallInit,Initializes falling state,Enemy,analyzed
+sub_30EA2,Stage 11,21960,Enemy_Stage11BossPartFallDelay,Delays before next fall iteration,Enemy,analyzed
+sub_DA5A,Gusthead boss,22140,Stage_GustheadTransition,Transitions to Gusthead boss,Stage,analyzed
+sub_2E948,Gusthead boss,22140,Enemy_Stage10BeetleDefeat,Handles beetle enemy defeat,Enemy,analyzed
+sub_2E99E,Gusthead boss,22140,Enemy_Stage10BeetleFall,Falling beetle with explosion,Enemy,analyzed
+sub_310E6,Gusthead boss,22140,Enemy_GustheadEyeMain,Main handler for Gusthead eye enemy,Enemy,analyzed
+sub_310FC,Gusthead boss,22140,Enemy_GustheadEyeInit,Initializes Gusthead eye sprite,Enemy,analyzed
+sub_3110E,Gusthead boss,22140,Enemy_GustheadEyeSpawnChain,Spawns chain of 8 projectiles,Enemy,analyzed
+sub_3116E,Gusthead boss,22140,Enemy_GustheadEyeDestroy,Destroys eye and projectile chain,Enemy,analyzed
+sub_31194,Gusthead boss,22140,Enemy_GustheadSmallEyeMain,Main dispatcher for small eye,Enemy,analyzed
+sub_311AE,Gusthead boss,22140,Enemy_GustheadSmallEyeInit,Initializes small eye enemy,Enemy,analyzed
+sub_311CE,Gusthead boss,22140,Enemy_GustheadSmallEyeWait,Wait state before spawning,Enemy,analyzed
+sub_31208,Gusthead boss,22140,Enemy_GustheadSmallEyeSpawn,Spawns projectile with sound,Enemy,analyzed
+sub_31232,Gusthead boss,22140,Enemy_GustheadSmallEyeAttack,Attack state with projectile spawn,Enemy,analyzed
+sub_3130E,Gusthead boss,22140,Enemy_GustheadSmallEyeCheckSpawn,Checks if should spawn projectile,Enemy,analyzed
+sub_31352,Gusthead boss,22140,Enemy_GustheadEyeChainMain,Main handler for eye chain projectile,Enemy,analyzed
+sub_313C4,Gusthead boss,22140,Enemy_GustheadEyeChainInit,Initializes eye chain segment,Enemy,analyzed
+sub_3F1A0,Gusthead boss,22320,Boss_GustheadMainWrapper,Wrapper for Gusthead boss main,Boss,analyzed
+sub_3F1A4,Gusthead boss,22320,Boss_GustheadMain,Main Gusthead boss handler,Boss,analyzed
+sub_3F2B8,Gusthead boss,22320,Boss_GustheadInitBattle,Initializes Gusthead battle,Boss,analyzed
+sub_3F2D0,Gusthead boss,22320,Boss_GustheadSetupParts,Sets up boss parts and tentacles,Boss,analyzed
+sub_3F3C8,Gusthead boss,22320,Boss_GustheadStartIntro,Starts boss intro sequence,Boss,analyzed
+sub_3F3D4,Gusthead boss,22320,Boss_GustheadIntroFlicker,Intro flicker animation,Boss,analyzed
+sub_3F3F6,Gusthead boss,22320,Boss_GustheadIntroReveal,Reveals boss with tentacle setup,Boss,analyzed
+sub_3F44C,Gusthead boss,22320,Boss_GustheadBattleStart,Starts active battle phase,Boss,analyzed
+sub_3F48A,Gusthead boss,22320,Boss_GustheadDefeatSequence,Boss defeat animation sequence,Boss,analyzed
+sub_3F6AE,Gusthead boss,22320,Boss_GustheadUpdateBounce,Updates boss vertical bounce,Boss,analyzed
+sub_40070,Gusthead boss,22320,Boss_GustheadDefeatComplete,Completes boss defeat,Boss,analyzed
+sub_405A8,Gusthead boss,22320,Boss_GustheadUpdateTentacles,Updates tentacle positions,Boss,analyzed
+sub_4065A,Gusthead boss,22320,Boss_GustheadUpdateTentacleAngles,Updates tentacle rotation angles,Boss,analyzed
+sub_15CAC,Gusthead boss,22500,Player_GustheadBossIntro,Player intro state for Gusthead,Player,analyzed
+sub_3F4C2,Gusthead boss,22500,Boss_GustheadTentacleMain,Main handler for tentacle part,Boss,analyzed
+sub_3F4EA,Gusthead boss,22680,Boss_GustheadTentacleUpdate,Updates single tentacle position,Boss,analyzed
+sub_3F564,Gusthead boss,22680,Boss_GustheadTentacleDamage,Handles tentacle damage,Boss,analyzed
+sub_3F5EE,Gusthead boss,22680,Boss_GustheadTentacleDefeat,Tentacle defeat sequence,Boss,analyzed
+sub_3F62C,Gusthead boss,22680,Boss_GustheadTentacleRetract,Retracts defeated tentacle,Boss,analyzed
+sub_3F6D2,Gusthead boss,22680,Boss_GustheadCoreMain,Main handler for boss core,Boss,analyzed
+sub_4019A,Gusthead boss,22680,Boss_GustheadCoreDefeat,Boss core defeat state,Boss,analyzed
 sub_4022E,Gusthead boss,22680,,,,pending
 sub_4051C,Gusthead boss,22680,,,,pending
 sub_4058A,Gusthead boss,22680,,,,pending
