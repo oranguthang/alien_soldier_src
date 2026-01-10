@@ -1178,86 +1178,86 @@ sub_DB2E,Ship start (Stage 12),23760,,,Stage,analyzed
 sub_DB64,Ship start (Stage 12),23760,,,Stage,analyzed
 sub_DB7E,Ship start (Stage 12),23760,,,Stage,analyzed
 sub_1239A,Ship start (Stage 12),23760,,,Stage,analyzed
-sub_142EC,Ship start (Stage 12),23760,Collision_ShipCollisionDispatcher,Dispatcher for ship collision types,Collision,analyzed
-sub_14304,Ship start (Stage 12),23760,Collision_PlayerShipCollision,Player collision with ship platform,Collision,analyzed
-sub_2A7F6,Ship start (Stage 12),23760,Enemy_DelayedHide,Hides enemy after delay timer,Enemy,analyzed
-sub_2CECA,Ship start (Stage 12),23760,Enemy_ShipBossStateHandler,State handler for ship boss,Enemy,analyzed
-sub_2CEDE,Ship start (Stage 12),23760,Enemy_ShipBossDispatcher,State dispatcher for ship boss,Enemy,analyzed
-sub_2CEF6,Ship start (Stage 12),23760,Enemy_ShipBossInit,Initializes ship boss sprite,Enemy,analyzed
-sub_2E3A2,Ship start (Stage 12),23760,Enemy_Stage12FloaterCheckBounds,Checks if floater reached Y bound,Enemy,analyzed
-sub_2E3B0,Ship start (Stage 12),23760,Enemy_Stage12FloaterFall,Floater falling state with collision,Enemy,analyzed
-sub_2F5C0,Ship start (Stage 12),23760,Enemy_ShipMain,Main handler for ship platform,Enemy,analyzed
-sub_2F5E8,Ship start (Stage 12),23760,Enemy_ShipInit,Initializes ship platform entity,Enemy,analyzed
-sub_2F90E,Ship start (Stage 12),23760,Enemy_ShipCannon1Main,Main handler for ship cannon 1,Enemy,analyzed
-sub_2F93E,Ship start (Stage 12),23760,Enemy_ShipCannon1Init,Initializes ship cannon 1,Enemy,analyzed
-sub_2F9E2,Ship start (Stage 12),23940,Enemy_ShipCannon1Wait,Cannon 1 wait state,Enemy,analyzed
-sub_2FA3E,Ship start (Stage 12),23940,Enemy_ShipCannon1Destroyed,Cannon 1 destroyed state,Enemy,analyzed
-sub_11170,Ship battle (Stage 12),24300,Stage_LoadShipGraphics,Loads ship tile graphics,Stage,analyzed
-sub_13142,Ship battle (Stage 12),24300,Scroll_UpdateShipScroll,Updates scroll for ship section,Scroll,analyzed
-sub_1320C,Ship battle (Stage 12),24300,Scroll_ShipScrollPattern,Ship scroll movement pattern,Scroll,analyzed
-sub_2F62E,Ship battle (Stage 12),24300,Enemy_ShipUpdatePosition,Updates ship platform position,Enemy,analyzed
-sub_2F672,Ship battle (Stage 12),24300,Enemy_ShipSpawnCannons,Spawns 4 cannons on ship,Enemy,analyzed
-sub_2F73E,Ship battle (Stage 12),24300,Enemy_ShipWaitForCannons,Waits for all cannons destroyed,Enemy,analyzed
-sub_2F790,Ship battle (Stage 12),24300,Enemy_ShipCheckDestroyed,Checks if all cannons destroyed,Enemy,analyzed
-sub_2F7D6,Ship battle (Stage 12),24300,Enemy_ShipExit,Ship exit sequence,Enemy,analyzed
-sub_2F894,Ship battle (Stage 12),24300,Enemy_ShipCannonSpawn,Spawns single cannon entity,Enemy,analyzed
-sub_2FB10,Ship battle (Stage 12),24300,Enemy_ShipCannon2Main,Main handler for ship cannon 2,Enemy,analyzed
-sub_2FB4A,Ship battle (Stage 12),24300,Enemy_ShipCannon2Init,Initializes ship cannon 2,Enemy,analyzed
-sub_2FBEA,Ship battle (Stage 12),24300,Enemy_ShipCannon3Main,Main handler for ship cannon 3,Enemy,analyzed
-sub_2E4DC,Ship battle (Stage 12),24480,Enemy_Stage12TurretMain,Main handler for turret enemy,Enemy,analyzed
-sub_2E4FE,Ship battle (Stage 12),24480,Enemy_Stage12TurretDispatcher,State dispatcher for turret,Enemy,analyzed
-sub_2E518,Ship battle (Stage 12),24480,Enemy_Stage12TurretInit,Initializes turret sprite,Enemy,analyzed
-sub_2E524,Ship battle (Stage 12),24480,Enemy_Stage12TurretIdle,Turret idle state,Enemy,analyzed
-sub_2E5A8,Ship battle (Stage 12),24480,Enemy_Stage12TurretFire,Turret fires projectile,Enemy,analyzed
-sub_2F82E,Ship battle (Stage 12),24480,Enemy_ShipCannonFirePattern,Cannon firing pattern logic,Enemy,analyzed
-sub_2E43A,Ship battle (Stage 12),24660,Enemy_Stage12LauncherMain,Main handler for launcher enemy,Enemy,analyzed
-sub_2E540,Ship battle (Stage 12),24660,Enemy_Stage12TurretAttack,Turret attack state,Enemy,analyzed
-sub_2E54C,Ship battle (Stage 12),24660,Enemy_Stage12TurretReload,Turret reload delay,Enemy,analyzed
-sub_2E562,Ship battle (Stage 12),24660,Enemy_Stage12TurretCheckPlayer,Checks player position for firing,Enemy,analyzed
-sub_2E58E,Ship battle (Stage 12),24660,Enemy_Stage12TurretDefeat,Turret defeat sequence,Enemy,analyzed
-sub_2E59A,Ship battle (Stage 12),24660,Enemy_Stage12TurretExplode,Turret explosion effect,Enemy,analyzed
-sub_2E5EA,Ship battle (Stage 12),24660,Enemy_Stage12LauncherDispatcher,State dispatcher for launcher,Enemy,analyzed
-sub_2E61A,Ship battle (Stage 12),24660,Enemy_Stage12LauncherInit,Initializes launcher sprite,Enemy,analyzed
-sub_2E634,Ship battle (Stage 12),24660,,,,pending
-sub_2BFA6,Ship battle (Stage 12),25020,,,,pending
-sub_2E490,Ship battle (Stage 12),25020,,,,pending
-sub_2E672,Ship battle (Stage 12),25020,,,,pending
-sub_DBA0,Sharpsteel boss,25740,,,,pending
-sub_2E5E2,Sharpsteel boss,25920,,,,pending
-sub_34874,Sharpsteel boss,25920,,,,pending
-sub_47C1C,Sharpsteel boss,25920,,,,pending
-sub_47C96,Sharpsteel boss,25920,,,,pending
-sub_47CA6,Sharpsteel boss,25920,,,,pending
-sub_47D94,Sharpsteel boss,25920,,,,pending
-sub_47DE8,Sharpsteel boss,25920,,,,pending
-sub_48690,Sharpsteel boss,25920,,,,pending
-sub_48820,Sharpsteel boss,25920,,,,pending
-sub_489F0,Sharpsteel boss,25920,,,,pending
-sub_48B84,Sharpsteel boss,25920,,,,pending
-sub_47E02,Sharpsteel boss,26100,,,,pending
-sub_48856,Sharpsteel boss,26100,,,,pending
-sub_48940,Sharpsteel boss,26100,,,,pending
-sub_47E36,Sharpsteel boss,26460,,,,pending
-sub_47E98,Sharpsteel boss,26460,,,,pending
-sub_47F3E,Sharpsteel boss,26460,,,,pending
-sub_47FA2,Sharpsteel boss,26460,,,,pending
-sub_47FCA,Sharpsteel boss,26460,,,,pending
-sub_486A4,Sharpsteel boss,26460,,,,pending
-sub_486E6,Sharpsteel boss,26460,,,,pending
-sub_4871A,Sharpsteel boss,26460,,,,pending
-sub_488A0,Sharpsteel boss,26460,,,,pending
-sub_2FB54,Sharpsteel boss,26640,,,,pending
-sub_2FB68,Sharpsteel boss,26640,,,,pending
-sub_47F02,Sharpsteel boss,26640,,,,pending
-sub_47F24,Sharpsteel boss,26640,,,,pending
-sub_47F9C,Sharpsteel boss,26640,,,,pending
-sub_481AC,Sharpsteel boss,26640,,,,pending
-sub_48802,Sharpsteel boss,26640,,,,pending
-sub_4879C,Sharpsteel boss,26820,,,,pending
-sub_3ADE,Ship desctruction,27180,,,,pending
-sub_3B4C,Ship desctruction,27180,,,,pending
-sub_DBBC,Ship desctruction,27180,,,,pending
-sub_10EC6,Ship desctruction,27180,,,,pending
+sub_142EC,Ship start (Stage 12),23760,,,Collision,analyzed
+sub_14304,Ship start (Stage 12),23760,,,Collision,analyzed
+sub_2A7F6,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2CECA,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2CEDE,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2CEF6,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2E3A2,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2E3B0,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2F5C0,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2F5E8,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2F90E,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2F93E,Ship start (Stage 12),23760,,,Enemy,analyzed
+sub_2F9E2,Ship start (Stage 12),23940,,,Enemy,analyzed
+sub_2FA3E,Ship start (Stage 12),23940,,,Enemy,analyzed
+sub_11170,Ship battle (Stage 12),24300,,,Stage,analyzed
+sub_13142,Ship battle (Stage 12),24300,,,Scroll,analyzed
+sub_1320C,Ship battle (Stage 12),24300,,,Scroll,analyzed
+sub_2F62E,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2F672,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2F73E,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2F790,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2F7D6,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2F894,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2FB10,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2FB4A,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2FBEA,Ship battle (Stage 12),24300,,,Enemy,analyzed
+sub_2E4DC,Ship battle (Stage 12),24480,,,Enemy,analyzed
+sub_2E4FE,Ship battle (Stage 12),24480,,,Enemy,analyzed
+sub_2E518,Ship battle (Stage 12),24480,,,Enemy,analyzed
+sub_2E524,Ship battle (Stage 12),24480,,,Enemy,analyzed
+sub_2E5A8,Ship battle (Stage 12),24480,,,Enemy,analyzed
+sub_2F82E,Ship battle (Stage 12),24480,,,Enemy,analyzed
+sub_2E43A,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2E540,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2E54C,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2E562,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2E58E,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2E59A,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2E5EA,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2E61A,Ship battle (Stage 12),24660,,,Enemy,analyzed
+sub_2E634,Ship battle (Stage 12),24660,Enemy_Stage12LauncherWait,Launcher wait state with position update,Enemy,analyzed
+sub_2BFA6,Ship battle (Stage 12),25020,Projectile_SetFallVelocity,Sets falling velocity based on flag,Projectile,analyzed
+sub_2E490,Ship battle (Stage 12),25020,Enemy_Stage12LauncherExplode,Launcher explosion with flicker,Enemy,analyzed
+sub_2E672,Ship battle (Stage 12),25020,Enemy_Stage12LauncherUpdatePosition,Updates launcher position relative to ship,Enemy,analyzed
+sub_DBA0,Sharpsteel boss,25740,Stage_SharpssteelTransition,Transitions to Sharpsteel boss,Stage,analyzed
+sub_2E5E2,Sharpsteel boss,25920,Enemy_Stage12TurretHide,Hides turret enemy,Enemy,analyzed
+sub_34874,Sharpsteel boss,25920,Sprite_UpdateBossBladeSprite,Updates boss blade sprite and flip,Sprite,analyzed
+sub_47C1C,Sharpsteel boss,25920,Boss_SharpssteelMain,Main Sharpsteel boss handler,Boss,analyzed
+sub_47C96,Sharpsteel boss,25920,Boss_SharpssteelWaitPlayerReady,Waits for player ready,Boss,analyzed
+sub_47CA6,Sharpsteel boss,25920,Boss_SharpssteelInit,Initializes Sharpsteel boss parts,Boss,analyzed
+sub_47D94,Sharpsteel boss,25920,Boss_SharpssteelBattleActive,Active battle state,Boss,analyzed
+sub_47DE8,Sharpsteel boss,25920,Boss_SharpssteelUpdateBlades,Updates all blade positions,Boss,analyzed
+sub_48690,Sharpsteel boss,25920,Boss_SharpssteelBladeMain,Main handler for blade part,Boss,analyzed
+sub_48820,Sharpsteel boss,25920,Boss_SharpssteelCoreMain,Main handler for boss core,Boss,analyzed
+sub_489F0,Sharpsteel boss,25920,Boss_SharpssteelCoreInit,Initializes boss core,Boss,analyzed
+sub_48B84,Sharpsteel boss,25920,Boss_SharpssteelCoreDefeat,Core defeat sequence,Boss,analyzed
+sub_47E02,Sharpsteel boss,26100,Boss_SharpssteelSpawnBlades,Spawns blade entities,Boss,analyzed
+sub_48856,Sharpsteel boss,26100,Boss_SharpssteelCoreDispatcher,State dispatcher for core,Boss,analyzed
+sub_48940,Sharpsteel boss,26100,Boss_SharpssteelCoreIdle,Core idle state,Boss,analyzed
+sub_47E36,Sharpsteel boss,26460,Boss_SharpssteelInitBattle,Initializes battle phase,Boss,analyzed
+sub_47E98,Sharpsteel boss,26460,Boss_SharpssteelSetRotation,Sets rotation parameters,Boss,analyzed
+sub_47F3E,Sharpsteel boss,26460,Boss_SharpssteelUpdateRotation,Updates rotation speed,Boss,analyzed
+sub_47FA2,Sharpsteel boss,26460,Boss_SharpssteelIncreaseSpeed,Increases rotation speed,Boss,analyzed
+sub_47FCA,Sharpsteel boss,26460,Boss_SharpssteelUpdateCore,Updates core position,Boss,analyzed
+sub_486A4,Sharpsteel boss,26460,Boss_SharpssteelBladeInit,Initializes single blade,Boss,analyzed
+sub_486E6,Sharpsteel boss,26460,Boss_SharpssteelBladeUpdate,Updates blade position,Boss,analyzed
+sub_4871A,Sharpsteel boss,26460,Boss_SharpssteelBladeCheckHit,Checks blade collision,Boss,analyzed
+sub_488A0,Sharpsteel boss,26460,Boss_SharpssteelCoreActive,Core active state,Boss,analyzed
+sub_2FB54,Sharpsteel boss,26640,Enemy_ShipCannon2Dispatcher,State dispatcher for cannon 2,Enemy,analyzed
+sub_2FB68,Sharpsteel boss,26640,Enemy_ShipCannon2Wait,Cannon 2 wait state,Enemy,analyzed
+sub_47F02,Sharpsteel boss,26640,Boss_SharpssteelAttackPattern1,Attack pattern 1,Boss,analyzed
+sub_47F24,Sharpsteel boss,26640,Boss_SharpssteelAttackPattern2,Attack pattern 2,Boss,analyzed
+sub_47F9C,Sharpsteel boss,26640,Boss_SharpssteelDefeatStart,Starts defeat sequence,Boss,analyzed
+sub_481AC,Sharpsteel boss,26640,Boss_SharpssteelBladeDefeat,Blade defeat state,Boss,analyzed
+sub_48802,Sharpsteel boss,26640,Boss_SharpssteelCoreDamage,Core damage state,Boss,analyzed
+sub_4879C,Sharpsteel boss,26820,Boss_SharpssteelCoreFlash,Core damage flash effect,Boss,analyzed
+sub_3ADE,Ship desctruction,27180,VBlank_UpdateSharpssteelPalette,Updates Sharpsteel palette in VBlank,VBlank,analyzed
+sub_3B4C,Ship desctruction,27180,VBlank_SharpssteelPaletteEffect,Sharpsteel palette effect,VBlank,analyzed
+sub_DBBC,Ship desctruction,27180,Stage_Stage14Init,Initializes Stage 14,Stage,analyzed
+sub_10EC6,Ship desctruction,27180,Scroll_UpdateStage14Scroll,Updates Stage 14 scroll,Scroll,analyzed
 sub_2F868,Ship desctruction,27180,,,,pending
 sub_2F8B8,Ship desctruction,27180,,,,pending
 sub_47D80,Ship desctruction,27180,,,,pending
