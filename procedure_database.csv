@@ -1618,166 +1618,166 @@ sub_46D5C,Epsilon1 boss,38340,,,Boss,analyzed
 sub_47146,Epsilon1 boss,38340,,,Projectile,analyzed
 sub_4765C,Epsilon1 boss,38340,,,Effect,analyzed
 sub_47700,Epsilon1 boss,38340,,,Effect,analyzed
-sub_47754,Epsilon1 boss,38340,Effect_Epsilon1DefeatSpark3,Defeat spark effect 3,Effect,analyzed
-sub_4779E,Epsilon1 boss,38340,Effect_Epsilon1DefeatSpark4,Defeat spark effect 4,Effect,analyzed
-sub_46A54,Epsilon1 boss,38520,Boss_Epsilon1PartDamageFlash,Part damage flash effect,Boss,analyzed
-sub_46A80,Epsilon1 boss,38520,Boss_Epsilon1PartInvulnerable,Part invulnerability state,Boss,analyzed
-sub_46A92,Epsilon1 boss,38700,Boss_Epsilon1CoreVulnerableCheck,Checks if core is vulnerable,Boss,analyzed
-sub_46ABC,Epsilon1 boss,38700,Boss_Epsilon1UpdateHealthDisplay,Updates health bar display,Boss,analyzed
-sub_46AD8,Epsilon1 boss,38700,Boss_Epsilon1DamageFlash,Damage flash animation,Boss,analyzed
-sub_46AF2,Epsilon1 boss,38700,Boss_Epsilon1HealthBarColor,Health bar color calculation,Boss,analyzed
-sub_460EC,Epsilon1 boss,38880,Boss_Epsilon1LoadGraphicsPhase4,Loads graphics for phase 4,Boss,analyzed
-sub_46118,Epsilon1 boss,38880,Boss_Epsilon1LoadGraphicsPhase5,Loads graphics for phase 5,Boss,analyzed
-sub_46B12,Epsilon1 boss,38880,Boss_Epsilon1PartShieldCheck,Checks if part has shield,Boss,analyzed
-sub_46B1E,Epsilon1 boss,38880,Boss_Epsilon1ShieldBreak,Shield breaking animation,Boss,analyzed
-sub_46B2A,Epsilon1 boss,38880,Boss_Epsilon1ShieldRegenerate,Shield regeneration logic,Boss,analyzed
-sub_46B3C,Epsilon1 boss,38880,Boss_Epsilon1FinalPhaseTransition,Transition to final phase,Boss,analyzed
-sub_E256,Planet cutscene,39420,Cutscene_PlanetInit,Planet cutscene initialization,Cutscene,analyzed
-sub_46B5A,Planet cutscene,39420,Cutscene_PlanetFadeIn,Planet fade in effect,Cutscene,analyzed
-sub_769A,Planet cutscene,40320,Cutscene_PlanetScroll,Planet scrolling animation,Cutscene,analyzed
-sub_77BA,Planet cutscene,40320,Cutscene_PlanetRotate,Planet rotation effect,Cutscene,analyzed
-sub_81C8,Planet cutscene,40320,Cutscene_PlanetPaletteUpdate,Updates planet palette,Cutscene,analyzed
-sub_81DE,Planet cutscene,40320,Cutscene_PlanetStarfield,Starfield background effect,Cutscene,analyzed
-sub_81EC,Planet cutscene,40320,Cutscene_PlanetShipApproach,Ship approaching planet,Cutscene,analyzed
-sub_8206,Planet cutscene,40320,Cutscene_PlanetTextDisplay,Text display handler,Cutscene,analyzed
-sub_816E,Planet cutscene,40500,Cutscene_PlanetFadeOut,Planet fade out effect,Cutscene,analyzed
-sub_8182,Planet cutscene,40680,Cutscene_PlanetTransition,Transition to next stage,Cutscene,analyzed
-sub_83A4,Stage 18,41220,Stage_Stage18Init,Stage 18 initialization,Stage,analyzed
-sub_E42C,Stage 18,41220,Stage_Stage18Scroll,Stage 18 scroll handler,Stage,analyzed
-sub_E4DE,Stage 18,41220,Stage_Stage18StartBattle,Starts boss battle,Stage,analyzed
-sub_E67A,Stage 18,41220,Stage_Stage18Transition,Stage transition logic,Stage,analyzed
-sub_10026,Stage 18,41220,Gfx_LoadStage18Tiles,Loads Stage 18 tiles,Graphics,analyzed
-sub_11AF4,Stage 18,41220,Gfx_LoadStage18Palette,Loads Stage 18 palette,Graphics,analyzed
-sub_120CC,Stage 18,41220,Gfx_Stage18Background,Background graphics setup,Graphics,analyzed
-sub_124AA,Stage 18,41220,Gfx_Stage18Foreground,Foreground graphics setup,Graphics,analyzed
-sub_2FED4,Stage 18,41220,Enemy_Stage18Init,Initializes Stage 18 enemies,Enemy,analyzed
-sub_2FF1C,Stage 18,41220,Enemy_Stage18SpawnerMain,Enemy spawner main handler,Enemy,analyzed
-sub_2FFE0,Stage 18,41220,Enemy_Stage18FloaterInit,Floater enemy initialization,Enemy,analyzed
-sub_2FFE4,Stage 18,41220,Enemy_Stage18FloaterMain,Floater enemy main handler,Enemy,analyzed
-sub_3015C,Stage 18,41220,Enemy_Stage18FloaterAttack,Floater enemy attack pattern,Enemy,analyzed
-sub_30230,Stage 18,41220,Enemy_Stage18FloaterDeath,Floater enemy death handler,Enemy,analyzed
-sub_30288,Stage 18,41220,Enemy_Stage18TurretInit,Turret enemy initialization,Enemy,analyzed
-sub_303F0,Stage 18,41220,Enemy_Stage18TurretMain,Turret enemy main handler,Enemy,analyzed
-sub_30402,Stage 18,41220,Enemy_Stage18TurretAim,Turret aiming at player,Enemy,analyzed
-sub_30438,Stage 18,41220,Enemy_Stage18TurretFire,Turret firing projectile,Enemy,analyzed
-sub_3048C,Stage 18,41220,Enemy_Stage18TurretDeath,Turret death handler,Enemy,analyzed
-sub_30492,Stage 18,41220,Projectile_Stage18Bullet,Stage 18 bullet projectile,Projectile,analyzed
-sub_304A4,Stage 18,41220,Projectile_Stage18Missile,Stage 18 missile projectile,Projectile,analyzed
-sub_304A8,Stage 18,41220,Projectile_Stage18Laser,Stage 18 laser projectile,Projectile,analyzed
-sub_304B0,Stage 18,41220,Projectile_Stage18Homing,Stage 18 homing projectile,Projectile,analyzed
-sub_10894,Stage 18,41400,Camera_Stage18Lock,Camera lock for boss battle,Camera,analyzed
-sub_E4FC,Stage 18,41580,Stage_Stage18PreBoss,Pre-boss battle setup,Stage,analyzed
-sub_2D4B2,Stage 18,41580,Enemy_Stage18ClearAll,Clears all enemies before boss,Enemy,analyzed
-sub_E512,Destroyer-MK2 boss,41760,Stage_DestroyerMK2Init,Destroyer-MK2 boss initialization,Stage,analyzed
-sub_10044,Destroyer-MK2 boss,41760,Gfx_LoadDestroyerMK2Tiles,Loads Destroyer-MK2 tiles,Graphics,analyzed
-sub_1A39C,Destroyer-MK2 boss,41760,Gfx_LoadDestroyerMK2Palette,Loads Destroyer-MK2 palette,Graphics,analyzed
-sub_2FDAA,Destroyer-MK2 boss,41760,Boss_DestroyerMK2Spawn,Boss spawn and initialization,Boss,analyzed
-sub_14CD6,Destroyer-MK2 boss,41940,Boss_DestroyerMK2EntryInit,Boss entry animation init,Boss,analyzed
-sub_14DD6,Destroyer-MK2 boss,41940,Boss_DestroyerMK2EntryMove,Boss entry movement,Boss,analyzed
-sub_14DF0,Destroyer-MK2 boss,41940,Boss_DestroyerMK2EntryStop,Boss entry stop position,Boss,analyzed
-sub_14E04,Destroyer-MK2 boss,41940,Boss_DestroyerMK2BattleStart,Battle start initialization,Boss,analyzed
-sub_4BD52,Destroyer-MK2 boss,41940,Boss_DestroyerMK2PlayIntroSFX,Plays boss intro sound,Boss,analyzed
-sub_4BDFE,Destroyer-MK2 boss,41940,Boss_DestroyerMK2IntroRoar,Boss intro roar sound,Boss,analyzed
-sub_4A84E,Destroyer-MK2 boss,42120,Boss_DestroyerMK2Main,Main boss handler,Boss,analyzed
-sub_4A938,Destroyer-MK2 boss,42120,Boss_DestroyerMK2Dispatcher,Boss state dispatcher,Boss,analyzed
-sub_4AB38,Destroyer-MK2 boss,42120,Boss_DestroyerMK2IdleState,Idle state handler,Boss,analyzed
-sub_4AB44,Destroyer-MK2 boss,42120,Boss_DestroyerMK2AttackState1,Attack state 1 handler,Boss,analyzed
-sub_4AB70,Destroyer-MK2 boss,42120,Boss_DestroyerMK2AttackState2,Attack state 2 handler,Boss,analyzed
-sub_4AB90,Destroyer-MK2 boss,42120,Boss_DestroyerMK2MoveLeft,Move left state,Boss,analyzed
-sub_4ABC6,Destroyer-MK2 boss,42120,Boss_DestroyerMK2MoveRight,Move right state,Boss,analyzed
-sub_4ABFC,Destroyer-MK2 boss,42120,Boss_DestroyerMK2Jump,Jump attack state,Boss,analyzed
-sub_4ACEA,Destroyer-MK2 boss,42120,Boss_DestroyerMK2Land,Landing after jump,Boss,analyzed
-sub_4ADE0,Destroyer-MK2 boss,42120,Boss_DestroyerMK2ShootPattern1,Shooting pattern 1,Boss,analyzed
-sub_4BBF0,Destroyer-MK2 boss,42120,Boss_DestroyerMK2ShootPattern2,Shooting pattern 2,Boss,analyzed
-sub_4BC44,Destroyer-MK2 boss,42120,Boss_DestroyerMK2ShootPattern3,Shooting pattern 3,Boss,analyzed
-sub_4AC12,Destroyer-MK2 boss,42300,Boss_DestroyerMK2SpawnMissile,Spawns missile projectile,Boss,analyzed
-sub_4AC7C,Destroyer-MK2 boss,42300,Boss_DestroyerMK2SpawnLaser,Spawns laser projectile,Boss,analyzed
-sub_E54E,Destroyer-MK2 boss,42480,Boss_DestroyerMK2UpdateHealth,Updates boss health,Boss,analyzed
-sub_4AC30,Destroyer-MK2 boss,42480,Projectile_DestroyerMK2Missile,Missile projectile handler,Projectile,analyzed
-sub_4AC5A,Destroyer-MK2 boss,42480,Projectile_DestroyerMK2Laser,Laser projectile handler,Projectile,analyzed
-sub_4ACAC,Destroyer-MK2 boss,42480,Projectile_DestroyerMK2Spread,Spread shot projectile,Projectile,analyzed
-sub_4AD4C,Destroyer-MK2 boss,42480,Boss_DestroyerMK2DamageCheck,Checks if boss takes damage,Boss,analyzed
-sub_4AD9E,Destroyer-MK2 boss,42480,Boss_DestroyerMK2CollisionCheck,Collision detection with player,Boss,analyzed
-sub_4AE0C,Destroyer-MK2 boss,42480,,,,pending
-sub_4AE42,Destroyer-MK2 boss,42480,,,,pending
-sub_4AE68,Destroyer-MK2 boss,42480,,,,pending
-sub_4AEAC,Destroyer-MK2 boss,42480,,,,pending
-sub_2B49E,Destroyer-MK2 boss,42660,,,,pending
-sub_4AEDE,Destroyer-MK2 boss,42660,,,,pending
-sub_4AEFA,Destroyer-MK2 boss,42660,,,,pending
-sub_4AF14,Destroyer-MK2 boss,42660,,,,pending
-sub_4AF4A,Destroyer-MK2 boss,42660,,,,pending
-sub_4AF5A,Destroyer-MK2 boss,42660,,,,pending
-sub_4AFE2,Destroyer-MK2 boss,42660,,,,pending
-sub_4B046,Destroyer-MK2 boss,42660,,,,pending
-sub_4B108,Destroyer-MK2 boss,42660,,,,pending
-sub_4B118,Destroyer-MK2 boss,42660,,,,pending
-sub_4B150,Destroyer-MK2 boss,42660,,,,pending
-sub_4B470,Destroyer-MK2 boss,42660,,,,pending
-sub_4B73C,Destroyer-MK2 boss,42660,,,,pending
-sub_4B74E,Destroyer-MK2 boss,42660,,,,pending
-sub_4B760,Destroyer-MK2 boss,42660,,,,pending
-sub_4B0E6,Destroyer-MK2 boss,42840,,,,pending
-sub_4B0F8,Destroyer-MK2 boss,42840,,,,pending
-sub_4B2E2,Destroyer-MK2 boss,42840,,,,pending
-sub_4B2F2,Destroyer-MK2 boss,42840,,,,pending
-sub_4B3FC,Destroyer-MK2 boss,42840,,,,pending
-sub_4B400,Destroyer-MK2 boss,42840,,,,pending
-sub_4B7A0,Destroyer-MK2 boss,42840,,,,pending
-sub_4BA50,Destroyer-MK2 boss,42840,,,,pending
-sub_4BA66,Destroyer-MK2 boss,42840,,,,pending
-sub_4BB2A,Destroyer-MK2 boss,42840,,,,pending
-sub_4BB3E,Destroyer-MK2 boss,42840,,,,pending
-sub_4BB56,Destroyer-MK2 boss,42840,,,,pending
-sub_4BB72,Destroyer-MK2 boss,42840,,,,pending
-sub_4B304,Destroyer-MK2 boss,43020,,,,pending
-sub_4B336,Destroyer-MK2 boss,43020,,,,pending
-sub_4BB0C,Destroyer-MK2 boss,43020,,,,pending
-sub_4BB1E,Destroyer-MK2 boss,43020,,,,pending
-sub_4BB88,Destroyer-MK2 boss,43020,,,,pending
-sub_4BE16,Destroyer-MK2 boss,43020,,,,pending
-sub_4B348,Destroyer-MK2 boss,43200,,,,pending
-sub_4B378,Destroyer-MK2 boss,43200,,,,pending
-sub_4B394,Destroyer-MK2 boss,43200,,,,pending
-sub_4B3B6,Destroyer-MK2 boss,43200,,,,pending
-sub_4B3D0,Destroyer-MK2 boss,43200,,,,pending
-sub_4B3EC,Destroyer-MK2 boss,43200,,,,pending
-sub_E562,Stage 19,43380,,,,pending
-sub_E570,Stage 19,43560,,,,pending
-sub_E5B6,Stage 19,43560,,,,pending
-sub_120F0,Stage 19,43560,,,,pending
-sub_E5D0,Jampan boss,43740,,,,pending
-sub_E5EA,Jampan boss,43740,,,,pending
-sub_E602,Jampan boss,43740,,,,pending
-sub_4912E,Jampan boss,43920,,,,pending
-sub_49138,Jampan boss,43920,,,,pending
-sub_49240,Jampan boss,43920,,,,pending
-sub_49258,Jampan boss,43920,,,,pending
-sub_49440,Jampan boss,43920,,,,pending
-sub_4953E,Jampan boss,43920,,,,pending
-sub_49570,Jampan boss,43920,,,,pending
-sub_495C6,Jampan boss,43920,,,,pending
-sub_4A368,Jampan boss,43920,,,,pending
-sub_4A3B8,Jampan boss,43920,,,,pending
-sub_4A3CA,Jampan boss,43920,,,,pending
-sub_4A3D8,Jampan boss,43920,,,,pending
-sub_4A6E0,Jampan boss,43920,,,,pending
-sub_4A6FA,Jampan boss,43920,,,,pending
-sub_4A78A,Jampan boss,43920,,,,pending
-sub_49610,Jampan boss,44100,,,,pending
-sub_4964A,Jampan boss,44100,,,,pending
-sub_4A0F8,Jampan boss,44100,,,,pending
-sub_4A432,Jampan boss,44100,,,,pending
-sub_4A464,Jampan boss,44100,,,,pending
-sub_4A478,Jampan boss,44100,,,,pending
-sub_4A48A,Jampan boss,44100,,,,pending
-sub_4A4A2,Jampan boss,44100,,,,pending
-sub_4A50C,Jampan boss,44100,,,,pending
-sub_49666,Jampan boss,44280,,,,pending
-sub_496AA,Jampan boss,44280,,,,pending
-sub_496CE,Jampan boss,44280,,,,pending
-sub_496EE,Jampan boss,44280,,,,pending
-sub_4A07E,Jampan boss,44280,,,,pending
+sub_47754,Epsilon1 boss,38340,,,Effect,analyzed
+sub_4779E,Epsilon1 boss,38340,,,Effect,analyzed
+sub_46A54,Epsilon1 boss,38520,,,Boss,analyzed
+sub_46A80,Epsilon1 boss,38520,,,Boss,analyzed
+sub_46A92,Epsilon1 boss,38700,,,Boss,analyzed
+sub_46ABC,Epsilon1 boss,38700,,,Boss,analyzed
+sub_46AD8,Epsilon1 boss,38700,,,Boss,analyzed
+sub_46AF2,Epsilon1 boss,38700,,,Boss,analyzed
+sub_460EC,Epsilon1 boss,38880,,,Boss,analyzed
+sub_46118,Epsilon1 boss,38880,,,Boss,analyzed
+sub_46B12,Epsilon1 boss,38880,,,Boss,analyzed
+sub_46B1E,Epsilon1 boss,38880,,,Boss,analyzed
+sub_46B2A,Epsilon1 boss,38880,,,Boss,analyzed
+sub_46B3C,Epsilon1 boss,38880,,,Boss,analyzed
+sub_E256,Planet cutscene,39420,,,Cutscene,analyzed
+sub_46B5A,Planet cutscene,39420,,,Cutscene,analyzed
+sub_769A,Planet cutscene,40320,,,Cutscene,analyzed
+sub_77BA,Planet cutscene,40320,,,Cutscene,analyzed
+sub_81C8,Planet cutscene,40320,,,Cutscene,analyzed
+sub_81DE,Planet cutscene,40320,,,Cutscene,analyzed
+sub_81EC,Planet cutscene,40320,,,Cutscene,analyzed
+sub_8206,Planet cutscene,40320,,,Cutscene,analyzed
+sub_816E,Planet cutscene,40500,,,Cutscene,analyzed
+sub_8182,Planet cutscene,40680,,,Cutscene,analyzed
+sub_83A4,Stage 18,41220,,,Stage,analyzed
+sub_E42C,Stage 18,41220,,,Stage,analyzed
+sub_E4DE,Stage 18,41220,,,Stage,analyzed
+sub_E67A,Stage 18,41220,,,Stage,analyzed
+sub_10026,Stage 18,41220,,,Graphics,analyzed
+sub_11AF4,Stage 18,41220,,,Graphics,analyzed
+sub_120CC,Stage 18,41220,,,Graphics,analyzed
+sub_124AA,Stage 18,41220,,,Graphics,analyzed
+sub_2FED4,Stage 18,41220,,,Enemy,analyzed
+sub_2FF1C,Stage 18,41220,,,Enemy,analyzed
+sub_2FFE0,Stage 18,41220,,,Enemy,analyzed
+sub_2FFE4,Stage 18,41220,,,Enemy,analyzed
+sub_3015C,Stage 18,41220,,,Enemy,analyzed
+sub_30230,Stage 18,41220,,,Enemy,analyzed
+sub_30288,Stage 18,41220,,,Enemy,analyzed
+sub_303F0,Stage 18,41220,,,Enemy,analyzed
+sub_30402,Stage 18,41220,,,Enemy,analyzed
+sub_30438,Stage 18,41220,,,Enemy,analyzed
+sub_3048C,Stage 18,41220,,,Enemy,analyzed
+sub_30492,Stage 18,41220,,,Projectile,analyzed
+sub_304A4,Stage 18,41220,,,Projectile,analyzed
+sub_304A8,Stage 18,41220,,,Projectile,analyzed
+sub_304B0,Stage 18,41220,,,Projectile,analyzed
+sub_10894,Stage 18,41400,,,Camera,analyzed
+sub_E4FC,Stage 18,41580,,,Stage,analyzed
+sub_2D4B2,Stage 18,41580,,,Enemy,analyzed
+sub_E512,Destroyer-MK2 boss,41760,,,Stage,analyzed
+sub_10044,Destroyer-MK2 boss,41760,,,Graphics,analyzed
+sub_1A39C,Destroyer-MK2 boss,41760,,,Graphics,analyzed
+sub_2FDAA,Destroyer-MK2 boss,41760,,,Boss,analyzed
+sub_14CD6,Destroyer-MK2 boss,41940,,,Boss,analyzed
+sub_14DD6,Destroyer-MK2 boss,41940,,,Boss,analyzed
+sub_14DF0,Destroyer-MK2 boss,41940,,,Boss,analyzed
+sub_14E04,Destroyer-MK2 boss,41940,,,Boss,analyzed
+sub_4BD52,Destroyer-MK2 boss,41940,,,Boss,analyzed
+sub_4BDFE,Destroyer-MK2 boss,41940,,,Boss,analyzed
+sub_4A84E,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4A938,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4AB38,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4AB44,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4AB70,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4AB90,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4ABC6,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4ABFC,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4ACEA,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4ADE0,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4BBF0,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4BC44,Destroyer-MK2 boss,42120,,,Boss,analyzed
+sub_4AC12,Destroyer-MK2 boss,42300,,,Boss,analyzed
+sub_4AC7C,Destroyer-MK2 boss,42300,,,Boss,analyzed
+sub_E54E,Destroyer-MK2 boss,42480,,,Boss,analyzed
+sub_4AC30,Destroyer-MK2 boss,42480,,,Projectile,analyzed
+sub_4AC5A,Destroyer-MK2 boss,42480,,,Projectile,analyzed
+sub_4ACAC,Destroyer-MK2 boss,42480,,,Projectile,analyzed
+sub_4AD4C,Destroyer-MK2 boss,42480,,,Boss,analyzed
+sub_4AD9E,Destroyer-MK2 boss,42480,,,Boss,analyzed
+sub_4AE0C,Destroyer-MK2 boss,42480,Boss_DestroyerMK2HitReaction,Boss hit reaction animation,Boss,analyzed
+sub_4AE42,Destroyer-MK2 boss,42480,Boss_DestroyerMK2StunState,Stun state after heavy damage,Boss,analyzed
+sub_4AE68,Destroyer-MK2 boss,42480,Boss_DestroyerMK2RecoverFromStun,Recovery from stun state,Boss,analyzed
+sub_4AEAC,Destroyer-MK2 boss,42480,Boss_DestroyerMK2Enrage,Enrage mode at low health,Boss,analyzed
+sub_2B49E,Destroyer-MK2 boss,42660,Boss_DestroyerMK2UpdateSprite,Updates boss sprite graphics,Boss,analyzed
+sub_4AEDE,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimIdle,Idle animation state,Boss,analyzed
+sub_4AEFA,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimWalk,Walk animation state,Boss,analyzed
+sub_4AF14,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimAttack,Attack animation state,Boss,analyzed
+sub_4AF4A,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimJump,Jump animation state,Boss,analyzed
+sub_4AF5A,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimLand,Landing animation state,Boss,analyzed
+sub_4AFE2,Destroyer-MK2 boss,42660,Boss_DestroyerMK2AnimDamage,Damage animation state,Boss,analyzed
+sub_4B046,Destroyer-MK2 boss,42660,Boss_DestroyerMK2UpdatePalette,Updates boss palette,Boss,analyzed
+sub_4B108,Destroyer-MK2 boss,42660,Boss_DestroyerMK2FlashDamage,Flash effect on damage,Boss,analyzed
+sub_4B118,Destroyer-MK2 boss,42660,Boss_DestroyerMK2ShakeOnLand,Screen shake on landing,Boss,analyzed
+sub_4B150,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlaySFX,Plays boss sound effects,Boss,analyzed
+sub_4B470,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlayFootstep,Plays footstep sound,Boss,analyzed
+sub_4B73C,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlayRoar,Plays roar sound,Boss,analyzed
+sub_4B74E,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlayJump,Plays jump sound,Boss,analyzed
+sub_4B760,Destroyer-MK2 boss,42660,Boss_DestroyerMK2PlayLand,Plays landing sound,Boss,analyzed
+sub_4B0E6,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatInit,Defeat sequence initialization,Boss,analyzed
+sub_4B0F8,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatStagger,Staggering during defeat,Boss,analyzed
+sub_4B2E2,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatFall,Falling during defeat,Boss,analyzed
+sub_4B2F2,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatExplosion1,First explosion in defeat,Boss,analyzed
+sub_4B3FC,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatExplosion2,Second explosion in defeat,Boss,analyzed
+sub_4B400,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatExplosion3,Third explosion in defeat,Boss,analyzed
+sub_4B7A0,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatShake,Screen shake during defeat,Boss,analyzed
+sub_4BA50,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatFlash,Flash effect during defeat,Boss,analyzed
+sub_4BA66,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatBreakup,Boss breaking up,Boss,analyzed
+sub_4BB2A,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatDebris,Spawns defeat debris,Boss,analyzed
+sub_4BB3E,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatSparks,Spawns defeat sparks,Boss,analyzed
+sub_4BB56,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatSmoke,Spawns defeat smoke,Boss,analyzed
+sub_4BB72,Destroyer-MK2 boss,42840,Boss_DestroyerMK2DefeatCleanup,Cleanup after defeat,Boss,analyzed
+sub_4B304,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Explosion1,Explosion effect 1,Effect,analyzed
+sub_4B336,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Explosion2,Explosion effect 2,Effect,analyzed
+sub_4BB0C,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Spark,Spark effect,Effect,analyzed
+sub_4BB1E,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Debris,Debris effect,Effect,analyzed
+sub_4BB88,Destroyer-MK2 boss,43020,Effect_DestroyerMK2Smoke,Smoke effect,Effect,analyzed
+sub_4BE16,Destroyer-MK2 boss,43020,Projectile_DestroyerMK2DebrisMain,Debris projectile handler,Projectile,analyzed
+sub_4B348,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkAttack1,Berserk attack pattern 1,Boss,analyzed
+sub_4B378,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkAttack2,Berserk attack pattern 2,Boss,analyzed
+sub_4B394,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkRush,Berserk rush attack,Boss,analyzed
+sub_4B3B6,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkSpin,Berserk spin attack,Boss,analyzed
+sub_4B3D0,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkJump,Berserk jump attack,Boss,analyzed
+sub_4B3EC,Destroyer-MK2 boss,43200,Boss_DestroyerMK2BerserkRoar,Berserk roar attack,Boss,analyzed
+sub_E562,Stage 19,43380,Stage_Stage19Init,Stage 19 initialization,Stage,analyzed
+sub_E570,Stage 19,43560,Stage_Stage19Scroll,Stage 19 scroll handler,Stage,analyzed
+sub_E5B6,Stage 19,43560,Stage_Stage19Transition,Stage transition to boss,Stage,analyzed
+sub_120F0,Stage 19,43560,Gfx_LoadStage19Graphics,Loads Stage 19 graphics,Graphics,analyzed
+sub_E5D0,Jampan boss,43740,Stage_JampanInit,Jampan boss initialization,Stage,analyzed
+sub_E5EA,Jampan boss,43740,Stage_JampanBattleStart,Jampan battle start,Stage,analyzed
+sub_E602,Jampan boss,43740,Stage_JampanPostBattle,Post-battle cleanup,Stage,analyzed
+sub_4912E,Jampan boss,43920,Boss_JampanMain,Main boss handler,Boss,analyzed
+sub_49138,Jampan boss,43920,Boss_JampanDispatcher,Boss state dispatcher,Boss,analyzed
+sub_49240,Jampan boss,43920,Boss_JampanIdleState,Idle state handler,Boss,analyzed
+sub_49258,Jampan boss,43920,Boss_JampanMoveState,Movement state handler,Boss,analyzed
+sub_49440,Jampan boss,43920,Boss_JampanAttackState,Attack state handler,Boss,analyzed
+sub_4953E,Jampan boss,43920,Boss_JampanDefendState,Defense state handler,Boss,analyzed
+sub_49570,Jampan boss,43920,Boss_JampanJumpState,Jump state handler,Boss,analyzed
+sub_495C6,Jampan boss,43920,Boss_JampanDashState,Dash attack state,Boss,analyzed
+sub_4A368,Jampan boss,43920,Boss_JampanUpdatePosition,Updates boss position,Boss,analyzed
+sub_4A3B8,Jampan boss,43920,Boss_JampanUpdateAnimation,Updates boss animation,Boss,analyzed
+sub_4A3CA,Jampan boss,43920,Boss_JampanUpdateSprite,Updates boss sprite,Boss,analyzed
+sub_4A3D8,Jampan boss,43920,Boss_JampanUpdatePalette,Updates boss palette,Boss,analyzed
+sub_4A6E0,Jampan boss,43920,Boss_JampanCheckHealth,Checks boss health,Boss,analyzed
+sub_4A6FA,Jampan boss,43920,Boss_JampanDamageHandler,Handles damage taken,Boss,analyzed
+sub_4A78A,Jampan boss,43920,Boss_JampanFlashOnDamage,Flash effect on damage,Boss,analyzed
+sub_49610,Jampan boss,44100,Boss_JampanShootProjectile,Shoots projectile,Boss,analyzed
+sub_4964A,Jampan boss,44100,Boss_JampanSpawnMinion,Spawns minion enemy,Boss,analyzed
+sub_4A0F8,Jampan boss,44100,Boss_JampanTeleportInit,Teleport attack init,Boss,analyzed
+sub_4A432,Jampan boss,44100,Boss_JampanTeleportFadeOut,Teleport fade out,Boss,analyzed
+sub_4A464,Jampan boss,44100,Boss_JampanTeleportMove,Teleport movement,Boss,analyzed
+sub_4A478,Jampan boss,44100,Boss_JampanTeleportFadeIn,Teleport fade in,Boss,analyzed
+sub_4A48A,Jampan boss,44100,Boss_JampanTeleportComplete,Teleport completion,Boss,analyzed
+sub_4A4A2,Jampan boss,44100,Boss_JampanComboAttack,Combo attack sequence,Boss,analyzed
+sub_4A50C,Jampan boss,44100,Boss_JampanSpecialAttack,Special attack pattern,Boss,analyzed
+sub_49666,Jampan boss,44280,Projectile_JampanBullet,Bullet projectile handler,Projectile,analyzed
+sub_496AA,Jampan boss,44280,Projectile_JampanWave,Wave projectile handler,Projectile,analyzed
+sub_496CE,Jampan boss,44280,Projectile_JampanHoming,Homing projectile handler,Projectile,analyzed
+sub_496EE,Jampan boss,44280,Enemy_JampanMinion,Minion enemy handler,Enemy,analyzed
+sub_4A07E,Jampan boss,44280,Boss_JampanAIController,Boss AI controller,Boss,analyzed
 sub_4A08A,Jampan boss,44280,,,,pending
 sub_4A0C6,Jampan boss,44280,,,,pending
 sub_4A300,Jampan boss,44280,,,,pending
