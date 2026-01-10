@@ -1778,166 +1778,166 @@ sub_496AA,Jampan boss,44280,,,Projectile,analyzed
 sub_496CE,Jampan boss,44280,,,Projectile,analyzed
 sub_496EE,Jampan boss,44280,,,Enemy,analyzed
 sub_4A07E,Jampan boss,44280,,,Boss,analyzed
-sub_4A08A,Jampan boss,44280,Boss_JampanUpdateFacing,Updates boss facing direction,Boss,analyzed
-sub_4A0C6,Jampan boss,44280,Boss_JampanAimAtPlayer,Calculates angle and aims at player,Boss,analyzed
-sub_4A300,Jampan boss,44280,Boss_JampanShadowMain,Shadow effect main handler,Boss,analyzed
-sub_4A316,Jampan boss,44280,Boss_JampanShadowDispatcher,Shadow effect dispatcher,Boss,analyzed
-sub_4A328,Jampan boss,44280,Boss_JampanShadowInit,Shadow effect initialization,Boss,analyzed
-sub_4A340,Jampan boss,44280,Boss_JampanShadowAnimate,Shadow animation handler,Boss,analyzed
-sub_4A40C,Jampan boss,44280,Boss_JampanAimTracking,Smooth aim tracking at player,Boss,analyzed
-sub_4A53A,Jampan boss,44280,Boss_JampanFormationMain,Formation attack main handler,Boss,analyzed
-sub_4A54E,Jampan boss,44280,Boss_JampanFormationInit,Formation attack initialization,Boss,analyzed
-sub_4A56C,Jampan boss,44280,Boss_JampanFormationWait,Formation wait for trigger,Boss,analyzed
-sub_4A57E,Jampan boss,44280,Boss_JampanFormationUpdate,Updates formation positions,Boss,analyzed
-sub_E636,Jampan boss,44460,Stage_JampanDefeatCamera,Camera during defeat sequence,Stage,analyzed
-sub_49930,Jampan boss,44460,Boss_JampanDefeatInit,Defeat sequence initialization,Boss,analyzed
-sub_49950,Jampan boss,44460,Boss_JampanDefeatTeleport,Defeat teleport effect,Boss,analyzed
-sub_49992,Jampan boss,44460,Boss_JampanDefeatFade,Defeat fade out animation,Boss,analyzed
-sub_4A5F0,Jampan boss,44460,Boss_JampanDefeatExplosion,Defeat explosion effect,Boss,analyzed
-sub_49DB2,Jampan boss,44640,Boss_JampanDefeatFlash,Flash effect during defeat,Boss,analyzed
-sub_49E26,Jampan boss,44640,Boss_JampanDefeatShake,Screen shake during defeat,Boss,analyzed
-sub_49E64,Jampan boss,44640,Boss_JampanDefeatBreakup,Boss breaking up animation,Boss,analyzed
-sub_4A160,Jampan boss,44640,Boss_JampanDefeatDebris,Spawns defeat debris,Boss,analyzed
-sub_49E9A,Jampan boss,44820,Boss_JampanDefeatSparkInit,Defeat spark initialization,Boss,analyzed
-sub_49EB2,Jampan boss,44820,Boss_JampanDefeatSparkMove,Defeat spark movement,Boss,analyzed
-sub_49ED2,Jampan boss,44820,Boss_JampanDefeatSparkUpdate,Defeat spark update,Boss,analyzed
-sub_49EEC,Jampan boss,44820,Boss_JampanDefeatSparkFade,Defeat spark fade effect,Boss,analyzed
-sub_49F0E,Jampan boss,44820,Boss_JampanDefeatSparkWait,Defeat spark wait timer,Boss,analyzed
-sub_4A034,Jampan boss,44820,Boss_JampanDefeatFinalMain,Final defeat phase main,Boss,analyzed
-sub_4A044,Jampan boss,44820,Boss_JampanDefeatFinalInit,Final defeat phase init,Boss,analyzed
-sub_4A078,Jampan boss,44820,Boss_JampanDefeatFinalLoop,Final defeat phase loop,Boss,analyzed
-sub_49F22,Jampan boss,45000,Boss_JampanDefeatEndInit,End of defeat initialization,Boss,analyzed
-sub_49F40,Jampan boss,45000,Boss_JampanDefeatEndFade,End fade to white,Boss,analyzed
-sub_4A018,Jampan boss,45000,Boss_JampanDefeatEndWait,Wait before transition,Boss,analyzed
-sub_49F88,Jampan boss,45180,Boss_JampanDefeatCleanupInit,Cleanup initialization,Boss,analyzed
-sub_49FEE,Jampan boss,45180,Boss_JampanDefeatCleanupWait,Cleanup wait timer,Boss,analyzed
-sub_4A65E,Jampan boss,45180,Boss_JampanDebugController,Debug controller input handler,Boss,analyzed
-sub_E644,Jampan boss,45360,Stage_JampanPostDefeatInit,Post-defeat stage init,Stage,analyzed
-sub_E656,Jampan boss,45360,Stage_JampanPostDefeatCheck,Post-defeat checks and transition,Stage,analyzed
-sub_19AB4,Jampan boss,45360,Cutscene_JampanInitParams,Cutscene parameter initialization,Cutscene,analyzed
-sub_4A026,Jampan boss,45360,Boss_JampanDefeatTimerCheck,Defeat timer countdown check,Boss,analyzed
-sub_E7D8,7 forces intro (Stage 20),45540,Stage_Stage20Init,Stage 20 initialization,Stage,analyzed
-sub_E830,7 forces intro (Stage 20),45540,Stage_Stage20Scroll,Stage 20 scroll handler,Stage,analyzed
-sub_EFE8,7 forces intro (Stage 20),45540,Gfx_Stage20InitPlanes,Initializes Stage 20 planes,Graphics,analyzed
-sub_11B9C,7 forces intro (Stage 20),45540,Gfx_LoadStage20Tiles,Loads Stage 20 tiles,Graphics,analyzed
-sub_12112,7 forces intro (Stage 20),45540,Gfx_LoadStage20Graphics,Loads Stage 20 graphics,Graphics,analyzed
-sub_19D6C,7 forces intro (Stage 20),45540,Cutscene_Stage20ClearFlag,Clears cutscene flag,Cutscene,analyzed
-sub_54B84,7 forces intro (Stage 20),45540,Entity_SevenForcesMain,Seven Forces entity main handler,Entity,analyzed
-sub_54BD8,7 forces intro (Stage 20),45540,Entity_SevenForcesDispatcher,Seven Forces dispatcher,Entity,analyzed
-sub_54C3C,7 forces intro (Stage 20),45540,Entity_SevenForcesIntro,Seven Forces intro animation,Entity,analyzed
-sub_54C7E,7 forces intro (Stage 20),45540,Entity_SevenForcesIntroMove,Seven Forces intro movement,Entity,analyzed
-sub_54F24,7 forces intro (Stage 20),45540,Entity_SevenForcesTextDisplay,Text display handler,Entity,analyzed
-sub_54F48,7 forces intro (Stage 20),45720,Entity_SevenForcesTextInit,Text initialization,Entity,analyzed
-sub_54F6C,Valkirie force,45900,Entity_SevenForcesTextUpdate,Text update handler,Entity,analyzed
-sub_54F7E,Valkirie force,45900,Entity_SevenForcesTransform,Transformation sequence,Entity,analyzed
-sub_54F9E,Valkirie force,45900,Boss_ValkirieMain,Main boss handler,Boss,analyzed
-sub_54FE4,Valkirie force,45900,Boss_ValkirieDispatcher,Boss state dispatcher,Boss,analyzed
-sub_55460,Valkirie force,45900,Boss_ValkirieIntroInit,Intro animation init,Boss,analyzed
-sub_5575E,Valkirie force,45900,Boss_ValkirieIntroMove,Intro movement,Boss,analyzed
-sub_557E0,Valkirie force,45900,Boss_ValkirieIntroStop,Intro stop position,Boss,analyzed
-sub_5604C,Valkirie force,45900,Boss_ValkirieBattleStart,Battle start initialization,Boss,analyzed
-sub_345B2,Valkirie force,46080,Boss_ValkiriePlayIntroSFX,Plays intro sound effects,Boss,analyzed
-sub_558B4,Valkirie force,46080,Boss_ValkirieIdleState,Idle state handler,Boss,analyzed
-sub_5590A,Valkirie force,46080,Boss_ValkirieAttackState1,Attack state 1 handler,Boss,analyzed
-sub_5605C,Valkirie force,46080,Boss_ValkirieUpdateSprites,Updates boss sprites,Boss,analyzed
-sub_56190,Valkirie force,46080,Boss_ValkirieAnimationScript,Animation script interpreter,Boss,analyzed
-sub_561CA,Valkirie force,46080,Boss_ValkirieAnimationLoop,Animation loop handler,Boss,analyzed
-sub_56224,Valkirie force,46080,Boss_ValkirieAnimationUpdate,Animation frame update,Boss,analyzed
-sub_566B6,Valkirie force,46080,Boss_ValkirieMovePattern1,Movement pattern 1,Boss,analyzed
-sub_5671A,Valkirie force,46080,Boss_ValkirieMovePattern2,Movement pattern 2,Boss,analyzed
-sub_56924,Valkirie force,46080,Boss_ValkirieMovePattern3,Movement pattern 3,Boss,analyzed
-sub_5594E,Valkirie force,46260,Boss_ValkirieShootPattern1,Shooting pattern 1,Boss,analyzed
-sub_55ED0,Valkirie force,46260,Boss_ValkirieShootPattern2,Shooting pattern 2,Boss,analyzed
-sub_55EF0,Valkirie force,46260,Boss_ValkirieShootPattern3,Shooting pattern 3,Boss,analyzed
-sub_55FE6,Valkirie force,46260,Boss_ValkirieSpawnProjectile1,Spawns projectile type 1,Boss,analyzed
-sub_55FF2,Valkirie force,46260,Boss_ValkirieSpawnProjectile2,Spawns projectile type 2,Boss,analyzed
-sub_55F34,Valkirie force,46440,Boss_ValkirieSpawnProjectile3,Spawns projectile type 3,Boss,analyzed
-sub_55F96,Valkirie force,46440,Boss_ValkirieSpawnProjectile4,Spawns projectile type 4,Boss,analyzed
-sub_2A092,Valkirie force,46620,Projectile_ValkirieMain,Projectile main handler,Projectile,analyzed
-sub_55C8C,Valkirie force,46620,Projectile_ValkirieBullet,Bullet projectile handler,Projectile,analyzed
-sub_55CD6,Valkirie force,46620,Boss_ValkirieDamageCheck,Checks if boss takes damage,Boss,analyzed
-sub_55D74,Valkirie force,46620,Boss_ValkirieCollisionCheck,Collision detection with player,Boss,analyzed
-sub_55DD0,Valkirie force,46620,Boss_ValkirieUpdateHealth,Updates boss health,Boss,analyzed
-sub_55EBA,Valkirie force,46620,,,,pending
-sub_5601A,Valkirie force,46620,,,,pending
-sub_56036,Valkirie force,46620,,,,pending
-sub_56942,Valkirie force,46620,,,,pending
-sub_E846,Medusa force,46800,,,,pending
-sub_EB9E,Medusa force,46800,,,,pending
-sub_54FFA,Medusa force,46800,,,,pending
-sub_5505A,Medusa force,46800,,,,pending
-sub_5547C,Medusa force,46800,,,,pending
-sub_55518,Medusa force,46800,,,,pending
-sub_555C8,Medusa force,46800,,,,pending
-sub_555DA,Medusa force,46800,,,,pending
-sub_55600,Medusa force,46800,,,,pending
-sub_5699C,Medusa force,46800,,,,pending
-sub_56A06,Medusa force,46800,,,,pending
-sub_56AE4,Medusa force,46800,,,,pending
-sub_56B16,Medusa force,46800,,,,pending
-sub_56EB4,Medusa force,46800,,,,pending
-sub_56EC4,Medusa force,46800,,,,pending
-sub_56FF6,Medusa force,46800,,,,pending
-sub_57044,Medusa force,46800,,,,pending
-sub_5707E,Medusa force,46800,,,,pending
-sub_570D8,Medusa force,46800,,,,pending
-sub_570EC,Medusa force,46800,,,,pending
-sub_5507A,Medusa force,46980,,,,pending
-sub_56B6C,Medusa force,46980,,,,pending
-sub_56E6E,Medusa force,46980,,,,pending
-sub_56E72,Medusa force,46980,,,,pending
-sub_56EAC,Medusa force,46980,,,,pending
-sub_5717A,Medusa force,46980,,,,pending
-sub_5719A,Medusa force,46980,,,,pending
-sub_5720C,Medusa force,46980,,,,pending
-sub_571CE,Medusa force,47160,,,,pending
-sub_571EA,Medusa force,47520,,,,pending
-sub_E858,Sylpheed force,47880,,,,pending
-sub_55094,Sylpheed force,47880,,,,pending
-sub_550F4,Sylpheed force,47880,,,,pending
-sub_5510C,Sylpheed force,47880,,,,pending
-sub_5562A,Sylpheed force,47880,,,,pending
-sub_593D4,Sylpheed force,47880,,,,pending
-sub_59460,Sylpheed force,47880,,,,pending
-sub_5951C,Sylpheed force,47880,,,,pending
-sub_599BC,Sylpheed force,47880,,,,pending
-sub_59A00,Sylpheed force,47880,,,,pending
-sub_59A10,Sylpheed force,47880,,,,pending
-sub_59B72,Sylpheed force,47880,,,,pending
-sub_59BAC,Sylpheed force,47880,,,,pending
-sub_59C06,Sylpheed force,47880,,,,pending
-sub_E876,Sylpheed force,48060,,,,pending
-sub_E892,Sylpheed force,48060,,,,pending
-sub_EC38,Sylpheed force,48060,,,,pending
-sub_595CA,Sylpheed force,48060,,,,pending
-sub_5960E,Sylpheed force,48060,,,,pending
-sub_5963E,Sylpheed force,48060,,,,pending
-sub_5966A,Sylpheed force,48060,,,,pending
-sub_E8AA,Sylpheed force,48240,,,,pending
-sub_E8C0,Sylpheed force,48240,,,,pending
-sub_EC86,Sylpheed force,48240,,,,pending
-sub_ECAA,Sylpheed force,48240,,,,pending
-sub_F02C,Sylpheed force,48240,,,,pending
-sub_F0B4,Sylpheed force,48240,,,,pending
-sub_19DAE,Sylpheed force,48240,,,,pending
-sub_19E06,Sylpheed force,48240,,,,pending
-sub_19E24,Sylpheed force,48240,,,,pending
-sub_19E56,Sylpheed force,48240,,,,pending
-sub_19E9A,Sylpheed force,48240,,,,pending
-sub_19F10,Sylpheed force,48240,,,,pending
-sub_19F36,Sylpheed force,48240,,,,pending
-sub_1A152,Sylpheed force,48240,,,,pending
-sub_1A1F2,Sylpheed force,48240,,,,pending
-sub_1A208,Sylpheed force,48240,,,,pending
-sub_5511C,Sylpheed force,48240,,,,pending
-sub_59696,Sylpheed force,48240,,,,pending
-sub_5997A,Sylpheed force,48240,,,,pending
-sub_19EE4,Sylpheed force,48420,,,,pending
-sub_1A074,Sylpheed force,48420,,,,pending
-sub_1A0BA,Sylpheed force,48420,,,,pending
-sub_59818,Sylpheed force,48420,,,,pending
-sub_59950,Sylpheed force,48420,,,,pending
-sub_E8DC,Artemis force,48600,,,,pending
+sub_4A08A,Jampan boss,44280,,,Boss,analyzed
+sub_4A0C6,Jampan boss,44280,,,Boss,analyzed
+sub_4A300,Jampan boss,44280,,,Boss,analyzed
+sub_4A316,Jampan boss,44280,,,Boss,analyzed
+sub_4A328,Jampan boss,44280,,,Boss,analyzed
+sub_4A340,Jampan boss,44280,,,Boss,analyzed
+sub_4A40C,Jampan boss,44280,,,Boss,analyzed
+sub_4A53A,Jampan boss,44280,,,Boss,analyzed
+sub_4A54E,Jampan boss,44280,,,Boss,analyzed
+sub_4A56C,Jampan boss,44280,,,Boss,analyzed
+sub_4A57E,Jampan boss,44280,,,Boss,analyzed
+sub_E636,Jampan boss,44460,,,Stage,analyzed
+sub_49930,Jampan boss,44460,,,Boss,analyzed
+sub_49950,Jampan boss,44460,,,Boss,analyzed
+sub_49992,Jampan boss,44460,,,Boss,analyzed
+sub_4A5F0,Jampan boss,44460,,,Boss,analyzed
+sub_49DB2,Jampan boss,44640,,,Boss,analyzed
+sub_49E26,Jampan boss,44640,,,Boss,analyzed
+sub_49E64,Jampan boss,44640,,,Boss,analyzed
+sub_4A160,Jampan boss,44640,,,Boss,analyzed
+sub_49E9A,Jampan boss,44820,,,Boss,analyzed
+sub_49EB2,Jampan boss,44820,,,Boss,analyzed
+sub_49ED2,Jampan boss,44820,,,Boss,analyzed
+sub_49EEC,Jampan boss,44820,,,Boss,analyzed
+sub_49F0E,Jampan boss,44820,,,Boss,analyzed
+sub_4A034,Jampan boss,44820,,,Boss,analyzed
+sub_4A044,Jampan boss,44820,,,Boss,analyzed
+sub_4A078,Jampan boss,44820,,,Boss,analyzed
+sub_49F22,Jampan boss,45000,,,Boss,analyzed
+sub_49F40,Jampan boss,45000,,,Boss,analyzed
+sub_4A018,Jampan boss,45000,,,Boss,analyzed
+sub_49F88,Jampan boss,45180,,,Boss,analyzed
+sub_49FEE,Jampan boss,45180,,,Boss,analyzed
+sub_4A65E,Jampan boss,45180,,,Boss,analyzed
+sub_E644,Jampan boss,45360,,,Stage,analyzed
+sub_E656,Jampan boss,45360,,,Stage,analyzed
+sub_19AB4,Jampan boss,45360,,,Cutscene,analyzed
+sub_4A026,Jampan boss,45360,,,Boss,analyzed
+sub_E7D8,7 forces intro (Stage 20),45540,,,Stage,analyzed
+sub_E830,7 forces intro (Stage 20),45540,,,Stage,analyzed
+sub_EFE8,7 forces intro (Stage 20),45540,,,Graphics,analyzed
+sub_11B9C,7 forces intro (Stage 20),45540,,,Graphics,analyzed
+sub_12112,7 forces intro (Stage 20),45540,,,Graphics,analyzed
+sub_19D6C,7 forces intro (Stage 20),45540,,,Cutscene,analyzed
+sub_54B84,7 forces intro (Stage 20),45540,,,Entity,analyzed
+sub_54BD8,7 forces intro (Stage 20),45540,,,Entity,analyzed
+sub_54C3C,7 forces intro (Stage 20),45540,,,Entity,analyzed
+sub_54C7E,7 forces intro (Stage 20),45540,,,Entity,analyzed
+sub_54F24,7 forces intro (Stage 20),45540,,,Entity,analyzed
+sub_54F48,7 forces intro (Stage 20),45720,,,Entity,analyzed
+sub_54F6C,Valkirie force,45900,,,Entity,analyzed
+sub_54F7E,Valkirie force,45900,,,Entity,analyzed
+sub_54F9E,Valkirie force,45900,,,Boss,analyzed
+sub_54FE4,Valkirie force,45900,,,Boss,analyzed
+sub_55460,Valkirie force,45900,,,Boss,analyzed
+sub_5575E,Valkirie force,45900,,,Boss,analyzed
+sub_557E0,Valkirie force,45900,,,Boss,analyzed
+sub_5604C,Valkirie force,45900,,,Boss,analyzed
+sub_345B2,Valkirie force,46080,,,Boss,analyzed
+sub_558B4,Valkirie force,46080,,,Boss,analyzed
+sub_5590A,Valkirie force,46080,,,Boss,analyzed
+sub_5605C,Valkirie force,46080,,,Boss,analyzed
+sub_56190,Valkirie force,46080,,,Boss,analyzed
+sub_561CA,Valkirie force,46080,,,Boss,analyzed
+sub_56224,Valkirie force,46080,,,Boss,analyzed
+sub_566B6,Valkirie force,46080,,,Boss,analyzed
+sub_5671A,Valkirie force,46080,,,Boss,analyzed
+sub_56924,Valkirie force,46080,,,Boss,analyzed
+sub_5594E,Valkirie force,46260,,,Boss,analyzed
+sub_55ED0,Valkirie force,46260,,,Boss,analyzed
+sub_55EF0,Valkirie force,46260,,,Boss,analyzed
+sub_55FE6,Valkirie force,46260,,,Boss,analyzed
+sub_55FF2,Valkirie force,46260,,,Boss,analyzed
+sub_55F34,Valkirie force,46440,,,Boss,analyzed
+sub_55F96,Valkirie force,46440,,,Boss,analyzed
+sub_2A092,Valkirie force,46620,,,Projectile,analyzed
+sub_55C8C,Valkirie force,46620,,,Projectile,analyzed
+sub_55CD6,Valkirie force,46620,,,Boss,analyzed
+sub_55D74,Valkirie force,46620,,,Boss,analyzed
+sub_55DD0,Valkirie force,46620,,,Boss,analyzed
+sub_55EBA,Valkirie force,46620,Boss_ValkirieDestroyParts,Destroys boss parts on defeat,Boss,analyzed
+sub_5601A,Valkirie force,46620,Boss_ValkirieCheckFacing,Checks player facing direction,Boss,analyzed
+sub_56036,Valkirie force,46620,Boss_ValkirieSetFacing,Sets boss facing direction,Boss,analyzed
+sub_56942,Valkirie force,46620,Boss_ValkirieUpdatePalette,Updates boss palette colors,Boss,analyzed
+sub_E846,Medusa force,46800,Stage_MedusaTransition,Transition to Medusa form,Stage,analyzed
+sub_EB9E,Medusa force,46800,Stage_MedusaCamera,Camera control for Medusa,Stage,analyzed
+sub_54FFA,Medusa force,46800,Boss_MedusaMain,Main boss handler,Boss,analyzed
+sub_5505A,Medusa force,46800,Boss_MedusaDispatcher,Boss state dispatcher,Boss,analyzed
+sub_5547C,Medusa force,46800,Boss_MedusaIntroInit,Intro animation init,Boss,analyzed
+sub_55518,Medusa force,46800,Boss_MedusaIntroMove,Intro movement,Boss,analyzed
+sub_555C8,Medusa force,46800,Boss_MedusaIntroStop,Intro stop position,Boss,analyzed
+sub_555DA,Medusa force,46800,Boss_MedusaBattleStart,Battle start initialization,Boss,analyzed
+sub_55600,Medusa force,46800,Boss_MedusaIdleState,Idle state handler,Boss,analyzed
+sub_5699C,Medusa force,46800,Boss_MedusaAttackState1,Attack state 1 handler,Boss,analyzed
+sub_56A06,Medusa force,46800,Boss_MedusaAttackState2,Attack state 2 handler,Boss,analyzed
+sub_56AE4,Medusa force,46800,Boss_MedusaMovePattern1,Movement pattern 1,Boss,analyzed
+sub_56B16,Medusa force,46800,Boss_MedusaMovePattern2,Movement pattern 2,Boss,analyzed
+sub_56EB4,Medusa force,46800,Boss_MedusaShootPattern1,Shooting pattern 1,Boss,analyzed
+sub_56EC4,Medusa force,46800,Boss_MedusaShootPattern2,Shooting pattern 2,Boss,analyzed
+sub_56FF6,Medusa force,46800,Boss_MedusaShootPattern3,Shooting pattern 3,Boss,analyzed
+sub_57044,Medusa force,46800,Boss_MedusaSpawnProjectile1,Spawns projectile type 1,Boss,analyzed
+sub_5707E,Medusa force,46800,Boss_MedusaSpawnProjectile2,Spawns projectile type 2,Boss,analyzed
+sub_570D8,Medusa force,46800,Boss_MedusaSpawnProjectile3,Spawns projectile type 3,Boss,analyzed
+sub_570EC,Medusa force,46800,Boss_MedusaSpawnProjectile4,Spawns projectile type 4,Boss,analyzed
+sub_5507A,Medusa force,46980,Boss_MedusaUpdateSprites,Updates boss sprites,Boss,analyzed
+sub_56B6C,Medusa force,46980,Boss_MedusaAnimationScript,Animation script interpreter,Boss,analyzed
+sub_56E6E,Medusa force,46980,Boss_MedusaAnimationLoop,Animation loop handler,Boss,analyzed
+sub_56E72,Medusa force,46980,Boss_MedusaAnimationUpdate,Animation frame update,Boss,analyzed
+sub_56EAC,Medusa force,46980,Boss_MedusaCollisionCheck,Collision detection with player,Boss,analyzed
+sub_5717A,Medusa force,46980,Boss_MedusaDamageCheck,Checks if boss takes damage,Boss,analyzed
+sub_5719A,Medusa force,46980,Boss_MedusaUpdateHealth,Updates boss health,Boss,analyzed
+sub_5720C,Medusa force,46980,Boss_MedusaFlashDamage,Flash effect on damage,Boss,analyzed
+sub_571CE,Medusa force,47160,Projectile_MedusaMain,Projectile main handler,Projectile,analyzed
+sub_571EA,Medusa force,47520,Boss_MedusaDefeatInit,Defeat sequence initialization,Boss,analyzed
+sub_E858,Sylpheed force,47880,Stage_SylpheedTransition,Transition to Sylpheed form,Stage,analyzed
+sub_55094,Sylpheed force,47880,Boss_SylpheedMain,Main boss handler,Boss,analyzed
+sub_550F4,Sylpheed force,47880,Boss_SylpheedDispatcher,Boss state dispatcher,Boss,analyzed
+sub_5510C,Sylpheed force,47880,Boss_SylpheedIntroInit,Intro animation init,Boss,analyzed
+sub_5562A,Sylpheed force,47880,Boss_SylpheedIntroMove,Intro movement,Boss,analyzed
+sub_593D4,Sylpheed force,47880,Boss_SylpheedIntroStop,Intro stop position,Boss,analyzed
+sub_59460,Sylpheed force,47880,Boss_SylpheedBattleStart,Battle start initialization,Boss,analyzed
+sub_5951C,Sylpheed force,47880,Boss_SylpheedIdleState,Idle state handler,Boss,analyzed
+sub_599BC,Sylpheed force,47880,Boss_SylpheedAttackState1,Attack state 1 handler,Boss,analyzed
+sub_59A00,Sylpheed force,47880,Boss_SylpheedAttackState2,Attack state 2 handler,Boss,analyzed
+sub_59A10,Sylpheed force,47880,Boss_SylpheedAttackState3,Attack state 3 handler,Boss,analyzed
+sub_59B72,Sylpheed force,47880,Boss_SylpheedMovePattern1,Movement pattern 1,Boss,analyzed
+sub_59BAC,Sylpheed force,47880,Boss_SylpheedMovePattern2,Movement pattern 2,Boss,analyzed
+sub_59C06,Sylpheed force,47880,Boss_SylpheedMovePattern3,Movement pattern 3,Boss,analyzed
+sub_E876,Sylpheed force,48060,Stage_SylpheedCamera,Camera control for Sylpheed,Stage,analyzed
+sub_E892,Sylpheed force,48060,Stage_SylpheedCameraUpdate,Camera position update,Stage,analyzed
+sub_EC38,Sylpheed force,48060,Stage_SylpheedCameraLock,Camera lock handler,Stage,analyzed
+sub_595CA,Sylpheed force,48060,Boss_SylpheedShootPattern1,Shooting pattern 1,Boss,analyzed
+sub_5960E,Sylpheed force,48060,Boss_SylpheedShootPattern2,Shooting pattern 2,Boss,analyzed
+sub_5963E,Sylpheed force,48060,Boss_SylpheedShootPattern3,Shooting pattern 3,Boss,analyzed
+sub_5966A,Sylpheed force,48060,Boss_SylpheedShootPattern4,Shooting pattern 4,Boss,analyzed
+sub_E8AA,Sylpheed force,48240,Stage_SylpheedGraphicsInit,Graphics initialization,Stage,analyzed
+sub_E8C0,Sylpheed force,48240,Stage_SylpheedGraphicsUpdate,Graphics update handler,Stage,analyzed
+sub_EC86,Sylpheed force,48240,Gfx_LoadSylpheedTiles,Loads Sylpheed tiles,Graphics,analyzed
+sub_ECAA,Sylpheed force,48240,Gfx_LoadSylpheedPalette,Loads Sylpheed palette,Graphics,analyzed
+sub_F02C,Sylpheed force,48240,Gfx_SylpheedBackground,Background graphics setup,Graphics,analyzed
+sub_F0B4,Sylpheed force,48240,Gfx_SylpheedForeground,Foreground graphics setup,Graphics,analyzed
+sub_19DAE,Sylpheed force,48240,Boss_SylpheedSpawnProjectile1,Spawns projectile type 1,Boss,analyzed
+sub_19E06,Sylpheed force,48240,Boss_SylpheedSpawnProjectile2,Spawns projectile type 2,Boss,analyzed
+sub_19E24,Sylpheed force,48240,Boss_SylpheedSpawnProjectile3,Spawns projectile type 3,Boss,analyzed
+sub_19E56,Sylpheed force,48240,Boss_SylpheedSpawnProjectile4,Spawns projectile type 4,Boss,analyzed
+sub_19E9A,Sylpheed force,48240,Boss_SylpheedSpawnProjectile5,Spawns projectile type 5,Boss,analyzed
+sub_19F10,Sylpheed force,48240,Projectile_SylpheedBullet1,Bullet projectile type 1,Projectile,analyzed
+sub_19F36,Sylpheed force,48240,Projectile_SylpheedBullet2,Bullet projectile type 2,Projectile,analyzed
+sub_1A152,Sylpheed force,48240,Projectile_SylpheedLaser,Laser projectile handler,Projectile,analyzed
+sub_1A1F2,Sylpheed force,48240,Projectile_SylpheedHoming,Homing projectile handler,Projectile,analyzed
+sub_1A208,Sylpheed force,48240,Projectile_SylpheedWave,Wave projectile handler,Projectile,analyzed
+sub_5511C,Sylpheed force,48240,Boss_SylpheedUpdateSprites,Updates boss sprites,Boss,analyzed
+sub_59696,Sylpheed force,48240,Boss_SylpheedAnimationScript,Animation script interpreter,Boss,analyzed
+sub_5997A,Sylpheed force,48240,Boss_SylpheedAnimationUpdate,Animation frame update,Boss,analyzed
+sub_19EE4,Sylpheed force,48420,Boss_SylpheedCollisionCheck,Collision detection with player,Boss,analyzed
+sub_1A074,Sylpheed force,48420,Boss_SylpheedDamageCheck,Checks if boss takes damage,Boss,analyzed
+sub_1A0BA,Sylpheed force,48420,Boss_SylpheedUpdateHealth,Updates boss health,Boss,analyzed
+sub_59818,Sylpheed force,48420,Boss_SylpheedFlashDamage,Flash effect on damage,Boss,analyzed
+sub_59950,Sylpheed force,48420,Boss_SylpheedDefeatInit,Defeat sequence initialization,Boss,analyzed
+sub_E8DC,Artemis force,48600,Stage_ArtemisTransition,Transition to Artemis form,Stage,analyzed
 sub_E8FA,Artemis force,48600,,,,pending
 sub_EE62,Artemis force,48600,,,,pending
 sub_EED8,Artemis force,48600,,,,pending
