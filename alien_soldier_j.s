@@ -36041,6 +36041,11 @@ UI_InitializeGameVariables:                              ; CODE XREF: UI_HandleT
 loc_1CD02:                              ; CODE XREF: UI_SetPasswordConfirmFlag+6   j
                 move.w  #$200,(word_FFA216).w
                 move.w  #$200,(word_FFA218).w
+                tst.w   (word_FFFF0E).w
+                bne.s   loc_1CD0E
+                move.w  #$3E8,(word_FFA216).w
+                move.w  #$3E8,(word_FFA218).w
+loc_1CD0E:
                 clr.l   (dword_FFA212).w
                 clr.w   (word_FF822A).w
                 move.w  #3,(word_FFA228).w
@@ -36051,20 +36056,21 @@ loc_1CD02:                              ; CODE XREF: UI_SetPasswordConfirmFlag+6
                 clr.w   (word_FF8090).w
                 clr.b   (byte_FFFF31).w
                 bsr.w UI_InitializeScoreBuffer
-                bra.s   loc_1CDB8
+                bra.w   loc_1CDB8
 ; End of function UI_InitializeGameVariables
 ; Initializes game state after continue, sets weapon ammo and clears menu flags
 UI_InitGameStateFromContinue:                              ; CODE XREF: UI_TransitionFromContinue+28   j  ; was: sub_1CD3A
                                         ; UI_UpdatePasswordDisplay+12   j
                 move.w  (word_FFA218).w,(word_FFA216).w
-                tst.w   (word_FFFF0E).w
-                beq.s   loc_1CD5A
                 move.w  #$3E8,d0
+                tst.w   (word_FFFF0E).w
+                bne.s   loc_1CD5A
+                move.w  #$7D0,d0
+loc_1CD5A:
                 move.w  d0,(word_FFA268).w
                 move.w  d0,(word_FFA26A).w
                 move.w  d0,(word_FFA26C).w
                 move.w  d0,(word_FFA26E).w
-loc_1CD5A:                              ; CODE XREF: UI_InitGameStateFromContinue+A   j
                 move.w  (word_FFA268).w,(word_FFA260).w
                 move.w  (word_FFA26A).w,(word_FFA262).w
                 move.w  (word_FFA26C).w,(word_FFA264).w
@@ -36153,6 +36159,10 @@ UI_InitScoreBufferLoop:                              ; CODE XREF: UI_InitializeS
 Enemy_UpdateBehavior:                              ; CODE XREF: Player_Initialize+4   p  ; was: sub_1CE3A
                                         ; sub_1CDB4   p
                 lea     word_1CE4C(pc),a0
+                tst.w   (word_FFFF0E).w
+                bne.s   loc_1CE44
+                lea     word_1CE7E(pc),a0
+loc_1CE44:
                 nop
                 move.w  (word_FFA204).w,d0
                 move.w  (a0,d0.w),(word_FFA270).w
@@ -36166,6 +36176,11 @@ word_1CE4C:     dc.w $200, $240, $300, $330, $330
                 dc.w $320, $410, $200, $200, $240
                 dc.w $340, $300, $400, $220, $950
                 dc.w $200, $200, $410, $220, $555
+word_1CE7E:     dc.w $959, $959, $959, $959, $959
+                dc.w $959, $959, $959, $959, $959
+                dc.w $959, $959, $959, $959, $959
+                dc.w $959, $959, $959, $959, $959
+                dc.w $959, $959, $959, $959, $959
 
 
 ; Sets up results screen graphics and memory state
@@ -38468,11 +38483,22 @@ UI_LoadStageGraphics:                              ; CODE XREF: UI_InitializeSta
                 move.w  d0,(word_FF8200).w
                 move.w  d0,(word_FF8202).w
                 move.w  d0,(word_FF8206).w
+                tst.w   (word_FFFF0E).w
+                bne.s   loc_1EFF0
+                move.w  #$3E8,(word_FFA218).w
+                move.w  #$3E8,(word_FFA216).w
+loc_1EFF0:
+                bsr.w UI_UpdateMenuState
                 move.w  (word_FFA216).w,(word_FF820A).w
                 move.w  #$12,(word_FFA02A).w
                 move.w  #$DA,(dword_FFA410).w
                 move.w  #$130,(dword_FFA414).w
-                move.w  #$330,(word_FFA270).w
+                move.w  #$330,d0
+                tst.w   (word_FFFF0E).w
+                bne.s   loc_1EFFA
+                move.w  #$959,d0
+loc_1EFFA:
+                move.w  d0,(word_FFA270).w
                 bset    #0,(byte_FFA272).w
                 move.w  #$8000,(word_FF808A).w
                 lea     (word_B94E).l,a4
@@ -38568,6 +38594,10 @@ UI_UpdateMenuState:                              ; CODE XREF: Stage_HandleTransi
                                         ; UI_HandleTitleMenuInput+C   p ...
                 movea.w #(word_FFA260-M68K_RAM),a0
                 move.w  #$3E8,d0
+                tst.w   (word_FFFF0E).w
+                bne.s   loc_1F07A
+                move.w  #$7D0,d0
+loc_1F07A:
                 moveq   #7,d7
 loc_1F07C:                              ; CODE XREF: UI_UpdateMenuState+C   j
                 move.w  d0,(a0)+
@@ -39565,6 +39595,10 @@ loc_1FC5C:                              ; CODE XREF: Results_InitializeDataDispl
                 move.w  #$18,d7
                 lea     ((dword_FF944E+2)).w,a0
                 lea     (word_1CE4C).l,a1
+                tst.w   (word_FFFF0E).w
+                bne.s   loc_1FC76
+                lea     (word_1CE7E).l,a1
+loc_1FC76:
                 lea     (word_FFAA00).w,a2
                 lea     (word_FFAA80).w,a3
                 lea     (word_FFAB00).w,a4
@@ -40140,6 +40174,10 @@ loc_20242:                              ; CODE XREF: Data_ClearWordArray+E   j
 ; Processes stage completion times and calculates totals for results screen
 UI_PrepareResultsData:                              ; CODE XREF: Results_InitializeDataDisplay+1AC   p  ; was: sub_2024A
                 lea     (word_1CE4C).l,a1
+                tst.w   (word_FFFF0E).w
+                bne.s   loc_20260
+                lea     (word_1CE7E).l,a1
+loc_20260:
                 lea     (word_FFAA00).w,a2
                 lea     (word_FFAA80).w,a3
                 lea     (word_FFAB00).w,a4
