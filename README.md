@@ -355,6 +355,7 @@ These values are NOT ROM addresses but VDP tile indices with extended attributes
 ## Credits
 
 - Disassembly work using IDA Pro
+- Alien Soldier SMPS/Treasure format research and sound data mapping by Valley Bell and the [SMPS Research project](https://github.com/sonicretro/smps-rips/tree/master/68k/Alien%20Soldier)
 - AS Macro Assembler by Alfred Arnold
 - Gens-automation emulator (https://github.com/oranguthang/gens_automation)
 - Inspired by lab313ru's Quackshot disassembly

@@ -174,3 +174,6 @@ analysis_results.csv
 batch_extract.txt
 batch_analysis.csv
 batch_renames.csv
+
+# Local reference repositories
+references/

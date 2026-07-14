@@ -68,29 +68,9 @@ init:
 # If missing, print a friendly hint instead of cryptic "error in opening file"
 .PHONY: check-init
 check-init:
-	@if [ ! -d "$(DATA_DIR)/artcomp" ] || [ ! -d "$(DATA_DIR)/artunc" ]; then \
-		echo ""; \
-		echo "============================================================"; \
-		echo " ERROR: Project is not initialized!"; \
-		echo "============================================================"; \
-		echo ""; \
-		echo " The data/ directory (or its subfolders) is missing."; \
-		echo " Assembly will fail with 'error in opening file' because"; \
-		echo " the source uses binclude/incbin directives that reference"; \
-		echo " data files extracted from the original ROM."; \
-		echo ""; \
-		echo " Please run first:"; \
-		echo "   make init"; \
-		echo ""; \
-		echo " This requires the original ROM file in project root:"; \
-		echo "   $(ORIG_ROM)"; \
-		echo ""; \
-		echo " If you don't have the original ROM, copy it to the project"; \
-		echo " root directory and run 'make init' again."; \
-		echo "============================================================"; \
-		echo ""; \
-		exit 1; \
-	fi
+	@python $(SCRIPTS_DIR)/check_init.py \
+		--data-dir "$(DATA_DIR)" \
+		--orig-rom "$(ORIG_ROM)"
 
 # Build ROM from assembly source
 .PHONY: build

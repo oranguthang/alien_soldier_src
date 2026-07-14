@@ -109245,7 +109245,7 @@ Sound_ApplyPitchEffects:                              ; CODE XREF: Sound_UpdateC
                 move.b  $A(a5),d0
                 andi.w  #$7F,d0
                 beq.s   loc_82764
-                lea     off_84CC8(pc),a0
+                lea     ModulationEnvelopePointerTable(pc),a0
                 subq.w  #1,d0
                 lsl.w   #2,d0
                 movea.l (a0,d0.w),a0
@@ -109416,7 +109416,7 @@ Sound_ProcessTremoloEnvelope:                              ; CODE XREF: Sound_Pr
                 move.b  $20(a5),d0
                 subq.w  #1,d0
                 lsl.w   #2,d0
-                movea.l off_82884(pc,d0.w),a0
+                movea.l PanAnimationPointerTable(pc,d0.w),a0
                 moveq   #0,d0
                 move.b  $21(a5),d0
                 subq.w  #1,d0
@@ -109430,18 +109430,18 @@ locret_82882:                           ; CODE XREF: Sound_ProcessTremolo+24   j
                 rts
 ; End of function Sound_ProcessTremolo
 ; ---------------------------------------------------------------------------
-off_82884:      dc.l byte_82890         ; DATA XREF: Sound_ProcessTremolo+3C   r
-                dc.l byte_82892
-                dc.l byte_82895
-byte_82890:     dc.b $40, $80           ; DATA XREF: ROM:off_82884   o
-byte_82892:     dc.b $40, $C0, $80      ; DATA XREF: ROM:00082888   o
-byte_82895:     dc.b $C0, $80, $C0, $40, 0
+PanAnimationPointerTable:      dc.l PanAnimation_1         ; DATA XREF: Sound_ProcessTremolo+3C   r
+                dc.l PanAnimation_2
+                dc.l PanAnimation_3
+PanAnimation_1:     dc.b $40, $80           ; DATA XREF: ROM:PanAnimationPointerTable   o
+PanAnimation_2:     dc.b $40, $C0, $80      ; DATA XREF: ROM:00082888   o
+PanAnimation_3:     dc.b $C0, $80, $C0, $40, 0
                                         ; DATA XREF: ROM:0008288C   o
 
 
 ; Sends PSG volume update via Z80 bus with arbitration
 Sound_SendPSGVolumeUpdate:                              ; CODE XREF: Sound_ProcessTremolo+56   p  ; was: sub_8289A
-                                        ; Sound_SetChannelFlags+16   j ...
+                                        ; Sound_SetPanAndAMS+16   j ...
                 btst    #2,(a5)
                 bne.s   locret_828F4
                 cmpi.b  #6,1(a5)
@@ -109540,7 +109540,7 @@ loc_8298E:                              ; CODE XREF: Sound_HandleZ80BusRequest+A
 ; Processes sound fade and volume changes
 Sound_ProcessFade:                              ; CODE XREF: Sound_UpdateDriver+1E   p  ; was: sub_829AA
                                         ; DATA XREF: Sound_UpdateDriver+1E   o
-                lea     byte_84EF4(pc),a0
+                lea     SoundPriorityTable(pc),a0
                 lea     (byte_FFF80E).w,a1
                 move.b  (byte_FFF800).w,d3
                 moveq   #3,d4
@@ -109607,13 +109607,13 @@ Sound_UpdateEnvelope:                              ; CODE XREF: Sound_UpdateDriv
                 cmpi.b  #$40,d7 ; '@'
                 bcs.w   loc_82A8E
                 cmpi.b  #$81,d7
-                bcs.w Sound_LoadMusicTrack
+                bcs.w Sound_LoadSFX
                 cmpi.b  #$A0,d7
                 bcs.w Sound_ProcessDAC
                 cmpi.b  #$F9,d7
                 bcs.w   loc_830D2
                 cmpi.b  #$FD,d7
-                bcs.w Boss_SireneUpdateSprites
+                bcs.w Sound_LoadSpecialSFX
 locret_82A6A:                           ; CODE XREF: Sound_UpdateEnvelope+16   j
                 rts
 ; ---------------------------------------------------------------------------
@@ -109991,7 +109991,7 @@ Sound_BGM:                              ; CODE XREF: Sound_ProcessDAC+4   j
                 jsr Sound_ProcessFM(pc)   ; (pc)
                 jsr Sound_ProcessSpecialChannels(pc)   ; (pc)
                 jsr Sound_ResetDriver(pc)   ; (pc)
-                lea     BGM_list(pc),a4
+                lea     BGM_PointerTable(pc),a4
                 subi.b  #$81,d7
                 lsl.w   #2,d7
                 movea.l (a4,d7.w),a4
@@ -110106,14 +110106,14 @@ byte_830B0:     dc.b 6, 0, 1, 2, 4, 5, 6, 0
 byte_830B8:     dc.b $80, $A0, $C0, 0   ; DATA XREF: Sound_ProcessDAC+9C   o
 
 
-; Loads complete music track data initializing all sound channels
-Sound_LoadMusicTrack:                              ; CODE XREF: Sound_UpdateEnvelope+34   j  ; was: sub_830BC
+; Loads regular SFX IDs $40-$7F and $A0-$F8 into the sound channels
+Sound_LoadSFX:                              ; CODE XREF: Sound_UpdateEnvelope+34   j  ; was: sub_830BC
                 cmpi.b  #$80,d7
                 bcs.w   loc_830C6
                 rts
 ; ---------------------------------------------------------------------------
-loc_830C6:                              ; CODE XREF: Sound_LoadMusicTrack+4   j
-                lea     off_84FF2(pc),a0
+loc_830C6:                              ; CODE XREF: Sound_LoadSFX+4   j
+                lea     SFX_PointerTable(pc),a0
                 addi.w  #$1D,d7
                 bra.w   loc_830E4
 ; ---------------------------------------------------------------------------
@@ -110122,10 +110122,10 @@ loc_830D2:                              ; CODE XREF: Sound_UpdateEnvelope+44   j
                 bcs.w   loc_830DC
                 rts
 ; ---------------------------------------------------------------------------
-loc_830DC:                              ; CODE XREF: Sound_LoadMusicTrack+1A   j
-                lea     off_84FF2(pc),a0
+loc_830DC:                              ; CODE XREF: Sound_LoadSFX+1A   j
+                lea     SFX_PointerTable(pc),a0
                 subi.b  #$A0,d7
-loc_830E4:                              ; CODE XREF: Sound_LoadMusicTrack+12   j
+loc_830E4:                              ; CODE XREF: Sound_LoadSFX+12   j
                 lsl.w   #2,d7
                 movea.l (a0,d7.w),a3
                 movea.l a3,a1
@@ -110137,7 +110137,7 @@ loc_830E4:                              ; CODE XREF: Sound_LoadMusicTrack+12   j
                 move.b  (a1)+,d7
                 subq.w  #1,d7
                 moveq   #$30,d6 ; '0'
-loc_830FC:                              ; CODE XREF: Sound_LoadMusicTrack:loc_83178   j
+loc_830FC:                              ; CODE XREF: Sound_LoadSFX:loc_83178   j
                 moveq   #0,d3
                 move.b  1(a1),d3
                 move.b  d3,d4
@@ -110149,7 +110149,7 @@ loc_830FC:                              ; CODE XREF: Sound_LoadMusicTrack:loc_83
                 bset    #2,(a5)
                 bra.s   loc_8313E
 ; ---------------------------------------------------------------------------
-loc_83118:                              ; CODE XREF: Sound_LoadMusicTrack+48   j
+loc_83118:                              ; CODE XREF: Sound_LoadSFX+48   j
                 lsr.w   #3,d3
                 movea.l dword_83196(pc,d3.w),a5
                 bset    #2,(a5)
@@ -110160,12 +110160,12 @@ loc_83118:                              ; CODE XREF: Sound_LoadMusicTrack+48   j
                 move.b  d0,(VDP_PSG).l
                 bchg    #5,d0
                 move.b  d0,(VDP_PSG).l
-loc_8313E:                              ; CODE XREF: Sound_LoadMusicTrack+5A   j
-                                        ; Sound_LoadMusicTrack+6A   j
+loc_8313E:                              ; CODE XREF: Sound_LoadSFX+5A   j
+                                        ; Sound_LoadSFX+6A   j
                 movea.l dword_831B6(pc,d3.w),a5
                 movea.l a5,a2
                 moveq   #$B,d0
-loc_83146:                              ; CODE XREF: Sound_LoadMusicTrack+8C   j
+loc_83146:                              ; CODE XREF: Sound_LoadSFX+8C   j
                 clr.l   (a2)+
                 dbf     d0,loc_83146
                 move.l  d1,$20(a5)
@@ -110181,38 +110181,38 @@ loc_83146:                              ; CODE XREF: Sound_LoadMusicTrack+8C   j
                 tst.b   d4
                 bmi.s   loc_83178
                 move.b  #$C0,$27(a5)
-loc_83178:                              ; CODE XREF: Sound_LoadMusicTrack+B4   j
+loc_83178:                              ; CODE XREF: Sound_LoadSFX+B4   j
                 dbf     d7,loc_830FC
                 tst.b   (byte_FFFA50).w
                 bpl.s   loc_83188
                 bset    #2,(word_FFFB40).w
-loc_83188:                              ; CODE XREF: Sound_LoadMusicTrack+C4   j
+loc_83188:                              ; CODE XREF: Sound_LoadSFX+C4   j
                 tst.b   (byte_FFFB10).w
                 bpl.s   locret_83194
                 bset    #2,(word_FFFB70).w
-locret_83194:                           ; CODE XREF: Sound_LoadMusicTrack+D0   j
+locret_83194:                           ; CODE XREF: Sound_LoadSFX+D0   j
                 rts
-; End of function Sound_LoadMusicTrack
+; End of function Sound_LoadSFX
 ; ---------------------------------------------------------------------------
 dword_83196:    dc.l $FFFFF8D0, 0       ; DATA XREF: Sound_ProcessDAC:loc_83056   o
-                                        ; Sound_LoadMusicTrack+4E   o ...
+                                        ; Sound_LoadSFX+4E   o ...
                 dc.l $FFFFF900, $FFFFF930
                 dc.l $FFFFF990, $FFFFF9C0
                 dc.l $FFFFF9F0, $FFFFF9F0
-dword_831B6:    dc.l $FFFFFA20, 0       ; DATA XREF: Sound_LoadMusicTrack:loc_8313E   r
+dword_831B6:    dc.l $FFFFFA20, 0       ; DATA XREF: Sound_LoadSFX:loc_8313E   r
                 dc.l $FFFFFA50, $FFFFFA80
                 dc.l $FFFFFAB0, $FFFFFAE0
                 dc.l $FFFFFB10, $FFFFFB10
 
 
-; Updates boss sprites
-Boss_SireneUpdateSprites:                              ; CODE XREF: Sound_UpdateEnvelope+4C   j  ; was: sub_831D6
+; Loads special SFX IDs $F9-$FC into the dedicated override channels
+Sound_LoadSpecialSFX:                              ; CODE XREF: Sound_UpdateEnvelope+4C   j  ; was: sub_831D6
                 cmpi.b  #$FD,d7
                 bcs.w   loc_831E0
                 rts
 ; ---------------------------------------------------------------------------
-loc_831E0:                              ; CODE XREF: Boss_SireneUpdateSprites+4   j
-                lea     off_85156(pc),a0
+loc_831E0:                              ; CODE XREF: Sound_LoadSpecialSFX+4   j
+                lea     SpecialSFX_PointerTable(pc),a0
                 subi.b  #$F9,d7
                 lsl.w   #2,d7
                 movea.l (a0,d7.w),a3
@@ -110226,20 +110226,20 @@ loc_831E0:                              ; CODE XREF: Boss_SireneUpdateSprites+4 
                 move.b  (a1)+,d7
                 subq.w  #1,d7
                 moveq   #$30,d6 ; '0'
-loc_83204:                              ; CODE XREF: Boss_SireneUpdateSprites:loc_83252   j
+loc_83204:                              ; CODE XREF: Sound_LoadSpecialSFX:loc_83252   j
                 move.b  1(a1),d4
                 bmi.s   loc_83216
                 bset    #2,(byte_FFF900).w
                 lea     (word_FFFB40).w,a5
                 bra.s   loc_83220
 ; ---------------------------------------------------------------------------
-loc_83216:                              ; CODE XREF: Boss_SireneUpdateSprites+32   j
+loc_83216:                              ; CODE XREF: Sound_LoadSpecialSFX+32   j
                 bset    #2,(byte_FFF9F0).w
                 lea     (word_FFFB70).w,a5
-loc_83220:                              ; CODE XREF: Boss_SireneUpdateSprites+3E   j
+loc_83220:                              ; CODE XREF: Sound_LoadSpecialSFX+3E   j
                 movea.l a5,a2
                 moveq   #$B,d0
-loc_83224:                              ; CODE XREF: Boss_SireneUpdateSprites+50   j
+loc_83224:                              ; CODE XREF: Sound_LoadSpecialSFX+50   j
                 clr.l   (a2)+
                 dbf     d0,loc_83224
                 move.w  (a1)+,(a5)
@@ -110254,12 +110254,12 @@ loc_83224:                              ; CODE XREF: Boss_SireneUpdateSprites+50
                 tst.b   d4
                 bmi.s   loc_83252
                 move.b  #$C0,$27(a5)
-loc_83252:                              ; CODE XREF: Boss_SireneUpdateSprites+74   j
+loc_83252:                              ; CODE XREF: Sound_LoadSpecialSFX+74   j
                 dbf     d7,loc_83204
                 tst.b   (byte_FFFA50).w
                 bpl.s   loc_83262
                 bset    #2,(word_FFFB40).w
-loc_83262:                              ; CODE XREF: Boss_SireneUpdateSprites+84   j
+loc_83262:                              ; CODE XREF: Sound_LoadSpecialSFX+84   j
                 tst.b   (byte_FFFB10).w
                 bpl.s   locret_83282
                 bset    #2,(word_FFFB70).w
@@ -110267,9 +110267,9 @@ loc_83262:                              ; CODE XREF: Boss_SireneUpdateSprites+84
                 move.b  d4,(VDP_PSG).l
                 bchg    #5,d4
                 move.b  d4,(VDP_PSG).l
-locret_83282:                           ; CODE XREF: Boss_SireneUpdateSprites+90   j
+locret_83282:                           ; CODE XREF: Sound_LoadSpecialSFX+90   j
                 rts
-; End of function Boss_SireneUpdateSprites
+; End of function Sound_LoadSpecialSFX
 ; ---------------------------------------------------------------------------
 unused_10:	binclude	"data/other/unused_10.bin"
 
@@ -110615,8 +110615,8 @@ nullsub_137:                            ; CODE XREF: Sound_CheckChannelFlags+4  
 
 
 ; Checks if channel is paused before processing channel bits
-Sound_CheckPauseFlag:                              ; CODE XREF: Sound_SetInstrumentVariant+24   p  ; was: sub_83596
-                                        ; Sound_WriteYM2612Direct+4   j ...
+Sound_CheckPauseFlag:                              ; CODE XREF: Sound_SetLFO+24   p  ; was: sub_83596
+                                        ; Sound_WriteFMChannelRegister+4   j ...
                 btst    #2,(a5)
                 beq.w Sound_ProcessChannelBits
                 rts
@@ -110870,67 +110870,67 @@ Sound_CommandDispatcher:                              ; CODE XREF: Sound_PlayPSG
                 jmp     loc_8382A(pc,d5.w)
 ; ---------------------------------------------------------------------------
 loc_8382A:                              ; CODE XREF: Sound_CommandDispatcher+6   j
-                bra.w Sound_SetChannelFlags
+                bra.w Sound_SetPanAndAMS            ; E0: pan + AMS/FMS
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetEnvelopeParam
+                bra.w Sound_SetDetune               ; E1: detune
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetGlobalFlag
+                bra.w Sound_SetCommunication        ; E2: communication byte
 ; ---------------------------------------------------------------------------
-                bra.w Sound_MuteAndStop
+                bra.w Sound_MuteAndStop             ; E3: mute and stop track
 ; ---------------------------------------------------------------------------
-                bra.w Sound_LoadChannelParams
+                bra.w Sound_SetPanAnimation         ; E4: pan animation
 ; ---------------------------------------------------------------------------
-                bra.w Sound_AddVolume
+                bra.w Sound_AddPSGFMVolume          ; E5: PSG/FM volume pair
 ; ---------------------------------------------------------------------------
-                bra.w   loc_83928
+                bra.w Sound_AddFMVolume             ; E6: FM volume
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetChannelSustain
+                bra.w Sound_HoldNextNote            ; E7: hold next note
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetTimerValue
+                bra.w Sound_SetNoteStop             ; E8: note stop timeout
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetInstrumentVariant
+                bra.w Sound_SetLFO                  ; E9: YM2612 LFO
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetRegisterValue
+                bra.w Sound_SetTempo                ; EA: tempo
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetTempoCommand
+                bra.w Sound_QueueSoundCommand       ; EB: queue sound ID
 ; ---------------------------------------------------------------------------
-                bra.w Sound_ApplyTransposeOffset
+                bra.w Sound_AddPSGVolume            ; EC: PSG volume
 ; ---------------------------------------------------------------------------
-                bra.w Sound_WriteYM2612Direct
+                bra.w Sound_WriteFMChannelRegister  ; ED: current FM channel register
 ; ---------------------------------------------------------------------------
-                bra.w Sound_WriteYM2612Command
+                bra.w Sound_WriteFM1Register        ; EE: FM1 register
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SelectInstrument
+                bra.w Sound_SelectInstrument        ; EF: FM instrument
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetupLFO
+                bra.w Sound_SetupModulation         ; F0: custom modulation
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetModulationDepth
+                bra.w Sound_SetModulationEnvelopeByChannel ; F1: PSG/FM modulation envelopes
 ; ---------------------------------------------------------------------------
-                bra.w Sound_StopChannel
+                bra.w Sound_StopChannel             ; F2: stop track
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetPSGTone
+                bra.w Sound_SetPSGNoise             ; F3: PSG noise
 ; ---------------------------------------------------------------------------
-                bra.w Sound_StoreByteAtOffset0A
+                bra.w Sound_SetModulationEnvelope   ; F4: modulation envelope
 ; ---------------------------------------------------------------------------
-                bra.w Boss_SireneShootPattern4
+                bra.w Sound_SetPSGInstrument        ; F5: PSG instrument
 ; ---------------------------------------------------------------------------
-                bra.w Sound_JumpRelative
+                bra.w Sound_JumpRelative            ; F6: jump
 ; ---------------------------------------------------------------------------
-                bra.w Sound_LoopCounter
+                bra.w Sound_LoopCounter             ; F7: loop
 ; ---------------------------------------------------------------------------
-                bra.w Sound_PushReturnAddress
+                bra.w Sound_CallSequenceSubroutine  ; F8: call sequence subroutine
 ; ---------------------------------------------------------------------------
-                bra.w Sound_AdvanceSequence
+                bra.w Sound_ReturnFromSequenceSubroutine ; F9: return
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetChannelParam02
+                bra.w Sound_SetTickMultiplier       ; FA: current tick multiplier
 ; ---------------------------------------------------------------------------
-                bra.w Sound_AddTranspose
+                bra.w Sound_AddTranspose            ; FB: transpose
 ; ---------------------------------------------------------------------------
-                bra.w Sound_EnableModulationFlag
+                bra.w Sound_EnableModulationFlag    ; FC: enable modulation
 ; ---------------------------------------------------------------------------
-                bra.w Sound_DisableModulationFlag
+                bra.w Sound_DisableModulationFlag   ; FD: disable modulation
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetCH3SpecialMode
+                bra.w Sound_SetCH3SpecialMode       ; FE: YM2612 channel 3 special mode
 ; End of function Sound_CommandDispatcher
 ; Dispatches extended sound commands via jump table
 Sound_ExtendedCommandDispatch:
@@ -110941,18 +110941,18 @@ Sound_ExtendedCommandDispatch:
 ; ---------------------------------------------------------------------------
 loc_838B0:                              ; CODE XREF: Sound_ExtendedCommandDispatch+6   j
                                         ; DATA XREF: Sound_ExtendedCommandDispatch+6   o
-                bra.w Sound_MuteAllOperators
+                bra.w Sound_SetSSGEG                ; FF 00: SSG-EG setup
 ; ---------------------------------------------------------------------------
-                bra.w Sound_ToggleMuteAllChannels
+                bra.w Sound_SetMusicPaused          ; FF 01: pause/resume music
 ; ---------------------------------------------------------------------------
-                bra.w Sound_SetTempoAllChannels
+                bra.w Sound_SetAllTickMultipliers   ; FF 02: all tick multipliers
 ; ---------------------------------------------------------------------------
-                bra.w Sound_InitializeFadeParams
+                bra.w Sound_InitializeFadeParams    ; FF 03: special fade
 ; ---------------------------------------------------------------------------
-                bra.w Sound_CheckFadeComplete
+                bra.w Sound_CheckFadeComplete       ; FF 04: stop special fade
 ; End of function Sound_ExtendedCommandDispatch
-; Sets sound channel control flags
-Sound_SetChannelFlags:                              ; CODE XREF: Sound_CommandDispatcher:loc_8382A   j  ; was: sub_838C4
+; Sets channel panning and YM2612 AMS/FMS flags (E0)
+Sound_SetPanAndAMS:                              ; CODE XREF: Sound_CommandDispatcher:loc_8382A   j  ; was: sub_838C4
                 move.b  (a4)+,d1
                 tst.b   1(a5)
                 bmi.s   locret_838DE
@@ -110962,26 +110962,26 @@ Sound_SetChannelFlags:                              ; CODE XREF: Sound_CommandDi
                 move.b  d1,$27(a5)
                 jmp Sound_SendPSGVolumeUpdate(pc)   ; (pc)
 ; ---------------------------------------------------------------------------
-locret_838DE:                           ; CODE XREF: Sound_SetChannelFlags+6   j
+locret_838DE:                           ; CODE XREF: Sound_SetPanAndAMS+6   j
                 rts
-; End of function Sound_SetChannelFlags
-; Sets envelope parameter for channel
-Sound_SetEnvelopeParam:                              ; CODE XREF: Sound_CommandDispatcher+E   j  ; was: sub_838E0
+; End of function Sound_SetPanAndAMS
+; Sets channel detune (E1)
+Sound_SetDetune:                              ; CODE XREF: Sound_CommandDispatcher+E   j  ; was: sub_838E0
                 move.b  (a4)+,$1E(a5)
                 rts
-; End of function Sound_SetEnvelopeParam
-; Sets global sound driver flag byte from track data
-Sound_SetGlobalFlag:                              ; CODE XREF: Sound_CommandDispatcher+12   j  ; was: sub_838E6
+; End of function Sound_SetDetune
+; Sets the global communication byte (E2)
+Sound_SetCommunication:                              ; CODE XREF: Sound_CommandDispatcher+12   j  ; was: sub_838E6
                 move.b  (a4)+,(byte_FFF803).w
                 rts
-; End of function Sound_SetGlobalFlag
+; End of function Sound_SetCommunication
 ; Mutes all channels then stops the current channel
 Sound_MuteAndStop:                              ; CODE XREF: Sound_CommandDispatcher+16   j  ; was: sub_838EC
                 jsr Sound_MuteAllChannels(pc)   ; (pc)
                 bra.w Sound_StopChannel
 ; End of function Sound_MuteAndStop
-; Loads sound channel parameters from track data
-Sound_LoadChannelParams:                              ; CODE XREF: Sound_CommandDispatcher+1A   j  ; was: sub_838F4
+; Configures or disables pan animation (E4)
+Sound_SetPanAnimation:                              ; CODE XREF: Sound_CommandDispatcher+1A   j  ; was: sub_838F4
                 move.b  (a4)+,$1F(a5)
                 beq.s   loc_83910
                 move.b  (a4)+,$20(a5)
@@ -110991,54 +110991,54 @@ Sound_LoadChannelParams:                              ; CODE XREF: Sound_Command
                 move.b  (a4)+,$24(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_83910:                              ; CODE XREF: Sound_LoadChannelParams+4   j
+loc_83910:                              ; CODE XREF: Sound_SetPanAnimation+4   j
                 move.b  $27(a5),d1
                 jmp Sound_SendPSGVolumeUpdate(pc)   ; (pc)
-; End of function Sound_LoadChannelParams
-; Adds volume offset to channel volume (FM or PSG-specific handling)
-Sound_AddVolume:                              ; CODE XREF: Sound_CommandDispatcher+1E   j  ; was: sub_83918
+; End of function Sound_SetPanAnimation
+; Adds separate PSG/FM volume offsets, selecting by channel type (E5)
+Sound_AddPSGFMVolume:                              ; CODE XREF: Sound_CommandDispatcher+1E   j  ; was: sub_83918
                 move.b  (a4)+,d0
                 tst.b   1(a5)
-                bpl.s   loc_83928
+                bpl.s   Sound_AddFMVolume
                 add.b   d0,9(a5)
                 addq.w  #1,a4
                 rts
 ; ---------------------------------------------------------------------------
-loc_83928:                              ; CODE XREF: Sound_CommandDispatcher+22   j
-                                        ; Sound_AddVolume+6   j
+Sound_AddFMVolume:                     ; CODE XREF: Sound_CommandDispatcher+22   j
+                                        ; Sound_AddPSGFMVolume+6   j
                 move.b  (a4)+,d0
                 add.b   d0,9(a5)
                 bra.w Sound_ApplyVolume
-; End of function Sound_AddVolume
-; Sets sound channel sustain flag for envelope control
-Sound_SetChannelSustain:                              ; CODE XREF: Sound_CommandDispatcher+26   j  ; was: sub_83932
+; End of function Sound_AddPSGFMVolume
+; Holds the next note without retriggering it (E7)
+Sound_HoldNextNote:                              ; CODE XREF: Sound_CommandDispatcher+26   j  ; was: sub_83932
                 bset    #4,(a5)
                 rts
-; End of function Sound_SetChannelSustain
-; Sets sound channel timer value from sequence data
-Sound_SetTimerValue:                              ; CODE XREF: Sound_CommandDispatcher+2A   j  ; was: sub_83938
+; End of function Sound_HoldNextNote
+; Sets the note stop timeout (E8)
+Sound_SetNoteStop:                              ; CODE XREF: Sound_CommandDispatcher+2A   j  ; was: sub_83938
                 move.b  (a4),$12(a5)
                 move.b  (a4)+,$13(a5)
                 rts
-; End of function Sound_SetTimerValue
-; Selects instrument variant from instrument pointer table based on track parameter
-Sound_SetInstrumentVariant:                              ; CODE XREF: Sound_CommandDispatcher+2E   j  ; was: sub_83942
+; End of function Sound_SetNoteStop
+; Configures the YM2612 LFO and channel AMS/FMS settings (E9)
+Sound_SetLFO:                              ; CODE XREF: Sound_CommandDispatcher+2E   j  ; was: sub_83942
                 movea.l (dword_FFF820).w,a1
                 beq.s   loc_8394C
                 movea.l $20(a5),a1
-loc_8394C:                              ; CODE XREF: Sound_SetInstrumentVariant+4   j
+loc_8394C:                              ; CODE XREF: Sound_SetLFO+4   j
                 move.b  (a4),d3
                 adda.w  #9,a0
                 lea     byte_8398C(pc),a2
                 moveq   #3,d6
-loc_83958:                              ; CODE XREF: Sound_SetInstrumentVariant+2A   j
+loc_83958:                              ; CODE XREF: Sound_SetLFO+2A   j
                 move.b  (a1)+,d1
                 move.b  (a2)+,d0
                 btst    #7,d3
                 beq.s   loc_8396A
                 bset    #7,d1
                 jsr Sound_CheckPauseFlag(pc)   ; (pc)
-loc_8396A:                              ; CODE XREF: Sound_SetInstrumentVariant+1E   j
+loc_8396A:                              ; CODE XREF: Sound_SetLFO+1E   j
                 lsl.w   #1,d3
                 dbf     d6,loc_83958
                 move.b  (a4)+,d1
@@ -111050,40 +111050,40 @@ loc_8396A:                              ; CODE XREF: Sound_SetInstrumentVariant+
                 or.b    d0,d1
                 move.b  d1,$27(a5)
                 jmp Sound_SendPSGVolumeUpdate(pc)   ; (pc)
-; End of function Sound_SetInstrumentVariant
+; End of function Sound_SetLFO
 ; ---------------------------------------------------------------------------
-byte_8398C:     dc.b $60, $68, $64, $6C ; DATA XREF: Sound_SetInstrumentVariant+10   o
+byte_8398C:     dc.b $60, $68, $64, $6C ; DATA XREF: Sound_SetLFO+10   o
 
 
-; Sets sound register value
-Sound_SetRegisterValue:                              ; CODE XREF: Sound_CommandDispatcher+32   j  ; was: sub_83990
+; Sets the music tempo and reload value (EA)
+Sound_SetTempo:                              ; CODE XREF: Sound_CommandDispatcher+32   j  ; was: sub_83990
                 move.b  (a4),(byte_FFF802).w
                 move.b  (a4)+,(byte_FFF801).w
                 rts
-; End of function Sound_SetRegisterValue
-; Sets music tempo
-Sound_SetTempoCommand:                              ; CODE XREF: Sound_CommandDispatcher+36   j  ; was: sub_8399A
+; End of function Sound_SetTempo
+; Queues a sound ID from sequence data (EB)
+Sound_QueueSoundCommand:                              ; CODE XREF: Sound_CommandDispatcher+36   j  ; was: sub_8399A
                 move.b  (a4)+,(dword_FFF80A).w
                 rts
-; End of function Sound_SetTempoCommand
-; Adds transpose offset to channel
-Sound_ApplyTransposeOffset:                              ; CODE XREF: Sound_CommandDispatcher+3A   j  ; was: sub_839A0
+; End of function Sound_QueueSoundCommand
+; Adds a PSG volume offset (EC)
+Sound_AddPSGVolume:                              ; CODE XREF: Sound_CommandDispatcher+3A   j  ; was: sub_839A0
                 move.b  (a4)+,d0
                 add.b   d0,9(a5)
                 rts
-; End of function Sound_ApplyTransposeOffset
-; Writes two bytes directly to YM2612 using parameters from command stream
-Sound_WriteYM2612Direct:                              ; CODE XREF: Sound_CommandDispatcher+3E   j  ; was: sub_839A8
+; End of function Sound_AddPSGVolume
+; Writes a register on the current FM channel (ED)
+Sound_WriteFMChannelRegister:                              ; CODE XREF: Sound_CommandDispatcher+3E   j  ; was: sub_839A8
                 move.b  (a4)+,d0
                 move.b  (a4)+,d1
                 bra.w Sound_CheckPauseFlag
-; End of function Sound_WriteYM2612Direct
-; Reads register and value from command stream and writes to YM2612 chip
-Sound_WriteYM2612Command:                              ; CODE XREF: Sound_CommandDispatcher+42   j  ; was: sub_839B0
+; End of function Sound_WriteFMChannelRegister
+; Writes a register on YM2612 port 0/FM1 (EE)
+Sound_WriteFM1Register:                              ; CODE XREF: Sound_CommandDispatcher+42   j  ; was: sub_839B0
                 move.b  (a4)+,d0
                 move.b  (a4)+,d1
                 bra.w Sound_WriteYM2612Wrapper
-; End of function Sound_WriteYM2612Command
+; End of function Sound_WriteFM1Register
 ; Selects instrument for sound channel
 Sound_SelectInstrument:                              ; CODE XREF: Sound_CommandDispatcher+46   j  ; was: sub_839B8
                 moveq   #0,d0
@@ -111220,8 +111220,8 @@ byte_83AF2:     dc.b $30, $38, $34, $3C, $50, $58, $54, $5C, $60, $68, $64, $6C,
 byte_83B06:     dc.b $40, $48, $44, $4C ; DATA XREF: Sound_ApplyVolume+36   o
 
 
-; Sets up LFO modulation parameters
-Sound_SetupLFO:                              ; CODE XREF: Sound_CommandDispatcher+4A   j  ; was: sub_83B0A
+; Sets up custom modulation parameters (F0)
+Sound_SetupModulation:                              ; CODE XREF: Sound_CommandDispatcher+4A   j  ; was: sub_83B0A
                 bset    #7,$A(a5)
                 move.l  a4,$14(a5)
                 move.b  (a4)+,$18(a5)
@@ -111232,16 +111232,16 @@ Sound_SetupLFO:                              ; CODE XREF: Sound_CommandDispatche
                 move.b  d0,$1B(a5)
                 clr.w   $1C(a5)
                 rts
-; End of function Sound_SetupLFO
-; Sets modulation depth parameter at offset $A in channel structure
-Sound_SetModulationDepth:                              ; CODE XREF: Sound_CommandDispatcher+4E   j  ; was: sub_83B2E
+; End of function Sound_SetupModulation
+; Selects separate PSG/FM modulation envelopes by channel type (F1)
+Sound_SetModulationEnvelopeByChannel:                              ; CODE XREF: Sound_CommandDispatcher+4E   j  ; was: sub_83B2E
                 move.b  (a4)+,d0
                 tst.b   1(a5)
-                bpl.w Sound_StoreByteAtOffset0A
+                bpl.w Sound_SetModulationEnvelope
                 move.b  d0,$A(a5)
                 move.b  (a4)+,d0
                 rts
-; End of function Sound_SetModulationDepth
+; End of function Sound_SetModulationEnvelopeByChannel
 ; Stops sound channel clearing flags and sending key off commands
 Sound_StopChannel:                              ; CODE XREF: Sound_CommandDispatcher+52   j  ; was: sub_83B40
                                         ; Sound_MuteAndStop+4   j
@@ -111321,27 +111321,27 @@ loc_83C00:                              ; CODE XREF: Sound_StopChannel+12   j
                 addq.w  #8,sp
                 rts
 ; End of function Sound_StopChannel
-; Sets PSG tone channel frequency and volume
-Sound_SetPSGTone:                              ; CODE XREF: Sound_CommandDispatcher+56   j  ; was: sub_83C04
+; Selects PSG noise mode and writes the PSG control byte (F3)
+Sound_SetPSGNoise:                              ; CODE XREF: Sound_CommandDispatcher+56   j  ; was: sub_83C04
                 move.b  #$E0,1(a5)
                 move.b  (a4)+,$25(a5)
                 btst    #2,(a5)
                 bne.s   locret_83C1C
                 move.b  -1(a4),(VDP_PSG).l
-locret_83C1C:                           ; CODE XREF: Sound_SetPSGTone+E   j
+locret_83C1C:                           ; CODE XREF: Sound_SetPSGNoise+E   j
                 rts
-; End of function Sound_SetPSGTone
-; Stores command parameter byte at offset $A in channel structure
-Sound_StoreByteAtOffset0A:                              ; CODE XREF: Sound_CommandDispatcher+5A   j  ; was: sub_83C1E
-                                        ; Sound_SetModulationDepth+6   j
+; End of function Sound_SetPSGNoise
+; Selects a modulation envelope common to all channel types (F4)
+Sound_SetModulationEnvelope:                              ; CODE XREF: Sound_CommandDispatcher+5A   j  ; was: sub_83C1E
+                                        ; Sound_SetModulationEnvelopeByChannel+6   j
                 move.b  (a4)+,$A(a5)
                 rts
-; End of function Sound_StoreByteAtOffset0A
-; Shooting pattern 4
-Boss_SireneShootPattern4:                              ; CODE XREF: Sound_CommandDispatcher+5E   j  ; was: sub_83C24
+; End of function Sound_SetModulationEnvelope
+; Selects a PSG instrument (F5)
+Sound_SetPSGInstrument:                              ; CODE XREF: Sound_CommandDispatcher+5E   j  ; was: sub_83C24
                 move.b  (a4)+,$B(a5)
                 rts
-; End of function Boss_SireneShootPattern4
+; End of function Sound_SetPSGInstrument
 ; Jumps relative offset in track data
 Sound_JumpRelative:                              ; CODE XREF: Sound_CommandDispatcher+62   j  ; was: sub_83C2A
                                         ; Sound_LoopCounter+14   j ...
@@ -111366,17 +111366,17 @@ loc_83C46:                              ; CODE XREF: Sound_LoopCounter+A   j
                 addq.w  #2,a4
                 rts
 ; End of function Sound_LoopCounter
-; Pushes return address for subroutine
-Sound_PushReturnAddress:                              ; CODE XREF: Sound_CommandDispatcher+6A   j  ; was: sub_83C50
+; Calls a relative sequence subroutine (F8)
+Sound_CallSequenceSubroutine:                              ; CODE XREF: Sound_CommandDispatcher+6A   j  ; was: sub_83C50
                 moveq   #0,d0
                 move.b  $D(a5),d0
                 subq.b  #4,d0
                 move.l  a4,(a5,d0.w)
                 move.b  d0,$D(a5)
                 bra.s Sound_JumpRelative
-; End of function Sound_PushReturnAddress
-; Advances to next command in sound sequence incrementing pointer
-Sound_AdvanceSequence:                              ; CODE XREF: Sound_CommandDispatcher+6E   j  ; was: sub_83C62
+; End of function Sound_CallSequenceSubroutine
+; Returns from a sequence subroutine (F9)
+Sound_ReturnFromSequenceSubroutine:                              ; CODE XREF: Sound_CommandDispatcher+6E   j  ; was: sub_83C62
                 moveq   #0,d0
                 move.b  $D(a5),d0
                 movea.l (a5,d0.w),a4
@@ -111384,12 +111384,12 @@ Sound_AdvanceSequence:                              ; CODE XREF: Sound_CommandDi
                 addq.b  #4,d0
                 move.b  d0,$D(a5)
                 rts
-; End of function Sound_AdvanceSequence
-; Sets channel parameter at offset 2 from command stream value
-Sound_SetChannelParam02:                              ; CODE XREF: Sound_CommandDispatcher+72   j  ; was: sub_83C76
+; End of function Sound_ReturnFromSequenceSubroutine
+; Sets the current channel tick multiplier (FA)
+Sound_SetTickMultiplier:                              ; CODE XREF: Sound_CommandDispatcher+72   j  ; was: sub_83C76
                 move.b  (a4)+,2(a5)
                 rts
-; End of function Sound_SetChannelParam02
+; End of function Sound_SetTickMultiplier
 ; Adds transpose value to sound channel pitch offset
 Sound_AddTranspose:                              ; CODE XREF: Sound_CommandDispatcher+76   j  ; was: sub_83C7C
                 move.b  (a4)+,d0
@@ -111430,11 +111430,11 @@ word_83CC2:     dc.w 0, $180, $1F4, $260
                                         ; DATA XREF: Sound_SetCH3SpecialMode+1C   r
 
 
-; Writes total level $1F to all four FM operators to silence channel
-Sound_MuteAllOperators:                              ; CODE XREF: Sound_ExtendedCommandDispatch:loc_838B0   j  ; was: sub_83CCA
+; Configures SSG-EG and forces full attack for all four FM operators (FF 00)
+Sound_SetSSGEG:                              ; CODE XREF: Sound_ExtendedCommandDispatch:loc_838B0   j  ; was: sub_83CCA
                 lea     byte_83CE6(pc),a1
                 moveq   #3,d3
-loc_83CD0:                              ; CODE XREF: Sound_MuteAllOperators+16   j
+loc_83CD0:                              ; CODE XREF: Sound_SetSSGEG+16   j
                 move.b  (a1)+,d0
                 move.b  (a4)+,d1
                 jsr Sound_CheckPauseFlag(pc)   ; (pc)
@@ -111443,14 +111443,14 @@ loc_83CD0:                              ; CODE XREF: Sound_MuteAllOperators+16  
                 jsr Sound_CheckPauseFlag(pc)   ; (pc)
                 dbf     d3,loc_83CD0
                 rts
-; End of function Sound_MuteAllOperators
+; End of function Sound_SetSSGEG
 ; ---------------------------------------------------------------------------
 byte_83CE6:     dc.b $90, $50, $98, $58, $94, $54, $9C, $5C
-                                        ; DATA XREF: Sound_MuteAllOperators   o
+                                        ; DATA XREF: Sound_SetSSGEG   o
 
 
-; Toggles mute state for all FM and PSG channels based on parameter
-Sound_ToggleMuteAllChannels:                              ; CODE XREF: Sound_ExtendedCommandDispatch+E   j  ; was: sub_83CEE
+; Pauses or resumes all music channels (FF 01)
+Sound_SetMusicPaused:                              ; CODE XREF: Sound_ExtendedCommandDispatch+E   j  ; was: sub_83CEE
                 moveq   #$30,d3 ; '0'
                 move.b  (a4)+,d0
                 beq.s   loc_83D4A
@@ -111460,9 +111460,9 @@ Sound_ToggleMuteAllChannels:                              ; CODE XREF: Sound_Ext
                 beq.s   loc_83D08
                 bclr    #7,(a5)
                 bset    #0,(a5)
-loc_83D08:                              ; CODE XREF: Sound_ToggleMuteAllChannels+10   j
+loc_83D08:                              ; CODE XREF: Sound_SetMusicPaused+10   j
                 moveq   #5,d4
-loc_83D0A:                              ; CODE XREF: Sound_ToggleMuteAllChannels:loc_83D28   j
+loc_83D0A:                              ; CODE XREF: Sound_SetMusicPaused:loc_83D28   j
                 adda.w  d3,a5
                 btst    #7,(a5)
                 beq.s   loc_83D28
@@ -111472,28 +111472,28 @@ loc_83D0A:                              ; CODE XREF: Sound_ToggleMuteAllChannels
                 moveq   #0,d1
                 jsr Sound_CheckPauseFlag(pc)   ; (pc)
                 jsr Sound_CheckChannelFlags(pc)   ; (pc)
-loc_83D28:                              ; CODE XREF: Sound_ToggleMuteAllChannels+22   j
+loc_83D28:                              ; CODE XREF: Sound_SetMusicPaused+22   j
                 dbf     d4,loc_83D0A
                 moveq   #2,d4
-loc_83D2E:                              ; CODE XREF: Sound_ToggleMuteAllChannels:loc_83D42   j
+loc_83D2E:                              ; CODE XREF: Sound_SetMusicPaused:loc_83D42   j
                 adda.w  d3,a5
                 btst    #7,(a5)
                 beq.s   loc_83D42
                 bclr    #7,(a5)
                 bset    #0,(a5)
                 jsr Sound_CheckPSGMute(pc)   ; (pc)
-loc_83D42:                              ; CODE XREF: Sound_ToggleMuteAllChannels+46   j
+loc_83D42:                              ; CODE XREF: Sound_SetMusicPaused+46   j
                 dbf     d4,loc_83D2E
                 movea.l a3,a5
                 rts
 ; ---------------------------------------------------------------------------
-loc_83D4A:                              ; CODE XREF: Sound_ToggleMuteAllChannels+4   j
+loc_83D4A:                              ; CODE XREF: Sound_SetMusicPaused+4   j
                 movea.l a5,a3
                 lea     (byte_FFF840).w,a5
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_83D5E:                              ; CODE XREF: Sound_ToggleMuteAllChannels+78   j
+loc_83D5E:                              ; CODE XREF: Sound_SetMusicPaused+78   j
                 bset    #0,(IO_Z80BUS).l
                 bne.s   loc_83D5E
                 move.b  (byte_A01FFD).l,d0
@@ -111505,17 +111505,17 @@ loc_83D5E:                              ; CODE XREF: Sound_ToggleMuteAllChannels
                 beq.w   loc_83D98
                 bpl.w   loc_83D90
                 move.b  d2,d1
-loc_83D90:                              ; CODE XREF: Sound_ToggleMuteAllChannels+9C   j
+loc_83D90:                              ; CODE XREF: Sound_SetMusicPaused+9C   j
                 move.b  #$B6,d0
                 jsr Sound_WriteYM2612Register(pc)   ; (pc)
-loc_83D98:                              ; CODE XREF: Sound_ToggleMuteAllChannels+98   j
+loc_83D98:                              ; CODE XREF: Sound_SetMusicPaused+98   j
                 btst    #0,(a5)
                 beq.s   loc_83DA6
                 bset    #7,(a5)
                 bclr    #0,(a5)
-loc_83DA6:                              ; CODE XREF: Sound_ToggleMuteAllChannels+AE   j
+loc_83DA6:                              ; CODE XREF: Sound_SetMusicPaused+AE   j
                 moveq   #5,d4
-loc_83DA8:                              ; CODE XREF: Sound_ToggleMuteAllChannels:loc_83E02   j
+loc_83DA8:                              ; CODE XREF: Sound_SetMusicPaused:loc_83E02   j
                 adda.w  d3,a5
                 btst    #0,(a5)
                 beq.s   loc_83E02
@@ -111529,7 +111529,7 @@ loc_83DA8:                              ; CODE XREF: Sound_ToggleMuteAllChannels
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_83DDA:                              ; CODE XREF: Sound_ToggleMuteAllChannels+F4   j
+loc_83DDA:                              ; CODE XREF: Sound_SetMusicPaused+F4   j
                 bset    #0,(IO_Z80BUS).l
                 bne.s   loc_83DDA
                 move.b  (byte_A01FFD).l,d0
@@ -111537,36 +111537,36 @@ loc_83DDA:                              ; CODE XREF: Sound_ToggleMuteAllChannels
                 move    (sp)+,sr
                 tst.b   d0
                 bne.w   loc_83E02
-loc_83DFA:                              ; CODE XREF: Sound_ToggleMuteAllChannels+DA   j
+loc_83DFA:                              ; CODE XREF: Sound_SetMusicPaused+DA   j
                 move.b  #$B4,d0
                 jsr Sound_ProcessChannelBits(pc)   ; (pc)
-loc_83E02:                              ; CODE XREF: Sound_ToggleMuteAllChannels+C0   j
-                                        ; Sound_ToggleMuteAllChannels+CE   j ...
+loc_83E02:                              ; CODE XREF: Sound_SetMusicPaused+C0   j
+                                        ; Sound_SetMusicPaused+CE   j ...
                 dbf     d4,loc_83DA8
                 moveq   #2,d4
-loc_83E08:                              ; CODE XREF: Sound_ToggleMuteAllChannels:loc_83E18   j
+loc_83E08:                              ; CODE XREF: Sound_SetMusicPaused:loc_83E18   j
                 adda.w  d3,a5
                 btst    #0,(a5)
                 beq.s   loc_83E18
                 bset    #7,(a5)
                 bclr    #0,(a5)
-loc_83E18:                              ; CODE XREF: Sound_ToggleMuteAllChannels+120   j
+loc_83E18:                              ; CODE XREF: Sound_SetMusicPaused+120   j
                 dbf     d4,loc_83E08
                 movea.l a3,a5
                 rts
-; End of function Sound_ToggleMuteAllChannels
-; Sets tempo parameter at offset 2 for all 10 sound channels
-Sound_SetTempoAllChannels:                              ; CODE XREF: Sound_ExtendedCommandDispatch+12   j  ; was: sub_83E20
+; End of function Sound_SetMusicPaused
+; Sets the tick multiplier for all ten sound channels (FF 02)
+Sound_SetAllTickMultipliers:                              ; CODE XREF: Sound_ExtendedCommandDispatch+12   j  ; was: sub_83E20
                 lea     (byte_FFF840).w,a0
                 move.b  (a4)+,d0
                 moveq   #$30,d1 ; '0'
                 moveq   #9,d2
-loc_83E2A:                              ; CODE XREF: Sound_SetTempoAllChannels+10   j
+loc_83E2A:                              ; CODE XREF: Sound_SetAllTickMultipliers+10   j
                 move.b  d0,2(a0)
                 adda.w  d1,a0
                 dbf     d2,loc_83E2A
                 rts
-; End of function Sound_SetTempoAllChannels
+; End of function Sound_SetAllTickMultipliers
 ; Initializes fade parameters if not already active, stores fade in/out values
 Sound_InitializeFadeParams:                              ; CODE XREF: Sound_ExtendedCommandDispatch+16   j  ; was: sub_83E36
                 tst.b   (byte_FFF828).w
@@ -111705,7 +111705,7 @@ loc_84B4E:                              ; CODE XREF: Sound_SetFMFrequency+12   j
                 moveq   #0,d0
                 move.b  $B(a5),d0
                 beq.s Sound_ApplyPSGVolume
-                lea     off_84D8C(pc),a0
+                lea     PSGVolumeEnvelopePointerTable(pc),a0
                 subq.w  #1,d0
                 lsl.w   #2,d0
                 movea.l (a0,d0.w),a0
@@ -111825,82 +111825,83 @@ word_84C18:     dc.w $356, $326, $2F9   ; DATA XREF: Sound_ProcessNoteData+10   
                 dc.w $17, $16, $15
                 dc.w $13, $12, $11
                 dc.w 0
-                dc.l byte_84EF4
-                dc.l off_85156
-                dc.l BGM_list
-                dc.l off_84FF2
-                dc.l off_84CC8
-                dc.l off_84D8C
+SoundDataPointerTable:
+			dc.l SoundPriorityTable
+                dc.l SpecialSFX_PointerTable
+                dc.l BGM_PointerTable
+                dc.l SFX_PointerTable
+                dc.l ModulationEnvelopePointerTable
+                dc.l PSGVolumeEnvelopePointerTable
                 dc.l $A0
                 dc.l Sound_UpdateDriver          ; debug this
-                dc.l off_85166
-off_84CC8:      dc.l byte_84CE8         ; DATA XREF: Sound_ApplyPitchEffects+C   o
+                dc.l SFX_40_7F_PointerTable
+ModulationEnvelopePointerTable:      dc.l ModulationEnvelope_1         ; DATA XREF: Sound_ApplyPitchEffects+C   o
                                         ; ROM:00084CB4   o
-                dc.l byte_84CFE
-                dc.l byte_84D14
-                dc.l byte_84D1E
-                dc.l byte_84D38
-                dc.l byte_84D28
-                dc.l byte_84D62
-                dc.l byte_84D64
-byte_84CE8:     dc.b 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, $A, $B, $C, $D, $E, $F
-                                        ; DATA XREF: ROM:off_84CC8   o
+                dc.l ModulationEnvelope_2
+                dc.l ModulationEnvelope_3
+                dc.l ModulationEnvelope_4
+                dc.l ModulationEnvelope_5
+                dc.l ModulationEnvelope_6
+                dc.l ModulationEnvelope_7
+                dc.l ModulationEnvelope_8
+ModulationEnvelope_1:     dc.b 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, $A, $B, $C, $D, $E, $F
+                                        ; DATA XREF: ROM:ModulationEnvelopePointerTable   o
                 dc.b $10, $11, $12, $13, $14, $83
-byte_84CFE:     dc.b 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, $A, $B, $C, $D, $E, $F
+ModulationEnvelope_2:     dc.b 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, $A, $B, $C, $D, $E, $F
                                         ; DATA XREF: ROM:00084CCC   o
                 dc.b $10, $11, $12, $13, $14, $80
-byte_84D14:     dc.b $D8, $E2, $EC, $F6, 0, $A, $14, $1E, $28, $83
+ModulationEnvelope_3:     dc.b $D8, $E2, $EC, $F6, 0, $A, $14, $1E, $28, $83
                                         ; DATA XREF: ROM:00084CD0   o
-byte_84D1E:     dc.b $D8, $E2, $EC, $F6, 0, $A, $14, $1E, $28, $80
+ModulationEnvelope_4:     dc.b $D8, $E2, $EC, $F6, 0, $A, $14, $1E, $28, $80
                                         ; DATA XREF: ROM:00084CD4   o
-byte_84D28:     dc.b 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1
+ModulationEnvelope_6:     dc.b 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1
                                         ; DATA XREF: ROM:00084CDC   o
-byte_84D38:     dc.b 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1
+ModulationEnvelope_5:     dc.b 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1
                                         ; DATA XREF: ROM:00084CD8   o
                 dc.b 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2
                 dc.b 3, 3, 3, 3, 3, 3, 3, 3, 4, $83
-byte_84D62:     dc.b 2, $83             ; DATA XREF: ROM:00084CE0   o
-byte_84D64:     dc.b 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2
+ModulationEnvelope_7:     dc.b 2, $83             ; DATA XREF: ROM:00084CE0   o
+ModulationEnvelope_8:     dc.b 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2
                                         ; DATA XREF: ROM:00084CE4   o
                 dc.b 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6
                 dc.b 6, 6, 6, 6, 7, 7, 7, $83
-off_84D8C:      dc.l byte_84DB4         ; DATA XREF: Sound_ProcessFMModulation+14   o
+PSGVolumeEnvelopePointerTable:      dc.l PSGVolumeEnvelope_1         ; DATA XREF: Sound_ProcessFMModulation+14   o
                                         ; ROM:00084CB8   o
-                dc.l byte_84DCB
-                dc.l byte_84DD2
-                dc.l byte_84DDB
-                dc.l byte_84DF6
-                dc.l byte_84DE6
-                dc.l byte_84E20
-                dc.l byte_84E22
-                dc.l byte_84E4A
-                dc.l byte_84E6A
-byte_84DB4:     dc.b 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5
-                                        ; DATA XREF: ROM:off_84D8C   o
+                dc.l PSGVolumeEnvelope_2
+                dc.l PSGVolumeEnvelope_3
+                dc.l PSGVolumeEnvelope_4
+                dc.l PSGVolumeEnvelope_5
+                dc.l PSGVolumeEnvelope_6
+                dc.l PSGVolumeEnvelope_7
+                dc.l PSGVolumeEnvelope_8
+                dc.l PSGVolumeEnvelope_9
+                dc.l PSGVolumeEnvelope_10
+PSGVolumeEnvelope_1:     dc.b 0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5
+                                        ; DATA XREF: ROM:PSGVolumeEnvelopePointerTable   o
                 dc.b 5, 5, 6, 6, 6, 7, $83
-byte_84DCB:     dc.b 0, 2, 4, 6, 8, $10, $83
+PSGVolumeEnvelope_2:     dc.b 0, 2, 4, 6, 8, $10, $83
                                         ; DATA XREF: ROM:00084D90   o
-byte_84DD2:     dc.b 0, 0, 1, 1, 3, 3, 4, 5, $83
+PSGVolumeEnvelope_3:     dc.b 0, 0, 1, 1, 3, 3, 4, 5, $83
                                         ; DATA XREF: ROM:00084D94   o
-byte_84DDB:     dc.b 0, 0, 2, 3, 4, 4, 5, 5, 5, 6, $83
+PSGVolumeEnvelope_4:     dc.b 0, 0, 2, 3, 4, 4, 5, 5, 5, 6, $83
                                         ; DATA XREF: ROM:00084D98   o
-byte_84DE6:     dc.b 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1
+PSGVolumeEnvelope_6:     dc.b 4, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1
                                         ; DATA XREF: ROM:00084DA0   o
-byte_84DF6:     dc.b 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1
+PSGVolumeEnvelope_5:     dc.b 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1
                                         ; DATA XREF: ROM:00084D9C   o
                 dc.b 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2
                 dc.b 3, 3, 3, 3, 3, 3, 3, 3, 4, $83
-byte_84E20:     dc.b 2, $83             ; DATA XREF: ROM:00084DA4   o
-byte_84E22:     dc.b 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2
+PSGVolumeEnvelope_7:     dc.b 2, $83             ; DATA XREF: ROM:00084DA4   o
+PSGVolumeEnvelope_8:     dc.b 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2
                                         ; DATA XREF: ROM:00084DA8   o
                 dc.b 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6
                 dc.b 6, 6, 6, 6, 7, 7, 7, $83
-byte_84E4A:     dc.b 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4
+PSGVolumeEnvelope_9:     dc.b 8, 8, 7, 7, 7, 7, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4
                                         ; DATA XREF: ROM:00084DAC   o
                 dc.b 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 0, $81
-byte_84E6A:     dc.b 8, 7, 6, 5, 4, 3, 3, 2, 2, 1, 1, 0, $81, 0
+PSGVolumeEnvelope_10:     dc.b 8, 7, 6, 5, 4, 3, 3, 2, 2, 1, 1, 0, $81, 0
                                         ; DATA XREF: ROM:00084DB0   o
-BGM_list:      dc.l runnerad2025         ; DATA XREF: Sound_ProcessDAC+16   o
+BGM_PointerTable:      dc.l runnerad2025         ; DATA XREF: Sound_ProcessDAC+16   o
                                         ; ROM:00084CAC   o
                 dc.l blacksheep
                 dc.l over
@@ -111920,19 +111921,19 @@ BGM_list:      dc.l runnerad2025         ; DATA XREF: Sound_ProcessDAC+16   o
                 dc.l titletheme
                 dc.l silent
                 dc.l galaxydesert
-                dc.l byte_9045E
-                dc.l byte_91304
-                dc.l byte_92270
-                dc.l byte_92E7E
-                dc.l byte_93CC8
+                dc.l soldierssong
+                dc.l alonezvariation
+                dc.l seventhforce
+                dc.l threeprayers
+                dc.l alonez
                 dc.l runnerad2025
                 dc.l runnerad2025
                 dc.l runnerad2025
                 dc.l runnerad2025
                 dc.l runnerad2025
                 dc.l runnerad2025
-                dc.l byte_94C10
-byte_84EF4:     dc.b $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
+                dc.l specialsfxtrack
+SoundPriorityTable:     dc.b $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
                                         ; DATA XREF: Sound_ProcessFade   o
                                         ; ROM:00084CA4   o
                 dc.b $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
@@ -111950,165 +111951,165 @@ byte_84EF4:     dc.b $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF,
                 dc.b $53, $60, $45, $60, $5A, $40, $5A, $45, $54, $5A, $45, $50, $50, $46, $46, $5B
                 dc.b $59, $54, $54, $5B, $5B, $5A, $5A, $54, $54, $54, $45, $52, $53, $53, $50, $5B
                 dc.b $55, $55, $55, $5B, $5B, $5B, $5B, $5B, $FF, $FF, $FF, $FF, $FF, $FF
-off_84FF2:      dc.l byte_94D4C         ; DATA XREF: Sound_LoadMusicTrack:loc_830C6   o
+SFX_PointerTable:      dc.l SFX_A0         ; DATA XREF: Sound_LoadSFX:loc_830C6   o
                                         ; sub_830BC:loc_830DC   o ...
-                dc.l byte_94DB2
-                dc.l byte_94E16
-                dc.l byte_94E40
-                dc.l byte_94E86
-                dc.l byte_94ED2
-                dc.l byte_94F5C
-                dc.l byte_94F92
-                dc.l byte_94FF0
-                dc.l byte_95044
-                dc.l byte_9507A
-                dc.l byte_951C8
-                dc.l byte_95232
-                dc.l byte_95262
-                dc.l byte_952B0
-                dc.l byte_95306
-                dc.l byte_9536E
-                dc.l byte_953BC
-                dc.l byte_95408
-                dc.l byte_95458
-                dc.l byte_95486
-                dc.l byte_954EC
-                dc.l byte_9554C
-                dc.l byte_9557A
-                dc.l byte_955AC
-                dc.l byte_95652
-                dc.l byte_956A2
-                dc.l byte_956D0
-                dc.l byte_95744
-                dc.l byte_957D4
-                dc.l byte_95820
-                dc.l byte_958A2
-                dc.l byte_958EC
-                dc.l byte_95942
-                dc.l byte_959FC
-                dc.l byte_95A4E
-                dc.l byte_95A7A
-                dc.l byte_95B2A
-                dc.l byte_95B62
-                dc.l byte_95B98
-                dc.l byte_95C10
-                dc.l byte_95C58
-                dc.l byte_95CA8
-                dc.l byte_95D10
-                dc.l byte_95D40
-                dc.l byte_95D8E
-                dc.l byte_95DBE
-                dc.l byte_95DEC
-                dc.l byte_95E26
-                dc.l byte_95E5C
-                dc.l byte_95E92
-                dc.l byte_95F10
-                dc.l byte_95F3E
-                dc.l byte_95F6E
-                dc.l byte_95FE2
-                dc.l byte_96012
-                dc.l byte_96074
-                dc.l byte_960A4
-                dc.l byte_960F6
-                dc.l byte_96156
-                dc.l byte_961BA
-                dc.l byte_961F0
-                dc.l byte_9625E
-                dc.l byte_9628E
-                dc.l byte_962DC
-                dc.l byte_96346
-                dc.l byte_963AC
-                dc.l byte_963E0
-                dc.l byte_96412
-                dc.l byte_96444
-                dc.l byte_96558
-                dc.l byte_965E8
-                dc.l byte_9661A
-                dc.l byte_9664A
-                dc.l byte_9667E
-                dc.l byte_966CC
-                dc.l byte_966FA
-                dc.l byte_96732
-                dc.l byte_96762
-                dc.l byte_96792
-                dc.l byte_9795A
-                dc.l byte_979F8
-                dc.l byte_97A58
-                dc.l byte_97A9E
-                dc.l byte_97AE4
-                dc.l byte_97C16
-                dc.l byte_97CFA
-                dc.l byte_97D9A
-                dc.l byte_97ECC
-off_85156:      dc.l byte_97F1A         ; DATA XREF: Boss_SireneUpdateSprites:loc_831E0   o
+                dc.l SFX_A1
+                dc.l SFX_A2
+                dc.l SFX_A3
+                dc.l SFX_A4
+                dc.l SFX_A5
+                dc.l SFX_A6
+                dc.l SFX_A7
+                dc.l SFX_A8
+                dc.l SFX_A9
+                dc.l SFX_AA
+                dc.l SFX_AB
+                dc.l SFX_AC
+                dc.l SFX_AD
+                dc.l SFX_AE
+                dc.l SFX_AF
+                dc.l SFX_B0
+                dc.l SFX_B1
+                dc.l SFX_B2
+                dc.l SFX_B3
+                dc.l SFX_B4
+                dc.l SFX_B5
+                dc.l SFX_B6
+                dc.l SFX_B7
+                dc.l SFX_B8
+                dc.l SFX_B9
+                dc.l SFX_BA
+                dc.l SFX_BB
+                dc.l SFX_BC
+                dc.l SFX_BD
+                dc.l SFX_BE
+                dc.l SFX_BF
+                dc.l SFX_C0
+                dc.l SFX_C1
+                dc.l SFX_C2
+                dc.l SFX_C3
+                dc.l SFX_C4
+                dc.l SFX_C5
+                dc.l SFX_C6
+                dc.l SFX_C7
+                dc.l SFX_C8
+                dc.l SFX_C9
+                dc.l SFX_CA
+                dc.l SFX_CB
+                dc.l SFX_CC
+                dc.l SFX_CD
+                dc.l SFX_CE
+                dc.l SFX_CF
+                dc.l SFX_D0
+                dc.l SFX_D1
+                dc.l SFX_D2
+                dc.l SFX_D3
+                dc.l SFX_D4
+                dc.l SFX_D5
+                dc.l SFX_D6
+                dc.l SFX_D7
+                dc.l SFX_D8
+                dc.l SFX_D9
+                dc.l SFX_DA
+                dc.l SFX_DB
+                dc.l SFX_DC
+                dc.l SFX_DD
+                dc.l SFX_DE
+                dc.l SFX_DF
+                dc.l SFX_E0
+                dc.l SFX_E1
+                dc.l SFX_E2
+                dc.l SFX_E3
+                dc.l SFX_E4
+                dc.l SFX_E5
+                dc.l SFX_E6
+                dc.l SFX_E7
+                dc.l SFX_E8
+                dc.l SFX_E9
+                dc.l SFX_EA
+                dc.l SFX_EB
+                dc.l SFX_EC
+                dc.l SFX_ED
+                dc.l SFX_EE
+                dc.l SFX_EF
+                dc.l SFX_F0
+                dc.l SFX_F1
+                dc.l SFX_F2
+                dc.l SFX_F3
+                dc.l SFX_F4
+                dc.l SFX_F5
+                dc.l SFX_F6
+                dc.l SFX_F7
+                dc.l SFX_F8
+SpecialSFX_PointerTable:      dc.l SFX_F9         ; DATA XREF: Sound_LoadSpecialSFX:loc_831E0   o
                                         ; ROM:00084CA8   o
-                dc.l byte_97F50
-                dc.l byte_97F82
-                dc.l byte_97FCE
-off_85166:      dc.l byte_967EC         ; DATA XREF: ROM:00084CC4   o
-                dc.l byte_96806
-                dc.l byte_96852
-                dc.l byte_968BA
-                dc.l byte_9698A
-                dc.l byte_969C0
-                dc.l byte_969FA
-                dc.l byte_96A3A
-                dc.l byte_96A7A
-                dc.l byte_96AE4
-                dc.l byte_96B30
-                dc.l byte_96B72
-                dc.l byte_96C0C
-                dc.l byte_96C5C
-                dc.l byte_96CAC
-                dc.l byte_96CE0
-                dc.l byte_96D96
-                dc.l byte_96DEA
-                dc.l byte_96E20
-                dc.l byte_96EC2
-                dc.l byte_96EF8
-                dc.l byte_96F26
-                dc.l byte_96F70
-                dc.l byte_96FE6
-                dc.l byte_96FFC
-                dc.l byte_9702E
-                dc.l byte_97060
-                dc.l byte_970AE
-                dc.l byte_970DA
-                dc.l byte_9710E
-                dc.l byte_9713E
-                dc.l byte_97172
-                dc.l byte_971A6
-                dc.l byte_971DC
-                dc.l byte_9720A
-                dc.l byte_9723E
-                dc.l byte_9726E
-                dc.l byte_9729E
-                dc.l byte_972CE
-                dc.l byte_97304
-                dc.l byte_97336
-                dc.l byte_97388
-                dc.l byte_973BA
-                dc.l byte_973EC
-                dc.l byte_9741E
-                dc.l byte_97450
-                dc.l byte_97482
-                dc.l byte_974B4
-                dc.l byte_974F2
-                dc.l byte_9752A
-                dc.l byte_97562
-                dc.l byte_97594
-                dc.l byte_975CE
-                dc.l byte_97600
-                dc.l byte_9762E
-                dc.l byte_9765E
-                dc.l byte_97690
-                dc.l byte_976C0
-                dc.l byte_976F6
-                dc.l byte_97728
-                dc.l byte_977B8
-                dc.l byte_97844
-                dc.l byte_978B8
-                dc.l byte_97928
+                dc.l SFX_FA
+                dc.l SFX_FB
+                dc.l SFX_FC
+SFX_40_7F_PointerTable:      dc.l SFX_40         ; DATA XREF: ROM:00084CC4   o
+                dc.l SFX_41
+                dc.l SFX_42
+                dc.l SFX_43
+                dc.l SFX_44
+                dc.l SFX_45
+                dc.l SFX_46
+                dc.l SFX_47
+                dc.l SFX_48
+                dc.l SFX_49
+                dc.l SFX_4A
+                dc.l SFX_4B
+                dc.l SFX_4C
+                dc.l SFX_4D
+                dc.l SFX_4E
+                dc.l SFX_4F
+                dc.l SFX_50
+                dc.l SFX_51
+                dc.l SFX_52
+                dc.l SFX_53
+                dc.l SFX_54
+                dc.l SFX_55
+                dc.l SFX_56
+                dc.l SFX_57
+                dc.l SFX_58
+                dc.l SFX_59
+                dc.l SFX_5A
+                dc.l SFX_5B
+                dc.l SFX_5C
+                dc.l SFX_5D
+                dc.l SFX_5E
+                dc.l SFX_5F
+                dc.l SFX_60
+                dc.l SFX_61
+                dc.l SFX_62
+                dc.l SFX_63
+                dc.l SFX_64
+                dc.l SFX_65
+                dc.l SFX_66
+                dc.l SFX_67
+                dc.l SFX_68
+                dc.l SFX_69
+                dc.l SFX_6A
+                dc.l SFX_6B
+                dc.l SFX_6C
+                dc.l SFX_6D
+                dc.l SFX_6E
+                dc.l SFX_6F
+                dc.l SFX_70
+                dc.l SFX_71
+                dc.l SFX_72
+                dc.l SFX_73
+                dc.l SFX_74
+                dc.l SFX_75
+                dc.l SFX_76
+                dc.l SFX_77
+                dc.l SFX_78
+                dc.l SFX_79
+                dc.l SFX_7A
+                dc.l SFX_7B
+                dc.l SFX_7C
+                dc.l SFX_7D
+                dc.l SFX_7E
+                dc.l SFX_7F
 runnerad2025:	binclude	"data/sound/runnerad2025.bin"
 runnerad2025_End:
 blacksheep:	binclude	"data/sound/blacksheep.bin"
@@ -112147,345 +112148,345 @@ silent:	binclude	"data/sound/silent.bin"
 silent_End:
 galaxydesert:	binclude	"data/sound/galaxydesert.bin"
 galaxydesert_End:
-byte_9045E:	binclude	"data/other/byte_9045E.bin"
-byte_9045E_End:
-byte_91304:	binclude	"data/other/byte_91304.bin"
-byte_91304_End:
-byte_92270:	binclude	"data/other/byte_92270.bin"
-byte_92270_End:
-byte_92E7E:	binclude	"data/other/byte_92E7E.bin"
-byte_92E7E_End:
-byte_93CC8:	binclude	"data/other/byte_93CC8.bin"
-byte_93CC8_End:
-byte_94C10:	binclude	"data/other/byte_94C10.bin"
-byte_94C10_End:
-byte_94D4C:     dc.b 0, $34, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $22, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $FC, $FF, $96, 3, $80, 1, $EF, 1, $85
-                                        ; DATA XREF: ROM:off_84FF2   o
+soldierssong:	binclude	"data/sound/soldierssong.bin"
+soldierssong_End:
+alonezvariation:	binclude	"data/sound/alonezvariation.bin"
+alonezvariation_End:
+seventhforce:	binclude	"data/sound/seventhforce.bin"
+seventhforce_End:
+threeprayers:	binclude	"data/sound/threeprayers.bin"
+threeprayers_End:
+alonez:	binclude	"data/sound/alonez.bin"
+alonez_End:
+specialsfxtrack:	binclude	"data/sound/specialsfxtrack.bin"
+specialsfxtrack_End:
+SFX_A0:     dc.b 0, $34, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $22, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $FC, $FF, $96, 3, $80, 1, $EF, 1, $85
+                                        ; DATA XREF: ROM:SFX_PointerTable   o
                 dc.b $40, $F2, $80, 1, $F5, 0, $F3, $E7, $F0, 0, 1, 1, $FF, $96, 3, $80, 1, $C0, $40, $F2, $35, 1, $40, 0, 0, $1F, $1F, $1E, $1F, $F, $1F, $1F
                 dc.b $1F, $1F, $C, 0, 0, $1F, $F, $F, $F, 6, $80, $80, $80, $39, $2D, $41, $17, $7F, $1F, $1F, $1E, $1F, $1F, $1F, $1F, $A, $D, $10, $D, $D, $1F, $F
                 dc.b $F, $3F, 3, 9, 5, $80
-byte_94DB2:     dc.b 0, $32, 1, 2, $80, 5, 0, $10, $FD, 1, $80, 4, 0, $21, 0, 2, $EF, 0, $F0, 0, 2, $93, $FF, $A1, $A, $E6, 4, $F7, 0, 8, $FF, $F8
+SFX_A1:     dc.b 0, $32, 1, 2, $80, 5, 0, $10, $FD, 1, $80, 4, 0, $21, 0, 2, $EF, 0, $F0, 0, 2, $93, $FF, $A1, $A, $E6, 4, $F7, 0, 8, $FF, $F8
                                         ; DATA XREF: ROM:00084FF6   o
                 dc.b $F2, $EF, 1, $F0, 0, 1, $35, 5, $98, $A, $E6, 5, $F7, 0, 8, $FF, $F8, $F2, $3A, 5, $73, $B, 1, $1F, $1F, $1F, $1F, $12, $1F, $1F, $1F, $A
                 dc.b $D, 0, 0, $1F, $F, $F, $F, $C, $10, 2, $80, $38, $41, $31, $63, $32, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, 0, $10, $15, 0, $3F, $1F, $F, $F
                 dc.b $1B, 0, 0, $80
-byte_94E16:     dc.b 0, $11, 1, 1, $80, 5, 0, $A, $1A, $E, $EF, 0, $A7, 1, $B1, $C, $F2, $1C, $3A, $31, $7A, $71, $14, $1F, $1F, $1E, $1F, $C, $1A, $C, $1E, $14
+SFX_A2:     dc.b 0, $11, 1, 1, $80, 5, 0, $A, $1A, $E, $EF, 0, $A7, 1, $B1, $C, $F2, $1C, $3A, $31, $7A, $71, $14, $1F, $1F, $1E, $1F, $C, $1A, $C, $1E, $14
                                         ; DATA XREF: ROM:00084FFA   o
                 dc.b $12, $14, $17, $1F, $19, $1F, $20, $80, $16, $80
-byte_94E40:     dc.b 0, $2D, 1, 1, $80, 5, 0, $A, 0, 3, $EF, 0, $D1, 2, $E7, $BC, $A5, 1, $AC, $A9, $AC, $E6, 1, $FB, 4, $F7, 0, 6, $FF, $F3, $A5, 1
+SFX_A3:     dc.b 0, $2D, 1, 1, $80, 5, 0, $A, 0, 3, $EF, 0, $D1, 2, $E7, $BC, $A5, 1, $AC, $A9, $AC, $E6, 1, $FB, 4, $F7, 0, 6, $FF, $F3, $A5, 1
                                         ; DATA XREF: ROM:00084FFE   o
                 dc.b $AC, $A9, $AC, $E6, 2, $FB, 4, $F7, 0, 6, $FF, $F3, $F2, $3A, 4, $31, $71, 3, $1F, $1F, $1F, $1F, $1E, $17, $16, $1F, 0, $E, 0, 0, $1F, $2F
                 dc.b $1F, $F, $1D, $24, $18, 0
-byte_94E86:     dc.b 0, $32, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $21, 0, 0, $EF, 0, $F0, 0, 1, $35, 5, $98, $A, $E6, 5, $F7, 0, 8, $FF, $F8
+SFX_A4:     dc.b 0, $32, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $21, 0, 0, $EF, 0, $F0, 0, 1, $35, 5, $98, $A, $E6, 5, $F7, 0, 8, $FF, $F8
                                         ; DATA XREF: ROM:00085002   o
                 dc.b $F2, $F3, $E7, $F0, 0, 4, 4, $FF, $B7, $A, $EC, 1, $F7, 0, 8, $FF, $F8, $F2, $38, $41, $31, $63, $32, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, 0
                 dc.b 0, $14, 0, $1F, $1F, $F, $F, $1B, 0, 0, $80, 0
-byte_94ED2:     dc.b 0, $3F, 1, 2, $80, 5, 0, $10, 0, 1, $80, 4, 0, $21, 0, 1, $EF, 0, $F0, 0, 1, $C0, $FF, $90, 3, $80, 1, $EF, 1, $FD, $C0, $7F
+SFX_A5:     dc.b 0, $3F, 1, 2, $80, 5, 0, $10, 0, 1, $80, 4, 0, $21, 0, 1, $EF, 0, $F0, 0, 1, $C0, $FF, $90, 3, $80, 1, $EF, 1, $FD, $C0, $7F
                                         ; DATA XREF: ROM:00085006   o
                 dc.b $F2, $EF, 0, $E1, $1E, $F0, 0, 1, $C0, $FF, $90, 3, $80, 1, $EF, 2, $F0, 0, 1, $10, $FF, $A0, $10, $E6, 5, $F7, 0, 8, $FF, $F3, $F2, $39
                 dc.b 0, $11, 0, $F, $1F, $1F, $1F, $1F, $1F, 1, $18, $1C, $13, 0, 0, 2, $6F, $1F, $F, $D, $B, 9, 0, $80, $39, $79, $31, 1, $3F, $1F, $1F, $E
                 dc.b $1F, $1F, 1, $18, 6, 7, $D, 8, $A, $7F, $1F, $F, $1D, $2B, $27, $10, $80, $39, $73, $31, $33, $4F, $1F, $1F, $1F, $1F, $1F, 1, $18, 6, 7, $D
                 dc.b 0, $A, $7F, $F, $F, $1D, $B, $17, 0, $80
-byte_94F5C:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 3, $EF, 0, $B4, 1, $F0, 0, 1, $49, $FF, $B1, $10, $E6, $11, $F7, 0, 2, $FF, $F8, $F2, $38, 0, 3
+SFX_A6:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 3, $EF, 0, $B4, 1, $F0, 0, 1, $49, $FF, $B1, $10, $E6, $11, $F7, 0, 2, $FF, $F8, $F2, $38, 0, 3
                                         ; DATA XREF: ROM:0008500A   o
                 dc.b $10, $70, $12, $12, $1F, $1F, $15, $16, $19, $1F, $16, 9, 2, 5, $11, $F, $1F, $F, $1B, $1D, 0, $80
-byte_94F92:     dc.b 0, $2B, 1, 2, $80, 5, 0, $10, 0, 7, $80, $C0, 0, $28, 0, 7, $EF, 1, $F0, 0, 1, $30, $FF, $BA, 1, $C6, 2, $BB, 3, $C7, 4, $BC
+SFX_A7:     dc.b 0, $2B, 1, 2, $80, 5, 0, $10, 0, 7, $80, $C0, 0, $28, 0, 7, $EF, 1, $F0, 0, 1, $30, $FF, $BA, 1, $C6, 2, $BB, 3, $C7, 4, $BC
                                         ; DATA XREF: ROM:0008500E   o
                 dc.b 5, $C8, 6, $BD, 7, $C9, $F, $F2, $80, $2B, $F2, $3C, $54, $77, $12, $21, $1F, $1F, $1F, $1F, $1F, $1F, $15, $13, $F, 7, $11, 7, $56, $19, $11, $19
                 dc.b $F, $80, $28, $80, $3C, $5F, $71, $1D, $22, $1F, $1F, $1F, $1F, $1F, $1F, $15, $13, $C, 0, $11, 2, $B6, $19, $11, $19, $13, $80, $14, $80, 0
-byte_94FF0:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, 0, 4, $EF, 0, $F0, 0, 1, $A, $FF, $B9, 2, $80, 2, $EF, 1, $B9, 7, $E6, $30, $F7, 0, 2, $FF, $F2
+SFX_A8:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, 0, 4, $EF, 0, $F0, 0, 1, $A, $FF, $B9, 2, $80, 2, $EF, 1, $B9, 7, $E6, $30, $F7, 0, 2, $FF, $F2
                                         ; DATA XREF: ROM:00085012   o
                 dc.b $F2, 0, $3B, 0, 0, $72, $1F, $1F, $1F, $1F, $F, $1F, $1F, $F, 5, $13, 6, $A, $2F, $F, $F, $1F, $2E, 7, $11, $80, $39, $40, $B, 0, $76, $1F
                 dc.b $F, $1F, $1F, $1F, $1F, $1F, $1F, $17, 1, $D, $B, $2F, $1F, $F, $F, $15, $14, $A, $80, 0
-byte_95044:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $F0, 0, 1, $1D, $FF, $8C, $12, $E6, $1A, $F7, 0, 2, $FF, $F8, $F2, $3A, $21, $31
+SFX_A9:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $F0, 0, 1, $1D, $FF, $8C, $12, $E6, $1A, $F7, 0, 2, $FF, $F8, $F2, $3A, $21, $31
                                         ; DATA XREF: ROM:00085016   o
                 dc.b $10, $30, $1B, $11, $1C, $16, $14, $1F, $1F, $1F, 2, $E, 6, 0, $3F, $1A, 9, $F, $15, 0, $12, $80
-byte_9507A:	binclude	"data/other/byte_9507A.bin"
-byte_9507A_End:
-byte_951C8:     dc.b 0, $37, 1, 2, $80, 5, 0, $10, $F0, $A, $80, $C0, 0, $2B, 0, 0, $EF, 0, $F0, 0, 1, $AB, $FF, $CA, 9, $80, 1, $F0, 0, 1, $3C, $FF
+SFX_AA:	binclude	"data/sound/SFX_AA.bin"
+SFX_AA_End:
+SFX_AB:     dc.b 0, $37, 1, 2, $80, 5, 0, $10, $F0, $A, $80, $C0, 0, $2B, 0, 0, $EF, 0, $F0, 0, 1, $AB, $FF, $CA, 9, $80, 1, $F0, 0, 1, $3C, $FF
                                         ; DATA XREF: ROM:0008501E   o
                 dc.b $C7, $A, $E7, $F0, 0, 2, $3C, $FF, $D0, $20, $F2, $F3, $E7, $80, $A, $F0, 0, 1, 3, $FF, $B4, $2C, $F2, $3B, $30, 0, 0, $7F, $11, $1F, $1F, $1F
                 dc.b $12, $1E, $1E, $1F, $15, 8, 0, 0, $1F, $F, $F, $F, $B, 3, $D, $80, $3B, $30, 0, 0, $7F, $11, $1F, $1F, $1F, $12, $1E, $1E, $1F, $15, 6, 0
                 dc.b 0, $1F, $F, $F, $F, $D, 8, $D, $80, 0
-byte_95232:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $8C, 6, $89, $20, $F2, $3A, $B, $12, 0, $2F, $11, $15, $1C, $1F, $1F
+SFX_AC:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $8C, 6, $89, $20, $F2, $3A, $B, $12, 0, $2F, $11, $15, $1C, $1F, $1F
                                         ; DATA XREF: ROM:00085022   o
                 dc.b $1F, $E, 7, $B, 8, 0, $C, $F, $F, 2, $1F, $16, $1D, $10, $80, 0
-byte_95262:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 3, $C, $80, 1, $EF, 0, $B8, 1, $EF, 1, $BA, 5, $E6, $25, $F7, 0, 2, $FF, $F0, $F2, $39, 1, 1, 1
+SFX_AD:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 3, $C, $80, 1, $EF, 0, $B8, 1, $EF, 1, $BA, 5, $E6, $25, $F7, 0, 2, $FF, $F0, $F2, $39, 1, 1, 1
                                         ; DATA XREF: ROM:00085026   o
                 dc.b 1, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, 0, 0, 0, 0, $F, $F, $F, $F, $20, $10, $20, $80, $3C, $32, $72, $78, $32, $1F, $1F, $1F, $1F, $1F, $1F
                 dc.b $1F, $1F, $10, 0, 0, 0, $1F, $F, $F, $F, $1D, $80, $23, $80
-byte_952B0:     dc.b 0, $24, 1, 1, $80, 5, 0, $A, 0, 4, $EF, 0, $F0, 0, 1, $7D, $FF, $96, 5, $EF, 1, $F0, 0, 1, $CD, $FF, $A4, 9, $E6, $21, $F7, 0
+SFX_AE:     dc.b 0, $24, 1, 1, $80, 5, 0, $A, 0, 4, $EF, 0, $F0, 0, 1, $7D, $FF, $96, 5, $EF, 1, $F0, 0, 1, $CD, $FF, $A4, 9, $E6, $21, $F7, 0
                                         ; DATA XREF: ROM:0008502A   o
                 dc.b 2, $FF, $F8, $F2, $3B, $31, 0, $12, $22, $1E, $1F, $1F, $1B, $1F, $1E, $19, $1F, $13, $A, 0, 0, $3F, $1F, $F, $F, 4, 0, $18, $80, $38, $3C, $50
                 dc.b $60, $19, $1F, $1F, $1F, $1F, $1F, $1E, $19, $1F, $10, 0, 0, 0, $1F, $F, $1F, $F, $19, $F, $10, $80
-byte_95306:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 6, $F0, 0, 1, $96, $FF, $EF, 0, $A0, 3, $EF, 1, $90, 3, $F7, 0, 3, $FF, $FA, $F2, 8, 1, $64
+SFX_AF:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 6, $F0, 0, 1, $96, $FF, $EF, 0, $A0, 3, $EF, 1, $90, 3, $F7, 0, 3, $FF, $FA, $F2, 8, 1, $64
                                         ; DATA XREF: ROM:0008502E   o
                 dc.b $17, $42, $1F, $1F, $1F, $1F, $18, $1F, $14, $1F, $1B, $14, $13, 0, $1F, $15, $18, $F, $15, $13, 4, $80, 8, 2, $62, 0, $4A, $1F, $1F, $1F, $1F, $18
                 dc.b $1F, $14, $1F, $15, $16, 1, 0, $6F, $15, 8, $F, 5, $10, 0, $80, 8, 2, $60, $10, $41, $1F, $1F, $1F, $1F, $18, $1F, $14, $1F, $12, $14, 0, 0
                 dc.b $1F, $15, $28, $F, $15, $13, 0, $80
-byte_9536E:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 0, 1, $80, 1, $EF, 0, $F0, 0, 1, $F1, $FF, $96, 3, $80, 1, $EF, 1, $84, $20, $F2, $35, 1, $40, 0
+SFX_B0:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 0, 1, $80, 1, $EF, 0, $F0, 0, 1, $F1, $FF, $96, 3, $80, 1, $EF, 1, $84, $20, $F2, $35, 1, $40, 0
                                         ; DATA XREF: ROM:00085032   o
                 dc.b 0, $1F, $1F, $1E, $1F, $F, $1F, $1F, $1F, $1F, $C, 0, 0, $1F, $F, $F, $F, 6, $80, $80, $80, $39, $26, $30, $12, $78, $1F, $1F, $17, $1F, $1F, $F
                 dc.b $F, $B, $E, 0, $E, 8, $F, $1F, $F, $1F, $D, $19, 0, $80
-byte_953BC:     dc.b 0, $19, 1, 1, $80, 5, 0, $A, 0, 7, $EF, 0, $9D, 2, $80, 2, $A9, 4, $80, 1, $E6, $1C, $A9, 5, $F2, $38, 4, 1, 2, $17, $1F, $1F
+SFX_B1:     dc.b 0, $19, 1, 1, $80, 5, 0, $A, 0, 7, $EF, 0, $9D, 2, $80, 2, $A9, 4, $80, 1, $E6, $1C, $A9, 5, $F2, $38, 4, 1, 2, $17, $1F, $1F
                                         ; DATA XREF: ROM:00085036   o
                 dc.b $1F, $1F, $1F, $1F, $11, $F, $11, $11, 0, $B, $1F, $1F, $4F, $1F, $21, $E, 1, $80, $38, 2, 0, 1, 6, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $15, $B
                 dc.b $10, $12, $B, $1F, $2F, $2F, $1F, $12, $C, 0, $80, 0
-byte_95408:     dc.b 0, $1E, 1, 1, $80, 5, 0, $A, 0, 0, $80, 4, $EF, 0, $A8, 7, $80, 1, $EF, 1, $B5, 8, $E6, 6, $F7, 0, 4, $FF, $F8, $F2, $3D, $79
+SFX_B2:     dc.b 0, $1E, 1, 1, $80, 5, 0, $A, 0, 0, $80, 4, $EF, 0, $A8, 7, $80, 1, $EF, 1, $B5, 8, $E6, 6, $F7, 0, 4, $FF, $F8, $F2, $3D, $79
                                         ; DATA XREF: ROM:0008503A   o
                 dc.b $33, 1, 9, $1E, $F, $F, $F, $D, $1F, $17, $1F, 4, 0, 0, 0, $1F, $F, $F, $F, $D, $80, $80, $80, $38, $71, $10, 8, $3F, $1F, $1F, $1F, $1F
                 dc.b $1C, $1F, $17, $1B, 1, 1, 8, 0, $12, 2, 2, 8, $10, $26, $F, $80
-byte_95458:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, $FD, $B, $EF, 0, $C6, 1, $CC, 6, $E6, $20, 4, $F2, $1B, $24, 1, 1, $1A, $1F, $1F, $1F, $1F, $1F, $1F, $1E
+SFX_B3:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, $FD, $B, $EF, 0, $C6, 1, $CC, 6, $E6, $20, 4, $F2, $1B, $24, 1, 1, $1A, $1F, $1F, $1F, $1F, $1F, $1F, $1E
                                         ; DATA XREF: ROM:0008503E   o
                 dc.b $1F, 0, 6, $10, 0, $12, $12, 2, $F, $10, $2D, 0, $80, 0
-byte_95486:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, $C, 6, $EF, 0, $F0, 0, 0, $20, 4, $AB, $12, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $38, $70, 0, 0, $3F
+SFX_B4:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, $C, 6, $EF, 0, $F0, 0, 0, $20, 4, $AB, $12, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $38, $70, 0, 0, $3F
                                         ; DATA XREF: ROM:00085042   o
                 dc.b $18, $1F, $1F, $1F, $1C, $1E, $1F, $1F, $10, 0, 4, 0, $1F, $F, $F, $F, $1D, $12, 0, $80, $38, $10, 5, $7F, $3F, $16, $1F, $1F, $1F, $1C, $1E, $1F
                 dc.b $1F, $14, $F, 7, 0, $1F, $F, $F, $F, $3E, $E, 6, $80, $38, $70, 0, 1, $3F, $10, $1F, $1F, $1F, $1C, $E, $17, $1F, $10, $10, 0, 0, $1F, $1F
                 dc.b $1F, $F, $20, $15, 6, $80
-byte_954EC:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, 9, $EF, 0, $F0, 0, 1, $D4, $FF, $9D, 4, $F2, $3A, $70, $31, $10, 2, $1F, $1F, $1F, $1F, $19, $1F, $1F
+SFX_B5:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, 9, $EF, 0, $F0, 0, 1, $D4, $FF, $9D, 4, $F2, $3A, $70, $31, $10, 2, $1F, $1F, $1F, $1F, $19, $1F, $1F
                                         ; DATA XREF: ROM:00085046   o
                 dc.b $1F, $18, $12, 2, 3, $F, $F, $F, $F, $31, $13, $D, $80, $3A, $70, $30, $13, 2, $1F, $1F, $1F, $1F, $19, $1F, $1F, $1F, 8, 3, $14, 3, $F, $F
                 dc.b $F, $F, $21, $10, 0, $80, $3B, $71, $31, $10, 7, $1F, $1F, $12, $1F, $19, $1F, $1F, $1F, $D, 1, $12, 6, $1F, $1F, $1F, $F, $16, 8, 5, $80, 0
-byte_9554C:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, $A, $EF, 0, $F0, 0, 2, $8E, $FF, $98, 5, $F2, $38, 2, 2, 1, $37, $1F, $1F, $10, $16, $18, $19, $13
+SFX_B6:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, $A, $EF, 0, $F0, 0, 2, $8E, $FF, $98, 5, $F2, $38, 2, 2, 1, $37, $1F, $1F, $10, $16, $18, $19, $13
                                         ; DATA XREF: ROM:0008504A   o
                 dc.b $1F, $1A, 0, $15, 2, $1F, $F, $1F, $F, $10, $16, 6, $80, 0
-byte_9557A:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, 1, 1, $70, 1, $88, $1C, $80, 2, $F2, $3A, $61, $10, $6F, $10, $F, $1F, $1F
+SFX_B7:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, 1, 1, $70, 1, $88, $1C, $80, 2, $F2, $3A, $61, $10, $6F, $10, $F, $1F, $1F
                                         ; DATA XREF: ROM:0008504E   o
                 dc.b $F, $1F, $1F, $19, 9, $10, 0, 0, $C, $1F, $F, $1F, $F, $10, 1, 0, $80, 0
-byte_955AC:     dc.b 0, $5B, 1, 3, $80, 4, 0, $16, 0, 0, $80, 5, 0, $2D, 0, 0, $80, $C0, 0, $3D, 0, 0, $EF, 1, $83, 6, $80, 2, $EF, 0, $F0, 0
+SFX_B8:     dc.b 0, $5B, 1, 3, $80, 4, 0, $16, 0, 0, $80, 5, 0, $2D, 0, 0, $80, $C0, 0, $3D, 0, 0, $EF, 1, $83, 6, $80, 2, $EF, 0, $F0, 0
                                         ; DATA XREF: ROM:00085052   o
                 dc.b 0, $C1, $FF, $8E, 6, $E6, 3, $F7, 0, $10, $FF, $F8, $F2, $EB, $2F, $83, 6, $80, 2, $80, $12, $E6, 6, $F7, 0, 5, $FF, $F8, $F2, $F3, $E7, $A3
                 dc.b 6, $80, 2, $F0, 0, 4, 4, $FF, $C2, 6, $E7, $F7, 0, $A, $FF, $F9, $EC, 1, $C2, $10, $E7, $F7, 0, 5, $FF, $F7, $F2, $40, 3, 0, $11, $31
                 dc.b $1F, $1F, $1F, $1F, $10, $1F, $D, $1F, $10, 0, 0, 0, $1F, $30, $F, $F, $12, $13, $10, $80, $42, $70, 2, $10, $5F, $1F, $1F, $1F, $1F, $1E, $10, $1D
                 dc.b $1A, $1D, $B, $12, $11, $1F, $2F, $F, $9F, $15, $18, $17, $80, $40, 2, 0, $14, $35, $1F, $1F, $1F, $1F, $10, $1F, $D, $1F, $10, 0, 0, 0, $1F, $30
                 dc.b $F, $F, $12, $13, $10, $80
-byte_95652:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 4, $EF, 0, $F0, 1, 1, $28, $2C, $9C, 7, $80, 1, $EF, 1, $A0, 7, $E6, $1C, 6, $F2, $3A, $71, $77
+SFX_B9:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 4, $EF, 0, $F0, 1, 1, $28, $2C, $9C, 7, $80, 1, $EF, 1, $A0, 7, $E6, $1C, 6, $F2, $3A, $71, $77
                                         ; DATA XREF: ROM:00085056   o
                 dc.b $30, $30, $1F, $13, $1A, $1F, $1F, $1F, $1F, $1F, $10, $15, 4, $C, $1F, $1F, $F, $F, $1F, $10, $18, $80, $3A, $71, $10, 1, $32, $1F, $12, $10, $1F, $1F
                 dc.b $1F, $1F, $1F, $12, 9, $10, 0, $1F, $F, $F, $F, $1D, $24, 5, $80, 0
-byte_956A2:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, $C, $EF, 0, $F0, 0, 2, $8E, $FF, $98, 5, $F2, $38, 0, 2, 0, $31, $F, $F, $F, $16, $18, $19, 0
+SFX_BA:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, $C, $EF, 0, $F0, 0, 2, $8E, $FF, $98, 5, $F2, $38, 0, 2, 0, $31, $F, $F, $F, $16, $18, $19, 0
                                         ; DATA XREF: ROM:0008505A   o
                 dc.b $1F, $A, 0, 0, 2, $3F, $1F, $1F, $F, $22, $14, $10, $80, 0
-byte_956D0:     dc.b 0, $42, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $2C, 0, 1, $EF, 0, $F0, 0, 1, $9B, $FF, $A8, 3, $80, 1, $EF, 1, $F0, 0, 1
+SFX_BB:     dc.b 0, $42, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $2C, 0, 1, $EF, 0, $F0, 0, 1, $9B, $FF, $A8, 3, $80, 1, $EF, 1, $F0, 0, 1
                                         ; DATA XREF: ROM:0008505E   o
                 dc.b $93, $FF, $94, 5, $E6, 5, $F7, 0, 9, $FF, $F8, $F2, $F3, $E7, $F0, 0, 2, 2, $FF, $B1, 3, $80, 1, $BA, 8, $E7, $EC, 1, $F7, 0, 6, $FF
                 dc.b $F7, $F2, $38, 0, 0, 0, $33, $1F, $1F, $1F, $1F, $15, $19, $1B, $1F, $10, $12, 0, 0, $1F, $3F, $F, $F, $27, $10, 8, $80, $28, $71, 1, $52, $59
                 dc.b $1F, $1F, $1F, $1F, $1E, $1B, $1F, $1F, 9, $10, 0, 0, $1F, $2F, $3F, $F, 0, $11, 0, $80
-byte_95744:     dc.b 0, $45, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $27, 0, 0, $EF, 1, $83, 6, $80, 2, $EF, 0, $F0, 0, 0, $C1, $FF, $8E, $12, $E6
+SFX_BC:     dc.b 0, $45, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $27, 0, 0, $EF, 1, $83, 6, $80, 2, $EF, 0, $F0, 0, 0, $C1, $FF, $8E, $12, $E6
                                         ; DATA XREF: ROM:00085062   o
                 dc.b 6, $F7, 0, 5, $FF, $F8, $F2, $F3, $E7, $A3, 6, $80, 2, $F0, 0, 4, 4, $FF, $C2, 6, $E7, $F7, 0, $A, $FF, $F9, $EC, 1, $C2, 6, $E7, $F7
                 dc.b 0, 5, $FF, $F7, $F2, $40, 3, 0, $11, $31, $1F, $1F, $1F, $1F, $10, $1F, $D, $1F, $10, 0, 0, 0, $1F, $30, $F, $F, $12, $13, $10, $80, $40, $72
                 dc.b 2, $11, $5A, $1F, $1F, $1A, $1F, $1E, $10, $1D, $1F, 2, $1B, 2, 0, $1F, $2F, $1F, $F, $13, 8, $10, $80, $40, 2, 0, $14, $35, $1F, $1F, $1F, $1F
                 dc.b $10, $1F, $D, $1F, $10, 0, 0, 0, $1F, $30, $F, $F, $12, $13, $10, $80
-byte_957D4:     dc.b 0, $1A, 1, 1, $80, 4, 0, $A, 0, 3, $EF, 0, $F0, 0, 1, $33, $FF, $BB, 1, $80, 1, $EF, 1, $C0, 5, $F2, $34, $70, $24, $60, $77, $1F
+SFX_BD:     dc.b 0, $1A, 1, 1, $80, 4, 0, $A, 0, 3, $EF, 0, $F0, 0, 1, $33, $FF, $BB, 1, $80, 1, $EF, 1, $C0, 5, $F2, $34, $70, $24, $60, $77, $1F
                                         ; DATA XREF: ROM:00085066   o
                 dc.b $1F, $1F, $1F, $1F, $10, $10, $E, $1F, $E, $10, 2, $1E, $1F, 8, $1F, $18, $80, 0, $80, $30, $70, 0, 0, $70, $1F, $1F, $1F, $1F, $1F, $10, $16, $1F
                 dc.b $10, $11, $E, 8, $1E, $1F, $17, $1F, $10, $16, $10, $80
-byte_95820:     dc.b 0, $36, 1, 2, $80, 5, 0, $10, 0, 1, $80, 4, 0, $30, 0, $A, $EF, 0, $F0, 0, 1, $C8, $FF, $AB, 1, $80, 1, $EF, 1, $F0, 0, 1
+SFX_BE:     dc.b 0, $36, 1, 2, $80, 5, 0, $10, 0, 1, $80, 4, 0, $30, 0, $A, $EF, 0, $F0, 0, 1, $C8, $FF, $AB, 1, $80, 1, $EF, 1, $F0, 0, 1
                                         ; DATA XREF: ROM:0008506A   o
                 dc.b 8, $FF, $A5, $1A, $EF, 2, $B0, 4, $E6, 4, $F7, 0, 9, $FF, $F8, $F2, $E1, $FF, $F6, $FF, $DC, $F2, $3B, $70, $11, $11, $6F, $1F, $1F, $1F, $1F, $10
                 dc.b $18, $14, $1F, $10, 4, 9, 0, $13, $1D, $1F, $E, $14, 2, $10, $85, $1A, $71, $F, $20, $5F, $1F, $E, $1B, $F, $10, $18, $17, $1F, $11, $B, $A, 0
                 dc.b $13, $1D, $1F, $E, 7, $11, $10, $85, $3A, $30, 0, $6F, $7F, $1F, $1F, $1F, $1F, $11, $1D, 7, $1F, $14, 2, $10, 0, $36, $2E, $F, $F, $17, $10, $1A
                 dc.b $81, 0
-byte_958A2:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 6, $EF, 0, $F0, 0, 1, $C6, $FF, $A0, $A, $EF, 1, $88, $10, $F2, $38, 1, $61, 0, 4, $1F, $1F, $1F
+SFX_BF:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 6, $EF, 0, $F0, 0, 1, $C6, $FF, $A0, $A, $EF, 1, $88, $10, $F2, $38, 1, $61, 0, 4, $1F, $1F, $1F
                                         ; DATA XREF: ROM:0008506E   o
                 dc.b $1F, $18, $1F, $14, $1F, $12, $14, 0, 0, $1F, $15, $28, $F, $25, 3, 0, $80, $3A, 5, $64, 3, 2, $1F, $1F, $1F, $1F, $18, $1F, $14, $1F, 2, 4
                 dc.b 0, 9, $1F, $15, $18, $F, $15, $13, $10, $80
-byte_958EC:     dc.b 0, $23, 1, 1, $80, 5, 0, $A, 0, 7, $80, 1, $EF, 0, $F0, 0, 1, $F0, $FF, $CA, $1A, $80, 1, $EF, 1, $BA, 5, $E6, $1A, $F7, 0, 1
+SFX_C0:     dc.b 0, $23, 1, 1, $80, 5, 0, $A, 0, 7, $80, 1, $EF, 0, $F0, 0, 1, $F0, $FF, $CA, $1A, $80, 1, $EF, 1, $BA, 5, $E6, $1A, $F7, 0, 1
                                         ; DATA XREF: ROM:00085072   o
                 dc.b $FF, $F8, $F2, $3D, 0, $12, $6E, $14, $19, $D, $F, $D, $1B, $1E, $1F, $1F, 0, 0, 0, 2, $B, $F, $F, $F, $12, $80, $80, $80, $3C, 2, $4F, $23
                 dc.b $1E, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $F, 0, $12, 0, $1C, $F, $F, $F, 5, $80, $13, $80, 0
-byte_95942:     dc.b 0, $6E, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $32, 0, 0, $80, $C0, 0, $4E, 0, 2, $EF, 2, $F0, 0, 1, $C6, $FF, $8A, 4, $80
+SFX_C1:     dc.b 0, $6E, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $32, 0, 0, $80, $C0, 0, $4E, 0, 2, $EF, 2, $F0, 0, 1, $C6, $FF, $8A, 4, $80
                                         ; DATA XREF: ROM:00085076   o
                 dc.b 1, $EF, 1, $F0, 0, 1, $D4, $FF, $93, 8, $E6, 4, $F7, 0, $C, $FF, $F8, $F2, $EF, 2, $F0, 0, 1, $A6, $FF, $83, 4, $80, 1, $EF, 0, $F0
                 dc.b 0, 1, $C4, $FF, $91, $A, $E6, 4, $F7, 0, $C, $FF, $F8, $F2, $F3, $E7, $F0, 0, 2, 1, $FF, $A5, 4, $80, 1, $C5, $B, $E7, $EC, 0, $F7, 0
                 dc.b 9, $FF, $F7, $C5, $B, $E7, $EC, 1, $F7, 0, 3, $FF, $F7, $F2, $3D, 3, 3, 3, 3, $1F, $1F, $1F, $1E, $1E, $1B, $1F, $1F, 4, 0, 0, 0, $19
                 dc.b $1A, 9, $F, 9, $80, $80, $80, $3D, 0, $50, $31, $75, $1F, $1F, $1F, $1F, $10, $1D, $1F, $1F, 0, 0, 0, 0, $1F, $F, $F, $F, 5, $80, $80, $80
                 dc.b $38, $27, $72, $11, $53, $1F, $1F, $1F, $1F, $1C, $1D, $1F, $1F, $18, $10, 2, 0, $19, $2F, $F, $F, $C, $12, 0, $80, 0
-byte_959FC:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, $11, 0, $EF, 0, $F0, 0, 1, $D9, $FF, $86, 6, $80, 4, $EF, 1, $F0, 0, 1, $90, $FF, $95, 6, $F2, $30
+SFX_C2:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, $11, 0, $EF, 0, $F0, 0, 1, $D9, $FF, $86, 6, $80, 4, $EF, 1, $F0, 0, 1, $90, $FF, $95, 6, $F2, $30
                                         ; DATA XREF: ROM:0008507A   o
                 dc.b 0, $12, $11, $70, $11, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $11, 1, $10, 0, $F, $F, $F, $F, 6, $20, $C, $84, $36, 2, $31, $72, 1, $1F, $1F, $F
                 dc.b $1F, $10, $16, $F, $F, 2, 0, 0, 0, $11, $F, $F, $F, 1, $80, $80, $80, 0
-byte_95A4E:     dc.b 0, $12, 1, 1, $80, 5, 0, $A, 0, 2, $EF, 0, $DB, 4, $D6, $D9, $20, $F2, $14, $3A, $72, $72, $34, $1F, $1F, $1F, $1F, $1E, $1F, $1F, $F, $C
+SFX_C3:     dc.b 0, $12, 1, 1, $80, 5, 0, $A, 0, 2, $EF, 0, $DB, 4, $D6, $D9, $20, $F2, $14, $3A, $72, $72, $34, $1F, $1F, $1F, $1F, $1E, $1F, $1F, $F, $C
                                         ; DATA XREF: ROM:0008507E   o
                 dc.b $D, 0, $D, $1F, $1F, $1F, $1F, $1C, $80, $11, $80, 0
-byte_95A7A:     dc.b 0, $4B, 1, 3, $80, 5, 0, $16, $A, 2, $80, 4, 0, $35, $A, 7, $80, $C0, 0, $3D, $F9, 1, $E1, $F6, $80, 1, $EF, 0, $AE, 3, $EF, 1
+SFX_C4:     dc.b 0, $4B, 1, 3, $80, 5, 0, $16, $A, 2, $80, 4, 0, $35, $A, 7, $80, $C0, 0, $3D, $F9, 1, $E1, $F6, $80, 1, $EF, 0, $AE, 3, $EF, 1
                                         ; DATA XREF: ROM:00085082   o
                 dc.b $BA, 2, $E7, $E0, $80, 3, $E7, $E0, $40, 3, $E7, $E0, $C0, $E6, $A, $F7, 0, 5, $FF, $E5, $F2, $E1, $FF, $F6, $FF, $DD, $80, $3C, $F2, $80, 1, $AE
                 dc.b 3, $BA, 8, $EC, 2, $F7, 0, 5, $FF, $F4, $F2, $3C, 6, 2, 4, 1, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, 2, 0, $15, 0, $F, $F, $1F, $F
                 dc.b $30, $85, $21, $85, $3C, $74, $31, $36, $7F, $1F, $1F, $1F, $1F, $1F, $D, $F, $D, $1A, $D, $F, $D, $1F, $1F, $1F, $1F, $10, $80, $1A, $80, $3C, $C, $F
                 dc.b 1, 4, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, 2, 0, $15, 0, $F, $F, $1F, $F, $20, $80, $11, $80, $3C, $7C, $33, $36, $79, $1F, $1F, $1F, $1F, $1F
                 dc.b $D, $1F, $D, 0, $D, 0, $D, $1F, $1F, $1F, $1F, $1B, $80, $14, $80, 0
-byte_95B2A:     dc.b 0, $1E, 1, 1, $80, 4, 0, $A, $10, 3, $80, 1, $EF, 0, $87, 6, $80, 1, $9E, 6, $80, 1, $E6, $F, $F7, 0, 3, $FF, $F6, $F2, $3A, $7F
+SFX_C5:     dc.b 0, $1E, 1, 1, $80, 4, 0, $A, $10, 3, $80, 1, $EF, 0, $87, 6, $80, 1, $9E, 6, $80, 1, $E6, $F, $F7, 0, 3, $FF, $F6, $F2, $3A, $7F
                                         ; DATA XREF: ROM:00085086   o
                 dc.b $32, 0, $3F, $1D, $15, $1F, $1F, $1F, $1C, $A, $1F, 7, $10, $10, 0, $1F, $F, $F, $F, $1A, $19, $10, $80, 0
-byte_95B62:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 7, $80, 1, $EF, 0, $F0, 0, 1, $39, $FF, $99, 7, $E6, $19, $F7, 0, 2, $FF, $F8, $F2, $3C, $75, 8
+SFX_C6:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 7, $80, 1, $EF, 0, $F0, 0, 1, $39, $FF, $99, 7, $E6, $19, $F7, 0, 2, $FF, $F8, $F2, $3C, $75, 8
                                         ; DATA XREF: ROM:0008508A   o
                 dc.b 4, 1, $F, $11, $10, $11, $15, $1F, $19, $1F, $10, 0, $10, 0, $F, $F, $1F, $E, 0, $80, 0, $80
-byte_95B98:     dc.b 0, $13, 1, 1, $80, 5, 0, $A, 0, 2, $EF, 0, $A9, 2, $EF, 1, $AC, $B, $F2, $3B, $70, 7, 4, $F, $15, $18, $11, $11, $15, $1F, $19, $1F
+SFX_C7:     dc.b 0, $13, 1, 1, $80, 5, 0, $A, 0, 2, $EF, 0, $A9, 2, $EF, 1, $AC, $B, $F2, $3B, $70, 7, 4, $F, $15, $18, $11, $11, $15, $1F, $19, $1F
                                         ; DATA XREF: ROM:0008508E   o
                 dc.b $11, 0, $F, 0, $F, $F, $1F, $1F, $1F, $10, $D, $80, $38, $70, $20, 8, $1F, $1F, $1F, $1F, $1F, $15, $1F, $19, $1F, $C, 0, $10, 0, $1F, $F, $F
                 dc.b $F, $12, $2A, 6, $80, $3B, $70, 2, 2, $A, $15, $18, $11, $11, $15, $1F, $19, $1F, $11, 0, $C, 0, $1F, $F, $1F, $1F, $2F, 2, $1D, $80, $38, $7B
                 dc.b $23, $C, $1F, $1F, $1F, $1F, $1F, $15, $1F, $19, $1F, $1C, 0, 0, 0, $1F, $F, $F, $F, $A, $19, 6, $80, 0
-byte_95C10:     dc.b 0, $15, 1, 1, $80, 5, 0, $A, 0, 5, $EF, 1, $B1, 1, $80, 1, $EF, 0, $C4, $15, $F2, $3D, 0, $36, $79, 9, $19, $1F, $1F, $1F, $11, $1F
+SFX_C8:     dc.b 0, $15, 1, 1, $80, 5, 0, $A, 0, 5, $EF, 1, $B1, 1, $80, 1, $EF, 0, $C4, $15, $F2, $3D, 0, $36, $79, 9, $19, $1F, $1F, $1F, $11, $1F
                                         ; DATA XREF: ROM:00085092   o
                 dc.b $1F, $1F, $A, $D, $D, $D, $1D, $F, $F, $F, $C, $80, $80, $80, $3A, 1, $31, 1, $66, $1F, $1F, $1F, $1F, $11, $1F, 5, $1F, $13, $13, $19, 0, $1D
                 dc.b $2F, $8F, $F, $1D, $10, $1A, $83, 0
-byte_95C58:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $F6, 3, $80, 1, $EF, 0, $F0, 0, 1, $E9, $FF, $99, 5, $FD, $EF, 1, $9B, $7F, $E7, $50, $F2, $3B, $71, 3
+SFX_C9:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $F6, 3, $80, 1, $EF, 0, $F0, 0, 1, $E9, $FF, $99, 5, $FD, $EF, 1, $9B, $7F, $E7, $50, $F2, $3B, $71, 3
                                         ; DATA XREF: ROM:00085096   o
                 dc.b $11, 3, $15, $18, $11, $1A, $15, $1F, $19, $1F, $10, $10, 0, 0, $1F, $F, $1F, $F, $21, $10, $30, $80, $3D, 9, $3E, $32, $75, $15, $1C, $13, $17, $E
                 dc.b $1F, $1F, $1F, $10, 5, 5, 5, $F, $F, $1F, $1F, 5, $81, $80, $80, 0
-byte_95CA8:     dc.b 0, $35, 1, 3, $80, 4, 0, $16, $F3, 2, $80, 5, 0, $24, 0, 1, $80, $C0, 0, $32, 0, 5, $EF, 0, $F0, 0, 1, $F5, $FF, $9A, 3, $80
+SFX_CA:     dc.b 0, $35, 1, 3, $80, 4, 0, $16, $F3, 2, $80, 5, 0, $24, 0, 1, $80, $C0, 0, $32, 0, 5, $EF, 0, $F0, 0, 1, $F5, $FF, $9A, 3, $80
                                         ; DATA XREF: ROM:0008509A   o
                 dc.b 1, $BA, $5E, $F2, $EF, 1, $F0, 0, 1, $F8, $FF, $AA, 3, $80, 1, $95, $5E, $F2, $80, $62, $F2, $38, 3, $62, 5, $F, $1F, $1F, $1F, $1F, $1F, $12
                 dc.b $1F, $1F, $10, $B, 6, 7, $1F, $3F, $F, $F, $11, $16, $14, $80, $38, 0, $77, 0, $A, $1F, $1F, $1F, $1F, $1F, $12, $1F, $1F, $11, 9, 8, 0, $1F
                 dc.b $1F, $F, $F, $17, $11, 7, $80, 0
-byte_95D10:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 1, 0, $80, 1, $EF, 0, $F0, 0, 1, $F4, $FF, $87, $35, $F2, $B, $72, 0, $1C, $3F, $16, $1D, $1D, $12, $1F
+SFX_CB:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 1, 0, $80, 1, $EF, 0, $F0, 0, 1, $F4, $FF, $87, $35, $F2, $B, $72, 0, $1C, $3F, $16, $1D, $1D, $12, $1F
                                         ; DATA XREF: ROM:0008509E   o
                 dc.b $1A, $A, 8, 6, 9, 2, $B, 7, 0, 9, $1F, $10, $10, $10, $80, 0
-byte_95D40:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $EE, $FF, $81, 4, $80, 1, $EF, 1, $82, 8, $F2, $3A, 0, $70, 0
+SFX_CC:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $EE, $FF, $81, 4, $80, 1, $EF, 1, $82, 8, $F2, $3A, 0, $70, 0
                                         ; DATA XREF: ROM:000850A2   o
                 dc.b $F, $1C, $1B, $10, $1F, $1F, $1F, $1F, $1F, $1B, 0, $10, 0, $F, $1F, $1F, $F, $11, $17, 0, $80, $38, $31, $20, $31, $26, $1F, $1F, $14, $1F, $F, $1F
                 dc.b $1F, $1F, $10, 0, 0, 0, $2F, $F, $F, $F, $1C, 7, $10, $80
-byte_95D8E:     dc.b 0, $17, 1, 1, $80, 5, 0, $A, $F, $C, $EF, 0, $F0, 0, 1, $13, $FF, $96, 5, $E6, $19, 5, $F2, $3A, $7F, 1, $F, $3A, $1C, $1F, $1F, $1C
+SFX_CD:     dc.b 0, $17, 1, 1, $80, 5, 0, $A, $F, $C, $EF, 0, $F0, 0, 1, $13, $FF, $96, 5, $E6, $19, 5, $F2, $3A, $7F, 1, $F, $3A, $1C, $1F, $1F, $1C
                                         ; DATA XREF: ROM:000850A6   o
                 dc.b $1F, $1F, $1F, $F, $B, 0, 0, 6, $1F, $F, $E, $F, $24, 6, 9, $80
-byte_95DBE:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 6, 4, $80, 1, $EF, 0, $BB, $24, $E6, $19, $15, $F2, $38, 0, $40, 0, $F, $C, $F, $E, $F, $1F, $1F, $1F
+SFX_CE:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 6, 4, $80, 1, $EF, 0, $BB, $24, $E6, $19, $15, $F2, $38, 0, $40, 0, $F, $C, $F, $E, $F, $1F, $1F, $1F
                                         ; DATA XREF: ROM:000850AA   o
                 dc.b $F, 2, $C, 0, $A, $1F, $1F, $F, $F, $1F, 3, $A, $80, 0
-byte_95DEC:     dc.b 0, $20, 1, 1, $80, 5, 0, $A, $5D, 1, $EF, 0, $F0, 0, 1, $41, $FF, $9E, 1, $94, 2, $80, 2, $E6, $10, $9E, 1, $94, 2, $80, 2, $F2
+SFX_CF:     dc.b 0, $20, 1, 1, $80, 5, 0, $A, $5D, 1, $EF, 0, $F0, 0, 1, $41, $FF, $9E, 1, $94, 2, $80, 2, $E6, $10, $9E, 1, $94, 2, $80, 2, $F2
                                         ; DATA XREF: ROM:000850AE   o
                 dc.b $3B, $70, 0, 0, $35, $1C, $1F, $1F, $1F, $1F, $1C, $1F, $D, $15, $11, 4, 7, $4F, $F, $1F, $1F, 2, 0, $10, $80, 0
-byte_95E26:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $44, $FF, $81, $10, $E6, 9, $F7, 0, 3, $FF, $F8, $F2, $3B, $27, $70
+SFX_D0:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $44, $FF, $81, $10, $E6, 9, $F7, 0, 3, $FF, $F8, $F2, $3B, $27, $70
                                         ; DATA XREF: ROM:000850B2   o
                 dc.b $5D, $18, $1F, $1F, $F, $12, $1F, $1F, $12, $17, 3, 0, 0, 0, $1F, $1F, $F, $F, $1F, $14, 0, $80
-byte_95E5C:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $39, $FF, $91, 7, $E6, $C, $F7, 0, 4, $FF, $F8, $F2, $3C, $75, 3
+SFX_D1:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $39, $FF, $91, 7, $E6, $C, $F7, 0, 4, $FF, $F8, $F2, $3C, $75, 3
                                         ; DATA XREF: ROM:000850B6   o
                 dc.b 4, 1, $F, $11, $10, $12, $15, $1F, $19, $1F, $10, 0, $10, 0, $F, $F, $1F, $E, 0, $80, 0, $80
-byte_95E92:     dc.b 0, $4B, 1, 3, $80, 4, 0, $16, $F6, 8, $80, 5, 0, $2C, $F6, $10, $80, $C0, 0, $46, 0, $10, $80, 1, $EF, 0, $F0, 0, 1, $D, $FF, $AD
+SFX_D2:     dc.b 0, $4B, 1, 3, $80, 4, 0, $16, $F6, 8, $80, 5, 0, $2C, $F6, $10, $80, $C0, 0, $46, 0, $10, $80, 1, $EF, 0, $F0, 0, 1, $D, $FF, $AD
                                         ; DATA XREF: ROM:000850BA   o
                 dc.b $37, $AD, $AD, $37, $E6, 6, $F7, 0, 3, $FF, $F8, $F2, $80, 6, $EF, 0, $E1, 2, $F0, 0, 1, $D, $FF, $AD, $37, $AD, $AD, $37, $E6, 6, $F7, 0
                 dc.b 2, $FF, $F8, $AD, $32, $F2, $80, $7F, $7F, $16, $F2, $3A, $79, $33, 6, $33, $1F, $1F, $F, $15, $1F, $1F, $12, $17, 6, 0, 0, 0, $1F, $1F, $F, $F
                 dc.b $26, $15, $10, $80, $3A, $79, $33, 3, $36, $1F, $1F, $F, $15, $1F, $1F, $12, $17, 6, 0, 0, 0, $1F, $1F, $F, $F, $16, $1D, $20, $80, 0
-byte_95F10:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, 3, $EF, 0, $F0, 0, 1, $D0, $FF, $91, 5, $F2, 8, $A, $13, $14, $73, $1F, $1F, $1F, $1F, $15, $16, $19
+SFX_D3:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, 3, $EF, 0, $F0, 0, 1, $D0, $FF, $91, 5, $F2, 8, $A, $13, $14, $73, $1F, $1F, $1F, $1F, $15, $16, $19
                                         ; DATA XREF: ROM:000850BE   o
                 dc.b $11, $1A, 1, 0, $16, $11, $F, $3F, $2F, $10, 2, $10, $80, 0
-byte_95F3E:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 1, 1, 8, $FF, $88, $7F, $F2, $31, $10, $30, $45, $41, $1B, $1A, 7, $B, $14
+SFX_D4:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 1, 1, 8, $FF, $88, $7F, $F2, $31, $10, $30, $45, $41, $1B, $1A, 7, $B, $14
                                         ; DATA XREF: ROM:000850C2   o
                 dc.b $10, $12, $1D, 1, 4, 2, 5, $1F, $1F, $F, $1F, $1A, 4, 0, $80, 0
-byte_95F6E:     dc.b 0, $41, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $2A, $C0, 0, $80, $C0, 0, $33, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, 2, $FF, $A1
+SFX_D5:     dc.b 0, $41, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $2A, $C0, 0, $80, $C0, 0, $33, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, 2, $FF, $A1
                                         ; DATA XREF: ROM:000850C6   o
                 dc.b $7F, $F0, 0, 1, 2, $FF, $E7, $A5, $40, $F2, $80, 1, $EF, 1, $A1, $7F, $E7, $40, $F2, $F5, 9, $F3, $E7, $F0, 0, 4, $FF, $FF, $B3, $7F, $E7, $40
                 dc.b $F2, $D, $2F, 0, $3F, $7F, $1B, 9, 9, 9, $1C, 5, 5, 5, 6, $A, $A, $A, $F, $1F, $1F, $1F, 5, $85, $85, $85, $A, $20, 7, $26, $75, $1F
                 dc.b $1F, $1F, 9, $1F, 5, 5, 5, 0, 0, 0, $A, $F, $F, $F, $1F, $15, $10, $16, $85, 0
-byte_95FE2:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, $F8, 5, $EF, 0, $F0, 0, 1, 1, $FF, $9E, 1, $B4, 2, $F2, $39, $70, $21, 0, $32, $1F, $12, $1F, $1F, $10
+SFX_D6:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, $F8, 5, $EF, 0, $F0, 0, 1, 1, $FF, $9E, 1, $B4, 2, $F2, $39, $70, $21, 0, $32, $1F, $12, $1F, $1F, $10
                                         ; DATA XREF: ROM:000850CA   o
                 dc.b $17, $1F, $11, $D, $1F, 1, $17, $1F, $1F, $1F, $2F, $1D, $10, 0, $80, 0
-byte_96012:     dc.b 0, $2F, 1, 2, $80, 5, 0, $10, 0, 1, $80, 4, 0, $2C, 0, $10, $80, 1, $EF, 0, $F0, 0, 1, $C0, $FF, $95, 4, $80, 1, $F0, 0, 1
+SFX_D7:     dc.b 0, $2F, 1, 2, $80, 5, 0, $10, 0, 1, $80, 4, 0, $2C, 0, $10, $80, 1, $EF, 0, $F0, 0, 1, $C0, $FF, $95, 4, $80, 1, $F0, 0, 1
                                         ; DATA XREF: ROM:000850CE   o
                 dc.b $E0, $FF, $83, $14, $E6, 8, $F7, 0, 3, $FF, $F8, $F2, $80, $42, $F2, $3B, $1E, $61, $3F, $A, $F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, 0, 0, 0, 0
                 dc.b $F, $F, $F, $F, $17, $10, $20, $80, $3B, $1F, $74, $31, 4, $F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, 0, 0, 0, 0, $F, $F, $F, $F, $17, 0, $20
                 dc.b $80, 0
-byte_96074:     dc.b 0, $16, 1, 1, $80, 4, 0, $A, 0, 5, $80, 2, $EF, 0, $F0, 0, 1, $C0, $FF, $81, 6, $F2, $3B, $32, 2, $10, $1E, $10, $1F, $1F, $12, $16
+SFX_D8:     dc.b 0, $16, 1, 1, $80, 4, 0, $A, 0, 5, $80, 2, $EF, 0, $F0, 0, 1, $C0, $FF, $81, 6, $F2, $3B, $32, 2, $10, $1E, $10, $1F, $1F, $12, $16
                                         ; DATA XREF: ROM:000850D2   o
                 dc.b $1E, $19, $1F, 3, $B, 0, 0, $F, $D, $F, $E, $18, 1, 0, $80, 0
-byte_960A4:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $1B, $66, $83, $18, $EF, 1, $F0, 0, 1, $F3, $66, $90, $2E, $F2, $3A
+SFX_D9:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $1B, $66, $83, $18, $EF, 1, $F0, 0, 1, $F3, $66, $90, $2E, $F2, $3A
                                         ; DATA XREF: ROM:000850D6   o
                 dc.b $F, $10, 0, $2F, $11, $15, $1C, $10, $1F, $1F, $A, $1F, 1, 0, $C, 1, $1F, $F, 2, $F, $1A, $11, $C, $82, $3A, 3, 0, 0, $3A, $11, $15, $1F
                 dc.b $1F, $1F, $1C, $A, $1F, $A, $B, $10, 1, $1F, $F, $12, $F, $10, 7, 0, $80, 0
-byte_960F6:     dc.b 0, $2D, 1, 2, $80, 5, 0, $10, 5, 4, $80, 4, 0, $1C, 0, 0, $EF, 0, $A7, $14, $E6, 6, $F7, 0, 3, $FF, $F8, $F2, $EF, 1, $F0, 0
+SFX_DA:     dc.b 0, $2D, 1, 2, $80, 5, 0, $10, 5, 4, $80, 4, 0, $1C, 0, 0, $EF, 0, $A7, $14, $E6, 6, $F7, 0, 3, $FF, $F8, $F2, $EF, 1, $F0, 0
                                         ; DATA XREF: ROM:000850DA   o
                 dc.b 1, $D8, $FF, $94, $A, $E6, 6, $F7, 0, 6, $FF, $F8, $F2, $30, $4C, $10, $29, $6C, $1F, $1F, $1E, $1F, $1F, $1F, $1F, $1F, $19, $E, 4, 0, $1B, $1A
                 dc.b $1C, $F, $1F, 1, $11, $80, $30, 1, $61, $61, $40, $1F, $1F, $1F, $1F, $1C, $1F, $1F, $1F, $10, 8, $C, 0, $1B, $1A, $C, $F, $10, $10, $10, $80, 0
-byte_96156:     dc.b 0, $19, 1, 1, $80, 4, 0, $A, 0, 0, $80, 2, $EF, 0, $D0, $A, $E6, 3, $E7, $F7, 0, 2, $FF, $F7, $F2, $C, $22, $31, $7E, $73, $E, $D
+SFX_DB:     dc.b 0, $19, 1, 1, $80, 4, 0, $A, 0, 0, $80, 2, $EF, 0, $D0, $A, $E6, 3, $E7, $F7, 0, 2, $FF, $F7, $F2, $C, $22, $31, $7E, $73, $E, $D
                                         ; DATA XREF: ROM:000850DE   o
                 dc.b $F, $E, $19, $1F, $1F, $1F, 0, $E, 2, $E, $1F, $F, $F, $F, $1F, $80, $20, $80, $C, $32, $31, $7E, $73, $E, $D, $F, $E, $19, $1F, $1F, $1F, 0
                 dc.b $E, 2, $E, $15, $A, 5, $A, $1F, $80, $20, $80, $C, $31, $31, $71, $7F, $F, $D, $F, $E, $19, $1F, $1F, $1F, $10, $E, 2, $E, $15, 9, 5, 9
                 dc.b $1E, $80, $1B, $80
-byte_961BA:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, 0, 1, $26, $FF, $8D, $B, $E6, $A, $F7, 0, 3, $FF, $F8, $F2, $3A, $7B, $30
+SFX_DC:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, 0, 1, $26, $FF, $8D, $B, $E6, $A, $F7, 0, 3, $FF, $F8, $F2, $3A, $7B, $30
                                         ; DATA XREF: ROM:000850E2   o
                 dc.b $30, $75, $E, $F, $E, $12, $1F, $12, $1F, $1F, 0, 0, 7, 0, $1F, $F, $1F, $F, $1A, $1C, 5, $80
-byte_961F0:     dc.b 0, $54, 1, 2, $80, 5, 0, $10, 0, $E, $80, 4, 0, $30, 0, $1A, $80, 1, $EF, 0, $E9, $2F, $3F, $F0, 1, 1, $A0, $FF, $C0, 2, $80, 1
+SFX_DD:     dc.b 0, $54, 1, 2, $80, 5, 0, $10, 0, $E, $80, 4, 0, $30, 0, $1A, $80, 1, $EF, 0, $E9, $2F, $3F, $F0, 1, 1, $A0, $FF, $C0, 2, $80, 1
                                         ; DATA XREF: ROM:000850E6   o
                 dc.b $F0, 1, 1, $7F, $FF, $C8, 8, $E7, $F0, 4, 1, $A3, $FF, $D6, 7, $F2, $80, 6, $80, 1, $E1, 6, $EF, 0, $E9, $27, $3F, $F0, 1, 1, $A0, $FF
                 dc.b $C0, 2, $80, 1, $F0, 1, 1, $7F, $FF, $C8, 8, $E7, $F0, 4, 1, $A3, $FF, $D6, $C, $F2, $3C, $70, $31, $30, $70, $1F, $13, $1F, $13, $F, $1F, $1F
                 dc.b $1F, 0, 0, $10, 0, $12, $F, $12, $F, $1E, $80, $10, $80, 0
-byte_9625E:     dc.b 0, $16, 1, 1, $80, 4, 0, $A, 0, 1, $80, 1, $EF, 0, $F0, 1, 1, $51, $FF, $B1, $C, $F2, $39, $36, $74, $C, 2, $1F, $1E, $F, $12, $14
+SFX_DE:     dc.b 0, $16, 1, 1, $80, 4, 0, $A, 0, 1, $80, 1, $EF, 0, $F0, 1, 1, $51, $FF, $B1, $C, $F2, $39, $36, $74, $C, 2, $1F, $1E, $F, $12, $14
                                         ; DATA XREF: ROM:000850EA   o
                 dc.b $1F, $1F, $1F, $10, $E, $10, $F, $19, 9, 9, $A, $11, $13, $21, $80, 0
-byte_9628E:     dc.b 0, $1C, 1, 1, $80, 4, 0, $A, 0, 4, $80, 1, $EF, 0, $CB, 1, $BD, 4, $C0, 7, $E6, $B, $F7, 0, 3, $FF, $F8, $F2, 0, $5A, $F, $75
+SFX_DF:     dc.b 0, $1C, 1, 1, $80, 4, 0, $A, 0, 4, $80, 1, $EF, 0, $CB, 1, $BD, 4, $C0, 7, $E6, $B, $F7, 0, 3, $FF, $F8, $F2, 0, $5A, $F, $75
                                         ; DATA XREF: ROM:000850EE   o
                 dc.b $3F, $1F, $1F, $1F, $1F, $11, $1F, $D, $1F, $18, $11, $F, 0, $1F, $30, $9F, $F, $33, $29, $E, $80, 0, $59, $43, $7F, $3F, $1F, $1E, $1A, $1F, $11, $1F
                 dc.b $D, $1F, $18, $E, 9, 0, $1F, $30, $9F, $F, $2C, $16, $20, $80
-byte_962DC:     dc.b 0, $38, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $2C, 0, 2, $EF, 0, $F0, 0, 2, $F5, $FF, $90, $75, $80, $10, $EF, 1, $F0, 0, 1
+SFX_E0:     dc.b 0, $38, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $2C, 0, 2, $EF, 0, $F0, 0, 2, $F5, $FF, $90, $75, $80, $10, $EF, 1, $F0, 0, 1
                                         ; DATA XREF: ROM:000850F2   o
                 dc.b $25, $11, $A4, 5, $E6, 7, $F7, 0, 2, $FF, $F8, $F2, $F3, $E7, $F0, 1, 2, 1, $FF, $C2, $7F, $E7, $A, $F2, $39, $10, 2, $63, $19, $1F, $1F, $12
                 dc.b $1A, $17, $1F, $1F, $1F, 1, 5, $B, 7, $2F, $2F, $1F, $F, $19, $F, 3, $80, $39, $1F, 0, $60, $1B, $1F, $1F, $12, $F, $14, $1F, $1F, $1F, 6, 0
                 dc.b 7, $C, $5F, $2F, $1F, $F, 9, 7, 0, $84
-byte_96346:     dc.b 0, $34, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $22, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $F1, $FF, $96, 3, $80, 1, $EF, 1, $85
+SFX_E1:     dc.b 0, $34, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $22, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $F1, $FF, $96, 3, $80, 1, $EF, 1, $85
                                         ; DATA XREF: ROM:000850F6   o
                 dc.b $20, $F2, $80, 1, $F5, 5, $F3, $E7, $F0, 0, 1, 1, $FF, $C6, 3, $80, 1, $C0, $20, $F2, $35, 1, $41, 1, 1, $1F, $1F, $1E, $1F, $F, $1F, $1F
                 dc.b $1F, $F, $C, 0, 0, $F, $F, $F, $F, 8, $8A, $8A, $8A, $39, $31, $42, 3, $71, $1F, $1F, $1E, $1F, $1F, $1F, $1F, $A, $C, $F, $D, $D, $4F, $F
                 dc.b $F, $3F, 0, $18, $1A, $80
-byte_963AC:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, $1D, 3, $80, 1, $EF, 0, $F0, 0, 1, $4B, $FF, $89, 7, $87, $12, $E6, $1A, $E, $F2, $B, 0, $7F, $2F, $3F
+SFX_E2:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, $1D, 3, $80, 1, $EF, 0, $F0, 0, 1, $4B, $FF, $89, 7, $87, $12, $E6, $1A, $E, $F2, $B, 0, $7F, $2F, $3F
                                         ; DATA XREF: ROM:000850FA   o
                 dc.b $D, $11, $F, $F, $F, $1A, $A, $C, 1, 3, $B, $D, $F, $F, $F, $1F, $26, $18, $1E, $80
-byte_963E0:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $73, $FF, $84, 2, $81, 6, $F2, $2C, $70, $31, $20, $7B, $12, $14, $14
+SFX_E3:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $73, $FF, $84, 2, $81, 6, $F2, $2C, $70, $31, $20, $7B, $12, $14, $14
                                         ; DATA XREF: ROM:000850FE   o
                 dc.b $15, $15, $1F, $19, $1F, $1F, 0, 0, 0, $F, $F, $2F, $E, $F, $80, 0, $80, 0
-byte_96412:     dc.b 0, $18, 1, 1, $80, 4, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $55, 2, $9A, $55, $80, 1, $F2, $3A, $7F, 0, $30, $F, $1D, $15, $12
+SFX_E4:     dc.b 0, $18, 1, 1, $80, 4, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $55, 2, $9A, $55, $80, 1, $F2, $3A, $7F, 0, $30, $F, $1D, $15, $12
                                         ; DATA XREF: ROM:00085102   o
                 dc.b $12, $1F, $1C, $19, $D, 8, 4, 8, 9, $1F, $1F, $1F, $1F, $D, $D, 1, $80, 0
-byte_96444:	binclude	"data/other/byte_96444.bin"
-byte_96444_End:
-byte_96558:     dc.b 0, $45, 1, 2, $80, 5, 0, $10, 0, 2, $80, 4, 0, $2D, $10, 1, $EF, 2, $80, $3D, $B0, 4, $FB, 2, $E6, 1, $F7, 0, $18, $FF, $F6, $A5
+SFX_E5:	binclude	"data/sound/SFX_E5.bin"
+SFX_E5_End:
+SFX_E6:     dc.b 0, $45, 1, 2, $80, 5, 0, $10, 0, 2, $80, 4, 0, $2D, $10, 1, $EF, 2, $80, $3D, $B0, 4, $FB, 2, $E6, 1, $F7, 0, $18, $FF, $F6, $A5
                                         ; DATA XREF: ROM:0008510A   o
                 dc.b 4, $FB, 2, $E6, 6, $F7, 0, 6, $FF, $F6, $80, 3, $F2, $EF, 0, $FB, $1A, $80, 1, $87, 4, $F7, 0, $C, $FF, $F8, $FB, $E6, $80, 1, $EF, 1
                 dc.b $AA, $77, $80, 3, $F2, $3A, $70, $30, 4, $3F, $1D, $15, $1E, $1F, $1F, $1C, $A, $1F, 1, 6, $10, 0, $35, 5, $15, $B, $1A, $10, 0, $82, $3A, $2F
                 dc.b $F, $F, $6F, $1D, $15, $10, 7, $F, $C, $19, $1F, 2, 0, 6, 4, $15, $15, $15, $A, $10, $D, 8, $80, $3C, $30, $70, $30, $70, $1F, 8, $F, 8
                 dc.b $1E, $1F, $1F, $1F, 2, 3, $1F, 6, $1F, $1F, $3F, $F, $A, $80, 4, $80
-byte_965E8:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $A5, $15, $80, 3, $F2, $3A, $F, $F, 0, $3F, $F, $10, $12
+SFX_E7:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $A5, $15, $80, 3, $F2, $3A, $F, $F, 0, $3F, $F, $10, $12
                                         ; DATA XREF: ROM:0008510E   o
                 dc.b $F, $1F, $1F, $1F, $17, $E, 2, 0, 0, 5, 5, $15, $A, $2D, $1B, $16, $80, 0
-byte_9661A:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 6, $80, 1, $EF, 0, $AA, $19, $E6, $1B, $15, $80, 1, $F2, $3A, $70, $11, $35, $F, $1D, $14, $1D, $1C, $1F
+SFX_E8:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 6, $80, 1, $EF, 0, $AA, $19, $E6, $1B, $15, $80, 1, $F2, $3A, $70, $11, $35, $F, $1D, $14, $1D, $1C, $1F
                                         ; DATA XREF: ROM:00085112   o
                 dc.b $1C, $19, $D, 8, $F, $19, 0, $F, $1F, $F, $F, $10, $11, 8, $80, 0
-byte_9664A:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $11, $FF, $8A, $10, $E6, $12, $A, $80, 1, $F2, $3A, $7E, 1, $30, $F
+SFX_E9:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $11, $FF, $8A, $10, $E6, $12, $A, $80, 1, $F2, $3A, $7E, 1, $30, $F
                                         ; DATA XREF: ROM:00085116   o
                 dc.b $1D, $14, $1F, $1F, $1F, $1C, $19, $D, 0, 0, $10, 0, $1F, $F, $3F, $F, $1B, $10, 0, $80
-byte_9667E:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $B5, $B, $E6, 5, $EF, 1, $BA, $1C, $E6, $1B, $A, $80, 1, $F2, $38, 0, $40, 0
+SFX_EA:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $B5, $B, $E6, 5, $EF, 1, $BA, $1C, $E6, $1B, $A, $80, 1, $F2, $38, 0, $40, 0
                                         ; DATA XREF: ROM:0008511A   o
                 dc.b $F, $C, $F, $E, $F, $1F, $1F, $1F, $F, 2, $C, 0, $A, $1F, $1F, $F, $F, $1F, 3, $A, $80, $3A, $7F, $19, $30, $F, $1D, $14, $1D, $1C, $1F, $1C
                 dc.b $19, $D, 0, 0, 0, 0, $F, $F, $F, $F, $20, $30, $20, $80
-byte_966CC:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, $C, $EF, 0, $F0, 0, 2, $8E, $FF, $98, 5, $F2, $38, 0, 2, 1, $42, $F, $F, $F, $16, $18, $19, 0
+SFX_EB:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, $C, $EF, 0, $F0, 0, 2, $8E, $FF, $98, 5, $F2, $38, 0, 2, 1, $42, $F, $F, $F, $16, $18, $19, 0
                                         ; DATA XREF: ROM:0008511E   o
                 dc.b $1F, $1A, 0, 0, 2, $1F, $1F, $1F, $F, $10, $1A, $10, $80, 0
-byte_966FA:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, $10, 0, $EF, 0, $F0, 0, 1, $E3, $FF, $81, 4, $80, 1, $85, 8, $E6, $C, $F7, 0, 4, $FF, $F8, $F2, $3A
+SFX_EC:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, $10, 0, $EF, 0, $F0, 0, 1, $E3, $FF, $81, 4, $80, 1, $85, 8, $E6, $C, $F7, 0, 4, $FF, $F8, $F2, $3A
                                         ; DATA XREF: ROM:00085122   o
                 dc.b $30, $10, $10, 3, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $F, $11, 0, 4, $F, $F, $F, $F, 0, $27, $20, $80
-byte_96732:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 2, $EF, 0, $A6, $C, $E6, 6, $F7, 0, 5, $FF, $F8, $F2, $1A, $75, $30, $20, $6F, $1F, $1F, $1B, $1F, $1F
+SFX_ED:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 2, $EF, 0, $A6, $C, $E6, 6, $F7, 0, 5, $FF, $F8, $F2, $1A, $75, $30, $20, $6F, $1F, $1F, $1B, $1F, $1F
                                         ; DATA XREF: ROM:00085126   o
                 dc.b $1C, $1A, $1F, 8, $10, 9, 0, $17, $F, $E, $F, 7, $16, $10, $80, 0
-byte_96762:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 1, $80, 1, $EF, 0, $F0, 0, 1, $F4, $FF, $87, $32, $F2, $B, $70, 7, $11, $3F, $16, $D, $D, $E, $1F
+SFX_EE:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 1, $80, 1, $EF, 0, $F0, 0, 1, $F4, $FF, $87, $32, $F2, $B, $70, 7, $11, $3F, $16, $D, $D, $E, $1F
                                         ; DATA XREF: ROM:0008512A   o
                 dc.b $1A, $A, $1F, 6, $19, 0, 0, 7, 0, 9, $F, $10, $13, 0, $80, 0
-byte_96792:     dc.b 0, $F, 1, 1, $80, 5, 0, $A, 0, 7, $EF, 0, $C7, 6, $F2, $3C, $E, 0, 0, $4F, $1D, $11, $E, $F, $F, $1A, $A, 6, 0, 0, 0, 0
+SFX_EF:     dc.b 0, $F, 1, 1, $80, 5, 0, $A, 0, 7, $EF, 0, $C7, 6, $F2, $3C, $E, 0, 0, $4F, $1D, $11, $E, $F, $F, $1A, $A, 6, 0, 0, 0, 0
                                         ; DATA XREF: ROM:0008512E   o
                 dc.b $F, $F, $F, $1F, $1C, 3, $20, $80, $C, $F, 1, 3, $F, $1D, $F, $E, $F, $F, $1A, $A, 6, 0, 0, 0, 0, $F, $F, $F, $1F, 0, $15, $2C
                 dc.b $80, $C, $F, 0, 3, $F, $1D, $F, $E, $F, $F, $1A, $A, 6, 0, 0, 0, 0, $1F, $F, $F, $1F, $30, $15, $30, $80
-byte_967EC:     dc.b 0, $1A, 1, 1, $80, $A0, 0, $A, $E5, 0, $F5, 1, $C0, 5, $BD, $A, $EC, 2, $F7, 0, 4, $FF, $F8, $EC, $F8, $F2
-                                        ; DATA XREF: ROM:off_85166   o
-byte_96806:     dc.b 0, $1A, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $EE, $FF, $98, 4, $EF, 1, $97, $1E, $F2, $38, $34, $31, $70, $13, $1F
+SFX_40:     dc.b 0, $1A, 1, 1, $80, $A0, 0, $A, $E5, 0, $F5, 1, $C0, 5, $BD, $A, $EC, 2, $F7, 0, 4, $FF, $F8, $EC, $F8, $F2
+                                        ; DATA XREF: ROM:SFX_40_7F_PointerTable   o
+SFX_41:     dc.b 0, $1A, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $EE, $FF, $98, 4, $EF, 1, $97, $1E, $F2, $38, $34, $31, $70, $13, $1F
                                         ; DATA XREF: ROM:0008516A   o
                 dc.b $1F, $F, $1F, $1F, $1F, $1F, $1F, 0, 0, 0, 0, $2F, $F, $F, $F, $1C, $17, 0, $80, $3A, $F, $71, 0, 7, $C, $12, $12, $1F, $F, $1F, $1F, $1F
                 dc.b $D, 0, $C, 4, $12, $12, 2, 8, $21, $10, 0, $80
-byte_96852:     dc.b 0, $35, 1, 3, $80, 4, 0, $16, 0, 3, $80, 5, 0, $2D, 0, 3, $80, $C0, 0, $31, 0, $A, $EF, 0, $F0, 0, 1, $E1, $FF, $97, 2, $EF
+SFX_42:     dc.b 0, $35, 1, 3, $80, 4, 0, $16, 0, 3, $80, 5, 0, $2D, 0, 3, $80, $C0, 0, $31, 0, $A, $EF, 0, $F0, 0, 1, $E1, $FF, $97, 2, $EF
                                         ; DATA XREF: ROM:0008516E   o
                 dc.b 1, $81, 4, $FB, 1, $F7, 0, $2D, $FF, $F8, $80, 7, $F2, $80, $7F, $3E, $F2, $80, $7F, $3E, $F2, $3A, $71, 1, 4, $24, $1F, $1F, $1F, $1F, $1F, 0
                 dc.b $1D, $1F, $13, 0, $D, 0, $A, $E, $1E, $E, $17, 1, $16, $80, $3B, $76, $7E, $30, $37, $1F, $1F, $1F, $5F, $1F, $1F, $1D, $1F, $A, 0, 0, 2, $12
                 dc.b 2, 2, 9, $10, $17, $1D, $80, 0
-byte_968BA:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, $10, 3, $EF, 0, $F0, 0, 1, $43, $FF, $8A, 1, $80, 1, $95, 8, $80, 1, $E6, 8, $F7, 0, 3, $FF, $F6
+SFX_43:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, $10, 3, $EF, 0, $F0, 0, 1, $43, $FF, $8A, 1, $80, 1, $95, 8, $80, 1, $E6, 8, $F7, 0, 3, $FF, $F6
                                         ; DATA XREF: ROM:00085172   o
                 dc.b $F2, $39, $30, $70, 0, 6, $F, $18, $1D, $1A, $F, $1F, $1F, $1F, 4, 0, $A, 0, $2F, $F, $1F, $F, $1F, $10, $1D, $80, $39, $1F, $30, $77, 5, $1D
                 dc.b $18, $16, $1A, $1F, $1F, $1F, $1F, $1F, $16, 1, 0, $5F, $F, $F, $F, $24, $10, $11, $80, $3E, $1D, $1F, $6C, $1F, $10, $12, $12, $12, $1F, $1F, $1F, $1F
@@ -112493,239 +112494,239 @@ byte_968BA:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, $10, 3, $EF, 0, $F0, 0, 1, $43
                 dc.b $F, $10, $80, $80, $80, $3D, $2D, $1C, $7D, 1, $D, $18, $16, $1A, $1F, $1F, $1F, $1F, $F, 6, 7, 7, $1F, $F, $F, $F, $14, $80, $80, $80, $3D, $2F
                 dc.b $11, $87, $F, $1D, $18, $16, $1A, $1F, $1F, $1F, $1F, $F, 6, 7, 7, $1F, $F, $F, $F, $14, $80, $80, $80, $3D, $3F, $1B, $80, $A, $1D, $18, $16, $1A
                 dc.b $1F, $1F, $1F, $1F, $1F, 6, 7, 7, $1F, $F, $F, $F, $10, $80, $80, $80
-byte_9698A:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 5, $EF, 0, $F0, 0, 1, $80, $FF, $9F, 2, $80, 1, $F0, 4, 1, $55, 3, $A0, $3A, $F2, $38, $31, 2
+SFX_44:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 5, $EF, 0, $F0, 0, 1, $80, $FF, $9F, 2, $80, 1, $F0, 4, 1, $55, 3, $A0, $3A, $F2, $38, $31, 2
                                         ; DATA XREF: ROM:00085176   o
                 dc.b 3, $71, $F, $1F, $F, $1F, $1F, $E, $1F, 7, 7, 0, $A, $E, $F, $1F, $F, $1F, $17, $1E, $C, $80
-byte_969C0:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, 4, $A, $EF, 0, $F0, 0, 1, $20, $FF, $A2, 5, $E7, $F0, 0, 1, $CC, $FF, $AA, 2, $F7, 0, $D, $FF, $FA
+SFX_45:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, 4, $A, $EF, 0, $F0, 0, 1, $20, $FF, $A2, 5, $E7, $F0, 0, 1, $CC, $FF, $AA, 2, $F7, 0, $D, $FF, $FA
                                         ; DATA XREF: ROM:0008517A   o
                 dc.b $F2, $38, 4, $11, 3, $E, $1F, $1F, $1F, $1F, $14, $1F, $1F, $1F, 1, 1, 0, 0, $12, $12, 2, $A, $1B, $18, $A, $80
-byte_969FA:     dc.b 0, $27, 1, 2, $80, 5, 0, $10, $A, 7, $80, $C0, 0, $24, $A, 7, $EF, 0, $F0, 0, 1, $50, $FF, $B5, 2, $BC, $C1, 5, $E6, 6, $F7, 0
+SFX_46:     dc.b 0, $27, 1, 2, $80, 5, 0, $10, $A, 7, $80, $C0, 0, $24, $A, 7, $EF, 0, $F0, 0, 1, $50, $FF, $B5, 2, $BC, $C1, 5, $E6, 6, $F7, 0
                                         ; DATA XREF: ROM:0008517E   o
                 dc.b 5, $FF, $F8, $F2, $80, $1B, $F2, $38, $33, $13, $76, 1, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, 0, $10, 0, $B, $1F, $2F, $F, $F, $22, $17, $2F, $80
-byte_96A3A:     dc.b 0, $27, 1, 2, $80, 5, 0, $10, 0, 3, $80, $C0, 0, $24, 0, 6, $EF, 0, $F0, 0, 2, $70, $F, $B5, 3, $BC, $C1, $A, $E6, 6, $F7, 0
+SFX_47:     dc.b 0, $27, 1, 2, $80, 5, 0, $10, 0, 3, $80, $C0, 0, $24, 0, 6, $EF, 0, $F0, 0, 2, $70, $F, $B5, 3, $BC, $C1, $A, $E6, 6, $F7, 0
                                         ; DATA XREF: ROM:00085182   o
                 dc.b 5, $FF, $F8, $F2, $80, $38, $F2, $B, $41, $11, $71, $11, $1F, $1F, $1F, $1F, $1F, $1F, $F, $1F, $11, 0, 0, $B, $1F, $1F, $F, $F, $1A, $1A, $1F, $80
-byte_96A7A:     dc.b 0, $37, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $27, 0, 1, $EF, 0, $F0, 0, 1, $C1, $FF, $9F, 3, $80, 1, $EF, 1, $81, 7, $E6
+SFX_48:     dc.b 0, $37, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $27, 0, 1, $EF, 0, $F0, 0, 1, $C1, $FF, $9F, 3, $80, 1, $EF, 1, $81, 7, $E6
                                         ; DATA XREF: ROM:00085186   o
                 dc.b 5, $F7, 0, 6, $FF, $F8, $F2, $F3, $E7, $A6, 3, $80, 1, $B3, 7, $EC, 1, $F7, 0, 6, $FF, $F8, $F2, $38, $32, 0, 1, $52, $1B, $1F, $1F, $17
                 dc.b $1F, $15, $1D, $1F, $13, 0, $10, 0, $F, $1F, $1F, $F, $31, 8, $10, $85, $3D, $2C, 1, 1, 1, $1F, $1F, $1F, $1F, $F, $15, $1D, $1F, 0, 0, 0
                 dc.b 0, $1F, $F, $1F, $F, $11, $80, $80, $80, 0
-byte_96AE4:     dc.b 0, $1A, 1, 1, $80, 5, 0, $A, 0, 1, $EF, 0, $88, 5, $EF, 1, $98, $A, $E6, 6, $F7, 0, 6, $FF, $F8, $F2, $30, 1, $60, $61, $41, $1F
+SFX_49:     dc.b 0, $1A, 1, 1, $80, 5, 0, $A, 0, 1, $EF, 0, $88, 5, $EF, 1, $98, $A, $E6, 6, $F7, 0, 6, $FF, $F8, $F2, $30, 1, $60, $61, $41, $1F
                                         ; DATA XREF: ROM:0008518A   o
                 dc.b $1F, $1F, $1F, $1C, $1F, $1F, $10, $10, 8, $C, 0, $1B, $1A, $C, $1F, $10, 0, $1B, $80, $30, $4C, $16, $20, $6F, $1F, $1F, $1E, $1F, $1F, $1F, $1F, $1F
                 dc.b 9, $E, $A, 0, $1B, $1A, $1C, $F, $1F, $1A, $C, $80
-byte_96B30:     dc.b 0, $28, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $1A, 0, 0, $EF, 0, $F0, 0, 2, $EA, $FF, $90, $38, $F2, $81, 2, $80, 1, $F3, $E7
+SFX_4A:     dc.b 0, $28, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $1A, 0, 0, $EF, 0, $F0, 0, 2, $EA, $FF, $90, $38, $F2, $81, 2, $80, 1, $F3, $E7
                                         ; DATA XREF: ROM:0008518E   o
                 dc.b $F0, 1, 1, $F7, $18, $A5, $30, $F2, $38, $16, 8, $60, $31, $1F, $1F, $1F, $1F, $17, $1F, $1F, $1F, 1, $A, $B, $A, $2F, $2F, $F, $F, 9, $F, $F
                 dc.b $80, 0
-byte_96B72:     dc.b 0, $35, 1, 1, $80, 5, 0, $A, 0, 4, $EF, 0, $F0, 0, 1, $31, $FF, $97, 2, $EF, 1, $90, 3, $FB, 1, $F7, 0, $1A, $FF, $F8, $FB, $E8
+SFX_4B:     dc.b 0, $35, 1, 1, $80, 5, 0, $A, 0, 4, $EF, 0, $F0, 0, 1, $31, $FF, $97, 2, $EF, 1, $90, 3, $FB, 1, $F7, 0, $1A, $FF, $F8, $FB, $E8
                                         ; DATA XREF: ROM:00085192   o
                 dc.b $EF, 2, $F0, 0, 1, $C0, $FF, $84, 3, $80, 1, $EF, 3, $F0, 0, 1, $F6, $FF, $A7, $35, $F2, $3A, $72, 1, 4, $24, $1F, $1F, $1F, $1F, $1F, 0
                 dc.b $1D, $1F, $13, 0, $D, 0, $A, $E, $1E, $E, $17, 1, $16, $80, $3C, $71, $75, $31, $35, $11, $5F, $13, $5F, $1F, $1F, $1D, $1F, 0, 0, 7, 2, $32
                 dc.b 8, 2, 8, $20, $80, $1C, $80, $3C, $70, $34, $30, $70, $16, $D, $D, $E, $1F, $1A, $A, $1F, 6, 9, 0, 0, 7, $A, 9, $A, $2D, $83, 7, $80
                 dc.b $3C, $70, $34, $30, $70, $16, $D, $D, $E, $1F, $1A, $A, $1F, 6, 9, 0, 0, 7, $A, 9, $A, $2D, $83, 7, $80, 0
-byte_96C0C:     dc.b 0, $37, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $25, 0, 0, $EF, 0, $F0, 0, 1, $E3, $FF, $8A, 4, $80, 1, $85, $13, $E6, $A, $F7
+SFX_4C:     dc.b 0, $37, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $25, 0, 0, $EF, 0, $F0, 0, 1, $E3, $FF, $8A, 4, $80, 1, $85, $13, $E6, $A, $F7
                                         ; DATA XREF: ROM:00085196   o
                 dc.b 0, 3, $FF, $F8, $F2, $F3, $E7, $F5, 0, $BA, 4, $80, 1, $C6, $13, $EC, 2, $F7, 0, 3, $FF, $F8, $F2, $38, $30, $13, $83, $A, $1F, $1F, $11, $1F
                 dc.b $1F, $1F, $1F, $1F, 0, 0, 0, 4, $F, $F, $F, $F, 0, $10, 0, $80
-byte_96C5C:     dc.b 0, $37, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $25, 0, 0, $EF, 0, $F0, 0, 1, $E3, $FF, $8A, 4, $80, 1, $85, $13, $E6, $A, $F7
+SFX_4D:     dc.b 0, $37, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $25, 0, 0, $EF, 0, $F0, 0, 1, $E3, $FF, $8A, 4, $80, 1, $85, $13, $E6, $A, $F7
                                         ; DATA XREF: ROM:0008519A   o
                 dc.b 0, 3, $FF, $F8, $F2, $F3, $E7, $F5, 0, $BA, 4, $80, 1, $C0, $13, $EC, 2, $F7, 0, 3, $FF, $F8, $F2, $38, $30, $10, $72, $E, $1F, $1F, $11, $1F
                 dc.b $1F, $1F, $1F, $1F, 0, 0, 0, 4, $F, $F, $F, $F, 0, $C, 0, $80
-byte_96CAC:     dc.b 0, $1A, 1, 1, $80, 5, 0, $A, 0, 9, $80, 1, $EF, 0, $F0, 0, 1, $43, $FF, $91, 6, $E7, $FD, $97, $18, $F2, $32, $61, $32, $2E, $7F, $18
+SFX_4E:     dc.b 0, $1A, 1, 1, $80, 5, 0, $A, 0, 9, $80, 1, $EF, 0, $F0, 0, 1, $43, $FF, $91, 6, $E7, $FD, $97, $18, $F2, $32, $61, $32, $2E, $7F, $18
                                         ; DATA XREF: ROM:0008519E   o
                 dc.b $1A, $1B, $12, $1F, $1F, $1F, $1F, 9, $10, 0, 0, $F, $1F, $F, $F, $15, 0, $15, $80, 0
-byte_96CE0:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, $E0, 0, $80, 1, $EF, 0, $F0, 2, 1, $C2, $FF, $A5, 9, $AB, $C, $E6, 6, $F7, 0, 5, $FF, $F8, $F2, $34
+SFX_4F:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, $E0, 0, $80, 1, $EF, 0, $F0, 2, 1, $C2, $FF, $A5, 9, $AB, $C, $E6, 6, $F7, 0, 5, $FF, $F8, $F2, $34
                                         ; DATA XREF: ROM:000851A2   o
                 dc.b 9, $4F, 2, 6, $F, $10, $F, $10, $10, 0, $1D, $F, $10, 4, $10, 4, 1, $F, $F, $F, 0, $80, 0, $80, $34, $F, $41, 9, $A, $F, $10, $F
                 dc.b $10, $10, 0, $1D, $F, 0, 4, 0, 4, 1, $F, $F, $F, 6, $80, $10, $80, $34, $C, $4D, 7, $F, $F, $F, $F, $F, $10, 0, $1D, $F, $A, 4
                 dc.b 0, 4, 1, $F, $F, $F, $13, $80, 0, $80, $34, $D, $43, 6, 1, $F, $F, $F, $F, $10, 0, $1D, $F, 0, 4, 0, 4, 1, $F, $F, $F, $13
                 dc.b $80, $E, $80, $3D, $F, $65, $15, $15, $F, $F, $F, $F, $10, $10, $1D, $F, $A, $E, $E, $E, $21, $1F, $F, $1F, 7, $80, $80, $80, $3D, $F, $66, $16
                 dc.b $16, $1F, $F, $F, $F, $10, $10, $1D, $F, $A, $E, $E, $E, $21, $1F, $F, $1F, 0, $80, $80, $80, 0
-byte_96D96:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $EF, 0, $F0, 1, 1, $22, $FF, $B9, 4, $EF, 1, $AB, $C, $E6, 9, $F7, 0, 3, $FF, $F8
+SFX_50:     dc.b 0, $21, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $EF, 0, $F0, 1, 1, $22, $FF, $B9, 4, $EF, 1, $AB, $C, $E6, 9, $F7, 0, 3, $FF, $F8
                                         ; DATA XREF: ROM:000851A6   o
                 dc.b $F2, $3B, $30, 0, 0, $7F, $11, $1F, $1F, $1F, $12, $1E, $1E, $1F, $15, 8, 0, 0, $1F, $F, $F, $F, $B, 3, $D, $81, $32, 0, $30, $11, $F, $1B
                 dc.b $1F, $1F, $1F, $1E, $1F, $1D, $1F, $11, $E, 0, 0, $31, $1F, $F, $F, 1, $A, 0, $80, 0
-byte_96DEA:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $10, 4, $80, 1, $EF, 0, $F0, 0, 2, $F3, $D, $87, $1D, $E6, $18, $F7, 0, 2, $FF, $F8, $F2, $3A, $71, 0
+SFX_51:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $10, 4, $80, 1, $EF, 0, $F0, 0, 2, $F3, $D, $87, $1D, $E6, $18, $F7, 0, 2, $FF, $F8, $F2, $3A, $71, 0
                                         ; DATA XREF: ROM:000851AA   o
                 dc.b $7F, $3F, $10, $13, $F, $12, $1F, $1C, $19, $1F, 4, $C, 7, 0, $17, $10, $19, $F, $1D, $F, $C, $80
-byte_96E20:     dc.b 0, $25, 1, 1, $80, 5, 0, $A, $1D, 7, $80, 1, $EF, 0, $F0, 0, 1, $E3, $D, $85, 5, $80, 1, $90, 5, $80, 1, $FB, $FF, $E6, 1, $F7
+SFX_52:     dc.b 0, $25, 1, 1, $80, 5, 0, $A, $1D, 7, $80, 1, $EF, 0, $F0, 0, 1, $E3, $D, $85, 5, $80, 1, $90, 5, $80, 1, $FB, $FF, $E6, 1, $F7
                                         ; DATA XREF: ROM:000851AE   o
                 dc.b 0, 7, $FF, $F4, $F2, $3A, $71, $30, $7E, $3F, $10, $D, $19, $12, $1F, $1C, $19, $1F, 5, $15, 1, 0, $12, $12, $12, $E, $20, $11, $12, $80, $3A, $70
                 dc.b $30, $7F, $3F, $10, $10, $19, $12, $1F, $1C, $19, $1F, $15, $15, 1, 0, $1F, $1F, $1F, $F, $1F, 8, $11, $80, $3A, $71, 0, $7F, $3F, $10, $13, $F, $12
                 dc.b $1F, $1C, $19, $1F, 4, $C, 7, 0, $17, $10, $19, $F, $1D, $F, $C, $80, $3A, $72, 0, $7F, $3F, $10, $13, $F, $12, $1F, $1C, $19, $1F, 4, $C, 7
                 dc.b 0, $17, $10, $19, $F, $1D, $1F, $C, $80, $3A, $7E, 1, $7E, $3F, $10, $F, $12, $12, $1F, $1C, $19, $1F, $B, $A, 7, 0, $1F, $1F, $1F, $F, $12, $15
                 dc.b $12, $80
-byte_96EC2:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $E5, 0, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $A5, 4, $80, 1, $B0, 4, $E6, $15, 7, $F2, $39, 0, 4
+SFX_53:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $E5, 0, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $A5, 4, $80, 1, $B0, 4, $E6, $15, 7, $F2, $39, 0, 4
                                         ; DATA XREF: ROM:000851B2   o
                 dc.b 0, $3F, $1B, $15, $1F, $1F, $1F, $1F, $1F, $17, $17, 3, 0, 0, $27, $1C, $1F, $F, $1F, $15, $15, $80
-byte_96EF8:     dc.b 0, $15, 1, 1, $80, 5, 0, $A, $E0, 8, $EF, 0, $E7, $F0, 0, 1, $13, $13, $AB, $25, $F2, $32, $36, 0, $76, $D, $1B, $1F, $F, $F, $1E, $1F
+SFX_54:     dc.b 0, $15, 1, 1, $80, 5, 0, $A, $E0, 8, $EF, 0, $E7, $F0, 0, 1, $13, $13, $AB, $25, $F2, $32, $36, 0, $76, $D, $1B, $1F, $F, $F, $1E, $1F
                                         ; DATA XREF: ROM:000851B6   o
                 dc.b $1D, $1F, 0, 0, 0, 0, 1, $1F, $F, $F, $25, $17, $2F, $80
-byte_96F26:     dc.b 0, $30, 1, 1, $80, 4, 0, $A, $E9, 3, $FB, $17, $EF, 0, $F0, 1, 1, $22, $FF, $81, 4, 4, $FB, 1, $F7, 0, $16, $FF, $F7, $FB, $ED, $94
+SFX_55:     dc.b 0, $30, 1, 1, $80, 4, 0, $A, $E9, 3, $FB, $17, $EF, 0, $F0, 1, 1, $22, $FF, $81, 4, 4, $FB, 1, $F7, 0, $16, $FF, $F7, $FB, $ED, $94
                                         ; DATA XREF: ROM:000851BA   o
                 dc.b 4, $F7, 0, $30, $FF, $FA, $94, 4, $E6, 1, $F7, 0, $15, $FF, $F8, $F2, $34, 1, $30, $11, 6, $1B, $1F, $1F, $12, $E, $1F, $E, $1F, 1, 0, 9
                 dc.b 0, 1, $1F, $1F, $F, 6, $10, 9, $80, 0
-byte_96F70:     dc.b 0, $2B, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $F0, 0, 1, $20, $FF, $EF, 0, $91, 3, $EF, 1, $91, 3, $EF, 0, $91, 3, $EF, 1, $91
+SFX_56:     dc.b 0, $2B, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $F0, 0, 1, $20, $FF, $EF, 0, $91, 3, $EF, 1, $91, 3, $EF, 0, $91, 3, $EF, 1, $91
                                         ; DATA XREF: ROM:000851BE   o
                 dc.b 3, $EF, 2, $91, 3, $F7, 0, $A, $FF, $E8, $F2, $39, $6C, $E, 1, $1F, $1F, $1F, $1F, $1F, $1F, 0, $1D, $1F, $D, 0, 0, 0, 5, 5, 5, $A
                 dc.b $20, $20, $28, $85, $A, $7F, 0, 1, $3F, $1F, $1F, $1F, $1F, $1F, 0, $1D, $1F, 3, $10, $D, 0, $15, 5, 5, $A, $20, $1E, $13, $80, $3A, $70, 0
                 dc.b $1C, $21, $1F, $1F, $1F, $1F, $1F, 0, $1D, $1F, $11, 1, 9, 0, $15, 5, 5, $A, $21, $11, $1F, $80
-byte_96FE6:     dc.b 0, $16, 1, 1, $80, $C0, 0, $A, 0, 0, $F5, $A, $F3, $E7, $F0, 4, 4, $FF, $FF, $B8, $48, $F2
+SFX_57:     dc.b 0, $16, 1, 1, $80, $C0, 0, $A, 0, 0, $F5, $A, $F3, $E7, $F0, 4, 4, $FF, $FF, $B8, $48, $F2
                                         ; DATA XREF: ROM:000851C2   o
-byte_96FFC:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $DD, $FF, $81, 7, $80, 2, $F2, 8, $50, $10, 7, $5F, $1F, $1F, $C
+SFX_58:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $DD, $FF, $81, 7, $80, 2, $F2, 8, $50, $10, 7, $5F, $1F, $1F, $C
                                         ; DATA XREF: ROM:000851C6   o
                 dc.b $F, $1F, $1F, $1F, $1F, 0, $E, $E, 0, 7, 7, $16, $A, 0, $3F, 0, $80, 0
-byte_9702E:     dc.b 0, $19, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $A5, $15, $E6, $15, 7, $F2, $3A, $D, $F, 0, $3F, $1B, $15
+SFX_59:     dc.b 0, $19, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $A5, $15, $E6, $15, 7, $F2, $3A, $D, $F, 0, $3F, $1B, $15
                                         ; DATA XREF: ROM:000851CA   o
                 dc.b $1F, $1F, $1F, $1F, $1F, $17, $1E, 2, 0, 0, 7, $C, $19, $F, $1D, $1B, $16, $80
-byte_97060:     dc.b 0, $1C, 1, 1, $80, 4, 0, $A, 0, 0, $EF, 0, $8B, 4, $80, 1, $EF, 1, $81, 7, $E6, $E, $F7, 0, 3, $FF, $F8, $F2, $32, $33, $6F, $10
+SFX_5A:     dc.b 0, $1C, 1, 1, $80, 4, 0, $A, 0, 0, $EF, 0, $8B, 4, $80, 1, $EF, 1, $81, 7, $E6, $E, $F7, 0, 3, $FF, $F8, $F2, $32, $33, $6F, $10
                                         ; DATA XREF: ROM:000851CE   o
                 dc.b 3, $1F, $1F, $1F, $1F, $1F, $1C, $1F, $11, $12, $13, $D, 0, $1F, $2F, $1F, $A, 0, 9, $18, $80, $12, 1, $77, $40, $F, $1E, $1F, $1F, $1F, $F, $C
                 dc.b $F, $1F, $1B, $1B, 5, 0, $F, $1F, $F, $F, $1C, $1B, $10, $80
-byte_970AE:     dc.b 0, $13, 1, 1, $80, 4, 0, $A, $50, 5, $80, 3, $EF, 0, $81, $7F, $E7, $30, $F2, $D, $7E, $37, $17, 7, 6, $D, $D, $E, $1F, $1A, $A, $1F
+SFX_5B:     dc.b 0, $13, 1, 1, $80, 4, 0, $A, $50, 5, $80, 3, $EF, 0, $81, $7F, $E7, $30, $F2, $D, $7E, $37, $17, 7, 6, $D, $D, $E, $1F, $1A, $A, $1F
                                         ; DATA XREF: ROM:000851D2   o
                 dc.b 1, 6, 6, 6, 7, 9, 9, 9, 0, $80, $80, $80
-byte_970DA:     dc.b 0, $1B, 1, 1, $80, 4, 0, $A, 0, 3, $EF, 0, $F0, 1, 2, $E3, $66, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $72, 0, $E, $21
+SFX_5C:     dc.b 0, $1B, 1, 1, $80, 4, 0, $A, 0, 3, $EF, 0, $F0, 1, 2, $E3, $66, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $72, 0, $E, $21
                                         ; DATA XREF: ROM:000851D6   o
                 dc.b $12, $18, $16, $18, $1F, $C, $1A, $1F, $B, 9, 8, 0, $17, $10, 9, $F, $17, $13, 7, $80
-byte_9710E:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $F3, $66, $90, $2E, $F2, $3A, 3, 0, 0, $3A, $11, $15, $1F, $1F, $1F
+SFX_5D:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $F3, $66, $90, $2E, $F2, $3A, 3, 0, 0, $3A, $11, $15, $1F, $1F, $1F
                                         ; DATA XREF: ROM:000851DA   o
                 dc.b $1C, $A, $1F, $A, $B, $10, 1, $1F, $F, $12, $F, $10, 7, 0, $80, 0
-byte_9713E:     dc.b 0, $1A, 1, 1, $80, 5, 0, $A, $EA, 0, $80, 1, $EF, 0, $F0, 0, 1, $3C, 5, $A5, 4, $80, 1, $B0, $14, $F2, $39, $31, $72, 0, 4, $1B
+SFX_5E:     dc.b 0, $1A, 1, 1, $80, 5, 0, $A, $EA, 0, $80, 1, $EF, 0, $F0, 0, 1, $3C, 5, $A5, 4, $80, 1, $B0, $14, $F2, $39, $31, $72, 0, 4, $1B
                                         ; DATA XREF: ROM:000851DE   o
                 dc.b $15, $1F, $1F, $1F, $1F, $1F, $17, 5, $D, 8, 0, $17, $1C, $F, $F, $1F, $11, $1C, $80, 0
-byte_97172:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, $F, 0, $EF, 0, $F0, 1, 1, $D, $46, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $7F, 0, 1, $1F
+SFX_5F:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, $F, 0, $EF, 0, $F0, 1, 1, $D, $46, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $7F, 0, 1, $1F
                                         ; DATA XREF: ROM:000851E2   o
                 dc.b $1D, $1F, $1F, $1F, $1F, $1C, $A, $1F, 0, 0, $D, 0, $17, 0, 9, $F, $1D, $10, $13, $80
-byte_971A6:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $A, 3, $80, 1, $EF, 0, $F0, 1, 2, $E3, $66, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $7E, 2
+SFX_60:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $A, 3, $80, 1, $EF, 0, $F0, 1, 2, $E3, $66, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $7E, 2
                                         ; DATA XREF: ROM:000851E6   o
                 dc.b 0, $2F, $1D, $15, $1F, $1F, $1F, $1C, $A, $1F, 4, 9, 8, 5, $1F, $F, $F, $F, $19, $10, $15, $80
-byte_971DC:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, 8, $EF, 0, $BA, $B, $E6, $1B, $A, $80, 1, $F2, $3A, $7F, $19, $30, $F, $1D, $14, $1D, $1C, $1F, $1C, $19
+SFX_61:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, 0, 8, $EF, 0, $BA, $B, $E6, $1B, $A, $80, 1, $F2, $3A, $7F, $19, $30, $F, $1D, $14, $1D, $1C, $1F, $1C, $19
                                         ; DATA XREF: ROM:000851EA   o
                 dc.b $D, 0, 0, 0, 0, $F, $F, $F, $F, $20, $30, $20, $80, 0
-byte_9720A:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, 5, 0, $EF, 0, $F0, 1, 2, $E3, $66, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $75, 5, 4, $25
+SFX_62:     dc.b 0, $1B, 1, 1, $80, 5, 0, $A, 5, 0, $EF, 0, $F0, 1, 2, $E3, $66, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $75, 5, 4, $25
                                         ; DATA XREF: ROM:000851EE   o
                 dc.b $D, $10, $12, $11, $1F, $1C, $A, $1F, 4, 9, 8, 0, $17, 0, 9, $F, $17, 5, $18, $80
-byte_9723E:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $AA, $1E, $E6, $1B, $15, $80, 1, $F2, $3A, $71, $10, $41, 7, $1D, $14, $D, $C, $1F
+SFX_63:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $AA, $1E, $E6, $1B, $15, $80, 1, $F2, $3A, $71, $10, $41, 7, $1D, $14, $D, $C, $1F
                                         ; DATA XREF: ROM:000851F2   o
                 dc.b $1C, $19, $D, $1F, $10, 1, 0, $1F, $1F, $1F, $F, $1B, 0, $16, $80, 0
-byte_9726E:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $AA, $1E, $E6, $1B, $15, $80, 1, $F2, $3A, $71, $10, $41, 7, $1D, $14, $D, $C, $1F
+SFX_64:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $AA, $1E, $E6, $1B, $15, $80, 1, $F2, $3A, $71, $10, $41, 7, $1D, $14, $D, $C, $1F
                                         ; DATA XREF: ROM:000851F6   o
                 dc.b $1C, $19, $D, $1F, $10, $11, 0, $1F, $1F, $1F, $F, $1B, 0, $16, $80, 0
-byte_9729E:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $EF, 0, $BA, 6, $E6, $12, 5, $80, 1, $F2, $3A, $71, 1, $30, 9, $1D, $14, $1F, $1F, $1F
+SFX_65:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 0, 5, $80, 1, $EF, 0, $BA, 6, $E6, $12, 5, $80, 1, $F2, $3A, $71, 1, $30, 9, $1D, $14, $1F, $1F, $1F
                                         ; DATA XREF: ROM:000851FA   o
                 dc.b $1C, $19, $D, $1F, 0, 0, 0, $1F, $1F, $3F, $F, $2B, $20, $14, $80, 0
-byte_972CE:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $F4, $FF, $87, $38, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $B, $70, 2
+SFX_66:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $F4, $FF, $87, $38, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $B, $70, 2
                                         ; DATA XREF: ROM:000851FE   o
                 dc.b $16, $3E, $16, $D, $D, $E, $1F, $1A, $A, $1F, 6, 9, 0, 0, 7, 0, 9, $F, $20, $10, 0, $80
-byte_97304:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, 0, 1, $75, 1, $9A, $40, $80, 1, $F2, $39, $71, 0, $30, 1, $1D, $15, $12
+SFX_67:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, 0, 1, $75, 1, $9A, $40, $80, 1, $F2, $39, $71, 0, $30, 1, $1D, $15, $12
                                         ; DATA XREF: ROM:00085202   o
                 dc.b $12, $1F, $1C, $19, $D, 6, $E, 4, 7, $1F, $2F, $F, $F, $1A, 5, 0, $80, 0
-byte_97336:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 1, 1, $22, $FF, $8C, 4, $8B, 6, $E6, 1, $F7, 0, $C, $FF, $F8, $F2, $33
+SFX_68:     dc.b 0, $1F, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 1, 1, $22, $FF, $8C, 4, $8B, 6, $E6, 1, $F7, 0, $C, $FF, $F8, $F2, $33
                                         ; DATA XREF: ROM:00085206   o
                 dc.b 0, $11, 0, $F, $1B, $1F, $1F, $12, $10, $1F, $1D, $1F, $14, $19, 0, 0, $11, $F, $F, $F, $16, 0, 1, $80, $33, 9, $11, 0, $F, $1B, $1F, $1F
                 dc.b $12, $10, $1F, $1D, $1F, $14, $19, 0, 0, $11, $F, $F, $F, $16, 0, 1, $80, 0
-byte_97388:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $55, 2, $9A, $74, $80, 1, $F2, $3A, $7F, 0, $31, $E, $1D, $15, $12
+SFX_69:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $55, 2, $9A, $74, $80, 1, $F2, $3A, $7F, 0, $31, $E, $1D, $15, $12
                                         ; DATA XREF: ROM:0008520A   o
                 dc.b $12, $1F, $1C, $19, 7, 0, 0, 0, 0, $1F, $1F, $1F, $1F, $26, $1D, $11, $80, 0
-byte_973BA:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $55, 4, $9A, $54, $80, 1, $F2, $3A, $6F, 0, $30, $2D, $1D, $15, $12
+SFX_6A:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $55, 4, $9A, $54, $80, 1, $F2, $3A, $6F, 0, $30, $2D, $1D, $15, $12
                                         ; DATA XREF: ROM:0008520E   o
                 dc.b $12, $1F, $1C, $19, 7, 0, 0, 0, 9, $1F, $1F, $1F, $1F, $16, $D, $B, $80, 0
-byte_973EC:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, $10, 2, $80, 1, $EF, 0, $F0, 0, 1, $15, 4, $9A, $54, $80, 1, $F2, $3A, $6F, $1F, $30, $28, $1D, $15, $10
+SFX_6B:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, $10, 2, $80, 1, $EF, 0, $F0, 0, 1, $15, 4, $9A, $54, $80, 1, $F2, $3A, $6F, $1F, $30, $28, $1D, $15, $10
                                         ; DATA XREF: ROM:00085212   o
                 dc.b $17, $1F, $1C, $19, $1F, 6, 0, 5, 4, $1F, $1F, $1F, $F, $1E, $1D, $1B, $80, 0
-byte_9741E:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $F0, 0, 1, $E9, $FF, $9A, $14, $80, 1, $F2, $3A, $6F, 8, $38, $2F, $1D, $16, $10
+SFX_6C:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $F0, 0, 1, $E9, $FF, $9A, $14, $80, 1, $F2, $3A, $6F, 8, $38, $2F, $1D, $16, $10
                                         ; DATA XREF: ROM:00085216   o
                 dc.b $1F, $1F, $1C, $19, $1F, 0, 0, $10, 6, $1F, $1F, $1F, $F, $1B, $1A, 0, $80, 0
-byte_97450:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $F0, 0, 1, $F9, $FF, $9A, $30, $80, 1, $F2, $3A, $6F, 0, $33, $1F, $1D, $16, $10
+SFX_6D:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $F0, 0, 1, $F9, $FF, $9A, $30, $80, 1, $F2, $3A, $6F, 0, $33, $1F, $1D, $16, $10
                                         ; DATA XREF: ROM:0008521A   o
                 dc.b $1F, $1F, $1C, $19, $1F, 0, 0, $10, 6, $1F, $1F, $1F, $F, $B, $1A, 0, $80, 0
-byte_97482:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $F0, 0, 2, $19, $FF, $9A, $30, $80, 1, $F2, $3A, $78, 1, $3F, $1F, $1D, $16, $10
+SFX_6E:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 4, $80, 1, $EF, 0, $F0, 0, 2, $19, $FF, $9A, $30, $80, 1, $F2, $3A, $78, 1, $3F, $1F, $1D, $16, $10
                                         ; DATA XREF: ROM:0008521E   o
                 dc.b $1F, $1F, $1C, $19, $1F, 4, $1C, $B, 0, $1F, $1F, $1F, $F, $B, $C, 0, $80, 0
-byte_974B4:     dc.b 0, $25, 1, 1, $80, 5, 0, $A, 9, 4, $80, 1, $EF, 0, $9A, 4, $80, 1, $F7, 0, 4, $FF, $F8, $80, 1, $9A, 8, $80, 1, $E6, $1D, $F7
+SFX_6F:     dc.b 0, $25, 1, 1, $80, 5, 0, $A, 9, 4, $80, 1, $EF, 0, $9A, 4, $80, 1, $F7, 0, 4, $FF, $F8, $80, 1, $9A, 8, $80, 1, $E6, $1D, $F7
                                         ; DATA XREF: ROM:00085222   o
                 dc.b 0, 2, $FF, $F6, $F2, $3A, $7F, 0, $32, $1F, $1D, $16, $1C, $1F, $1F, $1C, $19, $1F, 4, 0, $1D, 0, $1F, $1F, $1F, $F, $2A, $1B, $10, $80
-byte_974F2:     dc.b 0, $1E, 1, 1, $80, 5, 0, $A, $37, 0, $80, 1, $EF, 0, $95, $C, $80, 1, $9E, 8, $80, 1, $E6, $1D, $F7, 0, 2, $FF, $F6, $F2, $3A, $7F
+SFX_70:     dc.b 0, $1E, 1, 1, $80, 5, 0, $A, $37, 0, $80, 1, $EF, 0, $95, $C, $80, 1, $9E, 8, $80, 1, $E6, $1D, $F7, 0, 2, $FF, $F6, $F2, $3A, $7F
                                         ; DATA XREF: ROM:00085226   o
                 dc.b 8, $33, $1F, $1D, $16, $F, $1F, $1F, $1C, $1A, $1F, $10, $12, $D, 0, $1F, $1F, $2F, $F, $1D, $10, 0, $80, 0
-byte_9752A:     dc.b 0, $1E, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $90, 6, $80, 1, $9E, 6, $80, 1, $E6, 1, $F7, 0, $A, $FF, $F6, $F2, $3A, $78
+SFX_71:     dc.b 0, $1E, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $90, 6, $80, 1, $9E, 6, $80, 1, $E6, 1, $F7, 0, $A, $FF, $F6, $F2, $3A, $78
                                         ; DATA XREF: ROM:0008522A   o
                 dc.b $D, $30, $F, $1D, $16, $F, $1F, $1F, $1C, $1A, $1F, 2, $10, $10, 0, $1F, $F, $1F, $F, $1D, $2E, $10, $80, 0
-byte_97562:     dc.b 0, $19, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $6C, 4, $9B, $C, $E6, $20, 7, $F2, $3A, $F, 2, 1, $2F, $11, $15
+SFX_72:     dc.b 0, $19, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $6C, 4, $9B, $C, $E6, $20, 7, $F2, $3A, $F, 2, 1, $2F, $11, $15
                                         ; DATA XREF: ROM:0008522E   o
                 dc.b $1C, $1F, $1F, $1F, $F, 7, $B, $10, $10, 7, 7, $C, 9, $1D, $16, $1D, 4, $80
-byte_97594:     dc.b 0, $20, 1, 1, $80, 5, 0, $A, $10, 3, $80, 1, $EF, 0, $87, 6, $80, 1, $8E, 6, $80, 1, $91, 6, $80, 1, $F7, 0, 3, $FF, $F0, $F2
+SFX_73:     dc.b 0, $20, 1, 1, $80, 5, 0, $A, $10, 3, $80, 1, $EF, 0, $87, 6, $80, 1, $8E, 6, $80, 1, $91, 6, $80, 1, $F7, 0, 3, $FF, $F0, $F2
                                         ; DATA XREF: ROM:00085232   o
                 dc.b $3A, $7F, $30, 8, $34, $1D, $15, $1F, $12, $1F, $1C, $A, $1F, 0, 0, 0, 0, $1F, $F, $F, $F, $16, $11, $20, $80, 0
-byte_975CE:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, $23, 3, $80, 1, $EF, 0, $87, 4, $80, 2, $F7, 0, 4, $FF, $F8, $F2, $3A, $7F, $F, $3F, $F, $1F, $1F, $1F
+SFX_74:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, $23, 3, $80, 1, $EF, 0, $87, 4, $80, 2, $F7, 0, 4, $FF, $F8, $F2, $3A, $7F, $F, $3F, $F, $1F, $1F, $1F
                                         ; DATA XREF: ROM:00085236   o
                 dc.b $1F, $11, $13, $10, $1F, 0, 0, $B, 0, $1F, $9F, $1F, $F, $18, $21, $15, $80, 0
-byte_97600:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, $20, 3, $80, 1, $EF, 0, $87, $7D, $E6, $20, $12, $F2, $3A, $7F, $3F, $F, $3F, $1D, $15, $1F, $1F, $1F, $1C, $A
+SFX_75:     dc.b 0, $14, 1, 1, $80, 5, 0, $A, $20, 3, $80, 1, $EF, 0, $87, $7D, $E6, $20, $12, $F2, $3A, $7F, $3F, $F, $3F, $1D, $15, $1F, $1F, $1F, $1C, $A
                                         ; DATA XREF: ROM:0008523A   o
                 dc.b $1F, 1, 6, 0, 0, $1F, $F, $F, $F, $16, $10, $10, $80, 0
-byte_9762E:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, $A, 0, $80, 1, $EF, 0, $F0, 0, 1, $10, $66, $87, $7F, $F2, $3A, $23, 3, $4E, $30, $1D, $15, $17, $10, $1F
+SFX_76:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, $A, 0, $80, 1, $EF, 0, $F0, 0, 1, $10, $66, $87, $7F, $F2, $3A, $23, 3, $4E, $30, $1D, $15, $17, $10, $1F
                                         ; DATA XREF: ROM:0008523E   o
                 dc.b $1C, $A, $1F, 4, 0, 8, 0, $19, 9, 7, $F, $24, $30, $1D, $80, 0
-byte_9765E:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, $A, 0, $80, 1, $EF, 0, $87, $23, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $7D, 8, $D, $2F, $1D, $15, $12
+SFX_77:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, $A, 0, $80, 1, $EF, 0, $87, $23, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $7D, 8, $D, $2F, $1D, $15, $12
                                         ; DATA XREF: ROM:00085242   o
                 dc.b $17, $1F, $1C, $A, $1F, 0, 0, 8, 0, $1F, $F, $F, $F, $19, $2F, $1F, $80, 0
-byte_97690:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 1, 0, $80, 1, $EF, 0, $F0, 0, 1, $F4, $FF, $87, $38, $F2, $B, $72, 0, $1C, $3F, $16, $1D, $1D, $12, $1F
+SFX_78:     dc.b 0, $16, 1, 1, $80, 5, 0, $A, 1, 0, $80, 1, $EF, 0, $F0, 0, 1, $F4, $FF, $87, $38, $F2, $B, $72, 0, $1C, $3F, $16, $1D, $1D, $12, $1F
                                         ; DATA XREF: ROM:00085246   o
                 dc.b $1A, $A, $1F, 6, 9, 2, 0, 7, 0, 9, $F, $10, $10, $10, $80, 0
-byte_976C0:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $A, 4, $80, 1, $EF, 0, $F0, 1, 2, $33, $66, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $75, 4
+SFX_79:     dc.b 0, $1D, 1, 1, $80, 5, 0, $A, $A, 4, $80, 1, $EF, 0, $F0, 1, 2, $33, $66, $87, $1D, $E6, $20, $F7, 0, 2, $FF, $F8, $F2, $3A, $75, 4
                                         ; DATA XREF: ROM:0008524A   o
                 dc.b $32, $F, $1D, $15, $1F, $1F, $1F, $1C, $A, $1F, 4, 9, 8, 0, $1F, $F, $F, $F, $11, 0, $20, $80
-byte_976F6:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, $E0, 5, $EF, 0, $B4, 1, $F0, 0, 1, $10, $FF, $B1, $1D, $80, 3, $F2, $C, $11, $69, $1D, $70, $18, $12, $12
+SFX_7A:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, $E0, 5, $EF, 0, $B4, 1, $F0, 0, 1, $10, $FF, $B1, $1D, $80, 3, $F2, $C, $11, $69, $1D, $70, $18, $12, $12
                                         ; DATA XREF: ROM:0008524E   o
                 dc.b $12, $F, $16, $18, $1F, 0, 0, 0, 0, 3, 9, 9, 9, $10, $80, $20, $80, 0
-byte_97728:     dc.b 0, $45, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $27, 0, 0, $EF, 1, $83, 6, $80, 2, $EF, 0, $F0, 0, 0, $C1, $FF, $8E, $12, $E6
+SFX_7B:     dc.b 0, $45, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $27, 0, 0, $EF, 1, $83, 6, $80, 2, $EF, 0, $F0, 0, 0, $C1, $FF, $8E, $12, $E6
                                         ; DATA XREF: ROM:00085252   o
                 dc.b 6, $F7, 0, 5, $FF, $F8, $F2, $F3, $E7, $A3, 6, $80, 2, $F0, 0, 4, 4, $FF, $C2, 6, $E7, $F7, 0, $A, $FF, $F9, $EC, 1, $C2, 6, $E7, $F7
                 dc.b 0, 5, $FF, $F7, $F2, $40, 3, 0, $11, $31, $1F, $1F, $1F, $1F, $10, $1F, $D, $1F, $10, 0, 0, 0, $1F, $30, $F, $F, $12, $13, $10, $80, $40, $72
                 dc.b 2, $11, $5A, $1F, $1F, $1A, $1F, $1E, $10, $1D, $1F, 2, $1B, 2, 0, $1F, $2F, $1F, $F, $13, 8, $10, $80, $40, 2, 0, $14, $35, $1F, $1F, $1F, $1F
                 dc.b $10, $1F, $D, $1F, $10, 0, 0, 0, $1F, $30, $F, $F, $12, $13, $10, $80
-byte_977B8:     dc.b 0, $41, 1, 2, $80, 5, 0, $10, $10, 0, $80, $C0, 0, $29, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $C5, $FF, $83, 4, $80, 1, $EF, 1, $A0
+SFX_7C:     dc.b 0, $41, 1, 2, $80, 5, 0, $10, $10, 0, $80, $C0, 0, $29, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $C5, $FF, $83, 4, $80, 1, $EF, 1, $A0
                                         ; DATA XREF: ROM:00085256   o
                 dc.b 8, $E6, 6, $F7, 0, 7, $FF, $F8, $F2, $80, 1, $F3, $E7, $F0, 0, 1, 4, $FF, $A9, 4, $80, 1, $C0, 8, $EC, 1, $E7, $F7, 0, 7, $FF, $F7
                 dc.b $F2, $32, 2, $10, $11, 9, $1B, $1F, $1F, $1F, $1E, $1F, $1D, $1F, 1, 4, 0, 0, $21, $1F, $F, $F, $11, $10, 0, $80, $35, 0, $30, 1, $10, $1B
                 dc.b $1F, $1F, $1F, $1E, $1F, $1D, $1F, 0, 0, 0, 0, 0, $F, $F, $F, $C, $80, $80, $80, $35, 2, $36, 1, $11, $1B, $1F, $1F, $1F, $1E, $1F, $1D, $1F
                 dc.b 0, 0, 0, 0, 0, $F, $F, $F, $C, $80, $80, $80
-byte_97844:     dc.b 0, $41, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $29, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $C5, $FF, $95, 4, $80, 1, $EF, 1, $90
+SFX_7D:     dc.b 0, $41, 1, 2, $80, 5, 0, $10, 0, 0, $80, $C0, 0, $29, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $C5, $FF, $95, 4, $80, 1, $EF, 1, $90
                                         ; DATA XREF: ROM:0008525A   o
                 dc.b 6, $E6, 4, $F7, 0, 9, $FF, $F8, $F2, $80, 1, $F3, $E7, $F0, 0, 1, 3, $FF, $A9, 4, $80, 1, $C6, 8, $EC, 1, $E7, $F7, 0, 7, $FF, $F7
                 dc.b $F2, $32, 1, $11, $10, 5, $1F, $1F, $1F, $1F, $1E, $1F, $1D, $1F, $11, $14, 0, 0, $21, $1F, $F, $F, $1D, 0, $10, $80, $32, 0, $32, 9, $17, $1F
                 dc.b $1F, $1F, $1F, $E, $1F, $1D, $1F, 0, 0, 0, 0, 0, $F, $F, $F, $11, $11, $10, $80, 0
-byte_978B8:     dc.b 0, $3E, 1, 2, $80, 5, 0, $10, 0, 1, $80, $C0, 0, $28, 0, 0, $EF, 0, $8F, 3, $80, 2, $90, 5, $E6, 1, $99, $C, $E6, 5, $99, $A
+SFX_7E:     dc.b 0, $3E, 1, 2, $80, 5, 0, $10, 0, 1, $80, $C0, 0, $28, 0, 0, $EF, 0, $8F, 3, $80, 2, $90, 5, $E6, 1, $99, $C, $E6, 5, $99, $A
                                         ; DATA XREF: ROM:0008525E   o
                 dc.b $F7, 0, 5, $FF, $F8, $80, 5, $F2, $80, 3, $F0, 0, 3, 3, $FF, $F3, $E7, $B5, $C, $E7, $C6, $1C, $EC, 1, $F7, 0, 3, $FF, $F7, $F2, $38, $71
                 dc.b 0, 1, $60, $1F, $1F, $1F, $1F, $10, $18, $17, $1F, $11, $C, 0, 0, $13, $1D, $1F, $E, $17, 1, $10, $80, $3A, 3, $70, $30, 4, $1F, $1F, $1F, $1F
                 dc.b $18, $D, $15, $12, 7, $C, 0, 8, 3, 5, 9, $E, $E, $10, $10, $80
-byte_97928:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 1, 1, $70, 1, $86, $36, $80, 2, $F2, $3A, $7F, $10, $20, $F, $1F, $1F, $1F
+SFX_7F:     dc.b 0, $18, 1, 1, $80, 5, 0, $A, 0, 0, $80, 1, $EF, 0, $F0, 1, 1, $70, 1, $86, $36, $80, 2, $F2, $3A, $7F, $10, $20, $F, $1F, $1F, $1F
                                         ; DATA XREF: ROM:00085262   o
                 dc.b $1F, $1F, $1C, $19, 7, $C, 9, 0, 7, $1F, $1F, $1F, $1F, $14, 6, 0, $80, 0
-byte_9795A:     dc.b 0, $52, 1, 3, $80, 4, 0, $16, $7A, 4, $80, 5, 0, $2D, 0, 4, $80, $C0, 0, $3D, 0, 0, $EF, 0, $B6, 3, $80, 1, $EF, 1, $F0, 1
+SFX_F0:     dc.b 0, $52, 1, 3, $80, 4, 0, $16, $7A, 4, $80, 5, 0, $2D, 0, 4, $80, $C0, 0, $3D, 0, 0, $EF, 0, $B6, 3, $80, 1, $EF, 1, $F0, 1
                                         ; DATA XREF: ROM:00085132   o
                 dc.b 1, $E, $FF, $A6, $B, $E6, 4, $F7, 0, 8, $FF, $F8, $F2, $EF, 2, $86, 3, $80, 1, $8D, $B, $E6, 4, $F7, 0, 8, $FF, $F8, $F2, $F3, $E7, $A5
                 dc.b 3, $80, 1, $F0, 0, 2, $FE, $FF, $C4, $B, $EC, 1, $F7, 0, 8, $FF, $F8, $F2, $3D, $1E, $7D, $3F, $C, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $10
                 dc.b 0, 0, 0, $E, $F, $F, $F, $E, $87, $88, $88, $3C, $75, $24, $19, $30, $1F, $1F, $1F, $1F, $1F, $1F, $15, $1F, $F, 0, 1, 0, $F, $F, $2F, $F
                 dc.b 8, $80, $10, $80, $38, 2, $20, $22, $64, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1F, $1B, $10, $10, 0, $F, $F, $F, $F, $1D, $10, 2, $80, 0
-byte_979F8:     dc.b 0, $2E, 1, 2, $80, 5, 0, $10, 0, 3, $80, 4, 0, $25, 0, 2, $80, 1, $EF, 1, $F0, 0, 1, $D2, $FF, $85, 4, $9A, 9, $E6, 8, $F7
+SFX_F1:     dc.b 0, $2E, 1, 2, $80, 5, 0, $10, 0, 3, $80, 4, 0, $25, 0, 2, $80, 1, $EF, 1, $F0, 0, 1, $D2, $FF, $85, 4, $9A, 9, $E6, 8, $F7
                                         ; DATA XREF: ROM:00085136   o
                 dc.b 0, 3, $FF, $F8, $F2, $80, 1, $EF, 0, $85, 4, $9A, $1B, $F2, $33, $F, $20, 3, $E, $1F, $1F, $1F, $1F, $10, $1F, $1D, $C, 1, 0, $11, $D, $11
                 dc.b $F, $F, $1F, $1A, $1C, 0, $80, $33, 0, $14, $E, $F, $1B, $1F, $1F, $12, $10, $1F, $1D, $1F, $15, $10, 0, 0, $11, $1F, $F, $F, $16, $10, 0, $80
-byte_97A58:     dc.b 0, $13, 1, 1, $80, 4, 0, $A, 0, 2, $EF, 0, $A9, 2, $EF, 1, $AC, 7, $F2, $3B, $76, 6, 0, $1F, $15, $18, $11, $11, $15, $1F, $19, $1F
+SFX_F2:     dc.b 0, $13, 1, 1, $80, 4, 0, $A, 0, 2, $EF, 0, $A9, 2, $EF, 1, $AC, 7, $F2, $3B, $76, 6, 0, $1F, $15, $18, $11, $11, $15, $1F, $19, $1F
                                         ; DATA XREF: ROM:0008513A   o
                 dc.b 1, 0, $F, 0, $F, $F, $1F, $1F, $E, $10, $D, $80, $2B, $70, $23, $F, $1F, $1F, $1F, $1F, $1F, $15, $1F, $19, $1F, 1, 0, 0, 0, $14, 5, 1
                 dc.b $B, 2, $16, $11, $80, 0
-byte_97A9E:     dc.b 0, $13, 1, 1, $80, 4, 0, $A, 0, 2, $EF, 0, $C9, 3, $EF, 1, $CC, $B, $F2, $3B, $70, 0, 2, $F, $15, $18, $11, $11, $15, $1F, $19, $1F
+SFX_F3:     dc.b 0, $13, 1, 1, $80, 4, 0, $A, 0, 2, $EF, 0, $C9, 3, $EF, 1, $CC, $B, $F2, $3B, $70, 0, 2, $F, $15, $18, $11, $11, $15, $1F, $19, $1F
                                         ; DATA XREF: ROM:0008513E   o
                 dc.b $11, 0, $C, 0, $1F, $F, $1F, $1F, $F, $12, $1D, $80, $38, $70, $20, $F, $1F, $1F, $1F, $1F, $1F, $15, $1F, $19, $1F, $C, $10, 0, 0, $1F, $F, $F
                 dc.b $F, $1A, $14, 6, $80, 0
-byte_97AE4:	binclude	"data/other/byte_97AE4.bin"
-byte_97AE4_End:
-byte_97C16:     dc.b 0, $80, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $3D, 0, 0, $80, $C0, 0, $5F, 0, 6, $EF, 2, $81, 6, $F7, 0, $10, $FF, $FA, $EF
+SFX_F4:	binclude	"data/sound/SFX_F4.bin"
+SFX_F4_End:
+SFX_F5:     dc.b 0, $80, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $3D, 0, 0, $80, $C0, 0, $5F, 0, 6, $EF, 2, $81, 6, $F7, 0, $10, $FF, $FA, $EF
                                         ; DATA XREF: ROM:00085146   o
                 dc.b 0, $F0, 0, 1, $D4, $FF, $FB, $FE, $81, 6, 6, 6, $FB, $FF, $F7, 0, $11, $FF, $F6, $81, 6, 6, 6, $F7, 0, $22, $FF, $F8, $F2, $EF, 3, $86
                 dc.b $60, $EF, 1, $F0, 0, 1, $F4, 8, $86, $60, $E7, $60, $E7, $60, $E7, $12, $E7, $60, $E7, $60, $E7, $60, $E7, $60, $E7, $60, $E7, $60, $E7, $24, $F2, $F3
@@ -112734,29 +112735,29 @@ byte_97C16:     dc.b 0, $80, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $3D, 0, 0, $
                 dc.b $1B, $1A, $1F, $1A, $A, $1F, 0, 0, 0, 0, $F, $F, $F, $F, $F, $80, $80, $80, $3B, $10, $70, 2, 5, $1A, $1F, $1B, $1A, $1F, $1A, $A, $1F, $12
                 dc.b 0, 0, 0, $1F, $F, $F, $F, 8, 0, $1D, $80, $3D, 1, $70, $10, $10, $16, $1C, $1B, $1A, $1F, $1A, $A, $1F, 0, 0, 0, 0, $F, $F, $F, $F
                 dc.b $F, $80, $80, $80
-byte_97CFA:     dc.b 0, $6E, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $3C, 0, 0, $80, $C0, 0, $56, 0, 6, $EF, 0, $F0, 0, 1, $D4, $FF, $81, 6, 6
+SFX_F6:     dc.b 0, $6E, 1, 3, $80, 5, 0, $16, 0, 0, $80, 4, 0, $3C, 0, 0, $80, $C0, 0, $56, 0, 6, $EF, 0, $F0, 0, 1, $D4, $FF, $81, 6, 6
                                         ; DATA XREF: ROM:0008514A   o
                 dc.b 6, $FB, 1, $F7, 0, $13, $FF, $F6, $81, 6, 6, 6, $F7, 0, 3, $FF, $F8, 6, 6, $E6, 8, 6, $F7, 0, 3, $FF, $F9, $F2, $EF, 1, $F0, 0
                 dc.b 1, $F4, 8, $86, $60, $E7, $60, $E7, $60, $E7, $72, $E6, 2, $E7, $86, 2, $F7, 0, 9, $FF, $F7, $F2, $F3, $E7, $F5, 0, $BF, $20, $E7, $40, $E7, $60
                 dc.b $E7, $60, $E7, $72, $EC, 1, $E7, 3, $F7, 0, 6, $FF, $F8, $F2, $3B, $10, $70, 2, 5, $1A, $1F, $1B, $1A, $1F, $1A, $A, $1F, $12, 0, 0, 0, $1F
                 dc.b $F, $F, $F, 8, 0, $1D, $82, $3D, 1, $70, $10, $10, $16, $1C, $1B, $1A, $1F, $1A, $A, $1F, 0, 0, 0, 0, $F, $F, $F, $F, $F, $80, $80, $80
-byte_97D9A:	binclude	"data/other/byte_97D9A.bin"
-byte_97D9A_End:
-byte_97ECC:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, $45, 5, $F9, $FF, $B0, 7, $EF, 1, $AB, $7F, $E7, $60, $F2, $32, 2, $30, $11
+SFX_F7:	binclude	"data/sound/SFX_F7.bin"
+SFX_F7_End:
+SFX_F8:     dc.b 0, $1C, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, $45, 5, $F9, $FF, $B0, 7, $EF, 1, $AB, $7F, $E7, $60, $F2, $32, 2, $30, $11
                                         ; DATA XREF: ROM:00085152   o
                 dc.b $F, $1B, $1F, $1F, 6, $1E, $1F, $1D, $F, 1, $E, 0, $10, $31, $1F, $F, $1F, $21, $10, 0, $80, $31, $F, $2F, $20, $F, $1B, $1F, $1F, 4, $1E, $1F
                 dc.b $1D, $F, 6, 0, 7, 5, 1, $1F, $F, $1F, $20, $17, $16, $80
-byte_97F1A:     dc.b 0, $1C, 1, 1, $80, 4, 0, $A, $18, $D, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $87, 7, $E7, $8C, 7, $F6, $FF, $F9, $F2, $32, 8, $10, $70
-                                        ; DATA XREF: ROM:off_85156   o
+SFX_F9:     dc.b 0, $1C, 1, 1, $80, 4, 0, $A, $18, $D, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $87, 7, $E7, $8C, 7, $F6, $FF, $F9, $F2, $32, 8, $10, $70
+                                        ; DATA XREF: ROM:SpecialSFX_PointerTable   o
                 dc.b $2E, $1B, $F, $F, $D, $1F, $F, $1F, $1F, 0, $C, 0, 8, $1F, $F, $F, $F, $29, $10, $1A, $80, 0
-byte_97F50:     dc.b 0, $19, 1, 1, $80, 4, 0, $A, $A, 6, $80, 1, $EF, 0, $F0, 1, 1, $22, $FF, $88, 7, $F6, $FF, $FC, $F2, $30, 2, $31, 1, 2, $1B, $1F
+SFX_FA:     dc.b 0, $19, 1, 1, $80, 4, 0, $A, $A, 6, $80, 1, $EF, 0, $F0, 1, 1, $22, $FF, $88, 7, $F6, $FF, $FC, $F2, $30, 2, $31, 1, 2, $1B, $1F
                                         ; DATA XREF: ROM:0008515A   o
                 dc.b $1F, $12, $1E, $1F, $1E, $1F, 1, $10, 9, 0, 1, $1F, $F, $F, $30, $20, $B, $80
-byte_97F82:     dc.b 0, $32, 1, 1, $80, 4, 0, $A, $E9, 3, $FB, $17, $EF, 0, $F0, 1, 1, $22, $FF, $81, 4, 4, $FB, 1, $F7, 0, $16, $FF, $F7, $FB, $ED, $94
+SFX_FB:     dc.b 0, $32, 1, 1, $80, 4, 0, $A, $E9, 3, $FB, $17, $EF, 0, $F0, 1, 1, $22, $FF, $81, 4, 4, $FB, 1, $F7, 0, $16, $FF, $F7, $FB, $ED, $94
                                         ; DATA XREF: ROM:0008515E   o
                 dc.b 4, $F7, 0, $30, $FF, $FA, $94, 4, $E6, 1, $F7, 0, $15, $FF, $F8, $EB, 3, $F2, $34, 1, $30, $11, 6, $1B, $1F, $1F, $12, $E, $1F, $E, $1F, 1
                 dc.b 0, 9, 0, 1, $1F, $1F, $F, 6, $10, 9, $80, 0
-byte_97FCE:     dc.b 0, $19, 1, 1, $80, 4, 0, $A, $E0, $A, $EF, 0, $E7, $F0, 0, 1, $15, $15, $AB, $2C, $E7, $F6, $FF, $FB, $F2, $32, $36, 0, $76, $D, $1B, $1F
+SFX_FC:     dc.b 0, $19, 1, 1, $80, 4, 0, $A, $E0, $A, $EF, 0, $E7, $F0, 0, 1, $15, $15, $AB, $2C, $E7, $F6, $FF, $FB, $F2, $32, $36, 0, $76, $D, $1B, $1F
                                         ; DATA XREF: ROM:word_82DEC   t
                                         ; ROM:00085162   o
                 dc.b $F, $F, $1E, $1F, $1D, $1F, 0, 0, 0, 0, 1, $1F, $F, $F, $25, $17, $2F, $80
