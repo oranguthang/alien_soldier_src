@@ -96,7 +96,7 @@ Math_ClearD0D1:
 ; Clears all objects except specified types
 Sprite_ClearAllExcept:                              ; CODE XREF: Cutscene_ShipAnimationLoop+26   j  ; was: sub_1C288
                                         ; Stage_CaterpillarShipMovement+A0   p ...
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 moveq   #0,d3
                 moveq   #$3C,d7 ; '<'
 loc_1C290:                              ; CODE XREF: Sprite_ClearAllExcept+76   j
@@ -221,9 +221,9 @@ Object_Clear96Bytes:                              ; CODE XREF: Boss_ValkirieMove
 Stage_LoadBackgroundGraphics:                              ; DATA XREF: Sys_DispatchGameState+62   o  ; was: sub_1C3FA
                 tst.b   (word_FFF720).w
                 bmi.s   locret_1C448
-                cmpi.w  #4,(word_FFA286).w
+                cmpi.w  #4,(GameSubstateIndex).w
                 beq.w   loc_1C4C2
-                move.w  (word_FFA286).w,d0
+                move.w  (GameSubstateIndex).w,d0
                 bne.s   loc_1C44A
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
@@ -231,7 +231,7 @@ Stage_LoadBackgroundGraphics:                              ; DATA XREF: Sys_Disp
                 jsr (Gfx_LoadVDPRegisters).l
                 jsr (Stage_StateDispatcher).l
                 jsr (Sys_InitStageState).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.w  #$1F,(word_FFA944).w
                 move.w  (dword_FFA900).w,(word_FFA946).w
                 move.w  (dword_FFA904).w,(word_FFA948).w
@@ -269,7 +269,7 @@ loc_1C48E:                              ; CODE XREF: Stage_LoadBackgroundGraphic
                 bpl.w   locret_1C448
 loc_1C4AA:                              ; CODE XREF: Stage_LoadBackgroundGraphics+6C   j
                                         ; Stage_LoadBackgroundGraphics+92   j
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.w  #$1F,(word_FFA944).w
                 move.w  (dword_FFA908).w,(word_FFA946).w
                 move.w  (dword_FFA90C).w,(word_FFA948).w
@@ -297,8 +297,8 @@ loc_1C4FE:                              ; CODE XREF: Stage_LoadBackgroundGraphic
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 jsr (Gfx_FadePaletteTransition).l
-                move.w  #$10,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$10,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 clr.b   (byte_FFF705).w
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
@@ -319,9 +319,9 @@ off_1C53E:      dc.l dword_11336        ; DATA XREF: Stage_LoadBackgroundGraphic
 Stage_XiTigerHandler:                              ; DATA XREF: Sys_DispatchGameState+D6   o  ; was: sub_1C546
                 tst.b   (word_FFF720).w
                 bmi.s   locret_1C5A8
-                cmpi.w  #4,(word_FFA286).w
+                cmpi.w  #4,(GameSubstateIndex).w
                 beq.w   loc_1C5FC
-                move.w  (word_FFA286).w,d0
+                move.w  (GameSubstateIndex).w,d0
                 bne.s   loc_1C5AA
                 jsr (Sys_InitGraphicsChain).l
                 jsr (Gfx_LoadVDPRegisters).l
@@ -332,7 +332,7 @@ Stage_XiTigerHandler:                              ; DATA XREF: Sys_DispatchGame
                 jsr (Gfx_FadePaletteTransition).l
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.w  #$1F,(word_FFA944).w
                 move.w  (dword_FFA900).w,(word_FFA946).w
                 move.w  (dword_FFA904).w,(word_FFA948).w
@@ -357,7 +357,7 @@ loc_1C5CA:                              ; CODE XREF: Stage_XiTigerHandler+68   j
                 jsr (Gfx_RenderScrollingBackground).l
                 bpl.w   locret_1C5A8
 loc_1C5E4:                              ; CODE XREF: Stage_XiTigerHandler+80   j
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.w  #$1F,(word_FFA944).w
                 move.w  (dword_FFA908).w,(word_FFA946).w
                 move.w  (dword_FFA90C).w,(word_FFA948).w
@@ -380,8 +380,8 @@ loc_1C61C:                              ; CODE XREF: Stage_XiTigerHandler+BA   j
                 jsr (Gfx_RenderScrollingBackground).l
                 bpl.w   locret_1C5A8
 loc_1C636:                              ; CODE XREF: Stage_XiTigerHandler+D2   j
-                move.w  #$10,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$10,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 clr.b   (byte_FFF705).w
                 move.w  #$8004,(word_FF80F2).w
                 move.w  #$10,(word_FF80F0).w
@@ -491,8 +491,8 @@ loc_1C816:                              ; CODE XREF: Sys_GameplayMainLoop+1B0   
                 clr.w   (word_FFA21E).w
                 cmpi.w  #1,d0
                 bne.s   loc_1C844
-                move.w  #$2C,(word_FFA284).w ; ','
-                clr.w   (word_FFA286).w
+                move.w  #$2C,(GameModeIndex).w ; ','
+                clr.w   (GameSubstateIndex).w
                 move.b  #4,d0
                 jsr (Sound_PlaySFX).l
                 bra.s   loc_1C860
@@ -500,13 +500,13 @@ loc_1C816:                              ; CODE XREF: Sys_GameplayMainLoop+1B0   
 loc_1C844:                              ; CODE XREF: Sys_GameplayMainLoop+1D0   j
                 cmpi.w  #3,d0
                 bne.s   loc_1C856
-                move.w  #$34,(word_FFA284).w ; '4'
-                clr.w   (word_FFA286).w
+                move.w  #$34,(GameModeIndex).w ; '4'
+                clr.w   (GameSubstateIndex).w
                 bra.s   loc_1C860
 ; ---------------------------------------------------------------------------
 loc_1C856:                              ; CODE XREF: Sys_GameplayMainLoop+1EC   j
-                move.w  #$68,(word_FFA284).w ; 'h'
-                clr.w   (word_FFA286).w
+                move.w  #$68,(GameModeIndex).w ; 'h'
+                clr.w   (GameSubstateIndex).w
 loc_1C860:                              ; CODE XREF: Sys_GameplayMainLoop+1B8   j
                                         ; Sys_GameplayMainLoop+1C0   j ...
                 tst.b   (byte_FFF705).w
@@ -529,20 +529,20 @@ loc_1C884:                              ; CODE XREF: Sys_GameplayMainLoop+208   
 ; End of function Sys_GameplayMainLoop
 ; Set game state to $40
 Sys_SetState40:
-                move.w  #$40,(word_FFA284).w ; '@'  ; was: sub_1C892
-                clr.w   (word_FFA286).w
+                move.w  #$40,(GameModeIndex).w ; '@'  ; was: sub_1C892
+                clr.w   (GameSubstateIndex).w
                 rts
 ; End of function Sys_SetState40
 ; Set game state to $3C with input
 Sys_SetState3CWithInput:
-                move.w  #$3C,(word_FFA284).w ; '<'  ; was: sub_1C89E
-                clr.w   (word_FFA286).w
+                move.w  #$3C,(GameModeIndex).w ; '<'  ; was: sub_1C89E
+                clr.w   (GameSubstateIndex).w
                 move.b  #1,d0
                 jmp (Input_ProcessButtons).l
 ; End of function Sys_SetState3CWithInput
 ; Sets weapon icon index from weapon ID lookup
 UI_SetWeaponIconIndex:                              ; CODE XREF: Sys_GameplayMainLoop+72   p  ; was: sub_1C8B2
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 asr.w   #1,d0
                 move.b  byte_1C8C0(pc,d0.w),(byte_FF8232).w
                 rts
@@ -963,7 +963,7 @@ UI_SetPasswordConfirmFlag:                              ; CODE XREF: UI_HandlePa
 ; Initializes game state variables for menu/title screen
 UI_InitializeGameVariables:                              ; CODE XREF: UI_HandleTitleInput+8A   p  ; was: sub_1CCF4
                                         ; UI_HandleTitleInput+BA   j ...
-                clr.w   (word_FFA204).w
+                clr.w   (StageTableIndex).w
                 move.w  #2,(word_FFA22A).w
                 clr.b   (byte_FFA209).w
 loc_1CD02:                              ; CODE XREF: UI_SetPasswordConfirmFlag+6   j
@@ -1007,7 +1007,7 @@ loc_1CD5A:                              ; CODE XREF: UI_InitGameStateFromContinu
                 clr.b   (byte_FFFF31).w
                 bsr.s UI_ResetMenuBufferAndState
                 move.w  #$50,(word_FF80C2).w ; 'P'
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0
                 move.b  byte_1CDCE(pc,d0.w),(dword_FF80C8).w
                 rts
@@ -1044,7 +1044,7 @@ byte_1CDCE:     dc.b $18, $18, $18, $18, $18, $18, $18, $18, $18, $18
 ; Stores current weapon selection value to buffer
 UI_StoreWeaponSelection:                              ; CODE XREF: Text_AdvancePhase+30   p  ; was: sub_1CDF4
                 movea.w #(word_FFAA00-M68K_RAM),a0
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 move.w  (word_FFA270).w,(a0,d0.w)
                 rts
 ; End of function UI_StoreWeaponSelection
@@ -1052,14 +1052,14 @@ UI_StoreWeaponSelection:                              ; CODE XREF: Text_AdvanceP
 UI_StoreWeaponToBuffer:                              ; CODE XREF: Text_CompleteWithSound:loc_B0FE   p  ; was: sub_1CE04
                                         ; Boss_ZLeoDefeatedDelay+2E   j
                 movea.w #(word_FFAA80-M68K_RAM),a0
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 move.w  (word_FFA270).w,(a0,d0.w)
                 rts
 ; End of function UI_StoreWeaponToBuffer
 ; Increments score counter with maximum value check
 UI_IncrementScoreCounter:                              ; CODE XREF: Results_UpdateAndDisplay+2A   p  ; was: sub_1CE14
                 movea.w #(word_FFAB00-M68K_RAM),a0
-                adda.w  (word_FFA204).w,a0
+                adda.w  (StageTableIndex).w,a0
                 cmpi.w  #$3E7,(a0)
                 bpl.s   locret_1CE24
                 addq.w  #1,(a0)
@@ -1082,7 +1082,7 @@ Enemy_UpdateBehavior:                              ; CODE XREF: Player_Initializ
                                         ; sub_1CDB4   p
                 lea     word_1CE4C(pc),a0
                 nop
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 move.w  (a0,d0.w),(word_FFA270).w
                 rts
 ; End of function Enemy_UpdateBehavior
@@ -1098,14 +1098,14 @@ word_1CE4C:     dc.w $200, $240, $300, $330, $330
 
 ; Sets up results screen graphics and memory state
 UI_InitializeResultsScreen:                              ; DATA XREF: Sys_DispatchGameState+5A   o  ; was: sub_1CE7E
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s UI_LoadResultsPalette
                 jsr (Sys_InitGameMode).l
                 movea.l #stru_1CEFC,a0
                 jsr     (LoadObjData).l
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 clr.b   (word_FFF7F4+1).w
                 clr.w   (word_FF00EC).l
                 clr.w   (word_FF0178).l
@@ -1113,8 +1113,8 @@ UI_InitializeResultsScreen:                              ; DATA XREF: Sys_Dispat
 ; ---------------------------------------------------------------------------
 ; Loads palette and data tables for results screen
 UI_LoadResultsPalette:                              ; CODE XREF: UI_InitializeResultsScreen+4   j  ; was: loc_1CEB6
-                move.w  #8,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #8,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 move.w  #$F0,(word_FF8100).w
                 move.w  #0,d0
                 move.w  #0,d1
@@ -1146,7 +1146,7 @@ stru_1CEFC:     dc.w 7                  ; field_0
 Sys_UpdateGameLoop:                              ; DATA XREF: Sys_DispatchGameState+5E   o  ; was: sub_1CF16
                 tst.w   (word_FFF720).w
                 bmi.s   loc_1CF2E
-                cmpi.w  #4,(word_FFA286).w
+                cmpi.w  #4,(GameSubstateIndex).w
                 bcs.s   loc_1CF2E
                 btst    #7,(word_FFF708).w
                 bne.w   loc_1D3A8
@@ -1165,7 +1165,7 @@ loc_1CF2E:                              ; CODE XREF: Sys_UpdateGameLoop+4   j
 ; End of function Sys_UpdateGameLoop
 ; Dispatches to menu state handler based on index
 UI_DispatchMenuState:                              ; CODE XREF: Sys_UpdateGameLoop+30   p  ; was: sub_1CF62
-                move.w  (word_FFA286).w,d0
+                move.w  (GameSubstateIndex).w,d0
                 movea.w off_1CF72(pc,d0.w),a0
                 adda.l  #UI_InitializeSEGAScreen,a0
                 jmp     (a0)
@@ -1232,7 +1232,7 @@ loc_1D006:                              ; CODE XREF: UI_InitializeSEGAScreen+86 
                 clr.w   (word_FF0178).l
                 move.b  #$87,d0
                 jsr (Input_ProcessButtons).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -1259,7 +1259,7 @@ loc_1D09E:                              ; CODE XREF: UI_InitializeSEGAScreen+11E
                 move.l  #$94039300,-(a0)
                 move.w  a0,(word_FFF70C).w
                 move    #$2300,sr
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.w  #$C000,2(a0)
                 move.w  #$C200,$E(a0)
@@ -1321,12 +1321,12 @@ Effect_UpdatePlanetRotation:                              ; DATA XREF: ROM:0001D
                 tst.w   (word_FF00C6).l
                 bpl.w   locret_1D3D8
                 move.w  #$80,(word_FF8100).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Effect_UpdatePlanetRotation
 ; Sets up title screen with palettes and graphics
 UI_InitializeTitleScreen:                              ; DATA XREF: ROM:0001CF76   o  ; was: sub_1D1AA
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 movea.l #dword_1D25E,a0
                 movea.w #(word_FFE340-M68K_RAM),a1
                 moveq   #7,d7
@@ -1336,7 +1336,7 @@ UI_LoadTitleData:                              ; CODE XREF: UI_InitializeTitleSc
                 dbf d7,UI_LoadTitleData
                 movea.l #stru_1D254,a0
                 jsr (Data_ProcessPointer).l
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.w  #$C000,2(a0)
                 move.w  #$C200,$E(a0)
@@ -1411,7 +1411,7 @@ UI_InitializeGameScreen:                              ; DATA XREF: ROM:0001D290 
                 jsr (Gfx_UpdateVDPRegistersWithMask).l
                 tst.w   (word_FF00C6).l
                 bpl.w   locret_1D3D8
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.w  #$C000,2(a0)
                 move.w  #$A000,$E(a0)
@@ -1447,24 +1447,24 @@ Effect_UpdateGameRotation:                              ; DATA XREF: ROM:0001D29
                 tst.w   (word_FF00C6).l
                 bpl.w   locret_1D3D8
                 clr.w   (word_FFC622).w
-                move.w  #6,(word_FFA286).w
+                move.w  #6,(GameSubstateIndex).w
                 move.w  #$C,(word_FF00EC).l
                 rts
 ; ---------------------------------------------------------------------------
 loc_1D3A8:                              ; CODE XREF: Sys_UpdateGameLoop+14   j
-                cmpi.w  #6,(word_FFA286).w
+                cmpi.w  #6,(GameSubstateIndex).w
                 bne.s   loc_1D3BC
                 cmpi.w  #$C,(word_FF00EC).l
                 beq.w   locret_1D3D8
 loc_1D3BC:                              ; CODE XREF: Effect_UpdateGameRotation+30   j
-                move.w  #$28,(word_FFA284).w ; '('
+                move.w  #$28,(GameModeIndex).w ; '('
                 jmp     (loc_5102).l
 ; End of function Effect_UpdateGameRotation
 ; Clears boss data and transitions to story screen
 Sys_TransitionToStoryScreen:                              ; DATA XREF: ROM:0001D298   o  ; was: sub_1D3C8
                 jsr (Sys_ClearBossDataBuffer).l
-                move.w  #$24,(word_FFA284).w ; '$'
-                clr.w   (word_FFA286).w
+                move.w  #$24,(GameModeIndex).w ; '$'
+                clr.w   (GameSubstateIndex).w
 locret_1D3D8:                           ; CODE XREF: Effect_FadeOutPlanet+14   j
                                         ; Sys_WaitForFrameDelay+4   j ...
                 rts
@@ -1482,7 +1482,7 @@ Stage_InitializeTransition:                              ; DATA XREF: ROM:0001CF
                 jsr (Data_LoadPointerTable2).l
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jmp Gfx_SetupScrollPlanes
 ; End of function Stage_InitializeTransition
 ; ---------------------------------------------------------------------------
@@ -1522,7 +1522,7 @@ Cutscene_InitializeScene:                              ; DATA XREF: ROM:0001CF7E
                 jsr     (LoadObjData).l
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jsr (Gfx_DecompressCutsceneData).l
                 jmp Gfx_SetupScrollPlanes
 ; End of function Cutscene_InitializeScene
@@ -1601,7 +1601,7 @@ word_1D5E0:     dc.w $316, $100, $B8, $32C, $100, $C4, $326, $100
 
 ; Initializes stage select screen with graphics setup
 UI_InitializeStageSelect:                              ; DATA XREF: Sys_DispatchGameState+82   o  ; was: sub_1D628
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s   loc_1D69C
                 tst.w   (word_FFF720).w
                 bpl.s   loc_1D636
@@ -1628,12 +1628,12 @@ loc_1D636:                              ; CODE XREF: UI_InitializeStageSelect+A 
 loc_1D688:                              ; CODE XREF: UI_InitializeStageSelect+58   j
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jmp Gfx_QueueVRAMCommand
 ; ---------------------------------------------------------------------------
 loc_1D69C:                              ; CODE XREF: UI_InitializeStageSelect+4   j
-                move.w  #$30,(word_FFA284).w ; '0'
-                clr.w   (word_FFA286).w
+                move.w  #$30,(GameModeIndex).w ; '0'
+                clr.w   (GameSubstateIndex).w
                 lea     (byte_BAF0).l,a0
                 jsr     (LoadPalette).l
                 jsr (Gfx_FadePaletteTransition).l
@@ -1679,7 +1679,7 @@ stru_1D70A:     dc.w 3                  ; field_0
 
 ; Initializes stage select screen
 Stage_InitializeStageSelect:                              ; DATA XREF: Sys_DispatchGameState+AA   o  ; was: sub_1D734
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s   loc_1D778
                 jsr (Sys_InitGameMode).l
                 movea.l #stru_1D70A,a0
@@ -1690,12 +1690,12 @@ Stage_InitializeStageSelect:                              ; DATA XREF: Sys_Dispa
                 jsr (Gfx_FadePaletteTransition).l
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jmp VDP_SetupPaletteTransfer
 ; ---------------------------------------------------------------------------
 loc_1D778:                              ; CODE XREF: Stage_InitializeStageSelect+4   j
-                move.w  #$30,(word_FFA284).w ; '0'
-                move.w  #6,(word_FFA286).w
+                move.w  #$30,(GameModeIndex).w ; '0'
+                move.w  #6,(GameSubstateIndex).w
                 lea     (byte_BAF0).l,a0
                 jsr     (LoadPalette).l
                 jsr (Gfx_FadePaletteTransition).l
@@ -1709,7 +1709,7 @@ loc_1D778:                              ; CODE XREF: Stage_InitializeStageSelect
 ; End of function Stage_InitializeStageSelect
 ; Dispatches stage select state handler
 UI_DispatchStageState:                              ; DATA XREF: Sys_DispatchGameState+86   o  ; was: sub_1D7BE
-                move.w  (word_FFA286).w,d0
+                move.w  (GameSubstateIndex).w,d0
                 movea.w off_1D7CE(pc,d0.w),a0
                 adda.l  #UI_UpdateStageScroll,a0
                 jmp     (a0)
@@ -1742,7 +1742,7 @@ loc_1D7F6:                              ; CODE XREF: UI_UpdateStageScroll+A   j
 loc_1D800:                              ; CODE XREF: UI_UpdateStageScroll+12   j
                 cmpi.w  #$3C0,(dword_FFA900).w
                 bmi.s   loc_1D86A
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -1752,7 +1752,7 @@ loc_1D800:                              ; CODE XREF: UI_UpdateStageScroll+12   j
 UI_HandleStageFadeOut:                              ; DATA XREF: ROM:0001D7D0   o  ; was: sub_1D81E
                 bclr    #1,(word_FF80F4).w
                 beq.s   loc_1D86A
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 clr.b   (word_FFF7E6+1).w
                 move.b  #$12,(word_FFF7F4+1).w
                 move.w  #4,(word_FF80F2).w
@@ -1904,7 +1904,7 @@ Results_RenderScoreValues:                              ; CODE XREF: UI_Initiali
                 move.w  #$6B06,d4
                 jsr (UI_RenderTextStringWrapped).l
                 moveq   #0,d0
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 addq.w  #2,d0
                 jsr (Math_LookupCosineValue).l
                 move.w  #$4302,d1
@@ -1934,7 +1934,7 @@ UI_RenderContinueText:                              ; CODE XREF: UI_InitializeCo
                 move.w  #$2300,d0
                 move.w  #$6B32,d4
                 jsr (UI_RenderTextStringWrapped).l
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 asl.w   #2,d0
                 addi.l  #word_A82A,d0
                 moveq   #0,d1
@@ -1961,12 +1961,12 @@ UI_InitializeContinueScreen:                              ; DATA XREF: ROM:0001D
                 clr.l   (dword_FFA90C).w
                 tst.w   (word_FFA228).w
                 bne.s   loc_1DABC
-                move.w  #$14,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$14,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_1DABC:                              ; CODE XREF: UI_InitializeContinueScreen+1E   j
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.l  #$A0000,(dword_FF8066+2).w
                 subi.l  #$200,(dword_FF8066+2).w
                 lea     (word_B95A).l,a4
@@ -1998,7 +1998,7 @@ UI_UpdateContinueDisplay:                              ; DATA XREF: ROM:0001D7DA
                 jsr (Gfx_FadePaletteTransition).l
                 bclr    #0,(word_FF80F4).w
                 beq.s   locret_1DB5A
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.b  #$94,d0
                 jsr (Sys_WaitVBlank).l
 locret_1DB5A:                           ; CODE XREF: UI_UpdateContinueDisplay+22   j
@@ -2022,7 +2022,7 @@ loc_1DB80:                              ; CODE XREF: UI_HandleContinueInput+10  
                 subi.l  #$200,(dword_FF8066+2).w
                 bpl.s   loc_1DBB0
 loc_1DB8E:                              ; CODE XREF: UI_HandleContinueInput+20   j
-                addq.w  #4,(word_FFA286).w
+                addq.w  #4,(GameSubstateIndex).w
                 move.b  #1,d0
                 jsr (Input_ProcessButtons).l
                 move.w  #2,(word_FF80F2).w
@@ -2039,7 +2039,7 @@ loc_1DBC0:                              ; CODE XREF: UI_HandleContinueInput+22  
                                         ; UI_HandleContinueInput+58   j
                 btst    #7,(word_FFF708).w
                 beq.s   loc_1DBFA
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.b  #1,d0
                 jsr (Input_ProcessButtons).l
                 move.w  #2,(word_FF80F2).w
@@ -2064,22 +2064,22 @@ UI_TransitionFromContinue:                              ; DATA XREF: ROM:0001D7D
                 beq.s   loc_1DBFA
                 tst.w   (word_FFFF0E).w
                 beq.s   loc_1DC24
-                move.w  #$3C,(word_FFA284).w ; '<'
-                clr.w   (word_FFA286).w
+                move.w  #$3C,(GameModeIndex).w ; '<'
+                clr.w   (GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_1DC24:                              ; CODE XREF: UI_TransitionFromContinue+10   j
-                move.w  #$70,(word_FFA284).w ; 'p'
-                clr.w   (word_FFA286).w
+                move.w  #$70,(GameModeIndex).w ; 'p'
+                clr.w   (GameSubstateIndex).w
                 jmp UI_InitGameStateFromContinue
 ; End of function UI_TransitionFromContinue
 ; Handles game over screen fade transition
 UI_HandleGameOverTransition:                              ; DATA XREF: ROM:0001D7E0   o  ; was: sub_1DC34
                 bclr    #1,(word_FF80F4).w
                 beq.s   loc_1DBFA
-                addq.w  #2,(word_FFA286).w
-                move.w  #$14,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
+                move.w  #$14,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 rts
 ; End of function UI_HandleGameOverTransition
 ; Initializes results display by calling render functions
@@ -2097,7 +2097,7 @@ Results_UpdateAndDisplay:                              ; DATA XREF: ROM:0001D7D2
                 jsr (Gfx_FadePaletteTransition).l
                 bclr    #0,(word_FF80F4).w
                 beq.s   locret_1DCB0
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jsr (UI_IncrementScoreCounter).l
                 lea     stru_1DCB2(pc),a0
                 nop
@@ -2137,7 +2137,7 @@ Results_HandleCompletion:                              ; DATA XREF: ROM:0001D7D4
                 jsr (Gfx_FadePaletteTransition).l
                 btst    #7,(word_FFF708).w
                 beq.s   locret_1DD14
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -2149,16 +2149,16 @@ Gfx_FadeOutResults:                              ; DATA XREF: ROM:0001D7D6   o  
                 jsr (Gfx_FadePaletteTransition).l
                 bclr    #1,(word_FF80F4).w
                 beq.s   locret_1DD2C
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 clr.b   (word_FFF7F4+1).w
 locret_1DD2C:                           ; CODE XREF: Gfx_FadeOutResults+C   j
                 rts
 ; End of function Gfx_FadeOutResults
 ; Initializes results screen
 Results_InitializeScreen:                              ; DATA XREF: Sys_DispatchGameState+DA   o  ; was: sub_1DD2E
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s   loc_1DD8A
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jsr (Sys_InitGameMode).l
                 jsr (Sys_ClearBossDataBuffer).l
                 move.w  #4,(word_FF80F2).w
@@ -2173,7 +2173,7 @@ Results_InitializeScreen:                              ; DATA XREF: Sys_Dispatch
                 clr.w   (dword_FF8560).w
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jmp Gfx_QueueVRAMCommand
 ; ---------------------------------------------------------------------------
 locret_1DD88:                           ; CODE XREF: Results_InitializeScreen+60   j
@@ -2182,8 +2182,8 @@ locret_1DD88:                           ; CODE XREF: Results_InitializeScreen+60
 loc_1DD8A:                              ; CODE XREF: Results_InitializeScreen+4   j
                 tst.w   (word_FFF720).w
                 bmi.s   locret_1DD88
-                addq.w  #4,(word_FFA284).w
-                move.w  #2,(word_FFA286).w
+                addq.w  #4,(GameModeIndex).w
+                move.w  #2,(GameSubstateIndex).w
                 lea     (word_B96E).l,a4
                 jsr (Gfx_LoadMultiplePalettes).l
                 bsr.w Results_RenderAllStats
@@ -2313,7 +2313,7 @@ Results_DisplayBonus:                              ; CODE XREF: Results_RenderAl
 ; Main loop for results screen
 Results_MainLoop:                              ; DATA XREF: Sys_DispatchGameState+DE   o  ; was: sub_1DF3A
                 addq.w  #1,(word_FFA000).w
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s   loc_1DF52
                 jsr (Results_CheckSkipButton).l
                 bsr.w Results_DisplayTime
@@ -2321,21 +2321,21 @@ Results_MainLoop:                              ; DATA XREF: Sys_DispatchGameStat
 loc_1DF52:                              ; CODE XREF: Results_MainLoop+8   j
                 jsr (Gfx_SetupScrollPlanes).l
                 jsr (Gfx_FadePaletteTransition).l
-                cmpi.w  #2,(word_FFA286).w
+                cmpi.w  #2,(GameSubstateIndex).w
                 bne.s   loc_1DF74
                 bclr    #0,(word_FF80F4).w
                 beq.s   locret_1DFB4
-                clr.w   (word_FFA286).w
+                clr.w   (GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_1DF74:                              ; CODE XREF: Results_MainLoop+2A   j
-                cmpi.w  #4,(word_FFA286).w
+                cmpi.w  #4,(GameSubstateIndex).w
                 beq.s   loc_1DFA2
                 btst    #7,(word_FFF708).w
                 beq.s   locret_1DFB4
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 beq.s   loc_1DF90
-                move.w  #4,(word_FFA286).w
+                move.w  #4,(GameSubstateIndex).w
 loc_1DF90:                              ; CODE XREF: Results_MainLoop+4E   j
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
@@ -2345,8 +2345,8 @@ loc_1DF90:                              ; CODE XREF: Results_MainLoop+4E   j
 loc_1DFA2:                              ; CODE XREF: Results_MainLoop+40   j
                 bclr    #1,(word_FF80F4).w
                 beq.s   locret_1DFB4
-                move.w  #$14,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$14,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
 locret_1DFB4:                           ; CODE XREF: Results_MainLoop+32   j
                                         ; Results_MainLoop+48   j ...
                 rts
@@ -2360,8 +2360,8 @@ UI_InitializePasswordScreen:                              ; DATA XREF: Sys_Dispa
                 jsr (Stage_DispatchObjectLoader).l
                 movea.l #stru_1E012,a0
                 jsr     (LoadObjData).l
-                addq.w  #4,(word_FFA284).w
-                move.w  #$40,(word_FFA286).w ; '@'
+                addq.w  #4,(GameModeIndex).w
+                move.w  #$40,(GameSubstateIndex).w ; '@'
                 jsr (Gfx_QueueFontDMATransfer).l
                 lea     (byte_BAD2).l,a0
                 jsr     (LoadPalette).l
@@ -2384,15 +2384,15 @@ stru_1E012:     dc.w 3                  ; field_0
 
 ; Updates password display with blinking cursor
 UI_UpdatePasswordDisplay:                              ; DATA XREF: Sys_DispatchGameState+96   o  ; was: sub_1E024
-                move.w  (word_FFA286).w,d0
+                move.w  (GameSubstateIndex).w,d0
                 subq.w  #1,d0
                 bpl.s   loc_1E03C
-                move.w  #$C,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$C,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 jmp UI_InitGameStateFromContinue
 ; ---------------------------------------------------------------------------
 loc_1E03C:                              ; CODE XREF: UI_UpdatePasswordDisplay+6   j
-                move.w  d0,(word_FFA286).w
+                move.w  d0,(GameSubstateIndex).w
                 andi.w  #8,d0
                 bne.s   loc_1E05A
                 movea.l #byte_4660,a0
@@ -2408,9 +2408,9 @@ loc_1E05A:                              ; CODE XREF: UI_UpdatePasswordDisplay+20
 ; End of function UI_UpdatePasswordDisplay
 ; Initializes password screen
 Password_InitializeScreen:                              ; DATA XREF: Sys_DispatchGameState+AE   o  ; was: sub_1E06E
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s   loc_1E0C4
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jsr (Sys_InitGameMode).l
                 jsr (Stage_DispatchObjectLoader).l
                 jsr (Sys_ClearBossDataBuffer).l
@@ -2426,7 +2426,7 @@ Password_InitializeScreen:                              ; DATA XREF: Sys_Dispatc
                 jmp Gfx_QueueVRAMCommand
 ; ---------------------------------------------------------------------------
 loc_1E0C4:                              ; CODE XREF: Password_InitializeScreen+4   j
-                addq.w  #4,(word_FFA284).w
+                addq.w  #4,(GameModeIndex).w
                 jsr (Gfx_FadePaletteTransition).l
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA904).w
@@ -2450,8 +2450,8 @@ loc_1E0C4:                              ; CODE XREF: Password_InitializeScreen+4
 Password_HandleInput:                              ; DATA XREF: Sys_DispatchGameState+B2   o  ; was: sub_1E124
                 bclr    #1,(word_FF80F4).w
                 beq.s   loc_1E14C
-                move.w  #$C,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$C,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 jsr (UI_ClearPasswordFlags).l
                 lea     stru_1E012(pc),a0
                 jsr     (LoadObjData).l
@@ -2471,9 +2471,9 @@ loc_1E164:                              ; CODE XREF: Password_HandleInput+2C   j
 ; End of function Password_HandleInput
 ; Initializes credits screen
 Credits_InitializeScreen:                              ; DATA XREF: Sys_DispatchGameState+B6   o  ; was: sub_1E16C
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s   loc_1E1BE
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jsr (Sys_InitGameMode).l
                 lea     stru_1E204(pc),a0
                 nop
@@ -2490,7 +2490,7 @@ Credits_InitializeScreen:                              ; DATA XREF: Sys_Dispatch
                 rts
 ; ---------------------------------------------------------------------------
 loc_1E1BE:                              ; CODE XREF: Credits_InitializeScreen+4   j
-                addq.w  #4,(word_FFA284).w
+                addq.w  #4,(GameModeIndex).w
                 jsr (Gfx_FadePaletteTransition).l
                 movea.l #dword_1E236,a0
                 move.w  #$800,d0
@@ -2546,7 +2546,7 @@ loc_1E260:                              ; CODE XREF: Input_CheckButtonModeAndBra
 ; End of function Input_CheckButtonModeAndBranch
 ; Initializes weapon selection screen
 UI_InitializeWeaponSelect:                              ; DATA XREF: Sys_DispatchGameState+8A   o  ; was: sub_1E264
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s UI_WeaponSelectTransition
                 jsr (Sys_InitGameMode).l
                 jsr (Sys_ClearBossDataBuffer).l
@@ -2556,7 +2556,7 @@ UI_InitializeWeaponSelect:                              ; DATA XREF: Sys_Dispatc
 UI_PrepareWeaponSelectGfx:
                 bclr    #6,(word_FFF7D2+1).w  ; was: sub_1E27A
                 clr.b   (byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 move.w  #$6000,(word_FF8146).w
                 move.w  #$F,(word_FF8148).w
                 move.w  #0,(word_FF814A).w
@@ -2565,18 +2565,18 @@ UI_PrepareWeaponSelectGfx:
 ; End of function UI_PrepareWeaponSelectGfx
 ; Handles weapon select transition
 UI_WeaponSelectTransition:                              ; CODE XREF: UI_InitializeWeaponSelect+4   j  ; was: sub_1E2A6
-                cmpi.w  #4,(word_FFA286).w
+                cmpi.w  #4,(GameSubstateIndex).w
                 beq.s   loc_1E2C6
                 tst.b   (word_FFF720).w
                 bmi.w   locret_1E40A
                 jsr (VDP_TransferFontTile).l
                 bpl.w   locret_1E40A
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_1E2C6:                              ; CODE XREF: UI_WeaponSelectTransition+6   j
-                move.w  #$38,(word_FFA284).w ; '8'
-                clr.w   (word_FFA286).w
+                move.w  #$38,(GameModeIndex).w ; '8'
+                clr.w   (GameSubstateIndex).w
                 move.b  (byte_FFA230).w,d0
                 beq.s   loc_1E2DC
                 jsr (Input_CheckButtonMode).l
@@ -2615,11 +2615,11 @@ dword_1E344:    dc.l 0, $CAA0A88, $8660644, 0
 UI_HandleMenuTextTransition:                              ; DATA XREF: Sys_DispatchGameState+8E   o  ; was: sub_1E364
                 tst.b   (word_FFF720).w
                 bmi.w   locret_1E3D4
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 beq.s   loc_1E38E
                 btst    #7,(word_FFF708).w
                 beq.s   loc_1E38E
-                clr.w   (word_FFA286).w
+                clr.w   (GameSubstateIndex).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -2647,7 +2647,7 @@ loc_1E3C2:                              ; CODE XREF: UI_HandleMenuTextTransition
                 jsr (Gfx_FadePaletteTransition).l
                 bclr    #0,(word_FF80F4).w
                 beq.s   loc_1E3D6
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
 locret_1E3D4:                           ; CODE XREF: UI_HandleMenuTextTransition+4   j
                                         ; UI_HandleMenuTextTransition+78   j
                 rts
@@ -2658,11 +2658,11 @@ loc_1E3D6:                              ; CODE XREF: UI_HandleMenuTextTransition
 ; Transitions from menu to stage loading
 UI_TransitionToStageLoad:                              ; CODE XREF: Input_CheckButtonModeAndBranch:loc_1E260   j  ; was: loc_1E3DE
                                         ; Stage_HandleCreditsOrAdvance+32   j
-                move.w  #$C,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$C,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 jsr (UI_UpdateWeaponSelection).l
                 move.w  #$50,(word_FF80C2).w ; 'P'
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0
                 move.b  byte_1E40C(pc,d0.w),(dword_FF80C8).w
                 clr.b   (byte_FFA272).w
@@ -2737,7 +2737,7 @@ byte_1E6C6:     dc.b 3, $DA, 0, $39, $32, $6B, $31, $40, $4E, $5C, $A0, $DA, $92
 
 ; Initializes stage transition fade
 Sys_TransitionToStageInit:                              ; DATA XREF: Sys_DispatchGameState+BE   o  ; was: sub_1E76C
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s   loc_1E7A8
                 jsr (Sys_InitGameMode).l
                 jsr (Sys_ClearBossDataBuffer).l
@@ -2747,12 +2747,12 @@ Sys_TransitionToStageInit:                              ; DATA XREF: Sys_Dispatc
                 jsr (Gfx_FadePaletteTransition).l
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jmp Gfx_WriteVDPCommand
 ; ---------------------------------------------------------------------------
 loc_1E7A8:                              ; CODE XREF: Sys_TransitionToStageInit+4   j
-                addq.w  #4,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                addq.w  #4,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 bset    #0,(byte_FFA209).w
                 moveq   #0,d0
                 move.l  d0,(dword_FF8128).w
@@ -2778,14 +2778,14 @@ Sys_StageTransitionUpdate:                              ; DATA XREF: Sys_Dispatc
                 addq.w  #1,(word_FFA000).w
                 bclr    #0,(word_FF80F4).w
                 beq.s   loc_1E824
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_1E824:                              ; CODE XREF: Sys_StageTransitionUpdate+3E   j
                 bclr    #1,(word_FF80F4).w
                 beq.s   locret_1E83C
-                move.w  #$C,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$C,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 jmp Stage_DispatchObjectLoader
 ; ---------------------------------------------------------------------------
 locret_1E83C:                           ; CODE XREF: Sys_StageTransitionUpdate+4C   j
@@ -2901,7 +2901,7 @@ Cutscene_XiTigerSetup:                              ; DATA XREF: Cutscene_Update
                 move.w  #$100,(dword_FF8130).w
                 move.b  #$1E,d0
                 jsr (Sound_PlaySFX).l
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 bsr.w Cutscene_XiTigerInit
                 lea     $60(a0),a0
                 bsr.w Cutscene_XiTigerInit
@@ -2956,7 +2956,7 @@ Cutscene_XiTigerWaitComplete:                              ; DATA XREF: ROM:0001
                 jsr (Sound_PlaySFX).l
                 addq.w  #2,(dword_FF8128).w
                 move.w  #$50,(dword_FF8130).w ; 'P'
-                clr.w   (word_FFC620).w
+                clr.w   (Entity_ObjectPool).w
                 clr.w   (word_FFC680).w
 loc_1E9FA:                              ; CODE XREF: Cutscene_XiTigerWaitComplete+4   j
                 bsr.w Cutscene_XiTigerComplete
@@ -3073,8 +3073,8 @@ loc_1EB42:                              ; CODE XREF: Cutscene_XiTigerFadeOutAlt+
 ; Completes Xi Tiger cutscene
 Cutscene_XiTigerFinish:                              ; DATA XREF: ROM:0001E922   o  ; was: sub_1EB4E
                 jsr (Stage_DispatchObjectLoader).l
-                move.w  #$80,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$80,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 move.w  #0,(word_FF814C).w
                 rts
 ; End of function Cutscene_XiTigerFinish
@@ -3116,7 +3116,7 @@ Cutscene_XiTigerProcessCommands:                              ; CODE XREF: Cutsc
                 addi.l  #$800,(dword_FF812C).w
                 move.w  (dword_FF812C).w,d0
                 add.w   d0,(dword_FF8128+2).w
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 movea.w #(word_FFC680-M68K_RAM),a1
                 move.w  (dword_FF8128+2).w,d0
                 andi.w  #$3F,d0 ; '?'
@@ -3345,7 +3345,7 @@ Stage_HandleCreditsOrAdvance:                              ; DATA XREF: ROM:0001
 ; ---------------------------------------------------------------------------
 loc_1EE74:                              ; CODE XREF: Stage_HandleCreditsOrAdvance+4   j
                 clr.w   (word_FF820C).w
-                addq.w  #2,(word_FFA204).w
+                addq.w  #2,(StageTableIndex).w
                 bclr    #7,(dword_FFA20E).w
                 clr.b   (byte_FFA209).w
                 clr.b   (byte_FFA95A).w
@@ -3356,7 +3356,7 @@ loc_1EE74:                              ; CODE XREF: Stage_HandleCreditsOrAdvanc
 ; End of function Stage_HandleCreditsOrAdvance
 ; Initializes stage start with full game setup
 UI_InitializeStageStart:                              ; DATA XREF: Sys_DispatchGameState+C6   o  ; was: sub_1EE9E
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s UI_LoadStageGraphics
                 clr.w   (word_FFA29C).w
                 clr.b   (byte_FFFF31).w
@@ -3369,13 +3369,13 @@ UI_InitializeStageStart:                              ; DATA XREF: Sys_DispatchG
                 jsr (Gfx_FadePaletteTransition).l
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 jmp Gfx_WriteVDPCommand
 ; ---------------------------------------------------------------------------
 ; Loads stage graphics palettes and initializes systems
 UI_LoadStageGraphics:                              ; CODE XREF: UI_InitializeStageStart+4   j  ; was: loc_1EEEA
-                addq.w  #4,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                addq.w  #4,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 lea     stru_1EFB8(pc),a0
                 nop
                 jsr     (LoadObjData).l
@@ -3522,7 +3522,7 @@ Sys_UpdateGameplayLoop:                              ; DATA XREF: Sys_DispatchGa
                 addq.w  #1,(word_FFA000).w
                 bclr    #0,(word_FF80F4).w
                 beq.s   loc_1F0EE
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_1F0EE:                              ; CODE XREF: Sys_UpdateGameplayLoop+62   j
@@ -3531,18 +3531,18 @@ loc_1F0EE:                              ; CODE XREF: Sys_UpdateGameplayLoop+62  
                 rts
 ; ---------------------------------------------------------------------------
 loc_1F0F8:                              ; CODE XREF: Sys_UpdateGameplayLoop+70   j
-                tst.w   (word_FFA204).w
+                tst.w   (StageTableIndex).w
                 bne.s UI_TransitionToContinueScreen
                 move.l  #byte_1E444,(dword_FFA22C).w ; text?
-                move.w  #$34,(word_FFA284).w ; '4'
-                clr.w   (word_FFA286).w
+                move.w  #$34,(GameModeIndex).w ; '4'
+                clr.w   (GameSubstateIndex).w
                 jsr (Input_GetMappedButton).l
                 jmp UI_InitializeGameVariables
 ; ---------------------------------------------------------------------------
 ; Transitions to continue screen after stage end
 UI_TransitionToContinueScreen:                              ; CODE XREF: Sys_UpdateGameplayLoop+78   j  ; was: loc_1F11C
-                move.w  #$3C,(word_FFA284).w ; '<'
-                clr.w   (word_FFA286).w
+                move.w  #$3C,(GameModeIndex).w ; '<'
+                clr.w   (GameSubstateIndex).w
                 jmp     loc_1CDB8
 ; End of function Sys_UpdateGameplayLoop
 ; Loads stage assets and data
@@ -4446,8 +4446,8 @@ Results_CheckSkipButton:                              ; CODE XREF: Results_Handl
                 beq.s   locret_1FC0C
                 btst    #7,(word_FFF708).w
                 beq.s   locret_1FC0C
-                move.w  #4,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #4,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
 locret_1FC0C:                           ; CODE XREF: Results_CheckSkipButton+C   j
                                         ; Results_CheckSkipButton+14   j
                 rts
@@ -4507,11 +4507,11 @@ loc_1FC8A:                              ; CODE XREF: Results_InitializeDataDispl
                 bsr.w UI_WriteNullByte
                 move.w  (dword_FF9400+2).w,d0
                 addq.w  #2,(dword_FF9400+2).w
-                cmp.w   (word_FFA204).w,d0
+                cmp.w   (StageTableIndex).w,d0
                 bhi.s   loc_1FCCC
                 tst.w   (a2)
                 bpl.s   loc_1FCB4
-                cmp.w   (word_FFA204).w,d0
+                cmp.w   (StageTableIndex).w,d0
                 bne.s   loc_1FCCC
 loc_1FCB4:                              ; CODE XREF: Results_InitializeDataDisplay+86   j
                 move.w  (a1),(dword_FF9408+2).w
@@ -4621,7 +4621,7 @@ UI_RenderResultsDataRow:                              ; DATA XREF: ROM:0001FC1C 
                 move.w  a0,(dword_FF9420+2).w
                 move.w  #$4006,d4
                 add.w   (dword_FF9404).w,d4
-                move.w  (word_FFA204).w,d3
+                move.w  (StageTableIndex).w,d3
                 lsr.w   #1,d3
                 cmp.w   (dword_FF9400+2).w,d3
                 beq.s   loc_1FE2C
@@ -4690,7 +4690,7 @@ UI_ScrollResultsScreen:                              ; DATA XREF: ROM:0001FC1E  
                 addq.w  #2,(dword_FF9400).w
                 tst.w   (word_FF9442).w
                 bne.s   loc_1FEDA
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 lsl.w   #3,d0
                 neg.w   d0
                 addi.w  #$90,d0
@@ -4715,7 +4715,7 @@ loc_1FEF4:                              ; CODE XREF: UI_RenderResultsRowWithScro
                 move.w  a0,(dword_FF9420+2).w
                 move.w  #$4006,d4
                 add.w   (dword_FF9404).w,d4
-                move.w  (word_FFA204).w,d3
+                move.w  (StageTableIndex).w,d3
                 lsr.w   #1,d3
                 cmp.w   (dword_FF9400+2).w,d3
                 beq.s   loc_1FF28

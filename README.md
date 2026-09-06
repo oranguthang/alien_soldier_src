@@ -21,6 +21,7 @@ make verify         # Permanent byte-identity gate
 make verify-layout  # Check module ranges, landmarks, gaps, and size policy
 make lint           # Check source/provenance and repository policy
 make test           # Run the Python verification tests
+make runtime        # Replay six checkpoints and validate named RAM state
 ```
 
 ## Project Structure

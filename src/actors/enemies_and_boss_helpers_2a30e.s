@@ -581,7 +581,7 @@ locret_2A8B8:                           ; CODE XREF: Projectile_FallingDebris+E 
 ; Clears sprites for inactive objects with specific IDs checking flags
 Sprite_ClearInactiveObjects:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A8BA
                 bset    #4,2(a5)
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #$12C,d0
                 move.w  #$134,d1
 loc_2A8CC:                              ; CODE XREF: Sprite_ClearInactiveObjects+30   j

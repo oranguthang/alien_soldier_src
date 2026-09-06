@@ -2,11 +2,15 @@
 
 The machine-readable thresholds live in `config/source_policy.json`.
 
-At the start of release 0.5 work the source contains 10,497 defined symbols
+At the start of release 0.5 work the source contained 10,497 defined symbols
 with neutral address-derived names: 9,493 ROM labels and 1,004 RAM equates.
 This is a burn-down ceiling: new such names fail lint, while evidence-backed
 work should reduce the count. It is not a target that must reach zero for the
 preservation contract.
+
+The first evidence-backed RAM pass reduced the live count to 10,493 by naming
+`GameModeIndex`, `GameSubstateIndex`, `StageTableIndex`, and
+`Entity_ObjectPool`. Their old address names remain in provenance markers.
 
 Two especially broad data labels are explicitly registered:
 

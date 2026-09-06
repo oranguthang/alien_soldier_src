@@ -11,7 +11,7 @@ Enemy_BuildCollisionLists:                              ; CODE XREF: Boss_Update
                 move.w  d0,(word_FF8D7C).w
                 move.w  d0,(word_FF8D7E).w
                 move.w  d0,(word_FF8126).w
-                movea.w #(word_FFC620-M68K_RAM),a4
+                movea.w #(Entity_ObjectPool-M68K_RAM),a4
                 moveq   #$3B,d7 ; ';'
 loc_13B5E:                              ; CODE XREF: Enemy_BuildCollisionLists+120   j
                 tst.w   (a4)

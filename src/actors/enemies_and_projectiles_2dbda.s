@@ -2740,7 +2740,7 @@ Enemy_ShipCannon1Init:                              ; DATA XREF: Enemy_ShipCanno
 Enemy_ShipCannon1Init_WaitCamera:                              ; DATA XREF: ROM:0002F922   o  ; was: loc_2F97A
                 cmpi.w  #$17A0,(dword_FFA900).w
                 bmi.s   loc_2F9B8
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
 loc_2F986:                              ; CODE XREF: Enemy_ShipCannon1Init+56   j
                 cmpi.w  #$36C,(a0)
                 beq.s   loc_2F9B8
@@ -3078,7 +3078,7 @@ Boss_DestroyerMK2Spawn:                              ; DATA XREF: ROM:off_5DC   
                 move.w  #$CD00,2(a5)
                 move.l  #word_1B1090,8(a5)
                 move.w  #$4470,$E(a5)
-                cmpi.w  #$18,(word_FFA204).w
+                cmpi.w  #$18,(StageTableIndex).w
                 bcc.s   loc_2FDEE
                 move.l  #word_1A0CD0,8(a5)
                 move.w  #$4000,$E(a5)

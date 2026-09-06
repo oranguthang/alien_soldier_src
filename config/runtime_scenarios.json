@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "emulator_component": "emulator",
+  "rom_checksum": "0x55555558",
+  "movie": {
+    "path": "movies/dammit,truncated-aliensoldier.gmv",
+    "sha256": "f7257697d537431c128b267d37c9f80cb60ee43139928504f0c7a47f8007c3f4"
+  },
+  "scenarios": [
+    {
+      "id": "boot",
+      "frame": 20,
+      "description": "Reset completed and the first SEGA screen frame is running.",
+      "expectations": [
+        { "symbol": "GameModeIndex", "address": "0xFFA284", "type": "u16", "equals": "0x0000", "evidence": "static+runtime" },
+        { "symbol": "GameSubstateIndex", "address": "0xFFA286", "type": "u16", "equals": "0x0000", "evidence": "static+runtime" }
+      ]
+    },
+    {
+      "id": "title",
+      "frame": 320,
+      "description": "Title screen main state.",
+      "expectations": [
+        { "symbol": "GameModeIndex", "address": "0xFFA284", "type": "u16", "equals": "0x0014", "evidence": "static+runtime" },
+        { "symbol": "GameSubstateIndex", "address": "0xFFA286", "type": "u16", "equals": "0x0000", "evidence": "runtime" }
+      ]
+    },
+    {
+      "id": "gameplay_start",
+      "frame": 700,
+      "description": "Stage 1 active gameplay after loading and weapon selection.",
+      "expectations": [
+        { "symbol": "GameModeIndex", "address": "0xFFA284", "type": "u16", "equals": "0x0010", "evidence": "static+runtime" },
+        { "symbol": "StageTableIndex", "address": "0xFFA204", "type": "u16", "equals": "0x0000", "evidence": "static+runtime" }
+      ]
+    },
+    {
+      "id": "boss_transition",
+      "frame": 900,
+      "description": "Jetsripper has entered the Stage 1 object pool.",
+      "expectations": [
+        { "symbol": "GameModeIndex", "address": "0xFFA284", "type": "u16", "equals": "0x0010", "evidence": "static+runtime" },
+        { "symbol": "Entity_ObjectPool", "offset": "0x01E0", "address": "0xFFC800", "field": "handler_table_offset", "type": "u16", "equals": "0x0048", "evidence": "static+runtime", "note": "0x48 indexes Boss_JetsripperMain in off_5DC." }
+      ]
+    },
+    {
+      "id": "stage_change",
+      "frame": 1920,
+      "description": "Stage 2 active gameplay after the first boss.",
+      "expectations": [
+        { "symbol": "GameModeIndex", "address": "0xFFA284", "type": "u16", "equals": "0x0010", "evidence": "static+runtime" },
+        { "symbol": "StageTableIndex", "address": "0xFFA204", "type": "u16", "equals": "0x0002", "evidence": "static+runtime" }
+      ]
+    },
+    {
+      "id": "credits",
+      "frame": 70000,
+      "description": "Credits main loop during the Alien Soldier staff sequence.",
+      "expectations": [
+        { "symbol": "GameModeIndex", "address": "0xFFA284", "type": "u16", "equals": "0x0090", "evidence": "static+runtime" },
+        { "symbol": "GameSubstateIndex", "address": "0xFFA286", "type": "u16", "equals": "0x0002", "evidence": "runtime" },
+        { "symbol": "StageTableIndex", "address": "0xFFA204", "type": "u16", "equals": "0x0030", "evidence": "runtime" }
+      ]
+    }
+  ]
+}

@@ -1092,7 +1092,7 @@ Enemy_Stage14TurretInit:                              ; DATA XREF: ROM:000314D6 
                 bclr    #4,$22(a5)
                 bne.w Enemy_Stage14TurretMain
 loc_3239E:                              ; CODE XREF: Enemy_FlierBoundsCheck+E   j
-                cmpi.w  #$1A,(word_FFA204).w
+                cmpi.w  #$1A,(StageTableIndex).w
                 bne.s   loc_323B8
                 move.w  #$E0,(word_FF8140).w
                 move.b  #$20,(byte_FF8142).w ; ' '
@@ -1347,7 +1347,7 @@ Boss_JetsripperSpawnCircleShots:                              ; DATA XREF: ROM:0
                 bsr.w Enemy_Stage14FlierInit
                 bsr.w Boss_JetsripperUpdateAnimation
                 lea     (word_FFCD40).w,a4
-                lea     (word_FFC620).w,a0
+                lea     (Entity_ObjectPool).w,a0
                 bsr.w Boss_JetsripperRandomizePattern
                 move.w  #$B,d6
 loc_32720:                              ; CODE XREF: Boss_JetsripperSpawnCircleShots+5C   j
@@ -1491,7 +1491,7 @@ loc_3291A:                              ; CODE XREF: Boss_JetsripperRetractCircl
                 addq.w  #2,4(a4)
                 suba.w  #$60,a4 ; '`'
                 dbf     d6,loc_3291A
-                lea     (word_FFC620).w,a3
+                lea     (Entity_ObjectPool).w,a3
                 move.w  a3,$44(a4)
                 move.w  (dword_FF9404+2).w,$40(a4)
                 move.w  $42(a3),$42(a4)
@@ -1754,7 +1754,7 @@ word_32C5C:     dc.w $6000, $2000, $202, 0, 0, 0, 0, $FF
 Enemy_Stage14FlierAttack:                              ; DATA XREF: ROM:000323F0   o  ; was: sub_32C6C
                 bsr.w Enemy_DeathExplode
                 movea.w a5,a4
-                lea     (word_FFC620).w,a5
+                lea     (Entity_ObjectPool).w,a5
                 jsr (Math_CalculateAngleToPlayer).l
                 movea.w a4,a5
                 move.w  d2,$40(a5)
@@ -1770,7 +1770,7 @@ Boss_JetsripperDeathRotate:                              ; DATA XREF: ROM:000323
 ; Adjusts boss rotation angle to track player position with smooth turning
 Boss_JetsripperTrackPlayer:                              ; CODE XREF: Boss_JetsripperDeathRotate+4   p  ; was: sub_32C98
                 movea.w a5,a4
-                lea     (word_FFC620).w,a5
+                lea     (Entity_ObjectPool).w,a5
                 jsr (Math_CalculateAngleToPlayer).l
                 movea.w a4,a5
                 move.w  $40(a5),d0
@@ -1929,7 +1929,7 @@ Boss_WolfGaropaAttackState1:                              ; DATA XREF: ROM:off_3
                 move.w  #$A300,$E(a5)
                 move.w  #$10,$48(a5)
                 addq.w  #2,4(a5)
-                cmpi.w  #$10,(word_FFA204).w
+                cmpi.w  #$10,(StageTableIndex).w
                 bne.w   locret_30BB8
                 move.w  #$18,$48(a5)
                 addq.w  #2,4(a5)

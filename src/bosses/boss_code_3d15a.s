@@ -4221,7 +4221,7 @@ Boss_GustheadTentaclesSetPriority:
                 move.w  #2,d0  ; was: sub_405EA
 loc_405EE:                              ; CODE XREF: Boss_GustheadTentaclesClearPriority+2   j
                 move.w  #3,d7
-                movea.l (word_FFC620).w,a0
+                movea.l (Entity_ObjectPool).w,a0
                 lea     $60(a0),a0
 loc_405FA:                              ; CODE XREF: Boss_GustheadTentaclesSetPriority+18   j
                 move.w  d0,4(a0)
@@ -4232,7 +4232,7 @@ loc_405FA:                              ; CODE XREF: Boss_GustheadTentaclesSetPr
 ; Updates sine/cosine angle offsets for tentacle animation
 Boss_GustheadTentaclesUpdateAngles:
                 move.w  #3,d7  ; was: sub_40608
-                movea.w (word_FFC620).w,a0
+                movea.w (Entity_ObjectPool).w,a0
                 lea     $60(a0),a0
 loc_40614:                              ; CODE XREF: Boss_GustheadTentaclesUpdateAngles+4C   j
                 clr.w   d0

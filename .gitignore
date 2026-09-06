@@ -162,6 +162,7 @@ test_screenshots/
 reference/
 diffs/
 logs/
+runtime/
 analysis_report*
 unnamed_procedures.txt
 tmp/

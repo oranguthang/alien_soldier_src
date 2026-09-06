@@ -983,7 +983,7 @@ stru_1169E:     dc.w $444               ; field_0
 ; Updates boss palette with fade or flash effect
 Gfx_UpdateBossPalette:                              ; CODE XREF: Stage_InitBossIntro+2E   j  ; was: sub_116A8
                                         ; Camera_TransitionToBossArena+2E   j ...
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
 loc_116AC:                              ; CODE XREF: Boss_BackStringerTimerState+1A   p
                 moveq   #0,d0
                 move.l  d0,(a0)+
@@ -1034,7 +1034,7 @@ locret_11720:                           ; CODE XREF: Gfx_UpdateBossPalette+66   
 Stage_DispatchObjectLoader:                              ; CODE XREF: UI_InitializePasswordScreen+16   p  ; was: sub_11722
                                         ; Password_InitializeScreen+10   p ...
                 bsr.w Stage_LoadObjectData
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 movea.w off_11736(pc,d0.w),a0
                 adda.l  #Stage_LoadObjectData,a0
                 jmp     (a0)
@@ -1807,7 +1807,7 @@ stru_11DA8:     dc.w 7                  ; field_0
 Stage_StateDispatcher:                              ; CODE XREF: Camera_UpdateSmooth+E   p  ; was: sub_11DD2
                                         ; Stage_TriggerPhaseTransition+12   p ...
                 clr.b   (byte_FFA230).w
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 movea.w off_11DE6(pc,d0.w),a0
                 adda.l  #Gfx_LoadTileData,a0
                 jmp     (a0)
@@ -2327,7 +2327,7 @@ loc_1224E:                              ; CODE XREF: Sys_InitStageState+24   j
 ; End of function Sys_InitStageState
 ; Dispatches to stage-specific initialization routine
 Stage_DispatchInitializer:                              ; CODE XREF: Sys_InitStageState:loc_1224E   p  ; was: sub_1225C
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 movea.w off_1226C(pc,d0.w),a0
                 adda.l  #Sys_ClearRAMBuffer,a0
                 jmp     (a0)
@@ -2555,7 +2555,7 @@ loc_12452:                              ; CODE XREF: Stage_InitStage17Boss+78   
                 move.w  d0,(a0)
                 addq.w  #4,a0
                 dbf     d7,loc_12452
-                move.w  #$484,(word_FFC620).w
+                move.w  #$484,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
                 lea     word_1249A(pc),a0
                 nop
@@ -2836,11 +2836,11 @@ loc_1270C:                              ; CODE XREF: Stage_LoadPalette+C0   j
 ; End of function Stage_LoadPalette
 CheckFlagsLoadObjData:                  ; CODE XREF: Stage_LoadStage1Objects+A   j
                                         ; Stage_LoadStage1Phase1+E   j ...
-                cmpi.w  #$3C,(word_FFA284).w ; '<'
+                cmpi.w  #$3C,(GameModeIndex).w ; '<'
                 beq.s   loc_12752
-                cmpi.w  #$C,(word_FFA284).w
+                cmpi.w  #$C,(GameModeIndex).w
                 beq.s   loc_12752
-                cmpi.w  #$10,(word_FFA284).w
+                cmpi.w  #$10,(GameModeIndex).w
                 beq.s   loc_12752
                 jmp (Data_ProcessPointer).l
 ; ---------------------------------------------------------------------------

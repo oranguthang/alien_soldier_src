@@ -23,13 +23,13 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   automatically generated semantic names.
 - Initial source/project lint and unit tests are wired as `make lint` and
   `make test`.
+- Six pinned runtime scenarios check 13 named RAM expectations across boot,
+  title, gameplay, boss entry, stage change, and credits.
 
 ## Remaining release gates
 
 - Deeper assembly style rules and semantic review of the RAM inventory.
 - Broader negative-path tests for build and verification tooling.
-- Named runtime scenarios for boot, title/menu, gameplay start, stage change,
-  boss transition, and completion/credits, each with RAM/state assertions.
 - A single `make release-check` gate: asset policy, lint, tests, clean byte
   identity, symbols/layout, runtime checks, and release audit.
 

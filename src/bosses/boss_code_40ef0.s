@@ -2936,7 +2936,7 @@ off_4331A:      dc.l word_EBF00         ; DATA XREF: Boss_SunsetStingSegmentFall
 
 ; Main segment handler
 Boss_SunsetStingSegmentMain:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_4333A
-                lea     (word_FFC620).w,a3
+                lea     (Entity_ObjectPool).w,a3
                 lea     (word_FF9800).w,a4
                 bsr.s Boss_SunsetStingSegmentDispatcher
                 cmpi.w  #$C,4(a5)
@@ -3096,7 +3096,7 @@ Boss_SunsetStingSegmentConvertToProjectile:                              ; DATA 
 ; End of function Boss_SunsetStingSegmentConvertToProjectile
 ; Destroyed segment handler
 Boss_SunsetStingSegmentDestroyed:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_43506
-                lea     (word_FFC620).w,a3
+                lea     (Entity_ObjectPool).w,a3
                 lea     (word_FF9800).w,a4
                 bsr.s Boss_SunsetStingSegmentStateDispatch
                 cmpi.w  #$E,4(a5)
@@ -3392,7 +3392,7 @@ Boss_SunsetStingSegmentFalling:                              ; DATA XREF: ROM:00
 ; End of function Boss_SunsetStingSegmentFalling
 ; Boss falls during defeat
 Boss_SunsetStingDefeatFall:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_43858
-                lea     (word_FFC620).w,a3
+                lea     (Entity_ObjectPool).w,a3
                 lea     (word_FF9800).w,a4
                 bsr.s Boss_SunsetStingDefeatExplode
                 btst    #7,(a4)
@@ -3467,7 +3467,7 @@ Projectile_SpawnViblackBullet:                              ; CODE XREF: Boss_Vi
 ; End of function Projectile_SpawnViblackBullet
 ; Sets up entity pointers and calls projectile dispatcher
 Boss_ViblackProjectileDispatcher:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_43930
-                lea     (word_FFC620).w,a3
+                lea     (Entity_ObjectPool).w,a3
                 lea     (word_FF9800).w,a4
                 bsr.s   nullsub_7
                 rts

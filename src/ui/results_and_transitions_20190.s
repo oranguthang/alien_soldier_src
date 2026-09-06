@@ -329,7 +329,7 @@ loc_20466:                              ; CODE XREF: UI_UpdateResultsViewport+34
                 mulu.w  #$100,d4
                 move.w  d4,(dword_FF9404).w
                 addi.w  #$4006,d4
-                move.w  (word_FFA204).w,d3
+                move.w  (StageTableIndex).w,d3
                 lsr.w   #1,d3
                 cmp.w   d0,d3
                 beq.s   loc_204C2
@@ -619,8 +619,8 @@ loc_20A64:                              ; CODE XREF: Credits_InitXiTiger+110   j
                 move.w  #0,(word_FFFF38).w
                 move.b  #$90,d0
                 jsr (Sys_WaitVBlank).l
-                addq.w  #4,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                addq.w  #4,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
                 clr.w   (word_FFA000).w
@@ -663,7 +663,7 @@ Credits_MainLoop:                              ; DATA XREF: Sys_DispatchGameStat
 ; Dispatches to current credits state handler based on state index
 Credits_StateDispatcher:                              ; CODE XREF: Credits_MainLoop+18   p  ; was: sub_20BAE
                 subq.w  #1,(word_FF0188).l
-                move.w  (word_FFA286).w,d0
+                move.w  (GameSubstateIndex).w,d0
                 lea     off_20BC0(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -699,7 +699,7 @@ Credits_FadeInState:                              ; DATA XREF: ROM:off_20BC0   o
                 clr.w   (word_FF00EC).l
                 clr.w   (word_FF017C).l
                 move.w  #$4D80,(word_FF0188).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
 locret_20C30:                           ; CODE XREF: Credits_FadeInState+E   j
                                         ; Credits_FadeInState+16   j ...
                 rts
@@ -724,7 +724,7 @@ Credits_ScrollWithColorCycle:                              ; DATA XREF: ROM:0002
                 jsr (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FF0176).l
                 bne.w   locret_20C30
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Credits_ScrollWithColorCycle
 ; Waits for timer to reach specific value before advancing state
@@ -737,7 +737,7 @@ Credits_WaitForTimerEnd:                              ; DATA XREF: ROM:00020BC4 
                 cmpi.w  #$3000,(word_FF0188).l
                 bne.w   locret_20C30
                 move.w  #0,(word_FF0176).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Credits_WaitForTimerEnd
 ; Cycles RGB color values in palette entries with XOR operation
@@ -851,7 +851,7 @@ loc_20E0C:                              ; CODE XREF: Credits_FadeOutAndClearVRAM
                 move.w  d1,(a0)
                 dbf     d0,loc_20E0C
                 move    (sp)+,sr
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Credits_FadeOutAndClearVRAM
 ; Fades palette from black to normal colors
@@ -869,7 +869,7 @@ Credits_FadeInFromBlack:                              ; DATA XREF: ROM:00020BC8 
                 jsr (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FF0176).l
                 bne.w   locret_20C30
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Credits_FadeInFromBlack
 ; Waits for scroll sequence to complete before advancing
@@ -880,7 +880,7 @@ Credits_WaitForScrollEnd:                              ; DATA XREF: ROM:00020BCA
                 tst.w   (word_FF0188).l
                 bne.w   locret_20C30
                 move.w  #0,(word_FF0176).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Credits_WaitForScrollEnd
 ; Fades out and returns to title screen mode
@@ -896,8 +896,8 @@ Credits_FadeOutAndExit:                              ; DATA XREF: ROM:00020BCC  
                 move.w  #1,(word_FFFF46).w
                 move.w  (word_FFFF60).w,(word_FFFF38).w
                 jsr (Sys_ClearBossDataBuffer).l
-                move.w  #$84,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$84,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 rts
 ; End of function Credits_FadeOutAndExit
 ; Xi-Tiger VBlank sync
@@ -1823,7 +1823,7 @@ off_220EC:      dc.w Boss_ZLeoIntroSequence-*        ; DATA XREF: Boss_ZLeoMainC
 Boss_ZLeoIntroSequence:                              ; DATA XREF: ROM:off_220EC   o  ; was: sub_22112
                 addq.w  #2,(dword_FF9400).w
                 clr.w   (word_FFA45E).w
-                lea     (word_FFC620).w,a0
+                lea     (Entity_ObjectPool).w,a0
                 move.w  #$10,(a0)
                 move.w  #$C00,2(a0)
                 clr.w   $C(a0)
@@ -2053,7 +2053,7 @@ Credits_FadeOutWaitInput:                              ; DATA XREF: ROM:0002210E
                 bne.s   locret_223C8
                 subq.w  #1,(dword_FF9400+2).w
                 bpl.s   locret_223C8
-                move.w  #$8C,(word_FFA284).w
+                move.w  #$8C,(GameModeIndex).w
                 addq.w  #2,(dword_FF9400).w
 locret_223C8:                           ; CODE XREF: Credits_FadeOutWaitInput+E   j
                                         ; Credits_FadeOutWaitInput+16   j ...
@@ -2293,8 +2293,8 @@ loc_23D86:                              ; CODE XREF: Demo_PlaybackSystem+BE   j
 loc_23D8C:                              ; CODE XREF: Demo_PlaybackSystem+9C   j
                                         ; Demo_PlaybackSystem+A4   j
                 clr.b   (byte_FFF807).w
-                move.w  #$14,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$14,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 clr.w   (word_FFFF5A).w
                 clr.w   (word_FFF74A).w
                 clr.w   (word_FFF74E).w
@@ -4122,17 +4122,17 @@ loc_275B6:                              ; CODE XREF: Effect_ComplexScrollWave+C8
 ; End of function Effect_ComplexScrollWave
 ; Initializes game over state, loads objects, sets up VDP registers, initializes various game state flags
 Stage_InitGameOver:                              ; DATA XREF: Sys_DispatchGameState+CE   o  ; was: sub_275C6
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.s   loc_275E2
                 jsr (Sys_InitGameMode).l
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_275E2:                              ; CODE XREF: Stage_InitGameOver+4   j
-                addq.w  #4,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                addq.w  #4,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 move.w  #$4C,(word_FFF74A).w ; 'L'
                 clr.w   (word_FFF74E).w
                 move.b  #3,(word_FFF7E6+1).w
@@ -4179,9 +4179,9 @@ Effect_CopyGameOverPalette:                              ; DATA XREF: Sys_Dispat
                 bsr.s Stage_GameOverDispatcher
                 rts
 ; End of function Effect_CopyGameOverPalette
-; Dispatcher that jumps to game over state handler based on word_FFA286 index via offset table
+; Dispatcher that jumps to game over state handler based on GameSubstateIndex index via offset table
 Stage_GameOverDispatcher:                              ; CODE XREF: Effect_CopyGameOverPalette+E   p  ; was: sub_27692
-                move.w  (word_FFA286).w,d0
+                move.w  (GameSubstateIndex).w,d0
                 movea.w off_276A2(pc,d0.w),a0
                 adda.l  #Stage_DemoInputHandler,a0
                 jmp     (a0)
@@ -4226,7 +4226,7 @@ loc_276FE:                              ; CODE XREF: Stage_DemoInputHandler+44  
                                         ; Stage_DemoInputHandler+4E   j
                 btst    #6,(word_FFF708).w
                 beq.s   loc_2771A
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 clr.w   (dword_FF8128).w
                 move.w  #$50,(dword_FF807E).w ; 'P'
                 move.w  #$20,(word_FF8082).w ; ' '
@@ -4247,7 +4247,7 @@ loc_27740:                              ; CODE XREF: Stage_CameraAutoAdvance+C  
                 move.w  (dword_FF8128).w,d0
                 move.w  word_2775A(pc,d0.w),(word_FF807C).w
                 bpl.s   loc_27756
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_27756:                              ; CODE XREF: Stage_CameraAutoAdvance+2C   j

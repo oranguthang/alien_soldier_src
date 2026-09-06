@@ -63,7 +63,7 @@ def scan(policy: dict, project_root: Path) -> Inventory:
             match = LABEL.match(line) or EQUATE.match(line)
             if match:
                 name = match.group(1)
-                current_label = name if LABEL.match(line) else current_label
+                current_label = name
                 if name in definitions:
                     errors.append(f"{where}: {name} already defined at {definitions[name]}")
                 else:

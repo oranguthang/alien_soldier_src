@@ -4111,7 +4111,7 @@ loc_1A296:                              ; CODE XREF: Sys_UpdateObjectSpawner+E  
 ; Processes all objects with screen bounds culling
 Sys_ProcessVisibleObjects:                              ; CODE XREF: Sys_StoryScreenMainLoop+32   p  ; was: sub_1A29C
                                         ; UI_UpdateOptionsScreen+58   p ...
-                lea     (word_FFC620).w,a5
+                lea     (Entity_ObjectPool).w,a5
 loc_1A2A0:                              ; CODE XREF: Sys_ProcessVisibleObjects+5A   j
                 move.w  (a5),d0
                 beq.s Sys_AdvanceObjectPointer
@@ -4491,7 +4491,7 @@ locret_1B744:                           ; CODE XREF: Data_CheckAndResetEntry+4  
 Sys_ClearBossDataBuffer:                              ; CODE XREF: Cutscene_InitCreditsScreen+44   p  ; was: sub_1B746
                                         ; Cutscene_SegaScreenFadeOut+44   p ...
                 moveq   #0,d0
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
 loc_1B74C:                              ; CODE XREF: Sys_ClearBossDataBuffer+3A   j
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
@@ -4662,7 +4662,7 @@ Input_GetMappedButton:                              ; CODE XREF: UI_InitializePa
 ; ---------------------------------------------------------------------------
 ; Gets mapped attack button input based on control configuration
 Input_GetAttackButton:                              ; CODE XREF: Input_GetMappedButton+6   j  ; was: loc_1B8DC
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 asr.w   #1,d0
                 move.b  byte_1B8EC(pc,d0.w),d0
                 jmp (Input_ProcessButtons).l
@@ -4712,7 +4712,7 @@ dword_1B970:    dc.l $FFFE8000, $FFFF8000, $8000, $18000
 ; Clears specific flags from object buffer
 Sprite_ClearObjectFlags:                              ; CODE XREF: Boss_JetsripperDeathInit+A   p  ; was: sub_1B980
                                         ; Boss_ShiperInitDefeat+6   p ...
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 moveq   #$3C,d7 ; '<'
                 move.b  #$92,d0
 loc_1B98A:                              ; CODE XREF: Sprite_ClearObjectFlags+1A   j

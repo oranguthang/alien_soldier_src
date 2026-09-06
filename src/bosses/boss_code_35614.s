@@ -2401,7 +2401,7 @@ loc_37210:                              ; CODE XREF: Boss_ShiperSpawnProjectile+
                 move.b  #8,$20(a0)
                 move.b  #$84,$21(a0)
                 move.l  #$F808F808,$28(a0)
-                movea.w #(word_FFC620-M68K_RAM),a1
+                movea.w #(Entity_ObjectPool-M68K_RAM),a1
                 move.w  $10(a1),$10(a0)
                 addi.w  #-8,$10(a0)
                 move.w  $14(a1),$14(a0)

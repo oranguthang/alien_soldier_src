@@ -2459,7 +2459,7 @@ Boss_BugmaxClampLegPositions:                              ; CODE XREF: Boss_Bug
                 lea     word_4DAD2(pc),a2
                 nop
                 moveq   #0,d6
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #7,d7
 loc_4DAA4:                              ; CODE XREF: Boss_BugmaxClampLegPositions+40   j
                 move.w  d2,d0

@@ -1135,7 +1135,7 @@ Boss_JampanMoveState:                              ; DATA XREF: ROM:000491D8   o
                 move.l  #$F010F010,$28(a5)
                 move.w  #$20,$24(a5) ; ' '
 loc_492F4:                              ; CODE XREF: Boss_JampanDefeatEndFade+12   p
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 lea     $60(a0),a0
                 move.w  #$224,(a0)
                 move.w  #$4D00,2(a0)

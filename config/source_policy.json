@@ -6,9 +6,9 @@
   "provenance": {
     "marker": "; was:",
     "minimum_unique_mappings": 4822,
-    "legacy_name_pattern": "^(sub|loc|locret|nullsub)_[0-9A-F]+$",
+    "legacy_name_pattern": "^(sub|loc|locret|nullsub|byte|word|dword|off|unk|unknown|stru)_[0-9A-F]+$",
     "default_evidence": "hypothesis",
-    "note": "Earlier semantic names were generated automatically. A marker maps the most recent global label to its unique IDA name, even when the marker is printed on the first instruction."
+    "note": "Earlier semantic names were generated automatically. A marker maps the most recent definition to its unique imported name, even when the marker is printed on the first instruction."
   },
   "unknowns": {
     "address_derived_name_pattern": "^(loc|locret|nullsub|off|unk|unknown|byte|word|dword|flt|stru|asc)_[0-9A-F]+$",

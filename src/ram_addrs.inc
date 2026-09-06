@@ -460,7 +460,7 @@ byte_FFA150 equ $FFFFA150
 byte_FFA156 equ $FFFFA156
 byte_FFA17C equ $FFFFA17C
 dword_FFA200 equ $FFFFA200
-word_FFA204 equ $FFFFA204
+StageTableIndex equ $FFFFA204 ; was: word_FFA204
 word_FFA206 equ $FFFFA206
 byte_FFA209 equ $FFFFA209
 dword_FFA20E equ $FFFFA20E
@@ -492,8 +492,8 @@ word_FFA270 equ $FFFFA270
 byte_FFA272 equ $FFFFA272
 word_FFA280 equ $FFFFA280
 word_FFA282 equ $FFFFA282
-word_FFA284 equ $FFFFA284
-word_FFA286 equ $FFFFA286
+GameModeIndex equ $FFFFA284 ; was: word_FFA284
+GameSubstateIndex equ $FFFFA286 ; was: word_FFA286
 word_FFA29C equ $FFFFA29C
 byte_FFA300 equ $FFFFA300
 byte_FFA3E0 equ $FFFFA3E0
@@ -573,7 +573,7 @@ byte_FFC020 equ $FFFFC020
 byte_FFC2C0 equ $FFFFC2C0
 byte_FFC320 equ $FFFFC320
 word_FFC5C0 equ $FFFFC5C0
-word_FFC620 equ $FFFFC620
+Entity_ObjectPool equ $FFFFC620 ; was: word_FFC620
 word_FFC622 equ $FFFFC622
 word_FFC624 equ $FFFFC624
 dword_FFC628 equ $FFFFC628

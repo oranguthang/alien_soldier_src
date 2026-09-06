@@ -17,8 +17,8 @@ class SourcePolicyTests(unittest.TestCase):
         policy = json.loads((ROOT / "config/source_policy.json").read_text(encoding="utf-8"))
         inventory = lint_source.scan(policy, ROOT)
         self.assertEqual([], inventory.errors)
-        self.assertEqual(4822, len(inventory.provenance))
-        self.assertEqual(10497, len(inventory.address_derived))
+        self.assertEqual(4826, len(inventory.provenance))
+        self.assertEqual(10493, len(inventory.address_derived))
 
 
 if __name__ == "__main__":

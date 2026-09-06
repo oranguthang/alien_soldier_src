@@ -1,9 +1,11 @@
 # RAM map
 
 `src/ram_addrs.inc` is the machine-consumed RAM inventory. It currently defines
-976 observed 68000 work-RAM addresses and 28 observed Z80-RAM addresses with
-neutral size/address names. Only `VDPCommand` has a semantic work-RAM name;
-that name is still subject to the evidence policy in `docs/naming.md`.
+976 observed 68000 work-RAM addresses and 28 observed Z80-RAM addresses. Most
+still have neutral size/address names. The first reviewed semantic fields are
+`GameModeIndex`, `GameSubstateIndex`, `StageTableIndex`, and
+`Entity_ObjectPool`; `VDPCommand` predates this review. All remain subject to
+the evidence policy in `docs/naming.md`.
 
 ## Address spaces
 

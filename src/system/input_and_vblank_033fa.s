@@ -2015,8 +2015,8 @@ Gfx_ClearPlaneB:                               ; CODE XREF: Gfx_ClearPlanesAndIn
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w
                 jsr (Gfx_SetupScrollPlanes).l
-                addq.w  #4,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                addq.w  #4,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 rts
 ; End of function Gfx_ClearPlanesAndInit
 ; ---------------------------------------------------------------------------
@@ -2065,7 +2065,7 @@ loc_491C:                               ; CODE XREF: Sys_StoryScreenMainLoop+6  
 ; Dispatches story screen state machine based on timer
 Sys_StoryScreenDispatcher:                               ; CODE XREF: Sys_StoryScreenMainLoop+38   p  ; was: sub_495E
                 subq.w  #1,(word_FF0106).l
-                move.w  (word_FFA286).w,d0
+                move.w  (GameSubstateIndex).w,d0
                 lea     off_4970(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -2089,7 +2089,7 @@ off_4970:       dc.w Sys_InitStoryScreenTimer-*         ; DATA XREF: Sys_StorySc
 ; Initializes story screen state timer
 Sys_InitStoryScreenTimer:                               ; DATA XREF: ROM:off_4970   o  ; was: sub_498A
                 move.w  #$2900,(word_FF0106).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Sys_InitStoryScreenTimer
 ; Waits for specific timer value then processes button input
@@ -2098,7 +2098,7 @@ UI_WaitForTimerAndButton:                               ; DATA XREF: ROM:0000497
                 bne.w   locret_514E
                 move.b  #1,d0
                 jsr (Input_ProcessButtons).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function UI_WaitForTimerAndButton
 ; Waits for timer value then resets fade state
@@ -2106,7 +2106,7 @@ Gfx_WaitForTimerAndResetFade:                               ; DATA XREF: ROM:000
                 cmpi.w  #$1880,(word_FF0106).l
                 bne.w   locret_514E
                 move.w  #0,(word_FF0176).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_WaitForTimerAndResetFade
 ; Fades out palette to dark then loads new graphics data
@@ -2124,7 +2124,7 @@ Gfx_FadeOutToDark:                               ; DATA XREF: ROM:00004976   o  
                 bne.w   locret_514E
                 movea.l #stru_48DA,a0
                 jsr (Data_ProcessPointer).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_FadeOutToDark
 ; Fades to target palette and sets up scrolling data
@@ -2142,7 +2142,7 @@ Gfx_FadeToTargetAndSetupScroll:                               ; DATA XREF: ROM:0
                 clr.w   (dword_FFA90C).w
                 move.w  #0,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_FadeToTargetAndSetupScroll
 ; Waits for fade completion then loads tile data via DMA
@@ -2168,7 +2168,7 @@ Gfx_WaitForFadeAndLoadTiles:                               ; DATA XREF: ROM:0000
                 jsr (Gfx_ApplyPaletteFade).l
                 move.b  #$88,d0
                 jsr (Input_ProcessButtons).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_WaitForFadeAndLoadTiles
 ; Fades in palette from dark to normal brightness
@@ -2184,7 +2184,7 @@ Gfx_FadeInFromDark:                               ; DATA XREF: ROM:0000497C   o 
                 jsr (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FF0176).l
                 bne.w   locret_514E
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_FadeInFromDark
 ; Waits for short timer value then processes input
@@ -2193,7 +2193,7 @@ UI_WaitForTimerShort:                               ; DATA XREF: ROM:0000497E   
                 bne.w   locret_514E
                 move.b  #1,d0
                 jsr (Input_ProcessButtons).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function UI_WaitForTimerShort
 ; Sets up VDP for title screen letter animation via DMA
@@ -2302,7 +2302,7 @@ Sys_ReleaseZ80BusAndAdvance:                               ; CODE XREF: Gfx_Setu
                 move    #$2300,sr
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_SetupTitleScreenLetters
 ; ---------------------------------------------------------------------------
@@ -2544,7 +2544,7 @@ Sys_CompleteZ80BusReleaseAndAdvance:                               ; CODE XREF: 
                 move    #$2300,sr
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_AnimateLettersExpand
 ; ---------------------------------------------------------------------------
@@ -2651,7 +2651,7 @@ loc_50E0:                               ; CODE XREF: Gfx_AnimateLettersExpandLar
                 move.b  #$38,d0 ; '8'
                 jsr (Sound_PlaySFX).l
                 move.w  #$1C0,(word_FF0106).l
-                addq.w  #2,(word_FFA286).w
+                addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_AnimateLettersExpandLarge
 ; Transitions from story screen to title screen
@@ -2667,7 +2667,7 @@ loc_5102:                               ; CODE XREF: Sys_StoryScreenMainLoop+1C 
                 jsr (Gfx_FadePaletteTransition).l
                 move.b  #1,d0
                 jsr (Input_ProcessButtons).l
-                move.w  #$18,(word_FFA286).w
+                move.w  #$18,(GameSubstateIndex).w
                 rts
 ; End of function Sys_TransitionToTitleScreen
 ; Exits story screen and returns to mode select
@@ -2676,8 +2676,8 @@ Sys_ExitStoryScreen:                               ; DATA XREF: ROM:00004988   o
                 beq.w   locret_514E
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                move.w  #$14,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$14,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
 locret_514E:                            ; CODE XREF: UI_WaitForTimerAndButton+8   j
                                         ; Gfx_WaitForTimerAndResetFade+8   j ...
                 rts
@@ -3031,8 +3031,8 @@ Cutscene_InitStarDelay:                               ; DATA XREF: ROM:off_5610 
 Cutscene_InitStarSprites:                               ; DATA XREF: ROM:00005612   o  ; was: sub_562C
                 subq.w  #1,(word_FF00FE).l
                 bne.w   locret_514E
-                lea     (word_FFC620).w,a5
-                move.w  #$CC00,word_FFC622-word_FFC620(a5)
+                lea     (Entity_ObjectPool).w,a5
+                move.w  #$CC00,word_FFC622-Entity_ObjectPool(a5)
                 move.w  #$10,(a5)
                 move.l  #word_189D68,8(a5)
                 move.w  #$E500,$E(a5)
@@ -3164,7 +3164,7 @@ nullsub_17:                             ; DATA XREF: ROM:0000561A   o
 
 ; Dispatches story screen text rendering states
 UI_StoryTextDispatcher:                               ; CODE XREF: Sys_StoryScreenMainLoop+3C   p  ; was: sub_588C
-                cmpi.w  #$18,(word_FFA286).w
+                cmpi.w  #$18,(GameSubstateIndex).w
                 beq.w   locret_514E
                 move.w  (word_FF0178).l,d0
                 lea     off_58A4(pc,d0.w),a0
@@ -3966,8 +3966,8 @@ Cutscene_FadeOutCredits:                               ; DATA XREF: ROM:00007C3A
                 bne.w   locret_514E
                 movea.l #byte_7D48,a0
                 jsr (Gfx_LoadCompressedTiles).l
-                lea     (word_FFC620).w,a5
-                move.w  #$128,dword_FFC630-word_FFC620(a5)
+                lea     (Entity_ObjectPool).w,a5
+                move.w  #$128,dword_FFC630-Entity_ObjectPool(a5)
                 move.w  #$E8,$14(a5)
                 jsr (Sprite_ClearForTransition).l
                 move.w  #$2C8,(a5)
@@ -4167,8 +4167,8 @@ loc_7FDC:                               ; CODE XREF: Cutscene_InitPlanetScene+5C
 loc_7FEE:                               ; CODE XREF: Cutscene_InitPlanetScene+6A   j
                 move.l  d0,(a0)+
                 dbf     d7,loc_7FEE
-                lea     (word_FFC620).w,a5
-                move.w  #$CC00,word_FFC622-word_FFC620(a5)
+                lea     (Entity_ObjectPool).w,a5
+                move.w  #$CC00,word_FFC622-Entity_ObjectPool(a5)
                 move.w  #$10,(a5)
                 move.l  #stru_8630,8(a5)
                 move.w  #$8001,$E(a5)
@@ -4321,8 +4321,8 @@ Cutscene_PlanetTextDisplay:                               ; DATA XREF: ROM:00008
 ; End of function Cutscene_PlanetTextDisplay
 ; Dispatches to planet sprite handler based on state value
 Cutscene_PlanetSpriteHandler:                               ; CODE XREF: Cutscene_PlanetZoomMainLoop+8   p  ; was: sub_8220
-                lea     (word_FFC620).w,a5
-                move.w  word_FFC624-word_FFC620(a5),d0
+                lea     (Entity_ObjectPool).w,a5
+                move.w  word_FFC624-Entity_ObjectPool(a5),d0
                 lea     off_8230(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -4532,7 +4532,7 @@ Cutscene_PlanetZoomMainLoop:                               ; DATA XREF: ROM:0000
                 bsr.w Cutscene_PlanetPaletteUpdate
                 bsr.w Cutscene_PlanetSpriteHandler
                 bsr.w Effect_ClearOffscreenSprites
-                lea     (word_FFC620).w,a5
+                lea     (Entity_ObjectPool).w,a5
                 move.w  (word_FF0118).l,d1
                 bsr.w Sprite_SetGraphicsPointer
                 bsr.w Cutscene_Calculate3DRotation

@@ -40,6 +40,8 @@ ORIG_ROM = Alien Soldier (J) [!].bin
 ASSET_MANIFEST = assets/manifest.json
 TOOLCHAIN_MANIFEST = config/toolchain.json
 ROM_LAYOUT = config/rom_layout.json
+RUNTIME_SCENARIOS = config/runtime_scenarios.json
+RUNTIME_DIR = runtime/captures
 
 # Directories
 DATA_DIR = data
@@ -51,7 +53,7 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout lint test
+.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout lint test runtime runtime-validate
 all: build
 
 # Initialize project from original ROM
@@ -150,6 +152,20 @@ lint:
 
 test:
 	@$(PYTHON) -m unittest discover -s tests -p "test_*.py"
+
+runtime: verify
+	@$(PYTHON) $(SCRIPTS_DIR)/run_runtime_scenarios.py \
+		--scenarios $(RUNTIME_SCENARIOS) \
+		--gens "$(GENS_EXE)" \
+		--rom $(ROM) \
+		--output-dir $(RUNTIME_DIR)
+	@$(MAKE) --no-print-directory runtime-validate
+
+runtime-validate:
+	@$(PYTHON) $(SCRIPTS_DIR)/validate_runtime_scenarios.py \
+		--scenarios $(RUNTIME_SCENARIOS) \
+		--capture-dir $(RUNTIME_DIR) \
+		--ram-map src/ram_addrs.inc
 
 # Unpack LZSS-compressed data from ROM to data/uncompressed/
 # Attempts to decompress all entries from data/data_addrs.txt
@@ -376,7 +392,7 @@ rename:
 	@echo "  3. Commit: git add $(SRC) && git commit"
 
 # Gens emulator paths
-GENS_DIR = gens_automation
+GENS_DIR ?= ../gens_automation
 GENS_EXE = $(GENS_DIR)/Output/Gens.exe
 GENS_REPO = https://github.com/oranguthang/gens_automation.git
 

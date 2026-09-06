@@ -5,7 +5,7 @@
       "id": "assembler",
       "name": "AS Macro Assembler",
       "version": "1.42 Beta [Bld 212]",
-      "role": "Assembles alien_soldier_j.s into alien_soldier_j.p",
+      "role": "Assembles src/main.s into build/main.p",
       "source": "http://john.ccac.rwth-aachen.de:8000/as/",
       "source_commit": null,
       "provenance": "bundled",

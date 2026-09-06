@@ -239,7 +239,7 @@ Stage_DeepStriderTransition:                               ; DATA XREF: ROM:0000
 ; End of function Stage_DeepStriderTransition
 ; Deep Strider battle stage handler
 Stage_DeepStriderBattle:                               ; DATA XREF: ROM:0000D962   o  ; was: sub_DA22
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s Camera_UpdateDeepStrider
                 bsr.w Stage_TriggerPhaseTransition
 ; Updates camera for Deep Strider boss battle with phase transition check
@@ -289,7 +289,7 @@ locret_DA92:                            ; CODE XREF: Stage_GustheadTransition+10
 ; End of function Stage_GustheadTransition
 ; Transitions after Gusthead defeat
 Stage_GustheadDefeatTransition:                               ; DATA XREF: ROM:0000D96C   o  ; was: sub_DA94
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   loc_DAA0
                 jsr (Stage_TriggerPhaseTransition).l
 loc_DAA0:                               ; CODE XREF: Stage_GustheadDefeatTransition+4   j
@@ -303,7 +303,7 @@ loc_DAA8:                               ; CODE XREF: Stage_GustheadDefeatTransit
                 beq.s   loc_DAE2
                 bsr.w Scroll_ApplyVelocity
                 bsr.w Scroll_AddDeltaToScroll
-                cmpi.w  #$14,(word_FFA204).w
+                cmpi.w  #$14,(StageTableIndex).w
                 beq.s   locret_DAE0
                 tst.w   (word_FFA968).w
                 beq.s   locret_DAE0
@@ -406,7 +406,7 @@ Stage_SharpssteelTransition:                               ; DATA XREF: ROM:0000
 ; End of function Stage_SharpssteelTransition
 ; Initializes Stage 14
 Stage_Stage14Init:                               ; DATA XREF: ROM:0000D97E   o  ; was: sub_DBBC
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.w Stage_Stage10CheckTransition_Return
                 move.w  #$FFFF,(word_FFDB44).w
                 bra.w Stage_TriggerPhaseTransition
@@ -417,7 +417,7 @@ Stage_TeleportTransition:                               ; DATA XREF: ROM:0000D98
                 bne.w Stage_Stage10CheckTransition_Return
                 addq.w  #2,(word_FFA950).w
                 clr.w   (word_FF820C).w
-                addq.w  #2,(word_FFA204).w
+                addq.w  #2,(StageTableIndex).w
                 clr.b   (byte_FFA209).w
                 clr.w   (dword_FF806A+2).w
                 move.b  #$CA,d0
@@ -522,7 +522,7 @@ Stage_WaitForTimerDecrement:                               ; CODE XREF: Stage_St
 Stage_InitStage13:                               ; CODE XREF: Stage_SnakeTransition+2A   j  ; was: sub_DD0E
                                         ; DATA XREF: ROM:0000D990   o
                 move.w  #$36,(word_FFA950).w ; '6'
-                move.w  #$298,(word_FFC620).w
+                move.w  #$298,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
                 move.w  #$30,(word_FFF74A).w ; '0'
                 clr.w   (word_FFF74E).w
@@ -568,7 +568,7 @@ Stage_BugmaxWaitDMA:                               ; DATA XREF: ROM:0000D996   o
                 bpl.w Stage_Stage10CheckTransition_Return
                 subq.w  #1,(word_FF806E).w
                 bmi.s Stage_InitBugmaxBattle
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.w Stage_Stage10CheckTransition_Return
 ; Initializes Bugmax boss battle with palette and DMA setup
 Stage_InitBugmaxBattle:                               ; CODE XREF: Stage_BugmaxWaitDMA+12   j  ; was: loc_DDC2
@@ -583,7 +583,7 @@ Stage_InitBugmaxBattle:                               ; CODE XREF: Stage_BugmaxW
 ; Starts Bugmax battle phase
 Stage_BugmaxStartBattle:                               ; DATA XREF: ROM:0000D998   o  ; was: sub_DDE8
                 bsr.w Scroll_UpdateSnakeBackground
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   loc_DDFC
                 addq.w  #2,(word_FFA950).w
                 move.w  #$22,(word_FFA02A).w ; '"'
@@ -639,7 +639,7 @@ Stage_InitBossPaletteScroll:                               ; DATA XREF: ROM:0000
 ; End of function Stage_InitBossPaletteScroll
 ; Initialize score timer and clear scroll variables
 Stage_InitScoreTimerClear:                               ; DATA XREF: ROM:0000D9A2   o  ; was: sub_DE8E
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   locret_DEA0
                 bsr.w UI_InitScoreTimer
                 clr.w   (dword_FFA908).w
@@ -690,7 +690,7 @@ Stage_SunsetStingTransition:                               ; DATA XREF: ROM:0000
 ; End of function Stage_SunsetStingTransition
 ; Waits for battle to start
 Stage_SunsetStingWaitBattle:                               ; DATA XREF: ROM:0000D9AC   o  ; was: sub_DF26
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   loc_DF30
                 bsr.w Stage_TriggerPhaseTransition
 loc_DF30:                               ; CODE XREF: Stage_SunsetStingWaitBattle+4   j
@@ -720,7 +720,7 @@ Stage_ViblackStartBattle:                               ; CODE XREF: Stage_Vibla
 ; Initializes Viblack mini-boss
 Stage_ViblackInit:                               ; DATA XREF: ROM:0000D9B2   o  ; was: sub_DF6C
                 addq.w  #2,(word_FFA950).w
-                move.w  #$2B8,(word_FFC620).w
+                move.w  #$2B8,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
                 clr.l   (dword_FF8062+2).w
                 clr.w   (dword_FF806A).w
@@ -937,7 +937,7 @@ Stage_Epsilon1Scroll:                               ; DATA XREF: ROM:0000D9C8   
                                         ; ROM:0000D9CA   o
                 move.w  #$18,(dword_FF8128).w
                 bsr.w Stage_Epsilon1UpdateScrollParallax
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   locret_E1D4
                 bra.w Stage_TransitionToNextPhase
 ; ---------------------------------------------------------------------------
@@ -953,7 +953,7 @@ Stage_Epsilon1BattleStart:                               ; DATA XREF: ROM:0000D9
 ; End of function Stage_Epsilon1BattleStart
 ; Waits for boss intro completion
 Stage_Epsilon1WaitIntroComplete:                               ; DATA XREF: ROM:0000D9CE   o  ; was: sub_E1E8
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s Stage_Epsilon1UpdateScrollParallax
                 addq.w  #2,(word_FFA950).w
 ; End of function Stage_Epsilon1WaitIntroComplete
@@ -1270,7 +1270,7 @@ Stage_DestroyerMK2Init:                               ; DATA XREF: ROM:0000E43C 
 ; End of function Stage_DestroyerMK2Init
 ; Updates boss health
 Boss_DestroyerMK2UpdateHealth:                               ; DATA XREF: ROM:0000E43E   o  ; was: sub_E54E
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   loc_E558
                 bsr.w Stage_TriggerPhaseTransition
 loc_E558:                               ; CODE XREF: Boss_DestroyerMK2UpdateHealth+4   j
@@ -2474,7 +2474,7 @@ Stage_TransitionGraphics:                               ; DATA XREF: Stage_Trans
                 move.b  #3,(word_FFF7E6+1).w
                 move.b  #1,(byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
-                move.w  #$3AC,(word_FFC620).w
+                move.w  #$3AC,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
 ; Handles graphics transition with scroll updates
 Stage_Graphics_TransitionLoop:                               ; DATA XREF: ROM:0000F0FE   o  ; was: loc_F1EC
@@ -2523,7 +2523,7 @@ Boss_DestroyerProtoTransition:                               ; DATA XREF: ROM:00
 ; Boss initialization
 Boss_DestroyerProtoInit:                               ; DATA XREF: ROM:0000F106   o  ; was: sub_F288
                 bsr.w Stage_ScrollUpdate3
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.w Boss_DestroyerProtoTransition_Return
                 move.w  #$1C,(word_FF9DAE).w
                 bsr.w Boss_DestroyerProtoPaletteInit
@@ -2598,7 +2598,7 @@ loc_F398:                               ; CODE XREF: Boss_DestroyerProtoGraphics
                 bne.s   locret_F3DE
                 move.b  #1,(byte_FFA958).w
                 move.w  #$50,(word_FF80C2).w ; 'P'
-                move.w  #$2A,(word_FFA204).w ; '*'
+                move.w  #$2A,(StageTableIndex).w ; '*'
                 move.w  #$166,(dword_FF9D96).w
                 move.l  #$2000000,(dword_FF9DAA).w
                 move.w  #$3C8,(word_FFDB20).w
@@ -2652,7 +2652,7 @@ Boss_ShieldViperGraphicsInit:                               ; DATA XREF: ROM:000
 Boss_ShieldViperPaletteSetup:                               ; DATA XREF: ROM:0000F112   o  ; was: sub_F448
                 bsr.w   loc_FBD8
                 bsr.w Boss_ShieldViperScrollSetup
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.w Boss_DestroyerProtoTransition_Return
                 move.b  #1,(byte_FF830E).w
                 addq.w  #2,(word_FFA950).w
@@ -2725,7 +2725,7 @@ loc_F53E:                               ; CODE XREF: Boss_ShieldViperFinalCleanu
                 move.b  #$89,d0
                 jsr (Input_CheckButtonMode).l
                 addq.w  #2,(word_FFA950).w
-                addq.w  #2,(word_FFA204).w
+                addq.w  #2,(StageTableIndex).w
                 move.l  #$10000,(dword_FF9DB6).w
 locret_F55E:                            ; CODE XREF: Boss_ShieldViperFinalCleanup+1A   j
                 rts
@@ -2828,7 +2828,7 @@ Boss_WolfGaropaIntroMove:                               ; DATA XREF: ROM:0000F12
 ; Spawns projectile type 2
 Boss_WolfGaropaSpawnProjectile2:                               ; DATA XREF: ROM:0000F126   o  ; was: sub_F6A6
                 bsr.w Boss_WolfGaropaBattleStart
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   locret_F6C2
                 move.w  #$30,(word_FFA950).w ; '0'
                 move.w  #$2E,(word_FF80C2).w ; '.'
@@ -3008,7 +3008,7 @@ Boss_MissirayTransition:                               ; DATA XREF: ROM:0000F140
 ; End of function Boss_MissirayTransition
 ; Boss initialization
 Boss_MissirayInit:                               ; DATA XREF: ROM:0000F142   o  ; was: sub_F8D0
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   loc_F8E6
                 addq.w  #2,(word_FFA950).w
                 move.w  #$2E,(word_FF80C2).w ; '.'
@@ -3148,7 +3148,7 @@ Stage_CheckPhaseComplete:                               ; DATA XREF: ROM:0000F15
                 bne.s   locret_FA82
                 tst.w   (word_FF8138).w
                 bne.s   locret_FA82
-                addq.w  #2,(word_FFA204).w
+                addq.w  #2,(StageTableIndex).w
                 move.b  #$8F,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
                 bra.w Stage_InitTransitionState
@@ -3194,7 +3194,7 @@ Boss_ZLeoTransition:                               ; DATA XREF: ROM:0000F176   o
 ; End of function Boss_ZLeoTransition
 ; Checks trigger flag and starts phase transition
 Stage_CheckTransitionTrigger:                               ; DATA XREF: ROM:0000F178   o  ; was: sub_FAE0
-                tst.w   (word_FFC620).w
+                tst.w   (Entity_ObjectPool).w
                 bne.s   locret_FAEA
                 bsr.w Stage_TriggerPhaseTransition
 locret_FAEA:                            ; CODE XREF: Stage_CheckTransitionTrigger+4   j
@@ -3221,8 +3221,8 @@ Stage25_CameraUpdate:                               ; CODE XREF: Stage25_Transit
 ; End of function Stage25_CameraUpdate
 ; Sets scroll timer and clears secondary timer
 Stage_SetStage25ScrollTimer:                               ; DATA XREF: ROM:0000F186   o  ; was: sub_FB08
-                move.w  #$8C,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #$8C,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 rts
 ; End of function Stage_SetStage25ScrollTimer
 ; Advances state and sets vertical scroll
@@ -3683,7 +3683,7 @@ Stage_TransitionToNextPhase:                               ; CODE XREF: Stage_Up
                 move.w  #$56,(word_FF80C2).w ; 'V'
 ; Sets palette transition values when entering boss battle phase
 Stage_SetBossTransitionPalette:                               ; CODE XREF: Stage_InitXiTigerBoss   p  ; was: loc_FF54
-                move.w  (word_FFA204).w,d0
+                move.w  (StageTableIndex).w,d0
                 lea     word_FF7E(pc),a0
                 nop
                 lea     word_FFD2(pc),a1
@@ -4161,7 +4161,7 @@ Stage_InitSectionChange:                              ; CODE XREF: Camera_Stage2
                 move.w  #$50,(word_FF80C2).w ; 'P'
 loc_103C0:                              ; CODE XREF: Stage_InitTransitionState+1C   j
                 clr.w   (word_FF820C).w
-                addq.w  #2,(word_FFA204).w
+                addq.w  #2,(StageTableIndex).w
                 bclr    #7,(dword_FFA20E).w
                 clr.b   (byte_FFA209).w
 locret_103D2:                           ; CODE XREF: Stage_InitSectionChange+4   j
@@ -4180,9 +4180,9 @@ Stage_TriggerPhaseTransition:                              ; CODE XREF: Camera_B
 loc_103E2:                              ; CODE XREF: UI_InitScoreTimer+6   j
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA209).w
-                addq.w  #2,(word_FFA204).w
+                addq.w  #2,(StageTableIndex).w
                 jsr (Stage_StateDispatcher).l
-                subq.w  #2,(word_FFA204).w
+                subq.w  #2,(StageTableIndex).w
                 rts
 ; End of function Stage_TriggerPhaseTransition
 ; Sets up VDP scroll plane registers

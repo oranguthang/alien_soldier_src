@@ -384,7 +384,7 @@ loc_4B8:                                ; CODE XREF: ShowRedScreen:loc_4B8   j
 
 ; Checks console region via IO_PCBVER and sets up region flags (region check disabled in this code).
 Sys_CheckRegionLock:                                ; DATA XREF: Sys_DispatchGameState:off_C7C   o  ; was: sub_4BA
-                tst.w   (word_FFA286).w
+                tst.w   (GameSubstateIndex).w
                 bne.w   locret_580
                 move.b  (IO_PCBVER+1).l,d0
                 bpl.s Sys_SetGameModeFlags
@@ -393,8 +393,8 @@ Sys_CheckRegionLock:                                ; DATA XREF: Sys_DispatchGam
 
 ; Branch target that sets game mode flags after region check passes.
 Sys_SetGameModeFlags:                                ; CODE XREF: Sys_CheckRegionLock+E   j  ; was: loc_4D0
-                move.w  #4,(word_FFA284).w
-                clr.w   (word_FFA286).w
+                move.w  #4,(GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 rts
 ; End of function Sys_CheckRegionLock
 RegionRestricted:                       ; CODE XREF: Sys_CheckRegionLock+14   j
@@ -434,7 +434,7 @@ RegionRestricted:                       ; CODE XREF: Sys_CheckRegionLock+14   j
                 jsr (UI_RenderTextStringWrapped).l
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
-                addq.w  #4,(word_FFA286).w
+                addq.w  #4,(GameSubstateIndex).w
 locret_580:                             ; CODE XREF: Sys_CheckRegionLock+4   j
                 rts
 ; End of function RegionRestricted
@@ -922,14 +922,14 @@ Sys_DispatchGameState:
                 move.b  #4,(dword_FFF80A).w
                 clr.b   (byte_FFF807).w
                 clr.w   (word_FFF720).w
-                clr.w   (word_FFA284).w
-                clr.w   (word_FFA286).w
+                clr.w   (GameModeIndex).w
+                clr.w   (GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_C6C:                                ; CODE XREF: Sys_UpdateTimers+E   j
                                         ; Sys_DispatchGameState+4   j ...
                 jsr (Demo_PlaybackSystem).l
-                move.w  (word_FFA284).w,d0
+                move.w  (GameModeIndex).w,d0
                 movea.l off_C7C(pc,d0.w),a0
                 jmp     (a0)
 ; ---------------------------------------------------------------------------

@@ -4380,7 +4380,7 @@ locret_3C9DE:                           ; CODE XREF: Boss_FlyingNeoUpdateWingSpr
 Boss_FlyingNeoCalculateDistance:                              ; CODE XREF: Boss_FlyingNeoAttackPatternUpdate+C   p  ; was: sub_3C9E0
                 movea.w #(word_FFCA40-M68K_RAM),a5
                 jsr (Physics_CalculateDistanceTo).l
-                movea.w #(word_FFC620-M68K_RAM),a5
+                movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 rts
 ; End of function Boss_FlyingNeoCalculateDistance
 ; Updates boss sprite positions and rendering

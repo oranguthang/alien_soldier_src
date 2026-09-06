@@ -1597,7 +1597,7 @@ word_508A2_End:
 Projectile_WolfGaropaBullet2:                              ; CODE XREF: Projectile_WolfGaropaBullet1+BE   p  ; was: sub_509B0
                 movea.w #(byte_FFD040-M68K_RAM),a5
                 jsr (Math_CalculateAngleToPlayer).l
-                movea.w #(word_FFC620-M68K_RAM),a5
+                movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 moveq   #0,d3
                 moveq   #4,d7
                 cmpi.w  #$14,$4DE(a5)

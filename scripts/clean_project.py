@@ -14,6 +14,7 @@ import glob
 ROOT_TARGETS = [
     # Build artifacts
     'build',
+    os.path.join('runtime', 'captures'),
     'language.dat',
     'Gens.cfg',
     'alien_soldier_j.p',

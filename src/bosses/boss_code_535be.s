@@ -2907,7 +2907,7 @@ Boss_MedusaIntroStop:                              ; CODE XREF: Boss_ValkirieInt
                 bset    #0,(byte_FFA272).w
                 movea.w #(word_FFDC40-M68K_RAM),a5
                 bsr.s Boss_MedusaBattleStart
-                movea.w #(word_FFC620-M68K_RAM),a5
+                movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 rts
 ; End of function Boss_MedusaIntroStop
 ; Battle start initialization
@@ -4111,7 +4111,7 @@ loc_566BC:                              ; CODE XREF: Boss_ValkirieMovePattern1+C
                 move.l  #$F010F010,$208(a5)
                 move.b  #3,(byte_FFC9DE).w
                 movea.w a5,a0
-                movea.w #(word_FFC620-M68K_RAM),a5
+                movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 rts
 ; End of function Boss_ValkirieMovePattern1
 ; Movement pattern 2
@@ -4138,7 +4138,7 @@ loc_56768:                              ; CODE XREF: Boss_ValkirieMovePattern2+4
 ; ---------------------------------------------------------------------------
 loc_56770:                              ; CODE XREF: Boss_ValkirieMovePattern2+10   j
                                         ; Boss_ValkirieMovePattern2+108   j
-                movea.w #(word_FFC620-M68K_RAM),a0
+                movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  $54(a0),$54(a5)
                 move.w  #$D160,$48(a5)
                 move.w  #$D160,$4A(a5)
