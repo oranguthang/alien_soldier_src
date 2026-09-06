@@ -19,6 +19,7 @@ cd alien_soldier_src
 make init           # Validate the canonical ROM, extract data, build and verify
 make verify         # Permanent byte-identity gate
 make verify-layout  # Check module ranges, landmarks, gaps, and size policy
+make verify-symbols # Export and validate ROM/RAM/hardware symbols
 make lint           # Check source/provenance and repository policy
 make test           # Run the Python verification tests
 make runtime        # Replay six checkpoints and validate named RAM state
@@ -71,7 +72,7 @@ alien_soldier_src/
 | `compare_traces.py` | Compares two CPU traces for divergence |
 | `debug_pointers.py` | Binary search for pointer issues (24 parallel workers) |
 | `extract_data_addrs.py` | Parses listing to extract binclude addresses → data_addrs.txt |
-| `extract_symbols.py` | Extracts ~7000 symbols from AS listing file |
+| `extract_symbols.py` | Exports canonical ROM/RAM/hardware symbols from AS listing |
 | `find_unnamed_procedures.py` | Lists procedures still named `sub_*`, `loc_*` |
 | `find_unreferenced_labels.py` | Finds labels with no references (dead code) |
 | `generate_analysis_report.py` | Generates HTML report from analysis data |
@@ -96,6 +97,7 @@ make check-assets       # Validate all 579 extracted private segments
 make split              # Re-extract binary data from original ROM
 make clean              # Remove build artifacts; preserve extracted data
 make symbols            # Extract symbols from listing file
+make verify-symbols     # Validate symbol coverage against layout/runtime contracts
 make build-gens         # Build modified Gens emulator (requires VS2022)
 ```
 

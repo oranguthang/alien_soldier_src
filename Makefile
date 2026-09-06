@@ -588,13 +588,20 @@ endif
 SYMBOLS_FILE = logs/symbols.txt
 
 # Generate symbol file from assembly listing
-# Usage: make symbols [SYMBOLS=<output.txt>] [--all|--include-loc|--include-generic]
-.PHONY: symbols
+# Export one canonical symbol for every ROM, RAM, and hardware address.
+.PHONY: symbols verify-symbols
 symbols: $(LISTING)
 	@python -c "import os; os.makedirs('logs', exist_ok=True)"
 	@echo "Extracting symbols from $(LISTING)..."
 	python $(SCRIPTS_DIR)/extract_symbols.py $(LISTING) \
-		--stats --rom-only -o $(if $(SYMBOLS),$(SYMBOLS),$(SYMBOLS_FILE))
+		--stats --all -o $(if $(SYMBOLS),$(SYMBOLS),$(SYMBOLS_FILE))
+
+verify-symbols: symbols
+	@$(PYTHON) $(SCRIPTS_DIR)/verify_symbols.py \
+		--symbols $(if $(SYMBOLS),$(SYMBOLS),$(SYMBOLS_FILE)) \
+		--layout $(ROM_LAYOUT) \
+		--runtime $(RUNTIME_SCENARIOS) \
+		--minimum 15000
 
 # Generate listing file (prerequisite for symbols)
 $(LISTING): $(wildcard src/*.s src/*/*.s src/*.inc)

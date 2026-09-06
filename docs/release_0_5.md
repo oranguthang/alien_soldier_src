@@ -25,13 +25,15 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   `make test`.
 - Six pinned runtime scenarios check 13 named RAM expectations across boot,
   title, gameplay, boss entry, stage change, and credits.
+- The listing exports 16,044 canonical ROM/RAM/hardware addresses; layout
+  landmarks and runtime symbols are checked by `make verify-symbols`.
 
 ## Remaining release gates
 
 - Deeper assembly style rules and semantic review of the RAM inventory.
 - Broader negative-path tests for build and verification tooling.
 - A single `make release-check` gate: asset policy, lint, tests, clean byte
-  identity, symbols/layout, runtime checks, and release audit.
+  identity, runtime checks, and release audit.
 
 Semantic labels from the earlier automated naming pass are explicitly not
 grandfathered as facts. They may be renamed as evidence improves, while their
