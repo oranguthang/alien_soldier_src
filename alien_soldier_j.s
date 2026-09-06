@@ -98,12 +98,12 @@ Checksum:       dc.w $834F              ; DATA XREF: Reset+164   o
 Peripherials:   dc.b 'J               '
 RomStart:       dc.l         0
 RomEnd:         dc.l byte_1FFFFF
-RamStart:       dc.l M68K_RAM
-RamEnd:         dc.l byte_FFFFFF
+RamStart:       dc.l M68K_RAM_PHYSICAL
+RamEnd:         dc.l M68K_RAM_END_PHYSICAL
 SramCode:       dc.b '            '
 ModemCode:      dc.b '            '
 Reserved:       dc.b '                                        '
-CountryCode:    dc.b 'U               '
+CountryCode:    dc.b 'B               '
 
 ; ===============================================================================
 ; UNUSED/SCRAPPED CONTENT DOCUMENTATION
@@ -259,10 +259,7 @@ loc_35E:                                ; CODE XREF: Reset+162   j
                 bcc.s   loc_35E
                 movea.l #Checksum,a1
                 cmp.w   (a1),d1
-                ;temporarily disable checksum check
-                ;bne.w   ShowRedScreen
-                nop
-                nop
+                bne.w   ShowRedScreen
                 lea     (dword_FFFF00).w,a1
                 moveq   #0,d1
                 move.w  #$3F,d0 ; '?'
@@ -402,9 +399,7 @@ Sys_CheckRegionLock:                                ; DATA XREF: Sys_DispatchGam
                 move.b  (IO_PCBVER+1).l,d0
                 bpl.s Sys_SetGameModeFlags
                 btst    #6,d0
-                ;disable region check
-                ;beq.s   RegionRestricted
-                nop
+                beq.s   RegionRestricted
 
 ; Branch target that sets game mode flags after region check passes.
 Sys_SetGameModeFlags:                                ; CODE XREF: Sys_CheckRegionLock+E   j  ; was: loc_4D0
@@ -4391,12 +4386,12 @@ byte_2E4E:      dc.b 4, $24, $30, $34, 7, $7A, 0, 0
                                         ; sub_2E2A   o
                 dc.b 0, 0, 0, 0, $81, $3C, 0, 2
                 dc.b 1, 0, 0, 0, 0, 0, 0
-    align 2,0
+    align0 2
 byte_2E66:      dc.b 4, $24, $30, $34, 7, $7A, 0, $10
                                         ; DATA XREF: Gfx_LoadVDPRegisters   o
                 dc.b 0, 0, 0, 0, $81, $3C, 0, 2
                 dc.b 1, 0, 4, 0, 0, 0, 0
-    align 2,0
+    align0 2
 
 
 ; Initializes controller I/O ports and modes
@@ -14276,7 +14271,7 @@ loc_CE16:                               ; CODE XREF: Stage_WaitAndTransition+4  
 ; Writes boss parameter bytes to RAM structure
 Stage_WriteBossParams:                               ; CODE XREF: Stage_InitStage8Train+38   p  ; was: sub_CE2E
                                         ; Stage_FlyingNeoBattleStart+1A   p
-                lea     (byte_FF615D).l,a0
+                lea     (M68K_RAM_PHYSICAL+(byte_FF615D-M68K_RAM)).l,a0
                 move.b  (a1)+,(a0)
                 move.b  (a1)+,1(a0)
                 move.b  (a1)+,8(a0)
@@ -65128,7 +65123,7 @@ word_3939A:     dc.w $70, $D400, $70D4, $1431, $F842, $2ED0
 
 ; Sets up palette color sequence for visual effect with repeated values
 Gfx_SetPaletteSequence:                              ; CODE XREF: Boss_TerobusterIntro+24   p  ; was: sub_393A6
-                movea.l #byte_FF644A,a0
+                movea.l #(M68K_RAM_PHYSICAL+(byte_FF644A-M68K_RAM)),a0
                 move.b  #$CE,d0
                 move.b  #$C5,(a0)+
                 move.b  d0,(a0)+
@@ -76066,7 +76061,8 @@ Boss_SunsetStingAnimatePartSequence:                              ; CODE XREF: B
                 move.w  #4,d4
 loc_41D8A:                              ; CODE XREF: Boss_SunsetStingAnimatePartSequence+36   j
                 move.w  (a0)+,d0
-                btst    #3,$E(a4)
+                ; Original immediate is $B; memory BTST uses its low three bits.
+                dc.w    $082C, $000B, $000E ; btst #$B,$E(a4)
                 beq.s   loc_41D96
                 neg.w   d0
 loc_41D96:                              ; CODE XREF: Boss_SunsetStingAnimatePartSequence+10   j

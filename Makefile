@@ -1,6 +1,8 @@
 # Alien Soldier (J) Makefile
 # Build configuration for AS assembler
 
+PYTHON ?= python
+
 # Toolchain selection: auto-detect host OS/arch and pick the matching
 # build-tools folder under bin/. Override with: make PLATFORM=<subfolder>
 ifeq ($(OS),Windows_NT)
@@ -34,7 +36,7 @@ SRC = alien_soldier_j.s
 OBJ = alien_soldier_j.p
 ROM = asbuilt.bin
 ORIG_ROM = Alien Soldier (J) [!].bin
-REF_ROM = alien_soldier_j.bin
+ASSET_MANIFEST = assets/manifest.json
 
 # Directories
 DATA_DIR = data
@@ -46,16 +48,16 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all
+.PHONY: all build verify check-assets update-asset-manifest
 all: build
 
 # Initialize project from original ROM
 # Usage: make init
 .PHONY: init
 init:
-	@python $(SCRIPTS_DIR)/init_project.py \
+	@$(PYTHON) $(SCRIPTS_DIR)/init_project.py \
 		--orig-rom "$(ORIG_ROM)" \
-		--ref-rom "$(REF_ROM)" \
+		--manifest $(ASSET_MANIFEST) \
 		--data-dir $(DATA_DIR) \
 		--data-addrs $(DATA_ADDRS) \
 		--source $(SRC) \
@@ -68,22 +70,37 @@ init:
 # If missing, print a friendly hint instead of cryptic "error in opening file"
 .PHONY: check-init
 check-init:
-	@python $(SCRIPTS_DIR)/check_init.py \
+	@$(PYTHON) $(SCRIPTS_DIR)/check_init.py \
 		--data-dir "$(DATA_DIR)" \
 		--orig-rom "$(ORIG_ROM)"
 
 # Build ROM from assembly source
 .PHONY: build
-build: check-init
+build: check-init check-assets
 	@echo "Building ROM..."
-	python $(SCRIPTS_DIR)/build_rom.py \
+	$(PYTHON) $(SCRIPTS_DIR)/build_rom.py \
 		--source $(SRC) \
 		--output $(ROM) \
+		--manifest $(ASSET_MANIFEST) \
+		--original-rom "$(ORIG_ROM)" \
 		--as-bin $(AS_BIN) \
 		--p2bin $(P2BIN) \
 		--as-args "$(AS_ARGS)"
 	@echo ""
 	@echo "Build complete: $(ROM)"
+
+# Permanent preservation gate: assemble from source and require the canonical
+# Japanese cartridge image byte for byte. The European ROM is not a 0.5 profile.
+verify: check-init check-assets
+	@$(PYTHON) $(SCRIPTS_DIR)/build_rom.py \
+		--source $(SRC) \
+		--output $(ROM) \
+		--manifest $(ASSET_MANIFEST) \
+		--original-rom "$(ORIG_ROM)" \
+		--as-bin $(AS_BIN) \
+		--p2bin $(P2BIN) \
+		--as-args "$(AS_ARGS)" \
+		--verify
 
 # Split original ROM into data files
 .PHONY: split
@@ -91,7 +108,22 @@ split:
 	@python $(SCRIPTS_DIR)/split_data_from_rom.py \
 		--rom-file "$(ORIG_ROM)" \
 		--output $(DATA_DIR) \
-		--addrs $(DATA_ADDRS)
+		--addrs $(DATA_ADDRS) \
+		--manifest $(ASSET_MANIFEST)
+
+# Read-only prerequisite for every ordinary build.
+check-assets:
+	@$(PYTHON) $(SCRIPTS_DIR)/check_assets.py \
+		--manifest $(ASSET_MANIFEST) \
+		--asset-dir $(DATA_DIR)
+
+# Explicit maintainer operation used only when the extraction map changes.
+update-asset-manifest:
+	@$(PYTHON) $(SCRIPTS_DIR)/generate_asset_manifest.py \
+		--manifest $(ASSET_MANIFEST) \
+		--rom "$(ORIG_ROM)" \
+		--ranges $(DATA_ADDRS) \
+		--asset-dir $(DATA_DIR)
 
 # Unpack LZSS-compressed data from ROM to data/uncompressed/
 # Attempts to decompress all entries from data/data_addrs.txt
@@ -226,9 +258,10 @@ endif
 # Compare built ROM with reference
 .PHONY: compare
 compare:
-	@python $(SCRIPTS_DIR)/compare_roms.py \
+	@$(PYTHON) $(SCRIPTS_DIR)/compare_roms.py \
 		--built $(ROM) \
-		--original $(REF_ROM) \
+		--original "$(ORIG_ROM)" \
+		--manifest $(ASSET_MANIFEST) \
 		--project-dir .
 
 # ============================================================================
@@ -626,9 +659,11 @@ help:
 	@echo ""
 	@echo "Basic commands:"
 	@echo "  make build              - Assemble and build ROM (default)"
+	@echo "  make verify             - Build and require canonical byte identity"
 	@echo "  make compare            - Compare built ROM with original"
+	@echo "  make check-assets       - Validate all extracted private segments"
 	@echo "  make split              - Extract data from original ROM"
-	@echo "  make clean              - Remove all build artifacts and extracted data"
+	@echo "  make clean              - Remove build artifacts; preserve extracted data"
 	@echo ""
 	@echo "Analysis workflow (requires MOVIE=tas|longplay|menus):"
 	@echo "  1. make find-unanalyzed        - Generate list of unanalyzed procedures"
@@ -642,7 +677,7 @@ help:
 	@echo "     -> Claude reads workflow/batch_procedures.txt"
 	@echo "     -> Claude creates workflow/rename_batch.csv"
 	@echo "  3. make rename                 - Apply renames and mark processed"
-	@echo "  4. make build && make compare"
+	@echo "  4. make verify"
 	@echo "  5. git commit"
 	@echo ""
 	@echo "Debugging (visual + memory):"

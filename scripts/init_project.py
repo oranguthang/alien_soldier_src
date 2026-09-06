@@ -6,20 +6,21 @@ Steps:
 1. Check original ROM exists
 2. Extract data segments from original ROM
 3. Build ROM from source
-4. Create reference ROM (copy of first build)
+4. Verify the build byte for byte against the canonical ROM
 """
 
 import os
 import sys
-import shutil
 import argparse
 import subprocess
+import hashlib
+import json
 
 
 def main():
     parser = argparse.ArgumentParser(description='Initialize Alien Soldier project')
     parser.add_argument('--orig-rom', required=True, help='Original ROM file')
-    parser.add_argument('--ref-rom', required=True, help='Reference ROM file (output)')
+    parser.add_argument('--manifest', required=True, help='Canonical ROM manifest')
     parser.add_argument('--data-dir', required=True, help='Data directory')
     parser.add_argument('--data-addrs', required=True, help='Data addresses file')
     parser.add_argument('--source', required=True, help='Assembly source file')
@@ -43,6 +44,17 @@ def main():
     print('=== Initializing project ===')
     print()
 
+    with open(args.orig_rom, 'rb') as rom_file:
+        original = rom_file.read()
+    with open(args.manifest, 'r', encoding='utf-8') as manifest_file:
+        reference = json.load(manifest_file)['reference_rom']
+    original_sha1 = hashlib.sha1(original).hexdigest()
+    if len(original) != reference['size'] or original_sha1 != reference['sha1']:
+        print('ERROR: Input is not the canonical Japanese ROM!')
+        print(f"  Expected: {reference['size']} bytes, SHA1 {reference['sha1']}")
+        print(f"  Actual:   {len(original)} bytes, SHA1 {original_sha1}")
+        return 1
+
     # Step 2: Extract data segments
     print('Step 1: Extracting data from original ROM...')
     scripts_dir = os.path.dirname(os.path.abspath(__file__))
@@ -60,6 +72,15 @@ def main():
         return 1
     print()
 
+    result = subprocess.run([
+        sys.executable, os.path.join(scripts_dir, 'check_assets.py'),
+        '--manifest', args.manifest,
+        '--asset-dir', args.data_dir
+    ])
+    if result.returncode != 0:
+        print('ERROR: Extracted assets do not match the manifest!')
+        return 1
+
     # Step 3: Build ROM from source
     print('Step 2: Building ROM from source...')
     build_script = os.path.join(scripts_dir, 'build_rom.py')
@@ -70,7 +91,10 @@ def main():
         '--output', args.output,
         '--as-bin', args.as_bin,
         '--p2bin', args.p2bin,
-        '--as-args', args.as_args
+        '--as-args', args.as_args,
+        '--manifest', args.manifest,
+        '--original-rom', args.orig_rom,
+        '--verify'
     ])
 
     if result.returncode != 0:
@@ -78,15 +102,9 @@ def main():
         return 1
     print()
 
-    # Step 4: Create reference ROM (copy of first build)
-    print('Step 3: Creating reference ROM...')
-    shutil.copy2(args.output, args.ref_rom)
-    print(f'  {args.output} -> {args.ref_rom}')
-    print()
-
     print('=== Project initialized successfully! ===')
     print()
-    print('Reference ROM created. You can now:')
+    print('Canonical ROM reproduced. You can now:')
     print('  make build   - Build ROM from source')
     print('  make compare - Compare with reference')
     return 0

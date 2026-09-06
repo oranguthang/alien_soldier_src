@@ -15,8 +15,8 @@ cd alien_soldier_src
 # Place original ROM in project root:
 #   Alien Soldier (J) [!].bin
 
-make init           # Extract data, build ROM, create reference
-make compare        # Verify build matches reference
+make init           # Validate the canonical ROM, extract data, build and verify
+make verify         # Permanent byte-identity gate
 ```
 
 ## Project Structure
@@ -85,9 +85,11 @@ alien_soldier_src/
 ```bash
 make init               # Initialize project (requires original ROM)
 make build              # Assemble source → asbuilt.bin (2MB)
-make compare            # Compare asbuilt.bin with reference ROM
+make verify             # Require byte identity with the Japanese cartridge dump
+make compare            # Compare an existing build without reassembling
+make check-assets       # Validate all 579 extracted private segments
 make split              # Re-extract binary data from original ROM
-make clean              # Remove all build artifacts
+make clean              # Remove build artifacts; preserve extracted data
 make symbols            # Extract symbols from listing file
 make build-gens         # Build modified Gens emulator (requires VS2022)
 ```
@@ -191,9 +193,11 @@ make stop               # Kill all running Gens emulator instances
 3. **p2bin.exe** - Converts .p object file → asbuilt.bin (2 MB)
 
 ### Build Status
-- ✅ Build succeeds with byte-accurate ROM output (no warnings)
-- ✅ Checksum validation disabled in source (original ROM had incorrect checksum)
-- 📁 `alien_soldier_j.bin` is the reference ROM with these fixes applied
+- The default source reproduces the canonical Japanese cartridge dump byte for byte.
+- `make verify` validates the user-supplied dump against `assets/manifest.json` and
+  then compares every output byte directly with it.
+- The original checksum and region checks are preserved. Modified gameplay builds
+  are outside the 0.5 preservation profile.
 
 ## Binary Trace System
 
@@ -334,7 +338,7 @@ These values are NOT ROM addresses but VDP tile indices with extended attributes
 ## Project Status
 
 ### Completed
-- [x] Byte-accurate ROM assembly
+- [x] Byte-identical canonical Japanese ROM assembly
 - [x] Basic code documentation (~200+ functions labeled)
 - [x] RAM address definitions (~1014 addresses)
 - [x] Tile decompression algorithm documented

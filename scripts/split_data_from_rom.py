@@ -12,6 +12,9 @@ Creates data/{subdir}/{name}.bin for each entry.
 import os
 import sys
 import argparse
+import hashlib
+import json
+from pathlib import Path
 
 
 def main():
@@ -22,6 +25,8 @@ def main():
                         help='Output directory (default: data)')
     parser.add_argument('-a', '--addrs', default='data/data_addrs.txt',
                         help='Addresses file (default: data/data_addrs.txt)')
+    parser.add_argument('--manifest', default='assets/manifest.json',
+                        help='Canonical ROM manifest')
 
     args = parser.parse_args()
 
@@ -40,6 +45,15 @@ def main():
     with open(args.rom_file, 'rb') as f:
         rom_data = f.read()
     print(f'ROM size: 0x{len(rom_data):X} ({len(rom_data)} bytes)')
+
+    with open(args.manifest, 'r', encoding='utf-8') as manifest_file:
+        reference = json.load(manifest_file)['reference_rom']
+    rom_sha1 = hashlib.sha1(rom_data).hexdigest()
+    if len(rom_data) != reference['size'] or rom_sha1 != reference['sha1']:
+        print(f'Error: "{args.rom_file}" is not the canonical Japanese ROM')
+        print(f"  Expected: {reference['size']} bytes, SHA1 {reference['sha1']}")
+        print(f'  Actual:   {len(rom_data)} bytes, SHA1 {rom_sha1}')
+        return 1
 
     # Parse addresses file
     print(f'Loading addresses from: {args.addrs}')
@@ -67,6 +81,23 @@ def main():
     subdirs = set(e[3] for e in entries if e[3])
     for subdir in subdirs:
         os.makedirs(os.path.join(args.output, subdir), exist_ok=True)
+
+    # The extraction regions are a generated cache. Remove stale binary files
+    # only inside regions owned by this range map; unrelated data/ files stay.
+    output_root = Path(args.output)
+    expected_paths = {
+        Path(subdir) / f'{name}.bin'
+        for name, _start, _end, subdir in entries
+    }
+    removed_stale = 0
+    for subdir in subdirs:
+        for existing in (output_root / subdir).rglob('*.bin'):
+            relative = existing.relative_to(output_root)
+            if relative not in expected_paths:
+                existing.unlink()
+                removed_stale += 1
+    if removed_stale:
+        print(f'Removed {removed_stale} stale extracted files')
 
     # Extract all segments
     success_count = 0

@@ -3,7 +3,7 @@
 ## Project Overview
 
 - **Source file**: `alien_soldier_j.s` - Main assembly source (~123K lines)
-- **Original ROM**: `alien_soldier_j.bin` - Reference ROM for verification
+- **Original ROM**: `Alien Soldier (J) [!].bin` - Canonical private ROM for verification
 - **Workflow dir**: `workflow/` - Reports, batch files, and state
 
 ## Makefile Workflow
@@ -231,7 +231,7 @@ This:
 ### In Git
 
 - `alien_soldier_j.s` - Main source
-- `alien_soldier_j.bin` - Original ROM
+- `Alien Soldier (J) [!].bin` - Canonical private ROM (ignored by Git)
 - `workflow/analysis_report_*.csv` - Analysis reports with processed status
 - `workflow/.movie` - Current movie type
 - `scripts/*.py` - Build and analysis scripts

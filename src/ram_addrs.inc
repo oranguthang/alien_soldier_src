@@ -1,5 +1,7 @@
 ; ---------- ram names -------------
 M68K_RAM equ $FFFF0000
+M68K_RAM_PHYSICAL equ $00FF0000
+M68K_RAM_END_PHYSICAL equ $00FFFFFF
 dword_FF0020 equ $FFFF0020
 word_FF0040 equ $FFFF0040
 word_FF0060 equ $FFFF0060

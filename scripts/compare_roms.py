@@ -7,6 +7,8 @@ Compares built ROM with original ROM to verify they are identical.
 
 import sys
 import argparse
+import hashlib
+import json
 from pathlib import Path
 
 
@@ -33,7 +35,8 @@ def compare_files(file1, file2):
 def main():
     parser = argparse.ArgumentParser(description='Compare built ROM with original')
     parser.add_argument('--built', default='asbuilt.bin', help='Built ROM file')
-    parser.add_argument('--original', default='alien_soldier_j.bin', help='Original ROM file')
+    parser.add_argument('--original', default='Alien Soldier (J) [!].bin', help='Canonical ROM file')
+    parser.add_argument('--manifest', default='assets/manifest.json', help='Asset manifest')
     parser.add_argument('--project-dir', default='.', help='Project directory')
 
     args = parser.parse_args()
@@ -52,6 +55,16 @@ def main():
         print(f"Error: Original ROM not found: {original_file}")
         return 1
 
+    manifest = json.loads(Path(args.manifest).read_text(encoding='utf-8'))
+    reference = manifest['reference_rom']
+    original_data = original_file.read_bytes()
+    original_sha1 = hashlib.sha1(original_data).hexdigest()
+    if len(original_data) != reference['size'] or original_sha1 != reference['sha1']:
+        print(f"Error: {original_file.name} is not the canonical Japanese ROM")
+        print(f"  Expected: {reference['size']} bytes, SHA1 {reference['sha1']}")
+        print(f"  Actual:   {len(original_data)} bytes, SHA1 {original_sha1}")
+        return 1
+
     # Compare files
     identical, message = compare_files(built_file, original_file)
 
@@ -62,8 +75,8 @@ def main():
         print(f"  Built:    {built_file.name} ({built_file.stat().st_size:,} bytes)")
         print(f"  Original: {original_file.name} ({original_file.stat().st_size:,} bytes)")
         print()
-        print("[OK] Assembly source matches original ROM perfectly")
-        print("[OK] All procedure renames preserve binary output")
+        print(f"[OK] Byte-identical canonical ROM reproduced (SHA1 {original_sha1})")
+        print("[OK] The complete assembled source preserves every canonical byte")
         return 0
     else:
         print("=" * 60)
