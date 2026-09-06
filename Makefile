@@ -51,7 +51,7 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout
+.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout lint test
 all: build
 
 # Initialize project from original ROM
@@ -142,6 +142,14 @@ verify-layout: $(LISTING)
 		--layout $(ROM_LAYOUT) \
 		--listing $(LISTING) \
 		--rom $(ROM)
+
+lint:
+	@$(PYTHON) $(SCRIPTS_DIR)/lint_source.py \
+		--policy config/source_policy.json
+	@$(PYTHON) $(SCRIPTS_DIR)/lint_project.py
+
+test:
+	@$(PYTHON) -m unittest discover -s tests -p "test_*.py"
 
 # Unpack LZSS-compressed data from ROM to data/uncompressed/
 # Attempts to decompress all entries from data/data_addrs.txt

@@ -19,6 +19,8 @@ cd alien_soldier_src
 make init           # Validate the canonical ROM, extract data, build and verify
 make verify         # Permanent byte-identity gate
 make verify-layout  # Check module ranges, landmarks, gaps, and size policy
+make lint           # Check source/provenance and repository policy
+make test           # Run the Python verification tests
 ```
 
 ## Project Structure

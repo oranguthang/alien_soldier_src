@@ -17,13 +17,17 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   6000-line ceiling.
 - `config/rom_layout.json` is checked against listing addresses, landmarks,
   padding ranges, and the built image.
+- Naming/evidence rules, all 4,822 provenance mappings, and the initial unknown
+  backlog are policy checked.
+- Source/subsystem and RAM orientation maps exist without overstating the
+  automatically generated semantic names.
+- Initial source/project lint and unit tests are wired as `make lint` and
+  `make test`.
 
 ## Remaining release gates
 
-- Naming, style, provenance, and evidence-level contracts.
-- Source map, subsystem map, reviewed RAM map, and unknowns register.
-- Lint for assembly, configuration, Python, and documentation links.
-- Tests for build and verification tooling.
+- Deeper assembly style rules and semantic review of the RAM inventory.
+- Broader negative-path tests for build and verification tooling.
 - Named runtime scenarios for boot, title/menu, gameplay start, stage change,
   boss transition, and completion/credits, each with RAM/state assertions.
 - A single `make release-check` gate: asset policy, lint, tests, clean byte
