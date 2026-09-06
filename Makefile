@@ -32,12 +32,14 @@ AS_ARGS = -maxerrors 2
 export AS_MSGPATH = $(TOOLS_DIR)
 
 # Files
-SRC = alien_soldier_j.s
-OBJ = alien_soldier_j.p
+SRC = src/main.s
+OBJ = build/main.p
 ROM = asbuilt.bin
+LISTING = build/main.lst
 ORIG_ROM = Alien Soldier (J) [!].bin
 ASSET_MANIFEST = assets/manifest.json
 TOOLCHAIN_MANIFEST = config/toolchain.json
+ROM_LAYOUT = config/rom_layout.json
 
 # Directories
 DATA_DIR = data
@@ -49,7 +51,7 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all build verify check-assets update-asset-manifest verify-toolchain
+.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout
 all: build
 
 # Initialize project from original ROM
@@ -62,6 +64,7 @@ init:
 		--data-dir $(DATA_DIR) \
 		--data-addrs $(DATA_ADDRS) \
 		--source $(SRC) \
+		--obj $(OBJ) \
 		--output $(ROM) \
 		--as-bin $(AS_BIN) \
 		--p2bin $(P2BIN) \
@@ -81,6 +84,7 @@ build: check-init check-assets verify-toolchain
 	@echo "Building ROM..."
 	$(PYTHON) $(SCRIPTS_DIR)/build_rom.py \
 		--source $(SRC) \
+		--obj $(OBJ) \
 		--output $(ROM) \
 		--manifest $(ASSET_MANIFEST) \
 		--original-rom "$(ORIG_ROM)" \
@@ -95,6 +99,7 @@ build: check-init check-assets verify-toolchain
 verify: check-init check-assets verify-toolchain
 	@$(PYTHON) $(SCRIPTS_DIR)/build_rom.py \
 		--source $(SRC) \
+		--obj $(OBJ) \
 		--output $(ROM) \
 		--manifest $(ASSET_MANIFEST) \
 		--original-rom "$(ORIG_ROM)" \
@@ -102,6 +107,7 @@ verify: check-init check-assets verify-toolchain
 		--p2bin $(P2BIN) \
 		--as-args "$(AS_ARGS)" \
 		--verify
+	@$(MAKE) --no-print-directory verify-layout
 
 # Split original ROM into data files
 .PHONY: split
@@ -130,6 +136,12 @@ verify-toolchain:
 	@$(PYTHON) $(SCRIPTS_DIR)/verify_toolchain.py \
 		--config $(TOOLCHAIN_MANIFEST) \
 		--platform $(PLATFORM)
+
+verify-layout: $(LISTING)
+	@$(PYTHON) $(SCRIPTS_DIR)/verify_layout.py \
+		--layout $(ROM_LAYOUT) \
+		--listing $(LISTING) \
+		--rom $(ROM)
 
 # Unpack LZSS-compressed data from ROM to data/uncompressed/
 # Attempts to decompress all entries from data/data_addrs.txt
@@ -554,16 +566,17 @@ SYMBOLS_FILE = logs/symbols.txt
 # Generate symbol file from assembly listing
 # Usage: make symbols [SYMBOLS=<output.txt>] [--all|--include-loc|--include-generic]
 .PHONY: symbols
-symbols: alien_soldier_j.lst
+symbols: $(LISTING)
 	@python -c "import os; os.makedirs('logs', exist_ok=True)"
-	@echo "Extracting symbols from alien_soldier_j.lst..."
-	python $(SCRIPTS_DIR)/extract_symbols.py alien_soldier_j.lst \
+	@echo "Extracting symbols from $(LISTING)..."
+	python $(SCRIPTS_DIR)/extract_symbols.py $(LISTING) \
 		--stats --rom-only -o $(if $(SYMBOLS),$(SYMBOLS),$(SYMBOLS_FILE))
 
 # Generate listing file (prerequisite for symbols)
-alien_soldier_j.lst: alien_soldier_j.s src/macros.inc src/ports.inc src/equals.inc src/ram_addrs.inc
+$(LISTING): $(wildcard src/*.s src/*/*.s src/*.inc)
 	@echo "Building listing file..."
-	$(AS_BIN) -L $(AS_ARGS) alien_soldier_j.s
+	@python -c "import os; os.makedirs('build', exist_ok=True)"
+	$(AS_BIN) -i . -L -olist $(LISTING) -o $(OBJ) $(AS_ARGS) $(SRC)
 
 # Generate human-readable story log from binary trace
 # Usage: make trace-story LOG=<path.btrc> [OUT=<path.txt>] [SYMBOLS=<path.txt>]

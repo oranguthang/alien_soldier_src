@@ -232,7 +232,7 @@ Gens.exe -rom asbuilt.bin -play movie.gmv \
     -turbo -nosound
 
 # Step 2: Remove unknown_1 data and rebuild
-# (edit alien_soldier_j.s to comment out unknown_1)
+# (edit src/data/bank_0e8000.s to comment out unknown_1)
 make build
 
 # Step 3: Dump modified ROM state

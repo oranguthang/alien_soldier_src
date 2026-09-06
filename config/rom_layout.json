@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "target": {
+    "platform": "Sega Mega Drive / Genesis",
+    "cpu": "Motorola 68000",
+    "cartridge_size": 2097152,
+    "translation_unit": "single",
+    "entrypoint": "src/main.s",
+    "max_module_lines": 6000,
+    "entrypoint_note": "AS assembles one translation unit. Include order in src/main.s is ROM order; there is no linker script."
+  },
+  "memory_regions": [
+    {
+      "id": "rom",
+      "start": "0x000000",
+      "end": "0x1FFFFF",
+      "size": 2097152,
+      "access": "read-only",
+      "owner": "src/main.s"
+    },
+    {
+      "id": "work_ram",
+      "start": "0xFF0000",
+      "end": "0xFFFFFF",
+      "size": 65536,
+      "access": "read-write",
+      "owner": "src/ram_addrs.inc"
+    },
+    {
+      "id": "z80_ram",
+      "start": "0xA00000",
+      "end": "0xA01FFF",
+      "size": 8192,
+      "access": "read-write via bus request",
+      "owner": "src/ports.inc"
+    },
+    {
+      "id": "io_and_vdp",
+      "start": "0xA10000",
+      "end": "0xC0001F",
+      "access": "memory-mapped registers",
+      "owner": "src/ports.inc"
+    }
+  ],
+  "rom_image": {
+    "size": 2097152,
+    "padding_byte": "0xFF",
+    "padding_tool": "p2bin -p=FF",
+    "vector_table": {
+      "start": "0x000000",
+      "end": "0x0000FF",
+      "symbol": "dword_0",
+      "owner": "src/system/vectors_and_core.s"
+    },
+    "header": {
+      "start": "0x000100",
+      "end": "0x0001FF",
+      "symbol": "CopyRights",
+      "owner": "src/system/vectors_and_core.s"
+    },
+    "gaps": [
+      {
+        "start": "0x05CB72",
+        "end": "0x082323",
+        "size": 153522,
+        "filled_by": "org $82324 and p2bin -p=FF"
+      },
+      {
+        "start": "0x0D9A5E",
+        "end": "0x0E7FFF",
+        "size": 58786,
+        "filled_by": "org $E8000 and p2bin -p=FF"
+      },
+      {
+        "start": "0x1653C8",
+        "end": "0x17FFFF",
+        "size": 109624,
+        "filled_by": "org $180000 and p2bin -p=FF"
+      }
+    ],
+    "landmarks": [
+      { "symbol": "dword_0", "address": "0x000000", "role": "Exception vector table" },
+      { "symbol": "CopyRights", "address": "0x000100", "role": "Mega Drive cartridge header" },
+      { "symbol": "Checksum", "address": "0x00018E", "role": "Header checksum word" },
+      { "symbol": "Reset", "address": "0x000200", "role": "Reset entry" },
+      { "symbol": "Sound_UpdateThunk", "address": "0x082324", "role": "Main sound update entry" },
+      { "symbol": "word_E8000", "address": "0x0E8000", "role": "Data bank boundary" },
+      { "symbol": "unknown_2", "address": "0x180000", "role": "Data bank boundary; semantic role unverified" },
+      { "symbol": "byte_1FFFFF", "address": "0x1FFFFF", "role": "Last emitted ROM byte" }
+    ]
+  },
+  "shared_definitions": [
+    { "file": "src/macros.inc", "emits_bytes": false },
+    { "file": "src/ports.inc", "emits_bytes": false },
+    { "file": "src/equals.inc", "emits_bytes": false },
+    { "file": "src/ram_addrs.inc", "emits_bytes": false }
+  ],
+  "modules": [
+    { "file": "src/system/vectors_and_core.s", "subsystem": "system", "start": "0x000000", "end": "0x0033F9" },
+    { "file": "src/system/input_and_vblank_033fa.s", "subsystem": "system", "start": "0x0033FA", "end": "0x008A79" },
+    { "file": "src/cutscenes/opening_08a7a.s", "subsystem": "cutscenes", "start": "0x008A7A", "end": "0x00D713" },
+    { "file": "src/stages/stage_systems_0d714.s", "subsystem": "stages", "start": "0x00D714", "end": "0x010D15" },
+    { "file": "src/rendering/background_and_scroll_10d16.s", "subsystem": "rendering", "start": "0x010D16", "end": "0x013B29" },
+    { "file": "src/gameplay/collision_and_player_13b2a.s", "subsystem": "gameplay", "start": "0x013B2A", "end": "0x016F35" },
+    { "file": "src/player/movement_and_damage_16f36.s", "subsystem": "player", "start": "0x016F36", "end": "0x01C169" },
+    { "file": "src/player/weapons_and_projectiles_1c16a.s", "subsystem": "player", "start": "0x01C16A", "end": "0x02018F" },
+    { "file": "src/ui/results_and_transitions_20190.s", "subsystem": "ui", "start": "0x020190", "end": "0x02A30D" },
+    { "file": "src/actors/enemies_and_boss_helpers_2a30e.s", "subsystem": "actors", "start": "0x02A30E", "end": "0x02DBD9" },
+    { "file": "src/actors/enemies_and_projectiles_2dbda.s", "subsystem": "actors", "start": "0x02DBDA", "end": "0x03153F" },
+    { "file": "src/bosses/boss_code_31540.s", "subsystem": "bosses", "start": "0x031540", "end": "0x035613" },
+    { "file": "src/bosses/boss_code_35614.s", "subsystem": "bosses", "start": "0x035614", "end": "0x03923D" },
+    { "file": "src/bosses/boss_code_3923e.s", "subsystem": "bosses", "start": "0x03923E", "end": "0x03D159" },
+    { "file": "src/bosses/boss_code_3d15a.s", "subsystem": "bosses", "start": "0x03D15A", "end": "0x040EEF" },
+    { "file": "src/bosses/boss_code_40ef0.s", "subsystem": "bosses", "start": "0x040EF0", "end": "0x044C3B" },
+    { "file": "src/bosses/boss_code_44c3c.s", "subsystem": "bosses", "start": "0x044C3C", "end": "0x0484E3" },
+    { "file": "src/bosses/boss_code_484e4.s", "subsystem": "bosses", "start": "0x0484E4", "end": "0x04BD4F" },
+    { "file": "src/bosses/boss_code_4bd50.s", "subsystem": "bosses", "start": "0x04BD50", "end": "0x04F64D" },
+    { "file": "src/bosses/boss_code_4f64e.s", "subsystem": "bosses", "start": "0x04F64E", "end": "0x0535BD" },
+    { "file": "src/bosses/boss_code_535be.s", "subsystem": "bosses", "start": "0x0535BE", "end": "0x0570EB" },
+    { "file": "src/bosses/boss_code_570ec.s", "subsystem": "bosses", "start": "0x0570EC", "end": "0x059865" },
+    { "file": "src/bosses/boss_code_59866.s", "subsystem": "bosses", "start": "0x059866", "end": "0x082323" },
+    { "file": "src/sound/driver_82324.s", "subsystem": "sound", "start": "0x082324", "end": "0x0E7FFF" },
+    { "file": "src/data/bank_0e8000.s", "subsystem": "data", "start": "0x0E8000", "end": "0x17FFFF" },
+    { "file": "src/data/bank_180000.s", "subsystem": "data", "start": "0x180000", "end": "0x1FFFFF" }
+  ]
+}

@@ -24,6 +24,7 @@ def main():
     parser.add_argument('--data-dir', required=True, help='Data directory')
     parser.add_argument('--data-addrs', required=True, help='Data addresses file')
     parser.add_argument('--source', required=True, help='Assembly source file')
+    parser.add_argument('--obj', required=True, help='AS object file')
     parser.add_argument('--output', required=True, help='Output ROM file')
     parser.add_argument('--as-bin', required=True, help='AS assembler binary')
     parser.add_argument('--p2bin', required=True, help='P2BIN converter')
@@ -88,6 +89,7 @@ def main():
     result = subprocess.run([
         sys.executable, build_script,
         '--source', args.source,
+        '--obj', args.obj,
         '--output', args.output,
         '--as-bin', args.as_bin,
         '--p2bin', args.p2bin,

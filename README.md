@@ -1,6 +1,7 @@
 # Alien Soldier (J) Disassembly
 
-Alien Soldier (J) source code disassembly project. The source assembles with the AS Macro Assembler.
+Alien Soldier (J) source reconstruction project. The address-ordered source
+under `src/` assembles with the AS Macro Assembler.
 
 **AS Assembler**: http://john.ccac.rwth-aachen.de:8000/as/index.html
 
@@ -17,6 +18,7 @@ cd alien_soldier_src
 
 make init           # Validate the canonical ROM, extract data, build and verify
 make verify         # Permanent byte-identity gate
+make verify-layout  # Check module ranges, landmarks, gaps, and size policy
 ```
 
 ## Project Structure
@@ -48,7 +50,7 @@ alien_soldier_src/
 │   └── alien_soldier_j_menus.gmv          # Menu navigation
 ├── workflow/                      # Documentation workflow state
 ├── gens_automation/               # Modified Gens emulator (auto-cloned)
-├── alien_soldier_j.s              # Main disassembled source (~120k lines)
+├── src/main.s                     # Address-ordered assembly entrypoint
 ├── Makefile                       # Build and automation system
 └── README.md
 ```
@@ -189,7 +191,7 @@ make stop               # Kill all running Gens emulator instances
 
 ### Build Process
 1. **scripts/build_rom.py** - Python build script that orchestrates the build
-2. **asw.exe** - Macro Assembler (AS 1.42 Beta) assembles alien_soldier_j.s → alien_soldier_j.p
+2. **asw.exe** - Macro Assembler (AS 1.42 Beta) assembles `src/main.s` and its ordered modules to `build/main.p`
 3. **p2bin.exe** - Converts .p object file → asbuilt.bin (2 MB)
 
 ### Build Status
@@ -198,6 +200,8 @@ make stop               # Kill all running Gens emulator instances
   then compares every output byte directly with it.
 - The original checksum and region checks are preserved. Modified gameplay builds
   are outside the 0.5 preservation profile.
+- The active 0.5 work contract is tracked in `docs/release_0_5.md`; source
+  partitioning rules and naming confidence are documented in `docs/source_layout.md`.
 
 ## Binary Trace System
 

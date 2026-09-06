@@ -5,6 +5,7 @@ import argparse
 import subprocess
 import hashlib
 import json
+import shlex
 
 
 def detect_platform():
@@ -43,44 +44,50 @@ def get_default_tools():
 
 def run_process(cmd):
     """Execute shell command and wait for completion"""
-    p = subprocess.Popen(cmd, bufsize=2048, shell=True)
+    p = subprocess.Popen(cmd, bufsize=2048)
     return p.wait()
 
 
-def assemble_main_src(base_dir, src_file, output_file, as_bin, p2bin, as_args,
-                      padding):
+def assemble_main_src(base_dir, src_file, object_file, output_file, as_bin,
+                      p2bin, as_args, padding):
     """Assemble source file and convert to binary ROM"""
     # Get absolute paths before changing directory
     src_abs = os.path.abspath(src_file)
+    object_abs = os.path.abspath(object_file)
     output_abs = os.path.abspath(output_file)
     p2bin_abs = os.path.abspath(p2bin)
     as_bin_abs = os.path.abspath(as_bin)
+
+    os.makedirs(os.path.dirname(object_abs), exist_ok=True)
 
     # Get bin directory
     bin_dir = os.path.dirname(as_bin_abs)
 
     # Calculate relative path from bin to source
-    src_rel = os.path.relpath(src_abs, os.getcwd())
+    src_rel = os.path.relpath(src_abs, bin_dir)
 
     # Use full path to assembler
-    asm_cmd = f'"{as_bin_abs}" {as_args} "{src_rel}"'
-    print(f'Assembling: {asm_cmd}')
-    ret = run_process(asm_cmd)
+    asm_cmd = [
+        as_bin_abs,
+        '-i', os.path.abspath(base_dir),
+        '-o', object_abs,
+        *shlex.split(as_args),
+        src_rel,
+    ]
+    print(f'Assembling: {subprocess.list2cmdline(asm_cmd)}')
+    ret = subprocess.call(asm_cmd, cwd=bin_dir)
 
     if ret != 0:
         print(f'Assembly failed with code {ret}')
         return ret
 
     # Convert .p file to binary
-    pre, ext = os.path.splitext(src_abs)
-    p_file_abs = pre + '.p'
-
-    if not os.path.exists(p_file_abs):
-        print(f'Error: Object file {p_file_abs} not found')
+    if not os.path.exists(object_abs):
+        print(f'Error: Object file {object_abs} not found')
         return 1
 
-    p2bin_cmd = f'"{p2bin_abs}" "{p_file_abs}" "{output_abs}" -p={padding}'
-    print(f'Converting to binary: {p2bin_cmd}')
+    p2bin_cmd = [p2bin_abs, object_abs, output_abs, f'-p={padding}']
+    print(f'Converting to binary: {subprocess.list2cmdline(p2bin_cmd)}')
     ret = run_process(p2bin_cmd)
     if ret != 0:
         print(f'Conversion failed with code {ret}')
@@ -96,8 +103,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Build Alien Soldier ROM from assembly source'
     )
-    parser.add_argument('-s', '--source', default='alien_soldier_j.s',
-                        help='Source assembly file (default: alien_soldier_j.s)')
+    parser.add_argument('-s', '--source', default='src/main.s',
+                        help='Source assembly index (default: src/main.s)')
+    parser.add_argument('--obj', default='build/main.p',
+                        help='AS object file (default: build/main.p)')
     parser.add_argument('-o', '--output', default='asbuilt.bin',
                         help='Output ROM file (default: asbuilt.bin)')
     parser.add_argument('--as-bin', default=default_as_bin,
@@ -129,6 +138,7 @@ if __name__ == '__main__':
     ret = assemble_main_src(
         basedir,
         args.source,
+        args.obj,
         args.output,
         args.as_bin,
         args.p2bin,

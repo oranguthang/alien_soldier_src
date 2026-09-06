@@ -2,7 +2,8 @@
 
 ## Project Overview
 
-- **Source file**: `alien_soldier_j.s` - Main assembly source (~123K lines)
+- **Source entrypoint**: `src/main.s` - Address-ordered include index
+- **ROM modules**: `src/**/*.s` - Source split by broad subsystem and ROM order
 - **Original ROM**: `Alien Soldier (J) [!].bin` - Canonical private ROM for verification
 - **Workflow dir**: `workflow/` - Reports, batch files, and state
 
@@ -95,17 +96,15 @@ sub_1234,Player_UpdateHealth,"Updates player health bar"
 make rename
 ```
 
-This will:
-1. Read `workflow/rename_batch.csv`
-2. Apply all renames to `alien_soldier_j.s`
-3. Mark procedures as `processed=true` in the report CSV
+The legacy batch-renaming scripts still assume one monolithic source file and
+must not be used until they are made module-aware. Apply reviewed renames to
+the owning `src/**/*.s` module, update every reference, and run `make verify`.
 
 ### Step 5: Verify and Commit
 
 ```bash
-make build
-make compare
-git add alien_soldier_j.s
+make verify
+git add src
 git commit -m "Document batch N: X procedures"
 ```
 
@@ -230,7 +229,7 @@ This:
 
 ### In Git
 
-- `alien_soldier_j.s` - Main source
+- `src/main.s` and `src/**/*.s` - Ordered source index and ROM modules
 - `Alien Soldier (J) [!].bin` - Canonical private ROM (ignored by Git)
 - `workflow/analysis_report_*.csv` - Analysis reports with processed status
 - `workflow/.movie` - Current movie type

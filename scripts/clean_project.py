@@ -13,9 +13,11 @@ import glob
 # Files/folders in project root
 ROOT_TARGETS = [
     # Build artifacts
+    'build',
     'language.dat',
     'Gens.cfg',
     'alien_soldier_j.p',
+    'alien_soldier_j.lst',
     'asbuilt.bin',
     'rename_log.txt',
 ]
