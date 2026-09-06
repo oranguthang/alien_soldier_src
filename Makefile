@@ -37,6 +37,7 @@ OBJ = alien_soldier_j.p
 ROM = asbuilt.bin
 ORIG_ROM = Alien Soldier (J) [!].bin
 ASSET_MANIFEST = assets/manifest.json
+TOOLCHAIN_MANIFEST = config/toolchain.json
 
 # Directories
 DATA_DIR = data
@@ -48,7 +49,7 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all build verify check-assets update-asset-manifest
+.PHONY: all build verify check-assets update-asset-manifest verify-toolchain
 all: build
 
 # Initialize project from original ROM
@@ -76,7 +77,7 @@ check-init:
 
 # Build ROM from assembly source
 .PHONY: build
-build: check-init check-assets
+build: check-init check-assets verify-toolchain
 	@echo "Building ROM..."
 	$(PYTHON) $(SCRIPTS_DIR)/build_rom.py \
 		--source $(SRC) \
@@ -91,7 +92,7 @@ build: check-init check-assets
 
 # Permanent preservation gate: assemble from source and require the canonical
 # Japanese cartridge image byte for byte. The European ROM is not a 0.5 profile.
-verify: check-init check-assets
+verify: check-init check-assets verify-toolchain
 	@$(PYTHON) $(SCRIPTS_DIR)/build_rom.py \
 		--source $(SRC) \
 		--output $(ROM) \
@@ -124,6 +125,11 @@ update-asset-manifest:
 		--rom "$(ORIG_ROM)" \
 		--ranges $(DATA_ADDRS) \
 		--asset-dir $(DATA_DIR)
+
+verify-toolchain:
+	@$(PYTHON) $(SCRIPTS_DIR)/verify_toolchain.py \
+		--config $(TOOLCHAIN_MANIFEST) \
+		--platform $(PLATFORM)
 
 # Unpack LZSS-compressed data from ROM to data/uncompressed/
 # Attempts to decompress all entries from data/data_addrs.txt
@@ -662,6 +668,7 @@ help:
 	@echo "  make verify             - Build and require canonical byte identity"
 	@echo "  make compare            - Compare built ROM with original"
 	@echo "  make check-assets       - Validate all extracted private segments"
+	@echo "  make verify-toolchain   - Hash-check build tools and pin the emulator"
 	@echo "  make split              - Extract data from original ROM"
 	@echo "  make clean              - Remove build artifacts; preserve extracted data"
 	@echo ""
