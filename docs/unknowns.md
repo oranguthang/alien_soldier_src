@@ -248,6 +248,14 @@ form the rest of the honest 287-line
 `src/enemies/stage_10_wasp_and_falling_shot.s` ROM-ordered module. The two
 incorrect Stage 10 fly claims are recorded in the name audit.
 
+The Stage 12 enemy pass reduced the count to 9,865 by replacing all 29
+address-derived definitions in the former `stage_12.s`. The 398-line
+`src/enemies/stage_12_enemies.s` keeps the ROM-interleaved floater, launcher,
+camera-attached turret, and their shared falling/debris states together. The
+old main/attack/reload/check-player names were checked against state-table
+ownership, constructors, and field accesses; six contradicted claims are
+recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

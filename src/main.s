@@ -159,7 +159,7 @@
                 include "src/enemies/stage_9_flies_and_viblack_shots.s"
                 include "src/enemies/bird_enemy.s"
                 include "src/enemies/stage_10_wasp_and_falling_shot.s"
-                include "src/enemies/stage_12.s"
+                include "src/enemies/stage_12_enemies.s"
                 include "src/enemies/stage_10_ground.s"
                 include "src/enemies/flyer.s"
                 include "src/cutscenes/train_and_xi_tiger.s"

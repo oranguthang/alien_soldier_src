@@ -179,7 +179,7 @@ off_1A0EFE:     dc.w    word_1A0D36-*                   ; DATA XREF: ROM:001A0F1
                 dc.w    2
                 dc.w    off_1A0EFE-*
                 dc.w    0
-off_1A0F1A:     dc.w    word_1A0CBE-*                   ; DATA XREF: ROM:off_2E320   o
+off_1A0F1A:     dc.w    word_1A0CBE-*                   ; DATA XREF: ROM:Enemy_Stage12FloatingAnimationMappings   o
                                         ; ROM:off_40318   o
                 dc.w    5
                 dc.w    word_1A0CC4-*

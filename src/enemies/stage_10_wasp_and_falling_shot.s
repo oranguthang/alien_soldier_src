@@ -48,7 +48,7 @@ Projectile_FallingShotUpdate_CheckSpecialBounds:        ; CODE XREF: Projectile_
                                         ; Projectile_FallingShotInit+7A   j
                 cmpi.w  #$150,$14(a5)
                 blt.s   Projectile_FallingShotUpdate_Return
-                bra.w   loc_2E416
+                bra.w   Enemy_ConvertStage12FallingObjectToEffect
 ; ---------------------------------------------------------------------------
 Projectile_FallingShotUpdate_CheckTerrain:              ; CODE XREF: Projectile_FallingShotInit+64   j  ; was: loc_2E024
                 moveq   #0,d0

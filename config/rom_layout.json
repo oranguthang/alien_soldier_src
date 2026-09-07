@@ -246,7 +246,7 @@
     { "file": "src/enemies/stage_9_flies_and_viblack_shots.s", "subsystem": "enemies", "start": "0x02D66C", "end": "0x02DA39" },
     { "file": "src/enemies/bird_enemy.s", "subsystem": "enemies", "start": "0x02DA3A", "end": "0x02DF7D" },
     { "file": "src/enemies/stage_10_wasp_and_falling_shot.s", "subsystem": "enemies", "start": "0x02DF7E", "end": "0x02E2BD" },
-    { "file": "src/enemies/stage_12.s", "subsystem": "enemies", "start": "0x02E2BE", "end": "0x02E6C1" },
+    { "file": "src/enemies/stage_12_enemies.s", "subsystem": "enemies", "start": "0x02E2BE", "end": "0x02E6C1" },
     { "file": "src/enemies/stage_10_ground.s", "subsystem": "enemies", "start": "0x02E6C2", "end": "0x02E9FB" },
     { "file": "src/enemies/flyer.s", "subsystem": "enemies", "start": "0x02E9FC", "end": "0x02EF31" },
     { "file": "src/cutscenes/train_and_xi_tiger.s", "subsystem": "cutscenes", "start": "0x02EF32", "end": "0x02F1A1" },

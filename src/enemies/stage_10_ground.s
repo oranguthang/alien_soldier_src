@@ -203,7 +203,7 @@ Enemy_BeetleFallAndLand:                                ; DATA XREF: ROM:0002E81
                 btst    #7,$1C(a5)
                 bne.s   locret_2E92A
                 cmpi.w  #$150,$14(a5)
-                bgt.w   loc_2E416
+                bgt.w   Enemy_ConvertStage12FallingObjectToEffect
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Collision_InitBufferPointers).l
@@ -226,7 +226,7 @@ Enemy_BeetleFallOffscreen:                              ; DATA XREF: ROM:0002E81
                 btst    #7,$1C(a5)
                 bne.s   locret_2E946
                 cmpi.w  #$150,$14(a5)
-                bgt.w   loc_2E416
+                bgt.w   Enemy_ConvertStage12FallingObjectToEffect
 locret_2E946:                                           ; CODE XREF: Enemy_BeetleFallOffscreen+E   j
                 rts
 ; End of function Enemy_BeetleFallOffscreen

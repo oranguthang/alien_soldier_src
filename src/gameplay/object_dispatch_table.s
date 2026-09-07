@@ -178,13 +178,13 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_Stage10WaspController
                 dc.l    Enemy_UpdateStage10WaspDefeatDebris
                 dc.l    Stage_TunnelSequencer
-                dc.l    Enemy_Stage12FloaterDispatcher
-                dc.l    Enemy_Stage12LauncherExplode
+                dc.l    Enemy_Stage12FloaterController
+                dc.l    Enemy_UpdateStage12DefeatDebris
                 dc.l    Enemy_Stage10BeetleMain
                 dc.l    Enemy_Stage10BeetleFall
                 dc.l    Enemy_Stage10BomberMain
-                dc.l    Enemy_Stage12TurretMain
-                dc.l    Enemy_Stage12LauncherDispatcher
+                dc.l    Enemy_Stage12TurretController
+                dc.l    Enemy_Stage12LauncherController
                 dc.l    Projectile_Epsilon1IntroMain
                 dc.l    Projectile_ViblackChainMain
                 dc.l    Projectile_ViblackChainSegment

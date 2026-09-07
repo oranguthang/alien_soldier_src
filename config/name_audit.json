@@ -1847,6 +1847,72 @@
         "This first state initializes display, collision and damage fields on the type-0x2BC falling shot before entering Projectile_FallingShotUpdate.",
         "It selects no fly animation, movement state or Stage 10 object data."
       ]
+    },
+    {
+      "address": "0x02E30C",
+      "previous_name": "Enemy_Stage12FloaterMain",
+      "current_name": "Enemy_UpdateStage12FloatingAnimation",
+      "legacy_name": "sub_2E30C",
+      "evidence": "static",
+      "basis": [
+        "Both the floater and launcher controllers tail-call this routine after dispatching their own states.",
+        "It only maps the animation selector at offset 0x5C to one of two sprite mappings and clears the frame counter; it performs no main-state dispatch."
+      ]
+    },
+    {
+      "address": "0x02E376",
+      "previous_name": "Enemy_Stage12FloaterAttack",
+      "current_name": "Enemy_Stage12FloaterInitState",
+      "legacy_name": "sub_2E376",
+      "evidence": "static",
+      "basis": [
+        "This is state zero in Enemy_Stage12FloaterStateOffsets and calls the shared sprite initializer before selecting animation state 4.",
+        "It creates no projectile and immediately falls through to the player-distance wait state, so it is initialization rather than an attack."
+      ]
+    },
+    {
+      "address": "0x02E43A",
+      "previous_name": "Enemy_Stage12LauncherMain",
+      "current_name": "Enemy_ConvertStage12ObjectToDefeatDebris",
+      "legacy_name": "sub_2E43A",
+      "evidence": "static",
+      "basis": [
+        "Both the floater and launcher controllers branch here on defeat, inactive-stage state, or collision flags.",
+        "The active conversion clears combat fields, installs entity type 0x2D0 and upward falling velocity; it is a shared defeat conversion, not the launcher's main handler."
+      ]
+    },
+    {
+      "address": "0x02E490",
+      "previous_name": "Enemy_Stage12LauncherExplode",
+      "current_name": "Enemy_UpdateStage12DefeatDebris",
+      "legacy_name": "sub_2E490",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x2D0, installed by the shared floater/launcher defeat conversion, maps to this handler.",
+        "It applies gravity and blinking before the final explosion and pickup, so ownership is shared and the routine is the debris update rather than a launcher-only explosion entry."
+      ]
+    },
+    {
+      "address": "0x02E54C",
+      "previous_name": "Enemy_Stage12TurretReload",
+      "current_name": "Enemy_Stage12TurretAllocateLauncherState",
+      "legacy_name": "sub_2E54C",
+      "evidence": "static",
+      "basis": [
+        "The state requests one free primary object slot, leaves it dormant as type 0x10, and stores its address at offset 0x4A.",
+        "It sets no reload timer or weapon ammunition; the next state later activates that reserved slot as the Stage 12 launcher."
+      ]
+    },
+    {
+      "address": "0x02E562",
+      "previous_name": "Enemy_Stage12TurretCheckPlayer",
+      "current_name": "Enemy_Stage12TurretActivateLauncherState",
+      "legacy_name": "sub_2E562",
+      "evidence": "static",
+      "basis": [
+        "The only condition compares the turret's own Y coordinate with 0x140; no player object or player position is read.",
+        "Once the threshold is reached, the state converts the reserved slot at offset 0x4A to entity type 0x2E4 and initializes its launch delay fields."
+      ]
     }
   ]
 }
