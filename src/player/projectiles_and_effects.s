@@ -108,7 +108,7 @@ Effect_SpawnParticle:                                   ; CODE XREF: Player_Hand
                 bne.w   locret_175B6
                 bsr.w   Sprite_AllocateSlot
                 bne.w   locret_175B6
-                lea     (dword_2AE58).l,a1
+                lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 lea     (word_1B514).l,a1
                 move.w  (dword_FFFF08).w,d0
@@ -167,7 +167,7 @@ loc_175DA:                                              ; CODE XREF: Player_Spaw
 loc_175EE:                                              ; CODE XREF: Player_SpawnPhoenixParticles+2A   j
                 bsr.w   Sprite_AllocateSlot
                 bne.w   locret_17640
-                lea     (dword_2AE58).l,a1
+                lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 lea     (word_1B514).l,a1
                 move.w  (dword_FFFF08).w,d0
@@ -355,11 +355,11 @@ loc_177D8:                                              ; CODE XREF: Effect_Crea
                 move.l  d0,$4C(a0)
                 bsr.w   Effect_FindDashTrailSlot
                 bne.s   locret_17882
-                lea     (dword_2ADFA).l,a1
+                lea     (Effect_DashTrailPrimarySpriteFrames).l,a1
                 move.w  #$FFF4,$18(a0)
                 tst.w   $48(a5)
                 bpl.s   Effect_SetDashTrailProperties
-                lea     (dword_2AE14).l,a1
+                lea     (Effect_DashTrailSecondarySpriteFrames).l,a1
                 neg.w   $18(a0)
 ; Sets sprite properties for dash trail effect including position and velocity
 Effect_SetDashTrailProperties:                          ; CODE XREF: Effect_CreateDashTrail+90   j  ; was: loc_17852

@@ -452,7 +452,7 @@ Cutscene_XiTigerSkipCheck:                              ; CODE XREF: Cutscene_Xi
                 bne.w   locret_1E9AE
                 move.w  #$120,$10(a0)
                 add.w   d7,$10(a0)
-                lea     (dword_2AE48).l,a1
+                lea     (Cutscene_XiTigerSkipSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.w  #$274,(a0)
                 rts
@@ -478,7 +478,7 @@ Cutscene_XiTigerComplete:                               ; CODE XREF: Cutscene_Xi
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$100,d0
                 move.w  d0,$14(a0)
-                lea     (dword_2AE2E).l,a1
+                lea     (Cutscene_XiTigerCompletionSpriteFrames).l,a1
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 addq.w  #8,d0

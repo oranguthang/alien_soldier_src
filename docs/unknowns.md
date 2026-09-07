@@ -44,6 +44,13 @@ named by their verified order in `Credits_SceneDataPointers`; character or
 staff-role claims are deliberately deferred. Five demonstrably incorrect
 generated Z-Leo names are recorded in `config/name_audit.json`.
 
+The debug and shared-effect pass reduced the count to 11,063. The sprite editor
+was separated from 22 cross-subsystem sprite-frame tables, the misplaced
+Shield Viper block was reclassified under `src/bosses/`, and the unrelated
+`Object_CopyDataBlock` helper was moved into `src/gameplay/`. Six generated
+Shield Viper names that described pattern-buffer rendering as movement,
+palette, cleanup, or shooting logic are recorded in the name audit.
+
 Three especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

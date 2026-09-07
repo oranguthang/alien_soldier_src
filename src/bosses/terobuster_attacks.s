@@ -50,10 +50,10 @@ loc_38BE8:                                              ; CODE XREF: Boss_Terobu
                 move.w  #2,(word_FFA014).w
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_38C64
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 btst    #1,(word_FFA000+1).w
                 bne.s   loc_38C18
-                movea.l #dword_2AD28,a1
+                movea.l #Boss_TerobusterProjectileSpriteFrames,a1
                 move.l  #$FFFD2000,$1C(a0)
 loc_38C18:                                              ; CODE XREF: Boss_TerobusterAttackPattern3+48   j
                 jsr     (Projectile_FindFreeSlotComplex).l
@@ -196,7 +196,7 @@ Boss_TerobusterSpawnProjectile:                         ; CODE XREF: Boss_Terobu
                 bne.s   locret_38E06
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_38E06
-                movea.l #dword_2AD28,a1
+                movea.l #Boss_TerobusterProjectileSpriteFrames,a1
                 jsr     (Projectile_FindFreeSlotComplex).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

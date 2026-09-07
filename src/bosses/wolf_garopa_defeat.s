@@ -4,7 +4,7 @@ Boss_WolfGaropaDefeatInit:                              ; CODE XREF: Projectile_
                 bne.w   locret_50BEA
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   locret_50BEA
-                lea     (dword_2AF48).l,a1
+                lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.b  #4,$20(a0)
                 move.w  #$8C40,2(a0)
@@ -44,7 +44,7 @@ Boss_WolfGaropaCollision:                               ; CODE XREF: Boss_WolfGa
                 bne.w   locret_50C5A
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   locret_50C5A
-                lea     (dword_2AD4A).l,a1
+                lea     (Boss_SharedCollisionProjectileSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.b  #4,$20(a0)
                 move.w  #$8C00,2(a0)

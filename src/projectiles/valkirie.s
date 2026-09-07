@@ -128,7 +128,7 @@ Projectile_UpdateWithSpawning:                          ; DATA XREF: ROM:off_5DC
                 bne.s   locret_2A200
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_2A200
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 bsr.w   Sprite_InitFromTable
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -169,7 +169,7 @@ loc_2A234:                                              ; CODE XREF: Projectile_
                 bne.s   locret_2A270
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_2A270
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 bsr.w   Sprite_InitFromTable
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

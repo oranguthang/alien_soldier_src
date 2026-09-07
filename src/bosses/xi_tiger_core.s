@@ -769,7 +769,7 @@ Boss_XiTigerSpawnProjectile:                            ; CODE XREF: Boss_XiTige
                                         ; Boss_XiTigerAttackPattern3+52   j
                 jsr     (Projectile_SpawnAtPosition).l
                 bne.s   locret_3E21A
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 jsr     (Projectile_FindFreeSlotComplex).l
                 move.b  #0,$20(a0)
                 move.w  #$FFFD,$1C(a0)

@@ -338,7 +338,7 @@ Boss_ViblackSpawnRandomProjectiles:                     ; CODE XREF: Boss_Viblac
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$A0,d0
                 move.w  d0,$14(a0)
-                lea     (dword_2AE2E).l,a1
+                lea     (Cutscene_XiTigerCompletionSpriteFrames).l,a1
                 move.w  #9,$1C(a0)
                 jmp     Sprite_InitFromTable
 ; End of function Boss_ViblackSpawnRandomProjectiles
@@ -533,7 +533,7 @@ loc_444F6:                                              ; CODE XREF: Projectile_
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
                 move.l  #$42000,$1C(a5)
-                lea     (dword_2ABF0).l,a1              ; make offsets?
+                lea     (Projectile_SpawnSpriteFrames).l,a1  ; make offsets?
                 jmp     Sys_PassObjectAddress
 ; ---------------------------------------------------------------------------
 loc_44514:                                              ; CODE XREF: Projectile_ViblackChainMain+A   j

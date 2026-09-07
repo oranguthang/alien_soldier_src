@@ -92,6 +92,72 @@
         "The routine initializes one object slot from the active Z-Leo object's position and sprite attributes.",
         "It plays a sound effect and performs no tilemap transfer."
       ]
+    },
+    {
+      "address": "0x04F794",
+      "previous_name": "Boss_ShieldViperMovement3",
+      "current_name": "Boss_ShieldViperUpdatePatternPhaseA",
+      "legacy_name": "sub_4F794",
+      "evidence": "static",
+      "basis": [
+        "The routine advances an accumulator and converts it to a bounded range.",
+        "It tail-calls the shared effect-pattern buffer filler and does not update entity coordinates."
+      ]
+    },
+    {
+      "address": "0x04F7C0",
+      "previous_name": "Boss_ShieldViperPaletteUpdate",
+      "current_name": "Boss_ShieldViperUpdatePatternPhaseB",
+      "legacy_name": "sub_4F7C0",
+      "evidence": "static",
+      "basis": [
+        "The routine advances a second accumulator and tail-calls the effect-pattern buffer filler when the boss is active.",
+        "It does not access palette memory."
+      ]
+    },
+    {
+      "address": "0x04F7FE",
+      "previous_name": "Boss_ShieldViperCleanup",
+      "current_name": "Boss_ShieldViperUpdatePatternPhaseC",
+      "legacy_name": "sub_4F7FE",
+      "evidence": "static",
+      "basis": [
+        "The routine mirrors the phase-B accumulator and pattern-fill behavior using a third state field.",
+        "It performs no object destruction or resource cleanup."
+      ]
+    },
+    {
+      "address": "0x04F83C",
+      "previous_name": "Boss_ShieldViperShootPattern1",
+      "current_name": "Boss_ShieldViperClearPatternBuffer",
+      "legacy_name": "sub_4F83C",
+      "evidence": "static",
+      "basis": [
+        "The routine writes zero across all 96 longwords of the effect-pattern buffer.",
+        "It neither allocates nor updates a projectile."
+      ]
+    },
+    {
+      "address": "0x04F84E",
+      "previous_name": "Boss_ShieldViperShootPattern2",
+      "current_name": "Boss_ShieldViperFillPatternRange",
+      "legacy_name": "sub_4F84E",
+      "evidence": "static",
+      "basis": [
+        "The routine fills a caller-selected range in the 96-entry effect-pattern buffer.",
+        "Its output is consumed by rendering transfer code rather than a projectile spawner."
+      ]
+    },
+    {
+      "address": "0x04F886",
+      "previous_name": "Boss_ShieldViperShootPattern3",
+      "current_name": "Boss_ShieldViperTransferPatternBuffer",
+      "legacy_name": "sub_4F886",
+      "evidence": "static",
+      "basis": [
+        "The routine prepares the effect-pattern workspace and tail-calls the shared transfer primitive.",
+        "It does not perform shooting logic."
+      ]
     }
   ]
 }

@@ -108,6 +108,7 @@
                 include "src/stages/xi_tiger_background.s"
                 include "src/gameplay/main_loop.s"
                 include "src/debug/player_controls.s"
+                include "src/gameplay/object_copy.s"
                 include "src/system/game_variables.s"
                 include "src/ui/frontend_loop.s"
                 include "src/ui/screen_transitions.s"

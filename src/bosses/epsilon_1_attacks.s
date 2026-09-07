@@ -227,7 +227,7 @@ loc_463E4:                                              ; CODE XREF: Boss_Epsilo
                 move.l  (dword_FFC69C).w,$1C(a0)
                 move.w  d2,$58(a0)
                 move.w  #$268,(a0)
-                move.l  #dword_2ADC8,$54(a0)
+                move.l  #Weapon_SpreadShotInitialSpriteFrame,$54(a0)
                 move.w  #$8C80,2(a0)
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)

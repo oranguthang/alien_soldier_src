@@ -585,7 +585,7 @@ Projectile_WolfGaropaHoming:                            ; CODE XREF: Projectile_
                 move.w  #1,(word_FFA014).w
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   locret_50AEE
-                movea.l #dword_2ADC8,a1
+                movea.l #Weapon_SpreadShotInitialSpriteFrame,a1
                 jsr     (Sprite_InitFromTable).l
                 move.b  #4,$20(a0)
                 move.w  #$8040,2(a0)

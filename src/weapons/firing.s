@@ -79,7 +79,7 @@ loc_17F9E:                                              ; CODE XREF: Weapon_Fire
                 move.w  d2,$14(a0)
                 move.w  #$268,(a0)
                 move.l  #Weapon_InitProjectileSprite,$48(a0)
-                move.l  #dword_2ADD0,$54(a0)
+                move.l  #Weapon_ProjectileSpriteFrames,$54(a0)
                 move.w  #$8C80,2(a0)
                 move.w  #3,$26(a0)
                 tst.w   (word_FFFF0E).w
@@ -271,7 +271,7 @@ Weapon_InitSpreadShot:                                  ; CODE XREF: Weapon_Cons
                 move.w  d2,$14(a0)
                 move.w  #$268,(a0)
                 move.l  #Weapon_SetProjectileAnimation,$48(a0)
-                move.l  #dword_2ADC8,$54(a0)
+                move.l  #Weapon_SpreadShotInitialSpriteFrame,$54(a0)
                 move.w  #$8C80,2(a0)
                 clr.b   $21(a0)
                 move.w  #1,$26(a0)

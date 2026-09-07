@@ -897,7 +897,7 @@ loc_3F14E:                                              ; CODE XREF: Enemy_Bounc
                                         ; Enemy_BounceOnFloorOrExplode+14   j
                 neg.w   $18(a5)
                 move.w  #$FFFE,$1C(a5)
-                lea     (dword_2ABF0).l,a1              ; make offsets?
+                lea     (Projectile_SpawnSpriteFrames).l,a1  ; make offsets?
                 jmp     Sys_PassObjectAddress
 ; ---------------------------------------------------------------------------
 loc_3F164:                                              ; CODE XREF: Enemy_BounceOnFloorOrExplode+38   j

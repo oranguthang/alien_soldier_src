@@ -402,7 +402,7 @@ nullsub_20:                                             ; DATA XREF: ROM:0000882
 Effect_SpawnStarParticle:                               ; CODE XREF: Cutscene_ShipInitScene+6C   p  ; was: sub_8C42
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.w   locret_514E
-                lea     (dword_2AF48).l,a1
+                lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 jsr     (RandomNumber).l
                 move.w  d0,d2

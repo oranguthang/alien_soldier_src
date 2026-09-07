@@ -100,7 +100,7 @@ Boss_ShiperSpawnAngledProjectile:
                 bne.s   locret_3715E
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_3715E
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 jsr     (Sprite_InitType94FromTable).l
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$7E,d0                         ; '~'

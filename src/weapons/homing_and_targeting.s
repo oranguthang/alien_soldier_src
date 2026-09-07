@@ -350,7 +350,7 @@ loc_189A6:                                              ; CODE XREF: Effect_Spaw
                 asl.l   #4,d2
                 move.l  d1,$1C(a5)
                 move.l  d2,$18(a5)
-                lea     (dword_2AE8A).l,a1
+                lea     (Effect_KnockbackParticleSpriteFrames).l,a1
                 jsr     (Effect_SpawnObjectType).l
                 move.w  #$8C80,2(a5)
                 rts
@@ -365,7 +365,7 @@ loc_189E0:                                              ; CODE XREF: Effect_Spaw
                 move.l  $1C(a5),d0
                 asr.l   #1,d0
                 move.l  d0,$1C(a5)
-                lea     (dword_2AD16).l,a1
+                lea     (Effect_KnockbackImpactSpriteFrames).l,a1
                 jmp     Effect_SpawnObjectType
 ; ---------------------------------------------------------------------------
 locret_18A0A:                                           ; CODE XREF: Effect_SpawnKnockbackParticle+56   j

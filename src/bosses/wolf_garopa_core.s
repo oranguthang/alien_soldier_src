@@ -1,3 +1,4 @@
+; Movement pattern 2
 Boss_WolfGaropaMovement2:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_4F8F0
                 tst.w   4(a5)
                 beq.w   loc_4F920

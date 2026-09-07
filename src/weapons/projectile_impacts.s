@@ -34,7 +34,7 @@ Weapon_HandleProjectileHit:                             ; DATA XREF: ROM:off_5DC
 loc_18AE2:                                              ; CODE XREF: Weapon_HandleProjectileHit+6   j
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (dword_2ACA6).l,a1
+                lea     (Weapon_ImpactSpriteFrames).l,a1
                 jmp     Effect_SpawnObjectType
 ; ---------------------------------------------------------------------------
 loc_18AF6:                                              ; CODE XREF: Weapon_HandleProjectileHit+16   j
@@ -91,7 +91,7 @@ locret_18B92:                                           ; CODE XREF: Weapon_Hand
 loc_18B94:                                              ; CODE XREF: Weapon_HandleExplosiveImpact+1E   j
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (dword_2ACA6).l,a1
+                lea     (Weapon_ImpactSpriteFrames).l,a1
                 jmp     Effect_SpawnObjectType
 ; ---------------------------------------------------------------------------
 loc_18BA8:                                              ; CODE XREF: Weapon_HandleExplosiveImpact+18   j
@@ -168,10 +168,10 @@ loc_18C64:                                              ; CODE XREF: Sprite_Spaw
                 bne.w   loc_18CEE
                 jsr     (Sprite_AllocateSlot).l
                 bne.w   loc_18CEE
-                lea     (dword_2AF5A).l,a1
+                lea     (Effect_ParticlePrimarySpriteFrames).l,a1
                 btst    #7,(dword_FFFF08).w
                 bne.s   loc_18C8C
-                lea     (dword_2AF8C).l,a1
+                lea     (Effect_ParticleSecondarySpriteFrames).l,a1
 loc_18C8C:                                              ; CODE XREF: Sprite_SpawnParticleEffect+32   j
                 jsr     (Projectile_FindFreeSlotComplex).l
                 move.w  #$8C80,2(a0)
@@ -387,7 +387,7 @@ Sprite_HandleProjectileCollision:                       ; CODE XREF: Sprite_Upda
                 bne.s   loc_18F30
                 tst.w   $26(a5)
                 bpl.s   locret_18F2E
-                lea     (dword_2AECC).l,a1
+                lea     (Projectile_CollisionSpriteFrames).l,a1
                 jsr     (Sys_PassObjectAddress).l
                 move.w  #$8080,2(a5)
                 clr.l   $18(a5)
@@ -411,7 +411,7 @@ loc_18F46:                                              ; CODE XREF: Weapon_Init
 ; End of function Sprite_HandleProjectileCollision
 ; Spawns explosion effect with random velocity
 Effect_SpawnExplosion:                                  ; CODE XREF: Sprite_HandleProjectileCollision+3E   p  ; was: sub_18F58
-                lea     (dword_2AF48).l,a1
+                lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.w  #$8C80,2(a0)
                 move.b  (dword_FFFF08).w,d3
@@ -439,7 +439,7 @@ Weapon_UpdateBombProjectile:                            ; DATA XREF: ROM:off_5DC
                 bne.w   loc_1905C
                 tst.w   $26(a5)
                 bpl.s   loc_18FD2
-                lea     (dword_2AF1E).l,a1
+                lea     (Projectile_BombAndRadialSpriteFrames).l,a1
                 jsr     (Sys_PassObjectAddress).l
                 move.w  #$8080,2(a5)
                 clr.l   $18(a5)
@@ -461,7 +461,7 @@ loc_18FD2:                                              ; CODE XREF: Weapon_Upda
                 move.l  $1C(a5),d0
                 asr.l   #2,d0
                 move.l  d0,$1C(a0)
-                lea     (dword_2AF48).l,a1
+                lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.w  #$8C80,2(a0)
                 rts
@@ -501,7 +501,7 @@ loc_1906E:                                              ; CODE XREF: Weapon_Upda
 ; End of function Weapon_UpdateBombProjectile
 ; Creates explosion debris particles with random velocity
 Effect_CreateExplosionDebris:                           ; CODE XREF: Weapon_UpdateBombProjectile+CA   p  ; was: sub_19084
-                lea     (dword_2AF48).l,a1
+                lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.w  #$8C80,2(a0)
                 move.b  (dword_FFFF08).w,d3

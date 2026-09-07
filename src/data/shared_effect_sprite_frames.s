@@ -1,4 +1,4 @@
-dword_2ABF0:    dc.l    $1454B, $F00F0F0                ; DATA XREF: Projectile_UpdateWithSpawning+24   o
+Projectile_SpawnSpriteFrames:   dc.l    $1454B, $F00F0F0  ; DATA XREF: Projectile_UpdateWithSpawning+24   o  ; was: dword_2ABF0
                                         ; Projectile_UpdateWithSpawning+A4   o
                 dc.l    $1456C, $F00F0F0                ; make offsets?
                 dc.l    $14480, $A00F4F4
@@ -8,7 +8,7 @@ dword_2ABF0:    dc.l    $1454B, $F00F0F0                ; DATA XREF: Projectile_
                 dc.l    $244A4, $500F8F8
                 dc.l    $144A8, $500F8F8
                 dc.w    $FFFF
-dword_2AC32:    dc.l    $1454B, $F00F0F0                ; DATA XREF: Boss_ArtemisSpawnReflectedProjectile+10   o
+Boss_ArtemisReflectedProjectileSpriteFrames:    dc.l    $1454B, $F00F0F0  ; DATA XREF: Boss_ArtemisSpawnReflectedProjectile+10   o  ; was: dword_2AC32
                 dc.l    $1456C, $F00F0F0
                 dc.l    $24480, $A00F4F4
                 dc.l    $24489, $A00F4F4
@@ -17,21 +17,21 @@ dword_2AC32:    dc.l    $1454B, $F00F0F0                ; DATA XREF: Boss_Artemi
                 dc.l    $144A4, $500F8F8
                 dc.l    $144A8, $500F8F8
                 dc.w    $FFFF
-dword_2AC74:    dc.l    $24480, $A00F4F4                ; DATA XREF: Effect_SpawnParticleLoop+22   o
+Effect_ParticleLoopSpriteFrames:    dc.l    $24480, $A00F4F4  ; DATA XREF: Effect_SpawnParticleLoop+22   o  ; was: dword_2AC74
                 dc.l    $24489, $A00F4F4
                 dc.l    $24492, $A00F4F4
                 dc.l    $2449B, $A00F4F4
                 dc.l    $244A4, $500F8F8
                 dc.l    $244A8, $500F8F8
                 dc.w    $FFFF
-dword_2ACA6:    dc.l    $244AC, $500F8F8                ; DATA XREF: Weapon_HandleProjectileHit+20   o
+Weapon_ImpactSpriteFrames:  dc.l    $244AC, $500F8F8    ; DATA XREF: Weapon_HandleProjectileHit+20   o  ; was: dword_2ACA6
                                         ; Weapon_HandleExplosiveImpact+72   o
                 dc.l    $244B0, $500F8F8
                 dc.l    $244B4, $500F8F8
                 dc.l    $244B8, $500F8F8
                 dc.l    $144E8, $500F8F8
                 dc.w    $FFFF
-dword_2ACD0:    dc.l    $244F6, $FCFC                   ; DATA XREF: Enemy_SpawnAnimatedProjectile+A   o
+Enemy_AnimatedProjectileSpriteFrames:   dc.l    $244F6, $FCFC  ; DATA XREF: Enemy_SpawnAnimatedProjectile+A   o  ; was: dword_2ACD0
                 dc.l    $244F7, $FCFC
                 dc.l    $244F8, $FCFC
                 dc.l    $24CF7, $FCFC
@@ -41,23 +41,23 @@ dword_2ACD0:    dc.l    $244F6, $FCFC                   ; DATA XREF: Enemy_Spawn
                 dc.l    $254F7, $FCFC
                 dc.l    $FFFF0002
                 dc.w    $ACD0
-dword_2AD16:    dc.l    $244AC, $500F8F8                ; DATA XREF: Effect_SpawnKnockbackParticle+70   o
+Effect_KnockbackImpactSpriteFrames: dc.l    $244AC, $500F8F8  ; DATA XREF: Effect_SpawnKnockbackParticle+70   o  ; was: dword_2AD16
                                         ; Projectile_ExplodeOnWall+A0   o
                 dc.l    $244C4, $500F8F8
                 dc.w    $FFFF
-dword_2AD28:    dc.l    $364CC, $500F8F8                ; DATA XREF: Boss_TerobusterAttackPattern3+4A   o
+Boss_TerobusterProjectileSpriteFrames:  dc.l    $364CC, $500F8F8  ; DATA XREF: Boss_TerobusterAttackPattern3+4A   o  ; was: dword_2AD28
                                         ; Boss_TerobusterSpawnProjectile+12   o
                 dc.l    $264D0, $500F8F8
                 dc.l    $264D4, $FCFC
                 dc.l    $264D5, $FCFC
                 dc.w    $FFFF
-dword_2AD4A:    dc.l    $344CC, $500F8F8                ; DATA XREF: Boss_ViblackProjectileAttack:loc_43CCE   o
+Boss_SharedCollisionProjectileSpriteFrames: dc.l    $344CC, $500F8F8  ; DATA XREF: Boss_ViblackProjectileAttack:loc_43CCE   o  ; was: dword_2AD4A
                                         ; Boss_WolfGaropaCollision+20   o
                 dc.l    $244D0, $500F8F8
                 dc.l    $244D4, $FCFC
                 dc.l    $244D5, $FCFC
                 dc.w    $FFFF
-dword_2AD6C:    dc.l    $24480, $A00F4F4                ; DATA XREF: Enemy_HomingMissileUpdate+80   o
+Projectile_HomingAndRockSpriteFrames:   dc.l    $24480, $A00F4F4  ; DATA XREF: Enemy_HomingMissileUpdate+80   o  ; was: dword_2AD6C
                                         ; Boss_TerobusterSpawnFallingRock+40   o
                 dc.l    $244CC, $500F8F8
                 dc.l    $244D0, $500F8F8
@@ -71,30 +71,30 @@ dword_2AD6C:    dc.l    $24480, $A00F4F4                ; DATA XREF: Enemy_Homin
                 dc.l    $144FC, $FCFC
                 dc.l    $144FD, $FCFC
                 dc.w    $FFFF
-dword_2ADC8:    dc.l    $24480, $A00F4F4                ; DATA XREF: Weapon_InitSpreadShot+16   o
+Weapon_SpreadShotInitialSpriteFrame:    dc.l    $24480, $A00F4F4  ; DATA XREF: Weapon_InitSpreadShot+16   o  ; was: dword_2ADC8
                                         ; Projectile_Epsilon1SpreadSetup+16   o
-dword_2ADD0:    dc.l    $244D6, $A00F4F4                ; DATA XREF: Weapon_FireProjectile+70   o
+Weapon_ProjectileSpriteFrames:  dc.l    $244D6, $A00F4F4  ; DATA XREF: Weapon_FireProjectile+70   o  ; was: dword_2ADD0
                 dc.l    $244DF, $A00F4F4
                 dc.l    $244D6, $A00F4F4
                 dc.l    $244BC, $500F8F8
                 dc.l    $244C0, $500F8F8
                 dc.w    $FFFF
-dword_2ADFA:    dc.l    $24562, $FCFC                   ; DATA XREF: Effect_CreateDashTrail+80   o
+Effect_DashTrailPrimarySpriteFrames:    dc.l    $24562, $FCFC  ; DATA XREF: Effect_CreateDashTrail+80   o  ; was: dword_2ADFA
                 dc.l    $34561, $400F8FC
                 dc.l    $44560, $800F4FC
                 dc.w    $FFFF
-dword_2AE14:    dc.l    $24D62, $FCFC                   ; DATA XREF: Effect_CreateDashTrail+92   o
+Effect_DashTrailSecondarySpriteFrames:  dc.l    $24D62, $FCFC  ; DATA XREF: Effect_CreateDashTrail+92   o  ; was: dword_2AE14
                 dc.l    $34D61, $400F8FC
                 dc.l    $44D60, $800F4FC
                 dc.w    $FFFF
-dword_2AE2E:    dc.l    $4455D, $200FCF4                ; DATA XREF: Cutscene_XiTigerComplete+2A   o
+Cutscene_XiTigerCompletionSpriteFrames: dc.l    $4455D, $200FCF4  ; DATA XREF: Cutscene_XiTigerComplete+2A   o  ; was: dword_2AE2E
                                         ; Boss_ViblackSpawnRandomProjectiles+34   o
                 dc.l    $4455E, $100FCF8
                 dc.l    $4455F, $FCFC
                 dc.w    $FFFF
-dword_2AE48:    dc.l    $244D6, $A00F4F4                ; DATA XREF: Cutscene_XiTigerSkipCheck+14   o
+Cutscene_XiTigerSkipSpriteFrames:   dc.l    $244D6, $A00F4F4  ; DATA XREF: Cutscene_XiTigerSkipCheck+14   o  ; was: dword_2AE48
                 dc.l    $244DF, $A00F4F4
-dword_2AE58:    dc.l    $244BC, $500F8F8                ; DATA XREF: Effect_SpawnParticle+1E   o
+Effect_SharedParticleSpriteFrames:  dc.l    $244BC, $500F8F8  ; DATA XREF: Effect_SpawnParticle+1E   o  ; was: dword_2AE58
                                         ; Player_SpawnPhoenixParticles+3E   o
                 dc.l    $244C0, $500F8F8
                 dc.l    $144F2, $FCFC
@@ -102,7 +102,7 @@ dword_2AE58:    dc.l    $244BC, $500F8F8                ; DATA XREF: Effect_Spaw
                 dc.l    $144F4, $FCFC
                 dc.l    $144F5, $FCFC
                 dc.w    $FFFF
-dword_2AE8A:    dc.l    $1454B, $F00F0F0                ; DATA XREF: Effect_SpawnKnockbackParticle+3E   o
+Effect_KnockbackParticleSpriteFrames:   dc.l    $1454B, $F00F0F0  ; DATA XREF: Effect_SpawnKnockbackParticle+3E   o  ; was: dword_2AE8A
                 dc.l    $1456C, $F00F0F0
                 dc.l    $24480, $A00F4F4
                 dc.l    $24489, $A00F4F4
@@ -111,7 +111,7 @@ dword_2AE8A:    dc.l    $1454B, $F00F0F0                ; DATA XREF: Effect_Spaw
                 dc.l    $144A4, $500F8F8
                 dc.l    $144A8, $500F8F8
                 dc.w    $FFFF
-dword_2AECC:    dc.l    $144D6, $A00F4F4                ; DATA XREF: Sprite_HandleProjectileCollision+E   o
+Projectile_CollisionSpriteFrames:   dc.l    $144D6, $A00F4F4  ; DATA XREF: Sprite_HandleProjectileCollision+E   o  ; was: dword_2AECC
                 dc.l    $244DF, $A00F4F4
                 dc.l    $244D6, $A00F4F4
                 dc.l    $244DF, $A00F4F4
@@ -122,30 +122,28 @@ dword_2AECC:    dc.l    $144D6, $A00F4F4                ; DATA XREF: Sprite_Hand
                 dc.l    $144F2, $FCFC
                 dc.l    $144F3, $FCFC
                 dc.w    $FFFF
-dword_2AF1E:    dc.l    $244D6, $A00F4F4                ; DATA XREF: Weapon_UpdateBombProjectile+10   o
+Projectile_BombAndRadialSpriteFrames:   dc.l    $244D6, $A00F4F4  ; DATA XREF: Weapon_UpdateBombProjectile+10   o  ; was: dword_2AF1E
                                         ; Boss_ArtemisSpawnRadialProjectile+12   o
                 dc.l    $244DF, $A00F4F4
                 dc.l    $144BC, $500F8F8
                 dc.l    $144C0, $500F8F8
                 dc.l    $144F3, $FCFC
                 dc.w    $FFFF
-dword_2AF48:    dc.l    $844F4, $FCFC                   ; DATA XREF: Effect_SpawnStarParticle+A   o
+Effect_StarParticleSpriteFrames:    dc.l    $844F4, $FCFC  ; DATA XREF: Effect_SpawnStarParticle+A   o  ; was: dword_2AF48
                                         ; sub_18F58   o
                 dc.l    $844F5, $FCFC
                 dc.w    $FFFF
-dword_2AF5A:    dc.l    $24480, $A00F4F4                ; DATA XREF: Sprite_SpawnParticleEffect+26   o
+Effect_ParticlePrimarySpriteFrames: dc.l    $24480, $A00F4F4  ; DATA XREF: Sprite_SpawnParticleEffect+26   o  ; was: dword_2AF5A
                 dc.l    $24489, $A00F4F4
                 dc.l    $24492, $A00F4F4
                 dc.l    $2449B, $A00F4F4
                 dc.l    $244A4, $500F8F8
                 dc.l    $144A8, $500F8F8
                 dc.w    $FFFF
-dword_2AF8C:    dc.l    $24480, $A00F4F4                ; DATA XREF: Sprite_SpawnParticleEffect+34   o
+Effect_ParticleSecondarySpriteFrames:   dc.l    $24480, $A00F4F4  ; DATA XREF: Sprite_SpawnParticleEffect+34   o  ; was: dword_2AF8C
                 dc.l    $34489, $A00F4F4
                 dc.l    $34492, $A00F4F4
                 dc.l    $2449B, $A00F4F4
                 dc.l    $244A4, $500F8F8
                 dc.l    $144A8, $500F8F8
                 dc.w    $FFFF
-
-; Finds free sprite slot in RAM at FFCC80

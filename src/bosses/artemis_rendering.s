@@ -460,7 +460,7 @@ Boss_ArtemisSpawnRadialProjectile:                      ; CODE XREF: Boss_Artemi
                 bne.s   locret_58C00
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_58C00
-                lea     (dword_2AF1E).l,a1
+                lea     (Projectile_BombAndRadialSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -486,7 +486,7 @@ Boss_ArtemisSpawnReflectedProjectile:                   ; CODE XREF: Boss_Artemi
                 bne.s   locret_58C60
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_58C60
-                lea     (dword_2AC32).l,a1
+                lea     (Boss_ArtemisReflectedProjectileSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$F,d0

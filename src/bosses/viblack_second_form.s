@@ -238,7 +238,7 @@ loc_43CAE:                                              ; CODE XREF: Boss_Viblac
                 bra.s   loc_43CF8
 ; ---------------------------------------------------------------------------
 loc_43CCE:                                              ; CODE XREF: Boss_ViblackProjectileAttack+48   j
-                lea     (dword_2AD4A).l,a1
+                lea     (Boss_SharedCollisionProjectileSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 lea     (word_1B514).l,a1
                 move.w  word_1B494-word_1B514(a1,d6.w),d0

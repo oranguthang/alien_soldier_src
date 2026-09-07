@@ -62,7 +62,7 @@ Boss_AntroidSpawnDebris:                                ; CODE XREF: Boss_Antroi
                 bne.s   locret_37F76
                 jsr     (Projectile_InitTypeA4).l
                 bne.s   locret_37F76
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 jsr     (Projectile_FindFreeSlotComplex).l
                 move.b  #0,$20(a0)
                 move.l  #$FFFE8000,$1C(a0)

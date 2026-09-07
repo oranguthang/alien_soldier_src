@@ -285,7 +285,7 @@ loc_3C35E:                                              ; CODE XREF: Boss_Flying
 ; Spawns defeat particle with velocity and sound
 Boss_FlyingNeoSpawnDefeatParticle:                      ; CODE XREF: Boss_FlyingNeoDefeatState1:loc_3C350   p  ; was: sub_3C36A
                                         ; sub_3C3AE:loc_3C3DC   p
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 jsr     (Sprite_InitFromTable).l
                 clr.l   $18(a0)
                 move.l  #$FFFEE000,$1C(a0)

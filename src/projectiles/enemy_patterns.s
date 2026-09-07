@@ -1,3 +1,4 @@
+; Finds a free sprite slot in the enemy projectile pool
 Enemy_FindFreeSpriteSlot:                               ; CODE XREF: Enemy_FindSlotAndInit   p  ; was: sub_2AFBE
                 movea.w #(byte_FFCC80-M68K_RAM),a0
                 jmp     loc_1C11C
@@ -125,7 +126,7 @@ loc_2B11A:                                              ; CODE XREF: Projectile_
                 asr.l   #2,d2
                 move.l  d1,$1C(a0)
                 move.l  d2,$18(a0)
-                movea.l #dword_2AD16,a1
+                movea.l #Effect_KnockbackImpactSpriteFrames,a1
                 bra.w   Sprite_InitFromTable
 ; End of function Projectile_ExplodeOnWall
 ; ---------------------------------------------------------------------------
@@ -253,7 +254,7 @@ loc_2B31C:                                              ; CODE XREF: Enemy_Homin
                 neg.l   d2
                 move.l  d1,$1C(a0)
                 move.l  d2,$18(a0)
-                movea.l #dword_2ACA6,a1
+                movea.l #Weapon_ImpactSpriteFrames,a1
                 bra.w   Sprite_InitFromTable
 ; End of function Enemy_HomingProjectileMain
 ; Spawns bullet for Jetsripper boss with calculated velocity
@@ -355,7 +356,7 @@ loc_2B468:                                              ; CODE XREF: Projectile_
                 neg.l   d2
                 move.l  d1,$1C(a0)
                 move.l  d2,$18(a0)
-                movea.l #dword_2ACA6,a1
+                movea.l #Weapon_ImpactSpriteFrames,a1
                 bra.w   Sprite_InitFromTable
 ; End of function Projectile_BulletWithDelayedPhysics
 ; Updates boss sprite graphics
@@ -496,7 +497,7 @@ loc_2B5D2:                                              ; CODE XREF: Enemy_Bounc
 Enemy_SpawnAnimatedProjectile:                          ; CODE XREF: Boss_TerobusterSpawnMultiDirectional+52   p  ; was: sub_2B60C
                 move.w  #$54,(a0)                       ; 'T'
                 move.w  #$8D40,2(a0)
-                move.l  #dword_2ACD0,$48(a0)
+                move.l  #Enemy_AnimatedProjectileSpriteFrames,$48(a0)
                 move.w  #1,$4C(a0)
                 moveq   #0,d0
                 move.w  (dword_FFFF08).w,d0

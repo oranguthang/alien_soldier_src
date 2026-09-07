@@ -60,12 +60,12 @@ loc_2A3C0:                                              ; CODE XREF: Projectile_
                                         ; Projectile_InitTypeA4+10   j
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.w   locret_2A3E4
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 move.w  (dword_FFFF08).w,d6
                 move.w  d6,d1
                 andi.w  #$300,d6
                 bne.s   loc_2A3E2
-                movea.l #dword_2ACA6,a1
+                movea.l #Weapon_ImpactSpriteFrames,a1
 loc_2A3E2:                                              ; CODE XREF: Projectile_InitTypeA4+3E   j
                 moveq   #0,d0
 locret_2A3E4:                                           ; CODE XREF: Projectile_InitTypeA4+2A   j
@@ -116,7 +116,7 @@ Projectile_SpawnFourDirectional:
 loc_2A45C:                                              ; CODE XREF: Projectile_SpawnFourDirectional+4A   j
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.w   locret_2A49C
-                movea.l #dword_2ABF0,a1                 ; make offsets?
+                movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 bsr.w   Sprite_InitWithDefaultState
                 move.w  $10(a3),$10(a0)
                 move.w  $14(a3),$14(a0)
@@ -164,7 +164,7 @@ Effect_SpawnParticleLoop:                               ; DATA XREF: ROM:off_5DC
 loc_2A506:                                              ; CODE XREF: Effect_SpawnParticleLoop+10   j
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.w   locret_2A554
-                movea.l #dword_2AC74,a1
+                movea.l #Effect_ParticleLoopSpriteFrames,a1
                 bsr.w   Projectile_FindFreeSlotComplex
                 move.b  (dword_FFFF08+1).w,d0
                 move.b  (dword_FFFF08+2).w,d1

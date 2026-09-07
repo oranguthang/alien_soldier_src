@@ -37,7 +37,7 @@ loc_38F10:                                              ; CODE XREF: Enemy_Homin
                 bne.s   loc_38F5E
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   loc_38F5E
-                movea.l #dword_2AD6C,a1
+                movea.l #Projectile_HomingAndRockSpriteFrames,a1
                 jsr     (Projectile_FindFreeSlotComplex).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -183,7 +183,7 @@ Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_Terobu
                 add.w   $14(a5),d2
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
-                movea.l #dword_2AD6C,a1
+                movea.l #Projectile_HomingAndRockSpriteFrames,a1
                 jsr     (Projectile_FindFreeSlotComplex).l
                 move.l  #$FFFFC000,$1C(a0)
 locret_390EE:                                           ; CODE XREF: Boss_TerobusterSpawnFallingRock+6   j
