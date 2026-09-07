@@ -560,7 +560,11 @@ else ifndef BP
 else
 	@echo "Tracing from breakpoint $(BP) for $(if $(FRAMES),$(FRAMES),20) frames..."
 	@if not exist logs mkdir logs
-	$(GENS_EXE) -rom $(ROM) -play $(MOVIE_FILE_$(MOVIE)) -turbo -nosound \
+	@if not exist build mkdir build
+	$(GENS_EXE) -rom $(ROM) -play $(MOVIE_FILE_$(MOVIE)) -turbo -frameskip 8 -nosound \
+		-screenshot-interval 2147483647 \
+		-screenshot-dir build \
+		$(if $(MAX_FRAMES_$(MOVIE)),-max-frames $(MAX_FRAMES_$(MOVIE)),) \
 		-trace-breakpoint $(BP) \
 		-trace-frames $(if $(FRAMES),$(FRAMES),20) \
 		-trace-log $(if $(LOG),$(LOG),logs/trace_$(BP).csv)

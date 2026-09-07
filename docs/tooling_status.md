@@ -13,3 +13,12 @@ They must not be used as evidence for preservation or semantic correctness.
 Read-only trace parsing and report generation do not mutate source and remain
 useful, but their output is evidence only when its ROM, movie, emulator commit,
 frame range, and interpretation are recorded.
+
+`make trace` passes an inert screenshot interval to the pinned emulator. This
+is required because that emulator currently evaluates its maximum-frame and
+movie-finished termination checks only while screenshot automation is enabled.
+The workaround produces no periodic captures, bounds the TAS trace at its
+pinned 90,000-frame limit, and lets the longplay/menu traces stop at movie end
+when a requested breakpoint is never reached. Rendering uses frameskip 8 to
+keep a negative breakpoint search practical; emulated frame numbers and CPU
+execution remain unchanged.
