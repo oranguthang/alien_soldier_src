@@ -10,7 +10,7 @@ Input_ReadPlayerInput_Return:                           ; CODE XREF: Input_ReadP
                 rts
 ; End of function Input_ReadPlayerInput
 ; Updates weapon switch timer and cooldown
-Player_UpdateWeaponSwitchTimer:                         ; CODE XREF: Player_Update:loc_15030   p  ; was: sub_16B24
+Player_UpdateWeaponSwitchTimer:                         ; CODE XREF: Player_Update:Player_Update_RunState   p  ; was: sub_16B24
                                         ; sub_19DAE:loc_19DC8   p
                 subq.w  #1,(word_FF826A).w
                 bmi.s   Player_UpdateWeaponSwitchTimer_CheckRestart
@@ -117,7 +117,7 @@ Player_UpdateInvulnerabilityTimer_Return:               ; CODE XREF: Player_Upda
 ; End of function Player_UpdateInvulnerabilityTimer
 ; Updates player horizontal facing bit from input
 Player_UpdateHorizontalFacing:                          ; CODE XREF: Player_HandleSpecialAttack+B0   p  ; was: sub_16C40
-                                        ; Player_CheckSpecialAttack+1E   p
+                                        ; Player_RenderSpecialMoveRecovery+1E   p
                 btst    #2,$69(a5)
                 beq.s   Player_UpdateHorizontalFacing_CheckRight
                 bclr    #3,$E(a5)

@@ -6,7 +6,7 @@ Physics_WallCheckWrapper:                               ; CODE XREF: Player_Hand
                 jmp     Physics_EntityWallCheck
 ; End of function Physics_WallCheckWrapper
 ; Runs the extended wall check unless terrain collisions are disabled
-Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Physics_BossCollisionCheck+8   p  ; was: sub_16CD8
+Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Player_AirborneDamageState+8   p  ; was: sub_16CD8
                                         ; sub_15B8C   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
@@ -14,14 +14,14 @@ Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Physics_Bos
 ; End of function Physics_ExtendedWallCheckWrapper
 ; Checks moving platforms, then probes the entity's lower terrain boundary
 Physics_LowerTerrainCheckWrapper:                       ; CODE XREF: Player_HandleJump+6   p  ; was: sub_16CE8
-                                        ; Physics_ApplyBossVelocity+6   p
+                                        ; Player_GroundedDamageState+6   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_CheckLowerTerrain
 ; End of function Physics_LowerTerrainCheckWrapper
 ; Checks moving platforms, then resolves lower terrain while descending
-Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Physics_BossCollisionCheck+14   p  ; was: sub_16CFE
+Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Player_AirborneDamageState+14   p  ; was: sub_16CFE
                                         ; Player_DashKickState+E   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
@@ -29,15 +29,15 @@ Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Physics_Bos
                 jmp     Physics_CheckLowerTerrainWhenDescending
 ; End of function Physics_DescendingTerrainCheckWrapper
 ; Checks moving platforms, then probes the entity's upper terrain boundary
-Physics_UpperTerrainCheckWrapper:                       ; CODE XREF: Player_HandleDashState+6   p  ; was: sub_16D14
-                                        ; Player_HandleAirDashState+6   p
+Physics_UpperTerrainCheckWrapper:                       ; CODE XREF: Player_CeilingIdleState+6   p  ; was: sub_16D14
+                                        ; Player_CeilingDamageState+6   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_CheckUpperTerrain
 ; End of function Physics_UpperTerrainCheckWrapper
 ; Checks moving platforms, then resolves upper terrain while rising
-Physics_RisingTerrainCheckWrapper:                      ; CODE XREF: Physics_BossCollisionCheck+28   p  ; was: sub_16D2A
+Physics_RisingTerrainCheckWrapper:                      ; CODE XREF: Player_AirborneDamageState+28   p  ; was: sub_16D2A
                                         ; Player_HandleFallingState+5A   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
@@ -154,7 +154,7 @@ Player_AutoFlipDirection_Return:                        ; CODE XREF: Player_Auto
 ; End of function Player_AutoFlipDirection
 ; Accelerates horizontal velocity toward the limit selected by facing
 Physics_AccelerateHorizontalByFacing:                   ; CODE XREF: Player_GroundedMovementState:loc_1570E   p  ; was: sub_16E34
-                                        ; sub_167EE:loc_16846   p
+                                        ; sub_167EE:Player_CeilingMovementState_Accelerate   p
                 btst    #3,$E(a5)
                 bne.s   Physics_AccelerateHorizontalByFacing_AcceleratePositive
                 move.l  $18(a5),d0
@@ -180,7 +180,7 @@ Physics_AccelerateHorizontalByFacing_Store:             ; CODE XREF: Physics_Acc
 ; End of function Physics_AccelerateHorizontalByFacing
 ; Accelerates horizontal velocity toward the negative limit
 Physics_AccelerateHorizontalNegative:                   ; CODE XREF: Player_AirAttackState+4A   j  ; was: sub_16E70
-                                        ; Player_AirControlState+56   j
+                                        ; Player_CeilingAirControlState+56   j
                 move.l  $18(a5),d0
                 bpl.s   Physics_AccelerateHorizontalNegative_SubtractStep
                 cmpi.l  #$FFFD6000,d0
@@ -193,7 +193,7 @@ Physics_AccelerateHorizontalNegative_Store:             ; CODE XREF: Physics_Acc
 ; End of function Physics_AccelerateHorizontalNegative
 ; Accelerates horizontal velocity toward the positive limit
 Physics_AccelerateHorizontalPositive:                   ; CODE XREF: Player_AirAttackState+62   j  ; was: sub_16E8A
-                                        ; Player_AirControlState+6E   j
+                                        ; Player_CeilingAirControlState+6E   j
                 move.l  $18(a5),d0
                 bmi.s   Physics_AccelerateHorizontalPositive_AddStep
                 cmpi.l  #$2A000,d0
@@ -210,8 +210,8 @@ Player_DecelerateHorizontalVelocityFast:                ; CODE XREF: Player_Hand
                 move.l  #$C000,d1
 ; End of function Player_DecelerateHorizontalVelocityFast
 ; Decelerates horizontal velocity towards zero
-Player_DecelerateHorizontalVelocity:                    ; CODE XREF: Physics_ApplyBossVelocity+2A   p  ; was: sub_16EAA
-                                        ; Player_DefeatGroundedState+22   p
+Player_DecelerateHorizontalVelocity:                    ; CODE XREF: Player_GroundedDamageState+2A   p  ; was: sub_16EAA
+                                        ; Player_DamageLandingRecoveryState+22   p
                 move.l  $18(a5),d0
                 bmi.s   Player_DecelerateHorizontalVelocity_IncreaseNegative
                 sub.l   d1,d0
@@ -230,47 +230,47 @@ Physics_StoreHorizontalVelocity:                        ; CODE XREF: Player_Dece
                 move.l  d0,$18(a5)
                 rts
 ; End of function Player_DecelerateHorizontalVelocity
-; Processes collision damage and knockback
-Player_ProcessCollisionDamage:                          ; CODE XREF: Player_HandleJump+60   j  ; was: sub_16EC8
+; Renders the player's unarmed idle frame with cycling offsets
+Player_RenderIdleFrame:                                 ; CODE XREF: Player_HandleJump+60   j  ; was: sub_16EC8
                                         ; Player_HandleGroundedState+1E   j
                 move.w  (word_FFA000).w,d0
                 asr.w   #2,d0
                 andi.w  #6,d0
-                move.b  Player_CollisionDirectionOffsetTable(pc,d0.w),d5
-                move.b  Player_CollisionDirectionOffsetTable+1(pc,d0.w),d6
+                move.b  Player_IdleFrameOffsets(pc,d0.w),d5
+                move.b  Player_IdleFrameOffsets+1(pc,d0.w),d6
                 movea.l #word_E8972,a1
                 movea.l #word_E8942,a2
                 bra.w   Player_BuildSpritePieces
-; End of function Player_ProcessCollisionDamage
+; End of function Player_RenderIdleFrame
 ; ---------------------------------------------------------------------------
-Player_CollisionDirectionOffsetTable:   dc.b    1, $FE, 0, $FF, 0, 0, 0, $FF  ; was: byte_16EEA
-                                        ; DATA XREF: Player_ProcessCollisionDamage+A   r
-                                        ; Player_ProcessCollisionDamage+E   r
+Player_IdleFrameOffsets:    dc.b    1, $FE, 0, $FF, 0, 0, 0, $FF  ; was: byte_16EEA
+                                        ; DATA XREF: Player_RenderIdleFrame+A   r
+                                        ; Player_RenderIdleFrame+E   r
 
-; Handles player defeat state with direction check
-Player_HandleDefeatByBoss:                              ; CODE XREF: Player_HandleAirState+5E   j  ; was: sub_16EF2
+; Renders an airborne frame using animated or fixed offsets
+Player_RenderAirborneFrame:                             ; CODE XREF: Player_HandleAirState+5E   j  ; was: sub_16EF2
                                         ; Player_HandleLandingState+76   j
                 tst.w   $48(a5)
-                bpl.s   Player_SetupDefeatSequence1
-Player_HandleDefeatByBoss_UseDirectionalOffsets:        ; CODE XREF: Player_JumpApexState+12   j  ; was: loc_16EF8
+                bpl.s   Player_RenderAirborneFrame_UseStaticOffsets
+Player_RenderAirborneFrame_UseAnimatedOffsets:          ; CODE XREF: Player_JumpApexState+12   j  ; was: loc_16EF8
                 move.w  (word_FFA000).w,d0
                 asr.w   #2,d0
                 andi.w  #6,d0
-                move.b  Player_DefeatDirectionOffsetTable(pc,d0.w),d5
-                move.b  Player_DefeatDirectionOffsetTable+1(pc,d0.w),d6
+                move.b  Player_AirborneFrameOffsets(pc,d0.w),d5
+                move.b  Player_AirborneFrameOffsets+1(pc,d0.w),d6
                 movea.l #word_E8972,a1
                 movea.l #word_E8F0A,a2
                 bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
-; Sets up player defeat sequence animation data and parameters (variant 1)
-Player_SetupDefeatSequence1:                            ; CODE XREF: Player_HandleDefeatByBoss+4   j  ; was: loc_16F1A
+; Uses fixed offsets for the nonnegative animation state
+Player_RenderAirborneFrame_UseStaticOffsets:            ; CODE XREF: Player_RenderAirborneFrame+4   j  ; was: loc_16F1A
                 moveq   #0,d5
                 moveq   #8,d6
                 movea.l #word_E8972,a1
                 movea.l #word_E89C2,a2
                 bra.w   Player_BuildSpritePieces
-; End of function Player_HandleDefeatByBoss
+; End of function Player_RenderAirborneFrame
 ; ---------------------------------------------------------------------------
-Player_DefeatDirectionOffsetTable:  dc.b    1, $F, 0, $10, 0, $11, 0, $10  ; was: byte_16F2E
-                                        ; DATA XREF: Player_HandleDefeatByBoss+10   r
-                                        ; Player_HandleDefeatByBoss+14   r
+Player_AirborneFrameOffsets:    dc.b    1, $F, 0, $10, 0, $11, 0, $10  ; was: byte_16F2E
+                                        ; DATA XREF: Player_RenderAirborneFrame+10   r
+                                        ; Player_RenderAirborneFrame+14   r

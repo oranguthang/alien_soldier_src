@@ -1022,6 +1022,325 @@
         "The routine converts a stored value into a sign glyph and three digit glyphs, then writes four sprite entries to the OAM staging buffer.",
         "It accesses neither scroll coordinates nor VDP registers, so the previous screen pulse or shake claim was false."
       ]
+    },
+    {
+      "address": "0x014F82",
+      "previous_name": "Player_ClearState",
+      "current_name": "Player_ClearObjectHeader",
+      "legacy_name": "sub_14F82",
+      "evidence": "static",
+      "basis": [
+        "The routine clears only the first two words of the player object: its identifier and display-attribute word.",
+        "No state-machine field or broader player state block is cleared."
+      ]
+    },
+    {
+      "address": "0x014F8A",
+      "previous_name": "Player_SetInvincibilityFlag",
+      "current_name": "Player_SetDisplayFlag",
+      "legacy_name": "sub_14F8A",
+      "evidence": "static",
+      "basis": [
+        "The only object mutation is setting bit 7 of display word 2, the same bit cleared by the invulnerability blink renderer.",
+        "The routine does not update the invulnerability timer or collision flags."
+      ]
+    },
+    {
+      "address": "0x0152CA",
+      "previous_name": "Physics_ApplyBossVelocity",
+      "current_name": "Player_GroundedDamageState",
+      "legacy_name": "sub_152CA",
+      "evidence": "static",
+      "basis": [
+        "The player state table selects this routine immediately after Player_HandleDamageKnockback assigns state 0x3A.",
+        "It checks lower terrain, a recovery input chord, a damage timer, and the player's horizontal deceleration; no boss object is accessed."
+      ]
+    },
+    {
+      "address": "0x015342",
+      "previous_name": "Physics_BossCollisionCheck",
+      "current_name": "Player_AirborneDamageState",
+      "legacy_name": "sub_15342",
+      "evidence": "static",
+      "basis": [
+        "This player state applies gravity, performs rising or descending terrain probes, and transitions to landing when lower terrain is reached.",
+        "It neither tests projectiles nor references a boss object."
+      ]
+    },
+    {
+      "address": "0x01539C",
+      "previous_name": "Boss_TakeDamage",
+      "current_name": "Player_CheckDamageRecoveryInput",
+      "legacy_name": "sub_1539C",
+      "evidence": "static",
+      "basis": [
+        "The routine tests two player input bits and returns true only for their chord while the player is in grounded damage state.",
+        "It performs no health subtraction and writes no boss field."
+      ]
+    },
+    {
+      "address": "0x0154E2",
+      "previous_name": "Player_SelectDeathAnimation",
+      "current_name": "Player_RenderAirMovementFrame",
+      "legacy_name": "loc_154E2",
+      "evidence": "static",
+      "basis": [
+        "The ordinary air-movement state reaches the branch whenever horizontal velocity is nonzero.",
+        "It chooses between two normal player sprite-building paths based on input and does not inspect a death state."
+      ]
+    },
+    {
+      "address": "0x01560C",
+      "previous_name": "Player_SetSpecialMoveDuration",
+      "current_name": "Player_HandleSpecialMove_ReturnActivated",
+      "legacy_name": "loc_1560C",
+      "evidence": "static",
+      "basis": [
+        "The label contains only moveq #1,d0 followed by rts.",
+        "It writes no timer or duration field and solely reports successful activation to the caller."
+      ]
+    },
+    {
+      "address": "0x016EC8",
+      "previous_name": "Player_ProcessCollisionDamage",
+      "current_name": "Player_RenderIdleFrame",
+      "legacy_name": "sub_16EC8",
+      "evidence": "static",
+      "basis": [
+        "The routine selects cyclic coordinate offsets and fixed player frame streams before tail-calling Player_BuildSpritePieces.",
+        "It performs no collision query, health update, or knockback mutation."
+      ]
+    },
+    {
+      "address": "0x016EF2",
+      "previous_name": "Player_HandleDefeatByBoss",
+      "current_name": "Player_RenderAirborneFrame",
+      "legacy_name": "sub_16EF2",
+      "evidence": "static",
+      "basis": [
+        "Multiple ordinary air, landing, jump-apex, and slide states use the routine to choose animated or fixed sprite offsets.",
+        "It only prepares player frame streams for Player_BuildSpritePieces and contains no boss or defeat test."
+      ]
+    },
+    {
+      "address": "0x01609A",
+      "previous_name": "Effect_UpdateParticles",
+      "current_name": "Player_SpecialMoveRecoveryState",
+      "legacy_name": "sub_1609A",
+      "evidence": "static",
+      "basis": [
+        "The player state table selects this routine for state 0x46 after Player_HandleSpecialAttack transfers into it.",
+        "It performs player terrain, input, damage, velocity, and rendering decisions and never iterates or updates particle objects."
+      ]
+    },
+    {
+      "address": "0x016116",
+      "previous_name": "Player_CheckSpecialAttack",
+      "current_name": "Player_RenderSpecialMoveRecovery",
+      "legacy_name": "sub_16116",
+      "evidence": "static",
+      "basis": [
+        "The routine selects player frame streams and either builds the composite sprite or prepares the weapon overlay.",
+        "No availability, resource, or attack-state condition is checked."
+      ]
+    },
+    {
+      "address": "0x01615C",
+      "previous_name": "Effect_SpawnDebris",
+      "current_name": "Player_CheckAlternateSpecialActivation",
+      "legacy_name": "sub_1615C",
+      "evidence": "static",
+      "basis": [
+        "The routine tests player input and an availability timer, then either toggles a mode flag or initializes state 0x54.",
+        "It allocates no object, initializes no sprite, and writes no particle velocity."
+      ]
+    },
+    {
+      "address": "0x0161A6",
+      "previous_name": "Player_HandleBossVictory",
+      "current_name": "Player_AlternateSpecialState",
+      "legacy_name": "sub_161A6",
+      "evidence": "static",
+      "basis": [
+        "Player_CheckAlternateSpecialActivation explicitly initializes state 0x54, whose state-table entry is this routine.",
+        "The routine performs normal terrain handling and player rendering and does not inspect boss status or stage completion."
+      ]
+    },
+    {
+      "address": "0x01635A",
+      "previous_name": "Player_DefeatState",
+      "current_name": "Player_KnockbackState",
+      "legacy_name": "sub_1635A",
+      "evidence": "static",
+      "basis": [
+        "Player_InitKnockbackState assigns state 0x2A, whose state-table entry is this routine.",
+        "It applies knockback gravity and terrain collision before restoring normal player state; no death transition is performed."
+      ]
+    },
+    {
+      "address": "0x0163D2",
+      "previous_name": "Player_InitGroundedState",
+      "current_name": "Player_InitCeilingIdleState",
+      "legacy_name": "sub_163D2",
+      "evidence": "static",
+      "basis": [
+        "The initializer assigns state 0x18, whose handler probes upper terrain and exits when upper contact is lost.",
+        "The state is therefore the upper-terrain idle path, not a lower-terrain grounded state."
+      ]
+    },
+    {
+      "address": "0x016402",
+      "previous_name": "Player_HandleDashState",
+      "current_name": "Player_CeilingIdleState",
+      "legacy_name": "sub_16402",
+      "evidence": "static",
+      "basis": [
+        "The routine is state 0x18 and begins by checking upper terrain contact before processing ordinary counter, dash, and movement input.",
+        "It is entered by Player_InitCeilingIdleState and is not itself the dash-state initializer."
+      ]
+    },
+    {
+      "address": "0x0164B0",
+      "previous_name": "Player_HandleAirDashState",
+      "current_name": "Player_CeilingDamageState",
+      "legacy_name": "sub_164B0",
+      "evidence": "static",
+      "basis": [
+        "Player_InitCeilingDamageKnockback assigns state 0x3E, whose state-table entry is this routine.",
+        "It checks upper terrain, advances the damage timer and decelerates knockback velocity; it contains no dash input or dash setup."
+      ]
+    },
+    {
+      "address": "0x01652C",
+      "previous_name": "Player_ProcessAirState",
+      "current_name": "Player_CeilingDashState",
+      "legacy_name": "sub_1652C",
+      "evidence": "static",
+      "basis": [
+        "Player_InitDashState assigns state 0x22, whose state-table entry is this routine.",
+        "The routine requires upper-terrain contact, processes dash input and decelerates horizontal velocity before rendering."
+      ]
+    },
+    {
+      "address": "0x01663A",
+      "previous_name": "Player_InitiateLanding",
+      "current_name": "Player_InitCeilingLandingState",
+      "legacy_name": "sub_1663A",
+      "evidence": "static",
+      "basis": [
+        "Upper-terrain collision branches from falling and bounce states enter this initializer, which sets orientation bit 4 and state 0x26.",
+        "The corresponding handler begins with an upper-terrain probe."
+      ]
+    },
+    {
+      "address": "0x016670",
+      "previous_name": "Player_ProcessJumpState",
+      "current_name": "Player_CeilingLandingState",
+      "legacy_name": "sub_16670",
+      "evidence": "static",
+      "basis": [
+        "The player state table maps state 0x26, assigned by Player_InitCeilingLandingState, to this routine.",
+        "It validates upper-terrain contact and runs a landing timer; it is not the general jump handler."
+      ]
+    },
+    {
+      "address": "0x01674A",
+      "previous_name": "Player_CheckDashCounter",
+      "current_name": "Player_CounterState",
+      "legacy_name": "sub_1674A",
+      "evidence": "static",
+      "basis": [
+        "Player_CheckCounterInput assigns state 0x20, whose state-table entry is this routine.",
+        "The handler checks the selected special state and upper-terrain contact, then renders an idle frame; it does not detect a counter event."
+      ]
+    },
+    {
+      "address": "0x01676E",
+      "previous_name": "Player_ToggleScreenSide",
+      "current_name": "Player_ToggleAlternateMode",
+      "legacy_name": "sub_1676E",
+      "evidence": "static",
+      "basis": [
+        "The routine only toggles bit 1 of word 0xFFFFA22A, plays sound 0xA3, and returns false.",
+        "It writes no screen coordinate, scroll register, or camera state, so screen-side ownership is not established."
+      ]
+    },
+    {
+      "address": "0x016928",
+      "previous_name": "Player_UpdateForceWeapon",
+      "current_name": "Player_ReturnToCeilingIdleState",
+      "legacy_name": "sub_16928",
+      "evidence": "static",
+      "basis": [
+        "The routine is a one-instruction state-table thunk to Player_InitCeilingIdleState.",
+        "It does not inspect, update, or render weapon data."
+      ]
+    },
+    {
+      "address": "0x016A3E",
+      "previous_name": "Boss_ArtemisSpawnProjectile2",
+      "current_name": "Player_UpdateAnimStatePlus4",
+      "legacy_name": "sub_16A3E",
+      "evidence": "static",
+      "basis": [
+        "This player state-table handler loads d1 with 4 and tail-calls Player_UpdateAnimationState.",
+        "It allocates no projectile and contains no Artemis-specific access."
+      ]
+    },
+    {
+      "address": "0x016A4A",
+      "previous_name": "Credits_VBlankHandler",
+      "current_name": "Player_InitTeleportDashReturnState",
+      "legacy_name": "sub_16A4A",
+      "evidence": "static",
+      "basis": [
+        "The routine is a player state-table entry that advances the player state, resets object blocks, and installs teleport-dash coordinates and frames.",
+        "It neither waits for VBlank nor references credits data."
+      ]
+    },
+    {
+      "address": "0x015C66",
+      "previous_name": "Sprite_PositionBossParts",
+      "current_name": "Player_EndDashWithVerticalVelocity",
+      "legacy_name": "sub_15C66",
+      "evidence": "static",
+      "basis": [
+        "Player_CheckDashInput tail-calls the routine when its dash input chord is incomplete.",
+        "The routine calls Player_EndDashState and writes only the player's vertical velocity; it does not address sprite parts or boss data."
+      ]
+    },
+    {
+      "address": "0x015CAC",
+      "previous_name": "Player_GustheadBossIntro",
+      "current_name": "Player_InitFallingTransition",
+      "legacy_name": "sub_15CAC",
+      "evidence": "static",
+      "basis": [
+        "The routine initializes player state 0x14, which maps to the common Player_HandleFallingState handler, with a timer and vertical velocity.",
+        "It references no stage identifier, Gusthead object, or intro state."
+      ]
+    },
+    {
+      "address": "0x015E40",
+      "previous_name": "Gfx_DrawBossHealthUI",
+      "current_name": "Player_SelectFallPrimaryFrame",
+      "legacy_name": "sub_15E40",
+      "evidence": "static",
+      "basis": [
+        "The routine compares the player's vertical velocity and returns one of two player frame pointers in a1.",
+        "It writes no sprite or UI buffer and reads no boss health value."
+      ]
+    },
+    {
+      "address": "0x016086",
+      "previous_name": "Player_RenderDeathEffect",
+      "current_name": "Player_RenderSpecialAttackWithWeapon",
+      "legacy_name": "loc_16086",
+      "evidence": "static",
+      "basis": [
+        "The active special-attack state branches here when the weapon input bit is set.",
+        "The block selects the alternate player animation layout and weapon positioning table before Player_PrepareSpriteRendering_WithTables; no death or particle state is involved."
+      ]
     }
   ]
 }

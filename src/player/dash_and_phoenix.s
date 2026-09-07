@@ -6,9 +6,9 @@ Player_GroundedMovementState:                           ; DATA XREF: ROM:0001506
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_HandleSpecialMove
-                bne.s   nullsub_38
+                bne.s   Player_GroundedMovementState_Return
                 bsr.w   Player_CheckSpecialMoveActivation
-                bne.s   nullsub_38
+                bne.s   Player_GroundedMovementState_Return
                 btst    #0,(byte_FF826C).w
                 bne.w   Player_HandleDamageKnockback
                 btst    #1,$69(a5)
@@ -189,11 +189,11 @@ word_15926:     dc.w    $20, $FFE0, $FFF8, 8
 
 ; Initializes player dash attack with direction and projectile
 Player_InitiateDashAttack:                              ; CODE XREF: Player_CheckDashInput+E   j  ; was: sub_1592E
-                                        ; Player_ProcessAirState+34   j
+                                        ; Player_CeilingDashState+34   j
                 move.w  #$24,4(a5)                      ; '$'
                 bra.s   loc_1593C
 ; ---------------------------------------------------------------------------
-loc_15936:                                              ; CODE XREF: Physics_ApplyBossVelocity+20   j
+loc_15936:                                              ; CODE XREF: Player_GroundedDamageState+20   j
                                         ; Player_CheckSpecialMoveActivation+1A   j
                 move.w  #$10,4(a5)
 loc_1593C:                                              ; CODE XREF: Player_InitiateDashAttack+6   j
@@ -381,7 +381,7 @@ loc_15B36:                                              ; CODE XREF: Player_Hand
 ; ---------------------------------------------------------------------------
 loc_15B5C:                                              ; CODE XREF: Player_HandleSlideState+2C   j
                 subq.w  #1,$48(a5)
-                bra.w   Player_HandleDefeatByBoss
+                bra.w   Player_RenderAirborneFrame
 ; End of function Player_HandleSlideState
 nullsub_39:
                 rts
@@ -430,7 +430,7 @@ Player_CheckSpecialMoveActivation:                      ; CODE XREF: Player_Hand
                 bne.w   loc_15936
                 btst    #2,6(a5)
                 beq.w   loc_15936
-                bsr.w   Player_GustheadBossIntro
+                bsr.w   Player_InitFallingTransition
                 moveq   #1,d0
                 rts
 ; ---------------------------------------------------------------------------
@@ -448,20 +448,20 @@ locret_15C1E:                                           ; CODE XREF: Player_Chec
                 rts
 ; End of function Player_CheckSpecialMoveActivation
 ; Checks controller input for dash attack activation
-Player_CheckDashInput:                                  ; CODE XREF: Player_HandleDashState+20   p  ; was: sub_15C20
+Player_CheckDashInput:                                  ; CODE XREF: Player_CeilingIdleState+20   p  ; was: sub_15C20
                                         ; Player_HandleCrouchState+1C   p
                 btst    #5,$6A(a5)
                 beq.s   locret_15C1E
                 btst    #0,$69(a5)
                 bne.w   Player_InitiateDashAttack
-                bra.s   Sprite_PositionBossParts
+                bra.s   Player_EndDashWithVerticalVelocity
 ; End of function Player_CheckDashInput
 ; Initializes player falling state with parameters
 Player_InitFallState:                                   ; CODE XREF: Player_HandleJump+10   j  ; was: sub_15C34
                                         ; Player_HandleAirState+16   j
                 clr.w   (word_FF8224).w
                 clr.w   $52(a5)
-loc_15C3C:                                              ; CODE XREF: Player_DefeatGroundedState+18   j
+loc_15C3C:                                              ; CODE XREF: Player_DamageLandingRecoveryState+18   j
                                         ; Player_HandleDashCancel+5E   j
                 bclr    #0,(byte_FF826C).w
                 move.w  #6,4(a5)

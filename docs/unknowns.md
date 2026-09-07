@@ -133,6 +133,36 @@ dash-trail state directly. Static inspection also proved that the generated
 screen-pulse label was false: the routine builds four OAM entries for a
 transient signed three-digit value and never accesses scroll or VDP state.
 
+The player core-state pass reduced the count to 10,251 by replacing all 28
+address-derived definitions in `core_states.s`. The state table and its branch
+targets now expose the death, jump, landing, special-move, and damage phases.
+Static audit removed generated boss physics/health claims from player damage
+states, an invincibility claim from a display-bit setter, and death/collision
+claims from ordinary player rendering helpers. These corrections are recorded
+in the name audit.
+
+The player cutscene/damage pass reduced the count to 10,222 by replacing all
+29 address-derived definitions in `cutscene_and_damage_states.s`. Upper-terrain
+idle and damage states, knockback physics, cutscene control, and the recovery
+after a special move now have explicit branches. Object-free routines formerly
+described as particle/debris spawners and a boss-victory path are now recorded
+as the input-driven alternate-special state they actually implement.
+
+The player air/ground pass reduced the count to 10,196 by replacing all 26
+address-derived definitions in `air_and_ground_states.s`. Cross-checking each
+handler against the player state table distinguished upper-terrain dash,
+landing, counter, and armed-control states. It also removed generated Artemis,
+credits, projectile, screen-side, and force-weapon claims from small player
+animation, teleport, state-thunk, and mode-toggle routines.
+
+The player falling/special pass reduced the count to 10,160 by replacing all
+36 address-derived definitions in `fall_and_special_attack.s`. The long falling
+handler now exposes its gravity, terrain, input, velocity-clamp, and rendering
+phases without being split into artificial files. Static inspection removed
+generated boss-part, Gusthead-intro, boss-health UI, and death-effect claims
+from ordinary dash-exit, falling-transition, frame-selection, and armed-render
+helpers.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

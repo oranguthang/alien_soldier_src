@@ -100,7 +100,7 @@ Player_BuildSpritePieces_CopySecondaryStream:           ; CODE XREF: Player_Buil
 ; End of function Player_BuildSpritePieces
 ; Spawns particle effect with random velocity
 Effect_SpawnParticle:                                   ; CODE XREF: Player_HandleJump+14   p  ; was: sub_17514
-                                        ; Player_HandleDashState+16   p
+                                        ; Player_CeilingIdleState+16   p
                 btst    #4,$69(a5)
                 bne.w   Effect_SpawnParticle_Return
                 move.w  (dword_FFFF08+2).w,d0

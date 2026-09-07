@@ -178,7 +178,7 @@ dword_19812:    dc.l    0, $28930, $4F964, $738D8, $93134
                 dc.l    $738D8, $93134, $ACEF8, $C0280, $CC004
 word_198B2:     dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $ECFC, $1FC, $ECDA, $D2DA
                                         ; DATA XREF: Player_HandleSpecialAttack:loc_16086   o
-                                        ; sub_16116:loc_16146   o
+                                        ; sub_16116:Player_RenderSpecialMoveRecovery_WithWeapon   o
 word_198C2:     dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $FD0D, $120D, $FDEB, $E3EB
                                         ; DATA XREF: Player_RenderWithWeapon+4A   o
 word_198D2:     dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $ECFC, $1FC, $ECDA, $D2DA

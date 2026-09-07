@@ -256,7 +256,7 @@ word_E891A:     dc.w    $800                            ; DATA XREF: ROM:00016FC
                 dc.w    $8811
                 dc.l    sprite_F5A82+$9000000
                 dc.w    $F1F7
-word_E8942:     dc.w    $800                            ; DATA XREF: Player_ProcessCollisionDamage+18   o
+word_E8942:     dc.w    $800                            ; DATA XREF: Player_RenderIdleFrame+18   o
                                         ; Player_UpdateDashSprite+16   o
                 dc.l    sprite_F6036+$4000000
                 dc.w    $F0F8
@@ -308,7 +308,7 @@ word_E8992:     dc.w    $800                            ; DATA XREF: ROM:0001704
                 dc.l    sprite_F62DE+$E000000
                 dc.w    $F8EF
 word_E89C2:     dc.w    $800                            ; DATA XREF: Player_HandleAirMovement+66   o
-                                        ; Player_DefeatState+6   o
+                                        ; Player_KnockbackState+6   o
                 dc.l    sprite_F6914
                 dc.w    $18DF
                 dc.w    $801
@@ -492,7 +492,7 @@ word_E8B82:     dc.w    $1000                           ; DATA XREF: ROM:0001720
                 dc.w    $9015
                 dc.l    sprite_F76C8+$9000000
                 dc.w    $E8F8
-word_E8BAA:     dc.w    $800                            ; DATA XREF: Player_DefeatState   o
+word_E8BAA:     dc.w    $800                            ; DATA XREF: Player_KnockbackState   o
                                         ; sub_1A122   o
                 dc.l    sprite_F7B76+$D000000
                 dc.w    $F3EE
@@ -541,7 +541,7 @@ word_E8C0A:     dc.w    $800                            ; DATA XREF: ROM:0001736
                 dc.w    $8806
                 dc.l    sprite_F83AA+$F000000
                 dc.w    $DAEF
-word_E8C2A:     dc.w    $800                            ; DATA XREF: Player_SelectFallAnimation:loc_15E80   o
+word_E8C2A:     dc.w    $800                            ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseFastFrame   o
                 dc.l    sprite_F891A
                 dc.w    $20F6
                 dc.w    $801
@@ -556,7 +556,7 @@ word_E8C2A:     dc.w    $800                            ; DATA XREF: Player_Sele
                 dc.w    $8812
                 dc.l    sprite_F8672+$C000000
                 dc.w    $F8EE
-word_E8C52:     dc.w    $800                            ; DATA XREF: Player_SelectFallAnimation:loc_15E88   o
+word_E8C52:     dc.w    $800                            ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseRisingFrame   o
                 dc.l    sprite_F8ABE+$4000000
                 dc.w    $EFF6
                 dc.w    $802
@@ -574,7 +574,7 @@ word_E8C6A:     dc.w    $800                            ; DATA XREF: Player_Sele
                 dc.w    $880E
                 dc.l    sprite_F8C02+$9000000
                 dc.w    $F0F6
-word_E8C82:     dc.w    $800                            ; DATA XREF: Gfx_DrawBossHealthUI:loc_15E56   o
+word_E8C82:     dc.w    $800                            ; DATA XREF: Player_SelectFallPrimaryFrame:Player_SelectFallPrimaryFrame_UseDefault   o
                 dc.l    sprite_F906E+$2000000
                 dc.w    $D70E
                 dc.w    $803
@@ -583,7 +583,7 @@ word_E8C82:     dc.w    $800                            ; DATA XREF: Gfx_DrawBos
                 dc.w    $8805
                 dc.l    sprite_F8EAA+$B000000
                 dc.w    $D7F6
-word_E8C9A:     dc.w    $800                            ; DATA XREF: Gfx_DrawBossHealthUI+E   o
+word_E8C9A:     dc.w    $800                            ; DATA XREF: Player_SelectFallPrimaryFrame+E   o
                 dc.l    sprite_F92D8+$8000000
                 dc.w    $CFF6
                 dc.w    $803
@@ -788,7 +788,7 @@ word_E8E6A:     dc.w    0                               ; DATA XREF: Player_Phoe
                 dc.w    $802C
                 dc.l    sprite_FB966+$B000000
                 dc.w    $E3F1
-word_E8EBA:     dc.w    0                               ; DATA XREF: Credits_VBlankHandler+42   o
+word_E8EBA:     dc.w    0                               ; DATA XREF: Player_InitTeleportDashReturnState+42   o
                                         ; Effect_CreateDashTrail+6   o
                 dc.l    sprite_FC728+$5000000
                 dc.w    $F430
@@ -819,7 +819,7 @@ word_E8EBA:     dc.w    0                               ; DATA XREF: Credits_VBl
                 dc.w    $803A
                 dc.l    sprite_FBFF8+$6000000
                 dc.w    $F4D0
-word_E8F0A:     dc.w    $800                            ; DATA XREF: Player_HandleDefeatByBoss+1E   o
+word_E8F0A:     dc.w    $800                            ; DATA XREF: Player_RenderAirborneFrame+1E   o
                                         ; Player_RenderWithWeapon+1E   o
                 dc.l    sprite_FC8F0
                 dc.w    3
@@ -834,7 +834,7 @@ word_E8F22:     dc.w    4, 0, $ECD8                     ; DATA XREF: Player_Tele
                 dc.w    5, $D00, $E4E0
                 dc.w    $D, $D00, $E400
                 dc.w    $8015, $500, $E420
-word_E8F3A:     dc.w    $800                            ; DATA XREF: Player_HandleSpecialAttack:loc_16056   o
+word_E8F3A:     dc.w    $800                            ; DATA XREF: Player_HandleSpecialAttack:Player_HandleSpecialAttack_SelectFrame   o
                                         ; sub_16116   o
                 dc.l    sprite_FCF40+$5000000
                 dc.w    $17F9
@@ -854,7 +854,7 @@ word_E8F3A:     dc.w    $800                            ; DATA XREF: Player_Hand
                 dc.l    sprite_FCA94+$A000000
                 dc.w    $EFF9
 word_E8F6A:     dc.w    $800                            ; DATA XREF: Player_HandleSpecialAttack+A0   o
-                                        ; Player_CheckSpecialAttack+E   o
+                                        ; Player_RenderSpecialMoveRecovery+E   o
                 dc.l    sprite_FCBB6+$E000000
                 dc.w    $EFF9
                 dc.w    $80C

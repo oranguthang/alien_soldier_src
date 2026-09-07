@@ -1,4 +1,5 @@
-Effect_UpdateParticles:                                 ; CODE XREF: Player_HandleSpecialAttack+18   j  ; was: sub_1609A
+; Handles the airborne recovery phase after the special attack
+Player_SpecialMoveRecoveryState:                        ; CODE XREF: Player_HandleSpecialAttack+18   j  ; was: sub_1609A
                                         ; DATA XREF: ROM:000150A8   o
                 bset    #0,(byte_FF8244).w
                 bset    #6,(byte_FF8244).w
@@ -11,74 +12,75 @@ Effect_UpdateParticles:                                 ; CODE XREF: Player_Hand
                 clr.b   6(a5)
                 bsr.w   Physics_RisingTerrainCheckWrapper
                 btst    #1,6(a5)
-                bne.w   Player_InitiateLanding
-                bsr.w   Effect_SpawnDebris
-                bne.w   nullsub_40
+                bne.w   Player_InitCeilingLandingState
+                bsr.w   Player_CheckAlternateSpecialActivation
+                bne.w   Player_SpecialMoveRecoveryState_Return
                 btst    #0,(byte_FF826C).w
-                bne.w   Player_InitDeathKnockback
+                bne.w   Player_InitAirborneDamageKnockback
                 btst    #5,$6A(a5)
-                beq.s   Player_CheckSpecialAttack
+                beq.s   Player_RenderSpecialMoveRecovery
                 tst.b   (word_FF8224).w
-                bne.s   loc_160FA
+                bne.s   Player_SpecialMoveRecoveryState_SetFastVerticalVelocity
                 btst    #1,$69(a5)
                 bne.w   loc_15936
-loc_160FA:                                              ; CODE XREF: Effect_UpdateParticles+54   j
+Player_SpecialMoveRecoveryState_SetFastVerticalVelocity:  ; CODE XREF: Player_SpecialMoveRecoveryState+54   j  ; was: loc_160FA
                 move.l  #$FFF80000,$1C(a5)
-                bra.s   loc_1610C
-; End of function Effect_UpdateParticles
+                bra.s   Player_InitAirRecovery_Finish
+; End of function Player_SpecialMoveRecoveryState
 ; Sets upward velocity for air recovery
 Player_InitAirRecovery:
                 move.l  #$FFFD8000,$1C(a5)              ; was: sub_16104
-loc_1610C:                                              ; CODE XREF: Effect_UpdateParticles+68   j
+Player_InitAirRecovery_Finish:                          ; CODE XREF: Player_SpecialMoveRecoveryState+68   j  ; was: loc_1610C
                 move.w  #$FFE0,$52(a5)
                 bra.w   loc_15C3C
 ; End of function Player_InitAirRecovery
-; Checks if player can use special attack
-Player_CheckSpecialAttack:                              ; CODE XREF: Effect_UpdateParticles+4E   j  ; was: sub_16116
+; Renders the recovery pose with or without the weapon overlay
+Player_RenderSpecialMoveRecovery:                       ; CODE XREF: Player_SpecialMoveRecoveryState+4E   j  ; was: sub_16116
                 movea.l #word_E8F3A,a2
                 btst    #0,(word_FFA000+1).w
-                bne.s   loc_1612A
+                bne.s   Player_RenderSpecialMoveRecovery_SelectVariant
                 movea.l #word_E8F6A,a2
-loc_1612A:                                              ; CODE XREF: Player_CheckSpecialAttack+C   j
+Player_RenderSpecialMoveRecovery_SelectVariant:         ; CODE XREF: Player_RenderSpecialMoveRecovery+C   j  ; was: loc_1612A
                 btst    #4,$69(a5)
-                bne.w   loc_16146
+                bne.w   Player_RenderSpecialMoveRecovery_WithWeapon
                 bsr.w   Player_UpdateHorizontalFacing
                 movea.l #word_E8972,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
-loc_16146:                                              ; CODE XREF: Player_CheckSpecialAttack+1A   j
+Player_RenderSpecialMoveRecovery_WithWeapon:            ; CODE XREF: Player_RenderSpecialMoveRecovery+1A   j  ; was: loc_16146
                 lea     (word_198B2).l,a4
                 moveq   #0,d5
                 moveq   #$FFFFFFFF,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
                 bra.w   Player_PrepareSpriteRendering_WithTables
-; End of function Player_CheckSpecialAttack
-nullsub_40:                                             ; CODE XREF: Effect_UpdateParticles+3A   j
+; End of function Player_RenderSpecialMoveRecovery
+Player_SpecialMoveRecoveryState_Return:                 ; CODE XREF: Player_SpecialMoveRecoveryState+3A   j  ; was: nullsub_40
                 rts
-; End of function nullsub_40
+; End of function Player_SpecialMoveRecoveryState_Return
 
-; Spawns debris particles from boss damage
-Effect_SpawnDebris:                                     ; CODE XREF: Effect_UpdateParticles+36   p  ; was: sub_1615C
+; Checks the input and availability conditions for the alternate special state
+Player_CheckAlternateSpecialActivation:                 ; CODE XREF: Player_SpecialMoveRecoveryState+36   p  ; was: sub_1615C
                 btst    #6,$6A(a5)
-                beq.s   loc_1617A
+                beq.s   Player_CheckAlternateSpecialActivation_NotActivated
                 btst    #1,$69(a5)
-                beq.s   loc_16174
-                bsr.w   Player_ToggleDirectionFlag
+                beq.s   Player_CheckAlternateSpecialActivation_CheckAvailability
+                bsr.w   Player_ToggleAlternateModeWithInputMask
                 moveq   #0,d0
                 rts
 ; ---------------------------------------------------------------------------
-loc_16174:                                              ; CODE XREF: Effect_SpawnDebris+E   j
+Player_CheckAlternateSpecialActivation_CheckAvailability:  ; CODE XREF: Player_CheckAlternateSpecialActivation+E   j  ; was: loc_16174
                 tst.w   (word_FF8038).w
-                bmi.s   Player_InitVictoryState
-loc_1617A:                                              ; CODE XREF: Effect_SpawnDebris+6   j
+                bmi.s   Player_InitAlternateSpecialState
+Player_CheckAlternateSpecialActivation_NotActivated:    ; CODE XREF: Player_CheckAlternateSpecialActivation+6   j  ; was: loc_1617A
                 moveq   #0,d0
                 rts
+; End of function Player_CheckAlternateSpecialActivation
 ; ---------------------------------------------------------------------------
-; Initializes victory state with palette change and position setup
-Player_InitVictoryState:                                ; CODE XREF: Effect_SpawnDebris+1C   j  ; was: loc_1617E
+; Initializes state 0x54 after alternate-special activation
+Player_InitAlternateSpecialState:                       ; CODE XREF: Player_CheckAlternateSpecialActivation+1C   j  ; was: loc_1617E
                 move.w  (word_FFA24E).w,(word_FFA220).w
                 move.w  #$12,(word_FFA21C).w
                 move.b  #$7F,(byte_FF830F).w
@@ -87,9 +89,9 @@ Player_InitVictoryState:                                ; CODE XREF: Effect_Spaw
                 move.w  #$54,4(a5)                      ; 'T'
                 moveq   #1,d0
                 rts
-; End of function Effect_SpawnDebris
-; Handles player state during boss defeat sequence
-Player_HandleBossVictory:                               ; DATA XREF: ROM:000150B6   o  ; was: sub_161A6
+; End of function Player_InitAlternateSpecialState
+; Handles state 0x54 with terrain checks and an unarmed animation
+Player_AlternateSpecialState:                           ; DATA XREF: ROM:000150B6   o  ; was: sub_161A6
                 bset    #0,(byte_FF8244).w
                 bset    #6,(byte_FF8244).w
                 jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
@@ -101,22 +103,22 @@ Player_HandleBossVictory:                               ; DATA XREF: ROM:000150B
                 clr.b   6(a5)
                 bsr.w   Physics_RisingTerrainCheckWrapper
                 btst    #1,6(a5)
-                bne.w   Player_InitiateLanding
+                bne.w   Player_InitCeilingLandingState
                 cmpi.w  #$12,(word_FFA21C).w
-                bpl.s   loc_161EE
+                bpl.s   Player_AlternateSpecialState_Render
                 move.w  #$46,4(a5)                      ; 'F'
                 bsr.w   Player_AutoFlipDirection
-loc_161EE:                                              ; CODE XREF: Player_HandleBossVictory+3C   j
+Player_AlternateSpecialState_Render:                    ; CODE XREF: Player_AlternateSpecialState+3C   j  ; was: loc_161EE
                 movea.l #word_E8F3A,a2
                 btst    #0,(word_FFA000+1).w
-                bne.s   loc_16202
+                bne.s   Player_AlternateSpecialState_SelectFrame
                 movea.l #word_E8F6A,a2
-loc_16202:                                              ; CODE XREF: Player_HandleBossVictory+54   j
+Player_AlternateSpecialState_SelectFrame:               ; CODE XREF: Player_AlternateSpecialState+54   j  ; was: loc_16202
                 movea.l #word_E8972,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 bra.w   Player_BuildSpritePieces
-; End of function Player_HandleBossVictory
+; End of function Player_AlternateSpecialState
 ; Initializes player cutscene state clearing velocities and flags
 Player_InitCutsceneState:                               ; CODE XREF: Player_Update+72   p  ; was: sub_16210
                 move.b  #$7F,(byte_FF830F).w
@@ -137,24 +139,24 @@ Player_HandleCutsceneControl:                           ; DATA XREF: ROM:0001509
                                         ; ROM:00015096   o
                 bset    #3,(byte_FF8244).w
                 bclr    #0,(byte_FF825C).w
-                bne.s   loc_1625C
-                bra.w   loc_1629E
+                bne.s   Player_HandleCutsceneControl_ProcessActive
+                bra.w   Player_HandleCutsceneControl_Finish
 ; ---------------------------------------------------------------------------
-loc_1625C:                                              ; CODE XREF: Player_HandleCutsceneControl+C   j
+Player_HandleCutsceneControl_ProcessActive:             ; CODE XREF: Player_HandleCutsceneControl+C   j  ; was: loc_1625C
                 bclr    #2,(byte_FF825C).w
-                bne.s   loc_16286
+                bne.s   Player_HandleCutsceneControl_ApplyPosition
                 move.b  $6A(a5),d0
                 andi.b  #$2C,d0                         ; ','
-                beq.s   loc_16272
+                beq.s   Player_HandleCutsceneControl_CheckTimer
                 addq.w  #1,$4A(a5)
-loc_16272:                                              ; CODE XREF: Player_HandleCutsceneControl+22   j
+Player_HandleCutsceneControl_CheckTimer:                ; CODE XREF: Player_HandleCutsceneControl+22   j  ; was: loc_16272
                 move.w  (word_FF824E).w,d0
                 cmp.w   $4A(a5),d0
-                bpl.s   loc_16286
+                bpl.s   Player_HandleCutsceneControl_ApplyPosition
                 bclr    #1,(byte_FF825C).w
-                bra.w   loc_1629E
+                bra.w   Player_HandleCutsceneControl_Finish
 ; ---------------------------------------------------------------------------
-loc_16286:                                              ; CODE XREF: Player_HandleCutsceneControl+18   j
+Player_HandleCutsceneControl_ApplyPosition:             ; CODE XREF: Player_HandleCutsceneControl+18   j  ; was: loc_16286
                                         ; Player_HandleCutsceneControl+30   j
                 bset    #1,(byte_FF825C).w
                 move.w  (word_FF8250).w,$10(a5)
@@ -162,7 +164,7 @@ loc_16286:                                              ; CODE XREF: Player_Hand
                 moveq   #$FFFFFFFE,d1
                 bra.w   Player_AdvanceAnimationFrame
 ; ---------------------------------------------------------------------------
-loc_1629E:                                              ; CODE XREF: Player_HandleCutsceneControl+E   j
+Player_HandleCutsceneControl_Finish:                    ; CODE XREF: Player_HandleCutsceneControl+E   j  ; was: loc_1629E
                                         ; Player_HandleCutsceneControl+38   j
                 move.b  #$30,(byte_FF825D).w            ; '0'
                 bra.w   *+4
@@ -177,43 +179,43 @@ Player_InitKnockbackState:                              ; CODE XREF: Player_Upda
                 move.w  #$2A,4(a5)                      ; '*'
                 move.w  #$C,$48(a5)
                 tst.w   $5E(a5)
-                bpl.s   loc_16312
+                bpl.s   Player_InitKnockbackState_SetAlternateVerticalVelocity
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                bne.s   loc_162E6
+                bne.s   Player_InitKnockbackState_SetDefaultVelocity
                 move.b  #$19,d0
                 jsr     (Sound_PlaySFX).l
-loc_162E6:                                              ; CODE XREF: Player_InitKnockbackState+32   j
+Player_InitKnockbackState_SetDefaultVelocity:           ; CODE XREF: Player_InitKnockbackState+32   j  ; was: loc_162E6
                 move.l  #$FFFEA000,$1C(a5)
                 tst.l   (dword_FF8300).w
-                beq.s   loc_162FC
-loc_162F4:                                              ; CODE XREF: Player_InitKnockbackState+80   j
+                beq.s   Player_InitKnockbackState_SetFacingVelocity
+Player_InitKnockbackState_UseStoredHorizontalVelocity:  ; CODE XREF: Player_InitKnockbackState+80   j  ; was: loc_162F4
                 move.l  (dword_FF8300).w,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_162FC:                                              ; CODE XREF: Player_InitKnockbackState+4A   j
+Player_InitKnockbackState_SetFacingVelocity:            ; CODE XREF: Player_InitKnockbackState+4A   j  ; was: loc_162FC
                 move.l  #$FFFF7000,$18(a5)
                 btst    #3,$E(a5)
-                bne.s   locret_16310
+                bne.s   Player_InitKnockbackState_Return
                 neg.l   $18(a5)
-locret_16310:                                           ; CODE XREF: Player_InitKnockbackState+62   j
+Player_InitKnockbackState_Return:                       ; CODE XREF: Player_InitKnockbackState+62   j  ; was: locret_16310
                 rts
 ; ---------------------------------------------------------------------------
-loc_16312:                                              ; CODE XREF: Player_InitKnockbackState+28   j
+Player_InitKnockbackState_SetAlternateVerticalVelocity:  ; CODE XREF: Player_InitKnockbackState+28   j  ; was: loc_16312
                 move.b  #$19,d0
                 jsr     (Sound_PlaySFX).l
                 move.l  #$FFFE8000,$1C(a5)
                 tst.w   (dword_FF8300).w
-                bne.w   loc_162F4
+                bne.w   Player_InitKnockbackState_UseStoredHorizontalVelocity
                 bra.s   Player_SetKnockbackVelocity
 ; End of function Player_InitKnockbackState
 ; Sets horizontal knockback velocity
 Player_SetHorizontalKnockback:
-                bmi.s   loc_1633A                       ; was: sub_1632E
+                bmi.s   Player_SetHorizontalKnockback_Negative  ; was: sub_1632E
                 move.l  #$38000,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_1633A:                                              ; CODE XREF: Player_SetHorizontalKnockback   j
+Player_SetHorizontalKnockback_Negative:                 ; CODE XREF: Player_SetHorizontalKnockback   j  ; was: loc_1633A
                 move.l  #$FFFC8000,$18(a5)
                 rts
 ; End of function Player_SetHorizontalKnockback
@@ -221,62 +223,62 @@ loc_1633A:                                              ; CODE XREF: Player_SetH
 Player_SetKnockbackVelocity:                            ; CODE XREF: Player_InitKnockbackState+84   j  ; was: sub_16344
                 move.l  #$FFFC8000,$18(a5)
                 btst    #3,$E(a5)
-                bne.s   locret_16358
+                bne.s   Player_SetKnockbackVelocity_Return
                 neg.l   $18(a5)
-locret_16358:                                           ; CODE XREF: Player_SetKnockbackVelocity+E   j
+Player_SetKnockbackVelocity_Return:                     ; CODE XREF: Player_SetKnockbackVelocity+E   j  ; was: locret_16358
                 rts
 ; End of function Player_SetKnockbackVelocity
-; Player death/defeat state handling gravity and landing detection
-Player_DefeatState:                                     ; DATA XREF: ROM:0001508C   o  ; was: sub_1635A
+; Handles player knockback gravity and terrain contacts
+Player_KnockbackState:                                  ; DATA XREF: ROM:0001508C   o  ; was: sub_1635A
                 movea.l #word_E8BAA,a1
                 movea.l #word_E89C2,a2
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFF,d6
                 bsr.w   Player_BuildSpritePieces
                 subq.w  #1,$48(a5)
-                bpl.s   loc_1638C
+                bpl.s   Player_KnockbackState_ApplyPhysics
                 bsr.w   Player_ClearKnockbackState
                 bsr.w   Player_InitFallState
                 move.b  #1,(word_FF8224).w
                 move.b  #1,(word_FF8224+1).w
                 bra.w   Player_HandleFallingState
 ; ---------------------------------------------------------------------------
-loc_1638C:                                              ; CODE XREF: Player_DefeatState+18   j
+Player_KnockbackState_ApplyPhysics:                     ; CODE XREF: Player_KnockbackState+18   j  ; was: loc_1638C
                 addi.l  #$6000,$1C(a5)
                 bsr.w   Physics_ExtendedWallCheckWrapper
                 tst.w   $1C(a5)
-                bmi.s   loc_163B2
+                bmi.s   Player_KnockbackState_CheckUpperTerrain
                 bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
-                beq.s   locret_163BC
+                beq.s   Player_StateNoOp_Return
                 bsr.w   Player_ClearKnockbackState
                 bra.w   Player_InitLandingState
 ; ---------------------------------------------------------------------------
-loc_163B2:                                              ; CODE XREF: Player_DefeatState+42   j
+Player_KnockbackState_CheckUpperTerrain:                ; CODE XREF: Player_KnockbackState+42   j  ; was: loc_163B2
                 clr.b   6(a5)
                 jmp     Physics_RisingTerrainCheckWrapper(pc)  ; (pc)
-; End of function Player_DefeatState
+; End of function Player_KnockbackState
 ; Empty function that returns
 Player_NoOp:
                 nop                                     ; was: sub_163BA
-locret_163BC:                                           ; CODE XREF: Player_DefeatState+4E   j
+Player_StateNoOp_Return:                                ; CODE XREF: Player_KnockbackState+4E   j  ; was: locret_163BC
                 rts
 ; End of function Player_NoOp
 ; Clears player knockback flag and resets sprite state after hit
-Player_ClearKnockbackState:                             ; CODE XREF: Player_DefeatState+1A   p  ; was: sub_163BE
-                                        ; Player_DefeatState+50   p
+Player_ClearKnockbackState:                             ; CODE XREF: Player_KnockbackState+1A   p  ; was: sub_163BE
+                                        ; Player_KnockbackState+50   p
                 clr.w   (word_FF80E6).w
                 move.w  #$CD00,2(a5)
                 move.b  #$81,$21(a5)
                 rts
 ; End of function Player_ClearKnockbackState
-nullsub_41:
+Player_UnusedStateReturn:                               ; was: nullsub_41
                 rts
-; End of function nullsub_41
+; End of function Player_UnusedStateReturn
 
-; Initializes player landing state after air
-Player_InitGroundedState:                               ; CODE XREF: Player_HandleAirDashState+1A   j  ; was: sub_163D2
-                                        ; Player_ProcessAirState+66   j
+; Initializes the idle state used while attached to upper terrain
+Player_InitCeilingIdleState:                            ; CODE XREF: Player_CeilingDamageState+1A   j  ; was: sub_163D2
+                                        ; Player_CeilingDashState+66   j
                 move.b  #$7F,(byte_FF830F).w
                 bclr    #0,(byte_FF826C).w
                 clr.w   (word_FF8224).w
@@ -286,14 +288,14 @@ Player_InitGroundedState:                               ; CODE XREF: Player_Hand
                 move.w  #$FFFF,$C(a5)
                 move.w  #$10,$5C(a5)
                 bra.w   Player_AutoFlipDirection
-; End of function Player_InitGroundedState
-nullsub_42:                                             ; CODE XREF: Player_HandleDashState+1E   j
-                                        ; Player_HandleDashState+24   j
+; End of function Player_InitCeilingIdleState
+Player_CeilingIdleState_Return:                         ; CODE XREF: Player_CeilingIdleState+1E   j  ; was: nullsub_42
+                                        ; Player_CeilingIdleState+24   j
                 rts
-; End of function nullsub_42
+; End of function Player_CeilingIdleState_Return
 
-; Main handler for player dash state with counter and input checks
-Player_HandleDashState:                                 ; DATA XREF: ROM:0001507A   o  ; was: sub_16402
+; Handles idle input while the player remains attached to upper terrain
+Player_CeilingIdleState:                                ; DATA XREF: ROM:0001507A   o  ; was: sub_16402
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
@@ -302,29 +304,30 @@ Player_HandleDashState:                                 ; DATA XREF: ROM:0001507
                 beq.w   Player_EndDashState
                 bsr.w   Effect_SpawnParticle
                 bsr.w   Player_CheckCounterInput
-                bne.s   nullsub_42
+                bne.s   Player_CeilingIdleState_Return
                 bsr.w   Player_CheckDashInput
-                bne.s   nullsub_42
+                bne.s   Player_CeilingIdleState_Return
                 btst    #0,(byte_FF826C).w
-                bne.w   loc_1646C
+                bne.w   Player_InitCeilingDamageKnockback
                 btst    #4,$69(a5)
-                beq.s   loc_16440
+                beq.s   Player_CeilingIdleState_CheckDashInput
                 tst.w   (word_FFA22A).w
-                bne.s   loc_1645E
-loc_16440:                                              ; CODE XREF: Player_HandleDashState+36   j
+                bne.s   Player_CeilingIdleState_Render
+Player_CeilingIdleState_CheckDashInput:                 ; CODE XREF: Player_CeilingIdleState+36   j  ; was: loc_16440
                 btst    #0,$69(a5)
                 bne.w   Player_InitDashState
                 btst    #2,$69(a5)
                 bne.w   Player_InitWallKickState
                 btst    #3,$69(a5)
                 bne.w   Player_InitWallKickState
-loc_1645E:                                              ; CODE XREF: Player_HandleDashState+3C   j
+Player_CeilingIdleState_Render:                         ; CODE XREF: Player_CeilingIdleState+3C   j  ; was: loc_1645E
                 btst    #4,$69(a5)
-                beq.w   Player_ProcessCollisionDamage
+                beq.w   Player_RenderIdleFrame
                 bra.w   Player_UpdateDashSprite
 ; ---------------------------------------------------------------------------
-loc_1646C:                                              ; CODE XREF: Player_HandleDashState+2C   j
-                                        ; Player_ProcessAirState+3E   j
+; Initializes horizontal knockback from the upper-terrain idle state
+Player_InitCeilingDamageKnockback:                      ; CODE XREF: Player_CeilingIdleState+2C   j  ; was: loc_1646C
+                                        ; Player_CeilingDashState+3E   j
                 bsr.w   Player_SpawnDamageImpactEffect
                 move.b  #$7F,(byte_FF830F).w
                 jsr     (Sys_ClearObjectBlocks16).l
@@ -335,23 +338,22 @@ loc_1646C:                                              ; CODE XREF: Player_Hand
                 move.w  #$10,$5C(a5)
                 move.l  #$FFFE0000,$18(a5)
                 btst    #3,$E(a5)
-                bne.s   locret_164AE
+                bne.s   Player_InitCeilingDamageKnockback_Return
                 neg.l   $18(a5)
-locret_164AE:                                           ; CODE XREF: Player_HandleDashState+A6   j
+Player_InitCeilingDamageKnockback_Return:               ; CODE XREF: Player_CeilingIdleState+A6   j  ; was: locret_164AE
                 rts
-; End of function Player_HandleDashState
-; Handles player air dash state with terrain check
-Player_HandleAirDashState:                              ; DATA XREF: ROM:000150A0   o  ; was: sub_164B0
+; End of function Player_InitCeilingDamageKnockback
+; Handles the upper-terrain phase of player damage knockback
+Player_CeilingDamageState:                              ; DATA XREF: ROM:000150A0   o  ; was: sub_164B0
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
-                beq.w   Player_SetDeathStateFlags
+                beq.w   Player_SetAirborneDamageState
                 subq.w  #1,$4A(a5)
-                bmi.w   Player_InitGroundedState
+                bmi.w   Player_InitCeilingIdleState
                 move.l  #$2000,d1
                 bsr.w   Player_DecelerateHorizontalVelocity
                 bra.w   Player_AnimateDefeatSprite
-; End of function Player_HandleAirDashState
-; Updates weapon charge from input
+; End of function Player_CeilingDamageState

@@ -50,7 +50,7 @@ Player_DirectionalMovementSecondaryFrames:  dc.l    word_E8812  ; DATA XREF: Pla
                 dc.l    word_E87EA
 
 ; Renders player weapon sprite with animation update
-Player_RenderWeaponSprite:                              ; CODE XREF: Player_AirControlState+40   p  ; was: sub_16FCC
+Player_RenderWeaponSprite:                              ; CODE XREF: Player_CeilingAirControlState+40   p  ; was: sub_16FCC
                 bsr.s   Player_UpdateWeaponAnim
                 moveq   #1,d5
                 addq.w  #3,d6
@@ -103,7 +103,7 @@ Player_WeaponAnimationFrames:   dc.l    word_E8CC2      ; DATA XREF: Player_Upda
                 dc.l    word_E8992
 
 ; Updates player dash sprite
-Player_UpdateDashSprite:                                ; CODE XREF: Player_HandleDashState+66   j  ; was: sub_17052
+Player_UpdateDashSprite:                                ; CODE XREF: Player_CeilingIdleState+66   j  ; was: sub_17052
                 tst.w   (word_FFA22A).w
                 beq.s   Player_UpdateDashSprite_UseDefaultVariant
                 lea     (word_198F2).l,a4
@@ -141,8 +141,8 @@ Player_RenderSpecialWeapon_UseDefaultVariant:           ; CODE XREF: Player_Rend
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderSpecialWeapon
 ; Renders player sprite with weapon state and metasprite selection
-Player_RenderWithWeapon:                                ; CODE XREF: Player_ProcessAirState+74   j  ; was: sub_170BA
-                                        ; Player_ProcessJumpState+76   j
+Player_RenderWithWeapon:                                ; CODE XREF: Player_CeilingDashState+74   j  ; was: sub_170BA
+                                        ; Player_CeilingLandingState+76   j
                 tst.w   $48(a5)
                 bpl.w   Player_RenderGroundedFrame
                 tst.w   (word_FFA22A).w
@@ -249,7 +249,7 @@ Player_DashAnimationTileOffsets:    dc.w    $FFFE, $FFFF, 0, $FFFF, $FFFE, $FFFF
 
 ; Updates player animation state and frame data
 Player_UpdateAnimationState:                            ; CODE XREF: Player_HandleFallingState+C6   j  ; was: sub_171CA
-                                        ; Boss_ArtemisSpawnProjectile2+2   j
+                                        ; Player_UpdateAnimStatePlus4+2   j
                 bsr.s   Player_AdvanceAnimationFrame
                 tst.w   $52(a5)
                 beq.w   Player_AutoFlipDirection
@@ -276,7 +276,7 @@ Player_AnimationFrameTable: dc.l    word_E8A1A          ; DATA XREF: Player_Adva
                 dc.l    word_E8B82
 
 ; Renders multiple death particle sprites during player death sequence
-Player_RenderDeathParticles:                            ; CODE XREF: Player_HandleDeathSequence:loc_15182   j  ; was: sub_1720C
+Player_RenderDeathParticles:                            ; CODE XREF: Player_HandleDeathSequence:Player_HandleDeathSequence_RenderParticles   j  ; was: sub_1720C
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 movea.w a0,a1
                 move.w  $48(a5),d0
@@ -320,7 +320,7 @@ Player_PrepareSpriteRendering:                          ; CODE XREF: Player_Hand
                 lea     Player_PrimaryAnimationLayoutTable(pc),a0
                 nop
 Player_PrepareSpriteRendering_WithTables:               ; CODE XREF: Player_HandleSpecialAttack+D2   j  ; was: loc_1727A
-                                        ; Player_CheckSpecialAttack+40   j
+                                        ; Player_RenderSpecialMoveRecovery+40   j
                 lea     Player_LowerTerrainAnimationIndices(pc),a1
                 nop
                 btst    #4,$E(a5)
@@ -353,7 +353,7 @@ Player_PrimaryAnimationLayoutTable: dc.l    word_E8D92  ; DATA XREF: Player_Prep
                 dc.w    $FEFE, $FDFF, $FC01, $FDFF, $FAFD, $FBFE, $FC00, $FBFE
                 dc.w    $FAFE, $FBFF, $FC00, $FBFF
 Player_AlternateAnimationLayoutTable:   dc.l    word_E8E12  ; DATA XREF: Player_HandleSpecialAttack+CC   o  ; was: off_172F8
-                                        ; Player_CheckSpecialAttack+3A   o
+                                        ; Player_RenderSpecialMoveRecovery+3A   o
                 dc.l    word_E8E4A
                 dc.l    word_E8E32
                 dc.l    word_E8DF2
@@ -363,8 +363,8 @@ Player_AlternateAnimationLayoutTable:   dc.l    word_E8E12  ; DATA XREF: Player_
                 dc.w    $FB00, $FC00, $FD01, $FC00
 
 ; Animates player defeat sprite cycling through death animation frames
-Player_AnimateDefeatSprite:                             ; CODE XREF: Physics_ApplyBossVelocity+2E   j  ; was: sub_17334
-                                        ; Player_DefeatGroundedState+26   j
+Player_AnimateDefeatSprite:                             ; CODE XREF: Player_GroundedDamageState+2E   j  ; was: sub_17334
+                                        ; Player_DamageLandingRecoveryState+26   j
                 subq.w  #1,$C(a5)
                 bpl.s   Player_UpdateDefeatAnimation
                 move.w  #2,$C(a5)
@@ -393,7 +393,7 @@ Player_DefeatFrameOffsets:  dc.b    0, 0, 0, 5, 0, 5, 4, 5  ; was: byte_1737E
                                         ; Player_AnimateDefeatSprite+22   r
 
 ; Creates the fixed-slot impact object used when the player takes damage
-Player_CreateDamageImpactObject:                        ; CODE XREF: Player_SpawnDamageImpactEffect:loc_153D0   j  ; was: sub_17386
+Player_CreateDamageImpactObject:                        ; CODE XREF: Player_SpawnDamageImpactEffect:Player_SpawnDamageImpactEffect_Create   j  ; was: sub_17386
                 move.w  #$E0,(word_FF8140).w
                 move.b  #$E0,(byte_FF8142).w
                 move.b  #8,(byte_FF8143).w
