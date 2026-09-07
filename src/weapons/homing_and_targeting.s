@@ -1,12 +1,12 @@
-Player_SpawnCircleAttack:                              ; DATA XREF: ROM:00017F30   o  ; was: sub_18530
+Player_SpawnCircleAttack:                               ; DATA XREF: ROM:00017F30   o  ; was: sub_18530
                 tst.w   $10(a4)
-                beq.w Effect_SpawnRandomDebris
+                beq.w   Effect_SpawnRandomDebris
                 tst.w   (word_FF8238).w
-                bpl.w Weapon_BeamFireEmptyExit
-                move.w  #$38,(word_FF8238).w ; '8'
+                bpl.w   Weapon_BeamFireEmptyExit
+                move.w  #$38,(word_FF8238).w            ; '8'
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
-loc_1854C:                              ; CODE XREF: Player_SpawnCircleAttack+26   j
+loc_1854C:                                              ; CODE XREF: Player_SpawnCircleAttack+26   j
                 move.w  (a0),d0
                 bne.w   locret_1869E
                 lea     $60(a0),a0
@@ -17,16 +17,16 @@ loc_1854C:                              ; CODE XREF: Player_SpawnCircleAttack+26
                 tst.w   (word_FFA22A).w
                 bne.s   loc_18578
                 subi.w  #$A,$10(a4)
-loc_18578:                              ; CODE XREF: Player_SpawnCircleAttack+40   j
+loc_18578:                                              ; CODE XREF: Player_SpawnCircleAttack+40   j
                 move.w  #$8C,d0
                 tst.b   (word_FFFF0E).w
                 bne.s   loc_18586
                 move.w  #$8C,d0
-loc_18586:                              ; CODE XREF: Player_SpawnCircleAttack+50   j
+loc_18586:                                              ; CODE XREF: Player_SpawnCircleAttack+50   j
                 sub.w   d0,$10(a4)
                 bpl.s   loc_18590
                 clr.w   $10(a4)
-loc_18590:                              ; CODE XREF: Player_SpawnCircleAttack+5A   j
+loc_18590:                                              ; CODE XREF: Player_SpawnCircleAttack+5A   j
                 moveq   #0,d5
                 movea.l #byte_184D8,a0
                 move.b  (a0,d6.w),d5
@@ -35,8 +35,8 @@ loc_18590:                              ; CODE XREF: Player_SpawnCircleAttack+5A
                 movea.l #word_1B514,a0
                 move.w  -$80(a0,d5.w),d3
                 move.w  (a0,d5.w),d4
-                muls.w  #$27,d3 ; '''
-                muls.w  #$27,d4 ; '''
+                muls.w  #$27,d3                         ; '''
+                muls.w  #$27,d4                         ; '''
                 move.l  d3,(dword_FF8040).w
                 move.l  d4,(dword_FF8044).w
                 move.w  d1,d3
@@ -50,7 +50,7 @@ loc_18590:                              ; CODE XREF: Player_SpawnCircleAttack+5A
                 move.l  $20(a0,d7.w),d4
                 move.w  d7,d6
                 addq.w  #8,d6
-                andi.w  #$70,d6 ; 'p'
+                andi.w  #$70,d6                         ; 'p'
                 asr.w   #3,d6
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
@@ -58,8 +58,8 @@ loc_18590:                              ; CODE XREF: Player_SpawnCircleAttack+5A
                 moveq   #1,d5
                 move.w  (word_FF808A).w,d0
                 andi.w  #$8000,d0
-loc_18600:                              ; CODE XREF: Player_SpawnCircleAttack+150   j
-                move.w  #$60,(a0) ; '`'
+loc_18600:                                              ; CODE XREF: Player_SpawnCircleAttack+150   j
+                move.w  #$60,(a0)                       ; '`'
                 move.w  #$8E80,2(a0)
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
@@ -79,10 +79,10 @@ loc_18600:                              ; CODE XREF: Player_SpawnCircleAttack+15
                 move.b  #4,$23(a0)
                 move.w  #$D,$26(a0)
                 tst.w   (word_FFFF0E).w
-                bne.s Weapon_SetCircleAttackProperties
+                bne.s   Weapon_SetCircleAttackProperties
                 move.w  #$E,$26(a0)
 ; Sets sprite properties for circular attack pattern projectiles
-Weapon_SetCircleAttackProperties:                              ; CODE XREF: Player_SpawnCircleAttack+134   j  ; was: loc_1866C
+Weapon_SetCircleAttackProperties:                       ; CODE XREF: Player_SpawnCircleAttack+134   j  ; was: loc_1866C
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
                 move.w  d5,$5E(a0)
@@ -94,31 +94,29 @@ Weapon_SetCircleAttackProperties:                              ; CODE XREF: Play
                 move.l  off_186A0(pc,d6.w),(dword_FF8020).w
                 clr.w   (word_FF801C).w
                 move.b  #$B4,d0
-                jmp (Sound_PlaySFX).l
+                jmp     (Sound_PlaySFX).l
 ; ---------------------------------------------------------------------------
-locret_1869E:                           ; CODE XREF: Player_SpawnCircleAttack+1E   j
+locret_1869E:                                           ; CODE XREF: Player_SpawnCircleAttack+1E   j
                 rts
 ; End of function Player_SpawnCircleAttack
 ; ---------------------------------------------------------------------------
-off_186A0:      dc.l off_19932          ; DATA XREF: Player_SpawnCircleAttack+15A   r
-                dc.l off_19972
-                dc.l off_19952
-                dc.l off_19972
-word_186B0:     dc.w $65A0, $75A0, $75A0, $7DA0, $6DA0, $6DA0, $65A0, $65A0
+off_186A0:      dc.l    off_19932                       ; DATA XREF: Player_SpawnCircleAttack+15A   r
+                dc.l    off_19972
+                dc.l    off_19952
+                dc.l    off_19972
+word_186B0:     dc.w    $65A0, $75A0, $75A0, $7DA0, $6DA0, $6DA0, $65A0, $65A0
                                         ; DATA XREF: Player_SpawnCircleAttack+C0   o
-                dc.w $C00, $500, $300, $500, $C00, $500, $300, $500
-                dc.w $F0FC, $F8F8, $FCF0, $F8F8, $F0FC, $F8F8, $FCF0, $F8F8
-
+                dc.w    $C00, $500, $300, $500, $C00, $500, $300, $500
+                dc.w    $F0FC, $F8F8, $FCF0, $F8F8, $F0FC, $F8F8, $FCF0, $F8F8
 
 nullsub_49:
                 rts
 ; End of function nullsub_49
 
-
 ; Fires homing projectile that tracks player position
-Weapon_FireHomingShot:                              ; DATA XREF: ROM:00017F2E   o  ; was: sub_186E2
+Weapon_FireHomingShot:                                  ; DATA XREF: ROM:00017F2E   o  ; was: sub_186E2
                 tst.w   $10(a4)
-                beq.w Effect_SpawnRandomDebris
+                beq.w   Effect_SpawnRandomDebris
                 move.w  #$E0,(word_FF8140).w
                 move.b  #$80,(byte_FF8142).w
                 move.b  #8,(byte_FF8143).w
@@ -126,28 +124,28 @@ Weapon_FireHomingShot:                              ; DATA XREF: ROM:00017F2E   
                 bne.s   locret_18716
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
-loc_1870A:                              ; CODE XREF: Weapon_FireHomingShot+30   j
+loc_1870A:                                              ; CODE XREF: Weapon_FireHomingShot+30   j
                 move.w  (a0),d0
                 beq.s   loc_18718
                 lea     $60(a0),a0
                 dbf     d7,loc_1870A
-locret_18716:                           ; CODE XREF: Weapon_FireHomingShot+20   j
+locret_18716:                                           ; CODE XREF: Weapon_FireHomingShot+20   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_18718:                              ; CODE XREF: Weapon_FireHomingShot+2A   j
+loc_18718:                                              ; CODE XREF: Weapon_FireHomingShot+2A   j
                 tst.w   (word_FFA22A).w
                 bne.s   loc_18722
                 subq.w  #2,$10(a4)
-loc_18722:                              ; CODE XREF: Weapon_FireHomingShot+3A   j
+loc_18722:                                              ; CODE XREF: Weapon_FireHomingShot+3A   j
                 move.w  #3,d0
                 tst.b   (word_FFFF0E).w
                 bne.s   loc_18730
                 move.w  #2,d0
-loc_18730:                              ; CODE XREF: Weapon_FireHomingShot+48   j
+loc_18730:                                              ; CODE XREF: Weapon_FireHomingShot+48   j
                 sub.w   d0,$10(a4)
                 bpl.s   loc_1873A
                 clr.w   $10(a4)
-loc_1873A:                              ; CODE XREF: Weapon_FireHomingShot+52   j
+loc_1873A:                                              ; CODE XREF: Weapon_FireHomingShot+52   j
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
                 sub.w   $10(a5),d1
@@ -156,15 +154,15 @@ loc_1873A:                              ; CODE XREF: Weapon_FireHomingShot+52   
                 move.w  d2,$5A(a0)
                 clr.l   $50(a5)
                 clr.l   $54(a5)
-                move.w  #$74,(a0) ; 't'
-                move.b  #$40,$21(a0) ; '@'
+                move.w  #$74,(a0)                       ; 't'
+                move.b  #$40,$21(a0)                    ; '@'
                 move.b  #4,$23(a0)
                 move.w  #3,$26(a0)
                 tst.w   (word_FFFF0E).w
-                bne.s Weapon_SetHomingProjectileData
+                bne.s   Weapon_SetHomingProjectileData
                 move.w  #4,$26(a0)
 ; Sets homing projectile velocity and sprite animation data
-Weapon_SetHomingProjectileData:                              ; CODE XREF: Weapon_FireHomingShot+92   j  ; was: loc_1877C
+Weapon_SetHomingProjectileData:                         ; CODE XREF: Weapon_FireHomingShot+92   j  ; was: loc_1877C
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
                 move.w  #$12,$5E(a0)
@@ -178,7 +176,7 @@ Weapon_SetHomingProjectileData:                              ; CODE XREF: Weapon
                 move.l  $20(a1,d6.w),d1
                 move.l  d0,$1C(a0)
                 move.l  d1,$18(a0)
-                andi.w  #$70,d6 ; 'p'
+                andi.w  #$70,d6                         ; 'p'
                 asr.w   #3,d6
                 movea.l #word_187EC,a1
                 move.w  (a1,d6.w),d0
@@ -189,33 +187,31 @@ Weapon_SetHomingProjectileData:                              ; CODE XREF: Weapon
                 btst    #1,(word_FFA000+1).w
                 bne.s   locret_187EA
                 move.b  #$B3,d0
-                jmp (Sound_PlaySFX).l
+                jmp     (Sound_PlaySFX).l
 ; ---------------------------------------------------------------------------
-locret_187EA:                           ; CODE XREF: Weapon_FireHomingShot+FC   j
+locret_187EA:                                           ; CODE XREF: Weapon_FireHomingShot+FC   j
                 rts
 ; End of function Weapon_FireHomingShot
 ; ---------------------------------------------------------------------------
-word_187EC:     dc.w $65A3, $75A6, $75A0, $7DA6, $6DA3, $6DA6, $65A0, $65A6
+word_187EC:     dc.w    $65A3, $75A6, $75A0, $7DA6, $6DA3, $6DA6, $65A0, $65A6
                                         ; DATA XREF: Weapon_FireHomingShot+D8   o
-                dc.w $800, $A00, $200, $A00, $800, $A00, $200, $A00
-                dc.w $F4FC, $F4F4, $FCF4, $F4F4, $F4FC, $F4F4, $FCF4, $F4F4
-
+                dc.w    $800, $A00, $200, $A00, $800, $A00, $200, $A00
+                dc.w    $F4FC, $F4F4, $FCF4, $F4F4, $F4FC, $F4F4, $FCF4, $F4F4
 
 nullsub_50:
                 rts
 ; End of function nullsub_50
 
-
 ; Calculates projectile spawn position
 Weapon_CalculateOffsetPosition:
-                move.b  (a4,d6.w),d0  ; was: sub_1881E
+                move.b  (a4,d6.w),d0                    ; was: sub_1881E
                 move.b  8(a4,d6.w),d1
                 ext.w   d0
                 ext.w   d1
                 btst    #3,$E(a5)
                 beq.s   loc_18834
                 neg.w   d0
-loc_18834:                              ; CODE XREF: Weapon_CalculateOffsetPosition+12   j
+loc_18834:                                              ; CODE XREF: Weapon_CalculateOffsetPosition+12   j
                 add.w   $10(a5),d0
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
@@ -223,22 +219,22 @@ loc_18834:                              ; CODE XREF: Weapon_CalculateOffsetPosit
                 rts
 ; End of function Weapon_CalculateOffsetPosition
 ; Spawns random debris particle with velocity
-Effect_SpawnRandomDebris:                              ; CODE XREF: Weapon_FireProjectile+4   j  ; was: sub_18846
-                                        ; Weapon_FireMultipleShots+4   j ...
+Effect_SpawnRandomDebris:                               ; CODE XREF: Weapon_FireProjectile+4   j  ; was: sub_18846
+                                        ; Weapon_FireMultipleShots+4   j
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_18860
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
-loc_18854:                              ; CODE XREF: Effect_SpawnRandomDebris+16   j
+loc_18854:                                              ; CODE XREF: Effect_SpawnRandomDebris+16   j
                 tst.w   (a0)
-                beq.s Effect_CreateDebrisParticle
+                beq.s   Effect_CreateDebrisParticle
                 lea     $60(a0),a0
                 dbf     d7,loc_18854
-locret_18860:                           ; CODE XREF: Effect_SpawnRandomDebris+6   j
+locret_18860:                                           ; CODE XREF: Effect_SpawnRandomDebris+6   j
                 rts
 ; ---------------------------------------------------------------------------
 ; Creates random debris particle effect with velocity
-Effect_CreateDebrisParticle:                              ; CODE XREF: Effect_SpawnRandomDebris+10   j  ; was: loc_18862
+Effect_CreateDebrisParticle:                            ; CODE XREF: Effect_SpawnRandomDebris+10   j  ; was: loc_18862
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
@@ -249,17 +245,17 @@ Effect_CreateDebrisParticle:                              ; CODE XREF: Effect_Sp
                 add.w   d0,d2
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
-                jsr (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitializeProperties).l
                 move.w  #$334,(a0)
                 move.l  #off_E9738,8(a0)
-                move.b  #$40,$21(a0) ; '@'
+                move.b  #$40,$21(a0)                    ; '@'
                 clr.b   $23(a0)
                 move.w  #1,$26(a0)
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
                 movea.l #byte_184D8,a1
                 move.b  (a1,d6.w),d6
-                andi.w  #$7C,d6 ; '|'
+                andi.w  #$7C,d6                         ; '|'
                 movea.l #dword_193B2,a1
                 move.l  (a1,d6.w),d0
                 move.l  $20(a1,d6.w),d1
@@ -271,24 +267,24 @@ Effect_CreateDebrisParticle:                              ; CODE XREF: Effect_Sp
                 btst    #1,(word_FFA000+1).w
                 bne.s   locret_188EC
                 move.b  #$D3,d0
-                jsr (Sound_PlaySFX).l
-locret_188EC:                           ; CODE XREF: Effect_SpawnRandomDebris+9A   j
+                jsr     (Sound_PlaySFX).l
+locret_188EC:                                           ; CODE XREF: Effect_SpawnRandomDebris+9A   j
                 rts
 ; End of function Effect_SpawnRandomDebris
 ; Checks if enemy damage exceeds threshold
-Enemy_CheckDamageThreshold:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_188EE
+Enemy_CheckDamageThreshold:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_188EE
                 bclr    #7,$22(a5)
-                bne.s Enemy_SetFlashOnDamage
+                bne.s   Enemy_SetFlashOnDamage
                 cmpi.w  #$80,$C(a5)
                 bmi.s   locret_18904
 ; Sets enemy sprite flash flag when damage threshold exceeded
-Enemy_SetFlashOnDamage:                              ; CODE XREF: Enemy_CheckDamageThreshold+6   j  ; was: loc_188FE
+Enemy_SetFlashOnDamage:                                 ; CODE XREF: Enemy_CheckDamageThreshold+6   j  ; was: loc_188FE
                 bset    #4,2(a5)
-locret_18904:                           ; CODE XREF: Enemy_CheckDamageThreshold+E   j
+locret_18904:                                           ; CODE XREF: Enemy_CheckDamageThreshold+E   j
                 rts
 ; End of function Enemy_CheckDamageThreshold
 ; Updates target sight position
-Player_UpdateTargetSight:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_18906
+Player_UpdateTargetSight:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_18906
                 movea.w #(word_FFA400-M68K_RAM),a0
                 clr.w   $56(a5)
                 move.w  $10(a0),d5
@@ -321,28 +317,28 @@ Player_UpdateTargetSight:                              ; DATA XREF: ROM:off_5DC 
                 bclr    #7,2(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_18972:                              ; CODE XREF: Player_UpdateTargetSight+62   j
+loc_18972:                                              ; CODE XREF: Player_UpdateTargetSight+62   j
                 bset    #7,2(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-locret_18984:                           ; CODE XREF: Player_UpdateTargetSight+56   j
+locret_18984:                                           ; CODE XREF: Player_UpdateTargetSight+56   j
                 rts
 ; End of function Player_UpdateTargetSight
 ; Marks sprite object for removal by setting deactivation flag
-Sprite_MarkForRemoval:                              ; CODE XREF: Weapon_UpdateRotatingProjectile+30   j  ; was: sub_18986
-                                        ; Weapon_UpdateRotatingProjectile+3A   j ...
+Sprite_MarkForRemoval:                                  ; CODE XREF: Weapon_UpdateRotatingProjectile+30   j  ; was: sub_18986
+                                        ; Weapon_UpdateRotatingProjectile+3A   j
                 bset    #4,2(a5)
                 rts
 ; End of function Sprite_MarkForRemoval
 ; Spawns particle effect when enemy takes knockback damage
-Effect_SpawnKnockbackParticle:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_1898E
+Effect_SpawnKnockbackParticle:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_1898E
                 bclr    #7,$22(a5)
                 bne.s   loc_189A6
                 bclr    #6,$23(a5)
                 beq.s   loc_189E0
                 bclr    #4,$23(a5)
                 bne.s   loc_18A0C
-loc_189A6:                              ; CODE XREF: Effect_SpawnKnockbackParticle+6   j
+loc_189A6:                                              ; CODE XREF: Effect_SpawnKnockbackParticle+6   j
                 movea.l #word_1B514,a1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
@@ -355,11 +351,11 @@ loc_189A6:                              ; CODE XREF: Effect_SpawnKnockbackPartic
                 move.l  d1,$1C(a5)
                 move.l  d2,$18(a5)
                 lea     (dword_2AE8A).l,a1
-                jsr (Effect_SpawnObjectType).l
+                jsr     (Effect_SpawnObjectType).l
                 move.w  #$8C80,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_189E0:                              ; CODE XREF: Effect_SpawnKnockbackParticle+E   j
+loc_189E0:                                              ; CODE XREF: Effect_SpawnKnockbackParticle+E   j
                 subq.w  #1,$5E(a5)
                 bpl.s   locret_18A0A
                 clr.b   $21(a5)
@@ -370,19 +366,19 @@ loc_189E0:                              ; CODE XREF: Effect_SpawnKnockbackPartic
                 asr.l   #1,d0
                 move.l  d0,$1C(a5)
                 lea     (dword_2AD16).l,a1
-                jmp Effect_SpawnObjectType
+                jmp     Effect_SpawnObjectType
 ; ---------------------------------------------------------------------------
-locret_18A0A:                           ; CODE XREF: Effect_SpawnKnockbackParticle+56   j
+locret_18A0A:                                           ; CODE XREF: Effect_SpawnKnockbackParticle+56   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_18A0C:                              ; CODE XREF: Effect_SpawnKnockbackParticle+16   j
+loc_18A0C:                                              ; CODE XREF: Effect_SpawnKnockbackParticle+16   j
                 move.l  #word_1805C,$4A(a5)
                 move.w  #$456C,d0
                 add.w   (word_FF808A).w,d0
                 move.w  d0,$E(a5)
                 move.w  #$F00,8(a5)
                 move.w  #$F0F0,$A(a5)
-loc_18A2C:                              ; CODE XREF: Weapon_HandleProjectileHit+4C   j
+loc_18A2C:                                              ; CODE XREF: Weapon_HandleProjectileHit+4C   j
                                         ; Weapon_HandleExplosiveImpact+9E   j
                 move.w  #$18C,(a5)
                 move.w  #$8C80,2(a5)
@@ -390,7 +386,7 @@ loc_18A2C:                              ; CODE XREF: Weapon_HandleProjectileHit+
                 lea     dword_19632(pc),a1
                 nop
                 move.w  (dword_FFFF08).w,d6
-                andi.w  #$7C,d6 ; '|'
+                andi.w  #$7C,d6                         ; '|'
                 move.l  (a1,d6.w),d0
                 move.l  $20(a1,d6.w),d1
                 asr.l   #1,d0
@@ -398,6 +394,6 @@ loc_18A2C:                              ; CODE XREF: Weapon_HandleProjectileHit+
                 move.l  d0,$1C(a5)
                 move.l  d1,$18(a5)
                 move.b  #$C8,d0
-                jmp (Sound_PlaySFX).l
+                jmp     (Sound_PlaySFX).l
 ; End of function Effect_SpawnKnockbackParticle
 ; Updates rotating projectile animation and boundary checking

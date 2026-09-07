@@ -39,6 +39,7 @@
     "emulator"
   ],
   "required_documents": [
+    "docs/assembly_style.md",
     "docs/naming.md",
     "docs/provenance.md",
     "docs/ram_map.md",

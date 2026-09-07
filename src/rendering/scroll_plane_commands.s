@@ -1,4 +1,4 @@
-Gfx_WriteScrollValue:                              ; CODE XREF: Gfx_SetupScrollPlanes+4A   p  ; was: sub_10496
+Gfx_WriteScrollValue:                                   ; CODE XREF: Gfx_SetupScrollPlanes+4A   p  ; was: sub_10496
                                         ; Gfx_SetupScrollPlanes+82   p
                 btst    #2,d5
                 bne.w   loc_104CA
@@ -7,11 +7,11 @@ Gfx_WriteScrollValue:                              ; CODE XREF: Gfx_SetupScrollP
                 btst    #0,d5
                 bne.s   locret_104AE
                 move.w  d0,(a0)
-locret_104AE:                           ; CODE XREF: Gfx_WriteScrollValue+14   j
+locret_104AE:                                           ; CODE XREF: Gfx_WriteScrollValue+14   j
                 rts
 ; End of function Gfx_WriteScrollValue
 ; Writes scroll values to VRAM with various modes
-Gfx_WriteScrollValues:                              ; CODE XREF: Gfx_SetupScrollPlanes+60   p  ; was: sub_104B0
+Gfx_WriteScrollValues:                                  ; CODE XREF: Gfx_SetupScrollPlanes+60   p  ; was: sub_104B0
                                         ; Gfx_SetupScrollPlanes+98   j
                 btst    #3,d5
                 bne.w   loc_10664
@@ -20,14 +20,14 @@ Gfx_WriteScrollValues:                              ; CODE XREF: Gfx_SetupScroll
                 btst    #1,d5
                 bne.s   locret_104C8
                 move.w  d0,(a0)
-locret_104C8:                           ; CODE XREF: Gfx_WriteScrollValues+14   j
+locret_104C8:                                           ; CODE XREF: Gfx_WriteScrollValues+14   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_104CA:                              ; CODE XREF: Gfx_WriteScrollValue+4   j
+loc_104CA:                                              ; CODE XREF: Gfx_WriteScrollValue+4   j
                 cmpi.b  #2,d3
                 beq.w   loc_1055E
                 move.w  #6,d7
-loc_104D6:                              ; CODE XREF: Gfx_WriteScrollValues+A8   j
+loc_104D6:                                              ; CODE XREF: Gfx_WriteScrollValues+A8   j
                 move.w  d0,(a0)
                 move.w  d0,4(a0)
                 move.w  d0,8(a0)
@@ -64,7 +64,7 @@ loc_104D6:                              ; CODE XREF: Gfx_WriteScrollValues+A8   
                 dbf     d7,loc_104D6
                 rts
 ; ---------------------------------------------------------------------------
-loc_1055E:                              ; CODE XREF: Gfx_WriteScrollValues+1E   j
+loc_1055E:                                              ; CODE XREF: Gfx_WriteScrollValues+1E   j
                 move.w  d0,(a0)
                 move.w  d0,$20(a0)
                 move.w  d0,$40(a0)
@@ -95,7 +95,7 @@ loc_1055E:                              ; CODE XREF: Gfx_WriteScrollValues+1E   
                 move.w  d0,$360(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_105CE:                              ; CODE XREF: Gfx_WriteScrollValue+C   j
+loc_105CE:                                              ; CODE XREF: Gfx_WriteScrollValue+C   j
                 movea.w #(byte_FF8800-M68K_RAM),a2
                 moveq   #0,d0
                 cmpi.b  #2,d3
@@ -105,22 +105,22 @@ loc_105CE:                              ; CODE XREF: Gfx_WriteScrollValue+C   j
                 move.w  d0,d6
                 bmi.s   loc_105E6
                 clr.w   d6
-loc_105E6:                              ; CODE XREF: Gfx_WriteScrollValues+132   j
+loc_105E6:                                              ; CODE XREF: Gfx_WriteScrollValues+132   j
                 asl.w   #1,d0
                 adda.l  d0,a2
-loc_105EA:                              ; CODE XREF: Gfx_WriteScrollValues+13E   j
+loc_105EA:                                              ; CODE XREF: Gfx_WriteScrollValues+13E   j
                 move.w  (a2)+,(a1)
                 addq.w  #4,a1
                 dbf     d7,loc_105EA
                 move.w  -2(a2),d0
-loc_105F6:                              ; CODE XREF: Gfx_WriteScrollValues+14A   j
+loc_105F6:                                              ; CODE XREF: Gfx_WriteScrollValues+14A   j
                 move.w  d0,(a1)
                 addq.w  #4,a1
                 dbf     d6,loc_105F6
                 rts
 ; ---------------------------------------------------------------------------
-loc_10600:                              ; CODE XREF: Gfx_WriteScrollValues+128   j
-                moveq   #$20,d0 ; ' '
+loc_10600:                                              ; CODE XREF: Gfx_WriteScrollValues+128   j
+                moveq   #$20,d0                         ; ' '
                 move.w  (a2)+,(a1)
                 adda.w  d0,a1
                 move.w  (a2)+,(a1)
@@ -171,7 +171,7 @@ loc_10600:                              ; CODE XREF: Gfx_WriteScrollValues+128  
                 adda.w  d0,a1
                 rts
 ; ---------------------------------------------------------------------------
-loc_10664:                              ; CODE XREF: Gfx_WriteScrollValues+4   j
+loc_10664:                                              ; CODE XREF: Gfx_WriteScrollValues+4   j
                 move.w  d0,(a0)
                 move.w  d0,4(a0)
                 move.w  d0,8(a0)
@@ -194,10 +194,10 @@ loc_10664:                              ; CODE XREF: Gfx_WriteScrollValues+4   j
                 move.w  d0,$4C(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_106B4:                              ; CODE XREF: Gfx_WriteScrollValues+C   j
+loc_106B4:                                              ; CODE XREF: Gfx_WriteScrollValues+C   j
                 movea.w #(dword_FF8A00-M68K_RAM),a2
                 move.w  #$13,d7
-loc_106BC:                              ; CODE XREF: Gfx_WriteScrollValues+210   j
+loc_106BC:                                              ; CODE XREF: Gfx_WriteScrollValues+210   j
                 move.w  (a2)+,(a0)
                 addq.w  #4,a0
                 dbf     d7,loc_106BC

@@ -1,14 +1,14 @@
 Gfx_QueueDMAClear:
-                clr.b   d3  ; was: sub_1D32
+                clr.b   d3                              ; was: sub_1D32
                 bra.s   loc_1D3A
 ; End of function Gfx_QueueDMAClear
 ; Queues DMA commands with tile data processing and transfer
 Gfx_QueueDMATileData:
-                move.b  #1,d3  ; was: sub_1D36
-loc_1D3A:                               ; CODE XREF: Gfx_QueueDMAClear+2   j
+                move.b  #1,d3                           ; was: sub_1D36
+loc_1D3A:                                               ; CODE XREF: Gfx_QueueDMAClear+2   j
                 movea.w (word_FFF70C).w,a1
                 movea.w (word_FFF70E).w,a2
-loc_1D42:                               ; CODE XREF: Gfx_QueueDMATileData+66   j
+loc_1D42:                                               ; CODE XREF: Gfx_QueueDMATileData+66   j
                                         ; Gfx_QueueDMATileData+6A   j
                 move.w  (a0)+,d0
                 move.l  (a0)+,-(a1)
@@ -28,7 +28,7 @@ loc_1D42:                               ; CODE XREF: Gfx_QueueDMATileData+66   j
                 move.w  d2,-(a1)
                 move.w  #$8F02,-(a1)
                 move.l  #$94009300,d1
-loc_1D76:                               ; CODE XREF: Gfx_QueueDMATileData+56   j
+loc_1D76:                                               ; CODE XREF: Gfx_QueueDMATileData+56   j
                                         ; Gfx_QueueDMATileData+5C   j
                 move.b  (a0)+,d0
                 cmpi.b  #$FE,d0
@@ -41,12 +41,12 @@ loc_1D76:                               ; CODE XREF: Gfx_QueueDMATileData+56   j
                 addq.b  #1,d1
                 bra.s   loc_1D76
 ; ---------------------------------------------------------------------------
-loc_1D8E:                               ; CODE XREF: Gfx_QueueDMATileData+50   j
+loc_1D8E:                                               ; CODE XREF: Gfx_QueueDMATileData+50   j
                 clr.w   (a2)+
                 addq.b  #1,d1
                 bra.s   loc_1D76
 ; ---------------------------------------------------------------------------
-loc_1D94:                               ; CODE XREF: Gfx_QueueDMATileData+46   j
+loc_1D94:                                               ; CODE XREF: Gfx_QueueDMATileData+46   j
                 move.l  d1,-(a1)
                 move.w  a0,d2
                 btst    #0,d2
@@ -54,7 +54,7 @@ loc_1D94:                               ; CODE XREF: Gfx_QueueDMATileData+46   j
                 addq.l  #1,a0
                 bra.s   loc_1D42
 ; ---------------------------------------------------------------------------
-loc_1DA2:                               ; CODE XREF: Gfx_QueueDMATileData+4C   j
+loc_1DA2:                                               ; CODE XREF: Gfx_QueueDMATileData+4C   j
                 move.l  d1,-(a1)
                 move.w  a1,(word_FFF70C).w
                 move.w  a2,(word_FFF70E).w
@@ -62,14 +62,14 @@ loc_1DA2:                               ; CODE XREF: Gfx_QueueDMATileData+4C   j
 ; End of function Gfx_QueueDMATileData
 ; Queues DMA commands for pattern/tile data with alternate format
 Gfx_QueueDMAPattern:
-                clr.b   d3  ; was: sub_1DAE
+                clr.b   d3                              ; was: sub_1DAE
                 bra.s   loc_1DB6
 ; ---------------------------------------------------------------------------
                 move.b  #1,d3
-loc_1DB6:                               ; CODE XREF: Gfx_QueueDMAPattern+2   j
+loc_1DB6:                                               ; CODE XREF: Gfx_QueueDMAPattern+2   j
                 movea.w (word_FFF70C).w,a1
                 movea.w (word_FFF70E).w,a2
-loc_1DBE:                               ; CODE XREF: Gfx_QueueDMAPattern+68   j
+loc_1DBE:                                               ; CODE XREF: Gfx_QueueDMAPattern+68   j
                                         ; Gfx_QueueDMAPattern+6C   j
                 move.l  (a0)+,-(a1)
                 move.l  a2,d1
@@ -88,7 +88,7 @@ loc_1DBE:                               ; CODE XREF: Gfx_QueueDMAPattern+68   j
                 move.w  d2,-(a1)
                 move.w  #$8F02,-(a1)
                 move.l  #$94009300,d1
-loc_1DF0:                               ; CODE XREF: Gfx_QueueDMAPattern+58   j
+loc_1DF0:                                               ; CODE XREF: Gfx_QueueDMAPattern+58   j
                                         ; Gfx_QueueDMAPattern+5E   j
                 move.b  (a0)+,d0
                 cmpi.b  #$FE,d0
@@ -101,12 +101,12 @@ loc_1DF0:                               ; CODE XREF: Gfx_QueueDMAPattern+58   j
                 addq.b  #1,d1
                 bra.s   loc_1DF0
 ; ---------------------------------------------------------------------------
-loc_1E08:                               ; CODE XREF: Gfx_QueueDMAPattern+52   j
+loc_1E08:                                               ; CODE XREF: Gfx_QueueDMAPattern+52   j
                 clr.w   (a2)+
                 addq.b  #1,d1
                 bra.s   loc_1DF0
 ; ---------------------------------------------------------------------------
-loc_1E0E:                               ; CODE XREF: Gfx_QueueDMAPattern+48   j
+loc_1E0E:                                               ; CODE XREF: Gfx_QueueDMAPattern+48   j
                 move.l  d1,-(a1)
                 move.w  a0,d2
                 btst    #0,d2
@@ -114,7 +114,7 @@ loc_1E0E:                               ; CODE XREF: Gfx_QueueDMAPattern+48   j
                 addq.l  #1,a0
                 bra.s   loc_1DBE
 ; ---------------------------------------------------------------------------
-loc_1E1C:                               ; CODE XREF: Gfx_QueueDMAPattern+4E   j
+loc_1E1C:                                               ; CODE XREF: Gfx_QueueDMAPattern+4E   j
                 move.l  d1,-(a1)
                 move.w  a1,(word_FFF70C).w
                 move.w  a2,(word_FFF70E).w
@@ -122,7 +122,7 @@ loc_1E1C:                               ; CODE XREF: Gfx_QueueDMAPattern+4E   j
 ; End of function Gfx_QueueDMAPattern
 ; Converts number to ASCII digits and queues DMA for text display
 Gfx_QueueNumberDisplay:
-                movea.w (word_FFF70C).w,a1  ; was: sub_1E28
+                movea.w (word_FFF70C).w,a1              ; was: sub_1E28
                 movea.w (word_FFF70E).w,a2
                 move.l  d2,-(a1)
                 move.l  a2,d4
@@ -146,13 +146,13 @@ Gfx_QueueNumberDisplay:
                 andi.l  #$FFFF,d1
                 bra.w   loc_1E7C
 ; ---------------------------------------------------------------------------
-loc_1E6E:                               ; CODE XREF: Gfx_QueueNumberDisplay+32   j
+loc_1E6E:                                               ; CODE XREF: Gfx_QueueNumberDisplay+32   j
                 subq.w  #1,d2
                 asl.w   #1,d2
                 andi.l  #$FFFF,d1
                 bra.w   loc_1E94
 ; ---------------------------------------------------------------------------
-loc_1E7C:                               ; CODE XREF: Gfx_QueueNumberDisplay+42   j
+loc_1E7C:                                               ; CODE XREF: Gfx_QueueNumberDisplay+42   j
                                         ; Gfx_QueueNumberDisplay+66   j
                 divu.w  Gfx_QueueBCDDisplay(pc,d2.w),d1
                 bne.w   loc_1E98
@@ -163,10 +163,10 @@ loc_1E7C:                               ; CODE XREF: Gfx_QueueNumberDisplay+42  
                 bpl.s   loc_1E7C
                 bra.w   loc_1EA8
 ; ---------------------------------------------------------------------------
-loc_1E94:                               ; CODE XREF: Gfx_QueueNumberDisplay+50   j
+loc_1E94:                                               ; CODE XREF: Gfx_QueueNumberDisplay+50   j
                                         ; Gfx_QueueNumberDisplay+7E   j
                 divu.w  Gfx_QueueBCDDisplay(pc,d2.w),d1
-loc_1E98:                               ; CODE XREF: Gfx_QueueNumberDisplay+58   j
+loc_1E98:                                               ; CODE XREF: Gfx_QueueNumberDisplay+58   j
                 addi.b  #-$4B,d1
                 move.b  d1,d0
                 move.w  d0,(a2)+
@@ -174,7 +174,7 @@ loc_1E98:                               ; CODE XREF: Gfx_QueueNumberDisplay+58  
                 swap    d1
                 subq.w  #2,d2
                 bpl.s   loc_1E94
-loc_1EA8:                               ; CODE XREF: Gfx_QueueNumberDisplay+68   j
+loc_1EA8:                                               ; CODE XREF: Gfx_QueueNumberDisplay+68   j
                 move.w  #$8F02,-(a1)
                 move.l  #$94009300,d2
                 add.b   d3,d2
@@ -185,7 +185,7 @@ loc_1EA8:                               ; CODE XREF: Gfx_QueueNumberDisplay+68  
 ; End of function Gfx_QueueNumberDisplay
 ; Converts number to BCD/ASCII with leading zeros for score display
 Gfx_QueueBCDDisplay:
-                ori.b   #$A,d1  ; was: sub_1EC0
+                ori.b   #$A,d1                          ; was: sub_1EC0
                 ori.w   #$3E8,-(a4)
                 move.l  (a0),-(a3)
                 movea.w (word_FFF70C).w,a1
@@ -212,13 +212,13 @@ Gfx_QueueBCDDisplay:
                 andi.l  #$FFFF,d1
                 bra.w   loc_1F1E
 ; ---------------------------------------------------------------------------
-loc_1F10:                               ; CODE XREF: Gfx_QueueBCDDisplay+3C   j
+loc_1F10:                                               ; CODE XREF: Gfx_QueueBCDDisplay+3C   j
                 subq.w  #1,d2
                 asl.w   #1,d2
                 andi.l  #$FFFF,d1
                 bra.w   loc_1F36
 ; ---------------------------------------------------------------------------
-loc_1F1E:                               ; CODE XREF: Gfx_QueueBCDDisplay+4C   j
+loc_1F1E:                                               ; CODE XREF: Gfx_QueueBCDDisplay+4C   j
                                         ; Gfx_QueueBCDDisplay+70   j
                 divu.w  word_1F62(pc,d2.w),d1
                 bne.w   loc_1F3A
@@ -229,10 +229,10 @@ loc_1F1E:                               ; CODE XREF: Gfx_QueueBCDDisplay+4C   j
                 bpl.s   loc_1F1E
                 bra.w   loc_1F4A
 ; ---------------------------------------------------------------------------
-loc_1F36:                               ; CODE XREF: Gfx_QueueBCDDisplay+5A   j
+loc_1F36:                                               ; CODE XREF: Gfx_QueueBCDDisplay+5A   j
                                         ; Gfx_QueueBCDDisplay+88   j
                 divu.w  word_1F62(pc,d2.w),d1
-loc_1F3A:                               ; CODE XREF: Gfx_QueueBCDDisplay+62   j
+loc_1F3A:                                               ; CODE XREF: Gfx_QueueBCDDisplay+62   j
                 addi.b  #-$4B,d1
                 move.b  d1,d0
                 move.w  d0,(a2)+
@@ -240,7 +240,7 @@ loc_1F3A:                               ; CODE XREF: Gfx_QueueBCDDisplay+62   j
                 swap    d1
                 subq.w  #2,d2
                 bpl.s   loc_1F36
-loc_1F4A:                               ; CODE XREF: Gfx_QueueBCDDisplay+72   j
+loc_1F4A:                                               ; CODE XREF: Gfx_QueueBCDDisplay+72   j
                 move.w  #$8F02,-(a1)
                 move.l  #$94009300,d2
                 add.b   d3,d2
@@ -250,11 +250,10 @@ loc_1F4A:                               ; CODE XREF: Gfx_QueueBCDDisplay+72   j
                 rts
 ; End of function Gfx_QueueBCDDisplay
 ; ---------------------------------------------------------------------------
-word_1F62:      dc.w 1, $10, $100, $1000
-
+word_1F62:      dc.w    1, $10, $100, $1000
 
 ; Configures VDP DMA registers for data transfer
-Gfx_SetupDMATransfer:                               ; CODE XREF: Sprite_ProcessDMAQueue+50   p  ; was: sub_1F6A
+Gfx_SetupDMATransfer:                                   ; CODE XREF: Sprite_ProcessDMAQueue+50   p  ; was: sub_1F6A
                                         ; Sprite_ProcessDMAQueueAlt+62   p
                 move.w  (a1)+,d1
                 move.w  d0,d7
@@ -293,18 +292,18 @@ Gfx_SetupDMATransfer:                               ; CODE XREF: Sprite_ProcessD
                 rts
 ; End of function Gfx_SetupDMATransfer
 ; Loads 4 palette blocks from pointers to FFE300/FFE380 buffers
-Gfx_LoadFourPalettes:                               ; CODE XREF: UI_WeaponSelectTransition+3C   p  ; was: sub_1FC8
+Gfx_LoadFourPalettes:                                   ; CODE XREF: UI_WeaponSelectTransition+3C   p  ; was: sub_1FC8
                 lea     (word_FFE300).w,a2
                 lea     (word_FFE380).w,a3
-                bsr.w Gfx_CopyPaletteBlock
-                bsr.w Gfx_CopyPaletteBlock
-                bsr.w Gfx_CopyPaletteBlock
-                bsr.w Gfx_CopyPaletteBlock
+                bsr.w   Gfx_CopyPaletteBlock
+                bsr.w   Gfx_CopyPaletteBlock
+                bsr.w   Gfx_CopyPaletteBlock
+                bsr.w   Gfx_CopyPaletteBlock
                 rts
 ; End of function Gfx_LoadFourPalettes
 ; Copies 32-byte palette block from pointer to dual buffers
-Gfx_CopyPaletteBlock:                               ; CODE XREF: Gfx_LoadFourPalettes+8   p  ; was: sub_1FE2
-                                        ; Gfx_LoadFourPalettes+C   p ...
+Gfx_CopyPaletteBlock:                                   ; CODE XREF: Gfx_LoadFourPalettes+8   p  ; was: sub_1FE2
+                                        ; Gfx_LoadFourPalettes+C   p
                 move.l  (a0)+,d0
                 beq.w   loc_200C
                 movea.l d0,a1
@@ -326,7 +325,7 @@ Gfx_CopyPaletteBlock:                               ; CODE XREF: Gfx_LoadFourPal
                 move.l  (a1)+,(a3)+
                 rts
 ; ---------------------------------------------------------------------------
-loc_200C:                               ; CODE XREF: Gfx_CopyPaletteBlock+2   j
+loc_200C:                                               ; CODE XREF: Gfx_CopyPaletteBlock+2   j
                 lea     $20(a2),a2
                 lea     $20(a3),a3
                 rts

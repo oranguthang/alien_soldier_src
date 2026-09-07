@@ -53,7 +53,7 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout lint test runtime runtime-capture runtime-validate release-audit release-check source-inventory
+.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout format lint test runtime runtime-capture runtime-validate release-audit release-check source-inventory
 all: build
 
 # Initialize project from original ROM
@@ -146,9 +146,14 @@ verify-layout: $(LISTING)
 		--rom $(ROM)
 
 lint:
+	@$(PYTHON) $(SCRIPTS_DIR)/asm_style.py src
 	@$(PYTHON) $(SCRIPTS_DIR)/lint_source.py \
 		--policy config/source_policy.json
 	@$(PYTHON) $(SCRIPTS_DIR)/lint_project.py
+
+format:
+	@$(PYTHON) $(SCRIPTS_DIR)/asm_style.py src --fix
+	@$(MAKE) --no-print-directory lint
 
 test:
 	@$(PYTHON) -m unittest discover -s tests -p "test_*.py"
