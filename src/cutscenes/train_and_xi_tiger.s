@@ -1,3 +1,4 @@
+; Dispatches the train-end entity state using a jump table
 Entity_TrainEndDispatcher:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2EF32
                 clr.w   6(a5)
                 move.w  4(a5),d0

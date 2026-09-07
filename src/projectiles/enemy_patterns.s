@@ -154,7 +154,7 @@ dword_2B166:    dc.l    0, $1C170                       ; DATA XREF: Projectile_
 
 ; Initializes homing projectile with trajectory calculation
 Enemy_InitHomingProjectile:                             ; CODE XREF: Enemy_UpdateCircularMotionAndFire+5A   p  ; was: sub_2B206
-                                        ; Enemy_FlyerState4+48   p
+                                        ; Enemy_Stage11FishFireVolleyState+48   p
                 moveq   #$A,d7
                 tst.w   (word_FFFF0E).w
                 beq.s   Enemy_SetProjectileDifficulty

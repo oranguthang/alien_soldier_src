@@ -264,6 +264,16 @@ beetles at alternating screen edges. The cohesive 291-line
 lower-bound exit, and type-`$2D8` defeat debris. Four contradicted generated
 claims are recorded in the name audit.
 
+The Stage 11 fish pass reduced the count to 9,793 by replacing all 51
+address-derived definitions in the former `flyer.s`. Entity type `$454` is a
+wave controller that creates type-`$44C` fish before the Gusthead encounter;
+each fish rises into the playfield, tracks the player's height, optionally
+fires a sixteen-shot homing volley, crosses the screen, and returns to its
+outer edge. Its type-`$10` child is an attached projectile-origin sprite, not
+one of the emitted shots. The cohesive 484-line implementation now lives in
+`src/enemies/stage_11_fish.s`; contradicted generic-flyer, projectile, and
+motion claims are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

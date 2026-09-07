@@ -161,7 +161,7 @@
                 include "src/enemies/stage_10_wasp_and_falling_shot.s"
                 include "src/enemies/stage_12_enemies.s"
                 include "src/enemies/stage_10_beetles.s"
-                include "src/enemies/flyer.s"
+                include "src/enemies/stage_11_fish.s"
                 include "src/cutscenes/train_and_xi_tiger.s"
                 include "src/bosses/xi_tiger.s"
                 include "src/bosses/antroid_and_debris.s"

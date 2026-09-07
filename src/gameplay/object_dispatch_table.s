@@ -274,9 +274,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_ValkirieMainAlt
                 dc.l    Boss_SylpheedIntroStop
                 dc.l    Enemy_Stage18Init
-                dc.l    Enemy_FlyerAttack
+                dc.l    Enemy_Stage11FishController
                 dc.l    Boss_MedusaDamageCheck
-                dc.l    Enemy_FlyerMain
+                dc.l    Stage11_FishWaveController
                 dc.l    Projectile_TrackerSt21Bullet
                 dc.l    Entity_TrainEndDispatcher
                 dc.l    Entity_XiTigerIntro

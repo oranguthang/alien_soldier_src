@@ -28,7 +28,7 @@ listing by `make verify-layout`.
 | `0x02C254-0x02CB85` | Bugmax debris, shared enemy spawning/movement, and stage actors | 3 | static/hypothesis |
 | `0x02CB86-0x02D27B` | projectile-attack and ship enemies, shared helpers, and phase/debris states | 3 | static/hypothesis |
 | `0x02D27C-0x02DF7D` | circling and Stage 9 flies, Viblack shots, and bird enemies | 3 | static/hypothesis |
-| `0x02DF7E-0x02F1A1` | stage 10/12 enemies, flyer, train, and Xi-Tiger intro | 5 | hypothesis |
+| `0x02DF7E-0x02F1A1` | stage 10/12 enemies, Stage 11 fish, train, and Xi-Tiger intro | 5 | hypothesis |
 | `0x02F1A2-0x030B39` | Xi-Tiger, Antroid, ship, stage 18, and Jetsripper weapons | 6 | hypothesis |
 | `0x030B3A-0x032343` | stage 11 parts, Gusthead, and Destroyer Proto | 4 | hypothesis |
 | `0x032344-0x033C49` | stage 14/Jetsripper, Wolf Garopa, Tracker, and Missiray flyer | 4 | hypothesis |

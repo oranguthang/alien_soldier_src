@@ -41,30 +41,30 @@ word_EB3F0:     dc.w    $6800, $700, $E1F8              ; DATA XREF: ROM:000EB49
 word_EB3FC:     dc.w    $6800, $700, $E0F8              ; DATA XREF: Enemy_FlyerAnimation2+6   o
                                         ; Projectile_FlyerAccelerateDown+14   o
                 dc.w    $E808, $700, $FFF8
-word_EB408:     dc.w    $6842, $D00, $5EF               ; DATA XREF: Enemy_FlyerMovement2+A   o
-                                        ; sub_2EDD8:loc_2EDFA   o
+word_EB408:     dc.w    $6842, $D00, $5EF               ; DATA XREF: Enemy_InitStage11Fish+A   o
+                                        ; Enemy_Stage11FishWaitForInnerEdgeState_Finish   o
                 dc.w    $6810, $F00, $F600
                 dc.w    $684A, $100, $5E7
                 dc.w    $6820, $E00, $F6E0
                 dc.w    $683A, $100, $E6DF
                 dc.w    $682C, $400, $EEF
                 dc.w    $E82E, $E00, $DEE7
-word_EB432:     dc.w    $683A, $100, $E6DF              ; DATA XREF: Enemy_FlyerState2+24   o
-                                        ; sub_2EE0C:loc_2EE32   o
+word_EB432:     dc.w    $683A, $100, $E6DF              ; DATA XREF: Enemy_Stage11FishChoosePassState+24   o
+                                        ; Enemy_Stage11FishBrakeInwardMotionState_Finish   o
                 dc.w    $6852, $700, $5EF
                 dc.w    $684C, $600, $5FF
                 dc.w    $6820, $E00, $F6E0
                 dc.w    $6810, $F00, $F600
                 dc.w    $682C, $400, $EEF
                 dc.w    $E82E, $E00, $DEE7
-word_EB45C:     dc.w    $6860, $600, $F4ED              ; DATA XREF: Enemy_FlyerState6+28   o
+word_EB45C:     dc.w    $6860, $600, $F4ED              ; DATA XREF: Enemy_Stage11FishBrakeOutwardMotionState+28   o
                 dc.w    $685A, $600, $FCFD
                 dc.w    $6820, $E00, $F6E0
                 dc.w    $6810, $F00, $F600
                 dc.w    $683A, $100, $E6DF
                 dc.w    $682C, $400, $EEF
                 dc.w    $E82E, $E00, $DEE7
-word_EB486:     dc.w    $683C, $C00, $F6                ; DATA XREF: Enemy_FlyerSpawnProjectile+1C   o
+word_EB486:     dc.w    $683C, $C00, $F6                ; DATA XREF: Enemy_Stage11FishInitEmitterState+1C   o
                 dc.w    $E840, $400, $F8F6
 off_EB492:      dc.w    word_EB3D8-*                    ; DATA XREF: Enemy_FlyerAccelerateFall+1C   o
                 dc.w    1

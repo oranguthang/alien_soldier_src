@@ -1957,6 +1957,138 @@
         "The routine returns when health is already negative or the inactive flag is set.",
         "Only a still-active object plays the sound, selects the shared effect mapping and enters Projectile_InitType88FromCurrent, so the old death-check description inverted the operative condition."
       ]
+    },
+    {
+      "address": "0x02E9FC",
+      "previous_name": "Enemy_FlyerMain",
+      "current_name": "Stage11_FishWaveController",
+      "legacy_name": "sub_2E9FC",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x454 maps here, while the routine itself owns no enemy sprite, collision box, health, or movement fields.",
+        "Its three-state table initializes a pointer list and creates or replaces type-0x44C fish objects, proving that it is the wave controller rather than an individual flyer's main loop."
+      ]
+    },
+    {
+      "address": "0x02EA0E",
+      "previous_name": "Enemy_FlyerDispatcher",
+      "current_name": "Stage11_FishWaveInitState",
+      "legacy_name": "sub_2EA0E",
+      "evidence": "static",
+      "basis": [
+        "This is the first entry selected by Stage11_FishWaveStateOffsets, not the dispatch routine itself.",
+        "It clears the child-pointer list, writes its sentinel, initializes a 64-frame timer and advances the controller state."
+      ]
+    },
+    {
+      "address": "0x02EA58",
+      "previous_name": "Enemy_FlyerMovement1",
+      "current_name": "Stage11_SpawnFish",
+      "legacy_name": "sub_2EA58",
+      "evidence": "static",
+      "basis": [
+        "The routine initializes the newly allocated object through Enemy_InitStage11Fish and stores the wave-controller parent pointer.",
+        "It selects an alternating spawn X coordinate and a fixed Y coordinate; it does not update the caller's movement."
+      ]
+    },
+    {
+      "address": "0x02EABE",
+      "previous_name": "Enemy_FlyerMovement2",
+      "current_name": "Enemy_InitStage11Fish",
+      "legacy_name": "sub_2EABE",
+      "evidence": "static",
+      "basis": [
+        "The routine installs entity type 0x44C and initializes the sprite mapping, collision, damage, hitbox and animation fields.",
+        "It is called only while spawning or replacing a fish, so the generated movement classification was incorrect."
+      ]
+    },
+    {
+      "address": "0x02EB00",
+      "previous_name": "Enemy_FlyerAttack",
+      "current_name": "Enemy_Stage11FishController",
+      "legacy_name": "sub_2EB00",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x44C maps here and the routine performs defeat, stage-shutdown, parent-lifetime, emitter-position and state-dispatch handling every frame.",
+        "Only one later state fires projectiles, so classifying the complete lifecycle controller as an attack routine was too narrow."
+      ]
+    },
+    {
+      "address": "0x02EB94",
+      "previous_name": "Enemy_FlyerSpawnProjectile",
+      "current_name": "Enemy_Stage11FishInitEmitterState",
+      "legacy_name": "sub_2EB94",
+      "evidence": "static",
+      "basis": [
+        "The allocated child remains inert entity type 0x10, receives a sprite mapping, and its address is retained at fish offset 0x5C.",
+        "The fish controller repositions this child every frame and later uses it only as the origin passed to Enemy_InitHomingProjectile; it is an attached emitter sprite, not the fired projectile."
+      ]
+    },
+    {
+      "address": "0x02EBF4",
+      "previous_name": "Enemy_FlyerAccelerate",
+      "current_name": "Enemy_Stage11FishBrakeVerticalMotionState",
+      "legacy_name": "sub_2EBF4",
+      "evidence": "static",
+      "basis": [
+        "The fish enters with negative upward vertical velocity and this state adds 0x4000 until the sign bit clears.",
+        "It then explicitly clears vertical velocity, advances state and starts a timer, so its net action is braking to rest."
+      ]
+    },
+    {
+      "address": "0x02EE0C",
+      "previous_name": "Projectile_FlyerBullet1",
+      "current_name": "Enemy_Stage11FishBrakeInwardMotionState",
+      "legacy_name": "sub_2EE0C",
+      "evidence": "static",
+      "basis": [
+        "This entry is selected from the type-0x44C fish state table and updates the fish's own horizontal and vertical velocity.",
+        "It changes the fish sprite mapping and advances the fish state when horizontal speed reaches zero; no projectile object is initialized."
+      ]
+    },
+    {
+      "address": "0x02EE44",
+      "previous_name": "Projectile_FlyerBullet2",
+      "current_name": "Enemy_Stage11FishAccelerateOutwardState",
+      "legacy_name": "sub_2EE44",
+      "evidence": "static",
+      "basis": [
+        "This is the next type-0x44C fish state after inward braking and it accelerates the same object's horizontal velocity toward plus or minus six.",
+        "The routine creates no child and initializes no projectile fields, contradicting the generated bullet classification."
+      ]
+    },
+    {
+      "address": "0x02EE80",
+      "previous_name": "Projectile_FlyerBullet3",
+      "current_name": "Enemy_Stage11FishWaitForOuterEdgeState",
+      "legacy_name": "sub_2EE80",
+      "evidence": "static",
+      "basis": [
+        "The state waits for the type-0x44C fish itself to reach X coordinate 0xA0 or 0x1A0, then stops horizontal motion and returns to its tracking state.",
+        "It neither represents nor updates a bullet; the actual homing shots use entity type 0x148."
+      ]
+    },
+    {
+      "address": "0x02EEC0",
+      "previous_name": "Enemy_FlyerDestroy",
+      "current_name": "Enemy_Stage11FishBeginExitState",
+      "legacy_name": "sub_2EEC0",
+      "evidence": "static",
+      "basis": [
+        "The state sets a display/status bit and advances to the following upward-acceleration state.",
+        "It leaves the entity type and object slot intact, so it begins an exit sequence instead of destroying the fish."
+      ]
+    },
+    {
+      "address": "0x02EECC",
+      "previous_name": "Enemy_FlyerDecelerate",
+      "current_name": "Enemy_Stage11FishAccelerateUpwardState",
+      "legacy_name": "sub_2EECC",
+      "evidence": "static",
+      "basis": [
+        "Each update subtracts 0x4000 from vertical velocity with no zero test or lower-speed clamp.",
+        "Negative vertical velocity is upward in the engine's downward-positive screen-coordinate convention, so this continuously accelerates upward rather than decelerating."
+      ]
     }
   ]
 }
