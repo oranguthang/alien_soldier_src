@@ -158,6 +158,127 @@
         "The routine prepares the effect-pattern workspace and tail-calls the shared transfer primitive.",
         "It does not perform shooting logic."
       ]
+    },
+    {
+      "address": "0x013ADE",
+      "previous_name": "Boss_UpdateCollisionSystem",
+      "current_name": "Collision_UpdateSystem",
+      "legacy_name": "sub_13ADE",
+      "evidence": "static",
+      "basis": [
+        "The routine builds collision lists and invokes player, weapon, terrain, special-attack, and platform collision passes.",
+        "It is called by the general gameplay update loop and is not owned by one boss."
+      ]
+    },
+    {
+      "address": "0x013B2A",
+      "previous_name": "Enemy_BuildCollisionLists",
+      "current_name": "Collision_BuildEntityLists",
+      "legacy_name": "sub_13B2A",
+      "evidence": "static",
+      "basis": [
+        "The routine scans the complete object pool and classifies entries into five lists according to collision flags.",
+        "Several lists are consumed by player weapons, moving platforms, and targeting code, not only enemy logic."
+      ]
+    },
+    {
+      "address": "0x013CCA",
+      "previous_name": "Enemy_DetectPlayerCollision",
+      "current_name": "Collision_CheckWeaponProjectilesAgainstEnemies",
+      "legacy_name": "sub_13CCA",
+      "evidence": "static",
+      "basis": [
+        "The outer loop scans four entries in the alternating weapon-effect pool at FFBFC0/FFC020.",
+        "On overlap it subtracts projectile damage from target health and handles target defeat or hit scoring."
+      ]
+    },
+    {
+      "address": "0x013E9A",
+      "previous_name": "Player_DetectProjectileHit",
+      "current_name": "Collision_CheckPlayerAgainstHostiles",
+      "legacy_name": "sub_13E9A",
+      "evidence": "static",
+      "basis": [
+        "The fixed collision box is derived from the player object at FFA400.",
+        "The routine scans the primary hostile list and applies resource damage and response state to the player."
+      ]
+    },
+    {
+      "address": "0x01400C",
+      "previous_name": "Sprite_SetBossOAMEntry",
+      "current_name": "Collision_CheckSpecialAttackTargets",
+      "legacy_name": "sub_1400C",
+      "evidence": "static",
+      "basis": [
+        "The routine constructs a collision box around the dedicated object at FFC5C0 and tests two target lists.",
+        "That object is initialized by player dash, projectile, and Z-Leo impact code; the routine performs no OAM writes."
+      ]
+    },
+    {
+      "address": "0x0142D8",
+      "previous_name": "Collision_CheckAllEnemies",
+      "current_name": "Collision_CheckPlayerPlatforms",
+      "legacy_name": "sub_142D8",
+      "evidence": "static",
+      "basis": [
+        "The routine walks only the collision list selected by object flag bit 5.",
+        "Each entry dispatches one of three player-to-moving-platform contact handlers."
+      ]
+    },
+    {
+      "address": "0x0142EC",
+      "previous_name": "Collision_ShipCollisionDispatcher",
+      "current_name": "Collision_DispatchPlatformContact",
+      "legacy_name": "sub_142EC",
+      "evidence": "static",
+      "basis": [
+        "The dispatcher selects a contact handler using the object's mode field at offset 0x46.",
+        "The handlers place the player on a platform top or underside and are not limited to a ship."
+      ]
+    },
+    {
+      "address": "0x014304",
+      "previous_name": "Collision_PlayerShipCollision",
+      "current_name": "Collision_PlayerLandOnPlatform",
+      "legacy_name": "sub_14304",
+      "evidence": "static",
+      "basis": [
+        "After bounds checks the routine places the player at object Y minus 0x20 and links horizontal displacement.",
+        "No ship-specific state or data is accessed."
+      ]
+    },
+    {
+      "address": "0x014386",
+      "previous_name": "Boss_ZLeoPlayerCollision",
+      "current_name": "Collision_PlayerClampToPlatformTop",
+      "legacy_name": "sub_14386",
+      "evidence": "static",
+      "basis": [
+        "The routine clamps the player to object Y minus 0x20 for either vertical travel direction.",
+        "It is selected from the generic platform handler table and contains no Z-Leo-specific reference."
+      ]
+    },
+    {
+      "address": "0x014416",
+      "previous_name": "Enemy_Stage17Init",
+      "current_name": "Collision_PlayerHitPlatformUnderside",
+      "legacy_name": "sub_14416",
+      "evidence": "static",
+      "basis": [
+        "After overlap tests the routine places the player at object Y plus 0x20 and sets underside-contact flags.",
+        "It initializes neither a stage nor an enemy."
+      ]
+    },
+    {
+      "address": "0x0144A6",
+      "previous_name": "UI_DecrementScoreBCD",
+      "current_name": "UI_DecrementCounterBCD",
+      "legacy_name": "sub_144A6",
+      "evidence": "static",
+      "basis": [
+        "The routine subtracts one BCD unit from the two-byte counter at FFFF42 and saturates underflow at 9999.",
+        "It never accesses the four-byte score value at FFA212."
+      ]
     }
   ]
 }

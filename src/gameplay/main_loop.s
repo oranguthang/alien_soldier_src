@@ -16,7 +16,7 @@ loc_1C68A:                                              ; CODE XREF: Sys_Gamepla
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$EEE,(VDP_DATA).l
 loc_1C6A6:                                              ; CODE XREF: Sys_GameplayMainLoop+36   j
-                jsr     (Boss_UpdateCollisionSystem).l
+                jsr     (Collision_UpdateSystem).l
                 tst.b   (byte_FFF746).w
                 bpl.s   loc_1C6C4
                 move.l  #$C0420000,(VDP_CTRL).l

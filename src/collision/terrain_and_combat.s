@@ -1,9 +1,9 @@
-Collision_PlayerWeaponVsEnemy:                          ; CODE XREF: Boss_UpdateCollisionSystem+2A   p  ; was: sub_14190
+Collision_PlayerWeaponVsEnemy:                          ; CODE XREF: Collision_UpdateSystem+2A   p  ; was: sub_14190
                 movea.w #(byte_FF8F80-M68K_RAM),a5
                 move.w  (word_FF8D7E).w,d7
-                bmi.w   locret_141F0
+                bmi.w   Collision_PlayerWeaponVsEnemy_Return
                 moveq   #4,d5
-loc_1419E:                                              ; CODE XREF: Collision_PlayerWeaponVsEnemy+5C   j
+Collision_PlayerWeaponVsEnemy_WeaponLoop:               ; CODE XREF: Collision_PlayerWeaponVsEnemy+5C   j  ; was: loc_1419E
                 movea.w (a5)+,a3
                 moveq   #$FFFFFFF8,d0
                 add.w   $10(a3),d0
@@ -15,39 +15,39 @@ loc_1419E:                                              ; CODE XREF: Collision_P
                 add.w   $14(a3),d3
                 movea.w #(byte_FF8E00-M68K_RAM),a4
                 move.w  (word_FF8D78).w,d6
-                bmi.w   locret_141F0
-loc_141C4:                                              ; CODE XREF: Collision_PlayerWeaponVsEnemy:loc_141E8   j
+                bmi.w   Collision_PlayerWeaponVsEnemy_Return
+Collision_PlayerWeaponVsEnemy_TargetLoop:               ; CODE XREF: Collision_PlayerWeaponVsEnemy:Collision_PlayerWeaponVsEnemy_NextTarget   j  ; was: loc_141C4
                 movea.w (a4)+,a2
                 cmp.w   $34(a2),d1
-                bmi.s   loc_141E8
+                bmi.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 cmp.w   $36(a2),d0
-                bpl.s   loc_141E8
+                bpl.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 cmp.w   $32(a2),d2
-                bpl.s   loc_141E8
+                bpl.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 cmp.w   $30(a2),d3
-                bmi.s   loc_141E8
+                bmi.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 btst    d5,$21(a2)
-                bne.s   loc_141F2
-                beq.w   loc_14278
-loc_141E8:                                              ; CODE XREF: Collision_PlayerWeaponVsEnemy+3A   j
+                bne.s   Collision_PlayerWeaponVsEnemy_ResolveFlaggedTarget
+                beq.w   Collision_PlayerWeaponVsEnemy_ApplyStandardDamage
+Collision_PlayerWeaponVsEnemy_NextTarget:               ; CODE XREF: Collision_PlayerWeaponVsEnemy+3A   j  ; was: loc_141E8
                                         ; Collision_PlayerWeaponVsEnemy+40   j
-                dbf     d6,loc_141C4
-                dbf     d7,loc_1419E
-locret_141F0:                                           ; CODE XREF: Collision_PlayerWeaponVsEnemy+8   j
+                dbf     d6,Collision_PlayerWeaponVsEnemy_TargetLoop
+                dbf     d7,Collision_PlayerWeaponVsEnemy_WeaponLoop
+Collision_PlayerWeaponVsEnemy_Return:                   ; CODE XREF: Collision_PlayerWeaponVsEnemy+8   j  ; was: locret_141F0
                                         ; Collision_PlayerWeaponVsEnemy+30   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_141F2:                                              ; CODE XREF: Collision_PlayerWeaponVsEnemy+52   j
+Collision_PlayerWeaponVsEnemy_ResolveFlaggedTarget:     ; CODE XREF: Collision_PlayerWeaponVsEnemy+52   j  ; was: loc_141F2
                 btst    #2,(byte_FF80EC).w
-                bne.s   loc_14202
+                bne.s   Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage
                 tst.w   (word_FF8200).w
-                beq.w   loc_141E8
-loc_14202:                                              ; CODE XREF: Collision_PlayerWeaponVsEnemy+68   j
+                beq.w   Collision_PlayerWeaponVsEnemy_NextTarget
+Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_PlayerWeaponVsEnemy+68   j  ; was: loc_14202
                 bset    #7,$22(a3)
                 btst    #1,(byte_FF80EC).w
-                bne.s   loc_141E8
+                bne.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 btst    #4,$23(a2)
-                bne.s   loc_141E8
+                bne.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 movem.l d0,-(sp)
                 move.b  #$AE,d0
                 jsr     (Sound_PlaySFX).l
@@ -61,22 +61,22 @@ loc_14202:                                              ; CODE XREF: Collision_P
                 move.w  #$20,(word_FF809A).w            ; ' '
                 mulu.w  $24(a2),d4
                 sub.w   d4,(word_FF8200).w
-                bpl.s   loc_141E8
+                bpl.s   Collision_PlayerWeaponVsEnemy_NextTarget
                 clr.w   (word_FF8200).w
                 clr.w   (word_FF8202).w
                 clr.b   (byte_FF80EC).w
                 clr.w   (word_FF8234).w
                 clr.w   (word_FF8236).w
                 clr.b   (byte_FF8260).w
-                bsr.w   UI_DecrementScoreBCD
-                bra.w   loc_141E8
+                bsr.w   UI_DecrementCounterBCD
+                bra.w   Collision_PlayerWeaponVsEnemy_NextTarget
 ; ---------------------------------------------------------------------------
-loc_14278:                                              ; CODE XREF: Collision_PlayerWeaponVsEnemy+54   j
+Collision_PlayerWeaponVsEnemy_ApplyStandardDamage:      ; CODE XREF: Collision_PlayerWeaponVsEnemy+54   j  ; was: loc_14278
                 tst.w   $24(a2)
-                bmi.w   loc_141E8
+                bmi.w   Collision_PlayerWeaponVsEnemy_NextTarget
                 bset    #7,$22(a3)
                 btst    #4,$23(a2)
-                bne.w   loc_141E8
+                bne.w   Collision_PlayerWeaponVsEnemy_NextTarget
                 ori.b   #$40,$22(a2)                    ; '@'
                 movem.l d0,-(sp)
                 move.b  #$AE,d0
@@ -84,77 +84,77 @@ loc_14278:                                              ; CODE XREF: Collision_P
                 movem.l (sp)+,d0
                 move.w  $26(a3),d4
                 sub.w   d4,$24(a2)
-                bpl.w   loc_141E8
+                bpl.w   Collision_PlayerWeaponVsEnemy_NextTarget
                 btst    #6,$23(a2)
-                beq.s   loc_142C6
+                beq.s   Collision_PlayerWeaponVsEnemy_FinishStandardDefeat
                 subq.w  #1,(word_FF829E).w
-                bpl.s   loc_142C6
+                bpl.s   Collision_PlayerWeaponVsEnemy_FinishStandardDefeat
                 clr.w   (word_FF829E).w
-loc_142C6:                                              ; CODE XREF: Collision_PlayerWeaponVsEnemy+12A   j
+Collision_PlayerWeaponVsEnemy_FinishStandardDefeat:     ; CODE XREF: Collision_PlayerWeaponVsEnemy+12A   j  ; was: loc_142C6
                                         ; Collision_PlayerWeaponVsEnemy+130   j
                 btst    #7,$23(a2)
-                bne.w   loc_141E8
-                bsr.w   UI_DecrementScoreBCD
-                bra.w   loc_141E8
+                bne.w   Collision_PlayerWeaponVsEnemy_NextTarget
+                bsr.w   UI_DecrementCounterBCD
+                bra.w   Collision_PlayerWeaponVsEnemy_NextTarget
 ; End of function Collision_PlayerWeaponVsEnemy
-; Loops through all active enemies checking collision with projectiles
-Collision_CheckAllEnemies:                              ; CODE XREF: Player_ProcessAction+A   p  ; was: sub_142D8
+; Checks the player against objects registered as moving platforms
+Collision_CheckPlayerPlatforms:                         ; CODE XREF: Player_ProcessAction+A   p  ; was: sub_142D8
                                         ; Player_UpdateTerrainCheck+A   p
                 movea.w #(byte_FF8F00-M68K_RAM),a4
                 move.w  (word_FF8D7C).w,d7
-                bmi.s   locret_142EA
-; Processes collision for each enemy in active list
-Collision_ProcessEnemyLoop:                             ; CODE XREF: Collision_CheckAllEnemies+E   j  ; was: loc_142E2
+                bmi.s   Collision_CheckPlayerPlatforms_Return
+; Processes one entry in the moving-platform collision list
+Collision_PlayerPlatformLoop:                           ; CODE XREF: Collision_CheckPlayerPlatforms+E   j  ; was: loc_142E2
                 movea.w (a4)+,a2
-                bsr.s   Collision_ShipCollisionDispatcher
-                dbf     d7,Collision_ProcessEnemyLoop
-locret_142EA:                                           ; CODE XREF: Collision_CheckAllEnemies+8   j
-                                        ; DATA XREF: ROM:off_142FC   o
+                bsr.s   Collision_DispatchPlatformContact
+                dbf     d7,Collision_PlayerPlatformLoop
+Collision_CheckPlayerPlatforms_Return:                  ; CODE XREF: Collision_CheckPlayerPlatforms+8   j  ; was: locret_142EA
+                                        ; DATA XREF: ROM:Collision_PlatformHandlerOffsets   o
                 rts
-; End of function Collision_CheckAllEnemies
-; Dispatcher for ship collision types
-Collision_ShipCollisionDispatcher:                      ; CODE XREF: Collision_CheckAllEnemies+C   p  ; was: sub_142EC
+; End of function Collision_CheckPlayerPlatforms
+; Dispatches the platform contact mode stored in the object
+Collision_DispatchPlatformContact:                      ; CODE XREF: Collision_CheckPlayerPlatforms+C   p  ; was: sub_142EC
                 move.w  $46(a2),d0
-                movea.w off_142FC(pc,d0.w),a0
-                adda.l  #Collision_PlayerShipCollision,a0
+                movea.w Collision_PlatformHandlerOffsets(pc,d0.w),a0
+                adda.l  #Collision_PlayerLandOnPlatform,a0
                 jmp     (a0)
-; End of function Collision_ShipCollisionDispatcher
+; End of function Collision_DispatchPlatformContact
 ; ---------------------------------------------------------------------------
-off_142FC:      dc.w    locret_142EA-Collision_PlayerShipCollision
-                                        ; DATA XREF: Collision_ShipCollisionDispatcher+4   r
-                dc.w    Collision_PlayerShipCollision-Collision_PlayerShipCollision
-                dc.w    Enemy_Stage17Init-Collision_PlayerShipCollision
-                dc.w    Boss_ZLeoPlayerCollision-Collision_PlayerShipCollision
+Collision_PlatformHandlerOffsets:   dc.w    Collision_CheckPlayerPlatforms_Return-Collision_PlayerLandOnPlatform  ; was: off_142FC
+                                        ; DATA XREF: Collision_DispatchPlatformContact+4   r
+                dc.w    Collision_PlayerLandOnPlatform-Collision_PlayerLandOnPlatform
+                dc.w    Collision_PlayerHitPlatformUnderside-Collision_PlayerLandOnPlatform
+                dc.w    Collision_PlayerClampToPlatformTop-Collision_PlayerLandOnPlatform
 
-; Player collision with ship platform
-Collision_PlayerShipCollision:                          ; DATA XREF: Collision_ShipCollisionDispatcher+8   o  ; was: sub_14304
-                                        ; ROM:off_142FC   o
+; Lands the player on top of a moving platform
+Collision_PlayerLandOnPlatform:                         ; DATA XREF: Collision_DispatchPlatformContact+8   o  ; was: sub_14304
+                                        ; ROM:Collision_PlatformHandlerOffsets   o
                 tst.w   $1C(a5)
-                bmi.w   locret_14384
+                bmi.w   Collision_PlayerLandOnPlatform_Return
                 move.w  $28(a2),d0
                 add.w   $48(a2),d0
                 move.w  $10(a5),d1
                 addq.w  #8,d1
                 cmp.w   d1,d0
-                bpl.w   locret_14384
+                bpl.w   Collision_PlayerLandOnPlatform_Return
                 move.w  $2A(a2),d0
                 add.w   $48(a2),d0
                 move.w  $10(a5),d1
                 subq.w  #8,d1
                 cmp.w   d1,d0
-                bmi.s   locret_14384
+                bmi.s   Collision_PlayerLandOnPlatform_Return
                 move.w  $4A(a2),d0
                 subq.w  #6,d0
                 move.w  $14(a5),d1
                 addi.w  #$26,d1                         ; '&'
                 cmp.w   d1,d0
-                bpl.s   locret_14384
+                bpl.s   Collision_PlayerLandOnPlatform_Return
                 move.w  $4A(a2),d0
                 addq.w  #6,d0
                 move.w  $14(a5),d1
                 addi.w  #-$1A,d1
                 cmp.w   d1,d0
-                bmi.s   locret_14384
+                bmi.s   Collision_PlayerLandOnPlatform_Return
                 clr.l   $1C(a5)
                 bset    #0,6(a5)
                 bset    #0,6(a2)
@@ -166,46 +166,46 @@ Collision_PlayerShipCollision:                          ; DATA XREF: Collision_S
                 move.w  $4A(a2),d0
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,$14(a5)
-locret_14384:                                           ; CODE XREF: Collision_PlayerShipCollision+4   j
-                                        ; Collision_PlayerShipCollision+18   j
+Collision_PlayerLandOnPlatform_Return:                  ; CODE XREF: Collision_PlayerLandOnPlatform+4   j  ; was: locret_14384
+                                        ; Collision_PlayerLandOnPlatform+18   j
                 rts
-; End of function Collision_PlayerShipCollision
-; Player collision handler
-Boss_ZLeoPlayerCollision:                               ; DATA XREF: ROM:00014302   o  ; was: sub_14386
+; End of function Collision_PlayerLandOnPlatform
+; Clamps the player to a platform top for either vertical direction
+Collision_PlayerClampToPlatformTop:                     ; DATA XREF: ROM:00014302   o  ; was: sub_14386
                 move.w  $28(a2),d0
                 add.w   $48(a2),d0
                 move.w  $10(a5),d1
                 addq.w  #8,d1
                 cmp.w   d1,d0
-                bpl.w   locret_14414
+                bpl.w   Collision_PlayerClampToPlatformTop_Return
                 move.w  $2A(a2),d0
                 add.w   $48(a2),d0
                 move.w  $10(a5),d1
                 subq.w  #8,d1
                 cmp.w   d1,d0
-                bmi.s   locret_14414
+                bmi.s   Collision_PlayerClampToPlatformTop_Return
                 move.w  $4A(a2),d0
                 subq.w  #6,d0
                 move.w  $14(a5),d1
                 addi.w  #$26,d1                         ; '&'
                 cmp.w   d1,d0
-                bpl.s   locret_14414
+                bpl.s   Collision_PlayerClampToPlatformTop_Return
                 move.w  $4A(a2),d0
                 addq.w  #6,d0
                 move.w  $14(a5),d1
                 addi.w  #-$1A,d1
                 cmp.w   d1,d0
-                bmi.s   locret_14414
+                bmi.s   Collision_PlayerClampToPlatformTop_Return
                 tst.w   $1C(a5)
-                bpl.s   loc_143EA
+                bpl.s   Collision_PlayerClampToPlatformTop_Attach
                 move.w  $4A(a2),d0
                 subi.w  #$20,d0                         ; ' '
                 cmp.w   $14(a5),d0
-                bpl.s   locret_14414
+                bpl.s   Collision_PlayerClampToPlatformTop_Return
                 move.w  d0,$14(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_143EA:                                              ; CODE XREF: Boss_ZLeoPlayerCollision+4E   j
+Collision_PlayerClampToPlatformTop_Attach:              ; CODE XREF: Collision_PlayerClampToPlatformTop+4E   j  ; was: loc_143EA
                 move.w  $4A(a2),d0
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,$14(a5)
@@ -216,44 +216,44 @@ loc_143EA:                                              ; CODE XREF: Boss_ZLeoPl
                 sub.w   $48(a2),d5
                 neg.w   d5
                 add.w   d5,$10(a5)
-locret_14414:                                           ; CODE XREF: Boss_ZLeoPlayerCollision+10   j
-                                        ; Boss_ZLeoPlayerCollision+24   j
+Collision_PlayerClampToPlatformTop_Return:              ; CODE XREF: Collision_PlayerClampToPlatformTop+10   j  ; was: locret_14414
+                                        ; Collision_PlayerClampToPlatformTop+24   j
                 rts
-; End of function Boss_ZLeoPlayerCollision
-; Initializes Stage 17 enemies
-Enemy_Stage17Init:                                      ; DATA XREF: ROM:00014300   o  ; was: sub_14416
+; End of function Collision_PlayerClampToPlatformTop
+; Resolves contact with the underside of a moving platform
+Collision_PlayerHitPlatformUnderside:                   ; DATA XREF: ROM:00014300   o  ; was: sub_14416
                 clr.w   6(a2)
                 tst.l   $1C(a5)
-                beq.s   loc_14424
-                bpl.w   locret_144A4
-loc_14424:                                              ; CODE XREF: Enemy_Stage17Init+8   j
+                beq.s   Collision_PlayerHitPlatformUnderside_CheckBounds
+                bpl.w   Collision_PlayerHitPlatformUnderside_Return
+Collision_PlayerHitPlatformUnderside_CheckBounds:       ; CODE XREF: Collision_PlayerHitPlatformUnderside+8   j  ; was: loc_14424
                 move.w  $28(a2),d0
                 add.w   $48(a2),d0
                 move.w  $10(a5),d1
                 addq.w  #8,d1
                 cmp.w   d1,d0
-                bpl.w   locret_144A4
+                bpl.w   Collision_PlayerHitPlatformUnderside_Return
                 move.w  $2A(a2),d0
                 add.w   $48(a2),d0
                 move.w  $10(a5),d1
                 subq.w  #8,d1
                 cmp.w   d1,d0
-                bmi.s   locret_144A4
+                bmi.s   Collision_PlayerHitPlatformUnderside_Return
                 move.w  $4A(a2),d0
                 subq.w  #6,d0
                 move.w  $14(a5),d1
                 addi.w  #$26,d1                         ; '&'
                 cmp.w   d1,d0
-                bpl.s   locret_144A4
+                bpl.s   Collision_PlayerHitPlatformUnderside_Return
                 btst    #4,$E(a5)
-                bne.s   loc_14476
+                bne.s   Collision_PlayerHitPlatformUnderside_Attach
                 move.w  $4A(a2),d0
                 addq.w  #6,d0
                 move.w  $14(a5),d1
                 addi.w  #-$1A,d1
                 cmp.w   d1,d0
-                bmi.s   locret_144A4
-loc_14476:                                              ; CODE XREF: Enemy_Stage17Init+4C   j
+                bmi.s   Collision_PlayerHitPlatformUnderside_Return
+Collision_PlayerHitPlatformUnderside_Attach:            ; CODE XREF: Collision_PlayerHitPlatformUnderside+4C   j  ; was: loc_14476
                 clr.l   $1C(a5)
                 bset    #1,6(a5)
                 bset    #1,6(a2)
@@ -265,13 +265,13 @@ loc_14476:                                              ; CODE XREF: Enemy_Stage
                 move.w  $4A(a2),d0
                 addi.w  #$20,d0                         ; ' '
                 move.w  d0,$14(a5)
-locret_144A4:                                           ; CODE XREF: Enemy_Stage17Init+A   j
-                                        ; Enemy_Stage17Init+1E   j
+Collision_PlayerHitPlatformUnderside_Return:            ; CODE XREF: Collision_PlayerHitPlatformUnderside+A   j  ; was: locret_144A4
+                                        ; Collision_PlayerHitPlatformUnderside+1E   j
                 rts
-; End of function Enemy_Stage17Init
-; Decrements score value using BCD arithmetic for display
-UI_DecrementScoreBCD:                                   ; CODE XREF: Enemy_DetectPlayerCollision+122   p  ; was: sub_144A6
-                                        ; Enemy_DetectPlayerCollision+196   p
+; End of function Collision_PlayerHitPlatformUnderside
+; Decrements the shared two-byte BCD counter, saturating at 9999
+UI_DecrementCounterBCD:                                 ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+122   p  ; was: sub_144A6
+                                        ; Collision_CheckWeaponProjectilesAgainstEnemies+196   p
                 movem.l d1/a3-a4,-(sp)
                 movea.w #(word_FFFF44-M68K_RAM),a3
                 movea.w #(word_FF804A-M68K_RAM),a4
@@ -279,12 +279,12 @@ UI_DecrementScoreBCD:                                   ; CODE XREF: Enemy_Detec
                 sub.w   d1,d1
                 abcd    -(a4),-(a3)
                 abcd    -(a4),-(a3)
-                bcc.s   loc_144C6
+                bcc.s   UI_DecrementCounterBCD_Return
                 move.w  #$9999,(word_FFFF42).w
-loc_144C6:                                              ; CODE XREF: UI_DecrementScoreBCD+18   j
+UI_DecrementCounterBCD_Return:                          ; CODE XREF: UI_DecrementCounterBCD+18   j  ; was: loc_144C6
                 movem.l (sp)+,d1/a3-a4
                 rts
-; End of function UI_DecrementScoreBCD
+; End of function UI_DecrementCounterBCD
 ; Gets entity position coordinates for collision detection
 Collision_GetEntityPosition:                            ; CODE XREF: Enemy_BouncingProjectile:loc_2B5C0   p  ; was: sub_144CC
                                         ; sub_2B88A:loc_2B8AA   p
@@ -355,14 +355,14 @@ Physics_AlignToTerrainTop:                              ; CODE XREF: Enemy_Updat
 ; Aligns entity horizontally to wall
 Physics_AlignToWallSurface:
                 tst.w   $18(a5)                         ; was: sub_14560
-                bmi.s   loc_14576
+                bmi.s   Physics_AlignToWallSurface_AdjustOppositeDirection
                 move.w  d0,d4
                 add.w   (dword_FFA900).w,d4
                 andi.w  #7,d4
                 sub.w   d4,$10(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_14576:                                              ; CODE XREF: Physics_AlignToWallSurface+4   j
+Physics_AlignToWallSurface_AdjustOppositeDirection:     ; CODE XREF: Physics_AlignToWallSurface+4   j  ; was: loc_14576
                 move.w  d0,d4
                 add.w   (dword_FFA900).w,d4
                 neg.w   d4
@@ -384,12 +384,12 @@ Physics_GetTerrainTileData:                             ; CODE XREF: Physics_Ent
                 add.w   $10(a5),d0
                 add.w   $14(a5),d1
                 cmpi.w  #$A0,d1
-                bpl.s   loc_145AE
+                bpl.s   Physics_GetTerrainTileData_ReadTile
                 moveq   #0,d2
                 moveq   #0,d3
                 rts
 ; ---------------------------------------------------------------------------
-loc_145AE:                                              ; CODE XREF: Physics_GetTerrainTileData+C   j
+Physics_GetTerrainTileData_ReadTile:                    ; CODE XREF: Physics_GetTerrainTileData+C   j  ; was: loc_145AE
                 move.w  d0,d2
                 sub.w   d7,d2
                 add.w   (dword_FFA900).w,d2
@@ -406,15 +406,15 @@ loc_145AE:                                              ; CODE XREF: Physics_Get
                 andi.w  #$7FF,d2
                 move.b  (a1,d2.w),d2
                 andi.w  #$FE,d2
-                beq.s   locret_145F2
+                beq.s   Physics_GetTerrainTileData_Return
                 btst    #$B,d3
-                beq.s   loc_145E8
+                beq.s   Physics_GetTerrainTileData_CheckSecondTileFlag
                 addq.w  #8,d2
-loc_145E8:                                              ; CODE XREF: Physics_GetTerrainTileData+4A   j
+Physics_GetTerrainTileData_CheckSecondTileFlag:         ; CODE XREF: Physics_GetTerrainTileData+4A   j  ; was: loc_145E8
                 btst    #$C,d3
-                beq.s   locret_145F2
+                beq.s   Physics_GetTerrainTileData_Return
                 addi.w  #$40,d2                         ; '@'
-locret_145F2:                                           ; CODE XREF: Physics_GetTerrainTileData+44   j
+Physics_GetTerrainTileData_Return:                      ; CODE XREF: Physics_GetTerrainTileData+44   j  ; was: locret_145F2
                                         ; Physics_GetTerrainTileData+52   j
                 rts
 ; End of function Physics_GetTerrainTileData
@@ -441,11 +441,11 @@ Collision_CheckProjectileTile:                          ; CODE XREF: Enemy_Homin
                 andi.w  #$7FF,d2
                 move.b  (a1,d2.w),d2
                 andi.w  #$FE,d2
-                beq.s   locret_14646
+                beq.s   Collision_CheckProjectileTile_Return
                 cmpi.w  #$80,d2
-                bpl.s   locret_14646
+                bpl.s   Collision_CheckProjectileTile_Return
                 moveq   #0,d2
-locret_14646:                                           ; CODE XREF: Collision_CheckProjectileTile+48   j
+Collision_CheckProjectileTile_Return:                   ; CODE XREF: Collision_CheckProjectileTile+48   j  ; was: locret_14646
                                         ; Collision_CheckProjectileTile+4E   j
                 rts
 ; End of function Collision_CheckProjectileTile
@@ -459,18 +459,18 @@ Physics_EntityWallCheck:                                ; CODE XREF: Physics_Ent
                 moveq   #0,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   loc_14670
+                bmi.s   Physics_EntityWallCheck_CheckRight
                 bset    #2,7(a5)
                 bsr.w   Physics_HandleWallCollision
-loc_14670:                                              ; CODE XREF: Physics_EntityWallCheck+1C   j
+Physics_EntityWallCheck_CheckRight:                     ; CODE XREF: Physics_EntityWallCheck+1C   j  ; was: loc_14670
                 moveq   #8,d0
                 moveq   #0,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   locret_14688
+                bmi.s   Physics_EntityWallCheck_Return
                 bset    #3,7(a5)
                 bsr.w   Sprite_UpdateBossAnimation
-locret_14688:                                           ; CODE XREF: Physics_EntityWallCheck+34   j
+Physics_EntityWallCheck_Return:                         ; CODE XREF: Physics_EntityWallCheck+34   j  ; was: locret_14688
                 rts
 ; End of function Physics_EntityWallCheck
 ; Multi-point terrain collision check for boss with wall detection
@@ -478,9 +478,9 @@ Physics_BossTerrainCheck:                               ; CODE XREF: Physics_Bos
                                         ; sub_2C71E:loc_2C850   p
                 moveq   #$18,d6
                 tst.w   $1C(a5)
-                bmi.s   loc_14694
+                bmi.s   Physics_BossTerrainCheck_Begin
                 moveq   #$FFFFFFE8,d6
-loc_14694:                                              ; CODE XREF: Physics_BossTerrainCheck+6   j
+Physics_BossTerrainCheck_Begin:                         ; CODE XREF: Physics_BossTerrainCheck+6   j  ; was: loc_14694
                                         ; Player_TerrainCheckFlipped+12   j
                 lea     (M68K_RAM).l,a0
                 lea     (dword_FF7800).l,a1
@@ -489,37 +489,36 @@ loc_14694:                                              ; CODE XREF: Physics_Bos
                 moveq   #0,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   loc_146BE
+                bmi.s   Physics_BossTerrainCheck_CheckLowerLeft
                 bset    #2,7(a5)
                 bsr.w   Physics_HandleWallCollision
-                bra.s   loc_146D0
+                bra.s   Physics_BossTerrainCheck_CheckRight
 ; ---------------------------------------------------------------------------
-loc_146BE:                                              ; CODE XREF: Physics_BossTerrainCheck+26   j
+Physics_BossTerrainCheck_CheckLowerLeft:                ; CODE XREF: Physics_BossTerrainCheck+26   j  ; was: loc_146BE
                 moveq   #$FFFFFFF8,d0
                 move.w  d6,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   loc_146D0
+                bmi.s   Physics_BossTerrainCheck_CheckRight
                 bsr.w   Physics_HandleWallCollision
-loc_146D0:                                              ; CODE XREF: Physics_BossTerrainCheck+32   j
+Physics_BossTerrainCheck_CheckRight:                    ; CODE XREF: Physics_BossTerrainCheck+32   j  ; was: loc_146D0
                                         ; Physics_BossTerrainCheck+40   j
                 moveq   #8,d0
                 moveq   #0,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   loc_146E8
+                bmi.s   Physics_BossTerrainCheck_CheckLowerRight
                 bset    #3,7(a5)
                 bra.w   Sprite_UpdateBossAnimation
 ; ---------------------------------------------------------------------------
-loc_146E8:                                              ; CODE XREF: Physics_BossTerrainCheck+52   j
+Physics_BossTerrainCheck_CheckLowerRight:               ; CODE XREF: Physics_BossTerrainCheck+52   j  ; was: loc_146E8
                 moveq   #8,d0
                 move.w  d6,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   locret_146FA
+                bmi.s   Physics_BossTerrainCheck_Return
                 bra.w   Sprite_UpdateBossAnimation
 ; ---------------------------------------------------------------------------
-locret_146FA:                                           ; CODE XREF: Physics_BossTerrainCheck+6A   j
+Physics_BossTerrainCheck_Return:                        ; CODE XREF: Physics_BossTerrainCheck+6A   j  ; was: locret_146FA
                 rts
 ; End of function Physics_BossTerrainCheck
-; Dispatches player action handlers

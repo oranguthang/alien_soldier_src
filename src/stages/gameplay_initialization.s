@@ -214,7 +214,7 @@ loc_1F07C:                                              ; CODE XREF: UI_UpdateMe
 ; Main gameplay loop with player physics and rendering
 Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_DispatchGameState+CA   o  ; was: sub_1F084
                 jsr     (Gfx_UpdateScrollPosition).l
-                jsr     (Boss_UpdateCollisionSystem).l
+                jsr     (Collision_UpdateSystem).l
                 jsr     (Sys_InitObjectPointers).l
                 jsr     (UI_CheckVBlankFlag).l
                 jsr     (Physics_ApplyFriction).l

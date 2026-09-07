@@ -16,7 +16,7 @@ Player_ProcessAction:                                   ; CODE XREF: Player_Hand
                                         ; Physics_ApplyBossVelocity+6   p
                 btst    #5,(byte_FF8245).w
                 bne.w   locret_16D7E
-                jsr     (Collision_CheckAllEnemies).l
+                jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Player_ActionDispatcher
 ; End of function Player_ProcessAction
 ; Updates player state and checks terrain collision
@@ -24,7 +24,7 @@ Player_UpdateTerrainCheck:                              ; CODE XREF: Physics_Bos
                                         ; Player_DashKickState+E   p
                 btst    #5,(byte_FF8245).w
                 bne.w   locret_16D7E
-                jsr     (Collision_CheckAllEnemies).l
+                jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Player_CheckTerrainCollision
 ; End of function Player_UpdateTerrainCheck
 ; Standard terrain collision check for player
@@ -32,7 +32,7 @@ Player_TerrainCheckStandard:                            ; CODE XREF: Player_Hand
                                         ; Player_HandleAirDashState+6   p
                 btst    #5,(byte_FF8245).w
                 bne.w   locret_16D7E
-                jsr     (Collision_CheckAllEnemies).l
+                jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_MultiPointTerrainCheck
 ; End of function Player_TerrainCheckStandard
 ; Alternative terrain collision check with velocity
@@ -40,7 +40,7 @@ Player_TerrainCheckAlternate:                           ; CODE XREF: Physics_Bos
                                         ; Player_HandleFallingState+5A   p
                 btst    #5,(byte_FF8245).w
                 bne.w   locret_16D7E
-                jsr     (Collision_CheckAllEnemies).l
+                jsr     (Collision_CheckPlayerPlatforms).l
                 jmp     Physics_TerrainCheckWithVelocity
 ; End of function Player_TerrainCheckAlternate
 ; Dispatches player action based on facing direction
@@ -48,7 +48,7 @@ Player_DirectionDispatcher:                             ; CODE XREF: Player_Phoe
                                         ; sub_159E0:loc_159F0   p
                 btst    #5,(byte_FF8245).w
                 bne.w   locret_16D7E
-                jsr     (Collision_CheckAllEnemies).l
+                jsr     (Collision_CheckPlayerPlatforms).l
                 btst    #4,$E(a5)
                 beq.w   Player_ActionDispatcher
                 jmp     Physics_MultiPointTerrainCheck
@@ -60,9 +60,9 @@ Player_TerrainCheckFlipped:                             ; CODE XREF: Player_Phoe
                 bne.w   locret_16D7E
                 moveq   #$FFFFFFE8,d6
                 btst    #4,$E(a5)
-                beq.w   loc_14694
+                beq.w   Physics_BossTerrainCheck_Begin
                 moveq   #$18,d6
-                jmp     loc_14694
+                jmp     Physics_BossTerrainCheck_Begin
 ; ---------------------------------------------------------------------------
 locret_16D7E:                                           ; CODE XREF: Physics_EntityTerrainWrapper+6   j
                                         ; Physics_BossTerrainWrapper+6   j

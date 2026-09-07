@@ -1,5 +1,5 @@
 UI_AddScoreBCD:                                         ; CODE XREF: Text_FinalizeAndSaveScore+14   p  ; was: sub_3954
-                                        ; Enemy_DetectPlayerCollision+E2   p
+                                        ; Collision_CheckWeaponProjectilesAgainstEnemies+E2   p
                 tst.w   (word_FFA270).w
                 beq.s   locret_397C
                 lea     (word_FFA216).w,a0

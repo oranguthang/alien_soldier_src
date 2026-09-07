@@ -51,6 +51,13 @@ Shield Viper block was reclassified under `src/bosses/`, and the unrelated
 Shield Viper names that described pattern-buffer rendering as movement,
 palette, cleanup, or shooting logic are recorded in the name audit.
 
+The collision pass reduced the count to 10,982 without splitting its two
+cohesive 525--566-line modules. Static data flow corrected eleven generated
+names, including an alleged OAM writer that actually checks the player's
+special-attack object, and an alleged Stage 17 initializer that resolves
+contact with a moving platform's underside. The corrections and evidence are
+recorded in `config/name_audit.json`.
+
 Three especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
