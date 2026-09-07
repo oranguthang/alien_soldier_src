@@ -14,69 +14,69 @@ Player_GroundedMovementState:                           ; DATA XREF: ROM:0001506
                 btst    #1,$69(a5)
                 bne.w   Player_InitJumpCancelState
                 btst    #4,$69(a5)
-                beq.s   loc_156FC
+                beq.s   Player_GroundedMovementState_CheckHorizontalInput
                 tst.w   (word_FFA22A).w
                 bne.w   Player_InitAirJumpState
-loc_156FC:                                              ; CODE XREF: Player_GroundedMovementState+3A   j
+Player_GroundedMovementState_CheckHorizontalInput:      ; CODE XREF: Player_GroundedMovementState+3A   j  ; was: loc_156FC
                 btst    #2,$69(a5)
-                bne.s   loc_1570E
+                bne.s   Player_GroundedMovementState_Accelerate
                 btst    #3,$69(a5)
                 beq.w   Player_InitAirJumpState
-loc_1570E:                                              ; CODE XREF: Player_GroundedMovementState+4A   j
+Player_GroundedMovementState_Accelerate:                ; CODE XREF: Player_GroundedMovementState+4A   j  ; was: loc_1570E
                 bsr.w   Physics_AccelerateHorizontalByFacing
                 btst    #4,$69(a5)
                 beq.w   Player_RenderDirectionalMovement
                 btst    #3,$69(a5)
-                beq.s   loc_15732
+                beq.s   Player_GroundedMovementState_CheckRightFacing
                 btst    #3,$E(a5)
-                beq.w   Player_InitIdleWallState
+                beq.w   Player_InitGroundWeaponState
                 bra.w   Player_RenderDashEffect
 ; ---------------------------------------------------------------------------
-loc_15732:                                              ; CODE XREF: Player_GroundedMovementState+6A   j
+Player_GroundedMovementState_CheckRightFacing:          ; CODE XREF: Player_GroundedMovementState+6A   j  ; was: loc_15732
                 btst    #3,$E(a5)
-                bne.w   Player_InitIdleWallState
+                bne.w   Player_InitGroundWeaponState
                 bra.w   Player_RenderDashEffect
 ; ---------------------------------------------------------------------------
-; Initializes idle wall cling state with cleared velocity
-Player_InitIdleWallState:                               ; CODE XREF: Player_CheckWallCollisionJump+2E   j  ; was: loc_15740
+; Initializes state 0x04 for weapon movement on lower terrain
+Player_InitGroundWeaponState:                           ; CODE XREF: Player_CheckWallCollisionJump+2E   j  ; was: loc_15740
                                         ; Player_CheckWallCollisionJump+44   j
                 move.w  #4,4(a5)
                 clr.w   $48(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #4,$5C(a5)
-locret_15756:                                           ; CODE XREF: Player_AirAttackState+18   j
-                                        ; Player_AirAttackState+1E   j
+Player_GroundWeaponState_Return:                        ; CODE XREF: Player_GroundWeaponState+18   j  ; was: locret_15756
+                                        ; Player_GroundWeaponState+1E   j
                 rts
 ; End of function Player_GroundedMovementState
-; Player air attack state handler processing jump cancels and directional attacks
-Player_AirAttackState:                                  ; DATA XREF: ROM:00015066   o  ; was: sub_15758
+; Handles armed movement while the player remains attached to lower terrain
+Player_GroundWeaponState:                               ; DATA XREF: ROM:00015066   o  ; was: sub_15758
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
                 bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_HandleSpecialMove
-                bne.s   locret_15756
+                bne.s   Player_GroundWeaponState_Return
                 bsr.w   Player_CheckSpecialMoveActivation
-                bne.s   locret_15756
+                bne.s   Player_GroundWeaponState_Return
                 btst    #1,$69(a5)
                 bne.w   Player_InitJumpCancelState
                 btst    #4,$69(a5)
                 beq.w   Player_InitWallBounceState
                 bsr.w   Player_PrepareWeaponSprite
                 btst    #2,$69(a5)
-                beq.s   loc_157A6
+                beq.s   Player_GroundWeaponState_CheckRightFacing
                 btst    #3,$E(a5)
                 beq.w   Player_InitWallBounceState
                 bra.w   Physics_AccelerateHorizontalNegative
 ; ---------------------------------------------------------------------------
-loc_157A6:                                              ; CODE XREF: Player_AirAttackState+3E   j
+Player_GroundWeaponState_CheckRightFacing:              ; CODE XREF: Player_GroundWeaponState+3E   j  ; was: loc_157A6
                 btst    #3,$69(a5)
                 beq.w   Player_InitAirJumpState
                 btst    #3,$E(a5)
                 bne.w   Player_InitWallBounceState
                 bra.w   Physics_AccelerateHorizontalPositive
-; End of function Player_AirAttackState
+; End of function Player_GroundWeaponState
 ; Initializes Phoenix weapon attack
 Player_InitPhoenixAttack:
                 move.w  #$56,4(a5)                      ; 'V'  ; was: sub_157BE
@@ -90,21 +90,21 @@ Player_InitPhoenixAttack:
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 btst    #2,$69(a5)
-                bne.s   loc_1580C
+                bne.s   Player_InitPhoenixAttack_FaceLeft
                 btst    #3,$69(a5)
-                bne.s   loc_1581C
+                bne.s   Player_InitPhoenixAttack_FaceRight
                 btst    #3,$E(a5)
-                bne.s   loc_1581C
-loc_1580C:                                              ; CODE XREF: Player_InitPhoenixAttack+3C   j
+                bne.s   Player_InitPhoenixAttack_FaceRight
+Player_InitPhoenixAttack_FaceLeft:                      ; CODE XREF: Player_InitPhoenixAttack+3C   j  ; was: loc_1580C
                 move.l  #$FFF88000,$48(a5)
                 bclr    #3,$E(a5)
-                bra.s   loc_1582A
+                bra.s   Player_InitPhoenixAttack_Finish
 ; ---------------------------------------------------------------------------
-loc_1581C:                                              ; CODE XREF: Player_InitPhoenixAttack+44   j
+Player_InitPhoenixAttack_FaceRight:                     ; CODE XREF: Player_InitPhoenixAttack+44   j  ; was: loc_1581C
                                         ; Player_InitPhoenixAttack+4C   j
                 move.l  #$78000,$48(a5)
                 bset    #3,$E(a5)
-loc_1582A:                                              ; CODE XREF: Player_InitPhoenixAttack+5C   j
+Player_InitPhoenixAttack_Finish:                        ; CODE XREF: Player_InitPhoenixAttack+5C   j  ; was: loc_1582A
                 move.l  #word_E86AA,8(a5)
                 bsr.w   Player_SpawnPhoenixTrails
                 moveq   #1,d0
@@ -113,35 +113,35 @@ loc_1582A:                                              ; CODE XREF: Player_Init
 ; Updates Phoenix attack state
 Player_PhoenixAttackUpdate:                             ; DATA XREF: ROM:000150B8   o  ; was: sub_1583A
                 btst    #5,$6A(a5)
-                beq.s   loc_15848
+                beq.s   Player_PhoenixAttackUpdate_UpdateTimer
                 move.w  #7,$50(a5)
-loc_15848:                                              ; CODE XREF: Player_PhoenixAttackUpdate+6   j
+Player_PhoenixAttackUpdate_UpdateTimer:                 ; CODE XREF: Player_PhoenixAttackUpdate+6   j  ; was: loc_15848
                 subq.w  #1,$4E(a5)
-                bpl.w   loc_158A0
+                bpl.w   Player_PhoenixAttackUpdate_UpdateCollision
                 jsr     (Sys_ClearObjectBlocks16).l
                 clr.w   $4E(a5)
                 cmpi.w  #7,$50(a5)
-                beq.s   loc_15866
+                beq.s   Player_PhoenixAttackUpdate_SelectState
                 addq.w  #2,$4E(a5)
-loc_15866:                                              ; CODE XREF: Player_PhoenixAttackUpdate+26   j
+Player_PhoenixAttackUpdate_SelectState:                 ; CODE XREF: Player_PhoenixAttackUpdate+26   j  ; was: loc_15866
                 move.w  #$10,4(a5)
                 btst    #4,$E(a5)
-                beq.s   loc_1587A
+                beq.s   Player_PhoenixAttackUpdate_TryProjectile
                 move.w  #$24,4(a5)                      ; '$'
-loc_1587A:                                              ; CODE XREF: Player_PhoenixAttackUpdate+38   j
+Player_PhoenixAttackUpdate_TryProjectile:               ; CODE XREF: Player_PhoenixAttackUpdate+38   j  ; was: loc_1587A
                 tst.w   (word_FF8304).w
-                bne.s   loc_15896
+                bne.s   Player_PhoenixAttackUpdate_PlayBlockedSound
                 btst    #7,(byte_FF8245).w
-                bne.s   loc_15896
+                bne.s   Player_PhoenixAttackUpdate_PlayBlockedSound
                 move.l  #word_E8E6A,8(a5)
                 bsr.w   Player_SpawnProjectile
-                bra.s   loc_158A0
+                bra.s   Player_PhoenixAttackUpdate_UpdateCollision
 ; ---------------------------------------------------------------------------
-loc_15896:                                              ; CODE XREF: Player_PhoenixAttackUpdate+44   j
+Player_PhoenixAttackUpdate_PlayBlockedSound:            ; CODE XREF: Player_PhoenixAttackUpdate+44   j  ; was: loc_15896
                                         ; Player_PhoenixAttackUpdate+4C   j
                 move.b  #$A6,d0
                 jsr     (Sound_PlaySFX).l
-loc_158A0:                                              ; CODE XREF: Player_PhoenixAttackUpdate+12   j
+Player_PhoenixAttackUpdate_UpdateCollision:             ; CODE XREF: Player_PhoenixAttackUpdate+12   j  ; was: loc_158A0
                                         ; Player_PhoenixAttackUpdate+5A   j
                 move.w  #1,(word_FF809C).w
                 bset    #6,$21(a5)
@@ -171,19 +171,19 @@ Player_InitPhoenixTrail:                                ; CODE XREF: Player_Spaw
                 move.w  d0,$E(a0)
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
-                bpl.s   loc_15906
+                bpl.s   Player_InitPhoenixTrail_SetPosition
                 clr.b   $20(a0)
-loc_15906:                                              ; CODE XREF: Player_InitPhoenixTrail+2C   j
+Player_InitPhoenixTrail_SetPosition:                    ; CODE XREF: Player_InitPhoenixTrail+2C   j  ; was: loc_15906
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 clr.w   $1A(a0)
-                move.w  word_15926(pc,d7.w),d0
+                move.w  Player_PhoenixTrailOffsetsAndVelocities(pc,d7.w),d0
                 add.w   d0,$10(a0)
-                move.w  word_15926+4(pc,d7.w),$18(a0)
+                move.w  Player_PhoenixTrailOffsetsAndVelocities+4(pc,d7.w),$18(a0)
                 rts
 ; End of function Player_InitPhoenixTrail
 ; ---------------------------------------------------------------------------
-word_15926:     dc.w    $20, $FFE0, $FFF8, 8
+Player_PhoenixTrailOffsetsAndVelocities:    dc.w    $20, $FFE0, $FFF8, 8  ; was: word_15926
                                         ; DATA XREF: Player_InitPhoenixTrail+42   r
                                         ; Player_InitPhoenixTrail+4A   r
 
@@ -191,12 +191,12 @@ word_15926:     dc.w    $20, $FFE0, $FFF8, 8
 Player_InitiateDashAttack:                              ; CODE XREF: Player_CheckDashInput+E   j  ; was: sub_1592E
                                         ; Player_CeilingDashState+34   j
                 move.w  #$24,4(a5)                      ; '$'
-                bra.s   loc_1593C
+                bra.s   Player_InitiateDashAttack_Initialize
 ; ---------------------------------------------------------------------------
-loc_15936:                                              ; CODE XREF: Player_GroundedDamageState+20   j
+Player_InitiateDashAttack_UseGroundState:               ; CODE XREF: Player_GroundedDamageState+20   j  ; was: loc_15936
                                         ; Player_CheckSpecialMoveActivation+1A   j
                 move.w  #$10,4(a5)
-loc_1593C:                                              ; CODE XREF: Player_InitiateDashAttack+6   j
+Player_InitiateDashAttack_Initialize:                   ; CODE XREF: Player_InitiateDashAttack+6   j  ; was: loc_1593C
                 move.b  #$73,(byte_FF830F).w            ; 's'
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #1,(word_FF8224).w
@@ -207,21 +207,21 @@ loc_1593C:                                              ; CODE XREF: Player_Init
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 btst    #2,$69(a5)
-                bne.s   loc_15982
+                bne.s   Player_InitiateDashAttack_FaceLeft
                 btst    #3,$69(a5)
-                bne.s   loc_15992
+                bne.s   Player_InitiateDashAttack_FaceRight
                 btst    #3,$E(a5)
-                bne.s   loc_15992
-loc_15982:                                              ; CODE XREF: Player_InitiateDashAttack+42   j
+                bne.s   Player_InitiateDashAttack_FaceRight
+Player_InitiateDashAttack_FaceLeft:                     ; CODE XREF: Player_InitiateDashAttack+42   j  ; was: loc_15982
                 move.l  #$FFF88000,$48(a5)
                 bclr    #3,$E(a5)
-                bra.s   loc_159A0
+                bra.s   Player_InitiateDashAttack_TryProjectile
 ; ---------------------------------------------------------------------------
-loc_15992:                                              ; CODE XREF: Player_InitiateDashAttack+4A   j
+Player_InitiateDashAttack_FaceRight:                    ; CODE XREF: Player_InitiateDashAttack+4A   j  ; was: loc_15992
                                         ; Player_InitiateDashAttack+52   j
                 move.l  #$78000,$48(a5)
                 bset    #3,$E(a5)
-loc_159A0:                                              ; CODE XREF: Player_InitiateDashAttack+62   j
+Player_InitiateDashAttack_TryProjectile:                ; CODE XREF: Player_InitiateDashAttack+62   j  ; was: loc_159A0
                 tst.w   (word_FF8304).w
                 bne.s   Player_PlayDashAttackSound
                 btst    #7,(byte_FF8245).w
@@ -242,119 +242,119 @@ Player_PlayDashAttackSound:                             ; CODE XREF: Player_Init
                 moveq   #1,d0
                 rts
 ; End of function Player_InitiateDashAttack
-; Handles dash cancel state and timer management
-Player_HandleDashCancel:                                ; DATA XREF: ROM:00015072   o  ; was: sub_159E0
+; Updates the active dash attack, terrain contact, and exit transitions
+Player_DashAttackState:                                 ; DATA XREF: ROM:00015072   o  ; was: sub_159E0
                                         ; ROM:00015086   o
                 tst.b   (byte_FF8311).w
-                bne.s   loc_159F0
+                bne.s   Player_DashAttackState_Finish
                 subq.w  #1,$50(a5)
-                bmi.s   loc_159F0
-                bra.w   loc_15A6E
+                bmi.s   Player_DashAttackState_Finish
+                bra.w   Player_DashAttackState_UpdateMovement
 ; ---------------------------------------------------------------------------
-loc_159F0:                                              ; CODE XREF: Player_HandleDashCancel+4   j
-                                        ; Player_HandleDashCancel+A   j
+Player_DashAttackState_Finish:                          ; CODE XREF: Player_DashAttackState+4   j  ; was: loc_159F0
+                                        ; Player_DashAttackState+A   j
                 bsr.w   Physics_FacingTerrainCheckWrapper
-loc_159F4:                                              ; CODE XREF: Player_HandleDashCancel:loc_15A6C   j
+Player_DashAttackState_Cleanup:                         ; CODE XREF: Player_DashAttackState:Player_DashAttackState_CleanupAfterMovement   j  ; was: loc_159F4
                 clr.w   (word_FFC5C0).w
                 bclr    #0,(byte_FF826C).w
                 bclr    #6,$21(a5)
                 bclr    #4,$23(a5)
                 moveq   #0,d0
                 btst    #4,$E(a5)
-                beq.s   loc_15A16
+                beq.s   Player_DashAttackState_CheckTerrainContact
                 moveq   #1,d0
-loc_15A16:                                              ; CODE XREF: Player_HandleDashCancel+32   j
+Player_DashAttackState_CheckTerrainContact:             ; CODE XREF: Player_DashAttackState+32   j  ; was: loc_15A16
                 btst    d0,6(a5)
-                bne.s   loc_15A46
+                bne.s   Player_DashAttackState_HandleTerrainContact
                 move.w  #$FFE0,$52(a5)
                 move.l  $48(a5),$18(a5)
                 tst.w   $4E(a5)
-                beq.s   loc_15A38
+                beq.s   Player_DashAttackState_ExitToFall
                 move.l  $18(a5),d0
                 asr.l   #1,d0
                 move.l  d0,$18(a5)
-loc_15A38:                                              ; CODE XREF: Player_HandleDashCancel+4C   j
+Player_DashAttackState_ExitToFall:                      ; CODE XREF: Player_DashAttackState+4C   j  ; was: loc_15A38
                 btst    #4,$E(a5)
-                beq.w   loc_15C3C
+                beq.w   Player_InitFallState_Finish
                 bra.w   Player_InitAirDashEnd
 ; ---------------------------------------------------------------------------
-loc_15A46:                                              ; CODE XREF: Player_HandleDashCancel+3A   j
+Player_DashAttackState_HandleTerrainContact:            ; CODE XREF: Player_DashAttackState+3A   j  ; was: loc_15A46
                 clr.w   (word_FF8224).w
                 tst.w   $4E(a5)
-                bne.s   loc_15A5E
+                bne.s   Player_DashAttackState_ResumeAttachedState
                 btst    #4,$E(a5)
                 beq.w   Player_InitSlideState
                 bra.w   Player_InitSlideState
 ; ---------------------------------------------------------------------------
-loc_15A5E:                                              ; CODE XREF: Player_HandleDashCancel+6E   j
+Player_DashAttackState_ResumeAttachedState:             ; CODE XREF: Player_DashAttackState+6E   j  ; was: loc_15A5E
                 btst    #4,$E(a5)
                 beq.w   Player_InitJumpCancelCleanup
                 bra.w   Player_InitDashAnimation
 ; ---------------------------------------------------------------------------
-loc_15A6C:                                              ; CODE XREF: Player_HandleDashCancel+A4   j
-                                        ; Player_HandleDashCancel+AA   j
-                bra.s   loc_159F4
+Player_DashAttackState_CleanupAfterMovement:            ; CODE XREF: Player_DashAttackState+A4   j  ; was: loc_15A6C
+                                        ; Player_DashAttackState+AA   j
+                bra.s   Player_DashAttackState_Cleanup
 ; ---------------------------------------------------------------------------
-loc_15A6E:                                              ; CODE XREF: Player_HandleDashCancel+C   j
+Player_DashAttackState_UpdateMovement:                  ; CODE XREF: Player_DashAttackState+C   j  ; was: loc_15A6E
                 move.w  #1,(word_FF809C).w
                 bset    #6,$21(a5)
                 bset    #4,$23(a5)
                 bsr.w   Player_ApplyHorizontalMovement
-                bne.s   loc_15A6C
+                bne.s   Player_DashAttackState_CleanupAfterMovement
                 bsr.w   Player_ApplyHorizontalMovement
-                bne.s   loc_15A6C
+                bne.s   Player_DashAttackState_CleanupAfterMovement
                 bsr.w   Player_ApplyHorizontalMovement
-                bne.s   loc_15A6C
+                bne.s   Player_DashAttackState_CleanupAfterMovement
                 bset    #4,(byte_FF8244).w
                 bra.w   Effect_CreateDashTrail
-; End of function Player_HandleDashCancel
+; End of function Player_DashAttackState
 ; Applies horizontal movement with boundary checking
-Player_ApplyHorizontalMovement:                         ; CODE XREF: Player_HandleDashCancel+A0   p  ; was: sub_15A9C
-                                        ; Player_HandleDashCancel+A6   p
+Player_ApplyHorizontalMovement:                         ; CODE XREF: Player_DashAttackState+A0   p  ; was: sub_15A9C
+                                        ; Player_DashAttackState+A6   p
                 clr.w   6(a5)
                 bsr.w   Physics_FacingExtendedWallCheckWrapper
                 bsr.w   Physics_FacingTerrainCheckWrapper
                 tst.w   $48(a5)
-                bmi.s   loc_15AB8
+                bmi.s   Player_ApplyHorizontalMovement_CheckLeftCollision
                 btst    #1,7(a5)
-                beq.s   loc_15AC0
+                beq.s   Player_ApplyHorizontalMovement_Apply
                 rts
 ; ---------------------------------------------------------------------------
-loc_15AB8:                                              ; CODE XREF: Player_ApplyHorizontalMovement+10   j
+Player_ApplyHorizontalMovement_CheckLeftCollision:      ; CODE XREF: Player_ApplyHorizontalMovement+10   j  ; was: loc_15AB8
                 btst    #0,7(a5)
-                bne.s   locret_15AF2
-loc_15AC0:                                              ; CODE XREF: Player_ApplyHorizontalMovement+18   j
+                bne.s   Player_ApplyHorizontalMovement_Return
+Player_ApplyHorizontalMovement_Apply:                   ; CODE XREF: Player_ApplyHorizontalMovement+18   j  ; was: loc_15AC0
                 move.l  $48(a5),d0
                 add.l   d0,$10(a5)
                 btst    #1,(byte_FF8245).w
-                bne.s   loc_15AF0
+                bne.s   Player_ApplyHorizontalMovement_ReturnNoCollision
                 cmpi.w  #$1AF,$10(a5)
-                bmi.s   loc_15AE2
+                bmi.s   Player_ApplyHorizontalMovement_ClampLeft
                 move.w  #$1AF,$10(a5)
                 moveq   #0,d0
                 rts
 ; ---------------------------------------------------------------------------
-loc_15AE2:                                              ; CODE XREF: Player_ApplyHorizontalMovement+3A   j
+Player_ApplyHorizontalMovement_ClampLeft:               ; CODE XREF: Player_ApplyHorizontalMovement+3A   j  ; was: loc_15AE2
                 cmpi.w  #$90,$10(a5)
-                bpl.s   loc_15AF0
+                bpl.s   Player_ApplyHorizontalMovement_ReturnNoCollision
                 move.w  #$90,$10(a5)
-loc_15AF0:                                              ; CODE XREF: Player_ApplyHorizontalMovement+32   j
+Player_ApplyHorizontalMovement_ReturnNoCollision:       ; CODE XREF: Player_ApplyHorizontalMovement+32   j  ; was: loc_15AF0
                                         ; Player_ApplyHorizontalMovement+4C   j
                 moveq   #0,d0
-locret_15AF2:                                           ; CODE XREF: Player_ApplyHorizontalMovement+22   j
+Player_ApplyHorizontalMovement_Return:                  ; CODE XREF: Player_ApplyHorizontalMovement+22   j  ; was: locret_15AF2
                 rts
 ; End of function Player_ApplyHorizontalMovement
 ; Initializes player slide knockback state
-Player_InitSlideState:                                  ; CODE XREF: Player_HandleDashCancel+76   j  ; was: sub_15AF4
-                                        ; Player_HandleDashCancel+7A   j
+Player_InitSlideState:                                  ; CODE XREF: Player_DashAttackState+76   j  ; was: sub_15AF4
+                                        ; Player_DashAttackState+7A   j
                 move.b  #$7F,(byte_FF830F).w
                 move.w  #$40,4(a5)                      ; '@'
                 move.w  #4,$5C(a5)
                 move.l  #$FFFE0000,$18(a5)
                 tst.w   $48(a5)
-                bmi.s   loc_15B18
+                bmi.s   Player_InitSlideState_Finish
                 neg.l   $18(a5)
-loc_15B18:                                              ; CODE XREF: Player_InitSlideState+1E   j
+Player_InitSlideState_Finish:                           ; CODE XREF: Player_InitSlideState+1E   j  ; was: loc_15B18
                 move.w  #2,$48(a5)
                 rts
 ; End of function Player_InitSlideState
@@ -366,26 +366,26 @@ Player_HandleSlideState:                                ; DATA XREF: ROM:000150A
                 bsr.w   Physics_FacingTerrainCheckWrapper
                 moveq   #0,d0
                 btst    #4,$E(a5)
-                beq.s   loc_15B36
+                beq.s   Player_HandleSlideState_CheckTerrainContact
                 moveq   #1,d0
-loc_15B36:                                              ; CODE XREF: Player_HandleSlideState+12   j
+Player_HandleSlideState_CheckTerrainContact:            ; CODE XREF: Player_HandleSlideState+12   j  ; was: loc_15B36
                 btst    d0,6(a5)
                 beq.w   Player_InitFallState
                 move.l  #$4000,d1
                 bsr.w   Player_DecelerateHorizontalVelocity
                 tst.l   $18(a5)
-                bne.s   loc_15B5C
+                bne.s   Player_HandleSlideState_UpdateAnimation
                 btst    #4,$E(a5)
                 beq.w   Player_InitJumpCancelCleanup
                 bra.w   Player_InitDashAnimation
 ; ---------------------------------------------------------------------------
-loc_15B5C:                                              ; CODE XREF: Player_HandleSlideState+2C   j
+Player_HandleSlideState_UpdateAnimation:                ; CODE XREF: Player_HandleSlideState+2C   j  ; was: loc_15B5C
                 subq.w  #1,$48(a5)
                 bra.w   Player_RenderAirborneFrame
 ; End of function Player_HandleSlideState
-nullsub_39:
+Player_UnusedDashStateReturn:                           ; was: nullsub_39
                 rts
-; End of function nullsub_39
+; End of function Player_UnusedDashStateReturn
 
 ; Initializes dash kick with velocity
 Player_InitDashKick:
@@ -394,9 +394,9 @@ Player_InitDashKick:
                 bclr    #4,$E(a5)
                 move.l  #$FFFCE000,$18(a5)
                 tst.w   $48(a5)
-                bmi.s   locret_15B8A
+                bmi.s   Player_InitDashKick_Return
                 neg.l   $18(a5)
-locret_15B8A:                                           ; CODE XREF: Player_InitDashKick+1E   j
+Player_InitDashKick_Return:                             ; CODE XREF: Player_InitDashKick+1E   j  ; was: locret_15B8A
                 rts
 ; End of function Player_InitDashKick
 ; Handles dash kick with gravity
@@ -406,35 +406,35 @@ Player_DashKickState:                                   ; DATA XREF: ROM:000150A
                 addi.l  #$8800,$1C(a5)
                 bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
-                beq.s   locret_15BB6
+                beq.s   Player_DashKickState_Return
                 bsr.w   Player_InitSlideState
                 move.l  $18(a5),d0
                 asr.l   #1,d0
                 move.l  d0,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-locret_15BB6:                                           ; CODE XREF: Player_DashKickState+18   j
+Player_DashKickState_Return:                            ; CODE XREF: Player_DashKickState+18   j  ; was: locret_15BB6
                 rts
 ; End of function Player_DashKickState
 ; Checks and activates special move from state flags
 Player_CheckSpecialMoveActivation:                      ; CODE XREF: Player_HandleJump+1E   p  ; was: sub_15BB8
                                         ; Player_HandleAirState+20   p
                 btst    #5,$6A(a5)
-                beq.s   locret_15C1E
+                beq.s   Player_CheckSpecialMoveActivation_Return
                 btst    #1,$69(a5)
-                beq.w   loc_15BF2
+                beq.w   Player_CheckSpecialMoveActivation_InitAirState
                 move.b  $69(a5),d0
                 andi.b  #$C,d0
-                bne.w   loc_15936
+                bne.w   Player_InitiateDashAttack_UseGroundState
                 btst    #6,(byte_FF8245).w
-                bne.w   loc_15936
+                bne.w   Player_InitiateDashAttack_UseGroundState
                 btst    #2,6(a5)
-                beq.w   loc_15936
+                beq.w   Player_InitiateDashAttack_UseGroundState
                 bsr.w   Player_InitFallingTransition
                 moveq   #1,d0
                 rts
 ; ---------------------------------------------------------------------------
-loc_15BF2:                                              ; CODE XREF: Player_CheckSpecialMoveActivation+E   j
+Player_CheckSpecialMoveActivation_InitAirState:         ; CODE XREF: Player_CheckSpecialMoveActivation+E   j  ; was: loc_15BF2
                 move.w  #8,4(a5)
                 move.l  #$FFFA8000,$1C(a5)
                 move.w  #$C,$5C(a5)
@@ -443,7 +443,7 @@ loc_15BF2:                                              ; CODE XREF: Player_Chec
                 clr.w   (word_FF8224).w
                 clr.w   $52(a5)
                 move.b  #$7F,(byte_FF830F).w
-locret_15C1E:                                           ; CODE XREF: Player_CheckSpecialMoveActivation+6   j
+Player_CheckSpecialMoveActivation_Return:               ; CODE XREF: Player_CheckSpecialMoveActivation+6   j  ; was: locret_15C1E
                                         ; Player_CheckDashInput+6   j
                 rts
 ; End of function Player_CheckSpecialMoveActivation
@@ -451,7 +451,7 @@ locret_15C1E:                                           ; CODE XREF: Player_Chec
 Player_CheckDashInput:                                  ; CODE XREF: Player_CeilingIdleState+20   p  ; was: sub_15C20
                                         ; Player_HandleCrouchState+1C   p
                 btst    #5,$6A(a5)
-                beq.s   locret_15C1E
+                beq.s   Player_CheckSpecialMoveActivation_Return
                 btst    #0,$69(a5)
                 bne.w   Player_InitiateDashAttack
                 bra.s   Player_EndDashWithVerticalVelocity
@@ -461,8 +461,8 @@ Player_InitFallState:                                   ; CODE XREF: Player_Hand
                                         ; Player_HandleAirState+16   j
                 clr.w   (word_FF8224).w
                 clr.w   $52(a5)
-loc_15C3C:                                              ; CODE XREF: Player_DamageLandingRecoveryState+18   j
-                                        ; Player_HandleDashCancel+5E   j
+Player_InitFallState_Finish:                            ; CODE XREF: Player_DamageLandingRecoveryState+18   j  ; was: loc_15C3C
+                                        ; Player_DashAttackState+5E   j
                 bclr    #0,(byte_FF826C).w
                 move.w  #6,4(a5)
                 bclr    #4,$E(a5)
@@ -472,4 +472,3 @@ loc_15C3C:                                              ; CODE XREF: Player_Dama
                 move.b  #$7F,(byte_FF830F).w
                 rts
 ; End of function Player_InitFallState
-; Positions multiple boss sprite parts

@@ -146,7 +146,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_DestroyerMK2Main
                 dc.l    Boss_DestroyerMK2ComponentStateDispatch
                 dc.l    Enemy_CheckBoundsAndDispatch
-                dc.l    Enemy_InitializeBoss
+                dc.l    UI_WeaponSelectionObject
                 dc.l    Effect_UpdateDashTrail
                 dc.l    Projectile_BulletWithDelayedPhysics
                 dc.l    Boss_DestroyerMK2PlayRoar

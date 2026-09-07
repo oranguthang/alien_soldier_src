@@ -110,13 +110,13 @@ Player_UpdateState:                                     ; CODE XREF: Player_Upda
 Player_StateHandlerOffsets: dc.w    Player_HandleJump-Player_HandleDeathSequence  ; was: off_15062
                                         ; DATA XREF: Player_UpdateState+4   r
                 dc.w    Player_GroundedMovementState-Player_HandleDeathSequence
-                dc.w    Player_AirAttackState-Player_HandleDeathSequence
+                dc.w    Player_GroundWeaponState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
                 dc.w    Player_HandleAirMovement-Player_HandleDeathSequence
                 dc.w    Player_HandleGroundedState-Player_HandleDeathSequence
                 dc.w    Player_HandleAirState-Player_HandleDeathSequence
-                dc.w    Player_HandleDashCancel-Player_HandleDeathSequence
+                dc.w    Player_DashAttackState-Player_HandleDeathSequence
                 dc.w    Player_HandleBounceState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
                 dc.w    Player_HandleLandingState-Player_HandleDeathSequence
@@ -126,7 +126,7 @@ Player_StateHandlerOffsets: dc.w    Player_HandleJump-Player_HandleDeathSequence
                 dc.w    Player_HandleCrouchState-Player_HandleDeathSequence
                 dc.w    Player_CounterState-Player_HandleDeathSequence
                 dc.w    Player_CeilingDashState-Player_HandleDeathSequence
-                dc.w    Player_HandleDashCancel-Player_HandleDeathSequence
+                dc.w    Player_DashAttackState-Player_HandleDeathSequence
                 dc.w    Player_CeilingLandingState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
                 dc.w    Player_KnockbackState-Player_HandleDeathSequence
@@ -306,7 +306,7 @@ Player_GroundedDamageState:                             ; DATA XREF: ROM:0001509
                 subq.w  #1,$4A(a5)
                 bmi.w   Player_InitAirState
                 bsr.w   Player_CheckDamageRecoveryInput
-                bne.w   loc_15936
+                bne.w   Player_InitiateDashAttack_UseGroundState
                 move.l  #$2000,d1
                 bsr.w   Player_DecelerateHorizontalVelocity
                 bra.w   Player_AnimateDefeatSprite
@@ -359,7 +359,7 @@ Player_DamageLandingRecoveryState:
 Player_DamageState_UpdateTimer:                         ; CODE XREF: Player_AirborneDamageState+22   j  ; was: loc_15386
                                         ; Player_AirborneDamageState+2E   j
                 subq.w  #1,$4A(a5)
-                bmi.w   loc_15C3C
+                bmi.w   Player_InitFallState_Finish
                 move.l  #$1800,d1
                 bsr.w   Player_DecelerateHorizontalVelocity
                 bra.w   Player_AnimateDefeatSprite
@@ -395,7 +395,7 @@ Player_InitJumpCancelState:                             ; CODE XREF: Player_Hand
                                         ; Player_HandleAirMovement+30   j
                 move.w  #2,$48(a5)
 ; Initializes jump cancel state clearing flags and setting timers
-Player_InitJumpCancelCleanup:                           ; CODE XREF: Player_HandleDashCancel+84   j  ; was: loc_153DA
+Player_InitJumpCancelCleanup:                           ; CODE XREF: Player_DashAttackState+84   j  ; was: loc_153DA
                                         ; Player_HandleSlideState+34   j
                 bclr    #0,(byte_FF826C).w
                 clr.w   (word_FF8224).w
@@ -613,14 +613,14 @@ Player_CheckWallCollisionJump_CheckFacing:              ; CODE XREF: Player_Chec
                 btst    #3,$69(a5)
                 beq.s   Player_CheckWallCollisionJump_CheckLeft
                 btst    #3,$E(a5)
-                bne.w   Player_InitIdleWallState
+                bne.w   Player_InitGroundWeaponState
                 bra.s   Player_InitWallBounceState
 ; ---------------------------------------------------------------------------
 Player_CheckWallCollisionJump_CheckLeft:                ; CODE XREF: Player_CheckWallCollisionJump+26   j  ; was: loc_15680
                 btst    #2,$69(a5)
                 beq.w   Player_InitAirJumpState
                 btst    #3,$E(a5)
-                beq.w   Player_InitIdleWallState
+                beq.w   Player_InitGroundWeaponState
 ; Initializes wall bounce state with velocity and direction flip
 Player_InitWallBounceState:                             ; CODE XREF: Player_CheckWallCollisionJump+6   j  ; was: loc_15694
                                         ; Player_CheckWallCollisionJump+16   j

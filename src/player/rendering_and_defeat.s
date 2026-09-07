@@ -58,7 +58,7 @@ Player_RenderWeaponSprite:                              ; CODE XREF: Player_Ceil
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderWeaponSprite
 ; Prepares player weapon sprite for rendering with animation data
-Player_PrepareWeaponSprite:                             ; CODE XREF: Player_AirAttackState+34   p  ; was: sub_16FDC
+Player_PrepareWeaponSprite:                             ; CODE XREF: Player_GroundWeaponState+34   p  ; was: sub_16FDC
                 bsr.s   Player_UpdateWeaponAnim
                 moveq   #1,d5
                 addq.w  #3,d6

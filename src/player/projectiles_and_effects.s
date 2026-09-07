@@ -323,7 +323,7 @@ UI_RenderTransientValue_UseClampedY:                    ; CODE XREF: UI_RenderTr
                 jmp     (Sprite_AddToOAMBuffer).l
 ; End of function UI_RenderTransientValue
 ; Creates visual dash trail effect behind player
-Effect_CreateDashTrail:                                 ; CODE XREF: Player_HandleDashCancel+B8   j  ; was: sub_177B6
+Effect_CreateDashTrail:                                 ; CODE XREF: Player_DashAttackState+B8   j  ; was: sub_177B6
                                         ; Player_TeleportDash+C8   j
                 tst.w   (word_FFC5C0).w
                 beq.s   Effect_CreateDashTrail_AllocateObjects
@@ -412,7 +412,7 @@ Effect_UpdateFacingFlags_Return:                        ; CODE XREF: Effect_Upda
 ; ---------------------------------------------------------------------------
 UI_WeaponDisplayStepDelays:     dc.w    0, 1, 3, 3, $12, 5  ; DATA XREF: UI_UpdateWeaponDisplay+1E   o  ; was: word_178DA
 UI_WeaponSelectionSpriteFrames: dc.l    word_E9964      ; DATA XREF: UI_InitWeaponSelectScreen+8A   o  ; was: off_178E6
-                                        ; sub_2BBC0:loc_2BC18   o
+                                        ; sub_2BBC0:UI_UpdateWeaponSelectionObject_LoadAnimatedFrame   o
                 dc.l    word_E9976
                 dc.l    word_E9988
                 dc.l    word_E999A

@@ -70,8 +70,8 @@ off_17984:      dc.w    UI_UpdateWeaponDisplay_Return-UI_GetWeaponIconData
                 dc.w    UI_UpdateWeaponSelect-UI_GetWeaponIconData
 
 ; Gets weapon icon data from table
-UI_GetWeaponIconData:                                   ; CODE XREF: Enemy_UpdateBossAI+76   p  ; was: sub_1799A
-                                        ; Enemy_UpdateBossAI+B2   p
+UI_GetWeaponIconData:                                   ; CODE XREF: UI_UpdateWeaponSelectionObject+76   p  ; was: sub_1799A
+                                        ; UI_UpdateWeaponSelectionObject+B2   p
                                         ; DATA XREF:
                 movea.w (word_FFA24E).w,a0
                 adda.w  #$A250,a0

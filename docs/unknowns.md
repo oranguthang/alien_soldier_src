@@ -163,6 +163,21 @@ generated boss-part, Gusthead-intro, boss-health UI, and death-effect claims
 from ordinary dash-exit, falling-transition, frame-selection, and armed-render
 helpers.
 
+The final player dash/Phoenix pass reduced the count to 10,118 by replacing all
+42 address-derived definitions in `dash_and_phoenix.s`. All eleven modules in
+`src/player/` now contain zero live address-derived definitions and remain
+cohesive at 180--637 lines. The final state-table audit distinguished armed
+lower-terrain state 0x04 and the active dash-attack handler from the generated
+wall-idle, air-attack, and dash-cancel claims.
+
+The weapon-selection object pass reduced the count to 10,106 by replacing its
+12 address-derived branch labels. Static consumers and field accesses proved
+that `0x02BB86--0x02BCFB` manages weapon-selection animation, input, counters,
+and palette refresh rather than enemy or boss AI. The block therefore moved to
+`src/ui/weapon_selection_object.s`; the following shared combat runtime begins
+at the next dispatch-table handler in `src/actors/shared_combat_runtime.s`.
+The three corrected generated function claims are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

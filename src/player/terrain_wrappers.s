@@ -46,7 +46,7 @@ Physics_RisingTerrainCheckWrapper:                      ; CODE XREF: Player_Airb
 ; End of function Physics_RisingTerrainCheckWrapper
 ; Selects the lower- or upper-boundary terrain probe from entity facing
 Physics_FacingTerrainCheckWrapper:                      ; CODE XREF: Player_PhoenixAttackUpdate+86   p  ; was: sub_16D40
-                                        ; sub_159E0:loc_159F0   p
+                                        ; sub_159E0:Player_DashAttackState_Finish   p
                 btst    #5,(byte_FF8245).w
                 bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
@@ -153,7 +153,7 @@ Player_AutoFlipDirection_Return:                        ; CODE XREF: Player_Auto
                 rts
 ; End of function Player_AutoFlipDirection
 ; Accelerates horizontal velocity toward the limit selected by facing
-Physics_AccelerateHorizontalByFacing:                   ; CODE XREF: Player_GroundedMovementState:loc_1570E   p  ; was: sub_16E34
+Physics_AccelerateHorizontalByFacing:                   ; CODE XREF: Player_GroundedMovementState:Player_GroundedMovementState_Accelerate   p  ; was: sub_16E34
                                         ; sub_167EE:Player_CeilingMovementState_Accelerate   p
                 btst    #3,$E(a5)
                 bne.s   Physics_AccelerateHorizontalByFacing_AcceleratePositive
@@ -179,7 +179,7 @@ Physics_AccelerateHorizontalByFacing_Store:             ; CODE XREF: Physics_Acc
                 rts
 ; End of function Physics_AccelerateHorizontalByFacing
 ; Accelerates horizontal velocity toward the negative limit
-Physics_AccelerateHorizontalNegative:                   ; CODE XREF: Player_AirAttackState+4A   j  ; was: sub_16E70
+Physics_AccelerateHorizontalNegative:                   ; CODE XREF: Player_GroundWeaponState+4A   j  ; was: sub_16E70
                                         ; Player_CeilingAirControlState+56   j
                 move.l  $18(a5),d0
                 bpl.s   Physics_AccelerateHorizontalNegative_SubtractStep
@@ -192,7 +192,7 @@ Physics_AccelerateHorizontalNegative_Store:             ; CODE XREF: Physics_Acc
                 rts
 ; End of function Physics_AccelerateHorizontalNegative
 ; Accelerates horizontal velocity toward the positive limit
-Physics_AccelerateHorizontalPositive:                   ; CODE XREF: Player_AirAttackState+62   j  ; was: sub_16E8A
+Physics_AccelerateHorizontalPositive:                   ; CODE XREF: Player_GroundWeaponState+62   j  ; was: sub_16E8A
                                         ; Player_CeilingAirControlState+6E   j
                 move.l  $18(a5),d0
                 bmi.s   Physics_AccelerateHorizontalPositive_AddStep

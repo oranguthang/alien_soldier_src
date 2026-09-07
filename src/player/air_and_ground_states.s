@@ -16,7 +16,7 @@ Player_InitDashState:                                   ; CODE XREF: Player_Ceil
                                         ; Player_HandleCrouchState+32   j
                 move.w  #2,$48(a5)
 ; Initializes dash animation with timer and direction flip
-Player_InitDashAnimation:                               ; CODE XREF: Player_HandleDashCancel+88   j  ; was: loc_16502
+Player_InitDashAnimation:                               ; CODE XREF: Player_DashAttackState+88   j  ; was: loc_16502
                                         ; Player_HandleSlideState+38   j
                 move.w  #$22,4(a5)                      ; '"'
                 bset    #4,$E(a5)
@@ -419,7 +419,7 @@ Player_TeleportDash_Finish:                             ; CODE XREF: Player_Tele
                 move.w  #$FFE0,$52(a5)
                 move.l  #$68000,$18(a5)
                 move.w  #$FFFF,$1C(a5)
-                bra.w   loc_15C3C
+                bra.w   Player_InitFallState_Finish
 ; End of function Player_TeleportDash
 ; Advances the common player animation state by four
 Player_UpdateAnimStatePlus4:                            ; DATA XREF: ROM:000150BA   o  ; was: sub_16A3E

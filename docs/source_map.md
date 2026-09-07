@@ -24,7 +24,7 @@ listing by `make verify-layout`.
 | `0x02024A-0x023CB9` | results data, credits, selection UI, and floating icons | 6 | hypothesis |
 | `0x023CBA-0x02A30D` | demo, cutscene, transition, VDP layout, and Valkirie systems | 8 | hypothesis |
 | `0x02A30E-0x02B6B1` | shared combat helpers, sprite debug tooling, and enemy projectiles | 3 | hypothesis |
-| `0x02B6B2-0x02C0FF` | Jetsripper combat, stage 25 destruction, and shared boss runtime | 3 | hypothesis |
+| `0x02B6B2-0x02C0FF` | Jetsripper combat, weapon-selection UI, stage 25 destruction, and shared combat runtime | 4 | static/hypothesis |
 | `0x02C100-0x02CB85` | Snake/Bugmax projectiles, Jetsripper movement, and actor states | 3 | hypothesis |
 | `0x02CB86-0x02D3E7` | Jetsripper/Joker combat, ship enemy, and phase attacks | 3 | hypothesis |
 | `0x02D3E8-0x02DF7D` | circle, stage 17, and bird enemies | 3 | hypothesis |

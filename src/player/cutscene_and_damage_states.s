@@ -22,7 +22,7 @@ Player_SpecialMoveRecoveryState:                        ; CODE XREF: Player_Hand
                 tst.b   (word_FF8224).w
                 bne.s   Player_SpecialMoveRecoveryState_SetFastVerticalVelocity
                 btst    #1,$69(a5)
-                bne.w   loc_15936
+                bne.w   Player_InitiateDashAttack_UseGroundState
 Player_SpecialMoveRecoveryState_SetFastVerticalVelocity:  ; CODE XREF: Player_SpecialMoveRecoveryState+54   j  ; was: loc_160FA
                 move.l  #$FFF80000,$1C(a5)
                 bra.s   Player_InitAirRecovery_Finish
@@ -32,7 +32,7 @@ Player_InitAirRecovery:
                 move.l  #$FFFD8000,$1C(a5)              ; was: sub_16104
 Player_InitAirRecovery_Finish:                          ; CODE XREF: Player_SpecialMoveRecoveryState+68   j  ; was: loc_1610C
                 move.w  #$FFE0,$52(a5)
-                bra.w   loc_15C3C
+                bra.w   Player_InitFallState_Finish
 ; End of function Player_InitAirRecovery
 ; Renders the recovery pose with or without the weapon overlay
 Player_RenderSpecialMoveRecovery:                       ; CODE XREF: Player_SpecialMoveRecoveryState+4E   j  ; was: sub_16116

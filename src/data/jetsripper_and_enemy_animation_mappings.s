@@ -1,4 +1,4 @@
-word_E9952:     dc.w    $4480, $A00, $F4F4              ; DATA XREF: Enemy_UpdateBossAI:loc_2BBF4   o
+word_E9952:     dc.w    $4480, $A00, $F4F4              ; DATA XREF: UI_UpdateWeaponSelectionObject:UI_UpdateWeaponSelectionObject_UseIdleFrame   o
                 dc.w    $47F0, $500, $F8F0
                 dc.w    $CFF0, $500, $F8FF
 word_E9964:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:UI_WeaponSelectionSpriteFrames   o

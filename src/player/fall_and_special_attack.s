@@ -10,7 +10,7 @@ Player_EndDashState:                                    ; CODE XREF: Player_EndD
                 clr.w   (word_FF8224).w
                 clr.w   $52(a5)
 ; Initializes end of air dash with gravity and velocity setup
-Player_InitAirDashEnd:                                  ; CODE XREF: Player_HandleDashCancel+62   j  ; was: loc_15C7A
+Player_InitAirDashEnd:                                  ; CODE XREF: Player_DashAttackState+62   j  ; was: loc_15C7A
                 bclr    #0,(byte_FF826C).w
                 move.w  #$28,4(a5)                      ; '('
                 bclr    #4,$E(a5)
@@ -94,7 +94,7 @@ Player_HandleFallingState_ProcessInput:                 ; CODE XREF: Player_Hand
 Player_HandleFallingState_TryDashAttack:                ; CODE XREF: Player_HandleFallingState+94   j  ; was: loc_15D84
                 tst.b   (word_FF8224).w
                 bne.s   Player_HandleFallingState_SelectControl
-                bra.w   loc_15936
+                bra.w   Player_InitiateDashAttack_UseGroundState
 ; ---------------------------------------------------------------------------
 Player_HandleFallingState_SelectControl:                ; CODE XREF: Player_HandleFallingState+8C   j  ; was: loc_15D8E
                                         ; Player_HandleFallingState+9A   j
@@ -342,11 +342,11 @@ Player_HandleSpecialAttack_ProcessInput:                ; CODE XREF: Player_Hand
                 tst.b   (word_FF8224).w
                 bne.s   Player_HandleSpecialAttack_CancelToFall
                 btst    #1,$69(a5)
-                bne.w   loc_15936
+                bne.w   Player_InitiateDashAttack_UseGroundState
 Player_HandleSpecialAttack_CancelToFall:                ; CODE XREF: Player_HandleSpecialAttack+74   j  ; was: loc_16044
                 move.l  #$FFF80000,$1C(a5)
                 move.w  #$FFE0,$52(a5)
-                bra.w   loc_15C3C
+                bra.w   Player_InitFallState_Finish
 ; ---------------------------------------------------------------------------
 Player_HandleSpecialAttack_SelectFrame:                 ; CODE XREF: Player_HandleSpecialAttack+6E   j  ; was: loc_16056
                 movea.l #word_E8F3A,a2

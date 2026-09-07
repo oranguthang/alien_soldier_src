@@ -1341,6 +1341,72 @@
         "The active special-attack state branches here when the weapon input bit is set.",
         "The block selects the alternate player animation layout and weapon positioning table before Player_PrepareSpriteRendering_WithTables; no death or particle state is involved."
       ]
+    },
+    {
+      "address": "0x015740",
+      "previous_name": "Player_InitIdleWallState",
+      "current_name": "Player_InitGroundWeaponState",
+      "legacy_name": "loc_15740",
+      "evidence": "static",
+      "basis": [
+        "The initializer assigns player state 0x04, whose handler validates lower-terrain contact and prepares the weapon sprite.",
+        "It does not check wall contact or initialize a wall-cling flag."
+      ]
+    },
+    {
+      "address": "0x015758",
+      "previous_name": "Player_AirAttackState",
+      "current_name": "Player_GroundWeaponState",
+      "legacy_name": "sub_15758",
+      "evidence": "static",
+      "basis": [
+        "The player state table maps state 0x04 to this routine, and Player_InitGroundWeaponState assigns that state.",
+        "The handler requires lower-terrain contact, prepares the weapon sprite, and accelerates horizontal movement; it is not an airborne state."
+      ]
+    },
+    {
+      "address": "0x0159E0",
+      "previous_name": "Player_HandleDashCancel",
+      "current_name": "Player_DashAttackState",
+      "legacy_name": "sub_159E0",
+      "evidence": "static",
+      "basis": [
+        "Both active dash state values 0x10 and 0x24 map to this routine in the player state table.",
+        "It updates repeated dash movement, terrain contact and the visual trail before performing cleanup only when the timer or collision ends the attack."
+      ]
+    },
+    {
+      "address": "0x02BB86",
+      "previous_name": "Enemy_InitializeState",
+      "current_name": "UI_InitWeaponSelectionObject",
+      "legacy_name": "sub_2BB86",
+      "evidence": "static",
+      "basis": [
+        "The routine initializes fields consumed by UI_UpdateWeaponSelectionObject, including its animation counter and weapon-selection frame state.",
+        "Its object-table entry leads only to the weapon-selection update path and not to enemy targeting or combat logic."
+      ]
+    },
+    {
+      "address": "0x02BBC0",
+      "previous_name": "Enemy_UpdateBossAI",
+      "current_name": "UI_UpdateWeaponSelectionObject",
+      "legacy_name": "sub_2BBC0",
+      "evidence": "static",
+      "basis": [
+        "The routine reads UI_WeaponSelectionSpriteFrames and calls UI_GetWeaponIconData and UI_ClearWeaponCounters.",
+        "Its input branches change the selected weapon, refill its value, clear UI counters, and refresh palette data; no boss target or combat state is accessed."
+      ]
+    },
+    {
+      "address": "0x02BCEE",
+      "previous_name": "Enemy_InitializeBoss",
+      "current_name": "UI_WeaponSelectionObject",
+      "legacy_name": "sub_2BCEE",
+      "evidence": "static",
+      "basis": [
+        "The entity dispatch-table entry performs one-time UI_InitWeaponSelectionObject setup and then tail-branches to UI_UpdateWeaponSelectionObject.",
+        "Both callees operate on weapon-selection display and input state, not boss initialization."
+      ]
     }
   ]
 }

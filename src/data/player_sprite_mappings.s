@@ -6,7 +6,7 @@ word_E8680:     dc.w    $800, 0, $F00D                  ; DATA XREF: Player_Init
                 dc.w    $810, $600, $10
                 dc.w    $816, $100, $F0E5
                 dc.w    $8818, $F00, $E1ED
-word_E86AA:     dc.w    $800                            ; DATA XREF: Player_InitPhoenixAttack:loc_1582A   o
+word_E86AA:     dc.w    $800                            ; DATA XREF: Player_InitPhoenixAttack:Player_InitPhoenixAttack_Finish   o
                                         ; Player_InitiateDashAttack+A0   o
                 dc.l    sprite_F2A28
                 dc.w    $F00D
