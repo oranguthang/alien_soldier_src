@@ -202,7 +202,7 @@ off_1A0F2E:     dc.w    word_1A0CBE-*                   ; DATA XREF: ROM:0002E32
                 dc.w    off_1A0F2E-*
                 dc.w    0
 off_1A0F42:     dc.w    word_1A0CDC-*                   ; DATA XREF: Enemy_Stage10BeetleInit+4A   o
-                                        ; Enemy_Stage10BeetleMain+2C   o
+                                        ; Enemy_Stage10BeetleController+2C   o
                 dc.w    2
                 dc.w    word_1A0CE2-*
                 dc.w    3

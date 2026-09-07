@@ -1913,6 +1913,50 @@
         "The only condition compares the turret's own Y coordinate with 0x140; no player object or player position is read.",
         "Once the threshold is reached, the state converts the reserved slot at offset 0x4A to entity type 0x2E4 and initializes its launch delay fields."
       ]
+    },
+    {
+      "address": "0x02E6C2",
+      "previous_name": "Enemy_Stage10BomberMain",
+      "current_name": "Stage10_BeetleWaveController",
+      "legacy_name": "sub_2E6C2",
+      "evidence": "static",
+      "basis": [
+        "The controller fixes its own position, then its state table creates one entity type 0x2D4 and waits until that child changes type before repeating.",
+        "Entity type 0x2D4 maps to Enemy_Stage10BeetleController, and no bomber sprite, projectile payload or flight state is initialized."
+      ]
+    },
+    {
+      "address": "0x02E6EE",
+      "previous_name": "Enemy_Stage10BomberSpawn",
+      "current_name": "Stage10_BeetleWaveSpawnState",
+      "legacy_name": "sub_2E6EE",
+      "evidence": "static",
+      "basis": [
+        "The state allocates a child, installs entity type 0x2D4 and places it at one of two screen-edge X coordinates with a small random Y offset.",
+        "The installed type dispatches to the beetle controller, so this is a beetle-wave spawn state rather than a bomber projectile spawn."
+      ]
+    },
+    {
+      "address": "0x02E8AA",
+      "previous_name": "Enemy_Stage10BeetleDelayTable",
+      "current_name": "Enemy_Stage10BeetleLoadNextMoveDelay",
+      "legacy_name": "sub_2E8AA",
+      "evidence": "static",
+      "basis": [
+        "This executable routine indexes the adjacent Enemy_Stage10BeetleMoveDelays data and writes the selected value to the object's timer.",
+        "It advances and wraps the table index before returning, so the previous name incorrectly classified code as data."
+      ]
+    },
+    {
+      "address": "0x02E9D0",
+      "previous_name": "Enemy_BeetleDeathCheck",
+      "current_name": "Enemy_Stage10BeetleConvertIfActive",
+      "legacy_name": "sub_2E9D0",
+      "evidence": "static",
+      "basis": [
+        "The routine returns when health is already negative or the inactive flag is set.",
+        "Only a still-active object plays the sound, selects the shared effect mapping and enters Projectile_InitType88FromCurrent, so the old death-check description inverted the operative condition."
+      ]
     }
   ]
 }

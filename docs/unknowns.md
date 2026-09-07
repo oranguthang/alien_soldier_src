@@ -256,6 +256,14 @@ old main/attack/reload/check-player names were checked against state-table
 ownership, constructors, and field accesses; six contradicted claims are
 recorded in the name audit.
 
+The Stage 10 beetle pass reduced the count to 9,844 by replacing all 21
+address-derived definitions in the former `stage_10_ground.s`. Its alleged
+bomber is the type-`$2DC` wave controller that creates and waits for type-`$2D4`
+beetles at alternating screen edges. The cohesive 291-line
+`src/enemies/stage_10_beetles.s` also owns beetle roaming, terrain bounces,
+lower-bound exit, and type-`$2D8` defeat debris. Four contradicted generated
+claims are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
