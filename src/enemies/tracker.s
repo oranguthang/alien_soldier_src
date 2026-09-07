@@ -22,7 +22,7 @@ loc_32F04:                                              ; CODE XREF: Enemy_Track
 loc_32F24:                                              ; CODE XREF: Enemy_TrackerMain+C   j
                                         ; Enemy_TrackerMain+14   j
                 move.l  #off_E953C,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; End of function Enemy_TrackerMain
 ; Tracker enemy state dispatcher using jump table
 Enemy_TrackerDispatcher:                                ; CODE XREF: Enemy_TrackerMain+4   p  ; was: sub_32F32

@@ -133,7 +133,7 @@ locret_2E414:                                           ; CODE XREF: Enemy_FallU
 loc_2E416:                                              ; CODE XREF: Enemy_Stage10FlyInit+92   j
                                         ; Enemy_FallUntilOffscreen+1E   j
                 movea.w a5,a0
-                jsr     (Enemy_GetEntityAddress).l
+                jsr     (Projectile_InitType88FromCurrent).l
                 move.l  #off_1A0E96,8(a5)
                 move.w  #$C000,$E(a5)
                 move.l  #$FFFD8000,$1C(a5)
@@ -161,7 +161,7 @@ Enemy_Stage12LauncherMain:                              ; CODE XREF: Enemy_Stage
                 jsr     (Sound_PlaySFX).l
                 move.l  #off_E953C,8(a5)
                 clr.w   $C(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_2E46C:                                              ; CODE XREF: Enemy_Stage12LauncherMain+4   j
                                         ; Enemy_Stage12LauncherMain+C   j

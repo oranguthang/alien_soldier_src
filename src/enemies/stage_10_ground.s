@@ -243,7 +243,7 @@ Enemy_Stage10BeetleDefeat:                              ; CODE XREF: Enemy_Stage
                 jsr     (Sound_PlaySFX).l
                 move.l  #off_E953C,8(a5)
                 clr.w   $C(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_2E97A:                                              ; CODE XREF: Enemy_Stage10BeetleDefeat+4   j
                                         ; Enemy_Stage10BeetleDefeat+C   j
@@ -283,7 +283,7 @@ Enemy_BeetleDeathCheck:
                 jsr     (Sound_PlaySFX).l
                 move.l  #off_E953C,8(a5)
                 clr.w   $C(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 locret_2E9FA:                                           ; CODE XREF: Enemy_BeetleDeathCheck+4   j
                                         ; Enemy_BeetleDeathCheck+C   j

@@ -152,7 +152,7 @@ Boss_SunsetStingSegmentWobble:                          ; DATA XREF: ROM:0004337
 ; End of function Boss_SunsetStingSegmentWobble
 ; Converts segment to projectile
 Boss_SunsetStingSegmentConvertToProjectile:             ; DATA XREF: ROM:00043380   o  ; was: sub_434F6
-                jsr     (Enemy_GetEntityAddress).l
+                jsr     (Projectile_InitType88FromCurrent).l
                 move.l  #off_E95DC,8(a5)
                 rts
 ; End of function Boss_SunsetStingSegmentConvertToProjectile

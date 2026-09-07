@@ -296,10 +296,10 @@ loc_55352:                                              ; CODE XREF: Cutscene_Se
                                         ; sub_553CC:loc_553DC   p
                 move.w  #2,(word_FFA010).w
                 move.w  #2,(word_FFA014).w
-                jsr     (Effect_PlayRandomExplosionSound).l
+                jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_553CA
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.l  #off_E953C,8(a0)
                 btst    #0,(dword_FFFF08).w
                 beq.s   loc_5538A

@@ -21,7 +21,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Projectile_ExplodeOnWall
                 dc.l    Projectile_DirectionalInitMain
                 dc.l    Projectile_BouncingWithGravity
-                dc.l    Physics_ApplyUpwardVelocity
+                dc.l    Physics_AccelerateDownward
                 dc.l    Projectile_UpdateWithSpawning
                 dc.l    Sprite_UpdateSeekingProjectile
                 dc.l    Sprite_HandleProjectileCollision
@@ -36,11 +36,11 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Physics_ApplyGravity
                 dc.l    Enemy_ProcessProjectile
                 dc.l    Enemy_BirdMain
-                dc.l    Physics_SetUpwardVelocity
+                dc.l    Physics_AccelerateUpward
                 dc.l    Enemy_BossProjectileMovement
                 dc.l    Sprite_AnimateAndExpire
                 dc.l    Sprite_MatchParentPosition
-                dc.l    Projectile_InitializeFromTable
+                dc.l    Anim_UpdateWithGlobalAttributes
                 dc.l    Effect_SpawnParticleLoop
                 dc.l    Enemy_TinyWrapper
                 dc.l    Enemy_TinyWrapper
@@ -48,7 +48,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Boss_TerobusterMovementPhysics
                 dc.l    Enemy_TinyWrapper
                 dc.l    Enemy_TinyWrapper
-                dc.l    Boss_CheckVisibilityTimer
+                dc.l    Object_UpdateVisibilityLifetime
                 dc.l    Enemy_TinyWrapper
                 dc.l    Enemy_TinyWrapper
                 dc.l    Enemy_TinyWrapper
@@ -76,7 +76,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Boss_CaterpillarMain
                 dc.l    Enemy_InitSpriteGraphics
                 dc.l    Enemy_TinyWrapper
-                dc.l    Projectile_DestroyOffscreen
+                dc.l    Terrain_StampObjectPattern
                 dc.l    Enemy_HomingMissileUpdate
                 dc.l    Boss_CaterpillarPart2
                 dc.l    Boss_CaterpillarPart3
@@ -90,13 +90,13 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Physics_CheckHeightBoundary
                 dc.l    Entity_EmptyState6
                 dc.l    UI_DebugSpritePositionEditor
-                dc.l    Sprite_ClearInactiveObjects
+                dc.l    Object_ClearInactiveTypes12CAnd134
                 dc.l    Entity_FlyingNeoGravityAccel
                 dc.l    Projectile_FallingDebris
                 dc.l    Projectile_IntroFalling
                 dc.l    Enemy_BouncingProjectile
                 dc.l    Projectile_FallingSpawner
-                dc.l    Sys_PassObjectAddress
+                dc.l    Sprite_InitCurrentFromTable
                 dc.l    Enemy_DelayedHide
                 dc.l    Weapon_UpdateRotatingProjectile
                 dc.l    Sprite_LoadAnimationFrame
@@ -153,7 +153,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Boss_DestroyerMK2DefeatFlash
                 dc.l    Boss_DestroyerMK2DefeatDebris
                 dc.l    Boss_Epsilon1Main
-                dc.l    Boss_Epsilon1FinalPhase
+                dc.l    Anim_RunCallbackScript
                 dc.l    Sprite_SetPriorityHigh
                 dc.l    Weapon_UpdateBombProjectile
                 dc.l    Cutscene_XiTigerFadeOut

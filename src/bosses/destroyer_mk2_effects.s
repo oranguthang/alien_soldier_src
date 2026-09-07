@@ -533,7 +533,7 @@ loc_4BBB4:                                              ; CODE XREF: Effect_Dest
                 subq.w  #1,(word_FFC792).w
                 clr.b   $21(a5)
                 move.l  #off_E95DC,8(a5)
-                jsr     (Enemy_GetEntityAddress).l
+                jsr     (Projectile_InitType88FromCurrent).l
                 move.w  $1C(a5),d0
                 neg.w   d0
                 asr.w   #1,d0
@@ -721,12 +721,12 @@ loc_4BE0C:                                              ; CODE XREF: Boss_Destro
 Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Effect_DestroyerMK2Explosion2   p  ; was: sub_4BE16
                                         ; DATA XREF: Effect_DestroyerMK2Explosion2   o
                 jsr     (Gfx_UpdatePaletteFade).l
-                jsr     (Effect_PlayRandomExplosionSound).l
+                jsr     (Projectile_UpdateWithExplosionSound).l
                 move.w  #2,(word_FFA014).w
                 move.w  #4,(word_FFA010).w
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_4BE98
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 clr.b   $20(a0)
                 move.w  #6,$18(a0)
                 move.w  (dword_FFFF08+2).w,$1A(a0)

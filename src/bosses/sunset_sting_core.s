@@ -643,7 +643,7 @@ loc_41484:                                              ; CODE XREF: Effect_Debr
 Projectile_SpawnWithRandomOffset:                       ; CODE XREF: Boss_SunsetStingSpawnDebrisField+88   p  ; was: sub_41492
                                         ; Boss_SunsetStingDescendAndActivate+E   p
                 move.l  d1,-(sp)
-                jsr     (Projectile_InitTypeA4).l
+                jsr     (Projectile_UpdateWithImpactFrames).l
                 bne.s   loc_414EA
                 jsr     (Sprite_InitFromTable).l
                 clr.b   $20(a0)

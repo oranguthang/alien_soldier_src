@@ -153,7 +153,7 @@ locret_14838:                                           ; CODE XREF: Physics_Mul
 ; End of function Physics_MultiPointTerrainCheck
 ; Terrain collision check with vertical velocity validation
 Physics_TerrainCheckWithVelocity:                       ; CODE XREF: Player_TerrainCheckAlternate+10   j  ; was: sub_1483A
-                                        ; sub_2C71E:loc_2C86E   j
+                                        ; sub_2C71E:Enemy_MainStateMachine_CheckRisingTerrain   j
                 lea     (M68K_RAM).l,a0
                 lea     (dword_FF7800).l,a1
                 move.w  #$80,d7

@@ -593,9 +593,9 @@ Boss_MadamBarbarCheckBounds:                            ; CODE XREF: Boss_MadamB
 Boss_MadamBarbarSpawnBullet:                            ; CODE XREF: Boss_MadamBarbarAttackPhase:loc_3A6BE   p  ; was: sub_3AB82
                 move.w  #6,(word_FFA010).w
                 move.w  #6,(word_FFA014).w
-                jsr     (Projectile_SpawnAtPosition).l
+                jsr     (Projectile_UpdateAfterGlobalDelay).l
                 bne.s   locret_3ABE2
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)
                 move.w  #1,$1C(a0)
                 move.w  (dword_FFFF08+2).w,$1E(a0)

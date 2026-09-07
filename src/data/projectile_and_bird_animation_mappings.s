@@ -270,7 +270,7 @@ off_EA5B8:      dc.w    word_EA12C-*                    ; DATA XREF: ROM:0002CA9
                 dc.w    5
                 dc.w    off_EA5B8-*
                 dc.w    0
-off_EA5DC:      dc.w    word_EA05A-*                    ; DATA XREF: ROM:off_2CA90   o
+off_EA5DC:      dc.w    word_EA05A-*                    ; DATA XREF: ROM:Enemy_ProjectileAnimationPointers   o
                                         ; ROM:000EA5F4   o
                 dc.w    8
                 dc.w    word_EA084-*
@@ -305,7 +305,7 @@ off_EA5F8:      dc.w    word_EA246-*                    ; DATA XREF: ROM:0002CA9
                 dc.w    off_EA5F8-*
                 dc.w    0
 off_EA61C:      dc.w    word_EA084-*                    ; DATA XREF: ROM:0002CA9C   o
-                                        ; ROM:off_2CB56   o
+                                        ; ROM:Enemy_DirectionalAnimationPointers   o
                 dc.w    2
                 dc.w    word_EA270-*
                 dc.w    2

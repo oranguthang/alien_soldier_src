@@ -688,7 +688,7 @@ off_E9850:      dc.w    word_E9092-*                    ; DATA XREF: Projectile_
                 dc.w    1
                 dc.w    word_E9404-*
                 dc.w    $FF
-off_E9870:      dc.w    word_E907A-*                    ; DATA XREF: Boss_SpawnProjectile+2A   o
+off_E9870:      dc.w    word_E907A-*                    ; DATA XREF: Boss_JetsripperInitC4Projectile+2A   o
                 dc.w    1
                 dc.w    word_E9092-*
                 dc.w    1

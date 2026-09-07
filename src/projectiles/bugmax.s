@@ -99,7 +99,7 @@ loc_4D4DC:                                              ; CODE XREF: Enemy_Bugma
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_4D4F2:                                              ; CODE XREF: Enemy_BugmaxDebrisBounce+2C   j
                 clr.l   $18(a5)
@@ -238,7 +238,7 @@ loc_4D668:                                              ; CODE XREF: Projectile_
 loc_4D67C:                                              ; CODE XREF: Projectile_BugmaxFlyingPhase+6C   j
                 move.l  #off_E95DC,8(a5)
                 move.w  #$FFFE,$1C(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 locret_4D690:                                           ; CODE XREF: Projectile_BugmaxFlyingPhase+3C   j
                                         ; Projectile_BugmaxFlyingPhase+72   j

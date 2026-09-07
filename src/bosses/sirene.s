@@ -767,7 +767,7 @@ loc_57E66:                                              ; CODE XREF: Projectile_
                 move.b  #$2F,d0                         ; '/'
                 jsr     (Sound_PlaySFX).l
                 move.l  #off_E953C,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 loc_57E7E:                                              ; CODE XREF: Projectile_SireneHoming+38   j
                 move.w  (dword_FFDB30).w,d0

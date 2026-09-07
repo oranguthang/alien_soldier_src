@@ -73,7 +73,7 @@ loc_2CF5A:                                              ; CODE XREF: Physics_Acc
 ; End of function Physics_AccelerateGravity
 ; Updates player physics and action state
 Player_UpdatePhysics:                                   ; CODE XREF: Enemy_MainStateMachine+34   p  ; was: sub_2CF64
-                                        ; sub_2C71E:loc_2C7D8   p
+                                        ; sub_2C71E:Enemy_MainStateMachine_UpdateMovement   p
                 jsr     (Physics_EntityWallCheck).l
                 jmp     Player_ActionDispatcher
 ; End of function Player_UpdatePhysics

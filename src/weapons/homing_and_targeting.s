@@ -245,7 +245,7 @@ Effect_CreateDebrisParticle:                            ; CODE XREF: Effect_Spaw
                 add.w   d0,d2
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.w  #$334,(a0)
                 move.l  #off_E9738,8(a0)
                 move.b  #$40,$21(a0)                    ; '@'
@@ -351,7 +351,7 @@ loc_189A6:                                              ; CODE XREF: Effect_Spaw
                 move.l  d1,$1C(a5)
                 move.l  d2,$18(a5)
                 lea     (Effect_KnockbackParticleSpriteFrames).l,a1
-                jsr     (Effect_SpawnObjectType).l
+                jsr     (Sprite_InitTypeA4FromCurrentTable).l
                 move.w  #$8C80,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
@@ -366,7 +366,7 @@ loc_189E0:                                              ; CODE XREF: Effect_Spaw
                 asr.l   #1,d0
                 move.l  d0,$1C(a5)
                 lea     (Effect_KnockbackImpactSpriteFrames).l,a1
-                jmp     Effect_SpawnObjectType
+                jmp     Sprite_InitTypeA4FromCurrentTable
 ; ---------------------------------------------------------------------------
 locret_18A0A:                                           ; CODE XREF: Effect_SpawnKnockbackParticle+56   j
                 rts

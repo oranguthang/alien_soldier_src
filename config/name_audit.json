@@ -279,6 +279,204 @@
         "The routine subtracts one BCD unit from the two-byte counter at FFFF42 and saturates underflow at 9999.",
         "It never accesses the four-byte score value at FFA212."
       ]
+    },
+    {
+      "address": "0x02A39C",
+      "previous_name": "Projectile_InitTypeA4",
+      "current_name": "Projectile_UpdateWithImpactFrames",
+      "legacy_name": "sub_2A39C",
+      "evidence": "static",
+      "basis": [
+        "The routine updates an existing projectile trajectory and selects between shared impact-frame tables.",
+        "It writes no object type and performs no type-A4 initialization."
+      ]
+    },
+    {
+      "address": "0x02A688",
+      "previous_name": "Projectile_FindFreeSlotComplex",
+      "current_name": "Sprite_InitTypeA4FromTable",
+      "legacy_name": "sub_2A688",
+      "evidence": "static",
+      "basis": [
+        "The routine calls the table initializer for the object already supplied in a0 and then writes type A4.",
+        "It performs no pool scan or free-slot test."
+      ]
+    },
+    {
+      "address": "0x02A6B4",
+      "previous_name": "Projectile_InitializeFromTable",
+      "current_name": "Anim_UpdateWithGlobalAttributes",
+      "legacy_name": "sub_2A6B4",
+      "evidence": "static",
+      "basis": [
+        "The routine advances the current animation frame and merges global stage bits into sprite attributes.",
+        "It neither consumes an initialization table nor allocates a projectile."
+      ]
+    },
+    {
+      "address": "0x02A6D0",
+      "previous_name": "Physics_ApplyUpwardVelocity",
+      "current_name": "Physics_AccelerateDownward",
+      "legacy_name": "sub_2A6D0",
+      "evidence": "static",
+      "basis": [
+        "The routine adds 0x8000 to the vertical velocity field.",
+        "The engine's paired entry point subtracts velocity for upward acceleration before falling through here."
+      ]
+    },
+    {
+      "address": "0x02A702",
+      "previous_name": "Sprite_SetBossInactiveState",
+      "current_name": "Anim_HideOnScriptEnd",
+      "legacy_name": "loc_2A702",
+      "evidence": "static",
+      "basis": [
+        "This branch is reached only when the animation script reads a negative end marker.",
+        "It writes the hidden display state and contains no boss-specific behavior."
+      ]
+    },
+    {
+      "address": "0x02A70A",
+      "previous_name": "Boss_Epsilon1FinalPhase",
+      "current_name": "Anim_RunCallbackScript",
+      "legacy_name": "sub_2A70A",
+      "evidence": "static",
+      "basis": [
+        "The routine reads generic frame records through the pointer stored at object offset 0x54.",
+        "At the end marker it restores velocities and jumps through the callback stored at offset 0x48."
+      ]
+    },
+    {
+      "address": "0x02A79C",
+      "previous_name": "Enemy_GetEntityAddress",
+      "current_name": "Projectile_InitType88FromCurrent",
+      "legacy_name": "sub_2A79C",
+      "evidence": "static",
+      "basis": [
+        "The entry copies a5 to a0 and falls directly into the type-88 projectile initializer.",
+        "Its callers therefore initialize the current object rather than merely retrieving an address."
+      ]
+    },
+    {
+      "address": "0x02A7A4",
+      "previous_name": "Weapon_CopySeekingMissileAddress",
+      "current_name": "Effect_InitType188FromCurrent",
+      "legacy_name": "sub_2A7A4",
+      "evidence": "static",
+      "basis": [
+        "The entry copies a5 to a0 and falls into code that writes object type 188 and shared effect graphics.",
+        "No seeking-missile address is stored or returned separately."
+      ]
+    },
+    {
+      "address": "0x02A7AC",
+      "previous_name": "Effect_WrapperA5ToA0",
+      "current_name": "Projectile_InitType1A8FromCurrent",
+      "legacy_name": "sub_2A7AC",
+      "evidence": "static",
+      "basis": [
+        "The entry copies a5 to a0 and falls through to the type-1A8 initializer.",
+        "Its observable behavior is projectile initialization, not a register-copy wrapper."
+      ]
+    },
+    {
+      "address": "0x02A7AE",
+      "previous_name": "Projectile_InitType2A",
+      "current_name": "Projectile_InitType1A8",
+      "legacy_name": "sub_2A7AE",
+      "evidence": "static",
+      "basis": [
+        "The first write assigns object type 0x1A8.",
+        "The value 0x2A does not occur in the routine."
+      ]
+    },
+    {
+      "address": "0x02A7BC",
+      "previous_name": "Sprite_SetObjectPointer",
+      "current_name": "Sprite_InitType160FromCurrent",
+      "legacy_name": "sub_2A7BC",
+      "evidence": "static",
+      "basis": [
+        "The entry copies a5 to a0 and falls through to code that writes object type 160 and graphics attributes.",
+        "It initializes the current object rather than storing an object pointer."
+      ]
+    },
+    {
+      "address": "0x02A824",
+      "previous_name": "Projectile_SetVelocityFromAngle",
+      "current_name": "Projectile_ApplyGlobalAttributes",
+      "legacy_name": "sub_2A824",
+      "evidence": "static",
+      "basis": [
+        "The routine masks and merges word FF8092 into the sprite attribute field at offset 0x0E.",
+        "It reads neither an angle nor either velocity field."
+      ]
+    },
+    {
+      "address": "0x02A834",
+      "previous_name": "Projectile_GetVelocityComponents",
+      "current_name": "Projectile_UpdatePriorityBySlot",
+      "legacy_name": "sub_2A834",
+      "evidence": "static",
+      "basis": [
+        "The routine tests the object's RAM-slot bit and frame parity, then sets or clears bit 7 of display state.",
+        "It performs no trigonometry and never accesses a velocity field."
+      ]
+    },
+    {
+      "address": "0x02A85C",
+      "previous_name": "Sprite_WrapperA5ToA0",
+      "current_name": "Effect_InitDebrisFromCurrent",
+      "legacy_name": "sub_2A85C",
+      "evidence": "static",
+      "basis": [
+        "The entry copies a5 to a0 and falls into debris initialization with randomized velocity.",
+        "Its effect extends beyond register forwarding."
+      ]
+    },
+    {
+      "address": "0x02A94C",
+      "previous_name": "Projectile_DestroyOffscreen",
+      "current_name": "Terrain_StampObjectPattern",
+      "legacy_name": "sub_2A94C",
+      "evidence": "static",
+      "basis": [
+        "The routine loads object graphics metadata and writes a terminated pattern into the terrain tile map.",
+        "It contains no visibility test and never clears or destroys the object."
+      ]
+    },
+    {
+      "address": "0x02C8EA",
+      "previous_name": "Enemy_CheckBoundsVisibility",
+      "current_name": "Enemy_DispatchVisibilityState",
+      "legacy_name": "sub_2C8EA",
+      "evidence": "static",
+      "basis": [
+        "The routine indexes a two-entry handler table using the object's state field and jumps to the selected handler.",
+        "It does not read coordinates or compare screen bounds."
+      ]
+    },
+    {
+      "address": "0x02C902",
+      "previous_name": "Enemy_DestroyIfOffscreen",
+      "current_name": "Enemy_BeginDestructionDelay",
+      "legacy_name": "sub_2C902",
+      "evidence": "static",
+      "basis": [
+        "The routine initializes a fixed 0x24-frame destruction delay and then falls into its updater.",
+        "It performs no offscreen test."
+      ]
+    },
+    {
+      "address": "0x02C928",
+      "previous_name": "Boss_SetupDestructionState",
+      "current_name": "Enemy_UpdateDestructionDelay",
+      "legacy_name": "loc_2C928",
+      "evidence": "static",
+      "basis": [
+        "This state decrements the existing delay and converts the object to its terminal effect type at expiry.",
+        "The destruction state was initialized by the preceding entry point; this code is its updater."
+      ]
     }
   ]
 }

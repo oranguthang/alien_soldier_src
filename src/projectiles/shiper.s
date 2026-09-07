@@ -1,8 +1,8 @@
 Boss_ShiperSpawnDebris:                                 ; CODE XREF: Boss_ShiperUpdateWithFade+6   p  ; was: sub_36FEE
                 move.w  #3,(word_FFA010).w
-                jsr     (Projectile_InitTypeA4).l
+                jsr     (Projectile_UpdateWithImpactFrames).l
                 bne.s   locret_37046
-                jsr     (Sprite_InitWithDefaultState).l
+                jsr     (Sprite_InitType58FromTable).l
                 clr.b   $20(a0)
                 move.w  #$FFFA,$1C(a0)
                 move.w  (dword_FFFF08+2).w,$1E(a0)
@@ -365,7 +365,7 @@ loc_374A6:                                              ; CODE XREF: Enemy_Bounc
                 asr.l   #2,d0
                 move.l  d0,$18(a5)
                 move.l  #off_E953C,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 locret_374C4:                                           ; CODE XREF: Enemy_BounceRotateProjectile+62   j
                                         ; Enemy_BounceRotateProjectile+6E   j

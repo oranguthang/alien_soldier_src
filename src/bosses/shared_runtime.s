@@ -295,7 +295,7 @@ loc_2BE72:                                              ; CODE XREF: Projectile_
                 move.l  $10(a5),$10(a0)
                 move.l  $14(a5),$14(a0)
                 move.l  a1,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 add.w   d6,d2
 loc_2BEB6:                                              ; CODE XREF: Projectile_SpawnMultiPattern+18   j
                 dbf     d7,loc_2BE72
@@ -476,7 +476,7 @@ Enemy_SpawnHelperSprite:                                ; DATA XREF: ROM:off_2C0
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.w   nullsub_61
                 move.l  #off_E9560,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  #4,$48(a5)

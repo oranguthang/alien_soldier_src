@@ -246,7 +246,7 @@ word_E9FD8:     dc.w    $685D, $C00, $1800              ; DATA XREF: ROM:000EA03
                 dc.w    $6024, $A00, $E1E8
                 dc.w    $6824, $A00, $E100
                 dc.w    $E861, $500, $D4F9
-off_EA00E:      dc.w    word_E9F36-*                    ; DATA XREF: ROM:off_2C984   o
+off_EA00E:      dc.w    word_E9F36-*                    ; DATA XREF: ROM:Enemy_AnimationPointers   o
                                         ; ROM:000EA032   o
                 dc.w    4
                 dc.w    word_E9E94-*

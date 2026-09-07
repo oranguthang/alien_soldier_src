@@ -25,7 +25,7 @@ Boss_GustheadBounceTransition:                          ; DATA XREF: ROM:0004012
                 blt.s   locret_40196
                 clr.l   $1C(a5)
                 clr.l   $18(a5)
-                jsr     (Enemy_GetEntityAddress).l
+                jsr     (Projectile_InitType88FromCurrent).l
                 move.l  #off_1A0E96,8(a5)
                 move.w  #$4000,$E(a5)
 locret_40196:                                           ; CODE XREF: Boss_GustheadBounceTransition+E   j
@@ -172,7 +172,7 @@ loc_40342:                                              ; CODE XREF: Enemy_Gusth
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_40358:                                              ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+C   j
                 move.w  4(a5),d0
@@ -286,7 +286,7 @@ loc_40486:                                              ; CODE XREF: Boss_Gusthe
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_4049C:                                              ; CODE XREF: Boss_GustheadDebrisUpdate+C   j
                 bsr.w   Enemy_GustheadDebrisFlip
@@ -313,7 +313,7 @@ Boss_GustheadDebrisReset:
                 clr.l   $18(a5)                         ; was: sub_404DC
                 clr.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; End of function Boss_GustheadDebrisReset
 ; Checks ground collision and applies upward bounce velocity to debris
 Boss_GustheadDebrisGroundBounce:                        ; CODE XREF: Enemy_GustheadDebrisUpdate+32   j  ; was: sub_404F2
@@ -321,7 +321,7 @@ Boss_GustheadDebrisGroundBounce:                        ; CODE XREF: Enemy_Gusth
                 cmpi.w  #$150,$14(a5)
                 blt.s   locret_4051A
                 move.l  #off_1A0E96,8(a5)
-                jsr     (Enemy_GetEntityAddress).l
+                jsr     (Projectile_InitType88FromCurrent).l
                 move.w  #$C000,$E(a5)
                 move.l  #$FFFD8000,$1C(a5)
                 clr.w   $18(a5)

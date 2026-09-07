@@ -251,7 +251,7 @@ locret_4A2EE:                                           ; CODE XREF: Enemy_Jampa
 loc_4A2F0:                                              ; CODE XREF: Enemy_JampanShieldMain+6   j
                                         ; Enemy_JampanShieldFire+34   j
                 move.l  #off_E953C,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; End of function Enemy_JampanShieldFire
 nullsub_102:                                            ; DATA XREF: ROM:0004A220   o
                 rts

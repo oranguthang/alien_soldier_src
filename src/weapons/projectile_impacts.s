@@ -35,7 +35,7 @@ loc_18AE2:                                              ; CODE XREF: Weapon_Hand
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 lea     (Weapon_ImpactSpriteFrames).l,a1
-                jmp     Effect_SpawnObjectType
+                jmp     Sprite_InitTypeA4FromCurrentTable
 ; ---------------------------------------------------------------------------
 loc_18AF6:                                              ; CODE XREF: Weapon_HandleProjectileHit+16   j
                 move.w  #$44D6,d0
@@ -47,9 +47,9 @@ loc_18AF6:                                              ; CODE XREF: Weapon_Hand
                 bra.w   loc_18A2C
 ; End of function Weapon_HandleProjectileHit
 ; Attributes: thunk
-; Thunk to Effect_SpawnObjectType
+; Thunk to Sprite_InitTypeA4FromCurrentTable
 Effect_SpawnObjectThunk1:
-                jmp     Effect_SpawnObjectType          ; was: sub_18B1A
+                jmp     Sprite_InitTypeA4FromCurrentTable  ; was: sub_18B1A
 ; End of function Effect_SpawnObjectThunk1
 ; Decrements projectile lifetime
 Weapon_TickLifetimeTimer:                               ; CODE XREF: Weapon_HandleProjectileHit+E   j  ; was: sub_18B20
@@ -92,7 +92,7 @@ loc_18B94:                                              ; CODE XREF: Weapon_Hand
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 lea     (Weapon_ImpactSpriteFrames).l,a1
-                jmp     Effect_SpawnObjectType
+                jmp     Sprite_InitTypeA4FromCurrentTable
 ; ---------------------------------------------------------------------------
 loc_18BA8:                                              ; CODE XREF: Weapon_HandleExplosiveImpact+18   j
                 move.w  #$44D6,d0
@@ -104,9 +104,9 @@ loc_18BA8:                                              ; CODE XREF: Weapon_Hand
                 bra.w   loc_18A2C
 ; End of function Weapon_HandleExplosiveImpact
 ; Attributes: thunk
-; Thunk to Effect_SpawnObjectType
+; Thunk to Sprite_InitTypeA4FromCurrentTable
 Effect_SpawnObjectThunk2:
-                jmp     Effect_SpawnObjectType          ; was: sub_18BCC
+                jmp     Sprite_InitTypeA4FromCurrentTable  ; was: sub_18BCC
 ; End of function Effect_SpawnObjectThunk2
 ; Animates explosion sprite fading sequence
 Weapon_AnimateExplosionFade:                            ; CODE XREF: Weapon_HandleExplosiveImpact+E   j  ; was: sub_18BD2
@@ -173,7 +173,7 @@ loc_18C64:                                              ; CODE XREF: Sprite_Spaw
                 bne.s   loc_18C8C
                 lea     (Effect_ParticleSecondarySpriteFrames).l,a1
 loc_18C8C:                                              ; CODE XREF: Sprite_SpawnParticleEffect+32   j
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 move.w  #$8C80,2(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -241,7 +241,7 @@ loc_18D6E:                                              ; CODE XREF: Weapon_Upda
                 move.l  #off_E9680,8(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                jmp     Weapon_CopySeekingMissileAddress
+                jmp     Effect_InitType188FromCurrent
 ; ---------------------------------------------------------------------------
 loc_18D8A:                                              ; CODE XREF: Weapon_UpdateSeekingMissile+E   j
                 subq.w  #1,$48(a5)
@@ -388,7 +388,7 @@ Sprite_HandleProjectileCollision:                       ; CODE XREF: Sprite_Upda
                 tst.w   $26(a5)
                 bpl.s   locret_18F2E
                 lea     (Projectile_CollisionSpriteFrames).l,a1
-                jsr     (Sys_PassObjectAddress).l
+                jsr     (Sprite_InitCurrentFromTable).l
                 move.w  #$8080,2(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
@@ -440,7 +440,7 @@ Weapon_UpdateBombProjectile:                            ; DATA XREF: ROM:off_5DC
                 tst.w   $26(a5)
                 bpl.s   loc_18FD2
                 lea     (Projectile_BombAndRadialSpriteFrames).l,a1
-                jsr     (Sys_PassObjectAddress).l
+                jsr     (Sprite_InitCurrentFromTable).l
                 move.w  #$8080,2(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
@@ -607,7 +607,7 @@ loc_191B8:                                              ; CODE XREF: Sprite_Init
                 jsr     (Sys_FindFreeObjectSlot).l
                 bne.w   locret_19230
                 move.l  #off_E9584,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.b  $20(a5),$20(a0)
                 lea     (word_1B514).l,a1
                 move.w  (word_FFA000).w,d0

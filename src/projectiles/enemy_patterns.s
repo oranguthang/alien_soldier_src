@@ -491,7 +491,7 @@ loc_2B5D2:                                              ; CODE XREF: Enemy_Bounc
                 move.l  d0,$18(a0)
                 move.l  d1,$1C(a0)
                 move.l  #off_E9560,8(a0)
-                jmp     Sprite_InitializeProperties
+                jmp     Sprite_InitType160
 ; End of function Enemy_BouncingProjectile
 ; Spawns animated projectile from enemy with random animation offset
 Enemy_SpawnAnimatedProjectile:                          ; CODE XREF: Boss_TerobusterSpawnMultiDirectional+52   p  ; was: sub_2B60C
@@ -544,7 +544,7 @@ loc_2B6A0:                                              ; CODE XREF: Projectile_
                 move.l  d0,$18(a5)
 loc_2B6A4:                                              ; CODE XREF: Projectile_BouncingWithGravity+1C   j
                                         ; Projectile_BouncingWithGravity+2C   j
-                bsr.w   Gfx_AnimateSpriteTileLoop
+                bsr.w   Anim_UpdateLoopingScript
                 addi.l  #$8000,$1C(a5)
                 rts
 ; End of function Projectile_BouncingWithGravity

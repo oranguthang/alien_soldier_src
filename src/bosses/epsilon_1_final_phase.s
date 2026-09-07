@@ -6,7 +6,7 @@ Boss_Epsilon1CheckVulnerable:                           ; CODE XREF: Projectile_
                 beq.s   locret_477F6
 loc_477E8:                                              ; CODE XREF: Boss_Epsilon1CheckVulnerable+6   j
                 move.l  #off_E95DC,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 locret_477F6:                                           ; CODE XREF: Boss_Epsilon1CheckVulnerable+E   j
                 rts

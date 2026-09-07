@@ -60,10 +60,10 @@ loc_37F06:                                              ; CODE XREF: Boss_Antroi
 Boss_AntroidSpawnDebris:                                ; CODE XREF: Boss_AntroidUpdateMetaspriteFlipped   p  ; was: sub_37F26
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_37F76
-                jsr     (Projectile_InitTypeA4).l
+                jsr     (Projectile_UpdateWithImpactFrames).l
                 bne.s   locret_37F76
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)
                 move.l  #$FFFE8000,$1C(a0)
                 move.b  (dword_FFFF08).w,d0

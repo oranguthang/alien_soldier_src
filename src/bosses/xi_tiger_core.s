@@ -767,10 +767,10 @@ Gfx_QueueDMATransfer:                                   ; CODE XREF: Boss_Shells
 ; Spawns boss projectile with trajectory
 Boss_XiTigerSpawnProjectile:                            ; CODE XREF: Boss_XiTigerAttackPattern2+66   j  ; was: sub_3E1C0
                                         ; Boss_XiTigerAttackPattern3+52   j
-                jsr     (Projectile_SpawnAtPosition).l
+                jsr     (Projectile_UpdateAfterGlobalDelay).l
                 bne.s   locret_3E21A
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)
                 move.w  #$FFFD,$1C(a0)
                 move.w  (dword_FFFF08+2).w,$1E(a0)

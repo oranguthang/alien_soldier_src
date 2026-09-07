@@ -552,7 +552,7 @@ loc_3ECE6:                                              ; CODE XREF: Boss_DeepSt
                 lea     $60(a0),a0
                 move.b  #$30,d0                         ; '0'
                 jsr     (Sound_PlaySFX).l
-                jsr     (Projectile_InitType2A).l
+                jsr     (Projectile_InitType1A8).l
                 move.l  #off_E953C,8(a0)
                 move.l  d4,$1C(a0)
                 move.w  #$150,$14(a0)
@@ -576,7 +576,7 @@ Boss_DeepStriderSpawnDebris:                            ; CODE XREF: Boss_DeepSt
                 bne.s   locret_3ED9A
                 jsr     (Projectile_FindFreeSlotAndClear).l
                 bne.s   locret_3ED9A
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.l  #off_E953C,8(a0)
                 move.b  (dword_FFFF08).w,d1
                 andi.w  #3,d1
@@ -898,7 +898,7 @@ loc_3F14E:                                              ; CODE XREF: Enemy_Bounc
                 neg.w   $18(a5)
                 move.w  #$FFFE,$1C(a5)
                 lea     (Projectile_SpawnSpriteFrames).l,a1  ; make offsets?
-                jmp     Sys_PassObjectAddress
+                jmp     Sprite_InitCurrentFromTable
 ; ---------------------------------------------------------------------------
 loc_3F164:                                              ; CODE XREF: Enemy_BounceOnFloorOrExplode+38   j
                 addi.l  #$E00,$1C(a5)
@@ -909,7 +909,7 @@ loc_3F164:                                              ; CODE XREF: Enemy_Bounc
                 move.l  #$FFFC0000,$1C(a5)
 loc_3F182:                                              ; CODE XREF: Enemy_FallingBombLogic+C0   p
                 move.l  #off_1A0E96,8(a5)
-                jsr     (Enemy_GetEntityAddress).l
+                jsr     (Projectile_InitType88FromCurrent).l
                 move.w  #$4000,$E(a5)
 locret_3F196:                                           ; CODE XREF: Enemy_BounceOnFloorOrExplode+58   j
                                         ; Enemy_BounceOnFloorOrExplode+60   j

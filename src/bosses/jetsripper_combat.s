@@ -52,7 +52,7 @@ loc_2B72E:                                              ; CODE XREF: Boss_Jetsri
 Boss_SpawnPeriodicProjectile:                           ; CODE XREF: Boss_JetsripperMain+6E   j  ; was: loc_2B75E
                                         ; Boss_JetsripperMain+76   j
                 move.w  #$9C,$26(a5)
-                jsr     (Boss_SpawnProjectile).l
+                jsr     (Boss_JetsripperInitC4Projectile).l
                 btst    #0,$5F(a5)
                 beq.s   locret_2B776
                 clr.l   $1C(a5)
@@ -105,7 +105,7 @@ locret_2B806:                                           ; CODE XREF: Enemy_InitP
 byte_2B808:     dc.b    $FF, 0, 1, 0                    ; DATA XREF: Enemy_InitProjectileType+48   r
 
 ; Spawns projectile with trajectory calculation towards player position
-Boss_SpawnTargetedProjectile:                           ; CODE XREF: Boss_SpawnPeriodicShots+1E   p  ; was: sub_2B80C
+Boss_SpawnTargetedProjectile:                           ; CODE XREF: Enemy_UpdatePeriodicShots+1E   p  ; was: sub_2B80C
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_2B888
                 add.w   $10(a5),d5
@@ -166,7 +166,7 @@ loc_2B8C0:                                              ; CODE XREF: Projectile_
                 move.l  d0,$18(a5)
                 move.l  #$FFFEC000,$1C(a5)
                 move.l  #off_E953C,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; End of function Projectile_GravityBounce
 ; Spawns falling debris projectile with gravity and horizontal velocity
 Projectile_SpawnFallingDebris:                          ; CODE XREF: Enemy_GroundWalkWithProjectile:loc_2CD90   p  ; was: sub_2B8E0
@@ -225,7 +225,7 @@ loc_2B9AA:                                              ; CODE XREF: Enemy_Trail
                 clr.l   $18(a5)
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #off_E95DC,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; End of function Enemy_TrailingExplosionSpawner
 ; Spawns falling hazard projectiles from top of screen at intervals
 Enemy_SpawnFallingHazard:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B9C4
@@ -277,7 +277,7 @@ Projectile_TerrainCollision:                            ; DATA XREF: ROM:off_5DC
 loc_2BA64:                                              ; CODE XREF: Projectile_TerrainCollision+4A   j
                 move.l  #off_E9584,8(a5)
                 move.l  #$FFFF0000,$1C(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_2BA7A:                                              ; CODE XREF: Projectile_TerrainCollision+4   j
                 jsr     (Collision_GetEntityPosition).l

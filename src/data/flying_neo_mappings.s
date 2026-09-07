@@ -1,4 +1,4 @@
-word_19C4A4:    dc.w    $FFEE, $FF                      ; DATA XREF: ROM:off_2A9D8   o
+word_19C4A4:    dc.w    $FFEE, $FF                      ; DATA XREF: ROM:Terrain_ObjectStampPattern   o
 word_19C4A8:    dc.w    $8800, $500, $F4F8              ; DATA XREF: ROM:0019C4E2   o
                                         ; ROM:0019C4EA   o
 word_19C4AE:    dc.w    $8804, $500, $F4F8              ; DATA XREF: ROM:0019C4E6   o
@@ -16,7 +16,7 @@ word_19C4D2:    dc.w    $880C, $500, $F4F9              ; DATA XREF: ROM:0019C50
                                         ; ROM:0019C51E   o
 word_19C4D8:    dc.w    $880C, $500, $F4F7              ; DATA XREF: ROM:0019C516   o
                                         ; ROM:0019C526   o
-off_19C4DE:     dc.w    word_19C4B4-*                   ; DATA XREF: ROM:off_2A924   o
+off_19C4DE:     dc.w    word_19C4B4-*                   ; DATA XREF: ROM:Enemy_SpriteMappingPointers   o
                                         ; ROM:0019C4EE   o
                 dc.w    6
                 dc.w    word_19C4A8-*

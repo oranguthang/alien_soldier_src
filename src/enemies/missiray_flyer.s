@@ -502,7 +502,7 @@ Projectile_FlyerUpdate4:                                ; DATA XREF: ROM:00033A6
                 subq.w  #1,$48(a5)
                 bne.s   locret_33C48
                 move.l  #off_E953C,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 locret_33C48:                                           ; CODE XREF: Projectile_FlyerUpdate4+16   j
                 rts

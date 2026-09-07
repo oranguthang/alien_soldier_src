@@ -409,7 +409,7 @@ loc_529AA:                                              ; CODE XREF: Boss_ZLeoFa
 ; Animation update handler 2
 Boss_ZLeoAnimationUpdate2:                              ; CODE XREF: Boss_ZLeoAttackPattern2+68   p  ; was: sub_529CE
                                         ; Boss_ZLeoAttackPattern2+9C   p
-                jsr     (Effect_PlayRandomExplosionSound).l
+                jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_52A52
                 move.w  (dword_FFFF08).w,d0
@@ -419,7 +419,7 @@ Boss_ZLeoAnimationUpdate2:                              ; CODE XREF: Boss_ZLeoAt
                 bra.w   loc_52A24
 ; ---------------------------------------------------------------------------
 loc_529F0:                                              ; CODE XREF: Boss_ZLeoAnimationUpdate2+16   j
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.w  (dword_FFFF08).w,d0
                 ext.l   d0
                 asl.l   #2,d0

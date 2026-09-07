@@ -245,7 +245,7 @@ Segment_MissirayType2SpawnDebris:                       ; CODE XREF: Segment_Mis
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_546DC
                 jsr     (RandomNumber).l
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #7,d0
                 lsl.w   #2,d0

@@ -19,7 +19,7 @@ Stage24_UpdateForeground:                               ; DATA XREF: ROM:00033A6
                 bne.s   loc_33CD0
                 move.w  #$10,(a0)
                 move.l  #off_E95DC,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
                 move.l  #$FE02F40C,$2C(a0)
                 move.b  #$40,$21(a0)                    ; '@'
@@ -38,7 +38,7 @@ loc_33CD8:                                              ; CODE XREF: Stage24_Upd
                 move.w  $4A(a5),d0
                 sub.w   d0,$14(a5)
                 move.l  #off_E953C,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; End of function Stage24_UpdateForeground
 ; Palette update
 Stage24_PaletteUpdate:                                  ; CODE XREF: Stage24_UpdateBackground+C   p  ; was: sub_33CEE
@@ -64,7 +64,7 @@ loc_33CFC:                                              ; CODE XREF: Stage24_Pal
 Stage24_TileUpdate:                                     ; CODE XREF: Stage24_PaletteUpdate+20   p  ; was: sub_33D26
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_33D56
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
                 move.l  #off_E953C,8(a0)
                 move.w  $10(a5),$10(a0)

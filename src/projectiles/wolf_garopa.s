@@ -658,7 +658,7 @@ loc_50B24:                                              ; CODE XREF: Projectile_
 loc_50B28:                                              ; CODE XREF: Projectile_WolfGaropaWave+8C   j
                 neg.l   $1C(a5)
                 move.l  #off_E95A4,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 loc_50B3A:                                              ; CODE XREF: Projectile_WolfGaropaWave+C   j
                 move.w  $10(a5),d0

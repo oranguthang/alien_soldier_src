@@ -166,7 +166,7 @@ loc_45976:                                              ; CODE XREF: Boss_Epsilo
                 neg.l   d0
                 move.l  d0,$1C(a5)
                 move.l  #off_E9584,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_4599C:                                              ; CODE XREF: Boss_Epsilon1DebrisPhysics+C   j
                 subi.l  #$1000,$1C(a5)

@@ -123,7 +123,7 @@ Enemy_Stage10WaspMain:                                  ; DATA XREF: ROM:off_5DC
                 clr.l   $1C(a5)
                 move.l  #off_E953C,8(a5)
                 clr.w   $C(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_2E10A:                                              ; CODE XREF: Enemy_Stage10WaspMain+1C   j
                 jsr     (RandomNumber).l

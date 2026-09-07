@@ -441,7 +441,7 @@ loc_42506:                                              ; CODE XREF: Boss_Sunset
 ; Spawns projectile fragment with random offset
 Boss_SunsetStingSpawnFragmentProjectile:                ; CODE XREF: Boss_SunsetStingInitFragmentExplosion+84   p  ; was: sub_42514
                 move.l  d1,-(sp)
-                jsr     (Projectile_InitTypeA4).l
+                jsr     (Projectile_UpdateWithImpactFrames).l
                 bne.s   loc_4256C
                 jsr     (Sprite_InitFromTable).l
                 clr.b   $20(a0)

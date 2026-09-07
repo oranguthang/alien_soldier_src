@@ -119,7 +119,7 @@ loc_53080:                                              ; CODE XREF: Projectile_
                 neg.l   $18(a5)
                 neg.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 loc_53096:                                              ; CODE XREF: Projectile_ZLeoOrbMain+C   j
                 cmpi.w  #$1C0,$10(a5)
@@ -208,7 +208,7 @@ loc_5319A:                                              ; CODE XREF: Projectile_
 loc_531B2:                                              ; CODE XREF: Projectile_ZLeoLaserMain+1C   j
                 move.w  #3,(word_FFA010).w
                 move.l  #off_E953C,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 loc_531C6:                                              ; CODE XREF: Projectile_ZLeoLaserMain+24   j
                 addi.w  #6,$56(a5)
@@ -271,7 +271,7 @@ Projectile_ZLeoLaser_CollisionCheck:                    ; CODE XREF: Projectile_
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #off_E9850,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 loc_532B0:                                              ; CODE XREF: Projectile_ZLeoLaserMain+106   j
                 move.w  (word_FFA000).w,d0

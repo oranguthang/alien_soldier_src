@@ -14,7 +14,7 @@ loc_3AE5A:                                              ; CODE XREF: Projectile_
                 jsr     (Sound_PlaySFX).l
                 move.w  #2,(word_FFA010).w
                 move.l  #off_E953C,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 loc_3AE78:                                              ; CODE XREF: Projectile_MadamBarbarDebris+A   j
                 bclr    #3,$E(a5)

@@ -282,7 +282,7 @@ locret_3B600:                                           ; CODE XREF: Boss_JokerC
 ; End of function Boss_JokerCleanup
 ; Spawns falling debris and explosion sprites during defeat
 Boss_JokerSpawnDebris:                                  ; CODE XREF: Boss_JokerFallingPhase1:loc_3B57A   p  ; was: sub_3B602
-                jsr     (Effect_PlayRandomExplosionSound).l
+                jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_3B68C
                 move.w  (dword_FFFF08).w,d0
@@ -292,7 +292,7 @@ Boss_JokerSpawnDebris:                                  ; CODE XREF: Boss_JokerF
                 bra.w   loc_3B65E
 ; ---------------------------------------------------------------------------
 loc_3B624:                                              ; CODE XREF: Boss_JokerSpawnDebris+16   j
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 bset    #7,3(a0)
                 move.w  (dword_FFFF08).w,d0
                 ext.l   d0

@@ -127,7 +127,7 @@ locret_4724C:                                           ; CODE XREF: Gfx_Epsilon
 Projectile_Epsilon1SpreadUpdate:                        ; CODE XREF: Projectile_Epsilon1DefeatDebris+16   j  ; was: sub_4724E
                 clr.b   $21(a5)
                 move.l  #off_E95DC,8(a5)
-                jsr     (Enemy_GetEntityAddress).l
+                jsr     (Projectile_InitType88FromCurrent).l
                 clr.l   $18(a5)
                 move.w  $1C(a5),d0
                 neg.w   d0
@@ -307,7 +307,7 @@ nullsub_91:                                             ; DATA XREF: ROM:0004739
 ; Projectile offscreen handler
 Projectile_Epsilon1OffscreenHandler:                    ; CODE XREF: Projectile_Epsilon1StateHandler+6   j  ; was: sub_47440
                 move.l  #off_E95DC,8(a5)
-                jsr     (Enemy_GetEntityAddress).l
+                jsr     (Projectile_InitType88FromCurrent).l
                 clr.l   $18(a5)
                 move.w  $1C(a5),d0
                 neg.w   d0
@@ -412,7 +412,7 @@ loc_4753E:                                              ; CODE XREF: Projectile_
                 bsr.w   Projectile_Epsilon1RingExpand
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_475C2
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.l  #off_E95C0,8(a0)
                 move.w  #$480,$E(a0)
                 move.w  $10(a5),$10(a0)
@@ -420,7 +420,7 @@ loc_4753E:                                              ; CODE XREF: Projectile_
                 move.w  $14(a5),$14(a0)
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_475C2
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.l  #off_E95C0,8(a0)
                 move.w  #$480,$E(a0)
                 move.w  $10(a5),$10(a0)
@@ -596,7 +596,7 @@ Effect_Epsilon1DefeatSpark4:                            ; DATA XREF: ROM:0004750
                 addq.w  #2,4(a5)
                 move.l  #off_E953C,8(a5)
                 move.w  #$FFFF,$1C(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; End of function Effect_Epsilon1DefeatSpark4
 nullsub_94:
                 rts

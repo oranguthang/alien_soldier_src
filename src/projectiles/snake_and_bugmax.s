@@ -14,7 +14,7 @@ Projectile_SnakeInit:                                   ; DATA XREF: ROM:off_2C1
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.w   nullsub_61
                 move.l  #off_E953C,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$20,d0                         ; ' '

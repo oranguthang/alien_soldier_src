@@ -14,7 +14,7 @@ loc_38EC2:                                              ; CODE XREF: Enemy_Homin
                 neg.l   $18(a5)
                 neg.l   $1C(a5)
                 move.l  #off_E9584,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_38ED8:                                              ; CODE XREF: Enemy_HomingMissileUpdate+1E   j
                 lea     word_38FEC(pc),a0
@@ -38,7 +38,7 @@ loc_38F10:                                              ; CODE XREF: Enemy_Homin
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   loc_38F5E
                 movea.l #Projectile_HomingAndRockSpriteFrames,a1
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  $18(a5),d0
@@ -184,7 +184,7 @@ Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_Terobu
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
                 movea.l #Projectile_HomingAndRockSpriteFrames,a1
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 move.l  #$FFFFC000,$1C(a0)
 locret_390EE:                                           ; CODE XREF: Boss_TerobusterSpawnFallingRock+6   j
                                         ; Boss_TerobusterSpawnFallingRock+E   j

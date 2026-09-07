@@ -432,7 +432,7 @@ loc_58B50:                                              ; CODE XREF: Boss_Artemi
 loc_58B68:                                              ; CODE XREF: Boss_ArtemisAnimationScript+9A   j
                 move.w  #3,(word_FFA010).w
                 move.l  #off_E953C,8(a5)
-                jmp     Sprite_SetObjectPointer
+                jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 loc_58B7C:                                              ; CODE XREF: Boss_ArtemisAnimationScript+CE   j
                 move.w  (word_FFA000).w,d0

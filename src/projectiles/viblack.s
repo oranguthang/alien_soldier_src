@@ -534,7 +534,7 @@ loc_444F6:                                              ; CODE XREF: Projectile_
                 jsr     (Sound_PlaySFX).l
                 move.l  #$42000,$1C(a5)
                 lea     (Projectile_SpawnSpriteFrames).l,a1  ; make offsets?
-                jmp     Sys_PassObjectAddress
+                jmp     Sprite_InitCurrentFromTable
 ; ---------------------------------------------------------------------------
 loc_44514:                                              ; CODE XREF: Projectile_ViblackChainMain+A   j
                 cmpi.w  #$200,$14(a5)

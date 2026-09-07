@@ -707,7 +707,7 @@ Boss_DestroyerProtoSpawnProjectile2:                    ; CODE XREF: Boss_Destro
                 jsr     (Gfx_UpdatePaletteFade).l
                 move.w  #4,(word_FFA010).w
                 move.w  #4,(word_FFA014).w
-                jsr     (Effect_PlayRandomExplosionSound).l
+                jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   locret_30BB8
                 jsr     (Projectile_InitType88).l

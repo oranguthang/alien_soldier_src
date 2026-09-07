@@ -56,7 +56,7 @@ loc_38BE8:                                              ; CODE XREF: Boss_Terobu
                 movea.l #Boss_TerobusterProjectileSpriteFrames,a1
                 move.l  #$FFFD2000,$1C(a0)
 loc_38C18:                                              ; CODE XREF: Boss_TerobusterAttackPattern3+48   j
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
@@ -197,7 +197,7 @@ Boss_TerobusterSpawnProjectile:                         ; CODE XREF: Boss_Terobu
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.s   locret_38E06
                 movea.l #Boss_TerobusterProjectileSpriteFrames,a1
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 addi.w  #$14,$10(a0)

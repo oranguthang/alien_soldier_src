@@ -132,7 +132,7 @@ Projectile_SpawnBulletAtOffset:                         ; CODE XREF: Boss_Projec
                 move.w  d0,$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  #off_E95DC,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
                 andi.w  #$FEFF,2(a0)
                 rts
@@ -196,7 +196,7 @@ loc_33FB6:                                              ; CODE XREF: Sprite_Init
                 move.l  d0,$18(a0)
                 move.l  d1,$1C(a0)
                 move.l  #off_E95DC,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 adda.w  #$60,a0                         ; '`'
                 dbf     d7,loc_33FB6
                 move.w  #3,d1

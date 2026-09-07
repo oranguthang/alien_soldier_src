@@ -176,7 +176,7 @@ locret_2C4DA:                                           ; CODE XREF: Boss_Adjust
 ; End of function Boss_AdjustPositionToPlayer
 ; Sets up boss sprite properties and palette
 Sprite_SetupBossSprite:                                 ; CODE XREF: Enemy_MainStateMachine+2   p  ; was: sub_2C4DC
-                                        ; Enemy_DestroyIfOffscreen+6   p
+                                        ; Enemy_BeginDestructionDelay+6   p
                 move.w  #$EF00,2(a5)
                 move.w  (word_FF826E).w,d1
                 or.w    (word_FF808A).w,d1
@@ -222,7 +222,7 @@ off_2C550:      dc.l    off_E9E1C                       ; DATA XREF: Anim_Update
                 dc.l    off_E9E80
 
 ; Applies horizontal acceleration with speed limits
-Physics_AccelerateHorizontal:                           ; CODE XREF: Enemy_MainStateMachine:loc_2C814   p  ; was: sub_2C564
+Physics_AccelerateHorizontal:                           ; CODE XREF: Enemy_MainStateMachine:Enemy_MainStateMachine_Accelerate   p  ; was: sub_2C564
                 btst    #3,$E(a5)
                 bne.s   loc_2C590
                 move.l  $18(a5),d0

@@ -99,7 +99,7 @@ loc_48EDA:                                              ; CODE XREF: Enemy_Falli
                                         ; Enemy_FallingBombLogic+5E   j
                 clr.l   $1C(a5)
                 move.l  #off_E95A4,8(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_48EEC:                                              ; CODE XREF: Enemy_FallingBombLogic+66   j
                 cmpi.w  #$150,$14(a5)

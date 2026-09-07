@@ -355,7 +355,7 @@ Boss_ZLeoSpawnParticles_Loop:                           ; CODE XREF: Boss_ZLeoSp
                 jsr     (RandomNumber).l
                 jsr     (Projectile_UpdateTrajectory).l
                 bne.w   Boss_ZLeoSpawnParticles_Return
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
                 move.b  (dword_FFFF08+2).w,d6
                 andi.w  #3,d6

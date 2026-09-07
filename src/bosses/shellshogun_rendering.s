@@ -252,9 +252,9 @@ loc_3A10E:                                              ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarPaletteCycle
 ; Flash boss sprite when taking damage
 Boss_ShellshogunFlashOnHit:                             ; CODE XREF: Boss_ShellshogunChargeAttack:loc_3986A   p  ; was: sub_3A122
-                jsr     (Projectile_SpawnAtPosition).l
+                jsr     (Projectile_UpdateAfterGlobalDelay).l
                 bne.s   locret_3A170
-                jsr     (Projectile_FindFreeSlotComplex).l
+                jsr     (Sprite_InitTypeA4FromTable).l
                 clr.b   $20(a0)
                 move.l  $18(a5),$18(a0)
                 move.l  $1C(a5),$1C(a0)

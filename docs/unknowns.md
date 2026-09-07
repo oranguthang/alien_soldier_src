@@ -58,6 +58,16 @@ special-attack object, and an alleged Stage 17 initializer that resolves
 contact with a moving platform's underside. The corrections and evidence are
 recorded in `config/name_audit.json`.
 
+The shared-object and Jetsripper-stage actor pass reduced the count to 10,902.
+The 682-line helper library remains cohesive under
+`src/actors/shared_object_helpers.s`; the adjacent 457-line state-machine block
+was moved between its real Jetsripper neighbors as
+`src/enemies/jetsripper_stage_actors.s`. Static control flow also exposed
+generated names that claimed velocity calculation, projectile destruction, or
+boss-specific behavior where the code actually updates display priority,
+stamps terrain tiles, or interprets a callback script. These corrections are
+recorded in the name audit.
+
 Three especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

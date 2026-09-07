@@ -71,7 +71,7 @@ Enemy_BirdMain:                                         ; DATA XREF: ROM:off_5DC
                 clr.l   $1C(a5)
                 move.l  #off_E953C,8(a5)
                 clr.w   $C(a5)
-                jmp     Enemy_GetEntityAddress
+                jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 loc_2DB1A:                                              ; CODE XREF: Enemy_BirdMain+1C   j
                 jsr     (RandomNumber).l
@@ -438,7 +438,7 @@ loc_2DF1A:                                              ; CODE XREF: Enemy_BirdP
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  #off_E953C,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
                 subq.w  #1,$4A(a5)
                 bne.s   locret_2DF7C
                 moveq   #2,d0

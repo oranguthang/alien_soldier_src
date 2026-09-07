@@ -274,7 +274,7 @@ locret_2F8B6:                                           ; CODE XREF: Enemy_ShipU
 ; End of function Enemy_ShipCannonSpawn
 ; Spawns debris projectile with random offset
 Enemy_ShipSpawnDebrisProjectile:                        ; CODE XREF: Enemy_ShipSpawnCannons+A4   p  ; was: sub_2F8B8
-                jsr     (Projectile_SpawnAtPosition).l
+                jsr     (Projectile_UpdateAfterGlobalDelay).l
                 bne.s   locret_2F90C
                 jsr     (Sprite_InitFromTable).l
                 move.b  #0,$20(a0)

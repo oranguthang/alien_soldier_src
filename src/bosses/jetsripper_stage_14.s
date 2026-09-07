@@ -41,7 +41,7 @@ loc_323B8:                                              ; CODE XREF: Enemy_Stage
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  #off_E9560,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
 loc_323DA:                                              ; CODE XREF: Enemy_Stage14TurretInit+3C   j
                 move.w  #$1000,2(a5)
                 rts
@@ -836,7 +836,7 @@ Enemy_DeathExplode:                                     ; CODE XREF: Projectile_
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  #off_E9560,8(a0)
-                jsr     (Sprite_InitializeProperties).l
+                jsr     (Sprite_InitType160).l
 loc_32DF6:                                              ; CODE XREF: Enemy_DeathExplode+E   j
                 move.w  #$1000,2(a5)
                 rts
