@@ -4,8 +4,8 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Player_Update
                 dc.l    Entity_EmptyState3
                 dc.l    Entity_EmptyState4
-                dc.l    Effect_SpawnKnockbackParticle
-                dc.l    Sprite_SpawnParticleEffect
+                dc.l    Effect_UpdateKnockbackParticle
+                dc.l    Effect_UpdateImpactParticleSpawner
                 dc.l    Enemy_BehaviorController
                 dc.l    Enemy_DestructionParticleMain
                 dc.l    Boss_CalculatePlayerDistance
@@ -23,11 +23,11 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Projectile_BouncingWithGravity
                 dc.l    Physics_AccelerateDownward
                 dc.l    Projectile_UpdateWithSpawning
-                dc.l    Sprite_UpdateSeekingProjectile
-                dc.l    Sprite_HandleProjectileCollision
+                dc.l    Weapon_UpdateSeekingProjectile
+                dc.l    Weapon_HandleSeekingProjectileCollision
                 dc.l    Anim_UpdateWithPaletteSwap
                 dc.l    Weapon_UpdateSeekingMissile
-                dc.l    Sprite_MatchParentPosition
+                dc.l    Effect_UpdateCompanionFromParent
                 dc.l    Weapon_UpdateBombProjectile
                 dc.l    Enemy_TinyWrapper
                 dc.l    Effect_UpdateDeathSparkMotion
@@ -38,8 +38,8 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Enemy_BirdMain
                 dc.l    Physics_AccelerateUpward
                 dc.l    Enemy_BossProjectileMovement
-                dc.l    Sprite_AnimateAndExpire
-                dc.l    Sprite_MatchParentPosition
+                dc.l    Effect_AnimateAndExpire
+                dc.l    Effect_UpdateCompanionFromParent
                 dc.l    Anim_UpdateWithGlobalAttributes
                 dc.l    Effect_SpawnParticleLoop
                 dc.l    Enemy_TinyWrapper
@@ -114,7 +114,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Boss_SunsetStingInitDispatcher
                 dc.l    Effect_DebrisParticleAnimate
                 dc.l    Boss_SunsetStingMainDispatcher
-                dc.l    Sprite_DestroyOnTimeout
+                dc.l    Object_UpdateRemovalTimer
                 dc.l    Enemy_TrailingExplosionSpawner
                 dc.l    Boss_SpawnMultipleShots
                 dc.l    Projectile_JetsripperFalling
@@ -139,7 +139,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Boss_JampanTeleportFadeOut
                 dc.l    Boss_JampanFormationMain
                 dc.l    Weapon_HandleExplosiveImpact
-                dc.l    Sprite_InitProjectile
+                dc.l    Effect_InitPlayerMotionProjectile
                 dc.l    Boss_JampanShadowMain
                 dc.l    Enemy_JampanShieldMain
                 dc.l    Boss_JampanDefeatFinalMain
@@ -154,7 +154,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Boss_DestroyerMK2DefeatDebris
                 dc.l    Boss_Epsilon1Main
                 dc.l    Anim_RunCallbackScript
-                dc.l    Sprite_SetPriorityHigh
+                dc.l    Object_MarkInactiveDirect
                 dc.l    Weapon_UpdateBombProjectile
                 dc.l    Cutscene_XiTigerFadeOut
                 dc.l    Boss_Epsilon1IntroMain
@@ -204,7 +204,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Boss_Epsilon1DebrisPhysics
                 dc.l    Stage25_ScreenShake
                 dc.l    Enemy_PlayDeathSound
-                dc.l    Enemy_CheckDamageThreshold
+                dc.l    Object_RemoveOnFlagOrAnimationEnd
                 dc.l    Enemy_BugmaxDebrisMain
                 dc.l    Projectile_BugmaxMainController
                 dc.l    Projectile_BugmaxSineController

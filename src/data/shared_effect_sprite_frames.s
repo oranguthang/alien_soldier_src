@@ -41,7 +41,7 @@ Enemy_AnimatedProjectileSpriteFrames:   dc.l    $244F6, $FCFC  ; DATA XREF: Enem
                 dc.l    $254F7, $FCFC
                 dc.l    $FFFF0002
                 dc.w    $ACD0
-Effect_KnockbackImpactSpriteFrames: dc.l    $244AC, $500F8F8  ; DATA XREF: Effect_SpawnKnockbackParticle+70   o  ; was: dword_2AD16
+Effect_KnockbackImpactSpriteFrames: dc.l    $244AC, $500F8F8  ; DATA XREF: Effect_UpdateKnockbackParticle+70   o  ; was: dword_2AD16
                                         ; Projectile_ExplodeOnWall+A0   o
                 dc.l    $244C4, $500F8F8
                 dc.w    $FFFF
@@ -102,7 +102,7 @@ Effect_SharedParticleSpriteFrames:  dc.l    $244BC, $500F8F8  ; DATA XREF: Effec
                 dc.l    $144F4, $FCFC
                 dc.l    $144F5, $FCFC
                 dc.w    $FFFF
-Effect_KnockbackParticleSpriteFrames:   dc.l    $1454B, $F00F0F0  ; DATA XREF: Effect_SpawnKnockbackParticle+3E   o  ; was: dword_2AE8A
+Effect_KnockbackParticleSpriteFrames:   dc.l    $1454B, $F00F0F0  ; DATA XREF: Effect_UpdateKnockbackParticle+3E   o  ; was: dword_2AE8A
                 dc.l    $1456C, $F00F0F0
                 dc.l    $24480, $A00F4F4
                 dc.l    $24489, $A00F4F4
@@ -111,7 +111,7 @@ Effect_KnockbackParticleSpriteFrames:   dc.l    $1454B, $F00F0F0  ; DATA XREF: E
                 dc.l    $144A4, $500F8F8
                 dc.l    $144A8, $500F8F8
                 dc.w    $FFFF
-Projectile_CollisionSpriteFrames:   dc.l    $144D6, $A00F4F4  ; DATA XREF: Sprite_HandleProjectileCollision+E   o  ; was: dword_2AECC
+Projectile_CollisionSpriteFrames:   dc.l    $144D6, $A00F4F4  ; DATA XREF: Weapon_HandleSeekingProjectileCollision+E   o  ; was: dword_2AECC
                 dc.l    $244DF, $A00F4F4
                 dc.l    $244D6, $A00F4F4
                 dc.l    $244DF, $A00F4F4
@@ -133,14 +133,14 @@ Effect_StarParticleSpriteFrames:    dc.l    $844F4, $FCFC  ; DATA XREF: Effect_S
                                         ; sub_18F58   o
                 dc.l    $844F5, $FCFC
                 dc.w    $FFFF
-Effect_ParticlePrimarySpriteFrames: dc.l    $24480, $A00F4F4  ; DATA XREF: Sprite_SpawnParticleEffect+26   o  ; was: dword_2AF5A
+Effect_ParticlePrimarySpriteFrames: dc.l    $24480, $A00F4F4  ; DATA XREF: Effect_UpdateImpactParticleSpawner+26   o  ; was: dword_2AF5A
                 dc.l    $24489, $A00F4F4
                 dc.l    $24492, $A00F4F4
                 dc.l    $2449B, $A00F4F4
                 dc.l    $244A4, $500F8F8
                 dc.l    $144A8, $500F8F8
                 dc.w    $FFFF
-Effect_ParticleSecondarySpriteFrames:   dc.l    $24480, $A00F4F4  ; DATA XREF: Sprite_SpawnParticleEffect+34   o  ; was: dword_2AF8C
+Effect_ParticleSecondarySpriteFrames:   dc.l    $24480, $A00F4F4  ; DATA XREF: Effect_UpdateImpactParticleSpawner+34   o  ; was: dword_2AF8C
                 dc.l    $34489, $A00F4F4
                 dc.l    $34492, $A00F4F4
                 dc.l    $2449B, $A00F4F4

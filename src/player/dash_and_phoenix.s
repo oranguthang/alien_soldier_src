@@ -81,7 +81,7 @@ Player_InitPhoenixAttack:
                 move.w  #$56,4(a5)                      ; 'V'  ; was: sub_157BE
                 move.w  #8,$4E(a5)
                 move.b  #$73,(byte_FF830F).w            ; 's'
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #1,(word_FF8224).w
                 move.b  #1,(word_FF8224+1).w
                 move.w  #$C,$50(a5)
@@ -117,7 +117,7 @@ Player_PhoenixAttackUpdate:                             ; DATA XREF: ROM:000150B
 loc_15848:                                              ; CODE XREF: Player_PhoenixAttackUpdate+6   j
                 subq.w  #1,$4E(a5)
                 bpl.w   loc_158A0
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 clr.w   $4E(a5)
                 cmpi.w  #7,$50(a5)
                 beq.s   loc_15866
@@ -197,7 +197,7 @@ loc_15936:                                              ; CODE XREF: Physics_App
                 move.w  #$10,4(a5)
 loc_1593C:                                              ; CODE XREF: Player_InitiateDashAttack+6   j
                 move.b  #$73,(byte_FF830F).w            ; 's'
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #1,(word_FF8224).w
                 move.b  #1,(word_FF8224+1).w
                 clr.w   $4E(a5)

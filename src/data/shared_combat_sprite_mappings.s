@@ -296,7 +296,7 @@ off_E9560:      dc.w    word_E90C2-*                    ; DATA XREF: Player_Spaw
                 dc.w    1
                 dc.w    word_E90BC-*
                 dc.w    $FF
-off_E9584:      dc.w    word_E90C8-*                    ; DATA XREF: Sprite_InitProjectile+40   o
+off_E9584:      dc.w    word_E90C8-*                    ; DATA XREF: Effect_InitPlayerMotionProjectile+40   o
                                         ; ROM:00022564   o
                 dc.w    1
                 dc.w    word_E907A-*

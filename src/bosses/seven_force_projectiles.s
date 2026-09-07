@@ -4,7 +4,7 @@ Gfx_LoadArtemisTiles:                                   ; CODE XREF: Boss_Sylphe
                 beq.w   locret_1A01A
                 move.w  #6,4(a5)
                 move.b  #$73,(byte_FF830F).w            ; 's'
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #$A6,d0
                 jsr     (Sound_PlaySFX).l
                 move.b  #1,(word_FF8224).w
@@ -82,7 +82,7 @@ Boss_SylpheedDamageCheck:                               ; CODE XREF: Boss_Sylphe
                                         ; Projectile_SylpheedBullet2+12   j
                 jsr     (Boss_FlashOnHit).l
                 move.b  #$7F,(byte_FF830F).w
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #8,4(a5)
                 move.w  #$FFFC,$48(a5)
                 move.w  #$A,$4A(a5)
@@ -107,7 +107,7 @@ Boss_DestroyerProtoDefeatInit:                          ; CODE XREF: Boss_Sylphe
                 jsr     (Sound_PlaySFX).l
                 move.b  #$7F,(byte_FF830F).w
                 move.w  #$8000,(word_FF80E6).w
-                jsr     (Memory_ClearBlock).l
+                jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$A,4(a5)
                 move.w  #$10,$48(a5)
                 tst.w   (dword_FF8300).w

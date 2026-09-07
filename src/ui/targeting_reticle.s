@@ -196,7 +196,7 @@ word_19912:     dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $1226, $2E26, $1204, 4
                                         ; Player_RenderWithWeapon+82   o
 word_19922:     dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $115, $1D15, $1F3, $EFF3
                                         ; DATA XREF: Player_RenderWithWeapon:loc_170E2   o
-off_19932:      dc.l    sprite_FDF0E                    ; DATA XREF: ROM:off_186A0   o
+off_19932:      dc.l    sprite_FDF0E                    ; DATA XREF: ROM:Weapon_CircleAttackAnimationPointers   o
                 dc.l    sprite_FDE8E
                 dc.l    sprite_FDE0E
                 dc.l    sprite_FDD8E

@@ -477,6 +477,120 @@
         "This state decrements the existing delay and converts the object to its terminal effect type at expiry.",
         "The destruction state was initialized by the preceding entry point; this code is its updater."
       ]
+    },
+    {
+      "address": "0x017ED8",
+      "previous_name": "Sprite_RenderPlayer",
+      "current_name": "Weapon_UpdatePlayerFiring",
+      "legacy_name": "sub_17ED8",
+      "evidence": "static",
+      "basis": [
+        "The routine derives a muzzle position from direction-indexed offsets and the current object coordinates.",
+        "It dispatches through a table containing the beam, bullet, homing, spread, and circular weapon handlers.",
+        "It does not construct sprite pieces or write the sprite output buffer."
+      ]
+    },
+    {
+      "address": "0x017F14",
+      "previous_name": "Sprite_CheckWeaponFireEffect",
+      "current_name": "Weapon_DispatchSelectedType",
+      "legacy_name": "loc_17F14",
+      "evidence": "static",
+      "basis": [
+        "The routine uses the current weapon index to select one entry from the adjacent fire-handler table.",
+        "It performs an indirect jump and contains no ammo or effect-visibility test."
+      ]
+    },
+    {
+      "address": "0x01830E",
+      "previous_name": "Weapon_SetProjectileAnimation",
+      "current_name": "Weapon_InitSpreadProjectileState",
+      "legacy_name": "sub_1830E",
+      "evidence": "static",
+      "basis": [
+        "The routine writes the object type, display state, and two object-state bytes.",
+        "It neither advances an animation nor assigns an animation frame table."
+      ]
+    },
+    {
+      "address": "0x0188EE",
+      "previous_name": "Enemy_CheckDamageThreshold",
+      "current_name": "Object_RemoveOnFlagOrAnimationEnd",
+      "legacy_name": "sub_188EE",
+      "evidence": "static",
+      "basis": [
+        "The routine tests one object-state flag and compares the animation counter at offset 0x0C with 0x80.",
+        "Either terminal condition sets the same inactive-object bit used by the surrounding removal handlers.",
+        "It does not read a health or damage field and contains no enemy-specific reference."
+      ]
+    },
+    {
+      "address": "0x01898E",
+      "previous_name": "Effect_SpawnKnockbackParticle",
+      "current_name": "Effect_UpdateKnockbackParticle",
+      "legacy_name": "sub_1898E",
+      "evidence": "static",
+      "basis": [
+        "The object dispatch table invokes this routine as a recurring update handler.",
+        "Its state flags select initial motion, lifetime countdown, or impact initialization for the existing object.",
+        "It does not allocate a new object slot."
+      ]
+    },
+    {
+      "address": "0x018C1E",
+      "previous_name": "Sprite_SetPriorityHigh",
+      "current_name": "Object_MarkInactiveDirect",
+      "legacy_name": "sub_18C1E",
+      "evidence": "static",
+      "basis": [
+        "The routine only sets bit 4 of the object display-state word.",
+        "The same write terminates objects throughout the adjacent projectile and effect handlers; no priority field is calculated."
+      ]
+    },
+    {
+      "address": "0x018C42",
+      "previous_name": "Weapon_CheckProjectileDamage",
+      "current_name": "Weapon_HideHitEffectWhenFinished",
+      "legacy_name": "loc_18C42",
+      "evidence": "static",
+      "basis": [
+        "The only comparison uses the animation counter at object offset 0x0C and the terminal value 0x80.",
+        "At the terminal frame it replaces the display-state word with the hidden state 0x1000.",
+        "No damage or health field is read."
+      ]
+    },
+    {
+      "address": "0x018C52",
+      "previous_name": "Sprite_SpawnParticleEffect",
+      "current_name": "Effect_UpdateImpactParticleSpawner",
+      "legacy_name": "sub_18C52",
+      "evidence": "static",
+      "basis": [
+        "State flags choose between updating the current particle animation and attempting to allocate a child effect.",
+        "Both paths finish by marking the current object inactive, so spawning is only one state of the handler."
+      ]
+    },
+    {
+      "address": "0x019244",
+      "previous_name": "Memory_ClearBlock",
+      "current_name": "Sys_ClearObjectBlocks17",
+      "legacy_name": "sub_19244",
+      "evidence": "static",
+      "basis": [
+        "The entry fixes a0 to the shared object-pool base and d7 to 0x10 before entering the common clearing loop.",
+        "The common loop clears exactly 96 bytes per DBF iteration, so this entry clears 17 object-sized blocks rather than an arbitrary memory block."
+      ]
+    },
+    {
+      "address": "0x01925A",
+      "previous_name": "Sys_ClearMemoryBlock",
+      "current_name": "Sys_ClearObjectBlocks96",
+      "legacy_name": "sub_1925A",
+      "evidence": "static",
+      "basis": [
+        "Each loop iteration contains 24 longword stores and therefore clears one 96-byte object block.",
+        "The three adjacent entry points supply the shared object-pool base and counts of 8, 16, or 17 blocks."
+      ]
     }
   ]
 }

@@ -378,7 +378,7 @@ Player_TeleportDash:                                    ; DATA XREF: ROM:000150B
                 move.w  #$CD00,2(a5)
                 addq.w  #2,4(a5)
                 clr.w   $48(a5)
-                jsr     (Memory_ClearBlock).l
+                jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$78,$10(a5)                    ; 'x'
                 move.w  #$100,$14(a5)
                 move.l  #$41000,$18(a5)
@@ -414,7 +414,7 @@ Player_TeleportDash_ApplyVelocity:                      ; DATA XREF: ROM:000150B
 loc_16A0E:                                              ; CODE XREF: Player_TeleportDash+A2   j
                 bclr    #6,$21(a5)
                 bclr    #4,$23(a5)
-                jsr     (Memory_ClearBlock).l
+                jsr     (Sys_ClearObjectBlocks17).l
                 bclr    #0,(byte_FF8245).w
                 move.w  #$FFE0,$52(a5)
                 move.l  #$68000,$18(a5)
@@ -437,7 +437,7 @@ Credits_VBlankHandler:                                  ; DATA XREF: ROM:000150B
                 move.b  #$70,(byte_FF830F).w            ; 'p'
                 bset    #0,(byte_FF8245).w
                 move.w  #$CD00,2(a5)
-                jsr     (Memory_ClearBlock).l
+                jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$120,$10(a5)
                 move.w  #$100,$14(a5)
                 bset    #3,$E(a5)

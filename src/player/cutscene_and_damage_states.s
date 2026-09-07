@@ -173,7 +173,7 @@ Player_InitKnockbackState:                              ; CODE XREF: Player_Upda
                 move.b  #$7F,(byte_FF830F).w
                 bclr    #4,$E(a5)
                 move.w  #$8000,(word_FF80E6).w
-                jsr     (Memory_ClearBlock).l
+                jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$2A,4(a5)                      ; '*'
                 move.w  #$C,$48(a5)
                 tst.w   $5E(a5)
@@ -327,7 +327,7 @@ loc_1646C:                                              ; CODE XREF: Player_Hand
                                         ; Player_ProcessAirState+3E   j
                 bsr.w   Boss_FlashOnHit
                 move.b  #$7F,(byte_FF830F).w
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$3E,4(a5)                      ; '>'
                 move.w  #$FFFC,$48(a5)
                 move.w  #$A,$4A(a5)

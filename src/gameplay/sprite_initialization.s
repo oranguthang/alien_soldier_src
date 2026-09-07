@@ -268,7 +268,7 @@ Sprite_AllocateSlot:                                    ; CODE XREF: Effect_Spaw
 ; End of function Sprite_AllocateSlot
 ; Finds free slot in object array
 Sys_FindFreeObjectSlot:                                 ; CODE XREF: Effect_FindDashTrailSlot+6   j  ; was: sub_1C042
-                                        ; Sprite_InitProjectile+36   p
+                                        ; Effect_InitPlayerMotionProjectile+36   p
                 move.w  (a0),d0
                 beq.s   locret_1C04E
                 lea     $60(a0),a0

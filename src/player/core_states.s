@@ -164,7 +164,7 @@ Player_HandleDeathSequence:                             ; CODE XREF: Player_Upda
                 jsr     (Sound_PlaySFX).l
                 move.b  #$73,(byte_FF830F).w            ; 's'
                 move.w  #$8000,(word_FF80E6).w
-                jsr     (Memory_ClearBlock).l
+                jsr     (Sys_ClearObjectBlocks17).l
                 move.b  #1,(word_FF8224).w
                 move.b  #1,(word_FF8224+1).w
                 move.w  #$36,4(a5)                      ; '6'
@@ -283,7 +283,7 @@ Player_HandleDamageKnockback:                           ; CODE XREF: Player_Hand
                                         ; Player_HandleAirState+2C   j
                 bsr.w   Boss_FlashOnHit
                 move.b  #$7F,(byte_FF830F).w
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$3A,4(a5)                      ; ':'
                 move.w  #$FFFC,$48(a5)
                 move.w  #$A,$4A(a5)
@@ -316,7 +316,7 @@ Player_InitDeathKnockback:                              ; CODE XREF: Player_Hand
                                         ; Player_HandleSpecialAttack+64   j
                 bsr.w   Boss_FlashOnHit
                 move.b  #$7F,(byte_FF830F).w
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$FFFC,$48(a5)
                 move.w  #$A,$4A(a5)
                 move.w  #$FFFF,$C(a5)

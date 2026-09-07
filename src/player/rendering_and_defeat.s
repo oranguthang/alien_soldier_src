@@ -340,7 +340,7 @@ Sprite_GetPlayerAnimation:                              ; CODE XREF: Sprite_Prep
                 add.b   $14(a0,d0.w),d6
                 add.b   $15(a0,d0.w),d5
                 bsr.w   Stage_HandleBossDefeat
-                jmp     Sprite_RenderPlayer
+                jmp     Weapon_UpdatePlayerFiring
 ; End of function Sprite_PrepareRendering
 ; ---------------------------------------------------------------------------
 off_172BC:      dc.l    word_E8D92                      ; DATA XREF: Sprite_PrepareRendering   o

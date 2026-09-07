@@ -85,7 +85,7 @@ loc_2BC94:                                              ; CODE XREF: Enemy_Updat
                 asl.w   #1,d1
                 move.w  d1,(word_FFA21E).w
                 jsr     (UI_ClearWeaponCounters).l
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 jsr     (Gfx_LoadPaletteData).l
                 bra.s   loc_2BCD2
 ; ---------------------------------------------------------------------------

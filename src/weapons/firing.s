@@ -1,4 +1,5 @@
-Sprite_RenderPlayer:                                    ; CODE XREF: Sprite_PrepareRendering+42   j  ; was: sub_17ED8
+; Computes the muzzle position and dispatches the selected weapon handler
+Weapon_UpdatePlayerFiring:                              ; CODE XREF: Sprite_PrepareRendering+42   j  ; was: sub_17ED8
                 moveq   #0,d6
                 move.b  $9E(a5),d6
                 move.b  (a4,d6.w),d1
@@ -6,75 +7,75 @@ Sprite_RenderPlayer:                                    ; CODE XREF: Sprite_Prep
                 ext.w   d1
                 ext.w   d2
                 btst    #3,$E(a5)
-                beq.s   loc_17EF4
+                beq.s   Weapon_UpdatePlayerFiring_ApplyMuzzleOffset
                 neg.w   d1
-loc_17EF4:                                              ; CODE XREF: Sprite_RenderPlayer+18   j
+Weapon_UpdatePlayerFiring_ApplyMuzzleOffset:            ; CODE XREF: Weapon_UpdatePlayerFiring+18   j  ; was: loc_17EF4
                 add.w   $10(a5),d1
                 add.w   $14(a5),d2
-                move.b  byte_17F3A(pc,d6.w),d6
+                move.b  Weapon_DirectionIndexTable(pc,d6.w),d6
                 movea.w (word_FFA24E).w,a4
                 adda.w  #$A250,a4
                 tst.w   $10(a4)
-                beq.s   Sprite_CheckWeaponFireEffect
+                beq.s   Weapon_DispatchSelectedType
                 bset    #2,(byte_FF8244).w
-; Checks if weapon fire effect should be displayed based on ammo
-Sprite_CheckWeaponFireEffect:                           ; CODE XREF: Sprite_RenderPlayer+34   j  ; was: loc_17F14
+; Dispatches the handler selected by the current weapon type
+Weapon_DispatchSelectedType:                            ; CODE XREF: Weapon_UpdatePlayerFiring+34   j  ; was: loc_17F14
                 move.w  (word_FFA21C).w,d0
-                movea.w off_17F24(pc,d0.w),a0
-                adda.l  #byte_17F3A,a0
+                movea.w Weapon_FireHandlerOffsets(pc,d0.w),a0
+                adda.l  #Weapon_DirectionIndexTable,a0
                 jmp     (a0)
-; End of function Sprite_RenderPlayer
+; End of function Weapon_UpdatePlayerFiring
 ; ---------------------------------------------------------------------------
-off_17F24:      dc.w    Weapon_BeamFireEmptyExit-byte_17F3A
-                                        ; DATA XREF: Sprite_RenderPlayer+40   r
-                dc.w    Weapon_FireProjectile-byte_17F3A
-                dc.w    Weapon_FireMultipleShots-byte_17F3A
-                dc.w    Weapon_FireBulletHandler-byte_17F3A
-                dc.w    Weapon_FireBeamWeapon-byte_17F3A
-                dc.w    Weapon_FireHomingShot-byte_17F3A
-                dc.w    Player_SpawnCircleAttack-byte_17F3A
-                dc.w    Weapon_BeamFireEmptyExit-byte_17F3A
-                dc.w    Weapon_BeamFireEmptyExit-byte_17F3A
-                dc.w    Weapon_BeamFireEmptyExit-byte_17F3A
-                dc.w    Weapon_BeamFireEmptyExit-byte_17F3A
-byte_17F3A:     dc.b    0, 1, 2, 3, 4, 5, 6, 7
-                                        ; DATA XREF: Sprite_RenderPlayer+24   r
-                                        ; Sprite_RenderPlayer+44   o
+Weapon_FireHandlerOffsets:  dc.w    Weapon_FireNoOp-Weapon_DirectionIndexTable  ; was: off_17F24
+                                        ; DATA XREF: Weapon_UpdatePlayerFiring+40   r
+                dc.w    Weapon_FireProjectile-Weapon_DirectionIndexTable
+                dc.w    Weapon_FireMultipleShots-Weapon_DirectionIndexTable
+                dc.w    Weapon_FireBulletHandler-Weapon_DirectionIndexTable
+                dc.w    Weapon_FireBeamWeapon-Weapon_DirectionIndexTable
+                dc.w    Weapon_FireHomingShot-Weapon_DirectionIndexTable
+                dc.w    Player_SpawnCircleAttack-Weapon_DirectionIndexTable
+                dc.w    Weapon_FireNoOp-Weapon_DirectionIndexTable
+                dc.w    Weapon_FireNoOp-Weapon_DirectionIndexTable
+                dc.w    Weapon_FireNoOp-Weapon_DirectionIndexTable
+                dc.w    Weapon_FireNoOp-Weapon_DirectionIndexTable
+Weapon_DirectionIndexTable: dc.b    0, 1, 2, 3, 4, 5, 6, 7  ; was: byte_17F3A
+                                        ; DATA XREF: Weapon_UpdatePlayerFiring+24   r
+                                        ; Weapon_UpdatePlayerFiring+44   o
 
 ; Fires weapon projectile with damage calculation and ammo depletion
 Weapon_FireProjectile:                                  ; DATA XREF: ROM:00017F26   o  ; was: sub_17F42
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
                 tst.w   (word_FF8238).w
-                bpl.s   locret_17F68
+                bpl.s   Weapon_FireProjectile_Return
                 move.w  #2,(word_FF8238).w
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
-loc_17F5C:                                              ; CODE XREF: Weapon_FireProjectile+22   j
+Weapon_FireProjectile_FindSlot:                         ; CODE XREF: Weapon_FireProjectile+22   j  ; was: loc_17F5C
                 tst.w   (a0)
-                beq.s   loc_17F6A
+                beq.s   Weapon_FireProjectile_Initialize
                 lea     $60(a0),a0
-                dbf     d7,loc_17F5C
-locret_17F68:                                           ; CODE XREF: Weapon_FireProjectile+C   j
+                dbf     d7,Weapon_FireProjectile_FindSlot
+Weapon_FireProjectile_Return:                           ; CODE XREF: Weapon_FireProjectile+C   j  ; was: locret_17F68
                 rts
 ; ---------------------------------------------------------------------------
-loc_17F6A:                                              ; CODE XREF: Weapon_FireProjectile+1C   j
+Weapon_FireProjectile_Initialize:                       ; CODE XREF: Weapon_FireProjectile+1C   j  ; was: loc_17F6A
                 move.w  #$80,(word_FF8140).w
                 move.b  #$E0,(byte_FF8142).w
                 move.b  #4,(byte_FF8143).w
                 tst.w   (word_FFA22A).w
-                bne.s   loc_17F86
+                bne.s   Weapon_FireProjectile_SelectAmmoCost
                 subq.w  #2,$10(a4)
-loc_17F86:                                              ; CODE XREF: Weapon_FireProjectile+3E   j
+Weapon_FireProjectile_SelectAmmoCost:                   ; CODE XREF: Weapon_FireProjectile+3E   j  ; was: loc_17F86
                 move.w  #2,d0
                 tst.b   (word_FFFF0E).w
-                bne.s   loc_17F94
+                bne.s   Weapon_FireProjectile_SubtractAmmo
                 move.w  #1,d0
-loc_17F94:                                              ; CODE XREF: Weapon_FireProjectile+4C   j
+Weapon_FireProjectile_SubtractAmmo:                     ; CODE XREF: Weapon_FireProjectile+4C   j  ; was: loc_17F94
                 sub.w   d0,$10(a4)
-                bpl.s   loc_17F9E
+                bpl.s   Weapon_FireProjectile_SetupObject
                 clr.w   $10(a4)
-loc_17F9E:                                              ; CODE XREF: Weapon_FireProjectile+56   j
+Weapon_FireProjectile_SetupObject:                      ; CODE XREF: Weapon_FireProjectile+56   j  ; was: loc_17F9E
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
                 move.w  #$268,(a0)
@@ -83,13 +84,13 @@ loc_17F9E:                                              ; CODE XREF: Weapon_Fire
                 move.w  #$8C80,2(a0)
                 move.w  #3,$26(a0)
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_17FD2
+                bne.s   Weapon_FireProjectile_SetDamageAndVelocity
                 move.w  #4,$26(a0)
-loc_17FD2:                                              ; CODE XREF: Weapon_FireProjectile+88   j
+Weapon_FireProjectile_SetDamageAndVelocity:             ; CODE XREF: Weapon_FireProjectile+88   j  ; was: loc_17FD2
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
                 move.w  (dword_FF802C).w,$5E(a0)
-                movea.l #byte_184D8,a1
+                movea.l #Weapon_DirectionTableOffsets,a1
                 move.b  (a1,d6.w),d6
                 andi.w  #$7C,d6                         ; '|'
                 movea.l #dword_19812,a1
@@ -115,24 +116,24 @@ Weapon_InitProjectileSprite:                            ; DATA XREF: Weapon_Fire
                 move.b  #$40,$21(a5)                    ; '@'
                 move.b  #1,$23(a5)
                 move.w  $5C(a5),d6
-                move.w  word_1805C(pc,d6.w),d0
+                move.w  Weapon_ProjectileSpriteTiles(pc,d6.w),d0
                 or.w    (word_FF808A).w,d0
                 move.w  d0,$E(a5)
-                move.w  word_1806C(pc,d6.w),8(a5)
-                move.w  word_1807C(pc,d6.w),$A(a5)
-                bra.w   loc_18F46
+                move.w  Weapon_ProjectileSpriteSizes(pc,d6.w),8(a5)
+                move.w  Weapon_ProjectileSpriteOffsets(pc,d6.w),$A(a5)
+                bra.w   Weapon_InitProjectileCompanion
 ; End of function Weapon_InitProjectileSprite
 ; ---------------------------------------------------------------------------
-word_1805C:     dc.w    $4DA8, $4DB0                    ; DATA XREF: Weapon_InitProjectileSprite+1A   r
-                                        ; sub_1898E:loc_18A0C   o
+Weapon_ProjectileSpriteTiles:   dc.w    $4DA8, $4DB0    ; DATA XREF: Weapon_InitProjectileSprite+1A   r  ; was: word_1805C
+                                        ; sub_1898E:Effect_UpdateKnockbackParticle_InitImpact   o
                 dc.w    $45A0, $45B0
                 dc.w    $45A8, $55B0
                 dc.w    $55A0, $5DB0
-word_1806C:     dc.w    $D00, $A00                      ; DATA XREF: Weapon_InitProjectileSprite+26   r
+Weapon_ProjectileSpriteSizes:   dc.w    $D00, $A00      ; DATA XREF: Weapon_InitProjectileSprite+26   r  ; was: word_1806C
                 dc.w    $700, $A00
                 dc.w    $D00, $A00
                 dc.w    $700, $A00
-word_1807C:     dc.w    $F0F8, $F4F4                    ; DATA XREF: Weapon_InitProjectileSprite+2C   r
+Weapon_ProjectileSpriteOffsets: dc.w    $F0F8, $F4F4    ; DATA XREF: Weapon_InitProjectileSprite+2C   r  ; was: word_1807C
                 dc.w    $F8F0, $F4F4
                 dc.w    $F0F8, $F4F4
                 dc.w    $F8F0, $F4F4
@@ -140,19 +141,19 @@ word_1807C:     dc.w    $F0F8, $F4F4                    ; DATA XREF: Weapon_Init
 ; Spawns homing projectile effect
 Weapon_SpawnHomingEffect:
                 tst.w   (word_FF8238).w                 ; was: sub_1808C
-                bpl.s   locret_180AA
+                bpl.s   Weapon_SpawnHomingEffect_Return
                 move.w  #2,(word_FF8238).w
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
-loc_1809E:                                              ; CODE XREF: Weapon_SpawnHomingEffect+1A   j
+Weapon_SpawnHomingEffect_FindSlot:                      ; CODE XREF: Weapon_SpawnHomingEffect+1A   j  ; was: loc_1809E
                 move.w  (a0),d0
-                beq.s   loc_180AC
+                beq.s   Weapon_SpawnHomingEffect_Initialize
                 lea     $60(a0),a0
-                dbf     d7,loc_1809E
-locret_180AA:                                           ; CODE XREF: Weapon_SpawnHomingEffect+4   j
+                dbf     d7,Weapon_SpawnHomingEffect_FindSlot
+Weapon_SpawnHomingEffect_Return:                        ; CODE XREF: Weapon_SpawnHomingEffect+4   j  ; was: locret_180AA
                 rts
 ; ---------------------------------------------------------------------------
-loc_180AC:                                              ; CODE XREF: Weapon_SpawnHomingEffect+14   j
+Weapon_SpawnHomingEffect_Initialize:                    ; CODE XREF: Weapon_SpawnHomingEffect+14   j  ; was: loc_180AC
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
@@ -170,7 +171,7 @@ loc_180AC:                                              ; CODE XREF: Weapon_Spaw
                 move.b  #$81,$23(a0)
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
-                movea.l #byte_184D8,a1
+                movea.l #Weapon_DirectionTableOffsets,a1
                 move.b  (a1,d6.w),d6
                 andi.w  #$7C,d6                         ; '|'
                 lea     dword_19772(pc),a1
@@ -182,7 +183,7 @@ loc_180AC:                                              ; CODE XREF: Weapon_Spaw
                 addq.w  #8,d6
                 andi.w  #$70,d6                         ; 'p'
                 asr.w   #3,d6
-                lea     word_1818E(pc),a1
+                lea     Weapon_HomingEffectSpriteData(pc),a1
                 nop
                 move.w  (a1,d6.w),d0
                 or.w    (word_FF808A).w,d0
@@ -191,14 +192,14 @@ loc_180AC:                                              ; CODE XREF: Weapon_Spaw
                 move.w  $20(a1,d6.w),$A(a0)
                 movea.w #(byte_FFC2C0-M68K_RAM),a1
                 moveq   #2,d7
-loc_18142:                                              ; CODE XREF: Weapon_SpawnHomingEffect+BE   j
+Weapon_SpawnHomingEffect_FindCompanion:                 ; CODE XREF: Weapon_SpawnHomingEffect+BE   j  ; was: loc_18142
                 tst.w   (a1)
-                beq.s   loc_18150
+                beq.s   Weapon_SpawnHomingEffect_InitializeCompanion
                 lea     $60(a1),a1
-                dbf     d7,loc_18142
+                dbf     d7,Weapon_SpawnHomingEffect_FindCompanion
                 rts
 ; ---------------------------------------------------------------------------
-loc_18150:                                              ; CODE XREF: Weapon_SpawnHomingEffect+B8   j
+Weapon_SpawnHomingEffect_InitializeCompanion:           ; CODE XREF: Weapon_SpawnHomingEffect+B8   j  ; was: loc_18150
                 move.l  $18(a0),d0
                 asr.l   #2,d0
                 move.l  d0,$18(a1)
@@ -215,7 +216,7 @@ loc_18150:                                              ; CODE XREF: Weapon_Spaw
                 rts
 ; End of function Weapon_SpawnHomingEffect
 ; ---------------------------------------------------------------------------
-word_1818E:     dc.w    $457E, $5580, $557C, $5D80, $4D7E, $4D80, $457C, $4580
+Weapon_HomingEffectSpriteData:  dc.w    $457E, $5580, $557C, $5D80, $4D7E, $4D80, $457C, $4580  ; was: word_1818E
                                         ; DATA XREF: Weapon_SpawnHomingEffect+92   o
                                         ; Weapon_HandleProjectileHit+44   o
                 dc.w    $400, $500, $100, $500, $400, $500, $100, $500
@@ -226,25 +227,25 @@ Weapon_FireMultipleShots:                               ; DATA XREF: ROM:00017F2
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
                 tst.w   (word_FF8238).w
-                bpl.w   locret_182BA
+                bpl.w   Weapon_InitSpreadShot_Return
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1
                 moveq   #0,d3
                 moveq   #7,d7
-loc_181DA:                                              ; CODE XREF: Weapon_FireMultipleShots+28   j
+Weapon_FireMultipleShots_ScanSlots:                     ; CODE XREF: Weapon_FireMultipleShots+28   j  ; was: loc_181DA
                 tst.w   (a0)
-                bne.s   loc_181E2
+                bne.s   Weapon_FireMultipleShots_NextSlot
                 move.w  a0,(a1)+
                 addq.w  #1,d3
-loc_181E2:                                              ; CODE XREF: Weapon_FireMultipleShots+1E   j
+Weapon_FireMultipleShots_NextSlot:                      ; CODE XREF: Weapon_FireMultipleShots+1E   j  ; was: loc_181E2
                 lea     $60(a0),a0
-                dbf     d7,loc_181DA
+                dbf     d7,Weapon_FireMultipleShots_ScanSlots
                 tst.w   d3
-                beq.w   locret_182BA
+                beq.w   Weapon_InitSpreadShot_Return
                 move.b  #$BF,d0
                 jsr     (Sound_PlaySFX).l
                 movea.w #(dword_FFA100-M68K_RAM),a3
-                lea     byte_184D8(pc),a1
+                lea     Weapon_DirectionTableOffsets(pc),a1
                 nop
                 lea     dword_19632(pc),a2
                 nop
@@ -270,15 +271,15 @@ Weapon_InitSpreadShot:                                  ; CODE XREF: Weapon_Cons
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
                 move.w  #$268,(a0)
-                move.l  #Weapon_SetProjectileAnimation,$48(a0)
+                move.l  #Weapon_InitSpreadProjectileState,$48(a0)
                 move.l  #Weapon_SpreadShotInitialSpriteFrame,$54(a0)
                 move.w  #$8C80,2(a0)
                 clr.b   $21(a0)
                 move.w  #1,$26(a0)
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_18276
+                bne.s   Weapon_InitSpreadShot_SetVelocity
                 move.w  #2,$26(a0)
-loc_18276:                                              ; CODE XREF: Weapon_InitSpreadShot+32   j
+Weapon_InitSpreadShot_SetVelocity:                      ; CODE XREF: Weapon_InitSpreadShot+32   j  ; was: loc_18276
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
                 move.l  (a2,d6.w),d3
@@ -299,7 +300,7 @@ loc_18276:                                              ; CODE XREF: Weapon_Init
                 move.l  d3,$1C(a0)
                 move.l  d4,$18(a0)
                 move.w  #$20,$5E(a0)                    ; ' '
-locret_182BA:                                           ; CODE XREF: Weapon_FireMultipleShots+C   j
+Weapon_InitSpreadShot_Return:                           ; CODE XREF: Weapon_FireMultipleShots+C   j  ; was: locret_182BA
                                         ; Weapon_FireMultipleShots+2E   j
                 rts
 ; End of function Weapon_InitSpreadShot
@@ -309,39 +310,39 @@ Weapon_FireFourShotSpread:                              ; CODE XREF: Weapon_Fire
                 move.b  #$E0,(byte_FF8142).w
                 move.b  #4,(byte_FF8143).w
                 tst.w   (word_FFA22A).w
-                bne.s   loc_182D8
+                bne.s   Weapon_FireFourShotSpread_SelectAmmoCost
                 subq.w  #8,$10(a4)
-loc_182D8:                                              ; CODE XREF: Weapon_FireFourShotSpread+16   j
+Weapon_FireFourShotSpread_SelectAmmoCost:               ; CODE XREF: Weapon_FireFourShotSpread+16   j  ; was: loc_182D8
                 move.w  #4,(word_FF8238).w
                 move.w  #$14,d0
                 tst.b   (word_FFFF0E).w
-                bne.s   loc_182EC
+                bne.s   Weapon_FireFourShotSpread_SubtractAmmo
                 move.w  #$12,d0
-loc_182EC:                                              ; CODE XREF: Weapon_FireFourShotSpread+2A   j
+Weapon_FireFourShotSpread_SubtractAmmo:                 ; CODE XREF: Weapon_FireFourShotSpread+2A   j  ; was: loc_182EC
                 sub.w   d0,$10(a4)
-                bpl.s   loc_182F6
+                bpl.s   Weapon_FireFourShotSpread_SetupLoop
                 clr.w   $10(a4)
-loc_182F6:                                              ; CODE XREF: Weapon_FireFourShotSpread+34   j
+Weapon_FireFourShotSpread_SetupLoop:                    ; CODE XREF: Weapon_FireFourShotSpread+34   j  ; was: loc_182F6
                 subi.w  #$14,d6
                 moveq   #3,d7
-loc_182FC:                                              ; CODE XREF: Weapon_FireFourShotSpread+4C   j
+Weapon_FireFourShotSpread_SpawnLoop:                    ; CODE XREF: Weapon_FireFourShotSpread+4C   j  ; was: loc_182FC
                 addi.w  #8,d6
                 andi.w  #$7C,d6                         ; '|'
                 bsr.w   Weapon_InitSpreadShot
-                dbf     d7,loc_182FC
+                dbf     d7,Weapon_FireFourShotSpread_SpawnLoop
                 rts
 ; End of function Weapon_FireFourShotSpread
-; Sets projectile sprite animation properties and frame data
-Weapon_SetProjectileAnimation:                          ; DATA XREF: Weapon_InitSpreadShot+E   o  ; was: sub_1830E
+; Initializes the spread projectile object type and display state
+Weapon_InitSpreadProjectileState:                       ; DATA XREF: Weapon_InitSpreadShot+E   o  ; was: sub_1830E
                 move.w  #$22C,(a5)
                 move.w  #$8C80,2(a5)
                 move.b  #$40,$21(a5)                    ; '@'
                 move.b  #1,$23(a5)
                 rts
-; End of function Weapon_SetProjectileAnimation
-nullsub_46:
+; End of function Weapon_InitSpreadProjectileState
+Weapon_EmptySpreadProjectileHandler:                    ; was: nullsub_46
                 rts
-; End of function nullsub_46
+; End of function Weapon_EmptySpreadProjectileHandler
 
 ; Handles player bullet firing with ammo check
 Weapon_FireBulletHandler:                               ; DATA XREF: ROM:00017F2A   o  ; was: sub_18328
@@ -354,27 +355,27 @@ Weapon_FireBulletHandler:                               ; DATA XREF: ROM:00017F2
                 move.b  #8,(byte_FF8143).w
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
-loc_18352:                                              ; CODE XREF: Weapon_FireBulletHandler+32   j
+Weapon_FireBulletHandler_FindSlot:                      ; CODE XREF: Weapon_FireBulletHandler+32   j  ; was: loc_18352
                 move.w  (a0),d0
-                beq.s   loc_18360
+                beq.s   Weapon_FireBulletHandler_Initialize
                 lea     $60(a0),a0
-                dbf     d7,loc_18352
+                dbf     d7,Weapon_FireBulletHandler_FindSlot
                 rts
 ; ---------------------------------------------------------------------------
-loc_18360:                                              ; CODE XREF: Weapon_FireBulletHandler+2C   j
+Weapon_FireBulletHandler_Initialize:                    ; CODE XREF: Weapon_FireBulletHandler+2C   j  ; was: loc_18360
                 tst.w   (word_FFA22A).w
-                bne.s   loc_1836A
+                bne.s   Weapon_FireBulletHandler_SelectAmmoCost
                 subq.w  #2,$10(a4)
-loc_1836A:                                              ; CODE XREF: Weapon_FireBulletHandler+3C   j
+Weapon_FireBulletHandler_SelectAmmoCost:                ; CODE XREF: Weapon_FireBulletHandler+3C   j  ; was: loc_1836A
                 move.w  #4,d0
                 tst.b   (word_FFFF0E).w
-                bne.s   loc_18378
+                bne.s   Weapon_FireBulletHandler_SubtractAmmo
                 move.w  #3,d0
-loc_18378:                                              ; CODE XREF: Weapon_FireBulletHandler+4A   j
+Weapon_FireBulletHandler_SubtractAmmo:                  ; CODE XREF: Weapon_FireBulletHandler+4A   j  ; was: loc_18378
                 sub.w   d0,$10(a4)
-                bpl.s   loc_18382
+                bpl.s   Weapon_FireBulletHandler_SetupObject
                 clr.w   $10(a4)
-loc_18382:                                              ; CODE XREF: Weapon_FireBulletHandler+54   j
+Weapon_FireBulletHandler_SetupObject:                   ; CODE XREF: Weapon_FireBulletHandler+54   j  ; was: loc_18382
                 move.w  d1,$10(a0)
                 move.w  d2,$14(a0)
                 move.w  #$18,(a0)
@@ -383,13 +384,13 @@ loc_18382:                                              ; CODE XREF: Weapon_Fire
                 move.b  #8,$23(a0)
                 move.w  #3,$26(a0)
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_183B2
+                bne.s   Weapon_FireBulletHandler_SetDamage
                 move.w  #4,$26(a0)
-loc_183B2:                                              ; CODE XREF: Weapon_FireBulletHandler+82   j
+Weapon_FireBulletHandler_SetDamage:                     ; CODE XREF: Weapon_FireBulletHandler+82   j  ; was: loc_183B2
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
                 move.w  #$10,$48(a0)
-                movea.l #byte_184D8,a1
+                movea.l #Weapon_DirectionTableOffsets,a1
                 moveq   #0,d5
                 move.b  (a1,d6.w),d5
                 movea.l (dword_FF802C).w,a1
@@ -400,16 +401,16 @@ loc_183B2:                                              ; CODE XREF: Weapon_Fire
                 move.w  d5,$56(a0)
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.s   locret_183FA
+                bne.s   Weapon_FireBulletHandler_Return
                 move.b  #$EB,d0
                 jmp     (Sound_PlaySFX).l
 ; ---------------------------------------------------------------------------
-locret_183FA:                                           ; CODE XREF: Weapon_FireBulletHandler+C6   j
+Weapon_FireBulletHandler_Return:                        ; CODE XREF: Weapon_FireBulletHandler+C6   j  ; was: locret_183FA
                 rts
 ; End of function Weapon_FireBulletHandler
-nullsub_47:
+Weapon_EmptyBulletCompanionHandler:                     ; was: nullsub_47
                 rts
-; End of function nullsub_47
+; End of function Weapon_EmptyBulletCompanionHandler
 
 ; Fires beam weapon with continuous fire and ammo consumption
 Weapon_FireBeamWeapon:                                  ; DATA XREF: ROM:00017F2C   o  ; was: sub_183FE
@@ -421,32 +422,32 @@ Weapon_FireBeamWeapon:                                  ; DATA XREF: ROM:00017F2
                 move.b  #$20,(byte_FF8142).w            ; ' '
                 move.b  #$C,(byte_FF8143).w
                 tst.w   (word_FF8238).w
-                bpl.w   locret_18442
+                bpl.w   Weapon_FireBeamWeapon_Return
                 move.w  #1,(word_FF8238).w
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
-loc_18436:                                              ; CODE XREF: Weapon_FireBeamWeapon+40   j
+Weapon_FireBeamWeapon_FindSlot:                         ; CODE XREF: Weapon_FireBeamWeapon+40   j  ; was: loc_18436
                 move.w  (a0),d0
-                beq.s   loc_18444
+                beq.s   Weapon_FireBeamWeapon_Initialize
                 lea     $60(a0),a0
-                dbf     d7,loc_18436
-locret_18442:                                           ; CODE XREF: Weapon_FireBeamWeapon+28   j
+                dbf     d7,Weapon_FireBeamWeapon_FindSlot
+Weapon_FireBeamWeapon_Return:                           ; CODE XREF: Weapon_FireBeamWeapon+28   j  ; was: locret_18442
                 rts
 ; ---------------------------------------------------------------------------
-loc_18444:                                              ; CODE XREF: Weapon_FireBeamWeapon+3A   j
+Weapon_FireBeamWeapon_Initialize:                       ; CODE XREF: Weapon_FireBeamWeapon+3A   j  ; was: loc_18444
                 tst.w   (word_FFA22A).w
-                bne.s   loc_1844E
+                bne.s   Weapon_FireBeamWeapon_SelectAmmoCost
                 subq.w  #4,$10(a4)
-loc_1844E:                                              ; CODE XREF: Weapon_FireBeamWeapon+4A   j
+Weapon_FireBeamWeapon_SelectAmmoCost:                   ; CODE XREF: Weapon_FireBeamWeapon+4A   j  ; was: loc_1844E
                 move.w  #2,d0
                 tst.b   (word_FFFF0E).w
-                bne.s   loc_1845C
+                bne.s   Weapon_FireBeamWeapon_SubtractAmmo
                 move.w  #1,d0
-loc_1845C:                                              ; CODE XREF: Weapon_FireBeamWeapon+58   j
+Weapon_FireBeamWeapon_SubtractAmmo:                     ; CODE XREF: Weapon_FireBeamWeapon+58   j  ; was: loc_1845C
                 sub.w   d0,$10(a4)
-                bpl.s   loc_18466
+                bpl.s   Weapon_FireBeamWeapon_SetupObject
                 clr.w   $10(a4)
-loc_18466:                                              ; CODE XREF: Weapon_FireBeamWeapon+62   j
+Weapon_FireBeamWeapon_SetupObject:                      ; CODE XREF: Weapon_FireBeamWeapon+62   j  ; was: loc_18466
                 move.w  #$6C,(a0)                       ; 'l'
                 move.w  #1,$26(a0)
                 tst.w   (word_FFFF0E).w
@@ -466,26 +467,26 @@ Weapon_SetBeamProjectileData:                           ; CODE XREF: Weapon_Fire
                 clr.w   $56(a0)
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #7,d0
-                move.b  byte_184E0(pc,d0.w),d0
-                add.b   byte_184D8(pc,d6.w),d0
+                move.b  Weapon_BeamJitterOffsets(pc,d0.w),d0
+                add.b   Weapon_DirectionTableOffsets(pc,d6.w),d0
                 move.b  d0,$57(a0)
                 move.w  a0,d0
                 btst    #5,d0
-                beq.s   Weapon_BeamFireEmptyExit
+                beq.s   Weapon_FireNoOp
                 move.b  #$BA,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Weapon_FireBeamWeapon
-; Empty exit point after beam weapon fire
-Weapon_BeamFireEmptyExit:                               ; CODE XREF: Weapon_FireBeamWeapon+CC   j  ; was: nullsub_45
+; Shared no-op handler for weapon states that do not emit a projectile
+Weapon_FireNoOp:                                        ; CODE XREF: Weapon_FireBeamWeapon+CC   j  ; was: nullsub_45
                                         ; Player_SpawnCircleAttack+C   j
                                         ; DATA XREF:
                 rts
-; End of function Weapon_BeamFireEmptyExit
+; End of function Weapon_FireNoOp
 ; ---------------------------------------------------------------------------
-byte_184D8:     dc.b    0, $10, $20, $30, $40, $50, $60, $70
+Weapon_DirectionTableOffsets:   dc.b    0, $10, $20, $30, $40, $50, $60, $70  ; was: byte_184D8
                                         ; DATA XREF: Weapon_FireProjectile+A0   o
                                         ; Weapon_SpawnHomingEffect+66   o
-byte_184E0:     dc.b    $FC, $F8, $FC, 0, 0, 4, 8, 4
+Weapon_BeamJitterOffsets:   dc.b    $FC, $F8, $FC, 0, 0, 4, 8, 4  ; was: byte_184E0
                                         ; DATA XREF: Weapon_FireBeamWeapon+BA   r
 
 ; Duplicates beam projectile
@@ -506,8 +507,6 @@ Weapon_CloneBeamProjectile:
                 move.w  d0,$4C(a1)
                 rts
 ; End of function Weapon_CloneBeamProjectile
-nullsub_48:
+Weapon_EmptyBeamCompanionHandler:                       ; was: nullsub_48
                 rts
-; End of function nullsub_48
-
-; Spawns 8 projectiles in circular pattern
+; End of function Weapon_EmptyBeamCompanionHandler

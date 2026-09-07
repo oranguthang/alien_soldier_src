@@ -248,7 +248,7 @@ Projectile_QuadVelocityComponents:  dc.w    $FFFF, $FFFF, 1, $FFFF, $FFFF, 1, 1,
                                         ; DATA XREF: Enemy_SpawnQuadProjectiles+18   o
 
 ; Initializes the current object from the table in a1
-Sprite_InitCurrentFromTable:                            ; CODE XREF: Sprite_HandleProjectileCollision+14   p  ; was: sub_2A614
+Sprite_InitCurrentFromTable:                            ; CODE XREF: Weapon_HandleSeekingProjectileCollision+14   p  ; was: sub_2A614
                                         ; Weapon_UpdateBombProjectile+16   p
                 movea.w a5,a0
 ; End of function Sprite_InitCurrentFromTable
@@ -305,14 +305,14 @@ Sprite_InitType94FromTable:                             ; CODE XREF: Boss_Shiper
                 rts
 ; End of function Sprite_InitType94FromTable
 ; Initializes the current object as type A4 from the table in a1
-Sprite_InitTypeA4FromCurrentTable:                      ; CODE XREF: Effect_SpawnKnockbackParticle+44   p  ; was: sub_2A67E
-                                        ; Effect_SpawnKnockbackParticle+76   j
+Sprite_InitTypeA4FromCurrentTable:                      ; CODE XREF: Effect_UpdateKnockbackParticle+44   p  ; was: sub_2A67E
+                                        ; Effect_UpdateKnockbackParticle+76   j
                 bsr.w   Sprite_InitCurrentFromTable
                 move.w  #$A4,(a0)
                 rts
 ; End of function Sprite_InitTypeA4FromCurrentTable
 ; Initializes the object in a0 as type A4 from the table in a1
-Sprite_InitTypeA4FromTable:                             ; CODE XREF: Sprite_SpawnParticleEffect:loc_18C8C   p  ; was: sub_2A688
+Sprite_InitTypeA4FromTable:                             ; CODE XREF: Effect_UpdateImpactParticleSpawner:Effect_UpdateImpactParticleSpawner_InitChild   p  ; was: sub_2A688
                                         ; Effect_SpawnParticleLoop+28   p
                 bsr.w   Sprite_InitFromTable
                 move.w  #$A4,(a0)
@@ -473,7 +473,7 @@ Sprite_InitType160FromCurrent:                          ; CODE XREF: Enemy_Spawn
 ; End of function Sprite_InitType160FromCurrent
 ; Initializes object type 160 in a0
 Sprite_InitType160:                                     ; CODE XREF: Effect_SpawnRandomDebris+3C   p  ; was: sub_2A7BE
-                                        ; Sprite_InitProjectile+48   p
+                                        ; Effect_InitPlayerMotionProjectile+48   p
                 move.w  #$160,(a0)
 ; Applies shared graphics attributes to an effect object
 Sprite_InitializeEffectGraphics:                        ; CODE XREF: Projectile_InitType88+4   j  ; was: loc_2A7C2

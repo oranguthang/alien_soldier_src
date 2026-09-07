@@ -140,7 +140,7 @@ Boss_ArtemisMain:                                       ; DATA XREF: ROM:00054BB
                 clr.l   (dword_FFA41C).w
                 move.w  #$34,(word_FFA02A).w            ; '4'
                 bset    #2,(byte_FF8245).w
-                jsr     (Memory_ClearBlock).l
+                jsr     (Sys_ClearObjectBlocks17).l
                 move.l  #$38000,$1C(a5)
                 move.l  #$22000,$18(a5)
                 cmpi.w  #$120,$10(a5)

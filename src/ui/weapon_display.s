@@ -102,7 +102,7 @@ UI_InitWeaponSelectScreen:                              ; DATA XREF: ROM:0001799
                 move.w  d1,(word_FF8036).w
                 move.w  #$A0,(word_FF8030).w
                 move.w  d0,(word_FF8238).w
-                bsr.w   Memory_ClearBlock
+                bsr.w   Sys_ClearObjectBlocks17
                 movea.w #(byte_FFC2C0-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.l  #off_E968C,8(a0)
@@ -274,7 +274,7 @@ UI_IncrementWeaponSelection:                            ; CODE XREF: Player_Init
                 asl.w   #1,d0
                 move.w  d0,(word_FFA21E).w
                 bsr.w   UI_ClearWeaponCounters
-                bra.w   Sys_ClearObjectBufferSmall
+                bra.w   Sys_ClearObjectBlocks16
 ; End of function UI_IncrementWeaponSelection
 ; Updates weapon selection index and clears object buffer
 UI_UpdateWeaponSelection:                               ; CODE XREF: UI_UpdateWeaponSelect+1A   j  ; was: sub_17C1A
@@ -298,7 +298,7 @@ loc_17C40:                                              ; CODE XREF: UI_UpdateWe
                 asl.w   #1,d0
                 move.w  d0,(word_FFA21E).w
                 clr.w   (word_FF8038).w
-                bra.w   Sys_ClearObjectBufferSmall
+                bra.w   Sys_ClearObjectBlocks16
 ; End of function UI_UpdateWeaponSelection
 ; Saves current weapon selection index to RAM
 UI_SaveWeaponIndex:                                     ; CODE XREF: UI_UpdateWeaponSelect   p  ; was: sub_17C4E

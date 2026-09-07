@@ -68,6 +68,15 @@ boss-specific behavior where the code actually updates display priority,
 stamps terrain tiles, or interprets a callback script. These corrections are
 recorded in the name audit.
 
+The weapon-system pass reduced the count to 10,775 by replacing all 127 live
+address-derived definitions in `src/weapons/`. The ROM-ordered block now uses
+three cohesive 397--649-line weapon modules; its unrelated 51-line shared
+object-pool clearing primitive moved to `src/system/object_pool_clearing.s`.
+Static control and data flow corrected generated claims about player rendering,
+damage thresholds, sprite priority, and particle spawning. The code actually
+dispatches weapon fire, removes objects at state or animation boundaries, and
+updates multi-state effects. These corrections are recorded in the name audit.
+
 Three especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

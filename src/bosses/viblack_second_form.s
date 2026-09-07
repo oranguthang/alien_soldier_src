@@ -115,7 +115,7 @@ Boss_ViblackDescend:                                    ; DATA XREF: ROM:000439E
                 move.w  #$30,(word_FFA02A).w            ; '0'
                 bset    #5,(byte_FF8245).w
                 bset    #4,(word_FFA40E).w
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$8000,(word_FF808A).w
                 move.w  #4,(word_FFA010).w
                 move.b  #$DA,d0
@@ -345,7 +345,7 @@ Boss_ViblackDefeatMoveDown:                             ; DATA XREF: ROM:000439F
                 beq.s   loc_43E20
                 move.w  #$4C,(word_FFA404).w            ; 'L'
                 move.w  #$FFF8,(dword_FFA41C).w
-                jsr     (Sys_ClearObjectBufferSmall).l
+                jsr     (Sys_ClearObjectBlocks16).l
 loc_43E20:                                              ; CODE XREF: Boss_ViblackDefeatMoveDown+2E   j
                 move.w  #$320,(word_FFC680).w
                 clr.w   (word_FFC682).w
