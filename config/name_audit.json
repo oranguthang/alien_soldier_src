@@ -35,6 +35,63 @@
         "The payload is exactly 16 Mega Drive color words.",
         "UI_InitializeSEGAScreen copies all 32 bytes into palette RAM immediately before loading sega_tiles."
       ]
+    },
+    {
+      "address": "0x0223E2",
+      "previous_name": "Boss_ZLeoPaletteUpdate",
+      "current_name": "Boss_ZLeoUpdateScroll",
+      "legacy_name": "sub_223E2",
+      "evidence": "static",
+      "basis": [
+        "The routine adds the Z-Leo velocity field to the horizontal scroll accumulator.",
+        "It neither reads nor writes palette memory."
+      ]
+    },
+    {
+      "address": "0x02241E",
+      "previous_name": "Stage_UpdateCameraFromTable",
+      "current_name": "Boss_ZLeoUpdateCameraOrbit",
+      "legacy_name": "sub_2241E",
+      "evidence": "static",
+      "basis": [
+        "Both outputs are derived from phase indices and the shared sine table.",
+        "The resulting fixed-point coordinates are written to the same camera target fields used by the Z-Leo ending sequence."
+      ]
+    },
+    {
+      "address": "0x022466",
+      "previous_name": "Boss_ZLeoPaletteEffect1",
+      "current_name": "Boss_ZLeoUpdateCameraBounds",
+      "legacy_name": "sub_22466",
+      "evidence": "static",
+      "basis": [
+        "The routine checks the camera Y coordinate against 0x80 and 0x1C0.",
+        "Inside that range it copies camera coordinates to the target fields; outside it resets the target and a control flag.",
+        "It does not access palette memory."
+      ]
+    },
+    {
+      "address": "0x02249A",
+      "previous_name": "Boss_ZLeoPaletteEffect2",
+      "current_name": "Boss_ZLeoSpawnParticles",
+      "legacy_name": "sub_2249A",
+      "evidence": "static",
+      "basis": [
+        "The routine allocates sprite objects, assigns randomized positions and velocity, and selects sprite frame pointers.",
+        "It emits periodic sound effects after the particle loop.",
+        "It does not access palette memory."
+      ]
+    },
+    {
+      "address": "0x02257C",
+      "previous_name": "Credits_UpdateTilemap",
+      "current_name": "Boss_ZLeoSpawnImpactObject",
+      "legacy_name": "sub_2257C",
+      "evidence": "static",
+      "basis": [
+        "The routine initializes one object slot from the active Z-Leo object's position and sprite attributes.",
+        "It plays a sound effect and performs no tilemap transfer."
+      ]
     }
   ]
 }

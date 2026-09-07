@@ -3,15 +3,15 @@ Credits_InitXiTiger:                                    ; DATA XREF: Sys_Dispatc
                 clr.b   (byte_FFF755).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Gfx_QueueVRAMCommand).l
-                movea.l #stru_20B4A,a0
+                movea.l #Credits_XiTigerAssetLoadList,a0
                 jsr     (LoadObjData).l
                 lea     (word_FF5000).l,a0
                 move.w  #$FF,d7
-loc_20982:                                              ; CODE XREF: Credits_InitXiTiger+34   j
+Credits_InitXiTiger_ClearTileAttributesLoop:            ; CODE XREF: Credits_InitXiTiger+34   j  ; was: loc_20982
                 move.w  (a0),d0
                 andi.w  #$FEFF,d0
                 move.w  d0,(a0)+
-                dbf     d7,loc_20982
+                dbf     d7,Credits_InitXiTiger_ClearTileAttributesLoop
                 jsr     (Sys_ClearBossDataBuffer).l
                 lea     (dword_FF5180).l,a0
                 move.w  #$A000,d0
@@ -21,9 +21,9 @@ loc_20982:                                              ; CODE XREF: Credits_Ini
                 lea     (dword_FF6180).l,a0
                 moveq   #0,d0
                 move.w  #$1F,d1
-loc_209B8:                                              ; CODE XREF: Credits_InitXiTiger+64   j
+Credits_InitXiTiger_ClearTilemapBufferLoop:             ; CODE XREF: Credits_InitXiTiger+64   j  ; was: loc_209B8
                 move.l  d0,(a0)+
-                dbf     d1,loc_209B8
+                dbf     d1,Credits_InitXiTiger_ClearTilemapBufferLoop
                 move.l  #$81828300,(dword_FF6194).l
                 move.l  #$85868700,(dword_FF619C).l
                 move.l  #$898A8B00,(dword_FF61A4).l
@@ -48,19 +48,19 @@ loc_209B8:                                              ; CODE XREF: Credits_Ini
                 move.l  #$FFF80000,d0
                 lea     (word_FFE400).w,a0
                 move.w  #$1B,d7
-loc_20A52:                                              ; CODE XREF: Credits_InitXiTiger+102   j
+Credits_InitXiTiger_InitHorizontalScrollLoop:           ; CODE XREF: Credits_InitXiTiger+102   j  ; was: loc_20A52
                 move.l  d0,(a0)
                 adda.w  #$20,a0                         ; ' '
-                dbf     d7,loc_20A52
+                dbf     d7,Credits_InitXiTiger_InitHorizontalScrollLoop
                 lea     (word_FFEC00).w,a0
                 move.w  #$13,d7
-loc_20A64:                                              ; CODE XREF: Credits_InitXiTiger+110   j
+Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_InitXiTiger+110   j  ; was: loc_20A64
                 move.l  d0,(a0)+
-                dbf     d7,loc_20A64
+                dbf     d7,Credits_InitXiTiger_InitVerticalScrollLoop
                 lea     (word_FFC680).w,a5
                 move.w  #$CC00,word_FFC682-word_FFC680(a5)
                 move.w  #$10,(a5)
-                move.l  #word_21A32,8(a5)
+                move.l  #Credits_XiTigerSpriteFrames,8(a5)
                 move.w  #$8000,$E(a5)
                 move.w  #$90,$10(a5)
                 move.w  #$E0,$14(a5)
@@ -70,7 +70,7 @@ loc_20A64:                                              ; CODE XREF: Credits_Ini
                 lea     (word_FFC6E0).w,a5
                 move.w  #$CC00,word_FFC6E2-word_FFC6E0(a5)
                 move.w  #$10,(a5)
-                move.l  #word_21A32,8(a5)
+                move.l  #Credits_XiTigerSpriteFrames,8(a5)
                 move.w  #$8000,$E(a5)
                 move.w  #$1B0,$10(a5)
                 move.w  #$E0,$14(a5)
@@ -103,7 +103,7 @@ loc_20A64:                                              ; CODE XREF: Credits_Ini
                 rts
 ; End of function Credits_InitXiTiger
 ; ---------------------------------------------------------------------------
-stru_20B4A:     dc.w    7                               ; field_0
+Credits_XiTigerAssetLoadList:   dc.w    7               ; field_0  ; was: stru_20B4A
                                         ; DATA XREF: Credits_InitXiTiger+16   o
                 dc.l    tiles_18B2FA                    ; field_2
                 dc.w    $4000                           ; field_6
@@ -139,12 +139,12 @@ Credits_MainLoop:                                       ; DATA XREF: Sys_Dispatc
 Credits_StateDispatcher:                                ; CODE XREF: Credits_MainLoop+18   p  ; was: sub_20BAE
                 subq.w  #1,(word_FF0188).l
                 move.w  (GameSubstateIndex).w,d0
-                lea     off_20BC0(pc,d0.w),a0
+                lea     Credits_StateHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
 ; End of function Credits_StateDispatcher
 ; ---------------------------------------------------------------------------
-off_20BC0:      dc.w    Credits_FadeInState-*           ; DATA XREF: Credits_StateDispatcher+A   o
+Credits_StateHandlers:  dc.w    Credits_FadeInState-*   ; DATA XREF: Credits_StateDispatcher+A   o  ; was: off_20BC0
                 dc.w    Credits_ScrollWithColorCycle-*
                 dc.w    Credits_WaitForTimerEnd-*
                 dc.w    Credits_FadeOutAndClearVRAM-*
@@ -153,14 +153,14 @@ off_20BC0:      dc.w    Credits_FadeInState-*           ; DATA XREF: Credits_Sta
                 dc.w    Credits_FadeOutAndExit-*
 
 ; Handles fade-in transition at start of credits sequence
-Credits_FadeInState:                                    ; DATA XREF: ROM:off_20BC0   o  ; was: sub_20BCE
+Credits_FadeInState:                                    ; DATA XREF: ROM:Credits_StateHandlers   o  ; was: sub_20BCE
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 nop
                 move.w  (word_FFA000).w,d0
                 cmpi.w  #$80,d0
-                bcs.w   locret_20C30
+                bcs.w   Credits_StateReturn
                 andi.w  #$F,d0
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 addq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
                 lea     (word_FFE300).w,a0
@@ -168,13 +168,13 @@ Credits_FadeInState:                                    ; DATA XREF: ROM:off_20B
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FF0176).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 move.w  #$FFF0,(word_FF0176).l
                 clr.w   (word_FF00EC).l
                 clr.w   (word_FF017C).l
                 move.w  #$4D80,(word_FF0188).l
                 addq.w  #2,(GameSubstateIndex).w
-locret_20C30:                                           ; CODE XREF: Credits_FadeInState+E   j
+Credits_StateReturn:                                    ; CODE XREF: Credits_FadeInState+E   j  ; was: locret_20C30
                                         ; Credits_FadeInState+16   j
                 rts
 ; End of function Credits_FadeInState
@@ -187,9 +187,9 @@ Credits_ScrollWithColorCycle:                           ; DATA XREF: ROM:00020BC
                 bsr.w   Credits_CyclePaletteColors
                 move.w  (word_FFA000).w,d0
                 cmpi.w  #$11C0,d0
-                bcs.w   locret_20C30
+                bcs.w   Credits_StateReturn
                 andi.w  #$F,d0
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 addq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
                 lea     (word_FFE360).w,a0
@@ -197,7 +197,7 @@ Credits_ScrollWithColorCycle:                           ; DATA XREF: ROM:00020BC
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FF0176).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Credits_ScrollWithColorCycle
@@ -209,7 +209,7 @@ Credits_WaitForTimerEnd:                                ; DATA XREF: ROM:00020BC
                 nop
                 bsr.w   Credits_CyclePaletteColors
                 cmpi.w  #$3000,(word_FF0188).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 move.w  #0,(word_FF0176).l
                 addq.w  #2,(GameSubstateIndex).w
                 rts
@@ -235,27 +235,27 @@ Credits_UpdateScrollTables:                             ; CODE XREF: Credits_Fad
                 neg.l   d0
                 lea     (word_FFE5C2).w,a0
                 move.w  #$D,d7
-loc_20CEE:                                              ; CODE XREF: Credits_UpdateScrollTables+32   j
+Credits_UpdateScrollTables_UpperForwardLoop:            ; CODE XREF: Credits_UpdateScrollTables+32   j  ; was: loc_20CEE
                 move.l  d0,d2
                 swap    d2
                 move.w  d2,(a0)
                 add.l   d3,d1
                 sub.l   d1,d0
                 adda.w  #$20,a0                         ; ' '
-                dbf     d7,loc_20CEE
+                dbf     d7,Credits_UpdateScrollTables_UpperForwardLoop
                 move.l  (dword_FF0110).l,d1
                 move.l  d1,d0
                 asr.l   #1,d0
                 lea     (word_FFE5A2).w,a0
                 move.w  #$D,d7
-loc_20D12:                                              ; CODE XREF: Credits_UpdateScrollTables+56   j
+Credits_UpdateScrollTables_UpperReverseLoop:            ; CODE XREF: Credits_UpdateScrollTables+56   j  ; was: loc_20D12
                 move.l  d0,d2
                 swap    d2
                 move.w  d2,(a0)
                 add.l   d3,d1
                 add.l   d1,d0
                 suba.w  #$20,a0                         ; ' '
-                dbf     d7,loc_20D12
+                dbf     d7,Credits_UpdateScrollTables_UpperReverseLoop
                 move.l  (dword_FF0110).l,d1
                 move.l  d1,d3
                 asr.l   #1,d3
@@ -264,27 +264,27 @@ loc_20D12:                                              ; CODE XREF: Credits_Upd
                 asl.l   #1,d1
                 lea     (word_FFEC2A).w,a0
                 move.w  #9,d7
-loc_20D3C:                                              ; CODE XREF: Credits_UpdateScrollTables+80   j
+Credits_UpdateScrollTables_LowerForwardLoop:            ; CODE XREF: Credits_UpdateScrollTables+80   j  ; was: loc_20D3C
                 move.l  d0,d2
                 swap    d2
                 move.w  d2,(a0)
                 add.l   d3,d1
                 sub.l   d1,d0
                 adda.w  #4,a0
-                dbf     d7,loc_20D3C
+                dbf     d7,Credits_UpdateScrollTables_LowerForwardLoop
                 move.l  (dword_FF0110).l,d1
                 move.l  d1,d0
                 asl.l   #1,d1
                 lea     (word_FFEC26).w,a0
                 move.w  #9,d7
-loc_20D60:                                              ; CODE XREF: Credits_UpdateScrollTables+A4   j
+Credits_UpdateScrollTables_LowerReverseLoop:            ; CODE XREF: Credits_UpdateScrollTables+A4   j  ; was: loc_20D60
                 move.l  d0,d2
                 swap    d2
                 move.w  d2,(a0)
                 add.l   d3,d1
                 add.l   d1,d0
                 suba.w  #4,a0
-                dbf     d7,loc_20D60
+                dbf     d7,Credits_UpdateScrollTables_LowerReverseLoop
                 rts
 ; End of function Credits_UpdateScrollTables
 ; Fades out palette and clears VRAM plane data
@@ -294,7 +294,7 @@ Credits_FadeOutAndClearVRAM:                            ; DATA XREF: ROM:00020BC
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 subq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
                 lea     (word_FFE320).w,a0
@@ -302,7 +302,7 @@ Credits_FadeOutAndClearVRAM:                            ; DATA XREF: ROM:00020BC
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$FFF2,(word_FF0176).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 move    sr,-(sp)
                 move    #$2700,sr
                 lea     (VDP_DATA).l,a0
@@ -310,9 +310,9 @@ Credits_FadeOutAndClearVRAM:                            ; DATA XREF: ROM:00020BC
                 move.l  #$40000003,(VDP_CTRL).l
                 move.w  #$7FF,d0
                 move.w  #0,d1
-loc_20DDE:                                              ; CODE XREF: Credits_FadeOutAndClearVRAM+6C   j
+Credits_FadeOutAndClearVRAM_PlaneALoop:                 ; CODE XREF: Credits_FadeOutAndClearVRAM+6C   j  ; was: loc_20DDE
                 move.w  d1,(a0)
-                dbf     d0,loc_20DDE
+                dbf     d0,Credits_FadeOutAndClearVRAM_PlaneALoop
                 move    (sp)+,sr
                 move    sr,-(sp)
                 move    #$2700,sr
@@ -321,9 +321,9 @@ loc_20DDE:                                              ; CODE XREF: Credits_Fad
                 move.l  #$60000003,(VDP_CTRL).l
                 move.w  #$7FF,d0
                 move.w  #0,d1
-loc_20E0C:                                              ; CODE XREF: Credits_FadeOutAndClearVRAM+9A   j
+Credits_FadeOutAndClearVRAM_PlaneBLoop:                 ; CODE XREF: Credits_FadeOutAndClearVRAM+9A   j  ; was: loc_20E0C
                 move.w  d1,(a0)
-                dbf     d0,loc_20E0C
+                dbf     d0,Credits_FadeOutAndClearVRAM_PlaneBLoop
                 move    (sp)+,sr
                 addq.w  #2,(GameSubstateIndex).w
                 rts
@@ -334,7 +334,7 @@ Credits_FadeInFromBlack:                                ; DATA XREF: ROM:00020BC
                 bsr.w   Credits_XiTigerVBlankSync
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 addq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
                 lea     (word_FFE320).w,a0
@@ -342,7 +342,7 @@ Credits_FadeInFromBlack:                                ; DATA XREF: ROM:00020BC
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FF0176).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Credits_FadeInFromBlack
@@ -352,7 +352,7 @@ Credits_WaitForScrollEnd:                               ; DATA XREF: ROM:00020BC
                 bsr.w   Credits_XiTigerVBlankSync
                 bsr.w   Credits_ScrollStateDispatcher
                 tst.w   (word_FF0188).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 move.w  #0,(word_FF0176).l
                 addq.w  #2,(GameSubstateIndex).w
                 rts
@@ -366,7 +366,7 @@ Credits_FadeOutAndExit:                                 ; DATA XREF: ROM:00020BC
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$FFF2,(word_FF0176).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 move.w  #1,(word_FFFF46).w
                 move.w  (word_FFFF60).w,(word_FFFF38).w
                 jsr     (Sys_ClearBossDataBuffer).l
@@ -378,58 +378,58 @@ Credits_FadeOutAndExit:                                 ; DATA XREF: ROM:00020BC
 Credits_XiTigerVBlankSync:                              ; CODE XREF: Credits_ScrollWithColorCycle+6   p  ; was: sub_20ECC
                                         ; Credits_WaitForTimerEnd+6   p
                 cmpi.w  #$1F40,(word_FF0188).l
-                beq.s   loc_20EEC
+                beq.s   Credits_XiTigerVBlankSync_WaitMode1
                 cmpi.w  #$1EC0,(word_FF0188).l
-                beq.s   loc_20EF6
+                beq.s   Credits_XiTigerVBlankSync_WaitMode94
                 cmpi.w  #$A0,(word_FF0188).l
-                beq.s   loc_20EEC
+                beq.s   Credits_XiTigerVBlankSync_WaitMode1
                 rts
 ; ---------------------------------------------------------------------------
-loc_20EEC:                                              ; CODE XREF: Credits_XiTigerVBlankSync+8   j
+Credits_XiTigerVBlankSync_WaitMode1:                    ; CODE XREF: Credits_XiTigerVBlankSync+8   j  ; was: loc_20EEC
                                         ; Credits_XiTigerVBlankSync+1C   j
                 move.b  #1,d0
                 jmp     (Sys_WaitVBlank).l
 ; ---------------------------------------------------------------------------
-loc_20EF6:                                              ; CODE XREF: Credits_XiTigerVBlankSync+12   j
+Credits_XiTigerVBlankSync_WaitMode94:                   ; CODE XREF: Credits_XiTigerVBlankSync+12   j  ; was: loc_20EF6
                 move.b  #$94,d0
                 jmp     (Sys_WaitVBlank).l
 ; End of function Credits_XiTigerVBlankSync
 ; Dispatches to scroll sequence state handler
 Credits_ScrollStateDispatcher:                          ; CODE XREF: Credits_WaitForScrollEnd+A   p  ; was: sub_20F00
                 move.w  (word_FF017C).l,d0
-                lea     off_20F0E(pc,d0.w),a0
+                lea     Credits_SceneStateHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
 ; End of function Credits_ScrollStateDispatcher
 ; ---------------------------------------------------------------------------
-off_20F0E:      dc.w    Stage_InitializeCreditsScreen-*  ; DATA XREF: Credits_ScrollStateDispatcher+6   o
-                dc.w    Stage_LoadCreditsDataPhase-*
-                dc.w    Stage_WaitForPlayerInput-*
-                dc.w    Stage_UpdateCreditsLoop-*
-                dc.w    Credits_TreasureScreen1-*
-                dc.w    Credits_TreasureScreen2-*
-                dc.w    Stage_WaitTimerAndInput-*
-                dc.w    Gfx_FadeOutPaletteCredits-*
-                dc.w    Credits_TreasureScreen1-*
-                dc.w    Credits_SegaScreen-*
-                dc.w    Stage_WaitTimerAndInput-*
-                dc.w    Gfx_FadeOutPaletteCredits-*
-                dc.w    nullsub_54-*
+Credits_SceneStateHandlers: dc.w    Credits_InitializeSceneSequence-*  ; DATA XREF: Credits_ScrollStateDispatcher+6   o  ; was: off_20F0E
+                dc.w    Credits_LoadNextScene-*
+                dc.w    Credits_WaitForSceneActivation-*
+                dc.w    Credits_UpdateScene-*
+                dc.w    Credits_PrepareSpecialScenePalette-*
+                dc.w    Credits_LoadTreasureScene-*
+                dc.w    Credits_WaitForSpecialSceneActivation-*
+                dc.w    Credits_FadeInSpecialScene-*
+                dc.w    Credits_PrepareSpecialScenePalette-*
+                dc.w    Credits_LoadSegaScene-*
+                dc.w    Credits_WaitForSpecialSceneActivation-*
+                dc.w    Credits_FadeInSpecialScene-*
+                dc.w    Credits_SceneStateIdle-*
 
 ; Initialize credits screen with sprite objects and palette data
-Stage_InitializeCreditsScreen:                          ; DATA XREF: ROM:off_20F0E   o  ; was: sub_20F28
+Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits_SceneStateHandlers   o  ; was: sub_20F28
                 clr.w   (word_FF017E).l
-                lea     stru_2158C(pc),a0
+                lea     Credits_InitialAssetLoadList(pc),a0
                 nop
                 jsr     (Data_ProcessPointer).l
-                lea     word_2156C(pc),a0
+                lea     Credits_InitialPalette(pc),a0
                 nop
                 lea     (word_FFE340).w,a1
                 bsr.w   Data_Copy32Bytes
                 lea     (word_FFC680).w,a5
                 move.w  #$CC00,word_FFC682-word_FFC680(a5)
                 move.w  #$10,(a5)
-                move.l  #word_21A32,8(a5)
+                move.l  #Credits_XiTigerSpriteFrames,8(a5)
                 move.w  #$8000,$E(a5)
                 move.w  #$90,$10(a5)
                 move.w  #$E0,$14(a5)
@@ -439,7 +439,7 @@ Stage_InitializeCreditsScreen:                          ; DATA XREF: ROM:off_20F
                 lea     (word_FFC6E0).w,a5
                 move.w  #$CC00,word_FFC6E2-word_FFC6E0(a5)
                 move.w  #$10,(a5)
-                move.l  #word_21A32,8(a5)
+                move.l  #Credits_XiTigerSpriteFrames,8(a5)
                 move.w  #$8000,$E(a5)
                 move.w  #$1B0,$10(a5)
                 move.w  #$E0,$14(a5)
@@ -453,19 +453,19 @@ Stage_InitializeCreditsScreen:                          ; DATA XREF: ROM:off_20F
                 lea     (word_FFE400).w,a0
                 move.l  #$7F008000,d1
                 move.w  #$EF,d0
-loc_20FD8:                                              ; CODE XREF: Stage_InitializeCreditsScreen+B2   j
+Credits_InitializeSceneSequence_FillPaletteBufferLoop:  ; CODE XREF: Credits_InitializeSceneSequence+B2   j  ; was: loc_20FD8
                 move.l  d1,(a0)+
-                dbf     d0,loc_20FD8
+                dbf     d0,Credits_InitializeSceneSequence_FillPaletteBufferLoop
                 move.w  #$AA,(word_FF018E).l
-                move.l  #off_214C8,(dword_FF018A).l
+                move.l  #Credits_SceneDataPointers,(dword_FF018A).l
                 move.l  #$FFFFE320,(dword_FF0190).l
                 addq.w  #2,(word_FF017C).l
                 rts
-; End of function Stage_InitializeCreditsScreen
+; End of function Credits_InitializeSceneSequence
 ; Load next phase of credits data and process pointer
-Stage_LoadCreditsDataPhase:                             ; DATA XREF: ROM:00020F10   o  ; was: sub_21002
+Credits_LoadNextScene:                                  ; DATA XREF: ROM:00020F10   o  ; was: sub_21002
                 subq.w  #1,(word_FF018E).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 movea.l (dword_FF018A).l,a2
                 movea.l (a2)+,a0
                 movea.l (dword_FF0190).l,a1
@@ -475,40 +475,40 @@ Stage_LoadCreditsDataPhase:                             ; DATA XREF: ROM:00020F1
                 move.w  #$160,(word_FF018E).l
                 addq.w  #2,(word_FF017C).l
                 rts
-; End of function Stage_LoadCreditsDataPhase
+; End of function Credits_LoadNextScene
 ; Wait for timer and check player input to advance
-Stage_WaitForPlayerInput:                               ; DATA XREF: ROM:00020F12   o  ; was: sub_21036
+Credits_WaitForSceneActivation:                         ; DATA XREF: ROM:00020F12   o  ; was: sub_21036
                 subq.w  #1,(word_FF018E).l
                 tst.w   (word_FFF720).w
-                bmi.w   locret_20C30
+                bmi.w   Credits_StateReturn
                 clr.w   (word_FF0194).l
                 addq.w  #2,(word_FF017C).l
                 rts
-; End of function Stage_WaitForPlayerInput
+; End of function Credits_WaitForSceneActivation
 ; Main credits update loop with data cycling
-Stage_UpdateCreditsLoop:                                ; DATA XREF: ROM:00020F14   o  ; was: sub_21052
+Credits_UpdateScene:                                    ; DATA XREF: ROM:00020F14   o  ; was: sub_21052
                 bsr.w   Gfx_FadeInPaletteEntry
                 bsr.w   Gfx_FadeAllPaletteEntries
                 subq.w  #1,(word_FF018E).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 move.w  #$AA,(word_FF018E).l
                 move.w  #2,(word_FF017C).l
                 addq.l  #8,(dword_FF018A).l
                 eori.l  #$40,(dword_FF0190).l           ; '@'
                 movea.l (dword_FF018A).l,a2
                 tst.l   (a2)
-                bpl.w   locret_20C30
+                bpl.w   Credits_StateReturn
                 move.w  #$1A0,(word_FF018E).l
                 move.w  #8,(word_FF017C).l
                 rts
-; End of function Stage_UpdateCreditsLoop
+; End of function Credits_UpdateScene
 ; Fade in single palette entry by modifying color value
-Gfx_FadeInPaletteEntry:                                 ; CODE XREF: Stage_UpdateCreditsLoop   p  ; was: sub_210A2
+Gfx_FadeInPaletteEntry:                                 ; CODE XREF: Credits_UpdateScene   p  ; was: sub_210A2
                 move.w  (word_FF0194).l,d0
                 cmpi.w  #$1E0,d0
-                bcc.w   locret_20C30
+                bcc.w   Credits_StateReturn
                 addq.w  #2,(word_FF0194).l
-                move.w  word_210CE(pc,d0.w),d1
+                move.w  Credits_PaletteFadeOrder(pc,d0.w),d1
                 lea     (word_FFE400).w,a0
                 move.l  (a0,d1.w),d2
                 subi.l  #$7FFF8,d2
@@ -516,31 +516,31 @@ Gfx_FadeInPaletteEntry:                                 ; CODE XREF: Stage_Updat
                 rts
 ; End of function Gfx_FadeInPaletteEntry
 ; ---------------------------------------------------------------------------
-word_210CE:     binclude "data/other/word_210CE.bin"
-word_210CE_End:
+Credits_PaletteFadeOrder:   binclude "data/other/word_210CE.bin"  ; was: word_210CE
+Credits_PaletteFadeOrder_End:                           ; was: word_210CE_End
 
 ; Fade all palette entries in buffer
-Gfx_FadeAllPaletteEntries:                              ; CODE XREF: Stage_UpdateCreditsLoop+4   p  ; was: sub_212AE
+Gfx_FadeAllPaletteEntries:                              ; CODE XREF: Credits_UpdateScene+4   p  ; was: sub_212AE
                 lea     (word_FFE400).w,a0
                 move.l  #$7FFF8,d1
                 move.w  #$EF,d0
-loc_212BC:                                              ; CODE XREF: Gfx_FadeAllPaletteEntries+20   j
+Credits_FadeAllPaletteEntries_Loop:                     ; CODE XREF: Gfx_FadeAllPaletteEntries+20   j  ; was: loc_212BC
                 move.l  (a0),d2
                 andi.l  #$FF00FF,d2
-                beq.s   loc_212CC
+                beq.s   Credits_FadeAllPaletteEntries_Next
                 move.l  (a0),d2
                 sub.l   d1,d2
                 move.l  d2,(a0)
-loc_212CC:                                              ; CODE XREF: Gfx_FadeAllPaletteEntries+16   j
+Credits_FadeAllPaletteEntries_Next:                     ; CODE XREF: Gfx_FadeAllPaletteEntries+16   j  ; was: loc_212CC
                 addq.l  #4,a0
-                dbf     d0,loc_212BC
+                dbf     d0,Credits_FadeAllPaletteEntries_Loop
                 rts
 ; End of function Gfx_FadeAllPaletteEntries
-; Treasure screen handler 1
-Credits_TreasureScreen1:                                ; DATA XREF: ROM:00020F16   o  ; was: sub_212D4
+; Copies the staged palette before loading a special credits scene
+Credits_PrepareSpecialScenePalette:                     ; DATA XREF: ROM:00020F16   o  ; was: sub_212D4
                                         ; ROM:00020F1E   o
                 subq.w  #1,(word_FF018E).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 move.w  #$160,(word_FF018E).l
                 move.w  #0,(word_FF0176).l
                 lea     (word_FFE320).w,a0
@@ -550,13 +550,13 @@ Credits_TreasureScreen1:                                ; DATA XREF: ROM:00020F1
                 bsr.w   Data_Copy32Bytes
                 addq.w  #2,(word_FF017C).l
                 rts
-; End of function Credits_TreasureScreen1
-; Treasure screen handler 2
-Credits_TreasureScreen2:                                ; DATA XREF: ROM:00020F18   o  ; was: sub_2130A
+; End of function Credits_PrepareSpecialScenePalette
+; Fades out the rolling credits and loads the treasure scene
+Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F18   o  ; was: sub_2130A
                 subq.w  #1,(word_FF018E).l
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 subq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
                 lea     (word_FFE320).w,a0
@@ -564,7 +564,7 @@ Credits_TreasureScreen2:                                ; DATA XREF: ROM:00020F1
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$FFF2,(word_FF0176).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 clr.w   (word_FFC680).w
                 clr.w   (word_FFC6E0).w
                 move.b  #0,(word_FFF7E6+1).w
@@ -572,35 +572,35 @@ Credits_TreasureScreen2:                                ; DATA XREF: ROM:00020F1
                 clr.w   (dword_FFA908).w
                 move.b  #4,(byte_FFA95A).w
                 move.b  #4,(byte_FFA95B).w
-                lea     word_2197E(pc),a0
+                lea     Credits_TreasurePaletteData(pc),a0
                 nop
                 lea     (dword_FFE3A0).w,a1
                 bsr.w   Data_Copy32Bytes
                 bsr.w   Data_Copy32Bytes
                 bsr.w   Data_Copy32Bytes
-                lea     stru_219DE(pc),a0
+                lea     Credits_TreasureAssetLoadList(pc),a0
                 nop
                 jsr     (Data_ProcessPointer).l
                 move.w  #$220,(word_FF018E).l
                 addq.w  #2,(word_FF017C).l
                 rts
-; End of function Credits_TreasureScreen2
-; Wait for timer countdown and check for player skip
-Stage_WaitTimerAndInput:                                ; DATA XREF: ROM:00020F1A   o  ; was: sub_2139A
+; End of function Credits_LoadTreasureScene
+; Waits until the special-scene state may advance
+Credits_WaitForSpecialSceneActivation:                  ; DATA XREF: ROM:00020F1A   o  ; was: sub_2139A
                                         ; ROM:00020F22   o
                 subq.w  #1,(word_FF018E).l
                 tst.w   (word_FFF720).w
-                bmi.w   locret_20C30
+                bmi.w   Credits_StateReturn
                 addq.w  #2,(word_FF017C).l
                 rts
-; End of function Stage_WaitTimerAndInput
-; Fade out palette to black for credits
-Gfx_FadeOutPaletteCredits:                              ; DATA XREF: ROM:00020F1C   o  ; was: sub_213B0
+; End of function Credits_WaitForSpecialSceneActivation
+; Fades a newly loaded special scene in from black
+Credits_FadeInSpecialScene:                             ; DATA XREF: ROM:00020F1C   o  ; was: sub_213B0
                                         ; ROM:00020F24   o
                 subq.w  #1,(word_FF018E).l
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 addq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
                 lea     (word_FFE320).w,a0
@@ -608,16 +608,16 @@ Gfx_FadeOutPaletteCredits:                              ; DATA XREF: ROM:00020F1
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FF0176).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 addq.w  #2,(word_FF017C).l
                 rts
-; End of function Gfx_FadeOutPaletteCredits
-; Sega presentation screen
-Credits_SegaScreen:                                     ; DATA XREF: ROM:00020F20   o  ; was: sub_213F2
+; End of function Credits_FadeInSpecialScene
+; Fades out the treasure scene and loads the SEGA presentation
+Credits_LoadSegaScene:                                  ; DATA XREF: ROM:00020F20   o  ; was: sub_213F2
                 subq.w  #1,(word_FF018E).l
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 subq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
                 lea     (word_FFE320).w,a0
@@ -625,7 +625,7 @@ Credits_SegaScreen:                                     ; DATA XREF: ROM:00020F2
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$FFF2,(word_FF0176).l
-                bne.w   locret_20C30
+                bne.w   Credits_StateReturn
                 move    sr,-(sp)
                 move    #$2700,sr
                 lea     (VDP_DATA).l,a0
@@ -633,9 +633,9 @@ Credits_SegaScreen:                                     ; DATA XREF: ROM:00020F2
                 move.l  #$40000003,(VDP_CTRL).l
                 move.w  #$7FF,d0
                 move.w  #0,d1
-loc_21454:                                              ; CODE XREF: Credits_SegaScreen+64   j
+Credits_LoadSegaScene_ClearPlaneALoop:                  ; CODE XREF: Credits_LoadSegaScene+64   j  ; was: loc_21454
                 move.w  d1,(a0)
-                dbf     d0,loc_21454
+                dbf     d0,Credits_LoadSegaScene_ClearPlaneALoop
                 move    (sp)+,sr
                 move    sr,-(sp)
                 move    #$2700,sr
@@ -644,23 +644,23 @@ loc_21454:                                              ; CODE XREF: Credits_Seg
                 move.l  #$60000003,(VDP_CTRL).l
                 move.w  #$7FF,d0
                 move.w  #0,d1
-loc_21482:                                              ; CODE XREF: Credits_SegaScreen+92   j
+Credits_LoadSegaScene_ClearPlaneBLoop:                  ; CODE XREF: Credits_LoadSegaScene+92   j  ; was: loc_21482
                 move.w  d1,(a0)
-                dbf     d0,loc_21482
+                dbf     d0,Credits_LoadSegaScene_ClearPlaneBLoop
                 move    (sp)+,sr
-                lea     word_21A00(pc),a0
+                lea     Credits_SegaPalette(pc),a0
                 nop
                 lea     ((dword_FFE3DE+2)).w,a1
                 bsr.w   Data_Copy32Bytes
-                lea     stru_21A20(pc),a0
+                lea     Credits_SegaAssetLoadList(pc),a0
                 nop
                 jsr     (Data_ProcessPointer).l
                 move.w  #$1E0,(word_FF018E).l
                 addq.w  #2,(word_FF017C).l
                 rts
-; End of function Credits_SegaScreen
-nullsub_54:                                             ; DATA XREF: ROM:00020F26   o
+; End of function Credits_LoadSegaScene
+Credits_SceneStateIdle:                                 ; DATA XREF: ROM:00020F26   o  ; was: nullsub_54
                 rts
-; End of function nullsub_54
+; End of function Credits_SceneStateIdle
 
 ; Copy 32 bytes (8 longwords) from source to destination

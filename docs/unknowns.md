@@ -38,12 +38,19 @@ recognize address suffixes on every IDA type prefix, including `sprite_*`,
 live address-derived definitions; this exposes 928 names that the equivalent
 post-pass count under the earlier narrow regex would have missed.
 
-Two especially broad data labels are explicitly registered:
+The credits pass reduced the expanded count to 11,152 by replacing all 110
+address-derived definitions in `src/credits/`. Its 20 numbered scene pairs are
+named by their verified order in `Credits_SceneDataPointers`; character or
+staff-role claims are deliberately deferred. Five demonstrably incorrect
+generated Z-Leo names are recorded in `config/name_audit.json`.
+
+Three especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
 |---|---:|---|---|
 | `UnidentifiedSegaTilemap` | `0x0E8020` | hypothesis | 48 sequential tile words adjacent to the SEGA art; no live pointer has been found. |
 | `UnidentifiedTilemapData` | `0x180000` | unknown | Tile-like words at the frontend asset boundary; no live pointer has been found. |
+| `Credits_UnidentifiedTrailingData` | `0x0225CC` | unknown | Opaque block ending at the demo subsystem boundary; no live reference has been found, so neither purpose nor unused status is asserted. |
 
 Semantic names with `; was:` history are a second review queue. Their default
 level is `hypothesis`, not `confirmed`; see `docs/provenance.md`.

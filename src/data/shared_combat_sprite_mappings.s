@@ -259,7 +259,7 @@ word_E9530:     dc.w    $C8E0, $800, $FCF4              ; DATA XREF: ROM:off_308
 word_E9536:     dc.w    $C8E3, $A00, $F4F4              ; DATA XREF: ROM:00030818   o
                                         ; ROM:00030820   o
 off_E953C:      dc.w    word_E90C2-*                    ; DATA XREF: Sprite_ShipDebrisUpdate+20   o
-                                        ; ROM:off_2255C   o
+                                        ; ROM:Boss_ZLeoParticleSpritePointers   o
                 dc.w    1
                 dc.w    word_E90C8-*
                 dc.w    1

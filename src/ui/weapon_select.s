@@ -108,7 +108,7 @@ loc_1E3D6:                                              ; CODE XREF: UI_HandleMe
                 bclr    #1,(word_FF80F4).w
                 beq.s   locret_1E3D4
 ; Transitions from menu to stage loading
-UI_TransitionToStageLoad:                               ; CODE XREF: Input_CheckButtonModeAndBranch:loc_1E260   j  ; was: loc_1E3DE
+UI_TransitionToStageLoad:                               ; CODE XREF: Input_CheckButtonModeAndBranch:Input_CheckButtonModeAndBranch_Transition   j  ; was: loc_1E3DE
                                         ; Stage_HandleCreditsOrAdvance+32   j
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
