@@ -6,8 +6,11 @@ listing by `make verify-layout`.
 
 | ROM range | Broad owner | Files | Confidence |
 |---|---|---:|---|
-| `0x000000-0x008A79` | boot, system, input, interrupts | 2 | mixed: static/hypothesis |
-| `0x008A7A-0x00D713` | opening and cutscene support | 1 | hypothesis |
+| `0x000000-0x003549` | header, boot, interrupts, rendering primitives, objects, input | 18 | mixed: static/hypothesis |
+| `0x00354A-0x00483F` | math, score, palette, results, and text engines | 6 | mixed: static/hypothesis |
+| `0x004840-0x009321` | story, planet, credits, and ship sequences | 9 | hypothesis |
+| `0x009322-0x00C83D` | title/options/password UI, results, and palette assets | 6 | hypothesis |
+| `0x00C83E-0x00D713` | camera dispatch and early-stage transitions | 4 | hypothesis |
 | `0x00D714-0x010D15` | stage systems | 1 | hypothesis |
 | `0x010D16-0x013B29` | background and scroll rendering | 1 | hypothesis |
 | `0x013B2A-0x016F35` | collision and shared gameplay | 1 | hypothesis |

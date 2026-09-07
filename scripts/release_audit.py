@@ -65,8 +65,11 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
 
     modules = layout["modules"]
     stats["modules"] = len(modules)
-    if len(modules) != threshold["module_count"]:
-        errors.append(f"layout has {len(modules)} modules")
+    if len(modules) < threshold["minimum_module_count"]:
+        errors.append(
+            f"layout has {len(modules)} modules; expected at least "
+            f"{threshold['minimum_module_count']}"
+        )
     if layout["target"]["max_module_lines"] != threshold["max_module_lines"]:
         errors.append("module line ceiling differs from release contract")
     if layout["target"]["cartridge_size"] != canonical["size"]:

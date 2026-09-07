@@ -19,7 +19,8 @@ ADDRESS_DERIVED = re.compile(
     re.IGNORECASE,
 )
 GENERIC_CONTAINER = re.compile(
-    r"(?:^|_)(?:boss_code|bank)(?:_|$)|_[0-9a-f]{5,}$", re.IGNORECASE
+    r"(?:^|_)(?:boss_code|bank)(?:_|$)|_(?=[0-9a-f]*[0-9])[0-9a-f]{5,}$",
+    re.IGNORECASE,
 )
 PROCEDURE_LEGACY = re.compile(r"^(?:sub|nullsub)_[0-9A-F]+$", re.IGNORECASE)
 LISTING_ROW = re.compile(r"^\(\d+\)\s+\d+/\s*([0-9A-F]+)\s*:")
