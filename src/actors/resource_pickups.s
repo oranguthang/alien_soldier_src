@@ -35,7 +35,7 @@ Pickup_SelectLargeSize:                                 ; CODE XREF: Pickup_Spaw
                 bra.w   Pickup_SpawnSelectedSize
 ; End of function Pickup_SpawnLargeFromCurrentObjectAlt
 ; Selects a pickup size randomly with the caller-provided mask
-Pickup_SpawnRandomFromCurrentObject:                    ; CODE XREF: Boss_SpawnMultipleShots+26   j  ; was: sub_2BD1E
+Pickup_SpawnRandomFromCurrentObject:                    ; CODE XREF: Enemy_UpdateDefeatProjectile+26   j  ; was: sub_2BD1E
                                         ; Enemy_ProcessObject+18   j
                 movea.w a5,a0
 Pickup_SelectRandomSize:                                ; CODE XREF: Boss_InitJetsripperSpread+36   p  ; was: loc_2BD20

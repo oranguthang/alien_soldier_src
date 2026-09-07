@@ -153,7 +153,7 @@ dword_2B166:    dc.l    0, $1C170                       ; DATA XREF: Projectile_
                 dc.l    $85080, $8D3B4
 
 ; Initializes homing projectile with trajectory calculation
-Enemy_InitHomingProjectile:                             ; CODE XREF: Enemy_CircularHomingMotion+5A   p  ; was: sub_2B206
+Enemy_InitHomingProjectile:                             ; CODE XREF: Enemy_UpdateCircularMotionAndFire+5A   p  ; was: sub_2B206
                                         ; Enemy_FlyerState4+48   p
                 moveq   #$A,d7
                 tst.w   (word_FFFF0E).w
@@ -161,7 +161,7 @@ Enemy_InitHomingProjectile:                             ; CODE XREF: Enemy_Circu
                 moveq   #$B,d7
 ; Initializes enemy homing projectile with velocity and angle
 Enemy_SetProjectileDifficulty:                          ; CODE XREF: Enemy_InitHomingProjectile+6   j  ; was: loc_2B210
-                                        ; Enemy_InitTrackedProjectile+32   j
+                                        ; Enemy_SpawnTrackedProjectile+32   j
                 move.w  #$148,(a0)
                 move.w  #$ED00,2(a0)
                 clr.w   4(a0)
@@ -377,7 +377,7 @@ off_2B4B6:      dc.l    stru_2B526                      ; DATA XREF: Boss_Destro
                 dc.l    stru_2B534
 
 ; Initializes projectile with angle calculation and directional velocity
-Enemy_InitDirectionalProjectile:                        ; CODE XREF: Enemy_SpawnParticleHardMode+1E   p  ; was: sub_2B4BE
+Enemy_InitDirectionalProjectile:                        ; CODE XREF: Enemy_SpawnDifficultyProjectilePattern+1E   p  ; was: sub_2B4BE
                                         ; Enemy_BossProjectileMovement+3A   p
                 lea     stru_2B526(pc),a4
                 nop

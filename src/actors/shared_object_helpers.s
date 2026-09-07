@@ -219,7 +219,7 @@ Projectile_FallingSpawner_Return:                       ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_FallingSpawner
 ; Spawns 4 projectiles in pattern with sound
-Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_SpawnParticleHardMode:loc_2D664   j  ; was: sub_2A5B6
+Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_SpawnDifficultyProjectilePattern:loc_2D664   j  ; was: sub_2A5B6
                                         ; Enemy_ClearAndSpawnQuadProjectiles+14   j
                 movea.w a5,a0
                 move.l  #off_E95DC,8(a5)

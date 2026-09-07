@@ -187,6 +187,42 @@ by the adjacent spawn routines. That evidence produced three cohesive modules:
 `bugmax_debris_spawner.s` (98 lines). Generated boss-state, enemy-health, and
 Snake-projectile claims were removed and recorded in the name audit.
 
+The shared enemy spawn/movement pass reduced the count to 10,054 by replacing
+all 23 address-derived definitions in the former `jetsripper_movement.s`.
+The gameplay loop calls this block as a global spawn director: it allocates one
+of four enemy slots and searches terrain near the player before creating entity
+type `$1C`. The latter half supplies that enemy family's sprite, movement,
+tracked-projectile, and defeat-object helpers. It now lives as the cohesive
+348-line `src/enemies/spawn_and_movement.s`; generated Jetsripper/boss claims
+are recorded in the name audit.
+
+The shared projectile-attack enemy pass reduced the count to 10,031 by
+replacing all 23 address-derived definitions in the former
+`jetsripper_and_joker.s`. Its first state machine approaches, leaps, and fires
+from the ground; its second emits difficulty-scaled bursts of homing
+projectiles. Both use common enemy initialization and defeat-to-pickup paths,
+with no Jetsripper or Joker state. The cohesive 290-line block now lives at
+`src/enemies/projectile_attack_states.s`; six corrected generated claims are
+recorded in the name audit.
+
+The ship/shared-helper pass reduced the count to 10,020 by replacing all 11
+address-derived definitions in the former `ship.s`. Its 38-line ship-patrol
+controller now closes the preceding projectile-attack enemy module, while the
+following 102 source lines are isolated as
+`src/enemies/shared_enemy_helpers.s`. Those helpers implement facing, capped
+gravity, terrain checks, visibility, and the next phase enemy's sprite and
+animation setup. Generated boss, player-physics, and VDP-register claims are
+recorded in the name audit.
+
+The phase/circling pass reduced the count to 9,984 by replacing all 36
+address-derived definitions in the former `phase_attacks.s` and `circle.s`.
+Entity type `$290` owns the phase-pattern state machine and type `$294` owns
+its bouncing defeat-debris controller. The sprite, rotation, and circular
+motion helpers at the following ROM boundary travel with their circling-enemy
+consumer. The result is a 218-line `src/enemies/phase_and_debris_states.s`
+module and a 335-line `src/enemies/circling_enemies.s` module. Four materially
+incorrect generated claims are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

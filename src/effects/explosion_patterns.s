@@ -36,8 +36,8 @@ Effect_SpawnRadialParticlePattern_Next:                 ; CODE XREF: Effect_Spaw
                 rts
 ; End of function Effect_SpawnRadialParticlePattern
 ; Creates explosion variant A and plays its sound
-Effect_SpawnExplosionA:                                 ; CODE XREF: Boss_SpawnMultipleShots+E   p  ; was: sub_2BEBC
-                                        ; Projectile_JetsripperFalling+E   p
+Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_UpdateDefeatProjectile+E   p  ; was: sub_2BEBC
+                                        ; Enemy_UpdateAlternateDefeatProjectile+E   p
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Object_UpdateNoOpReturn
                 move.l  #off_E953C,8(a0)
@@ -52,7 +52,7 @@ Effect_SpawnExplosionA:                                 ; CODE XREF: Boss_SpawnM
 ; End of function Effect_SpawnExplosionA
 ; Creates explosion variant B and plays its sound
 Effect_SpawnExplosionB:                                 ; CODE XREF: Enemy_ProcessObject+10   p  ; was: sub_2BEF0
-                                        ; Projectile_BouncingDebrisMain+9A   p
+                                        ; Enemy_UpdateBouncingDebrisSpawner+9A   p
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Object_UpdateNoOpReturn
                 move.w  #8,$4A(a0)

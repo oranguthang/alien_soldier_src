@@ -34,7 +34,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_ApplyGravityEffect
                 dc.l    Projectile_GravityBounce
                 dc.l    Physics_ApplyGravity
-                dc.l    Enemy_ProcessProjectile
+                dc.l    Enemy_ProjectileAttackController
                 dc.l    Enemy_BirdMain
                 dc.l    Physics_AccelerateUpward
                 dc.l    Enemy_BossProjectileMovement
@@ -116,10 +116,10 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_SunsetStingMainDispatcher
                 dc.l    Object_UpdateRemovalTimer
                 dc.l    Enemy_TrailingExplosionSpawner
-                dc.l    Boss_SpawnMultipleShots
-                dc.l    Projectile_JetsripperFalling
+                dc.l    Enemy_UpdateDefeatProjectile
+                dc.l    Enemy_UpdateAlternateDefeatProjectile
                 dc.l    Enemy_BirdProjectileSpawn
-                dc.l    Enemy_ProcessAltProjectile
+                dc.l    Enemy_HomingAttackController
                 dc.l    Enemy_GustheadDebrisMain
                 dc.l    Enemy_GustheadDebrisPhysicsMain
                 dc.l    Boss_SunsetStingMain
@@ -162,13 +162,13 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_Epsilon1StateHandler
                 dc.l    Projectile_Epsilon1ChainInit
                 dc.l    Boss_CaterpillarPart1
-                dc.l    Enemy_Phase2StateHandler
-                dc.l    Projectile_BouncingDebrisMain
+                dc.l    Enemy_PhasePatternController
+                dc.l    Enemy_UpdateBouncingDebrisSpawner
                 dc.l    Boss_CaterpillarShootingStar
                 dc.l    Boss_SnakeMain
                 dc.l    Boss_SnakeSegmentMain
-                dc.l    Enemy_CircleMainHandler
-                dc.l    Enemy_SpawnParticleHardMode
+                dc.l    Enemy_CirclingController
+                dc.l    Enemy_SpawnDifficultyProjectilePattern
                 dc.l    Enemy_FlyMain
                 dc.l    Enemy_FlyMovement
                 dc.l    Enemy_AnimationWrapper
@@ -218,7 +218,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_Epsilon1ProjectileRotation
                 dc.l    Enemy_FallingBombLogic
                 dc.l    Enemy_ShipCannon1Main
-                dc.l    Enemy_ShipBossStateHandler
+                dc.l    Enemy_ShipPatrolController
                 dc.l    Boss_ShieldViperSpawnProjectile2
                 dc.l    Projectile_ShieldViperBulletAnimation
                 dc.l    Projectile_ShieldViperBulletMain

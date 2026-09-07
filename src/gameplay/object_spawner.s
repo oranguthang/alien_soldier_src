@@ -149,7 +149,7 @@ Sys_ClearObjectSlot:                                    ; CODE XREF: Sys_Process
                 movea.l a5,a0
 ; Clears 96-byte object memory block (24 long-words) to zero
 Sys_Clear96ByteBlock:                                   ; CODE XREF: Object_ClearInactiveTypes12CAnd134+22   p  ; was: loc_1A3B2
-                                        ; sub_2C3F8:loc_2C40E   p
+                                        ; sub_2C3F8:EnemySpawn_AllocateObjectSlot_Initialize   p
                 moveq   #0,d0
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+

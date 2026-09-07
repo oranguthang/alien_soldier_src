@@ -1,23 +1,23 @@
-; Jetsripper-stage enemy and projectile state machines
+; Shared enemy and projectile state machines
 Enemy_BehaviorController:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C6A8
                 tst.w   4(a5)
                 beq.s   Enemy_DispatchBehaviorState
                 tst.w   $24(a5)
-                bmi.w   Boss_FireProjectilePattern
+                bmi.w   Enemy_ConvertToDefeatProjectile
                 tst.w   (word_FF808C).w
-                bpl.w   Boss_FireProjectilePattern
+                bpl.w   Enemy_ConvertToDefeatProjectile
                 btst    #7,$22(a5)
                 beq.s   Enemy_BehaviorController_UpdateDelay
                 btst    #4,$22(a5)
                 bne.s   Enemy_BehaviorController_UpdateDelay
-                bsr.w   Boss_FireProjectilePattern
+                bsr.w   Enemy_ConvertToDefeatProjectile
                 addq.w  #1,$4A(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Enemy_BehaviorController_UpdateDelay:                   ; CODE XREF: Enemy_BehaviorController+1C   j  ; was: loc_2C6D8
                                         ; Enemy_BehaviorController+24   j
                 cmpi.w  #$FF00,$5A(a5)
-                bmi.w   Boss_FireProjectilePattern
+                bmi.w   Enemy_ConvertToDefeatProjectile
                 subq.w  #1,$5A(a5)
                 bpl.s   Enemy_BehaviorController_RefreshRandom
                 move.w  #$13,$5E(a5)
@@ -27,7 +27,7 @@ Enemy_BehaviorController_RefreshRandom:                 ; CODE XREF: Enemy_Behav
 ; Dispatches enemy to behavior state handler and updates animation
 Enemy_DispatchBehaviorState:                            ; CODE XREF: Enemy_BehaviorController+4   j  ; was: loc_2C6F8
                 bsr.s   Enemy_StateDispatcher
-                bra.w   Anim_UpdateAnimationState
+                bra.w   Enemy_UpdateBehaviorAnimation
 ; End of function Enemy_BehaviorController
 ; Dispatches enemy to appropriate state handler
 Enemy_StateDispatcher:                                  ; CODE XREF: Enemy_BehaviorController:loc_2C6F8   p  ; was: sub_2C6FE
@@ -50,7 +50,7 @@ Enemy_BehaviorStateOffsets: dc.w    Enemy_MainStateMachine-Enemy_MainStateMachin
 Enemy_MainStateMachine:                                 ; DATA XREF: Enemy_StateDispatcher+C   o  ; was: sub_2C71E
                                         ; ROM:Enemy_BehaviorStateOffsets   o
                 moveq   #0,d0
-                bsr.w   Sprite_SetupBossSprite
+                bsr.w   Enemy_SetupBehaviorSprite
 Enemy_MainStateMachine_StartMove:                       ; CODE XREF: Enemy_MainStateMachine+B6   j  ; was: loc_2C724
                                         ; Enemy_MainStateMachine+198   j
                 btst    #0,$5F(a5)
@@ -65,10 +65,10 @@ Enemy_MainStateMachine_StartMove:                       ; CODE XREF: Enemy_MainS
 Enemy_MainStateMachine_UpdateState:                     ; DATA XREF: ROM:0002C714   o  ; was: loc_2C74A
                 subq.w  #1,$48(a5)
                 bmi.w   Enemy_MainStateMachine_SelectMovement
-                bsr.w   Player_UpdatePhysics
+                bsr.w   Enemy_UpdateGroundCollision
                 btst    #0,6(a5)
                 beq.w   Enemy_MainStateMachine_BeginAirborne
-                bsr.w   Physics_DecelerateHorizontal
+                bsr.w   Enemy_DecelerateHorizontal
 Enemy_MainStateMachine_CheckPlayerDistance:             ; CODE XREF: Enemy_MainStateMachine+FA   j  ; was: loc_2C764
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$78,d0                         ; 'x'
@@ -109,7 +109,7 @@ Enemy_ExecuteMovementPattern:                           ; CODE XREF: Enemy_MainS
                 subq.w  #1,$48(a5)
                 bmi.w   Enemy_MainStateMachine_StartMove
 Enemy_MainStateMachine_UpdateMovement:                  ; CODE XREF: Enemy_MainStateMachine+AE   j  ; was: loc_2C7D8
-                bsr.w   Player_UpdatePhysics
+                bsr.w   Enemy_UpdateGroundCollision
                 btst    #0,6(a5)
                 beq.w   Enemy_MainStateMachine_BeginAirborne
                 btst    #3,$E(a5)
@@ -128,7 +128,7 @@ Enemy_MainStateMachine_ReverseAtWall:                   ; CODE XREF: Enemy_MainS
                 clr.l   $18(a5)
 Enemy_MainStateMachine_Accelerate:                      ; CODE XREF: Enemy_MainStateMachine+D6   j  ; was: loc_2C814
                                         ; Enemy_MainStateMachine+E0   j
-                bsr.w   Physics_AccelerateHorizontal
+                bsr.w   Enemy_AccelerateHorizontal
                 bra.w   Enemy_MainStateMachine_CheckPlayerDistance
 ; ---------------------------------------------------------------------------
 Enemy_MainStateMachine_BeginAirborne:                   ; CODE XREF: Enemy_MainStateMachine+3E   j  ; was: loc_2C81C
@@ -143,14 +143,14 @@ Enemy_MainStateMachine_BeginLeap:                       ; CODE XREF: Enemy_MainS
                                         ; Enemy_MainStateMachine+E8   j
                 move.l  #$FFFA8000,$1C(a5)
                 move.l  #$FFFE8000,$18(a5)
-                bsr.w   Physics_NegateVelocityIfFacingLeft
+                bsr.w   Enemy_ApplyFacingToHorizontalVelocity
 Enemy_MainStateMachine_SetAirborneState:                ; CODE XREF: Enemy_MainStateMachine+110   j  ; was: loc_2C844
                 move.w  #6,4(a5)
                 move.w  #$14,$5C(a5)
 ; Performs terrain collision check in enemy state machine
 Enemy_MainStateMachine_TerrainCheck:                    ; DATA XREF: ROM:0002C718   o  ; was: loc_2C850
                 jsr     (Physics_EntityExtendedWallCheck).l
-                bsr.w   Physics_AccelerateGravity
+                bsr.w   Enemy_ApplyCappedGravity
                 bmi.s   Enemy_MainStateMachine_CheckRisingTerrain
                 jsr     (Physics_CheckLowerTerrainWhenDescending).l
                 btst    #0,6(a5)
@@ -168,10 +168,10 @@ Enemy_MainStateMachine_BeginGroundedState:              ; CODE XREF: Enemy_MainS
 Enemy_MainStateMachine_GroundedTimer:                   ; DATA XREF: ROM:0002C71A   o  ; was: loc_2C886
                 subq.w  #1,$48(a5)
                 bmi.w   Enemy_MainStateMachine_SelectMovement
-                bsr.w   Player_UpdatePhysics
+                bsr.w   Enemy_UpdateGroundCollision
                 btst    #0,6(a5)
                 beq.w   Enemy_MainStateMachine_BeginAirborne
-                bra.w   Physics_DecelerateHorizontal
+                bra.w   Enemy_DecelerateHorizontal
 ; ---------------------------------------------------------------------------
 Enemy_MainStateMachine_BeginAttackCooldown:             ; CODE XREF: Enemy_MainStateMachine+58   j  ; was: loc_2C8A0
                 move.w  #$A,4(a5)
@@ -181,13 +181,13 @@ Enemy_MainStateMachine_BeginAttackCooldown:             ; CODE XREF: Enemy_MainS
 Enemy_MainStateMachine_AttackCooldown:                  ; DATA XREF: ROM:0002C71C   o  ; was: loc_2C8B2
                 subq.w  #1,$48(a5)
                 bmi.w   Enemy_MainStateMachine_StartMove
-                bsr.w   Player_UpdatePhysics
+                bsr.w   Enemy_UpdateGroundCollision
                 btst    #0,6(a5)
                 beq.w   Enemy_MainStateMachine_BeginAirborne
-                bsr.w   Physics_DecelerateHorizontal
+                bsr.w   Enemy_DecelerateHorizontal
                 cmpi.w  #$1E,$48(a5)
                 bne.s   Enemy_CheckFacePlayerTiming
-                bra.w   Enemy_InitTrackedProjectile
+                bra.w   Enemy_SpawnTrackedProjectile
 ; ---------------------------------------------------------------------------
 ; Checks if it's time to face player direction during movement
 Enemy_CheckFacePlayerTiming:                            ; CODE XREF: Enemy_MainStateMachine+1B4   j  ; was: loc_2C8D8
@@ -198,7 +198,7 @@ Enemy_CheckFacePlayerTiming:                            ; CODE XREF: Enemy_MainS
 ; Wrapper calling visibility check and animation update
 Enemy_AnimationWrapper:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C8E4
                 bsr.s   Enemy_DispatchVisibilityState
-                bra.w   Anim_UpdateAnimationState
+                bra.w   Enemy_UpdateBehaviorAnimation
 ; End of function Enemy_AnimationWrapper
 ; Dispatches the object's visibility/destruction substate
 Enemy_DispatchVisibilityState:                          ; CODE XREF: Enemy_AnimationWrapper   p  ; was: sub_2C8EA
@@ -218,7 +218,7 @@ Enemy_BeginDestructionDelay:                            ; DATA XREF: Enemy_Dispa
                                         ; ROM:Enemy_VisibilityStateOffsets   o
                 addq.w  #2,4(a5)
                 moveq   #0,d0
-                bsr.w   Sprite_SetupBossSprite
+                bsr.w   Enemy_SetupBehaviorSprite
                 move.w  #$24,$48(a5)                    ; '$'
                 clr.b   $21(a5)
                 move.b  #$7C,$20(a5)                    ; '|'
@@ -230,7 +230,7 @@ Enemy_UpdateDestructionDelay:                           ; DATA XREF: ROM:0002C90
                 bpl.s   Enemy_UpdateDestructionDelay_Return
                 move.w  #$1C,(a5)
                 moveq   #0,d0
-                bsr.w   Sprite_SetupBossSprite
+                bsr.w   Enemy_SetupBehaviorSprite
 Enemy_UpdateDestructionDelay_Return:                    ; CODE XREF: Enemy_BeginDestructionDelay+2A   j  ; was: locret_2C938
                 rts
 ; End of function Enemy_BeginDestructionDelay
@@ -342,8 +342,8 @@ Enemy_TryPeriodicShot_Return:                           ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdatePeriodicShots
 ; Initializes sprite properties for projectile object
-Sprite_InitializeProjectileSprite:                      ; CODE XREF: Enemy_ProjectileStateMachine+6   p  ; was: sub_2CA40
-                                        ; Enemy_AltProjectileStateMachine+6   p
+Sprite_InitializeProjectileSprite:                      ; CODE XREF: Enemy_ProjectileAttackInit+6   p  ; was: sub_2CA40
+                                        ; Enemy_HomingAttackInit+6   p
                 move.w  #$EF00,2(a5)
                 move.w  (word_FF8272).w,d0
                 or.w    (word_FF808A).w,d0
@@ -357,8 +357,8 @@ Sprite_InitializeProjectileSprite:                      ; CODE XREF: Enemy_Proje
                 rts
 ; End of function Sprite_InitializeProjectileSprite
 ; Updates projectile animation frame
-Anim_UpdateProjectileAnimation:                         ; CODE XREF: Enemy_ProcessProjectile+16   j  ; was: sub_2CA7C
-                                        ; Enemy_ProcessAltProjectile+14   j
+Anim_UpdateProjectileAnimation:                         ; CODE XREF: Enemy_ProjectileAttackController+16   j  ; was: sub_2CA7C
+                                        ; Enemy_HomingAttackController+14   j
                 move.w  $5C(a5),d0
                 beq.s   Anim_UpdateProjectileAnimation_Return
                 subq.w  #4,d0
@@ -380,8 +380,8 @@ Enemy_ProjectileAnimationPointers:  dc.l    off_EA5DC   ; DATA XREF: Anim_Update
                 dc.l    off_EA6A8
 
 ; Sets horizontal velocity based on entity flip direction
-Physics_SetHorizontalVelocityByFlip:                    ; CODE XREF: Enemy_ProjectileStateMachine+9E   j  ; was: sub_2CAB8
-                                        ; Enemy_ProjectileStateMachine+B6   p
+Physics_SetHorizontalVelocityByFlip:                    ; CODE XREF: Enemy_ProjectileAttackInit+9E   j  ; was: sub_2CAB8
+                                        ; Enemy_ProjectileAttackInit+B6   p
                 btst    #3,$E(a5)
                 bne.s   Physics_SetHorizontalVelocityByFlip_SetLeft
                 move.l  #$30000,$18(a5)
@@ -392,8 +392,8 @@ Physics_SetHorizontalVelocityByFlip_SetLeft:            ; CODE XREF: Physics_Set
                 rts
 ; End of function Physics_SetHorizontalVelocityByFlip
 ; Applies friction to horizontal velocity by decrementing/incrementing by $4000 toward zero
-Physics_ApplyHorizontalFriction:                        ; CODE XREF: Enemy_ProjectileStateMachine:loc_2CC8C   j  ; was: sub_2CAD4
-                                        ; sub_2CD54:loc_2CD96   p
+Physics_ApplyHorizontalFriction:                        ; CODE XREF: Enemy_ProjectileAttackInit:Enemy_ProjectileAttack_ApplyFriction   j  ; was: sub_2CAD4
+                                        ; sub_2CD54:Enemy_ProjectileAttackGroundState_UpdateMovement   p
                 move.l  $18(a5),d0
                 beq.s   Physics_ApplyHorizontalFriction_Return
                 bmi.s   Physics_ApplyHorizontalFriction_AdjustNegative
@@ -417,7 +417,7 @@ Physics_ApplyHorizontalFriction_Stop:                   ; CODE XREF: Physics_App
                 rts
 ; End of function Physics_ApplyHorizontalFriction
 ; Calculates appropriate sprite and offsets based on angle to player
-Enemy_CalculateDirectionalSprite:                       ; CODE XREF: Enemy_AltProjectileStateMachine+58   p  ; was: sub_2CB0A
+Enemy_CalculateDirectionalSprite:                       ; CODE XREF: Enemy_HomingAttackInit+58   p  ; was: sub_2CB0A
                 jsr     (Math_CalculateAngleToPlayer).l
                 move.w  d2,d5
                 addi.w  #$20,d5                         ; ' '

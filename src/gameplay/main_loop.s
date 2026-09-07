@@ -56,7 +56,7 @@ Sys_GameplayMainLoop_UpdateProjectiles:                 ; CODE XREF: Sys_Gamepla
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #0,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateStageEffects:                ; CODE XREF: Sys_GameplayMainLoop+FE   j  ; was: loc_1C76E
-                jsr     (Boss_JetsripperMoveLeft).l
+                jsr     (EnemySpawn_UpdateDirector).l
                 jsr     (Effect_PaletteDispatcher).l
                 tst.b   (byte_FFF746).w
                 bpl.s   Sys_GameplayMainLoop_UpdateStage

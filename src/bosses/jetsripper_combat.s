@@ -169,7 +169,7 @@ loc_2B8C0:                                              ; CODE XREF: Projectile_
                 jmp     Projectile_InitType88FromCurrent
 ; End of function Projectile_GravityBounce
 ; Spawns falling debris projectile with gravity and horizontal velocity
-Projectile_SpawnFallingDebris:                          ; CODE XREF: Enemy_GroundWalkWithProjectile:loc_2CD90   p  ; was: sub_2B8E0
+Projectile_SpawnFallingDebris:                          ; CODE XREF: Enemy_ProjectileAttackGroundState:Enemy_ProjectileAttackGroundState_SpawnProjectile   p  ; was: sub_2B8E0
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2B93C
                 add.w   $10(a5),d5

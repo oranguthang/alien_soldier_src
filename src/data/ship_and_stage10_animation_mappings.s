@@ -257,7 +257,7 @@ off_EADDA:      dc.w    word_EA944-*                    ; DATA XREF: ROM:0002D00
                 dc.w    2
                 dc.w    word_EA86C-*
                 dc.w    $FF
-off_EADEA:      dc.w    word_EA944-*                    ; DATA XREF: ROM:off_2D004   o
+off_EADEA:      dc.w    word_EA944-*                    ; DATA XREF: ROM:Enemy_PhasePatternAnimationMappings   o
                                         ; ROM:000EAE02   o
                 dc.w    $70
                 dc.w    word_EA8FC-*
@@ -574,9 +574,9 @@ word_EB30E:     dc.w    $E854, $F00, $F0F0              ; DATA XREF: ROM:0002D32
                                         ; ROM:0002D33E   o
 word_EB314:     dc.w    $E864, $E00, $F5F0              ; DATA XREF: ROM:0002D32A   o
                                         ; ROM:0002D342   o
-word_EB31A:     dc.w    $E870, $E00, $F4EF              ; DATA XREF: ROM:off_2D326   o
+word_EB31A:     dc.w    $E870, $E00, $F4EF              ; DATA XREF: ROM:Enemy_CirclingRotationMappings   o
                                         ; ROM:0002D346   o
-off_EB320:      dc.w    word_EB2E4-*                    ; DATA XREF: ROM:off_2D2EC   o
+off_EB320:      dc.w    word_EB2E4-*                    ; DATA XREF: ROM:Enemy_CirclingAnimationMappings   o
                                         ; ROM:000EB334   o
                 dc.w    2
                 dc.w    word_EB2EA-*

@@ -2,16 +2,16 @@ Enemy_FlyMain:                                          ; DATA XREF: ROM:Entity_
                 tst.w   4(a5)
                 beq.s   loc_2D696
                 tst.w   $24(a5)
-                bmi.w   Enemy_ResetToIdleState
+                bmi.w   Enemy_ResetCirclingState
                 bclr    #7,$22(a5)
-                bne.w   Enemy_ResetToIdleState
+                bne.w   Enemy_ResetCirclingState
                 tst.w   (word_FF808C).w
-                bpl.w   Enemy_ResetToIdleState
+                bpl.w   Enemy_ResetCirclingState
                 jsr     (RandomNumber).l
                 clr.w   6(a5)
 loc_2D696:                                              ; CODE XREF: Enemy_FlyMain+4   j
                 bsr.s   Enemy_FlyDispatcher
-                bra.w   Enemy_UpdateSpritePattern
+                bra.w   Enemy_UpdateCirclingAnimation
 ; End of function Enemy_FlyMain
 ; Fly enemy state dispatcher using jump table
 Enemy_FlyDispatcher:                                    ; CODE XREF: Enemy_FlyMain:loc_2D696   p  ; was: sub_2D69C
@@ -29,7 +29,7 @@ off_2D6AC:      dc.w    Enemy_FlyInit-*                 ; DATA XREF: Enemy_FlyDi
 ; Initializes fly enemy with position and animation
 Enemy_FlyInit:                                          ; DATA XREF: ROM:off_2D6AC   o  ; was: sub_2D6B2
                 moveq   #0,d0
-                bsr.w   Enemy_InitSpriteParams
+                bsr.w   Enemy_InitCirclingSprite
                 move.w  #4,$5C(a5)
                 addq.w  #2,4(a5)
                 move.w  #$10,$50(a5)
@@ -48,10 +48,10 @@ Enemy_FlyInit_RotateToTarget:                           ; CODE XREF: Enemy_FlyIn
                 move.w  $4A(a5),d0
                 add.w   d0,$4C(a5)
                 andi.w  #$1FF,$4C(a5)
-                bsr.w   Enemy_UpdateRotationSprite
+                bsr.w   Enemy_UpdateCirclingRotationSprite
                 move.w  $50(a5),d2
                 move.w  $50(a5),d3
-                bsr.w   Enemy_CircularHomingMotion
+                bsr.w   Enemy_UpdateCircularMotionAndFire
                 move.w  $4E(a5),d0
                 cmp.w   $4C(a5),d0
                 bne.s   locret_2D756
@@ -105,7 +105,7 @@ Enemy_Stage17WalkerMain:                                ; DATA XREF: ROM:Entity_
 ; Updates Stage 17 walker enemy state and sprite
 Enemy_Stage17WalkerUpdate:                              ; CODE XREF: Enemy_Stage17WalkerMain+4   j  ; was: loc_2D7A8
                 bsr.s   Enemy_Stage17WalkerInit
-                bra.w   Enemy_UpdateSpritePattern
+                bra.w   Enemy_UpdateCirclingAnimation
 ; End of function Enemy_Stage17WalkerMain
 ; Initializes walker enemy
 Enemy_Stage17WalkerInit:                                ; CODE XREF: Enemy_Stage17WalkerMain:loc_2D7A8   p  ; was: sub_2D7AE
@@ -125,11 +125,11 @@ off_2D7BE:      dc.w    Enemy_Stage17WalkerWalk-*       ; DATA XREF: Enemy_Stage
 ; Walker walking state
 Enemy_Stage17WalkerWalk:                                ; DATA XREF: ROM:off_2D7BE   o  ; was: sub_2D7C8
                 moveq   #0,d0
-                bsr.w   Enemy_InitSpriteParams
+                bsr.w   Enemy_InitCirclingSprite
                 move.b  #2,$25(a5)
                 move.w  #$80,$4C(a5)
                 addq.w  #2,4(a5)
-                bsr.w   Enemy_UpdateRotationSprite
+                bsr.w   Enemy_UpdateCirclingRotationSprite
                 move.w  #2,$1C(a5)
                 move.w  (word_FF8248).w,d0
                 sub.w   $10(a5),d0
@@ -176,7 +176,7 @@ Enemy_Stage17WalkerAttack:                              ; DATA XREF: ROM:0002D7C
 Enemy_Stage17WalkerCheckEdge:                           ; DATA XREF: ROM:0002D7C4   o  ; was: sub_2D844
                 move.w  $4E(a5),d0
                 add.w   d0,$4C(a5)
-                bsr.w   Enemy_UpdateRotationSprite
+                bsr.w   Enemy_UpdateCirclingRotationSprite
                 subq.w  #1,$48(a5)
                 bne.s   locret_2D872
                 move.w  #$1C0,$48(a5)

@@ -333,7 +333,7 @@ Collision_CheckTerrainTile:                             ; CODE XREF: Collision_G
 ; End of function Collision_CheckTerrainTile
 ; Aligns entity Y position to terrain surface clearing velocity
 Physics_AlignToTerrain:                                 ; CODE XREF: Player_InitHardLanding   p  ; was: sub_14534
-                                        ; Enemy_UpdateTrajectory+52   p
+                                        ; Enemy_PhasePatternAirborneState+52   p
                 move.w  d1,d4
                 sub.w   (dword_FFA904).w,d4
                 andi.w  #7,d4
@@ -342,7 +342,7 @@ Physics_AlignToTerrain:                                 ; CODE XREF: Player_Init
                 rts
 ; End of function Physics_AlignToTerrain
 ; Aligns entity to terrain surface from above
-Physics_AlignToTerrainTop:                              ; CODE XREF: Enemy_UpdateTrajectory+66   p  ; was: sub_14548
+Physics_AlignToTerrainTop:                              ; CODE XREF: Enemy_PhasePatternAirborneState+66   p  ; was: sub_14548
                 move.w  d1,d4
                 sub.w   (dword_FFA904).w,d4
                 neg.w   d4
@@ -372,8 +372,8 @@ Physics_AlignToWallSurface_AdjustOppositeDirection:     ; CODE XREF: Physics_Ali
                 rts
 ; End of function Physics_AlignToWallSurface
 ; Initializes collision buffer pointers
-Collision_InitBufferPointers:                           ; CODE XREF: Enemy_UpdateTrajectory:loc_2D0D6   p  ; was: sub_1458A
-                                        ; Projectile_BouncingDebrisMain+22   p
+Collision_InitBufferPointers:                           ; CODE XREF: Enemy_PhasePatternAirborneState:Enemy_PhasePatternAirborneState_CheckTerrain   p  ; was: sub_1458A
+                                        ; Enemy_UpdateBouncingDebrisSpawner+22   p
                 lea     (M68K_RAM).l,a0
                 lea     (dword_FF7800).l,a1
                 move.w  #$80,d7

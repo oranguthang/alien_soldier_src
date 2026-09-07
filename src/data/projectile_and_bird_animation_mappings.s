@@ -373,7 +373,7 @@ off_EA67C:      dc.w    word_EA05A-*                    ; DATA XREF: ROM:0002CAA
                 dc.w    word_EA0AE-*
                 dc.w    $FF
 off_EA69C:      dc.w    word_EA53A-*                    ; DATA XREF: ROM:0002CAB0   o
-                                        ; Boss_JetsripperIdle+10   o
+                                        ; Enemy_ConvertToAlternateDefeatProjectile+10   o
                 dc.w    4
                 dc.w    word_EA564-*
                 dc.w    4

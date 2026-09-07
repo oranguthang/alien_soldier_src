@@ -116,7 +116,7 @@ off_E9E08:      dc.w    word_E9CC4-*                    ; DATA XREF: ROM:0002C55
                 dc.w    4
                 dc.w    off_E9E08-*
                 dc.w    0
-off_E9E1C:      dc.w    word_E9C2E-*                    ; DATA XREF: ROM:off_2C550   o
+off_E9E1C:      dc.w    word_E9C2E-*                    ; DATA XREF: ROM:Enemy_BehaviorAnimationMappings   o
                                         ; ROM:000E9E3C   o
                 dc.w    6
                 dc.w    word_E9C4C-*
@@ -168,7 +168,7 @@ off_E9E68:      dc.w    word_E9C2E-*                    ; DATA XREF: ROM:0002C55
                 dc.w    word_E9D42-*
                 dc.w    $FF
 off_E9E80:      dc.w    word_E9DA8-*                    ; DATA XREF: ROM:0002C560   o
-                                        ; Boss_FireProjectilePattern+10   o
+                                        ; Enemy_ConvertToDefeatProjectile+10   o
                 dc.w    3
                 dc.w    word_E9DF0-*
                 dc.w    2

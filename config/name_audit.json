@@ -1495,6 +1495,215 @@
         "Boss_BugmaxSpawnDebris initializes entity type 0x348 with a lifetime, rectangular spread dimensions, and randomized initial delay.",
         "This handler repeatedly creates particles inside that rectangle and waits between them, so it is a debris spawner rather than Bugmax's main projectile controller."
       ]
+    },
+    {
+      "address": "0x02C33A",
+      "previous_name": "Boss_JetsripperMoveLeft",
+      "current_name": "EnemySpawn_UpdateDirector",
+      "legacy_name": "sub_2C33A",
+      "evidence": "static",
+      "basis": [
+        "The main gameplay loop calls the routine unconditionally in its stage-effects chain, and the routine dispatches only the global state stored at 0xFF8114.",
+        "Its active path allocates an enemy object, searches terrain near the player, and installs entity type 0x1C; it neither identifies Jetsripper nor moves an existing boss."
+      ]
+    },
+    {
+      "address": "0x02C3F8",
+      "previous_name": "Boss_SetAnimationFrame",
+      "current_name": "EnemySpawn_AllocateObjectSlot",
+      "legacy_name": "sub_2C3F8",
+      "evidence": "static",
+      "basis": [
+        "The routine scans four 0x60-byte object records for a zero type field and clears the selected record.",
+        "It returns failure when every slot is occupied and does not read or write animation-frame data."
+      ]
+    },
+    {
+      "address": "0x02C41C",
+      "previous_name": "Boss_UpdateAttackTimer",
+      "current_name": "EnemySpawn_FindTerrainPosition",
+      "legacy_name": "sub_2C41C",
+      "evidence": "static",
+      "basis": [
+        "The routine converts player-relative coordinates to layout offsets and scans collision-layout bytes for a consecutive open run.",
+        "Its success result supplies the position written into a newly allocated enemy object; no attack timer is updated."
+      ]
+    },
+    {
+      "address": "0x02C4DC",
+      "previous_name": "Sprite_SetupBossSprite",
+      "current_name": "Enemy_SetupBehaviorSprite",
+      "legacy_name": "sub_2C4DC",
+      "evidence": "static",
+      "basis": [
+        "The shared Enemy_MainStateMachine and delayed-destruction handler call this routine for entity type 0x1C.",
+        "It applies variant parameters from a local four-byte table and contains no boss-specific state or mapping."
+      ]
+    },
+    {
+      "address": "0x02C622",
+      "previous_name": "Boss_FireProjectilePattern",
+      "current_name": "Enemy_ConvertToDefeatProjectile",
+      "legacy_name": "sub_2C622",
+      "evidence": "static",
+      "basis": [
+        "Enemy_BehaviorController enters this routine when the enemy is defeated or leaves its active conditions.",
+        "The routine converts the current object to entity type 0x1D4, assigns falling velocity and defeat animation data, and spawns no projectile pattern."
+      ]
+    },
+    {
+      "address": "0x02C666",
+      "previous_name": "Boss_SpawnMultipleShots",
+      "current_name": "Enemy_UpdateDefeatProjectile",
+      "legacy_name": "sub_2C666",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x1D4 maps to this handler, which applies gravity, blinks, and counts down one object.",
+        "At expiry it creates one explosion and either removes the object or converts it to a randomly sized resource pickup; it does not spawn multiple shots."
+      ]
+    },
+    {
+      "address": "0x02CB86",
+      "previous_name": "Boss_JetsripperIdle",
+      "current_name": "Enemy_ConvertToAlternateDefeatProjectile",
+      "legacy_name": "sub_2CB86",
+      "evidence": "static",
+      "basis": [
+        "Enemy_HomingAttackController enters this routine when its current object is defeated.",
+        "The routine converts that object to entity type 0x1D8, assigns falling velocity and an alternate defeat mapping, and accesses no Jetsripper idle state."
+      ]
+    },
+    {
+      "address": "0x02CBC6",
+      "previous_name": "Projectile_JetsripperFalling",
+      "current_name": "Enemy_UpdateAlternateDefeatProjectile",
+      "legacy_name": "sub_2CBC6",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x1D8 maps to this handler after the shared homing-attack enemy is defeated.",
+        "It applies gravity and blinking, then creates an explosion and resource pickup; no Jetsripper-specific data is referenced."
+      ]
+    },
+    {
+      "address": "0x02CBF8",
+      "previous_name": "Enemy_ProcessProjectile",
+      "current_name": "Enemy_ProjectileAttackController",
+      "legacy_name": "sub_2CBF8",
+      "evidence": "static",
+      "basis": [
+        "The dispatch table covers an enemy's idle, approach, airborne, defeat, and ground-attack states.",
+        "The controller uses terrain collision, faces the player, and only spawns a projectile during one timed ground state; the controlled object is not itself a projectile."
+      ]
+    },
+    {
+      "address": "0x02CCEE",
+      "previous_name": "Physics_BossGravityAndCollision",
+      "current_name": "Enemy_ProjectileAttackAirborneState",
+      "legacy_name": "sub_2CCEE",
+      "evidence": "static",
+      "basis": [
+        "Two airborne entries in Enemy_ProjectileAttackStateOffsets target this routine.",
+        "It applies capped gravity and checks upper and lower terrain for the shared enemy object; no boss identity is tested."
+      ]
+    },
+    {
+      "address": "0x02CDA8",
+      "previous_name": "Boss_JokerRecoilAttack",
+      "current_name": "Enemy_BeginDefeatFall",
+      "legacy_name": "sub_2CDA8",
+      "evidence": "static",
+      "basis": [
+        "Enemy_ProjectileAttackController calls the routine only after its health field becomes negative.",
+        "The routine clears collision fields, assigns defeat animation and velocity, then enters the shared explosion-and-pickup fall state; it has no Joker attack behavior."
+      ]
+    },
+    {
+      "address": "0x02CE1C",
+      "previous_name": "Enemy_ProcessAltProjectile",
+      "current_name": "Enemy_HomingAttackController",
+      "legacy_name": "sub_2CE1C",
+      "evidence": "static",
+      "basis": [
+        "Its state table initializes an enemy, waits a difficulty-indexed delay, and emits a difficulty-indexed number of tracked projectiles.",
+        "The object has its own health and defeat conversion, so it is the homing-attack enemy controller rather than an alternative projectile."
+      ]
+    },
+    {
+      "address": "0x02CECA",
+      "previous_name": "Enemy_ShipBossStateHandler",
+      "current_name": "Enemy_ShipPatrolController",
+      "legacy_name": "sub_2CECA",
+      "evidence": "static",
+      "basis": [
+        "The object uses the same sprite setup, animation update, health field, and defeat-object conversion as the adjacent ordinary enemy families.",
+        "Its two states only initialize and repeat an idle animation timer; no boss health, phase, or boss-only dispatch is present."
+      ]
+    },
+    {
+      "address": "0x02CF64",
+      "previous_name": "Player_UpdatePhysics",
+      "current_name": "Enemy_UpdateGroundCollision",
+      "legacy_name": "sub_2CF64",
+      "evidence": "static",
+      "basis": [
+        "All callers operate on the current enemy object in a5.",
+        "The routine performs the shared entity wall check and lower-terrain check and never references the player object or player state."
+      ]
+    },
+    {
+      "address": "0x02CF8A",
+      "previous_name": "Enemy_SetVDPFlagHigh",
+      "current_name": "Enemy_SetupPhasePatternSprite",
+      "legacy_name": "sub_2CF8A",
+      "evidence": "static",
+      "basis": [
+        "The routine initializes object display flags, sprite priority, collision dimensions, and an animation-state timer for the adjacent phase enemy.",
+        "It writes no VDP port or VDP command buffer; the alleged VDP flag is the object's display-flags word."
+      ]
+    },
+    {
+      "address": "0x02D0B2",
+      "previous_name": "Enemy_UpdateTrajectory",
+      "current_name": "Enemy_PhasePatternAirborneState",
+      "legacy_name": "sub_2D0B2",
+      "evidence": "static",
+      "basis": [
+        "The phase-pattern state table targets this routine as one complete object state, not as a general trajectory helper.",
+        "It applies capped gravity, probes upper or lower terrain according to vertical direction, aligns the object to the contacted surface, and returns to the wait state."
+      ]
+    },
+    {
+      "address": "0x02D1AC",
+      "previous_name": "Projectile_BouncingDebrisMain",
+      "current_name": "Enemy_UpdateBouncingDebrisSpawner",
+      "legacy_name": "sub_2D1AC",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x294 applies gravity and terrain alignment while allocating randomized type-0x88 child particles.",
+        "When its lifetime expires it creates an explosion and resource pickup, so the object is a defeat-debris spawner rather than an ordinary projectile."
+      ]
+    },
+    {
+      "address": "0x02D4B2",
+      "previous_name": "Enemy_Stage18ClearAll",
+      "current_name": "Enemy_CirclingSteerTowardTarget",
+      "legacy_name": "sub_2D4B2",
+      "evidence": "static",
+      "basis": [
+        "The routine compares the current circling enemy position with stored target coordinates plus random jitter and adjusts its two velocity components.",
+        "It neither scans nor clears the enemy pool and performs no stage-number check."
+      ]
+    },
+    {
+      "address": "0x02D542",
+      "previous_name": "Physics_ClampVerticalVelocityUp",
+      "current_name": "Enemy_CirclingSteerTowardLowerTarget",
+      "legacy_name": "loc_2D542",
+      "evidence": "static",
+      "basis": [
+        "Control reaches this branch when target Y minus current Y is positive.",
+        "It adds 0x4000 to vertical velocity and caps it at positive 0x20000, which is downward in the game's screen-coordinate convention rather than upward."
+      ]
     }
   ]
 }
