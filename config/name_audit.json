@@ -1759,6 +1759,72 @@
         "The routine is called from Viblack's active attack and defeat-check paths and alternates the spawned object's horizontal position between two screen sides.",
         "It tail-calls Projectile_InitViblackSideShot, whose type-0x2F4 state machine contains no walker behavior."
       ]
+    },
+    {
+      "address": "0x02DBAE",
+      "previous_name": "Enemy_BirdStartDive",
+      "current_name": "Enemy_BirdBeginHorizontalEntryState",
+      "legacy_name": "sub_2DBAE",
+      "evidence": "static",
+      "basis": [
+        "The state writes only the horizontal velocity field at offset 0x18, choosing negative or positive 0x20000 from the spawn-side flag.",
+        "It does not change vertical velocity or perform terrain checks; the later Enemy_BirdDiveAttack state owns that behavior."
+      ]
+    },
+    {
+      "address": "0x02DBF8",
+      "previous_name": "Player_WallCheckAndDispatch",
+      "current_name": "Enemy_UpdateWallAndLowerTerrainCollision",
+      "legacy_name": "sub_2DBF8",
+      "evidence": "static",
+      "basis": [
+        "The routine calls the generic entity wall check and tail-jumps to the lower-terrain check using the current a5 object.",
+        "It neither selects a player object nor dispatches a player state."
+      ]
+    },
+    {
+      "address": "0x02DCFE",
+      "previous_name": "Enemy_BirdDescendToThreshold",
+      "current_name": "Enemy_BirdAccelerateUpwardState",
+      "legacy_name": "sub_2DCFE",
+      "evidence": "static",
+      "basis": [
+        "The state subtracts 0x4000 from vertical velocity until reaching negative 0x58000.",
+        "Negative vertical velocity moves upward in the engine's downward-positive screen-coordinate convention, so the old descend claim was reversed."
+      ]
+    },
+    {
+      "address": "0x02DD2E",
+      "previous_name": "Enemy_BirdDecelerate",
+      "current_name": "Enemy_BirdReverseToUpwardState",
+      "legacy_name": "sub_2DD2E",
+      "evidence": "static",
+      "basis": [
+        "The state repeatedly subtracts 0x4000 from vertical velocity until it reaches negative 0x20000.",
+        "It therefore continues through zero into upward motion before starting the attack timer, rather than merely decelerating downward."
+      ]
+    },
+    {
+      "address": "0x02DD6C",
+      "previous_name": "Enemy_BirdAscendToThreshold",
+      "current_name": "Enemy_BirdAccelerateDownwardExitState",
+      "legacy_name": "sub_2DD6C",
+      "evidence": "static",
+      "basis": [
+        "The state adds 0x4000 to vertical velocity until reaching positive 0x20000.",
+        "Positive vertical velocity is downward in screen coordinates, contradicting the generated ascend description."
+      ]
+    },
+    {
+      "address": "0x02DEFE",
+      "previous_name": "Enemy_BirdProjectileSpawn",
+      "current_name": "Enemy_UpdateBirdDefeatDebris",
+      "legacy_name": "sub_2DEFE",
+      "evidence": "static",
+      "basis": [
+        "Enemy_ConvertBirdToDefeatDebris changes a defeated bird to entity type 0x1DC, whose dispatch-table entry is this routine.",
+        "The handler applies gravity, emits visual particles, creates a radial destruction effect and either spawns a pickup or removes the debris; it does not create the bird's attack projectile."
+      ]
     }
   ]
 }

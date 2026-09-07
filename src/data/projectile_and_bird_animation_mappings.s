@@ -445,7 +445,7 @@ word_EA7C2:     dc.w    $684C, $A00, $3F4               ; DATA XREF: ROM:000EA86
                 dc.w    $686C, $500, $BE8
                 dc.w    $6810, $200, $30D
                 dc.w    $E800, $F00, $FBED
-off_EA7E0:      dc.w    word_EA6B4-*                    ; DATA XREF: ROM:off_2DAA0   o
+off_EA7E0:      dc.w    word_EA6B4-*                    ; DATA XREF: ROM:Enemy_BirdAnimationMappings   o
                                         ; ROM:000EA810   o
                 dc.w    4
                 dc.w    word_EA6D8-*

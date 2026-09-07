@@ -232,6 +232,14 @@ the honest 371-line module is
 fly-death descriptions contradicted live constructors and state behavior;
 those corrections are recorded in the name audit.
 
+The bird-enemy pass reduced the count to 9,916 by replacing all 37
+address-derived definitions in the former `bird.s`. The cohesive 460-line
+`src/enemies/bird_enemy.s` now covers sprite setup, the complete fourteen-state
+bird controller, directional shot creation, and the type-`$1DC` defeat-debris
+handler. Direction claims were checked against signed velocity writes and the
+engine's downward-positive screen coordinates; six contradicted generated
+names are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

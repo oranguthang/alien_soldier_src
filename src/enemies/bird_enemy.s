@@ -7,7 +7,7 @@ Enemy_InitBirdSprite:                                   ; CODE XREF: Enemy_BirdI
                 move.b  #$C0,$21(a5)
                 move.l  #$FC04FC04,$2C(a5)
                 move.l  #$F010F010,$28(a5)
-                lea     word_2DA88(pc),a0
+                lea     Enemy_BirdSpriteParameters(pc),a0
                 nop
                 moveq   #0,d1
                 move.b  (a0,d0.w),$27(a5)
@@ -18,53 +18,53 @@ Enemy_InitBirdSprite:                                   ; CODE XREF: Enemy_BirdI
                 rts
 ; End of function Enemy_InitBirdSprite
 ; ---------------------------------------------------------------------------
-word_2DA88:     dc.w    $1806, $1100                    ; DATA XREF: Enemy_InitBirdSprite+2E   o
+Enemy_BirdSpriteParameters: dc.w    $1806, $1100        ; DATA XREF: Enemy_InitBirdSprite+2E   o  ; was: word_2DA88
 
 ; Updates bird enemy animation pointer based on state index
-Enemy_UpdateBirdAnimation:                              ; CODE XREF: Enemy_BirdMain+58   p  ; was: sub_2DA8C
-                                        ; Enemy_BirdBounceOff+32   j
+Enemy_UpdateBirdAnimation:                              ; CODE XREF: Enemy_BirdController+58   p  ; was: sub_2DA8C
+                                        ; Enemy_ConvertBirdToDefeatDebris+32   j
                 move.w  $5C(a5),d0
-                beq.s   locret_2DA9E
+                beq.s   Enemy_UpdateBirdAnimation_Return
                 subq.w  #4,d0
-                move.l  off_2DAA0(pc,d0.w),8(a5)
+                move.l  Enemy_BirdAnimationMappings(pc,d0.w),8(a5)
                 clr.w   $C(a5)
-locret_2DA9E:                                           ; CODE XREF: Enemy_UpdateBirdAnimation+4   j
+Enemy_UpdateBirdAnimation_Return:                       ; CODE XREF: Enemy_UpdateBirdAnimation+4   j  ; was: locret_2DA9E
                 rts
 ; End of function Enemy_UpdateBirdAnimation
 ; ---------------------------------------------------------------------------
-off_2DAA0:      dc.l    off_EA7E0                       ; DATA XREF: Enemy_UpdateBirdAnimation+8   r
+Enemy_BirdAnimationMappings:    dc.l    off_EA7E0       ; DATA XREF: Enemy_UpdateBirdAnimation+8   r  ; was: off_2DAA0
                 dc.l    off_EA814
                 dc.l    off_EA848
                 dc.l    off_EA85C
 
 ; Updates sprite horizontal flip based on velocity
-Enemy_UpdateSpriteFlip:                                 ; CODE XREF: Enemy_BirdMain+5C   j  ; was: sub_2DAB0
+Enemy_UpdateHorizontalFlipFromVelocity:                 ; CODE XREF: Enemy_BirdController+5C   j  ; was: sub_2DAB0
                                         ; Enemy_Stage10WaspMain+5C   j
                 tst.l   $18(a5)
-                beq.s   locret_2DACC
+                beq.s   Enemy_UpdateHorizontalFlipFromVelocity_Return
                 btst    #7,$18(a5)
-                bne.s   Sprite_SetHorizontalFlipBit
+                bne.s   Enemy_SetHorizontalFlip
                 andi.w  #$F7FF,$E(a5)
                 rts
 ; ---------------------------------------------------------------------------
 ; Sets sprite horizontal flip bit based on velocity direction
-Sprite_SetHorizontalFlipBit:                            ; CODE XREF: Enemy_UpdateSpriteFlip+C   j  ; was: loc_2DAC6
+Enemy_SetHorizontalFlip:                                ; CODE XREF: Enemy_UpdateHorizontalFlipFromVelocity+C   j  ; was: loc_2DAC6
                 ori.w   #$800,$E(a5)
-locret_2DACC:                                           ; CODE XREF: Enemy_UpdateSpriteFlip+4   j
+Enemy_UpdateHorizontalFlipFromVelocity_Return:          ; CODE XREF: Enemy_UpdateHorizontalFlipFromVelocity+4   j  ; was: locret_2DACC
                 rts
-; End of function Enemy_UpdateSpriteFlip
-; Main bird enemy update checking defeat conditions and player collision
-Enemy_BirdMain:                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DACE
+; End of function Enemy_UpdateHorizontalFlipFromVelocity
+; Updates the bird state machine and converts defeated or inactive birds to debris
+Enemy_BirdController:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DACE
                 tst.w   4(a5)
-                beq.s   Enemy_BirdMainLoop
+                beq.s   Enemy_BirdController_DispatchAndRender
                 tst.w   $24(a5)
-                bmi.w   Enemy_BirdBounceOff
+                bmi.w   Enemy_ConvertBirdToDefeatDebris
                 tst.w   (word_FF808C).w
-                bpl.w   Enemy_BirdBounceOff
+                bpl.w   Enemy_ConvertBirdToDefeatDebris
                 bclr    #7,$22(a5)
-                beq.s   loc_2DB1A
+                beq.s   Enemy_BirdController_UpdateState
                 btst    #4,$22(a5)
-                bne.w   Enemy_BirdBounceOff
+                bne.w   Enemy_ConvertBirdToDefeatDebris
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 clr.l   $18(a5)
@@ -73,122 +73,122 @@ Enemy_BirdMain:                                         ; DATA XREF: ROM:Entity_
                 clr.w   $C(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
-loc_2DB1A:                                              ; CODE XREF: Enemy_BirdMain+1C   j
+Enemy_BirdController_UpdateState:                       ; CODE XREF: Enemy_BirdController+1C   j  ; was: loc_2DB1A
                 jsr     (RandomNumber).l
                 clr.w   6(a5)
 ; Main loop for bird enemy dispatching state and updating animation
-Enemy_BirdMainLoop:                                     ; CODE XREF: Enemy_BirdMain+4   j  ; was: loc_2DB24
-                bsr.s   Enemy_BirdStateDispatcher
+Enemy_BirdController_DispatchAndRender:                 ; CODE XREF: Enemy_BirdController+4   j  ; was: loc_2DB24
+                bsr.s   Enemy_DispatchBirdState
                 bsr.w   Enemy_UpdateBirdAnimation
-                bra.w   Enemy_UpdateSpriteFlip
-; End of function Enemy_BirdMain
+                bra.w   Enemy_UpdateHorizontalFlipFromVelocity
+; End of function Enemy_BirdController
 ; Bird enemy state machine dispatcher using jump table
-Enemy_BirdStateDispatcher:                              ; CODE XREF: Enemy_BirdMain:loc_2DB24   p  ; was: sub_2DB2E
+Enemy_DispatchBirdState:                                ; CODE XREF: Enemy_BirdController:Enemy_BirdController_DispatchAndRender   p  ; was: sub_2DB2E
                 clr.w   $5C(a5)
                 move.w  4(a5),d0
-                lea     off_2DB3E(pc,d0.w),a0
+                lea     Enemy_BirdStateOffsets(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Enemy_BirdStateDispatcher
+; End of function Enemy_DispatchBirdState
 ; ---------------------------------------------------------------------------
-off_2DB3E:      dc.w    Enemy_BirdInit-*                ; DATA XREF: Enemy_BirdStateDispatcher+8   o
-                dc.w    Enemy_BirdStartDive-*
-                dc.w    Enemy_BirdFireWrapper-*
-                dc.w    Enemy_BirdFlyState-*
+Enemy_BirdStateOffsets: dc.w    Enemy_BirdInit-*        ; DATA XREF: Enemy_DispatchBirdState+8   o  ; was: off_2DB3E
+                dc.w    Enemy_BirdBeginHorizontalEntryState-*
+                dc.w    Enemy_BirdFireState-*
+                dc.w    Enemy_BirdPrepareDiveState-*
                 dc.w    Enemy_BirdDiveAttack-*
                 dc.w    Enemy_BirdWaitState-*
                 dc.w    Enemy_BirdChasePlayer-*
                 dc.w    Enemy_BirdWaitTimer-*
-                dc.w    Enemy_BirdDescendToThreshold-*
-                dc.w    Enemy_BirdAccelerate-*
-                dc.w    Enemy_BirdDecelerate-*
+                dc.w    Enemy_BirdAccelerateUpwardState-*
+                dc.w    Enemy_BirdAccelerateDownwardState-*
+                dc.w    Enemy_BirdReverseToUpwardState-*
                 dc.w    Enemy_BirdAttackState-*
-                dc.w    Enemy_BirdAscendToThreshold-*
+                dc.w    Enemy_BirdAccelerateDownwardExitState-*
                 dc.w    Enemy_BirdOscillateMovement-*
 
-nullsub_66:
+Enemy_BirdNoOpState:                                    ; was: nullsub_66
                 rts
-; End of function nullsub_66
+; End of function Enemy_BirdNoOpState
 
 ; Initializes bird enemy position direction and movement state
-Enemy_BirdInit:                                         ; DATA XREF: ROM:off_2DB3E   o  ; was: sub_2DB5C
+Enemy_BirdInit:                                         ; DATA XREF: ROM:Enemy_BirdStateOffsets   o  ; was: sub_2DB5C
                 moveq   #0,d0
                 bsr.w   Enemy_InitBirdSprite
                 addq.w  #2,4(a5)
                 btst    #0,$5F(a5)
-                bne.s   loc_2DB7C
+                bne.s   Enemy_BirdInit_PlaceAtLeftEdge
                 move.w  #$1E0,$10(a5)
                 ori.w   #$800,$E(a5)
-                bra.s   loc_2DB88
+                bra.s   Enemy_BirdInit_SelectInitialState
 ; ---------------------------------------------------------------------------
-loc_2DB7C:                                              ; CODE XREF: Enemy_BirdInit+10   j
+Enemy_BirdInit_PlaceAtLeftEdge:                         ; CODE XREF: Enemy_BirdInit+10   j  ; was: loc_2DB7C
                 move.w  #$70,$10(a5)                    ; 'p'
                 andi.w  #$F7FF,$E(a5)
-loc_2DB88:                                              ; CODE XREF: Enemy_BirdInit+1E   j
+Enemy_BirdInit_SelectInitialState:                      ; CODE XREF: Enemy_BirdInit+1E   j  ; was: loc_2DB88
                 btst    #1,$5F(a5)
                 bne.s   Enemy_BirdSetWaitState
                 move.w  #2,4(a5)
                 cmpi.w  #$1B8,(word_FFDB20).w
-                bne.s   locret_2DBAC
+                bne.s   Enemy_BirdInit_Return
                 move.b  #2,$25(a5)
                 rts
 ; ---------------------------------------------------------------------------
 ; Sets bird enemy to waiting state with timer
 Enemy_BirdSetWaitState:                                 ; CODE XREF: Enemy_BirdInit+32   j  ; was: loc_2DBA6
                 move.w  #6,4(a5)
-locret_2DBAC:                                           ; CODE XREF: Enemy_BirdInit+40   j
+Enemy_BirdInit_Return:                                  ; CODE XREF: Enemy_BirdInit+40   j  ; was: locret_2DBAC
                 rts
 ; End of function Enemy_BirdInit
-; Starts bird dive attack setting velocity and animation
-Enemy_BirdStartDive:                                    ; DATA XREF: ROM:0002DB40   o  ; was: sub_2DBAE
+; Starts the bird's horizontal screen entry and selects its direction
+Enemy_BirdBeginHorizontalEntryState:                    ; DATA XREF: ROM:0002DB40   o  ; was: sub_2DBAE
                 addq.w  #2,4(a5)
                 move.w  #4,$5C(a5)
                 ori.w   #$8000,2(a5)
                 btst    #0,$5F(a5)
-                bne.s   Enemy_BirdSetDiveVelocity
+                bne.s   Enemy_BirdBeginHorizontalEntryState_MoveRight
                 move.l  #$FFFE0000,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-; Sets bird vertical velocity based on flip flag for dive attack
-Enemy_BirdSetDiveVelocity:                              ; CODE XREF: Enemy_BirdStartDive+16   j  ; was: loc_2DBD0
+; Sets positive horizontal entry velocity for the opposite spawn side
+Enemy_BirdBeginHorizontalEntryState_MoveRight:          ; CODE XREF: Enemy_BirdBeginHorizontalEntryState+16   j  ; was: loc_2DBD0
                 move.l  #$20000,$18(a5)
                 rts
-; End of function Enemy_BirdStartDive
-; Wrapper for bird enemy projectile firing
-Enemy_BirdFireWrapper:                                  ; DATA XREF: ROM:0002DB42   o  ; was: sub_2DBDA
-                bsr.w   Enemy_BirdFireProjectile
+; End of function Enemy_BirdBeginHorizontalEntryState
+; Fires the bird's periodic shot while this state remains active
+Enemy_BirdFireState:                                    ; DATA XREF: ROM:0002DB42   o  ; was: sub_2DBDA
+                bsr.w   Enemy_BirdSpawnShot
                 rts
-; End of function Enemy_BirdFireWrapper
-; Bird flying state setting animation and timer parameters
-Enemy_BirdFlyState:                                     ; DATA XREF: ROM:0002DB44   o  ; was: sub_2DBE0
+; End of function Enemy_BirdFireState
+; Selects the dive animation and advances to terrain-aware movement
+Enemy_BirdPrepareDiveState:                             ; DATA XREF: ROM:0002DB44   o  ; was: sub_2DBE0
                 ori.w   #$8000,2(a5)
                 move.w  #8,$5C(a5)
                 move.w  #4,$4A(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Enemy_BirdFlyState
-; Checks wall collision and dispatches player action
-Player_WallCheckAndDispatch:
+; End of function Enemy_BirdPrepareDiveState
+; Updates wall and lower-terrain collision for the current enemy
+Enemy_UpdateWallAndLowerTerrainCollision:
                 jsr     (Physics_EntityWallCheck).l     ; was: sub_2DBF8
                 jmp     Physics_CheckLowerTerrain
-; End of function Player_WallCheckAndDispatch
+; End of function Enemy_UpdateWallAndLowerTerrainCollision
 ; Bird dive attack with gravity and ground collision detection
 Enemy_BirdDiveAttack:                                   ; DATA XREF: ROM:0002DB46   o  ; was: sub_2DC04
                 jsr     (Physics_EntityWallCheck).l
                 move.b  7(a5),$58(a5)
                 btst    #7,$1C(a5)
-                bne.s   loc_2DC26
+                bne.s   Enemy_BirdDiveAttack_ApplyGravity
                 jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 bne.s   Enemy_BirdTransitionToWait
-loc_2DC26:                                              ; CODE XREF: Enemy_BirdDiveAttack+12   j
+Enemy_BirdDiveAttack_ApplyGravity:                      ; CODE XREF: Enemy_BirdDiveAttack+12   j  ; was: loc_2DC26
                 jsr     (Physics_CheckUpperTerrainWhenRising).l
                 addi.l  #$4000,$1C(a5)
                 cmpi.l  #$58000,$1C(a5)
-                bgt.s   loc_2DC40
+                bgt.s   Enemy_BirdDiveAttack_BeginRecovery
                 rts
 ; ---------------------------------------------------------------------------
-loc_2DC40:                                              ; CODE XREF: Enemy_BirdDiveAttack+38   j
+Enemy_BirdDiveAttack_BeginRecovery:                     ; CODE XREF: Enemy_BirdDiveAttack+38   j  ; was: loc_2DC40
                 move.w  #8,$5C(a5)
                 addq.w  #8,4(a5)
                 rts
@@ -205,14 +205,14 @@ Enemy_BirdTransitionToWait:                             ; CODE XREF: Enemy_BirdD
 Enemy_BirdWaitState:                                    ; DATA XREF: ROM:0002DB48   o  ; was: sub_2DC62
                 move.w  #$C,$5C(a5)
                 subq.w  #1,$48(a5)
-                bne.s   locret_2DC78
+                bne.s   Enemy_BirdWaitState_Return
                 subq.w  #1,$4A(a5)
-                beq.s   loc_2DC7A
+                beq.s   Enemy_BirdWaitState_BeginChase
                 addq.w  #2,4(a5)
-locret_2DC78:                                           ; CODE XREF: Enemy_BirdWaitState+A   j
+Enemy_BirdWaitState_Return:                             ; CODE XREF: Enemy_BirdWaitState+A   j  ; was: locret_2DC78
                 rts
 ; ---------------------------------------------------------------------------
-loc_2DC7A:                                              ; CODE XREF: Enemy_BirdWaitState+10   j
+Enemy_BirdWaitState_BeginChase:                         ; CODE XREF: Enemy_BirdWaitState+10   j  ; was: loc_2DC7A
                 move.w  #$C,$5C(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #4,4(a5)
@@ -222,104 +222,104 @@ loc_2DC7A:                                              ; CODE XREF: Enemy_BirdW
 Enemy_BirdChasePlayer:                                  ; DATA XREF: ROM:0002DB4A   o  ; was: sub_2DC8C
                 jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
-                bpl.s   loc_2DCA0
+                bpl.s   Enemy_BirdChasePlayer_MoveRight
                 move.l  #$FFFE0000,$18(a5)
-                bra.s   loc_2DCA8
+                bra.s   Enemy_BirdChasePlayer_SelectVerticalMotion
 ; ---------------------------------------------------------------------------
-loc_2DCA0:                                              ; CODE XREF: Enemy_BirdChasePlayer+8   j
+Enemy_BirdChasePlayer_MoveRight:                        ; CODE XREF: Enemy_BirdChasePlayer+8   j  ; was: loc_2DCA0
                 move.l  #$20000,$18(a5)
-loc_2DCA8:                                              ; CODE XREF: Enemy_BirdChasePlayer+12   j
+Enemy_BirdChasePlayer_SelectVerticalMotion:             ; CODE XREF: Enemy_BirdChasePlayer+12   j  ; was: loc_2DCA8
                 cmpi.w  #$80,d0
-                bcc.s   loc_2DCC2
+                bcc.s   Enemy_BirdChasePlayer_ResetApproach
                 move.w  #8,$5C(a5)
                 move.l  #$FFFA8000,$1C(a5)
                 addq.w  #6,4(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_2DCC2:                                              ; CODE XREF: Enemy_BirdChasePlayer+20   j
+Enemy_BirdChasePlayer_ResetApproach:                    ; CODE XREF: Enemy_BirdChasePlayer+20   j  ; was: loc_2DCC2
                 subq.w  #4,4(a5)
                 tst.b   $58(a5)
-                beq.s   loc_2DCDC
+                beq.s   Enemy_BirdChasePlayer_UseShallowAscent
                 move.w  #8,$5C(a5)
                 move.l  #$FFFB0000,$1C(a5)
-                bra.s   locret_2DCEA
+                bra.s   Enemy_BirdChasePlayer_Return
 ; ---------------------------------------------------------------------------
-loc_2DCDC:                                              ; CODE XREF: Enemy_BirdChasePlayer+3E   j
+Enemy_BirdChasePlayer_UseShallowAscent:                 ; CODE XREF: Enemy_BirdChasePlayer+3E   j  ; was: loc_2DCDC
                 move.w  #$10,$5C(a5)
                 move.l  #$FFFD8000,$1C(a5)
-locret_2DCEA:                                           ; CODE XREF: Enemy_BirdChasePlayer+4E   j
+Enemy_BirdChasePlayer_Return:                           ; CODE XREF: Enemy_BirdChasePlayer+4E   j  ; was: locret_2DCEA
                 rts
 ; End of function Enemy_BirdChasePlayer
 ; Bird enemy wait state timer countdown before state transition
 Enemy_BirdWaitTimer:                                    ; DATA XREF: ROM:0002DB4C   o  ; was: sub_2DCEC
                 subq.w  #1,$48(a5)
-                bpl.s   locret_2DCFC
+                bpl.s   Enemy_BirdWaitTimer_Return
                 move.w  #4,$4A(a5)
                 subq.w  #2,4(a5)
-locret_2DCFC:                                           ; CODE XREF: Enemy_BirdWaitTimer+4   j
+Enemy_BirdWaitTimer_Return:                             ; CODE XREF: Enemy_BirdWaitTimer+4   j  ; was: locret_2DCFC
                 rts
 ; End of function Enemy_BirdWaitTimer
-; Bird descends with negative velocity until reaching threshold
-Enemy_BirdDescendToThreshold:                           ; DATA XREF: ROM:0002DB4E   o  ; was: sub_2DCFE
+; Accelerates upward until reaching the negative vertical-speed threshold
+Enemy_BirdAccelerateUpwardState:                        ; DATA XREF: ROM:0002DB4E   o  ; was: sub_2DCFE
                 addi.l  #-$4000,$1C(a5)
                 cmpi.l  #$FFFA8000,$1C(a5)
-                bgt.s   locret_2DD14
+                bgt.s   Enemy_BirdAccelerateUpwardState_Return
                 addq.w  #2,4(a5)
-locret_2DD14:                                           ; CODE XREF: Enemy_BirdDescendToThreshold+10   j
+Enemy_BirdAccelerateUpwardState_Return:                 ; CODE XREF: Enemy_BirdAccelerateUpwardState+10   j  ; was: locret_2DD14
                 rts
-; End of function Enemy_BirdDescendToThreshold
-; Bird accelerates upward with gravity until reaching threshold
-Enemy_BirdAccelerate:                                   ; DATA XREF: ROM:0002DB50   o  ; was: sub_2DD16
+; End of function Enemy_BirdAccelerateUpwardState
+; Accelerates downward until reaching the positive vertical-speed threshold
+Enemy_BirdAccelerateDownwardState:                      ; DATA XREF: ROM:0002DB50   o  ; was: sub_2DD16
                 addi.l  #$4000,$1C(a5)
                 cmpi.l  #$28000,$1C(a5)
-                blt.s   locret_2DD2C
+                blt.s   Enemy_BirdAccelerateDownwardState_Return
                 addq.w  #2,4(a5)
-locret_2DD2C:                                           ; CODE XREF: Enemy_BirdAccelerate+10   j
+Enemy_BirdAccelerateDownwardState_Return:               ; CODE XREF: Enemy_BirdAccelerateDownwardState+10   j  ; was: locret_2DD2C
                 rts
-; End of function Enemy_BirdAccelerate
-; Bird decelerates downward with negative gravity and state change
-Enemy_BirdDecelerate:                                   ; DATA XREF: ROM:0002DB52   o  ; was: sub_2DD2E
+; End of function Enemy_BirdAccelerateDownwardState
+; Reverses vertical motion upward, then starts the attack timer
+Enemy_BirdReverseToUpwardState:                         ; DATA XREF: ROM:0002DB52   o  ; was: sub_2DD2E
                 addi.l  #-$4000,$1C(a5)
                 cmpi.l  #$FFFE0000,$1C(a5)
-                bgt.s   locret_2DD50
+                bgt.s   Enemy_BirdReverseToUpwardState_Return
                 move.w  #$100,$48(a5)
                 move.w  #4,$5C(a5)
                 addq.w  #2,4(a5)
-locret_2DD50:                                           ; CODE XREF: Enemy_BirdDecelerate+10   j
+Enemy_BirdReverseToUpwardState_Return:                  ; CODE XREF: Enemy_BirdReverseToUpwardState+10   j  ; was: locret_2DD50
                 rts
-; End of function Enemy_BirdDecelerate
+; End of function Enemy_BirdReverseToUpwardState
 ; Bird attack state with AI movement and projectile firing
 Enemy_BirdAttackState:                                  ; DATA XREF: ROM:0002DB54   o  ; was: sub_2DD52
                 bsr.w   Enemy_BirdAITracking
-                bsr.w   Enemy_BirdFireProjectile
+                bsr.w   Enemy_BirdSpawnShot
                 subq.w  #1,$48(a5)
-                bne.s   locret_2DD6A
+                bne.s   Enemy_BirdAttackState_Return
                 move.w  #4,$5C(a5)
                 addq.w  #2,4(a5)
-locret_2DD6A:                                           ; CODE XREF: Enemy_BirdAttackState+C   j
+Enemy_BirdAttackState_Return:                           ; CODE XREF: Enemy_BirdAttackState+C   j  ; was: locret_2DD6A
                 rts
 ; End of function Enemy_BirdAttackState
-; Bird ascends with positive velocity until reaching threshold
-Enemy_BirdAscendToThreshold:                            ; DATA XREF: ROM:0002DB56   o  ; was: sub_2DD6C
+; Accelerates downward before entering the oscillating movement state
+Enemy_BirdAccelerateDownwardExitState:                  ; DATA XREF: ROM:0002DB56   o  ; was: sub_2DD6C
                 addi.l  #$4000,$1C(a5)
                 cmpi.l  #$20000,$1C(a5)
-                blt.s   locret_2DD82
+                blt.s   Enemy_BirdAccelerateDownwardExitState_Return
                 addq.w  #2,4(a5)
-locret_2DD82:                                           ; CODE XREF: Enemy_BirdAscendToThreshold+10   j
+Enemy_BirdAccelerateDownwardExitState_Return:           ; CODE XREF: Enemy_BirdAccelerateDownwardExitState+10   j  ; was: locret_2DD82
                 rts
-; End of function Enemy_BirdAscendToThreshold
+; End of function Enemy_BirdAccelerateDownwardExitState
 ; Bird oscillates velocity values for horizontal and vertical movement
 Enemy_BirdOscillateMovement:                            ; DATA XREF: ROM:0002DB58   o  ; was: sub_2DD84
                 btst    #7,$1C(a5)
-                bne.s   loc_2DD94
+                bne.s   Enemy_BirdOscillateMovement_UpdateHorizontal
                 addi.l  #-$2000,$1C(a5)
-loc_2DD94:                                              ; CODE XREF: Enemy_BirdOscillateMovement+6   j
+Enemy_BirdOscillateMovement_UpdateHorizontal:           ; CODE XREF: Enemy_BirdOscillateMovement+6   j  ; was: loc_2DD94
                 btst    #7,$18(a5)
-                bne.s   loc_2DDA6
+                bne.s   Enemy_BirdOscillateMovement_AccelerateLeft
                 addi.l  #$800,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_2DDA6:                                              ; CODE XREF: Enemy_BirdOscillateMovement+16   j
+Enemy_BirdOscillateMovement_AccelerateLeft:             ; CODE XREF: Enemy_BirdOscillateMovement+16   j  ; was: loc_2DDA6
                 addi.l  #-$800,$18(a5)
                 rts
 ; End of function Enemy_BirdOscillateMovement
@@ -327,7 +327,7 @@ loc_2DDA6:                                              ; CODE XREF: Enemy_BirdO
 Enemy_BirdAITracking:                                   ; CODE XREF: Enemy_BirdAttackState   p  ; was: sub_2DDB0
                 move.w  (word_FFA000).w,d7
                 andi.w  #$1F,d7
-                bne.s   loc_2DDDA
+                bne.s   Enemy_BirdAITracking_UpdateTarget
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$7F,d0
                 subi.w  #$40,d0                         ; '@'
@@ -336,54 +336,54 @@ Enemy_BirdAITracking:                                   ; CODE XREF: Enemy_BirdA
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,$4E(a5)
-loc_2DDDA:                                              ; CODE XREF: Enemy_BirdAITracking+8   j
+Enemy_BirdAITracking_UpdateTarget:                      ; CODE XREF: Enemy_BirdAITracking+8   j  ; was: loc_2DDDA
                 move.w  (word_FF8248).w,d0
                 add.w   $4C(a5),d0
                 move.w  (word_FF824A).w,d1
                 subi.w  #$60,d1                         ; '`'
                 add.w   $4E(a5),d1
                 sub.w   $10(a5),d0
-                beq.s   loc_2DE2E
+                beq.s   Enemy_BirdAITracking_UpdateVertical
                 tst.w   d0
-                bpl.s   loc_2DE14
+                bpl.s   Enemy_BirdAITracking_AccelerateRight
                 subi.l  #$2000,$18(a5)
                 cmpi.l  #$FFFE0000,$18(a5)
-                bge.s   loc_2DE2E
+                bge.s   Enemy_BirdAITracking_UpdateVertical
                 move.l  #$FFFE0000,$18(a5)
-                bra.s   loc_2DE2E
+                bra.s   Enemy_BirdAITracking_UpdateVertical
 ; ---------------------------------------------------------------------------
-loc_2DE14:                                              ; CODE XREF: Enemy_BirdAITracking+46   j
+Enemy_BirdAITracking_AccelerateRight:                   ; CODE XREF: Enemy_BirdAITracking+46   j  ; was: loc_2DE14
                 addi.l  #$2000,$18(a5)
                 cmpi.l  #$20000,$18(a5)
-                ble.s   loc_2DE2E
+                ble.s   Enemy_BirdAITracking_UpdateVertical
                 move.l  #$20000,$18(a5)
-loc_2DE2E:                                              ; CODE XREF: Enemy_BirdAITracking+42   j
+Enemy_BirdAITracking_UpdateVertical:                    ; CODE XREF: Enemy_BirdAITracking+42   j  ; was: loc_2DE2E
                                         ; Enemy_BirdAITracking+58   j
                 sub.w   $14(a5),d1
-                beq.s   locret_2DE6E
+                beq.s   Enemy_BirdAITracking_Return
                 tst.w   d1
-                bpl.s   loc_2DE54
+                bpl.s   Enemy_BirdAITracking_AccelerateDown
                 subi.l  #$4000,$1C(a5)
                 cmpi.l  #$FFFE0000,$1C(a5)
-                bge.s   locret_2DE6E
+                bge.s   Enemy_BirdAITracking_Return
                 move.l  #$FFFE0000,$1C(a5)
-                bra.s   locret_2DE6E
+                bra.s   Enemy_BirdAITracking_Return
 ; ---------------------------------------------------------------------------
-loc_2DE54:                                              ; CODE XREF: Enemy_BirdAITracking+86   j
+Enemy_BirdAITracking_AccelerateDown:                    ; CODE XREF: Enemy_BirdAITracking+86   j  ; was: loc_2DE54
                 addi.l  #$4000,$1C(a5)
                 cmpi.l  #$20000,$1C(a5)
-                ble.s   locret_2DE6E
+                ble.s   Enemy_BirdAITracking_Return
                 move.l  #$20000,$1C(a5)
-locret_2DE6E:                                           ; CODE XREF: Enemy_BirdAITracking+82   j
+Enemy_BirdAITracking_Return:                            ; CODE XREF: Enemy_BirdAITracking+82   j  ; was: locret_2DE6E
                                         ; Enemy_BirdAITracking+98   j
                 rts
 ; End of function Enemy_BirdAITracking
-; Spawns bird projectile with direction
-Enemy_BirdFireProjectile:                               ; CODE XREF: Enemy_BirdFireWrapper   p  ; was: sub_2DE70
+; Spawns a falling bird shot in the current horizontal direction
+Enemy_BirdSpawnShot:                                    ; CODE XREF: Enemy_BirdFireState   p  ; was: sub_2DE70
                                         ; Enemy_BirdAttackState+4   p
                 move.w  (word_FFA000).w,d0
                 andi.w  #$1F,d0
-                bne.s   locret_2DEC6
+                bne.s   Enemy_BirdSpawnShot_Return
                 jsr     (Projectile_FindFreePrimarySlot).l
                 move.w  #$2BC,(a0)
                 move.b  $20(a5),$20(a0)
@@ -392,20 +392,20 @@ Enemy_BirdFireProjectile:                               ; CODE XREF: Enemy_BirdF
                 addi.w  #4,$14(a0)
                 move.w  $10(a5),$10(a0)
                 btst    #7,$18(a5)
-                beq.s   loc_2DEB8
+                beq.s   Enemy_BirdSpawnShot_MoveLeft
                 move.l  #$2000,$18(a0)
                 addi.w  #$10,$10(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_2DEB8:                                              ; CODE XREF: Enemy_BirdFireProjectile+36   j
+Enemy_BirdSpawnShot_MoveLeft:                           ; CODE XREF: Enemy_BirdSpawnShot+36   j  ; was: loc_2DEB8
                 move.l  #$FFFFE000,$18(a0)
                 addi.w  #-$10,$10(a0)
-locret_2DEC6:                                           ; CODE XREF: Enemy_BirdFireProjectile+8   j
+Enemy_BirdSpawnShot_Return:                             ; CODE XREF: Enemy_BirdSpawnShot+8   j  ; was: locret_2DEC6
                 rts
-; End of function Enemy_BirdFireProjectile
-; Bird enemy bounces off with reversed velocity after hit
-Enemy_BirdBounceOff:                                    ; CODE XREF: Enemy_BirdMain+A   j  ; was: sub_2DEC8
-                                        ; Enemy_BirdMain+12   j
+; End of function Enemy_BirdSpawnShot
+; Converts the bird to defeat debris with reversed horizontal and upward velocity
+Enemy_ConvertBirdToDefeatDebris:                        ; CODE XREF: Enemy_BirdController+A   j  ; was: sub_2DEC8
+                                        ; Enemy_BirdController+12   j
                 clr.w   4(a5)
                 move.w  #$1DC,(a5)
                 move.l  $18(a5),d0
@@ -418,29 +418,29 @@ Enemy_BirdBounceOff:                                    ; CODE XREF: Enemy_BirdM
                 move.w  #4,$4A(a5)
                 move.w  #8,$5C(a5)
                 bra.w   Enemy_UpdateBirdAnimation
-; End of function Enemy_BirdBounceOff
-; Bird spawns projectiles with gravity and explosion effect
-Enemy_BirdProjectileSpawn:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DEFE
+; End of function Enemy_ConvertBirdToDefeatDebris
+; Updates falling bird defeat debris, emits particles, then creates a pickup
+Enemy_UpdateBirdDefeatDebris:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DEFE
                 bsr.w   Enemy_ToggleSpriteVisibility
                 addi.l  #$2000,$1C(a5)
                 tst.w   4(a5)
-                bne.s   loc_2DF1A
+                bne.s   Enemy_UpdateBirdDefeatDebris_EmitParticles
                 tst.w   $1C(a5)
-                bmi.s   loc_2DF1A
+                bmi.s   Enemy_UpdateBirdDefeatDebris_EmitParticles
                 addq.w  #2,4(a5)
-loc_2DF1A:                                              ; CODE XREF: Enemy_BirdProjectileSpawn+10   j
-                                        ; Enemy_BirdProjectileSpawn+16   j
+Enemy_UpdateBirdDefeatDebris_EmitParticles:             ; CODE XREF: Enemy_UpdateBirdDefeatDebris+10   j  ; was: loc_2DF1A
+                                        ; Enemy_UpdateBirdDefeatDebris+16   j
                 move.w  (word_FFA000).w,d7
                 andi.w  #7,d7
-                bne.s   locret_2DF7C
+                bne.s   Enemy_UpdateBirdDefeatDebris_Return
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_2DF7C
+                bne.s   Enemy_UpdateBirdDefeatDebris_Return
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  #off_E953C,8(a0)
                 jsr     (Sprite_InitType160).l
                 subq.w  #1,$4A(a5)
-                bne.s   locret_2DF7C
+                bne.s   Enemy_UpdateBirdDefeatDebris_Return
                 moveq   #2,d0
                 moveq   #4,d1
                 movea.l #off_E953C,a1
@@ -448,14 +448,13 @@ loc_2DF1A:                                              ; CODE XREF: Enemy_BirdP
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 cmpi.w  #$1B8,(word_FFDB20).w
-                beq.s   loc_2DF76
+                beq.s   Enemy_UpdateBirdDefeatDebris_RemoveForSpecialStage
                 moveq   #7,d0
                 jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
-loc_2DF76:                                              ; CODE XREF: Enemy_BirdProjectileSpawn+6E   j
+Enemy_UpdateBirdDefeatDebris_RemoveForSpecialStage:     ; CODE XREF: Enemy_UpdateBirdDefeatDebris+6E   j  ; was: loc_2DF76
                 bset    #4,2(a5)
-locret_2DF7C:                                           ; CODE XREF: Enemy_BirdProjectileSpawn+24   j
-                                        ; Enemy_BirdProjectileSpawn+2C   j
+Enemy_UpdateBirdDefeatDebris_Return:                    ; CODE XREF: Enemy_UpdateBirdDefeatDebris+24   j  ; was: locret_2DF7C
+                                        ; Enemy_UpdateBirdDefeatDebris+2C   j
                 rts
-; End of function Enemy_BirdProjectileSpawn
-; Main dispatcher for Stage 10 fly enemy
+; End of function Enemy_UpdateBirdDefeatDebris

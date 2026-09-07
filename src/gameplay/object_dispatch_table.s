@@ -35,7 +35,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_GravityBounce
                 dc.l    Physics_ApplyGravity
                 dc.l    Enemy_ProjectileAttackController
-                dc.l    Enemy_BirdMain
+                dc.l    Enemy_BirdController
                 dc.l    Physics_AccelerateUpward
                 dc.l    Enemy_BossProjectileMovement
                 dc.l    Effect_AnimateAndExpire
@@ -118,7 +118,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_TrailingExplosionSpawner
                 dc.l    Enemy_UpdateDefeatProjectile
                 dc.l    Enemy_UpdateAlternateDefeatProjectile
-                dc.l    Enemy_BirdProjectileSpawn
+                dc.l    Enemy_UpdateBirdDefeatDebris
                 dc.l    Enemy_HomingAttackController
                 dc.l    Enemy_GustheadDebrisMain
                 dc.l    Enemy_GustheadDebrisPhysicsMain

@@ -132,7 +132,7 @@ loc_2E10A:                                              ; CODE XREF: Enemy_Stage
 Enemy_WaspMainLoop:                                     ; CODE XREF: Enemy_Stage10WaspMain+4   j  ; was: loc_2E114
                 bsr.s   Enemy_Stage10WaspDispatcher
                 bsr.w   Enemy_UpdateAnimationFrame
-                bra.w   Enemy_UpdateSpriteFlip
+                bra.w   Enemy_UpdateHorizontalFlipFromVelocity
 ; End of function Enemy_Stage10WaspMain
 ; State dispatcher for wasp enemy
 Enemy_Stage10WaspDispatcher:                            ; CODE XREF: Enemy_Stage10WaspMain:loc_2E114   p  ; was: sub_2E11E

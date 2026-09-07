@@ -106,7 +106,7 @@ Enemy_Stage10BeetleMain:                                ; DATA XREF: ROM:Entity_
 ; Main loop for beetle enemy with state dispatch and animation
 Enemy_BeetleMainLoop:                                   ; CODE XREF: Enemy_Stage10BeetleMain+4   j  ; was: loc_2E7EC
                 bsr.s   Enemy_Stage10BeetleDispatcher
-                bsr.w   Enemy_UpdateSpriteFlip
+                bsr.w   Enemy_UpdateHorizontalFlipFromVelocity
                 tst.l   $1C(a5)
                 bne.s   locret_2E804
                 move.l  #off_1A0F42,8(a5)
