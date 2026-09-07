@@ -488,7 +488,7 @@ Stage_LoadStage10Graphics:                              ; CODE XREF: Stage_Stage
                                         ; sub_DA40   p
                 move.w  #$30,(word_FFF74A).w            ; '0'
                 clr.w   (word_FFF74E).w
-                jsr     (Enemy_InitStage10Debris).l
+                jsr     (Stage10_InitAmbientParticles).l
                 addq.w  #2,(word_FFA950).w
                 rts
 ; End of function Stage_LoadStage10Graphics

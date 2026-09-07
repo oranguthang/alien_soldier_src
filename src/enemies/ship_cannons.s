@@ -598,12 +598,12 @@ Boss_EnableVisibilityFlag:
                 bne.s   nullsub_72
                 bset    #4,2(a5)
                 clr.w   $4C(a5)
-                bra.w   loc_2F4DC
+                bra.w   TerrainTileAnimation_TransferIfScheduled
 ; End of function Boss_EnableVisibilityFlag
 ; Updates boss graphics tiles via DMA based on animation frame
 Boss_UpdateTilesDMA:
                 tst.w   $48(a5)                         ; was: sub_2FCCE
-                bne.w   locret_2F418
+                bne.w   TerrainTileAnimation_Return
                 move.w  $4C(a5),d0
                 move.w  word_2FCEC(pc,d0.w),$56(a5)
                 movea.w a5,a0

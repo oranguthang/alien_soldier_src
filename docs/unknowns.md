@@ -298,6 +298,20 @@ below the normal target size because merging unrelated Antroid code would
 obscure the ROM boundary. Incorrect Xi-Tiger and generic boss claims are
 recorded in the name audit.
 
+The stage-environment pass reduced the count to 9,755 by replacing all 11
+address-derived definitions in the former
+`src/bosses/antroid_and_debris.s`. The first state machine is shared by
+sixteen entity types across multiple stages: spawn parameter `$5E` selects
+one of eight terrain-layout bases, and its five forward/rewind frames are
+written through `Gfx_DMATransferTiles`. It neither belongs to Antroid nor
+implements a multi-shot enemy. The adjacent type-`$208` system is initialized
+only by the Stage 10 graphics setup and continuously recycles six
+non-colliding objects within screen bounds, so the unsupported debris claim
+has been narrowed to ambient particles without asserting their exact visual
+identity. Both environmental visual systems now form the cohesive 202-line
+`src/effects/stage_environment.s`; fourteen materially incorrect enemy,
+projectile, Antroid and debris claims are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

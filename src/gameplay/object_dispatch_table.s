@@ -29,7 +29,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Weapon_UpdateSeekingMissile
                 dc.l    Effect_UpdateCompanionFromParent
                 dc.l    Weapon_UpdateBombProjectile
-                dc.l    Enemy_TinyWrapper
+                dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Effect_UpdateDeathSparkMotion
                 dc.l    Projectile_ApplyGravityEffect
                 dc.l    Projectile_GravityBounce
@@ -42,32 +42,32 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Effect_UpdateCompanionFromParent
                 dc.l    Anim_UpdateWithGlobalAttributes
                 dc.l    Effect_SpawnParticleLoop
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Boss_TerobusterMain
                 dc.l    Boss_TerobusterMovementPhysics
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Object_UpdateVisibilityLifetime
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Boss_JetsripperMainHandler
                 dc.l    Boss_JetsripperClampY
                 dc.l    Boss_JetsripperSegmentPhysics
                 dc.l    Boss_CalculatePlayerDistance
                 dc.l    Boss_ShellshogunMainHandler
                 dc.l    Entity_EmptyState5
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_SpawnMultiShot
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_OddFrameHandler
                 dc.l    Enemy_SpawnFallingHazard
                 dc.l    Projectile_TerrainCollision
-                dc.l    Enemy_TinyWrapper
-                dc.l    Enemy_TinyWrapper
+                dc.l    TerrainTileAnimation_EvenFrameHandler
+                dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Boss_XiTigerMain
                 dc.l    Boss_MadamBarbarMain
                 dc.l    Projectile_MadamBarbarDropBehavior
@@ -75,7 +75,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Weapon_HandleProjectileHit
                 dc.l    Boss_CaterpillarMain
                 dc.l    Enemy_InitSpriteGraphics
-                dc.l    Enemy_TinyWrapper
+                dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Terrain_StampObjectPattern
                 dc.l    Enemy_HomingMissileUpdate
                 dc.l    Boss_CaterpillarPart2
@@ -129,7 +129,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_JetsripperProjectileUpdate
                 dc.l    Weapon_UpdateSeekingMissile
                 dc.l    Effect_SpawnPlayerDeathSpark
-                dc.l    Enemy_DebrisUpdate
+                dc.l    Stage10_UpdateAmbientParticle
                 dc.l    Boss_SunsetStingDefeatFall
                 dc.l    Boss_ViblackProjectileDispatcher
                 dc.l    Boss_GustheadDebrisUpdate

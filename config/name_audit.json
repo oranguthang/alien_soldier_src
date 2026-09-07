@@ -2265,6 +2265,160 @@
         "The state reads the retained parent pointer and recomputes each motion component from stored radial amplitudes, angular offsets and the parent's changing angle fields.",
         "It belongs exclusively to the orphaned radial-test particle table and expires the slot after 128 frames; no live boss ownership is established."
       ]
+    },
+    {
+      "address": "0x02F396",
+      "previous_name": "Enemy_TinyWrapper",
+      "current_name": "TerrainTileAnimation_EvenFrameHandler",
+      "legacy_name": "sub_2F396",
+      "evidence": "static",
+      "basis": [
+        "Sixteen entity types share this entry, including Stage 2 types 0xFC and Stage 10 types 0xC0/0xDC; no single enemy owns it.",
+        "The handler selects even global frames for a state machine that writes pattern bytes into terrain-layout memory through Gfx_DMATransferTiles."
+      ]
+    },
+    {
+      "address": "0x02F39A",
+      "previous_name": "Enemy_SpawnMultiShot",
+      "current_name": "TerrainTileAnimation_OddFrameHandler",
+      "legacy_name": "sub_2F39A",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x100 is placed by the Stage 2 object list and differs from the shared entry only by XORing the global-frame parity with one.",
+        "The routine itself allocates no objects and computes no shot velocity; it dispatches the same terrain-layout animation states on odd frames."
+      ]
+    },
+    {
+      "address": "0x02F3CA",
+      "previous_name": "Enemy_MultiShotDispatcher",
+      "current_name": "TerrainTileAnimation_DispatchState",
+      "legacy_name": "loc_2F3CA",
+      "evidence": "static",
+      "basis": [
+        "Its six offsets select initialization, activation wait, finish, forward-frame, peak-hold and rewind states.",
+        "All visible changes are terrain pattern transfers; there is no multi-shot state or projectile loop."
+      ]
+    },
+    {
+      "address": "0x02F3E6",
+      "previous_name": "Enemy_TwinProjectileHandler",
+      "current_name": "TerrainTileAnimation_Initialize",
+      "legacy_name": "sub_2F3E6",
+      "evidence": "static",
+      "basis": [
+        "This first state initializes a five-repeat counter and a Gfx_DMATransferTiles descriptor at object fields 0x50-0x56.",
+        "Spawn parameter 0x5E chooses one of eight terrain-layout base addresses; no projectile is created here."
+      ]
+    },
+    {
+      "address": "0x02F42A",
+      "previous_name": "Enemy_DestroyOnContact",
+      "current_name": "TerrainTileAnimation_WaitForActivation",
+      "legacy_name": "sub_2F42A",
+      "evidence": "static",
+      "basis": [
+        "The only position test is the controller's screen X coordinate against 0x1A8, followed by a 32-frame countdown.",
+        "There is no collision or player access; expiry starts the forward tile sequence, creates a type-0x2B0 cue effect and plays SFX 0x45."
+      ]
+    },
+    {
+      "address": "0x02F46C",
+      "previous_name": "Boss_AntroidPhaseCounter",
+      "current_name": "TerrainTileAnimation_AdvanceFrame",
+      "legacy_name": "sub_2F46C",
+      "evidence": "static",
+      "basis": [
+        "On the selected frame parity this state increments field 0x4C by two and transfers the corresponding entry from a five-pattern terrain table.",
+        "At the fifth pattern it starts a 32-frame hold; it reads no Antroid object, health or battle state."
+      ]
+    },
+    {
+      "address": "0x02F48E",
+      "previous_name": "Boss_CheckPhaseTrigger",
+      "current_name": "TerrainTileAnimation_HoldPeakFrame",
+      "legacy_name": "sub_2F48E",
+      "evidence": "static",
+      "basis": [
+        "This table state only counts down the hold timer installed after the fifth terrain pattern is written.",
+        "It advances unconditionally when the timer expires and checks neither a boss phase nor an external trigger."
+      ]
+    },
+    {
+      "address": "0x02F49A",
+      "previous_name": "Boss_AdvanceToNextPhase",
+      "current_name": "TerrainTileAnimation_RewindFrame",
+      "legacy_name": "sub_2F49A",
+      "evidence": "static",
+      "basis": [
+        "The state decrements the pattern index back to zero, transfers each terrain frame, and repeats the activation cycle until its five-repeat counter expires.",
+        "Its random 0x40-0xBF delay separates visual cycles; no boss-phase variable is read or written."
+      ]
+    },
+    {
+      "address": "0x02F4C8",
+      "previous_name": "Boss_AntroidUpdateTiles",
+      "current_name": "TerrainTileAnimation_Finish",
+      "legacy_name": "sub_2F4C8",
+      "evidence": "static",
+      "basis": [
+        "This terminal state marks the controller for removal, resets the pattern index and performs one final shared terrain transfer.",
+        "The routine is reached by the multi-stage terrain controller and has no Antroid-specific input or graphics reference."
+      ]
+    },
+    {
+      "address": "0x02F4E4",
+      "previous_name": "Boss_AntroidDMATileTransfer",
+      "current_name": "TerrainTileAnimation_TransferFrame",
+      "legacy_name": "loc_2F4E4",
+      "evidence": "static",
+      "basis": [
+        "Field 0x4C selects one of five layout-pattern word pairs, which are appended to the object-resident transfer descriptor before calling Gfx_DMATransferTiles.",
+        "The descriptor targets layout base addresses chosen from stage spawn parameter 0x5E, so the transfer is shared terrain animation rather than Antroid art."
+      ]
+    },
+    {
+      "address": "0x02F504",
+      "previous_name": "Enemy_InitStage10Debris",
+      "current_name": "Stage10_InitAmbientParticles",
+      "legacy_name": "sub_2F504",
+      "evidence": "static",
+      "basis": [
+        "Stage_LoadStage10Graphics calls this routine once to initialize exactly six reserved object slots as type 0x208.",
+        "The objects have no collision setup or finite debris lifetime; their update loop continually recycles them inside the viewport."
+      ]
+    },
+    {
+      "address": "0x02F516",
+      "previous_name": "Enemy_InitDebrisEntity",
+      "current_name": "Stage10_InitAmbientParticle",
+      "legacy_name": "sub_2F516",
+      "evidence": "static",
+      "basis": [
+        "This helper initializes each of the six reserved type-0x208 objects with display attributes, camera history and a fixed tile index.",
+        "It immediately falls through to randomized placement used by the persistent Stage 10 ambient system, not a one-shot enemy debris effect."
+      ]
+    },
+    {
+      "address": "0x02F53E",
+      "previous_name": "Enemy_DebrisSetRandomVelocity",
+      "current_name": "Stage10_ResetAmbientParticle",
+      "legacy_name": "loc_2F53E",
+      "evidence": "static",
+      "basis": [
+        "The helper selects a random screen X in 0xA0-0x19F, Y in 0x80-0xFF and a signed vertical motion value, accounting for camera delta.",
+        "It is reached both during initialization and whenever a type-0x208 particle exits its screen bounds, establishing a recycling operation rather than debris physics."
+      ]
+    },
+    {
+      "address": "0x02F580",
+      "previous_name": "Enemy_DebrisUpdate",
+      "current_name": "Stage10_UpdateAmbientParticle",
+      "legacy_name": "sub_2F580",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x208 maps here and is constructed only by Stage10_InitAmbientParticles in the Stage 10 graphics setup.",
+        "The handler compensates for horizontal camera motion, derives horizontal motion from the stage scroll rate and recycles the object at viewport bounds; it has no enemy or debris interaction."
+      ]
     }
   ]
 }
