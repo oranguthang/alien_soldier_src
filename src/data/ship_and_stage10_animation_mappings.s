@@ -505,7 +505,7 @@ word_EB236:     dc.w    $6049, $500, $305               ; DATA XREF: ROM:000EB2C
                 dc.w    $682D, $500, $F208
                 dc.w    $6837, $A00, $DA08
                 dc.w    $E831, $600, $EAF8
-off_EB278:      dc.w    word_EAF1E-*                    ; DATA XREF: ROM:off_2E0AE   o
+off_EB278:      dc.w    word_EAF1E-*                    ; DATA XREF: ROM:Enemy_Stage10WaspAnimationMappings   o
                                         ; ROM:000EB290   o
                 dc.w    4
                 dc.w    word_EAF60-*
@@ -537,7 +537,7 @@ off_EB294:      dc.w    word_EAF60-*                    ; DATA XREF: ROM:0002E0B
                 dc.w    word_EB0AA-*
                 dc.w    $FF
 off_EB2B4:      dc.w    word_EB0AA-*                    ; DATA XREF: ROM:0002E0B6   o
-                                        ; Enemy_Stage10WaspDeath+10   o
+                                        ; Enemy_ConvertStage10WaspToDefeatDebris+10   o
                 dc.w    6
                 dc.w    word_EB12E-*
                 dc.w    6

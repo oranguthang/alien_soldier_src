@@ -1825,6 +1825,28 @@
         "Enemy_ConvertBirdToDefeatDebris changes a defeated bird to entity type 0x1DC, whose dispatch-table entry is this routine.",
         "The handler applies gravity, emits visual particles, creates a radial destruction effect and either spawns a pickup or removes the debris; it does not create the bird's attack projectile."
       ]
+    },
+    {
+      "address": "0x02DF7E",
+      "previous_name": "Enemy_Stage10FlyMain",
+      "current_name": "Projectile_FallingShotController",
+      "legacy_name": "sub_2DF7E",
+      "evidence": "static",
+      "basis": [
+        "Enemy_BirdSpawnShot installs entity type 0x2BC, whose dispatch-table entry is this controller, outside any Stage 10-specific constructor.",
+        "Its two states initialize generic projectile collision fields and apply gravity, impact, bounds and lifetime handling; no fly AI or Stage 10 state is read."
+      ]
+    },
+    {
+      "address": "0x02DF8E",
+      "previous_name": "Enemy_Stage10FlyInit",
+      "current_name": "Projectile_FallingShotInit",
+      "legacy_name": "sub_2DF8E",
+      "evidence": "static",
+      "basis": [
+        "This first state initializes display, collision and damage fields on the type-0x2BC falling shot before entering Projectile_FallingShotUpdate.",
+        "It selects no fly animation, movement state or Stage 10 object data."
+      ]
     }
   ]
 }

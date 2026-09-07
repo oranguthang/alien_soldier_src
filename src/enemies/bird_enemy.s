@@ -39,7 +39,7 @@ Enemy_BirdAnimationMappings:    dc.l    off_EA7E0       ; DATA XREF: Enemy_Updat
 
 ; Updates sprite horizontal flip based on velocity
 Enemy_UpdateHorizontalFlipFromVelocity:                 ; CODE XREF: Enemy_BirdController+5C   j  ; was: sub_2DAB0
-                                        ; Enemy_Stage10WaspMain+5C   j
+                                        ; Enemy_Stage10WaspController+5C   j
                 tst.l   $18(a5)
                 beq.s   Enemy_UpdateHorizontalFlipFromVelocity_Return
                 btst    #7,$18(a5)

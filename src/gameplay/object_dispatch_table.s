@@ -174,9 +174,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_AnimationWrapper
                 dc.l    Enemy_InitProjectileType
                 dc.l    Boss_ViblackMain
-                dc.l    Enemy_Stage10FlyMain
-                dc.l    Enemy_Stage10WaspMain
-                dc.l    Enemy_Stage10WaspExplode
+                dc.l    Projectile_FallingShotController
+                dc.l    Enemy_Stage10WaspController
+                dc.l    Enemy_UpdateStage10WaspDefeatDebris
                 dc.l    Stage_TunnelSequencer
                 dc.l    Enemy_Stage12FloaterDispatcher
                 dc.l    Enemy_Stage12LauncherExplode

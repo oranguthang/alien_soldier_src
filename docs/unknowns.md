@@ -240,6 +240,14 @@ handler. Direction claims were checked against signed velocity writes and the
 engine's downward-positive screen coordinates; six contradicted generated
 names are recorded in the name audit.
 
+The falling-shot/Stage 10 wasp pass reduced the count to 9,894 by replacing
+all 22 address-derived definitions in the former `stage_10_fliers.s`. Its first
+handler is the generic type-`$2BC` falling shot created by the bird controller,
+not a Stage 10 fly. The adjacent type-`$2C0` wasp and type-`$2C4` defeat debris
+form the rest of the honest 287-line
+`src/enemies/stage_10_wasp_and_falling_shot.s` ROM-ordered module. The two
+incorrect Stage 10 fly claims are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

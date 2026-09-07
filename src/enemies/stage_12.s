@@ -130,7 +130,7 @@ locret_2E414:                                           ; CODE XREF: Enemy_FallU
                                         ; Enemy_FallUntilOffscreen+1C   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_2E416:                                              ; CODE XREF: Enemy_Stage10FlyInit+92   j
+loc_2E416:                                              ; CODE XREF: Projectile_FallingShotInit+92   j
                                         ; Enemy_FallUntilOffscreen+1E   j
                 movea.w a5,a0
                 jsr     (Projectile_InitType88FromCurrent).l
