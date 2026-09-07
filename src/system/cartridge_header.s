@@ -16,7 +16,7 @@
 ; Segment type: Pure code
 ; segment "ROM"
 ; ROM segment
-dword_0:        dc.l    $FFFFFF00                       ; DATA XREF: ROM:stru_113AA   o
+Sys_VectorTable:    dc.l    $FFFFFF00                   ; DATA XREF: ROM:stru_113AA   o  ; was: dword_0
                                         ; ROM:stru_11408   o
                 dc.l    Reset
                 dc.l    BusErr

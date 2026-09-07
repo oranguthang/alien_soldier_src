@@ -101,7 +101,7 @@ UI_UpdateOptionsScreen:                                 ; DATA XREF: Sys_Dispatc
                 beq.s   loc_978C
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                jmp     loc_1CDB8
+                jmp     UI_ResetMenuBufferAndState_Clear
 ; ---------------------------------------------------------------------------
 loc_978C:                                               ; CODE XREF: UI_UpdateOptionsScreen+6   j
                 tst.w   (word_FF80F2).w
@@ -487,7 +487,7 @@ Sys_RunOptionsMenuLoop:                                 ; DATA XREF: Sys_Dispatc
                 beq.s   loc_9EA0
                 move.w  #$54,(GameModeIndex).w          ; 'T'
                 clr.w   (GameSubstateIndex).w
-                jmp     loc_1CDB8
+                jmp     UI_ResetMenuBufferAndState_Clear
 ; ---------------------------------------------------------------------------
 loc_9EA0:                                               ; CODE XREF: Sys_RunOptionsMenuLoop+6   j
                 tst.w   (word_FF80F2).w

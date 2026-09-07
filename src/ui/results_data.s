@@ -1,5 +1,5 @@
 UI_PrepareResultsData:                                  ; CODE XREF: Results_InitializeDataDisplay+1AC   p  ; was: sub_2024A
-                lea     (word_1CE4C).l,a1
+                lea     (UI_StageWeaponSelectionTable).l,a1
                 lea     (word_FFAA00).w,a2
                 lea     (word_FFAA80).w,a3
                 lea     (word_FFAB00).w,a4

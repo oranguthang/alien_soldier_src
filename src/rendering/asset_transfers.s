@@ -214,7 +214,7 @@ stru_11398:     dc.w    7                               ; field_0
                 dc.w    $FFFF
 stru_113AA:     dc.w    $24                             ; field_0
                                         ; DATA XREF: Camera_FollowTarget+34   o
-                dc.l    dword_0                         ; field_2
+                dc.l    0                               ; field_2
                 dc.l    byte_C2B2                       ; field_6
 stru_113B4:     dc.w    $118                            ; field_0
                                         ; DATA XREF: Boss_MadamBarbarScrollInit+2A   o
@@ -255,7 +255,7 @@ stru_113F6:     dc.w    7                               ; field_0
 stru_11408:     dc.w    $154                            ; field_0
                                         ; DATA XREF: Stage_FlyingNeoBattleStart+A   o
                 dc.l    stru_11412                      ; field_2
-                dc.l    dword_0                         ; field_6
+                dc.l    0                               ; field_6
 stru_11412:     dc.w    7                               ; field_0
                                         ; DATA XREF: ROM:stru_11408   o
                 dc.l    tiles_114DF8                    ; field_2
@@ -558,19 +558,19 @@ stru_11662:     dc.w    7                               ; field_0
                 dc.w    $FFFF
 stru_1166C:     dc.w    $430                            ; field_0
                                         ; DATA XREF: Boss_MedusaMain+4A   o
-                dc.l    dword_0                         ; field_2
+                dc.l    0                               ; field_2
                 dc.l    byte_C69E                       ; field_6
 stru_11676:     dc.w    $434                            ; field_0
                                         ; DATA XREF: Boss_SireneMain+1A   o
-                dc.l    dword_0                         ; field_2
+                dc.l    0                               ; field_2
                 dc.l    byte_C6FE                       ; field_6
 stru_11680:     dc.w    $438                            ; field_0
                                         ; DATA XREF: Boss_ArtemisMain+78   o
-                dc.l    dword_0                         ; field_2
+                dc.l    0                               ; field_2
                 dc.l    byte_C6DE                       ; field_6
 stru_1168A:     dc.w    $43C                            ; field_0
                                         ; DATA XREF: Boss_SireneDeathFlash2+1C   o
-                dc.l    dword_0                         ; field_2
+                dc.l    0                               ; field_2
                 dc.l    byte_C73E                       ; field_6
 stru_11694:     dc.w    $440                            ; field_0
                                         ; DATA XREF: Boss_SireneDeathFlash1+1C   o
@@ -578,7 +578,7 @@ stru_11694:     dc.w    $440                            ; field_0
                 dc.l    byte_C71E                       ; field_6
 stru_1169E:     dc.w    $444                            ; field_0
                                         ; DATA XREF: Boss_SylpheedMain+50   o
-                dc.l    dword_0                         ; field_2
+                dc.l    0                               ; field_2
                 dc.l    byte_C6BE                       ; field_6
 
 ; Updates boss palette with fade or flash effect

@@ -79,7 +79,7 @@
       }
     ],
     "landmarks": [
-      { "symbol": "dword_0", "address": "0x000000", "role": "Exception vector table" },
+      { "symbol": "Sys_VectorTable", "address": "0x000000", "role": "Exception vector table" },
       { "symbol": "CopyRights", "address": "0x000100", "role": "Mega Drive cartridge header" },
       { "symbol": "Checksum", "address": "0x00018E", "role": "Header checksum word" },
       { "symbol": "Reset", "address": "0x000200", "role": "Reset entry" },

@@ -162,7 +162,7 @@ Boss_ShieldViperDamage:                                 ; CODE XREF: Boss_Shield
                                         ; Boss_ShieldViperDifficultySetup+1E   p
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-                jsr     (loc_355A).l
+                jsr     (Math_CalculateDirectionIndex).l
                 addi.w  #$100,d2
                 sub.w   $56(a5),d2
                 andi.w  #$1FF,d2

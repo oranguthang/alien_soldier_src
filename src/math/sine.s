@@ -8,7 +8,7 @@ Math_LookupSineTable:                                   ; CODE XREF: Effect_Init
                 rts
 ; End of function Math_LookupSineTable
 ; ---------------------------------------------------------------------------
-stru_8630:      dc.w    $8000                           ; field_0
+Sprite_SharedGraphicsFrameTable:    dc.w    $8000       ; field_0  ; was: stru_8630
                                         ; DATA XREF: Cutscene_InitPlanetScene+7C   o
                                         ; Sprite_SetGraphicsPointer+8   o
                 dc.l    $F00F0F0                        ; field_2

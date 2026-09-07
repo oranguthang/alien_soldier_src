@@ -51,7 +51,7 @@ loc_1FC5C:                                              ; CODE XREF: Results_Ini
                 clr.w   (dword_FFA900).w
                 move.w  #$18,d7
                 lea     ((dword_FF944E+2)).w,a0
-                lea     (word_1CE4C).l,a1
+                lea     (UI_StageWeaponSelectionTable).l,a1
                 lea     (word_FFAA00).w,a2
                 lea     (word_FFAA80).w,a3
                 lea     (word_FFAB00).w,a4

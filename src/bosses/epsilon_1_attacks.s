@@ -193,7 +193,7 @@ Boss_Epsilon1DualProjectileAim:                         ; DATA XREF: ROM:00045D1
                 move.w  $14(a0),d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-                jsr     (loc_355A).l
+                jsr     (Math_CalculateDirectionIndex).l
                 move.w  $10(a5),d0
                 addq.w  #8,d0
                 move.w  $14(a5),d1

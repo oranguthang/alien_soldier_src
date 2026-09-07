@@ -1,4 +1,4 @@
-VBlank_EffectDispatcher:                                ; CODE XREF: VBLANK:loc_ABC   p  ; was: sub_1356
+VBlank_EffectDispatcher:                                ; CODE XREF: VBLANK:Int_VBlank_RunEffects   p  ; was: sub_1356
                 move.w  (word_FFF74A).w,d0
                 movea.l off_1360(pc,d0.w),a0
                 jmp     (a0)

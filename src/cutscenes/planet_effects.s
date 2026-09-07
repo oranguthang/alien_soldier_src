@@ -180,7 +180,7 @@ loc_7FEE:                                               ; CODE XREF: Cutscene_In
                 lea     (Entity_ObjectPool).w,a5
                 move.w  #$CC00,word_FFC622-Entity_ObjectPool(a5)
                 move.w  #$10,(a5)
-                move.l  #stru_8630,8(a5)
+                move.l  #Sprite_SharedGraphicsFrameTable,8(a5)
                 move.w  #$8001,$E(a5)
                 move.w  #$190,$10(a5)
                 move.w  #$130,$14(a5)
@@ -288,7 +288,7 @@ Sprite_SetGraphicsPointer:                              ; CODE XREF: Cutscene_Pl
                 move.w  d1,d0
                 lsl.w   #1,d1
                 add.w   d1,d0
-                addi.l  #stru_8630,d0
+                addi.l  #Sprite_SharedGraphicsFrameTable,d0
                 move.l  d0,8(a5)
                 rts
 ; End of function Sprite_SetGraphicsPointer

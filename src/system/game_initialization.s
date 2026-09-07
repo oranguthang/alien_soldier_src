@@ -76,28 +76,28 @@ Gfx_InitVideoMode:                                      ; CODE XREF: Sys_InitFul
 ; Initializes all VDP registers by loading values from lookup table and storing them to VDP_CTRL and RAM
 Gfx_InitVDPRegisters:                                   ; CODE XREF: Reset+218   p  ; was: sub_2E08
                                         ; ShowRedScreen   p
-                lea     byte_2E4E(pc),a0
+                lea     Gfx_InitialVDPRegisterValues(pc),a0
                 lea     (word_FFF7D0).w,a1
                 move.w  #$8000,d0
                 moveq   #$17,d7
-loc_2E16:                                               ; CODE XREF: Gfx_InitVDPRegisters+1C   j
+Gfx_InitVDPRegisters_Loop:                              ; CODE XREF: Gfx_InitVDPRegisters+1C   j  ; was: loc_2E16
                 move.b  (a0)+,d0
                 move.w  d0,(VDP_CTRL).l
                 move.w  d0,(a1)+
                 addi.w  #$100,d0
-                dbf     d7,loc_2E16
+                dbf     d7,Gfx_InitVDPRegisters_Loop
                 rts
 ; End of function Gfx_InitVDPRegisters
 ; Loads alternative VDP register table for boot
 Gfx_LoadVDPRegistersAlt:                                ; CODE XREF: Sys_InitFullGame+4   p  ; was: sub_2E2A
-                lea     byte_2E4E(pc),a0
-                bra.w   loc_2E36
+                lea     Gfx_InitialVDPRegisterValues(pc),a0
+                bra.w   Gfx_LoadVDPRegisters_Setup
 ; End of function Gfx_LoadVDPRegistersAlt
 ; Loads VDP register values from table
 Gfx_LoadVDPRegisters:                                   ; CODE XREF: Sys_InitGameMode+4   p  ; was: sub_2E32
                                         ; Stage_LoadBackgroundGraphics+26   p
-                lea     byte_2E66(pc),a0
-loc_2E36:                                               ; CODE XREF: Gfx_LoadVDPRegistersAlt+4   j
+                lea     Gfx_GameVDPRegisterValues(pc),a0
+Gfx_LoadVDPRegisters_Setup:                             ; CODE XREF: Gfx_LoadVDPRegistersAlt+4   j  ; was: loc_2E36
                 lea     (word_FFF7D0).w,a1
                 move.w  #$8000,d0
                 moveq   #23,d7
@@ -110,13 +110,13 @@ Gfx_LoadVDPLoop:                                        ; CODE XREF: Gfx_LoadVDP
                 rts
 ; End of function Gfx_LoadVDPRegisters
 ; ---------------------------------------------------------------------------
-byte_2E4E:      dc.b    4, $24, $30, $34, 7, $7A, 0, 0
+Gfx_InitialVDPRegisterValues:   dc.b    4, $24, $30, $34, 7, $7A, 0, 0  ; was: byte_2E4E
                                         ; DATA XREF: Gfx_InitVDPRegisters   o
                                         ; sub_2E2A   o
                 dc.b    0, 0, 0, 0, $81, $3C, 0, 2
                 dc.b    1, 0, 0, 0, 0, 0, 0
                 align0  2
-byte_2E66:      dc.b    4, $24, $30, $34, 7, $7A, 0, $10
+Gfx_GameVDPRegisterValues:  dc.b    4, $24, $30, $34, 7, $7A, 0, $10  ; was: byte_2E66
                                         ; DATA XREF: Gfx_LoadVDPRegisters   o
                 dc.b    0, 0, 0, 0, $81, $3C, 0, 2
                 dc.b    1, 0, 4, 0, 0, 0, 0

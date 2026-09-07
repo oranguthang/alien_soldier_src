@@ -419,7 +419,7 @@ Boss_ValkirieCalculateAngleToPlayer:                    ; CODE XREF: Boss_Valkir
                 move.w  (word_FFCB14).w,d1
                 sub.w   $1F0(a5),d0
                 sub.w   $1F4(a5),d1
-                jmp     (loc_355A).l
+                jmp     (Math_CalculateDirectionIndex).l
 ; End of function Boss_ValkirieCalculateAngleToPlayer
 ; Updates boss palette colors
 Boss_ValkirieUpdatePalette:                             ; CODE XREF: Boss_ValkirieIntroMove+3A   p  ; was: sub_56942

@@ -75,7 +75,7 @@ Boss_SnakeInit:                                         ; DATA XREF: ROM:off_408
                 move.w  #$4000,(word_FF8200).w
                 move.w  #$E300,$E(a5)
                 move.w  #$CD00,2(a5)
-                move.l  #stru_8630,8(a5)
+                move.l  #Sprite_SharedGraphicsFrameTable,8(a5)
                 clr.w   $C(a5)
                 clr.w   $54(a5)
                 move.b  #$10,$20(a5)
@@ -91,7 +91,7 @@ Boss_SnakeInit:                                         ; DATA XREF: ROM:off_408
                 lea     $60(a5),a0
 loc_408DE:                                              ; CODE XREF: Boss_SnakeInit+E8   j
                 move.w  #$29C,(a0)
-                move.l  #stru_8630,8(a0)
+                move.l  #Sprite_SharedGraphicsFrameTable,8(a0)
                 clr.w   $C(a0)
                 move.w  #$E300,$E(a0)
                 move.w  #$CD00,2(a0)
@@ -363,7 +363,7 @@ Boss_SnakeAI:                                           ; CODE XREF: Boss_SnakeS
                 move.w  (dword_FF9408).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-                jsr     (loc_355A).l
+                jsr     (Math_CalculateDirectionIndex).l
                 move.w  (dword_FF9400).w,d1
                 addi.w  #$100,d1
                 sub.w   d2,d1

@@ -564,7 +564,7 @@ Boss_CaterpillarUpdateRotation:                         ; CODE XREF: Boss_Caterp
                 move.w  (dword_FF9408+2).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-                jsr     (loc_355A).l
+                jsr     (Math_CalculateDirectionIndex).l
                 move.w  (dword_FF9400).w,d1
                 addi.w  #$100,d1
                 sub.w   d2,d1

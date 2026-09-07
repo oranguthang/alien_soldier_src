@@ -74,7 +74,7 @@ UI_UpdatePasswordScreen:                                ; DATA XREF: Sys_Dispatc
                 beq.s   loc_A4CE
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                jmp     loc_1CDB8
+                jmp     UI_ResetMenuBufferAndState_Clear
 ; ---------------------------------------------------------------------------
 loc_A4CE:                                               ; CODE XREF: UI_UpdatePasswordScreen+6   j
                 tst.w   (word_FF80F2).w

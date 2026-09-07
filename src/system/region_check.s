@@ -1,6 +1,6 @@
-Sys_CheckRegionLock:                                    ; DATA XREF: Sys_DispatchGameState:off_C7C   o  ; was: sub_4BA
+Sys_CheckRegionLock:                                    ; DATA XREF: Sys_DispatchGameState:Sys_GameStateHandlers   o  ; was: sub_4BA
                 tst.w   (GameSubstateIndex).w
-                bne.w   locret_580
+                bne.w   RegionCheck_Return
                 move.b  (IO_PCBVER+1).l,d0
                 bpl.s   Sys_SetGameModeFlags
                 btst    #6,d0
@@ -24,50 +24,50 @@ RegionRestricted:                                       ; CODE XREF: Sys_CheckRe
                 jsr     (LoadPalette).l
                 move.w  #$8300,d0
                 move.w  #$438C,d4
-                lea     byte_582(pc),a0
+                lea     RegionLock_DevelopedForUseText(pc),a0
                 nop
                 jsr     (UI_RenderTextStringWrapped).l
                 move.w  #$8300,d0
                 move.w  #$4518,d4
-                lea     byte_59E(pc),a0
+                lea     RegionLock_NTSCDomesticText(pc),a0
                 nop
                 jsr     (UI_RenderTextStringWrapped).l
                 move.w  #$8300,d0
                 move.w  #$46A4,d4
-                lea     byte_5AE(pc),a0
+                lea     RegionLock_AndText(pc),a0
                 nop
                 jsr     (UI_RenderTextStringWrapped).l
                 move.w  #$8300,d0
                 move.w  #$4808,d4
-                lea     byte_5B2(pc),a0
+                lea     RegionLock_PALSecamText(pc),a0
                 nop
                 jsr     (UI_RenderTextStringWrapped).l
                 move.w  #$8300,d0
                 move.w  #$49A0,d4
-                lea     byte_5D2(pc),a0
+                lea     RegionLock_SystemsText(pc),a0
                 nop
                 jsr     (UI_RenderTextStringWrapped).l
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
                 addq.w  #4,(GameSubstateIndex).w
-locret_580:                                             ; CODE XREF: Sys_CheckRegionLock+4   j
+RegionCheck_Return:                                     ; CODE XREF: Sys_CheckRegionLock+4   j  ; was: locret_580
                 rts
 ; End of function RegionRestricted
 ; ---------------------------------------------------------------------------
-byte_582:       dc.b    $E, $F, $20, $F, $16, $19, $1A, $F
+RegionLock_DevelopedForUseText: dc.b    $E, $F, $20, $F, $16, $19, $1A, $F  ; was: byte_582
                                         ; DATA XREF: RegionRestricted+38   o
                 dc.b    $E, 0, $10, $19, $1C, 0, $1F, $1D
                 dc.b    $F, 0, $19, $18, $16, $23, 0, $21
                 dc.b    $13, $1E, $12, $FF
-byte_59E:       dc.b    $18, $1E, $1D, $D, 0, $17, $F, $11
+RegionLock_NTSCDomesticText:    dc.b    $18, $1E, $1D, $D, 0, $17, $F, $11  ; was: byte_59E
                                         ; DATA XREF: RegionRestricted+4C   o
                 dc.b    $B, 0, $E, $1C, $13, $20, $F, $FF
-byte_5AE:       dc.b    $B, $18, $E, $FF                ; DATA XREF: RegionRestricted+60   o
-byte_5B2:       dc.b    $1A, $B, $16, 0, $B, $18, $E, 0
+RegionLock_AndText:         dc.b    $B, $18, $E, $FF    ; DATA XREF: RegionRestricted+60   o  ; was: byte_5AE
+RegionLock_PALSecamText:    dc.b    $1A, $B, $16, 0, $B, $18, $E, 0  ; was: byte_5B2
                                         ; DATA XREF: RegionRestricted+74   o
                 dc.b    $10, $1C, $F, $18, $D, $12, 0, $1D
                 dc.b    $F, $D, $B, $17, 0, $17, $F, $11
                 dc.b    $B, 0, $E, $1C, $13, $20, $F, $FF
-byte_5D2:       dc.b    $1D, $23, $1D, $1E, $F, $17, $1D, $25
+RegionLock_SystemsText: dc.b    $1D, $23, $1D, $1E, $F, $17, $1D, $25  ; was: byte_5D2
                                         ; DATA XREF: RegionRestricted+88   o
                 dc.b    $FF, $FF

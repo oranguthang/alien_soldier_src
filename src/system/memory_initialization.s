@@ -14,12 +14,12 @@ Sys_ClearRAM:                                           ; CODE XREF: Sys_InitSub
                 lea     (M68K_RAM).l,a0
                 moveq   #0,d0
                 move.w  #$7FF,d1
-loc_2EC8:                                               ; CODE XREF: Sys_ClearRAM+14   j
+Sys_ClearRAM_Loop:                                      ; CODE XREF: Sys_ClearRAM+14   j  ; was: loc_2EC8
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2EC8
+                dbf     d1,Sys_ClearRAM_Loop
                 rts
 ; End of function Sys_ClearRAM
 ; Clears first 8KB of RAM (partial clear)
@@ -27,12 +27,12 @@ Sys_ClearRAMPartial:
                 lea     (M68K_RAM).l,a0                 ; was: sub_2ED6
                 moveq   #0,d0
                 move.w  #$1FF,d1
-loc_2EE2:                                               ; CODE XREF: Sys_ClearRAMPartial+14   j
+Sys_ClearRAMPartial_Loop:                               ; CODE XREF: Sys_ClearRAMPartial+14   j  ; was: loc_2EE2
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2EE2
+                dbf     d1,Sys_ClearRAMPartial_Loop
                 rts
 ; End of function Sys_ClearRAMPartial
 ; Clears object RAM area at FF8000
@@ -41,12 +41,12 @@ Sys_ClearObjectRAM:                                     ; CODE XREF: Sys_InitFul
                 lea     (dword_FF8000).w,a0
                 moveq   #0,d0
                 move.w  #$1FF,d1
-loc_2EFA:                                               ; CODE XREF: Sys_ClearObjectRAM+12   j
+Sys_ClearObjectRAM_Loop:                                ; CODE XREF: Sys_ClearObjectRAM+12   j  ; was: loc_2EFA
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2EFA
+                dbf     d1,Sys_ClearObjectRAM_Loop
                 rts
 ; End of function Sys_ClearObjectRAM
 ; Clears sprite buffer areas
@@ -55,21 +55,21 @@ Sys_ClearSpriteBuffers:                                 ; CODE XREF: Sys_InitFul
                 lea     (word_FFA000).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-loc_2F12:                                               ; CODE XREF: Sys_ClearSpriteBuffers+12   j
+Sys_ClearSpriteBuffers_FirstLoop:                       ; CODE XREF: Sys_ClearSpriteBuffers+12   j  ; was: loc_2F12
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2F12
+                dbf     d1,Sys_ClearSpriteBuffers_FirstLoop
                 lea     (dword_FFA100).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-loc_2F28:                                               ; CODE XREF: Sys_ClearSpriteBuffers+28   j
+Sys_ClearSpriteBuffers_SecondLoop:                      ; CODE XREF: Sys_ClearSpriteBuffers+28   j  ; was: loc_2F28
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2F28
+                dbf     d1,Sys_ClearSpriteBuffers_SecondLoop
                 rts
 ; End of function Sys_ClearSpriteBuffers
 ; Clears FFA200 buffer area (128 bytes)
@@ -77,12 +77,12 @@ Sys_ClearBufferFFA200:                                  ; CODE XREF: Sys_InitFul
                 lea     (dword_FFA200).w,a0
                 moveq   #0,d0
                 move.w  #7,d1
-loc_2F40:                                               ; CODE XREF: Sys_ClearBufferFFA200+12   j
+Sys_ClearBufferFFA200_Loop:                             ; CODE XREF: Sys_ClearBufferFFA200+12   j  ; was: loc_2F40
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2F40
+                dbf     d1,Sys_ClearBufferFFA200_Loop
                 rts
 ; End of function Sys_ClearBufferFFA200
 ; Clears FFA280 timer/state buffer area
@@ -90,12 +90,12 @@ Sys_ClearTimerBuffer:
                 lea     (word_FFA280).w,a0              ; was: sub_2F4E
                 moveq   #0,d0
                 move.w  #7,d1
-loc_2F58:                                               ; CODE XREF: Sys_ClearTimerBuffer+12   j
+Sys_ClearTimerBuffer_Loop:                              ; CODE XREF: Sys_ClearTimerBuffer+12   j  ; was: loc_2F58
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2F58
+                dbf     d1,Sys_ClearTimerBuffer_Loop
                 rts
 ; End of function Sys_ClearTimerBuffer
 ; Clears main object data buffer with zero fill
@@ -104,12 +104,12 @@ Sys_ClearObjectBuffer:                                  ; CODE XREF: Sys_InitFul
                 lea     (word_FFA400).w,a0
                 moveq   #0,d0
                 move.w  #$3F,d1                         ; '?'
-loc_2F70:                                               ; CODE XREF: Sys_ClearObjectBuffer+12   j
+Sys_ClearObjectBuffer_Loop:                             ; CODE XREF: Sys_ClearObjectBuffer+12   j  ; was: loc_2F70
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2F70
+                dbf     d1,Sys_ClearObjectBuffer_Loop
                 rts
 ; End of function Sys_ClearObjectBuffer
 ; Clears first half of object buffer at FFA400
@@ -117,12 +117,12 @@ Sys_ClearObjectBufferHalf:
                 lea     (word_FFA400).w,a0              ; was: sub_2F7E
                 moveq   #0,d0
                 move.w  #$1F,d1
-loc_2F88:                                               ; CODE XREF: Sys_ClearObjectBufferHalf+12   j
+Sys_ClearObjectBufferHalf_Loop:                         ; CODE XREF: Sys_ClearObjectBufferHalf+12   j  ; was: loc_2F88
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2F88
+                dbf     d1,Sys_ClearObjectBufferHalf_Loop
                 rts
 ; End of function Sys_ClearObjectBufferHalf
 ; Clears FFA600 buffer area (512 bytes)
@@ -130,12 +130,12 @@ Sys_ClearBufferFFA600:
                 lea     (dword_FFA600).w,a0             ; was: sub_2F96
                 moveq   #0,d0
                 move.w  #$1F,d1
-loc_2FA0:                                               ; CODE XREF: Sys_ClearBufferFFA600+12   j
+Sys_ClearBufferFFA600_Loop:                             ; CODE XREF: Sys_ClearBufferFFA600+12   j  ; was: loc_2FA0
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2FA0
+                dbf     d1,Sys_ClearBufferFFA600_Loop
                 rts
 ; End of function Sys_ClearBufferFFA600
 ; Clears FFA400 and FFA600 buffers (96 bytes each)
@@ -143,21 +143,21 @@ Sys_ClearDualObjectBuffers:                             ; CODE XREF: Gfx_Initial
                 lea     (word_FFA400).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
-loc_2FB8:                                               ; CODE XREF: Sys_ClearDualObjectBuffers+12   j
+Sys_ClearDualObjectBuffers_FirstLoop:                   ; CODE XREF: Sys_ClearDualObjectBuffers+12   j  ; was: loc_2FB8
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2FB8
+                dbf     d1,Sys_ClearDualObjectBuffers_FirstLoop
                 lea     (dword_FFA600).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
-loc_2FCE:                                               ; CODE XREF: Sys_ClearDualObjectBuffers+28   j
+Sys_ClearDualObjectBuffers_SecondLoop:                  ; CODE XREF: Sys_ClearDualObjectBuffers+28   j  ; was: loc_2FCE
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2FCE
+                dbf     d1,Sys_ClearDualObjectBuffers_SecondLoop
                 rts
 ; End of function Sys_ClearDualObjectBuffers
 ; Clears FFA800 buffer area (256 bytes)
@@ -165,12 +165,12 @@ Sys_ClearBufferFFA800:                                  ; CODE XREF: Sys_InitGra
                 lea     (word_FFA800).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-loc_2FE6:                                               ; CODE XREF: Sys_ClearBufferFFA800+12   j
+Sys_ClearBufferFFA800_Loop:                             ; CODE XREF: Sys_ClearBufferFFA800+12   j  ; was: loc_2FE6
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2FE6
+                dbf     d1,Sys_ClearBufferFFA800_Loop
                 rts
 ; End of function Sys_ClearBufferFFA800
 ; Clears first 96 bytes of FFA800 buffer
@@ -178,12 +178,12 @@ Sys_ClearBufferFFA800Partial:                           ; CODE XREF: Gfx_Initial
                 lea     (word_FFA800).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
-loc_2FFE:                                               ; CODE XREF: Sys_ClearBufferFFA800Partial+12   j
+Sys_ClearBufferFFA800Partial_Loop:                      ; CODE XREF: Sys_ClearBufferFFA800Partial+12   j  ; was: loc_2FFE
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_2FFE
+                dbf     d1,Sys_ClearBufferFFA800Partial_Loop
                 rts
 ; End of function Sys_ClearBufferFFA800Partial
 ; Clears scroll position buffer for stage initialization
@@ -191,12 +191,12 @@ Sys_ClearScrollBuffer:                                  ; CODE XREF: Sys_InitSub
                 lea     (dword_FFA900).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-loc_3016:                                               ; CODE XREF: Sys_ClearScrollBuffer+12   j
+Sys_ClearScrollBuffer_Loop:                             ; CODE XREF: Sys_ClearScrollBuffer+12   j  ; was: loc_3016
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_3016
+                dbf     d1,Sys_ClearScrollBuffer_Loop
                 rts
 ; End of function Sys_ClearScrollBuffer
 ; Clears FFB200 buffer area (512 bytes)
@@ -204,12 +204,12 @@ Sys_ClearBufferFFB200:
                 lea     (dword_FFB200).w,a0             ; was: sub_3024
                 moveq   #0,d0
                 move.w  #$1F,d1
-loc_302E:                                               ; CODE XREF: Sys_ClearBufferFFB200+12   j
+Sys_ClearBufferFFB200_Loop:                             ; CODE XREF: Sys_ClearBufferFFB200+12   j  ; was: loc_302E
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_302E
+                dbf     d1,Sys_ClearBufferFFB200_Loop
                 rts
 ; End of function Sys_ClearBufferFFB200
 ; Clears tile processing buffer at $FFB400 by writing zeros for $40 iterations (256 bytes)
@@ -217,12 +217,12 @@ Gfx_ClearTileBuffer:                                    ; CODE XREF: Gfx_InitVid
                 lea     (dword_FFB400).w,a0
                 moveq   #0,d0
                 move.w  #$3F,d1                         ; '?'
-loc_3046:                                               ; CODE XREF: Gfx_ClearTileBuffer+12   j
+Gfx_ClearTileBuffer_Loop:                               ; CODE XREF: Gfx_ClearTileBuffer+12   j  ; was: loc_3046
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_3046
+                dbf     d1,Gfx_ClearTileBuffer_Loop
                 rts
 ; End of function Gfx_ClearTileBuffer
 ; Clears FFB800 buffer area (192 bytes)
@@ -230,12 +230,12 @@ Sys_ClearBufferFFB800:                                  ; CODE XREF: Sys_ClearGa
                 lea     (dword_FFB800).w,a0
                 moveq   #0,d0
                 move.w  #$B,d1
-loc_305E:                                               ; CODE XREF: Sys_ClearBufferFFB800+12   j
+Sys_ClearBufferFFB800_Loop:                             ; CODE XREF: Sys_ClearBufferFFB800+12   j  ; was: loc_305E
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_305E
+                dbf     d1,Sys_ClearBufferFFB800_Loop
                 rts
 ; End of function Sys_ClearBufferFFB800
 ; Clears FFBE00 OAM sprite buffer area
@@ -243,12 +243,12 @@ Sys_ClearOAMBuffer:                                     ; CODE XREF: Sys_InitGra
                 lea     (byte_FFBE00).w,a0
                 moveq   #0,d0
                 move.w  #$1B,d1
-loc_3076:                                               ; CODE XREF: Sys_ClearOAMBuffer+12   j
+Sys_ClearOAMBuffer_Loop:                                ; CODE XREF: Sys_ClearOAMBuffer+12   j  ; was: loc_3076
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_3076
+                dbf     d1,Sys_ClearOAMBuffer_Loop
                 rts
 ; End of function Sys_ClearOAMBuffer
 ; Initializes graphics chain with RAM clear operations
@@ -258,12 +258,12 @@ Gfx_InitializeChain:                                    ; CODE XREF: Sys_InitGra
                 lea     (dword_FFBFC0).w,a0
                 moveq   #0,d0
                 move.w  #$1CD,d1
-loc_3096:                                               ; CODE XREF: Gfx_InitializeChain+1A   j
+Gfx_InitializeChain_Loop:                               ; CODE XREF: Gfx_InitializeChain+1A   j  ; was: loc_3096
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_3096
+                dbf     d1,Gfx_InitializeChain_Loop
                 rts
 ; End of function Gfx_InitializeChain
 ; Clears FFBFC0 buffer area (768 bytes)
@@ -271,12 +271,12 @@ Sys_ClearBufferFFBFC0:
                 lea     (dword_FFBFC0).w,a0             ; was: sub_30A4
                 moveq   #0,d0
                 move.w  #$2F,d1                         ; '/'
-loc_30AE:                                               ; CODE XREF: Sys_ClearBufferFFBFC0+12   j
+Sys_ClearBufferFFBFC0_Loop:                             ; CODE XREF: Sys_ClearBufferFFBFC0+12   j  ; was: loc_30AE
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_30AE
+                dbf     d1,Sys_ClearBufferFFBFC0_Loop
                 rts
 ; End of function Sys_ClearBufferFFBFC0
 ; Clears graphics processing chain buffer at $FFE000 by writing zeros for $27 iterations
@@ -284,12 +284,12 @@ Gfx_ClearGraphicsChain:                                 ; CODE XREF: Sys_InitGra
                 lea     (dword_FFE000).w,a0
                 moveq   #0,d0
                 move.w  #$26,d1                         ; '&'
-loc_30C6:                                               ; CODE XREF: Gfx_ClearGraphicsChain+12   j
+Gfx_ClearGraphicsChain_Loop:                            ; CODE XREF: Gfx_ClearGraphicsChain+12   j  ; was: loc_30C6
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_30C6
+                dbf     d1,Gfx_ClearGraphicsChain_Loop
                 rts
 ; End of function Gfx_ClearGraphicsChain
 ; Clears palette buffer to black
@@ -297,12 +297,12 @@ Palette_ClearBuffer:                                    ; CODE XREF: Sys_ClearPa
                 lea     (word_FFE300).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-loc_30DE:                                               ; CODE XREF: Palette_ClearBuffer+12   j
+Palette_ClearBuffer_Loop:                               ; CODE XREF: Palette_ClearBuffer+12   j  ; was: loc_30DE
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_30DE
+                dbf     d1,Palette_ClearBuffer_Loop
                 rts
 ; End of function Palette_ClearBuffer
 ; Clears screen buffer at $FFE400 by writing zeros for $80 iterations (512 bytes)
@@ -310,12 +310,12 @@ Sys_ClearScreenBuffer:                                  ; CODE XREF: Sys_InitSub
                 lea     (word_FFE400).w,a0
                 moveq   #0,d0
                 move.w  #$7F,d1
-loc_30F6:                                               ; CODE XREF: Sys_ClearScreenBuffer+12   j
+Sys_ClearScreenBuffer_Loop:                             ; CODE XREF: Sys_ClearScreenBuffer+12   j  ; was: loc_30F6
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_30F6
+                dbf     d1,Sys_ClearScreenBuffer_Loop
                 rts
 ; End of function Sys_ClearScreenBuffer
 ; Clears enemy entity buffer resetting all slots
@@ -323,12 +323,12 @@ Sys_ClearEnemyBuffer:                                   ; CODE XREF: Sys_InitSub
                 lea     (word_FFEC00).w,a0
                 moveq   #0,d0
                 move.w  #9,d1
-loc_310E:                                               ; CODE XREF: Sys_ClearEnemyBuffer+12   j
+Sys_ClearEnemyBuffer_Loop:                              ; CODE XREF: Sys_ClearEnemyBuffer+12   j  ; was: loc_310E
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_310E
+                dbf     d1,Sys_ClearEnemyBuffer_Loop
                 rts
 ; End of function Sys_ClearEnemyBuffer
 ; Clears sprite metasprite buffer for new stage
@@ -336,12 +336,12 @@ Sys_ClearSpriteBuffer:                                  ; CODE XREF: Sys_ClearGa
                 lea     (dword_FFF000).w,a0
                 moveq   #0,d0
                 move.w  #$6F,d1                         ; 'o'
-loc_3126:                                               ; CODE XREF: Sys_ClearSpriteBuffer+12   j
+Sys_ClearSpriteBuffer_Loop:                             ; CODE XREF: Sys_ClearSpriteBuffer+12   j  ; was: loc_3126
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,loc_3126
+                dbf     d1,Sys_ClearSpriteBuffer_Loop
                 rts
 ; End of function Sys_ClearSpriteBuffer
 ; Clears VDP command queue buffer for DMA operations

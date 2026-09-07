@@ -11,9 +11,9 @@ Sound_AcquireZ80Bus:                                    ; CODE XREF: Sys_VBlankH
                 bne.s   Sound_AcquireZ80Bus
                 bsr.w   Input_ReadController
                 bsr.w   Input_ReadSecondaryController
-loc_33CC:                                               ; CODE XREF: Sound_AcquireZ80Bus+1A   j
+Sound_AcquireZ80Bus_ReleaseWait:                        ; CODE XREF: Sound_AcquireZ80Bus+1A   j  ; was: loc_33CC
                 bclr    #0,(IO_Z80BUS).l
-                beq.s   loc_33CC
+                beq.s   Sound_AcquireZ80Bus_ReleaseWait
                 rts
 ; End of function Sound_AcquireZ80Bus
 ; Reads controller input from I/O ports
@@ -24,8 +24,8 @@ Input_ReadController:                                   ; CODE XREF: Sound_Acqui
                 bsr.w   Input_ReadControllerPort
                 move.b  d0,(byte_FFFF06).w
                 cmpi.b  #$D,d0
-                beq.w   loc_3424
-                bra.w   loc_3418
+                beq.w   Input_ReadController_ReadButtons
+                bra.w   Input_ReadController_Disconnected
 ; End of function Input_ReadController
 ; Reads secondary controller port processing button states
 Input_ReadSecondaryController:                          ; CODE XREF: Sound_AcquireZ80Bus+E   p  ; was: sub_33FA
@@ -35,14 +35,14 @@ Input_ReadSecondaryController:                          ; CODE XREF: Sound_Acqui
                 bsr.w   Input_ReadControllerPort
                 move.b  d0,(byte_FFFF07).w
                 cmpi.b  #$D,d0
-                beq.w   loc_3424
-loc_3418:                                               ; CODE XREF: Input_ReadController+1E   j
+                beq.w   Input_ReadController_ReadButtons
+Input_ReadController_Disconnected:                      ; CODE XREF: Input_ReadController+1E   j  ; was: loc_3418
                 clr.b   (a1)
                 clr.b   2(a1)
                 clr.b   4(a1)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3424:                                               ; CODE XREF: Input_ReadController+1A   j
+Input_ReadController_ReadButtons:                       ; CODE XREF: Input_ReadController+1A   j  ; was: loc_3424
                                         ; Input_ReadSecondaryController+1A   j
                 move.b  #0,(a2)
                 nop
@@ -72,7 +72,7 @@ loc_3424:                                               ; CODE XREF: Input_ReadC
 ; Maps secondary controller button bits to standard input format
 Input_MapSecondaryButtons:                              ; CODE XREF: Input_ReadSecondaryController+4E   p  ; was: sub_3462
                 btst    #6,(byte_FFF705).w
-                beq.w   locret_3498
+                beq.w   Input_MapSecondaryButtons_Return
                 move.b  d0,d1
                 move.b  #6,d2
                 move.b  (a3),d3
@@ -87,13 +87,13 @@ Input_MapSecondaryButtons:                              ; CODE XREF: Input_ReadS
 Input_TestAndSetBit:                                    ; CODE XREF: Input_MapSecondaryButtons+12   p  ; was: sub_348C
                                         ; Input_MapSecondaryButtons+1E   p
                 btst    d3,d1
-                beq.w   loc_3496
+                beq.w   Input_TestAndSetBit_Clear
                 bset    d2,d0
                 rts
 ; ---------------------------------------------------------------------------
-loc_3496:                                               ; CODE XREF: Input_TestAndSetBit+2   j
+Input_TestAndSetBit_Clear:                              ; CODE XREF: Input_TestAndSetBit+2   j  ; was: loc_3496
                 bclr    d2,d0
-locret_3498:                                            ; CODE XREF: Input_MapSecondaryButtons+6   j
+Input_MapSecondaryButtons_Return:                       ; CODE XREF: Input_MapSecondaryButtons+6   j  ; was: locret_3498
                 rts
 ; End of function Input_TestAndSetBit
 ; Low-level controller port bit reading
@@ -144,41 +144,41 @@ Sound_PlaySFX:                                          ; CODE XREF: Gfx_Animate
 Input_ProcessButtons:                                   ; CODE XREF: RegionRestricted+E   p  ; was: sub_34EE
                                         ; Sys_VBlankEventHandler+1A   p
                 tst.b   (dword_FFF80A).w
-                bpl.w   loc_34FE
+                bpl.w   Input_ProcessButtons_StoreFirst
                 cmp.b   (dword_FFF80A).w,d0
-                bne.w   loc_3504
-loc_34FE:                                               ; CODE XREF: Input_ProcessButtons+4   j
+                bne.w   Input_ProcessButtons_CheckSecond
+Input_ProcessButtons_StoreFirst:                        ; CODE XREF: Input_ProcessButtons+4   j  ; was: loc_34FE
                 move.b  d0,(dword_FFF80A).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_3504:                                               ; CODE XREF: Input_ProcessButtons+C   j
+Input_ProcessButtons_CheckSecond:                       ; CODE XREF: Input_ProcessButtons+C   j  ; was: loc_3504
                 tst.b   (dword_FFF80A+1).w
-                bpl.w   loc_3514
+                bpl.w   Input_ProcessButtons_StoreSecond
                 cmp.b   (dword_FFF80A+1).w,d0
-                bne.w   loc_351A
-loc_3514:                                               ; CODE XREF: Input_ProcessButtons+1A   j
+                bne.w   Input_ProcessButtons_CheckThird
+Input_ProcessButtons_StoreSecond:                       ; CODE XREF: Input_ProcessButtons+1A   j  ; was: loc_3514
                 move.b  d0,(dword_FFF80A+1).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_351A:                                               ; CODE XREF: Input_ProcessButtons+22   j
+Input_ProcessButtons_CheckThird:                        ; CODE XREF: Input_ProcessButtons+22   j  ; was: loc_351A
                 tst.b   (dword_FFF80A+2).w
-                bpl.w   loc_352A
+                bpl.w   Input_ProcessButtons_StoreThird
                 cmp.b   (dword_FFF80A+2).w,d0
-                bne.w   loc_3530
-loc_352A:                                               ; CODE XREF: Input_ProcessButtons+30   j
+                bne.w   Input_ProcessButtons_CheckFourth
+Input_ProcessButtons_StoreThird:                        ; CODE XREF: Input_ProcessButtons+30   j  ; was: loc_352A
                 move.b  d0,(dword_FFF80A+2).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_3530:                                               ; CODE XREF: Input_ProcessButtons+38   j
+Input_ProcessButtons_CheckFourth:                       ; CODE XREF: Input_ProcessButtons+38   j  ; was: loc_3530
                 tst.b   (dword_FFF80A+3).w
-                bpl.w   loc_3540
+                bpl.w   Input_ProcessButtons_StoreFourth
                 cmp.b   (dword_FFF80A+3).w,d0
-                bne.w   loc_3546
-loc_3540:                                               ; CODE XREF: Input_ProcessButtons+46   j
+                bne.w   Input_ProcessButtons_NoFreeSlot
+Input_ProcessButtons_StoreFourth:                       ; CODE XREF: Input_ProcessButtons+46   j  ; was: loc_3540
                 move.b  d0,(dword_FFF80A+3).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_3546:                                               ; CODE XREF: Input_ProcessButtons+4E   j
+Input_ProcessButtons_NoFreeSlot:                        ; CODE XREF: Input_ProcessButtons+4E   j  ; was: loc_3546
                 clr.b   d0
                 rts
 ; End of function Input_ProcessButtons

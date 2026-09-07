@@ -252,7 +252,7 @@ loc_1F0F8:                                              ; CODE XREF: Sys_UpdateG
 UI_TransitionToContinueScreen:                          ; CODE XREF: Sys_UpdateGameplayLoop+78   j  ; was: loc_1F11C
                 move.w  #$3C,(GameModeIndex).w          ; '<'
                 clr.w   (GameSubstateIndex).w
-                jmp     loc_1CDB8
+                jmp     UI_ResetMenuBufferAndState_Clear
 ; End of function Sys_UpdateGameplayLoop
 ; Loads stage assets and data
 Stage_LoadAssets:                                       ; CODE XREF: Sys_UpdateGameplayLoop+3C   p  ; was: sub_1F12C

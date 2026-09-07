@@ -4,7 +4,7 @@ Math_CalculateAngleToPlayer:                            ; CODE XREF: Math_Calcul
                 move.w  (word_FF824A).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-loc_355A:                                               ; CODE XREF: Boss_CaterpillarUpdateRotation+1E   p
+Math_CalculateDirectionIndex:                           ; CODE XREF: Boss_CaterpillarUpdateRotation+1E   p  ; was: loc_355A
                                         ; Boss_SnakeAI+1E   p
                 bsr.s   Math_Arctan2Lookup
                 asr.w   #7,d2
@@ -29,43 +29,43 @@ Math_Arctan2WithPreserve:
                 rts
 ; End of function Math_Arctan2WithPreserve
 ; Arctangent2 function using lookup table
-Math_Arctan2Lookup:                                     ; CODE XREF: Math_CalculateAngleToPlayer:loc_355A   p  ; was: sub_3580
+Math_Arctan2Lookup:                                     ; CODE XREF: Math_CalculateAngleToPlayer:Math_CalculateDirectionIndex   p  ; was: sub_3580
                                         ; Math_Arctan2WithPreserve+4   p
-                lea     word_36A4(pc),a0
+                lea     Math_ArctangentTable(pc),a0
                 nop
                 tst.w   d0
-                bmi.w   loc_3626
-                bne.w   loc_35B0
+                bmi.w   Math_Arctan2Lookup_NegativeX
+                bne.w   Math_Arctan2Lookup_PositiveX
                 tst.w   d1
-                bmi.w   loc_35A4
-                bne.w   loc_359E
-loc_359A:                                               ; CODE XREF: Math_Arctan2Lookup+32   j
+                bmi.w   Math_Arctan2Lookup_ReturnThreeQuarterTurn
+                bne.w   Math_Arctan2Lookup_ReturnQuarterTurn
+Math_Arctan2Lookup_ReturnZero:                          ; CODE XREF: Math_Arctan2Lookup+32   j  ; was: loc_359A
                 clr.w   d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_359E:                                               ; CODE XREF: Math_Arctan2Lookup+16   j
+Math_Arctan2Lookup_ReturnQuarterTurn:                   ; CODE XREF: Math_Arctan2Lookup+16   j  ; was: loc_359E
                 move.w  #$4000,d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_35A4:                                               ; CODE XREF: Math_Arctan2Lookup+12   j
+Math_Arctan2Lookup_ReturnThreeQuarterTurn:              ; CODE XREF: Math_Arctan2Lookup+12   j  ; was: loc_35A4
                 move.w  #$C000,d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_35AA:                                               ; CODE XREF: Math_Arctan2Lookup+AA   j
+Math_Arctan2Lookup_ReturnHalfTurn:                      ; CODE XREF: Math_Arctan2Lookup+AA   j  ; was: loc_35AA
                 move.w  #$8000,d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_35B0:                                               ; CODE XREF: Math_Arctan2Lookup+C   j
+Math_Arctan2Lookup_PositiveX:                           ; CODE XREF: Math_Arctan2Lookup+C   j  ; was: loc_35B0
                 tst.w   d1
-                beq.s   loc_359A
-                bmi.w   loc_35EE
+                beq.s   Math_Arctan2Lookup_ReturnZero
+                bmi.w   Math_Arctan2Lookup_Quadrant4
                 cmp.w   d0,d1
-                bcs.w   loc_35C8
-                bne.w   loc_35DA
+                bcs.w   Math_Arctan2Lookup_Quadrant1LowSlope
+                bne.w   Math_Arctan2Lookup_Quadrant1HighSlope
                 move.w  #$2000,d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_35C8:                                               ; CODE XREF: Math_Arctan2Lookup+3A   j
+Math_Arctan2Lookup_Quadrant1LowSlope:                   ; CODE XREF: Math_Arctan2Lookup+3A   j  ; was: loc_35C8
                 clr.w   d2
                 swap    d1
                 clr.w   d1
@@ -75,7 +75,7 @@ loc_35C8:                                               ; CODE XREF: Math_Arctan
                 add.w   (a0,d1.w),d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_35DA:                                               ; CODE XREF: Math_Arctan2Lookup+3E   j
+Math_Arctan2Lookup_Quadrant1HighSlope:                  ; CODE XREF: Math_Arctan2Lookup+3E   j  ; was: loc_35DA
                 move.w  #$4000,d2
                 swap    d0
                 clr.w   d0
@@ -85,15 +85,15 @@ loc_35DA:                                               ; CODE XREF: Math_Arctan
                 sub.w   (a0,d0.w),d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_35EE:                                               ; CODE XREF: Math_Arctan2Lookup+34   j
+Math_Arctan2Lookup_Quadrant4:                           ; CODE XREF: Math_Arctan2Lookup+34   j  ; was: loc_35EE
                 neg.w   d1
                 cmp.w   d0,d1
-                bcs.w   loc_3600
-                bne.w   loc_3612
+                bcs.w   Math_Arctan2Lookup_Quadrant4LowSlope
+                bne.w   Math_Arctan2Lookup_Quadrant4HighSlope
                 move.w  #$E000,d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_3600:                                               ; CODE XREF: Math_Arctan2Lookup+72   j
+Math_Arctan2Lookup_Quadrant4LowSlope:                   ; CODE XREF: Math_Arctan2Lookup+72   j  ; was: loc_3600
                 clr.w   d2
                 swap    d1
                 clr.w   d1
@@ -103,7 +103,7 @@ loc_3600:                                               ; CODE XREF: Math_Arctan
                 sub.w   (a0,d1.w),d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_3612:                                               ; CODE XREF: Math_Arctan2Lookup+76   j
+Math_Arctan2Lookup_Quadrant4HighSlope:                  ; CODE XREF: Math_Arctan2Lookup+76   j  ; was: loc_3612
                 move.w  #$C000,d2
                 swap    d0
                 clr.w   d0
@@ -113,18 +113,18 @@ loc_3612:                                               ; CODE XREF: Math_Arctan
                 add.w   (a0,d0.w),d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_3626:                                               ; CODE XREF: Math_Arctan2Lookup+8   j
+Math_Arctan2Lookup_NegativeX:                           ; CODE XREF: Math_Arctan2Lookup+8   j  ; was: loc_3626
                 neg.w   d0
                 tst.w   d1
-                beq.w   loc_35AA
-                bmi.w   loc_366A
+                beq.w   Math_Arctan2Lookup_ReturnHalfTurn
+                bmi.w   Math_Arctan2Lookup_Quadrant3
                 cmp.w   d0,d1
-                bcs.w   loc_3642
-                bne.w   loc_3656
+                bcs.w   Math_Arctan2Lookup_Quadrant2LowSlope
+                bne.w   Math_Arctan2Lookup_Quadrant2HighSlope
                 move.w  #$6000,d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_3642:                                               ; CODE XREF: Math_Arctan2Lookup+B4   j
+Math_Arctan2Lookup_Quadrant2LowSlope:                   ; CODE XREF: Math_Arctan2Lookup+B4   j  ; was: loc_3642
                 move.w  #$8000,d2
                 swap    d1
                 clr.w   d1
@@ -134,7 +134,7 @@ loc_3642:                                               ; CODE XREF: Math_Arctan
                 sub.w   (a0,d1.w),d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_3656:                                               ; CODE XREF: Math_Arctan2Lookup+B8   j
+Math_Arctan2Lookup_Quadrant2HighSlope:                  ; CODE XREF: Math_Arctan2Lookup+B8   j  ; was: loc_3656
                 move.w  #$4000,d2
                 swap    d0
                 clr.w   d0
@@ -144,15 +144,15 @@ loc_3656:                                               ; CODE XREF: Math_Arctan
                 add.w   (a0,d0.w),d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_366A:                                               ; CODE XREF: Math_Arctan2Lookup+AE   j
+Math_Arctan2Lookup_Quadrant3:                           ; CODE XREF: Math_Arctan2Lookup+AE   j  ; was: loc_366A
                 neg.w   d1
                 cmp.w   d0,d1
-                bcs.w   loc_367C
-                bne.w   loc_3690
+                bcs.w   Math_Arctan2Lookup_Quadrant3LowSlope
+                bne.w   Math_Arctan2Lookup_Quadrant3HighSlope
                 move.w  #$A000,d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_367C:                                               ; CODE XREF: Math_Arctan2Lookup+EE   j
+Math_Arctan2Lookup_Quadrant3LowSlope:                   ; CODE XREF: Math_Arctan2Lookup+EE   j  ; was: loc_367C
                 move.w  #$8000,d2
                 swap    d1
                 clr.w   d1
@@ -162,7 +162,7 @@ loc_367C:                                               ; CODE XREF: Math_Arctan
                 add.w   (a0,d1.w),d2
                 rts
 ; ---------------------------------------------------------------------------
-loc_3690:                                               ; CODE XREF: Math_Arctan2Lookup+F2   j
+Math_Arctan2Lookup_Quadrant3HighSlope:                  ; CODE XREF: Math_Arctan2Lookup+F2   j  ; was: loc_3690
                 move.w  #$C000,d2
                 swap    d0
                 clr.w   d0
@@ -173,35 +173,35 @@ loc_3690:                                               ; CODE XREF: Math_Arctan
                 rts
 ; End of function Math_Arctan2Lookup
 ; ---------------------------------------------------------------------------
-word_36A4:      binclude "data/other/word_36A4.bin"
-word_36A4_End:
+Math_ArctangentTable:   binclude "data/other/word_36A4.bin"  ; was: word_36A4
+Math_ArctangentTable_End:                               ; was: word_36A4_End
 
-; Calculates square root of d0 using Newton-Raphson method
+; Calculates the integer square root of d0 with a restoring bit-pair algorithm
 Math_SquareRoot:
                 tst.l   d0                              ; was: sub_38A4
-                beq.s   locret_38C8
+                beq.s   Math_SquareRoot_Return
                 cmpi.l  #$10000,d0
-                bcc.s   loc_38FA
+                bcc.s   Math_SquareRoot_ComputeWordResult
                 cmpi.w  #$271,d0
-                bhi.s   loc_38CA
+                bhi.s   Math_SquareRoot_ComputeByteResult
                 move.w  d1,-(sp)
                 move.w  #$FFFF,d1
-loc_38BC:                                               ; CODE XREF: Math_SquareRoot+1C   j
+Math_SquareRoot_SmallValueLoop:                         ; CODE XREF: Math_SquareRoot+1C   j  ; was: loc_38BC
                 addq.w  #2,d1
                 sub.w   d1,d0
-                bpl.s   loc_38BC
+                bpl.s   Math_SquareRoot_SmallValueLoop
                 asr.w   #1,d1
                 move.w  d1,d0
                 move.w  (sp)+,d1
-locret_38C8:                                            ; CODE XREF: Math_SquareRoot+2   j
+Math_SquareRoot_Return:                                 ; CODE XREF: Math_SquareRoot+2   j  ; was: locret_38C8
                 rts
 ; ---------------------------------------------------------------------------
-loc_38CA:                                               ; CODE XREF: Math_SquareRoot+10   j
+Math_SquareRoot_ComputeByteResult:                      ; CODE XREF: Math_SquareRoot+10   j  ; was: loc_38CA
                 movem.w d1-d4,-(sp)
                 move.w  #7,d4
                 clr.w   d1
                 clr.w   d2
-loc_38D6:                                               ; CODE XREF: Math_SquareRoot:loc_38EE   j
+Math_SquareRoot_ByteResultLoop:                         ; CODE XREF: Math_SquareRoot:Math_SquareRoot_ByteResultNextBit   j  ; was: loc_38D6
                 add.w   d0,d0
                 addx.w  d1,d1
                 add.w   d0,d0
@@ -210,22 +210,22 @@ loc_38D6:                                               ; CODE XREF: Math_Square
                 move.w  d2,d3
                 add.w   d3,d3
                 cmp.w   d3,d1
-                bls.s   loc_38EE
+                bls.s   Math_SquareRoot_ByteResultNextBit
                 addq.w  #1,d2
                 addq.w  #1,d3
                 sub.w   d3,d1
-loc_38EE:                                               ; CODE XREF: Math_SquareRoot+42   j
-                dbf     d4,loc_38D6
+Math_SquareRoot_ByteResultNextBit:                      ; CODE XREF: Math_SquareRoot+42   j  ; was: loc_38EE
+                dbf     d4,Math_SquareRoot_ByteResultLoop
                 move.w  d2,d0
                 movem.w (sp)+,d1-d4
                 rts
 ; ---------------------------------------------------------------------------
-loc_38FA:                                               ; CODE XREF: Math_SquareRoot+A   j
+Math_SquareRoot_ComputeWordResult:                      ; CODE XREF: Math_SquareRoot+A   j  ; was: loc_38FA
                 movem.l d1-d4,-(sp)
                 moveq   #$D,d4
                 moveq   #0,d1
                 moveq   #0,d2
-loc_3904:                                               ; CODE XREF: Math_SquareRoot:loc_391C   j
+Math_SquareRoot_WordResultLoop:                         ; CODE XREF: Math_SquareRoot:Math_SquareRoot_WordResultBit15   j  ; was: loc_3904
                 add.l   d0,d0
                 addx.w  d1,d1
                 add.l   d0,d0
@@ -234,12 +234,12 @@ loc_3904:                                               ; CODE XREF: Math_Square
                 move.w  d2,d3
                 add.w   d3,d3
                 cmp.w   d3,d1
-                bls.s   loc_391C
+                bls.s   Math_SquareRoot_WordResultBit15
                 addq.w  #1,d2
                 addq.w  #1,d3
                 sub.w   d3,d1
-loc_391C:                                               ; CODE XREF: Math_SquareRoot+70   j
-                dbf     d4,loc_3904
+Math_SquareRoot_WordResultBit15:                        ; CODE XREF: Math_SquareRoot+70   j  ; was: loc_391C
+                dbf     d4,Math_SquareRoot_WordResultLoop
                 add.l   d0,d0
                 addx.w  d1,d1
                 add.l   d0,d0
@@ -248,11 +248,11 @@ loc_391C:                                               ; CODE XREF: Math_Square
                 move.l  d2,d3
                 add.w   d3,d3
                 cmp.l   d3,d1
-                bls.s   loc_3938
+                bls.s   Math_SquareRoot_WordResultBit16
                 addq.w  #1,d2
                 addq.w  #1,d3
                 sub.l   d3,d1
-loc_3938:                                               ; CODE XREF: Math_SquareRoot+8C   j
+Math_SquareRoot_WordResultBit16:                        ; CODE XREF: Math_SquareRoot+8C   j  ; was: loc_3938
                 add.l   d0,d0
                 addx.l  d1,d1
                 add.l   d0,d0
@@ -261,9 +261,9 @@ loc_3938:                                               ; CODE XREF: Math_Square
                 move.l  d2,d3
                 add.l   d3,d3
                 cmp.l   d3,d1
-                bls.s   loc_394C
+                bls.s   Math_SquareRoot_FinishWordResult
                 addq.w  #1,d2
-loc_394C:                                               ; CODE XREF: Math_SquareRoot+A4   j
+Math_SquareRoot_FinishWordResult:                       ; CODE XREF: Math_SquareRoot+A4   j  ; was: loc_394C
                 move.w  d2,d0
                 movem.l (sp)+,d1-d4
                 rts

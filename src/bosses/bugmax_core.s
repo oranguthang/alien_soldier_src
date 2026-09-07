@@ -58,7 +58,7 @@ loc_4BF58:                                              ; CODE XREF: Boss_Bugmax
                 move.w  (dword_FFC694).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-                jsr     (loc_355A).l
+                jsr     (Math_CalculateDirectionIndex).l
                 cmpi.w  #$1C0,d2
                 bcs.s   loc_4BF8A
                 move.w  #$1C0,d2
@@ -75,7 +75,7 @@ loc_4BF94:                                              ; CODE XREF: Boss_Bugmax
                 move.w  (dword_FFC6F4).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-                jsr     (loc_355A).l
+                jsr     (Math_CalculateDirectionIndex).l
                 cmpi.w  #$C0,d2
                 bcs.s   loc_4BFB8
                 move.w  #$C0,d2
@@ -314,7 +314,7 @@ loc_4C242:                                              ; CODE XREF: Boss_Bugmax
                 swap    d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-                jsr     (loc_355A).l
+                jsr     (Math_CalculateDirectionIndex).l
                 move.w  d2,(word_FFC6CC).w
                 moveq   #0,d3
                 moveq   #0,d4
@@ -333,7 +333,7 @@ loc_4C242:                                              ; CODE XREF: Boss_Bugmax
                 swap    d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-                jsr     (loc_355A).l
+                jsr     (Math_CalculateDirectionIndex).l
                 move.w  d2,(word_FFC72C).w
                 move.w  d2,d0
                 lea     (word_FF9600).w,a0
