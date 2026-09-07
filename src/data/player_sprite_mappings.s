@@ -37,7 +37,7 @@ word_E86E2:     dc.w    $800                            ; DATA XREF: ROM:00016FA
                 dc.w    $880F
                 dc.l    sprite_F2F18+$1000000
                 dc.w    $D809
-word_E86FA:     dc.w    $800                            ; DATA XREF: ROM:off_16F8C   o
+word_E86FA:     dc.w    $800                            ; DATA XREF: ROM:Player_DirectionalMovementPrimaryFrames   o
                 dc.l    sprite_F2F5A+$E000000
                 dc.w    $DFE7
                 dc.w    $80C
@@ -142,7 +142,7 @@ word_E87EA:     dc.w    $800                            ; DATA XREF: ROM:00016FC
                 dc.w    $8813
                 dc.l    sprite_F4236+$E000000
                 dc.w    $F8F8
-word_E8812:     dc.w    $800                            ; DATA XREF: ROM:off_16FAC   o
+word_E8812:     dc.w    $800                            ; DATA XREF: ROM:Player_DirectionalMovementSecondaryFrames   o
                 dc.l    sprite_F498A+$1000000
                 dc.w    $FFE7
                 dc.w    $802
@@ -342,7 +342,7 @@ word_E89F2:     dc.w    $800                            ; DATA XREF: Player_Rend
                 dc.w    $880F
                 dc.l    sprite_F6936+$9000000
                 dc.w    $F2
-word_E8A1A:     dc.w    $800                            ; DATA XREF: ROM:off_171EC   o
+word_E8A1A:     dc.w    $800                            ; DATA XREF: ROM:Player_AnimationFrameTable   o
                 dc.l    sprite_F6E06
                 dc.w    $10E
                 dc.w    $801
@@ -502,7 +502,7 @@ word_E8BAA:     dc.w    $800                            ; DATA XREF: Player_Defe
                 dc.w    $880C
                 dc.l    sprite_F7A32+$6000000
                 dc.w    $DBFE
-word_E8BC2:     dc.w    $800                            ; DATA XREF: ROM:off_1735E   o
+word_E8BC2:     dc.w    $800                            ; DATA XREF: ROM:Player_DefeatPrimaryFrameTable   o
                 dc.l    sprite_F7EBE+$1000000
                 dc.w    $EAE5
                 dc.w    $802
@@ -598,7 +598,7 @@ word_E8C9A:     dc.w    $800                            ; DATA XREF: Gfx_DrawBos
                 dc.w    $880B
                 dc.l    sprite_F90D0+$D000000
                 dc.w    $DFF6
-word_E8CC2:     dc.w    $800                            ; DATA XREF: ROM:off_1703A   o
+word_E8CC2:     dc.w    $800                            ; DATA XREF: ROM:Player_WeaponAnimationFrames   o
                 dc.l    sprite_F951E+$9000000
                 dc.w    $10F6
                 dc.w    $806
@@ -676,7 +676,7 @@ word_E8D72:     dc.w    $800                            ; DATA XREF: ROM:000172C
                 dc.w    $8808
                 dc.l    sprite_FA2C6+$D000000
                 dc.w    $E8F8
-word_E8D92:     dc.w    $800                            ; DATA XREF: ROM:off_172BC   o
+word_E8D92:     dc.w    $800                            ; DATA XREF: ROM:Player_PrimaryAnimationLayoutTable   o
                 dc.l    sprite_FA692+$9000000
                 dc.w    $E3DE
                 dc.w    $806
@@ -724,7 +724,7 @@ word_E8DF2:     dc.w    $800                            ; DATA XREF: ROM:0001730
                 dc.w    $880D
                 dc.l    sprite_FAE06+$D000000
                 dc.w    $E2F1
-word_E8E12:     dc.w    $800                            ; DATA XREF: ROM:off_172F8   o
+word_E8E12:     dc.w    $800                            ; DATA XREF: ROM:Player_AlternateAnimationLayoutTable   o
                 dc.l    sprite_FB354
                 dc.w    $E4E5
                 dc.w    $801
@@ -872,7 +872,7 @@ word_E8F6A:     dc.w    $800                            ; DATA XREF: Player_Hand
                 dc.w    $881E
                 dc.l    sprite_FCD38+$1000000
                 dc.w    $F7F1
-word_E8F9A:     dc.w    $800                            ; DATA XREF: ROM:off_17242   o
+word_E8F9A:     dc.w    $800                            ; DATA XREF: ROM:Player_DeathParticleAnimationFrames   o
                 dc.l    sprite_FD0C4+$9000000
                 dc.w    $5F3
                 dc.w    $806

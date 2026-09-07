@@ -694,7 +694,7 @@ loc_571BC:                                              ; CODE XREF: Boss_Medusa
 ; End of function Boss_MedusaUpdateHealth
 ; Projectile main handler
 Projectile_MedusaMain:                                  ; DATA XREF: ROM:00057196   o  ; was: sub_571CE
-                jsr     (Player_ActionDispatcher).l
+                jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 beq.s   loc_571DE
                 rts
@@ -710,7 +710,7 @@ Boss_MedusaDefeatInit:                                  ; DATA XREF: ROM:0005719
                 bpl.s   loc_571FA
                 addi.l  #$4000,$1C(a5)
 loc_571FA:                                              ; CODE XREF: Boss_MedusaDefeatInit+6   j
-                jsr     (Player_CheckTerrainCollision).l
+                jsr     (Physics_CheckLowerTerrainWhenDescending).l
                 btst    #0,6(a5)
                 bne.w   loc_571BC
                 rts

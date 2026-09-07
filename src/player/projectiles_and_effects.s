@@ -18,14 +18,14 @@ Player_SpawnProjectile:                                 ; CODE XREF: Player_Phoe
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_17476
+                bne.s   Player_SpawnProjectile_UseAlternateParameters
                 move.w  #$26,$26(a0)                    ; '&'
                 subi.w  #$1E,(word_FFA216).w
                 move.w  #$801E,(word_FF8262).w
                 move.w  #$30,(word_FF8268).w            ; '0'
                 rts
 ; ---------------------------------------------------------------------------
-loc_17476:                                              ; CODE XREF: Player_SpawnProjectile+60   j
+Player_SpawnProjectile_UseAlternateParameters:          ; CODE XREF: Player_SpawnProjectile+60   j  ; was: loc_17476
                 move.w  #$23,$26(a0)                    ; '#'
                 subi.w  #$32,(word_FFA216).w            ; '2'
                 move.w  #$8032,(word_FF8262).w
@@ -34,17 +34,17 @@ loc_17476:                                              ; CODE XREF: Player_Spaw
 ; End of function Player_SpawnProjectile
 ; Calculates weapon data table offset
 Player_GetWeaponTableOffset:
-                bne.s   loc_17498                       ; was: sub_17490
+                bne.s   Player_GetWeaponTableOffset_SelectFrame  ; was: sub_17490
                 bset    #1,(byte_FF8244).w
-loc_17498:                                              ; CODE XREF: Player_GetWeaponTableOffset   j
+Player_GetWeaponTableOffset_SelectFrame:                ; CODE XREF: Player_GetWeaponTableOffset   j  ; was: loc_17498
                 movea.l $48(a5),a0
                 move.w  (word_FFA000).w,d0
                 asr.w   #1,d0
                 andi.w  #$C,d0
                 rts
 ; End of function Player_GetWeaponTableOffset
-; Handles stage progression after boss defeat
-Stage_HandleBossDefeat:                                 ; CODE XREF: Player_HandleAirMovement+70   j  ; was: sub_174A8
+; Expands two frame streams into the player's composite sprite-piece buffer
+Player_BuildSpritePieces:                               ; CODE XREF: Player_HandleAirMovement+70   j  ; was: sub_174A8
                                         ; Player_HandleFallingState+D6   j
                 movea.w #(byte_FF8780-M68K_RAM),a3
                 move.l  a3,8(a5)
@@ -52,10 +52,10 @@ Stage_HandleBossDefeat:                                 ; CODE XREF: Player_Hand
                 moveq   #$F,d4
                 ext.w   d5
                 asl.w   #8,d6
-loc_174BA:                                              ; CODE XREF: Stage_HandleBossDefeat+2C   j
+Player_BuildSpritePieces_CopyPrimaryStream:             ; CODE XREF: Player_BuildSpritePieces+2C   j  ; was: loc_174BA
                 move.w  (a1)+,d0
                 bclr    d4,d0
-                bne.s   loc_174D6
+                bne.s   Player_BuildSpritePieces_CopyFinalPrimaryPiece
                 move.w  d0,(a3)+
                 move.l  (a1)+,(a3)+
                 move.w  (a1)+,d1
@@ -65,9 +65,9 @@ loc_174BA:                                              ; CODE XREF: Stage_Handl
                 add.b   d5,d1
                 move.b  d1,d2
                 move.w  d2,(a3)+
-                bra.s   loc_174BA
+                bra.s   Player_BuildSpritePieces_CopyPrimaryStream
 ; ---------------------------------------------------------------------------
-loc_174D6:                                              ; CODE XREF: Stage_HandleBossDefeat+16   j
+Player_BuildSpritePieces_CopyFinalPrimaryPiece:         ; CODE XREF: Player_BuildSpritePieces+16   j  ; was: loc_174D6
                 move.w  d0,(a3)+
                 andi.w  #$3FF,d0
                 moveq   #0,d1
@@ -87,7 +87,7 @@ loc_174D6:                                              ; CODE XREF: Stage_Handl
                 add.b   d5,d1
                 move.b  d1,d2
                 move.w  d2,(a3)+
-loc_17502:                                              ; CODE XREF: Stage_HandleBossDefeat+68   j
+Player_BuildSpritePieces_CopySecondaryStream:           ; CODE XREF: Player_BuildSpritePieces+68   j  ; was: loc_17502
                 move.w  (a2)+,d1
                 move.w  d1,d2
                 add.w   d0,d2
@@ -95,19 +95,19 @@ loc_17502:                                              ; CODE XREF: Stage_Handl
                 move.l  (a2)+,(a3)+
                 move.w  (a2)+,(a3)+
                 btst    d4,d1
-                beq.s   loc_17502
+                beq.s   Player_BuildSpritePieces_CopySecondaryStream
                 rts
-; End of function Stage_HandleBossDefeat
+; End of function Player_BuildSpritePieces
 ; Spawns particle effect with random velocity
 Effect_SpawnParticle:                                   ; CODE XREF: Player_HandleJump+14   p  ; was: sub_17514
                                         ; Player_HandleDashState+16   p
                 btst    #4,$69(a5)
-                bne.w   locret_175B6
+                bne.w   Effect_SpawnParticle_Return
                 move.w  (dword_FFFF08+2).w,d0
                 andi.w  #$E000,d0
-                bne.w   locret_175B6
+                bne.w   Effect_SpawnParticle_Return
                 bsr.w   Sprite_AllocateSlot
-                bne.w   locret_175B6
+                bne.w   Effect_SpawnParticle_Return
                 lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 lea     (Math_SineTable).l,a1
@@ -136,37 +136,37 @@ Effect_SpawnParticle:                                   ; CODE XREF: Player_Hand
                 move.w  d0,$10(a0)
                 moveq   #$10,d1
                 btst    #4,$E(a5)
-                beq.s   loc_175A4
+                beq.s   Effect_SpawnParticle_SetPosition
                 moveq   #$10,d1
-loc_175A4:                                              ; CODE XREF: Effect_SpawnParticle+8C   j
+Effect_SpawnParticle_SetPosition:                       ; CODE XREF: Effect_SpawnParticle+8C   j  ; was: loc_175A4
                 move.b  (dword_FFFF08+1).w,d0
                 andi.w  #$1F,d0
                 sub.w   d1,d0
                 add.w   $14(a5),d0
                 move.w  d0,$14(a0)
-locret_175B6:                                           ; CODE XREF: Effect_SpawnParticle+6   j
+Effect_SpawnParticle_Return:                            ; CODE XREF: Effect_SpawnParticle+6   j  ; was: locret_175B6
                                         ; Effect_SpawnParticle+12   j
                 rts
 ; End of function Effect_SpawnParticle
 ; Spawns Phoenix particle effects
 Player_SpawnPhoenixParticles:
                 subq.w  #1,$4A(a5)                      ; was: sub_175B8
-                bpl.w   locret_17640
+                bpl.w   Player_SpawnPhoenixParticles_Return
                 move.w  #$FFFF,$4A(a5)
                 btst    #4,$69(a5)
-                bne.w   locret_17640
+                bne.w   Player_SpawnPhoenixParticles_Return
                 subq.w  #2,(word_FF8304).w
-                bpl.s   loc_175DA
+                bpl.s   Player_SpawnPhoenixParticles_CheckSoundFrame
                 clr.w   (word_FF8304).w
-loc_175DA:                                              ; CODE XREF: Player_SpawnPhoenixParticles+1C   j
+Player_SpawnPhoenixParticles_CheckSoundFrame:           ; CODE XREF: Player_SpawnPhoenixParticles+1C   j  ; was: loc_175DA
                 move.w  (word_FFA000).w,d0
                 andi.w  #$F,d0
-                bne.s   loc_175EE
+                bne.s   Player_SpawnPhoenixParticles_Allocate
                 move.b  #$AC,d0
                 jsr     (Sound_PlaySFX).l
-loc_175EE:                                              ; CODE XREF: Player_SpawnPhoenixParticles+2A   j
+Player_SpawnPhoenixParticles_Allocate:                  ; CODE XREF: Player_SpawnPhoenixParticles+2A   j  ; was: loc_175EE
                 bsr.w   Sprite_AllocateSlot
-                bne.w   locret_17640
+                bne.w   Player_SpawnPhoenixParticles_Return
                 lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 lea     (Math_SineTable).l,a1
@@ -186,7 +186,7 @@ loc_175EE:                                              ; CODE XREF: Player_Spaw
                 sub.l   d1,$14(a0)
                 move.w  $10(a5),$10(a0)
                 sub.l   d2,$10(a0)
-locret_17640:                                           ; CODE XREF: Player_SpawnPhoenixParticles+4   j
+Player_SpawnPhoenixParticles_Return:                    ; CODE XREF: Player_SpawnPhoenixParticles+4   j  ; was: locret_17640
                                         ; Player_SpawnPhoenixParticles+14   j
                 rts
 ; End of function Player_SpawnPhoenixParticles
@@ -197,20 +197,20 @@ Player_SpawnTripleShot:                                 ; CODE XREF: Player_Init
                 moveq   #3,d5
                 moveq   #2,d7
                 btst    #3,$E(a5)
-                beq.s   loc_1765E
+                beq.s   Player_SpawnTripleShot_FaceLeft
                 move.w  #$C0,d6
                 subq.w  #8,d4
-                bra.s   loc_17664
+                bra.s   Player_SpawnTripleShot_Loop
 ; ---------------------------------------------------------------------------
-loc_1765E:                                              ; CODE XREF: Player_SpawnTripleShot+12   j
+Player_SpawnTripleShot_FaceLeft:                        ; CODE XREF: Player_SpawnTripleShot+12   j  ; was: loc_1765E
                 addq.w  #8,d4
                 move.w  #$1E0,d6
-loc_17664:                                              ; CODE XREF: Player_SpawnTripleShot+1A   j
+Player_SpawnTripleShot_Loop:                            ; CODE XREF: Player_SpawnTripleShot+1A   j  ; was: loc_17664
                                         ; Player_SpawnTripleShot+30   j
                 move.l  #off_E9560,8(a0)
                 bsr.s   Player_InitShotProjectile
                 addi.w  #$40,d6                         ; '@'
-                dbf     d7,loc_17664
+                dbf     d7,Player_SpawnTripleShot_Loop
                 rts
 ; End of function Player_SpawnTripleShot
 ; Spawns 5 projectiles in radial spread
@@ -219,14 +219,14 @@ Player_SpawnRadialShot:
                 move.w  #$FFC0,d6
                 moveq   #4,d7
                 btst    #3,$E(a5)
-                beq.s   loc_1768C
+                beq.s   Player_SpawnRadialShot_Loop
                 addi.w  #$80,d6
-loc_1768C:                                              ; CODE XREF: Player_SpawnRadialShot+E   j
+Player_SpawnRadialShot_Loop:                            ; CODE XREF: Player_SpawnRadialShot+E   j  ; was: loc_1768C
                                         ; Player_SpawnRadialShot+22   j
                 move.l  #off_E9560,8(a0)
                 bsr.s   Player_InitShotProjectile
                 addi.w  #$40,d6                         ; '@'
-                dbf     d7,loc_1768C
+                dbf     d7,Player_SpawnRadialShot_Loop
                 rts
 ; End of function Player_SpawnRadialShot
 ; Initializes shot projectile with angle and velocity
@@ -251,29 +251,29 @@ Player_InitShotProjectile:                              ; CODE XREF: Player_Spaw
                 rts
 ; End of function Player_InitShotProjectile
 ; ---------------------------------------------------------------------------
-word_176E2:     dc.w    0, 8, 4, 8, 0, $C, $10, $C
-                                        ; DATA XREF: Sprite_PrepareRendering:loc_1727A   o
-word_176F2:     dc.w    0, $C, $10, $C, 0, 8, 4, 8
-                                        ; DATA XREF: Sprite_PrepareRendering+14   o
+Player_LowerTerrainAnimationIndices:    dc.w    0, 8, 4, 8, 0, $C, $10, $C  ; was: word_176E2
+                                        ; DATA XREF: Player_PrepareSpriteRendering:Player_PrepareSpriteRendering_WithTables   o
+Player_UpperTerrainAnimationIndices:    dc.w    0, $C, $10, $C, 0, 8, 4, 8  ; was: word_176F2
+                                        ; DATA XREF: Player_PrepareSpriteRendering+14   o
 
-; Updates screen pulse/shake effect
-Effect_UpdateScreenPulse:
+; Renders a transient signed three-digit value as four OAM sprites
+UI_RenderTransientValue:
                 tst.w   (word_FF8262).w                 ; was: sub_17702
-                beq.w   locret_1771A
+                beq.w   UI_RenderTransientValue_Return
                 tst.b   (byte_FF813E).w
-                bmi.s   loc_17728
+                bmi.s   UI_RenderTransientValue_BuildSprites
                 subq.w  #1,(word_FF8268).w
-                bpl.s   loc_1771C
+                bpl.s   UI_RenderTransientValue_UpdatePosition
                 clr.w   (word_FF8262).w
-locret_1771A:                                           ; CODE XREF: Effect_UpdateScreenPulse+4   j
+UI_RenderTransientValue_Return:                         ; CODE XREF: UI_RenderTransientValue+4   j  ; was: locret_1771A
                 rts
 ; ---------------------------------------------------------------------------
-loc_1771C:                                              ; CODE XREF: Effect_UpdateScreenPulse+12   j
+UI_RenderTransientValue_UpdatePosition:                 ; CODE XREF: UI_RenderTransientValue+12   j  ; was: loc_1771C
                 btst    #0,(word_FFA000+1).w
-                bne.s   loc_17728
+                bne.s   UI_RenderTransientValue_BuildSprites
                 subq.w  #1,(word_FF8266).w
-loc_17728:                                              ; CODE XREF: Effect_UpdateScreenPulse+C   j
-                                        ; Effect_UpdateScreenPulse+20   j
+UI_RenderTransientValue_BuildSprites:                   ; CODE XREF: UI_RenderTransientValue+C   j  ; was: loc_17728
+                                        ; UI_RenderTransientValue+20   j
                 move.b  (word_FF8262).w,d0
                 andi.w  #$10,d0
                 addi.w  #-$3841,d0
@@ -295,9 +295,9 @@ loc_17728:                                              ; CODE XREF: Effect_Upda
                 move.w  (word_FF8264).w,d5
                 move.w  (word_FF8266).w,d6
                 cmpi.w  #$A0,d6
-                bpl.s   loc_1777E
+                bpl.s   UI_RenderTransientValue_UseClampedY
                 move.w  #$A0,d6
-loc_1777E:                                              ; CODE XREF: Effect_UpdateScreenPulse+76   j
+UI_RenderTransientValue_UseClampedY:                    ; CODE XREF: UI_RenderTransientValue+76   j  ; was: loc_1777E
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 move.w  d6,(a0)+
                 move.w  d4,(a0)+
@@ -321,21 +321,21 @@ loc_1777E:                                              ; CODE XREF: Effect_Upda
                 move.w  #$FFFF,(a0)
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 jmp     (Sprite_AddToOAMBuffer).l
-; End of function Effect_UpdateScreenPulse
+; End of function UI_RenderTransientValue
 ; Creates visual dash trail effect behind player
 Effect_CreateDashTrail:                                 ; CODE XREF: Player_HandleDashCancel+B8   j  ; was: sub_177B6
                                         ; Player_TeleportDash+C8   j
                 tst.w   (word_FFC5C0).w
-                beq.s   loc_177D8
+                beq.s   Effect_CreateDashTrail_AllocateObjects
                 move.l  #word_E8EBA,8(a5)
                 btst    #0,(word_FFA000+1).w
-                bne.w   locret_17882
+                bne.w   Effect_CreateDashTrail_Return
                 move.l  #word_E8E6A,8(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_177D8:                                              ; CODE XREF: Effect_CreateDashTrail+4   j
+Effect_CreateDashTrail_AllocateObjects:                 ; CODE XREF: Effect_CreateDashTrail+4   j  ; was: loc_177D8
                 bsr.w   Effect_FindDashTrailSlot
-                bne.w   locret_17882
+                bne.w   Effect_CreateDashTrail_Return
                 move.w  #$250,(a0)
                 clr.b   $21(a0)
                 move.w  #$C880,2(a0)
@@ -354,7 +354,7 @@ loc_177D8:                                              ; CODE XREF: Effect_Crea
                 add.l   d0,$10(a0)
                 move.l  d0,$4C(a0)
                 bsr.w   Effect_FindDashTrailSlot
-                bne.s   locret_17882
+                bne.s   Effect_CreateDashTrail_Return
                 lea     (Effect_DashTrailPrimarySpriteFrames).l,a1
                 move.w  #$FFF4,$18(a0)
                 tst.w   $48(a5)
@@ -373,29 +373,29 @@ Effect_SetDashTrailProperties:                          ; CODE XREF: Effect_Crea
                 subi.w  #$10,d0
                 add.w   $14(a5),d0
                 move.w  d0,$14(a0)
-locret_17882:                                           ; CODE XREF: Effect_CreateDashTrail+14   j
+Effect_CreateDashTrail_Return:                          ; CODE XREF: Effect_CreateDashTrail+14   j  ; was: locret_17882
                                         ; Effect_CreateDashTrail+26   j
                 rts
 ; End of function Effect_CreateDashTrail
 ; Updates dash trail position with acceleration
 Effect_UpdateDashTrail:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_17884
                 btst    #4,(byte_FF8244).w
-                bne.s   loc_17894
-loc_1788C:                                              ; CODE XREF: Effect_UpdateDashTrail+14   j
+                bne.s   Effect_UpdateDashTrail_ApplyMotion
+Effect_UpdateDashTrail_SetDisplayFlag:                  ; CODE XREF: Effect_UpdateDashTrail+14   j  ; was: loc_1788C
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_17894:                                              ; CODE XREF: Effect_UpdateDashTrail+6   j
+Effect_UpdateDashTrail_ApplyMotion:                     ; CODE XREF: Effect_UpdateDashTrail+6   j  ; was: loc_17894
                 subq.w  #1,$48(a5)
-                bmi.s   loc_1788C
+                bmi.s   Effect_UpdateDashTrail_SetDisplayFlag
                 move.l  $18(a5),d0
                 add.l   $4C(a5),d0
                 move.l  d0,$18(a5)
                 bset    #7,2(a5)
                 btst    #0,$49(a5)
-                beq.s   locret_178BA
+                beq.s   Effect_UpdateDashTrail_Return
                 bclr    #7,2(a5)
-locret_178BA:                                           ; CODE XREF: Effect_UpdateDashTrail+2E   j
+Effect_UpdateDashTrail_Return:                          ; CODE XREF: Effect_UpdateDashTrail+2E   j  ; was: locret_178BA
                 rts
 ; End of function Effect_UpdateDashTrail
 ; Updates sprite facing flags
@@ -404,19 +404,17 @@ Effect_UpdateFacingFlags:                               ; DATA XREF: ROM:Entity_
                 move.w  (word_FF8092).w,d0
                 or.w    d0,$E(a5)
                 cmpi.w  #$80,$C(a5)
-                bmi.s   locret_178D8
+                bmi.s   Effect_UpdateFacingFlags_Return
                 move.w  #$1000,2(a5)
-locret_178D8:                                           ; CODE XREF: Effect_UpdateFacingFlags+14   j
+Effect_UpdateFacingFlags_Return:                        ; CODE XREF: Effect_UpdateFacingFlags+14   j  ; was: locret_178D8
                 rts
 ; End of function Effect_UpdateFacingFlags
 ; ---------------------------------------------------------------------------
-word_178DA:     dc.w    0, 1, 3, 3, $12, 5              ; DATA XREF: UI_UpdateWeaponDisplay+1E   o
-off_178E6:      dc.l    word_E9964                      ; DATA XREF: UI_InitWeaponSelectScreen+8A   o
+UI_WeaponDisplayStepDelays:     dc.w    0, 1, 3, 3, $12, 5  ; DATA XREF: UI_UpdateWeaponDisplay+1E   o  ; was: word_178DA
+UI_WeaponSelectionSpriteFrames: dc.l    word_E9964      ; DATA XREF: UI_InitWeaponSelectScreen+8A   o  ; was: off_178E6
                                         ; sub_2BBC0:loc_2BC18   o
                 dc.l    word_E9976
                 dc.l    word_E9988
                 dc.l    word_E999A
                 dc.l    word_E99AC
                 dc.l    word_E99BE
-
-; Updates weapon selection display counters

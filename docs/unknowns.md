@@ -104,6 +104,35 @@ and submits a HUD sprite list. It now lives at
 claim a physics step. The corrections and their evidence are recorded in the
 name audit.
 
+The player-terrain pass reduced the count to 10,346 by replacing all 60
+address-derived definitions in `terrain_collision.s`, `terrain_responses.s`,
+and `terrain_wrappers.s`. The three ROM-adjacent modules remain cohesive at
+276--619 lines. Their handlers are now named by the actual five-point probe
+geometry and by mechanically visible alignment operations. Static audit also
+removed false velocity, acceleration, gravity, animation, boss, and player
+ownership claims from shared terrain code. The strongest corrections are
+recorded in the name audit.
+
+The player input/status pass reduced the count to 10,332 by replacing all 14
+address-derived definitions in `input_and_status.s`. Branches and hitbox data
+now describe their mechanically visible roles. The three palette data sets
+remain neutral variants because their selection conditions are visible but
+their precise gameplay meanings have not yet been established.
+
+The player-rendering pass reduced the count to 10,306 by replacing all 26
+address-derived definitions in `rendering_and_defeat.s`. It also corrected
+generated boss/death claims attached to ordinary ground and ceiling movement,
+composite-sprite construction, and the player's damage-impact object. Frame
+tables with unproved visual roles retain neutral primary/secondary or variant
+names. These cross-module corrections are recorded in the name audit.
+
+The player projectile/effect pass reduced the count to 10,279 by replacing all
+27 address-derived definitions in `projectiles_and_effects.s`. Its loops now
+describe sprite-stream expansion, particle allocation, shot orientation, and
+dash-trail state directly. Static inspection also proved that the generated
+screen-pulse label was false: the routine builds four OAM entries for a
+transient signed three-digit value and never accesses scroll or VDP state.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

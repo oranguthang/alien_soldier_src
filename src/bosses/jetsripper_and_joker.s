@@ -77,7 +77,7 @@ loc_2CC3E:                                              ; CODE XREF: Enemy_Proje
 ; Checks for wall collision and sets bounce state
 Enemy_ProjectileStateMachine_CheckWallBounce:           ; DATA XREF: ROM:0002CC28   o  ; was: loc_2CC54
                 jsr     (Physics_EntityWallCheck).l
-                jsr     (Player_ActionDispatcher).l
+                jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 beq.w   Enemy_ProjectileBounceState
                 subq.w  #1,$48(a5)
@@ -100,7 +100,7 @@ loc_2CC90:                                              ; CODE XREF: Enemy_Proje
 ; Tracks player position and adjusts projectile direction
 Enemy_ProjectileStateMachine_TrackPlayer:               ; DATA XREF: ROM:0002CC2A   o  ; was: loc_2CC9C
                 jsr     (Physics_EntityWallCheck).l
-                jsr     (Player_ActionDispatcher).l
+                jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 beq.w   Enemy_ProjectileBounceState
                 bsr.w   Enemy_FacePlayer
@@ -122,7 +122,7 @@ loc_2CCD6:                                              ; CODE XREF: Enemy_Proje
 ; Applies gravity with max falling speed $7C000, checks terrain and player collision
 Physics_BossGravityAndCollision:                        ; CODE XREF: Enemy_ProjectileBounceState+16   j  ; was: sub_2CCEE
                                         ; DATA XREF: ROM:0002CC2C   o
-                jsr     (Physics_BossTerrainCheck).l
+                jsr     (Physics_EntityExtendedWallCheck).l
                 cmpi.l  #$7C000,$1C(a5)
                 bmi.s   loc_2CD08
                 move.l  #$7C000,$1C(a5)
@@ -132,11 +132,11 @@ loc_2CD08:                                              ; CODE XREF: Physics_Bos
                 addi.l  #$6000,$1C(a5)
                 bmi.s   loc_2CD22
 loc_2CD12:                                              ; CODE XREF: Physics_BossGravityAndCollision+18   j
-                jsr     (Player_CheckTerrainCollision).l
+                jsr     (Physics_CheckLowerTerrainWhenDescending).l
                 btst    #0,6(a5)
                 bne.w   loc_2CC3E
 loc_2CD22:                                              ; CODE XREF: Physics_BossGravityAndCollision+22   j
-                jmp     Physics_TerrainCheckWithVelocity
+                jmp     Physics_CheckUpperTerrainWhenRising
 ; End of function Physics_BossGravityAndCollision
 ; Sets state 6, halves horizontal velocity, branches to gravity/collision routine
 Enemy_ProjectileBounceState:                            ; CODE XREF: Enemy_ProjectileStateMachine+32   j  ; was: sub_2CD28
@@ -157,7 +157,7 @@ Enemy_SetWaitState:                                     ; CODE XREF: Enemy_Proje
 ; Ground-based enemy movement with projectile spawning at specific timing
 Enemy_GroundWalkWithProjectile:                         ; DATA XREF: ROM:0002CC32   o  ; was: sub_2CD54
                 jsr     (Physics_EntityWallCheck).l
-                jsr     (Player_ActionDispatcher).l
+                jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 beq.w   Enemy_ProjectileBounceState
                 subq.w  #1,$48(a5)

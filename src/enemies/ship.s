@@ -75,7 +75,7 @@ loc_2CF5A:                                              ; CODE XREF: Physics_Acc
 Player_UpdatePhysics:                                   ; CODE XREF: Enemy_MainStateMachine+34   p  ; was: sub_2CF64
                                         ; sub_2C71E:Enemy_MainStateMachine_UpdateMovement   p
                 jsr     (Physics_EntityWallCheck).l
-                jmp     Player_ActionDispatcher
+                jmp     Physics_CheckLowerTerrain
 ; End of function Player_UpdatePhysics
 ; Toggles sprite visibility flag
 Enemy_ToggleSpriteVisibility:                           ; CODE XREF: Projectile_BouncingDebrisMain   p  ; was: sub_2CF70

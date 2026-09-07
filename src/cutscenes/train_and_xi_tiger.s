@@ -87,7 +87,7 @@ locret_2F030:                                           ; CODE XREF: Entity_Trai
 Entity_TrainJumpFall:                                   ; DATA XREF: ROM:0002EF4A   o  ; was: sub_2F032
                 btst    #7,$1C(a5)
                 bne.s   loc_2F048
-                jsr     (Player_ActionDispatcher).l
+                jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 bne.s   Entity_TrainJumpLanded
 loc_2F048:                                              ; CODE XREF: Entity_TrainJumpFall+6   j
@@ -163,7 +163,7 @@ locret_2F0F4:                                           ; CODE XREF: Entity_XiTi
 Entity_XiTigerIntroState2:                              ; DATA XREF: ROM:0002F0A0   o  ; was: sub_2F0F6
                 btst    #7,$1C(a5)
                 bne.s   loc_2F10C
-                jsr     (Player_ActionDispatcher).l
+                jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 bne.s   loc_2F116
 loc_2F10C:                                              ; CODE XREF: Entity_XiTigerIntroState2+6   j

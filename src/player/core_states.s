@@ -109,7 +109,7 @@ Player_UpdateState:                                     ; CODE XREF: Player_Upda
 ; ---------------------------------------------------------------------------
 off_15062:      dc.w    Player_HandleJump-Player_HandleDeathSequence
                                         ; DATA XREF: Player_UpdateState+4   r
-                dc.w    Boss_UpdateHealthBar-Player_HandleDeathSequence
+                dc.w    Player_GroundedMovementState-Player_HandleDeathSequence
                 dc.w    Player_AirAttackState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
@@ -121,7 +121,7 @@ off_15062:      dc.w    Player_HandleJump-Player_HandleDeathSequence
                 dc.w    Player_HandleFallingState-Player_HandleDeathSequence
                 dc.w    Player_HandleLandingState-Player_HandleDeathSequence
                 dc.w    Player_HandleDashState-Player_HandleDeathSequence
-                dc.w    Sound_PlayBossHitSound-Player_HandleDeathSequence
+                dc.w    Player_CeilingMovementState-Player_HandleDeathSequence
                 dc.w    Player_AirControlState-Player_HandleDeathSequence
                 dc.w    Player_HandleCrouchState-Player_HandleDeathSequence
                 dc.w    Player_CheckDashCounter-Player_HandleDeathSequence
@@ -250,9 +250,9 @@ nullsub_36:                                             ; CODE XREF: Player_Hand
 
 ; Handles player jump mechanics
 Player_HandleJump:                                      ; DATA XREF: ROM:off_15062   o  ; was: sub_1521E
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Effect_SpawnParticle
@@ -281,7 +281,7 @@ loc_15278:                                              ; CODE XREF: Player_Hand
 ; Handles damage knockback with velocity and timer setup
 Player_HandleDamageKnockback:                           ; CODE XREF: Player_HandleJump+2A   j  ; was: loc_15286
                                         ; Player_HandleAirState+2C   j
-                bsr.w   Boss_FlashOnHit
+                bsr.w   Player_SpawnDamageImpactEffect
                 move.b  #$7F,(byte_FF830F).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$3A,4(a5)                      ; ':'
@@ -298,9 +298,9 @@ locret_152C8:                                           ; CODE XREF: Player_Hand
 ; End of function Player_HandleJump
 ; Applies velocity to boss position with bounds
 Physics_ApplyBossVelocity:                              ; DATA XREF: ROM:0001509C   o  ; was: sub_152CA
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_SetDeathStateFlags
                 subq.w  #1,$4A(a5)
@@ -314,7 +314,7 @@ Physics_ApplyBossVelocity:                              ; DATA XREF: ROM:0001509
 ; Initializes player death knockback state and velocity
 Player_InitDeathKnockback:                              ; CODE XREF: Player_HandleFallingState+82   j  ; was: sub_152FC
                                         ; Player_HandleSpecialAttack+64   j
-                bsr.w   Boss_FlashOnHit
+                bsr.w   Player_SpawnDamageImpactEffect
                 move.b  #$7F,(byte_FF830F).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$FFFC,$48(a5)
@@ -334,26 +334,26 @@ Player_SetDeathStateFlags:                              ; CODE XREF: Physics_App
 ; Checks collision between boss and player shots
 Physics_BossCollisionCheck:                             ; DATA XREF: ROM:0001509E   o  ; was: sub_15342
                 addi.l  #$5000,$1C(a5)
-                jsr     Physics_BossTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 tst.w   $1C(a5)
                 bmi.s   loc_15366
-                bsr.w   Player_UpdateTerrainCheck
+                bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 bne.w   Player_InitLandingState
                 bra.s   loc_15386
 ; ---------------------------------------------------------------------------
 loc_15366:                                              ; CODE XREF: Physics_BossCollisionCheck+12   j
                 clr.b   6(a5)
-                jsr     Player_TerrainCheckAlternate(pc)  ; (pc)
+                jsr     Physics_RisingTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 bra.s   loc_15386
 ; End of function Physics_BossCollisionCheck
 ; Handles player defeat with terrain check
 Player_DefeatGroundedState:
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)  ; was: sub_15372
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)  ; was: sub_15372
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 bne.w   Player_InitAirState
 loc_15386:                                              ; CODE XREF: Physics_BossCollisionCheck+22   j
@@ -378,8 +378,8 @@ locret_153BA:                                           ; CODE XREF: Boss_TakeDa
                                         ; Boss_TakeDamage+E   j
                 rts
 ; End of function Boss_TakeDamage
-; Flashes boss sprite when taking damage
-Boss_FlashOnHit:                                        ; CODE XREF: Player_HandleJump:loc_15286   p  ; was: sub_153BC
+; Supplies facing-dependent position and velocity for the player damage impact
+Player_SpawnDamageImpactEffect:                         ; CODE XREF: Player_HandleJump:loc_15286   p  ; was: sub_153BC
                                         ; sub_152FC   p
                 moveq   #$FFFFFFFC,d0
                 move.l  #$FFFC0000,d2
@@ -387,9 +387,9 @@ Boss_FlashOnHit:                                        ; CODE XREF: Player_Hand
                 btst    #4,$E(a5)
                 beq.s   loc_153D0
                 moveq   #$A,d1
-loc_153D0:                                              ; CODE XREF: Boss_FlashOnHit+10   j
-                bra.w   Boss_CheckDefeatCondition
-; End of function Boss_FlashOnHit
+loc_153D0:                                              ; CODE XREF: Player_SpawnDamageImpactEffect+10   j
+                bra.w   Player_CreateDamageImpactObject
+; End of function Player_SpawnDamageImpactEffect
 ; Initializes jump cancel state clearing flags and timers
 Player_InitJumpCancelState:                             ; CODE XREF: Player_HandleJump+42   j  ; was: sub_153D4
                                         ; Player_HandleAirMovement+30   j
@@ -414,9 +414,9 @@ nullsub_37:                                             ; CODE XREF: Player_Hand
 ; Handles player airborne state logic
 Player_HandleAirState:                                  ; DATA XREF: ROM:00015070   o  ; was: sub_15408
                 bset    #1,(byte_FF8244).w
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_HandleSpecialMove
@@ -425,7 +425,7 @@ Player_HandleAirState:                                  ; DATA XREF: ROM:0001507
                 bne.s   nullsub_37
                 btst    #0,(byte_FF826C).w
                 bne.w   Player_HandleDamageKnockback
-                bsr.w   Player_ApplyKnockbackVelocity
+                bsr.w   Player_DecelerateHorizontalVelocityFast
                 subq.w  #1,$48(a5)
                 bpl.s   Player_CheckAirStateTransition
                 move.w  #$FFFF,$48(a5)
@@ -441,7 +441,7 @@ Player_CheckAirStateTransition:                         ; CODE XREF: Player_Hand
                                         ; Player_HandleAirState+4C   j
                 btst    #4,$69(a5)
                 beq.w   Player_HandleDefeatByBoss
-                bra.w   loc_170F6
+                bra.w   Player_RenderAirborneWithWeapon
 ; End of function Player_HandleAirState
 ; Initializes player air state with parameters
 Player_InitAirJumpState:                                ; CODE XREF: Player_HandleLandingState+6C   j  ; was: sub_1546E
@@ -455,9 +455,9 @@ Player_InitAirJumpState:                                ; CODE XREF: Player_Hand
 ; End of function Player_InitAirJumpState
 ; Handles player movement while airborne
 Player_HandleAirMovement:                               ; DATA XREF: ROM:0001506C   o  ; was: sub_1548C
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_HandleSpecialMove
@@ -468,7 +468,7 @@ Player_HandleAirMovement:                               ; DATA XREF: ROM:0001506
                 bne.w   Player_HandleDamageKnockback
                 btst    #1,$69(a5)
                 bne.w   Player_InitJumpCancelState
-                bsr.w   Player_ApplyKnockbackVelocity
+                bsr.w   Player_DecelerateHorizontalVelocityFast
                 move.l  $18(a5),d0
                 bne.s   Player_SelectDeathAnimation
                 btst    #2,$69(a5)
@@ -485,7 +485,7 @@ Player_SelectDeathAnimation:                            ; CODE XREF: Player_Hand
                 movea.l #word_E89C2,a2
                 moveq   #0,d5
                 moveq   #6,d6
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 locret_15500:                                           ; CODE XREF: Player_HandleAirMovement+18   j
                                         ; Player_HandleAirMovement+1E   j
@@ -507,9 +507,9 @@ Player_InitLandingState:                                ; CODE XREF: Physics_Bos
 ; Handles player landing state logic
 Player_HandleLandingState:                              ; DATA XREF: ROM:00015078   o  ; was: sub_15532
                 bset    #1,(byte_FF8244).w
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_HandleSpecialMove
@@ -540,7 +540,7 @@ loc_155A2:                                              ; CODE XREF: Player_Hand
                                         ; Player_HandleLandingState+56   j
                 btst    #4,$69(a5)
                 beq.w   Player_HandleDefeatByBoss
-                bra.w   loc_170F6
+                bra.w   Player_RenderAirborneWithWeapon
 ; End of function Player_HandleLandingState
 ; Handles player special move action
 Player_HandleSpecialMove:                               ; CODE XREF: Player_HandleJump+18   p  ; was: sub_155B0
@@ -575,9 +575,9 @@ Player_SetSpecialMoveDuration:                          ; CODE XREF: Player_Hand
 ; End of function Player_HandleSpecialMove
 ; Handles player grounded state with terrain and damage checks
 Player_HandleGroundedState:                             ; DATA XREF: ROM:0001506E   o  ; was: sub_15610
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 cmpi.w  #$12,(word_FFA21C).w
@@ -631,8 +631,8 @@ Player_InitWallBounceState:                             ; CODE XREF: Player_Chec
                 move.w  #4,$5C(a5)
                 bra.w   Player_AutoFlipDirection
 ; End of function Player_CheckWallCollisionJump
-nullsub_38:                                             ; CODE XREF: Boss_UpdateHealthBar+18   j
-                                        ; Boss_UpdateHealthBar+1E   j
+nullsub_38:                                             ; CODE XREF: Player_GroundedMovementState+18   j
+                                        ; Player_GroundedMovementState+1E   j
                 rts
 ; End of function nullsub_38
 

@@ -801,6 +801,227 @@
         "The routine calls the HUD sprite-list builder and HUD renderer, then indexes the Xi Tiger cutscene state table.",
         "It invokes no physics, terrain, collision, or movement routine."
       ]
+    },
+    {
+      "address": "0x0146FC",
+      "previous_name": "Player_ActionDispatcher",
+      "current_name": "Physics_CheckLowerTerrain",
+      "legacy_name": "sub_146FC",
+      "evidence": "static",
+      "basis": [
+        "The routine samples terrain at horizontal offsets -8, 0, and +8 along two lower Y offsets.",
+        "It dispatches terrain-angle response handlers and reads no player input or action-state index.",
+        "Enemy and projectile state machines call the same routine, so player ownership is not established."
+      ]
+    },
+    {
+      "address": "0x01468A",
+      "previous_name": "Physics_BossTerrainCheck",
+      "current_name": "Physics_EntityExtendedWallCheck",
+      "legacy_name": "sub_1468A",
+      "evidence": "static",
+      "basis": [
+        "The routine probes both horizontal sides at the entity center and at a velocity-selected vertical offset.",
+        "Generic enemies and projectiles call it, and it contains no boss type or boss-state check."
+      ]
+    },
+    {
+      "address": "0x014AF8",
+      "previous_name": "Physics_UpdateVelocity",
+      "current_name": "Physics_HandleUpperLeftInnerTerrain",
+      "legacy_name": "sub_14AF8",
+      "evidence": "static",
+      "basis": [
+        "The caller reaches this routine only after the upper-left inner terrain probe at offsets -8 and -24 succeeds.",
+        "The routine normalizes the terrain angle and dispatches a response table; it never writes either velocity field."
+      ]
+    },
+    {
+      "address": "0x014BBC",
+      "previous_name": "Physics_ApplyAcceleration",
+      "current_name": "Physics_HandleUpperLeftOuterTerrain",
+      "legacy_name": "sub_14BBC",
+      "evidence": "static",
+      "basis": [
+        "The caller reaches this routine from the upper-left outer probe at offsets -8 and -32.",
+        "It sets collision flags and dispatches a terrain-angle response without adding to a velocity or acceleration value."
+      ]
+    },
+    {
+      "address": "0x014ED2",
+      "previous_name": "Sprite_UpdateBossAnimation",
+      "current_name": "Physics_ResolveRightWallCollision",
+      "legacy_name": "sub_14ED2",
+      "evidence": "static",
+      "basis": [
+        "The routine marks the right-side collision flag and subtracts the tile penetration depth from the entity X coordinate.",
+        "It accesses no sprite mapping, animation counter, or boss identity."
+      ]
+    },
+    {
+      "address": "0x014CD6",
+      "previous_name": "Boss_DestroyerMK2EntryInit",
+      "current_name": "Physics_CalcFloorOffsetAdd4",
+      "legacy_name": "sub_14CD6",
+      "evidence": "static",
+      "basis": [
+        "The routine invokes the shared floor-alignment calculation seeded with 4 and then adds 4 to the entity Y coordinate.",
+        "It is selected from generic terrain-angle response tables and contains no Destroyer MK2 state or type check."
+      ]
+    },
+    {
+      "address": "0x014E04",
+      "previous_name": "Boss_DestroyerMK2BattleStart",
+      "current_name": "Physics_PrepareVerticalOffset2",
+      "legacy_name": "sub_14E04",
+      "evidence": "static",
+      "basis": [
+        "This entry sets d3 to 2 and falls into the shared quarter-step floor-alignment calculation.",
+        "Four generic terrain response entries call it; no battle state or boss data is accessed."
+      ]
+    },
+    {
+      "address": "0x016E34",
+      "previous_name": "Physics_ApplyVerticalDecel",
+      "current_name": "Physics_AccelerateHorizontalByFacing",
+      "legacy_name": "sub_16E34",
+      "evidence": "static",
+      "basis": [
+        "The routine exclusively reads and writes object offset 0x18, the horizontal 16.16 velocity paired with X at offset 0x10.",
+        "Facing bit 3 selects addition or subtraction of 0xA800 toward symmetric horizontal limits."
+      ]
+    },
+    {
+      "address": "0x016E70",
+      "previous_name": "Physics_ApplyDownwardGravity",
+      "current_name": "Physics_AccelerateHorizontalNegative",
+      "legacy_name": "sub_16E70",
+      "evidence": "static",
+      "basis": [
+        "The routine subtracts 0xA800 from object offset 0x18 toward a negative limit.",
+        "It does not access the vertical velocity at offset 0x1C, so neither downward motion nor gravity is implemented."
+      ]
+    },
+    {
+      "address": "0x016E8A",
+      "previous_name": "Physics_ApplyUpwardGravity",
+      "current_name": "Physics_AccelerateHorizontalPositive",
+      "legacy_name": "sub_16E8A",
+      "evidence": "static",
+      "basis": [
+        "The routine adds 0xA800 to object offset 0x18 toward a positive limit.",
+        "It does not access the vertical velocity at offset 0x1C, so neither upward motion nor gravity is implemented."
+      ]
+    },
+    {
+      "address": "0x016D40",
+      "previous_name": "Player_DirectionDispatcher",
+      "current_name": "Physics_FacingTerrainCheckWrapper",
+      "legacy_name": "sub_16D40",
+      "evidence": "static",
+      "basis": [
+        "After the common disable and moving-platform checks, facing bit 4 selects between lower- and upper-boundary terrain probes.",
+        "The routine neither reads directional input nor dispatches a player action state."
+      ]
+    },
+    {
+      "address": "0x014E20",
+      "previous_name": "Physics_ApplyOffset6Down",
+      "current_name": "Physics_ApplyOffset5Sub6",
+      "legacy_name": "sub_14E20",
+      "evidence": "static",
+      "basis": [
+        "The routine enters the additive quarter-step alignment family through the helper that seeds d3 with 5.",
+        "After alignment it subtracts 6 from the Y coordinate; the previous name confused the adjustment with the seed and asserted a screen direction."
+      ]
+    },
+    {
+      "address": "0x016BAC",
+      "previous_name": "Player_ApplyHitboxOffset",
+      "current_name": "Player_SetHitbox_StoreBounds",
+      "legacy_name": "loc_16BAC",
+      "evidence": "static",
+      "basis": [
+        "The routine stores the selected or horizontally mirrored four-byte hitbox boundary value at object offset 0x28.",
+        "It performs no arithmetic or coordinate write, so the previous claim that it applies an offset was inaccurate."
+      ]
+    },
+    {
+      "address": "0x0156B8",
+      "previous_name": "Boss_UpdateHealthBar",
+      "current_name": "Player_GroundedMovementState",
+      "legacy_name": "sub_156B8",
+      "evidence": "static",
+      "basis": [
+        "The routine is a player state-table target that checks lower terrain contact, movement input, jumps, and player special moves.",
+        "It neither accesses a boss object nor reads or writes a health value."
+      ]
+    },
+    {
+      "address": "0x0167EE",
+      "previous_name": "Sound_PlayBossHitSound",
+      "current_name": "Player_CeilingMovementState",
+      "legacy_name": "sub_167EE",
+      "evidence": "static",
+      "basis": [
+        "The routine is a player state-table target that checks upper terrain contact and handles directional movement, dash, counter, and crouch transitions.",
+        "It does not call the sound driver or inspect any boss damage state."
+      ]
+    },
+    {
+      "address": "0x016F36",
+      "previous_name": "Boss_AnimateDeathSequence",
+      "current_name": "Player_RenderDirectionalMovement",
+      "legacy_name": "sub_16F36",
+      "evidence": "static",
+      "basis": [
+        "Both ordinary grounded and ceiling player movement states tail-call the routine after processing directional input.",
+        "It advances a repeating eight-frame cycle and submits player sprite pieces; no boss or death condition is tested."
+      ]
+    },
+    {
+      "address": "0x0153BC",
+      "previous_name": "Boss_FlashOnHit",
+      "current_name": "Player_SpawnDamageImpactEffect",
+      "legacy_name": "sub_153BC",
+      "evidence": "static",
+      "basis": [
+        "Player damage-state initializers call the routine, which supplies facing-dependent relative position and velocity arguments to an impact-object creator.",
+        "It does not alter palette or visibility fields and therefore does not flash a boss sprite."
+      ]
+    },
+    {
+      "address": "0x017386",
+      "previous_name": "Boss_CheckDefeatCondition",
+      "current_name": "Player_CreateDamageImpactObject",
+      "legacy_name": "sub_17386",
+      "evidence": "static",
+      "basis": [
+        "The routine initializes a fixed object slot, positions it relative to the player, assigns velocity and sprite data, and plays sound 0x43.",
+        "It performs no health comparison and contains no conditional defeat transition."
+      ]
+    },
+    {
+      "address": "0x0174A8",
+      "previous_name": "Stage_HandleBossDefeat",
+      "current_name": "Player_BuildSpritePieces",
+      "legacy_name": "sub_174A8",
+      "evidence": "static",
+      "basis": [
+        "The routine expands two terminated frame streams into the buffer at 0xFF8780 while applying tile and coordinate offsets.",
+        "It is called by many ordinary player animation paths and does not update stage progression or a boss state."
+      ]
+    },
+    {
+      "address": "0x017702",
+      "previous_name": "Effect_UpdateScreenPulse",
+      "current_name": "UI_RenderTransientValue",
+      "legacy_name": "sub_17702",
+      "evidence": "static",
+      "basis": [
+        "The routine converts a stored value into a sign glyph and three digit glyphs, then writes four sprite entries to the OAM staging buffer.",
+        "It accesses neither scroll coordinates nor VDP registers, so the previous screen pulse or shake claim was false."
+      ]
     }
   ]
 }

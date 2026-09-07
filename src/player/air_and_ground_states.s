@@ -33,9 +33,9 @@ nullsub_43:                                             ; CODE XREF: Player_Proc
 ; Processes player state while airborne
 Player_ProcessAirState:                                 ; DATA XREF: ROM:00015084   o  ; was: sub_1652C
                 bset    #1,(byte_FF8244).w
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                jsr     Player_TerrainCheckStandard(pc)  ; (pc)
+                jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
@@ -50,7 +50,7 @@ Player_ProcessAirState:                                 ; DATA XREF: ROM:0001508
 loc_16564:                                              ; CODE XREF: Player_ProcessAirState+28   j
                 btst    #0,(byte_FF826C).w
                 bne.w   loc_1646C
-                bsr.w   Player_ApplyKnockbackVelocity
+                bsr.w   Player_DecelerateHorizontalVelocityFast
                 subq.w  #1,$48(a5)
                 bpl.s   Player_CheckGroundTransition
                 move.w  #$FFFF,$48(a5)
@@ -80,9 +80,9 @@ Player_InitCrouchState:                                 ; CODE XREF: Player_Proc
 ; End of function Player_InitCrouchState
 ; Main crouch state handler with input checks
 Player_HandleCrouchState:                               ; DATA XREF: ROM:00015080   o  ; was: sub_165C2
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                jsr     Player_TerrainCheckStandard(pc)  ; (pc)
+                jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
@@ -94,7 +94,7 @@ Player_HandleCrouchState:                               ; DATA XREF: ROM:0001508
                 bne.w   loc_1646C
                 btst    #0,$69(a5)
                 bne.w   Player_InitDashState
-                bsr.w   Player_ApplyKnockbackVelocity
+                bsr.w   Player_DecelerateHorizontalVelocityFast
                 move.l  $18(a5),d0
                 bne.s   Player_SelectCrouchAnimation
                 btst    #2,$69(a5)
@@ -106,12 +106,12 @@ Player_HandleCrouchState:                               ; DATA XREF: ROM:0001508
 ; Selects appropriate crouch/defeat animation based on state
 Player_SelectCrouchAnimation:                           ; CODE XREF: Player_HandleCrouchState+3E   j  ; was: loc_1661A
                 btst    #4,$69(a5)
-                bne.w   loc_17132
+                bne.w   Player_RenderGroundedFrame
                 movea.l #word_E8972,a1
                 movea.l #word_E89C2,a2
                 moveq   #0,d5
                 moveq   #6,d6
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 locret_16638:                                           ; CODE XREF: Player_HandleCrouchState+1A   j
                                         ; Player_HandleCrouchState+20   j
@@ -133,9 +133,9 @@ Player_InitiateLanding:                                 ; CODE XREF: Player_Hand
 ; End of function Player_InitiateLanding
 ; Processes player state during jump
 Player_ProcessJumpState:                                ; DATA XREF: ROM:00015088   o  ; was: sub_16670
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                jsr     Player_TerrainCheckStandard(pc)  ; (pc)
+                jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
@@ -203,9 +203,9 @@ loc_16746:                                              ; CODE XREF: Player_Chec
 Player_CheckDashCounter:                                ; DATA XREF: ROM:00015082   o  ; was: sub_1674A
                 cmpi.w  #$12,(word_FFA21C).w
                 bmi.w   Player_InitGroundedState
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                jsr     Player_TerrainCheckStandard(pc)  ; (pc)
+                jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
@@ -256,16 +256,16 @@ Player_InitWallKickAnimation:                           ; CODE XREF: Player_Init
                 move.w  #$10,$5C(a5)
                 bra.w   Player_AutoFlipDirection
 ; End of function Player_InitWallKickState
-nullsub_44:                                             ; CODE XREF: Sound_PlayBossHitSound+1A   j
-                                        ; Sound_PlayBossHitSound+20   j
+nullsub_44:                                             ; CODE XREF: Player_CeilingMovementState+1A   j
+                                        ; Player_CeilingMovementState+20   j
                 rts
 ; End of function nullsub_44
 
-; Plays sound effect for boss taking damage
-Sound_PlayBossHitSound:                                 ; DATA XREF: ROM:0001507C   o  ; was: sub_167EE
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+; Handles directional movement while the player is attached to upper terrain
+Player_CeilingMovementState:                            ; DATA XREF: ROM:0001507C   o  ; was: sub_167EE
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                jsr     Player_TerrainCheckStandard(pc)  ; (pc)
+                jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
@@ -281,22 +281,22 @@ Sound_PlayBossHitSound:                                 ; DATA XREF: ROM:0001507
                 beq.s   loc_16834
                 tst.w   (word_FFA22A).w
                 bne.w   Player_InitCrouchState
-loc_16834:                                              ; CODE XREF: Sound_PlayBossHitSound+3C   j
+loc_16834:                                              ; CODE XREF: Player_CeilingMovementState+3C   j
                 btst    #2,$69(a5)
                 bne.s   loc_16846
                 btst    #3,$69(a5)
                 beq.w   Player_InitCrouchState
-loc_16846:                                              ; CODE XREF: Sound_PlayBossHitSound+4C   j
-                bsr.w   Physics_ApplyVerticalDecel
+loc_16846:                                              ; CODE XREF: Player_CeilingMovementState+4C   j
+                bsr.w   Physics_AccelerateHorizontalByFacing
                 btst    #4,$69(a5)
-                beq.w   Boss_AnimateDeathSequence
+                beq.w   Player_RenderDirectionalMovement
                 btst    #3,$69(a5)
                 beq.s   loc_1686A
                 btst    #3,$E(a5)
                 beq.w   loc_16878
                 bra.w   Player_RenderDashSprite
 ; ---------------------------------------------------------------------------
-loc_1686A:                                              ; CODE XREF: Sound_PlayBossHitSound+6C   j
+loc_1686A:                                              ; CODE XREF: Player_CeilingMovementState+6C   j
                 btst    #3,$E(a5)
                 bne.w   loc_16878
                 bra.w   Player_RenderDashSprite
@@ -310,12 +310,12 @@ loc_16878:                                              ; CODE XREF: Player_Init
 locret_1688E:                                           ; CODE XREF: Player_AirControlState+1A   j
                                         ; Player_AirControlState+20   j
                 rts
-; End of function Sound_PlayBossHitSound
+; End of function Player_CeilingMovementState
 ; Handles player air control state with terrain checks and dash/counter inputs during aerial movement
 Player_AirControlState:                                 ; DATA XREF: ROM:0001507E   o  ; was: sub_16890
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                jsr     Player_TerrainCheckStandard(pc)  ; (pc)
+                jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
@@ -334,14 +334,14 @@ Player_AirControlState:                                 ; DATA XREF: ROM:0001507
                 beq.s   loc_168EA
                 btst    #3,$E(a5)
                 beq.w   Player_InitWallKickAnimation
-                bra.w   Physics_ApplyDownwardGravity
+                bra.w   Physics_AccelerateHorizontalNegative
 ; ---------------------------------------------------------------------------
 loc_168EA:                                              ; CODE XREF: Player_AirControlState+4A   j
                 btst    #3,$69(a5)
                 beq.w   Player_InitCrouchState
                 btst    #3,$E(a5)
                 bne.w   Player_InitWallKickAnimation
-                bra.w   Physics_ApplyUpwardGravity
+                bra.w   Physics_AccelerateHorizontalPositive
 ; End of function Player_AirControlState
 ; Updates aim direction from D-pad
 Player_UpdateAimDirection:                              ; DATA XREF: ROM:000150AA   o  ; was: sub_16902
@@ -368,7 +368,7 @@ Player_JumpApexState:                                   ; DATA XREF: ROM:000150A
                 addi.l  #$8800,$1C(a5)
                 bpl.w   Player_InitFallState
                 bclr    #4,$E(a5)
-                bra.w   loc_16EF8
+                bra.w   Player_HandleDefeatByBoss_UseDirectionalOffsets
 ; End of function Player_JumpApexState
 ; Player dash effect during teleport
 Player_TeleportDash:                                    ; DATA XREF: ROM:000150B2   o  ; was: sub_16942

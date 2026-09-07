@@ -1,31 +1,31 @@
-Physics_DispatchSlopeHandler:                           ; CODE XREF: Physics_MultiPointTerrainCheck+5E   j  ; was: sub_14C12
-                                        ; Physics_TerrainCheckWithVelocity+70   j
+Physics_HandleUpperRightOuterTerrain:                   ; CODE XREF: Physics_CheckUpperTerrain+5E   j  ; was: sub_14C12
+                                        ; Physics_CheckUpperTerrainWhenRising+70   j
                                         ; DATA XREF:
                 cmpi.w  #$80,d2
                 bmi.w   Physics_SetSolidTerrainFlag
                 bset    #1,6(a5)
                 andi.w  #$7E,d2                         ; '~'
                 subi.w  #$40,d2                         ; '@'
-                bmi.w   Physics_SnapToSurface
-                movea.w off_14C38(pc,d2.w),a4
+                bmi.w   Physics_SnapToUpperSurface
+                movea.w Physics_UpperRightOuterResponseTable(pc,d2.w),a4
                 adda.l  #Physics_TerrainEmptyHandler,a4
                 jmp     (a4)
-; End of function Physics_DispatchSlopeHandler
+; End of function Physics_HandleUpperRightOuterTerrain
 ; ---------------------------------------------------------------------------
-off_14C38:      dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
-                                        ; DATA XREF: Physics_DispatchSlopeHandler+1A   r
-                dc.w    Physics_SnapToSurface-Physics_TerrainEmptyHandler
+Physics_UpperRightOuterResponseTable:   dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler  ; was: off_14C38
+                                        ; DATA XREF: Physics_HandleUpperRightOuterTerrain+1A   r
+                dc.w    Physics_SnapToUpperSurface-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
-                dc.w    Physics_SnapToSurface-Physics_TerrainEmptyHandler
+                dc.w    Physics_SnapToUpperSurface-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
-                dc.w    Physics_SnapAndSubtract4-Physics_TerrainEmptyHandler
-                dc.w    Physics_PrepareVertical4Down-Physics_TerrainEmptyHandler
+                dc.w    Physics_ApplyEvenOffset0Sub4-Physics_TerrainEmptyHandler
+                dc.w    Physics_ApplyEvenOffset4Sub4-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
-                dc.w    Boss_DestroyerMK2EntryInit-Physics_TerrainEmptyHandler
+                dc.w    Physics_CalcFloorOffsetAdd4-Physics_TerrainEmptyHandler
                 dc.w    Physics_SnapAndAdd4-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
@@ -39,29 +39,29 @@ off_14C38:      dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
                 dc.w    Physics_TerrainEmptyHandler-Physics_TerrainEmptyHandler
 
 ; Empty terrain angle physics handler
-Physics_TerrainEmptyHandler:                            ; CODE XREF: Physics_ProcessTerrainAngle+4   j  ; was: nullsub_35
-                                        ; Physics_ProcessTerrainAngle+1A   j
+Physics_TerrainEmptyHandler:                            ; CODE XREF: Physics_HandleLowerLeftInnerTerrain+4   j  ; was: nullsub_35
+                                        ; Physics_HandleLowerLeftInnerTerrain+1A   j
                 rts
 ; End of function Physics_TerrainEmptyHandler
 ; Sets solid terrain collision flag (bit 2 in collision flags)
-Physics_SetSolidTerrainFlag:                            ; CODE XREF: Physics_HandleCeilingCollision+4   j  ; was: sub_14C6A
-                                        ; Physics_ApplyAcceleration+4   j
+Physics_SetSolidTerrainFlag:                            ; CODE XREF: Physics_HandleUpperCenterTerrain+4   j  ; was: sub_14C6A
+                                        ; Physics_HandleUpperLeftOuterTerrain+4   j
                 bset    #2,6(a5)
                 rts
 ; End of function Physics_SetSolidTerrainFlag
-; Snaps player position to floor surface
-Player_SnapToFloor:                                     ; CODE XREF: Player_HandleCollision+1A   j  ; was: sub_14C72
-                                        ; Player_HandleFloorCollision+1A   j
+; Clears vertical velocity and snaps the entity to a lower surface
+Physics_SnapToLowerSurface:                             ; CODE XREF: Physics_HandleLowerCenterTerrain+1A   j  ; was: sub_14C72
+                                        ; Physics_HandleLowerLeftOuterTerrain+1A   j
                 clr.l   $1C(a5)
                 move.w  d1,d4
                 sub.w   (dword_FFA904).w,d4
                 andi.w  #7,d4
                 sub.w   d4,$14(a5)
                 rts
-; End of function Player_SnapToFloor
-; Snaps player position to terrain surface
-Physics_SnapToSurface:                                  ; CODE XREF: Physics_HandleCeilingCollision+16   j  ; was: sub_14C86
-                                        ; Physics_ApplyAcceleration+16   j
+; End of function Physics_SnapToLowerSurface
+; Clears vertical velocity and snaps the entity to an upper surface
+Physics_SnapToUpperSurface:                             ; CODE XREF: Physics_HandleUpperCenterTerrain+16   j  ; was: sub_14C86
+                                        ; Physics_HandleUpperLeftOuterTerrain+16   j
                 clr.l   $1C(a5)
                 move.w  d1,d4
                 sub.w   (dword_FFA904).w,d4
@@ -70,7 +70,7 @@ Physics_SnapToSurface:                                  ; CODE XREF: Physics_Han
                 andi.w  #7,d4
                 add.w   d4,$14(a5)
                 rts
-; End of function Physics_SnapToSurface
+; End of function Physics_SnapToUpperSurface
 ; Snaps to floor and subtracts 12 pixels
 Physics_SnapFloorMinus12:                               ; DATA XREF: ROM:0001495C   o  ; was: sub_14C9E
                 bsr.w   Physics_PrepareFloorOffset8
@@ -110,13 +110,13 @@ Physics_CalcFloorOffsetSubtract4:                       ; DATA XREF: ROM:000149D
                 subq.w  #4,$14(a5)
                 rts
 ; End of function Physics_CalcFloorOffsetSubtract4
-; Boss entry animation init
-Boss_DestroyerMK2EntryInit:                             ; DATA XREF: ROM:00014A84   o  ; was: sub_14CD6
+; Applies the half-step floor alignment seeded with 4, then adds 4 to Y
+Physics_CalcFloorOffsetAdd4:                            ; DATA XREF: ROM:00014A84   o  ; was: sub_14CD6
                                         ; ROM:00014B42   o
                 bsr.s   Physics_CalculateFloorOffset4
                 addq.w  #4,$14(a5)
                 rts
-; End of function Boss_DestroyerMK2EntryInit
+; End of function Physics_CalcFloorOffsetAdd4
 ; Calculates floor offset plus 12 pixels
 Physics_CalcFloorPlus12:                                ; DATA XREF: ROM:00014BA4   o  ; was: sub_14CDE
                 bsr.s   Physics_CalculateFloorOffset4
@@ -135,7 +135,7 @@ Physics_CalculateFloorOffset4:                          ; CODE XREF: Physics_Cal
                 moveq   #4,d3
 ; Aligns entity to floor with calculated pixel offset
 Physics_AlignToFloorWithOffset:                         ; CODE XREF: Physics_PrepareFloorOffset8+2   j  ; was: loc_14CEE
-                bsr.w   Player_SnapToFloor
+                bsr.w   Physics_SnapToLowerSurface
                 move.w  d0,d4
                 add.w   (dword_FFA900).w,d4
                 andi.w  #7,d4
@@ -145,70 +145,70 @@ Physics_AlignToFloorWithOffset:                         ; CODE XREF: Physics_Pre
                 add.w   d3,$14(a5)
                 rts
 ; End of function Physics_CalculateFloorOffset4
-; Applies vertical offset of 4 pixels
-Physics_ApplyVerticalOffset4:                           ; DATA XREF: ROM:00014A30   o  ; was: sub_14D08
+; Applies the even floor alignment seeded with 4, then adds 4 to Y
+Physics_ApplyEvenOffset4Add4:                           ; DATA XREF: ROM:00014A30   o  ; was: sub_14D08
                                         ; ROM:00014B9E   o
-                bsr.s   Physics_PrepareVerticalOffset
+                bsr.s   Physics_PrepareEvenOffset4
                 addq.w  #4,$14(a5)
                 rts
-; End of function Physics_ApplyVerticalOffset4
-; Prepares vertical offset 12 pixels down
-Physics_PrepareVertical12Down:                          ; DATA XREF: ROM:000149D6   o  ; was: sub_14D10
-                bsr.s   Physics_PrepareVerticalOffset
+; End of function Physics_ApplyEvenOffset4Add4
+; Applies the even floor alignment seeded with 4, then subtracts 12 from Y
+Physics_ApplyEvenOffset4Sub12:                          ; DATA XREF: ROM:000149D6   o  ; was: sub_14D10
+                bsr.s   Physics_PrepareEvenOffset4
                 subi.w  #$C,$14(a5)
                 rts
-; End of function Physics_PrepareVertical12Down
-; Prepares vertical offset 4 pixels down
-Physics_PrepareVertical4Down:                           ; DATA XREF: ROM:00014964   o  ; was: sub_14D1A
+; End of function Physics_ApplyEvenOffset4Sub12
+; Applies the even floor alignment seeded with 4, then subtracts 4 from Y
+Physics_ApplyEvenOffset4Sub4:                           ; DATA XREF: ROM:00014964   o  ; was: sub_14D1A
                                         ; ROM:00014A8A   o
-                bsr.s   Physics_PrepareVerticalOffset
+                bsr.s   Physics_PrepareEvenOffset4
                 subq.w  #4,$14(a5)
                 rts
-; End of function Physics_PrepareVertical4Down
-; Prepares vertical offset 12 pixels up
-Physics_PrepareVertical12Up:                            ; DATA XREF: ROM:00014B3C   o  ; was: sub_14D22
-                bsr.s   Physics_PrepareVerticalOffset
+; End of function Physics_ApplyEvenOffset4Sub4
+; Applies the even floor alignment seeded with 4, then adds 12 to Y
+Physics_ApplyEvenOffset4Add12:                          ; DATA XREF: ROM:00014B3C   o  ; was: sub_14D22
+                bsr.s   Physics_PrepareEvenOffset4
                 addi.w  #$C,$14(a5)
                 rts
-; End of function Physics_PrepareVertical12Up
-; Snaps to floor and adds 4 pixels
-Physics_SnapFloorAdd4:                                  ; DATA XREF: ROM:00014A32   o  ; was: sub_14D2C
+; End of function Physics_ApplyEvenOffset4Add12
+; Applies the even floor alignment seeded with 0, then adds 4 to Y
+Physics_ApplyEvenOffset0Add4:                           ; DATA XREF: ROM:00014A32   o  ; was: sub_14D2C
                                         ; ROM:00014B9C   o
-                bsr.s   Physics_SnapToFloorNoOffset
+                bsr.s   Physics_PrepareEvenOffset0
                 addq.w  #4,$14(a5)
                 rts
-; End of function Physics_SnapFloorAdd4
-; Snaps to floor and subtracts 12 pixels
-Physics_SnapFloorSub12:                                 ; DATA XREF: ROM:000149D8   o  ; was: sub_14D34
-                bsr.s   Physics_SnapToFloorNoOffset
+; End of function Physics_ApplyEvenOffset0Add4
+; Applies the even floor alignment seeded with 0, then subtracts 12 from Y
+Physics_ApplyEvenOffset0Sub12:                          ; DATA XREF: ROM:000149D8   o  ; was: sub_14D34
+                bsr.s   Physics_PrepareEvenOffset0
                 subi.w  #$C,$14(a5)
                 rts
-; End of function Physics_SnapFloorSub12
-; Snaps to floor and subtracts 4 pixels
-Physics_SnapAndSubtract4:                               ; DATA XREF: ROM:00014966   o  ; was: sub_14D3E
+; End of function Physics_ApplyEvenOffset0Sub12
+; Applies the even floor alignment seeded with 0, then subtracts 4 from Y
+Physics_ApplyEvenOffset0Sub4:                           ; DATA XREF: ROM:00014966   o  ; was: sub_14D3E
                                         ; ROM:00014A8C   o
-                bsr.s   Physics_SnapToFloorNoOffset
+                bsr.s   Physics_PrepareEvenOffset0
                 subq.w  #4,$14(a5)
                 rts
-; End of function Physics_SnapAndSubtract4
-; Snaps to floor and adds 12 pixels
-Physics_SnapFloorAdd12:                                 ; DATA XREF: ROM:00014B3A   o  ; was: sub_14D46
-                bsr.s   Physics_SnapToFloorNoOffset
+; End of function Physics_ApplyEvenOffset0Sub4
+; Applies the even floor alignment seeded with 0, then adds 12 to Y
+Physics_ApplyEvenOffset0Add12:                          ; DATA XREF: ROM:00014B3A   o  ; was: sub_14D46
+                bsr.s   Physics_PrepareEvenOffset0
                 addi.w  #$C,$14(a5)
                 rts
-; End of function Physics_SnapFloorAdd12
-; Prepares d3=4 for vertical offset
-Physics_PrepareVerticalOffset:                          ; CODE XREF: Physics_ApplyVerticalOffset4   p  ; was: sub_14D50
+; End of function Physics_ApplyEvenOffset0Add12
+; Seeds the even floor-alignment response with 4
+Physics_PrepareEvenOffset4:                             ; CODE XREF: Physics_ApplyEvenOffset4Add4   p  ; was: sub_14D50
                                         ; sub_14D10   p
                 moveq   #4,d3
-                bra.s   loc_14D56
-; End of function Physics_PrepareVerticalOffset
-; Snaps entity to floor without offset
-Physics_SnapToFloorNoOffset:                            ; CODE XREF: Physics_SnapFloorAdd4   p  ; was: sub_14D54
+                bra.s   Physics_AlignFloorEvenOffset
+; End of function Physics_PrepareEvenOffset4
+; Seeds the even floor-alignment response with 0
+Physics_PrepareEvenOffset0:                             ; CODE XREF: Physics_ApplyEvenOffset0Add4   p  ; was: sub_14D54
                                         ; sub_14D34   p
                 moveq   #0,d3
-loc_14D56:                                              ; CODE XREF: Physics_PrepareVerticalOffset+2   j
-                bsr.w   Player_SnapToFloor
+Physics_AlignFloorEvenOffset:                           ; CODE XREF: Physics_PrepareEvenOffset4+2   j  ; was: loc_14D56
+                bsr.w   Physics_SnapToLowerSurface
                 move.w  d0,d4
                 add.w   (dword_FFA900).w,d4
                 andi.w  #6,d4
@@ -216,7 +216,7 @@ loc_14D56:                                              ; CODE XREF: Physics_Pre
                 add.w   d4,d3
                 add.w   d3,$14(a5)
                 rts
-; End of function Physics_SnapToFloorNoOffset
+; End of function Physics_PrepareEvenOffset0
 ; Prepares 8-pixel offset subtracts 10
 Physics_Prepare8Sub10:                                  ; DATA XREF: ROM:0001496C   o  ; was: sub_14D6E
                 bsr.w   Physics_PrepareVerticalOffset8
@@ -289,55 +289,55 @@ Physics_Apply4Add2:                                     ; DATA XREF: ROM:00014A9
                 addq.w  #2,$14(a5)
                 rts
 ; End of function Physics_Apply4Add2
-; Boss entry movement
-Boss_DestroyerMK2EntryMove:                             ; DATA XREF: ROM:00014972   o  ; was: sub_14DD6
-                bsr.s   Boss_DestroyerMK2BattleStart
+; Applies the quarter-step floor alignment seeded with 2, then subtracts 10 from Y
+Physics_ApplyOffset2Sub10:                              ; DATA XREF: ROM:00014972   o  ; was: sub_14DD6
+                bsr.s   Physics_PrepareVerticalOffset2
                 subi.w  #$A,$14(a5)
                 rts
-; End of function Boss_DestroyerMK2EntryMove
-; Starts DestroyerMK2 battle moves 6 down
-Boss_DestroyerMK2Sub6:                                  ; DATA XREF: ROM:000149E4   o  ; was: sub_14DE0
-                bsr.s   Boss_DestroyerMK2BattleStart
+; End of function Physics_ApplyOffset2Sub10
+; Applies the quarter-step floor alignment seeded with 2, then subtracts 6 from Y
+Physics_ApplyOffset2Sub6:                               ; DATA XREF: ROM:000149E4   o  ; was: sub_14DE0
+                bsr.s   Physics_PrepareVerticalOffset2
                 subq.w  #6,$14(a5)
                 rts
-; End of function Boss_DestroyerMK2Sub6
-; Starts DestroyerMK2 battle moves 2 down
-Boss_DestroyerMK2Sub2:                                  ; DATA XREF: ROM:00014A3E   o  ; was: sub_14DE8
-                bsr.s   Boss_DestroyerMK2BattleStart
+; End of function Physics_ApplyOffset2Sub6
+; Applies the quarter-step floor alignment seeded with 2, then subtracts 2 from Y
+Physics_ApplyOffset2Sub2:                               ; DATA XREF: ROM:00014A3E   o  ; was: sub_14DE8
+                bsr.s   Physics_PrepareVerticalOffset2
                 subq.w  #2,$14(a5)
                 rts
-; End of function Boss_DestroyerMK2Sub2
-; Boss entry stop position
-Boss_DestroyerMK2EntryStop:                             ; DATA XREF: ROM:00014A98   o  ; was: sub_14DF0
-                bsr.s   Boss_DestroyerMK2BattleStart
+; End of function Physics_ApplyOffset2Sub2
+; Applies the quarter-step floor alignment seeded with 2, then adds 2 to Y
+Physics_ApplyOffset2Add2:                               ; DATA XREF: ROM:00014A98   o  ; was: sub_14DF0
+                bsr.s   Physics_PrepareVerticalOffset2
                 addq.w  #2,$14(a5)
                 rts
-; End of function Boss_DestroyerMK2EntryStop
+; End of function Physics_ApplyOffset2Add2
 ; Prepares d3=8 for vertical offset
 Physics_PrepareVerticalOffset8:                         ; CODE XREF: Physics_Prepare8Sub10   p  ; was: sub_14DF8
                                         ; sub_14D7A   p
                 moveq   #8,d3
-                bra.s   loc_14E06
+                bra.s   Physics_AlignFloorQuarterSubtractOffset
 ; End of function Physics_PrepareVerticalOffset8
 ; Prepares d3=6 for vertical offset
 Physics_PrepareVerticalOffset6:                         ; CODE XREF: Physics_Prepare6Sub10   p  ; was: sub_14DFC
                                         ; sub_14D9C   p
                 moveq   #6,d3
-                bra.s   loc_14E06
+                bra.s   Physics_AlignFloorQuarterSubtractOffset
 ; End of function Physics_PrepareVerticalOffset6
 ; Applies 4-pixel floor offset for terrain alignment
 Physics_ApplyFloorOffset4:                              ; CODE XREF: Physics_Apply4Sub10   p  ; was: sub_14E00
                                         ; sub_14DBE   p
                 moveq   #4,d3
-                bra.s   loc_14E06
+                bra.s   Physics_AlignFloorQuarterSubtractOffset
 ; End of function Physics_ApplyFloorOffset4
-; Battle start initialization
-Boss_DestroyerMK2BattleStart:                           ; CODE XREF: Boss_DestroyerMK2EntryMove   p  ; was: sub_14E04
+; Seeds the quarter-step floor-alignment response with 2
+Physics_PrepareVerticalOffset2:                         ; CODE XREF: Physics_ApplyOffset2Sub10   p  ; was: sub_14E04
                                         ; sub_14DE0   p
                 moveq   #2,d3
-loc_14E06:                                              ; CODE XREF: Physics_PrepareVerticalOffset8+2   j
+Physics_AlignFloorQuarterSubtractOffset:                ; CODE XREF: Physics_PrepareVerticalOffset8+2   j  ; was: loc_14E06
                                         ; Physics_PrepareVerticalOffset6+2   j
-                bsr.w   Player_SnapToFloor
+                bsr.w   Physics_SnapToLowerSurface
                 move.w  d0,d4
                 add.w   (dword_FFA900).w,d4
                 andi.w  #7,d4
@@ -346,128 +346,128 @@ loc_14E06:                                              ; CODE XREF: Physics_Pre
                 sub.w   d4,d3
                 add.w   d3,$14(a5)
                 rts
-; End of function Boss_DestroyerMK2BattleStart
-; Applies vertical physics offset -6
-Physics_ApplyOffset6Down:                               ; DATA XREF: ROM:00014974   o  ; was: sub_14E20
-                bsr.w   Physics_PrepareVerticalOffset5
+; End of function Physics_PrepareVerticalOffset2
+; Applies the quarter-step additive alignment seeded with 5, then subtracts 6 from Y
+Physics_ApplyOffset5Sub6:                               ; DATA XREF: ROM:00014974   o  ; was: sub_14E20
+                bsr.w   Physics_PrepareQuarterAddOffset5
                 subq.w  #6,$14(a5)
                 rts
-; End of function Physics_ApplyOffset6Down
-; Applies vertical physics offset -10
-Physics_ApplyOffset10Down:                              ; DATA XREF: ROM:000149E6   o  ; was: sub_14E2A
-                bsr.s   Physics_PrepareVerticalOffset5
+; End of function Physics_ApplyOffset5Sub6
+; Applies the quarter-step additive alignment seeded with 5, then subtracts 10 from Y
+Physics_ApplyOffset5Sub10:                              ; DATA XREF: ROM:000149E6   o  ; was: sub_14E2A
+                bsr.s   Physics_PrepareQuarterAddOffset5
                 subi.w  #$A,$14(a5)
                 rts
-; End of function Physics_ApplyOffset10Down
-; Prepares vertical offset 5 and adds 2 to Y position
-Physics_ApplyOffset5Up:                                 ; DATA XREF: ROM:00014A40   o  ; was: sub_14E34
-                bsr.s   Physics_PrepareVerticalOffset5
+; End of function Physics_ApplyOffset5Sub10
+; Applies the quarter-step additive alignment seeded with 5, then adds 2 to Y
+Physics_ApplyOffset5Add2:                               ; DATA XREF: ROM:00014A40   o  ; was: sub_14E34
+                bsr.s   Physics_PrepareQuarterAddOffset5
                 addq.w  #2,$14(a5)
                 rts
-; End of function Physics_ApplyOffset5Up
-; Prepares vertical offset 5 and subtracts 2 from Y position
-Physics_ApplyOffset5Down:                               ; DATA XREF: ROM:00014A9A   o  ; was: sub_14E3C
-                bsr.s   Physics_PrepareVerticalOffset5
+; End of function Physics_ApplyOffset5Add2
+; Applies the quarter-step additive alignment seeded with 5, then subtracts 2 from Y
+Physics_ApplyOffset5Sub2:                               ; DATA XREF: ROM:00014A9A   o  ; was: sub_14E3C
+                bsr.s   Physics_PrepareQuarterAddOffset5
                 subq.w  #2,$14(a5)
                 rts
-; End of function Physics_ApplyOffset5Down
-; Prepares vertical offset 3 and subtracts 6 from Y position
-Physics_ApplyOffset3Down6:                              ; DATA XREF: ROM:00014976   o  ; was: sub_14E44
-                bsr.s   Physics_PrepareVerticalOffset3
+; End of function Physics_ApplyOffset5Sub2
+; Applies the quarter-step additive alignment seeded with 3, then subtracts 6 from Y
+Physics_ApplyOffset3Sub6:                               ; DATA XREF: ROM:00014976   o  ; was: sub_14E44
+                bsr.s   Physics_PrepareQuarterAddOffset3
                 subq.w  #6,$14(a5)
                 rts
-; End of function Physics_ApplyOffset3Down6
-; Prepares vertical offset 3 and subtracts 10 from Y position
-Physics_ApplyOffset3Down10:                             ; DATA XREF: ROM:000149E8   o  ; was: sub_14E4C
-                bsr.s   Physics_PrepareVerticalOffset3
+; End of function Physics_ApplyOffset3Sub6
+; Applies the quarter-step additive alignment seeded with 3, then subtracts 10 from Y
+Physics_ApplyOffset3Sub10:                              ; DATA XREF: ROM:000149E8   o  ; was: sub_14E4C
+                bsr.s   Physics_PrepareQuarterAddOffset3
                 subi.w  #$A,$14(a5)
                 rts
-; End of function Physics_ApplyOffset3Down10
-; Prepares vertical offset 3 and adds 2 to Y position
-Physics_ApplyOffset3Up:                                 ; DATA XREF: ROM:00014A42   o  ; was: sub_14E56
-                bsr.s   Physics_PrepareVerticalOffset3
+; End of function Physics_ApplyOffset3Sub10
+; Applies the quarter-step additive alignment seeded with 3, then adds 2 to Y
+Physics_ApplyOffset3Add2:                               ; DATA XREF: ROM:00014A42   o  ; was: sub_14E56
+                bsr.s   Physics_PrepareQuarterAddOffset3
                 addq.w  #2,$14(a5)
                 rts
-; End of function Physics_ApplyOffset3Up
-; Prepares vertical offset 3 and subtracts 2 from Y position
-Physics_ApplyOffset3Down:                               ; DATA XREF: ROM:00014A9C   o  ; was: sub_14E5E
-                bsr.s   Physics_PrepareVerticalOffset3
+; End of function Physics_ApplyOffset3Add2
+; Applies the quarter-step additive alignment seeded with 3, then subtracts 2 from Y
+Physics_ApplyOffset3Sub2:                               ; DATA XREF: ROM:00014A9C   o  ; was: sub_14E5E
+                bsr.s   Physics_PrepareQuarterAddOffset3
                 subq.w  #2,$14(a5)
                 rts
-; End of function Physics_ApplyOffset3Down
-; Prepares vertical offset 1 and subtracts 6 from Y position
-Physics_ApplyOffset1Down6:                              ; DATA XREF: ROM:00014978   o  ; was: sub_14E66
-                bsr.s   Physics_PrepareVerticalOffset1
+; End of function Physics_ApplyOffset3Sub2
+; Applies the quarter-step additive alignment seeded with 1, then subtracts 6 from Y
+Physics_ApplyOffset1Sub6:                               ; DATA XREF: ROM:00014978   o  ; was: sub_14E66
+                bsr.s   Physics_PrepareQuarterAddOffset1
                 subq.w  #6,$14(a5)
                 rts
-; End of function Physics_ApplyOffset1Down6
-; Prepares vertical offset 1 and subtracts 10 from Y position
-Physics_ApplyOffset1Down10:                             ; DATA XREF: ROM:000149EA   o  ; was: sub_14E6E
-                bsr.s   Physics_PrepareVerticalOffset1
+; End of function Physics_ApplyOffset1Sub6
+; Applies the quarter-step additive alignment seeded with 1, then subtracts 10 from Y
+Physics_ApplyOffset1Sub10:                              ; DATA XREF: ROM:000149EA   o  ; was: sub_14E6E
+                bsr.s   Physics_PrepareQuarterAddOffset1
                 subi.w  #$A,$14(a5)
                 rts
-; End of function Physics_ApplyOffset1Down10
-; Prepares vertical offset 1 and adds 2 to Y position
-Physics_ApplyOffset1Up:                                 ; DATA XREF: ROM:00014A44   o  ; was: sub_14E78
-                bsr.s   Physics_PrepareVerticalOffset1
+; End of function Physics_ApplyOffset1Sub10
+; Applies the quarter-step additive alignment seeded with 1, then adds 2 to Y
+Physics_ApplyOffset1Add2:                               ; DATA XREF: ROM:00014A44   o  ; was: sub_14E78
+                bsr.s   Physics_PrepareQuarterAddOffset1
                 addq.w  #2,$14(a5)
                 rts
-; End of function Physics_ApplyOffset1Up
-; Prepares vertical offset 1 and subtracts 2 from Y position
-Physics_ApplyOffset1Down:                               ; DATA XREF: ROM:00014A9E   o  ; was: sub_14E80
-                bsr.s   Physics_PrepareVerticalOffset1
+; End of function Physics_ApplyOffset1Add2
+; Applies the quarter-step additive alignment seeded with 1, then subtracts 2 from Y
+Physics_ApplyOffset1Sub2:                               ; DATA XREF: ROM:00014A9E   o  ; was: sub_14E80
+                bsr.s   Physics_PrepareQuarterAddOffset1
                 subq.w  #2,$14(a5)
                 rts
-; End of function Physics_ApplyOffset1Down
-; Prepares negative offset and subtracts 6 from Y position
-Physics_ApplyOffsetNegDown6:                            ; DATA XREF: ROM:0001497A   o  ; was: sub_14E88
-                bsr.s   Physics_PrepareOffsetNeg
+; End of function Physics_ApplyOffset1Sub2
+; Applies the quarter-step additive alignment seeded with -1, then subtracts 6 from Y
+Physics_ApplyOffsetNegative1Sub6:                       ; DATA XREF: ROM:0001497A   o  ; was: sub_14E88
+                bsr.s   Physics_PrepareQuarterAddOffsetNegative1
                 subq.w  #6,$14(a5)
                 rts
-; End of function Physics_ApplyOffsetNegDown6
-; Prepares negative offset and subtracts 10 from Y position
-Physics_ApplyOffsetNegDown10:                           ; DATA XREF: ROM:000149EC   o  ; was: sub_14E90
-                bsr.s   Physics_PrepareOffsetNeg
+; End of function Physics_ApplyOffsetNegative1Sub6
+; Applies the quarter-step additive alignment seeded with -1, then subtracts 10 from Y
+Physics_ApplyOffsetNegative1Sub10:                      ; DATA XREF: ROM:000149EC   o  ; was: sub_14E90
+                bsr.s   Physics_PrepareQuarterAddOffsetNegative1
                 subi.w  #$A,$14(a5)
                 rts
-; End of function Physics_ApplyOffsetNegDown10
-; Prepares negative offset and adds 2 to Y position
-Physics_ApplyOffsetNegUp:                               ; DATA XREF: ROM:00014A46   o  ; was: sub_14E9A
-                bsr.s   Physics_PrepareOffsetNeg
+; End of function Physics_ApplyOffsetNegative1Sub10
+; Applies the quarter-step additive alignment seeded with -1, then adds 2 to Y
+Physics_ApplyOffsetNegative1Add2:                       ; DATA XREF: ROM:00014A46   o  ; was: sub_14E9A
+                bsr.s   Physics_PrepareQuarterAddOffsetNegative1
                 addq.w  #2,$14(a5)
                 rts
-; End of function Physics_ApplyOffsetNegUp
-; Prepares negative offset and subtracts 2 from Y position
-Physics_ApplyOffsetNegDown:                             ; DATA XREF: ROM:00014AA0   o  ; was: sub_14EA2
-                bsr.s   Physics_PrepareOffsetNeg
+; End of function Physics_ApplyOffsetNegative1Add2
+; Applies the quarter-step additive alignment seeded with -1, then subtracts 2 from Y
+Physics_ApplyOffsetNegative1Sub2:                       ; DATA XREF: ROM:00014AA0   o  ; was: sub_14EA2
+                bsr.s   Physics_PrepareQuarterAddOffsetNegative1
                 subq.w  #2,$14(a5)
                 rts
-; End of function Physics_ApplyOffsetNegDown
-; Prepares d3=5 for vertical offset
-Physics_PrepareVerticalOffset5:                         ; CODE XREF: Physics_ApplyOffset6Down   p  ; was: sub_14EAA
+; End of function Physics_ApplyOffsetNegative1Sub2
+; Seeds the quarter-step additive floor-alignment response with 5
+Physics_PrepareQuarterAddOffset5:                       ; CODE XREF: Physics_ApplyOffset5Sub6   p  ; was: sub_14EAA
                                         ; sub_14E2A   p
                 moveq   #5,d3
-                bra.s   loc_14EB8
-; End of function Physics_PrepareVerticalOffset5
-; Prepares d3=3 for vertical offset
-Physics_PrepareVerticalOffset3:                         ; CODE XREF: Physics_ApplyOffset3Down6   p  ; was: sub_14EAE
+                bra.s   Physics_AlignFloorQuarterAddOffset
+; End of function Physics_PrepareQuarterAddOffset5
+; Seeds the quarter-step additive floor-alignment response with 3
+Physics_PrepareQuarterAddOffset3:                       ; CODE XREF: Physics_ApplyOffset3Sub6   p  ; was: sub_14EAE
                                         ; sub_14E4C   p
                 moveq   #3,d3
-                bra.s   loc_14EB8
-; End of function Physics_PrepareVerticalOffset3
-; Prepares d3=1 for vertical offset
-Physics_PrepareVerticalOffset1:                         ; CODE XREF: Physics_ApplyOffset1Down6   p  ; was: sub_14EB2
+                bra.s   Physics_AlignFloorQuarterAddOffset
+; End of function Physics_PrepareQuarterAddOffset3
+; Seeds the quarter-step additive floor-alignment response with 1
+Physics_PrepareQuarterAddOffset1:                       ; CODE XREF: Physics_ApplyOffset1Sub6   p  ; was: sub_14EB2
                                         ; sub_14E6E   p
                 moveq   #1,d3
-                bra.s   loc_14EB8
-; End of function Physics_PrepareVerticalOffset1
-; Prepares negative vertical offset
-Physics_PrepareOffsetNeg:                               ; CODE XREF: Physics_ApplyOffsetNegDown6   p  ; was: sub_14EB6
+                bra.s   Physics_AlignFloorQuarterAddOffset
+; End of function Physics_PrepareQuarterAddOffset1
+; Seeds the quarter-step additive floor-alignment response with -1
+Physics_PrepareQuarterAddOffsetNegative1:               ; CODE XREF: Physics_ApplyOffsetNegative1Sub6   p  ; was: sub_14EB6
                                         ; sub_14E90   p
                 moveq   #$FFFFFFFF,d3
-loc_14EB8:                                              ; CODE XREF: Physics_PrepareVerticalOffset5+2   j
-                                        ; Physics_PrepareVerticalOffset3+2   j
-                bsr.w   Player_SnapToFloor
+Physics_AlignFloorQuarterAddOffset:                     ; CODE XREF: Physics_PrepareQuarterAddOffset5+2   j  ; was: loc_14EB8
+                                        ; Physics_PrepareQuarterAddOffset3+2   j
+                bsr.w   Physics_SnapToLowerSurface
                 move.w  d0,d4
                 add.w   (dword_FFA900).w,d4
                 andi.w  #7,d4
@@ -476,10 +476,10 @@ loc_14EB8:                                              ; CODE XREF: Physics_Pre
                 add.w   d4,d3
                 add.w   d3,$14(a5)
                 rts
-; End of function Physics_PrepareOffsetNeg
-; Updates boss sprite animation frame
-Sprite_UpdateBossAnimation:                             ; CODE XREF: Physics_EntityWallCheck+3C   p  ; was: sub_14ED2
-                                        ; Physics_BossTerrainCheck+5A   j
+; End of function Physics_PrepareQuarterAddOffsetNegative1
+; Marks and resolves penetration into the entity's right wall
+Physics_ResolveRightWallCollision:                      ; CODE XREF: Physics_EntityWallCheck+3C   p  ; was: sub_14ED2
+                                        ; Physics_EntityExtendedWallCheck+5A   j
                 bset    #1,7(a5)
                 move.w  d0,d4
                 add.w   (dword_FFA900).w,d4
@@ -487,10 +487,10 @@ Sprite_UpdateBossAnimation:                             ; CODE XREF: Physics_Ent
                 addq.w  #1,d4
                 sub.w   d4,$10(a5)
                 rts
-; End of function Sprite_UpdateBossAnimation
-; Handles wall collision and adjusts position
-Physics_HandleWallCollision:                            ; CODE XREF: Physics_EntityWallCheck+24   p  ; was: sub_14EEA
-                                        ; Physics_BossTerrainCheck+2E   p
+; End of function Physics_ResolveRightWallCollision
+; Marks and resolves penetration into the entity's left wall
+Physics_ResolveLeftWallCollision:                       ; CODE XREF: Physics_EntityWallCheck+24   p  ; was: sub_14EEA
+                                        ; Physics_EntityExtendedWallCheck+2E   p
                 bset    #0,7(a5)
                 move.w  d0,d4
                 add.w   (dword_FFA900).w,d4
@@ -500,5 +500,4 @@ Physics_HandleWallCollision:                            ; CODE XREF: Physics_Ent
                 addq.w  #1,d4
                 add.w   d4,$10(a5)
                 rts
-; End of function Physics_HandleWallCollision
-; Initializes player stats and parameters
+; End of function Physics_ResolveLeftWallCollision

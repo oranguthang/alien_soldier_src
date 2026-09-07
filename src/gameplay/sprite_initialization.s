@@ -263,7 +263,7 @@ Sprite_FindFreeEffectSlot_Return:                       ; CODE XREF: Sprite_Find
 ; End of function Sprite_FindFreeEffectSlot
 ; Allocates free sprite slot with buffer search
 Sprite_AllocateSlot:                                    ; CODE XREF: Effect_SpawnParticle+16   p  ; was: sub_1C03C
-                                        ; sub_175B8:loc_175EE   p
+                                        ; sub_175B8:Player_SpawnPhoenixParticles_Allocate   p
                 movea.w #(byte_FFC320-M68K_RAM),a0
                 moveq   #6,d7
 ; End of function Sprite_AllocateSlot

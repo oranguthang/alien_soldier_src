@@ -51,7 +51,7 @@ loc_15D0A:                                              ; CODE XREF: Player_Hand
                 addi.l  #$8800,$1C(a5)
 loc_15D12:                                              ; CODE XREF: Player_HandleDeathSequence+11C   j
                                         ; Player_HandleDeathSequence+128   j
-                jsr     Physics_BossTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 tst.w   $1C(a5)
                 bmi.s   loc_15D3A
@@ -62,7 +62,7 @@ loc_15D1E:                                              ; CODE XREF: Player_Hand
                 bra.s   loc_15D60
 ; ---------------------------------------------------------------------------
 loc_15D2A:                                              ; CODE XREF: Player_HandleFallingState+3E   j
-                bsr.w   Player_UpdateTerrainCheck
+                bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 bne.w   Player_InitLandingState
                 bra.s   loc_15D60
@@ -70,7 +70,7 @@ loc_15D2A:                                              ; CODE XREF: Player_Hand
 loc_15D3A:                                              ; CODE XREF: Player_HandleFallingState+22   j
                                         ; Player_HandleFallingState+38   j
                 clr.b   6(a5)
-                jsr     Player_TerrainCheckAlternate(pc)  ; (pc)
+                jsr     Physics_RisingTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 bne.w   Player_InitiateLanding
@@ -110,7 +110,7 @@ loc_15D9E:                                              ; CODE XREF: Player_Hand
                 bsr.w   Player_SelectFallAnimation
                 moveq   #0,d5
                 moveq   #0,d6
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 loc_15DBE:                                              ; CODE XREF: Player_HandleFallingState+B6   j
                 btst    #2,$69(a5)
@@ -165,7 +165,7 @@ loc_15E2A:                                              ; CODE XREF: Player_Hand
                 lea     (word_198D2).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #3,d6
-                bra.w   Sprite_PrepareRendering
+                bra.w   Player_PrepareSpriteRendering
 ; End of function Player_HandleFallingState
 ; Draws boss health UI elements
 Gfx_DrawBossHealthUI:                                   ; CODE XREF: Player_HandleFallingState+CA   p  ; was: sub_15E40
@@ -220,18 +220,18 @@ Player_InitHardLanding:                                 ; CODE XREF: Player_Hand
 Player_HandleBounceState:                               ; DATA XREF: ROM:00015074   o  ; was: sub_15EB6
                 bset    #0,(byte_FF8244).w
                 addi.l  #$8800,$1C(a5)
-                jsr     Physics_BossTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 tst.w   $1C(a5)
                 bmi.s   loc_15EE0
-                bsr.w   Player_UpdateTerrainCheck
+                bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 bne.w   Player_InitLandingState
                 bra.s   loc_15EF4
 ; ---------------------------------------------------------------------------
 loc_15EE0:                                              ; CODE XREF: Player_HandleBounceState+18   j
                 clr.b   6(a5)
-                jsr     Player_TerrainCheckAlternate(pc)  ; (pc)
+                jsr     Physics_RisingTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 bne.w   Player_InitiateLanding
@@ -239,7 +239,7 @@ loc_15EF4:                                              ; CODE XREF: Player_Hand
                 cmpi.w  #$38,$52(a5)                    ; '8'
                 bpl.w   Player_InitFallState
                 moveq   #2,d1
-                bra.w   Anim_SelectFrameData
+                bra.w   Player_AdvanceAnimationFrame
 ; End of function Player_HandleBounceState
 ; Applies horizontal air control input
 Player_ApplyAirControl:                                 ; CODE XREF: Player_HandleFallingState:loc_15D9E   p  ; was: sub_15F04
@@ -318,19 +318,19 @@ Player_HandleSpecialAttack:                             ; DATA XREF: ROM:000150B
 loc_15FE0:                                              ; CODE XREF: Player_HandleSpecialAttack+4   j
                 bset    #0,(byte_FF8244).w
                 bset    #6,(byte_FF8244).w
-                jsr     Physics_BossTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 addi.l  #$C000,$1C(a5)
                 bmi.s   loc_16010
                 clr.b   6(a5)
-                bsr.w   Player_UpdateTerrainCheck
+                bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 bne.w   Player_InitLandingState
                 bra.s   loc_16022
 ; ---------------------------------------------------------------------------
 loc_16010:                                              ; CODE XREF: Player_HandleSpecialAttack+36   j
                 clr.b   6(a5)
-                bsr.w   Player_TerrainCheckAlternate
+                bsr.w   Physics_RisingTerrainCheckWrapper
                 btst    #1,6(a5)
                 bne.w   Player_InitiateLanding
 loc_16022:                                              ; CODE XREF: Player_HandleSpecialAttack+4A   j
@@ -359,15 +359,15 @@ loc_1606A:                                              ; CODE XREF: Player_Hand
                 movea.l #word_E8972,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 ; Renders death effect particles using animation data
 Player_RenderDeathEffect:                               ; CODE XREF: Player_HandleSpecialAttack+AC   j  ; was: loc_16086
                 lea     (word_198B2).l,a4
                 moveq   #0,d5
                 moveq   #$FFFFFFFF,d6
-                lea     off_172F8(pc),a0
+                lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
-                bra.w   loc_1727A
+                bra.w   Player_PrepareSpriteRendering_WithTables
 ; End of function Player_HandleSpecialAttack
 ; Updates particle effects for explosions

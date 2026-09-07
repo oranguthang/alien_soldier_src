@@ -183,19 +183,19 @@ word_198C2:     dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $FD0D, $120D, $FDEB, $E3EB
                                         ; DATA XREF: Player_RenderWithWeapon+4A   o
 word_198D2:     dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $ECFC, $1FC, $ECDA, $D2DA
                                         ; DATA XREF: Player_HandleFallingState+14E   o
-                                        ; sub_17086:loc_170A6   o
+                                        ; sub_17086:Player_RenderSpecialWeapon_UseDefaultVariant   o
 word_198E2:     dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $FD0D, $120D, $FDEB, $E3EB
-                                        ; DATA XREF: Player_RenderWithWeapon:loc_1711E   o
+                                        ; DATA XREF: Player_RenderWithWeapon:Player_RenderAirborneWithWeapon_UseDefaultVariant   o
 word_198F2:     dc.w    $E2E6, $FCE6, $E2E8, $F4E8, $1226, $2E26, $1204, 4
                                         ; DATA XREF: Player_RenderWeaponSprite+6   o
                                         ; Player_UpdateDashSprite+6   o
 word_19902:     dc.w    $E2E6, $FCE6, $E2E8, $F4E8, $115, $1D15, $1F3, $EFF3
                                         ; DATA XREF: Player_RenderWithWeapon+E   o
 word_19912:     dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $1226, $2E26, $1204, 4
-                                        ; DATA XREF: Player_UpdateDashSprite:loc_17072   o
+                                        ; DATA XREF: Player_UpdateDashSprite:Player_UpdateDashSprite_UseDefaultVariant   o
                                         ; Player_RenderWithWeapon+82   o
 word_19922:     dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $115, $1D15, $1F3, $EFF3
-                                        ; DATA XREF: Player_RenderWithWeapon:loc_170E2   o
+                                        ; DATA XREF: Player_RenderWithWeapon:Player_RenderWithWeapon_UseDefaultVariant   o
 off_19932:      dc.l    sprite_FDF0E                    ; DATA XREF: ROM:Weapon_CircleAttackAnimationPointers   o
                 dc.l    sprite_FDE8E
                 dc.l    sprite_FDE0E

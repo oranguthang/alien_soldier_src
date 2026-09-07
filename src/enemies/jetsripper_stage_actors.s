@@ -149,16 +149,16 @@ Enemy_MainStateMachine_SetAirborneState:                ; CODE XREF: Enemy_MainS
                 move.w  #$14,$5C(a5)
 ; Performs terrain collision check in enemy state machine
 Enemy_MainStateMachine_TerrainCheck:                    ; DATA XREF: ROM:0002C718   o  ; was: loc_2C850
-                jsr     (Physics_BossTerrainCheck).l
+                jsr     (Physics_EntityExtendedWallCheck).l
                 bsr.w   Physics_AccelerateGravity
                 bmi.s   Enemy_MainStateMachine_CheckRisingTerrain
-                jsr     (Player_CheckTerrainCollision).l
+                jsr     (Physics_CheckLowerTerrainWhenDescending).l
                 btst    #0,6(a5)
                 bne.w   Enemy_MainStateMachine_BeginGroundedState
                 rts
 ; ---------------------------------------------------------------------------
 Enemy_MainStateMachine_CheckRisingTerrain:              ; CODE XREF: Enemy_MainStateMachine+13C   j  ; was: loc_2C86E
-                jmp     Physics_TerrainCheckWithVelocity
+                jmp     Physics_CheckUpperTerrainWhenRising
 ; ---------------------------------------------------------------------------
 Enemy_MainStateMachine_BeginGroundedState:              ; CODE XREF: Enemy_MainStateMachine+14A   j  ; was: loc_2C874
                 move.w  #8,4(a5)

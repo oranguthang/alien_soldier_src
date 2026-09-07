@@ -170,7 +170,7 @@ Enemy_BirdFlyState:                                     ; DATA XREF: ROM:0002DB4
 ; Checks wall collision and dispatches player action
 Player_WallCheckAndDispatch:
                 jsr     (Physics_EntityWallCheck).l     ; was: sub_2DBF8
-                jmp     Player_ActionDispatcher
+                jmp     Physics_CheckLowerTerrain
 ; End of function Player_WallCheckAndDispatch
 ; Bird dive attack with gravity and ground collision detection
 Enemy_BirdDiveAttack:                                   ; DATA XREF: ROM:0002DB46   o  ; was: sub_2DC04
@@ -178,11 +178,11 @@ Enemy_BirdDiveAttack:                                   ; DATA XREF: ROM:0002DB4
                 move.b  7(a5),$58(a5)
                 btst    #7,$1C(a5)
                 bne.s   loc_2DC26
-                jsr     (Player_ActionDispatcher).l
+                jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 bne.s   Enemy_BirdTransitionToWait
 loc_2DC26:                                              ; CODE XREF: Enemy_BirdDiveAttack+12   j
-                jsr     (Physics_TerrainCheckWithVelocity).l
+                jsr     (Physics_CheckUpperTerrainWhenRising).l
                 addi.l  #$4000,$1C(a5)
                 cmpi.l  #$58000,$1C(a5)
                 bgt.s   loc_2DC40

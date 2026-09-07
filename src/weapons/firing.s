@@ -1,5 +1,5 @@
 ; Computes the muzzle position and dispatches the selected weapon handler
-Weapon_UpdatePlayerFiring:                              ; CODE XREF: Sprite_PrepareRendering+42   j  ; was: sub_17ED8
+Weapon_UpdatePlayerFiring:                              ; CODE XREF: Player_PrepareSpriteRendering+42   j  ; was: sub_17ED8
                 moveq   #0,d6
                 move.b  $9E(a5),d6
                 move.b  (a4,d6.w),d1

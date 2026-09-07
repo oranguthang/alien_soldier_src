@@ -1,7 +1,8 @@
-Boss_UpdateHealthBar:                                   ; DATA XREF: ROM:00015064   o  ; was: sub_156B8
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+; Handles directional movement while the player is attached to lower terrain
+Player_GroundedMovementState:                           ; DATA XREF: ROM:00015064   o  ; was: sub_156B8
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_HandleSpecialMove
@@ -16,22 +17,22 @@ Boss_UpdateHealthBar:                                   ; DATA XREF: ROM:0001506
                 beq.s   loc_156FC
                 tst.w   (word_FFA22A).w
                 bne.w   Player_InitAirJumpState
-loc_156FC:                                              ; CODE XREF: Boss_UpdateHealthBar+3A   j
+loc_156FC:                                              ; CODE XREF: Player_GroundedMovementState+3A   j
                 btst    #2,$69(a5)
                 bne.s   loc_1570E
                 btst    #3,$69(a5)
                 beq.w   Player_InitAirJumpState
-loc_1570E:                                              ; CODE XREF: Boss_UpdateHealthBar+4A   j
-                bsr.w   Physics_ApplyVerticalDecel
+loc_1570E:                                              ; CODE XREF: Player_GroundedMovementState+4A   j
+                bsr.w   Physics_AccelerateHorizontalByFacing
                 btst    #4,$69(a5)
-                beq.w   Boss_AnimateDeathSequence
+                beq.w   Player_RenderDirectionalMovement
                 btst    #3,$69(a5)
                 beq.s   loc_15732
                 btst    #3,$E(a5)
                 beq.w   Player_InitIdleWallState
                 bra.w   Player_RenderDashEffect
 ; ---------------------------------------------------------------------------
-loc_15732:                                              ; CODE XREF: Boss_UpdateHealthBar+6A   j
+loc_15732:                                              ; CODE XREF: Player_GroundedMovementState+6A   j
                 btst    #3,$E(a5)
                 bne.w   Player_InitIdleWallState
                 bra.w   Player_RenderDashEffect
@@ -46,12 +47,12 @@ Player_InitIdleWallState:                               ; CODE XREF: Player_Chec
 locret_15756:                                           ; CODE XREF: Player_AirAttackState+18   j
                                         ; Player_AirAttackState+1E   j
                 rts
-; End of function Boss_UpdateHealthBar
+; End of function Player_GroundedMovementState
 ; Player air attack state handler processing jump cancels and directional attacks
 Player_AirAttackState:                                  ; DATA XREF: ROM:00015066   o  ; was: sub_15758
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_ProcessAction
+                bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
                 bsr.w   Player_HandleSpecialMove
@@ -67,14 +68,14 @@ Player_AirAttackState:                                  ; DATA XREF: ROM:0001506
                 beq.s   loc_157A6
                 btst    #3,$E(a5)
                 beq.w   Player_InitWallBounceState
-                bra.w   Physics_ApplyDownwardGravity
+                bra.w   Physics_AccelerateHorizontalNegative
 ; ---------------------------------------------------------------------------
 loc_157A6:                                              ; CODE XREF: Player_AirAttackState+3E   j
                 btst    #3,$69(a5)
                 beq.w   Player_InitAirJumpState
                 btst    #3,$E(a5)
                 bne.w   Player_InitWallBounceState
-                bra.w   Physics_ApplyUpwardGravity
+                bra.w   Physics_AccelerateHorizontalPositive
 ; End of function Player_AirAttackState
 ; Initializes Phoenix weapon attack
 Player_InitPhoenixAttack:
@@ -147,8 +148,8 @@ loc_158A0:                                              ; CODE XREF: Player_Phoe
                 bset    #4,$23(a5)
                 bset    #4,(byte_FF8244).w
                 clr.w   6(a5)
-                bsr.w   Player_TerrainCheckFlipped
-                bsr.w   Player_DirectionDispatcher
+                bsr.w   Physics_FacingExtendedWallCheckWrapper
+                bsr.w   Physics_FacingTerrainCheckWrapper
                 rts
 ; End of function Player_PhoenixAttackUpdate
 ; Spawns two Phoenix trail objects
@@ -252,7 +253,7 @@ Player_HandleDashCancel:                                ; DATA XREF: ROM:0001507
 ; ---------------------------------------------------------------------------
 loc_159F0:                                              ; CODE XREF: Player_HandleDashCancel+4   j
                                         ; Player_HandleDashCancel+A   j
-                bsr.w   Player_DirectionDispatcher
+                bsr.w   Physics_FacingTerrainCheckWrapper
 loc_159F4:                                              ; CODE XREF: Player_HandleDashCancel:loc_15A6C   j
                 clr.w   (word_FFC5C0).w
                 bclr    #0,(byte_FF826C).w
@@ -311,8 +312,8 @@ loc_15A6E:                                              ; CODE XREF: Player_Hand
 Player_ApplyHorizontalMovement:                         ; CODE XREF: Player_HandleDashCancel+A0   p  ; was: sub_15A9C
                                         ; Player_HandleDashCancel+A6   p
                 clr.w   6(a5)
-                bsr.w   Player_TerrainCheckFlipped
-                bsr.w   Player_DirectionDispatcher
+                bsr.w   Physics_FacingExtendedWallCheckWrapper
+                bsr.w   Physics_FacingTerrainCheckWrapper
                 tst.w   $48(a5)
                 bmi.s   loc_15AB8
                 btst    #1,7(a5)
@@ -360,9 +361,9 @@ loc_15B18:                                              ; CODE XREF: Player_Init
 ; Handles player slide knockback state
 Player_HandleSlideState:                                ; DATA XREF: ROM:000150A2   o  ; was: sub_15B20
                                         ; ROM:000150A4   o
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                bsr.w   Player_DirectionDispatcher
+                bsr.w   Physics_FacingTerrainCheckWrapper
                 moveq   #0,d0
                 btst    #4,$E(a5)
                 beq.s   loc_15B36
@@ -400,10 +401,10 @@ locret_15B8A:                                           ; CODE XREF: Player_Init
 ; End of function Player_InitDashKick
 ; Handles dash kick with gravity
 Player_DashKickState:                                   ; DATA XREF: ROM:000150A6   o  ; was: sub_15B8C
-                jsr     Physics_BossTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 addi.l  #$8800,$1C(a5)
-                bsr.w   Player_UpdateTerrainCheck
+                bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.s   locret_15BB6
                 bsr.w   Player_InitSlideState

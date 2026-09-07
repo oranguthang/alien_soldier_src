@@ -9,7 +9,7 @@ UI_UpdateWeaponDisplay:                                 ; CODE XREF: Sys_Gamepla
                 moveq   #8,d0
 loc_17918:                                              ; CODE XREF: UI_UpdateWeaponDisplay+16   j
                 movea.w #(word_FFA250-M68K_RAM),a0
-                lea     word_178DA(pc),a1
+                lea     UI_WeaponDisplayStepDelays(pc),a1
                 moveq   #0,d1
                 moveq   #3,d7
 loc_17924:                                              ; CODE XREF: UI_UpdateWeaponDisplay+4E   j
@@ -116,7 +116,7 @@ UI_InitWeaponSelectScreen:                              ; DATA XREF: ROM:0001799
                 movea.w #(word_FFA250-M68K_RAM),a1
                 lea     word_17A9C(pc),a3
                 nop
-                lea     off_178E6(pc),a4
+                lea     UI_WeaponSelectionSpriteFrames(pc),a4
                 movea.w #(word_FFA400-M68K_RAM),a5
                 move.w  (word_FF808A).w,d3
                 moveq   #0,d4

@@ -98,8 +98,8 @@ Collision_PlayerWeaponVsEnemy_FinishStandardDefeat:     ; CODE XREF: Collision_P
                 bra.w   Collision_PlayerWeaponVsEnemy_NextTarget
 ; End of function Collision_PlayerWeaponVsEnemy
 ; Checks the player against objects registered as moving platforms
-Collision_CheckPlayerPlatforms:                         ; CODE XREF: Player_ProcessAction+A   p  ; was: sub_142D8
-                                        ; Player_UpdateTerrainCheck+A   p
+Collision_CheckPlayerPlatforms:                         ; CODE XREF: Physics_LowerTerrainCheckWrapper+A   p  ; was: sub_142D8
+                                        ; Physics_DescendingTerrainCheckWrapper+A   p
                 movea.w #(byte_FF8F00-M68K_RAM),a4
                 move.w  (word_FF8D7C).w,d7
                 bmi.s   Collision_CheckPlayerPlatforms_Return
@@ -450,7 +450,7 @@ Collision_CheckProjectileTile_Return:                   ; CODE XREF: Collision_C
                 rts
 ; End of function Collision_CheckProjectileTile
 ; Entity wall collision detection checking left and right sides
-Physics_EntityWallCheck:                                ; CODE XREF: Physics_EntityTerrainWrapper+A   j  ; was: sub_14648
+Physics_EntityWallCheck:                                ; CODE XREF: Physics_WallCheckWrapper+A   j  ; was: sub_14648
                                         ; sub_2CC34:loc_2CC54   p
                 lea     (M68K_RAM).l,a0
                 lea     (dword_FF7800).l,a1
@@ -461,7 +461,7 @@ Physics_EntityWallCheck:                                ; CODE XREF: Physics_Ent
                 cmpi.w  #$80,d2
                 bmi.s   Physics_EntityWallCheck_CheckRight
                 bset    #2,7(a5)
-                bsr.w   Physics_HandleWallCollision
+                bsr.w   Physics_ResolveLeftWallCollision
 Physics_EntityWallCheck_CheckRight:                     ; CODE XREF: Physics_EntityWallCheck+1C   j  ; was: loc_14670
                 moveq   #8,d0
                 moveq   #0,d1
@@ -469,19 +469,19 @@ Physics_EntityWallCheck_CheckRight:                     ; CODE XREF: Physics_Ent
                 cmpi.w  #$80,d2
                 bmi.s   Physics_EntityWallCheck_Return
                 bset    #3,7(a5)
-                bsr.w   Sprite_UpdateBossAnimation
+                bsr.w   Physics_ResolveRightWallCollision
 Physics_EntityWallCheck_Return:                         ; CODE XREF: Physics_EntityWallCheck+34   j  ; was: locret_14688
                 rts
 ; End of function Physics_EntityWallCheck
-; Multi-point terrain collision check for boss with wall detection
-Physics_BossTerrainCheck:                               ; CODE XREF: Physics_BossTerrainWrapper+A   j  ; was: sub_1468A
+; Extended entity wall check with velocity-dependent vertical probe offsets
+Physics_EntityExtendedWallCheck:                        ; CODE XREF: Physics_ExtendedWallCheckWrapper+A   j  ; was: sub_1468A
                                         ; sub_2C71E:loc_2C850   p
                 moveq   #$18,d6
                 tst.w   $1C(a5)
-                bmi.s   Physics_BossTerrainCheck_Begin
+                bmi.s   Physics_EntityExtendedWallCheck_Begin
                 moveq   #$FFFFFFE8,d6
-Physics_BossTerrainCheck_Begin:                         ; CODE XREF: Physics_BossTerrainCheck+6   j  ; was: loc_14694
-                                        ; Player_TerrainCheckFlipped+12   j
+Physics_EntityExtendedWallCheck_Begin:                  ; CODE XREF: Physics_EntityExtendedWallCheck+6   j  ; was: loc_14694
+                                        ; Physics_FacingExtendedWallCheckWrapper+12   j
                 lea     (M68K_RAM).l,a0
                 lea     (dword_FF7800).l,a1
                 move.w  #$80,d7
@@ -489,36 +489,36 @@ Physics_BossTerrainCheck_Begin:                         ; CODE XREF: Physics_Bos
                 moveq   #0,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   Physics_BossTerrainCheck_CheckLowerLeft
+                bmi.s   Physics_EntityExtendedWallCheck_CheckOffsetLeft
                 bset    #2,7(a5)
-                bsr.w   Physics_HandleWallCollision
-                bra.s   Physics_BossTerrainCheck_CheckRight
+                bsr.w   Physics_ResolveLeftWallCollision
+                bra.s   Physics_EntityExtendedWallCheck_CheckRight
 ; ---------------------------------------------------------------------------
-Physics_BossTerrainCheck_CheckLowerLeft:                ; CODE XREF: Physics_BossTerrainCheck+26   j  ; was: loc_146BE
+Physics_EntityExtendedWallCheck_CheckOffsetLeft:        ; CODE XREF: Physics_EntityExtendedWallCheck+26   j  ; was: loc_146BE
                 moveq   #$FFFFFFF8,d0
                 move.w  d6,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   Physics_BossTerrainCheck_CheckRight
-                bsr.w   Physics_HandleWallCollision
-Physics_BossTerrainCheck_CheckRight:                    ; CODE XREF: Physics_BossTerrainCheck+32   j  ; was: loc_146D0
-                                        ; Physics_BossTerrainCheck+40   j
+                bmi.s   Physics_EntityExtendedWallCheck_CheckRight
+                bsr.w   Physics_ResolveLeftWallCollision
+Physics_EntityExtendedWallCheck_CheckRight:             ; CODE XREF: Physics_EntityExtendedWallCheck+32   j  ; was: loc_146D0
+                                        ; Physics_EntityExtendedWallCheck+40   j
                 moveq   #8,d0
                 moveq   #0,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   Physics_BossTerrainCheck_CheckLowerRight
+                bmi.s   Physics_EntityExtendedWallCheck_CheckOffsetRight
                 bset    #3,7(a5)
-                bra.w   Sprite_UpdateBossAnimation
+                bra.w   Physics_ResolveRightWallCollision
 ; ---------------------------------------------------------------------------
-Physics_BossTerrainCheck_CheckLowerRight:               ; CODE XREF: Physics_BossTerrainCheck+52   j  ; was: loc_146E8
+Physics_EntityExtendedWallCheck_CheckOffsetRight:       ; CODE XREF: Physics_EntityExtendedWallCheck+52   j  ; was: loc_146E8
                 moveq   #8,d0
                 move.w  d6,d1
                 bsr.w   Physics_GetTerrainTileData
                 cmpi.w  #$80,d2
-                bmi.s   Physics_BossTerrainCheck_Return
-                bra.w   Sprite_UpdateBossAnimation
+                bmi.s   Physics_EntityExtendedWallCheck_Return
+                bra.w   Physics_ResolveRightWallCollision
 ; ---------------------------------------------------------------------------
-Physics_BossTerrainCheck_Return:                        ; CODE XREF: Physics_BossTerrainCheck+6A   j  ; was: locret_146FA
+Physics_EntityExtendedWallCheck_Return:                 ; CODE XREF: Physics_EntityExtendedWallCheck+6A   j  ; was: locret_146FA
                 rts
-; End of function Physics_BossTerrainCheck
+; End of function Physics_EntityExtendedWallCheck

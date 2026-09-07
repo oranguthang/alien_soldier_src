@@ -2,14 +2,14 @@ Effect_UpdateParticles:                                 ; CODE XREF: Player_Hand
                                         ; DATA XREF: ROM:000150A8   o
                 bset    #0,(byte_FF8244).w
                 bset    #6,(byte_FF8244).w
-                jsr     Physics_BossTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 clr.b   6(a5)
-                bsr.w   Player_UpdateTerrainCheck
+                bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 bne.w   Player_InitLandingState
                 clr.b   6(a5)
-                bsr.w   Player_TerrainCheckAlternate
+                bsr.w   Physics_RisingTerrainCheckWrapper
                 btst    #1,6(a5)
                 bne.w   Player_InitiateLanding
                 bsr.w   Effect_SpawnDebris
@@ -46,15 +46,15 @@ loc_1612A:                                              ; CODE XREF: Player_Chec
                 movea.l #word_E8972,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 loc_16146:                                              ; CODE XREF: Player_CheckSpecialAttack+1A   j
                 lea     (word_198B2).l,a4
                 moveq   #0,d5
                 moveq   #$FFFFFFFF,d6
-                lea     off_172F8(pc),a0
+                lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
-                bra.w   loc_1727A
+                bra.w   Player_PrepareSpriteRendering_WithTables
 ; End of function Player_CheckSpecialAttack
 nullsub_40:                                             ; CODE XREF: Effect_UpdateParticles+3A   j
                 rts
@@ -92,14 +92,14 @@ Player_InitVictoryState:                                ; CODE XREF: Effect_Spaw
 Player_HandleBossVictory:                               ; DATA XREF: ROM:000150B6   o  ; was: sub_161A6
                 bset    #0,(byte_FF8244).w
                 bset    #6,(byte_FF8244).w
-                jsr     Physics_BossTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_ExtendedWallCheckWrapper(pc)  ; (pc)
                 nop
                 clr.b   6(a5)
-                bsr.w   Player_UpdateTerrainCheck
+                bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 bne.w   Player_InitLandingState
                 clr.b   6(a5)
-                bsr.w   Player_TerrainCheckAlternate
+                bsr.w   Physics_RisingTerrainCheckWrapper
                 btst    #1,6(a5)
                 bne.w   Player_InitiateLanding
                 cmpi.w  #$12,(word_FFA21C).w
@@ -115,7 +115,7 @@ loc_16202:                                              ; CODE XREF: Player_Hand
                 movea.l #word_E8972,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; End of function Player_HandleBossVictory
 ; Initializes player cutscene state clearing velocities and flags
 Player_InitCutsceneState:                               ; CODE XREF: Player_Update+72   p  ; was: sub_16210
@@ -160,7 +160,7 @@ loc_16286:                                              ; CODE XREF: Player_Hand
                 move.w  (word_FF8250).w,$10(a5)
                 move.w  (word_FF8252).w,$14(a5)
                 moveq   #$FFFFFFFE,d1
-                bra.w   Anim_SelectFrameData
+                bra.w   Player_AdvanceAnimationFrame
 ; ---------------------------------------------------------------------------
 loc_1629E:                                              ; CODE XREF: Player_HandleCutsceneControl+E   j
                                         ; Player_HandleCutsceneControl+38   j
@@ -232,7 +232,7 @@ Player_DefeatState:                                     ; DATA XREF: ROM:0001508
                 movea.l #word_E89C2,a2
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFF,d6
-                bsr.w   Stage_HandleBossDefeat
+                bsr.w   Player_BuildSpritePieces
                 subq.w  #1,$48(a5)
                 bpl.s   loc_1638C
                 bsr.w   Player_ClearKnockbackState
@@ -243,10 +243,10 @@ Player_DefeatState:                                     ; DATA XREF: ROM:0001508
 ; ---------------------------------------------------------------------------
 loc_1638C:                                              ; CODE XREF: Player_DefeatState+18   j
                 addi.l  #$6000,$1C(a5)
-                bsr.w   Physics_BossTerrainWrapper
+                bsr.w   Physics_ExtendedWallCheckWrapper
                 tst.w   $1C(a5)
                 bmi.s   loc_163B2
-                bsr.w   Player_UpdateTerrainCheck
+                bsr.w   Physics_DescendingTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.s   locret_163BC
                 bsr.w   Player_ClearKnockbackState
@@ -254,7 +254,7 @@ loc_1638C:                                              ; CODE XREF: Player_Defe
 ; ---------------------------------------------------------------------------
 loc_163B2:                                              ; CODE XREF: Player_DefeatState+42   j
                 clr.b   6(a5)
-                jmp     Player_TerrainCheckAlternate(pc)  ; (pc)
+                jmp     Physics_RisingTerrainCheckWrapper(pc)  ; (pc)
 ; End of function Player_DefeatState
 ; Empty function that returns
 Player_NoOp:
@@ -294,9 +294,9 @@ nullsub_42:                                             ; CODE XREF: Player_Hand
 
 ; Main handler for player dash state with counter and input checks
 Player_HandleDashState:                                 ; DATA XREF: ROM:0001507A   o  ; was: sub_16402
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                jsr     Player_TerrainCheckStandard(pc)  ; (pc)
+                jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_EndDashState
@@ -325,7 +325,7 @@ loc_1645E:                                              ; CODE XREF: Player_Hand
 ; ---------------------------------------------------------------------------
 loc_1646C:                                              ; CODE XREF: Player_HandleDashState+2C   j
                                         ; Player_ProcessAirState+3E   j
-                bsr.w   Boss_FlashOnHit
+                bsr.w   Player_SpawnDamageImpactEffect
                 move.b  #$7F,(byte_FF830F).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$3E,4(a5)                      ; '>'
@@ -342,9 +342,9 @@ locret_164AE:                                           ; CODE XREF: Player_Hand
 ; End of function Player_HandleDashState
 ; Handles player air dash state with terrain check
 Player_HandleAirDashState:                              ; DATA XREF: ROM:000150A0   o  ; was: sub_164B0
-                jsr     Physics_EntityTerrainWrapper(pc)  ; (pc)
+                jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
-                jsr     Player_TerrainCheckStandard(pc)  ; (pc)
+                jsr     Physics_UpperTerrainCheckWrapper(pc)  ; (pc)
                 nop
                 btst    #1,6(a5)
                 beq.w   Player_SetDeathStateFlags

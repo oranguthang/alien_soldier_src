@@ -1,225 +1,226 @@
-Physics_EntityTerrainWrapper:                           ; CODE XREF: Player_HandleJump   p  ; was: sub_16CC8
+; Runs the simple wall check unless terrain collisions are disabled
+Physics_WallCheckWrapper:                               ; CODE XREF: Player_HandleJump   p  ; was: sub_16CC8
                                         ; sub_152CA   p
                 btst    #5,(byte_FF8245).w
-                bne.w   locret_16D7E
+                bne.w   Physics_TerrainCheckWrappers_Return
                 jmp     Physics_EntityWallCheck
-; End of function Physics_EntityTerrainWrapper
-; Boss terrain collision wrapper checking flag before testing terrain
-Physics_BossTerrainWrapper:                             ; CODE XREF: Physics_BossCollisionCheck+8   p  ; was: sub_16CD8
+; End of function Physics_WallCheckWrapper
+; Runs the extended wall check unless terrain collisions are disabled
+Physics_ExtendedWallCheckWrapper:                       ; CODE XREF: Physics_BossCollisionCheck+8   p  ; was: sub_16CD8
                                         ; sub_15B8C   p
                 btst    #5,(byte_FF8245).w
-                bne.w   locret_16D7E
-                jmp     Physics_BossTerrainCheck
-; End of function Physics_BossTerrainWrapper
-; Processes player action through dispatcher
-Player_ProcessAction:                                   ; CODE XREF: Player_HandleJump+6   p  ; was: sub_16CE8
+                bne.w   Physics_TerrainCheckWrappers_Return
+                jmp     Physics_EntityExtendedWallCheck
+; End of function Physics_ExtendedWallCheckWrapper
+; Checks moving platforms, then probes the entity's lower terrain boundary
+Physics_LowerTerrainCheckWrapper:                       ; CODE XREF: Player_HandleJump+6   p  ; was: sub_16CE8
                                         ; Physics_ApplyBossVelocity+6   p
                 btst    #5,(byte_FF8245).w
-                bne.w   locret_16D7E
+                bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
-                jmp     Player_ActionDispatcher
-; End of function Player_ProcessAction
-; Updates player state and checks terrain collision
-Player_UpdateTerrainCheck:                              ; CODE XREF: Physics_BossCollisionCheck+14   p  ; was: sub_16CFE
+                jmp     Physics_CheckLowerTerrain
+; End of function Physics_LowerTerrainCheckWrapper
+; Checks moving platforms, then resolves lower terrain while descending
+Physics_DescendingTerrainCheckWrapper:                  ; CODE XREF: Physics_BossCollisionCheck+14   p  ; was: sub_16CFE
                                         ; Player_DashKickState+E   p
                 btst    #5,(byte_FF8245).w
-                bne.w   locret_16D7E
+                bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
-                jmp     Player_CheckTerrainCollision
-; End of function Player_UpdateTerrainCheck
-; Standard terrain collision check for player
-Player_TerrainCheckStandard:                            ; CODE XREF: Player_HandleDashState+6   p  ; was: sub_16D14
+                jmp     Physics_CheckLowerTerrainWhenDescending
+; End of function Physics_DescendingTerrainCheckWrapper
+; Checks moving platforms, then probes the entity's upper terrain boundary
+Physics_UpperTerrainCheckWrapper:                       ; CODE XREF: Player_HandleDashState+6   p  ; was: sub_16D14
                                         ; Player_HandleAirDashState+6   p
                 btst    #5,(byte_FF8245).w
-                bne.w   locret_16D7E
+                bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
-                jmp     Physics_MultiPointTerrainCheck
-; End of function Player_TerrainCheckStandard
-; Alternative terrain collision check with velocity
-Player_TerrainCheckAlternate:                           ; CODE XREF: Physics_BossCollisionCheck+28   p  ; was: sub_16D2A
+                jmp     Physics_CheckUpperTerrain
+; End of function Physics_UpperTerrainCheckWrapper
+; Checks moving platforms, then resolves upper terrain while rising
+Physics_RisingTerrainCheckWrapper:                      ; CODE XREF: Physics_BossCollisionCheck+28   p  ; was: sub_16D2A
                                         ; Player_HandleFallingState+5A   p
                 btst    #5,(byte_FF8245).w
-                bne.w   locret_16D7E
+                bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
-                jmp     Physics_TerrainCheckWithVelocity
-; End of function Player_TerrainCheckAlternate
-; Dispatches player action based on facing direction
-Player_DirectionDispatcher:                             ; CODE XREF: Player_PhoenixAttackUpdate+86   p  ; was: sub_16D40
+                jmp     Physics_CheckUpperTerrainWhenRising
+; End of function Physics_RisingTerrainCheckWrapper
+; Selects the lower- or upper-boundary terrain probe from entity facing
+Physics_FacingTerrainCheckWrapper:                      ; CODE XREF: Player_PhoenixAttackUpdate+86   p  ; was: sub_16D40
                                         ; sub_159E0:loc_159F0   p
                 btst    #5,(byte_FF8245).w
-                bne.w   locret_16D7E
+                bne.w   Physics_TerrainCheckWrappers_Return
                 jsr     (Collision_CheckPlayerPlatforms).l
                 btst    #4,$E(a5)
-                beq.w   Player_ActionDispatcher
-                jmp     Physics_MultiPointTerrainCheck
-; End of function Player_DirectionDispatcher
-; Player terrain collision check with flipped hitbox offset direction
-Player_TerrainCheckFlipped:                             ; CODE XREF: Player_PhoenixAttackUpdate+82   p  ; was: sub_16D60
+                beq.w   Physics_CheckLowerTerrain
+                jmp     Physics_CheckUpperTerrain
+; End of function Physics_FacingTerrainCheckWrapper
+; Runs the extended wall check with a facing-selected vertical probe offset
+Physics_FacingExtendedWallCheckWrapper:                 ; CODE XREF: Player_PhoenixAttackUpdate+82   p  ; was: sub_16D60
                                         ; Player_ApplyHorizontalMovement+4   p
                 btst    #5,(byte_FF8245).w
-                bne.w   locret_16D7E
+                bne.w   Physics_TerrainCheckWrappers_Return
                 moveq   #$FFFFFFE8,d6
                 btst    #4,$E(a5)
-                beq.w   Physics_BossTerrainCheck_Begin
+                beq.w   Physics_EntityExtendedWallCheck_Begin
                 moveq   #$18,d6
-                jmp     Physics_BossTerrainCheck_Begin
+                jmp     Physics_EntityExtendedWallCheck_Begin
 ; ---------------------------------------------------------------------------
-locret_16D7E:                                           ; CODE XREF: Physics_EntityTerrainWrapper+6   j
-                                        ; Physics_BossTerrainWrapper+6   j
+Physics_TerrainCheckWrappers_Return:                    ; CODE XREF: Physics_WallCheckWrapper+6   j  ; was: locret_16D7E
+                                        ; Physics_ExtendedWallCheckWrapper+6   j
                 rts
-; End of function Player_TerrainCheckFlipped
+; End of function Physics_FacingExtendedWallCheckWrapper
 ; Processes D-pad input for character facing direction
 Input_ProcessDirectionInput:                            ; CODE XREF: Player_Update+58   p  ; was: sub_16D80
                                         ; Boss_SylpheedSpawnProjectile1+6   p
                 tst.w   (word_FFA02A).w
-                bne.w   locret_16DE4
+                bne.w   Input_ProcessDirectionInput_Return
                 move.b  $69(a5),d1
                 move.w  (word_FFA22A).w,d0
-                beq.s   loc_16D9C
+                beq.s   Input_ProcessDirectionInput_CheckAlternateGate
                 btst    #4,$69(a5)
-                bne.s   loc_16DA6
+                bne.s   Input_ProcessDirectionInput_ApplyHorizontalInput
                 rts
 ; ---------------------------------------------------------------------------
-loc_16D9C:                                              ; CODE XREF: Input_ProcessDirectionInput+10   j
+Input_ProcessDirectionInput_CheckAlternateGate:         ; CODE XREF: Input_ProcessDirectionInput+10   j  ; was: loc_16D9C
                 btst    #4,$6A(a5)
-                bne.s   loc_16DA6
+                bne.s   Input_ProcessDirectionInput_ApplyHorizontalInput
                 rts
 ; ---------------------------------------------------------------------------
-loc_16DA6:                                              ; CODE XREF: Input_ProcessDirectionInput+18   j
+Input_ProcessDirectionInput_ApplyHorizontalInput:       ; CODE XREF: Input_ProcessDirectionInput+18   j  ; was: loc_16DA6
                                         ; Input_ProcessDirectionInput+22   j
                 btst    #2,d1
-                beq.s   loc_16DB8
+                beq.s   Input_ProcessDirectionInput_CheckRightInput
                 bclr    #3,$E(a5)
                 bclr    #3,d1
-                bra.s   loc_16DC8
+                bra.s   Input_ProcessDirectionInput_DecodeDirection
 ; ---------------------------------------------------------------------------
-loc_16DB8:                                              ; CODE XREF: Input_ProcessDirectionInput+2A   j
+Input_ProcessDirectionInput_CheckRightInput:            ; CODE XREF: Input_ProcessDirectionInput+2A   j  ; was: loc_16DB8
                 btst    #3,d1
-                beq.s   loc_16DC8
+                beq.s   Input_ProcessDirectionInput_DecodeDirection
                 bset    #3,$E(a5)
                 bclr    #2,d1
-loc_16DC8:                                              ; CODE XREF: Input_ProcessDirectionInput+36   j
+Input_ProcessDirectionInput_DecodeDirection:            ; CODE XREF: Input_ProcessDirectionInput+36   j  ; was: loc_16DC8
                                         ; Input_ProcessDirectionInput+3C   j
                 andi.w  #$F,d1
-                bne.s   loc_16DDC
+                bne.s   Input_ProcessDirectionInput_LookupDirection
                 moveq   #4,d0
                 btst    #3,$E(a5)
                 beq.s   Input_StoreDirectionByte
                 moveq   #0,d0
                 bra.s   Input_StoreDirectionByte
 ; ---------------------------------------------------------------------------
-loc_16DDC:                                              ; CODE XREF: Input_ProcessDirectionInput+4C   j
-                move.b  byte_16DE6(pc,d1.w),d0
+Input_ProcessDirectionInput_LookupDirection:            ; CODE XREF: Input_ProcessDirectionInput+4C   j  ; was: loc_16DDC
+                move.b  Input_DirectionIndexTable(pc,d1.w),d0
 ; Stores processed direction input byte to player entity
 Input_StoreDirectionByte:                               ; CODE XREF: Input_ProcessDirectionInput+56   j  ; was: loc_16DE0
                                         ; Input_ProcessDirectionInput+5A   j
                 move.b  d0,$9E(a5)
-locret_16DE4:                                           ; CODE XREF: Input_ProcessDirectionInput+4   j
+Input_ProcessDirectionInput_Return:                     ; CODE XREF: Input_ProcessDirectionInput+4   j  ; was: locret_16DE4
                 rts
 ; End of function Input_ProcessDirectionInput
 ; ---------------------------------------------------------------------------
-byte_16DE6:     dc.b    0, 6, 2, 0, 4, 5, 3, 0, 0, 7, 1, 0, 0, 0, 0, 0
-                                        ; DATA XREF: Input_ProcessDirectionInput:loc_16DDC   r
+Input_DirectionIndexTable:  dc.b    0, 6, 2, 0, 4, 5, 3, 0, 0, 7, 1, 0, 0, 0, 0, 0  ; was: byte_16DE6
+                                        ; DATA XREF: Input_ProcessDirectionInput:Input_ProcessDirectionInput_LookupDirection   r
 
 ; Auto-flips player direction based on weapon aim angle constraints
 Player_AutoFlipDirection:                               ; CODE XREF: Player_InitAirState+2A   j  ; was: sub_16DF6
                                         ; Player_InitJumpCancelState+2E   j
                 tst.w   (word_FFA22A).w
-                bne.s   locret_16E32
+                bne.s   Player_AutoFlipDirection_Return
                 btst    #4,$69(a5)
-                beq.s   locret_16E32
+                beq.s   Player_AutoFlipDirection_Return
                 move.b  $9E(a5),d0
                 btst    #3,$E(a5)
-                beq.s   loc_16E1E
+                beq.s   Player_AutoFlipDirection_CheckLeftFacing
                 cmpi.b  #3,d0
-                bmi.s   locret_16E32
+                bmi.s   Player_AutoFlipDirection_Return
                 cmpi.b  #6,d0
-                bmi.s   loc_16E2C
+                bmi.s   Player_AutoFlipDirection_Flip
                 rts
 ; ---------------------------------------------------------------------------
-loc_16E1E:                                              ; CODE XREF: Player_AutoFlipDirection+18   j
+Player_AutoFlipDirection_CheckLeftFacing:               ; CODE XREF: Player_AutoFlipDirection+18   j  ; was: loc_16E1E
                 cmpi.b  #2,d0
-                bmi.s   loc_16E2C
+                bmi.s   Player_AutoFlipDirection_Flip
                 cmpi.b  #7,d0
-                bpl.s   loc_16E2C
+                bpl.s   Player_AutoFlipDirection_Flip
                 rts
 ; ---------------------------------------------------------------------------
-loc_16E2C:                                              ; CODE XREF: Player_AutoFlipDirection+24   j
+Player_AutoFlipDirection_Flip:                          ; CODE XREF: Player_AutoFlipDirection+24   j  ; was: loc_16E2C
                                         ; Player_AutoFlipDirection+2C   j
                 eori.w  #$800,$E(a5)
-locret_16E32:                                           ; CODE XREF: Player_AutoFlipDirection+4   j
+Player_AutoFlipDirection_Return:                        ; CODE XREF: Player_AutoFlipDirection+4   j  ; was: locret_16E32
                                         ; Player_AutoFlipDirection+C   j
                 rts
 ; End of function Player_AutoFlipDirection
-; Applies vertical momentum deceleration based on direction flag
-Physics_ApplyVerticalDecel:                             ; CODE XREF: Boss_UpdateHealthBar:loc_1570E   p  ; was: sub_16E34
+; Accelerates horizontal velocity toward the limit selected by facing
+Physics_AccelerateHorizontalByFacing:                   ; CODE XREF: Player_GroundedMovementState:loc_1570E   p  ; was: sub_16E34
                                         ; sub_167EE:loc_16846   p
                 btst    #3,$E(a5)
-                bne.s   loc_16E56
+                bne.s   Physics_AccelerateHorizontalByFacing_AcceleratePositive
                 move.l  $18(a5),d0
-                bpl.s   loc_16E4A
+                bpl.s   Physics_AccelerateHorizontalByFacing_AccelerateNegative
                 cmpi.l  #$FFFBE000,d0
-                bmi.s   loc_16E6A
-loc_16E4A:                                              ; CODE XREF: Physics_ApplyVerticalDecel+C   j
+                bmi.s   Physics_AccelerateHorizontalByFacing_Store
+Physics_AccelerateHorizontalByFacing_AccelerateNegative:  ; CODE XREF: Physics_AccelerateHorizontalByFacing+C   j  ; was: loc_16E4A
                 subi.l  #$A800,d0
                 move.l  d0,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_16E56:                                              ; CODE XREF: Physics_ApplyVerticalDecel+6   j
+Physics_AccelerateHorizontalByFacing_AcceleratePositive:  ; CODE XREF: Physics_AccelerateHorizontalByFacing+6   j  ; was: loc_16E56
                 move.l  $18(a5),d0
-                bmi.s   loc_16E64
+                bmi.s   Physics_AccelerateHorizontalByFacing_AddStep
                 cmpi.l  #$42000,d0
-                bpl.s   loc_16E6A
-loc_16E64:                                              ; CODE XREF: Physics_ApplyVerticalDecel+26   j
+                bpl.s   Physics_AccelerateHorizontalByFacing_Store
+Physics_AccelerateHorizontalByFacing_AddStep:           ; CODE XREF: Physics_AccelerateHorizontalByFacing+26   j  ; was: loc_16E64
                 addi.l  #$A800,d0
-loc_16E6A:                                              ; CODE XREF: Physics_ApplyVerticalDecel+14   j
-                                        ; Physics_ApplyVerticalDecel+2E   j
+Physics_AccelerateHorizontalByFacing_Store:             ; CODE XREF: Physics_AccelerateHorizontalByFacing+14   j  ; was: loc_16E6A
+                                        ; Physics_AccelerateHorizontalByFacing+2E   j
                 move.l  d0,$18(a5)
                 rts
-; End of function Physics_ApplyVerticalDecel
-; Applies downward gravity acceleration with terminal velocity limit
-Physics_ApplyDownwardGravity:                           ; CODE XREF: Player_AirAttackState+4A   j  ; was: sub_16E70
+; End of function Physics_AccelerateHorizontalByFacing
+; Accelerates horizontal velocity toward the negative limit
+Physics_AccelerateHorizontalNegative:                   ; CODE XREF: Player_AirAttackState+4A   j  ; was: sub_16E70
                                         ; Player_AirControlState+56   j
                 move.l  $18(a5),d0
-                bpl.s   loc_16E7E
+                bpl.s   Physics_AccelerateHorizontalNegative_SubtractStep
                 cmpi.l  #$FFFD6000,d0
-                bmi.s   loc_16E84
-loc_16E7E:                                              ; CODE XREF: Physics_ApplyDownwardGravity+4   j
+                bmi.s   Physics_AccelerateHorizontalNegative_Store
+Physics_AccelerateHorizontalNegative_SubtractStep:      ; CODE XREF: Physics_AccelerateHorizontalNegative+4   j  ; was: loc_16E7E
                 subi.l  #$A800,d0
-loc_16E84:                                              ; CODE XREF: Physics_ApplyDownwardGravity+C   j
+Physics_AccelerateHorizontalNegative_Store:             ; CODE XREF: Physics_AccelerateHorizontalNegative+C   j  ; was: loc_16E84
                 move.l  d0,$18(a5)
                 rts
-; End of function Physics_ApplyDownwardGravity
-; Applies upward gravity acceleration with maximum upward velocity limit
-Physics_ApplyUpwardGravity:                             ; CODE XREF: Player_AirAttackState+62   j  ; was: sub_16E8A
+; End of function Physics_AccelerateHorizontalNegative
+; Accelerates horizontal velocity toward the positive limit
+Physics_AccelerateHorizontalPositive:                   ; CODE XREF: Player_AirAttackState+62   j  ; was: sub_16E8A
                                         ; Player_AirControlState+6E   j
                 move.l  $18(a5),d0
-                bmi.s   loc_16E98
+                bmi.s   Physics_AccelerateHorizontalPositive_AddStep
                 cmpi.l  #$2A000,d0
-                bpl.s   loc_16E9E
-loc_16E98:                                              ; CODE XREF: Physics_ApplyUpwardGravity+4   j
+                bpl.s   Physics_AccelerateHorizontalPositive_Store
+Physics_AccelerateHorizontalPositive_AddStep:           ; CODE XREF: Physics_AccelerateHorizontalPositive+4   j  ; was: loc_16E98
                 addi.l  #$A800,d0
-loc_16E9E:                                              ; CODE XREF: Physics_ApplyUpwardGravity+C   j
+Physics_AccelerateHorizontalPositive_Store:             ; CODE XREF: Physics_AccelerateHorizontalPositive+C   j  ; was: loc_16E9E
                 move.l  d0,$18(a5)
                 rts
-; End of function Physics_ApplyUpwardGravity
-; Applies knockback velocity with direction check
-Player_ApplyKnockbackVelocity:                          ; CODE XREF: Player_HandleAirState+30   p  ; was: sub_16EA4
+; End of function Physics_AccelerateHorizontalPositive
+; Selects the faster horizontal deceleration step
+Player_DecelerateHorizontalVelocityFast:                ; CODE XREF: Player_HandleAirState+30   p  ; was: sub_16EA4
                                         ; Player_HandleAirMovement+34   p
                 move.l  #$C000,d1
-; End of function Player_ApplyKnockbackVelocity
+; End of function Player_DecelerateHorizontalVelocityFast
 ; Decelerates horizontal velocity towards zero
 Player_DecelerateHorizontalVelocity:                    ; CODE XREF: Physics_ApplyBossVelocity+2A   p  ; was: sub_16EAA
                                         ; Player_DefeatGroundedState+22   p
                 move.l  $18(a5),d0
-                bmi.s   loc_16EBC
+                bmi.s   Player_DecelerateHorizontalVelocity_IncreaseNegative
                 sub.l   d1,d0
                 bpl.s   Physics_StoreHorizontalVelocity
                 moveq   #0,d0
                 move.l  d0,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_16EBC:                                              ; CODE XREF: Player_DecelerateHorizontalVelocity+4   j
+Player_DecelerateHorizontalVelocity_IncreaseNegative:   ; CODE XREF: Player_DecelerateHorizontalVelocity+4   j  ; was: loc_16EBC
                 add.l   d1,d0
                 bmi.s   Physics_StoreHorizontalVelocity
                 moveq   #0,d0
@@ -235,14 +236,14 @@ Player_ProcessCollisionDamage:                          ; CODE XREF: Player_Hand
                 move.w  (word_FFA000).w,d0
                 asr.w   #2,d0
                 andi.w  #6,d0
-                move.b  byte_16EEA(pc,d0.w),d5
-                move.b  byte_16EEA+1(pc,d0.w),d6
+                move.b  Player_CollisionDirectionOffsetTable(pc,d0.w),d5
+                move.b  Player_CollisionDirectionOffsetTable+1(pc,d0.w),d6
                 movea.l #word_E8972,a1
                 movea.l #word_E8942,a2
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; End of function Player_ProcessCollisionDamage
 ; ---------------------------------------------------------------------------
-byte_16EEA:     dc.b    1, $FE, 0, $FF, 0, 0, 0, $FF
+Player_CollisionDirectionOffsetTable:   dc.b    1, $FE, 0, $FF, 0, 0, 0, $FF  ; was: byte_16EEA
                                         ; DATA XREF: Player_ProcessCollisionDamage+A   r
                                         ; Player_ProcessCollisionDamage+E   r
 
@@ -251,15 +252,15 @@ Player_HandleDefeatByBoss:                              ; CODE XREF: Player_Hand
                                         ; Player_HandleLandingState+76   j
                 tst.w   $48(a5)
                 bpl.s   Player_SetupDefeatSequence1
-loc_16EF8:                                              ; CODE XREF: Player_JumpApexState+12   j
+Player_HandleDefeatByBoss_UseDirectionalOffsets:        ; CODE XREF: Player_JumpApexState+12   j  ; was: loc_16EF8
                 move.w  (word_FFA000).w,d0
                 asr.w   #2,d0
                 andi.w  #6,d0
-                move.b  byte_16F2E(pc,d0.w),d5
-                move.b  byte_16F2E+1(pc,d0.w),d6
+                move.b  Player_DefeatDirectionOffsetTable(pc,d0.w),d5
+                move.b  Player_DefeatDirectionOffsetTable+1(pc,d0.w),d6
                 movea.l #word_E8972,a1
                 movea.l #word_E8F0A,a2
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 ; Sets up player defeat sequence animation data and parameters (variant 1)
 Player_SetupDefeatSequence1:                            ; CODE XREF: Player_HandleDefeatByBoss+4   j  ; was: loc_16F1A
@@ -267,11 +268,9 @@ Player_SetupDefeatSequence1:                            ; CODE XREF: Player_Hand
                 moveq   #8,d6
                 movea.l #word_E8972,a1
                 movea.l #word_E89C2,a2
-                bra.w   Stage_HandleBossDefeat
+                bra.w   Player_BuildSpritePieces
 ; End of function Player_HandleDefeatByBoss
 ; ---------------------------------------------------------------------------
-byte_16F2E:     dc.b    1, $F, 0, $10, 0, $11, 0, $10
+Player_DefeatDirectionOffsetTable:  dc.b    1, $F, 0, $10, 0, $11, 0, $10  ; was: byte_16F2E
                                         ; DATA XREF: Player_HandleDefeatByBoss+10   r
                                         ; Player_HandleDefeatByBoss+14   r
-
-; Handles boss death animation frame transitions

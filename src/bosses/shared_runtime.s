@@ -42,7 +42,7 @@ loc_2BC02:                                              ; CODE XREF: Enemy_Updat
                 moveq   #0,d1
                 move.w  d1,$48(a5)
 loc_2BC18:                                              ; CODE XREF: Enemy_UpdateBossAI+50   j
-                lea     (off_178E6).l,a0
+                lea     (UI_WeaponSelectionSpriteFrames).l,a0
                 move.l  (a0,d1.w),8(a5)
 loc_2BC24:                                              ; CODE XREF: Enemy_UpdateBossAI+3C   j
                 bclr    #3,$22(a5)

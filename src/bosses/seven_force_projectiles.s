@@ -80,7 +80,7 @@ Gfx_UpdateTrackerSprites:                               ; CODE XREF: Gfx_LoadArt
 ; Checks if boss takes damage
 Boss_SylpheedDamageCheck:                               ; CODE XREF: Boss_SylpheedSpawnProjectile4+22   j  ; was: sub_1A074
                                         ; Projectile_SylpheedBullet2+12   j
-                jsr     (Boss_FlashOnHit).l
+                jsr     (Player_SpawnDamageImpactEffect).l
                 move.b  #$7F,(byte_FF830F).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #8,4(a5)
@@ -135,7 +135,7 @@ Boss_DestroyerProtoDefeatAnim:                          ; DATA XREF: ROM:00019E2
                 movea.l #word_E89C2,a2
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFF,d6
-                jsr     (Stage_HandleBossDefeat).l
+                jsr     (Player_BuildSpritePieces).l
                 subq.w  #1,$48(a5)
                 bpl.s   locret_1A120
                 clr.w   (word_FF80E6).w
@@ -248,14 +248,14 @@ loc_1A21C:                                              ; CODE XREF: Projectile_
                 movea.l #word_E8972,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
-                jmp     Stage_HandleBossDefeat
+                jmp     Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 loc_1A23A:                                              ; CODE XREF: Projectile_SylpheedWave+1A   j
                 lea     (word_198B2).l,a4
                 moveq   #0,d5
                 moveq   #$FFFFFFFF,d6
-                lea     (off_172F8).l,a0
-                jmp     loc_1727A
+                lea     (Player_AlternateAnimationLayoutTable).l,a0
+                jmp     Player_PrepareSpriteRendering_WithTables
 ; End of function Projectile_SylpheedWave
 ; Animation script interpreter
 Boss_SireneAnimationScript:                             ; CODE XREF: Boss_SylpheedCollisionCheck+E   j  ; was: sub_1A250
@@ -267,7 +267,7 @@ loc_1A264:                                              ; CODE XREF: Boss_Sirene
                 movea.l #word_E8972,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
-                jmp     Stage_HandleBossDefeat
+                jmp     Player_BuildSpritePieces
 ; End of function Boss_SireneAnimationScript
 ; Background graphics setup
 Gfx_SireneBackground:                                   ; CODE XREF: Player_Update+50   j  ; was: sub_1A274

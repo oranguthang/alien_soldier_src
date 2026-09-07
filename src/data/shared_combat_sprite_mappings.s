@@ -277,8 +277,8 @@ off_E953C:      dc.w    word_E90C2-*                    ; DATA XREF: Sprite_Ship
                 dc.w    2
                 dc.w    word_E90BC-*
                 dc.w    $FF
-off_E9560:      dc.w    word_E90C2-*                    ; DATA XREF: Player_SpawnTripleShot:loc_17664   o
-                                        ; sub_17678:loc_1768C   o
+off_E9560:      dc.w    word_E90C2-*                    ; DATA XREF: Player_SpawnTripleShot:Player_SpawnTripleShot_Loop   o
+                                        ; sub_17678:Player_SpawnRadialShot_Loop   o
                 dc.w    1
                 dc.w    word_E90C8-*
                 dc.w    1
@@ -631,7 +631,7 @@ off_E97EC:      dc.w    word_E929C-*                    ; DATA XREF: ROM:000E97F
                 dc.w    5
                 dc.w    off_E97EC-*
                 dc.w    0
-off_E9800:      dc.w    word_E9218-*                    ; DATA XREF: Boss_CheckDefeatCondition+2C   o
+off_E9800:      dc.w    word_E9218-*                    ; DATA XREF: Player_CreateDamageImpactObject+2C   o
                 dc.w    1
                 dc.w    word_E90C2-*
                 dc.w    1

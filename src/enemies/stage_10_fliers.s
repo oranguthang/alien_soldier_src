@@ -172,11 +172,11 @@ Enemy_Stage10WaspState2:                                ; DATA XREF: ROM:0002E13
                 jsr     (Physics_EntityWallCheck).l
                 btst    #7,$1C(a5)
                 bne.s   loc_2E18A
-                jsr     (Player_ActionDispatcher).l
+                jsr     (Physics_CheckLowerTerrain).l
                 btst    #0,6(a5)
                 bne.s   Enemy_WaspTransitionToWait
 loc_2E18A:                                              ; CODE XREF: Enemy_Stage10WaspState2+C   j
-                jsr     (Physics_TerrainCheckWithVelocity).l
+                jsr     (Physics_CheckUpperTerrainWhenRising).l
                 addi.l  #$4000,$1C(a5)
                 rts
 ; ---------------------------------------------------------------------------
