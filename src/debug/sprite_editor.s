@@ -1,4 +1,4 @@
-UI_DebugSpriteEditor:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_2AA08
+UI_DebugSpriteEditor:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2AA08
                 btst    #7,(word_FFF706).w
                 beq.w   UI_DebugSpriteEditor_Setup
                 move.w  #$1000,2(a5)
@@ -88,7 +88,7 @@ UI_DebugSpriteEditor_Return:                            ; CODE XREF: UI_DebugSpr
                 rts
 ; End of function UI_DebugSpriteEditor
 ; Debug sprite position editor for moving sprites with collision detection
-UI_DebugSpritePositionEditor:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_2AB4A
+UI_DebugSpritePositionEditor:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2AB4A
                 tst.w   4(a5)
                 bne.w   UI_DebugSpritePositionEditor_Update
                 addq.w  #2,4(a5)

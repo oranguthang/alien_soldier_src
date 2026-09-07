@@ -1,4 +1,4 @@
-Enemy_FlyMain:                                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_2D66C
+Enemy_FlyMain:                                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D66C
                 tst.w   4(a5)
                 beq.s   loc_2D696
                 tst.w   $24(a5)
@@ -91,7 +91,7 @@ nullsub_64:                                             ; DATA XREF: ROM:0002D6B
 ; End of function nullsub_64
 
 ; Stage 17 walker enemy main handler
-Enemy_Stage17WalkerMain:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2D77E
+Enemy_Stage17WalkerMain:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D77E
                 tst.w   4(a5)
                 beq.s   Enemy_Stage17WalkerUpdate
                 tst.w   $24(a5)
@@ -236,7 +236,7 @@ nullsub_65:
 ; End of function nullsub_65
 
 ; Fly enemy movement with wave pattern
-Enemy_FlyMovement:                                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_2D8E8
+Enemy_FlyMovement:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D8E8
                 move.w  4(a5),d0
                 lea     off_2D8F4(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -268,7 +268,7 @@ locret_2D928:                                           ; CODE XREF: Enemy_FlyAt
 ; End of function Enemy_FlyAttack
 ; Fly return pattern after attack
 Enemy_FlyReturnPattern:                                 ; DATA XREF: ROM:0002D8F8   o  ; was: sub_2D92A
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2D952
                 move.w  #$10,(a0)
                 lea     $4C(a5),a1
@@ -320,7 +320,7 @@ loc_2D9B2:                                              ; CODE XREF: Enemy_FlyDe
 ; End of function Enemy_FlyDeath
 ; Walker projectile handler
 Projectile_Stage17WalkerShot:                           ; CODE XREF: Boss_ViblackSpawnWalkerShot+36   j  ; was: sub_2D9BA
-                                        ; DATA XREF: ROM:off_5DC   o
+                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 move.w  #$2F4,(a0)
                 move.w  #$D80,2(a0)
                 move.w  #$80,$14(a0)
@@ -328,7 +328,7 @@ Projectile_Stage17WalkerShot:                           ; CODE XREF: Boss_Viblac
                 rts
 ; End of function Projectile_Stage17WalkerShot
 ; State machine dispatcher using jump table indexed by state value in offset 4
-Projectile_JumpTableDispatcher:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_2D9D0
+Projectile_JumpTableDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D9D0
                 move.w  4(a5),d0
                 lea     off_2D9DC(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -340,7 +340,7 @@ off_2D9DC:      dc.w    Projectile_SpawnLinkedObject-*  ; DATA XREF: Projectile_
 
 ; Spawns linked object ID $2F4, copies position and link values, advances state
 Projectile_SpawnLinkedObject:                           ; DATA XREF: ROM:off_2D9DC   o  ; was: sub_2D9E0
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2DA18
                 move.w  #$2F4,(a0)
                 move.w  $10(a5),$10(a0)

@@ -74,7 +74,7 @@ Results_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 bne.s   loc_1DD8A
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Sys_InitGameMode).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w

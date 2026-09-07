@@ -657,6 +657,116 @@
         "The routine selects two masks from a progress-indexed table and applies them to three rows of the transition pattern buffer.",
         "It does not reset the object state or the transition progress value."
       ]
+    },
+    {
+      "address": "0x01B410",
+      "previous_name": "Physics_CalculateDistanceTo",
+      "current_name": "Physics_GetPlayerDelta",
+      "legacy_name": "sub_1B410",
+      "evidence": "static",
+      "basis": [
+        "The routine loads the player object at FFA400 and returns the absolute horizontal delta in d0.",
+        "It returns the signed vertical delta in d2 and the constant 1 in d3; no norm, square, or root is calculated."
+      ]
+    },
+    {
+      "address": "0x01B746",
+      "previous_name": "Sys_ClearBossDataBuffer",
+      "current_name": "Sys_ClearEntityObjectPool",
+      "legacy_name": "sub_1B746",
+      "evidence": "static",
+      "basis": [
+        "The routine starts at Entity_ObjectPool and clears consecutive 96-byte records through address DCA0.",
+        "Frontend and cutscene callers use the same routine, so the storage is neither boss-specific nor a separate boss buffer."
+      ]
+    },
+    {
+      "address": "0x01A39C",
+      "previous_name": "Gfx_LoadDestroyerMK2Palette",
+      "current_name": "Sys_FindReusableSlotInRange",
+      "legacy_name": "sub_1A39C",
+      "evidence": "static",
+      "basis": [
+        "The routine scans 96-byte object records between bounds supplied by the caller and tests bit 6 of each record's state byte.",
+        "It returns a qualifying slot and status; it accesses neither palette data nor a VDP port."
+      ]
+    },
+    {
+      "address": "0x01C050",
+      "previous_name": "Projectile_UpdateTrajectory",
+      "current_name": "Projectile_FindFreePrimarySlot",
+      "legacy_name": "sub_1C050",
+      "evidence": "static",
+      "basis": [
+        "The routine performs an unrolled scan of object records and returns when their type word is zero.",
+        "Each probe advances a0 by the 0x60-byte object stride; no position, velocity, or angle field is updated."
+      ]
+    },
+    {
+      "address": "0x00295C",
+      "previous_name": "Gfx_DecompressLZSS",
+      "current_name": "Data_DecompressLZSSDirect",
+      "legacy_name": "sub_295C",
+      "evidence": "static",
+      "basis": [
+        "The routine invokes LZSSDecomp with the destination already configured in a2.",
+        "It performs no VDP-port access or DMA setup, so the destination is not necessarily VRAM."
+      ]
+    },
+    {
+      "address": "0x002972",
+      "previous_name": "Data_DecompressLZSS",
+      "current_name": "Gfx_DecompressLZSSToVRAMBatched",
+      "legacy_name": "sub_2972",
+      "evidence": "static",
+      "basis": [
+        "The routine decodes blocks into the FFB400 staging buffer and passes each block to Gfx_ExecuteDMATransfer.",
+        "It waits for transfer completion before decoding the next block, establishing the staged VRAM behavior omitted by the previous name."
+      ]
+    },
+    {
+      "address": "0x01C8B2",
+      "previous_name": "UI_SetWeaponIconIndex",
+      "current_name": "UI_UpdateStageNumberBCD",
+      "legacy_name": "sub_1C8B2",
+      "evidence": "static",
+      "basis": [
+        "The routine indexes its table with StageTableIndex divided by two.",
+        "The table encodes decimal stages 1 through 50 in packed BCD and the results renderer consumes the stored byte as two digits."
+      ]
+    },
+    {
+      "address": "0x01C8F2",
+      "previous_name": "UI_CheckVBlankFlag",
+      "current_name": "Sys_BeginVisibleObjectList",
+      "legacy_name": "sub_1C8F2",
+      "evidence": "static",
+      "basis": [
+        "After checking the frame-processing flag, the routine initializes word_FFF758 to ED00.",
+        "Sys_UpdateObjectCount derives the visible-object count from that cursor; this routine performs no VDP access."
+      ]
+    },
+    {
+      "address": "0x01C97A",
+      "previous_name": "Gfx_UpdateScrollPosition",
+      "current_name": "Object_ApplyCameraMotion",
+      "legacy_name": "sub_1C97A",
+      "evidence": "static",
+      "basis": [
+        "The routine computes camera deltas, iterates the active visible-object list, and applies shared motion biases to object positions.",
+        "It also clamps player and object coordinates, so its behavior is object motion rather than a graphics-only scroll update."
+      ]
+    },
+    {
+      "address": "0x01CAF2",
+      "previous_name": "Projectile_CheckBounds",
+      "current_name": "Object_ClampToPlayfield",
+      "legacy_name": "sub_1CAF2",
+      "evidence": "static",
+      "basis": [
+        "The shared camera-motion routine passes each active object in a5 to this helper.",
+        "It clamps horizontal and vertical coordinates according to global bound-enable bits without testing any projectile identity or type."
+      ]
     }
   ]
 }

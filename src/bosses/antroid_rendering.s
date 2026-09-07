@@ -89,7 +89,7 @@ Gfx_SetFadeParamsThunk:                                 ; CODE XREF: Boss_Antroi
 ; Updates boss flip direction based on player position
 Boss_AntroidUpdateFlipDirection:                        ; CODE XREF: Boss_AntroidTransitionToIdle+114   j  ; was: sub_37F7E
                                         ; sub_379A0   p
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 move.w  $54(a5),d7
                 move.w  #$100,$54(a5)
                 tst.w   d1
@@ -131,7 +131,7 @@ locret_37FEA:                                           ; CODE XREF: Boss_Antroi
 Boss_AntroidSpawnProjectile:                            ; CODE XREF: Boss_AntroidWaitState:loc_37D18   p  ; was: sub_37FEC
                 btst    #0,(word_FFA000+1).w
                 bne.w   locret_380A2
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_380A2
                 move.w  #$158,(a0)
                 move.w  #$8D00,2(a0)
@@ -176,7 +176,7 @@ locret_380A2:                                           ; CODE XREF: Boss_Antroi
                 rts
 ; End of function Boss_AntroidSpawnProjectile
 ; Updates Antroid projectile with fade and collision
-Boss_AntroidProjectileUpdate:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_380A4
+Boss_AntroidProjectileUpdate:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_380A4
                 tst.w   (word_FF808C).w
                 bpl.s   loc_380FA
                 bclr    #7,$22(a5)

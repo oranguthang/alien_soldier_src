@@ -1,4 +1,4 @@
-Boss_GustheadMainWrapper:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_3F1A0
+Boss_GustheadMainWrapper:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3F1A0
                 bsr.s   Boss_GustheadMain
                 rts
 ; End of function Boss_GustheadMainWrapper
@@ -118,7 +118,7 @@ Boss_GustheadInitBattle:                                ; DATA XREF: ROM:off_3F2
                 addq.w  #2,4(a5)
                 move.w  #$1B0,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; End of function Boss_GustheadInitBattle
 ; Sets up boss parts and tentacles
 Boss_GustheadSetupParts:                                ; DATA XREF: ROM:0003F24E   o  ; was: sub_3F2D0
@@ -619,7 +619,7 @@ Boss_GustheadFireRadialProjectiles:                     ; CODE XREF: Boss_Gusthe
                 move.w  #3,d7
                 move.w  #$150,d6
 loc_3F8C4:                                              ; CODE XREF: Boss_GustheadFireRadialProjectiles+66   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3F930
                 move.w  #$10,(a0)
                 jsr     (Projectile_InitType88).l
@@ -630,7 +630,7 @@ loc_3F8C4:                                              ; CODE XREF: Boss_Gusthe
                 move.w  #$4000,$E(a0)
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (a1,d6.w),d0
                 move.w  -$80(a1,d6.w),d1
                 ext.l   d0
@@ -662,7 +662,7 @@ Boss_GustheadCalculateVelocity:                         ; CODE XREF: Boss_Gusthe
 loc_3F942:                                              ; CODE XREF: Boss_GustheadGetTentacleAngle1+4   j
                                         ; Boss_GustheadGetTentacleAngle2+4   j
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 moveq   #0,d1
                 btst    #0,$4B(a5)
                 beq.s   loc_3F95E

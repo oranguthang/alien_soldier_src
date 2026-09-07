@@ -1,4 +1,4 @@
-Enemy_TrackerMain:                                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_32EE0
+Enemy_TrackerMain:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_32EE0
                 lea     (word_FF9800).w,a4
                 bsr.w   Enemy_TrackerDispatcher
                 subq.w  #1,$5A(a5)
@@ -12,7 +12,7 @@ Enemy_TrackerMain:                                      ; DATA XREF: ROM:off_5DC
 loc_32F04:                                              ; CODE XREF: Enemy_TrackerMain+1A   j
                 jsr     (Math_CalculateAngleToPlayer).l
                 move.w  d2,d6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_32F24
                 moveq   #9,d7
                 moveq   #0,d0
@@ -54,7 +54,7 @@ Enemy_TrackerSpawnWave:                                 ; DATA XREF: ROM:off_32F
                 moveq   #0,d6
 loc_32F74:                                              ; CODE XREF: Enemy_TrackerSpawnWave+1E   j
                 bsr.w   Enemy_TrackerInitProjectile
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 dbne    d7,loc_32F74
                 rts
 ; End of function Enemy_TrackerSpawnWave
@@ -147,7 +147,7 @@ locret_330A4:                                           ; CODE XREF: Enemy_Track
                 rts
 ; End of function Enemy_TrackerReverse
 ; Tracker enemy main (win cutscene)
-Enemy_TrackerWinMain:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_330A6
+Enemy_TrackerWinMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_330A6
                 tst.w   4(a5)
                 beq.s   loc_330BC
                 cmpi.b  #$80,(byte_FFA958).w
@@ -205,7 +205,7 @@ locret_33138:                                           ; CODE XREF: Enemy_Track
 ; End of function Enemy_TrackerSt21State2
 ; Tracker spawn init (Stage 21)
 Enemy_TrackerSt21SpawnInit:                             ; DATA XREF: ROM:000330EE   o  ; was: sub_3313A
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_331AC
                 addq.w  #2,4(a5)
                 bsr.w   Enemy_TrackerSt21Attack1
@@ -284,7 +284,7 @@ word_33290:     dc.w    $B0, $170, $D0, $170, $F0, $170, $110, $170, $130, $170,
                 dc.w    $1B0, $170, $1D0, $170, $1D0, $150, $1D0, $130, $1D0, $110, $1D0, $F0, $1D0, $D0, $1D0, $B0
 
 ; Tracker movement (win cutscene)
-Enemy_TrackerWinMovement:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_332D0
+Enemy_TrackerWinMovement:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_332D0
                 btst    #0,$5F(a5)
                 bne.w   Enemy_TrackerWinFollow
                 tst.w   4(a5)
@@ -381,7 +381,7 @@ Enemy_TrackerSt21Destroy:                               ; CODE XREF: Enemy_Track
                 tst.w   $48(a5)
                 bne.w   locret_334B0
                 move.w  #1,$48(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_334B0
                 tst.w   (word_FFFF0E).w
                 beq.s   loc_33426
@@ -469,7 +469,7 @@ Enemy_TrackerWinSpawnBullet:                            ; CODE XREF: Enemy_Track
                 move.w  (word_FFA000).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   locret_33578
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_33578
                 bsr.w   Enemy_TrackerWinInitSprite
                 move.w  #$400,$E(a0)
@@ -525,7 +525,7 @@ Enemy_TrackerSt21Collision:                             ; CODE XREF: Enemy_Track
                 rts
 ; End of function Enemy_TrackerSt21Collision
 ; Tracker bullet (Stage 21)
-Projectile_TrackerSt21Bullet:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_335EE
+Projectile_TrackerSt21Bullet:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_335EE
                 move.w  4(a5),d0
                 lea     off_335FA(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -563,7 +563,7 @@ word_3363C:     dc.w    $FF00, $100                     ; DATA XREF: Enemy_Track
 
 ; Tracker animation (Stage 21)
 Enemy_TrackerSt21Animation:                             ; DATA XREF: ROM:000335FE   o  ; was: sub_33640
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$10,d0
                 bpl.s   locret_33660
                 move.w  #$C8,$26(a5)

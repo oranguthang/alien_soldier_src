@@ -1,4 +1,4 @@
-off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_ProcessProjectiles+12   r
+Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_ProcessProjectiles+12   r  ; was: off_5DC
                                         ; Sys_ProcessVisibleObjects+10   r
                 dc.l    Entity_EmptyState4
                 dc.l    Player_Update
@@ -296,6 +296,6 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Projectile_ZLeoLaser_CollisionCheck
 
 ; Empty entity state handler in main dispatch table
-Entity_EmptyState4:                                     ; DATA XREF: ROM:off_5DC   o  ; was: nullsub_4
+Entity_EmptyState4:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_4
                 rts
 ; End of function Entity_EmptyState4

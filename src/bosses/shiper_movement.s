@@ -388,7 +388,7 @@ loc_36E32:                                              ; CODE XREF: Boss_Shiper
 loc_36E3C:                                              ; CODE XREF: Boss_ShiperTentaclePosition+58   j
                                         ; Boss_ShiperTentaclePosition+60   j
                 move.w  d2,$22A(a5)
-                movea.l #word_1B514,a0
+                movea.l #Math_SineTable,a0
                 movea.l #off_36FCE,a1
                 move.w  #$D300,$1EE(a5)
                 move.w  #$D300,$2AE(a5)

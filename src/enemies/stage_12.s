@@ -37,7 +37,7 @@ off_2E320:      dc.l    off_1A0F1A                      ; DATA XREF: Enemy_Stage
                 dc.l    off_1A0F2E
 
 ; State dispatcher for floater
-Enemy_Stage12FloaterDispatcher:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E328
+Enemy_Stage12FloaterDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E328
                 tst.w   4(a5)
                 beq.s   loc_2E352
                 tst.w   $24(a5)
@@ -77,7 +77,7 @@ Enemy_Stage12FloaterAttack:                             ; DATA XREF: ROM:off_2E3
                 addq.w  #2,4(a5)
 ; Calculates distance to player and initiates dive attack when close enough
 Enemy_Stage12FloaterAttack_CheckDistance:               ; DATA XREF: ROM:0002E36A   o  ; was: loc_2E386
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$60,d0                         ; '`'
                 bcc.w   locret_2E3A0
                 move.l  #$FFFE0000,$1C(a5)
@@ -107,7 +107,7 @@ Enemy_Stage12FloaterFall:                               ; DATA XREF: ROM:0002E36
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (a1,d0.w),d0
                 ext.l   d0
                 asl.l   #3,d0
@@ -175,7 +175,7 @@ loc_2E46C:                                              ; CODE XREF: Enemy_Stage
                 rts
 ; End of function Enemy_Stage12LauncherMain
 ; Launcher explosion with flicker
-Enemy_Stage12LauncherExplode:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E490
+Enemy_Stage12LauncherExplode:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E490
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2E4C6
@@ -200,7 +200,7 @@ locret_2E4DA:                                           ; CODE XREF: Enemy_Stage
                 rts
 ; End of function Enemy_Stage12LauncherExplode
 ; Main handler for turret enemy
-Enemy_Stage12TurretMain:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E4DC
+Enemy_Stage12TurretMain:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E4DC
                 tst.w   (word_FF808C).w
                 bpl.w   Enemy_Stage12TurretHide
                 bsr.s   Enemy_Stage12TurretDispatcher
@@ -254,7 +254,7 @@ locret_2E54A:                                           ; CODE XREF: Enemy_Stage
 ; End of function Enemy_Stage12TurretAttack
 ; Turret reload delay
 Enemy_Stage12TurretReload:                              ; DATA XREF: ROM:0002E510   o  ; was: sub_2E54C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2E560
                 move.w  #$10,(a0)
                 move.w  a0,$4A(a5)
@@ -306,7 +306,7 @@ loc_2E5BE:                                              ; CODE XREF: Enemy_Stage
                 andi.w  #$1FF,d7
                 bne.s   locret_2E5E0
 loc_2E5C8:                                              ; CODE XREF: Enemy_Stage12TurretFire+14   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2E5E0
                 move.w  #$90,(a0)
                 move.w  #1,$5E(a0)
@@ -321,7 +321,7 @@ Enemy_Stage12TurretHide:                                ; CODE XREF: Enemy_Stage
                 rts
 ; End of function Enemy_Stage12TurretHide
 ; State dispatcher for launcher
-Enemy_Stage12LauncherDispatcher:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E5EA
+Enemy_Stage12LauncherDispatcher:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E5EA
                 tst.w   4(a5)
                 beq.s   loc_2E614
                 tst.w   $24(a5)

@@ -15,7 +15,7 @@ Stage24_UpdateForeground:                               ; DATA XREF: ROM:00033A6
                 bne.s   locret_33CD6
                 subq.w  #1,$4C(a5)
                 beq.s   loc_33CD8
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_33CD0
                 move.w  #$10,(a0)
                 move.l  #off_E95DC,8(a0)
@@ -44,7 +44,7 @@ loc_33CD8:                                              ; CODE XREF: Stage24_Upd
 Stage24_PaletteUpdate:                                  ; CODE XREF: Stage24_UpdateBackground+C   p  ; was: sub_33CEE
                 move.w  #2,d7
                 move.w  #$40,d6                         ; '@'
-                lea     (word_1B514).l,a3
+                lea     (Math_SineTable).l,a3
 loc_33CFC:                                              ; CODE XREF: Stage24_PaletteUpdate+28   j
                 move.w  d6,d5
                 move.w  (a3,d5.w),d2
@@ -62,7 +62,7 @@ loc_33CFC:                                              ; CODE XREF: Stage24_Pal
 ; End of function Stage24_PaletteUpdate
 ; Tile update
 Stage24_TileUpdate:                                     ; CODE XREF: Stage24_PaletteUpdate+20   p  ; was: sub_33D26
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_33D56
                 jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'

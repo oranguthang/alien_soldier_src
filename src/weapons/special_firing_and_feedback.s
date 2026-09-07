@@ -32,7 +32,7 @@ Weapon_CircleAttack_SetupProjectiles:                   ; CODE XREF: Player_Spaw
                 move.b  (a0,d6.w),d5
                 move.w  d5,d7
                 asl.w   #2,d5
-                movea.l #word_1B514,a0
+                movea.l #Math_SineTable,a0
                 move.w  -$80(a0,d5.w),d3
                 move.w  (a0,d5.w),d4
                 muls.w  #$27,d3                         ; '''
@@ -272,7 +272,7 @@ Effect_CreateDebrisParticle_Return:                     ; CODE XREF: Effect_Spaw
                 rts
 ; End of function Effect_SpawnRandomDebris
 ; Removes the object when its state flag or animation lifetime has ended
-Object_RemoveOnFlagOrAnimationEnd:                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_188EE
+Object_RemoveOnFlagOrAnimationEnd:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_188EE
                 bclr    #7,$22(a5)
                 bne.s   Object_RemoveOnFlagOrAnimationEnd_Deactivate
                 cmpi.w  #$80,$C(a5)
@@ -283,7 +283,7 @@ Object_RemoveOnFlagOrAnimationEnd_Return:               ; CODE XREF: Object_Remo
                 rts
 ; End of function Object_RemoveOnFlagOrAnimationEnd
 ; Updates target sight position
-Player_UpdateTargetSight:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_18906
+Player_UpdateTargetSight:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18906
                 movea.w #(word_FFA400-M68K_RAM),a0
                 clr.w   $56(a5)
                 move.w  $10(a0),d5
@@ -294,7 +294,7 @@ Player_UpdateTargetSight:                               ; DATA XREF: ROM:off_5DC
                 move.w  (word_FF8036).w,d7
                 add.w   $50(a5),d7
                 andi.w  #$1FE,d7
-                movea.l #word_1B514,a2
+                movea.l #Math_SineTable,a2
                 move.w  -$80(a2,d7.w),d1
                 move.w  (a2,d7.w),d2
                 muls.w  d0,d1
@@ -330,7 +330,7 @@ Object_MarkInactive:                                    ; CODE XREF: Weapon_Upda
                 rts
 ; End of function Object_MarkInactive
 ; Updates the knockback particle across motion, lifetime, and impact states
-Effect_UpdateKnockbackParticle:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_1898E
+Effect_UpdateKnockbackParticle:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_1898E
                 bclr    #7,$22(a5)
                 bne.s   Effect_UpdateKnockbackParticle_BeginMotion
                 bclr    #6,$23(a5)
@@ -338,7 +338,7 @@ Effect_UpdateKnockbackParticle:                         ; DATA XREF: ROM:off_5DC
                 bclr    #4,$23(a5)
                 bne.s   Effect_UpdateKnockbackParticle_InitImpact
 Effect_UpdateKnockbackParticle_BeginMotion:             ; CODE XREF: Effect_UpdateKnockbackParticle+6   j  ; was: loc_189A6
-                movea.l #word_1B514,a1
+                movea.l #Math_SineTable,a1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1

@@ -1,4 +1,4 @@
-Boss_BugmaxMain:                                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_4BEBC
+Boss_BugmaxMain:                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4BEBC
                 tst.w   4(a5)
                 beq.w   Boss_BugmaxMainDispatch
                 lea     (word_3E3C).l,a2
@@ -483,7 +483,7 @@ Boss_BugmaxInit:                                        ; DATA XREF: ROM:off_4C3
                 move.b  #4,(byte_FFA420).w
                 move.w  #$300,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 clr.w   $5E(a5)
                 move.w  #$604,d0
                 move.w  d0,$5C(a5)
@@ -670,7 +670,7 @@ Boss_BugmaxSpawnDebris:                                 ; CODE XREF: Boss_Bugmax
                 clr.w   d6
 ; Spawns debris objects in loop
 Boss_BugmaxSpawnDebrisLoop:                             ; CODE XREF: Boss_BugmaxSpawnDebris+38   j  ; was: loc_4C6C4
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4C6FA
                 lea     word_4C70A(pc),a2
                 nop

@@ -302,7 +302,7 @@ loc_27928:                                              ; CODE XREF: Gfx_Render3
                 rts
 ; End of function Gfx_Render3DLandscape
 ; Main state machine for tunnel/3D sequence
-Stage_TunnelSequencer:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_27934
+Stage_TunnelSequencer:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_27934
                 move.w  4(a5),d0
                 movea.w off_27944(pc,d0.w),a0
                 adda.l  #Stage_TunnelInit,a0

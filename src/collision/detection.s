@@ -1,4 +1,4 @@
-Collision_UpdateSystem:                                 ; CODE XREF: Sys_GameplayMainLoop:loc_1C6A6   p  ; was: sub_13ADE
+Collision_UpdateSystem:                                 ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateCollision   p  ; was: sub_13ADE
                                         ; Sys_UpdateGameplayLoop+6   p
                 tst.b   (byte_FF813E).w
                 bmi.s   Collision_UpdateSystem_Return

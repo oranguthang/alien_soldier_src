@@ -141,7 +141,7 @@ loc_1F99E:                                              ; CODE XREF: Gfx_Update3
                 move.w  #$7000,d0
                 move.w  #$8F02,d3
                 move.l  #$94019340,d4
-                jmp     loc_1B78C
+                jmp     VDP_QueueCommand_Build
 ; End of function Gfx_Update3DPlanetEffect
 ; Writes pixel data to graphics buffer
 Gfx_WritePixelData:                                     ; CODE XREF: Gfx_Update3DPlanetEffect:loc_1F96A   p  ; was: sub_1F9C4

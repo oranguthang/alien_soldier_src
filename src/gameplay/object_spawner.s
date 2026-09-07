@@ -1,14 +1,15 @@
-Sys_UpdateObjectSpawner:                                ; CODE XREF: Sys_GameplayMainLoop:loc_1C732   p  ; was: sub_1A280
+; Updates the stage object-spawn cursor and delay
+Sys_UpdateObjectSpawner:                                ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateSpawner   p  ; was: sub_1A280
                                         ; Stage_UpdateGameplay+C   p
                 tst.b   (byte_FF813E).w
-                bpl.w   loc_1A28A
+                bpl.w   Sys_UpdateObjectSpawner_TickDelay
                 rts
 ; ---------------------------------------------------------------------------
-loc_1A28A:                                              ; CODE XREF: Sys_UpdateObjectSpawner+4   j
+Sys_UpdateObjectSpawner_TickDelay:                      ; CODE XREF: Sys_UpdateObjectSpawner+4   j  ; was: loc_1A28A
                 move.w  (word_FF808C).w,d0
-                bmi.w   loc_1A296
+                bmi.w   Sys_UpdateObjectSpawner_ProcessList
                 subq.w  #1,(word_FF808C).w
-loc_1A296:                                              ; CODE XREF: Sys_UpdateObjectSpawner+E   j
+Sys_UpdateObjectSpawner_ProcessList:                    ; CODE XREF: Sys_UpdateObjectSpawner+E   j  ; was: loc_1A296
                 jsr     Sys_ProcessSpawnList(pc)        ; (pc)
                 nop
 ; End of function Sys_UpdateObjectSpawner
@@ -16,33 +17,33 @@ loc_1A296:                                              ; CODE XREF: Sys_UpdateO
 Sys_ProcessVisibleObjects:                              ; CODE XREF: Sys_StoryScreenMainLoop+32   p  ; was: sub_1A29C
                                         ; UI_UpdateOptionsScreen+58   p
                 lea     (Entity_ObjectPool).w,a5
-loc_1A2A0:                                              ; CODE XREF: Sys_ProcessVisibleObjects+5A   j
+Sys_ProcessVisibleObjects_Loop:                         ; CODE XREF: Sys_ProcessVisibleObjects+5A   j  ; was: loc_1A2A0
                 move.w  (a5),d0
                 beq.s   Sys_AdvanceObjectPointer
                 cmpi.w  #$10,d0
-                beq.s   loc_1A2B2
+                beq.s   Sys_ProcessVisibleObjects_CheckVisibility
                 movea.w d0,a0
-                movea.l off_5DC(a0),a0
+                movea.l Entity_UpdateHandlerTable(a0),a0
                 jsr     (a0)
-loc_1A2B2:                                              ; CODE XREF: Sys_ProcessVisibleObjects+C   j
+Sys_ProcessVisibleObjects_CheckVisibility:              ; CODE XREF: Sys_ProcessVisibleObjects+C   j  ; was: loc_1A2B2
                 btst    #4,2(a5)
-                bne.s   loc_1A2DE
+                bne.s   Sys_ProcessVisibleObjects_Clear
                 btst    #1,2(a5)
-                beq.s   loc_1A2E4
+                beq.s   Sys_ProcessVisibleObjects_Queue
                 move.w  $10(a5),d0
                 subi.w  #$60,d0                         ; '`'
                 cmpi.w  #$180,d0
-                bhi.s   loc_1A2DE
+                bhi.s   Sys_ProcessVisibleObjects_Clear
                 move.w  $14(a5),d0
                 subi.w  #$40,d0                         ; '@'
                 cmpi.w  #$130,d0
-                bls.s   loc_1A2E4
-loc_1A2DE:                                              ; CODE XREF: Sys_ProcessVisibleObjects+1C   j
+                bls.s   Sys_ProcessVisibleObjects_Queue
+Sys_ProcessVisibleObjects_Clear:                        ; CODE XREF: Sys_ProcessVisibleObjects+1C   j  ; was: loc_1A2DE
                                         ; Sys_ProcessVisibleObjects+32   j
                 bsr.w   Sys_ClearObjectSlot
                 bra.s   Sys_AdvanceObjectPointer
 ; ---------------------------------------------------------------------------
-loc_1A2E4:                                              ; CODE XREF: Sys_ProcessVisibleObjects+24   j
+Sys_ProcessVisibleObjects_Queue:                        ; CODE XREF: Sys_ProcessVisibleObjects+24   j  ; was: loc_1A2E4
                                         ; Sys_ProcessVisibleObjects+40   j
                 movea.w (word_FFF758).w,a0
                 move.w  a5,(a0)+
@@ -52,29 +53,29 @@ Sys_AdvanceObjectPointer:                               ; CODE XREF: Sys_Process
                                         ; Sys_ProcessVisibleObjects+46   j
                 lea     $60(a5),a5
                 cmpa.w  #$DCA0,a5
-                bcs.s   loc_1A2A0
+                bcs.s   Sys_ProcessVisibleObjects_Loop
                 rts
 ; End of function Sys_ProcessVisibleObjects
 ; Processes object spawn list based on scroll
-Sys_ProcessSpawnList:                                   ; CODE XREF: Sys_UpdateObjectSpawner:loc_1A296   p  ; was: sub_1A2FA
-                                        ; DATA XREF: Sys_UpdateObjectSpawner:loc_1A296   o
+Sys_ProcessSpawnList:                                   ; CODE XREF: Sys_UpdateObjectSpawner:Sys_UpdateObjectSpawner_ProcessList   p  ; was: sub_1A2FA
+                                        ; DATA XREF: Sys_UpdateObjectSpawner:Sys_UpdateObjectSpawner_ProcessList   o
                 move.l  (dword_FFA20E).w,d0
-                bmi.s   locret_1A322
+                bmi.s   Sys_ProcessSpawnList_Return
                 tst.w   (dword_FFA910).w
-                bmi.s   locret_1A322
+                bmi.s   Sys_ProcessSpawnList_Return
                 movea.l d0,a4
-loc_1A308:                                              ; CODE XREF: Sys_ProcessSpawnList+22   j
+Sys_ProcessSpawnList_Loop:                              ; CODE XREF: Sys_ProcessSpawnList+22   j  ; was: loc_1A308
                 move.w  (dword_FFA900).w,d7
                 addi.w  #$140,d7
                 cmp.w   (a4),d7
-                blt.s   loc_1A31E
+                blt.s   Sys_ProcessSpawnList_SaveCursor
                 bsr.w   Sys_SpawnObject
                 lea     $C(a4),a4
-                bra.s   loc_1A308
+                bra.s   Sys_ProcessSpawnList_Loop
 ; ---------------------------------------------------------------------------
-loc_1A31E:                                              ; CODE XREF: Sys_ProcessSpawnList+18   j
+Sys_ProcessSpawnList_SaveCursor:                        ; CODE XREF: Sys_ProcessSpawnList+18   j  ; was: loc_1A31E
                 move.l  a4,(dword_FFA20E).w
-locret_1A322:                                           ; CODE XREF: Sys_ProcessSpawnList+4   j
+Sys_ProcessSpawnList_Return:                            ; CODE XREF: Sys_ProcessSpawnList+4   j  ; was: locret_1A322
                                         ; Sys_ProcessSpawnList+A   j
                 rts
 ; End of function Sys_ProcessSpawnList
@@ -83,26 +84,26 @@ Sys_SpawnObject:                                        ; CODE XREF: Sys_Process
                 movea.w 8(a4),a5
                 movea.w $A(a4),a0
                 bsr.w   Sys_FindSlotInRange
-                beq.s   loc_1A33C
+                beq.s   Sys_SpawnObject_InitializeSlot
                 movea.w 8(a4),a5
-                bsr.w   Gfx_LoadDestroyerMK2Palette
-                beq.s   locret_1A388
-loc_1A33C:                                              ; CODE XREF: Sys_SpawnObject+C   j
+                bsr.w   Sys_FindReusableSlotInRange
+                beq.s   Sys_SpawnObject_Return
+Sys_SpawnObject_InitializeSlot:                         ; CODE XREF: Sys_SpawnObject+C   j  ; was: loc_1A33C
                 bsr.w   Sys_ClearObjectSlot
                 move.w  4(a4),d0
                 bclr    #0,d0
-                beq.s   loc_1A352
+                beq.s   Sys_SpawnObject_CheckSecondDifficultyFlag
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_1A35E
-locret_1A350:                                           ; CODE XREF: Sys_SpawnObject+38   j
+                bne.s   Sys_SpawnObject_Populate
+Sys_SpawnObject_ReturnWithoutSpawn:                     ; CODE XREF: Sys_SpawnObject+38   j  ; was: locret_1A350
                 rts
 ; ---------------------------------------------------------------------------
-loc_1A352:                                              ; CODE XREF: Sys_SpawnObject+24   j
+Sys_SpawnObject_CheckSecondDifficultyFlag:              ; CODE XREF: Sys_SpawnObject+24   j  ; was: loc_1A352
                 bclr    #1,d0
-                beq.s   loc_1A35E
+                beq.s   Sys_SpawnObject_Populate
                 tst.w   (word_FFFF0E).w
-                bne.s   locret_1A350
-loc_1A35E:                                              ; CODE XREF: Sys_SpawnObject+2A   j
+                bne.s   Sys_SpawnObject_ReturnWithoutSpawn
+Sys_SpawnObject_Populate:                               ; CODE XREF: Sys_SpawnObject+2A   j  ; was: loc_1A35E
                                         ; Sys_SpawnObject+32   j
                 move.w  d0,(a5)
                 move.w  6(a4),$5E(a5)
@@ -115,36 +116,36 @@ loc_1A35E:                                              ; CODE XREF: Sys_SpawnOb
                 add.w   (dword_FFA904).w,d1
                 move.w  d1,$14(a5)
                 clr.w   $16(a5)
-locret_1A388:                                           ; CODE XREF: Sys_SpawnObject+16   j
+Sys_SpawnObject_Return:                                 ; CODE XREF: Sys_SpawnObject+16   j  ; was: locret_1A388
                 rts
 ; End of function Sys_SpawnObject
 ; Finds free slot in object array range
 Sys_FindSlotInRange:                                    ; CODE XREF: Sys_SpawnObject+8   p  ; was: sub_1A38A
                                         ; Sys_FindSlotInRange+A   j
                 tst.w   (a5)
-                beq.s   locret_1A39A
+                beq.s   Sys_FindSlotInRange_Return
                 lea     $60(a5),a5
                 cmpa.l  a0,a5
                 bcs.s   Sys_FindSlotInRange
                 andi    #$FB,ccr
-locret_1A39A:                                           ; CODE XREF: Sys_FindSlotInRange+2   j
+Sys_FindSlotInRange_Return:                             ; CODE XREF: Sys_FindSlotInRange+2   j  ; was: locret_1A39A
                 rts
 ; End of function Sys_FindSlotInRange
-; Loads Destroyer-MK2 palette
-Gfx_LoadDestroyerMK2Palette:                            ; CODE XREF: Sys_SpawnObject+12   p  ; was: sub_1A39C
-                                        ; Gfx_LoadDestroyerMK2Palette+E   j
+; Finds a flagged reusable object slot within the requested range
+Sys_FindReusableSlotInRange:                            ; CODE XREF: Sys_SpawnObject+12   p  ; was: sub_1A39C
+                                        ; Sys_FindReusableSlotInRange+E   j
                 btst    #6,3(a5)
-                bne.s   locret_1A3AE
+                bne.s   Sys_FindReusableSlotInRange_Return
                 lea     $60(a5),a5
                 cmpa.l  a0,a5
-                bcs.s   Gfx_LoadDestroyerMK2Palette
+                bcs.s   Sys_FindReusableSlotInRange
                 moveq   #0,d0
-locret_1A3AE:                                           ; CODE XREF: Gfx_LoadDestroyerMK2Palette+6   j
+Sys_FindReusableSlotInRange_Return:                     ; CODE XREF: Sys_FindReusableSlotInRange+6   j  ; was: locret_1A3AE
                 rts
-; End of function Gfx_LoadDestroyerMK2Palette
+; End of function Sys_FindReusableSlotInRange
 ; Clears 96 bytes of object RAM
 Sys_ClearObjectSlot:                                    ; CODE XREF: Sys_ProcessProjectiles:loc_199D6   p  ; was: sub_1A3B0
-                                        ; sub_1A29C:loc_1A2DE   p
+                                        ; sub_1A29C:Sys_ProcessVisibleObjects_Clear   p
                 movea.l a5,a0
 ; Clears 96-byte object memory block (24 long-words) to zero
 Sys_Clear96ByteBlock:                                   ; CODE XREF: Object_ClearInactiveTypes12CAnd134+22   p  ; was: loc_1A3B2
@@ -177,11 +178,11 @@ Sys_Clear96ByteBlock:                                   ; CODE XREF: Object_Clea
                 rts
 ; End of function Sys_ClearObjectSlot
 ; ---------------------------------------------------------------------------
-word_1A3E6:     dc.w    $7FFF                           ; DATA XREF: ROM:stru_12910   o
+Stage_EmptyObjectSpawnList: dc.w    $7FFF               ; DATA XREF: ROM:stru_12910   o  ; was: word_1A3E6
                                         ; ROM:stru_1296A   o
                                         ; UNUSED: Intro cutscene sprite graphics
                                         ; See stru_12910 for complete structure (line 23283)
-word_1A3E8:     dc.w    $1A0, $130, $1C, $10, $C680, $CF80
+Stage1_ObjectSpawnList: dc.w    $1A0, $130, $1C, $10, $C680, $CF80  ; was: word_1A3E8
                                         ; DATA XREF: ROM:stru_127A8   o
                 dc.w    $200, $130, $1D, $11, $C680, $CF80
                 dc.w    $280, $D0, $1C, $15, $C680, $CF80
@@ -202,9 +203,9 @@ word_1A3E8:     dc.w    $1A0, $130, $1C, $10, $C680, $CF80
                 dc.w    $750, $14C, $49, 0, $C680, $CF80
                 dc.w    $780, $130, $1D, 0, $C680, $CF80
                 dc.w    $7C0, $110, $1E0, 0, $C680, $CF80
-word_1A4D8:     binclude "data/other/word_1A4D8.bin"
-word_1A4D8_End:
-word_1A6B8:     dc.w    $D10, $130, $1C, 0, $C680, $CF80
+Stage2_ObjectSpawnList:             binclude "data/other/word_1A4D8.bin"  ; was: word_1A4D8
+Stage2_ObjectSpawnList_End:                             ; was: word_1A4D8_End
+Stage2_AlternateObjectSpawnList:    dc.w    $D10, $130, $1C, 0, $C680, $CF80  ; was: word_1A6B8
                                         ; DATA XREF: ROM:stru_127E4   o
                 dc.w    $D30, $130, $1C, 0, $C680, $CF80
                 dc.w    $D40, $130, $28C, 0, $C680, $CF80
@@ -218,17 +219,17 @@ word_1A6B8:     dc.w    $D10, $130, $1C, 0, $C680, $CF80
                 dc.w    $110A, $AC, $22, 0, $C680, $CF80
                 dc.w    $11E0, $130, $1C, 0, $C680, $CF80
                 dc.w    $1240, $130, $1C, 0, $C680, $CF80
-word_1A754:     binclude "data/other/word_1A754.bin"
-word_1A754_End:
-word_1A882:     binclude "data/other/word_1A882.bin"
-word_1A882_End:
-word_1A9B0:     dc.w    $4D4, $108, $12C, 8, $DB20, $DCA0
+Stage2_SecondObjectSpawnList:   binclude "data/other/word_1A754.bin"  ; was: word_1A754
+Stage2_SecondObjectSpawnList_End:                       ; was: word_1A754_End
+Stage2_ThirdObjectSpawnList:    binclude "data/other/word_1A882.bin"  ; was: word_1A882
+Stage2_ThirdObjectSpawnList_End:                        ; was: word_1A882_End
+Stage2_FourthObjectSpawnList:   dc.w    $4D4, $108, $12C, 8, $DB20, $DCA0  ; was: word_1A9B0
                                         ; DATA XREF: ROM:stru_1283E   o
                 dc.w    $550, $108, $12C, $18, $DB20, $DCA0
                 dc.w    $5B8, $108, $12C, $10, $DB20, $DCA0
-word_1A9D4:     binclude "data/other/word_1A9D4.bin"
-word_1A9D4_End:
-word_1AB24:     dc.w    $C10, $130, $1C, 0, $C680, $CF80
+Stage2_FifthRuntimeSpawnList:   binclude "data/other/word_1A9D4.bin"  ; was: word_1A9D4
+Stage2_FifthRuntimeSpawnList_End:                       ; was: word_1A9D4_End
+Stage2_FifthObjectSpawnList:    dc.w    $C10, $130, $1C, 0, $C680, $CF80  ; was: word_1AB24
                                         ; DATA XREF: ROM:stru_1285C   o
                 dc.w    $C30, $130, $1D, $11, $C680, $CF80
                 dc.w    $C50, $130, $1C, 0, $C680, $CF80
@@ -243,7 +244,7 @@ word_1AB24:     dc.w    $C10, $130, $1C, 0, $C680, $CF80
                 dc.w    $1070, $130, $8C, 0, $C680, $CF80
                 dc.w    $10E2, $118, $12C, $8020, $DB20, $DCA0
                 dc.w    $7FFF
-word_1ABC2:     dc.w    $980, $120, $1C, 0, $C680, $CF80
+Stage8_ObjectSpawnList: dc.w    $980, $120, $1C, 0, $C680, $CF80  ; was: word_1ABC2
                                         ; DATA XREF: ROM:stru_1287A   o
                 dc.w    $A20, $120, $1D, $11, $C680, $CF80
                 dc.w    $AC0, $120, $1C, 0, $C680, $CF80
@@ -258,33 +259,31 @@ word_1ABC2:     dc.w    $980, $120, $1C, 0, $C680, $CF80
                 dc.w    $EC0, $120, $1C, 0, $C680, $CF80
                 dc.w    $F40, $120, $1C, 0, $C680, $CF80
                 dc.w    $7FFF
-word_1AC60:     dc.w    $7FFF                           ; DATA XREF: ROM:stru_12898   o
-word_1AC62:     binclude "data/other/word_1AC62.bin"
-word_1AC62_End:
-word_1AD8E:     binclude "data/other/word_1AD8E.bin"
-word_1AD8E_End:
-word_1AE96:     binclude "data/other/word_1AE96.bin"    ; UNUSED: Unknown graphics (314 bytes)
+Stage8_EmptyObjectSpawnList:        dc.w    $7FFF       ; DATA XREF: ROM:stru_12898   o  ; was: word_1AC60
+Stage10_ObjectSpawnList:            binclude "data/other/word_1AC62.bin"  ; was: word_1AC62
+Stage10_ObjectSpawnList_End:                            ; was: word_1AC62_End
+Stage10_AlternateObjectSpawnList:   binclude "data/other/word_1AD8E.bin"  ; was: word_1AD8E
+Stage10_AlternateObjectSpawnList_End:                   ; was: word_1AD8E_End
+Stage11_UnidentifiedAsset:          binclude "data/other/word_1AE96.bin"  ; UNUSED: Unknown graphics (314 bytes)  ; was: word_1AE96
                                         ; See stru_128F2 for structure (line 23266)
-word_1AE96_End:
-word_1AFD0:     dc.w    $160, $1FD8, $20, 0, $C680, $CF80
+Stage11_UnidentifiedAsset_End:                          ; was: word_1AE96_End
+Stage13_AlternateObjectSpawnList:   dc.w    $160, $1FD8, $20, 0, $C680, $CF80  ; was: word_1AFD0
                                         ; DATA XREF: ROM:stru_1292E   o
                 dc.w    $1E0, $2028, $24C, 0, $C680, $CF80
                 dc.w    $200, $2010, $1C, 0, $C680, $CF80
                 dc.w    $2C0, $2010, $1C, 0, $C680, $CF80
                 dc.w    $380, $2010, $1C, 0, $C680, $CF80
-word_1B00C:     dc.w    $720, $2000, $380, 0, $C680, $CF80
+Stage14_ObjectSpawnList:    dc.w    $720, $2000, $380, 0, $C680, $CF80  ; was: word_1B00C
                                         ; DATA XREF: ROM:stru_1294C   o
                 dc.w    $720, $2000, $39C, 0, $C680, $CF80
                 dc.w    $740, $2028, $24C, 0, $C680, $CF80
                 dc.w    $764, $2028, $20, 0, $C680, $CF80
                 dc.w    $7FFF
-word_1B03E:     binclude "data/other/word_1B03E.bin"
-word_1B03E_End:
-word_1B2BA:     binclude "data/other/word_1B2BA.bin"
-word_1B2BA_End:
-word_1B3F4:     dc.w    $7FFF                           ; DATA XREF: ROM:stru_12AB4   o
-word_1B3F6:     dc.w    $270, $2D0, $20, 0, $C680, $CF80
+Stage18_ObjectSpawnList:            binclude "data/other/word_1B03E.bin"  ; was: word_1B03E
+Stage18_ObjectSpawnList_End:                            ; was: word_1B03E_End
+Stage18_AlternateObjectSpawnList:   binclude "data/other/word_1B2BA.bin"  ; was: word_1B2BA
+Stage18_AlternateObjectSpawnList_End:                   ; was: word_1B2BA_End
+Stage28_EmptyObjectSpawnList:       dc.w    $7FFF       ; DATA XREF: ROM:stru_12AB4   o  ; was: word_1B3F4
+Stage32_ObjectSpawnList:            dc.w    $270, $2D0, $20, 0, $C680, $CF80  ; was: word_1B3F6
                                         ; DATA XREF: ROM:stru_12B2C   o
                 dc.w    $7FFF
-
-; Looks up cosine value from trigonometry table

@@ -1,4 +1,4 @@
-Entity_TrainEndDispatcher:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_2EF32
+Entity_TrainEndDispatcher:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2EF32
                 clr.w   6(a5)
                 move.w  4(a5),d0
                 lea     off_2EF42(pc,d0.w),a0
@@ -116,7 +116,7 @@ locret_2F08A:                                           ; CODE XREF: Entity_Trai
                 rts
 ; End of function Entity_TrainJumpComplete
 ; Xi-Tiger intro entity initialization
-Entity_XiTigerIntro:                                    ; DATA XREF: ROM:off_5DC   o  ; was: sub_2F08C
+Entity_XiTigerIntro:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F08C
                 clr.w   6(a5)
                 move.w  4(a5),d0
                 lea     off_2F09C(pc,d0.w),a0

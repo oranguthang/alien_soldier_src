@@ -361,7 +361,7 @@ loc_1EC2A:                                              ; CODE XREF: Cutscene_Xi
 Cutscene_XiTigerUpdateScroll:                           ; CODE XREF: Cutscene_XiTigerScrollFadeIn:loc_1EAEE   p  ; was: sub_1EC34
                                         ; Cutscene_XiTigerFlashEffect+2A   p
                 movea.w #(word_FFE402-M68K_RAM),a0
-                lea     (word_1B494).l,a1
+                lea     (Math_QuarterSineTable).l,a1
                 moveq   #0,d0
                 addi.w  #$108,(dword_FF8134).w
                 move.w  (dword_FF8134).w,d0
@@ -448,7 +448,7 @@ Cutscene_XiTigerWaitForInput:                           ; CODE XREF: Cutscene_Xi
 ; End of function Cutscene_XiTigerWaitForInput
 ; Checks if player wants to skip cutscene
 Cutscene_XiTigerSkipCheck:                              ; CODE XREF: Cutscene_XiTigerWaitForInput   p  ; was: sub_1ED3C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_1E9AE
                 move.w  #$120,$10(a0)
                 add.w   d7,$10(a0)
@@ -458,7 +458,7 @@ Cutscene_XiTigerSkipCheck:                              ; CODE XREF: Cutscene_Xi
                 rts
 ; End of function Cutscene_XiTigerSkipCheck
 ; Fades out cutscene graphics
-Cutscene_XiTigerFadeOut:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_1ED62
+Cutscene_XiTigerFadeOut:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_1ED62
                 move.w  #$E1,d0
                 sub.w   (word_FF9F14).w,d0
                 move.w  d0,$14(a5)
@@ -468,7 +468,7 @@ Cutscene_XiTigerFadeOut:                                ; DATA XREF: ROM:off_5DC
 ; End of function Cutscene_XiTigerFadeOut
 ; Completes cutscene advancing to gameplay
 Cutscene_XiTigerComplete:                               ; CODE XREF: Cutscene_XiTigerWaitComplete:loc_1E9FA   p  ; was: sub_1ED7C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_1E9AE
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$FF,d0

@@ -1,4 +1,4 @@
-Boss_BackStringerMain:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_446AE
+Boss_BackStringerMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_446AE
                 tst.w   4(a5)
                 beq.w   loc_44702
                 tst.w   8(a5)
@@ -93,8 +93,8 @@ loc_447AA:                                              ; CODE XREF: Boss_BackSt
                 lea     $120(a0),a0
                 dbf     d7,loc_447AA
                 bsr.w   Boss_BackStringerInitProjectileSlots
-                movea.l #word_1BDC0,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_BackStringerObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 move.w  #2,$1DE(a5)
                 bra.w   Boss_BackStringerAttackStateMachine
 ; End of function Boss_BackStringerSpawn
@@ -697,7 +697,7 @@ Boss_BackStringerDefeatInit:                            ; CODE XREF: Boss_BackSt
                 move.w  #0,$AA(a5)
                 move.w  #$10,$10A(a5)
                 movea.w #(word_FFC740-M68K_RAM),a0
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 moveq   #$20,d4                         ; ' '
                 moveq   #0,d0
                 moveq   #1,d7

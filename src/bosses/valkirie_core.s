@@ -1,4 +1,4 @@
-Boss_ValkirieStateHandler:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_50FA6
+Boss_ValkirieStateHandler:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_50FA6
                 tst.w   4(a5)
                 beq.w   loc_50FBA
                 tst.w   8(a5)
@@ -72,8 +72,8 @@ Boss_ValkirieInit:                                      ; DATA XREF: ROM:off_50F
                 move.w  d1,$9CE(a5)
                 move.b  #$18,$9E0(a5)
                 move.l  #word_EC792,$9C8(a5)
-                movea.l #word_1BE6C,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_ValkirieObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 bsr.w   Boss_ValkirieDMALeftTiles
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
@@ -179,7 +179,7 @@ loc_51210:                                              ; CODE XREF: Boss_Valkir
                 bra.w   loc_5129E
 ; ---------------------------------------------------------------------------
 loc_5123E:                                              ; CODE XREF: Boss_ValkirieInit+254   j
-                lea     (word_1B514).l,a0
+                lea     (Math_SineTable).l,a0
                 move.l  #word_EC792,$9C8(a5)
                 bset    #3,$9CE(a5)
                 move.w  #$1A0,d7

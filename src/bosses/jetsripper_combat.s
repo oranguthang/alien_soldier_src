@@ -12,7 +12,7 @@ off_2B6C4:      dc.l    word_E90DA                      ; DATA XREF: Projectile_
                 dc.l    word_E90E6
 
 ; Main update routine for Jetsripper boss
-Boss_JetsripperMain:                                    ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B6D4
+Boss_JetsripperMain:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B6D4
                 tst.w   4(a5)
                 bne.w   loc_2B70E
                 move.w  $14(a5),$48(a5)
@@ -37,13 +37,13 @@ loc_2B70E:                                              ; CODE XREF: Boss_Jetsri
                 add.w   $48(a5),d0
                 move.w  d0,$14(a5)
 loc_2B72E:                                              ; CODE XREF: Boss_JetsripperMain+40   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$10,d0
                 bpl.s   locret_2B776
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_SpawnPeriodicProjectile
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_SpawnPeriodicProjectile
                 jsr     (Effect_SpawnDestructionBlast).l
                 move.w  $10(a5),$10(a0)
@@ -64,7 +64,7 @@ locret_2B776:                                           ; CODE XREF: Boss_Jetsri
 byte_2B778:     dc.b    $FF, 0, 1, 0                    ; DATA XREF: Boss_JetsripperMain+4C   r
 
 ; Initializes enemy projectile type and flags
-Enemy_InitProjectileType:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B77C
+Enemy_InitProjectileType:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B77C
                 tst.w   4(a5)
                 bne.w   loc_2B7BA
                 move.w  $14(a5),$48(a5)
@@ -91,7 +91,7 @@ loc_2B7BA:                                              ; CODE XREF: Enemy_InitP
                 jmp     Projectile_DeflectBounce
 ; ---------------------------------------------------------------------------
 loc_2B7EA:                                              ; CODE XREF: Enemy_InitProjectileType+5C   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$C,d0
                 bpl.s   locret_2B806
 loc_2B7F6:                                              ; CODE XREF: Enemy_InitProjectileType+64   j
@@ -106,7 +106,7 @@ byte_2B808:     dc.b    $FF, 0, 1, 0                    ; DATA XREF: Enemy_InitP
 
 ; Spawns projectile with trajectory calculation towards player position
 Boss_SpawnTargetedProjectile:                           ; CODE XREF: Enemy_UpdatePeriodicShots+1E   p  ; was: sub_2B80C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2B888
                 add.w   $10(a5),d5
                 add.w   $14(a5),d6
@@ -122,7 +122,7 @@ Boss_SpawnTargetedProjectile:                           ; CODE XREF: Enemy_Updat
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$FC04FC04,$2C(a0)
                 movea.w a0,a1
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 moveq   #0,d0
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #7,d0
@@ -141,7 +141,7 @@ locret_2B888:                                           ; CODE XREF: Boss_SpawnT
                 rts
 ; End of function Boss_SpawnTargetedProjectile
 ; Projectile with gravity physics deflection and ground bounce
-Projectile_GravityBounce:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B88A
+Projectile_GravityBounce:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B88A
                 addi.l  #$3000,$1C(a5)
                 btst    #7,$22(a5)
                 beq.s   loc_2B8AA
@@ -170,7 +170,7 @@ loc_2B8C0:                                              ; CODE XREF: Projectile_
 ; End of function Projectile_GravityBounce
 ; Spawns falling debris projectile with gravity and horizontal velocity
 Projectile_SpawnFallingDebris:                          ; CODE XREF: Enemy_GroundWalkWithProjectile:loc_2CD90   p  ; was: sub_2B8E0
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2B93C
                 add.w   $10(a5),d5
                 add.w   $14(a5),d6
@@ -191,12 +191,12 @@ locret_2B93C:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_SpawnFallingDebris
 ; Spawns trailing explosion particles while projectile moves
-Enemy_TrailingExplosionSpawner:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B93E
+Enemy_TrailingExplosionSpawner:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B93E
                 addq.w  #1,$48(a5)
                 move.w  $48(a5),d0
                 andi.w  #3,d0
                 bne.s   loc_2B990
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_2B990
                 move.l  #off_E9638,8(a0)
                 move.w  $10(a5),$10(a0)
@@ -228,7 +228,7 @@ loc_2B9AA:                                              ; CODE XREF: Enemy_Trail
                 jmp     Projectile_InitType88FromCurrent
 ; End of function Enemy_TrailingExplosionSpawner
 ; Spawns falling hazard projectiles from top of screen at intervals
-Enemy_SpawnFallingHazard:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B9C4
+Enemy_SpawnFallingHazard:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B9C4
                 tst.w   (word_FF808C).w
                 bmi.s   loc_2B9D2
                 bset    #4,2(a5)
@@ -271,7 +271,7 @@ locret_2BA56:                                           ; CODE XREF: Enemy_Spawn
 word_2BA58:     dc.w    $40, $28, $10                   ; DATA XREF: Enemy_SpawnFallingHazard+14   o
 
 ; Handles projectile collision with terrain changing state or destroying
-Projectile_TerrainCollision:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BA5E
+Projectile_TerrainCollision:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BA5E
                 tst.w   (word_FF808C).w
                 bmi.s   loc_2BA7A
 loc_2BA64:                                              ; CODE XREF: Projectile_TerrainCollision+4A   j

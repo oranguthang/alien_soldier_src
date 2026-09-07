@@ -1,4 +1,4 @@
-Boss_ShieldViperDefeatMain:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_4F1A6
+Boss_ShieldViperDefeatMain:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4F1A6
                 move.w  4(a5),d0
                 lea     off_4F1B2(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -20,8 +20,8 @@ Boss_ShieldViperDefeatState1:                           ; DATA XREF: ROM:off_4F1
                 move.w  $56(a5),d0
                 add.w   $52(a5),d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a3
-                move.w  word_1B494-word_1B514(a3,d0.w),d1
+                lea     (Math_SineTable).l,a3
+                move.w  Math_QuarterSineTable-Math_SineTable(a3,d0.w),d1
                 move.w  (a3,d0.w),d0
                 ext.l   d0
                 ext.l   d1
@@ -51,7 +51,7 @@ locret_4F22A:                                           ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperDefeatState2
 ; Defeat visual effect
 Boss_ShieldViperDefeatEffect:                           ; CODE XREF: Boss_ShieldViperDefeatState1+14   p  ; was: sub_4F22C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4F26A
                 move.l  #off_E9560,8(a0)
                 jsr     (Projectile_InitType88).l
@@ -297,8 +297,8 @@ Boss_ShieldViperAttackState2:                           ; CODE XREF: Boss_Shield
                 move.w  $56(a5),d0
                 addi.w  #$100,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a3
-                move.w  word_1B494-word_1B514(a3,d0.w),d1
+                lea     (Math_SineTable).l,a3
+                move.w  Math_QuarterSineTable-Math_SineTable(a3,d0.w),d1
 loc_4F4E2:
                 move.w  (a3,d0.w),d0
                 move.w  (dword_FF941C).w,d2

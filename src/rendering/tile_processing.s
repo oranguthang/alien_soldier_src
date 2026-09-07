@@ -9,7 +9,7 @@ loc_2A60:                                               ; CODE XREF: Sys_ClearDM
                 rts
 ; End of function Sys_ClearDMABuffer
 ; Processes and converts compressed tile bitplane data extracting pixel patterns from packed format
-Gfx_ProcessTileData:                                    ; CODE XREF: Gfx_LoadAndDecompTiles:loc_26F2   p  ; was: sub_2A68
+Gfx_ProcessTileData:                                    ; CODE XREF: Gfx_LoadAndDecompTiles:Gfx_LoadAndDecompTiles_Loop   p  ; was: sub_2A68
                                         ; sub_2700:loc_271E   p
                 movem.l d2-d7/a4-a5,-(sp)
                 move.w  (dword_FFF730).w,d2
@@ -261,7 +261,7 @@ loc_2C3A:                                               ; CODE XREF: Gfx_WriteTi
                 rts
 ; End of function Gfx_WriteTilesToVRAM
 ; Executes DMA transfer with VDP register setup
-Gfx_ExecuteDMATransfer:                                 ; CODE XREF: Gfx_DMATransferWithWait:loc_28DA   p  ; was: sub_2C62
+Gfx_ExecuteDMATransfer:                                 ; CODE XREF: Gfx_DMATransferWithWait:Gfx_DMATransferWithWait_ExecuteBatch   p  ; was: sub_2C62
                                         ; Gfx_DecompTilesToVRAMBatched+3A   p
                 move    sr,-(sp)
                 move    #$2700,sr

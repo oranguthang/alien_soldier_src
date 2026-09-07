@@ -129,7 +129,7 @@ loc_4A724:                                              ; CODE XREF: Boss_Jampan
                 lea     (word_FFC860).w,a0
                 move.w  #$F,d0
 loc_4A740:                                              ; CODE XREF: Boss_JampanDamageHandler+8A   j
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $48(a0),d4
                 add.w   (dword_FF9424).w,d4
                 move.w  $4A(a0),d5

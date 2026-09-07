@@ -1,4 +1,4 @@
-Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_3A47C
+Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3A47C
                 tst.w   4(a5)
                 beq.w   loc_3A4D4
                 tst.w   8(a5)
@@ -52,7 +52,7 @@ Boss_MadamBarbarInit:                                   ; DATA XREF: Boss_MadamB
                 clr.w   8(a5)
                 move.w  #$118,d0
                 move.w  #$12C,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.b  #1,(byte_FF830E).w
 locret_3A51A:                                           ; CODE XREF: Boss_MadamBarbarSetup+4   j
                 rts
@@ -95,8 +95,8 @@ Boss_MadamBarbarSetup:                                  ; DATA XREF: ROM:0003A4E
                 move.w  #$100,8(a0)
                 move.w  #1,$17E(a5)
                 move.w  #$248,$9D0(a5)
-                movea.l #word_1BAF4,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_MadamBarbarObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 movea.l #word_3A5F2,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 bsr.w   Boss_MadamBarbarSetCollision
@@ -191,7 +191,7 @@ Boss_MadamBarbarDefeatSequence:                         ; DATA XREF: ROM:0003A4F
                 bpl.s   loc_3A708
                 moveq   #0,d0
                 move.w  #$12C,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
 loc_3A708:                                              ; CODE XREF: Boss_MadamBarbarDefeatSequence+4   j
                 bsr.w   Boss_MadamBarbarUpdateParts
@@ -521,7 +521,7 @@ byte_3AACE:     dc.b    0, 1, 2, 3, 4, 4, 4, 4, 3, 2, 1, 0, 0, 1, 1, 0
 ; Calculate direction to player and set Madam Barbar facing
 Boss_MadamBarbarFacePlayer:
                 clr.w   $54(a5)                         ; was: sub_3AADE
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   Boss_MadamBarbarSetCollision
                 move.w  #$100,$54(a5)
@@ -786,7 +786,7 @@ Boss_MadamBarbarSpawnDebris:                            ; CODE XREF: Boss_MadamB
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   locret_3AE34
                 movea.w #(byte_FFD700-M68K_RAM),a0
-                jsr     (loc_1C11C).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
                 bne.s   locret_3AE34
                 move.w  #$120,(a0)
                 clr.w   4(a0)

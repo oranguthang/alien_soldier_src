@@ -124,8 +124,8 @@ Math_CalculatePolarPosition:                            ; CODE XREF: Boss_Bugmax
 loc_4DB88:                                              ; CODE XREF: Boss_BugmaxRotateParts1+3A   p
                                         ; Boss_BugmaxRotateParts1+6A   p
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a2
-                move.w  word_1B494-word_1B514(a2,d0.w),d1
+                lea     (Math_SineTable).l,a2
+                move.w  Math_QuarterSineTable-Math_SineTable(a2,d0.w),d1
                 move.w  (a2,d0.w),d0
                 muls.w  d2,d0
                 muls.w  d2,d1
@@ -148,8 +148,8 @@ Boss_BugmaxCalculateWave:                               ; CODE XREF: Boss_Bugmax
                 add.l   d0,(dword_FF9404).w
                 move.w  (dword_FF9404).w,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d0.w),d0
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d0
                 tst.w   d0
                 bmi.s   loc_4DBD4
                 muls.w  (dword_FF940C).w,d0

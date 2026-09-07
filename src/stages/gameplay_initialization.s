@@ -72,7 +72,7 @@ UI_InitializeStageStart:                                ; DATA XREF: Sys_Dispatc
                 clr.b   (byte_FFFF31).w
                 move.w  #2,(word_FFA22A).w
                 jsr     (Sys_InitGameMode).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -213,10 +213,10 @@ loc_1F07C:                                              ; CODE XREF: UI_UpdateMe
 ; End of function UI_UpdateMenuState
 ; Main gameplay loop with player physics and rendering
 Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_DispatchGameState+CA   o  ; was: sub_1F084
-                jsr     (Gfx_UpdateScrollPosition).l
+                jsr     (Object_ApplyCameraMotion).l
                 jsr     (Collision_UpdateSystem).l
                 jsr     (Sys_InitObjectPointers).l
-                jsr     (UI_CheckVBlankFlag).l
+                jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Physics_ApplyFriction).l
                 jsr     (UI_RenderHUDElement1).l
                 jsr     (Player_Update).l

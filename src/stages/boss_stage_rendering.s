@@ -225,7 +225,7 @@ loc_FE78:                                               ; CODE XREF: Boss_Shield
                 addq.w  #1,(word_FF9DFE).w
                 move.w  #$8F02,d3
                 move.l  #$94009340,d4
-                jmp     loc_1B78C
+                jmp     VDP_QueueCommand_Build
 ; End of function Boss_ShieldViperRenderBackground
 ; Attack state 3 handler
 Boss_WolfGaropaAttackState3:                            ; CODE XREF: Boss_WolfGaropaTransition+28   p  ; was: sub_FEA0
@@ -248,7 +248,7 @@ Boss_WolfGaropaAttackState4:                            ; CODE XREF: Boss_WolfGa
                 rts
 ; End of function Boss_WolfGaropaAttackState4
 ; Palette update handler
-Boss_WolfGaropaPaletteUpdate:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_FEDE
+Boss_WolfGaropaPaletteUpdate:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_FEDE
                 move.b  #$80,$21(a5)
                 move.w  #$F3E0,d0
                 sub.w   (dword_FFA904).w,d0

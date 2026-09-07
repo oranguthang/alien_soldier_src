@@ -71,7 +71,7 @@ locret_50C5A:                                           ; CODE XREF: Boss_WolfGa
 ; Defeat animation
 Boss_WolfGaropaDefeatAnim:                              ; CODE XREF: Boss_WolfGaropaDefeatInit+2C   p  ; was: sub_50C5C
                                         ; Boss_WolfGaropaCollision+38   p
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $A76(a5),d0
                 move.w  -$80(a2,d0.w),d3
                 move.w  (a2,d0.w),d4

@@ -40,7 +40,7 @@ Player_SetInvincibilityFlag_Return:                     ; CODE XREF: Player_SetI
                 rts
 ; End of function Player_SetInvincibilityFlag
 ; Main player update routine
-Player_Update:                                          ; CODE XREF: Sys_GameplayMainLoop:loc_1C70E   p  ; was: sub_14F98
+Player_Update:                                          ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdatePlayer   p  ; was: sub_14F98
                                         ; sub_1EE3C   p
                 movea.w #(word_FFA400-M68K_RAM),a5
                 btst    #1,(byte_FF8144).w

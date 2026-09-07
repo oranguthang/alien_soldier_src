@@ -1,4 +1,4 @@
-Enemy_Phase2StateHandler:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2D020
+Enemy_Phase2StateHandler:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D020
                 tst.w   4(a5)
                 beq.s   loc_2D040
                 tst.w   $24(a5)
@@ -147,7 +147,7 @@ Enemy_ResetToIdleState290:                              ; CODE XREF: Enemy_Phase
                 rts
 ; End of function Enemy_ResetToIdleState290
 ; Handles bouncing debris projectile with gravity, collision, spawns particles, plays sound
-Projectile_BouncingDebrisMain:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_2D1AC
+Projectile_BouncingDebrisMain:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D1AC
                 bsr.w   Enemy_ToggleSpriteVisibility
                 tst.l   $1C(a5)
                 beq.s   loc_2D1EA
@@ -166,7 +166,7 @@ loc_2D1C8:                                              ; CODE XREF: Projectile_
                 jsr     (Physics_AlignToTerrain).l
 loc_2D1EA:                                              ; CODE XREF: Projectile_BouncingDebrisMain+8   j
                                         ; Projectile_BouncingDebrisMain+2A   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2D254
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
@@ -300,8 +300,8 @@ Enemy_CircularHomingMotion:                             ; CODE XREF: Enemy_Circl
                                         ; Enemy_DescendAttackState+18   p
                 move.w  $4C(a5),d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d0.w),d1
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d0.w),d1
                 move.w  (a1,d0.w),d0
                 muls.w  d2,d0
                 muls.w  d3,d1
@@ -311,10 +311,10 @@ Enemy_CircularHomingMotion:                             ; CODE XREF: Enemy_Circl
                 add.w   a5,d0
                 andi.w  #$7F,d0
                 bne.s   locret_2D3E6
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$20,d0                         ; ' '
                 bcs.s   locret_2D3E6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2D3E6
                 move.w  a0,$56(a5)
                 jsr     (Math_CalculateAngleToPlayer).l

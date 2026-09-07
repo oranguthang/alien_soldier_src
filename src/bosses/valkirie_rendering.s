@@ -242,7 +242,7 @@ loc_566BC:                                              ; CODE XREF: Boss_Valkir
                 rts
 ; End of function Boss_ValkirieMovePattern1
 ; Movement pattern 2
-Boss_ValkirieMovePattern2:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_5671A
+Boss_ValkirieMovePattern2:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5671A
                 btst    #1,(byte_FFC9DE).w
                 beq.w   loc_56804
                 bclr    #4,(byte_FFC9DE).w
@@ -338,8 +338,8 @@ loc_56860:                                              ; CODE XREF: Boss_Valkir
                 beq.s   loc_5687C
                 bsr.w   Boss_ValkirieCalculateAngleToPlayer
 loc_5687C:                                              ; CODE XREF: Boss_ValkirieMovePattern2+15C   j
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d2.w),d0
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d2.w),d0
                 move.w  (a1,d2.w),d1
                 ext.l   d0
                 ext.l   d1

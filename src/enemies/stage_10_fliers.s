@@ -1,4 +1,4 @@
-Enemy_Stage10FlyMain:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_2DF7E
+Enemy_Stage10FlyMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DF7E
                 move.w  4(a5),d0
                 lea     off_2DF8A(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -106,7 +106,7 @@ off_2E0AE:      dc.l    off_EB278                       ; DATA XREF: Enemy_Updat
                 dc.l    off_EB2CC
 
 ; Main handler for Stage 10 wasp enemy
-Enemy_Stage10WaspMain:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E0BE
+Enemy_Stage10WaspMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E0BE
                 tst.w   4(a5)
                 beq.s   Enemy_WaspMainLoop
                 tst.w   $24(a5)
@@ -219,7 +219,7 @@ Enemy_Stage10WaspState5:                                ; DATA XREF: ROM:0002E13
                 subq.w  #1,$48(a5)
                 bne.s   locret_2E22A
                 subq.w  #6,4(a5)
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   loc_2E20A
                 move.l  #$FFFE0000,$18(a5)
@@ -266,7 +266,7 @@ locret_2E280:                                           ; CODE XREF: Enemy_Stage
                 rts
 ; End of function Enemy_Stage10WaspDeath
 ; Wasp explosion with gravity and sound
-Enemy_Stage10WaspExplode:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E282
+Enemy_Stage10WaspExplode:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E282
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2E2A8

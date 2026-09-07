@@ -1,5 +1,5 @@
 Boss_SharpssteelSpawnProjectileWave:                    ; CODE XREF: Boss_SharpssteelTimerCountdown+76   p  ; was: sub_48DA0
-                lea     (word_1B514).l,a4
+                lea     (Math_SineTable).l,a4
                 moveq   #0,d5
                 moveq   #0,d6
                 moveq   #$12,d4
@@ -56,7 +56,7 @@ byte_48E34:     dc.b    $D0, 0, $E0, $F8, $F0, $F0, $10, $F0, $20, $F8
                 dc.b    $30, 0, $C0, $24, $D0, $20, $30, $20, $40, $24
 
 ; Handles falling bomb with gravity and explosion
-Enemy_FallingBombLogic:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_48E48
+Enemy_FallingBombLogic:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_48E48
                 tst.w   (word_FF808C).w
                 bpl.w   loc_48EDA
                 addi.l  #$B00,$1C(a5)
@@ -87,7 +87,7 @@ loc_48EAA:                                              ; CODE XREF: Enemy_Falli
                 tst.w   $24(a5)
                 bpl.s   loc_48EEC
 loc_48EB0:                                              ; CODE XREF: Enemy_FallingBombLogic+60   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_48EDA
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -183,7 +183,7 @@ loc_48FF0:                                              ; CODE XREF: Boss_Sharps
                 rts
 ; End of function Boss_SharpssteelSpawnDebris
 ; Creates screen shake and debris during destruction
-Effect_ShipDestructionDebris:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_49000
+Effect_ShipDestructionDebris:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_49000
                 move.w  #4,(word_FFA010).w
                 move.w  #2,(word_FFA014).w
                 addq.w  #1,$48(a5)
@@ -235,7 +235,7 @@ loc_49098:                                              ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelSpawnSixRadialShots
 ; Initializes projectile with position and trajectory
 Projectile_InitSharpssteelShot:                         ; CODE XREF: Boss_SharpssteelSpawnSixRadialShots:loc_49098   p  ; was: sub_490A6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_490FE
                 move.w  #$414,(a0)
                 move.w  #$C480,2(a0)

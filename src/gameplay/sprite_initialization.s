@@ -1,8 +1,9 @@
+; Initializes a newly allocated effect object with randomized position and velocity
 Effect_InitRandomizedObject:
                 bra.w   *+4                             ; was: sub_1B906
 ; ---------------------------------------------------------------------------
-loc_1B90A:                                              ; CODE XREF: Effect_InitRandomizedObject   j
-                bne.w   locret_1B96E
+Effect_InitRandomizedObject_Initialize:                 ; CODE XREF: Effect_InitRandomizedObject   j  ; was: loc_1B90A
+                bne.w   Effect_InitRandomizedObject_Return
                 move.l  d7,$48(a0)
                 move.b  (dword_FFFF08+1).w,d0
                 andi.w  #$1F,d0
@@ -18,17 +19,17 @@ loc_1B90A:                                              ; CODE XREF: Effect_Init
                 move.l  #$FFFFE000,$58(a0)
                 move.b  (dword_FFFF08+2).w,d0
                 andi.w  #$C,d0
-                move.l  dword_1B970(pc,d0.w),$1C(a0)
+                move.l  Effect_RandomVerticalVelocityTable(pc,d0.w),$1C(a0)
                 move.l  #$800,$5C(a0)
                 cmpi.w  #8,d0
-                bmi.w   locret_1B96E
+                bmi.w   Effect_InitRandomizedObject_Return
                 move.l  #$FFFFF800,$5C(a0)
-locret_1B96E:                                           ; CODE XREF: Effect_InitRandomizedObject:loc_1B90A   j
+Effect_InitRandomizedObject_Return:                     ; CODE XREF: Effect_InitRandomizedObject:Effect_InitRandomizedObject_Initialize   j  ; was: locret_1B96E
                                         ; Effect_InitRandomizedObject+5C   j
                 rts
 ; End of function Effect_InitRandomizedObject
 ; ---------------------------------------------------------------------------
-dword_1B970:    dc.l    $FFFE8000, $FFFF8000, $8000, $18000
+Effect_RandomVerticalVelocityTable: dc.l    $FFFE8000, $FFFF8000, $8000, $18000  ; was: dword_1B970
                                         ; DATA XREF: Effect_InitRandomizedObject+4A   r
 
 ; Clears specific flags from object buffer
@@ -37,34 +38,34 @@ Sprite_ClearObjectFlags:                                ; CODE XREF: Boss_Jetsri
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 moveq   #$3C,d7                         ; '<'
                 move.b  #$92,d0
-loc_1B98A:                                              ; CODE XREF: Sprite_ClearObjectFlags+1A   j
+Sprite_ClearObjectFlags_Loop:                           ; CODE XREF: Sprite_ClearObjectFlags+1A   j  ; was: loc_1B98A
                 move.b  $21(a0),d1
                 and.b   d0,d1
-                beq.s   loc_1B996
+                beq.s   Sprite_ClearObjectFlags_Next
                 clr.b   $21(a0)
-loc_1B996:                                              ; CODE XREF: Sprite_ClearObjectFlags+10   j
+Sprite_ClearObjectFlags_Next:                           ; CODE XREF: Sprite_ClearObjectFlags+10   j  ; was: loc_1B996
                 lea     $60(a0),a0
-                dbf     d7,loc_1B98A
+                dbf     d7,Sprite_ClearObjectFlags_Loop
                 rts
 ; End of function Sprite_ClearObjectFlags
-; Initializes sprite from pointer table with offsets
-Sprite_InitFromPointerTable:                            ; CODE XREF: Sprite_InitFromPointerTable+42   j  ; was: sub_1B9A0
+; Initializes a group of objects from a terminated descriptor table
+Object_InitGroupFromTable:                              ; CODE XREF: Object_InitGroupFromTable+42   j  ; was: sub_1B9A0
                                         ; Boss_ShiperSetupState+136   p
                 move.w  (a1)+,d0
                 cmpi.w  #$FFFE,d0
-                bne.s   loc_1B9AA
+                bne.s   Object_InitGroupFromTable_InitializeEntry
                 rts
 ; ---------------------------------------------------------------------------
-loc_1B9AA:                                              ; CODE XREF: Sprite_InitFromPointerTable+6   j
+Object_InitGroupFromTable_InitializeEntry:              ; CODE XREF: Object_InitGroupFromTable+6   j  ; was: loc_1B9AA
                 movea.w d0,a0
                 move.b  (a1)+,$21(a0)
                 clr.b   $23(a0)
                 move.b  (a1)+,d0
                 bclr    #0,d0
-                beq.s   Sprite_SetFlipFlag
+                beq.s   Object_InitGroupFromTable_StoreEntry
                 move.b  #$10,$23(a0)
-; Sets horizontal flip flag in sprite properties byte
-Sprite_SetFlipFlag:                                     ; CODE XREF: Sprite_InitFromPointerTable+1A   j  ; was: loc_1B9C2
+; Stores the decoded descriptor fields for the current object
+Object_InitGroupFromTable_StoreEntry:                   ; CODE XREF: Object_InitGroupFromTable+1A   j  ; was: loc_1B9C2
                 lsr.b   #1,d0
                 move.b  d0,$25(a0)
                 clr.b   $24(a0)
@@ -75,10 +76,10 @@ Sprite_SetFlipFlag:                                     ; CODE XREF: Sprite_Init
                 asl.w   #1,d0
                 move.w  d0,$26(a0)
                 move.b  (a1)+,$23(a0)
-                bra.s   Sprite_InitFromPointerTable
-; End of function Sprite_InitFromPointerTable
+                bra.s   Object_InitGroupFromTable
+; End of function Object_InitGroupFromTable
 ; ---------------------------------------------------------------------------
-word_1B9E4:     dc.w    $C620, $1050, $F010, $F010, 0, 0, $80
+Boss_AntroidObjectInitTable:    dc.w    $C620, $1050, $F010, $F010, 0, 0, $80  ; was: word_1B9E4
                                         ; DATA XREF: Boss_AntroidInitPhase+60   o
                 dc.w    $C680, $5028, $F010, $F010, $F808, $F808, $2A00
                 dc.w    $C6E0, $103C, $F808, $F808, 0, 0, 4
@@ -87,7 +88,7 @@ word_1B9E4:     dc.w    $C620, $1050, $F010, $F010, 0, 0, $80
                 dc.w    $CDA0, $5008, $F808, $F808, $FC04, $FC04, $2A04
                 dc.w    $CE60, $5008, $F808, $F808, $FC04, $FC04, $2A04
                 dc.w    $FFFE
-word_1BA48:     dc.w    $C620, $5014, $E61A, $E61A, $E818, $E818, $5B0D
+Boss_ShellshogunObjectInitTable:    dc.w    $C620, $5014, $E61A, $E61A, $E818, $E818, $5B0D  ; was: word_1BA48
                                         ; DATA XREF: Boss_ShellshogunSetupPhase+128   o
                 dc.w    $C680, $1038, $F00C, $F40C, 0, 0, $80
                 dc.w    $C920, $5020, $F808, $F808, $F808, $F808, $5005
@@ -95,7 +96,7 @@ word_1BA48:     dc.w    $C620, $5014, $E61A, $E61A, $E818, $E818, $5B0D
                 dc.w    $CD40, $5020, $F808, $F808, $F808, $F808, $5005
                 dc.w    $CE00, $1020, $F808, $F808, 0, 0, 5
                 dc.w    $FFFE
-word_1BA9E:     dc.w    $C620, $5008, $C808, $E214, $C808, $E214, $3C00
+Boss_ShiperObjectInitTable: dc.w    $C620, $5008, $C808, $E214, $C808, $E214, $3C00  ; was: word_1BA9E
                                         ; DATA XREF: Boss_ShiperSetupState+130   o
                 dc.w    $C680, $5008, $C000, $D81C, $C000, $D81C, $3C00
                 dc.w    $CB60, $5020, $F40C, $F40C, $FA06, $FA06, $7F05
@@ -103,30 +104,30 @@ word_1BA9E:     dc.w    $C620, $5008, $C808, $E214, $C808, $E214, $3C00
                 dc.w    $C9E0, $1020, $F40C, $F40C, $F60A, $F60A, $7F05
                 dc.w    $CBC0, $1030, $F010, $F808, 0, 0, $80
                 dc.w    $FFFE
-word_1BAF4:     dc.w    $C620, $5024, $E820, $E020, $EC18, $EC18, $A080
+Boss_MadamBarbarObjectInitTable:    dc.w    $C620, $5024, $E820, $E020, $EC18, $EC18, $A080  ; was: word_1BAF4
                                         ; DATA XREF: Boss_MadamBarbarSetup+AA   o
                 dc.w    $C6E0, $1010, $F20E, $F20E, 0, 0, 5
                 dc.w    $C7A0, $5010, $F20E, $F20E, $F40C, $F40C, $4305
                 dc.w    $C920, $1010, $F20E, $F20E, 0, 0, 5
                 dc.w    $C9E0, $5010, $F20E, $F20E, $F40C, $F40C, $4305
                 dc.w    $FFFE
-word_1BB3C:     dc.w    $C620, $5038, $E830, $E020, $E830, $E020, $6E80
+Boss_JokerObjectInitTable:  dc.w    $C620, $5038, $E830, $E020, $E830, $E020, $6E80  ; was: word_1BB3C
                                         ; DATA XREF: Boss_JokerSetup+70   o
                 dc.w    $FFFE
-word_1BB4C:     dc.w    $C620, $5040, $D40C, $B80C, $D40C, $B80C, $3C88
+Boss_TerobusterObjectInitTable: dc.w    $C620, $5040, $D40C, $B80C, $D40C, $B80C, $3C88  ; was: word_1BB4C
                                         ; DATA XREF: Boss_TerobusterSetup+A4   o
                 dc.w    $C6E0, $5008, $F010, $F010, $F808, $F808, $3C00
                 dc.w    $C7A0, $5008, $F010, $F010, $F808, $F808, $3C00
                 dc.w    $C8C0, $5008, $F010, $F010, $F808, $F808, $3C00
                 dc.w    $C980, $5008, $F010, $F010, $F808, $F808, $3C00
                 dc.w    $FFFE
-word_1BB94:     dc.w    $C620, $5038, 0, 0, 0, 0, $4204
+Boss_FlyingNeoObjectInitTable:  dc.w    $C620, $5038, 0, 0, 0, 0, $4204  ; was: word_1BB94
                                         ; DATA XREF: Boss_FlyingNeoSetup+C4   o
                 dc.w    $C9E0, $5050, $F808, $F20E, $F808, $F20E, $4280
                 dc.w    $C800, $5008, $F812, $F808, $F812, $F808, $4204
                 dc.w    $C980, $5008, $F812, $F808, $F812, $F808, $4204
                 dc.w    $FFFE
-word_1BBCE:     dc.w    $C620, $5030, $E826, $E020, $E826, $E020, $6C80
+Boss_XiTigerObjectInitTable:    dc.w    $C620, $5030, $E826, $E020, $E826, $E020, $6C80  ; was: word_1BBCE
                                         ; DATA XREF: Boss_XiTigerSetup+5C   o
                 dc.w    $C6E0, $1018, $F010, $F010, 0, 0, 5
                 dc.w    $C7A0, $1018, $F010, $F010, 0, 0, 5
@@ -139,14 +140,14 @@ word_1BBCE:     dc.w    $C620, $5030, $E826, $E020, $E826, $E020, $6C80
                 dc.w    $CDA0, $5018, $F010, $F010, $F40C, $F40C, $6C04
                 dc.w    $CE60, $1018, $F40C, $F40C, 0, 0, 4
                 dc.w    $FFFE
-word_1BC6A:     dc.w    $C740, $103C, $F010, $F010, $FD0C, $F40C, 0
+Boss_DeepStriderObjectInitTable:    dc.w    $C740, $103C, $F010, $F010, $FD0C, $F40C, 0  ; was: word_1BC6A
                                         ; DATA XREF: Boss_DeepStriderIntroRise+36   o
                 dc.w    $C680, $103C, $F010, $F010, 0, 0, $80
                 dc.w    $C7A0, $103C, $F40C, $F40C, 0, 0, 0
                 dc.w    $C860, $1008, $F808, $F808, 0, 0, 0
                 dc.w    $C8C0, $1008, $FC04, $FC04, 0, 0, 0
                 dc.w    $FFFE
-word_1BCB2:     dc.w    $C620, $1014, $F010, $F010, $F010, $F010, $4700
+Boss_SharpssteelObjectInitTable:    dc.w    $C620, $1014, $F010, $F010, $F010, $F010, $4700  ; was: word_1BCB2
                                         ; DATA XREF: Boss_SharpssteelInit+4A   o
                 dc.w    $C680, $1014, $E41C, $E41C, $F010, $F010, $4700
                 dc.w    $C6E0, $1028, $EC14, $EC14, $F010, $F010, $4780
@@ -162,19 +163,19 @@ word_1BCB2:     dc.w    $C620, $1014, $F010, $F010, $F010, $F010, $4700
                 dc.w    $CC20, 0, $F010, $F010, $F20E, $F20E, 0
                 dc.w    $CC80, 0, $F010, $F010, $F20E, $F20E, 0
                 dc.w    $FFFE
-word_1BD78:     dc.w    $C620, $502C, $E41C, $E41C, $E41C, $E41C, $3280
+Boss_SunsetStingObjectInitTable:    dc.w    $C620, $502C, $E41C, $E41C, $E41C, $E41C, $3280  ; was: word_1BD78
                                         ; DATA XREF: Boss_SunsetStingLoadGraphics+C   o
                 dc.w    $C860, $1004, $F010, $F010, $F808, $F808, $3200
                 dc.w    $CA40, $1004, $F010, $F010, $F808, $F808, $3200
                 dc.w    $CC20, $1004, $F010, $F010, $F808, $F808, $3200
                 dc.w    $D400, $1004, $F010, $F010, $F808, $F808, $3200
                 dc.w    $FFFE
-word_1BDC0:     dc.w    $C6E0, $1020, $F010, $F010, $F808, $F808, $2204
+Boss_BackStringerObjectInitTable:   dc.w    $C6E0, $1020, $F010, $F010, $F808, $F808, $2204  ; was: word_1BDC0
                                         ; DATA XREF: Boss_BackStringerSpawn+68   o
                 dc.w    $C740, $1020, $F010, $F010, $F808, $F808, $2204
                 dc.w    $C7A0, $1038, $EC14, $EC14, $F808, $F808, $2280
                 dc.w    $FFFE
-word_1BDEC:     dc.w    $C620, $5004, $E004, $E040, $E0F8, $E030, $4309
+Boss_WolfGaropaObjectInitTable: dc.w    $C620, $5004, $E004, $E040, $E0F8, $E030, $4309  ; was: word_1BDEC
                                         ; DATA XREF: Boss_WolfGaropaMovement3+106   o
                 dc.w    $C8C0, 4, $F010, $F010, $FC04, $FC04, 9
                 dc.w    $CC80, 4, $F010, $F010, $FC04, $FC04, 9
@@ -185,48 +186,48 @@ word_1BDEC:     dc.w    $C620, $5004, $E004, $E040, $E0F8, $E030, $4309
                 dc.w    $CF80, 8, $F010, $FF24, $F010, $FC04, $2A04
                 dc.w    $CFE0, $1038, $FC2C, $F010, 0, 0, $84
                 dc.w    $FFFE
-word_1BE6C:     dc.w    $C620, $501C, $D010, $F010, $D808, $F808, $6909
+Boss_ValkirieObjectInitTable:   dc.w    $C620, $501C, $D010, $F010, $D808, $F808, $6909  ; was: word_1BE6C
                                         ; DATA XREF: Boss_ValkirieInit+F6   o
                 dc.w    $CB60, $5004, $F010, $F010, $FC04, $FC04, $7D09
                 dc.w    $CCE0, $5004, $F010, $F010, $FC04, $FC04, $7D09
                 dc.w    $CC20, $5004, $E41C, $F010, $F808, $FE02, $7D09
                 dc.w    $CDA0, $5004, $E41C, $F010, $F808, $FE02, $7D09
                 dc.w    $FFFE
-word_1BEB4:     dc.w    $C620, $1018, $CC02, $EC14, 0, 0, $8F
+Boss_ZLeoObjectInitTable:   dc.w    $C620, $1018, $CC02, $EC14, 0, 0, $8F  ; was: word_1BEB4
                                         ; DATA XREF: Boss_ZLeoIntroInit+192   o
                 dc.w    $FFFE
-word_1BEC4:     dc.w    $C620, $5038, $F010, $F010, $EC14, $EC14, $6488
+Boss_ValkirieIntroObjectInitTable:  dc.w    $C620, $5038, $F010, $F010, $EC14, $EC14, $6488  ; was: word_1BEC4
                                         ; DATA XREF: Boss_ValkirieIntroStop+46   o
                 dc.w    $C6E0, $500C, $F010, $F010, $F010, $F010, $6408
                 dc.w    $C7A0, $5000, $F60A, $F60A, $F010, $F010, $6410
                 dc.w    $C980, $5000, $F60A, $F60A, $F010, $F010, $6410
-word_1BEFC:     dc.w    $CBC0, $5004, $F010, $F010, $FA06, $FA06, $640C
+Boss_ValkirieEffectObjectInitTable: dc.w    $CBC0, $5004, $F010, $F010, $FA06, $FA06, $640C  ; was: word_1BEFC
                                         ; DATA XREF: Boss_ValkirieSpawnEffect   o
                 dc.w    $CE00, $5004, $F010, $F010, $FA06, $FA06, $640C
                 dc.w    $FFFE
-word_1BF1A:     dc.w    $C620, $5018, $E020, $E020, $E818, $E41C, $8088
+Boss_MedusaObjectInitTable: dc.w    $C620, $5018, $E020, $E020, $E818, $E41C, $8088  ; was: word_1BF1A
                                         ; DATA XREF: Boss_MedusaMovePattern2+4A   o
                 dc.w    $FFFE
-word_1BF2A:     dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $3888
+Boss_SireneObjectInitTable: dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $3888  ; was: word_1BF2A
                                         ; DATA XREF: Boss_SireneShootPattern1+B4   o
                 dc.w    $C920, $5000, $F010, $F010, $F010, $F010, $3810
                 dc.w    $CCE0, $5000, $F010, $F010, $F010, $F010, $3810
                 dc.w    $FFFE
-byte_1BF56:     dc.b    $D1, 0, $10, $40, $F8, 8, $F8
+Boss_ArtemisAttackObjectInitData:   dc.b    $D1, 0, $10, $40, $F8, 8, $F8  ; was: byte_1BF56
                                         ; DATA XREF: Boss_ArtemisAttackState1+BA   o
                 dc.b    8, 0, 0, 0, 0, 0, $88
-word_1BF64:     dc.w    $C680, $5004, $F010, $F010, $EC14, $EC14, $2908
+Boss_ArtemisProjectileInitTable:    dc.w    $C680, $5004, $F010, $F010, $EC14, $EC14, $2908  ; was: word_1BF64
                                         ; DATA XREF: Projectile_ArtemisInitSprite1   o
                 dc.w    $C6E0, $5004, $F010, $F010, $EC14, $EC14, $2908
                 dc.w    $C7A0, $501C, $F808, $F808, $FA06, $FA06, $2905
                 dc.w    $FFFE
-word_1BF90:     dc.w    $C620, $5044, $EC14, $EC14, $EC14, $EC14, $5B08
+Boss_UnidentifiedSevenForceObjectInitTable: dc.w    $C620, $5044, $EC14, $EC14, $EC14, $EC14, $5B08  ; was: word_1BF90
                                         ; DATA XREF: Boss_Unknown1InitMetasprite+46   o
                 dc.w    $FFFE
-word_1BFA0:     dc.w    $C620, $5044, $EC14, $EC14, $EC14, $EC14, $5B08
+Boss_ValkirieAlternateObjectInitTable:  dc.w    $C620, $5044, $EC14, $EC14, $EC14, $EC14, $5B08  ; was: word_1BFA0
                                         ; DATA XREF: Boss_ValkirieInitAlt+46   o
                 dc.w    $FFFE
-word_1BFB0:     dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $5B88
+Boss_SylpheedObjectInitTable:   dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $5B88  ; was: word_1BFB0
                                         ; DATA XREF: Boss_SylpheedAnimationScript+68   o
                 dc.w    $CB60, $5000, $EC14, $EC14, $FC04, $FC04, $3710
                 dc.w    $CC20, $5000, $EC14, $EC14, $FC04, $FC04, $3710
@@ -240,24 +241,24 @@ word_1BFB0:     dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $5B88
 Sprite_FindFreeEnemySlot:                               ; CODE XREF: Enemy_DestroyOnContact+14   p  ; was: sub_1C014
                 movea.w #(word_FFC680-M68K_RAM),a0
                 moveq   #$F,d7
-loc_1C01A:                                              ; CODE XREF: Sprite_FindFreeEnemySlot+E   j
+Sprite_FindFreeEnemySlot_Loop:                          ; CODE XREF: Sprite_FindFreeEnemySlot+E   j  ; was: loc_1C01A
                 move.w  (a0),d0
-                beq.s   locret_1C026
+                beq.s   Sprite_FindFreeEnemySlot_Return
                 lea     $60(a0),a0
-                dbf     d7,loc_1C01A
-locret_1C026:                                           ; CODE XREF: Sprite_FindFreeEnemySlot+8   j
+                dbf     d7,Sprite_FindFreeEnemySlot_Loop
+Sprite_FindFreeEnemySlot_Return:                        ; CODE XREF: Sprite_FindFreeEnemySlot+8   j  ; was: locret_1C026
                 rts
 ; End of function Sprite_FindFreeEnemySlot
 ; Searches for free sprite slot in effect pool for explosions
 Sprite_FindFreeEffectSlot:                              ; CODE XREF: Enemy_SpawnFallingHazard+2E   p  ; was: sub_1C028
                 movea.w #(word_FFDB20-M68K_RAM),a0
                 moveq   #3,d7
-loc_1C02E:                                              ; CODE XREF: Sprite_FindFreeEffectSlot+E   j
+Sprite_FindFreeEffectSlot_Loop:                         ; CODE XREF: Sprite_FindFreeEffectSlot+E   j  ; was: loc_1C02E
                 move.w  (a0),d0
-                beq.s   locret_1C03A
+                beq.s   Sprite_FindFreeEffectSlot_Return
                 lea     $60(a0),a0
-                dbf     d7,loc_1C02E
-locret_1C03A:                                           ; CODE XREF: Sprite_FindFreeEffectSlot+8   j
+                dbf     d7,Sprite_FindFreeEffectSlot_Loop
+Sprite_FindFreeEffectSlot_Return:                       ; CODE XREF: Sprite_FindFreeEffectSlot+8   j  ; was: locret_1C03A
                 rts
 ; End of function Sprite_FindFreeEffectSlot
 ; Allocates free sprite slot with buffer search
@@ -270,10 +271,9 @@ Sprite_AllocateSlot:                                    ; CODE XREF: Effect_Spaw
 Sys_FindFreeObjectSlot:                                 ; CODE XREF: Effect_FindDashTrailSlot+6   j  ; was: sub_1C042
                                         ; Effect_InitPlayerMotionProjectile+36   p
                 move.w  (a0),d0
-                beq.s   locret_1C04E
+                beq.s   Sys_FindFreeObjectSlot_Return
                 lea     $60(a0),a0
                 dbf     d7,Sys_FindFreeObjectSlot
-locret_1C04E:                                           ; CODE XREF: Sys_FindFreeObjectSlot+2   j
+Sys_FindFreeObjectSlot_Return:                          ; CODE XREF: Sys_FindFreeObjectSlot+2   j  ; was: locret_1C04E
                 rts
 ; End of function Sys_FindFreeObjectSlot
-; Updates projectile trajectory and rotation

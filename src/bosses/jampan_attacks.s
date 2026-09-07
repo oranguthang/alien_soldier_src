@@ -454,7 +454,7 @@ Boss_JampanDefeatSparkFade:                             ; DATA XREF: ROM:0004923
                 bsr.s   Boss_JampanDefeatSparkUpdate
                 move.w  #$218,d0
                 move.w  #$23C,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 jsr     (Effect_InitPlayerSpawn).l
                 move.b  #4,(byte_FFA95A).w
                 addq.w  #2,4(a5)
@@ -511,7 +511,7 @@ Boss_JampanDefeatCleanupInit:                           ; DATA XREF: ROM:0004923
                 addi.w  #$40,d0                         ; '@'
                 move.w  d0,$48(a5)
                 jsr     (Math_CalculateAngleToPlayer).l
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (a1,d2.w),d0
                 move.w  -$80(a1,d2.w),d1
                 ext.l   d0
@@ -565,7 +565,7 @@ locret_4A032:                                           ; CODE XREF: Boss_Jampan
                 rts
 ; End of function Boss_JampanDefeatTimerCheck
 ; Final defeat phase main
-Boss_JampanDefeatFinalMain:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_4A034
+Boss_JampanDefeatFinalMain:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4A034
                 move.w  4(a5),d0
                 lea     off_4A040(pc,d0.w),a0
                 adda.w  (a0),a0

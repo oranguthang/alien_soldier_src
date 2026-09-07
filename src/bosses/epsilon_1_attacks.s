@@ -167,7 +167,7 @@ locret_4634C:                                           ; CODE XREF: Boss_Epsilo
 ; Spawns special entity during attack
 Boss_Epsilon1AttackPhase7SpawnEntity:                   ; DATA XREF: ROM:00045D10   o  ; was: sub_4634E
                 bsr.w   Boss_Epsilon1SpawnProjectileRing
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_46366
                 move.w  #$10,(a0)
                 move.w  a0,(dword_FF941C).w
@@ -178,7 +178,7 @@ locret_46366:                                           ; CODE XREF: Boss_Epsilo
 ; Spawns projectile ring and updates trajectory
 Boss_Epsilon1ProjectileRingAndUpdate:                   ; DATA XREF: ROM:00045D12   o  ; was: sub_46368
                 bsr.w   Boss_Epsilon1SpawnProjectileRing
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_46380
                 move.w  #$10,(a0)
                 move.w  a0,(dword_FF941C+2).w
@@ -361,7 +361,7 @@ locret_4655E:                                           ; CODE XREF: Projectile_
 ; End of function Projectile_Epsilon1Type5Main
 ; Homing projectile initialization
 Projectile_Epsilon1HomingInit:                          ; DATA XREF: ROM:00045D2C   o  ; was: sub_46560
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4658E
                 move.w  #$10,(a0)
                 lea     (dword_FF941C).w,a1
@@ -379,7 +379,7 @@ locret_4658E:                                           ; CODE XREF: Projectile_
 ; End of function Projectile_Epsilon1HomingInit
 ; Homing projectile tracking update
 Projectile_Epsilon1HomingUpdate:                        ; DATA XREF: ROM:00045D2E   o  ; was: sub_46590
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_465DE
                 move.w  $48(a5),d0
                 add.w   d0,d0

@@ -1,4 +1,4 @@
-Boss_MissirayMain:                                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_537B8
+Boss_MissirayMain:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_537B8
                 tst.w   4(a5)
                 beq.w   loc_538AE
                 jsr     (Gfx_InitPaletteFade).l
@@ -117,7 +117,7 @@ Boss_MissirayDispatcher:                                ; DATA XREF: ROM:off_538
                 move.b  #4,(byte_FFA420).w
                 move.w  #$3D0,d0
                 move.w  #$3E0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.b  #2,(byte_FFA95B).w
                 clr.w   (dword_FF9404).w
                 move.w  #$A0,(dword_FF9404+2).w
@@ -529,7 +529,7 @@ Boss_MissirayGraphicsUpdate2:                           ; DATA XREF: ROM:000538D
                 bne.s   locret_53DB6
                 move.w  #$3D0,d0
                 move.w  #$3E0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #4,$4A(a5)
                 addq.w  #2,4(a5)
 locret_53DB6:                                           ; CODE XREF: Boss_MissirayGraphicsUpdate2+E   j

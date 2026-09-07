@@ -78,7 +78,7 @@ loc_227E:                                               ; CODE XREF: Sprite_Cull
                 move.w  a3,-$41FA(a1)
 loc_22BE:                                               ; CODE XREF: Sprite_CullOffscreen+4   j
                                         ; Sprite_CullOffscreen+1E   j
-                bra.w   loc_2068
+                bra.w   Sys_ProcessObjectList_NextObject
 ; End of function Sprite_CullOffscreen
 nullsub_11:                                             ; CODE XREF: Sprite_PrepareOAM+24   j
                                         ; Sprite_PrepareOAM+2A   j

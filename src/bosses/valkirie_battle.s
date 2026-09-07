@@ -1,4 +1,4 @@
-Boss_ValkirieIntroMove:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_5575E
+Boss_ValkirieIntroMove:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5575E
                 tst.w   4(a5)
                 beq.w   loc_557AA
                 tst.w   8(a5)
@@ -67,8 +67,8 @@ Boss_ValkirieIntroStop:                                 ; DATA XREF: Boss_Valkir
                 move.w  #$42C,(a5)
                 move.w  #$CC00,2(a5)
                 clr.w   6(a5)
-                movea.l #word_1BEC4,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_ValkirieIntroObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 bsr.w   Boss_ValkirieMovePattern1
                 movea.w #(word_FFDC40-M68K_RAM),a0
                 move.w  $10(a0),$10(a5)
@@ -158,7 +158,7 @@ loc_55930:                                              ; CODE XREF: Boss_Valkir
 Boss_ValkirieShootPattern1:                             ; DATA XREF: ROM:000557C2   o  ; was: sub_5594E
                 bclr    #0,$23E(a5)
                 beq.s   loc_559AA
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$80,d0
                 bpl.s   loc_55966
                 bra.w   Boss_ValkirieCollisionCheck
@@ -616,8 +616,8 @@ locret_55E7C:                                           ; CODE XREF: Boss_Valkir
 ; Spawns visual effect sprite from pointer table at $1BEFC
 Boss_ValkirieSpawnEffect:                               ; CODE XREF: Boss_ValkirieChargeUpdate+A   p  ; was: sub_55E7E
                                         ; Boss_ValkirieUpdateHealth+68   p
-                lea     (word_1BEFC).l,a1
-                jmp     Sprite_InitFromPointerTable
+                lea     (Boss_ValkirieEffectObjectInitTable).l,a1
+                jmp     Object_InitGroupFromTable
 ; End of function Boss_ValkirieSpawnEffect
 ; Updates multiple Valkirie body parts with animation IDs, velocities, and flags from table
 Boss_ValkirieUpdateParts:                               ; CODE XREF: Boss_ValkirieChargeAttack+BC   p  ; was: sub_55E8A
@@ -794,7 +794,7 @@ Boss_ValkirieSpawnProjectile2:                          ; CODE XREF: Boss_Valkir
 ; Checks player facing direction
 Boss_ValkirieCheckFacing:                               ; CODE XREF: Boss_ValkirieAttackDecision+12   p  ; was: sub_5601A
                                         ; Boss_ValkirieChargeUpdate+58   p
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   $54(a5)
                 beq.s   loc_5602E
                 tst.w   d1
@@ -813,7 +813,7 @@ loc_56032:                                              ; CODE XREF: Boss_Valkir
 ; Sets boss facing direction
 Boss_ValkirieSetFacing:                                 ; CODE XREF: Boss_ValkirieShootPattern1:loc_559AA   p  ; was: sub_56036
                                         ; Boss_ArtemisSpawnProjectile6+6   p
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 clr.w   $54(a5)
                 tst.w   d1
                 bmi.s   locret_5604A

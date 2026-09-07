@@ -1,4 +1,4 @@
-Entity_EmptyState3:                                     ; DATA XREF: ROM:off_5DC   o  ; was: nullsub_3
+Entity_EmptyState3:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_3
                 rts
 ; End of function Entity_EmptyState3
 ; ---------------------------------------------------------------------------

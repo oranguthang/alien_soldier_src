@@ -350,7 +350,7 @@ Boss_DestroyerMK2BerserkJump:                           ; DATA XREF: ROM:0004A93
                 bsr.s   Boss_DestroyerMK2BerserkAttack2
                 move.w  #$240,d0
                 move.w  #$3DC,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.b  #4,(byte_FFA95A).w
                 addq.w  #2,4(a5)
                 rts
@@ -425,7 +425,7 @@ loc_4B48A:                                              ; CODE XREF: Boss_Destro
                 rts
 ; End of function Boss_DestroyerMK2PlayFootstep
 ; Main state dispatcher for boss component
-Boss_DestroyerMK2ComponentStateDispatch:                ; DATA XREF: ROM:off_5DC   o  ; was: sub_4B490
+Boss_DestroyerMK2ComponentStateDispatch:                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4B490
                 move.w  4(a5),d0
                 lea     off_4B49C(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -509,7 +509,7 @@ Boss_DestroyerMK2ComponentSpawnProjectile:              ; DATA XREF: ROM:0004B4A
                 subq.w  #1,$48(a5)
                 bpl.w   locret_4B5DC
                 addq.w  #2,4(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_4B5DC
                 move.w  #$248,(a0)
                 move.b  #$40,$21(a0)                    ; '@'

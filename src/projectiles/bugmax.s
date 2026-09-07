@@ -1,4 +1,4 @@
-Enemy_BugmaxDebrisFall:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_4D3C4
+Enemy_BugmaxDebrisFall:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D3C4
                 addi.l  #$1000,$1C(a5)
                 tst.w   $5C(a5)
                 beq.s   loc_4D3D4
@@ -11,7 +11,7 @@ loc_4D3D4:                                              ; CODE XREF: Boss_Bugmax
                 add.w   (word_FFA000).w,d7
                 andi.w  #7,d7
                 bne.s   locret_4D43A
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4D43A
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
@@ -37,7 +37,7 @@ locret_4D43A:                                           ; CODE XREF: Enemy_Bugma
 word_4D43C:     dc.w    $BB, $BC, $BB, $C1              ; DATA XREF: Enemy_BugmaxDebrisFall+68   r
 
 ; Bugmax debris handler
-Enemy_BugmaxDebrisMain:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_4D444
+Enemy_BugmaxDebrisMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D444
                 addi.l  #$2000,$1C(a5)
                 bsr.w   Boss_BugmaxAnimateFlip
                 move.w  4(a5),d0
@@ -176,7 +176,7 @@ Projectile_InitBugmaxSpread:                            ; CODE XREF: Boss_Bugmax
                 rts
 ; End of function Projectile_InitBugmaxSpread
 ; Main controller with screen shake and state machine
-Projectile_BugmaxMainController:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_4D5C8
+Projectile_BugmaxMainController:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D5C8
                 tst.l   $1C(a5)
                 beq.s   loc_4D5F2
                 move.w  (word_FFA000).w,d0
@@ -217,7 +217,7 @@ Projectile_BugmaxFlyingPhase:                           ; DATA XREF: ROM:off_4D5
                 clr.w   $5C(a5)
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4D690
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
@@ -318,7 +318,7 @@ Projectile_InitBugmaxSine:                              ; CODE XREF: Boss_Bugmax
                 addi.w  #$40,(dword_FF9428).w           ; '@'
                 move.w  (dword_FF9428).w,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  (a2,d0.w),d0
                 ext.l   d0
                 asl.l   #1,d0
@@ -329,7 +329,7 @@ Projectile_InitBugmaxSine:                              ; CODE XREF: Boss_Bugmax
                 rts
 ; End of function Projectile_InitBugmaxSine
 ; Main controller with collision and bounce physics
-Projectile_BugmaxSineController:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_4D79C
+Projectile_BugmaxSineController:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D79C
                 addi.l  #$2000,$1C(a5)
                 tst.w   (dword_FF9428+2).w
                 bne.w   loc_4D82E
@@ -479,7 +479,7 @@ loc_4D92E:                                              ; CODE XREF: Boss_Bugmax
 loc_4D948:                                              ; CODE XREF: Boss_BugmaxSpawnProjectile+28   j
                                         ; Boss_BugmaxSpawnProjectile+32   j
                 lea     (word_FFCF80).w,a0
-                jsr     (loc_1C0A4).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckExtendedRange).l
                 bne.w   locret_4DA18
                 move.w  #$338,(a0)
                 move.w  (dword_FFC630).w,$10(a0)

@@ -17,7 +17,7 @@ loc_470D4:                                              ; CODE XREF: Projectile_
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$FC04FC04,$2C(a0)
                 move.w  #2,$48(a0)
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $58(a0),d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a2,d0.w),d1
@@ -37,7 +37,7 @@ loc_470D4:                                              ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_Epsilon1SpreadExpanding
 ; Defeat debris projectiles
-Projectile_Epsilon1DefeatDebris:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_47146
+Projectile_Epsilon1DefeatDebris:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_47146
                 bsr.w   Boss_Epsilon1CheckVulnerable
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
@@ -74,7 +74,7 @@ locret_471A8:                                           ; CODE XREF: Projectile_
 ; End of function Projectile_Epsilon1SpreadDelayTimer
 ; Spawns spread projectile with position offset
 Projectile_Epsilon1SpreadSpawn:                         ; DATA XREF: ROM:0004719A   o  ; was: sub_471AA
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4721E
                 move.w  #1,$5E(a0)
                 move.w  #$27C,(a0)
@@ -170,7 +170,7 @@ locret_472BE:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_Epsilon1CheckFlag
 ; Projectile main handler
-Projectile_Epsilon1IntroMain:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_472C0
+Projectile_Epsilon1IntroMain:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_472C0
                 bsr.w   Boss_Epsilon1CheckVulnerable
                 move.w  4(a5),d0
                 lea     off_472D0(pc,d0.w),a0
@@ -207,7 +207,7 @@ Projectile_Epsilon1SpawnPattern:                        ; DATA XREF: ROM:000472D
                 move.w  #$60,d6                         ; '`'
                 clr.w   d5
 loc_4730C:                                              ; CODE XREF: Projectile_Epsilon1SpawnPattern+34   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_4732E
                 bsr.s   Projectile_Epsilon1InitProperties
                 move.w  $10(a5),$10(a0)
@@ -245,7 +245,7 @@ locret_47380:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_Epsilon1Cleanup
 ; Projectile state handler
-Projectile_Epsilon1StateHandler:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_47382
+Projectile_Epsilon1StateHandler:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_47382
                 cmpi.w  #$150,$14(a5)
                 bgt.w   Projectile_Epsilon1OffscreenHandler
                 move.w  4(a5),d0
@@ -327,7 +327,7 @@ locret_47484:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_Epsilon1OffscreenHandler
 ; Chain projectile initialization
-Projectile_Epsilon1ChainInit:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_47486
+Projectile_Epsilon1ChainInit:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_47486
                 btst    #0,(word_FFC66C).w
                 bne.s   loc_4749C
                 btst    #2,(word_FFC66C).w
@@ -410,7 +410,7 @@ loc_4753E:                                              ; CODE XREF: Projectile_
                 move.w  #2,$48(a5)
                 addq.w  #2,4(a5)
                 bsr.w   Projectile_Epsilon1RingExpand
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_475C2
                 jsr     (Sprite_InitType160).l
                 move.l  #off_E95C0,8(a0)
@@ -418,7 +418,7 @@ loc_4753E:                                              ; CODE XREF: Projectile_
                 move.w  $10(a5),$10(a0)
                 addi.w  #8,$10(a0)
                 move.w  $14(a5),$14(a0)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_475C2
                 jsr     (Sprite_InitType160).l
                 move.l  #off_E95C0,8(a0)
@@ -547,7 +547,7 @@ loc_47710:                                              ; CODE XREF: Effect_Epsi
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 bne.s   locret_47752
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_47752
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)

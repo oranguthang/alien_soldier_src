@@ -122,7 +122,7 @@ Boss_Epsilon1DefeatExplosion3:                          ; DATA XREF: ROM:00045D5
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 bne.s   locret_46962
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_46962
                 jsr     (Projectile_InitType88).l
                 move.l  #off_E953C,8(a0)
@@ -273,7 +273,7 @@ Boss_Epsilon1DamageFlash:                               ; DATA XREF: ROM:00045D6
                 bmi.s   locret_46AF0
                 move.w  #$264,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 addq.w  #2,4(a5)
 locret_46AF0:                                           ; CODE XREF: Boss_Epsilon1DamageFlash+6   j
                 rts
@@ -512,7 +512,7 @@ locret_46D02:                                           ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1PartDeathFall
 ; Part explosion effect
 Boss_Epsilon1PartDeathExplode:                          ; DATA XREF: ROM:00046C8A   o  ; was: sub_46D04
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_46D5A
                 move.l  #off_E95DC,8(a0)
                 jsr     (Projectile_InitType88).l

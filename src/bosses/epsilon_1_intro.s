@@ -1,4 +1,4 @@
-Boss_Epsilon1IntroMain:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_46D68
+Boss_Epsilon1IntroMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_46D68
                 btst    #0,(word_FFC66C).w
                 bne.s   loc_46D78
                 btst    #2,(word_FFC66C).w
@@ -111,8 +111,8 @@ loc_46E6C:                                              ; CODE XREF: Physics_Cal
                 andi.w  #$1FF,$4E(a5)
                 move.w  $4E(a5),d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a2
-                move.w  word_1B494-word_1B514(a2,d0.w),d1
+                lea     (Math_SineTable).l,a2
+                move.w  Math_QuarterSineTable-Math_SineTable(a2,d0.w),d1
                 move.w  (a2,d0.w),d0
                 ext.l   d0
                 ext.l   d1
@@ -127,7 +127,7 @@ Boss_Epsilon1MinibossSpawnProjectile:                   ; DATA XREF: ROM:00046DB
                 eori.w  #$8000,2(a5)
                 subq.w  #1,$48(a5)
                 bpl.w   locret_46F1C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_46F1C
                 move.w  a0,(dword_FF9420).w
                 move.w  #$10,(a0)
@@ -249,7 +249,7 @@ locret_46FDE:                                           ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1ShuffleArray
 ; Spawns projectile and calculates position
 Boss_Epsilon1SpawnProjectile:                           ; DATA XREF: ROM:00046F74   o  ; was: sub_46FE0
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_472A8
                 move.w  #$10,(a0)
                 move.w  a0,$4C(a5)

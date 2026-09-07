@@ -1,4 +1,4 @@
-Entity_SevenForcesMain:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_54B84
+Entity_SevenForcesMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_54B84
                 move.w  4(a5),d0
                 beq.w   nullsub_126
                 movea.w off_54B98(pc,d0.w),a0
@@ -244,7 +244,7 @@ loc_54E4A:                                              ; CODE XREF: Debug_Seven
                 move.w  #$20,d0                         ; ' '
                 move.w  #$8F02,d3
                 move.l  #$94009320,d4
-                jsr     (loc_1B78C).l
+                jsr     (VDP_QueueCommand_Build).l
                 move.w  #0,(word_FFE318).w
                 btst    #0,(word_FFA000+1).w
                 bne.s   loc_54EF2

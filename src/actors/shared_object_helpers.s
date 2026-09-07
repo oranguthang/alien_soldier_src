@@ -1,5 +1,5 @@
 ; Shared object, projectile, animation, and effect helpers
-Object_UpdateVisibilityLifetime:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A30E
+Object_UpdateVisibilityLifetime:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A30E
                 cmpi.w  #$80,$C(a5)
                 bmi.s   Object_UpdateVisibilityLifetime_Countdown
                 bset    #4,2(a5)
@@ -59,7 +59,7 @@ Projectile_UpdateWithImpactFrames_PlaySound:            ; CODE XREF: Projectile_
                 jsr     (Sound_PlaySFX).l
 Projectile_UpdateWithImpactFrames_Update:               ; CODE XREF: Projectile_UpdateAfterGlobalDelay+4   j  ; was: loc_2A3C0
                                         ; Projectile_UpdateWithImpactFrames+10   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Projectile_UpdateWithImpactFrames_Return
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 move.w  (dword_FFFF08).w,d6
@@ -111,11 +111,11 @@ Boss_CaterpillarSpawnExplosion:                         ; CODE XREF: Boss_Caterp
 ; Spawns 4 projectiles in different directions using sine/cosine table
 Projectile_SpawnFourDirectional:
                 movea.w a0,a3                           ; was: sub_2A44E
-                movea.l #word_1B514,a4
+                movea.l #Math_SineTable,a4
                 move.w  #$150,d6
                 moveq   #3,d7
 Projectile_SpawnFourDirectional_Loop:                   ; CODE XREF: Projectile_SpawnFourDirectional+4A   j  ; was: loc_2A45C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Projectile_SpawnFourDirectional_Return
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 bsr.w   Sprite_InitType58FromTable
@@ -155,7 +155,7 @@ Effect_SetScreenShake:
                 rts
 ; End of function Effect_SetScreenShake
 ; Spawns particle effects at intervals with random position offsets
-Effect_SpawnParticleLoop:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A4EE
+Effect_SpawnParticleLoop:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A4EE
                 subq.w  #1,$48(a5)
                 bpl.s   Effect_SpawnParticleLoop_Return
                 move.w  #2,$48(a5)
@@ -163,7 +163,7 @@ Effect_SpawnParticleLoop:                               ; DATA XREF: ROM:off_5DC
                 bpl.s   Effect_SpawnParticleLoop_Spawn
                 bset    #4,2(a5)
 Effect_SpawnParticleLoop_Spawn:                         ; CODE XREF: Effect_SpawnParticleLoop+10   j  ; was: loc_2A506
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Effect_SpawnParticleLoop_Return
                 movea.l #Effect_ParticleLoopSpriteFrames,a1
                 bsr.w   Sprite_InitTypeA4FromTable
@@ -201,12 +201,12 @@ Effect_InitLargeExplosion:
                 jmp     (Sound_PlaySFX).l
 ; End of function Effect_InitLargeExplosion
 ; Falling projectile that spawns child projectiles periodically
-Projectile_FallingSpawner:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A578
+Projectile_FallingSpawner:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A578
                 addi.l  #$3000,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   Projectile_FallingSpawner_Return
                 move.w  #2,$48(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Projectile_FallingSpawner_Return
                 move.l  #off_E95C0,8(a0)
                 move.w  $10(a5),$10(a0)
@@ -231,7 +231,7 @@ Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_Spawn
                 moveq   #3,d7
 ; Updates quad projectile spawn with trajectory calculation
 Projectile_UpdateQuadSpawn:                             ; CODE XREF: Enemy_SpawnQuadProjectiles+48   j  ; was: loc_2A5D6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Enemy_SpawnQuadProjectiles_Return
                 move.l  #off_E95A4,8(a0)
                 move.w  $10(a5),$10(a0)
@@ -319,7 +319,7 @@ Sprite_InitTypeA4FromTable:                             ; CODE XREF: Effect_Upda
                 rts
 ; End of function Sprite_InitTypeA4FromTable
 ; Updates animation frame and swaps palette based on frame counter
-Anim_UpdateWithPaletteSwap:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A692
+Anim_UpdateWithPaletteSwap:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A692
                 bsr.w   Anim_UpdateSpriteFrame
                 andi.w  #$9FFF,$E(a5)
                 btst    #1,(word_FFA000+1).w
@@ -332,7 +332,7 @@ Anim_UpdateWithPaletteSwap_UseAlternatePalette:         ; CODE XREF: Anim_Update
                 rts
 ; End of function Anim_UpdateWithPaletteSwap
 ; Updates animation and applies the global stage attribute bits
-Anim_UpdateWithGlobalAttributes:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A6B4
+Anim_UpdateWithGlobalAttributes:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A6B4
                 bsr.w   Anim_UpdateSpriteFrame
                 andi.w  #$E7FF,$E(a5)
                 move.w  (word_FF8092).w,d0
@@ -340,11 +340,11 @@ Anim_UpdateWithGlobalAttributes:                        ; DATA XREF: ROM:off_5DC
                 rts
 ; End of function Anim_UpdateWithGlobalAttributes
 ; Applies a net upward acceleration through the following shared entry point
-Physics_AccelerateUpward:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A6C8
+Physics_AccelerateUpward:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A6C8
                 subi.l  #$10000,$1C(a5)
 ; End of function Physics_AccelerateUpward
 ; Applies downward acceleration to the current object
-Physics_AccelerateDownward:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A6D0
+Physics_AccelerateDownward:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A6D0
                 addi.l  #$8000,$1C(a5)
 ; End of function Physics_AccelerateDownward
 ; Updates sprite animation frame timer and data
@@ -370,7 +370,7 @@ Anim_HideOnScriptEnd:                                   ; CODE XREF: Anim_Update
                 rts
 ; End of function Anim_UpdateSpriteFrame
 ; Reads a frame script and invokes its stored callback at the end marker
-Anim_RunCallbackScript:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A70A
+Anim_RunCallbackScript:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A70A
                 movea.l $54(a5),a0
                 tst.w   (a0)+
                 bmi.s   Anim_RunCallbackScript_InvokeCallback
@@ -487,10 +487,10 @@ Sprite_InitializeEffectGraphics:                        ; CODE XREF: Projectile_
                 rts
 ; End of function Sprite_InitType160
 ; Applies gravity to vertical velocity
-Physics_ApplyGravity:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A7DE
+Physics_ApplyGravity:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A7DE
                 addi.l  #$2000,$1C(a5)
 ; Checks if sprite has exceeded height boundary and sets inactive
-Physics_CheckHeightBoundary:                            ; DATA XREF: ROM:off_5DC   o  ; was: loc_2A7E6
+Physics_CheckHeightBoundary:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: loc_2A7E6
                 cmpi.w  #$80,$C(a5)
                 bmi.s   Physics_ApplyGravity_Return
                 move.w  #$1000,2(a5)
@@ -498,7 +498,7 @@ Physics_ApplyGravity_Return:                            ; CODE XREF: Physics_App
                 rts
 ; End of function Physics_ApplyGravity
 ; Hides enemy after delay timer
-Enemy_DelayedHide:                                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A7F6
+Enemy_DelayedHide:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A7F6
                 subq.w  #1,$48(a5)
                 bpl.s   Enemy_DelayedHide_Return
                 move.w  #$1000,2(a5)
@@ -506,10 +506,10 @@ Enemy_DelayedHide_Return:                               ; CODE XREF: Enemy_Delay
                 rts
 ; End of function Enemy_DelayedHide
 ; Projectile with gravity physics
-Projectile_FallWithGravity:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A804
+Projectile_FallWithGravity:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A804
                 addi.l  #$3000,$1C(a5)
 ; Updates projectile trajectory with gravity applied
-Projectile_FallWithGravity_Update:                      ; DATA XREF: ROM:off_5DC   o  ; was: loc_2A80C
+Projectile_FallWithGravity_Update:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: loc_2A80C
                 bsr.w   Projectile_ApplyGlobalAttributes
                 bsr.w   Projectile_UpdatePriorityBySlot
                 cmpi.w  #$80,$C(a5)
@@ -569,7 +569,7 @@ Effect_InitDebrisSprite:                                ; CODE XREF: Boss_JokerS
                 rts
 ; End of function Effect_InitDebrisSprite
 ; Falling debris projectile with gravity acceleration
-Projectile_FallingDebris:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A8A2
+Projectile_FallingDebris:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A8A2
                 addi.l  #$4000,$1C(a5)
                 cmpi.w  #$80,$C(a5)
                 bmi.s   Projectile_FallingDebris_Return
@@ -578,7 +578,7 @@ Projectile_FallingDebris_Return:                        ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_FallingDebris
 ; Clears inactive object types 12C and 134 from the shared pool
-Object_ClearInactiveTypes12CAnd134:                     ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A8BA
+Object_ClearInactiveTypes12CAnd134:                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A8BA
                 bset    #4,2(a5)
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #$12C,d0
@@ -600,7 +600,7 @@ Object_ClearInactiveTypes12CAnd134_NextObject:          ; CODE XREF: Object_Clea
                 rts
 ; End of function Object_ClearInactiveTypes12CAnd134
 ; Initializes enemy sprite graphics mode and animation pointer
-Enemy_InitSpriteGraphics:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A8EE
+Enemy_InitSpriteGraphics:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A8EE
                 tst.w   4(a5)
                 bne.w   Enemy_InitSpriteGraphics_Return
                 addq.w  #2,4(a5)
@@ -629,7 +629,7 @@ Enemy_SpriteAttributesTable:    dc.l    $2DF6000        ; DATA XREF: Enemy_InitS
                 dc.l    $2DF6000
 
 ; Loads object graphics attributes and stamps its pattern into the terrain map
-Terrain_StampObjectPattern:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A94C
+Terrain_StampObjectPattern:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A94C
                 tst.w   4(a5)
                 bne.w   Terrain_StampObjectPattern_Return
                 move.w  $5E(a5),d0

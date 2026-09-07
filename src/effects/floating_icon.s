@@ -13,7 +13,7 @@ Effect_FloatingIconSpriteData:  dc.b    $83, 0, 1, 0, $F8, $FC  ; was: byte_21F4
                                         ; DATA XREF: Effect_InitFloatingIcon+E   o
 
 ; Dispatcher for floating icon animation states
-Effect_FloatingIconDispatcher:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_21F50
+Effect_FloatingIconDispatcher:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_21F50
                 move.w  4(a5),d0
                 lea     Effect_FloatingIconStateOffsets(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -35,8 +35,8 @@ Effect_FloatingIconInit:                                ; DATA XREF: ROM:Effect_
                 move.w  #8,$4A(a5)
                 move.w  $4C(a5),d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a4
-                move.w  word_1B494-word_1B514(a4,d0.w),d1
+                lea     (Math_SineTable).l,a4
+                move.w  Math_QuarterSineTable-Math_SineTable(a4,d0.w),d1
                 move.w  (a4,d0.w),d0
                 ext.l   d0
                 ext.l   d1
@@ -79,8 +79,8 @@ Effect_CalculateFloatingIconPosition:                   ; CODE XREF: Effect_Floa
                                         ; Effect_FloatingIconReturn+16   p
                 move.w  $4C(a5),d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a4
-                move.w  word_1B494-word_1B514(a4,d0.w),d1
+                lea     (Math_SineTable).l,a4
+                move.w  Math_QuarterSineTable-Math_SineTable(a4,d0.w),d1
                 move.w  (a4,d0.w),d0
                 muls.w  $4E(a5),d0
                 muls.w  $4E(a5),d1

@@ -136,7 +136,7 @@ Cutscene_SegaScreenFadeOut:                             ; DATA XREF: ROM:00007C4
                 bne.w   locret_514E
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.l  #dword_11326,(dword_FFA940).w
                 move.w  #$800,(word_FFA946).w
                 move.w  #0,(word_FFA948).w

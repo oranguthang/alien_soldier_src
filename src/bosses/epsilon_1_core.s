@@ -1,9 +1,9 @@
-Boss_Epsilon1Main:                                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_45AD0
+Boss_Epsilon1Main:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45AD0
                 cmpi.w  #6,4(a5)
                 bls.w   loc_45CD4
                 btst    #6,(byte_FF8244).w
                 bne.s   loc_45AEE
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$C,d0
                 bhi.s   loc_45B14
 loc_45AEE:                                              ; CODE XREF: Boss_Epsilon1Main+10   j
@@ -38,7 +38,7 @@ loc_45B30:                                              ; CODE XREF: Boss_Epsilo
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$4E(a5)
                 move.w  (dword_FF9414).w,d0
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 andi.w  #$1FE,d0
                 move.w  -$80(a2,d0.w),d0
                 ext.l   d0
@@ -76,8 +76,8 @@ loc_45BC4:                                              ; CODE XREF: Boss_Epsilo
                 move.w  d2,$10(a5)
                 move.w  d3,$14(a5)
                 move.w  $56(a5),d0
-                lea     (word_1B514).l,a2
-                move.w  word_1B494-word_1B514(a2,d0.w),d1
+                lea     (Math_SineTable).l,a2
+                move.w  Math_QuarterSineTable-Math_SineTable(a2,d0.w),d1
                 muls.w  $54(a5),d1
                 swap    d1
                 move.w  (word_FFC6CC).w,d0
@@ -117,7 +117,7 @@ loc_45C42:                                              ; CODE XREF: Boss_Epsilo
                 move.w  #$4E,4(a5)                      ; 'N'
 loc_45C5E:                                              ; CODE XREF: Boss_Epsilon1Main+C6   j
                                         ; Boss_Epsilon1Main+F0   j
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  (dword_FF940C).w,d2
                 move.w  (dword_FF940C+2).w,d3
                 movea.w #(word_FFC6E0-M68K_RAM),a1
@@ -285,7 +285,7 @@ loc_45E04:                                              ; CODE XREF: Boss_Epsilo
                 move.b  #4,(byte_FFA420).w
                 move.w  #$264,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$120,$10(a5)
                 move.w  #$F0,$14(a5)
                 move.w  $10(a5),(dword_FF940C).w

@@ -34,10 +34,10 @@ loc_2F1D8:                                              ; CODE XREF: Boss_XiTige
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 move.w  d0,$56(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_2F2A0
                 bsr.w   nullsub_69
-                lea     (word_1B514).l,a4
+                lea     (Math_SineTable).l,a4
                 move.w  $52(a5),d0
                 andi.w  #$1FE,d0
                 move.w  (a4,d0.w),d2

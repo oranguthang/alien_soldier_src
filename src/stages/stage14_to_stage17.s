@@ -69,7 +69,7 @@ Stage_SunsetStingTransition:                            ; DATA XREF: ROM:0000D9A
                 move.w  #$660,(word_FFA974).w
                 moveq   #0,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 lea     (stru_114B4).l,a1
                 bra.w   Gfx_UpdateBossPalette
 ; End of function Stage_SunsetStingTransition

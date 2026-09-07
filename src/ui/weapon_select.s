@@ -2,7 +2,7 @@ UI_InitializeWeaponSelect:                              ; DATA XREF: Sys_Dispatc
                 tst.w   (GameSubstateIndex).w
                 bne.s   UI_WeaponSelectTransition
                 jsr     (Sys_InitGameMode).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 bra.w   Input_CheckButtonModeAndBranch
 ; End of function UI_InitializeWeaponSelect
 ; Prepares weapon select graphics

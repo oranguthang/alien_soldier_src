@@ -1,4 +1,4 @@
-Segment_MissirayPartMain:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_54458
+Segment_MissirayPartMain:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_54458
                 move.b  $50(a5),d0
                 andi.w  #3,d0
                 add.w   d0,d0
@@ -170,8 +170,8 @@ Segment_MissirayCalculateAngle:                         ; CODE XREF: Segment_Mis
                                         ; Segment_MissirayType1Rotate1+A   p
                 move.w  $48(a5),d1
                 andi.w  #$1FE,d1
-                lea     (word_1B514).l,a3
-                move.w  word_1B494-word_1B514(a3,d1.w),d1
+                lea     (Math_SineTable).l,a3
+                move.w  Math_QuarterSineTable-Math_SineTable(a3,d1.w),d1
                 muls.w  d0,d1
                 swap    d1
                 move.w  d1,$4C(a5)
@@ -242,7 +242,7 @@ loc_5469E:                                              ; CODE XREF: Segment_Mis
 ; End of function Segment_MissirayType2Rise
 ; Segment type 2 spawn debris
 Segment_MissirayType2SpawnDebris:                       ; CODE XREF: Segment_MissirayType2Rise+16   p  ; was: sub_546A6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_546DC
                 jsr     (RandomNumber).l
                 jsr     (Sprite_InitType160).l
@@ -293,7 +293,7 @@ Boss_MissirayCheckPlayerProximity:                      ; CODE XREF: Boss_Missir
                 bne.w   locret_547D6
                 tst.w   (dword_FF940C).w
                 bmi.s   loc_5475A
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 move.w  #$20,d1                         ; ' '
                 tst.w   (word_FFFF0E).w
                 beq.s   loc_5474E
@@ -355,7 +355,7 @@ locret_547D6:                                           ; CODE XREF: Boss_Missir
 Boss_MissiraySpawnMissile:                              ; CODE XREF: Boss_MissirayCheckPlayerProximity:loc_5479C   p  ; was: sub_547D8
                                         ; sub_5472E:loc_547D0   p
                                         ; DATA XREF:
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_54830
                 move.w  #$404,(a0)
                 move.w  #$EC00,2(a0)
@@ -378,7 +378,7 @@ locret_54830:                                           ; CODE XREF: Boss_Missir
                 rts
 ; End of function Boss_MissiraySpawnMissile
 ; Missile projectile main
-Projectile_MissirayMissileMain:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_54832
+Projectile_MissirayMissileMain:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_54832
                 move.w  4(a5),d0
                 lea     off_5483E(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -400,7 +400,7 @@ Projectile_MissirayMissileTrack:                        ; DATA XREF: ROM:off_548
                 subq.w  #1,$46(a5)
                 bne.s   locret_548E2
                 move.w  #$1000,2(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_548E2
                 move.w  #$404,(a0)
                 move.w  #$8E00,2(a0)

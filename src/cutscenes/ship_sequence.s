@@ -1,4 +1,4 @@
-Cutscene_ShipObjectDispatcher:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_86F0
+Cutscene_ShipObjectDispatcher:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_86F0
                 cmpi.w  #$16,(word_FF0132).l
                 bcc.s   loc_86FC
                 bsr.s   Cutscene_UpdateShipPaletteAlt
@@ -66,7 +66,7 @@ Cutscene_ShipAnimationLoop:                             ; DATA XREF: ROM:0000870
                 bclr    #0,(byte_FFA958).w
                 moveq   #0,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
 locret_87EE:                                            ; CODE XREF: Cutscene_ShipAnimationLoop+1A   j
                 rts
@@ -400,7 +400,7 @@ nullsub_20:                                             ; DATA XREF: ROM:0000882
 
 ; Spawns star particles with random trajectory calculations
 Effect_SpawnStarParticle:                               ; CODE XREF: Cutscene_ShipInitScene+6C   p  ; was: sub_8C42
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_514E
                 lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
@@ -747,7 +747,7 @@ word_917A:      dc.w    $480, $FC0, 0, $120, $488, $F60, 4, $110
                 dc.w    $548, $C0, $1C, $128, 0
 
 ; Updates ship debris sprite countdown and transitions state
-Sprite_ShipDebrisUpdate:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_9274
+Sprite_ShipDebrisUpdate:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_9274
                 subq.w  #1,$40(a5)
                 beq.s   loc_928C
                 cmpi.w  #$60,$14(a5)                    ; '`'
@@ -765,7 +765,7 @@ loc_928C:                                               ; CODE XREF: Sprite_Ship
                 rts
 ; End of function Sprite_ShipDebrisUpdate
 ; Dispatches debris sprite update to appropriate handler
-Sprite_DebrisDispatcher:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_92AE
+Sprite_DebrisDispatcher:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_92AE
                 move.w  4(a5),d0
                 lea     off_92BA(pc,d0.w),a0
                 adda.w  (a0),a0

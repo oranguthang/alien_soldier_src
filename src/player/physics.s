@@ -1,4 +1,4 @@
-Physics_ApplyFriction:                                  ; CODE XREF: Sys_GameplayMainLoop:loc_1C6F0   p  ; was: sub_13278
+Physics_ApplyFriction:                                  ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdatePhysics   p  ; was: sub_13278
                                         ; sub_1E8F6   p
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1

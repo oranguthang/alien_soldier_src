@@ -158,7 +158,7 @@ loc_4A1DC:                                              ; CODE XREF: Boss_Jampan
                 rts
 ; End of function Boss_JampanDefeatDebris
 ; Main AI for Jampan shield entity
-Enemy_JampanShieldMain:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_4A1E4
+Enemy_JampanShieldMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4A1E4
                 cmpi.w  #$52,(word_FFC624).w            ; 'R'
                 bcc.w   loc_4A2F0
                 cmpi.w  #$180,$14(a5)
@@ -234,7 +234,7 @@ locret_4A2B0:                                           ; CODE XREF: Enemy_Jampa
 Enemy_JampanShieldFire:                                 ; DATA XREF: ROM:0004A21E   o  ; was: sub_4A2B2
                 subq.w  #1,$48(a5)
                 bne.s   locret_4A2EE
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_4A2E8
                 move.l  #off_E95A4,8(a0)
                 move.l  $10(a5),$10(a0)
@@ -258,7 +258,7 @@ nullsub_102:                                            ; DATA XREF: ROM:0004A22
 ; End of function nullsub_102
 
 ; Shadow effect main handler
-Boss_JampanShadowMain:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_4A300
+Boss_JampanShadowMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4A300
                 bsr.s   Boss_JampanShadowDispatcher
                 tst.w   $54(a5)
                 beq.s   locret_4A314
@@ -312,11 +312,11 @@ nullsub_103:                                            ; DATA XREF: ROM:0004A32
 ; End of function nullsub_103
 
 ; Updates boss position
-Boss_JampanUpdatePosition:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_4A368
+Boss_JampanUpdatePosition:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4A368
                 bsr.s   Boss_JampanUpdateAnimation
                 movea.w $50(a5),a1
                 move.b  $20(a1),$20(a5)
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $4A(a5),d2
                 move.w  $48(a5),d3
                 move.w  (a2,d2.w),d0
@@ -399,7 +399,7 @@ locret_4A430:                                           ; CODE XREF: Boss_Jampan
                 rts
 ; End of function Boss_JampanAimTracking
 ; Teleport fade out
-Boss_JampanTeleportFadeOut:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_4A432
+Boss_JampanTeleportFadeOut:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4A432
                 bsr.s   Boss_JampanTeleportMove
                 movea.w $50(a5),a1
                 move.b  $20(a1),$20(a5)
@@ -510,7 +510,7 @@ locret_4A538:                                           ; CODE XREF: Boss_Jampan
                 rts
 ; End of function Boss_JampanSpecialAttack
 ; Formation attack main handler
-Boss_JampanFormationMain:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_4A53A
+Boss_JampanFormationMain:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4A53A
                 move.w  4(a5),d0
                 lea     off_4A546(pc,d0.w),a0
                 adda.w  (a0),a0

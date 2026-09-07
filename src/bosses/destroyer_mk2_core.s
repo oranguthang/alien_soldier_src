@@ -1,4 +1,4 @@
-Boss_DestroyerMK2Main:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_4A84E
+Boss_DestroyerMK2Main:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4A84E
                 tst.w   4(a5)
                 beq.w   loc_4A8F4
                 bsr.w   Boss_DestroyerMK2IntroRoar
@@ -105,7 +105,7 @@ loc_4A962:                                              ; CODE XREF: Boss_Destro
                 bset    #3,$4C(a5)
                 move.w  #$240,d0
                 move.w  #$3DC,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$C0,d0
                 sub.w   (dword_FFA900).w,d0
                 move.w  d0,$10(a5)
@@ -608,8 +608,8 @@ Boss_DestroyerMK2AnimLand:                              ; DATA XREF: ROM:0004A92
                 move.w  (dword_FF9410).w,d6
                 add.w   d6,d6
                 move.w  word_4AFBE(pc,d6.w),d0
-                lea     (word_1B514).l,a3
-                move.w  word_1B494-word_1B514(a3,d1.w),d1
+                lea     (Math_SineTable).l,a3
+                move.w  Math_QuarterSineTable-Math_SineTable(a3,d1.w),d1
                 bpl.s   loc_4AF90
                 ext.l   d1
                 move.w  word_4AFD0(pc,d6.w),d2

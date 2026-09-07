@@ -1,4 +1,4 @@
-Projectile_BackStringerRopeSegment:                     ; DATA XREF: ROM:off_5DC   o  ; was: sub_45696
+Projectile_BackStringerRopeSegment:                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45696
                 bclr    #0,$5E(a5)
                 beq.s   loc_456CA
                 move.w  #$1000,d0

@@ -58,7 +58,7 @@ Password_InitializeScreen:                              ; DATA XREF: Sys_Dispatc
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Stage_DispatchObjectLoader).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 lea     (byte_BAF0).l,a0
                 jsr     (LoadPalette).l
                 move.w  #4,(word_FF80F2).w

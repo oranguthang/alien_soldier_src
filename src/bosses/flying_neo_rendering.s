@@ -172,7 +172,7 @@ locret_3C9DE:                                           ; CODE XREF: Boss_Flying
 ; Calculates distance to enemy entity
 Boss_FlyingNeoCalculateDistance:                        ; CODE XREF: Boss_FlyingNeoAttackPatternUpdate+C   p  ; was: sub_3C9E0
                 movea.w #(word_FFCA40-M68K_RAM),a5
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 rts
 ; End of function Boss_FlyingNeoCalculateDistance

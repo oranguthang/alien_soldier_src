@@ -1,4 +1,4 @@
-Entity_EmptyState8:                                     ; DATA XREF: ROM:off_5DC   o  ; was: nullsub_8
+Entity_EmptyState8:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_8
                 rts
 ; End of function Entity_EmptyState8
 ; Updates Z-Leo vertical scroll position based on velocity, handles screen wrap-around boundary checks
@@ -63,8 +63,8 @@ loc_52F68:                                              ; CODE XREF: Boss_ZLeoSp
                 move.b  #8,$20(a0)
                 move.w  $296(a5),d0
                 move.w  d0,d2
-                lea     (word_1B514).l,a2
-                move.w  word_1B494-word_1B514(a2,d0.w),d3
+                lea     (Math_SineTable).l,a2
+                move.w  Math_QuarterSineTable-Math_SineTable(a2,d0.w),d3
                 move.w  (a2,d0.w),d4
                 muls.w  #$28,d3                         ; '('
                 muls.w  #$28,d4                         ; '('
@@ -102,7 +102,7 @@ word_5303A:     dc.w    0, $20, $18, $18, $20, 0, $18, $FFE8, 0, $FFE0, $FFE8, $
                                         ; Boss_ZLeoSpawnOrb+C0   r
 
 ; Orb projectile main
-Projectile_ZLeoOrbMain:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_5305A
+Projectile_ZLeoOrbMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5305A
                 tst.w   (word_FF808C).w
                 bpl.s   loc_53070
                 btst    #7,$22(a5)
@@ -189,7 +189,7 @@ locret_53180:                                           ; CODE XREF: Boss_ZLeoSp
                 rts
 ; End of function Boss_ZLeoSpawnLaser
 ; Laser projectile main
-Projectile_ZLeoLaserMain:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_53182
+Projectile_ZLeoLaserMain:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_53182
                 cmpi.w  #$180,$14(a5)
                 bpl.s   loc_53192
                 cmpi.w  #$80,$14(a5)
@@ -213,7 +213,7 @@ loc_531B2:                                              ; CODE XREF: Projectile_
 loc_531C6:                                              ; CODE XREF: Projectile_ZLeoLaserMain+24   j
                 addi.w  #6,$56(a5)
                 addq.w  #5,$50(a5)
-                lea     (word_1B514).l,a0
+                lea     (Math_SineTable).l,a0
                 move.w  $56(a5),d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a0,d0.w),d1
@@ -262,7 +262,7 @@ loc_53242:                                              ; CODE XREF: Projectile_
                 neg.l   $18(a5)
 ; Handles laser projectile collision and spawns particle effects
 Projectile_ZLeoLaser_CollisionCheck:                    ; CODE XREF: Projectile_ZLeoLaserMain+FA   j  ; was: loc_53282
-                                        ; DATA XREF: ROM:off_5DC   o
+                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 bclr    #7,$22(a5)
                 beq.s   loc_532B0
                 move.b  #$BC,d0
@@ -340,7 +340,7 @@ locret_533BC:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_ZLeoSpawnLasers
 ; Z-Leo laser projectile falling behavior - decrements timer, applies downward velocity, destroys on timeout
-Projectile_ZLeoLaserFall:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_533BE
+Projectile_ZLeoLaserFall:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_533BE
                 subq.w  #1,$48(a5)
                 bpl.s   loc_533CC
                 bset    #4,2(a5)
@@ -352,7 +352,7 @@ loc_533CC:                                              ; CODE XREF: Projectile_
 ; End of function Projectile_ZLeoLaserFall
 ; Spawns falling projectile with graphics setup and horizontal velocity based on screen position
 Projectile_ZLeoSpawnDropProjectile:                     ; CODE XREF: Boss_ZLeoAttackSequence+1A2   p  ; was: sub_533D6
-                                        ; DATA XREF: ROM:off_5DC   o
+                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   locret_534AA
                 move.w  #$6000,$4DE(a5)
@@ -402,7 +402,7 @@ locret_534AA:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_ZLeoSpawnDropProjectile
 ; Z-Leo drop projectile main logic - moves horizontally, rises to Y=$F0, delays, then falls offscreen
-Projectile_ZLeoDropProjectileMain:                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_534AC
+Projectile_ZLeoDropProjectileMain:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_534AC
                 move.w  #1,(word_FF9500).w
                 move.l  $56(a5),d0
                 add.l   d0,$10(a5)

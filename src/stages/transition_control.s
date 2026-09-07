@@ -2,7 +2,7 @@ Sys_TransitionToStageInit:                              ; DATA XREF: Sys_Dispatc
                 tst.w   (GameSubstateIndex).w
                 bne.s   loc_1E7A8
                 jsr     (Sys_InitGameMode).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 clr.b   (word_FF80F4).w
@@ -28,9 +28,9 @@ loc_1E7A8:                                              ; CODE XREF: Sys_Transit
 ; End of function Sys_TransitionToStageInit
 ; Updates stage transition
 Sys_StageTransitionUpdate:                              ; DATA XREF: Sys_DispatchGameState+C2   o  ; was: sub_1E7DE
-                jsr     (Gfx_UpdateScrollPosition).l
+                jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sys_InitObjectPointers).l
-                jsr     (UI_CheckVBlankFlag).l
+                jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   Cutscene_DispatchUpdate
                 jsr     (Sys_UpdateObjectCount).l

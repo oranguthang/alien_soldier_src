@@ -12,7 +12,7 @@ Credits_InitXiTiger_ClearTileAttributesLoop:            ; CODE XREF: Credits_Ini
                 andi.w  #$FEFF,d0
                 move.w  d0,(a0)+
                 dbf     d7,Credits_InitXiTiger_ClearTileAttributesLoop
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 lea     (dword_FF5180).l,a0
                 move.w  #$A000,d0
                 move.w  #0,d1
@@ -123,9 +123,9 @@ Credits_XiTigerAssetLoadList:   dc.w    7               ; field_0  ; was: stru_2
 
 ; Main loop for credits sequence processing objects and graphics
 Credits_MainLoop:                                       ; DATA XREF: Sys_DispatchGameState+E6   o  ; was: sub_20B74
-                jsr     (Gfx_UpdateScrollPosition).l
+                jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sys_InitObjectPointers).l
-                jsr     (UI_CheckVBlankFlag).l
+                jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   Credits_StateDispatcher
                 jsr     (Sys_UpdateObjectCount).l
@@ -369,7 +369,7 @@ Credits_FadeOutAndExit:                                 ; DATA XREF: ROM:00020BC
                 bne.w   Credits_StateReturn
                 move.w  #1,(word_FFFF46).w
                 move.w  (word_FFFF60).w,(word_FFFF38).w
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #$84,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 rts

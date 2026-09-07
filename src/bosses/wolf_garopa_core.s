@@ -1,5 +1,5 @@
 ; Movement pattern 2
-Boss_WolfGaropaMovement2:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_4F8F0
+Boss_WolfGaropaMovement2:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4F8F0
                 tst.w   4(a5)
                 beq.w   loc_4F920
                 tst.w   8(a5)
@@ -100,8 +100,8 @@ Boss_WolfGaropaMovement3:                               ; DATA XREF: Boss_WolfGa
                 move.w  #$8000,$B42(a5)
                 move.w  #0,$B50(a5)
                 move.w  #$500,$B48(a5)
-                movea.l #word_1BDEC,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_WolfGaropaObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 movea.l #$FFFF2020,a0
                 move.w  #$E000,d0
                 move.w  #$1E0,d1

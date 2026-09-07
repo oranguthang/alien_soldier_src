@@ -1,4 +1,4 @@
-Enemy_FlyerMain:                                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E9FC
+Enemy_FlyerMain:                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E9FC
                 move.w  4(a5),d0
                 lea     off_2EA08(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -26,7 +26,7 @@ Enemy_FlyerSpawnInit:                                   ; DATA XREF: ROM:0002EA0
                 adda.w  $4C(a5),a4
                 tst.w   (a4)
                 bmi.s   loc_2EA52
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_2EA46
                 move.w  a0,(a4)
                 bsr.s   Enemy_FlyerMovement1
@@ -74,7 +74,7 @@ locret_2EAAE:                                           ; CODE XREF: Enemy_Flyer
                 rts
 ; ---------------------------------------------------------------------------
 loc_2EAB0:                                              ; CODE XREF: Enemy_FlyerState1+A   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2EAAE
                 move.w  a0,(a4)
                 bsr.s   Enemy_FlyerMovement1
@@ -95,7 +95,7 @@ Enemy_FlyerMovement2:                                   ; CODE XREF: Enemy_Flyer
                 rts
 ; End of function Enemy_FlyerMovement2
 ; Flying enemy attack
-Enemy_FlyerAttack:                                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_2EB00
+Enemy_FlyerAttack:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2EB00
                 tst.w   4(a5)
                 beq.s   loc_2EB68
                 tst.w   $24(a5)
@@ -151,7 +151,7 @@ off_2EB74:      dc.w    Enemy_FlyerSpawnProjectile-*    ; DATA XREF: Enemy_Flyer
 
 ; Spawns flyer projectile
 Enemy_FlyerSpawnProjectile:                             ; DATA XREF: ROM:off_2EB74   o  ; was: sub_2EB94
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2EBD0
                 move.w  #$10,(a0)
                 move.w  #$CC00,2(a0)
@@ -253,7 +253,7 @@ Enemy_FlyerState4:                                      ; DATA XREF: ROM:0002EB8
                 bsr.w   Enemy_FlyerState5
                 subq.w  #1,$48(a5)
                 bne.s   locret_2ED20
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_2ED14
                 movem.w a5,-(sp)
                 movea.w $5C(a5),a5

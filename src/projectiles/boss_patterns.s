@@ -1,4 +1,4 @@
-Boss_ProjectileStateDispatcher:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_33DB0
+Boss_ProjectileStateDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_33DB0
                 tst.w   4(a5)
                 beq.s   loc_33DDE
                 bclr    #7,$22(a5)
@@ -103,11 +103,11 @@ Boss_ProjectileSpreadFireLoop:                          ; DATA XREF: ROM:00033DF
                 eori.w  #$8000,2(a5)
                 subq.w  #1,$48(a5)
                 bne.s   locret_33EFC
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_33EEC
                 move.w  $4C(a5),d0
                 bsr.w   Projectile_SpawnBulletAtOffset
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_33EEC
                 move.w  $4C(a5),d0
                 neg.w   d0
@@ -138,7 +138,7 @@ Projectile_SpawnBulletAtOffset:                         ; CODE XREF: Boss_Projec
                 rts
 ; End of function Projectile_SpawnBulletAtOffset
 ; Loads animation frame data into sprite
-Sprite_LoadAnimationFrame:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_33F30
+Sprite_LoadAnimationFrame:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_33F30
                 bsr.w   Sprite_InitializeObject
                 bsr.w   Sprite_UpdateAnimationTimer
                 bsr.s   Boss_UpdateTimedSoundEffect
@@ -186,7 +186,7 @@ loc_33FB6:                                              ; CODE XREF: Sprite_Init
                 move.w  word_FFC6CC-word_FFC680(a0),d2
                 add.w   $4C(a5),d2
                 add.w   d2,d2
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (a1,d2.w),d0
                 move.w  -$80(a1,d2.w),d1
                 ext.l   d0
@@ -280,7 +280,7 @@ loc_340E2:                                              ; CODE XREF: Sprite_Appl
                 add.w   $4C(a5),d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (a1,d0.w),d1
                 move.w  -$80(a1,d0.w),d2
                 muls.w  $4A(a0),d1
@@ -445,7 +445,7 @@ Boss_HomingProjectileAttack:                            ; DATA XREF: ROM:0003419
                 bpl.w   loc_34326
                 jsr     (Math_CalculateAngleToPlayer).l
                 move.w  d2,d6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_343CC
                 move.w  #$FFE8,d0
                 clr.w   d1
@@ -472,7 +472,7 @@ Boss_MultiProjectileSpread:                             ; DATA XREF: ROM:0003419
                 lea     (word_FFC680).w,a5
                 move.w  #7,d4
 loc_3436A:                                              ; CODE XREF: Boss_MultiProjectileSpread+52   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_34396
                 clr.w   d0
                 clr.w   d1

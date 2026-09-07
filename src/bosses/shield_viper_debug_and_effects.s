@@ -15,13 +15,13 @@ Boss_ShieldViperSpawnProjectileWithAngle:               ; CODE XREF: Boss_Shield
                 bsr.w   Boss_ShieldViperUpdateSpriteFlip
                 btst    #0,(word_FFA000+1).w
                 bne.s   Boss_ShieldViperSpawnProjectileWithAngle_Return
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_ShieldViperSpawnProjectileWithAngle_Return
                 jsr     Projectile_ShieldViperSpawnEffect(pc)  ; (pc)
                 move.b  $20(a5),$20(a0)
                 move.w  $970(a5),$10(a0)
                 move.w  $974(a5),$14(a0)
-                lea     (word_1B514).l,a3
+                lea     (Math_SineTable).l,a3
                 move.w  $56(a5),d0
                 add.w   $52(a5),d0
                 addi.w  #$100,d0
@@ -113,7 +113,7 @@ Debug_TriggerAttackState_Return:                        ; CODE XREF: Debug_Trigg
                 rts
 ; End of function Debug_TriggerAttackState
 ; Updates Shield Viper state, color selection, and effect pattern output
-Boss_ShieldViperMovement2:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_4F70C
+Boss_ShieldViperMovement2:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4F70C
                 btst    #0,(word_FFA000+1).w
                 bne.w   Boss_ShieldViperMovement2_Return
                 bsr.w   Boss_ShieldViperClearPatternBuffer
@@ -283,7 +283,7 @@ Boss_ShieldViperTransferPatternBuffer:                  ; CODE XREF: Boss_Shield
                 move.w  #$3A80,d0
                 move.w  #$8F02,d3
                 move.l  #$940093C0,d4
-                jmp     loc_1B78C
+                jmp     VDP_QueueCommand_Build
 ; End of function Boss_ShieldViperTransferPatternBuffer
 ; Applies gravity effect to 96 particle positions in memory
 Effect_ApplyGravityToParticles:

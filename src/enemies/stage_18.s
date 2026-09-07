@@ -1,4 +1,4 @@
-Enemy_FloatingOscillator:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2FCF6
+Enemy_FloatingOscillator:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2FCF6
                 tst.w   4(a5)
                 bne.s   loc_2FD4A
                 addq.w  #2,4(a5)
@@ -47,7 +47,7 @@ locret_2FDA8:                                           ; CODE XREF: Enemy_Float
                 rts
 ; End of function Enemy_FloatingOscillator
 ; Boss spawn and initialization
-Boss_DestroyerMK2Spawn:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_2FDAA
+Boss_DestroyerMK2Spawn:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2FDAA
                 bclr    #7,$E(a5)
                 move.w  (word_FF808A).w,d0
                 or.w    d0,$E(a5)
@@ -145,7 +145,7 @@ locret_2FED2:                                           ; CODE XREF: Boss_Destro
                 rts
 ; End of function Boss_DestroyerMK2Spawn
 ; Initializes Stage 18 enemies
-Enemy_Stage18Init:                                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_2FED4
+Enemy_Stage18Init:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2FED4
                 tst.w   $50(a5)
                 bne.w   Projectile_Stage18Bullet
                 cmpi.w  #2,4(a5)
@@ -195,7 +195,7 @@ loc_2FF4A:                                              ; CODE XREF: Enemy_Stage
                 move.w  #$1000,2(a5)
                 move.w  #$B,d7
 loc_2FF62:                                              ; CODE XREF: Enemy_Stage18SpawnerMain+8E   j
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.w   locret_30BB8
                 move.w  #$1000,2(a0)
                 move.w  #$448,(a0)
@@ -479,7 +479,7 @@ Boss_UpdateFallingSpawner:                              ; DATA XREF: ROM:0002FF1
                 andi.w  #$1F,d0
                 bne.w   locret_30BB8
 loc_3038E:                                              ; CODE XREF: Boss_UpdateFallingSpawner+4E   j
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.w   locret_30BB8
                 move.l  #off_E953C,8(a0)
                 movea.w a0,a4

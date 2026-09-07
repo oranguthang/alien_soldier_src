@@ -1,4 +1,4 @@
-Boss_ValkirieMainAlt:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_58FEE
+Boss_ValkirieMainAlt:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_58FEE
                 tst.w   4(a5)
                 beq.w   loc_5902E
                 tst.w   8(a5)
@@ -47,8 +47,8 @@ Boss_ValkirieInitAlt:                                   ; DATA XREF: Boss_Valkir
                 move.w  #$440,(a5)
                 move.w  #$CC00,2(a5)
                 clr.w   6(a5)
-                movea.l #word_1BFA0,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_ValkirieAlternateObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 movea.w #(word_FFDC40-M68K_RAM),a0
                 move.w  $10(a0),$10(a5)
                 move.w  #2,$1DE(a5)

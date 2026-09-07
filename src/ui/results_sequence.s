@@ -361,7 +361,7 @@ Text_CalculateRotationCoords:                           ; CODE XREF: Text_Positi
                 movea.w #(byte_FFA126-M68K_RAM),a1
                 movea.w #(byte_FFA128-M68K_RAM),a2
                 movea.w #(byte_FFA12E-M68K_RAM),a3
-                movea.l #word_1B514,a4
+                movea.l #Math_SineTable,a4
                 move.w  (word_FF80C6).w,d0
                 move.w  (dword_FF80CE).w,d1
                 move.w  d1,d4

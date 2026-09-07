@@ -329,8 +329,8 @@ loc_589FC:                                              ; CODE XREF: Boss_Artemi
                 move.l  #word_E90C2,8(a0)
                 move.b  $B00(a5),$20(a0)
                 subq.b  #4,$20(a0)
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d7.w),d0
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d7.w),d0
                 move.w  (a1,d7.w),d1
                 ext.l   d0
                 ext.l   d1
@@ -350,7 +350,7 @@ locret_58A5C:                                           ; CODE XREF: Boss_Artemi
                 rts
 ; End of function Boss_ArtemisUpdateSprites
 ; Animation script interpreter
-Boss_ArtemisAnimationScript:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_58A5E
+Boss_ArtemisAnimationScript:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_58A5E
                 tst.w   $48(a5)
                 bmi.s   loc_58ADA
                 subq.w  #1,$48(a5)
@@ -467,8 +467,8 @@ Boss_ArtemisSpawnRadialProjectile:                      ; CODE XREF: Boss_Artemi
                 move.b  $20(a5),$20(a0)
                 move.w  (dword_FFFF08).w,d5
                 andi.w  #$1FE,d5
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d5.w),d0
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d5.w),d0
                 move.w  (a1,d5.w),d1
                 ext.l   d0
                 ext.l   d1

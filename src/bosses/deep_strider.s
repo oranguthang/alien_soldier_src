@@ -1,4 +1,4 @@
-Boss_DeepStriderMain:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_3E582
+Boss_DeepStriderMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3E582
                 tst.w   4(a5)
                 beq.w   Boss_DeepStriderStateDispatch
                 tst.w   8(a5)
@@ -57,7 +57,7 @@ Boss_DeepStriderInit:                                   ; DATA XREF: Boss_DeepSt
 Boss_DeepStriderClearSprites:                           ; CODE XREF: Boss_DeepStriderReviveRise+38   p  ; was: sub_3E5FC
                 move.w  #$19C,d0
                 move.w  #$208,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; End of function Boss_DeepStriderClearSprites
 ; Boss intro rise sequence
 Boss_DeepStriderIntroRise:                              ; DATA XREF: ROM:0003E5CC   o  ; was: sub_3E60A
@@ -72,8 +72,8 @@ Boss_DeepStriderIntroRise:                              ; DATA XREF: ROM:0003E5C
                 move.w  #$19C,(a5)
                 bset    #0,$2A2(a5)
                 move.w  #$D00,$4E2(a5)
-                lea     (word_1BC6A).l,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                lea     (Boss_DeepStriderObjectInitTable).l,a1
+                jsr     (Object_InitGroupFromTable).l
                 move.w  #4,4(a5)
                 move.w  #$180,$536(a5)
                 move.w  #$B8,$4F0(a5)
@@ -345,7 +345,7 @@ loc_3E9DC:                                              ; CODE XREF: Boss_DeepSt
                 move.w  #$1B0,$4F4(a5)
 ; Deep Strider hovering with angle firing
 Boss_DeepStriderBattle_HoverAndShoot:                   ; DATA XREF: ROM:0003E5F0   o  ; was: loc_3EA20
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 move.w  #$100,$54(a5)
                 tst.w   d1
                 bpl.s   loc_3EA34
@@ -433,7 +433,7 @@ loc_3EB24:                                              ; CODE XREF: Boss_DeepSt
                 beq.s   loc_3EB50
                 cmpi.w  #4,d0
                 bpl.s   loc_3EB4A
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   loc_3EB50
 loc_3EB4A:                                              ; CODE XREF: Boss_DeepStriderBattleLogic+2A8   j
@@ -574,7 +574,7 @@ Boss_DeepStriderSpawnDebris:                            ; CODE XREF: Boss_DeepSt
                 move.w  #1,(word_FFA014).w
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_3ED9A
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   locret_3ED9A
                 jsr     (Sprite_InitType160).l
                 move.l  #off_E953C,8(a0)
@@ -831,7 +831,7 @@ Boss_DeepStriderFireAngleProjectile:                    ; CODE XREF: Boss_DeepSt
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
                 bne.w   locret_3F112
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_3F112
                 move.w  #$350,(a0)
                 move.w  #$AD80,2(a0)
@@ -845,7 +845,7 @@ Boss_DeepStriderFireAngleProjectile:                    ; CODE XREF: Boss_DeepSt
                 move.w  (dword_FFFF08).w,d3
                 ext.l   d3
                 asl.l   #2,d3
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  $56(a5),d7
                 addi.w  #$20,d7                         ; ' '
                 andi.w  #$1FE,d7
@@ -876,7 +876,7 @@ locret_3F112:                                           ; CODE XREF: Boss_DeepSt
                 rts
 ; End of function Boss_DeepStriderFireAngleProjectile
 ; Handles enemy bouncing on floor collision or spawning explosion
-Enemy_BounceOnFloorOrExplode:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_3F114
+Enemy_BounceOnFloorOrExplode:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3F114
                 tst.w   (word_FF808C).w
                 bpl.s   loc_3F14E
                 bclr    #7,$22(a5)

@@ -1,17 +1,17 @@
 LoadObjData:                                            ; CODE XREF: Effect_InitLettersEffect+20   p
                                         ; Effect_InitStage2DemoEffect+1E   p
                 move.w  (a0)+,d0
-                bmi.w   locret_264E
+                bmi.w   LoadObjData_Return
                 lsl.w   #2,d0
-                movea.l off_2650(pc,d0.w),a1
+                movea.l LoadObjDataHandlers(pc,d0.w),a1
                 jsr     (a1)
                 bra.s   LoadObjData
 ; ---------------------------------------------------------------------------
-locret_264E:                                            ; CODE XREF: LoadObjData+2   j
+LoadObjData_Return:                                     ; CODE XREF: LoadObjData+2   j  ; was: locret_264E
                 rts
 ; End of function LoadObjData
 ; ---------------------------------------------------------------------------
-off_2650:       dc.l    LoadFuncToRAM
+LoadObjDataHandlers:    dc.l    LoadFuncToRAM           ; was: off_2650
                 dc.l    Gfx_LoadDataToVRAM
                 dc.l    Gfx_LoadAndDecompTiles
                 dc.l    Gfx_LoadCompressedGfx
@@ -20,7 +20,7 @@ off_2650:       dc.l    LoadFuncToRAM
                 dc.l    LoadCompressedTiles
                 dc.l    LoadCompressedMappings
 
-LoadFuncToRAM:                                          ; DATA XREF: ROM:off_2650   o
+LoadFuncToRAM:                                          ; DATA XREF: ROM:LoadObjDataHandlers   o
                                         ; ROM:00002660   o
                 movea.l (a0)+,a1
                 moveq   #$FFFFFFFF,d2
@@ -44,12 +44,12 @@ Gfx_LoadDataToVRAM:                                     ; DATA XREF: ROM:0000265
                 move.w  (a0)+,d1
                 movea.l d1,a3
                 move.w  (a1)+,d0
-loc_2690:                                               ; CODE XREF: Gfx_LoadDataToVRAM+4A   j
+Gfx_LoadDataToVRAM_BatchLoop:                           ; CODE XREF: Gfx_LoadDataToVRAM+4A   j  ; was: loc_2690
                 move.w  #$200,d1
                 cmp.w   d1,d0
-                bge.w   loc_269C
+                bge.w   Gfx_LoadDataToVRAM_TransferBatch
                 move.w  d0,d1
-loc_269C:                                               ; CODE XREF: Gfx_LoadDataToVRAM+10   j
+Gfx_LoadDataToVRAM_TransferBatch:                       ; CODE XREF: Gfx_LoadDataToVRAM+10   j  ; was: loc_269C
                 sub.w   d1,d0
                 lsr.w   #2,d1
                 subq.w  #1,d1
@@ -64,12 +64,12 @@ loc_269C:                                               ; CODE XREF: Gfx_LoadDat
                 swap    d7
                 move.l  d7,(a5)
                 lea     (VDP_DATA).l,a5
-loc_26C6:                                               ; CODE XREF: Gfx_LoadDataToVRAM+42   j
+Gfx_LoadDataToVRAM_WriteLoop:                           ; CODE XREF: Gfx_LoadDataToVRAM+42   j  ; was: loc_26C6
                 move.l  (a1)+,(a5)
-                dbf     d1,loc_26C6
+                dbf     d1,Gfx_LoadDataToVRAM_WriteLoop
                 move    (sp)+,sr
                 tst.w   d0
-                bne.s   loc_2690
+                bne.s   Gfx_LoadDataToVRAM_BatchLoop
                 rts
 ; End of function Gfx_LoadDataToVRAM
 ; Loads and decompresses tile data to destination buffer
@@ -86,10 +86,10 @@ Gfx_LoadAndDecompTiles:                                 ; DATA XREF: ROM:0000265
                 move.w  d2,(dword_FFF730).w
                 move.w  d3,(dword_FFF730+2).w
                 bsr.w   Sys_ClearDMABuffer
-loc_26F2:                                               ; CODE XREF: Gfx_LoadAndDecompTiles+26   j
+Gfx_LoadAndDecompTiles_Loop:                            ; CODE XREF: Gfx_LoadAndDecompTiles+26   j  ; was: loc_26F2
                 bsr.w   Gfx_ProcessTileData
                 bsr.w   Gfx_PackTileData
-                dbf     d1,loc_26F2
+                dbf     d1,Gfx_LoadAndDecompTiles_Loop
                 rts
 ; End of function Gfx_LoadAndDecompTiles
 ; Loads and decompresses graphics data by processing header info and calling decompression subroutines
@@ -139,11 +139,11 @@ LoadCompressedMappings:                                 ; DATA XREF: ROM:0000266
                 moveq   #0,d0
                 move.w  (a0)+,d0
                 movea.l d0,a3
-loc_2756:                                               ; CODE XREF: LoadCompressedMappings+56   j
+LoadCompressedMappings_BlockLoop:                       ; CODE XREF: LoadCompressedMappings+56   j  ; was: loc_2756
                 lea     (dword_FFB400).w,a2
                 bsr.w   LZSSDecomp
                 cmpa.l  a4,a1
-                bcc.w   loc_279E
+                bcc.w   LoadCompressedMappings_FinalBlock
                 move.w  #$FF,d1
                 lea     (dword_FFB400).w,a2
                 lea     (VDP_CTRL).l,a5
@@ -157,14 +157,14 @@ loc_2756:                                               ; CODE XREF: LoadCompres
                 swap    d2
                 move.l  d2,(a5)
                 lea     (VDP_DATA).l,a5
-loc_2790:                                               ; CODE XREF: LoadCompressedMappings+4C   j
+LoadCompressedMappings_WriteFullBlock:                  ; CODE XREF: LoadCompressedMappings+4C   j  ; was: loc_2790
                 move.l  (a2)+,(a5)
-                dbf     d1,loc_2790
+                dbf     d1,LoadCompressedMappings_WriteFullBlock
                 move    (sp)+,sr
                 lea     $400(a3),a3
-                bra.s   loc_2756
+                bra.s   LoadCompressedMappings_BlockLoop
 ; ---------------------------------------------------------------------------
-loc_279E:                                               ; CODE XREF: LoadCompressedMappings+1A   j
+LoadCompressedMappings_FinalBlock:                      ; CODE XREF: LoadCompressedMappings+1A   j  ; was: loc_279E
                 move.w  a2,d1
                 subi.w  #$B400,d1
                 lsr.w   #1,d1
@@ -180,9 +180,9 @@ loc_279E:                                               ; CODE XREF: LoadCompres
                 swap    d2
                 move.l  d2,(a5)
                 lea     (VDP_DATA).l,a5
-loc_27CE:                                               ; CODE XREF: LoadCompressedMappings+8A   j
+LoadCompressedMappings_WriteFinalBlock:                 ; CODE XREF: LoadCompressedMappings+8A   j  ; was: loc_27CE
                 move.w  (a2)+,(a5)
-                dbf     d1,loc_27CE
+                dbf     d1,LoadCompressedMappings_WriteFinalBlock
                 move    (sp)+,sr
                 rts
 ; End of function LoadCompressedMappings
@@ -191,21 +191,21 @@ loc_27CE:                                               ; CODE XREF: LoadCompres
 Data_ProcessPointer:                                    ; CODE XREF: Sys_DispatchDataLoader+16   p  ; was: sub_27D8
                                         ; Gfx_FadeOutToDark+3C   p
                 move.w  (a0)+,d0
-                bmi.w   locret_2864
+                bmi.w   Data_ProcessPointer_Return
                 bset    #$F,d0
                 move.w  d0,(word_FFF720).w
                 movea.l (a0)+,a1
                 btst    #0,d0
-                bne.w   loc_282E
+                bne.w   Data_ProcessPointer_ReadWordLength
                 moveq   #$FFFFFFFF,d1
                 move.w  (a0)+,d1
                 move.l  d1,(dword_FFF72C).w
                 move.l  a0,(dword_FFF724).w
                 btst    #1,d0
-                beq.w   loc_284C
+                beq.w   Data_ProcessPointer_StoreRawLength
                 btst    #2,d0
-                bne.w   loc_2856
-loc_280C:                                               ; CODE XREF: Data_ProcessPointer+6E   j
+                bne.w   Data_ProcessPointer_StoreEndPointer
+Data_ProcessPointer_ReadCompressedHeader:               ; CODE XREF: Data_ProcessPointer+6E   j  ; was: loc_280C
                 moveq   #0,d1
                 move.b  (a1),d1
                 addq.w  #1,d1
@@ -218,71 +218,71 @@ loc_280C:                                               ; CODE XREF: Data_Proces
                 move.l  a1,(dword_FFF728).w
                 bra.w   Sys_ClearDMABuffer
 ; ---------------------------------------------------------------------------
-loc_282E:                                               ; CODE XREF: Data_ProcessPointer+14   j
+Data_ProcessPointer_ReadWordLength:                     ; CODE XREF: Data_ProcessPointer+14   j  ; was: loc_282E
                 moveq   #0,d1
                 move.w  (a0)+,d1
                 move.l  d1,(dword_FFF72C).w
                 move.l  a0,(dword_FFF724).w
                 btst    #1,d0
-                beq.w   loc_284C
+                beq.w   Data_ProcessPointer_StoreRawLength
                 btst    #2,d0
-                beq.s   loc_280C
-                bra.w   loc_2856
+                beq.s   Data_ProcessPointer_ReadCompressedHeader
+                bra.w   Data_ProcessPointer_StoreEndPointer
 ; ---------------------------------------------------------------------------
-loc_284C:                                               ; CODE XREF: Data_ProcessPointer+28   j
+Data_ProcessPointer_StoreRawLength:                     ; CODE XREF: Data_ProcessPointer+28   j  ; was: loc_284C
                                         ; Data_ProcessPointer+66   j
                 move.w  (a1)+,(word_FFF722).w
                 move.l  a1,(dword_FFF728).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_2856:                                               ; CODE XREF: Data_ProcessPointer+30   j
+Data_ProcessPointer_StoreEndPointer:                    ; CODE XREF: Data_ProcessPointer+30   j  ; was: loc_2856
                                         ; Data_ProcessPointer+70   j
                 moveq   #0,d1
                 move.w  (a1)+,d1
                 move.l  a1,(dword_FFF728).w
                 adda.l  d1,a1
                 move.l  a1,(dword_FFF730).w
-locret_2864:                                            ; CODE XREF: Data_ProcessPointer+2   j
+Data_ProcessPointer_Return:                             ; CODE XREF: Data_ProcessPointer+2   j  ; was: locret_2864
                 rts
 ; End of function Data_ProcessPointer
 ; Dispatches data loading operations by calling function pointers from jump table until $FFFF terminator
 Sys_DispatchDataLoader:                                 ; CODE XREF: Reset+266   p  ; was: sub_2866
                 move.w  (word_FFF720).w,d0
-                beq.w   locret_288A
+                beq.w   Sys_DispatchDataLoader_Return
                 movea.l (dword_FFF724).w,a0
-loc_2872:                                               ; CODE XREF: Sys_DispatchDataLoader+1E   j
+Sys_DispatchDataLoader_Loop:                            ; CODE XREF: Sys_DispatchDataLoader+1E   j  ; was: loc_2872
                 add.w   d0,d0
                 add.w   d0,d0
-                movea.l off_288C(pc,d0.w),a3
+                movea.l Sys_DataLoaderHandlers(pc,d0.w),a3
                 jsr     (a3)
                 bsr.w   Data_ProcessPointer
                 cmpi.w  #$FFFF,d0
-                bne.s   loc_2872
+                bne.s   Sys_DispatchDataLoader_Loop
                 clr.w   (word_FFF720).w
-locret_288A:                                            ; CODE XREF: Sys_DispatchDataLoader+4   j
+Sys_DispatchDataLoader_Return:                          ; CODE XREF: Sys_DispatchDataLoader+4   j  ; was: locret_288A
                 rts
 ; End of function Sys_DispatchDataLoader
 ; ---------------------------------------------------------------------------
-off_288C:       dc.l    Data_CopyToRAM
+Sys_DataLoaderHandlers: dc.l    Data_CopyToRAM          ; was: off_288C
                 dc.l    Gfx_DMATransferWithWait
                 dc.l    Gfx_DecompTilesToRAM
                 dc.l    Gfx_DecompTilesToVRAMBatched
                 dc.l    Data_CopyToRAM
                 dc.l    Gfx_DMATransferWithWait
-                dc.l    Gfx_DecompressLZSS
-                dc.l    Data_DecompressLZSS
+                dc.l    Data_DecompressLZSSDirect
+                dc.l    Gfx_DecompressLZSSToVRAMBatched
 
 ; Copies data from source to destination in RAM
-Data_CopyToRAM:                                         ; DATA XREF: ROM:off_288C   o  ; was: sub_28AC
+Data_CopyToRAM:                                         ; DATA XREF: ROM:Sys_DataLoaderHandlers   o  ; was: sub_28AC
                                         ; ROM:0000289C   o
                 movea.l (dword_FFF728).w,a1
                 movea.l (dword_FFF72C).w,a2
                 move.w  (word_FFF722).w,d1
-loc_28B8:                                               ; CODE XREF: Data_CopyToRAM+12   j
+Data_CopyToRAM_Loop:                                    ; CODE XREF: Data_CopyToRAM+12   j  ; was: loc_28B8
                 move.l  (a1)+,(a2)+
                 move.l  (a1)+,(a2)+
                 subq.w  #8,d1
-                bhi.s   loc_28B8
+                bhi.s   Data_CopyToRAM_Loop
                 rts
 ; End of function Data_CopyToRAM
 ; Performs DMA transfer with VBlank wait loop
@@ -291,18 +291,18 @@ Gfx_DMATransferWithWait:                                ; DATA XREF: ROM:0000289
                 movea.l (dword_FFF728).w,a2
                 movea.w (dword_FFF72C).w,a3
                 move.w  (word_FFF722).w,d0
-loc_28CE:                                               ; CODE XREF: Gfx_DMATransferWithWait+24   j
+Gfx_DMATransferWithWait_BatchLoop:                      ; CODE XREF: Gfx_DMATransferWithWait+24   j  ; was: loc_28CE
                 move.w  #$200,d1
                 cmp.w   d1,d0
-                bge.w   loc_28DA
+                bge.w   Gfx_DMATransferWithWait_ExecuteBatch
                 move.w  d0,d1
-loc_28DA:                                               ; CODE XREF: Gfx_DMATransferWithWait+12   j
+Gfx_DMATransferWithWait_ExecuteBatch:                   ; CODE XREF: Gfx_DMATransferWithWait+12   j  ; was: loc_28DA
                 bsr.w   Gfx_ExecuteDMATransfer
-loc_28DE:                                               ; CODE XREF: Gfx_DMATransferWithWait+20   j
+Gfx_DMATransferWithWait_Wait:                           ; CODE XREF: Gfx_DMATransferWithWait+20   j  ; was: loc_28DE
                 tst.b   (byte_FFF754).w
-                bne.s   loc_28DE
+                bne.s   Gfx_DMATransferWithWait_Wait
                 sub.w   d1,d0
-                bne.s   loc_28CE
+                bne.s   Gfx_DMATransferWithWait_BatchLoop
                 rts
 ; End of function Gfx_DMATransferWithWait
 ; Decompresses tiles to RAM buffer
@@ -311,10 +311,10 @@ Gfx_DecompTilesToRAM:                                   ; DATA XREF: ROM:0000289
                 movea.l (dword_FFF72C).w,a2
                 move.w  (word_FFF722).w,d0
                 subq.w  #1,d0
-loc_28F8:                                               ; CODE XREF: Gfx_DecompTilesToRAM+16   j
+Gfx_DecompTilesToRAM_Loop:                              ; CODE XREF: Gfx_DecompTilesToRAM+16   j  ; was: loc_28F8
                 bsr.w   Gfx_ProcessTileData
                 bsr.w   Gfx_PackTileData
-                dbf     d0,loc_28F8
+                dbf     d0,Gfx_DecompTilesToRAM_Loop
                 rts
 ; End of function Gfx_DecompTilesToRAM
 ; Decompresses tiles to VRAM in batched DMA transfers
@@ -322,137 +322,137 @@ Gfx_DecompTilesToVRAMBatched:                           ; DATA XREF: ROM:0000289
                 movea.l (dword_FFF728).w,a1
                 movea.l (dword_FFF72C).w,a3
                 move.w  (word_FFF722).w,d0
-loc_2912:                                               ; CODE XREF: Gfx_DecompTilesToVRAMBatched+44   j
+Gfx_DecompTilesToVRAMBatched_BatchLoop:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+44   j  ; was: loc_2912
                 lea     (dword_FFB600).w,a2
                 move.w  #$10,d2
                 cmp.w   d2,d0
-                bge.w   loc_2922
+                bge.w   Gfx_DecompTilesToVRAMBatched_PrepareBatch
                 move.w  d0,d2
-loc_2922:                                               ; CODE XREF: Gfx_DecompTilesToVRAMBatched+16   j
+Gfx_DecompTilesToVRAMBatched_PrepareBatch:              ; CODE XREF: Gfx_DecompTilesToVRAMBatched+16   j  ; was: loc_2922
                 move.w  d2,d1
                 asl.w   #5,d1
                 sub.w   d2,d0
                 subq.w  #1,d2
-loc_292A:                                               ; CODE XREF: Gfx_DecompTilesToVRAMBatched+2C   j
+Gfx_DecompTilesToVRAMBatched_DecodeLoop:                ; CODE XREF: Gfx_DecompTilesToVRAMBatched+2C   j  ; was: loc_292A
                 bsr.w   Gfx_ProcessTileData
                 bsr.w   Gfx_PackTileData
-                dbf     d2,loc_292A
+                dbf     d2,Gfx_DecompTilesToVRAMBatched_DecodeLoop
                 tst.w   d0
-                beq.w   loc_294C
+                beq.w   Gfx_DecompTilesToVRAMBatched_FinalBatch
                 lea     (dword_FFB600).w,a2
                 bsr.w   Gfx_ExecuteDMATransfer
-loc_2944:                                               ; CODE XREF: Gfx_DecompTilesToVRAMBatched+42   j
+Gfx_DecompTilesToVRAMBatched_WaitBatch:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+42   j  ; was: loc_2944
                 tst.b   (byte_FFF754).w
-                bne.s   loc_2944
-                bra.s   loc_2912
+                bne.s   Gfx_DecompTilesToVRAMBatched_WaitBatch
+                bra.s   Gfx_DecompTilesToVRAMBatched_BatchLoop
 ; ---------------------------------------------------------------------------
-loc_294C:                                               ; CODE XREF: Gfx_DecompTilesToVRAMBatched+32   j
+Gfx_DecompTilesToVRAMBatched_FinalBatch:                ; CODE XREF: Gfx_DecompTilesToVRAMBatched+32   j  ; was: loc_294C
                 lea     (dword_FFB600).w,a2
                 bsr.w   Gfx_ExecuteDMATransfer
-loc_2954:                                               ; CODE XREF: Gfx_DecompTilesToVRAMBatched+52   j
+Gfx_DecompTilesToVRAMBatched_WaitFinal:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+52   j  ; was: loc_2954
                 tst.b   (byte_FFF754).w
-                bne.s   loc_2954
+                bne.s   Gfx_DecompTilesToVRAMBatched_WaitFinal
                 rts
 ; End of function Gfx_DecompTilesToVRAMBatched
-; Decompresses LZSS data to VRAM in loop
-Gfx_DecompressLZSS:                                     ; DATA XREF: ROM:000028A4   o  ; was: sub_295C
+; Decompresses LZSS blocks directly to the configured memory destination
+Data_DecompressLZSSDirect:                              ; DATA XREF: ROM:000028A4   o  ; was: sub_295C
                 movea.l (dword_FFF728).w,a1
                 movea.l (dword_FFF72C).w,a2
                 movea.l (dword_FFF730).w,a4
-; Loop that repeatedly decompresses LZSS data directly to VRAM until reaching target address
-Gfx_LZSSToVRAMLoop:                                     ; CODE XREF: Gfx_DecompressLZSS+12   j  ; was: loc_2968
+; Repeats direct LZSS decompression until the source end is reached
+Data_DecompressLZSSDirect_BlockLoop:                    ; CODE XREF: Data_DecompressLZSSDirect+12   j  ; was: loc_2968
                 bsr.w   LZSSDecomp
                 cmpa.l  a4,a1
-                bcs.s   Gfx_LZSSToVRAMLoop
+                bcs.s   Data_DecompressLZSSDirect_BlockLoop
                 rts
-; End of function Gfx_DecompressLZSS
-; Decompresses LZSS data to RAM buffer
-Data_DecompressLZSS:                                    ; DATA XREF: ROM:000028A8   o  ; was: sub_2972
+; End of function Data_DecompressLZSSDirect
+; Decompresses LZSS through a RAM staging buffer and DMA-transfers it to VRAM
+Gfx_DecompressLZSSToVRAMBatched:                        ; DATA XREF: ROM:000028A8   o  ; was: sub_2972
                 movea.l (dword_FFF728).w,a1
                 movea.l (dword_FFF72C).w,a3
                 movea.l (dword_FFF730).w,a4
-loc_297E:                                               ; CODE XREF: Data_DecompressLZSS+2C   j
+Gfx_DecompressLZSSToVRAMBatched_BlockLoop:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+2C   j  ; was: loc_297E
                 lea     (dword_FFB400).w,a2
                 bsr.w   LZSSDecomp
                 cmpa.l  a4,a1
-                bcc.w   loc_29A0
+                bcc.w   Gfx_DecompressLZSSToVRAMBatched_FinalBlock
                 move.w  #$400,d1
                 lea     (dword_FFB400).w,a2
                 bsr.w   Gfx_ExecuteDMATransfer
-loc_2998:                                               ; CODE XREF: Data_DecompressLZSS+2A   j
+Gfx_DecompressLZSSToVRAMBatched_WaitBlock:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+2A   j  ; was: loc_2998
                 tst.b   (byte_FFF754).w
-                bne.s   loc_2998
-                bra.s   loc_297E
+                bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitBlock
+                bra.s   Gfx_DecompressLZSSToVRAMBatched_BlockLoop
 ; ---------------------------------------------------------------------------
-loc_29A0:                                               ; CODE XREF: Data_DecompressLZSS+16   j
+Gfx_DecompressLZSSToVRAMBatched_FinalBlock:             ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+16   j  ; was: loc_29A0
                 move.w  a2,d1
                 subi.w  #$B400,d1
                 lea     (dword_FFB400).w,a2
                 bsr.w   Gfx_ExecuteDMATransfer
-loc_29AE:                                               ; CODE XREF: Data_DecompressLZSS+40   j
+Gfx_DecompressLZSSToVRAMBatched_WaitFinal:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+40   j  ; was: loc_29AE
                 tst.b   (byte_FFF754).w
-                bne.s   loc_29AE
+                bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitFinal
                 rts
-; End of function Data_DecompressLZSS
+; End of function Gfx_DecompressLZSSToVRAMBatched
 LZSSDecomp:                                             ; CODE XREF: LoadCompressedTiles:loc_273C   p
                                         ; LoadCompressedMappings+14   p
                 movem.l d4-d7/a5,-(sp)
                 move.w  a2,d4
                 addi.w  #$400,d4
-loc_29C0:                                               ; CODE XREF: LZSSDecomp+16   j
+LZSSDecomp_BlockLoop:                                   ; CODE XREF: LZSSDecomp+16   j  ; was: loc_29C0
                 bsr.w   Data_LZSSDecodeBlock
                 cmpa.l  a4,a1
-                bcc.w   loc_29CE
+                bcc.w   LZSSDecomp_Return
                 cmp.w   a2,d4
-                bhi.s   loc_29C0
-loc_29CE:                                               ; CODE XREF: LZSSDecomp+10   j
+                bhi.s   LZSSDecomp_BlockLoop
+LZSSDecomp_Return:                                      ; CODE XREF: LZSSDecomp+10   j  ; was: loc_29CE
                 movem.l (sp)+,d4-d7/a5
                 rts
 ; End of function LZSSDecomp
 
 ; LZSS decoder that handles various compression block types including literal runs RLE and backreferences
-Data_LZSSDecodeBlock:                                   ; CODE XREF: LZSSDecomp:loc_29C0   p  ; was: sub_29D4
+Data_LZSSDecodeBlock:                                   ; CODE XREF: LZSSDecomp:LZSSDecomp_BlockLoop   p  ; was: sub_29D4
                 move.b  (a1)+,d5
-                bmi.w   loc_2A2C
+                bmi.w   Data_LZSSDecodeBlock_CopyBackReference
                 btst    #5,d5
-                bne.w   loc_29EE
+                bne.w   Data_LZSSDecodeBlock_FillByte
                 btst    #6,d5
-                beq.w   loc_2A4C
-                bra.w   loc_2A06
+                beq.w   Data_LZSSDecodeBlock_CopyLiteral
+                bra.w   Data_LZSSDecodeBlock_FillPair
 ; ---------------------------------------------------------------------------
-loc_29EE:                                               ; CODE XREF: Data_LZSSDecodeBlock+A   j
+Data_LZSSDecodeBlock_FillByte:                          ; CODE XREF: Data_LZSSDecodeBlock+A   j  ; was: loc_29EE
                 btst    #6,d5
-                bne.w   loc_2A1A
+                bne.w   Data_LZSSDecodeBlock_FillMixedPair
                 andi.w  #$1F,d5
                 addq.w  #1,d5
                 move.b  (a1)+,d6
-loc_29FE:                                               ; CODE XREF: Data_LZSSDecodeBlock+2C   j
+Data_LZSSDecodeBlock_FillByteLoop:                      ; CODE XREF: Data_LZSSDecodeBlock+2C   j  ; was: loc_29FE
                 move.b  d6,(a2)+
-                dbf     d5,loc_29FE
+                dbf     d5,Data_LZSSDecodeBlock_FillByteLoop
                 rts
 ; ---------------------------------------------------------------------------
-loc_2A06:                                               ; CODE XREF: Data_LZSSDecodeBlock+16   j
+Data_LZSSDecodeBlock_FillPair:                          ; CODE XREF: Data_LZSSDecodeBlock+16   j  ; was: loc_2A06
                 andi.w  #$1F,d5
                 addq.w  #1,d5
                 move.b  (a1)+,d6
                 move.b  (a1)+,d7
-loc_2A10:                                               ; CODE XREF: Data_LZSSDecodeBlock+40   j
+Data_LZSSDecodeBlock_FillPairLoop:                      ; CODE XREF: Data_LZSSDecodeBlock+40   j  ; was: loc_2A10
                 move.b  d6,(a2)+
                 move.b  d7,(a2)+
-                dbf     d5,loc_2A10
+                dbf     d5,Data_LZSSDecodeBlock_FillPairLoop
                 rts
 ; ---------------------------------------------------------------------------
-loc_2A1A:                                               ; CODE XREF: Data_LZSSDecodeBlock+1E   j
+Data_LZSSDecodeBlock_FillMixedPair:                     ; CODE XREF: Data_LZSSDecodeBlock+1E   j  ; was: loc_2A1A
                 andi.w  #$1F,d5
                 addq.w  #1,d5
                 move.b  (a1)+,d6
-loc_2A22:                                               ; CODE XREF: Data_LZSSDecodeBlock+52   j
+Data_LZSSDecodeBlock_FillMixedPairLoop:                 ; CODE XREF: Data_LZSSDecodeBlock+52   j  ; was: loc_2A22
                 move.b  d6,(a2)+
                 move.b  (a1)+,(a2)+
-                dbf     d5,loc_2A22
+                dbf     d5,Data_LZSSDecodeBlock_FillMixedPairLoop
                 rts
 ; ---------------------------------------------------------------------------
-loc_2A2C:                                               ; CODE XREF: Data_LZSSDecodeBlock+2   j
+Data_LZSSDecodeBlock_CopyBackReference:                 ; CODE XREF: Data_LZSSDecodeBlock+2   j  ; was: loc_2A2C
                 move.b  d5,d6
                 lsr.b   #2,d5
                 andi.w  #$1F,d5
@@ -463,16 +463,15 @@ loc_2A2C:                                               ; CODE XREF: Data_LZSSDe
                 addq.w  #1,d6
                 movea.l a2,a5
                 suba.w  d6,a5
-loc_2A44:                                               ; CODE XREF: Data_LZSSDecodeBlock+72   j
+Data_LZSSDecodeBlock_CopyBackReferenceLoop:             ; CODE XREF: Data_LZSSDecodeBlock+72   j  ; was: loc_2A44
                 move.b  (a5)+,(a2)+
-                dbf     d5,loc_2A44
+                dbf     d5,Data_LZSSDecodeBlock_CopyBackReferenceLoop
                 rts
 ; ---------------------------------------------------------------------------
-loc_2A4C:                                               ; CODE XREF: Data_LZSSDecodeBlock+12   j
+Data_LZSSDecodeBlock_CopyLiteral:                       ; CODE XREF: Data_LZSSDecodeBlock+12   j  ; was: loc_2A4C
                 andi.w  #$1F,d5
-loc_2A50:                                               ; CODE XREF: Data_LZSSDecodeBlock+7E   j
+Data_LZSSDecodeBlock_CopyLiteralLoop:                   ; CODE XREF: Data_LZSSDecodeBlock+7E   j  ; was: loc_2A50
                 move.b  (a1)+,(a2)+
-                dbf     d5,loc_2A50
+                dbf     d5,Data_LZSSDecodeBlock_CopyLiteralLoop
                 rts
 ; End of function Data_LZSSDecodeBlock
-; Clears DMA buffer at FFB400

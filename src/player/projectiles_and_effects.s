@@ -110,7 +110,7 @@ Effect_SpawnParticle:                                   ; CODE XREF: Player_Hand
                 bne.w   locret_175B6
                 lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
@@ -169,7 +169,7 @@ loc_175EE:                                              ; CODE XREF: Player_Spaw
                 bne.w   locret_17640
                 lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
@@ -234,7 +234,7 @@ Player_InitShotProjectile:                              ; CODE XREF: Player_Spaw
                                         ; Player_SpawnRadialShot+1C   p
                 jsr     (Projectile_InitType88).l
                 move.b  $20(a5),$20(a0)
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 andi.w  #$1FE,d6
                 move.w  -$80(a1,d6.w),d1
                 move.w  (a1,d6.w),d2
@@ -378,7 +378,7 @@ locret_17882:                                           ; CODE XREF: Effect_Crea
                 rts
 ; End of function Effect_CreateDashTrail
 ; Updates dash trail position with acceleration
-Effect_UpdateDashTrail:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_17884
+Effect_UpdateDashTrail:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_17884
                 btst    #4,(byte_FF8244).w
                 bne.s   loc_17894
 loc_1788C:                                              ; CODE XREF: Effect_UpdateDashTrail+14   j
@@ -399,7 +399,7 @@ locret_178BA:                                           ; CODE XREF: Effect_Upda
                 rts
 ; End of function Effect_UpdateDashTrail
 ; Updates sprite facing flags
-Effect_UpdateFacingFlags:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_178BC
+Effect_UpdateFacingFlags:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_178BC
                 andi.w  #$E7FF,$E(a5)
                 move.w  (word_FF8092).w,d0
                 or.w    d0,$E(a5)

@@ -119,7 +119,7 @@ Sprite_InitMetaspritePointers:                          ; CODE XREF: Sprite_Init
 ; End of function Sprite_InitMetaspritePointers
 ; Updates metasprite rotation and sine-based positioning
 Sprite_UpdateMetaspriteRotation:                        ; CODE XREF: Sprite_UpdateMetaspriteAngles   p  ; was: sub_3450E
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $54(a5),d3
                 move.w  $56(a5),d4
                 move.w  $50(a5),d5
@@ -180,7 +180,7 @@ Boss_ValkiriePlayIntroSFX:                              ; CODE XREF: Boss_Valkir
                 movea.w a5,a4
                 move.w  d7,(dword_FF8040).w
                 lea     $60(a4),a4
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $56(a5),d4
                 move.w  $50(a5),d5
                 move.w  #$1FE,d6
@@ -259,7 +259,7 @@ Sprite_CalculateRotationOffset:                         ; CODE XREF: Sprite_Upda
                 movea.w a4,a3
                 lea     $60(a4),a4
                 move.w  d7,(dword_FF8040).w
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $54(a5),d3
                 move.w  $56(a5),d4
                 move.w  $50(a5),d5
@@ -321,7 +321,7 @@ Boss_CalculateSegmentChain:                             ; CODE XREF: Boss_BackSt
                 movea.w a4,a3
                 lea     $60(a4),a4
                 move.w  d7,(dword_FF8040).w
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $54(a5),d3
                 move.w  $56(a5),d4
                 move.w  $50(a5),d5

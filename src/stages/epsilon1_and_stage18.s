@@ -135,7 +135,7 @@ loc_E28A:                                               ; CODE XREF: Boss_Sharps
                 nop
 ; Initializes projectile properties in a loop with animation and position
 Projectile_InitializeLoop:                              ; CODE XREF: Projectile_SpawnQuadPattern+48   j  ; was: loc_E294
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   locret_E2D4
                 jsr     (Projectile_InitType1A8).l
                 move.l  #off_1A0E96,8(a0)
@@ -173,8 +173,8 @@ Enemy_SpawnProjectileAtAngle:                           ; CODE XREF: Boss_Jetsri
                 move.w  d5,$10(a0)
                 move.w  d6,$14(a0)
                 move.b  #8,$20(a0)
-                lea     (word_1B514).l,a4
-                move.w  word_1B494-word_1B514(a4,d4.w),d0
+                lea     (Math_SineTable).l,a4
+                move.w  Math_QuarterSineTable-Math_SineTable(a4,d4.w),d0
                 move.w  (a4,d4.w),d1
                 ext.l   d0
                 ext.l   d1

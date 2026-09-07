@@ -139,7 +139,7 @@ Stage_LoadConfigData:                                   ; CODE XREF: Stage_LoadX
 ; ---------------------------------------------------------------------------
 stru_127A8:     dc.w    0                               ; field_0
                                         ; DATA XREF: Stage_InitStage1Data   o
-                dc.l    word_1A3E8                      ; field_2
+                dc.l    Stage1_ObjectSpawnList          ; field_2
                 dc.w    2                               ; field_6
                 dc.b    2                               ; field_8
                 dc.b    0                               ; field_9
@@ -155,7 +155,7 @@ stru_127A8:     dc.w    0                               ; field_0
                 dc.l    word_B988                       ; field_1A
 stru_127C6:     dc.w    $A                              ; field_0
                                         ; DATA XREF: Stage_InitStage2Data   o
-                dc.l    word_1A4D8                      ; field_2
+                dc.l    Stage2_ObjectSpawnList          ; field_2
                 dc.w    0                               ; field_6
                 dc.b    2                               ; field_8
                 dc.b    0                               ; field_9
@@ -171,7 +171,7 @@ stru_127C6:     dc.w    $A                              ; field_0
                 dc.l    word_B988                       ; field_1A
 stru_127E4:     dc.w    $12                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2ConfigAlt   o
-                dc.l    word_1A6B8                      ; field_2
+                dc.l    Stage2_AlternateObjectSpawnList  ; field_2
                 dc.w    0                               ; field_6
                 dc.b    2                               ; field_8
                 dc.b    0                               ; field_9
@@ -187,7 +187,7 @@ stru_127E4:     dc.w    $12                             ; field_0
                 dc.l    word_B988                       ; field_1A
 stru_12802:     dc.w    $22                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2Config2   o
-                dc.l    word_1A754                      ; field_2
+                dc.l    Stage2_SecondObjectSpawnList    ; field_2
                 dc.w    0                               ; field_6
                 dc.b    4                               ; field_8
                 dc.b    0                               ; field_9
@@ -203,7 +203,7 @@ stru_12802:     dc.w    $22                             ; field_0
                 dc.l    word_B98C                       ; field_1A
 stru_12820:     dc.w    $2E                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2Config3   o
-                dc.l    word_1A882                      ; field_2
+                dc.l    Stage2_ThirdObjectSpawnList     ; field_2
                 dc.w    0                               ; field_6
                 dc.b    6                               ; field_8
                 dc.b    0                               ; field_9
@@ -219,7 +219,7 @@ stru_12820:     dc.w    $2E                             ; field_0
                 dc.l    word_B992                       ; field_1A
 stru_1283E:     dc.w    $38                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2Config4   o
-                dc.l    word_1A9B0                      ; field_2
+                dc.l    Stage2_FourthObjectSpawnList    ; field_2
                 dc.w    0                               ; field_6
                 dc.b    6                               ; field_8
                 dc.b    0                               ; field_9
@@ -235,7 +235,7 @@ stru_1283E:     dc.w    $38                             ; field_0
                 dc.l    word_B992                       ; field_1A
 stru_1285C:     dc.w    $40                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2Config5   o
-                dc.l    word_1AB24                      ; field_2
+                dc.l    Stage2_FifthObjectSpawnList     ; field_2
                 dc.w    0                               ; field_6
                 dc.b    6                               ; field_8
                 dc.b    0                               ; field_9
@@ -251,7 +251,7 @@ stru_1285C:     dc.w    $40                             ; field_0
                 dc.l    word_B992                       ; field_1A
 stru_1287A:     dc.w    $50                             ; field_0
                                         ; DATA XREF: Stage_InitStage8Data   o
-                dc.l    word_1ABC2                      ; field_2
+                dc.l    Stage8_ObjectSpawnList          ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -267,7 +267,7 @@ stru_1287A:     dc.w    $50                             ; field_0
                 dc.l    word_B996                       ; field_1A
 stru_12898:     dc.w    $62                             ; field_0
                                         ; DATA XREF: Stage_InitStage8Palettes   o
-                dc.l    word_1AC60                      ; field_2
+                dc.l    Stage8_EmptyObjectSpawnList     ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -283,7 +283,7 @@ stru_12898:     dc.w    $62                             ; field_0
                 dc.l    word_B99A                       ; field_1A
 stru_128B6:     dc.w    0                               ; field_0
                                         ; DATA XREF: Stage_InitStage10Data   o
-                dc.l    word_1AC62                      ; field_2
+                dc.l    Stage10_ObjectSpawnList         ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -299,7 +299,7 @@ stru_128B6:     dc.w    0                               ; field_0
                 dc.l    word_B9A4                       ; field_1A
 stru_128D4:     dc.w    $A                              ; field_0
                                         ; DATA XREF: Stage_LoadStage10ConfigAlt   o
-                dc.l    word_1AD8E                      ; field_2
+                dc.l    Stage10_AlternateObjectSpawnList  ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -317,14 +317,14 @@ stru_128D4:     dc.w    $A                              ; field_0
 ; UNUSED GRAPHICS: Unknown Purpose
 ; Source: TCRF research (ROM offset 0x1291DE)
 ; Description: 314 bytes of unknown graphics data
-; Binary File: word_1AE96.bin
+; Binary File: Stage11_UnidentifiedAsset.bin
 ; Referenced by: stru_128F2
 ; Loader Function: sub_12386
 ; Status: Purpose unknown, possibly test graphics or scrapped UI element
 ; ===============================================================================
 stru_128F2:     dc.w    $14                             ; Structure size/ID
                                         ; DATA XREF: Stage_LoadStage11Config   o
-                dc.l    word_1AE96                      ; Unknown graphics data pointer (line 34452)
+                dc.l    Stage11_UnidentifiedAsset       ; Unknown graphics data pointer (line 34452)
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -342,7 +342,7 @@ stru_128F2:     dc.w    $14                             ; Structure size/ID
 ; UNUSED INTRO SPRITES: Kaede and Unknown Man
 ; Source: TCRF https://tcrf.net/Alien_Soldier (ROM offset 0x188A16)
 ; Description: Cut intro cutscene featuring Kaede and unidentified character
-; Graphics Data: word_1A3E6 (line 34368)
+; Graphics Data: Stage_EmptyObjectSpawnList (line 34368)
 ; Loader Function: sub_12390 (line 22614)
 ; Sprite Size: 4x4 tiles (32x32 pixels)
 ; Palette: Bank $40, Index $80
@@ -350,7 +350,7 @@ stru_128F2:     dc.w    $14                             ; Structure size/ID
 ; ===============================================================================
 stru_12910:     dc.w    $34                             ; Structure size/ID
                                         ; DATA XREF: Stage_InitCutsceneData   o
-                dc.l    word_1A3E6                      ; Sprite graphics data pointer
+                dc.l    Stage_EmptyObjectSpawnList      ; Sprite graphics data pointer
                 dc.w    0                               ; X position
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -366,7 +366,7 @@ stru_12910:     dc.w    $34                             ; Structure size/ID
                 dc.l    word_B9A4                       ; Animation/mapping data
 stru_1292E:     dc.w    $40                             ; field_0
                                         ; DATA XREF: Stage_LoadStage13ConfigAlt   o
-                dc.l    word_1AFD0                      ; field_2
+                dc.l    Stage13_AlternateObjectSpawnList  ; field_2
                 dc.w    0                               ; field_6
                 dc.b    $C                              ; field_8
                 dc.b    4                               ; field_9
@@ -382,7 +382,7 @@ stru_1292E:     dc.w    $40                             ; field_0
                 dc.l    word_B9A8                       ; field_1A
 stru_1294C:     dc.w    $4A                             ; field_0
                                         ; DATA XREF: Stage_LoadStage14Config   o
-                dc.l    word_1B00C                      ; field_2
+                dc.l    Stage14_ObjectSpawnList         ; field_2
                 dc.w    0                               ; field_6
                 dc.b    $C                              ; field_8
                 dc.b    4                               ; field_9
@@ -398,7 +398,7 @@ stru_1294C:     dc.w    $4A                             ; field_0
                 dc.l    word_B9A8                       ; field_1A
 stru_1296A:     dc.w    $56                             ; field_0
                                         ; DATA XREF: Stage_InitStage16Data   o
-                dc.l    word_1A3E6                      ; field_2
+                dc.l    Stage_EmptyObjectSpawnList      ; field_2
                 dc.w    0                               ; field_6
                 dc.b    $C                              ; field_8
                 dc.b    0                               ; field_9
@@ -414,7 +414,7 @@ stru_1296A:     dc.w    $56                             ; field_0
                 dc.l    word_B9A8                       ; field_1A
 stru_12988:     dc.w    $6C                             ; field_0
                                         ; DATA XREF: Stage_InitStage17Boss+6   o
-                dc.l    word_1A3E6                      ; field_2
+                dc.l    Stage_EmptyObjectSpawnList      ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -430,7 +430,7 @@ stru_12988:     dc.w    $6C                             ; field_0
                 dc.l    word_B9AC                       ; field_1A
 stru_129A6:     dc.w    0                               ; field_0
                                         ; DATA XREF: Gfx_Stage18Foreground   o
-                dc.l    word_1B03E                      ; field_2
+                dc.l    Stage18_ObjectSpawnList         ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -446,7 +446,7 @@ stru_129A6:     dc.w    0                               ; field_0
                 dc.l    word_B9B0                       ; field_1A
 stru_129C4:     dc.w    $A                              ; field_0
                                         ; DATA XREF: Stage_LoadStage18ConfigAlt   o
-                dc.l    word_1B2BA                      ; field_2
+                dc.l    Stage18_AlternateObjectSpawnList  ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -542,7 +542,7 @@ stru_12A5A:     dc.w    $70                             ; field_0
                 dc.l    word_B9B8                       ; field_1A
 stru_12A78:     dc.w    0                               ; field_0
                                         ; DATA XREF: Stage_InitStage26Config+C   o
-                dc.l    word_1A3E6                      ; field_2
+                dc.l    Stage_EmptyObjectSpawnList      ; field_2
                 dc.w    0                               ; field_6
                 dc.b    $E                              ; field_8
                 dc.b    0                               ; field_9
@@ -558,7 +558,7 @@ stru_12A78:     dc.w    0                               ; field_0
                 dc.l    word_B9C6                       ; field_1A
 stru_12A96:     dc.w    $2C                             ; field_0
                                         ; DATA XREF: Stage_InitStage27Config+C   o
-                dc.l    word_1A3E6                      ; field_2
+                dc.l    Stage_EmptyObjectSpawnList      ; field_2
                 dc.w    0                               ; field_6
                 dc.b    $E                              ; field_8
                 dc.b    0                               ; field_9
@@ -574,7 +574,7 @@ stru_12A96:     dc.w    $2C                             ; field_0
                 dc.l    word_B9CC                       ; field_1A
 stru_12AB4:     dc.w    $2E                             ; field_0
                                         ; DATA XREF: Stage_InitStage28Config+C   o
-                dc.l    word_1B3F4                      ; field_2
+                dc.l    Stage28_EmptyObjectSpawnList    ; field_2
                 dc.w    0                               ; field_6
                 dc.b    $12                             ; field_8
                 dc.b    0                               ; field_9
@@ -590,7 +590,7 @@ stru_12AB4:     dc.w    $2E                             ; field_0
                 dc.l    word_B9C6                       ; field_1A
 stru_12AD2:     dc.w    $40                             ; field_0
                                         ; DATA XREF: Stage_InitStage29Config   o
-                dc.l    word_1A3E6                      ; field_2
+                dc.l    Stage_EmptyObjectSpawnList      ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -606,7 +606,7 @@ stru_12AD2:     dc.w    $40                             ; field_0
                 dc.l    word_B9D2                       ; field_1A
 stru_12AF0:     dc.w    $4E                             ; field_0
                                         ; DATA XREF: Stage_InitStage30Config+6   o
-                dc.l    word_1A3E6                      ; field_2
+                dc.l    Stage_EmptyObjectSpawnList      ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -622,7 +622,7 @@ stru_12AF0:     dc.w    $4E                             ; field_0
                 dc.l    word_B9D8                       ; field_1A
 stru_12B0E:     dc.w    $62                             ; field_0
                                         ; DATA XREF: Stage_InitStage31Config+6   o
-                dc.l    word_1A3E6                      ; field_2
+                dc.l    Stage_EmptyObjectSpawnList      ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -638,7 +638,7 @@ stru_12B0E:     dc.w    $62                             ; field_0
                 dc.l    word_B9DE                       ; field_1A
 stru_12B2C:     dc.w    $76                             ; field_0
                                         ; DATA XREF: Stage_InitStage32Config   o
-                dc.l    word_1B3F6                      ; field_2
+                dc.l    Stage32_ObjectSpawnList         ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9
@@ -654,7 +654,7 @@ stru_12B2C:     dc.w    $76                             ; field_0
                 dc.l    word_B9E2                       ; field_1A
 stru_12B4A:     dc.w    $8A                             ; field_0
                                         ; DATA XREF: Stage_InitStage33Config   o
-                dc.l    word_1A3E6                      ; field_2
+                dc.l    Stage_EmptyObjectSpawnList      ; field_2
                 dc.w    0                               ; field_6
                 dc.b    0                               ; field_8
                 dc.b    0                               ; field_9

@@ -1,4 +1,4 @@
-Boss_SylpheedIntroStop:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_593D4
+Boss_SylpheedIntroStop:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_593D4
                 tst.w   4(a5)
                 beq.w   loc_59432
                 tst.w   8(a5)
@@ -250,8 +250,8 @@ loc_596EE:                                              ; CODE XREF: Boss_Sylphe
                 addq.w  #2,4(a5)
                 move.w  #$160,$3BC(a5)
                 move.w  #$F0,$3BE(a5)
-                movea.l #word_1BFB0,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_SylpheedObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 move.w  #$40,$11C(a5)                   ; '@'
 ; Sirene boss alternate counter update
 Boss_Sirene_AltState7:                                  ; DATA XREF: ROM:0005945E   o  ; was: loc_59710

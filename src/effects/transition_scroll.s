@@ -203,11 +203,11 @@ Effect_CopyPaletteData:                                 ; CODE XREF: Effect_Copy
                 dbf     d7,Effect_CopyPaletteData
                 rts
 ; End of function Effect_CopyPaletteData
-; Applies sine wave modulation to scroll buffer using Effect_LinearScrollBaseTable table and word_1B494 multiplier data
+; Applies sine wave modulation to scroll buffer using Effect_LinearScrollBaseTable table and Math_QuarterSineTable multiplier data
 Effect_ApplySineWaveScroll:
                 movea.l #Effect_LinearScrollBaseTable,a0  ; was: sub_26DF6
                 movea.w #(dword_FF9A00-M68K_RAM),a1
-                movea.l #word_1B494,a2
+                movea.l #Math_QuarterSineTable,a2
                 moveq   #$7F,d7
                 move.w  (dword_FF807E).w,d1
                 andi.w  #$1FE,d1

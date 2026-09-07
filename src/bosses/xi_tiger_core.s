@@ -1,4 +1,4 @@
-Boss_XiTigerMain:                                       ; DATA XREF: ROM:off_5DC   o  ; was: sub_3D814
+Boss_XiTigerMain:                                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D814
                 tst.w   4(a5)
                 beq.w   loc_3D878
                 tst.w   8(a5)
@@ -63,7 +63,7 @@ Boss_XiTigerInit:                                       ; DATA XREF: Boss_XiTige
                 move.w  #2,(word_FF821E).w
                 move.w  #$114,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 addq.w  #1,8(a5)
 locret_3D8CC:                                           ; CODE XREF: Boss_XiTigerSetup+4   j
                 rts
@@ -89,8 +89,8 @@ Boss_XiTigerSetup:                                      ; DATA XREF: ROM:0003D88
                 move.w  #$D00,2(a5)
                 clr.w   $54(a5)
                 clr.w   $56(a5)
-                movea.l #word_1BBCE,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_XiTigerObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 move.w  #$C000,$242(a5)
                 move.w  #$C000,$422(a5)
                 move.l  #word_EBA68,$248(a5)
@@ -257,7 +257,7 @@ Boss_XiTigerIdle_AttackDecision:                        ; DATA XREF: ROM:0003D89
                 cmpi.w  #$1E0,(word_FF8234).w
                 bmi.s   loc_3DB8A
                 move.w  #$1E0,(word_FF8234).w
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$A0,d0
                 bmi.w   loc_3DC7A
                 btst    #0,(dword_FFFF08).w
@@ -596,7 +596,7 @@ Boss_XiTigerDefeatInit:                                 ; DATA XREF: ROM:0003D8A
                 move.w  #$FEB0,(dword_FFA908).w
                 move.w  #$114,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
 loc_3E00C:                                              ; CODE XREF: Boss_XiTigerDefeatInit+14   j
                 lea     word_3E46E(pc),a1
@@ -643,7 +643,7 @@ Boss_XiTigerUpdateSprites:                              ; CODE XREF: Boss_XiTige
 Boss_XiTigerSetFacingDirection:                         ; CODE XREF: Boss_XiTigerIdleState+9A   j  ; was: sub_3E062
                                         ; Boss_XiTigerIdleState+DC   p
                 clr.w   $54(a5)
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   Boss_XiTigerFlipDirection
                 move.w  #$100,$54(a5)

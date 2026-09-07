@@ -11,7 +11,7 @@ off_2C10C:      dc.w    Projectile_SnakeInit-*          ; DATA XREF: Projectile_
 
 ; Initializes Snake projectile
 Projectile_SnakeInit:                                   ; DATA XREF: ROM:off_2C10C   o  ; was: sub_2C112
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   nullsub_61
                 move.l  #off_E953C,8(a0)
                 jsr     (Sprite_InitType160).l
@@ -121,7 +121,7 @@ Projectile_InitDebrisObject:                            ; CODE XREF: Boss_Bugmax
                 rts
 ; End of function Projectile_InitDebris
 ; Main Bugmax projectile handler
-Projectile_BugmaxMain:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_2C280
+Projectile_BugmaxMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C280
                 subq.w  #1,$4A(a5)
                 bpl.s   Projectile_DispatchBugmaxState
                 move.w  #$1000,2(a5)
@@ -149,7 +149,7 @@ locret_2C2AA:                                           ; CODE XREF: Projectile_
 ; End of function Projectile_BugmaxWait
 ; Spawns child projectiles
 Projectile_BugmaxSpawn:                                 ; DATA XREF: ROM:0002C29C   o  ; was: sub_2C2AC
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2C32A
                 jsr     (RandomNumber).l
                 btst    #0,(dword_FFFF08).w

@@ -1,4 +1,4 @@
-Boss_ArtemisIntroStop:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_57EBE
+Boss_ArtemisIntroStop:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_57EBE
                 tst.w   4(a5)
                 beq.w   loc_57F0E
                 tst.w   8(a5)
@@ -168,8 +168,8 @@ loc_580D2:                                              ; CODE XREF: Boss_Artemi
                 move.w  #$FFFF,$C(a5)
                 move.b  #$C2,d0
                 jsr     (Sound_PlaySFX).l
-                movea.l #byte_1BF56,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_ArtemisAttackObjectInitData,a1
+                jsr     (Object_InitGroupFromTable).l
 ; End of function Boss_ArtemisAttackState1
 ; Shooting pattern 2
 Boss_ArtemisShootPattern2:                              ; DATA XREF: ROM:00057F28   o  ; was: sub_58102
@@ -361,8 +361,8 @@ loc_58320:                                              ; CODE XREF: Projectile_
 ; End of function Projectile_ArtemisBullet2
 ; Initializes sprite graphics for Artemis projectile type 1
 Projectile_ArtemisInitSprite1:                          ; CODE XREF: Projectile_ArtemisBullet1+78   p  ; was: sub_58326
-                lea     (word_1BF64).l,a1
-                jmp     Sprite_InitFromPointerTable
+                lea     (Boss_ArtemisProjectileInitTable).l,a1
+                jmp     Object_InitGroupFromTable
 ; End of function Projectile_ArtemisInitSprite1
 ; Laser projectile handler
 Projectile_ArtemisLaser:                                ; CODE XREF: Boss_ArtemisSpawnProjectile6+22   j  ; was: sub_58332

@@ -1,4 +1,4 @@
-Enemy_HomingMissileUpdate:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_38EA2
+Enemy_HomingMissileUpdate:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_38EA2
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Physics_AddEntityOffset).l
@@ -35,7 +35,7 @@ loc_38F10:                                              ; CODE XREF: Enemy_Homin
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 bne.s   loc_38F5E
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_38F5E
                 movea.l #Projectile_HomingAndRockSpriteFrames,a1
                 jsr     (Sprite_InitTypeA4FromTable).l
@@ -55,7 +55,7 @@ loc_38F10:                                              ; CODE XREF: Enemy_Homin
                 move.l  d0,$1C(a0)
 loc_38F5E:                                              ; CODE XREF: Enemy_HomingMissileUpdate+76   j
                                         ; Enemy_HomingMissileUpdate+7E   j
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  d1,d0
                 move.w  -$80(a1,d0.w),d1
                 move.w  (a1,d0.w),d2
@@ -136,7 +136,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 andi.w  #3,d0
                 bne.s   locret_39084
                 move.w  #$14,$23C(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_39084
                 move.w  (a4)+,d0
                 move.w  (a4)+,d1
@@ -144,7 +144,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 jsr     (Projectile_SpawnDirectional8Way).l
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_39084
                 move.w  #1,$1C(a0)
                 moveq   #0,d0
@@ -169,7 +169,7 @@ word_39090:     dc.w    $30, $FFC4, $10, $FFD0, $C
 Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_TerobusterMainAI+27A   p  ; was: sub_3909A
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_390EE
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_390EE
                 move.b  (dword_FFFF08).w,d1
                 andi.w  #7,d1
@@ -191,7 +191,7 @@ locret_390EE:                                           ; CODE XREF: Boss_Terobu
                 rts
 ; End of function Boss_TerobusterSpawnFallingRock
 ; Boss movement physics with acceleration and boundaries
-Boss_TerobusterMovementPhysics:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_390F0
+Boss_TerobusterMovementPhysics:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_390F0
                 jsr     (RandomNumber).l
                 tst.w   4(a5)
                 bne.s   loc_39120

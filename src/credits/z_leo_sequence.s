@@ -311,7 +311,7 @@ Debug_CameraManualControl_Return:                       ; CODE XREF: Debug_Camer
 ; End of function Debug_CameraManualControl
 ; Updates the camera orbit from the shared sine table
 Boss_ZLeoUpdateCameraOrbit:
-                lea     (word_1B514).l,a4               ; was: sub_2241E
+                lea     (Math_SineTable).l,a4           ; was: sub_2241E
                 addi.w  #4,(dword_FF9404).w
                 addi.w  #2,(dword_FF9404+2).w
                 move.w  (dword_FF9404).w,d0
@@ -353,7 +353,7 @@ Boss_ZLeoSpawnParticles:                                ; CODE XREF: Boss_ZLeoIn
                 bmi.w   Boss_ZLeoSpawnParticles_Return
 Boss_ZLeoSpawnParticles_Loop:                           ; CODE XREF: Boss_ZLeoSpawnParticles+84   j  ; was: loc_224A4
                 jsr     (RandomNumber).l
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Boss_ZLeoSpawnParticles_Return
                 jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'

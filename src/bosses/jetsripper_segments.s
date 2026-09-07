@@ -208,7 +208,7 @@ loc_36026:                                              ; CODE XREF: Boss_Jetsri
 ; Calculates Y velocity from sine lookup using angle offset
 Math_CalculateSineVelocity:
                 move.w  #3,d3                           ; was: sub_36034
-                movea.l #word_1B514,a0
+                movea.l #Math_SineTable,a0
                 move.w  $56(a5),d0
                 addi.w  #$100,d0
                 andi.w  #$1FE,d0
@@ -222,7 +222,7 @@ Math_CalculateSineVelocity:
 Boss_JetsripperCalcVelocity:                            ; CODE XREF: Boss_JetsripperOscillate+3C   p  ; was: sub_36058
                                         ; Boss_JetsripperDivePrep+C   p
                 moveq   #$C,d3
-                movea.l #word_1B514,a0
+                movea.l #Math_SineTable,a0
                 move.w  $176(a5),d0
                 addi.w  #$100,d0
                 andi.w  #$1FE,d0
@@ -257,7 +257,7 @@ loc_36098:                                              ; CODE XREF: Boss_Update
                 movea.w a5,a0
                 bclr    #0,2(a5)
                 movea.w #(word_FFC680-M68K_RAM),a1
-                movea.l #word_1B514,a2
+                movea.l #Math_SineTable,a2
                 move.w  $5A(a5),d1
                 move.w  #$1FE,d2
                 moveq   #$10,d7
@@ -299,7 +299,7 @@ loc_3611A:                                              ; CODE XREF: Boss_Jetsri
                 clr.w   $58(a0)
                 movea.w #(word_FFC680-M68K_RAM),a1
                 movea.w #(byte_FF9808-M68K_RAM),a2
-                movea.l #word_1B514,a3
+                movea.l #Math_SineTable,a3
                 move.w  $5A(a5),d1
                 move.w  #$1FE,d2
                 moveq   #0,d6
@@ -356,7 +356,7 @@ word_361C6:     dc.w    $46, $28A, $4CE, 0, 2, 6, $2A, 0, $AAA, $CCC, $EEE, 0
                                         ; Boss_JetsripperUpdatePalette+20   r
 
 ; Clamps segment Y position to maximum 0x144
-Boss_JetsripperClampY:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_361DE
+Boss_JetsripperClampY:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_361DE
                 cmpi.w  #$144,$14(a5)
                 bmi.s   locret_361EC
                 move.w  #$144,$14(a5)
@@ -364,7 +364,7 @@ locret_361EC:                                           ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperClampY
 ; Updates body segment with gravity physics
-Boss_JetsripperSegmentPhysics:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_361EE
+Boss_JetsripperSegmentPhysics:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_361EE
                 tst.w   4(a5)
                 beq.w   loc_36276
                 addi.l  #$4000,$1C(a5)
@@ -413,7 +413,7 @@ loc_36276:                                              ; CODE XREF: Boss_Jetsri
                 move.w  #$CF00,2(a5)
                 move.w  #4,(word_FFA010).w
                 move.l  #$FFFC0000,$1C(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_362CC
                 move.l  #off_E9560,8(a0)
                 jsr     (Projectile_InitType88).l

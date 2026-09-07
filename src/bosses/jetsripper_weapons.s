@@ -101,7 +101,7 @@ Boss_JetsripperSpawnDirectionalProjectile:              ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperSpawnDirectionalProjectile
 ; Projectile state dispatcher using jump table for behavior selection
-Projectile_StateDispatcher:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_306EA
+Projectile_StateDispatcher:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_306EA
                 move.w  4(a5),d0
                 lea     off_306F6(pc,d0.w),a0
                 adda.w  (a0),a0

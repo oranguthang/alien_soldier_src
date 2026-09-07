@@ -525,7 +525,7 @@ Boss_MedusaIdleState:                                   ; DATA XREF: ROM:000555E
                 bsr.w   Boss_MedusaIntroMove
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$FFF4,$5E(a5)
                 bsr.w   Boss_MedusaIntroInit
                 move.b  #$30,d0                         ; '0'
@@ -537,7 +537,7 @@ Boss_SylpheedIntroMove:                                 ; DATA XREF: ROM:000555E
                 bsr.w   Boss_MedusaIntroMove
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 lea     (byte_C00C).l,a0
                 jsr     (LoadPalette).l
                 move.w  #$FFF2,$5E(a5)
@@ -555,7 +555,7 @@ Boss_ArtemisIntroMove:                                  ; DATA XREF: ROM:000555E
                 bsr.w   Boss_MedusaIntroMove
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 lea     (byte_C01C).l,a0
                 jsr     (LoadPalette).l
                 move.w  #$FFF2,$5E(a5)
@@ -569,7 +569,7 @@ Boss_SireneDispatcher:                                  ; DATA XREF: ROM:000555E
                 bsr.w   Boss_MedusaIntroMove
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Boss_MedusaIntroInit
                 move.b  #$30,d0                         ; '0'
@@ -581,7 +581,7 @@ Boss_SireneEndBattle1:                                  ; DATA XREF: ROM:000555F
                 move.b  #1,(byte_FFA958).w
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
 ; End of function Boss_SireneEndBattle1
@@ -591,7 +591,7 @@ Boss_SireneEndBattle2:                                  ; DATA XREF: ROM:000555F
                 move.b  #1,(byte_FFA958).w
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
 ; End of function Boss_SireneEndBattle2
@@ -608,7 +608,7 @@ Cutscene_SevenForcesTransition:                         ; DATA XREF: ROM:000555F
                 move.b  #1,(byte_FFA958).w
                 move.w  #$428,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Boss_MedusaIntroInit
                 rts

@@ -1,4 +1,4 @@
-Boss_SnakeMain:                                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_4079E
+Boss_SnakeMain:                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4079E
                 tst.w   4(a5)
                 beq.w   Boss_SnakeStateDispatch
                 move.w  $10(a5),d0
@@ -221,7 +221,7 @@ Boss_SnakeSegmentDestroy:                               ; DATA XREF: ROM:0004084
                 move.w  a5,$4A(a5)
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_40AB6
                 moveq   #3,d0
                 jsr     (loc_2BD20).l
@@ -257,7 +257,7 @@ nullsub_83:                                             ; DATA XREF: ROM:0004085
 ; End of function nullsub_83
 
 ; Main handler for Snake segment
-Boss_SnakeSegmentMain:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_40AF6
+Boss_SnakeSegmentMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40AF6
                 bsr.w   Boss_SnakeUpdateAnimation
                 tst.b   $21(a5)
                 beq.s   loc_40B0A
@@ -273,7 +273,7 @@ loc_40B0A:                                              ; CODE XREF: Boss_SnakeS
                 move.w  #4,4(a5)
                 jsr     (Projectile_ExplodeOnImpact).l
                 andi.w  #$7FFF,2(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_SnakeSegmentDispatch
                 moveq   #3,d0
                 jsr     (loc_2BD20).l
@@ -299,7 +299,7 @@ Boss_SnakeSegmentWait:                                  ; DATA XREF: ROM:off_40B
                 cmpi.w  #$160,$14(a5)
                 bgt.s   locret_40B9A
                 lea     (word_FFCF80).w,a0
-                jsr     (loc_1C11C).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
                 bne.s   locret_40B9A
                 jsr     (Projectile_InitType88).l
                 bsr.s   Boss_SnakeSetupProjectile
@@ -385,8 +385,8 @@ loc_40C48:                                              ; CODE XREF: Boss_SnakeA
                 move.w  (dword_FF9400).w,d0
                 addi.w  #$100,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d0.w),d1
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d0.w),d1
                 move.w  (a1,d0.w),d0
                 muls.w  (dword_FF9408+2).w,d0
                 muls.w  (dword_FF940C).w,d1

@@ -98,7 +98,7 @@ loc_F946:                                               ; CODE XREF: Stage24_Gra
                 rts
 ; End of function Stage24_GraphicsSetup
 ; Scroll handler
-Stage24_ScrollHandler:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_F950
+Stage24_ScrollHandler:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_F950
                 move.b  (byte_FFA420).w,$20(a5)
                 subq.b  #4,$20(a5)
                 tst.w   $56(a5)
@@ -198,7 +198,7 @@ locret_FA82:                                            ; CODE XREF: Stage_Check
                 rts
 ; End of function Stage_CheckPhaseComplete
 ; Increments stage phase counter
-Stage_IncrementPhase:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_FA84
+Stage_IncrementPhase:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_FA84
                                         ; ROM:0000F15E   o
                 addq.w  #2,(word_FFA950).w
 ; Return after incrementing stage phase

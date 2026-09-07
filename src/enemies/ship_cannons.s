@@ -1,4 +1,4 @@
-Enemy_ShipMain:                                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_2F5C0
+Enemy_ShipMain:                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F5C0
                 move.l  $54(a5),d0
                 add.l   d0,(dword_FFA908).w
                 move.w  4(a5),d0
@@ -298,7 +298,7 @@ locret_2F90C:                                           ; CODE XREF: Enemy_ShipS
                 rts
 ; End of function Enemy_ShipSpawnDebrisProjectile
 ; Main handler for ship cannon 1
-Enemy_ShipCannon1Main:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_2F90E
+Enemy_ShipCannon1Main:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F90E
                 move.w  4(a5),d0
                 movea.w off_2F91E(pc,d0.w),a0
                 adda.l  #Enemy_ShipCannon1Init,a0
@@ -498,7 +498,7 @@ Enemy_CannonFireProjectile:                             ; CODE XREF: Enemy_ShipC
                 bne.s   locret_2FBE8
                 move.b  #$2C,d0                         ; ','
                 jsr     (Sound_PlaySFX).l
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2FBE8
                 move.w  #$188,(a0)
                 move.w  #$8500,2(a0)
@@ -541,7 +541,7 @@ locret_2FC24:                                           ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdateFlipToPlayer
 ; Main dispatcher checking screen bounds and routing to state
-Enemy_ProjectileMainDispatch:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_2FC26
+Enemy_ProjectileMainDispatch:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2FC26
                 cmpi.w  #$70,$10(a5)                    ; 'p'
                 bpl.s   loc_2FC34
                 move.w  #4,4(a5)

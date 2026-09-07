@@ -31,7 +31,7 @@ locret_36366:                                           ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperSpawnProjectile
 ; Updates projectile with bouncing logic
-Boss_JetsripperProjectileUpdate:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_36368
+Boss_JetsripperProjectileUpdate:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_36368
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$8B0,d0
@@ -50,7 +50,7 @@ loc_3638A:                                              ; CODE XREF: Boss_Jetsri
                 beq.s   loc_363C2
                 bclr    #4,$22(a5)
                 beq.s   loc_363B4
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_363B4
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -93,7 +93,7 @@ Boss_JetsripperProjectileFinal:                         ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperProjectileUpdate
 ; Calculates distance to player for AI
-Boss_CalculatePlayerDistance:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_3641A
+Boss_CalculatePlayerDistance:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3641A
                 move.w  (word_FFEC02).w,(word_FFEC04).w
                 tst.w   4(a5)
                 beq.s   loc_3648A
@@ -165,7 +165,7 @@ Boss_CheckPlayerProximity:                              ; DATA XREF: Boss_Calcul
                 move.w  #$13,(word_FFA944).w
                 move.w  #$24,d0                         ; '$'
                 move.w  #$134,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; End of function Boss_CheckPlayerProximity
 nullsub_77:
                 rts

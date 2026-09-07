@@ -55,8 +55,8 @@ loc_502BE:                                              ; CODE XREF: Boss_WolfGa
 loc_502C8:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+7A   j
                                         ; Boss_WolfGaropaShootPattern5+8E   j
                 move.w  $A16(a5),d0
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d0.w),d1
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d1
                 move.w  (a0,d0.w),d2
                 ext.l   d1
                 ext.l   d2
@@ -225,8 +225,8 @@ Boss_WolfGaropaSpawnProjectile3:                        ; CODE XREF: Boss_WolfGa
                 clr.w   $53C(a5)
 loc_504AA:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+4   j
                 move.w  $A76(a5),d0
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d0.w),d1
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d1
                 move.w  (a0,d0.w),d2
                 moveq   #$20,d3                         ; ' '
                 moveq   #$36,d4                         ; '6'
@@ -282,8 +282,8 @@ loc_5053A:                                              ; CODE XREF: Boss_WolfGa
 loc_5055A:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+AA   j
                                         ; Boss_WolfGaropaSpawnProjectile3+B2   j
                 move.w  $A76(a5),d3
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d3.w),d1
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d3.w),d1
                 move.w  (a0,d3.w),d2
                 muls.w  d0,d1
                 muls.w  d0,d2
@@ -603,8 +603,8 @@ Projectile_WolfGaropaHoming:                            ; CODE XREF: Projectile_
                 move.b  #8,$20(a0)
                 move.w  $A76(a5),d0
                 move.w  d0,d2
-                lea     (word_1B514).l,a2
-                move.w  word_1B494-word_1B514(a2,d0.w),d3
+                lea     (Math_SineTable).l,a2
+                move.w  Math_QuarterSineTable-Math_SineTable(a2,d0.w),d3
                 move.w  (a2,d0.w),d4
                 muls.w  #$80,d3
                 muls.w  #$80,d4
@@ -638,7 +638,7 @@ locret_50AEE:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_WolfGaropaHoming
 ; Wave projectile
-Projectile_WolfGaropaWave:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_50AF0
+Projectile_WolfGaropaWave:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_50AF0
                 tst.w   (word_FF808C).w
                 bpl.s   loc_50B06
                 btst    #7,$22(a5)

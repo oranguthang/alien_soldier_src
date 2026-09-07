@@ -1,4 +1,4 @@
-Boss_SunsetStingInitDispatcher:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_40CEE
+Boss_SunsetStingInitDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40CEE
                 moveq   #4,d7
                 jsr     (Gfx_InitPaletteFade).l
                 move.w  4(a5),d0
@@ -36,7 +36,7 @@ Boss_SunsetStingSetupArena:                             ; DATA XREF: ROM:off_40D
                 move.b  #6,(byte_FF80EC).w
                 move.w  #$1C0,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 addq.w  #2,4(a5)
                 move.b  #$80,$4B(a5)
                 clr.w   (word_FFC67E).w
@@ -47,8 +47,8 @@ Boss_SunsetStingLoadGraphics:                           ; DATA XREF: ROM:00040D0
                 tst.w   (word_FFF720).w
                 bmi.w   locret_40DC2
                 addq.w  #2,4(a5)
-                movea.l #word_1BD78,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_SunsetStingObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 moveq   #6,d7
                 jsr     (Data_LoadPaletteTable).l
                 move.w  (a5),-(sp)
@@ -135,7 +135,7 @@ Boss_SunsetStingIdleState:                              ; DATA XREF: ROM:00040D0
                 bra.w   Boss_SunsetStingUpdateGraphics
 ; ---------------------------------------------------------------------------
 loc_40ECA:                                              ; CODE XREF: Boss_SunsetStingIdleState+4   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$80,d0
                 bcs.s   Boss_SunsetStingCloseRangeAttack
                 lea     word_40EE0(pc),a0
@@ -387,7 +387,7 @@ word_411B0:     dc.w    $FFFD, $FCFF, $103, $401, $49ED, $60, $363C, 4
 
 ; Spawns multiple projectile debris with randomized trajectories
 Boss_SunsetStingSpawnDebris:                            ; CODE XREF: Boss_SunsetStingSpawnDebris+5E   j  ; was: sub_411C0
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_41222
                 move.w  #$1C4,(a0)
                 ori.w   #$CD00,2(a0)
@@ -423,7 +423,7 @@ Boss_SunsetStingCalculateTrajectory:                    ; CODE XREF: Boss_Sunset
                 sub.w   $5A(a5),d1
                 add.w   d1,d1
                 andi.w  #$1FE,d1
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  (a2,d1.w),d0
                 move.w  -$80(a2,d1.w),d1
                 neg.w   d0
@@ -440,7 +440,7 @@ loc_41250:                                              ; CODE XREF: Boss_Sunset
 ; Checks distance to player and sets horizontal flip bit
 Boss_SunsetStingCheckFlipDirection:
                 andi.w  #$F7FF,$E(a5)                   ; was: sub_4125A
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   locret_41270
                 ori.w   #$800,$E(a5)
@@ -487,7 +487,7 @@ Boss_SunsetStingCalculateVerticalVelocity:              ; CODE XREF: Boss_Sunset
                 move.b  $4B(a5),d0
                 asl.w   #2,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a0
+                lea     (Math_SineTable).l,a0
                 move.w  (a0,d0.w),d0
                 ext.l   d0
                 asl.l   #6,d0
@@ -556,7 +556,7 @@ Boss_SunsetStingSpawnDebrisField:                       ; DATA XREF: ROM:00040D2
                 move.w  (word_FFC67C).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
 loc_413A4:                                              ; CODE XREF: Boss_SunsetStingSpawnDebrisField+6E   j
                 move.w  #$1C4,(a4)
                 move.w  #$CD40,2(a4)
@@ -615,7 +615,7 @@ locret_41454:                                           ; CODE XREF: Boss_Sunset
                 rts
 ; End of function Boss_SunsetStingFadeOutAndDestroy
 ; Updates debris particle rotation and animation frame
-Effect_DebrisParticleAnimate:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_41456
+Effect_DebrisParticleAnimate:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_41456
                 tst.b   $4B(a5)
                 beq.s   loc_41462
                 subq.b  #1,$4B(a5)
@@ -800,7 +800,7 @@ Boss_SunsetStingUpdateBodyPartPositions:                ; CODE XREF: Boss_Sunset
                 move.w  (word_FFC67C).w,d7
                 subq.w  #1,d7
                 lea     $60(a5),a4
-                movea.l #word_1B514,a2
+                movea.l #Math_SineTable,a2
                 movem.l a5,-(sp)
                 btst    #3,$E(a5)
                 lea     Boss_SunsetStingApplyParentOffset(pc),a5

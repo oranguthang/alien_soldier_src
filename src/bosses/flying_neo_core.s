@@ -1,4 +1,4 @@
-Boss_FlyingNeoMain:                                     ; DATA XREF: ROM:off_5DC   o  ; was: sub_3BFF6
+Boss_FlyingNeoMain:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3BFF6
                 tst.w   4(a5)
                 beq.w   Boss_FlyingNeoStateDispatch
                 tst.w   $23C(a5)
@@ -90,7 +90,7 @@ Boss_FlyingNeoInit:                                     ; DATA XREF: Boss_Flying
                 move.w  #1,8(a5)
                 move.w  #$154,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 movea.w #(word_FF9900-M68K_RAM),a0
                 moveq   #$C,d0
                 jsr     (Math_CalculateSineCosineTable).l
@@ -184,8 +184,8 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 nop
                 moveq   #1,d7
                 bsr.w   Boss_FlyingNeoInitSprites
-                movea.l #word_1BB94,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_FlyingNeoObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 lea     (byte_C330).l,a0
                 jsr     (Gfx_SyncPaletteBuffers).l
                 lea     (word_3E12).l,a2
@@ -356,7 +356,7 @@ Boss_FlyingNeoDefeatState4:                             ; DATA XREF: ROM:0003C0B
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 bne.s   loc_3C4A6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_3C4A6
                 move.l  #off_E953C,8(a0)
                 move.l  #$FFFF1000,$1C(a0)

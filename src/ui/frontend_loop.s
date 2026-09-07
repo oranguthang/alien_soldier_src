@@ -52,9 +52,9 @@ Sys_UpdateGameLoop:                                     ; DATA XREF: Sys_Dispatc
                 bne.w   loc_1D3A8
 loc_1CF2E:                                              ; CODE XREF: Sys_UpdateGameLoop+4   j
                                         ; Sys_UpdateGameLoop+C   j
-                jsr     (Gfx_UpdateScrollPosition).l
+                jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sys_InitObjectPointers).l
-                jsr     (UI_CheckVBlankFlag).l
+                jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   UI_DispatchMenuState
                 jsr     (Sys_UpdateObjectCount).l

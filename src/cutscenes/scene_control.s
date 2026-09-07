@@ -1,5 +1,5 @@
 Sys_TransitionToStoryScreen:                            ; DATA XREF: ROM:0001D298   o  ; was: sub_1D3C8
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #$24,(GameModeIndex).w          ; '$'
                 clr.w   (GameSubstateIndex).w
 locret_1D3D8:                                           ; CODE XREF: Effect_FadeOutPlanet+14   j

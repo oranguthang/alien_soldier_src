@@ -283,7 +283,7 @@ Boss_ShieldViperSpawnLinkedProjectiles:                 ; DATA XREF: ROM:0004E03
                 move.w  #2,d6
                 move.w  #$17,d7
 loc_4E892:                                              ; CODE XREF: Boss_ShieldViperSpawnLinkedProjectiles+2E   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_4E8B4
                 move.w  #$10,(a0)
                 move.w  a0,$5C(a1)
@@ -318,7 +318,7 @@ Boss_ShieldViperSpawnScatteredProjectiles:              ; DATA XREF: ROM:0004E03
                 move.w  #$20,d6                         ; ' '
                 moveq   #0,d5
 loc_4E8EE:                                              ; CODE XREF: Boss_ShieldViperSpawnScatteredProjectiles+64   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_4E93A
                 move.w  #$378,(a0)
                 move.w  #$4C80,2(a0)
@@ -460,7 +460,7 @@ Boss_ShieldViperSpawnChildSequentially:                 ; DATA XREF: ROM:0004E05
                 bsr.w   Boss_ShieldViperUpdateSpriteFlip
                 subq.w  #1,$48(a5)
                 bpl.s   locret_4EC1A
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4EC1A
                 move.w  #$10,(a0)
                 movea.w $4A(a5),a1

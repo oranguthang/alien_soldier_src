@@ -9,7 +9,7 @@ loc_1D636:                                              ; CODE XREF: UI_Initiali
                 jsr     (Sys_InitGameMode).l
                 movea.l #stru_1D70A,a0
                 jsr     (LoadObjData).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w

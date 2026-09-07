@@ -29,7 +29,7 @@ loc_3564E:                                              ; CODE XREF: Boss_CheckS
                 rts
 ; End of function Boss_CheckScreenBounds
 ; Main handler checking boss state and HP thresholds
-Boss_JetsripperMainHandler:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_35656
+Boss_JetsripperMainHandler:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_35656
                 clr.w   $52(a5)
                 bsr.s   Boss_JetsripperUpdateState
                 tst.w   (a5)
@@ -101,7 +101,7 @@ Boss_JetsripperInitState:                               ; DATA XREF: Boss_Jetsri
                 move.w  a5,$48(a5)
                 move.w  #$E4,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; End of function Boss_JetsripperInitState
 ; Initializes 18 body segments with physics parameters
 Boss_JetsripperInitBody:                                ; DATA XREF: ROM:000356DA   o  ; was: sub_3570E
@@ -514,7 +514,7 @@ loc_35BC4:                                              ; CODE XREF: Boss_Jetsri
                 move.l  #$28000,$18(a5)
                 move.l  #$FFFA8000,$1C(a5)
                 subi.w  #$34,(word_FF8234).w            ; '4'
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   locret_35C36
                 move.l  #$FFFD8000,$18(a5)
@@ -583,7 +583,7 @@ loc_35CCE:                                              ; CODE XREF: Boss_Jetsri
                 move.w  #$180,$56(a5)
                 clr.w   $BE(a5)
                 clr.w   $5A(a5)
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   loc_35D24
                 move.w  #8,4(a5)
@@ -617,7 +617,7 @@ Boss_JetsripperDeathInit:                               ; DATA XREF: ROM:000356F
                 jsr     (Sprite_ClearObjectFlags).l
                 clr.w   2(a5)
                 move.w  #$C0,$4C(a5)
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   loc_35DAA
                 move.w  #$EC,(a0)
                 clr.w   4(a0)
@@ -650,7 +650,7 @@ Boss_JetsripperDeathFade:                               ; DATA XREF: ROM:000356F
                 bpl.s   locret_35DDA
                 moveq   #0,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; End of function Boss_JetsripperDeathFade
 ; Adjusts radius parameter toward target value 0xC0
 Boss_JetsripperAdjustRadius:                            ; CODE XREF: Boss_JetsripperRotateState   p  ; was: sub_35DF2

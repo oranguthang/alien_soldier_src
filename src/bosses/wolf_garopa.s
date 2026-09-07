@@ -1,4 +1,4 @@
-Boss_WolfGaropaIdleState:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_32DFE
+Boss_WolfGaropaIdleState:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_32DFE
                 move.w  4(a5),d0
                 lea     off_32E0A(pc,d0.w),a0
                 adda.w  (a0),a0

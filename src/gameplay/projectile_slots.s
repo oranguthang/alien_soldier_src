@@ -1,187 +1,188 @@
-Projectile_UpdateTrajectory:                            ; CODE XREF: Effect_SpawnStarParticle   p  ; was: sub_1C050
-                                        ; Projectile_FindFreeSlotAndClear+4   p
+; Finds the first free slot in the forward projectile/object pool
+Projectile_FindFreePrimarySlot:                         ; CODE XREF: Effect_SpawnStarParticle   p  ; was: sub_1C050
+                                        ; Projectile_FindFreeOrRecycleSlot+4   p
                 movea.w #(word_FFCF80-M68K_RAM),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
-loc_1C0A4:                                              ; CODE XREF: Boss_CaterpillarCheckFreeSlot+4   j
+Projectile_FindFreePrimarySlot_CheckExtendedRange:      ; CODE XREF: Boss_CaterpillarCheckFreeSlot+4   j  ; was: loc_1C0A4
                                         ; Boss_SunsetStingInitHomingProjectile+E   p
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
-loc_1C11C:                                              ; CODE XREF: Stage_SpawnIntroProjectile+C   p
+Projectile_FindFreePrimarySlot_CheckEnemyRange:         ; CODE XREF: Stage_SpawnIntroProjectile+C   p  ; was: loc_1C11C
                                         ; Enemy_FindFreeSpriteSlot+4   j
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
-loc_1C144:                                              ; CODE XREF: Boss_ShiperSpawnProjectile+16   p
+Projectile_FindFreePrimarySlot_CheckFinalRange:         ; CODE XREF: Boss_ShiperSpawnProjectile+16   p  ; was: loc_1C144
                                         ; Boss_TerobusterSpawnHomingMissile+22   p
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C168
+                beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
                 move.w  (a0),d0
                 beq.w   *+4
-locret_1C168:                                           ; CODE XREF: Projectile_UpdateTrajectory+6   j
-                                        ; Projectile_UpdateTrajectory+10   j
+Projectile_FindFreePrimarySlot_Return:                  ; CODE XREF: Projectile_FindFreePrimarySlot+6   j  ; was: locret_1C168
+                                        ; Projectile_FindFreePrimarySlot+10   j
                 rts
-; End of function Projectile_UpdateTrajectory
+; End of function Projectile_FindFreePrimarySlot
 ; Finds free slot in projectile buffer unrolled search
 Projectile_FindFreeSlot:                                ; CODE XREF: Enemy_SpawnProjectileAtAngle   p  ; was: sub_1C16A
                                         ; sub_2A0D6   p
                 movea.w #(byte_FFD9A0-M68K_RAM),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
-                beq.w   locret_1C282
+                beq.w   Projectile_FindFreeSlot_Return
                 lea     -$60(a0),a0
                 move.w  (a0),d0
                 beq.w   *+4
-locret_1C282:                                           ; CODE XREF: Projectile_FindFreeSlot+6   j
+Projectile_FindFreeSlot_Return:                         ; CODE XREF: Projectile_FindFreeSlot+6   j  ; was: locret_1C282
                                         ; Projectile_FindFreeSlot+10   j
                 rts
 ; End of function Projectile_FindFreeSlot
@@ -191,19 +192,19 @@ Math_ClearD0D1:
                 moveq   #0,d1
 ; End of function Math_ClearD0D1
 ; Clears all objects except specified types
-Sprite_ClearAllExcept:                                  ; CODE XREF: Cutscene_ShipAnimationLoop+26   j  ; was: sub_1C288
+Object_ClearAllExceptTypes:                             ; CODE XREF: Cutscene_ShipAnimationLoop+26   j  ; was: sub_1C288
                                         ; Stage_CaterpillarShipMovement+A0   p
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 moveq   #0,d3
                 moveq   #$3C,d7                         ; '<'
-loc_1C290:                                              ; CODE XREF: Sprite_ClearAllExcept+76   j
+Object_ClearAllExceptTypes_Loop:                        ; CODE XREF: Object_ClearAllExceptTypes+76   j  ; was: loc_1C290
                                         ; Boss_SireneBattleStart+74   p
                 move.w  (a0),d2
-                beq.s   loc_1C2FA
+                beq.s   Object_ClearAllExceptTypes_Next
                 cmp.w   d0,d2
-                beq.s   loc_1C2FA
+                beq.s   Object_ClearAllExceptTypes_Next
                 cmp.w   d1,d2
-                beq.s   loc_1C2FA
+                beq.s   Object_ClearAllExceptTypes_Next
                 move.l  d3,(a0)
                 move.l  d3,4(a0)
                 move.l  d3,8(a0)
@@ -228,34 +229,34 @@ loc_1C290:                                              ; CODE XREF: Sprite_Clea
                 move.l  d3,$54(a0)
                 move.l  d3,$58(a0)
                 move.l  d3,$5C(a0)
-loc_1C2FA:                                              ; CODE XREF: Sprite_ClearAllExcept+A   j
-                                        ; Sprite_ClearAllExcept+E   j
+Object_ClearAllExceptTypes_Next:                        ; CODE XREF: Object_ClearAllExceptTypes+A   j  ; was: loc_1C2FA
+                                        ; Object_ClearAllExceptTypes+E   j
                 lea     $60(a0),a0
-                dbf     d7,loc_1C290
+                dbf     d7,Object_ClearAllExceptTypes_Loop
                 rts
-; End of function Sprite_ClearAllExcept
+; End of function Object_ClearAllExceptTypes
 ; Finds free projectile slot and clears
-Projectile_FindFreeSlotAndClear:                        ; CODE XREF: Projectile_SpawnQuadPattern:loc_E294   p  ; was: sub_1C304
+Projectile_FindFreeOrRecycleSlot:                       ; CODE XREF: Projectile_SpawnQuadPattern:loc_E294   p  ; was: sub_1C304
                                         ; sub_2FF1C:loc_2FF62   p
                 movem.l d7,-(sp)
-                jsr     Projectile_UpdateTrajectory(pc)  ; (pc)
-                beq.s   loc_1C32A
+                jsr     Projectile_FindFreePrimarySlot(pc)  ; (pc)
+                beq.s   Projectile_FindFreeOrRecycleSlot_Return
                 movea.w #(word_FFCF80-M68K_RAM),a0
                 moveq   #$1A,d7
-loc_1C314:                                              ; CODE XREF: Projectile_FindFreeSlotAndClear+20   j
+Projectile_FindFreeOrRecycleSlot_Scan:                  ; CODE XREF: Projectile_FindFreeOrRecycleSlot+20   j  ; was: loc_1C314
                 move.w  (a0),d0
-                beq.s   loc_1C32A
+                beq.s   Projectile_FindFreeOrRecycleSlot_Return
                 btst    #6,3(a0)
-                bne.s   loc_1C330
+                bne.s   Projectile_FindFreeOrRecycleSlot_Clear
                 lea     $60(a0),a0
-                dbf     d7,loc_1C314
+                dbf     d7,Projectile_FindFreeOrRecycleSlot_Scan
                 moveq   #1,d7
-loc_1C32A:                                              ; CODE XREF: Projectile_FindFreeSlotAndClear+8   j
-                                        ; Projectile_FindFreeSlotAndClear+12   j
+Projectile_FindFreeOrRecycleSlot_Return:                ; CODE XREF: Projectile_FindFreeOrRecycleSlot+8   j  ; was: loc_1C32A
+                                        ; Projectile_FindFreeOrRecycleSlot+12   j
                 movem.l (sp)+,d7
                 rts
 ; ---------------------------------------------------------------------------
-loc_1C330:                                              ; CODE XREF: Projectile_FindFreeSlotAndClear+1A   j
+Projectile_FindFreeOrRecycleSlot_Clear:                 ; CODE XREF: Projectile_FindFreeOrRecycleSlot+1A   j  ; was: loc_1C330
                 moveq   #0,d7
                 move.l  d7,(a0)
                 move.l  d7,4(a0)
@@ -284,7 +285,7 @@ loc_1C330:                                              ; CODE XREF: Projectile_
                 moveq   #0,d7
                 movem.l (sp)+,d7
                 rts
-; End of function Projectile_FindFreeSlotAndClear
+; End of function Projectile_FindFreeOrRecycleSlot
 ; Clear 96 bytes of object data
 Object_Clear96Bytes:                                    ; CODE XREF: Boss_ValkirieMovePattern1:loc_566BC   p  ; was: sub_1C398
                 moveq   #0,d3
@@ -314,4 +315,3 @@ Object_Clear96Bytes:                                    ; CODE XREF: Boss_Valkir
                 move.l  d3,$5C(a0)
                 rts
 ; End of function Object_Clear96Bytes
-; Loads stage background graphics with DMA and palette transitions

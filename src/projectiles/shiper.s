@@ -98,14 +98,14 @@ loc_370FA:                                              ; CODE XREF: Boss_Shiper
 Boss_ShiperSpawnAngledProjectile:
                 btst    #0,(word_FFA000+1).w            ; was: sub_37104
                 bne.s   locret_3715E
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3715E
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 jsr     (Sprite_InitType94FromTable).l
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$7E,d0                         ; '~'
                 addi.w  #$C0,d0
-                movea.l #word_1B514,a1
+                movea.l #Math_SineTable,a1
                 move.w  -$80(a1,d0.w),d1
                 move.w  (a1,d0.w),d2
                 ext.l   d1
@@ -131,7 +131,7 @@ loc_3716A:                                              ; CODE XREF: Boss_Shells
                                         ; Boss_ShellshogunSpawnFallingDebris+82   j
                 jsr     (RandomNumber).l
                 movea.w #(byte_FFD700-M68K_RAM),a0
-                jsr     (loc_1C11C).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
                 bne.s   locret_371E6
                 move.w  #$108,(a0)
                 move.w  #$ED80,2(a0)
@@ -164,12 +164,12 @@ Boss_ShiperSpawnProjectile:                             ; CODE XREF: Boss_Shiper
                 movea.w #(byte_FFD700-M68K_RAM),a0
                 tst.w   (word_FFFF0E).w
                 bne.s   loc_37208
-                jsr     (loc_1C144).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 beq.s   loc_37210
                 rts
 ; ---------------------------------------------------------------------------
 loc_37208:                                              ; CODE XREF: Boss_ShiperSpawnProjectile+14   j
-                jsr     (loc_1C11C).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
                 bne.s   locret_37274
 loc_37210:                                              ; CODE XREF: Boss_ShiperSpawnProjectile+1C   j
                 move.w  #$98,(a0)
@@ -196,7 +196,7 @@ locret_37274:                                           ; CODE XREF: Boss_Shiper
                 rts
 ; End of function Boss_ShiperSpawnProjectile
 ; Boss projectile movement with horizontal acceleration and vertical oscillation
-Enemy_BossProjectileMovement:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_37276
+Enemy_BossProjectileMovement:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_37276
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$1AD8,d0
@@ -209,7 +209,7 @@ loc_3728C:                                              ; CODE XREF: Enemy_BossP
                 bpl.s   loc_372B6
                 tst.w   $24(a5)
                 bpl.s   loc_372C4
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_372B6
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -299,7 +299,7 @@ loc_37376:                                              ; CODE XREF: Boss_Shiper
                 move.w  word_37416+4(pc,d5.w),$A(a0)
                 move.w  word_37416+6(pc,d5.w),$26(a0)
                 addq.w  #8,d5
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$3E,d0                         ; '>'
                 subi.w  #$20,d0                         ; ' '
@@ -325,7 +325,7 @@ word_37416:     dc.w    $A3F7, $A00, $F4F4, $7A, $A410, $500, $F8F8, $3D, $A400,
                                         ; Boss_ShiperSpawnCircleShot+50   r
 
 ; Bouncing projectile with rotation animation gravity and deflection on collision
-Enemy_BounceRotateProjectile:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_37436
+Enemy_BounceRotateProjectile:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_37436
                 tst.w   (word_FF808C).w
                 bpl.w   loc_374A6
                 moveq   #1,d1
@@ -338,7 +338,7 @@ loc_37448:                                              ; CODE XREF: Enemy_Bounc
                 asr.w   #1,d0
                 andi.w  #6,d0
                 andi.w  #$E7FF,$E(a5)
-                lea     (word_1C972).l,a0
+                lea     (Object_CameraPriorityTable).l,a0
                 move.w  (a0,d0.w),d0
                 or.w    d0,$E(a5)
                 bclr    #7,$22(a5)

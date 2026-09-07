@@ -223,7 +223,7 @@ off_19972:      dc.l    sprite_FE70E                    ; DATA XREF: ROM:000186A
                 dc.l    sprite_FE38E
 
 ; Processes all active projectile objects
-Sys_ProcessProjectiles:                                 ; CODE XREF: Sys_GameplayMainLoop:loc_1C750   p  ; was: sub_19992
+Sys_ProcessProjectiles:                                 ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateProjectiles   p  ; was: sub_19992
                                         ; Stage_UpdateGameplay+12   p
                 tst.b   (byte_FF813E).w
                 bmi.w   locret_199F2
@@ -232,7 +232,7 @@ loc_1999E:                                              ; CODE XREF: Sys_Process
                 move.w  (a5),d0
                 beq.s   Sys_AdvanceProjectilePointer
                 movea.w d0,a0
-                movea.l off_5DC(a0),a0
+                movea.l Entity_UpdateHandlerTable(a0),a0
                 jsr     (a0)
                 btst    #4,2(a5)
                 bne.s   loc_199D6

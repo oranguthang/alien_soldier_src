@@ -1,4 +1,4 @@
-Boss_SharpssteelMain:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_47C1C
+Boss_SharpssteelMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_47C1C
                 tst.w   4(a5)
                 beq.w   loc_47C4C
                 tst.w   8(a5)
@@ -82,8 +82,8 @@ Boss_SharpssteelInit:                                   ; DATA XREF: ROM:00047C5
                 clr.w   6(a5)
                 move.w  #$CC00,$C2(a5)
                 bsr.w   Boss_SharpssteelCoreDispatcher
-                movea.l #word_1BCB2,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_SharpssteelObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 move.w  #2,$1DE(a5)
                 bra.w   Boss_SharpssteelBattleActive
 ; End of function Boss_SharpssteelInit
@@ -457,7 +457,7 @@ loc_480E0:                                              ; CODE XREF: Boss_Sharps
                 bra.w   Boss_SharpssteelAttackPattern3
 ; ---------------------------------------------------------------------------
 loc_48108:                                              ; CODE XREF: Boss_SharpssteelAttackPattern1Alt+22   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 move.b  (dword_FFFF08).w,d2
                 clr.w   $54(a5)
                 tst.w   d1

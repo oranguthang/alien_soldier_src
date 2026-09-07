@@ -9,7 +9,7 @@ Stage_SpawnIntroProjectile:                             ; CODE XREF: Stage_Stage
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_D622
                 movea.w #(byte_FFD700-M68K_RAM),a0
-                jsr     (loc_1C11C).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
                 bne.s   locret_D622
                 move.w  #$178,(a0)
                 move.w  #$8100,2(a0)
@@ -29,7 +29,7 @@ locret_D622:                                            ; CODE XREF: Stage_Spawn
                 rts
 ; End of function Stage_SpawnIntroProjectile
 ; Intro falling projectile with screen position and flicker
-Projectile_IntroFalling:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_D624
+Projectile_IntroFalling:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_D624
                 subq.w  #1,$48(a5)
                 bpl.s   loc_D632
                 bset    #4,2(a5)

@@ -1,4 +1,4 @@
-Boss_CaterpillarMain:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_3D0AE
+Boss_CaterpillarMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D0AE
                 move.w  4(a5),d0
                 movea.w off_3D0BE(pc,d0.w),a0
                 adda.l  #Boss_CaterpillarInit,a0
@@ -57,7 +57,7 @@ loc_3D110:                                              ; CODE XREF: Boss_Caterp
                 addi.w  #-$6800,d0
                 movea.w d0,a0
                 movea.w #(dword_FF8A00-M68K_RAM),a1
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  #$1FE,d2
                 move.w  #$10,d3
                 moveq   #$13,d7
@@ -116,7 +116,7 @@ word_3D19A:     dc.w    $288, $3D8, $28                 ; DATA XREF: Boss_Caterp
                 dc.w    $140, $958, $D8
 
 ; Caterpillar part 2 with projectile firing
-Boss_CaterpillarPart2:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_3D1F4
+Boss_CaterpillarPart2:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D1F4
                 tst.w   4(a5)
                 bne.s   loc_3D23A
                 addq.w  #2,4(a5)
@@ -191,7 +191,7 @@ word_3D2E0:     dc.w    $C0, $FFF0, $E, 0, $80, 0, $10, 0, $40, $10, $E, 0
                                         ; Boss_CaterpillarPart2+C8   r
 
 ; Caterpillar part 3 with attack patterns
-Boss_CaterpillarPart3:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_3D2F8
+Boss_CaterpillarPart3:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D2F8
                 tst.w   4(a5)
                 bne.s   loc_3D332
                 addq.w  #2,4(a5)
@@ -238,7 +238,7 @@ off_3D37A:      dc.l    word_EB5B6                      ; DATA XREF: Boss_Caterp
                 dc.l    word_EB5CE
 
 ; Caterpillar part 4 with animation states
-Boss_CaterpillarPart4:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_3D38A
+Boss_CaterpillarPart4:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D38A
                 tst.w   4(a5)
                 bne.s   loc_3D3C4
                 addq.w  #2,4(a5)
@@ -284,7 +284,7 @@ off_3D40A:      dc.l    word_EB60A                      ; DATA XREF: Boss_Caterp
                 dc.l    word_EB616
 
 ; Caterpillar part 1 entity with timer
-Boss_CaterpillarPart1:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_3D412
+Boss_CaterpillarPart1:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D412
                 tst.w   4(a5)
                 bne.s   loc_3D43E
                 addq.w  #2,4(a5)
@@ -320,7 +320,7 @@ loc_3D482:                                              ; CODE XREF: Boss_Caterp
                 adda.w  $5A(a5),a0
                 move.w  (a0)+,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  (a2,d0.w),d1
                 ext.l   d1
                 asl.l   #6,d1
@@ -333,10 +333,10 @@ loc_3D482:                                              ; CODE XREF: Boss_Caterp
 ; Checks for free projectile slot
 Boss_CaterpillarCheckFreeSlot:                          ; CODE XREF: Boss_CaterpillarPart2:loc_3D29C   p  ; was: sub_3D4AC
                 movea.w #(byte_FFD280-M68K_RAM),a0
-                jmp     loc_1C0A4
+                jmp     Projectile_FindFreePrimarySlot_CheckExtendedRange
 ; End of function Boss_CaterpillarCheckFreeSlot
 ; Shooting star entity with state machine
-Boss_CaterpillarShootingStar:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_3D4B6
+Boss_CaterpillarShootingStar:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D4B6
                 tst.w   4(a5)
                 beq.w   loc_3D546
                 move.w  $10(a5),d0
@@ -509,7 +509,7 @@ Boss_CaterpillarShipState3:                             ; DATA XREF: ROM:0003D55
                 move.w  a5,$4A(a5)
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3D724
                 move.w  #3,d0
                 jsr     (loc_2BD20).l
@@ -533,7 +533,7 @@ Boss_CaterpillarShipState4:                             ; DATA XREF: ROM:0003D55
                 move.w  a0,$4A(a5)
                 move.w  #$A,$48(a5)
                 movea.w a0,a4
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3D782
                 move.w  #3,d0
                 jsr     (loc_2BD20).l
@@ -586,8 +586,8 @@ loc_3D7D8:                                              ; CODE XREF: Boss_Caterp
                 move.w  (dword_FF9400).w,d0
                 addi.w  #$100,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d0.w),d1
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d0.w),d1
                 move.w  (a1,d0.w),d0
                 move.w  (dword_FF940C).w,d2
                 muls.w  d2,d0

@@ -411,7 +411,7 @@ Boss_SpawnExplosionDebris:                              ; CODE XREF: Boss_Jetsri
                 move.w  #4,(word_FFA010).w
                 move.w  #4,(word_FFA014).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3FFC2
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)
@@ -487,7 +487,7 @@ Boss_GustheadDefeatExit:                                ; DATA XREF: ROM:0003F2B
                 addq.w  #2,4(a5)
                 move.w  #$1B0,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
 locret_4003E:                                           ; CODE XREF: Boss_GustheadDefeatExit+6   j
                 rts
@@ -516,7 +516,7 @@ locret_4006E:                                           ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Boss_GustheadDefeatFinalize
 ; Completes boss defeat
-Boss_GustheadDefeatComplete:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_40070
+Boss_GustheadDefeatComplete:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40070
                 btst    #7,(byte_FFC66A).w
                 bne.w   loc_40118
                 clr.w   d1

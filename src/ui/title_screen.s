@@ -2,7 +2,7 @@ UI_InitTitleScreen:                                     ; DATA XREF: Sys_Dispatc
                 tst.w   (GameSubstateIndex).w
                 bne.s   loc_936C
                 jsr     (Sys_InitGameMode).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 lea     stru_A1B6(pc),a0
                 nop
                 jsr     (LoadObjData).l

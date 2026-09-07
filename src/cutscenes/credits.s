@@ -11,7 +11,7 @@ Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_Trans
                 move.w  #$1F,(word_FF804A).w
                 move.w  #1,(dword_FF8044+2).w
                 jsr     (Gfx_LoadTilesLoop).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 lea     (dword_11326).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1

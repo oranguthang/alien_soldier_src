@@ -100,8 +100,8 @@ loc_36664:                                              ; CODE XREF: Boss_Shiper
                 move.w  #$F0F0,$54A(a5)
                 movea.w #(byte_FFCBC0-M68K_RAM),a0
                 move.w  #$10,(a0)
-                movea.l #word_1BA9E,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_ShiperObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 bsr.w   Boss_ShiperTentaclePosition
                 bra.w   Boss_ShiperScrollUpdate
 ; End of function Boss_ShiperSetupState
@@ -137,7 +137,7 @@ Boss_ShiperAttackDecision_UpdateAndSpawn:               ; CODE XREF: Boss_Shiper
                 btst    #0,$5E(a5)
                 beq.s   locret_3677C
 loc_3673C:                                              ; CODE XREF: Boss_ShiperCheckHealthTransition+34   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #7,d0
                 addq.w  #1,d0
@@ -372,7 +372,7 @@ loc_369B0:                                              ; CODE XREF: Boss_Shiper
                 move.b  #4,(byte_FFA95B).w
                 move.w  #$24,d0                         ; '$'
                 move.w  #$134,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 jsr     (Boss_InitDefeatExplosion).l
                 moveq   #$1C,d0
                 jmp     (Gfx_SetFadeParams).l

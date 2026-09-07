@@ -1,4 +1,4 @@
-Stage_SpawnerDispatcher1:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_30B3A
+Stage_SpawnerDispatcher1:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_30B3A
                 move.w  4(a5),d0
                 lea     off_30B46(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -33,7 +33,7 @@ Stage_SpawnerSpawnByTimer:                              ; DATA XREF: ROM:00030B4
                 cmp.w   (a4)+,d0
                 bcs.w   locret_30BB8
 loc_30B98:                                              ; CODE XREF: Stage_SpawnerSpawnByTimer+34   j
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   loc_30BBA
                 move.w  #$384,(a0)
                 move.w  (a4)+,$10(a0)
@@ -85,7 +85,7 @@ word_30C54:     dc.w    $E080, $90, $70, $1B0, $68
                 dc.w    $1B0, $60, $FFFF
 
 ; Dispatch to spawner state handler via jump table
-Stage_SpawnerDispatcher2:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_30CBE
+Stage_SpawnerDispatcher2:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_30CBE
                 move.w  4(a5),d0
                 lea     off_30CCA(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -150,7 +150,7 @@ loc_30D8A:                                              ; CODE XREF: Enemy_Bounc
                 rts
 ; End of function Enemy_BounceOnGround
 ; Main handler for Stage 11 boss part
-Enemy_Stage11BossPartMain:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_30D90
+Enemy_Stage11BossPartMain:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_30D90
                 cmpi.w  #$14,4(a5)
                 bcc.s   loc_30DA6
                 tst.w   $24(a5)
@@ -205,7 +205,7 @@ Enemy_Stage11BossPartFloat:                             ; DATA XREF: ROM:00030DB
 ; End of function Enemy_Stage11BossPartFloat
 ; Boss part spawns projectile
 Enemy_Stage11BossPartSpawn:                             ; DATA XREF: ROM:00030DB6   o  ; was: sub_30E3C
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   loc_30E70
                 move.w  #$8F00,2(a0)
                 move.w  #$38C,(a0)
@@ -317,7 +317,7 @@ Boss_JetsripperSpawnUpwardProjectile:                   ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperSpawnUpwardProjectile
 ; State dispatcher for boss part
-Enemy_Stage11BossPartDispatcher:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_30FA6
+Enemy_Stage11BossPartDispatcher:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_30FA6
                 move.w  4(a5),d0
                 lea     off_30FB2(pc,d0.w),a0
                 adda.w  (a0),a0

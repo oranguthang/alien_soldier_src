@@ -197,7 +197,7 @@ loc_D332:                                               ; CODE XREF: Stage_Cater
                 clr.w   (dword_FFA90C).w
                 moveq   #0,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$6000,(dword_FFA940).w
                 move.w  #$1F,(word_FFA944).w
                 move.w  #0,(word_FFA946).w

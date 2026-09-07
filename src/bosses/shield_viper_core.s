@@ -1,4 +1,4 @@
-Boss_ShieldViperMain:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_4DDD2
+Boss_ShieldViperMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4DDD2
                 tst.w   4(a5)
                 beq.w   loc_4DFDA
                 move.w  $10(a5),d0
@@ -18,7 +18,7 @@ loc_4DE16:                                              ; CODE XREF: Boss_Shield
                                         ; Boss_ShieldViperMain+2A   j
                 btst    #0,$58(a5)
                 bne.w   loc_4DFDA
-                lea     (word_1B514).l,a3
+                lea     (Math_SineTable).l,a3
                 move.w  (dword_FF9410).w,d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
@@ -233,7 +233,7 @@ Boss_ShieldViperDispatcher:                             ; DATA XREF: ROM:off_4DF
                 addq.w  #2,4(a5)
                 move.w  #$34C,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 clr.w   (dword_FF9404).w
                 move.b  #4,(byte_FFA420).w
                 move.w  #$50,(dword_FF9418).w           ; 'P'
@@ -620,8 +620,8 @@ Projectile_ShieldViperSpawnRotating:                    ; CODE XREF: Boss_Shield
                 add.w   $52(a5),d0
                 addi.w  #$120,d0
                 andi.w  #$1C0,d0
-                lea     (word_1B514).l,a3
-                move.w  word_1B494-word_1B514(a3,d0.w),d1
+                lea     (Math_SineTable).l,a3
+                move.w  Math_QuarterSineTable-Math_SineTable(a3,d0.w),d1
                 move.w  (a3,d0.w),d0
                 lea     $960(a5),a0
                 eori.w  #$8000,2(a0)
@@ -646,14 +646,14 @@ Boss_ShieldViperSpinAttackUpdate:                       ; DATA XREF: ROM:0004E01
                 bsr.w   Boss_ShieldViperUpdateSpriteFlip
                 subq.w  #1,$48(a5)
                 bpl.s   locret_4E5BE
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4E5BE
                 jsr     Projectile_ShieldViperSpawnEffect(pc)  ; (pc)
                 nop
                 move.b  $20(a5),$20(a0)
                 move.w  $970(a5),$10(a0)
                 move.w  $974(a5),$14(a0)
-                lea     (word_1B514).l,a3
+                lea     (Math_SineTable).l,a3
                 move.w  $56(a5),d0
                 add.w   $52(a5),d0
                 addi.w  #$120,d0

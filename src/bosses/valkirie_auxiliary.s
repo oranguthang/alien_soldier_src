@@ -1,4 +1,4 @@
-Boss_ValkiriePart3Handler:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_51842
+Boss_ValkiriePart3Handler:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_51842
                 tst.w   4(a5)
                 beq.w   loc_51856
                 tst.w   8(a5)

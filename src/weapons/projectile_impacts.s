@@ -1,4 +1,4 @@
-Weapon_UpdateRotatingProjectile:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_18A66
+Weapon_UpdateRotatingProjectile:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18A66
                 move.w  $48(a5),d0
                 addq.w  #2,d0
                 andi.w  #$E,d0
@@ -24,7 +24,7 @@ Weapon_UpdateRotatingProjectile_Return:                 ; CODE XREF: Weapon_Upda
                 rts
 ; End of function Weapon_UpdateRotatingProjectile
 ; Handles projectile collision
-Weapon_HandleProjectileHit:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_18ACA
+Weapon_HandleProjectileHit:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18ACA
                 bclr    #7,$22(a5)
                 bne.s   Weapon_HandleProjectileHit_InitImpact
                 bclr    #6,$23(a5)
@@ -58,7 +58,7 @@ Weapon_TickLifetimeTimer:                               ; CODE XREF: Weapon_Hand
                 rts
 ; End of function Weapon_TickLifetimeTimer
 ; Handles explosive projectile impact with particle spawn
-Weapon_HandleExplosiveImpact:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_18B2A
+Weapon_HandleExplosiveImpact:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18B2A
                 bclr    #7,$22(a5)
                 bne.s   Weapon_HandleExplosiveImpact_InitExplosion
                 bclr    #6,$23(a5)
@@ -136,12 +136,12 @@ Weapon_ExplosionFadeOffsets:    dc.w    $F4F4, $F8F8, $F8F8, $FCFC  ; was: word_
                                         ; DATA XREF: Weapon_AnimateExplosionFade+2C   r
 
 ; Marks the current object inactive without additional cleanup
-Object_MarkInactiveDirect:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_18C1E
+Object_MarkInactiveDirect:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18C1E
                 bset    #4,2(a5)
                 rts
 ; End of function Object_MarkInactiveDirect
 ; Processes projectile hit effects including screen shake and palette change
-Weapon_ProcessProjectileHit:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_18C26
+Weapon_ProcessProjectileHit:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18C26
                 move.w  #$A0,(word_FF8140).w
                 move.b  #$60,(byte_FF8142).w            ; '`'
                 move.b  #4,(byte_FF8143).w
@@ -157,7 +157,7 @@ Weapon_ProcessProjectileHit_Return:                     ; CODE XREF: Weapon_Proc
                 rts
 ; End of function Weapon_ProcessProjectileHit
 ; Updates an impact particle or spawns its child effect
-Effect_UpdateImpactParticleSpawner:                     ; DATA XREF: ROM:off_5DC   o  ; was: sub_18C52
+Effect_UpdateImpactParticleSpawner:                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18C52
                 bclr    #6,$23(a5)
                 bne.s   Effect_UpdateImpactParticleSpawner_SpawnChild
                 bclr    #7,$22(a5)
@@ -231,7 +231,7 @@ Effect_ImpactParticleOffsets:   dc.w    $F0F0, $F0F0, $F0F0, $F0F0, $F0F0, $F4F4
                                         ; DATA XREF: Effect_UpdateImpactParticleSpawner+D4   r
 
 ; Updates seeking missile projectile with target tracking and rotation
-Weapon_UpdateSeekingMissile:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_18D5E
+Weapon_UpdateSeekingMissile:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18D5E
                 bclr    #7,$22(a5)
                 bne.s   Weapon_UpdateSeekingMissile_InitImpact
                 bclr    #4,$23(a5)
@@ -337,7 +337,7 @@ Weapon_SeekingMissileTiles: dc.w    $45A0, $45A0, $45A4, $45AD, $45AD, $45B6, $4
                                         ; DATA XREF: Weapon_UpdateSeekingMissile+F2   r
 
 ; Matches sprite position and properties to parent sprite
-Effect_UpdateCompanionFromParent:                       ; DATA XREF: ROM:off_5DC   o  ; was: sub_18E92
+Effect_UpdateCompanionFromParent:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18E92
                 movea.w a5,a0
                 btst    #0,(word_FFA000+1).w
                 bne.s   Effect_UpdateCompanionFromAlternateParent
@@ -368,7 +368,7 @@ Effect_CopyParentTransform:                             ; CODE XREF: Effect_Upda
                 rts
 ; End of function Effect_UpdateCompanionFromParent
 ; Updates projectile seeking movement
-Weapon_UpdateSeekingProjectile:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_18EE8
+Weapon_UpdateSeekingProjectile:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18EE8
                 subq.w  #1,$5E(a5)
                 bmi.s   Weapon_HandleSeekingProjectileCollision
                 bne.s   Weapon_ApplySeekingProjectileMotion
@@ -382,7 +382,7 @@ Weapon_ApplySeekingProjectileMotion:                    ; CODE XREF: Weapon_Upda
 ; End of function Weapon_UpdateSeekingProjectile
 ; Handles projectile collision and destruction
 Weapon_HandleSeekingProjectileCollision:                ; CODE XREF: Weapon_UpdateSeekingProjectile+4   j  ; was: sub_18F06
-                                        ; DATA XREF: ROM:off_5DC   o
+                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 btst    #6,$23(a5)
                 bne.s   Weapon_HandleSeekingProjectileCollision_Explode
                 tst.w   $26(a5)
@@ -420,7 +420,7 @@ Effect_SpawnExplosion:                                  ; CODE XREF: Weapon_Hand
                 andi.w  #1,d4
                 addq.w  #3,d3
                 addq.w  #3,d4
-                movea.l #word_1B514,a1
+                movea.l #Math_SineTable,a1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
@@ -434,7 +434,7 @@ Effect_SpawnExplosion:                                  ; CODE XREF: Weapon_Hand
                 rts
 ; End of function Effect_SpawnExplosion
 ; Updates bomb projectile with gravity and collision detection
-Weapon_UpdateBombProjectile:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_18FA6
+Weapon_UpdateBombProjectile:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18FA6
                 btst    #6,$23(a5)
                 bne.w   Weapon_UpdateBombProjectile_Explode
                 tst.w   $26(a5)
@@ -510,7 +510,7 @@ Effect_CreateExplosionDebris:                           ; CODE XREF: Weapon_Upda
                 andi.w  #1,d4
                 addq.w  #2,d3
                 addq.w  #2,d4
-                movea.l #word_1B514,a1
+                movea.l #Math_SineTable,a1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
@@ -525,7 +525,7 @@ Effect_CreateExplosionDebris:                           ; CODE XREF: Weapon_Upda
 ; End of function Effect_CreateExplosionDebris
 ; Spawns spark particle during player death sequence
 Effect_SpawnPlayerDeathSpark:                           ; CODE XREF: Player_HandleInvulnerabilityTimer:loc_16AFC   j  ; was: sub_190D2
-                                        ; DATA XREF: ROM:off_5DC   o
+                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #$F,d7
 Effect_SpawnPlayerDeathSpark_FindSlot:                  ; CODE XREF: Effect_SpawnPlayerDeathSpark+E   j  ; was: loc_190D8
@@ -546,7 +546,7 @@ Effect_SpawnPlayerDeathSpark_Initialize:                ; CODE XREF: Effect_Spaw
                 or.w    d0,$E(a0)
                 move.l  #off_E9560,8(a0)
                 clr.w   $C(a0)
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
@@ -565,7 +565,7 @@ Effect_SpawnPlayerDeathSpark_Initialize:                ; CODE XREF: Effect_Spaw
                 rts
 ; End of function Effect_SpawnPlayerDeathSpark
 ; Updates death spark particle motion with deceleration
-Effect_UpdateDeathSparkMotion:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_19154
+Effect_UpdateDeathSparkMotion:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_19154
                 cmpi.w  #$80,$C(a5)
                 bmi.s   Effect_ApplySparkDeceleration
                 bset    #4,2(a5)
@@ -582,7 +582,7 @@ Effect_ApplySparkDeceleration:                          ; CODE XREF: Effect_Upda
                 rts
 ; End of function Effect_UpdateDeathSparkMotion
 ; Destroys sprite when timer expires
-Object_UpdateRemovalTimer:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_1917A
+Object_UpdateRemovalTimer:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_1917A
                 subq.w  #1,$48(a5)
                 bpl.s   Object_UpdateRemovalTimer_Return
                 bset    #4,2(a5)
@@ -590,7 +590,7 @@ Object_UpdateRemovalTimer_Return:                       ; CODE XREF: Object_Upda
                 rts
 ; End of function Object_UpdateRemovalTimer
 ; Initializes projectile sprite with position and velocity
-Effect_InitPlayerMotionProjectile:                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_19188
+Effect_InitPlayerMotionProjectile:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_19188
                 bset    #7,2(a5)
                 cmpi.l  #word_E8EBA,(dword_FFA408).w
                 beq.s   Effect_InitPlayerMotionProjectile_CopyPosition
@@ -609,7 +609,7 @@ Effect_InitPlayerMotionProjectile_SpawnChild:           ; CODE XREF: Effect_Init
                 move.l  #off_E9584,8(a0)
                 jsr     (Sprite_InitType160).l
                 move.b  $20(a5),$20(a0)
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (word_FFA000).w,d0
                 asl.w   #5,d0
                 andi.w  #$1FE,d0
@@ -639,7 +639,7 @@ Effect_InitPlayerMotionProjectile_Return:               ; CODE XREF: Effect_Init
                 rts
 ; End of function Effect_InitPlayerMotionProjectile
 ; Increments frame and checks lifetime
-Effect_AnimateAndExpire:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_19232
+Effect_AnimateAndExpire:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_19232
                 addq.w  #1,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   Effect_AnimateAndExpire_Return

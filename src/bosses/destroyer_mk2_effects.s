@@ -78,7 +78,7 @@ locret_4B73A:                                           ; CODE XREF: Enemy_Reset
                 rts
 ; End of function Enemy_ResetStateOnScrollCheck
 ; Plays roar sound
-Boss_DestroyerMK2PlayRoar:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_4B73C
+Boss_DestroyerMK2PlayRoar:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4B73C
                 move.w  $46(a5),d0
                 lea     off_4B748(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -339,7 +339,7 @@ locret_4B9FA:                                           ; CODE XREF: Enemy_Rotat
                 rts
 ; End of function Enemy_RotateWithGravityFall
 ; Checks X position bounds before dispatching
-Enemy_CheckBoundsAndDispatch:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_4B9FC
+Enemy_CheckBoundsAndDispatch:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4B9FC
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 cmpi.w  #$C10,d0
@@ -379,7 +379,7 @@ Boss_DestroyerMK2SetEntityFlag:                         ; CODE XREF: Enemy_Check
                 rts
 ; End of function Boss_DestroyerMK2SetEntityFlag
 ; Flash effect during defeat
-Boss_DestroyerMK2DefeatFlash:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_4BA50
+Boss_DestroyerMK2DefeatFlash:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4BA50
                 move.w  4(a5),d0
                 lea     off_4BA5C(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -465,7 +465,7 @@ locret_4BB28:                                           ; CODE XREF: Effect_Dest
                 rts
 ; End of function Effect_DestroyerMK2Debris
 ; Spawns defeat debris
-Boss_DestroyerMK2DefeatDebris:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_4BB2A
+Boss_DestroyerMK2DefeatDebris:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4BB2A
                 move.w  4(a5),d0
                 lea     off_4BB36(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -611,7 +611,7 @@ loc_4BC9E:                                              ; CODE XREF: Boss_Destro
                 movea.w #(word_FFC920-M68K_RAM),a0
                 move.w  (dword_FF9404).w,d5
                 move.w  (dword_FF9408).w,d6
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  #7,d7
 loc_4BCF0:                                              ; CODE XREF: Boss_DestroyerMK2ShootPattern3+106   j
                 tst.w   4(a0)
@@ -724,7 +724,7 @@ Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Effect_Dest
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 move.w  #2,(word_FFA014).w
                 move.w  #4,(word_FFA010).w
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4BE98
                 jsr     (Sprite_InitType160).l
                 clr.b   $20(a0)

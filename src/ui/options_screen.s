@@ -4,7 +4,7 @@ UI_InitOptionsScreen:                                   ; DATA XREF: Sys_Dispatc
                 jsr     (Sys_InitGameMode).l
                 movea.l #stru_A1F8,a0
                 jsr     (LoadObjData).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 clr.b   (word_FF80F4).w
@@ -117,9 +117,9 @@ loc_97B4:                                               ; CODE XREF: UI_UpdateOp
                                         ; UI_UpdateOptionsScreen+24   j
                 jsr     Gfx_UpdateMenuPalette(pc)       ; (pc)
                 nop
-                jsr     (Gfx_UpdateScrollPosition).l
+                jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sys_InitObjectPointers).l
-                jsr     (UI_CheckVBlankFlag).l
+                jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   UI_HandleOptionsInput
                 jsr     (Sys_UpdateObjectCount).l
@@ -500,9 +500,9 @@ loc_9EA0:                                               ; CODE XREF: Sys_RunOpti
                 clr.w   (word_FF80F0).w
 loc_9EC2:                                               ; CODE XREF: Sys_RunOptionsMenuLoop+1C   j
                                         ; Sys_RunOptionsMenuLoop+24   j
-                jsr     (Gfx_UpdateScrollPosition).l
+                jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sys_InitObjectPointers).l
-                jsr     (UI_CheckVBlankFlag).l
+                jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   UI_HandleOptionsNavigation
                 jsr     (Sys_UpdateObjectCount).l
@@ -872,7 +872,7 @@ UI_InitCursorSprite:                                    ; CODE XREF: UI_InitOpti
                 rts
 ; End of function UI_InitCursorSprite
 ; Empty entity state handler in main dispatch table
-Entity_EmptyState5:                                     ; DATA XREF: ROM:off_5DC   o  ; was: nullsub_5
+Entity_EmptyState5:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_5
                 rts
 ; End of function Entity_EmptyState5
 ; ---------------------------------------------------------------------------

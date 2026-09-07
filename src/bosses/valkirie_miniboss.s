@@ -1,4 +1,4 @@
-Boss_ValkirieMinibossHandler:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_515AE
+Boss_ValkirieMinibossHandler:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_515AE
                 tst.w   4(a5)
                 beq.w   loc_515C2
                 tst.w   8(a5)

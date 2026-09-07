@@ -1,5 +1,5 @@
 ; Jetsripper-stage enemy and projectile state machines
-Enemy_BehaviorController:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2C6A8
+Enemy_BehaviorController:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C6A8
                 tst.w   4(a5)
                 beq.s   Enemy_DispatchBehaviorState
                 tst.w   $24(a5)
@@ -70,7 +70,7 @@ Enemy_MainStateMachine_UpdateState:                     ; DATA XREF: ROM:0002C71
                 beq.w   Enemy_MainStateMachine_BeginAirborne
                 bsr.w   Physics_DecelerateHorizontal
 Enemy_MainStateMachine_CheckPlayerDistance:             ; CODE XREF: Enemy_MainStateMachine+FA   j  ; was: loc_2C764
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$78,d0                         ; 'x'
                 bpl.s   Enemy_MainStateMachine_CheckCloseRange
                 btst    #2,$5F(a5)
@@ -196,7 +196,7 @@ Enemy_CheckFacePlayerTiming:                            ; CODE XREF: Enemy_MainS
                 rts
 ; End of function Enemy_MainStateMachine
 ; Wrapper calling visibility check and animation update
-Enemy_AnimationWrapper:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_2C8E4
+Enemy_AnimationWrapper:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C8E4
                 bsr.s   Enemy_DispatchVisibilityState
                 bra.w   Anim_UpdateAnimationState
 ; End of function Enemy_AnimationWrapper
@@ -263,7 +263,7 @@ Enemy_AnimationPointers:    dc.l    off_EA00E           ; DATA XREF: Anim_Update
                 dc.l    off_EA036
 
 ; Main processing routine for enemy object
-Enemy_ProcessObject:                                    ; DATA XREF: ROM:off_5DC   o  ; was: sub_2C990
+Enemy_ProcessObject:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C990
                 tst.b   $21(a5)
                 beq.s   Enemy_RunBehaviorHandler
                 clr.w   6(a5)

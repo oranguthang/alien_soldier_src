@@ -15,7 +15,7 @@ locret_2CBC4:                                           ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperIdle
 ; Falling projectile handler
-Projectile_JetsripperFalling:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_2CBC6
+Projectile_JetsripperFalling:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2CBC6
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2CBE2
@@ -32,7 +32,7 @@ locret_2CBF6:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_JetsripperFalling
 ; Main processing routine for projectile object
-Enemy_ProcessProjectile:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2CBF8
+Enemy_ProcessProjectile:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2CBF8
                 tst.w   4(a5)
                 beq.s   Enemy_ProcessProjectileState
                 clr.w   6(a5)
@@ -217,7 +217,7 @@ word_2CE14:     dc.w    $98, $60                        ; DATA XREF: Enemy_AltPr
 word_2CE18:     dc.w    1, 4                            ; DATA XREF: Enemy_AltProjectileStateMachine+3A   o
 
 ; Processing routine for alternative projectile type
-Enemy_ProcessAltProjectile:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2CE1C
+Enemy_ProcessAltProjectile:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2CE1C
                 tst.w   4(a5)
                 beq.s   Enemy_ProcessAltState
                 clr.w   6(a5)
@@ -273,7 +273,7 @@ Enemy_HomingProjectileLoop:                             ; DATA XREF: ROM:0002CE4
                 subq.w  #1,$4A(a5)
                 bmi.w   loc_2CE58
                 bsr.w   Enemy_CalculateDirectionalSprite
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2CEC8
                 move.w  d3,d0
                 move.w  d4,d1

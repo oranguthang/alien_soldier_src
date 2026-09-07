@@ -214,7 +214,7 @@ loc_4302:                                               ; CODE XREF: Gfx_UpdateS
                 rts
 ; End of function Gfx_UpdateSega3Palette
 ; Dispatches effect system handler based on current effect mode
-Gfx_SecondaryEffectDispatcher:                          ; CODE XREF: Sys_GameplayMainLoop:loc_1C7B0   p  ; was: sub_4316
+Gfx_SecondaryEffectDispatcher:                          ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateSecondaryEffects   p  ; was: sub_4316
                 tst.b   (byte_FF813E).w
                 bpl.s   Gfx_DispatchSecondaryEffect
                 rts

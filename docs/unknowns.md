@@ -86,13 +86,23 @@ VDP-register update. The wave-buffer clear was also documented at its actual
 DBF count of 81 longwords rather than 80. These corrections are recorded in
 the name audit.
 
-Three especially broad data labels are explicitly registered:
+The gameplay-infrastructure pass reduced the count to 10,417 by replacing all
+227 live address-derived definitions in `src/gameplay/`. Its existing modules
+were already cohesive and remain between 14 and 478 lines. Static audit
+corrected generated claims about projectile trajectories, boss-only clearing,
+Destroyer-MK2 palette loading, weapon-icon selection, and VDP/LZSS behavior.
+The code actually scans object pools, applies shared camera motion, converts
+the stage number to BCD, and distinguishes direct memory decompression from
+staged VRAM DMA. These corrections are recorded in the name audit.
+
+Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
 |---|---:|---|---|
 | `UnidentifiedSegaTilemap` | `0x0E8020` | hypothesis | 48 sequential tile words adjacent to the SEGA art; no live pointer has been found. |
 | `UnidentifiedTilemapData` | `0x180000` | unknown | Tile-like words at the frontend asset boundary; no live pointer has been found. |
 | `Credits_UnidentifiedTrailingData` | `0x0225CC` | unknown | Opaque block ending at the demo subsystem boundary; no live reference has been found, so neither purpose nor unused status is asserted. |
+| `Stage11_UnidentifiedAsset` | `0x01AE96` | unknown | 314-byte asset selected by the Stage 11 configuration; its format and intended use are not established by a live consumer. |
 
 Semantic names with `; was:` history are a second review queue. Their default
 level is `hypothesis`, not `confirmed`; see `docs/provenance.md`.

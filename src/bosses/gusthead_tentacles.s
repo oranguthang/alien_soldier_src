@@ -1,7 +1,7 @@
 Boss_GustheadTentacleInit:                              ; DATA XREF: ROM:off_4012C   o  ; was: sub_40132
                 addq.w  #2,4(a5)
                 ori.w   #$100,2(a5)
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  $4E(a5),d0
                 andi.w  #$1FE,d0
                 move.w  (a1,d0.w),d1
@@ -43,7 +43,7 @@ Boss_GustheadCoreDefeat:                                ; CODE XREF: Boss_Gusthe
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
                 bne.w   locret_4076C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_4076C
                 move.w  (word_FFA000).w,d0
                 andi.w  #$3F,d0                         ; '?'
@@ -76,7 +76,7 @@ loc_40226:                                              ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Boss_GustheadCoreDefeat
 ; Main handler for Gusthead debris
-Enemy_GustheadDebrisMain:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_4022E
+Enemy_GustheadDebrisMain:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4022E
                 subq.w  #1,$48(a5)
                 bmi.s   loc_40286
                 cmpi.w  #$60,$10(a5)                    ; '`'
@@ -116,7 +116,7 @@ Boss_GustheadSpawnDebris:                               ; CODE XREF: Boss_Gusthe
                 bne.s   locret_402EE
                 tst.l   (dword_FF8240).w
                 beq.s   locret_402EE
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_402EE
                 move.w  #$1E8,(a0)
                 move.w  #$ED00,2(a0)
@@ -158,7 +158,7 @@ off_40318:      dc.l    off_1A0F1A                      ; DATA XREF: Enemy_Gusth
                 dc.l    off_1A0F42
 
 ; Main physics handler for debris
-Enemy_GustheadDebrisPhysicsMain:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_40328
+Enemy_GustheadDebrisPhysicsMain:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40328
                 tst.w   $24(a5)
                 bmi.s   loc_4033E
                 bclr    #7,$22(a5)
@@ -243,11 +243,11 @@ loc_403E8:                                              ; CODE XREF: Enemy_Gusth
 ; End of function Enemy_GustheadDebrisFlip
 ; Spawns 4 debris projectiles with trajectories from angle table
 Boss_GustheadSpawnDebris4Way:                           ; CODE XREF: Boss_GustheadBounceAttackLogic+2A   p  ; was: sub_403F0
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  #3,d7
                 move.w  #$120,d6
 loc_403FE:                                              ; CODE XREF: Boss_GustheadSpawnDebris4Way+76   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4046A
                 move.w  (a1,d6.w),d0
                 ext.l   d0
@@ -272,7 +272,7 @@ locret_4046A:                                           ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Boss_GustheadSpawnDebris4Way
 ; Updates debris physics with gravity, boundary checks, and collision detection
-Boss_GustheadDebrisUpdate:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_4046C
+Boss_GustheadDebrisUpdate:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4046C
                 tst.w   $24(a5)
                 bmi.s   loc_40482
                 bclr    #7,$22(a5)
@@ -465,7 +465,7 @@ loc_4067E:                                              ; CODE XREF: Boss_Gusthe
                 move.w  #3,d0
                 movea.w a5,a1
 loc_40684:                                              ; CODE XREF: Boss_GustheadUpdateTentacleAngles+106   j
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  $48(a0),d4
                 move.w  $4E(a0),d5
                 move.w  $50(a0),d6
@@ -559,7 +559,7 @@ Enemy_GustheadDebrisExplode:                            ; CODE XREF: Enemy_Gusth
                                         ; sub_4046C:loc_40482   j
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_40798
                 jsr     (Projectile_InitType88).l
                 move.l  #off_E95DC,8(a0)

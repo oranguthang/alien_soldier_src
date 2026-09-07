@@ -3,7 +3,7 @@ Object_ClearForTransition:                              ; CODE XREF: Cutscene_Fa
                 clr.w   4(a5)
                 move.w  #$150,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; End of function Object_ClearForTransition
 ; Initializes boss defeat explosion sprite at boss position
 Boss_InitDefeatExplosion:                               ; CODE XREF: Boss_ShiperDefeatSequence+58   p  ; was: sub_2690E
@@ -16,7 +16,7 @@ Boss_InitDefeatExplosion:                               ; CODE XREF: Boss_Shiper
                 rts
 ; End of function Boss_InitDefeatExplosion
 ; Boss defeat sequence state dispatcher using jump table
-Boss_DefeatStateDispatcher:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_26928
+Boss_DefeatStateDispatcher:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_26928
                 move.w  4(a5),d0
                 movea.w Boss_DefeatStateOffsets(pc,d0.w),a0
                 adda.l  #Boss_DefeatInitAnimation,a0
@@ -96,7 +96,7 @@ Effect_InitPlayerSpawn:                                 ; CODE XREF: Boss_InitPo
                 rts
 ; End of function Effect_InitPlayerSpawn
 ; Effect state machine dispatcher
-Effect_TransitionObjectDispatcher:                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_26A00
+Effect_TransitionObjectDispatcher:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_26A00
                 move.w  4(a5),d0
                 movea.w Effect_TransitionObjectStateOffsets(pc,d0.w),a0
                 adda.l  #Effect_TransitionInit,a0

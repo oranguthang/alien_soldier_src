@@ -1,4 +1,4 @@
-Boss_Epsilon1BounceProjectile:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_4577C
+Boss_Epsilon1BounceProjectile:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4577C
                 tst.w   (word_FFC680).w
                 beq.s   loc_4578A
                 cmpi.w  #$17C,$14(a5)
@@ -124,7 +124,7 @@ Boss_Epsilon1SpawnDualProjectiles:                      ; CODE XREF: Boss_BackSt
 ; End of function Boss_Epsilon1SpawnDualProjectiles
 ; Spawns angled projectile with trajectory parameters
 Projectile_SpawnAngled:                                 ; CODE XREF: Boss_Epsilon1SpawnDualProjectiles+14   p  ; was: sub_458F6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_45944
                 move.w  #$328,(a0)
                 move.w  #$CC80,2(a0)
@@ -143,7 +143,7 @@ locret_45944:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_SpawnAngled
 ; Handles debris bouncing physics
-Boss_Epsilon1DebrisPhysics:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_45946
+Boss_Epsilon1DebrisPhysics:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45946
                 tst.w   (word_FF808C).w
                 bpl.s   loc_45976
                 bclr    #7,$22(a5)
@@ -181,15 +181,15 @@ loc_459B4:                                              ; CODE XREF: Boss_Epsilo
                 andi.w  #6,d0
                 move.w  d0,$4C(a5)
                 andi.w  #$E7FF,$E(a5)
-                lea     (word_1C972).l,a0
+                lea     (Object_CameraPriorityTable).l,a0
                 move.w  (a0,d0.w),d0
                 or.w    d0,$E(a5)
                 move.w  $56(a5),d0
                 add.w   $48(a5),d0
                 andi.w  #$1FE,d0
                 move.w  d0,$56(a5)
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d0.w),d0
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d0
                 ext.l   d0
                 asl.l   #4,d0
                 move.l  d0,$18(a5)
@@ -220,7 +220,7 @@ locret_45A58:                                           ; CODE XREF: Boss_Epsilo
                 rts
 ; End of function Boss_Epsilon1DebrisPhysics
 ; Updates projectile rotation based on spin direction
-Boss_Epsilon1ProjectileRotation:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_45A5A
+Boss_Epsilon1ProjectileRotation:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45A5A
                 cmpi.w  #$80,$C(a5)
                 bmi.s   loc_45A6A
                 move.w  #$1000,2(a5)
@@ -232,13 +232,13 @@ loc_45A6A:                                              ; CODE XREF: Boss_Epsilo
                 andi.w  #6,d0
                 move.w  d0,$48(a5)
                 andi.w  #$E7FF,$E(a5)
-                lea     (word_1C972).l,a0
+                lea     (Object_CameraPriorityTable).l,a0
                 move.w  (a0,d0.w),d0
                 or.w    d0,$E(a5)
                 rts
 ; End of function Boss_Epsilon1ProjectileRotation
 ; Chain segment falling state
-Projectile_BackStringerChainFalling:                    ; DATA XREF: ROM:off_5DC   o  ; was: sub_45A90
+Projectile_BackStringerChainFalling:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45A90
                 cmpi.w  #$170,$14(a5)
                 bmi.s   loc_45AA0
                 bset    #4,2(a5)

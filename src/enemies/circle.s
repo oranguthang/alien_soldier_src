@@ -1,4 +1,4 @@
-Enemy_CircleMainHandler:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2D3E8
+Enemy_CircleMainHandler:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D3E8
                 tst.w   4(a5)
                 beq.s   Enemy_ExecuteCirclePattern
                 tst.w   $24(a5)
@@ -38,7 +38,7 @@ Enemy_ApproachPlayerState:                              ; DATA XREF: ROM:off_2D4
                 addq.w  #2,4(a5)
 ; Calculate distance to player and determine next action
 Enemy_ApproachPlayerState_CheckDistance:                ; DATA XREF: ROM:0002D42A   o  ; was: loc_2D446
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$60,d0                         ; '`'
                 bcs.s   loc_2D456
                 bra.w   Enemy_Stage18ClearAll
@@ -60,8 +60,8 @@ Enemy_CalculateTrajectoryToPlayer:                      ; CODE XREF: Enemy_Appro
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d0.w),d1
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d0.w),d1
                 move.w  (a1,d0.w),d0
                 ext.l   d0
                 ext.l   d1
@@ -203,10 +203,10 @@ Enemy_ResetToIdleState:                                 ; CODE XREF: Enemy_Circl
                 rts
 ; End of function Enemy_ResetToIdleState
 ; Spawns particle effect only on hard difficulty
-Enemy_SpawnParticleHardMode:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_2D640
+Enemy_SpawnParticleHardMode:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D640
                 tst.w   (word_FFFF0E).w
                 beq.s   Enemy_SpawnQuadProjectilesHard
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Enemy_SpawnQuadProjectilesHard
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

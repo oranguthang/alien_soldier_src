@@ -1,4 +1,4 @@
-Boss_SunsetStingMainDispatcher:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_418FC
+Boss_SunsetStingMainDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_418FC
                 move.w  (word_FFA000).w,d0
                 andi.w  #$F,d0
                 bne.s   loc_41932
@@ -58,7 +58,7 @@ Boss_SunsetStingInitState:                              ; DATA XREF: ROM:off_419
                 clr.b   (dword_FFC6DC).w
                 move.w  #$1C8,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 addq.w  #2,4(a5)
                 move.b  #$80,$4B(a5)
                 clr.w   (word_FFC67E).w
@@ -73,7 +73,7 @@ Boss_SunsetStingLoadGraphicsAlt:                        ; DATA XREF: ROM:0004194
                 bmi.w   locret_41A5E
                 addq.w  #2,4(a5)
                 movea.l #word_426DA,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                jsr     (Object_InitGroupFromTable).l
                 moveq   #6,d7
                 jsr     (Data_LoadPaletteTable).l
                 move.w  (a5),-(sp)
@@ -391,7 +391,7 @@ Boss_SunsetStingInitHomingProjectile:                   ; CODE XREF: Boss_Sunset
                 subi.b  #$40,d0                         ; '@'
                 move.w  d0,-(sp)
                 movea.w #(byte_FFD280-M68K_RAM),a0
-                jsr     (loc_1C0A4).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckExtendedRange).l
                 bne.s   locret_41E2A
                 move.w  (sp)+,d6
                 add.w   d6,d6
@@ -549,7 +549,7 @@ Boss_SunsetStingCalculateChainPosition:                 ; CODE XREF: Boss_Sunset
                 clr.l   d3
                 clr.l   d4
                 lea     (a4),a3
-                movea.l #word_1B514,a2
+                movea.l #Math_SineTable,a2
 loc_41FBC:                                              ; CODE XREF: Boss_SunsetStingCalculateChainPosition+38   j
                 add.w   $56(a3),d6
                 move.w  d6,d1

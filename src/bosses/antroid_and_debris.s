@@ -1,9 +1,9 @@
-Enemy_TinyWrapper:                                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_2F396
+Enemy_TinyWrapper:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F396
                 moveq   #0,d0
                 bra.s   loc_2F39E
 ; End of function Enemy_TinyWrapper
 ; Spawns multiple projectiles in spread pattern
-Enemy_SpawnMultiShot:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_2F39A
+Enemy_SpawnMultiShot:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F39A
                 move.w  #1,d0
 loc_2F39E:                                              ; CODE XREF: Enemy_TinyWrapper+2   j
                 move.w  (word_FFA000).w,d1
@@ -180,7 +180,7 @@ Enemy_DebrisSetRandomVelocity:                          ; CODE XREF: Enemy_Debri
                 jmp     (RandomNumber).l
 ; End of function Enemy_InitDebrisEntity
 ; Updates debris position with screen bounds
-Enemy_DebrisUpdate:                                     ; DATA XREF: ROM:off_5DC   o  ; was: sub_2F580
+Enemy_DebrisUpdate:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F580
                 movea.w a5,a0
                 cmpi.w  #$80,$10(a5)
                 bmi.w   Enemy_DebrisSetRandomVelocity

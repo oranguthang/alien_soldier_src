@@ -329,7 +329,7 @@ Boss_JokerSpawnBomb:                                    ; CODE XREF: Boss_JokerS
                 tst.w   $35C(a5)
                 bne.s   locret_3BE82
                 movea.w #(byte_FFD700-M68K_RAM),a0
-                jsr     (loc_1C144).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   locret_3BE82
                 subi.w  #$14,(word_FF8234).w
                 move.w  #$198,(a0)
@@ -351,7 +351,7 @@ locret_3BE82:                                           ; CODE XREF: Boss_JokerS
                 rts
 ; End of function Boss_JokerSpawnBomb
 ; Joker bomb projectile descending then firing directional shots
-Projectile_JokerBomb:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_3BE84
+Projectile_JokerBomb:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3BE84
                 tst.w   (word_FF808C).w
                 bmi.s   loc_3BE92
                 bset    #4,2(a5)
@@ -372,7 +372,7 @@ loc_3BEB0:                                              ; CODE XREF: Projectile_
                 subq.w  #1,$48(a5)
                 bpl.s   loc_3BEF0
                 movea.w #(byte_FFD400-M68K_RAM),a0
-                jsr     (loc_1C144).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   loc_3BEE8
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

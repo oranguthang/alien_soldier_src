@@ -1,4 +1,4 @@
-Enemy_FallingObjectDispatch:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_304E4
+Enemy_FallingObjectDispatch:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_304E4
                 move.w  4(a5),d0
                 lea     off_304F0(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -28,7 +28,7 @@ Enemy_SpawnFromTable:                                   ; DATA XREF: ROM:0002FC4
 ; Checks camera Y position and spawns enemy from table
 Enemy_SpawnFromTable_CheckSpawn:                        ; DATA XREF: ROM:0002FC4A   o  ; was: loc_30520
                 bcs.w   locret_30BB8
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   loc_30554
                 move.w  #$CD00,2(a0)
                 move.w  #$3A0,(a0)
@@ -52,7 +52,7 @@ word_3055C:     dc.w    $E190, $200, $E1F0, $40, $E230, $200, $E290, $40, $E2E0,
                                         ; DATA XREF: Enemy_FallingObjectInit+14   o
 
 ; State dispatcher for flying enemy with multiple phases
-Enemy_FlyingEnemyDispatch:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_3057A
+Enemy_FlyingEnemyDispatch:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3057A
                 move.w  4(a5),d0
                 lea     off_30586(pc,d0.w),a0
                 adda.w  (a0),a0

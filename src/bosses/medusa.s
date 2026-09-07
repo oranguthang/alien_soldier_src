@@ -1,4 +1,4 @@
-Boss_MedusaAttackState1:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_5699C
+Boss_MedusaAttackState1:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5699C
                 tst.w   4(a5)
                 beq.w   loc_569E0
                 tst.w   8(a5)
@@ -133,8 +133,8 @@ loc_56B32:                                              ; CODE XREF: Boss_Medusa
                 move.w  #$FFFF,$C(a5)
                 move.b  #$F0,d0
                 jsr     (Sound_PlaySFX).l
-                movea.l #word_1BF1A,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_MedusaObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
 ; End of function Boss_MedusaMovePattern2
 ; Animation script interpreter
 Boss_MedusaAnimationScript:                             ; DATA XREF: ROM:000569F6   o  ; was: sub_56B6C
@@ -663,7 +663,7 @@ word_57132:     dc.w    $401C, $1402, $14, 0, $C01C, $1402, $10
 word_57172:     dc.w    0, 0, $7090, 0                  ; DATA XREF: Boss_MedusaMovePattern1+28   o
 
 ; Checks if boss takes damage
-Boss_MedusaDamageCheck:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_5717A
+Boss_MedusaDamageCheck:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5717A
                 move.w  (dword_FFC630).w,$10(a5)
                 clr.w   6(a5)
                 move.w  4(a5),d0

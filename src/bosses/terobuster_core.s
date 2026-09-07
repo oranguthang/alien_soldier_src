@@ -1,4 +1,4 @@
-Boss_TerobusterMain:                                    ; DATA XREF: ROM:off_5DC   o  ; was: sub_38518
+Boss_TerobusterMain:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_38518
                 tst.w   4(a5)
                 beq.w   loc_38566
                 jsr     (Gfx_InitPaletteFade).l
@@ -59,7 +59,7 @@ Boss_TerobusterInit:                                    ; DATA XREF: ROM:off_385
                 move.w  #1,8(a5)
                 move.w  #$B4,d0
                 move.w  #$12C,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$80,$48(a5)
 locret_385C8:                                           ; CODE XREF: Boss_TerobusterSetup+4   j
                                         ; Boss_TerobusterSetup+A   j
@@ -99,8 +99,8 @@ Boss_TerobusterSetup:                                   ; DATA XREF: ROM:0003857
                 move.w  #$B00,$48E(a5)
                 move.l  #word_EB86A,$488(a5)
                 move.b  #$10,$4A0(a5)
-                movea.l #word_1BB4C,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_TerobusterObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 lea     word_3868A(pc),a0
                 nop
                 jsr     (Gfx_LoadCompressedTiles).l
@@ -154,7 +154,7 @@ Boss_TerobusterMainAI:                                  ; DATA XREF: ROM:0003857
 loc_3870A:                                              ; CODE XREF: Boss_TerobusterMainAI+6   j
                 subq.w  #1,$11C(a5)
                 bpl.s   loc_3876C
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 addi.w  #$28,d1                         ; '('
                 tst.w   d1
                 bmi.s   loc_38732

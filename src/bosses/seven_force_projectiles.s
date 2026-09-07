@@ -151,8 +151,8 @@ Projectile_SylpheedLaser:                               ; CODE XREF: Projectile_
                 andi.w  #$F,d0
                 move.b  (a0,d0.w),d0
                 asl.w   #1,d0
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d0.w),d1
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d1
                 move.w  (a0,d0.w),d2
                 move.w  d1,d3
                 move.w  d2,d4

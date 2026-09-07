@@ -1,4 +1,4 @@
-Boss_SunsetStingSegmentMain:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_4333A
+Boss_SunsetStingSegmentMain:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4333A
                 lea     (Entity_ObjectPool).w,a3
                 lea     (word_FF9800).w,a4
                 bsr.s   Boss_SunsetStingSegmentDispatcher
@@ -90,7 +90,7 @@ Boss_SunsetStingSegmentMove:                            ; DATA XREF: ROM:0004337
                 jsr     (Projectile_ExplodeWithSound).l
                 bclr    #4,$22(a5)
                 beq.s   locret_4346C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4346C
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -157,7 +157,7 @@ Boss_SunsetStingSegmentConvertToProjectile:             ; DATA XREF: ROM:0004338
                 rts
 ; End of function Boss_SunsetStingSegmentConvertToProjectile
 ; Destroyed segment handler
-Boss_SunsetStingSegmentDestroyed:                       ; DATA XREF: ROM:off_5DC   o  ; was: sub_43506
+Boss_SunsetStingSegmentDestroyed:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_43506
                 lea     (Entity_ObjectPool).w,a3
                 lea     (word_FF9800).w,a4
                 bsr.s   Boss_SunsetStingSegmentStateDispatch
@@ -451,7 +451,7 @@ Boss_SunsetStingSegmentFalling:                         ; DATA XREF: ROM:0004358
                 rts
 ; End of function Boss_SunsetStingSegmentFalling
 ; Boss falls during defeat
-Boss_SunsetStingDefeatFall:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_43858
+Boss_SunsetStingDefeatFall:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_43858
                 lea     (Entity_ObjectPool).w,a3
                 lea     (word_FF9800).w,a4
                 bsr.s   Boss_SunsetStingDefeatExplode
@@ -498,7 +498,7 @@ Boss_SunsetStingDefeatEnd:                              ; DATA XREF: ROM:off_438
                 bra.w   loc_432CA
 ; End of function Boss_SunsetStingDefeatEnd
 ; Applies gravity and disables after timer expires
-Projectile_ViblackFallAndDisable:                       ; DATA XREF: ROM:off_5DC   o  ; was: sub_438CE
+Projectile_ViblackFallAndDisable:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_438CE
                 move.l  $58(a5),d0
                 add.l   d0,$1C(a5)
                 subq.w  #1,$48(a5)
@@ -508,7 +508,7 @@ Projectile_ViblackFallAndDisable:                       ; DATA XREF: ROM:off_5DC
 ; End of function Projectile_ViblackFallAndDisable
 ; Spawns projectile at boss position with upward velocity
 Projectile_SpawnViblackBullet:                          ; CODE XREF: Boss_ViblackAttachedToPlayer+C   p  ; was: sub_438E6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_432CE
                 move.w  #$1F8,(a0)
                 move.w  #$CD00,2(a0)
@@ -524,7 +524,7 @@ Projectile_SpawnViblackBullet:                          ; CODE XREF: Boss_Viblac
                 rts
 ; End of function Projectile_SpawnViblackBullet
 ; Sets up entity pointers and calls projectile dispatcher
-Boss_ViblackProjectileDispatcher:                       ; DATA XREF: ROM:off_5DC   o  ; was: sub_43930
+Boss_ViblackProjectileDispatcher:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_43930
                 lea     (Entity_ObjectPool).w,a3
                 lea     (word_FF9800).w,a4
                 bsr.s   nullsub_7
@@ -552,7 +552,7 @@ off_43952:      dc.w    Projectile_SpawnViblackMissile-*  ; DATA XREF: Boss_Vibl
 ; Spawns missile projectile at entity position
 Projectile_SpawnViblackMissile:                         ; DATA XREF: ROM:off_43952   o  ; was: sub_43956
                                         ; ROM:00043954   o
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_432CE
                 move.w  #$210,(a0)
                 move.w  #$ED00,2(a0)

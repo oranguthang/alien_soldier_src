@@ -402,7 +402,7 @@ Stage_InitPostBoss:                                     ; DATA XREF: ROM:0000C87
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_CC1C
                 clr.w   (dword_FFA90C).w
-                move.l  #word_1A9D4,(dword_FFA20E).w
+                move.l  #Stage2_FifthRuntimeSpawnList,(dword_FFA20E).w
                 bsr.w   UI_InitScoreTimer
 loc_CC1C:                                               ; CODE XREF: Stage_InitPostBoss+4   j
                 bra.w   Camera_UpdateTowardsPlayer

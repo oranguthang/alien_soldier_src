@@ -1,6 +1,6 @@
 Math_LookupSineTable:                                   ; CODE XREF: Effect_InitializeStarfield+98   p  ; was: sub_8618
                                         ; Cutscene_PlanetZoomInStep+24   p
-                lea     (word_1B494).l,a0
+                lea     (Math_QuarterSineTable).l,a0
                 move.w  (a0,d0.w),d1
                 addi.w  #$80,d0
                 andi.w  #$1FE,d0

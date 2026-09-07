@@ -3,21 +3,21 @@ Math_LookupCosineValue:                                 ; CODE XREF: Results_Ren
                 move.w  (a0,d0.w),d0
                 rts
 ; End of function Math_LookupCosineValue
-; Calculates distance between two objects using position differences
-Physics_CalculateDistanceTo:                            ; CODE XREF: Boss_JetsripperMain:loc_2B72E   p  ; was: sub_1B410
+; Returns the player's absolute horizontal and signed vertical deltas
+Physics_GetPlayerDelta:                                 ; CODE XREF: Boss_JetsripperMain:loc_2B72E   p  ; was: sub_1B410
                                         ; sub_2B77C:loc_2B7EA   p
                 movea.w #(word_FFA400-M68K_RAM),a0
                 move.w  $10(a0),d1
                 sub.w   $10(a5),d1
                 move.w  d1,d0
-                bpl.s   loc_1B422
+                bpl.s   Physics_GetPlayerDelta_AbsoluteX
                 neg.w   d0
-loc_1B422:                                              ; CODE XREF: Physics_CalculateDistanceTo+E   j
+Physics_GetPlayerDelta_AbsoluteX:                       ; CODE XREF: Physics_GetPlayerDelta+E   j  ; was: loc_1B422
                 move.w  $14(a0),d2
                 sub.w   $14(a5),d2
                 moveq   #1,d3
                 rts
-; End of function Physics_CalculateDistanceTo
+; End of function Physics_GetPlayerDelta
 ; Calculates angle using arctan2
 Math_CalcAngleBetweenObjs:
                 move.w  $10(a0),d0                      ; was: sub_1B42E
@@ -41,7 +41,7 @@ Math_CalculateSineCosineTable:                          ; CODE XREF: Boss_Shiper
                 movea.w a3,a4
                 addq.w  #4,a3
                 move.w  a5,(dword_FF8040).w
-                movea.l #word_1B494,a5
+                movea.l #Math_QuarterSineTable,a5
                 asl.w   #2,d0
                 move.w  #$3F,d7                         ; '?'
 ; Populates sine/cosine lookup table with calculated values
@@ -64,7 +64,7 @@ Math_PopulateTrigTable:                                 ; CODE XREF: Math_Calcul
                 rts
 ; End of function Math_CalculateSineCosineTable
 ; ---------------------------------------------------------------------------
-word_1B494:     dc.w    0, $192, $323, $4B5, $645, $7D5, $964, $AF1
+Math_QuarterSineTable:  dc.w    0, $192, $323, $4B5, $645, $7D5, $964, $AF1  ; was: word_1B494
                                         ; DATA XREF: Math_LookupSineTable   o
                                         ; Enemy_SpawnProjectileAtAngle+3A   r
                 dc.w    $C7C, $E05, $F8C, $1111, $1294, $1413, $158F, $1708
@@ -74,8 +74,8 @@ word_1B494:     dc.w    0, $192, $323, $4B5, $645, $7D5, $964, $AF1
                 dc.w    $3536, $3612, $36E5, $37AF, $3871, $392A, $39DA, $3A82
                 dc.w    $3B20, $3BB6, $3C42, $3CC5, $3D3E, $3DAE, $3E14, $3E71
                 dc.w    $3EC5, $3F0E, $3F4E, $3F84, $3FB1, $3FD3, $3FEC, $3FFB
-word_1B514:     binclude "data/other/word_1B514.bin"
-word_1B514_End:
+Math_SineTable: binclude "data/other/word_1B514.bin"    ; was: word_1B514
+Math_SineTable_End:                                     ; was: word_1B514_End
 
 ; Loop clearing table entries
 Data_ClearTableLoop:                                    ; CODE XREF: Data_ClearTableLoop+C   j  ; was: sub_1B714
@@ -88,23 +88,23 @@ Data_ClearTableLoop:                                    ; CODE XREF: Data_ClearT
 ; Check and reset table entry
 Data_CheckAndResetEntry:                                ; CODE XREF: Data_ClearTableLoop   p  ; was: sub_1B726
                 cmpi.w  #0,(a0)
-                beq.w   locret_1B744
+                beq.w   Data_CheckAndResetEntry_Return
                 cmp.w   (a0),d0
-                beq.w   locret_1B744
+                beq.w   Data_CheckAndResetEntry_Return
                 cmp.w   (a0),d1
-                beq.w   locret_1B744
+                beq.w   Data_CheckAndResetEntry_Return
                 move.w  #$10,(a0)
                 move.w  #$1000,2(a0)
-locret_1B744:                                           ; CODE XREF: Data_CheckAndResetEntry+4   j
+Data_CheckAndResetEntry_Return:                         ; CODE XREF: Data_CheckAndResetEntry+4   j  ; was: locret_1B744
                                         ; Data_CheckAndResetEntry+A   j
                 rts
 ; End of function Data_CheckAndResetEntry
-; Clears boss entity data buffer with zero fill
-Sys_ClearBossDataBuffer:                                ; CODE XREF: Cutscene_InitCreditsScreen+44   p  ; was: sub_1B746
+; Clears the complete entity object pool
+Sys_ClearEntityObjectPool:                              ; CODE XREF: Cutscene_InitCreditsScreen+44   p  ; was: sub_1B746
                                         ; Cutscene_SegaScreenFadeOut+44   p
                 moveq   #0,d0
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
-loc_1B74C:                                              ; CODE XREF: Sys_ClearBossDataBuffer+3A   j
+Sys_ClearEntityObjectPool_Loop:                         ; CODE XREF: Sys_ClearEntityObjectPool+3A   j  ; was: loc_1B74C
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
@@ -130,14 +130,14 @@ loc_1B74C:                                              ; CODE XREF: Sys_ClearBo
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 cmpa.w  #$DCA0,a0
-                bmi.s   loc_1B74C
+                bmi.s   Sys_ClearEntityObjectPool_Loop
                 rts
-; End of function Sys_ClearBossDataBuffer
+; End of function Sys_ClearEntityObjectPool
 ; Queues VDP command for DMA
 VDP_QueueCommand:                                       ; CODE XREF: Scroll_UpdateSnakeBackground+64   p  ; was: sub_1B784
                 move.w  #$8F02,d3
                 movea.w (word_FFF70E).w,a0
-loc_1B78C:                                              ; CODE XREF: Boss_ShieldViperRenderBackground+32   j
+VDP_QueueCommand_Build:                                 ; CODE XREF: Boss_ShieldViperRenderBackground+32   j  ; was: loc_1B78C
                                         ; Gfx_Update3DPlanetEffect+190   j
                 movea.w (word_FFF70C).w,a1
                 move.w  d0,d1
@@ -173,9 +173,9 @@ Stage22_GraphicsUpdate2:                                ; CODE XREF: Stage_LoadT
                 move.w  #$8F02,d3
                 move    sr,-(sp)
                 move    #$2700,sr
-loc_1B7E6:                                              ; CODE XREF: Stage22_GraphicsUpdate2+12   j
+Stage22_GraphicsUpdate2_RequestZ80Bus:                  ; CODE XREF: Stage22_GraphicsUpdate2+12   j  ; was: loc_1B7E6
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_1B7E6
+                bne.s   Stage22_GraphicsUpdate2_RequestZ80Bus
                 lea     (VDP_CTRL).l,a4
                 move.w  (word_FFF7D2).w,d2
                 bset    #4,d2
@@ -212,9 +212,9 @@ loc_1B7E6:                                              ; CODE XREF: Stage22_Gra
                 move.w  (word_FFF7D2).w,d0
                 bclr    #4,d0
                 move.w  d0,(a4)
-loc_1B864:                                              ; CODE XREF: Stage22_GraphicsUpdate2+90   j
+Stage22_GraphicsUpdate2_ReleaseZ80Bus:                  ; CODE XREF: Stage22_GraphicsUpdate2+90   j  ; was: loc_1B864
                 bclr    #0,(IO_Z80BUS).l
-                beq.s   loc_1B864
+                beq.s   Stage22_GraphicsUpdate2_ReleaseZ80Bus
                 move    (sp)+,sr
                 rts
 ; End of function Stage22_GraphicsUpdate2
@@ -250,18 +250,18 @@ Sys_ClearRAMBuffer8K:
                 movea.w #(dword_FF8000-M68K_RAM),a0     ; was: sub_1B8A6
                 moveq   #0,d0
                 move.w  #$7FF,d7
-loc_1B8B0:                                              ; CODE XREF: Sys_ClearRAMBuffer8K+C   j
+Sys_ClearRAMBuffer8K_Loop:                              ; CODE XREF: Sys_ClearRAMBuffer8K+C   j  ; was: loc_1B8B0
                 move.l  d0,(a0)+
-                dbf     d7,loc_1B8B0
+                dbf     d7,Sys_ClearRAMBuffer8K_Loop
                 rts
 ; End of function Sys_ClearRAMBuffer8K
 ; Checks button mode flag before processing input buttons
 Input_CheckButtonMode:                                  ; CODE XREF: Stage_SnakeTransition+24   p  ; was: sub_1B8B8
                                         ; Stage_BugmaxTransitionCheck+1C   p
                 btst    #1,(word_FFFF38+1).w
-                beq.s   loc_1B8C4
+                beq.s   Input_CheckButtonMode_Process
                 move.b  #4,d0
-loc_1B8C4:                                              ; CODE XREF: Input_CheckButtonMode+6   j
+Input_CheckButtonMode_Process:                          ; CODE XREF: Input_CheckButtonMode+6   j  ; was: loc_1B8C4
                 jmp     (Input_ProcessButtons).l
 ; End of function Input_CheckButtonMode
 ; Maps button input based on game state
@@ -276,13 +276,11 @@ Input_GetMappedButton:                                  ; CODE XREF: UI_Initiali
 Input_GetAttackButton:                                  ; CODE XREF: Input_GetMappedButton+6   j  ; was: loc_1B8DC
                 move.w  (StageTableIndex).w,d0
                 asr.w   #1,d0
-                move.b  byte_1B8EC(pc,d0.w),d0
+                move.b  Input_StageButtonMap(pc,d0.w),d0
                 jmp     (Input_ProcessButtons).l
 ; End of function Input_GetMappedButton
 ; ---------------------------------------------------------------------------
-byte_1B8EC:     dc.b    $81, $81, $81, $81, $81, $81, $81, $89, $89, $86
+Input_StageButtonMap:   dc.b    $81, $81, $81, $81, $81, $81, $81, $89, $89, $86  ; was: byte_1B8EC
                                         ; DATA XREF: Input_GetMappedButton+18   r
                 dc.b    $86, $86, $89, $92, $92, $8B, $8B, $97, $97, 0
                 dc.b    $93, $93, $89, $8F, $9F, 0
-
-; Initialize object with random params

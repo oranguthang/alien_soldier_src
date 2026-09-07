@@ -1,4 +1,4 @@
-Boss_SunsetStingMain:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_42A10
+Boss_SunsetStingMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_42A10
                 lea     (word_FF9800).w,a4
                 lea     (word_FFC680).w,a3
                 bsr.s   Boss_SunsetStingDispatcher
@@ -78,7 +78,7 @@ Boss_SunsetStingInit:                                   ; DATA XREF: ROM:off_42A
                 bmi.w   locret_432CE
                 move.w  #$1EC,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.b  #1,(byte_FF830E).w
                 move.w  #$1E0,$10(a5)
                 move.w  #$D8,$14(a5)
@@ -619,7 +619,7 @@ loc_431B0:                                              ; CODE XREF: Boss_Sunset
 ; Spawns debris rain projectiles
 Boss_SunsetStingSpawnDebrisRain:                        ; CODE XREF: Boss_SunsetStingDefeatWobble:loc_431B0   p  ; was: sub_431C2
                                         ; sub_43226:loc_43232   p
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_432CE
                 jsr     (Projectile_InitType88).l
                 move.w  (dword_FFFF08).w,d0
@@ -657,7 +657,7 @@ loc_43232:                                              ; CODE XREF: Boss_Sunset
                 bne.w   locret_432CE
                 move.w  #$1EC,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 jsr     (Effect_InitPlayerSpawn).l
                 clr.w   (word_FF8640).w
                 clr.l   $1C(a5)

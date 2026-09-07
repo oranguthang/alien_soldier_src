@@ -1,4 +1,4 @@
-Boss_ZLeoMain:                                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_51AD6
+Boss_ZLeoMain:                                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_51AD6
                 tst.w   4(a5)
                 beq.w   loc_51B6A
                 tst.w   8(a5)
@@ -115,7 +115,7 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:off_51B
                 bset    #0,(byte_FF8245).w
                 move.w  #$3F8,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$54,(word_FFF74A).w            ; 'T'
                 clr.w   (word_FFF74E).w
                 move.w  #$18,(word_FF8090).w
@@ -228,8 +228,8 @@ loc_51D60:                                              ; CODE XREF: Boss_ZLeoIn
                 bclr    #3,$BAE(a5)
                 move.b  #$4C,$B60(a5)                   ; 'L'
                 move.b  #$4C,$C80(a5)                   ; 'L'
-                movea.l #word_1BEB4,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_ZLeoObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 clr.l   $2FC(a5)
                 clr.l   $35C(a5)
                 move.w  #2,$1DE(a5)
@@ -523,7 +523,7 @@ loc_5215E:                                              ; CODE XREF: Boss_ZLeoDe
                 move.w  #$120,$48(a5)
                 move.w  #$3F8,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 movea.w #(word_FFE380-M68K_RAM),a0
                 move.w  #$EEE,d0
                 moveq   #$3F,d7                         ; '?'

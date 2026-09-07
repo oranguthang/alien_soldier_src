@@ -173,7 +173,7 @@ Stage_LoadStage11Config:                                ; DATA XREF: ROM:0001228
 ; UNUSED GRAPHICS LOADER: Intro Sprite Loader
 ; Description: Would have loaded cut intro cutscene sprites
 ; Target Structure: stru_12910 (line 23283)
-; Graphics Source: word_1A3E6 (line 34368)
+; Graphics Source: Stage_EmptyObjectSpawnList (line 34368)
 ; Status: Loader exists but never called in final game
 ; ===============================================================================
 ; Initializes unused intro cutscene sprite data

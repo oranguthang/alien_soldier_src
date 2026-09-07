@@ -48,7 +48,7 @@ loc_38BE8:                                              ; CODE XREF: Boss_Terobu
                                         ; Boss_TerobusterAttackPattern3+20   j
                 move.w  #2,(word_FFA010).w
                 move.w  #2,(word_FFA014).w
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_38C64
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 btst    #1,(word_FFA000+1).w
@@ -92,7 +92,7 @@ Boss_TerobusterDefeatInit:                              ; DATA XREF: ROM:0003858
                 move.b  #4,(byte_FFA95A).w
                 move.w  #$B4,d0
                 move.w  #$12C,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 jsr     (Boss_InitDefeatExplosion).l
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
@@ -194,7 +194,7 @@ Boss_TerobusterSpawnProjectile:                         ; CODE XREF: Boss_Terobu
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
                 bne.s   locret_38E06
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_38E06
                 movea.l #Boss_TerobusterProjectileSpriteFrames,a1
                 jsr     (Sprite_InitTypeA4FromTable).l
@@ -231,7 +231,7 @@ loc_38E2A:                                              ; CODE XREF: Boss_Terobu
                 andi.w  #$1F,d0
                 bne.s   locret_38EA0
                 movea.w #(byte_FFD880-M68K_RAM),a0
-                jsr     (loc_1C144).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   locret_38EA0
                 move.w  #$138,(a0)
                 move.w  #$8D00,2(a0)

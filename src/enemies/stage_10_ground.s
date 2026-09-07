@@ -1,4 +1,4 @@
-Enemy_Stage10BomberMain:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E6C2
+Enemy_Stage10BomberMain:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E6C2
                 move.w  #$120,$10(a5)
                 move.w  #$154,$14(a5)
                 move.w  4(a5),d0
@@ -20,7 +20,7 @@ Enemy_Stage10BomberInit:                                ; DATA XREF: ROM:off_2E6
 ; End of function Enemy_Stage10BomberInit
 ; Spawns bomber projectile at random position
 Enemy_Stage10BomberSpawn:                               ; DATA XREF: ROM:0002E6DC   o  ; was: sub_2E6EE
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2E73A
                 jsr     (RandomNumber).l
                 move.w  a0,$4C(a5)
@@ -94,7 +94,7 @@ Enemy_Stage10BeetleInit:                                ; CODE XREF: Enemy_Stage
 word_2E7C8:     dc.w    $1804, $1100                    ; DATA XREF: Enemy_Stage10BeetleInit+2C   o
 
 ; Main handler for Stage 10 beetle enemy
-Enemy_Stage10BeetleMain:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E7CC
+Enemy_Stage10BeetleMain:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E7CC
                 tst.w   4(a5)
                 beq.s   Enemy_BeetleMainLoop
                 tst.w   $24(a5)
@@ -166,7 +166,7 @@ loc_2E86A:                                              ; CODE XREF: Enemy_Stage
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (a1,d0.w),d0
                 ext.l   d0
                 asl.l   #3,d0
@@ -257,7 +257,7 @@ loc_2E97A:                                              ; CODE XREF: Enemy_Stage
                 rts
 ; End of function Enemy_Stage10BeetleDefeat
 ; Falling beetle with explosion
-Enemy_Stage10BeetleFall:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2E99E
+Enemy_Stage10BeetleFall:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E99E
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2E9BA

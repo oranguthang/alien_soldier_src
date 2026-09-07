@@ -320,7 +320,7 @@ loc_DBFC:                                               ; CODE XREF: Stage_Telep
                 clr.b   (byte_FFA95A).w
                 moveq   #0,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 bset    #6,(byte_FFA959).w
                 move.w  #$50,(word_FFA404).w            ; 'P'
                 clr.l   (dword_FF8240).w

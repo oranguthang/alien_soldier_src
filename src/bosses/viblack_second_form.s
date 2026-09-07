@@ -1,4 +1,4 @@
-Boss_ViblackMain:                                       ; DATA XREF: ROM:off_5DC   o  ; was: sub_4398C
+Boss_ViblackMain:                                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4398C
                 tst.w   4(a5)
                 beq.w   Boss_ViblackStateDispatch
                 addq.w  #1,$4E(a5)
@@ -228,7 +228,7 @@ Boss_ViblackProjectileAttack:                           ; DATA XREF: ROM:000439E
                 moveq   #1,d5
 loc_43CAE:                                              ; CODE XREF: Boss_ViblackProjectileAttack+CA   j
                                         ; Boss_ViblackProjectileAttack+D6   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_43C44
                 cmpi.w  #$A0,$48(a5)
                 bpl.s   loc_43CCE
@@ -240,8 +240,8 @@ loc_43CAE:                                              ; CODE XREF: Boss_Viblac
 loc_43CCE:                                              ; CODE XREF: Boss_ViblackProjectileAttack+48   j
                 lea     (Boss_SharedCollisionProjectileSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d6.w),d0
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d6.w),d0
                 move.w  (a1,d6.w),d1
                 ext.l   d0
                 ext.l   d1

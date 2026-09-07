@@ -1,4 +1,4 @@
-Enemy_GustheadEyeMain:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_310E6
+Enemy_GustheadEyeMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_310E6
                 bsr.w   Enemy_GustheadEyeDestroy
                 move.w  4(a5),d0
                 lea     off_310F6(pc,d0.w),a0
@@ -24,7 +24,7 @@ Enemy_GustheadEyeSpawnChain:                            ; DATA XREF: ROM:000310F
                 move.w  #7,d7
                 move.w  a5,$44(a5)
 loc_31120:                                              ; CODE XREF: Enemy_GustheadEyeSpawnChain+44   j
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   loc_31164
                 movea.w $44(a5),a1
                 move.w  $10(a1),$10(a0)
@@ -67,7 +67,7 @@ loc_3118E:                                              ; CODE XREF: Enemy_Gusth
                 rts
 ; End of function Enemy_GustheadEyeDestroy
 ; Main dispatcher for small eye
-Enemy_GustheadSmallEyeMain:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_31194
+Enemy_GustheadSmallEyeMain:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_31194
                 move.w  4(a5),d0
                 lea     off_311A0(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -223,7 +223,7 @@ Boss_GustheadWaitAndSpawnEyes:                          ; DATA XREF: ROM:000313C
 ; Calculates angle to player
 Enemy_GustheadGetAngleToPlayer:                         ; CODE XREF: Enemy_Stage18FloaterDeath+42   p  ; was: sub_3133A
                                         ; Boss_CalcRandomAngle+E   p
-                lea     (word_1B494).l,a0
+                lea     (Math_QuarterSineTable).l,a0
                 move.w  (a0,d0.w),d1
                 addi.w  #$80,d0
                 andi.w  #$1FE,d0
@@ -231,7 +231,7 @@ Enemy_GustheadGetAngleToPlayer:                         ; CODE XREF: Enemy_Stage
                 rts
 ; End of function Enemy_GustheadGetAngleToPlayer
 ; Main handler for eye chain projectile
-Enemy_GustheadEyeChainMain:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_31352
+Enemy_GustheadEyeChainMain:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_31352
                 cmpi.w  #$E,4(a5)
                 bcc.w   loc_313A8
                 tst.w   $24(a5)
@@ -347,7 +347,7 @@ Boss_GustheadResetState:                                ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Boss_GustheadResetState
 ; Updates entity slot
-Enemy_UpdateEntitySlot:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_314C2
+Enemy_UpdateEntitySlot:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_314C2
                 move.w  $48(a5),d0
                 lea     off_314CE(pc,d0.w),a0
                 adda.w  (a0),a0

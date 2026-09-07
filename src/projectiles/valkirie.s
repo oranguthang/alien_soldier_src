@@ -23,7 +23,7 @@ loc_2A08A:                                              ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_CopyValkirieData
 ; Projectile main handler
-Projectile_ValkirieMain:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A092
+Projectile_ValkirieMain:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A092
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2A0A0
                 bset    #4,2(a5)
@@ -64,7 +64,7 @@ locret_2A100:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_InitType424
 ; Updates timer and toggles sprite visibility based on condition flags
-Projectile_TimerAndVisibility:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A102
+Projectile_TimerAndVisibility:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A102
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2A110
                 bset    #4,2(a5)
@@ -117,16 +117,16 @@ loc_2A198:                                              ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_InitWithDirection
 ; Updates projectile trajectory and spawns child projectiles at intervals
-Projectile_UpdateWithSpawning:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A1A0
+Projectile_UpdateWithSpawning:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A1A0
                 tst.b   $48(a5)
                 bmi.s   loc_2A202
                 subq.w  #1,$48(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2A200
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 bne.s   locret_2A200
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2A200
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 bsr.w   Sprite_InitFromTable
@@ -134,7 +134,7 @@ Projectile_UpdateWithSpawning:                          ; DATA XREF: ROM:off_5DC
                 move.w  $14(a5),$14(a0)
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
-                movea.l #word_1B514,a1
+                movea.l #Math_SineTable,a1
                 move.w  -$80(a1,d0.w),d1
                 move.w  (a1,d0.w),d2
                 ext.l   d1
@@ -167,7 +167,7 @@ loc_2A234:                                              ; CODE XREF: Projectile_
                                         ; Projectile_UpdateWithSpawning+76   j
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_2A270
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2A270
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
                 bsr.w   Sprite_InitFromTable
@@ -185,7 +185,7 @@ locret_2A270:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_UpdateWithSpawning
 ; Applies downward acceleration and horizontal deceleration to projectile
-Projectile_ApplyGravityEffect:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_2A272
+Projectile_ApplyGravityEffect:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A272
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2A280
                 bset    #4,2(a5)

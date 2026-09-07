@@ -1,4 +1,4 @@
-Enemy_FlyerCollision:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_33664
+Enemy_FlyerCollision:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_33664
                 move.w  4(a5),d0
                 lea     off_33670(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -16,7 +16,7 @@ Enemy_FlyerDamage:                                      ; DATA XREF: ROM:off_336
                 clr.w   $4A(a5)
                 cmpi.w  #$3E0,(word_FFDB20).w
                 beq.s   loc_336A2
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_33696
                 move.w  #$454,(a0)
                 move.w  a0,$40(a5)
@@ -48,7 +48,7 @@ Enemy_FlyerUpdateSprites2:                              ; DATA XREF: ROM:0003367
                 move.w  #9,d7
                 lea     $4C(a5),a1
 loc_336D2:                                              ; CODE XREF: Enemy_FlyerUpdateSprites2+2C   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_336E4
                 move.w  #$10,(a0)
                 move.w  a0,(a1)+
@@ -154,11 +154,11 @@ locret_3381A:                                           ; CODE XREF: Enemy_Flyer
 ; End of function Enemy_FlyerInitState
 ; Spawns pair of projectiles and stores references, handles spawn failure
 Enemy_FlyerSpawnPair:                                   ; DATA XREF: ROM:000337F4   o  ; was: sub_3381C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_33840
                 move.w  #$10,(a0)
                 move.w  a0,$5C(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_33842
                 move.w  #$10,(a0)
                 move.w  a0,$5E(a5)
@@ -225,7 +225,7 @@ Enemy_FlyerPeriodicMissirayFire:                        ; CODE XREF: Enemy_Flyer
                 move.w  (word_FFA000).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 bne.s   locret_33922
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_33922
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$FF,d0
@@ -244,7 +244,7 @@ Enemy_FlyerPeriodicProjectileFire:                      ; CODE XREF: Enemy_Flyer
                 move.w  (word_FFA000).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 bne.s   locret_33954
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_33954
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$FF,d0
@@ -293,7 +293,7 @@ loc_339B0:                                              ; CODE XREF: Enemy_Flyer
                 rts
 ; End of function Enemy_FlyerAnimation2
 ; Flyer animation 3
-Enemy_FlyerAnimation3:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_339DE
+Enemy_FlyerAnimation3:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_339DE
                 tst.w   4(a5)
                 beq.s   loc_33A44
                 cmpi.w  #$E,4(a5)
@@ -410,7 +410,7 @@ locret_33B12:                                           ; CODE XREF: Projectile_
 ; Projectile update 2
 Projectile_FlyerUpdate2:                                ; CODE XREF: Enemy_FlyerAccelerateFall+48   p  ; was: sub_33B14
                                         ; Projectile_FlyerUpdate1+8   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_33B52
                 jsr     (Projectile_InitType88).l
                 andi.w  #$FEFF,2(a0)

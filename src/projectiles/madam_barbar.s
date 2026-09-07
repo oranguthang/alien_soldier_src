@@ -1,4 +1,4 @@
-Projectile_MadamBarbarDebris:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_3AE36
+Projectile_MadamBarbarDebris:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3AE36
                 tst.w   (word_FF808C).w
                 bpl.s   loc_3AE42
                 tst.w   $24(a5)
@@ -163,7 +163,7 @@ Boss_MadamBarbarCheckCollision:                         ; CODE XREF: Projectile_
 ; Spawns boss projectiles with random position offset calculations
 Boss_MadamBarbarSpawnProjectile:                        ; CODE XREF: Boss_MadamBarbarAttackPhase   p  ; was: sub_3B01E
                                         ; Boss_MadamBarbarIdleUpdate+1A   p
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3B066
                 movea.l #dword_3B178,a1
                 jsr     (Sprite_InitFromTable).l
@@ -189,7 +189,7 @@ Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamB
                 move.w  (word_FFA000).w,d0
                 andi.w  #$F,d0
                 bne.s   locret_3B066
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3B066
                 move.w  #$11C,(a0)
                 clr.w   4(a0)
@@ -207,7 +207,7 @@ Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamB
                 bra.w   loc_3B03E
 ; End of function Boss_MadamBarbarSpawnDropProjectile
 ; Handle Madam Barbar dropped projectile animation and bouncing behavior
-Projectile_MadamBarbarDropBehavior:                     ; DATA XREF: ROM:off_5DC   o  ; was: sub_3B0C0
+Projectile_MadamBarbarDropBehavior:                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3B0C0
                 tst.w   (word_FF808C).w
                 bmi.s   loc_3B0CE
                 bset    #4,2(a5)

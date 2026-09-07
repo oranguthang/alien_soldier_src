@@ -47,7 +47,7 @@ loc_323DA:                                              ; CODE XREF: Enemy_Stage
                 rts
 ; End of function Enemy_Stage14TurretInit
 ; Main state dispatcher for Jetsripper boss using indexed jump table
-Boss_JetsripperStateDispatcher:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_323E2
+Boss_JetsripperStateDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_323E2
                 move.w  $48(a5),d0
                 lea     off_323EE(pc,d0.w),a0
                 adda.w  (a0),a0

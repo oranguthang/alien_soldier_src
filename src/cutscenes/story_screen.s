@@ -64,9 +64,9 @@ Sys_StoryScreenMainLoop:                                ; DATA XREF: Sys_Dispatc
                 bne.w   loc_5102
 loc_491C:                                               ; CODE XREF: Sys_StoryScreenMainLoop+6   j
                                         ; Sys_StoryScreenMainLoop+E   j
-                jsr     (Gfx_UpdateScrollPosition).l
+                jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sys_InitObjectPointers).l
-                jsr     (UI_CheckVBlankFlag).l
+                jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   Sys_StoryScreenDispatcher
                 bsr.w   UI_StoryTextDispatcher

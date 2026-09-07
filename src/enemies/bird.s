@@ -54,7 +54,7 @@ locret_2DACC:                                           ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdateSpriteFlip
 ; Main bird enemy update checking defeat conditions and player collision
-Enemy_BirdMain:                                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_2DACE
+Enemy_BirdMain:                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DACE
                 tst.w   4(a5)
                 beq.s   Enemy_BirdMainLoop
                 tst.w   $24(a5)
@@ -220,7 +220,7 @@ loc_2DC7A:                                              ; CODE XREF: Enemy_BirdW
 ; End of function Enemy_BirdWaitState
 ; Bird chases player calculating direction and dive distance
 Enemy_BirdChasePlayer:                                  ; DATA XREF: ROM:0002DB4A   o  ; was: sub_2DC8C
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   loc_2DCA0
                 move.l  #$FFFE0000,$18(a5)
@@ -384,7 +384,7 @@ Enemy_BirdFireProjectile:                               ; CODE XREF: Enemy_BirdF
                 move.w  (word_FFA000).w,d0
                 andi.w  #$1F,d0
                 bne.s   locret_2DEC6
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 move.w  #$2BC,(a0)
                 move.b  $20(a5),$20(a0)
                 addq.b  #4,$20(a0)
@@ -420,7 +420,7 @@ Enemy_BirdBounceOff:                                    ; CODE XREF: Enemy_BirdM
                 bra.w   Enemy_UpdateBirdAnimation
 ; End of function Enemy_BirdBounceOff
 ; Bird spawns projectiles with gravity and explosion effect
-Enemy_BirdProjectileSpawn:                              ; DATA XREF: ROM:off_5DC   o  ; was: sub_2DEFE
+Enemy_BirdProjectileSpawn:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2DEFE
                 bsr.w   Enemy_ToggleSpriteVisibility
                 addi.l  #$2000,$1C(a5)
                 tst.w   4(a5)
@@ -433,7 +433,7 @@ loc_2DF1A:                                              ; CODE XREF: Enemy_BirdP
                 move.w  (word_FFA000).w,d7
                 andi.w  #7,d7
                 bne.s   locret_2DF7C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_2DF7C
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

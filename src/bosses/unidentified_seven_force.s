@@ -1,4 +1,4 @@
-Boss_Unknown1MainLoop:                                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_58C62
+Boss_Unknown1MainLoop:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_58C62
                 tst.w   4(a5)
                 beq.w   loc_58C84
                 tst.w   8(a5)
@@ -36,8 +36,8 @@ Boss_Unknown1InitMetasprite:                            ; DATA XREF: Boss_Unknow
                 move.w  #$43C,(a5)
                 move.w  #$CC00,2(a5)
                 clr.w   6(a5)
-                movea.l #word_1BF90,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_UnidentifiedSevenForceObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 movea.w #(word_FFDC40-M68K_RAM),a0
                 move.w  $10(a0),$10(a5)
                 move.w  #2,$1DE(a5)

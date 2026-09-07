@@ -1,5 +1,5 @@
 Boss_ShieldViperDefeatInit:                             ; DATA XREF: ROM:0004E056   o  ; was: sub_4EC5E
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_4EC9E
                 bsr.w   Boss_WolfGaropaMovement1
                 move.w  #$37C,(a0)
@@ -100,7 +100,7 @@ locret_4ED94:                                           ; CODE XREF: Boss_Shield
                 rts
 ; End of function Boss_ShieldViperTransitionOut
 ; Spawns projectile type 2
-Boss_ShieldViperSpawnProjectile2:                       ; DATA XREF: ROM:off_5DC   o  ; was: sub_4ED96
+Boss_ShieldViperSpawnProjectile2:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4ED96
                 movea.w a5,a0
                 bsr.w   Boss_ShieldViperCollision
                 move.w  4(a5),d0
@@ -157,8 +157,8 @@ loc_4EE28:                                              ; CODE XREF: Boss_Shield
                 addi.w  #$80,d0
 loc_4EE2C:                                              ; CODE XREF: Boss_ShieldViperChildCircularMotion+6C   j
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a3
-                move.w  word_1B494-word_1B514(a3,d0.w),d1
+                lea     (Math_SineTable).l,a3
+                move.w  Math_QuarterSineTable-Math_SineTable(a3,d0.w),d1
                 move.w  (a3,d0.w),d0
                 muls.w  #$10,d0
                 muls.w  #$10,d1
@@ -242,7 +242,7 @@ locret_4EF2C:                                           ; CODE XREF: Boss_Shield
                 rts
 ; End of function Boss_ShieldViperChildReturnToParent
 ; Main handler for bullet state machine
-Projectile_ShieldViperBulletMain:                       ; DATA XREF: ROM:off_5DC   o  ; was: sub_4EF2E
+Projectile_ShieldViperBulletMain:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4EF2E
                 btst    #0,(word_FFC678).w
                 beq.s   loc_4EF5E
                 btst    #7,2(a5)
@@ -360,8 +360,8 @@ loc_4F04C:                                              ; CODE XREF: Boss_Shield
                 addi.w  #$80,d0
 loc_4F050:                                              ; CODE XREF: Boss_ShieldViperChildPositionUpdate+14   j
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a3
-                move.w  word_1B494-word_1B514(a3,d0.w),d1
+                lea     (Math_SineTable).l,a3
+                move.w  Math_QuarterSineTable-Math_SineTable(a3,d0.w),d1
                 move.w  (a3,d0.w),d0
                 muls.w  $50(a0),d0
                 muls.w  $50(a0),d1
@@ -421,7 +421,7 @@ locret_4F10A:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_ShieldViperSpawnEffect
 ; Handles bullet animation timing
-Projectile_ShieldViperBulletAnimation:                  ; DATA XREF: ROM:off_5DC   o  ; was: sub_4F10C
+Projectile_ShieldViperBulletAnimation:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4F10C
                 bclr    #4,$22(a5)
                 bne.s   loc_4F154
                 tst.w   4(a5)

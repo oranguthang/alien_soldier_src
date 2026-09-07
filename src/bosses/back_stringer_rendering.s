@@ -212,7 +212,7 @@ loc_451B6:                                              ; CODE XREF: Boss_BackSt
                 rts
 ; End of function Boss_BackStringerRetractSegments
 ; Flashing effect for destroyed BackStringer segment
-Effect_BackStringerSegmentFlash:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_451E6
+Effect_BackStringerSegmentFlash:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_451E6
                 subq.w  #1,$48(a5)
                 bpl.s   loc_451F6
                 move.w  #$10,(a5)
@@ -247,8 +247,8 @@ loc_45238:                                              ; CODE XREF: Boss_BackSt
                 move.w  $56(a5),d0
                 subi.w  #$80,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d0.w),d1
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d1
                 move.w  (a0,d0.w),d2
                 move.w  $3BC(a5),d0
                 asr.w   #2,d0

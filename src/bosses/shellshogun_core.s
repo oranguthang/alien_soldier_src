@@ -1,4 +1,4 @@
-Boss_ShellshogunMainHandler:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_394D8
+Boss_ShellshogunMainHandler:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_394D8
                 tst.w   4(a5)
                 beq.w   loc_39512
                 tst.w   $26(a5)
@@ -53,7 +53,7 @@ Boss_ShellshogunInitState:                              ; DATA XREF: Boss_Shells
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$F4,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 clr.w   8(a5)
                 clr.w   $A(a5)
                 move.b  #1,(byte_FF830E).w
@@ -127,8 +127,8 @@ loc_3964C:                                              ; CODE XREF: Boss_Shells
                 move.w  #$C000,$A22(a5)
                 move.l  #word_EB98A,$A28(a5)
                 move.b  #$C,$A40(a5)
-                movea.l #word_1BA48,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_ShellshogunObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 movea.l #byte_396C6,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 bsr.w   Boss_ShellshogunInitSprites
@@ -228,7 +228,7 @@ Boss_ShellshogunChargeAttack:                           ; DATA XREF: ROM:0003953
                 move.w  #$FEB0,(dword_FFA908).w
                 move.w  #$F4,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
 loc_39802:                                              ; CODE XREF: Boss_ShellshogunChargeAttack+A   j
                                         ; Boss_ShellshogunChargeAttack+1C   j
@@ -332,7 +332,7 @@ loc_3990C:                                              ; CODE XREF: Boss_Shells
                 cmpi.w  #$1D8,d0
                 bpl.w   Boss_ShellshogunInitJumpAttack
 loc_3992A:                                              ; CODE XREF: Boss_ShellshogunAttackPattern+22   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$D0,d0
                 bpl.s   loc_39954
                 move.w  (dword_FFFF08).w,d0
@@ -431,7 +431,7 @@ locret_39A54:                                           ; CODE XREF: Boss_Shells
 ; ---------------------------------------------------------------------------
 loc_39A56:                                              ; CODE XREF: Boss_ShellshogunSpawnShells+3C   j
                                         ; Boss_ShellshogunSpawnShells+44   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 beq.s   loc_39A3E
                 cmpi.w  #$88,d0
                 bpl.s   loc_39A3E

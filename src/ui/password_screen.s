@@ -4,7 +4,7 @@ UI_InitPasswordScreen:                                  ; DATA XREF: Sys_Dispatc
                 jsr     (Sys_InitGameMode).l
                 movea.l #stru_A1F8,a0
                 jsr     (LoadObjData).l
-                jsr     (Sys_ClearBossDataBuffer).l
+                jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -88,9 +88,9 @@ loc_A4EC:                                               ; CODE XREF: UI_UpdatePa
                                         ; UI_UpdatePasswordScreen+24   j
                 jsr     (Gfx_UpdateCursorFlash).l
                 jsr     (Gfx_UpdateMenuPalette).l
-                jsr     (Gfx_UpdateScrollPosition).l
+                jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sys_InitObjectPointers).l
-                jsr     (UI_CheckVBlankFlag).l
+                jsr     (Sys_BeginVisibleObjectList).l
                 bsr.w   UI_HandlePasswordInput
                 movea.w #(word_FF9900-M68K_RAM),a0
                 move.w  #$8300,d0

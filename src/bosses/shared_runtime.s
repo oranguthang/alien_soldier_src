@@ -109,7 +109,7 @@ loc_2BCE6:                                              ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdateBossAI
 ; Initializes boss object and state
-Enemy_InitializeBoss:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BCEE
+Enemy_InitializeBoss:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BCEE
                 tst.w   4(a5)
                 bne.s   Enemy_InitializeBossHandler
                 bsr.w   Enemy_InitializeState
@@ -118,7 +118,7 @@ Enemy_InitializeBossHandler:                            ; CODE XREF: Enemy_Initi
                 bra.w   Enemy_UpdateBossAI
 ; End of function Enemy_InitializeBoss
 ; Empty entity state handler in main dispatch table
-Entity_EmptyState6:                                     ; DATA XREF: ROM:off_5DC   o  ; was: nullsub_6
+Entity_EmptyState6:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_6
                 rts
 ; End of function Entity_EmptyState6
 ; Sets sprite pointer a0 from a5 and clears d7
@@ -214,7 +214,7 @@ off_2BDA8:      dc.l    off_E97E0                       ; DATA XREF: Effect_Crea
 
 ; Dispatches to boss state handler based on state index
 Boss_StateDispatcher:                                   ; CODE XREF: Boss_ValkirieScreenTimer:loc_50E36   j  ; was: sub_2BDB0
-                                        ; DATA XREF: ROM:off_5DC   o
+                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 subq.w  #1,$4A(a5)
                 bmi.s   loc_2BE1E
                 cmpi.w  #$20,$4A(a5)                    ; ' '
@@ -252,7 +252,7 @@ loc_2BE1E:                                              ; CODE XREF: Boss_StateD
 loc_2BE26:                                              ; CODE XREF: Boss_StateDispatcher+28   j
                                         ; Boss_StateDispatcher+30   j
                 andi.w  #$E7FF,$E(a5)
-                lea     (word_1C972).l,a0
+                lea     (Object_CameraPriorityTable).l,a0
                 move.w  (word_FFA000).w,d0
                 asr.w   #1,d0
                 andi.w  #6,d0
@@ -280,10 +280,10 @@ Projectile_SpawnMultiPattern:                           ; CODE XREF: Projectile_
                 lsr.w   d0,d6
                 andi.w  #$1FE,d6
 loc_2BE72:                                              ; CODE XREF: Projectile_SpawnMultiPattern:loc_2BEB6   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   loc_2BEB6
                 andi.w  #$1FE,d2
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 move.w  (a2,d2.w),d4
                 move.w  -$80(a2,d2.w),d5
                 ext.l   d4
@@ -304,7 +304,7 @@ loc_2BEB6:                                              ; CODE XREF: Projectile_
 ; Projectile explosion creating sprite with sound effect playback
 Projectile_ExplodeWithSound:                            ; CODE XREF: Boss_SpawnMultipleShots+E   p  ; was: sub_2BEBC
                                         ; Projectile_JetsripperFalling+E   p
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   nullsub_61
                 move.l  #off_E953C,8(a0)
                 move.w  #$1A0,(a0)
@@ -319,7 +319,7 @@ Projectile_ExplodeWithSound:                            ; CODE XREF: Boss_SpawnM
 ; Explosion effect when projectile hits
 Projectile_ExplodeOnImpact:                             ; CODE XREF: Enemy_ProcessObject+10   p  ; was: sub_2BEF0
                                         ; Projectile_BouncingDebrisMain+9A   p
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   nullsub_61
                 move.w  #8,$4A(a0)
                 move.w  #$1A4,(a0)
@@ -344,7 +344,7 @@ Effect_InitializeExplosionEffect:                       ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_ExplodeOnImpact
 ; Updates enemy phase pattern based on timer
-Enemy_UpdatePhasePattern:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BF58
+Enemy_UpdatePhasePattern:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BF58
                 cmpi.w  #$80,$C(a5)
                 bcc.w   Enemy_CheckHealthThreshold
                 cmpi.w  #$80,$10(a5)
@@ -396,7 +396,7 @@ Enemy_TargetPlayer:                                     ; DATA XREF: ROM:off_2BF
                 jsr     (Math_CalculateAngleToPlayer).l
                 addi.w  #$100,d2
                 andi.w  #$1FE,d2
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (a1,d2.w),d0
                 ext.l   d0
                 asl.l   #4,d0
@@ -431,7 +431,7 @@ Projectile_RandomAngleInit:                             ; DATA XREF: ROM:off_2C0
 Projectile_InitRandomAngle:                             ; DATA XREF: ROM:0002C016   o  ; was: loc_2C024
                 andi.w  #$1FE,$5E(a5)
                 move.w  $5E(a5),d2
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  (a1,d2.w),d0
                 move.w  -$80(a1,d2.w),d1
                 ext.l   d0
@@ -473,7 +473,7 @@ off_2C086:      dc.w    Enemy_SpawnHelperSprite-*       ; DATA XREF: Enemy_Phase
 
 ; Spawns helper sprite for enemy with position and state init
 Enemy_SpawnHelperSprite:                                ; DATA XREF: ROM:off_2C086   o  ; was: sub_2C08C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   nullsub_61
                 move.l  #off_E9560,8(a0)
                 jsr     (Sprite_InitType160).l
@@ -503,7 +503,7 @@ Enemy_CheckHealthThreshold:                             ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_CheckHealthThreshold
 ; Boss part state dispatcher using jump table
-Enemy_BossPartDispatcher:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2C0DE
+Enemy_BossPartDispatcher:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C0DE
                 cmpi.w  #$80,$C(a5)
                 bcc.w   Enemy_CheckHealthThreshold
                 move.w  $4C(a5),d0

@@ -53,7 +53,7 @@ loc_42080:                                              ; CODE XREF: Boss_Sunset
                 bcs.s   loc_42088
                 move.w  d1,(dword_FFC6D8).w
 loc_42088:                                              ; CODE XREF: Boss_SunsetStingRotateAndMove+24   j
-                movea.l #word_1B514,a2
+                movea.l #Math_SineTable,a2
                 move.b  (dword_FFC6DC+1).w,d1
                 add.w   d1,d1
                 andi.w  #$1FE,d1
@@ -305,7 +305,7 @@ loc_4236A:                                              ; CODE XREF: Boss_Sunset
                 move.w  $B6(a4),$56(a3)
                 adda.w  #$60,a3                         ; '`'
                 dbf     d4,loc_4236A
-                movea.l #word_1B514,a2
+                movea.l #Math_SineTable,a2
                 move.w  $56(a5),d1
                 add.w   $56(a4),d1
                 andi.w  #$1FE,d1
@@ -358,7 +358,7 @@ Boss_SunsetStingInitFragmentExplosion:
                 move.w  (word_FFC67C).w,d4
                 subq.w  #2,d4
                 lea     $60(a5),a4
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
 loc_4242A:                                              ; CODE XREF: Boss_SunsetStingInitFragmentExplosion+6A   j
                 move.w  #$CD40,2(a4)
                 jsr     (RandomNumber).l
@@ -725,7 +725,7 @@ JumpRandomFunc:                                         ; CODE XREF: Boss_Sunset
 Math_GetSinCos:                                         ; CODE XREF: Math_GetScaledSinCos   p  ; was: sub_42882
                 lsr.w   #1,d0
                 andi.w  #$1FE,d0
-                lea     (word_1B494).l,a0
+                lea     (Math_QuarterSineTable).l,a0
                 move.w  (a0,d0.w),d1
                 addi.w  #$80,d0
                 andi.w  #$1FE,d0

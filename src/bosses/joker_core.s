@@ -1,4 +1,4 @@
-Boss_JokerMain:                                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_3B29E
+Boss_JokerMain:                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3B29E
                 tst.w   4(a5)
                 beq.w   loc_3B2D6
                 tst.w   8(a5)
@@ -54,7 +54,7 @@ Boss_JokerInit:                                         ; DATA XREF: Boss_JokerM
                 move.w  #4,$4A(a5)
                 move.w  #$15C,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
 locret_3B32E:                                           ; CODE XREF: Boss_JokerSetup+4   j
                 rts
 ; End of function Boss_JokerInit
@@ -91,8 +91,8 @@ loc_3B382:                                              ; CODE XREF: Boss_JokerS
                 bset    d0,2(a5)
                 bset    d0,$362(a5)
                 bset    d0,$6C2(a5)
-                movea.l #word_1BB3C,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_JokerObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 lea     byte_3B3F8(pc),a0
                 nop
                 jsr     (Gfx_LoadCompressedTiles).l
@@ -219,7 +219,7 @@ Boss_JokerFadeOut:                                      ; DATA XREF: ROM:0003B30
                 clr.w   8(a5)
                 move.w  #$15C,d0
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 move.b  #4,(byte_FFA95A).w
                 jsr     (Effect_InitPlayerSpawn).l
                 addi.w  #$10,$14(a0)
@@ -341,7 +341,7 @@ Boss_JokerSelectAttack:                                 ; CODE XREF: Boss_JokerD
                 tst.w   (word_FF8234).w
                 bmi.s   Boss_JokerInitTauntState
                 beq.s   Boss_JokerInitTauntState
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$6A,d0                         ; 'j'
                 bpl.s   loc_3B6E8
                 move.w  (dword_FFFF08).w,d0
@@ -413,7 +413,7 @@ loc_3B7A4:                                              ; CODE XREF: Boss_JokerD
                 bra.s   Boss_JokerDive_ApplyGravity
 ; ---------------------------------------------------------------------------
 loc_3B7B4:                                              ; CODE XREF: Boss_JokerDivePrep+60   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 move.l  #$10000,d0
                 move.w  (dword_FFFF08).w,d0
                 tst.w   d1

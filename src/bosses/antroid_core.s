@@ -1,4 +1,4 @@
-Boss_AntroidMainHandler:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_374C6
+Boss_AntroidMainHandler:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_374C6
                 tst.w   4(a5)
                 beq.w   Boss_AntroidStateDispatch
                 tst.w   8(a5)
@@ -59,7 +59,7 @@ Boss_AntroidInitState:                                  ; DATA XREF: Boss_Antroi
                 clr.w   8(a5)
                 move.w  #$30,d0                         ; '0'
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 rts
 ; End of function Boss_AntroidInitState
 ; Initializes Antroid boss phase with metasprite setup
@@ -83,8 +83,8 @@ Boss_AntroidInitPhase:                                  ; DATA XREF: ROM:0003751
                 move.w  #$C100,$542(a5)
                 move.w  #$2C8,$550(a5)
                 clr.w   6(a5)
-                movea.l #word_1B9E4,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_AntroidObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 move.w  #2,$1DE(a5)
                 move.w  #$100,$54(a5)
                 bsr.w   Boss_AntroidInitPhysics
@@ -190,7 +190,7 @@ Boss_AntroidBattleDecision:                             ; CODE XREF: Boss_Antroi
                 move.w  d7,d0
                 andi.w  #$C800,d0
                 beq.w   Boss_AntroidInitIdleState
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$A8,d0
                 bpl.s   loc_3771E
                 cmpi.w  #$3600,(word_FF8200).w
@@ -314,7 +314,7 @@ loc_37846:                                              ; CODE XREF: Boss_Antroi
 ; ---------------------------------------------------------------------------
 loc_3784E:                                              ; CODE XREF: Boss_AntroidFlyingAttack+4E   j
                 move.w  #2,$23C(a5)
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$70,d0                         ; 'p'
                 bpl.s   Boss_AntroidStartAttack2Setup
                 move.w  (dword_FFFF08).w,d0
@@ -390,7 +390,7 @@ loc_378FE:                                              ; CODE XREF: Boss_Antroi
 ; ---------------------------------------------------------------------------
 loc_3791C:                                              ; CODE XREF: Boss_AntroidDivingAttack+58   j
                 move.w  #2,$23C(a5)
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$70,d0                         ; 'p'
                 bpl.w   Boss_AntroidSetIdleAnim
                 move.w  (dword_FFFF08).w,d0
@@ -571,7 +571,7 @@ loc_37B2E:                                              ; CODE XREF: Boss_Antroi
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$380,d0
                 beq.s   loc_37B52
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$88,d0
                 bmi.w   loc_37C74
                 move.b  (dword_FFFF08+2).w,d0
@@ -814,7 +814,7 @@ Boss_AntroidEnterDefeatedState:                         ; CODE XREF: Boss_Antroi
                 move.w  #$14,6(a5)
                 moveq   #$30,d0                         ; '0'
                 moveq   #0,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
 ; End of function Boss_AntroidEnterDefeatedState
 ; Death sequence timer with fade effect
 Boss_AntroidDeathTimer:                                 ; DATA XREF: ROM:00037530   o  ; was: sub_37E6C

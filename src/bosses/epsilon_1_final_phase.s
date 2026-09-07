@@ -71,7 +71,7 @@ loc_47864:                                              ; CODE XREF: Boss_Epsilo
                 andi.w  #3,d7
                 bne.s   loc_4789C
 loc_4787C:                                              ; CODE XREF: Boss_Epsilon1SpawnProjectileRing+3C   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d0
                 beq.s   loc_4789C
                 tst.w   d1
@@ -126,7 +126,7 @@ loc_47912:                                              ; CODE XREF: Boss_Epsilo
                 dbf     d7,loc_47912
                 move.w  (dword_FFA90C).w,d2
                 lea     (dword_FF8A00).w,a1
-                lea     (word_1B514).l,a2
+                lea     (Math_SineTable).l,a2
                 lea     (dword_FF942C).w,a3
                 lea     (dword_FF9466).w,a4
                 move.w  (dword_FFC690).w,d6
@@ -348,7 +348,7 @@ word_47B6E:     dc.w    $989C, $999D, $9A9E, $9B9F, $A0A4, $A0A4, $A0A4, $A0A4, 
                                         ; DATA XREF: Boss_Epsilon1UpdatePaletteAnim+42   r
 
 ; Intro controller state dispatcher
-Boss_Epsilon1IntroController:                           ; DATA XREF: ROM:off_5DC   o  ; was: sub_47B8E
+Boss_Epsilon1IntroController:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_47B8E
                 move.w  4(a5),d0
                 lea     off_47B9A(pc,d0.w),a0
                 adda.w  (a0),a0

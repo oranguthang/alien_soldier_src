@@ -30,7 +30,7 @@ loc_50D28:                                              ; CODE XREF: Boss_Valkir
                 rts
 ; End of function Boss_ValkirieInitScreenPair
 ; Forces player to ceiling during Valkirie encounter by adjusting vertical position and checking proximity to boss position
-Boss_ValkirieForcePlayerToCeiling:                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_50D50
+Boss_ValkirieForcePlayerToCeiling:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_50D50
                 tst.b   (byte_FF9DBA).w
                 beq.s   loc_50D7E
                 btst    #4,$22(a5)
@@ -97,7 +97,7 @@ locret_50E0A:                                           ; CODE XREF: Boss_Valkir
                 rts
 ; End of function Boss_ValkirieForcePlayerToCeiling
 ; Manages timer-based screen positioning during Valkirie boss battle with vertical position updates
-Boss_ValkirieScreenTimer:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_50E0C
+Boss_ValkirieScreenTimer:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_50E0C
                 subq.w  #1,$1C(a5)
                 bpl.s   loc_50E1A
                 bset    #4,2(a5)
@@ -140,7 +140,7 @@ loc_50E66:                                              ; CODE XREF: Boss_WolfGa
                 move.w  #$FEB0,(dword_FFA908).w
                 move.w  #$3E8,d0
                 move.w  #$41C,d1
-                jsr     (Sprite_ClearAllExcept).l
+                jsr     (Object_ClearAllExceptTypes).l
                 moveq   #$1C,d0
                 jmp     (Gfx_SetFadeParams).l
 ; ---------------------------------------------------------------------------
@@ -167,7 +167,7 @@ loc_50EC0:                                              ; CODE XREF: Boss_WolfGa
 loc_50ED4:                                              ; CODE XREF: Boss_WolfGaropaDamage+6A   j
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_50F3C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_50F3C
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$3F,d0                         ; '?'

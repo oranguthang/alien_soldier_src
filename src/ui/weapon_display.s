@@ -370,7 +370,7 @@ loc_17CD4:                                              ; CODE XREF: Enemy_Calcu
                 moveq   #4,d3
 loc_17CEA:                                              ; CODE XREF: Enemy_CalculateVelocityFromPlayer+1E   j
                                         ; Enemy_CalculateVelocityFromPlayer+2A   j
-                movea.l #word_1B514,a0
+                movea.l #Math_SineTable,a0
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a0,d0.w),d1

@@ -39,7 +39,7 @@ locret_53EBC:                                           ; CODE XREF: Boss_Missir
 ; End of function Boss_MissirayWaitSegmentsReady
 ; Shooting pattern 1
 Boss_MissirayShootPattern1:                             ; DATA XREF: ROM:00053E76   o  ; was: sub_53EBE
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_53ED4
                 move.w  #$10,(a0)
                 move.w  a0,(dword_FF9414).w
@@ -592,7 +592,7 @@ loc_54416:                                              ; CODE XREF: Boss_Missir
                 move.w  #7,d7
                 lea     (dword_FF9414).w,a3
 loc_54424:                                              ; CODE XREF: Boss_MissiraySpawnBulletRing+26   j
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_5443C
                 move.w  #$10,(a0)
                 move.w  a0,(a3)+

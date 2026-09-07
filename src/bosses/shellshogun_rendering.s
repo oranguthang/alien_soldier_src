@@ -10,7 +10,7 @@ Boss_ShellshogunRenderSprites:                          ; CODE XREF: Boss_Shells
 ; Checks boss defeat condition and triggers end
 Boss_ShellshogunCheckDefeat:                            ; CODE XREF: Boss_ShellshogunAttackPattern+A   p  ; was: sub_39E76
                                         ; Boss_ShellshogunJumpAttackUpdate+6   p
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 clr.w   $54(a5)
                 tst.w   d1
                 bpl.s   loc_39E8A
@@ -116,7 +116,7 @@ loc_39F8C:                                              ; CODE XREF: Boss_Shells
                 move.w  d0,$1DE(a5)
                 move.w  d1,$23C(a5)
                 movea.w #(byte_FFCF20-M68K_RAM),a0
-                movea.l #word_1B514,a1
+                movea.l #Math_SineTable,a1
                 movea.l #word_39FEA,a2
                 move.w  $56(a5),d0
                 addi.w  #$80,d0
@@ -194,7 +194,7 @@ loc_3A056:                                              ; CODE XREF: Boss_Shells
 loc_3A082:                                              ; CODE XREF: Boss_ShellshogunSetTileData+66   j
                 move.b  #$C0,$AA1(a5)
                 move.b  #$C0,$B01(a5)
-                lea     (word_1B514).l,a1
+                lea     (Math_SineTable).l,a1
                 move.w  $29C(a5),d0
                 addi.w  #$80,d0
                 tst.w   $54(a5)
@@ -406,7 +406,7 @@ Boss_ShellshogunCollisionCheck:                         ; CODE XREF: Boss_Shells
 ; End of function Boss_ShellshogunCollisionCheck
 ; ---------------------------------------------------------------------------
 word_3A2E6:     dc.w    $10, $F, $18, 0, $FFFF
-                                        ; DATA XREF: ROM:off_5DC   o
+                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                                         ; sub_398FE:loc_39972   o
 word_3A2F0:     dc.w    $F030, $1E, $70, $1E, $FFFE
                                         ; DATA XREF: Boss_ShellshogunAttackPattern+CC   o

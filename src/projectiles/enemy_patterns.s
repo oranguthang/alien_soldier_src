@@ -1,7 +1,7 @@
 ; Finds a free sprite slot in the enemy projectile pool
 Enemy_FindFreeSpriteSlot:                               ; CODE XREF: Enemy_FindSlotAndInit   p  ; was: sub_2AFBE
                 movea.w #(byte_FFCC80-M68K_RAM),a0
-                jmp     loc_1C11C
+                jmp     Projectile_FindFreePrimarySlot_CheckEnemyRange
 ; End of function Enemy_FindFreeSpriteSlot
 ; Finds free enemy sprite slot and initializes with homing projectile
 Enemy_FindSlotAndInit:
@@ -43,7 +43,7 @@ word_2B02A:     dc.w    $4CD6, $5CDF, $54E8, $54DF, $44D6, $44DF, $44E8, $4CDF
                                         ; DATA XREF: Projectile_SpawnDirectional8Way+2C   r
 
 ; Initializes directional projectile with animation, velocity from table
-Projectile_DirectionalInitMain:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B03A
+Projectile_DirectionalInitMain:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B03A
                 subq.w  #1,$4A(a5)
                 bpl.s   locret_2B09A
                 move.w  #$4C,(a5)                       ; 'L'
@@ -73,7 +73,7 @@ word_2B09C:     dc.w    $4CF1, $5CF2, $5CF3, $5CF4, $54F5, $54F4, $54F3, $54F2
                 dc.w    $44F1, $44F2, $44F3, $44F4, $44F5, $4CF4, $4CF3, $4CF2
 
 ; Checks bounds/collision, explodes projectile on wall impact
-Projectile_ExplodeOnWall:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B0BC
+Projectile_ExplodeOnWall:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B0BC
                 cmpi.w  #$88,$10(a5)
                 bmi.s   loc_2B0DC
                 cmpi.w  #$1B8,$10(a5)
@@ -182,8 +182,8 @@ Enemy_SetProjectileDifficulty:                          ; CODE XREF: Enemy_InitH
                 add.w   d0,$10(a0)
                 add.w   d1,$14(a0)
                 move.w  #3,$48(a0)
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d6.w),d1
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d6.w),d1
                 move.w  (a1,d6.w),d2
                 muls.w  d7,d1
                 muls.w  d7,d2
@@ -196,7 +196,7 @@ Enemy_SetProjectileDifficulty:                          ; CODE XREF: Enemy_InitH
                 rts
 ; End of function Enemy_InitHomingProjectile
 ; Main handler for homing projectile with reflect logic
-Enemy_HomingProjectileMain:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B298
+Enemy_HomingProjectileMain:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B298
                 cmpi.w  #$70,$10(a5)                    ; 'p'
                 bmi.s   loc_2B2B8
                 cmpi.w  #$1D0,$10(a5)
@@ -284,8 +284,8 @@ loc_2B35C:                                              ; CODE XREF: Boss_Jetsri
                 add.w   d0,$10(a0)
                 add.w   d1,$14(a0)
                 move.w  #3,$48(a0)
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d6.w),d1
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d6.w),d1
                 move.w  (a1,d6.w),d2
                 muls.w  d7,d1
                 muls.w  d7,d2
@@ -298,7 +298,7 @@ loc_2B35C:                                              ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperSpawnBullet
 ; Bullet projectile with delayed physics activation and wall collision
-Projectile_BulletWithDelayedPhysics:                    ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B3E4
+Projectile_BulletWithDelayedPhysics:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B3E4
                 cmpi.w  #$70,$10(a5)                    ; 'p'
                 bmi.s   loc_2B404
                 cmpi.w  #$1D0,$10(a5)
@@ -402,8 +402,8 @@ loc_2B4C4:                                              ; CODE XREF: Boss_Destro
                 jsr     (Math_CalculateAngleBetween).l
                 move.w  d2,d6
 loc_2B50A:                                              ; CODE XREF: Enemy_InitDirectionalProjectile+42   j
-                lea     (word_1B514).l,a1
-                move.w  word_1B494-word_1B514(a1,d6.w),d0
+                lea     (Math_SineTable).l,a1
+                move.w  Math_QuarterSineTable-Math_SineTable(a1,d6.w),d0
                 move.w  (a1,d6.w),d1
                 muls.w  d7,d0
                 muls.w  d7,d1
@@ -427,7 +427,7 @@ stru_2B534:     dc.w    $38                             ; field_0
                 dc.w    1                               ; field_C
 
 ; Bouncing enemy projectile with screen bounds check
-Enemy_BouncingProjectile:                               ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B542
+Enemy_BouncingProjectile:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B542
                 tst.w   4(a5)
                 bne.s   loc_2B56C
                 cmpi.w  #$80,$C(a5)
@@ -514,7 +514,7 @@ Enemy_SpawnAnimatedProjectile:                          ; CODE XREF: Boss_Terobu
                 rts
 ; End of function Enemy_SpawnAnimatedProjectile
 ; Bouncing projectile with gravity and terrain collision detection
-Projectile_BouncingWithGravity:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_2B652
+Projectile_BouncingWithGravity:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B652
                 cmpi.w  #$80,$14(a5)
                 bmi.s   loc_2B662
                 cmpi.w  #$15C,$14(a5)

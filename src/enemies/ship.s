@@ -1,4 +1,4 @@
-Enemy_ShipBossStateHandler:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2CECA
+Enemy_ShipBossStateHandler:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2CECA
                 tst.w   4(a5)
                 beq.s   loc_2CED8
                 tst.w   $24(a5)
@@ -39,7 +39,7 @@ locret_2CF16:                                           ; CODE XREF: Enemy_ShipB
 ; Updates enemy facing direction to track player
 Enemy_FacePlayer:                                       ; CODE XREF: Enemy_MainStateMachine+78   p  ; was: sub_2CF18
                                         ; Enemy_MainStateMachine+1C0   j
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
                 bpl.s   loc_2CF2A
                 bset    #3,$E(a5)

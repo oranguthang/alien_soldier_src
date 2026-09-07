@@ -1,4 +1,4 @@
-Boss_SireneIntroInit:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_57498
+Boss_SireneIntroInit:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_57498
                 tst.w   4(a5)
                 beq.w   loc_574E8
                 tst.w   8(a5)
@@ -150,7 +150,7 @@ loc_5766E:                                              ; CODE XREF: Boss_Sirene
                 moveq   #0,d3
                 moveq   #$1A,d7
                 movea.w #(word_FFC680-M68K_RAM),a0
-                jsr     (loc_1C290).l
+                jsr     (Object_ClearAllExceptTypes_Loop).l
                 clr.w   2(a5)
                 clr.w   8(a5)
                 bset    #2,(byte_FF8144).w
@@ -211,8 +211,8 @@ Enemy_Projectile_State8:                                ; DATA XREF: ROM:0005750
                 addi.w  #$20,(word_FFA974).w            ; ' '
                 clr.b   (byte_FF80EC).w
                 bclr    #0,(byte_FFA272).w
-                movea.l #word_1BF2A,a1
-                jsr     (Sprite_InitFromPointerTable).l
+                movea.l #Boss_SireneObjectInitTable,a1
+                jsr     (Object_InitGroupFromTable).l
                 bclr    #0,2(a5)
                 bset    #0,$62(a5)
                 bra.w   loc_57794
@@ -293,8 +293,8 @@ Boss_SireneSpawnProjectile3:                            ; CODE XREF: Boss_Sirene
                 asr.w   #7,d2
                 addi.w  #$80,d2
                 andi.w  #$1FE,d2
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d2.w),d0
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d2.w),d0
                 move.w  (a0,d2.w),d1
                 muls.w  #5,d0
                 muls.w  #$C,d1
@@ -312,8 +312,8 @@ loc_5788C:                                              ; CODE XREF: Boss_Sirene
                 asr.w   #7,d2
                 addi.w  #$80,d2
                 andi.w  #$1FE,d2
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d2.w),d0
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d2.w),d0
                 move.w  (a0,d2.w),d1
                 muls.w  #4,d0
                 muls.w  #$D,d1
@@ -430,7 +430,7 @@ loc_57A0E:                                              ; CODE XREF: Projectile_
                 move.w  #$5FE0,d0
                 move.w  #$8F02,d3
                 move.l  #$94009310,d4
-                jsr     (loc_1B78C).l
+                jsr     (VDP_QueueCommand_Build).l
                 btst    #0,(word_FFA000+1).w
                 bne.s   loc_57A58
                 move.w  #$F000,(word_FF9508).w
@@ -694,7 +694,7 @@ word_57D18:     dc.w    $88D2, $40F8, $2E4E, $3024, $B201, $9C00, $A0E0, $E0
                 dc.w    $4000, $C0F8, $A030, $E0E0, $D0A0, $4000, $C00C
 
 ; Empty entity state handler in main dispatch table
-Entity_EmptyState9:                                     ; DATA XREF: ROM:off_5DC   o  ; was: nullsub_9
+Entity_EmptyState9:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_9
                 rts
 ; End of function Entity_EmptyState9
 ; Laser projectile handler
@@ -703,7 +703,7 @@ Projectile_SireneLaser:                                 ; CODE XREF: Boss_Sirene
                 andi.w  #$1F,d0
                 bne.s   locret_57DF2
                 movea.w #(byte_FFD880-M68K_RAM),a0
-                jsr     (loc_1C144).l
+                jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
                 bne.s   locret_57DF2
                 move.w  #$490,(a0)
                 move.w  #$E100,2(a0)
@@ -726,7 +726,7 @@ locret_57DF2:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_SireneLaser
 ; Homing projectile handler
-Projectile_SireneHoming:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_57DF4
+Projectile_SireneHoming:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_57DF4
                 cmpi.w  #$88,$14(a5)
                 bmi.s   loc_57E18
                 cmpi.w  #$170,$14(a5)
@@ -778,8 +778,8 @@ loc_57E7E:                                              ; CODE XREF: Projectile_
                 asr.w   #7,d2
                 addi.w  #$80,d2
                 andi.w  #$1FE,d2
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d2.w),d0
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d2.w),d0
                 move.w  (a0,d2.w),d1
                 muls.w  #4,d0
                 muls.w  #$D,d1

@@ -60,7 +60,7 @@ Boss_ValkirieUpdateSubPositions:
                 rts
 ; End of function Boss_ValkirieUpdateSubPositions
 ; Dispatcher for Valkirie projectile entity state machine
-Entity_ValkirieProjectileDispatcher:                    ; DATA XREF: ROM:off_5DC   o  ; was: sub_549E2
+Entity_ValkirieProjectileDispatcher:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_549E2
                 move.w  4(a5),d0
                 movea.w off_549F2(pc,d0.w),a0
                 adda.l  #nullsub_126,a0

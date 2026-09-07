@@ -224,7 +224,7 @@ Boss_ViblackSetRandomTarget:                            ; CODE XREF: Boss_Viblac
 Boss_ViblackSpawnRandomRings:                           ; CODE XREF: Boss_ViblackUpdateAll+C   j  ; was: sub_44128
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_4418C
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4418C
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$F,d0
@@ -253,7 +253,7 @@ locret_4418C:                                           ; CODE XREF: Boss_Viblac
 ; End of function Boss_ViblackSpawnRandomRings
 ; Spawns random projectiles
 Boss_ViblackSpawnRandomProjectile2:                     ; CODE XREF: Boss_ViblackUpdatePosAndPalette   p  ; was: sub_4418E
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_441EA
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$F,d0
@@ -328,7 +328,7 @@ locret_4427A:                                           ; CODE XREF: Boss_BackSt
 Boss_ViblackSpawnRandomProjectiles:                     ; CODE XREF: Boss_ViblackUpdateSpriteAndSpawn+4   p  ; was: sub_4427C
                 btst    #0,(word_FFA000+1).w
                 bne.w   locret_43C44
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_43C44
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$FF,d0
@@ -360,8 +360,8 @@ loc_442EA:                                              ; CODE XREF: Boss_Viblac
                 addq.w  #2,d3
                 move.w  d3,$50(a5)
 loc_442F0:                                              ; CODE XREF: Boss_ViblackMoveToTarget+26   j
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d2.w),d0
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d2.w),d0
                 move.w  (a0,d2.w),d1
                 muls.w  d3,d0
                 muls.w  d3,d1
@@ -418,7 +418,7 @@ Boss_ViblackSpawnWalkerShot:                            ; CODE XREF: Boss_Viblac
                 bpl.w   locret_43C44
                 andi.w  #$F,d0
                 bne.w   locret_43C44
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_43C44
                 move.w  #$6F0,d0
                 btst    #0,(word_FFA000).w
@@ -445,7 +445,7 @@ loc_443C0:                                              ; CODE XREF: Boss_Viblac
                 move.w  a0,(a1)+
                 moveq   #9,d6
 loc_443D2:                                              ; CODE XREF: Boss_ViblackSpawnChain+44   j
-                jsr     (Projectile_FindFreeSlotAndClear).l
+                jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.w   locret_44482
                 move.w  #$10,(a0)
                 bset    #4,2(a0)
@@ -510,7 +510,7 @@ Boss_ViblackInitChainSegment:                           ; CODE XREF: Boss_Viblac
                 rts
 ; End of function Boss_ViblackInitChainSegment
 ; Chain projectile main handler
-Projectile_ViblackChainMain:                            ; DATA XREF: ROM:off_5DC   o  ; was: sub_444C2
+Projectile_ViblackChainMain:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_444C2
                 tst.w   (word_FF808C).w
                 bpl.s   loc_444CE
                 tst.w   $24(a5)
@@ -599,8 +599,8 @@ loc_4459E:                                              ; CODE XREF: Projectile_
                 bpl.s   loc_445C6
                 moveq   #$F,d3
 loc_445C6:                                              ; CODE XREF: Projectile_ViblackChainMain+100   j
-                lea     (word_1B514).l,a0
-                move.w  word_1B494-word_1B514(a0,d2.w),d0
+                lea     (Math_SineTable).l,a0
+                move.w  Math_QuarterSineTable-Math_SineTable(a0,d2.w),d0
                 move.w  (a0,d2.w),d1
                 ext.l   d1
                 muls.w  d3,d0
@@ -638,7 +638,7 @@ locret_44622:                                           ; CODE XREF: Projectile_
 word_44624:     dc.w    $10, $F0                        ; DATA XREF: Projectile_ViblackChainMain+13E   r
 
 ; Chain segment handler
-Projectile_ViblackChainSegment:                         ; DATA XREF: ROM:off_5DC   o  ; was: sub_44628
+Projectile_ViblackChainSegment:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_44628
                 tst.w   4(a5)
                 beq.s   loc_44648
                 cmpi.w  #4,4(a5)

@@ -1,4 +1,4 @@
-Boss_JetsripperMoveLeft:                                ; CODE XREF: Sys_GameplayMainLoop:loc_1C76E   p  ; was: sub_2C33A
+Boss_JetsripperMoveLeft:                                ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateStageEffects   p  ; was: sub_2C33A
                 tst.b   (byte_FFF705).w
                 bmi.s   locret_2C35E
                 movea.w #(word_FFA400-M68K_RAM),a5
@@ -279,7 +279,7 @@ loc_2C5E4:                                              ; CODE XREF: Physics_Dec
 ; End of function Physics_DecelerateHorizontal
 ; Initializes homing projectile that tracks player with angle calculation
 Enemy_InitTrackedProjectile:                            ; CODE XREF: Enemy_MainStateMachine+1B6   j  ; was: sub_2C5EA
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 beq.s   loc_2C5F4
                 rts
 ; ---------------------------------------------------------------------------
@@ -321,7 +321,7 @@ locret_2C664:                                           ; CODE XREF: Boss_FirePr
                 rts
 ; End of function Boss_FireProjectilePattern
 ; Spawns multiple projectiles in sequence
-Boss_SpawnMultipleShots:                                ; DATA XREF: ROM:off_5DC   o  ; was: sub_2C666
+Boss_SpawnMultipleShots:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C666
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_ToggleVisibilityBit

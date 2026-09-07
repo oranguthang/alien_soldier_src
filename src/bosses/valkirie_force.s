@@ -1,4 +1,4 @@
-Boss_ValkirieForceMain:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_53500
+Boss_ValkirieForceMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_53500
                 tst.w   4(a5)
                 beq.w   loc_53514
                 tst.w   8(a5)

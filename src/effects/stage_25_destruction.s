@@ -43,7 +43,7 @@ Effect_ApplyStage25ParticleOrientation:                 ; CODE XREF: Effect_Upda
                 rts
 ; End of function Effect_UpdateStage25DestructionParticle
 ; Main handler for destruction particle effect
-Effect_RunStage25DestructionParticle:                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB4C
+Effect_RunStage25DestructionParticle:                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BB4C
                 tst.w   4(a5)
                 bne.s   Effect_RunStage25DestructionParticle_Update
                 bsr.w   Effect_InitStage25DestructionParticle
@@ -52,14 +52,14 @@ Effect_RunStage25DestructionParticle_Update:            ; CODE XREF: Effect_RunS
                 bra.w   Effect_UpdateStage25DestructionParticle
 ; End of function Effect_RunStage25DestructionParticle
 ; Screen shake effect
-Effect_TriggerStage25Shake:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB5A
+Effect_TriggerStage25Shake:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BB5A
                 move.w  #$30,(word_FF813C).w            ; '0'
                 bset    #4,2(a5)
                 move.b  #$1B,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Effect_TriggerStage25Shake
 ; Triggers the Stage 25 death shake and sound, then retires the object
-Effect_TriggerStage25DeathSound:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB70
+Effect_TriggerStage25DeathSound:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BB70
                 move.w  #$30,(word_FF813C).w            ; '0'
                 bset    #4,2(a5)
                 move.b  #$1C,d0

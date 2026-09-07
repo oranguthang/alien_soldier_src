@@ -1,4 +1,4 @@
-Boss_JampanFlashToggle:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_49100
+Boss_JampanFlashToggle:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_49100
                 tst.w   (word_FF808C).w
                 bpl.s   loc_49126
                 bset    #7,2(a5)
@@ -16,7 +16,7 @@ locret_4912C:                                           ; CODE XREF: Boss_Jampan
                 rts
 ; End of function Boss_JampanFlashToggle
 ; Main boss handler
-Boss_JampanMain:                                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_4912E
+Boss_JampanMain:                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4912E
                 bsr.w   Boss_JampanDispatcher
                 bsr.w   Boss_JampanCheckHealth
                 rts
@@ -134,7 +134,7 @@ Boss_JampanIdleState:                                   ; DATA XREF: ROM:off_491
                 addq.w  #2,4(a5)
                 move.w  #$218,d0
                 moveq   #0,d1
-                jmp     Sprite_ClearAllExcept
+                jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
 locret_49256:                                           ; CODE XREF: Boss_JampanIdleState+4   j
                 rts
@@ -664,7 +664,7 @@ Boss_JampanDefeatFade:                                  ; DATA XREF: ROM:000491F
                 bne.s   locret_49A12
                 move.w  #1,(word_FFC732).w
                 move.w  #1,(word_FFC7F2).w
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_49A12
                 andi.w  #$7FFF,(word_FFC862).w
                 move.w  #$238,(a0)

@@ -345,7 +345,7 @@ locret_4CDFC:                                           ; CODE XREF: Boss_Bugmax
 Boss_BugmaxProjectileAttack:                            ; DATA XREF: ROM:0004C404   o  ; was: sub_4CDFE
                 bsr.w   Boss_BugmaxUpdateMovement
                 bsr.w   Boss_BugmaxHorizontalAI
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4CE1C
                 bsr.w   Projectile_InitBugmaxSpread
                 move.w  #$10,$48(a5)
@@ -359,7 +359,7 @@ Boss_BugmaxDistanceTrackLoop:                           ; DATA XREF: ROM:0004C40
                 bsr.w   Boss_BugmaxHorizontalAI
                 tst.b   (dword_FF9418+3).w
                 bne.s   loc_4CE44
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 subq.w  #1,$48(a5)
                 bne.s   locret_4CE42
                 subq.w  #1,$4A(a5)
@@ -639,7 +639,7 @@ loc_4D13C:                                              ; CODE XREF: Boss_Bugmax
 Boss_BugmaxDistanceChasePlayer:                         ; DATA XREF: ROM:0004C422   o  ; was: sub_4D14E
                 bsr.w   Boss_BugmaxUpdateMovement
                 bsr.w   Boss_BugmaxHorizontalAI
-                jsr     (Physics_CalculateDistanceTo).l
+                jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$20,d0                         ; ' '
                 bcs.s   loc_4D170
                 bclr    #0,(dword_FF941C).w
@@ -669,7 +669,7 @@ locret_4D19A:                                           ; CODE XREF: Boss_Bugmax
 Boss_BugmaxProjectileVerticalAttack:                    ; DATA XREF: ROM:0004C426   o  ; was: sub_4D19C
                 bsr.w   Boss_BugmaxUpdateMovement
                 bsr.w   Boss_BugmaxVerticalControl
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4D1BA
                 bsr.w   Projectile_InitBugmaxSine
                 move.w  #8,$48(a5)
@@ -800,7 +800,7 @@ Boss_BugmaxFallOffScreen:                               ; DATA XREF: ROM:0004C43
                 move.w  #$40,(dword_FF940C+2).w         ; '@'
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_UpdateTrajectory).l
+                jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4D372
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
