@@ -278,8 +278,8 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_MedusaDamageCheck
                 dc.l    Stage11_FishWaveController
                 dc.l    Projectile_TrackerSt21Bullet
-                dc.l    Entity_TrainEndDispatcher
-                dc.l    Entity_XiTigerIntro
+                dc.l    Cutscene_XiTigerTrainEntranceController
+                dc.l    Cutscene_XiTigerBossEntranceController
                 dc.l    Effect_FloatingIconDispatcher
                 dc.l    Projectile_ZLeoOrbMain
                 dc.l    Projectile_ZLeoLaserMain

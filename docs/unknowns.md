@@ -274,6 +274,16 @@ one of the emitted shots. The cohesive 484-line implementation now lives in
 `src/enemies/stage_11_fish.s`; contradicted generic-flyer, projectile, and
 motion claims are recorded in the name audit.
 
+The Xi-Tiger entrance pass reduced the count to 9,780 by replacing all 13
+remaining address-derived definitions in the former
+`src/cutscenes/train_and_xi_tiger.s`. Entity type `$45C`, created by the Stage
+8 train initializer, drives Xi-Tiger's first train-roof appearance and jump;
+entity type `$460`, created after the Stage 9 ship sequence, drives his jump
+into the boss encounter. Both use the same palette, object setup, and sprite
+frames, so the cohesive 223-line implementation now lives in
+`src/cutscenes/xi_tiger_entrance_sequences.s`. Incorrect train-end, player,
+dispatcher, and generic state claims are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

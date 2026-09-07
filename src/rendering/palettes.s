@@ -164,7 +164,7 @@ byte_C1A2:      dc.b    $62, $E, 0, 0, $E, $EE, $E, $A8, 0, 6, 0, $2A, 0, 0, 4, 
                                         ; sub_11EAA   o
                 dc.b    0, $46, 2, $8A, 6, $CC, 2, $24, 4, $6A, 8, $AE, 6, $22, $A, $62
 byte_C1C2:      dc.b    $62, $E, 0, 0, $E, $EE, 0, $EE, 0, $AE, 0, $6E, 0, $E, 0, 4
-                                        ; DATA XREF: Entity_TrainEndLoadPalette   o
+                                        ; DATA XREF: Cutscene_XiTigerActorSetup   o
                 dc.b    0, $48, 2, $20, 4, $42, 8, $86, $C, $CA, 6, 0, 8, $40, $C, $84
 byte_C1E2:      dc.b    $62, $E, $E, $EE, $F, $FF, $A, $26, $A, $AA, 8, $88, $F, $FF, 6, $66
                                         ; DATA XREF: Stage_LoadStage5Graphics+6   o

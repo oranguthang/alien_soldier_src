@@ -81,7 +81,7 @@ word_EBCD8:     dc.w    $814, $100, $D8FD               ; DATA XREF: ROM:0002F19
                 dc.w    $805, 0, $F008
                 dc.w    $80B, $A00, $E0F0
                 dc.w    $8800, $C00, $E008
-word_EBD02:     dc.w    $814, $100, $D8FC               ; DATA XREF: ROM:off_2F194   o
+word_EBD02:     dc.w    $814, $100, $D8FC               ; DATA XREF: ROM:Cutscene_XiTigerBossEntranceLandingFrameTable   o
                 dc.w    $805, 0, $F008
                 dc.w    $822, $C00, $18F0
                 dc.w    $816, $B00, $F8F0
@@ -89,22 +89,22 @@ word_EBD02:     dc.w    $814, $100, $D8FC               ; DATA XREF: ROM:off_2F1
                 dc.w    $835, 0, $E008
                 dc.w    $85C, $800, $E808
                 dc.w    $880B, $A00, $E0F0
-word_EBD32:     dc.w    $814, $100, $D8FB               ; DATA XREF: Entity_TrainEndInit+22   o
-                                        ; Entity_TrainJumpPrep+A   o
+word_EBD32:     dc.w    $814, $100, $D8FB               ; DATA XREF: Cutscene_XiTigerTrainEntranceInit+22   o
+                                        ; Cutscene_XiTigerTrainEntrancePrepareJump+A   o
                 dc.w    $822, $C00, $18F0
                 dc.w    $816, $B00, $F8F0
                 dc.w    $806, $100, $F010
                 dc.w    $808, $200, $E008
                 dc.w    $880B, $A00, $E0F0
                 dc.w    $8814, $100, $FAFC
-word_EBD5C:     dc.w    $86C, $100, $100C               ; DATA XREF: Entity_TransitionAnimationState+A   o
-                                        ; Entity_XiTigerIntroState2+24   o
+word_EBD5C:     dc.w    $86C, $100, $100C               ; DATA XREF: Cutscene_XiTigerTrainEntranceWait+A   o
+                                        ; Cutscene_XiTigerBossEntranceUpdateJump+24   o
                 dc.w    $860, $B00, $F4
                 dc.w    $833, $100, $F0E4
                 dc.w    $826, 0, $E0FC
                 dc.w    $8827, $E00, $E8EC
-word_EBD7A:     dc.w    $858, $500, $10EE               ; DATA XREF: Entity_TrainJumpWait+6   o
-                                        ; Entity_XiTigerIntroStartState+1E   o
+word_EBD7A:     dc.w    $858, $500, $10EE               ; DATA XREF: Cutscene_XiTigerTrainEntranceSwitchAirbornePose+6   o
+                                        ; Cutscene_XiTigerBossEntranceWaitForScroll+1E   o
                 dc.w    $856, $400, $1006
                 dc.w    $850, $900, $E6
                 dc.w    $848, $D00, $FE

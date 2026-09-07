@@ -1,3 +1,4 @@
+; Xi-Tiger boss main attack-pattern dispatcher
 Boss_XiTigerAttackMain:
                 bsr.w   Boss_HandleInputOffset          ; was: sub_2F1A2
                 move.w  4(a5),d0

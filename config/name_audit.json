@@ -2089,6 +2089,94 @@
         "Each update subtracts 0x4000 from vertical velocity with no zero test or lower-speed clamp.",
         "Negative vertical velocity is upward in the engine's downward-positive screen-coordinate convention, so this continuously accelerates upward rather than decelerating."
       ]
+    },
+    {
+      "address": "0x02EF32",
+      "previous_name": "Entity_TrainEndDispatcher",
+      "current_name": "Cutscene_XiTigerTrainEntranceController",
+      "legacy_name": "sub_2EF32",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x45C maps here and is created by Stage_InitStage8Train before the train-roof section begins, not at the end of the train stage.",
+        "The object uses Xi-Tiger's palette and sprite frames, then performs his delayed jump from the train roof and releases the stage gate."
+      ]
+    },
+    {
+      "address": "0x02EF4E",
+      "previous_name": "Entity_TrainEndInit",
+      "current_name": "Cutscene_XiTigerTrainEntranceInit",
+      "legacy_name": "sub_2EF4E",
+      "evidence": "static",
+      "basis": [
+        "This is the first state of the type-0x45C Xi-Tiger actor created by the Stage 8 train initializer.",
+        "It installs the shared Xi-Tiger appearance, places him at the train-roof offset and starts the opening delay; no train-end object is initialized."
+      ]
+    },
+    {
+      "address": "0x02EF7E",
+      "previous_name": "Entity_TrainEndLoadPalette",
+      "current_name": "Cutscene_XiTigerActorSetup",
+      "legacy_name": "sub_2EF7E",
+      "evidence": "static",
+      "basis": [
+        "The routine is called by both the Stage 8 train entrance and the pre-boss entrance initializers.",
+        "Besides loading byte_C1C2, it initializes display flags, collision bounds and sprite parameters, so it is neither train-end-specific nor only a palette loader."
+      ]
+    },
+    {
+      "address": "0x02EFC8",
+      "previous_name": "Entity_TransitionAnimationState",
+      "current_name": "Cutscene_XiTigerTrainEntranceWait",
+      "legacy_name": "sub_2EFC8",
+      "evidence": "static",
+      "basis": [
+        "This is the second state of the type-0x45C Xi-Tiger train-entrance table and keeps the actor aligned to the train roof for 128 frames.",
+        "It does not update animation frames; on expiry it selects one fixed mapping and starts the 16-frame pre-jump delay."
+      ]
+    },
+    {
+      "address": "0x02F032",
+      "previous_name": "Entity_TrainJumpFall",
+      "current_name": "Cutscene_XiTigerTrainEntranceUpdateJump",
+      "legacy_name": "sub_2F032",
+      "evidence": "static",
+      "basis": [
+        "The state belongs to Xi-Tiger's type-0x45C entrance actor rather than the player or a generic train entity.",
+        "It applies gravity throughout both ascent and descent, checks terrain only while descending, and advances the entrance sequence on landing."
+      ]
+    },
+    {
+      "address": "0x02F06E",
+      "previous_name": "Entity_TrainJumpComplete",
+      "current_name": "Cutscene_XiTigerTrainEntranceFinish",
+      "legacy_name": "sub_2F06E",
+      "evidence": "static",
+      "basis": [
+        "After the landing delay this state removes the Xi-Tiger actor, clears the stage-gate word and restores the normal stage palette.",
+        "Those writes complete the entire Stage 8 entrance sequence, not merely the jump operation."
+      ]
+    },
+    {
+      "address": "0x02F0A8",
+      "previous_name": "Entity_XiTigerIntroDispatcher",
+      "current_name": "Cutscene_XiTigerBossEntranceInit",
+      "legacy_name": "sub_2F0A8",
+      "evidence": "static",
+      "basis": [
+        "The actual dispatcher is the type-0x460 controller at 0x02F08C; this routine is its first state-table entry.",
+        "It advances the state, initializes the shared Xi-Tiger actor parameters and writes the initial position once."
+      ]
+    },
+    {
+      "address": "0x02F0BC",
+      "previous_name": "Entity_XiTigerIntroState1",
+      "current_name": "Cutscene_XiTigerBossEntranceUpdateY",
+      "legacy_name": "sub_2F0BC",
+      "evidence": "static",
+      "basis": [
+        "This routine is called as a helper from several true state handlers and has no entry in the boss-entrance state table.",
+        "Its only operation sets the actor Y coordinate to vertical stage scroll plus 0x128, so classifying it as state 1 was structurally incorrect."
+      ]
     }
   ]
 }
