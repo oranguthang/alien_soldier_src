@@ -165,7 +165,7 @@
     { "file": "src/stages/configuration_loader.s", "subsystem": "stages", "start": "0x012648", "end": "0x012B69" },
     { "file": "src/ui/debug_input_test.s", "subsystem": "ui", "start": "0x012B6A", "end": "0x012E4F" },
     { "file": "src/ui/hud_rendering.s", "subsystem": "ui", "start": "0x012E50", "end": "0x013277" },
-    { "file": "src/player/physics.s", "subsystem": "player", "start": "0x013278", "end": "0x0133D3" },
+    { "file": "src/ui/hud_sprite_list.s", "subsystem": "ui", "start": "0x013278", "end": "0x0133D3" },
     { "file": "src/ui/status_display.s", "subsystem": "ui", "start": "0x0133D4", "end": "0x013729" },
     { "file": "src/ui/debug_menu.s", "subsystem": "ui", "start": "0x01372A", "end": "0x013ADD" },
     { "file": "src/collision/detection.s", "subsystem": "collision", "start": "0x013ADE", "end": "0x01418F" },

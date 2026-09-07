@@ -217,7 +217,7 @@ Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_Dispatc
                 jsr     (Collision_UpdateSystem).l
                 jsr     (Sys_InitObjectPointers).l
                 jsr     (Sys_BeginVisibleObjectList).l
-                jsr     (Physics_ApplyFriction).l
+                jsr     (UI_BuildHUDSpriteList).l
                 jsr     (UI_RenderHUDElement1).l
                 jsr     (Player_Update).l
                 jsr     (UI_UpdateWeaponDisplay).l

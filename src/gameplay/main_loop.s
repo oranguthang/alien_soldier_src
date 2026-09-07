@@ -27,11 +27,11 @@ Sys_GameplayMainLoop_UpdatePrimaryEffects:              ; CODE XREF: Sys_Gamepla
                 bsr.w   UI_UpdateStageNumberBCD
                 jsr     (Gfx_PrimaryEffectDispatcher).l
                 tst.b   (byte_FFF746).w
-                bpl.s   Sys_GameplayMainLoop_UpdatePhysics
+                bpl.s   Sys_GameplayMainLoop_BuildHUDSprites
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E00,(VDP_DATA).l
-Sys_GameplayMainLoop_UpdatePhysics:                     ; CODE XREF: Sys_GameplayMainLoop+80   j  ; was: loc_1C6F0
-                jsr     (Physics_ApplyFriction).l
+Sys_GameplayMainLoop_BuildHUDSprites:                   ; CODE XREF: Sys_GameplayMainLoop+80   j  ; was: loc_1C6F0
+                jsr     (UI_BuildHUDSpriteList).l
                 tst.b   (byte_FFF746).w
                 bpl.s   Sys_GameplayMainLoop_UpdatePlayer
                 move.l  #$C0420000,(VDP_CTRL).l

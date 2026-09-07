@@ -110,7 +110,7 @@ UI_RenderDebugMenu:                                     ; CODE XREF: UI_RenderHU
                 bsr.w   UI_SetupScoreDMA
                 movea.w #(byte_FFA108-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1
-                bsr.w   loc_13280
+                bsr.w   UI_AppendHUDSpriteList
                 move.b  (word_FFF708).w,d0
                 andi.b  #$4F,d0                         ; 'O'
                 cmp.b   (byte_FF866A).w,d0

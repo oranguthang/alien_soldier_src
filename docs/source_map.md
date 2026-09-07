@@ -14,7 +14,7 @@ listing by `make verify-layout`.
 | `0x00D714-0x010025` | stage groups, boss transitions, and dispatch helpers | 13 | hypothesis |
 | `0x010026-0x010D15` | camera, scroll planes, and tilemap rendering | 4 | static/hypothesis |
 | `0x010D16-0x012B69` | DMA, asset transfer, and stage loading/configuration | 7 | static/hypothesis |
-| `0x012B6A-0x013ADD` | debug UI, HUD, status display, and player physics | 5 | hypothesis |
+| `0x012B6A-0x013ADD` | debug UI, HUD, and status display | 5 | static/hypothesis |
 | `0x013ADE-0x0146FB` | entity, terrain, and combat collision | 2 | static/hypothesis |
 | `0x0146FC-0x016F35` | player terrain and state families | 9 | hypothesis |
 | `0x016F36-0x019A6B` | player rendering, weapons, projectiles, and weapon UI | 7 | hypothesis |

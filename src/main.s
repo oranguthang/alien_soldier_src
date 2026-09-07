@@ -78,7 +78,7 @@
                 include "src/stages/configuration_loader.s"
                 include "src/ui/debug_input_test.s"
                 include "src/ui/hud_rendering.s"
-                include "src/player/physics.s"
+                include "src/ui/hud_sprite_list.s"
                 include "src/ui/status_display.s"
                 include "src/ui/debug_menu.s"
                 include "src/collision/detection.s"

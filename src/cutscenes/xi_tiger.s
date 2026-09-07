@@ -19,7 +19,7 @@ Cutscene_DispatchUpdate:                                ; CODE XREF: Sys_StageTr
                 jmp     (a0)
 ; End of function Cutscene_DispatchUpdate
 ; ---------------------------------------------------------------------------
-off_1E864:      dc.w    Cutscene_UpdatePhysicsAndHUD-Cutscene_LoadInitialAssets
+off_1E864:      dc.w    Cutscene_UpdateHUDAndXiTigerState-Cutscene_LoadInitialAssets
                                         ; DATA XREF: Cutscene_DispatchUpdate+4   r
                 dc.w    Stage_UpdateGameplay-Cutscene_LoadInitialAssets
                 dc.w    Stage_HandleCreditsOrAdvance-Cutscene_LoadInitialAssets
@@ -74,18 +74,18 @@ stru_1E8A4:     dc.w    7                               ; field_0
                 dc.w    $7800                           ; field_6
                 dc.w    $FFFF
 
-; Updates physics and HUD
-Cutscene_UpdatePhysicsAndHUD:                           ; DATA XREF: ROM:off_1E864   o  ; was: sub_1E8F6
-                jsr     (Physics_ApplyFriction).l
+; Updates the HUD and dispatches the current Xi Tiger cutscene state
+Cutscene_UpdateHUDAndXiTigerState:                      ; DATA XREF: ROM:off_1E864   o  ; was: sub_1E8F6
+                jsr     (UI_BuildHUDSpriteList).l
                 jsr     (UI_RenderHUDElement1).l
                 move.w  (dword_FF8128).w,d0
                 movea.w off_1E912(pc,d0.w),a0
                 adda.l  #Cutscene_XiTigerSetup,a0
                 jmp     (a0)
-; End of function Cutscene_UpdatePhysicsAndHUD
+; End of function Cutscene_UpdateHUDAndXiTigerState
 ; ---------------------------------------------------------------------------
 off_1E912:      dc.w    Cutscene_XiTigerSetup-Cutscene_XiTigerSetup
-                                        ; DATA XREF: Cutscene_UpdatePhysicsAndHUD+10   r
+                                        ; DATA XREF: Cutscene_UpdateHUDAndXiTigerState+10   r
                 dc.w    Cutscene_XiTigerWaitComplete-Cutscene_XiTigerSetup
                 dc.w    Cutscene_XiTigerScrollUpdate-Cutscene_XiTigerSetup
                 dc.w    Cutscene_XiTigerScrollSetup-Cutscene_XiTigerSetup
@@ -96,7 +96,7 @@ off_1E912:      dc.w    Cutscene_XiTigerSetup-Cutscene_XiTigerSetup
                 dc.w    Cutscene_XiTigerFinish-Cutscene_XiTigerSetup
 
 ; Sets up Xi Tiger cutscene
-Cutscene_XiTigerSetup:                                  ; DATA XREF: Cutscene_UpdatePhysicsAndHUD+14   o  ; was: sub_1E924
+Cutscene_XiTigerSetup:                                  ; DATA XREF: Cutscene_UpdateHUDAndXiTigerState+14   o  ; was: sub_1E924
                                         ; ROM:off_1E912   o
                 addq.w  #2,(dword_FF8128).w
                 move.l  #$20000,(dword_FF812C).w

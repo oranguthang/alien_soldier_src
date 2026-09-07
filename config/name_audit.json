@@ -767,6 +767,40 @@
         "The shared camera-motion routine passes each active object in a5 to this helper.",
         "It clamps horizontal and vertical coordinates according to global bound-enable bits without testing any projectile identity or type."
       ]
+    },
+    {
+      "address": "0x013278",
+      "previous_name": "Physics_ApplyFriction",
+      "current_name": "UI_BuildHUDSpriteList",
+      "legacy_name": "sub_13278",
+      "evidence": "static",
+      "basis": [
+        "The routine writes four-word sprite descriptors sequentially into the FFA100 display-list buffer.",
+        "It terminates the list with FFFF and tail-calls Sprite_AddToOAMBuffer; no entity velocity or friction value is read or updated.",
+        "Its secondary entry is called directly by UI_RenderDebugMenu, confirming UI ownership."
+      ]
+    },
+    {
+      "address": "0x01C6F0",
+      "previous_name": "Sys_GameplayMainLoop_UpdatePhysics",
+      "current_name": "Sys_GameplayMainLoop_BuildHUDSprites",
+      "legacy_name": "loc_1C6F0",
+      "evidence": "static",
+      "basis": [
+        "The block contains one subsystem call, to UI_BuildHUDSpriteList.",
+        "It performs no motion, collision, acceleration, or entity-state operation before continuing to Player_Update."
+      ]
+    },
+    {
+      "address": "0x01E8F6",
+      "previous_name": "Cutscene_UpdatePhysicsAndHUD",
+      "current_name": "Cutscene_UpdateHUDAndXiTigerState",
+      "legacy_name": "sub_1E8F6",
+      "evidence": "static",
+      "basis": [
+        "The routine calls the HUD sprite-list builder and HUD renderer, then indexes the Xi Tiger cutscene state table.",
+        "It invokes no physics, terrain, collision, or movement routine."
+      ]
     }
   ]
 }

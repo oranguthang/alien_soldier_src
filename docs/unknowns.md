@@ -95,6 +95,15 @@ The code actually scans object pools, applies shared camera motion, converts
 the stage number to BCD, and distinguishes direct memory decompression from
 staged VRAM DMA. These corrections are recorded in the name audit.
 
+The HUD ownership correction reduced the count to 10,406 by replacing the 11
+address-derived definitions in the block formerly stored as
+`src/player/physics.s`. Instruction-level inspection proved that the block
+does not apply friction or update any entity velocity: it builds, terminates,
+and submits a HUD sprite list. It now lives at
+`src/ui/hud_sprite_list.s`; dependent gameplay and Xi Tiger labels no longer
+claim a physics step. The corrections and their evidence are recorded in the
+name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

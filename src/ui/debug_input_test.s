@@ -1,5 +1,5 @@
 UI_RenderHUDElement1:                                   ; CODE XREF: Sys_GameplayMainLoop+164   p  ; was: sub_12B6A
-                                        ; Cutscene_UpdatePhysicsAndHUD+6   p
+                                        ; Cutscene_UpdateHUDAndXiTigerState+6   p
                 clr.l   (dword_FF84A0).w
                 clr.l   (dword_FF8500).w
                 clr.l   (dword_FF8560).w
