@@ -109,7 +109,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_FallWithGravity_Update
                 dc.l    Boss_GustheadMainWrapper
                 dc.l    Enemy_FloatingOscillator
-                dc.l    Enemy_ShipMain
+                dc.l    Stage12_YachtControllerMain
                 dc.l    Boss_GustheadDefeatComplete
                 dc.l    Boss_SunsetStingInitDispatcher
                 dc.l    Effect_DebrisParticleAnimate
@@ -198,7 +198,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Sprite_DebrisDispatcher
                 dc.l    Boss_BackStringerMain
                 dc.l    Boss_Epsilon1BounceProjectile
-                dc.l    Enemy_ProjectileMainDispatch
+                dc.l    OrphanedCrossStageEntityDispatch
                 dc.l    Projectile_BackStringerRopeSegment
                 dc.l    Effect_BackStringerSegmentFlash
                 dc.l    Boss_Epsilon1DebrisPhysics
@@ -217,7 +217,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_BounceRotateProjectile
                 dc.l    Boss_Epsilon1ProjectileRotation
                 dc.l    Enemy_FallingBombLogic
-                dc.l    Enemy_ShipCannon1Main
+                dc.l    Stage12_TeddyBearMain
                 dc.l    Enemy_ShipPatrolController
                 dc.l    Boss_ShieldViperSpawnProjectile2
                 dc.l    Projectile_ShieldViperBulletAnimation

@@ -124,7 +124,7 @@ TerrainTileAnimation_Complete:                          ; CODE XREF: TerrainTile
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
 TerrainTileAnimation_TransferIfScheduled:               ; CODE XREF: TerrainTileAnimation_Finish+10   j  ; was: loc_2F4DC
-                                        ; Boss_EnableVisibilityFlag+10   j
+                                        ; OrphanedTerrainTileAnimationReveal+10   j
                 tst.w   $48(a5)
                 bne.w   TerrainTileAnimation_Return
 ; Writes the selected pattern into the terrain layout via the shared DMA helper

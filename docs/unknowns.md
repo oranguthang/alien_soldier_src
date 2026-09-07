@@ -312,6 +312,20 @@ identity. Both environmental visual systems now form the cohesive 202-line
 `src/effects/stage_environment.s`; fourteen materially incorrect enemy,
 projectile, Antroid and debris claims are recorded in the name audit.
 
+The Stage 12 yacht pass reduced the count to 9,712 by replacing all 43
+address-derived definitions in the former `src/enemies/ship_cannons.s`.
+Pinned-TAS breakpoints place the fixed-slot yacht controller at frame 23,660
+and the small blue teddy-bear actor at frame 23,676; captured frames show that
+actor boarding the yacht and later piloting it. Static data flow confirms that
+the alleged cannon-spawn helpers instead update yacht motion, scrolling-plane
+offsets and steering. The cohesive 545-line stage implementation now lives in
+`src/stages/stage_12_yacht.s`. The adjacent 78-line
+`src/debug/orphaned_cross_stage_handlers.s` remains a documented short-file
+exception: its entity dispatcher has no known constructor and was not reached
+in the full pinned TAS, while the following terrain-animation companion has no
+live reference. Seventeen contradicted cannon, projectile and boss claims are
+recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

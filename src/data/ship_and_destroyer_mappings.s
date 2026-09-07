@@ -126,8 +126,8 @@ off_1A0EA6:     dc.w    word_1A0CA6-*                   ; DATA XREF: ROM:00040BF
                 dc.w    8
                 dc.w    word_1A0CB8-*
                 dc.w    $FF
-off_1A0EB6:     dc.w    word_1A0CEE-*                   ; DATA XREF: Enemy_ShipCannon1Wait+12   o
-                                        ; Enemy_ShipCannon2Main+30   o
+off_1A0EB6:     dc.w    word_1A0CEE-*                   ; DATA XREF: Stage12_TeddyBearBeginDrop+12   o
+                                        ; Stage12_TeddyBearPilotStart+30   o
                 dc.w    6
                 dc.w    word_1A0CFA-*
                 dc.w    3
@@ -141,15 +141,15 @@ off_1A0EB6:     dc.w    word_1A0CEE-*                   ; DATA XREF: Enemy_ShipC
                 dc.w    3
                 dc.w    off_1A0EB6-*
                 dc.w    0
-off_1A0ED2:     dc.w    word_1A0CEE-*                   ; DATA XREF: Enemy_ShipCannon2Main+10   o
+off_1A0ED2:     dc.w    word_1A0CEE-*                   ; DATA XREF: Stage12_TeddyBearPilotStart+10   o
                                         ; ROM:001A0EDA   o
                 dc.w    8
                 dc.w    word_1A0CFA-*
                 dc.w    8
                 dc.w    off_1A0ED2-*
                 dc.w    0
-off_1A0EDE:     dc.w    word_1A0D06-*                   ; DATA XREF: Enemy_ShipCannon1Destroyed+56   o
-                                        ; Enemy_ShipCannon1Destroyed+BC   o
+off_1A0EDE:     dc.w    word_1A0D06-*                   ; DATA XREF: Stage12_TeddyBearFacePlayerDelay+56   o
+                                        ; Stage12_TeddyBearFacePlayerDelay+BC   o
                 dc.w    3
                 dc.w    word_1A0D12-*
                 dc.w    3
@@ -218,7 +218,7 @@ off_1A0F56:     dc.w    word_1A0E32-*                   ; DATA XREF: ROM:001A0F5
                 dc.w    9
                 dc.w    off_1A0F56-*
                 dc.w    0
-off_1A0F62:     dc.w    word_1A0D54-*                   ; DATA XREF: Enemy_ShipCannon1Init+68   o
+off_1A0F62:     dc.w    word_1A0D54-*                   ; DATA XREF: Stage12_TeddyBearInit+68   o
                                         ; ROM:001A0F72   o
                 dc.w    5
                 dc.w    word_1A0D6C-*
@@ -229,7 +229,7 @@ off_1A0F62:     dc.w    word_1A0D54-*                   ; DATA XREF: Enemy_ShipC
                 dc.w    4
                 dc.w    off_1A0F62-*
                 dc.w    0
-off_1A0F76:     dc.w    word_1A0D54-*                   ; DATA XREF: Enemy_ShipCannon1Init+10   o
+off_1A0F76:     dc.w    word_1A0D54-*                   ; DATA XREF: Stage12_TeddyBearInit+10   o
                                         ; Enemy_FallingObjectInit+C   o
                 dc.w    2
                 dc.w    word_1A0D6C-*
@@ -240,7 +240,7 @@ off_1A0F76:     dc.w    word_1A0D54-*                   ; DATA XREF: Enemy_ShipC
                 dc.w    1
                 dc.w    off_1A0F76-*
                 dc.w    0
-off_1A0F8A:     dc.w    word_1A0D9C-*                   ; DATA XREF: Enemy_ShipCannon1Destroyed+14   o
+off_1A0F8A:     dc.w    word_1A0D9C-*                   ; DATA XREF: Stage12_TeddyBearFacePlayerDelay+14   o
                                         ; ROM:001A0FA2   o
                 dc.w    8
                 dc.w    word_1A0DBA-*
@@ -255,14 +255,14 @@ off_1A0F8A:     dc.w    word_1A0D9C-*                   ; DATA XREF: Enemy_ShipC
                 dc.w    2
                 dc.w    off_1A0F8A-*
                 dc.w    0
-off_1A0FA6:     dc.w    word_1A0D9C-*                   ; DATA XREF: Enemy_ShipCannon1Wait+44   o
+off_1A0FA6:     dc.w    word_1A0D9C-*                   ; DATA XREF: Stage12_TeddyBearBeginDrop+44   o
                                         ; ROM:001A0FAE   o
                 dc.w    $B
                 dc.w    word_1A0DBA-*
                 dc.w    $B
                 dc.w    off_1A0FA6-*
                 dc.w    0
-off_1A0FB2:     dc.w    word_1A0DBA-*                   ; DATA XREF: Enemy_ShipCannon1Destroyed+3C   o
+off_1A0FB2:     dc.w    word_1A0DBA-*                   ; DATA XREF: Stage12_TeddyBearFacePlayerDelay+3C   o
                                         ; ROM:001A0FBA   o
                 dc.w    $10
                 dc.w    word_1A0E14-*
@@ -279,9 +279,9 @@ off_1A0FBE:     dc.w    word_1A0E3E-*                   ; DATA XREF: ROM:001A0FC
                 dc.w    6
                 dc.w    off_1A0FBE-*
                 dc.w    0
-off_1A0FD2:     dc.w    word_1A0E3E-*                   ; DATA XREF: Enemy_ShipCannon1Init+8E   o
+off_1A0FD2:     dc.w    word_1A0E3E-*                   ; DATA XREF: Stage12_TeddyBearInit+8E   o
                 dc.w    $FF
-off_1A0FD6:     dc.w    word_1A0D4E-*                   ; DATA XREF: Enemy_ShipCannon2Wait+4   o
+off_1A0FD6:     dc.w    word_1A0D4E-*                   ; DATA XREF: Stage12_TeddyBearPilotRelease+4   o
                 dc.w    $FF
 byte_1A0FDA:    dc.b    0, $49, 2, 0, $D0, $D2, $20, $82, $22, 0, $27, $82, 1, $90, $92, $2C, $82, $41, 0, 2, $A8, $22, $2A, 0, 3, $A0, $A2, $A4, $A6, $AC, $2D, $39
                                         ; DATA XREF: ROM:000119AA   o

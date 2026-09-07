@@ -2419,6 +2419,193 @@
         "Entity type 0x208 maps here and is constructed only by Stage10_InitAmbientParticles in the Stage 10 graphics setup.",
         "The handler compensates for horizontal camera motion, derives horizontal motion from the stage scroll rate and recycles the object at viewport bounds; it has no enemy or debris interaction."
       ]
+    },
+    {
+      "address": "0x02F5C0",
+      "previous_name": "Enemy_ShipMain",
+      "current_name": "Stage12_YachtControllerMain",
+      "legacy_name": "sub_2F5C0",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS reaches this invisible fixed-slot controller at frame 23660, the documented start of the Stage 12 yacht sequence.",
+        "Its states drive yacht motion, scrolling-plane offsets, steering, destruction palette cycling and debris; no enemy-cannon object is initialized here."
+      ]
+    },
+    {
+      "address": "0x02F62E",
+      "previous_name": "Enemy_ShipUpdatePosition",
+      "current_name": "Stage12_YachtRevealPan",
+      "legacy_name": "sub_2F62E",
+      "evidence": "static",
+      "basis": [
+        "The state temporarily offsets the camera only for a graphics pass, restores it, and advances the reveal offset by eight until 0x90.",
+        "At completion it sets stage flags and advances the yacht controller; it does not perform the controller's normal position integration."
+      ]
+    },
+    {
+      "address": "0x02F672",
+      "previous_name": "Enemy_ShipSpawnCannons",
+      "current_name": "Stage12_YachtBeginMotion",
+      "legacy_name": "sub_2F672",
+      "evidence": "static",
+      "basis": [
+        "The routine plays one sound, initializes the vertical direction and velocity, and enters the active yacht state.",
+        "It contains no object allocation, entity-type write or cannon constructor."
+      ]
+    },
+    {
+      "address": "0x02F690",
+      "previous_name": "Enemy_ShipSpawnCannons_MainState",
+      "current_name": "Stage12_YachtActiveState",
+      "legacy_name": "loc_2F690",
+      "evidence": "static",
+      "basis": [
+        "This state consumes yacht signal bits and calls vertical motion, scroll acceleration, steering, scroll-preset and plane-offset helpers.",
+        "It allocates no cannons and transitions to the destruction state when the controller health field becomes negative."
+      ]
+    },
+    {
+      "address": "0x02F706",
+      "previous_name": "Enemy_ShipSpawnCannons_MainLoop",
+      "current_name": "Stage12_YachtDestructionState",
+      "legacy_name": "loc_2F706",
+      "evidence": "static",
+      "basis": [
+        "The active-state health check selects this state after the yacht controller becomes defeated.",
+        "It cycles a dedicated palette table, emits randomized debris and retains the yacht motion and plane-offset updates."
+      ]
+    },
+    {
+      "address": "0x02F73E",
+      "previous_name": "Enemy_ShipWaitForCannons",
+      "current_name": "Stage12_YachtUpdateVerticalBob",
+      "legacy_name": "sub_2F73E",
+      "evidence": "static",
+      "basis": [
+        "Field 0x58 selects upward or downward acceleration between Y limits 0x12E and 0x13C.",
+        "The helper toggles that direction field at each limit and neither scans nor waits for another entity."
+      ]
+    },
+    {
+      "address": "0x02F790",
+      "previous_name": "Enemy_ShipCheckDestroyed",
+      "current_name": "Stage12_YachtAccelerateScroll",
+      "legacy_name": "sub_2F790",
+      "evidence": "static",
+      "basis": [
+        "The helper caps and increments the yacht scroll-rate accumulator, then derives camera compensation from it under stage flag control.",
+        "It performs no health, destruction or remaining-object check."
+      ]
+    },
+    {
+      "address": "0x02F82E",
+      "previous_name": "Enemy_ShipCannonFirePattern",
+      "current_name": "Stage12_YachtClampHorizontalVelocity",
+      "legacy_name": "sub_2F82E",
+      "evidence": "static",
+      "basis": [
+        "The helper compares yacht X against two horizontal limits and eases field 0x18 toward zero or back into bounds.",
+        "It neither creates a projectile nor selects a firing pattern."
+      ]
+    },
+    {
+      "address": "0x02F894",
+      "previous_name": "Enemy_ShipCannonSpawn",
+      "current_name": "Stage12_YachtUpdatePlaneOffsets",
+      "legacy_name": "sub_2F894",
+      "evidence": "static",
+      "basis": [
+        "The routine writes two global scrolling-plane offsets derived from the yacht X/Y position and vertical camera position.",
+        "It calls no allocator and writes no entity type, so the claimed cannon spawn is contradicted."
+      ]
+    },
+    {
+      "address": "0x02F90E",
+      "previous_name": "Enemy_ShipCannon1Main",
+      "current_name": "Stage12_TeddyBearMain",
+      "legacy_name": "sub_2F90E",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS first reaches this actor at frame 23676; the captured Stage 12 scene shows the small blue teddy bear approaching the yacht.",
+        "Later states jump onto and attach the actor at a fixed offset from the yacht controller before beginning its pilot animation."
+      ]
+    },
+    {
+      "address": "0x02F93E",
+      "previous_name": "Enemy_ShipCannon1Init",
+      "current_name": "Stage12_TeddyBearInit",
+      "legacy_name": "sub_2F93E",
+      "evidence": "runtime",
+      "basis": [
+        "At the first runtime hit, the actor uses this initializer's mapping, Y=0x120 and collision fields while entering from the right of the Stage 12 scene.",
+        "The same state machine later anchors that actor to the yacht; it is not one of several ship cannons."
+      ]
+    },
+    {
+      "address": "0x02FB10",
+      "previous_name": "Enemy_ShipCannon2Main",
+      "current_name": "Stage12_TeddyBearPilotStart",
+      "legacy_name": "sub_2FB10",
+      "evidence": "static",
+      "basis": [
+        "This state first calls the helper that anchors the teddy bear to the yacht, then advances its animation and stage progress counters.",
+        "The apparent numbered cannon states are successive states of the same entity dispatch table, not separate cannon handlers."
+      ]
+    },
+    {
+      "address": "0x02FBEA",
+      "previous_name": "Enemy_ShipCannon3Main",
+      "current_name": "Stage12_TeddyBearAttachToYacht",
+      "legacy_name": "sub_2FBEA",
+      "evidence": "static",
+      "basis": [
+        "The helper reads the fixed yacht controller slot and places the current actor at yacht X+0x44 and Y-0x27.",
+        "It creates and updates no third cannon."
+      ]
+    },
+    {
+      "address": "0x02FC26",
+      "previous_name": "Enemy_ProjectileMainDispatch",
+      "current_name": "OrphanedCrossStageEntityDispatch",
+      "legacy_name": "sub_2FC26",
+      "evidence": "static",
+      "basis": [
+        "No source constructor or data owner has been established, and a bounded breakpoint run did not reach the entry during all 90,000 pinned TAS frames.",
+        "Its three table entries jump into existing Stage 18 projectile and falling-spawner code, so a generic projectile identity would overstate the evidence."
+      ]
+    },
+    {
+      "address": "0x02FC4C",
+      "previous_name": "Enemy_ProjectileInit",
+      "current_name": "OrphanedTerrainTileAnimationInit",
+      "legacy_name": "sub_2FC4C",
+      "evidence": "static",
+      "basis": [
+        "The preceding dispatch table uses this address only as a relative-offset arithmetic base; none of its entries targets the initializer itself.",
+        "Its descriptor fields and eight layout bases mirror the adjacent terrain-tile animator, while no live code or data reference reaches it."
+      ]
+    },
+    {
+      "address": "0x02FCBA",
+      "previous_name": "Boss_EnableVisibilityFlag",
+      "current_name": "OrphanedTerrainTileAnimationReveal",
+      "legacy_name": "sub_2FCBA",
+      "evidence": "static",
+      "basis": [
+        "This unreferenced state waits for field 0x48, sets a display flag, resets the pattern index and branches into the shared terrain transfer helper.",
+        "No boss object or boss-specific state is accessed."
+      ]
+    },
+    {
+      "address": "0x02FCCE",
+      "previous_name": "Boss_UpdateTilesDMA",
+      "current_name": "OrphanedTerrainTileAnimationTransfer",
+      "legacy_name": "sub_2FCCE",
+      "evidence": "static",
+      "basis": [
+        "This unreferenced state selects one of the same five terrain pattern words and passes the object-resident descriptor to Gfx_DMATransferTiles.",
+        "The precise visual owner remains unresolved, so the name states only the observed transfer role and orphan status."
+      ]
     }
   ]
 }
