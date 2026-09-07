@@ -1,0 +1,74 @@
+Credits_InitializeScreen:                               ; DATA XREF: Sys_DispatchGameState+B6   o  ; was: sub_1E16C
+                tst.w   (GameSubstateIndex).w
+                bne.s   loc_1E1BE
+                addq.w  #2,(GameSubstateIndex).w
+                jsr     (Sys_InitGameMode).l
+                lea     stru_1E204(pc),a0
+                nop
+                jsr     (LoadObjData).l
+                lea     (byte_BB72).l,a0
+                jsr     (LoadPalette).l
+                move.w  #4,(word_FF80F2).w
+                move.w  #$FFF4,(word_FF80F0).w
+                move.w  #$E000,(word_FF80F4).w
+                jsr     (Gfx_FadePaletteTransition).l
+                bclr    #6,(word_FFF7D2+1).w
+                clr.b   (byte_FFF755).w
+                move.b  #0,(word_FFF7F4+1).w
+                rts
+; ---------------------------------------------------------------------------
+loc_1E1BE:                                              ; CODE XREF: Credits_InitializeScreen+4   j
+                addq.w  #4,(GameModeIndex).w
+                jsr     (Gfx_FadePaletteTransition).l
+                movea.l #dword_1E236,a0
+                move.w  #$800,d0
+                move.w  #$FF00,d1
+                jsr     (Gfx_DirectVRAMTransfer).l
+                clr.w   (dword_FFA900).w
+                clr.w   (dword_FFA904).w
+                jsr     (Gfx_SetupScrollPlanes).l
+                move.w  #0,(word_FF807A).w
+                jsr     (Effect_TransitionDispatcher).l
+                bset    #6,(word_FFF7D2+1).w
+                move.b  #$80,(byte_FFF755).w
+                rts
+; End of function Credits_InitializeScreen
+; ---------------------------------------------------------------------------
+stru_1E204:     dc.w    7                               ; field_0
+                                        ; DATA XREF: Credits_InitializeScreen+10   o
+                dc.l    tiles_18B2FA                    ; field_2
+                dc.w    $6000                           ; field_6
+                dc.w    7                               ; field_0
+                dc.l    tiles_F10A4                     ; field_2
+                dc.w    $9000                           ; field_6
+                dc.w    7                               ; field_0
+                dc.l    byte_18D562                     ; field_2
+                dc.w    $E000                           ; field_6
+                dc.w    6                               ; field_0
+                dc.l    byte_18CC50                     ; field_2
+                dc.w    $6000                           ; field_6
+                dc.w    6                               ; field_0
+                dc.l    byte_18CD7C                     ; field_2
+                dc.w    $4020                           ; field_6
+                dc.w    6                               ; field_0
+                dc.l    byte_18454C                     ; field_2
+                dc.w    $7000                           ; field_6
+                dc.w    $FFFF
+dword_1E236:    dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $4000
+                                        ; DATA XREF: Credits_InitializeScreen+5C   o
+
+; Updates credits palette effects
+Credits_UpdateEffects:                                  ; DATA XREF: Sys_DispatchGameState+BA   o  ; was: sub_1E246
+                jsr     (Gfx_FadePaletteTransition).l
+                jsr     (Effect_PaletteDispatcher).l
+                rts
+; End of function Credits_UpdateEffects
+; Checks button input mode and branches to handler
+Input_CheckButtonModeAndBranch:                         ; CODE XREF: UI_InitializeWeaponSelect+12   j  ; was: sub_1E254
+                move.b  (byte_FFA230).w,d0
+                beq.s   loc_1E260
+                jsr     (Input_CheckButtonMode).l
+loc_1E260:                                              ; CODE XREF: Input_CheckButtonModeAndBranch+4   j
+                bra.w   UI_TransitionToStageLoad
+; End of function Input_CheckButtonModeAndBranch
+; Initializes weapon selection screen

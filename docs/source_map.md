@@ -18,9 +18,11 @@ listing by `make verify-layout`.
 | `0x013ADE-0x0146FB` | entity, terrain, and combat collision | 2 | static/hypothesis |
 | `0x0146FC-0x016F35` | player terrain and state families | 9 | hypothesis |
 | `0x016F36-0x019A6B` | player rendering, weapons, projectiles, and weapon UI | 7 | hypothesis |
-| `0x019A6C-0x01C169` | stage intros, Seven Force projectiles, and object utilities | 6 | hypothesis |
-| `0x01C16A-0x02018F` | gameplay loop, menus, results, and cutscene control | 1 | hypothesis |
-| `0x020190-0x02A30D` | UI, results, transitions, effects | 1 | hypothesis |
+| `0x019A6C-0x01C3F9` | stage intros, Seven Force projectiles, object utilities, and projectile slots | 6 | hypothesis |
+| `0x01C3FA-0x01E83D` | stage background, gameplay, frontend, results, and transitions | 14 | hypothesis |
+| `0x01E83E-0x020249` | cutscenes, stage initialization, menus, and results scrolling | 5 | hypothesis |
+| `0x02024A-0x023CB9` | results data, credits, selection UI, and floating icons | 6 | hypothesis |
+| `0x023CBA-0x02A30D` | demo, cutscene, transition, VDP layout, and Valkirie systems | 8 | hypothesis |
 | `0x02A30E-0x03153F` | enemies, projectiles, boss helpers | 2 | hypothesis |
 | `0x031540-0x082323` | boss-heavy code and first padding gap | 12 | hypothesis |
 | `0x082324-0x0E7FFF` | sound driver/data and second padding gap | 1 | static |
