@@ -163,7 +163,7 @@
                 include "src/enemies/stage_10_beetles.s"
                 include "src/enemies/stage_11_fish.s"
                 include "src/cutscenes/xi_tiger_entrance_sequences.s"
-                include "src/bosses/xi_tiger.s"
+                include "src/debug/orphaned_radial_particle_test.s"
                 include "src/bosses/antroid_and_debris.s"
                 include "src/enemies/ship_cannons.s"
                 include "src/enemies/stage_18.s"

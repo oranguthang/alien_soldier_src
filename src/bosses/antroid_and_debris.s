@@ -1,3 +1,4 @@
+; Tiny wrapper selecting one of two shared enemy-state variants
 Enemy_TinyWrapper:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F396
                 moveq   #0,d0
                 bra.s   loc_2F39E

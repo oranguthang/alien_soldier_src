@@ -91,7 +91,7 @@ word_E91D6:     dc.w    $C872, 0, $FCFC                 ; DATA XREF: ROM:000E964
                 dc.w    $58DB, 0, 0
                 dc.w    $40DB, 0, $F8F8
                 dc.w    $C8DB, 0, $F800
-word_E91FA:     dc.w    $C874, 0, $FCFC                 ; DATA XREF: Boss_XiTigerProjectileInit+1E   o
+word_E91FA:     dc.w    $C874, 0, $FCFC                 ; DATA XREF: Debug_SetupRadialTestParticleSprite+1E   o
                                         ; Boss_GustheadCoreDefeat+36   o
 word_E9200:     dc.w    $C875, 0, $FCFC                 ; DATA XREF: ROM:000E9664   o
                                         ; ROM:000E9670   o

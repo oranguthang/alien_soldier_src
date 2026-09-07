@@ -250,7 +250,7 @@
     { "file": "src/enemies/stage_10_beetles.s", "subsystem": "enemies", "start": "0x02E6C2", "end": "0x02E9FB" },
     { "file": "src/enemies/stage_11_fish.s", "subsystem": "enemies", "start": "0x02E9FC", "end": "0x02EF31" },
     { "file": "src/cutscenes/xi_tiger_entrance_sequences.s", "subsystem": "cutscenes", "start": "0x02EF32", "end": "0x02F1A1" },
-    { "file": "src/bosses/xi_tiger.s", "subsystem": "bosses", "start": "0x02F1A2", "end": "0x02F395" },
+    { "file": "src/debug/orphaned_radial_particle_test.s", "subsystem": "debug", "start": "0x02F1A2", "end": "0x02F395" },
     { "file": "src/bosses/antroid_and_debris.s", "subsystem": "bosses", "start": "0x02F396", "end": "0x02F5BF" },
     { "file": "src/enemies/ship_cannons.s", "subsystem": "enemies", "start": "0x02F5C0", "end": "0x02FCF5" },
     { "file": "src/enemies/stage_18.s", "subsystem": "enemies", "start": "0x02FCF6", "end": "0x0304E3" },

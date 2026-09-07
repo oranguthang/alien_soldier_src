@@ -284,6 +284,20 @@ frames, so the cohesive 223-line implementation now lives in
 `src/cutscenes/xi_tiger_entrance_sequences.s`. Incorrect train-end, player,
 dispatcher, and generic state claims are recorded in the name audit.
 
+The orphaned radial-particle pass reduced the count to 9,766 by replacing all
+14 address-derived definitions in the former `src/bosses/xi_tiger.s`. No code
+or data reference, absolute ROM pointer, or entity-dispatch entry reaches any
+of its three plausible entry points. Bounded breakpoint runs through all
+90,000 frames of the pinned TAS likewise did not execute `0x02F1A2`,
+`0x02F2A4`, or `0x02F2EC`. Static data flow identifies an input-adjustable
+radius, randomized sine-based motion for eight candidate slots, and a child
+state that follows changing parent angles; the empty slot-setup hook leaves
+the released implementation incomplete. The honest 176-line module is
+`src/debug/orphaned_radial_particle_test.s`; it remains separate despite being
+below the normal target size because merging unrelated Antroid code would
+obscure the ROM boundary. Incorrect Xi-Tiger and generic boss claims are
+recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

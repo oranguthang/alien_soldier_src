@@ -2177,6 +2177,94 @@
         "This routine is called as a helper from several true state handlers and has no entry in the boss-entrance state table.",
         "Its only operation sets the actor Y coordinate to vertical stage scroll plus 0x128, so classifying it as state 1 was structurally incorrect."
       ]
+    },
+    {
+      "address": "0x02F1A2",
+      "previous_name": "Boss_XiTigerAttackMain",
+      "current_name": "Debug_RadialParticleTestController",
+      "legacy_name": "sub_2F1A2",
+      "evidence": "static",
+      "basis": [
+        "No source reference, absolute ROM pointer or entity-dispatch entry reaches this controller, and the pinned 90,000-frame TAS did not execute its address.",
+        "Its only direct input response changes a radius with held left/right input, while its state prepares randomized sine-based slot motion; it contains no Xi-Tiger object, frame or battle-state reference."
+      ]
+    },
+    {
+      "address": "0x02F1B6",
+      "previous_name": "Boss_XiTigerAttackInit",
+      "current_name": "Debug_RadialParticleTestInit",
+      "legacy_name": "sub_2F1B6",
+      "evidence": "static",
+      "basis": [
+        "This is the first state of the orphaned controller at 0x02F1A2 and initializes only status, radius and a fixed screen position.",
+        "No boss identity, health, collision or Xi-Tiger state is initialized."
+      ]
+    },
+    {
+      "address": "0x02F1D4",
+      "previous_name": "Boss_XiTigerSpawnProjectiles",
+      "current_name": "Debug_RadialParticleTestPrepareBurstState",
+      "legacy_name": "sub_2F1D4",
+      "evidence": "static",
+      "basis": [
+        "The routine calculates randomized radial motion for up to eight free slots and stores a parent pointer and angular offsets.",
+        "Its post-allocation setup hook is an RTS and it never installs an entity type, so the released code only prepares candidate slots rather than spawning functional Xi-Tiger projectiles."
+      ]
+    },
+    {
+      "address": "0x02F2A4",
+      "previous_name": "Boss_XiTigerProjectileInit",
+      "current_name": "Debug_SetupRadialTestParticleSprite",
+      "legacy_name": "sub_2F2A4",
+      "evidence": "static",
+      "basis": [
+        "This standalone routine has no static caller or pointer, and the pinned 90,000-frame TAS did not execute its address.",
+        "It copies a parent position and assigns a generic one-piece effect frame also used by unrelated Viblack and homing-projectile code; nothing identifies an Xi-Tiger projectile."
+      ]
+    },
+    {
+      "address": "0x02F2D2",
+      "previous_name": "Boss_HandleInputOffset",
+      "current_name": "Debug_AdjustRadialParticleRadius",
+      "legacy_name": "sub_2F2D2",
+      "evidence": "static",
+      "basis": [
+        "Held right increments and held left decrements controller field 0x50, initialized to 0x18 by the radial-test init state.",
+        "That field is multiplied by sine-table values when preparing slot motion, establishing it as the test radius rather than an unspecified boss offset."
+      ]
+    },
+    {
+      "address": "0x02F2EC",
+      "previous_name": "Boss_ApplyVelocityDispatch",
+      "current_name": "Debug_RadialTestParticleController",
+      "legacy_name": "sub_2F2EC",
+      "evidence": "static",
+      "basis": [
+        "No object-table entry, source reference or absolute ROM pointer reaches this updater, and the pinned 90,000-frame TAS did not execute it.",
+        "It applies one slot's velocity and dispatches only the radial test's initial-motion and parent-angle-following states, so the generated generic boss ownership was unsupported."
+      ]
+    },
+    {
+      "address": "0x02F30C",
+      "previous_name": "Boss_TimerAdvanceState",
+      "current_name": "Debug_RadialTestParticleInitialMotionState",
+      "legacy_name": "sub_2F30C",
+      "evidence": "static",
+      "basis": [
+        "This is the first entry in the orphaned particle updater's two-state table and begins with the eight-frame timer assigned by the separate sprite setup routine.",
+        "On expiry it changes a status bit, installs a 128-frame lifetime and advances specifically to the parent-following state."
+      ]
+    },
+    {
+      "address": "0x02F324",
+      "previous_name": "Boss_SyncPositionToParent",
+      "current_name": "Debug_RadialTestParticleFollowParentState",
+      "legacy_name": "sub_2F324",
+      "evidence": "static",
+      "basis": [
+        "The state reads the retained parent pointer and recomputes each motion component from stored radial amplitudes, angular offsets and the parent's changing angle fields.",
+        "It belongs exclusively to the orphaned radial-test particle table and expires the slot after 128 frames; no live boss ownership is established."
+      ]
     }
   ]
 }
