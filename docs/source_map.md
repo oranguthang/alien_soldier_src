@@ -11,7 +11,8 @@ listing by `make verify-layout`.
 | `0x004840-0x009321` | story, planet, credits, and ship sequences | 9 | hypothesis |
 | `0x009322-0x00C83D` | title/options/password UI, results, and palette assets | 6 | hypothesis |
 | `0x00C83E-0x00D713` | camera dispatch and early-stage transitions | 4 | hypothesis |
-| `0x00D714-0x010D15` | stage systems | 1 | hypothesis |
+| `0x00D714-0x010025` | stage groups, boss transitions, and dispatch helpers | 13 | hypothesis |
+| `0x010026-0x010D15` | camera, scroll planes, and tilemap rendering | 4 | static/hypothesis |
 | `0x010D16-0x013B29` | background and scroll rendering | 1 | hypothesis |
 | `0x013B2A-0x016F35` | collision and shared gameplay | 1 | hypothesis |
 | `0x016F36-0x02018F` | player, weapons, projectiles | 2 | hypothesis |
