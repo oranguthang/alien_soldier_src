@@ -1,0 +1,51 @@
+tiles_18E5D2:   binclude "data/artcomp/tiles_18E5D2.bin"
+tiles_18E5D2_End:
+tiles_19051C:   binclude "data/artcomp/tiles_19051C.bin"
+tiles_19051C_End:
+tiles_1912EC:   binclude "data/artcomp/tiles_1912EC.bin"
+tiles_1912EC_End:
+byte_192C38:    binclude "data/mappings/byte_192C38.bin"
+byte_192C38_End:
+byte_192F7C:    dc.b    0, $48, $26, 0, $1F, 1, 2, 3, 4, 5, 6, 7, 8, $B, $C, $D, $E, $F, $10, $11, $12, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1F, $20, $21
+                                        ; DATA XREF: ROM:000117C0   o
+                dc.b    $22, $23, $24, $25, $26, $3E, 0, $1F, 9, $A, $29, $2A, $2B, $2C, $2D, $2E, $13, $14, $2F, $30, $31, $32, $33, $34, $1D, $1E, $35, $36, $37, $38, $39, $3A
+                dc.b    $27, $28, $3B, $3C, $3D, $3E, $3F, $40, $D8, $3F
+byte_192FC6:    dc.b    0, $48, $26, 0, $1F, 2, 3, 4, 5, 6, 7, 8, 9, $C, $D, $E, $F, $10, $11, $12, $13, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $20, $21, $22
+                                        ; DATA XREF: ROM:00011806   o
+                                        ; ROM:00011830   o
+                dc.b    $23, $24, $25, $26, $27, $3E, 0, $1F, $A, $B, $2A, $2B, $2C, $2D, $2E, $2F, $14, $15, $30, $31, $32, $33, $34, $35, $1E, $1F, $36, $37, $38, $39, $3A, $3B
+                dc.b    $28, $29, $3C, $3D, $3E, $3F, $40, $41, $D8, $3F
+byte_193010:    binclude "data/mappings/byte_193010.bin"
+byte_193010_End:
+byte_19382C:    binclude "data/mappings/byte_19382C.bin"
+byte_19382C_End:
+byte_193DBE:    binclude "data/mappings/byte_193DBE.bin"
+byte_193DBE_End:
+tiles_1942B8:   binclude "data/artcomp/tiles_1942B8.bin"
+tiles_1942B8_End:
+byte_19794C:    binclude "data/mappings/byte_19794C.bin"
+byte_19794C_End:
+byte_197C28:    binclude "data/mappings/byte_197C28.bin"
+byte_197C28_End:
+tiles_198E2C:   binclude "data/artcomp/tiles_198E2C.bin"
+tiles_198E2C_End:
+tiles_19AEA6:   binclude "data/artcomp/tiles_19AEA6.bin"
+tiles_19AEA6_End:
+byte_19AF40:    binclude "data/mappings/byte_19AF40.bin"
+byte_19AF40_End:
+byte_19B0F6:    binclude "data/mappings/byte_19B0F6.bin"
+byte_19B0F6_End:
+byte_19BA44:    dc.b    0, $6E, $1F, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, $A, $B, $C, $D, $E, $F, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C
+                                        ; DATA XREF: ROM:000048F2   o
+                                        ; ROM:00007C12   o
+                dc.b    $1D, $1E, $1F, $3F, 0, $84, $3F, $5F, 0, 0, $5F, 0, 0, $D8, $A7, $20, $FF, $98, $E1, $84, 9, $C4, $CC, $2F, 7, $C4, $DF, 0, 4, $8D, $24, $95
+                dc.b    $29, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $96, $DE, $82, $F7, $F8, $1F, $FC, $3F, $FC, $5F
+                dc.b    $EB, $49, $83, $79, $F3, $67, $83, $9B, $F3, $87, $83, $BD, $EB, $9F, $EB, $DF
+tiles_19BAB4:   binclude "data/artcomp/tiles_19BAB4.bin"
+tiles_19BAB4_End:
+tiles_19BC68:   binclude "data/artcomp/tiles_19BC68.bin"
+tiles_19BC68_End:
+tiles_19BE86:   binclude "data/artcomp/tiles_19BE86.bin"
+tiles_19BE86_End:
+tiles_19BF9E:   binclude "data/artcomp/tiles_19BF9E.bin"
+tiles_19BF9E_End:

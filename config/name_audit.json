@@ -24,6 +24,17 @@
         "The adjacent selector dispatches only palette fade and palette-update handlers.",
         "It is called from the same gameplay graphics/effect chain as the primary dispatcher."
       ]
+    },
+    {
+      "address": "0x0E8000",
+      "previous_name": "word_E8000",
+      "current_name": "SegaScreenPalette",
+      "legacy_name": "word_E8000",
+      "evidence": "static",
+      "basis": [
+        "The payload is exactly 16 Mega Drive color words.",
+        "UI_InitializeSEGAScreen copies all 32 bytes into palette RAM immediately before loading sega_tiles."
+      ]
     }
   ]
 }

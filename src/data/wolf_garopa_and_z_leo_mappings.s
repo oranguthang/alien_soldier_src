@@ -1,0 +1,153 @@
+word_ED172:     dc.w    $480B, $100, $F8E9              ; DATA XREF: Boss_WolfGaropaMovement3+94   o
+                dc.w    $4803, $D00, $F8F1
+                dc.w    $C800, $800, $F0F3
+                dc.w    $480D, $800, $EBF2
+                dc.w    $C810, $E00, $F3F2
+word_ED190:     dc.w    $4824, $400, $FBE1              ; DATA XREF: Boss_WolfGaropaMovement3+AE   o
+                                        ; ROM:off_50586   o
+                dc.w    $C81C, $D00, $F8F0
+word_ED19C:     dc.w    $482F, $500, $CEA               ; DATA XREF: ROM:0005058A   o
+                dc.w    $482C, $800, $4EC
+                dc.w    $C826, $900, $F4F4
+word_ED1AE:     dc.w    $483B, $100, $10FB              ; DATA XREF: ROM:0005058E   o
+                dc.w    $C833, $700, $F0F8
+word_ED1BA:     dc.w    $4846, $500, $C07               ; DATA XREF: ROM:00050592   o
+                dc.w    $4843, $800, $4FD
+                dc.w    $C83D, $900, $F4F5
+word_ED1CC:     dc.w    $C84A, $E00, $F4F0              ; DATA XREF: ROM:off_352A6   o
+word_ED1D2:     dc.w    $4859, $D00, $FAEE              ; DATA XREF: ROM:000352AA   o
+                dc.w    $C856, $800, $F2F6
+word_ED1DE:     dc.w    $C861, $A00, $F5F4              ; DATA XREF: ROM:000352AE   o
+word_ED1E4:     dc.w    $486D, $700, $F3F7              ; DATA XREF: ROM:000352B2   o
+                dc.w    $C86A, $200, $F307
+word_ED1F0:     dc.w    $C875, $B00, $F0F4              ; DATA XREF: ROM:000352B6   o
+word_ED1F6:     dc.w    $406A, $200, $F2F2              ; DATA XREF: ROM:000352BA   o
+                dc.w    $C06D, $700, $F2FA
+word_ED202:     dc.w    $C061, $A00, $F4F5              ; DATA XREF: ROM:000352BE   o
+word_ED208:     dc.w    $4056, $800, $F1F2              ; DATA XREF: ROM:000352C2   o
+                dc.w    $C059, $D00, $F9F2
+word_ED214:     dc.w    $4890, $500, $F9E7              ; DATA XREF: ROM:off_352C6   o
+                dc.w    $4884, $E00, $F9F7
+                dc.w    $C881, $800, $F1F9
+word_ED226:     dc.w    $48A0, $800, $9F6               ; DATA XREF: ROM:000352CA   o
+                dc.w    $4894, $E00, $F1F6
+                dc.w    $C8A3, $500, $FEE6
+word_ED238:     dc.w    $48B9, 0, $DF4                  ; DATA XREF: ROM:000352CE   o
+                dc.w    $48B7, $100, $5EC
+                dc.w    $C8A7, $F00, $EDF4
+word_ED24A:     dc.w    $48C9, $100, $AF9               ; DATA XREF: ROM:000352D2   o
+                dc.w    $48C6, $200, $FAF1
+                dc.w    $C8BA, $B00, $EAF9
+word_ED25C:     dc.w    $49C5, $500, $8F9               ; DATA XREF: ROM:000352D6   o
+                dc.w    $49C2, $200, $EEF1
+                dc.w    $C9B6, $B00, $E8F9
+word_ED26E:     dc.w    $48DA, $500, $9FD               ; DATA XREF: ROM:000352DA   o
+                dc.w    $48D7, $200, $F10A
+                dc.w    $C8CB, $B00, $E9F2
+word_ED280:     dc.w    $48EE, $800, $C00               ; DATA XREF: ROM:000352DE   o
+                dc.w    $48EA, $C00, $4F8
+                dc.w    $C8DE, $E00, $ECF0
+word_ED292:     dc.w    $48FD, 0, $803                  ; DATA XREF: ROM:000352E2   o
+                dc.w    $48FE, $500, $FE0B
+                dc.w    $C8F1, $E00, $F0EB
+word_ED2A4:     dc.w    $490A, $100, $F9E9              ; DATA XREF: ROM:off_352E6   o
+                dc.w    $C902, $D00, $F9F1
+word_ED2B0:     dc.w    $4910, $500, $FAF0              ; DATA XREF: ROM:000352EA   o
+                dc.w    $C90C, $500, $F600
+word_ED2BC:     dc.w    $491A, $500, $3F2               ; DATA XREF: ROM:000352EE   o
+                dc.w    $C914, $900, $F3F6
+word_ED2C8:     dc.w    $4922, $500, $1F7               ; DATA XREF: ROM:000352F2   o
+                dc.w    $C91E, $500, $F1FB
+word_ED2D4:     dc.w    $492E, $400, $FFA               ; DATA XREF: ROM:000352F6   o
+                dc.w    $C926, $700, $EFFA
+word_ED2E0:     dc.w    $4934, $500, $FC                ; DATA XREF: ROM:000352FA   o
+                dc.w    $C930, $500, $F0F8
+word_ED2EC:     dc.w    $493E, $500, $FD05              ; DATA XREF: ROM:000352FE   o
+                dc.w    $C938, $600, $F1F5
+word_ED2F8:     dc.w    $4946, $500, $F802              ; DATA XREF: ROM:00035302   o
+                dc.w    $C942, $500, $F4F2
+word_ED304:     dc.w    $C94A, $900, $F9EF              ; DATA XREF: ROM:00035330   o
+                                        ; ROM:00035344   o
+word_ED30A:     dc.w    $C950, $600, $FBFB              ; DATA XREF: Boss_WolfGaropaShootPattern6+96   o
+word_ED310:     dc.w    $4965, 0, $BF2                  ; DATA XREF: Boss_WolfGaropaSetPattern1   o
+                                        ; Boss_WolfGaropaShootPattern5+140   o
+                dc.w    $4966, $600, $FCE2
+                dc.w    $495A, $400, $EBF4
+                dc.w    $C95C, $A00, $F3F2
+word_ED328:     dc.w    $497B, $900, $DEC               ; DATA XREF: Boss_WolfGaropaMovement3+E6   o
+                                        ; Boss_WolfGaropaShootPattern5+14C   o
+                dc.w    $496C, $800, $EDEC
+                dc.w    $C96F, $E00, $F5EC
+word_ED33A:     dc.w    $498F, $200, $E0E4              ; DATA XREF: Boss_WolfGaropaMovement3+CE   o
+                                        ; sub_50220:loc_5034E   o
+                dc.w    $4992, $D00, $F8EC
+                dc.w    $4981, $100, $E80C
+                dc.w    $C983, $E00, $E0EC
+word_ED352:     dc.w    $49B4, $400, $FADF              ; DATA XREF: Boss_WolfGaropaShootPattern5+11E   o
+                dc.w    $49AC, $D00, $FAEF
+                dc.w    $499A, $E00, $E2EF
+                dc.w    $C9A6, $600, $E2DF
+                dc.w    0, $700, $F0F0
+                dc.w    $8800, $700, $F000
+                dc.w    $8808, $300, $F0FC
+                dc.w    $880C, $300, $F0FC
+word_ED382:     dc.w    $10, $B00, $ECE8                ; DATA XREF: Projectile_ZLeoSpawnLasers+1A   o
+                dc.w    $8810, $B00, $EC00
+                dc.w    $881C, $500, $F8F8
+word_ED394:     dc.w    $A820, $200, $F4FC              ; DATA XREF: Boss_ZLeoIntroInit+154   o
+                                        ; Boss_ZLeoIntroInit+16C   o
+word_ED39A:     dc.w    $2837, $200, $8E8               ; DATA XREF: Boss_ZLeoIntroInit+14C   o
+                                        ; Boss_ZLeoIntroInit+164   o
+                dc.w    $2833, $300, $F0
+                dc.w    $A823, $700, $F0F8
+word_ED3AC:     dc.w    $284A, $500, $8F8               ; DATA XREF: ROM:000355E0   o
+                dc.w    $A83A, $F00, $E8F0
+word_ED3B8:     dc.w    $A84E, $200, $F3FC              ; DATA XREF: Boss_ZLeoIntroInit+100   o
+word_ED3BE:     dc.w    $A851, $100, $F8FC              ; DATA XREF: Boss_ZLeoIntroInit+114   o
+word_ED3C4:     dc.w    $2867, 0, $CEC                  ; DATA XREF: ROM:000355B0   o
+                                        ; ROM:000355B8   o
+                dc.w    $2868, $C00, $CF4
+                dc.w    $2863, $300, $ECEC
+                dc.w    $A853, $F00, $ECF4
+word_ED3DC:     dc.w    $386C, $D00, $F0                ; DATA XREF: ROM:000355B4   o
+                                        ; ROM:000355C4   o
+                dc.w    $A86C, $D00, $F0F0
+word_ED3E8:     dc.w    $A874, $A00, $F4F4              ; DATA XREF: ROM:000355D4   o
+                                        ; ROM:000355DC   o
+word_ED3EE:     dc.w    $A87D, $500, $F8F8              ; DATA XREF: ROM:000355C8   o
+                                        ; ROM:000355D0   o
+word_ED3F4:     dc.w    $3889, $D00, $E0                ; DATA XREF: ROM:off_528C8   o
+                dc.w    $3881, $D00, 0
+                dc.w    $2889, $D00, $F0E0
+                dc.w    $A881, $D00, $F000
+word_ED40C:     dc.w    $28A4, $F00, $FCE4              ; DATA XREF: ROM:000528CC   o
+                dc.w    $289E, $900, $FC04
+                dc.w    $289D, 0, $F4F4
+                dc.w    $A891, $E00, $E4FC
+word_ED424:     dc.w    $20BC, $700, $F0                ; DATA XREF: ROM:000355BC   o
+                                        ; ROM:000528D0   o
+                dc.w    $20B4, $700, $E0F0
+                dc.w    $28BC, $700, 0
+                dc.w    $A8B4, $700, $E000
+word_ED43C:     dc.w    $20A4, $F00, $FCFC              ; DATA XREF: ROM:000528D4   o
+                dc.w    $209E, $900, $FCE4
+                dc.w    $209D, 0, $F404
+                dc.w    $A091, $E00, $E4E4
+                dc.w    $A8C4, $800, $FCF4
+                dc.w    $28C9, $500, $FAF2
+                dc.w    $A8C7, $100, $F202
+                dc.w    $A8CD, $200, $F4FD
+                dc.w    $20C9, $500, $F9FF
+                dc.w    $A0C7, $100, $F1F7
+word_ED478:     dc.w    $A82B, $700, $F0F8              ; DATA XREF: Boss_ZLeoIntroInit+144   o
+                                        ; Boss_ZLeoIntroInit+15C   o
+word_ED47E:     dc.w    $80C, $300, $70FC               ; DATA XREF: Projectile_ZLeoSpawnLasers+60   o
+                                        ; Projectile_ZLeoSpawnDropProjectile+3C   o
+                dc.w    $808, $300, $50FC
+                dc.w    $808, $300, $30FC
+                dc.w    $808, $300, $10FC
+                dc.w    $808, $300, $F0FC
+                dc.w    $808, $300, $D0FC
+                dc.w    $808, $300, $B0FC
+                dc.w    0, $700, $90F0
+                dc.w    $8800, $700, $9000

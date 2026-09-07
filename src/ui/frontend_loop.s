@@ -136,7 +136,7 @@ loc_1D006:                                              ; CODE XREF: UI_Initiali
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
-                movea.l #word_E8000,a0
+                movea.l #SegaScreenPalette,a0
                 movea.w #(byte_FFE3C0-M68K_RAM),a1
                 moveq   #7,d7
 loc_1D09E:                                              ; CODE XREF: UI_InitializeSEGAScreen+11E   j

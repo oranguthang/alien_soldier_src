@@ -54,8 +54,15 @@ listing by `make verify-layout`.
 | `0x084A70-0x085265` | channel playback and sound lookup tables | 4 | static |
 | `0x085266-0x097FFF` | music tracks and sound effects | 5 | static |
 | `0x098000-0x0E7FFF` | PCM sample banks and second padding gap | 1 | static |
-| `0x0E8000-0x17FFFF` | mixed data and third padding gap | 1 | unknown |
-| `0x180000-0x1FFFFF` | final data bank and ROM end byte | 1 | unknown |
+| `0x0E8000-0x0ED4B3` | frontend, player, enemy, projectile, and boss sprite mappings | 17 | hypothesis |
+| `0x0ED4B4-0x1412B5` | gameplay tile art, player sprite art, and stage mappings | 5 | static |
+| `0x1412B6-0x14AE07` | Japanese font assets | 1 | static |
+| `0x14AE08-0x17FFFF` | credits scene assets and third padding gap | 1 | static |
+| `0x180000-0x189D37` | frontend scene assets and unidentified tilemap data | 1 | hypothesis |
+| `0x189D38-0x18E5D1` | planet, credits, and menu assets | 2 | static |
+| `0x18E5D2-0x1A1025` | stage object art and sprite mappings | 4 | hypothesis |
+| `0x1A1026-0x1CE4F7` | stage phase and Seven Force cutscene assets | 7 | static |
+| `0x1CE4F8-0x1FFFFF` | late-stage assets, ROM padding, and final byte | 3 | static |
 
 The ranges are intentionally address ordered. A broad owner is not proof that
 every routine in that interval belongs to the named subsystem. As analysis

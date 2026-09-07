@@ -231,8 +231,8 @@ Gens.exe -rom asbuilt.bin -play movie.gmv \
     -dump-state-interval 20 \
     -turbo -nosound
 
-# Step 2: Remove unknown_1 data and rebuild
-# (edit src/data/bank_0e8000.s to comment out unknown_1)
+# Step 2: Remove UnidentifiedSegaTilemap data and rebuild
+# (edit src/data/sega_screen_assets.s to comment out UnidentifiedSegaTilemap)
 make build
 
 # Step 3: Dump modified ROM state

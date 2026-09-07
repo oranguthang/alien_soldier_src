@@ -19,12 +19,16 @@ graphics-effect handler tables at `0x0040AC` and `0x00432E`. The corrected
 dispatcher claims and their static evidence are recorded in
 `config/name_audit.json`.
 
+The asset-bank reconstruction reduced it to 10,488. `SegaScreenPalette` is
+confirmed by its 16-color payload and the frontend copy loop. Two address-based
+placeholders became role-neutral unknowns pending stronger evidence.
+
 Two especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
 |---|---:|---|---|
-| `unknown_1` | `0x0E8020` | unknown | Large data structure; format and ownership are unverified. |
-| `unknown_2` | `0x180000` | unknown | Start of the final data bank; semantic role is unverified. |
+| `UnidentifiedSegaTilemap` | `0x0E8020` | hypothesis | 48 sequential tile words adjacent to the SEGA art; no live pointer has been found. |
+| `UnidentifiedTilemapData` | `0x180000` | unknown | Tile-like words at the frontend asset boundary; no live pointer has been found. |
 
 The 4,822 semantic names with `; was:` history are a second review queue. Their
 default level is `hypothesis`, not `confirmed`; see `docs/provenance.md`.
