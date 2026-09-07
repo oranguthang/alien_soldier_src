@@ -53,7 +53,7 @@ BIN_DIR = bin
 DATA_ADDRS = $(DATA_DIR)/data_addrs.txt
 
 # Default target
-.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout lint test runtime runtime-validate
+.PHONY: all build verify check-assets update-asset-manifest verify-toolchain verify-layout lint test runtime runtime-capture runtime-validate release-audit release-check source-inventory
 all: build
 
 # Initialize project from original ROM
@@ -153,7 +153,16 @@ lint:
 test:
 	@$(PYTHON) -m unittest discover -s tests -p "test_*.py"
 
+source-inventory: $(LISTING)
+	@$(PYTHON) $(SCRIPTS_DIR)/source_inventory.py \
+		--layout $(ROM_LAYOUT) \
+		--listing $(LISTING) \
+		--output build/source_inventory.json
+
 runtime: verify
+	@$(MAKE) --no-print-directory runtime-capture
+
+runtime-capture:
 	@$(PYTHON) $(SCRIPTS_DIR)/run_runtime_scenarios.py \
 		--scenarios $(RUNTIME_SCENARIOS) \
 		--gens "$(GENS_EXE)" \
@@ -166,6 +175,22 @@ runtime-validate:
 		--scenarios $(RUNTIME_SCENARIOS) \
 		--capture-dir $(RUNTIME_DIR) \
 		--ram-map src/ram_addrs.inc
+
+release-audit:
+	@$(PYTHON) $(SCRIPTS_DIR)/release_audit.py \
+		--contract config/release_0_5.json
+
+# Ordered, clean-room release gate. Sub-makes are intentional: each phase is
+# visible in logs and no stale build/listing/runtime output can satisfy it.
+release-check:
+	@$(MAKE) --no-print-directory check-assets
+	@$(MAKE) --no-print-directory lint
+	@$(MAKE) --no-print-directory test
+	@$(MAKE) --no-print-directory clean
+	@$(MAKE) --no-print-directory verify
+	@$(MAKE) --no-print-directory verify-symbols
+	@$(MAKE) --no-print-directory runtime-capture
+	@$(MAKE) --no-print-directory release-audit
 
 # Unpack LZSS-compressed data from ROM to data/uncompressed/
 # Attempts to decompress all entries from data/data_addrs.txt

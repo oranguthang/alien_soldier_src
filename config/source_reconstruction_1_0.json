@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "release": "Source Reconstruction 1.0",
+  "status": "development",
+  "benchmark": "flicky_src Source Reconstruction 1.0",
+  "canonical_profile": "japan",
+  "source_shape": {
+    "entrypoint": "src/main.s",
+    "entrypoint_role": "address-ordered include index",
+    "preferred_module_lines": {
+      "minimum": 200,
+      "maximum": 700
+    },
+    "default_maximum_module_lines": 1000,
+    "maximum_address_derived_definitions": 0,
+    "maximum_generic_container_names": 0,
+    "generic_container_pattern": "(?:^|_)(?:boss_code|bank)(?:_|$)|_[0-9a-f]{5,}$",
+    "oversize_waivers": []
+  },
+  "module_rules": [
+    "A module owns one coherent subsystem, object, procedure family, or its private data.",
+    "A procedure and its private tables are not split merely to satisfy a line target.",
+    "ROM order is preserved by include order even when one logical subsystem has several non-contiguous modules.",
+    "Mixed address buckets and filenames derived from ROM addresses are not release-quality modules.",
+    "A module over 1000 lines requires a named concrete-boss waiver with a documented cohesion argument."
+  ],
+  "naming_rules": [
+    "An address is never a symbol identity.",
+    "A semantic name must be supported by static, runtime, or authoritative format evidence.",
+    "An uncertain symbol receives an honest role-neutral name and an unknowns-register entry, not an invented behavior.",
+    "Every imported or replaced name retains traceable provenance."
+  ],
+  "required_commands": [
+    "make split",
+    "make build",
+    "make verify",
+    "make test",
+    "make format",
+    "make lint"
+  ]
+}

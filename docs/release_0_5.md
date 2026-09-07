@@ -27,13 +27,26 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   title, gameplay, boss entry, stage change, and credits.
 - The listing exports 16,044 canonical ROM/RAM/hardware addresses; layout
   landmarks and runtime symbols are checked by `make verify-symbols`.
+- `make clean` is restricted to reproducible build/runtime outputs and Python
+  caches; extracted assets, traces, workflow files, and source backups survive.
+- The machine-readable release contract and static audit are wired through
+  `config/release_0_5.json` and `make release-audit`.
+- Mechanical assembly style is linted: column-zero definitions, entrypoint-only
+  includes, lowercase paths, final newlines, and a 200-character line ceiling.
+- Negative-path tests reject missing, altered, or stale assets; changed
+  toolchain files; non-canonical ROM input; byte divergence; weakened release
+  scope; and incorrect runtime state.
 
-## Remaining release gates
+## Reconstruction backlog after 0.5
 
-- Deeper assembly style rules and semantic review of the RAM inventory.
-- Broader negative-path tests for build and verification tooling.
-- A single `make release-check` gate: asset policy, lint, tests, clean byte
-  identity, runtime checks, and release audit.
+The contract does not require invented semantics. Most of the RAM inventory and
+10,493 address-derived definitions intentionally remain in the unknowns
+backlog. Promote or correct them only with recorded static/runtime evidence.
+The older source-mutating analysis workflows are also outside the release
+interface until made module-aware; see `docs/tooling_status.md`.
+
+Before publishing or tagging a release, execute and retain the result of the
+full `make release-check` gate on a supported host.
 
 Semantic labels from the earlier automated naming pass are explicitly not
 grandfathered as facts. They may be renamed as evidence improves, while their

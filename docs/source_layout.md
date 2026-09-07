@@ -11,20 +11,27 @@ ROM. `make verify` runs this check after the byte-identity build.
 
 ## Module size policy
 
-Alien Soldier uses a 6000-line limit for byte-emitting `.s` modules. This is a
-project-specific first partition of a roughly 120,000-line source, not a claim
-that every current file is already a final semantic unit. The limit is strict
-and machine checked. Future evidence-backed splits should normally make files
-smaller and more cohesive.
+The preservation-stage 0.5 layout still enforces a temporary 6,000-line limit
+for byte-emitting `.s` modules. This only guards the first partition of a
+roughly 120,000-line source; it is not an acceptable 1.0 module policy.
+
+The Source Reconstruction 1.0 destination is normally 200-700 lines per
+cohesive module, with a default hard ceiling of 1,000 lines. The sole possible
+exception is one concrete boss whose state machine and private data cannot be
+split without harming readability. Exceptions are reviewed individually and
+declared in `config/source_reconstruction_1_0.json`. See
+`docs/modularization_plan.md` for the migration rules and measured baseline.
 
 Definition-only `.inc` files are outside this limit. They will receive their
 own structure and policy as the RAM and hardware maps mature.
 
 ## Naming confidence
 
-Directory names identify the best-supported broad subsystem. Filenames for
-mixed or uncertain areas include their starting ROM address, such as
-`boss_code_31540.s`, rather than asserting a narrower interpretation.
+Directory names identify the best-supported broad subsystem. Existing mixed
+and address-derived filenames are migration debt, not a naming convention.
+Release 1.0 permits neither ROM-address filenames nor containers such as
+`boss_code_31540.s`; uncertain code receives a role-neutral concept name until
+stronger evidence supports a narrower identity.
 
 Many symbol descriptions were generated during an earlier automated pass and
 must be treated as hypotheses. Existing `; was:` annotations retain the IDA

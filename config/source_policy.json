@@ -3,6 +3,13 @@
   "assembly_root": "src",
   "entrypoint": "src/main.s",
   "layout": "config/rom_layout.json",
+  "style": {
+    "maximum_line_length": 200,
+    "definitions_column_zero": true,
+    "includes_only_in_entrypoint": true,
+    "lowercase_source_paths": true,
+    "require_final_newline": true
+  },
   "provenance": {
     "marker": "; was:",
     "minimum_unique_mappings": 4822,

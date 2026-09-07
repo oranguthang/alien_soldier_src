@@ -13,6 +13,9 @@ from pathlib import Path
 
 LABEL = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*):")
 EQUATE = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*)\s+equ\b", re.IGNORECASE)
+INDENTED_DEFINITION = re.compile(
+    r"^\s+([A-Za-z_][A-Za-z0-9_]*(?::|\s+equ\b))", re.IGNORECASE
+)
 INCLUDE = re.compile(r'^\s*include\s+"([^"]+)"', re.IGNORECASE)
 WAS = re.compile(r";\s*was:\s*([A-Za-z_][A-Za-z0-9_]*)\s*$")
 EMITTING = re.compile(
@@ -40,6 +43,7 @@ def scan(policy: dict, project_root: Path) -> Inventory:
     entrypoint = project_root / policy["entrypoint"]
     layout = json.loads((project_root / policy["layout"]).read_text(encoding="utf-8"))
     line_limit = layout["target"]["max_module_lines"]
+    style = policy["style"]
 
     definitions: dict[str, str] = {}
     provenance: dict[str, tuple[str, str]] = {}
@@ -51,6 +55,10 @@ def scan(policy: dict, project_root: Path) -> Inventory:
         relative = path.relative_to(project_root).as_posix()
         text = path.read_text(encoding="utf-8")
         lines = text.splitlines()
+        if style["lowercase_source_paths"] and relative != relative.lower():
+            errors.append(f"{relative}: source path is not lowercase")
+        if style["require_final_newline"] and text and not text.endswith("\n"):
+            errors.append(f"{relative}: missing final newline")
         if path.suffix == ".s" and path != entrypoint and len(lines) > line_limit:
             errors.append(f"{relative}: {len(lines)} lines exceeds limit {line_limit}")
 
@@ -59,6 +67,19 @@ def scan(policy: dict, project_root: Path) -> Inventory:
             where = f"{relative}:{number}"
             if line.rstrip(" \t") != line:
                 errors.append(f"{where}: trailing whitespace")
+            if len(line) > style["maximum_line_length"]:
+                errors.append(
+                    f"{where}: line has {len(line)} characters; "
+                    f"limit is {style['maximum_line_length']}"
+                )
+            if style["definitions_column_zero"] and INDENTED_DEFINITION.match(line):
+                errors.append(f"{where}: global definition must start in column zero")
+            if (
+                style["includes_only_in_entrypoint"]
+                and path != entrypoint
+                and INCLUDE.match(line)
+            ):
+                errors.append(f"{where}: include is only allowed in {policy['entrypoint']}")
 
             match = LABEL.match(line) or EQUATE.match(line)
             if match:

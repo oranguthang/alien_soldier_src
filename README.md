@@ -20,9 +20,11 @@ make init           # Validate the canonical ROM, extract data, build and verify
 make verify         # Permanent byte-identity gate
 make verify-layout  # Check module ranges, landmarks, gaps, and size policy
 make verify-symbols # Export and validate ROM/RAM/hardware symbols
+make source-inventory # Measure semantic-module and naming debt
 make lint           # Check source/provenance and repository policy
 make test           # Run the Python verification tests
 make runtime        # Replay six checkpoints and validate named RAM state
+make release-check  # Run the complete ordered clean-room release gate
 ```
 
 ## Project Structure
@@ -82,6 +84,7 @@ alien_soldier_src/
 | `report_pointers.py` | Generates report from pointer debugging session |
 | `split_data_from_listing.py` | Extracts data sections from AS listing |
 | `split_data_from_rom.py` | Extracts and decompresses tile data from ROM |
+| `source_inventory.py` | Measures module sizes, generic paths, provenance, and address-derived names |
 | `unpack_data.py` | Decompresses LZSS data from artcomp/ to uncompressed/ |
 | `validate_movie_descriptions.py` | Validates TAS movie file integrity |
 
@@ -99,6 +102,7 @@ make clean              # Remove build artifacts; preserve extracted data
 make symbols            # Extract symbols from listing file
 make verify-symbols     # Validate symbol coverage against layout/runtime contracts
 make build-gens         # Build modified Gens emulator (requires VS2022)
+make release-check      # Run all preservation, policy, symbol, and runtime gates
 ```
 
 ### Documentation Workflow

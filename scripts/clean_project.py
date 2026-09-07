@@ -12,27 +12,17 @@ import glob
 
 # Files/folders in project root
 ROOT_TARGETS = [
-    # Build artifacts
     'build',
     os.path.join('runtime', 'captures'),
-    'language.dat',
-    'Gens.cfg',
     'alien_soldier_j.p',
     'alien_soldier_j.lst',
     'asbuilt.bin',
-    'rename_log.txt',
 ]
 
-# Glob patterns in project root
-ROOT_GLOBS = [
-    'alien_soldier_j_backup_*.s',
-]
-
-# Patterns to find recursively in all directories
+# Safe interpreter caches only. Analysis logs, source backups, configuration,
+# extracted data, and maintainer work are deliberately preserved.
 RECURSIVE_PATTERNS = [
-    'tmpclaude*',
     '__pycache__',
-    'tmp',
 ]
 
 
@@ -57,12 +47,6 @@ def main():
     for target in ROOT_TARGETS:
         if os.path.exists(target):
             if remove_path(target):
-                removed += 1
-
-    # Remove glob patterns in root
-    for pattern in ROOT_GLOBS:
-        for path in glob.glob(pattern):
-            if remove_path(path):
                 removed += 1
 
     # Remove recursive patterns

@@ -8,6 +8,25 @@ import json
 import shlex
 
 
+def canonical_rom_error(data, reference):
+    """Return a diagnostic when bytes are not the declared preservation input."""
+    digest = hashlib.sha1(data).hexdigest()
+    if len(data) != reference['size'] or digest != reference['sha1']:
+        return (
+            f"expected {reference['size']} bytes, SHA1 {reference['sha1']}; "
+            f"actual {len(data)} bytes, SHA1 {digest}"
+        )
+    return None
+
+
+def first_difference(left, right):
+    """Return the first differing byte offset, including a length-only mismatch."""
+    return next(
+        (index for index, pair in enumerate(zip(left, right)) if pair[0] != pair[1]),
+        min(len(left), len(right)),
+    )
+
+
 def detect_platform():
     """Auto-detect host OS/arch and return matching bin/ subfolder.
     Mirrors the logic from Makefile.
@@ -160,18 +179,15 @@ if __name__ == '__main__':
             with open(args.output, 'rb') as built_file:
                 built = built_file.read()
             original_sha1 = hashlib.sha1(original).hexdigest()
-            if len(original) != reference['size'] or original_sha1 != reference['sha1']:
+            identity_error = canonical_rom_error(original, reference)
+            if identity_error:
                 print(f'ERROR: {args.original_rom} is not the canonical Japanese ROM')
-                print(f"  expected: {reference['size']} bytes, SHA1 {reference['sha1']}")
-                print(f'  actual:   {len(original)} bytes, SHA1 {original_sha1}')
+                print(f'  {identity_error}')
                 ret = 1
             elif built == original:
                 print(f'[OK] Byte-identical canonical ROM reproduced (SHA1 {original_sha1})')
             else:
-                offset = next(
-                    (i for i, pair in enumerate(zip(built, original)) if pair[0] != pair[1]),
-                    min(len(built), len(original)),
-                )
+                offset = first_difference(built, original)
                 message = f'Built ROM differs from canonical ROM at 0x{offset:06X}'
                 if args.verify:
                     print(f'ERROR: {message}')

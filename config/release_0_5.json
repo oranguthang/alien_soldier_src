@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "release": "0.5",
+  "status": "development",
+  "target_contract": "Source Reconstruction 1.0",
+  "canonical_profile": {
+    "id": "japan",
+    "rom_filename": "Alien Soldier (J) [!].bin",
+    "size": 2097152,
+    "sha1": "8f6eb584ed9487b8504fbc21d86783f58e6c9cd6",
+    "sha256": "5613637d267cf8d0bf3ff1e396d7929526cd5221cb8af06349528c8bedced1a0"
+  },
+  "excluded_profiles": [
+    {
+      "id": "europe",
+      "reason": "Not part of the preservation-first 0.5 profile; any future region variant must be explicit."
+    }
+  ],
+  "thresholds": {
+    "asset_count": 579,
+    "module_count": 26,
+    "max_module_lines": 6000,
+    "minimum_provenance_mappings": 4822,
+    "minimum_addressed_symbols": 15000,
+    "runtime_scenarios": 6,
+    "minimum_expectations_per_scenario": 2
+  },
+  "required_runtime_ids": [
+    "boot",
+    "title",
+    "gameplay_start",
+    "boss_transition",
+    "stage_change",
+    "credits"
+  ],
+  "required_toolchain_components": [
+    "assembler",
+    "binary_converter",
+    "emulator"
+  ],
+  "required_documents": [
+    "docs/naming.md",
+    "docs/provenance.md",
+    "docs/ram_map.md",
+    "docs/release_0_5.md",
+    "docs/release_check.md",
+    "docs/runtime.md",
+    "docs/source_layout.md",
+    "docs/source_map.md",
+    "docs/symbols.md",
+    "docs/tooling_status.md",
+    "docs/unknowns.md"
+  ],
+  "release_interface": [
+    "check-assets",
+    "verify-toolchain",
+    "lint",
+    "test",
+    "clean",
+    "verify",
+    "verify-symbols",
+    "runtime",
+    "release-audit",
+    "release-check"
+  ]
+}

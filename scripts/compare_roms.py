@@ -18,6 +18,11 @@ def compare_files(file1, file2):
         data1 = f1.read()
         data2 = f2.read()
 
+    return compare_files_bytes(data1, data2)
+
+
+def compare_files_bytes(data1, data2):
+    """Compare in-memory images; kept separate for negative-path tests."""
     if len(data1) != len(data2):
         return False, f"Size mismatch: {len(data1)} vs {len(data2)} bytes"
 

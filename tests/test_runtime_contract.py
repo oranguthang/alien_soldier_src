@@ -46,6 +46,32 @@ class RuntimeContractTests(unittest.TestCase):
         self.assertEqual(0x55555558, state.rom_checksum)
         self.assertEqual(0x1234, state.m68k_u16(0xFF0000))
 
+    def test_wrong_runtime_value_is_rejected(self) -> None:
+        ram = bytearray(65536)
+        header = b"GENSTATE" + struct.pack("<IIQI", 1, 1, 0, 0x55555558) + bytes(36)
+        table = struct.pack("<IIII", M68K_RAM, 96, len(ram), 0) + bytes(16)
+        config = {
+            "rom_checksum": "0x55555558",
+            "scenarios": [
+                {
+                    "id": "bad",
+                    "frame": 1,
+                    "expectations": [
+                        {"symbol": "Mode", "address": "0xFF0000", "type": "u16", "equals": "1"},
+                        {"symbol": "Mode", "address": "0xFF0000", "type": "u16", "equals": "1"},
+                    ],
+                }
+            ],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            capture = Path(directory) / "bad"
+            capture.mkdir()
+            (capture / "000001.genstate").write_bytes(header + table + ram)
+            errors = __import__("validate_runtime_scenarios").validate(
+                config, Path(directory), {"Mode": 0xFF0000}
+            )
+        self.assertEqual(2, sum("expected 0x1" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()
