@@ -213,7 +213,7 @@ locret_40A6C:                                           ; CODE XREF: Boss_SnakeP
 ; Segment destroyed with explosion
 Boss_SnakeSegmentDestroy:                               ; DATA XREF: ROM:0004084E   o  ; was: sub_40A6E
                 bsr.w   Boss_SnakeAI
-                jsr     (Projectile_ExplodeOnImpact).l
+                jsr     (Effect_SpawnExplosionB).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 andi.w  #$7FFF,2(a5)
@@ -224,7 +224,7 @@ Boss_SnakeSegmentDestroy:                               ; DATA XREF: ROM:0004084
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_40AB6
                 moveq   #3,d0
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
 locret_40AB6:                                           ; CODE XREF: Boss_SnakeSegmentDestroy+32   j
@@ -271,12 +271,12 @@ loc_40B0A:                                              ; CODE XREF: Boss_SnakeS
                 tst.w   $5E(a5)
                 beq.s   Boss_SnakeSegmentDispatch
                 move.w  #4,4(a5)
-                jsr     (Projectile_ExplodeOnImpact).l
+                jsr     (Effect_SpawnExplosionB).l
                 andi.w  #$7FFF,2(a5)
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_SnakeSegmentDispatch
                 moveq   #3,d0
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
 ; State dispatcher for snake segments

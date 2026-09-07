@@ -216,7 +216,7 @@ UI_DisplayPauseGraphics_Render:                         ; CODE XREF: UI_DisplayP
 ; ---------------------------------------------------------------------------
 Object_CameraPriorityTable: dc.w    0, $800, $1800, $1000  ; was: word_1C972
                                         ; DATA XREF: Object_ApplyCameraMotion:Object_ApplyCameraMotion_Begin   o
-                                        ; Boss_StateDispatcher+7C   o
+                                        ; Pickup_Update+7C   o
 
 ; Applies camera deltas and shared motion biases to active objects
 Object_ApplyCameraMotion:                               ; CODE XREF: Sys_StoryScreenMainLoop:loc_491C   p  ; was: sub_1C97A

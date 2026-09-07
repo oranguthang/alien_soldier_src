@@ -270,11 +270,11 @@ Enemy_Stage10WaspExplode:                               ; DATA XREF: ROM:Entity_
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2E2A8
-                jsr     (Projectile_ExplodeWithSound).l
+                jsr     (Effect_SpawnExplosionA).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 moveq   #7,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_2E2A8:                                              ; CODE XREF: Enemy_Stage10WaspExplode+C   j
                 bset    #7,2(a5)

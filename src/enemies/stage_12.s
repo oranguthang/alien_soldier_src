@@ -179,13 +179,13 @@ Enemy_Stage12LauncherExplode:                           ; DATA XREF: ROM:Entity_
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2E4C6
-                jsr     (Projectile_ExplodeWithSound).l
+                jsr     (Effect_SpawnExplosionA).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 cmpi.w  #$1B8,(word_FFDB20).w
                 beq.s   loc_2E4BE
                 moveq   #$F,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_2E4BE:                                              ; CODE XREF: Enemy_Stage12LauncherExplode+24   j
                 bset    #4,2(a5)

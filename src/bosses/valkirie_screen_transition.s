@@ -23,7 +23,7 @@ loc_50D28:                                              ; CODE XREF: Boss_Valkir
                 move.l  d2,$2C(a0)
                 movea.w #(word_FFDB20-M68K_RAM),a0
                 move.w  d3,$14(a0)
-                jsr     (loc_2BD00).l
+                jsr     (Pickup_SpawnSmall).l
                 move.w  #$420,(a0)
                 move.w  #$E000,2(a0)
                 move.w  #$28,$1C(a0)                    ; '('
@@ -114,7 +114,7 @@ loc_50E1A:                                              ; CODE XREF: Boss_Valkir
 loc_50E2E:                                              ; CODE XREF: Boss_ValkirieScreenTimer+12   j
                 subi.l  #$A8000,$10(a5)
 loc_50E36:                                              ; CODE XREF: Boss_ValkirieScreenTimer+20   j
-                jmp     Boss_StateDispatcher
+                jmp     Pickup_Update
 ; End of function Boss_ValkirieScreenTimer
 ; Updates boss sprites
 Boss_WolfGaropaUpdateSprites:                           ; CODE XREF: Boss_WolfGaropaMovement2+22   j  ; was: sub_50E3C

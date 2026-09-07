@@ -261,9 +261,9 @@ Enemy_Stage10BeetleFall:                                ; DATA XREF: ROM:Entity_
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2E9BA
-                jsr     (Projectile_ExplodeWithSound).l
+                jsr     (Effect_SpawnExplosionA).l
                 moveq   #$F,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_2E9BA:                                              ; CODE XREF: Enemy_Stage10BeetleFall+C   j
                 bset    #7,2(a5)

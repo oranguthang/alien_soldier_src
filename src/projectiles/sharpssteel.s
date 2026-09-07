@@ -92,7 +92,7 @@ loc_48EB0:                                              ; CODE XREF: Enemy_Falli
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 moveq   #$15,d0
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 move.w  #$E440,2(a0)
                 move.l  #$2000,$1C(a0)
 loc_48EDA:                                              ; CODE XREF: Enemy_FallingBombLogic+4   j

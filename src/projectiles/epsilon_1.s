@@ -588,7 +588,7 @@ loc_47792:                                              ; CODE XREF: Effect_Epsi
 ; End of function Effect_Epsilon1DefeatSpark3
 ; Defeat spark effect 4
 Effect_Epsilon1DefeatSpark4:                            ; DATA XREF: ROM:00047502   o  ; was: sub_4779E
-                jsr     (Projectile_ExplodeWithSound).l
+                jsr     (Effect_SpawnExplosionA).l
                 move.w  $4A(a5),d0
                 add.w   d0,d0
                 lea     (dword_FF9466).w,a1

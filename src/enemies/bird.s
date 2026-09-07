@@ -444,13 +444,13 @@ loc_2DF1A:                                              ; CODE XREF: Enemy_BirdP
                 moveq   #2,d0
                 moveq   #4,d1
                 movea.l #off_E953C,a1
-                jsr     (Projectile_SpawnMultiPattern).l
+                jsr     (Effect_SpawnRadialParticlePattern).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 cmpi.w  #$1B8,(word_FFDB20).w
                 beq.s   loc_2DF76
                 moveq   #7,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_2DF76:                                              ; CODE XREF: Enemy_BirdProjectileSpawn+6E   j
                 bset    #4,2(a5)

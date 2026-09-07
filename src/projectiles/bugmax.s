@@ -93,7 +93,7 @@ locret_4D4CC:                                           ; CODE XREF: Enemy_Bugma
 loc_4D4CE:                                              ; CODE XREF: Enemy_BugmaxDebrisBounce+C   j
                 bclr    #4,$22(a5)
                 beq.s   loc_4D4DC
-                jmp     Sprite_SetPointerClearD7
+                jmp     Pickup_SpawnSmallFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_4D4DC:                                              ; CODE XREF: Enemy_BugmaxDebrisBounce+56   j
                 clr.l   $18(a5)
@@ -392,7 +392,7 @@ loc_4D82E:                                              ; CODE XREF: Projectile_
 Projectile_BugmaxSineDestroy:                           ; CODE XREF: Projectile_BugmaxSineController+16   j  ; was: sub_4D854
                                         ; Projectile_BugmaxSineController+20   j
                 moveq   #7,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; End of function Projectile_BugmaxSineDestroy
 nullsub_111:
                 rts

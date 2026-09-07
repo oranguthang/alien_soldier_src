@@ -418,7 +418,7 @@ loc_58B20:                                              ; CODE XREF: Boss_Artemi
                 bne.s   loc_58B50
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                jsr     (loc_2BD18).l
+                jsr     (Pickup_SelectLargeSize).l
 loc_58B50:                                              ; CODE XREF: Boss_ArtemisAnimationScript+C6   j
                                         ; Boss_ArtemisAnimationScript+D6   j
                 move.l  $18(a5),d0

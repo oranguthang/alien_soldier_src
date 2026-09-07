@@ -255,7 +255,7 @@ loc_3B136:                                              ; CODE XREF: Projectile_
                 bne.s   loc_3B168
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   loc_3B168
-                jsr     (Effect_SpawnDestructionBlast).l
+                jsr     (Pickup_SpawnLarge).l
                 bset    #2,2(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

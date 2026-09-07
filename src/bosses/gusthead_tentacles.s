@@ -566,6 +566,6 @@ Enemy_GustheadDebrisExplode:                            ; CODE XREF: Enemy_Gusth
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
 loc_40798:                                              ; CODE XREF: Enemy_GustheadDebrisExplode+E   j
-                jmp     Sprite_SetPointerClearD7
+                jmp     Pickup_SpawnSmallFromCurrentObject
 ; End of function Enemy_GustheadDebrisExplode
 ; Main handler for Snake boss

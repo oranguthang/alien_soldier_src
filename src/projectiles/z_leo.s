@@ -113,7 +113,7 @@ loc_53070:                                              ; CODE XREF: Projectile_
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 bne.s   loc_530AE
-                jmp     Sprite_SetPointerClearD7
+                jmp     Pickup_SpawnSmallFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_53080:                                              ; CODE XREF: Projectile_ZLeoOrbMain+14   j
                 neg.l   $18(a5)

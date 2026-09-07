@@ -54,7 +54,7 @@ loc_3638A:                                              ; CODE XREF: Boss_Jetsri
                 bne.s   loc_363B4
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                jsr     (Effect_SpawnDestructionBlast).l
+                jsr     (Pickup_SpawnLarge).l
 loc_363B4:                                              ; CODE XREF: Boss_JetsripperProjectileUpdate+30   j
                                         ; Boss_JetsripperProjectileUpdate+38   j
                 clr.l   $18(a5)

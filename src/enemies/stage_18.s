@@ -426,7 +426,7 @@ Boss_InitJetsripperSpread:                              ; DATA XREF: ROM:0002FF1
                 clr.w   $56(a5)
                 clr.b   $21(a5)
                 move.w  #0,d0
-                jsr     (Boss_JetsripperAttackPattern1).l
+                jsr     (Pickup_SpawnRandomFromCurrentObject).l
                 move.w  #$A,d5
                 movea.w $44(a5),a4
                 move.w  #$B,d6
@@ -434,7 +434,7 @@ loc_302F6:                                              ; CODE XREF: Boss_InitJe
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   loc_30314
                 move.w  #$FF,d0
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 move.w  $10(a4),$10(a0)
                 move.w  $14(a4),$14(a0)
 loc_30314:                                              ; CODE XREF: Boss_InitJetsripperSpread+30   j

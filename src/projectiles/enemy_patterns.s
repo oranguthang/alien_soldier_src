@@ -95,7 +95,7 @@ loc_2B0E4:                                              ; CODE XREF: Projectile_
                 btst    #4,$22(a5)
                 beq.s   loc_2B114
 loc_2B0FA:                                              ; CODE XREF: Projectile_ExplodeOnWall+2C   j
-                jsr     (Sprite_SetPointerClearD7).l
+                jsr     (Pickup_SpawnSmallFromCurrentObject).l
                 bra.s   loc_2B11A
 ; ---------------------------------------------------------------------------
 loc_2B102:                                              ; CODE XREF: Projectile_ExplodeOnWall+34   j
@@ -233,7 +233,7 @@ loc_2B2F0:                                              ; CODE XREF: Enemy_Homin
                 btst    #4,$22(a5)
                 beq.s   loc_2B316
 loc_2B306:                                              ; CODE XREF: Enemy_HomingProjectileMain+5C   j
-                jsr     (Sprite_SetPointerClearD7).l
+                jsr     (Pickup_SpawnSmallFromCurrentObject).l
                 bra.s   loc_2B31C
 ; ---------------------------------------------------------------------------
 loc_2B30E:                                              ; CODE XREF: Enemy_HomingProjectileMain+64   j
@@ -335,7 +335,7 @@ loc_2B43C:                                              ; CODE XREF: Projectile_
                 btst    #4,$22(a5)
                 beq.s   loc_2B462
 loc_2B452:                                              ; CODE XREF: Projectile_BulletWithDelayedPhysics+5C   j
-                jsr     (Sprite_SetPointerClearD7).l
+                jsr     (Pickup_SpawnSmallFromCurrentObject).l
                 bra.s   loc_2B468
 ; ---------------------------------------------------------------------------
 loc_2B45A:                                              ; CODE XREF: Projectile_BulletWithDelayedPhysics+64   j
@@ -468,7 +468,7 @@ loc_2B5A2:                                              ; CODE XREF: Enemy_Bounc
                 btst    #4,$22(a5)
                 beq.s   loc_2B5CC
 loc_2B5B8:                                              ; CODE XREF: Enemy_BouncingProjectile+64   j
-                jsr     (Sprite_SetPointerClearD7).l
+                jsr     (Pickup_SpawnSmallFromCurrentObject).l
                 bra.s   loc_2B5D2
 ; ---------------------------------------------------------------------------
 loc_2B5C0:                                              ; CODE XREF: Enemy_BouncingProjectile+6C   j

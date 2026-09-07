@@ -174,9 +174,18 @@ The weapon-selection object pass reduced the count to 10,106 by replacing its
 12 address-derived branch labels. Static consumers and field accesses proved
 that `0x02BB86--0x02BCFB` manages weapon-selection animation, input, counters,
 and palette refresh rather than enemy or boss AI. The block therefore moved to
-`src/ui/weapon_selection_object.s`; the following shared combat runtime begins
-at the next dispatch-table handler in `src/actors/shared_combat_runtime.s`.
+`src/ui/weapon_selection_object.s`; the following resource-pickup runtime begins
+at the next dispatch-table handler in `src/actors/resource_pickups.s`.
 The three corrected generated function claims are recorded in the name audit.
+
+The pickup and explosion pass reduced the count to 10,077 by replacing all 29
+address-derived definitions across the former shared-combat and
+Snake/Bugmax blocks. Object type `$194` adds score and player resource on
+collection; types `$1A0` and `$1A4` are the two explosion controllers created
+by the adjacent spawn routines. That evidence produced three cohesive modules:
+`resource_pickups.s` (145 lines), `explosion_patterns.s` (363 lines), and
+`bugmax_debris_spawner.s` (98 lines). Generated boss-state, enemy-health, and
+Snake-projectile claims were removed and recorded in the name audit.
 
 Four especially broad data labels are explicitly registered:
 

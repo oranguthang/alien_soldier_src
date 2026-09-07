@@ -648,7 +648,7 @@ Projectile_WolfGaropaWave:                              ; DATA XREF: ROM:Entity_
 loc_50B06:                                              ; CODE XREF: Projectile_WolfGaropaWave+4   j
                 btst    #0,(dword_FFFF08+1).w
                 bne.s   loc_50B44
-                jsr     (Sprite_SetPointerClearD7).l
+                jsr     (Pickup_SpawnSmallFromCurrentObject).l
                 ori.w   #$A00,2(a5)
                 move.l  #$FFFA8000,$18(a5)
                 rts

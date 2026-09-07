@@ -152,7 +152,7 @@ Boss_Epsilon1DebrisPhysics:                             ; DATA XREF: ROM:Entity_
                 beq.s   loc_45976
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   loc_45976
-                jsr     (Effect_SpawnDestructionBlast).l
+                jsr     (Pickup_SpawnLarge).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
 loc_45976:                                              ; CODE XREF: Boss_Epsilon1DebrisPhysics+4   j

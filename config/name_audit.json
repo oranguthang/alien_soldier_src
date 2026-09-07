@@ -1407,6 +1407,94 @@
         "The entity dispatch-table entry performs one-time UI_InitWeaponSelectionObject setup and then tail-branches to UI_UpdateWeaponSelectionObject.",
         "Both callees operate on weapon-selection display and input state, not boss initialization."
       ]
+    },
+    {
+      "address": "0x02BCFE",
+      "previous_name": "Sprite_SetPointerClearD7",
+      "current_name": "Pickup_SpawnSmallFromCurrentObject",
+      "legacy_name": "sub_2BCFE",
+      "evidence": "static",
+      "basis": [
+        "The routine selects pickup variant zero and enters the common initializer, which installs entity type 0x194 and the small resource amount and sprite mapping.",
+        "It does not render a sprite or merely clear a register; its callers invoke it when combat objects are destroyed."
+      ]
+    },
+    {
+      "address": "0x02BD10",
+      "previous_name": "Effect_SpawnDestructionBlast",
+      "current_name": "Pickup_SpawnLarge",
+      "legacy_name": "sub_2BD10",
+      "evidence": "static",
+      "basis": [
+        "The routine selects pickup variant one before the common type-0x194 initializer.",
+        "Variant one uses the larger resource amount, pickup sound, and pickup sprite mapping; no explosion controller is created."
+      ]
+    },
+    {
+      "address": "0x02BD1E",
+      "previous_name": "Boss_JetsripperAttackPattern1",
+      "current_name": "Pickup_SpawnRandomFromCurrentObject",
+      "legacy_name": "sub_2BD1E",
+      "evidence": "static",
+      "basis": [
+        "The caller-provided mask is applied only to the random word to select the small or large pickup variant.",
+        "The routine is shared by ordinary enemies and projectiles and contains no Jetsripper attack state."
+      ]
+    },
+    {
+      "address": "0x02BDB0",
+      "previous_name": "Boss_StateDispatcher",
+      "current_name": "Pickup_Update",
+      "legacy_name": "sub_2BDB0",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x194 is installed by the pickup initializer and maps to this update handler.",
+        "On collection the handler plays the pickup sound, adds 500 BCD score, increases the player's resource up to its maximum, and starts the transient value display."
+      ]
+    },
+    {
+      "address": "0x02BF58",
+      "previous_name": "Enemy_UpdatePhasePattern",
+      "current_name": "Effect_UpdateExplosionA",
+      "legacy_name": "sub_2BF58",
+      "evidence": "static",
+      "basis": [
+        "Effect_SpawnExplosionA installs entity type 0x1A0, whose dispatch-table entry is this routine.",
+        "The handler bounds-checks the effect, manages its particle lifetime, and selects one of four random motion variants; it reads no enemy phase state."
+      ]
+    },
+    {
+      "address": "0x02C0DE",
+      "previous_name": "Enemy_BossPartDispatcher",
+      "current_name": "Effect_UpdateExplosionB",
+      "legacy_name": "sub_2C0DE",
+      "evidence": "static",
+      "basis": [
+        "Effect_SpawnExplosionB installs entity type 0x1A4, whose dispatch-table entry is this routine.",
+        "Its random selector dispatches only particle-loop and radial-ring explosion patterns, not boss-part states."
+      ]
+    },
+    {
+      "address": "0x02C100",
+      "previous_name": "Projectile_SnakeDispatcher",
+      "current_name": "Effect_ExplosionB_ParticleLoopDispatcher",
+      "legacy_name": "sub_2C100",
+      "evidence": "static",
+      "basis": [
+        "The only parent dispatch is explosion B's variant table, and the child states spawn common explosion particles around the controller.",
+        "No Snake boss state, Snake-specific mapping, or projectile attack parameters are referenced."
+      ]
+    },
+    {
+      "address": "0x02C280",
+      "previous_name": "Projectile_BugmaxMain",
+      "current_name": "Projectile_BugmaxDebrisSpawner",
+      "legacy_name": "sub_2C280",
+      "evidence": "static",
+      "basis": [
+        "Boss_BugmaxSpawnDebris initializes entity type 0x348 with a lifetime, rectangular spread dimensions, and randomized initial delay.",
+        "This handler repeatedly creates particles inside that rectangle and waits between them, so it is a debris spawner rather than Bugmax's main projectile controller."
+      ]
     }
   ]
 }

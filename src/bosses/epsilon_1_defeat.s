@@ -152,7 +152,7 @@ Boss_Epsilon1DefeatShake:                               ; DATA XREF: ROM:00045D5
                 move.w  #$EC80,2(a5)
                 clr.w   $C(a5)
                 addq.w  #2,4(a5)
-                jsr     (Projectile_ExplodeOnImpact).l
+                jsr     (Effect_SpawnExplosionB).l
 locret_469AE:                                           ; CODE XREF: Boss_Epsilon1DefeatShake+4   j
                 rts
 ; End of function Boss_Epsilon1DefeatShake

@@ -32,7 +32,7 @@ Boss_WolfGaropaAttackState2:                            ; DATA XREF: ROM:00032E0
                 bne.w   locret_30BB8
                 subq.w  #1,$48(a5)
                 move.w  #$F,d0
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 ori.w   #$800,2(a0)
                 move.l  #$FFF78000,$18(a0)
                 jsr     (RandomNumber).l
@@ -54,7 +54,7 @@ Boss_WolfGaropaSpawnProjectiles:                        ; DATA XREF: ROM:00032E0
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   loc_32ED8
                 move.w  #$F,d0
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 jsr     (RandomNumber).l
                 andi.w  #$70,d0                         ; 'p'
                 addi.w  #$D0,d0

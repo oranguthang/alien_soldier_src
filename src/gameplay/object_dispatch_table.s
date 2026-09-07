@@ -100,11 +100,11 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_DelayedHide
                 dc.l    Weapon_UpdateRotatingProjectile
                 dc.l    Sprite_LoadAnimationFrame
-                dc.l    Boss_StateDispatcher
+                dc.l    Pickup_Update
                 dc.l    Projectile_JokerBomb
                 dc.l    Boss_DeepStriderMain
-                dc.l    Enemy_UpdatePhasePattern
-                dc.l    Enemy_BossPartDispatcher
+                dc.l    Effect_UpdateExplosionA
+                dc.l    Effect_UpdateExplosionB
                 dc.l    Projectile_FallWithGravity
                 dc.l    Projectile_FallWithGravity_Update
                 dc.l    Boss_GustheadMainWrapper
@@ -209,7 +209,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_BugmaxMainController
                 dc.l    Projectile_BugmaxSineController
                 dc.l    Enemy_BugmaxDebrisFall
-                dc.l    Projectile_BugmaxMain
+                dc.l    Projectile_BugmaxDebrisSpawner
                 dc.l    Boss_ShieldViperMain
                 dc.l    Enemy_BounceOnFloorOrExplode
                 dc.l    Boss_DefeatStateDispatcher

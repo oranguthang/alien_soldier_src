@@ -325,7 +325,7 @@ Boss_SpawnMultipleShots:                                ; DATA XREF: ROM:Entity_
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_ToggleVisibilityBit
-                jsr     (Projectile_ExplodeWithSound).l
+                jsr     (Effect_SpawnExplosionA).l
                 tst.w   $4A(a5)
                 beq.w   loc_2C68A
                 bset    #4,2(a5)
@@ -333,7 +333,7 @@ Boss_SpawnMultipleShots:                                ; DATA XREF: ROM:Entity_
 ; ---------------------------------------------------------------------------
 loc_2C68A:                                              ; CODE XREF: Boss_SpawnMultipleShots+18   j
                 moveq   #7,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 ; Toggles boss visibility bit based on animation frame
 Boss_ToggleVisibilityBit:                               ; CODE XREF: Boss_SpawnMultipleShots+C   j  ; was: loc_2C692

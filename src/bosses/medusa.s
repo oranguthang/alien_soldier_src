@@ -762,10 +762,10 @@ loc_57264:                                              ; CODE XREF: Boss_Medusa
                 bpl.s   locret_572A0
                 cmpi.w  #$8000,(a0)
                 bne.s   loc_5729A
-                jmp     loc_2BD00
+                jmp     Pickup_SpawnSmall
 ; ---------------------------------------------------------------------------
 loc_5729A:                                              ; CODE XREF: Boss_MedusaFlashDamage+86   j
-                jmp     Effect_SpawnDestructionBlast
+                jmp     Pickup_SpawnLarge
 ; ---------------------------------------------------------------------------
 locret_572A0:                                           ; CODE XREF: Boss_MedusaFlashDamage+4   j
                                         ; Boss_MedusaFlashDamage+40   j

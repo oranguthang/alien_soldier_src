@@ -201,10 +201,10 @@ loc_33FB6:                                              ; CODE XREF: Sprite_Init
                 dbf     d7,loc_33FB6
                 move.w  #3,d1
                 move.w  #0,d2
-                jsr     (Gfx_SetAnimationPointer).l
+                jsr     (Effect_SpawnEightWayExplosionParticles).l
                 move.w  #4,d1
                 move.w  #$20,d2                         ; ' '
-                jsr     (Gfx_SetAnimationPointer).l
+                jsr     (Effect_SpawnEightWayExplosionParticles).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #4,(word_FFA010).w

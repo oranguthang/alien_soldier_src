@@ -614,7 +614,7 @@ off_E97D4:      dc.w    word_E90F2-*                    ; DATA XREF: ROM:0002BDA
                 dc.w    1
                 dc.w    off_E97D4-*
                 dc.w    0
-off_E97E0:      dc.w    word_E90EC-*                    ; DATA XREF: ROM:off_2BDA8   o
+off_E97E0:      dc.w    word_E90EC-*                    ; DATA XREF: ROM:Pickup_SpriteMappings   o
                                         ; ROM:000E97E8   o
                 dc.w    8
                 dc.w    word_E90F8-*

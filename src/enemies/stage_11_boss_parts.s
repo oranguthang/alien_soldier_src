@@ -411,7 +411,7 @@ loc_310A8:                                              ; CODE XREF: Boss_Jetsri
                 bne.s   loc_310DE
                 jsr     (RandomNumber).l
                 move.w  #$F,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_310DE:                                              ; CODE XREF: Boss_JetsripperSpawnRandomAngleProjectile+36   j
                 move.w  #$1000,2(a5)

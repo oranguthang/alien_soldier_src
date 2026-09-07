@@ -476,7 +476,7 @@ locret_2EF18:                                           ; CODE XREF: Enemy_Flyer
 ; Explosion handler
 Enemy_FlyerExplode:                                     ; CODE XREF: Enemy_FlyerAttack+A   j  ; was: sub_2EF1A
                                         ; Enemy_FlyerAttack+12   j
-                jsr     (Projectile_ExplodeOnImpact).l
+                jsr     (Effect_SpawnExplosionB).l
                 move.w  #$1000,2(a5)
                 movea.w $5C(a5),a0
                 move.w  #$1000,2(a0)

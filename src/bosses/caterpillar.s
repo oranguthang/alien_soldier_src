@@ -501,7 +501,7 @@ Boss_CaterpillarRotationOnly:                           ; DATA XREF: ROM:0003D55
 ; Ship state 3 defeating boss sequence
 Boss_CaterpillarShipState3:                             ; DATA XREF: ROM:0003D55C   o  ; was: sub_3D6DA
                 bsr.w   Boss_CaterpillarUpdateRotation
-                jsr     (Projectile_ExplodeOnImpact).l
+                jsr     (Effect_SpawnExplosionB).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 andi.w  #$7FFF,2(a5)
@@ -512,7 +512,7 @@ Boss_CaterpillarShipState3:                             ; DATA XREF: ROM:0003D55
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3D724
                 move.w  #3,d0
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
 locret_3D724:                                           ; CODE XREF: Boss_CaterpillarShipState3+32   j
@@ -536,7 +536,7 @@ Boss_CaterpillarShipState4:                             ; DATA XREF: ROM:0003D55
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3D782
                 move.w  #3,d0
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 move.w  $10(a4),$10(a0)
                 move.w  $14(a4),$14(a0)
                 move.b  #$BB,d0

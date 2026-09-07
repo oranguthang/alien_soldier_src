@@ -269,9 +269,9 @@ Enemy_ProcessObject:                                    ; DATA XREF: ROM:Entity_
                 clr.w   6(a5)
                 tst.w   $24(a5)
                 bpl.s   Enemy_RunBehaviorHandler
-                jsr     (Projectile_ExplodeOnImpact).l
+                jsr     (Effect_SpawnExplosionB).l
                 moveq   #3,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 ; Runs enemy behavior state handler and updates animation
 Enemy_RunBehaviorHandler:                               ; CODE XREF: Enemy_ProcessObject+4   j  ; was: loc_2C9AE

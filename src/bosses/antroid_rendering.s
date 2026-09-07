@@ -184,7 +184,7 @@ Boss_AntroidProjectileUpdate:                           ; DATA XREF: ROM:Entity_
                 bclr    #4,$22(a5)
                 beq.s   loc_380FA
                 move.w  #3,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_380C4:                                              ; CODE XREF: Boss_AntroidProjectileUpdate+C   j
                 move.l  $4C(a5),d0

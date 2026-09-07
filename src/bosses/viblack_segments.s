@@ -87,14 +87,14 @@ Boss_SunsetStingSegmentMove:                            ; DATA XREF: ROM:0004337
                 bsr.w   Physics_ClearVelocity
                 move.b  d0,$21(a5)
                 move.w  #8,4(a5)
-                jsr     (Projectile_ExplodeWithSound).l
+                jsr     (Effect_SpawnExplosionA).l
                 bclr    #4,$22(a5)
                 beq.s   locret_4346C
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_4346C
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                jsr     (Effect_SpawnDestructionBlast).l
+                jsr     (Pickup_SpawnLarge).l
 locret_4346C:                                           ; CODE XREF: Boss_SunsetStingSegmentMove+20   j
                                         ; Boss_SunsetStingSegmentMove+28   j
                 rts

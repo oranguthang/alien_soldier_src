@@ -402,7 +402,7 @@ loc_3342A:                                              ; CODE XREF: Enemy_Track
 loc_33440:                                              ; CODE XREF: Enemy_TrackerSt21Destroy+36   j
                 move.w  #0,d0
 loc_33444:                                              ; CODE XREF: Enemy_TrackerSt21Destroy+3C   j
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
                 bset    #3,2(a0)
                 bset    #2,2(a0)
                 move.b  $20(a5),$20(a0)

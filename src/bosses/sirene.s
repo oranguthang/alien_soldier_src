@@ -761,7 +761,7 @@ loc_57E20:                                              ; CODE XREF: Projectile_
 loc_57E54:                                              ; CODE XREF: Projectile_SireneHoming+5A   j
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                jsr     (loc_2BD20).l
+                jsr     (Pickup_SelectRandomSize).l
 loc_57E66:                                              ; CODE XREF: Projectile_SireneHoming+30   j
                                         ; Projectile_SireneHoming+40   j
                 move.b  #$2F,d0                         ; '/'

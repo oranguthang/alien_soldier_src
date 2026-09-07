@@ -449,7 +449,7 @@ loc_4F14C:                                              ; CODE XREF: Projectile_
 ; ---------------------------------------------------------------------------
 loc_4F154:                                              ; CODE XREF: Projectile_ShieldViperBulletAnimation+6   j
                 moveq   #7,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 locret_4F15C:                                           ; CODE XREF: Projectile_ShieldViperBulletAnimation+12   j
                 rts

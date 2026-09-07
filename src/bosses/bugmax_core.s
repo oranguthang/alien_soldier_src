@@ -680,7 +680,7 @@ Boss_BugmaxSpawnDebrisLoop:                             ; CODE XREF: Boss_Bugmax
                 movea.w word_4C6FC(pc,d6.w),a1
                 move.w  $10(a1),$10(a0)
                 move.w  $14(a1),$14(a0)
-                jsr     (Projectile_InitDebrisObject).l
+                jsr     (Projectile_InitBugmaxDebris).l
                 addq.w  #2,d6
                 dbf     d7,Boss_BugmaxSpawnDebrisLoop
 locret_4C6FA:                                           ; CODE XREF: Boss_BugmaxSpawnDebris+C   j

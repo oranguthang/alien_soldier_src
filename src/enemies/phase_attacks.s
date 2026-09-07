@@ -189,9 +189,9 @@ loc_2D206:                                              ; CODE XREF: Projectile_
                 move.w  #$FFFE,$1C(a0)
                 subq.w  #1,$48(a5)
                 bne.s   locret_2D254
-                jsr     (Projectile_ExplodeOnImpact).l
+                jsr     (Effect_SpawnExplosionB).l
                 moveq   #3,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 locret_2D254:                                           ; CODE XREF: Projectile_BouncingDebrisMain+44   j
                                         ; Projectile_BouncingDebrisMain+98   j

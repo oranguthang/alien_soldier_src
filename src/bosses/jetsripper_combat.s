@@ -45,7 +45,7 @@ loc_2B72E:                                              ; CODE XREF: Boss_Jetsri
                 bne.s   Boss_SpawnPeriodicProjectile
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_SpawnPeriodicProjectile
-                jsr     (Effect_SpawnDestructionBlast).l
+                jsr     (Pickup_SpawnLarge).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
 ; Spawns periodic projectile for boss with timer check

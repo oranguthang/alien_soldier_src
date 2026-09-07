@@ -19,9 +19,9 @@ Projectile_JetsripperFalling:                           ; DATA XREF: ROM:Entity_
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2CBE2
-                jsr     (Projectile_ExplodeWithSound).l
+                jsr     (Effect_SpawnExplosionA).l
                 moveq   #7,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_2CBE2:                                              ; CODE XREF: Projectile_JetsripperFalling+C   j
                 bset    #7,2(a5)
@@ -200,9 +200,9 @@ Boss_RecoilFallPattern:                                 ; CODE XREF: Boss_JokerR
                 addi.l  #$5C00,$1C(a5)
                 subq.w  #1,$48(a5)
                 bpl.s   loc_2CDFE
-                jsr     (Projectile_ExplodeWithSound).l
+                jsr     (Effect_SpawnExplosionA).l
                 moveq   #7,d0
-                jmp     Boss_JetsripperAttackPattern1
+                jmp     Pickup_SpawnRandomFromCurrentObject
 ; ---------------------------------------------------------------------------
 loc_2CDFE:                                              ; CODE XREF: Boss_JokerRecoilAttack+46   j
                 bset    #7,2(a5)

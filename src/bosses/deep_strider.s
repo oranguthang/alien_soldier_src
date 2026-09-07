@@ -885,7 +885,7 @@ Enemy_BounceOnFloorOrExplode:                           ; DATA XREF: ROM:Entity_
                 beq.s   loc_3F14E
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   loc_3F14E
-                jsr     (loc_2BD00).l
+                jsr     (Pickup_SpawnSmall).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 bra.s   loc_3F14E

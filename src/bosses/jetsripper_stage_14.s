@@ -2,7 +2,7 @@ Enemy_Stage14TurretMain:                                ; CODE XREF: Boss_Jetsri
                                         ; Enemy_Stage14TurretInit+18   j
                 jsr     (RandomNumber).l
                 andi.w  #$1F,d0
-                jsr     (Boss_JetsripperAttackPattern1).l
+                jsr     (Pickup_SpawnRandomFromCurrentObject).l
                 andi.w  #$FEFF,2(a5)
                 rts
 ; End of function Enemy_Stage14TurretMain
