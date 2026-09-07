@@ -591,6 +591,72 @@
         "Each loop iteration contains 24 longword stores and therefore clears one 96-byte object block.",
         "The three adjacent entry points supply the shared object-pool base and counts of 8, 16, or 17 blocks."
       ]
+    },
+    {
+      "address": "0x026376",
+      "previous_name": "Memory_ClearBuffer",
+      "current_name": "Effect_ClearWaveOutputBuffer",
+      "legacy_name": "sub_26376",
+      "evidence": "static",
+      "basis": [
+        "The routine always fixes its destination to the wave output buffer at FFFF9800.",
+        "Its DBF counter starts at 0x50, so it clears 81 longwords rather than the 80 claimed by the generated comment."
+      ]
+    },
+    {
+      "address": "0x0268E8",
+      "previous_name": "Memory_ClearTileBuffer",
+      "current_name": "Gfx_ClearInterpolationTileBuffer",
+      "legacy_name": "sub_268E8",
+      "evidence": "static",
+      "basis": [
+        "The destination is fixed to the 512-byte tile-interpolation workspace at FF9800.",
+        "Both callers immediately generate interpolated tile data into that workspace."
+      ]
+    },
+    {
+      "address": "0x0271BC",
+      "previous_name": "Effect_ApplyPaletteToVDP",
+      "current_name": "Effect_GenerateTransitionBuffers",
+      "legacy_name": "sub_271BC",
+      "evidence": "static",
+      "basis": [
+        "The routine reads transition tables and writes the FF9600, FF9800, FF9A00, and FF9B00 RAM workspaces.",
+        "It neither accesses the VDP ports nor writes palette RAM; later code consumes the generated buffers."
+      ]
+    },
+    {
+      "address": "0x0272A8",
+      "previous_name": "Effect_ClearPaletteBuffer",
+      "current_name": "Effect_ClearTransitionPatternBuffer",
+      "legacy_name": "sub_272A8",
+      "evidence": "static",
+      "basis": [
+        "The routine clears 24 longwords beginning at FF9400 and resets the transition progress counter.",
+        "It does not access either palette RAM or a palette data table."
+      ]
+    },
+    {
+      "address": "0x0272BE",
+      "previous_name": "Effect_ScrollUpdate",
+      "current_name": "Effect_BuildTransitionPattern",
+      "legacy_name": "sub_272BE",
+      "evidence": "static",
+      "basis": [
+        "The routine writes a fixed arrangement of zero and 0xE nibble masks into the FF9400 pattern buffer.",
+        "It then queues the buffer-related VDP register setup but does not update a position or scroll accumulator."
+      ]
+    },
+    {
+      "address": "0x0273BC",
+      "previous_name": "Effect_ResetTransitionState",
+      "current_name": "Effect_ApplyTransitionMask",
+      "legacy_name": "sub_273BC",
+      "evidence": "static",
+      "basis": [
+        "The routine selects two masks from a progress-indexed table and applies them to three rows of the transition pattern buffer.",
+        "It does not reset the object state or the transition progress value."
+      ]
     }
   ]
 }

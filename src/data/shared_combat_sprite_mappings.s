@@ -592,7 +592,7 @@ off_E979C:      dc.w    word_E913A-*                    ; DATA XREF: ROM:000E97B
                 dc.w    1
                 dc.w    off_E979C-*
                 dc.w    0
-off_E97B8:      dc.w    word_E9152-*                    ; DATA XREF: Enemy_InitDestructionParticle+A   o
+off_E97B8:      dc.w    word_E9152-*                    ; DATA XREF: Effect_InitStage25DestructionParticle+A   o
                                         ; ROM:000E97D0   o
                 dc.w    $18
                 dc.w    word_E922A-*

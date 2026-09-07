@@ -322,7 +322,7 @@ Stage_TunnelInit:                                       ; DATA XREF: Stage_Tunne
                 move.w  #$100,2(a5)
                 move.b  #4,(byte_FFA95B).w
                 clr.w   (word_FF808A).w
-                bra.w   Effect_ClearPaletteBuffer
+                bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function Stage_TunnelInit
 ; Loads objects for tunnel sequence
 Stage_TunnelLoadObjects:                                ; DATA XREF: Stage_TunnelSequencer+12   o  ; was: sub_27968
@@ -359,7 +359,7 @@ Stage_TunnelStartEffect:                                ; DATA XREF: Stage_Tunne
 Stage_TunnelSetScroll:                                  ; DATA XREF: Stage_TunnelSequencer+16   o  ; was: sub_279C2
                 addq.w  #2,4(a5)
                 move.l  #$18000,(dword_FF80A0).w
-                bsr.w   Effect_ScrollUpdate
+                bsr.w   Effect_BuildTransitionPattern
 ; End of function Stage_TunnelSetScroll
 ; Updates tunnel sequence with scroll and fade effects
 Stage_TunnelUpdate:                                     ; DATA XREF: Stage_TunnelSequencer+18   o  ; was: sub_279D2
@@ -378,7 +378,7 @@ Stage_TunnelUpdate:                                     ; DATA XREF: Stage_Tunne
                 clr.w   (word_FF8090).w
                 bset    #4,2(a5)
                 move.b  #4,(byte_FFA95B).w
-                bra.w   Effect_ClearPaletteBuffer
+                bra.w   Effect_ClearTransitionPatternBuffer
 ; ---------------------------------------------------------------------------
 locret_27A18:                                           ; CODE XREF: Stage_TunnelUpdate+50   j
                 rts
@@ -389,7 +389,7 @@ loc_27A1A:                                              ; CODE XREF: Stage_Tunne
                 bmi.s   locret_27A18
                 asr.w   #4,d0
                 move.w  d0,(word_FF8082).w
-                bra.w   Effect_ResetTransitionState
+                bra.w   Effect_ApplyTransitionMask
 ; End of function Stage_TunnelUpdate
 ; ---------------------------------------------------------------------------
 dword_27A2E:    binclude "data/other/dword_27A2E.bin"

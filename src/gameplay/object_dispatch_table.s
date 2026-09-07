@@ -7,7 +7,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Effect_UpdateKnockbackParticle
                 dc.l    Effect_UpdateImpactParticleSpawner
                 dc.l    Enemy_BehaviorController
-                dc.l    Enemy_DestructionParticleMain
+                dc.l    Effect_RunStage25DestructionParticle
                 dc.l    Boss_CalculatePlayerDistance
                 dc.l    Entity_EmptyState4
                 dc.l    Entity_EmptyState4
@@ -83,7 +83,7 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Boss_CaterpillarPart4
                 dc.l    Enemy_HomingProjectileMain
                 dc.l    word_3A2E6
-                dc.l    Effect_StateDispatcher
+                dc.l    Effect_TransitionObjectDispatcher
                 dc.l    Boss_FlyingNeoMain
                 dc.l    Boss_AntroidProjectileUpdate
                 dc.l    Boss_JokerMain
@@ -202,8 +202,8 @@ off_5DC:        dc.l    Entity_EmptyState4              ; DATA XREF: Sys_Process
                 dc.l    Projectile_BackStringerRopeSegment
                 dc.l    Effect_BackStringerSegmentFlash
                 dc.l    Boss_Epsilon1DebrisPhysics
-                dc.l    Stage25_ScreenShake
-                dc.l    Enemy_PlayDeathSound
+                dc.l    Effect_TriggerStage25Shake
+                dc.l    Effect_TriggerStage25DeathSound
                 dc.l    Object_RemoveOnFlagOrAnimationEnd
                 dc.l    Enemy_BugmaxDebrisMain
                 dc.l    Projectile_BugmaxMainController

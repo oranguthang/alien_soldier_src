@@ -1,10 +1,10 @@
-Sprite_ClearForTransition:                              ; CODE XREF: Cutscene_FadeOutCredits+52   p  ; was: sub_268FA
+Object_ClearForTransition:                              ; CODE XREF: Cutscene_FadeOutCredits+52   p  ; was: sub_268FA
                 move.w  #$150,(a5)
                 clr.w   4(a5)
                 move.w  #$150,d0
                 moveq   #0,d1
                 jmp     Sprite_ClearAllExcept
-; End of function Sprite_ClearForTransition
+; End of function Object_ClearForTransition
 ; Initializes boss defeat explosion sprite at boss position
 Boss_InitDefeatExplosion:                               ; CODE XREF: Boss_ShiperDefeatSequence+58   p  ; was: sub_2690E
                                         ; Boss_TerobusterDefeatInit+38   p
@@ -18,12 +18,12 @@ Boss_InitDefeatExplosion:                               ; CODE XREF: Boss_Shiper
 ; Boss defeat sequence state dispatcher using jump table
 Boss_DefeatStateDispatcher:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_26928
                 move.w  4(a5),d0
-                movea.w off_26938(pc,d0.w),a0
+                movea.w Boss_DefeatStateOffsets(pc,d0.w),a0
                 adda.l  #Boss_DefeatInitAnimation,a0
                 jmp     (a0)
 ; End of function Boss_DefeatStateDispatcher
 ; ---------------------------------------------------------------------------
-off_26938:      dc.w    Boss_DefeatInitAnimation-Boss_DefeatInitAnimation
+Boss_DefeatStateOffsets:    dc.w    Boss_DefeatInitAnimation-Boss_DefeatInitAnimation  ; was: off_26938
                                         ; DATA XREF: Boss_DefeatStateDispatcher+4   r
                 dc.w    Boss_DefeatLoadGraphics-Boss_DefeatInitAnimation
                 dc.w    Boss_DefeatSetupState-Boss_DefeatInitAnimation
@@ -32,25 +32,25 @@ off_26938:      dc.w    Boss_DefeatInitAnimation-Boss_DefeatInitAnimation
 
 ; Initializes boss defeat animation state and graphics mode
 Boss_DefeatInitAnimation:                               ; DATA XREF: Boss_DefeatStateDispatcher+8   o  ; was: sub_26942
-                                        ; ROM:off_26938   o
+                                        ; ROM:Boss_DefeatStateOffsets   o
                 move.w  #2,4(a5)
                 move.w  #$100,2(a5)
                 move.b  #4,(byte_FFA95B).w
                 clr.w   (word_FF808A).w
-                bra.w   Effect_ClearPaletteBuffer
+                bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function Boss_DefeatInitAnimation
 ; Loads boss defeat explosion animation graphics via DMA
 Boss_DefeatLoadGraphics:                                ; DATA XREF: ROM:0002693A   o  ; was: sub_2695C
                 addq.w  #2,4(a5)
                 movem.l a5,-(sp)
-                lea     stru_26976(pc),a0
+                lea     Boss_DefeatGraphicsLoadDescriptor(pc),a0
                 nop
                 jsr     (LoadObjData).l
                 movem.l (sp)+,a5
                 rts
 ; End of function Boss_DefeatLoadGraphics
 ; ---------------------------------------------------------------------------
-stru_26976:     dc.w    7                               ; field_0
+Boss_DefeatGraphicsLoadDescriptor:  dc.w    7           ; field_0  ; was: stru_26976
                                         ; DATA XREF: Boss_DefeatLoadGraphics+8   o
                 dc.l    byte_18D562                     ; field_2
                 dc.w    $E000                           ; field_6
@@ -82,8 +82,8 @@ Boss_DefeatScrollUpdate:                                ; DATA XREF: ROM:0002694
                 move.w  $14(a5),(dword_FF807E+2).w
                 addq.w  #3,(word_FF807C).w
                 cmpi.w  #$7F,(word_FF807C).w
-                bmi.w   Effect_ResetTransitionState
-                bra.w   loc_26ACE
+                bmi.w   Effect_ApplyTransitionMask
+                bra.w   Effect_UpdateTransition_Finish
 ; End of function Boss_DefeatScrollUpdate
 ; Initializes player spawn effect with position
 Effect_InitPlayerSpawn:                                 ; CODE XREF: Boss_InitPositionTracking+10   p  ; was: sub_269E6
@@ -96,41 +96,41 @@ Effect_InitPlayerSpawn:                                 ; CODE XREF: Boss_InitPo
                 rts
 ; End of function Effect_InitPlayerSpawn
 ; Effect state machine dispatcher
-Effect_StateDispatcher:                                 ; DATA XREF: ROM:off_5DC   o  ; was: sub_26A00
+Effect_TransitionObjectDispatcher:                      ; DATA XREF: ROM:off_5DC   o  ; was: sub_26A00
                 move.w  4(a5),d0
-                movea.w off_26A10(pc,d0.w),a0
+                movea.w Effect_TransitionObjectStateOffsets(pc,d0.w),a0
                 adda.l  #Effect_TransitionInit,a0
                 jmp     (a0)
-; End of function Effect_StateDispatcher
+; End of function Effect_TransitionObjectDispatcher
 ; ---------------------------------------------------------------------------
-off_26A10:      dc.w    Effect_TransitionInit-Effect_TransitionInit
-                                        ; DATA XREF: Effect_StateDispatcher+4   r
+Effect_TransitionObjectStateOffsets:    dc.w    Effect_TransitionInit-Effect_TransitionInit  ; was: off_26A10
+                                        ; DATA XREF: Effect_TransitionObjectDispatcher+4   r
                 dc.w    Effect_LoadTransitionGraphics-Effect_TransitionInit
                 dc.w    Effect_StartTransition-Effect_TransitionInit
                 dc.w    Effect_SetupScroll-Effect_TransitionInit
                 dc.w    Effect_UpdateTransition-Effect_TransitionInit
 
 ; Initializes screen transition effect state
-Effect_TransitionInit:                                  ; DATA XREF: Effect_StateDispatcher+8   o  ; was: sub_26A1A
-                                        ; ROM:off_26A10   o
+Effect_TransitionInit:                                  ; DATA XREF: Effect_TransitionObjectDispatcher+8   o  ; was: sub_26A1A
+                                        ; ROM:Effect_TransitionObjectStateOffsets   o
                 move.w  #2,4(a5)
                 move.w  #$100,2(a5)
                 move.b  #4,(byte_FFA95B).w
                 clr.w   (word_FF808A).w
-                bra.w   Effect_ClearPaletteBuffer
+                bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function Effect_TransitionInit
 ; Loads transition graphics data
 Effect_LoadTransitionGraphics:                          ; DATA XREF: ROM:00026A12   o  ; was: sub_26A34
                 addq.w  #2,4(a5)
                 movem.l a5,-(sp)
-                lea     stru_26A4E(pc),a0
+                lea     Effect_TransitionGraphicsLoadDescriptor(pc),a0
                 nop
                 jsr     (LoadObjData).l
                 movem.l (sp)+,a5
                 rts
 ; End of function Effect_LoadTransitionGraphics
 ; ---------------------------------------------------------------------------
-stru_26A4E:     dc.w    7                               ; field_0
+Effect_TransitionGraphicsLoadDescriptor:    dc.w    7   ; field_0  ; was: stru_26A4E
                                         ; DATA XREF: Effect_LoadTransitionGraphics+8   o
                 dc.l    byte_18D562                     ; field_2
                 dc.w    $E000                           ; field_6
@@ -154,7 +154,7 @@ Effect_StartTransition:                                 ; DATA XREF: ROM:00026A1
 Effect_SetupScroll:                                     ; DATA XREF: ROM:00026A16   o  ; was: sub_26A8E
                 addq.w  #2,4(a5)
                 move.l  #$18000,(dword_FF80A0).w
-                bsr.w   Effect_ScrollUpdate
+                bsr.w   Effect_BuildTransitionPattern
 ; End of function Effect_SetupScroll
 ; Updates transition effect with scroll and timer
 Effect_UpdateTransition:                                ; DATA XREF: ROM:00026A18   o  ; was: sub_26A9E
@@ -167,34 +167,34 @@ Effect_UpdateTransition:                                ; DATA XREF: ROM:00026A1
                 addq.w  #1,d0
                 add.w   d0,(word_FF807C).w
                 cmpi.w  #$7F,(word_FF807C).w
-                bmi.w   Effect_ResetTransitionState
-loc_26ACE:                                              ; CODE XREF: Boss_DefeatScrollUpdate+1E   j
+                bmi.w   Effect_ApplyTransitionMask
+Effect_UpdateTransition_Finish:                         ; CODE XREF: Boss_DefeatScrollUpdate+1E   j  ; was: loc_26ACE
                 clr.w   (word_FF807A).w
                 clr.w   (word_FFF74A).w
                 clr.w   (word_FFF74E).w
                 clr.w   (word_FF8090).w
                 bset    #4,2(a5)
                 move.b  #4,(byte_FFA95B).w
-                bra.w   Effect_ClearPaletteBuffer
+                bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function Effect_UpdateTransition
 ; Dispatches to transition effect handler based on state index
 Effect_TransitionDispatcher:                            ; CODE XREF: Credits_InitializeScreen+84   p  ; was: sub_26AEE
                 move.w  (word_FF807A).w,d0
-                movea.w off_26AFE(pc,d0.w),a0
-                adda.l  #Effect_InitializeTransition1,a0
+                movea.w Effect_TransitionModeOffsets(pc,d0.w),a0
+                adda.l  #Effect_InitTransitionModeStandardA,a0
                 jmp     (a0)
 ; End of function Effect_TransitionDispatcher
 ; ---------------------------------------------------------------------------
-off_26AFE:      dc.w    Effect_InitializeTransition1-Effect_InitializeTransition1
+Effect_TransitionModeOffsets:   dc.w    Effect_InitTransitionModeStandardA-Effect_InitTransitionModeStandardA  ; was: off_26AFE
                                         ; DATA XREF: Effect_TransitionDispatcher+4   r
-                dc.w    Effect_InitializeTransition2-Effect_InitializeTransition1
-                dc.w    Effect_InitializeTransition4-Effect_InitializeTransition1
-                dc.w    Effect_InitializeTransition4-Effect_InitializeTransition1
-                dc.w    Effect_InitializeTransition3-Effect_InitializeTransition1
+                dc.w    Effect_InitTransitionModeStandardB-Effect_InitTransitionModeStandardA
+                dc.w    Effect_InitTransitionModeKeepProgress-Effect_InitTransitionModeStandardA
+                dc.w    Effect_InitTransitionModeKeepProgress-Effect_InitTransitionModeStandardA
+                dc.w    Effect_InitTransitionModeLong-Effect_InitTransitionModeStandardA
 
 ; Initializes transition effect with fade and palette settings
-Effect_InitializeTransition1:                           ; DATA XREF: Effect_TransitionDispatcher+8   o  ; was: sub_26B08
-                                        ; ROM:off_26AFE   o
+Effect_InitTransitionModeStandardA:                     ; DATA XREF: Effect_TransitionDispatcher+8   o  ; was: sub_26B08
+                                        ; ROM:Effect_TransitionModeOffsets   o
                 move.w  #4,(word_FF8090).w
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #$10,(word_FFF74A).w
@@ -202,9 +202,9 @@ Effect_InitializeTransition1:                           ; DATA XREF: Effect_Tran
                 move.b  #3,(word_FFF7E6+1).w
                 clr.w   (word_FF807C).w
                 rts
-; End of function Effect_InitializeTransition1
-; Initializes transition effect parameters (duplicate of sub_26B08)
-Effect_InitializeTransition2:                           ; DATA XREF: ROM:00026B00   o  ; was: sub_26B2A
+; End of function Effect_InitTransitionModeStandardA
+; Initializes the second standard transition mode
+Effect_InitTransitionModeStandardB:                     ; DATA XREF: ROM:00026B00   o  ; was: sub_26B2A
                 move.w  #4,(word_FF8090).w
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #$10,(word_FFF74A).w
@@ -212,9 +212,9 @@ Effect_InitializeTransition2:                           ; DATA XREF: ROM:00026B0
                 move.b  #3,(word_FFF7E6+1).w
                 clr.w   (word_FF807C).w
                 rts
-; End of function Effect_InitializeTransition2
+; End of function Effect_InitTransitionModeStandardB
 ; Initializes transition with longer duration ($14 vs $4)
-Effect_InitializeTransition3:                           ; DATA XREF: ROM:00026B06   o  ; was: sub_26B4C
+Effect_InitTransitionModeLong:                          ; DATA XREF: ROM:00026B06   o  ; was: sub_26B4C
                 move.w  #$14,(word_FF8090).w
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #4,(word_FFF74A).w
@@ -222,9 +222,9 @@ Effect_InitializeTransition3:                           ; DATA XREF: ROM:00026B0
                 move.b  #3,(word_FFF7E6+1).w
                 clr.w   (word_FF807C).w
                 rts
-; End of function Effect_InitializeTransition3
+; End of function Effect_InitTransitionModeLong
 ; Initializes transition effect without clearing progress counter
-Effect_InitializeTransition4:                           ; DATA XREF: ROM:00026B02   o  ; was: sub_26B6E
+Effect_InitTransitionModeKeepProgress:                  ; DATA XREF: ROM:00026B02   o  ; was: sub_26B6E
                                         ; ROM:00026B04   o
                 move.w  #4,(word_FF8090).w
                 move.b  #$80,(byte_FFA95B).w
@@ -232,17 +232,17 @@ Effect_InitializeTransition4:                           ; DATA XREF: ROM:00026B0
                 clr.w   (word_FFF74E).w
                 move.b  #3,(word_FFF7E6+1).w
                 rts
-; End of function Effect_InitializeTransition4
+; End of function Effect_InitTransitionModeKeepProgress
 ; Palette effect dispatcher
 Effect_PaletteDispatcher:                               ; CODE XREF: Cutscene_CreditsDispatcher   p  ; was: sub_26B8C
                                         ; Sys_GameplayMainLoop+118   p
                 move.w  (word_FF807A).w,d0
-                movea.w off_26B9C(pc,d0.w),a0
+                movea.w Effect_PaletteStateOffsets(pc,d0.w),a0
                 adda.l  #Effect_PaletteUpdateMain,a0
                 jmp     (a0)
 ; End of function Effect_PaletteDispatcher
 ; ---------------------------------------------------------------------------
-off_26B9C:      dc.w    nullsub_60-Effect_PaletteUpdateMain
+Effect_PaletteStateOffsets: dc.w    Effect_PaletteEmptyState-Effect_PaletteUpdateMain  ; was: off_26B9C
                                         ; DATA XREF: Effect_PaletteDispatcher+4   r
                 dc.w    Effect_PaletteUpdateMain-Effect_PaletteUpdateMain
                 dc.w    Effect_InitializePaletteEffects-Effect_PaletteUpdateMain
@@ -251,9 +251,9 @@ off_26B9C:      dc.w    nullsub_60-Effect_PaletteUpdateMain
 
 ; Main palette update routine
 Effect_PaletteUpdateMain:                               ; DATA XREF: Effect_PaletteDispatcher+8   o  ; was: sub_26BA6
-                                        ; ROM:off_26B9C   o
+                                        ; ROM:Effect_PaletteStateOffsets   o
                 bsr.w   Effect_InitPaletteBuffers
-                bra.w   Effect_ApplyPaletteToVDP
+                bra.w   Effect_GenerateTransitionBuffers
 ; End of function Effect_PaletteUpdateMain
 ; Initializes palette buffers and applies two-stage effect setup
 Effect_InitializePaletteEffects:                        ; DATA XREF: ROM:00026BA0   o  ; was: sub_26BAE
@@ -261,54 +261,54 @@ Effect_InitializePaletteEffects:                        ; DATA XREF: ROM:00026BA
                 bsr.w   Effect_InitScrollBuffers
                 bsr.w   Effect_ProcessConditionalScroll
 ; End of function Effect_InitializePaletteEffects
-nullsub_60:                                             ; DATA XREF: ROM:off_26B9C   o
+Effect_PaletteEmptyState:                               ; DATA XREF: ROM:Effect_PaletteStateOffsets   o  ; was: nullsub_60
                 rts
-; End of function nullsub_60
+; End of function Effect_PaletteEmptyState
 
 ; Initializes palette effect by checking word_FF8082, clearing if negative, then calls buffer and effect setup routines
 Effect_InitPaletteEffect:                               ; DATA XREF: ROM:00026BA2   o  ; was: sub_26BBC
                 tst.w   (word_FF8082).w
-                bpl.s   loc_26BC6
+                bpl.s   Effect_InitPaletteEffect_Setup
                 clr.w   (word_FF8082).w
-loc_26BC6:                                              ; CODE XREF: Effect_InitPaletteEffect+4   j
+Effect_InitPaletteEffect_Setup:                         ; CODE XREF: Effect_InitPaletteEffect+4   j  ; was: loc_26BC6
                 bsr.w   Effect_ClearScrollBuffer
                 bsr.w   Effect_InitPaletteBuffers
                 bsr.w   Effect_FillScrollBuffer
                 bra.w   Effect_ProcessSimpleScroll
 ; End of function Effect_InitPaletteEffect
-; Initializes scroll buffers at FF9480 using sine table data from word_26FBC, calculating 63 buffer values with interpolation
+; Initializes scroll buffers at FF9480 using sine table data from Effect_TransitionSineTable, calculating 63 buffer values with interpolation
 Effect_InitScrollBuffers:                               ; CODE XREF: Effect_InitializePaletteEffects+4   p  ; was: sub_26BD6
                 movea.w #(word_FF9480-M68K_RAM),a0
                 movea.w #(word_FF9480-M68K_RAM),a1
                 moveq   #$3E,d7                         ; '>'
-                movea.l #word_26FBC,a2
+                movea.l #Effect_TransitionSineTable,a2
                 move.w  (word_FF807C).w,d0
                 andi.w  #$1FE,d0
                 cmpi.w  #$80,d0
-                beq.s   loc_26C4A
+                beq.s   Effect_InitScrollBuffers_FillMaximum
                 cmpi.w  #$180,d0
-                beq.s   loc_26C4E
+                beq.s   Effect_InitScrollBuffers_FillZero
                 move.w  (a2,d0.w),d1
                 muls.w  #$60,d1                         ; '`'
                 asl.l   #2,d1
                 move.l  #$300000,d0
-loc_26C0A:                                              ; CODE XREF: Effect_InitScrollBuffers+62   j
+Effect_InitScrollBuffers_FillLoop:                      ; CODE XREF: Effect_InitScrollBuffers+62   j  ; was: loc_26C0A
                 tst.l   d0
-                bpl.s   loc_26C12
-loc_26C0E:                                              ; CODE XREF: Effect_InitScrollBuffers+46   j
+                bpl.s   Effect_InitScrollBuffers_CheckHigh
+Effect_InitScrollBuffers_ClampLow:                      ; CODE XREF: Effect_InitScrollBuffers+46   j  ; was: loc_26C0E
                 clr.l   d0
-                bra.s   loc_26C2C
+                bra.s   Effect_InitScrollBuffers_StorePair
 ; ---------------------------------------------------------------------------
-loc_26C12:                                              ; CODE XREF: Effect_InitScrollBuffers+36   j
+Effect_InitScrollBuffers_CheckHigh:                     ; CODE XREF: Effect_InitScrollBuffers+36   j  ; was: loc_26C12
                 cmpi.l  #$600000,d0
-                bpl.s   loc_26C26
+                bpl.s   Effect_InitScrollBuffers_ClampHigh
                 add.l   d1,d0
-                bmi.s   loc_26C0E
+                bmi.s   Effect_InitScrollBuffers_ClampLow
                 cmpi.l  #$600000,d0
-                bmi.s   loc_26C2C
-loc_26C26:                                              ; CODE XREF: Effect_InitScrollBuffers+42   j
+                bmi.s   Effect_InitScrollBuffers_StorePair
+Effect_InitScrollBuffers_ClampHigh:                     ; CODE XREF: Effect_InitScrollBuffers+42   j  ; was: loc_26C26
                 move.l  #$600000,d0
-loc_26C2C:                                              ; CODE XREF: Effect_InitScrollBuffers+3A   j
+Effect_InitScrollBuffers_StorePair:                     ; CODE XREF: Effect_InitScrollBuffers+3A   j  ; was: loc_26C2C
                                         ; Effect_InitScrollBuffers+4E   j
                 swap    d0
                 move.w  d0,(a0)+
@@ -316,24 +316,24 @@ loc_26C2C:                                              ; CODE XREF: Effect_Init
                 swap    d0
                 move.w  d0,-(a1)
                 swap    d0
-                dbf     d7,loc_26C0A
-loc_26C3C:                                              ; CODE XREF: Effect_SetupScrollPointers   j
+                dbf     d7,Effect_InitScrollBuffers_FillLoop
+Effect_SetupScrollBufferPointers:                       ; CODE XREF: Effect_SetupScrollPointers   j  ; was: loc_26C3C
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 movea.w #(word_FF9800-M68K_RAM),a2
                 movea.w #(word_FF9600-M68K_RAM),a3
                 rts
 ; ---------------------------------------------------------------------------
-loc_26C4A:                                              ; CODE XREF: Effect_InitScrollBuffers+1C   j
+Effect_InitScrollBuffers_FillMaximum:                   ; CODE XREF: Effect_InitScrollBuffers+1C   j  ; was: loc_26C4A
                 moveq   #$60,d0                         ; '`'
-                bra.s   loc_26C50
+                bra.s   Effect_InitScrollBuffers_FillConstantLoop
 ; ---------------------------------------------------------------------------
-loc_26C4E:                                              ; CODE XREF: Effect_InitScrollBuffers+22   j
+Effect_InitScrollBuffers_FillZero:                      ; CODE XREF: Effect_InitScrollBuffers+22   j  ; was: loc_26C4E
                 moveq   #0,d0
-loc_26C50:                                              ; CODE XREF: Effect_InitScrollBuffers+76   j
+Effect_InitScrollBuffers_FillConstantLoop:              ; CODE XREF: Effect_InitScrollBuffers+76   j  ; was: loc_26C50
                                         ; Effect_InitScrollBuffers+7E   j
                 move.w  d0,(a0)+
                 move.w  d0,-(a1)
-                dbf     d7,loc_26C50
+                dbf     d7,Effect_InitScrollBuffers_FillConstantLoop
 ; End of function Effect_InitScrollBuffers
 ; Attributes: thunk
 ; Thunk to set up scroll effect address registers a0/a2/a3 to point to scroll data buffers

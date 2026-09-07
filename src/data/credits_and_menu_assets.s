@@ -25,7 +25,7 @@ byte_18CD7C:    binclude "data/mappings/byte_18CD7C.bin"
 byte_18CD7C_End:
 byte_18D562:    dc.b    0, $EB, $60, $E5, $9E, $9F, $5F, 0, 0, $5B, 0, 0, $62, $E5, $9D, $9D, $9E, $9F, $5F, 0, 0, $59, 0, 0, $42, $E5, $9D, $FD, 7, $5F, 0, 0
                                         ; DATA XREF: ROM:0001E214   o
-                                        ; ROM:stru_26976   o
+                                        ; ROM:Boss_DefeatGraphicsLoadDescriptor   o
                 dc.b    $F0, $7F, $FD, 7, $5F, 0, 0, $FC, $7F, $FD, $8B, $5F, 0, 0, $FC, $7F, $FE, $F, $5F, 0, 0, $FC, $7F, $FE, $93, $5F, 0, 0, $FC, $7F, $FF, $17
                 dc.b    $5F, 0, 0, $8B, $F7, $4E, $E5, $9D, $60, $E5, $9E, $9F, $5F, 0, 0, $E0, $41, $50, $E5, $9D, $FC, $83, $5B, 0, 0, $FC, $7F, $FD, 7, $5D, 0, 0
                 dc.b    $FC, $FF, $FD, $8B, $5D, 0, 0, $FD, $7F, $FE, $F, $5D, 0, 0, $FD, $FF, $FE, $93, $5D, 0, 0, $FE, $7F, $FF, $17, $5D, 0, 0, $FE, $FF, $FF, $9B

@@ -125,7 +125,7 @@ loc_261E4:                                              ; CODE XREF: Gfx_RenderT
                 addi.l  #-$10000,d0
                 movea.l d0,a2
                 dbf     d7,loc_261E4
-                movea.l #word_26640,a0
+                movea.l #Gfx_WaveParameterTableD,a0
                 move.w  (word_FF8102).w,d0
                 move.w  (a0,d0.w),d0
                 move.w  #$1400,d1

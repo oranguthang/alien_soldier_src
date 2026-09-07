@@ -1,4 +1,4 @@
-Enemy_InitDestructionParticle:                          ; CODE XREF: Enemy_DestructionParticleMain+6   p  ; was: sub_2BAB4
+Effect_InitStage25DestructionParticle:                  ; CODE XREF: Effect_RunStage25DestructionParticle+6   p  ; was: sub_2BAB4
                 addq.w  #2,4(a5)
                 move.w  #$E700,2(a5)
                 move.l  #off_E97B8,8(a5)
@@ -10,59 +10,58 @@ Enemy_InitDestructionParticle:                          ; CODE XREF: Enemy_Destr
                 move.l  #$F808F808,$2C(a5)
                 move.l  #$FC04FC04,$28(a5)
                 rts
-; End of function Enemy_InitDestructionParticle
+; End of function Effect_InitStage25DestructionParticle
 ; Destruction particle handler
-Stage25_DestructionParticle:                            ; CODE XREF: Enemy_DestructionParticleMain:loc_2BB56   j  ; was: sub_2BAF2
+Effect_UpdateStage25DestructionParticle:                ; CODE XREF: Effect_RunStage25DestructionParticle:loc_2BB56   j  ; was: sub_2BAF2
                 bclr    #7,$22(a5)
-                beq.s   Sprite_ClearHorizontalFlip
+                beq.s   Effect_ApplyStage25ParticleOrientation
                 bclr    #4,$22(a5)
-                bne.s   Sprite_ClearHorizontalFlip
+                bne.s   Effect_ApplyStage25ParticleOrientation
                 move.b  #$A7,d0
                 jsr     (Sound_PlaySFX).l
                 tst.w   (word_FFA216).w
-                beq.w   loc_2BB32
-                bmi.w   loc_2BB32
+                beq.w   Effect_UpdateStage25DestructionParticle_ConvertObject
+                bmi.w   Effect_UpdateStage25DestructionParticle_ConvertObject
                 addi.w  #$20,(word_FFA218).w            ; ' '
                 cmpi.w  #$400,(word_FFA218).w
-                bmi.s   loc_2BB2C
+                bmi.s   Effect_UpdateStage25DestructionParticle_ApplyShake
                 move.w  #$400,(word_FFA218).w
-loc_2BB2C:                                              ; CODE XREF: Stage25_DestructionParticle+32   j
+Effect_UpdateStage25DestructionParticle_ApplyShake:     ; CODE XREF: Effect_UpdateStage25DestructionParticle+32   j  ; was: loc_2BB2C
                 move.w  (word_FFA218).w,(word_FFA216).w
-loc_2BB32:                                              ; CODE XREF: Stage25_DestructionParticle+1E   j
-                                        ; Stage25_DestructionParticle+22   j
+Effect_UpdateStage25DestructionParticle_ConvertObject:  ; CODE XREF: Effect_UpdateStage25DestructionParticle+1E   j  ; was: loc_2BB32
+                                        ; Effect_UpdateStage25DestructionParticle+22   j
                 move.w  #$32C,(a5)
                 clr.b   $21(a5)
                 rts
 ; ---------------------------------------------------------------------------
 ; Clears horizontal flip bit and applies screen flip direction
-Sprite_ClearHorizontalFlip:                             ; CODE XREF: Stage25_DestructionParticle+6   j  ; was: loc_2BB3C
-                                        ; Stage25_DestructionParticle+E   j
+Effect_ApplyStage25ParticleOrientation:                 ; CODE XREF: Effect_UpdateStage25DestructionParticle+6   j  ; was: loc_2BB3C
+                                        ; Effect_UpdateStage25DestructionParticle+E   j
                 bclr    #7,$E(a5)
                 move.w  (word_FF808A).w,d0
                 or.w    d0,$E(a5)
                 rts
-; End of function Stage25_DestructionParticle
+; End of function Effect_UpdateStage25DestructionParticle
 ; Main handler for destruction particle effect
-Enemy_DestructionParticleMain:                          ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB4C
+Effect_RunStage25DestructionParticle:                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB4C
                 tst.w   4(a5)
-                bne.s   Enemy_InitDestructionHandler
-                bsr.w   Enemy_InitDestructionParticle
+                bne.s   Effect_RunStage25DestructionParticle_Update
+                bsr.w   Effect_InitStage25DestructionParticle
 ; Initializes destruction particle handler if not yet initialized
-Enemy_InitDestructionHandler:                           ; CODE XREF: Enemy_DestructionParticleMain+4   j  ; was: loc_2BB56
-                bra.w   Stage25_DestructionParticle
-; End of function Enemy_DestructionParticleMain
+Effect_RunStage25DestructionParticle_Update:            ; CODE XREF: Effect_RunStage25DestructionParticle+4   j  ; was: loc_2BB56
+                bra.w   Effect_UpdateStage25DestructionParticle
+; End of function Effect_RunStage25DestructionParticle
 ; Screen shake effect
-Stage25_ScreenShake:                                    ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB5A
+Effect_TriggerStage25Shake:                             ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB5A
                 move.w  #$30,(word_FF813C).w            ; '0'
                 bset    #4,2(a5)
                 move.b  #$1B,d0
                 jmp     (Sound_PlaySFX).l
-; End of function Stage25_ScreenShake
-; Plays enemy death sound and sets timer
-Enemy_PlayDeathSound:                                   ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB70
+; End of function Effect_TriggerStage25Shake
+; Triggers the Stage 25 death shake and sound, then retires the object
+Effect_TriggerStage25DeathSound:                        ; DATA XREF: ROM:off_5DC   o  ; was: sub_2BB70
                 move.w  #$30,(word_FF813C).w            ; '0'
                 bset    #4,2(a5)
                 move.b  #$1C,d0
                 jmp     (Sound_PlaySFX).l
-; End of function Enemy_PlayDeathSound
-; Initializes enemy state flags and properties
+; End of function Effect_TriggerStage25DeathSound

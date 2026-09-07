@@ -77,6 +77,15 @@ damage thresholds, sprite priority, and particle spawning. The code actually
 dispatches weapon fire, removes objects at state or animation boundaries, and
 updates multi-state effects. These corrections are recorded in the name audit.
 
+The effects pass reduced the count to 10,644 by replacing all 131 live
+address-derived definitions in `src/effects/`. Its five modules are already
+cohesive and remain between 68 and 682 lines. The audit corrected several
+generated VDP and palette claims: the affected routines only build, clear, or
+mask transition buffers in RAM, with a separate helper queuing the eventual
+VDP-register update. The wave-buffer clear was also documented at its actual
+DBF count of 81 longwords rather than 80. These corrections are recorded in
+the name audit.
+
 Three especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -150,7 +150,7 @@ Cutscene_FadeOutCredits:                                ; DATA XREF: ROM:00007C3
                 lea     (Entity_ObjectPool).w,a5
                 move.w  #$128,dword_FFC630-Entity_ObjectPool(a5)
                 move.w  #$E8,$14(a5)
-                jsr     (Sprite_ClearForTransition).l
+                jsr     (Object_ClearForTransition).l
                 move.w  #$2C8,(a5)
                 move.w  #$10,(word_FF0106).l
                 addq.w  #2,(dword_FF8128+2).w
