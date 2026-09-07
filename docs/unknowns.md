@@ -216,12 +216,21 @@ recorded in the name audit.
 
 The phase/circling pass reduced the count to 9,984 by replacing all 36
 address-derived definitions in the former `phase_attacks.s` and `circle.s`.
-Entity type `$290` owns the phase-pattern state machine and type `$294` owns
+Entity type `$28C` owns the phase-pattern state machine and type `$290` owns
 its bouncing defeat-debris controller. The sprite, rotation, and circular
 motion helpers at the following ROM boundary travel with their circling-enemy
 consumer. The result is a 218-line `src/enemies/phase_and_debris_states.s`
 module and a 335-line `src/enemies/circling_enemies.s` module. Four materially
 incorrect generated claims are recorded in the name audit.
+
+The Stage 9 fly/Viblack shot pass reduced the count to 9,953 by replacing all
+31 address-derived definitions in the former `stage_17.s`. The ROM ordering
+interleaves the Stage 9 fly formation controller and its type-`$2A8` children
+with Viblack's type-`$2F4` side shots and a four-shot sequence controller, so
+the honest 371-line module is
+`src/enemies/stage_9_flies_and_viblack_shots.s`. The old Stage 17 walker and
+fly-death descriptions contradicted live constructors and state behavior;
+those corrections are recorded in the name audit.
 
 Four especially broad data labels are explicitly registered:
 

@@ -169,8 +169,8 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_SnakeSegmentMain
                 dc.l    Enemy_CirclingController
                 dc.l    Enemy_SpawnDifficultyProjectilePattern
-                dc.l    Enemy_FlyMain
-                dc.l    Enemy_FlyMovement
+                dc.l    Enemy_Stage9FlyController
+                dc.l    Stage9_FlyFormationController
                 dc.l    Enemy_AnimationWrapper
                 dc.l    Enemy_InitProjectileType
                 dc.l    Boss_ViblackMain
@@ -188,9 +188,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_Epsilon1IntroMain
                 dc.l    Projectile_ViblackChainMain
                 dc.l    Projectile_ViblackChainSegment
-                dc.l    Enemy_Stage17WalkerMain
-                dc.l    Projectile_Stage17WalkerShot
-                dc.l    Projectile_JumpTableDispatcher
+                dc.l    Projectile_ViblackSideShotController
+                dc.l    Projectile_InitViblackSideShot
+                dc.l    Projectile_ViblackSideShotSequenceController
                 dc.l    Boss_BugmaxMain
                 dc.l    Effect_UpdateFacingFlags
                 dc.l    Cutscene_ShipObjectDispatcher

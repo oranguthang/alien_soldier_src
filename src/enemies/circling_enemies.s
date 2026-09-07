@@ -1,6 +1,6 @@
 ; Initializes sprite and collision parameters for circling enemy families
 Enemy_InitCirclingSprite:                               ; CODE XREF: Enemy_CirclingApproachState+2   p  ; was: sub_2D27C
-                                        ; Enemy_FlyInit+2   p
+                                        ; Enemy_Stage9FlyInit+2   p
                 move.w  #$ED00,2(a5)
                 move.w  (word_FF827A).w,d1
                 or.w    (word_FF808A).w,d1
@@ -24,7 +24,7 @@ Enemy_CirclingSpriteParameters: dc.w    $1802, $1100, $1802, $1100  ; DATA XREF:
 
 ; Updates the current circling-enemy animation mapping
 Enemy_UpdateCirclingAnimation:                          ; CODE XREF: Enemy_CirclingController+2C   j  ; was: sub_2D2D2
-                                        ; Enemy_FlyMain+2C   j
+                                        ; Enemy_Stage9FlyController+2C   j
                 move.w  $5C(a5),d0
                 beq.s   Enemy_UpdateCirclingAnimation_Return
                 move.w  #$ED00,2(a5)

@@ -243,7 +243,7 @@
     { "file": "src/enemies/shared_enemy_helpers.s", "subsystem": "enemies", "start": "0x02CF18", "end": "0x02D01F" },
     { "file": "src/enemies/phase_and_debris_states.s", "subsystem": "enemies", "start": "0x02D020", "end": "0x02D27B" },
     { "file": "src/enemies/circling_enemies.s", "subsystem": "enemies", "start": "0x02D27C", "end": "0x02D66B" },
-    { "file": "src/enemies/stage_17.s", "subsystem": "enemies", "start": "0x02D66C", "end": "0x02DA39" },
+    { "file": "src/enemies/stage_9_flies_and_viblack_shots.s", "subsystem": "enemies", "start": "0x02D66C", "end": "0x02DA39" },
     { "file": "src/enemies/bird.s", "subsystem": "enemies", "start": "0x02DA3A", "end": "0x02DF7D" },
     { "file": "src/enemies/stage_10_fliers.s", "subsystem": "enemies", "start": "0x02DF7E", "end": "0x02E2BD" },
     { "file": "src/enemies/stage_12.s", "subsystem": "enemies", "start": "0x02E2BE", "end": "0x02E6C1" },

@@ -409,8 +409,8 @@ Sound_ViblackPeriodic:                                  ; CODE XREF: Boss_Viblac
                 move.b  #$CD,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Sound_ViblackPeriodic
-; Periodically spawns walker shot projectiles
-Boss_ViblackSpawnWalkerShot:                            ; CODE XREF: Boss_ViblackDefeatCheck+4   p  ; was: sub_44368
+; Periodically spawns side shots from alternating horizontal positions
+Boss_ViblackSpawnSideShot:                              ; CODE XREF: Boss_ViblackDefeatCheck+4   p  ; was: sub_44368
                                         ; Boss_ViblackAttackState+4   p
                 move.w  (word_FFA000).w,d0
                 andi.w  #$FF,d0
@@ -424,10 +424,10 @@ Boss_ViblackSpawnWalkerShot:                            ; CODE XREF: Boss_Viblac
                 btst    #0,(word_FFA000).w
                 bne.s   loc_4439A
                 move.w  #$810,d0
-loc_4439A:                                              ; CODE XREF: Boss_ViblackSpawnWalkerShot+2C   j
+loc_4439A:                                              ; CODE XREF: Boss_ViblackSpawnSideShot+2C   j
                 sub.w   (dword_FFA900).w,d0
-                jmp     Projectile_Stage17WalkerShot
-; End of function Boss_ViblackSpawnWalkerShot
+                jmp     Projectile_InitViblackSideShot
+; End of function Boss_ViblackSpawnSideShot
 ; Spawns chain of connected projectiles
 Boss_ViblackSpawnChain:                                 ; CODE XREF: Boss_ViblackDefeatCheck+42   p  ; was: sub_443A4
                 cmpi.w  #$CE,$14(a5)

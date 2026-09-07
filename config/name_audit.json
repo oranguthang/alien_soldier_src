@@ -1704,6 +1704,61 @@
         "Control reaches this branch when target Y minus current Y is positive.",
         "It adds 0x4000 to vertical velocity and caps it at positive 0x20000, which is downward in the game's screen-coordinate convention rather than upward."
       ]
+    },
+    {
+      "address": "0x02D77E",
+      "previous_name": "Enemy_Stage17WalkerMain",
+      "current_name": "Projectile_ViblackSideShotController",
+      "legacy_name": "sub_2D77E",
+      "evidence": "static",
+      "basis": [
+        "Projectile_InitViblackSideShot installs entity type 0x2F4, whose dispatch-table entry is this controller, and the only initializer call comes from Viblack's attack code.",
+        "Its states enter from a screen side, rotate, launch horizontally, track Viblack's stored altitude, and end in a projectile burst; no walker movement or Stage 17 discriminator is present."
+      ]
+    },
+    {
+      "address": "0x02D8E8",
+      "previous_name": "Enemy_FlyMovement",
+      "current_name": "Stage9_FlyFormationController",
+      "legacy_name": "sub_2D8E8",
+      "evidence": "static",
+      "basis": [
+        "Stage_InitStage9Flies installs entity type 0x2AC, whose dispatch-table entry is this routine.",
+        "The state machine allocates four dormant object slots and activates them one by one as type-0x2A8 Stage 9 flies; it controls the formation rather than moving one fly."
+      ]
+    },
+    {
+      "address": "0x02D954",
+      "previous_name": "Enemy_FlyDeath",
+      "current_name": "Stage9_FlyFormationActivateWaveState",
+      "legacy_name": "sub_2D954",
+      "evidence": "static",
+      "basis": [
+        "This formation-controller state walks the stored slot array and converts one dormant slot to type 0x2A8 at fixed intervals.",
+        "After the first four entries it restarts from the alternate horizontal offset, and only hides the controller after both waves; it is not a fly death handler."
+      ]
+    },
+    {
+      "address": "0x02D9BA",
+      "previous_name": "Projectile_Stage17WalkerShot",
+      "current_name": "Projectile_InitViblackSideShot",
+      "legacy_name": "sub_2D9BA",
+      "evidence": "static",
+      "basis": [
+        "Boss_ViblackSpawnSideShot is the only direct caller and supplies an alternating left/right horizontal position.",
+        "The routine installs entity type 0x2F4, which dispatches to Projectile_ViblackSideShotController; it has no walker owner."
+      ]
+    },
+    {
+      "address": "0x044368",
+      "previous_name": "Boss_ViblackSpawnWalkerShot",
+      "current_name": "Boss_ViblackSpawnSideShot",
+      "legacy_name": "sub_44368",
+      "evidence": "static",
+      "basis": [
+        "The routine is called from Viblack's active attack and defeat-check paths and alternates the spawned object's horizontal position between two screen sides.",
+        "It tail-calls Projectile_InitViblackSideShot, whose type-0x2F4 state machine contains no walker behavior."
+      ]
     }
   ]
 }

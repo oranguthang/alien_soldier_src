@@ -156,7 +156,7 @@
                 include "src/enemies/shared_enemy_helpers.s"
                 include "src/enemies/phase_and_debris_states.s"
                 include "src/enemies/circling_enemies.s"
-                include "src/enemies/stage_17.s"
+                include "src/enemies/stage_9_flies_and_viblack_shots.s"
                 include "src/enemies/bird.s"
                 include "src/enemies/stage_10_fliers.s"
                 include "src/enemies/stage_12.s"

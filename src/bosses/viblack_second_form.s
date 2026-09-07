@@ -154,7 +154,7 @@ loc_43BD0:                                              ; CODE XREF: Boss_Viblac
 ; Checks defeat condition
 Boss_ViblackDefeatCheck:                                ; DATA XREF: ROM:000439E4   o  ; was: sub_43BE2
                 bsr.w   Boss_ViblackUpdatePosition
-                bsr.w   Boss_ViblackSpawnWalkerShot
+                bsr.w   Boss_ViblackSpawnSideShot
                 bsr.w   Boss_ViblackMoveToTarget
                 bne.s   locret_43C44
                 move.w  (dword_FFFF08).w,d0
@@ -190,7 +190,7 @@ locret_43C44:                                           ; CODE XREF: Boss_Viblac
 ; Attack state with timer and projectile spawning
 Boss_ViblackAttackState:                                ; DATA XREF: ROM:000439E6   o  ; was: sub_43C46
                 bsr.w   Boss_ViblackUpdatePosition
-                bsr.w   Boss_ViblackSpawnWalkerShot
+                bsr.w   Boss_ViblackSpawnSideShot
                 subq.w  #1,$48(a5)
                 bpl.s   locret_43C5E
 loc_43C54:                                              ; CODE XREF: Boss_ViblackProjectileAttack+8   j
