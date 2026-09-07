@@ -36,8 +36,12 @@ listing by `make verify-layout`.
 | `0x035614-0x0374C5` | Jetsripper and Shiper state, movement, and projectiles | 6 | hypothesis |
 | `0x0374C6-0x0394D7` | Antroid and Terobuster systems | 7 | hypothesis |
 | `0x0394D8-0x03B29D` | Shellshogun and Madam Barbar systems | 4 | hypothesis |
-| `0x03B29E-0x03D159` | Joker, Flying Neo, and Caterpillar systems | 5 | hypothesis |
-| `0x03D15A-0x082323` | later boss code and first padding gap | 9 | hypothesis |
+| `0x03B29E-0x03D0AD` | Joker and Flying Neo systems | 4 | hypothesis |
+| `0x03D0AE-0x040CED` | Caterpillar, Xi-Tiger, Deep Strider, Gusthead, and Snake | 7 | hypothesis |
+| `0x040CEE-0x045ACF` | Sunset Sting, Viblack, Back Stringer, and opening Epsilon projectiles | 12 | hypothesis |
+| `0x045AD0-0x0490FF` | Epsilon 1 and Sharpssteel systems | 9 | hypothesis |
+| `0x049100-0x04BD4F` | Jampan and Destroyer MK2 systems | 7 | hypothesis |
+| `0x04BD50-0x082323` | later boss code and first padding gap | 5 | hypothesis |
 | `0x082324-0x0E7FFF` | sound driver/data and second padding gap | 1 | static |
 | `0x0E8000-0x17FFFF` | mixed data and third padding gap | 1 | unknown |
 | `0x180000-0x1FFFFF` | final data bank and ROM end byte | 1 | unknown |
