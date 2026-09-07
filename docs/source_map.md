@@ -49,7 +49,11 @@ listing by `make verify-layout`.
 | `0x057498-0x058FED` | Sirene, Artemis, and an unidentified Seven Force | 4 | hypothesis |
 | `0x058FEE-0x05A43B` | alternate Valkirie and Sylpheed systems | 3 | hypothesis |
 | `0x05A43C-0x082323` | final entity stub, included data, and first padding gap | 1 | static |
-| `0x082324-0x0E7FFF` | sound driver/data and second padding gap | 1 | static |
+| `0x082324-0x083E6F` | 68k sound driver, playback, and sequence commands | 6 | static |
+| `0x083E70-0x084A6F` | embedded Z80 sound program | 1 | static |
+| `0x084A70-0x085265` | channel playback and sound lookup tables | 4 | static |
+| `0x085266-0x097FFF` | music tracks and sound effects | 5 | static |
+| `0x098000-0x0E7FFF` | PCM sample banks and second padding gap | 1 | static |
 | `0x0E8000-0x17FFFF` | mixed data and third padding gap | 1 | unknown |
 | `0x180000-0x1FFFFF` | final data bank and ROM end byte | 1 | unknown |
 
