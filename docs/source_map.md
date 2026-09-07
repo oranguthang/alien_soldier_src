@@ -17,7 +17,9 @@ listing by `make verify-layout`.
 | `0x012B6A-0x013ADD` | debug UI, HUD, status display, and player physics | 5 | hypothesis |
 | `0x013ADE-0x0146FB` | entity, terrain, and combat collision | 2 | static/hypothesis |
 | `0x0146FC-0x016F35` | player terrain and state families | 9 | hypothesis |
-| `0x016F36-0x02018F` | player, weapons, projectiles | 2 | hypothesis |
+| `0x016F36-0x019A6B` | player rendering, weapons, projectiles, and weapon UI | 7 | hypothesis |
+| `0x019A6C-0x01C169` | stage intros, Seven Force projectiles, and object utilities | 6 | hypothesis |
+| `0x01C16A-0x02018F` | gameplay loop, menus, results, and cutscene control | 1 | hypothesis |
 | `0x020190-0x02A30D` | UI, results, transitions, effects | 1 | hypothesis |
 | `0x02A30E-0x03153F` | enemies, projectiles, boss helpers | 2 | hypothesis |
 | `0x031540-0x082323` | boss-heavy code and first padding gap | 12 | hypothesis |
