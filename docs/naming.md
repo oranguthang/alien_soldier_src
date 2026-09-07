@@ -18,6 +18,8 @@ interpretation pass; those names are hypotheses until reviewed.
   `boss_code` are not module identities.
 - Preserve the original IDA symbol through its `; was:` provenance mapping
   when renaming a definition.
+- Record corrections to earlier generated semantic names, including their
+  evidence basis, in `config/name_audit.json`.
 - Rename all references atomically and require `make verify` afterward.
 - Do not infer behavior solely from a caller name that is itself provisional.
 

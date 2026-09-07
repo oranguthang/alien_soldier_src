@@ -1,17 +1,17 @@
-Player_StateDispatcher:                               ; CODE XREF: Sys_GameplayMainLoop+76   p  ; was: sub_4094
+Gfx_PrimaryEffectDispatcher:                               ; CODE XREF: Sys_GameplayMainLoop+76   p  ; was: sub_4094
                 tst.b   (byte_FF813E).w
-                bpl.s Player_DispatchState
+                bpl.s Gfx_DispatchPrimaryEffect
                 rts
 ; ---------------------------------------------------------------------------
-; Dispatches player state handler by looking up function pointer from state table and jumping to it.
-Player_DispatchState:                               ; CODE XREF: Player_StateDispatcher+4   j  ; was: loc_409C
+; Dispatches the primary graphics effect selected by stage configuration.
+Gfx_DispatchPrimaryEffect:                               ; CODE XREF: Gfx_PrimaryEffectDispatcher+4   j  ; was: loc_409C
                 move.w  (word_FF8220).w,d0
-                movea.w off_40AC(pc,d0.w),a0
+                movea.w Gfx_PrimaryEffectHandlers(pc,d0.w),a0
                 adda.l  #Gfx_UpdatePaletteState,a0
                 jmp     (a0)
-; End of function Player_StateDispatcher
+; End of function Gfx_PrimaryEffectDispatcher
 ; ---------------------------------------------------------------------------
-off_40AC:       dc.w locret_410A-Gfx_UpdatePaletteState
+Gfx_PrimaryEffectHandlers: dc.w locret_410A-Gfx_UpdatePaletteState ; was: off_40AC
                 dc.w Gfx_UpdatePaletteState-Gfx_UpdatePaletteState
                 dc.w Gfx_PaletteState_Calculate-Gfx_UpdatePaletteState
                 dc.w Stage_SetScrollOffset-Gfx_UpdatePaletteState
@@ -24,8 +24,8 @@ off_40AC:       dc.w locret_410A-Gfx_UpdatePaletteState
 
 
 ; Updates palette state and positions
-Gfx_UpdatePaletteState:                               ; DATA XREF: Player_StateDispatcher+10   o  ; was: sub_40C0
-                                        ; ROM:off_40AC   o ...
+Gfx_UpdatePaletteState:                               ; DATA XREF: Gfx_PrimaryEffectDispatcher+10   o  ; was: sub_40C0
+                                        ; ROM:Gfx_PrimaryEffectHandlers   o ...
                 move.w  #$8CE,d0
                 move.w  #$6AE,d1
                 btst    #0,(word_FFA000+1).w
@@ -52,8 +52,8 @@ Gfx_SetPlayerPaletteIndex:                               ; CODE XREF: Gfx_Update
                 movea.w #(word_FFE33E-M68K_RAM),a0
                 move.w  d0,(a0)
                 move.w  d0,$80(a0)
-locret_410A:                            ; DATA XREF: ROM:off_40AC   o
-                                        ; ROM:off_432E   o
+locret_410A:                            ; DATA XREF: ROM:Gfx_PrimaryEffectHandlers   o
+                                        ; ROM:Gfx_SecondaryEffectHandlers   o
                 rts
 ; End of function Gfx_UpdatePaletteState
 ; ---------------------------------------------------------------------------
@@ -220,28 +220,28 @@ loc_4302:                               ; CODE XREF: Gfx_UpdateSega3Palette+A   
                 rts
 ; End of function Gfx_UpdateSega3Palette
 ; Dispatches effect system handler based on current effect mode
-Effect_SystemDispatcher:                               ; CODE XREF: Sys_GameplayMainLoop:loc_1C7B0   p  ; was: sub_4316
+Gfx_SecondaryEffectDispatcher:                               ; CODE XREF: Sys_GameplayMainLoop:loc_1C7B0   p  ; was: sub_4316
                 tst.b   (byte_FF813E).w
-                bpl.s Gfx_PaletteFadeDispatch
+                bpl.s Gfx_DispatchSecondaryEffect
                 rts
 ; ---------------------------------------------------------------------------
 ; Dispatches palette fade effects based on system state
-Gfx_PaletteFadeDispatch:                               ; CODE XREF: Effect_SystemDispatcher+4   j  ; was: loc_431E
+Gfx_DispatchSecondaryEffect:                               ; CODE XREF: Gfx_SecondaryEffectDispatcher+4   j  ; was: loc_431E
                 move.w  (word_FF8222).w,d0
-                movea.w off_432E(pc,d0.w),a0
+                movea.w Gfx_SecondaryEffectHandlers(pc,d0.w),a0
                 adda.l  #Palette_FadeEffect,a0
                 jmp     (a0)
-; End of function Effect_SystemDispatcher
+; End of function Gfx_SecondaryEffectDispatcher
 ; ---------------------------------------------------------------------------
-off_432E:       dc.w locret_410A-Palette_FadeEffect
+Gfx_SecondaryEffectHandlers: dc.w locret_410A-Palette_FadeEffect ; was: off_432E
                 dc.w Palette_FadeEffect-Palette_FadeEffect
                 dc.w Gfx_Stage14PaletteMain-Palette_FadeEffect
                 dc.w Gfx_PaletteFadeEffect-Palette_FadeEffect
 
 
 ; Palette fade effect system with RGB interpolation
-Palette_FadeEffect:                               ; DATA XREF: Effect_SystemDispatcher+10   o  ; was: sub_4336
-                                        ; ROM:off_432E   o ...
+Palette_FadeEffect:                               ; DATA XREF: Gfx_SecondaryEffectDispatcher+10   o  ; was: sub_4336
+                                        ; ROM:Gfx_SecondaryEffectHandlers   o ...
                 movea.l (dword_FF821A).w,a2
                 move.w  (word_FF8218).w,d0
                 bsr.w Gfx_FadeRGBColor

@@ -416,7 +416,7 @@ loc_1C6C4:                              ; CODE XREF: Sys_GameplayMainLoop+54   j
                 jsr (Sys_InitObjectPointers).l
                 bsr.w UI_CheckVBlankFlag
                 bsr.w UI_SetWeaponIconIndex
-                jsr (Player_StateDispatcher).l
+                jsr (Gfx_PrimaryEffectDispatcher).l
                 tst.b   (byte_FFF746).w
                 bpl.s   loc_1C6F0
                 move.l  #$C0420000,(VDP_CTRL).l
@@ -460,7 +460,7 @@ loc_1C792:                              ; CODE XREF: Sys_GameplayMainLoop+122   
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$EEE,(VDP_DATA).l
 loc_1C7B0:                              ; CODE XREF: Sys_GameplayMainLoop+140   j
-                jsr (Effect_SystemDispatcher).l
+                jsr (Gfx_SecondaryEffectDispatcher).l
                 bsr.w Sys_UpdateObjectCount
                 jsr (Player_BehaviorDispatcher).l
                 jsr (UI_RenderHUDElement1).l

@@ -90,7 +90,7 @@ data are checked.
 | `0x00354A` | `Math_CalculateAngleToPlayer` | angle/vector math |
 | `0x003954` | `UI_AddScoreBCD` | BCD score arithmetic |
 | `0x0039AA` | `Gfx_FadePaletteTransition` | palette transitions |
-| `0x004094` | `Player_StateDispatcher` | likely misnamed palette dispatcher; audit first |
+| `0x004094` | `Gfx_PrimaryEffectDispatcher` | primary graphics-effect dispatch |
 | `0x004386` | `Results_UpdateNumbers` | results-number rendering |
 | `0x004594` | `Gfx_BuildVDPCommandList` | text/VDP command construction |
 | `0x004840` | `Gfx_ClearPlanesAndInit` | story-screen initialization |
@@ -102,10 +102,10 @@ data are checked.
 | `0x008618` | `Math_LookupSineTable` | sine lookup helpers and table |
 | `0x0086F0` | `Cutscene_ShipObjectDispatcher` | ship object family; continues past old file boundary |
 
-`Player_StateDispatcher` is already contradicted by its dispatch variable and
-targets, which update palettes, scroll, and tiles. This is the first explicit
-Sonnet-label audit item; its replacement name must be based on the complete
-caller/target set, not this preliminary observation alone.
+The former `Player_StateDispatcher` was contradicted by its dispatch variable
+and targets, which update palettes, scroll, and tiles. The complete static
+caller/target audit is recorded in `config/name_audit.json`; this became the
+first corrected Sonnet-label item.
 
 ### 3. Reconstruct shared gameplay engines
 

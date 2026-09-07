@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "default_status_for_unlisted_generated_names": "hypothesis",
+  "records": [
+    {
+      "address": "0x004094",
+      "previous_name": "Player_StateDispatcher",
+      "current_name": "Gfx_PrimaryEffectDispatcher",
+      "legacy_name": "sub_4094",
+      "evidence": "static",
+      "basis": [
+        "The dispatch table targets palette updates, scroll updates, and boss tile/palette setup handlers.",
+        "The selector word is loaded as a stage-configuration field and written by stage/camera setup code.",
+        "The only direct call is one step in the main gameplay rendering/effect chain, not the player state update."
+      ]
+    },
+    {
+      "address": "0x004316",
+      "previous_name": "Effect_SystemDispatcher",
+      "current_name": "Gfx_SecondaryEffectDispatcher",
+      "legacy_name": "sub_4316",
+      "evidence": "static",
+      "basis": [
+        "The adjacent selector dispatches only palette fade and palette-update handlers.",
+        "It is called from the same gameplay graphics/effect chain as the primary dispatcher."
+      ]
+    }
+  ]
+}

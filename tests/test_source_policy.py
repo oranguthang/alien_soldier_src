@@ -18,8 +18,8 @@ class SourcePolicyTests(unittest.TestCase):
         policy = json.loads((ROOT / "config/source_policy.json").read_text(encoding="utf-8"))
         inventory = lint_source.scan(policy, ROOT)
         self.assertEqual([], inventory.errors)
-        self.assertEqual(4826, len(inventory.provenance))
-        self.assertEqual(10493, len(inventory.address_derived))
+        self.assertEqual(4828, len(inventory.provenance))
+        self.assertEqual(10491, len(inventory.address_derived))
 
     def test_style_violations_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

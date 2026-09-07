@@ -14,6 +14,11 @@ The first evidence-backed RAM pass reduced the live count to 10,493 by naming
 `GameModeIndex`, `GameSubstateIndex`, `StageTableIndex`, and
 `Entity_ObjectPool`. Their old address names remain in provenance markers.
 
+The first Sonnet-label audit reduced it again to 10,491 by naming the two
+graphics-effect handler tables at `0x0040AC` and `0x00432E`. The corrected
+dispatcher claims and their static evidence are recorded in
+`config/name_audit.json`.
+
 Two especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
