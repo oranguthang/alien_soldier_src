@@ -76,7 +76,7 @@ off_EB492:      dc.w    word_EB3D8-*                    ; DATA XREF: Enemy_Flyer
                 dc.w    1
                 dc.w    word_EB3FC-*
                 dc.w    $FF
-word_EB4A6:     dc.w    $603A, $600, $F4F0              ; DATA XREF: Enemy_Stage18SpawnerMain+B8   o
+word_EB4A6:     dc.w    $603A, $600, $F4F0              ; DATA XREF: Stage18_SegmentedWormSpawnSegments+B8   o
                                         ; ROM:off_3007C   o
                 dc.w    $E800, $A00, $F400
 word_EB4B2:     dc.w    $6809, 0, $F313                 ; DATA XREF: ROM:00030088   o
@@ -120,7 +120,7 @@ word_EB54E:     dc.w    $6872, 0, $F6ED                 ; DATA XREF: ROM:0003010
                 dc.w    $6873, $800, $EEED
                 dc.w    $6870, $100, $F6F5
                 dc.w    $E86A, $600, $F6FD
-off_EB566:      dc.w    word_EB58C-*                    ; DATA XREF: Enemy_Stage18FloaterDeath+12   o
+off_EB566:      dc.w    word_EB58C-*                    ; DATA XREF: Stage18_SegmentedWormEmitParticle+12   o
                 dc.w    4
                 dc.w    word_EB586-*
                 dc.w    4

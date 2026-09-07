@@ -38,7 +38,7 @@ Pickup_SelectLargeSize:                                 ; CODE XREF: Pickup_Spaw
 Pickup_SpawnRandomFromCurrentObject:                    ; CODE XREF: Enemy_UpdateDefeatProjectile+26   j  ; was: sub_2BD1E
                                         ; Enemy_ProcessObject+18   j
                 movea.w a5,a0
-Pickup_SelectRandomSize:                                ; CODE XREF: Boss_InitJetsripperSpread+36   p  ; was: loc_2BD20
+Pickup_SelectRandomSize:                                ; CODE XREF: Stage18_SegmentedWormScatterSegments+36   p  ; was: loc_2BD20
                                         ; Boss_WolfGaropaAttackState2+2A   p
                 moveq   #0,d7
                 move.w  (dword_FFFF08).w,d1

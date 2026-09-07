@@ -12,7 +12,7 @@ word_1A0CC4:    dc.w    $C95C, $B00, $F0F4              ; DATA XREF: ROM:001A0F1
                                         ; ROM:001A0F32   o
 word_1A0CCA:    dc.w    $C15C, $B00, $F0F4              ; DATA XREF: ROM:001A0F26   o
                                         ; ROM:001A0F3A   o
-word_1A0CD0:    dc.w    $6170, $E00, $F8E0              ; DATA XREF: Boss_DestroyerMK2Spawn+36   o
+word_1A0CD0:    dc.w    $6170, $E00, $F8E0              ; DATA XREF: Stage18_MovingPlatform+36   o
                 dc.w    $E970, $E00, $F800
 word_1A0CDC:    dc.w    $C949, $800, $FCF4              ; DATA XREF: ROM:off_1A0F42   o
                                         ; ROM:001A0F4A   o

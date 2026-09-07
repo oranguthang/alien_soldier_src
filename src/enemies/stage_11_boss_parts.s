@@ -42,8 +42,8 @@ loc_30B98:                                              ; CODE XREF: Stage_Spawn
                 tst.w   (a4)
                 bpl.s   loc_30B98
                 move.l  a4,$40(a5)
-locret_30BB8:                                           ; CODE XREF: Enemy_Stage18SpawnerMain+24   j
-                                        ; Enemy_Stage18SpawnerMain+4C   j
+locret_30BB8:                                           ; CODE XREF: Stage18_SegmentedWormSpawnSegments+24   j
+                                        ; Stage18_SegmentedWormSpawnSegments+4C   j
                 rts
 ; ---------------------------------------------------------------------------
 loc_30BBA:                                              ; CODE XREF: Stage_SpawnerSpawnByTimer+20   j

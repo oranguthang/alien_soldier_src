@@ -16,7 +16,7 @@ OrphanedCrossStageEntitySelectState:                    ; CODE XREF: OrphanedCro
                 jmp     (a0)
 ; End of function OrphanedCrossStageEntityDispatch
 ; ---------------------------------------------------------------------------
-OrphanedCrossStageEntityStateTable: dc.w    Projectile_Stage18Homing+2-OrphanedTerrainTileAnimationInit
+OrphanedCrossStageEntityStateTable: dc.w    Stage18_SegmentedWormUpdateFollower+2-OrphanedTerrainTileAnimationInit
                                         ; DATA XREF: OrphanedCrossStageEntityDispatch+14   r
                                         ; debug this link
                 dc.w    Enemy_SpawnFromTable-OrphanedTerrainTileAnimationInit

@@ -1,4 +1,4 @@
-word_E907A:     dc.w    $5079, $A00, $E8                ; DATA XREF: Enemy_FloatingOscillator+22   o
+word_E907A:     dc.w    $5079, $A00, $E8                ; DATA XREF: OrphanedFloatingOscillator+22   o
                                         ; ROM:000E9544   o
                 dc.w    $5879, $A00, 0
                 dc.w    $4079, $A00, $E8E8

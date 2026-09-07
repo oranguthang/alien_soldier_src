@@ -221,8 +221,8 @@ Boss_GustheadWaitAndSpawnEyes:                          ; DATA XREF: ROM:000313C
                 rts
 ; End of function Boss_GustheadWaitAndSpawnEyes
 ; Calculates angle to player
-Enemy_GustheadGetAngleToPlayer:                         ; CODE XREF: Enemy_Stage18FloaterDeath+42   p  ; was: sub_3133A
-                                        ; Boss_CalcRandomAngle+E   p
+Enemy_GustheadGetAngleToPlayer:                         ; CODE XREF: Stage18_SegmentedWormEmitParticle+42   p  ; was: sub_3133A
+                                        ; Stage18_SegmentedWormRandomizeVelocity+E   p
                 lea     (Math_QuarterSineTable).l,a0
                 move.w  (a0,d0.w),d1
                 addi.w  #$80,d0

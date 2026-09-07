@@ -2606,6 +2606,182 @@
         "This unreferenced state selects one of the same five terrain pattern words and passes the object-resident descriptor to Gfx_DMATransferTiles.",
         "The precise visual owner remains unresolved, so the name states only the observed transfer role and orphan status."
       ]
+    },
+    {
+      "address": "0x02FCF6",
+      "previous_name": "Enemy_FloatingOscillator",
+      "current_name": "OrphanedFloatingOscillator",
+      "legacy_name": "sub_2FCF6",
+      "evidence": "static",
+      "basis": [
+        "No source constructor or data owner for the entity-table entry has been established.",
+        "A bounded breakpoint run did not reach the routine during all 90,000 frames of the pinned TAS; the motion is observable statically, but an enemy identity is not."
+      ]
+    },
+    {
+      "address": "0x02FDAA",
+      "previous_name": "Boss_DestroyerMK2Spawn",
+      "current_name": "Stage18_MovingPlatform",
+      "legacy_name": "sub_2FDAA",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS first reaches this type-0x3DC actor at frame 41438, before the Destroyer-MK2 encounter; at frame 41500 its mapping and coordinates identify the moving platform visible below the player.",
+        "Destroyer-MK2 setup preserves type 0x3DC while clearing other objects, consistent with retaining an arena platform rather than spawning the boss."
+      ]
+    },
+    {
+      "address": "0x02FED4",
+      "previous_name": "Enemy_Stage18Init",
+      "current_name": "Stage18_SegmentedWormMain",
+      "legacy_name": "sub_2FED4",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS reaches this type-0x448 dispatcher at frame 41189 at the start of Stage 18.",
+        "A frame-41220 state contains two heads and two linked chains totalling twenty-four type-0x448 objects matching the two blue segmented worms visible on screen."
+      ]
+    },
+    {
+      "address": "0x02FF1C",
+      "previous_name": "Enemy_Stage18SpawnerMain",
+      "current_name": "Stage18_SegmentedWormSpawnSegments",
+      "legacy_name": "sub_2FF1C",
+      "evidence": "static",
+      "basis": [
+        "The initializer creates exactly twelve type-0x448 child objects and links each predecessor through field 0x44.",
+        "It then enables collision on all twelve segments and launches the head; this is one worm-chain constructor, not a general enemy spawner."
+      ]
+    },
+    {
+      "address": "0x02FFE4",
+      "previous_name": "Enemy_Stage18FloaterMain",
+      "current_name": "Stage18_SegmentedWormInitCollision",
+      "legacy_name": "sub_2FFE4",
+      "evidence": "static",
+      "basis": [
+        "This shared initializer assigns the collision box, health and display attributes used by every type-0x448 chain member.",
+        "Runtime state shows those fields on the visible segmented worms, while no independent floater type is created."
+      ]
+    },
+    {
+      "address": "0x03015C",
+      "previous_name": "Enemy_Stage18FloaterAttack",
+      "current_name": "Stage18_SegmentedWormUpdateHead",
+      "legacy_name": "sub_3015C",
+      "evidence": "static",
+      "basis": [
+        "The state advances the linked follower, chooses a frame from velocity, moves the head and removes the complete field-0x44 chain when it exits bounds.",
+        "Its launch direction alternates between the two worm heads; no separate floater attack is represented."
+      ]
+    },
+    {
+      "address": "0x030230",
+      "previous_name": "Enemy_Stage18FloaterDeath",
+      "current_name": "Stage18_SegmentedWormEmitParticle",
+      "legacy_name": "sub_30230",
+      "evidence": "static",
+      "basis": [
+        "The helper is called from every active head update, decrements a repeat timer and allocates a type-0x88 particle when it expires.",
+        "It neither removes the worm nor checks a death state."
+      ]
+    },
+    {
+      "address": "0x030288",
+      "previous_name": "Enemy_Stage18TurretInit",
+      "current_name": "Stage18_SegmentedWormAdvanceFollower",
+      "legacy_name": "sub_30288",
+      "evidence": "static",
+      "basis": [
+        "After a six-frame delay, this helper copies the predecessor's stored position and horizontal motion into the next object linked by field 0x44.",
+        "That propagation produces the worm trail and initializes no turret."
+      ]
+    },
+    {
+      "address": "0x0302CC",
+      "previous_name": "Boss_InitJetsripperSpread",
+      "current_name": "Stage18_SegmentedWormScatterSegments",
+      "legacy_name": "sub_302CC",
+      "evidence": "static",
+      "basis": [
+        "The segmented-worm health sum selects this state after falling below 0xCE0.",
+        "It walks the same twelve-object link chain, gives each segment a randomized velocity and falling state, and emits reward particles; no Jetsripper object is referenced."
+      ]
+    },
+    {
+      "address": "0x030366",
+      "previous_name": "Boss_UpdateFallingSpawner",
+      "current_name": "Stage18_SegmentedWormUpdateFallingSegment",
+      "legacy_name": "sub_30366",
+      "evidence": "static",
+      "basis": [
+        "This state is installed on every scattered worm segment and applies gravity, spin-frame animation and periodic particles.",
+        "On terrain contact it hides the segment and emits a final particle; it is neither a boss-wide nor a spawner controller."
+      ]
+    },
+    {
+      "address": "0x0303B8",
+      "previous_name": "Boss_UpdateAnimationCycle",
+      "current_name": "Stage18_SegmentedWormAdvanceSpinFrame",
+      "legacy_name": "sub_303B8",
+      "evidence": "static",
+      "basis": [
+        "The helper advances field 0x58 through an eight-step directional-frame cycle selected by the segment variant in field 0x54.",
+        "Its callers and tables all belong to scattered Stage 18 worm segments."
+      ]
+    },
+    {
+      "address": "0x0303F0",
+      "previous_name": "Enemy_Stage18TurretMain",
+      "current_name": "Stage18_SegmentedWormGetDirectionFrame",
+      "legacy_name": "sub_303F0",
+      "evidence": "static",
+      "basis": [
+        "The helper classifies signed horizontal and vertical velocity into one of eight frame-table offsets.",
+        "Both the worm head and linked followers use the result to choose mappings and tile attributes; it performs no turret update."
+      ]
+    },
+    {
+      "address": "0x030492",
+      "previous_name": "Projectile_Stage18Bullet",
+      "current_name": "Stage18_SegmentedWormSegmentDispatch",
+      "legacy_name": "sub_30492",
+      "evidence": "static",
+      "basis": [
+        "The type-0x448 main dispatcher reaches this table only for child objects marked by nonzero field 0x50.",
+        "Its states initialize, propagate and scatter linked worm segments rather than dispatching a bullet projectile."
+      ]
+    },
+    {
+      "address": "0x0304A4",
+      "previous_name": "Projectile_Stage18Missile",
+      "current_name": "Stage18_SegmentedWormSegmentInit",
+      "legacy_name": "sub_304A4",
+      "evidence": "static",
+      "basis": [
+        "This thunk advances a newly allocated type-0x448 child and falls into the common worm-segment collision initializer.",
+        "It creates or updates no missile."
+      ]
+    },
+    {
+      "address": "0x0304A8",
+      "previous_name": "Projectile_Stage18Laser",
+      "current_name": "Stage18_SegmentedWormSegmentFollow",
+      "legacy_name": "sub_304A8",
+      "evidence": "static",
+      "basis": [
+        "This state skips follower propagation only while segment horizontal motion is zero, then falls through to the linked-segment update.",
+        "No laser collision, lifetime or rendering setup occurs."
+      ]
+    },
+    {
+      "address": "0x0304B0",
+      "previous_name": "Projectile_Stage18Homing",
+      "current_name": "Stage18_SegmentedWormUpdateFollower",
+      "legacy_name": "sub_304B0",
+      "evidence": "static",
+      "basis": [
+        "The routine propagates predecessor position and motion through field 0x44, applies gravity, and selects the follower's directional frame.",
+        "Its direct table and fallthrough callers are worm-segment states; it does not home on the player."
+      ]
     }
   ]
 }

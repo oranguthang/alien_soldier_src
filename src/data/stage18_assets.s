@@ -30,7 +30,7 @@ byte_1B0C64:    binclude "data/mappings/byte_1B0C64.bin"
 byte_1B0C64_End:
 tiles_1B0F08:   binclude "data/artcomp/tiles_1B0F08.bin"
 tiles_1B0F08_End:
-word_1B1090:    dc.w    $6000, $F00, $EEE0              ; DATA XREF: Boss_DestroyerMK2Spawn+20   o
+word_1B1090:    dc.w    $6000, $F00, $EEE0              ; DATA XREF: Stage18_MovingPlatform+20   o
                 dc.w    $E800, $F00, $EE00
 byte_1B109C:    dc.b    0, $2E, $5F                     ; DATA XREF: ROM:00011B46   o
                 dc.b    0, 0, $5F

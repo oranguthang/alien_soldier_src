@@ -108,7 +108,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_FallWithGravity
                 dc.l    Projectile_FallWithGravity_Update
                 dc.l    Boss_GustheadMainWrapper
-                dc.l    Enemy_FloatingOscillator
+                dc.l    OrphanedFloatingOscillator
                 dc.l    Stage12_YachtControllerMain
                 dc.l    Boss_GustheadDefeatComplete
                 dc.l    Boss_SunsetStingInitDispatcher
@@ -246,7 +246,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_MissirayMain
                 dc.l    Segment_MissirayPartMain
                 dc.l    Entity_EmptyState4
-                dc.l    Boss_DestroyerMK2Spawn
+                dc.l    Stage18_MovingPlatform
                 dc.l    Stage24_ScrollHandler
                 dc.l    Stage_IncrementPhase
                 dc.l    Boss_WolfGaropaMovement2
@@ -273,7 +273,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_Unknown1MainLoop
                 dc.l    Boss_ValkirieMainAlt
                 dc.l    Boss_SylpheedIntroStop
-                dc.l    Enemy_Stage18Init
+                dc.l    Stage18_SegmentedWormMain
                 dc.l    Enemy_Stage11FishController
                 dc.l    Boss_MedusaDamageCheck
                 dc.l    Stage11_FishWaveController

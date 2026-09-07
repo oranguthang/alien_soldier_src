@@ -326,6 +326,21 @@ in the full pinned TAS, while the following terrain-animation companion has no
 live reference. Seventeen contradicted cannon, projectile and boss claims are
 recorded in the name audit.
 
+The Stage 18 pass reduced the count to 9,659 by replacing all 53 remaining
+address-derived definitions in `src/enemies/stage_18.s`. Pinned-TAS execution
+places the type-`$448` dispatcher at frame 41,189; the frame-41,220 capture and
+RAM state show two visible blue worms, each represented by a head and a linked
+twelve-segment chain. This turns the alleged floater, turret, Jetsripper spread
+and missile/laser/homing routines into cohesive worm spawn, follower,
+direction-frame, scatter and falling-segment states. A separate type-`$3DC`
+actor is the moving platform visible at frame 41,500 and preserved by the
+Destroyer-MK2 arena setup, not a boss constructor. The leading oscillator has
+no known constructor and was not reached in all 90,000 pinned TAS frames, so
+its orphan status is explicit. The resulting 641-line module remains intact;
+its state-table and linked-object ownership provide a semantic boundary, not
+an arbitrary line-count split. Sixteen materially incorrect generated claims
+are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
