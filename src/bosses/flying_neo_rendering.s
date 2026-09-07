@@ -1,0 +1,475 @@
+Boss_FlyingNeoHoverDecision:                            ; DATA XREF: ROM:0003C0C6   o  ; was: sub_3C7B2
+                subq.w  #1,$1DE(a5)
+                bpl.s   loc_3C7C8
+                move.w  (dword_FFFF08).w,d0
+                andi.w  #1,d0
+                beq.w   loc_3C92E
+                bra.w   Boss_FlyingNeoInitAttackPattern
+; ---------------------------------------------------------------------------
+loc_3C7C8:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+4   j
+                lea     word_3D00A(pc),a1
+                nop
+                bsr.w   Boss_FlyingNeoProcessAnimation
+                bra.w   Boss_FlyingNeoUpdateSprites
+; ---------------------------------------------------------------------------
+loc_3C7D6:                                              ; CODE XREF: Boss_FlyingNeoCheckAttackCondition+14   j
+                move.w  #$20,4(a5)                      ; ' '
+                move.l  #$FFFD0000,$1C(a5)
+                clr.w   6(a5)
+                clr.w   $58(a5)
+                move.w  #$FFFF,$C(a5)
+; Flying Neo hover state with horizontal velocity
+Boss_FlyingNeoHover_HorizontalMovement:                 ; DATA XREF: ROM:0003C0C8   o  ; was: loc_3C7F2
+                cmpi.w  #$A0,$14(a5)
+                bmi.s   loc_3C84E
+                tst.w   $54(a5)
+                beq.s   loc_3C81C
+                cmpi.l  #$FFFDE000,$18(a5)
+                bmi.s   loc_3C812
+                addi.l  #-$2200,$18(a5)
+loc_3C812:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+56   j
+                move.l  #$FFFDE000,$18(a5)
+                bra.s   loc_3C836
+; ---------------------------------------------------------------------------
+loc_3C81C:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+4C   j
+                cmpi.l  #$22000,$18(a5)
+                bpl.s   loc_3C82E
+                addi.l  #$2200,$18(a5)
+loc_3C82E:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+72   j
+                move.l  #$22000,$18(a5)
+loc_3C836:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+68   j
+                lea     word_3D054(pc),a1
+                nop
+                bsr.w   Boss_FlyingNeoProcessAnimation
+                bsr.w   Boss_FlyingNeoUpdateSprites
+                move.l  #word_EBBCA,$3C8(a5)
+                rts
+; ---------------------------------------------------------------------------
+loc_3C84E:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+46   j
+                addq.w  #2,4(a5)
+                clr.w   $58(a5)
+                move.w  #$FFFF,$C(a5)
+                clr.l   $18(a5)
+                move.w  #$E000,$11C(a5)
+                tst.w   $54(a5)
+                beq.s   Boss_FlyingNeoDivePhase
+                neg.w   $11C(a5)
+; Dive phase with velocity accumulation and sound effects
+Boss_FlyingNeoDivePhase:                                ; CODE XREF: Boss_FlyingNeoHoverDecision+B8   j  ; was: loc_3C870
+                                        ; DATA XREF: ROM:0003C0CA   o
+                cmpi.w  #$D8,$14(a5)
+                bpl.s   loc_3C8DE
+                move.w  $11C(a5),d0
+                ext.l   d0
+                add.l   d0,$18(a5)
+                cmpi.l  #$40000,$1C(a5)
+                bpl.s   loc_3C894
+                addi.l  #$4800,$1C(a5)
+loc_3C894:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+D8   j
+                move.w  (word_FFA000).w,d0
+                andi.w  #7,d0
+                bne.s   loc_3C8A8
+                move.b  #$D1,d0
+                jsr     (Sound_PlaySFX).l
+loc_3C8A8:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+EA   j
+                lea     word_3D05E(pc),a1
+                nop
+loc_3C8AE:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+178   j
+                bsr.w   Boss_FlyingNeoProcessAnimation
+                bsr.w   Boss_FlyingNeoUpdateSprites
+                move.l  #word_EBBB8,$3C8(a5)
+                move.l  #word_EBC0C,d0
+                move.l  #word_EBC18,d1
+                cmpi.w  #2,6(a5)
+                bpl.s   loc_3C8D4
+                exg     d0,d1
+loc_3C8D4:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+11E   j
+                move.l  d0,$1E8(a5)
+                move.l  d1,$368(a5)
+                rts
+; ---------------------------------------------------------------------------
+loc_3C8DE:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+C4   j
+                addq.w  #2,4(a5)
+                move.w  $11C(a5),d0
+                asl.w   #1,d0
+                move.w  d0,$11C(a5)
+; Flying Neo dive phase with velocity
+Boss_FlyingNeoDive_DiveInitiated:                       ; DATA XREF: ROM:0003C0CC   o  ; was: loc_3C8EC
+                cmpi.w  #$B8,$14(a5)
+                bpl.s   loc_3C908
+                move.w  #$1A,4(a5)
+                move.w  #2,$17E(a5)
+                clr.w   $1DC(a5)
+                bra.w   Boss_FlyingNeoSetupAttackSlots
+; ---------------------------------------------------------------------------
+loc_3C908:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+140   j
+                move.w  $11C(a5),d0
+                ext.l   d0
+                sub.l   d0,$18(a5)
+                cmpi.l  #$FFFD8000,$1C(a5)
+                bmi.s   loc_3C924
+                subi.l  #$4800,$1C(a5)
+loc_3C924:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+168   j
+                lea     word_3D070(pc),a1
+                nop
+                bra.w   loc_3C8AE
+; ---------------------------------------------------------------------------
+loc_3C92E:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+E   j
+                move.w  #$26,4(a5)                      ; '&'
+                clr.w   $58(a5)
+                move.w  #$FFFF,$C(a5)
+                clr.w   6(a5)
+                clr.l   $18(a5)
+                clr.l   $1C(a5)
+; Flying Neo wing animation state
+Boss_FlyingNeoHover_WingAnimation:                      ; DATA XREF: ROM:0003C0CE   o  ; was: loc_3C94A
+                tst.w   $54(a5)
+                bne.s   loc_3C978
+                cmpi.w  #$FA0,$BC(a5)
+                bpl.s   loc_3C982
+loc_3C958:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+1CC   j
+                move.l  #$12000,$1C(a5)
+                move.l  #$12000,$18(a5)
+                tst.w   $54(a5)
+                beq.w   Boss_FlyingNeoResetAttack
+                neg.l   $18(a5)
+                bra.w   Boss_FlyingNeoResetAttack
+; ---------------------------------------------------------------------------
+loc_3C978:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+19C   j
+                cmpi.w  #$1000,$BC(a5)
+                bpl.w   loc_3C958
+loc_3C982:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+1A4   j
+                movea.w #(word_FFC800-M68K_RAM),a0
+                movea.w #(word_FFC980-M68K_RAM),a1
+                cmpi.w  #5,6(a5)
+                bmi.s   loc_3C994
+                exg     a0,a1
+loc_3C994:                                              ; CODE XREF: Boss_FlyingNeoHoverDecision+1DE   j
+                move.w  a0,$48(a5)
+                move.w  a0,$4A(a5)
+                move.w  (dword_FFA904).w,d0
+                addi.w  #$BC,d0
+                move.w  d0,$14(a0)
+                lea     word_3D02E(pc),a1
+                nop
+                bsr.w   Boss_FlyingNeoProcessAnimation
+                bsr.w   Boss_FlyingNeoUpdateSprites
+                movea.w #(word_FFC800-M68K_RAM),a0
+                bsr.s   Boss_FlyingNeoUpdateWingSprite
+                movea.w #(word_FFC980-M68K_RAM),a0
+; End of function Boss_FlyingNeoHoverDecision
+; Updates wing sprite frame based on Y position
+Boss_FlyingNeoUpdateWingSprite:                         ; CODE XREF: Boss_FlyingNeoHoverDecision+208   p  ; was: sub_3C9C0
+                move.l  #word_EBC0C,8(a0)
+                move.w  (dword_FFA904).w,d0
+                addi.w  #$B2,d0
+                cmp.w   $14(a0),d0
+                bmi.s   locret_3C9DE
+                move.l  #word_EBC18,8(a0)
+locret_3C9DE:                                           ; CODE XREF: Boss_FlyingNeoUpdateWingSprite+14   j
+                rts
+; End of function Boss_FlyingNeoUpdateWingSprite
+; Calculates distance to enemy entity
+Boss_FlyingNeoCalculateDistance:                        ; CODE XREF: Boss_FlyingNeoAttackPatternUpdate+C   p  ; was: sub_3C9E0
+                movea.w #(word_FFCA40-M68K_RAM),a5
+                jsr     (Physics_CalculateDistanceTo).l
+                movea.w #(Entity_ObjectPool-M68K_RAM),a5
+                rts
+; End of function Boss_FlyingNeoCalculateDistance
+; Updates boss sprite positions and rendering
+Boss_FlyingNeoUpdateSprites:                            ; CODE XREF: Boss_FlyingNeoIntroWait+14   j  ; was: sub_3C9F0
+                                        ; Boss_FlyingNeoPlayerControlled+76   j
+                move.w  #$E,$A0(a5)
+                move.w  #$1C,$A4(a5)
+                tst.w   $54(a5)
+                beq.s   Boss_FlyingNeoUpdateMetasprite
+                move.w  #$10,$A0(a5)
+; Updates metasprite angles and linked positions
+Boss_FlyingNeoUpdateMetasprite:                         ; CODE XREF: Boss_FlyingNeoUpdateSprites+10   j  ; was: loc_3CA08
+                clr.w   $40(a5)
+                clr.w   $44(a5)
+                movea.w #(word_FFC6E0-M68K_RAM),a4
+                movea.w a5,a3
+                moveq   #7,d7
+                move.w  #8,(dword_FF8040).w
+                jsr     (Sprite_UpdateMetaspriteAngles).l
+                bsr.w   Boss_FlyingNeoUpdateScroll
+                bsr.w   Boss_FlyingNeoCollisionCheck
+                bsr.w   Boss_FlyingNeoAnimationUpdate
+                bra.w   loc_3CC66
+; End of function Boss_FlyingNeoUpdateSprites
+; ---------------------------------------------------------------------------
+byte_3CA34:     dc.b    4, $FE, 3, $FF, 2, 0, 3, 0
+                                        ; DATA XREF: Boss_FlyingNeoAnimationUpdate:loc_3CA5C   o
+
+; Updates boss animation frame with interpolation
+Boss_FlyingNeoAnimationUpdate:                          ; CODE XREF: Boss_FlyingNeoUpdateSprites+3C   p  ; was: sub_3CA3C
+                move.l  #word_EBBB8,$3C8(a5)
+                move.w  (word_FFA000).w,d0
+                btst    #7,d0
+                beq.s   loc_3CA5C
+                btst    #3,d0
+                beq.s   loc_3CA5C
+                move.l  #word_EBBCA,$3C8(a5)
+loc_3CA5C:                                              ; CODE XREF: Boss_FlyingNeoAnimationUpdate+10   j
+                                        ; Boss_FlyingNeoAnimationUpdate+16   j
+                lea     byte_3CA34(pc),a0
+                move.w  (word_FFA000).w,d0
+                andi.w  #6,d0
+                move.b  (a0,d0.w),d4
+                move.b  1(a0,d0.w),d5
+                ext.w   d4
+                ext.w   d5
+                movea.w #(word_FFC9E0-M68K_RAM),a0
+                moveq   #$FFFFFFD2,d0
+                moveq   #$16,d1
+                tst.w   $54(a5)
+                beq.s   loc_3CA86
+                moveq   #$4C,d0                         ; 'L'
+                neg.w   d4
+loc_3CA86:                                              ; CODE XREF: Boss_FlyingNeoAnimationUpdate+44   j
+                add.w   d4,d0
+                add.w   d5,d1
+                add.w   $10(a5),d0
+                add.w   $14(a5),d1
+                move.w  d0,$10(a0)
+                move.w  d1,$14(a0)
+                movea.w #(word_FFCA40-M68K_RAM),a0
+                moveq   #$32,d0                         ; '2'
+                moveq   #$A,d1
+                tst.w   $54(a5)
+                beq.s   loc_3CAAA
+                moveq   #$FFFFFFEE,d0
+loc_3CAAA:                                              ; CODE XREF: Boss_FlyingNeoAnimationUpdate+6A   j
+                add.w   $10(a5),d0
+                add.w   $14(a5),d1
+                move.w  d0,$10(a0)
+                move.w  d1,$14(a0)
+                movea.w #(word_FF9800-M68K_RAM),a0
+                movea.w #(word_FF9800-M68K_RAM),a1
+                moveq   #$23,d7                         ; '#'
+                move.w  $23E(a5),d0
+loc_3CAC8:                                              ; CODE XREF: Boss_FlyingNeoAnimationUpdate+92   j
+                move.w  (a1),d1
+                move.w  d0,(a1)+
+                move.w  d1,d0
+                dbf     d7,loc_3CAC8
+                movea.w #(word_FFCA40-M68K_RAM),a0
+                movea.w #(byte_FFCAA0-M68K_RAM),a1
+                movea.w #(byte_FF9806-M68K_RAM),a2
+                movea.w #(word_FF9900-M68K_RAM),a3
+                movea.w #(dword_FF9A00-M68K_RAM),a4
+                move.w  $54(a5),d4
+                asl.w   #1,d4
+                move.w  #$3FC,d5
+                moveq   #$1C,d6
+                moveq   #7,d7
+loc_3CAF4:                                              ; CODE XREF: Boss_FlyingNeoAnimationUpdate+FE   j
+                move.w  (a2),d0
+                beq.s   loc_3CB00
+                bpl.s   loc_3CAFE
+                add.w   d6,d0
+                bra.s   loc_3CB00
+; ---------------------------------------------------------------------------
+loc_3CAFE:                                              ; CODE XREF: Boss_FlyingNeoAnimationUpdate+BC   j
+                sub.w   d6,d0
+loc_3CB00:                                              ; CODE XREF: Boss_FlyingNeoAnimationUpdate+BA   j
+                                        ; Boss_FlyingNeoAnimationUpdate+C0   j
+                add.w   d0,$56(a1)
+                move.w  $56(a1),d0
+                move.w  d0,d1
+                add.w   d4,d0
+                and.w   d5,d0
+                and.w   d5,d1
+                move.l  (a3,d1.w),d3
+                move.l  (a4,d0.w),d2
+                add.l   $10(a0),d2
+                add.l   $14(a0),d3
+                move.l  d2,$10(a1)
+                move.l  d3,$14(a1)
+                tst.w   d6
+                beq.s   Boss_FlyingNeoAdvanceAnimation
+                subq.w  #4,d6
+; Advances animation frame pointers in loop
+Boss_FlyingNeoAdvanceAnimation:                         ; CODE XREF: Boss_FlyingNeoAnimationUpdate+EE   j  ; was: loc_3CB2E
+                lea     $60(a0),a0
+                lea     $60(a1),a1
+                adda.w  #8,a2
+                dbf     d7,loc_3CAF4
+locret_3CB3E:                                           ; CODE XREF: Boss_FlyingNeoUpdatePaletteFade+8   j
+                rts
+; End of function Boss_FlyingNeoAnimationUpdate
+; Updates palette fade effect for boss
+Boss_FlyingNeoUpdatePaletteFade:                        ; CODE XREF: Boss_FlyingNeoDefeatState1   p  ; was: sub_3CB40
+                                        ; sub_3C3AE   p
+                move.w  (word_FFA000).w,d0
+                andi.w  #$F,d0
+                bne.s   locret_3CB3E
+                lea     (word_3E12).l,a2
+                lea     word_3CB5C(pc),a3
+                nop
+                jmp     (Palette_ProcessFadeEffect).l
+; End of function Boss_FlyingNeoUpdatePaletteFade
+; ---------------------------------------------------------------------------
+word_3CB5C:     dc.w    2, $CEE, 0, 0, $866, $200, $422, 6, $2A, $26E
+                                        ; DATA XREF: Boss_FlyingNeoUpdatePaletteFade+10   o
+                dc.w    $24, $268, $6AC
+
+; Clear entity sprite IDs and array data
+Boss_FlyingNeoClearEntityData:
+                movea.w #(byte_FFCAA0-M68K_RAM),a0      ; was: sub_3CB76
+                moveq   #7,d7
+loc_3CB7C:                                              ; CODE XREF: Boss_FlyingNeoClearEntityData+E   j
+                move.w  d0,$56(a0)
+                lea     $60(a0),a0
+                dbf     d7,loc_3CB7C
+                movea.w #(word_FF9800-M68K_RAM),a0
+                moveq   #$23,d7                         ; '#'
+                moveq   #0,d1
+loc_3CB90:                                              ; CODE XREF: Boss_FlyingNeoClearEntityData+1C   j
+                move.w  d1,(a0)+
+                dbf     d7,loc_3CB90
+                rts
+; End of function Boss_FlyingNeoClearEntityData
+; Updates scroll offsets for boss parallax
+Boss_FlyingNeoUpdateScroll:                             ; CODE XREF: Boss_FlyingNeoDefeatState1+8   p  ; was: sub_3CB98
+                                        ; Boss_FlyingNeoDefeatState2+8   p
+                cmpi.w  #$FE,$14(a5)
+                bmi.s   loc_3CBA6
+                move.w  #$FE,$14(a5)
+loc_3CBA6:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+6   j
+                movea.w #(byte_FF9506-M68K_RAM),a0
+                moveq   #0,d0
+                move.w  (dword_FFA904).w,d7
+                subi.w  #$60,d7                         ; '`'
+                asr.w   #3,d7
+                moveq   #7,d6
+                sub.w   d7,d6
+                addi.w  #$F,d7
+loc_3CBBE:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+2A   j
+                move.w  d0,(a0)+
+                subq.w  #8,d0
+                dbf     d7,loc_3CBBE
+                move.w  (dword_FFA904).w,d0
+                neg.w   d0
+loc_3CBCC:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+36   j
+                move.w  d0,(a0)+
+                dbf     d6,loc_3CBCC
+                moveq   #8,d7
+                move.w  $14(a5),d0
+                subi.w  #$C0,d0
+                andi.w  #$FFF8,d0
+                asr.w   #2,d0
+                bpl.s   loc_3CBF0
+                asr.w   #1,d0
+                add.w   d0,d7
+                bmi.s   loc_3CC02
+                move.w  #$9506,d0
+                bra.s   loc_3CBF4
+; ---------------------------------------------------------------------------
+loc_3CBF0:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+4A   j
+                addi.w  #-$6AFA,d0
+loc_3CBF4:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+56   j
+                movea.w d0,a0
+                moveq   #$58,d0                         ; 'X'
+                sub.w   $14(a5),d0
+loc_3CBFC:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+66   j
+                move.w  d0,(a0)+
+                dbf     d7,loc_3CBFC
+loc_3CC02:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+50   j
+                movea.w #(byte_FFE40A-M68K_RAM),a0
+                move.w  (dword_FFA904).w,d7
+                subi.w  #$60,d7                         ; '`'
+                bpl.s   loc_3CC12
+                moveq   #0,d7
+loc_3CC12:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+76   j
+                addi.w  #$9C,d7
+                move.w  #$120,d0
+                add.w   $10(a5),d0
+                cmpi.w  #$200,$10(a5)
+                bpl.s   loc_3CC2E
+                cmpi.w  #$28,$10(a5)                    ; '('
+                bpl.s   loc_3CC3C
+loc_3CC2E:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+8C   j
+                move.w  #$148,d0
+                tst.w   $54(a5)
+                beq.s   loc_3CC3C
+                move.w  #$118,d0
+loc_3CC3C:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+94   j
+                                        ; Boss_FlyingNeoUpdateScroll+9E   j
+                move.w  d0,(a0)
+                addq.w  #4,a0
+                dbf     d7,loc_3CC3C
+                move.w  (dword_FFA900).w,d0
+                neg.w   d0
+loc_3CC4A:                                              ; CODE XREF: Boss_FlyingNeoUpdateScroll+BA   j
+                move.w  d0,(a0)
+                addq.w  #4,a0
+                cmpa.w  #$E78A,a0
+                bmi.s   loc_3CC4A
+                rts
+; End of function Boss_FlyingNeoUpdateScroll
+; Writes scroll values to VDP via DMA
+Boss_FlyingNeoDMAScrollWrite:                           ; CODE XREF: Boss_FlyingNeoDefeatState3+1C   p  ; was: sub_3CC56
+                movea.w (word_FFF70E).w,a0
+                moveq   #$1B,d7
+loc_3CC5C:                                              ; CODE XREF: Boss_FlyingNeoDMAScrollWrite+A   j
+                move.w  #$193,(a0)+
+                dbf     d7,loc_3CC5C
+                bra.s   Boss_FlyingNeoDMAScrollSetup
+; ---------------------------------------------------------------------------
+loc_3CC66:                                              ; CODE XREF: Boss_FlyingNeoUpdateSprites+40   j
+                movea.w (word_FFF70E).w,a0
+                moveq   #$1B,d7
+                lea     word_3CCCE(pc),a1
+                nop
+                btst    #1,(word_FFA000+1).w
+                bne.s   loc_3CC80
+                lea     word_3CD3E(pc),a1
+                nop
+loc_3CC80:                                              ; CODE XREF: Boss_FlyingNeoDMAScrollWrite+22   j
+                tst.w   $54(a5)
+                beq.s   loc_3CC8C
+                adda.l  #$38,a1                         ; '8'
+loc_3CC8C:                                              ; CODE XREF: Boss_FlyingNeoDMAScrollWrite+2E   j
+                                        ; Boss_FlyingNeoDMAScrollWrite+38   j
+                move.w  (a1)+,(a0)+
+                dbf     d7,loc_3CC8C
+; Sets up DMA scroll write registers for background
+Boss_FlyingNeoDMAScrollSetup:                           ; CODE XREF: Boss_FlyingNeoDMAScrollWrite+E   j  ; was: loc_3CC92
+                movea.w (word_FFF70C).w,a4
+                move.w  #$83,-(a4)
+                move.w  #$6B80,-(a4)
+                move.b  (word_FFF70E).w,d2
+                move.b  (word_FFF70E+1).w,d3
+                asr.b   #1,d2
+                roxr.b  #1,d3
+                move.b  d3,-(a4)
+                move.b  #$95,-(a4)
+                move.b  d2,-(a4)
+                move.b  #$96,-(a4)
+                move.l  #$8F02977F,-(a4)
+                move.l  #$9400931C,-(a4)
+                move.w  a4,(word_FFF70C).w
+                addi.w  #$38,(word_FFF70E).w            ; '8'
+                rts
+; End of function Boss_FlyingNeoDMAScrollWrite
+; ---------------------------------------------------------------------------
+word_3CCCE:     dc.w    $6343, $6344, $6345, $6346, $6347, $6348, $6349, $634A
+                                        ; DATA XREF: Boss_FlyingNeoDMAScrollWrite+16   o
+                dc.w    $634B, $634C, $634D, $634E, $634F, $6350, $6351, $6352
+                dc.w    $6353, $63CD, $63CD, $63CD, $63CD, $63CD, $63CD, $63CD
+                dc.w    $63CD, $63CD, $63CD, $63CD, $63CD, $63CD, $63CD, $63CD
+                dc.w    $63CD, $63CD, $63CD, $63CD, $63CD, $63CD, $63CD, $6B53
+                dc.w    $6B52, $6B51, $6B50, $6B4F, $6B4E, $6B4D, $6B4C, $6B4B
+                dc.w    $6B4A, $6B49, $6B48, $6B47, $6B46, $6B45, $6B44, $6B43
+word_3CD3E:     dc.w    $63CD, $63CD, $63CD, $63CD, $63CD, $6B53, $6B52, $6354
+                                        ; DATA XREF: Boss_FlyingNeoDMAScrollWrite+24   o
+                dc.w    $6355, $6356, $6357, $6358, $6359, $635A, $635B, $6B49
+                dc.w    $6B48, $6B47, $6B46, $6B45, $6B44, $6B43, $63CD, $63CD
+                dc.w    $63CD, $63CD, $63CD, $63CD, $63CD, $63CD, $63CD, $63CD
+                dc.w    $63CD, $63CD, $6343, $6344, $6345, $6346, $6347, $6348
+                dc.w    $6349, $635B, $6B5A, $6B59, $6B58, $6B57, $6B56, $6B55
+                dc.w    $6B54, $6352, $6353, $63CD, $63CD, $63CD, $63CD, $63CD
+
+; Checks collision between boss and player attacks

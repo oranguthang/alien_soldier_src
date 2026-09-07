@@ -33,7 +33,11 @@ listing by `make verify-layout`.
 | `0x030B3A-0x032343` | stage 11 parts, Gusthead, and Destroyer Proto | 4 | hypothesis |
 | `0x032344-0x033C49` | stage 14/Jetsripper, Wolf Garopa, Tracker, and Missiray flyer | 4 | hypothesis |
 | `0x033C4A-0x035613` | stage 24 visuals, boss projectiles, metasprites, and sprite tables | 4 | hypothesis |
-| `0x035614-0x082323` | boss-heavy code and first padding gap | 11 | hypothesis |
+| `0x035614-0x0374C5` | Jetsripper and Shiper state, movement, and projectiles | 6 | hypothesis |
+| `0x0374C6-0x0394D7` | Antroid and Terobuster systems | 7 | hypothesis |
+| `0x0394D8-0x03B29D` | Shellshogun and Madam Barbar systems | 4 | hypothesis |
+| `0x03B29E-0x03D159` | Joker, Flying Neo, and Caterpillar systems | 5 | hypothesis |
+| `0x03D15A-0x082323` | later boss code and first padding gap | 9 | hypothesis |
 | `0x082324-0x0E7FFF` | sound driver/data and second padding gap | 1 | static |
 | `0x0E8000-0x17FFFF` | mixed data and third padding gap | 1 | unknown |
 | `0x180000-0x1FFFFF` | final data bank and ROM end byte | 1 | unknown |
