@@ -40,8 +40,15 @@ listing by `make verify-layout`.
 | `0x03D0AE-0x040CED` | Caterpillar, Xi-Tiger, Deep Strider, Gusthead, and Snake | 7 | hypothesis |
 | `0x040CEE-0x045ACF` | Sunset Sting, Viblack, Back Stringer, and opening Epsilon projectiles | 12 | hypothesis |
 | `0x045AD0-0x0490FF` | Epsilon 1 and Sharpssteel systems | 9 | hypothesis |
-| `0x049100-0x04BD4F` | Jampan and Destroyer MK2 systems | 7 | hypothesis |
-| `0x04BD50-0x082323` | later boss code and first padding gap | 5 | hypothesis |
+| `0x049100-0x04BEBB` | Jampan and Destroyer MK2 systems | 7 | hypothesis |
+| `0x04BEBC-0x04DDD1` | Bugmax systems | 4 | hypothesis |
+| `0x04DDD2-0x050CD3` | Shield Viper and Wolf Garopa systems | 8 | hypothesis |
+| `0x050CD4-0x0537B7` | Valkirie transition, Z-Leo, and Valkirie Force | 8 | hypothesis |
+| `0x0537B8-0x05575D` | Missiray and Seven Forces introduction/forms | 6 | hypothesis |
+| `0x05575E-0x057497` | Valkirie battle/rendering and Medusa | 3 | hypothesis |
+| `0x057498-0x058FED` | Sirene, Artemis, and an unidentified Seven Force | 4 | hypothesis |
+| `0x058FEE-0x05A43B` | alternate Valkirie and Sylpheed systems | 3 | hypothesis |
+| `0x05A43C-0x082323` | final entity stub, included data, and first padding gap | 1 | static |
 | `0x082324-0x0E7FFF` | sound driver/data and second padding gap | 1 | static |
 | `0x0E8000-0x17FFFF` | mixed data and third padding gap | 1 | unknown |
 | `0x180000-0x1FFFFF` | final data bank and ROM end byte | 1 | unknown |

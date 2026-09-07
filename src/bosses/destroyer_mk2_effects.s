@@ -648,3 +648,124 @@ loc_4BD46:                                              ; CODE XREF: Boss_Destro
                 rts
 ; End of function Boss_DestroyerMK2ShootPattern3
 ; Copies entity address from a5 to a0
+Boss_DestroyerMK2CopyEntityAddress:                     ; CODE XREF: Boss_DestroyerMK2DefeatShake+16   p  ; was: sub_4BD50
+                                        ; Enemy_RotateAndMoveWithAccel+E   p
+                movea.w a5,a0
+; End of function Boss_DestroyerMK2CopyEntityAddress
+; Plays boss intro sound
+Boss_DestroyerMK2PlayIntroSFX:                          ; CODE XREF: Boss_DestroyerMK2ShootPattern3+DA   p  ; was: sub_4BD52
+                addi.w  #$20,d2                         ; ' '
+                andi.w  #$1C0,d2
+                lsr.w   #4,d2
+                move.l  off_4BD6C(pc,d2.w),8(a0)
+                lsr.w   #1,d2
+                move.w  word_4BD8C(pc,d2.w),$E(a0)
+                rts
+; End of function Boss_DestroyerMK2PlayIntroSFX
+; ---------------------------------------------------------------------------
+off_4BD6C:      dc.l    word_EC2C8                      ; DATA XREF: Boss_DestroyerMK2PlayIntroSFX+A   r
+                dc.l    word_EC2CE
+                dc.l    word_EC2D4
+                dc.l    word_EC2CE
+                dc.l    word_EC2C8
+                dc.l    word_EC2DA
+                dc.l    word_EC2E0
+                dc.l    word_EC2DA
+word_4BD8C:     dc.w    $6300, $6300, $6300, $6B00, $6300, $6B00, $6300, $6300, $838, 0, $F706, $6728, $838, 5, $F706, $670C
+                                        ; DATA XREF: Boss_DestroyerMK2PlayIntroSFX+12   r
+
+; Updates weapon cooldown timers
+Boss_UpdateMultipleWeaponTimers:
+                tst.w   (word_FFC804).w                 ; was: sub_4BDAC
+                bne.s   loc_4BDB8
+                move.w  #2,(word_FFC804).w
+loc_4BDB8:                                              ; CODE XREF: Boss_UpdateMultipleWeaponTimers+4   j
+                btst    #6,(word_FFF706).w
+                beq.s   loc_4BDCC
+                tst.w   (word_FFC7A4).w
+                bne.s   loc_4BDCC
+                move.w  #2,(word_FFC7A4).w
+loc_4BDCC:                                              ; CODE XREF: Boss_UpdateMultipleWeaponTimers+12   j
+                                        ; Boss_UpdateMultipleWeaponTimers+18   j
+                btst    #1,(word_FFF706).w
+                beq.s   locret_4BDFC
+                btst    #5,(word_FFF706).w
+                beq.s   loc_4BDE8
+                tst.w   (word_FFC8C4).w
+                bne.s   loc_4BDE8
+                move.w  #2,(word_FFC8C4).w
+loc_4BDE8:                                              ; CODE XREF: Boss_UpdateMultipleWeaponTimers+2E   j
+                                        ; Boss_UpdateMultipleWeaponTimers+34   j
+                btst    #6,(word_FFF706).w
+                beq.s   locret_4BDFC
+                tst.w   (word_FFC864).w
+                bne.s   locret_4BDFC
+                move.w  #2,(word_FFC864).w
+locret_4BDFC:                                           ; CODE XREF: Boss_UpdateMultipleWeaponTimers+26   j
+                                        ; Boss_UpdateMultipleWeaponTimers+42   j
+                rts
+; End of function Boss_UpdateMultipleWeaponTimers
+; Boss intro roar sound
+Boss_DestroyerMK2IntroRoar:                             ; CODE XREF: Boss_DestroyerMK2Main+8   p  ; was: sub_4BDFE
+                lea     (word_FFE480).w,a0
+                move.w  (dword_FFA900).w,d0
+                neg.w   d0
+                move.w  #$27,d7                         ; '''
+loc_4BE0C:                                              ; CODE XREF: Boss_DestroyerMK2IntroRoar+12   j
+                move.w  d0,(a0)
+                addq.w  #4,a0
+                dbf     d7,loc_4BE0C
+                rts
+; End of function Boss_DestroyerMK2IntroRoar
+; Debris projectile handler
+Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Effect_DestroyerMK2Explosion2   p  ; was: sub_4BE16
+                                        ; DATA XREF: Effect_DestroyerMK2Explosion2   o
+                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Effect_PlayRandomExplosionSound).l
+                move.w  #2,(word_FFA014).w
+                move.w  #4,(word_FFA010).w
+                jsr     (Projectile_UpdateTrajectory).l
+                bne.s   locret_4BE98
+                jsr     (Sprite_InitializeProperties).l
+                clr.b   $20(a0)
+                move.w  #6,$18(a0)
+                move.w  (dword_FFFF08+2).w,$1A(a0)
+                move.b  (dword_FFFF08).w,d0
+                move.b  (dword_FFFF08+1).w,d1
+                andi.w  #$1F,d0
+                andi.w  #$3F,d1                         ; '?'
+                subi.w  #$24,d0                         ; '$'
+                subi.w  #$24,d1                         ; '$'
+                add.w   $10(a5),d0
+                add.w   $14(a5),d1
+                move.w  d0,$10(a0)
+                move.w  d1,$14(a0)
+                move.w  (dword_FFFF08).w,d0
+                ext.l   d0
+                asl.l   #2,d0
+                move.l  d0,$1C(a0)
+                move.b  (dword_FFFF08+1).w,d0
+                andi.w  #7,d0
+                add.w   d0,d0
+                add.w   d0,d0
+                move.l  off_4BE9A(pc,d0.w),8(a0)
+                ori.w   #$8000,$E(a0)
+locret_4BE98:                                           ; CODE XREF: Projectile_DestroyerMK2DebrisMain+1E   j
+                rts
+; End of function Projectile_DestroyerMK2DebrisMain
+; ---------------------------------------------------------------------------
+off_4BE9A:      dc.l    off_E953C                       ; DATA XREF: Projectile_DestroyerMK2DebrisMain+76   r
+                dc.l    off_E95A4
+                dc.l    off_E9560
+                dc.l    off_E95C0
+                dc.l    off_E9584
+                dc.l    off_E95DC
+                dc.l    off_E9584
+                dc.l    off_E9604
+
+nullsub_108:                                            ; CODE XREF: Boss_DestroyerMK2ComponentCheckDefeat+4   j
+                                        ; Boss_DestroyerMK2ComponentCheckDefeat+14   j
+                rts
+; End of function nullsub_108
+
+; Main handler for Bugmax boss
