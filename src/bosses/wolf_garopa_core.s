@@ -52,9 +52,9 @@ Boss_WolfGaropaMovement3:                               ; DATA XREF: Boss_WolfGa
                 movea.w a5,a4
                 move.w  #$288,(dword_FF8040).w
                 moveq   #$18,d7
-                movea.l #dword_3530C,a0
-                movea.l #word_35370,a1
-                movea.l #word_3538A,a2
+                movea.l #Boss_WolfGaropaMetaspriteDescriptors,a0
+                movea.l #Boss_WolfGaropaPartRadii,a1
+                movea.l #Boss_WolfGaropaPartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 move.w  #$3E8,(a5)
                 move.w  #$C00,2(a5)

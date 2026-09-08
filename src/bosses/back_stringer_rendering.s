@@ -3,7 +3,7 @@ Boss_BackStringerUpdateRender:                          ; CODE XREF: Boss_Epsilo
                 bsr.w   Boss_BackStringerUpdatePalette
                 bsr.w   Boss_BackStringerUpdateArms
                 moveq   #$14,d7
-                jmp     Boss_BackStringerUpdateMetasprite
+                jmp     Boss_BackStringerUpdateSegmentChainAndLoadCount
 ; End of function Boss_BackStringerUpdateRender
 ; Updates palette cycling
 Boss_BackStringerUpdatePalette:                         ; CODE XREF: Boss_BackStringerUpdateRender   p  ; was: sub_44F60
@@ -409,7 +409,7 @@ loc_452FE:                                              ; CODE XREF: Boss_BackSt
 ; End of function Boss_BackStringerAnimatePose
 ; Calculates animation interpolation
 Anim_BackStringerCalcInterpolation:                     ; CODE XREF: Boss_BackStringerAnimatePose+62   p  ; was: sub_45410
-                movea.l #word_35200,a1
+                movea.l #Boss_BackStringerNeutralPose,a1
                 movea.w #(word_FF9600-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$13,d7

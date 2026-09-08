@@ -776,7 +776,7 @@ Boss_DeepStriderUpdateAngles:                           ; CODE XREF: Boss_DeepSt
                 move.w  d2,$416(a5)
                 move.w  d2,$476(a5)
                 moveq   #$C,d7
-                jmp     Sprite_UpdateMetaspriteParts
+                jmp     Sprite_UpdateMetaspriteFourFrameRotationAndLoadCount
 ; End of function Boss_DeepStriderUpdateParts
 ; ---------------------------------------------------------------------------
 off_3EFAE:      dc.l    word_EBDE6                      ; DATA XREF: ROM:0003F00C   o

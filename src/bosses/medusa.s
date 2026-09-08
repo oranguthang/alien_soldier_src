@@ -421,7 +421,7 @@ Boss_MedusaShootPattern1:                               ; CODE XREF: Boss_Medusa
                 bsr.w   Boss_MedusaSpawnProjectile1
                 bsr.w   Boss_MedusaShootPattern2
                 moveq   #$13,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_MedusaShootPattern1
 ; Shooting pattern 2
 Boss_MedusaShootPattern2:                               ; CODE XREF: Boss_MedusaShootPattern1+4   p  ; was: sub_56EC4

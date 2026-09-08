@@ -72,9 +72,9 @@ Boss_BackStringerSpawn:                                 ; DATA XREF: ROM:0004471
                 movea.w a5,a4
                 move.w  #$8300,(dword_FF8040).w
                 moveq   #$14,d7
-                movea.l #off_3516C,a0
-                movea.l #word_351C0,a1
-                movea.l #word_351D6,a2
+                movea.l #Boss_BackStringerMetaspriteDescriptors,a0
+                movea.l #Boss_BackStringerPartRadii,a1
+                movea.l #Boss_BackStringerPartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 move.w  #$314,(a5)
                 move.w  #$8D00,2(a5)

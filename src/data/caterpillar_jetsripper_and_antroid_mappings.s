@@ -85,9 +85,9 @@ word_EB75C:     dc.w    $C05B, $700, $F0F9              ; DATA XREF: ROM:0003495
 word_EB762:     dc.w    $C853, $700, $F0F8              ; DATA XREF: ROM:00034958   o
 word_EB768:     dc.w    $C85B, $700, $EFF8              ; DATA XREF: ROM:00034954   o
 word_EB76E:     dc.w    $C863, $A00, $F3F4              ; DATA XREF: ROM:00034950   o
-word_EB774:     dc.w    $C86C, $D00, $F7F1              ; DATA XREF: ROM:off_3494C   o
+word_EB774:     dc.w    $C86C, $D00, $F7F1              ; DATA XREF: ROM:Boss_AntroidPrimaryRotationFrames   o
                                         ; RAM:00FFC808   o
-word_EB77A:     dc.w    $C07C, $D00, $FAEB              ; DATA XREF: ROM:off_3496C   o
+word_EB77A:     dc.w    $C07C, $D00, $FAEB              ; DATA XREF: ROM:Boss_AntroidSecondaryRotationFrames   o
                                         ; Boss_AntroidTransitionToIdle+42   o
 word_EB780:     dc.w    $58B8, $500, $1EF               ; DATA XREF: ROM:00034970   o
                 dc.w    $D8BC, $900, $F9F7
@@ -109,8 +109,8 @@ word_EB7E0:     dc.w    $E892, $B00, $F0F6              ; DATA XREF: ROM:00034A5
 word_EB7E6:     dc.w    $F09E, $700, $F0F8              ; DATA XREF: ROM:00034A52   o
 word_EB7EC:     dc.w    $F0A6, $B00, $F0F4              ; DATA XREF: ROM:00034A4E   o
 word_EB7F2:     dc.w    $F0B2, $F00, $F0F0              ; DATA XREF: ROM:00034A4A   o
-word_EB7F8:     dc.w    $F0C2, $E00, $F2F1              ; DATA XREF: ROM:off_34A46   o
-word_EB7FE:     dc.w    $60D6, $500, $F806              ; DATA XREF: ROM:off_34A66   o
+word_EB7F8:     dc.w    $F0C2, $E00, $F2F1              ; DATA XREF: ROM:Boss_TerobusterPrimaryRotationFrames   o
+word_EB7FE:     dc.w    $60D6, $500, $F806              ; DATA XREF: ROM:Boss_TerobusterSecondaryRotationFrames   o
                                         ; Boss_TerobusterMainAI+2A0   o
                 dc.w    $E0CE, $D00, $F8E6
 word_EB80A:     dc.w    $60E2, $600, $F805              ; DATA XREF: ROM:00034A6A   o

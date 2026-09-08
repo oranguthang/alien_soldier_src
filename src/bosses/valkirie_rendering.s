@@ -261,7 +261,7 @@ Boss_ValkirieMovePattern2:                              ; DATA XREF: ROM:Entity_
                 move.w  #$100,$23C(a5)
 loc_56768:                                              ; CODE XREF: Boss_ValkirieMovePattern2+44   j
                 move.l  d0,$1F8(a5)
-                bra.w   Boss_ValkirieMovePattern3
+                bra.w   Boss_ValkirieUpdatePartPositions
 ; ---------------------------------------------------------------------------
 loc_56770:                                              ; CODE XREF: Boss_ValkirieMovePattern2+10   j
                                         ; Boss_ValkirieMovePattern2+108   j
@@ -272,7 +272,7 @@ loc_56770:                                              ; CODE XREF: Boss_Valkir
                 move.w  $4F0(a0),$190(a5)
                 move.w  $4F4(a0),$194(a5)
                 move.w  $536(a0),$56(a5)
-                bsr.w   Boss_ValkirieMovePattern3
+                bsr.w   Boss_ValkirieUpdatePartPositions
                 moveq   #8,d5
                 move.w  #$1F8,d6
                 btst    #0,(byte_FFC9DE).w
@@ -330,7 +330,7 @@ loc_56858:                                              ; CODE XREF: Boss_Valkir
                 move.w  #$FFFF,$5C(a5)
 loc_56860:                                              ; CODE XREF: Boss_ValkirieMovePattern2+13C   j
                                         ; sub_5671A:loc_56858   j
-                bsr.w   Boss_ValkirieMovePattern3
+                bsr.w   Boss_ValkirieUpdatePartPositions
                 move.w  (dword_FFA900).w,d1
                 add.w   $10(a5),d1
                 move.w  $23C(a5),d2
@@ -407,12 +407,12 @@ loc_5691A:                                              ; CODE XREF: Boss_Valkir
                 move.l  #$FFFEE000,$1F8(a5)
                 rts
 ; End of function Boss_ValkirieSetPartVelocity2
-; Movement pattern 3
-Boss_ValkirieMovePattern3:                              ; CODE XREF: Boss_ValkirieMovePattern2+52   j  ; was: sub_56924
+; Updates the five-part group between Valkirie's two anchor objects
+Boss_ValkirieUpdatePartPositions:                       ; CODE XREF: Boss_ValkirieMovePattern2+52   j  ; was: sub_56924
                                         ; Boss_ValkirieMovePattern2+7E   p
                 moveq   #4,d7
-                jmp     Boss_ValkiriePlayIntroSFX
-; End of function Boss_ValkirieMovePattern3
+                jmp     Boss_ValkirieUpdateAnchoredMetasprite
+; End of function Boss_ValkirieUpdatePartPositions
 ; Calculates angle from boss to player position for targeting
 Boss_ValkirieCalculateAngleToPlayer:                    ; CODE XREF: Boss_ValkirieMovePattern2+15E   p  ; was: sub_5692C
                 move.w  (word_FFCB10).w,d0

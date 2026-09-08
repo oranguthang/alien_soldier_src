@@ -153,7 +153,7 @@ loc_48694:                                              ; CODE XREF: Boss_Sharps
                 bsr.w   Boss_SharpssteelBackgroundFadeControl
                 bsr.w   Boss_SharpssteelCoreMain
                 moveq   #$11,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_SharpssteelBladeMain
 ; Initializes single blade
 Boss_SharpssteelBladeInit:                              ; CODE XREF: Boss_SharpssteelUpdateRotation+4E   p  ; was: sub_486A4
@@ -307,10 +307,10 @@ Boss_SharpssteelCoreMain:                               ; CODE XREF: Boss_Sharps
                 nop
                 movea.w #(word_FFC980-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
-                jsr     (Sprite_UpdateBossBladeSprite).l
+                jsr     (Sprite_UpdateFourDirectionFrame).l
                 movea.w #(byte_FFCB00-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
-                jmp     Sprite_UpdateBossBladeSprite
+                jmp     Sprite_UpdateFourDirectionFrame
 ; End of function Boss_SharpssteelCoreMain
 ; ---------------------------------------------------------------------------
 off_48846:      dc.l    word_EC196                      ; DATA XREF: Boss_SharpssteelCoreMain   o
@@ -626,7 +626,7 @@ loc_48B50:                                              ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelCoreInit
 ; Core defeat sequence
 Boss_SharpssteelCoreDefeat:                             ; CODE XREF: Boss_SharpssteelCoreInit+5C   p  ; was: sub_48B84
-                movea.l #word_3529E,a1
+                movea.l #Boss_SharpssteelNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #7,d7

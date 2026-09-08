@@ -192,7 +192,7 @@ Boss_FlyingNeoUpdateMetasprite:                         ; CODE XREF: Boss_Flying
                 movea.w a5,a3
                 moveq   #7,d7
                 move.w  #8,(dword_FF8040).w
-                jsr     (Sprite_UpdateMetaspriteAngles).l
+                jsr     (Sprite_UpdateMetaspriteEightFrameRotation).l
                 bsr.w   Boss_FlyingNeoUpdateScroll
                 bsr.w   Boss_FlyingNeoCollisionCheck
                 bsr.w   Boss_FlyingNeoAnimationUpdate

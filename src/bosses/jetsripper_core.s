@@ -1,3 +1,4 @@
+; Checks whether the current boss position is inside the shared screen bounds
 Boss_CheckScreenBounds:                                 ; CODE XREF: Boss_TerobusterUpdateBodyParts+72   j  ; was: sub_35614
                                         ; Boss_ShellshogunBoundsCheck+18   j
                 tst.w   (dword_FFA908).w

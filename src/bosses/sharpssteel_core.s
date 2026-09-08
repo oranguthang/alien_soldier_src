@@ -71,9 +71,9 @@ Boss_SharpssteelInit:                                   ; DATA XREF: ROM:00047C5
                 movea.w a5,a4
                 move.w  #$8300,(dword_FF8040).w
                 moveq   #$11,d7
-                movea.l #off_35220,a0
-                movea.l #word_35268,a1
-                movea.l #word_3527A,a2
+                movea.l #Boss_SharpssteelMetaspriteDescriptors,a0
+                movea.l #Boss_SharpssteelPartRadii,a1
+                movea.l #Boss_SharpssteelPartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 move.w  #$C300,$36E(a5)
                 move.w  #$C300,$4EE(a5)

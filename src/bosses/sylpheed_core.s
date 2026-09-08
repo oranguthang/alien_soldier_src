@@ -501,7 +501,7 @@ Boss_SylpheedAttackState2:                              ; CODE XREF: Boss_Sylphe
                 bsr.w   Boss_SylpheedMovePattern1
                 bsr.w   Boss_SylpheedAttackState3
                 moveq   #$19,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_SylpheedAttackState2
 ; Attack state 3 handler
 Boss_SylpheedAttackState3:                              ; CODE XREF: Boss_SylpheedAttackState2+4   p  ; was: sub_59A10

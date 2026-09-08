@@ -13,7 +13,7 @@ Boss_AntroidUpdateSprite:                               ; CODE XREF: Boss_Antroi
 Boss_AntroidSetupMetasprite:                            ; CODE XREF: Boss_AntroidEarthquakeAttack+18   p  ; was: sub_37EB0
                                         ; Boss_AntroidJumpAttackState+12   p
                 moveq   #$18,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_AntroidSetupMetasprite
 ; Switches metasprite table based on frame counter for animation variety
 Boss_AntroidUpdateMetaspriteTable:                      ; CODE XREF: Boss_AntroidEarthquakeAttack+38   j  ; was: sub_37EB8

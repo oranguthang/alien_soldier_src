@@ -6,7 +6,7 @@ word_EBBCA:     dc.w    $286E, $D00, $2FA               ; DATA XREF: Boss_Flying
                                         ; Boss_FlyingNeoAnimationUpdate+18   o
                 dc.w    $2864, $400, $EAFA
                 dc.w    $A85C, $D00, $F2FA
-word_EBBDC:     dc.w    $A0C5, $D00, $F8F0              ; DATA XREF: ROM:off_34F20   o
+word_EBBDC:     dc.w    $A0C5, $D00, $F8F0              ; DATA XREF: ROM:Boss_FlyingNeoRotationFrames   o
 word_EBBE2:     dc.w    $A0BD, $D00, $F8F1              ; DATA XREF: ROM:00034F24   o
 word_EBBE8:     dc.w    $A0B4, $A00, $F5F3              ; DATA XREF: ROM:00034F28   o
 word_EBBEE:     dc.w    $A0A8, $B00, $F2F6              ; DATA XREF: ROM:00034F2C   o
@@ -20,7 +20,7 @@ word_EBC0C:     dc.w    $287E, $100, $FBF2              ; DATA XREF: Boss_Flying
 word_EBC18:     dc.w    $28D6, $200, $FBF3              ; DATA XREF: ROM:00034F56   o
                                         ; ROM:00034F66   o
                 dc.w    $A8CE, $700, $FBFB
-word_EBC24:     dc.w    $E856, $500, $F9F8              ; DATA XREF: ROM:off_34F8A   o
+word_EBC24:     dc.w    $E856, $500, $F9F8              ; DATA XREF: ROM:Boss_JokerRotationFramesA   o
                                         ; ROM:00034FC6   o
 word_EBC2A:     dc.w    $E85A, $500, $F9F8              ; DATA XREF: ROM:00034F8E   o
                                         ; ROM:00034FC2   o
@@ -35,8 +35,8 @@ word_EBC42:     dc.w    $F04A, $500, $F9FA              ; DATA XREF: ROM:00034F9
 word_EBC48:     dc.w    $F04E, $500, $F9F9              ; DATA XREF: ROM:00034FA2   o
                                         ; ROM:00034FAE   o
 word_EBC4E:     dc.w    $F052, $500, $F9F9              ; DATA XREF: ROM:00034FA6   o
-                                        ; ROM:off_34FAA   o
-word_EBC54:     dc.w    $E093, $D00, $F8EF              ; DATA XREF: ROM:off_34FCA   o
+                                        ; ROM:Boss_JokerRotationFramesB   o
+word_EBC54:     dc.w    $E093, $D00, $F8EF              ; DATA XREF: ROM:Boss_JokerRotationFramesC   o
                                         ; ROM:00035006   o
 word_EBC5A:     dc.w    $E08B, $D00, $F7ED              ; DATA XREF: ROM:00034FCE   o
                                         ; ROM:00035002   o
@@ -51,8 +51,8 @@ word_EBC72:     dc.w    $E87A, $700, $F2F8              ; DATA XREF: ROM:00034FD
 word_EBC78:     dc.w    $E882, $A00, $F3F4              ; DATA XREF: ROM:00034FE2   o
                                         ; ROM:00034FEE   o
 word_EBC7E:     dc.w    $E88B, $D00, $F7F3              ; DATA XREF: ROM:00034FE6   o
-                                        ; ROM:off_34FEA   o
-word_EBC84:     dc.w    $E09B, $D00, $FCE8              ; DATA XREF: ROM:off_3500A   o
+                                        ; ROM:Boss_JokerRotationFramesD   o
+word_EBC84:     dc.w    $E09B, $D00, $FCE8              ; DATA XREF: ROM:Boss_JokerRotationFramesE   o
                                         ; ROM:00035046   o
 word_EBC8A:     dc.w    $60D8, 0, 5                     ; DATA XREF: ROM:0003500E   o
                                         ; ROM:00035042   o
@@ -73,7 +73,7 @@ word_EBCC6:     dc.w    $78B1, 0, $F4FE                 ; DATA XREF: ROM:0003502
                                         ; ROM:0003502E   o
                 dc.w    $F8AB, $900, $FCFE
 word_EBCD2:     dc.w    $F8A3, $D00, $F4F8              ; DATA XREF: ROM:00035026   o
-                                        ; ROM:off_3502A   o
+                                        ; ROM:Boss_JokerRotationFramesF   o
 word_EBCD8:     dc.w    $814, $100, $D8FD               ; DATA XREF: ROM:0002F198   o
                 dc.w    $804, 0, $E820
                 dc.w    $822, $C00, $18F0

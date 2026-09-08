@@ -462,6 +462,25 @@ object, and eight sine-positioned parts. Static evidence supports the neutral
 name `stage_3_orbiting_formation.s`, but no canonical character name is yet
 claimed without stronger visual or runtime evidence.
 
+The `boss_metasprites.s` audit reduced the count to 9,327. Its shared routines
+now distinguish traversal setup, eight-frame and four-frame directional
+rotation, Back Stringer's dual-position segment chain, and the animation
+interpolation buffer. In particular, the former
+`Boss_ValkiriePlayIntroSFX` name was contradicted by the implementation: the
+routine makes no sound call and instead aligns Valkirie's five-part group
+between two object anchors. The corrected name and its static basis are
+recorded in `name_audit.json`.
+
+The adjacent data audit renamed `boss_sprite_tables.s` to
+`boss_metasprite_definitions.s` and reduced the address-derived count to
+9,218. The 801-line module remains intact because it is one coherent registry
+for the shared initializer: directional frame pointers, inline descriptors,
+part radii, packed parent links/flags, and interpolation poses for twelve boss
+definition groups. Static evidence also shows deliberate type-punning in the
+original data. Valkirie reads one rotation table bytewise as a neutral pose, while
+Z-Leo and Valkirie Force interpret the shared block at `$0355A4` differently;
+the names preserve those dual roles instead of claiming a single false type.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

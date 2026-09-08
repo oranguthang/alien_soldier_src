@@ -88,7 +88,7 @@ loc_5262E:                                              ; CODE XREF: Boss_ZLeoIn
                                         ; Boss_ZLeoIntroMove+24   j
                 bsr.w   Boss_ZLeoUpdateSegments
                 moveq   #$F,d7
-                jsr     (Sprite_InitMetaspriteSimple).l
+                jsr     (Sprite_BeginMetaspritePartTraversal).l
                 move.w  #$120,d0
                 sub.w   $10(a5),d0
                 move.w  d0,(dword_FFA900).w
@@ -301,7 +301,7 @@ Boss_ZLeoUpdateBladeSprite:                             ; CODE XREF: Boss_ZLeoRi
                 nop
                 movea.w #(word_FFC860-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
-                jmp     Sprite_UpdateBossBladeSprite
+                jmp     Sprite_UpdateFourDirectionFrame
 ; End of function Boss_ZLeoUpdateBladeSprite
 ; ---------------------------------------------------------------------------
 off_528C8:      dc.l    word_ED3F4                      ; DATA XREF: Boss_ZLeoUpdateBladeSprite   o

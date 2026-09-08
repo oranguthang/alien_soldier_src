@@ -1,7 +1,7 @@
 word_EC6F0:     dc.w    $2870, $100, $FEF4              ; DATA XREF: Boss_ValkirieInit+D4   o
                 dc.w    $A86A, $600, $F6FC
-word_EC6FC:     dc.w    $A872, $500, $F8F8              ; DATA XREF: ROM:off_353BC   o
-                                        ; ROM:off_354B0   o
+word_EC6FC:     dc.w    $A872, $500, $F8F8              ; DATA XREF: ROM:Boss_ValkirieRotationFramesA   o
+                                        ; ROM:Boss_ValkirieAlternateRotationFramesAndNeutralPose   o
 word_EC702:     dc.w    $A876, $500, $F8F8              ; DATA XREF: ROM:000353C0   o
                                         ; ROM:000354B4   o
 word_EC708:     dc.w    $A87A, $500, $F9F8              ; DATA XREF: ROM:000353C4   o
@@ -16,8 +16,8 @@ word_EC720:     dc.w    $A88A, $500, $F7F9              ; DATA XREF: ROM:000353D
                                         ; ROM:000354C8   o
 word_EC726:     dc.w    $A88E, $500, $F7F8              ; DATA XREF: ROM:000353D8   o
                                         ; ROM:000354CC   o
-word_EC72C:     dc.w    $A892, $D00, $F7F0              ; DATA XREF: ROM:off_353DC   o
-                                        ; ROM:off_354D0   o
+word_EC72C:     dc.w    $A892, $D00, $F7F0              ; DATA XREF: ROM:Boss_ValkirieRotationFramesB   o
+                                        ; ROM:Boss_ValkirieAlternateRotationFramesB   o
 word_EC732:     dc.w    $A89A, $900, $F6F7              ; DATA XREF: ROM:000353E0   o
                                         ; ROM:000354D4   o
 word_EC738:     dc.w    $28A6, $100, $FBF5              ; DATA XREF: ROM:000353E4   o
@@ -57,7 +57,7 @@ word_EC7C8:     dc.w    $A917, $900, $FBF8              ; DATA XREF: Boss_Valkir
                                         ; Boss_ValkirieInit+20A   o
 word_EC7CE:     dc.w    $A91D, $500, $F8F2              ; DATA XREF: Boss_ValkirieInit+82   o
                                         ; Boss_ValkirieInit+B6   o
-word_EC7D4:     dc.w    $A921, $500, $F8F9              ; DATA XREF: ROM:off_3541C   o
+word_EC7D4:     dc.w    $A921, $500, $F8F9              ; DATA XREF: ROM:Boss_ValkirieMetaspriteDescriptors   o
                                         ; ROM:00035510   o
 word_EC7DA:     dc.w    $A925, $500, $F8F8              ; DATA XREF: ROM:00035430   o
                                         ; ROM:00035444   o

@@ -86,7 +86,7 @@ loc_39252:                                              ; CODE XREF: Boss_Terobu
 ; End of function Boss_TerobusterApplyAngles
 ; Calculates interpolation deltas for smooth animation
 Boss_TerobusterCalculateDeltas:                         ; CODE XREF: Boss_TerobusterInterpolateAnimation+4E   p  ; was: sub_392B0
-                movea.l #word_34ADA,a1
+                movea.l #Boss_TerobusterNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #5,d7

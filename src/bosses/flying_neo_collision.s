@@ -197,7 +197,7 @@ loc_3CF9C:                                              ; CODE XREF: Boss_Flying
 ; End of function Boss_FlyingNeoProcessAnimation
 ; Calculates interpolation deltas for animation system
 Boss_FlyingNeoCalculateDeltas:                          ; CODE XREF: Boss_FlyingNeoProcessAnimation+62   p  ; was: sub_3CFE8
-                movea.l #word_34F86,a1
+                movea.l #Boss_FlyingNeoNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #3,d7

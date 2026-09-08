@@ -1,7 +1,7 @@
 Boss_ShellshogunRenderSprites:                          ; CODE XREF: Boss_ShellshogunUpdateAnimation+A   p  ; was: sub_39E5E
                                         ; Boss_ShellshogunTransitionState+2A   p
                 moveq   #$16,d7
-                jsr     (Sprite_InitMetaspriteSimple).l
+                jsr     (Sprite_BeginMetaspritePartTraversal).l
                 bsr.w   Boss_ShellshogunBoundsCheck
                 bsr.w   Boss_ShellshogunSetTileData
                 bsr.w   Boss_ShellshogunUpdateSprite
@@ -54,7 +54,7 @@ Boss_ShellshogunInitPalette:                            ; CODE XREF: Boss_Shells
 ; End of function Boss_ShellshogunInitPalette
 ; Update Shellshogun sprite flipping based on rotation angle
 Boss_ShellshogunUpdateSpriteFlip:                       ; CODE XREF: Boss_ShellshogunVerticalMovement+A0   j  ; was: sub_39EE4
-                lea     (off_34B80).l,a0
+                lea     (Boss_ShellshogunRotationFramesF).l,a0
                 move.w  $29C(a5),d0
                 subi.w  #$110,d0
                 move.w  d0,d1
@@ -304,7 +304,7 @@ loc_3A19E:                                              ; CODE XREF: Boss_Shells
                 ext.l   d0
                 addi.l  #word_3A38A,d0
                 movea.l d0,a0
-                bsr.w   Boss_ShellshogunCollisionCheck
+                bsr.w   Boss_ShellshogunCalculateAnimationDeltas
                 move.b  (dword_FF8040).w,d1
                 ext.w   d1
                 add.w   d1,$C(a5)
@@ -395,15 +395,15 @@ loc_3A1E4:                                              ; CODE XREF: Boss_Shells
                 move.w  d0,$8F6(a5)
                 rts
 ; End of function Boss_ShellshogunAnimUpdate
-; Checks collision with player projectiles
-Boss_ShellshogunCollisionCheck:                         ; CODE XREF: Boss_ShellshogunAnimUpdate+4E   p  ; was: sub_3A2CC
-                movea.l #word_34C54,a1
+; Calculates per-channel deltas toward Shellshogun's neutral pose
+Boss_ShellshogunCalculateAnimationDeltas:               ; CODE XREF: Boss_ShellshogunAnimUpdate+4E   p  ; was: sub_3A2CC
+                movea.l #Boss_ShellshogunNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 subq.w  #1,$C(a5)
                 moveq   #$E,d7
                 jmp     Anim_CalculateInterpolationDeltas
-; End of function Boss_ShellshogunCollisionCheck
+; End of function Boss_ShellshogunCalculateAnimationDeltas
 ; ---------------------------------------------------------------------------
 word_3A2E6:     dc.w    $10, $F, $18, 0, $FFFF
                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o

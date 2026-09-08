@@ -452,7 +452,7 @@ Boss_SireneIdleState:                                   ; CODE XREF: Boss_Sirene
                 bsr.w   Boss_SireneAttackState3
                 bsr.w   Boss_SireneAttackState1
                 moveq   #$1A,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_SireneIdleState
 ; Attack state 1 handler
 Boss_SireneAttackState1:                                ; CODE XREF: Boss_SireneIdleState+4   p  ; was: sub_57A82

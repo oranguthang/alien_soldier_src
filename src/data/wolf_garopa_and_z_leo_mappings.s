@@ -14,7 +14,7 @@ word_ED1AE:     dc.w    $483B, $100, $10FB              ; DATA XREF: ROM:0005058
 word_ED1BA:     dc.w    $4846, $500, $C07               ; DATA XREF: ROM:00050592   o
                 dc.w    $4843, $800, $4FD
                 dc.w    $C83D, $900, $F4F5
-word_ED1CC:     dc.w    $C84A, $E00, $F4F0              ; DATA XREF: ROM:off_352A6   o
+word_ED1CC:     dc.w    $C84A, $E00, $F4F0              ; DATA XREF: ROM:Boss_WolfGaropaRotationFramesA   o
 word_ED1D2:     dc.w    $4859, $D00, $FAEE              ; DATA XREF: ROM:000352AA   o
                 dc.w    $C856, $800, $F2F6
 word_ED1DE:     dc.w    $C861, $A00, $F5F4              ; DATA XREF: ROM:000352AE   o
@@ -26,7 +26,7 @@ word_ED1F6:     dc.w    $406A, $200, $F2F2              ; DATA XREF: ROM:000352B
 word_ED202:     dc.w    $C061, $A00, $F4F5              ; DATA XREF: ROM:000352BE   o
 word_ED208:     dc.w    $4056, $800, $F1F2              ; DATA XREF: ROM:000352C2   o
                 dc.w    $C059, $D00, $F9F2
-word_ED214:     dc.w    $4890, $500, $F9E7              ; DATA XREF: ROM:off_352C6   o
+word_ED214:     dc.w    $4890, $500, $F9E7              ; DATA XREF: ROM:Boss_WolfGaropaRotationFramesB   o
                 dc.w    $4884, $E00, $F9F7
                 dc.w    $C881, $800, $F1F9
 word_ED226:     dc.w    $48A0, $800, $9F6               ; DATA XREF: ROM:000352CA   o
@@ -50,7 +50,7 @@ word_ED280:     dc.w    $48EE, $800, $C00               ; DATA XREF: ROM:000352D
 word_ED292:     dc.w    $48FD, 0, $803                  ; DATA XREF: ROM:000352E2   o
                 dc.w    $48FE, $500, $FE0B
                 dc.w    $C8F1, $E00, $F0EB
-word_ED2A4:     dc.w    $490A, $100, $F9E9              ; DATA XREF: ROM:off_352E6   o
+word_ED2A4:     dc.w    $490A, $100, $F9E9              ; DATA XREF: ROM:Boss_WolfGaropaRotationFramesC   o
                 dc.w    $C902, $D00, $F9F1
 word_ED2B0:     dc.w    $4910, $500, $FAF0              ; DATA XREF: ROM:000352EA   o
                 dc.w    $C90C, $500, $F600

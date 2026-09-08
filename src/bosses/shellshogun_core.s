@@ -79,9 +79,9 @@ Boss_ShellshogunSetupPhase:                             ; DATA XREF: ROM:0003952
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$15,d7
                 moveq   #$17,d7
-                movea.l #dword_34BAC,a0
-                movea.l #word_34C0C,a1
-                movea.l #word_34C24,a2
+                movea.l #Boss_ShellshogunMetaspriteDescriptors,a0
+                movea.l #Boss_ShellshogunPartRadii,a1
+                movea.l #Boss_ShellshogunPartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 bset    #7,$6E(a5)
                 bset    #7,$CE(a5)

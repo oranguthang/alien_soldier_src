@@ -96,7 +96,7 @@ loc_59124:                                              ; CODE XREF: Boss_Valkir
                 bsr.w   Boss_ValkirieAnimationScriptAlt
                 bsr.w   Boss_ValkirieSetSymmetricAngles
                 moveq   #$16,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_ValkirieState3Setup
 ; Sets symmetric sprite angles for left/right mirrored parts
 Boss_ValkirieSetSymmetricAngles:                        ; CODE XREF: Boss_ValkirieState3Setup+4E   p  ; was: sub_59134

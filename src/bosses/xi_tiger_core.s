@@ -75,9 +75,9 @@ Boss_XiTigerSetup:                                      ; DATA XREF: ROM:0003D88
                 movea.w a5,a4
                 move.w  #$8280,(dword_FF8040).w
                 moveq   #$18,d7
-                movea.l #dword_34CF6,a0
-                movea.l #word_34D5A,a1
-                movea.l #word_34D74,a2
+                movea.l #Boss_XiTigerMetaspriteDescriptors,a0
+                movea.l #Boss_XiTigerPartRadii,a1
+                movea.l #Boss_XiTigerPartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 bset    #0,2(a5)
                 bset    #0,$6C2(a5)
@@ -634,7 +634,7 @@ locret_3E04E:                                           ; CODE XREF: Boss_XiTige
 Boss_XiTigerUpdateSprites:                              ; CODE XREF: Boss_XiTigerFallingLanding+6A   j  ; was: sub_3E050
                                         ; Boss_XiTigerBattleStart+30   j
                 moveq   #$17,d7
-                jsr     (Sprite_InitMetaspriteSimple).l
+                jsr     (Sprite_BeginMetaspritePartTraversal).l
                 bsr.w   Boss_XiTigerUpdateBody
                 bsr.w   Boss_XiTigerUpdateClaws
                 rts
@@ -932,7 +932,7 @@ loc_3E2B2:                                              ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerProcessAnimation
 ; Calculates animation interpolation deltas
 Boss_XiTigerCalculateDeltas:                            ; CODE XREF: Boss_XiTigerProcessAnimation+62   p  ; was: sub_3E3B0
-                movea.l #word_34DA6,a1
+                movea.l #Boss_XiTigerNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$F,d7

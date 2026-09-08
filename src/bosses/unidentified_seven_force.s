@@ -113,7 +113,7 @@ loc_58DD8:                                              ; CODE XREF: Boss_Unknow
                 bsr.w   Boss_ValkirieAnimationScriptBase
                 bsr.w   Boss_ValkirieSetAnimationAngles
                 moveq   #$18,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_Unknown1InitPositionState4
 ; Sets animation angle values for multiple sprite parts based on source data
 Boss_ValkirieSetAnimationAngles:                        ; CODE XREF: Boss_Unknown1InitPositionState4+88   p  ; was: sub_58DE8

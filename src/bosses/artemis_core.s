@@ -492,7 +492,7 @@ Boss_ArtemisAttackState2:                               ; CODE XREF: Boss_Artemi
                 bsr.w   Boss_ArtemisMovePattern1
                 bsr.w   Boss_ArtemisAttackState3
                 moveq   #$1C,d7
-                jsr     (Sprite_InitMetaspriteSimple).l
+                jsr     (Sprite_BeginMetaspritePartTraversal).l
                 move.w  (dword_FFA904).w,d6
                 subi.w  #$E200,d6
                 addi.w  #$12A,d6

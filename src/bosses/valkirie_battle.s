@@ -827,6 +827,6 @@ Boss_ValkirieBattleStart:                               ; CODE XREF: Boss_Valkir
                 bsr.w   Boss_ValkirieAnimationScript
                 bsr.w   Boss_ValkirieUpdateSprites
                 moveq   #$18,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_ValkirieBattleStart
 ; Updates boss sprites

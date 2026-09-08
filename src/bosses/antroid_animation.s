@@ -147,7 +147,7 @@ loc_381F2:                                              ; CODE XREF: Anim_Interp
 ; End of function Anim_InterpolateToTarget
 ; Resets boss animation to initial state
 Boss_AntroidResetAnimation:                             ; CODE XREF: Anim_InterpolateToTarget+62   p  ; was: sub_382BC
-                movea.l #word_34A36,a1
+                movea.l #Boss_AntroidNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$E,d7

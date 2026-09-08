@@ -212,7 +212,7 @@ locret_38E06:                                           ; CODE XREF: Boss_Terobu
 Boss_TerobusterInitMetasprite:                          ; CODE XREF: Boss_TerobusterMainAI+82   j  ; was: sub_38E08
                                         ; Boss_TerobusterMainAI+134   j
                 moveq   #9,d7
-                jsr     (Sprite_InitMetaspriteSimple).l
+                jsr     (Sprite_BeginMetaspritePartTraversal).l
                 bsr.w   Boss_TerobusterUpdateBodyParts
                 bsr.w   Boss_TerobusterOscillateValue
                 bra.w   Boss_TerobusterSpawnProjectile

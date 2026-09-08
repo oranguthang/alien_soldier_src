@@ -46,7 +46,7 @@ word_EC12A:     dc.w    $386D, $600, $E8                ; DATA XREF: ROM:0003522
                 dc.w    $3861, $E00, $F8
                 dc.w    $286D, $600, $E8E8
                 dc.w    $A861, $E00, $E8F8
-word_EC142:     dc.w    $387F, $200, $FCEC              ; DATA XREF: ROM:off_35220   o
+word_EC142:     dc.w    $387F, $200, $FCEC              ; DATA XREF: ROM:Boss_SharpssteelMetaspriteDescriptors   o
                                         ; ROM:off_48922   o
                 dc.w    $287F, $200, $ECEC
                 dc.w    $3873, $E00, $FCF4

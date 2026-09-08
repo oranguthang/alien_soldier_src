@@ -24,7 +24,7 @@ loc_3BA34:                                              ; CODE XREF: Boss_JokerR
                 move.w  #$1D,$40(a3)
                 move.w  d5,$44(a3)
                 moveq   #$15,d7
-                jsr     (Sprite_InitMetaspriteSimple).l
+                jsr     (Sprite_BeginMetaspritePartTraversal).l
                 cmpi.w  #$60,$10(a5)                    ; '`'
                 bmi.s   loc_3BA8E
                 cmpi.w  #$1E0,$10(a5)
@@ -312,7 +312,7 @@ loc_3BD46:                                              ; CODE XREF: Boss_JokerU
 ; End of function Boss_JokerUpdateAnimation
 ; Calculates interpolation deltas for smooth boss animation transitions
 Boss_JokerCalcDeltas:                                   ; CODE XREF: Boss_JokerUpdateAnimation+62   p  ; was: sub_3BDF4
-                movea.l #word_350DC,a1
+                movea.l #Boss_JokerNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #9,d7

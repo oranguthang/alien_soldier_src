@@ -1,7 +1,7 @@
 Boss_WolfGaropaShootPattern5:                           ; CODE XREF: Boss_WolfGaropaInitMultiPattern+12   j  ; was: sub_50220
                                         ; Boss_WolfGaropaShootPattern3+A8   j
                 moveq   #$18,d7
-                jsr     (Sprite_InitMetaspriteSimple).l
+                jsr     (Sprite_BeginMetaspritePartTraversal).l
                 bsr.w   Boss_WolfGaropaCollision
                 bsr.w   Boss_WolfGaropaCleanup
                 move.w  $10(a5),$35E(a5)
@@ -251,7 +251,7 @@ loc_504DE:                                              ; CODE XREF: Boss_WolfGa
                 nop
                 movea.w #(byte_FFD040-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
-                jsr     (Sprite_UpdateBossBladeSprite).l
+                jsr     (Sprite_UpdateFourDirectionFrame).l
                 movea.w #(byte_FFD160-M68K_RAM),a0
                 jsr     (loc_2A128).l
                 move.w  $6BC(a5),d0

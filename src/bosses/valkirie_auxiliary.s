@@ -58,7 +58,7 @@ loc_518D0:                                              ; CODE XREF: Boss_Valkir
 loc_518E0:                                              ; CODE XREF: Boss_ValkirieDebugAngleControl+24   j
                 bsr.w   Boss_ValkirieAnimationSequencer
                 moveq   #$19,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_ValkirieDebugAngleControl
 ; Processes animation sequence data from table, handles frame interpolation, and updates multiple sprite angles ($B6-$9B6 offsets)
 Boss_ValkirieAnimationSequencer:                        ; CODE XREF: Boss_ValkirieDebugAngleControl:loc_518E0   p  ; was: sub_518EC
@@ -206,7 +206,7 @@ loc_51974:                                              ; CODE XREF: Boss_Valkir
 ; End of function Boss_ValkirieAnimationSequencer
 ; Calculates animation interpolation deltas for 18 animation channels using frame data
 Boss_ValkirieAnimationCalc:                             ; CODE XREF: Boss_ValkirieAnimationSequencer+5C   p  ; was: sub_51A86
-                lea     (off_354B0).l,a1
+                lea     (Boss_ValkirieAlternateRotationFramesAndNeutralPose).l,a1
                 moveq   #$12,d7
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)

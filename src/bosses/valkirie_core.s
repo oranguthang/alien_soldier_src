@@ -29,9 +29,9 @@ Boss_ValkirieInit:                                      ; DATA XREF: ROM:off_50F
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$14,d7
-                movea.l #off_3541C,a0
-                movea.l #word_35470,a1
-                movea.l #word_35486,a2
+                movea.l #Boss_ValkirieMetaspriteDescriptors,a0
+                movea.l #Boss_ValkiriePartRadii,a1
+                movea.l #Boss_ValkiriePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 move.w  #$3EC,(a5)
                 move.w  #$CC00,2(a5)
@@ -119,7 +119,7 @@ loc_51152:                                              ; CODE XREF: Boss_Valkir
 loc_51162:                                              ; CODE XREF: Boss_ValkirieInit+18E   j
                 bsr.w   Boss_ValkirieAnimationController
                 moveq   #$14,d7
-                jsr     (Sprite_InitMetaspritePointers).l
+                jsr     (Sprite_SetMetaspriteTraversalPointers).l
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 move.w  #$FFF3,d7
                 tst.w   $54(a5)

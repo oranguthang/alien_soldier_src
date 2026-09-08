@@ -185,7 +185,7 @@
                 include "src/projectiles/missiray_and_rising_shots.s"
                 include "src/bosses/stage_3_orbiting_formation.s"
                 include "src/rendering/boss_metasprites.s"
-                include "src/data/boss_sprite_tables.s"
+                include "src/data/boss_metasprite_definitions.s"
                 include "src/bosses/jetsripper_core.s"
                 include "src/bosses/jetsripper_segments.s"
                 include "src/projectiles/jetsripper.s"

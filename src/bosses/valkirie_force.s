@@ -23,9 +23,9 @@ Boss_ValkirieForceInit:                                 ; DATA XREF: Boss_Valkir
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$19,d7
-                movea.l #dword_355A4,a0
-                movea.l #dword_355A4,a1
-                movea.l #dword_355A4,a2
+                movea.l #Boss_ZLeoValkirieForceSharedMetaspriteData,a0
+                movea.l #Boss_ZLeoValkirieForceSharedMetaspriteData,a1
+                movea.l #Boss_ZLeoValkirieForceSharedMetaspriteData,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 move.w  #$3FC,(a5)
                 move.w  #$CC00,2(a5)
@@ -57,7 +57,7 @@ loc_535A2:                                              ; CODE XREF: Boss_Valkir
 loc_535B2:                                              ; CODE XREF: Boss_ValkirieForceInit+86   j
                 bsr.w   Boss_ValkirieForceAnimUpdate
                 moveq   #$19,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_ValkirieForceInit
 ; Updates boss animation sequence with interpolation and applies rotation angles to all segments
 Boss_ValkirieForceAnimUpdate:                           ; CODE XREF: Boss_ValkirieForceInit:loc_535B2   p  ; was: sub_535BE
@@ -205,7 +205,7 @@ loc_53646:                                              ; CODE XREF: Boss_Valkir
 ; End of function Boss_ValkirieForceAnimUpdate
 ; Calculates animation interpolation deltas for Valkirie Force transformations
 Anim_ValkirieForceCalculateDeltas:                      ; CODE XREF: Boss_ValkirieForceAnimUpdate+5C   p  ; was: sub_53758
-                lea     (dword_355A4).l,a1
+                lea     (Boss_ZLeoValkirieForceSharedMetaspriteData).l,a1
                 moveq   #$12,d7
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)

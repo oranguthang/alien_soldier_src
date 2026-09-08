@@ -65,9 +65,9 @@ Boss_MadamBarbarSetup:                                  ; DATA XREF: ROM:0003A4E
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$1C,d7
-                movea.l #dword_34E48,a0
-                movea.l #word_34EBC,a1
-                movea.l #word_34EDA,a2
+                movea.l #Boss_MadamBarbarMetaspriteDescriptors,a0
+                movea.l #Boss_MadamBarbarPartRadii,a1
+                movea.l #Boss_MadamBarbarPartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 bset    #0,$962(a5)
                 bset    #0,$9C2(a5)
@@ -444,7 +444,7 @@ Boss_MadamBarbarUpdateParts:                            ; CODE XREF: Boss_MadamB
                 bsr.w   Boss_MadamBarbarRotateInit
 loc_3A9F6:                                              ; CODE XREF: Boss_MadamBarbarAIState+200   j
                 moveq   #$1B,d7
-                jsr     (Sprite_InitMetaspritePointers).l
+                jsr     (Sprite_SetMetaspriteTraversalPointers).l
                 movea.w #(word_FFC680-M68K_RAM),a0
                 moveq   #$24,d0                         ; '$'
                 moveq   #$A,d1
@@ -767,7 +767,7 @@ loc_3AC7A:                                              ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarUpdateAnimation
 ; Calculates interpolation deltas for smooth boss animation transitions
 Boss_MadamBarbarCalcDeltas:                             ; CODE XREF: Boss_MadamBarbarUpdateAnimation+62   p  ; was: sub_3AD8E
-                lea     (word_34F14).l,a1
+                lea     (Boss_MadamBarbarNeutralPose).l,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #$B,d7

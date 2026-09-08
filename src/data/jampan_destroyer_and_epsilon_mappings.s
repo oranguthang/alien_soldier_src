@@ -67,7 +67,7 @@ word_EC376:     dc.w    $7086, 0, $E6FE                 ; DATA XREF: ROM:0004501
                 dc.w    $707E, $D00, $EEEE
                 dc.w    $707A, $500, $FEFE
                 dc.w    $F074, $900, $FEE6
-word_EC38E:     dc.w    $E8A2, $800, $FCF4              ; DATA XREF: ROM:off_350E6   o
+word_EC38E:     dc.w    $E8A2, $800, $FCF4              ; DATA XREF: ROM:Boss_BackStringerRotationFramesA   o
                                         ; ROM:00035122   o
 word_EC394:     dc.w    $E8A5, $900, $F8F4              ; DATA XREF: ROM:000350EA   o
                                         ; ROM:0003511E   o
@@ -84,9 +84,9 @@ word_EC3B8:     dc.w    $60AF, $400, $3FE               ; DATA XREF: ROM:000350F
                                         ; ROM:0003510A   o
                 dc.w    $E0AB, $500, $F3F6
 word_EC3C4:     dc.w    $E0A5, $900, $F8F5              ; DATA XREF: ROM:00035102   o
-                                        ; ROM:off_35106   o
+                                        ; ROM:Boss_BackStringerRotationFramesB   o
                 dc.w    $E0A2, $800, $FCF5
-word_EC3D0:     dc.w    $E8BA, $800, $FCF4              ; DATA XREF: ROM:off_35126   o
+word_EC3D0:     dc.w    $E8BA, $800, $FCF4              ; DATA XREF: ROM:Boss_BackStringerRotationFramesC   o
                                         ; ROM:00035162   o
 word_EC3D6:     dc.w    $E8BD, $900, $F8F3              ; DATA XREF: ROM:0003512A   o
                                         ; ROM:0003515E   o
@@ -101,7 +101,7 @@ word_EC3EE:     dc.w    $E0CC, $600, $F3F7              ; DATA XREF: ROM:0003513
 word_EC3F4:     dc.w    $E0C3, $A00, $F4F4              ; DATA XREF: ROM:0003513E   o
                                         ; ROM:0003514A   o
 word_EC3FA:     dc.w    $E0BD, $900, $F8F4              ; DATA XREF: ROM:00035142   o
-                                        ; ROM:off_35146   o
+                                        ; ROM:Boss_BackStringerRotationFramesD   o
                 dc.w    $E8BA, $800, $FCF4
 word_EC406:     dc.w    $E8D5, $A00, $F4F3              ; DATA XREF: Projectile_BackStringerSpawnDrops+46   o
                 dc.w    $E0D5, $A00, $F4F6
@@ -228,7 +228,7 @@ off_EC42A:      dc.w    word_EC412-*                    ; DATA XREF: Boss_Epsilo
                 dc.w    $E130, $A00, $F7F8
                 dc.w    $E127, $A00, $F7F7
                 dc.w    $E11D, $A00, $F7F7
-word_EC6C0:     dc.w    $284D, $C00, $5F0               ; DATA XREF: ROM:off_353FC   o
+word_EC6C0:     dc.w    $284D, $C00, $5F0               ; DATA XREF: ROM:Boss_ValkirieRotationFramesC   o
                                         ; ROM:00035418   o
                 dc.w    $284B, $100, $F5F0
                 dc.w    $A843, $D00, $F5F8

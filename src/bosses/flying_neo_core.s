@@ -141,9 +141,9 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 movea.w #(word_FFC680-M68K_RAM),a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #8,d7
-                movea.l #dword_34F46,a0
-                movea.l #word_34F6A,a1
-                movea.l #word_34F74,a2
+                movea.l #Boss_FlyingNeoMetaspriteDescriptors,a0
+                movea.l #Boss_FlyingNeoPartRadii,a1
+                movea.l #Boss_FlyingNeoPartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 clr.w   $54(a5)
                 clr.w   $56(a5)

@@ -58,7 +58,7 @@ loc_5163C:                                              ; CODE XREF: Boss_Valkir
 loc_5164C:                                              ; CODE XREF: Boss_ValkirieMinibossInput+24   j
                 bsr.w   Boss_ValkirieMinibossAnimController
                 moveq   #$19,d7
-                jmp     Sprite_InitMetaspriteSimple
+                jmp     Sprite_BeginMetaspritePartTraversal
 ; End of function Boss_ValkirieMinibossInput
 ; Animation controller for Valkirie miniboss that processes frames and updates all sprite component tile indices
 Boss_ValkirieMinibossAnimController:                    ; CODE XREF: Boss_ValkirieMinibossInput:loc_5164C   p  ; was: sub_51658
