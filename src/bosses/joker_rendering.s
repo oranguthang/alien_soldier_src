@@ -1,3 +1,4 @@
+; Positions Joker's linked parts and prepares its rasterized tile display
 Boss_JokerRenderBody:                                   ; CODE XREF: Boss_JokerUpdatePhaseGatePose+98   p  ; was: sub_3BA1A
                                         ; Boss_JokerUpdateDefeatDescent+30   j
                 movea.w #(word_FFCD40-M68K_RAM),a0
@@ -5,10 +6,10 @@ Boss_JokerRenderBody:                                   ; CODE XREF: Boss_JokerU
                 movea.w #(word_FFCDA0-M68K_RAM),a2
                 movea.w #(byte_FFCE60-M68K_RAM),a3
                 tst.w   $54(a5)
-                beq.s   loc_3BA34
+                beq.s   Boss_JokerPositionLinkedParts
                 exg     a0,a1
                 exg     a2,a3
-loc_3BA34:                                              ; CODE XREF: Boss_JokerRenderBody+14   j
+Boss_JokerPositionLinkedParts:                          ; CODE XREF: Boss_JokerRenderBody+14   j  ; was: loc_3BA34
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
                 move.w  #$FFE4,$40(a0)
@@ -26,29 +27,29 @@ loc_3BA34:                                              ; CODE XREF: Boss_JokerR
                 moveq   #$15,d7
                 jsr     (Sprite_BeginMetaspritePartTraversal).l
                 cmpi.w  #$60,$10(a5)                    ; '`'
-                bmi.s   loc_3BA8E
+                bmi.s   Boss_JokerUseFixedHorizontalOffset
                 cmpi.w  #$1E0,$10(a5)
-                bmi.s   loc_3BA96
-loc_3BA8E:                                              ; CODE XREF: Boss_JokerRenderBody+6A   j
+                bmi.s   Boss_JokerUseScreenRelativeHorizontalOffset
+Boss_JokerUseFixedHorizontalOffset:                     ; CODE XREF: Boss_JokerRenderBody+6A   j  ; was: loc_3BA8E
                 move.w  #$FE72,(dword_FFA908).w
-                bra.s   loc_3BAA2
+                bra.s   Boss_JokerInitializeDescendingWordRamp
 ; ---------------------------------------------------------------------------
-loc_3BA96:                                              ; CODE XREF: Boss_JokerRenderBody+72   j
+Boss_JokerUseScreenRelativeHorizontalOffset:            ; CODE XREF: Boss_JokerRenderBody+72   j  ; was: loc_3BA96
                 move.w  #$C0,d0
                 sub.w   $10(a5),d0
                 move.w  d0,(dword_FFA908).w
-loc_3BAA2:                                              ; CODE XREF: Boss_JokerRenderBody+7A   j
+Boss_JokerInitializeDescendingWordRamp:                 ; CODE XREF: Boss_JokerRenderBody+7A   j  ; was: loc_3BAA2
                 move.w  #$80,d0
                 move.w  #$5F,d7                         ; '_'
                 movea.w #(byte_FF9520-M68K_RAM),a0
-loc_3BAAE:                                              ; CODE XREF: Boss_JokerRenderBody+98   j
+Boss_JokerInitializeDescendingWordRampNextWord:         ; CODE XREF: Boss_JokerRenderBody+98   j  ; was: loc_3BAAE
                 move.w  d0,(a0)+
                 subq.w  #2,d0
-                dbf     d7,loc_3BAAE
+                dbf     d7,Boss_JokerInitializeDescendingWordRampNextWord
                 moveq   #0,d5
                 move.w  $1DC(a5),d5
                 subi.w  #$40,d5                         ; '@'
-                beq.s   loc_3BAD4
+                beq.s   Boss_JokerBuildBodyHeightRasterValues
                 ext.l   d5
                 asl.l   #8,d5
                 divs.w  $1DC(a5),d5
@@ -56,7 +57,7 @@ loc_3BAAE:                                              ; CODE XREF: Boss_JokerR
                 move.w  #0,d5
                 asr.l   #8,d5
                 asl.l   #1,d5
-loc_3BAD4:                                              ; CODE XREF: Boss_JokerRenderBody+A6   j
+Boss_JokerBuildBodyHeightRasterValues:                  ; CODE XREF: Boss_JokerRenderBody+A6   j  ; was: loc_3BAD4
                 moveq   #0,d3
                 move.w  #$1B0,d3
                 sub.w   $14(a5),d3
@@ -68,7 +69,7 @@ loc_3BAD4:                                              ; CODE XREF: Boss_JokerR
                 movea.w d0,a0
                 movea.w d0,a1
                 moveq   #$1E,d7
-loc_3BAF6:                                              ; CODE XREF: Boss_JokerRenderBody+EC   j
+Boss_JokerBuildBodyHeightRasterValuesNextPair:          ; CODE XREF: Boss_JokerRenderBody+EC   j  ; was: loc_3BAF6
                 move.w  d3,-(a0)
                 move.w  d4,(a1)+
                 swap    d3
@@ -77,10 +78,10 @@ loc_3BAF6:                                              ; CODE XREF: Boss_JokerR
                 swap    d4
                 sub.l   d5,d4
                 swap    d4
-                dbf     d7,loc_3BAF6
+                dbf     d7,Boss_JokerBuildBodyHeightRasterValuesNextPair
                 movea.w #(word_FF9600-M68K_RAM),a0
                 movea.w #(dword_FF9610-M68K_RAM),a1
-                lea     word_3BC1A(pc),a2
+                lea     Boss_JokerCyclingTileWords(pc),a2
                 nop
                 move.w  (word_FFA000).w,d0
                 andi.w  #$1C,d0
@@ -102,28 +103,28 @@ loc_3BAF6:                                              ; CODE XREF: Boss_JokerR
                 move.w  d3,6(a1)
                 move.w  (word_FFA000).w,d0
                 andi.w  #$F,d0
-                bne.s   loc_3BB70
+                bne.s   Boss_JokerUpdateSecondaryTileFrameIndex
                 eori.w  #1,$29E(a5)
-loc_3BB70:                                              ; CODE XREF: Boss_JokerRenderBody+14E   j
+Boss_JokerUpdateSecondaryTileFrameIndex:                ; CODE XREF: Boss_JokerRenderBody+14E   j  ; was: loc_3BB70
                 move.w  $29C(a5),d0
                 btst    #0,(word_FFA000+1).w
-                bne.s   loc_3BB96
+                bne.s   Boss_JokerApplySecondaryTileFrame
                 tst.w   $29E(a5)
-                bne.w   loc_3BB8C
+                bne.w   Boss_JokerIncreaseSecondaryTileFrameIndex
                 subq.w  #4,d0
-                bpl.s   loc_3BB96
+                bpl.s   Boss_JokerApplySecondaryTileFrame
                 moveq   #0,d0
-                bra.s   loc_3BB96
+                bra.s   Boss_JokerApplySecondaryTileFrame
 ; ---------------------------------------------------------------------------
-loc_3BB8C:                                              ; CODE XREF: Boss_JokerRenderBody+166   j
+Boss_JokerIncreaseSecondaryTileFrameIndex:              ; CODE XREF: Boss_JokerRenderBody+166   j  ; was: loc_3BB8C
                 addq.w  #4,d0
                 cmpi.w  #$10,d0
-                bmi.s   loc_3BB96
+                bmi.s   Boss_JokerApplySecondaryTileFrame
                 moveq   #$C,d0
-loc_3BB96:                                              ; CODE XREF: Boss_JokerRenderBody+160   j
+Boss_JokerApplySecondaryTileFrame:                      ; CODE XREF: Boss_JokerRenderBody+160   j  ; was: loc_3BB96
                                         ; Boss_JokerRenderBody+16C   j
                 move.w  d0,$29C(a5)
-                lea     word_3BC5A(pc),a2
+                lea     Boss_JokerSecondaryTileFrameWords(pc),a2
                 nop
                 move.w  (a2,d0.w),d1
                 move.w  2(a2,d0.w),d2
@@ -160,82 +161,82 @@ loc_3BB96:                                              ; CODE XREF: Boss_JokerR
                 rts
 ; End of function Boss_JokerRenderBody
 ; ---------------------------------------------------------------------------
-word_3BC1A:     dc.w    $E302, $E303, $E32E, $E330, $E332, $E334, $E336, $E338
+Boss_JokerCyclingTileWords: dc.w    $E302, $E303, $E32E, $E330, $E332, $E334, $E336, $E338  ; was: word_3BC1A
                                         ; DATA XREF: Boss_JokerRenderBody+F8   o
                 dc.w    $E336, $E338, $E332, $E334, $E32E, $E330, $E302, $E303
                 dc.w    $E306, $E307, $E32F, $E331, $E333, $E335, $E337, $E339
                 dc.w    $E337, $E339, $E333, $E335, $E32F, $E331, $E306, $E307
-word_3BC5A:     dc.w    $E342, $E344, $E33E, $E340, $E33A, $E33C, $E304, $E305
+Boss_JokerSecondaryTileFrameWords:  dc.w    $E342, $E344, $E33E, $E340, $E33A, $E33C, $E304, $E305  ; was: word_3BC5A
                                         ; DATA XREF: Boss_JokerRenderBody+180   o
                 dc.w    $E343, $E345, $E33F, $E341, $E33B, $E33D, $E308, $E309
 
-; Calculate Joker boss Y position based on horizontal offset
-Boss_JokerCalculateYPosition:                           ; CODE XREF: Boss_JokerLandingImpact:loc_3B98A   p  ; was: sub_3BC7A
-                                        ; Boss_JokerLandingImpact+A4   p
+; Derives Joker's Y coordinate from its current fixed-point body height
+Boss_JokerDeriveYFromBodyHeight:                        ; CODE XREF: Boss_JokerJumpAscentState:Boss_JokerUpdateBodyHeightCompressionPose   p  ; was: sub_3BC7A
+                                        ; Boss_JokerJumpAscentState+A4   p
                 move.w  $1DC(a5),d0
                 subi.w  #$40,d0                         ; '@'
                 asr.w   #1,d0
                 addi.w  #$C8,d0
                 move.w  d0,$14(a5)
                 rts
-; End of function Boss_JokerCalculateYPosition
+; End of function Boss_JokerDeriveYFromBodyHeight
 ; Slows Joker boss horizontal velocity towards zero with fixed rate
-Boss_JokerSlowHorizontal:                               ; CODE XREF: Boss_JokerStretchState:loc_3B874   p  ; was: sub_3BC8E
+Boss_JokerSlowHorizontalVelocity:                       ; CODE XREF: Boss_JokerStretchState:Boss_JokerUpdateStretchPose   p  ; was: sub_3BC8E
                 move.l  $18(a5),d0
-                beq.s   locret_3BCA4
-                bmi.s   loc_3BCA6
+                beq.s   Boss_JokerSlowHorizontalVelocityReturn
+                bmi.s   Boss_JokerSlowNegativeHorizontalVelocity
                 subi.l  #$2000,d0
-                bpl.s   loc_3BCA0
-loc_3BC9E:                                              ; CODE XREF: Boss_JokerSlowHorizontal+1E   j
+                bpl.s   Boss_JokerStoreHorizontalVelocity
+Boss_JokerClearHorizontalVelocity:                      ; CODE XREF: Boss_JokerSlowHorizontalVelocity+1E   j  ; was: loc_3BC9E
                 moveq   #0,d0
-loc_3BCA0:                                              ; CODE XREF: Boss_JokerSlowHorizontal+E   j
+Boss_JokerStoreHorizontalVelocity:                      ; CODE XREF: Boss_JokerSlowHorizontalVelocity+E   j  ; was: loc_3BCA0
                 move.l  d0,$18(a5)
-locret_3BCA4:                                           ; CODE XREF: Boss_JokerSlowHorizontal+4   j
+Boss_JokerSlowHorizontalVelocityReturn:                 ; CODE XREF: Boss_JokerSlowHorizontalVelocity+4   j  ; was: locret_3BCA4
                 rts
 ; ---------------------------------------------------------------------------
-loc_3BCA6:                                              ; CODE XREF: Boss_JokerSlowHorizontal+6   j
+Boss_JokerSlowNegativeHorizontalVelocity:               ; CODE XREF: Boss_JokerSlowHorizontalVelocity+6   j  ; was: loc_3BCA6
                 addi.l  #$2000,d0
-                bpl.s   loc_3BC9E
+                bpl.s   Boss_JokerClearHorizontalVelocity
                 move.l  d0,$18(a5)
                 rts
-; End of function Boss_JokerSlowHorizontal
-; Updates Joker boss animation with interpolation for body parts
-Boss_JokerUpdateAnimation:                              ; CODE XREF: Boss_JokerUpdatePhaseGatePose+36   p  ; was: sub_3BCB4
+; End of function Boss_JokerSlowHorizontalVelocity
+; Interprets one pose-command stream and publishes linked-part angles
+Boss_JokerUpdatePose:                                   ; CODE XREF: Boss_JokerUpdatePhaseGatePose+36   p  ; was: sub_3BCB4
                                         ; Boss_JokerUpdateDefeatDescent+2C   p
                 clr.w   $3BC(a5)
                 tst.w   $C(a5)
-                bpl.s   loc_3BD36
-loc_3BCBE:                                              ; CODE XREF: Boss_JokerUpdateAnimation+4A   j
+                bpl.s   Boss_JokerAdvancePoseInterpolation
+Boss_JokerReadNextPoseCommand:                          ; CODE XREF: Boss_JokerUpdatePose+4A   j  ; was: loc_3BCBE
                 move.w  $58(a5),d0
-                bmi.w   loc_3BD46
+                bmi.w   Boss_JokerPublishPoseAngles
                 cmpi.b  #$80,(a1,d0.w)
-                bne.s   loc_3BCE0
+                bne.s   Boss_JokerReadPoseControlWord
                 move.b  1(a1,d0.w),d0
                 jsr     (Sound_PlaySFX).l
                 addq.w  #2,$58(a5)
                 move.w  $58(a5),d0
-loc_3BCE0:                                              ; CODE XREF: Boss_JokerUpdateAnimation+18   j
+Boss_JokerReadPoseControlWord:                          ; CODE XREF: Boss_JokerUpdatePose+18   j  ; was: loc_3BCE0
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
-                bne.s   loc_3BCF0
+                bne.s   Boss_JokerCheckPoseLoopCommand
                 move.w  d3,$58(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3BCF0:                                              ; CODE XREF: Boss_JokerUpdateAnimation+34   j
+Boss_JokerCheckPoseLoopCommand:                         ; CODE XREF: Boss_JokerUpdatePose+34   j  ; was: loc_3BCF0
                 cmpi.w  #$FFFF,d3
-                bne.s   loc_3BD00
+                bne.s   Boss_JokerStartPoseInterpolation
                 clr.w   $58(a5)
                 clr.w   $35E(a5)
-                bra.s   loc_3BCBE
+                bra.s   Boss_JokerReadNextPoseCommand
 ; ---------------------------------------------------------------------------
-loc_3BD00:                                              ; CODE XREF: Boss_JokerUpdateAnimation+40   j
+Boss_JokerStartPoseInterpolation:                       ; CODE XREF: Boss_JokerUpdatePose+40   j  ; was: loc_3BD00
                 move.w  d3,(dword_FF8040).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
-                addi.l  #word_3BF88,d0
+                addi.l  #Boss_JokerPoseTargets,d0
                 movea.l d0,a0
-                bsr.w   Boss_JokerCalcDeltas
+                bsr.w   Boss_JokerCalculatePoseDeltas
                 moveq   #0,d0
                 move.b  (dword_FF8040).w,d0
                 move.w  d0,$C(a5)
@@ -243,14 +244,14 @@ loc_3BD00:                                              ; CODE XREF: Boss_JokerU
                 addq.w  #1,$35E(a5)
                 addq.w  #1,$3BC(a5)
                 tst.w   $C(a5)
-                bmi.s   loc_3BD46
-loc_3BD36:                                              ; CODE XREF: Boss_JokerUpdateAnimation+8   j
+                bmi.s   Boss_JokerPublishPoseAngles
+Boss_JokerAdvancePoseInterpolation:                     ; CODE XREF: Boss_JokerUpdatePose+8   j  ; was: loc_3BD36
                 subq.w  #1,$C(a5)
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #9,d7
                 jsr     (Anim_ApplyInterpolationStep).l
-loc_3BD46:                                              ; CODE XREF: Boss_JokerUpdateAnimation+E   j
-                                        ; Boss_JokerUpdateAnimation+80   j
+Boss_JokerPublishPoseAngles:                            ; CODE XREF: Boss_JokerUpdatePose+E   j  ; was: loc_3BD46
+                                        ; Boss_JokerUpdatePose+80   j
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #1,d6
                 move.w  #$1FE,d7
@@ -309,28 +310,28 @@ loc_3BD46:                                              ; CODE XREF: Boss_JokerU
                 and.w   d7,d0
                 move.w  d0,$716(a5)
                 rts
-; End of function Boss_JokerUpdateAnimation
-; Calculates interpolation deltas for smooth boss animation transitions
-Boss_JokerCalcDeltas:                                   ; CODE XREF: Boss_JokerUpdateAnimation+62   p  ; was: sub_3BDF4
+; End of function Boss_JokerUpdatePose
+; Calculates the ten channel deltas toward the selected pose target
+Boss_JokerCalculatePoseDeltas:                          ; CODE XREF: Boss_JokerUpdatePose+62   p  ; was: sub_3BDF4
                 movea.l #Boss_JokerNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 moveq   #9,d7
                 jmp     Anim_CalculateInterpolationDeltas
-; End of function Boss_JokerCalcDeltas
-; Load animation frame delays for Joker boss
-Boss_JokerLoadFrameDelays:
+; End of function Boss_JokerCalculatePoseDeltas
+; Initializes the ten fixed-point pose channels from the source record in A0
+Boss_JokerInitializePoseChannels:
                 movea.w #(dword_FF9400-M68K_RAM),a1     ; was: sub_3BE0A
                 moveq   #9,d7
                 jmp     Anim_LoadFrameDelays
-; End of function Boss_JokerLoadFrameDelays
-; Spawns bomb projectile during special attack with damage value
-Boss_JokerSpawnBomb:                                    ; CODE XREF: Boss_JokerDiveDescentState+42   p  ; was: sub_3BE16
+; End of function Boss_JokerInitializePoseChannels
+; Spawns Joker's descending directional-shot emitter
+Boss_JokerSpawnDescendingShotEmitter:                   ; CODE XREF: Boss_JokerDiveDescentState+42   p  ; was: sub_3BE16
                 tst.w   $35C(a5)
-                bne.s   locret_3BE82
+                bne.s   Boss_JokerSpawnDescendingShotEmitterReturn
                 movea.w #(byte_FFD700-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
-                bne.s   locret_3BE82
+                bne.s   Boss_JokerSpawnDescendingShotEmitterReturn
                 subi.w  #$14,(word_FF8234).w
                 move.w  #$198,(a0)
                 move.w  #$8100,2(a0)
@@ -346,34 +347,34 @@ Boss_JokerSpawnBomb:                                    ; CODE XREF: Boss_JokerD
                 addi.w  #$26,$14(a0)                    ; '&'
                 move.w  #$C0,$48(a0)
                 move.w  #4,$4A(a0)
-locret_3BE82:                                           ; CODE XREF: Boss_JokerSpawnBomb+4   j
-                                        ; Boss_JokerSpawnBomb+10   j
+Boss_JokerSpawnDescendingShotEmitterReturn:             ; CODE XREF: Boss_JokerSpawnDescendingShotEmitter+4   j  ; was: locret_3BE82
+                                        ; Boss_JokerSpawnDescendingShotEmitter+10   j
                 rts
-; End of function Boss_JokerSpawnBomb
-; Joker bomb projectile descending then firing directional shots
-Projectile_JokerBomb:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3BE84
+; End of function Boss_JokerSpawnDescendingShotEmitter
+; Descends while tracking the player, emits aimed shots, then bursts four ways
+Projectile_JokerDescendingShotEmitter:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3BE84
                 tst.w   (word_FF808C).w
-                bmi.s   loc_3BE92
+                bmi.s   Projectile_JokerDescendingShotEmitterUpdate
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3BE92:                                              ; CODE XREF: Projectile_JokerBomb+4   j
+Projectile_JokerDescendingShotEmitterUpdate:            ; CODE XREF: Projectile_JokerDescendingShotEmitter+4   j  ; was: loc_3BE92
                 tst.w   $24(a5)
-                bpl.s   loc_3BE9E
-loc_3BE98:                                              ; CODE XREF: Projectile_JokerBomb+68   j
+                bpl.s   Projectile_JokerDescendingShotEmitterTrackPlayer
+Projectile_JokerDescendingShotEmitterBurst:             ; CODE XREF: Projectile_JokerDescendingShotEmitter+68   j  ; was: loc_3BE98
                 jmp     Enemy_SpawnQuadProjectiles
 ; ---------------------------------------------------------------------------
-loc_3BE9E:                                              ; CODE XREF: Projectile_JokerBomb+12   j
+Projectile_JokerDescendingShotEmitterTrackPlayer:       ; CODE XREF: Projectile_JokerDescendingShotEmitter+12   j  ; was: loc_3BE9E
                 cmpi.w  #$148,$14(a5)
-                bpl.s   loc_3BEB0
+                bpl.s   Projectile_JokerDescendingShotEmitterUpdateTimer
                 addq.w  #2,$14(a5)
                 move.w  (dword_FFC630).w,$10(a5)
-loc_3BEB0:                                              ; CODE XREF: Projectile_JokerBomb+20   j
+Projectile_JokerDescendingShotEmitterUpdateTimer:       ; CODE XREF: Projectile_JokerDescendingShotEmitter+20   j  ; was: loc_3BEB0
                 subq.w  #1,$48(a5)
-                bpl.s   loc_3BEF0
+                bpl.s   Projectile_JokerDescendingShotEmitterUpdatePreShotJitter
                 movea.w #(byte_FFD400-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckFinalRange).l
-                bne.s   loc_3BEE8
+                bne.s   Projectile_JokerDescendingShotEmitterCountEmission
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  #$8004,d2
@@ -382,46 +383,46 @@ loc_3BEB0:                                              ; CODE XREF: Projectile_
                 andi.w  #$7F,d0
                 addi.w  #$50,d0                         ; 'P'
                 move.w  d0,$48(a5)
-loc_3BEE8:                                              ; CODE XREF: Projectile_JokerBomb+3C   j
+Projectile_JokerDescendingShotEmitterCountEmission:     ; CODE XREF: Projectile_JokerDescendingShotEmitter+3C   j  ; was: loc_3BEE8
                 subq.w  #1,$4A(a5)
-                bmi.s   loc_3BE98
-locret_3BEEE:                                           ; CODE XREF: Projectile_JokerBomb+78   j
-                                        ; Projectile_JokerBomb+86   j
+                bmi.s   Projectile_JokerDescendingShotEmitterBurst
+Projectile_JokerDescendingShotEmitterReturn:            ; CODE XREF: Projectile_JokerDescendingShotEmitter+78   j  ; was: locret_3BEEE
+                                        ; Projectile_JokerDescendingShotEmitter+86   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_3BEF0:                                              ; CODE XREF: Projectile_JokerBomb+30   j
+Projectile_JokerDescendingShotEmitterUpdatePreShotJitter:  ; CODE XREF: Projectile_JokerDescendingShotEmitter+30   j  ; was: loc_3BEF0
                 move.w  #$F8F8,$A(a5)
                 cmpi.w  #$30,$48(a5)                    ; '0'
-                bpl.s   locret_3BEEE
+                bpl.s   Projectile_JokerDescendingShotEmitterReturn
                 move.w  #$F7F8,$A(a5)
                 btst    #1,(word_FFA000+1).w
-                bne.s   locret_3BEEE
+                bne.s   Projectile_JokerDescendingShotEmitterReturn
                 move.w  #$F9F8,$A(a5)
                 rts
-; End of function Projectile_JokerBomb
+; End of function Projectile_JokerDescendingShotEmitter
 ; ---------------------------------------------------------------------------
 Boss_JokerPhaseGatePoseCommands:    dc.w    $1818, 0, $814, $A, $1919, $A, $1818, 0, $814, $A, $1919, $A, $FFFF  ; was: word_3BF14
                                         ; DATA XREF: Boss_JokerUpdatePhaseGatePose   o
 Boss_JokerInterruptWaitPoseCommands:    dc.w    $2020, $14, $2020, $1E, $FFFF  ; was: word_3BF2E
                                         ; DATA XREF: Boss_JokerBeginInterruptWaitState+1C   o
-Boss_JokerDiveAndLandingPoseCommands:   dc.w    $1018, $28, $2424, $28, $FFFE  ; was: word_3BF38
+Boss_JokerDiveAndJumpPreparationPoseCommands:   dc.w    $1018, $28, $2424, $28, $FFFE  ; was: word_3BF38
                                         ; DATA XREF: Boss_JokerDivePrep+6   o
-                                        ; Boss_JokerLandingState+E   o
+                                        ; Boss_JokerJumpPreparationState+E   o
 Boss_JokerDiveMotionPoseCommands:   dc.w    $E12, $32, $1C1C, $32, $FFFE  ; was: word_3BF42
                                         ; DATA XREF: Boss_JokerDiveMotionState+1C   o
 Boss_JokerDiveDescentAndBouncePoseCommands: dc.w    $E38, $3C, $E0E, $3C, $FFFE  ; was: word_3BF4C
                                         ; DATA XREF: Boss_JokerDiveDescentState+A   o
-                                        ; Boss_JokerGroundBounceAttack+1C   o
-word_3BF56:     dc.w    $F0F, $32, $FFFE                ; DATA XREF: Boss_JokerLandingImpact+20   o
-word_3BF5C:     dc.w    $80C, $3C, $2424, $3C, $FFFE
-                                        ; DATA XREF: Boss_JokerLandingImpact+7A   o
-word_3BF66:     dc.w    $6868, $32, $FFFE               ; DATA XREF: Boss_JokerLandingImpact+A8   o
-word_3BF6C:     dc.w    $508, $28, $1616, $28, $810, $1E, $2020, $1E, $FFFE
+                                        ; Boss_JokerBounceMotionState+1C   o
+Boss_JokerJumpAscentPoseCommands:               dc.w    $F0F, $32, $FFFE  ; DATA XREF: Boss_JokerJumpAscentState+20   o  ; was: word_3BF56
+Boss_JokerBodyHeightCompressionPoseCommands:    dc.w    $80C, $3C, $2424, $3C, $FFFE  ; was: word_3BF5C
+                                        ; DATA XREF: Boss_JokerJumpAscentState+7A   o
+Boss_JokerBodyHeightRecoveryPoseCommands:   dc.w    $6868, $32, $FFFE  ; DATA XREF: Boss_JokerJumpAscentState+A8   o  ; was: word_3BF66
+Boss_JokerStretchPoseCommands:              dc.w    $508, $28, $1616, $28, $810, $1E, $2020, $1E, $FFFE  ; was: word_3BF6C
                                         ; DATA XREF: Boss_JokerStretchState+2A   o
 Boss_JokerDefeatFallPoseCommands:   dc.w    $E0E, $5A, $E0E, $64, $FFFF  ; was: word_3BF7E
                                         ; DATA XREF: Boss_JokerUpdateDefeatDescent:Boss_JokerAnimateDefeatFall   o
-word_3BF88:     dc.w    $40D8, $4028, $64F0, $301C, $10D0, $7000, $C060, $78FA
-                                        ; DATA XREF: Boss_JokerUpdateAnimation+5A   o
+Boss_JokerPoseTargets:  dc.w    $40D8, $4028, $64F0, $301C, $10D0, $7000, $C060, $78FA  ; was: word_3BF88
+                                        ; DATA XREF: Boss_JokerUpdatePose+5A   o
                 dc.w    $3CF0, $68A8, $40F0, $4010, $9098, $58F0, $68A8, $80B0
                 dc.w    $50, $78B4, $5808, $4CA8, $9020, $F0E0, $A890, $48D8
                 dc.w    $70B8, $2000, $6000, $30F8, $2050, $8E0, $9010, $F0F0

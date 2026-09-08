@@ -101,7 +101,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Weapon_UpdateRotatingProjectile
                 dc.l    Boss_Stage3OrbitingFormationMain
                 dc.l    Pickup_Update
-                dc.l    Projectile_JokerBomb
+                dc.l    Projectile_JokerDescendingShotEmitter
                 dc.l    Boss_DeepStriderMain
                 dc.l    Effect_UpdateExplosionA
                 dc.l    Effect_UpdateExplosionB

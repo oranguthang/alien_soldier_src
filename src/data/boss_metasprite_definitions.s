@@ -481,7 +481,7 @@ Boss_JokerPartLinks:    dc.w    0, $728, $720           ; DATA XREF: Boss_JokerS
                 dc.w    $427, $426, $848
                 dc.w    $847, $5A8, $5A0
                 dc.w    $669
-Boss_JokerNeutralPose:  dc.w    $80, $8080, $E080       ; DATA XREF: Boss_JokerCalcDeltas   o  ; was: word_350DC
+Boss_JokerNeutralPose:  dc.w    $80, $8080, $E080       ; DATA XREF: Boss_JokerCalculatePoseDeltas   o  ; was: word_350DC
                 dc.w    $A0A0, $8060
 ; Back Stringer directional frames and dual-position segment-chain definition
 Boss_BackStringerRotationFramesA:   dc.l    word_EC38E  ; DATA XREF: ROM:00035180   o  ; was: off_350E6

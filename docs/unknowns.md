@@ -782,12 +782,48 @@ of two mapping/velocity combinations.
 The Joker state-selection and dive audit reduced the count to 8,594. The
 former attack selector does not inspect health; it combines shared progress,
 absolute player-X distance, and frame-derived bits to choose interrupt-wait,
-dive preparation, or landing preparation. The imported `Taunt` description is
+dive preparation, or jump preparation. The imported `Taunt` description is
 now a neutral interrupt-wait pose because no static consumer establishes its
 presentation. Likewise `ApplySpinGravity` and `SpinDive` were rejected: the
 code updates a fixed-point body-height accumulator and vertical velocity, then
 continues into a descent state without an explicit rotation operation. Four
 pose streams are named only from their direct state consumers.
+
+The Joker jump, body-height, and stretch audit reduced the count to 8,582 and
+left `bosses/joker_core.s` with no live address-derived definitions. The
+former `Landing*` chain is an upward jump followed by body-height compression
+and recovery: preparation installs negative Y velocity, ascent adds positive
+acceleration, and the next two states manipulate fixed-point body height rather
+than applying a falling velocity. The former `GroundBounceAttack` is therefore
+kept as a neutral bounce-motion state. Its shared acceleration helper performs
+no terrain query, and all four adjacent pose streams are named from their exact
+state consumers.
+
+The first Joker rendering audit reduced the count to 8,566. It corrected the
+imported `CalculateYPosition` description: the helper derives Y exclusively
+from fixed-point body-height field `$1DC`, with no horizontal input. The main
+renderer now exposes only operations visible in the routine: linked-part
+positioning, fixed versus screen-relative horizontal offsets, a descending
+96-word ramp, paired body-height raster values, two tile-word tables, and a
+bounded secondary tile-frame index. The exact visual role of the raster
+buffers and tile groups remains unclaimed pending runtime evidence.
+
+The Joker pose-interpreter audit reduced the count to 8,559 and corrected two
+more imported descriptions. `UpdateAnimation` is now `UpdatePose`: callers
+supply a command stream, `$FFFE` stops it, `$FFFF` loops it, optional `$80`
+prefixes emit sound effects, and ordinary commands select ten-channel pose
+targets for interpolation and linked-part angle publication. Likewise the
+former `LoadFrameDelays` wrapper initializes fixed-point pose channels from
+source bytes; it does not load animation timing data.
+
+The final Joker shot-emitter audit reduced the count to 8,551 and left
+`bosses/joker_rendering.s` with no live address-derived definitions. The
+imported `Bomb` terminology was not supported by a named graphic or another
+consumer, so type `$198` is now a descending shot emitter. Its handler follows
+the player object's X coordinate while descending to Y `$148`, emits timed
+directional projectiles, jitters one display field near each emission, and
+ends with the shared four-way burst. These operations establish the emitter
+name without asserting an unsupported visual identity.
 
 Four especially broad data labels are explicitly registered:
 
