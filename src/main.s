@@ -177,7 +177,7 @@
                 include "src/projectiles/destroyer_proto_and_victor_projectiles.s"
                 include "src/bosses/victor_core_and_ring.s"
                 include "src/bosses/victor_parts_and_projectiles.s"
-                include "src/bosses/wolf_garopa.s"
+                include "src/bosses/wolf_garopa_reward_shower.s"
                 include "src/enemies/tracker.s"
                 include "src/enemies/missiray_flyer.s"
                 include "src/stages/stage_24_visuals.s"

@@ -292,7 +292,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_ArtemisAnimationScript
                 dc.l    Entity_EmptyState9
                 dc.l    Projectile_SireneHoming
-                dc.l    Boss_WolfGaropaIdleState
+                dc.l    Boss_WolfGaropaRewardShowerMain
                 dc.l    Projectile_ZLeoLaser_CollisionCheck
 
 ; Empty entity state handler in main dispatch table

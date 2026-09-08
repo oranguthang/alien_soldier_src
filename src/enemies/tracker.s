@@ -1,3 +1,4 @@
+; Tracker enemy main update with angle calculation and projectile
 Enemy_TrackerMain:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_32EE0
                 lea     (word_FF9800).w,a4
                 bsr.w   Enemy_TrackerDispatcher

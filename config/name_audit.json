@@ -4581,6 +4581,34 @@
     {
       "address": "0x032D9C", "previous_name": "Enemy_FlierBoundsCheck", "current_name": "Boss_VictorOrbitingPartCollisionMain", "legacy_name": "sub_32D9C", "evidence": "static",
       "basis": ["Subtype $0A handles Victor part collision flags, the shared impact path, and horizontal arena removal."]
+    },
+    {
+      "address": "0x032DFE", "previous_name": "Boss_WolfGaropaIdleState", "current_name": "Boss_WolfGaropaRewardShowerMain", "legacy_name": "sub_32DFE", "evidence": "static",
+      "basis": ["Wolf Garopa's post-battle transition installs type `$494`; this handler dispatches a reward-pickup emitter and contains no boss idle logic."]
+    },
+    {
+      "address": "0x032E0A", "previous_name": "off_32E0A", "current_name": "Boss_WolfGaropaRewardShowerStates", "legacy_name": "off_32E0A", "evidence": "static",
+      "basis": ["The type-$494 reward emitter indexes these initialization, finite-emission, and timed-emission states."]
+    },
+    {
+      "address": "0x032E10", "previous_name": "Boss_WolfGaropaAttackState1", "current_name": "Boss_WolfGaropaRewardShowerInit", "legacy_name": "sub_32E10", "evidence": "static",
+      "basis": ["The routine configures the hidden emitter, seeds its pickup count, and selects a stage-specific mode; it performs no boss attack."]
+    },
+    {
+      "address": "0x032E3C", "previous_name": "Boss_WolfGaropaAttackState2", "current_name": "Boss_WolfGaropaSpawnFiniteRewardPickups", "legacy_name": "sub_32E3C", "evidence": "static",
+      "basis": ["Every eight ticks this state allocates a randomized pickup at X=$1D0 and decrements a sixteen-item count."]
+    },
+    {
+      "address": "0x032E9A", "previous_name": "loc_32E9A", "current_name": "Boss_WolfGaropaRemoveRewardEmitter", "legacy_name": "loc_32E9A", "evidence": "static",
+      "basis": ["Both reward modes converge here when their pickup countdown reaches zero, setting the emitter removal flag."]
+    },
+    {
+      "address": "0x032EA2", "previous_name": "Boss_WolfGaropaSpawnProjectiles", "current_name": "Boss_WolfGaropaSpawnTimedRewardPickups", "legacy_name": "sub_32EA2", "evidence": "static",
+      "basis": ["The state calls Pickup_SelectRandomSize and emits no projectile type; its remaining count is stored at offset $48."]
+    },
+    {
+      "address": "0x032ED8", "previous_name": "loc_32ED8", "current_name": "Boss_WolfGaropaAdvanceRewardCountdown", "legacy_name": "loc_32ED8", "evidence": "static",
+      "basis": ["Allocation failure and successful pickup initialization converge here to decrement the remaining reward count."]
     }
   ]
 }

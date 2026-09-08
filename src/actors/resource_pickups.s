@@ -39,7 +39,7 @@ Pickup_SpawnRandomFromCurrentObject:                    ; CODE XREF: Enemy_Updat
                                         ; Enemy_ProcessObject+18   j
                 movea.w a5,a0
 Pickup_SelectRandomSize:                                ; CODE XREF: Stage18_SegmentedWormScatterSegments+36   p  ; was: loc_2BD20
-                                        ; Boss_WolfGaropaAttackState2+2A   p
+                                        ; Boss_WolfGaropaSpawnFiniteRewardPickups+2A   p
                 moveq   #0,d7
                 move.w  (dword_FFFF08).w,d1
                 and.w   d0,d1

@@ -264,7 +264,7 @@
     { "file": "src/projectiles/destroyer_proto_and_victor_projectiles.s", "subsystem": "projectiles", "start": "0x031FF8", "end": "0x0323E1" },
     { "file": "src/bosses/victor_core_and_ring.s", "subsystem": "bosses", "start": "0x0323E2", "end": "0x0329A5" },
     { "file": "src/bosses/victor_parts_and_projectiles.s", "subsystem": "bosses", "start": "0x0329A6", "end": "0x032DFD" },
-    { "file": "src/bosses/wolf_garopa.s", "subsystem": "bosses", "start": "0x032DFE", "end": "0x032EDF" },
+    { "file": "src/bosses/wolf_garopa_reward_shower.s", "subsystem": "bosses", "start": "0x032DFE", "end": "0x032EDF" },
     { "file": "src/enemies/tracker.s", "subsystem": "enemies", "start": "0x032EE0", "end": "0x033663" },
     { "file": "src/enemies/missiray_flyer.s", "subsystem": "enemies", "start": "0x033664", "end": "0x033C49" },
     { "file": "src/stages/stage_24_visuals.s", "subsystem": "stages", "start": "0x033C4A", "end": "0x033DAF" },

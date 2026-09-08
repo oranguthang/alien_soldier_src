@@ -416,6 +416,12 @@ Destroyer Proto/Victor projectile module. This ownership is supported by the
 canonical movie scene map, object types and static state tables; individual
 low-level behavior names retain static or hypothesis evidence as recorded.
 
+The adjacent Wolf Garopa reward-emitter pass reduced the count to 9,495. Type
+`$494` is installed by the post-battle transition and emits randomized pickups
+from a fixed arena point; it is not an idle or attack-state implementation for
+the boss itself. The coherent 68-line helper remains a documented compact
+module as `src/bosses/wolf_garopa_reward_shower.s`.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

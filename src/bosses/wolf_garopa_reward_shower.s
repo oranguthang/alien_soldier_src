@@ -1,16 +1,17 @@
-Boss_WolfGaropaIdleState:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_32DFE
+; Post-battle type-$494 reward-pickup emitter created by Wolf Garopa's stage transition
+Boss_WolfGaropaRewardShowerMain:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_32DFE
                 move.w  4(a5),d0
-                lea     off_32E0A(pc,d0.w),a0
+                lea     Boss_WolfGaropaRewardShowerStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_WolfGaropaIdleState
+; End of function Boss_WolfGaropaRewardShowerMain
 ; ---------------------------------------------------------------------------
-off_32E0A:      dc.w    Boss_WolfGaropaAttackState1-*   ; DATA XREF: Boss_WolfGaropaIdleState+4   o
-                dc.w    Boss_WolfGaropaAttackState2-*
-                dc.w    Boss_WolfGaropaSpawnProjectiles-*
+Boss_WolfGaropaRewardShowerStates:  dc.w    Boss_WolfGaropaRewardShowerInit-*  ; DATA XREF: Boss_WolfGaropaRewardShowerMain+4   o  ; was: off_32E0A
+                dc.w    Boss_WolfGaropaSpawnFiniteRewardPickups-*
+                dc.w    Boss_WolfGaropaSpawnTimedRewardPickups-*
 
-; Attack state 1 handler
-Boss_WolfGaropaAttackState1:                            ; DATA XREF: ROM:off_32E0A   o  ; was: sub_32E10
+; Initializes the reward count and selects the stage-specific emission mode
+Boss_WolfGaropaRewardShowerInit:                        ; DATA XREF: ROM:Boss_WolfGaropaRewardShowerStates   o  ; was: sub_32E10
                 move.w  #$100,2(a5)
                 move.w  #$A300,$E(a5)
                 move.w  #$10,$48(a5)
@@ -20,9 +21,9 @@ Boss_WolfGaropaAttackState1:                            ; DATA XREF: ROM:off_32E
                 move.w  #$18,$48(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_WolfGaropaAttackState1
-; Attack state 2 handler
-Boss_WolfGaropaAttackState2:                            ; DATA XREF: ROM:00032E0C   o  ; was: sub_32E3C
+; End of function Boss_WolfGaropaRewardShowerInit
+; Emits sixteen falling pickups from a fixed point, one every eight ticks
+Boss_WolfGaropaSpawnFiniteRewardPickups:                ; DATA XREF: ROM:00032E0C   o  ; was: sub_32E3C
                 move.w  #$1D0,$10(a5)
                 move.w  #$120,$14(a5)
                 move.w  (word_FFA000).w,d0
@@ -42,17 +43,17 @@ Boss_WolfGaropaAttackState2:                            ; DATA XREF: ROM:00032E0
                 move.w  #$1D0,$10(a0)
                 tst.w   $48(a5)
                 bne.w   Entity_UpdateReturn
-loc_32E9A:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectiles+3A   j
+Boss_WolfGaropaRemoveRewardEmitter:                     ; CODE XREF: Boss_WolfGaropaSpawnTimedRewardPickups+3A   j  ; was: loc_32E9A
                 move.w  #$1000,2(a5)
                 rts
-; End of function Boss_WolfGaropaAttackState2
-; Spawns random projectiles periodically during Wolf Garopa boss fight
-Boss_WolfGaropaSpawnProjectiles:                        ; DATA XREF: ROM:00032E0E   o  ; was: sub_32EA2
+; End of function Boss_WolfGaropaSpawnFiniteRewardPickups
+; Emits a countdown-controlled stream of stationary random pickups
+Boss_WolfGaropaSpawnTimedRewardPickups:                 ; DATA XREF: ROM:00032E0E   o  ; was: sub_32EA2
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
                 bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
-                bne.s   loc_32ED8
+                bne.s   Boss_WolfGaropaAdvanceRewardCountdown
                 move.w  #$F,d0
                 jsr     (Pickup_SelectRandomSize).l
                 jsr     (RandomNumber).l
@@ -60,9 +61,8 @@ Boss_WolfGaropaSpawnProjectiles:                        ; DATA XREF: ROM:00032E0
                 addi.w  #$D0,d0
                 move.w  d0,$14(a0)
                 move.w  #$1D0,$10(a0)
-loc_32ED8:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectiles+12   j
+Boss_WolfGaropaAdvanceRewardCountdown:                  ; CODE XREF: Boss_WolfGaropaSpawnTimedRewardPickups+12   j  ; was: loc_32ED8
                 subq.w  #1,$48(a5)
-                beq.s   loc_32E9A
+                beq.s   Boss_WolfGaropaRemoveRewardEmitter
                 rts
-; End of function Boss_WolfGaropaSpawnProjectiles
-; Tracker enemy main update with angle calculation and projectile
+; End of function Boss_WolfGaropaSpawnTimedRewardPickups
