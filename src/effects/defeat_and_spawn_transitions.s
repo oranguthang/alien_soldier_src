@@ -87,7 +87,7 @@ Boss_DefeatScrollUpdate:                                ; DATA XREF: ROM:0002694
 ; End of function Boss_DefeatScrollUpdate
 ; Initializes player spawn effect with position
 Effect_InitPlayerSpawn:                                 ; CODE XREF: Boss_ShellshogunDefeatPaletteState+10   p  ; was: sub_269E6
-                                        ; Boss_JokerFadeOut+2E   p
+                                        ; Boss_JokerFadeOutState+2E   p
                 movea.w #(word_FFC680-M68K_RAM),a0
                 move.w  #$150,(a0)
                 clr.w   4(a0)

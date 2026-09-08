@@ -1,5 +1,5 @@
-Boss_JokerRenderBody:                                   ; CODE XREF: Boss_JokerDefeatAnim+98   p  ; was: sub_3BA1A
-                                        ; Boss_JokerFallingPhase2+30   j
+Boss_JokerRenderBody:                                   ; CODE XREF: Boss_JokerUpdatePhaseGatePose+98   p  ; was: sub_3BA1A
+                                        ; Boss_JokerUpdateDefeatDescent+30   j
                 movea.w #(word_FFCD40-M68K_RAM),a0
                 movea.w #(byte_FFCE00-M68K_RAM),a1
                 movea.w #(word_FFCDA0-M68K_RAM),a2
@@ -200,8 +200,8 @@ loc_3BCA6:                                              ; CODE XREF: Boss_JokerS
                 rts
 ; End of function Boss_JokerSlowHorizontal
 ; Updates Joker boss animation with interpolation for body parts
-Boss_JokerUpdateAnimation:                              ; CODE XREF: Boss_JokerDefeatAnim+36   p  ; was: sub_3BCB4
-                                        ; Boss_JokerFallingPhase2+2C   p
+Boss_JokerUpdateAnimation:                              ; CODE XREF: Boss_JokerUpdatePhaseGatePose+36   p  ; was: sub_3BCB4
+                                        ; Boss_JokerUpdateDefeatDescent+2C   p
                 clr.w   $3BC(a5)
                 tst.w   $C(a5)
                 bpl.s   loc_3BD36
@@ -325,7 +325,7 @@ Boss_JokerLoadFrameDelays:
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_JokerLoadFrameDelays
 ; Spawns bomb projectile during special attack with damage value
-Boss_JokerSpawnBomb:                                    ; CODE XREF: Boss_JokerSpinDive+42   p  ; was: sub_3BE16
+Boss_JokerSpawnBomb:                                    ; CODE XREF: Boss_JokerDiveDescentState+42   p  ; was: sub_3BE16
                 tst.w   $35C(a5)
                 bne.s   locret_3BE82
                 movea.w #(byte_FFD700-M68K_RAM),a0
@@ -400,17 +400,17 @@ loc_3BEF0:                                              ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_JokerBomb
 ; ---------------------------------------------------------------------------
-word_3BF14:     dc.w    $1818, 0, $814, $A, $1919, $A, $1818, 0, $814, $A, $1919, $A, $FFFF
-                                        ; DATA XREF: Boss_JokerDefeatAnim:loc_3B464   o
-word_3BF2E:     dc.w    $2020, $14, $2020, $1E, $FFFF
-                                        ; DATA XREF: Boss_JokerInitTauntState+1C   o
-word_3BF38:     dc.w    $1018, $28, $2424, $28, $FFFE
+Boss_JokerPhaseGatePoseCommands:    dc.w    $1818, 0, $814, $A, $1919, $A, $1818, 0, $814, $A, $1919, $A, $FFFF  ; was: word_3BF14
+                                        ; DATA XREF: Boss_JokerUpdatePhaseGatePose   o
+Boss_JokerInterruptWaitPoseCommands:    dc.w    $2020, $14, $2020, $1E, $FFFF  ; was: word_3BF2E
+                                        ; DATA XREF: Boss_JokerBeginInterruptWaitState+1C   o
+Boss_JokerDiveAndLandingPoseCommands:   dc.w    $1018, $28, $2424, $28, $FFFE  ; was: word_3BF38
                                         ; DATA XREF: Boss_JokerDivePrep+6   o
                                         ; Boss_JokerLandingState+E   o
-word_3BF42:     dc.w    $E12, $32, $1C1C, $32, $FFFE
-                                        ; DATA XREF: Boss_JokerDivePrep+8A   o
-word_3BF4C:     dc.w    $E38, $3C, $E0E, $3C, $FFFE
-                                        ; DATA XREF: Boss_JokerSpinDive+A   o
+Boss_JokerDiveMotionPoseCommands:   dc.w    $E12, $32, $1C1C, $32, $FFFE  ; was: word_3BF42
+                                        ; DATA XREF: Boss_JokerDiveMotionState+1C   o
+Boss_JokerDiveDescentAndBouncePoseCommands: dc.w    $E38, $3C, $E0E, $3C, $FFFE  ; was: word_3BF4C
+                                        ; DATA XREF: Boss_JokerDiveDescentState+A   o
                                         ; Boss_JokerGroundBounceAttack+1C   o
 word_3BF56:     dc.w    $F0F, $32, $FFFE                ; DATA XREF: Boss_JokerLandingImpact+20   o
 word_3BF5C:     dc.w    $80C, $3C, $2424, $3C, $FFFE
@@ -418,8 +418,8 @@ word_3BF5C:     dc.w    $80C, $3C, $2424, $3C, $FFFE
 word_3BF66:     dc.w    $6868, $32, $FFFE               ; DATA XREF: Boss_JokerLandingImpact+A8   o
 word_3BF6C:     dc.w    $508, $28, $1616, $28, $810, $1E, $2020, $1E, $FFFE
                                         ; DATA XREF: Boss_JokerStretchState+2A   o
-word_3BF7E:     dc.w    $E0E, $5A, $E0E, $64, $FFFF
-                                        ; DATA XREF: Boss_JokerFallingPhase2:loc_3B5C6   o
+Boss_JokerDefeatFallPoseCommands:   dc.w    $E0E, $5A, $E0E, $64, $FFFF  ; was: word_3BF7E
+                                        ; DATA XREF: Boss_JokerUpdateDefeatDescent:Boss_JokerAnimateDefeatFall   o
 word_3BF88:     dc.w    $40D8, $4028, $64F0, $301C, $10D0, $7000, $C060, $78FA
                                         ; DATA XREF: Boss_JokerUpdateAnimation+5A   o
                 dc.w    $3CF0, $68A8, $40F0, $4010, $9098, $58F0, $68A8, $80B0

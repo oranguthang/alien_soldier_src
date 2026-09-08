@@ -753,6 +753,42 @@ a projectile wait. The separate type-`$11C` drop object retains projectile
 terminology because its dedicated handler applies falling motion, probes
 terrain contacts, optionally creates a pickup, and converts to an explosion.
 
+The first Joker audit reduced the count to 8,621. Its main entry is now
+explicitly split into palette/screen-X publication and a 20-state relative
+offset dispatcher. Setup retains only operations visible in the ROM: four
+tilemap steps, a 19-record metasprite, four auxiliary type-`$10` slots, an
+object-init table, an 18-byte compressed-tile command stream, and flag-bit
+updates across 18 linked records. No anatomy or attack purpose is inferred for
+the auxiliary slots or linked records.
+
+The Joker phase-gate audit reduced the count to 8,614 and rejected the entire
+interim `DefeatInit`/`DefeatWait`/`DefeatAnim` interpretation. That sequence
+contains no health check, requests player/UI sequence five, waits on player
+behavior state `$FF80C2`, and then returns to `Boss_JokerSelectNextState`. It is
+now documented as states `$18`, `$1A`, and `$1C` of a battle phase gate, with
+its own looping pose stream, bounded body-height adjustment, facing toggle,
+and render path. Joker's actual health-zero branch remains the separate
+falling transition beginning at `Boss_JokerBeginDefeatFall`.
+
+The Joker health-zero transition audit reduced the count to 8,604. The actual
+defeat path is now explicit from the `$FF8200 == 0` branch through the falling
+delay, palette update, fade-out, player-spawn replacement, inverse fade-in, and
+final cleanup. The former `FadeComplete` state was corrected to fade-in because
+it decreases the same counter that the preceding state increases. The former
+`SpawnDebris` helper was broadened to a defeat effect: only one selector value
+uses the debris initializer, while the other seven create type `$160` with one
+of two mapping/velocity combinations.
+
+The Joker state-selection and dive audit reduced the count to 8,594. The
+former attack selector does not inspect health; it combines shared progress,
+absolute player-X distance, and frame-derived bits to choose interrupt-wait,
+dive preparation, or landing preparation. The imported `Taunt` description is
+now a neutral interrupt-wait pose because no static consumer establishes its
+presentation. Likewise `ApplySpinGravity` and `SpinDive` were rejected: the
+code updates a fixed-point body-height accumulator and vertical velocity, then
+continues into a descent state without an explicit rotation operation. Four
+pose streams are named only from their direct state consumers.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

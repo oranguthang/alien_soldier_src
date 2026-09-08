@@ -74,7 +74,7 @@ Projectile_UpdateWithImpactFrames_Return:               ; CODE XREF: Projectile_
 ; End of function Projectile_UpdateWithImpactFrames
 ; Updates a projectile while emitting randomized explosion sounds
 Projectile_UpdateWithExplosionSound:                    ; CODE XREF: Boss_DestroyerProtoEmitDefeatParticle+12   p  ; was: sub_2A3E6
-                                        ; sub_3B602   p
+                                        ; Boss_JokerSpawnDefeatEffect   p
                 subq.w  #1,(word_FF809E).w
                 bpl.s   Projectile_UpdateWithImpactFrames_Update
                 move.w  #$FFFF,(word_FF809E).w
@@ -548,7 +548,7 @@ Effect_InitDebrisFromCurrent:
                 movea.w a5,a0                           ; was: sub_2A85C
 ; End of function Effect_InitDebrisFromCurrent
 ; Initializes debris sprite with velocity from RNG
-Effect_InitDebrisSprite:                                ; CODE XREF: Boss_JokerSpawnDebris+18   p  ; was: sub_2A85E
+Effect_InitDebrisSprite:                                ; CODE XREF: Boss_JokerSpawnDefeatEffect+18   p  ; was: sub_2A85E
                                         ; Boss_BackStringerSpawnDebris+1C   p
                 move.w  #$174,(a0)
                 move.w  #$EDC0,2(a0)

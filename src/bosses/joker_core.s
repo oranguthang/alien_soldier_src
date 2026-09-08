@@ -1,53 +1,53 @@
 Boss_JokerMain:                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3B29E
                 tst.w   4(a5)
-                beq.w   loc_3B2D6
+                beq.w   Boss_JokerDispatchState
                 tst.w   8(a5)
-                beq.s   loc_3B2D6
+                beq.s   Boss_JokerDispatchState
                 btst    #2,(byte_FF80EC).w
-                bne.s   loc_3B2C4
+                bne.s   Boss_JokerUpdatePaletteAndScreenX
                 btst    #1,(byte_FF80EC).w
-                bne.s   loc_3B2C4
+                bne.s   Boss_JokerUpdatePaletteAndScreenX
                 tst.w   (word_FF8200).w
-                beq.w   Boss_JokerFallingInit
-loc_3B2C4:                                              ; CODE XREF: Boss_JokerMain+14   j
+                beq.w   Boss_JokerBeginDefeatFall
+Boss_JokerUpdatePaletteAndScreenX:                      ; CODE XREF: Boss_JokerMain+14   j  ; was: loc_3B2C4
                                         ; Boss_JokerMain+1C   j
                 jsr     (Gfx_InitPaletteFade).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
-loc_3B2D6:                                              ; CODE XREF: Boss_JokerMain+4   j
+Boss_JokerDispatchState:                                ; CODE XREF: Boss_JokerMain+4   j  ; was: loc_3B2D6
                                         ; Boss_JokerMain+C   j
                 move.w  4(a5),d0
-                movea.w off_3B2E6(pc,d0.w),a0
+                movea.w Boss_JokerStateOffsets(pc,d0.w),a0
                 adda.l  #Boss_JokerInit,a0
                 jmp     (a0)
 ; End of function Boss_JokerMain
 ; ---------------------------------------------------------------------------
-off_3B2E6:      dc.w    Boss_JokerInit-Boss_JokerInit
+Boss_JokerStateOffsets: dc.w    Boss_JokerInit-Boss_JokerInit  ; was: off_3B2E6
                                         ; DATA XREF: Boss_JokerMain+3C   r
                 dc.w    Boss_JokerSetup-Boss_JokerInit
-                dc.w    Boss_JokerInitTauntState-Boss_JokerInit
+                dc.w    Boss_JokerBeginInterruptWaitState-Boss_JokerInit
                 dc.w    Boss_JokerDivePrep-Boss_JokerInit
-                dc.w    Boss_JokerDive_ApplyGravity-Boss_JokerInit
-                dc.w    Boss_JokerSpinDive-Boss_JokerInit
+                dc.w    Boss_JokerDiveMotionState-Boss_JokerInit
+                dc.w    Boss_JokerDiveDescentState-Boss_JokerInit
                 dc.w    Boss_JokerStretchState-Boss_JokerInit
                 dc.w    Boss_JokerLandingState-Boss_JokerInit
                 dc.w    Boss_JokerLandingImpact-Boss_JokerInit
                 dc.w    Boss_JokerLandingImpact_FallingPhase-Boss_JokerInit
                 dc.w    Boss_JokerLandingImpact_GroundBounce-Boss_JokerInit
                 dc.w    Boss_JokerGroundBounceAttack-Boss_JokerInit
-                dc.w    Boss_JokerDefeatWait-Boss_JokerInit
-                dc.w    Boss_JokerDefeatAnim-Boss_JokerInit
-                dc.w    Boss_JokerDefeatAnim_TimerCountdown-Boss_JokerInit
-                dc.w    Boss_JokerFallingPhase1-Boss_JokerInit
-                dc.w    Boss_JokerFadeOut-Boss_JokerInit
-                dc.w    Boss_JokerFadeComplete-Boss_JokerInit
+                dc.w    Boss_JokerPhaseGateDelayState-Boss_JokerInit
+                dc.w    Boss_JokerWaitForPlayerSequenceState-Boss_JokerInit
+                dc.w    Boss_JokerPhaseGateCompletionDelayState-Boss_JokerInit
+                dc.w    Boss_JokerDefeatFallDelayState-Boss_JokerInit
+                dc.w    Boss_JokerFadeOutState-Boss_JokerInit
+                dc.w    Boss_JokerFadeInState-Boss_JokerInit
                 dc.w    Boss_JokerCleanup-Boss_JokerInit
-                dc.w    Boss_JokerTaunt_WaitInterrupt-Boss_JokerInit
+                dc.w    Boss_JokerInterruptWaitState-Boss_JokerInit
 
 ; Initializes Joker boss clearing sprites and setting scroll position
 Boss_JokerInit:                                         ; DATA XREF: Boss_JokerMain+40   o  ; was: sub_3B30E
-                                        ; ROM:off_3B2E6   o
+                                        ; ROM:Boss_JokerStateOffsets   o
                 addq.w  #2,4(a5)
                 clr.w   8(a5)
                 move.w  (dword_FFA900).w,$48(a5)
@@ -55,22 +55,22 @@ Boss_JokerInit:                                         ; DATA XREF: Boss_JokerM
                 move.w  #$15C,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-locret_3B32E:                                           ; CODE XREF: Boss_JokerSetup+4   j
+Boss_JokerInitializationReturn:                         ; CODE XREF: Boss_JokerSetup+4   j  ; was: locret_3B32E
                 rts
 ; End of function Boss_JokerInit
-; Sets up Joker boss with metasprites tiles animation and music
+; Stages tilemap rendering, then initializes Joker's metasprite and objects
 Boss_JokerSetup:                                        ; DATA XREF: ROM:0003B2E8   o  ; was: sub_3B330
                 tst.w   (word_FFF720).w
-                bmi.s   locret_3B32E
+                bmi.s   Boss_JokerInitializationReturn
                 subq.w  #1,$4A(a5)
-                bmi.s   loc_3B354
+                bmi.s   Boss_JokerInitializeMetasprite
                 addi.w  #8,$48(a5)
                 move.w  $48(a5),d0
                 addi.w  #$158,d0
                 move.w  (dword_FFA904).w,d1
                 jmp     Gfx_RenderTilemap
 ; ---------------------------------------------------------------------------
-loc_3B354:                                              ; CODE XREF: Boss_JokerSetup+A   j
+Boss_JokerInitializeMetasprite:                         ; CODE XREF: Boss_JokerSetup+A   j  ; was: loc_3B354
                 addq.w  #1,8(a5)
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
@@ -82,10 +82,10 @@ loc_3B354:                                              ; CODE XREF: Boss_JokerS
                 movea.w #(word_FFCD40-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #3,d7
-loc_3B382:                                              ; CODE XREF: Boss_JokerSetup+5A   j
+Boss_JokerInitializeAuxiliaryObjectTypes:               ; CODE XREF: Boss_JokerSetup+5A   j  ; was: loc_3B382
                 move.w  #$10,(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3B382
+                dbf     d7,Boss_JokerInitializeAuxiliaryObjectTypes
                 move.w  #$15C,(a5)
                 moveq   #0,d0
                 bset    d0,2(a5)
@@ -93,16 +93,16 @@ loc_3B382:                                              ; CODE XREF: Boss_JokerS
                 bset    d0,$6C2(a5)
                 movea.l #Boss_JokerObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
-                lea     byte_3B3F8(pc),a0
+                lea     Boss_JokerCompressedTileCommands(pc),a0
                 nop
                 jsr     (Gfx_LoadCompressedTiles).l
                 movea.w #(word_FFC680-M68K_RAM),a0
                 moveq   #7,d0
                 moveq   #$11,d7
-loc_3B3C0:                                              ; CODE XREF: Boss_JokerSetup+98   j
+Boss_JokerEnableLinkedPartFlag7:                        ; CODE XREF: Boss_JokerSetup+98   j  ; was: loc_3B3C0
                 bset    d0,3(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3B3C0
+                dbf     d7,Boss_JokerEnableLinkedPartFlag7
                 move.w  #2,$35C(a5)
                 move.w  #$238,$10(a5)
                 move.w  #$40,$1DC(a5)                   ; '@'
@@ -110,86 +110,86 @@ loc_3B3C0:                                              ; CODE XREF: Boss_JokerS
                 clr.w   (word_FFF74E).w
                 move.w  #$E,(word_FF8090).w
                 move.b  #2,(byte_FFA95B).w
-                bra.w   Boss_JokerAttackState
+                bra.w   Boss_JokerBeginDiveState
 ; End of function Boss_JokerSetup
 ; ---------------------------------------------------------------------------
-byte_3B3F8:     dc.b    $61, 0, $20, 0, 3, 2, 0, $40, $41
+Boss_JokerCompressedTileCommands:   dc.b    $61, 0, $20, 0, 3, 2, 0, $40, $41  ; was: byte_3B3F8
                                         ; DATA XREF: Boss_JokerSetup+7C   o
                 dc.b    0, $45, $44, $42, $43, $48, $3C, $46, $47
 
-; Initializes boss defeat sequence with state and timer setup
-Boss_JokerDefeatInit:                                   ; CODE XREF: Boss_JokerStretchState+48   j  ; was: sub_3B40A
+; Starts the phase gate before the player/UI sequence
+Boss_JokerBeginPhaseGate:                               ; CODE XREF: Boss_JokerStretchState+48   j  ; was: sub_3B40A
                 move.w  #$18,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$40,$11C(a5)                   ; '@'
-; End of function Boss_JokerDefeatInit
-; Defeat sequence timer countdown checking victory condition
-Boss_JokerDefeatWait:                                   ; DATA XREF: ROM:0003B2FE   o  ; was: sub_3B420
+; End of function Boss_JokerBeginPhaseGate
+; Counts down before requesting player/UI sequence five
+Boss_JokerPhaseGateDelayState:                          ; DATA XREF: ROM:0003B2FE   o  ; was: sub_3B420
                 subq.w  #1,$11C(a5)
-                bpl.w   loc_3B464
+                bpl.w   Boss_JokerUpdatePhaseGatePose
                 addq.w  #2,4(a5)
                 moveq   #5,d0
                 jsr     (UI_CheckVictoryCondition).l
-; End of function Boss_JokerDefeatWait
-; Defeat animation with hitbox adjustment and metasprite flipping
-Boss_JokerDefeatAnim:                                   ; DATA XREF: ROM:0003B300   o  ; was: sub_3B434
+; End of function Boss_JokerPhaseGateDelayState
+; Waits for the player/UI sequence to finish
+Boss_JokerWaitForPlayerSequenceState:                   ; DATA XREF: ROM:0003B300   o  ; was: sub_3B434
                 tst.w   (word_FF80C2).w
-                bne.w   loc_3B464
+                bne.w   Boss_JokerUpdatePhaseGatePose
                 addq.w  #2,4(a5)
                 move.w  #$40,$11C(a5)                   ; '@'
-; Xi-Tiger Joker defeat animation timer
-Boss_JokerDefeatAnim_TimerCountdown:                    ; DATA XREF: ROM:0003B302   o  ; was: loc_3B446
+; Counts down after the player/UI sequence before returning to battle
+Boss_JokerPhaseGateCompletionDelayState:                ; DATA XREF: ROM:0003B302   o  ; was: loc_3B446
                 subq.w  #1,$11C(a5)
-                bpl.s   loc_3B464
+                bpl.s   Boss_JokerUpdatePhaseGatePose
                 clr.b   (byte_FF80EC).w
                 clr.w   $35C(a5)
                 subi.w  #$60,(word_FFA970).w            ; '`'
                 addi.w  #$40,(word_FFA974).w            ; '@'
-                bra.w   Boss_JokerSelectAttack
+                bra.w   Boss_JokerSelectNextState
 ; ---------------------------------------------------------------------------
-loc_3B464:                                              ; CODE XREF: Boss_JokerDefeatWait+4   j
-                                        ; Boss_JokerDefeatAnim+4   j
-                lea     word_3BF14(pc),a1
+Boss_JokerUpdatePhaseGatePose:                          ; CODE XREF: Boss_JokerPhaseGateDelayState+4   j  ; was: loc_3B464
+                                        ; Boss_JokerWaitForPlayerSequenceState+4   j
+                lea     Boss_JokerPhaseGatePoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdateAnimation
                 move.w  $58(a5),d7
                 cmpi.w  #$10,d7
-                beq.s   loc_3B47E
+                beq.s   Boss_JokerIncreasePhaseGateBodyHeight
                 cmpi.w  #4,d7
-                bne.s   loc_3B48C
-loc_3B47E:                                              ; CODE XREF: Boss_JokerDefeatAnim+42   j
+                bne.s   Boss_JokerDecreasePhaseGateBodyHeight
+Boss_JokerIncreasePhaseGateBodyHeight:                  ; CODE XREF: Boss_JokerUpdatePhaseGatePose+42   j  ; was: loc_3B47E
                 cmpi.w  #$56,$1DC(a5)                   ; 'V'
-                bpl.s   loc_3B498
+                bpl.s   Boss_JokerCheckPhaseGateFacingToggle
                 addq.w  #2,$1DC(a5)
-                bra.s   loc_3B498
+                bra.s   Boss_JokerCheckPhaseGateFacingToggle
 ; ---------------------------------------------------------------------------
-loc_3B48C:                                              ; CODE XREF: Boss_JokerDefeatAnim+48   j
+Boss_JokerDecreasePhaseGateBodyHeight:                  ; CODE XREF: Boss_JokerUpdatePhaseGatePose+48   j  ; was: loc_3B48C
                 cmpi.w  #$32,$1DC(a5)                   ; '2'
-                bmi.s   loc_3B498
+                bmi.s   Boss_JokerCheckPhaseGateFacingToggle
                 subq.w  #1,$1DC(a5)
-loc_3B498:                                              ; CODE XREF: Boss_JokerDefeatAnim+50   j
-                                        ; Boss_JokerDefeatAnim+56   j
+Boss_JokerCheckPhaseGateFacingToggle:                   ; CODE XREF: Boss_JokerUpdatePhaseGatePose+50   j  ; was: loc_3B498
+                                        ; Boss_JokerUpdatePhaseGatePose+56   j
                 tst.w   $3BC(a5)
-                beq.s   loc_3B4BA
+                beq.s   Boss_JokerRenderPhaseGatePose
                 cmpi.w  #8,$58(a5)
-                beq.s   loc_3B4AE
+                beq.s   Boss_JokerTogglePhaseGateFacing
                 cmpi.w  #$14,$58(a5)
-                bne.s   loc_3B4BA
-loc_3B4AE:                                              ; CODE XREF: Boss_JokerDefeatAnim+70   j
+                bne.s   Boss_JokerRenderPhaseGatePose
+Boss_JokerTogglePhaseGateFacing:                        ; CODE XREF: Boss_JokerUpdatePhaseGatePose+70   j  ; was: loc_3B4AE
                 eori.w  #$100,$54(a5)
                 move.w  $370(a5),$6D0(a5)
-loc_3B4BA:                                              ; CODE XREF: Boss_JokerDefeatAnim+68   j
-                                        ; Boss_JokerDefeatAnim+78   j
+Boss_JokerRenderPhaseGatePose:                          ; CODE XREF: Boss_JokerUpdatePhaseGatePose+68   j  ; was: loc_3B4BA
+                                        ; Boss_JokerUpdatePhaseGatePose+78   j
                 move.w  #$CCE0,$48(a5)
                 move.w  #$CCE0,$4A(a5)
                 move.w  #$144,$6D4(a5)
                 bsr.w   Boss_JokerRenderBody
                 move.w  #$144,$374(a5)
                 rts
-; End of function Boss_JokerDefeatAnim
-; Initializes Joker boss falling state after defeat
-Boss_JokerFallingInit:                                  ; CODE XREF: Boss_JokerMain+22   j  ; was: sub_3B4D8
+; End of function Boss_JokerWaitForPlayerSequenceState
+; Initializes Joker's health-zero falling sequence
+Boss_JokerBeginDefeatFall:                              ; CODE XREF: Boss_JokerMain+22   j  ; was: sub_3B4D8
                 move.w  #4,(word_FF808C).w
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,(byte_FFA272).w
@@ -206,14 +206,14 @@ Boss_JokerFallingInit:                                  ; CODE XREF: Boss_JokerM
                 move.w  a5,$4A(a5)
                 move.w  #$80,$11C(a5)
                 clr.w   $A(a5)
-                bra.s   Boss_JokerFallingPhase1
-; End of function Boss_JokerFallingInit
-; Boss fade out effect clearing sprites and spawning player
-Boss_JokerFadeOut:                                      ; DATA XREF: ROM:0003B306   o  ; was: sub_3B52E
-                bsr.w   Gfx_SetFadeLevel
+                bra.s   Boss_JokerDefeatFallDelayState
+; End of function Boss_JokerBeginDefeatFall
+; Increases the fade counter, then replaces the boss objects with player spawn
+Boss_JokerFadeOutState:                                 ; DATA XREF: ROM:0003B306   o  ; was: sub_3B52E
+                bsr.w   Boss_JokerApplyFadeCounter
                 addq.w  #1,$A(a5)
                 cmpi.w  #$20,$A(a5)                     ; ' '
-                bmi.s   loc_3B57A
+                bmi.s   Boss_JokerUpdateDefeatFall
                 addq.w  #2,4(a5)
                 clr.w   2(a5)
                 clr.w   8(a5)
@@ -224,74 +224,74 @@ Boss_JokerFadeOut:                                      ; DATA XREF: ROM:0003B30
                 jsr     (Effect_InitPlayerSpawn).l
                 addi.w  #$10,$14(a0)
                 rts
-; End of function Boss_JokerFadeOut
-; First falling phase with palette fade and projectile spawn
-Boss_JokerFallingPhase1:                                ; CODE XREF: Boss_JokerFallingInit+54   j  ; was: sub_3B56A
+; End of function Boss_JokerFadeOutState
+; Delays the fade-out state while updating the defeat fall
+Boss_JokerDefeatFallDelayState:                         ; CODE XREF: Boss_JokerBeginDefeatFall+54   j  ; was: sub_3B56A
                                         ; DATA XREF: ROM:0003B304   o
                 subq.w  #1,$11C(a5)
-                bpl.s   loc_3B574
+                bpl.s   Boss_JokerUpdateDefeatPaletteFade
                 addq.w  #2,4(a5)
-loc_3B574:                                              ; CODE XREF: Boss_JokerFallingPhase1+4   j
+Boss_JokerUpdateDefeatPaletteFade:                      ; CODE XREF: Boss_JokerDefeatFallDelayState+4   j  ; was: loc_3B574
                 jsr     (Gfx_UpdatePaletteFade).l
-loc_3B57A:                                              ; CODE XREF: Boss_JokerFadeOut+E   j
-                bsr.w   Boss_JokerSpawnDebris
+Boss_JokerUpdateDefeatFall:                             ; CODE XREF: Boss_JokerFadeOutState+E   j  ; was: loc_3B57A
+                bsr.w   Boss_JokerSpawnDefeatEffect
                 move.w  #4,(word_FFA010).w
                 addi.l  #$3000,$1C(a5)
-                bpl.s   Boss_JokerFallingPhase2
+                bpl.s   Boss_JokerUpdateDefeatDescent
                 cmpi.w  #$48,$1DC(a5)                   ; 'H'
-                bpl.s   loc_3B5C6
+                bpl.s   Boss_JokerAnimateDefeatFall
                 addi.l  #$18000,$1DC(a5)
-                bra.s   loc_3B5C6
-; End of function Boss_JokerFallingPhase1
-; Second falling phase adjusting descent speed to ground
-Boss_JokerFallingPhase2:                                ; CODE XREF: Boss_JokerFallingPhase1+22   j  ; was: sub_3B5A0
+                bra.s   Boss_JokerAnimateDefeatFall
+; End of function Boss_JokerDefeatFallDelayState
+; Adjusts body height and clamps the health-zero fall to Y $120
+Boss_JokerUpdateDefeatDescent:                          ; CODE XREF: Boss_JokerDefeatFallDelayState+22   j  ; was: sub_3B5A0
                 cmpi.w  #$34,$1DC(a5)                   ; '4'
-                bmi.s   loc_3B5B0
+                bmi.s   Boss_JokerClampDefeatFallY
                 subi.l  #$18000,$1DC(a5)
-loc_3B5B0:                                              ; CODE XREF: Boss_JokerFallingPhase2+6   j
+Boss_JokerClampDefeatFallY:                             ; CODE XREF: Boss_JokerUpdateDefeatDescent+6   j  ; was: loc_3B5B0
                 cmpi.w  #$120,$14(a5)
-                bmi.s   loc_3B5C6
+                bmi.s   Boss_JokerAnimateDefeatFall
                 move.w  #$120,$14(a5)
                 move.l  #$FFFCC000,$1C(a5)
-loc_3B5C6:                                              ; CODE XREF: Boss_JokerFallingPhase1+2A   j
-                                        ; Boss_JokerFallingPhase1+34   j
-                lea     word_3BF7E(pc),a1
+Boss_JokerAnimateDefeatFall:                            ; CODE XREF: Boss_JokerDefeatFallDelayState+2A   j  ; was: loc_3B5C6
+                                        ; Boss_JokerDefeatFallDelayState+34   j
+                lea     Boss_JokerDefeatFallPoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdateAnimation
                 bra.w   Boss_JokerRenderBody
-; End of function Boss_JokerFallingPhase2
-; Completes fade out and transitions to final state
-Boss_JokerFadeComplete:                                 ; DATA XREF: ROM:0003B308   o  ; was: sub_3B5D4
+; End of function Boss_JokerUpdateDefeatDescent
+; Decreases the fade counter back to zero
+Boss_JokerFadeInState:                                  ; DATA XREF: ROM:0003B308   o  ; was: sub_3B5D4
                 subq.w  #2,$A(a5)
-                bne.s   loc_3B5E4
+                bne.s   Boss_JokerApplyFadeInLevel
                 addq.w  #2,4(a5)
                 move.w  #$70,$11C(a5)                   ; 'p'
-loc_3B5E4:                                              ; CODE XREF: Boss_JokerFadeComplete+4   j
-                bra.w   Gfx_SetFadeLevel
-; End of function Boss_JokerFadeComplete
+Boss_JokerApplyFadeInLevel:                             ; CODE XREF: Boss_JokerFadeInState+4   j  ; was: loc_3B5E4
+                bra.w   Boss_JokerApplyFadeCounter
+; End of function Boss_JokerFadeInState
 ; Cleans up Joker boss removing entity and clearing flags
 Boss_JokerCleanup:                                      ; DATA XREF: ROM:0003B30A   o  ; was: sub_3B5E8
                 subq.w  #1,$11C(a5)
-                bpl.s   locret_3B600
+                bpl.s   Boss_JokerCleanupReturn
                 bset    #4,2(a5)
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 clr.b   (word_FFF7E6+1).w
-locret_3B600:                                           ; CODE XREF: Boss_JokerCleanup+4   j
+Boss_JokerCleanupReturn:                                ; CODE XREF: Boss_JokerCleanup+4   j  ; was: locret_3B600
                 rts
 ; End of function Boss_JokerCleanup
-; Spawns falling debris and explosion sprites during defeat
-Boss_JokerSpawnDebris:                                  ; CODE XREF: Boss_JokerFallingPhase1:loc_3B57A   p  ; was: sub_3B602
+; Spawns a randomized debris or type-$160 effect during the defeat fall
+Boss_JokerSpawnDefeatEffect:                            ; CODE XREF: Boss_JokerDefeatFallDelayState:Boss_JokerUpdateDefeatFall   p  ; was: sub_3B602
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
-                bne.s   locret_3B68C
+                bne.s   Boss_JokerSpawnDefeatEffectReturn
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #7,d0
-                bne.s   loc_3B624
+                bne.s   Boss_JokerInitializeType160DefeatEffect
                 jsr     (Effect_InitDebrisSprite).l
-                bra.w   loc_3B65E
+                bra.w   Boss_JokerPositionDefeatEffect
 ; ---------------------------------------------------------------------------
-loc_3B624:                                              ; CODE XREF: Boss_JokerSpawnDebris+16   j
+Boss_JokerInitializeType160DefeatEffect:                ; CODE XREF: Boss_JokerSpawnDefeatEffect+16   j  ; was: loc_3B624
                 jsr     (Sprite_InitType160).l
                 bset    #7,3(a0)
                 move.w  (dword_FFFF08).w,d0
@@ -301,11 +301,11 @@ loc_3B624:                                              ; CODE XREF: Boss_JokerS
                 move.l  #off_E953C,8(a0)
                 move.w  #$FFFE,$1C(a0)
                 btst    #0,(dword_FFFF08).w
-                beq.s   loc_3B65E
+                beq.s   Boss_JokerPositionDefeatEffect
                 move.l  #off_E9604,8(a0)
                 clr.w   $1C(a0)
-loc_3B65E:                                              ; CODE XREF: Boss_JokerSpawnDebris+1E   j
-                                        ; Boss_JokerSpawnDebris+4E   j
+Boss_JokerPositionDefeatEffect:                         ; CODE XREF: Boss_JokerSpawnDefeatEffect+1E   j  ; was: loc_3B65E
+                                        ; Boss_JokerSpawnDefeatEffect+4E   j
                 move.b  #0,$20(a0)
                 move.b  (dword_FFFF08).w,d0
                 move.b  (dword_FFFF08+1).w,d1
@@ -317,19 +317,19 @@ loc_3B65E:                                              ; CODE XREF: Boss_JokerS
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-locret_3B68C:                                           ; CODE XREF: Boss_JokerSpawnDebris+C   j
+Boss_JokerSpawnDefeatEffectReturn:                      ; CODE XREF: Boss_JokerSpawnDefeatEffect+C   j  ; was: locret_3B68C
                 rts
-; End of function Boss_JokerSpawnDebris
+; End of function Boss_JokerSpawnDefeatEffect
 ; Sets graphics fade level based on counter value
-Gfx_SetFadeLevel:                                       ; CODE XREF: Boss_JokerFadeOut   p  ; was: sub_3B68E
-                                        ; sub_3B5D4:loc_3B5E4   j
+Boss_JokerApplyFadeCounter:                             ; CODE XREF: Boss_JokerFadeOutState   p  ; was: sub_3B68E
+                                        ; Boss_JokerFadeInState:Boss_JokerApplyFadeInLevel   j
                 move.w  $A(a5),d0
                 asr.w   #1,d0
                 jmp     (Gfx_SetFadeParams).l
-; End of function Gfx_SetFadeLevel
-; Selects boss attack pattern based on health and RNG value
-Boss_JokerSelectAttack:                                 ; CODE XREF: Boss_JokerDefeatAnim+2C   j  ; was: sub_3B69A
-                                        ; Boss_JokerInitTauntState+12   j
+; End of function Boss_JokerApplyFadeCounter
+; Selects the next state from shared progress, player distance, and RNG
+Boss_JokerSelectNextState:                              ; CODE XREF: Boss_JokerPhaseGateCompletionDelayState+1A   j  ; was: sub_3B69A
+                                        ; Boss_JokerBeginInterruptWaitState+12   j
                 move.w  #4,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
@@ -339,41 +339,40 @@ Boss_JokerSelectAttack:                                 ; CODE XREF: Boss_JokerD
                 clr.l   $18(a5)
                 move.w  #$40,$1DC(a5)                   ; '@'
                 tst.w   (word_FF8234).w
-                bmi.s   Boss_JokerInitTauntState
-                beq.s   Boss_JokerInitTauntState
+                bmi.s   Boss_JokerBeginInterruptWaitState
+                beq.s   Boss_JokerBeginInterruptWaitState
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$6A,d0                         ; 'j'
-                bpl.s   loc_3B6E8
+                bpl.s   Boss_JokerSelectDistantPlayerState
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
-                beq.w   Boss_JokerAttackState
+                beq.w   Boss_JokerBeginDiveState
                 bra.w   Boss_JokerLandingPrep
 ; ---------------------------------------------------------------------------
-loc_3B6E8:                                              ; CODE XREF: Boss_JokerSelectAttack+3C   j
+Boss_JokerSelectDistantPlayerState:                     ; CODE XREF: Boss_JokerSelectNextState+3C   j  ; was: loc_3B6E8
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$F,d0
                 beq.w   Boss_JokerLandingPrep
-                bra.w   Boss_JokerAttackState
-; End of function Boss_JokerSelectAttack
-; Initialize Xi-Tiger Joker boss taunt state with animation
-Boss_JokerInitTauntState:                               ; CODE XREF: Boss_JokerSelectAttack+2E   j  ; was: sub_3B6F8
-                                        ; Boss_JokerSelectAttack+30   j
-                                        ; DATA XREF:
+                bra.w   Boss_JokerBeginDiveState
+; End of function Boss_JokerSelectNextState
+; Starts the interrupt-wait pose state
+Boss_JokerBeginInterruptWaitState:                      ; CODE XREF: Boss_JokerSelectNextState+2E   j  ; was: sub_3B6F8
+                                        ; Boss_JokerSelectNextState+30   j
                 move.w  #$26,4(a5)                      ; '&'
                 move.w  #$30,$11C(a5)                   ; '0'
-; Waits for interrupt flag before selecting next attack
-Boss_JokerTaunt_WaitInterrupt:                          ; DATA XREF: ROM:0003B30C   o  ; was: loc_3B704
+; Waits for shared flag bit zero before selecting the next state
+Boss_JokerInterruptWaitState:                           ; DATA XREF: ROM:0003B30C   o  ; was: loc_3B704
                 bclr    #0,(byte_FF8260).w
-                bne.w   Boss_JokerSelectAttack
+                bne.w   Boss_JokerSelectNextState
                 addi.w  #2,(word_FF8234).w
-                lea     word_3BF2E(pc),a1
+                lea     Boss_JokerInterruptWaitPoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdateAnimation
                 bra.w   Boss_JokerRenderBody
-; End of function Boss_JokerInitTauntState
-; Sets Joker boss attack state with collision and animation params
-Boss_JokerAttackState:                                  ; CODE XREF: Boss_JokerSetup+C4   j  ; was: sub_3B722
-                                        ; Boss_JokerSelectAttack+46   j
+; End of function Boss_JokerBeginInterruptWaitState
+; Initializes the dive preparation state
+Boss_JokerBeginDiveState:                               ; CODE XREF: Boss_JokerSetup+C4   j  ; was: sub_3B722
+                                        ; Boss_JokerSelectNextState+46   j
                 move.w  #$16,$26(a5)
                 move.w  #6,4(a5)
                 clr.w   $58(a5)
@@ -381,17 +380,17 @@ Boss_JokerAttackState:                                  ; CODE XREF: Boss_JokerS
                 move.w  a5,$48(a5)
                 move.w  #$C980,$4A(a5)
                 move.w  #$144,$374(a5)
-; End of function Boss_JokerAttackState
+; End of function Boss_JokerBeginDiveState
 ; Joker boss dive preparation with sound and velocity initialization
 Boss_JokerDivePrep:                                     ; DATA XREF: ROM:0003B2EC   o  ; was: sub_3B748
                 tst.w   $58(a5)
-                bmi.s   loc_3B75C
-                lea     word_3BF38(pc),a1
+                bmi.s   Boss_JokerInitializeDiveMotion
+                lea     Boss_JokerDiveAndLandingPoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdateAnimation
                 bra.w   Boss_JokerRenderBody
 ; ---------------------------------------------------------------------------
-loc_3B75C:                                              ; CODE XREF: Boss_JokerDivePrep+4   j
+Boss_JokerInitializeDiveMotion:                         ; CODE XREF: Boss_JokerDivePrep+4   j  ; was: loc_3B75C
                 move.b  #$44,d0                         ; 'D'
                 jsr     (Sound_PlaySFX).l
                 addq.w  #2,4(a5)
@@ -404,59 +403,59 @@ loc_3B75C:                                              ; CODE XREF: Boss_JokerD
                 move.b  #$44,d0                         ; 'D'
                 jsr     (Sound_PlaySFX).l
                 tst.w   $35C(a5)
-                bne.s   loc_3B7A4
+                bne.s   Boss_JokerSelectDiveHorizontalMotion
                 subi.w  #$C,(word_FF8234).w
-loc_3B7A4:                                              ; CODE XREF: Boss_JokerDivePrep+54   j
+Boss_JokerSelectDiveHorizontalMotion:                   ; CODE XREF: Boss_JokerDivePrep+54   j  ; was: loc_3B7A4
                 tst.w   $35C(a5)
-                beq.s   loc_3B7B4
+                beq.s   Boss_JokerSetPlayerDirectedDiveMotion
                 move.l  #$FFFEC000,$18(a5)
-                bra.s   Boss_JokerDive_ApplyGravity
+                bra.s   Boss_JokerDiveMotionState
 ; ---------------------------------------------------------------------------
-loc_3B7B4:                                              ; CODE XREF: Boss_JokerDivePrep+60   j
+Boss_JokerSetPlayerDirectedDiveMotion:                  ; CODE XREF: Boss_JokerDivePrep+60   j  ; was: loc_3B7B4
                 jsr     (Physics_GetPlayerDelta).l
                 move.l  #$10000,d0
                 move.w  (dword_FFFF08).w,d0
                 tst.w   d1
-                bpl.s   loc_3B7CA
+                bpl.s   Boss_JokerStoreDiveHorizontalVelocity
                 neg.l   d0
-loc_3B7CA:                                              ; CODE XREF: Boss_JokerDivePrep+7E   j
+Boss_JokerStoreDiveHorizontalVelocity:                  ; CODE XREF: Boss_JokerDivePrep+7E   j  ; was: loc_3B7CA
                 move.l  d0,$18(a5)
-; Applies spinning gravity during dive attack sequence
-Boss_JokerDive_ApplyGravity:                            ; CODE XREF: Boss_JokerDivePrep+6A   j  ; was: loc_3B7CE
+; Updates accelerated dive motion until vertical velocity becomes nonnegative
+Boss_JokerDiveMotionState:                              ; CODE XREF: Boss_JokerDivePrep+6A   j  ; was: loc_3B7CE
                                         ; DATA XREF: ROM:0003B2EE   o
-                bsr.s   Boss_JokerApplySpinGravity
-                bpl.s   Boss_JokerDiveComplete
-                lea     word_3BF42(pc),a1
+                bsr.s   Boss_JokerUpdateDiveBodyMotion
+                bpl.s   Boss_JokerAdvanceToDiveDescentState
+                lea     Boss_JokerDiveMotionPoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdateAnimation
                 bra.w   Boss_JokerRenderBody
 ; End of function Boss_JokerDivePrep
-; Applies spinning gravity acceleration and rotation to boss
-Boss_JokerApplySpinGravity:                             ; CODE XREF: Boss_JokerDivePrep:loc_3B7CE   p  ; was: sub_3B7E0
-                                        ; sub_3B808   p
+; Applies acceleration to body height and vertical velocity
+Boss_JokerUpdateDiveBodyMotion:                         ; CODE XREF: Boss_JokerDivePrep:Boss_JokerDiveMotionState   p  ; was: sub_3B7E0
+                                        ; Boss_JokerDiveDescentState   p
                 addi.l  #$A00,$23C(a5)
                 move.l  $23C(a5),d0
                 add.l   d0,$1DC(a5)
                 addi.l  #$2000,$1C(a5)
                 rts
-; End of function Boss_JokerApplySpinGravity
-; Completes dive attack transitioning to next phase
-Boss_JokerDiveComplete:                                 ; CODE XREF: Boss_JokerDivePrep+88   j  ; was: sub_3B7FA
+; End of function Boss_JokerUpdateDiveBodyMotion
+; Advances from rising dive motion to the descent state
+Boss_JokerAdvanceToDiveDescentState:                    ; CODE XREF: Boss_JokerDivePrep+88   j  ; was: sub_3B7FA
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-; End of function Boss_JokerDiveComplete
-; Joker boss spinning dive attack with gravity and projectile spawn
-Boss_JokerSpinDive:                                     ; DATA XREF: ROM:0003B2F0   o  ; was: sub_3B808
-                bsr.s   Boss_JokerApplySpinGravity
+; End of function Boss_JokerAdvanceToDiveDescentState
+; Continues accelerated dive descent until the linked Y boundary
+Boss_JokerDiveDescentState:                             ; DATA XREF: ROM:0003B2F0   o  ; was: sub_3B808
+                bsr.s   Boss_JokerUpdateDiveBodyMotion
                 cmpi.w  #$144,$374(a5)
-                bpl.s   loc_3B820
-                lea     word_3BF4C(pc),a1
+                bpl.s   Boss_JokerBeginStretchState
+                lea     Boss_JokerDiveDescentAndBouncePoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdateAnimation
                 bra.w   Boss_JokerRenderBody
 ; ---------------------------------------------------------------------------
-loc_3B820:                                              ; CODE XREF: Boss_JokerSpinDive+8   j
+Boss_JokerBeginStretchState:                            ; CODE XREF: Boss_JokerDiveDescentState+8   j  ; was: loc_3B820
                                         ; Boss_JokerGroundBounceAttack+18   j
                 move.w  #$C,4(a5)
                 clr.w   $58(a5)
@@ -467,7 +466,7 @@ loc_3B820:                                              ; CODE XREF: Boss_JokerS
                 move.b  #$53,d0                         ; 'S'
                 jsr     (Sound_PlaySFX).l
                 bsr.w   Boss_JokerSpawnBomb
-; End of function Boss_JokerSpinDive
+; End of function Boss_JokerDiveDescentState
 ; Joker boss stretch state adjusting hitbox size dynamically
 Boss_JokerStretchState:                                 ; DATA XREF: ROM:0003B2F2   o  ; was: sub_3B84E
                 move.w  $58(a5),d0
@@ -495,15 +494,15 @@ loc_3B886:                                              ; CODE XREF: Boss_JokerS
                 tst.w   $35C(a5)
                 beq.s   loc_3B89A
                 cmpi.w  #$190,$10(a5)
-                bpl.w   Boss_JokerAttackState
-                bra.w   Boss_JokerDefeatInit
+                bpl.w   Boss_JokerBeginDiveState
+                bra.w   Boss_JokerBeginPhaseGate
 ; ---------------------------------------------------------------------------
 loc_3B89A:                                              ; CODE XREF: Boss_JokerStretchState+3C   j
-                bra.w   Boss_JokerSelectAttack
+                bra.w   Boss_JokerSelectNextState
 ; End of function Boss_JokerStretchState
 ; Prepares boss landing state after fall setting params
-Boss_JokerLandingPrep:                                  ; CODE XREF: Boss_JokerSelectAttack+4A   j  ; was: sub_3B89E
-                                        ; Boss_JokerSelectAttack+56   j
+Boss_JokerLandingPrep:                                  ; CODE XREF: Boss_JokerSelectNextState+4A   j  ; was: sub_3B89E
+                                        ; Boss_JokerSelectNextState+56   j
                 move.w  #$E,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
@@ -516,7 +515,7 @@ Boss_JokerLandingState:                                 ; DATA XREF: ROM:0003B2F
                 tst.w   $58(a5)
                 bmi.s   loc_3B8DA
                 subi.l  #$8000,$1DC(a5)
-                lea     word_3BF38(pc),a1
+                lea     Boss_JokerDiveAndLandingPoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdateAnimation
                 bra.w   Boss_JokerRenderBody
@@ -611,8 +610,8 @@ Boss_JokerGroundBounceAttack:                           ; DATA XREF: ROM:0003B2F
                 bsr.s   Boss_JokerUpdateGroundBounce
                 addi.l  #$2000,$1C(a5)
                 cmpi.w  #$140,$374(a5)
-                bpl.w   loc_3B820
-                lea     word_3BF4C(pc),a1
+                bpl.w   Boss_JokerBeginStretchState
+                lea     Boss_JokerDiveDescentAndBouncePoseCommands(pc),a1
                 nop
                 bsr.w   Boss_JokerUpdateAnimation
                 bra.w   *+4
