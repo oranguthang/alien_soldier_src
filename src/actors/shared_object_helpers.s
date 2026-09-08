@@ -468,7 +468,7 @@ Effect_SpawnExplosionType1AC:
 ; End of function Effect_SpawnExplosionType1AC
 ; Initializes the current object as type 160
 Sprite_InitType160FromCurrent:                          ; CODE XREF: Enemy_SpawnQuadProjectiles+A   p  ; was: sub_2A7BC
-                                        ; Projectile_FlyerUpdate4+20   j
+                                        ; Projectile_Stage24RisingShotUpdateArc+20   j
                 movea.w a5,a0
 ; End of function Sprite_InitType160FromCurrent
 ; Initializes object type 160 in a0

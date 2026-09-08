@@ -240,8 +240,8 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Entity_DispatchStoredSubtype
                 dc.l    Effect_ShipDestructionDebris
                 dc.l    Entity_VictorSubtypeDispatcher
-                dc.l    Enemy_FlyerAnimation3
-                dc.l    Enemy_FlyerCollision
+                dc.l    Projectile_MissirayAndRisingShotMain
+                dc.l    Effect_RisingShotWaveControllerMain
                 dc.l    Boss_ProjectileStateDispatcher
                 dc.l    Boss_MissirayMain
                 dc.l    Segment_MissirayPartMain

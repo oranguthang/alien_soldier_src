@@ -140,7 +140,7 @@ Segment_MissirayType1Fire:                              ; DATA XREF: ROM:0005456
                 move.w  $14(a5),d1
                 move.l  #$FFFF0000,d2
                 move.l  #$FFFFE000,d3
-                jsr     (Projectile_MissirayBulletInit).l
+                jsr     (Projectile_InitMissirayFallingShot).l
                 rts
 ; ---------------------------------------------------------------------------
 loc_545B8:                                              ; CODE XREF: Segment_MissirayType1Fire+1A   j

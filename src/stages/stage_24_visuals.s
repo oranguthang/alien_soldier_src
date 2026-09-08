@@ -75,7 +75,7 @@ locret_33D56:                                           ; CODE XREF: Stage24_Til
                 rts
 ; End of function Stage24_TileUpdate
 ; Initializes Missiray bullet projectile with graphics and parameters
-Projectile_InitMissirayBullet:                          ; CODE XREF: Enemy_FlyerPeriodicProjectileFire+2C   p  ; was: sub_33D58
+Projectile_InitMissirayBullet:                          ; CODE XREF: Orphaned_RisingShotPairFireMissirayShot+2C   p  ; was: sub_33D58
                                         ; Segment_MissirayType1Fire+54   p
                 move.w  #$3CC,(a0)
                 move.l  #off_ED152,8(a0)

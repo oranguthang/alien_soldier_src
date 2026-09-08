@@ -32,15 +32,15 @@ off_EB3C8:      dc.w    word_EB392-*                    ; DATA XREF: Enemy_Forma
                 dc.w    3
                 dc.w    off_EB3C8-*
                 dc.w    0
-word_EB3D8:     dc.w    $6800, $700, $E5F8              ; DATA XREF: Projectile_MissirayBulletInit+6   o
+word_EB3D8:     dc.w    $6800, $700, $E5F8              ; DATA XREF: Projectile_InitMissirayFallingShot+6   o
                                         ; ROM:off_EB492   o
                 dc.w    $E808, $700, $FAF8
 word_EB3E4:     dc.w    $6800, $700, $E3F8              ; DATA XREF: ROM:000EB496   o
                 dc.w    $E808, $700, $FCF8
 word_EB3F0:     dc.w    $6800, $700, $E1F8              ; DATA XREF: ROM:000EB49A   o
                 dc.w    $E808, $700, $FEF8
-word_EB3FC:     dc.w    $6800, $700, $E0F8              ; DATA XREF: Enemy_FlyerAnimation2+6   o
-                                        ; Projectile_FlyerAccelerateDown+14   o
+word_EB3FC:     dc.w    $6800, $700, $E0F8              ; DATA XREF: Projectile_InitRisingShotWaveMember+6   o
+                                        ; Projectile_MissirayFallingShotDescend+14   o
                 dc.w    $E808, $700, $FFF8
 word_EB408:     dc.w    $6842, $D00, $5EF               ; DATA XREF: Enemy_InitStage11Fish+A   o
                                         ; Enemy_Stage11FishWaitForInnerEdgeState_Finish   o
@@ -67,7 +67,7 @@ word_EB45C:     dc.w    $6860, $600, $F4ED              ; DATA XREF: Enemy_Stage
                 dc.w    $E82E, $E00, $DEE7
 word_EB486:     dc.w    $683C, $C00, $F6                ; DATA XREF: Enemy_Stage11FishInitEmitterState+1C   o
                 dc.w    $E840, $400, $F8F6
-off_EB492:      dc.w    word_EB3D8-*                    ; DATA XREF: Enemy_FlyerAccelerateFall+1C   o
+off_EB492:      dc.w    word_EB3D8-*                    ; DATA XREF: Projectile_MissirayFallingShotApplyGravity+1C   o
                 dc.w    1
                 dc.w    word_EB3E4-*
                 dc.w    1

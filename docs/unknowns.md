@@ -434,6 +434,18 @@ accompanying data was also separated into its asteroid/Destroyer Proto
 mappings and a compressed tile asset whose actual consumer is the Stage 3
 phase 3 object set.
 
+The rising-shot/Missiray pass reduced the count to 9,396. The former
+`missiray_flyer.s` contained no coherent flyer enemy. Type `$3C8`, installed by
+both the post-Destroyer Proto transition and Stage 24 initialization, manages
+ten delayed rising-shot members and an optional Stage 11 fish-wave companion.
+The adjacent controller at `0x0337E4` has neither a static caller nor an
+absolute ROM pointer and remains explicitly orphaned. Type `$3C4` is shared by
+Missiray falling shots and the rising-wave members, with two later states used
+only by Stage 24. These three ROM-contiguous roles now live in
+`rising_shot_waves.s`, `orphaned_rising_shot_pair.s`, and
+`missiray_and_rising_shots.s`; their generated flyer, collision, damage, and
+animation ownership claims were removed.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
