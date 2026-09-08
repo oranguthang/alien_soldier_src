@@ -146,12 +146,12 @@ word_EB592:     dc.w    $6812, $400, $FCE0              ; DATA XREF: Boss_Stage3
                 dc.w    $680C, $600, $E8F0
                 dc.w    $7800, $E00, 0
                 dc.w    $E800, $E00, $E800
-word_EB5B0:     dc.w    $E814, $A00, $F4F4              ; DATA XREF: Boss_Stage3OrbitingFormationInit+5E   o
-word_EB5B6:     dc.w    $2128, $600, $7F1               ; DATA XREF: ROM:off_3D37A   o
+word_EB5B0:                                 dc.w    $E814, $A00, $F4F4  ; DATA XREF: Boss_Stage3OrbitingFormationInit+5E   o
+Boss_CaterpillarFourPhaseSegmentMappingA:   dc.w    $2128, $600, $7F1  ; DATA XREF: ROM:Boss_CaterpillarFourPhaseSegmentMappings   o  ; was: word_EB5B6
                 dc.w    $2928, $600, $701
                 dc.w    $2122, $600, $EFF1
                 dc.w    $A922, $600, $EF01
-word_EB5CE:     dc.w    $212E, $600, $7F1               ; DATA XREF: ROM:0003D37E   o
+Boss_CaterpillarFourPhaseSegmentMappingB:   dc.w    $212E, $600, $7F1  ; DATA XREF: ROM:0003D37E   o  ; was: word_EB5CE
                                         ; ROM:0003D386   o
                 dc.w    $292E, $600, $701
                 dc.w    $2122, $600, $EFF1

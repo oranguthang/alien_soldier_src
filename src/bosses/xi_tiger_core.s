@@ -1,3 +1,5 @@
+; Xi-Tiger controller, combat states, and movement helpers
+
 Boss_XiTigerMain:                                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3D814
                 tst.w   4(a5)
                 beq.w   loc_3D878

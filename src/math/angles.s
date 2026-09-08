@@ -4,7 +4,7 @@ Math_CalculateAngleToPlayer:                            ; CODE XREF: Math_Calcul
                 move.w  (word_FF824A).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
-Math_CalculateDirectionIndex:                           ; CODE XREF: Boss_CaterpillarUpdateRotation+1E   p  ; was: loc_355A
+Math_CalculateDirectionIndex:                           ; CODE XREF: Boss_CaterpillarUpdateShipSteering+1E   p  ; was: loc_355A
                                         ; Boss_SnakeAI+1E   p
                 bsr.s   Math_Arctan2Lookup
                 asr.w   #7,d2

@@ -1,29 +1,29 @@
-word_EB5E6:     dc.w    $211A, $700, $F0F1              ; DATA XREF: Boss_CaterpillarPart2+18   o
+Boss_CaterpillarHomingProjectileSegmentMapping: dc.w    $211A, $700, $F0F1  ; DATA XREF: Boss_CaterpillarHomingProjectileSegment+18   o  ; was: word_EB5E6
                 dc.w    $A91A, $700, $F001
-word_EB5F2:     dc.w    $2134, $600, $7F1               ; DATA XREF: ROM:0003D382   o
+Boss_CaterpillarFourPhaseSegmentMappingC:   dc.w    $2134, $600, $7F1  ; DATA XREF: ROM:0003D382   o  ; was: word_EB5F2
                 dc.w    $2934, $600, $701
                 dc.w    $2122, $600, $EFF1
                 dc.w    $A922, $600, $EF01
-word_EB60A:     dc.w    $2142, $700, $EFF1              ; DATA XREF: ROM:off_3D40A   o
+Boss_CaterpillarTwoPhaseSegmentMappingA:    dc.w    $2142, $700, $EFF1  ; DATA XREF: ROM:Boss_CaterpillarTwoPhaseSegmentMappings   o  ; was: word_EB60A
                 dc.w    $A942, $700, $EF01
-word_EB616:     dc.w    $214A, $700, $EFF1              ; DATA XREF: ROM:0003D40E   o
+Boss_CaterpillarTwoPhaseSegmentMappingB:    dc.w    $214A, $700, $EFF1  ; DATA XREF: ROM:0003D40E   o  ; was: word_EB616
                 dc.w    $A94A, $700, $EF01
-word_EB622:     dc.w    $2152, $700, $EFF1              ; DATA XREF: Boss_CaterpillarPart1+24   o
+Boss_CaterpillarShipTransitionSegmentMapping:   dc.w    $2152, $700, $EFF1  ; DATA XREF: Boss_CaterpillarShipTransitionSegment+24   o  ; was: word_EB622
                 dc.w    $A952, $700, $EF01
-word_EB62E:     dc.w    $A95A, $A00, $F5F5              ; DATA XREF: Boss_CaterpillarShipInit+76   o
-                                        ; ROM:off_EB640   o
-word_EB634:     dc.w    $A963, $A00, $F7F3              ; DATA XREF: ROM:000EB644   o
+Boss_CaterpillarShipTrailMappingA:  dc.w    $A95A, $A00, $F5F5  ; DATA XREF: Boss_CaterpillarShipInit+76   o  ; was: word_EB62E
+                                        ; ROM:Boss_CaterpillarShipTrailAnimation   o
+Boss_CaterpillarShipTrailMappingB:  dc.w    $A963, $A00, $F7F3  ; DATA XREF: ROM:000EB644   o  ; was: word_EB634
                                         ; ROM:000EB64C   o
-word_EB63A:     dc.w    $A96C, $500, $F8F8              ; DATA XREF: ROM:000EB648   o
-off_EB640:      dc.w    word_EB62E-*                    ; DATA XREF: ROM:000EB650   o
+Boss_CaterpillarShipTrailMappingC:  dc.w    $A96C, $500, $F8F8  ; DATA XREF: ROM:000EB648   o  ; was: word_EB63A
+Boss_CaterpillarShipTrailAnimation: dc.w    Boss_CaterpillarShipTrailMappingA-*  ; DATA XREF: ROM:000EB650   o  ; was: off_EB640
                 dc.w    8
-                dc.w    word_EB634-*
+                dc.w    Boss_CaterpillarShipTrailMappingB-*
                 dc.w    4
-                dc.w    word_EB63A-*
+                dc.w    Boss_CaterpillarShipTrailMappingC-*
                 dc.w    6
-                dc.w    word_EB634-*
+                dc.w    Boss_CaterpillarShipTrailMappingB-*
                 dc.w    4
-                dc.w    off_EB640-*
+                dc.w    Boss_CaterpillarShipTrailAnimation-*
                 dc.w    0
 word_EB654:     dc.w    $6804, $E00, $F3EE              ; DATA XREF: Boss_JetsripperInitBody+1E   o
                                         ; Boss_JetsripperDeathInit+36   o

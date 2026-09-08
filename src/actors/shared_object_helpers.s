@@ -95,8 +95,8 @@ Projectile_UpdateWithExplosionSound_Return:             ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_UpdateWithExplosionSound
 ; Spawns explosion projectile with sound
-Boss_CaterpillarSpawnExplosion:                         ; CODE XREF: Boss_CaterpillarPart2+4C   j  ; was: sub_2A418
-                                        ; Boss_CaterpillarPart3+40   j
+Boss_CaterpillarSpawnExplosion:                         ; CODE XREF: Boss_CaterpillarHomingProjectileSegment+4C   j  ; was: sub_2A418
+                                        ; Boss_CaterpillarFourPhaseSegment+40   j
                 movea.w a5,a0
                 bsr.w   Projectile_InitType88
                 move.l  #off_E953C,8(a0)

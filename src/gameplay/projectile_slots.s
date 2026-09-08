@@ -26,7 +26,7 @@ Projectile_FindFreePrimarySlot:                         ; CODE XREF: Effect_Spaw
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
-Projectile_FindFreePrimarySlot_CheckExtendedRange:      ; CODE XREF: Boss_CaterpillarCheckFreeSlot+4   j  ; was: loc_1C0A4
+Projectile_FindFreePrimarySlot_CheckExtendedRange:      ; CODE XREF: Boss_CaterpillarFindFreeHomingProjectileSlot+4   j  ; was: loc_1C0A4
                                         ; Boss_SunsetStingInitHomingProjectile+E   p
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreePrimarySlot_Return

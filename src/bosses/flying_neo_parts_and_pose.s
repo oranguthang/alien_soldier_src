@@ -239,5 +239,3 @@ Boss_FlyingNeoPoseTargets:  dc.w    $868, $1C70, $1C70, $868, $3010, $470, $1020
                                         ; DATA XREF: Boss_FlyingNeoUpdatePoseAnimation+5A   o
                 dc.w    $470, $3010, $5020, $1020, $6850, $6850, $7800, $870
                 dc.w    $1860, $7008, $6C24, $878, $F860, $6024
-
-; Main caterpillar boss handler with state dispatch

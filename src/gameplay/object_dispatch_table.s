@@ -78,9 +78,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Terrain_StampObjectPattern
                 dc.l    Projectile_TerobusterHomingMissileUpdate
-                dc.l    Boss_CaterpillarPart2
-                dc.l    Boss_CaterpillarPart3
-                dc.l    Boss_CaterpillarPart4
+                dc.l    Boss_CaterpillarHomingProjectileSegment
+                dc.l    Boss_CaterpillarFourPhaseSegment
+                dc.l    Boss_CaterpillarTwoPhaseSegment
                 dc.l    Enemy_HomingProjectileMain
                 dc.l    Boss_ShellshogunDecisionPoseCommands
                 dc.l    Effect_TransitionObjectDispatcher
@@ -161,10 +161,10 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_Epsilon1DefeatDebris
                 dc.l    Projectile_Epsilon1StateHandler
                 dc.l    Projectile_Epsilon1ChainInit
-                dc.l    Boss_CaterpillarPart1
+                dc.l    Boss_CaterpillarShipTransitionSegment
                 dc.l    Enemy_PhasePatternController
                 dc.l    Enemy_UpdateBouncingDebrisSpawner
-                dc.l    Boss_CaterpillarShootingStar
+                dc.l    Boss_CaterpillarShipController
                 dc.l    Boss_SnakeMain
                 dc.l    Boss_SnakeSegmentMain
                 dc.l    Enemy_CirclingController
