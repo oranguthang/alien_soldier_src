@@ -86,7 +86,7 @@ Boss_DefeatScrollUpdate:                                ; DATA XREF: ROM:0002694
                 bra.w   Effect_UpdateTransition_Finish
 ; End of function Boss_DefeatScrollUpdate
 ; Initializes player spawn effect with position
-Effect_InitPlayerSpawn:                                 ; CODE XREF: Boss_InitPositionTracking+10   p  ; was: sub_269E6
+Effect_InitPlayerSpawn:                                 ; CODE XREF: Boss_ShellshogunDefeatPaletteState+10   p  ; was: sub_269E6
                                         ; Boss_JokerFadeOut+2E   p
                 movea.w #(word_FFC680-M68K_RAM),a0
                 move.w  #$150,(a0)

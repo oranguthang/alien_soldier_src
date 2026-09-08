@@ -1,4 +1,4 @@
-Boss_ShellshogunRenderSprites:                          ; CODE XREF: Boss_ShellshogunUpdateAnimation+A   p  ; was: sub_39E5E
+Boss_ShellshogunRenderSprites:                          ; CODE XREF: Boss_ShellshogunUpdateSlamAnimation+A   p  ; was: sub_39E5E
                                         ; Boss_ShellshogunTransitionState+2A   p
                 moveq   #$16,d7
                 jsr     (Sprite_BeginMetaspritePartTraversal).l
@@ -8,7 +8,7 @@ Boss_ShellshogunRenderSprites:                          ; CODE XREF: Boss_Shells
                 bra.w   Boss_ShellshogunUpdatePosition
 ; End of function Boss_ShellshogunRenderSprites
 ; Checks boss defeat condition and triggers end
-Boss_ShellshogunCheckDefeat:                            ; CODE XREF: Boss_ShellshogunAttackPattern+A   p  ; was: sub_39E76
+Boss_ShellshogunCheckDefeat:                            ; CODE XREF: Boss_ShellshogunDecisionState+A   p  ; was: sub_39E76
                                         ; Boss_ShellshogunJumpAttackUpdate+6   p
                 jsr     (Physics_GetPlayerDelta).l
                 clr.w   $54(a5)
@@ -251,7 +251,7 @@ loc_3A10E:                                              ; CODE XREF: Boss_MadamB
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Boss_MadamBarbarPaletteCycle
 ; Flash boss sprite when taking damage
-Boss_ShellshogunFlashOnHit:                             ; CODE XREF: Boss_ShellshogunChargeAttack:loc_3986A   p  ; was: sub_3A122
+Boss_ShellshogunFlashOnHit:                             ; CODE XREF: Boss_ShellshogunDefeatLaunchState:Boss_ShellshogunRenderDefeatLaunch   p  ; was: sub_3A122
                 jsr     (Projectile_UpdateAfterGlobalDelay).l
                 bne.s   locret_3A170
                 jsr     (Sprite_InitTypeA4FromTable).l
@@ -274,8 +274,8 @@ locret_3A170:                                           ; CODE XREF: Boss_Shells
                 rts
 ; End of function Boss_ShellshogunFlashOnHit
 ; Updates boss animation frame and interpolation
-Boss_ShellshogunAnimUpdate:                             ; CODE XREF: Boss_ShellshogunChargeAttack+B0   p  ; was: sub_3A172
-                                        ; Boss_ShellshogunAttackPattern+7A   p
+Boss_ShellshogunAnimUpdate:                             ; CODE XREF: Boss_ShellshogunDefeatLaunchState+B0   p  ; was: sub_3A172
+                                        ; Boss_ShellshogunDecisionState+7A   p
                 clr.w   $17C(a5)
                 tst.w   $C(a5)
                 bpl.s   loc_3A1D4
@@ -407,11 +407,11 @@ Boss_ShellshogunCalculateAnimationDeltas:               ; CODE XREF: Boss_Shells
 ; ---------------------------------------------------------------------------
 word_3A2E6:     dc.w    $10, $F, $18, 0, $FFFF
                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
-                                        ; sub_398FE:loc_39972   o
+                                        ; Boss_ShellshogunDecisionState:Boss_ShellshogunUpdateDecisionPose   o
 word_3A2F0:     dc.w    $F030, $1E, $70, $1E, $FFFE
-                                        ; DATA XREF: Boss_ShellshogunAttackPattern+CC   o
+                                        ; DATA XREF: Boss_ShellshogunDecisionState+CC   o
 word_3A2FA:     dc.w    $EF11, $5A, $E830, $87, $E, $87, $9080, $96, $12, $96, $9080, $87, $FFFE
-                                        ; DATA XREF: Boss_ShellshogunUpdateAnimation   o
+                                        ; DATA XREF: Boss_ShellshogunUpdateSlamAnimation   o
 word_3A314:     dc.w    $17, $2D, $10, $3C, $1B, $4B, $21, $5A, $FFFF
                                         ; DATA XREF: Boss_ShellshogunSetParams   o
 word_3A326:     dc.w    $FE14, $69, 6, $69, $FE12, $78, 6, $78, $FFFF
@@ -426,7 +426,7 @@ word_3A358:     dc.w    $FC18, $E2, $FD18, $E2, $FE0E, $D3, $FF0E, $C4, $18, $C4
 word_3A372:     dc.w    $FC0C, $E2, $18, $E2, $FC0C, $F, $FFFE
                                         ; DATA XREF: Boss_ShellshogunDecelerateHorizontal+28   o
 word_3A380:     dc.w    $C, $C4, $C, $E2, $FFFF
-                                        ; DATA XREF: Boss_ShellshogunChargeAttack+AA   o
+                                        ; DATA XREF: Boss_ShellshogunDefeatLaunchState+AA   o
 word_3A38A:     dc.w    $CCE8, $20E8, $2013, $FE2, $A870, $3060, $78B8, $4CC0, $E010, $F020, $1400, $F0A0, $7844, $6080, $BC40, $C0D0
                                         ; DATA XREF: Boss_ShellshogunAnimUpdate+46   o
                 dc.w    $F0E0, $2020, $20C0, $B090, $2060, $60E0, $40CC, $E810, $F020, $F870, $F0A8, $7030, $5060, $F030, $D0E0, $20F8

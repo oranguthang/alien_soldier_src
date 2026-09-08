@@ -619,6 +619,36 @@ rejected. The 19 intro tile-load records are named only by their proven table
 indices rather than guessed visual content. The complete Terobuster code/data
 range now has no live address-derived definitions.
 
+The first Shellshogun audit reduced the count to 8,798. It covers the main
+dispatcher and the complete initialization-to-combat path. The imported
+`MoveLeft` and `MoveRight` names were rejected: these states implement the
+pre-battle delay and readiness gate rather than directional motion.
+Names for the two three-record initialization loops deliberately stop at
+`AuxiliaryParts` and `SecondaryObjects` until their downstream handlers prove
+narrower identities.
+
+The contiguous Shellshogun defeat audit reduced the count further to 8,790.
+The zero-health branch proves that the former `IdleState` and `ChargeAttack`
+names were false: states `$12`, `$14`, `$16`, and `$18` implement launch,
+palette, dissolve, and completion-delay phases. The similarly broad imported
+`InitPositionTracking`, `UpdatePositionDelta`, and `TrackPlayerPosition`
+names were replaced from the same state-machine evidence.
+
+The Shellshogun decision-state audit reduced the count to 8,782. The former
+`AttackPattern` routine is a state selector, and the former
+`Attack_ShellProjectile` state only advances shared stage progress while
+running a bounded pose stream; neither routine allocates a projectile. The
+state selected with pose cursor four remains conservatively named
+`PoseGateState` until its following control flow is fully audited.
+
+The completed pose-gate and slam audit reduced the count to 8,774. The
+imported `SpawnShells` name was false: state `$0C` contains no allocation or
+projectile initialization and instead gates a return-or-slam decision on pose
+events, position, facing, stage progress, and player distance. The following
+states `$0E` and `$10` do form one coherent slam preparation/follow-through
+sequence, so their narrower names are retained with static state-machine
+evidence.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -4,8 +4,8 @@ word_EB876:     dc.w    $683B, $C00, $6F7               ; DATA XREF: ROM:00034BB
                                         ; Boss_ShellshogunTransitionState+2E   o
                 dc.w    $6835, $600, $F6E8
                 dc.w    $E829, $E00, $EEF7
-word_EB888:     dc.w    $6843, $400, $EFF               ; DATA XREF: Boss_ShellshogunAttackPattern+E0   o
-                                        ; Boss_ShellshogunUpdateAnimation+E   o
+word_EB888:     dc.w    $6843, $400, $EFF               ; DATA XREF: Boss_ShellshogunDecisionState+E0   o
+                                        ; Boss_ShellshogunUpdateSlamAnimation+E   o
                 dc.w    $683F, $C00, $6F7
                 dc.w    $6835, $600, $F6E8
                 dc.w    $E829, $E00, $EEF7

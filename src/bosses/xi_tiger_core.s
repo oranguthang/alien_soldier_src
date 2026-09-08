@@ -755,8 +755,8 @@ Boss_XiTigerUpdateBody:                                 ; CODE XREF: Boss_XiTige
                 jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_XiTigerUpdateBody
 ; Queues DMA transfer to VRAM
-Gfx_QueueDMATransfer:                                   ; CODE XREF: Boss_ShellshogunChargeAttack+C   p  ; was: sub_3E1AA
-                                        ; sub_3987C:loc_39898   j
+Gfx_QueueDMATransfer:                                   ; CODE XREF: Boss_ShellshogunDefeatLaunchState+C   p  ; was: sub_3E1AA
+                                        ; Boss_ShellshogunDefeatPaletteState:Boss_ShellshogunDefeatPaletteRender   j
                 move.w  6(a5),d0
                 asr.w   #1,d0
                 movea.w #(word_FFE300-M68K_RAM),a0
