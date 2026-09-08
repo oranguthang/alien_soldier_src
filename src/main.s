@@ -183,7 +183,6 @@
                 include "src/effects/rising_shot_waves.s"
                 include "src/debug/orphaned_rising_shot_pair.s"
                 include "src/projectiles/missiray_and_rising_shots.s"
-                include "src/stages/stage_24_visuals.s"
                 include "src/projectiles/boss_patterns.s"
                 include "src/rendering/boss_metasprites.s"
                 include "src/data/boss_sprite_tables.s"

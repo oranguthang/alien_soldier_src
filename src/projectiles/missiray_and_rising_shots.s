@@ -83,8 +83,8 @@ Projectile_MissirayAndRisingShotStates: dc.w    Projectile_MissirayAndRisingShot
                 dc.w    Projectile_RisingShotRiseAndEmit-*
                 dc.w    Projectile_Stage24RisingShotInitArc-*
                 dc.w    Projectile_Stage24RisingShotUpdateArc-*
-                dc.w    Stage24_UpdateBackground-*
-                dc.w    Stage24_UpdateForeground-*
+                dc.w    Projectile_Stage24RisingShotBeginTopEdgeBurst-*
+                dc.w    Projectile_Stage24RisingShotEmitTopEdgeTrail-*
 
 ; Selects the falling-shot or rising-wave state path
 Projectile_MissirayAndRisingShotSelectVariant:          ; DATA XREF: ROM:Projectile_MissirayAndRisingShotStates   o  ; was: sub_33A66
@@ -248,3 +248,100 @@ Projectile_Stage24RisingShotUpdateArc:                  ; DATA XREF: ROM:00033A6
 Projectile_Stage24RisingShotArcReturn:                  ; CODE XREF: Projectile_Stage24RisingShotUpdateArc+16   j  ; was: locret_33C48
                 rts
 ; End of function Projectile_Stage24RisingShotUpdateArc
+; Begins the radial burst when a Stage 24 rising shot crosses the camera top edge
+Projectile_Stage24RisingShotBeginTopEdgeBurst:          ; DATA XREF: ROM:00033A62   o  ; was: sub_33C4A
+                bclr    #7,2(a5)
+                move.w  (dword_FFDB34).w,$14(a5)
+                bsr.w   Projectile_Stage24RisingShotSpawnRadialBurst
+                move.w  #4,$48(a5)
+                move.w  #$20,$4A(a5)                    ; ' '
+                move.w  #4,$4C(a5)
+                addq.w  #2,4(a5)
+                rts
+; End of function Projectile_Stage24RisingShotBeginTopEdgeBurst
+; Emits a short vertical trail before converting the rising shot to a type-$160 effect
+Projectile_Stage24RisingShotEmitTopEdgeTrail:           ; DATA XREF: ROM:00033A64   o  ; was: sub_33C72
+                move.w  (dword_FFDB34).w,$14(a5)
+                subq.w  #1,$48(a5)
+                bne.s   Projectile_Stage24RisingShotTrailReturn
+                subq.w  #1,$4C(a5)
+                beq.s   Projectile_Stage24RisingShotFinishTopEdgeBurst
+                jsr     (Projectile_FindFreePrimarySlot).l
+                bne.s   Projectile_Stage24RisingShotResetTrailDelay
+                move.w  #$10,(a0)
+                move.l  #off_E95DC,8(a0)
+                jsr     (Sprite_InitType160).l
+                move.b  #$60,$20(a0)                    ; '`'
+                move.l  #$FE02F40C,$2C(a0)
+                move.b  #$40,$21(a0)                    ; '@'
+                move.w  #$32,$26(a0)                    ; '2'
+                move.w  $10(a5),$10(a0)
+                move.w  $14(a5),d0
+                sub.w   $4A(a5),d0
+                move.w  d0,$14(a0)
+                addi.w  #8,$4A(a5)
+Projectile_Stage24RisingShotResetTrailDelay:            ; CODE XREF: Projectile_Stage24RisingShotEmitTopEdgeTrail+18   j  ; was: loc_33CD0
+                move.w  #4,$48(a5)
+Projectile_Stage24RisingShotTrailReturn:                ; CODE XREF: Projectile_Stage24RisingShotEmitTopEdgeTrail+A   j  ; was: locret_33CD6
+                rts
+; ---------------------------------------------------------------------------
+Projectile_Stage24RisingShotFinishTopEdgeBurst:         ; CODE XREF: Projectile_Stage24RisingShotEmitTopEdgeTrail+10   j  ; was: loc_33CD8
+                move.w  $4A(a5),d0
+                sub.w   d0,$14(a5)
+                move.l  #off_E953C,8(a5)
+                jmp     Sprite_InitType160FromCurrent
+; End of function Projectile_Stage24RisingShotEmitTopEdgeTrail
+; Spawns three radial particles and plays the burst sound
+Projectile_Stage24RisingShotSpawnRadialBurst:           ; CODE XREF: Projectile_Stage24RisingShotBeginTopEdgeBurst+C   p  ; was: sub_33CEE
+                move.w  #2,d7
+                move.w  #$40,d6                         ; '@'
+                lea     (Math_SineTable).l,a3
+Projectile_Stage24RisingShotSpawnNextRadialParticle:    ; CODE XREF: Projectile_Stage24RisingShotSpawnRadialBurst+28   j  ; was: loc_33CFC
+                move.w  d6,d5
+                move.w  (a3,d5.w),d2
+                move.w  -$80(a3,d5.w),d3
+                ext.l   d2
+                ext.l   d3
+                asl.l   #3,d2
+                asl.l   #3,d3
+                bsr.w   Projectile_Stage24RisingShotSpawnBurstParticle
+                addi.w  #$40,d6                         ; '@'
+                dbf     d7,Projectile_Stage24RisingShotSpawnNextRadialParticle
+                move.b  #$BB,d0
+                jsr     (Sound_PlaySFX).l
+                rts
+; End of function Projectile_Stage24RisingShotSpawnRadialBurst
+; Spawns one radial type-$160 burst particle with the supplied velocity
+Projectile_Stage24RisingShotSpawnBurstParticle:         ; CODE XREF: Projectile_Stage24RisingShotSpawnRadialBurst+20   p  ; was: sub_33D26
+                jsr     (Projectile_FindFreePrimarySlot).l
+                bne.s   Projectile_Stage24RisingShotSpawnBurstParticleReturn
+                jsr     (Sprite_InitType160).l
+                move.b  #$60,$20(a0)                    ; '`'
+                move.l  #off_E953C,8(a0)
+                move.w  $10(a5),$10(a0)
+                move.w  $14(a5),$14(a0)
+                move.l  d2,$18(a0)
+                move.l  d3,$1C(a0)
+Projectile_Stage24RisingShotSpawnBurstParticleReturn:   ; CODE XREF: Projectile_Stage24RisingShotSpawnBurstParticle+6   j  ; was: locret_33D56
+                rts
+; End of function Projectile_Stage24RisingShotSpawnBurstParticle
+; Initializes Missiray bullet projectile with graphics and parameters
+Projectile_InitMissirayBullet:                          ; CODE XREF: Orphaned_RisingShotPairFireMissirayShot+2C   p  ; was: sub_33D58
+                                        ; Segment_MissirayType1Fire+54   p
+                move.w  #$3CC,(a0)
+                move.l  #off_ED152,8(a0)
+                clr.w   $C(a0)
+                move.l  #$FC04FC04,$2C(a0)
+                move.l  #$F808F808,$28(a0)
+                move.w  #$EC00,2(a0)
+                move.w  #$300,$E(a0)
+                move.b  #$C0,$21(a0)
+                move.b  #8,$23(a0)
+                move.w  #$28,$24(a0)                    ; '('
+                move.w  #$50,$26(a0)                    ; 'P'
+                move.b  #$60,$20(a0)                    ; '`'
+                move.w  d0,$10(a0)
+                move.w  d1,$14(a0)
+                move.l  d2,$58(a0)
+                rts
+; End of function Projectile_InitMissirayBullet

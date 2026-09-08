@@ -1,3 +1,4 @@
+; Shared type-$3CC boss-projectile state machine
 Boss_ProjectileStateDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_33DB0
                 tst.w   4(a5)
                 beq.s   loc_33DDE

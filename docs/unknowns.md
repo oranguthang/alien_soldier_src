@@ -446,6 +446,13 @@ only by Stage 24. These three ROM-contiguous roles now live in
 `missiray_and_rising_shots.s`; their generated flyer, collision, damage, and
 animation ownership claims were removed.
 
+The adjacent Stage 24 visual pass reduced the count to 9,391. Four generated
+names claimed background, foreground, palette, and tile work, but the type
+`$3C4` state path actually creates a radial burst and a short vertical trail
+when a rising shot crosses the camera's top edge. Those states are now part of
+the same `missiray_and_rising_shots.s` module as the rest of the type `$3C4`
+state machine; the former 98-line `stage_24_visuals.s` fragment was removed.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
