@@ -215,7 +215,7 @@
                 include "src/bosses/joker_rendering.s"
                 include "src/bosses/flying_neo_core.s"
                 include "src/bosses/flying_neo_rendering.s"
-                include "src/bosses/flying_neo_collision.s"
+                include "src/bosses/flying_neo_parts_and_pose.s"
                 include "src/bosses/caterpillar.s"
                 include "src/bosses/xi_tiger_core.s"
                 include "src/bosses/deep_strider.s"

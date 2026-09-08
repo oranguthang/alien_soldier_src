@@ -393,7 +393,7 @@ Boss_FlyingNeoPartRadii:    dc.w    8, $1810, $1F08     ; DATA XREF: Boss_Flying
 Boss_FlyingNeoPartLinks:    dc.w    0, $8065, $C064     ; DATA XREF: Boss_FlyingNeoSetup+18   o  ; was: word_34F74
                 dc.w    $8124, $8123, $806B
                 dc.w    $C06A, $82AA, $82A9
-Boss_FlyingNeoNeutralPose:  dc.w    $A0A0, $A0A0        ; DATA XREF: Boss_FlyingNeoCalculateDeltas   o  ; was: word_34F86
+Boss_FlyingNeoNeutralPose:  dc.w    $A0A0, $A0A0        ; DATA XREF: Boss_FlyingNeoBeginPoseInterpolation   o  ; was: word_34F86
 ; Joker directional frames and metasprite definition
 Boss_JokerRotationFramesA:  dc.l    word_EBC24          ; DATA XREF: ROM:0003507E   o  ; was: off_34F8A
                                         ; ROM:00035086   o

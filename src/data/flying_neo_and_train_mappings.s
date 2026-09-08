@@ -3,7 +3,7 @@ word_EBBB8:     dc.w    $2866, $D00, $2FA               ; DATA XREF: Boss_Flying
                 dc.w    $2864, $400, $EAFA
                 dc.w    $A85C, $D00, $F2FA
 word_EBBCA:     dc.w    $286E, $D00, $2FA               ; DATA XREF: Boss_FlyingNeoRenderRisingRetreat+E   o
-                                        ; Boss_FlyingNeoAnimationUpdate+18   o
+                                        ; Boss_FlyingNeoUpdateLinkedPartOrbits+18   o
                 dc.w    $2864, $400, $EAFA
                 dc.w    $A85C, $D00, $F2FA
 word_EBBDC:     dc.w    $A0C5, $D00, $F8F0              ; DATA XREF: ROM:Boss_FlyingNeoRotationFrames   o
