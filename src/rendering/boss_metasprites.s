@@ -467,7 +467,7 @@ Anim_CalculateInterpolationDeltasNextChannel:           ; CODE XREF: Anim_Calcul
 ; End of function Anim_CalculateInterpolationDeltas
 ; Loads animation frame delays converting bytes to words
 Anim_LoadFrameDelays:                                   ; CODE XREF: Boss_AntroidInitializePoseChannels+6   j  ; was: sub_348CC
-                                        ; Boss_TerobusterLoadFrameDelays+6   j
+                                        ; Boss_TerobusterInitializePoseChannels+6   j
                 moveq   #0,d1
 Anim_LoadFrameDelaysNextChannel:                        ; CODE XREF: Anim_LoadFrameDelays+A   j  ; was: loc_348CE
                 move.b  (a0)+,d0

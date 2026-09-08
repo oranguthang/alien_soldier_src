@@ -45,7 +45,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Boss_TerobusterMain
-                dc.l    Boss_TerobusterMovementPhysics
+                dc.l    Effect_TerobusterDefeatPartUpdate
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Object_UpdateVisibilityLifetime
@@ -77,7 +77,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_InitSpriteGraphics
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Terrain_StampObjectPattern
-                dc.l    Enemy_HomingMissileUpdate
+                dc.l    Projectile_TerobusterHomingMissileUpdate
                 dc.l    Boss_CaterpillarPart2
                 dc.l    Boss_CaterpillarPart3
                 dc.l    Boss_CaterpillarPart4

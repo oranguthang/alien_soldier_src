@@ -602,6 +602,23 @@ also publishes an oscillation and attempts a periodic projectile spawn. Its
 replacement name records those operations rather than claiming one-time
 initialization.
 
+The Terobuster projectile and defeat-part audit reduced the count to 8,845.
+Object type `$138` links the boss's missile spawner to its homing handler and
+its direction-frame, trail, velocity-clamping, and player-steering paths.
+Handler-table offset `$B8` also disproved the broad imported
+`Boss_TerobusterMovementPhysics` name: defeat entry converts marked linked
+parts to `$B8`, whose repeated-bounce and optional rotation-frame handler now
+lives in the ROM-ordered `effects/terobuster_defeat_parts.s` module rather
+than the projectile container.
+
+The Terobuster pose and intro-tile audit reduced the count further to 8,809.
+State consumers prove the roles of the bounded pose-command streams, and the
+shared generated helper expands packed bytes into six fixed-point pose
+channels; the former `Boss_TerobusterLoadFrameDelays` name was therefore
+rejected. The 19 intro tile-load records are named only by their proven table
+indices rather than guessed visual content. The complete Terobuster code/data
+range now has no live address-derived definitions.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -203,6 +203,7 @@
                 include "src/bosses/terobuster_core.s"
                 include "src/bosses/terobuster_attacks.s"
                 include "src/projectiles/terobuster.s"
+                include "src/effects/terobuster_defeat_parts.s"
                 include "src/bosses/terobuster_animation.s"
                 include "src/bosses/shellshogun_core.s"
                 include "src/bosses/shellshogun_rendering.s"

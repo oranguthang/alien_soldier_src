@@ -2,23 +2,23 @@ Boss_TerobusterInterpolateAnimation:                    ; CODE XREF: Boss_Terobu
                                         ; Boss_TerobusterDecisionState:Boss_TerobusterMissileAttackBSelectPoseCommands   p
                 clr.w   $1DC(a5)
                 tst.w   $C(a5)
-                bpl.s   loc_3922E
-loc_391D6:                                              ; CODE XREF: Boss_TerobusterInterpolateAnimation+2A   j
+                bpl.s   Boss_TerobusterAdvancePoseInterpolation
+Boss_TerobusterReadPoseCommand:                         ; CODE XREF: Boss_TerobusterInterpolateAnimation+2A   j  ; was: loc_391D6
                 move.w  $58(a5),d0
                 bmi.s   Boss_TerobusterApplyAngles
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
-                bne.s   loc_391EC
+                bne.s   Boss_TerobusterCheckPoseLoopCommand
                 move.w  d3,$58(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_391EC:                                              ; CODE XREF: Boss_TerobusterInterpolateAnimation+18   j
+Boss_TerobusterCheckPoseLoopCommand:                    ; CODE XREF: Boss_TerobusterInterpolateAnimation+18   j  ; was: loc_391EC
                 cmpi.w  #$FFFF,d3
-                bne.s   loc_391F8
+                bne.s   Boss_TerobusterBeginPoseCommand
                 clr.w   $58(a5)
-                bra.s   loc_391D6
+                bra.s   Boss_TerobusterReadPoseCommand
 ; ---------------------------------------------------------------------------
-loc_391F8:                                              ; CODE XREF: Boss_TerobusterInterpolateAnimation+24   j
+Boss_TerobusterBeginPoseCommand:                        ; CODE XREF: Boss_TerobusterInterpolateAnimation+24   j  ; was: loc_391F8
                 addq.w  #4,$58(a5)
                 subq.w  #1,$17E(a5)
                 addq.w  #1,$1DC(a5)
@@ -26,7 +26,7 @@ loc_391F8:                                              ; CODE XREF: Boss_Terobu
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
-                addi.l  #word_3936A,d0
+                addi.l  #Boss_TerobusterPoseTargets,d0
                 movea.l d0,a0
                 bsr.w   Boss_TerobusterCalculateDeltas
                 move.b  (dword_FF8040).w,d1
@@ -34,7 +34,7 @@ loc_391F8:                                              ; CODE XREF: Boss_Terobu
                 add.w   d1,$C(a5)
                 tst.w   $C(a5)
                 bmi.s   Boss_TerobusterApplyAngles
-loc_3922E:                                              ; CODE XREF: Boss_TerobusterInterpolateAnimation+8   j
+Boss_TerobusterAdvancePoseInterpolation:                ; CODE XREF: Boss_TerobusterInterpolateAnimation+8   j  ; was: loc_3922E
                 subq.w  #1,$C(a5)
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #5,d7
@@ -47,9 +47,9 @@ Boss_TerobusterApplyAngles:                             ; CODE XREF: Boss_Terobu
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 movea.w #(dword_FF940C-M68K_RAM),a1
                 tst.w   $A(a5)
-                beq.s   loc_39252
+                beq.s   Boss_TerobusterApplyPoseSides
                 exg     a0,a1
-loc_39252:                                              ; CODE XREF: Boss_TerobusterApplyAngles+10   j
+Boss_TerobusterApplyPoseSides:                          ; CODE XREF: Boss_TerobusterApplyAngles+10   j  ; was: loc_39252
                 move.b  (a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -92,41 +92,41 @@ Boss_TerobusterCalculateDeltas:                         ; CODE XREF: Boss_Terobu
                 moveq   #5,d7
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_TerobusterCalculateDeltas
-; Loads animation frame delays for timing system
-Boss_TerobusterLoadFrameDelays:                         ; CODE XREF: Boss_TerobusterSetup+120   p  ; was: sub_392C6
+; Expands six packed pose-channel bytes into the interpolation buffer
+Boss_TerobusterInitializePoseChannels:                  ; CODE XREF: Boss_TerobusterSetup+120   p  ; was: sub_392C6
                                         ; Boss_TerobusterIntro+20   p
                 movea.w #(dword_FF9400-M68K_RAM),a1
                 moveq   #5,d7
                 jmp     Anim_LoadFrameDelays
-; End of function Boss_TerobusterLoadFrameDelays
+; End of function Boss_TerobusterInitializePoseChannels
 ; ---------------------------------------------------------------------------
-word_392D2:     dc.w    4, 0, $FFFF                     ; DATA XREF: Boss_TerobusterDecisionState:Boss_TerobusterSpawnFallingRocks   o
-word_392D8:     dc.w    3, 0, 1, $36, $FFFF
+Boss_TerobusterFallingRockPoseCommands:         dc.w    4, 0, $FFFF  ; DATA XREF: Boss_TerobusterDecisionState:Boss_TerobusterSpawnFallingRocks   o  ; was: word_392D2
+Boss_TerobusterFallingRockFinalePoseCommands:   dc.w    3, 0, 1, $36, $FFFF  ; was: word_392D8
                                         ; DATA XREF: Boss_TerobusterDecisionState+28A   o
-word_392E2:     dc.w    $10, $2A, $20, $30, $FFFE
+Boss_TerobusterDescentPoseCommands: dc.w    $10, $2A, $20, $30, $FFFE  ; was: word_392E2
                                         ; DATA XREF: Boss_TerobusterDescentState+28   o
-word_392EC:     dc.w    $FD12, $30, $34, $30, $F040, $24, $20, $24, $FFFE
+Boss_TerobusterLandingFirstPoseCommands:    dc.w    $FD12, $30, $34, $30, $F040, $24, $20, $24, $FFFE  ; was: word_392EC
                                         ; DATA XREF: Boss_TerobusterLandingState:Boss_TerobusterSelectLandingPose   o
-word_392FE:     dc.w    $1C, 0, $FFFE                   ; DATA XREF: Boss_TerobusterLandingCheckComplete   o
-word_39304:     dc.w    5, 0, $FA0E, 0, $E, 6, $14, $C, 5, $12, $FA0E, $12, $E, $18, $14, $1E
+Boss_TerobusterLandingSecondPoseCommands:   dc.w    $1C, 0, $FFFE  ; DATA XREF: Boss_TerobusterLandingCheckComplete   o  ; was: word_392FE
+Boss_TerobusterMissileAttackAPoseCommands:  dc.w    5, 0, $FA0E, 0, $E, 6, $14, $C, 5, $12, $FA0E, $12, $E, $18, $14, $1E  ; was: word_39304
                                         ; DATA XREF: Boss_TerobusterDecisionState+FA   o
                 dc.w    $FFFF
-word_39326:     dc.w    $14, $1E, $E, $18, 5, $12, $FA0E, $12, $14, $C, $E, 6, 5, 0, $FA0E, 0
+Boss_TerobusterMissileAttackBPoseCommands:  dc.w    $14, $1E, $E, $18, 5, $12, $FA0E, $12, $14, $C, $E, 6, 5, 0, $FA0E, 0  ; was: word_39326
                                         ; DATA XREF: Boss_TerobusterDecisionState+1BA   o
                 dc.w    $FFFF
-word_39348:     dc.w    6, $1E, 8, $18, 3, $12, $FA08, $12, 6, $C, 8, 6, 3, 0, $FA08, 0
+Boss_TerobusterMissileAttackBDelayedPoseCommands:   dc.w    6, $1E, 8, $18, 3, $12, $FA08, $12, 6, $C, 8, 6, 3, 0, $FA08, 0  ; was: word_39348
                                         ; DATA XREF: Boss_TerobusterDecisionState+1B4   o
                 dc.w    $FFFF
-word_3936A:     dc.w    $1330, $F840, $30D0, $F460, $C030, $44C8, $3060, $9024
+Boss_TerobusterPoseTargets: dc.w    $1330, $F840, $30D0, $F460, $C030, $44C8, $3060, $9024  ; was: word_3936A
                                         ; DATA XREF: Boss_TerobusterSetup+11A   o
                                         ; Boss_TerobusterBeginStageGateDelay   o
                 dc.w    $24F8, $4030, $D013, $30F8, $3044, $C8F4, $60C0, $2424
                 dc.w    $F830, $6090, $2040, $E020, $40E0, $4000, $CC40, $CC
-word_3939A:     dc.w    $70, $D400, $70D4, $1431, $F842, $2ED0
+Boss_TerobusterIntroPoseChannels:   dc.w    $70, $D400, $70D4, $1431, $F842, $2ED0  ; was: word_3939A
                                         ; DATA XREF: Boss_TerobusterIntro+1A   o
 
-; Sets up palette color sequence for visual effect with repeated values
-Gfx_SetPaletteSequence:                                 ; CODE XREF: Boss_TerobusterIntro+24   p  ; was: sub_393A6
+; Initializes Terobuster's five-byte intro palette sequence
+Boss_TerobusterInitializePaletteSequence:               ; CODE XREF: Boss_TerobusterIntro+24   p  ; was: sub_393A6
                 movea.l #(M68K_RAM_PHYSICAL+(byte_FF644A-M68K_RAM)),a0
                 move.b  #$CE,d0
                 move.b  #$C5,(a0)+
@@ -135,77 +135,77 @@ Gfx_SetPaletteSequence:                                 ; CODE XREF: Boss_Terobu
                 move.b  d0,(a0)+
                 move.b  d0,(a0)+
                 rts
-; End of function Gfx_SetPaletteSequence
-; Loads compressed tiles by index with bounds checking
-Boss_TerobusterLoadTilesByIndex:                        ; CODE XREF: Boss_TerobusterTileRevealState+E   p  ; was: sub_393BE
+; End of function Boss_TerobusterInitializePaletteSequence
+; Loads a compressed Terobuster intro-tile record by bounded index
+Boss_TerobusterLoadIntroTilesByIndex:                   ; CODE XREF: Boss_TerobusterTileRevealState+E   p  ; was: sub_393BE
                 asl.w   #2,d0
-                bmi.s   locret_393D2
+                bmi.s   Boss_TerobusterLoadIntroTilesReturn
                 cmpi.w  #$4C,d0                         ; 'L'
-                bpl.s   locret_393D2
-                movea.l off_393D4(pc,d0.w),a0
+                bpl.s   Boss_TerobusterLoadIntroTilesReturn
+                movea.l Boss_TerobusterIntroTileLoadTable(pc,d0.w),a0
                 jmp     Gfx_LoadCompressedTiles
 ; ---------------------------------------------------------------------------
-locret_393D2:                                           ; CODE XREF: Boss_TerobusterLoadTilesByIndex+2   j
-                                        ; Boss_TerobusterLoadTilesByIndex+8   j
+Boss_TerobusterLoadIntroTilesReturn:                    ; CODE XREF: Boss_TerobusterLoadIntroTilesByIndex+2   j  ; was: locret_393D2
+                                        ; Boss_TerobusterLoadIntroTilesByIndex+8   j
                 rts
-; End of function Boss_TerobusterLoadTilesByIndex
+; End of function Boss_TerobusterLoadIntroTilesByIndex
 ; ---------------------------------------------------------------------------
-off_393D4:      dc.l    byte_394D0                      ; DATA XREF: Boss_TerobusterLoadTilesByIndex+A   r
-                dc.l    byte_394C8
-                dc.l    byte_394C0
-                dc.l    byte_394B8
-                dc.l    byte_394B0
-                dc.l    byte_394A8
-                dc.l    byte_394A0
-                dc.l    byte_39496
-                dc.l    byte_3948C
-                dc.l    byte_39482
-                dc.l    byte_39478
-                dc.l    byte_3946E
-                dc.l    byte_39464
-                dc.l    byte_3945A
-                dc.l    byte_39450
-                dc.l    byte_39444
-                dc.l    byte_39438
-                dc.l    byte_3942C
-                dc.l    byte_39420
-byte_39420:     dc.b    $42, $51, $40, 0, 4, 0, $C2, $C7, $C6, $C6, $C6, 0
+Boss_TerobusterIntroTileLoadTable:  dc.l    Boss_TerobusterIntroTileLoadStep00  ; DATA XREF: Boss_TerobusterLoadIntroTilesByIndex+A   r  ; was: off_393D4
+                dc.l    Boss_TerobusterIntroTileLoadStep01
+                dc.l    Boss_TerobusterIntroTileLoadStep02
+                dc.l    Boss_TerobusterIntroTileLoadStep03
+                dc.l    Boss_TerobusterIntroTileLoadStep04
+                dc.l    Boss_TerobusterIntroTileLoadStep05
+                dc.l    Boss_TerobusterIntroTileLoadStep06
+                dc.l    Boss_TerobusterIntroTileLoadStep07
+                dc.l    Boss_TerobusterIntroTileLoadStep08
+                dc.l    Boss_TerobusterIntroTileLoadStep09
+                dc.l    Boss_TerobusterIntroTileLoadStep10
+                dc.l    Boss_TerobusterIntroTileLoadStep11
+                dc.l    Boss_TerobusterIntroTileLoadStep12
+                dc.l    Boss_TerobusterIntroTileLoadStep13
+                dc.l    Boss_TerobusterIntroTileLoadStep14
+                dc.l    Boss_TerobusterIntroTileLoadStep15
+                dc.l    Boss_TerobusterIntroTileLoadStep16
+                dc.l    Boss_TerobusterIntroTileLoadStep17
+                dc.l    Boss_TerobusterIntroTileLoadStep18
+Boss_TerobusterIntroTileLoadStep18: dc.b    $42, $51, $40, 0, 4, 0, $C2, $C7, $C6, $C6, $C6, 0  ; was: byte_39420
                                         ; DATA XREF: ROM:0003941C   o
-byte_3942C:     dc.b    $42, $51, $40, 0, 4, 0, $C3, $C8, $B9, $B9, $B9, 0
+Boss_TerobusterIntroTileLoadStep17: dc.b    $42, $51, $40, 0, 4, 0, $C3, $C8, $B9, $B9, $B9, 0  ; was: byte_3942C
                                         ; DATA XREF: ROM:00039418   o
-byte_39438:     dc.b    $42, $51, $40, 0, 4, 0, $C4, $C9, $C6, $C6, $C6, 0
+Boss_TerobusterIntroTileLoadStep16: dc.b    $42, $51, $40, 0, 4, 0, $C4, $C9, $C6, $C6, $C6, 0  ; was: byte_39438
                                         ; DATA XREF: ROM:00039414   o
-byte_39444:     dc.b    $42, $51, $40, 0, 4, 0, $C5, $CA, $B9, $B9, $B9, 0
+Boss_TerobusterIntroTileLoadStep15: dc.b    $42, $51, $40, 0, 4, 0, $C5, $CA, $B9, $B9, $B9, 0  ; was: byte_39444
                                         ; DATA XREF: ROM:00039410   o
-byte_39450:     dc.b    $42, $59, $40, 0, 3, 0, $CB, $C7, $C6, $C6
+Boss_TerobusterIntroTileLoadStep14: dc.b    $42, $59, $40, 0, 3, 0, $CB, $C7, $C6, $C6  ; was: byte_39450
                                         ; DATA XREF: ROM:0003940C   o
-byte_3945A:     dc.b    $42, $59, $40, 0, 3, 0, $CC, $C8, $B9, $B9
+Boss_TerobusterIntroTileLoadStep13: dc.b    $42, $59, $40, 0, 3, 0, $CC, $C8, $B9, $B9  ; was: byte_3945A
                                         ; DATA XREF: ROM:00039408   o
-byte_39464:     dc.b    $42, $59, $40, 0, 3, 0, $CD, $C9, $C6, $C6
+Boss_TerobusterIntroTileLoadStep12: dc.b    $42, $59, $40, 0, 3, 0, $CD, $C9, $C6, $C6  ; was: byte_39464
                                         ; DATA XREF: ROM:00039404   o
-byte_3946E:     dc.b    $42, $59, $40, 0, 3, 0, $CE, $CA, $B9, $B9
+Boss_TerobusterIntroTileLoadStep11: dc.b    $42, $59, $40, 0, 3, 0, $CE, $CA, $B9, $B9  ; was: byte_3946E
                                         ; DATA XREF: ROM:00039400   o
-byte_39478:     dc.b    $42, $61, $40, 0, 2, 0, $CB, $C7, $C6, 0
+Boss_TerobusterIntroTileLoadStep10: dc.b    $42, $61, $40, 0, 2, 0, $CB, $C7, $C6, 0  ; was: byte_39478
                                         ; DATA XREF: ROM:000393FC   o
-byte_39482:     dc.b    $42, $61, $40, 0, 2, 0, $CC, $C8, $B9, 0
+Boss_TerobusterIntroTileLoadStep09: dc.b    $42, $61, $40, 0, 2, 0, $CC, $C8, $B9, 0  ; was: byte_39482
                                         ; DATA XREF: ROM:000393F8   o
-byte_3948C:     dc.b    $42, $61, $40, 0, 2, 0, $CD, $C9, $C6, 0
+Boss_TerobusterIntroTileLoadStep08: dc.b    $42, $61, $40, 0, 2, 0, $CD, $C9, $C6, 0  ; was: byte_3948C
                                         ; DATA XREF: ROM:000393F4   o
-byte_39496:     dc.b    $42, $61, $40, 0, 2, 0, $CE, $CA, $B9, 0
+Boss_TerobusterIntroTileLoadStep07: dc.b    $42, $61, $40, 0, 2, 0, $CE, $CA, $B9, 0  ; was: byte_39496
                                         ; DATA XREF: ROM:000393F0   o
-byte_394A0:     dc.b    $42, $69, $40, 0, 1, 0, $CB, $C7
+Boss_TerobusterIntroTileLoadStep06: dc.b    $42, $69, $40, 0, 1, 0, $CB, $C7  ; was: byte_394A0
                                         ; DATA XREF: ROM:000393EC   o
-byte_394A8:     dc.b    $42, $69, $40, 0, 1, 0, $CC, $C8
+Boss_TerobusterIntroTileLoadStep05: dc.b    $42, $69, $40, 0, 1, 0, $CC, $C8  ; was: byte_394A8
                                         ; DATA XREF: ROM:000393E8   o
-byte_394B0:     dc.b    $42, $69, $40, 0, 1, 0, $CD, $C9
+Boss_TerobusterIntroTileLoadStep04: dc.b    $42, $69, $40, 0, 1, 0, $CD, $C9  ; was: byte_394B0
                                         ; DATA XREF: ROM:000393E4   o
-byte_394B8:     dc.b    $42, $69, $40, 0, 1, 0, $CE, $CA
+Boss_TerobusterIntroTileLoadStep03: dc.b    $42, $69, $40, 0, 1, 0, $CE, $CA  ; was: byte_394B8
                                         ; DATA XREF: ROM:000393E0   o
-byte_394C0:     dc.b    $42, $71, $40, 0, 1, 0, $CE, $CB
+Boss_TerobusterIntroTileLoadStep02: dc.b    $42, $71, $40, 0, 1, 0, $CE, $CB  ; was: byte_394C0
                                         ; DATA XREF: ROM:000393DC   o
-byte_394C8:     dc.b    $42, $71, $40, 0, 1, 0, $CE, $CD
+Boss_TerobusterIntroTileLoadStep01: dc.b    $42, $71, $40, 0, 1, 0, $CE, $CD  ; was: byte_394C8
                                         ; DATA XREF: ROM:000393D8   o
-byte_394D0:     dc.b    $42, $71, $40, 0, 1, 0, $CE, $CE
-                                        ; DATA XREF: ROM:off_393D4   o
+Boss_TerobusterIntroTileLoadStep00: dc.b    $42, $71, $40, 0, 1, 0, $CE, $CE  ; was: byte_394D0
+                                        ; DATA XREF: ROM:Boss_TerobusterIntroTileLoadTable   o
 
 ; Main Shellshogun boss handler with state dispatch

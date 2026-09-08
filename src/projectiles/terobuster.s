@@ -1,23 +1,23 @@
-Enemy_HomingMissileUpdate:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_38EA2
+Projectile_TerobusterHomingMissileUpdate:               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_38EA2
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Physics_AddEntityOffset).l
-                bne.s   loc_38EC2
+                bne.s   Projectile_TerobusterHomingMissileConvertToImpact
                 btst    #7,$22(a5)
-                bne.s   loc_38EC2
+                bne.s   Projectile_TerobusterHomingMissileConvertToImpact
                 tst.w   (word_FF808C).w
-                bpl.s   loc_38EC2
+                bpl.s   Projectile_TerobusterHomingMissileConvertToImpact
                 tst.w   $24(a5)
-                bpl.s   loc_38ED8
-loc_38EC2:                                              ; CODE XREF: Enemy_HomingMissileUpdate+A   j
-                                        ; Enemy_HomingMissileUpdate+12   j
+                bpl.s   Projectile_TerobusterHomingMissileUpdateFlight
+Projectile_TerobusterHomingMissileConvertToImpact:      ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+A   j  ; was: loc_38EC2
+                                        ; Projectile_TerobusterHomingMissileUpdate+12   j
                 neg.l   $18(a5)
                 neg.l   $1C(a5)
                 move.l  #off_E9584,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
-loc_38ED8:                                              ; CODE XREF: Enemy_HomingMissileUpdate+1E   j
-                lea     word_38FEC(pc),a0
+Projectile_TerobusterHomingMissileUpdateFlight:         ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+1E   j  ; was: loc_38ED8
+                lea     Projectile_TerobusterHomingMissileDirectionFrames(pc),a0
                 nop
                 move.w  $56(a5),d1
                 subi.w  #$10,d1
@@ -29,14 +29,14 @@ loc_38ED8:                                              ; CODE XREF: Enemy_Homin
                 move.w  4(a0,d0.w),$A(a5)
                 andi.w  #$1FE,d1
                 cmpi.w  #$100,d1
-                bmi.s   loc_38F10
+                bmi.s   Projectile_TerobusterHomingMissileTrySpawnTrail
                 eori.w  #$1800,$E(a5)
-loc_38F10:                                              ; CODE XREF: Enemy_HomingMissileUpdate+66   j
+Projectile_TerobusterHomingMissileTrySpawnTrail:        ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+66   j  ; was: loc_38F10
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.s   loc_38F5E
+                bne.s   Projectile_TerobusterHomingMissileUpdateVelocity
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   loc_38F5E
+                bne.s   Projectile_TerobusterHomingMissileUpdateVelocity
                 movea.l #Projectile_HomingAndRockSpriteFrames,a1
                 jsr     (Sprite_InitTypeA4FromTable).l
                 move.w  $10(a5),$10(a0)
@@ -53,8 +53,8 @@ loc_38F10:                                              ; CODE XREF: Enemy_Homin
                 add.l   d0,$14(a0)
                 asr.l   #3,d0
                 move.l  d0,$1C(a0)
-loc_38F5E:                                              ; CODE XREF: Enemy_HomingMissileUpdate+76   j
-                                        ; Enemy_HomingMissileUpdate+7E   j
+Projectile_TerobusterHomingMissileUpdateVelocity:       ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+76   j  ; was: loc_38F5E
+                                        ; Projectile_TerobusterHomingMissileUpdate+7E   j
                 lea     (Math_SineTable).l,a1
                 move.w  d1,d0
                 move.w  -$80(a1,d0.w),d1
@@ -68,60 +68,60 @@ loc_38F5E:                                              ; CODE XREF: Enemy_Homin
                 asl.l   #4,d1
                 asl.l   #4,d2
                 tst.l   d1
-                bpl.s   loc_38F8A
+                bpl.s   Projectile_TerobusterHomingMissileCheckVerticalVelocity
                 cmp.l   $1C(a5),d1
-                bpl.s   loc_38F96
-                bra.s   loc_38F90
+                bpl.s   Projectile_TerobusterHomingMissileClampVerticalVelocity
+                bra.s   Projectile_TerobusterHomingMissileAdjustVerticalVelocity
 ; ---------------------------------------------------------------------------
-loc_38F8A:                                              ; CODE XREF: Enemy_HomingMissileUpdate+DE   j
+Projectile_TerobusterHomingMissileCheckVerticalVelocity:  ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+DE   j  ; was: loc_38F8A
                 cmp.l   $1C(a5),d1
-                bmi.s   loc_38F96
-loc_38F90:                                              ; CODE XREF: Enemy_HomingMissileUpdate+E6   j
+                bmi.s   Projectile_TerobusterHomingMissileClampVerticalVelocity
+Projectile_TerobusterHomingMissileAdjustVerticalVelocity:  ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+E6   j  ; was: loc_38F90
                 add.l   d3,$1C(a5)
-                bra.s   loc_38F9A
+                bra.s   Projectile_TerobusterHomingMissileUpdateHorizontalVelocity
 ; ---------------------------------------------------------------------------
-loc_38F96:                                              ; CODE XREF: Enemy_HomingMissileUpdate+E4   j
-                                        ; Enemy_HomingMissileUpdate+EC   j
+Projectile_TerobusterHomingMissileClampVerticalVelocity:  ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+E4   j  ; was: loc_38F96
+                                        ; Projectile_TerobusterHomingMissileUpdate+EC   j
                 move.l  d1,$1C(a5)
-loc_38F9A:                                              ; CODE XREF: Enemy_HomingMissileUpdate+F2   j
+Projectile_TerobusterHomingMissileUpdateHorizontalVelocity:  ; CODE XREF: Projectile_TerobusterHomingMissileAdjustVerticalVelocity+2   j  ; was: loc_38F9A
                 tst.l   d2
-                bpl.s   loc_38FA6
+                bpl.s   Projectile_TerobusterHomingMissileCheckHorizontalVelocity
                 cmp.l   $18(a5),d2
-                bpl.s   loc_38FB2
-                bra.s   loc_38FAC
+                bpl.s   Projectile_TerobusterHomingMissileClampHorizontalVelocity
+                bra.s   Projectile_TerobusterHomingMissileAdjustHorizontalVelocity
 ; ---------------------------------------------------------------------------
-loc_38FA6:                                              ; CODE XREF: Enemy_HomingMissileUpdate+FA   j
+Projectile_TerobusterHomingMissileCheckHorizontalVelocity:  ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+FA   j  ; was: loc_38FA6
                 cmp.l   $18(a5),d2
-                bcs.s   loc_38FB2
-loc_38FAC:                                              ; CODE XREF: Enemy_HomingMissileUpdate+102   j
+                bcs.s   Projectile_TerobusterHomingMissileClampHorizontalVelocity
+Projectile_TerobusterHomingMissileAdjustHorizontalVelocity:  ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+102   j  ; was: loc_38FAC
                 add.l   d4,$18(a5)
-                bra.s   loc_38FB6
+                bra.s   Projectile_TerobusterHomingMissileSteerTowardPlayer
 ; ---------------------------------------------------------------------------
-loc_38FB2:                                              ; CODE XREF: Enemy_HomingMissileUpdate+100   j
-                                        ; Enemy_HomingMissileUpdate+108   j
+Projectile_TerobusterHomingMissileClampHorizontalVelocity:  ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+100   j  ; was: loc_38FB2
+                                        ; Projectile_TerobusterHomingMissileUpdate+108   j
                 move.l  d2,$18(a5)
-loc_38FB6:                                              ; CODE XREF: Enemy_HomingMissileUpdate+10E   j
+Projectile_TerobusterHomingMissileSteerTowardPlayer:    ; CODE XREF: Projectile_TerobusterHomingMissileAdjustHorizontalVelocity+2   j  ; was: loc_38FB6
                 jsr     (Math_CalculateAngleToPlayer).l
                 sub.w   $56(a5),d2
-                bmi.w   loc_38FD8
+                bmi.w   Projectile_TerobusterHomingMissileCheckWrappedHeadingDelta
                 cmpi.w  #$100,d2
-                bpl.w   loc_38FE0
-loc_38FCC:                                              ; CODE XREF: Enemy_HomingMissileUpdate+13A   j
+                bpl.w   Projectile_TerobusterHomingMissileDecreaseHeading
+Projectile_TerobusterHomingMissileIncreaseHeading:      ; CODE XREF: Projectile_TerobusterHomingMissileCheckWrappedHeadingDelta+8   j  ; was: loc_38FCC
                 addq.w  #4,$56(a5)
                 andi.w  #$1FE,$56(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_38FD8:                                              ; CODE XREF: Enemy_HomingMissileUpdate+11E   j
+Projectile_TerobusterHomingMissileCheckWrappedHeadingDelta:  ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+11E   j  ; was: loc_38FD8
                 cmpi.w  #$FF00,d2
-                bmi.w   loc_38FCC
-loc_38FE0:                                              ; CODE XREF: Enemy_HomingMissileUpdate+126   j
+                bmi.w   Projectile_TerobusterHomingMissileIncreaseHeading
+Projectile_TerobusterHomingMissileDecreaseHeading:      ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+126   j  ; was: loc_38FE0
                 subq.w  #4,$56(a5)
                 andi.w  #$1FE,$56(a5)
                 rts
-; End of function Enemy_HomingMissileUpdate
+; End of function Projectile_TerobusterHomingMissileUpdate
 ; ---------------------------------------------------------------------------
-word_38FEC:     dc.w    $D478, $400, $F8FC, 0
-                                        ; DATA XREF: Enemy_HomingMissileUpdate:loc_38ED8   o
+Projectile_TerobusterHomingMissileDirectionFrames:  dc.w    $D478, $400, $F8FC, 0  ; was: word_38FEC
+                                        ; DATA XREF: Projectile_TerobusterHomingMissileUpdate:Projectile_TerobusterHomingMissileUpdateFlight   o
                 dc.w    $D474, $500, $F8F8, 0
                 dc.w    $D470, $500, $F8F8, 0
                 dc.w    $D46C, $500, $F8F8, 0
@@ -134,10 +134,10 @@ word_38FEC:     dc.w    $D478, $400, $F8FC, 0
 Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_TerobusterDecisionState+294   p  ; was: sub_3902C
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.s   locret_39084
+                bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  #$14,$23C(a5)
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_39084
+                bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  (a4)+,d0
                 move.w  (a4)+,d1
                 move.w  (a4)+,d2
@@ -145,7 +145,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_39084
+                bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  #1,$1C(a0)
                 moveq   #0,d0
                 move.w  (dword_FFFF08).w,d0
@@ -155,22 +155,22 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 move.w  (a4)+,d1
                 move.w  (a4)+,d2
                 jsr     (Enemy_SpawnAnimatedProjectile).l
-locret_39084:                                           ; CODE XREF: Boss_TerobusterSpawnMultiDirectional+8   j
+Boss_TerobusterSpawnMultiDirectionalReturn:             ; CODE XREF: Boss_TerobusterSpawnMultiDirectional+8   j  ; was: locret_39084
                                         ; Boss_TerobusterSpawnMultiDirectional+16   j
                 rts
 ; End of function Boss_TerobusterSpawnMultiDirectional
 ; ---------------------------------------------------------------------------
-word_39086:     dc.w    $40, $FFB2, $FFD6, $FFCC, $FFD8
+Boss_TerobusterFallingRockParametersA:  dc.w    $40, $FFB2, $FFD6, $FFCC, $FFD8  ; was: word_39086
                                         ; DATA XREF: Boss_TerobusterDecisionState:Boss_TerobusterFallingRockAttack   o
-word_39090:     dc.w    $30, $FFC4, $10, $FFD0, $C
+Boss_TerobusterFallingRockParametersB:  dc.w    $30, $FFC4, $10, $FFD0, $C  ; was: word_39090
                                         ; DATA XREF: Boss_TerobusterDecisionState+250   o
 
 ; Spawns falling rocks with randomized position offsets and downward velocity
 Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_TerobusterDecisionState+27A   p  ; was: sub_3909A
                 btst    #0,(word_FFA000+1).w
-                bne.s   locret_390EE
+                bne.s   Boss_TerobusterSpawnFallingRockReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_390EE
+                bne.s   Boss_TerobusterSpawnFallingRockReturn
                 move.b  (dword_FFFF08).w,d1
                 andi.w  #7,d1
                 subi.w  #4,d1
@@ -186,80 +186,8 @@ Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_Terobu
                 movea.l #Projectile_HomingAndRockSpriteFrames,a1
                 jsr     (Sprite_InitTypeA4FromTable).l
                 move.l  #$FFFFC000,$1C(a0)
-locret_390EE:                                           ; CODE XREF: Boss_TerobusterSpawnFallingRock+6   j
+Boss_TerobusterSpawnFallingRockReturn:                  ; CODE XREF: Boss_TerobusterSpawnFallingRock+6   j  ; was: locret_390EE
                                         ; Boss_TerobusterSpawnFallingRock+E   j
                 rts
 ; End of function Boss_TerobusterSpawnFallingRock
-; Boss movement physics with acceleration and boundaries
-Boss_TerobusterMovementPhysics:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_390F0
-                jsr     (RandomNumber).l
-                tst.w   4(a5)
-                bne.s   loc_39120
-                addq.w  #2,4(a5)
-                move.w  #$CF00,2(a5)
-                tst.l   $4C(a5)
-                bne.s   loc_39112
-                move.w  #$8F00,2(a5)
-loc_39112:                                              ; CODE XREF: Boss_TerobusterMovementPhysics+1A   j
-                move.w  #1,$48(a5)
-                move.w  (dword_FFFF08+2).w,$56(a5)
-                bra.s   loc_39164
-; ---------------------------------------------------------------------------
-loc_39120:                                              ; CODE XREF: Boss_TerobusterMovementPhysics+A   j
-                btst    #0,(word_FFA000+1).w
-                beq.s   loc_39148
-                tst.w   $54(a5)
-                bpl.s   loc_3913C
-                cmpi.w  #$FFFF,$54(a5)
-                beq.s   loc_39148
-                addq.w  #1,$54(a5)
-                bra.s   loc_39148
-; ---------------------------------------------------------------------------
-loc_3913C:                                              ; CODE XREF: Boss_TerobusterMovementPhysics+3C   j
-                cmpi.w  #1,$54(a5)
-                beq.s   loc_39148
-                subq.w  #1,$54(a5)
-loc_39148:                                              ; CODE XREF: Boss_TerobusterMovementPhysics+36   j
-                                        ; Boss_TerobusterMovementPhysics+44   j
-                addi.l  #$4000,$1C(a5)
-                bmi.s   loc_39196
-                tst.w   $48(a5)
-                beq.s   loc_39196
-                cmpi.w  #$140,$14(a5)
-                bmi.s   loc_39196
-                clr.w   $48(a5)
-loc_39164:                                              ; CODE XREF: Boss_TerobusterMovementPhysics+2E   j
-                move.l  #$FFFCF000,$1C(a5)
-                moveq   #0,d0
-                move.w  (dword_FFFF08).w,d0
-                andi.w  #7,d0
-                swap    d0
-                subi.l  #$38000,d0
-                move.l  d0,$18(a5)
-                tst.w   $18(a5)
-                bmi.s   loc_39190
-                move.w  #8,$54(a5)
-                bra.s   loc_39196
-; ---------------------------------------------------------------------------
-loc_39190:                                              ; CODE XREF: Boss_TerobusterMovementPhysics+96   j
-                move.w  #$FFF8,$54(a5)
-loc_39196:                                              ; CODE XREF: Boss_TerobusterMovementPhysics+60   j
-                                        ; Boss_TerobusterMovementPhysics+66   j
-                move.l  $4C(a5),d1
-                beq.s   locret_391CA
-                movea.l d1,a0
-                andi.w  #$E7FF,$E(a5)
-                move.w  $56(a5),d0
-                add.w   $54(a5),d0
-                move.w  d0,$56(a5)
-                andi.w  #$2C,d0                         ; ','
-                cmpi.w  #$20,d0                         ; ' '
-                bmi.s   loc_391C0
-                bset    #3,$E(a5)
-loc_391C0:                                              ; CODE XREF: Boss_TerobusterMovementPhysics+C8   j
-                andi.w  #$1C,d0
-                move.l  (a0,d0.w),8(a5)
-locret_391CA:                                           ; CODE XREF: Boss_TerobusterMovementPhysics+AA   j
-                rts
-; End of function Boss_TerobusterMovementPhysics
 ; Interpolates animation frames with delay loading

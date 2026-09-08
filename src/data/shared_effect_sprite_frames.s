@@ -57,7 +57,7 @@ Boss_SharedCollisionProjectileSpriteFrames: dc.l    $344CC, $500F8F8  ; DATA XRE
                 dc.l    $244D4, $FCFC
                 dc.l    $244D5, $FCFC
                 dc.w    $FFFF
-Projectile_HomingAndRockSpriteFrames:   dc.l    $24480, $A00F4F4  ; DATA XREF: Enemy_HomingMissileUpdate+80   o  ; was: dword_2AD6C
+Projectile_HomingAndRockSpriteFrames:   dc.l    $24480, $A00F4F4  ; DATA XREF: Projectile_TerobusterHomingMissileUpdate+80   o  ; was: dword_2AD6C
                                         ; Boss_TerobusterSpawnFallingRock+40   o
                 dc.l    $244CC, $500F8F8
                 dc.l    $244D0, $500F8F8
