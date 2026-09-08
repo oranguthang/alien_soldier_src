@@ -365,7 +365,7 @@ Boss_MadamBarbarPartLinks:  dc.w    $8000, $8007, $8066  ; was: word_34EDA
                 dc.w    $786, 7, $846
                 dc.w    $8A6, $540, $660
                 dc.w    $780, $8A0
-Boss_MadamBarbarNeutralPose:    dc.w    $8080, $80, $80  ; DATA XREF: Boss_MadamBarbarCalcDeltas   o  ; was: word_34F14
+Boss_MadamBarbarNeutralPose:    dc.w    $8080, $80, $80  ; DATA XREF: Boss_MadamBarbarCalculatePoseDeltas   o  ; was: word_34F14
                 dc.w    $80, $8080, $8080
 ; Flying Neo directional frames and metasprite definition
 Boss_FlyingNeoRotationFrames:   dc.l    word_EBBDC      ; DATA XREF: ROM:00034F4A   o  ; was: off_34F20

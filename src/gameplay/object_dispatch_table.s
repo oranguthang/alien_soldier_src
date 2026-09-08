@@ -70,7 +70,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Boss_XiTigerMain
                 dc.l    Boss_MadamBarbarMain
-                dc.l    Projectile_MadamBarbarDropBehavior
+                dc.l    Projectile_MadamBarbarDropUpdate
                 dc.l    Projectile_MadamBarbarDebris
                 dc.l    Weapon_HandleProjectileHit
                 dc.l    Boss_CaterpillarMain

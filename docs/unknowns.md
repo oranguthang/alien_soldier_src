@@ -707,7 +707,7 @@ The Madam Barbar barrage and idle-state audit reduced the count to 8,705. The
 former `DefeatSequence` label was rejected: state `$0C` follows the timed bullet
 barrage without a health check, updates all 29 linked parts, clears their flag
 bit seven, and finally clears an object range. States `$08`, `$0A`, `$0C`,
-`$0E`, and `$18` are now described as projectile wait, bullet barrage,
+`$0E`, and `$18` are now described as player-sequence wait, bullet barrage,
 post-barrage cleanup, AI entry, and idle-progress flow respectively.
 
 The Madam Barbar attack-selector audit reduced the count to 8,688. The former
@@ -725,6 +725,33 @@ the former `CheckBounds` helper publishes shared screen coordinates before the
 common clamp. The former `SpawnBullet` is now a barrage particle because it
 initializes generic type `$A4` with randomized position and velocity rather than
 a boss-specific projectile type.
+
+The Madam Barbar pose-system audit reduced the count to 8,661 and left
+`bosses/madam_barbar_core.s` with no live address-derived definitions. The
+interpreter's optional SFX prefix, stop/loop controls, 12-channel interpolation,
+angle publication, six state-specific streams, and pose-target base are all
+named from direct consumers. The former `LoadFrameDelays` wrapper is now an
+initial-pose channel loader; the generic callee converts source bytes to
+fixed-point channel values and does not read timing data.
+
+The first Madam Barbar debris-projectile audit reduced the count to 8,639.
+It names the type-`$160` conversion, horizontal timers and reversals, numbered
+motion states, offset probes, and shared-effect publication from operations
+visible in the routine. The imported `CheckCollision` name was narrowed to a
+vertical-offset probe because the helper only supplies offsets zero and `$0C`
+to `Physics_AddEntityOffset`; no boss-center or collision-direction claim is
+made. The state names remain numeric until runtime or stronger cross-reference
+evidence establishes their gameplay meaning.
+
+The remaining Madam Barbar projectile audit reduced the count to 8,629 and
+left `projectiles/madam_barbar.s` with no live address-derived definitions.
+It also rejected an interim semantic mistake: `SpawnProjectile` actually
+creates type `$38`, whose dispatch entry is only `Anim_UpdateSpriteFrame`, so
+the routine and its table are now an animation effect. Consequently boss state
+eight is a player-sequence wait, keyed by player behavior state `$FF80C2`, not
+a projectile wait. The separate type-`$11C` drop object retains projectile
+terminology because its dedicated handler applies falling motion, probes
+terrain contacts, optionally creates a pickup, and converts to an explosion.
 
 Four especially broad data labels are explicitly registered:
 

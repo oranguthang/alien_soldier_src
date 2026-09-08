@@ -1,41 +1,42 @@
+; Madam Barbar debris motion states and shared-effect handoff
 Projectile_MadamBarbarDebris:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3AE36
                 tst.w   (word_FF808C).w
-                bpl.s   loc_3AE42
+                bpl.s   Projectile_MadamBarbarDebrisConvertToType160
                 tst.w   $24(a5)
-                bpl.s   loc_3AE78
-loc_3AE42:                                              ; CODE XREF: Projectile_MadamBarbarDebris+4   j
+                bpl.s   Projectile_MadamBarbarDebrisUpdateActive
+Projectile_MadamBarbarDebrisConvertToType160:           ; CODE XREF: Projectile_MadamBarbarDebris+4   j  ; was: loc_3AE42
                 clr.l   $18(a5)
                 move.l  #$FFFEE000,$1C(a5)
                 btst    #4,$E(a5)
-                beq.s   loc_3AE5A
+                beq.s   Projectile_MadamBarbarDebrisInitializeType160
                 neg.l   $1C(a5)
-loc_3AE5A:                                              ; CODE XREF: Projectile_MadamBarbarDebris+1E   j
+Projectile_MadamBarbarDebrisInitializeType160:          ; CODE XREF: Projectile_MadamBarbarDebris+1E   j  ; was: loc_3AE5A
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #2,(word_FFA010).w
                 move.l  #off_E953C,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
-loc_3AE78:                                              ; CODE XREF: Projectile_MadamBarbarDebris+A   j
+Projectile_MadamBarbarDebrisUpdateActive:               ; CODE XREF: Projectile_MadamBarbarDebris+A   j  ; was: loc_3AE78
                 bclr    #3,$E(a5)
                 btst    #2,(word_FFA000+1).w
-                bne.s   loc_3AE8C
+                bne.s   Projectile_MadamBarbarDebrisDispatchMotionState
                 bset    #3,$E(a5)
-loc_3AE8C:                                              ; CODE XREF: Projectile_MadamBarbarDebris+4E   j
+Projectile_MadamBarbarDebrisDispatchMotionState:        ; CODE XREF: Projectile_MadamBarbarDebris+4E   j  ; was: loc_3AE8C
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$5E(a5)
                 move.w  4(a5),d0
-                bne.w   loc_3AF32
+                bne.w   Projectile_MadamBarbarDebrisUpdateMotionStateOne
                 tst.w   $4A(a5)
-                beq.s   loc_3AF0A
+                beq.s   Projectile_MadamBarbarDebrisUpdateInitialVerticalMotion
                 subq.w  #1,$48(a5)
-                bmi.s   loc_3AED6
+                bmi.s   Projectile_MadamBarbarDebrisUpdateHorizontalMotionTimer
                 cmpi.w  #$600,$5E(a5)
-                bpl.s   loc_3AEBC
+                bpl.s   Projectile_MadamBarbarDebrisReverseHorizontalMotion
                 cmpi.w  #$4A0,$5E(a5)
-                bpl.s   locret_3AF30
-loc_3AEBC:                                              ; CODE XREF: Projectile_MadamBarbarDebris+7C   j
+                bpl.s   Projectile_MadamBarbarDebrisMotionReturn
+Projectile_MadamBarbarDebrisReverseHorizontalMotion:    ; CODE XREF: Projectile_MadamBarbarDebris+7C   j  ; was: loc_3AEBC
                 addq.w  #1,4(a5)
                 move.l  $4C(a5),d0
                 asr.l   #1,d0
@@ -44,67 +45,67 @@ loc_3AEBC:                                              ; CODE XREF: Projectile_
                 bclr    #4,$E(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3AED6:                                              ; CODE XREF: Projectile_MadamBarbarDebris+74   j
+Projectile_MadamBarbarDebrisUpdateHorizontalMotionTimer:  ; CODE XREF: Projectile_MadamBarbarDebris+74   j  ; was: loc_3AED6
                                         ; Projectile_MadamBarbarDebris+18C   j
                 clr.l   $18(a5)
                 cmpi.w  #$FFD0,$48(a5)
-                bmi.s   loc_3AEF4
+                bmi.s   Projectile_MadamBarbarDebrisRestartHorizontalMotion
                 cmpi.w  #$FFE0,$48(a5)
-                bpl.s   locret_3AF08
+                bpl.s   Projectile_MadamBarbarDebrisHorizontalTimerReturn
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
-                beq.s   locret_3AF08
-loc_3AEF4:                                              ; CODE XREF: Projectile_MadamBarbarDebris+AA   j
+                beq.s   Projectile_MadamBarbarDebrisHorizontalTimerReturn
+Projectile_MadamBarbarDebrisRestartHorizontalMotion:    ; CODE XREF: Projectile_MadamBarbarDebris+AA   j  ; was: loc_3AEF4
                 move.l  $4C(a5),$18(a5)
                 move.b  (dword_FFFF08+1).w,d0
                 andi.w  #$F,d0
                 addq.w  #8,d0
                 move.w  d0,$48(a5)
-locret_3AF08:                                           ; CODE XREF: Projectile_MadamBarbarDebris+B2   j
+Projectile_MadamBarbarDebrisHorizontalTimerReturn:      ; CODE XREF: Projectile_MadamBarbarDebris+B2   j  ; was: locret_3AF08
                                         ; Projectile_MadamBarbarDebris+BC   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_3AF0A:                                              ; CODE XREF: Projectile_MadamBarbarDebris+6E   j
+Projectile_MadamBarbarDebrisUpdateInitialVerticalMotion:  ; CODE XREF: Projectile_MadamBarbarDebris+6E   j  ; was: loc_3AF0A
                 subi.l  #$3000,$1C(a5)
-                bpl.s   locret_3AF30
+                bpl.s   Projectile_MadamBarbarDebrisMotionReturn
                 cmpi.w  #$B8,$14(a5)
-                bpl.s   locret_3AF30
+                bpl.s   Projectile_MadamBarbarDebrisMotionReturn
                 move.w  #$B8,$14(a5)
                 clr.l   $1C(a5)
                 move.l  $4C(a5),$18(a5)
                 addq.w  #1,$4A(a5)
-locret_3AF30:                                           ; CODE XREF: Projectile_MadamBarbarDebris+84   j
+Projectile_MadamBarbarDebrisMotionReturn:               ; CODE XREF: Projectile_MadamBarbarDebris+84   j  ; was: locret_3AF30
                                         ; Projectile_MadamBarbarDebris+DC   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_3AF32:                                              ; CODE XREF: Projectile_MadamBarbarDebris+66   j
+Projectile_MadamBarbarDebrisUpdateMotionStateOne:       ; CODE XREF: Projectile_MadamBarbarDebris+66   j  ; was: loc_3AF32
                 cmpi.w  #1,d0
-                bne.s   loc_3AF64
+                bne.s   Projectile_MadamBarbarDebrisCheckMotionStateThree
                 cmpi.w  #7,$1C(a5)
-                bpl.s   loc_3AF4A
+                bpl.s   Projectile_MadamBarbarDebrisProbeStateOneCollision
                 addi.l  #$3000,$1C(a5)
-                bmi.s   locret_3AF30
-loc_3AF4A:                                              ; CODE XREF: Projectile_MadamBarbarDebris+108   j
-                bsr.w   Boss_MadamBarbarCheckCollision
-                beq.s   locret_3AF30
+                bmi.s   Projectile_MadamBarbarDebrisMotionReturn
+Projectile_MadamBarbarDebrisProbeStateOneCollision:     ; CODE XREF: Projectile_MadamBarbarDebris+108   j  ; was: loc_3AF4A
+                bsr.w   Projectile_MadamBarbarProbeVerticalOffset
+                beq.s   Projectile_MadamBarbarDebrisMotionReturn
                 addq.w  #1,4(a5)
                 move.b  #$82,$21(a5)
                 clr.w   $48(a5)
                 jmp     Physics_AlignToTerrain
 ; ---------------------------------------------------------------------------
-loc_3AF64:                                              ; CODE XREF: Projectile_MadamBarbarDebris+100   j
+Projectile_MadamBarbarDebrisCheckMotionStateThree:      ; CODE XREF: Projectile_MadamBarbarDebris+100   j  ; was: loc_3AF64
                 cmpi.w  #3,d0
-                bne.s   loc_3AFA8
-loc_3AF6A:                                              ; CODE XREF: Projectile_MadamBarbarDebris+180   j
+                bne.s   Projectile_MadamBarbarDebrisCheckSharedEffectTrigger
+Projectile_MadamBarbarDebrisEnterSharedEffectState:     ; CODE XREF: Projectile_MadamBarbarDebris+180   j  ; was: loc_3AF6A
                 move.w  #3,4(a5)
                 clr.l   $18(a5)
                 bclr    #1,(byte_FF825C).w
-                bne.s   loc_3AF86
+                bne.s   Projectile_MadamBarbarDebrisPublishSharedEffectPosition
                 subq.w  #1,4(a5)
                 clr.w   $48(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3AF86:                                              ; CODE XREF: Projectile_MadamBarbarDebris+144   j
+Projectile_MadamBarbarDebrisPublishSharedEffectPosition:  ; CODE XREF: Projectile_MadamBarbarDebris+144   j  ; was: loc_3AF86
                 move.w  #7,(word_FF824E).w
                 bset    #0,(byte_FF825C).w
                 move.w  $10(a5),d0
@@ -114,62 +115,62 @@ loc_3AF86:                                              ; CODE XREF: Projectile_
                 move.w  d0,(word_FF8252).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_3AFA8:                                              ; CODE XREF: Projectile_MadamBarbarDebris+132   j
+Projectile_MadamBarbarDebrisCheckSharedEffectTrigger:   ; CODE XREF: Projectile_MadamBarbarDebris+132   j  ; was: loc_3AFA8
                 bclr    #1,$22(a5)
-                beq.s   loc_3AFB8
+                beq.s   Projectile_MadamBarbarDebrisUpdateMotionStateTwo
                 bset    #1,(byte_FF825C).w
-                bra.s   loc_3AF6A
+                bra.s   Projectile_MadamBarbarDebrisEnterSharedEffectState
 ; ---------------------------------------------------------------------------
-loc_3AFB8:                                              ; CODE XREF: Projectile_MadamBarbarDebris+178   j
+Projectile_MadamBarbarDebrisUpdateMotionStateTwo:       ; CODE XREF: Projectile_MadamBarbarDebris+178   j  ; was: loc_3AFB8
                 move.b  #$82,$21(a5)
                 subq.w  #1,$48(a5)
-                bmi.w   loc_3AED6
+                bmi.w   Projectile_MadamBarbarDebrisUpdateHorizontalMotionTimer
                 cmpi.w  #$650,$5E(a5)
-                bpl.s   loc_3AFD6
+                bpl.s   Projectile_MadamBarbarDebrisMarkForRemovalOutsideHorizontalRange
                 cmpi.w  #$450,$5E(a5)
-                bpl.s   loc_3AFDE
-loc_3AFD6:                                              ; CODE XREF: Projectile_MadamBarbarDebris+196   j
+                bpl.s   Projectile_MadamBarbarDebrisProbeStateTwoCollision
+Projectile_MadamBarbarDebrisMarkForRemovalOutsideHorizontalRange:  ; CODE XREF: Projectile_MadamBarbarDebris+196   j  ; was: loc_3AFD6
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3AFDE:                                              ; CODE XREF: Projectile_MadamBarbarDebris+19E   j
-                bsr.s   Boss_MadamBarbarCheckCollision
-                beq.s   loc_3B004
+Projectile_MadamBarbarDebrisProbeStateTwoCollision:     ; CODE XREF: Projectile_MadamBarbarDebris+19E   j  ; was: loc_3AFDE
+                bsr.s   Projectile_MadamBarbarProbeVerticalOffset
+                beq.s   Projectile_MadamBarbarDebrisReturnToStateOne
                 moveq   #8,d0
                 tst.w   $18(a5)
-                bpl.s   loc_3AFEC
+                bpl.s   Projectile_MadamBarbarDebrisProbeHorizontalOffset
                 moveq   #$FFFFFFF8,d0
-loc_3AFEC:                                              ; CODE XREF: Projectile_MadamBarbarDebris+1B2   j
+Projectile_MadamBarbarDebrisProbeHorizontalOffset:      ; CODE XREF: Projectile_MadamBarbarDebris+1B2   j  ; was: loc_3AFEC
                 moveq   #0,d1
                 jsr     (Physics_AddEntityOffset).l
-                beq.s   locret_3B012
+                beq.s   Projectile_MadamBarbarDebrisReturn
                 move.b  #$80,$21(a5)
                 move.l  #$FFFC0000,$1C(a5)
-loc_3B004:                                              ; CODE XREF: Projectile_MadamBarbarDebris+1AA   j
+Projectile_MadamBarbarDebrisReturnToStateOne:           ; CODE XREF: Projectile_MadamBarbarDebris+1AA   j  ; was: loc_3B004
                 subq.w  #1,4(a5)
                 move.l  $18(a5),d0
                 asr.l   #1,d0
                 move.l  d0,$18(a5)
-locret_3B012:                                           ; CODE XREF: Projectile_MadamBarbarDebris+1BE   j
+Projectile_MadamBarbarDebrisReturn:                     ; CODE XREF: Projectile_MadamBarbarDebris+1BE   j  ; was: locret_3B012
                 rts
 ; End of function Projectile_MadamBarbarDebris
-; Checks collision at boss center position for projectile spawning
-Boss_MadamBarbarCheckCollision:                         ; CODE XREF: Projectile_MadamBarbarDebris:loc_3AF4A   p  ; was: sub_3B014
-                                        ; sub_3AE36:loc_3AFDE   p
+; Probes the collision helper at vertical offset $0C
+Projectile_MadamBarbarProbeVerticalOffset:              ; CODE XREF: Projectile_MadamBarbarDebris:Projectile_MadamBarbarDebrisProbeStateOneCollision   p  ; was: sub_3B014
+                                        ; Projectile_MadamBarbarDebris:Projectile_MadamBarbarDebrisProbeStateTwoCollision   p
                 moveq   #0,d0
                 moveq   #$C,d1
                 jmp     Physics_AddEntityOffset
-; End of function Boss_MadamBarbarCheckCollision
-; Spawns boss projectiles with random position offset calculations
-Boss_MadamBarbarSpawnProjectile:                        ; CODE XREF: Boss_MadamBarbarProjectileWaitState   p  ; was: sub_3B01E
+; End of function Projectile_MadamBarbarProbeVerticalOffset
+; Spawns a type-$38 animation effect at a randomized nearby position
+Boss_MadamBarbarSpawnAnimationEffect:                   ; CODE XREF: Boss_MadamBarbarWaitForPlayerSequence   p  ; was: sub_3B01E
                                         ; Boss_MadamBarbarIdleProgressState+1A   p
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_3B066
-                movea.l #dword_3B178,a1
+                bne.s   Boss_MadamBarbarSpawnObjectReturn
+                movea.l #Boss_MadamBarbarAnimationEffectFrames,a1
                 jsr     (Sprite_InitFromTable).l
                 move.w  #$8100,2(a0)
                 move.b  #$20,$20(a0)                    ; ' '
-loc_3B03E:                                              ; CODE XREF: Boss_MadamBarbarSpawnDropProjectile+54   j
+Boss_MadamBarbarPositionSpawnedObject:                  ; CODE XREF: Boss_MadamBarbarSpawnDropProjectile+54   j  ; was: loc_3B03E
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
@@ -180,17 +181,17 @@ loc_3B03E:                                              ; CODE XREF: Boss_MadamB
                 addi.w  #8,d0
                 add.w   $14(a5),d0
                 move.w  d0,$14(a0)
-locret_3B066:                                           ; CODE XREF: Boss_MadamBarbarSpawnProjectile+6   j
+Boss_MadamBarbarSpawnObjectReturn:                      ; CODE XREF: Boss_MadamBarbarSpawnAnimationEffect+6   j  ; was: locret_3B066
                                         ; Boss_MadamBarbarSpawnDropProjectile+8   j
                 rts
-; End of function Boss_MadamBarbarSpawnProjectile
+; End of function Boss_MadamBarbarSpawnAnimationEffect
 ; Spawn falling projectile from Madam Barbar boss
 Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamBarbarSelectAttackState+244   p  ; was: sub_3B068
                 move.w  (word_FFA000).w,d0
                 andi.w  #$F,d0
-                bne.s   locret_3B066
+                bne.s   Boss_MadamBarbarSpawnObjectReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_3B066
+                bne.s   Boss_MadamBarbarSpawnObjectReturn
                 move.w  #$11C,(a0)
                 clr.w   4(a0)
                 move.w  #$8D00,2(a0)
@@ -204,92 +205,92 @@ Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamB
                 move.w  (dword_FFFF08).w,d0
                 ext.l   d0
                 move.l  d0,$18(a0)
-                bra.w   loc_3B03E
+                bra.w   Boss_MadamBarbarPositionSpawnedObject
 ; End of function Boss_MadamBarbarSpawnDropProjectile
-; Handle Madam Barbar dropped projectile animation and bouncing behavior
-Projectile_MadamBarbarDropBehavior:                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3B0C0
+; Updates the Madam Barbar drop projectile startup and terrain contacts
+Projectile_MadamBarbarDropUpdate:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3B0C0
                 tst.w   (word_FF808C).w
-                bmi.s   loc_3B0CE
+                bmi.s   Projectile_MadamBarbarDropUpdateActive
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3B0CE:                                              ; CODE XREF: Projectile_MadamBarbarDropBehavior+4   j
+Projectile_MadamBarbarDropUpdateActive:                 ; CODE XREF: Projectile_MadamBarbarDropUpdate+4   j  ; was: loc_3B0CE
                 tst.w   4(a5)
-                bne.s   loc_3B0FC
+                bne.s   Projectile_MadamBarbarDropUpdateFallingMotion
                 subq.w  #1,$48(a5)
-                bpl.s   locret_3B0FA
+                bpl.s   Projectile_MadamBarbarDropStartupReturn
                 move.w  #$F,$48(a5)
                 addq.w  #1,$E(a5)
                 cmpi.b  #$C5,$F(a5)
-                bne.s   locret_3B0FA
+                bne.s   Projectile_MadamBarbarDropStartupReturn
                 addq.w  #2,4(a5)
                 move.l  $18(a5),d0
                 asl.l   #3,d0
                 move.l  d0,$18(a5)
-locret_3B0FA:                                           ; CODE XREF: Projectile_MadamBarbarDropBehavior+18   j
-                                        ; Projectile_MadamBarbarDropBehavior+2A   j
+Projectile_MadamBarbarDropStartupReturn:                ; CODE XREF: Projectile_MadamBarbarDropUpdate+18   j  ; was: locret_3B0FA
+                                        ; Projectile_MadamBarbarDropUpdate+2A   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_3B0FC:                                              ; CODE XREF: Projectile_MadamBarbarDropBehavior+12   j
+Projectile_MadamBarbarDropUpdateFallingMotion:          ; CODE XREF: Projectile_MadamBarbarDropUpdate+12   j  ; was: loc_3B0FC
                 move.w  #$C3C5,$E(a5)
                 cmpi.w  #7,$1C(a5)
-                bpl.s   loc_3B114
+                bpl.s   Projectile_MadamBarbarDropProbeTerrainContact
                 addi.l  #$6000,$1C(a5)
-                bmi.s   locret_3B134
-loc_3B114:                                              ; CODE XREF: Projectile_MadamBarbarDropBehavior+48   j
+                bmi.s   Projectile_MadamBarbarDropMotionReturn
+Projectile_MadamBarbarDropProbeTerrainContact:          ; CODE XREF: Projectile_MadamBarbarDropUpdate+48   j  ; was: loc_3B114
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Physics_AddEntityOffset).l
-                beq.s   locret_3B134
+                beq.s   Projectile_MadamBarbarDropMotionReturn
                 subq.w  #1,$4A(a5)
-                bmi.s   loc_3B136
+                bmi.s   Projectile_MadamBarbarDropHandleFinalTerrainContact
                 move.l  #$FFFC4000,$1C(a5)
                 move.w  #$C3D2,$E(a5)
-locret_3B134:                                           ; CODE XREF: Projectile_MadamBarbarDropBehavior+52   j
-                                        ; Projectile_MadamBarbarDropBehavior+5E   j
+Projectile_MadamBarbarDropMotionReturn:                 ; CODE XREF: Projectile_MadamBarbarDropUpdate+52   j  ; was: locret_3B134
+                                        ; Projectile_MadamBarbarDropUpdate+5E   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_3B136:                                              ; CODE XREF: Projectile_MadamBarbarDropBehavior+64   j
+Projectile_MadamBarbarDropHandleFinalTerrainContact:    ; CODE XREF: Projectile_MadamBarbarDropUpdate+64   j  ; was: loc_3B136
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
-                bne.s   loc_3B168
+                bne.s   Projectile_MadamBarbarDropConvertToExplosion
                 jsr     (Projectile_FindFreeSlot).l
-                bne.s   loc_3B168
+                bne.s   Projectile_MadamBarbarDropConvertToExplosion
                 jsr     (Pickup_SpawnLarge).l
                 bset    #2,2(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  #$FFFF6000,$1C(a0)
-loc_3B168:                                              ; CODE XREF: Projectile_MadamBarbarDropBehavior+7E   j
-                                        ; Projectile_MadamBarbarDropBehavior+86   j
+Projectile_MadamBarbarDropConvertToExplosion:           ; CODE XREF: Projectile_MadamBarbarDropUpdate+7E   j  ; was: loc_3B168
+                                        ; Projectile_MadamBarbarDropUpdate+86   j
                 clr.l   $18(a5)
                 move.w  #$FFFE,$1C(a5)
                 jmp     Projectile_CheckLifetime
-; End of function Projectile_MadamBarbarDropBehavior
+; End of function Projectile_MadamBarbarDropUpdate
 ; ---------------------------------------------------------------------------
-dword_3B178:    dc.l    $163BC, $FCFC, $163BD, $FCFC, $163BE, $FCFC, $263BF
-                                        ; DATA XREF: Boss_MadamBarbarSpawnProjectile+8   o
+Boss_MadamBarbarAnimationEffectFrames:  dc.l    $163BC, $FCFC, $163BD, $FCFC, $163BE, $FCFC, $263BF  ; was: dword_3B178
+                                        ; DATA XREF: Boss_MadamBarbarSpawnAnimationEffect+8   o
                 dc.l    $500F8F8, $163BE, $FCFC, $163BD, $FCFC, $163BC, $FCFC
                 dc.w    $FFFF
-dword_3B1B2:    dc.l    $100000, $10000C                ; DATA XREF: Boss_MadamBarbarIntroApproachState:Boss_MadamBarbarUpdateIntroPose   o
+Boss_MadamBarbarIntroIdlePoseCommands:  dc.l    $100000, $10000C  ; DATA XREF: Boss_MadamBarbarIntroApproachState:Boss_MadamBarbarUpdateIntroPose   o  ; was: dword_3B1B2
                                         ; Boss_MadamBarbarIdleProgressState+1E   o
                 dc.w    $FFFF
-dword_3B1BC:    dc.l    $70000, $7000C                  ; DATA XREF: Boss_MadamBarbarSelectAttackState+248   o
+Boss_MadamBarbarDropProjectilePoseCommands: dc.l    $70000, $7000C  ; DATA XREF: Boss_MadamBarbarSelectAttackState+248   o  ; was: dword_3B1BC
                 dc.w    $FFFF
-dword_3B1C6:    dc.l    $40018, $4000C                  ; DATA XREF: Boss_MadamBarbarBulletBarrageState+58   o
+Boss_MadamBarbarBulletBarragePoseCommands:  dc.l    $40018, $4000C  ; DATA XREF: Boss_MadamBarbarBulletBarrageState+58   o  ; was: dword_3B1C6
                 dc.w    $FFFF
-dword_3B1D0:    dc.l    $F70D0018, $220018, $E3200024, $FE0E0024, $180024, $F0200018
+Boss_MadamBarbarCenterSpinPoseCommands: dc.l    $F70D0018, $220018, $E3200024, $FE0E0024, $180024, $F0200018  ; was: dword_3B1D0
                                         ; DATA XREF: Boss_MadamBarbarSelectAttackState+1F6   o
                 dc.w    $FFFE
-dword_3B1EA:    dc.l    $100030, $10003C, $100048, $100054
+Boss_MadamBarbarPlayerLeftPoseCommands: dc.l    $100030, $10003C, $100048, $100054  ; was: dword_3B1EA
                                         ; DATA XREF: Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarUpdatePlayerLeftSidePose   o
                 dc.w    $FFFF
-dword_3B1FC:    dc.l    $100060, $10006C, $100078, $100084
+Boss_MadamBarbarPlayerRightPoseCommands:    dc.l    $100060, $10006C, $100078, $100084  ; was: dword_3B1FC
                                         ; DATA XREF: Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarUpdatePlayerRightSidePose   o
                 dc.w    $FFFF
-word_3B20E:     dc.w    $D828, $A8D8, $8818, $D820, $A8E0, $F8E8, $E028, $A0D8
+Boss_MadamBarbarPoseTargets:    dc.w    $D828, $A8D8, $8818, $D820, $A8E0, $F8E8, $E028, $A0D8  ; was: word_3B20E
                                         ; DATA XREF: Boss_MadamBarbarSetupState+CA   o
-                                        ; Boss_MadamBarbarUpdateAnimation+5A   o
+                                        ; Boss_MadamBarbarUpdatePose+5A   o
                 dc.w    $9020, $D020, $B0E0, $F0E0, $A028, $E0D8, $8010, $E028
                 dc.w    $A0D8, $F0, $4408, $3CF8, $B404, $CC04, $B4FC, $CCFC
                 dc.w    $C030, $A0D0, $9020, $D020, $B0E0, $F0E0, $E030, $C0D0
