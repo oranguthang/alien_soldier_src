@@ -1,7 +1,7 @@
-; Flash boss sprite when taking damage
-Boss_ShellshogunFlashOnHit:                             ; CODE XREF: Boss_ShellshogunDefeatLaunchState:Boss_ShellshogunRenderDefeatLaunch   p  ; was: sub_3A122
+; Spawns a type-A4 debris object around Shellshogun during defeat launch
+Boss_ShellshogunSpawnDefeatDebris:                      ; CODE XREF: Boss_ShellshogunDefeatLaunchState:Boss_ShellshogunRenderDefeatLaunch   p  ; was: sub_3A122
                 jsr     (Projectile_UpdateAfterGlobalDelay).l
-                bne.s   locret_3A170
+                bne.s   Boss_ShellshogunSpawnDefeatDebrisReturn
                 jsr     (Sprite_InitTypeA4FromTable).l
                 clr.b   $20(a0)
                 move.l  $18(a5),$18(a0)
@@ -18,31 +18,31 @@ Boss_ShellshogunFlashOnHit:                             ; CODE XREF: Boss_Shells
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-locret_3A170:                                           ; CODE XREF: Boss_ShellshogunFlashOnHit+6   j
+Boss_ShellshogunSpawnDefeatDebrisReturn:                ; CODE XREF: Boss_ShellshogunSpawnDefeatDebris+6   j  ; was: locret_3A170
                 rts
-; End of function Boss_ShellshogunFlashOnHit
-; Updates boss animation frame and interpolation
-Boss_ShellshogunAnimUpdate:                             ; CODE XREF: Boss_ShellshogunDefeatLaunchState+B0   p  ; was: sub_3A172
+; End of function Boss_ShellshogunSpawnDefeatDebris
+; Interprets one pose-command stream and publishes its linked-part angles
+Boss_ShellshogunUpdatePose:                             ; CODE XREF: Boss_ShellshogunDefeatLaunchState+B0   p  ; was: sub_3A172
                                         ; Boss_ShellshogunDecisionState+7A   p
                 clr.w   $17C(a5)
                 tst.w   $C(a5)
-                bpl.s   loc_3A1D4
-loc_3A17C:                                              ; CODE XREF: Boss_ShellshogunAnimUpdate+2A   j
+                bpl.s   Boss_ShellshogunAdvancePoseInterpolation
+Boss_ShellshogunReadNextPoseCommand:                    ; CODE XREF: Boss_ShellshogunUpdatePose+2A   j  ; was: loc_3A17C
                 move.w  $58(a5),d0
-                bmi.s   loc_3A1E4
+                bmi.s   Boss_ShellshogunPublishPoseAngles
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
-                bne.s   loc_3A192
+                bne.s   Boss_ShellshogunCheckPoseLoopCommand
                 move.w  d3,$58(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3A192:                                              ; CODE XREF: Boss_ShellshogunAnimUpdate+18   j
+Boss_ShellshogunCheckPoseLoopCommand:                   ; CODE XREF: Boss_ShellshogunUpdatePose+18   j  ; was: loc_3A192
                 cmpi.w  #$FFFF,d3
-                bne.s   loc_3A19E
+                bne.s   Boss_ShellshogunStartPoseInterpolation
                 clr.w   $58(a5)
-                bra.s   loc_3A17C
+                bra.s   Boss_ShellshogunReadNextPoseCommand
 ; ---------------------------------------------------------------------------
-loc_3A19E:                                              ; CODE XREF: Boss_ShellshogunAnimUpdate+24   j
+Boss_ShellshogunStartPoseInterpolation:                 ; CODE XREF: Boss_ShellshogunUpdatePose+24   j  ; was: loc_3A19E
                 addq.w  #4,$58(a5)
                 subq.w  #1,$11E(a5)
                 addq.w  #1,$17C(a5)
@@ -50,21 +50,21 @@ loc_3A19E:                                              ; CODE XREF: Boss_Shells
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
-                addi.l  #word_3A38A,d0
+                addi.l  #Boss_ShellshogunPoseTargets,d0
                 movea.l d0,a0
-                bsr.w   Boss_ShellshogunCalculateAnimationDeltas
+                bsr.w   Boss_ShellshogunCalculatePoseDeltas
                 move.b  (dword_FF8040).w,d1
                 ext.w   d1
                 add.w   d1,$C(a5)
                 tst.w   $C(a5)
-                bmi.s   loc_3A1E4
-loc_3A1D4:                                              ; CODE XREF: Boss_ShellshogunAnimUpdate+8   j
+                bmi.s   Boss_ShellshogunPublishPoseAngles
+Boss_ShellshogunAdvancePoseInterpolation:               ; CODE XREF: Boss_ShellshogunUpdatePose+8   j  ; was: loc_3A1D4
                 subq.w  #1,$C(a5)
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #$E,d7
                 jsr     (Anim_ApplyInterpolationStep).l
-loc_3A1E4:                                              ; CODE XREF: Boss_ShellshogunAnimUpdate+E   j
-                                        ; Boss_ShellshogunAnimUpdate+60   j
+Boss_ShellshogunPublishPoseAngles:                      ; CODE XREF: Boss_ShellshogunUpdatePose+E   j  ; was: loc_3A1E4
+                                        ; Boss_ShellshogunUpdatePose+60   j
                 move.w  #$1FE,d7
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 move.b  (a0),d0
@@ -142,41 +142,41 @@ loc_3A1E4:                                              ; CODE XREF: Boss_Shells
                 and.w   d7,d0
                 move.w  d0,$8F6(a5)
                 rts
-; End of function Boss_ShellshogunAnimUpdate
+; End of function Boss_ShellshogunUpdatePose
 ; Calculates per-channel deltas toward Shellshogun's neutral pose
-Boss_ShellshogunCalculateAnimationDeltas:               ; CODE XREF: Boss_ShellshogunAnimUpdate+4E   p  ; was: sub_3A2CC
+Boss_ShellshogunCalculatePoseDeltas:                    ; CODE XREF: Boss_ShellshogunUpdatePose+4E   p  ; was: sub_3A2CC
                 movea.l #Boss_ShellshogunNeutralPose,a1
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 subq.w  #1,$C(a5)
                 moveq   #$E,d7
                 jmp     Anim_CalculateInterpolationDeltas
-; End of function Boss_ShellshogunCalculateAnimationDeltas
+; End of function Boss_ShellshogunCalculatePoseDeltas
 ; ---------------------------------------------------------------------------
-word_3A2E6:     dc.w    $10, $F, $18, 0, $FFFF
+Boss_ShellshogunDecisionPoseCommands:   dc.w    $10, $F, $18, 0, $FFFF  ; was: word_3A2E6
                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                                         ; Boss_ShellshogunDecisionState:Boss_ShellshogunUpdateDecisionPose   o
-word_3A2F0:     dc.w    $F030, $1E, $70, $1E, $FFFE
+Boss_ShellshogunTimedStageAdvancePoseCommands:  dc.w    $F030, $1E, $70, $1E, $FFFE  ; was: word_3A2F0
                                         ; DATA XREF: Boss_ShellshogunDecisionState+CC   o
-word_3A2FA:     dc.w    $EF11, $5A, $E830, $87, $E, $87, $9080, $96, $12, $96, $9080, $87, $FFFE
+Boss_ShellshogunSlamPoseCommands:   dc.w    $EF11, $5A, $E830, $87, $E, $87, $9080, $96, $12, $96, $9080, $87, $FFFE  ; was: word_3A2FA
                                         ; DATA XREF: Boss_ShellshogunUpdateSlamAnimation   o
-word_3A314:     dc.w    $17, $2D, $10, $3C, $1B, $4B, $21, $5A, $FFFF
+Boss_ShellshogunSharedPoseCommands: dc.w    $17, $2D, $10, $3C, $1B, $4B, $21, $5A, $FFFF  ; was: word_3A314
                                         ; DATA XREF: Boss_ShellshogunUpdateSharedPose   o
-word_3A326:     dc.w    $FE14, $69, 6, $69, $FE12, $78, 6, $78, $FFFF
+Boss_ShellshogunJumpWindupPoseCommands: dc.w    $FE14, $69, 6, $69, $FE12, $78, 6, $78, $FFFF  ; was: word_3A326
                                         ; DATA XREF: Boss_ShellshogunJumpAttackWindupState:Boss_ShellshogunRenderJumpWindup   o
-word_3A338:     dc.w    $FE28, $F, $FFFE                ; DATA XREF: Boss_ShellshogunJumpAttackAirState:Boss_ShellshogunRenderJumpAir   o
-word_3A33E:     dc.w    $FC18, $A6, $FD18, $A6, $13, $A6, $FF0E, $B5, $A, $B5, $D840, $A6, $FFFE
+Boss_ShellshogunJumpAirPoseCommands:            dc.w    $FE28, $F, $FFFE  ; DATA XREF: Boss_ShellshogunJumpAttackAirState:Boss_ShellshogunRenderJumpAir   o  ; was: word_3A338
+Boss_ShellshogunDirectionalAttackPoseCommands:  dc.w    $FC18, $A6, $FD18, $A6, $13, $A6, $FF0E, $B5, $A, $B5, $D840, $A6, $FFFE  ; was: word_3A33E
                                         ; DATA XREF: Boss_ShellshogunDirectionalAttackWindupState:Boss_ShellshogunUpdateDirectionalAttackWindup   o
                                         ; Boss_ShellshogunDirectionalAttackMotionState:Boss_ShellshogunRenderDirectionalAttack   o
-word_3A358:     dc.w    $FC18, $E2, $FD18, $E2, $FE0E, $D3, $FF0E, $C4, $18, $C4, $16, $E2, $FFFE
+Boss_ShellshogunLeapPoseCommands:   dc.w    $FC18, $E2, $FD18, $E2, $FE0E, $D3, $FF0E, $C4, $18, $C4, $16, $E2, $FFFE  ; was: word_3A358
                                         ; DATA XREF: Boss_ShellshogunLeapWindupState+6   o
                                         ; Boss_ShellshogunLeapFlightState:Boss_ShellshogunRenderLeapFlight   o
-word_3A372:     dc.w    $FC0C, $E2, $18, $E2, $FC0C, $F, $FFFE
+Boss_ShellshogunLeapRecoveryPoseCommands:   dc.w    $FC0C, $E2, $18, $E2, $FC0C, $F, $FFFE  ; was: word_3A372
                                         ; DATA XREF: Boss_ShellshogunLeapRecoveryState+28   o
-word_3A380:     dc.w    $C, $C4, $C, $E2, $FFFF
+Boss_ShellshogunDefeatLaunchPoseCommands:   dc.w    $C, $C4, $C, $E2, $FFFF  ; was: word_3A380
                                         ; DATA XREF: Boss_ShellshogunDefeatLaunchState+AA   o
-word_3A38A:     dc.w    $CCE8, $20E8, $2013, $FE2, $A870, $3060, $78B8, $4CC0, $E010, $F020, $1400, $F0A0, $7844, $6080, $BC40, $C0D0
-                                        ; DATA XREF: Boss_ShellshogunAnimUpdate+46   o
+Boss_ShellshogunPoseTargets:    dc.w    $CCE8, $20E8, $2013, $FE2, $A870, $3060, $78B8, $4CC0, $E010, $F020, $1400, $F0A0, $7844, $6080, $BC40, $C0D0  ; was: word_3A38A
+                                        ; DATA XREF: Boss_ShellshogunUpdatePose+46   o
                 dc.w    $F0E0, $2020, $20C0, $B090, $2060, $60E0, $40CC, $E810, $F020, $F870, $F0A8, $7030, $5060, $F030, $D0E0, $20F8
                 dc.w    $2010, $28C0, $B090, $5860, $70E8, $30CE, $E418, $FC20, $2840, $A0B8, $8018, $5090, $9010, $BCD4, $D0, $3030
                 dc.w    $4090, $9C50, $1050, $50C0, $70C4, $D8C0, $C020, $848, $B4B8, $C040, $6078, $B84C, $BCE8, $5020, $3000, $44C0

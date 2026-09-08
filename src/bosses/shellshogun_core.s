@@ -260,10 +260,10 @@ Boss_ShellshogunSetNegativeDefeatVelocity:              ; CODE XREF: Boss_Shells
                 move.w  #$FFFD,$18(a5)
 Boss_ShellshogunRenderDefeatLaunch:                     ; CODE XREF: Boss_ShellshogunDefeatLaunchState+56   j  ; was: loc_3986A
                                         ; Boss_ShellshogunDefeatLaunchState+5E   j
-                bsr.w   Boss_ShellshogunFlashOnHit
-                lea     word_3A380(pc),a1
+                bsr.w   Boss_ShellshogunSpawnDefeatDebris
+                lea     Boss_ShellshogunDefeatLaunchPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bra.w   Boss_ShellshogunUpdatePhysicsAndRender
 ; End of function Boss_ShellshogunDefeatLaunchState
 ; Advances the palette phase and starts the post-boss player effect
@@ -354,9 +354,9 @@ Boss_ShellshogunBeginPoseGateState:                     ; CODE XREF: Boss_Shells
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunUpdateDecisionPose:                     ; CODE XREF: Boss_ShellshogunDecisionState+12   j  ; was: loc_39972
-                lea     word_3A2E6(pc),a1
+                lea     Boss_ShellshogunDecisionPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunUpdatePhysicsAndRender
                 move.w  #$148,$494(a5)
                 rts
@@ -379,9 +379,9 @@ Boss_ShellshogunUpdateTimedStageAdvance:                ; CODE XREF: Boss_Shells
                 addi.w  #3,(word_FF8234).w
                 move.w  #4,(word_FFA010).w
                 move.w  #4,(word_FFA014).w
-                lea     word_3A2F0(pc),a1
+                lea     Boss_ShellshogunTimedStageAdvancePoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunUpdatePhysicsAndRender
                 move.w  #$148,$494(a5)
                 move.l  #word_EB888,$68(a5)
@@ -488,9 +488,9 @@ Boss_ShellshogunStoreSlamRotation:                      ; CODE XREF: Boss_Shells
 ; Advances and renders the slam pose stream
 Boss_ShellshogunUpdateSlamAnimation:                    ; CODE XREF: Boss_ShellshogunSlamAttackInit+2A   j  ; was: sub_39B04
                                         ; Boss_ShellshogunSlamAttackInit+52   j
-                lea     word_3A2FA(pc),a1
+                lea     Boss_ShellshogunSlamPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunRenderSprites
                 move.l  #word_EB888,$68(a5)
                 rts
@@ -514,9 +514,9 @@ Boss_ShellshogunDirectionalAttackWindupState:           ; DATA XREF: ROM:0003953
                 subi.w  #$20,$29C(a5)                   ; ' '
                 andi.w  #$1E0,$29C(a5)
 Boss_ShellshogunUpdateDirectionalAttackWindup:          ; CODE XREF: Boss_ShellshogunDirectionalAttackWindupState+4   j  ; was: loc_39B58
-                lea     word_3A33E(pc),a1
+                lea     Boss_ShellshogunDirectionalAttackPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunRenderSprites
                 move.l  #word_EB876,$68(a5)
                 rts
@@ -566,9 +566,9 @@ Boss_ShellshogunApplyNegativeDirectionalVelocity:       ; CODE XREF: Boss_Shells
                 bmi.s   Boss_ShellshogunStopDirectionalAttackVelocity
 Boss_ShellshogunRenderDirectionalAttack:                ; CODE XREF: Boss_ShellshogunDirectionalAttackMotionState+6E   j  ; was: loc_39BFA
                                         ; Boss_ShellshogunDirectionalAttackMotionState+78   j
-                lea     word_3A33E(pc),a1
+                lea     Boss_ShellshogunDirectionalAttackPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunRenderSprites
                 move.l  #word_EB888,$68(a5)
                 bra.w   Boss_ShellshogunUpdateSpriteFlip
@@ -602,9 +602,9 @@ Boss_ShellshogunSetJumpWindupPartFrame:                 ; CODE XREF: Boss_Shells
                 bmi.s   Boss_ShellshogunRenderJumpWindup
                 move.w  #$CC80,$23E(a5)
 Boss_ShellshogunRenderJumpWindup:                       ; CODE XREF: Boss_ShellshogunJumpAttackWindupState+2E   j  ; was: loc_39C82
-                lea     word_3A326(pc),a1
+                lea     Boss_ShellshogunJumpWindupPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunRenderSprites
                 move.l  #word_EB888,$68(a5)
                 rts
@@ -630,9 +630,9 @@ Boss_ShellshogunUpdateJumpAirRotation:                  ; CODE XREF: Boss_Shells
                 move.b  #$D1,d0
                 jsr     (Sound_PlaySFX).l
 Boss_ShellshogunRenderJumpAir:                          ; CODE XREF: Boss_ShellshogunJumpAttackAirState+30   j  ; was: loc_39CDE
-                lea     word_3A338(pc),a1
+                lea     Boss_ShellshogunJumpAirPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bra.w   Boss_ShellshogunRenderSprites
 ; End of function Boss_ShellshogunJumpAttackWindupState
 ; Initializes the leap windup selected by the decision state
@@ -646,9 +646,9 @@ Boss_ShellshogunInitLeapAttack:                         ; CODE XREF: Boss_Shells
 Boss_ShellshogunLeapWindupState:                        ; DATA XREF: ROM:00039544   o  ; was: sub_39D02
                 tst.w   $11E(a5)
                 bmi.s   Boss_ShellshogunBeginLeapFlight
-                lea     word_3A358(pc),a1
+                lea     Boss_ShellshogunLeapPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunUpdatePhysicsAndRender
                 move.l  #word_EB876,$68(a5)
                 rts
@@ -692,9 +692,9 @@ Boss_ShellshogunApplyLeapFlightGravity:                 ; CODE XREF: Boss_Shells
                 cmpi.w  #$148,$8B4(a5)
                 bpl.s   Boss_ShellshogunCompleteLeapLanding
 Boss_ShellshogunRenderLeapFlight:                       ; CODE XREF: Boss_ShellshogunLeapFlightState+56   j  ; was: loc_39DA4
-                lea     word_3A358(pc),a1
+                lea     Boss_ShellshogunLeapPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bra.w   Boss_ShellshogunUpdatePhysicsAndRender
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunCompleteLeapLanding:                    ; CODE XREF: Boss_ShellshogunLeapFlightState+5E   j  ; was: loc_39DB2
@@ -727,17 +727,17 @@ Boss_ShellshogunRenderLeapRecovery:                     ; CODE XREF: Boss_Shells
                                         ; Boss_ShellshogunLeapRecoveryState+14   j
                 tst.w   $58(a5)
                 bmi.w   Boss_ShellshogunReturnToDecisionState
-                lea     word_3A372(pc),a1
+                lea     Boss_ShellshogunLeapRecoveryPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 bra.w   Boss_ShellshogunUpdatePhysicsAndRender
 ; End of function Boss_ShellshogunLeapRecoveryState
 ; Advances the shared entrance/pose-gate stream and linked-part fields
 Boss_ShellshogunUpdateSharedPose:                       ; CODE XREF: Boss_ShellshogunSetupPhase+150   j  ; was: sub_39E20
                                         ; sub_396D2   p
-                lea     word_3A314(pc),a1
+                lea     Boss_ShellshogunSharedPoseCommands(pc),a1
                 nop
-                bsr.w   Boss_ShellshogunAnimUpdate
+                bsr.w   Boss_ShellshogunUpdatePose
                 move.w  #$148,$494(a5)
                 move.w  #$CAA0,$48(a5)
                 move.w  #$CAA0,$4A(a5)

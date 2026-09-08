@@ -189,7 +189,7 @@ Boss_ShellshogunPartLinks:  dc.w    4, 4, 4             ; DATA XREF: Boss_Shells
                 dc.w    $4E9, $5A8, $5A3
                 dc.w    4, $6CD, $6CC
                 dc.w    $78C, $78D, $84D
-Boss_ShellshogunNeutralPose:    dc.w    $40, $6070, $40E0  ; DATA XREF: Boss_ShellshogunCalculateAnimationDeltas   o  ; was: word_34C54
+Boss_ShellshogunNeutralPose:    dc.w    $40, $6070, $40E0  ; DATA XREF: Boss_ShellshogunCalculatePoseDeltas   o  ; was: word_34C54
                 dc.w    $8000, $4000, $7080
                 dc.w    $E080, $A000
 ; Xi-Tiger directional frames and metasprite definition

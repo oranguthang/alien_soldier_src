@@ -82,7 +82,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_CaterpillarPart3
                 dc.l    Boss_CaterpillarPart4
                 dc.l    Enemy_HomingProjectileMain
-                dc.l    word_3A2E6
+                dc.l    Boss_ShellshogunDecisionPoseCommands
                 dc.l    Effect_TransitionObjectDispatcher
                 dc.l    Boss_FlyingNeoMain
                 dc.l    Projectile_AntroidUpdate

@@ -679,6 +679,22 @@ former `SetTileData` routine is now bounded to the behavior visible in its
 body: angle-based frame and flip selection, anchor copying, and optional
 sine/cosine positioning of two trailing parts.
 
+The interleaved Madam Barbar palette-cycle audit reduced the count to 8,738.
+Its two control-flow labels now describe the signed fade-step direction and
+the common four-color application path. The 56-byte routine remains a small
+standalone module because its ROM ownership changes from Shellshogun to Madam
+Barbar and back again immediately afterward.
+
+The Shellshogun pose-system audit reduced the count to 8,721 and left the
+three Shellshogun modules with no live address-derived definitions. The former
+`FlashOnHit` name was rejected: the defeat-launch caller uses it to create a
+type-`$A4` object with inverted boss velocity and a randomized nearby position.
+The interpreter, its stop/loop/interpolation paths, ten state-specific command
+streams, and shared pose-target data now carry names tied to their static
+consumers. The decision stream's additional entity-dispatch-table reference
+is retained as an explicit unresolved cross-reference rather than explained
+away.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
