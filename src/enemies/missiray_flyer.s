@@ -1,3 +1,4 @@
+; Collision and animation helpers for the flyer preceding Missiray
 Enemy_FlyerCollision:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_33664
                 move.w  4(a5),d0
                 lea     off_33670(pc,d0.w),a0

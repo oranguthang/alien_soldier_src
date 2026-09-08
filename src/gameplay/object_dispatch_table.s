@@ -234,9 +234,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Stage15_FragmentEmitterMain
                 dc.l    Projectile_FragmentClusterMain
                 dc.l    Boss_ShieldViperMovement2
-                dc.l    Enemy_TrackerWinMain
-                dc.l    Enemy_TrackerWinMovement
-                dc.l    Enemy_TrackerMain
+                dc.l    Stage21_AsteroidFieldControllerMain
+                dc.l    Stage21_AsteroidMain
+                dc.l    Enemy_FormationWaveMain
                 dc.l    Entity_DispatchStoredSubtype
                 dc.l    Effect_ShipDestructionDebris
                 dc.l    Entity_VictorSubtypeDispatcher
@@ -277,7 +277,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_Stage11FishController
                 dc.l    Boss_MedusaDamageCheck
                 dc.l    Stage11_FishWaveController
-                dc.l    Projectile_TrackerSt21Bullet
+                dc.l    Projectile_Stage21AsteroidDebrisMain
                 dc.l    Cutscene_XiTigerTrainEntranceController
                 dc.l    Cutscene_XiTigerBossEntranceController
                 dc.l    Effect_FloatingIconDispatcher

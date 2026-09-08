@@ -31,7 +31,7 @@ listing by `make verify-layout`.
 | `0x02DF7E-0x02F1A1` | stage 10/12 enemies, Stage 11 fish, and Xi-Tiger entrance sequences | 5 | static/hypothesis |
 | `0x02F1A2-0x030D8F` | orphaned radial-particle test, stage environment, yacht, stage 18, and stage 15 fragment hazards | 6 | static/runtime |
 | `0x030D90-0x0323E1` | stage 11 rising hazards, Gusthead linked chain, Destroyer Proto, and shared hit-reactive projectiles | 6 | static/runtime |
-| `0x0323E2-0x033C49` | Victor, Wolf Garopa, Tracker, and Missiray flyer | 5 | static/hypothesis |
+| `0x0323E2-0x033C49` | Victor, Wolf Garopa rewards, formation-wave enemies, Stage 21 asteroids, and Missiray flyer | 6 | static/hypothesis |
 | `0x033C4A-0x035613` | stage 24 visuals, boss projectiles, metasprites, and sprite tables | 4 | hypothesis |
 | `0x035614-0x0374C5` | Jetsripper and Shiper state, movement, and projectiles | 6 | hypothesis |
 | `0x0374C6-0x0394D7` | Antroid and Terobuster systems | 7 | hypothesis |
@@ -62,7 +62,7 @@ listing by `make verify-layout`.
 | `0x189D38-0x18E5D1` | planet, credits, and menu assets | 2 | static |
 | `0x18E5D2-0x1A1025` | stage object art and sprite mappings | 4 | hypothesis |
 | `0x1A1026-0x1CE4F7` | stage phase and Seven Force cutscene assets | 7 | static |
-| `0x1CE4F8-0x1FFFFF` | late-stage assets, ROM padding, and final byte | 3 | static |
+| `0x1CE4F8-0x1FFFFF` | late-stage mappings, Stage 3 phase 3 tiles, ROM padding, and final byte | 4 | static |
 
 The ranges are intentionally address ordered. A broad owner is not proof that
 every routine in that interval belongs to the named subsystem. As analysis

@@ -245,7 +245,7 @@ stru_11C82:     dc.w    7                               ; field_0
                 dc.l    tiles_1C1A94                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1CECB4                    ; field_2
+                dc.l    Stage3Phase3Tiles               ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_1C2934                     ; field_2

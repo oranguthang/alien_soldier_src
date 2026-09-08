@@ -422,6 +422,18 @@ from a fixed arena point; it is not an idle or attack-state implementation for
 the boss itself. The coherent 68-line helper remains a documented compact
 module as `src/bosses/wolf_garopa_reward_shower.s`.
 
+The formation-wave/Stage 21 pass reduced the count to 9,439. The former
+`tracker.s` mixed a compact type-`$3B4` oscillating formation family with the
+unrelated asteroid-field subsystem. The generated `Tracker` ownership has no
+static support: the family is created by `Stage2_FifthObjectSpawnList` and is
+named only for its visible cloning and motion behavior. Type `$3AC` is
+installed directly by `Stage_TransitionGraphics`, creates type-`$3B0` large,
+small, and ambient rocks, and emits type-`$458` debris. The two families now
+live in the ROM-contiguous `formation_wave.s` and `stage_21_asteroids.s`. The
+accompanying data was also separated into its asteroid/Destroyer Proto
+mappings and a compressed tile asset whose actual consumer is the Stage 3
+phase 3 object set.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -231,7 +231,7 @@ Projectile_InitSharedHitReactiveShot:                   ; CODE XREF: Boss_Victor
 ; ---------------------------------------------------------------------------
 Projectile_DestroyerProtoInitSpreadShot:                ; CODE XREF: Boss_DestroyerProtoSpawnSpreadProjectile+5E   j  ; was: loc_31B3C
                 move.w  #$CC00,2(a0)
-                move.l  #word_1CEC90,8(a0)
+                move.l  #Shared_AsteroidAndDestroyerProtoMapping,8(a0)
                 move.w  #$400,$E(a0)
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$F010F010,$2C(a0)

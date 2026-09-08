@@ -23,7 +23,7 @@ word_EB3A4:     dc.w    $680C, $D00, $F0                ; DATA XREF: ROM:000EB3C
 word_EB3B6:     dc.w    $6814, $D00, $F0                ; DATA XREF: ROM:000EB3D0   o
                 dc.w    $6000, $500, $F0F0
                 dc.w    $E800, $500, $F000
-off_EB3C8:      dc.w    word_EB392-*                    ; DATA XREF: Enemy_TrackerInitProjectile+38   o
+off_EB3C8:      dc.w    word_EB392-*                    ; DATA XREF: Enemy_FormationWaveInitMember+38   o
                                         ; ROM:000EB3D4   o
                 dc.w    3
                 dc.w    word_EB3A4-*

@@ -265,7 +265,8 @@
     { "file": "src/bosses/victor_core_and_ring.s", "subsystem": "bosses", "start": "0x0323E2", "end": "0x0329A5" },
     { "file": "src/bosses/victor_parts_and_projectiles.s", "subsystem": "bosses", "start": "0x0329A6", "end": "0x032DFD" },
     { "file": "src/bosses/wolf_garopa_reward_shower.s", "subsystem": "bosses", "start": "0x032DFE", "end": "0x032EDF" },
-    { "file": "src/enemies/tracker.s", "subsystem": "enemies", "start": "0x032EE0", "end": "0x033663" },
+    { "file": "src/enemies/formation_wave.s", "subsystem": "enemies", "start": "0x032EE0", "end": "0x0330A5" },
+    { "file": "src/stages/stage_21_asteroids.s", "subsystem": "stages", "start": "0x0330A6", "end": "0x033663" },
     { "file": "src/enemies/missiray_flyer.s", "subsystem": "enemies", "start": "0x033664", "end": "0x033C49" },
     { "file": "src/stages/stage_24_visuals.s", "subsystem": "stages", "start": "0x033C4A", "end": "0x033DAF" },
     { "file": "src/projectiles/boss_patterns.s", "subsystem": "projectiles", "start": "0x033DB0", "end": "0x0343CD" },
@@ -423,7 +424,8 @@
     { "file": "src/data/seven_force_cutscene_assets.s", "subsystem": "data", "start": "0x1B6F86", "end": "0x1BE761" },
     { "file": "src/data/stage3_assets.s", "subsystem": "data", "start": "0x1BE762", "end": "0x1CE4F7" },
     { "file": "src/data/stage24_cutscene_assets.s", "subsystem": "data", "start": "0x1CE4F8", "end": "0x1CEC6B" },
-    { "file": "src/data/tracker_and_destroyer_proto_assets.s", "subsystem": "data", "start": "0x1CEC6C", "end": "0x1CF761" },
+    { "file": "src/data/stage_21_asteroid_and_destroyer_proto_mappings.s", "subsystem": "data", "start": "0x1CEC6C", "end": "0x1CECB3" },
+    { "file": "src/data/stage_3_phase_3_tiles.s", "subsystem": "data", "start": "0x1CECB4", "end": "0x1CF761" },
     { "file": "src/data/stage24_assets_and_rom_padding.s", "subsystem": "data", "start": "0x1CF762", "end": "0x1FFFFF" }
   ]
 }

@@ -8,12 +8,15 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT / "config" / "name_audit.json"
+SOURCE_POLICY = ROOT / "config" / "source_policy.json"
 EVIDENCE_LEVELS = {"unknown", "hypothesis", "static", "runtime", "confirmed"}
 
 
 class NameAuditTests(unittest.TestCase):
     def test_records_are_unique_and_traceable(self) -> None:
         audit = json.loads(AUDIT.read_text(encoding="utf-8"))
+        policy = json.loads(SOURCE_POLICY.read_text(encoding="utf-8"))
+        legacy_name_pattern = policy["provenance"]["legacy_name_pattern"]
         records = audit["records"]
         addresses = [record["address"] for record in records]
         names = [record["current_name"] for record in records]
@@ -22,10 +25,7 @@ class NameAuditTests(unittest.TestCase):
         self.assertEqual(len(names), len(set(names)))
         for record in records:
             self.assertRegex(record["address"], r"^0x[0-9A-F]{6}$")
-            self.assertRegex(
-                record["legacy_name"],
-                r"^(?:sub|loc|locret|nullsub|byte|word|dword|off|unk|unknown|stru)_[0-9A-F]+$",
-            )
+            self.assertRegex(record["legacy_name"], legacy_name_pattern)
             self.assertIn(record["evidence"], EVIDENCE_LEVELS)
             self.assertGreater(len(record["basis"]), 0)
 
