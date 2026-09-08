@@ -3,15 +3,15 @@ word_EB338:     dc.w    $6010, $F00, $E0                ; DATA XREF: Enemy_Gusth
                 dc.w    $6810, $F00, 0
                 dc.w    $E800, $F00, $E000
 word_EB350:     dc.w    $E820, $A00, $F4F4              ; DATA XREF: Enemy_GustheadSmallEyeInit+C   o
-word_EB356:     dc.w    $6816, $700, $F4EA              ; DATA XREF: Enemy_Stage11BossPartInit+C   o
+word_EB356:     dc.w    $6816, $700, $F4EA              ; DATA XREF: Stage11_RisingHazardLauncherInit+C   o
                 dc.w    $6806, $F00, $F4FA
                 dc.w    $6802, $C00, $ECF4
                 dc.w    $E800, $400, $E402
-word_EB36E:     dc.w    $4009, $A00, $E8                ; DATA XREF: Boss_JetsripperDebrisInit+C   o
+word_EB36E:     dc.w    $4009, $A00, $E8                ; DATA XREF: Stage15_FallingRockInit+C   o
                 dc.w    $4809, $A00, 0
                 dc.w    $4000, $A00, $E8E8
                 dc.w    $C800, $A00, $E800
-word_EB386:     dc.w    $4812, $E00, $F600              ; DATA XREF: Boss_JetsripperWeaponInit+C   o
+word_EB386:     dc.w    $4812, $E00, $F600              ; DATA XREF: Stage15_FragmentEmitterInit+C   o
                 dc.w    $C81E, $F00, $F0E0
 word_EB392:     dc.w    $6804, $D00, $F0                ; DATA XREF: ROM:off_EB3C8   o
                 dc.w    $6000, $500, $F0F0

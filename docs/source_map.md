@@ -29,8 +29,8 @@ listing by `make verify-layout`.
 | `0x02CB86-0x02D27B` | projectile-attack and ship enemies, shared helpers, and phase/debris states | 3 | static/hypothesis |
 | `0x02D27C-0x02DF7D` | circling and Stage 9 flies, Viblack shots, and bird enemies | 3 | static/hypothesis |
 | `0x02DF7E-0x02F1A1` | stage 10/12 enemies, Stage 11 fish, and Xi-Tiger entrance sequences | 5 | static/hypothesis |
-| `0x02F1A2-0x030B39` | orphaned radial-particle test, Antroid, ship, stage 18, and Jetsripper weapons | 6 | static/hypothesis |
-| `0x030B3A-0x032343` | stage 11 parts, Gusthead, and Destroyer Proto | 4 | hypothesis |
+| `0x02F1A2-0x030D8F` | orphaned radial-particle test, stage environment, yacht, stage 18, and stage 15 fragment hazards | 6 | static/runtime |
+| `0x030D90-0x032343` | stage 11 rising hazards, Gusthead, and Destroyer Proto | 4 | static/runtime |
 | `0x032344-0x033C49` | stage 14/Jetsripper, Wolf Garopa, Tracker, and Missiray flyer | 4 | hypothesis |
 | `0x033C4A-0x035613` | stage 24 visuals, boss projectiles, metasprites, and sprite tables | 4 | hypothesis |
 | `0x035614-0x0374C5` | Jetsripper and Shiper state, movement, and projectiles | 6 | hypothesis |

@@ -46,7 +46,7 @@ off_3150E:      dc.w    Boss_DestroyerProtoIntroInit-*  ; DATA XREF: Boss_Destro
 Boss_DestroyerProtoGfxUpdate:                           ; CODE XREF: Boss_DestroyerProtoMain+6   p  ; was: sub_31540
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  (dword_FF9400).w,d0
                 addq.w  #2,d0
                 cmpi.w  #$14,d0
@@ -71,7 +71,7 @@ Boss_DestroyerProtoIntroInit:                           ; DATA XREF: ROM:off_315
                 move.w  #$200,$10(a5)
                 bsr.w   Boss_DestroyerProtoBounds
                 tst.w   (word_FFF720).w
-                bmi.w   locret_30BB8
+                bmi.w   Entity_UpdateReturn
                 move.b  #4,(byte_FFA95A).w
                 move.b  #$50,$21(a5)                    ; 'P'
                 move.b  #$98,$23(a5)
@@ -135,7 +135,7 @@ Boss_DestroyerProtoIntroMove:                           ; DATA XREF: ROM:0003151
                 subi.w  #2,$18(a5)
                 bsr.w   Boss_DestroyerProtoBounds
                 cmpi.w  #$160,$10(a5)
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 move.w  #3,d0
                 jsr     (UI_CheckVictoryCondition).l
                 addq.w  #2,4(a5)
@@ -256,7 +256,7 @@ Boss_DestroyerProtoState3:                              ; DATA XREF: ROM:0003151
                 bsr.w   Boss_DestroyerProtoVelocity
                 bsr.w   Boss_DestroyerProtoBounds
                 tst.w   (word_FF80C2).w
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 clr.b   (byte_FF80EC).w
                 andi.b  #$EF,$23(a5)
                 move.w  #$20,$4A(a5)                    ; ' '
@@ -271,7 +271,7 @@ Boss_DestroyerProtoAttack1:                             ; DATA XREF: ROM:0003151
                 bsr.w   Boss_DestroyerProtoVelocity
                 bsr.w   Boss_DestroyerProtoBounds
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
 loc_3184C:                                              ; CODE XREF: Boss_DestroyerProtoAttack4Retreat+24   j
                                         ; Boss_DestroyerProtoAttack5Retreat+24   j
                 jsr     (RandomNumber).l
@@ -312,7 +312,7 @@ Boss_DestroyerProtoAttack2:                             ; DATA XREF: ROM:0003151
                 add.l   d0,$1C(a5)
                 bsr.w   Boss_DestroyerProtoBounds
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$1C,$4A(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -326,7 +326,7 @@ Boss_DestroyerProtoAttack3:                             ; DATA XREF: ROM:0003151
                 bsr.w   Boss_DestroyerProtoVelocity
                 bsr.w   Boss_DestroyerProtoBounds
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 jsr     (RandomNumber).l
@@ -366,7 +366,7 @@ loc_3197E:                                              ; CODE XREF: Boss_Destro
 Boss_DestroyerProtoAttack4Wait:                         ; DATA XREF: ROM:0003151A   o  ; was: sub_3198C
                 bsr.w   Boss_DestroyerProtoTurretOpen
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerProtoAttack4Wait
@@ -377,7 +377,7 @@ Boss_DestroyerProtoAttack4Rise:                         ; DATA XREF: ROM:0003151
                 bsr.w   Boss_DestroyerProtoBounds
                 addq.w  #1,$4A(a5)
                 cmpi.w  #$E,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 bsr.w   Boss_JetsripperSpawnProjectiles
                 move.b  #$EA,d0
                 jsr     (Sound_PlaySFX).l
@@ -390,7 +390,7 @@ Boss_DestroyerProtoAttack4Descend:                      ; DATA XREF: ROM:0003151
                 bsr.w   Boss_DestroyerProtoApplyPaletteFade
                 bsr.w   Boss_DestroyerProtoBounds
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$20,$4A(a5)                    ; ' '
                 addq.w  #2,4(a5)
                 rts
@@ -398,7 +398,7 @@ Boss_DestroyerProtoAttack4Descend:                      ; DATA XREF: ROM:0003151
 ; Delays before next attack phase
 Boss_DestroyerProtoAttack4Delay:                        ; DATA XREF: ROM:00031520   o  ; was: sub_319EC
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$1C,$4A(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -412,7 +412,7 @@ Boss_DestroyerProtoAttack4Retreat:                      ; DATA XREF: ROM:0003152
                 bsr.w   Boss_DestroyerProtoVelocity
                 bsr.w   Boss_DestroyerProtoBounds
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 bsr.w   Boss_DestroyerSyncPartAngles
                 bra.w   loc_3184C
 ; End of function Boss_DestroyerProtoAttack4Retreat
@@ -423,7 +423,7 @@ Boss_DestroyerProtoAttack4:                             ; DATA XREF: ROM:0003152
                 move.w  #$20,d1                         ; ' '
                 bsr.w   Boss_DestroyerProtoVelocity
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerProtoAttack4
@@ -436,7 +436,7 @@ Boss_DestroyerProtoShootPattern1:                       ; DATA XREF: ROM:0003152
                 bsr.w   Boss_DestroyerProtoApplyPaletteFade
                 addq.w  #1,$4A(a5)
                 cmpi.w  #$E,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$80,$4A(a5)
                 move.b  #$56,d0                         ; 'V'
                 jsr     (Sound_PlaySFX).l
@@ -450,7 +450,7 @@ Boss_DestroyerProtoShootPattern2:                       ; DATA XREF: ROM:0003152
                 bsr.w   Boss_DestroyerProtoVelocity
                 bsr.w   Boss_DestroyerProtoShootPattern3
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$E,$4A(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -459,9 +459,9 @@ Boss_DestroyerProtoShootPattern2:                       ; DATA XREF: ROM:0003152
 Boss_DestroyerProtoShootPattern3:                       ; CODE XREF: Boss_DestroyerProtoShootPattern2+C   p  ; was: sub_31AA2
                 move.w  $4A(a5),d0
                 andi.w  #1,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 lea     word_31FF8(pc),a1
                 nop
                 lea     word_32038(pc),a2
@@ -513,7 +513,7 @@ Boss_DestroyerProtoAttack5Rise:                         ; DATA XREF: ROM:0003152
                 move.w  #$8000,d7
                 bsr.w   Boss_DestroyerProtoApplyPaletteFade
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$1C,$4A(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -527,7 +527,7 @@ Boss_DestroyerProtoAttack5Retreat:                      ; DATA XREF: ROM:0003152
                 bsr.w   Boss_DestroyerProtoVelocity
                 bsr.w   Boss_DestroyerProtoBounds
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 bsr.w   Boss_DestroyerSyncPartAngles
                 bra.w   loc_3184C
 ; End of function Boss_DestroyerProtoAttack5Retreat
@@ -552,7 +552,7 @@ Boss_DestroyerProtoAttack6Aim:                          ; CODE XREF: Boss_Destro
 Boss_DestroyerProtoAttack6Wait:                         ; DATA XREF: ROM:0003152E   o  ; was: sub_31BFE
                 bsr.w   Boss_DestroyerProtoTurretOpen
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerProtoAttack6Wait
@@ -562,7 +562,7 @@ Boss_DestroyerProtoAttack6Prepare:                      ; DATA XREF: ROM:0003153
                 bsr.w   Boss_DestroyerProtoApplyPaletteFade
                 addq.w  #1,$4A(a5)
                 cmpi.w  #$E,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.l  #$FFFFC8C0,$58(a5)
                 move.l  #$FFFFCEC0,$5C(a5)
                 move.w  #$10,$4A(a5)
@@ -572,7 +572,7 @@ Boss_DestroyerProtoAttack6Prepare:                      ; DATA XREF: ROM:0003153
 ; Delays before multi-shot attack execution
 Boss_DestroyerProtoAttack6Delay:                        ; DATA XREF: ROM:00031532   o  ; was: sub_31C42
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$41,$4A(a5)                    ; 'A'
                 addq.w  #2,4(a5)
                 rts
@@ -582,7 +582,7 @@ Boss_DestroyerProtoAttack6Execute:                      ; DATA XREF: ROM:0003153
                 bsr.w   Boss_DestroyerProtoUpdateTurretStates
                 bsr.w   Boss_DestroyerProtoSpawnDualShots
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$E,$4A(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -591,11 +591,11 @@ Boss_DestroyerProtoAttack6Execute:                      ; DATA XREF: ROM:0003153
 Boss_DestroyerProtoSpawnDualShots:                      ; CODE XREF: Boss_DestroyerProtoAttack6Execute+4   p  ; was: sub_31C72
                 move.w  $4A(a5),d0
                 cmpi.w  #$40,d0                         ; '@'
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 cmpi.w  #$C,d0
-                bcs.w   locret_30BB8
+                bcs.w   Entity_UpdateReturn
                 andi.w  #3,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 lea     (word_FFC740).w,a4
                 movea.l $58(a5),a0
                 addi.l  #$60,$58(a5)                    ; '`'
@@ -650,7 +650,7 @@ Boss_DestroyerProtoAttack6FadeOut:                      ; DATA XREF: ROM:0003153
                 move.w  #$C000,d7
                 bsr.w   Boss_DestroyerProtoApplyPaletteFade
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$20,$4A(a5)                    ; ' '
                 addq.w  #2,4(a5)
                 rts
@@ -658,7 +658,7 @@ Boss_DestroyerProtoAttack6FadeOut:                      ; DATA XREF: ROM:0003153
 ; Waits after palette fade before retreat
 Boss_DestroyerProtoAttack6Wait2:                        ; DATA XREF: ROM:00031538   o  ; was: sub_31D5E
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$1C,$4A(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -672,7 +672,7 @@ Boss_DestroyerProtoAttack6Retreat:                      ; DATA XREF: ROM:0003153
                 bsr.w   Boss_DestroyerProtoVelocity
                 bsr.w   Boss_DestroyerProtoBounds
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 bsr.w   Boss_DestroyerSyncPartAngles
                 bra.w   loc_3184C
 ; End of function Boss_DestroyerProtoAttack6Retreat
@@ -709,7 +709,7 @@ Boss_DestroyerProtoSpawnProjectile2:                    ; CODE XREF: Boss_Destro
                 move.w  #4,(word_FFA014).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)
                 move.b  (dword_FFFF08).w,d0
@@ -756,7 +756,7 @@ Boss_DestroyerProtoSpawnProjectile3:                    ; DATA XREF: ROM:0003153
                 jsr     Boss_DestroyerProtoRotateSprites(pc)  ; (pc)
                 nop
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 movea.l #word_31EC8,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 move.w  #$1000,2(a5)
@@ -771,9 +771,9 @@ Boss_DestroyerProtoRotateSprites:                       ; CODE XREF: Boss_Destro
                                         ; DATA XREF: Boss_DestroyerProtoSpawnProjectile3+A   o
                 move.w  $4A(a5),d0
                 cmpi.w  #$40,d0                         ; '@'
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 andi.w  #1,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 lea     (word_FFE480).w,a0
                 lea     word_31F28(pc),a1
                 nop
@@ -819,7 +819,7 @@ Boss_DestroyerProtoApplyPaletteFade:                    ; CODE XREF: Boss_Destro
 Boss_DestroyerProtoPaletteFade:                         ; CODE XREF: Boss_DestroyerProtoSpawnProjectile3+4   p  ; was: sub_31F5E
                                         ; DATA XREF: Boss_DestroyerProtoSpawnProjectile3+4   o
                 cmpi.w  #$E,$4A(a5)
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 move.w  #$E000,d7
                 move.w  #$F,d0
                 sub.w   $4A(a5),d0

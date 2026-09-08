@@ -19,8 +19,8 @@ OrphanedCrossStageEntitySelectState:                    ; CODE XREF: OrphanedCro
 OrphanedCrossStageEntityStateTable: dc.w    Stage18_SegmentedWormUpdateFollower+2-OrphanedTerrainTileAnimationInit
                                         ; DATA XREF: OrphanedCrossStageEntityDispatch+14   r
                                         ; debug this link
-                dc.w    Enemy_SpawnFromTable-OrphanedTerrainTileAnimationInit
-                dc.w    Enemy_SpawnFromTable_CheckSpawn-OrphanedTerrainTileAnimationInit
+                dc.w    Stage15_FragmentEmitterWaveSpawn-OrphanedTerrainTileAnimationInit
+                dc.w    Stage15_FragmentEmitterWaveCheckThreshold-OrphanedTerrainTileAnimationInit
 
 ; Orphaned companion initializer for the terrain-tile animation descriptor
 OrphanedTerrainTileAnimationInit:                       ; DATA XREF: OrphanedCrossStageEntityDispatch+18   o  ; was: sub_2FC4C

@@ -187,7 +187,7 @@ Stage18_SegmentedWormSpawnSegments:                     ; DATA XREF: ROM:Stage18
                 move.w  $10(a5),d0
                 addi.w  #$20,d0                         ; ' '
                 cmp.w   (dword_FFA410).w,d0
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 move.w  #1,$5A(a5)
 Stage18_SegmentedWormCreateChain:                       ; CODE XREF: Stage18_SegmentedWormSpawnSegments+16   j
                 lea     Stage18_SegmentedWormInitialFrameTable(pc),a4
@@ -199,7 +199,7 @@ Stage18_SegmentedWormCreateChain:                       ; CODE XREF: Stage18_Seg
                 move.w  #$B,d7
 Stage18_SegmentedWormCreateNextSegment:                 ; CODE XREF: Stage18_SegmentedWormSpawnSegments+8E   j
                 jsr     (Projectile_FindFreeOrRecycleSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$1000,2(a0)
                 move.w  #$448,(a0)
                 move.w  #1,$50(a0)
@@ -244,7 +244,7 @@ Stage18_SegmentedWormInitCollision:                     ; CODE XREF: Stage18_Seg
                 move.w  #$28,$26(a5)                    ; '('
                 move.w  #$100,$24(a5)
                 tst.w   (word_FFFF0E).w
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 move.w  #$104,$24(a5)
                 rts
 ; End of function Stage18_SegmentedWormInitCollision
@@ -339,17 +339,17 @@ Stage18_SegmentedWormUpdateHead:                        ; DATA XREF: ROM:0002FF1
                 tst.w   $10(a5)
                 bmi.s   Stage18_SegmentedWormRemoveChain
                 cmpi.w  #$200,$14(a5)
-                bcs.w   locret_30BB8
+                bcs.w   Entity_UpdateReturn
 Stage18_SegmentedWormRemoveChain:                       ; CODE XREF: Stage18_SegmentedWormUpdateHead+40   j
                 move.w  #$1000,2(a5)
                 movea.w $44(a5),a4
                 tst.w   $44(a5)
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 move.w  #$B,d6
 Stage18_SegmentedWormRemoveNextSegment:                 ; CODE XREF: Stage18_SegmentedWormUpdateHead+74   j
                 move.w  #$1000,2(a4)
                 tst.w   $44(a4)
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 movea.w $44(a4),a4
                 dbf     d6,Stage18_SegmentedWormRemoveNextSegment
                 rts
@@ -381,9 +381,9 @@ Stage18_SegmentedWormLaunchLeft:                        ; CODE XREF: Stage18_Seg
 ; Emits one randomized particle from a worm segment
 Stage18_SegmentedWormEmitParticle:                      ; CODE XREF: Stage18_SegmentedWormUpdateHead   p  ; was: sub_30230
                 tst.w   $52(a5)
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.l  #off_EB566,8(a0)
                 movea.w a0,a4
                 jsr     (Projectile_InitType88).l
@@ -407,11 +407,11 @@ Stage18_SegmentedWormInitializeParticleVelocity:        ; CODE XREF: Stage18_Seg
 Stage18_SegmentedWormAdvanceFollower:                   ; CODE XREF: Stage18_SegmentedWormUpdateHead+4   p  ; was: sub_30288
                                         ; sub_304B0   p
                 tst.w   $52(a5)
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 subq.w  #1,$52(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 tst.w   $44(a5)
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 movea.w $44(a5),a0
                 move.l  $48(a5),$18(a0)
                 move.l  $48(a5),$48(a0)
@@ -480,10 +480,10 @@ Stage18_SegmentedWormUpdateFallingSegment:              ; DATA XREF: ROM:0002FF1
                 addq.w  #1,$56(a5)
                 move.w  $56(a5),d0
                 andi.w  #$1F,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
 Stage18_SegmentedWormEmitFallingParticle:               ; CODE XREF: Stage18_SegmentedWormUpdateFallingSegment+4E   j
                 jsr     (Projectile_FindFreeOrRecycleSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.l  #off_E953C,8(a0)
                 movea.w a0,a4
                 jsr     (Projectile_InitType88).l
@@ -517,7 +517,7 @@ Stage18_SegmentedWormGetDirectionFrame:                 ; CODE XREF: Stage18_Seg
                                         ; Stage18_SegmentedWormUpdateFollower+18   p
                 bsr.w   Stage18_SegmentedWormClassifyRightwardMotion
                 tst.l   $18(a5)
-                bpl.w   locret_30BB8
+                bpl.w   Entity_UpdateReturn
                 addi.w  #$20,d0                         ; ' '
                 rts
 ; End of function Stage18_SegmentedWormGetDirectionFrame
@@ -621,7 +621,7 @@ Stage18_SegmentedWormSegmentInit:                       ; DATA XREF: ROM:Stage18
 ; Skips follower propagation when horizontal velocity is zero
 Stage18_SegmentedWormSegmentFollow:                     ; DATA XREF: ROM:000304A0   o  ; was: sub_304A8
                 tst.l   $18(a5)
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
 ; End of function Stage18_SegmentedWormSegmentFollow
 ; Propagates predecessor motion and updates the segment direction frame
 Stage18_SegmentedWormUpdateFollower:                    ; DATA XREF: ROM:off_2FC46   o  ; was: sub_304B0

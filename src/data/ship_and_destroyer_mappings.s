@@ -230,7 +230,8 @@ off_1A0F62:     dc.w    word_1A0D54-*                   ; DATA XREF: Stage12_Ted
                 dc.w    off_1A0F62-*
                 dc.w    0
 off_1A0F76:     dc.w    word_1A0D54-*                   ; DATA XREF: Stage12_TeddyBearInit+10   o
-                                        ; Enemy_FallingObjectInit+C   o
+                                        ; Stage15_FragmentEmitterWaveInit+C   o
+                                        ; Stage15_FallingRockWaveInit+C   o
                 dc.w    2
                 dc.w    word_1A0D6C-*
                 dc.w    1

@@ -437,7 +437,7 @@ off_E9680:      dc.w    word_E9206-*                    ; DATA XREF: Weapon_Upda
                 dc.w    off_E9680-*
                 dc.w    0
 off_E968C:      dc.w    word_E9206-*                    ; DATA XREF: UI_InitWeaponSelectScreen+54   o
-                                        ; Boss_JetsripperSpawnDirectionalProjectile+10   o
+                                        ; Projectile_SpawnFragmentCluster+10   o
                 dc.w    2
                 dc.w    word_E920C-*
                 dc.w    2
@@ -671,7 +671,7 @@ off_E9818:      dc.w    word_E92F0-*                    ; DATA XREF: ROM:000E982
                 dc.w    2
                 dc.w    word_E9404-*
                 dc.w    $FF
-off_E9850:      dc.w    word_E9092-*                    ; DATA XREF: Projectile_HandleHit+1A   o
+off_E9850:      dc.w    word_E9092-*                    ; DATA XREF: Projectile_FragmentConvertToImpact+1A   o
                                         ; Projectile_ZLeoLaserMain+120   o
                 dc.w    1
                 dc.w    word_E907A-*

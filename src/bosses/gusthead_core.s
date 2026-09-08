@@ -750,9 +750,9 @@ Boss_GustheadInitDefeatBounce_RiseLoop:                 ; DATA XREF: ROM:0003F27
                 bne.s   locret_3FA7A
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '
-                bra.s   Boss_JetsripperFireProjectile
+                bra.s   Boss_GustheadSpawnFragmentCluster
 ; ---------------------------------------------------------------------------
 locret_3FA7A:                                           ; CODE XREF: Boss_GustheadInitDefeatBounce+42   j
                 rts
 ; End of function Boss_GustheadInitDefeatBounce
-; Fires projectile from Jetstripper boss based on position relative to player
+; Fires Gusthead's fragment cluster based on its horizontal position

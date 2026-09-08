@@ -2782,6 +2782,600 @@
         "The routine propagates predecessor position and motion through field 0x44, applies gravity, and selects the follower's directional frame.",
         "Its direct table and fallthrough callers are worm-segment states; it does not home on the player."
       ]
+    },
+    {
+      "address": "0x0304E4",
+      "previous_name": "Enemy_FallingObjectDispatch",
+      "current_name": "Stage15_FragmentEmitterWaveMain",
+      "legacy_name": "sub_304E4",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS first reaches entity type 0x39C here at frame 31751 with StageTableIndex 0x1C, and the captured screen identifies Stage 15.",
+        "Its two-state table owns the camera-threshold schedule that creates type-0x3A0 emitters; it does not update a falling object."
+      ]
+    },
+    {
+      "address": "0x0304F4",
+      "previous_name": "Enemy_FallingObjectInit",
+      "current_name": "Stage15_FragmentEmitterWaveInit",
+      "legacy_name": "sub_304F4",
+      "evidence": "static",
+      "basis": [
+        "The routine installs the seven-entry Stage 15 camera schedule and advances to the scroll-wait state.",
+        "It initializes the wave controller rather than any spawned type-0x3A0 actor."
+      ]
+    },
+    {
+      "address": "0x030516",
+      "previous_name": "Enemy_CheckSpawnTimer",
+      "current_name": "Stage15_FragmentEmitterWaveWaitForScroll",
+      "legacy_name": "sub_30516",
+      "evidence": "static",
+      "basis": [
+        "The state reads the camera coordinate and the controller's current schedule pointer before falling into the threshold check.",
+        "The schedule contains positions, not countdown timers."
+      ]
+    },
+    {
+      "address": "0x03051E",
+      "previous_name": "Enemy_SpawnFromTable",
+      "current_name": "Stage15_FragmentEmitterWaveSpawn",
+      "legacy_name": "sub_3051E",
+      "evidence": "static",
+      "basis": [
+        "Each accepted schedule entry allocates entity type 0x3A0, assigns its screen-relative vertical coordinate and selects side X 0x40 or 0x200.",
+        "Type 0x3A0 dispatches to Stage15_FragmentEmitterMain, so the former generic enemy description hid a concrete wave relationship."
+      ]
+    },
+    {
+      "address": "0x03057A",
+      "previous_name": "Enemy_FlyingEnemyDispatch",
+      "current_name": "Stage15_FragmentEmitterMain",
+      "legacy_name": "sub_3057A",
+      "evidence": "runtime",
+      "basis": [
+        "Entity type 0x3A0 is created only by the Stage 15 wave schedule, and its initializer first executes at pinned-TAS frame 31798.",
+        "Its four states wait, cross horizontally, emit a fragment cluster and retreat; no generic flying-enemy constructor reaches it."
+      ]
+    },
+    {
+      "address": "0x03058E",
+      "previous_name": "Boss_JetsripperWeaponInit",
+      "current_name": "Stage15_FragmentEmitterInit",
+      "legacy_name": "sub_3058E",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS initializes this scheduled type-0x3A0 actor at frame 31798 during Stage 15, long before any Jetsripper object owns the call.",
+        "The state assigns its collision, mapping, pass timer and next state without reading a boss pointer."
+      ]
+    },
+    {
+      "address": "0x0305D6",
+      "previous_name": "Boss_JetsripperWeaponWaitAndMove",
+      "current_name": "Stage15_FragmentEmitterWaitForPass",
+      "legacy_name": "sub_305D6",
+      "evidence": "static",
+      "basis": [
+        "The state waits for the scheduled actor to cross vertical boundary 0x100, counts down, then selects horizontal velocity from its side position.",
+        "This is the entry phase of the type-0x3A0 pass and contains no Jetsripper state."
+      ]
+    },
+    {
+      "address": "0x030612",
+      "previous_name": "Boss_JetsripperWeaponMoveAndSpawn",
+      "current_name": "Stage15_FragmentEmitterRunPass",
+      "legacy_name": "sub_30612",
+      "evidence": "static",
+      "basis": [
+        "The active pass counts down to one fragment-cluster emission, then reverses the emitter's horizontal velocity.",
+        "Its parent state table is the Stage 15 type-0x3A0 actor, not a Jetsripper weapon table."
+      ]
+    },
+    {
+      "address": "0x030660",
+      "previous_name": "Boss_JetsripperWeaponDelayDestroy",
+      "current_name": "Stage15_FragmentEmitterRetreat",
+      "legacy_name": "sub_30660",
+      "evidence": "static",
+      "basis": [
+        "After the horizontal pass reverses, this final state waits 96 frames and retires the emitter.",
+        "It is the fourth entry of Stage15_FragmentEmitterStates and performs no boss-wide destruction."
+      ]
+    },
+    {
+      "address": "0x030670",
+      "previous_name": "Boss_JetsripperSpawnDirectionalProjectile",
+      "current_name": "Projectile_SpawnFragmentCluster",
+      "legacy_name": "sub_30670",
+      "evidence": "runtime",
+      "basis": [
+        "The Stage 15 emitter first calls this constructor at pinned-TAS frame 32001; it creates type 0x3A4 attached to the supplied origin and direction.",
+        "Gusthead and Jetsripper code also call the same constructor, so the shared fragment-cluster API is not owned by Jetsripper."
+      ]
+    },
+    {
+      "address": "0x0306EA",
+      "previous_name": "Projectile_StateDispatcher",
+      "current_name": "Projectile_FragmentClusterMain",
+      "legacy_name": "sub_306EA",
+      "evidence": "static",
+      "basis": [
+        "Entity type 0x3A4 dispatches here to tracking, delayed-launch, impact, animation and falling-fragment states.",
+        "The linked fragment fields and dedicated direction tables make this a specific cluster state machine, not a generic projectile dispatcher."
+      ]
+    },
+    {
+      "address": "0x030702",
+      "previous_name": "Boss_JetsripperProjectileTrackAndSplit",
+      "current_name": "Projectile_FragmentClusterTrackAndSplit",
+      "legacy_name": "sub_30702",
+      "evidence": "static",
+      "basis": [
+        "The state follows the parent-relative offsets until its delay expires, then creates a direction-dependent set of linked type-0x3A4 fragments.",
+        "Its callers include Stage 15 and Gusthead constructions, so retaining Jetsripper ownership would be false."
+      ]
+    },
+    {
+      "address": "0x030844",
+      "previous_name": "Boss_JetsripperCopyFragmentReferences",
+      "current_name": "Projectile_FragmentClusterCopyLinks",
+      "legacy_name": "sub_30844",
+      "evidence": "static",
+      "basis": [
+        "The helper copies the fragment slot references from the original cluster into the final fragment and records their count.",
+        "It operates solely on the type-0x3A4 link array and has no boss-specific input."
+      ]
+    },
+    {
+      "address": "0x030868",
+      "previous_name": "Boss_JetsripperGetDirectionIndex",
+      "current_name": "Projectile_SelectFragmentImpactDirection",
+      "legacy_name": "sub_30868",
+      "evidence": "static",
+      "basis": [
+        "The routine maps player status and orientation flags to offsets 0x00 through 0x1C in the eight-way fragment velocity tables.",
+        "It is called only while rebuilding the cluster after impact and does not query Jetsripper."
+      ]
+    },
+    {
+      "address": "0x0308E8",
+      "previous_name": "Boss_JetsripperFragmentDelayMove",
+      "current_name": "Projectile_FragmentDelayLaunch",
+      "legacy_name": "sub_308E8",
+      "evidence": "static",
+      "basis": [
+        "Each linked fragment waits for its staggered field-0x46 delay, copies stored velocity into active motion and advances state.",
+        "The delay is part of the shared type-0x3A4 launch sequence."
+      ]
+    },
+    {
+      "address": "0x030908",
+      "previous_name": "Boss_JetsripperSpawnFragmentSpread",
+      "current_name": "Projectile_FragmentClusterHandleImpact",
+      "legacy_name": "sub_30908",
+      "evidence": "static",
+      "basis": [
+        "On the required collision bits, the state hides every linked member and rebuilds a directional response spread from the shared tables.",
+        "On timeout it removes the cluster; neither path depends on a Jetsripper object."
+      ]
+    },
+    {
+      "address": "0x030A42",
+      "previous_name": "Boss_JetsripperFragmentHandleHit",
+      "current_name": "Projectile_FragmentUpdateHitAndLifetime",
+      "legacy_name": "sub_30A42",
+      "evidence": "static",
+      "basis": [
+        "This type-0x3A4 state invokes the common fragment impact conversion and removes the fragment when its lifetime expires.",
+        "It is a per-fragment updater shared by every cluster owner."
+      ]
+    },
+    {
+      "address": "0x030A4E",
+      "previous_name": "Projectile_CheckAnimThreshold",
+      "current_name": "Projectile_FragmentImpactAnimation",
+      "legacy_name": "sub_30A4E",
+      "evidence": "static",
+      "basis": [
+        "The state waits for the fragment impact animation counter to reach 0x80 and then hides that fragment.",
+        "Its placement in the type-0x3A4 table narrows the former generic animation claim."
+      ]
+    },
+    {
+      "address": "0x030A60",
+      "previous_name": "Projectile_ApplyGravity",
+      "current_name": "Projectile_FragmentFallAndExpire",
+      "legacy_name": "sub_30A60",
+      "evidence": "static",
+      "basis": [
+        "The state accelerates the current fragment downward, handles an impact conversion and decrements its bounded lifetime.",
+        "It is the final falling state of the fragment-cluster table, not a general gravity primitive."
+      ]
+    },
+    {
+      "address": "0x030A76",
+      "previous_name": "Projectile_HandleHit",
+      "current_name": "Projectile_FragmentConvertToImpact",
+      "legacy_name": "sub_30A76",
+      "evidence": "static",
+      "basis": [
+        "When the fragment hit flag is set, this helper clears collision, swaps to impact graphics, stops motion and selects the impact-animation state.",
+        "Both callers are states in Projectile_FragmentClusterStates."
+      ]
+    },
+    {
+      "address": "0x030ABA",
+      "previous_name": "Projectile_DeflectBounce",
+      "current_name": "Projectile_FragmentBeginDeflectedFall",
+      "legacy_name": "sub_30ABA",
+      "evidence": "static",
+      "basis": [
+        "Jetsripper collision handlers convert their object to type 0x3A4 and jump here, which installs the fragment falling state, lifetime, health and lateral deflection velocity.",
+        "The routine prepares a deflected shared fragment; bounce direction is only one part of that transition."
+      ]
+    },
+    {
+      "address": "0x030B0E",
+      "previous_name": "Boss_JetsripperSetDifficultyHP1",
+      "current_name": "Projectile_SetCurrentFragmentHealth",
+      "legacy_name": "sub_30B0E",
+      "evidence": "static",
+      "basis": [
+        "The helper writes difficulty-selected health 0x64 or 0xC8 to the current type-0x3A4 fragment in a5.",
+        "Its only caller is the shared deflected-fragment transition."
+      ]
+    },
+    {
+      "address": "0x030B24",
+      "previous_name": "Boss_JetsripperSetDifficultyHP2",
+      "current_name": "Projectile_SetNewFragmentHealth",
+      "legacy_name": "sub_30B24",
+      "evidence": "static",
+      "basis": [
+        "The helper writes the same difficulty-selected health to a newly allocated fragment in a0.",
+        "It is used while rebuilding a shared cluster impact response, not by a Jetsripper state."
+      ]
+    },
+    {
+      "address": "0x03126C",
+      "previous_name": "Boss_JetsripperSpawnDirectionalProjectileAtFrame",
+      "current_name": "Enemy_GustheadSmallEyeSpawnFragmentClusterAtFrame",
+      "legacy_name": "sub_3126C",
+      "evidence": "static",
+      "basis": [
+        "The routine is reached from the Gusthead small-eye state table, uses that eye's coordinates and emits the shared cluster at animation value 0x19E.",
+        "It contains no Jetsripper object reference."
+      ]
+    },
+    {
+      "address": "0x03129A",
+      "previous_name": "Boss_JetsripperSpawnDirectionalWrapper",
+      "current_name": "Enemy_GustheadSmallEyeFragmentClusterAttack",
+      "legacy_name": "sub_3129A",
+      "evidence": "static",
+      "basis": [
+        "This Gusthead small-eye table entry calls the frame-gated cluster constructor and then falls into the eye position updater.",
+        "Its owning state table and adjacent states are Gusthead eye behavior."
+      ]
+    },
+    {
+      "address": "0x03FA7C",
+      "previous_name": "Boss_JetsripperFireProjectile",
+      "current_name": "Boss_GustheadSpawnFragmentCluster",
+      "legacy_name": "sub_3FA7C",
+      "evidence": "static",
+      "basis": [
+        "Gusthead rise, defeat-bounce and rotation states call this helper with Gusthead's stored coordinates.",
+        "It chooses a horizontal direction and invokes the shared fragment-cluster constructor; Jetsripper is not the caller or owner."
+      ]
+    },
+    {
+      "address": "0x030B3A",
+      "previous_name": "Stage_SpawnerDispatcher1",
+      "current_name": "Stage15_FallingRockWaveMain",
+      "legacy_name": "sub_30B3A",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS reaches entity type 0x380 at frame 31751 in the same Stage 15 scene as the fragment emitters.",
+        "Its schedule creates type-0x384 objects whose initializer and update implement terrain-bouncing falling rocks."
+      ]
+    },
+    {
+      "address": "0x030B4A",
+      "previous_name": "Stage_SpawnerInit1",
+      "current_name": "Stage15_FallingRockWaveInit",
+      "legacy_name": "sub_30B4A",
+      "evidence": "static",
+      "basis": [
+        "The initializer selects one of two Stage 15 rock schedules according to difficulty and advances the type-0x380 state.",
+        "The concrete owner and output type replace the numbered generic spawner name."
+      ]
+    },
+    {
+      "address": "0x030B7E",
+      "previous_name": "Stage_SpawnerSpawnByTimer",
+      "current_name": "Stage15_FallingRockWaveUpdate",
+      "legacy_name": "sub_30B7E",
+      "evidence": "static",
+      "basis": [
+        "The state compares camera progress with grouped schedule thresholds and creates type-0x384 rocks at each coordinate pair.",
+        "Its trigger is scroll position rather than an object-local timer."
+      ]
+    },
+    {
+      "address": "0x030BB8",
+      "previous_name": "locret_30BB8",
+      "current_name": "Entity_UpdateReturn",
+      "legacy_name": "locret_30BB8",
+      "evidence": "static",
+      "basis": [
+        "This single RTS is a shared early-return target used by more than one hundred entity, boss and projectile update paths.",
+        "Its cross-subsystem role is stable even though the instruction lies inside the Stage 15 ROM range."
+      ]
+    },
+    {
+      "address": "0x030CBE",
+      "previous_name": "Stage_SpawnerDispatcher2",
+      "current_name": "Stage15_FallingRockMain",
+      "legacy_name": "sub_30CBE",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS first executes type 0x384 here at frame 31782 during Stage 15.",
+        "The preceding type-0x380 schedule is its sole constructor and its two states initialize and bounce one falling rock."
+      ]
+    },
+    {
+      "address": "0x030CCE",
+      "previous_name": "Boss_JetsripperDebrisInit",
+      "current_name": "Stage15_FallingRockInit",
+      "legacy_name": "sub_30CCE",
+      "evidence": "static",
+      "basis": [
+        "This type-0x384 initializer assigns the rock mapping, collision, first-bounce marker and terrain response fields.",
+        "Runtime places its owner in Stage 15 and no Jetsripper object is referenced."
+      ]
+    },
+    {
+      "address": "0x030D20",
+      "previous_name": "Enemy_BounceOnGround",
+      "current_name": "Stage15_FallingRockBounce",
+      "legacy_name": "sub_30D20",
+      "evidence": "static",
+      "basis": [
+        "The state applies gravity, tests terrain, aligns the type-0x384 rock and reverses half of its vertical speed on impact.",
+        "It removes the rock below the Stage 15 playfield and is not a general enemy-ground primitive."
+      ]
+    },
+    {
+      "address": "0x030D90",
+      "previous_name": "Enemy_Stage11BossPartMain",
+      "current_name": "Stage11_RisingHazardLauncherMain",
+      "legacy_name": "sub_30D90",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS reaches entity type 0x388 at frame 21765; a frame-21778 capture identifies Stage 11 and shows the object below the playfield.",
+        "Its state table repeatedly creates type-0x38C rising hazards before following its own exit path; no boss-part parent is read."
+      ]
+    },
+    {
+      "address": "0x030DCA",
+      "previous_name": "Enemy_Stage11BossPartInit",
+      "current_name": "Stage11_RisingHazardLauncherInit",
+      "legacy_name": "sub_30DCA",
+      "evidence": "static",
+      "basis": [
+        "The type-0x388 initializer assigns its mapping, collision, initial up-left motion and first rise state.",
+        "The owner is the Stage 11 launcher seen in runtime rather than a demonstrated boss component."
+      ]
+    },
+    {
+      "address": "0x030E1C",
+      "previous_name": "Enemy_Stage11BossPartFloat",
+      "current_name": "Stage11_RisingHazardLauncherRise",
+      "legacy_name": "sub_30E1C",
+      "evidence": "static",
+      "basis": [
+        "This state adds downward acceleration until the launcher's upward velocity reaches zero, then stops motion and starts its emission counter.",
+        "The motion is a bounded rise into the emission phase, not an indefinite float."
+      ]
+    },
+    {
+      "address": "0x030E3C",
+      "previous_name": "Enemy_Stage11BossPartSpawn",
+      "current_name": "Stage11_RisingHazardLauncherEmit",
+      "legacy_name": "sub_30E3C",
+      "evidence": "static",
+      "basis": [
+        "The state creates type 0x38C at a fixed offset from the type-0x388 launcher and copies its variant field.",
+        "It then gives the launcher the descent motion used by the repeat cycle."
+      ]
+    },
+    {
+      "address": "0x030E86",
+      "previous_name": "Enemy_Stage11BossPartFallInit",
+      "current_name": "Stage11_RisingHazardLauncherReverseMotion",
+      "legacy_name": "sub_30E86",
+      "evidence": "static",
+      "basis": [
+        "Immediately after the one-frame descent setup, this state reverses the launcher to up-left motion and starts a four-frame pause counter.",
+        "Its role is the short emission-cycle reversal, not initial fall setup."
+      ]
+    },
+    {
+      "address": "0x030EA2",
+      "previous_name": "Enemy_Stage11BossPartFallDelay",
+      "current_name": "Stage11_RisingHazardLauncherPauseAndRepeat",
+      "legacy_name": "sub_30EA2",
+      "evidence": "static",
+      "basis": [
+        "The state stops motion for four frames, decrements the emission count and returns to the type-0x38C creation state until the count expires.",
+        "Only after all emissions does it advance to the launcher exit sequence."
+      ]
+    },
+    {
+      "address": "0x030EC4",
+      "previous_name": "Boss_JetsripperPartSetVelocity",
+      "current_name": "Stage11_RisingHazardLauncherBeginExit",
+      "legacy_name": "sub_30EC4",
+      "evidence": "static",
+      "basis": [
+        "This type-0x388 state begins its post-emission exit with down-right velocity.",
+        "It is reached only from the Stage 11 launcher table and accesses no Jetsripper data."
+      ]
+    },
+    {
+      "address": "0x030EDA",
+      "previous_name": "Boss_JetsripperPartDecelerateStop",
+      "current_name": "Stage11_RisingHazardLauncherBrakeDescent",
+      "legacy_name": "sub_30EDA",
+      "evidence": "static",
+      "basis": [
+        "The state reduces vertical velocity to zero, stops horizontal motion and primes the next curve timer.",
+        "The changed component is vertical velocity at offset 0x1C, which narrows the former generic deceleration name."
+      ]
+    },
+    {
+      "address": "0x030EF6",
+      "previous_name": "Boss_JetsripperDecelerateUp",
+      "current_name": "Stage11_RisingHazardLauncherCurveLeft",
+      "legacy_name": "sub_30EF6",
+      "evidence": "static",
+      "basis": [
+        "The state subtracts from horizontal velocity at offset 0x18 for 64 frames, curving the launcher left.",
+        "It does not change vertical velocity or belong to Jetsripper."
+      ]
+    },
+    {
+      "address": "0x030F12",
+      "previous_name": "Boss_JetsripperAccelerateDown",
+      "current_name": "Stage11_RisingHazardLauncherCurveRight",
+      "legacy_name": "sub_30F12",
+      "evidence": "static",
+      "basis": [
+        "The state adds to horizontal velocity at offset 0x18 for 32 frames and advances the launcher's curve sequence.",
+        "The previous name incorrectly described horizontal acceleration as downward motion."
+      ]
+    },
+    {
+      "address": "0x030F2E",
+      "previous_name": "Boss_JetsripperDecelerateAndReset",
+      "current_name": "Stage11_RisingHazardLauncherCurveLeftAndRestart",
+      "legacy_name": "sub_30F2E",
+      "evidence": "static",
+      "basis": [
+        "After another leftward curve, this state restores the launcher's original up-left velocity and returns to its rise state.",
+        "It closes the Stage 11 launcher motion loop without any boss reset."
+      ]
+    },
+    {
+      "address": "0x030F56",
+      "previous_name": "Boss_JetsripperInitFallVelocity",
+      "current_name": "Stage11_RisingHazardLauncherBeginFinalDescent",
+      "legacy_name": "sub_30F56",
+      "evidence": "static",
+      "basis": [
+        "When the collision-state guard forces state 0x14, this entry clears horizontal speed, sets a small downward velocity and advances to the final state.",
+        "The state belongs to the Stage 11 type-0x388 launcher, not Jetsripper."
+      ]
+    },
+    {
+      "address": "0x030F68",
+      "previous_name": "Boss_JetsripperSpawnProjectilesUntilLowY",
+      "current_name": "Stage11_RisingHazardLauncherFinalDescent",
+      "legacy_name": "sub_30F68",
+      "evidence": "static",
+      "basis": [
+        "The final launcher state emits upward random-angle shots while descending and removes type 0x388 after Y reaches 0x180.",
+        "Its owner and termination boundary are both Stage 11-specific."
+      ]
+    },
+    {
+      "address": "0x030F7E",
+      "previous_name": "Boss_JetsripperSpawnUpwardProjectile",
+      "current_name": "Stage11_RisingHazardLauncherFireUpward",
+      "legacy_name": "sub_30F7E",
+      "evidence": "static",
+      "basis": [
+        "Every fourth frame this helper allocates a random-angle shot from the launcher and flips positive vertical velocity upward.",
+        "The call is made exclusively by Stage11_RisingHazardLauncherFinalDescent."
+      ]
+    },
+    {
+      "address": "0x030FA6",
+      "previous_name": "Enemy_Stage11BossPartDispatcher",
+      "current_name": "Stage11_RisingHazardMain",
+      "legacy_name": "sub_30FA6",
+      "evidence": "runtime",
+      "basis": [
+        "The pinned TAS first reaches entity type 0x38C at frame 21778 in Stage 11.",
+        "The frame-21795 RAM capture contains three staggered type-0x38C objects rising from below the playfield; their sole constructor is the type-0x388 launcher."
+      ]
+    },
+    {
+      "address": "0x030FB6",
+      "previous_name": "Enemy_Stage11BossPartState1",
+      "current_name": "Stage11_RisingHazardInit",
+      "legacy_name": "sub_30FB6",
+      "evidence": "static",
+      "basis": [
+        "The type-0x38C initializer selects a palette phase and variant-indexed vertical speed, horizontal speed and acceleration.",
+        "It advances directly to the rising hazard update and has no boss-parent link."
+      ]
+    },
+    {
+      "address": "0x031048",
+      "previous_name": "Boss_JetsripperFallAndFirePattern",
+      "current_name": "Stage11_RisingHazardRiseAndReact",
+      "legacy_name": "sub_31048",
+      "evidence": "static",
+      "basis": [
+        "This type-0x38C state advances its palette, reacts to hit flags, applies its variant acceleration and removes the object below Y 0x180.",
+        "Runtime places all observed instances in Stage 11 rather than a Jetsripper encounter."
+      ]
+    },
+    {
+      "address": "0x03106A",
+      "previous_name": "Boss_JetsripperFrameCheck",
+      "current_name": "Stage11_RisingHazardAdvancePaletteEveryFourthFrame",
+      "legacy_name": "sub_3106A",
+      "evidence": "static",
+      "basis": [
+        "The helper returns on three frames out of four and otherwise falls through to the rising hazard palette updater.",
+        "It is not merely a boolean frame check and is not boss-specific."
+      ]
+    },
+    {
+      "address": "0x031076",
+      "previous_name": "Enemy_Stage11BossPartUpdatePalette",
+      "current_name": "Stage11_RisingHazardAdvancePalette",
+      "legacy_name": "sub_31076",
+      "evidence": "static",
+      "basis": [
+        "The helper cycles the type-0x38C sprite attribute through three values and is shared by initialization and the every-fourth-frame path.",
+        "Its ownership is the rising hazard state table, not an identified boss part."
+      ]
+    },
+    {
+      "address": "0x031096",
+      "previous_name": "Boss_JetsripperSpawnRandomAngleProjectile",
+      "current_name": "Stage11_RisingHazardReactToHit",
+      "legacy_name": "sub_31096",
+      "evidence": "static",
+      "basis": [
+        "Only hit flags 6 or 7 enter the active path, which emits one random-angle projectile and either spawns a rare pickup or removes the type-0x38C hazard.",
+        "The routine is a Stage 11 hit reaction rather than an unconditional Jetsripper firing state."
+      ]
+    },
+    {
+      "address": "0x03146C",
+      "previous_name": "Boss_GustheadSpawnAngleProjectile",
+      "current_name": "Projectile_SpawnRandomAngleShot",
+      "legacy_name": "sub_3146C",
+      "evidence": "static",
+      "basis": [
+        "Both a Gusthead small-eye state and the Stage 11 type-0x388 launcher call this type-0x88 random-angle projectile constructor.",
+        "The shared caller set contradicts exclusive Gusthead ownership."
+      ]
     }
   ]
 }

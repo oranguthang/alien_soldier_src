@@ -341,6 +341,37 @@ its state-table and linked-object ownership provide a semantic boundary, not
 an arbitrary line-count split. Sixteen materially incorrect generated claims
 are recorded in the name audit.
 
+The Stage 15 fragment-hazard pass reduced the count to 9,612. The pinned TAS
+first executes entity type `$39C` at frame 31,751 while `StageTableIndex` is
+`$1C` and the captured screen identifies Stage 15; its schedule creates seven
+type-`$3A0` side emitters at camera thresholds. The first emitter initializes
+at frame 31,798 and calls the type-`$3A4` fragment-cluster constructor at frame
+32,001. Static flow shows that the cluster follows its emitter, expands into
+linked directional fragments, reacts to impact or deflection, and applies
+difficulty-dependent health. Entity types `$380` and `$384` execute in the
+same scene at frames 31,751 and 31,782; their difficulty-selected schedules,
+terrain collision and damped vertical bounce identify the falling-rock wave.
+Gusthead and Jetsripper callers reuse the fragment projectile API, but neither
+owns the implementation. The artificial 67-line
+`src/enemies/falling_spawners.s` and 448-line
+`src/bosses/jetsripper_weapons.s` split is therefore replaced by the coherent
+663-line `src/stages/stage_15_fragment_hazards.s`; all 44 address-derived
+definitions in the joined ROM range and three caller-local address labels are
+gone. Thirty-three corrected generated claims are recorded in the name audit.
+
+The Stage 11 rising-hazard pass reduced the count to 9,602 by replacing the
+remaining ten address-derived definitions in the former
+`src/enemies/stage_11_boss_parts.s`. Pinned-TAS breakpoints place entity types
+`$388` and `$38C` at frames 21,765 and 21,778, and the captured screen plus
+`StageTableIndex=$14` identify Stage 11. RAM captures show the type-`$388`
+launcher below the playfield and three staggered type-`$38C` children rising
+from below it; static flow confirms the launch, palette, hit-reaction,
+projectile and removal states. The exact visual identity is not established,
+so `src/stages/stage_11_rising_hazards.s` deliberately uses a behavioral name.
+Its cohesive 269 lines are a documented below-target exception instead of
+being padded with the adjacent but separately owned Gusthead eye chains.
+Twenty-one corrected generated claims are recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

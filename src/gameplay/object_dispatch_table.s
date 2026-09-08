@@ -223,16 +223,16 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_ShieldViperBulletAnimation
                 dc.l    Projectile_ShieldViperBulletMain
                 dc.l    Boss_ShieldViperDefeatMain
-                dc.l    Stage_SpawnerDispatcher1
-                dc.l    Stage_SpawnerDispatcher2
-                dc.l    Enemy_Stage11BossPartMain
-                dc.l    Enemy_Stage11BossPartDispatcher
+                dc.l    Stage15_FallingRockWaveMain
+                dc.l    Stage15_FallingRockMain
+                dc.l    Stage11_RisingHazardLauncherMain
+                dc.l    Stage11_RisingHazardMain
                 dc.l    Enemy_GustheadEyeMain
                 dc.l    Enemy_GustheadSmallEyeMain
                 dc.l    Enemy_GustheadEyeChainMain
-                dc.l    Enemy_FallingObjectDispatch
-                dc.l    Enemy_FlyingEnemyDispatch
-                dc.l    Projectile_StateDispatcher
+                dc.l    Stage15_FragmentEmitterWaveMain
+                dc.l    Stage15_FragmentEmitterMain
+                dc.l    Projectile_FragmentClusterMain
                 dc.l    Boss_ShieldViperMovement2
                 dc.l    Enemy_TrackerWinMain
                 dc.l    Enemy_TrackerWinMovement

@@ -88,7 +88,7 @@ loc_2B7BA:                                              ; CODE XREF: Enemy_InitP
                 beq.s   loc_2B7EA
                 btst    #4,$22(a5)
                 beq.w   loc_2B7F6
-                jmp     Projectile_DeflectBounce
+                jmp     Projectile_FragmentBeginDeflectedFall
 ; ---------------------------------------------------------------------------
 loc_2B7EA:                                              ; CODE XREF: Enemy_InitProjectileType+5C   j
                 jsr     (Physics_GetPlayerDelta).l
@@ -147,7 +147,7 @@ Projectile_GravityBounce:                               ; DATA XREF: ROM:Entity_
                 beq.s   loc_2B8AA
                 btst    #4,$22(a5)
                 beq.w   loc_2B8C0
-                jmp     Projectile_DeflectBounce
+                jmp     Projectile_FragmentBeginDeflectedFall
 ; ---------------------------------------------------------------------------
 loc_2B8AA:                                              ; CODE XREF: Projectile_GravityBounce+E   j
                 jsr     (Collision_GetEntityPosition).l
@@ -292,7 +292,7 @@ loc_2BA9A:                                              ; CODE XREF: Projectile_
                 beq.s   locret_2BAB2
                 btst    #4,$22(a5)
                 beq.w   loc_2BA64
-                jmp     Projectile_DeflectBounce
+                jmp     Projectile_FragmentBeginDeflectedFall
 ; ---------------------------------------------------------------------------
 locret_2BAB2:                                           ; CODE XREF: Projectile_TerrainCollision+42   j
                 rts

@@ -16,7 +16,7 @@ Boss_WolfGaropaAttackState1:                            ; DATA XREF: ROM:off_32E
                 move.w  #$10,$48(a5)
                 addq.w  #2,4(a5)
                 cmpi.w  #$10,(StageTableIndex).w
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$18,$48(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -27,9 +27,9 @@ Boss_WolfGaropaAttackState2:                            ; DATA XREF: ROM:00032E0
                 move.w  #$120,$14(a5)
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 subq.w  #1,$48(a5)
                 move.w  #$F,d0
                 jsr     (Pickup_SelectRandomSize).l
@@ -41,7 +41,7 @@ Boss_WolfGaropaAttackState2:                            ; DATA XREF: ROM:00032E0
                 move.w  d0,$14(a0)
                 move.w  #$1D0,$10(a0)
                 tst.w   $48(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
 loc_32E9A:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectiles+3A   j
                 move.w  #$1000,2(a5)
                 rts
@@ -50,7 +50,7 @@ loc_32E9A:                                              ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaSpawnProjectiles:                        ; DATA XREF: ROM:00032E0E   o  ; was: sub_32EA2
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   loc_32ED8
                 move.w  #$F,d0

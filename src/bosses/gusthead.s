@@ -20,7 +20,7 @@ Enemy_GustheadEyeInit:                                  ; DATA XREF: ROM:off_310
 ; Spawns chain of 8 projectiles
 Enemy_GustheadEyeSpawnChain:                            ; DATA XREF: ROM:000310F8   o  ; was: sub_3110E
                 cmpi.w  #$180,$10(a5)
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 move.w  #7,d7
                 move.w  a5,$44(a5)
 loc_31120:                                              ; CODE XREF: Enemy_GustheadEyeSpawnChain+44   j
@@ -54,7 +54,7 @@ nullsub_74:                                             ; DATA XREF: ROM:000310F
 ; Destroys eye and projectile chain
 Enemy_GustheadEyeDestroy:                               ; CODE XREF: Enemy_GustheadEyeMain   p  ; was: sub_3116E
                 cmpi.w  #$60,$10(a5)                    ; '`'
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 movea.w a5,a4
                 move.w  #7,d7
 loc_3117E:                                              ; CODE XREF: Enemy_GustheadEyeDestroy:loc_3118E   j
@@ -95,7 +95,7 @@ Enemy_GustheadSmallEyeInit:                             ; DATA XREF: ROM:off_311
 Enemy_GustheadSmallEyeWait:                             ; DATA XREF: ROM:000311A2   o  ; was: sub_311CE
                 bsr.w   Enemy_GustheadUpdatePosition
                 subq.w  #1,$46(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$180,$40(a5)
                 clr.w   $42(a5)
                 move.w  #4,4(a5)
@@ -113,7 +113,7 @@ loc_311EA:                                              ; CODE XREF: Enemy_Gusth
 Enemy_GustheadSmallEyeSpawn:                            ; DATA XREF: ROM:000313B6   o  ; was: sub_31208
                 bsr.w   Enemy_GustheadUpdatePosition
                 subq.w  #1,$46(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$180,$40(a5)
                 clr.w   $42(a5)
                 move.b  #$4D,d0                         ; 'M'
@@ -128,7 +128,7 @@ Enemy_GustheadSmallEyeAttack:                           ; DATA XREF: ROM:000311A
                 bsr.w   Enemy_GustheadSmallEyeCheckSpawn
                 addq.w  #8,$42(a5)
                 cmpi.w  #$40,$42(a5)                    ; '@'
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #3,$46(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -139,37 +139,37 @@ Enemy_GustheadSmallEyeUpdate:                           ; DATA XREF: ROM:000311A
                 bsr.w   Enemy_GustheadUpdatePosition
                 subq.w  #2,$40(a5)
                 cmpi.w  #$140,$40(a5)
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 addq.w  #2,4(a5)
                 rts
 ; End of function Enemy_GustheadSmallEyeUpdate
 ; Spawns projectile in direction of player when animation frame equals 19Eh
-Boss_JetsripperSpawnDirectionalProjectileAtFrame:       ; CODE XREF: Boss_JetsripperSpawnDirectionalWrapper   p  ; was: sub_3126C
+Enemy_GustheadSmallEyeSpawnFragmentClusterAtFrame:      ; was: sub_3126C
                 cmpi.w  #$19E,$40(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  $10(a5),d5
                 move.w  $14(a5),d6
                 move.w  #2,d3
                 move.w  (dword_FFA410).w,d0
                 cmp.w   $10(a5),d0
-                bcs.s   loc_31292
+                bcs.s   Enemy_GustheadSmallEyeAimFragmentClusterLeft
                 clr.w   d4
-                bra.w   Boss_JetsripperSpawnDirectionalProjectile
+                bra.w   Projectile_SpawnFragmentCluster
 ; ---------------------------------------------------------------------------
-loc_31292:                                              ; CODE XREF: Boss_JetsripperSpawnDirectionalProjectileAtFrame+1E   j
+Enemy_GustheadSmallEyeAimFragmentClusterLeft:
                 move.w  #$10,d4
-                bra.w   Boss_JetsripperSpawnDirectionalProjectile
-; End of function Boss_JetsripperSpawnDirectionalProjectileAtFrame
+                bra.w   Projectile_SpawnFragmentCluster
+; End of function Enemy_GustheadSmallEyeSpawnFragmentClusterAtFrame
 ; Wrapper function calling directional projectile spawn check
-Boss_JetsripperSpawnDirectionalWrapper:                 ; DATA XREF: ROM:000313BC   o  ; was: sub_3129A
-                bsr.w   Boss_JetsripperSpawnDirectionalProjectileAtFrame
-; End of function Boss_JetsripperSpawnDirectionalWrapper
+Enemy_GustheadSmallEyeFragmentClusterAttack:            ; DATA XREF: ROM:000313BC   o  ; was: sub_3129A
+                bsr.w   Enemy_GustheadSmallEyeSpawnFragmentClusterAtFrame
+; End of function Enemy_GustheadSmallEyeFragmentClusterAttack
 ; Updates position and increments rotation counter, repeats attack pattern or advances state
 Boss_GustheadRotateAndRepeatAttack:                     ; DATA XREF: ROM:000311A8   o  ; was: sub_3129E
                 bsr.w   Enemy_GustheadUpdatePosition
                 addq.w  #2,$40(a5)
                 cmpi.w  #$1A0,$40(a5)
-                bcs.w   locret_30BB8
+                bcs.w   Entity_UpdateReturn
                 subq.w  #1,$46(a5)
                 beq.s   loc_312BC
                 subq.w  #2,4(a5)
@@ -184,7 +184,7 @@ Boss_GustheadRotateToHome:                              ; DATA XREF: ROM:000311A
                 bsr.w   Enemy_GustheadUpdatePosition
                 subq.w  #8,$42(a5)
                 cmpi.w  #$FFF8,$42(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$C0,$46(a5)
                 move.w  #2,4(a5)
                 rts
@@ -195,7 +195,7 @@ Boss_GustheadRotateSpawnEyesAndSound:                   ; DATA XREF: ROM:000313B
                 bsr.w   Enemy_GustheadSmallEyeCheckSpawn
                 subq.w  #8,$42(a5)
                 cmpi.w  #$FFF8,$42(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.b  #$4D,d0                         ; 'M'
                 jsr     (Sound_PlaySFX).l
                 move.w  #$C0,$46(a5)
@@ -216,7 +216,7 @@ Boss_GustheadWaitAndSpawnEyes:                          ; DATA XREF: ROM:000313C
                 bsr.w   Enemy_GustheadSmallEyeCheckSpawn
                 subq.w  #1,$46(a5)
                 cmpi.w  #$A0,$46(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #2,4(a5)
                 rts
 ; End of function Boss_GustheadWaitAndSpawnEyes
@@ -268,7 +268,7 @@ off_313B4:      dc.w    Enemy_GustheadEyeChainInit-*    ; DATA XREF: Enemy_Gusth
                 dc.w    Enemy_GustheadSmallEyeSpawn-*
                 dc.w    Enemy_GustheadSmallEyeAttack-*
                 dc.w    Enemy_GustheadSmallEyeUpdate-*
-                dc.w    Boss_JetsripperSpawnDirectionalWrapper-*
+                dc.w    Enemy_GustheadSmallEyeFragmentClusterAttack-*
                 dc.w    Boss_GustheadRotateSpawnEyesAndSound-*
                 dc.w    Boss_GustheadWaitAndSpawnEyes-*
                 dc.w    Boss_GustheadFallAndSpawnProjectiles-*
@@ -296,10 +296,10 @@ Boss_GustheadFallAndSpawnProjectiles:                   ; DATA XREF: ROM:000313C
                 bcc.w   Boss_GustheadResetState
                 move.w  (word_FFA280).w,d0
                 andi.w  #3,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_30BB8
-                bsr.w   Boss_GustheadSpawnAngleProjectile
+                bne.w   Entity_UpdateReturn
+                bsr.w   Projectile_SpawnRandomAngleShot
                 asl     $18(a4)
                 asl     $1C(a4)
                 rts
@@ -311,12 +311,12 @@ Boss_GustheadFallAndSpawnSlowProjectiles:               ; DATA XREF: ROM:000311A
                 bcc.s   Boss_GustheadResetState
                 move.w  (word_FFA280).w,d0
                 andi.w  #7,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
 ; End of function Boss_GustheadFallAndSpawnSlowProjectiles
 ; Spawns projectile with sound BBh at calculated angle toward player with offset positioning
-Boss_GustheadSpawnAngleProjectile:                      ; CODE XREF: Boss_JetsripperSpawnUpwardProjectile+16   p  ; was: sub_3146C
+Projectile_SpawnRandomAngleShot:                        ; was: sub_3146C
                                         ; Boss_GustheadFallAndSpawnProjectiles+28   p
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
@@ -339,7 +339,7 @@ Boss_GustheadSpawnAngleProjectile:                      ; CODE XREF: Boss_Jetsri
                 add.l   $14(a5),d1
                 move.l  d1,$14(a4)
                 rts
-; End of function Boss_GustheadSpawnAngleProjectile
+; End of function Projectile_SpawnRandomAngleShot
 ; Resets boss state to 1000h value
 Boss_GustheadResetState:                                ; CODE XREF: Boss_GustheadFallAndSpawnProjectiles+E   j  ; was: sub_314BA
                                         ; Boss_GustheadFallAndSpawnSlowProjectiles+E   j

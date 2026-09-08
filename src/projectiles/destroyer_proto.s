@@ -61,7 +61,7 @@ off_32218:      dc.w    Boss_JetsripperProjectileSpreadInit-*  ; DATA XREF: Proj
 ; Creates spread pattern of 7 projectile copies with staggered delays
 Boss_JetsripperProjectileSpreadInit:                    ; DATA XREF: ROM:off_32218   o  ; was: sub_32222
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.l  $4C(a5),$18(a5)
                 move.l  $50(a5),$1C(a5)
                 move.w  $54(a5),d0

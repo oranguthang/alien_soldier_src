@@ -1,4 +1,4 @@
-Boss_JetsripperFireProjectile:                          ; CODE XREF: Boss_GustheadInitDefeatBounce+4E   j  ; was: sub_3FA7C
+Boss_GustheadSpawnFragmentCluster:                      ; CODE XREF: Boss_GustheadInitDefeatBounce+4E   j  ; was: sub_3FA7C
                                         ; Boss_GustheadRiseAttack+4E   p
                 tst.w   (word_FFFF0E).w
                 beq.s   locret_3FAB0
@@ -6,20 +6,20 @@ Boss_JetsripperFireProjectile:                          ; CODE XREF: Boss_Gusthe
                 move.w  $674(a5),d6
                 move.w  $10(a5),d0
                 sub.w   (word_FF8248).w,d0
-                bmi.s   loc_3FAA2
+                bmi.s   Boss_GustheadAimFragmentClusterRight
                 move.w  #$10,d4
                 move.w  $670(a5),d5
                 subi.w  #$34,d5                         ; '4'
-                bra.s   loc_3FAAA
+                bra.s   Boss_GustheadEmitFragmentCluster
 ; ---------------------------------------------------------------------------
-loc_3FAA2:                                              ; CODE XREF: Boss_JetsripperFireProjectile+16   j
+Boss_GustheadAimFragmentClusterRight:
                 move.w  #0,d4
                 move.w  $670(a5),d5
-loc_3FAAA:                                              ; CODE XREF: Boss_JetsripperFireProjectile+24   j
-                jsr     (Boss_JetsripperSpawnDirectionalProjectile).l
-locret_3FAB0:                                           ; CODE XREF: Boss_JetsripperFireProjectile+4   j
+Boss_GustheadEmitFragmentCluster:
+                jsr     (Projectile_SpawnFragmentCluster).l
+locret_3FAB0:                                           ; CODE XREF: Boss_GustheadSpawnFragmentCluster+4   j
                 rts
-; End of function Boss_JetsripperFireProjectile
+; End of function Boss_GustheadSpawnFragmentCluster
 ; Gusthead boss attack state: updates tentacles/bounce, flips sprite, advances to next state
 Boss_GustheadAttackSequence1:                           ; DATA XREF: ROM:0003F27A   o  ; was: sub_3FAB2
                 bsr.w   Boss_GustheadUpdateTentacles
@@ -160,7 +160,7 @@ Boss_GustheadRiseAttack_UpdateLoop:                     ; DATA XREF: ROM:0003F28
                 bne.s   locret_3FC6C
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
-                jsr     Boss_JetsripperFireProjectile(pc)  ; (pc)
+                jsr     Boss_GustheadSpawnFragmentCluster(pc)  ; (pc)
 locret_3FC6C:                                           ; CODE XREF: Boss_GustheadRiseAttack+42   j
                 rts
 ; End of function Boss_GustheadRiseAttack
@@ -354,7 +354,7 @@ loc_3FEAC:                                              ; CODE XREF: Boss_Gusthe
                 move.w  $670(a5),d5
                 subi.w  #$34,d5                         ; '4'
                 move.w  $674(a5),d6
-                jsr     (Boss_JetsripperSpawnDirectionalProjectile).l
+                jsr     (Projectile_SpawnFragmentCluster).l
                 andi.w  #$FEFF,2(a0)
                 rts
 ; End of function Boss_GustheadRotateAttack

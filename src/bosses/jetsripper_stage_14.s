@@ -15,7 +15,7 @@ Boss_JetsripperProjectileReflect:                       ; CODE XREF: Boss_Jetsri
 ; Returns projectile to stored velocity after delay timer expires
 Boss_JetsripperProjectileReturn:                        ; DATA XREF: ROM:0003221C   o  ; was: sub_32368
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.l  $4C(a5),$18(a5)
                 move.l  $50(a5),$1C(a5)
                 subq.w  #2,4(a5)
@@ -26,7 +26,7 @@ Enemy_Stage14TurretInit:                                ; DATA XREF: ROM:000314D
                 bsr.w   Enemy_DeathExplode
                 bsr.w   Projectile_DestroyerProtoUpdate
                 bclr    #7,$22(a5)
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 bclr    #4,$22(a5)
                 bne.w   Enemy_Stage14TurretMain
 loc_3239E:                                              ; CODE XREF: Enemy_FlierBoundsCheck+E   j
@@ -104,7 +104,7 @@ Boss_JetsripperSpawnInit:                               ; DATA XREF: ROM:off_324
                 move.w  #$200,$10(a5)
                 bsr.w   Enemy_Stage14FlierInit
                 tst.w   (word_FFF720).w
-                bmi.w   locret_30BB8
+                bmi.w   Entity_UpdateReturn
                 move.l  #word_32604,(dword_FF9400).w
                 move.w  #1,(dword_FF9404).w
                 move.b  #4,(byte_FFA95A).w
@@ -190,7 +190,7 @@ Enemy_Stage14FlierInit:                                 ; CODE XREF: Boss_Jetsri
 Boss_JetsripperUpdateAnimation:                         ; CODE XREF: Boss_JetsripperFlyIn+8   p  ; was: sub_325DA
                                         ; Enemy_Stage14FlierMove+8   p
                 subq.w  #1,(dword_FF9404).w
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 movea.l (dword_FF9400).w,a0
                 tst.w   (a0)
                 bpl.s   loc_325F0
@@ -230,7 +230,7 @@ Boss_JetsripperFlyIn:                                   ; DATA XREF: ROM:0003242
                 bsr.w   Enemy_Stage14FlierInit
                 bsr.w   Boss_JetsripperUpdateAnimation
                 cmpi.w  #$180,$10(a5)
-                bhi.w   locret_30BB8
+                bhi.w   Entity_UpdateReturn
                 clr.w   $18(a5)
                 move.w  #3,d0
                 jsr     (UI_CheckVictoryCondition).l
@@ -243,7 +243,7 @@ Enemy_Stage14FlierMove:                                 ; DATA XREF: ROM:0003243
                 bsr.w   Enemy_Stage14FlierInit
                 bsr.w   Boss_JetsripperUpdateAnimation
                 tst.w   (word_FF80C2).w
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 clr.b   (byte_FF80EC).w
                 andi.b  #$EF,$23(a5)
                 addq.w  #2,4(a5)
@@ -363,7 +363,7 @@ Boss_JetsripperReverseCircle:                           ; DATA XREF: ROM:0003243
                 bsr.w   Enemy_Stage14FlierInit
                 bsr.w   Boss_JetsripperUpdateAnimation
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #3,(word_FFA010).w
                 move.b  #$53,d0                         ; 'S'
                 jsr     (Sound_PlaySFX).l
@@ -403,13 +403,13 @@ Boss_JetsripperRetractCircle:                           ; DATA XREF: ROM:0003243
                 cmpi.w  #$120,(dword_FF940C).w
                 bcc.s   loc_32902
                 cmpi.w  #$C0,$10(a5)
-                bhi.w   locret_30BB8
+                bhi.w   Entity_UpdateReturn
                 move.w  #$C0,$10(a5)
                 bra.s   loc_32912
 ; ---------------------------------------------------------------------------
 loc_32902:                                              ; CODE XREF: Boss_JetsripperRetractCircle+2E   j
                 cmpi.w  #$180,$10(a5)
-                bcs.w   locret_30BB8
+                bcs.w   Entity_UpdateReturn
                 move.w  #$180,$10(a5)
 loc_32912:                                              ; CODE XREF: Boss_JetsripperRetractCircle+40   j
                 lea     (word_FFD1C0).w,a4
@@ -452,7 +452,7 @@ loc_32992:                                              ; CODE XREF: Boss_Jetsri
 loc_32996:                                              ; CODE XREF: Boss_JetsripperStabilizeVelocity+E   j
                                         ; Boss_JetsripperStabilizeVelocity+16   j
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #6,4(a5)
                 rts
 ; End of function Boss_JetsripperStabilizeVelocity
@@ -479,7 +479,7 @@ Boss_JetsripperWindupRotation:                          ; DATA XREF: ROM:0003243
                 bsr.w   Boss_JetsripperUpdateAnimation
                 subi.l  #$10000,(dword_FF940C+2).w
                 cmpi.l  #$FFF00000,(dword_FF940C+2).w
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 bsr.w   Boss_JetsripperSpawnFlier
                 addq.w  #2,4(a5)
                 rts
@@ -492,14 +492,14 @@ Boss_JetsripperPhase4Init:                              ; DATA XREF: ROM:0003244
                 cmpi.l  #$80000,(dword_FF940C+2).w
                 beq.s   loc_32A36
                 cmpi.l  #$100000,(dword_FF940C+2).w
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 bsr.w   Boss_JetsripperSpawnFlier
                 subq.w  #2,4(a5)
                 rts
 ; ---------------------------------------------------------------------------
 loc_32A36:                                              ; CODE XREF: Boss_JetsripperPhase4Init+18   j
                 subq.w  #1,(dword_FF9410+2).w
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 lea     (word_FFC7A0).w,a4
                 move.w  #7,d6
 loc_32A46:                                              ; CODE XREF: Boss_JetsripperPhase4Init+4A   j
@@ -556,7 +556,7 @@ Boss_JetsripperPhase5Wait:                              ; DATA XREF: ROM:0003244
                 bsr.w   Enemy_Stage14FlierInit
                 bsr.w   Boss_JetsripperUpdateAnimation
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #6,4(a5)
                 rts
 ; End of function Boss_JetsripperPhase5Wait
@@ -574,7 +574,7 @@ Projectile_Stage14BulletInit:                           ; DATA XREF: ROM:0003244
                 bsr.w   Boss_JetsripperUpdateAnimation
                 bsr.w   Projectile_Stage14BulletMove
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$40,$4A(a5)                    ; '@'
                 addq.w  #2,4(a5)
                 rts
@@ -583,7 +583,7 @@ Projectile_Stage14BulletInit:                           ; DATA XREF: ROM:0003244
 Projectile_Stage14BulletMove:                           ; CODE XREF: Projectile_Stage14BulletInit+8   p  ; was: sub_32B32
                 move.w  $4A(a5),d0
                 andi.w  #$7F,d0
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 lea     word_32BCE(pc),a1
                 nop
                 lea     word_32BD8(pc),a2
@@ -594,7 +594,7 @@ Projectile_Stage14BulletMove:                           ; CODE XREF: Projectile_
                 clr.w   d6
 loc_32B56:                                              ; CODE XREF: Projectile_Stage14BulletMove+3C   j
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 bsr.w   loc_31B02
                 bsr.w   Enemy_Stage14SpawnSplitBullet
                 addq.w  #2,d6
@@ -606,7 +606,7 @@ loc_32B72:                                              ; CODE XREF: Projectile_
                 move.w  #4,d6
 loc_32B76:                                              ; CODE XREF: Projectile_Stage14BulletMove+5C   j
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 bsr.w   loc_31B02
                 bsr.w   Enemy_Stage14SpawnSplitBullet
                 addq.w  #2,d6
@@ -648,7 +648,7 @@ Boss_JetsripperPhase7Wait:                              ; DATA XREF: ROM:0003244
                 bsr.w   Enemy_Stage14FlierInit
                 bsr.w   Boss_JetsripperUpdateAnimation
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #6,4(a5)
                 rts
 ; End of function Boss_JetsripperPhase7Wait
@@ -670,7 +670,7 @@ Boss_JetsripperDeathExplosion:                          ; DATA XREF: ROM:0003244
                 ori.w   #$8000,$E(a0)
 loc_32C2E:                                              ; CODE XREF: Boss_JetsripperDeathExplosion+1C   j
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$E0,(word_FF8140).w
                 move.b  #$20,(byte_FF8142).w            ; ' '
                 move.b  #8,(byte_FF8143).w
@@ -710,9 +710,9 @@ Boss_JetsripperTrackPlayer:                             ; CODE XREF: Boss_Jetsri
                 sub.w   d0,d2
                 andi.w  #$1FE,d2
                 cmpi.w  #8,d2
-                bcs.w   locret_30BB8
+                bcs.w   Entity_UpdateReturn
                 cmpi.w  #$1F8,d2
-                bcc.w   locret_30BB8
+                bcc.w   Entity_UpdateReturn
                 cmpi.w  #$100,d2
                 bcc.s   loc_32CCC
                 addq.w  #2,$40(a5)
@@ -747,7 +747,7 @@ Enemy_Stage14FlierDespawn:                              ; DATA XREF: ROM:off_32C
                 add.w   d0,$40(a5)
                 subq.w  #1,$42(a5)
                 cmpi.w  #$80,$42(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 addq.w  #2,4(a5)
                 rts
 ; End of function Enemy_Stage14FlierDespawn
@@ -757,7 +757,7 @@ Enemy_Stage14FlierSpawnBullet:                          ; DATA XREF: ROM:00032CF
                 add.w   d0,$40(a5)
                 addq.w  #1,$42(a5)
                 cmpi.w  #$A8,$42(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 subq.w  #2,4(a5)
                 rts
 ; End of function Enemy_Stage14FlierSpawnBullet
@@ -766,7 +766,7 @@ Enemy_FlierRotateIncrement:                             ; DATA XREF: ROM:00032CF
                 move.w  (dword_FF940C+2).w,d0
                 add.w   d0,$40(a5)
                 cmpi.w  #$A8,$42(a5)
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 addq.w  #1,$42(a5)
                 rts
 ; End of function Enemy_FlierRotateIncrement
@@ -792,7 +792,7 @@ Enemy_FlierDeathRotate:                                 ; DATA XREF: ROM:off_32D
 ; Decrements rotation speed and clamps angle during death sequence
 Enemy_FlierDeathSlowdown:                               ; DATA XREF: ROM:00032D58   o  ; was: sub_32D68
                 cmpa.l  #$FFFFD1C0,a5
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 andi.w  #$1FE,$40(a5)
                 subq.w  #1,$42(a5)
                 bra.w   Enemy_GustheadUpdatePosition
@@ -803,7 +803,7 @@ Enemy_FlierDeathFinalize:                               ; DATA XREF: ROM:00032D5
                 sub.w   d0,$42(a5)
                 bsr.w   Enemy_GustheadUpdatePosition
                 subq.w  #1,$4A(a5)
-                bne.w   locret_30BB8
+                bne.w   Entity_UpdateReturn
                 move.w  #$1000,2(a5)
                 rts
 ; End of function Enemy_FlierDeathFinalize
@@ -830,7 +830,7 @@ loc_32DC4:                                              ; CODE XREF: Enemy_Flier
 Enemy_DeathExplode:                                     ; CODE XREF: Projectile_DestroyerProtoMain   p  ; was: sub_32DCC
                                         ; sub_32382   p
                 tst.w   (dword_FF9414+2).w
-                beq.w   locret_30BB8
+                beq.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   loc_32DF6
                 move.w  $10(a5),$10(a0)
