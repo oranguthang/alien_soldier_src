@@ -345,3 +345,143 @@ Projectile_InitMissirayBullet:                          ; CODE XREF: Orphaned_Ri
                 move.l  d2,$58(a0)
                 rts
 ; End of function Projectile_InitMissirayBullet
+; Type-$3CC Missiray bullet state machine
+Projectile_MissirayBulletMain:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_33DB0
+                tst.w   4(a5)
+                beq.s   Projectile_MissirayBulletDispatchState
+                bclr    #7,$22(a5)
+                bne.s   Projectile_MissirayBulletBeginImpact
+                btst    #1,(byte_FF80EC).w
+                bne.s   Projectile_MissirayBulletBeginImpact
+                tst.w   $24(a5)
+                bpl.s   Projectile_MissirayBulletDispatchState
+Projectile_MissirayBulletBeginImpact:                   ; CODE XREF: Projectile_MissirayBulletMain+C   j  ; was: loc_33DCC
+                                        ; Projectile_MissirayBulletMain+14   j
+                cmpi.w  #$C,4(a5)
+                bcc.s   Projectile_MissirayBulletDispatchState
+                move.w  #$C,4(a5)
+                clr.b   $21(a5)
+Projectile_MissirayBulletDispatchState:                 ; CODE XREF: Projectile_MissirayBulletMain+4   j  ; was: loc_33DDE
+                                        ; Projectile_MissirayBulletMain+1A   j
+                move.w  4(a5),d0
+                lea     Projectile_MissirayBulletStates(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Projectile_MissirayBulletMain
+; ---------------------------------------------------------------------------
+Projectile_MissirayBulletStates:    dc.w    Projectile_MissirayBulletBeginFall-*  ; DATA XREF: Projectile_MissirayBulletMain+32   o  ; was: off_33DEA
+                dc.w    Projectile_MissirayBulletDecelerateFall-*
+                dc.w    Projectile_MissirayBulletBeginTransformDelay-*
+                dc.w    Projectile_MissirayBulletTransform-*
+                dc.w    Projectile_MissirayBulletWaitForTransformFrame-*
+                dc.w    Projectile_MissirayBulletAccelerateDownward-*
+                dc.w    Projectile_MissirayBulletBeginImpactBurst-*
+                dc.w    Projectile_MissirayBulletEmitImpactBurst-*
+
+; Begins the bullet's downward fall and deceleration timer
+Projectile_MissirayBulletBeginFall:                     ; DATA XREF: ROM:Projectile_MissirayBulletStates   o  ; was: sub_33DFA
+                move.l  #$40000,$1C(a5)
+                move.w  #$10,$48(a5)
+                addq.w  #2,4(a5)
+                rts
+; End of function Projectile_MissirayBulletBeginFall
+; Decelerates the initial fall to a stop
+Projectile_MissirayBulletDecelerateFall:                ; DATA XREF: ROM:00033DEC   o  ; was: sub_33E0E
+                subi.l  #$3800,$1C(a5)
+                subq.w  #1,$48(a5)
+                bne.s   Projectile_MissirayBulletDecelerationReturn
+                clr.l   $1C(a5)
+                addq.w  #2,4(a5)
+Projectile_MissirayBulletDecelerationReturn:            ; CODE XREF: Projectile_MissirayBulletDecelerateFall+C   j  ; was: locret_33E24
+                rts
+; End of function Projectile_MissirayBulletDecelerateFall
+; Starts the delay before changing bullet form
+Projectile_MissirayBulletBeginTransformDelay:           ; DATA XREF: ROM:00033DEE   o  ; was: sub_33E26
+                move.w  #$10,$48(a5)
+                addq.w  #2,4(a5)
+                rts
+; End of function Projectile_MissirayBulletBeginTransformDelay
+; Changes graphics and restores the constructor-provided vertical velocity
+Projectile_MissirayBulletTransform:                     ; DATA XREF: ROM:00033DF0   o  ; was: sub_33E32
+                subq.w  #1,$48(a5)
+                bne.s   Projectile_MissirayBulletTransformDelayReturn
+                move.l  #off_ED156,8(a5)
+                clr.w   $C(a5)
+                move.l  #$FF01D62A,$2C(a5)
+                move.l  #$F808D030,$28(a5)
+                move.b  #$10,$23(a5)
+                move.l  $58(a5),$1C(a5)
+                addq.w  #2,4(a5)
+Projectile_MissirayBulletTransformDelayReturn:          ; CODE XREF: Projectile_MissirayBulletTransform+4   j  ; was: locret_33E64
+                rts
+; End of function Projectile_MissirayBulletTransform
+; Waits for the transformed animation to reach its next phase
+Projectile_MissirayBulletWaitForTransformFrame:         ; DATA XREF: ROM:00033DF2   o  ; was: sub_33E66
+                cmpi.w  #$80,$C(a5)
+                bcs.s   Projectile_MissirayBulletTransformFrameReturn
+                move.l  #off_ED13E,8(a5)
+                clr.w   $C(a5)
+                addq.w  #2,4(a5)
+Projectile_MissirayBulletTransformFrameReturn:          ; CODE XREF: Projectile_MissirayBulletWaitForTransformFrame+6   j  ; was: locret_33E7E
+                rts
+; End of function Projectile_MissirayBulletWaitForTransformFrame
+; Accelerates downward and removes the bullet below the arena
+Projectile_MissirayBulletAccelerateDownward:            ; DATA XREF: ROM:00033DF4   o  ; was: sub_33E80
+                cmpi.l  #$1C000,$1C(a5)
+                bge.s   Projectile_MissirayBulletCheckExit
+                addi.l  #$800,$1C(a5)
+Projectile_MissirayBulletCheckExit:                     ; CODE XREF: Projectile_MissirayBulletAccelerateDownward+8   j  ; was: loc_33E92
+                cmpi.w  #$180,$14(a5)
+                blt.s   Projectile_MissirayBulletUpdateReturn
+                move.w  #$1000,2(a5)
+Projectile_MissirayBulletUpdateReturn:                  ; CODE XREF: Projectile_MissirayBulletAccelerateDownward+18   j  ; was: locret_33EA0
+                rts
+; End of function Projectile_MissirayBulletAccelerateDownward
+; Initializes the symmetric impact-particle burst
+Projectile_MissirayBulletBeginImpactBurst:              ; DATA XREF: ROM:00033DF6   o  ; was: sub_33EA2
+                clr.l   $1C(a5)
+                move.w  #2,$48(a5)
+                move.w  #4,$4A(a5)
+                move.w  #8,$4C(a5)
+                addq.w  #2,4(a5)
+                rts
+; End of function Projectile_MissirayBulletBeginImpactBurst
+; Emits four pairs of type-$160 impact particles at widening X offsets
+Projectile_MissirayBulletEmitImpactBurst:               ; DATA XREF: ROM:00033DF8   o  ; was: sub_33EBE
+                eori.w  #$8000,2(a5)
+                subq.w  #1,$48(a5)
+                bne.s   Projectile_MissirayBulletImpactBurstReturn
+                jsr     (Projectile_FindFreePrimarySlot).l
+                bne.s   Projectile_MissirayBulletAdvanceImpactBurst
+                move.w  $4C(a5),d0
+                bsr.w   Projectile_MissirayBulletSpawnImpactParticle
+                jsr     (Projectile_FindFreePrimarySlot).l
+                bne.s   Projectile_MissirayBulletAdvanceImpactBurst
+                move.w  $4C(a5),d0
+                neg.w   d0
+                bsr.w   Projectile_MissirayBulletSpawnImpactParticle
+Projectile_MissirayBulletAdvanceImpactBurst:            ; CODE XREF: Projectile_MissirayBulletEmitImpactBurst+12   j  ; was: loc_33EEC
+                                        ; Projectile_MissirayBulletEmitImpactBurst+22   j
+                subq.w  #1,$4A(a5)
+                beq.s   Projectile_MissirayBulletFinishImpactBurst
+                addq.w  #8,$4C(a5)
+                move.w  #2,$48(a5)
+Projectile_MissirayBulletImpactBurstReturn:             ; CODE XREF: Projectile_MissirayBulletEmitImpactBurst+A   j  ; was: locret_33EFC
+                rts
+; ---------------------------------------------------------------------------
+Projectile_MissirayBulletFinishImpactBurst:             ; CODE XREF: Projectile_MissirayBulletEmitImpactBurst+32   j  ; was: loc_33EFE
+                move.w  #$1000,2(a5)
+                rts
+; End of function Projectile_MissirayBulletEmitImpactBurst
+; Converts an allocated slot to an impact particle at the supplied X offset
+Projectile_MissirayBulletSpawnImpactParticle:           ; CODE XREF: Projectile_MissirayBulletEmitImpactBurst+18   p  ; was: sub_33F06
+                                        ; Projectile_MissirayBulletEmitImpactBurst+2A   p
+                add.w   $10(a5),d0
+                move.w  d0,$10(a0)
+                move.w  $14(a5),$14(a0)
+                move.l  #off_E95DC,8(a0)
+                jsr     (Sprite_InitType160).l
+                move.b  #$60,$20(a0)                    ; '`'
+                andi.w  #$FEFF,2(a0)
+                rts
+; End of function Projectile_MissirayBulletSpawnImpactParticle

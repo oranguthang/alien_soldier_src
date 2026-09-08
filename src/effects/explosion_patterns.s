@@ -1,6 +1,6 @@
 ; Spawns eight radial explosion particles with the common mapping
-Effect_SpawnEightWayExplosionParticles:                 ; CODE XREF: Sprite_InitializeObject+78   p  ; was: sub_2BE56
-                                        ; Sprite_InitializeObject+86   p
+Effect_SpawnEightWayExplosionParticles:                 ; CODE XREF: Boss_Stage3OrbitingFormationCheckDefeat+78   p  ; was: sub_2BE56
+                                        ; Boss_Stage3OrbitingFormationCheckDefeat+86   p
                 move.w  #3,d0
                 movea.l #off_E953C,a1
 ; End of function Effect_SpawnEightWayExplosionParticles

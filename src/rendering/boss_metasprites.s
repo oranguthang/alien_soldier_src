@@ -1,3 +1,4 @@
+; Initializes a metasprite entry with caller-provided parameters
 Sprite_InitMetaspriteSimple:                            ; CODE XREF: Boss_AntroidSetupMetasprite+2   j  ; was: sub_343CE
                                         ; Boss_TerobusterInitMetasprite+2   p
                 bsr.w   Sprite_InitMetaspritePointers

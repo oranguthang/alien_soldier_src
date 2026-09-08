@@ -453,6 +453,15 @@ when a rising shot crosses the camera's top edge. Those states are now part of
 the same `missiray_and_rising_shots.s` module as the rest of the type `$3C4`
 state machine; the former 98-line `stage_24_visuals.s` fragment was removed.
 
+The former `boss_patterns.s` pass reduced the count to 9,365. Its first range
+is the type-`$3CC` Missiray bullet continuation: fall, transformation, and an
+impact burst made from type-`$160` particles. That range now completes
+`missiray_and_rising_shots.s`. The second range is the type-`$190` controller
+created directly by the Stage 3 camera; it manages boss health, a central
+object, and eight sine-positioned parts. Static evidence supports the neutral
+name `stage_3_orbiting_formation.s`, but no canonical character name is yet
+claimed without stronger visual or runtime evidence.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

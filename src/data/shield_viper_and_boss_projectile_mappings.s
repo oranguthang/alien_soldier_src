@@ -81,7 +81,7 @@ word_ED126:     dc.w    $6838, $500, $FAEB              ; DATA XREF: ROM:000ED15
                 dc.w    $6038, $500, $FA05
                 dc.w    $C83C, $D00, $FAF0
                 dc.w    $E837, 0, $1FFF
-off_ED13E:      dc.w    word_ED030-*                    ; DATA XREF: Boss_ProjectileWaitAnimation+8   o
+off_ED13E:      dc.w    word_ED030-*                    ; DATA XREF: Projectile_MissirayBulletWaitForTransformFrame+8   o
                                         ; ROM:000ED14E   o
                 dc.w    1
                 dc.w    word_ED04E-*
@@ -94,7 +94,7 @@ off_ED13E:      dc.w    word_ED030-*                    ; DATA XREF: Boss_Projec
                 dc.w    0
 off_ED152:      dc.w    word_ED024-*                    ; DATA XREF: Projectile_InitMissirayBullet+4   o
                 dc.w    $FF
-off_ED156:      dc.w    word_ED024-*                    ; DATA XREF: Boss_ProjectileTransformAttack+6   o
+off_ED156:      dc.w    word_ED024-*                    ; DATA XREF: Projectile_MissirayBulletTransform+6   o
                 dc.w    1
                 dc.w    word_ED126-*
                 dc.w    1

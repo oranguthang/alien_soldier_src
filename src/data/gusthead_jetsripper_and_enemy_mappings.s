@@ -141,12 +141,12 @@ word_EB586:     dc.w    $8876, $500, $F8F8              ; DATA XREF: ROM:000EB56
                                         ; ROM:000EB572   o
 word_EB58C:     dc.w    $887A, 0, $FCFC                 ; DATA XREF: ROM:off_EB566   o
                                         ; ROM:000EB56E   o
-word_EB592:     dc.w    $6812, $400, $FCE0              ; DATA XREF: Sprite_AdvanceToNextFrame   o
+word_EB592:     dc.w    $6812, $400, $FCE0              ; DATA XREF: Boss_Stage3OrbitingFormationInit   o
                 dc.w    $780C, $600, $F0
                 dc.w    $680C, $600, $E8F0
                 dc.w    $7800, $E00, 0
                 dc.w    $E800, $E00, $E800
-word_EB5B0:     dc.w    $E814, $A00, $F4F4              ; DATA XREF: Sprite_AdvanceToNextFrame+5E   o
+word_EB5B0:     dc.w    $E814, $A00, $F4F4              ; DATA XREF: Boss_Stage3OrbitingFormationInit+5E   o
 word_EB5B6:     dc.w    $2128, $600, $7F1               ; DATA XREF: ROM:off_3D37A   o
                 dc.w    $2928, $600, $701
                 dc.w    $2122, $600, $EFF1

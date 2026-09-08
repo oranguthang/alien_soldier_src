@@ -99,7 +99,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Sprite_InitCurrentFromTable
                 dc.l    Enemy_DelayedHide
                 dc.l    Weapon_UpdateRotatingProjectile
-                dc.l    Sprite_LoadAnimationFrame
+                dc.l    Boss_Stage3OrbitingFormationMain
                 dc.l    Pickup_Update
                 dc.l    Projectile_JokerBomb
                 dc.l    Boss_DeepStriderMain
@@ -242,7 +242,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Entity_VictorSubtypeDispatcher
                 dc.l    Projectile_MissirayAndRisingShotMain
                 dc.l    Effect_RisingShotWaveControllerMain
-                dc.l    Boss_ProjectileStateDispatcher
+                dc.l    Projectile_MissirayBulletMain
                 dc.l    Boss_MissirayMain
                 dc.l    Segment_MissirayPartMain
                 dc.l    Entity_EmptyState4
