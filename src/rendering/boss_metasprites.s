@@ -446,7 +446,7 @@ Sprite_UpdateFourDirectionFrameSelect:                  ; CODE XREF: Sprite_Upda
                 rts
 ; End of function Sprite_UpdateFourDirectionFrame
 ; Calculates interpolation deltas for animation blending
-Anim_CalculateInterpolationDeltas:                      ; CODE XREF: Boss_AntroidResetAnimation+10   j  ; was: sub_348AA
+Anim_CalculateInterpolationDeltas:                      ; CODE XREF: Boss_AntroidBeginPoseInterpolation+10   j  ; was: sub_348AA
                                         ; Boss_TerobusterCalculateDeltas+10   j
                 move.w  #$FF,d4
 Anim_CalculateInterpolationDeltasNextChannel:           ; CODE XREF: Anim_CalculateInterpolationDeltas+1C   j  ; was: loc_348AE
@@ -466,7 +466,7 @@ Anim_CalculateInterpolationDeltasNextChannel:           ; CODE XREF: Anim_Calcul
                 rts
 ; End of function Anim_CalculateInterpolationDeltas
 ; Loads animation frame delays converting bytes to words
-Anim_LoadFrameDelays:                                   ; CODE XREF: Boss_AntroidLoadFrameDelays+6   j  ; was: sub_348CC
+Anim_LoadFrameDelays:                                   ; CODE XREF: Boss_AntroidInitializePoseChannels+6   j  ; was: sub_348CC
                                         ; Boss_TerobusterLoadFrameDelays+6   j
                 moveq   #0,d1
 Anim_LoadFrameDelaysNextChannel:                        ; CODE XREF: Anim_LoadFrameDelays+A   j  ; was: loc_348CE
@@ -478,7 +478,7 @@ Anim_LoadFrameDelaysNextChannel:                        ; CODE XREF: Anim_LoadFr
                 rts
 ; End of function Anim_LoadFrameDelays
 ; Applies single interpolation step to animation values
-Anim_ApplyInterpolationStep:                            ; CODE XREF: Anim_InterpolateToTarget+8C   p  ; was: sub_348DC
+Anim_ApplyInterpolationStep:                            ; CODE XREF: Boss_AntroidUpdatePoseAnimation+8C   p  ; was: sub_348DC
                                         ; Boss_TerobusterInterpolateAnimation+6C   p
                 movea.l a0,a1
 Anim_ApplyInterpolationStepNextChannel:                 ; CODE XREF: Anim_ApplyInterpolationStep+A   j  ; was: loc_348DE

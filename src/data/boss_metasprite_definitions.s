@@ -54,7 +54,7 @@ Boss_AntroidSecondaryPartLinks: dc.w    $C069, $45AA, $C609  ; was: word_34A20
                 dc.w    $478A, $C789, $4849
                 dc.w    $C84A, $4909
 Boss_AntroidNeutralPose:    dc.w    $8080, $C080, $E090  ; was: word_34A36
-                                        ; DATA XREF: Boss_AntroidResetAnimation   o
+                                        ; DATA XREF: Boss_AntroidBeginPoseInterpolation   o
                 dc.w    $80E0, $9080, $8080
                 dc.w    $8080, $8000
 ; Terobuster directional frames and metasprite definition

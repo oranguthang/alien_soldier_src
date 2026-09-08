@@ -69,9 +69,9 @@ Boss_AntroidDeathFadeUpdateEffects:                     ; CODE XREF: Boss_Antroi
 ; Updates the ram-attack pose, debris, and alternating sprite flip
 Boss_AntroidUpdateRamAttackPose:                        ; CODE XREF: Boss_AntroidRamAttack+18   p  ; was: sub_37E2A
                 bsr.w   Boss_AntroidSpawnRamDebris
-                lea     word_383EE(pc),a1
+                lea     Boss_AntroidRamPoseCommands(pc),a1
                 nop
-                jsr     Anim_InterpolateToTarget(pc)    ; (pc)
+                jsr     Boss_AntroidUpdatePoseAnimation(pc)  ; (pc)
                 nop
                 bsr.w   Boss_AntroidRenderPose
                 move.l  #word_EB720,$C8(a5)

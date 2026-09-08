@@ -562,6 +562,14 @@ binds two fixed part slots. The type `$158` projectile is now a separate
 ROM-ordered module; its identity is established by both the spawner's type
 write and the corresponding `Entity_UpdateHandlerTable` entry.
 
+The Antroid animation audit reduced the count to 8,940. All command streams
+are now named for their proven state consumers, including the unterminated
+jump-slam retry prefix that intentionally continues into the first-arc stream.
+The audit also rejected two misleading generated names: the former
+`Boss_AntroidResetAnimation` begins a 15-channel pose interpolation, while
+`Boss_AntroidSwapPaletteBuffers` exchanges pose-channel groups and never
+touches palette memory.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

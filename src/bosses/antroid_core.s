@@ -131,9 +131,9 @@ Boss_AntroidInitPosition:
 ; End of function Boss_AntroidInitPosition
 ; Updates Antroid boss idle animation and sprite rendering
 Boss_AntroidIdleState:                                  ; DATA XREF: ROM:00037532   o  ; was: sub_37648
-                lea     word_38322(pc),a1
+                lea     Boss_AntroidIdlePoseCommands(pc),a1
                 nop
-                bsr.w   Anim_InterpolateToTarget
+                bsr.w   Boss_AntroidUpdatePoseAnimation
                 bra.w   Boss_AntroidRenderBlinkingPose
 ; End of function Boss_AntroidIdleState
 ; Restores Antroid's neutral pose and resumes attack selection
@@ -157,9 +157,9 @@ Boss_AntroidNeutralState:                               ; CODE XREF: Boss_Antroi
                                         ; DATA XREF: ROM:00037512   o
                 tst.w   $58(a5)
                 bmi.s   Boss_AntroidFinishNeutralAnimation
-                lea     word_3832C(pc),a1
+                lea     Boss_AntroidReturnPoseCommands(pc),a1
                 nop
-                bsr.w   Anim_InterpolateToTarget
+                bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderBlinkingPose
                 movea.w $11E(a5),a0
                 move.l  #word_EB77A,8(a0)
@@ -218,16 +218,16 @@ Boss_AntroidScheduleLeapAttackB:                        ; CODE XREF: Boss_Antroi
 ; ---------------------------------------------------------------------------
 Boss_AntroidUpdateDecisionAnimation:                    ; CODE XREF: Boss_AntroidInitPhase+9E   j  ; was: loc_3773E
                                         ; sub_37558:Boss_AntroidWaitForStageReadyAnimate   j
-                lea     word_38332(pc),a1
+                lea     Boss_AntroidDecisionPoseCommandsA(pc),a1
                 nop
                 move.w  (word_FFA000).w,d0
                 andi.w  #$FF,d0
                 cmpi.w  #$E0,d0
                 bmi.s   Boss_AntroidUpdateDecisionPose
-                lea     word_38344(pc),a1
+                lea     Boss_AntroidDecisionPoseCommandsB(pc),a1
                 nop
 Boss_AntroidUpdateDecisionPose:                         ; CODE XREF: Boss_AntroidReturnToNeutral+FA   j  ; was: loc_37758
-                bsr.w   Anim_InterpolateToTarget
+                bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderBlinkingPose
                 movea.w $11E(a5),a0
                 move.w  #$14E,$14(a0)
@@ -245,9 +245,9 @@ Boss_AntroidHealthRecoveryState:                        ; DATA XREF: ROM:0003754
                 subq.w  #1,$11C(a5)
                 bmi.w   Boss_AntroidReturnToNeutralLoadAnimation
                 addi.w  #3,(word_FF8234).w
-                lea     word_38356(pc),a1
+                lea     Boss_AntroidHealthRecoveryPoseCommands(pc),a1
                 nop
-                bsr.w   Anim_InterpolateToTarget
+                bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderPose
                 move.l  #word_EB77A,$548(a5)
                 move.w  #$14E,$554(a5)
@@ -267,9 +267,9 @@ Boss_AntroidPrepareLeapAttackA:                         ; DATA XREF: ROM:0003751
                 bra.s   Boss_AntroidLaunchLeapAttackA
 ; ---------------------------------------------------------------------------
 Boss_AntroidPrepareLeapAttackAAnimate:                  ; CODE XREF: Boss_AntroidPrepareLeapAttackA+6   j  ; was: loc_377D4
-                lea     word_38360(pc),a1
+                lea     Boss_AntroidLeapAttackAPoseCommands(pc),a1
                 nop
-                bsr.w   Anim_InterpolateToTarget
+                bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderBlinkingPose
                 movea.w $48(a5),a0
                 move.l  #word_EB77A,8(a0)
@@ -308,7 +308,7 @@ Boss_AntroidLeapAttackACheckScreenRange:                ; CODE XREF: Boss_Antroi
                 bpl.s   Boss_AntroidLeapAttackAChooseFollowup
 Boss_AntroidLeapAttackAFinish:                          ; CODE XREF: Boss_AntroidLeapAttackA+26   j  ; was: loc_37846
                                         ; Boss_AntroidLeapAttackA+34   j
-                bsr.w   Boss_AntroidEndAttack
+                bsr.w   Boss_AntroidSwapPoseSides
                 bra.w   Boss_AntroidReturnToNeutralLoadAnimation
 ; ---------------------------------------------------------------------------
 Boss_AntroidLeapAttackAChooseFollowup:                  ; CODE XREF: Boss_AntroidLeapAttackA+4E   j  ; was: loc_3784E
@@ -319,7 +319,7 @@ Boss_AntroidLeapAttackAChooseFollowup:                  ; CODE XREF: Boss_Antroi
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1E,d0
                 beq.s   Boss_AntroidEnterLeapAttackBPreparation
-                bsr.w   Boss_AntroidEndAttack
+                bsr.w   Boss_AntroidSwapPoseSides
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #6,d0
                 beq.w   Boss_AntroidEnterJumpSlamPreparation
@@ -327,9 +327,9 @@ Boss_AntroidLeapAttackAChooseFollowup:                  ; CODE XREF: Boss_Antroi
 ; ---------------------------------------------------------------------------
 Boss_AntroidLeapAttackAAnimate:                         ; CODE XREF: Boss_AntroidLeapAttackA+8   j  ; was: loc_3787E
                                         ; Boss_AntroidLeapAttackA+20   j
-                lea     word_38360(pc),a1
+                lea     Boss_AntroidLeapAttackAPoseCommands(pc),a1
                 nop
-                bsr.w   Anim_InterpolateToTarget
+                bsr.w   Boss_AntroidUpdatePoseAnimation
                 bra.w   Boss_AntroidRenderBlinkingPose
 ; ---------------------------------------------------------------------------
 ; Selects the second attack preparation state and falls through to its handler
@@ -344,9 +344,9 @@ Boss_AntroidPrepareLeapAttackB:                         ; DATA XREF: ROM:0003751
                 bra.s   Boss_AntroidLaunchLeapAttackB
 ; ---------------------------------------------------------------------------
 Boss_AntroidPrepareLeapAttackBAnimate:                  ; CODE XREF: Boss_AntroidPrepareLeapAttackB+6   j  ; was: loc_3789C
-                lea     word_3836E(pc),a1
+                lea     Boss_AntroidLeapAttackBPoseCommands(pc),a1
                 nop
-                bsr.w   Anim_InterpolateToTarget
+                bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderBlinkingPose
                 movea.w $48(a5),a0
                 move.l  #word_EB77A,8(a0)
@@ -400,9 +400,9 @@ Boss_AntroidLeapAttackBChooseFollowup:                  ; CODE XREF: Boss_Antroi
 ; ---------------------------------------------------------------------------
 Boss_AntroidLeapAttackBAnimate:                         ; CODE XREF: Boss_AntroidLeapAttackB+8   j  ; was: loc_3794C
                                         ; Boss_AntroidLeapAttackB+22   j
-                lea     word_3836E(pc),a1
+                lea     Boss_AntroidLeapAttackBPoseCommands(pc),a1
                 nop
-                bsr.w   Anim_InterpolateToTarget
+                bsr.w   Boss_AntroidUpdatePoseAnimation
                 bra.w   Boss_AntroidRenderBlinkingPose
 ; End of function Boss_AntroidLeapAttackB
 ; Stores the requested attack state and applies its initial launch velocity
