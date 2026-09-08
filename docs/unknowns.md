@@ -369,8 +369,27 @@ from below it; static flow confirms the launch, palette, hit-reaction,
 projectile and removal states. The exact visual identity is not established,
 so `src/stages/stage_11_rising_hazards.s` deliberately uses a behavioral name.
 Its cohesive 269 lines are a documented below-target exception instead of
-being padded with the adjacent but separately owned Gusthead eye chains.
+being padded with the adjacent but separately owned Gusthead linked chain.
 Twenty-one corrected generated claims are recorded in the name audit.
+
+The Gusthead linked-chain pass reduced the count to 9,587. Static ownership
+shows that type `$390` allocates and links eight segments through offset `$44`,
+using type `$394` for ordinary segments and type `$398` for the damageable
+terminal segment. The terminal walks the complete chain when hit, assigns
+scattered velocities, and moves every segment into a falling projectile state.
+The former eye/small-eye terminology is not supported by the code and has been
+replaced with neutral controller/segment/terminal names. Likewise,
+`Enemy_GustheadGetAngleToPlayer` was demonstrably false: it reads no player
+state and is an instruction-identical duplicate of the sine/cosine pair
+lookup, with callers in Stage 18 and Destroyer Proto. A provisional run on the
+currently unpinned emulator placed types `$390`, `$394`, and `$398` at frames
+21,989 and 22,000 immediately before the documented Gusthead fight. Because
+the sibling emulator moved away from pinned commit `a97abb6`, that ownership
+remains `hypothesis` in the name audit until the same breakpoints are replayed
+with the pinned toolchain. The coherent 352-line implementation now lives in
+`src/bosses/gusthead_linked_chain.s`; the unrelated type-`$3B8` subtype
+dispatcher was moved to the adjacent Destroyer Proto module. Forty new audit
+records and two corrected earlier records cover the pass.
 
 Four especially broad data labels are explicitly registered:
 

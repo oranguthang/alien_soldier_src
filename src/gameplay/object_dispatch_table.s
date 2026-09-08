@@ -227,9 +227,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Stage15_FallingRockMain
                 dc.l    Stage11_RisingHazardLauncherMain
                 dc.l    Stage11_RisingHazardMain
-                dc.l    Enemy_GustheadEyeMain
-                dc.l    Enemy_GustheadSmallEyeMain
-                dc.l    Enemy_GustheadEyeChainMain
+                dc.l    Boss_GustheadLinkedChainControllerMain
+                dc.l    Boss_GustheadLinkedChainSegmentMain
+                dc.l    Boss_GustheadLinkedChainTerminalMain
                 dc.l    Stage15_FragmentEmitterWaveMain
                 dc.l    Stage15_FragmentEmitterMain
                 dc.l    Projectile_FragmentClusterMain
@@ -237,7 +237,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_TrackerWinMain
                 dc.l    Enemy_TrackerWinMovement
                 dc.l    Enemy_TrackerMain
-                dc.l    Enemy_UpdateEntitySlot
+                dc.l    Entity_DispatchStoredSubtype
                 dc.l    Effect_ShipDestructionDebris
                 dc.l    Boss_JetsripperStateDispatcher
                 dc.l    Enemy_FlyerAnimation3

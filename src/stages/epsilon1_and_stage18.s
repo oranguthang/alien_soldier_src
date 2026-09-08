@@ -161,7 +161,7 @@ dword_E2D6:     dc.l    $FFFDC000, $FFFF4000
 
 ; Spawns projectile at calculated angle
 Enemy_SpawnProjectileAtAngle:                           ; CODE XREF: Stage11_RisingHazardReactToHit+26   p  ; was: sub_E2F6
-                                        ; Enemy_GustheadSmallEyeWait+34   j
+                                        ; Boss_GustheadLinkedChainBeginAttackCycle+34   j
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_E34A
                 jsr     (Projectile_InitType1A8).l

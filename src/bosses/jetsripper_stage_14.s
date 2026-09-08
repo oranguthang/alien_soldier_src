@@ -395,7 +395,7 @@ Boss_JetsripperRetractCircle:                           ; DATA XREF: ROM:0003243
                 move.w  #$E0,(word_FF8140).w
                 move.b  #$80,(byte_FF8142).w
                 move.b  #8,(byte_FF8143).w
-                bsr.w   Enemy_GustheadUpdatePosition
+                bsr.w   Entity_UpdatePolarPositionFromParent
                 move.w  #$100,$14(a5)
                 bsr.w   Enemy_Stage14FlierInit
                 bsr.w   Boss_JetsripperUpdateAnimation
@@ -691,14 +691,14 @@ Enemy_Stage14FlierAttack:                               ; DATA XREF: ROM:000323F
                 jsr     (Math_CalculateAngleToPlayer).l
                 movea.w a4,a5
                 move.w  d2,$40(a5)
-                bra.w   Enemy_GustheadUpdatePosition
+                bra.w   Entity_UpdatePolarPositionFromParent
 ; End of function Enemy_Stage14FlierAttack
 ; Handles boss death animation with rotation and position updates
 Boss_JetsripperDeathRotate:                             ; DATA XREF: ROM:000323F2   o  ; was: sub_32C86
                 bsr.w   Enemy_DeathExplode
                 bsr.w   Boss_JetsripperTrackPlayer
                 andi.w  #$1FE,$40(a5)
-                bra.w   Enemy_GustheadUpdatePosition
+                bra.w   Entity_UpdatePolarPositionFromParent
 ; End of function Boss_JetsripperDeathRotate
 ; Adjusts boss rotation angle to track player position with smooth turning
 Boss_JetsripperTrackPlayer:                             ; CODE XREF: Boss_JetsripperDeathRotate+4   p  ; was: sub_32C98
@@ -727,7 +727,7 @@ Enemy_Stage14FlierCheckBounds:                          ; DATA XREF: ROM:000323F
                 bsr.w   Enemy_DeathExplode
                 bsr.w   Enemy_Stage14FlierOutOfBounds
                 andi.w  #$1FE,$40(a5)
-                bra.w   Enemy_GustheadUpdatePosition
+                bra.w   Entity_UpdatePolarPositionFromParent
 ; End of function Enemy_Stage14FlierCheckBounds
 ; Handles flier out of bounds
 Enemy_Stage14FlierOutOfBounds:                          ; CODE XREF: Enemy_Stage14FlierCheckBounds+4   p  ; was: sub_32CE4
@@ -787,7 +787,7 @@ off_32D56:      dc.w    Enemy_FlierDeathRotate-*        ; DATA XREF: Enemy_Flier
 Enemy_FlierDeathRotate:                                 ; DATA XREF: ROM:off_32D56   o  ; was: sub_32D5C
                 move.w  $4C(a5),d0
                 add.w   d0,$42(a5)
-                bra.w   Enemy_GustheadUpdatePosition
+                bra.w   Entity_UpdatePolarPositionFromParent
 ; End of function Enemy_FlierDeathRotate
 ; Decrements rotation speed and clamps angle during death sequence
 Enemy_FlierDeathSlowdown:                               ; DATA XREF: ROM:00032D58   o  ; was: sub_32D68
@@ -795,13 +795,13 @@ Enemy_FlierDeathSlowdown:                               ; DATA XREF: ROM:00032D5
                 beq.w   Entity_UpdateReturn
                 andi.w  #$1FE,$40(a5)
                 subq.w  #1,$42(a5)
-                bra.w   Enemy_GustheadUpdatePosition
+                bra.w   Entity_UpdatePolarPositionFromParent
 ; End of function Enemy_FlierDeathSlowdown
 ; Decrements rotation and marks for destruction when timer expires
 Enemy_FlierDeathFinalize:                               ; DATA XREF: ROM:00032D5A   o  ; was: sub_32D80
                 move.w  $4C(a5),d0
                 sub.w   d0,$42(a5)
-                bsr.w   Enemy_GustheadUpdatePosition
+                bsr.w   Entity_UpdatePolarPositionFromParent
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
                 move.w  #$1000,2(a5)

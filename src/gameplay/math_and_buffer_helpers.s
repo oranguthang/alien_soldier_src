@@ -65,7 +65,7 @@ Math_PopulateTrigTable:                                 ; CODE XREF: Math_Calcul
 ; End of function Math_CalculateSineCosineTable
 ; ---------------------------------------------------------------------------
 Math_QuarterSineTable:  dc.w    0, $192, $323, $4B5, $645, $7D5, $964, $AF1  ; was: word_1B494
-                                        ; DATA XREF: Math_LookupSineTable   o
+                                        ; DATA XREF: Math_LookupSineCosinePair   o
                                         ; Enemy_SpawnProjectileAtAngle+3A   r
                 dc.w    $C7C, $E05, $F8C, $1111, $1294, $1413, $158F, $1708
                 dc.w    $187D, $19EF, $1B5D, $1CC6, $1E2B, $1F8B, $20E7, $223D

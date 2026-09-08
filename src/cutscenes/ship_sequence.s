@@ -411,7 +411,7 @@ Effect_SpawnStarParticle:                               ; CODE XREF: Cutscene_Sh
                 andi.w  #$FE,d0
                 addi.w  #$100,d0
                 movem.l a0,-(sp)
-                bsr.w   Math_LookupSineTable
+                bsr.w   Math_LookupSineCosinePair
                 movem.l (sp)+,a0
                 muls.w  d2,d0
                 move.l  d0,d3

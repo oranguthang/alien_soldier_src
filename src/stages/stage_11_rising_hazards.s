@@ -266,4 +266,3 @@ Stage11_RisingHazardRemove:
                 move.w  #$1000,2(a5)
                 rts
 ; End of function Stage11_RisingHazardReactToHit
-; Main handler for Gusthead eye enemy

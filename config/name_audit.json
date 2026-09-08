@@ -3039,23 +3039,23 @@
     {
       "address": "0x03126C",
       "previous_name": "Boss_JetsripperSpawnDirectionalProjectileAtFrame",
-      "current_name": "Enemy_GustheadSmallEyeSpawnFragmentClusterAtFrame",
+      "current_name": "Boss_GustheadLinkedChainEmitFragmentClusterAtAngle",
       "legacy_name": "sub_3126C",
       "evidence": "static",
       "basis": [
-        "The routine is reached from the Gusthead small-eye state table, uses that eye's coordinates and emits the shared cluster at animation value 0x19E.",
-        "It contains no Jetsripper object reference."
+        "The routine is reached from both linked-chain segment state tables and emits the shared cluster from the current segment.",
+        "Offset 0x40 is consumed as the polar angle by Entity_UpdatePolarPositionFromParent, so 0x19E is an angle-table offset rather than an animation frame."
       ]
     },
     {
       "address": "0x03129A",
       "previous_name": "Boss_JetsripperSpawnDirectionalWrapper",
-      "current_name": "Enemy_GustheadSmallEyeFragmentClusterAttack",
+      "current_name": "Boss_GustheadLinkedChainTerminalFragmentAttack",
       "legacy_name": "sub_3129A",
       "evidence": "static",
       "basis": [
-        "This Gusthead small-eye table entry calls the frame-gated cluster constructor and then falls into the eye position updater.",
-        "Its owning state table and adjacent states are Gusthead eye behavior."
+        "This terminal-segment table entry calls the angle-gated fragment constructor and then falls through to the shared polar-position updater.",
+        "The static table relationship proves terminal-chain ownership without assuming that the sprite depicts an eye."
       ]
     },
     {
@@ -3373,8 +3373,413 @@
       "legacy_name": "sub_3146C",
       "evidence": "static",
       "basis": [
-        "Both a Gusthead small-eye state and the Stage 11 type-0x388 launcher call this type-0x88 random-angle projectile constructor.",
+        "Both a Gusthead linked-chain state and the Stage 11 type-0x388 launcher call this type-0x88 random-angle projectile constructor.",
         "The shared caller set contradicts exclusive Gusthead ownership."
+      ]
+    },
+    {
+      "address": "0x008618",
+      "previous_name": "Math_LookupSineTable",
+      "current_name": "Math_LookupSineCosinePair",
+      "legacy_name": "sub_8618",
+      "evidence": "static",
+      "basis": [
+        "The routine returns the quarter-sine lookup in d1 and a quarter-cycle-shifted lookup in d0, producing sine and cosine together."
+      ]
+    },
+    {
+      "address": "0x0310E6",
+      "previous_name": "Enemy_GustheadEyeMain",
+      "current_name": "Boss_GustheadLinkedChainControllerMain",
+      "legacy_name": "sub_310E6",
+      "evidence": "hypothesis",
+      "basis": [
+        "The type-0x390 controller owns a linked allocation of eight type-0x394/0x398 objects through offset 0x44.",
+        "A provisional trace located it at frame 21989 immediately before the documented Gusthead encounter, but the emulator was not at the pinned commit and must be rerun before runtime confirmation."
+      ]
+    },
+    {
+      "address": "0x0310F6",
+      "previous_name": "off_310F6",
+      "current_name": "Boss_GustheadLinkedChainControllerStates",
+      "legacy_name": "off_310F6",
+      "evidence": "static",
+      "basis": [
+        "The type-0x390 dispatcher indexes these init, segment-allocation, and idle state offsets with entity state 0x04."
+      ]
+    },
+    {
+      "address": "0x0310FC",
+      "previous_name": "Enemy_GustheadEyeInit",
+      "current_name": "Boss_GustheadLinkedChainControllerInit",
+      "legacy_name": "sub_310FC",
+      "evidence": "static",
+      "basis": [
+        "This first controller state initializes flags and advances directly to the linked-segment allocator; it assigns no sprite mapping."
+      ]
+    },
+    {
+      "address": "0x03110E",
+      "previous_name": "Enemy_GustheadEyeSpawnChain",
+      "current_name": "Boss_GustheadLinkedChainSpawnSegments",
+      "legacy_name": "sub_3110E",
+      "evidence": "static",
+      "basis": [
+        "The routine allocates eight objects, links each predecessor through offset 0x44, and changes the final object from type 0x394 to type 0x398."
+      ]
+    },
+    {
+      "address": "0x031120",
+      "previous_name": "loc_31120",
+      "current_name": "Boss_GustheadLinkedChainSpawnNextSegment",
+      "legacy_name": "loc_31120",
+      "evidence": "static",
+      "basis": [
+        "This dbf loop body allocates, positions, delays, and links the next one of eight chain segments."
+      ]
+    },
+    {
+      "address": "0x031164",
+      "previous_name": "loc_31164",
+      "current_name": "Boss_GustheadLinkedChainHandleAllocationFailure",
+      "legacy_name": "loc_31164",
+      "evidence": "static",
+      "basis": [
+        "The allocation-failure branch writes removal flag 0x1000 to the controller and returns without completing the chain."
+      ]
+    },
+    {
+      "address": "0x03116C",
+      "previous_name": "nullsub_74",
+      "current_name": "Boss_GustheadLinkedChainControllerIdle",
+      "legacy_name": "nullsub_74",
+      "evidence": "static",
+      "basis": [
+        "This no-op is the controller's final state after all eight segments have been linked."
+      ]
+    },
+    {
+      "address": "0x03116E",
+      "previous_name": "Enemy_GustheadEyeDestroy",
+      "current_name": "Boss_GustheadLinkedChainCullAtLeftEdge",
+      "legacy_name": "sub_3116E",
+      "evidence": "static",
+      "basis": [
+        "When controller X drops below 0x60, the routine walks all eight offset-0x44 links and marks every segment for removal."
+      ]
+    },
+    {
+      "address": "0x03117E",
+      "previous_name": "loc_3117E",
+      "current_name": "Boss_GustheadLinkedChainCullNextSegment",
+      "legacy_name": "loc_3117E",
+      "evidence": "static",
+      "basis": [
+        "This loop follows the next segment pointer and writes the removal flag when a link exists."
+      ]
+    },
+    {
+      "address": "0x03118E",
+      "previous_name": "loc_3118E",
+      "current_name": "Boss_GustheadLinkedChainContinueCull",
+      "legacy_name": "loc_3118E",
+      "evidence": "static",
+      "basis": [
+        "Both missing-link and successfully removed paths converge here to continue the fixed eight-entry cull loop."
+      ]
+    },
+    {
+      "address": "0x031194",
+      "previous_name": "Enemy_GustheadSmallEyeMain",
+      "current_name": "Boss_GustheadLinkedChainSegmentMain",
+      "legacy_name": "sub_31194",
+      "evidence": "static",
+      "basis": [
+        "The controller constructs type 0x394 for every ordinary linked segment, and this entry dispatches that type's seven states.",
+        "The neutral segment name removes the unverified claim that its one-piece mapping depicts a small eye."
+      ]
+    },
+    {
+      "address": "0x0311A0",
+      "previous_name": "off_311A0",
+      "current_name": "Boss_GustheadLinkedChainSegmentStates",
+      "legacy_name": "off_311A0",
+      "evidence": "static",
+      "basis": [
+        "The type-0x394 main handler indexes these seven state offsets with entity state 0x04."
+      ]
+    },
+    {
+      "address": "0x0311AE",
+      "previous_name": "Enemy_GustheadSmallEyeInit",
+      "current_name": "Boss_GustheadLinkedChainSegmentInit",
+      "legacy_name": "sub_311AE",
+      "evidence": "static",
+      "basis": [
+        "This first type-0x394 state installs the ordinary-segment mapping and advances to the delayed attack cycle."
+      ]
+    },
+    {
+      "address": "0x0311CE",
+      "previous_name": "Enemy_GustheadSmallEyeWait",
+      "current_name": "Boss_GustheadLinkedChainBeginAttackCycle",
+      "legacy_name": "sub_311CE",
+      "evidence": "static",
+      "basis": [
+        "After its per-segment delay expires, the state sets angle 0x180, clears radius, advances to radius expansion, and fires once."
+      ]
+    },
+    {
+      "address": "0x0311EA",
+      "previous_name": "loc_311EA",
+      "current_name": "Boss_GustheadLinkedChainFireRandomShot",
+      "legacy_name": "loc_311EA",
+      "evidence": "static",
+      "basis": [
+        "This shared tail chooses an even random angle offset and jumps to the type-0x1A8 projectile constructor from the segment's X position."
+      ]
+    },
+    {
+      "address": "0x031208",
+      "previous_name": "Enemy_GustheadSmallEyeSpawn",
+      "current_name": "Boss_GustheadLinkedChainTerminalBeginAttackCycle",
+      "legacy_name": "sub_31208",
+      "evidence": "static",
+      "basis": [
+        "Only the type-0x398 terminal-state table reaches this variant, which plays sound 0x4D before joining the ordinary cycle's first shot."
+      ]
+    },
+    {
+      "address": "0x031232",
+      "previous_name": "Enemy_GustheadSmallEyeAttack",
+      "current_name": "Boss_GustheadLinkedChainExpandRadiusAndFire",
+      "legacy_name": "sub_31232",
+      "evidence": "static",
+      "basis": [
+        "The shared polar updater consumes offset 0x42 as radius; this state adds eight until radius 0x40 while attempting random shots."
+      ]
+    },
+    {
+      "address": "0x031254",
+      "previous_name": "Enemy_GustheadSmallEyeUpdate",
+      "current_name": "Boss_GustheadLinkedChainSweepAngleBackward",
+      "legacy_name": "sub_31254",
+      "evidence": "static",
+      "basis": [
+        "The state subtracts two from polar angle offset 0x40 until it falls below 0x140, then advances."
+      ]
+    },
+    {
+      "address": "0x031292",
+      "previous_name": "Enemy_GustheadSmallEyeAimFragmentClusterLeft",
+      "current_name": "Boss_GustheadLinkedChainAimFragmentClusterLeft",
+      "legacy_name": "loc_31292",
+      "evidence": "static",
+      "basis": [
+        "The branch selects fragment-cluster direction 0x10 when the player's X coordinate is left of the current chain segment."
+      ]
+    },
+    {
+      "address": "0x03129E",
+      "previous_name": "Boss_GustheadRotateAndRepeatAttack",
+      "current_name": "Boss_GustheadLinkedChainSweepAngleForward",
+      "legacy_name": "sub_3129E",
+      "evidence": "static",
+      "basis": [
+        "The state advances angle offset 0x40 to 0x1A0 and repeats the backward sweep three times before advancing."
+      ]
+    },
+    {
+      "address": "0x0312BC",
+      "previous_name": "loc_312BC",
+      "current_name": "Boss_GustheadLinkedChainAdvanceAfterOrbit",
+      "legacy_name": "loc_312BC",
+      "evidence": "static",
+      "basis": [
+        "The completed repetition path advances the segment state to radial retraction."
+      ]
+    },
+    {
+      "address": "0x0312C2",
+      "previous_name": "Boss_GustheadRotateToHome",
+      "current_name": "Boss_GustheadLinkedChainRetractRadius",
+      "legacy_name": "sub_312C2",
+      "evidence": "static",
+      "basis": [
+        "The state subtracts eight from polar radius offset 0x42 until it reaches -8; it does not modify the angle."
+      ]
+    },
+    {
+      "address": "0x0312E2",
+      "previous_name": "Boss_GustheadRotateSpawnEyesAndSound",
+      "current_name": "Boss_GustheadLinkedChainTerminalRetractAndFire",
+      "legacy_name": "sub_312E2",
+      "evidence": "static",
+      "basis": [
+        "The terminal-only state retracts radius offset 0x42 while firing and plays sound 0x4D at radius -8; it spawns no eyes."
+      ]
+    },
+    {
+      "address": "0x03130E",
+      "previous_name": "Enemy_GustheadSmallEyeCheckSpawn",
+      "current_name": "Boss_GustheadLinkedChainTryRandomShot",
+      "legacy_name": "sub_3130E",
+      "evidence": "static",
+      "basis": [
+        "The helper enters the random-shot tail only when the global frame counter is divisible by four."
+      ]
+    },
+    {
+      "address": "0x03131C",
+      "previous_name": "Boss_GustheadWaitAndSpawnEyes",
+      "current_name": "Boss_GustheadLinkedChainTerminalWaitAndFire",
+      "legacy_name": "sub_3131C",
+      "evidence": "static",
+      "basis": [
+        "The terminal-only state updates polar position and fires until its countdown reaches 0xA0; it allocates no eye objects."
+      ]
+    },
+    {
+      "address": "0x03133A",
+      "previous_name": "Enemy_GustheadGetAngleToPlayer",
+      "current_name": "Math_LookupSineCosinePairDuplicate",
+      "legacy_name": "sub_3133A",
+      "evidence": "static",
+      "basis": [
+        "The routine is instruction-for-instruction equivalent to Math_LookupSineCosinePair and reads no player state.",
+        "Callers include Stage 18 worms and Destroyer Proto, so Gusthead ownership and angle-to-player behavior were both false."
+      ]
+    },
+    {
+      "address": "0x031352",
+      "previous_name": "Enemy_GustheadEyeChainMain",
+      "current_name": "Boss_GustheadLinkedChainTerminalMain",
+      "legacy_name": "sub_31352",
+      "evidence": "static",
+      "basis": [
+        "The chain allocator assigns type 0x398 only to its final segment, which stores a root-controller link at offset 0x48.",
+        "On damage this handler walks and scatters all eight segments before entering terminal fall state 0x0E."
+      ]
+    },
+    {
+      "address": "0x03136C",
+      "previous_name": "loc_3136C",
+      "current_name": "Boss_GustheadLinkedChainScatterNextSegment",
+      "legacy_name": "loc_3136C",
+      "evidence": "static",
+      "basis": [
+        "This eight-entry loop follows the chain, assigns fall state 0x0C, randomizes velocity, and enables each segment sprite."
+      ]
+    },
+    {
+      "address": "0x0313A8",
+      "previous_name": "loc_313A8",
+      "current_name": "Boss_GustheadLinkedChainDispatchTerminalState",
+      "legacy_name": "loc_313A8",
+      "evidence": "static",
+      "basis": [
+        "Both the undamaged path and states at or above 0x0E converge here before indexing the terminal-state table."
+      ]
+    },
+    {
+      "address": "0x0313B4",
+      "previous_name": "off_313B4",
+      "current_name": "Boss_GustheadLinkedChainTerminalStates",
+      "legacy_name": "off_313B4",
+      "evidence": "static",
+      "basis": [
+        "The type-0x398 terminal handler indexes these eight offsets, sharing four motion states with ordinary segments and adding terminal variants."
+      ]
+    },
+    {
+      "address": "0x0313C4",
+      "previous_name": "Enemy_GustheadEyeChainInit",
+      "current_name": "Boss_GustheadLinkedChainTerminalInit",
+      "legacy_name": "sub_313C4",
+      "evidence": "static",
+      "basis": [
+        "This type-0x398 initializer installs the four-piece terminal mapping and configures health, collision, and hitbox fields absent from ordinary segments."
+      ]
+    },
+    {
+      "address": "0x031410",
+      "previous_name": "Boss_GustheadFallAndSpawnProjectiles",
+      "current_name": "Boss_GustheadLinkedChainTerminalFallAndFire",
+      "legacy_name": "sub_31410",
+      "evidence": "static",
+      "basis": [
+        "The terminal-only final state applies stronger downward acceleration, fires every fourth frame, and removes the segment below Y 0x1A0."
+      ]
+    },
+    {
+      "address": "0x031446",
+      "previous_name": "Boss_GustheadFallAndSpawnSlowProjectiles",
+      "current_name": "Boss_GustheadLinkedChainSegmentFallAndFire",
+      "legacy_name": "sub_31446",
+      "evidence": "static",
+      "basis": [
+        "The ordinary-segment final state applies slower downward acceleration, fires every eighth frame, and removes the segment below Y 0x180."
+      ]
+    },
+    {
+      "address": "0x0314BA",
+      "previous_name": "Boss_GustheadResetState",
+      "current_name": "Boss_GustheadLinkedChainRemoveSegment",
+      "legacy_name": "sub_314BA",
+      "evidence": "static",
+      "basis": [
+        "Both falling states branch here only after crossing their Y limit, and the routine writes removal flag 0x1000 rather than resetting state 0x04."
+      ]
+    },
+    {
+      "address": "0x0314C2",
+      "previous_name": "Enemy_UpdateEntitySlot",
+      "current_name": "Entity_DispatchStoredSubtype",
+      "legacy_name": "sub_314C2",
+      "evidence": "static",
+      "basis": [
+        "The type-0x3B8 entry reads the offset-0x48 selector and dispatches one of five heterogeneous handler subtypes."
+      ]
+    },
+    {
+      "address": "0x0314CE",
+      "previous_name": "off_314CE",
+      "current_name": "Entity_StoredSubtypeHandlers",
+      "legacy_name": "off_314CE",
+      "evidence": "static",
+      "basis": [
+        "This relative-offset table contains Destroyer Proto main/part states, its projectile handler, and a Stage 14 turret initializer selected by offset 0x48."
+      ]
+    },
+    {
+      "address": "0x031F8E",
+      "previous_name": "Enemy_GustheadUpdatePosition",
+      "current_name": "Entity_UpdatePolarPositionFromParent",
+      "legacy_name": "sub_31F8E",
+      "evidence": "static",
+      "basis": [
+        "The helper looks up sine/cosine from angle 0x40, scales by radius 0x42, and adds parent coordinates through link 0x44.",
+        "Jetsripper and Destroyer handlers also call it, so Gusthead ownership was too narrow."
+      ]
+    },
+    {
+      "address": "0x0EB338",
+      "previous_name": "word_EB338",
+      "current_name": "Boss_GustheadLinkedChainTerminalMapping",
+      "legacy_name": "word_EB338",
+      "evidence": "static",
+      "basis": [
+        "The type-0x398 terminal initializer is the sole pointer owner, and the mapping encodes four sprite pieces."
+      ]
+    },
+    {
+      "address": "0x0EB350",
+      "previous_name": "word_EB350",
+      "current_name": "Boss_GustheadLinkedChainSegmentMapping",
+      "legacy_name": "word_EB350",
+      "evidence": "static",
+      "basis": [
+        "The type-0x394 ordinary-segment initializer is the sole pointer owner, and the mapping encodes one sprite piece."
       ]
     }
   ]

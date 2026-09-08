@@ -1,4 +1,19 @@
-Boss_DestroyerProtoMain:                                ; DATA XREF: ROM:off_314CE   o  ; was: sub_314D8
+; Dispatches type $3B8 through the subtype index stored at entity offset $48
+Entity_DispatchStoredSubtype:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_314C2
+                move.w  $48(a5),d0
+                lea     Entity_StoredSubtypeHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Entity_DispatchStoredSubtype
+; ---------------------------------------------------------------------------
+Entity_StoredSubtypeHandlers:   dc.w    Boss_DestroyerProtoMain-*  ; DATA XREF: Entity_DispatchStoredSubtype+4   o  ; was: off_314CE
+                dc.w    Boss_DestroyerProtoState4-*
+                dc.w    Boss_DestroyerProtoState5-*
+                dc.w    Projectile_DestroyerProtoMain-*
+                dc.w    Enemy_Stage14TurretInit-*
+
+; Main boss handler
+Boss_DestroyerProtoMain:                                ; DATA XREF: ROM:Entity_StoredSubtypeHandlers   o  ; was: sub_314D8
                 jsr     (Gfx_InitPaletteFade).l
                 bsr.w   Boss_DestroyerProtoGfxUpdate
                 cmpi.w  #$2E,4(a5)                      ; '.'
@@ -147,7 +162,7 @@ Boss_DestroyerProtoCollision:                           ; CODE XREF: Boss_Destro
                 addq.w  #8,$40(a5)
                 andi.w  #$1FE,$40(a5)
                 move.w  $40(a5),d0
-                bsr.w   Enemy_GustheadGetAngleToPlayer
+                bsr.w   Math_LookupSineCosinePairDuplicate
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a5)
@@ -833,12 +848,12 @@ Boss_DestroyerProtoState4:                              ; DATA XREF: ROM:000314D
                 tst.w   4(a5)
                 bne.w   Projectile_DestroyerProtoUpdate
 ; End of function Boss_DestroyerProtoState4
-; Updates enemy position with bounds
-Enemy_GustheadUpdatePosition:                           ; CODE XREF: Enemy_GustheadSmallEyeWait   p  ; was: sub_31F8E
-                                        ; sub_31208   p
+; Recomputes an entity's position from its parent, polar angle, and radius
+Entity_UpdatePolarPositionFromParent:                   ; CODE XREF: Boss_GustheadLinkedChainBeginAttackCycle   p  ; was: sub_31F8E
+                                        ; Boss_GustheadLinkedChainTerminalBeginAttackCycle   p
                 movea.w $44(a5),a4
                 move.w  $40(a5),d0
-                bsr.w   Enemy_GustheadGetAngleToPlayer
+                bsr.w   Math_LookupSineCosinePairDuplicate
                 move.w  $42(a5),d2
                 muls.w  d2,d0
                 add.l   $10(a4),d0
@@ -847,12 +862,12 @@ Enemy_GustheadUpdatePosition:                           ; CODE XREF: Enemy_Gusth
                 add.l   $14(a4),d1
                 move.l  d1,$14(a5)
                 rts
-; End of function Enemy_GustheadUpdatePosition
+; End of function Entity_UpdatePolarPositionFromParent
 ; Boss state handler 5
 Boss_DestroyerProtoState5:                              ; DATA XREF: ROM:000314D2   o  ; was: sub_31FB4
                 tst.w   4(a5)
                 bne.w   loc_31FEA
-                bsr.w   Enemy_GustheadUpdatePosition
+                bsr.w   Entity_UpdatePolarPositionFromParent
 loc_31FC0:                                              ; CODE XREF: Boss_DestroyerProtoState5+3C   p
                 move.w  $46(a5),d0
                 addi.w  #$10,d0

@@ -32,7 +32,7 @@ loc_7DEA:                                               ; CODE XREF: Effect_Init
                 andi.w  #$7F,d2
                 jsr     (RandomNumber).l
                 andi.w  #$1FE,d0
-                bsr.w   Math_LookupSineTable
+                bsr.w   Math_LookupSineCosinePair
                 muls.w  d2,d0
                 move.l  d0,d3
                 swap    d0
@@ -363,7 +363,7 @@ Cutscene_PlanetZoomInStep:                              ; DATA XREF: ROM:0000823
                 subi.l  #$8000,(dword_FF011C).l
                 subi.w  #4,(word_FF011A).l
                 move.w  (word_FF011A).l,d0
-                bsr.w   Math_LookupSineTable
+                bsr.w   Math_LookupSineCosinePair
                 move.l  (dword_FF011C).l,d2
                 asl.l   #8,d2
                 swap    d2

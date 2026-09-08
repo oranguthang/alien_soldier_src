@@ -170,7 +170,7 @@
                 include "src/enemies/stage_18.s"
                 include "src/stages/stage_15_fragment_hazards.s"
                 include "src/stages/stage_11_rising_hazards.s"
-                include "src/bosses/gusthead.s"
+                include "src/bosses/gusthead_linked_chain.s"
                 include "src/bosses/destroyer_proto.s"
                 include "src/projectiles/destroyer_proto.s"
                 include "src/bosses/jetsripper_stage_14.s"

@@ -394,7 +394,7 @@ Stage18_SegmentedWormInitializeParticleVelocity:        ; CODE XREF: Stage18_Seg
                 jsr     (RandomNumber).l
                 andi.w  #$FE,d0
                 addi.w  #$100,d0
-                bsr.w   Enemy_GustheadGetAngleToPlayer
+                bsr.w   Math_LookupSineCosinePairDuplicate
                 ext.l   d0
                 asl.l   #3,d0
                 move.l  d0,$18(a4)
@@ -461,7 +461,7 @@ Stage18_SegmentedWormRandomizeVelocity:                 ; CODE XREF: Stage18_Seg
                 jsr     (RandomNumber).l
                 andi.w  #$FE,d0
                 addi.w  #$100,d0
-                bsr.w   Enemy_GustheadGetAngleToPlayer
+                bsr.w   Math_LookupSineCosinePairDuplicate
                 ext.l   d0
                 asl.l   #3,d0
                 ext.l   d1

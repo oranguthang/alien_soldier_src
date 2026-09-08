@@ -99,7 +99,7 @@ data are checked.
 | `0x007644` | `Cutscene_UpdateStarPositions` | planet/star rendering |
 | `0x007B30` | `Cutscene_InitCreditsScreen` | credits screen |
 | `0x007D68` | `Effect_InitializeStarfield` | starfield/planet effects |
-| `0x008618` | `Math_LookupSineTable` | sine lookup helpers and table |
+| `0x008618` | `Math_LookupSineCosinePair` | sine/cosine lookup helpers and table |
 | `0x0086F0` | `Cutscene_ShipObjectDispatcher` | ship object family; continues past old file boundary |
 
 The former `Player_StateDispatcher` was contradicted by its dispatch variable
