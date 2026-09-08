@@ -122,7 +122,7 @@ loc_3AAA:                                               ; CODE XREF: Gfx_Process
                 rts
 ; End of function Gfx_ProcessPaletteDual
 ; Updates palette with fade effect using timer
-Gfx_UpdatePaletteFade:                                  ; CODE XREF: Boss_DestroyerProtoSpawnProjectile2   p  ; was: sub_3ABA
+Gfx_UpdatePaletteFade:                                  ; CODE XREF: Boss_DestroyerProtoEmitDefeatParticle   p  ; was: sub_3ABA
                                         ; sub_35DDC   p
                 bsr.s   Gfx_CalculateFadeParams
                 move.w  (word_FFE3EC).w,(dword_FF8040).w

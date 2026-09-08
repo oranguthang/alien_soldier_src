@@ -391,6 +391,19 @@ with the pinned toolchain. The coherent 352-line implementation now lives in
 dispatcher was moved to the adjacent Destroyer Proto module. Forty new audit
 records and two corrected earlier records cover the pass.
 
+The Destroyer Proto pass reduced the count to 9,547 and replaced the former
+964-line monolith with four ROM-contiguous modules following actual control and
+data ownership: 281 lines of dispatch, introduction, and linked-part geometry;
+413 lines of target selection and twin-shot, spread, and aimed-stream combat;
+197 lines of defeat scatter and arena effects; and 224 lines of private
+velocity, offset, mapping, and type-`$3B8` projectile handlers shared with
+Stage 14. Static callers disproved seven generated Jetsripper ownership claims
+in the shared projectile tail. Forty address-derived definitions were removed,
+and 63 corrected or newly meaningful names are recorded in the name audit.
+Runtime ownership remains unclaimed until these paths can be replayed with the
+pinned emulator; the current evidence level is static or hypothesis as recorded
+per symbol.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

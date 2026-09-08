@@ -73,7 +73,7 @@ Projectile_UpdateWithImpactFrames_Return:               ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_UpdateWithImpactFrames
 ; Updates a projectile while emitting randomized explosion sounds
-Projectile_UpdateWithExplosionSound:                    ; CODE XREF: Boss_DestroyerProtoSpawnProjectile2+12   p  ; was: sub_2A3E6
+Projectile_UpdateWithExplosionSound:                    ; CODE XREF: Boss_DestroyerProtoEmitDefeatParticle+12   p  ; was: sub_2A3E6
                                         ; sub_3B602   p
                 subq.w  #1,(word_FF809E).w
                 bpl.s   Projectile_UpdateWithImpactFrames_Update

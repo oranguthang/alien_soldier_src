@@ -3781,6 +3781,510 @@
       "basis": [
         "The type-0x394 ordinary-segment initializer is the sole pointer owner, and the mapping encodes one sprite piece."
       ]
+    },
+    {
+      "address": "0x031502",
+      "previous_name": "loc_31502",
+      "current_name": "Boss_DestroyerProtoDispatchState",
+      "legacy_name": "loc_31502",
+      "evidence": "static",
+      "basis": ["The normal and forced-defeat paths converge here before indexing the boss state table with offset 0x04."]
+    },
+    {
+      "address": "0x03150E",
+      "previous_name": "off_3150E",
+      "current_name": "Boss_DestroyerProtoStates",
+      "legacy_name": "off_3150E",
+      "evidence": "static",
+      "basis": ["The main handler indexes these 25 relative offsets as the complete intro, combat, and defeat state sequence."]
+    },
+    {
+      "address": "0x03155A",
+      "previous_name": "loc_3155A",
+      "current_name": "Boss_DestroyerProtoStoreArenaEffectPhase",
+      "legacy_name": "loc_3155A",
+      "evidence": "static",
+      "basis": ["The wrapped and non-wrapped phase paths meet here before storing the phase and its two table-selected effect words."]
+    },
+    {
+      "address": "0x03156C",
+      "previous_name": "word_3156C",
+      "current_name": "Boss_DestroyerProtoArenaEffectValueATable",
+      "legacy_name": "word_3156C",
+      "evidence": "static",
+      "basis": ["Boss_DestroyerProtoCycleArenaEffect is the sole reader and writes each selected value to RAM 0xFFE366."]
+    },
+    {
+      "address": "0x031580",
+      "previous_name": "word_31580",
+      "current_name": "Boss_DestroyerProtoArenaEffectValueBTable",
+      "legacy_name": "word_31580",
+      "evidence": "static",
+      "basis": ["Boss_DestroyerProtoCycleArenaEffect is the sole reader and writes each selected value to RAM 0xFFE368."]
+    },
+    {
+      "address": "0x0315FA",
+      "previous_name": "loc_315FA",
+      "current_name": "Boss_DestroyerProtoInitNextPart",
+      "legacy_name": "loc_315FA",
+      "evidence": "static",
+      "basis": ["This six-entry loop initializes consecutive entity slots with part angles, radii, parent links, subtypes, and mappings."]
+    },
+    {
+      "address": "0x031676",
+      "previous_name": "word_31676",
+      "current_name": "Boss_DestroyerProtoPartAngleTable",
+      "legacy_name": "word_31676",
+      "evidence": "static",
+      "basis": ["The six-part initializer copies these values into polar angle fields 0x40 and 0x46."]
+    },
+    {
+      "address": "0x031682",
+      "previous_name": "word_31682",
+      "current_name": "Boss_DestroyerProtoPartRadiusTable",
+      "legacy_name": "word_31682",
+      "evidence": "static",
+      "basis": ["The initializer stores these six values as part radii and the open-parts helper treats them as the target radii."]
+    },
+    {
+      "address": "0x03168E",
+      "previous_name": "word_3168E",
+      "current_name": "Boss_DestroyerProtoPartParentSlotTable",
+      "legacy_name": "word_3168E",
+      "evidence": "static",
+      "basis": ["Each word is stored at child offset 0x44 and later dereferenced as the parent entity slot by the polar-position updater."]
+    },
+    {
+      "address": "0x03169A",
+      "previous_name": "word_3169A",
+      "current_name": "Boss_DestroyerProtoPartSubtypeTable",
+      "legacy_name": "word_3169A",
+      "evidence": "static",
+      "basis": ["The six values select subtype-dispatch entries 2 or 4 for ordinary and animated linked parts."]
+    },
+    {
+      "address": "0x0316A6",
+      "previous_name": "off_316A6",
+      "current_name": "Boss_DestroyerProtoPartMappingTable",
+      "legacy_name": "off_316A6",
+      "evidence": "static",
+      "basis": ["The subtype-derived index chooses one of two sprite mappings for each initialized part."]
+    },
+    {
+      "address": "0x0316AE",
+      "previous_name": "word_316AE",
+      "current_name": "Boss_DestroyerProtoGraphicsLoadDescriptor",
+      "legacy_name": "word_316AE",
+      "evidence": "static",
+      "basis": ["The intro initializer passes this descriptor directly to Gfx_LoadCompressedTiles before creating the six parts."]
+    },
+    {
+      "address": "0x031792",
+      "previous_name": "loc_31792",
+      "current_name": "Boss_DestroyerProtoCloseNextPart",
+      "legacy_name": "loc_31792",
+      "evidence": "static",
+      "basis": ["This six-entry loop subtracts eight from each nonzero part radius."]
+    },
+    {
+      "address": "0x03179E",
+      "previous_name": "loc_3179E",
+      "current_name": "Boss_DestroyerProtoContinueCloseParts",
+      "legacy_name": "loc_3179E",
+      "evidence": "static",
+      "basis": ["Zero and contracted-radius paths converge here before advancing to the next part slot."]
+    },
+    {
+      "address": "0x0317B4",
+      "previous_name": "loc_317B4",
+      "current_name": "Boss_DestroyerProtoOpenNextPart",
+      "legacy_name": "loc_317B4",
+      "evidence": "static",
+      "basis": ["This six-entry loop compares each radius with its configured target and adds eight until it matches."]
+    },
+    {
+      "address": "0x0317C8",
+      "previous_name": "loc_317C8",
+      "current_name": "Boss_DestroyerProtoContinueOpenParts",
+      "legacy_name": "loc_317C8",
+      "evidence": "static",
+      "basis": ["Matched and expanded-radius paths converge here before advancing to the next part slot."]
+    },
+    {
+      "address": "0x03184C",
+      "previous_name": "loc_3184C",
+      "current_name": "Boss_DestroyerProtoChooseNextMovementTarget",
+      "legacy_name": "loc_3184C",
+      "evidence": "static",
+      "basis": ["This shared tail chooses one of eight target coordinate pairs and derives fixed-point acceleration toward it."]
+    },
+    {
+      "address": "0x03188C",
+      "previous_name": "word_3188C",
+      "current_name": "Boss_DestroyerProtoMovementTargetTable",
+      "legacy_name": "word_3188C",
+      "evidence": "static",
+      "basis": ["The target-selection state indexes this table as eight X/Y coordinate pairs."]
+    },
+    {
+      "address": "0x03197E",
+      "previous_name": "loc_3197E",
+      "current_name": "Boss_DestroyerProtoSelectSpreadAttack",
+      "legacy_name": "loc_3197E",
+      "evidence": "static",
+      "basis": ["This random-choice branch selects state 0x16, the opening state of the rotating spread sequence."]
+    },
+    {
+      "address": "0x031B02",
+      "previous_name": "loc_31B02",
+      "current_name": "Projectile_InitSharedHitReactiveShot",
+      "legacy_name": "loc_31B02",
+      "evidence": "static",
+      "basis": ["Both the Destroyer Proto spread and Stage 14 split-shot code enter this initializer, which selects subtype 8 and collision fields."]
+    },
+    {
+      "address": "0x031B3C",
+      "previous_name": "loc_31B3C",
+      "current_name": "Projectile_DestroyerProtoInitSpreadShot",
+      "legacy_name": "loc_31B3C",
+      "evidence": "static",
+      "basis": ["The alternate spread branch selects subtype 6, the delayed Destroyer Proto spread dispatcher, and its private mapping."]
+    },
+    {
+      "address": "0x031DB0",
+      "previous_name": "loc_31DB0",
+      "current_name": "Boss_DestroyerProtoScatterNextPart",
+      "legacy_name": "loc_31DB0",
+      "evidence": "static",
+      "basis": ["This six-entry defeat loop assigns table-selected velocities and activates each linked part."]
+    },
+    {
+      "address": "0x031E7C",
+      "previous_name": "off_31E7C",
+      "current_name": "Boss_DestroyerProtoDefeatParticleMappingTable",
+      "legacy_name": "off_31E7C",
+      "evidence": "static",
+      "basis": ["The randomized defeat-particle emitter is the sole reader of these eight mapping pointers."]
+    },
+    {
+      "address": "0x031EC8",
+      "previous_name": "word_31EC8",
+      "current_name": "Boss_DestroyerProtoDefeatGraphicsLoadDescriptor",
+      "legacy_name": "word_31EC8",
+      "evidence": "static",
+      "basis": ["The final defeat state passes this descriptor to Gfx_LoadCompressedTiles immediately before removing the boss."]
+    },
+    {
+      "address": "0x031F02",
+      "previous_name": "loc_31F02",
+      "current_name": "Boss_DestroyerProtoRotateNextArenaEffectEntry",
+      "legacy_name": "loc_31F02",
+      "evidence": "static",
+      "basis": ["This 192-entry loop reads successive arena-effect words and conditionally rotates their low nine-bit angle."]
+    },
+    {
+      "address": "0x031F14",
+      "previous_name": "loc_31F14",
+      "current_name": "Boss_DestroyerProtoApplyArenaEffectRotation",
+      "legacy_name": "loc_31F14",
+      "evidence": "static",
+      "basis": ["Entries outside the excluded 0x140-0x17F interval receive the current table-selected angle delta here."]
+    },
+    {
+      "address": "0x031F1A",
+      "previous_name": "loc_31F1A",
+      "current_name": "Boss_DestroyerProtoAdvanceArenaEffectEntry",
+      "legacy_name": "loc_31F1A",
+      "evidence": "static",
+      "basis": ["Both rotated and excluded entries advance the buffer and cycle the rotation-delta index here."]
+    },
+    {
+      "address": "0x031F28",
+      "previous_name": "word_31F28",
+      "current_name": "Boss_DestroyerProtoArenaEffectRotationTable",
+      "legacy_name": "word_31F28",
+      "evidence": "static",
+      "basis": ["The defeat arena loop cycles these eight positive/negative angle delta pairs across its buffer entries."]
+    },
+    {
+      "address": "0x031FC0",
+      "previous_name": "loc_31FC0",
+      "current_name": "Boss_DestroyerProtoAnimatedPartSelectFrame",
+      "legacy_name": "loc_31FC0",
+      "evidence": "static",
+      "basis": ["This shared path quantizes angle 0x46 and selects both a mapping frame and sprite attribute for an animated part."]
+    },
+    {
+      "address": "0x031FEA",
+      "previous_name": "loc_31FEA",
+      "current_name": "Boss_DestroyerProtoAnimatedPartAdvance",
+      "legacy_name": "loc_31FEA",
+      "evidence": "static",
+      "basis": ["After scatter activation, this path advances the frame angle, selects the frame, and falls into arena-bound removal."]
+    },
+    {
+      "address": "0x031FF8",
+      "previous_name": "word_31FF8",
+      "current_name": "Projectile_DestroyerProtoVelocityXTable",
+      "legacy_name": "word_31FF8",
+      "evidence": "static",
+      "basis": ["Spread initialization and defeat scattering index these 16 longword-equivalent entries as X velocities."]
+    },
+    {
+      "address": "0x032038",
+      "previous_name": "word_32038",
+      "current_name": "Projectile_DestroyerProtoVelocityYTable",
+      "legacy_name": "word_32038",
+      "evidence": "static",
+      "basis": ["Spread initialization and defeat scattering index these 16 longword-equivalent entries as Y velocities."]
+    },
+    {
+      "address": "0x032078",
+      "previous_name": "dword_32078",
+      "current_name": "Projectile_DestroyerProtoSpawnOffsetXTable",
+      "legacy_name": "dword_32078",
+      "evidence": "static",
+      "basis": ["Projectile_DestroyerProtoInitFromPart adds these angle-indexed fixed-point values to the parent part's X position."]
+    },
+    {
+      "address": "0x0320B8",
+      "previous_name": "dword_320B8",
+      "current_name": "Projectile_DestroyerProtoSpawnOffsetYTable",
+      "legacy_name": "dword_320B8",
+      "evidence": "static",
+      "basis": ["Projectile_DestroyerProtoInitFromPart adds these angle-indexed fixed-point values to the parent part's Y position."]
+    },
+    {
+      "address": "0x0320F8",
+      "previous_name": "word_320F8",
+      "current_name": "Projectile_DestroyerProtoSpriteAttributeTable",
+      "legacy_name": "word_320F8",
+      "evidence": "static",
+      "basis": ["The projectile activator and animated-part frame selector copy these angle-indexed words into sprite attribute 0x0E."]
+    },
+    {
+      "address": "0x032118",
+      "previous_name": "off_32118",
+      "current_name": "Boss_DestroyerProtoPartMappingFrameTable",
+      "legacy_name": "off_32118",
+      "evidence": "static",
+      "basis": ["The animated linked-part handler selects these 16 mapping pointers from its quantized frame angle."]
+    },
+    {
+      "address": "0x032218",
+      "previous_name": "off_32218",
+      "current_name": "Projectile_DestroyerProtoStates",
+      "legacy_name": "off_32218",
+      "evidence": "static",
+      "basis": ["Projectile_DestroyerProtoMain indexes these five delayed-spread, restore, hit-response, and reflection states."]
+    },
+    {
+      "address": "0x03225E",
+      "previous_name": "loc_3225E",
+      "current_name": "Projectile_DestroyerProtoSpawnNextSpreadCopy",
+      "legacy_name": "loc_3225E",
+      "evidence": "static",
+      "basis": ["This seven-entry loop clones the lead projectile and assigns staggered activation delays."]
+    },
+    {
+      "address": "0x0322C8",
+      "previous_name": "off_322C8",
+      "current_name": "Projectile_DestroyerProtoMappingFrameTable",
+      "legacy_name": "off_322C8",
+      "evidence": "static",
+      "basis": ["Both projectile activation paths select one of these 16 mapping pointers from the stored direction frame."]
+    },
+    {
+      "address": "0x03233C",
+      "previous_name": "loc_3233C",
+      "current_name": "Projectile_RemoveOutsideArenaNow",
+      "legacy_name": "loc_3233C",
+      "evidence": "static",
+      "basis": ["All four failed arena-bound checks converge here to write removal flag 0x1000."]
+    },
+    {
+      "address": "0x031540",
+      "previous_name": "Boss_DestroyerProtoGfxUpdate",
+      "current_name": "Boss_DestroyerProtoCycleArenaEffect",
+      "legacy_name": "sub_31540",
+      "evidence": "static",
+      "basis": ["Every fourth tick the routine advances a ten-step phase and writes two phase-table values; it does not perform a generic graphics update."]
+    },
+    {
+      "address": "0x0316F8",
+      "previous_name": "Boss_DestroyerProtoCollision",
+      "current_name": "Boss_DestroyerProtoUpdateCircularVelocity",
+      "legacy_name": "sub_316F8",
+      "evidence": "static",
+      "basis": ["The routine advances angle 0x40 and derives X/Y velocity from sine/cosine; it reads no collision flags."]
+    },
+    {
+      "address": "0x03171C",
+      "previous_name": "Boss_DestroyerProtoBounds",
+      "current_name": "Boss_DestroyerProtoUpdateViewportOffset",
+      "legacy_name": "sub_3171C",
+      "evidence": "static",
+      "basis": ["The routine stores 0x2C0-X and Y-0xC0 to global words and performs no bounds comparison or clamp."]
+    },
+    {
+      "address": "0x031736",
+      "previous_name": "Boss_DestroyerProtoVelocity",
+      "current_name": "Boss_DestroyerProtoUpdatePartAngles",
+      "legacy_name": "sub_31736",
+      "evidence": "static",
+      "basis": ["It visits six fixed part slots and advances their angle fields by d0/d1; it does not modify entity velocity fields."]
+    },
+    {
+      "address": "0x031768",
+      "previous_name": "Boss_DestroyerProtoState1",
+      "current_name": "Boss_DestroyerProtoAddOuterPartAngle",
+      "legacy_name": "sub_31768",
+      "evidence": "static",
+      "basis": ["The helper adds d0 to one part's angle 0x40 and wraps it to the even 0x000-0x1FE range."]
+    },
+    {
+      "address": "0x031774",
+      "previous_name": "Boss_DestroyerProtoState2",
+      "current_name": "Boss_DestroyerProtoAddInnerPartAngles",
+      "legacy_name": "sub_31774",
+      "evidence": "static",
+      "basis": ["The helper adds d1 to both angle fields 0x40 and 0x46 of each inner part."]
+    },
+    {
+      "address": "0x0317FE",
+      "previous_name": "Boss_DestroyerProtoState3",
+      "current_name": "Boss_DestroyerProtoWaitForBattleStart",
+      "legacy_name": "sub_317FE",
+      "evidence": "static",
+      "basis": ["The state maintains circular motion until the global transition word clears, then enables combat and seeds the first timer."]
+    },
+    {
+      "address": "0x031830",
+      "previous_name": "Boss_DestroyerProtoAttack1",
+      "current_name": "Boss_DestroyerProtoChooseMovementTarget",
+      "legacy_name": "sub_31830",
+      "evidence": "static",
+      "basis": ["After a countdown, this state chooses target coordinates and computes acceleration toward them rather than attacking directly."]
+    },
+    {
+      "address": "0x0318AC",
+      "previous_name": "Boss_DestroyerProtoAttack2",
+      "current_name": "Boss_DestroyerProtoMoveToTarget",
+      "legacy_name": "sub_318AC",
+      "evidence": "static",
+      "basis": ["The state opens linked parts and accumulates the selected fixed-point X/Y acceleration until its movement timer expires."]
+    },
+    {
+      "address": "0x0318EC",
+      "previous_name": "Boss_DestroyerProtoAttack3",
+      "current_name": "Boss_DestroyerProtoChooseAttack",
+      "legacy_name": "sub_318EC",
+      "evidence": "static",
+      "basis": ["After stopping motion and closing parts, the state randomly selects twin-shot, spread, or aimed-stream setup."]
+    },
+    {
+      "address": "0x031D9A",
+      "previous_name": "Boss_DestroyerProtoSpawnProjectile1",
+      "current_name": "Boss_DestroyerProtoBeginDefeatScatter",
+      "legacy_name": "sub_31D9A",
+      "evidence": "static",
+      "basis": ["Forced defeat enters this state at 0x2E; it scatters six existing parts, disables battle control, and allocates no projectile."]
+    },
+    {
+      "address": "0x031DF6",
+      "previous_name": "Boss_DestroyerProtoSpawnProjectile2",
+      "current_name": "Boss_DestroyerProtoEmitDefeatParticle",
+      "legacy_name": "sub_31DF6",
+      "evidence": "static",
+      "basis": ["This helper allocates one type-0x88 particle with randomized position, velocity, and mapping during the defeat loop."]
+    },
+    {
+      "address": "0x031E9C",
+      "previous_name": "Boss_DestroyerProtoSpawnProjectile3",
+      "current_name": "Boss_DestroyerProtoUpdateDefeatExplosion",
+      "legacy_name": "sub_31E9C",
+      "evidence": "static",
+      "basis": ["The final state repeatedly emits defeat particles, fades the palette, rotates arena entries, then reloads graphics and removes the boss."]
+    },
+    {
+      "address": "0x031EDE",
+      "previous_name": "Boss_DestroyerProtoRotateSprites",
+      "current_name": "Boss_DestroyerProtoRotateArenaEffectEntries",
+      "legacy_name": "sub_31EDE",
+      "evidence": "static",
+      "basis": ["The loop mutates 192 words in the global arena-effect buffer; it does not iterate entity sprite slots."]
+    },
+    {
+      "address": "0x031F86",
+      "previous_name": "Boss_DestroyerProtoState4",
+      "current_name": "Boss_DestroyerProtoPartMain",
+      "legacy_name": "sub_31F86",
+      "evidence": "static",
+      "basis": ["Subtype entry 2 updates one linked part from its parent while state 0x04 is zero and otherwise falls into arena-bound removal."]
+    },
+    {
+      "address": "0x031FB4",
+      "previous_name": "Boss_DestroyerProtoState5",
+      "current_name": "Boss_DestroyerProtoAnimatedPartMain",
+      "legacy_name": "sub_31FB4",
+      "evidence": "static",
+      "basis": ["Subtype entry 4 adds angle-dependent mapping and sprite-attribute selection to the linked-part update."]
+    },
+    {
+      "address": "0x032158",
+      "previous_name": "Boss_JetsripperSpawnProjectiles",
+      "current_name": "Boss_DestroyerProtoLaunchTwinProjectiles",
+      "legacy_name": "sub_32158",
+      "evidence": "static",
+      "basis": ["The sole caller is Destroyer Proto's twin-shot state, and it initializes two fixed slots from that boss's inner parts."]
+    },
+    {
+      "address": "0x03216C",
+      "previous_name": "Boss_JetsripperInitProjectile",
+      "current_name": "Projectile_DestroyerProtoInitFromPart",
+      "legacy_name": "sub_3216C",
+      "evidence": "static",
+      "basis": ["Both callers are Destroyer Proto projectile paths, and all position/velocity tables are private to that family."]
+    },
+    {
+      "address": "0x032222",
+      "previous_name": "Boss_JetsripperProjectileSpreadInit",
+      "current_name": "Projectile_DestroyerProtoSpawnSpreadCopies",
+      "legacy_name": "sub_32222",
+      "evidence": "static",
+      "basis": ["The type-0x3B8 subtype-6 state activates a Destroyer Proto shot and clones seven delayed copies; Jetsripper is not a caller."]
+    },
+    {
+      "address": "0x032308",
+      "previous_name": "Boss_JetsripperProjectileBounce",
+      "current_name": "Projectile_DestroyerProtoCheckHorizontalReflection",
+      "legacy_name": "sub_32308",
+      "evidence": "static",
+      "basis": ["This Destroyer Proto projectile state tests collision flag 4 and invokes the shared horizontal reflection tail."]
+    },
+    {
+      "address": "0x032312",
+      "previous_name": "Boss_JetsripperProjectileTurretCheck",
+      "current_name": "Projectile_DestroyerProtoCheckStage14Hit",
+      "legacy_name": "sub_32312",
+      "evidence": "static",
+      "basis": ["The state tests collision flag 4 and transfers to the Stage 14 hit-response handler; no Jetsripper object is referenced."]
+    },
+    {
+      "address": "0x03235C",
+      "previous_name": "Boss_JetsripperProjectileReflect",
+      "current_name": "Projectile_DestroyerProtoReflectHorizontal",
+      "legacy_name": "sub_3235C",
+      "evidence": "static",
+      "basis": ["The only caller is the Destroyer Proto projectile reflection state; the helper negates X velocity and advances state."]
+    },
+    {
+      "address": "0x032368",
+      "previous_name": "Boss_JetsripperProjectileReturn",
+      "current_name": "Projectile_DestroyerProtoRestoreVelocity",
+      "legacy_name": "sub_32368",
+      "evidence": "static",
+      "basis": ["The Destroyer Proto projectile table points here to restore stored X/Y velocity after a delay; no Jetsripper caller exists."]
     }
   ]
 }

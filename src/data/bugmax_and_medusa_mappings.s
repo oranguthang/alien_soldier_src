@@ -238,7 +238,7 @@ word_ECEF2:     dc.w    $842, $400, $1DF8               ; DATA XREF: ROM:0003212
                 dc.w    $83A, $700, $FDF8
                 dc.w    $882A, $F00, $DDF0
 word_ECF04:     dc.w    $85C, $100, $F8DB               ; DATA XREF: ROM:000316AA   o
-                                        ; ROM:off_32118   o
+                                        ; ROM:Boss_DestroyerProtoPartMappingFrameTable   o
                 dc.w    $854, $D00, $F8E3
                 dc.w    $8844, $F00, $F003
 word_ECF16:     dc.w    $874, $A00, $FBDD               ; DATA XREF: ROM:0003211C   o
@@ -254,7 +254,7 @@ word_ECF40:     dc.w    $8AA, $A00, $BEE                ; DATA XREF: ROM:0003212
                                         ; ROM:0003212C   o
                 dc.w    $8B3, $900, $FBF6
                 dc.w    $889A, $F00, $DBF6
-word_ECF52:     dc.w    $88B9, $800, $FBF5              ; DATA XREF: ROM:off_322C8   o
+word_ECF52:     dc.w    $88B9, $800, $FBF5              ; DATA XREF: ROM:Projectile_DestroyerProtoMappingFrameTable   o
                                         ; ROM:000322E8   o
 word_ECF58:     dc.w    $88BC, $900, $F6F5              ; DATA XREF: ROM:000322CC   o
                                         ; ROM:000322E4   o
@@ -264,7 +264,7 @@ word_ECF64:     dc.w    $88CB, $600, $F4F7              ; DATA XREF: ROM:000322D
                                         ; ROM:000322DC   o
 word_ECF6A:     dc.w    $88D1, $200, $F3FC              ; DATA XREF: ROM:000322D8   o
                                         ; ROM:000322F8   o
-word_ECF70:     dc.w    $88D4, $500, $F8F8              ; DATA XREF: ROM:off_316A6   o
+word_ECF70:     dc.w    $88D4, $500, $F8F8              ; DATA XREF: ROM:Boss_DestroyerProtoPartMappingTable   o
 word_ECF76:     dc.w    $C84E, $F00, $F0F0              ; DATA XREF: ROM:stru_4E1E0   o
                                         ; ROM:0004E1E8   o
 word_ECF7C:     dc.w    $C85E, $F00, $EEF2              ; DATA XREF: ROM:0004F5A0   o

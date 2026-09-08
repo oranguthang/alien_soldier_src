@@ -1,4 +1,4 @@
-Enemy_Stage14TurretMain:                                ; CODE XREF: Boss_JetsripperProjectileTurretCheck+6   j  ; was: sub_32344
+Enemy_Stage14TurretMain:                                ; CODE XREF: Projectile_DestroyerProtoCheckStage14Hit+6   j  ; was: sub_32344
                                         ; Enemy_Stage14TurretInit+18   j
                 jsr     (RandomNumber).l
                 andi.w  #$1F,d0
@@ -7,24 +7,24 @@ Enemy_Stage14TurretMain:                                ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Enemy_Stage14TurretMain
 ; Reflects projectile by negating X velocity and advancing state
-Boss_JetsripperProjectileReflect:                       ; CODE XREF: Boss_JetsripperProjectileBounce+6   j  ; was: sub_3235C
+Projectile_DestroyerProtoReflectHorizontal:             ; CODE XREF: Projectile_DestroyerProtoCheckHorizontalReflection+6   j  ; was: sub_3235C
                 neg.l   $18(a5)
                 move.w  #2,4(a5)
                 rts
-; End of function Boss_JetsripperProjectileReflect
+; End of function Projectile_DestroyerProtoReflectHorizontal
 ; Returns projectile to stored velocity after delay timer expires
-Boss_JetsripperProjectileReturn:                        ; DATA XREF: ROM:0003221C   o  ; was: sub_32368
+Projectile_DestroyerProtoRestoreVelocity:               ; DATA XREF: ROM:0003221C   o  ; was: sub_32368
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
                 move.l  $4C(a5),$18(a5)
                 move.l  $50(a5),$1C(a5)
                 subq.w  #2,4(a5)
                 rts
-; End of function Boss_JetsripperProjectileReturn
+; End of function Projectile_DestroyerProtoRestoreVelocity
 ; Initializes turret
 Enemy_Stage14TurretInit:                                ; DATA XREF: ROM:000314D6   o  ; was: sub_32382
                 bsr.w   Enemy_DeathExplode
-                bsr.w   Projectile_DestroyerProtoUpdate
+                bsr.w   Projectile_RemoveOutsideArena
                 bclr    #7,$22(a5)
                 beq.w   Entity_UpdateReturn
                 bclr    #4,$22(a5)
@@ -595,7 +595,7 @@ Projectile_Stage14BulletMove:                           ; CODE XREF: Projectile_
 loc_32B56:                                              ; CODE XREF: Projectile_Stage14BulletMove+3C   j
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Entity_UpdateReturn
-                bsr.w   loc_31B02
+                bsr.w   Projectile_InitSharedHitReactiveShot
                 bsr.w   Enemy_Stage14SpawnSplitBullet
                 addq.w  #2,d6
                 cmpi.w  #6,d6
@@ -607,7 +607,7 @@ loc_32B72:                                              ; CODE XREF: Projectile_
 loc_32B76:                                              ; CODE XREF: Projectile_Stage14BulletMove+5C   j
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Entity_UpdateReturn
-                bsr.w   loc_31B02
+                bsr.w   Projectile_InitSharedHitReactiveShot
                 bsr.w   Enemy_Stage14SpawnSplitBullet
                 addq.w  #2,d6
                 cmpi.w  #$A,d6

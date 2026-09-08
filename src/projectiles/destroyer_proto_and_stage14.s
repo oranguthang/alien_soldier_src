@@ -1,0 +1,224 @@
+; Shared type-$3B8 projectile data and handlers used by Destroyer Proto and
+; Stage 14 split shots
+Projectile_DestroyerProtoVelocityXTable:    dc.w    4, 0  ; DATA XREF: Boss_DestroyerProtoSpawnSpreadProjectile+16   o  ; was: word_31FF8
+                                        ; Boss_DestroyerProtoBeginDefeatScatter+6   o
+                dc.w    3, $8000
+                dc.w    2, $D410
+                dc.w    1, $C000
+                dc.w    0, 0
+                dc.w    $FFFE, $4000
+                dc.w    $FFFD, $2BF0
+                dc.w    $FFFC, $8000
+                dc.w    $FFFC, 0
+                dc.w    $FFFC, $8000
+                dc.w    $FFFD, $2BF0
+                dc.w    $FFFE, $4000
+                dc.w    0, 0
+                dc.w    1, $C000
+                dc.w    2, $D410
+                dc.w    3, $8000
+Projectile_DestroyerProtoVelocityYTable:    dc.w    0, 0  ; DATA XREF: Boss_DestroyerProtoSpawnSpreadProjectile+1C   o  ; was: word_32038
+                                        ; Boss_DestroyerProtoBeginDefeatScatter+C   o
+                dc.w    1, $C000
+                dc.w    2, $D410
+                dc.w    3, $8000
+                dc.w    4, 0
+                dc.w    3, $8000
+                dc.w    2, $D410
+                dc.w    1, $C000
+                dc.w    0, 0
+                dc.w    $FFFE, $4000
+                dc.w    $FFFD, $2BF0
+                dc.w    $FFFC, $8000
+                dc.w    $FFFC, 0
+                dc.w    $FFFC, $8000
+                dc.w    $FFFD, $2BF0
+                dc.w    $FFFE, $4000
+Projectile_DestroyerProtoSpawnOffsetXTable: dc.l    $300000, $2AC000  ; DATA XREF: Projectile_DestroyerProtoInitFromPart+4C   o  ; was: dword_32078
+                dc.l    $21F0C0, $144000
+                dc.l    0, $FFEBC000
+                dc.l    $FFDE0F40, $FFD54000
+                dc.l    $FFD00000, $FFD54000
+                dc.l    $FFDE0F40, $FFEBC000
+                dc.l    0, $144000
+                dc.l    $21F0C0, $2AC000
+Projectile_DestroyerProtoSpawnOffsetYTable: dc.l    0, $144000  ; DATA XREF: Projectile_DestroyerProtoInitFromPart+68   o  ; was: dword_320B8
+                dc.l    $21F0C0, $2AC000
+                dc.l    $300000, $2AC000
+                dc.l    $21F0C0, $144000
+                dc.l    0, $FFEBC000
+                dc.l    $FFDE0F40, $FFD54000
+                dc.l    $FFD00000, $FFD54000
+                dc.l    $FFDE0F40, $FFEBC000
+Projectile_DestroyerProtoSpriteAttributeTable:  dc.w    $6B00, $6B00, $6B00, $6B00  ; was: word_320F8
+                                        ; DATA XREF: Projectile_DestroyerProtoActivateStreamShot+22   o
+                                        ; Boss_DestroyerProtoAnimatedPartMain+28   o
+                dc.w    $6300, $6300, $6300, $6300
+                dc.w    $7300, $7300, $7300, $7300
+                dc.w    $7B00, $7B00, $7B00, $7B00
+Boss_DestroyerProtoPartMappingFrameTable:   dc.l    word_ECF04  ; DATA XREF: Boss_DestroyerProtoAnimatedPartMain+1A   o  ; was: off_32118
+                dc.l    word_ECF16
+                dc.l    word_ECF28
+                dc.l    word_ECF40
+                dc.l    word_ECEF2
+                dc.l    word_ECF40
+                dc.l    word_ECF28
+                dc.l    word_ECF16
+                dc.l    word_ECF04
+                dc.l    word_ECF16
+                dc.l    word_ECF28
+                dc.l    word_ECF40
+                dc.l    word_ECEF2
+                dc.l    word_ECF40
+                dc.l    word_ECF28
+                dc.l    word_ECF16
+
+; Initializes two fixed-slot Destroyer Proto projectiles from the inner parts
+Boss_DestroyerProtoLaunchTwinProjectiles:               ; CODE XREF: Boss_DestroyerProtoLaunchTwinShots+1A   p  ; was: sub_32158
+                lea     (word_FFC740).w,a4
+                lea     (word_FFC8C0).w,a0
+                bsr.w   Projectile_DestroyerProtoInitFromPart
+                lea     (word_FFC860).w,a4
+                lea     (word_FFCEC0).w,a0
+; End of function Boss_DestroyerProtoLaunchTwinProjectiles
+; Initializes one delayed Destroyer Proto projectile from a linked part
+Projectile_DestroyerProtoInitFromPart:                  ; CODE XREF: Projectile_DestroyerProtoActivateStreamShot   p  ; was: sub_3216C
+                                        ; Boss_DestroyerProtoLaunchTwinProjectiles+8   p
+                move.w  #$EC00,word_FFCEC2-word_FFCEC0(a0)
+                move.b  #$40,$21(a0)                    ; '@'
+                move.l  #$F808F808,$2C(a0)
+                move.l  #$F010F010,$28(a0)
+                move.w  #$64,$26(a0)                    ; 'd'
+                move.l  #off_E968C,8(a0)
+                move.w  #$3B8,(a0)
+                move.w  $40(a4),d0
+                addi.w  #$10,d0
+                andi.w  #$1E0,d0
+                lsr.w   #3,d0
+                move.w  d0,$54(a0)
+                lea     Projectile_DestroyerProtoVelocityXTable(pc),a1
+                move.l  (a1,d0.w),d1
+                move.l  d1,$4C(a0)
+                lea     Projectile_DestroyerProtoSpawnOffsetXTable(pc),a1
+                move.l  (a1,d0.w),d1
+                add.l   $10(a4),d1
+                move.l  d1,$10(a0)
+                lea     Projectile_DestroyerProtoVelocityYTable(pc),a1
+                move.l  (a1,d0.w),d1
+                move.l  d1,$50(a0)
+                lea     Projectile_DestroyerProtoSpawnOffsetYTable(pc),a1
+                move.l  (a1,d0.w),d1
+                add.l   $14(a4),d1
+                move.l  d1,$14(a0)
+                move.b  #0,$20(a0)
+                move.w  #$480,d1
+                or.w    (word_FF808A).w,d1
+                move.w  d1,$E(a0)
+                move.w  #6,$48(a0)
+                move.w  #8,$4A(a0)
+                clr.w   4(a0)
+                rts
+; End of function Projectile_DestroyerProtoInitFromPart
+; Dispatches the delayed spread projectile states
+Projectile_DestroyerProtoMain:                          ; DATA XREF: ROM:000314D4   o  ; was: sub_32208
+                bsr.w   Enemy_DeathExplode
+                move.w  4(a5),d0
+                lea     Projectile_DestroyerProtoStates(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Projectile_DestroyerProtoMain
+; ---------------------------------------------------------------------------
+Projectile_DestroyerProtoStates:    dc.w    Projectile_DestroyerProtoSpawnSpreadCopies-*  ; DATA XREF: Projectile_DestroyerProtoMain+8   o  ; was: off_32218
+                dc.w    Projectile_RemoveOutsideArena-*
+                dc.w    Projectile_DestroyerProtoRestoreVelocity-*
+                dc.w    Projectile_DestroyerProtoCheckStage14Hit-*
+                dc.w    Projectile_DestroyerProtoCheckHorizontalReflection-*
+
+; Activates the lead shot and creates seven staggered spread copies
+Projectile_DestroyerProtoSpawnSpreadCopies:             ; DATA XREF: ROM:Projectile_DestroyerProtoStates   o  ; was: sub_32222
+                subq.w  #1,$4A(a5)
+                bne.w   Entity_UpdateReturn
+                move.l  $4C(a5),$18(a5)
+                move.l  $50(a5),$1C(a5)
+                move.w  $54(a5),d0
+                lea     Projectile_DestroyerProtoMappingFrameTable(pc),a0
+                nop
+                move.l  (a0,d0.w),8(a5)
+                lsr.w   #1,d0
+                lea     Projectile_DestroyerProtoSpriteAttributeTable(pc),a0
+                move.w  (a0,d0.w),$E(a5)
+                move.w  #$CC00,2(a5)
+                movea.w a5,a4
+                move.w  #6,d0
+Projectile_DestroyerProtoSpawnNextSpreadCopy:           ; CODE XREF: Projectile_DestroyerProtoSpawnSpreadCopies+9C   j  ; was: loc_3225E
+                adda.w  #$60,a4                         ; '`'
+                move.w  #$CC00,2(a4)
+                move.w  #$3B8,(a4)
+                move.w  #6,$48(a4)
+                move.w  #4,4(a4)
+                move.l  $4C(a5),$4C(a4)
+                move.l  $50(a5),$50(a4)
+                move.l  8(a5),8(a4)
+                move.w  $E(a5),$E(a4)
+                move.b  $21(a5),$21(a4)
+                move.l  $10(a5),$10(a4)
+                move.l  $14(a5),$14(a4)
+                move.l  $2C(a5),$2C(a4)
+                move.l  $28(a5),$28(a4)
+                move.w  #$64,$26(a4)                    ; 'd'
+                move.w  d0,d1
+                addq.w  #1,d1
+                lsl.w   #2,d1
+                move.w  d1,$4A(a4)
+                dbf     d0,Projectile_DestroyerProtoSpawnNextSpreadCopy
+                addq.w  #2,4(a5)
+                rts
+; End of function Projectile_DestroyerProtoSpawnSpreadCopies
+; ---------------------------------------------------------------------------
+Projectile_DestroyerProtoMappingFrameTable: dc.l    word_ECF52  ; DATA XREF: Projectile_DestroyerProtoActivateStreamShot+14   o  ; was: off_322C8
+                                        ; Projectile_DestroyerProtoSpawnSpreadCopies+18   o
+                dc.l    word_ECF58
+                dc.l    word_ECF5E
+                dc.l    word_ECF64
+                dc.l    word_ECF6A
+                dc.l    word_ECF64
+                dc.l    word_ECF5E
+                dc.l    word_ECF58
+                dc.l    word_ECF52
+                dc.l    word_ECF58
+                dc.l    word_ECF5E
+                dc.l    word_ECF64
+                dc.l    word_ECF6A
+                dc.l    word_ECF64
+                dc.l    word_ECF5E
+                dc.l    word_ECF58
+
+; Reflects horizontal velocity when collision flag 4 is set
+Projectile_DestroyerProtoCheckHorizontalReflection:     ; DATA XREF: ROM:00032220   o  ; was: sub_32308
+                bclr    #4,$22(a5)
+                bne.s   Projectile_DestroyerProtoReflectHorizontal
+                bra.s   Projectile_RemoveOutsideArena
+; End of function Projectile_DestroyerProtoCheckHorizontalReflection
+; Transfers collision flag 4 to the Stage 14 hit-response handler
+Projectile_DestroyerProtoCheckStage14Hit:               ; DATA XREF: ROM:0003221E   o  ; was: sub_32312
+                bclr    #4,$22(a5)
+                bne.s   Enemy_Stage14TurretMain
+; End of function Projectile_DestroyerProtoCheckStage14Hit
+; Marks a projectile or scattered boss part outside the arena for removal
+Projectile_RemoveOutsideArena:                          ; CODE XREF: Boss_DestroyerProtoPartMain+4   j  ; was: sub_3231A
+                                        ; Boss_DestroyerProtoAnimatedPartMain+40   j
+                cmpi.w  #$60,$10(a5)                    ; '`'
+                bcs.s   Projectile_RemoveOutsideArenaNow
+                cmpi.w  #$1E0,$10(a5)
+                bcc.s   Projectile_RemoveOutsideArenaNow
+                cmpi.w  #$60,$14(a5)                    ; '`'
+                bcs.s   Projectile_RemoveOutsideArenaNow
+                cmpi.w  #$180,$14(a5)
+                bcc.s   Projectile_RemoveOutsideArenaNow
+                rts
+; ---------------------------------------------------------------------------
+Projectile_RemoveOutsideArenaNow:                       ; CODE XREF: Projectile_RemoveOutsideArena+6   j  ; was: loc_3233C
+                                        ; Projectile_RemoveOutsideArena+E   j
+                move.w  #$1000,2(a5)
+                rts
+; End of function Projectile_RemoveOutsideArena

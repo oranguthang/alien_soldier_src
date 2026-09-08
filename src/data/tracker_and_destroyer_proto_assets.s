@@ -4,7 +4,7 @@ word_1CEC6C:    dc.w    $838, $E00, $E0                 ; DATA XREF: Enemy_Track
                 dc.w    $82C, $E00, 0
                 dc.w    $820, $E00, $E8E0
                 dc.w    $8814, $E00, $E800
-word_1CEC90:    dc.w    $8800, $F00, $F0F0              ; DATA XREF: Boss_DestroyerProtoShootPattern3+A0   o
+word_1CEC90:    dc.w    $8800, $F00, $F0F0              ; DATA XREF: Boss_DestroyerProtoSpawnSpreadProjectile+A0   o
                                         ; sub_3313A:loc_3318E   o
 word_1CEC96:    dc.w    $8810, $500, $F8F8              ; DATA XREF: ROM:off_3357A   o
                                         ; ROM:00033586   o
