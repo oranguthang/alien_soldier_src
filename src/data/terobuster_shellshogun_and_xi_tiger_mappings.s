@@ -1,7 +1,7 @@
 word_EB86A:     dc.w    $695A, $E00, $F2EB              ; DATA XREF: Boss_TerobusterSetup+96   o
                 dc.w    $E954, $600, $FA0B
 word_EB876:     dc.w    $683B, $C00, $6F7               ; DATA XREF: ROM:00034BB0   o
-                                        ; Boss_ShellshogunTransitionState+2E   o
+                                        ; Boss_ShellshogunDirectionalAttackWindupState+2E   o
                 dc.w    $6835, $600, $F6E8
                 dc.w    $E829, $E00, $EEF7
 word_EB888:     dc.w    $6843, $400, $EFF               ; DATA XREF: Boss_ShellshogunDecisionState+E0   o
@@ -83,7 +83,7 @@ word_EB9A2:     dc.w    $792B, $F00, $B6B7              ; DATA XREF: ROM:0003A0D
                 dc.w    $792B, $F00, $C7C8
                 dc.w    $7943, $F00, $ECED
                 dc.w    $E12B, $F00, $DEDF
-word_EB9BA:     dc.w    $6927, $C00, $FCA3              ; DATA XREF: ROM:off_3A0DA   o
+word_EB9BA:     dc.w    $6927, $C00, $FCA3              ; DATA XREF: ROM:Boss_ShellshogunRotatingPartFrameTable   o
                 dc.w    $693F, $C00, $FCF1
                 dc.w    $6127, $C00, $FCD4
                 dc.w    $E927, $C00, $FCBB

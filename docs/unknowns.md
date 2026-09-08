@@ -649,6 +649,36 @@ states `$0E` and `$10` do form one coherent slam preparation/follow-through
 sequence, so their narrower names are retained with static state-machine
 evidence.
 
+The Shellshogun directional-attack audit reduced the count to 8,767. The
+former `VerticalMovement` name was rejected: state `$1C` updates horizontal
+velocity field `$18` according to facing, while its `$1A` predecessor is the
+pose windup. Event-counter, stage-progress, effect, velocity, rendering, and
+sprite-flip names are limited to operations visible in the state chain.
+
+The remaining Shellshogun core-state audit reduced the count to 8,753 and
+left `bosses/shellshogun_core.s` with no live address-derived definitions.
+The first jump pair is named only from its two bounded pose streams. The
+former `DescendUpdate`/`LandingSequence` pair was corrected to leap windup and
+flight: it explicitly installs upward vertical velocity, applies gravity, and
+ends at the linked-part landing threshold before a signed-velocity recovery.
+The final wrapper's fallthrough from core into rendering is also recorded as
+intentional module-boundary control flow.
+
+The first Shellshogun rendering audit reduced the count to 8,746. Three
+especially misleading imported names were rejected: `CheckDefeat` only derives
+facing from signed horizontal player delta, `DeathSequence` only changes five
+linked-part flags for zero-facing orientation, and `InitPalette` only sets bit
+seven on eight linked records. The renderer's former generic position helper
+is now documented as a bounded three-part sine/cosine orbit update with an
+explicit source/radius table.
+
+The rotating-part rendering audit reduced the count to 8,740. The former
+`PhysicsUpdate` helper only selects a linked-part pointer and derives a wrapped
+rotation value; no velocity integration or collision query is present. The
+former `SetTileData` routine is now bounded to the behavior visible in its
+body: angle-based frame and flip selection, anchor copying, and optional
+sine/cosine positioning of two trailing parts.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

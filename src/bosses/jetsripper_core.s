@@ -1,6 +1,6 @@
 ; Replaces an out-of-range shared boss position with the offscreen fallback X
 Boss_ClampSharedScreenPosition:                         ; CODE XREF: Boss_TerobusterUpdateBodyParts+72   j  ; was: sub_35614
-                                        ; Boss_ShellshogunBoundsCheck+18   j
+                                        ; Boss_ShellshogunPublishScreenPosition+18   j
                 tst.w   (dword_FFA908).w
                 bmi.s   Boss_ClampSharedScreenPositionCheckNegativeX
                 cmpi.w  #$80,(dword_FFA908).w
