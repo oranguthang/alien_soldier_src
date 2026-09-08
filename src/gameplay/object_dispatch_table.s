@@ -85,7 +85,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    word_3A2E6
                 dc.l    Effect_TransitionObjectDispatcher
                 dc.l    Boss_FlyingNeoMain
-                dc.l    Boss_AntroidProjectileUpdate
+                dc.l    Projectile_AntroidUpdate
                 dc.l    Boss_JokerMain
                 dc.l    Physics_CheckHeightBoundary
                 dc.l    Entity_EmptyState6

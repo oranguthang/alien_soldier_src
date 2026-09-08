@@ -1,5 +1,8 @@
+; Antroid pose interpolation, animation helpers, and command streams
+
+; Interpolates animation values toward the next command target
 Anim_InterpolateToTarget:                               ; CODE XREF: Boss_AntroidIdleState+6   p  ; was: sub_3811A
-                                        ; Boss_AntroidTransitionToIdle+36   p
+                                        ; Boss_AntroidReturnToNeutral+36   p
                 clr.w   $23E(a5)
                 tst.w   $C(a5)
                 bpl.s   loc_3819C
@@ -173,8 +176,8 @@ loc_382EC:                                              ; CODE XREF: Boss_Antroi
                 rts
 ; End of function Boss_AntroidCalculateYOffset
 ; Ends attack phase and returns to idle
-Boss_AntroidEndAttack:                                  ; CODE XREF: Boss_AntroidFlyingAttack:loc_37846   p  ; was: sub_382F8
-                                        ; Boss_AntroidFlyingAttack+74   p
+Boss_AntroidEndAttack:                                  ; CODE XREF: Boss_AntroidLeapAttackA:Boss_AntroidLeapAttackAFinish   p  ; was: sub_382F8
+                                        ; Boss_AntroidLeapAttackA+74   p
                 eori.w  #2,6(a5)
                 movea.w #(dword_FF940C-M68K_RAM),a0
                 movea.w #(dword_FF9418-M68K_RAM),a1
@@ -195,39 +198,39 @@ Boss_AntroidSwapPaletteBuffers:                         ; CODE XREF: Boss_Antroi
 ; ---------------------------------------------------------------------------
 word_38322:     dc.w    $2020, $60, $2020, $70, $FFFF
                                         ; DATA XREF: Boss_AntroidIdleState   o
-word_3832C:     dc.w    $131B, $70, $FFFE               ; DATA XREF: Boss_AntroidTransitionToIdle+30   o
-                                        ; sub_379AA:loc_37A78   o
+word_3832C:     dc.w    $131B, $70, $FFFE               ; DATA XREF: Boss_AntroidReturnToNeutral+30   o
+                                        ; sub_379AA:Boss_AntroidJumpAttackAnimateLandingArc   o
 word_38332:     dc.w    $80C, $60, $808, $60, $80C, $70, $808, $70, $FFFF
-                                        ; DATA XREF: Boss_AntroidTransitionToIdle:loc_3773E   o
+                                        ; DATA XREF: Boss_AntroidReturnToNeutral:Boss_AntroidUpdateDecisionAnimation   o
 word_38344:     dc.w    $204, $60, $202, $60, $204, $70, $202, $70, $FFFF
-                                        ; DATA XREF: Boss_AntroidTransitionToIdle+FC   o
+                                        ; DATA XREF: Boss_AntroidReturnToNeutral+FC   o
 word_38356:     dc.w    $214, $E0, $106, $60, $FFFF
-                                        ; DATA XREF: Boss_AntroidEarthquakeAttack+E   o
+                                        ; DATA XREF: Boss_AntroidHealthRecoveryState+E   o
 word_38360:     dc.w    $1313, $30, $A1E, $40, $2828, $40, $FFFE
-                                        ; DATA XREF: Boss_AntroidAttackState1:loc_377D4   o
-                                        ; sub_377F6:loc_3787E   o
+                                        ; DATA XREF: Boss_AntroidPrepareLeapAttackA:Boss_AntroidPrepareLeapAttackAAnimate   o
+                                        ; sub_377F6:Boss_AntroidLeapAttackAAnimate   o
 word_3836E:     dc.w    $1313, $50, $A1E, $20, $2828, $20, $FFFE
-                                        ; DATA XREF: Boss_AntroidAttackState2:loc_3789C   o
-                                        ; sub_378BE:loc_3794C   o
+                                        ; DATA XREF: Boss_AntroidPrepareLeapAttackB:Boss_AntroidPrepareLeapAttackBAnimate   o
+                                        ; sub_378BE:Boss_AntroidLeapAttackBAnimate   o
 word_3837C:     dc.w    $910, $90, $D0D, $90, $80D0, $80B, $A0, $410, $A0, $1010, $B0, $FFFE
-                                        ; DATA XREF: Boss_AntroidJumpAttackState+8   o
-                                        ; sub_379AA:loc_37A22   o
+                                        ; DATA XREF: Boss_AntroidPrepareJumpAttack+8   o
+                                        ; sub_379AA:Boss_AntroidJumpAttackAnimateAirborne   o
 word_38394:     dc.w    $60A, $90, $505, $90, $80B, $A0
                                         ; DATA XREF: Boss_AntroidJumpSlamAttack+202   o
 word_383A0:     dc.w    $910, $90, $F0F, $90, $410, $C0, $C0C, $C0, $1313, $E0, $FFFE
                                         ; DATA XREF: Boss_AntroidJumpSlamAttack+8   o
-                                        ; sub_37A94:loc_37B00   o
+                                        ; sub_37A94:Boss_AntroidJumpSlamAnimateFirstArc   o
 word_383B6:     dc.w    $608, $F0, $E0E, $F0, $FFFE
                                         ; DATA XREF: Boss_AntroidJumpSlamAttack+104   o
 word_383C0:     dc.w    $C0C, $D0, $606, $D0, $E0E, $E0, $FFFE
-                                        ; DATA XREF: Boss_AntroidJumpSlamAttack:loc_37C06   o
+                                        ; DATA XREF: Boss_AntroidJumpSlamAttack:Boss_AntroidJumpSlamAnimateSecondArc   o
 word_383CE:     dc.w    $808, $E0, $FFFE                ; DATA XREF: Boss_AntroidJumpSlamAttack+1D2   o
 word_383D4:     dc.w    $181C, $100, $A0A, $100, $608, $110, $FFFE
                                         ; DATA XREF: Boss_AntroidWaitState+6   o
 word_383E2:     dc.w    $203, $110, $130, $60, $80A9, $FFFF
                                         ; DATA XREF: Boss_AntroidWaitState+72   o
 word_383EE:     dc.w    $808, 0, $808, $10, $FFFF
-                                        ; DATA XREF: Boss_AntroidUpdateMetaspriteFlipped+4   o
+                                        ; DATA XREF: Boss_AntroidUpdateRamAttackPose+4   o
 word_383F8:     binclude "data/other/word_383F8.bin"
 word_383F8_End:
 

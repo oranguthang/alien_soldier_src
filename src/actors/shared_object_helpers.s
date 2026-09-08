@@ -45,7 +45,7 @@ Projectile_UpdateAfterGlobalDelay:                      ; CODE XREF: Enemy_ShipS
 ; End of function Projectile_UpdateAfterGlobalDelay
 ; Updates a projectile and selects one of two shared impact-frame tables
 Projectile_UpdateWithImpactFrames:                      ; CODE XREF: Boss_ShiperSpawnDebris+6   p  ; was: sub_2A39C
-                                        ; Boss_AntroidSpawnDebris+8   p
+                                        ; Boss_AntroidSpawnRamDebris+8   p
                 move.w  (word_FFA000).w,d0
                 move.w  d0,d1
                 andi.w  #$1F,d1

@@ -88,7 +88,7 @@ word_EB76E:     dc.w    $C863, $A00, $F3F4              ; DATA XREF: ROM:0003495
 word_EB774:     dc.w    $C86C, $D00, $F7F1              ; DATA XREF: ROM:Boss_AntroidPrimaryRotationFrames   o
                                         ; RAM:00FFC808   o
 word_EB77A:     dc.w    $C07C, $D00, $FAEB              ; DATA XREF: ROM:Boss_AntroidSecondaryRotationFrames   o
-                                        ; Boss_AntroidTransitionToIdle+42   o
+                                        ; Boss_AntroidReturnToNeutral+42   o
 word_EB780:     dc.w    $58B8, $500, $1EF               ; DATA XREF: ROM:00034970   o
                 dc.w    $D8BC, $900, $F9F7
 word_EB78C:     dc.w    $58B0, $600, $FAF4              ; DATA XREF: ROM:00034974   o

@@ -531,6 +531,37 @@ Object types `$98` and `$35C` link the two Shiper spawners to their dispatch
 handlers, which is the static basis for replacing the broad imported names
 `Enemy_BossProjectileMovement` and `Enemy_BounceRotateProjectile`.
 
+The first Antroid audit reduced the count to 9,004. The former 834-line core
+is now split at state-entry boundaries into core/standard attacks (434 lines),
+jump/slam/projectile-wait (294), and charge/ram/defeat (104). Static control flow also
+disproved two imported names: `Boss_AntroidEarthquakeAttack` is the timed state
+that increments the boss-health value, while `Boss_AntroidSetIdleAnim` selects
+attack-preparation state `$08` and falls through to its handler. The replacement
+names state only those visible effects; the intended animation poses remain
+unclaimed.
+
+The Antroid jump/slam audit reduced the count to 8,985. Its state-table links
+show the ordinary jump (`$10` through `$14`), the two-arc jump-slam (`$26`
+through `$30`), and the projectile-wait pair (`$16`/`$18`). In particular,
+the imported `Boss_AntroidInitIdleState` name was rejected: it selects state
+`$16` and falls directly into the projectile-wait handler. Variant and arc
+names describe the visible control flow without assigning unverified poses.
+
+The Antroid ram/defeat audit reduced the count to 8,979. The entry at `$37D3A`
+does not implement a separate charge behavior: it initializes state `$1E`,
+velocity, facing, and flags before falling into the ram handler. Its former
+`Boss_AntroidChargeAttack` name is therefore replaced by
+`Boss_AntroidBeginRamAttack`; the subsequent rebound, fade, and removal paths
+are named from their direct state changes.
+
+The Antroid rendering/projectile audit reduced the count to 8,966 and exposed
+two more generated-name errors. `Boss_AntroidInitPhysics` only propagates the
+facing bit across linked metasprite parts, while `Boss_AntroidLoadAnimTable`
+does not read a table: it enters state `d0`, resets motion/pose fields, and
+binds two fixed part slots. The type `$158` projectile is now a separate
+ROM-ordered module; its identity is established by both the spawner's type
+write and the corresponding `Entity_UpdateHandlerTable` entry.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
