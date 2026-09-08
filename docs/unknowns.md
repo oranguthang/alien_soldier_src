@@ -570,6 +570,38 @@ The audit also rejected two misleading generated names: the former
 `Boss_AntroidSwapPaletteBuffers` exchanges pose-channel groups and never
 touches palette memory.
 
+The first Terobuster core audit reduced the count to 8,928. Its dispatcher
+uses offsets relative to the same address that holds the four-step part
+oscillation sequence; the semantic name records both the live data consumer
+and that intentional offset base. Setup, the ordinary/recovery decision-state
+entry, part ordering, tile-load descriptor, and fixed-slot binding are now
+named from their direct operations. Later attack-state labels remain in the
+review queue rather than inheriting assumptions from this setup pass.
+
+The Terobuster attack-selection audit reduced the count to 8,901. States $06
+and $08/$1C are two statically distinct homing-missile pose streams, so they
+are named sequence A and B instead of assigning unobserved pose meanings.
+State $1E is identified as the falling-rock sequence by its direct call to
+`Boss_TerobusterSpawnFallingRock`; after its timer expires, the handler calls
+`Boss_TerobusterSpawnMultiDirectional` before returning to the decision state.
+
+The Terobuster intro and defeat-entry audit reduced the count to 8,887 and
+rejected three generated control-flow claims. The former `Descend` state only
+loads a timed sequence of compressed tile records; descent begins in the next
+state. The former `BattleEnd` and `PostBattleCleanup` handlers are on the
+setup-to-battle path: they open the shared UI gate, wait for it to close, and
+then enter attack selection. Conversely, the former broad `BattleState` is
+reached only when shared boss health becomes zero and initializes Terobuster's
+defeat motion and ten-part conversion loop.
+
+The Terobuster defeat and shared-update audit reduced the count to 8,874. The
+three imported `AttackPattern` names were false: states $0A, $0C, and $0E are
+the post-health-zero bounce, randomized debris, and fade/explosion sequence.
+The former `InitMetasprite` is likewise a per-frame linked-body update that
+also publishes an oscillation and attempts a periodic projectile spawn. Its
+replacement name records those operations rather than claiming one-time
+initialization.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

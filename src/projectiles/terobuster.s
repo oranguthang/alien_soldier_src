@@ -131,7 +131,7 @@ word_38FEC:     dc.w    $D478, $400, $F8FC, 0
                 dc.w    $DC74, $500, $F8F8, 0
 
 ; Spawns 8-way directional projectiles with animated effects from table data
-Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_TerobusterMainAI+294   p  ; was: sub_3902C
+Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_TerobusterDecisionState+294   p  ; was: sub_3902C
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 bne.s   locret_39084
@@ -161,12 +161,12 @@ locret_39084:                                           ; CODE XREF: Boss_Terobu
 ; End of function Boss_TerobusterSpawnMultiDirectional
 ; ---------------------------------------------------------------------------
 word_39086:     dc.w    $40, $FFB2, $FFD6, $FFCC, $FFD8
-                                        ; DATA XREF: Boss_TerobusterMainAI:loc_38932   o
+                                        ; DATA XREF: Boss_TerobusterDecisionState:Boss_TerobusterFallingRockAttack   o
 word_39090:     dc.w    $30, $FFC4, $10, $FFD0, $C
-                                        ; DATA XREF: Boss_TerobusterMainAI+250   o
+                                        ; DATA XREF: Boss_TerobusterDecisionState+250   o
 
 ; Spawns falling rocks with randomized position offsets and downward velocity
-Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_TerobusterMainAI+27A   p  ; was: sub_3909A
+Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_TerobusterDecisionState+27A   p  ; was: sub_3909A
                 btst    #0,(word_FFA000+1).w
                 bne.s   locret_390EE
                 jsr     (Projectile_FindFreePrimarySlot).l

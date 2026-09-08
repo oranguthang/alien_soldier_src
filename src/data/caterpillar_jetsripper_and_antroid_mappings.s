@@ -111,7 +111,7 @@ word_EB7EC:     dc.w    $F0A6, $B00, $F0F4              ; DATA XREF: ROM:00034A4
 word_EB7F2:     dc.w    $F0B2, $F00, $F0F0              ; DATA XREF: ROM:00034A4A   o
 word_EB7F8:     dc.w    $F0C2, $E00, $F2F1              ; DATA XREF: ROM:Boss_TerobusterPrimaryRotationFrames   o
 word_EB7FE:     dc.w    $60D6, $500, $F806              ; DATA XREF: ROM:Boss_TerobusterSecondaryRotationFrames   o
-                                        ; Boss_TerobusterMainAI+2A0   o
+                                        ; Boss_TerobusterDecisionState+2A0   o
                 dc.w    $E0CE, $D00, $F8E6
 word_EB80A:     dc.w    $60E2, $600, $F805              ; DATA XREF: ROM:00034A6A   o
                 dc.w    $E0DA, $D00, $F8E5

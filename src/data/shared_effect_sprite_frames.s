@@ -45,7 +45,7 @@ Effect_KnockbackImpactSpriteFrames: dc.l    $244AC, $500F8F8  ; DATA XREF: Effec
                                         ; Projectile_ExplodeOnWall+A0   o
                 dc.l    $244C4, $500F8F8
                 dc.w    $FFFF
-Boss_TerobusterProjectileSpriteFrames:  dc.l    $364CC, $500F8F8  ; DATA XREF: Boss_TerobusterAttackPattern3+4A   o  ; was: dword_2AD28
+Boss_TerobusterProjectileSpriteFrames:  dc.l    $364CC, $500F8F8  ; DATA XREF: Boss_TerobusterDefeatDebrisState+4A   o  ; was: dword_2AD28
                                         ; Boss_TerobusterSpawnProjectile+12   o
                 dc.l    $264D0, $500F8F8
                 dc.l    $264D4, $FCFC

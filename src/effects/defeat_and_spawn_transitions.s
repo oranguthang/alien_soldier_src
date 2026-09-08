@@ -7,7 +7,7 @@ Object_ClearForTransition:                              ; CODE XREF: Cutscene_Fa
 ; End of function Object_ClearForTransition
 ; Initializes boss defeat explosion sprite at boss position
 Boss_InitDefeatExplosion:                               ; CODE XREF: Boss_ShiperDefeatSequence+58   p  ; was: sub_2690E
-                                        ; Boss_TerobusterDefeatInit+38   p
+                                        ; Boss_TerobusterDefeatFadeState+38   p
                 movea.w #(word_FFC680-M68K_RAM),a0
                 move.w  #$354,(a0)
                 clr.w   4(a0)

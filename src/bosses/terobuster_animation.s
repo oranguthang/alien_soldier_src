@@ -1,5 +1,5 @@
-Boss_TerobusterInterpolateAnimation:                    ; CODE XREF: Boss_TerobusterMainAI+100   p  ; was: sub_391CC
-                                        ; sub_386EE:loc_388B8   p
+Boss_TerobusterInterpolateAnimation:                    ; CODE XREF: Boss_TerobusterDecisionState+100   p  ; was: sub_391CC
+                                        ; Boss_TerobusterDecisionState:Boss_TerobusterMissileAttackBSelectPoseCommands   p
                 clr.w   $1DC(a5)
                 tst.w   $C(a5)
                 bpl.s   loc_3922E
@@ -41,8 +41,8 @@ loc_3922E:                                              ; CODE XREF: Boss_Terobu
                 jsr     (Anim_ApplyInterpolationStep).l
 ; End of function Boss_TerobusterInterpolateAnimation
 ; Applies animation angles to 9 boss body parts
-Boss_TerobusterApplyAngles:                             ; CODE XREF: Boss_TerobusterMainAI:loc_3876C   p  ; was: sub_3923E
-                                        ; sub_389CA:loc_389D4   p
+Boss_TerobusterApplyAngles:                             ; CODE XREF: Boss_TerobusterDecisionState:Boss_TerobusterDecisionAnimate   p  ; was: sub_3923E
+                                        ; Boss_TerobusterBeginTileReveal:Boss_TerobusterRenderIntroPose   p
                 move.w  #$1FE,d7
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 movea.w #(dword_FF940C-M68K_RAM),a1
@@ -100,26 +100,26 @@ Boss_TerobusterLoadFrameDelays:                         ; CODE XREF: Boss_Terobu
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_TerobusterLoadFrameDelays
 ; ---------------------------------------------------------------------------
-word_392D2:     dc.w    4, 0, $FFFF                     ; DATA XREF: Boss_TerobusterMainAI:loc_3895E   o
+word_392D2:     dc.w    4, 0, $FFFF                     ; DATA XREF: Boss_TerobusterDecisionState:Boss_TerobusterSpawnFallingRocks   o
 word_392D8:     dc.w    3, 0, 1, $36, $FFFF
-                                        ; DATA XREF: Boss_TerobusterMainAI+28A   o
+                                        ; DATA XREF: Boss_TerobusterDecisionState+28A   o
 word_392E2:     dc.w    $10, $2A, $20, $30, $FFFE
-                                        ; DATA XREF: Boss_TerobusterDescend+28   o
+                                        ; DATA XREF: Boss_TerobusterDescentState+28   o
 word_392EC:     dc.w    $FD12, $30, $34, $30, $F040, $24, $20, $24, $FFFE
-                                        ; DATA XREF: Boss_TerobusterDescend:loc_38A54   o
-word_392FE:     dc.w    $1C, 0, $FFFE                   ; DATA XREF: Boss_TerobusterDescend+4E   o
+                                        ; DATA XREF: Boss_TerobusterLandingState:Boss_TerobusterSelectLandingPose   o
+word_392FE:     dc.w    $1C, 0, $FFFE                   ; DATA XREF: Boss_TerobusterLandingCheckComplete   o
 word_39304:     dc.w    5, 0, $FA0E, 0, $E, 6, $14, $C, 5, $12, $FA0E, $12, $E, $18, $14, $1E
-                                        ; DATA XREF: Boss_TerobusterMainAI+FA   o
+                                        ; DATA XREF: Boss_TerobusterDecisionState+FA   o
                 dc.w    $FFFF
 word_39326:     dc.w    $14, $1E, $E, $18, 5, $12, $FA0E, $12, $14, $C, $E, 6, 5, 0, $FA0E, 0
-                                        ; DATA XREF: Boss_TerobusterMainAI+1BA   o
+                                        ; DATA XREF: Boss_TerobusterDecisionState+1BA   o
                 dc.w    $FFFF
 word_39348:     dc.w    6, $1E, 8, $18, 3, $12, $FA08, $12, 6, $C, 8, 6, 3, 0, $FA08, 0
-                                        ; DATA XREF: Boss_TerobusterMainAI+1B4   o
+                                        ; DATA XREF: Boss_TerobusterDecisionState+1B4   o
                 dc.w    $FFFF
 word_3936A:     dc.w    $1330, $F840, $30D0, $F460, $C030, $44C8, $3060, $9024
                                         ; DATA XREF: Boss_TerobusterSetup+11A   o
-                                        ; Boss_TerobusterDescend+A6   o
+                                        ; Boss_TerobusterBeginStageGateDelay   o
                 dc.w    $24F8, $4030, $D013, $30F8, $3044, $C8F4, $60C0, $2424
                 dc.w    $F830, $6090, $2040, $E020, $40E0, $4000, $CC40, $CC
 word_3939A:     dc.w    $70, $D400, $70D4, $1431, $F842, $2ED0
@@ -137,7 +137,7 @@ Gfx_SetPaletteSequence:                                 ; CODE XREF: Boss_Terobu
                 rts
 ; End of function Gfx_SetPaletteSequence
 ; Loads compressed tiles by index with bounds checking
-Boss_TerobusterLoadTilesByIndex:                        ; CODE XREF: Boss_TerobusterDescend+E   p  ; was: sub_393BE
+Boss_TerobusterLoadTilesByIndex:                        ; CODE XREF: Boss_TerobusterTileRevealState+E   p  ; was: sub_393BE
                 asl.w   #2,d0
                 bmi.s   locret_393D2
                 cmpi.w  #$4C,d0                         ; 'L'

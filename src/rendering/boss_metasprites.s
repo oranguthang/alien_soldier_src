@@ -1,6 +1,6 @@
 ; Prepares parent/child traversal registers and returns the actual part count
 Sprite_BeginMetaspritePartTraversal:                    ; CODE XREF: Boss_AntroidRenderPose+2   j  ; was: sub_343CE
-                                        ; Boss_TerobusterInitMetasprite+2   p
+                                        ; Boss_TerobusterUpdateMetaspriteAndProjectile+2   p
                 bsr.w   Sprite_SetMetaspriteTraversalPointers
                 bra.w   Sprite_LoadMetaspritePartCount
 ; End of function Sprite_BeginMetaspritePartTraversal
