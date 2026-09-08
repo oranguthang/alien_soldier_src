@@ -191,6 +191,8 @@
                 include "src/projectiles/jetsripper.s"
                 include "src/bosses/shiper_core.s"
                 include "src/bosses/shiper_movement.s"
+                include "src/bosses/shiper_scroll_and_effects.s"
+                include "src/projectiles/shellshogun_debris.s"
                 include "src/projectiles/shiper.s"
                 include "src/bosses/antroid_core.s"
                 include "src/bosses/antroid_rendering.s"

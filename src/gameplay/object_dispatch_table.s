@@ -37,7 +37,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_ProjectileAttackController
                 dc.l    Enemy_BirdController
                 dc.l    Physics_AccelerateUpward
-                dc.l    Enemy_BossProjectileMovement
+                dc.l    Projectile_ShiperOscillatingShot
                 dc.l    Effect_AnimateAndExpire
                 dc.l    Effect_UpdateCompanionFromParent
                 dc.l    Anim_UpdateWithGlobalAttributes
@@ -214,7 +214,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_BounceOnFloorOrExplode
                 dc.l    Boss_DefeatStateDispatcher
                 dc.l    Projectile_BackStringerChainFalling
-                dc.l    Enemy_BounceRotateProjectile
+                dc.l    Projectile_ShiperBouncingShot
                 dc.l    Boss_Epsilon1ProjectileRotation
                 dc.l    Enemy_FallingBombLogic
                 dc.l    Stage12_TeddyBearMain

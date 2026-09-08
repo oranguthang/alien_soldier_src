@@ -44,14 +44,14 @@ Boss_ShiperStates:  dc.w    Boss_ShiperBeginEncounter-Boss_ShiperBeginEncounter 
                 dc.w    Boss_ShiperLoadGraphics-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperSetupState-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperAttackDecision-Boss_ShiperBeginEncounter
-                dc.w    Boss_ShiperAttackDecision_UpdateAndSpawn-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperUpdateAttackAndSpawnProjectile-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperRiseState-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperHoverState-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperDecelerateVertical-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperRetreatLogic-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperRiseState-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperHoverState-Boss_ShiperBeginEncounter
-                dc.w    Boss_ShiperWaitDescend-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperWaitForMotionThreshold-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperDefeatWait-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperDeathHandler-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperPhaseCheck-Boss_ShiperBeginEncounter
@@ -82,21 +82,21 @@ Boss_ShiperBackgroundConfig:    dc.w    $FFFF, $7000, $FFFF, $6800, $FFFF, $2000
 ; Initializes Shiper Honeyviper boss by processing pointer data and setting up trigonometric tables
 Boss_ShiperInit:                                        ; DATA XREF: ROM:0003649C   o  ; was: sub_36504
                 jsr     (Gfx_RenderScrollingBackground).l
-                bpl.s   locret_36530
+                bpl.s   Boss_ShiperInitReturn
                 addq.w  #2,4(a5)
                 movem.l a5,-(sp)
-                movea.l #stru_36532,a0
+                movea.l #Boss_ShiperInitialAssetDescriptors,a0
                 jsr     (Data_ProcessPointer).l
                 movem.l (sp)+,a5
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #$10,d0
                 jmp     Math_CalculateSineCosineTable
 ; ---------------------------------------------------------------------------
-locret_36530:                                           ; CODE XREF: Boss_ShiperInit+6   j
+Boss_ShiperInitReturn:                                  ; CODE XREF: Boss_ShiperInit+6   j  ; was: locret_36530
                 rts
 ; End of function Boss_ShiperInit
 ; ---------------------------------------------------------------------------
-stru_36532:     dc.w    7                               ; field_0
+Boss_ShiperInitialAssetDescriptors: dc.w    7           ; field_0  ; was: stru_36532
                                         ; DATA XREF: Boss_ShiperInit+10   o
                 dc.l    tiles_10DA6C                    ; field_2
                 dc.w    $6000                           ; field_6
@@ -108,16 +108,16 @@ stru_36532:     dc.w    7                               ; field_0
 ; Waits for system ready then loads boss graphics via DMA transfer
 Boss_ShiperLoadGraphics:                                ; DATA XREF: ROM:0003649E   o  ; was: sub_36544
                 tst.w   (word_FFF720).w
-                bmi.s   locret_36560
+                bmi.s   Boss_ShiperLoadGraphicsReturn
                 addq.w  #2,4(a5)
-                movea.l #word_36562,a0
+                movea.l #Boss_ShiperTileDmaDescriptor,a0
                 jsr     (Gfx_DMATransferTiles).l
                 move.w  #$80,(dword_FFA908).w
-locret_36560:                                           ; CODE XREF: Boss_ShiperLoadGraphics+4   j
+Boss_ShiperLoadGraphicsReturn:                          ; CODE XREF: Boss_ShiperLoadGraphics+4   j  ; was: locret_36560
                 rts
 ; End of function Boss_ShiperLoadGraphics
 ; ---------------------------------------------------------------------------
-word_36562:     dc.w    $6100, $2000, $204, $708, $90A, $B0C, $D0E, $150F, $1011, $1213, $1400
+Boss_ShiperTileDmaDescriptor:   dc.w    $6100, $2000, $204, $708, $90A, $B0C, $D0E, $150F, $1011, $1213, $1400  ; was: word_36562
                                         ; DATA XREF: Boss_ShiperLoadGraphics+A   o
 
 ; Sets up complete boss state machine with positions sprites and collision data
@@ -138,16 +138,16 @@ Boss_ShiperSetupState:                                  ; DATA XREF: ROM:000364A
                 move.w  #$150,$74(a5)
                 move.w  #$C180,2(a5)
                 move.w  #$CB00,$E(a5)
-                move.l  #word_366E4,8(a5)
+                move.l  #Boss_ShiperPrimarySpriteDescriptor,8(a5)
                 move.b  #$30,$20(a5)                    ; '0'
                 move.w  #$10,$60(a5)
                 move.w  #$CD80,$62(a5)
                 move.w  #$CB00,$6E(a5)
-                move.l  #word_366F0,$68(a5)
+                move.l  #Boss_ShiperSecondarySpriteDescriptor,$68(a5)
                 move.b  #$30,$80(a5)                    ; '0'
-                movea.l #word_366BC,a0
+                movea.l #Boss_ShiperAuxiliaryPartDescriptors,a0
                 moveq   #4,d7
-loc_3660A:                                              ; CODE XREF: Boss_ShiperSetupState+B0   j
+Boss_ShiperSetupNextAuxiliaryPart:                      ; CODE XREF: Boss_ShiperSetupState+B0   j  ; was: loc_3660A
                 movea.w (a0)+,a1
                 move.w  #$10,(a1)
                 move.w  #$8080,2(a1)
@@ -155,7 +155,7 @@ loc_3660A:                                              ; CODE XREF: Boss_Shiper
                 move.w  (a0)+,$E(a1)
                 move.w  (a0)+,8(a1)
                 move.w  (a0)+,$A(a1)
-                dbf     d7,loc_3660A
+                dbf     d7,Boss_ShiperSetupNextAuxiliaryPart
                 move.b  #$20,$260(a5)                   ; ' '
                 move.b  #$20,$320(a5)                   ; ' '
                 move.w  #$10,$1E0(a5)
@@ -167,7 +167,7 @@ loc_3660A:                                              ; CODE XREF: Boss_Shiper
                 movea.w #(word_FFC980-M68K_RAM),a0
                 moveq   #$30,d0                         ; '0'
                 moveq   #5,d7
-loc_36664:                                              ; CODE XREF: Boss_ShiperSetupState+112   j
+Boss_ShiperSetupNextChainPart:                          ; CODE XREF: Boss_ShiperSetupState+112   j  ; was: loc_36664
                 move.w  #$10,(a0)
                 move.w  #$8080,2(a0)
                 move.b  d0,$20(a0)
@@ -176,7 +176,7 @@ loc_36664:                                              ; CODE XREF: Boss_Shiper
                 move.w  #$F4F4,$A(a0)
                 lea     $60(a0),a0
                 subq.w  #4,d0
-                dbf     d7,loc_36664
+                dbf     d7,Boss_ShiperSetupNextChainPart
                 move.w  #$63A7,$54E(a5)
                 move.w  #$F00,$548(a5)
                 move.w  #$F0F0,$54A(a5)
@@ -188,37 +188,37 @@ loc_36664:                                              ; CODE XREF: Boss_Shiper
                 bra.w   Boss_ShiperScrollUpdate
 ; End of function Boss_ShiperSetupState
 ; ---------------------------------------------------------------------------
-word_366BC:     dc.w    $C6E0, $63B7, $500, $F8F8, $C7A0, $63BB, $900, $F4F8, $C740, $63C1
+Boss_ShiperAuxiliaryPartDescriptors:    dc.w    $C6E0, $63B7, $500, $F8F8, $C7A0, $63BB, $900, $F4F8, $C740, $63C1  ; was: word_366BC
                                         ; DATA XREF: Boss_ShiperSetupState+8A   o
                 dc.w    $400, $F8FC, $C860, $E3E7, 0, $FCFC, $C920, $E3E3, $500, $F6FA
-word_366E4:     dc.w    $2892, $500, $E8, $A88A, $D00, $F8
+Boss_ShiperPrimarySpriteDescriptor: dc.w    $2892, $500, $E8, $A88A, $D00, $F8  ; was: word_366E4
                                         ; DATA XREF: Boss_ShiperSetupState+5C   o
-word_366F0:     dc.w    $2898, $900, $C1E2, $A896, $400, $C900
+Boss_ShiperSecondarySpriteDescriptor:   dc.w    $2898, $900, $C1E2, $A896, $400, $C900  ; was: word_366F0
                                         ; DATA XREF: Boss_ShiperSetupState+7C   o
 
 ; Boss attack decision logic choosing between dive and ranged attacks
 Boss_ShiperAttackDecision:                              ; DATA XREF: ROM:000364A2   o  ; was: sub_366FC
                 cmpi.w  #6,$16C(a5)
-                bpl.s   Boss_ShiperAttackDecision_UpdateAndSpawn
+                bpl.s   Boss_ShiperUpdateAttackAndSpawnProjectile
                 addq.w  #2,4(a5)
                 move.w  #$E,$174(a5)
                 cmpi.w  #$13C,(word_FF8234).w
-                bpl.s   loc_3671A
+                bpl.s   Boss_ShiperAttackDecisionResetMotion
                 clr.w   $174(a5)
-loc_3671A:                                              ; CODE XREF: Boss_ShiperAttackDecision+18   j
+Boss_ShiperAttackDecisionResetMotion:                   ; CODE XREF: Boss_ShiperAttackDecision+18   j  ; was: loc_3671A
                 clr.l   $78(a5)
 ; Updates boss state and spawns projectiles during attack phase
-Boss_ShiperAttackDecision_UpdateAndSpawn:               ; CODE XREF: Boss_ShiperAttackDecision+6   j  ; was: loc_3671E
+Boss_ShiperUpdateAttackAndSpawnProjectile:              ; CODE XREF: Boss_ShiperAttackDecision+6   j  ; was: loc_3671E
                                         ; DATA XREF: ROM:000364A4   o
                 bsr.w   Boss_ShiperUpdateMain
-                bsr.w   Boss_ShiperSpawnProjectile
+                bsr.w   Boss_ShiperSpawnOscillatingShot
                 cmpi.w  #2,$174(a5)
-                bne.s   locret_3677C
+                bne.s   Boss_ShiperAttackDecisionReturn
                 subq.w  #1,$5A(a5)
-                bpl.s   locret_3677C
+                bpl.s   Boss_ShiperAttackDecisionReturn
                 btst    #0,$5E(a5)
-                beq.s   locret_3677C
-loc_3673C:                                              ; CODE XREF: Boss_ShiperCheckHealthTransition+34   j
+                beq.s   Boss_ShiperAttackDecisionReturn
+Boss_ShiperSelectAttackDirection:                       ; CODE XREF: Boss_ShiperCheckHealthTransition+34   j  ; was: loc_3673C
                 jsr     (Physics_GetPlayerDelta).l
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #7,d0
@@ -226,18 +226,18 @@ loc_3673C:                                              ; CODE XREF: Boss_Shiper
                 move.w  d0,$5A(a5)
                 move.w  #4,$174(a5)
                 tst.w   d1
-                bpl.s   loc_3677E
+                bpl.s   Boss_ShiperSelectPositiveAttackMotion
                 cmpi.w  #$1C08,$58(a5)
-                bmi.s   loc_3677E
+                bmi.s   Boss_ShiperSelectPositiveAttackMotion
                 move.w  #$C,4(a5)
                 move.w  #2,$5C(a5)
                 move.l  #$FFFE4000,$78(a5)
                 bset    #1,$5E(a5)
-locret_3677C:                                           ; CODE XREF: Boss_ShiperAttackDecision+30   j
+Boss_ShiperAttackDecisionReturn:                        ; CODE XREF: Boss_ShiperAttackDecision+30   j  ; was: locret_3677C
                                         ; Boss_ShiperAttackDecision+36   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_3677E:                                              ; CODE XREF: Boss_ShiperAttackDecision+5C   j
+Boss_ShiperSelectPositiveAttackMotion:                  ; CODE XREF: Boss_ShiperAttackDecision+5C   j  ; was: loc_3677E
                                         ; Boss_ShiperAttackDecision+64   j
                 move.w  #$10,4(a5)
                 move.w  #4,$5C(a5)
@@ -270,12 +270,12 @@ Boss_ShiperCheckHealthTransition_WaitFade:              ; CODE XREF: Boss_Shiper
                 bsr.w   Boss_ShiperUpdateMain
                 addi.w  #4,(word_FF8234).w
                 cmpi.w  #$1E0,(word_FF8234).w
-                bmi.s   locret_367EE
+                bmi.s   Boss_ShiperCheckHealthTransitionReturn
                 subq.w  #1,$5A(a5)
-                bpl.s   locret_367EE
+                bpl.s   Boss_ShiperCheckHealthTransitionReturn
                 btst    #0,$5E(a5)
-                bne.w   loc_3673C
-locret_367EE:                                           ; CODE XREF: Boss_ShiperCheckHealthTransition+26   j
+                bne.w   Boss_ShiperSelectAttackDirection
+Boss_ShiperCheckHealthTransitionReturn:                 ; CODE XREF: Boss_ShiperCheckHealthTransition+26   j  ; was: locret_367EE
                                         ; Boss_ShiperCheckHealthTransition+2C   j
                 rts
 ; End of function Boss_ShiperCheckHealthTransition
@@ -292,14 +292,14 @@ Boss_ShiperRiseState:                                   ; DATA XREF: ROM:000364A
                                         ; ROM:000364AE   o
                 bsr.w   Boss_ShiperUpdateMain
                 addi.l  #$1E00,$78(a5)
-                bmi.s   loc_36816
+                bmi.s   Boss_ShiperRiseStateCheckPosition
                 clr.l   $78(a5)
-loc_36816:                                              ; CODE XREF: Boss_ShiperRiseState+C   j
+Boss_ShiperRiseStateCheckPosition:                      ; CODE XREF: Boss_ShiperRiseState+C   j  ; was: loc_36816
                 tst.w   $54(a5)
-                bmi.s   locret_36824
+                bmi.s   Boss_ShiperRiseStateReturn
                 addq.w  #2,4(a5)
                 clr.l   $78(a5)
-locret_36824:                                           ; CODE XREF: Boss_ShiperRiseState+16   j
+Boss_ShiperRiseStateReturn:                             ; CODE XREF: Boss_ShiperRiseState+16   j  ; was: locret_36824
                 rts
 ; End of function Boss_ShiperRiseState
 ; Boss hovering state with conditional movement based on timer and flags
@@ -307,47 +307,47 @@ Boss_ShiperHoverState:                                  ; DATA XREF: ROM:000364A
                                         ; ROM:000364B0   o
                 bsr.w   Boss_ShiperUpdateMain
                 btst    #0,$5E(a5)
-                beq.s   locret_36872
+                beq.s   Boss_ShiperHoverStateReturn
                 cmpi.w  #$E,4(a5)
-                beq.s   loc_3684A
+                beq.s   Boss_ShiperHoverStateUpdateRetreat
                 subq.w  #1,$5A(a5)
-                bpl.s   loc_36866
+                bpl.s   Boss_ShiperHoverStateResumePrevious
                 addq.w  #2,4(a5)
                 clr.w   $5C(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3684A:                                              ; CODE XREF: Boss_ShiperHoverState+12   j
+Boss_ShiperHoverStateUpdateRetreat:                     ; CODE XREF: Boss_ShiperHoverState+12   j  ; was: loc_3684A
                 subi.w  #$28,(word_FF8234).w            ; '('
                 bmi.w   Boss_ShiperInitHoverState
                 cmpi.w  #$1BC8,$58(a5)
                 bmi.w   Boss_ShiperRetreatState
                 subq.w  #1,$5A(a5)
                 bmi.w   Boss_ShiperRetreatState
-loc_36866:                                              ; CODE XREF: Boss_ShiperHoverState+18   j
+Boss_ShiperHoverStateResumePrevious:                    ; CODE XREF: Boss_ShiperHoverState+18   j  ; was: loc_36866
                 subq.w  #2,4(a5)
                 move.l  #$FFFDA000,$78(a5)
-locret_36872:                                           ; CODE XREF: Boss_ShiperHoverState+A   j
+Boss_ShiperHoverStateReturn:                            ; CODE XREF: Boss_ShiperHoverState+A   j  ; was: locret_36872
                 rts
 ; End of function Boss_ShiperHoverState
 ; Decreases vertical velocity and transitions when Y position negative
 Boss_ShiperDecelerateVertical:                          ; DATA XREF: ROM:000364AA   o  ; was: sub_36874
                 bsr.w   Boss_ShiperUpdateMain
                 subi.l  #$2000,$78(a5)
-                bpl.s   loc_36886
+                bpl.s   Boss_ShiperDecelerateVerticalCheckPosition
                 clr.l   $78(a5)
-loc_36886:                                              ; CODE XREF: Boss_ShiperDecelerateVertical+C   j
+Boss_ShiperDecelerateVerticalCheckPosition:             ; CODE XREF: Boss_ShiperDecelerateVertical+C   j  ; was: loc_36886
                 tst.w   $54(a5)
-                bmi.s   locret_36894
+                bmi.s   Boss_ShiperDecelerateVerticalReturn
                 addq.w  #2,4(a5)
                 clr.l   $78(a5)
-locret_36894:                                           ; CODE XREF: Boss_ShiperDecelerateVertical+16   j
+Boss_ShiperDecelerateVerticalReturn:                    ; CODE XREF: Boss_ShiperDecelerateVertical+16   j  ; was: locret_36894
                 rts
 ; End of function Boss_ShiperDecelerateVertical
 ; Handles retreat logic with timer checks and position validation
 Boss_ShiperRetreatLogic:                                ; DATA XREF: ROM:000364AC   o  ; was: sub_36896
                 bsr.w   Boss_ShiperUpdateMain
                 btst    #0,$5E(a5)
-                beq.s   locret_368CA
+                beq.s   Boss_ShiperRetreatLogicReturn
                 subi.w  #$28,(word_FF8234).w            ; '('
                 bmi.w   Boss_ShiperInitHoverState
                 cmpi.w  #$1C98,$58(a5)
@@ -356,47 +356,47 @@ Boss_ShiperRetreatLogic:                                ; DATA XREF: ROM:000364A
                 bmi.w   Boss_ShiperRetreatState
                 subq.w  #2,4(a5)
                 move.l  #$24000,$78(a5)
-locret_368CA:                                           ; CODE XREF: Boss_ShiperRetreatLogic+A   j
+Boss_ShiperRetreatLogicReturn:                          ; CODE XREF: Boss_ShiperRetreatLogic+A   j  ; was: locret_368CA
                 rts
 ; End of function Boss_ShiperRetreatLogic
-; Boss state waiting for descent condition then transitioning to next state
-Boss_ShiperWaitDescend:                                 ; DATA XREF: ROM:000364B2   o  ; was: sub_368CC
+; Waits until the accumulated motion coordinate drops below six
+Boss_ShiperWaitForMotionThreshold:                      ; DATA XREF: ROM:000364B2   o  ; was: sub_368CC
                 bsr.w   Boss_ShiperUpdateMain
                 cmpi.w  #6,$16C(a5)
-                bpl.s   locret_368E6
+                bpl.s   Boss_ShiperWaitForMotionThresholdReturn
                 addq.w  #2,4(a5)
                 clr.w   $174(a5)
                 move.w  #$30,$5A(a5)                    ; '0'
-locret_368E6:                                           ; CODE XREF: Boss_ShiperWaitDescend+A   j
+Boss_ShiperWaitForMotionThresholdReturn:                ; CODE XREF: Boss_ShiperWaitForMotionThreshold+A   j  ; was: locret_368E6
                 rts
-; End of function Boss_ShiperWaitDescend
+; End of function Boss_ShiperWaitForMotionThreshold
 ; Boss defeat state with timer counting down to victory check
 Boss_ShiperDefeatWait:                                  ; DATA XREF: ROM:000364B4   o  ; was: sub_368E8
                 bsr.w   Boss_ShiperUpdateMain
                 subq.w  #1,$5A(a5)
-                bpl.s   locret_368FE
+                bpl.s   Boss_ShiperDefeatWaitReturn
                 addq.w  #2,4(a5)
                 moveq   #2,d0
                 jmp     UI_CheckVictoryCondition
 ; ---------------------------------------------------------------------------
-locret_368FE:                                           ; CODE XREF: Boss_ShiperDefeatWait+8   j
+Boss_ShiperDefeatWaitReturn:                            ; CODE XREF: Boss_ShiperDefeatWait+8   j  ; was: locret_368FE
                 rts
 ; End of function Boss_ShiperDefeatWait
 ; Boss death handler checking multiple conditions before triggering defeat sequence
 Boss_ShiperDeathHandler:                                ; DATA XREF: ROM:000364B6   o  ; was: sub_36900
                 bsr.w   Boss_ShiperUpdateMain
                 tst.w   (word_FF80C2).w
-                bne.s   locret_3692E
+                bne.s   Boss_ShiperDeathHandlerReturn
                 btst    #0,$5E(a5)
-                bne.s   locret_3692E
+                bne.s   Boss_ShiperDeathHandlerReturn
                 cmpi.w  #2,$174(a5)
-                bne.s   locret_3692E
+                bne.s   Boss_ShiperDeathHandlerReturn
                 subi.w  #$A0,(word_FFA970).w
                 clr.b   (byte_FF80EC).w
                 move.w  #$104,(word_FFDB20).w
                 bra.w   Boss_ShiperRetreatState
 ; ---------------------------------------------------------------------------
-locret_3692E:                                           ; CODE XREF: Boss_ShiperDeathHandler+8   j
+Boss_ShiperDeathHandlerReturn:                          ; CODE XREF: Boss_ShiperDeathHandler+8   j  ; was: locret_3692E
                                         ; Boss_ShiperDeathHandler+10   j
                 rts
 ; End of function Boss_ShiperDeathHandler
@@ -411,11 +411,11 @@ Boss_ShiperInitDefeat:                                  ; CODE XREF: Boss_Shiper
 ; Checks boss phase transition conditions based on altitude and flags
 Boss_ShiperPhaseCheck:                                  ; DATA XREF: ROM:000364B8   o  ; was: sub_3694C
                 cmpi.w  #$C,$174(a5)
-                beq.s   loc_36962
+                beq.s   Boss_ShiperPhaseCheckActiveFlag
                 cmpi.w  #6,$16C(a5)
                 bpl.s   Boss_ShiperUpdateWithFade
                 move.w  #$A,$174(a5)
-loc_36962:                                              ; CODE XREF: Boss_ShiperPhaseCheck+6   j
+Boss_ShiperPhaseCheckActiveFlag:                        ; CODE XREF: Boss_ShiperPhaseCheck+6   j  ; was: loc_36962
                 btst    #0,$5E(a5)
                 beq.s   Boss_ShiperUpdateWithFade
                 cmpi.w  #$C,$174(a5)
@@ -435,14 +435,14 @@ Boss_ShiperUpdateWithFade:                              ; CODE XREF: Boss_Shiper
 Boss_ShiperDefeatSequence:                              ; DATA XREF: ROM:000364BA   o  ; was: sub_36990
                 bsr.w   Boss_ShiperUpdateWithFade
                 subq.w  #1,$5A(a5)
-                bmi.s   loc_369B0
+                bmi.s   Boss_ShiperDefeatSequenceBeginCleanup
                 cmpi.w  #$1C,$5A(a5)
-                bpl.w   locret_36A18
+                bpl.w   Boss_ShiperDefeatFlowReturn
                 moveq   #$1C,d0
                 sub.w   $5A(a5),d0
                 jmp     (Gfx_SetFadeParams).l
 ; ---------------------------------------------------------------------------
-loc_369B0:                                              ; CODE XREF: Boss_ShiperDefeatSequence+8   j
+Boss_ShiperDefeatSequenceBeginCleanup:                  ; CODE XREF: Boss_ShiperDefeatSequence+8   j  ; was: loc_369B0
                 addq.w  #2,4(a5)
                 clr.w   2(a5)
                 move.w  #$40,$5A(a5)                    ; '@'
@@ -463,15 +463,15 @@ loc_369B0:                                              ; CODE XREF: Boss_Shiper
 Boss_ShiperDefeatFadeOut:                               ; DATA XREF: ROM:000364BC   o  ; was: sub_369F6
                 move.w  $5A(a5),d0
                 subi.w  #$30,d0                         ; '0'
-                bmi.s   loc_36A06
+                bmi.s   Boss_ShiperDefeatFadeOutTick
                 jsr     (Gfx_SetFadeParams).l
-loc_36A06:                                              ; CODE XREF: Boss_ShiperDefeatFadeOut+8   j
+Boss_ShiperDefeatFadeOutTick:                           ; CODE XREF: Boss_ShiperDefeatFadeOut+8   j  ; was: loc_36A06
                 subq.w  #1,$5A(a5)
-                bpl.s   locret_36A18
+                bpl.s   Boss_ShiperDefeatFlowReturn
                 subq.w  #1,$4A(a5)
-                bpl.s   locret_36A18
+                bpl.s   Boss_ShiperDefeatFlowReturn
                 bset    #4,2(a5)
-locret_36A18:                                           ; CODE XREF: Boss_ShiperDefeatSequence+10   j
+Boss_ShiperDefeatFlowReturn:                            ; CODE XREF: Boss_ShiperDefeatSequence+10   j  ; was: locret_36A18
                                         ; Boss_ShiperDefeatFadeOut+14   j
                 rts
 ; End of function Boss_ShiperDefeatFadeOut

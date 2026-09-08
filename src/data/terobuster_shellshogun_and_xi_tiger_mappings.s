@@ -95,7 +95,7 @@ word_EB9EA:     dc.w    $A8C3, $500, $F6F9              ; DATA XREF: ROM:00036FD
 word_EB9F0:     dc.w    $A8C7, $500, $F5FA              ; DATA XREF: ROM:00036FDA   o
 word_EB9F6:     dc.w    $A8CB, $500, $F6F9              ; DATA XREF: ROM:00036FD6   o
 word_EB9FC:     dc.w    $A8CF, $500, $F6F9              ; DATA XREF: ROM:00036FD2   o
-word_EBA02:     dc.w    $A8D3, $500, $F7F9              ; DATA XREF: ROM:off_36FCE   o
+word_EBA02:     dc.w    $A8D3, $500, $F7F9              ; DATA XREF: ROM:Boss_ShiperTentacleDirectionFrames   o
 word_EBA08:     dc.w    $B0D7, $500, $F7F7              ; DATA XREF: ROM:00036FEA   o
 word_EBA0E:     dc.w    $B0DB, $500, $F7F7              ; DATA XREF: ROM:00036FE6   o
 word_EBA14:     dc.w    $B0DF, $500, $F7F7              ; DATA XREF: ROM:00036FE2   o

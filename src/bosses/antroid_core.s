@@ -1,3 +1,4 @@
+; Main Antroid boss handler dispatching to state routines
 Boss_AntroidMainHandler:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_374C6
                 tst.w   4(a5)
                 beq.w   Boss_AntroidStateDispatch

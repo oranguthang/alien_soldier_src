@@ -78,7 +78,7 @@ Projectile_FindFreePrimarySlot_CheckEnemyRange:         ; CODE XREF: Stage_Spawn
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
-Projectile_FindFreePrimarySlot_CheckFinalRange:         ; CODE XREF: Boss_ShiperSpawnProjectile+16   p  ; was: loc_1C144
+Projectile_FindFreePrimarySlot_CheckFinalRange:         ; CODE XREF: Boss_ShiperSpawnOscillatingShot+16   p  ; was: loc_1C144
                                         ; Boss_TerobusterSpawnHomingMissile+22   p
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreePrimarySlot_Return

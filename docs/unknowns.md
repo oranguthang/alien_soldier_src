@@ -507,6 +507,30 @@ split. Static control flow also disproved the generated player-distance and
 player-proximity claims: the two routines respectively run Shiper's complete
 state machine and begin its encounter/background transition.
 
+The `shiper_core.s` state audit reduced the count to 9,100. Its 29 imported
+labels now identify the asset and tile-DMA descriptors, auxiliary-part setup,
+signed attack selection, motion-state exits, and defeat cleanup. The generated
+`WaitDescend` name was removed because the routine never reads a position or
+velocity; it waits on accumulated movement coordinate `$16C`. These names
+remain static claims about visible data flow, not assertions about unobserved
+animation intent.
+
+The `shiper_movement.s` audit reduced the count to 9,059. Its 41 imported
+labels now expose the movement and rotation dispatch tables, signed horizontal
+acceleration, bounded rotation phases, vertical integration, sprite jitter,
+two independently oscillating tentacle angles, rotation history, and the
+five-part chain traversal. The coherent 526-line module remains intact; its
+size reflects one connected movement/geometry subsystem rather than an
+arbitrary ROM slice.
+
+The adjacent Shiper projectile audit reduced the count to 9,030 and exposed a
+previously hidden subsystem boundary. The old `projectiles/shiper.s` container
+mixed Shiper line-scroll/effects, a Shellshogun debris spawner, and Shiper's
+two projectile handlers. Those ranges are now separate ROM-ordered modules.
+Object types `$98` and `$35C` link the two Shiper spawners to their dispatch
+handlers, which is the static basis for replacing the broad imported names
+`Enemy_BossProjectileMovement` and `Enemy_BounceRotateProjectile`.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

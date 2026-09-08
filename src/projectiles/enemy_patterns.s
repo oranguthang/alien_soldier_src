@@ -378,7 +378,7 @@ off_2B4B6:      dc.l    stru_2B526                      ; DATA XREF: Boss_Destro
 
 ; Initializes projectile with angle calculation and directional velocity
 Enemy_InitDirectionalProjectile:                        ; CODE XREF: Enemy_SpawnDifficultyProjectilePattern+1E   p  ; was: sub_2B4BE
-                                        ; Enemy_BossProjectileMovement+3A   p
+                                        ; Projectile_ShiperOscillatingShot+3A   p
                 lea     stru_2B526(pc),a4
                 nop
 loc_2B4C4:                                              ; CODE XREF: Boss_DestroyerMK2UpdateSprite+14   j
