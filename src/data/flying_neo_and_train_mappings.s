@@ -1,8 +1,8 @@
 word_EBBB8:     dc.w    $2866, $D00, $2FA               ; DATA XREF: Boss_FlyingNeoSetup+64   o
-                                        ; Boss_FlyingNeoHoverDecision+104   o
+                                        ; Boss_FlyingNeoRenderArc+E   o
                 dc.w    $2864, $400, $EAFA
                 dc.w    $A85C, $D00, $F2FA
-word_EBBCA:     dc.w    $286E, $D00, $2FA               ; DATA XREF: Boss_FlyingNeoHoverDecision+92   o
+word_EBBCA:     dc.w    $286E, $D00, $2FA               ; DATA XREF: Boss_FlyingNeoRenderRisingRetreat+E   o
                                         ; Boss_FlyingNeoAnimationUpdate+18   o
                 dc.w    $2864, $400, $EAFA
                 dc.w    $A85C, $D00, $F2FA
@@ -14,8 +14,8 @@ word_EBBF4:     dc.w    $A0A0, $700, $F1F8              ; DATA XREF: ROM:00034F3
 word_EBBFA:     dc.w    $A8A8, $B00, $F2F2              ; DATA XREF: ROM:00034F34   o
 word_EBC00:     dc.w    $A8B4, $A00, $F4F5              ; DATA XREF: ROM:00034F38   o
 word_EBC06:     dc.w    $A8BD, $D00, $F8F0              ; DATA XREF: ROM:00034F3C   o
-word_EBC0C:     dc.w    $287E, $100, $FBF2              ; DATA XREF: Boss_FlyingNeoHoverDecision+10C   o
-                                        ; sub_3C9C0   o
+word_EBC0C:     dc.w    $287E, $100, $FBF2              ; DATA XREF: Boss_FlyingNeoRenderArc+16   o
+                                        ; Boss_FlyingNeoUpdatePartAnchorMapping   o
                 dc.w    $A876, $D00, $FBFA
 word_EBC18:     dc.w    $28D6, $200, $FBF3              ; DATA XREF: ROM:00034F56   o
                                         ; ROM:00034F66   o

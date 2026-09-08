@@ -825,6 +825,24 @@ directional projectiles, jitters one display field near each emission, and
 ends with the shared four-way burst. These operations establish the emitter
 name without asserting an unsupported visual identity.
 
+The first Flying Neo core audit reduced the count to 8,538. It rejected the
+imported `ClearPalettes` claim because the helper only clears bit 15 across
+four explicit palette-buffer ranges. It also corrected the alleged active
+battle state: state `$08` waits on player-sequence word `$FF80C2`, after which
+state `$0A` runs a `$30`-frame attack-start delay. Main-loop labels retain
+neutral health-threshold, shared-phase, palette-fade, defeat-check, and
+screen-X terminology where the exact presentation meaning is not yet proven.
+
+The Flying Neo defeat and player-control audit reduced the count to 8,523.
+The first two defeat states now describe their actual forward and reverse walk
+through linked-object slots, converting each selected record to an
+upward-moving type-`$38` particle. Later states launch a fixed type-`$88`
+record, emit randomized type-`$88` rain, load the final tile command, publish
+player-sequence value `$5C`, and maintain scrolling. The alleged collision
+center helper was narrowed to the defeat-effect origin fields used by these
+states; the player-controlled state is retained because it directly consumes
+the four directional bits of input word `$FFF706`.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -134,7 +134,7 @@ Stage_InitStage8Palettes:                               ; DATA XREF: ROM:0001227
                 nop
                 bsr.w   Stage_LoadConfigData
 loc_1233A:                                              ; CODE XREF: Stage_LoadXiTigerSprites+A   j
-                jsr     (Boss_FlyingNeoClearPalettes).l
+                jsr     (Boss_FlyingNeoClearPaletteHighBits).l
 loc_12340:                                              ; CODE XREF: Stage_InitStage9Flies+86   j
                 lea     (word_FF0C80).l,a0
                 lea     (word_FF0D00).l,a1

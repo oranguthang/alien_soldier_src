@@ -520,7 +520,7 @@ word_3DF4:      dc.w    $D                              ; DATA XREF: Data_LoadPa
                                         ; sub_3C20   o
                 dc.w    $E362, $E364, $E366, $E368, $E36A, $E36E, $E370, $E372
                 dc.w    $E374, $E376, $E378, $E37A, $E37C, $E37E
-word_3E12:      dc.w    $C                              ; DATA XREF: Boss_FlyingNeoMain:loc_3C00C   o
+word_3E12:      dc.w    $C                              ; DATA XREF: Boss_FlyingNeoMain:Boss_FlyingNeoProcessMainColorFade   o
                                         ; Boss_FlyingNeoMain+4E   o
                 dc.w    $E362, $E364, $E366, $E368, $E36A, $E370, $E372, $E374
                 dc.w    $E376, $E378, $E37A, $E37C, $E37E

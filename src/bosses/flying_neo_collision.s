@@ -88,7 +88,7 @@ Boss_FlyingNeoSetFlipBits:                              ; CODE XREF: Boss_Flying
 ; End of function Boss_FlyingNeoFlipDirection
 ; ---------------------------------------------------------------------------
 word_3CEA0:     dc.w    $6C0C, $4000, $301, $5656, $5656, $5656, $5656
-                                        ; DATA XREF: Boss_FlyingNeoDefeatState4+94   o
+                                        ; DATA XREF: Boss_FlyingNeoDefeatParticleRainState+94   o
 word_3CEAE:     dc.w    $6C0C, $2000, $301, $3031, $3233, $3435, $3637
                                         ; DATA XREF: Boss_FlyingNeoFlipDirection+42   o
 word_3CEBC:     dc.w    $6C0C, $2000, $301, $3839, $3A3B, $373D, $3E3F
@@ -118,7 +118,7 @@ nullsub_78:
 ; End of function nullsub_78
 
 ; Processes animation with interpolation and angle updates
-Boss_FlyingNeoProcessAnimation:                         ; CODE XREF: Boss_FlyingNeoIntroWait+10   p  ; was: sub_3CF0A
+Boss_FlyingNeoProcessAnimation:                         ; CODE XREF: Boss_FlyingNeoIntroDelayState+10   p  ; was: sub_3CF0A
                                         ; Boss_FlyingNeoPlayerControlled+72   p
                 clr.w   $A(a5)
                 tst.w   $C(a5)
@@ -211,23 +211,23 @@ Boss_FlyingNeoLoadFrameDelays:
 ; End of function Boss_FlyingNeoLoadFrameDelays
 ; ---------------------------------------------------------------------------
 word_3D00A:     dc.w    $408, 0, $808, 0, $408, 4, $808, 4
-                                        ; DATA XREF: Boss_FlyingNeoIntroWait+A   o
-                                        ; sub_3C4E2:loc_3C54E   o
+                                        ; DATA XREF: Boss_FlyingNeoIntroDelayState+A   o
+                                        ; Boss_FlyingNeoPlayerControlled:Boss_FlyingNeoApplyPlayerControlPose   o
                 dc.w    $FFFF
 word_3D01C:     dc.w    $612, 0, $1212, 0, $612, 4, $1212, 4
-                                        ; DATA XREF: Boss_FlyingNeoSwoopAttack:loc_3C762   o
+                                        ; DATA XREF: Boss_FlyingNeoHorizontalSwoopState:Boss_FlyingNeoUpdateSwoopPose   o
                 dc.w    $FFFF
 word_3D02E:     dc.w    $828, 8, $E0E, 8, $A10, $C, $A0A, $C
-                                        ; DATA XREF: Boss_FlyingNeoHoverDecision+1F6   o
+                                        ; DATA XREF: Boss_FlyingNeoHoverDecisionState+1F6   o
                 dc.w    $80AF, $828, $10, $E0E, $10, $A10, $14, $A0A
                 dc.w    $14, $80AF, $FFFF
 word_3D054:     dc.w    $70C, $18, $4040, $18, $FFFE
-                                        ; DATA XREF: Boss_FlyingNeoHoverDecision:loc_3C836   o
+                                        ; DATA XREF: Boss_FlyingNeoRisingRetreatState:Boss_FlyingNeoRenderRisingRetreat   o
 word_3D05E:     dc.w    $210, $1C, $606, $1C, $220, $20, $808, $20
-                                        ; DATA XREF: Boss_FlyingNeoHoverDecision:loc_3C8A8   o
+                                        ; DATA XREF: Boss_FlyingNeoDivingArcState:Boss_FlyingNeoSelectDivingArcPose   o
                 dc.w    $FFFF
 word_3D070:     dc.w    $820, $1C, $1216, $1C, $820, $20, $1216, $20
-                                        ; DATA XREF: Boss_FlyingNeoHoverDecision:loc_3C924   o
+                                        ; DATA XREF: Boss_FlyingNeoRisingArcState:Boss_FlyingNeoSelectRisingArcPose   o
                 dc.w    $FFFF
 word_3D082:     dc.w    $868, $1C70, $1C70, $868, $3010, $470, $1020, $501B
                                         ; DATA XREF: Boss_FlyingNeoProcessAnimation+5A   o
