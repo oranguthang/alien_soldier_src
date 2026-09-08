@@ -587,7 +587,7 @@ Boss_MadamBarbarCheckBounds:                            ; CODE XREF: Boss_MadamB
                 move.w  $14(a5),d0
                 addi.w  #$50,d0                         ; 'P'
                 move.w  d0,(dword_FFA90C).w
-                jmp     Boss_CheckScreenBounds
+                jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_MadamBarbarCheckBounds
 ; Spawns boss bullet projectile with random velocity calculation
 Boss_MadamBarbarSpawnBullet:                            ; CODE XREF: Boss_MadamBarbarAttackPhase:loc_3A6BE   p  ; was: sub_3AB82

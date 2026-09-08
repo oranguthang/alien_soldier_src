@@ -216,7 +216,7 @@ loc_512AC:                                              ; CODE XREF: Boss_Valkir
                 addi.w  #$3C,d1                         ; '<'
                 move.w  d0,(dword_FFA908).w
                 move.w  d1,(dword_FFA90C).w
-                jsr     (Boss_CheckScreenBounds).l
+                jsr     (Boss_ClampSharedScreenPosition).l
                 rts
 ; End of function Boss_ValkirieInit
 ; Flips Valkirie boss to face left by clearing horizontal flip bits on all sprite components and loading left-facing tiles

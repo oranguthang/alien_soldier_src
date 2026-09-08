@@ -8,7 +8,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Effect_UpdateImpactParticleSpawner
                 dc.l    Enemy_BehaviorController
                 dc.l    Effect_RunStage25DestructionParticle
-                dc.l    Boss_CalculatePlayerDistance
+                dc.l    Boss_ShiperMainHandler
                 dc.l    Entity_EmptyState4
                 dc.l    Entity_EmptyState4
                 dc.l    Boss_AntroidMainHandler
@@ -59,7 +59,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_JetsripperMainHandler
                 dc.l    Boss_JetsripperClampY
                 dc.l    Boss_JetsripperSegmentPhysics
-                dc.l    Boss_CalculatePlayerDistance
+                dc.l    Boss_ShiperMainHandler
                 dc.l    Boss_ShellshogunMainHandler
                 dc.l    Entity_EmptyState5
                 dc.l    TerrainTileAnimation_EvenFrameHandler

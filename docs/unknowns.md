@@ -481,6 +481,32 @@ original data. Valkirie reads one rotation table bytewise as a neutral pose, whi
 Z-Leo and Valkirie Force interpret the shared block at `$0355A4` differently;
 the names preserve those dual roles instead of claiming a single false type.
 
+The `jetsripper_core.s` control-flow audit reduced the count to 9,171. All 47
+formerly address-derived branches now describe their observed state-machine,
+angle-cycle, segment-rendering, dive, swing, or defeat role. The shared helper
+formerly called `Boss_CheckScreenBounds` was also corrected: it returns no
+boolean result and instead replaces out-of-range coordinates with fallback
+X=`$FEB0`, so its name now states that clamping side effect.
+
+The `jetsripper_segments.s` audit reduced the count to 9,142. Its 29 imported
+branch and table labels now describe angle-buffer traversal, per-segment radius
+assignment, chain positioning, directional mappings, palette selection, and
+death-segment physics. The audit also corrected three generated behavioral
+claims: the former segment-Y routine only distributes radius field `$54`, the
+former generic math helper writes horizontal velocity directly to the current
+object, and the sine helper returns its value in `d2` rather than writing a
+vertical-velocity field. The shared four-direction renderer is now explicitly
+named for both end pieces because live callers use it for the head and tail.
+
+The adjacent Jetsripper-projectile/Shiper boundary audit reduced the count to
+9,129. `projectiles/jetsripper.s` now ends with its palette update at `$036419`;
+the following Shiper main handler, state table, encounter initializer, no-op,
+and background configuration moved into `bosses/shiper_core.s` without moving
+any ROM byte. This corrects a subsystem ownership error, not merely a file-size
+split. Static control flow also disproved the generated player-distance and
+player-proximity claims: the two routines respectively run Shiper's complete
+state machine and begin its encounter/background transition.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

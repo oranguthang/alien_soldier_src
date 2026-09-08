@@ -478,7 +478,7 @@ Boss_SunsetStingUpdateScreenBounds:                     ; CODE XREF: Boss_Sunset
                 move.w  $14(a5),d0
                 addi.w  #$48,d0                         ; 'H'
                 move.w  d0,(dword_FFA90C).w
-                jmp     Boss_CheckScreenBounds
+                jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_SunsetStingUpdateScreenBounds
 ; ---------------------------------------------------------------------------
 off_4258E:      dc.l    word_4196C                      ; DATA XREF: Boss_SunsetStingLoadGraphicsAlt+28   o

@@ -680,7 +680,7 @@ Boss_SunsetStingUpdateCameraOffset:                     ; CODE XREF: Boss_Sunset
                 move.w  $14(a5),d0
                 addi.w  #$4C,d0                         ; 'L'
                 move.w  d0,(dword_FFA90C).w
-                jmp     Boss_CheckScreenBounds
+                jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_SunsetStingUpdateCameraOffset
 ; Updates animation angles for boss body parts
 Boss_SunsetStingUpdatePartAngles:                       ; CODE XREF: Boss_SunsetStingUpdateGraphics   p  ; was: sub_4150C

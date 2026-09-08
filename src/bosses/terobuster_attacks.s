@@ -187,7 +187,7 @@ loc_38D86:                                              ; CODE XREF: Boss_Terobu
                 add.w   $14(a5),d1
                 addi.w  #$3E,d1                         ; '>'
                 move.w  d1,(dword_FFA90C).w
-                jmp     Boss_CheckScreenBounds
+                jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_TerobusterUpdateBodyParts
 ; Spawns projectiles with trajectory and velocity updates
 Boss_TerobusterSpawnProjectile:                         ; CODE XREF: Boss_TerobusterInitMetasprite+10   j  ; was: sub_38DC4

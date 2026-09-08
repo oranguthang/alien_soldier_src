@@ -35,7 +35,7 @@ word_EB660:     dc.w    $6832, $900, $BF4               ; DATA XREF: ROM:00035F6
 word_EB672:     dc.w    $6050, $B00, $FDE8              ; DATA XREF: ROM:00035F72   o
                 dc.w    $6850, $B00, $FD00
                 dc.w    $E838, $D00, $EDF0
-word_EB684:     dc.w    $E86C, $D00, $F8F0              ; DATA XREF: ROM:off_35F7A   o
+word_EB684:     dc.w    $E86C, $D00, $F8F0              ; DATA XREF: ROM:Boss_JetsripperBodyDirectionFrames   o
                                         ; ROM:00035F9A   o
 word_EB68A:     dc.w    $E874, $E00, $F2F0              ; DATA XREF: ROM:00035FA2   o
                                         ; ROM:00035FB2   o
@@ -43,7 +43,7 @@ word_EB690:     dc.w    $E88C, $F00, $EFF1              ; DATA XREF: ROM:00035FA
 word_EB696:     dc.w    $605C, $F00, $FDE0              ; DATA XREF: Boss_JetsripperDiveExecute+CE   o
                 dc.w    $685C, $F00, $FD00
                 dc.w    $E838, $D00, $EDF0
-word_EB6A8:     dc.w    $E89C, $D00, $F7E9              ; DATA XREF: ROM:off_35FBA   o
+word_EB6A8:     dc.w    $E89C, $D00, $F7E9              ; DATA XREF: ROM:Boss_JetsripperTailFrames   o
 word_EB6AE:     dc.w    $E8A4, $E00, $EFEA              ; DATA XREF: ROM:00035FBE   o
                                         ; ROM:00035FC6   o
 word_EB6B4:     dc.w    $E8B0, $B00, $E7F4              ; DATA XREF: ROM:00035FC2   o
@@ -62,7 +62,7 @@ word_EB6D8:     dc.w    $E810, $F00, $EFF0              ; DATA XREF: ROM:00035F8
                 dc.w    $68F2, $B00, $F3ED
                 dc.w    $68F0, $400, $B05
                 dc.w    $E8E4, $E00, $F305
-word_EB6F6:     dc.w    $68FE, $400, $19F4              ; DATA XREF: ROM:off_35B1C   o
+word_EB6F6:     dc.w    $68FE, $400, $19F4              ; DATA XREF: ROM:Boss_JetsripperBodyFrames   o
                 dc.w    $68F2, $B00, $F9F4
                 dc.w    $68F0, $400, $110C
                 dc.w    $E8E4, $E00, $F90C

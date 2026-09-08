@@ -1,3 +1,85 @@
+; Runs Shiper's encounter state machine and shared visual state
+Boss_ShiperMainHandler:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3641A
+                move.w  (word_FFEC02).w,(word_FFEC04).w
+                tst.w   4(a5)
+                beq.s   Boss_ShiperDispatchState
+                tst.w   6(a5)
+                beq.s   Boss_ShiperDispatchState
+                btst    #2,(byte_FF80EC).w
+                bne.s   Boss_ShiperUpdateActiveState
+                btst    #1,(byte_FF80EC).w
+                bne.s   Boss_ShiperUpdateActiveState
+                tst.w   (word_FF8200).w
+                bne.s   Boss_ShiperUpdateActiveState
+                bset    #0,(byte_FFA272).w
+                bra.w   Boss_ShiperInitDefeat
+; ---------------------------------------------------------------------------
+Boss_ShiperUpdateActiveState:                           ; CODE XREF: Boss_ShiperMainHandler+18   j  ; was: loc_3644C
+                                        ; Boss_ShiperMainHandler+20   j
+                jsr     (Gfx_InitPaletteFade).l
+                clr.b   $49(a5)
+                move.w  (dword_FFA900).w,d0
+                add.w   $10(a5),d0
+                move.w  d0,$58(a5)
+                addi.l  #$6000,$7C(a5)
+                bmi.s   Boss_ShiperDispatchState
+                cmpi.w  #$150,$74(a5)
+                bmi.s   Boss_ShiperDispatchState
+                clr.l   $7C(a5)
+                move.w  #$150,$74(a5)
+                tst.w   (word_FFA010).w
+                bne.s   Boss_ShiperDispatchState
+                move.w  #1,(word_FFA010).w
+Boss_ShiperDispatchState:                               ; CODE XREF: Boss_ShiperMainHandler+A   j  ; was: loc_3648A
+                                        ; Boss_ShiperMainHandler+10   j
+                move.w  4(a5),d0
+                movea.w Boss_ShiperStates(pc,d0.w),a0
+                adda.l  #Boss_ShiperBeginEncounter,a0
+                jmp     (a0)
+; End of function Boss_ShiperMainHandler
+; ---------------------------------------------------------------------------
+Boss_ShiperStates:  dc.w    Boss_ShiperBeginEncounter-Boss_ShiperBeginEncounter  ; was: off_3649A
+                                        ; DATA XREF: Boss_ShiperMainHandler+74   r
+                dc.w    Boss_ShiperInit-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperLoadGraphics-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperSetupState-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperAttackDecision-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperAttackDecision_UpdateAndSpawn-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperRiseState-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperHoverState-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperDecelerateVertical-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperRetreatLogic-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperRiseState-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperHoverState-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperWaitDescend-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperDefeatWait-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperDeathHandler-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperPhaseCheck-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperDefeatSequence-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperDefeatFadeOut-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperCheckHealthTransition-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperCheckHealthTransition_WaitFade-Boss_ShiperBeginEncounter
+
+; Starts the encounter's background transition and removes unrelated objects
+Boss_ShiperBeginEncounter:                              ; DATA XREF: Boss_ShiperStates   o  ; was: sub_364C2
+                addq.w  #2,4(a5)
+                addq.w  #1,6(a5)
+                move.l  #Boss_ShiperBackgroundConfig,(dword_FFA940).w
+                move.w  #0,(word_FFA946).w
+                move.w  #0,(word_FFA948).w
+                move.w  #$13,(word_FFA944).w
+                move.w  #$24,d0                         ; '$'
+                move.w  #$134,d1
+                jmp     Object_ClearAllExceptTypes
+; End of function Boss_ShiperBeginEncounter
+Boss_ShiperNoOp:
+                rts                                     ; was: nullsub_77
+; End of function Boss_ShiperNoOp
+; ---------------------------------------------------------------------------
+Boss_ShiperBackgroundConfig:    dc.w    $FFFF, $7000, $FFFF, $6800, $FFFF, $2000, 0, $4000  ; was: word_364F4
+                                        ; DATA XREF: Boss_ShiperBeginEncounter+8   o
+
+; Initializes Shiper Honeyviper boss by processing pointer data and setting up trigonometric tables
 Boss_ShiperInit:                                        ; DATA XREF: ROM:0003649C   o  ; was: sub_36504
                 jsr     (Gfx_RenderScrollingBackground).l
                 bpl.s   locret_36530
@@ -319,7 +401,7 @@ locret_3692E:                                           ; CODE XREF: Boss_Shiper
                 rts
 ; End of function Boss_ShiperDeathHandler
 ; Sets boss defeat flags clears state and increments stage counter
-Boss_ShiperInitDefeat:                                  ; CODE XREF: Boss_CalculatePlayerDistance+2E   j  ; was: sub_36930
+Boss_ShiperInitDefeat:                                  ; CODE XREF: Boss_ShiperMainHandler+2E   j  ; was: sub_36930
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)

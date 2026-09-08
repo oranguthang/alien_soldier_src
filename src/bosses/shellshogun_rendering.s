@@ -88,7 +88,7 @@ Boss_ShellshogunBoundsCheck:                            ; CODE XREF: Boss_Shells
                 move.w  $14(a5),d0
                 addi.w  #$50,d0                         ; 'P'
                 move.w  d0,(dword_FFA90C).w
-                jmp     Boss_CheckScreenBounds
+                jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_ShellshogunBoundsCheck
 ; Updates boss position from velocity
 Boss_ShellshogunUpdatePosition:                         ; CODE XREF: Boss_ShellshogunRenderSprites+14   j  ; was: sub_39F58
