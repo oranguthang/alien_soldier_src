@@ -207,6 +207,8 @@
                 include "src/bosses/terobuster_animation.s"
                 include "src/bosses/shellshogun_core.s"
                 include "src/bosses/shellshogun_rendering.s"
+                include "src/bosses/madam_barbar_palette_cycle.s"
+                include "src/bosses/shellshogun_animation.s"
                 include "src/bosses/madam_barbar_core.s"
                 include "src/projectiles/madam_barbar.s"
                 include "src/bosses/joker_core.s"

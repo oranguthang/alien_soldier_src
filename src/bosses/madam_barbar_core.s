@@ -1,3 +1,4 @@
+; Main Madam Barbar boss handler checking defeat and state dispatch
 Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3A47C
                 tst.w   4(a5)
                 beq.w   loc_3A4D4
