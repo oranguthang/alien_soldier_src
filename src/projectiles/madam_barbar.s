@@ -161,8 +161,8 @@ Boss_MadamBarbarCheckCollision:                         ; CODE XREF: Projectile_
                 jmp     Physics_AddEntityOffset
 ; End of function Boss_MadamBarbarCheckCollision
 ; Spawns boss projectiles with random position offset calculations
-Boss_MadamBarbarSpawnProjectile:                        ; CODE XREF: Boss_MadamBarbarAttackPhase   p  ; was: sub_3B01E
-                                        ; Boss_MadamBarbarIdleUpdate+1A   p
+Boss_MadamBarbarSpawnProjectile:                        ; CODE XREF: Boss_MadamBarbarProjectileWaitState   p  ; was: sub_3B01E
+                                        ; Boss_MadamBarbarIdleProgressState+1A   p
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   locret_3B066
                 movea.l #dword_3B178,a1
@@ -185,7 +185,7 @@ locret_3B066:                                           ; CODE XREF: Boss_MadamB
                 rts
 ; End of function Boss_MadamBarbarSpawnProjectile
 ; Spawn falling projectile from Madam Barbar boss
-Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamBarbarAIState+244   p  ; was: sub_3B068
+Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamBarbarSelectAttackState+244   p  ; was: sub_3B068
                 move.w  (word_FFA000).w,d0
                 andi.w  #$F,d0
                 bne.s   locret_3B066
@@ -271,24 +271,24 @@ dword_3B178:    dc.l    $163BC, $FCFC, $163BD, $FCFC, $163BE, $FCFC, $263BF
                                         ; DATA XREF: Boss_MadamBarbarSpawnProjectile+8   o
                 dc.l    $500F8F8, $163BE, $FCFC, $163BD, $FCFC, $163BC, $FCFC
                 dc.w    $FFFF
-dword_3B1B2:    dc.l    $100000, $10000C                ; DATA XREF: Boss_MadamBarbarIntro:loc_3A65C   o
-                                        ; Boss_MadamBarbarIdleUpdate+1E   o
+dword_3B1B2:    dc.l    $100000, $10000C                ; DATA XREF: Boss_MadamBarbarIntroApproachState:Boss_MadamBarbarUpdateIntroPose   o
+                                        ; Boss_MadamBarbarIdleProgressState+1E   o
                 dc.w    $FFFF
-dword_3B1BC:    dc.l    $70000, $7000C                  ; DATA XREF: Boss_MadamBarbarAIState+248   o
+dword_3B1BC:    dc.l    $70000, $7000C                  ; DATA XREF: Boss_MadamBarbarSelectAttackState+248   o
                 dc.w    $FFFF
-dword_3B1C6:    dc.l    $40018, $4000C                  ; DATA XREF: Boss_MadamBarbarAttackPhase+58   o
+dword_3B1C6:    dc.l    $40018, $4000C                  ; DATA XREF: Boss_MadamBarbarBulletBarrageState+58   o
                 dc.w    $FFFF
 dword_3B1D0:    dc.l    $F70D0018, $220018, $E3200024, $FE0E0024, $180024, $F0200018
-                                        ; DATA XREF: Boss_MadamBarbarAIState+1F6   o
+                                        ; DATA XREF: Boss_MadamBarbarSelectAttackState+1F6   o
                 dc.w    $FFFE
 dword_3B1EA:    dc.l    $100030, $10003C, $100048, $100054
-                                        ; DATA XREF: Boss_MadamBarbarAIState:loc_3A830   o
+                                        ; DATA XREF: Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarUpdatePlayerLeftSidePose   o
                 dc.w    $FFFF
 dword_3B1FC:    dc.l    $100060, $10006C, $100078, $100084
-                                        ; DATA XREF: Boss_MadamBarbarAIState:loc_3A8AC   o
+                                        ; DATA XREF: Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarUpdatePlayerRightSidePose   o
                 dc.w    $FFFF
 word_3B20E:     dc.w    $D828, $A8D8, $8818, $D820, $A8E0, $F8E8, $E028, $A0D8
-                                        ; DATA XREF: Boss_MadamBarbarSetup+CA   o
+                                        ; DATA XREF: Boss_MadamBarbarSetupState+CA   o
                                         ; Boss_MadamBarbarUpdateAnimation+5A   o
                 dc.w    $9020, $D020, $B0E0, $F0E0, $A028, $E0D8, $8010, $E028
                 dc.w    $A0D8, $F0, $4408, $3CF8, $B404, $CC04, $B4FC, $CCFC

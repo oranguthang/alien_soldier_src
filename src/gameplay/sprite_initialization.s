@@ -105,7 +105,7 @@ Boss_ShiperObjectInitTable: dc.w    $C620, $5008, $C808, $E214, $C808, $E214, $3
                 dc.w    $CBC0, $1030, $F010, $F808, 0, 0, $80
                 dc.w    $FFFE
 Boss_MadamBarbarObjectInitTable:    dc.w    $C620, $5024, $E820, $E020, $EC18, $EC18, $A080  ; was: word_1BAF4
-                                        ; DATA XREF: Boss_MadamBarbarSetup+AA   o
+                                        ; DATA XREF: Boss_MadamBarbarSetupState+AA   o
                 dc.w    $C6E0, $1010, $F20E, $F20E, 0, 0, 5
                 dc.w    $C7A0, $5010, $F20E, $F20E, $F40C, $F40C, $4305
                 dc.w    $C920, $1010, $F20E, $F20E, 0, 0, 5

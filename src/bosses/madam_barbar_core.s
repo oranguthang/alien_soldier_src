@@ -1,67 +1,67 @@
-; Main Madam Barbar boss handler checking defeat and state dispatch
+; Dispatches Madam Barbar's main state and handles the external transition path
 Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3A47C
                 tst.w   4(a5)
-                beq.w   loc_3A4D4
+                beq.w   Boss_MadamBarbarDispatchState
                 tst.w   8(a5)
-                beq.s   loc_3A4D4
+                beq.s   Boss_MadamBarbarDispatchState
                 btst    #2,(byte_FF80EC).w
-                bne.s   loc_3A4C2
+                bne.s   Boss_MadamBarbarPrepareStateDispatch
                 btst    #1,(byte_FF80EC).w
-                bne.s   loc_3A4C2
+                bne.s   Boss_MadamBarbarPrepareStateDispatch
                 tst.w   (word_FF8200).w
-                bne.s   loc_3A4C2
+                bne.s   Boss_MadamBarbarPrepareStateDispatch
                 move.b  #1,(byte_FF830E).w
                 bset    #0,(byte_FFA272).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #4,(word_FF808C).w
-                bra.w   loc_3A682
+                bra.w   Boss_MadamBarbarBeginMainAttack
 ; ---------------------------------------------------------------------------
-loc_3A4C2:                                              ; CODE XREF: Boss_MadamBarbarMain+14   j
+Boss_MadamBarbarPrepareStateDispatch:                   ; CODE XREF: Boss_MadamBarbarMain+14   j  ; was: loc_3A4C2
                                         ; Boss_MadamBarbarMain+1C   j
                 jsr     (Gfx_InitPaletteFade).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
-loc_3A4D4:                                              ; CODE XREF: Boss_MadamBarbarMain+4   j
+Boss_MadamBarbarDispatchState:                          ; CODE XREF: Boss_MadamBarbarMain+4   j  ; was: loc_3A4D4
                                         ; Boss_MadamBarbarMain+C   j
                 move.w  4(a5),d0
-                movea.w off_3A4E4(pc,d0.w),a0
-                adda.l  #Boss_MadamBarbarInit,a0
+                movea.w Boss_MadamBarbarStateOffsets(pc,d0.w),a0
+                adda.l  #Boss_MadamBarbarInitializeState,a0
                 jmp     (a0)
 ; End of function Boss_MadamBarbarMain
 ; ---------------------------------------------------------------------------
-off_3A4E4:      dc.w    Boss_MadamBarbarInit-Boss_MadamBarbarInit
+Boss_MadamBarbarStateOffsets:   dc.w    Boss_MadamBarbarInitializeState-Boss_MadamBarbarInitializeState  ; was: off_3A4E4
                                         ; DATA XREF: Boss_MadamBarbarMain+5C   r
-                dc.w    Boss_MadamBarbarSetup-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarIntro-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarIntro_Sequence-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarAttackPhase-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarAttack_MainPhase-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarDefeatSequence-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarAIState-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarAI_RightSideAttack-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarAI_LeftSideAttack-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarAI_CenterSpinAttack-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarAI_DropProjectileAttack-Boss_MadamBarbarInit
-                dc.w    Boss_MadamBarbarIdleUpdate-Boss_MadamBarbarInit
+                dc.w    Boss_MadamBarbarSetupState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarIntroApproachState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarIntroCompletionState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarProjectileWaitState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarBulletBarrageState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarPostBarrageCleanupState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarSelectAttackState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarPlayerLeftSidePoseState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarPlayerRightSidePoseState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarCenterSpinState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarDropProjectileState-Boss_MadamBarbarInitializeState
+                dc.w    Boss_MadamBarbarIdleProgressState-Boss_MadamBarbarInitializeState
 
 ; Initializes Madam Barbar boss clearing sprites and setting flags
-Boss_MadamBarbarInit:                                   ; DATA XREF: Boss_MadamBarbarMain+60   o  ; was: sub_3A4FE
-                                        ; ROM:off_3A4E4   o
+Boss_MadamBarbarInitializeState:                        ; DATA XREF: Boss_MadamBarbarMain+60   o  ; was: sub_3A4FE
+                                        ; ROM:Boss_MadamBarbarStateOffsets   o
                 addq.w  #2,4(a5)
                 clr.w   8(a5)
                 move.w  #$118,d0
                 move.w  #$12C,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.b  #1,(byte_FF830E).w
-locret_3A51A:                                           ; CODE XREF: Boss_MadamBarbarSetup+4   j
+Boss_MadamBarbarInitializationReturn:                   ; CODE XREF: Boss_MadamBarbarSetupState+4   j  ; was: locret_3A51A
                 rts
-; End of function Boss_MadamBarbarInit
+; End of function Boss_MadamBarbarInitializeState
 ; Sets up Madam Barbar boss metasprites tiles and animation
-Boss_MadamBarbarSetup:                                  ; DATA XREF: ROM:0003A4E6   o  ; was: sub_3A51C
+Boss_MadamBarbarSetupState:                             ; DATA XREF: ROM:0003A4E6   o  ; was: sub_3A51C
                 tst.w   (word_FFF720).w
-                bmi.s   locret_3A51A
+                bmi.s   Boss_MadamBarbarInitializationReturn
                 addq.w  #1,8(a5)
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
@@ -98,27 +98,27 @@ Boss_MadamBarbarSetup:                                  ; DATA XREF: ROM:0003A4E
                 move.w  #$248,$9D0(a5)
                 movea.l #Boss_MadamBarbarObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
-                movea.l #word_3A5F2,a0
+                movea.l #Boss_MadamBarbarTileLoadCommands,a0
                 jsr     (Gfx_LoadCompressedTiles).l
-                bsr.w   Boss_MadamBarbarSetCollision
-                bsr.w   Boss_MadamBarbarWobble
+                bsr.w   Boss_MadamBarbarApplyPartFlagArrangement
+                bsr.w   Boss_MadamBarbarUpdateWobble
                 lea     word_3B20E(pc),a0
                 nop
                 bsr.w   Boss_MadamBarbarLoadFrameDelays
-                bra.s   Boss_MadamBarbarIntro
-; End of function Boss_MadamBarbarSetup
+                bra.s   Boss_MadamBarbarIntroApproachState
+; End of function Boss_MadamBarbarSetupState
 ; ---------------------------------------------------------------------------
-word_3A5F2:     dc.w    $6100, $2000, $302, $2021, $2223, $2425, $2627, $28, $2900
-                                        ; DATA XREF: Boss_MadamBarbarSetup+B6   o
+Boss_MadamBarbarTileLoadCommands:   dc.w    $6100, $2000, $302, $2021, $2223, $2425, $2627, $28, $2900  ; was: word_3A5F2
+                                        ; DATA XREF: Boss_MadamBarbarSetupState+B6   o
 
 ; Boss introduction sequence checking position for battle start
-Boss_MadamBarbarIntro:                                  ; CODE XREF: Boss_MadamBarbarSetup+D4   j  ; was: sub_3A604
+Boss_MadamBarbarIntroApproachState:                     ; CODE XREF: Boss_MadamBarbarSetupState+D4   j  ; was: sub_3A604
                                         ; DATA XREF: ROM:0003A4E8   o
                 tst.w   $17E(a5)
-                bpl.w   loc_3A830
+                bpl.w   Boss_MadamBarbarUpdatePlayerLeftSidePose
                 move.w  #3,$17E(a5)
                 cmpi.w  #$5C0,$BC(a5)
-                bpl.w   loc_3A830
+                bpl.w   Boss_MadamBarbarUpdatePlayerLeftSidePose
                 addq.w  #2,4(a5)
                 move.w  a5,$48(a5)
                 move.w  #$CFE0,$4A(a5)
@@ -127,31 +127,31 @@ Boss_MadamBarbarIntro:                                  ; CODE XREF: Boss_MadamB
                 move.w  #$FFFF,$C(a5)
                 move.w  #7,$17E(a5)
 ; Madam Barbar intro sequence with victory check
-Boss_MadamBarbarIntro_Sequence:                         ; DATA XREF: ROM:0003A4EA   o  ; was: loc_3A640
+Boss_MadamBarbarIntroCompletionState:                   ; DATA XREF: ROM:0003A4EA   o  ; was: loc_3A640
                 tst.w   $17E(a5)
-                bpl.s   loc_3A65C
+                bpl.s   Boss_MadamBarbarUpdateIntroPose
                 addq.w  #2,4(a5)
                 moveq   #6,d0
                 jsr     (UI_CheckVictoryCondition).l
                 move.b  #$8A,d0
                 jsr     (Input_CheckButtonMode).l
-loc_3A65C:                                              ; CODE XREF: Boss_MadamBarbarIntro+40   j
-                                        ; Boss_MadamBarbarAttackPhase+8   j
+Boss_MadamBarbarUpdateIntroPose:                        ; CODE XREF: Boss_MadamBarbarIntroApproachState+40   j  ; was: loc_3A65C
+                                        ; Boss_MadamBarbarProjectileWaitState+8   j
                 lea     dword_3B1B2(pc),a1
                 nop
                 bsr.w   Boss_MadamBarbarUpdateAnimation
                 bra.w   Boss_MadamBarbarUpdateParts
-; End of function Boss_MadamBarbarIntro
-; Boss attack phase with timer countdown and collision enabling
-Boss_MadamBarbarAttackPhase:                            ; DATA XREF: ROM:0003A4EC   o  ; was: sub_3A66A
+; End of function Boss_MadamBarbarIntroApproachState
+; Waits for the active projectile sequence before entering the AI state
+Boss_MadamBarbarProjectileWaitState:                    ; DATA XREF: ROM:0003A4EC   o  ; was: sub_3A66A
                 bsr.w   Boss_MadamBarbarSpawnProjectile
                 tst.w   (word_FF80C2).w
-                bne.s   loc_3A65C
+                bne.s   Boss_MadamBarbarUpdateIntroPose
                 clr.b   (byte_FF80EC).w
                 subi.w  #$A0,(word_FFA970).w
-                bra.w   loc_3A780
+                bra.w   Boss_MadamBarbarBeginAIState
 ; ---------------------------------------------------------------------------
-loc_3A682:                                              ; CODE XREF: Boss_MadamBarbarMain+42   j
+Boss_MadamBarbarBeginMainAttack:                        ; CODE XREF: Boss_MadamBarbarMain+42   j  ; was: loc_3A682
                 move.w  #$A,4(a5)
                 move.w  a5,$48(a5)
                 move.w  #$CFE0,$4A(a5)
@@ -160,56 +160,56 @@ loc_3A682:                                              ; CODE XREF: Boss_MadamB
                 move.w  #$FFFF,$C(a5)
                 move.w  #$11F,$11C(a5)
                 move.w  #$48,(word_FF809E).w            ; 'H'
-; Madam Barbar main attack with bullet spawning
-Boss_MadamBarbarAttack_MainPhase:                       ; DATA XREF: ROM:0003A4EE   o  ; was: loc_3A6AE
+; Runs the timed bullet barrage and flashes linked parts near its end
+Boss_MadamBarbarBulletBarrageState:                     ; DATA XREF: ROM:0003A4EE   o  ; was: loc_3A6AE
                 subq.w  #1,$11C(a5)
-                bpl.s   loc_3A6BE
+                bpl.s   Boss_MadamBarbarUpdateBulletBarrage
                 addq.w  #2,4(a5)
                 move.w  #$30,$11C(a5)                   ; '0'
-loc_3A6BE:                                              ; CODE XREF: Boss_MadamBarbarAttackPhase+48   j
-                bsr.w   Boss_MadamBarbarSpawnBullet
+Boss_MadamBarbarUpdateBulletBarrage:                    ; CODE XREF: Boss_MadamBarbarBulletBarrageState+8   j  ; was: loc_3A6BE
+                bsr.w   Boss_MadamBarbarSpawnBarrageParticle
                 lea     dword_3B1C6(pc),a1
                 nop
                 bsr.w   Boss_MadamBarbarUpdateAnimation
                 bsr.w   Boss_MadamBarbarUpdateParts
                 cmpi.w  #$38,$11C(a5)                   ; '8'
-                bpl.s   locret_3A6F4
+                bpl.s   Boss_MadamBarbarBulletBarrageReturn
                 btst    #0,(word_FFA000+1).w
-                bne.w   loc_3A70C
+                bne.w   Boss_MadamBarbarDisableAllPartFlag7
                 moveq   #7,d0
                 moveq   #$1C,d7
                 movea.w a5,a0
-loc_3A6E8:                                              ; CODE XREF: Boss_MadamBarbarAttackPhase+86   j
+Boss_MadamBarbarEnableAllPartFlag7:                     ; CODE XREF: Boss_MadamBarbarBulletBarrageState+86   j  ; was: loc_3A6E8
                 bset    d0,2(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3A6E8
-locret_3A6F4:                                           ; CODE XREF: Boss_MadamBarbarAttackPhase+6C   j
+                dbf     d7,Boss_MadamBarbarEnableAllPartFlag7
+Boss_MadamBarbarBulletBarrageReturn:                    ; CODE XREF: Boss_MadamBarbarBulletBarrageState+6C   j  ; was: locret_3A6F4
                 rts
-; End of function Boss_MadamBarbarAttackPhase
-; Boss defeat sequence clearing sprites and disabling collision
-Boss_MadamBarbarDefeatSequence:                         ; DATA XREF: ROM:0003A4F0   o  ; was: sub_3A6F6
+; End of function Boss_MadamBarbarBulletBarrageState
+; Updates linked parts and clears the object range after the barrage
+Boss_MadamBarbarPostBarrageCleanupState:                ; DATA XREF: ROM:0003A4F0   o  ; was: sub_3A6F6
                 subq.w  #1,$11C(a5)
-                bpl.s   loc_3A708
+                bpl.s   Boss_MadamBarbarUpdatePostBarrageParts
                 moveq   #0,d0
                 move.w  #$12C,d1
                 jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
-loc_3A708:                                              ; CODE XREF: Boss_MadamBarbarDefeatSequence+4   j
+Boss_MadamBarbarUpdatePostBarrageParts:                 ; CODE XREF: Boss_MadamBarbarPostBarrageCleanupState+4   j  ; was: loc_3A708
                 bsr.w   Boss_MadamBarbarUpdateParts
-loc_3A70C:                                              ; CODE XREF: Boss_MadamBarbarAttackPhase+74   j
+Boss_MadamBarbarDisableAllPartFlag7:                    ; CODE XREF: Boss_MadamBarbarBulletBarrageState+74   j  ; was: loc_3A70C
                 move.w  #$FEB0,(dword_FFA908).w
                 moveq   #7,d0
                 moveq   #$1C,d7
                 movea.w a5,a0
-loc_3A718:                                              ; CODE XREF: Boss_MadamBarbarDefeatSequence+2A   j
+Boss_MadamBarbarDisableNextPartFlag7:                   ; CODE XREF: Boss_MadamBarbarPostBarrageCleanupState+2A   j  ; was: loc_3A718
                 bclr    d0,2(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3A718
+                dbf     d7,Boss_MadamBarbarDisableNextPartFlag7
                 rts
-; End of function Boss_MadamBarbarDefeatSequence
+; End of function Boss_MadamBarbarPostBarrageCleanupState
 ; Initialize Madam Barbar idle state with position and timers
-Boss_MadamBarbarInitIdleState:                          ; CODE XREF: Boss_MadamBarbarAIState+7A   j  ; was: sub_3A726
-                                        ; Boss_MadamBarbarAIState+F6   j
+Boss_MadamBarbarBeginIdleState:                         ; CODE XREF: Boss_MadamBarbarSelectAttackState+7A   j  ; was: sub_3A726
+                                        ; Boss_MadamBarbarSelectAttackState+F6   j
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$18,4(a5)
@@ -217,15 +217,15 @@ Boss_MadamBarbarInitIdleState:                          ; CODE XREF: Boss_MadamB
                 move.w  #$CFE0,$4A(a5)
                 move.w  #$C8,$9D4(a5)
                 clr.w   $17E(a5)
-; End of function Boss_MadamBarbarInitIdleState
-; Update Madam Barbar idle state with projectile spawning
-Boss_MadamBarbarIdleUpdate:                             ; DATA XREF: ROM:0003A4FC   o  ; was: sub_3A74A
+; End of function Boss_MadamBarbarBeginIdleState
+; Advances shared progress and the idle pose until the AI state begins
+Boss_MadamBarbarIdleProgressState:                      ; DATA XREF: ROM:0003A4FC   o  ; was: sub_3A74A
                 tst.w   $17E(a5)
-                bpl.s   loc_3A75E
+                bpl.s   Boss_MadamBarbarUpdateIdleProgress
                 clr.w   $17E(a5)
                 cmpi.w  #$1E0,(word_FF8234).w
-                bpl.w   loc_3A776
-loc_3A75E:                                              ; CODE XREF: Boss_MadamBarbarIdleUpdate+4   j
+                bpl.w   Boss_MadamBarbarPrepareAIState
+Boss_MadamBarbarUpdateIdleProgress:                     ; CODE XREF: Boss_MadamBarbarIdleProgressState+4   j  ; was: loc_3A75E
                 addi.w  #2,(word_FF8234).w
                 bsr.w   Boss_MadamBarbarSpawnProjectile
                 lea     dword_3B1B2(pc),a1
@@ -233,124 +233,124 @@ loc_3A75E:                                              ; CODE XREF: Boss_MadamB
                 bsr.w   Boss_MadamBarbarUpdateAnimation
                 bra.w   Boss_MadamBarbarUpdateParts
 ; ---------------------------------------------------------------------------
-loc_3A776:                                              ; CODE XREF: Boss_MadamBarbarIdleUpdate+10   j
-                                        ; Boss_MadamBarbarAIState+8A   j
+Boss_MadamBarbarPrepareAIState:                         ; CODE XREF: Boss_MadamBarbarIdleProgressState+10   j  ; was: loc_3A776
+                                        ; Boss_MadamBarbarSelectAttackState+8A   j
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-loc_3A780:                                              ; CODE XREF: Boss_MadamBarbarAttackPhase+14   j
+Boss_MadamBarbarBeginAIState:                           ; CODE XREF: Boss_MadamBarbarProjectileWaitState+14   j  ; was: loc_3A780
                 move.w  #$E,4(a5)
                 move.w  a5,$48(a5)
                 move.w  #$CFE0,$4A(a5)
                 move.w  #$C8,$9D4(a5)
                 move.w  #1,$17E(a5)
-; End of function Boss_MadamBarbarIdleUpdate
-; Boss AI state machine tracking player position and attack patterns
-Boss_MadamBarbarAIState:                                ; DATA XREF: ROM:0003A4F2   o  ; was: sub_3A79C
+; End of function Boss_MadamBarbarIdleProgressState
+; Selects the next pose state from player distance, side, and frame-derived bits
+Boss_MadamBarbarSelectAttackState:                      ; DATA XREF: ROM:0003A4F2   o  ; was: sub_3A79C
                 tst.w   $17E(a5)
-                bpl.s   loc_3A7DE
+                bpl.s   Boss_MadamBarbarUpdateAttackSelectionPose
                 move.w  (dword_FFFF08).w,d7
                 move.w  (dword_FFA410).w,d0
                 sub.w   $10(a5),d0
                 move.w  d0,d1
-                bpl.s   loc_3A7B4
+                bpl.s   Boss_MadamBarbarCheckAttackDistance
                 neg.w   d1
-loc_3A7B4:                                              ; CODE XREF: Boss_MadamBarbarAIState+14   j
+Boss_MadamBarbarCheckAttackDistance:                    ; CODE XREF: Boss_MadamBarbarSelectAttackState+14   j  ; was: loc_3A7B4
                 cmpi.w  #$70,d1                         ; 'p'
-                bpl.s   loc_3A7C6
+                bpl.s   Boss_MadamBarbarCheckMediumRangeAttack
                 andi.w  #$3000,d7
-                bne.w   loc_3A8E4
-                bra.w   loc_3A9A0
+                bne.w   Boss_MadamBarbarBeginCenterSpin
+                bra.w   Boss_MadamBarbarBeginDropProjectileState
 ; ---------------------------------------------------------------------------
-loc_3A7C6:                                              ; CODE XREF: Boss_MadamBarbarAIState+1C   j
+Boss_MadamBarbarCheckMediumRangeAttack:                 ; CODE XREF: Boss_MadamBarbarSelectAttackState+1C   j  ; was: loc_3A7C6
                 cmpi.w  #$100,d1
-                bpl.s   loc_3A7D4
+                bpl.s   Boss_MadamBarbarSelectPlayerSidePose
                 andi.w  #$7000,d7
-                beq.w   loc_3A9A0
-loc_3A7D4:                                              ; CODE XREF: Boss_MadamBarbarAIState+2E   j
+                beq.w   Boss_MadamBarbarBeginDropProjectileState
+Boss_MadamBarbarSelectPlayerSidePose:                   ; CODE XREF: Boss_MadamBarbarSelectAttackState+2E   j  ; was: loc_3A7D4
                 tst.w   d0
-                bpl.w   loc_3A868
-                bra.w   loc_3A7EC
+                bpl.w   Boss_MadamBarbarBeginPlayerRightSidePose
+                bra.w   Boss_MadamBarbarBeginPlayerLeftSidePose
 ; ---------------------------------------------------------------------------
-loc_3A7DE:                                              ; CODE XREF: Boss_MadamBarbarAIState+4   j
+Boss_MadamBarbarUpdateAttackSelectionPose:              ; CODE XREF: Boss_MadamBarbarSelectAttackState+4   j  ; was: loc_3A7DE
                 lea     dword_3B1B2(pc),a1
                 nop
                 bsr.w   Boss_MadamBarbarUpdateAnimation
                 bra.w   Boss_MadamBarbarUpdateParts
 ; ---------------------------------------------------------------------------
-loc_3A7EC:                                              ; CODE XREF: Boss_MadamBarbarAIState+3E   j
+Boss_MadamBarbarBeginPlayerLeftSidePose:                ; CODE XREF: Boss_MadamBarbarSelectAttackState+3E   j  ; was: loc_3A7EC
                 move.w  #$10,4(a5)
                 clr.w   $58(a5)
                 clr.w   6(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #1,$17E(a5)
-; Madam Barbar right side attack with debris
-Boss_MadamBarbarAI_RightSideAttack:                     ; DATA XREF: ROM:0003A4F4   o  ; was: loc_3A806
+; Runs the pose selected when the player was left of the boss
+Boss_MadamBarbarPlayerLeftSidePoseState:                ; DATA XREF: ROM:0003A4F4   o  ; was: loc_3A806
                 bsr.w   Boss_MadamBarbarSpawnDebris
                 tst.w   $17E(a5)
-                bpl.s   loc_3A830
+                bpl.s   Boss_MadamBarbarUpdatePlayerLeftSidePose
                 subi.w  #0,(word_FF8234).w
-                bmi.w   Boss_MadamBarbarInitIdleState
+                bmi.w   Boss_MadamBarbarBeginIdleState
                 move.w  (dword_FFA410).w,d0
                 addi.w  #$60,d0                         ; '`'
                 cmp.w   $10(a5),d0
-                bpl.w   loc_3A776
+                bpl.w   Boss_MadamBarbarPrepareAIState
                 move.w  #3,$17E(a5)
-loc_3A830:                                              ; CODE XREF: Boss_MadamBarbarIntro+4   j
-                                        ; Boss_MadamBarbarIntro+14   j
+Boss_MadamBarbarUpdatePlayerLeftSidePose:               ; CODE XREF: Boss_MadamBarbarIntroApproachState+4   j  ; was: loc_3A830
+                                        ; Boss_MadamBarbarIntroApproachState+14   j
                 lea     dword_3B1EA(pc),a1
                 nop
                 bsr.w   Boss_MadamBarbarUpdateAnimation
                 bsr.w   Boss_MadamBarbarPlayRotationSound
                 movea.w #(word_FFCF80-M68K_RAM),a0
                 cmpi.w  #8,$58(a5)
-                beq.s   loc_3A856
+                beq.s   Boss_MadamBarbarAnchorPlayerLeftSidePose
                 cmpi.w  #$C,$58(a5)
-                beq.s   loc_3A856
+                beq.s   Boss_MadamBarbarAnchorPlayerLeftSidePose
                 movea.w #(byte_FFCFE0-M68K_RAM),a0
-loc_3A856:                                              ; CODE XREF: Boss_MadamBarbarAIState+AC   j
-                                        ; Boss_MadamBarbarAIState+B4   j
+Boss_MadamBarbarAnchorPlayerLeftSidePose:               ; CODE XREF: Boss_MadamBarbarSelectAttackState+AC   j  ; was: loc_3A856
+                                        ; Boss_MadamBarbarSelectAttackState+B4   j
                 move.w  #$C8,$14(a0)
                 move.w  a0,$48(a5)
                 move.w  a0,$4A(a5)
                 bra.w   Boss_MadamBarbarUpdateParts
 ; ---------------------------------------------------------------------------
-loc_3A868:                                              ; CODE XREF: Boss_MadamBarbarAIState+3A   j
+Boss_MadamBarbarBeginPlayerRightSidePose:               ; CODE XREF: Boss_MadamBarbarSelectAttackState+3A   j  ; was: loc_3A868
                 move.w  #$12,4(a5)
                 clr.w   $58(a5)
                 clr.w   6(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #1,$17E(a5)
-; Madam Barbar left side attack with rotation
-Boss_MadamBarbarAI_LeftSideAttack:                      ; DATA XREF: ROM:0003A4F6   o  ; was: loc_3A882
+; Runs the pose selected when the player was right of the boss
+Boss_MadamBarbarPlayerRightSidePoseState:               ; DATA XREF: ROM:0003A4F6   o  ; was: loc_3A882
                 bsr.w   Boss_MadamBarbarSpawnDebris
                 tst.w   $17E(a5)
-                bpl.s   loc_3A8AC
+                bpl.s   Boss_MadamBarbarUpdatePlayerRightSidePose
                 subi.w  #0,(word_FF8234).w
-                bmi.w   Boss_MadamBarbarInitIdleState
+                bmi.w   Boss_MadamBarbarBeginIdleState
                 move.w  (dword_FFA410).w,d0
                 subi.w  #$60,d0                         ; '`'
                 cmp.w   $10(a5),d0
-                bmi.w   loc_3A776
+                bmi.w   Boss_MadamBarbarPrepareAIState
                 move.w  #3,$17E(a5)
-loc_3A8AC:                                              ; CODE XREF: Boss_MadamBarbarAIState+EE   j
+Boss_MadamBarbarUpdatePlayerRightSidePose:              ; CODE XREF: Boss_MadamBarbarSelectAttackState+EE   j  ; was: loc_3A8AC
                 lea     dword_3B1FC(pc),a1
                 nop
                 bsr.w   Boss_MadamBarbarUpdateAnimation
                 bsr.w   Boss_MadamBarbarPlayRotationSound
                 movea.w #(byte_FFD040-M68K_RAM),a0
                 cmpi.w  #4,$58(a5)
-                beq.s   loc_3A8D2
+                beq.s   Boss_MadamBarbarAnchorPlayerRightSidePose
                 cmpi.w  #$10,$58(a5)
-                beq.s   loc_3A8D2
+                beq.s   Boss_MadamBarbarAnchorPlayerRightSidePose
                 movea.w #(byte_FFD0A0-M68K_RAM),a0
-loc_3A8D2:                                              ; CODE XREF: Boss_MadamBarbarAIState+128   j
-                                        ; Boss_MadamBarbarAIState+130   j
+Boss_MadamBarbarAnchorPlayerRightSidePose:              ; CODE XREF: Boss_MadamBarbarSelectAttackState+128   j  ; was: loc_3A8D2
+                                        ; Boss_MadamBarbarSelectAttackState+130   j
                 move.w  #$C8,$14(a0)
                 move.w  a0,$48(a5)
                 move.w  a0,$4A(a5)
                 bra.w   Boss_MadamBarbarUpdateParts
 ; ---------------------------------------------------------------------------
-loc_3A8E4:                                              ; CODE XREF: Boss_MadamBarbarAIState+22   j
+Boss_MadamBarbarBeginCenterSpin:                        ; CODE XREF: Boss_MadamBarbarSelectAttackState+22   j  ; was: loc_3A8E4
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$14,4(a5)
@@ -358,54 +358,54 @@ loc_3A8E4:                                              ; CODE XREF: Boss_MadamB
                 move.w  #$CFE0,$4A(a5)
                 move.w  #$C8,$9D4(a5)
                 clr.w   $11E(a5)
-; Madam Barbar center spin attack
-Boss_MadamBarbarAI_CenterSpinAttack:                    ; DATA XREF: ROM:0003A4F8   o  ; was: loc_3A908
+; Runs the center-spin pose and updates its linked-part parameters
+Boss_MadamBarbarCenterSpinState:                        ; DATA XREF: ROM:0003A4F8   o  ; was: loc_3A908
                 bsr.w   Boss_MadamBarbarSpawnDebris
                 move.w  $58(a5),d0
-                bpl.s   loc_3A91E
+                bpl.s   Boss_MadamBarbarCheckCenterSpinTrigger
                 tst.w   (word_FF8234).w
-                bmi.w   Boss_MadamBarbarInitIdleState
-                bra.w   loc_3A776
+                bmi.w   Boss_MadamBarbarBeginIdleState
+                bra.w   Boss_MadamBarbarPrepareAIState
 ; ---------------------------------------------------------------------------
-loc_3A91E:                                              ; CODE XREF: Boss_MadamBarbarAIState+174   j
+Boss_MadamBarbarCheckCenterSpinTrigger:                 ; CODE XREF: Boss_MadamBarbarSelectAttackState+174   j  ; was: loc_3A91E
                 tst.w   $11E(a5)
-                bne.s   loc_3A942
+                bne.s   Boss_MadamBarbarSelectCenterSpinPartValue
                 cmpi.w  #$C,d0
-                bne.s   loc_3A942
+                bne.s   Boss_MadamBarbarSelectCenterSpinPartValue
                 subi.w  #$52,(word_FF8234).w            ; 'R'
                 addq.w  #1,$11E(a5)
                 move.b  #$B2,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  $58(a5),d0
-loc_3A942:                                              ; CODE XREF: Boss_MadamBarbarAIState+186   j
-                                        ; Boss_MadamBarbarAIState+18C   j
+Boss_MadamBarbarSelectCenterSpinPartValue:              ; CODE XREF: Boss_MadamBarbarSelectAttackState+186   j  ; was: loc_3A942
+                                        ; Boss_MadamBarbarSelectAttackState+18C   j
                 move.w  #$86,d1
                 cmpi.w  #$C,d0
-                bmi.s   loc_3A956
+                bmi.s   Boss_MadamBarbarUpdateCenterSpinParameters
                 cmpi.w  #$14,d0
-                bpl.s   loc_3A956
+                bpl.s   Boss_MadamBarbarUpdateCenterSpinParameters
                 move.w  #$FF,d1
-loc_3A956:                                              ; CODE XREF: Boss_MadamBarbarAIState+1AE   j
-                                        ; Boss_MadamBarbarAIState+1B4   j
+Boss_MadamBarbarUpdateCenterSpinParameters:             ; CODE XREF: Boss_MadamBarbarSelectAttackState+1AE   j  ; was: loc_3A956
+                                        ; Boss_MadamBarbarSelectAttackState+1B4   j
                 move.w  d1,$1A6(a5)
                 move.w  d1,$3E6(a5)
                 move.w  $1DC(a5),d1
                 move.w  $1DE(a5),d2
                 cmpi.w  #$C,d0
-                bmi.s   loc_3A978
+                bmi.s   Boss_MadamBarbarIncreaseCenterSpinAngles
                 cmpi.w  #$10,d1
-                bmi.s   loc_3A982
+                bmi.s   Boss_MadamBarbarStoreCenterSpinAngles
                 subq.w  #4,d1
                 subq.w  #4,d2
-                bra.s   loc_3A982
+                bra.s   Boss_MadamBarbarStoreCenterSpinAngles
 ; ---------------------------------------------------------------------------
-loc_3A978:                                              ; CODE XREF: Boss_MadamBarbarAIState+1CE   j
+Boss_MadamBarbarIncreaseCenterSpinAngles:               ; CODE XREF: Boss_MadamBarbarSelectAttackState+1CE   j  ; was: loc_3A978
                 cmpi.w  #$60,d1                         ; '`'
-                bpl.s   loc_3A982
+                bpl.s   Boss_MadamBarbarStoreCenterSpinAngles
                 addq.w  #4,d1
                 addq.w  #4,d2
-loc_3A982:                                              ; CODE XREF: Boss_MadamBarbarAIState+1D4   j
-                                        ; Boss_MadamBarbarAIState+1DA   j
+Boss_MadamBarbarStoreCenterSpinAngles:                  ; CODE XREF: Boss_MadamBarbarSelectAttackState+1D4   j  ; was: loc_3A982
+                                        ; Boss_MadamBarbarSelectAttackState+1DA   j
                 andi.w  #$1FE,d1
                 andi.w  #$1FE,d2
                 move.w  d1,$1DC(a5)
@@ -413,10 +413,10 @@ loc_3A982:                                              ; CODE XREF: Boss_MadamB
                 lea     dword_3B1D0(pc),a1
                 nop
                 bsr.w   Boss_MadamBarbarUpdateAnimation
-                bra.w   loc_3A9F6
+                bra.w   Boss_MadamBarbarApplyPartLayout
 ; ---------------------------------------------------------------------------
-loc_3A9A0:                                              ; CODE XREF: Boss_MadamBarbarAIState+26   j
-                                        ; Boss_MadamBarbarAIState+34   j
+Boss_MadamBarbarBeginDropProjectileState:               ; CODE XREF: Boss_MadamBarbarSelectAttackState+26   j  ; was: loc_3A9A0
+                                        ; Boss_MadamBarbarSelectAttackState+34   j
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$16,4(a5)
@@ -427,80 +427,80 @@ loc_3A9A0:                                              ; CODE XREF: Boss_MadamB
                 andi.w  #$1E,d0
                 addq.w  #7,d0
                 move.w  d0,$17E(a5)
-; Madam Barbar dropping projectile attack
-Boss_MadamBarbarAI_DropProjectileAttack:                ; DATA XREF: ROM:0003A4FA   o  ; was: loc_3A9CE
+; Runs the bounded drop-projectile pose
+Boss_MadamBarbarDropProjectileState:                    ; DATA XREF: ROM:0003A4FA   o  ; was: loc_3A9CE
                 subi.w  #1,(word_FF8234).w
-                bmi.w   Boss_MadamBarbarInitIdleState
+                bmi.w   Boss_MadamBarbarBeginIdleState
                 tst.w   $17E(a5)
-                bmi.w   loc_3A776
+                bmi.w   Boss_MadamBarbarPrepareAIState
                 bsr.w   Boss_MadamBarbarSpawnDropProjectile
                 lea     dword_3B1BC(pc),a1
                 nop
                 bsr.w   Boss_MadamBarbarUpdateAnimation
                 bra.w   *+4
-; End of function Boss_MadamBarbarAIState
+; End of function Boss_MadamBarbarSelectAttackState
 ; Updates all boss body parts positions with offset calculations
-Boss_MadamBarbarUpdateParts:                            ; CODE XREF: Boss_MadamBarbarIntro+62   j  ; was: sub_3A9F2
-                                        ; Boss_MadamBarbarAttackPhase+62   p
-                bsr.w   Boss_MadamBarbarRotateInit
-loc_3A9F6:                                              ; CODE XREF: Boss_MadamBarbarAIState+200   j
+Boss_MadamBarbarUpdateParts:                            ; CODE XREF: Boss_MadamBarbarIntroApproachState+62   j  ; was: sub_3A9F2
+                                        ; Boss_MadamBarbarBulletBarrageState+62   p
+                bsr.w   Boss_MadamBarbarUpdateRotationBounds
+Boss_MadamBarbarApplyPartLayout:                        ; CODE XREF: Boss_MadamBarbarSelectAttackState+200   j  ; was: loc_3A9F6
                 moveq   #$1B,d7
                 jsr     (Sprite_SetMetaspriteTraversalPointers).l
                 movea.w #(word_FFC680-M68K_RAM),a0
                 moveq   #$24,d0                         ; '$'
                 moveq   #$A,d1
                 moveq   #5,d7
-loc_3AA08:                                              ; CODE XREF: Boss_MadamBarbarUpdateParts+22   j
+Boss_MadamBarbarOffsetPositiveXPositiveYGroup:          ; CODE XREF: Boss_MadamBarbarUpdateParts+22   j  ; was: loc_3AA08
                 add.w   d0,$40(a0)
                 add.w   d1,$44(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3AA08
+                dbf     d7,Boss_MadamBarbarOffsetPositiveXPositiveYGroup
                 moveq   #5,d7
-loc_3AA1A:                                              ; CODE XREF: Boss_MadamBarbarUpdateParts+34   j
+Boss_MadamBarbarOffsetNegativeXPositiveYGroup:          ; CODE XREF: Boss_MadamBarbarUpdateParts+34   j  ; was: loc_3AA1A
                 sub.w   d0,$40(a0)
                 add.w   d1,$44(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3AA1A
+                dbf     d7,Boss_MadamBarbarOffsetNegativeXPositiveYGroup
                 moveq   #$28,d0                         ; '('
                 moveq   #$28,d1                         ; '('
                 moveq   #$14,d2
                 moveq   #2,d7
-loc_3AA32:                                              ; CODE XREF: Boss_MadamBarbarUpdateParts+4C   j
+Boss_MadamBarbarOffsetNegativeXNegativeYGroupA:         ; CODE XREF: Boss_MadamBarbarUpdateParts+4C   j  ; was: loc_3AA32
                 sub.w   d0,$40(a0)
                 sub.w   d2,$44(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3AA32
+                dbf     d7,Boss_MadamBarbarOffsetNegativeXNegativeYGroupA
                 moveq   #2,d7
-loc_3AA44:                                              ; CODE XREF: Boss_MadamBarbarUpdateParts+5E   j
+Boss_MadamBarbarOffsetNegativeXNegativeYGroupB:         ; CODE XREF: Boss_MadamBarbarUpdateParts+5E   j  ; was: loc_3AA44
                 sub.w   d1,$40(a0)
                 sub.w   d2,$44(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3AA44
+                dbf     d7,Boss_MadamBarbarOffsetNegativeXNegativeYGroupB
                 moveq   #2,d7
-loc_3AA56:                                              ; CODE XREF: Boss_MadamBarbarUpdateParts+70   j
+Boss_MadamBarbarOffsetPositiveXNegativeYGroupA:         ; CODE XREF: Boss_MadamBarbarUpdateParts+70   j  ; was: loc_3AA56
                 add.w   d0,$40(a0)
                 sub.w   d2,$44(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3AA56
+                dbf     d7,Boss_MadamBarbarOffsetPositiveXNegativeYGroupA
                 moveq   #2,d7
-loc_3AA68:                                              ; CODE XREF: Boss_MadamBarbarUpdateParts+82   j
+Boss_MadamBarbarOffsetPositiveXNegativeYGroupB:         ; CODE XREF: Boss_MadamBarbarUpdateParts+82   j  ; was: loc_3AA68
                 add.w   d1,$40(a0)
                 sub.w   d2,$44(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_3AA68
+                dbf     d7,Boss_MadamBarbarOffsetPositiveXNegativeYGroupB
                 movea.w a5,a3
                 moveq   #$1C,d7
                 jsr     (Sprite_UpdateLinkedPositions).l
-                bsr.w   Boss_MadamBarbarCheckBounds
+                bsr.w   Boss_MadamBarbarPublishScreenPosition
 ; End of function Boss_MadamBarbarUpdateParts
-; Applies wobble effect to boss sprite using sine wave
-Boss_MadamBarbarWobble:                                 ; CODE XREF: Boss_MadamBarbarSetup+C6   p  ; was: sub_3AA86
+; Applies the frame-indexed wobble offsets to the root object
+Boss_MadamBarbarUpdateWobble:                           ; CODE XREF: Boss_MadamBarbarSetupState+C6   p  ; was: sub_3AA86
                 move.w  (word_FFA000).w,d7
                 andi.w  #$F,d7
-                move.b  byte_3AACE(pc,d7.w),d0
+                move.b  Boss_MadamBarbarWobbleOffsets(pc,d7.w),d0
                 addq.w  #8,d7
                 andi.w  #$F,d7
-                move.b  byte_3AACE(pc,d7.w),d1
+                move.b  Boss_MadamBarbarWobbleOffsets(pc,d7.w),d1
                 move.w  #$24EA,(dword_FF8040).w
                 move.w  #$240E,(dword_FF8040+2).w
                 sub.b   d0,(dword_FF8040).w
@@ -513,23 +513,23 @@ Boss_MadamBarbarWobble:                                 ; CODE XREF: Boss_MadamB
                 move.w  (dword_FF8040).w,4(a0)
                 move.w  (dword_FF8040+2).w,$A(a0)
                 rts
-; End of function Boss_MadamBarbarWobble
+; End of function Boss_MadamBarbarUpdateWobble
 ; ---------------------------------------------------------------------------
-byte_3AACE:     dc.b    0, 1, 2, 3, 4, 4, 4, 4, 3, 2, 1, 0, 0, 1, 1, 0
-                                        ; DATA XREF: Boss_MadamBarbarWobble+8   r
-                                        ; Boss_MadamBarbarWobble+12   r
+Boss_MadamBarbarWobbleOffsets:  dc.b    0, 1, 2, 3, 4, 4, 4, 4, 3, 2, 1, 0, 0, 1, 1, 0  ; was: byte_3AACE
+                                        ; DATA XREF: Boss_MadamBarbarUpdateWobble+8   r
+                                        ; Boss_MadamBarbarUpdateWobble+12   r
 
 ; Calculate direction to player and set Madam Barbar facing
-Boss_MadamBarbarFacePlayer:
+Boss_MadamBarbarUpdateFacingAndPartFlags:
                 clr.w   $54(a5)                         ; was: sub_3AADE
                 jsr     (Physics_GetPlayerDelta).l
                 tst.w   d1
-                bpl.s   Boss_MadamBarbarSetCollision
+                bpl.s   Boss_MadamBarbarApplyPartFlagArrangement
                 move.w  #$100,$54(a5)
-; End of function Boss_MadamBarbarFacePlayer
-; Sets collision flags on specific boss body segments
-Boss_MadamBarbarSetCollision:                           ; CODE XREF: Boss_MadamBarbarSetup+C2   p  ; was: sub_3AAF2
-                                        ; Boss_MadamBarbarFacePlayer+C   j
+; End of function Boss_MadamBarbarUpdateFacingAndPartFlags
+; Applies the fixed bit-three arrangement to eight linked parts
+Boss_MadamBarbarApplyPartFlagArrangement:               ; CODE XREF: Boss_MadamBarbarSetupState+C2   p  ; was: sub_3AAF2
+                                        ; Boss_MadamBarbarUpdateFacingAndPartFlags+C   j
                 moveq   #3,d5
                 bclr    d5,$6E(a5)
                 bclr    d5,$CE(a5)
@@ -540,48 +540,48 @@ Boss_MadamBarbarSetCollision:                           ; CODE XREF: Boss_MadamB
                 bset    d5,$36E(a5)
                 bset    d5,$3CE(a5)
                 rts
-; End of function Boss_MadamBarbarSetCollision
-; Initializes boss rotation animation pointer updates
-Boss_MadamBarbarRotateInit:                             ; CODE XREF: Boss_MadamBarbarUpdateParts   p  ; was: sub_3AB16
+; End of function Boss_MadamBarbarApplyPartFlagArrangement
+; Updates the two bounded rotation-control words
+Boss_MadamBarbarUpdateRotationBounds:                   ; CODE XREF: Boss_MadamBarbarUpdateParts   p  ; was: sub_3AB16
                 movea.w #(byte_FFC7FC-M68K_RAM),a0
-                bsr.s   Boss_MadamBarbarRotateUpdate
+                bsr.s   Boss_MadamBarbarUpdateRotationBound
                 movea.w #(word_FFC7FE-M68K_RAM),a0
-; End of function Boss_MadamBarbarRotateInit
-; Updates boss rotation angle based on frame counter
-Boss_MadamBarbarRotateUpdate:                           ; CODE XREF: Boss_MadamBarbarRotateInit+4   p  ; was: sub_3AB20
+; End of function Boss_MadamBarbarUpdateRotationBounds
+; Moves one rotation-control word between limits 8 and $20
+Boss_MadamBarbarUpdateRotationBound:                    ; CODE XREF: Boss_MadamBarbarUpdateRotationBounds+4   p  ; was: sub_3AB20
                 btst    #2,(word_FFA000+1).w
-                bne.s   loc_3AB3A
+                bne.s   Boss_MadamBarbarIncreaseRotationBound
                 subq.w  #8,(a0)
                 cmpi.w  #8,(a0)
-                bpl.s   loc_3AB34
+                bpl.s   Boss_MadamBarbarWrapRotationBound
                 move.w  #8,(a0)
-loc_3AB34:                                              ; CODE XREF: Boss_MadamBarbarRotateUpdate+E   j
-                                        ; Boss_MadamBarbarRotateUpdate+20   j
+Boss_MadamBarbarWrapRotationBound:                      ; CODE XREF: Boss_MadamBarbarUpdateRotationBound+E   j  ; was: loc_3AB34
+                                        ; Boss_MadamBarbarUpdateRotationBound+20   j
                 andi.w  #$1FC,(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_3AB3A:                                              ; CODE XREF: Boss_MadamBarbarRotateUpdate+6   j
+Boss_MadamBarbarIncreaseRotationBound:                  ; CODE XREF: Boss_MadamBarbarUpdateRotationBound+6   j  ; was: loc_3AB3A
                 addq.w  #8,(a0)
                 cmpi.w  #$20,(a0)                       ; ' '
-                bmi.s   loc_3AB34
+                bmi.s   Boss_MadamBarbarWrapRotationBound
                 move.w  #$20,(a0)                       ; ' '
                 andi.w  #$1FC,(a0)
-locret_3AB4A:                                           ; CODE XREF: Boss_MadamBarbarPlayRotationSound+4   j
+Boss_MadamBarbarRotationHelperReturn:                   ; CODE XREF: Boss_MadamBarbarPlayRotationSound+4   j  ; was: locret_3AB4A
                                         ; Boss_MadamBarbarPlayRotationSound+C   j
                 rts
-; End of function Boss_MadamBarbarRotateUpdate
+; End of function Boss_MadamBarbarUpdateRotationBound
 ; Play rotation sound effect for Madam Barbar based on animation frame
-Boss_MadamBarbarPlayRotationSound:                      ; CODE XREF: Boss_MadamBarbarAIState+9E   p  ; was: sub_3AB4C
-                                        ; Boss_MadamBarbarAIState+11A   p
+Boss_MadamBarbarPlayRotationSound:                      ; CODE XREF: Boss_MadamBarbarSelectAttackState+9E   p  ; was: sub_3AB4C
+                                        ; Boss_MadamBarbarSelectAttackState+11A   p
                 tst.w   $29C(a5)
-                beq.s   locret_3AB4A
+                beq.s   Boss_MadamBarbarRotationHelperReturn
                 btst    #0,7(a5)
-                bne.s   locret_3AB4A
+                bne.s   Boss_MadamBarbarRotationHelperReturn
                 move.b  #$AF,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Boss_MadamBarbarPlayRotationSound
-; Calculates boss screen bounds with camera offset for boundary checking
-Boss_MadamBarbarCheckBounds:                            ; CODE XREF: Boss_MadamBarbarUpdateParts+90   p  ; was: sub_3AB64
+; Publishes and clamps the boss-relative shared screen position
+Boss_MadamBarbarPublishScreenPosition:                  ; CODE XREF: Boss_MadamBarbarUpdateParts+90   p  ; was: sub_3AB64
                 move.w  #$BC,d0
                 sub.w   $10(a5),d0
                 move.w  d0,(dword_FFA908).w
@@ -589,13 +589,13 @@ Boss_MadamBarbarCheckBounds:                            ; CODE XREF: Boss_MadamB
                 addi.w  #$50,d0                         ; 'P'
                 move.w  d0,(dword_FFA90C).w
                 jmp     Boss_ClampSharedScreenPosition
-; End of function Boss_MadamBarbarCheckBounds
-; Spawns boss bullet projectile with random velocity calculation
-Boss_MadamBarbarSpawnBullet:                            ; CODE XREF: Boss_MadamBarbarAttackPhase:loc_3A6BE   p  ; was: sub_3AB82
+; End of function Boss_MadamBarbarPublishScreenPosition
+; Spawns a type-A4 particle with randomized position and horizontal velocity
+Boss_MadamBarbarSpawnBarrageParticle:                   ; CODE XREF: Boss_MadamBarbarBulletBarrageState:Boss_MadamBarbarUpdateBulletBarrage   p  ; was: sub_3AB82
                 move.w  #6,(word_FFA010).w
                 move.w  #6,(word_FFA014).w
                 jsr     (Projectile_UpdateAfterGlobalDelay).l
-                bne.s   locret_3ABE2
+                bne.s   Boss_MadamBarbarSpawnBarrageParticleReturn
                 jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)
                 move.w  #1,$1C(a0)
@@ -614,12 +614,12 @@ Boss_MadamBarbarSpawnBullet:                            ; CODE XREF: Boss_MadamB
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a0)
-locret_3ABE2:                                           ; CODE XREF: Boss_MadamBarbarSpawnBullet+12   j
+Boss_MadamBarbarSpawnBarrageParticleReturn:             ; CODE XREF: Boss_MadamBarbarSpawnBarrageParticle+12   j  ; was: locret_3ABE2
                 rts
-; End of function Boss_MadamBarbarSpawnBullet
+; End of function Boss_MadamBarbarSpawnBarrageParticle
 ; Updates boss animation sequence with interpolation and body part rotation
-Boss_MadamBarbarUpdateAnimation:                        ; CODE XREF: Boss_MadamBarbarIntro+5E   p  ; was: sub_3ABE4
-                                        ; Boss_MadamBarbarAttackPhase+5E   p
+Boss_MadamBarbarUpdateAnimation:                        ; CODE XREF: Boss_MadamBarbarIntroApproachState+5E   p  ; was: sub_3ABE4
+                                        ; Boss_MadamBarbarBulletBarrageState+5E   p
                 clr.w   $29C(a5)
                 tst.w   $C(a5)
                 bpl.s   loc_3AC6A
@@ -775,14 +775,14 @@ Boss_MadamBarbarCalcDeltas:                             ; CODE XREF: Boss_MadamB
                 jmp     Anim_CalculateInterpolationDeltas
 ; End of function Boss_MadamBarbarCalcDeltas
 ; Loads frame delay values for boss animation timing
-Boss_MadamBarbarLoadFrameDelays:                        ; CODE XREF: Boss_MadamBarbarSetup+D0   p  ; was: sub_3ADA4
+Boss_MadamBarbarLoadFrameDelays:                        ; CODE XREF: Boss_MadamBarbarSetupState+D0   p  ; was: sub_3ADA4
                 movea.w #(dword_FF9400-M68K_RAM),a1
                 moveq   #$B,d7
                 jmp     Anim_LoadFrameDelays
 ; End of function Boss_MadamBarbarLoadFrameDelays
 ; Spawns debris projectiles with random velocity and trajectory
-Boss_MadamBarbarSpawnDebris:                            ; CODE XREF: Boss_MadamBarbarAIState:loc_3A806   p  ; was: sub_3ADB0
-                                        ; sub_3A79C:loc_3A882   p
+Boss_MadamBarbarSpawnDebris:                            ; CODE XREF: Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarPlayerLeftSidePoseState   p  ; was: sub_3ADB0
+                                        ; Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarPlayerRightSidePoseState   p
                 move.w  (word_FFA000).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   locret_3AE34

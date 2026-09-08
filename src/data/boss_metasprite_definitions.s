@@ -320,7 +320,7 @@ Boss_MadamBarbarInlineSpriteDescriptorB:    dc.w    $63A0, $A00, $F4F4  ; DATA X
                                         ; ROM:00034E50   o
 Boss_MadamBarbarInlineSpriteDescriptorC:    dc.w    $43C4, 0, $FCFC  ; DATA XREF: ROM:00034E80   o  ; was: word_34E42
                                         ; ROM:00034E8C   o
-Boss_MadamBarbarMetaspriteDescriptors:  dc.l    0       ; DATA XREF: Boss_MadamBarbarSetup+14   o  ; was: dword_34E48
+Boss_MadamBarbarMetaspriteDescriptors:  dc.l    0       ; DATA XREF: Boss_MadamBarbarSetupState+14   o  ; was: dword_34E48
                 dc.l    Boss_MadamBarbarInlineSpriteDescriptorB+1
                 dc.l    Boss_MadamBarbarInlineSpriteDescriptorB+1
                 dc.l    Boss_MadamBarbarInlineSpriteDescriptorB+1
@@ -349,13 +349,13 @@ Boss_MadamBarbarMetaspriteDescriptors:  dc.l    0       ; DATA XREF: Boss_MadamB
                 dc.l    0
                 dc.l    0
                 dc.l    0
-Boss_MadamBarbarPartRadii:  dc.w    $10, $C10, $121C    ; DATA XREF: Boss_MadamBarbarSetup+1A   o  ; was: word_34EBC
+Boss_MadamBarbarPartRadii:  dc.w    $10, $C10, $121C    ; DATA XREF: Boss_MadamBarbarSetupState+1A   o  ; was: word_34EBC
                 dc.w    $1C10, $C10, $121C
                 dc.w    $1C06, $608, $606
                 dc.w    $806, $608, $606
                 dc.w    $80D, $D0D, $D00
 Boss_MadamBarbarPartLinks:  dc.w    $8000, $8007, $8066  ; was: word_34EDA
-                                        ; DATA XREF: Boss_MadamBarbarSetup+20   o
+                                        ; DATA XREF: Boss_MadamBarbarSetupState+20   o
                 dc.w    $80C5, $8124, $184
                 dc.w    $184, $8007, $82A6
                 dc.w    $8305, $8364, $3C4

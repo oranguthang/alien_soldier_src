@@ -695,6 +695,37 @@ consumers. The decision stream's additional entity-dispatch-table reference
 is retained as an explicit unresolved cross-reference rather than explained
 away.
 
+The first Madam Barbar audit reduced the count to 8,714. The main routine is
+now documented as a 13-state relative-offset dispatcher with a separate
+external-transition path. Initialization, 29-part metasprite setup, compressed
+tile commands, two intro states, their shared pose update, and the main-attack
+entry are named only from visible state transitions and direct consumers. No
+meaning is inferred from the two still-unaudited transition helper names called
+at intro completion.
+
+The Madam Barbar barrage and idle-state audit reduced the count to 8,705. The
+former `DefeatSequence` label was rejected: state `$0C` follows the timed bullet
+barrage without a health check, updates all 29 linked parts, clears their flag
+bit seven, and finally clears an object range. States `$08`, `$0A`, `$0C`,
+`$0E`, and `$18` are now described as projectile wait, bullet barrage,
+post-barrage cleanup, AI entry, and idle-progress flow respectively.
+
+The Madam Barbar attack-selector audit reduced the count to 8,688. The former
+right/left attack names were reversed relative to their proven selector:
+signed delta `playerX - bossX` below zero chooses the player-left pose, while a
+nonnegative delta chooses the player-right pose. Because those states primarily
+advance pose streams and swap linked anchors, they remain conservatively named
+pose states rather than attacks. Center-spin and drop-projectile behavior is
+retained where direct progress, sound, angle, and spawn operations support it.
+
+The Madam Barbar linked-part audit reduced the count to 8,676. Six layout loops
+are named by their exact signed X/Y operations instead of inferred anatomy. The
+former `SetCollision` helper only applies bit three to eight linked parts, and
+the former `CheckBounds` helper publishes shared screen coordinates before the
+common clamp. The former `SpawnBullet` is now a barrage particle because it
+initializes generic type `$A4` with randomized position and velocity rather than
+a boss-specific projectile type.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
