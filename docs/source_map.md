@@ -30,8 +30,8 @@ listing by `make verify-layout`.
 | `0x02D27C-0x02DF7D` | circling and Stage 9 flies, Viblack shots, and bird enemies | 3 | static/hypothesis |
 | `0x02DF7E-0x02F1A1` | stage 10/12 enemies, Stage 11 fish, and Xi-Tiger entrance sequences | 5 | static/hypothesis |
 | `0x02F1A2-0x030D8F` | orphaned radial-particle test, stage environment, yacht, stage 18, and stage 15 fragment hazards | 6 | static/runtime |
-| `0x030D90-0x032343` | stage 11 rising hazards, Gusthead linked chain, and Destroyer Proto | 6 | static/runtime |
-| `0x032344-0x033C49` | stage 14/Jetsripper, Wolf Garopa, Tracker, and Missiray flyer | 4 | hypothesis |
+| `0x030D90-0x0323E1` | stage 11 rising hazards, Gusthead linked chain, Destroyer Proto, and shared hit-reactive projectiles | 6 | static/runtime |
+| `0x0323E2-0x033C49` | Victor, Wolf Garopa, Tracker, and Missiray flyer | 5 | static/hypothesis |
 | `0x033C4A-0x035613` | stage 24 visuals, boss projectiles, metasprites, and sprite tables | 4 | hypothesis |
 | `0x035614-0x0374C5` | Jetsripper and Shiper state, movement, and projectiles | 6 | hypothesis |
 | `0x0374C6-0x0394D7` | Antroid and Terobuster systems | 7 | hypothesis |
@@ -54,7 +54,7 @@ listing by `make verify-layout`.
 | `0x084A70-0x085265` | channel playback and sound lookup tables | 4 | static |
 | `0x085266-0x097FFF` | music tracks and sound effects | 5 | static |
 | `0x098000-0x0E7FFF` | PCM sample banks and second padding gap | 1 | static |
-| `0x0E8000-0x0ED4B3` | frontend, player, enemy, projectile, and boss sprite mappings | 17 | hypothesis |
+| `0x0E8000-0x0ED4B3` | frontend, player, enemy, projectile, and boss sprite mappings | 19 | hypothesis |
 | `0x0ED4B4-0x1412B5` | gameplay tile art, player sprite art, and stage mappings | 5 | static |
 | `0x1412B6-0x14AE07` | Japanese font assets | 1 | static |
 | `0x14AE08-0x17FFFF` | credits scene assets and third padding gap | 1 | static |

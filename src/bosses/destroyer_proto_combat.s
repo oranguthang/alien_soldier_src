@@ -216,8 +216,8 @@ Boss_DestroyerProtoSpawnSpreadProjectile:               ; CODE XREF: Boss_Destro
                 jsr     (RandomNumber).l
                 andi.w  #$F,d0
                 beq.s   Projectile_DestroyerProtoInitSpreadShot
-Projectile_InitSharedHitReactiveShot:                   ; CODE XREF: Projectile_Stage14BulletMove+2E   p  ; was: loc_31B02
-                                        ; Projectile_Stage14BulletMove+4E   p
+Projectile_InitSharedHitReactiveShot:                   ; CODE XREF: Boss_VictorSpawnSplitShotWave+2E   p  ; was: loc_31B02
+                                        ; Boss_VictorSpawnSplitShotWave+4E   p
                 move.w  #$EC00,2(a0)
                 move.l  #off_E96E0,8(a0)
                 clr.w   $C(a0)

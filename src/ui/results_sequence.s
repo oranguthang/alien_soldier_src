@@ -550,7 +550,7 @@ dword_B446:     dc.l    $C6AA00FF                       ; DATA XREF: Text_Animat
 
 ; Checks conditions for victory message display
 UI_CheckVictoryCondition:                               ; CODE XREF: Boss_DestroyerProtoIntroMove+28   p  ; was: sub_B44E
-                                        ; Boss_JetsripperFlyIn+1E   p
+                                        ; Boss_VictorFlyIn+1E   p
                 bclr    #1,(byte_FFA209).w
                 bne.s   loc_B464
                 bclr    #0,(byte_FF80A8).w

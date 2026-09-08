@@ -1,5 +1,5 @@
 ; Shared type-$3B8 projectile data and handlers used by Destroyer Proto and
-; Stage 14 split shots
+; Victor split shots
 Projectile_DestroyerProtoVelocityXTable:    dc.w    4, 0  ; DATA XREF: Boss_DestroyerProtoSpawnSpreadProjectile+16   o  ; was: word_31FF8
                                         ; Boss_DestroyerProtoBeginDefeatScatter+6   o
                 dc.w    3, $8000
@@ -121,7 +121,7 @@ Projectile_DestroyerProtoInitFromPart:                  ; CODE XREF: Projectile_
 ; End of function Projectile_DestroyerProtoInitFromPart
 ; Dispatches the delayed spread projectile states
 Projectile_DestroyerProtoMain:                          ; DATA XREF: ROM:000314D4   o  ; was: sub_32208
-                bsr.w   Enemy_DeathExplode
+                bsr.w   Entity_RemoveWithExplosionWhenEnabled
                 move.w  4(a5),d0
                 lea     Projectile_DestroyerProtoStates(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -131,7 +131,7 @@ Projectile_DestroyerProtoMain:                          ; DATA XREF: ROM:000314D
 Projectile_DestroyerProtoStates:    dc.w    Projectile_DestroyerProtoSpawnSpreadCopies-*  ; DATA XREF: Projectile_DestroyerProtoMain+8   o  ; was: off_32218
                 dc.w    Projectile_RemoveOutsideArena-*
                 dc.w    Projectile_DestroyerProtoRestoreVelocity-*
-                dc.w    Projectile_DestroyerProtoCheckStage14Hit-*
+                dc.w    Projectile_DestroyerProtoCheckHitForPickup-*
                 dc.w    Projectile_DestroyerProtoCheckHorizontalReflection-*
 
 ; Activates the lead shot and creates seven staggered spread copies
@@ -199,11 +199,11 @@ Projectile_DestroyerProtoCheckHorizontalReflection:     ; DATA XREF: ROM:0003222
                 bne.s   Projectile_DestroyerProtoReflectHorizontal
                 bra.s   Projectile_RemoveOutsideArena
 ; End of function Projectile_DestroyerProtoCheckHorizontalReflection
-; Transfers collision flag 4 to the Stage 14 hit-response handler
-Projectile_DestroyerProtoCheckStage14Hit:               ; DATA XREF: ROM:0003221E   o  ; was: sub_32312
+; Converts a collision-flag-4 hit into the shared random-pickup response
+Projectile_DestroyerProtoCheckHitForPickup:             ; DATA XREF: ROM:0003221E   o  ; was: sub_32312
                 bclr    #4,$22(a5)
-                bne.s   Enemy_Stage14TurretMain
-; End of function Projectile_DestroyerProtoCheckStage14Hit
+                bne.s   Projectile_ConvertHitToRandomPickup
+; End of function Projectile_DestroyerProtoCheckHitForPickup
 ; Marks a projectile or scattered boss part outside the arena for removal
 Projectile_RemoveOutsideArena:                          ; CODE XREF: Boss_DestroyerProtoPartMain+4   j  ; was: sub_3231A
                                         ; Boss_DestroyerProtoAnimatedPartMain+40   j
@@ -222,3 +222,51 @@ Projectile_RemoveOutsideArenaNow:                       ; CODE XREF: Projectile_
                 move.w  #$1000,2(a5)
                 rts
 ; End of function Projectile_RemoveOutsideArena
+Projectile_ConvertHitToRandomPickup:                    ; CODE XREF: Projectile_DestroyerProtoCheckHitForPickup+6   j  ; was: sub_32344
+                                        ; Projectile_HitReactiveShotMain+18   j
+                jsr     (RandomNumber).l
+                andi.w  #$1F,d0
+                jsr     (Pickup_SpawnRandomFromCurrentObject).l
+                andi.w  #$FEFF,2(a5)
+                rts
+; End of function Projectile_ConvertHitToRandomPickup
+; Reflects projectile by negating X velocity and advancing state
+Projectile_DestroyerProtoReflectHorizontal:             ; CODE XREF: Projectile_DestroyerProtoCheckHorizontalReflection+6   j  ; was: sub_3235C
+                neg.l   $18(a5)
+                move.w  #2,4(a5)
+                rts
+; End of function Projectile_DestroyerProtoReflectHorizontal
+; Returns projectile to stored velocity after delay timer expires
+Projectile_DestroyerProtoRestoreVelocity:               ; DATA XREF: ROM:0003221C   o  ; was: sub_32368
+                subq.w  #1,$4A(a5)
+                bne.w   Entity_UpdateReturn
+                move.l  $4C(a5),$18(a5)
+                move.l  $50(a5),$1C(a5)
+                subq.w  #2,4(a5)
+                rts
+; End of function Projectile_DestroyerProtoRestoreVelocity
+; Updates a hit-reactive shot, spawning an impact object before removal
+Projectile_HitReactiveShotMain:                         ; DATA XREF: ROM:000314D6   o  ; was: sub_32382
+                bsr.w   Entity_RemoveWithExplosionWhenEnabled
+                bsr.w   Projectile_RemoveOutsideArena
+                bclr    #7,$22(a5)
+                beq.w   Entity_UpdateReturn
+                bclr    #4,$22(a5)
+                bne.w   Projectile_ConvertHitToRandomPickup
+Projectile_HitReactiveShotSpawnImpact:                  ; CODE XREF: Boss_VictorOrbitingPartCollisionMain+E   j  ; was: loc_3239E
+                cmpi.w  #$1A,(StageTableIndex).w
+                bne.s   Projectile_HitReactiveShotAllocateImpact
+                move.w  #$E0,(word_FF8140).w
+                move.b  #$20,(byte_FF8142).w            ; ' '
+                move.b  #8,(byte_FF8143).w
+Projectile_HitReactiveShotAllocateImpact:               ; CODE XREF: Projectile_HitReactiveShotMain+22   j  ; was: loc_323B8
+                jsr     (Projectile_FindFreeSlot).l
+                bne.s   Projectile_HitReactiveShotRemove
+                move.w  $10(a5),$10(a0)
+                move.w  $14(a5),$14(a0)
+                move.l  #off_E9560,8(a0)
+                jsr     (Sprite_InitType160).l
+Projectile_HitReactiveShotRemove:                       ; CODE XREF: Projectile_HitReactiveShotMain+3C   j  ; was: loc_323DA
+                move.w  #$1000,2(a5)
+                rts
+; End of function Projectile_HitReactiveShotMain

@@ -405,7 +405,7 @@ locret_3FF44:                                           ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Boss_GustheadDefeatFall
 ; Spawns debris during boss explosion
-Boss_SpawnExplosionDebris:                              ; CODE XREF: Boss_JetsripperDeathExplosion+12   p  ; was: sub_3FF46
+Boss_SpawnExplosionDebris:                              ; CODE XREF: Boss_VictorUpdateDefeatExplosion+12   p  ; was: sub_3FF46
                                         ; sub_3FF00   p
                 jsr     (Gfx_UpdatePaletteFade).l
                 move.w  #4,(word_FFA010).w

@@ -11,7 +11,7 @@ Entity_StoredSubtypeHandlers:   dc.w    Boss_DestroyerProtoMain-*  ; DATA XREF: 
                 dc.w    Boss_DestroyerProtoPartMain-*
                 dc.w    Boss_DestroyerProtoAnimatedPartMain-*
                 dc.w    Projectile_DestroyerProtoMain-*
-                dc.w    Enemy_Stage14TurretInit-*
+                dc.w    Projectile_HitReactiveShotMain-*
 
 ; Main boss handler
 Boss_DestroyerProtoMain:                                ; DATA XREF: ROM:Entity_StoredSubtypeHandlers   o  ; was: sub_314D8

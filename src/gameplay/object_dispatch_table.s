@@ -239,7 +239,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_TrackerMain
                 dc.l    Entity_DispatchStoredSubtype
                 dc.l    Effect_ShipDestructionDebris
-                dc.l    Boss_JetsripperStateDispatcher
+                dc.l    Entity_VictorSubtypeDispatcher
                 dc.l    Enemy_FlyerAnimation3
                 dc.l    Enemy_FlyerCollision
                 dc.l    Boss_ProjectileStateDispatcher

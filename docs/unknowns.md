@@ -404,6 +404,18 @@ Runtime ownership remains unclaimed until these paths can be replayed with the
 pinned emulator; the current evidence level is static or hypothesis as recorded
 per symbol.
 
+The Victor pass reduced the count to 9,498. The former
+`jetsripper_stage_14.s` was a systematic ownership error: the type-`$3C0`
+dispatcher builds Victor's twelve-part ring and implements the Stage 14 boss
+sequence, while the independently runtime-confirmed Jetsripper uses type `$48`
+and separate component handlers. The mixed 844-line file is now two coherent
+modules of 411 and 387 inventory lines: Victor's initialization and ring attack,
+then its launched parts, split shots, defeat, and component states. The
+preceding 50-line type-`$3B8` hit-response tail was restored to the shared
+Destroyer Proto/Victor projectile module. This ownership is supported by the
+canonical movie scene map, object types and static state tables; individual
+low-level behavior names retain static or hypothesis evidence as recorded.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
