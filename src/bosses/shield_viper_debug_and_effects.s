@@ -7,17 +7,17 @@ Debug_ShieldViperUpdate:
 ; Debug routine that checks if button 2 is pressed
 Debug_CheckButton2:
                 btst    #6,(word_FFF706).w              ; was: sub_4F5E6
-                beq.w   Debug_DisableProjectilesAndMove
+                beq.w   Boss_ShieldViperHideOrbitingRecordAndForceFlip
 ; End of function Debug_CheckButton2
-; Spawns shield viper projectile with calculated angle based on segment rotation
-Boss_ShieldViperSpawnProjectileWithAngle:               ; CODE XREF: Boss_ShieldViperPrepareMultiShot+8   p  ; was: sub_4F5F0
-                bsr.w   Projectile_ShieldViperSpawnRotating
-                bsr.w   Boss_ShieldViperUpdateSpriteFlip
+; On eligible frames, emit one orbit shot from the auxiliary record
+Boss_ShieldViperEmitOrbitShotOnFrameGate:               ; CODE XREF: Boss_ShieldViperEmitTimedOrbitShotStream+8   p  ; was: sub_4F5F0
+                bsr.w   Boss_ShieldViperUpdateOrbitingRecord
+                bsr.w   Gfx_ShieldViperUpdateHorizontalFlipFromFrameBit
                 btst    #0,(word_FFA000+1).w
                 bne.s   Boss_ShieldViperSpawnProjectileWithAngle_Return
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_ShieldViperSpawnProjectileWithAngle_Return
-                jsr     Projectile_ShieldViperSpawnEffect(pc)  ; (pc)
+                jsr     Projectile_InitShieldViperOrbitShot(pc)  ; (pc)
                 move.b  $20(a5),$20(a0)
                 move.w  $970(a5),$10(a0)
                 move.w  $974(a5),$14(a0)
@@ -34,17 +34,17 @@ Boss_ShieldViperSpawnProjectileWithAngle:               ; CODE XREF: Boss_Shield
                 asl.l   #5,d1
                 move.l  d0,$18(a0)
                 move.l  d1,$1C(a0)
-Boss_ShieldViperSpawnProjectileWithAngle_Return:        ; CODE XREF: Boss_ShieldViperSpawnProjectileWithAngle+E   j  ; was: locret_4F64C
-                                        ; Boss_ShieldViperSpawnProjectileWithAngle+16   j
+Boss_ShieldViperSpawnProjectileWithAngle_Return:        ; CODE XREF: Boss_ShieldViperEmitOrbitShotOnFrameGate+E   j  ; was: locret_4F64C
+                                        ; Boss_ShieldViperEmitOrbitShotOnFrameGate+16   j
                 rts
-; End of function Boss_ShieldViperSpawnProjectileWithAngle
-; Debug routine to disable projectiles and perform wolf garopa movement
-Debug_DisableProjectilesAndMove:                        ; CODE XREF: Boss_ShieldViperPrepareMultiShot+12   p  ; was: sub_4F64E
+; End of function Boss_ShieldViperEmitOrbitShotOnFrameGate
+; Hide the orbiting record and force horizontal flip across the body
+Boss_ShieldViperHideOrbitingRecordAndForceFlip:         ; CODE XREF: Boss_ShieldViperEmitTimedOrbitShotStream+12   p  ; was: sub_4F64E
                                         ; Debug_CheckButton2+6   j
-                bsr.w   Projectile_ShieldViperDisable
-                bsr.w   Boss_WolfGaropaMovement1
+                bsr.w   Boss_ShieldViperHideOrbitingRecord
+                bsr.w   Gfx_ShieldViperForceHorizontalFlip
                 rts
-; End of function Debug_DisableProjectilesAndMove
+; End of function Boss_ShieldViperHideOrbitingRecordAndForceFlip
 ; Debug routine to move cursor position with D-pad input
 Debug_MoveCursorWithDPad:                               ; CODE XREF: Debug_ShieldViperUpdate+8   p  ; was: sub_4F658
                 btst    #5,(word_FFF706).w
@@ -108,7 +108,7 @@ Debug_AdjustRotationWithDPad_Return:                    ; CODE XREF: Debug_Adjus
 Debug_TriggerAttackState:
                 btst    #4,(word_FFF706).w              ; was: sub_4F6FC
                 beq.w   Debug_TriggerAttackState_Return
-                bsr.w   Boss_ShieldViperAttackState2
+                bsr.w   Boss_ShieldViperMoveRadially
 Debug_TriggerAttackState_Return:                        ; CODE XREF: Debug_TriggerAttackState+6   j  ; was: locret_4F70A
                 rts
 ; End of function Debug_TriggerAttackState

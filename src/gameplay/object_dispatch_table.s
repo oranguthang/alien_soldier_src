@@ -210,7 +210,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_BugmaxSineController
                 dc.l    Projectile_BugmaxScatteredPartFall
                 dc.l    Projectile_BugmaxDebrisSpawner
-                dc.l    Boss_ShieldViperMain
+                dc.l    Boss_ShieldViperUpdate
                 dc.l    Enemy_UpdateBouncingObject
                 dc.l    Boss_DefeatStateDispatcher
                 dc.l    Projectile_BackStringerChainFalling
@@ -219,10 +219,10 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_SharpssteelFallingShotMain
                 dc.l    Stage12_TeddyBearMain
                 dc.l    Enemy_ShipPatrolController
-                dc.l    Boss_ShieldViperSpawnProjectile2
-                dc.l    Projectile_ShieldViperBulletAnimation
-                dc.l    Projectile_ShieldViperBulletMain
-                dc.l    Boss_ShieldViperDefeatMain
+                dc.l    Boss_ShieldViperBodyRecordMain
+                dc.l    Projectile_ShieldViperOrbitShotMain
+                dc.l    Projectile_ShieldViperPatternShotMain
+                dc.l    Boss_ShieldViperDefeatObjectMain
                 dc.l    Stage15_FallingRockWaveMain
                 dc.l    Stage15_FallingRockMain
                 dc.l    Stage11_RisingHazardLauncherMain

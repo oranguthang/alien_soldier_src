@@ -265,7 +265,7 @@ word_ECF64:     dc.w    $88CB, $600, $F4F7              ; DATA XREF: ROM:000322D
 word_ECF6A:     dc.w    $88D1, $200, $F3FC              ; DATA XREF: ROM:000322D8   o
                                         ; ROM:000322F8   o
 word_ECF70:     dc.w    $88D4, $500, $F8F8              ; DATA XREF: ROM:Boss_DestroyerProtoPartMappingTable   o
-word_ECF76:     dc.w    $C84E, $F00, $F0F0              ; DATA XREF: ROM:stru_4E1E0   o
+word_ECF76:     dc.w    $C84E, $F00, $F0F0              ; DATA XREF: ROM:Boss_ShieldViperBodyInitializationRecords   o
                                         ; ROM:0004E1E8   o
 word_ECF7C:     dc.w    $C85E, $F00, $EEF2              ; DATA XREF: ROM:0004F5A0   o
                                         ; ROM:0004F5C0   o

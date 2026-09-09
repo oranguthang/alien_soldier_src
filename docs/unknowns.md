@@ -1370,6 +1370,134 @@ observed angle, position, and wave-accumulator effects. Exact visual identities
 of the opening records and the original development purpose of those
 unreferenced helpers remain deliberately unclaimed.
 
+The Shield Viper core pass reduced the address-derived unknown count from
+6,598 to 6,555 and raised provenance to 9,268 unique mappings. The cohesive
+686-line `bosses/shield_viper_core.s` module now has exact static audit
+coverage for all 66 definitions and no live address-derived names. Ten
+directly used geometry, movement, rendering, and projectile helpers were
+audited with it, bringing the name-audit total to 4,794.
+
+The controller now exposes its two distinct body-layout paths. Trail mode
+shifts the controller angle and packed position through parallel history
+buffers and samples them at fixed intervals for 24 body records. Linked-body
+mode accumulates polar offsets across sixteen records, optionally anchors X
+and Y to selected records independently, projects eight trailing records from
+their predecessors, and maintains a separate trailing-angle history. The
+opening state path creates those 24 records from an explicit radius/subtype/
+mapping table plus two auxiliary records. Its first battle sequence alternates
+entry side and angular direction, switches geometry when the center record
+reaches angle `$80`, applies symmetric target offsets through three bend
+phases, and emits sixteen timed type-`$374` shots from an orbiting auxiliary
+record.
+
+This pass rejects the old generic `Dispatcher`, `Collision`, `IdleState`,
+`AttackState1/2`, `SpinAttack`, and `WolfGaropaMovement1` claims. The former
+collision helper only approaches a wrapped angular-offset target; the former
+idle helper updates a signed triangle-wave radial step; and the supposed Wolf
+Garopa movement routine only forces Shield Viper sprite flip attributes. The
+exact rendered identities of individual body mappings and both auxiliary
+records remain deliberately unclaimed pending pinned runtime evidence.
+
+The Shield Viper attack-sequence pass reduced the address-derived unknown
+count from 6,555 to 6,513 and raised provenance to 9,310 unique mappings. The
+cohesive 509-line `bosses/shield_viper_attacks.s` module now has no live
+address-derived names and exact static audit coverage for all 77 unique
+definition addresses; its binary-asset `_End` alias shares address `0x04EAC4`
+with the following routine and retains explicit provenance instead of a
+duplicate audit record. Six associated movement, steering, and orbit-shot
+helpers were audited with the module, bringing the name-audit total to 4,875.
+
+The state sequence now separates three mechanisms that the imported names had
+conflated. States `$32`-`$36` perform two eight-sample passes which periodically
+choose the sign of angular motion toward the player and allocate no projectile.
+States `$44`-`$48` wind up and emit frame-gated type-`$374` shots from the
+orbiting auxiliary record. States `$54`-`$56` attach empty type-`$10` records
+to as many as 24 body records with staggered activation, while states `$58`-
+`$5A` independently build a randomized index order and spawn up to twelve
+type-`$378` projectiles from a 32-record binary table. A later state sequence
+releases linked records across the body one at a time before restoring the
+tracking cycle.
+
+This pass rejects the old `SpawnProjectile1`, difficulty, damage, ascent,
+generic multi-shot, child-array spawn, and Wolf Garopa implications. The
+supposed difficulty branch uses a bit of the current RNG result; the supposed
+damage helpers only choose rotation direction toward the player, a random
+vertical target, or fixed arena point `($120,$F0)`; and the old child-array
+initializer only prepares a pointer, count, and timer. Type-`$10` records are
+therefore described structurally rather than assigned an unsupported visual
+or projectile identity. Exact visual identities of the type-`$374` and
+type-`$378` mappings remain deliberately unclaimed pending pinned runtime
+evidence.
+
+The Shield Viper body-record and projectile pass reduced the address-derived
+unknown count from 6,513 to 6,467 and raised provenance to 9,356 unique
+mappings. The cohesive 489-line `projectiles/shield_viper.s` module now has no
+live address-derived names and exact static audit coverage for all 66
+definition addresses. Its shared quantized-angle mapping helper and the two
+eight-record controller/body mapping tables were audited with it, bringing the
+name-audit total to 4,942.
+
+Entity type `$370` is now documented as the per-body-record state machine. It
+does not spawn a projectile. Its first linked-record sequence copies a body
+record's visual state to an already allocated type-`$10` record, hides and
+disables collision on the body, waits for the controller-supplied stagger,
+then launches the linked visual perpendicular to the effective body angle.
+After that record leaves the arena, the body waits detached. The later
+sequence starts a replacement linked visual at radial offset `$300`, contracts
+the offset to zero, and finally restores the body's saved display and collision
+state. These operations establish a body-visual relationship, but not the
+fictional or anatomical identity of each individual mapping.
+
+The two projectile types are also separated. Type `$378` waits on a stagger
+value supplied by the 32-record pattern asset, enables collision, blinks for
+sixteen frames, loads its X/Y velocity, and is retired against bounds chosen by
+the velocity signs. Visible type-`$378` records convert to the shared defeat
+object once the boss-defeat flag is set. Type `$374` is the independently
+emitted orbit shot: it advances through eight timed mapping records and a
+terminator, and its destruction path requests a random pickup. The entry at
+`0x04F01E` is explicitly recorded as a deliberate fall-through that only moves
+the current-record pointer into `a0`; it never copies an entity.
+
+Controller states `$70`-`$78` now describe the complete transition into
+defeat: convert displayed controller/body or linked records to type `$37C`
+with increasing even timers, wait for the stagger, run the post-defeat palette
+cycle, step the final palette fade, then hold its terminal step for four frames
+before removal. This rejects the old `SpawnProjectile2`, generic bullet,
+child-circular-motion, spin-attack, copy-entity, explosion, and movement-helper
+claims. In particular, the former `Movement1` only selects a mapping and
+orientation bits from a quantized angle, while the former projectile
+`Explode` routine performs palette work and allocates no effect.
+
+The Shield Viper defeat and shared-geometry pass reduced the address-derived
+unknown count from 6,467 to 6,439 and raised provenance to 9,384 unique
+mappings. The 402-line `bosses/shield_viper_defeat.s` module now has no live
+address-derived names and exact static audit coverage for all 48 definitions:
+35 records were added here and 13 geometry/mapping helpers had already been
+audited with the preceding core and projectile passes. The project-wide
+name-audit total is now 4,977.
+
+Entity type `$37C` is now represented as its own three-state defeat-object
+machine. Each converted controller, body, linked visual, or pattern shot waits
+for the assigned stagger, enables its display state, creates a falling
+type-`$88` burst, and derives a radial acceleration vector from its effective
+angle. The active state adds that vector to X/Y velocity every update and
+rotates the mapping when the conversion supplied a mapping table. The third
+state is an explicit no-op. This replaces the non-descriptive `DefeatState1`
+and `DefeatState2` labels without claiming an unsupported on-screen identity
+for every converted record.
+
+The internal geometry paths now name their actual loops: trail mode writes
+four angle/position samples across each adjacent-record interval; linked mode
+rebases effective body angles and seeds eight-sample trailing-angle groups;
+the body-bend helper writes symmetric target offsets; and radial movement
+scales sine components by the shared step. Three routines with no static
+callers remain documented strictly by their observed data flow. One writes
+four wrapped-angle samples between sixteen adjacent body records, one stores
+the magnitude and sign of an input-versus-bend-step delta, and one clamps
+record field `$14` inside the vertical band. The last routine was previously
+misnamed `ClampXPosition`: it never accesses X field `$10`, so the old axis
+claim is explicitly rejected.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

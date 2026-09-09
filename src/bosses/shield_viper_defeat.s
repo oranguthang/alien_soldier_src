@@ -1,22 +1,23 @@
-Boss_ShieldViperDefeatMain:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4F1A6
+; Dispatch the three states of a type-$37C Shield Viper defeat object
+Boss_ShieldViperDefeatObjectMain:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4F1A6
                 move.w  4(a5),d0
-                lea     off_4F1B2(pc,d0.w),a0
+                lea     Boss_ShieldViperDefeatObjectStateOffsets(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_ShieldViperDefeatMain
+; End of function Boss_ShieldViperDefeatObjectMain
 ; ---------------------------------------------------------------------------
-off_4F1B2:      dc.w    Boss_ShieldViperDefeatState1-*  ; DATA XREF: Boss_ShieldViperDefeatMain+4   o
-                dc.w    Boss_ShieldViperDefeatState2-*
-                dc.w    nullsub_117-*
+Boss_ShieldViperDefeatObjectStateOffsets:   dc.w    Boss_ShieldViperActivateDefeatObject-*  ; DATA XREF: Boss_ShieldViperDefeatObjectMain+4   o  ; was: off_4F1B2
+                dc.w    Boss_ShieldViperAccelerateDefeatObject-*
+                dc.w    Boss_ShieldViperDefeatObjectIdle-*
 
-; Defeat state 1
-Boss_ShieldViperDefeatState1:                           ; DATA XREF: ROM:off_4F1B2   o  ; was: sub_4F1B8
+; Wait for the per-record stagger, create a burst, and seed radial acceleration
+Boss_ShieldViperActivateDefeatObject:                   ; DATA XREF: ROM:Boss_ShieldViperDefeatObjectStateOffsets   o  ; was: sub_4F1B8
                 subq.w  #1,$48(a5)
-                bpl.s   locret_4F1FA
+                bpl.s   Boss_ShieldViperDefeatObjectActivationWaitReturn
                 move.w  #$CE80,2(a5)
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
-                bsr.w   Boss_ShieldViperDefeatEffect
+                bsr.w   Boss_ShieldViperSpawnDefeatBurst
                 move.w  $56(a5),d0
                 add.w   $52(a5),d0
                 andi.w  #$1FE,d0
@@ -29,30 +30,30 @@ Boss_ShieldViperDefeatState1:                           ; DATA XREF: ROM:off_4F1
                 asr.l   #3,d1
                 move.l  d0,$58(a5)
                 move.l  d1,$5C(a5)
-locret_4F1FA:                                           ; CODE XREF: Boss_ShieldViperDefeatState1+4   j
+Boss_ShieldViperDefeatObjectActivationWaitReturn:       ; CODE XREF: Boss_ShieldViperActivateDefeatObject+4   j  ; was: locret_4F1FA
                 rts
-; End of function Boss_ShieldViperDefeatState1
-; Defeat state 2
-Boss_ShieldViperDefeatState2:                           ; DATA XREF: ROM:0004F1B4   o  ; was: sub_4F1FC
+; End of function Boss_ShieldViperActivateDefeatObject
+; Add the seeded radial acceleration and rotate the mapping when one is present
+Boss_ShieldViperAccelerateDefeatObject:                 ; DATA XREF: ROM:0004F1B4   o  ; was: sub_4F1FC
                 move.l  $58(a5),d0
                 add.l   d0,$18(a5)
                 move.l  $5C(a5),d0
                 add.l   d0,$1C(a5)
                 tst.l   $4C(a5)
-                beq.s   locret_4F22A
+                beq.s   Boss_ShieldViperDefeatObjectAccelerationReturn
                 movea.l $4C(a5),a1
                 movea.w a5,a0
                 addi.w  #$10,$56(a5)
                 move.w  $56(a5),d0
                 add.w   $52(a5),d0
-                bsr.w   Boss_ShieldViperMovement1
-locret_4F22A:                                           ; CODE XREF: Boss_ShieldViperDefeatState2+14   j
+                bsr.w   Gfx_ShieldViperSelectMappingFromQuantizedAngle
+Boss_ShieldViperDefeatObjectAccelerationReturn:         ; CODE XREF: Boss_ShieldViperAccelerateDefeatObject+14   j  ; was: locret_4F22A
                 rts
-; End of function Boss_ShieldViperDefeatState2
-; Defeat visual effect
-Boss_ShieldViperDefeatEffect:                           ; CODE XREF: Boss_ShieldViperDefeatState1+14   p  ; was: sub_4F22C
+; End of function Boss_ShieldViperAccelerateDefeatObject
+; Create a falling type-$88 burst and optionally play its sound
+Boss_ShieldViperSpawnDefeatBurst:                       ; CODE XREF: Boss_ShieldViperActivateDefeatObject+14   p  ; was: sub_4F22C
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_4F26A
+                bne.s   Boss_ShieldViperDefeatBurstReturn
                 move.l  #off_E9560,8(a0)
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)
@@ -60,42 +61,42 @@ Boss_ShieldViperDefeatEffect:                           ; CODE XREF: Boss_Shield
                 move.w  $14(a5),$14(a0)
                 move.l  #$FFFE0000,$1C(a0)
                 tst.w   $2C(a5)
-                beq.s   locret_4F26A
+                beq.s   Boss_ShieldViperDefeatBurstReturn
                 move.b  #$C1,d0
                 jmp     (Sound_PlaySFX).l
-; ---------------------------------------------------------------------------
-locret_4F26A:                                           ; CODE XREF: Boss_ShieldViperDefeatEffect+6   j
-                                        ; Boss_ShieldViperDefeatEffect+32   j
+; Signed offsets added to base radial step $10 over a 32-frame cycle
+Boss_ShieldViperDefeatBurstReturn:                      ; CODE XREF: Boss_ShieldViperSpawnDefeatBurst+6   j  ; was: locret_4F26A
+                                        ; Boss_ShieldViperSpawnDefeatBurst+32   j
                 rts
-; End of function Boss_ShieldViperDefeatEffect
-nullsub_117:                                            ; DATA XREF: ROM:0004F1B6   o
+; End of function Boss_ShieldViperSpawnDefeatBurst
+Boss_ShieldViperDefeatObjectIdle:                       ; DATA XREF: ROM:0004F1B6   o  ; was: nullsub_117
                 rts
-; End of function nullsub_117
+; End of function Boss_ShieldViperDefeatObjectIdle
 
-; Idle state handler
-Boss_ShieldViperIdleState:                              ; CODE XREF: Boss_ShieldViperMain:loc_4DFD6   p  ; was: sub_4F26E
+; Cycle the radial movement step through a signed 32-frame triangle wave
+Boss_ShieldViperUpdateRadialMovementStep:               ; CODE XREF: Boss_ShieldViperUpdate:Boss_ShieldViperUpdateRadialStep   p  ; was: sub_4F26E
                 move.w  (dword_FF941C+2).w,d0
                 add.w   d0,d0
-                move.w  word_4F28C(pc,d0.w),d0
+                move.w  Boss_ShieldViperRadialStepTriangleWave(pc,d0.w),d0
                 addi.w  #$10,d0
                 move.w  d0,(dword_FF941C).w
                 addq.w  #1,(dword_FF941C+2).w
                 andi.w  #$1F,(dword_FF941C+2).w
                 rts
-; End of function Boss_ShieldViperIdleState
+; End of function Boss_ShieldViperUpdateRadialMovementStep
 ; ---------------------------------------------------------------------------
-word_4F28C:     dc.w    0, 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, 1
-                                        ; DATA XREF: Boss_ShieldViperIdleState+6   r
+Boss_ShieldViperRadialStepTriangleWave: dc.w    0, 1, 2, 3, 4, 5, 6, 7, 8, 7, 6, 5, 4, 3, 2, 1  ; was: word_4F28C
+                                        ; DATA XREF: Boss_ShieldViperUpdateRadialMovementStep+6   r
                 dc.w    0, $FFFF, $FFFE, $FFFD, $FFFC, $FFFB, $FFFA, $FFF9, $FFF8, $FFF9, $FFFA, $FFFB, $FFFC, $FFFD, $FFFE, $FFFF
 
-; Calculates 4 interpolated trail positions
-Boss_ShieldViperCalculateTrailPositions:                ; CODE XREF: Boss_ShieldViperTransitionState   p  ; was: sub_4F2CC
+; Disable linked geometry and seed four trail samples between adjacent records
+Boss_ShieldViperEnableTrailGeometry:                    ; CODE XREF: Boss_ShieldViperEnableTrailGeometryAndAdvance   p  ; was: sub_4F2CC
                 bclr    #0,(dword_FF9414+1).w
                 move.w  #$18,d7
                 lea     (a5),a0
                 lea     (word_FF94A0).w,a1
                 lea     (dword_FF9700).w,a2
-loc_4F2E0:                                              ; CODE XREF: Boss_ShieldViperCalculateTrailPositions+5A   j
+Boss_ShieldViperSeedNextTrailInterval:                  ; CODE XREF: Boss_ShieldViperEnableTrailGeometry+5A   j  ; was: loc_4F2E0
                 move.w  $56(a0),d0
                 add.w   $52(a0),d0
                 move.w  d0,$56(a0)
@@ -110,56 +111,56 @@ loc_4F2E0:                                              ; CODE XREF: Boss_Shield
                 move.w  $10(a0),d3
                 move.w  $14(a0),d4
                 move.w  #3,d6
-loc_4F314:                                              ; CODE XREF: Boss_ShieldViperCalculateTrailPositions+52   j
+Boss_ShieldViperStoreTrailIntervalSamples:              ; CODE XREF: Boss_ShieldViperEnableTrailGeometry+52   j  ; was: loc_4F314
                 move.w  d0,(a1)+
                 move.w  d3,(a2)+
                 move.w  d4,(a2)+
                 add.w   d1,d3
                 add.w   d2,d4
-                dbf     d6,loc_4F314
+                dbf     d6,Boss_ShieldViperStoreTrailIntervalSamples
                 lea     $60(a0),a0
-                dbf     d7,loc_4F2E0
+                dbf     d7,Boss_ShieldViperSeedNextTrailInterval
                 rts
-; End of function Boss_ShieldViperCalculateTrailPositions
-; Updates rotation angles for all shield viper body segments based on head position
-Boss_ShieldViperUpdateSegmentAngles:                    ; CODE XREF: Boss_ShieldViperWaitFor90DegRotation+22   p  ; was: sub_4F32C
+; End of function Boss_ShieldViperEnableTrailGeometry
+; Preserve effective body angles while switching from trail to linked geometry
+Boss_ShieldViperEnableLinkedBodyGeometry:               ; CODE XREF: Boss_ShieldViperWaitForCenterQuarterTurn+22   p  ; was: sub_4F32C
                 bset    #0,(dword_FF9414+1).w
                 move.w  #$10,d7
                 move.w  $4D6(a5),d0
                 lea     (a5),a0
-loc_4F33C:                                              ; CODE XREF: Boss_ShieldViperUpdateSegmentAngles+26   j
+Boss_ShieldViperRebaseNextLinkedBodyAngle:              ; CODE XREF: Boss_ShieldViperEnableLinkedBodyGeometry+26   j  ; was: loc_4F33C
                 move.w  $56(a0),d1
                 sub.w   d0,d1
                 move.w  d1,$52(a0)
                 move.w  d1,$54(a0)
                 move.w  d0,$56(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_4F33C
+                dbf     d7,Boss_ShieldViperRebaseNextLinkedBodyAngle
                 lea     $660(a5),a0
                 lea     (word_FF9620).w,a1
                 move.w  #7,d7
-loc_4F362:                                              ; CODE XREF: Boss_ShieldViperUpdateSegmentAngles+48   j
+Boss_ShieldViperSeedNextTrailingAngleGroup:             ; CODE XREF: Boss_ShieldViperEnableLinkedBodyGeometry+48   j  ; was: loc_4F362
                 move.w  $56(a0),d0
                 move.w  #7,d6
-loc_4F36A:                                              ; CODE XREF: Boss_ShieldViperUpdateSegmentAngles+40   j
+Boss_ShieldViperStoreTrailingAngleSample:               ; CODE XREF: Boss_ShieldViperEnableLinkedBodyGeometry+40   j  ; was: loc_4F36A
                 move.w  d0,(a1)+
-                dbf     d6,loc_4F36A
+                dbf     d6,Boss_ShieldViperStoreTrailingAngleSample
                 lea     $60(a0),a0
-                dbf     d7,loc_4F362
+                dbf     d7,Boss_ShieldViperSeedNextTrailingAngleGroup
                 move.w  d0,(a1)
                 rts
-; End of function Boss_ShieldViperUpdateSegmentAngles
-; Attack state 1 handler
-Boss_ShieldViperAttackState1:                           ; CODE XREF: Boss_ShieldViperBattleStart   p  ; was: sub_4F37C
-                                        ; Boss_ShieldViperWaitForAngleMatch+6   p
+; End of function Boss_ShieldViperEnableLinkedBodyGeometry
+; Advance the controller angle, then move radially at the resulting angle
+Boss_ShieldViperRotateAndMoveRadially:                  ; CODE XREF: Boss_ShieldViperWaitForStageTransitionAndEnterAttackSequence   p  ; was: sub_4F37C
+                                        ; Boss_ShieldViperRotateToEntryAngle+6   p
                 move.w  (dword_FF9400).w,d0
                 add.w   d0,$56(a5)
-                bsr.w   Boss_ShieldViperAttackState2
+                bsr.w   Boss_ShieldViperMoveRadially
                 rts
-; End of function Boss_ShieldViperAttackState1
-; Boss damage handler
-Boss_ShieldViperDamage:                                 ; CODE XREF: Boss_ShieldViperSpawnProjectile1+3C   p  ; was: sub_4F38A
-                                        ; Boss_ShieldViperDifficultySetup+1E   p
+; End of function Boss_ShieldViperRotateAndMoveRadially
+; Choose angular step $FFFC or 4 to rotate toward a supplied target point
+Boss_ShieldViperChooseRotationTowardTarget:             ; CODE XREF: Boss_ShieldViperBeginTwoPassPlayerTrackingCycle+3C   p  ; was: sub_4F38A
+                                        ; Boss_ShieldViperChooseRandomVerticalTarget+1E   p
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
                 jsr     (Math_CalculateDirectionIndex).l
@@ -167,116 +168,116 @@ Boss_ShieldViperDamage:                                 ; CODE XREF: Boss_Shield
                 sub.w   $56(a5),d2
                 andi.w  #$1FF,d2
                 cmpi.w  #$100,d2
-                bcs.s   loc_4F3B2
+                bcs.s   Boss_ShieldViperSelectPositiveTargetRotation
                 move.w  #$FFFC,(dword_FF9400).w
-                bra.s   locret_4F3B8
+                bra.s   Boss_ShieldViperTargetRotationSelectionReturn
 ; ---------------------------------------------------------------------------
-loc_4F3B2:                                              ; CODE XREF: Boss_ShieldViperDamage+1E   j
+Boss_ShieldViperSelectPositiveTargetRotation:           ; CODE XREF: Boss_ShieldViperChooseRotationTowardTarget+1E   j  ; was: loc_4F3B2
                 move.w  #4,(dword_FF9400).w
-locret_4F3B8:                                           ; CODE XREF: Boss_ShieldViperDamage+26   j
+Boss_ShieldViperTargetRotationSelectionReturn:          ; CODE XREF: Boss_ShieldViperChooseRotationTowardTarget+26   j  ; was: locret_4F3B8
                 rts
-; End of function Boss_ShieldViperDamage
-; Calls shield viper damage check every 8 frames using player position
-Boss_ShieldViperDamageEvery8Frames:
-                move.w  (word_FFA000).w,d7              ; was: sub_4F3BA
-                andi.w  #7,d7
-                bne.s   locret_4F3D0
-                move.w  (word_FF8248).w,d0
-                move.w  (word_FF824A).w,d1
-                bsr.w   Boss_ShieldViperDamage
-locret_4F3D0:                                           ; CODE XREF: Boss_ShieldViperDamageEvery8Frames+8   j
-                rts
-; End of function Boss_ShieldViperDamageEvery8Frames
-; Calls shield viper damage check at fixed center position (120,F0)
-Boss_ShieldViperDamageCenterPoint:                      ; CODE XREF: Boss_ShieldViperRotateAndAccelerate   p  ; was: sub_4F3D2
+; End of function Boss_ShieldViperChooseRotationTowardTarget
+; Every eight frames, choose rotation toward the player position
+Boss_ShieldViperChooseRotationTowardPlayerEveryEightFrames:  ; was: sub_4F3BA
                 move.w  (word_FFA000).w,d7
                 andi.w  #7,d7
-                bne.s   locret_4F3E8
+                bne.s   Boss_ShieldViperPlayerTargetRotationReturn
+                move.w  (word_FF8248).w,d0
+                move.w  (word_FF824A).w,d1
+                bsr.w   Boss_ShieldViperChooseRotationTowardTarget
+Boss_ShieldViperPlayerTargetRotationReturn:             ; CODE XREF: Boss_ShieldViperChooseRotationTowardPlayerEveryEightFrames+8   j  ; was: locret_4F3D0
+                rts
+; End of function Boss_ShieldViperChooseRotationTowardPlayerEveryEightFrames
+; Every eight frames, choose rotation toward arena point ($120,$F0)
+Boss_ShieldViperChooseRotationTowardArenaCenterEveryEightFrames:  ; CODE XREF: Boss_ShieldViperSteerTowardCenterAndDoubleStepAtQuarterTurn   p  ; was: sub_4F3D2
+                move.w  (word_FFA000).w,d7
+                andi.w  #7,d7
+                bne.s   Boss_ShieldViperCenterTargetRotationReturn
                 move.w  #$120,d0
                 move.w  #$F0,d1
-                bsr.w   Boss_ShieldViperDamage
-locret_4F3E8:                                           ; CODE XREF: Boss_ShieldViperDamageCenterPoint+8   j
+                bsr.w   Boss_ShieldViperChooseRotationTowardTarget
+Boss_ShieldViperCenterTargetRotationReturn:             ; CODE XREF: Boss_ShieldViperChooseRotationTowardArenaCenterEveryEightFrames+8   j  ; was: locret_4F3E8
                 rts
-; End of function Boss_ShieldViperDamageCenterPoint
-; Calculates interpolated angles for shield viper segments between current and target angles
-Boss_ShieldViperCalculateSegmentAngles:
-                lea     (word_FF94A0).w,a1              ; was: sub_4F3EA
+; End of function Boss_ShieldViperChooseRotationTowardArenaCenterEveryEightFrames
+; Write four wrapped-angle samples between each of sixteen adjacent body records
+Boss_ShieldViperInterpolateTrailAnglesBetweenBodyRecords:  ; was: sub_4F3EA
+                lea     (word_FF94A0).w,a1
                 move.w  #$F,d7
                 lea     $60(a5),a0
-loc_4F3F6:                                              ; CODE XREF: Boss_ShieldViperCalculateSegmentAngles+42   j
+Boss_ShieldViperInterpolateNextBodyAnglePair:           ; CODE XREF: Boss_ShieldViperInterpolateTrailAnglesBetweenBodyRecords+42   j  ; was: loc_4F3F6
                 move.w  $56(a0),d0
                 move.w  $B6(a0),d1
                 sub.w   d0,d1
                 andi.w  #$1FF,d1
                 cmpi.w  #$100,d1
-                bcc.s   loc_4F40C
-                bra.s   loc_4F41A
+                bcc.s   Boss_ShieldViperNormalizeNegativeBodyAngleDelta
+                bra.s   Boss_ShieldViperScaleBodyAngleDelta
 ; ---------------------------------------------------------------------------
-loc_4F40C:                                              ; CODE XREF: Boss_ShieldViperCalculateSegmentAngles+1E   j
+Boss_ShieldViperNormalizeNegativeBodyAngleDelta:        ; CODE XREF: Boss_ShieldViperInterpolateTrailAnglesBetweenBodyRecords+1E   j  ; was: loc_4F40C
                 move.w  #$200,d2
                 sub.w   d1,d2
                 andi.w  #$1FF,d2
                 move.w  d2,d1
                 neg.w   d1
-loc_4F41A:                                              ; CODE XREF: Boss_ShieldViperCalculateSegmentAngles+20   j
+Boss_ShieldViperScaleBodyAngleDelta:                    ; CODE XREF: Boss_ShieldViperInterpolateTrailAnglesBetweenBodyRecords+20   j  ; was: loc_4F41A
                 asr.w   #3,d1
                 move.w  #3,d6
-loc_4F420:                                              ; CODE XREF: Boss_ShieldViperCalculateSegmentAngles+3A   j
+Boss_ShieldViperStoreInterpolatedTrailAngles:           ; CODE XREF: Boss_ShieldViperInterpolateTrailAnglesBetweenBodyRecords+3A   j  ; was: loc_4F420
                 move.w  d0,(a1)+
                 add.w   d1,d0
-                dbf     d6,loc_4F420
+                dbf     d6,Boss_ShieldViperStoreInterpolatedTrailAngles
                 lea     $60(a0),a0
-                dbf     d7,loc_4F3F6
+                dbf     d7,Boss_ShieldViperInterpolateNextBodyAnglePair
                 clr.w   (dword_FF9404).w
                 rts
-; End of function Boss_ShieldViperCalculateSegmentAngles
-; Clamps shield viper X position between A0 and 150
-Boss_ShieldViperClampXPosition:
-                cmpi.w  #$A0,$14(a0)                    ; was: sub_4F436
-                bgt.s   loc_4F444
+; End of function Boss_ShieldViperInterpolateTrailAnglesBetweenBodyRecords
+; Keep record Y strictly inside the boundary values $A0 and $150
+Boss_ShieldViperClampRecordYInsideVerticalBand:         ; was: sub_4F436
+                cmpi.w  #$A0,$14(a0)
+                bgt.s   Boss_ShieldViperCheckRecordUpperYBound
                 move.w  #$A2,$14(a0)
-loc_4F444:                                              ; CODE XREF: Boss_ShieldViperClampXPosition+6   j
+Boss_ShieldViperCheckRecordUpperYBound:                 ; CODE XREF: Boss_ShieldViperClampRecordYInsideVerticalBand+6   j  ; was: loc_4F444
                 cmpi.w  #$150,$14(a0)
-                blt.s   locret_4F452
+                blt.s   Boss_ShieldViperVerticalBandClampReturn
                 move.w  #$14E,$14(a0)
-locret_4F452:                                           ; CODE XREF: Boss_ShieldViperClampXPosition+14   j
+Boss_ShieldViperVerticalBandClampReturn:                ; CODE XREF: Boss_ShieldViperClampRecordYInsideVerticalBand+14   j  ; was: locret_4F452
                 rts
-; End of function Boss_ShieldViperClampXPosition
-; Calculates rotation delta and direction for shield viper movement
-Boss_ShieldViperCalculateRotationDelta:
-                clr.w   $48(a5)                         ; was: sub_4F454
+; End of function Boss_ShieldViperClampRecordYInsideVerticalBand
+; Store the magnitude and sign of input d0 minus the shared body-bend step
+Boss_ShieldViperStoreBendStepDeltaMagnitudeAndSign:     ; was: sub_4F454
+                clr.w   $48(a5)
                 sub.w   (dword_FF9404).w,d0
-                beq.w   locret_4F478
+                beq.w   Boss_ShieldViperBendStepDeltaReturn
                 tst.w   d0
-                bpl.s   loc_4F46E
+                bpl.s   Boss_ShieldViperStorePositiveBendStepDeltaSign
                 move.w  #$FFFF,$4C(a5)
                 neg.w   d0
-                bra.s   loc_4F474
+                bra.s   Boss_ShieldViperStoreBendStepDeltaMagnitude
 ; ---------------------------------------------------------------------------
-loc_4F46E:                                              ; CODE XREF: Boss_ShieldViperCalculateRotationDelta+E   j
+Boss_ShieldViperStorePositiveBendStepDeltaSign:         ; CODE XREF: Boss_ShieldViperStoreBendStepDeltaMagnitudeAndSign+E   j  ; was: loc_4F46E
                 move.w  #1,$4C(a5)
-loc_4F474:                                              ; CODE XREF: Boss_ShieldViperCalculateRotationDelta+18   j
+Boss_ShieldViperStoreBendStepDeltaMagnitude:            ; CODE XREF: Boss_ShieldViperStoreBendStepDeltaMagnitudeAndSign+18   j  ; was: loc_4F474
                 move.w  d0,$48(a5)
-locret_4F478:                                           ; CODE XREF: Boss_ShieldViperCalculateRotationDelta+8   j
+Boss_ShieldViperBendStepDeltaReturn:                    ; CODE XREF: Boss_ShieldViperStoreBendStepDeltaMagnitudeAndSign+8   j  ; was: locret_4F478
                 rts
-; End of function Boss_ShieldViperCalculateRotationDelta
-; Applies rotation delta to all shield viper body segments
-Boss_ShieldViperApplyRotationToSegments:                ; CODE XREF: Boss_ShieldViperInitRotationSpeed:loc_4E3DE   p  ; was: sub_4F47A
-                                        ; sub_4E3FE:loc_4E440   p
+; End of function Boss_ShieldViperStoreBendStepDeltaMagnitudeAndSign
+; Write symmetric target angular offsets across the linked body records
+Boss_ShieldViperSetBodyTargetAngularOffsets:            ; CODE XREF: Boss_ShieldViperConfigureInitialBodyBend:Boss_ShieldViperApplyInitialBodyBend   p  ; was: sub_4F47A
+                                        ; sub_4E3FE:Boss_ShieldViperApplyBodyBendPhase   p
                 move.w  (dword_FF9404).w,d5
                 move.w  #2,d7
                 lea     $480(a5),a0
                 movea.w a0,a1
                 moveq   #0,d0
                 moveq   #0,d1
-loc_4F48C:                                              ; CODE XREF: Boss_ShieldViperApplyRotationToSegments+26   j
+Boss_ShieldViperSetSymmetricCenterBodyOffsets:          ; CODE XREF: Boss_ShieldViperSetBodyTargetAngularOffsets+26   j  ; was: loc_4F48C
                 lea     -$60(a0),a0
                 lea     $60(a1),a1
                 add.w   d5,d0
                 sub.w   d5,d1
                 move.w  d0,$54(a0)
                 move.w  d1,$54(a1)
-                dbf     d7,loc_4F48C
+                dbf     d7,Boss_ShieldViperSetSymmetricCenterBodyOffsets
                 lea     -$60(a0),a0
                 lea     $60(a1),a1
                 sub.w   d5,d0
@@ -284,22 +285,22 @@ loc_4F48C:                                              ; CODE XREF: Boss_Shield
                 move.w  d0,$54(a0)
                 move.w  d1,$54(a1)
                 move.w  #7,d7
-loc_4F4BC:                                              ; CODE XREF: Boss_ShieldViperApplyRotationToSegments+4C   j
+Boss_ShieldViperSetRemainingLeadingBodyOffsets:         ; CODE XREF: Boss_ShieldViperSetBodyTargetAngularOffsets+4C   j  ; was: loc_4F4BC
                 lea     -$60(a0),a0
                 sub.w   d5,d0
                 move.w  d0,$54(a0)
-                dbf     d7,loc_4F4BC
+                dbf     d7,Boss_ShieldViperSetRemainingLeadingBodyOffsets
                 rts
-; End of function Boss_ShieldViperApplyRotationToSegments
-; Attack state 2 handler
-Boss_ShieldViperAttackState2:                           ; CODE XREF: Boss_ShieldViperIntroStop   p  ; was: sub_4F4CC
-                                        ; Boss_ShieldViperWaitForApproach+6   p
+; End of function Boss_ShieldViperSetBodyTargetAngularOffsets
+; Move the controller radially using the current angle and shared step
+Boss_ShieldViperMoveRadially:                           ; CODE XREF: Boss_ShieldViperMoveIntroToYThreshold   p  ; was: sub_4F4CC
+                                        ; Boss_ShieldViperMoveToEntryYThreshold+6   p
                 move.w  $56(a5),d0
                 addi.w  #$100,d0
                 andi.w  #$1FE,d0
                 lea     (Math_SineTable).l,a3
                 move.w  Math_QuarterSineTable-Math_SineTable(a3,d0.w),d1
-loc_4F4E2:
+Boss_ShieldViperApplyRadialDisplacement:                ; was: loc_4F4E2
                 move.w  (a3,d0.w),d0
                 move.w  (dword_FF941C).w,d2
                 muls.w  d2,d0
@@ -307,30 +308,30 @@ loc_4F4E2:
                 add.l   d0,$10(a5)
                 add.l   d1,$14(a5)
                 rts
-; End of function Boss_ShieldViperAttackState2
-; Updates snake segments
-Boss_ShieldViperSegmentUpdate:                          ; CODE XREF: Boss_ShieldViperMain+14   p  ; was: sub_4F4F8
+; End of function Boss_ShieldViperMoveRadially
+; Select controller and body mappings from their quantized effective angles
+Gfx_ShieldViperUpdateBodyMappings:                      ; CODE XREF: Boss_ShieldViperUpdate+14   p  ; was: sub_4F4F8
                 move.w  $56(a5),d0
                 add.w   $52(a5),d0
-                lea     stru_4F558(pc),a1
+                lea     Boss_ShieldViperControllerAngularMappingRecords(pc),a1
                 nop
                 movea.w a5,a0
-                bsr.w   Boss_ShieldViperMovement1
+                bsr.w   Gfx_ShieldViperSelectMappingFromQuantizedAngle
                 move.w  #$11,d7
                 lea     $60(a5),a0
-                lea     stru_4F598(pc),a1
+                lea     Boss_ShieldViperBodyAngularMappingRecords(pc),a1
                 nop
-loc_4F51A:                                              ; CODE XREF: Boss_ShieldViperSegmentUpdate+32   j
+Gfx_ShieldViperUpdateNextBodyMapping:                   ; CODE XREF: Gfx_ShieldViperUpdateBodyMappings+32   j  ; was: loc_4F51A
                 move.w  $56(a0),d0
                 add.w   $52(a0),d0
-                bsr.w   Boss_ShieldViperMovement1
+                bsr.w   Gfx_ShieldViperSelectMappingFromQuantizedAngle
                 lea     $60(a0),a0
-                dbf     d7,loc_4F51A
+                dbf     d7,Gfx_ShieldViperUpdateNextBodyMapping
                 rts
-; End of function Boss_ShieldViperSegmentUpdate
-; Movement pattern 1
-Boss_ShieldViperMovement1:                              ; CODE XREF: Projectile_ShieldViperUpdateRotation+A   p  ; was: sub_4F530
-                                        ; Boss_ShieldViperChildPositionUpdate+4E   p
+; End of function Gfx_ShieldViperUpdateBodyMappings
+; Select sprite mapping and orientation bits from a quantized nine-bit angle
+Gfx_ShieldViperSelectMappingFromQuantizedAngle:         ; CODE XREF: Gfx_ShieldViperUpdateRecordAngularMapping+A   p  ; was: sub_4F530
+                                        ; Boss_ShieldViperPositionLinkedPartFromBodyRecord+4E   p
                 addi.w  #$20,d0                         ; ' '
                 andi.w  #$1C0,d0
                 lsr.w   #3,d0
@@ -341,11 +342,12 @@ Boss_ShieldViperMovement1:                              ; CODE XREF: Projectile_
                 or.w    d0,$E(a0)
                 move.l  4(a2),8(a0)
                 rts
-; End of function Boss_ShieldViperMovement1
+; End of function Gfx_ShieldViperSelectMappingFromQuantizedAngle
 ; ---------------------------------------------------------------------------
-stru_4F558:     dc.w    0                               ; field_0
-                                        ; DATA XREF: Boss_ShieldViperDefeatInit+14   o
-                                        ; Boss_ShieldViperSegmentUpdate+8   o
+; Eight controller mapping records indexed by quantized angle
+Boss_ShieldViperControllerAngularMappingRecords:    dc.w    0  ; field_0  ; was: stru_4F558
+                                        ; DATA XREF: Boss_ShieldViperBeginStaggeredDefeat+14   o
+                                        ; Gfx_ShieldViperUpdateBodyMappings+8   o
                 dc.w    $FFFF                           ; field_2
                 dc.l    word_ECF8E                      ; field_4
                 dc.w    $1000                           ; field_0
@@ -369,9 +371,10 @@ stru_4F558:     dc.w    0                               ; field_0
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
                 dc.l    word_ECFD0                      ; field_4
-stru_4F598:     dc.w    0                               ; field_0
-                                        ; DATA XREF: Boss_ShieldViperDefeatInit+84   o
-                                        ; Boss_ShieldViperChildCircularMotion+48   o
+; Eight body mapping records indexed by quantized angle
+Boss_ShieldViperBodyAngularMappingRecords:  dc.w    0   ; field_0  ; was: stru_4F598
+                                        ; DATA XREF: Boss_ShieldViperBeginStaggeredDefeat+84   o
+                                        ; Boss_ShieldViperBeginLinkedPartEjection+48   o
                 dc.w    $FFFF                           ; field_2
                 dc.l    word_ECF76                      ; field_4
                 dc.w    $1000                           ; field_0

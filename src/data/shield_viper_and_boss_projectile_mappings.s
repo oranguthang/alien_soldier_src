@@ -1,5 +1,5 @@
-word_ECF8E:     dc.w    $5800, $500, 8                  ; DATA XREF: Boss_ShieldViperDispatcher+4E   o
-                                        ; ROM:stru_4F558   o
+word_ECF8E:     dc.w    $5800, $500, 8                  ; DATA XREF: Boss_ShieldViperInitialize+4E   o
+                                        ; ROM:Boss_ShieldViperControllerAngularMappingRecords   o
                 dc.w    $5804, $E00, $E8
                 dc.w    $4804, $E00, $E8E8
                 dc.w    $C800, $500, $F008
@@ -22,9 +22,9 @@ word_ECFE8:     dc.w    $C892, $500, $F8F8              ; DATA XREF: ROM:0004E28
                                         ; ROM:0004E288   o
 word_ECFEE:     dc.w    $C896, $500, $F8F8              ; DATA XREF: ROM:0004E290   o
                                         ; ROM:0004E298   o
-word_ECFF4:     dc.w    $C89A, 0, $FCFC                 ; DATA XREF: Projectile_ShieldViperSpawnEffect+18   o
-                                        ; ROM:stru_4F15E   o
-word_ECFFA:     dc.w    $C89B, $500, $F8F8              ; DATA XREF: Boss_ShieldViperDispatcher+124   o
+word_ECFF4:     dc.w    $C89A, 0, $FCFC                 ; DATA XREF: Projectile_InitShieldViperOrbitShot+18   o
+                                        ; ROM:Projectile_ShieldViperOrbitShotAnimationRecords   o
+word_ECFFA:     dc.w    $C89B, $500, $F8F8              ; DATA XREF: Boss_ShieldViperInitialize+124   o
                                         ; ROM:0004F166   o
 word_ED000:     dc.w    $C89F, $A00, $F4F4              ; DATA XREF: ROM:0004F16E   o
 word_ED006:     dc.w    $C8A8, $F00, $F0F0              ; DATA XREF: ROM:0004F176   o
