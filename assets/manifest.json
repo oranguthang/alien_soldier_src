@@ -4784,8 +4784,8 @@
       "sha1": "c8668240c8b2860da560f777c174bf50da1136c2"
     },
     {
-      "name": "unused_9",
-      "path": "other/unused_9.bin",
+      "name": "arctangent_ratio_table_tail",
+      "path": "other/arctangent_ratio_table_tail.bin",
       "region": "other",
       "address": "0x4283C",
       "end": "0x4285C",

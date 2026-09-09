@@ -226,7 +226,7 @@
                 include "src/bosses/snake.s"
                 include "src/bosses/sunset_sting_core.s"
                 include "src/bosses/sunset_sting_attacks.s"
-                include "src/bosses/sunset_sting_defeat.s"
+                include "src/bosses/sunset_sting_transition_and_defeat.s"
                 include "src/bosses/sunset_sting_wave.s"
                 include "src/bosses/sunset_sting_main.s"
                 include "src/bosses/sunset_sting_segments.s"

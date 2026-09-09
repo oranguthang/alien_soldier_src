@@ -855,8 +855,11 @@ type-`$29C` chain in the documented Stage 13 Snake encounter at frames
 visual identity remains `hypothesis`; the state, movement, shot, and destruction
 names rely on static instruction-level evidence recorded in the name audit.
 
-The Sunset Sting controller, segment, and early-form passes reduced the count
-to 7,880 and left `bosses/sunset_sting_core.s`,
+The Sunset Sting controller, segment, early-form, attack, transition, and
+defeat passes reduced the count to 7,788 and left
+`bosses/sunset_sting_core.s`,
+`bosses/sunset_sting_attacks.s`,
+`bosses/sunset_sting_transition_and_defeat.s`,
 `bosses/sunset_sting_main.s`, and `bosses/sunset_sting_segments.s` with no live
 address-derived definitions. The controller audit
 corrected two labels falsely attributed to Viblack: states `$06` and `$08`
@@ -883,6 +886,27 @@ the shared-health-zero gate and begins the form's defeat transition. The six
 unreferenced bytes after the state table remain explicitly `unknown`; no use
 was invented for them. Exact visual ownership remains a runtime hypothesis
 until the pinned emulator can repeat the encounter capture.
+
+The attack pass reconstructed the later form's nineteen-entry state table,
+four chain roots, tracking and pose-pattern data, random-chain homing shots,
+and health-threshold loop. The former `CheckVictoryAlt` is another intro-message
+state. The former `RiseAndSpawnRing` neither rises nor creates a ring: it adds
+two to shared health each frame until `$01E0` and applies pose pattern C to all
+four chains, so it is now the health-refill state. The exact appearance of pose
+patterns A/B/C remains deliberately neutral pending pinned runtime evidence.
+
+The transition-and-defeat pass showed that the former `StartDeathSequence` is
+not itself a death state: it enters state `$1A`, where four chain roots
+oscillate while the controller moves between vertical bounds. States `$1E`
+through `$24` descend while firing, activate an eight-object trail, contract
+its vertical span, and return to health-state selection. The later primary-
+health-zero path resets the form controller; the distinct subsequent routines
+scatter its body parts, stagger their conversion to explosions, and finally
+remove the controller. Shared angle and weighted-choice helpers in the same ROM
+range now have subsystem-neutral names. The arctangent lookup starts in the
+instruction bytes at `0x042838` and continues through the extracted 32-byte
+table tail; that code/data overlap is preserved explicitly rather than called
+unused data.
 
 Four especially broad data labels are explicitly registered:
 

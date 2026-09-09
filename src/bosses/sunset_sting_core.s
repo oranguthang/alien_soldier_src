@@ -144,7 +144,7 @@ Boss_SunsetStingChooseAttack:                           ; CODE XREF: Boss_Sunset
                 cmpi.w  #$80,d0
                 bcs.s   Boss_SunsetStingCloseRangeAttack
                 lea     Boss_SunsetStingDistantAttackChoices(pc),a0
-                jmp     JumpRandomFunc
+                jmp     Math_JumpToWeightedChoice
 ; End of function Boss_SunsetStingIdleState
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingDistantAttackChoices:
@@ -160,7 +160,7 @@ Boss_SunsetStingDistantAttackChoices:
 ; Selects random attack pattern when player is close
 Boss_SunsetStingCloseRangeAttack:                       ; CODE XREF: Boss_SunsetStingIdleState+3A   j  ; was: sub_40EF0
                 lea     Boss_SunsetStingCloseAttackChoices(pc),a0
-                jmp     JumpRandomFunc
+                jmp     Math_JumpToWeightedChoice
 ; End of function Boss_SunsetStingCloseRangeAttack
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingCloseAttackChoices:
@@ -461,7 +461,7 @@ Boss_SunsetStingCalculateAngleAndFlip:                  ; CODE XREF: Boss_Sunset
                 andi.w  #$F7FF,$E(a5)
                 movem.l d3,-(sp)
                 lea     (word_FFA400).w,a4
-                jsr     (loc_427EC).l
+                jsr     (Physics_CalculateAngleToTarget).l
                 movem.l (sp)+,d3
                 move.b  d0,d2
                 bpl.s   Boss_SunsetStingStoreAimOffset
@@ -649,7 +649,7 @@ Boss_SunsetStingDebrisPartRemove:                       ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingDebrisPartMain
 ; Spawns projectile with randomized position offset
 Boss_SunsetStingSpawnRandomOffsetProjectile:            ; CODE XREF: Boss_SunsetStingRiseAndSpawnProjectilesState+E   p  ; was: sub_41492
-                                        ; Boss_SunsetStingDescendAndActivate+E   p
+                                        ; Boss_SunsetStingDescendAndActivateChainsState+E   p
                 move.l  d1,-(sp)
                 jsr     (Projectile_UpdateWithImpactFrames).l
                 bne.s   Boss_SunsetStingSpawnRandomOffsetProjectileReturn
@@ -749,7 +749,7 @@ Boss_SunsetStingBodyPartAngleSequences_End:             ; was: word_4165C_End
 
 ; Initializes boss body part sprites from pointer table
 Boss_SunsetStingInitBodyParts:                          ; CODE XREF: Boss_SunsetStingLoadGraphics+2E   p  ; was: sub_417D8
-                                        ; Boss_SunsetStingLoadGraphicsAlt+2E   p
+                                        ; Boss_SunsetStingSecondFormLoadGraphicsState+2E   p
                 clr.w   d7
                 movea.l a5,a3
                 clr.l   -(sp)
@@ -807,7 +807,7 @@ Boss_SunsetStingFinishBodyPartInitialization:           ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingInitBodyParts
 ; Updates positions of all boss body parts using sine/cosine
 Boss_SunsetStingUpdateBodyPartPositions:                ; CODE XREF: Boss_SunsetStingUpdateGraphics+20   p  ; was: sub_4185E
-                                        ; Boss_SunsetStingMainUpdate+78   p
+                                        ; Boss_SunsetStingSecondFormUpdate+78   p
                 move.w  (word_FFC67C).w,d7
                 subq.w  #1,d7
                 lea     $60(a5),a4

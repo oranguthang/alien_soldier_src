@@ -541,7 +541,7 @@ unused_5,0x225CC,0x23CBA,other
 unused_6,0x2665E,0x2667C,other
 unused_7,0x2A49E,0x2A4BE,other
 sunset_sting_early_form_unused_table_tail,0x40D2E,0x40D34,other
-unused_9,0x4283C,0x4285C,other
+arctangent_ratio_table_tail,0x4283C,0x4285C,other
 unused_10,0x83284,0x8329C,other
 byte_182F24,0x182F24,0x184378,other
 byte_184378,0x184378,0x18454C,other

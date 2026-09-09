@@ -313,7 +313,7 @@
     { "file": "src/bosses/snake.s", "subsystem": "bosses", "start": "0x04079E", "end": "0x040CED" },
     { "file": "src/bosses/sunset_sting_core.s", "subsystem": "bosses", "start": "0x040CEE", "end": "0x0418FB" },
     { "file": "src/bosses/sunset_sting_attacks.s", "subsystem": "bosses", "start": "0x0418FC", "end": "0x042009" },
-    { "file": "src/bosses/sunset_sting_defeat.s", "subsystem": "bosses", "start": "0x04200A", "end": "0x0428B3" },
+    { "file": "src/bosses/sunset_sting_transition_and_defeat.s", "subsystem": "bosses", "start": "0x04200A", "end": "0x0428B3" },
     { "file": "src/bosses/sunset_sting_wave.s", "subsystem": "bosses", "start": "0x0428B4", "end": "0x042A0F" },
     { "file": "src/bosses/sunset_sting_main.s", "subsystem": "bosses", "start": "0x042A10", "end": "0x043339" },
     { "file": "src/bosses/sunset_sting_segments.s", "subsystem": "bosses", "start": "0x04333A", "end": "0x04392F" },
