@@ -205,10 +205,10 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Effect_TriggerStage25Shake
                 dc.l    Effect_TriggerStage25DeathSound
                 dc.l    Object_RemoveOnFlagOrAnimationEnd
-                dc.l    Enemy_BugmaxDebrisMain
-                dc.l    Projectile_BugmaxMainController
+                dc.l    Projectile_BugmaxHitFragmentController
+                dc.l    Projectile_BugmaxSpreadController
                 dc.l    Projectile_BugmaxSineController
-                dc.l    Enemy_BugmaxDebrisFall
+                dc.l    Projectile_BugmaxScatteredPartFall
                 dc.l    Projectile_BugmaxDebrisSpawner
                 dc.l    Boss_ShieldViperMain
                 dc.l    Enemy_UpdateBouncingObject

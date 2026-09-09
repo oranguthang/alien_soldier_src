@@ -1279,6 +1279,97 @@ waits for fragments, converts collided debris, or activates linked records
 from encounter flags. Exact on-screen identities of the moving parts and
 transition debris remain unclaimed pending pinned runtime evidence.
 
+The Bugmax core pass reduced the count from 6,814 to 6,758 and raised
+provenance to 9,065 unique mappings. The cohesive 887-line
+`bosses/bugmax_core.s` module now has 88 audited definitions and no live
+address-derived names; the name-audit total is 4,477. Its size is retained
+because this single controller range couples four geometry modes, the shared
+position/angle history buffers, linked-record initialization, the opening
+transition, and the first linked-part motion states. Splitting inside those
+cross-cutting loops would reproduce the formal fragmentation rejected for the
+earlier source.
+
+The pass corrects the most consequential generated Bugmax claim. Main states
+`$08-$0C` are not a defeat sequence: they run before the spin, jump, and battle
+states, wait for two stage-scroll thresholds, load two replacement tile sets,
+and emit transition debris from linked-record coordinates. The actual forced
+final boundary is state `$56`, selected only after the encounter flags and
+`word_FF8200` clear. The former `UpdateLegs`, `RotateParts`, and generic
+`CalculatePerspective` labels are also narrowed to the implemented linked
+chain direction, history buffer, joint-angle clamp, or perspective-row
+operation. The opening transition's exact narrative presentation and the
+on-screen identity of each linked record remain deliberately unclaimed until
+pinned runtime evidence is available.
+
+The Bugmax battle-and-final-sequence pass reduced the address-derived unknown
+count from 6,758 to 6,684 and raised provenance to 9,139 unique mappings. The
+former `bosses/bugmax_attacks.s` is now the 847-line
+`bosses/bugmax_battle_and_final_sequence.s`; retaining one module is
+intentional because its contiguous main states `$18-$62` initialize the same
+linked records, select two projectile volleys and one linked-chain strike, and
+then execute the forced final sequence. Splitting that state table would make
+the control flow less legible while the file is already inside the agreed
+300-1,000-line range. All 114 definitions in the module and nine directly
+used contact/mapping helpers have exact static audit records, bringing the
+name-audit total to 4,600.
+
+This pass rejects the remaining generated `Mouth`, generic `SpecialAttack`,
+`SmartPositioning`, landing, and reversed vertical-motion claims. The first
+battle pattern emits a timed volley of horizontally scattered projectiles.
+The middle pattern bends the eight-record secondary chain, aims its shared
+angle at the player, enables collision on the central linked object, processes
+contact effects, and retracts the chain. The other projectile pattern chooses
+the player or a `$D0` side offset and emits eight bouncing sine projectiles.
+State `$56` begins the real final sequence: it waits for a wave band, pulses
+the palette, converts 22 linked records into falling type-`$344` parts, sends
+the controller upward with a negative velocity while emitting particles,
+relocates it, and then accelerates through the final descent. The exact visual
+identity of both battle tile sets, the central linked part, and the scattered
+type-`$344` parts remains deliberately unclaimed pending pinned runtime
+evidence.
+
+The Bugmax projectile pass reduced the address-derived unknown count from
+6,684 to 6,646 and raised provenance to 9,177 unique mappings. The cohesive
+542-line `projectiles/bugmax.s` module now has exact static audit coverage for
+all 65 definitions and no live address-derived names; 59 records were added
+in this pass because six aimed-chain contact helpers were already covered by
+the preceding battle pass. The name-audit total is now 4,659.
+
+Entity dispatch and creation sites now distinguish the four previously mixed
+roles. Type `$338` is a normal or special hit fragment emitted when an opening
+linked record exposes collision flag bit 6. Type `$33C` is the horizontally
+scattered battle projectile: one contact path locks two palette ranges through
+fade-out, hold, and restore states, while terrain contact converts the object
+to type `$88`. Type `$340` derives its launch velocity from a shared sine
+phase, performs up to three terrain bounces, and may convert into a random
+pickup on two collision flags. Type `$344` is assigned to the 22 linked
+records scattered by the final sequence and adds gravity while optionally
+emitting a periodic type-`$88` trail. The former generic `Enemy`, `Debris`,
+`MainController`, screen-shake, and `ExplosionWait` descriptions are therefore
+rejected. Exact rendered identities of the type-`$338` variants and the two
+standard fragment mappings remain deliberately unclaimed.
+
+The Bugmax movement and palette pass reduced the address-derived unknown
+count from 6,646 to 6,598 and raised provenance to 9,225 unique mappings.
+The cohesive 362-line `bosses/bugmax_movement.s` module now has exact static
+audit coverage for all 62 definitions and no live address-derived names; 59
+records were added in this pass because the central-part mapping helper and
+its two exits were already audited. The name-audit total is now 4,718.
+
+The opening controller's horizontal target steering is now separated from
+the eight-record object-pool clamp. The clamp table contains only seven
+explicit minimum/maximum pairs even though the original loop visits eight
+records; the eighth indexed pair therefore overlaps the first two instruction
+words of the following palette routine. This original ROM behaviour is
+recorded in the audit evidence rather than normalized in the preservation
+source. The former perspective helper is now identified narrowly as a signed
+wave-displacement palette offset, while the battle movement path is split into
+wave integration, bounded horizontal steering, and vertical-band steering.
+The two unreferenced controller-input routines are described only by their
+observed angle, position, and wave-accumulator effects. Exact visual identities
+of the opening records and the original development purpose of those
+unreferenced helpers remain deliberately unclaimed.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

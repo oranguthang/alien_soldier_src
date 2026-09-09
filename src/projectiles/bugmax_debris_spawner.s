@@ -2,7 +2,7 @@
 Projectile_InitBugmaxDebrisFromCurrentObject:
                 movea.w a5,a0                           ; was: sub_2C254
 ; Initializes a Bugmax debris spawner with caller-provided dimensions and lifetime
-Projectile_InitBugmaxDebris:                            ; CODE XREF: Boss_BugmaxSpawnDebris+30   p  ; was: loc_2C256
+Projectile_InitBugmaxDebris:                            ; CODE XREF: Boss_BugmaxSpawnTransitionDebris+30   p  ; was: loc_2C256
                 move.w  #$348,(a0)
                 move.w  #$F40,2(a0)
                 move.w  d0,$4A(a0)

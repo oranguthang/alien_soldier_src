@@ -1,88 +1,89 @@
-Boss_BugmaxAI:                                          ; CODE XREF: Boss_BugmaxUpdateAllParts+20   j  ; was: sub_4DA22
+; Steer the opening controller horizontally toward its stage-relative target
+Boss_BugmaxSteerOpeningControllerToHorizontalTarget:    ; CODE XREF: Boss_BugmaxEmitOpeningHitFragmentsAndSteer+20   j  ; was: sub_4DA22
                 move.w  #$168,d0
                 sub.w   (dword_FFA908).w,d0
                 sub.w   $10(a5),d0
-                beq.s   locret_4DA8A
+                beq.s   Boss_BugmaxOpeningHorizontalSteeringReturn
                 tst.w   d0
-                bmi.s   loc_4DA60
+                bmi.s   Boss_BugmaxHandleNegativeOpeningTargetDelta
                 addi.l  #$4000,$18(a5)
                 btst    #7,$18(a5)
-                beq.s   loc_4DA4C
+                beq.s   Boss_BugmaxClampOpeningVelocityAfterPositiveTarget
                 addi.l  #$4000,$18(a5)
-loc_4DA4C:                                              ; CODE XREF: Boss_BugmaxAI+20   j
+Boss_BugmaxClampOpeningVelocityAfterPositiveTarget:     ; CODE XREF: Boss_BugmaxSteerOpeningControllerToHorizontalTarget+20   j  ; was: loc_4DA4C
                 cmpi.l  #$FFFD8000,$18(a5)
-                bgt.s   locret_4DA8A
+                bgt.s   Boss_BugmaxOpeningHorizontalSteeringReturn
                 move.l  #$FFFD8000,$18(a5)
-                bra.s   locret_4DA8A
+                bra.s   Boss_BugmaxOpeningHorizontalSteeringReturn
 ; ---------------------------------------------------------------------------
-loc_4DA60:                                              ; CODE XREF: Boss_BugmaxAI+10   j
+Boss_BugmaxHandleNegativeOpeningTargetDelta:            ; CODE XREF: Boss_BugmaxSteerOpeningControllerToHorizontalTarget+10   j  ; was: loc_4DA60
                 addi.l  #-$4000,$18(a5)
                 btst    #7,$18(a5)
-                bne.s   loc_4DA78
+                bne.s   Boss_BugmaxClampOpeningNegativeVelocity
                 addi.l  #-$4000,$18(a5)
-loc_4DA78:                                              ; CODE XREF: Boss_BugmaxAI+4C   j
+Boss_BugmaxClampOpeningNegativeVelocity:                ; CODE XREF: Boss_BugmaxSteerOpeningControllerToHorizontalTarget+4C   j  ; was: loc_4DA78
                 cmpi.l  #$FFFD8000,$18(a5)
-                bgt.s   locret_4DA8A
+                bgt.s   Boss_BugmaxOpeningHorizontalSteeringReturn
                 move.l  #$FFFD8000,$18(a5)
-locret_4DA8A:                                           ; CODE XREF: Boss_BugmaxAI+C   j
-                                        ; Boss_BugmaxAI+32   j
+Boss_BugmaxOpeningHorizontalSteeringReturn:             ; CODE XREF: Boss_BugmaxSteerOpeningControllerToHorizontalTarget+C   j  ; was: locret_4DA8A
+                                        ; Boss_BugmaxSteerOpeningControllerToHorizontalTarget+32   j
                 rts
-; End of function Boss_BugmaxAI
-; Clamps leg X positions to bounds
-Boss_BugmaxClampLegPositions:                           ; CODE XREF: Boss_BugmaxVictoryCheck   p  ; was: sub_4DA8C
-                                        ; sub_4C65E   p
+; End of function Boss_BugmaxSteerOpeningControllerToHorizontalTarget
+; Clamp eight opening object records to their per-record horizontal bounds
+Boss_BugmaxClampOpeningObjectHorizontalPositions:       ; CODE XREF: Boss_BugmaxWaitAfterJitterAndCheckVictory   p  ; was: sub_4DA8C
+                                        ; Boss_BugmaxWaitForOpeningTransition   p
                 move.w  #$168,d2
                 sub.w   (dword_FFA908).w,d2
-                lea     word_4DAD2(pc),a2
+                lea     Boss_BugmaxOpeningObjectHorizontalBounds(pc),a2
                 nop
                 moveq   #0,d6
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #7,d7
-loc_4DAA4:                                              ; CODE XREF: Boss_BugmaxClampLegPositions+40   j
+Boss_BugmaxClampOpeningObjectPositionLoop:              ; CODE XREF: Boss_BugmaxClampOpeningObjectHorizontalPositions+40   j  ; was: loc_4DAA4
                 move.w  d2,d0
                 move.w  d2,d1
                 sub.w   (a2,d6.w),d0
                 add.w   2(a2,d6.w),d1
                 cmp.w   $10(a0),d0
-                bcs.s   loc_4DABC
+                bcs.s   Boss_BugmaxCheckOpeningObjectMaximumX
                 move.w  d0,$10(a0)
-                bra.s   Boss_BugmaxLegClampLoop
+                bra.s   Boss_BugmaxAdvanceOpeningObjectClampLoop
 ; ---------------------------------------------------------------------------
-loc_4DABC:                                              ; CODE XREF: Boss_BugmaxClampLegPositions+28   j
+Boss_BugmaxCheckOpeningObjectMaximumX:                  ; CODE XREF: Boss_BugmaxClampOpeningObjectHorizontalPositions+28   j  ; was: loc_4DABC
                 cmp.w   $10(a0),d1
-                bhi.s   Boss_BugmaxLegClampLoop
+                bhi.s   Boss_BugmaxAdvanceOpeningObjectClampLoop
                 move.w  d1,$10(a0)
-; Inner loop for leg position clamping
-Boss_BugmaxLegClampLoop:                                ; CODE XREF: Boss_BugmaxClampLegPositions+2E   j  ; was: loc_4DAC6
-                                        ; Boss_BugmaxClampLegPositions+34   j
+; Advance to the next opening object and pair of horizontal bounds
+Boss_BugmaxAdvanceOpeningObjectClampLoop:               ; CODE XREF: Boss_BugmaxClampOpeningObjectHorizontalPositions+2E   j  ; was: loc_4DAC6
+                                        ; Boss_BugmaxClampOpeningObjectHorizontalPositions+34   j
                 lea     $60(a0),a0
                 addq.w  #4,d6
-                dbf     d7,loc_4DAA4
+                dbf     d7,Boss_BugmaxClampOpeningObjectPositionLoop
                 rts
-; End of function Boss_BugmaxClampLegPositions
+; End of function Boss_BugmaxClampOpeningObjectHorizontalPositions
 ; ---------------------------------------------------------------------------
-word_4DAD2:     dc.w    8, 8, $C, 8, $C, $C, $10, $10, $C, $10, $C, $C, 8, 8
-                                        ; DATA XREF: Boss_BugmaxClampLegPositions+8   o
+Boss_BugmaxOpeningObjectHorizontalBounds:   dc.w    8, 8, $C, 8, $C, $C, $10, $10, $C, $10, $C, $C, 8, 8  ; was: word_4DAD2
+                                        ; DATA XREF: Boss_BugmaxClampOpeningObjectHorizontalPositions+8   o
 
-; Helper for 3D perspective calculation system
-Boss_BugmaxPerspectiveHelper:                           ; CODE XREF: Boss_BugmaxCalculatePerspective:loc_4C1E0   p  ; was: sub_4DAEE
+; Convert signed wave displacement into a palette offset for color word 3E2E
+Gfx_BugmaxApplyWavePaletteOffset:                       ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry:Boss_BugmaxUpdatePerspectiveParametersAndGeometry   p  ; was: sub_4DAEE
                 move.w  (dword_FF9400).w,d0
-                beq.s   locret_4DB2A
+                beq.s   Gfx_BugmaxWavePaletteOffsetReturn
                 tst.w   d0
-                bpl.s   loc_4DB02
+                bpl.s   Gfx_BugmaxSelectPositiveWavePaletteOffsets
                 neg.w   d0
-                lea     word_4DB3E(pc),a0
+                lea     Gfx_BugmaxNegativeWavePaletteOffsets(pc),a0
                 nop
-                bra.s   loc_4DB08
+                bra.s   Gfx_BugmaxClampWavePaletteMagnitude
 ; ---------------------------------------------------------------------------
-loc_4DB02:                                              ; CODE XREF: Boss_BugmaxPerspectiveHelper+8   j
-                lea     word_4DB2C(pc),a0
+Gfx_BugmaxSelectPositiveWavePaletteOffsets:             ; CODE XREF: Gfx_BugmaxApplyWavePaletteOffset+8   j  ; was: loc_4DB02
+                lea     Gfx_BugmaxPositiveWavePaletteOffsets(pc),a0
                 nop
-loc_4DB08:                                              ; CODE XREF: Boss_BugmaxPerspectiveHelper+12   j
+Gfx_BugmaxClampWavePaletteMagnitude:                    ; CODE XREF: Gfx_BugmaxApplyWavePaletteOffset+12   j  ; was: loc_4DB08
                 cmpi.w  #$40,d0                         ; '@'
-                bcs.s   loc_4DB12
+                bcs.s   Gfx_BugmaxApplyIndexedWavePaletteOffset
                 move.w  #$40,d0                         ; '@'
-loc_4DB12:                                              ; CODE XREF: Boss_BugmaxPerspectiveHelper+1E   j
+Gfx_BugmaxApplyIndexedWavePaletteOffset:                ; CODE XREF: Gfx_BugmaxApplyWavePaletteOffset+1E   j  ; was: loc_4DB12
                 lsr.w   #3,d0
                 add.w   d0,d0
                 move.w  (a0,d0.w),d0
@@ -90,39 +91,39 @@ loc_4DB12:                                              ; CODE XREF: Boss_Bugmax
                 lea     (word_3E2E).l,a4
                 jmp     (VBlank_SharpssteelPaletteEffect).l
 ; ---------------------------------------------------------------------------
-locret_4DB2A:                                           ; CODE XREF: Boss_BugmaxPerspectiveHelper+4   j
+Gfx_BugmaxWavePaletteOffsetReturn:                      ; CODE XREF: Gfx_BugmaxApplyWavePaletteOffset+4   j  ; was: locret_4DB2A
                 rts
-; End of function Boss_BugmaxPerspectiveHelper
+; End of function Gfx_BugmaxApplyWavePaletteOffset
 ; ---------------------------------------------------------------------------
-word_4DB2C:     dc.w    $FFF8, $FFFA, $FFFA, $FFFC, $FFFC, $FFFE, $FFFE, 0, 0
-                                        ; DATA XREF: Boss_BugmaxPerspectiveHelper:loc_4DB02   o
-word_4DB3E:     dc.w    8, 6, 6, 4, 4, 2, 2, 0, 0
-                                        ; DATA XREF: Boss_BugmaxPerspectiveHelper+C   o
+Gfx_BugmaxPositiveWavePaletteOffsets:   dc.w    $FFF8, $FFFA, $FFFA, $FFFC, $FFFC, $FFFE, $FFFE, 0, 0  ; was: word_4DB2C
+                                        ; DATA XREF: Gfx_BugmaxApplyWavePaletteOffset:Gfx_BugmaxSelectPositiveWavePaletteOffsets   o
+Gfx_BugmaxNegativeWavePaletteOffsets:   dc.w    8, 6, 6, 4, 4, 2, 2, 0, 0  ; was: word_4DB3E
+                                        ; DATA XREF: Gfx_BugmaxApplyWavePaletteOffset+C   o
 
-; Toggles mouth open/close sprite
-Boss_BugmaxToggleMouthSprite:                           ; CODE XREF: Boss_BugmaxCalculatePerspective+292   p  ; was: sub_4DB50
+; Alternate the central linked part between two mapping records every four frames
+Boss_BugmaxToggleCentralPartMapping:                    ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+292   p  ; was: sub_4DB50
                 move.w  (word_FFA000).w,d7
                 andi.w  #3,d7
-                bne.s   locret_4DB7A
+                bne.s   Boss_BugmaxCentralPartMappingToggleReturn
                 movea.w #(word_FFC680-M68K_RAM),a0
                 cmpi.l  #word_ECB28,8(a0)
-                beq.s   loc_4DB72
+                beq.s   Boss_BugmaxSelectAlternateCentralPartMapping
                 move.l  #word_ECB28,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4DB72:                                              ; CODE XREF: Boss_BugmaxToggleMouthSprite+16   j
+Boss_BugmaxSelectAlternateCentralPartMapping:           ; CODE XREF: Boss_BugmaxToggleCentralPartMapping+16   j  ; was: loc_4DB72
                 move.l  #word_ECB3A,8(a0)
-locret_4DB7A:                                           ; CODE XREF: Boss_BugmaxToggleMouthSprite+8   j
+Boss_BugmaxCentralPartMappingToggleReturn:              ; CODE XREF: Boss_BugmaxToggleCentralPartMapping+8   j  ; was: locret_4DB7A
                 rts
-; End of function Boss_BugmaxToggleMouthSprite
-; Calculates polar coordinates to position
-Math_CalculatePolarPosition:                            ; CODE XREF: Boss_BugmaxUpdateLegs+28   p  ; was: sub_4DB7C
-                                        ; Boss_BugmaxUpdateLegs+46   p
+; End of function Boss_BugmaxToggleCentralPartMapping
+; Project one linked record's radius and angle from an anchor position
+Math_CalculatePolarPosition:                            ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+28   p  ; was: sub_4DB7C
+                                        ; Boss_BugmaxUpdateLinkedChainGeometry+46   p
                 move.w  $50(a0),d2
                 move.w  $4C(a0),d0
                 add.w   $4E(a0),d0
-loc_4DB88:                                              ; CODE XREF: Boss_BugmaxRotateParts1+3A   p
-                                        ; Boss_BugmaxRotateParts1+6A   p
+Math_BugmaxCalculatePolarOffset:                        ; CODE XREF: Boss_BugmaxUpdateReverseLinkedChainGeometry+3A   p  ; was: loc_4DB88
+                                        ; Boss_BugmaxUpdateReverseLinkedChainGeometry+6A   p
                 andi.w  #$1FE,d0
                 lea     (Math_SineTable).l,a2
                 move.w  Math_QuarterSineTable-Math_SineTable(a2,d0.w),d1
@@ -133,17 +134,17 @@ loc_4DB88:                                              ; CODE XREF: Boss_Bugmax
                 add.l   d4,d1
                 rts
 ; End of function Math_CalculatePolarPosition
-; Updates boss movement
-Boss_BugmaxUpdateMovement:                              ; CODE XREF: Boss_BugmaxMovementPhase1   p  ; was: sub_4DBA4
-                                        ; Boss_BugmaxAttackPatternSelect+8   p
-                bsr.s   Boss_BugmaxCalculateWave
-                bsr.w   Boss_BugmaxHorizontalAI
-                bsr.w   Boss_BugmaxVerticalControl
+; Update battle wave displacement and horizontal/vertical steering
+Boss_BugmaxUpdateBattleMovement:                        ; CODE XREF: Boss_BugmaxSettleChainBendAtBattleBaseline   p  ; was: sub_4DBA4
+                                        ; Boss_BugmaxSelectBattlePattern+8   p
+                bsr.s   Boss_BugmaxUpdateWaveDisplacement
+                bsr.w   Boss_BugmaxUpdateHorizontalSteering
+                bsr.w   Boss_BugmaxUpdateVerticalBandSteering
                 rts
-; End of function Boss_BugmaxUpdateMovement
-; Calculates wave motion
-Boss_BugmaxCalculateWave:                               ; CODE XREF: Boss_BugmaxFallDown   p  ; was: sub_4DBB0
-                                        ; sub_4DBA4   p
+; End of function Boss_BugmaxUpdateBattleMovement
+; Integrate the wave phase and scale its displacement by the signed amplitude
+Boss_BugmaxUpdateWaveDisplacement:                      ; CODE XREF: Boss_BugmaxUpdateFinalWaveDescentAndCompleteEncounter   p  ; was: sub_4DBB0
+                                        ; Boss_BugmaxUpdateBattleMovement   p
                 move.l  (dword_FF9408).w,d0
                 add.l   d0,(dword_FF9404).w
                 move.w  (dword_FF9404).w,d0
@@ -151,214 +152,213 @@ Boss_BugmaxCalculateWave:                               ; CODE XREF: Boss_Bugmax
                 lea     (Math_SineTable).l,a0
                 move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d0
                 tst.w   d0
-                bmi.s   loc_4DBD4
+                bmi.s   Boss_BugmaxScaleWaveByNegativeAmplitude
                 muls.w  (dword_FF940C).w,d0
-                bra.s   loc_4DBD8
+                bra.s   Boss_BugmaxStoreWaveDisplacement
 ; ---------------------------------------------------------------------------
-loc_4DBD4:                                              ; CODE XREF: Boss_BugmaxCalculateWave+1C   j
+Boss_BugmaxScaleWaveByNegativeAmplitude:                ; CODE XREF: Boss_BugmaxUpdateWaveDisplacement+1C   j  ; was: loc_4DBD4
                 muls.w  (dword_FF940C+2).w,d0
-loc_4DBD8:                                              ; CODE XREF: Boss_BugmaxCalculateWave+22   j
+Boss_BugmaxStoreWaveDisplacement:                       ; CODE XREF: Boss_BugmaxUpdateWaveDisplacement+22   j  ; was: loc_4DBD8
                 move.l  d0,(dword_FF9400).w
                 rts
-; End of function Boss_BugmaxCalculateWave
-; Horizontal AI and player tracking
-Boss_BugmaxHorizontalAI:                                ; CODE XREF: Boss_BugmaxMoveAndCheckFlag+4   p  ; was: sub_4DBDE
-                                        ; Boss_BugmaxProjectileAttack+4   p
+; End of function Boss_BugmaxUpdateWaveDisplacement
+; Update bounded horizontal steering toward the explicit target or player X
+Boss_BugmaxUpdateHorizontalSteering:                    ; CODE XREF: Boss_BugmaxApproachSpreadVolleyTarget+4   p  ; was: sub_4DBDE
+                                        ; Boss_BugmaxSpawnSpreadProjectile+4   p
                 move.w  (word_FFA000).w,d0
                 andi.w  #$1FE,d0
                 move.l  (a0,d0.w),d6
                 ext.l   d6
-                bpl.s   loc_4DBF0
+                bpl.s   Boss_BugmaxCalculateHorizontalSteeringStep
                 neg.l   d6
-loc_4DBF0:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+E   j
+Boss_BugmaxCalculateHorizontalSteeringStep:             ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+E   j  ; was: loc_4DBF0
                 asr.l   #2,d6
                 move.w  (dword_FFA900).w,d0
                 cmpi.w  #$410,d0
-                bcc.s   loc_4DC0E
+                bcc.s   Boss_BugmaxSelectRightScrollHorizontalBounds
                 cmpi.w  #$5E0,$58(a5)
-                bgt.s   loc_4DC20
+                bgt.s   Boss_BugmaxSteerLeftFromUpperHorizontalBound
                 cmpi.w  #$440,$58(a5)
-                blt.s   loc_4DC2A
-                bra.s   loc_4DC34
+                blt.s   Boss_BugmaxSteerRightFromLowerHorizontalBound
+                bra.s   Boss_BugmaxHandleInBoundsHorizontalMode
 ; ---------------------------------------------------------------------------
-loc_4DC0E:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+1C   j
+Boss_BugmaxSelectRightScrollHorizontalBounds:           ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+1C   j  ; was: loc_4DC0E
                 cmpi.w  #$620,$58(a5)
-                bgt.s   loc_4DC20
+                bgt.s   Boss_BugmaxSteerLeftFromUpperHorizontalBound
                 cmpi.w  #$480,$58(a5)
-                blt.s   loc_4DC2A
-                bra.s   loc_4DC34
+                blt.s   Boss_BugmaxSteerRightFromLowerHorizontalBound
+                bra.s   Boss_BugmaxHandleInBoundsHorizontalMode
 ; ---------------------------------------------------------------------------
-loc_4DC20:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+24   j
-                                        ; Boss_BugmaxHorizontalAI+36   j
+Boss_BugmaxSteerLeftFromUpperHorizontalBound:           ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+24   j  ; was: loc_4DC20
+                                        ; Boss_BugmaxUpdateHorizontalSteering+36   j
                 move.l  #$2000,d6
-                bra.w   loc_4DC9E
+                bra.w   Boss_BugmaxSelectNegativeHorizontalAcceleration
 ; ---------------------------------------------------------------------------
-loc_4DC2A:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+2C   j
-                                        ; Boss_BugmaxHorizontalAI+3E   j
+Boss_BugmaxSteerRightFromLowerHorizontalBound:          ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+2C   j  ; was: loc_4DC2A
+                                        ; Boss_BugmaxUpdateHorizontalSteering+3E   j
                 move.l  #$2000,d6
-                bra.w   loc_4DC98
+                bra.w   Boss_BugmaxSelectPositiveHorizontalAcceleration
 ; ---------------------------------------------------------------------------
-loc_4DC34:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+2E   j
-                                        ; Boss_BugmaxHorizontalAI+40   j
+Boss_BugmaxHandleInBoundsHorizontalMode:                ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+2E   j  ; was: loc_4DC34
+                                        ; Boss_BugmaxUpdateHorizontalSteering+40   j
                 btst    #0,(dword_FF9418+1).w
-                bne.s   loc_4DC6A
+                bne.s   Boss_BugmaxSelectHorizontalSteeringTarget
                 btst    #1,(dword_FF9418+1).w
-                beq.s   loc_4DC60
+                beq.s   Boss_BugmaxGateHorizontalTargetUpdate
                 tst.l   $18(a5)
-                beq.w   locret_4DCDA
+                beq.w   Boss_BugmaxHorizontalSteeringReturn
                 move.l  #$1000,d6
                 btst    #7,$18(a5)
-                bne.w   loc_4DC98
-                bra.w   loc_4DC9E
+                bne.w   Boss_BugmaxSelectPositiveHorizontalAcceleration
+                bra.w   Boss_BugmaxSelectNegativeHorizontalAcceleration
 ; ---------------------------------------------------------------------------
-loc_4DC60:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+64   j
+Boss_BugmaxGateHorizontalTargetUpdate:                  ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+64   j  ; was: loc_4DC60
                 move.w  (word_FFA000).w,d7
                 andi.w  #$7F,d7
-                bne.s   loc_4DCA4
-loc_4DC6A:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+5C   j
+                bne.s   Boss_BugmaxApplyHorizontalAcceleration
+Boss_BugmaxSelectHorizontalSteeringTarget:              ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+5C   j  ; was: loc_4DC6A
                 move.w  (dword_FF9424).w,d0
-                beq.s   loc_4DC76
+                beq.s   Boss_BugmaxUsePlayerHorizontalTarget
                 sub.w   (dword_FFA900).w,d0
-                bra.s   loc_4DC7A
+                bra.s   Boss_BugmaxMeasureHorizontalTargetDelta
 ; ---------------------------------------------------------------------------
-loc_4DC76:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+90   j
+Boss_BugmaxUsePlayerHorizontalTarget:                   ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+90   j  ; was: loc_4DC76
                 move.w  (word_FF8248).w,d0
-loc_4DC7A:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+96   j
+Boss_BugmaxMeasureHorizontalTargetDelta:                ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+96   j  ; was: loc_4DC7A
                 sub.w   $10(a5),d0
                 move.w  d0,d1
-                bpl.s   loc_4DC84
+                bpl.s   Boss_BugmaxUseAbsoluteHorizontalTargetDelta
                 neg.w   d1
-loc_4DC84:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+A2   j
+Boss_BugmaxUseAbsoluteHorizontalTargetDelta:            ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+A2   j  ; was: loc_4DC84
                 cmpi.w  #$10,d1
-                bcc.s   loc_4DC90
+                bcc.s   Boss_BugmaxSelectHorizontalAccelerationDirection
                 bset    #0,(dword_FF941C).w
-loc_4DC90:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+AA   j
+Boss_BugmaxSelectHorizontalAccelerationDirection:       ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+AA   j  ; was: loc_4DC90
                 tst.w   d0
-                beq.s   locret_4DCDA
+                beq.s   Boss_BugmaxHorizontalSteeringReturn
                 tst.w   d0
-                bmi.s   loc_4DC9E
-loc_4DC98:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+52   j
-                                        ; Boss_BugmaxHorizontalAI+7A   j
+                bmi.s   Boss_BugmaxSelectNegativeHorizontalAcceleration
+Boss_BugmaxSelectPositiveHorizontalAcceleration:        ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+52   j  ; was: loc_4DC98
+                                        ; Boss_BugmaxUpdateHorizontalSteering+7A   j
                 clr.b   (dword_FF9418).w
-                bra.s   loc_4DCA4
+                bra.s   Boss_BugmaxApplyHorizontalAcceleration
 ; ---------------------------------------------------------------------------
-loc_4DC9E:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+48   j
-                                        ; Boss_BugmaxHorizontalAI+7E   j
+Boss_BugmaxSelectNegativeHorizontalAcceleration:        ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+48   j  ; was: loc_4DC9E
+                                        ; Boss_BugmaxUpdateHorizontalSteering+7E   j
                 move.b  #1,(dword_FF9418).w
-loc_4DCA4:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+8A   j
-                                        ; Boss_BugmaxHorizontalAI+BE   j
+Boss_BugmaxApplyHorizontalAcceleration:                 ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+8A   j  ; was: loc_4DCA4
+                                        ; Boss_BugmaxUpdateHorizontalSteering+BE   j
                 tst.b   (dword_FF9418).w
-                bne.s   loc_4DCB0
+                bne.s   Boss_BugmaxApplyNegativeHorizontalAcceleration
                 add.l   d6,$18(a5)
-                bra.s   loc_4DCB4
+                bra.s   Boss_BugmaxClampPositiveHorizontalVelocity
 ; ---------------------------------------------------------------------------
-loc_4DCB0:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+CA   j
+Boss_BugmaxApplyNegativeHorizontalAcceleration:         ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+CA   j  ; was: loc_4DCB0
                 sub.l   d6,$18(a5)
-loc_4DCB4:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+D0   j
+Boss_BugmaxClampPositiveHorizontalVelocity:             ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+D0   j  ; was: loc_4DCB4
                 cmpi.l  #$20000,$18(a5)
-                blt.s   loc_4DCC8
+                blt.s   Boss_BugmaxClampNegativeHorizontalVelocity
                 move.l  #$20000,$18(a5)
-                bra.s   locret_4DCDA
+                bra.s   Boss_BugmaxHorizontalSteeringReturn
 ; ---------------------------------------------------------------------------
-loc_4DCC8:                                              ; CODE XREF: Boss_BugmaxHorizontalAI+DE   j
+Boss_BugmaxClampNegativeHorizontalVelocity:             ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+DE   j  ; was: loc_4DCC8
                 cmpi.l  #$FFFE0000,$18(a5)
-                bgt.s   locret_4DCDA
+                bgt.s   Boss_BugmaxHorizontalSteeringReturn
                 move.l  #$FFFE0000,$18(a5)
-locret_4DCDA:                                           ; CODE XREF: Boss_BugmaxHorizontalAI+6A   j
-                                        ; Boss_BugmaxHorizontalAI+B4   j
+Boss_BugmaxHorizontalSteeringReturn:                    ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+6A   j  ; was: locret_4DCDA
+                                        ; Boss_BugmaxUpdateHorizontalSteering+B4   j
                 rts
-; End of function Boss_BugmaxHorizontalAI
-; Vertical movement control
-Boss_BugmaxVerticalControl:                             ; CODE XREF: Boss_BugmaxProjectileVerticalAttack+4   p  ; was: sub_4DCDC
-                                        ; Boss_BugmaxUpdateMovement+6   p
+; End of function Boss_BugmaxUpdateHorizontalSteering
+; Steer vertically toward the configured band and oscillate while inside it
+Boss_BugmaxUpdateVerticalBandSteering:                  ; CODE XREF: Boss_BugmaxSpawnSineProjectile+4   p  ; was: sub_4DCDC
+                                        ; Boss_BugmaxUpdateBattleMovement+6   p
                 move.l  #$2000,d7
                 move.w  (dword_FF9420).w,d0
                 move.w  $14(a5),d1
                 cmp.w   d0,d1
-                blt.s   loc_4DD14
+                blt.s   Boss_BugmaxAccelerateDownTowardVerticalBand
                 add.w   (dword_FF9420+2).w,d0
                 cmp.w   d0,d1
-                bgt.s   loc_4DD1C
+                bgt.s   Boss_BugmaxAccelerateUpTowardVerticalBand
                 move.w  (dword_FF9404).w,d0
                 subi.w  #$80,d0
                 andi.w  #$1FF,d0
                 cmpi.w  #$100,d0
-                bcc.s   loc_4DD0E
+                bcc.s   Boss_BugmaxAccelerateDownWithinVerticalBand
                 sub.l   d7,$1C(a5)
-                bra.s   loc_4DD22
+                bra.s   Boss_BugmaxClampVerticalVelocity
 ; ---------------------------------------------------------------------------
-loc_4DD0E:                                              ; CODE XREF: Boss_BugmaxVerticalControl+2A   j
+Boss_BugmaxAccelerateDownWithinVerticalBand:            ; CODE XREF: Boss_BugmaxUpdateVerticalBandSteering+2A   j  ; was: loc_4DD0E
                 add.l   d7,$1C(a5)
-                bra.s   loc_4DD22
+                bra.s   Boss_BugmaxClampVerticalVelocity
 ; ---------------------------------------------------------------------------
-loc_4DD14:                                              ; CODE XREF: Boss_BugmaxVerticalControl+10   j
+Boss_BugmaxAccelerateDownTowardVerticalBand:            ; CODE XREF: Boss_BugmaxUpdateVerticalBandSteering+10   j  ; was: loc_4DD14
                 asr.l   #1,d7
                 add.l   d7,$1C(a5)
-                bra.s   loc_4DD22
+                bra.s   Boss_BugmaxClampVerticalVelocity
 ; ---------------------------------------------------------------------------
-loc_4DD1C:                                              ; CODE XREF: Boss_BugmaxVerticalControl+18   j
+Boss_BugmaxAccelerateUpTowardVerticalBand:              ; CODE XREF: Boss_BugmaxUpdateVerticalBandSteering+18   j  ; was: loc_4DD1C
                 asr.l   #1,d7
                 sub.l   d7,$1C(a5)
-loc_4DD22:                                              ; CODE XREF: Boss_BugmaxVerticalControl+30   j
-                                        ; Boss_BugmaxVerticalControl+36   j
+Boss_BugmaxClampVerticalVelocity:                       ; CODE XREF: Boss_BugmaxUpdateVerticalBandSteering+30   j  ; was: loc_4DD22
+                                        ; Boss_BugmaxUpdateVerticalBandSteering+36   j
                 cmpi.l  #$20000,$1C(a5)
-                blt.s   loc_4DD36
+                blt.s   Boss_BugmaxClampNegativeVerticalVelocity
                 move.l  #$20000,$1C(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4DD36:                                              ; CODE XREF: Boss_BugmaxVerticalControl+4E   j
+Boss_BugmaxClampNegativeVerticalVelocity:               ; CODE XREF: Boss_BugmaxUpdateVerticalBandSteering+4E   j  ; was: loc_4DD36
                 cmpi.l  #$FFFE0000,$1C(a5)
-                bgt.s   locret_4DD48
+                bgt.s   Boss_BugmaxVerticalBandSteeringReturn
                 move.l  #$FFFE0000,$1C(a5)
-locret_4DD48:                                           ; CODE XREF: Boss_BugmaxVerticalControl+62   j
+Boss_BugmaxVerticalBandSteeringReturn:                  ; CODE XREF: Boss_BugmaxUpdateVerticalBandSteering+62   j  ; was: locret_4DD48
                 rts
-; End of function Boss_BugmaxVerticalControl
-; Debug control for manual angle adjustment
-Boss_BugmaxDebugAngleControl:
-                movea.w a5,a0                           ; was: sub_4DD4A
+; End of function Boss_BugmaxUpdateVerticalBandSteering
+; Unreferenced input helper for adjusting and wrapping the current part angle
+Boss_BugmaxAdjustCurrentPartAngleFromInput:             ; was: sub_4DD4A
+                movea.w a5,a0
                 btst    #2,(word_FFF706).w
-                beq.s   loc_4DD5A
+                beq.s   Boss_BugmaxCheckPartAngleIncreaseInput
                 addi.w  #-8,$4C(a0)
-loc_4DD5A:                                              ; CODE XREF: Boss_BugmaxDebugAngleControl+8   j
+Boss_BugmaxCheckPartAngleIncreaseInput:                 ; CODE XREF: Boss_BugmaxAdjustCurrentPartAngleFromInput+8   j  ; was: loc_4DD5A
                 btst    #3,(word_FFF706).w
-                beq.s   loc_4DD68
+                beq.s   Boss_BugmaxWrapInputAdjustedPartAngle
                 addi.w  #8,$4C(a0)
-loc_4DD68:                                              ; CODE XREF: Boss_BugmaxDebugAngleControl+16   j
+Boss_BugmaxWrapInputAdjustedPartAngle:                  ; CODE XREF: Boss_BugmaxAdjustCurrentPartAngleFromInput+16   j  ; was: loc_4DD68
                 andi.w  #$1FF,$4C(a0)
                 rts
-; End of function Boss_BugmaxDebugAngleControl
-; Debug control for manual position adjustment
-Boss_BugmaxDebugPositionControl:
-                btst    #2,(word_FFF706).w              ; was: sub_4DD70
-                beq.s   loc_4DD7E
+; End of function Boss_BugmaxAdjustCurrentPartAngleFromInput
+; Unreferenced input helper for adjusting position or the shared wave accumulator
+Boss_BugmaxAdjustPositionOrWaveFromInput:               ; was: sub_4DD70
+                btst    #2,(word_FFF706).w
+                beq.s   Boss_BugmaxCheckPositionXIncreaseInput
                 addi.w  #-2,$10(a5)
-loc_4DD7E:                                              ; CODE XREF: Boss_BugmaxDebugPositionControl+6   j
+Boss_BugmaxCheckPositionXIncreaseInput:                 ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+6   j  ; was: loc_4DD7E
                 btst    #3,(word_FFF706).w
-                beq.s   loc_4DD8C
+                beq.s   Boss_BugmaxCheckPositionUpOrWaveIncreaseInput
                 addi.w  #2,$10(a5)
-loc_4DD8C:                                              ; CODE XREF: Boss_BugmaxDebugPositionControl+14   j
+Boss_BugmaxCheckPositionUpOrWaveIncreaseInput:          ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+14   j  ; was: loc_4DD8C
                 btst    #0,(word_FFF706).w
-                beq.s   loc_4DDAC
+                beq.s   Boss_BugmaxCheckPositionDownOrWaveDecreaseInput
                 btst    #5,(word_FFF706).w
-                bne.s   loc_4DDA4
+                bne.s   Boss_BugmaxIncreaseWaveFromModifiedUpInput
                 addi.w  #-2,$14(a5)
-                bra.s   loc_4DDAC
+                bra.s   Boss_BugmaxCheckPositionDownOrWaveDecreaseInput
 ; ---------------------------------------------------------------------------
-loc_4DDA4:                                              ; CODE XREF: Boss_BugmaxDebugPositionControl+2A   j
+Boss_BugmaxIncreaseWaveFromModifiedUpInput:             ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+2A   j  ; was: loc_4DDA4
                 addi.l  #$A0000,(dword_FF9400).w
-loc_4DDAC:                                              ; CODE XREF: Boss_BugmaxDebugPositionControl+22   j
-                                        ; Boss_BugmaxDebugPositionControl+32   j
+Boss_BugmaxCheckPositionDownOrWaveDecreaseInput:        ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+22   j  ; was: loc_4DDAC
+                                        ; Boss_BugmaxAdjustPositionOrWaveFromInput+32   j
                 btst    #1,(word_FFF706).w
-                beq.s   locret_4DDD0
+                beq.s   Boss_BugmaxInputAdjustmentReturn
                 btst    #5,(word_FFF706).w
-                bne.s   loc_4DDC4
+                bne.s   Boss_BugmaxDecreaseWaveFromModifiedDownInput
                 addi.w  #2,$14(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4DDC4:                                              ; CODE XREF: Boss_BugmaxDebugPositionControl+4A   j
+Boss_BugmaxDecreaseWaveFromModifiedDownInput:           ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+4A   j  ; was: loc_4DDC4
                 addi.l  #-$A0000,(dword_FF9400).w
                 tst.l   (dword_FF9400).w
-locret_4DDD0:                                           ; CODE XREF: Boss_BugmaxDebugPositionControl+42   j
+Boss_BugmaxInputAdjustmentReturn:                       ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+42   j  ; was: locret_4DDD0
                 rts
-; End of function Boss_BugmaxDebugPositionControl
-; Main boss handler
+; End of function Boss_BugmaxAdjustPositionOrWaveFromInput

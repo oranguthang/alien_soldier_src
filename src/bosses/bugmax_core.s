@@ -1,25 +1,25 @@
 ; Main handler for Bugmax boss
 Boss_BugmaxMain:                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4BEBC
                 tst.w   4(a5)
-                beq.w   Boss_BugmaxMainDispatch
+                beq.w   Boss_BugmaxDispatchMainState
                 lea     (word_3E3C).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$58(a5)
                 move.w  $5E(a5),d0
-                lea     off_4BEE8(pc,d0.w),a0
+                lea     Boss_BugmaxGeometryModeHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
 ; End of function Boss_BugmaxMain
 ; ---------------------------------------------------------------------------
-off_4BEE8:      dc.w    Boss_BugmaxUpdateLegs-*         ; DATA XREF: Boss_BugmaxMain+24   o
-                dc.w    Boss_BugmaxRotateParts1-*
-                dc.w    Boss_BugmaxRotateParts2-*
-                dc.w    Boss_BugmaxCalculatePerspective-*
+Boss_BugmaxGeometryModeHandlers:    dc.w    Boss_BugmaxUpdateLinkedChainGeometry-*  ; DATA XREF: Boss_BugmaxMain+24   o  ; was: off_4BEE8
+                dc.w    Boss_BugmaxUpdateReverseLinkedChainGeometry-*
+                dc.w    Boss_BugmaxUpdateForwardLinkedChainGeometry-*
+                dc.w    Boss_BugmaxUpdatePerspectiveAndLinkedGeometry-*
 
-; Updates all leg positions
-Boss_BugmaxUpdateLegs:                                  ; DATA XREF: ROM:off_4BEE8   o  ; was: sub_4BEF0
+; Update controller anchors, linked-chain positions, and smoothed joint angles
+Boss_BugmaxUpdateLinkedChainGeometry:                   ; DATA XREF: ROM:Boss_BugmaxGeometryModeHandlers   o  ; was: sub_4BEF0
                 move.w  #$168,d0
                 sub.w   $5C(a5),d0
                 add.w   (dword_FFA900).w,d0
@@ -36,7 +36,7 @@ Boss_BugmaxUpdateLegs:                                  ; DATA XREF: ROM:off_4BE
                 move.w  #4,d7
                 movea.w #(word_FFC6E0-M68K_RAM),a0
                 movea.w a5,a1
-loc_4BF2E:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+58   j
+Boss_BugmaxProjectForwardLinkedChainLoop:               ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+58   j  ; was: loc_4BF2E
                 move.l  $10(a1),d3
                 move.l  $14(a1),d4
                 bsr.w   Math_CalculatePolarPosition
@@ -44,15 +44,15 @@ loc_4BF2E:                                              ; CODE XREF: Boss_Bugmax
                 move.l  d1,$14(a0)
                 movea.w a0,a1
                 lea     $60(a0),a0
-                dbf     d7,loc_4BF2E
+                dbf     d7,Boss_BugmaxProjectForwardLinkedChainLoop
                 move.w  $10(a5),d0
                 lea     (word_FF95E0).w,a0
                 move.w  #7,d7
-loc_4BF58:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+6E   j
+Boss_BugmaxShiftPrimaryPositionHistoryLoop:             ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+6E   j  ; was: loc_4BF58
                 move.w  (a0),d1
                 move.w  d0,(a0)+
                 move.w  d1,d0
-                dbf     d7,loc_4BF58
+                dbf     d7,Boss_BugmaxShiftPrimaryPositionHistoryLoop
                 move.w  -$C(a0),d4
                 move.w  -2(a0),d5
                 move.w  d4,d0
@@ -61,16 +61,16 @@ loc_4BF58:                                              ; CODE XREF: Boss_Bugmax
                 sub.w   $14(a5),d1
                 jsr     (Math_CalculateDirectionIndex).l
                 cmpi.w  #$1C0,d2
-                bcs.s   loc_4BF8A
+                bcs.s   Boss_BugmaxClampFirstJointAngleMinimum
                 move.w  #$1C0,d2
-                bra.s   loc_4BF94
+                bra.s   Boss_BugmaxStoreFirstJointAngle
 ; ---------------------------------------------------------------------------
-loc_4BF8A:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+92   j
+Boss_BugmaxClampFirstJointAngleMinimum:                 ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+92   j  ; was: loc_4BF8A
                 cmpi.w  #$140,d2
-                bhi.s   loc_4BF94
+                bhi.s   Boss_BugmaxStoreFirstJointAngle
                 move.w  #$140,d2
-loc_4BF94:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+98   j
-                                        ; Boss_BugmaxUpdateLegs+9E   j
+Boss_BugmaxStoreFirstJointAngle:                        ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+98   j  ; was: loc_4BF94
+                                        ; Boss_BugmaxUpdateLinkedChainGeometry+9E   j
                 move.w  d2,(word_FFC6CC).w
                 move.w  d5,d0
                 move.w  (dword_FFC6F4).w,d1
@@ -78,42 +78,42 @@ loc_4BF94:                                              ; CODE XREF: Boss_Bugmax
                 sub.w   $14(a5),d1
                 jsr     (Math_CalculateDirectionIndex).l
                 cmpi.w  #$C0,d2
-                bcs.s   loc_4BFB8
+                bcs.s   Boss_BugmaxClampSecondJointAngleMinimum
                 move.w  #$C0,d2
-                bra.s   loc_4BFC2
+                bra.s   Boss_BugmaxStoreSecondJointAngle
 ; ---------------------------------------------------------------------------
-loc_4BFB8:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+C0   j
+Boss_BugmaxClampSecondJointAngleMinimum:                ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+C0   j  ; was: loc_4BFB8
                 cmpi.w  #$40,d2                         ; '@'
-                bhi.s   loc_4BFC2
+                bhi.s   Boss_BugmaxStoreSecondJointAngle
                 move.w  #$40,d2                         ; '@'
-loc_4BFC2:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+C6   j
-                                        ; Boss_BugmaxUpdateLegs+CC   j
+Boss_BugmaxStoreSecondJointAngle:                       ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+C6   j  ; was: loc_4BFC2
+                                        ; Boss_BugmaxUpdateLinkedChainGeometry+CC   j
                 move.w  d2,(word_FFC72C).w
                 move.w  d2,d0
                 lea     (word_FF9600).w,a0
                 move.w  #7,d7
-loc_4BFD0:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+EE   j
+Boss_BugmaxShiftJointAngleHistoryRowsLoop:              ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+EE   j  ; was: loc_4BFD0
                 move.w  #3,d6
-loc_4BFD4:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+EA   j
+Boss_BugmaxShiftJointAngleHistoryRowLoop:               ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+EA   j  ; was: loc_4BFD4
                 move.w  (a0),d1
                 move.w  d0,(a0)+
                 move.w  d1,d0
-                dbf     d6,loc_4BFD4
-                dbf     d7,loc_4BFD0
+                dbf     d6,Boss_BugmaxShiftJointAngleHistoryRowLoop
+                dbf     d7,Boss_BugmaxShiftJointAngleHistoryRowsLoop
                 movea.w #(word_FFC6E0-M68K_RAM),a0
                 lea     (word_FF9600).w,a1
                 move.w  #$10,d6
                 move.w  #3,d7
-; Updates leg segment positions in loop
-Boss_BugmaxLegPositionLoop:                             ; CODE XREF: Boss_BugmaxUpdateLegs+110   j  ; was: loc_4BFF2
+; Copy smoothed joint angles into four linked-part records
+Boss_BugmaxCopySmoothedAnglesToLinkedPartsLoop:         ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+110   j  ; was: loc_4BFF2
                 lea     $60(a0),a0
                 lea     (a1,d6.w),a1
                 move.w  -2(a1),$4C(a0)
-                dbf     d7,Boss_BugmaxLegPositionLoop
-                bra.w   loc_4C392
-; End of function Boss_BugmaxUpdateLegs
-; Rotation pattern 1 for parts
-Boss_BugmaxRotateParts1:                                ; DATA XREF: ROM:0004BEEA   o  ; was: sub_4C008
+                dbf     d7,Boss_BugmaxCopySmoothedAnglesToLinkedPartsLoop
+                bra.w   Boss_BugmaxCheckForcedFinalState
+; End of function Boss_BugmaxUpdateLinkedChainGeometry
+; Project the linked chain in reverse record order
+Boss_BugmaxUpdateReverseLinkedChainGeometry:            ; DATA XREF: ROM:0004BEEA   o  ; was: sub_4C008
                 move.w  #$168,d0
                 sub.w   $5C(a5),d0
                 add.w   (dword_FFA900).w,d0
@@ -122,20 +122,20 @@ Boss_BugmaxRotateParts1:                                ; DATA XREF: ROM:0004BEE
                 movea.w #(word_FFC860-M68K_RAM),a1
                 movea.w #(word_FFC800-M68K_RAM),a0
                 move.w  #3,d7
-; Rotates segments using polar coordinates
-Boss_BugmaxRotateSegments:                              ; CODE XREF: Boss_BugmaxRotateParts1+4C   j  ; was: loc_4C02A
+; Project each reverse-chain segment from the preceding record
+Boss_BugmaxProjectReverseLinkedChainLoop:               ; CODE XREF: Boss_BugmaxUpdateReverseLinkedChainGeometry+4C   j  ; was: loc_4C02A
                 move.l  $10(a1),d3
                 move.l  $14(a1),d4
                 move.w  $50(a1),d2
                 move.w  $4C(a0),d0
                 add.w   $4E(a0),d0
                 addi.w  #$100,d0
-                bsr.w   loc_4DB88
+                bsr.w   Math_BugmaxCalculatePolarOffset
                 move.l  d0,$10(a0)
                 move.l  d1,$14(a0)
                 movea.w a0,a1
                 lea     -$60(a0),a0
-                dbf     d7,Boss_BugmaxRotateSegments
+                dbf     d7,Boss_BugmaxProjectReverseLinkedChainLoop
                 movea.w a5,a0
                 move.l  (dword_FFC6F0).w,d3
                 move.l  (dword_FFC6F4).w,d4
@@ -143,7 +143,7 @@ Boss_BugmaxRotateSegments:                              ; CODE XREF: Boss_Bugmax
                 move.w  $4C(a0),d0
                 add.w   $4E(a0),d0
                 addi.w  #$100,d0
-                bsr.w   loc_4DB88
+                bsr.w   Math_BugmaxCalculatePolarOffset
                 move.l  d0,$10(a0)
                 move.l  d1,$14(a0)
                 movea.w #(word_FFC680-M68K_RAM),a0
@@ -152,10 +152,10 @@ Boss_BugmaxRotateSegments:                              ; CODE XREF: Boss_Bugmax
                 bsr.w   Math_CalculatePolarPosition
                 move.l  d0,$10(a0)
                 move.l  d1,$14(a0)
-                bra.w   loc_4C392
-; End of function Boss_BugmaxRotateParts1
-; Rotation pattern 2 for parts
-Boss_BugmaxRotateParts2:                                ; DATA XREF: ROM:0004BEEC   o  ; was: sub_4C09A
+                bra.w   Boss_BugmaxCheckForcedFinalState
+; End of function Boss_BugmaxUpdateReverseLinkedChainGeometry
+; Project the linked chain in forward record order
+Boss_BugmaxUpdateForwardLinkedChainGeometry:            ; DATA XREF: ROM:0004BEEC   o  ; was: sub_4C09A
                 move.w  #$168,d0
                 sub.w   $5C(a5),d0
                 add.w   (dword_FFA900).w,d0
@@ -170,35 +170,35 @@ Boss_BugmaxRotateParts2:                                ; DATA XREF: ROM:0004BEE
                 move.w  #4,d7
                 movea.w #(word_FFC6E0-M68K_RAM),a0
                 movea.w a5,a1
-loc_4C0D2:                                              ; CODE XREF: Boss_BugmaxRotateParts2+5A   j
+Boss_BugmaxProjectForwardChainFromPreviousPartLoop:     ; CODE XREF: Boss_BugmaxUpdateForwardLinkedChainGeometry+5A   j  ; was: loc_4C0D2
                 move.l  $10(a1),d3
                 move.l  $14(a1),d4
                 move.w  $50(a0),d2
                 move.w  $4C(a0),d0
-                bsr.w   loc_4DB88
+                bsr.w   Math_BugmaxCalculatePolarOffset
                 move.l  d0,$10(a0)
                 move.l  d1,$14(a0)
                 movea.w a0,a1
                 lea     $60(a0),a0
-                dbf     d7,loc_4C0D2
-                bra.w   loc_4C22C
-; End of function Boss_BugmaxRotateParts2
-; Calculates perspective distortion for Bugmax
-Boss_BugmaxCalculatePerspective:                        ; DATA XREF: ROM:0004BEEE   o  ; was: sub_4C0FC
+                dbf     d7,Boss_BugmaxProjectForwardChainFromPreviousPartLoop
+                bra.w   Boss_BugmaxUpdatePositionAndAngleHistories
+; End of function Boss_BugmaxUpdateForwardLinkedChainGeometry
+; Update perspective rows, position histories, and both linked chains
+Boss_BugmaxUpdatePerspectiveAndLinkedGeometry:          ; DATA XREF: ROM:0004BEEE   o  ; was: sub_4C0FC
                 move.w  #$190,d0
                 sub.w   $10(a5),d0
                 move.w  d0,(dword_FFA908).w
                 move.w  #$60,d0                         ; '`'
                 move.w  #$5F,d7                         ; '_'
                 movea.w #(byte_FF9520-M68K_RAM),a0
-loc_4C114:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+1C   j
+Boss_BugmaxInitializePerspectiveRowsLoop:               ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+1C   j  ; was: loc_4C114
                 move.w  d0,(a0)+
                 subq.w  #2,d0
-                dbf     d7,loc_4C114
+                dbf     d7,Boss_BugmaxInitializePerspectiveRowsLoop
                 tst.w   (dword_FF9400).w
-                beq.w   loc_4C1E0
+                beq.w   Boss_BugmaxUpdatePerspectiveParametersAndGeometry
                 tst.w   (dword_FF9400).w
-                bmi.w   loc_4C184
+                bmi.w   Boss_BugmaxInitializeNegativePerspectiveSlope
                 move.w  #$204,d0
                 sub.w   $14(a5),d0
                 move.w  d0,(dword_FFA90C).w
@@ -219,17 +219,17 @@ loc_4C114:                                              ; CODE XREF: Boss_Bugmax
                 adda.w  d0,a0
                 move.l  (dword_FFA90C).w,d1
                 move.w  (dword_FF9400).w,d7
-loc_4C170:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+82   j
+Boss_BugmaxFillPerspectiveRowsBackwardLoop:             ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+82   j  ; was: loc_4C170
                 cmpa.w  a1,a0
-                beq.w   loc_4C1E0
+                beq.w   Boss_BugmaxUpdatePerspectiveParametersAndGeometry
                 sub.l   d2,d1
                 move.l  d1,d4
                 swap    d4
                 move.w  d4,-(a0)
-                dbf     d7,loc_4C170
-                bra.s   loc_4C1E0
+                dbf     d7,Boss_BugmaxFillPerspectiveRowsBackwardLoop
+                bra.s   Boss_BugmaxUpdatePerspectiveParametersAndGeometry
 ; ---------------------------------------------------------------------------
-loc_4C184:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+2C   j
+Boss_BugmaxInitializeNegativePerspectiveSlope:          ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+2C   j  ; was: loc_4C184
                 move.w  #$22C,d0
                 sub.w   $14(a5),d0
                 move.w  d0,(dword_FFA90C).w
@@ -253,20 +253,20 @@ loc_4C184:                                              ; CODE XREF: Boss_Bugmax
                 move.l  (dword_FFA90C).w,d1
                 move.w  (dword_FF9400).w,d7
                 neg.w   d7
-loc_4C1D0:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+E0   j
+Boss_BugmaxFillPerspectiveRowsForwardLoop:              ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+E0   j  ; was: loc_4C1D0
                 cmpa.w  a1,a0
-                beq.s   loc_4C1E0
+                beq.s   Boss_BugmaxUpdatePerspectiveParametersAndGeometry
                 add.l   d2,d1
                 move.l  d1,d4
                 swap    d4
                 move.w  d4,(a0)+
-                dbf     d7,loc_4C1D0
-loc_4C1E0:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+24   j
-                                        ; Boss_BugmaxCalculatePerspective+76   j
-                bsr.w   Boss_BugmaxPerspectiveHelper
+                dbf     d7,Boss_BugmaxFillPerspectiveRowsForwardLoop
+Boss_BugmaxUpdatePerspectiveParametersAndGeometry:      ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+24   j  ; was: loc_4C1E0
+                                        ; Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+76   j
+                bsr.w   Gfx_BugmaxApplyWavePaletteOffset
                 movea.w #(word_FFC680-M68K_RAM),a0
                 cmpi.w  #$10,(a0)
-                bne.w   loc_4C392
+                bne.w   Boss_BugmaxCheckForcedFinalState
                 move.l  $10(a5),d3
                 move.l  $14(a5),d4
                 bsr.w   Math_CalculatePolarPosition
@@ -275,7 +275,7 @@ loc_4C1E0:                                              ; CODE XREF: Boss_Bugmax
                 move.w  #4,d7
                 movea.w #(word_FFC6E0-M68K_RAM),a0
                 movea.w a5,a1
-loc_4C20E:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+12C   j
+Boss_BugmaxProjectPrimaryLinkedChainLoop:               ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+12C   j  ; was: loc_4C20E
                 move.l  $10(a1),d3
                 move.l  $14(a1),d4
                 bsr.w   Math_CalculatePolarPosition
@@ -283,19 +283,19 @@ loc_4C20E:                                              ; CODE XREF: Boss_Bugmax
                 move.l  d1,$14(a0)
                 movea.w a0,a1
                 lea     $60(a0),a0
-                dbf     d7,loc_4C20E
-loc_4C22C:                                              ; CODE XREF: Boss_BugmaxRotateParts2+5E   j
+                dbf     d7,Boss_BugmaxProjectPrimaryLinkedChainLoop
+Boss_BugmaxUpdatePositionAndAngleHistories:             ; CODE XREF: Boss_BugmaxUpdateForwardLinkedChainGeometry+5E   j  ; was: loc_4C22C
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 swap    d0
                 move.w  $14(a5),d0
                 lea     (word_FF95E0).w,a0
                 move.w  #7,d7
-loc_4C242:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+14C   j
+Boss_BugmaxShiftPositionHistoryLoop:                    ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+14C   j  ; was: loc_4C242
                 move.l  (a0),d1
                 move.l  d0,(a0)+
                 move.l  d1,d0
-                dbf     d7,loc_4C242
+                dbf     d7,Boss_BugmaxShiftPositionHistoryLoop
                 move.l  -$18(a0),d5
                 move.l  -4(a0),d6
                 moveq   #0,d3
@@ -310,7 +310,7 @@ loc_4C242:                                              ; CODE XREF: Boss_Bugmax
                 move.w  (dword_FF9414+2).w,d0
                 addi.w  #$80,d0
                 move.w  $50(a0),d2
-                bsr.w   loc_4DB88
+                bsr.w   Math_BugmaxCalculatePolarOffset
                 swap    d0
                 swap    d1
                 sub.w   $10(a5),d0
@@ -329,7 +329,7 @@ loc_4C242:                                              ; CODE XREF: Boss_Bugmax
                 move.w  (dword_FF9414+2).w,d0
                 subi.w  #$80,d0
                 move.w  $50(a0),d2
-                bsr.w   loc_4DB88
+                bsr.w   Math_BugmaxCalculatePolarOffset
                 swap    d0
                 swap    d1
                 sub.w   $10(a5),d0
@@ -339,77 +339,77 @@ loc_4C242:                                              ; CODE XREF: Boss_Bugmax
                 move.w  d2,d0
                 lea     (word_FF9600).w,a0
                 move.w  #7,d7
-loc_4C2D6:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+1E8   j
+Boss_BugmaxShiftPrimaryAngleHistoryRowsLoop:            ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+1E8   j  ; was: loc_4C2D6
                 move.w  #3,d6
-loc_4C2DA:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+1E4   j
+Boss_BugmaxShiftPrimaryAngleHistoryRowLoop:             ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+1E4   j  ; was: loc_4C2DA
                 move.w  (a0),d1
                 move.w  d0,(a0)+
                 move.w  d1,d0
-                dbf     d6,loc_4C2DA
-                dbf     d7,loc_4C2D6
+                dbf     d6,Boss_BugmaxShiftPrimaryAngleHistoryRowLoop
+                dbf     d7,Boss_BugmaxShiftPrimaryAngleHistoryRowsLoop
                 movea.w #(word_FFC6E0-M68K_RAM),a0
                 lea     (word_FF9600).w,a1
                 move.w  #$10,d6
                 move.w  #3,d7
-loc_4C2F8:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+20A   j
+Boss_BugmaxCopyPrimaryAnglesToLinkedPartsLoop:          ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+20A   j  ; was: loc_4C2F8
                 lea     $60(a0),a0
                 lea     (a1,d6.w),a1
                 move.w  -2(a1),$4C(a0)
-                dbf     d7,loc_4C2F8
+                dbf     d7,Boss_BugmaxCopyPrimaryAnglesToLinkedPartsLoop
                 move.w  (word_FFC6CC).w,d0
                 add.w   d0,d0
                 lea     (word_FF9680).w,a0
                 move.w  #7,d7
-loc_4C318:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+22A   j
+Boss_BugmaxShiftSecondaryAngleHistoryRowsLoop:          ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+22A   j  ; was: loc_4C318
                 move.w  #7,d6
-loc_4C31C:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+226   j
+Boss_BugmaxShiftSecondaryAngleHistoryRowLoop:           ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+226   j  ; was: loc_4C31C
                 move.w  (a0),d1
                 move.w  d0,(a0)+
                 move.w  d1,d0
-                dbf     d6,loc_4C31C
-                dbf     d7,loc_4C318
+                dbf     d6,Boss_BugmaxShiftSecondaryAngleHistoryRowLoop
+                dbf     d7,Boss_BugmaxShiftSecondaryAngleHistoryRowsLoop
                 movea.w #(word_FFC8C0-M68K_RAM),a0
                 lea     (word_FF9680).w,a1
                 move.w  #$10,d6
                 move.w  #7,d7
-loc_4C33A:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+24C   j
+Boss_BugmaxCopySecondaryAnglesToLinkedPartsLoop:        ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+24C   j  ; was: loc_4C33A
                 lea     (a1,d6.w),a1
                 move.w  -2(a1),$4C(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_4C33A
+                dbf     d7,Boss_BugmaxCopySecondaryAnglesToLinkedPartsLoop
                 move.w  #7,d7
                 movea.w #(word_FFC8C0-M68K_RAM),a0
                 move.w  (dword_FF9410+2).w,d2
                 movea.w #(word_FFC680-M68K_RAM),a1
-loc_4C35C:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+28E   j
+Boss_BugmaxProjectSecondaryLinkedChainLoop:             ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+28E   j  ; was: loc_4C35C
                 tst.b   (dword_FF9418+2).w
-                bne.s   loc_4C368
+                bne.s   Boss_BugmaxUseSharedSecondaryChainAngle
                 move.w  $4C(a0),d0
-                bra.s   loc_4C36C
+                bra.s   Boss_BugmaxProjectSecondaryChainPart
 ; ---------------------------------------------------------------------------
-loc_4C368:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+264   j
+Boss_BugmaxUseSharedSecondaryChainAngle:                ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+264   j  ; was: loc_4C368
                 move.w  (dword_FF9414).w,d0
-loc_4C36C:                                              ; CODE XREF: Boss_BugmaxCalculatePerspective+26A   j
+Boss_BugmaxProjectSecondaryChainPart:                   ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+26A   j  ; was: loc_4C36C
                 add.w   $4E(a0),d0
                 move.l  $10(a1),d3
                 move.l  $14(a1),d4
-                bsr.w   loc_4DB88
+                bsr.w   Math_BugmaxCalculatePolarOffset
                 move.l  d0,$10(a0)
                 move.l  d1,$14(a0)
                 movea.w a0,a1
                 lea     $60(a0),a0
-                dbf     d7,loc_4C35C
-                bsr.w   Boss_BugmaxToggleMouthSprite
-loc_4C392:                                              ; CODE XREF: Boss_BugmaxUpdateLegs+114   j
-                                        ; Boss_BugmaxRotateParts1+8E   j
+                dbf     d7,Boss_BugmaxProjectSecondaryLinkedChainLoop
+                bsr.w   Boss_BugmaxToggleCentralPartMapping
+Boss_BugmaxCheckForcedFinalState:                       ; CODE XREF: Boss_BugmaxUpdateLinkedChainGeometry+114   j  ; was: loc_4C392
+                                        ; Boss_BugmaxUpdateReverseLinkedChainGeometry+8E   j
                 btst    #2,(byte_FF80EC).w
-                bne.s   Boss_BugmaxMainDispatch
+                bne.s   Boss_BugmaxDispatchMainState
                 btst    #1,(byte_FF80EC).w
-                bne.w   Boss_BugmaxMainDispatch
+                bne.w   Boss_BugmaxDispatchMainState
                 tst.w   (word_FF8200).w
-                bne.s   Boss_BugmaxMainDispatch
+                bne.s   Boss_BugmaxDispatchMainState
                 move.b  #2,(byte_FF80EC).w
-loc_4C3B0:
+Boss_BugmaxEnterForcedFinalState:                       ; was: loc_4C3B0
                 bset    #0,$5A(a5)
                 move.w  #$56,4(a5)                      ; 'V'
                 move.w  #1,(dword_FF9428+2).w
@@ -417,69 +417,69 @@ loc_4C3B0:
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
 ; Main state dispatcher for Bugmax boss
-Boss_BugmaxMainDispatch:                                ; CODE XREF: Boss_BugmaxMain+4   j  ; was: loc_4C3CC
-                                        ; Boss_BugmaxCalculatePerspective+29C   j
+Boss_BugmaxDispatchMainState:                           ; CODE XREF: Boss_BugmaxMain+4   j  ; was: loc_4C3CC
+                                        ; Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+29C   j
                 move.w  4(a5),d0
-                lea     off_4C3D8(pc,d0.w),a0
+                lea     Boss_BugmaxMainStateHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_BugmaxCalculatePerspective
+; End of function Boss_BugmaxUpdatePerspectiveAndLinkedGeometry
 ; ---------------------------------------------------------------------------
-off_4C3D8:      dc.w    Boss_BugmaxInit-*               ; DATA XREF: Boss_BugmaxCalculatePerspective+2D4   o
-                dc.w    Boss_BugmaxShakeInit-*
-                dc.w    Boss_BugmaxShaking-*
-                dc.w    Boss_BugmaxVictoryCheck-*
-                dc.w    Boss_BugmaxDefeatStart-*
-                dc.w    Boss_BugmaxDefeatRise-*
-                dc.w    Boss_BugmaxDefeatExplode-*
-                dc.w    Boss_BugmaxSpinInit-*
-                dc.w    Boss_BugmaxSpinning-*
-                dc.w    Boss_BugmaxSpinReverse-*
-                dc.w    Boss_BugmaxSpinSlowdown-*
-                dc.w    Boss_BugmaxJumpPrepare-*
-                dc.w    Boss_BugmaxJumpInit-*
-                dc.w    Boss_BugmaxRotateMouthOpen-*
-                dc.w    Boss_BugmaxRotateMouthClose-*
-                dc.w    Boss_BugmaxLoadOpenMouthGfx-*
-                dc.w    Boss_BugmaxLoadClosedMouthGfx-*
-                dc.w    Boss_BugmaxMovementPhase1-*
-                dc.w    Boss_BugmaxAttackPatternSelect-*
-                dc.w    Boss_BugmaxEnterAttackStance1-*
-                dc.w    Boss_BugmaxWaitAttackReady-*
-                dc.w    Boss_BugmaxMoveAndCheckFlag-*
-                dc.w    Boss_BugmaxProjectileAttack-*
-                dc.w    Boss_BugmaxDistanceTrackLoop-*
-                dc.w    Boss_BugmaxAttackCountdown-*
-                dc.w    Boss_BugmaxPositionForHorizontal-*
-                dc.w    Boss_BugmaxHorizontalMoveWait-*
-                dc.w    Boss_BugmaxPrepareSpecialAttack-*
-                dc.w    Boss_BugmaxAngleCalculateAttack-*
-                dc.w    Boss_BugmaxSpecialAttackUpdate-*
-                dc.w    Boss_BugmaxSpecialAttackWait-*
-                dc.w    Boss_BugmaxSpecialAttackDecrement-*
-                dc.w    Boss_BugmaxResetSpecialAttack-*
-                dc.w    Boss_BugmaxSpecialAttackFinish-*
-                dc.w    Boss_BugmaxEnterAttackStance2-*
-                dc.w    Boss_BugmaxWaitCounter32-*
-                dc.w    Boss_BugmaxSmartPositioning-*
-                dc.w    Boss_BugmaxDistanceChasePlayer-*
-                dc.w    Boss_BugmaxAttackDelay-*
-                dc.w    Boss_BugmaxProjectileVerticalAttack-*
-                dc.w    Boss_BugmaxHorizontalAttackLoop-*
-                dc.w    Boss_BugmaxTimedStateTransition-*
-                dc.w    Boss_BugmaxResetState-*
-                dc.w    Boss_BugmaxLandCheck-*
-                dc.w    Boss_BugmaxLandFlash-*
-                dc.w    Boss_BugmaxScatterParts-*
-                dc.w    Boss_BugmaxFallOffScreen-*
-                dc.w    Boss_BugmaxWaitTimer-*
-                dc.w    Boss_BugmaxRiseUp-*
-                dc.w    Boss_BugmaxFallDown-*
+Boss_BugmaxMainStateHandlers:   dc.w    Boss_BugmaxInitializeEncounterState-*  ; DATA XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+2D4   o  ; was: off_4C3D8
+                dc.w    Boss_BugmaxInitializeHorizontalJitterState-*
+                dc.w    Boss_BugmaxUpdateHorizontalJitterState-*
+                dc.w    Boss_BugmaxWaitAfterJitterAndCheckVictory-*
+                dc.w    Boss_BugmaxWaitForOpeningTransition-*
+                dc.w    Boss_BugmaxWaitForFirstOpeningScrollThreshold-*
+                dc.w    Boss_BugmaxWaitForSecondOpeningScrollThreshold-*
+                dc.w    Boss_BugmaxInitializeLinkedPartSpin-*
+                dc.w    Boss_BugmaxAccelerateLinkedPartSpin-*
+                dc.w    Boss_BugmaxReverseLinkedPartSpin-*
+                dc.w    Boss_BugmaxSlowLinkedPartSpin-*
+                dc.w    Boss_BugmaxPrepareJumpState-*
+                dc.w    Boss_BugmaxInitializeBattleObjectChains-*
+                dc.w    Boss_BugmaxRotateLinkedAssemblyToward140-*
+                dc.w    Boss_BugmaxRotateLinkedAssemblyToward180AndStartBattle-*
+                dc.w    Gfx_BugmaxLoadTimedBattleTileSet-*
+                dc.w    Gfx_BugmaxLoadQueuedBattleTileSet-*
+                dc.w    Boss_BugmaxSettleChainBendAtBattleBaseline-*
+                dc.w    Boss_BugmaxSelectBattlePattern-*
+                dc.w    Boss_BugmaxBeginSpreadVolleyStance-*
+                dc.w    Boss_BugmaxIncreaseWaveStepForSpreadVolley-*
+                dc.w    Boss_BugmaxApproachSpreadVolleyTarget-*
+                dc.w    Boss_BugmaxSpawnSpreadProjectile-*
+                dc.w    Boss_BugmaxRepeatSpreadProjectileVolley-*
+                dc.w    Boss_BugmaxReduceWaveStepAfterSpreadVolley-*
+                dc.w    Boss_BugmaxSetChainStrikeApproachTarget-*
+                dc.w    Boss_BugmaxApproachChainStrikeTarget-*
+                dc.w    Boss_BugmaxBeginAimedChainStrike-*
+                dc.w    Boss_BugmaxAnimateAndAimChainStrike-*
+                dc.w    Boss_BugmaxExtendAimedChainStrike-*
+                dc.w    Boss_BugmaxHoldExtendedChainStrike-*
+                dc.w    Boss_BugmaxRetractAimedChainStrike-*
+                dc.w    Boss_BugmaxResetChainStrikeBend-*
+                dc.w    Boss_BugmaxSettleChainAfterStrike-*
+                dc.w    Boss_BugmaxBeginSineProjectileVolleyStance-*
+                dc.w    Boss_BugmaxIncreaseWaveStepForSineVolley-*
+                dc.w    Boss_BugmaxChooseSineVolleySideTarget-*
+                dc.w    Boss_BugmaxApproachSineVolleyTarget-*
+                dc.w    Boss_BugmaxPrepareSineProjectileVolley-*
+                dc.w    Boss_BugmaxSpawnSineProjectile-*
+                dc.w    Boss_BugmaxRepeatSineProjectileVolley-*
+                dc.w    Boss_BugmaxReduceWaveStepAfterSineVolley-*
+                dc.w    Boss_BugmaxReturnToBattlePatternSelection-*
+                dc.w    Boss_BugmaxWaitForFinalWaveBand-*
+                dc.w    Boss_BugmaxRunFinalPalettePulse-*
+                dc.w    Boss_BugmaxScatterLinkedParts-*
+                dc.w    Boss_BugmaxRiseWithFinalParticles-*
+                dc.w    Boss_BugmaxWaitBeforeFinalDescent-*
+                dc.w    Boss_BugmaxAccelerateFinalDescent-*
+                dc.w    Boss_BugmaxUpdateFinalWaveDescentAndCompleteEncounter-*
 
-; Initializes Bugmax with 7 parts
-Boss_BugmaxInit:                                        ; DATA XREF: ROM:off_4C3D8   o  ; was: sub_4C43C
+; Initialize the controller, six linked parts, and smoothing buffers
+Boss_BugmaxInitializeEncounterState:                    ; DATA XREF: ROM:Boss_BugmaxMainStateHandlers   o  ; was: sub_4C43C
                 tst.b   (word_FFF720).w
-                bmi.w   locret_4C5BC
+                bmi.w   Boss_BugmaxInitializeEncounterReturn
                 addq.w  #2,4(a5)
                 move.b  #4,(byte_FFA420).w
                 move.w  #$300,d0
@@ -520,7 +520,7 @@ Boss_BugmaxInit:                                        ; DATA XREF: ROM:off_4C3
                 moveq   #0,d6
                 move.w  #4,d7
                 movea.w #(word_FFC6E0-M68K_RAM),a0
-loc_4C51E:                                              ; CODE XREF: Boss_BugmaxInit+144   j
+Boss_BugmaxInitializeLinkedPartLoop:                    ; CODE XREF: Boss_BugmaxInitializeEncounterState+144   j  ; was: loc_4C51E
                 move.w  #$10,(a0)
                 move.w  $E(a5),$E(a0)
                 move.w  2(a5),2(a0)
@@ -533,14 +533,14 @@ loc_4C51E:                                              ; CODE XREF: Boss_Bugmax
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  #$80,$4C(a0)
-                lea     stru_4C5BE(pc),a1
+                lea     Boss_BugmaxLinkedPartDescriptors(pc),a1
                 nop
                 move.w  (a1,d6.w),$50(a0)
                 move.l  4(a1,d6.w),8(a0)
                 addq.w  #8,d6
                 lea     $60(a0),a0
-                dbf     d7,loc_4C51E
-                bsr.w   Boss_BugmaxLoadGfx
+                dbf     d7,Boss_BugmaxInitializeLinkedPartLoop
+                bsr.w   Gfx_BugmaxLoadInitialTiles
                 move.w  #$168,d0
                 sub.w   $5C(a5),d0
                 add.w   (dword_FFA900).w,d0
@@ -550,19 +550,19 @@ loc_4C51E:                                              ; CODE XREF: Boss_Bugmax
                 move.w  d0,(dword_FFA90C).w
                 lea     (word_FF9600).w,a0
                 move.w  #7,d7
-loc_4C5AC:                                              ; CODE XREF: Boss_BugmaxInit+17C   j
+Boss_BugmaxClearAngleHistoryRowsLoop:                   ; CODE XREF: Boss_BugmaxInitializeEncounterState+17C   j  ; was: loc_4C5AC
                 move.w  #3,d6
-; Clears position buffer with loop
-Boss_BugmaxClearBuffer:                                 ; CODE XREF: Boss_BugmaxInit+178   j  ; was: loc_4C5B0
+; Fill one four-word angle-history row with $80
+Boss_BugmaxClearAngleHistoryRowLoop:                    ; CODE XREF: Boss_BugmaxInitializeEncounterState+178   j  ; was: loc_4C5B0
                 move.w  #$80,(a0)+
-                dbf     d6,Boss_BugmaxClearBuffer
-                dbf     d7,loc_4C5AC
-locret_4C5BC:                                           ; CODE XREF: Boss_BugmaxInit+4   j
+                dbf     d6,Boss_BugmaxClearAngleHistoryRowLoop
+                dbf     d7,Boss_BugmaxClearAngleHistoryRowsLoop
+Boss_BugmaxInitializeEncounterReturn:                   ; CODE XREF: Boss_BugmaxInitializeEncounterState+4   j  ; was: locret_4C5BC
                 rts
-; End of function Boss_BugmaxInit
+; End of function Boss_BugmaxInitializeEncounterState
 ; ---------------------------------------------------------------------------
-stru_4C5BE:     dc.w    $5C                             ; field_0
-                                        ; DATA XREF: Boss_BugmaxInit+12C   o
+Boss_BugmaxLinkedPartDescriptors:   dc.w    $5C         ; field_0  ; was: stru_4C5BE
+                                        ; DATA XREF: Boss_BugmaxInitializeEncounterState+12C   o
                 dc.w    $FF                             ; field_2
                 dc.l    word_ECB9A                      ; field_4
                 dc.w    $40                             ; field_0
@@ -578,162 +578,162 @@ stru_4C5BE:     dc.w    $5C                             ; field_0
                 dc.w    $FF                             ; field_2
                 dc.l    word_ECBA6                      ; field_4
 
-; Loads Bugmax graphics
-Boss_BugmaxLoadGfx:                                     ; CODE XREF: Boss_BugmaxInit+148   p  ; was: sub_4C5E6
-                lea     word_4C5F2(pc),a0
+; Load the initial Bugmax tile set
+Gfx_BugmaxLoadInitialTiles:                             ; CODE XREF: Boss_BugmaxInitializeEncounterState+148   p  ; was: sub_4C5E6
+                lea     Gfx_BugmaxInitialTileLoadDescriptor(pc),a0
                 nop
                 jmp     Gfx_DMATransferTiles
-; End of function Boss_BugmaxLoadGfx
+; End of function Gfx_BugmaxLoadInitialTiles
 ; ---------------------------------------------------------------------------
-word_4C5F2:     dc.w    $6330, $2000, $104, $BEBF, $C2C3, $C6C7, $CACB, $CF
-                                        ; DATA XREF: Boss_BugmaxLoadGfx   o
+Gfx_BugmaxInitialTileLoadDescriptor:    dc.w    $6330, $2000, $104, $BEBF, $C2C3, $C6C7, $CACB, $CF  ; was: word_4C5F2
+                                        ; DATA XREF: Gfx_BugmaxLoadInitialTiles   o
 
-; Initializes shake animation
-Boss_BugmaxShakeInit:                                   ; DATA XREF: ROM:0004C3DA   o  ; was: sub_4C602
+; Save the body anchor and initialize the horizontal-jitter timer
+Boss_BugmaxInitializeHorizontalJitterState:             ; DATA XREF: ROM:0004C3DA   o  ; was: sub_4C602
                 move.w  $5C(a5),$4A(a5)
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_BugmaxShakeInit
-; Shake animation state
-Boss_BugmaxShaking:                                     ; DATA XREF: ROM:0004C3DC   o  ; was: sub_4C614
+; End of function Boss_BugmaxInitializeHorizontalJitterState
+; Alternate the body anchor by $60 while the jitter timer runs
+Boss_BugmaxUpdateHorizontalJitterState:                 ; DATA XREF: ROM:0004C3DC   o  ; was: sub_4C614
                 subq.w  #1,$48(a5)
-                beq.s   Boss_BugmaxShakeEnd
+                beq.s   Boss_BugmaxFinishHorizontalJitterState
                 move.w  $4A(a5),d0
                 move.w  (word_FFA000).w,d7
                 andi.w  #2,d7
-                beq.s   loc_4C62C
+                beq.s   Boss_BugmaxStoreJitteredBodyAnchor
                 addi.w  #$60,d0                         ; '`'
-loc_4C62C:                                              ; CODE XREF: Boss_BugmaxShaking+12   j
+Boss_BugmaxStoreJitteredBodyAnchor:                     ; CODE XREF: Boss_BugmaxUpdateHorizontalJitterState+12   j  ; was: loc_4C62C
                 move.w  d0,$5C(a5)
                 rts
 ; ---------------------------------------------------------------------------
-; Ends shaking and advances state
-Boss_BugmaxShakeEnd:                                    ; CODE XREF: Boss_BugmaxShaking+4   j  ; was: loc_4C632
+; Restore the saved body anchor and finish the jitter state
+Boss_BugmaxFinishHorizontalJitterState:                 ; CODE XREF: Boss_BugmaxUpdateHorizontalJitterState+4   j  ; was: loc_4C632
                 move.w  $4A(a5),$5C(a5)
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_BugmaxShaking
-; Checks victory condition
-Boss_BugmaxVictoryCheck:                                ; DATA XREF: ROM:0004C3DE   o  ; was: sub_4C644
-                bsr.w   Boss_BugmaxClampLegPositions
+; End of function Boss_BugmaxUpdateHorizontalJitterState
+; Wait after the jitter, clamp linked positions, and call the victory check
+Boss_BugmaxWaitAfterJitterAndCheckVictory:              ; DATA XREF: ROM:0004C3DE   o  ; was: sub_4C644
+                bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
                 subq.w  #1,$48(a5)
-                bne.s   locret_4C65C
+                bne.s   Boss_BugmaxPostJitterWaitReturn
                 move.w  #3,d0
                 jsr     (UI_CheckVictoryCondition).l
                 addq.w  #2,4(a5)
-locret_4C65C:                                           ; CODE XREF: Boss_BugmaxVictoryCheck+8   j
+Boss_BugmaxPostJitterWaitReturn:                        ; CODE XREF: Boss_BugmaxWaitAfterJitterAndCheckVictory+8   j  ; was: locret_4C65C
                 rts
-; End of function Boss_BugmaxVictoryCheck
-; Starts defeat sequence
-Boss_BugmaxDefeatStart:                                 ; DATA XREF: ROM:0004C3E0   o  ; was: sub_4C65E
-                bsr.w   Boss_BugmaxClampLegPositions
+; End of function Boss_BugmaxWaitAfterJitterAndCheckVictory
+; Wait for the opening transition gate and enable controller collision
+Boss_BugmaxWaitForOpeningTransition:                    ; DATA XREF: ROM:0004C3E0   o  ; was: sub_4C65E
+                bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
                 tst.w   (word_FF80C2).w
-                bne.s   locret_4C680
+                bne.s   Boss_BugmaxOpeningTransitionWaitReturn
                 move.b  #$D0,$21(a5)
                 clr.b   (byte_FF80EC).w
                 clr.w   (dword_FF9428+2).w
                 subi.w  #$A0,(word_FFA970).w
                 addq.w  #2,4(a5)
-locret_4C680:                                           ; CODE XREF: Boss_BugmaxDefeatStart+8   j
+Boss_BugmaxOpeningTransitionWaitReturn:                 ; CODE XREF: Boss_BugmaxWaitForOpeningTransition+8   j  ; was: locret_4C680
                 rts
-; End of function Boss_BugmaxDefeatStart
-; Boss rises during defeat
-Boss_BugmaxDefeatRise:                                  ; DATA XREF: ROM:0004C3E2   o  ; was: sub_4C682
-                bsr.w   Boss_BugmaxUpdateAllParts
-                bsr.w   Boss_BugmaxClampLegPositions
+; End of function Boss_BugmaxWaitForOpeningTransition
+; Wait for the first opening scroll threshold, then replace tiles and emit debris
+Boss_BugmaxWaitForFirstOpeningScrollThreshold:          ; DATA XREF: ROM:0004C3E2   o  ; was: sub_4C682
+                bsr.w   Boss_BugmaxEmitOpeningHitFragmentsAndSteer
+                bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
                 cmpi.w  #$6800,(word_FF8200).w
-                bhi.s   locret_4C6A0
+                bhi.s   Boss_BugmaxFirstOpeningThresholdReturn
                 addq.w  #2,4(a5)
                 move.w  #3,d0
-                bsr.w   Boss_BugmaxSpawnDebris
-                bra.s   Boss_BugmaxDMADeathTiles
+                bsr.w   Boss_BugmaxSpawnTransitionDebris
+                bra.s   Gfx_BugmaxLoadFirstOpeningTiles
 ; ---------------------------------------------------------------------------
-locret_4C6A0:                                           ; CODE XREF: Boss_BugmaxDefeatRise+E   j
+Boss_BugmaxFirstOpeningThresholdReturn:                 ; CODE XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold+E   j  ; was: locret_4C6A0
                 rts
 ; ---------------------------------------------------------------------------
-; DMA transfers death animation tiles
-Boss_BugmaxDMADeathTiles:                               ; CODE XREF: Boss_BugmaxDefeatRise+1C   j  ; was: loc_4C6A2
-                lea     word_4C6AE(pc),a0
+; Load the first opening-transition tile set
+Gfx_BugmaxLoadFirstOpeningTiles:                        ; CODE XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold+1C   j  ; was: loc_4C6A2
+                lea     Gfx_BugmaxFirstOpeningTileLoadDescriptor(pc),a0
                 nop
                 jmp     Gfx_DMATransferTiles
-; End of function Boss_BugmaxDefeatRise
+; End of function Boss_BugmaxWaitForFirstOpeningScrollThreshold
 ; ---------------------------------------------------------------------------
-word_4C6AE:     dc.w    $6330, $2000, $104, $BEBF, $C0C3, $C4C7, $C8CB, $CF
-                                        ; DATA XREF: Boss_BugmaxDefeatRise:loc_4C6A2   o
+Gfx_BugmaxFirstOpeningTileLoadDescriptor:   dc.w    $6330, $2000, $104, $BEBF, $C0C3, $C4C7, $C8CB, $CF  ; was: word_4C6AE
+                                        ; DATA XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold:loc_4C6A2   o
 
-; Spawns debris during defeat
-Boss_BugmaxSpawnDebris:                                 ; CODE XREF: Boss_BugmaxDefeatRise+18   p  ; was: sub_4C6BE
-                                        ; Boss_BugmaxDefeatExplode+20   p
+; Spawn Bugmax transition debris from selected linked records
+Boss_BugmaxSpawnTransitionDebris:                       ; CODE XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold+18   p  ; was: sub_4C6BE
+                                        ; Boss_BugmaxWaitForSecondOpeningScrollThreshold+20   p
                 move.w  d0,d7
                 subq.w  #1,d7
                 clr.w   d6
-; Spawns debris objects in loop
-Boss_BugmaxSpawnDebrisLoop:                             ; CODE XREF: Boss_BugmaxSpawnDebris+38   j  ; was: loc_4C6C4
+; Initialize the requested number of transition-debris projectiles
+Boss_BugmaxSpawnTransitionDebrisLoop:                   ; CODE XREF: Boss_BugmaxSpawnTransitionDebris+38   j  ; was: loc_4C6C4
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_4C6FA
-                lea     word_4C70A(pc),a2
+                bne.s   Boss_BugmaxTransitionDebrisSpawnReturn
+                lea     Boss_BugmaxDebrisParameterTable(pc),a2
                 nop
                 move.w  (a2,d6.w),d0
                 move.w  $E(a2,d6.w),d1
                 move.w  $1C(a2,d6.w),d2
-                movea.w word_4C6FC(pc,d6.w),a1
+                movea.w Boss_BugmaxDebrisSourceObjectTable(pc,d6.w),a1
                 move.w  $10(a1),$10(a0)
                 move.w  $14(a1),$14(a0)
                 jsr     (Projectile_InitBugmaxDebris).l
                 addq.w  #2,d6
-                dbf     d7,Boss_BugmaxSpawnDebrisLoop
-locret_4C6FA:                                           ; CODE XREF: Boss_BugmaxSpawnDebris+C   j
+                dbf     d7,Boss_BugmaxSpawnTransitionDebrisLoop
+Boss_BugmaxTransitionDebrisSpawnReturn:                 ; CODE XREF: Boss_BugmaxSpawnTransitionDebris+C   j  ; was: locret_4C6FA
                 rts
-; End of function Boss_BugmaxSpawnDebris
+; End of function Boss_BugmaxSpawnTransitionDebris
 ; ---------------------------------------------------------------------------
-word_4C6FC:     dc.w    $C620, $C6E0, $C740, $C7A0, $C680, $C800, $C860
-                                        ; DATA XREF: Boss_BugmaxSpawnDebris+20   r
-word_4C70A:     dc.w    $40, $40, $40, $40, $28, $28, $18
-                                        ; DATA XREF: Boss_BugmaxSpawnDebris+E   o
+Boss_BugmaxDebrisSourceObjectTable: dc.w    $C620, $C6E0, $C740, $C7A0, $C680, $C800, $C860  ; was: word_4C6FC
+                                        ; DATA XREF: Boss_BugmaxSpawnTransitionDebris+20   r
+Boss_BugmaxDebrisParameterTable:    dc.w    $40, $40, $40, $40, $28, $28, $18  ; was: word_4C70A
+                                        ; DATA XREF: Boss_BugmaxSpawnTransitionDebris+E   o
                 dc.w    $20, $20, $20, $10, 8, 8, 4
                 dc.w    $10, $10, $10, $10, 8, 8, 8
 
-; Explosion during defeat
-Boss_BugmaxDefeatExplode:                               ; DATA XREF: ROM:0004C3E4   o  ; was: sub_4C734
-                bsr.w   Boss_BugmaxUpdateAllParts
-                bsr.w   Boss_BugmaxClampLegPositions
+; Wait for the second opening scroll threshold, then replace tiles and emit debris
+Boss_BugmaxWaitForSecondOpeningScrollThreshold:         ; DATA XREF: ROM:0004C3E4   o  ; was: sub_4C734
+                bsr.w   Boss_BugmaxEmitOpeningHitFragmentsAndSteer
+                bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
                 cmpi.w  #$6000,(word_FF8200).w
-                bhi.s   locret_4C75A
+                bhi.s   Boss_BugmaxSecondOpeningThresholdReturn
                 clr.l   $18(a5)
                 addq.w  #2,$5E(a5)
                 addq.w  #2,4(a5)
                 move.w  #7,d0
-                bsr.w   Boss_BugmaxSpawnDebris
-                bra.s   Boss_BugmaxDMAExplodeTiles
+                bsr.w   Boss_BugmaxSpawnTransitionDebris
+                bra.s   Gfx_BugmaxLoadSecondOpeningTiles
 ; ---------------------------------------------------------------------------
-locret_4C75A:                                           ; CODE XREF: Boss_BugmaxDefeatExplode+E   j
+Boss_BugmaxSecondOpeningThresholdReturn:                ; CODE XREF: Boss_BugmaxWaitForSecondOpeningScrollThreshold+E   j  ; was: locret_4C75A
                 rts
 ; ---------------------------------------------------------------------------
-; DMA transfers explosion tiles
-Boss_BugmaxDMAExplodeTiles:                             ; CODE XREF: Boss_BugmaxDefeatExplode+24   j  ; was: loc_4C75C
-                lea     word_4C768(pc),a0
+; Load the second opening-transition tile set
+Gfx_BugmaxLoadSecondOpeningTiles:                       ; CODE XREF: Boss_BugmaxWaitForSecondOpeningScrollThreshold+24   j  ; was: loc_4C75C
+                lea     Gfx_BugmaxSecondOpeningTileLoadDescriptor(pc),a0
                 nop
                 jmp     Gfx_DMATransferTiles
-; End of function Boss_BugmaxDefeatExplode
+; End of function Boss_BugmaxWaitForSecondOpeningScrollThreshold
 ; ---------------------------------------------------------------------------
-word_4C768:     dc.w    $6330, $2000, $104, $BCBD, $C1, $C5, $C9, $CD
-                                        ; DATA XREF: Boss_BugmaxDefeatExplode:loc_4C75C   o
+Gfx_BugmaxSecondOpeningTileLoadDescriptor:  dc.w    $6330, $2000, $104, $BCBD, $C1, $C5, $C9, $CD  ; was: word_4C768
+                                        ; DATA XREF: Boss_BugmaxWaitForSecondOpeningScrollThreshold:loc_4C75C   o
 
-; Initializes spin attack
-Boss_BugmaxSpinInit:                                    ; DATA XREF: ROM:0004C3E6   o  ; was: sub_4C778
+; Initialize synchronized linked-part rotation
+Boss_BugmaxInitializeLinkedPartSpin:                    ; DATA XREF: ROM:0004C3E6   o  ; was: sub_4C778
                 move.w  (word_FFC72C).w,$4C(a5)
                 move.w  #$118,$4A(a5)
                 move.w  #$80,(word_FFC8AC).w
-                bsr.w   Boss_BugmaxSyncLegRotation
+                bsr.w   Boss_BugmaxSynchronizeLinkedPartAngles
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_BugmaxSpinInit
-; Spinning attack state
-Boss_BugmaxSpinning:                                    ; DATA XREF: ROM:0004C3E8   o  ; was: sub_4C794
+; End of function Boss_BugmaxInitializeLinkedPartSpin
+; Accelerate linked-part angular offsets over eight timed steps
+Boss_BugmaxAccelerateLinkedPartSpin:                    ; DATA XREF: ROM:0004C3E8   o  ; was: sub_4C794
                 movea.w #(word_FFC680-M68K_RAM),a0
-                bsr.w   Boss_BugmaxUpdateLegSprite
+                bsr.w   Boss_BugmaxSelectCentralPartFrameByAngle
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
@@ -741,59 +741,59 @@ Boss_BugmaxSpinning:                                    ; DATA XREF: ROM:0004C3E
                 move.w  d0,(dword_FFC874).w
                 move.w  (word_FFA000).w,d7
                 andi.w  #7,d7
-                bne.s   locret_4C7DA
+                bne.s   Boss_BugmaxLinkedPartSpinAccelerationReturn
                 addq.w  #1,$48(a5)
                 cmpi.w  #8,$48(a5)
-                bcc.s   loc_4C7D0
+                bcc.s   Boss_BugmaxFinishLinkedPartSpinAcceleration
                 move.w  $48(a5),d0
                 neg.w   d0
-                bsr.w   Boss_BugmaxSetLegOffsets
+                bsr.w   Boss_BugmaxSetLinkedPartAngleOffsets
                 rts
 ; ---------------------------------------------------------------------------
-loc_4C7D0:                                              ; CODE XREF: Boss_BugmaxSpinning+2E   j
+Boss_BugmaxFinishLinkedPartSpinAcceleration:            ; CODE XREF: Boss_BugmaxAccelerateLinkedPartSpin+2E   j  ; was: loc_4C7D0
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #2,4(a5)
-locret_4C7DA:                                           ; CODE XREF: Boss_BugmaxSpinning+22   j
+Boss_BugmaxLinkedPartSpinAccelerationReturn:            ; CODE XREF: Boss_BugmaxAccelerateLinkedPartSpin+22   j  ; was: locret_4C7DA
                 rts
-; End of function Boss_BugmaxSpinning
-; Sets leg rotation offsets
-Boss_BugmaxSetLegOffsets:                               ; CODE XREF: Boss_BugmaxSpinning+36   p  ; was: sub_4C7DC
-                                        ; Boss_BugmaxSpinReverse+2A   p
+; End of function Boss_BugmaxAccelerateLinkedPartSpin
+; Apply a cumulative angle offset across the linked-part address table
+Boss_BugmaxSetLinkedPartAngleOffsets:                   ; CODE XREF: Boss_BugmaxAccelerateLinkedPartSpin+36   p  ; was: sub_4C7DC
+                                        ; Boss_BugmaxReverseLinkedPartSpin+2A   p
                 move.w  #6,d7
                 moveq   #0,d6
-                lea     word_4C7F8(pc),a1
+                lea     Boss_BugmaxLinkedPartAddressTable(pc),a1
                 nop
-; Sets leg angle offsets in loop
-Boss_BugmaxSetLegOffsetsLoop:                           ; CODE XREF: Boss_BugmaxSetLegOffsets+16   j  ; was: loc_4C7E8
+; Store one linked-part angle offset and advance the accumulator
+Boss_BugmaxSetLinkedPartAngleOffsetLoop:                ; CODE XREF: Boss_BugmaxSetLinkedPartAngleOffsets+16   j  ; was: loc_4C7E8
                 movea.w (a1)+,a0
                 move.w  d6,$4E(a0)
                 add.w   d0,d6
                 add.w   d0,d6
-                dbf     d7,Boss_BugmaxSetLegOffsetsLoop
+                dbf     d7,Boss_BugmaxSetLinkedPartAngleOffsetLoop
                 rts
-; End of function Boss_BugmaxSetLegOffsets
+; End of function Boss_BugmaxSetLinkedPartAngleOffsets
 ; ---------------------------------------------------------------------------
-word_4C7F8:     dc.w    $C860, $C800, $C7A0, $C740, $C6E0, $C620, $C680
-                                        ; DATA XREF: Boss_BugmaxSetLegOffsets+6   o
+Boss_BugmaxLinkedPartAddressTable:  dc.w    $C860, $C800, $C7A0, $C740, $C6E0, $C620, $C680  ; was: word_4C7F8
+                                        ; DATA XREF: Boss_BugmaxSetLinkedPartAngleOffsets+6   o
                                         ; sub_4C806   o
 
-; Synchronizes leg rotations
-Boss_BugmaxSyncLegRotation:                             ; CODE XREF: Boss_BugmaxSpinInit+12   p  ; was: sub_4C806
-                lea     word_4C7F8(pc),a1
+; Copy the first linked-part angle to the remaining linked records
+Boss_BugmaxSynchronizeLinkedPartAngles:                 ; CODE XREF: Boss_BugmaxInitializeLinkedPartSpin+12   p  ; was: sub_4C806
+                lea     Boss_BugmaxLinkedPartAddressTable(pc),a1
                 movea.w (a1)+,a0
                 move.w  $4C(a0),d0
                 move.w  #5,d7
-loc_4C814:                                              ; CODE XREF: Boss_BugmaxSyncLegRotation+14   j
+Boss_BugmaxSynchronizeLinkedPartAngleLoop:              ; CODE XREF: Boss_BugmaxSynchronizeLinkedPartAngles+14   j  ; was: loc_4C814
                 movea.w (a1)+,a0
                 move.w  d0,$4C(a0)
-                dbf     d7,loc_4C814
+                dbf     d7,Boss_BugmaxSynchronizeLinkedPartAngleLoop
                 subi.w  #$100,(word_FFC6CC).w
                 andi.w  #$1FF,(word_FFC6CC).w
                 rts
-; End of function Boss_BugmaxSyncLegRotation
-; Updates leg sprite based on angle
-Boss_BugmaxUpdateLegSprite:                             ; CODE XREF: Boss_BugmaxSpinning+4   p  ; was: sub_4C82C
-                                        ; Boss_BugmaxSpinReverse+4   p
+; End of function Boss_BugmaxSynchronizeLinkedPartAngles
+; Select the central linked-part mapping from its normalized angle
+Boss_BugmaxSelectCentralPartFrameByAngle:               ; CODE XREF: Boss_BugmaxAccelerateLinkedPartSpin+4   p  ; was: sub_4C82C
+                                        ; Boss_BugmaxReverseLinkedPartSpin+4   p
                 move.w  $4C(a0),d0
                 add.w   $4E(a0),d0
                 addi.w  #$10,d0
@@ -801,27 +801,27 @@ Boss_BugmaxUpdateLegSprite:                             ; CODE XREF: Boss_Bugmax
                 andi.w  #$F7FF,$E(a0)
                 andi.w  #$EFFF,$E(a0)
                 cmpi.w  #$160,d0
-                bcs.s   loc_4C874
+                bcs.s   Boss_BugmaxSelectLowerAngleCentralPartFrame
                 cmpi.w  #$170,d0
-                bhi.s   loc_4C864
+                bhi.s   Boss_BugmaxSelectUpperAngleCentralPartFrame
                 ori.w   #$800,$E(a0)
                 move.l  #word_ECB7C,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4C864:                                              ; CODE XREF: Boss_BugmaxUpdateLegSprite+26   j
+Boss_BugmaxSelectUpperAngleCentralPartFrame:            ; CODE XREF: Boss_BugmaxSelectCentralPartFrameByAngle+26   j  ; was: loc_4C864
                 ori.w   #$800,$E(a0)
                 move.l  #word_ECB88,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4C874:                                              ; CODE XREF: Boss_BugmaxUpdateLegSprite+20   j
+Boss_BugmaxSelectLowerAngleCentralPartFrame:            ; CODE XREF: Boss_BugmaxSelectCentralPartFrameByAngle+20   j  ; was: loc_4C874
                 ori.w   #$800,$E(a0)
                 move.l  #word_ECB6A,8(a0)
                 rts
-; End of function Boss_BugmaxUpdateLegSprite
-; Reverse spin attack
-Boss_BugmaxSpinReverse:                                 ; DATA XREF: ROM:0004C3EA   o  ; was: sub_4C884
+; End of function Boss_BugmaxSelectCentralPartFrameByAngle
+; Reverse and randomize linked-part angular offsets during the timed state
+Boss_BugmaxReverseLinkedPartSpin:                       ; DATA XREF: ROM:0004C3EA   o  ; was: sub_4C884
                 movea.w #(word_FFC680-M68K_RAM),a0
-                bsr.w   Boss_BugmaxUpdateLegSprite
+                bsr.w   Boss_BugmaxSelectCentralPartFrameByAngle
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
@@ -832,57 +832,56 @@ Boss_BugmaxSpinReverse:                                 ; DATA XREF: ROM:0004C3E
                 subq.w  #1,d0
                 addi.w  #8,d0
                 neg.w   d0
-                bsr.w   Boss_BugmaxSetLegOffsets
+                bsr.w   Boss_BugmaxSetLinkedPartAngleOffsets
                 subq.w  #1,$48(a5)
-                bne.s   locret_4C8C2
+                bne.s   Boss_BugmaxReverseLinkedPartSpinReturn
                 move.w  #$FFF8,$48(a5)
                 addq.w  #2,4(a5)
-locret_4C8C2:                                           ; CODE XREF: Boss_BugmaxSpinReverse+32   j
+Boss_BugmaxReverseLinkedPartSpinReturn:                 ; CODE XREF: Boss_BugmaxReverseLinkedPartSpin+32   j  ; was: locret_4C8C2
                 rts
-; End of function Boss_BugmaxSpinReverse
-; Slows down spin attack
-Boss_BugmaxSpinSlowdown:                                ; DATA XREF: ROM:0004C3EC   o  ; was: sub_4C8C4
+; End of function Boss_BugmaxReverseLinkedPartSpin
+; Reduce the shared linked-part angle increment until the terminal value
+Boss_BugmaxSlowLinkedPartSpin:                          ; DATA XREF: ROM:0004C3EC   o  ; was: sub_4C8C4
                 move.w  $48(a5),d0
-                bsr.w   Boss_BugmaxSetLegOffsets
+                bsr.w   Boss_BugmaxSetLinkedPartAngleOffsets
                 subq.w  #1,$48(a5)
                 cmpi.w  #$FFEC,$48(a5)
-                bne.s   locret_4C8DC
+                bne.s   Boss_BugmaxLinkedPartSpinSlowdownReturn
                 addq.w  #2,4(a5)
-locret_4C8DC:                                           ; CODE XREF: Boss_BugmaxSpinSlowdown+12   j
+Boss_BugmaxLinkedPartSpinSlowdownReturn:                ; CODE XREF: Boss_BugmaxSlowLinkedPartSpin+12   j  ; was: locret_4C8DC
                 rts
-; End of function Boss_BugmaxSpinSlowdown
-; Prepares jump attack
-Boss_BugmaxJumpPrepare:                                 ; DATA XREF: ROM:0004C3EE   o  ; was: sub_4C8DE
+; End of function Boss_BugmaxSlowLinkedPartSpin
+; Finish angle restoration, seed jump velocities, and play sound $E4
+Boss_BugmaxPrepareJumpState:                            ; DATA XREF: ROM:0004C3EE   o  ; was: sub_4C8DE
                 move.w  $48(a5),d0
-                bsr.w   Boss_BugmaxSetLegOffsets
+                bsr.w   Boss_BugmaxSetLinkedPartAngleOffsets
                 addq.w  #1,$48(a5)
-                bne.s   locret_4C90A
+                bne.s   Boss_BugmaxPrepareJumpReturn
                 move.l  #$FFFA0000,(dword_FFC87C).w
                 move.l  #$FFFD0000,(dword_FFC878).w
                 addq.w  #2,4(a5)
                 move.b  #$E4,d0
                 jsr     (Sound_PlaySFX).l
-locret_4C90A:                                           ; CODE XREF: Boss_BugmaxJumpPrepare+C   j
+Boss_BugmaxPrepareJumpReturn:                           ; CODE XREF: Boss_BugmaxPrepareJumpState+C   j  ; was: locret_4C90A
                 rts
-; End of function Boss_BugmaxJumpPrepare
-; Adjusts angle based on horizontal scroll
-Boss_BugmaxAdjustAngleByScroll:                         ; CODE XREF: Boss_BugmaxRotateMouthClose+8   p  ; was: sub_4C90C
+; End of function Boss_BugmaxPrepareJumpState
+; Update the body anchor from the saved value and current scroll side
+Boss_BugmaxUpdateBodyAnchorFromScrollPhase:             ; CODE XREF: Boss_BugmaxRotateLinkedAssemblyToward180AndStartBattle+8   p  ; was: sub_4C90C
                 move.w  $4A(a5),d0
                 move.w  (word_FFA000).w,d7
                 btst    #0,d7
-                bne.s   loc_4C920
+                bne.s   Boss_BugmaxAdjustBodyAnchorForScrollSide
                 move.w  d0,$5C(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4C920:                                              ; CODE XREF: Boss_BugmaxAdjustAngleByScroll+C   j
+Boss_BugmaxAdjustBodyAnchorForScrollSide:               ; CODE XREF: Boss_BugmaxUpdateBodyAnchorFromScrollPhase+C   j  ; was: loc_4C920
                 cmpi.w  #$410,(dword_FFA900).w
-                bcc.s   loc_4C92E
+                bcc.s   Boss_BugmaxStorePositiveBodyAnchorOffset
                 subi.w  #$80,d0
                 rts
 ; ---------------------------------------------------------------------------
-loc_4C92E:                                              ; CODE XREF: Boss_BugmaxAdjustAngleByScroll+1A   j
+Boss_BugmaxStorePositiveBodyAnchorOffset:               ; CODE XREF: Boss_BugmaxUpdateBodyAnchorFromScrollPhase+1A   j  ; was: loc_4C92E
                 addi.w  #$80,d0
                 move.w  d0,$5C(a5)
                 rts
-; End of function Boss_BugmaxAdjustAngleByScroll
-; DMA transfer wrapper for Bugmax graphics
+; End of function Boss_BugmaxUpdateBodyAnchorFromScrollPhase

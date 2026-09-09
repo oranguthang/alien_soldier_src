@@ -77,5 +77,5 @@ word_EC822:     dc.w    $28FA, $500, $509               ; DATA XREF: ROM:000513B
                 dc.w    $A8F4, $600, $FBF9
 word_EC82E:     binclude "data/other/word_EC82E.bin"    ; DATA XREF: ROM:00035424   o
 word_EC82E_End:
-word_ECB1C:     dc.w    $E8F2, $500, $F8F8              ; DATA XREF: ROM:off_4DA1A   o
+word_ECB1C:     dc.w    $E8F2, $500, $F8F8              ; DATA XREF: ROM:Boss_BugmaxStandardHitFragmentMappings   o
 word_ECB22:     dc.w    $E8F6, 0, $FCFC                 ; DATA XREF: ROM:0004DA1E   o

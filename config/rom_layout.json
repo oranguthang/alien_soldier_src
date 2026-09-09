@@ -340,7 +340,7 @@
     { "file": "src/bosses/destroyer_mk2_patterns_and_components.s", "subsystem": "bosses", "start": "0x04B04C", "end": "0x04B68B" },
     { "file": "src/bosses/destroyer_mk2_linked_parts_and_debris.s", "subsystem": "bosses", "start": "0x04B68C", "end": "0x04BEBB" },
     { "file": "src/bosses/bugmax_core.s", "subsystem": "bosses", "start": "0x04BEBC", "end": "0x04C937" },
-    { "file": "src/bosses/bugmax_attacks.s", "subsystem": "bosses", "start": "0x04C938", "end": "0x04D3C3" },
+    { "file": "src/bosses/bugmax_battle_and_final_sequence.s", "subsystem": "bosses", "start": "0x04C938", "end": "0x04D3C3" },
     { "file": "src/projectiles/bugmax.s", "subsystem": "projectiles", "start": "0x04D3C4", "end": "0x04DA21" },
     { "file": "src/bosses/bugmax_movement.s", "subsystem": "bosses", "start": "0x04DA22", "end": "0x04DDD1" },
     { "file": "src/bosses/shield_viper_core.s", "subsystem": "bosses", "start": "0x04DDD2", "end": "0x04E5BF" },

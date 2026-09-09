@@ -191,7 +191,7 @@ loc_3B3E:                                               ; CODE XREF: Gfx_ApplyPa
 ; End of function Gfx_ApplyPaletteFade
 ; Sharpsteel palette effect
 VBlank_SharpssteelPaletteEffect:                        ; CODE XREF: VBlank_UpdateSharpssteelPalette+2   j  ; was: sub_3B4C
-                                        ; Boss_BugmaxPerspectiveHelper+36   j
+                                        ; Gfx_BugmaxApplyWavePaletteOffset+36   j
                 move.w  (a4)+,d5
                 bsr.w   Gfx_PrepareRGBComponents
                 move.w  d7,d0
@@ -524,7 +524,7 @@ word_3E12:      dc.w    $C                              ; DATA XREF: Boss_Flying
                                         ; Boss_FlyingNeoMain+4E   o
                 dc.w    $E362, $E364, $E366, $E368, $E36A, $E370, $E372, $E374
                 dc.w    $E376, $E378, $E37A, $E37C, $E37E
-word_3E2E:      dc.w    5                               ; DATA XREF: Boss_BugmaxPerspectiveHelper+30   o
+word_3E2E:      dc.w    5                               ; DATA XREF: Gfx_BugmaxApplyWavePaletteOffset+30   o
                 dc.w    $E366, $E368, $E36A, $E36E, $E370, $E378
 word_3E3C:      dc.w    6                               ; DATA XREF: Boss_BugmaxMain+8   o
                 dc.w    $E362, $E372, $E374, $E376, $E37A, $E37C, $E37E

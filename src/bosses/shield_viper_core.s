@@ -1,3 +1,4 @@
+; Main boss handler
 Boss_ShieldViperMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4DDD2
                 tst.w   4(a5)
                 beq.w   loc_4DFDA

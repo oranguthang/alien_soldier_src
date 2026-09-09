@@ -1,29 +1,29 @@
-word_ECB28:     dc.w    $68FC, $600, $F0F0              ; DATA XREF: Boss_BugmaxJumpInit+62   o
-                                        ; Boss_BugmaxToggleMouthSprite+E   o
+word_ECB28:     dc.w    $68FC, $600, $F0F0              ; DATA XREF: Boss_BugmaxInitializeBattleObjectChains+62   o
+                                        ; Boss_BugmaxToggleCentralPartMapping+E   o
                 dc.w    $68F8, $500, $F000
                 dc.w    $E8F7, 0, $F010
-word_ECB3A:     dc.w    $6902, $500, $F000              ; DATA XREF: Boss_BugmaxToggleMouthSprite:loc_4DB72   o
+word_ECB3A:     dc.w    $6902, $500, $F000              ; DATA XREF: Boss_BugmaxToggleCentralPartMapping:Boss_BugmaxSelectAlternateCentralPartMapping   o
                 dc.w    $E8FC, $600, $F0F0
-word_ECB46:     dc.w    $E907, 0, $FCFC                 ; DATA XREF: ROM:off_4CB2E   o
+word_ECB46:     dc.w    $E907, 0, $FCFC                 ; DATA XREF: ROM:Boss_BugmaxSecondaryLinkedPartMappings   o
                                         ; ROM:0004CB32   o
 word_ECB4C:     dc.w    $E906, 0, $FCFC                 ; DATA XREF: ROM:0004CB3A   o
                                         ; ROM:0004CB3E   o
-word_ECB52:     dc.w    $E908, $F00, $F0F0              ; DATA XREF: Boss_BugmaxJumpInit+22   o
-word_ECB58:     dc.w    $E918, $A00, $F4F4              ; DATA XREF: ROM:stru_4CB06   o
+word_ECB52:     dc.w    $E908, $F00, $F0F0              ; DATA XREF: Boss_BugmaxInitializeBattleObjectChains+22   o
+word_ECB58:     dc.w    $E918, $A00, $F4F4              ; DATA XREF: ROM:Boss_BugmaxPrimaryLinkedPartDescriptors   o
 word_ECB5E:     dc.w    $E921, $500, $F8F8              ; DATA XREF: ROM:0004CB0E   o
                                         ; ROM:0004CB16   o
 word_ECB64:     dc.w    $E925, $500, $F8F8              ; DATA XREF: ROM:0004CB1E   o
                                         ; ROM:0004CB26   o
-word_ECB6A:     dc.w    $78FC, $600, $F2F4              ; DATA XREF: Boss_BugmaxUpdateLegSprite+4E   o
+word_ECB6A:     dc.w    $78FC, $600, $F2F4              ; DATA XREF: Boss_BugmaxSelectCentralPartFrameByAngle+4E   o
                 dc.w    $78F8, $500, $FA04
                 dc.w    $F8F7, 0, $214
-word_ECB7C:     dc.w    $692F, $500, $F8                ; DATA XREF: Boss_BugmaxUpdateLegSprite+2E   o
+word_ECB7C:     dc.w    $692F, $500, $F8                ; DATA XREF: Boss_BugmaxSelectCentralPartFrameByAngle+2E   o
                 dc.w    $E929, $900, $F0F8
-word_ECB88:     dc.w    $6939, 0, $FCF3                 ; DATA XREF: Boss_BugmaxInit+88   o
-                                        ; Boss_BugmaxUpdateLegSprite+3E   o
+word_ECB88:     dc.w    $6939, 0, $FCF3                 ; DATA XREF: Boss_BugmaxInitializeEncounterState+88   o
+                                        ; Boss_BugmaxSelectCentralPartFrameByAngle+3E   o
                 dc.w    $E933, $600, $F4FB
-word_ECB94:     dc.w    $E93A, $F00, $F0F0              ; DATA XREF: Boss_BugmaxInit+3E   o
-word_ECB9A:     dc.w    $E94A, $A00, $F4F4              ; DATA XREF: ROM:stru_4C5BE   o
+word_ECB94:     dc.w    $E93A, $F00, $F0F0              ; DATA XREF: Boss_BugmaxInitializeEncounterState+3E   o
+word_ECB9A:     dc.w    $E94A, $A00, $F4F4              ; DATA XREF: ROM:Boss_BugmaxLinkedPartDescriptors   o
 word_ECBA0:     dc.w    $E953, $500, $F8F8              ; DATA XREF: ROM:0004C5C6   o
                                         ; ROM:0004C5CE   o
 word_ECBA6:     dc.w    $E957, $500, $F8F8              ; DATA XREF: ROM:0004C5D6   o

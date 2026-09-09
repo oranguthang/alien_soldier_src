@@ -253,7 +253,7 @@
                 include "src/bosses/destroyer_mk2_patterns_and_components.s"
                 include "src/bosses/destroyer_mk2_linked_parts_and_debris.s"
                 include "src/bosses/bugmax_core.s"
-                include "src/bosses/bugmax_attacks.s"
+                include "src/bosses/bugmax_battle_and_final_sequence.s"
                 include "src/projectiles/bugmax.s"
                 include "src/bosses/bugmax_movement.s"
                 include "src/bosses/shield_viper_core.s"

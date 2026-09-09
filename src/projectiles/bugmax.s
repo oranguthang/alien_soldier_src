@@ -1,18 +1,19 @@
-Enemy_BugmaxDebrisFall:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D3C4
+; Update a falling part and emit its periodic particle trail
+Projectile_BugmaxScatteredPartFall:                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D3C4
                 addi.l  #$1000,$1C(a5)
                 tst.w   $5C(a5)
-                beq.s   loc_4D3D4
+                beq.s   Projectile_BugmaxEmitPeriodicTrailParticle
                 rts
 ; ---------------------------------------------------------------------------
-loc_4D3D4:                                              ; CODE XREF: Boss_BugmaxFallOffScreen+6   j
-                                        ; Enemy_BugmaxDebrisFall+C   j
+Projectile_BugmaxEmitPeriodicTrailParticle:             ; CODE XREF: Boss_BugmaxRiseWithFinalParticles+6   j  ; was: loc_4D3D4
+                                        ; Projectile_BugmaxScatteredPartFall+C   j
                 move.w  a5,d7
                 lsr.w   #4,d7
                 add.w   (word_FFA000).w,d7
                 andi.w  #7,d7
-                bne.s   locret_4D43A
+                bne.s   Projectile_BugmaxTrailParticleEmissionReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_4D43A
+                bne.s   Projectile_BugmaxTrailParticleEmissionReturn
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -23,59 +24,59 @@ loc_4D3D4:                                              ; CODE XREF: Boss_Bugmax
                 jsr     (RandomNumber).l
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #3,d0
-                bne.s   locret_4D43A
+                bne.s   Projectile_BugmaxTrailParticleEmissionReturn
                 move.b  (dword_FFFF08+1).w,d0
                 andi.w  #6,d0
-                move.w  word_4D43C(pc,d0.w),d0
+                move.w  Projectile_BugmaxTrailSoundSequence(pc,d0.w),d0
                 andi.w  #$FF,d0
                 jsr     (Sound_PlaySFX).l
-locret_4D43A:                                           ; CODE XREF: Enemy_BugmaxDebrisFall+1C   j
-                                        ; Enemy_BugmaxDebrisFall+24   j
+Projectile_BugmaxTrailParticleEmissionReturn:           ; CODE XREF: Projectile_BugmaxScatteredPartFall+1C   j  ; was: locret_4D43A
+                                        ; Projectile_BugmaxScatteredPartFall+24   j
                 rts
-; End of function Enemy_BugmaxDebrisFall
+; End of function Projectile_BugmaxScatteredPartFall
 ; ---------------------------------------------------------------------------
-word_4D43C:     dc.w    $BB, $BC, $BB, $C1              ; DATA XREF: Enemy_BugmaxDebrisFall+68   r
+Projectile_BugmaxTrailSoundSequence:    dc.w    $BB, $BC, $BB, $C1  ; DATA XREF: Projectile_BugmaxScatteredPartFall+68   r  ; was: word_4D43C
 
-; Bugmax debris handler
-Enemy_BugmaxDebrisMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D444
+; Dispatch the states of a type-$338 hit fragment emitted by an opening linked part
+Projectile_BugmaxHitFragmentController:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D444
                 addi.l  #$2000,$1C(a5)
-                bsr.w   Boss_BugmaxAnimateFlip
+                bsr.w   Projectile_BugmaxCycleFlipMask
                 move.w  4(a5),d0
-                lea     off_4D45C(pc,d0.w),a0
+                lea     Projectile_BugmaxHitFragmentStateHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Enemy_BugmaxDebrisMain
+; End of function Projectile_BugmaxHitFragmentController
 ; ---------------------------------------------------------------------------
-off_4D45C:      dc.w    Enemy_BugmaxDebrisInit-*        ; DATA XREF: Enemy_BugmaxDebrisMain+10   o
-                dc.w    Enemy_BugmaxDebrisBounce-*
-                dc.w    nullsub_109-*
+Projectile_BugmaxHitFragmentStateHandlers:  dc.w    Projectile_BugmaxInitializeHitFragment-*  ; DATA XREF: Projectile_BugmaxHitFragmentController+10   o  ; was: off_4D45C
+                dc.w    Projectile_BugmaxUpdateHitFragmentMotion-*
+                dc.w    Projectile_BugmaxHitFragmentInactiveState-*
 
-; Initializes debris piece
-Enemy_BugmaxDebrisInit:                                 ; DATA XREF: ROM:off_4D45C   o  ; was: sub_4D462
+; Initialize the hit fragment's bounce count and optional sprite high bit
+Projectile_BugmaxInitializeHitFragment:                 ; DATA XREF: ROM:Projectile_BugmaxHitFragmentStateHandlers   o  ; was: sub_4D462
                 move.w  #2,$48(a5)
                 addq.w  #2,4(a5)
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #7,d0
-                beq.s   locret_4D47C
+                beq.s   Projectile_BugmaxHitFragmentInitializationReturn
                 ori.w   #$8000,$E(a5)
-locret_4D47C:                                           ; CODE XREF: Enemy_BugmaxDebrisInit+12   j
+Projectile_BugmaxHitFragmentInitializationReturn:       ; CODE XREF: Projectile_BugmaxInitializeHitFragment+12   j  ; was: locret_4D47C
                 rts
-; End of function Enemy_BugmaxDebrisInit
-; Debris bouncing physics
-Enemy_BugmaxDebrisBounce:                               ; DATA XREF: ROM:0004D45E   o  ; was: sub_4D47E
+; End of function Projectile_BugmaxInitializeHitFragment
+; Update normal bounce motion or the special fragment's collision and floor behavior
+Projectile_BugmaxUpdateHitFragmentMotion:               ; DATA XREF: ROM:0004D45E   o  ; was: sub_4D47E
                 tst.b   $5F(a5)
-                beq.s   loc_4D490
+                beq.s   Projectile_BugmaxCheckHitFragmentFloor
                 bclr    #7,$22(a5)
-                bne.s   loc_4D4CE
-                bsr.w   Enemy_BugmaxDebrisFlicker
-loc_4D490:                                              ; CODE XREF: Enemy_BugmaxDebrisBounce+4   j
+                bne.s   Projectile_BugmaxHandleSpecialHitFragmentCollision
+                bsr.w   Projectile_BugmaxCycleSpecialHitFragmentMapping
+Projectile_BugmaxCheckHitFragmentFloor:                 ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+4   j  ; was: loc_4D490
                 btst    #7,$1C(a5)
-                bne.s   locret_4D4CC
+                bne.s   Projectile_BugmaxHitFragmentMotionReturn
                 cmpi.w  #$130,$14(a5)
-                blt.s   locret_4D4CC
+                blt.s   Projectile_BugmaxHitFragmentMotionReturn
                 move.w  #$130,$14(a5)
                 tst.b   $5F(a5)
-                bne.s   loc_4D4F2
+                bne.s   Projectile_BugmaxSettleSpecialHitFragmentAtFloor
                 move.l  $1C(a5),d0
                 asr.l   #1,d0
                 neg.l   d0
@@ -84,78 +85,78 @@ loc_4D490:                                              ; CODE XREF: Enemy_Bugma
                 asr.l   #1,d0
                 move.l  d0,$18(a5)
                 subq.w  #1,$48(a5)
-                bne.s   locret_4D4CC
+                bne.s   Projectile_BugmaxHitFragmentMotionReturn
                 addq.w  #2,4(a5)
-locret_4D4CC:                                           ; CODE XREF: Enemy_BugmaxDebrisBounce+18   j
-                                        ; Enemy_BugmaxDebrisBounce+20   j
+Projectile_BugmaxHitFragmentMotionReturn:               ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+18   j  ; was: locret_4D4CC
+                                        ; Projectile_BugmaxUpdateHitFragmentMotion+20   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_4D4CE:                                              ; CODE XREF: Enemy_BugmaxDebrisBounce+C   j
+Projectile_BugmaxHandleSpecialHitFragmentCollision:     ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+C   j  ; was: loc_4D4CE
                 bclr    #4,$22(a5)
-                beq.s   loc_4D4DC
+                beq.s   Projectile_BugmaxConvertHitFragmentToParticle
                 jmp     Pickup_SpawnSmallFromCurrentObject
 ; ---------------------------------------------------------------------------
-loc_4D4DC:                                              ; CODE XREF: Enemy_BugmaxDebrisBounce+56   j
+Projectile_BugmaxConvertHitFragmentToParticle:          ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+56   j  ; was: loc_4D4DC
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
-loc_4D4F2:                                              ; CODE XREF: Enemy_BugmaxDebrisBounce+2C   j
+Projectile_BugmaxSettleSpecialHitFragmentAtFloor:       ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+2C   j  ; was: loc_4D4F2
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #$32,$26(a5)                    ; '2'
                 jmp     Projectile_CheckLifetime
-; End of function Enemy_BugmaxDebrisBounce
-; Flickers debris sprite graphics
-Enemy_BugmaxDebrisFlicker:                              ; CODE XREF: Enemy_BugmaxDebrisBounce+E   p  ; was: sub_4D506
+; End of function Projectile_BugmaxUpdateHitFragmentMotion
+; Cycle the special hit fragment among three mapping/tile values
+Projectile_BugmaxCycleSpecialHitFragmentMapping:        ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+E   p  ; was: sub_4D506
                 tst.b   $5F(a5)
-                beq.s   locret_4D538
+                beq.s   Projectile_BugmaxSpecialHitFragmentMappingReturn
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                beq.s   locret_4D538
+                beq.s   Projectile_BugmaxSpecialHitFragmentMappingReturn
                 cmpi.w  #1,d0
-                beq.s   loc_4D532
+                beq.s   Projectile_BugmaxSelectSpecialHitFragmentMappingA
                 cmpi.w  #2,d0
-                beq.s   loc_4D52A
+                beq.s   Projectile_BugmaxSelectSpecialHitFragmentMappingB
                 move.w  #$C4F7,$E(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4D52A:                                              ; CODE XREF: Enemy_BugmaxDebrisFlicker+1A   j
+Projectile_BugmaxSelectSpecialHitFragmentMappingB:      ; CODE XREF: Projectile_BugmaxCycleSpecialHitFragmentMapping+1A   j  ; was: loc_4D52A
                 move.w  #$C4F6,$E(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4D532:                                              ; CODE XREF: Enemy_BugmaxDebrisFlicker+14   j
+Projectile_BugmaxSelectSpecialHitFragmentMappingA:      ; CODE XREF: Projectile_BugmaxCycleSpecialHitFragmentMapping+14   j  ; was: loc_4D532
                 move.w  #$C4F1,$E(a5)
-locret_4D538:                                           ; CODE XREF: Enemy_BugmaxDebrisFlicker+4   j
-                                        ; Enemy_BugmaxDebrisFlicker+E   j
+Projectile_BugmaxSpecialHitFragmentMappingReturn:       ; CODE XREF: Projectile_BugmaxCycleSpecialHitFragmentMapping+4   j  ; was: locret_4D538
+                                        ; Projectile_BugmaxCycleSpecialHitFragmentMapping+E   j
                 rts
-; End of function Enemy_BugmaxDebrisFlicker
-nullsub_109:                                            ; DATA XREF: ROM:0004D460   o
+; End of function Projectile_BugmaxCycleSpecialHitFragmentMapping
+Projectile_BugmaxHitFragmentInactiveState:              ; DATA XREF: ROM:0004D460   o  ; was: nullsub_109
                 rts
-; End of function nullsub_109
+; End of function Projectile_BugmaxHitFragmentInactiveState
 
-; Animates sprite flip
-Boss_BugmaxAnimateFlip:                                 ; CODE XREF: Enemy_BugmaxDebrisMain+8   p  ; was: sub_4D53C
+; Cycle a four-entry XOR mask across the fragment's sprite attribute word
+Projectile_BugmaxCycleFlipMask:                         ; CODE XREF: Projectile_BugmaxHitFragmentController+8   p  ; was: sub_4D53C
                                         ; sub_4D608   p
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.s   locret_4D55E
+                bne.s   Projectile_BugmaxFlipMaskCycleReturn
                 addq.w  #1,$4A(a5)
                 andi.w  #3,$4A(a5)
                 move.w  $4A(a5),d0
                 add.w   d0,d0
-                move.w  word_4D560(pc,d0.w),d0
+                move.w  Projectile_BugmaxFlipMaskSequence(pc,d0.w),d0
                 eor.w   d0,$E(a5)
-locret_4D55E:                                           ; CODE XREF: Boss_BugmaxAnimateFlip+8   j
+Projectile_BugmaxFlipMaskCycleReturn:                   ; CODE XREF: Projectile_BugmaxCycleFlipMask+8   j  ; was: locret_4D55E
                 rts
-; End of function Boss_BugmaxAnimateFlip
+; End of function Projectile_BugmaxCycleFlipMask
 ; ---------------------------------------------------------------------------
-word_4D560:     dc.w    $1000, $800, $1000, $800
-                                        ; DATA XREF: Boss_BugmaxAnimateFlip+1A   r
+Projectile_BugmaxFlipMaskSequence:  dc.w    $1000, $800, $1000, $800  ; was: word_4D560
+                                        ; DATA XREF: Projectile_BugmaxCycleFlipMask+1A   r
 
 ; Initializes spread projectile with random offset
-Projectile_InitBugmaxSpread:                            ; CODE XREF: Boss_BugmaxProjectileAttack+10   p  ; was: sub_4D568
+Projectile_InitBugmaxSpread:                            ; CODE XREF: Boss_BugmaxSpawnSpreadProjectile+10   p  ; was: sub_4D568
                 move.w  #$33C,(a0)
                 move.w  #$EF80,2(a0)
                 move.l  #off_ECBD0,8(a0)
@@ -175,42 +176,42 @@ Projectile_InitBugmaxSpread:                            ; CODE XREF: Boss_Bugmax
                 move.w  #$FFFF,$1C(a0)
                 rts
 ; End of function Projectile_InitBugmaxSpread
-; Main controller with screen shake and state machine
-Projectile_BugmaxMainController:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D5C8
+; Apply alternating position jitter and dispatch the type-$33C spread projectile
+Projectile_BugmaxSpreadController:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D5C8
                 tst.l   $1C(a5)
-                beq.s   loc_4D5F2
+                beq.s   Projectile_BugmaxDispatchSpreadState
                 move.w  (word_FFA000).w,d0
                 andi.w  #1,d0
-                beq.s   loc_4D5E6
+                beq.s   Projectile_BugmaxApplyPositiveJitterOffset
                 subi.w  #$20,$10(a5)                    ; ' '
                 subi.w  #$20,$14(a5)                    ; ' '
-                bra.s   loc_4D5F2
+                bra.s   Projectile_BugmaxDispatchSpreadState
 ; ---------------------------------------------------------------------------
-loc_4D5E6:                                              ; CODE XREF: Projectile_BugmaxMainController+E   j
+Projectile_BugmaxApplyPositiveJitterOffset:             ; CODE XREF: Projectile_BugmaxSpreadController+E   j  ; was: loc_4D5E6
                 addi.w  #$20,$10(a5)                    ; ' '
                 addi.w  #$20,$14(a5)                    ; ' '
-loc_4D5F2:                                              ; CODE XREF: Projectile_BugmaxMainController+4   j
-                                        ; Projectile_BugmaxMainController+1C   j
+Projectile_BugmaxDispatchSpreadState:                   ; CODE XREF: Projectile_BugmaxSpreadController+4   j  ; was: loc_4D5F2
+                                        ; Projectile_BugmaxSpreadController+1C   j
                 move.w  4(a5),d0
-                lea     off_4D5FE(pc,d0.w),a0
+                lea     Projectile_BugmaxSpreadStateHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Projectile_BugmaxMainController
+; End of function Projectile_BugmaxSpreadController
 ; ---------------------------------------------------------------------------
-off_4D5FE:      dc.w    Projectile_BugmaxFlyingPhase-*  ; DATA XREF: Projectile_BugmaxMainController+2E   o
-                dc.w    Projectile_BugmaxFadeToBlack-*
-                dc.w    Projectile_BugmaxExplosionWait-*
-                dc.w    Projectile_BugmaxFadeFromBlack-*
-                dc.w    nullsub_110-*
+Projectile_BugmaxSpreadStateHandlers:   dc.w    Projectile_BugmaxUpdateSpreadFlight-*  ; DATA XREF: Projectile_BugmaxSpreadController+2E   o  ; was: off_4D5FE
+                dc.w    Projectile_BugmaxFadeImpactPalettesOut-*
+                dc.w    Projectile_BugmaxHoldImpactPalettes-*
+                dc.w    Projectile_BugmaxRestoreImpactPalettes-*
+                dc.w    Projectile_BugmaxSpreadInactiveState-*
 
-; Handles flying phase with collision and explosion
-Projectile_BugmaxFlyingPhase:                           ; DATA XREF: ROM:off_4D5FE   o  ; was: sub_4D608
-                bsr.w   Boss_BugmaxAnimateFlip
+; Update spread-projectile flight and choose impact fade or particle conversion
+Projectile_BugmaxUpdateSpreadFlight:                    ; DATA XREF: ROM:Projectile_BugmaxSpreadStateHandlers   o  ; was: sub_4D608
+                bsr.w   Projectile_BugmaxCycleFlipMask
                 addi.l  #$800,$1C(a5)
                 tst.b   (dword_FF9418+3).w
-                bne.s   loc_4D668
+                bne.s   Projectile_BugmaxCheckSpreadTerrainOrFinalTransition
                 bclr    #7,$22(a5)
-                beq.s   loc_4D668
+                beq.s   Projectile_BugmaxCheckSpreadTerrainOrFinalTransition
                 clr.l   $1C(a5)
                 move.w  #$4D80,2(a5)
                 move.b  #1,(dword_FF9418+3).w
@@ -218,7 +219,7 @@ Projectile_BugmaxFlyingPhase:                           ; DATA XREF: ROM:off_4D5
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_4D690
+                bne.s   Projectile_BugmaxSpreadFlightReturn
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -226,66 +227,66 @@ Projectile_BugmaxFlyingPhase:                           ; DATA XREF: ROM:off_4D5
                 move.w  #$FFFE,$1C(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4D668:                                              ; CODE XREF: Projectile_BugmaxFlyingPhase+10   j
-                                        ; Projectile_BugmaxFlyingPhase+18   j
+Projectile_BugmaxCheckSpreadTerrainOrFinalTransition:   ; CODE XREF: Projectile_BugmaxUpdateSpreadFlight+10   j  ; was: loc_4D668
+                                        ; Projectile_BugmaxUpdateSpreadFlight+18   j
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Collision_InitBufferPointers).l
                 move.w  d2,d2
-                bne.s   loc_4D67C
+                bne.s   Projectile_BugmaxConvertSpreadToParticle
                 tst.w   (dword_FF9428+2).w
-                beq.s   locret_4D690
-loc_4D67C:                                              ; CODE XREF: Projectile_BugmaxFlyingPhase+6C   j
+                beq.s   Projectile_BugmaxSpreadFlightReturn
+Projectile_BugmaxConvertSpreadToParticle:               ; CODE XREF: Projectile_BugmaxUpdateSpreadFlight+6C   j  ; was: loc_4D67C
                 move.l  #off_E95DC,8(a5)
                 move.w  #$FFFE,$1C(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
-locret_4D690:                                           ; CODE XREF: Projectile_BugmaxFlyingPhase+3C   j
-                                        ; Projectile_BugmaxFlyingPhase+72   j
+Projectile_BugmaxSpreadFlightReturn:                    ; CODE XREF: Projectile_BugmaxUpdateSpreadFlight+3C   j  ; was: locret_4D690
+                                        ; Projectile_BugmaxUpdateSpreadFlight+72   j
                 rts
-; End of function Projectile_BugmaxFlyingPhase
-; Fades screen to black for impact effect
-Projectile_BugmaxFadeToBlack:                           ; DATA XREF: ROM:0004D600   o  ; was: sub_4D692
-                bsr.w   Gfx_ApplyDualPaletteFade
+; End of function Projectile_BugmaxUpdateSpreadFlight
+; Increase the negative palette level after a spread-projectile contact
+Projectile_BugmaxFadeImpactPalettesOut:                 ; DATA XREF: ROM:0004D600   o  ; was: sub_4D692
+                bsr.w   Gfx_ApplyBugmaxSpreadImpactPaletteLevel
                 subq.w  #2,$5C(a5)
                 cmpi.w  #$FFF0,$5C(a5)
-                bne.s   locret_4D6AC
+                bne.s   Projectile_BugmaxImpactPaletteFadeOutReturn
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)
-locret_4D6AC:                                           ; CODE XREF: Projectile_BugmaxFadeToBlack+E   j
+Projectile_BugmaxImpactPaletteFadeOutReturn:            ; CODE XREF: Projectile_BugmaxFadeImpactPalettesOut+E   j  ; was: locret_4D6AC
                 rts
-; End of function Projectile_BugmaxFadeToBlack
-; Waits during explosion with timer countdown
-Projectile_BugmaxExplosionWait:                         ; DATA XREF: ROM:0004D602   o  ; was: sub_4D6AE
-                bsr.w   Gfx_ApplyDualPaletteFade
+; End of function Projectile_BugmaxFadeImpactPalettesOut
+; Hold both impact-affected palette ranges for $80 frames
+Projectile_BugmaxHoldImpactPalettes:                    ; DATA XREF: ROM:0004D602   o  ; was: sub_4D6AE
+                bsr.w   Gfx_ApplyBugmaxSpreadImpactPaletteLevel
                 subq.w  #1,$48(a5)
-                bne.s   locret_4D6BC
+                bne.s   Projectile_BugmaxImpactPaletteHoldReturn
                 addq.w  #2,4(a5)
-locret_4D6BC:                                           ; CODE XREF: Projectile_BugmaxExplosionWait+8   j
+Projectile_BugmaxImpactPaletteHoldReturn:               ; CODE XREF: Projectile_BugmaxHoldImpactPalettes+8   j  ; was: locret_4D6BC
                 rts
-; End of function Projectile_BugmaxExplosionWait
-; Fades screen back from black after explosion
-Projectile_BugmaxFadeFromBlack:                         ; DATA XREF: ROM:0004D604   o  ; was: sub_4D6BE
-                bsr.w   Gfx_ApplyDualPaletteFade
+; End of function Projectile_BugmaxHoldImpactPalettes
+; Restore the two palette ranges and release the shared impact lock
+Projectile_BugmaxRestoreImpactPalettes:                 ; DATA XREF: ROM:0004D604   o  ; was: sub_4D6BE
+                bsr.w   Gfx_ApplyBugmaxSpreadImpactPaletteLevel
                 move.w  (word_FFA000).w,d7
                 andi.w  #$1F,d7
-                bne.s   locret_4D6E6
+                bne.s   Projectile_BugmaxImpactPaletteRestoreReturn
                 addq.w  #2,$5C(a5)
                 cmpi.w  #2,$5C(a5)
-                bne.s   locret_4D6E6
+                bne.s   Projectile_BugmaxImpactPaletteRestoreReturn
                 clr.b   (dword_FF9418+3).w
                 bset    #4,2(a5)
                 addq.w  #2,4(a5)
-locret_4D6E6:                                           ; CODE XREF: Projectile_BugmaxFadeFromBlack+C   j
-                                        ; Projectile_BugmaxFadeFromBlack+18   j
+Projectile_BugmaxImpactPaletteRestoreReturn:            ; CODE XREF: Projectile_BugmaxRestoreImpactPalettes+C   j  ; was: locret_4D6E6
+                                        ; Projectile_BugmaxRestoreImpactPalettes+18   j
                 rts
-; End of function Projectile_BugmaxFadeFromBlack
-nullsub_110:                                            ; DATA XREF: ROM:0004D606   o
+; End of function Projectile_BugmaxRestoreImpactPalettes
+Projectile_BugmaxSpreadInactiveState:                   ; DATA XREF: ROM:0004D606   o  ; was: nullsub_110
                 rts
-; End of function nullsub_110
+; End of function Projectile_BugmaxSpreadInactiveState
 
-; Applies palette fade to two ranges simultaneously
-Gfx_ApplyDualPaletteFade:                               ; CODE XREF: Projectile_BugmaxFadeToBlack   p  ; was: sub_4D6EA
+; Apply the spread impact's current fade level to two palette ranges
+Gfx_ApplyBugmaxSpreadImpactPaletteLevel:                ; CODE XREF: Projectile_BugmaxFadeImpactPalettesOut   p  ; was: sub_4D6EA
                                         ; sub_4D6AE   p
                 move.w  $5C(a5),d0
                 move.w  #$1F,d5
@@ -298,9 +299,9 @@ Gfx_ApplyDualPaletteFade:                               ; CODE XREF: Projectile_
                 lea     (word_FFE360).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 rts
-; End of function Gfx_ApplyDualPaletteFade
+; End of function Gfx_ApplyBugmaxSpreadImpactPaletteLevel
 ; Initializes sine wave projectile with angular trajectory
-Projectile_InitBugmaxSine:                              ; CODE XREF: Boss_BugmaxProjectileVerticalAttack+10   p  ; was: sub_4D718
+Projectile_InitBugmaxSine:                              ; CODE XREF: Boss_BugmaxSpawnSineProjectile+10   p  ; was: sub_4D718
                 move.w  #$340,(a0)
                 move.w  #$EF80,2(a0)
                 move.l  #off_ECBDC,8(a0)
@@ -328,41 +329,41 @@ Projectile_InitBugmaxSine:                              ; CODE XREF: Boss_Bugmax
                 add.w   d0,$14(a0)
                 rts
 ; End of function Projectile_InitBugmaxSine
-; Main controller with collision and bounce physics
+; Dispatch the type-$340 phase-launched projectile and handle terminal collision flags
 Projectile_BugmaxSineController:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D79C
                 addi.l  #$2000,$1C(a5)
                 tst.w   (dword_FF9428+2).w
-                bne.w   loc_4D82E
+                bne.w   Projectile_BugmaxExpireSineProjectile
                 bclr    #4,$22(a5)
-                bne.w   Projectile_BugmaxSineDestroy
+                bne.w   Projectile_BugmaxDropRandomPickupFromSineProjectile
                 bclr    #6,$22(a5)
-                bne.w   Projectile_BugmaxSineDestroy
+                bne.w   Projectile_BugmaxDropRandomPickupFromSineProjectile
                 bclr    #7,$22(a5)
-                bne.w   loc_4D82E
+                bne.w   Projectile_BugmaxExpireSineProjectile
                 move.w  4(a5),d0
-                lea     off_4D7D6(pc,d0.w),a0
+                lea     Projectile_BugmaxSineStateHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
 ; End of function Projectile_BugmaxSineController
 ; ---------------------------------------------------------------------------
-off_4D7D6:      dc.w    Projectile_BugmaxSineBounce-*   ; DATA XREF: Projectile_BugmaxSineController+32   o
-                dc.w    Projectile_BugmaxSineBounce_BounceLoop-*
+Projectile_BugmaxSineStateHandlers: dc.w    Projectile_BugmaxInitializeSineBounceCounter-*  ; DATA XREF: Projectile_BugmaxSineController+32   o  ; was: off_4D7D6
+                dc.w    Projectile_BugmaxUpdateSineBounceMotion-*
 
-; Handles bouncing physics with velocity reversal
-Projectile_BugmaxSineBounce:                            ; DATA XREF: ROM:off_4D7D6   o  ; was: sub_4D7DA
+; Initialize a three-contact counter for the phase-launched bouncing projectile
+Projectile_BugmaxInitializeSineBounceCounter:           ; DATA XREF: ROM:Projectile_BugmaxSineStateHandlers   o  ; was: sub_4D7DA
                 move.w  #3,$48(a5)
                 addq.w  #2,4(a5)
-; Check ground collision and execute sine bounce pattern
-Projectile_BugmaxSineBounce_BounceLoop:                 ; DATA XREF: ROM:0004D7D8   o  ; was: loc_4D7E4
+; Check downward terrain contact, reverse vertical velocity, and randomize horizontal velocity
+Projectile_BugmaxUpdateSineBounceMotion:                ; DATA XREF: ROM:0004D7D8   o  ; was: loc_4D7E4
                 btst    #7,$1C(a5)
-                bne.s   locret_4D82C
+                bne.s   Projectile_BugmaxSineBounceMotionReturn
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Collision_InitBufferPointers).l
                 move.w  d2,d2
-                beq.s   locret_4D82C
+                beq.s   Projectile_BugmaxSineBounceMotionReturn
                 subq.w  #1,$48(a5)
-                beq.w   loc_4D82E
+                beq.w   Projectile_BugmaxExpireSineProjectile
                 move.l  $1C(a5),d0
                 asr.l   #1,d0
                 neg.l   d0
@@ -374,11 +375,11 @@ Projectile_BugmaxSineBounce_BounceLoop:                 ; DATA XREF: ROM:0004D7D
                 move.w  d0,$18(a5)
                 move.b  #$E3,d0
                 jsr     (Sound_PlaySFX).l
-locret_4D82C:                                           ; CODE XREF: Projectile_BugmaxSineBounce+10   j
-                                        ; Projectile_BugmaxSineBounce+1E   j
+Projectile_BugmaxSineBounceMotionReturn:                ; CODE XREF: Projectile_BugmaxInitializeSineBounceCounter+10   j  ; was: locret_4D82C
+                                        ; Projectile_BugmaxInitializeSineBounceCounter+1E   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_4D82E:                                              ; CODE XREF: Projectile_BugmaxSineController+C   j
+Projectile_BugmaxExpireSineProjectile:                  ; CODE XREF: Projectile_BugmaxSineController+C   j  ; was: loc_4D82E
                                         ; Projectile_BugmaxSineController+2A   j
                 move.b  #$E4,d0
                 jsr     (Sound_PlaySFX).l
@@ -387,100 +388,100 @@ loc_4D82E:                                              ; CODE XREF: Projectile_
                 move.w  #$C8,$26(a5)
                 move.l  #$FC04F808,$2C(a5)
                 jmp     Projectile_CheckLifetime
-; End of function Projectile_BugmaxSineBounce
-; Destroys sine projectile using destruction pattern
-Projectile_BugmaxSineDestroy:                           ; CODE XREF: Projectile_BugmaxSineController+16   j  ; was: sub_4D854
+; End of function Projectile_BugmaxInitializeSineBounceCounter
+; Convert collision-terminated type-$340 projectiles into a random pickup
+Projectile_BugmaxDropRandomPickupFromSineProjectile:    ; CODE XREF: Projectile_BugmaxSineController+16   j  ; was: sub_4D854
                                         ; Projectile_BugmaxSineController+20   j
                 moveq   #7,d0
                 jmp     Pickup_SpawnRandomFromCurrentObject
-; End of function Projectile_BugmaxSineDestroy
-nullsub_111:
+; End of function Projectile_BugmaxDropRandomPickupFromSineProjectile
+Projectile_BugmaxSineInactiveState:                     ; was: nullsub_111
                 rts
-; End of function nullsub_111
+; End of function Projectile_BugmaxSineInactiveState
 
-; Enables hitbox collision and sets damage values
-Boss_BugmaxEnableHitbox:                                ; CODE XREF: Boss_BugmaxAngleCalculateAttack+3E   p  ; was: sub_4D85E
+; Configure the linked-chain strike object's collision and damage fields
+Boss_BugmaxConfigureAimedChainHitbox:                   ; CODE XREF: Boss_BugmaxAnimateAndAimChainStrike+3E   p  ; was: sub_4D85E
                 movea.w #(byte_FFCB60-M68K_RAM),a0
                 move.b  #2,$21(a0)
                 move.l  #$FC04FC04,$2C(a0)
                 clr.b   $22(a0)
                 rts
-; End of function Boss_BugmaxEnableHitbox
-; Manages white flash effect when taking damage
-Boss_BugmaxFlashEffect:                                 ; CODE XREF: Boss_BugmaxSpecialAttackUpdate+4   p  ; was: sub_4D876
-                                        ; Boss_BugmaxSpecialAttackWait+4   p
+; End of function Boss_BugmaxConfigureAimedChainHitbox
+; Consume linked-chain contact state and publish its impact-effect coordinates
+Boss_BugmaxHandleAimedChainContactEffect:               ; CODE XREF: Boss_BugmaxExtendAimedChainStrike+4   p  ; was: sub_4D876
+                                        ; Boss_BugmaxHoldExtendedChainStrike+4   p
                 movea.w #(byte_FFCB60-M68K_RAM),a0
                 tst.w   $5C(a0)
-                bne.s   loc_4D894
+                bne.s   Boss_BugmaxPollAimedChainContactSignal
                 bclr    #1,$22(a0)
-                beq.s   locret_4D8C0
+                beq.s   Boss_BugmaxAimedChainContactReturn
                 bset    #1,(byte_FF825C).w
                 move.w  #2,$5C(a0)
-loc_4D894:                                              ; CODE XREF: Boss_BugmaxFlashEffect+8   j
+Boss_BugmaxPollAimedChainContactSignal:                 ; CODE XREF: Boss_BugmaxHandleAimedChainContactEffect+8   j  ; was: loc_4D894
                 bclr    #1,(byte_FF825C).w
-                bne.s   loc_4D8A2
+                bne.s   Boss_BugmaxPublishAimedChainImpactEffect
                 clr.w   $5C(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4D8A2:                                              ; CODE XREF: Boss_BugmaxFlashEffect+24   j
+Boss_BugmaxPublishAimedChainImpactEffect:               ; CODE XREF: Boss_BugmaxHandleAimedChainContactEffect+24   j  ; was: loc_4D8A2
                 move.w  #$2BC,(word_FF824E).w
                 bset    #0,(byte_FF825C).w
                 bset    #2,(byte_FF825C).w
                 move.w  $10(a0),(word_FF8250).w
                 move.w  $14(a0),(word_FF8252).w
-locret_4D8C0:                                           ; CODE XREF: Boss_BugmaxFlashEffect+10   j
+Boss_BugmaxAimedChainContactReturn:                     ; CODE XREF: Boss_BugmaxHandleAimedChainContactEffect+10   j  ; was: locret_4D8C0
                 rts
-; End of function Boss_BugmaxFlashEffect
-; Disables flash when health drops below threshold
-Boss_BugmaxDisableFlashEffect:                          ; CODE XREF: Boss_BugmaxSpecialAttackDecrement+4   p  ; was: sub_4D8C2
+; End of function Boss_BugmaxHandleAimedChainContactEffect
+; Continue contact handling until the retracting chain reaches the disable threshold
+Boss_BugmaxHandleContactOrDisableChainHitbox:           ; CODE XREF: Boss_BugmaxRetractAimedChainStrike+4   p  ; was: sub_4D8C2
                 movea.w #(byte_FFCB60-M68K_RAM),a0
                 cmpi.w  #$FFF0,(dword_FF9410).w
-                bgt.s   Boss_BugmaxFlashEffect
+                bgt.s   Boss_BugmaxHandleAimedChainContactEffect
                 clr.b   $21(a0)
                 rts
-; End of function Boss_BugmaxDisableFlashEffect
-; Updates all boss parts
-Boss_BugmaxUpdateAllParts:                              ; CODE XREF: Boss_BugmaxDefeatRise   p  ; was: sub_4D8D4
-                                        ; sub_4C734   p
+; End of function Boss_BugmaxHandleContactOrDisableChainHitbox
+; Poll eight opening objects for hit-fragment flags, then steer the controller
+Boss_BugmaxEmitOpeningHitFragmentsAndSteer:             ; CODE XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold   p  ; was: sub_4D8D4
+                                        ; Boss_BugmaxWaitForSecondOpeningScrollThreshold   p
                 movem.w a5,-(sp)
-                bsr.w   Boss_BugmaxSpawnProjectile
+                bsr.w   Boss_BugmaxEmitHitFragmentFromCurrentPart
                 move.w  #6,d7
                 movea.w #(word_FFC680-M68K_RAM),a5
-loc_4D8E4:                                              ; CODE XREF: Boss_BugmaxUpdateAllParts+18   j
-                bsr.w   Boss_BugmaxSpawnProjectile
+Boss_BugmaxEmitOpeningPartHitFragmentLoop:              ; CODE XREF: Boss_BugmaxEmitOpeningHitFragmentsAndSteer+18   j  ; was: loc_4D8E4
+                bsr.w   Boss_BugmaxEmitHitFragmentFromCurrentPart
                 lea     $60(a5),a5
-                dbf     d7,loc_4D8E4
+                dbf     d7,Boss_BugmaxEmitOpeningPartHitFragmentLoop
                 movem.w (sp)+,a5
-                bra.w   Boss_BugmaxAI
-; End of function Boss_BugmaxUpdateAllParts
-nullsub_112:
+                bra.w   Boss_BugmaxSteerOpeningControllerToHorizontalTarget
+; End of function Boss_BugmaxEmitOpeningHitFragmentsAndSteer
+Boss_BugmaxOpeningHitFragmentUnusedStub:                ; was: nullsub_112
                 rts
-; End of function nullsub_112
+; End of function Boss_BugmaxOpeningHitFragmentUnusedStub
 
-; Spawns projectile from boss
-Boss_BugmaxSpawnProjectile:                             ; CODE XREF: Boss_BugmaxUpdateAllParts+4   p  ; was: sub_4D8FA
-                                        ; sub_4D8D4:loc_4D8E4   p
+; Consume one linked part's hit flag and emit a normal or special type-$338 fragment
+Boss_BugmaxEmitHitFragmentFromCurrentPart:              ; CODE XREF: Boss_BugmaxEmitOpeningHitFragmentsAndSteer+4   p  ; was: sub_4D8FA
+                                        ; Boss_BugmaxEmitOpeningHitFragmentsAndSteer:Boss_BugmaxEmitOpeningPartHitFragmentLoop   p
                 bclr    #6,$22(a5)
-                beq.w   locret_4DA18
+                beq.w   Boss_BugmaxHitFragmentEmissionReturn
                 move.w  #4,(word_FFA014).w
                 btst    #7,(dword_FFC638).w
-                beq.s   loc_4D92E
+                beq.s   Boss_BugmaxAcceleratePositiveHitFragmentSpawnOffset
                 addi.l  #-$4000,(dword_FFC638).w
                 cmpi.l  #$FFFE0000,(dword_FFC638).w
-                blt.s   loc_4D948
+                blt.s   Boss_BugmaxAllocateHitFragment
                 move.l  #$FFFE0000,(dword_FFC638).w
-                bra.s   loc_4D948
+                bra.s   Boss_BugmaxAllocateHitFragment
 ; ---------------------------------------------------------------------------
-loc_4D92E:                                              ; CODE XREF: Boss_BugmaxSpawnProjectile+16   j
+Boss_BugmaxAcceleratePositiveHitFragmentSpawnOffset:    ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+16   j  ; was: loc_4D92E
                 addi.l  #$4000,(dword_FFC638).w
                 cmpi.l  #$20000,(dword_FFC638).w
-                blt.s   loc_4D948
+                blt.s   Boss_BugmaxAllocateHitFragment
                 move.l  #$20000,(dword_FFC638).w
-loc_4D948:                                              ; CODE XREF: Boss_BugmaxSpawnProjectile+28   j
-                                        ; Boss_BugmaxSpawnProjectile+32   j
+Boss_BugmaxAllocateHitFragment:                         ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+28   j  ; was: loc_4D948
+                                        ; Boss_BugmaxEmitHitFragmentFromCurrentPart+32   j
                 lea     (word_FFCF80).w,a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckExtendedRange).l
-                bne.w   locret_4DA18
+                bne.w   Boss_BugmaxHitFragmentEmissionReturn
                 move.w  #$338,(a0)
                 move.w  (dword_FFC630).w,$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -489,15 +490,15 @@ loc_4D948:                                              ; CODE XREF: Boss_Bugmax
                 jsr     (RandomNumber).l
                 move.b  (dword_FFFF08).w,d0
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_4D988
+                bne.s   Boss_BugmaxSelectHigherSpecialHitFragmentRate
                 andi.b  #7,d0
-                bne.s   Boss_BugmaxSetupProjectile
-                bra.s   loc_4D98E
+                bne.s   Boss_BugmaxConfigureStandardHitFragment
+                bra.s   Boss_BugmaxConfigureSpecialHitFragment
 ; ---------------------------------------------------------------------------
-loc_4D988:                                              ; CODE XREF: Boss_BugmaxSpawnProjectile+84   j
+Boss_BugmaxSelectHigherSpecialHitFragmentRate:          ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+84   j  ; was: loc_4D988
                 andi.b  #3,d0
-                bne.s   Boss_BugmaxSetupProjectile
-loc_4D98E:                                              ; CODE XREF: Boss_BugmaxSpawnProjectile+8C   j
+                bne.s   Boss_BugmaxConfigureStandardHitFragment
+Boss_BugmaxConfigureSpecialHitFragment:                 ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+8C   j  ; was: loc_4D98E
                 move.b  #1,$5F(a0)
                 move.w  #$8F80,2(a0)
                 move.w  #$44F1,$E(a0)
@@ -515,14 +516,14 @@ loc_4D98E:                                              ; CODE XREF: Boss_Bugmax
                 move.w  d0,$18(a0)
                 rts
 ; ---------------------------------------------------------------------------
-; Sets up projectile velocity and tile
-Boss_BugmaxSetupProjectile:                             ; CODE XREF: Boss_BugmaxSpawnProjectile+8A   j  ; was: loc_4D9E0
-                                        ; Boss_BugmaxSpawnProjectile+92   j
+; Configure the standard hit-fragment mapping and randomized velocity
+Boss_BugmaxConfigureStandardHitFragment:                ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+8A   j  ; was: loc_4D9E0
+                                        ; Boss_BugmaxEmitHitFragmentFromCurrentPart+92   j
                 move.w  #$CF80,2(a0)
                 move.b  (dword_FFFF08+1).w,d0
                 andi.w  #1,d0
                 lsl.w   #2,d0
-                move.l  off_4DA1A(pc,d0.w),8(a0)
+                move.l  Boss_BugmaxStandardHitFragmentMappings(pc,d0.w),8(a0)
                 move.w  $E(a5),$E(a0)
                 move.b  (dword_FFFF08+1).w,d0
                 andi.w  #3,d0
@@ -532,12 +533,10 @@ Boss_BugmaxSetupProjectile:                             ; CODE XREF: Boss_Bugmax
                 andi.w  #7,d0
                 subq.w  #4,d0
                 move.w  d0,$1C(a0)
-locret_4DA18:                                           ; CODE XREF: Boss_BugmaxSpawnProjectile+6   j
-                                        ; Boss_BugmaxSpawnProjectile+58   j
+Boss_BugmaxHitFragmentEmissionReturn:                   ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+6   j  ; was: locret_4DA18
+                                        ; Boss_BugmaxEmitHitFragmentFromCurrentPart+58   j
                 rts
-; End of function Boss_BugmaxSpawnProjectile
+; End of function Boss_BugmaxEmitHitFragmentFromCurrentPart
 ; ---------------------------------------------------------------------------
-off_4DA1A:      dc.l    word_ECB1C                      ; DATA XREF: Boss_BugmaxSpawnProjectile+F6   r
+Boss_BugmaxStandardHitFragmentMappings: dc.l    word_ECB1C  ; DATA XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+F6   r  ; was: off_4DA1A
                 dc.l    word_ECB22
-
-; AI and movement control
