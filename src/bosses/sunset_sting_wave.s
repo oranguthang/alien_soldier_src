@@ -1,57 +1,57 @@
-; Updates boss core position
-Boss_SunsetStingUpdateCore:                             ; CODE XREF: Boss_SunsetStingSegmentFlightState:Boss_SunsetStingSegmentFlightCheckCore   p  ; was: sub_428B4
-                                        ; sub_43738:loc_43754   p
+; Returns nonzero while an object remains inside the central flight bounds
+Boss_SunsetStingCheckWithinFlightBounds:                ; CODE XREF: Boss_SunsetStingSegmentFlightState:Boss_SunsetStingSegmentFlightCheckBounds   p  ; was: sub_428B4
+                                        ; Boss_SunsetStingSecondarySegmentFallState:Boss_SunsetStingSecondarySegmentCheckBounds   p
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 subi.w  #$780,d0
-                bpl.s   loc_428C4
+                bpl.s   Boss_SunsetStingCheckVerticalFlightBounds
                 neg.w   d0
-loc_428C4:                                              ; CODE XREF: Boss_SunsetStingUpdateCore+C   j
+Boss_SunsetStingCheckVerticalFlightBounds:              ; CODE XREF: Boss_SunsetStingCheckWithinFlightBounds+C   j  ; was: loc_428C4
                 cmpi.w  #$100,d0
-                bcc.s   loc_428DC
+                bcc.s   Boss_SunsetStingReturnOutsideFlightBounds
                 move.w  $14(a5),d0
                 subi.w  #$F0,d0
-                bpl.s   loc_428D6
+                bpl.s   Boss_SunsetStingCompareVerticalFlightBounds
                 neg.w   d0
-loc_428D6:                                              ; CODE XREF: Boss_SunsetStingUpdateCore+1E   j
+Boss_SunsetStingCompareVerticalFlightBounds:            ; CODE XREF: Boss_SunsetStingCheckWithinFlightBounds+1E   j  ; was: loc_428D6
                 cmpi.w  #$A0,d0
-                bcs.s   locret_428DE
-loc_428DC:                                              ; CODE XREF: Boss_SunsetStingUpdateCore+14   j
+                bcs.s   Boss_SunsetStingCheckFlightBoundsReturn
+Boss_SunsetStingReturnOutsideFlightBounds:              ; CODE XREF: Boss_SunsetStingCheckWithinFlightBounds+14   j  ; was: loc_428DC
                 moveq   #0,d0
-locret_428DE:                                           ; CODE XREF: Boss_SunsetStingUpdateCore+26   j
+Boss_SunsetStingCheckFlightBoundsReturn:                ; CODE XREF: Boss_SunsetStingCheckWithinFlightBounds+26   j  ; was: locret_428DE
                 rts
-; End of function Boss_SunsetStingUpdateCore
+; End of function Boss_SunsetStingCheckWithinFlightBounds
 ; Updates wave distortion screen effect
 Boss_SunsetStingUpdateWaveScreen:                       ; CODE XREF: Boss_SunsetStingMain+A   p  ; was: sub_428E0
                 cmpi.b  #$FF,(a4)
-                bne.s   loc_428EE
+                bne.s   Boss_SunsetStingUpdateWaveEffect
                 move.w  #$60,(word_FFE400).w            ; '`'
                 rts
 ; ---------------------------------------------------------------------------
-loc_428EE:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+4   j
+Boss_SunsetStingUpdateWaveEffect:                       ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+4   j  ; was: loc_428EE
                 move.l  $10(a3),d0
                 btst    #0,(a4)
-                beq.w   loc_42996
+                beq.w   Boss_SunsetStingBuildWaveTransitionBuffer
                 lea     (dword_FF99A0).w,a0
                 moveq   #$A,d7
-loc_42900:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+28   j
+Boss_SunsetStingFillWaveLeadBufferLoop:                 ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+28   j  ; was: loc_42900
                 move.l  d0,-(a0)
                 move.l  d0,-(a0)
                 move.l  d0,-(a0)
                 move.l  d0,-(a0)
-                dbf     d7,loc_42900
+                dbf     d7,Boss_SunsetStingFillWaveLeadBufferLoop
                 moveq   #$1B,d7
                 move.l  $58(a5),d1
                 move.l  d1,d2
                 asr.l   #4,d2
-loc_42916:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+42   j
+Boss_SunsetStingGenerateWaveCurveLoop:                  ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+42   j  ; was: loc_42916
                 move.l  d0,-(a0)
                 add.l   d1,d0
                 add.l   d2,d1
                 move.l  d0,-(a0)
                 add.l   d1,d0
                 add.l   d2,d1
-                dbf     d7,loc_42916
+                dbf     d7,Boss_SunsetStingGenerateWaveCurveLoop
                 move.l  d0,$10(a5)
                 lea     (word_FFE400).w,a0
                 move.w  $14(a5),d0
@@ -63,16 +63,16 @@ loc_42916:                                              ; CODE XREF: Boss_Sunset
                 adda.w  d0,a0
                 move.w  $10(a5),d0
                 moveq   #9,d7
-loc_4294A:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+7C   j
+Boss_SunsetStingFillWaveControllerRowsLoop:             ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+7C   j  ; was: loc_4294A
                 move.w  d0,(a0)
                 move.w  d0,4(a0)
                 move.w  d0,8(a0)
                 move.w  d0,$C(a0)
                 lea     $10(a0),a0
-                dbf     d7,loc_4294A
+                dbf     d7,Boss_SunsetStingFillWaveControllerRowsLoop
                 lea     (word_FF9810).w,a1
                 moveq   #$18,d7
-loc_42966:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+B0   j
+Boss_SunsetStingMergeWaveRowsLoop:                      ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+B0   j  ; was: loc_42966
                 move.w  d0,(a0)
                 move.w  d0,4(a0)
                 move.w  d0,8(a0)
@@ -83,10 +83,10 @@ loc_42966:                                              ; CODE XREF: Boss_Sunset
                 move.w  $C(a1),$C(a0)
                 lea     $10(a0),a0
                 lea     $10(a1),a1
-                dbf     d7,loc_42966
+                dbf     d7,Boss_SunsetStingMergeWaveRowsLoop
                 rts
 ; ---------------------------------------------------------------------------
-loc_42996:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+16   j
+Boss_SunsetStingBuildWaveTransitionBuffer:              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+16   j  ; was: loc_42996
                 swap    d0
                 move.w  d0,(word_FFE400).w
                 lea     (word_FF9CE0).w,a0
@@ -95,10 +95,10 @@ loc_42996:                                              ; CODE XREF: Boss_Sunset
                 sub.w   $14(a3),d7
                 lsr.w   #1,d7
                 move.w  #$1E0,d2
-loc_429B0:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+D4   j
+Boss_SunsetStingFillWaveTransitionTailLoop:             ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+D4   j  ; was: loc_429B0
                 move.w  d2,-(a0)
                 addq.w  #2,d2
-                dbf     d7,loc_429B0
+                dbf     d7,Boss_SunsetStingFillWaveTransitionTailLoop
                 move.w  $14(a3),d0
                 subi.w  #$71,d0                         ; 'q'
                 move.l  d0,d1
@@ -106,37 +106,37 @@ loc_429B0:                                              ; CODE XREF: Boss_Sunset
                 neg.w   d0
                 move.w  $14(a5),d2
                 sub.w   d2,d1
-                beq.s   loc_42A04
+                beq.s   Boss_SunsetStingFillRemainingWaveRowsLoop
                 move.w  d1,d7
                 addi.w  #$48,d7                         ; 'H'
                 asr.w   #1,d7
                 subq.w  #1,d7
                 tst.w   d1
-                bpl.s   loc_429E2
+                bpl.s   Boss_SunsetStingCalculateWaveInterpolationStep
                 neg.w   d1
                 moveq   #0,d2
-loc_429E2:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+FC   j
+Boss_SunsetStingCalculateWaveInterpolationStep:         ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+FC   j  ; was: loc_429E2
                 asl.w   #8,d1
                 divs.w  d7,d1
                 ext.l   d1
                 tst.w   d2
-                bne.s   loc_429EE
+                bne.s   Boss_SunsetStingOrientWaveInterpolationStep
                 neg.l   d1
-loc_429EE:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+10A   j
+Boss_SunsetStingOrientWaveInterpolationStep:            ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+10A   j  ; was: loc_429EE
                 asl.l   #8,d1
-loc_429F0:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+120   j
+Boss_SunsetStingWriteWaveInterpolationLoop:             ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+120   j  ; was: loc_429F0
                 swap    d0
                 add.l   d1,d0
                 swap    d0
                 move.w  d0,-(a0)
                 cmpa.l  #$FFFF9C00,a0
-                ble.s   locret_42A0E
-                dbf     d7,loc_429F0
-loc_42A04:                                              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+EE   j
+                ble.s   Boss_SunsetStingUpdateWaveScreenReturn
+                dbf     d7,Boss_SunsetStingWriteWaveInterpolationLoop
+Boss_SunsetStingFillRemainingWaveRowsLoop:              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+EE   j  ; was: loc_42A04
                                         ; Boss_SunsetStingUpdateWaveScreen+12C   j
                 move.w  d0,-(a0)
                 cmpa.l  #$FFFF9C00,a0
-                bne.s   loc_42A04
-locret_42A0E:                                           ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+11E   j
+                bne.s   Boss_SunsetStingFillRemainingWaveRowsLoop
+Boss_SunsetStingUpdateWaveScreenReturn:                 ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+11E   j  ; was: locret_42A0E
                 rts
 ; End of function Boss_SunsetStingUpdateWaveScreen

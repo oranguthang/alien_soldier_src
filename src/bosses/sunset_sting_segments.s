@@ -110,9 +110,9 @@ Boss_SunsetStingSegmentFlightUpdate:                    ; CODE XREF: Boss_Sunset
                 lea     Boss_SunsetStingSegmentMappings(pc),a0
                 bsr.w   Boss_SunsetStingSelectSegmentMapping
                 tst.w   $48(a5)
-                beq.s   Boss_SunsetStingSegmentFlightCheckCore
+                beq.s   Boss_SunsetStingSegmentFlightCheckBounds
                 move.l  $1C(a5),d0
-                bmi.s   Boss_SunsetStingSegmentFlightCheckCore
+                bmi.s   Boss_SunsetStingSegmentFlightCheckBounds
                 add.l   $14(a5),d0
                 swap    d0
                 addq.w  #8,d0
@@ -131,18 +131,18 @@ Boss_SunsetStingSegmentSetBounceRotation:               ; CODE XREF: Boss_Sunset
                 neg.l   d0
                 move.l  d0,$1C(a5)
                 subq.w  #1,$48(a5)
-Boss_SunsetStingSegmentFlightCheckCore:                 ; CODE XREF: Boss_SunsetStingSegmentFlightState+5E   j  ; was: loc_434C8
+Boss_SunsetStingSegmentFlightCheckBounds:               ; CODE XREF: Boss_SunsetStingSegmentFlightState+5E   j  ; was: loc_434C8
                                         ; Boss_SunsetStingSegmentFlightState+64   j
-                bsr.w   Boss_SunsetStingUpdateCore
+                bsr.w   Boss_SunsetStingCheckWithinFlightBounds
                 bne.w   Boss_SunsetStingReturn
                 move.w  #$A,4(a5)
                 rts
 ; End of function Boss_SunsetStingSegmentFlightState
-; Continues a destroyed primary segment's flight until it reaches the core
+; Continues a destroyed primary segment's flight until it leaves the bounds
 Boss_SunsetStingSegmentDestroyedFlightState:            ; DATA XREF: ROM:0004337C   o  ; was: sub_434D8
                 move.l  $58(a5),d0
                 add.l   d0,$1C(a5)
-                bra.s   Boss_SunsetStingSegmentFlightCheckCore
+                bra.s   Boss_SunsetStingSegmentFlightCheckBounds
 ; End of function Boss_SunsetStingSegmentDestroyedFlightState
 ; Resets a returned primary segment to its orbit state
 Boss_SunsetStingSegmentReattachState:                   ; DATA XREF: ROM:0004337E   o  ; was: sub_434E2
@@ -311,7 +311,7 @@ Boss_SunsetStingSecondarySegmentStoreRotationStep:      ; CODE XREF: Boss_Sunset
 Boss_SunsetStingSecondarySegmentCheckPlayer:            ; CODE XREF: Boss_SunsetStingSecondarySegmentFlightState+52   j  ; was: loc_436B0
                 lea     (word_FFA400).w,a0
                 bclr    #7,$22(a5)
-                beq.w   Boss_SunsetStingSecondarySegmentCheckCore
+                beq.w   Boss_SunsetStingSecondarySegmentCheckBounds
                 bclr    #4,$22(a5)
                 beq.s   Boss_SunsetStingSecondarySegmentCheckAttach
                 tst.l   d0
@@ -329,7 +329,7 @@ Boss_SunsetStingSecondarySegmentCheckAttach:            ; CODE XREF: Boss_Sunset
                 move.w  $14(a5),d0
                 sub.w   $14(a0),d0
                 cmpi.w  #$18,d0
-                bgt.s   Boss_SunsetStingSecondarySegmentCheckCore
+                bgt.s   Boss_SunsetStingSecondarySegmentCheckBounds
                 btst    #1,(byte_FF8244).w
                 beq.s   Boss_SunsetStingSecondarySegmentStoreAttachY
                 subi.b  #$14,d0
@@ -355,7 +355,7 @@ Boss_SunsetStingSecondarySegmentStoreAttachX:           ; CODE XREF: Boss_Sunset
                 move.w  #$A,4(a5)
                 rts
 ; End of function Boss_SunsetStingSecondarySegmentFlightState
-; Applies falling motion until the released secondary segment reaches the core
+; Applies falling motion until the released segment leaves the flight bounds
 Boss_SunsetStingSecondarySegmentFallState:              ; DATA XREF: ROM:0004357A   o  ; was: sub_43738
                 addi.l  #$4000,$1C(a5)
                 move.w  $4A(a5),d0
@@ -363,9 +363,9 @@ Boss_SunsetStingSecondarySegmentFallState:              ; DATA XREF: ROM:0004357
                 move.w  $48(a5),d0
                 lea     Boss_SunsetStingDestroyedSegmentMappings(pc),a0
                 bsr.w   Boss_SunsetStingSelectSegmentMapping
-Boss_SunsetStingSecondarySegmentCheckCore:              ; CODE XREF: Boss_SunsetStingSecondarySegmentFlightState+A0   j  ; was: loc_43754
+Boss_SunsetStingSecondarySegmentCheckBounds:            ; CODE XREF: Boss_SunsetStingSecondarySegmentFlightState+A0   j  ; was: loc_43754
                                         ; Boss_SunsetStingSecondarySegmentFlightState+CE   j
-                bsr.w   Boss_SunsetStingUpdateCore
+                bsr.w   Boss_SunsetStingCheckWithinFlightBounds
                 bne.w   Boss_SunsetStingReturn
                 move.w  #$C,4(a5)
                 rts
@@ -449,7 +449,7 @@ Boss_SunsetStingSecondarySegmentDefeatFallState:        ; DATA XREF: ROM:0004358
                 move.w  $48(a5),d0
                 lea     Boss_SunsetStingDestroyedSegmentMappings(pc),a0
                 bsr.w   Boss_SunsetStingSelectSegmentMapping
-                bsr.w   Boss_SunsetStingUpdateCore
+                bsr.w   Boss_SunsetStingCheckWithinFlightBounds
                 bne.w   Boss_SunsetStingReturn
                 clr.w   (a5)
                 rts

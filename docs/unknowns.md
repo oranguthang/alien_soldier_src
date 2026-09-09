@@ -856,7 +856,7 @@ visual identity remains `hypothesis`; the state, movement, shot, and destruction
 names rely on static instruction-level evidence recorded in the name audit.
 
 The Sunset Sting controller, segment, early-form, attack, transition, and
-defeat passes reduced the count to 7,788 and left
+defeat and wave passes reduced the count to 7,772 and left
 `bosses/sunset_sting_core.s`,
 `bosses/sunset_sting_attacks.s`,
 `bosses/sunset_sting_transition_and_defeat.s`,
@@ -907,6 +907,14 @@ range now have subsystem-neutral names. The arctangent lookup starts in the
 instruction bytes at `0x042838` and continues through the extracted 32-byte
 table tail; that code/data overlap is preserved explicitly rather than called
 unused data.
+
+The wave pass reconstructed both row-buffer builders and corrected another
+misleading Sonnet name: the former `UpdateCore` neither writes a core object nor
+tests contact with one. It measures an object's screen-relative X/Y distance
+against the central flight bounds. Primary, secondary, and defeat-fall segment
+states remain active while that result is nonzero and advance or retire after
+leaving the bounded area, so their former `CheckCore` names and documentation
+were corrected as part of the same evidence chain.
 
 Four especially broad data labels are explicitly registered:
 
