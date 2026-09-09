@@ -1,4 +1,4 @@
-word_EC6F0:     dc.w    $2870, $100, $FEF4              ; DATA XREF: Boss_ValkirieInit+D4   o
+word_EC6F0:     dc.w    $2870, $100, $FEF4              ; DATA XREF: Debug_ValkirieViewerInitialize+D4   o
                 dc.w    $A86A, $600, $F6FC
 word_EC6FC:     dc.w    $A872, $500, $F8F8              ; DATA XREF: ROM:Boss_ValkirieRotationFramesA   o
                                         ; ROM:Boss_ValkirieAlternateRotationFramesAndNeutralPose   o
@@ -41,8 +41,8 @@ word_EC762:     dc.w    $A09A, $900, $F6F3              ; DATA XREF: ROM:000353F
                 dc.w    $28D6, $500, $1F5
                 dc.w    $A8D0, $900, $F1F6
                 dc.w    $A8DA, $700, $F1FB
-word_EC792:     dc.w    $A8E2, $700, $F0F7              ; DATA XREF: Boss_ValkirieInit+EE   o
-                                        ; Boss_ValkirieInit+274   o
+word_EC792:     dc.w    $A8E2, $700, $F0F7              ; DATA XREF: Debug_ValkirieViewerInitialize+EE   o
+                                        ; Debug_ValkirieViewerInitialize+274   o
                 dc.w    $28EE, $900, $FFF4
                 dc.w    $A8EA, $500, $EFF4
                 dc.w    $28FA, $500, $FB02
@@ -51,19 +51,19 @@ word_EC7B0:     dc.w    $290D, $500, $23EA              ; DATA XREF: ROM:0003545
                                         ; ROM:0003546C   o
                 dc.w    $2907, $900, $13EA
                 dc.w    $A8FE, $A00, $FBF1
-word_EC7C2:     dc.w    $A911, $900, $F8FB              ; DATA XREF: Boss_ValkirieInit+68   o
-                                        ; Boss_ValkirieInit+9C   o
-word_EC7C8:     dc.w    $A917, $900, $FBF8              ; DATA XREF: Boss_ValkirieInit+1D0   o
-                                        ; Boss_ValkirieInit+20A   o
-word_EC7CE:     dc.w    $A91D, $500, $F8F2              ; DATA XREF: Boss_ValkirieInit+82   o
-                                        ; Boss_ValkirieInit+B6   o
+word_EC7C2:     dc.w    $A911, $900, $F8FB              ; DATA XREF: Debug_ValkirieViewerInitialize+68   o
+                                        ; Debug_ValkirieViewerInitialize+9C   o
+word_EC7C8:     dc.w    $A917, $900, $FBF8              ; DATA XREF: Debug_ValkirieViewerInitialize+1D0   o
+                                        ; Debug_ValkirieViewerInitialize+20A   o
+word_EC7CE:     dc.w    $A91D, $500, $F8F2              ; DATA XREF: Debug_ValkirieViewerInitialize+82   o
+                                        ; Debug_ValkirieViewerInitialize+B6   o
 word_EC7D4:     dc.w    $A921, $500, $F8F9              ; DATA XREF: ROM:Boss_ValkirieMetaspriteDescriptors   o
                                         ; ROM:00035510   o
 word_EC7DA:     dc.w    $A925, $500, $F8F8              ; DATA XREF: ROM:00035430   o
                                         ; ROM:00035444   o
 word_EC7E0:     dc.w    $A929, $500, $F8F8              ; DATA XREF: ROM:00035458   o
                                         ; ROM:00035468   o
-word_EC7E6:     dc.w    $A8B6, $D00, $F3E4              ; DATA XREF: ROM:off_5139A   o
+word_EC7E6:     dc.w    $A8B6, $D00, $F3E4              ; DATA XREF: ROM:Debug_ValkirieViewerGunMappingTable   o
 word_EC7EC:     dc.w    $A8BE, $D00, $F4E2              ; DATA XREF: ROM:0005139E   o
 word_EC7F2:     dc.w    $28CE, $400, $7E4               ; DATA XREF: ROM:000513A2   o
                 dc.w    $A8C6, $D00, $F7E4

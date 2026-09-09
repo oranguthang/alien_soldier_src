@@ -1,24 +1,25 @@
-Boss_ValkirieMinibossHandler:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_515AE
+; Minimal type-$3F0 controller followed by an unreferenced pose viewer
+Debug_ValkirieType3F0Main:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_515AE
                 tst.w   4(a5)
-                beq.w   loc_515C2
+                beq.w   Debug_ValkirieType3F0DispatchState
                 tst.w   8(a5)
-                beq.s   loc_515C2
+                beq.s   Debug_ValkirieType3F0DispatchState
                 jsr     (Gfx_InitPaletteFade).l
-loc_515C2:                                              ; CODE XREF: Boss_ValkirieMinibossHandler+4   j
-                                        ; Boss_ValkirieMinibossHandler+C   j
+Debug_ValkirieType3F0DispatchState:                     ; CODE XREF: Debug_ValkirieType3F0Main+4   j  ; was: loc_515C2
+                                        ; Debug_ValkirieType3F0Main+C   j
                 move.w  4(a5),d0
-                movea.w off_515D2(pc,d0.w),a0
-                adda.l  #Boss_ValkirieMinibossInit,a0
+                movea.w Debug_ValkirieType3F0StateTable(pc,d0.w),a0
+                adda.l  #Debug_ValkirieType3F0Initialize,a0
                 jmp     (a0)
-; End of function Boss_ValkirieMinibossHandler
+; End of function Debug_ValkirieType3F0Main
 ; ---------------------------------------------------------------------------
-off_515D2:      dc.w    Boss_ValkirieMinibossInit-Boss_ValkirieMinibossInit
-                                        ; DATA XREF: Boss_ValkirieMinibossHandler+18   r
-                dc.w    Boss_ValkirieForce_State20-Boss_ValkirieMinibossInit
+Debug_ValkirieType3F0StateTable:    dc.w    Debug_ValkirieType3F0Initialize-Debug_ValkirieType3F0Initialize  ; was: off_515D2
+                                        ; DATA XREF: Debug_ValkirieType3F0Main+18   r
+                dc.w    Debug_ValkirieType3F0UpdateWaitFlag-Debug_ValkirieType3F0Initialize
 
-; Initializes simplified Valkirie miniboss entity with basic parameters and position
-Boss_ValkirieMinibossInit:                              ; DATA XREF: Boss_ValkirieMinibossHandler+1C   o  ; was: sub_515D6
-                                        ; ROM:off_515D2   o
+; Initialize the type-$3F0 controller at its fixed position
+Debug_ValkirieType3F0Initialize:                        ; DATA XREF: Debug_ValkirieType3F0Main+1C   o  ; was: sub_515D6
+                                        ; ROM:Debug_ValkirieType3F0StateTable   o
                 move.w  #1,8(a5)
                 move.w  #$3F0,(a5)
                 move.w  #$CC00,2(a5)
@@ -32,85 +33,85 @@ Boss_ValkirieMinibossInit:                              ; DATA XREF: Boss_Valkir
                 clr.l   $1C(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
-; Valkirie Force attack phase
-Boss_ValkirieForce_State20:                             ; DATA XREF: ROM:000515D4   o  ; was: loc_51616
+; Type-$3F0 wait state: publish readiness when the global wait clears
+Debug_ValkirieType3F0UpdateWaitFlag:                    ; DATA XREF: ROM:000515D4   o  ; was: loc_51616
                 tst.w   (word_FF80C2).w
-                bne.s   locret_51622
+                bne.s   Debug_ValkirieType3F0WaitReturn
                 move.b  #1,(byte_FFA958).w
-locret_51622:                                           ; CODE XREF: Boss_ValkirieMinibossInit+44   j
+Debug_ValkirieType3F0WaitReturn:                        ; CODE XREF: Debug_ValkirieType3F0Initialize+44   j  ; was: locret_51622
                 rts
-; End of function Boss_ValkirieMinibossInit
-; Processes debug input for rotating Valkirie miniboss and updates metasprite display
-Boss_ValkirieMinibossInput:
-                btst    #2,(word_FFF706).w              ; was: sub_51624
-                beq.s   loc_51630
+; End of function Debug_ValkirieType3F0Initialize
+; Unreferenced controller-input entry for the secondary composite viewer
+Debug_ValkirieSecondaryViewerUpdate:                    ; was: sub_51624
+                btst    #2,(word_FFF706).w
+                beq.s   Debug_ValkirieSecondaryViewerCheckAngleDecreaseInput
                 addq.w  #2,$56(a5)
-loc_51630:                                              ; CODE XREF: Boss_ValkirieMinibossInput+6   j
+Debug_ValkirieSecondaryViewerCheckAngleDecreaseInput:   ; CODE XREF: Debug_ValkirieSecondaryViewerUpdate+6   j  ; was: loc_51630
                 btst    #3,(word_FFF706).w
-                beq.s   loc_5163C
+                beq.s   Debug_ValkirieSecondaryViewerPreparePoseUpdate
                 subq.w  #2,$56(a5)
-loc_5163C:                                              ; CODE XREF: Boss_ValkirieMinibossInput+12   j
+Debug_ValkirieSecondaryViewerPreparePoseUpdate:         ; CODE XREF: Debug_ValkirieSecondaryViewerUpdate+12   j  ; was: loc_5163C
                 andi.w  #$1FE,$56(a5)
-                lea     byte_51814(pc),a1
+                lea     Debug_ValkirieSecondaryViewerPoseScript(pc),a1
                 nop
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
-loc_5164C:                                              ; CODE XREF: Boss_ValkirieMinibossInput+24   j
-                bsr.w   Boss_ValkirieMinibossAnimController
+Debug_ValkirieSecondaryViewerAdvancePoseAndRender:      ; CODE XREF: Debug_ValkirieSecondaryViewerUpdate+24   j  ; was: loc_5164C
+                bsr.w   Debug_ValkirieSecondaryViewerAdvancePoseScript
                 moveq   #$19,d7
                 jmp     Sprite_BeginMetaspritePartTraversal
-; End of function Boss_ValkirieMinibossInput
-; Animation controller for Valkirie miniboss that processes frames and updates all sprite component tile indices
-Boss_ValkirieMinibossAnimController:                    ; CODE XREF: Boss_ValkirieMinibossInput:loc_5164C   p  ; was: sub_51658
+; End of function Debug_ValkirieSecondaryViewerUpdate
+; Interpret pose commands and update the secondary viewer's eighteen components
+Debug_ValkirieSecondaryViewerAdvancePoseScript:         ; CODE XREF: Debug_ValkirieSecondaryViewerUpdate:Debug_ValkirieSecondaryViewerAdvancePoseAndRender   p  ; was: sub_51658
                 clr.b   $23E(a5)
                 tst.w   $C(a5)
-                bpl.s   loc_516D0
-loc_51662:                                              ; CODE XREF: Boss_ValkirieMinibossAnimController+24   j
-                                        ; Boss_ValkirieMinibossAnimController+44   j
+                bpl.s   Debug_ValkirieSecondaryViewerTickPoseInterpolation
+Debug_ValkirieSecondaryViewerReadNextPoseCommand:       ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+24   j  ; was: loc_51662
+                                        ; Debug_ValkirieSecondaryViewerAdvancePoseScript+44   j
                 move.w  $58(a5),d0
-                bmi.w   loc_516E0
+                bmi.w   Debug_ValkirieSecondaryViewerStorePoseComponents
                 cmpi.b  #$80,(a1,d0.w)
-                bne.s   loc_5167E
+                bne.s   Debug_ValkirieSecondaryViewerCheckPoseControlCommand
                 move.b  1(a1,d0.w),$23E(a5)
                 addq.w  #2,$58(a5)
-                bra.s   loc_51662
+                bra.s   Debug_ValkirieSecondaryViewerReadNextPoseCommand
 ; ---------------------------------------------------------------------------
-loc_5167E:                                              ; CODE XREF: Boss_ValkirieMinibossAnimController+18   j
+Debug_ValkirieSecondaryViewerCheckPoseControlCommand:   ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+18   j  ; was: loc_5167E
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
-                bne.s   loc_5168E
+                bne.s   Debug_ValkirieSecondaryViewerHandlePoseLoopCommand
                 move.w  d3,$58(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_5168E:                                              ; CODE XREF: Boss_ValkirieMinibossAnimController+2E   j
+Debug_ValkirieSecondaryViewerHandlePoseLoopCommand:     ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+2E   j  ; was: loc_5168E
                 cmpi.w  #$FFFF,d3
-                bne.s   loc_5169E
+                bne.s   Debug_ValkirieSecondaryViewerBeginPoseCommandInterpolation
                 clr.w   $58(a5)
                 clr.w   $29C(a5)
-                bra.s   loc_51662
+                bra.s   Debug_ValkirieSecondaryViewerReadNextPoseCommand
 ; ---------------------------------------------------------------------------
-loc_5169E:                                              ; CODE XREF: Boss_ValkirieMinibossAnimController+3A   j
+Debug_ValkirieSecondaryViewerBeginPoseCommandInterpolation:  ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+3A   j  ; was: loc_5169E
                 move.w  d3,(dword_FF8040).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
-                addi.l  #word_5181E,d0
+                addi.l  #Debug_ValkirieSecondaryViewerPoseTargets,d0
                 movea.l d0,a0
-                bsr.w   Boss_ValkirieMinibossSetupInterp
+                bsr.w   Debug_ValkirieSecondaryViewerBeginPoseInterpolation
                 moveq   #0,d0
                 move.b  (dword_FF8040).w,d0
                 move.w  d0,$C(a5)
                 addq.w  #4,$58(a5)
                 addq.w  #1,$29C(a5)
                 tst.w   $C(a5)
-                bmi.s   loc_516E0
-loc_516D0:                                              ; CODE XREF: Boss_ValkirieMinibossAnimController+8   j
+                bmi.s   Debug_ValkirieSecondaryViewerStorePoseComponents
+Debug_ValkirieSecondaryViewerTickPoseInterpolation:     ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+8   j  ; was: loc_516D0
                 subq.w  #1,$C(a5)
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #$12,d7
                 jsr     (Anim_ApplyInterpolationStep).l
-loc_516E0:                                              ; CODE XREF: Boss_ValkirieMinibossAnimController+E   j
-                                        ; Boss_ValkirieMinibossAnimController+76   j
+Debug_ValkirieSecondaryViewerStorePoseComponents:       ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+E   j  ; was: loc_516E0
+                                        ; Debug_ValkirieSecondaryViewerAdvancePoseScript+76   j
                 move.w  #$1FE,d7
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 move.b  (a0),d0
@@ -203,28 +204,26 @@ loc_516E0:                                              ; CODE XREF: Boss_Valkir
                 and.w   d7,d0
                 move.w  d0,$9B6(a5)
                 rts
-; End of function Boss_ValkirieMinibossAnimController
-; Sets up animation interpolation for Valkirie miniboss smooth frame transitions
-Boss_ValkirieMinibossSetupInterp:                       ; CODE XREF: Boss_ValkirieMinibossAnimController+5C   p  ; was: sub_517F2
-                lea     word_5181E(pc),a1
+; End of function Debug_ValkirieSecondaryViewerAdvancePoseScript
+; Initialize interpolation deltas for the next secondary-viewer pose command
+Debug_ValkirieSecondaryViewerBeginPoseInterpolation:    ; CODE XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+5C   p  ; was: sub_517F2
+                lea     Debug_ValkirieSecondaryViewerPoseTargets(pc),a1
                 nop
                 moveq   #$12,d7
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
-; End of function Boss_ValkirieMinibossSetupInterp
-; Loads frame timing delays for Valkirie miniboss animations
-Boss_ValkirieMinibossLoadTiming:
-                moveq   #$12,d7                         ; was: sub_51808
+; End of function Debug_ValkirieSecondaryViewerBeginPoseInterpolation
+; Load interpolation durations for the eighteen secondary-viewer components
+Debug_ValkirieSecondaryViewerLoadPoseDurations:         ; was: sub_51808
+                moveq   #$12,d7
                 movea.w #(dword_FF9400-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
-; End of function Boss_ValkirieMinibossLoadTiming
+; End of function Debug_ValkirieSecondaryViewerLoadPoseDurations
 ; ---------------------------------------------------------------------------
-byte_51814:     dc.b    $20, $20, 0, 0, $20, $20, 0, $12, $FF, $FF
-                                        ; DATA XREF: Boss_ValkirieMinibossInput+1E   o
-word_5181E:     dc.w    $4000, $C094, $C010, $EC40, $F060, $F020, $2020, $10E0, $E000
-                                        ; DATA XREF: Boss_ValkirieMinibossAnimController+54   o
+Debug_ValkirieSecondaryViewerPoseScript:    dc.b    $20, $20, 0, 0, $20, $20, 0, $12, $FF, $FF  ; was: byte_51814
+                                        ; DATA XREF: Debug_ValkirieSecondaryViewerUpdate+1E   o
+Debug_ValkirieSecondaryViewerPoseTargets:   dc.w    $4000, $C094, $C010, $EC40, $F060, $F020, $2020, $10E0, $E000  ; was: word_5181E
+                                        ; DATA XREF: Debug_ValkirieSecondaryViewerAdvancePoseScript+54   o
                                         ; sub_517F2   o
                 dc.w    $4000, $C094, $C010, $EC40, $F060, $F020, $2020, $10E0, $E000
-
-; State handler for third Valkirie boss part/component with palette fade initialization

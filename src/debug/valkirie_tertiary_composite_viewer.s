@@ -1,24 +1,25 @@
-Boss_ValkiriePart3Handler:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_51842
+; Minimal type-$3F4 controller followed by an unreferenced pose viewer
+Debug_ValkirieType3F4Main:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_51842
                 tst.w   4(a5)
-                beq.w   loc_51856
+                beq.w   Debug_ValkirieType3F4DispatchState
                 tst.w   8(a5)
-                beq.s   loc_51856
+                beq.s   Debug_ValkirieType3F4DispatchState
                 jsr     (Gfx_InitPaletteFade).l
-loc_51856:                                              ; CODE XREF: Boss_ValkiriePart3Handler+4   j
-                                        ; Boss_ValkiriePart3Handler+C   j
+Debug_ValkirieType3F4DispatchState:                     ; CODE XREF: Debug_ValkirieType3F4Main+4   j  ; was: loc_51856
+                                        ; Debug_ValkirieType3F4Main+C   j
                 move.w  4(a5),d0
-                movea.w off_51866(pc,d0.w),a0
-                adda.l  #Boss_ValkiriePart3Init,a0
+                movea.w Debug_ValkirieType3F4StateTable(pc,d0.w),a0
+                adda.l  #Debug_ValkirieType3F4Initialize,a0
                 jmp     (a0)
-; End of function Boss_ValkiriePart3Handler
+; End of function Debug_ValkirieType3F4Main
 ; ---------------------------------------------------------------------------
-off_51866:      dc.w    Boss_ValkiriePart3Init-Boss_ValkiriePart3Init
-                                        ; DATA XREF: Boss_ValkiriePart3Handler+18   r
-                dc.w    Boss_ValkirieForce_State34-Boss_ValkiriePart3Init
+Debug_ValkirieType3F4StateTable:    dc.w    Debug_ValkirieType3F4Initialize-Debug_ValkirieType3F4Initialize  ; was: off_51866
+                                        ; DATA XREF: Debug_ValkirieType3F4Main+18   r
+                dc.w    Debug_ValkirieType3F4UpdateWaitFlag-Debug_ValkirieType3F4Initialize
 
-; Initializes third Valkirie boss component with basic entity parameters and screen position
-Boss_ValkiriePart3Init:                                 ; DATA XREF: Boss_ValkiriePart3Handler+1C   o  ; was: sub_5186A
-                                        ; ROM:off_51866   o
+; Initialize the type-$3F4 controller at its fixed position
+Debug_ValkirieType3F4Initialize:                        ; DATA XREF: Debug_ValkirieType3F4Main+1C   o  ; was: sub_5186A
+                                        ; ROM:Debug_ValkirieType3F4StateTable   o
                 move.w  #1,8(a5)
                 move.w  #$3F4,(a5)
                 move.w  #$CC00,2(a5)
@@ -32,85 +33,85 @@ Boss_ValkiriePart3Init:                                 ; DATA XREF: Boss_Valkir
                 clr.l   $1C(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
-; Valkirie Force advanced pattern
-Boss_ValkirieForce_State34:                             ; DATA XREF: ROM:00051868   o  ; was: loc_518AA
+; Type-$3F4 wait state: publish readiness when the global wait clears
+Debug_ValkirieType3F4UpdateWaitFlag:                    ; DATA XREF: ROM:00051868   o  ; was: loc_518AA
                 tst.w   (word_FF80C2).w
-                bne.s   locret_518B6
+                bne.s   Debug_ValkirieType3F4WaitReturn
                 move.b  #1,(byte_FFA958).w
-locret_518B6:                                           ; CODE XREF: Boss_ValkiriePart3Init+44   j
+Debug_ValkirieType3F4WaitReturn:                        ; CODE XREF: Debug_ValkirieType3F4Initialize+44   j  ; was: locret_518B6
                 rts
-; End of function Boss_ValkiriePart3Init
-; Debug mode handler for Valkirie boss - allows manual angle control using controller inputs (buttons 2/3)
-Boss_ValkirieDebugAngleControl:
-                btst    #2,(word_FFF706).w              ; was: sub_518B8
-                beq.s   loc_518C4
+; End of function Debug_ValkirieType3F4Initialize
+; Unreferenced controller-input entry for the tertiary composite viewer
+Debug_ValkirieTertiaryViewerUpdate:                     ; was: sub_518B8
+                btst    #2,(word_FFF706).w
+                beq.s   Debug_ValkirieTertiaryViewerCheckAngleDecreaseInput
                 addq.w  #2,$56(a5)
-loc_518C4:                                              ; CODE XREF: Boss_ValkirieDebugAngleControl+6   j
+Debug_ValkirieTertiaryViewerCheckAngleDecreaseInput:    ; CODE XREF: Debug_ValkirieTertiaryViewerUpdate+6   j  ; was: loc_518C4
                 btst    #3,(word_FFF706).w
-                beq.s   loc_518D0
+                beq.s   Debug_ValkirieTertiaryViewerPreparePoseUpdate
                 subq.w  #2,$56(a5)
-loc_518D0:                                              ; CODE XREF: Boss_ValkirieDebugAngleControl+12   j
+Debug_ValkirieTertiaryViewerPreparePoseUpdate:          ; CODE XREF: Debug_ValkirieTertiaryViewerUpdate+12   j  ; was: loc_518D0
                 andi.w  #$1FE,$56(a5)
-                lea     byte_51AA8(pc),a1
+                lea     Debug_ValkirieTertiaryViewerPoseScript(pc),a1
                 nop
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
-loc_518E0:                                              ; CODE XREF: Boss_ValkirieDebugAngleControl+24   j
-                bsr.w   Boss_ValkirieAnimationSequencer
+Debug_ValkirieTertiaryViewerAdvancePoseAndRender:       ; CODE XREF: Debug_ValkirieTertiaryViewerUpdate+24   j  ; was: loc_518E0
+                bsr.w   Debug_ValkirieTertiaryViewerAdvancePoseScript
                 moveq   #$19,d7
                 jmp     Sprite_BeginMetaspritePartTraversal
-; End of function Boss_ValkirieDebugAngleControl
-; Processes animation sequence data from table, handles frame interpolation, and updates multiple sprite angles ($B6-$9B6 offsets)
-Boss_ValkirieAnimationSequencer:                        ; CODE XREF: Boss_ValkirieDebugAngleControl:loc_518E0   p  ; was: sub_518EC
+; End of function Debug_ValkirieTertiaryViewerUpdate
+; Interpret pose commands and update the tertiary viewer's eighteen components
+Debug_ValkirieTertiaryViewerAdvancePoseScript:          ; CODE XREF: Debug_ValkirieTertiaryViewerUpdate:Debug_ValkirieTertiaryViewerAdvancePoseAndRender   p  ; was: sub_518EC
                 clr.b   $23E(a5)
                 tst.w   $C(a5)
-                bpl.s   loc_51964
-loc_518F6:                                              ; CODE XREF: Boss_ValkirieAnimationSequencer+24   j
-                                        ; Boss_ValkirieAnimationSequencer+44   j
+                bpl.s   Debug_ValkirieTertiaryViewerTickPoseInterpolation
+Debug_ValkirieTertiaryViewerReadNextPoseCommand:        ; CODE XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+24   j  ; was: loc_518F6
+                                        ; Debug_ValkirieTertiaryViewerAdvancePoseScript+44   j
                 move.w  $58(a5),d0
-                bmi.w   loc_51974
+                bmi.w   Debug_ValkirieTertiaryViewerStorePoseComponents
                 cmpi.b  #$80,(a1,d0.w)
-                bne.s   loc_51912
+                bne.s   Debug_ValkirieTertiaryViewerCheckPoseControlCommand
                 move.b  1(a1,d0.w),$23E(a5)
                 addq.w  #2,$58(a5)
-                bra.s   loc_518F6
+                bra.s   Debug_ValkirieTertiaryViewerReadNextPoseCommand
 ; ---------------------------------------------------------------------------
-loc_51912:                                              ; CODE XREF: Boss_ValkirieAnimationSequencer+18   j
+Debug_ValkirieTertiaryViewerCheckPoseControlCommand:    ; CODE XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+18   j  ; was: loc_51912
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
-                bne.s   loc_51922
+                bne.s   Debug_ValkirieTertiaryViewerHandlePoseLoopCommand
                 move.w  d3,$58(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_51922:                                              ; CODE XREF: Boss_ValkirieAnimationSequencer+2E   j
+Debug_ValkirieTertiaryViewerHandlePoseLoopCommand:      ; CODE XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+2E   j  ; was: loc_51922
                 cmpi.w  #$FFFF,d3
-                bne.s   loc_51932
+                bne.s   Debug_ValkirieTertiaryViewerBeginPoseCommandInterpolation
                 clr.w   $58(a5)
                 clr.w   $29C(a5)
-                bra.s   loc_518F6
+                bra.s   Debug_ValkirieTertiaryViewerReadNextPoseCommand
 ; ---------------------------------------------------------------------------
-loc_51932:                                              ; CODE XREF: Boss_ValkirieAnimationSequencer+3A   j
+Debug_ValkirieTertiaryViewerBeginPoseCommandInterpolation:  ; CODE XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+3A   j  ; was: loc_51932
                 move.w  d3,(dword_FF8040).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
-                addi.l  #byte_51AB2,d0
+                addi.l  #Debug_ValkirieTertiaryViewerPoseTargets,d0
                 movea.l d0,a0
-                bsr.w   Boss_ValkirieAnimationCalc
+                bsr.w   Debug_ValkirieTertiaryViewerBeginPoseInterpolation
                 moveq   #0,d0
                 move.b  (dword_FF8040).w,d0
                 move.w  d0,$C(a5)
                 addq.w  #4,$58(a5)
                 addq.w  #1,$29C(a5)
                 tst.w   $C(a5)
-                bmi.s   loc_51974
-loc_51964:                                              ; CODE XREF: Boss_ValkirieAnimationSequencer+8   j
+                bmi.s   Debug_ValkirieTertiaryViewerStorePoseComponents
+Debug_ValkirieTertiaryViewerTickPoseInterpolation:      ; CODE XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+8   j  ; was: loc_51964
                 subq.w  #1,$C(a5)
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #$12,d7
                 jsr     (Anim_ApplyInterpolationStep).l
-loc_51974:                                              ; CODE XREF: Boss_ValkirieAnimationSequencer+E   j
-                                        ; Boss_ValkirieAnimationSequencer+76   j
+Debug_ValkirieTertiaryViewerStorePoseComponents:        ; CODE XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+E   j  ; was: loc_51974
+                                        ; Debug_ValkirieTertiaryViewerAdvancePoseScript+76   j
                 move.w  #$1FE,d7
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 move.b  (a0),d0
@@ -203,27 +204,25 @@ loc_51974:                                              ; CODE XREF: Boss_Valkir
                 and.w   d7,d0
                 move.w  d0,$9B6(a5)
                 rts
-; End of function Boss_ValkirieAnimationSequencer
-; Calculates animation interpolation deltas for 18 animation channels using frame data
-Boss_ValkirieAnimationCalc:                             ; CODE XREF: Boss_ValkirieAnimationSequencer+5C   p  ; was: sub_51A86
+; End of function Debug_ValkirieTertiaryViewerAdvancePoseScript
+; Initialize interpolation deltas for the next tertiary-viewer pose command
+Debug_ValkirieTertiaryViewerBeginPoseInterpolation:     ; CODE XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+5C   p  ; was: sub_51A86
                 lea     (Boss_ValkirieAlternateRotationFramesAndNeutralPose).l,a1
                 moveq   #$12,d7
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
-; End of function Boss_ValkirieAnimationCalc
-; Loads animation frame delay data into RAM buffer for 18 animation channels
-Boss_ValkirieAnimationLoadDelays:
-                moveq   #$12,d7                         ; was: sub_51A9C
+; End of function Debug_ValkirieTertiaryViewerBeginPoseInterpolation
+; Load interpolation durations for the eighteen tertiary-viewer components
+Debug_ValkirieTertiaryViewerLoadPoseDurations:          ; was: sub_51A9C
+                moveq   #$12,d7
                 movea.w #(dword_FF9400-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
-; End of function Boss_ValkirieAnimationLoadDelays
+; End of function Debug_ValkirieTertiaryViewerLoadPoseDurations
 ; ---------------------------------------------------------------------------
-byte_51AA8:     dc.b    $20, $20, 0, 0, $20, $20, 0, $12, $FF, $FF
-                                        ; DATA XREF: Boss_ValkirieDebugAngleControl+1E   o
-byte_51AB2:     dc.b    $40, 0, $C0, $94, $C0, $10, $EC, $40, $F0, $60, $F0, $20, $20, $20, $10, $E0
-                                        ; DATA XREF: Boss_ValkirieAnimationSequencer+54   o
+Debug_ValkirieTertiaryViewerPoseScript: dc.b    $20, $20, 0, 0, $20, $20, 0, $12, $FF, $FF  ; was: byte_51AA8
+                                        ; DATA XREF: Debug_ValkirieTertiaryViewerUpdate+1E   o
+Debug_ValkirieTertiaryViewerPoseTargets:    dc.b    $40, 0, $C0, $94, $C0, $10, $EC, $40, $F0, $60, $F0, $20, $20, $20, $10, $E0  ; was: byte_51AB2
+                                        ; DATA XREF: Debug_ValkirieTertiaryViewerAdvancePoseScript+54   o
                 dc.b    $E0, 0, $40, 0, $C0, $94, $C0, $10, $EC, $40, $F0, $60, $F0, $20, $20, $20
                 dc.b    $10, $E0, $E0, 0
-
-; Main boss handler

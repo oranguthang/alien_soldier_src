@@ -690,7 +690,7 @@ Boss_ValkirieRotationFramesC:   dc.l    word_EC6C0      ; DATA XREF: ROM:0003545
                 dc.l    word_EC6E4
                 dc.l    word_EC6E4
                 dc.l    word_EC6C0
-Boss_ValkirieMetaspriteDescriptors: dc.l    word_EC7D4+$400000  ; DATA XREF: Boss_ValkirieInit+18   o  ; was: off_3541C
+Boss_ValkirieMetaspriteDescriptors: dc.l    word_EC7D4+$400000  ; DATA XREF: Debug_ValkirieViewerInitialize+18   o  ; was: off_3541C
                 dc.l    0
                 dc.l    word_EC82E+$400000
                 dc.l    0
@@ -711,11 +711,11 @@ Boss_ValkirieMetaspriteDescriptors: dc.l    word_EC7D4+$400000  ; DATA XREF: Bos
                 dc.l    Boss_ValkirieRotationFramesC
                 dc.l    word_EC7E0+$400000
                 dc.l    word_EC7B0+$400000
-Boss_ValkiriePartRadii: dc.w    0, $A, $8A95            ; DATA XREF: Boss_ValkirieInit+1E   o  ; was: word_35470
+Boss_ValkiriePartRadii: dc.w    0, $A, $8A95            ; DATA XREF: Debug_ValkirieViewerInitialize+1E   o  ; was: word_35470
                 dc.w    $909D, $A0A, $1510
                 dc.w    $1D0A, $E1C, $100A
                 dc.w    $E1C, $1000
-Boss_ValkiriePartLinks: dc.w    $8009, 0, $8007         ; DATA XREF: Boss_ValkirieInit+24   o  ; was: word_35486
+Boss_ValkiriePartLinks: dc.w    $8009, 0, $8007         ; DATA XREF: Debug_ValkirieViewerInitialize+24   o  ; was: word_35486
                 dc.w    $60, $8124, $8123
                 dc.w    $81E4, $81E3, $60
                 dc.w    $830F, $830E, $83CF

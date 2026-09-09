@@ -187,7 +187,7 @@ Boss_WolfGaropaObjectInitTable: dc.w    $C620, $5004, $E004, $E040, $E0F8, $E030
                 dc.w    $CFE0, $1038, $FC2C, $F010, 0, 0, $84
                 dc.w    $FFFE
 Boss_ValkirieObjectInitTable:   dc.w    $C620, $501C, $D010, $F010, $D808, $F808, $6909  ; was: word_1BE6C
-                                        ; DATA XREF: Boss_ValkirieInit+F6   o
+                                        ; DATA XREF: Debug_ValkirieViewerInitialize+F6   o
                 dc.w    $CB60, $5004, $F010, $F010, $FC04, $FC04, $7D09
                 dc.w    $CCE0, $5004, $F010, $F010, $FC04, $FC04, $7D09
                 dc.w    $CC20, $5004, $E41C, $F010, $F808, $FE02, $7D09

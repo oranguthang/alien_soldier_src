@@ -1617,6 +1617,57 @@ directly. The exact on-screen appearance and original design terminology for
 the boundary pair remain unclaimed; `Boundary` describes only the statically
 observed coordinate comparisons and player-X constraint.
 
+The Valkirie composite-viewer pass reduced the address-derived unknown count
+from 6,294 to 6,264 and raised provenance to 9,559 unique mappings. The
+442-line `bosses/valkirie_core.s` container has moved to
+`debug/valkirie_composite_viewer.s`, and all 40 definitions now have exact
+static audit coverage with no live address-derived names. The project-wide
+name-audit total is now 5,262.
+
+Entity type `$3EC` does not implement a Valkirie battle controller. Its table
+contains only initialization and an interactive update: controller-1 bits
+five and six change facing and DMA tile sets, while bits two and three adjust
+the displayed angle. Each frame then advances a fixed pose-command stream,
+updates twenty composite parts, positions mirrored part pairs and a gun
+mapping, and writes a shared screen anchor. There is no attack selection,
+damage handling, player targeting, or defeat state in this module. The
+`debug` classification therefore describes observed interactive viewer
+behaviour; it does not claim that the object is unreachable in every retail
+execution path.
+
+The pose data is now separated into base values, a command stream, four target
+records, interpolation setup, and the sixteen-component writer. This rejects
+the old `ValkirieForce_StateInit` and broad `AnimationController` names: the
+former is the persistent controller-input update, not initialization, and the
+latter is specifically the viewer pose-script interpreter. The original
+development-menu name and intended artist workflow remain unclaimed pending
+runtime or documentary evidence.
+
+The secondary Valkirie viewer pass reduced the address-derived unknown count
+from 6,264 to 6,236 and raised provenance to 9,587 unique mappings. The former
+`bosses/valkirie_miniboss.s` and `bosses/valkirie_auxiliary.s` containers are
+now the ROM-ordered `debug/valkirie_secondary_composite_viewer.s` and
+`debug/valkirie_tertiary_composite_viewer.s`. All 42 definitions across the
+pair have exact static audit coverage and no live address-derived names,
+bringing the project-wide name-audit total to 5,304.
+
+Each module begins with a minimal two-state controller for type `$3F0` or
+`$3F4`: initialization assigns a fixed position and self links, while state
+two only publishes readiness byte `FFA958` after global wait `FF80C2` clears.
+Neither controller initializes a metasprite, selects an attack, or implements
+damage. The old `Miniboss`, `Part3`, `ValkirieForce_State20`, and
+`ValkirieForce_State34` claims are therefore rejected in favor of explicit
+type-number names.
+
+The remaining entry in each module has no static caller. Both read controller
+up/down, adjust a wrapped angle, run a fixed eighteen-component pose script,
+and begin traversal of 25 composite parts. They are documented as secondary
+and tertiary viewer entries because that is the observable behavior, but
+their menu wiring, reachability, and original developer-facing names remain
+unknown. The separate files are retained because they are adjacent,
+self-contained ROM ranges of roughly 230 lines and use different pose-target
+tables.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -1,3 +1,4 @@
+; Main Z-Leo boss handler
 Boss_ZLeoMain:                                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_51AD6
                 tst.w   4(a5)
                 beq.w   loc_51B6A

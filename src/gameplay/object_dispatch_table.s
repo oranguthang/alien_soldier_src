@@ -250,9 +250,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Stage24_ScrollHandler
                 dc.l    Stage_IncrementPhase
                 dc.l    Boss_WolfGaropaUpdate
-                dc.l    Boss_ValkirieStateHandler
-                dc.l    Boss_ValkirieMinibossHandler
-                dc.l    Boss_ValkiriePart3Handler
+                dc.l    Debug_ValkirieCompositeViewerMain
+                dc.l    Debug_ValkirieType3F0Main
+                dc.l    Debug_ValkirieType3F4Main
                 dc.l    Boss_ZLeoMain
                 dc.l    Boss_ValkirieForceMain
                 dc.l    Weapon_ProcessProjectileHit
