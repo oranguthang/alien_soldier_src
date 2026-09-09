@@ -10,103 +10,103 @@ Boss_GustheadMainWrapper:                               ; DATA XREF: ROM:Entity_
 ; Main Gusthead boss handler
 Boss_GustheadMain:                                      ; CODE XREF: Boss_GustheadMainWrapper   p  ; was: sub_3F1A4
                 tst.w   4(a5)
-                beq.w   loc_3F240
+                beq.w   Boss_GustheadDispatchState
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                bne.s   loc_3F1D2
+                bne.s   Boss_GustheadAfterRootMappingToggle
                 addq.w  #4,$58(a5)
                 andi.w  #4,$58(a5)
                 move.w  $58(a5),d0
                 lea     Boss_GustheadRootMappings(pc),a1
                 move.l  (a1,d0.w),8(a5)
                 clr.w   $C(a5)
-loc_3F1D2:                                              ; CODE XREF: Boss_GustheadMain+10   j
+Boss_GustheadAfterRootMappingToggle:                    ; CODE XREF: Boss_GustheadMain+10   j  ; was: loc_3F1D2
                 tst.w   (word_FFA968).w
-                beq.s   loc_3F1E0
+                beq.s   Boss_GustheadSelectDebrisDrift
                 move.l  (dword_FFA960).w,d0
                 add.l   d0,$10(a5)
-loc_3F1E0:                                              ; CODE XREF: Boss_GustheadMain+32   j
+Boss_GustheadSelectDebrisDrift:                         ; CODE XREF: Boss_GustheadMain+32   j  ; was: loc_3F1E0
                 cmpi.w  #$50,4(a5)                      ; 'P'
-                bcc.s   loc_3F1F0
+                bcc.s   Boss_GustheadUseArenaMotionDebrisDrift
                 move.l  (dword_FF8240).w,(dword_FF9428).w
-                bra.s   loc_3F1FC
+                bra.s   Boss_GustheadCheckStageExit
 ; ---------------------------------------------------------------------------
-loc_3F1F0:                                              ; CODE XREF: Boss_GustheadMain+42   j
+Boss_GustheadUseArenaMotionDebrisDrift:                 ; CODE XREF: Boss_GustheadMain+42   j  ; was: loc_3F1F0
                 move.l  (dword_FFA960).w,d0
                 asr.l   #1,d0
                 neg.l   d0
                 move.l  d0,(dword_FF9428).w
-loc_3F1FC:                                              ; CODE XREF: Boss_GustheadMain+4A   j
+Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_GustheadMain+4A   j  ; was: loc_3F1FC
                 btst    #2,(byte_FF80EC).w
-                bne.s   loc_3F22E
+                bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 btst    #1,(byte_FF80EC).w
-                bne.s   loc_3F22E
+                bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 tst.w   (word_FF8200).w
-                bne.s   loc_3F22E
+                bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 move.b  #2,(byte_FF80EC).w
                 bset    #7,$4A(a5)
                 clr.l   (dword_FF8240).w
                 move.w  #$5C,4(a5)                      ; '\'
                 bset    #0,(byte_FFA272).w
-loc_3F22E:                                              ; CODE XREF: Boss_GustheadMain+5E   j
+Boss_GustheadUpdatePaletteAndScreenX:                   ; CODE XREF: Boss_GustheadMain+5E   j  ; was: loc_3F22E
                                         ; Boss_GustheadMain+66   j
                 jsr     (Gfx_InitPaletteFade).l
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$5C(a5)
-loc_3F240:                                              ; CODE XREF: Boss_GustheadMain+4   j
+Boss_GustheadDispatchState:                             ; CODE XREF: Boss_GustheadMain+4   j  ; was: loc_3F240
                 move.w  4(a5),d0
-                lea     off_3F24C(pc,d0.w),a0
+                lea     Boss_GustheadStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
 ; End of function Boss_GustheadMain
 ; ---------------------------------------------------------------------------
-off_3F24C:      dc.w    Boss_GustheadInitBattle-*       ; DATA XREF: Boss_GustheadMain+A0   o
+Boss_GustheadStates:    dc.w    Boss_GustheadInitBattle-*  ; DATA XREF: Boss_GustheadMain+A0   o  ; was: off_3F24C
                 dc.w    Boss_GustheadSetupParts-*
                 dc.w    Boss_GustheadStartIntro-*
                 dc.w    Boss_GustheadIntroFlicker-*
                 dc.w    Boss_GustheadIntroReveal-*
-                dc.w    Boss_GustheadBattleStart-*
-                dc.w    Boss_GustheadDefeatSequence-*
-                dc.w    Boss_GustheadTentacleMain-*
-                dc.w    Boss_GustheadTentacleUpdate-*
-                dc.w    Boss_GustheadTentacleDamage-*
-                dc.w    Boss_GustheadTentacleDamage_RetractLoop-*
-                dc.w    Boss_GustheadTentacleDefeat-*
-                dc.w    Boss_GustheadDefeatPhase1-*
-                dc.w    Boss_GustheadDefeatPhase2-*
-                dc.w    Boss_GustheadDefeatPhase3-*
-                dc.w    Boss_GustheadDefeatPhase4-*
-                dc.w    Boss_GustheadInitBounceMovement-*
-                dc.w    Boss_GustheadInitBounceMovement_UpdateLoop-*
-                dc.w    Boss_GustheadBounceAttackLogic-*
-                dc.w    Boss_GustheadInitFallMovement-*
-                dc.w    Boss_GustheadFallBounceLogic-*
-                dc.w    Boss_GustheadInitDefeatBounce-*
-                dc.w    Boss_GustheadInitDefeatBounce_RiseLoop-*
-                dc.w    Boss_GustheadAttackSequence1-*
-                dc.w    Boss_GustheadRepositionAttack-*
-                dc.w    Boss_GustheadScrollUp-*
-                dc.w    Boss_GustheadFlipSprite-*
-                dc.w    Boss_GustheadReturnToIdle-*
-                dc.w    Boss_GustheadDefeatStart-*
-                dc.w    Boss_GustheadDefeatStart_UpdateLoop-*
-                dc.w    Boss_GustheadDefeatStart_UpdateLoop-*
-                dc.w    Boss_GustheadDefeatStart_UpdateLoop-*
-                dc.w    Boss_GustheadRiseAttack-*
-                dc.w    Boss_GustheadRiseAttack_UpdateLoop-*
-                dc.w    Boss_GustheadAttackSequence2-*
-                dc.w    Boss_GustheadMoveToPosition-*
-                dc.w    Boss_GustheadScrollDown-*
-                dc.w    Boss_GustheadFlipSprite2-*
-                dc.w    Boss_GustheadPrepareDefeat-*
-                dc.w    Boss_GustheadDefeatScrollReset-*
-                dc.w    Boss_GustheadDefeat_ResetPhysics-*
-                dc.w    Boss_GustheadDefeatScrollReset_TentacleLoop-*
-                dc.w    Boss_GustheadDefeatSink-*
-                dc.w    Boss_GustheadDefeatWaitCamera-*
-                dc.w    Boss_GustheadRotateAttack-*
-                dc.w    Boss_GustheadRotateWait-*
+                dc.w    Boss_GustheadRetractSegmentsForBattleState-*
+                dc.w    Boss_GustheadStopBattleEntrySpinState-*
+                dc.w    Boss_GustheadWaitForBattleBannerState-*
+                dc.w    Boss_GustheadChoosePatternState-*
+                dc.w    Boss_GustheadBeginOscillationPattern-*
+                dc.w    Boss_GustheadAlignMiddleJointState-*
+                dc.w    Boss_GustheadSweepOuterJointState-*
+                dc.w    Boss_GustheadWaitForMiddleJointZeroState-*
+                dc.w    Boss_GustheadCountMiddleJointCyclesState-*
+                dc.w    Boss_GustheadBrakeOuterJointState-*
+                dc.w    Boss_GustheadReturnToPatternChoiceState-*
+                dc.w    Boss_GustheadBeginBouncePattern-*
+                dc.w    Boss_GustheadAlignJointsForBounceState-*
+                dc.w    Boss_GustheadBouncePatternState-*
+                dc.w    Boss_GustheadBeginPatternDescentState-*
+                dc.w    Boss_GustheadAlignJointsAfterDescentState-*
+                dc.w    Boss_GustheadBeginFragmentPattern-*
+                dc.w    Boss_GustheadAccelerateFragmentPatternSpinState-*
+                dc.w    Boss_GustheadFragmentPatternFlashState-*
+                dc.w    Boss_GustheadFragmentPatternRepositionState-*
+                dc.w    Boss_GustheadDecelerateFragmentPatternRotationState-*
+                dc.w    Boss_GustheadFragmentPatternRevealState-*
+                dc.w    Boss_GustheadReturnToPatternChoiceAfterFragmentsState-*
+                dc.w    Boss_GustheadBeginArenaTransitionState-*
+                dc.w    Boss_GustheadWaitForArenaTransitionState-*
+                dc.w    Boss_GustheadWaitForArenaTransitionState-*
+                dc.w    Boss_GustheadWaitForArenaTransitionState-*
+                dc.w    Boss_GustheadBeginFinalPhaseTransitionState-*
+                dc.w    Boss_GustheadFinalPhaseRiseState-*
+                dc.w    Boss_GustheadFinalPhaseFlashState-*
+                dc.w    Boss_GustheadFinalPhasePositioningState-*
+                dc.w    Boss_GustheadDecelerateFinalPhaseRotationState-*
+                dc.w    Boss_GustheadFinalPhaseRevealState-*
+                dc.w    Boss_GustheadActivateFinalPhaseState-*
+                dc.w    Boss_GustheadBeginFinalBattle-*
+                dc.w    Boss_GustheadInitializeFinalBattleMotion-*
+                dc.w    Boss_GustheadAlignJointsForFinalBattleState-*
+                dc.w    Boss_GustheadAccelerateFinalBattleRotationState-*
+                dc.w    Boss_GustheadWaitForFinalBattleScrollState-*
+                dc.w    Boss_GustheadFinalBattleAttackState-*
+                dc.w    Boss_GustheadFinalBattleLoopState-*
                 dc.w    Boss_GustheadDefeatInitPhase-*
                 dc.w    Boss_GustheadDefeatSlowScroll-*
                 dc.w    Boss_GustheadDefeatFall-*
@@ -117,9 +117,9 @@ off_3F24C:      dc.w    Boss_GustheadInitBattle-*       ; DATA XREF: Boss_Gusthe
                 dc.w    Boss_GustheadDefeatFinalize-*
 
 ; Initializes Gusthead battle
-Boss_GustheadInitBattle:                                ; DATA XREF: ROM:off_3F24C   o  ; was: sub_3F2B8
+Boss_GustheadInitBattle:                                ; DATA XREF: ROM:Boss_GustheadStates   o  ; was: sub_3F2B8
                 tst.w   (word_FFF720).w
-                bmi.w   locret_4076C
+                bmi.w   Boss_GustheadUpdateSegmentPositionsReturn
                 addq.w  #2,4(a5)
                 move.w  #$1B0,d0
                 moveq   #0,d1
@@ -155,31 +155,31 @@ Boss_GustheadSetupParts:                                ; DATA XREF: ROM:0003F24
                 movea.w a5,a0
                 lea     $60(a0),a0
                 clr.b   d5
-loc_3F35C:                                              ; CODE XREF: Boss_GustheadSetupParts+DA   j
+Boss_GustheadSetupArmLoop:                              ; CODE XREF: Boss_GustheadSetupParts+DA   j  ; was: loc_3F35C
                 move.w  #3,d6
                 clr.b   d0
-loc_3F362:                                              ; CODE XREF: Boss_GustheadSetupParts+D2   j
+Boss_GustheadSetupSegmentLoop:                          ; CODE XREF: Boss_GustheadSetupParts+D2   j  ; was: loc_3F362
                 move.w  #$1BC,(a0)
                 move.w  #$4C00,2(a0)
                 move.w  #$B00,$E(a0)
                 move.l  #word_EC022,8(a0)
                 tst.b   d0
-                bne.s   loc_3F386
+                bne.s   Boss_GustheadUseInnerSegmentRadius
                 move.w  #$28,$48(a0)                    ; '('
-                bra.s   loc_3F38C
+                bra.s   Boss_GustheadStoreSegmentRadius
 ; ---------------------------------------------------------------------------
-loc_3F386:                                              ; CODE XREF: Boss_GustheadSetupParts+AC   j
+Boss_GustheadUseInnerSegmentRadius:                     ; CODE XREF: Boss_GustheadSetupParts+AC   j  ; was: loc_3F386
                 move.w  #$18,$48(a0)
-loc_3F38C:                                              ; CODE XREF: Boss_GustheadSetupParts+B4   j
+Boss_GustheadStoreSegmentRadius:                        ; CODE XREF: Boss_GustheadSetupParts+B4   j  ; was: loc_3F38C
                 move.w  #$80,d1
                 add.w   d1,$48(a0)
                 move.b  d5,$4B(a0)
                 move.b  d0,$4A(a0)
                 lea     $60(a0),a0
                 addq.b  #1,d0
-                dbf     d6,loc_3F362
+                dbf     d6,Boss_GustheadSetupSegmentLoop
                 addi.b  #$40,d5                         ; '@'
-                dbf     d7,loc_3F35C
+                dbf     d7,Boss_GustheadSetupArmLoop
                 move.w  #$10,(a0)
                 move.w  #$6100,2(a0)
                 move.l  #off_E9680,8(a0)
@@ -196,25 +196,25 @@ Boss_GustheadStartIntro:                                ; DATA XREF: ROM:0003F25
 Boss_GustheadIntroFlicker:                              ; DATA XREF: ROM:0003F252   o  ; was: sub_3F3D4
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.s   loc_3F3E4
+                bne.s   Boss_GustheadIntroFlickerCountDown
                 eori.w  #$8000,2(a5)
-loc_3F3E4:                                              ; CODE XREF: Boss_GustheadIntroFlicker+8   j
+Boss_GustheadIntroFlickerCountDown:                     ; CODE XREF: Boss_GustheadIntroFlicker+8   j  ; was: loc_3F3E4
                 subq.w  #1,$48(a5)
-                bne.s   locret_3F3F4
+                bne.s   Boss_GustheadIntroFlickerReturn
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '
-locret_3F3F4:                                           ; CODE XREF: Boss_GustheadIntroFlicker+14   j
+Boss_GustheadIntroFlickerReturn:                        ; CODE XREF: Boss_GustheadIntroFlicker+14   j  ; was: locret_3F3F4
                 rts
 ; End of function Boss_GustheadIntroFlicker
 ; Reveals boss with tentacle setup
 Boss_GustheadIntroReveal:                               ; DATA XREF: ROM:0003F254   o  ; was: sub_3F3F6
                 move.w  (word_FFA000).w,d0
                 andi.w  #1,d0
-                bne.s   loc_3F406
+                bne.s   Boss_GustheadIntroRevealCountDown
                 eori.w  #$8000,2(a5)
-loc_3F406:                                              ; CODE XREF: Boss_GustheadIntroReveal+8   j
+Boss_GustheadIntroRevealCountDown:                      ; CODE XREF: Boss_GustheadIntroReveal+8   j  ; was: loc_3F406
                 subq.w  #1,$48(a5)
-                bne.s   locret_3F44A
+                bne.s   Boss_GustheadIntroRevealReturn
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$10,(dword_FF940C).w
@@ -223,107 +223,107 @@ loc_3F406:                                              ; CODE XREF: Boss_Gusthe
                 move.w  #$180,(dword_FF9408).w
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$4C(a5)
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateBounce
-locret_3F44A:                                           ; CODE XREF: Boss_GustheadIntroReveal+14   j
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateVerticalBounce
+Boss_GustheadIntroRevealReturn:                         ; CODE XREF: Boss_GustheadIntroReveal+14   j  ; was: locret_3F44A
                 rts
 ; End of function Boss_GustheadIntroReveal
-; Starts active battle phase
-Boss_GustheadBattleStart:                               ; DATA XREF: ROM:0003F256   o  ; was: sub_3F44C
+; Retracts all segment radii before the battle-entry banner
+Boss_GustheadRetractSegmentsForBattleState:             ; DATA XREF: ROM:0003F256   o  ; was: sub_3F44C
                 move.w  #3,d7
                 movea.w a5,a0
                 lea     $60(a0),a0
-loc_3F456:                                              ; CODE XREF: Boss_GustheadBattleStart+1C   j
+Boss_GustheadBattleEntryArmLoop:                        ; CODE XREF: Boss_GustheadRetractSegmentsForBattleState+1C   j  ; was: loc_3F456
                 move.w  #3,d6
-loc_3F45A:                                              ; CODE XREF: Boss_GustheadBattleStart+18   j
+Boss_GustheadBattleEntrySegmentLoop:                    ; CODE XREF: Boss_GustheadRetractSegmentsForBattleState+18   j  ; was: loc_3F45A
                 subi.w  #2,$48(a0)
                 lea     $60(a0),a0
-                dbf     d6,loc_3F45A
-                dbf     d7,loc_3F456
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateBounce
+                dbf     d6,Boss_GustheadBattleEntrySegmentLoop
+                dbf     d7,Boss_GustheadBattleEntryArmLoop
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateVerticalBounce
                 eori.w  #$8000,2(a5)
                 subq.w  #1,$48(a5)
-                bne.s   locret_3F488
+                bne.s   Boss_GustheadRetractSegmentsForBattleReturn
                 addq.w  #2,4(a5)
-locret_3F488:                                           ; CODE XREF: Boss_GustheadBattleStart+36   j
+Boss_GustheadRetractSegmentsForBattleReturn:            ; CODE XREF: Boss_GustheadRetractSegmentsForBattleState+36   j  ; was: locret_3F488
                 rts
-; End of function Boss_GustheadBattleStart
-; Boss defeat animation sequence
-Boss_GustheadDefeatSequence:                            ; DATA XREF: ROM:0003F258   o  ; was: sub_3F48A
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateBounce
+; End of function Boss_GustheadRetractSegmentsForBattleState
+; Brakes the introductory outer-joint spin before showing the battle banner
+Boss_GustheadStopBattleEntrySpinState:                  ; DATA XREF: ROM:0003F258   o  ; was: sub_3F48A
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateVerticalBounce
                 eori.w  #$8000,2(a5)
                 subi.l  #$2000,(dword_FF940C).w
-                bne.s   locret_3F4C0
+                bne.s   Boss_GustheadStopBattleEntrySpinReturn
                 ori.w   #$8000,2(a5)
                 move.b  #$50,$21(a5)                    ; 'P'
                 addq.w  #2,4(a5)
                 move.w  #3,d0
                 jsr     (UI_CheckVictoryCondition).l
-locret_3F4C0:                                           ; CODE XREF: Boss_GustheadDefeatSequence+1A   j
+Boss_GustheadStopBattleEntrySpinReturn:                 ; CODE XREF: Boss_GustheadStopBattleEntrySpinState+1A   j  ; was: locret_3F4C0
                 rts
-; End of function Boss_GustheadDefeatSequence
-; Main handler for tentacle part
-Boss_GustheadTentacleMain:                              ; DATA XREF: ROM:0003F25A   o  ; was: sub_3F4C2
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateBounce
+; End of function Boss_GustheadStopBattleEntrySpinState
+; Waits for the battle-entry banner to finish before enabling pattern selection
+Boss_GustheadWaitForBattleBannerState:                  ; DATA XREF: ROM:0003F25A   o  ; was: sub_3F4C2
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateVerticalBounce
                 tst.w   (word_FF80C2).w
-                bne.s   locret_3F4E8
+                bne.s   Boss_GustheadWaitForBattleBannerReturn
                 clr.b   (byte_FF80EC).w
                 ori.w   #$100,2(a5)
                 subi.w  #$A0,(word_FFA970).w
                 addq.w  #2,4(a5)
-locret_3F4E8:                                           ; CODE XREF: Boss_GustheadTentacleMain+10   j
+Boss_GustheadWaitForBattleBannerReturn:                 ; CODE XREF: Boss_GustheadWaitForBattleBannerState+10   j  ; was: locret_3F4E8
                 rts
-; End of function Boss_GustheadTentacleMain
-; Updates single tentacle position
-Boss_GustheadTentacleUpdate:                            ; DATA XREF: ROM:0003F25C   o  ; was: sub_3F4EA
+; End of function Boss_GustheadWaitForBattleBannerState
+; Chooses one of the three regular Gusthead movement patterns
+Boss_GustheadChoosePatternState:                        ; DATA XREF: ROM:0003F25C   o  ; was: sub_3F4EA
                 cmpi.w  #$3200,(word_FF8200).w
-                bcs.s   Boss_GustheadTentacleExtendStart
+                bcs.s   Boss_GustheadTriggerFinalPhaseTransition
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 tst.w   d0
-                beq.s   loc_3F50A
+                beq.s   Boss_GustheadChooseOscillationPattern
                 cmpi.w  #1,d0
-                beq.s   loc_3F51A
+                beq.s   Boss_GustheadChooseBouncePattern
                 cmpi.w  #2,d0
-                beq.s   loc_3F52A
-loc_3F50A:                                              ; CODE XREF: Boss_GustheadTentacleUpdate+12   j
+                beq.s   Boss_GustheadChooseFragmentPattern
+Boss_GustheadChooseOscillationPattern:                  ; CODE XREF: Boss_GustheadChoosePatternState+12   j  ; was: loc_3F50A
                 move.w  #1,$5A(a5)
                 move.w  #$12,4(a5)
-                bra.w   Boss_GustheadTentacleDamage
+                bra.w   Boss_GustheadBeginOscillationPattern
 ; ---------------------------------------------------------------------------
-loc_3F51A:                                              ; CODE XREF: Boss_GustheadTentacleUpdate+18   j
+Boss_GustheadChooseBouncePattern:                       ; CODE XREF: Boss_GustheadChoosePatternState+18   j  ; was: loc_3F51A
                 move.w  #3,$5A(a5)
                 move.w  #$20,4(a5)                      ; ' '
-                bra.w   Boss_GustheadInitBounceMovement
+                bra.w   Boss_GustheadBeginBouncePattern
 ; ---------------------------------------------------------------------------
-loc_3F52A:                                              ; CODE XREF: Boss_GustheadTentacleUpdate+1E   j
+Boss_GustheadChooseFragmentPattern:                     ; CODE XREF: Boss_GustheadChoosePatternState+1E   j  ; was: loc_3F52A
                 move.w  #2,$5A(a5)
                 move.w  #$2A,4(a5)                      ; '*'
-                bra.w   Boss_GustheadInitDefeatBounce
-; End of function Boss_GustheadTentacleUpdate
-; Alternative tentacle retraction routine for Gusthead boss
-Boss_GustheadTentacleRetractAlt:
-                bset    #6,$4A(a5)                      ; was: sub_3F53A
+                bra.w   Boss_GustheadBeginFragmentPattern
+; End of function Boss_GustheadChoosePatternState
+; Begins the arena-boundary transition back to pattern selection
+Boss_GustheadTriggerArenaTransition:                    ; was: sub_3F53A
+                bset    #6,$4A(a5)
                 move.w  #$38,4(a5)                      ; '8'
-                bra.w   Boss_GustheadDefeatStart
-; End of function Boss_GustheadTentacleRetractAlt
-; Initializes tentacle extension state for Gusthead boss
-Boss_GustheadTentacleExtendStart:                       ; CODE XREF: Boss_GustheadTentacleUpdate+6   j  ; was: sub_3F54A
+                bra.w   Boss_GustheadBeginArenaTransitionState
+; End of function Boss_GustheadTriggerArenaTransition
+; Begins the scripted transition into Gusthead's final battle phase
+Boss_GustheadTriggerFinalPhaseTransition:               ; CODE XREF: Boss_GustheadChoosePatternState+6   j  ; was: sub_3F54A
                 bset    #6,$4A(a5)
                 move.w  #1,(word_FFA968).w
                 clr.l   (dword_FFA960).w
                 move.w  #$40,4(a5)                      ; '@'
-                bra.w   Boss_GustheadRiseAttack
-; End of function Boss_GustheadTentacleExtendStart
-; Handles tentacle damage
-Boss_GustheadTentacleDamage:                            ; CODE XREF: Boss_GustheadTentacleUpdate+2C   j  ; was: sub_3F564
+                bra.w   Boss_GustheadBeginFinalPhaseTransitionState
+; End of function Boss_GustheadTriggerFinalPhaseTransition
+; Initializes the regular joint-oscillation pattern
+Boss_GustheadBeginOscillationPattern:                   ; CODE XREF: Boss_GustheadChoosePatternState+2C   j  ; was: sub_3F564
                                         ; DATA XREF: ROM:0003F25E   o
                 addq.w  #2,4(a5)
                 move.l  #$FFFF0000,$1C(a5)
@@ -335,205 +335,205 @@ Boss_GustheadTentacleDamage:                            ; CODE XREF: Boss_Gusthe
                 andi.l  #$1F80000,(dword_FF9404).w
                 andi.l  #$1F80000,(dword_FF9408).w
                 move.w  #$F0,$52(a5)
-; Update tentacles during retract phase after damage
-Boss_GustheadTentacleDamage_RetractLoop:                ; DATA XREF: ROM:0003F260   o  ; was: loc_3F5A2
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadTentacleRetract
+; Aligns the middle joint before the oscillation cycle
+Boss_GustheadAlignMiddleJointState:                     ; DATA XREF: ROM:0003F260   o  ; was: loc_3F5A2
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadMoveTowardPatternTarget
                 subi.w  #8,(dword_FF9404).w
                 andi.w  #$1F8,(dword_FF9404).w
-                bne.w   locret_4076C
+                bne.w   Boss_GustheadUpdateSegmentPositionsReturn
                 addq.w  #2,4(a5)
                 move.l  #$FFFE0000,(dword_FF9410).w
                 move.l  #$1000,(dword_FF941C).w
                 cmpi.w  #$120,(dword_FFA410).w
-                bcc.s   loc_3F5E4
+                bcc.s   Boss_GustheadAccelerateOuterJointPositive
                 move.l  #$FFFFF000,(dword_FF9418).w
-                bra.s   locret_3F5EC
+                bra.s   Boss_GustheadBeginOscillationPatternReturn
 ; ---------------------------------------------------------------------------
-loc_3F5E4:                                              ; CODE XREF: Boss_GustheadTentacleDamage+74   j
+Boss_GustheadAccelerateOuterJointPositive:              ; CODE XREF: Boss_GustheadBeginOscillationPattern+74   j  ; was: loc_3F5E4
                 move.l  #$1000,(dword_FF9418).w
-locret_3F5EC:                                           ; CODE XREF: Boss_GustheadTentacleDamage+7E   j
+Boss_GustheadBeginOscillationPatternReturn:             ; CODE XREF: Boss_GustheadBeginOscillationPattern+7E   j  ; was: locret_3F5EC
                 rts
-; End of function Boss_GustheadTentacleDamage
-; Tentacle defeat sequence
-Boss_GustheadTentacleDefeat:                            ; DATA XREF: ROM:0003F262   o  ; was: sub_3F5EE
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
-                bsr.w   Boss_GustheadCoreMain
-                bsr.s   Boss_GustheadTentacleRetract
+; End of function Boss_GustheadBeginOscillationPattern
+; Sweeps the outer joint until its signed angular-speed boundary
+Boss_GustheadSweepOuterJointState:                      ; DATA XREF: ROM:0003F262   o  ; was: sub_3F5EE
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
+                bsr.w   Boss_GustheadOscillateMiddleJointSpeed
+                bsr.s   Boss_GustheadMoveTowardPatternTarget
                 move.l  (dword_FF9418).w,d0
                 add.l   d0,(dword_FF940C).w
                 cmpi.l  #$C0000,(dword_FF940C).w
-                beq.s   loc_3F620
+                beq.s   Boss_GustheadFinishOuterJointSweep
                 cmpi.l  #$FFF40000,(dword_FF940C).w
-                bne.s   locret_3F62A
-loc_3F620:                                              ; CODE XREF: Boss_GustheadTentacleDefeat+26   j
+                bne.s   Boss_GustheadSweepOuterJointReturn
+Boss_GustheadFinishOuterJointSweep:                     ; CODE XREF: Boss_GustheadSweepOuterJointState+26   j  ; was: loc_3F620
                 move.w  #4,$48(a5)
                 addq.w  #2,4(a5)
-locret_3F62A:                                           ; CODE XREF: Boss_GustheadTentacleDefeat+30   j
+Boss_GustheadSweepOuterJointReturn:                     ; CODE XREF: Boss_GustheadSweepOuterJointState+30   j  ; was: locret_3F62A
                 rts
-; End of function Boss_GustheadTentacleDefeat
-; Retracts defeated tentacle
-Boss_GustheadTentacleRetract:                           ; CODE XREF: Boss_GustheadTentacleDamage+46   p  ; was: sub_3F62C
-                                        ; Boss_GustheadTentacleDefeat+14   p
+; End of function Boss_GustheadSweepOuterJointState
+; Moves the boss body toward the horizontal and vertical pattern targets
+Boss_GustheadMoveTowardPatternTarget:                   ; CODE XREF: Boss_GustheadBeginOscillationPattern+46   p  ; was: sub_3F62C
+                                        ; Boss_GustheadSweepOuterJointState+14   p
                 move.w  $10(a5),d0
                 sub.w   (dword_FFA410).w,d0
-                bpl.s   loc_3F638
+                bpl.s   Boss_GustheadCheckHorizontalTargetDistance
                 neg.w   d0
-loc_3F638:                                              ; CODE XREF: Boss_GustheadTentacleRetract+8   j
+Boss_GustheadCheckHorizontalTargetDistance:             ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+8   j  ; was: loc_3F638
                 cmpi.w  #$10,d0
-                bhi.s   loc_3F644
+                bhi.s   Boss_GustheadSelectHorizontalPatternTarget
                 clr.w   $50(a5)
-                bra.s   loc_3F65A
+                bra.s   Boss_GustheadMoveTowardHorizontalTarget
 ; ---------------------------------------------------------------------------
-loc_3F644:                                              ; CODE XREF: Boss_GustheadTentacleRetract+10   j
+Boss_GustheadSelectHorizontalPatternTarget:             ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+10   j  ; was: loc_3F644
                 cmpi.w  #$120,(dword_FFA410).w
-                bcc.s   loc_3F654
+                bcc.s   Boss_GustheadUseLeftPatternTarget
                 move.w  #$160,$50(a5)
-                bra.s   loc_3F65A
+                bra.s   Boss_GustheadMoveTowardHorizontalTarget
 ; ---------------------------------------------------------------------------
-loc_3F654:                                              ; CODE XREF: Boss_GustheadTentacleRetract+1E   j
+Boss_GustheadUseLeftPatternTarget:                      ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+1E   j  ; was: loc_3F654
                 move.w  #$E0,$50(a5)
-loc_3F65A:                                              ; CODE XREF: Boss_GustheadTentacleRetract+16   j
-                                        ; Boss_GustheadTentacleRetract+26   j
+Boss_GustheadMoveTowardHorizontalTarget:                ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+16   j  ; was: loc_3F65A
+                                        ; Boss_GustheadMoveTowardPatternTarget+26   j
                 tst.w   $50(a5)
-                beq.s   loc_3F686
+                beq.s   Boss_GustheadMoveTowardVerticalTarget
                 move.w  $50(a5),d0
                 sub.w   $10(a5),d0
-                bne.s   loc_3F670
+                bne.s   Boss_GustheadMoveTowardRightTarget
                 clr.w   $50(a5)
-                bra.s   loc_3F686
+                bra.s   Boss_GustheadMoveTowardVerticalTarget
 ; ---------------------------------------------------------------------------
-loc_3F670:                                              ; CODE XREF: Boss_GustheadTentacleRetract+3C   j
+Boss_GustheadMoveTowardRightTarget:                     ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+3C   j  ; was: loc_3F670
                 tst.w   d0
-                bmi.s   loc_3F67E
+                bmi.s   Boss_GustheadMoveTowardLeftTarget
                 addi.l  #$8000,$10(a5)
-                bra.s   loc_3F686
+                bra.s   Boss_GustheadMoveTowardVerticalTarget
 ; ---------------------------------------------------------------------------
-loc_3F67E:                                              ; CODE XREF: Boss_GustheadTentacleRetract+46   j
+Boss_GustheadMoveTowardLeftTarget:                      ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+46   j  ; was: loc_3F67E
                 subi.l  #$8000,$10(a5)
-loc_3F686:                                              ; CODE XREF: Boss_GustheadTentacleRetract+32   j
-                                        ; Boss_GustheadTentacleRetract+42   j
+Boss_GustheadMoveTowardVerticalTarget:                  ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+32   j  ; was: loc_3F686
+                                        ; Boss_GustheadMoveTowardPatternTarget+42   j
                 tst.w   $52(a5)
-                beq.s   Boss_GustheadUpdateBounce
+                beq.s   Boss_GustheadUpdateVerticalBounce
                 move.w  $52(a5),d0
                 sub.w   $14(a5),d0
-                bne.s   loc_3F69C
+                bne.s   Boss_GustheadMoveTowardLowerTarget
                 clr.w   $52(a5)
-                bra.s   Boss_GustheadUpdateBounce
+                bra.s   Boss_GustheadUpdateVerticalBounce
 ; ---------------------------------------------------------------------------
-loc_3F69C:                                              ; CODE XREF: Boss_GustheadTentacleRetract+68   j
+Boss_GustheadMoveTowardLowerTarget:                     ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+68   j  ; was: loc_3F69C
                 tst.w   d0
-                bmi.s   loc_3F6A8
+                bmi.s   Boss_GustheadMoveTowardUpperTarget
                 addi.w  #1,$14(a5)
-                bra.s   Boss_GustheadUpdateBounce
+                bra.s   Boss_GustheadUpdateVerticalBounce
 ; ---------------------------------------------------------------------------
-loc_3F6A8:                                              ; CODE XREF: Boss_GustheadTentacleRetract+72   j
+Boss_GustheadMoveTowardUpperTarget:                     ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+72   j  ; was: loc_3F6A8
                 subi.w  #1,$14(a5)
-; End of function Boss_GustheadTentacleRetract
+; End of function Boss_GustheadMoveTowardPatternTarget
 ; Updates boss vertical bounce
-Boss_GustheadUpdateBounce:                              ; CODE XREF: Boss_GustheadIntroReveal+50   p  ; was: sub_3F6AE
-                                        ; Boss_GustheadBattleStart+28   p
+Boss_GustheadUpdateVerticalBounce:                      ; CODE XREF: Boss_GustheadIntroReveal+50   p  ; was: sub_3F6AE
+                                        ; Boss_GustheadRetractSegmentsForBattleState+28   p
                 tst.l   $4C(a5)
-                beq.s   locret_3F6D0
+                beq.s   Boss_GustheadUpdateVerticalBounceReturn
                 move.l  $4C(a5),d0
                 add.l   d0,$1C(a5)
                 move.l  $1C(a5),d0
-                bpl.s   loc_3F6C4
+                bpl.s   Boss_GustheadCompareBounceSpeed
                 neg.l   d0
-loc_3F6C4:                                              ; CODE XREF: Boss_GustheadUpdateBounce+12   j
+Boss_GustheadCompareBounceSpeed:                        ; CODE XREF: Boss_GustheadUpdateVerticalBounce+12   j  ; was: loc_3F6C4
                 cmpi.l  #$10000,d0
-                bne.s   locret_3F6D0
+                bne.s   Boss_GustheadUpdateVerticalBounceReturn
                 neg.l   $4C(a5)
-locret_3F6D0:                                           ; CODE XREF: Boss_GustheadUpdateBounce+4   j
-                                        ; Boss_GustheadUpdateBounce+1C   j
+Boss_GustheadUpdateVerticalBounceReturn:                ; CODE XREF: Boss_GustheadUpdateVerticalBounce+4   j  ; was: locret_3F6D0
+                                        ; Boss_GustheadUpdateVerticalBounce+1C   j
                 rts
-; End of function Boss_GustheadUpdateBounce
-; Main handler for boss core
-Boss_GustheadCoreMain:                                  ; CODE XREF: Boss_GustheadTentacleDefeat+10   p  ; was: sub_3F6D2
-                                        ; Boss_GustheadDefeatPhase1+10   p
+; End of function Boss_GustheadUpdateVerticalBounce
+; Oscillates the middle-joint angular speed between signed limits
+Boss_GustheadOscillateMiddleJointSpeed:                 ; CODE XREF: Boss_GustheadSweepOuterJointState+10   p  ; was: sub_3F6D2
+                                        ; Boss_GustheadWaitForMiddleJointZeroState+10   p
                 move.l  (dword_FF941C).w,d0
                 add.l   d0,(dword_FF9410).w
                 move.l  (dword_FF9410).w,d0
-                bpl.s   loc_3F6E2
+                bpl.s   Boss_GustheadCompareMiddleJointSpeed
                 neg.l   d0
-loc_3F6E2:                                              ; CODE XREF: Boss_GustheadCoreMain+C   j
+Boss_GustheadCompareMiddleJointSpeed:                   ; CODE XREF: Boss_GustheadOscillateMiddleJointSpeed+C   j  ; was: loc_3F6E2
                 cmpi.l  #$20000,d0
-                bne.s   locret_3F6EE
+                bne.s   Boss_GustheadOscillateMiddleJointSpeedReturn
                 neg.l   (dword_FF941C).w
-locret_3F6EE:                                           ; CODE XREF: Boss_GustheadCoreMain+16   j
+Boss_GustheadOscillateMiddleJointSpeedReturn:           ; CODE XREF: Boss_GustheadOscillateMiddleJointSpeed+16   j  ; was: locret_3F6EE
                 rts
-; End of function Boss_GustheadCoreMain
-; Defeat phase 1 with tentacles
-Boss_GustheadDefeatPhase1:                              ; DATA XREF: ROM:0003F264   o  ; was: sub_3F6F0
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
-                bsr.w   Boss_GustheadCoreMain
-                bsr.w   Boss_GustheadTentacleRetract
-                bsr.w   Boss_GustheadSpawnDebris
+; End of function Boss_GustheadOscillateMiddleJointSpeed
+; Waits for the middle joint to cross angle zero during the oscillation pattern
+Boss_GustheadWaitForMiddleJointZeroState:               ; DATA XREF: ROM:0003F264   o  ; was: sub_3F6F0
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
+                bsr.w   Boss_GustheadOscillateMiddleJointSpeed
+                bsr.w   Boss_GustheadMoveTowardPatternTarget
+                bsr.w   Boss_GustheadSpawnEdgeDebris
                 tst.w   (dword_FF9404).w
-                bne.s   locret_3F716
+                bne.s   Boss_GustheadWaitForMiddleJointZeroReturn
                 addq.w  #2,4(a5)
-locret_3F716:                                           ; CODE XREF: Boss_GustheadDefeatPhase1+20   j
+Boss_GustheadWaitForMiddleJointZeroReturn:              ; CODE XREF: Boss_GustheadWaitForMiddleJointZeroState+20   j  ; was: locret_3F716
                 rts
-; End of function Boss_GustheadDefeatPhase1
-; Defeat phase 2 delay loop
-Boss_GustheadDefeatPhase2:                              ; DATA XREF: ROM:0003F266   o  ; was: sub_3F718
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
-                bsr.w   Boss_GustheadCoreMain
-                bsr.w   Boss_GustheadTentacleRetract
+; End of function Boss_GustheadWaitForMiddleJointZeroState
+; Counts completed middle-joint oscillation cycles
+Boss_GustheadCountMiddleJointCyclesState:               ; DATA XREF: ROM:0003F266   o  ; was: sub_3F718
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
+                bsr.w   Boss_GustheadOscillateMiddleJointSpeed
+                bsr.w   Boss_GustheadMoveTowardPatternTarget
                 tst.w   (dword_FF9404).w
-                beq.s   locret_3F740
+                beq.s   Boss_GustheadCountMiddleJointCyclesReturn
                 subq.w  #1,$48(a5)
-                beq.s   loc_3F742
+                beq.s   Boss_GustheadFinishMiddleJointCycles
                 subq.w  #2,4(a5)
-locret_3F740:                                           ; CODE XREF: Boss_GustheadDefeatPhase2+1C   j
+Boss_GustheadCountMiddleJointCyclesReturn:              ; CODE XREF: Boss_GustheadCountMiddleJointCyclesState+1C   j  ; was: locret_3F740
                 rts
 ; ---------------------------------------------------------------------------
-loc_3F742:                                              ; CODE XREF: Boss_GustheadDefeatPhase2+22   j
+Boss_GustheadFinishMiddleJointCycles:                   ; CODE XREF: Boss_GustheadCountMiddleJointCyclesState+22   j  ; was: loc_3F742
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_GustheadDefeatPhase2
-; Handles Gusthead boss defeat phase 3 with tentacle updates
-Boss_GustheadDefeatPhase3:                              ; DATA XREF: ROM:0003F268   o  ; was: sub_3F748
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
-                bsr.w   Boss_GustheadCoreMain
-                bsr.w   Boss_GustheadTentacleRetract
+; End of function Boss_GustheadCountMiddleJointCyclesState
+; Brakes the outer-joint angular speed to zero
+Boss_GustheadBrakeOuterJointState:                      ; DATA XREF: ROM:0003F268   o  ; was: sub_3F748
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
+                bsr.w   Boss_GustheadOscillateMiddleJointSpeed
+                bsr.w   Boss_GustheadMoveTowardPatternTarget
                 move.l  (dword_FF9418).w,d0
                 sub.l   d0,(dword_FF940C).w
-                bne.s   locret_3F77C
+                bne.s   Boss_GustheadBrakeOuterJointReturn
                 addq.w  #2,4(a5)
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #1,d0
-                beq.s   locret_3F77C
+                beq.s   Boss_GustheadBrakeOuterJointReturn
                 neg.l   (dword_FF9418).w
-locret_3F77C:                                           ; CODE XREF: Boss_GustheadDefeatPhase3+20   j
-                                        ; Boss_GustheadDefeatPhase3+2E   j
+Boss_GustheadBrakeOuterJointReturn:                     ; CODE XREF: Boss_GustheadBrakeOuterJointState+20   j  ; was: locret_3F77C
+                                        ; Boss_GustheadBrakeOuterJointState+2E   j
                 rts
-; End of function Boss_GustheadDefeatPhase3
-; Handles Gusthead boss defeat phase 4 final state
-Boss_GustheadDefeatPhase4:                              ; DATA XREF: ROM:0003F26A   o  ; was: sub_3F77E
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
-                bsr.w   Boss_GustheadTentacleRetract
+; End of function Boss_GustheadBrakeOuterJointState
+; Returns from the oscillation sequence to regular pattern selection
+Boss_GustheadReturnToPatternChoiceState:                ; DATA XREF: ROM:0003F26A   o  ; was: sub_3F77E
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
+                bsr.w   Boss_GustheadMoveTowardPatternTarget
                 move.w  #$10,4(a5)
                 rts
-; End of function Boss_GustheadDefeatPhase4
+; End of function Boss_GustheadReturnToPatternChoiceState
 ; Initializes bouncing movement parameters for Gusthead boss
-Boss_GustheadInitBounceMovement:                        ; CODE XREF: Boss_GustheadTentacleUpdate+3C   j  ; was: sub_3F79A
+Boss_GustheadBeginBouncePattern:                        ; CODE XREF: Boss_GustheadChoosePatternState+3C   j  ; was: sub_3F79A
                                         ; DATA XREF: ROM:0003F26C   o
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$4C(a5)
@@ -546,27 +546,27 @@ Boss_GustheadInitBounceMovement:                        ; CODE XREF: Boss_Gusthe
                 move.l  #$80000,(dword_FF9414).w
                 addq.w  #2,4(a5)
 ; Update tentacles and scroll during bounce initialization
-Boss_GustheadInitBounceMovement_UpdateLoop:             ; DATA XREF: ROM:0003F26E   o  ; was: loc_3F7E2
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
-                bsr.w   Boss_GustheadUpdateBounce
+Boss_GustheadAlignJointsForBounceState:                 ; DATA XREF: ROM:0003F26E   o  ; was: loc_3F7E2
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
+                bsr.w   Boss_GustheadUpdateVerticalBounce
                 cmpi.w  #$40,(dword_FF9400).w           ; '@'
-                bne.s   loc_3F802
+                bne.s   Boss_GustheadCheckBounceMiddleJoint
                 clr.l   (dword_FF940C).w
-loc_3F802:                                              ; CODE XREF: Boss_GustheadInitBounceMovement+62   j
+Boss_GustheadCheckBounceMiddleJoint:                    ; CODE XREF: Boss_GustheadBeginBouncePattern+62   j  ; was: loc_3F802
                 cmpi.w  #0,(dword_FF9404).w
-                bne.s   loc_3F80E
+                bne.s   Boss_GustheadCheckBounceInnerJoint
                 clr.l   (dword_FF9410).w
-loc_3F80E:                                              ; CODE XREF: Boss_GustheadInitBounceMovement+6E   j
+Boss_GustheadCheckBounceInnerJoint:                     ; CODE XREF: Boss_GustheadBeginBouncePattern+6E   j  ; was: loc_3F80E
                 cmpi.w  #$180,(dword_FF9408).w
-                bne.s   locret_3F852
+                bne.s   Boss_GustheadAlignJointsForBounceReturn
                 clr.l   (dword_FF9414).w
                 tst.l   (dword_FF9410).w
-                bne.s   locret_3F852
+                bne.s   Boss_GustheadAlignJointsForBounceReturn
                 tst.l   (dword_FF940C).w
-                bne.s   locret_3F852
+                bne.s   Boss_GustheadAlignJointsForBounceReturn
                 addq.w  #2,4(a5)
                 clr.l   $1C(a5)
                 clr.l   $4C(a5)
@@ -574,58 +574,58 @@ loc_3F80E:                                              ; CODE XREF: Boss_Gusthe
                 move.l  #$100000,(dword_FF9410).w
                 move.l  #$40000,(dword_FF9414).w
                 clr.w   $56(a5)
-                bsr.w   Boss_GustheadUpdateTargetAngle
-locret_3F852:                                           ; CODE XREF: Boss_GustheadInitBounceMovement+7A   j
-                                        ; Boss_GustheadInitBounceMovement+84   j
+                bsr.w   Boss_GustheadSelectNextBounceTurnAngle
+Boss_GustheadAlignJointsForBounceReturn:                ; CODE XREF: Boss_GustheadBeginBouncePattern+7A   j  ; was: locret_3F852
+                                        ; Boss_GustheadBeginBouncePattern+84   j
                 rts
-; End of function Boss_GustheadInitBounceMovement
+; End of function Boss_GustheadBeginBouncePattern
 ; Main logic for Gusthead boss bouncing attack pattern
-Boss_GustheadBounceAttackLogic:                         ; DATA XREF: ROM:0003F270   o  ; was: sub_3F854
+Boss_GustheadBouncePatternState:                        ; DATA XREF: ROM:0003F270   o  ; was: sub_3F854
                 ori.b   #3,$4B(a5)
-                bsr.w   Boss_GustheadCalculateVelocity
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
+                bsr.w   Boss_GustheadSetVelocityFromInnerJointAngle
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
                 cmpi.w  #$100,(dword_FF9408).w
-                bne.s   loc_3F886
+                bne.s   Boss_GustheadCheckBounceTurnAngle
                 cmpi.w  #$120,$14(a5)
-                blt.s   loc_3F886
-                bsr.w   Boss_GustheadSpawnDebris4Way
-                bsr.w   Boss_GustheadFireRadialProjectiles
-loc_3F886:                                              ; CODE XREF: Boss_GustheadBounceAttackLogic+20   j
-                                        ; Boss_GustheadBounceAttackLogic+28   j
+                blt.s   Boss_GustheadCheckBounceTurnAngle
+                bsr.w   Boss_GustheadSpawnFourWayDebris
+                bsr.w   Boss_GustheadSpawnFourWayArcVolley
+Boss_GustheadCheckBounceTurnAngle:                      ; CODE XREF: Boss_GustheadBouncePatternState+20   j  ; was: loc_3F886
+                                        ; Boss_GustheadBouncePatternState+28   j
                 move.w  $54(a5),d0
                 cmp.w   (dword_FF9408).w,d0
-                bne.s   locret_3F896
+                bne.s   Boss_GustheadBouncePatternReturn
                 neg.l   (dword_FF9414).w
-                bsr.s   Boss_GustheadUpdateTargetAngle
-locret_3F896:                                           ; CODE XREF: Boss_GustheadBounceAttackLogic+3A   j
+                bsr.s   Boss_GustheadSelectNextBounceTurnAngle
+Boss_GustheadBouncePatternReturn:                       ; CODE XREF: Boss_GustheadBouncePatternState+3A   j  ; was: locret_3F896
                 rts
-; End of function Boss_GustheadBounceAttackLogic
+; End of function Boss_GustheadBouncePatternState
 ; Updates target angle sequence for Gusthead boss movement
-Boss_GustheadUpdateTargetAngle:                         ; CODE XREF: Boss_GustheadInitBounceMovement+B4   p  ; was: sub_3F898
-                                        ; Boss_GustheadBounceAttackLogic+40   p
+Boss_GustheadSelectNextBounceTurnAngle:                 ; CODE XREF: Boss_GustheadBeginBouncePattern+B4   p  ; was: sub_3F898
+                                        ; Boss_GustheadBouncePatternState+40   p
                 move.w  $56(a5),d0
-                move.w  word_3F8B4(pc,d0.w),$54(a5)
+                move.w  Boss_GustheadBounceTurnAngles(pc,d0.w),$54(a5)
                 addq.w  #2,$56(a5)
                 cmpi.w  #6,$56(a5)
-                bls.s   locret_3F8B2
+                bls.s   Boss_GustheadSelectNextBounceTurnAngleReturn
                 addq.w  #2,4(a5)
-locret_3F8B2:                                           ; CODE XREF: Boss_GustheadUpdateTargetAngle+14   j
+Boss_GustheadSelectNextBounceTurnAngleReturn:           ; CODE XREF: Boss_GustheadSelectNextBounceTurnAngle+14   j  ; was: locret_3F8B2
                 rts
-; End of function Boss_GustheadUpdateTargetAngle
+; End of function Boss_GustheadSelectNextBounceTurnAngle
 ; ---------------------------------------------------------------------------
-word_3F8B4:     dc.w    $180, $80, $80, $180
-                                        ; DATA XREF: Boss_GustheadUpdateTargetAngle+4   r
+Boss_GustheadBounceTurnAngles:  dc.w    $180, $80, $80, $180  ; was: word_3F8B4
+                                        ; DATA XREF: Boss_GustheadSelectNextBounceTurnAngle+4   r
 
 ; Fires radial projectile pattern from Gusthead boss
-Boss_GustheadFireRadialProjectiles:                     ; CODE XREF: Boss_GustheadBounceAttackLogic+2E   p  ; was: sub_3F8BC
+Boss_GustheadSpawnFourWayArcVolley:                     ; CODE XREF: Boss_GustheadBouncePatternState+2E   p  ; was: sub_3F8BC
                 move.w  #3,d7
                 move.w  #$150,d6
-loc_3F8C4:                                              ; CODE XREF: Boss_GustheadFireRadialProjectiles+66   j
+Boss_GustheadFourWayArcVolleyLoop:                      ; CODE XREF: Boss_GustheadSpawnFourWayArcVolley+66   j  ; was: loc_3F8C4
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_3F930
+                bne.s   Boss_GustheadFourWayArcVolleyReturn
                 move.w  #$10,(a0)
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
@@ -645,55 +645,55 @@ loc_3F8C4:                                              ; CODE XREF: Boss_Gusthe
                 move.l  d0,$18(a0)
                 move.l  d1,$1C(a0)
                 addi.w  #$20,d6                         ; ' '
-                dbf     d7,loc_3F8C4
+                dbf     d7,Boss_GustheadFourWayArcVolleyLoop
                 move.b  #$4C,d0                         ; 'L'
                 jsr     (Sound_PlaySFX).l
-locret_3F930:                                           ; CODE XREF: Boss_GustheadFireRadialProjectiles+E   j
+Boss_GustheadFourWayArcVolleyReturn:                    ; CODE XREF: Boss_GustheadSpawnFourWayArcVolley+E   j  ; was: locret_3F930
                 rts
-; End of function Boss_GustheadFireRadialProjectiles
+; End of function Boss_GustheadSpawnFourWayArcVolley
 ; Retrieves first tentacle angle value for Gusthead boss
-Boss_GustheadGetTentacleAngle1:
-                move.w  (dword_FF9400).w,d0             ; was: sub_3F932
-                bra.s   loc_3F942
-; End of function Boss_GustheadGetTentacleAngle1
+Boss_GustheadSetVelocityFromOuterJointAngle:            ; was: sub_3F932
+                move.w  (dword_FF9400).w,d0
+                bra.s   Boss_GustheadSetVelocityFromSelectedJointAngle
+; End of function Boss_GustheadSetVelocityFromOuterJointAngle
 ; Retrieves second tentacle angle value for Gusthead boss
-Boss_GustheadGetTentacleAngle2:
-                move.w  (dword_FF9404).w,d0             ; was: sub_3F938
-                bra.s   loc_3F942
-; End of function Boss_GustheadGetTentacleAngle2
+Boss_GustheadSetVelocityFromMiddleJointAngle:           ; was: sub_3F938
+                move.w  (dword_FF9404).w,d0
+                bra.s   Boss_GustheadSetVelocityFromSelectedJointAngle
+; End of function Boss_GustheadSetVelocityFromMiddleJointAngle
 ; Calculates velocity components from angle for Gusthead boss
-Boss_GustheadCalculateVelocity:                         ; CODE XREF: Boss_GustheadBounceAttackLogic+6   p  ; was: sub_3F93E
+Boss_GustheadSetVelocityFromInnerJointAngle:            ; CODE XREF: Boss_GustheadBouncePatternState+6   p  ; was: sub_3F93E
                 move.w  (dword_FF9408).w,d0
-loc_3F942:                                              ; CODE XREF: Boss_GustheadGetTentacleAngle1+4   j
-                                        ; Boss_GustheadGetTentacleAngle2+4   j
+Boss_GustheadSetVelocityFromSelectedJointAngle:         ; CODE XREF: Boss_GustheadSetVelocityFromOuterJointAngle+4   j  ; was: loc_3F942
+                                        ; Boss_GustheadSetVelocityFromMiddleJointAngle+4   j
                 andi.w  #$1FE,d0
                 lea     (Math_SineTable).l,a1
                 moveq   #0,d1
                 btst    #0,$4B(a5)
-                beq.s   loc_3F95E
+                beq.s   Boss_GustheadSetSelectedVerticalVelocity
                 move.w  (a1,d0.w),d1
                 ext.l   d1
                 add.l   d1,d1
-loc_3F95E:                                              ; CODE XREF: Boss_GustheadCalculateVelocity+16   j
+Boss_GustheadSetSelectedVerticalVelocity:               ; CODE XREF: Boss_GustheadSetVelocityFromInnerJointAngle+16   j  ; was: loc_3F95E
                 moveq   #0,d2
                 btst    #1,$4B(a5)
-                beq.s   loc_3F970
+                beq.s   Boss_GustheadStoreSelectedJointVelocity
                 move.w  -$80(a1,d0.w),d2
                 ext.l   d2
                 asl.l   #4,d2
-loc_3F970:                                              ; CODE XREF: Boss_GustheadCalculateVelocity+28   j
+Boss_GustheadStoreSelectedJointVelocity:                ; CODE XREF: Boss_GustheadSetVelocityFromInnerJointAngle+28   j  ; was: loc_3F970
                 move.l  d1,$18(a5)
                 move.l  d2,$1C(a5)
                 rts
-; End of function Boss_GustheadCalculateVelocity
+; End of function Boss_GustheadSetVelocityFromInnerJointAngle
 ; Initializes falling movement parameters for Gusthead boss
-Boss_GustheadInitFallMovement:                          ; DATA XREF: ROM:0003F272   o  ; was: sub_3F97A
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
+Boss_GustheadBeginPatternDescentState:                  ; DATA XREF: ROM:0003F272   o  ; was: sub_3F97A
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
                 cmpi.w  #$F0,$14(a5)
-                bcs.s   locret_3F9DC
+                bcs.s   Boss_GustheadBeginPatternDescentReturn
                 move.l  #$F00000,$14(a5)
                 clr.l   $18(a5)
                 move.l  #$10000,$1C(a5)
@@ -705,59 +705,59 @@ Boss_GustheadInitFallMovement:                          ; DATA XREF: ROM:0003F27
                 move.w  #8,(dword_FF9410).w
                 move.w  #8,(dword_FF9414).w
                 addq.w  #2,4(a5)
-locret_3F9DC:                                           ; CODE XREF: Boss_GustheadInitFallMovement+16   j
+Boss_GustheadBeginPatternDescentReturn:                 ; CODE XREF: Boss_GustheadBeginPatternDescentState+16   j  ; was: locret_3F9DC
                 rts
-; End of function Boss_GustheadInitFallMovement
+; End of function Boss_GustheadBeginPatternDescentState
 ; Handles Gusthead boss falling and bouncing behavior
-Boss_GustheadFallBounceLogic:                           ; DATA XREF: ROM:0003F274   o  ; was: sub_3F9DE
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
-                bsr.w   Boss_GustheadUpdateBounce
+Boss_GustheadAlignJointsAfterDescentState:              ; DATA XREF: ROM:0003F274   o  ; was: sub_3F9DE
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
+                bsr.w   Boss_GustheadUpdateVerticalBounce
                 cmpi.w  #$40,(dword_FF9400).w           ; '@'
-                bne.s   loc_3F9FE
+                bne.s   Boss_GustheadCheckDescentMiddleJoint
                 clr.l   (dword_FF940C).w
-loc_3F9FE:                                              ; CODE XREF: Boss_GustheadFallBounceLogic+1A   j
+Boss_GustheadCheckDescentMiddleJoint:                   ; CODE XREF: Boss_GustheadAlignJointsAfterDescentState+1A   j  ; was: loc_3F9FE
                 cmpi.w  #$80,(dword_FF9404).w
-                bne.s   loc_3FA0A
+                bne.s   Boss_GustheadCheckDescentInnerJoint
                 clr.l   (dword_FF9410).w
-loc_3FA0A:                                              ; CODE XREF: Boss_GustheadFallBounceLogic+26   j
+Boss_GustheadCheckDescentInnerJoint:                    ; CODE XREF: Boss_GustheadAlignJointsAfterDescentState+26   j  ; was: loc_3FA0A
                 cmpi.w  #$180,(dword_FF9408).w
-                bne.s   locret_3FA28
+                bne.s   Boss_GustheadAlignJointsAfterDescentReturn
                 clr.w   (dword_FF9414).w
                 tst.l   (dword_FF940C).w
-                bne.s   locret_3FA28
+                bne.s   Boss_GustheadAlignJointsAfterDescentReturn
                 tst.l   (dword_FF9410).w
-                bne.s   locret_3FA28
+                bne.s   Boss_GustheadAlignJointsAfterDescentReturn
                 move.w  #$10,4(a5)
-locret_3FA28:                                           ; CODE XREF: Boss_GustheadFallBounceLogic+32   j
-                                        ; Boss_GustheadFallBounceLogic+3C   j
+Boss_GustheadAlignJointsAfterDescentReturn:             ; CODE XREF: Boss_GustheadAlignJointsAfterDescentState+32   j  ; was: locret_3FA28
+                                        ; Boss_GustheadAlignJointsAfterDescentState+3C   j
                 rts
-; End of function Boss_GustheadFallBounceLogic
-; Initializes defeat bounce sequence for Gusthead boss
-Boss_GustheadInitDefeatBounce:                          ; CODE XREF: Boss_GustheadTentacleUpdate+4C   j  ; was: sub_3FA2A
+; End of function Boss_GustheadAlignJointsAfterDescentState
+; Begins the fragment-cluster pattern with a vertical bounce
+Boss_GustheadBeginFragmentPattern:                      ; CODE XREF: Boss_GustheadChoosePatternState+4C   j  ; was: sub_3FA2A
                                         ; DATA XREF: ROM:0003F276   o
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$4C(a5)
                 clr.b   $21(a5)
                 addq.w  #2,4(a5)
-; Execute rising bounce movement during defeat sequence
-Boss_GustheadInitDefeatBounce_RiseLoop:                 ; DATA XREF: ROM:0003F278   o  ; was: loc_3FA42
-                bsr.w   Boss_GustheadUpdateTentacles
-                bsr.w   Boss_GustheadUpdateTentacleAngles
-                bsr.w   Boss_GustheadUpdateScroll
-                bsr.w   Boss_GustheadCoreDefeat
-                bsr.w   Boss_GustheadUpdateBounce
+; Accelerates the outer-joint spin before the fragment-cluster pattern
+Boss_GustheadAccelerateFragmentPatternSpinState:        ; DATA XREF: ROM:0003F278   o  ; was: loc_3FA42
+                bsr.w   Boss_GustheadAdvanceJointAngles
+                bsr.w   Boss_GustheadUpdateSegmentPositions
+                bsr.w   Boss_GustheadUpdateArenaScrollVelocity
+                bsr.w   Boss_GustheadSpawnScrollingDebris
+                bsr.w   Boss_GustheadUpdateVerticalBounce
                 eori.w  #$8000,2(a5)
                 addi.l  #$2000,(dword_FF940C).w
                 cmpi.l  #$100000,(dword_FF940C).w
-                bne.s   locret_3FA7A
+                bne.s   Boss_GustheadAccelerateFragmentPatternSpinReturn
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '
                 bra.s   Boss_GustheadSpawnFragmentCluster
 ; ---------------------------------------------------------------------------
-locret_3FA7A:                                           ; CODE XREF: Boss_GustheadInitDefeatBounce+42   j
+Boss_GustheadAccelerateFragmentPatternSpinReturn:       ; CODE XREF: Boss_GustheadBeginFragmentPattern+42   j  ; was: locret_3FA7A
                 rts
-; End of function Boss_GustheadInitDefeatBounce
+; End of function Boss_GustheadBeginFragmentPattern
 ; Fires Gusthead's fragment cluster based on its horizontal position

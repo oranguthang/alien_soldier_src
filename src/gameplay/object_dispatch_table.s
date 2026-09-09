@@ -110,7 +110,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_GustheadMainWrapper
                 dc.l    OrphanedFloatingOscillator
                 dc.l    Stage12_YachtControllerMain
-                dc.l    Boss_GustheadDefeatComplete
+                dc.l    Boss_GustheadSegmentMain
                 dc.l    Boss_SunsetStingInitDispatcher
                 dc.l    Effect_DebrisParticleAnimate
                 dc.l    Boss_SunsetStingMainDispatcher

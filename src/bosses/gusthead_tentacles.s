@@ -1,4 +1,4 @@
-Boss_GustheadTentacleInit:                              ; DATA XREF: ROM:off_4012C   o  ; was: sub_40132
+Boss_GustheadDetachedSegmentInit:                       ; DATA XREF: ROM:Boss_GustheadDetachedSegmentStates   o  ; was: sub_40132
                 addq.w  #2,4(a5)
                 ori.w   #$100,2(a5)
                 lea     (Math_SineTable).l,a1
@@ -12,45 +12,45 @@ Boss_GustheadTentacleInit:                              ; DATA XREF: ROM:off_401
                 ext.l   d2
                 lsl.l   #3,d2
                 tst.l   d2
-                bmi.s   loc_40164
+                bmi.s   Boss_GustheadStoreDetachedSegmentVerticalVelocity
                 neg.l   d2
-loc_40164:                                              ; CODE XREF: Boss_GustheadTentacleInit+2E   j
+Boss_GustheadStoreDetachedSegmentVerticalVelocity:      ; CODE XREF: Boss_GustheadDetachedSegmentInit+2E   j  ; was: loc_40164
                 move.l  d2,$1C(a5)
                 rts
-; End of function Boss_GustheadTentacleInit
-; Updates vertical velocity and transitions boss state after reaching Y position threshold
-Boss_GustheadBounceTransition:                          ; DATA XREF: ROM:0004012E   o  ; was: sub_4016A
+; End of function Boss_GustheadDetachedSegmentInit
+; Applies gravity to a detached segment and converts it to the shared effect below the arena
+Boss_GustheadDetachedSegmentFallState:                  ; DATA XREF: ROM:0004012E   o  ; was: sub_4016A
                 addi.l  #$1000,$1C(a5)
                 cmpi.w  #$150,$14(a5)
-                blt.s   locret_40196
+                blt.s   Boss_GustheadDetachedSegmentFallReturn
                 clr.l   $1C(a5)
                 clr.l   $18(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
                 move.l  #off_1A0E96,8(a5)
                 move.w  #$4000,$E(a5)
-locret_40196:                                           ; CODE XREF: Boss_GustheadBounceTransition+E   j
+Boss_GustheadDetachedSegmentFallReturn:                 ; CODE XREF: Boss_GustheadDetachedSegmentFallState+E   j  ; was: locret_40196
                 rts
-; End of function Boss_GustheadBounceTransition
-nullsub_81:                                             ; DATA XREF: ROM:00040130   o
+; End of function Boss_GustheadDetachedSegmentFallState
+Boss_GustheadDetachedSegmentInactiveState:              ; DATA XREF: ROM:00040130   o  ; was: nullsub_81
                 rts
-; End of function nullsub_81
+; End of function Boss_GustheadDetachedSegmentInactiveState
 
-; Boss core defeat state
-Boss_GustheadCoreDefeat:                                ; CODE XREF: Boss_GustheadTentacleDefeat+C   p  ; was: sub_4019A
-                                        ; Boss_GustheadDefeatPhase1+C   p
+; Spawns side debris while arena motion is active
+Boss_GustheadSpawnScrollingDebris:                      ; CODE XREF: Boss_GustheadSweepOuterJointState+C   p  ; was: sub_4019A
+                                        ; Boss_GustheadWaitForMiddleJointZeroState+C   p
                 tst.l   (dword_FF9428).w
-                beq.w   locret_4076C
+                beq.w   Boss_GustheadUpdateSegmentPositionsReturn
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                bne.w   locret_4076C
+                bne.w   Boss_GustheadUpdateSegmentPositionsReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.w   locret_4076C
+                bne.w   Boss_GustheadUpdateSegmentPositionsReturn
                 move.w  (word_FFA000).w,d0
                 andi.w  #$3F,d0                         ; '?'
-                bne.s   loc_401CC
+                bne.s   Boss_GustheadSpawnScrollingDebrisObject
                 move.w  #$D1,d0
                 jsr     (Sound_PlaySFX).l
-loc_401CC:                                              ; CODE XREF: Boss_GustheadCoreDefeat+26   j
+Boss_GustheadSpawnScrollingDebrisObject:                ; CODE XREF: Boss_GustheadSpawnScrollingDebris+26   j  ; was: loc_401CC
                 move.w  #$1E4,(a0)
                 move.l  #word_E91FA,8(a0)
                 move.w  #$480,$E(a0)
@@ -67,57 +67,57 @@ loc_401CC:                                              ; CODE XREF: Boss_Gusthe
                 move.l  d0,$18(a0)
                 move.l  #$FFFFF000,$1C(a0)
                 btst    #7,(dword_FF9428).w
-                beq.s   loc_40226
+                beq.s   Boss_GustheadUseLeftDebrisSpawnX
                 move.w  #$1C4,$10(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_40226:                                              ; CODE XREF: Boss_GustheadCoreDefeat+82   j
+Boss_GustheadUseLeftDebrisSpawnX:                       ; CODE XREF: Boss_GustheadSpawnScrollingDebris+82   j  ; was: loc_40226
                 move.w  #$7C,$10(a0)                    ; '|'
                 rts
-; End of function Boss_GustheadCoreDefeat
+; End of function Boss_GustheadSpawnScrollingDebris
 ; Main handler for Gusthead debris
 Enemy_GustheadDebrisMain:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4022E
                 subq.w  #1,$48(a5)
-                bmi.s   loc_40286
+                bmi.s   Enemy_GustheadDebrisRemove
                 cmpi.w  #$60,$10(a5)                    ; '`'
-                bcs.s   loc_40286
+                bcs.s   Enemy_GustheadDebrisRemove
                 cmpi.w  #$1E0,$10(a5)
-                bhi.s   loc_40286
+                bhi.s   Enemy_GustheadDebrisRemove
                 cmpi.w  #$60,$14(a5)                    ; '`'
-                bcs.s   loc_40286
+                bcs.s   Enemy_GustheadDebrisRemove
                 cmpi.w  #$180,$14(a5)
-                bhi.s   loc_40286
+                bhi.s   Enemy_GustheadDebrisRemove
                 move.l  (dword_FF9428).w,d0
-                beq.s   loc_40274
+                beq.s   Enemy_GustheadDebrisApplyStrongGravity
                 addq.b  #1,$4A(a5)
                 btst    #0,$4A(a5)
-                beq.s   loc_4026A
+                beq.s   Enemy_GustheadDebrisApplyDriftGravity
                 add.l   d0,$18(a5)
-loc_4026A:                                              ; CODE XREF: Enemy_GustheadDebrisMain+36   j
+Enemy_GustheadDebrisApplyDriftGravity:                  ; CODE XREF: Enemy_GustheadDebrisMain+36   j  ; was: loc_4026A
                 addi.l  #$400,$1C(a5)
-                bra.s   loc_4027C
+                bra.s   Enemy_GustheadDebrisStoreVerticalPosition
 ; ---------------------------------------------------------------------------
-loc_40274:                                              ; CODE XREF: Enemy_GustheadDebrisMain+2A   j
+Enemy_GustheadDebrisApplyStrongGravity:                 ; CODE XREF: Enemy_GustheadDebrisMain+2A   j  ; was: loc_40274
                 addi.l  #$2000,$1C(a5)
-loc_4027C:                                              ; CODE XREF: Enemy_GustheadDebrisMain+44   j
+Enemy_GustheadDebrisStoreVerticalPosition:              ; CODE XREF: Enemy_GustheadDebrisMain+44   j  ; was: loc_4027C
                 move.l  $1C(a5),d0
                 add.l   d0,$14(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_40286:                                              ; CODE XREF: Enemy_GustheadDebrisMain+4   j
+Enemy_GustheadDebrisRemove:                             ; CODE XREF: Enemy_GustheadDebrisMain+4   j  ; was: loc_40286
                                         ; Enemy_GustheadDebrisMain+C   j
                 bset    #4,2(a5)
                 rts
 ; End of function Enemy_GustheadDebrisMain
-; Spawns falling debris projectiles
-Boss_GustheadSpawnDebris:                               ; CODE XREF: Boss_GustheadDefeatPhase1+18   p  ; was: sub_4028E
+; Spawns falling debris at the arena edge selected by scroll direction
+Boss_GustheadSpawnEdgeDebris:                           ; CODE XREF: Boss_GustheadWaitForMiddleJointZeroState+18   p  ; was: sub_4028E
                 move.w  (word_FFA000).w,d0
                 andi.w  #$1F,d0
-                bne.s   locret_402EE
+                bne.s   Boss_GustheadSpawnEdgeDebrisReturn
                 tst.l   (dword_FF8240).w
-                beq.s   locret_402EE
+                beq.s   Boss_GustheadSpawnEdgeDebrisReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_402EE
+                bne.s   Boss_GustheadSpawnEdgeDebrisReturn
                 move.w  #$1E8,(a0)
                 move.w  #$ED00,2(a0)
                 bsr.w   Enemy_GustheadDebrisSetSprite
@@ -129,30 +129,30 @@ Boss_GustheadSpawnDebris:                               ; CODE XREF: Boss_Gusthe
                 move.b  #$10,$20(a0)
                 move.w  #$F0,$14(a0)
                 tst.l   (dword_FF8240).w
-                bmi.s   loc_402F0
+                bmi.s   Boss_GustheadUseRightDebrisSpawnX
                 move.w  #$78,$10(a0)                    ; 'x'
-locret_402EE:                                           ; CODE XREF: Boss_GustheadSpawnDebris+8   j
-                                        ; Boss_GustheadSpawnDebris+E   j
+Boss_GustheadSpawnEdgeDebrisReturn:                     ; CODE XREF: Boss_GustheadSpawnEdgeDebris+8   j  ; was: locret_402EE
+                                        ; Boss_GustheadSpawnEdgeDebris+E   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_402F0:                                              ; CODE XREF: Boss_GustheadSpawnDebris+58   j
+Boss_GustheadUseRightDebrisSpawnX:                      ; CODE XREF: Boss_GustheadSpawnEdgeDebris+58   j  ; was: loc_402F0
                 move.w  #$1C8,$10(a0)
                 rts
-; End of function Boss_GustheadSpawnDebris
+; End of function Boss_GustheadSpawnEdgeDebris
 ; Sets random debris sprite
-Enemy_GustheadDebrisSetSprite:                          ; CODE XREF: Boss_GustheadSpawnDebris+22   p  ; was: sub_402F8
-                                        ; Boss_GustheadSpawnDebris4Way+46   p
+Enemy_GustheadDebrisSetSprite:                          ; CODE XREF: Boss_GustheadSpawnEdgeDebris+22   p  ; was: sub_402F8
+                                        ; Boss_GustheadSpawnFourWayDebris+46   p
                 jsr     (RandomNumber).l
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 add.w   d0,d0
                 add.w   d0,d0
-                move.l  off_40318(pc,d0.w),8(a0)
+                move.l  Enemy_GustheadDebrisMappings(pc,d0.w),8(a0)
                 move.w  #$8000,$E(a0)
                 rts
 ; End of function Enemy_GustheadDebrisSetSprite
 ; ---------------------------------------------------------------------------
-off_40318:      dc.l    off_1A0F1A                      ; DATA XREF: Enemy_GustheadDebrisSetSprite+12   r
+Enemy_GustheadDebrisMappings:   dc.l    off_1A0F1A      ; DATA XREF: Enemy_GustheadDebrisSetSprite+12   r  ; was: off_40318
                 dc.l    off_1A0F42
                 dc.l    off_1A0F2E
                 dc.l    off_1A0F42
@@ -160,41 +160,41 @@ off_40318:      dc.l    off_1A0F1A                      ; DATA XREF: Enemy_Gusth
 ; Main physics handler for debris
 Enemy_GustheadDebrisPhysicsMain:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40328
                 tst.w   $24(a5)
-                bmi.s   loc_4033E
+                bmi.s   Enemy_GustheadDebrisBeginPickupRelease
                 bclr    #7,$22(a5)
-                beq.s   loc_40358
+                beq.s   Enemy_GustheadDebrisDispatchState
                 bclr    #4,$22(a5)
-                beq.s   loc_40342
-loc_4033E:                                              ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+4   j
-                bra.w   Enemy_GustheadDebrisExplode
+                beq.s   Enemy_GustheadDebrisConvertToEffect
+Enemy_GustheadDebrisBeginPickupRelease:                 ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+4   j  ; was: loc_4033E
+                bra.w   Enemy_GustheadDebrisReleasePickup
 ; ---------------------------------------------------------------------------
-loc_40342:                                              ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+14   j
+Enemy_GustheadDebrisConvertToEffect:                    ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+14   j  ; was: loc_40342
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
-loc_40358:                                              ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+C   j
+Enemy_GustheadDebrisDispatchState:                      ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+C   j  ; was: loc_40358
                 move.w  4(a5),d0
-                lea     off_40364(pc,d0.w),a0
+                lea     Enemy_GustheadDebrisStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
 ; End of function Enemy_GustheadDebrisPhysicsMain
 ; ---------------------------------------------------------------------------
-off_40364:      dc.w    Enemy_GustheadDebrisInit-*      ; DATA XREF: Enemy_GustheadDebrisPhysicsMain+34   o
+Enemy_GustheadDebrisStates: dc.w    Enemy_GustheadDebrisInit-*  ; DATA XREF: Enemy_GustheadDebrisPhysicsMain+34   o  ; was: off_40364
                 dc.w    Enemy_GustheadDebrisUpdate-*
-                dc.w    nullsub_82-*
+                dc.w    Enemy_GustheadDebrisInactiveState-*
 
 ; Initializes debris with velocity
-Enemy_GustheadDebrisInit:                               ; DATA XREF: ROM:off_40364   o  ; was: sub_4036A
+Enemy_GustheadDebrisInit:                               ; DATA XREF: ROM:Enemy_GustheadDebrisStates   o  ; was: sub_4036A
                 addq.w  #2,4(a5)
                 move.l  (dword_FF8240).w,d0
                 add.l   d0,d0
                 add.l   d0,d0
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_4037E
+                bne.s   Enemy_GustheadDebrisStoreHorizontalDrift
                 add.l   d0,d0
-loc_4037E:                                              ; CODE XREF: Enemy_GustheadDebrisInit+10   j
+Enemy_GustheadDebrisStoreHorizontalDrift:               ; CODE XREF: Enemy_GustheadDebrisInit+10   j  ; was: loc_4037E
                 move.l  d0,$18(a5)
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$FFF,d0
@@ -207,48 +207,48 @@ loc_4037E:                                              ; CODE XREF: Enemy_Gusth
 Enemy_GustheadDebrisUpdate:                             ; DATA XREF: ROM:00040366   o  ; was: sub_40396
                 bsr.w   Enemy_GustheadDebrisFlip
                 cmpi.w  #$60,$10(a5)                    ; '`'
-                bcs.s   loc_403CE
+                bcs.s   Enemy_GustheadDebrisRemoveOutOfBounds
                 cmpi.w  #$1E0,$10(a5)
-                bhi.s   loc_403CE
+                bhi.s   Enemy_GustheadDebrisRemoveOutOfBounds
                 cmpi.w  #$60,$14(a5)                    ; '`'
-                bcs.s   loc_403CE
+                bcs.s   Enemy_GustheadDebrisRemoveOutOfBounds
                 cmpi.w  #$180,$14(a5)
-                bhi.s   loc_403CE
+                bhi.s   Enemy_GustheadDebrisRemoveOutOfBounds
                 move.l  $4C(a5),d0
                 add.l   d0,$1C(a5)
                 btst    #7,$1C(a5)
                 beq.w   Boss_GustheadDebrisGroundBounce
                 rts
 ; ---------------------------------------------------------------------------
-loc_403CE:                                              ; CODE XREF: Enemy_GustheadDebrisUpdate+A   j
+Enemy_GustheadDebrisRemoveOutOfBounds:                  ; CODE XREF: Enemy_GustheadDebrisUpdate+A   j  ; was: loc_403CE
                                         ; Enemy_GustheadDebrisUpdate+12   j
                 bset    #4,2(a5)
                 rts
 ; End of function Enemy_GustheadDebrisUpdate
-nullsub_82:                                             ; DATA XREF: ROM:00040368   o
+Enemy_GustheadDebrisInactiveState:                      ; DATA XREF: ROM:00040368   o  ; was: nullsub_82
                 rts
-; End of function nullsub_82
+; End of function Enemy_GustheadDebrisInactiveState
 
 ; Flips debris sprite based on velocity
 Enemy_GustheadDebrisFlip:                               ; CODE XREF: Enemy_GustheadDebrisUpdate   p  ; was: sub_403D8
-                                        ; sub_4046C:loc_4049C   p
+                                        ; sub_4046C:Boss_GustheadDebrisApplyPhysics   p
                 btst    #7,$1C(a5)
-                bne.s   loc_403E8
+                bne.s   Enemy_GustheadDebrisClearVerticalFlip
                 ori.w   #$1000,$E(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_403E8:                                              ; CODE XREF: Enemy_GustheadDebrisFlip+6   j
+Enemy_GustheadDebrisClearVerticalFlip:                  ; CODE XREF: Enemy_GustheadDebrisFlip+6   j  ; was: loc_403E8
                 andi.w  #$EFFF,$E(a5)
                 rts
 ; End of function Enemy_GustheadDebrisFlip
 ; Spawns 4 debris projectiles with trajectories from angle table
-Boss_GustheadSpawnDebris4Way:                           ; CODE XREF: Boss_GustheadBounceAttackLogic+2A   p  ; was: sub_403F0
+Boss_GustheadSpawnFourWayDebris:                        ; CODE XREF: Boss_GustheadBouncePatternState+2A   p  ; was: sub_403F0
                 lea     (Math_SineTable).l,a1
                 move.w  #3,d7
                 move.w  #$120,d6
-loc_403FE:                                              ; CODE XREF: Boss_GustheadSpawnDebris4Way+76   j
+Boss_GustheadFourWayDebrisLoop:                         ; CODE XREF: Boss_GustheadSpawnFourWayDebris+76   j  ; was: loc_403FE
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_4046A
+                bne.s   Boss_GustheadFourWayDebrisReturn
                 move.w  (a1,d6.w),d0
                 ext.l   d0
                 asl.l   #4,d0
@@ -267,69 +267,69 @@ loc_403FE:                                              ; CODE XREF: Boss_Gusthe
                 move.w  #2,$24(a0)
                 move.w  #$10,$26(a0)
                 addi.w  #$40,d6                         ; '@'
-                dbf     d7,loc_403FE
-locret_4046A:                                           ; CODE XREF: Boss_GustheadSpawnDebris4Way+14   j
+                dbf     d7,Boss_GustheadFourWayDebrisLoop
+Boss_GustheadFourWayDebrisReturn:                       ; CODE XREF: Boss_GustheadSpawnFourWayDebris+14   j  ; was: locret_4046A
                 rts
-; End of function Boss_GustheadSpawnDebris4Way
+; End of function Boss_GustheadSpawnFourWayDebris
 ; Updates debris physics with gravity, boundary checks, and collision detection
 Boss_GustheadDebrisUpdate:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4046C
                 tst.w   $24(a5)
-                bmi.s   loc_40482
+                bmi.s   Boss_GustheadDebrisReleasePickup
                 bclr    #7,$22(a5)
-                beq.s   loc_4049C
+                beq.s   Boss_GustheadDebrisApplyPhysics
                 bclr    #4,$22(a5)
-                beq.s   loc_40486
-loc_40482:                                              ; CODE XREF: Boss_GustheadDebrisUpdate+4   j
-                bra.w   Enemy_GustheadDebrisExplode
+                beq.s   Boss_GustheadDebrisConvertToEffect
+Boss_GustheadDebrisReleasePickup:                       ; CODE XREF: Boss_GustheadDebrisUpdate+4   j  ; was: loc_40482
+                bra.w   Enemy_GustheadDebrisReleasePickup
 ; ---------------------------------------------------------------------------
-loc_40486:                                              ; CODE XREF: Boss_GustheadDebrisUpdate+14   j
+Boss_GustheadDebrisConvertToEffect:                     ; CODE XREF: Boss_GustheadDebrisUpdate+14   j  ; was: loc_40486
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
-loc_4049C:                                              ; CODE XREF: Boss_GustheadDebrisUpdate+C   j
+Boss_GustheadDebrisApplyPhysics:                        ; CODE XREF: Boss_GustheadDebrisUpdate+C   j  ; was: loc_4049C
                 bsr.w   Enemy_GustheadDebrisFlip
                 cmpi.w  #$60,$10(a5)                    ; '`'
-                bcs.s   loc_404D4
+                bcs.s   Boss_GustheadDebrisRemoveOutOfBounds
                 cmpi.w  #$1E0,$10(a5)
-                bhi.s   loc_404D4
+                bhi.s   Boss_GustheadDebrisRemoveOutOfBounds
                 cmpi.w  #$60,$14(a5)                    ; '`'
-                bcs.s   loc_404D4
+                bcs.s   Boss_GustheadDebrisRemoveOutOfBounds
                 cmpi.w  #$180,$14(a5)
-                bhi.s   loc_404D4
+                bhi.s   Boss_GustheadDebrisRemoveOutOfBounds
                 addi.l  #$2000,$1C(a5)
                 btst    #7,$1C(a5)
                 beq.w   Boss_GustheadDebrisGroundBounce
                 rts
 ; ---------------------------------------------------------------------------
-loc_404D4:                                              ; CODE XREF: Boss_GustheadDebrisUpdate+3A   j
+Boss_GustheadDebrisRemoveOutOfBounds:                   ; CODE XREF: Boss_GustheadDebrisUpdate+3A   j  ; was: loc_404D4
                                         ; Boss_GustheadDebrisUpdate+42   j
                 bset    #4,2(a5)
                 rts
 ; End of function Boss_GustheadDebrisUpdate
 ; Clears debris velocity and resets animation state
-Boss_GustheadDebrisReset:
-                clr.l   $18(a5)                         ; was: sub_404DC
+Enemy_GustheadDebrisConvertCurrentToEffect:             ; was: sub_404DC
+                clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #off_E95DC,8(a5)
                 jmp     Projectile_InitType88FromCurrent
-; End of function Boss_GustheadDebrisReset
+; End of function Enemy_GustheadDebrisConvertCurrentToEffect
 ; Checks ground collision and applies upward bounce velocity to debris
 Boss_GustheadDebrisGroundBounce:                        ; CODE XREF: Enemy_GustheadDebrisUpdate+32   j  ; was: sub_404F2
                                         ; Boss_GustheadDebrisUpdate+62   j
                 cmpi.w  #$150,$14(a5)
-                blt.s   locret_4051A
+                blt.s   Boss_GustheadDebrisGroundBounceReturn
                 move.l  #off_1A0E96,8(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
                 move.w  #$C000,$E(a5)
                 move.l  #$FFFD8000,$1C(a5)
                 clr.w   $18(a5)
-locret_4051A:                                           ; CODE XREF: Boss_GustheadDebrisGroundBounce+6   j
+Boss_GustheadDebrisGroundBounceReturn:                  ; CODE XREF: Boss_GustheadDebrisGroundBounce+6   j  ; was: locret_4051A
                 rts
 ; End of function Boss_GustheadDebrisGroundBounce
 ; Updates boss rotation animation
-Boss_GustheadUpdateRotation:                            ; CODE XREF: Boss_GustheadDefeatComplete+A2   p  ; was: sub_4051C
+Boss_GustheadUpdateSegmentMapping:                      ; CODE XREF: Boss_GustheadSegmentMain+A2   p  ; was: sub_4051C
                 movea.w a5,a0
                 clr.w   d0
                 move.b  $20(a0),d0
@@ -337,15 +337,15 @@ Boss_GustheadUpdateRotation:                            ; CODE XREF: Boss_Gusthe
                 andi.w  #$7F,d0
                 subi.w  #$20,d0                         ; ' '
                 andi.w  #$3C,d0                         ; '<'
-                move.l  off_4054A(pc,d0.w),8(a0)
+                move.l  Boss_GustheadSegmentMappings(pc,d0.w),8(a0)
                 clr.w   $C(a0)
                 lsr.w   #1,d0
                 lea     (word_FF9502).w,a1
                 addq.w  #1,(a1,d0.w)
                 rts
-; End of function Boss_GustheadUpdateRotation
+; End of function Boss_GustheadUpdateSegmentMapping
 ; ---------------------------------------------------------------------------
-off_4054A:      dc.l    word_EC010                      ; DATA XREF: Boss_GustheadUpdateRotation+18   r
+Boss_GustheadSegmentMappings:   dc.l    word_EC010      ; DATA XREF: Boss_GustheadUpdateSegmentMapping+18   r  ; was: off_4054A
                 dc.l    word_EC010
                 dc.l    word_EC010
                 dc.l    word_EC016
@@ -362,73 +362,73 @@ off_4054A:      dc.l    word_EC010                      ; DATA XREF: Boss_Gusthe
                 dc.l    word_EC034
                 dc.l    word_EC034
 
-; Updates scroll based on boss movement
-Boss_GustheadUpdateScroll:                              ; CODE XREF: Boss_GustheadTentacleDefeat+8   p  ; was: sub_4058A
-                                        ; Boss_GustheadDefeatPhase1+8   p
+; Derives arena scroll velocity from the active joint speed
+Boss_GustheadUpdateArenaScrollVelocity:                 ; CODE XREF: Boss_GustheadSweepOuterJointState+8   p  ; was: sub_4058A
+                                        ; Boss_GustheadWaitForMiddleJointZeroState+8   p
                 move.l  (dword_FF940C).w,d0
-                bne.s   loc_40596
+                bne.s   Boss_GustheadScaleArenaScrollVelocity
                 move.l  (dword_FF9414).w,d0
-                beq.s   loc_405A2
-loc_40596:                                              ; CODE XREF: Boss_GustheadUpdateScroll+4   j
+                beq.s   Boss_GustheadStoreArenaScrollVelocity
+Boss_GustheadScaleArenaScrollVelocity:                  ; CODE XREF: Boss_GustheadUpdateArenaScrollVelocity+4   j  ; was: loc_40596
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_405A0
+                bne.s   Boss_GustheadUseFullArenaScrollVelocity
                 asr.l   #5,d0
-                bra.s   loc_405A2
+                bra.s   Boss_GustheadStoreArenaScrollVelocity
 ; ---------------------------------------------------------------------------
-loc_405A0:                                              ; CODE XREF: Boss_GustheadUpdateScroll+10   j
+Boss_GustheadUseFullArenaScrollVelocity:                ; CODE XREF: Boss_GustheadUpdateArenaScrollVelocity+10   j  ; was: loc_405A0
                 asr.l   #4,d0
-loc_405A2:                                              ; CODE XREF: Boss_GustheadUpdateScroll+A   j
-                                        ; Boss_GustheadUpdateScroll+14   j
+Boss_GustheadStoreArenaScrollVelocity:                  ; CODE XREF: Boss_GustheadUpdateArenaScrollVelocity+A   j  ; was: loc_405A2
+                                        ; Boss_GustheadUpdateArenaScrollVelocity+14   j
                 move.l  d0,(dword_FF8240).w
                 rts
-; End of function Boss_GustheadUpdateScroll
-; Updates tentacle positions
-Boss_GustheadUpdateTentacles:                           ; CODE XREF: Boss_GustheadIntroReveal+48   p  ; was: sub_405A8
+; End of function Boss_GustheadUpdateArenaScrollVelocity
+; Advances the three shared fixed-point joint angles
+Boss_GustheadAdvanceJointAngles:                        ; CODE XREF: Boss_GustheadIntroReveal+48   p  ; was: sub_405A8
                                         ; Boss_GustheadBattleStart+20   p
                 tst.l   (dword_FF940C).w
-                beq.s   loc_405BC
+                beq.s   Boss_GustheadAdvanceMiddleJoint
                 move.l  (dword_FF940C).w,d0
                 add.l   d0,(dword_FF9400).w
                 andi.w  #$1FF,(dword_FF9400).w
-loc_405BC:                                              ; CODE XREF: Boss_GustheadUpdateTentacles+4   j
+Boss_GustheadAdvanceMiddleJoint:                        ; CODE XREF: Boss_GustheadAdvanceJointAngles+4   j  ; was: loc_405BC
                 tst.l   (dword_FF9410).w
-                beq.s   loc_405D0
+                beq.s   Boss_GustheadAdvanceInnerJoint
                 move.l  (dword_FF9410).w,d0
                 add.l   d0,(dword_FF9404).w
                 andi.w  #$1FF,(dword_FF9404).w
-loc_405D0:                                              ; CODE XREF: Boss_GustheadUpdateTentacles+18   j
+Boss_GustheadAdvanceInnerJoint:                         ; CODE XREF: Boss_GustheadAdvanceJointAngles+18   j  ; was: loc_405D0
                 tst.l   (dword_FF9414).w
-                beq.s   locret_405E4
+                beq.s   Boss_GustheadAdvanceJointAnglesReturn
                 move.l  (dword_FF9414).w,d0
                 add.l   d0,(dword_FF9408).w
                 andi.w  #$1FF,(dword_FF9408).w
-locret_405E4:                                           ; CODE XREF: Boss_GustheadUpdateTentacles+2C   j
+Boss_GustheadAdvanceJointAnglesReturn:                  ; CODE XREF: Boss_GustheadAdvanceJointAngles+2C   j  ; was: locret_405E4
                 rts
-; End of function Boss_GustheadUpdateTentacles
-; Sets tentacle sprite priority value to 0
-Boss_GustheadTentaclesClearPriority:
-                clr.w   d0                              ; was: sub_405E6
-                bra.s   loc_405EE
-; End of function Boss_GustheadTentaclesClearPriority
-; Sets sprite priority for all 4 tentacle segments
-Boss_GustheadTentaclesSetPriority:
-                move.w  #2,d0                           ; was: sub_405EA
-loc_405EE:                                              ; CODE XREF: Boss_GustheadTentaclesClearPriority+2   j
+; End of function Boss_GustheadAdvanceJointAngles
+; Sets the first arm's four segment state words to zero
+Boss_GustheadDisableFirstArmSegments:                   ; was: sub_405E6
+                clr.w   d0
+                bra.s   Boss_GustheadStoreFirstArmSegmentState
+; End of function Boss_GustheadDisableFirstArmSegments
+; Sets the first arm's four segment state words to two
+Boss_GustheadEnableFirstArmSegments:                    ; was: sub_405EA
+                move.w  #2,d0
+Boss_GustheadStoreFirstArmSegmentState:                 ; CODE XREF: Boss_GustheadDisableFirstArmSegments+2   j  ; was: loc_405EE
                 move.w  #3,d7
                 movea.l (Entity_ObjectPool).w,a0
                 lea     $60(a0),a0
-loc_405FA:                                              ; CODE XREF: Boss_GustheadTentaclesSetPriority+18   j
+Boss_GustheadFirstArmSegmentStateLoop:                  ; CODE XREF: Boss_GustheadEnableFirstArmSegments+18   j  ; was: loc_405FA
                 move.w  d0,4(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_405FA
+                dbf     d7,Boss_GustheadFirstArmSegmentStateLoop
                 rts
-; End of function Boss_GustheadTentaclesSetPriority
-; Updates sine/cosine angle offsets for tentacle animation
-Boss_GustheadTentaclesUpdateAngles:
-                move.w  #3,d7                           ; was: sub_40608
+; End of function Boss_GustheadEnableFirstArmSegments
+; Seeds the first arm's segment joint-angle fields from the shared angles
+Boss_GustheadSeedFirstArmJointAngles:                   ; was: sub_40608
+                move.w  #3,d7
                 movea.w (Entity_ObjectPool).w,a0
                 lea     $60(a0),a0
-loc_40614:                                              ; CODE XREF: Boss_GustheadTentaclesUpdateAngles+4C   j
+Boss_GustheadSeedFirstArmJointAngleLoop:                ; CODE XREF: Boss_GustheadSeedFirstArmJointAngles+4C   j  ; was: loc_40614
                 clr.w   d0
                 move.b  $4B(a0),d0
                 add.w   d0,d0
@@ -448,11 +448,11 @@ loc_40614:                                              ; CODE XREF: Boss_Gusthe
                 andi.w  #$1FF,d0
                 move.w  d0,$52(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_40614
+                dbf     d7,Boss_GustheadSeedFirstArmJointAngleLoop
                 rts
-; End of function Boss_GustheadTentaclesUpdateAngles
-; Updates tentacle rotation angles
-Boss_GustheadUpdateTentacleAngles:                      ; CODE XREF: Boss_GustheadIntroReveal+4C   p  ; was: sub_4065A
+; End of function Boss_GustheadSeedFirstArmJointAngles
+; Recomputes all four arms of four linked segment positions
+Boss_GustheadUpdateSegmentPositions:                    ; CODE XREF: Boss_GustheadIntroReveal+4C   p  ; was: sub_4065A
                                         ; Boss_GustheadBattleStart+24   p
                 move.l  $10(a5),$670(a5)
                 move.l  $14(a5),$674(a5)
@@ -461,10 +461,10 @@ Boss_GustheadUpdateTentacleAngles:                      ; CODE XREF: Boss_Gusthe
                 move.w  #4,$5C(a5)
                 movea.w a5,a0
                 lea     $60(a0),a0
-loc_4067E:                                              ; CODE XREF: Boss_GustheadUpdateTentacleAngles+10E   j
+Boss_GustheadUpdateArmLoop:                             ; CODE XREF: Boss_GustheadUpdateSegmentPositions+10E   j  ; was: loc_4067E
                 move.w  #3,d0
                 movea.w a5,a1
-loc_40684:                                              ; CODE XREF: Boss_GustheadUpdateTentacleAngles+106   j
+Boss_GustheadUpdateSegmentLoop:                         ; CODE XREF: Boss_GustheadUpdateSegmentPositions+106   j  ; was: loc_40684
                 lea     (Math_SineTable).l,a2
                 move.w  $48(a0),d4
                 move.w  $4E(a0),d5
@@ -485,16 +485,16 @@ loc_40684:                                              ; CODE XREF: Boss_Gusthe
                 add.w   d1,d1
                 asr.w   #2,d1
                 cmpi.w  #$3F,d1                         ; '?'
-                blt.s   loc_406CC
+                blt.s   Boss_GustheadClampSegmentFrameMinimum
                 move.w  #$3F,d1                         ; '?'
-                bra.s   loc_406D6
+                bra.s   Boss_GustheadStoreSegmentFrame
 ; ---------------------------------------------------------------------------
-loc_406CC:                                              ; CODE XREF: Boss_GustheadUpdateTentacleAngles+6A   j
+Boss_GustheadClampSegmentFrameMinimum:                  ; CODE XREF: Boss_GustheadUpdateSegmentPositions+6A   j  ; was: loc_406CC
                 cmpi.w  #$FFC1,d1
-                bgt.s   loc_406D6
+                bgt.s   Boss_GustheadStoreSegmentFrame
                 move.w  #$FFC1,d1
-loc_406D6:                                              ; CODE XREF: Boss_GustheadUpdateTentacleAngles+70   j
-                                        ; Boss_GustheadUpdateTentacleAngles+76   j
+Boss_GustheadStoreSegmentFrame:                         ; CODE XREF: Boss_GustheadUpdateSegmentPositions+70   j  ; was: loc_406D6
+                                        ; Boss_GustheadUpdateSegmentPositions+76   j
                 clr.w   d2
                 move.b  $20(a1),d2
                 add.w   d2,d1
@@ -547,25 +547,25 @@ loc_406D6:                                              ; CODE XREF: Boss_Gusthe
                 move.l  d3,$14(a0)
                 lea     (a0),a1
                 lea     $60(a0),a0
-                dbf     d0,loc_40684
+                dbf     d0,Boss_GustheadUpdateSegmentLoop
                 subq.w  #1,$5C(a5)
-                bne.w   loc_4067E
-locret_4076C:                                           ; CODE XREF: Boss_GustheadInitBattle+4   j
-                                        ; Boss_GustheadTentacleDamage+56   j
+                bne.w   Boss_GustheadUpdateArmLoop
+Boss_GustheadUpdateSegmentPositionsReturn:              ; CODE XREF: Boss_GustheadInitBattle+4   j  ; was: locret_4076C
+                                        ; Boss_GustheadBeginOscillationPattern+56   j
                 rts
-; End of function Boss_GustheadUpdateTentacleAngles
-; Debris explosion with particle spawn
-Enemy_GustheadDebrisExplode:                            ; CODE XREF: Enemy_GustheadDebrisPhysicsMain:loc_4033E   j  ; was: sub_4076E
-                                        ; sub_4046C:loc_40482   j
+; End of function Boss_GustheadUpdateSegmentPositions
+; Converts Gusthead debris to a pickup, optionally spawning a shared effect
+Enemy_GustheadDebrisReleasePickup:                      ; CODE XREF: Enemy_GustheadDebrisPhysicsMain:Enemy_GustheadDebrisBeginPickupRelease   j  ; was: sub_4076E
+                                        ; sub_4046C:Boss_GustheadDebrisReleasePickup   j
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   loc_40798
+                bne.s   Enemy_GustheadSpawnPickupFromDebris
                 jsr     (Projectile_InitType88).l
                 move.l  #off_E95DC,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-loc_40798:                                              ; CODE XREF: Enemy_GustheadDebrisExplode+E   j
+Enemy_GustheadSpawnPickupFromDebris:                    ; CODE XREF: Enemy_GustheadDebrisReleasePickup+E   j  ; was: loc_40798
                 jmp     Pickup_SpawnSmallFromCurrentObject
-; End of function Enemy_GustheadDebrisExplode
+; End of function Enemy_GustheadDebrisReleasePickup
 ; Main handler for Snake boss
