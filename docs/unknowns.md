@@ -843,6 +843,18 @@ center helper was narrowed to the defeat-effect origin fields used by these
 states; the player-controlled state is retained because it directly consumes
 the four directional bits of input word `$FFF706`.
 
+The Snake pass reduced the count to 8,029 and left `bosses/snake.s` with no
+live address-derived definitions. Static flow disproved the imported
+`RandomizeSegments` claim: the routine changes the sine/cosine amplitudes used
+by head steering and never writes a segment record. The former generic
+`Phase1` and `Phase2` states are a timed departure arc and downward exit, while
+the independent health-zero path starts the explosion and destroys all 23
+children in slot order. A provisional replay placed type `$298` and its
+type-`$29C` chain in the documented Stage 13 Snake encounter at frames
+27,720-28,480. Because that replay used the currently unpinned emulator, the
+visual identity remains `hypothesis`; the state, movement, shot, and destruction
+names rely on static instruction-level evidence recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

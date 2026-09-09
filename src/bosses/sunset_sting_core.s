@@ -1,3 +1,4 @@
+; Initializes the shared boss table pointer and dispatches the setup state
 Boss_SunsetStingInitDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40CEE
                 moveq   #4,d7
                 jsr     (Gfx_InitPaletteFade).l

@@ -283,7 +283,7 @@ Cutscene_PlanetTransition:                              ; DATA XREF: ROM:00007C4
 ; End of function Cutscene_PlanetTransition
 ; Sets sprite graphics pointer from table
 Sprite_SetGraphicsPointer:                              ; CODE XREF: Cutscene_PlanetZoomMainLoop+1A   p  ; was: sub_81B4
-                                        ; Boss_SnakeUpdateAnimation+26   p
+                                        ; Boss_SnakeAdvanceAnimation+26   p
                 moveq   #0,d0
                 move.w  d1,d0
                 lsl.w   #1,d1
