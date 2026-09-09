@@ -1,3 +1,4 @@
+; Main boss control routine with state machine dispatch
 Boss_SunsetStingMainDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_418FC
                 move.w  (word_FFA000).w,d0
                 andi.w  #$F,d0
@@ -576,4 +577,3 @@ loc_41FFC:                                              ; CODE XREF: Boss_Sunset
                 clr.l   $1C(a5)
                 rts
 ; End of function Boss_SunsetStingCalculateChainPosition
-; Initiates boss death animation sequence

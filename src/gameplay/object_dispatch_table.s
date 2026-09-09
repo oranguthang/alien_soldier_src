@@ -124,13 +124,13 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_GustheadDebrisPhysicsMain
                 dc.l    Boss_SunsetStingMain
                 dc.l    Boss_SunsetStingSegmentMain
-                dc.l    Boss_SunsetStingSegmentDestroyed
-                dc.l    Projectile_ViblackFallAndDisable
+                dc.l    Boss_SunsetStingSecondarySegmentMain
+                dc.l    Projectile_SunsetStingSegmentShotFallAndDisable
                 dc.l    Boss_JetsripperProjectileUpdate
                 dc.l    Weapon_UpdateSeekingMissile
                 dc.l    Effect_SpawnPlayerDeathSpark
                 dc.l    Stage10_UpdateAmbientParticle
-                dc.l    Boss_SunsetStingDefeatFall
+                dc.l    Boss_SunsetStingDefeatCoreMain
                 dc.l    Boss_ViblackProjectileDispatcher
                 dc.l    Boss_GustheadDebrisUpdate
                 dc.l    Boss_JampanMain

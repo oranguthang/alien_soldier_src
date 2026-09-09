@@ -1,3 +1,4 @@
+; Initiates boss death animation sequence
 Boss_SunsetStingStartDeathSequence:                     ; CODE XREF: Boss_SunsetStingCheckPhaseTransition+4   j  ; was: sub_4200A
                 move.w  #$1A,4(a5)
                 move.b  #0,$4B(a5)
@@ -733,8 +734,8 @@ Math_GetSinCos:                                         ; CODE XREF: Math_GetSca
                 rts
 ; End of function Math_GetSinCos
 ; Gets scaled sine and cosine
-Math_GetScaledSinCos:                                   ; CODE XREF: Boss_SunsetStingSegmentInit:loc_433A8   p  ; was: sub_428A0
-                                        ; Boss_SunsetStingSegmentInit+68   p
+Math_GetScaledSinCos:                                   ; CODE XREF: Boss_SunsetStingSegmentOrbitState:Boss_SunsetStingSegmentOrbitUpdatePosition   p  ; was: sub_428A0
+                                        ; Boss_SunsetStingSegmentOrbitState+68   p
                 bsr.s   Math_GetSinCos
                 muls.w  d2,d0
                 muls.w  d2,d1
@@ -748,4 +749,3 @@ Physics_ClearVelocity:                                  ; CODE XREF: Boss_Sunset
                 move.l  d0,$1C(a5)
                 rts
 ; End of function Physics_ClearVelocity
-; Updates boss core position

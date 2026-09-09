@@ -856,4 +856,3 @@ Boss_SunsetStingApplyParentOffset:                      ; DATA XREF: Boss_Sunset
                 movem.l (sp)+,a5
                 rts
 ; End of function Boss_SunsetStingApplyParentOffset
-; Main boss control routine with state machine dispatch

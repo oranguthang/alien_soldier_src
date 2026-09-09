@@ -11,7 +11,7 @@ word_EBEB2:     dc.w    $1022, $400, $EDF6              ; DATA XREF: ROM:0004330
 word_EBEBE:     dc.w    $9024, $F00, $F2F1              ; DATA XREF: ROM:00043312   o
 word_EBEC4:     dc.w    $1044, $100, $F7EB              ; DATA XREF: ROM:00043316   o
                 dc.w    $9034, $F00, $F0F3
-word_EBED0:     dc.w    $84E, $100, $F70D               ; DATA XREF: ROM:off_432FA   o
+word_EBED0:     dc.w    $84E, $100, $F70D               ; DATA XREF: ROM:Boss_SunsetStingSegmentMappings   o
                 dc.w    $1846, $D00, $FFED
                 dc.w    $8846, $D00, $EFED
 word_EBEE2:     dc.w    $1844, $100, $F60D              ; DATA XREF: ROM:000432FE   o
@@ -19,7 +19,7 @@ word_EBEE2:     dc.w    $1844, $100, $F60D              ; DATA XREF: ROM:000432F
 word_EBEEE:     dc.w    $9824, $F00, $F1EF              ; DATA XREF: ROM:00043302   o
 word_EBEF4:     dc.w    $1822, $400, $ECFA              ; DATA XREF: ROM:00043306   o
                 dc.w    $9812, $F00, $F4F1
-word_EBF00:     dc.w    $8865, $800, $FCF4              ; DATA XREF: ROM:off_4331A   o
+word_EBF00:     dc.w    $8865, $800, $FCF4              ; DATA XREF: ROM:Boss_SunsetStingDestroyedSegmentMappings   o
 word_EBF06:     dc.w    $985F, $900, $F4F3              ; DATA XREF: ROM:0004331E   o
 word_EBF0C:     dc.w    $1859, $100, $FEF8              ; DATA XREF: ROM:00043322   o
                 dc.w    $985B, $500, $F600
@@ -42,7 +42,7 @@ word_EBF6C:     dc.w    $BB, $D00, $FFE0                ; DATA XREF: ROM:off_438
 word_EBF78:     dc.w    $C3, $D00, $FFE0                ; DATA XREF: ROM:00043896   o
                 dc.w    $88C3, $D00, $FF00
 word_EBF84:     dc.w    $CB, $D00, $FFE0                ; DATA XREF: ROM:0004389A   o
-                                        ; Boss_SunsetStingDefeatEnd+6   o
+                                        ; Boss_SunsetStingDefeatCoreInitializeState+6   o
                 dc.w    $88CB, $D00, $FF00
 word_EBF90:     dc.w    $8D3, $A00, $F6F4               ; DATA XREF: ROM:off_EBFC0   o
                 dc.w    $88DF, $800, $8F4

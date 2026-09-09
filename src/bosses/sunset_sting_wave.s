@@ -1,4 +1,5 @@
-Boss_SunsetStingUpdateCore:                             ; CODE XREF: Boss_SunsetStingSegmentMove:loc_434C8   p  ; was: sub_428B4
+; Updates boss core position
+Boss_SunsetStingUpdateCore:                             ; CODE XREF: Boss_SunsetStingSegmentFlightState:Boss_SunsetStingSegmentFlightCheckCore   p  ; was: sub_428B4
                                         ; sub_43738:loc_43754   p
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
@@ -139,4 +140,3 @@ loc_42A04:                                              ; CODE XREF: Boss_Sunset
 locret_42A0E:                                           ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+11E   j
                 rts
 ; End of function Boss_SunsetStingUpdateWaveScreen
-; Main Sunset Sting boss handler
