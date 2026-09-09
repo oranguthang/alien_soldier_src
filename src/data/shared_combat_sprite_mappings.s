@@ -495,8 +495,8 @@ off_E96F0:      dc.w    word_E9218-*                    ; DATA XREF: ROM:000E96F
                 dc.w    2
                 dc.w    off_E96F0-*
                 dc.w    0
-off_E96FC:      dc.w    word_E93F2-*                    ; DATA XREF: Boss_ViblackSpawnRandomProjectile2+2E   o
-                                        ; Boss_BackStringerSpawnDebris+4E   o
+off_E96FC:      dc.w    word_E93F2-*                    ; DATA XREF: Boss_ViblackSpawnWideDefeatParticle+2E   o
+                                        ; Boss_ViblackSpawnTransitionDebris+4E   o
                 dc.w    3
                 dc.w    word_E93F8-*
                 dc.w    3

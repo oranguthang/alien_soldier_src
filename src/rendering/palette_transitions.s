@@ -136,7 +136,7 @@ Gfx_UpdatePaletteFade:                                  ; CODE XREF: Boss_Destro
 ; End of function Gfx_UpdatePaletteFade
 ; Updates Sharpsteel palette in VBlank
 VBlank_UpdateSharpssteelPalette:                        ; CODE XREF: Enemy_ShipSpawnCannons+9A   p  ; was: sub_3ADE
-                                        ; Boss_ViblackUpdateAll+6   p
+                                        ; Boss_ViblackUpdateDefeatEffectsAndParticles+6   p
                 bsr.s   Gfx_CalculateFadeParams
                 bra.w   VBlank_SharpssteelPaletteEffect
 ; End of function VBlank_UpdateSharpssteelPalette

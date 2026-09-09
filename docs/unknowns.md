@@ -855,8 +855,9 @@ type-`$29C` chain in the documented Stage 13 Snake encounter at frames
 visual identity remains `hypothesis`; the state, movement, shot, and destruction
 names rely on static instruction-level evidence recorded in the name audit.
 
-The Sunset Sting controller, segment, early-form, attack, transition, and
-defeat and wave passes reduced the count to 7,772 and left
+The Sunset Sting controller, segment, early-form, attack, transition, defeat,
+and wave passes, followed by the Viblack core/support/chain pass, reduced the
+count to 7,684 and left
 `bosses/sunset_sting_core.s`,
 `bosses/sunset_sting_attacks.s`,
 `bosses/sunset_sting_transition_and_defeat.s`,
@@ -915,6 +916,25 @@ against the central flight bounds. Primary, secondary, and defeat-fall segment
 states remain active while that result is nonzero and advance or retire after
 leaving the bounded area, so their former `CheckCore` names and documentation
 were corrected as part of the same evidence chain.
+
+The Viblack pass removed another false ownership boundary. States
+`$1A`, `$1C`, and `$1E` are entries in Viblack's own state table, not Back
+Stringer routines. The former `UpdateAngle`, `CopyPalette`, and `SpawnRing`
+names were also contradicted by their operands: those routines build and clip
+the `$FF9480` vertical-scroll profile and position an already allocated
+companion object. Viblack transition/scroll/particle support now lives in a
+430-line boss module, while the type-`$2EC` controller and ten type-`$2F0`
+children form a separate 252-line chain-projectile module.
+
+The same pass reconstructed the full sixteen-entry Viblack controller. The
+former `DefeatCheck` is the normal target-selection state for chain and radial
+attacks; defeat is forced separately by the main handler when shared boss
+health reaches zero. The old `DefeatMoveUp` and `DefeatMoveDown` labels were
+also reversed relative to their velocity changes and Y thresholds. Finally,
+the former broad `RopePhysics` claim was narrowed to the behavior visible in
+the instructions: an oscillating transition displacement and ten paired
+transition offsets written through `$FFEC24` and `$FFEC28`; their exact
+renderer role remains unproven.
 
 Four especially broad data labels are explicitly registered:
 

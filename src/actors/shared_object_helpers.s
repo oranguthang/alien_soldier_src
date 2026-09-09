@@ -549,7 +549,7 @@ Effect_InitDebrisFromCurrent:
 ; End of function Effect_InitDebrisFromCurrent
 ; Initializes debris sprite with velocity from RNG
 Effect_InitDebrisSprite:                                ; CODE XREF: Boss_JokerSpawnDefeatEffect+18   p  ; was: sub_2A85E
-                                        ; Boss_BackStringerSpawnDebris+1C   p
+                                        ; Boss_ViblackSpawnTransitionDebris+1C   p
                 move.w  #$174,(a0)
                 move.w  #$EDC0,2(a0)
                 move.w  #$480,$E(a0)

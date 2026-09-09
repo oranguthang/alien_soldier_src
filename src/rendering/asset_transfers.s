@@ -340,7 +340,7 @@ stru_114BE:     dc.w    7                               ; field_0
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 stru_114D0:     dc.w    $314                            ; field_0
-                                        ; DATA XREF: Boss_BackStringerTimerState+14   o
+                                        ; DATA XREF: Boss_ViblackTransitionTimerState+14   o
                 dc.l    stru_114DA                      ; field_2
                 dc.l    byte_C4BE                       ; field_6
 stru_114DA:     dc.w    7                               ; field_0
@@ -585,7 +585,7 @@ stru_1169E:     dc.w    $444                            ; field_0
 Gfx_UpdateBossPalette:                                  ; CODE XREF: Stage_InitBossIntro+2E   j  ; was: sub_116A8
                                         ; Camera_TransitionToBossArena+2E   j
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
-loc_116AC:                                              ; CODE XREF: Boss_BackStringerTimerState+1A   p
+loc_116AC:                                              ; CODE XREF: Boss_ViblackTransitionTimerState+1A   p
                 moveq   #0,d0
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+

@@ -131,7 +131,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Effect_SpawnPlayerDeathSpark
                 dc.l    Stage10_UpdateAmbientParticle
                 dc.l    Boss_SunsetStingDefeatCoreMain
-                dc.l    Boss_ViblackProjectileDispatcher
+                dc.l    Projectile_ViblackMissileMain
                 dc.l    Boss_GustheadDebrisUpdate
                 dc.l    Boss_JampanMain
                 dc.l    Boss_SharpssteelMain

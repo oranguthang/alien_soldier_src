@@ -231,7 +231,7 @@ byte_C464:      dc.b    2, $E, 0, 2, 0, $26, 0, $6A, 0, 0, 0, 0, 0, 0, 2, $AE
                                         ; DATA XREF: Boss_ViblackInit+9A   o
                 dc.b    4, $20, 6, $42, $A, $64, $C, $A8, $E, $CA, $E, $EC, 0, 0, $E, $EE
 byte_C484:      dc.b    2, $E, 0, 2, 4, 6, 6, $28, 0, 0, 0, 0, 2, 0, 8, $4A
-                                        ; DATA XREF: Boss_BackStringerTransitionFinish+3C   o
+                                        ; DATA XREF: Boss_ViblackFinishTransitionState+3C   o
                 dc.b    2, $20, 4, $42, 6, $66, 8, $88, $A, $AA, $A, $CC, 0, 0, $A, $AA
 byte_C4A4:      dc.b    $22, $B, $E, $CA, $E, $C8, $E, $A6, $E, $84, $C, $62, $A, $40, 8, $20
                                         ; DATA XREF: Stage_ViblackPostBattleScroll2+3E   o

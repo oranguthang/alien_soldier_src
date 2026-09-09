@@ -38,7 +38,7 @@ listing by `make verify-layout`.
 | `0x0394D8-0x03B29D` | Shellshogun and Madam Barbar systems | 4 | hypothesis |
 | `0x03B29E-0x03D0AD` | Joker and Flying Neo systems | 4 | hypothesis |
 | `0x03D0AE-0x040CED` | Caterpillar, Xi-Tiger, Deep Strider, Gusthead, and Snake | 7 | hypothesis |
-| `0x040CEE-0x045ACF` | Sunset Sting, Viblack, Back Stringer, and opening Epsilon projectiles | 12 | hypothesis |
+| `0x040CEE-0x045ACF` | Sunset Sting, Viblack, Back Stringer, and opening Epsilon projectiles | 13 | hypothesis |
 | `0x045AD0-0x0490FF` | Epsilon 1 and Sharpssteel systems | 9 | hypothesis |
 | `0x049100-0x04BEBB` | Jampan and Destroyer MK2 systems | 7 | hypothesis |
 | `0x04BEBC-0x04DDD1` | Bugmax systems | 4 | hypothesis |
