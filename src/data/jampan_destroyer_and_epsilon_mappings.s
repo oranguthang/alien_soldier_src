@@ -1,16 +1,16 @@
-word_EC238:     dc.w    0, $100, $F8F8                  ; DATA XREF: Boss_JampanMoveState+1D2   o
-                                        ; ROM:off_494FE   o
+word_EC238:     dc.w    0, $100, $F8F8                  ; DATA XREF: Boss_JampanInitializeEncounterState+1D2   o
+                                        ; ROM:Boss_JampanOrbitingPartSpriteFrames   o
                 dc.w    $8800, $100, $F800
-word_EC244:     dc.w    2, $100, $F8F8                  ; DATA XREF: Boss_JampanMoveState+D6   o
-                                        ; Boss_JampanMoveState+126   o
+word_EC244:     dc.w    2, $100, $F8F8                  ; DATA XREF: Boss_JampanInitializeEncounterState+D6   o
+                                        ; Boss_JampanInitializeEncounterState+126   o
                 dc.w    $8802, $100, $F800
 word_EC250:     dc.w    4, $700, $F0F0                  ; DATA XREF: ROM:00049502   o
                                         ; ROM:00049506   o
                 dc.w    $8804, $700, $F000
-word_EC25C:     dc.w    $D, $700, $F0F0                 ; DATA XREF: Boss_JampanMoveState+AE   o
-                                        ; Boss_JampanMoveState+FE   o
+word_EC25C:     dc.w    $D, $700, $F0F0                 ; DATA XREF: Boss_JampanInitializeEncounterState+AE   o
+                                        ; Boss_JampanInitializeEncounterState+FE   o
                 dc.w    $880D, $700, $F000
-word_EC268:     dc.w    $15, $700, $F0F0                ; DATA XREF: ROM:off_4A4F4   o
+word_EC268:     dc.w    $15, $700, $F0F0                ; DATA XREF: ROM:Boss_JampanLinkedAnimationFrameSequence   o
                                         ; ROM:0004A504   o
                 dc.w    $8815, $700, $F000
 word_EC274:     dc.w    $1D, $700, $F0F0                ; DATA XREF: ROM:0004A4F8   o

@@ -125,9 +125,9 @@ CountryCode:    dc.b    'B               '
 ; - Story Text Screens: Narrative text between stages (ROM 0x01E276)
 ; - Seven Force Variants: Harpy Force & Nemesis Force (non-functional)
 ;
-; DEBUG/TEST CODE:
-; - Boss_JampanDebugController: Developer test function (line ~88482)
-; Allows manual parameter control via controller input
+; INPUT-DRIVEN INTERNAL CONTROL:
+; - Boss_JampanAdjustOrbitParametersFromInput changes Jampan orbit parameters
+; from held button combinations; its original debug/gameplay purpose is unknown
 ;
 ; LOADER FUNCTIONS:
 ; -Stage_InitBossPhase2 (line ~16561): Lambda Bunny palette loader

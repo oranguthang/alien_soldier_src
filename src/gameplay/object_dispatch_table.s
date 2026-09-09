@@ -135,14 +135,14 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_GustheadDebrisUpdate
                 dc.l    Boss_JampanMain
                 dc.l    Boss_SharpssteelMain
-                dc.l    Boss_JampanUpdatePosition
-                dc.l    Boss_JampanTeleportFadeOut
-                dc.l    Boss_JampanFormationMain
+                dc.l    Boss_JampanRadialLinkedObjectMain
+                dc.l    Boss_JampanLinkedAnimationObjectMain
+                dc.l    Boss_JampanOrbitGroupControllerMain
                 dc.l    Weapon_HandleExplosiveImpact
                 dc.l    Effect_InitPlayerMotionProjectile
-                dc.l    Boss_JampanShadowMain
-                dc.l    Enemy_JampanShieldMain
-                dc.l    Boss_JampanDefeatFinalMain
+                dc.l    Boss_JampanOffsetAttackObjectMain
+                dc.l    Boss_JampanShieldMain
+                dc.l    Boss_JampanPostDefeatObjectMain
                 dc.l    Boss_DestroyerMK2Main
                 dc.l    Boss_DestroyerMK2ComponentStateDispatch
                 dc.l    Enemy_CheckBoundsAndDispatch

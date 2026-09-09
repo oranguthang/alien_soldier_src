@@ -251,7 +251,7 @@ byte_C4DE:      dc.b    $62, $E, 2, 0, 4, 4, 6, $26, 8, $4A, $A, $6C, $F, $FF, $
                 dc.b    $E, $CA, $E, $A8, $E, $86, $E, $64, $C, $42, $A, $20, 6, $20, 4, 0
 byte_C55E:      dc.b    $62, $E, 0, 0, $E, $EE, $C, $CC, $A, $AA, 8, $88, $F, $FF, 6, $66
                                         ; DATA XREF: ROM:stru_114E4   o
-                                        ; Boss_JampanDefeatEndFade+6   o
+                                        ; Boss_JampanReinitializePostDefeatObjectsState+6   o
                 dc.b    0, $A, 0, $E, 2, 4, 2, $26, 2, $48, 4, $6A, 6, $8C, 8, $AE
 byte_C57E:      dc.b    $62, $E, 0, 0, $E, $EE, 6, $E4, 0, $80, 0, $28, $F, $FF, 0, $6C
                                         ; DATA XREF: ROM:stru_1151C   o

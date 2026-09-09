@@ -248,7 +248,7 @@
                 include "src/bosses/jampan_core.s"
                 include "src/bosses/jampan_attacks.s"
                 include "src/bosses/jampan_support.s"
-                include "src/bosses/jampan_defeat.s"
+                include "src/bosses/jampan_geometry_and_input.s"
                 include "src/bosses/destroyer_mk2_core.s"
                 include "src/bosses/destroyer_mk2_defeat.s"
                 include "src/bosses/destroyer_mk2_effects.s"

@@ -1,129 +1,131 @@
-; Main boss handler
+; Jampan main controller, encounter setup, opening sequence, and attack selection
+
+; Updates the Jampan controller and publishes its screen-relative position
 Boss_JampanMain:                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4912E
-                bsr.w   Boss_JampanDispatcher
-                bsr.w   Boss_JampanCheckHealth
+                bsr.w   Boss_JampanUpdateAndDispatch
+                bsr.w   Boss_JampanPublishStageCoordinates
                 rts
 ; End of function Boss_JampanMain
-; Boss state dispatcher
-Boss_JampanDispatcher:                                  ; CODE XREF: Boss_JampanMain   p  ; was: sub_49138
+; Handles defeat entry and shared motion before dispatching the active state
+Boss_JampanUpdateAndDispatch:                           ; CODE XREF: Boss_JampanMain   p  ; was: sub_49138
                 tst.w   4(a5)
-                beq.w   loc_491CA
+                beq.w   Boss_JampanDispatchState
                 btst    #1,$4C(a5)
-                bne.s   loc_4915C
+                bne.s   Boss_JampanCheckDefeatTrigger
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                bne.s   loc_4915C
+                bne.s   Boss_JampanCheckDefeatTrigger
                 move.w  $4E(a5),d0
-                beq.s   loc_4915C
+                beq.s   Boss_JampanCheckDefeatTrigger
                 sub.w   d0,(word_FF8234).w
-loc_4915C:                                              ; CODE XREF: Boss_JampanDispatcher+E   j
-                                        ; Boss_JampanDispatcher+18   j
+Boss_JampanCheckDefeatTrigger:                          ; CODE XREF: Boss_JampanUpdateAndDispatch+E   j
+                                        ; Boss_JampanUpdateAndDispatch+18   j
                 btst    #2,(byte_FF80EC).w
-                bne.s   loc_4918E
+                bne.s   Boss_JampanUpdateScreenPositionAndMotion
                 btst    #1,(byte_FF80EC).w
-                bne.s   loc_4918E
+                bne.s   Boss_JampanUpdateScreenPositionAndMotion
                 tst.w   (word_FF8200).w
-                bne.s   loc_4918E
+                bne.s   Boss_JampanUpdateScreenPositionAndMotion
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,$4C(a5)
                 clr.l   (dword_FF8240).w
                 move.w  #$52,4(a5)                      ; 'R'
                 bset    #0,(byte_FFA272).w
-loc_4918E:                                              ; CODE XREF: Boss_JampanDispatcher+2A   j
-                                        ; Boss_JampanDispatcher+32   j
+Boss_JampanUpdateScreenPositionAndMotion:               ; CODE XREF: Boss_JampanUpdateAndDispatch+2A   j
+                                        ; Boss_JampanUpdateAndDispatch+32   j
                 jsr     (Gfx_InitPaletteFade).l
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$58(a5)
                 btst    #2,$4C(a5)
-                beq.s   loc_491CA
+                beq.s   Boss_JampanDispatchState
                 tst.l   $54(a5)
-                beq.s   loc_491CA
+                beq.s   Boss_JampanDispatchState
                 move.l  $54(a5),d0
                 add.l   d0,$1C(a5)
                 move.l  $1C(a5),d0
-                bpl.s   loc_491BE
+                bpl.s   Boss_JampanUseAbsoluteVerticalVelocity
                 neg.l   d0
-loc_491BE:                                              ; CODE XREF: Boss_JampanDispatcher+82   j
+Boss_JampanUseAbsoluteVerticalVelocity:                 ; CODE XREF: Boss_JampanUpdateAndDispatch+82   j
                 cmpi.l  #$10000,d0
-                bne.s   loc_491CA
+                bne.s   Boss_JampanDispatchState
                 neg.l   $54(a5)
-loc_491CA:                                              ; CODE XREF: Boss_JampanDispatcher+4   j
-                                        ; Boss_JampanDispatcher+6E   j
+Boss_JampanDispatchState:                               ; CODE XREF: Boss_JampanUpdateAndDispatch+4   j
+                                        ; Boss_JampanUpdateAndDispatch+6E   j
                 move.w  4(a5),d0
-                lea     off_491D6(pc,d0.w),a0
+                lea     Boss_JampanStateHandlers(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_JampanDispatcher
+; End of function Boss_JampanUpdateAndDispatch
 ; ---------------------------------------------------------------------------
-off_491D6:      dc.w    Boss_JampanIdleState-*          ; DATA XREF: Boss_JampanDispatcher+96   o
-                dc.w    Boss_JampanMoveState-*
-                dc.w    Boss_JampanDefendState-*
-                dc.w    Boss_JampanJumpState-*
-                dc.w    Boss_JampanDashState-*
-                dc.w    Boss_JampanShootProjectile-*
-                dc.w    Boss_JampanSpawnMinion-*
-                dc.w    Projectile_JampanBullet-*
-                dc.w    Projectile_JampanWave-*
-                dc.w    Projectile_JampanHoming-*
-                dc.w    Enemy_JampanMinion-*
-                dc.w    Boss_JampanReturnToIdle-*
-                dc.w    Boss_JampanBounceAttack-*
-                dc.w    Boss_JampanHorizontalDrift-*
-                dc.w    Boss_JampanWaitScreenShake-*
-                dc.w    Boss_JampanCenterHorizontal-*
-                dc.w    Boss_JampanDescendToHeight-*
-                dc.w    Boss_JampanDefeatInit-*
-                dc.w    Boss_JampanDefeatTeleport-*
-                dc.w    Boss_JampanDefeatFade-*
-                dc.w    Boss_JampanTeleportAttempt-*
-                dc.w    nullsub_98-*
-                dc.w    nullsub_99-*
-                dc.w    Boss_JampanWaitVelocityStop-*
-                dc.w    Boss_JampanPreAttackDelay-*
-                dc.w    Boss_JampanAttackWarmup-*
-                dc.w    Boss_JampanAttackPrepare-*
-                dc.w    Boss_JampanAttackRiseUp-*
-                dc.w    Boss_JampanAttackDescend-*
-                dc.w    Boss_JampanAttackFinish-*
-                dc.w    Boss_JampanPostAttackDelay-*
-                dc.w    Boss_JampanResetFromAttack-*
-                dc.w    Boss_JampanDefeatTransition-*
-                dc.w    Boss_JampanDefeatFadeout-*
-                dc.w    Boss_JampanDefeatInitAlt-*
-                dc.w    Boss_JampanDefeatWait-*
-                dc.w    Boss_JampanReturnToCenter-*
-                dc.w    Boss_JampanWaitRotation-*
-                dc.w    Boss_JampanDebrisFadeout-*
-                dc.w    Boss_JampanRotateToCenter-*
-                dc.w    nullsub_100-*
-                dc.w    Boss_JampanDefeatFlash-*
-                dc.w    Boss_JampanDefeatShake-*
-                dc.w    Boss_JampanDefeatBreakup-*
-                dc.w    Boss_JampanDefeatSparkInit-*
-                dc.w    Boss_JampanDefeatSparkMove-*
-                dc.w    Boss_JampanDefeatSparkFade-*
-                dc.w    Boss_JampanDefeatSparkWait-*
-                dc.w    Boss_JampanDefeatEndInit-*
-                dc.w    Boss_JampanDefeatEndFade-*
-                dc.w    Boss_JampanDefeatCleanupInit-*
-                dc.w    Boss_JampanDefeatCleanupWait-*
-                dc.w    nullsub_101-*
+Boss_JampanStateHandlers:   dc.w    Boss_JampanWaitForEncounterActivationState-*  ; DATA XREF: Boss_JampanUpdateAndDispatch+96   o
+                dc.w    Boss_JampanInitializeEncounterState-*
+                dc.w    Boss_JampanWaitForOpeningDelayState-*
+                dc.w    Boss_JampanOpeningFallState-*
+                dc.w    Boss_JampanOpeningBounceApexState-*
+                dc.w    Boss_JampanNormalizeOpeningAnglesState-*
+                dc.w    Boss_JampanWaitForOpeningSidePartState-*
+                dc.w    Boss_JampanNormalizeOpeningOffsetState-*
+                dc.w    Boss_JampanWaitForOpeningObjectClearState-*
+                dc.w    Boss_JampanWaitForOpeningSidePartsState-*
+                dc.w    Boss_JampanSelectAttackState-*
+                dc.w    Boss_JampanDampOrbitOffsetsState-*
+                dc.w    Boss_JampanBounceUntilSettledState-*
+                dc.w    Boss_JampanMoveToScreenThresholdState-*
+                dc.w    Boss_JampanWaitForStageMotionFlagState-*
+                dc.w    Boss_JampanBalanceHorizontalAngleState-*
+                dc.w    Boss_JampanRiseToAttackHeightState-*
+                dc.w    Boss_JampanInitializeOffsetAttackState-*
+                dc.w    Boss_JampanChooseOffsetAttackDirectionState-*
+                dc.w    Boss_JampanSpawnOffsetAttackObjectState-*
+                dc.w    Boss_JampanMoveOffsetAttackAcrossScreenState-*
+                dc.w    Boss_JampanNoOpState2A-*
+                dc.w    Boss_JampanNoOpState2C-*
+                dc.w    Boss_JampanNormalizeShieldCycleVerticalOffsetState-*
+                dc.w    Boss_JampanShieldCycleDelayState-*
+                dc.w    Boss_JampanExpandShieldRadiusState-*
+                dc.w    Boss_JampanShieldCyclePauseState-*
+                dc.w    Boss_JampanRotateShieldPatternForwardState-*
+                dc.w    Boss_JampanRotateShieldPatternBackwardState-*
+                dc.w    Boss_JampanCollapseShieldRadiusState-*
+                dc.w    Boss_JampanShieldCycleRecoveryDelayState-*
+                dc.w    Boss_JampanInitializeAlternatePatternState-*
+                dc.w    Boss_JampanWaitForAlternatePatternAngleState-*
+                dc.w    Boss_JampanExpandAlternatePatternState-*
+                dc.w    Boss_JampanBeginAlternatePatternHoldState-*
+                dc.w    Boss_JampanTrackPlayerDuringAlternatePatternState-*
+                dc.w    Boss_JampanCenterAlternatePatternVerticallyState-*
+                dc.w    Boss_JampanWaitForAlternatePrimaryAngleState-*
+                dc.w    Boss_JampanCollapseAlternatePatternState-*
+                dc.w    Boss_JampanRestoreAttackSelectionAngleState-*
+                dc.w    Boss_JampanNoOpState50-*
+                dc.w    Boss_JampanBeginDefeatState-*
+                dc.w    Boss_JampanDefeatFallState-*
+                dc.w    Boss_JampanDefeatExplosionHoldState-*
+                dc.w    Boss_JampanWaitForDefeatShieldDescentState-*
+                dc.w    Boss_JampanFadeDefeatPaletteOutState-*
+                dc.w    Boss_JampanResetAfterDefeatFadeState-*
+                dc.w    Boss_JampanFadeDefeatPaletteInState-*
+                dc.w    Boss_JampanPreparePostDefeatControllerState-*
+                dc.w    Boss_JampanReinitializePostDefeatObjectsState-*
+                dc.w    Boss_JampanInitializePostDefeatMovementState-*
+                dc.w    Boss_JampanUpdatePostDefeatMovementState-*
+                dc.w    Boss_JampanPostDefeatNoOpState68-*
 
-; Idle state handler
-Boss_JampanIdleState:                                   ; DATA XREF: ROM:off_491D6   o  ; was: sub_49240
+; Waits for the stage controller to activate the encounter
+Boss_JampanWaitForEncounterActivationState:             ; DATA XREF: ROM:Boss_JampanStateHandlers   o  ; was: sub_49240
                 tst.w   (word_FFF720).w
-                bmi.s   locret_49256
+                bmi.s   Boss_JampanWaitForEncounterActivationReturn
                 addq.w  #2,4(a5)
                 move.w  #$218,d0
                 moveq   #0,d1
                 jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
-locret_49256:                                           ; CODE XREF: Boss_JampanIdleState+4   j
+Boss_JampanWaitForEncounterActivationReturn:            ; CODE XREF: Boss_JampanWaitForEncounterActivationState+4   j
                 rts
-; End of function Boss_JampanIdleState
-; Movement state handler
-Boss_JampanMoveState:                                   ; DATA XREF: ROM:000491D8   o  ; was: sub_49258
+; End of function Boss_JampanWaitForEncounterActivationState
+; Loads encounter resources and initializes the controller and linked objects
+Boss_JampanInitializeEncounterState:                    ; DATA XREF: ROM:000491D8   o  ; was: sub_49258
                 move.b  #1,d0
                 jsr     (Sound_PlaySFX).l
                 addq.w  #2,4(a5)
@@ -142,7 +144,7 @@ Boss_JampanMoveState:                                   ; DATA XREF: ROM:000491D
                 clr.w   (dword_FF9428).w
                 clr.w   (dword_FF9428+2).w
                 clr.w   (dword_FF942C).w
-                bsr.w   Boss_JampanAttackState
+                bsr.w   Boss_JampanLoadEncounterTiles
                 move.b  #4,(byte_FFA420).w
                 move.w  #$1E8,$10(a5)
                 move.w  #$F0,$14(a5)
@@ -155,7 +157,7 @@ Boss_JampanMoveState:                                   ; DATA XREF: ROM:000491D
                 move.l  #$F010F010,$2C(a5)
                 move.l  #$F010F010,$28(a5)
                 move.w  #$20,$24(a5)                    ; ' '
-loc_492F4:                                              ; CODE XREF: Boss_JampanDefeatEndFade+12   p
+Boss_JampanInitializeLinkedObjectGraph:                 ; CODE XREF: Boss_JampanReinitializePostDefeatObjectsState+12   p
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 lea     $60(a0),a0
                 move.w  #$224,(a0)
@@ -191,67 +193,67 @@ loc_492F4:                                              ; CODE XREF: Boss_Jampan
                 lea     $60(a0),a0
                 move.w  #$F,d7
                 clr.w   d1
-loc_493B0:                                              ; CODE XREF: Boss_JampanMoveState+1B8   j
+Boss_JampanInitializeOrbitingPartLoop:                  ; CODE XREF: Boss_JampanInitializeEncounterState+1B8   j
                 move.w  #$CD00,2(a0)
                 move.w  #$6B00,$E(a0)
                 move.w  d1,d0
                 add.w   d0,d0
-                lea     word_4945E(pc),a1
+                lea     Boss_JampanOrbitingPartTypes(pc),a1
                 nop
                 move.w  (a1,d0.w),(a0)
-                lea     word_4949E(pc),a1
+                lea     Boss_JampanOrbitingPartRadii(pc),a1
                 nop
                 move.w  (a1,d0.w),$48(a0)
-                lea     word_4947E(pc),a1
+                lea     Boss_JampanOrbitingPartSpriteAttributes(pc),a1
                 nop
                 move.w  (a1,d0.w),d2
                 or.w    d2,$E(a0)
-                lea     word_494BE(pc),a1
+                lea     Boss_JampanOrbitingPartPrimaryAngles(pc),a1
                 nop
                 move.w  (a1,d0.w),$4A(a0)
-                lea     word_494DE(pc),a1
+                lea     Boss_JampanOrbitingPartSecondaryAngles(pc),a1
                 nop
                 move.w  (a1,d0.w),$4C(a0)
                 add.w   d0,d0
-                lea     off_494FE(pc),a1
+                lea     Boss_JampanOrbitingPartSpriteFrames(pc),a1
                 nop
                 move.l  (a1,d0.w),8(a0)
                 addq.w  #1,d1
                 lea     $60(a0),a0
-                dbf     d7,loc_493B0
+                dbf     d7,Boss_JampanInitializeOrbitingPartLoop
                 move.w  #5,d7
                 clr.w   d1
-loc_4941A:                                              ; CODE XREF: Boss_JampanMoveState+1DE   j
+Boss_JampanInitializeShieldSlotLoop:                    ; CODE XREF: Boss_JampanInitializeEncounterState+1DE   j
                 move.w  #$10,(a0)
                 move.w  #$4D00,2(a0)
                 move.w  #$6B00,$E(a0)
                 move.l  #word_EC238,8(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_4941A
-                bsr.w   Boss_JampanDamageHandler
+                dbf     d7,Boss_JampanInitializeShieldSlotLoop
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 rts
-; End of function Boss_JampanMoveState
-; Attack state handler
-Boss_JampanAttackState:                                 ; CODE XREF: Boss_JampanMoveState+4C   p  ; was: sub_49440
-                lea     word_4944E(pc),a0
+; End of function Boss_JampanInitializeEncounterState
+; Loads the compressed tile block used by the encounter
+Boss_JampanLoadEncounterTiles:                          ; CODE XREF: Boss_JampanInitializeEncounterState+4C   p  ; was: sub_49440
+                lea     Boss_JampanEncounterTileLoadDescriptor(pc),a0
                 nop
                 jsr     (Gfx_LoadCompressedTiles).l
                 rts
-; End of function Boss_JampanAttackState
+; End of function Boss_JampanLoadEncounterTiles
 ; ---------------------------------------------------------------------------
-word_4944E:     dc.w    $6100, $2000, $202, $7879, $7A7C, $7D7E, $8081, 0
-                                        ; DATA XREF: Boss_JampanAttackState   o
-word_4945E:     dc.w    $234, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10
-                                        ; DATA XREF: Boss_JampanMoveState+168   o
-word_4947E:     dc.w    0, 0, 0, $1000, $1000, $1000, $1000, $1000, $1000, $1000, 0, 0, 0, 0, 0, 0
-                                        ; DATA XREF: Boss_JampanMoveState+17E   o
-word_4949E:     dc.w    $24, $30, $30, $24, $24, $24, $24, $24, $24, $24, $24, $24, $24, $24, $24, $24
-                                        ; DATA XREF: Boss_JampanMoveState+172   o
-word_494BE:     dc.w    $80, $A8, $58, $20, $40, $60, $80, $A0, $C0, $E0, $30, $50, $70, $90, $B0, $D0
-                                        ; DATA XREF: Boss_JampanMoveState+18C   o
-word_494DE:     dc.w    $FFE0, $FF80, $FF80, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40
-                                        ; DATA XREF: Boss_JampanMoveState+198   o
-off_494FE:      dc.l    word_EC238                      ; DATA XREF: Boss_JampanMoveState+1A6   o
+Boss_JampanEncounterTileLoadDescriptor: dc.w    $6100, $2000, $202, $7879, $7A7C, $7D7E, $8081, 0
+                                        ; DATA XREF: Boss_JampanLoadEncounterTiles   o
+Boss_JampanOrbitingPartTypes:   dc.w    $234, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10, $10
+                                        ; DATA XREF: Boss_JampanInitializeEncounterState+168   o
+Boss_JampanOrbitingPartSpriteAttributes:    dc.w    0, 0, 0, $1000, $1000, $1000, $1000, $1000, $1000, $1000, 0, 0, 0, 0, 0, 0
+                                        ; DATA XREF: Boss_JampanInitializeEncounterState+17E   o
+Boss_JampanOrbitingPartRadii:   dc.w    $24, $30, $30, $24, $24, $24, $24, $24, $24, $24, $24, $24, $24, $24, $24, $24
+                                        ; DATA XREF: Boss_JampanInitializeEncounterState+172   o
+Boss_JampanOrbitingPartPrimaryAngles:   dc.w    $80, $A8, $58, $20, $40, $60, $80, $A0, $C0, $E0, $30, $50, $70, $90, $B0, $D0
+                                        ; DATA XREF: Boss_JampanInitializeEncounterState+18C   o
+Boss_JampanOrbitingPartSecondaryAngles: dc.w    $FFE0, $FF80, $FF80, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40
+                                        ; DATA XREF: Boss_JampanInitializeEncounterState+198   o
+Boss_JampanOrbitingPartSpriteFrames:    dc.l    word_EC238  ; DATA XREF: Boss_JampanInitializeEncounterState+1A6   o
                 dc.l    word_EC250
                 dc.l    word_EC250
                 dc.l    word_EC28C
@@ -268,28 +270,28 @@ off_494FE:      dc.l    word_EC238                      ; DATA XREF: Boss_Jampan
                 dc.l    word_EC28C
                 dc.l    word_EC28C
 
-; Defense state handler
-Boss_JampanDefendState:                                 ; DATA XREF: ROM:000491DA   o  ; was: sub_4953E
-                bsr.w   Boss_JampanDamageHandler
+; Waits before activating the opening-sequence linked parts
+Boss_JampanWaitForOpeningDelayState:                    ; DATA XREF: ROM:000491DA   o  ; was: sub_4953E
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 subq.w  #1,$48(a5)
-                bne.s   locret_4956E
-                bsr.w   Boss_JampanDamageHandler
+                bne.s   Boss_JampanWaitForOpeningDelayReturn
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 move.w  #1,(word_FFC732).w
                 move.w  #1,(word_FFC7F2).w
                 move.w  #4,(dword_FF9410).w
                 move.w  #4,(dword_FF9414).w
                 move.w  #3,$48(a5)
                 addq.w  #2,4(a5)
-locret_4956E:                                           ; CODE XREF: Boss_JampanDefendState+8   j
+Boss_JampanWaitForOpeningDelayReturn:                   ; CODE XREF: Boss_JampanWaitForOpeningDelayState+8   j
                 rts
-; End of function Boss_JampanDefendState
-; Jump state handler
-Boss_JampanJumpState:                                   ; DATA XREF: ROM:000491DC   o  ; was: sub_49570
+; End of function Boss_JampanWaitForOpeningDelayState
+; Moves left under gravity until reaching the opening-sequence floor
+Boss_JampanOpeningFallState:                            ; DATA XREF: ROM:000491DC   o  ; was: sub_49570
                 addi.l  #$2000,$1C(a5)
                 addi.l  #-$10000,$10(a5)
-                bsr.w   Boss_JampanDamageHandler
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 cmpi.w  #$110,$14(a5)
-                bcs.s   locret_495C4
+                bcs.s   Boss_JampanOpeningFallReturn
                 move.w  #$110,$14(a5)
                 andi.l  #$FFFF0000,$14(a5)
                 move.l  $1C(a5),d0
@@ -301,81 +303,81 @@ Boss_JampanJumpState:                                   ; DATA XREF: ROM:000491D
                 move.w  #4,(word_FFA014).w
                 move.w  #$A1,d0
                 jsr     (Sound_PlaySFX).l
-locret_495C4:                                           ; CODE XREF: Boss_JampanJumpState+1A   j
+Boss_JampanOpeningFallReturn:                           ; CODE XREF: Boss_JampanOpeningFallState+1A   j
                 rts
-; End of function Boss_JampanJumpState
-; Dash attack state
-Boss_JampanDashState:                                   ; DATA XREF: ROM:000491DE   o  ; was: sub_495C6
+; End of function Boss_JampanOpeningFallState
+; Continues the opening bounces and detects each zero-velocity apex
+Boss_JampanOpeningBounceApexState:                      ; DATA XREF: ROM:000491DE   o  ; was: sub_495C6
                 addi.l  #$2000,$1C(a5)
                 addi.l  #-$10000,$10(a5)
-                bsr.w   Boss_JampanDamageHandler
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.l   $1C(a5)
-                bne.s   locret_4960E
+                bne.s   Boss_JampanOpeningBounceApexReturn
                 subq.w  #1,$48(a5)
-                beq.s   loc_495EC
+                beq.s   Boss_JampanFinishOpeningBounces
                 subq.w  #2,4(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_495EC:                                              ; CODE XREF: Boss_JampanDashState+1E   j
+Boss_JampanFinishOpeningBounces:                        ; CODE XREF: Boss_JampanOpeningBounceApexState+1E   j
                 bset    #2,$4C(a5)
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$54(a5)
                 clr.w   (dword_FF9410).w
                 clr.w   (dword_FF9414).w
                 addq.w  #2,4(a5)
-locret_4960E:                                           ; CODE XREF: Boss_JampanDashState+18   j
+Boss_JampanOpeningBounceApexReturn:                     ; CODE XREF: Boss_JampanOpeningBounceApexState+18   j
                 rts
-; End of function Boss_JampanDashState
-; Shoots projectile
-Boss_JampanShootProjectile:                             ; DATA XREF: ROM:000491E0   o  ; was: sub_49610
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanOpeningBounceApexState
+; Converges two opening-sequence angle accumulators on $100
+Boss_JampanNormalizeOpeningAnglesState:                 ; DATA XREF: ROM:000491E0   o  ; was: sub_49610
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 cmpi.w  #$100,(dword_FF9404).w
-                beq.s   loc_49638
+                beq.s   Boss_JampanFinishOpeningAngleNormalization
                 cmpi.w  #$100,(dword_FF9404).w
-                bcs.s   loc_4962E
+                bcs.s   Boss_JampanIncreaseOpeningAngles
                 subq.w  #4,(dword_FF9404).w
                 subq.w  #4,(dword_FF9408).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_4962E:                                              ; CODE XREF: Boss_JampanShootProjectile+12   j
+Boss_JampanIncreaseOpeningAngles:                       ; CODE XREF: Boss_JampanNormalizeOpeningAnglesState+12   j
                 addq.w  #4,(dword_FF9404).w
                 addq.w  #4,(dword_FF9408).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_49638:                                              ; CODE XREF: Boss_JampanShootProjectile+A   j
+Boss_JampanFinishOpeningAngleNormalization:             ; CODE XREF: Boss_JampanNormalizeOpeningAnglesState+A   j
                 move.w  #2,(word_FFC6D2).w
                 move.w  #2,(word_FFC792).w
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_JampanShootProjectile
-; Spawns minion enemy
-Boss_JampanSpawnMinion:                                 ; DATA XREF: ROM:000491E2   o  ; was: sub_4964A
-                bsr.w   Boss_JampanTeleportInit
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanNormalizeOpeningAnglesState
+; Waits for the first linked side part to complete its opening state
+Boss_JampanWaitForOpeningSidePartState:                 ; DATA XREF: ROM:000491E2   o  ; was: sub_4964A
+                bsr.w   Boss_JampanTrackVerticalOrbitOffset
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (word_FFC6D2).w
-                bne.s   locret_49664
+                bne.s   Boss_JampanWaitForOpeningSidePartReturn
                 clr.w   (word_FFC732).w
                 clr.w   (word_FFC7F2).w
                 addq.w  #2,4(a5)
-locret_49664:                                           ; CODE XREF: Boss_JampanSpawnMinion+C   j
+Boss_JampanWaitForOpeningSidePartReturn:                ; CODE XREF: Boss_JampanWaitForOpeningSidePartState+C   j
                 rts
-; End of function Boss_JampanSpawnMinion
-; Bullet projectile handler
-Projectile_JampanBullet:                                ; DATA XREF: ROM:000491E4   o  ; was: sub_49666
-                bsr.w   Boss_JampanTeleportInit
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanWaitForOpeningSidePartState
+; Converges the signed opening offset on zero
+Boss_JampanNormalizeOpeningOffsetState:                 ; DATA XREF: ROM:000491E4   o  ; was: sub_49666
+                bsr.w   Boss_JampanTrackVerticalOrbitOffset
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 move.w  (dword_FF9424+2).w,d0
-                beq.s   loc_49684
+                beq.s   Boss_JampanFinishOpeningOffsetNormalization
                 tst.w   d0
-                bmi.s   loc_4967E
+                bmi.s   Boss_JampanIncreaseOpeningOffset
                 subq.w  #1,(dword_FF9424+2).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_4967E:                                              ; CODE XREF: Projectile_JampanBullet+10   j
+Boss_JampanIncreaseOpeningOffset:                       ; CODE XREF: Boss_JampanNormalizeOpeningOffsetState+10   j
                 addq.w  #1,(dword_FF9424+2).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_49684:                                              ; CODE XREF: Projectile_JampanBullet+C   j
+Boss_JampanFinishOpeningOffsetNormalization:            ; CODE XREF: Boss_JampanNormalizeOpeningOffsetState+C   j
                 move.w  #2,(word_FFC6D2).w
                 move.w  #2,(word_FFC792).w
                 addq.w  #2,4(a5)
@@ -384,70 +386,70 @@ loc_49684:                                              ; CODE XREF: Projectile_
                 move.b  #$8A,d0
                 jsr     (Input_CheckButtonMode).l
                 rts
-; End of function Projectile_JampanBullet
-; Wave projectile handler
-Projectile_JampanWave:                                  ; DATA XREF: ROM:000491E6   o  ; was: sub_496AA
-                bsr.w   Boss_JampanTeleportInit
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanNormalizeOpeningOffsetState
+; Waits for the stage-owned object counter to clear
+Boss_JampanWaitForOpeningObjectClearState:              ; DATA XREF: ROM:000491E6   o  ; was: sub_496AA
+                bsr.w   Boss_JampanTrackVerticalOrbitOffset
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (word_FF80C2).w
-                bne.s   locret_496CC
+                bne.s   Boss_JampanWaitForOpeningObjectClearReturn
                 clr.b   (byte_FF80EC).w
                 move.w  #1,(word_FFC732).w
                 move.w  #1,(word_FFC7F2).w
                 addq.w  #2,4(a5)
-locret_496CC:                                           ; CODE XREF: Projectile_JampanWave+C   j
+Boss_JampanWaitForOpeningObjectClearReturn:             ; CODE XREF: Boss_JampanWaitForOpeningObjectClearState+C   j
                 rts
-; End of function Projectile_JampanWave
-; Homing projectile handler
-Projectile_JampanHoming:                                ; DATA XREF: ROM:000491E8   o  ; was: sub_496CE
-                bsr.w   Boss_JampanTeleportInit
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanWaitForOpeningObjectClearState
+; Waits for the linked side parts before enabling the next pair
+Boss_JampanWaitForOpeningSidePartsState:                ; DATA XREF: ROM:000491E8   o  ; was: sub_496CE
+                bsr.w   Boss_JampanTrackVerticalOrbitOffset
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (word_FFC6D2).w
-                bne.s   locret_496EC
+                bne.s   Boss_JampanWaitForOpeningSidePartsReturn
                 move.w  #1,(word_FFC852).w
                 move.w  #1,(word_FFC8B2).w
                 addq.w  #2,4(a5)
-locret_496EC:                                           ; CODE XREF: Projectile_JampanHoming+C   j
+Boss_JampanWaitForOpeningSidePartsReturn:               ; CODE XREF: Boss_JampanWaitForOpeningSidePartsState+C   j
                 rts
-; End of function Projectile_JampanHoming
-; Minion enemy handler
-Enemy_JampanMinion:                                     ; DATA XREF: ROM:000491EA   o  ; was: sub_496EE
-                bsr.w   Boss_JampanAIController
-                bsr.w   Boss_JampanAimAtPlayer
-                bsr.w   Boss_JampanTeleportInit
-                bsr.w   nullsub_97
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanWaitForOpeningSidePartsState
+; Periodically chooses a live attack according to targets and random input
+Boss_JampanSelectAttackState:                           ; DATA XREF: ROM:000491EA   o  ; was: sub_496EE
+                bsr.w   Boss_JampanTrackPlayerX
+                bsr.w   Boss_JampanTrackPlayerAimOffset
+                bsr.w   Boss_JampanTrackVerticalOrbitOffset
+                bsr.w   Boss_JampanAttackSelectionNoOpHook
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (word_FF8234).w
-                ble.w   loc_49790
+                ble.w   Boss_JampanSelectNoTargetsRecovery
                 move.w  (word_FFA000).w,d0
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_4971E
+                bne.s   Boss_JampanUseFastAttackSelectionPeriod
                 andi.w  #$3F,d0                         ; '?'
-                bne.w   locret_497A8
-                bra.s   loc_49726
+                bne.w   Boss_JampanSelectAttackReturn
+                bra.s   Boss_JampanChooseRandomAttack
 ; ---------------------------------------------------------------------------
-loc_4971E:                                              ; CODE XREF: Enemy_JampanMinion+24   j
+Boss_JampanUseFastAttackSelectionPeriod:                ; CODE XREF: Boss_JampanSelectAttackState+24   j
                 andi.w  #$1F,d0
-                bne.w   locret_497A8
-loc_49726:                                              ; CODE XREF: Enemy_JampanMinion+2E   j
+                bne.w   Boss_JampanSelectAttackReturn
+Boss_JampanChooseRandomAttack:                          ; CODE XREF: Boss_JampanSelectAttackState+2E   j
                 move.b  (dword_FFFF08).w,d0
                 andi.b  #7,d0
-                beq.s   loc_4975E
+                beq.s   Boss_JampanSelectShieldCycle
                 cmpi.w  #1,d0
-                beq.s   loc_49750
+                beq.s   Boss_JampanSelectOffsetAttack
                 cmpi.w  #2,d0
-                beq.s   loc_49782
+                beq.s   Boss_JampanSelectAlternateAttack
                 bset    #1,$4C(a5)
                 move.w  #2,(word_FFC6D2).w
                 move.w  #2,(word_FFC792).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_49750:                                              ; CODE XREF: Enemy_JampanMinion+46   j
+Boss_JampanSelectOffsetAttack:                          ; CODE XREF: Boss_JampanSelectAttackState+46   j
                 move.w  #2,$4E(a5)
                 move.w  #$22,4(a5)                      ; '"'
                 rts
 ; ---------------------------------------------------------------------------
-loc_4975E:                                              ; CODE XREF: Enemy_JampanMinion+40   j
+Boss_JampanSelectShieldCycle:                           ; CODE XREF: Boss_JampanSelectAttackState+40   j
                 clr.w   (word_FFC8B2).w
                 move.w  #$FFFF,(word_FFC6D2).w
                 move.w  #$FFFF,(word_FFC792).w
@@ -456,62 +458,62 @@ loc_4975E:                                              ; CODE XREF: Enemy_Jampa
                 move.w  #$2E,4(a5)                      ; '.'
                 rts
 ; ---------------------------------------------------------------------------
-loc_49782:                                              ; CODE XREF: Enemy_JampanMinion+4C   j
+Boss_JampanSelectAlternateAttack:                       ; CODE XREF: Boss_JampanSelectAttackState+4C   j
                 move.w  #$A,$4E(a5)
                 move.w  #$3E,4(a5)                      ; '>'
                 rts
 ; ---------------------------------------------------------------------------
-loc_49790:                                              ; CODE XREF: Enemy_JampanMinion+18   j
+Boss_JampanSelectNoTargetsRecovery:                     ; CODE XREF: Boss_JampanSelectAttackState+18   j
                 move.w  #2,(word_FFC6D2).w
                 move.w  #2,(word_FFC792).w
                 bset    #1,$4C(a5)
                 move.w  #$16,4(a5)
-locret_497A8:                                           ; CODE XREF: Enemy_JampanMinion+2A   j
-                                        ; Enemy_JampanMinion+34   j
+Boss_JampanSelectAttackReturn:                          ; CODE XREF: Boss_JampanSelectAttackState+2A   j
+                                        ; Boss_JampanSelectAttackState+34   j
                 rts
-; End of function Enemy_JampanMinion
-; Returns boss to idle after velocity dampening
-Boss_JampanReturnToIdle:                                ; DATA XREF: ROM:000491EC   o  ; was: sub_497AA
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanSelectAttackState
+; Converges both signed orbit offsets on zero before recovery movement
+Boss_JampanDampOrbitOffsetsState:                       ; DATA XREF: ROM:000491EC   o  ; was: sub_497AA
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (dword_FF9424+2).w
-                beq.s   loc_497C4
+                beq.s   Boss_JampanUpdateSecondaryOrbitOffset
                 tst.w   (dword_FF9424+2).w
-                bpl.s   loc_497C0
+                bpl.s   Boss_JampanDecreasePrimaryOrbitOffset
                 addq.w  #1,(dword_FF9424+2).w
-                bra.s   loc_497C4
+                bra.s   Boss_JampanUpdateSecondaryOrbitOffset
 ; ---------------------------------------------------------------------------
-loc_497C0:                                              ; CODE XREF: Boss_JampanReturnToIdle+E   j
+Boss_JampanDecreasePrimaryOrbitOffset:                  ; CODE XREF: Boss_JampanDampOrbitOffsetsState+E   j
                 subq.w  #1,(dword_FF9424+2).w
-loc_497C4:                                              ; CODE XREF: Boss_JampanReturnToIdle+8   j
-                                        ; Boss_JampanReturnToIdle+14   j
+Boss_JampanUpdateSecondaryOrbitOffset:                  ; CODE XREF: Boss_JampanDampOrbitOffsetsState+8   j
+                                        ; Boss_JampanDampOrbitOffsetsState+14   j
                 tst.w   (dword_FF9428).w
-                beq.s   loc_497DC
+                beq.s   Boss_JampanCheckOrbitOffsetsSettled
                 tst.w   (dword_FF9428).w
-                bpl.s   loc_497D6
+                bpl.s   Boss_JampanDecreaseSecondaryOrbitOffset
                 addq.w  #1,(dword_FF9428).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_497D6:                                              ; CODE XREF: Boss_JampanReturnToIdle+24   j
+Boss_JampanDecreaseSecondaryOrbitOffset:                ; CODE XREF: Boss_JampanDampOrbitOffsetsState+24   j
                 subq.w  #1,(dword_FF9428).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_497DC:                                              ; CODE XREF: Boss_JampanReturnToIdle+1E   j
+Boss_JampanCheckOrbitOffsetsSettled:                    ; CODE XREF: Boss_JampanDampOrbitOffsetsState+1E   j
                 tst.w   (dword_FF9424+2).w
-                bne.s   locret_497FC
+                bne.s   Boss_JampanDampOrbitOffsetsReturn
                 bclr    #2,$4C(a5)
                 clr.l   $54(a5)
                 move.w  #1,$1C(a5)
                 move.w  #4,$48(a5)
                 addq.w  #2,4(a5)
-locret_497FC:                                           ; CODE XREF: Boss_JampanReturnToIdle+36   j
+Boss_JampanDampOrbitOffsetsReturn:                      ; CODE XREF: Boss_JampanDampOrbitOffsetsState+36   j
                 rts
-; End of function Boss_JampanReturnToIdle
-; Handles bounce attack with gravity and collision
-Boss_JampanBounceAttack:                                ; DATA XREF: ROM:000491EE   o  ; was: sub_497FE
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanDampOrbitOffsetsState
+; Repeats damped floor bounces until the recovery counter expires
+Boss_JampanBounceUntilSettledState:                     ; DATA XREF: ROM:000491EE   o  ; was: sub_497FE
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 addi.l  #$2000,$1C(a5)
                 cmpi.w  #$110,$14(a5)
-                bcs.s   locret_49860
+                bcs.s   Boss_JampanBounceUntilSettledReturn
                 move.w  #4,(word_FFA010).w
                 move.w  #4,(word_FFA014).w
                 move.w  #$A1,d0
@@ -522,133 +524,133 @@ Boss_JampanBounceAttack:                                ; DATA XREF: ROM:000491E
                 neg.l   d0
                 move.l  d0,$1C(a5)
                 tst.w   $1C(a5)
-                beq.s   loc_49846
+                beq.s   Boss_JampanFinishRecoveryBounce
                 subq.w  #1,$48(a5)
-                bne.s   locret_49860
-loc_49846:                                              ; CODE XREF: Boss_JampanBounceAttack+40   j
+                bne.s   Boss_JampanBounceUntilSettledReturn
+Boss_JampanFinishRecoveryBounce:                        ; CODE XREF: Boss_JampanBounceUntilSettledState+40   j
                 clr.l   $1C(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$FFFE,(word_FFC6D2).w
                 move.w  #$FFFE,(word_FFC792).w
                 addq.w  #2,4(a5)
-locret_49860:                                           ; CODE XREF: Boss_JampanBounceAttack+12   j
-                                        ; Boss_JampanBounceAttack+46   j
+Boss_JampanBounceUntilSettledReturn:                    ; CODE XREF: Boss_JampanBounceUntilSettledState+12   j
+                                        ; Boss_JampanBounceUntilSettledState+46   j
                 rts
-; End of function Boss_JampanBounceAttack
-; Adjusts horizontal position based on player
-Boss_JampanHorizontalDrift:                             ; DATA XREF: ROM:000491F0   o  ; was: sub_49862
+; End of function Boss_JampanBounceUntilSettledState
+; Moves horizontally toward screen-coordinate threshold $13A0
+Boss_JampanMoveToScreenThresholdState:                  ; DATA XREF: ROM:000491F0   o  ; was: sub_49862
                 cmpi.w  #$13A0,$58(a5)
-                bcs.s   loc_49878
+                bcs.s   Boss_JampanMoveRightTowardScreenThreshold
                 subq.w  #2,(dword_FF9408).w
                 subi.l  #$8000,$10(a5)
-                bra.s   loc_49884
+                bra.s   Boss_JampanUpdateScreenThresholdMovement
 ; ---------------------------------------------------------------------------
-loc_49878:                                              ; CODE XREF: Boss_JampanHorizontalDrift+6   j
+Boss_JampanMoveRightTowardScreenThreshold:              ; CODE XREF: Boss_JampanMoveToScreenThresholdState+6   j
                 addq.w  #2,(dword_FF9408).w
                 addi.l  #$8000,$10(a5)
-loc_49884:                                              ; CODE XREF: Boss_JampanHorizontalDrift+14   j
-                bsr.w   Boss_JampanDamageHandler
+Boss_JampanUpdateScreenThresholdMovement:               ; CODE XREF: Boss_JampanMoveToScreenThresholdState+14   j
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 addq.w  #8,(word_FF8234).w
                 subq.w  #1,$48(a5)
-                bne.s   locret_49896
+                bne.s   Boss_JampanMoveToScreenThresholdReturn
                 addq.w  #2,4(a5)
-locret_49896:                                           ; CODE XREF: Boss_JampanHorizontalDrift+2E   j
+Boss_JampanMoveToScreenThresholdReturn:                 ; CODE XREF: Boss_JampanMoveToScreenThresholdState+2E   j
                 rts
-; End of function Boss_JampanHorizontalDrift
-; Waits for screen shake to complete
-Boss_JampanWaitScreenShake:                             ; DATA XREF: ROM:000491F2   o  ; was: sub_49898
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanMoveToScreenThresholdState
+; Waits for stage motion flag zero before advancing
+Boss_JampanWaitForStageMotionFlagState:                 ; DATA XREF: ROM:000491F2   o  ; was: sub_49898
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 addq.w  #8,(word_FF8234).w
                 btst    #0,(byte_FF8260).w
-                beq.s   locret_498BE
+                beq.s   Boss_JampanWaitForStageMotionFlagReturn
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #2,(word_FFC6D2).w
                 move.w  #2,(word_FFC792).w
                 addq.w  #2,4(a5)
-locret_498BE:                                           ; CODE XREF: Boss_JampanWaitScreenShake+E   j
+Boss_JampanWaitForStageMotionFlagReturn:                ; CODE XREF: Boss_JampanWaitForStageMotionFlagState+E   j
                 rts
-; End of function Boss_JampanWaitScreenShake
-; Centers boss horizontally with oscillation
-Boss_JampanCenterHorizontal:                            ; DATA XREF: ROM:000491F4   o  ; was: sub_498C0
+; End of function Boss_JampanWaitForStageMotionFlagState
+; Converges the horizontal-angle accumulator on $100 while moving
+Boss_JampanBalanceHorizontalAngleState:                 ; DATA XREF: ROM:000491F4   o  ; was: sub_498C0
                 cmpi.w  #$100,(dword_FF9408).w
-                bcc.s   loc_498D6
+                bcc.s   Boss_JampanDecreaseHorizontalAngle
                 addq.w  #2,(dword_FF9408).w
                 addi.l  #$8000,$10(a5)
-                bra.s   loc_498E2
+                bra.s   Boss_JampanUpdateHorizontalAngleMovement
 ; ---------------------------------------------------------------------------
-loc_498D6:                                              ; CODE XREF: Boss_JampanCenterHorizontal+6   j
+Boss_JampanDecreaseHorizontalAngle:                     ; CODE XREF: Boss_JampanBalanceHorizontalAngleState+6   j
                 subq.w  #2,(dword_FF9408).w
                 subi.l  #$8000,$10(a5)
-loc_498E2:                                              ; CODE XREF: Boss_JampanCenterHorizontal+14   j
-                bsr.w   Boss_JampanDamageHandler
+Boss_JampanUpdateHorizontalAngleMovement:               ; CODE XREF: Boss_JampanBalanceHorizontalAngleState+14   j
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 subq.w  #1,$48(a5)
-                bne.s   locret_498F0
+                bne.s   Boss_JampanBalanceHorizontalAngleReturn
                 addq.w  #2,4(a5)
-locret_498F0:                                           ; CODE XREF: Boss_JampanCenterHorizontal+2A   j
+Boss_JampanBalanceHorizontalAngleReturn:                ; CODE XREF: Boss_JampanBalanceHorizontalAngleState+2A   j
                 rts
-; End of function Boss_JampanCenterHorizontal
-; Descends boss to Y position $F0
-Boss_JampanDescendToHeight:                             ; DATA XREF: ROM:000491F6   o  ; was: sub_498F2
-                bsr.w   Boss_JampanAIController
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanBalanceHorizontalAngleState
+; Raises the boss to screen Y $F0 and returns to attack selection
+Boss_JampanRiseToAttackHeightState:                     ; DATA XREF: ROM:000491F6   o  ; was: sub_498F2
+                bsr.w   Boss_JampanTrackPlayerX
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 subq.w  #1,$14(a5)
                 cmpi.w  #$F0,$14(a5)
-                bhi.s   locret_4992E
+                bhi.s   Boss_JampanRiseToAttackHeightReturn
                 move.w  #$F0,$14(a5)
                 bset    #2,$4C(a5)
                 move.l  #$FFFF0000,$1C(a5)
                 move.l  #$2000,$54(a5)
                 bclr    #1,$4C(a5)
                 move.w  #$12,4(a5)
-locret_4992E:                                           ; CODE XREF: Boss_JampanDescendToHeight+12   j
+Boss_JampanRiseToAttackHeightReturn:                    ; CODE XREF: Boss_JampanRiseToAttackHeightState+12   j
                 rts
-; End of function Boss_JampanDescendToHeight
-; Defeat sequence initialization
-Boss_JampanDefeatInit:                                  ; DATA XREF: ROM:000491F8   o  ; was: sub_49930
-                bsr.w   Boss_JampanTeleportInit
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanRiseToAttackHeightState
+; Initializes the live offset-attack branch selected by the combat selector
+Boss_JampanInitializeOffsetAttackState:                 ; DATA XREF: ROM:000491F8   o  ; was: sub_49930
+                bsr.w   Boss_JampanTrackVerticalOrbitOffset
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 clr.w   (word_FFC732).w
                 clr.w   (word_FFC7F2).w
                 clr.w   (word_FFC852).w
                 move.w  #8,$48(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_JampanDefeatInit
-; Defeat teleport effect
-Boss_JampanDefeatTeleport:                              ; DATA XREF: ROM:000491FA   o  ; was: sub_49950
-                bsr.w   Boss_JampanTeleportInit
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanInitializeOffsetAttackState
+; Chooses the offset-attack direction from the player's horizontal side
+Boss_JampanChooseOffsetAttackDirectionState:            ; DATA XREF: ROM:000491FA   o  ; was: sub_49950
+                bsr.w   Boss_JampanTrackVerticalOrbitOffset
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 subq.w  #1,$48(a5)
-                bne.s   locret_49990
+                bne.s   Boss_JampanChooseOffsetAttackDirectionReturn
                 addq.w  #2,4(a5)
                 bclr    #1,$4C(a5)
                 clr.w   (word_FFC8B2).w
                 move.w  (dword_FFA410).w,d0
                 sub.w   $10(a5),d0
-                bpl.s   loc_49984
+                bpl.s   Boss_JampanChooseRightOffsetAttack
                 move.w  #2,(word_FFC792).w
                 move.w  #$FFFE,$5A(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_49984:                                              ; CODE XREF: Boss_JampanDefeatTeleport+24   j
+Boss_JampanChooseRightOffsetAttack:                     ; CODE XREF: Boss_JampanChooseOffsetAttackDirectionState+24   j
                 move.w  #2,(word_FFC6D2).w
                 move.w  #2,$5A(a5)
-locret_49990:                                           ; CODE XREF: Boss_JampanDefeatTeleport+C   j
+Boss_JampanChooseOffsetAttackDirectionReturn:           ; CODE XREF: Boss_JampanChooseOffsetAttackDirectionState+C   j
                 rts
-; End of function Boss_JampanDefeatTeleport
-; Defeat fade out animation
-Boss_JampanDefeatFade:                                  ; DATA XREF: ROM:000491FC   o  ; was: sub_49992
-                bsr.w   Boss_JampanAimAtPlayer
-                bsr.w   Boss_JampanTeleportInit
-                bsr.w   Boss_JampanDamageHandler
+; End of function Boss_JampanChooseOffsetAttackDirectionState
+; Waits for linked parts, then creates the type-$238 offset-attack object
+Boss_JampanSpawnOffsetAttackObjectState:                ; DATA XREF: ROM:000491FC   o  ; was: sub_49992
+                bsr.w   Boss_JampanTrackPlayerAimOffset
+                bsr.w   Boss_JampanTrackVerticalOrbitOffset
+                bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (word_FFC6D2).w
-                bne.s   locret_49A12
+                bne.s   Boss_JampanSpawnOffsetAttackObjectReturn
                 tst.w   (word_FFC792).w
-                bne.s   locret_49A12
+                bne.s   Boss_JampanSpawnOffsetAttackObjectReturn
                 move.w  #1,(word_FFC732).w
                 move.w  #1,(word_FFC7F2).w
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_49A12
+                bne.s   Boss_JampanSpawnOffsetAttackObjectReturn
                 andi.w  #$7FFF,(word_FFC862).w
                 move.w  #$238,(a0)
                 move.w  #$CD00,2(a0)
@@ -661,14 +663,13 @@ Boss_JampanDefeatFade:                                  ; DATA XREF: ROM:000491F
                 andi.w  #$7FFF,(word_FFC862).w
                 addq.w  #2,4(a5)
                 tst.w   (word_FFFF0E).w
-                bne.s   loc_49A0C
+                bne.s   Boss_JampanUseShortOffsetAttackDelay
                 move.w  #$40,$48(a5)                    ; '@'
                 rts
 ; ---------------------------------------------------------------------------
-loc_49A0C:                                              ; CODE XREF: Boss_JampanDefeatFade+70   j
+Boss_JampanUseShortOffsetAttackDelay:                   ; CODE XREF: Boss_JampanSpawnOffsetAttackObjectState+70   j
                 move.w  #$10,$48(a5)
-locret_49A12:                                           ; CODE XREF: Boss_JampanDefeatFade+10   j
-                                        ; Boss_JampanDefeatFade+16   j
+Boss_JampanSpawnOffsetAttackObjectReturn:               ; CODE XREF: Boss_JampanSpawnOffsetAttackObjectState+10   j
+                                        ; Boss_JampanSpawnOffsetAttackObjectState+16   j
                 rts
-; End of function Boss_JampanDefeatFade
-; Attempts teleport with position checks
+; End of function Boss_JampanSpawnOffsetAttackObjectState

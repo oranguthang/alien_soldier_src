@@ -335,7 +335,7 @@
     { "file": "src/bosses/jampan_core.s", "subsystem": "bosses", "start": "0x04912E", "end": "0x049A13" },
     { "file": "src/bosses/jampan_attacks.s", "subsystem": "bosses", "start": "0x049A14", "end": "0x04A07D" },
     { "file": "src/bosses/jampan_support.s", "subsystem": "bosses", "start": "0x04A07E", "end": "0x04A5EF" },
-    { "file": "src/bosses/jampan_defeat.s", "subsystem": "bosses", "start": "0x04A5F0", "end": "0x04A84D" },
+    { "file": "src/bosses/jampan_geometry_and_input.s", "subsystem": "bosses", "start": "0x04A5F0", "end": "0x04A84D" },
     { "file": "src/bosses/destroyer_mk2_core.s", "subsystem": "bosses", "start": "0x04A84E", "end": "0x04B04B" },
     { "file": "src/bosses/destroyer_mk2_defeat.s", "subsystem": "bosses", "start": "0x04B04C", "end": "0x04B68B" },
     { "file": "src/bosses/destroyer_mk2_effects.s", "subsystem": "bosses", "start": "0x04B68C", "end": "0x04BEBB" },

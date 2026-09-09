@@ -1127,6 +1127,90 @@ fade, and the pose-command interpreter are now separated by their observed
 data flow. All 93 definitions and the rejected vertical, hitbox, palette, and
 defeat claims are recorded as static evidence in `config/name_audit.json`.
 
+The first Jampan pass reduced the count to 7,114. The 675-line
+`bosses/jampan_core.s` module has 76 audited definitions and no live
+address-derived names. It now describes the controller's shared update and
+53-entry state dispatch, complete encounter-object initialization, opening
+bounce sequence, live attack selection, recovery movement, and the first
+three states of its offset attack. The sixteen orbiting parts are initialized
+from explicit parallel type, sprite-attribute, radius, angle, and sprite-frame
+tables, followed by six reserved shield slots.
+
+This pass rejects two broad groups of generated claims. The former
+`Projectile_JampanBullet`, `Projectile_JampanWave`,
+`Projectile_JampanHoming`, and `Enemy_JampanMinion` are states `$0E-$14` of
+the main boss controller, not independently dispatched entities. Likewise,
+the former `DefeatInit`, `DefeatTeleport`, and `DefeatFade` are states
+`$22-$26` selected by the live random attack selector: they clear linked-part
+state, choose a signed direction from the player's side, and create entity
+type `$238`. The former `DescendToHeight` also had its direction reversed;
+it decreases screen Y until `$F0` and is now named as a rise. Exact visual
+identities of the orbiting parts and the type-`$238` attack object remain
+deliberately unclaimed. All 76 definitions and the rejected projectile,
+minion, defeat, and direction claims are recorded as static evidence in
+`config/name_audit.json`.
+
+The Jampan attack-and-defeat pass reduced the count to 7,066. The 598-line
+`bosses/jampan_attacks.s` module has 83 audited definitions and no live
+address-derived names; seven shared tracking, geometry, and coordinate
+helpers in the adjacent support/defeat modules were audited with it. States
+`$28-$4E` now document the end of the offset attack and two live shield
+patterns: radius expansion and collapse, forward/backward angular motion,
+player tracking, vertical centering, recovery, and return to attack
+selection. The three one-instruction slots at `$2A`, `$2C`, and `$50` are
+named only as no-op states, without inventing dormant behavior.
+
+The same pass establishes state `$52` as the real defeat boundary. Its
+sequence settles the orbit offsets, disables collision, falls with explosion
+debris, creates and waits for the type-`$23C` shield object, fades the palette
+out and back in, rebuilds the linked objects, and enters timed post-defeat
+movement. A separate two-state entity type `$240` maintains the post-defeat
+orbiting geometry and is preserved into the following encounter setup. The
+former `DamageHandler`, `DefeatDebris`, and `FlashOnDamage` helpers were
+disproved: they respectively update sixteen orbiting parts, update the six
+shield objects, and project one part from three angles and a radius. The
+former `CheckHealth` only publishes controller-derived stage coordinates.
+Exact visual identities and the narrative role of the post-defeat movement
+remain deliberately unclaimed. All 90 audited definitions are recorded as
+static evidence in `config/name_audit.json`.
+
+The Jampan support-object pass reduced the count below seven thousand, from
+7,066 to 6,999. The 574-line `bosses/jampan_support.s` module now has 96
+definitions and no live address-derived names. Together with the fourth
+orbit-group state at the start of the adjacent module, this pass adds 96 new
+static audit records. It also corrects the previous pass's object identity:
+entity type `$23C` is the shield handler, while type `$238` is the temporary
+object created by the offset attack.
+
+The support graph is now documented by dispatch identity and observable field
+use. Type `$224` projects itself radially around an anchor and extends or
+retracts according to field `$52`; type `$228` copies an anchor position and
+plays a six-entry mapping sequence under the same signal field; type `$22C`
+initializes and rotates the fixed-point angles of 13 linked records. Type
+`$23C` falls, performs damped bounces, emits four type-`$88` projectiles, and
+then converts itself into another type-`$88` projectile. The former
+`Shadow`, `Teleport`, `UpdateSprite`, `UpdatePalette`, `ComboAttack`,
+`SpecialAttack`, and `DefeatExplosion` names are therefore rejected. The
+visual identities of types `$224`, `$228`, and `$238`, and the display meaning
+of the type-`$238` oscillated parameter, remain deliberately unclaimed.
+
+The Jampan geometry-and-input pass reduced the count from 6,999 to 6,983.
+The former 230-line `bosses/jampan_defeat.s` tail was renamed to
+`bosses/jampan_geometry_and_input.s`: the actual defeat states are already in
+`bosses/jampan_attacks.s`, while this ROM range contains the reverse
+orbit-group state, held-input parameter adjustment, coordinate publication,
+and the projection of 16 linked parts. All 24 definitions now have exact
+static audit coverage and the module has no live address-derived names; 17
+records were added here and seven shared definitions were audited by the
+preceding Jampan passes.
+
+The old `DebugController` description is narrowed deliberately. The routine
+does read directional-plus-button combinations and changes three shared orbit
+angles or the radius offset by two, and it is called by the post-defeat
+movement states. Static code alone does not prove its original debug purpose,
+nor the earlier claim that it has no visible effect, so both claims have been
+removed pending pinned runtime evidence.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
