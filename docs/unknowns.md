@@ -1020,6 +1020,50 @@ rejected health, shield, fade, cutscene, and rotation claims are recorded as
 static evidence in the name audit; exact visual presentation still awaits the
 pinned emulator.
 
+The Epsilon 1 ring-controller pass reduced the count to 7,347 and narrowed an
+overly specific subsystem boundary. The former 326-line
+`bosses/epsilon_1_intro.s` is now the 331-line
+`bosses/epsilon_1_ring_controller.s`; its 43 definitions have no live
+address-derived names. The dispatch-table entry at offset `$278` leads to this
+fixed controller. Battle setup initializes it, while the separate intro and
+attack controllers activate it and select its mode through field `$5E` at
+`FFC7FE`. Thus `Intro` described only one caller, while the inherited
+`Miniboss` names had no corresponding object creation and were rejected.
+
+The zero mode copies the first entity-pool object's coordinates, steers the
+ring toward the player, reserves an inert aim-marker slot in `FF9420`, and
+repeats or deactivates after its finish delay; the boss spread launcher later
+consumes that saved marker position. The nonzero mode, used by the intro cycle
+and ring-only attack, initializes and randomizes an eight-byte order array,
+reserves an inert slot, positions the ring using a signed horizontal-offset
+table, and later activates the saved slot as entity type `$2E8`. The exact
+screen appearance, the semantic meaning of the global option word at
+`FFFF0E`, and the external conditions that advance the two no-op hold states
+remain deliberately unclaimed. All 43 names are recorded as static evidence
+in `config/name_audit.json`.
+
+The Epsilon 1 projectile-and-ring-object pass reduced the count to 7,303. The
+611-line `projectiles/epsilon_1_projectiles.s` module has 77 definitions and no
+live address-derived names. Its four consecutive dispatch-table entries and
+their creators establish distinct entity roles: type `$27C` is the five- or
+eleven-part spread projectile; type `$2E8` is the barrage emitter activated by
+the ring controller; type `$280` is one of the emitter's eight vertically
+spaced barrage-row projectiles; and type `$284` is one of the twelve fixed ring
+objects created during battle setup. Keeping this range together documents the
+actual producer/consumer chain while remaining inside the project's
+300-to-1,000-line module target.
+
+This pass rejects several inherited Sonnet claims. The former
+`Projectile_Epsilon1DefeatDebris` is the live spread handler, and the former
+`Projectile_Epsilon1IntroMain` is a barrage emitter shared by intro and attack
+callers. Likewise, the old `Chain`, `Tracking`, `Burst`, and four
+`DefeatSpark` labels all belong to the fixed type-`$284` ring-object state
+machine. Static field and allocation evidence proves delay, emission,
+positioning, release, linked-projectile, defeat, and despawn behavior. The
+narrow meanings of entity words eight and `$A`, exact visual presentation,
+and runtime timing remain deliberately unclaimed. All 77 definitions are
+recorded as static evidence in `config/name_audit.json`.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

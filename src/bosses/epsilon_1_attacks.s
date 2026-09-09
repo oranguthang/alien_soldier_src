@@ -216,13 +216,13 @@ Boss_Epsilon1FinishSpreadPair:                          ; CODE XREF: Boss_Epsilo
 ; Selects the five-step spread callback before common projectile setup
 Projectile_PrepareEpsilon1FiveStepSpread:               ; CODE XREF: Boss_Epsilon1DescendAndReleaseRingState+30   p  ; was: sub_463D2
                                         ; Boss_Epsilon1DescendAndReleaseRingState+46   p
-                move.l  #Projectile_Epsilon1SpreadInit,$48(a0)
+                move.l  #Projectile_Epsilon1InitializeFivePartSpread,$48(a0)
                 bra.s   Projectile_InitializeEpsilon1SpreadSlot
 ; End of function Projectile_PrepareEpsilon1FiveStepSpread
 ; Selects the eleven-step spread callback before common projectile setup
 Projectile_PrepareEpsilon1ElevenStepSpread:             ; CODE XREF: Boss_Epsilon1LaunchSpreadPairState+28   p  ; was: sub_463DC
                                         ; Boss_Epsilon1LaunchSpreadPairState+38   p
-                move.l  #Projectile_Epsilon1SpreadExpanding,$48(a0)
+                move.l  #Projectile_Epsilon1InitializeElevenPartSpread,$48(a0)
 Projectile_InitializeEpsilon1SpreadSlot:                ; CODE XREF: Projectile_PrepareEpsilon1FiveStepSpread+8   j  ; was: loc_463E4
                 move.l  (dword_FFC69C).w,$1C(a0)
                 move.w  d2,$58(a0)

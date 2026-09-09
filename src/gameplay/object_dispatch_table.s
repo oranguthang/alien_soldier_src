@@ -157,10 +157,10 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Object_MarkInactiveDirect
                 dc.l    Weapon_UpdateBombProjectile
                 dc.l    Cutscene_XiTigerFadeOut
-                dc.l    Boss_Epsilon1IntroMain
-                dc.l    Projectile_Epsilon1DefeatDebris
-                dc.l    Projectile_Epsilon1StateHandler
-                dc.l    Projectile_Epsilon1ChainInit
+                dc.l    Boss_Epsilon1RingController
+                dc.l    Projectile_Epsilon1SpreadProjectileMain
+                dc.l    Projectile_Epsilon1BarrageRowProjectileMain
+                dc.l    Boss_Epsilon1RingObjectMain
                 dc.l    Boss_CaterpillarShipTransitionSegment
                 dc.l    Enemy_PhasePatternController
                 dc.l    Enemy_UpdateBouncingDebrisSpawner
@@ -185,7 +185,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Stage10_BeetleWaveController
                 dc.l    Enemy_Stage12TurretController
                 dc.l    Enemy_Stage12LauncherController
-                dc.l    Projectile_Epsilon1IntroMain
+                dc.l    Projectile_Epsilon1BarrageEmitterMain
                 dc.l    Projectile_ViblackChainMain
                 dc.l    Projectile_ViblackChainSegment
                 dc.l    Projectile_ViblackSideShotController

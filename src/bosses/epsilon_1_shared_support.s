@@ -1,5 +1,5 @@
-Projectile_Epsilon1ConvertOnGlobalMode:                 ; CODE XREF: Projectile_Epsilon1DefeatDebris   p  ; was: sub_477D8
-                                        ; sub_472C0   p
+Projectile_Epsilon1ConvertOnGlobalMode:                 ; CODE XREF: Projectile_Epsilon1SpreadProjectileMain   p  ; was: sub_477D8
+                                        ; Projectile_Epsilon1BarrageEmitterMain   p
                 btst    #0,(word_FFC66C).w
                 bne.s   Projectile_Epsilon1ConvertToType88
                 btst    #2,(word_FFC66C).w
