@@ -1498,6 +1498,36 @@ record field `$14` inside the vertical band. The last routine was previously
 misnamed `ClampXPosition`: it never accesses X field `$10`, so the old axis
 claim is explicitly rejected.
 
+The Shield Viper debug and pattern-effect pass audited the remaining 41 names
+in the 325-line `bosses/shield_viper_debug_and_effects.s` module. Together
+with eight helpers already covered by earlier Shield Viper passes, all 49
+definitions in the module now have exact static audit records, bringing the
+project-wide total to 5,018. This pass intentionally leaves the
+address-derived unknown count at 6,439 and provenance at 9,384: its targets
+were pre-existing semantic names rather than raw address labels, so claiming
+numeric burn-down here would be misleading.
+
+Entity type `$3A8`, created as Shield Viper's second auxiliary record, is now
+identified as a pattern-effect controller rather than `Movement2`. On even
+frames it clears a 96-longword workspace, advances the primary range phase,
+selects a palette word, dispatches one of four local pattern states, and queues
+the workspace for rendering. Those states implement two ten-frame delays, a
+timed secondary phase, and a combined secondary/tertiary phase. The old
+`UpdateSprites`, `AnimationScript`, `ProjectileMain`, and `ProjectileBullet`
+names are rejected: the routines neither walk sprite records nor interpret a
+script nor allocate projectiles.
+
+The unreferenced manual-control entries are also described only by observed
+effects. They adjust the controller angle, shared body-bend step, or X/Y fields
+of two selected records; a separate input-gated helper performs one radial
+movement update and never triggers an attack state. Another input branch
+chooses between frame-gated orbit-shot emission and hiding the orbit record.
+Likewise, the two trailing unreferenced effect helpers are no longer asserted
+to be particle gravity: one accumulates progressively negative deltas across
+96 longwords and copies their high words to a strided buffer, while the other
+increments or decrements four counters according to frame parity. Their
+original development purpose remains unclaimed without runtime evidence.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

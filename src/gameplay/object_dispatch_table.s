@@ -233,7 +233,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Stage15_FragmentEmitterWaveMain
                 dc.l    Stage15_FragmentEmitterMain
                 dc.l    Projectile_FragmentClusterMain
-                dc.l    Boss_ShieldViperMovement2
+                dc.l    Gfx_ShieldViperPatternEffectMain
                 dc.l    Stage21_AsteroidFieldControllerMain
                 dc.l    Stage21_AsteroidMain
                 dc.l    Enemy_FormationWaveMain
