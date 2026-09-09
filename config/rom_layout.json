@@ -351,7 +351,7 @@
     { "file": "src/bosses/wolf_garopa_core.s", "subsystem": "bosses", "start": "0x04F8F0", "end": "0x05021F" },
     { "file": "src/projectiles/wolf_garopa.s", "subsystem": "projectiles", "start": "0x050220", "end": "0x050B7D" },
     { "file": "src/bosses/wolf_garopa_defeat.s", "subsystem": "bosses", "start": "0x050B7E", "end": "0x050CD3" },
-    { "file": "src/bosses/valkirie_screen_transition.s", "subsystem": "bosses", "start": "0x050CD4", "end": "0x050FA5" },
+    { "file": "src/bosses/wolf_garopa_attack_effects_and_transition.s", "subsystem": "bosses", "start": "0x050CD4", "end": "0x050FA5" },
     { "file": "src/bosses/valkirie_core.s", "subsystem": "bosses", "start": "0x050FA6", "end": "0x0515AD" },
     { "file": "src/bosses/valkirie_miniboss.s", "subsystem": "bosses", "start": "0x0515AE", "end": "0x051841" },
     { "file": "src/bosses/valkirie_auxiliary.s", "subsystem": "bosses", "start": "0x051842", "end": "0x051AD5" },

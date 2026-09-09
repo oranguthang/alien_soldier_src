@@ -1,10 +1,10 @@
-word_ED172:     dc.w    $480B, $100, $F8E9              ; DATA XREF: Boss_WolfGaropaMovement3+94   o
+word_ED172:     dc.w    $480B, $100, $F8E9              ; DATA XREF: Boss_WolfGaropaInitialize+94   o
                 dc.w    $4803, $D00, $F8F1
                 dc.w    $C800, $800, $F0F3
                 dc.w    $480D, $800, $EBF2
                 dc.w    $C810, $E00, $F3F2
-word_ED190:     dc.w    $4824, $400, $FBE1              ; DATA XREF: Boss_WolfGaropaMovement3+AE   o
-                                        ; ROM:off_50586   o
+word_ED190:     dc.w    $4824, $400, $FBE1              ; DATA XREF: Boss_WolfGaropaInitialize+AE   o
+                                        ; ROM:Boss_WolfGaropaOrbDirectionalMappingTable   o
                 dc.w    $C81C, $D00, $F8F0
 word_ED19C:     dc.w    $482F, $500, $CEA               ; DATA XREF: ROM:0005058A   o
                 dc.w    $482C, $800, $4EC
@@ -68,22 +68,22 @@ word_ED2F8:     dc.w    $4946, $500, $F802              ; DATA XREF: ROM:0003530
                 dc.w    $C942, $500, $F4F2
 word_ED304:     dc.w    $C94A, $900, $F9EF              ; DATA XREF: ROM:00035330   o
                                         ; ROM:00035344   o
-word_ED30A:     dc.w    $C950, $600, $FBFB              ; DATA XREF: Boss_WolfGaropaShootPattern6+96   o
-word_ED310:     dc.w    $4965, 0, $BF2                  ; DATA XREF: Boss_WolfGaropaSetPattern1   o
-                                        ; Boss_WolfGaropaShootPattern5+140   o
+word_ED30A:     dc.w    $C950, $600, $FBFB              ; DATA XREF: Boss_WolfGaropaAdvancePoseScript+96   o
+word_ED310:     dc.w    $4965, 0, $BF2                  ; DATA XREF: Boss_WolfGaropaSelectOrbNeutralMapping   o
+                                        ; Boss_WolfGaropaUpdateMetaspriteAndOrb+140   o
                 dc.w    $4966, $600, $FCE2
                 dc.w    $495A, $400, $EBF4
                 dc.w    $C95C, $A00, $F3F2
-word_ED328:     dc.w    $497B, $900, $DEC               ; DATA XREF: Boss_WolfGaropaMovement3+E6   o
-                                        ; Boss_WolfGaropaShootPattern5+14C   o
+word_ED328:     dc.w    $497B, $900, $DEC               ; DATA XREF: Boss_WolfGaropaInitialize+E6   o
+                                        ; Boss_WolfGaropaUpdateMetaspriteAndOrb+14C   o
                 dc.w    $496C, $800, $EDEC
                 dc.w    $C96F, $E00, $F5EC
-word_ED33A:     dc.w    $498F, $200, $E0E4              ; DATA XREF: Boss_WolfGaropaMovement3+CE   o
-                                        ; sub_50220:loc_5034E   o
+word_ED33A:     dc.w    $498F, $200, $E0E4              ; DATA XREF: Boss_WolfGaropaInitialize+CE   o
+                                        ; sub_50220:Boss_WolfGaropaSelectNearPlayerMapping   o
                 dc.w    $4992, $D00, $F8EC
                 dc.w    $4981, $100, $E80C
                 dc.w    $C983, $E00, $E0EC
-word_ED352:     dc.w    $49B4, $400, $FADF              ; DATA XREF: Boss_WolfGaropaShootPattern5+11E   o
+word_ED352:     dc.w    $49B4, $400, $FADF              ; DATA XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+11E   o
                 dc.w    $49AC, $D00, $FAEF
                 dc.w    $499A, $E00, $E2EF
                 dc.w    $C9A6, $600, $E2DF

@@ -7,7 +7,7 @@ Pickup_SpawnSmallFromCurrentObject:                     ; CODE XREF: Projectile_
                                         ; sub_2B298:loc_2B306   p
                 movea.w a5,a0
 Pickup_SpawnSmall:                                      ; CODE XREF: Enemy_UpdateBouncingObject+1E   p  ; was: loc_2BD00
-                                        ; Boss_ValkirieInitScreenPair+64   p
+                                        ; Effect_InitializeWolfGaropaBoundaryPair+64   p
                 moveq   #0,d7
                 bra.w   Pickup_InitializeSelectedSize
 ; End of function Pickup_SpawnSmallFromCurrentObject
@@ -92,7 +92,7 @@ Pickup_SpriteMappings:  dc.l    off_E97E0               ; DATA XREF: Pickup_Spaw
                 dc.l    off_E97D4
 
 ; Updates pickup lifetime, collection, display priority, and motion
-Pickup_Update:                                          ; CODE XREF: Boss_ValkirieScreenTimer:loc_50E36   j  ; was: sub_2BDB0
+Pickup_Update:                                          ; CODE XREF: Effect_WolfGaropaBoundaryFollowerMain:Effect_UpdateWolfGaropaBoundaryFollowerSprite   j  ; was: sub_2BDB0
                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 subq.w  #1,$4A(a5)
                 bmi.s   Pickup_Remove

@@ -433,7 +433,7 @@ locret_F750:                                            ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaBattleStart
 ; DMA transfers Wolf Garopa tile graphics
 Gfx_LoadWolfGaropaTiles:                                ; CODE XREF: Boss_WolfGaropaBattleStart+22   p  ; was: sub_F752
-                                        ; Boss_ValkirieForcePlayerToCeiling+28   p
+                                        ; Effect_WolfGaropaBoundaryMain+28   p
                 lea     byte_F76A(pc),a0
                 nop
                 jsr     (Gfx_DMATransferTiles).l

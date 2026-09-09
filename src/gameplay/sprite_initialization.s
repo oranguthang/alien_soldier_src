@@ -176,7 +176,7 @@ Boss_BackStringerObjectInitTable:   dc.w    $C6E0, $1020, $F010, $F010, $F808, $
                 dc.w    $C7A0, $1038, $EC14, $EC14, $F808, $F808, $2280
                 dc.w    $FFFE
 Boss_WolfGaropaObjectInitTable: dc.w    $C620, $5004, $E004, $E040, $E0F8, $E030, $4309  ; was: word_1BDEC
-                                        ; DATA XREF: Boss_WolfGaropaMovement3+106   o
+                                        ; DATA XREF: Boss_WolfGaropaInitialize+106   o
                 dc.w    $C8C0, 4, $F010, $F010, $FC04, $FC04, 9
                 dc.w    $CC80, 4, $F010, $F010, $FC04, $FC04, 9
                 dc.w    $C800, 4, $F010, $F010, 0, 0, 9

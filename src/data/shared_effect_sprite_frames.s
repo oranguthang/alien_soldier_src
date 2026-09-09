@@ -52,7 +52,7 @@ Boss_TerobusterProjectileSpriteFrames:  dc.l    $364CC, $500F8F8  ; DATA XREF: B
                 dc.l    $264D5, $FCFC
                 dc.w    $FFFF
 Boss_SharedCollisionProjectileSpriteFrames: dc.l    $344CC, $500F8F8  ; DATA XREF: Boss_ViblackRadialShotAttackState:Boss_ViblackInitializeStandardRadialShot   o  ; was: dword_2AD4A
-                                        ; Boss_WolfGaropaCollision+20   o
+                                        ; Boss_WolfGaropaSpawnOrbitSpark+20   o
                 dc.l    $244D0, $500F8F8
                 dc.l    $244D4, $FCFC
                 dc.l    $244D5, $FCFC

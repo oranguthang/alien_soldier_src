@@ -49,8 +49,8 @@ Gfx_SetupTileGraphics:                                  ; CODE XREF: Projectile_
                 rts
 ; End of function Gfx_SetupTileGraphics
 ; Finds free projectile slot and initializes type $424 projectile
-Projectile_InitType424:                                 ; CODE XREF: Boss_WolfGaropaDiveInit1+6   p  ; was: sub_2A0D6
-                                        ; Boss_WolfGaropaDiveInit2+6   p
+Projectile_InitType424:                                 ; CODE XREF: Boss_WolfGaropaBeginUpperType424Sequence+6   p  ; was: sub_2A0D6
+                                        ; Boss_WolfGaropaBeginLowerType424Sequence+6   p
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_2A100
                 move.w  #$424,(a0)
@@ -81,7 +81,7 @@ locret_2A124:                                           ; CODE XREF: Projectile_
 ; Sets sprite tile pattern from position table using random frame counter
 Gfx_SetTileFromRandomTable:
                 movea.w a5,a0                           ; was: sub_2A126
-loc_2A128:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+68   p
+loc_2A128:                                              ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+68   p
                 move.w  (word_FFA000).w,d0
                 asl.w   #2,d0
                 andi.w  #$C,d0

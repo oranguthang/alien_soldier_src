@@ -1,12 +1,13 @@
-Projectile_WolfGaropaLaser:                             ; CODE XREF: Projectile_WolfGaropaHoming+D4   j  ; was: sub_2B6B2
+; Select one of four projectile mappings from the quantized launch angle
+Projectile_SelectWolfGaropaDirectionMapping:            ; CODE XREF: Boss_WolfGaropaSpawnOrbProjectilePair+D4   j  ; was: sub_2B6B2
                 addi.w  #$20,d2                         ; ' '
                 andi.w  #$C0,d2
                 asr.w   #4,d2
                 move.l  off_2B6C4(pc,d2.w),8(a0)
                 rts
-; End of function Projectile_WolfGaropaLaser
+; End of function Projectile_SelectWolfGaropaDirectionMapping
 ; ---------------------------------------------------------------------------
-off_2B6C4:      dc.l    word_E90DA                      ; DATA XREF: Projectile_WolfGaropaLaser+A   r
+off_2B6C4:      dc.l    word_E90DA                      ; DATA XREF: Projectile_SelectWolfGaropaDirectionMapping+A   r
                 dc.l    word_E90E0
                 dc.l    word_E90D4
                 dc.l    word_E90E6

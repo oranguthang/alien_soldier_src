@@ -385,7 +385,7 @@ off_E9604:      dc.w    word_E90C2-*                    ; DATA XREF: ROM:stru_2B
                 dc.w    1
                 dc.w    word_E91BE-*
                 dc.w    $FF
-off_E962C:      dc.w    word_E91C4-*                    ; DATA XREF: Projectile_SpawnWolfGaropaBomb+A   o
+off_E962C:      dc.w    word_E91C4-*                    ; DATA XREF: Boss_WolfGaropaSpawnOrbExplosion+A   o
                                         ; ROM:000E9634   o
                 dc.w    1
                 dc.w    word_E91CA-*

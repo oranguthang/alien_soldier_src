@@ -623,7 +623,7 @@ Boss_WolfGaropaRotationFramesC: dc.l    word_ED2A4      ; DATA XREF: ROM:0003532
                 dc.l    word_ED2F8
 Boss_WolfGaropaInlineSpriteDescriptor:  dc.w    $63DE, $500, $F8F8  ; DATA XREF: ROM:00035324   o  ; was: word_35306
                                         ; ROM:0003532C   o
-Boss_WolfGaropaMetaspriteDescriptors:   dc.l    0       ; DATA XREF: Boss_WolfGaropaMovement3+1E   o  ; was: dword_3530C
+Boss_WolfGaropaMetaspriteDescriptors:   dc.l    0       ; DATA XREF: Boss_WolfGaropaInitialize+1E   o  ; was: dword_3530C
                 dc.l    0
                 dc.l    0
                 dc.l    0
@@ -648,12 +648,12 @@ Boss_WolfGaropaMetaspriteDescriptors:   dc.l    0       ; DATA XREF: Boss_WolfGa
                 dc.l    Boss_WolfGaropaRotationFramesC+$18000000
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
                 dc.l    word_ED304+$8400000
-Boss_WolfGaropaPartRadii:   dc.w    $2C, $2612, $1891   ; DATA XREF: Boss_WolfGaropaMovement3+24   o  ; was: word_35370
+Boss_WolfGaropaPartRadii:   dc.w    $2C, $2612, $1891   ; DATA XREF: Boss_WolfGaropaInitialize+24   o  ; was: word_35370
                 dc.w    $A290, $9F88, $1122
                 dc.w    $F1F, $893, $A694
                 dc.w    $A688, $1326, $1426
                 dc.w    $800
-Boss_WolfGaropaPartLinks:   dc.w    0, 0, 0             ; DATA XREF: Boss_WolfGaropaMovement3+2A   o  ; was: word_3538A
+Boss_WolfGaropaPartLinks:   dc.w    0, 0, 0             ; DATA XREF: Boss_WolfGaropaInitialize+2A   o  ; was: word_3538A
                 dc.w    0, 0, $4063
                 dc.w    $64, $4243, $244
                 dc.w    $4303, $40C8, $C9

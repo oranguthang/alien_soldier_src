@@ -1528,6 +1528,95 @@ to be particle gravity: one accumulates progressively negative deltas across
 increments or decrements four counters according to frame parity. Their
 original development purpose remains unclaimed without runtime evidence.
 
+The Wolf Garopa controller pass reduced the address-derived unknown count from
+6,439 to 6,386 and raised provenance to 9,437 unique mappings. The cohesive
+762-line `bosses/wolf_garopa_core.s` module now has no live address-derived
+names and exact static audit coverage for all 85 definitions. Twenty-three
+directly coupled pose, orb, effect, projectile, and post-defeat helpers were
+audited with it, bringing the project-wide name-audit total to 5,126.
+
+The controller now exposes two nested state machines instead of a flat list of
+supposed attacks. The outer type-`$3E8` machine builds the composite boss,
+runs its left-side entry, maintains a timed orb charge/projectile cycle,
+sweeps the orb through fixed wrapped angles `$140`, `$C0`, and `$180`, and
+then selects one of two type-`$424` sequences. The inner field-`$35C` machine
+steers fixed-point X velocity toward a target, applies three distinct
+gravity/launch transitions, consumes pose-event bits, and selects linked RAM
+records whose Y coordinate is forced to `$148`.
+
+The adjacent helpers establish what the old `ShootPattern` and
+`SpawnProjectile` names had conflated. One routine is a pose-script
+interpreter with duration, event, loop, and terminator commands; another only
+calculates interpolation deltas. The former `SpawnProjectile3` updates the
+auxiliary orb's mapping, center, radius, and endpoint without allocating an
+object, while the former `SpawnProjectile4` merely approaches a requested
+wrapped angle and reports completion in `d3`. Actual allocation is isolated
+to the paired projectile emitter and the orbit-centered star, spark, and
+type-`$188` explosion effects.
+
+This pass also rejects the old `Bullet1`, `Bullet2`, `Homing`, `Laser`,
+`Damage`, `Collision`, `DefeatInit`, `DefeatAnim`, and generic animation
+claims. Those entries respectively wait for battle readiness, steer the orb,
+allocate a projectile pair, choose a direction mapping, drive the defeat
+fade, emit orbit sparks, emit a charge star, calculate an emitter position,
+or run post-defeat timing. The visual identities of type `$424`, the three
+lazily loaded attack-effect tile variants, individual pose scripts, and the
+four linked RAM records remain deliberately unclaimed pending pinned runtime
+evidence.
+
+The Wolf Garopa pose, orb, and projectile pass reduced the address-derived
+unknown count from 6,386 to 6,322 and raised provenance to 9,501 unique
+mappings. All 78 unique definition addresses in the 688-line
+`projectiles/wolf_garopa.s` module now have exact static audit coverage: 65
+records were added here and 13 public helpers were covered by the controller
+pass. The binary pose-target `_End` alias shares address `0x0509B0` with the
+following routine and retains source provenance without duplicating an audit
+address. The project-wide name-audit total is now 5,191.
+
+The former shooting-pattern block is now separated into a real pose-command
+interpreter, four composite-part angle groups, six named command streams, a
+binary target table, and the interpolation initializer. Commands distinguish
+timed target interpolation from event-byte updates, `$FFFF` looping, and
+`$FFFE` termination. The orb path separately approaches wrapped angles,
+selects directional mappings, computes its center and attached endpoint, and
+cycles three tile-transfer frames. None of those helpers allocates a
+projectile.
+
+The actual emitter creates a pair of object records at the calculated orb
+position. Entity type `$408` is now conservatively named an orb shot: its
+handler checks arena bounds, reflects velocity, can convert the record to type
+`$160`, or enters a fallback that either requests a small pickup or marks the
+record for removal. This rejects the imported `Wave` identity because no wave
+table or wave-motion update exists. Exact on-screen identities of the
+projectile pair, type `$160` conversion, and attack-effect variants A/B/C
+remain unclaimed without pinned runtime evidence.
+
+The Wolf Garopa effects-and-transition pass reduced the address-derived
+unknown count from 6,322 to 6,294 and raised provenance to 9,529 unique
+mappings. The misleading `bosses/valkirie_screen_transition.s` container is
+now `bosses/wolf_garopa_attack_effects_and_transition.s`: all callers and
+state writes prove that its 243 lines belong to Wolf Garopa. Together with the
+three remaining returns in `bosses/wolf_garopa_defeat.s`, 31 unique addresses
+were added to the audit, bringing the project-wide total to 5,222. Both
+modules now have zero live address-derived definitions and exact audit
+coverage for all unique addresses.
+
+The former Valkirie-labelled routines are the paired type-`$418`/`$420`
+attack effect created by Wolf Garopa's two lazy effect loaders. Type `$418`
+tracks a screen-relative boundary, compares a vertical band with the player,
+and pushes player X when the boundary is crossed; it never forces player Y to
+the ceiling. Type `$420` follows that boundary while it exists, otherwise
+scrolls independently until its lifetime expires. No Valkirie caller or state
+dependency exists, so the old `InitScreenPair`, `ForcePlayerToCeiling`, and
+`ScreenTimer` identities are explicitly rejected rather than retained for
+historical familiarity.
+
+The latter half now names the defeat timer, bounded fade steps, randomized
+type-`$88` debris emission, post-defeat delay, and auxiliary-orb palette pulse
+directly. The exact on-screen appearance and original design terminology for
+the boundary pair remain unclaimed; `Boundary` describes only the statically
+observed coordinate comparisons and player-X constraint.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

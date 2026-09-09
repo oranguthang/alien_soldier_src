@@ -249,7 +249,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Stage18_MovingPlatform
                 dc.l    Stage24_ScrollHandler
                 dc.l    Stage_IncrementPhase
-                dc.l    Boss_WolfGaropaMovement2
+                dc.l    Boss_WolfGaropaUpdate
                 dc.l    Boss_ValkirieStateHandler
                 dc.l    Boss_ValkirieMinibossHandler
                 dc.l    Boss_ValkiriePart3Handler
@@ -257,13 +257,13 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_ValkirieForceMain
                 dc.l    Weapon_ProcessProjectileHit
                 dc.l    Projectile_MissirayMissileMain
-                dc.l    Projectile_WolfGaropaWave
+                dc.l    Projectile_WolfGaropaOrbShot
                 dc.l    Entity_EmptyState8
                 dc.l    Entity_ValkirieProjectileDispatcher
                 dc.l    Projectile_SharpssteelBladeShotMain
-                dc.l    Boss_ValkirieForcePlayerToCeiling
+                dc.l    Effect_WolfGaropaBoundaryMain
                 dc.l    Boss_WolfGaropaPaletteUpdate
-                dc.l    Boss_ValkirieScreenTimer
+                dc.l    Effect_WolfGaropaBoundaryFollowerMain
                 dc.l    Projectile_TimerAndVisibility
                 dc.l    Entity_SevenForcesMain
                 dc.l    Boss_ValkirieIntroMove

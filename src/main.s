@@ -264,7 +264,7 @@
                 include "src/bosses/wolf_garopa_core.s"
                 include "src/projectiles/wolf_garopa.s"
                 include "src/bosses/wolf_garopa_defeat.s"
-                include "src/bosses/valkirie_screen_transition.s"
+                include "src/bosses/wolf_garopa_attack_effects_and_transition.s"
                 include "src/bosses/valkirie_core.s"
                 include "src/bosses/valkirie_miniboss.s"
                 include "src/bosses/valkirie_auxiliary.s"

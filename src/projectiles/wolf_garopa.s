@@ -1,9 +1,9 @@
-Boss_WolfGaropaShootPattern5:                           ; CODE XREF: Boss_WolfGaropaInitMultiPattern+12   j  ; was: sub_50220
-                                        ; Boss_WolfGaropaShootPattern3+A8   j
+Boss_WolfGaropaUpdateMetaspriteAndOrb:                  ; CODE XREF: Boss_WolfGaropaUpdateInitialPose+12   j  ; was: sub_50220
+                                        ; Boss_WolfGaropaUpdateHorizontalTargetMotion+A8   j
                 moveq   #$18,d7
                 jsr     (Sprite_BeginMetaspritePartTraversal).l
-                bsr.w   Boss_WolfGaropaCollision
-                bsr.w   Boss_WolfGaropaCleanup
+                bsr.w   Boss_WolfGaropaSpawnOrbitSpark
+                bsr.w   Boss_WolfGaropaUpdateOrbPalettePulse
                 move.w  $10(a5),$35E(a5)
                 move.w  $14(a5),$3BC(a5)
                 move.w  #$130,d0
@@ -14,18 +14,18 @@ Boss_WolfGaropaShootPattern5:                           ; CODE XREF: Boss_WolfGa
                 add.w   (word_FFA016).w,d0
                 move.w  d1,(dword_FFA90C).w
                 move.w  (dword_FFA908).w,d0
-                bmi.s   loc_5026C
+                bmi.s   Boss_WolfGaropaCheckOrbScrollOffsetMinimum
                 cmpi.w  #$108,d0
-                bmi.s   loc_50272
-loc_50264:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+50   j
+                bmi.s   Boss_WolfGaropaStoreOrbAttachmentOrigins
+Boss_WolfGaropaClampOrbScrollOffsetMinimum:             ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+50   j  ; was: loc_50264
                 move.w  #$FEF6,(dword_FFA908).w
-                bra.s   loc_50272
+                bra.s   Boss_WolfGaropaStoreOrbAttachmentOrigins
 ; ---------------------------------------------------------------------------
-loc_5026C:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+3C   j
+Boss_WolfGaropaCheckOrbScrollOffsetMinimum:             ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+3C   j  ; was: loc_5026C
                 cmpi.w  #$FEF6,d0
-                bmi.s   loc_50264
-loc_50272:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+42   j
-                                        ; Boss_WolfGaropaShootPattern5+4A   j
+                bmi.s   Boss_WolfGaropaClampOrbScrollOffsetMinimum
+Boss_WolfGaropaStoreOrbAttachmentOrigins:               ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+42   j  ; was: loc_50272
+                                        ; Boss_WolfGaropaUpdateMetaspriteAndOrb+4A   j
                 move.w  $35E(a5),d0
                 addi.w  #-$A,d0
                 move.w  d0,$970(a5)
@@ -34,26 +34,26 @@ loc_50272:                                              ; CODE XREF: Boss_WolfGa
                 move.w  d0,$974(a5)
                 move.w  $53E(a5),d2
                 sub.w   $A16(a5),d2
-                bmi.w   loc_502B0
+                bmi.w   Boss_WolfGaropaCheckNegativeOrbFacingDelta
                 cmpi.w  #4,d2
-                bmi.s   loc_502C8
+                bmi.s   Boss_WolfGaropaPositionOrbFacingPart
                 cmpi.w  #$100,d2
-                bpl.w   loc_502BE
-loc_502A4:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+9A   j
+                bpl.w   Boss_WolfGaropaDecreaseOrbFacingAngle
+Boss_WolfGaropaIncreaseOrbFacingAngle:                  ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+9A   j  ; was: loc_502A4
                 addq.w  #2,$A16(a5)
                 andi.w  #$1FE,$A16(a5)
-                bra.s   loc_502C8
+                bra.s   Boss_WolfGaropaPositionOrbFacingPart
 ; ---------------------------------------------------------------------------
-loc_502B0:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+72   j
+Boss_WolfGaropaCheckNegativeOrbFacingDelta:             ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+72   j  ; was: loc_502B0
                 cmpi.w  #$FFFC,d2
-                bpl.s   loc_502C8
+                bpl.s   Boss_WolfGaropaPositionOrbFacingPart
                 cmpi.w  #$FF00,d2
-                bmi.w   loc_502A4
-loc_502BE:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+80   j
+                bmi.w   Boss_WolfGaropaIncreaseOrbFacingAngle
+Boss_WolfGaropaDecreaseOrbFacingAngle:                  ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+80   j  ; was: loc_502BE
                 subq.w  #2,$A16(a5)
                 andi.w  #$1FE,$A16(a5)
-loc_502C8:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+7A   j
-                                        ; Boss_WolfGaropaShootPattern5+8E   j
+Boss_WolfGaropaPositionOrbFacingPart:                   ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+7A   j  ; was: loc_502C8
+                                        ; Boss_WolfGaropaUpdateMetaspriteAndOrb+8E   j
                 move.w  $A16(a5),d0
                 lea     (Math_SineTable).l,a0
                 move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d1
@@ -89,23 +89,23 @@ loc_502C8:                                              ; CODE XREF: Boss_WolfGa
                 moveq   #0,d7
                 move.b  $38(a0),d7
                 cmpi.w  #$30,d7                         ; '0'
-                bmi.s   loc_5034E
+                bmi.s   Boss_WolfGaropaSelectNearPlayerMapping
                 move.l  #word_ED352,d1
                 addi.w  #$24,d2                         ; '$'
                 addi.w  #-6,d3
-                bra.s   loc_5035C
+                bra.s   Boss_WolfGaropaStorePlayerRelativeMapping
 ; ---------------------------------------------------------------------------
-loc_5034E:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+11C   j
+Boss_WolfGaropaSelectNearPlayerMapping:                 ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+11C   j  ; was: loc_5034E
                 move.l  #word_ED33A,d1
                 addi.w  #$1E,d2
                 addi.w  #-$12,d3
-loc_5035C:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+12C   j
+Boss_WolfGaropaStorePlayerRelativeMapping:              ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+12C   j  ; was: loc_5035C
                 move.l  d1,$A88(a5)
                 move.l  #word_ED310,d1
                 cmpi.w  #$40,d7                         ; '@'
-                bpl.s   loc_50372
+                bpl.s   Boss_WolfGaropaStoreOrbMappingAndPosition
                 move.l  #word_ED328,d1
-loc_50372:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+14A   j
+Boss_WolfGaropaStoreOrbMappingAndPosition:              ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+14A   j  ; was: loc_50372
                 move.l  d1,$AE8(a5)
                 move.b  $44(a0),d6
                 ext.w   d6
@@ -113,117 +113,117 @@ loc_50372:                                              ; CODE XREF: Boss_WolfGa
                 add.w   d6,d3
                 move.w  d3,$AF4(a5)
                 tst.w   (word_FF8200).w
-                bne.s   loc_5038E
-                bra.s   loc_503A4
+                bne.s   Boss_WolfGaropaAdvanceOrbPalettePhase
+                bra.s   Boss_WolfGaropaUpdateOrbFrameAndTiles
 ; ---------------------------------------------------------------------------
-loc_5038E:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+16A   j
+Boss_WolfGaropaAdvanceOrbPalettePhase:                  ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+16A   j  ; was: loc_5038E
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.s   loc_503A4
+                bne.s   Boss_WolfGaropaUpdateOrbFrameAndTiles
                 addi.w  #$20,(word_FFE37E).w            ; ' '
                 andi.w  #$EE,(word_FFE37E).w
-loc_503A4:                                              ; CODE XREF: Boss_WolfGaropaShootPattern5+16C   j
-                                        ; Boss_WolfGaropaShootPattern5+176   j
-                bsr.w   Boss_WolfGaropaSpawnProjectile3
-                bra.w   Projectile_WolfGaropaMain
-; End of function Boss_WolfGaropaShootPattern5
-; Graphics update handler
-Boss_WolfGaropaGraphicsUpdate:                          ; CODE XREF: Projectile_WolfGaropaBullet1+B2   p  ; was: sub_503AC
+Boss_WolfGaropaUpdateOrbFrameAndTiles:                  ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+16C   j  ; was: loc_503A4
+                                        ; Boss_WolfGaropaUpdateMetaspriteAndOrb+176   j
+                bsr.w   Boss_WolfGaropaUpdateOrbPositionAndFrame
+                bra.w   Gfx_UpdateWolfGaropaOrbTiles
+; End of function Boss_WolfGaropaUpdateMetaspriteAndOrb
+; Set the orb-facing flag from its horizontal position relative to the camera
+Boss_WolfGaropaUpdateOrbFacingFlag:                     ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+B2   p  ; was: sub_503AC
                 move.w  (word_FF8248).w,d0
                 sub.w   $9D0(a5),d0
                 move.w  d0,d1
-                bpl.s   loc_503BA
+                bpl.s   Boss_WolfGaropaCheckOrbFacingDistance
                 neg.w   d0
-loc_503BA:                                              ; CODE XREF: Boss_WolfGaropaGraphicsUpdate+A   j
+Boss_WolfGaropaCheckOrbFacingDistance:                  ; CODE XREF: Boss_WolfGaropaUpdateOrbFacingFlag+A   j  ; was: loc_503BA
                 cmpi.w  #6,d0
-                bmi.s   locret_503D0
+                bmi.s   Boss_WolfGaropaOrbFacingUpdateReturn
                 bset    #3,$9CE(a5)
                 tst.w   d1
-                bpl.s   locret_503D0
+                bpl.s   Boss_WolfGaropaOrbFacingUpdateReturn
                 bclr    #3,$9CE(a5)
-locret_503D0:                                           ; CODE XREF: Boss_WolfGaropaGraphicsUpdate+12   j
-                                        ; Boss_WolfGaropaGraphicsUpdate+1C   j
+Boss_WolfGaropaOrbFacingUpdateReturn:                   ; CODE XREF: Boss_WolfGaropaUpdateOrbFacingFlag+12   j  ; was: locret_503D0
+                                        ; Boss_WolfGaropaUpdateOrbFacingFlag+1C   j
                 rts
-; End of function Boss_WolfGaropaGraphicsUpdate
-; Check if bomb spawning conditions met and load bomb graphics tiles
-Boss_WolfGaropaBombCheck1:                              ; CODE XREF: Boss_WolfGaropaRising+6   p  ; was: sub_503D2
+; End of function Boss_WolfGaropaUpdateOrbFacingFlag
+; Lazily initialize attack effect A and load its graphics
+Boss_WolfGaropaTryLoadAttackEffectA:                    ; CODE XREF: Boss_WolfGaropaUpdateLaunchMotion+6   p  ; was: sub_503D2
                 tst.b   (byte_FF9DBA).w
-                beq.s   loc_503DA
-locret_503D8:                                           ; CODE XREF: Boss_WolfGaropaBombCheck1+E   j
+                beq.s   Boss_WolfGaropaLoadAttackEffectA
+Boss_WolfGaropaAttackEffectAReturn:                     ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectA+E   j  ; was: locret_503D8
                 rts
 ; ---------------------------------------------------------------------------
-loc_503DA:                                              ; CODE XREF: Boss_WolfGaropaBombCheck1+4   j
+Boss_WolfGaropaLoadAttackEffectA:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectA+4   j  ; was: loc_503DA
                 cmpi.w  #$10,(dword_FFA900).w
-                bpl.s   locret_503D8
+                bpl.s   Boss_WolfGaropaAttackEffectAReturn
                 move.b  #1,(byte_FF9DBA).w
                 moveq   #0,d0
                 move.w  #$E2,d1
-                bsr.w   Boss_ValkirieInitScreenPair
+                bsr.w   Effect_InitializeWolfGaropaBoundaryPair
                 move.b  #$D0,d0
                 jsr     (Sound_PlaySFX).l
-                lea     word_50414(pc),a0
+                lea     Boss_WolfGaropaAttackEffectATileTransfer(pc),a0
                 nop
                 jsr     (Gfx_DMATransferTiles).l
-                lea     word_50420(pc),a0
+                lea     Boss_WolfGaropaAttackEffectACompressedTiles(pc),a0
                 nop
                 jmp     Gfx_LoadCompressedTiles
-; End of function Boss_WolfGaropaBombCheck1
+; End of function Boss_WolfGaropaTryLoadAttackEffectA
 ; ---------------------------------------------------------------------------
-word_50414:     dc.w    $4658, $4000, $102, $2A2B, $2C2D, $2E2F
-                                        ; DATA XREF: Boss_WolfGaropaBombCheck1+2A   o
-word_50420:     dc.w    $4C50, $4000, $401, $3031, $3233, $2634, $3536, $3738
-                                        ; DATA XREF: Boss_WolfGaropaBombCheck1+36   o
+Boss_WolfGaropaAttackEffectATileTransfer:   dc.w    $4658, $4000, $102, $2A2B, $2C2D, $2E2F  ; was: word_50414
+                                        ; DATA XREF: Boss_WolfGaropaTryLoadAttackEffectA+2A   o
+Boss_WolfGaropaAttackEffectACompressedTiles:    dc.w    $4C50, $4000, $401, $3031, $3233, $2634, $3536, $3738  ; was: word_50420
+                                        ; DATA XREF: Boss_WolfGaropaTryLoadAttackEffectA+36   o
 
-; Trigger bomb spawn check by calling bomb initialization
-Boss_WolfGaropaBombTrigger:                             ; CODE XREF: Boss_WolfGaropaDiveLoop+1C   p  ; was: sub_50430
+; Gate attack-effect-B initialization on its shared loaded flag
+Boss_WolfGaropaTryLoadAttackEffectB:                    ; CODE XREF: Boss_WolfGaropaUpdateUpperType424Sequence+1C   p  ; was: sub_50430
                 tst.b   (byte_FF9DBA).w
-                beq.s   Boss_WolfGaropaBombCheck2
-locret_50436:                                           ; CODE XREF: Boss_WolfGaropaBombCheck2+6   j
+                beq.s   Boss_WolfGaropaLoadAttackEffectB
+Boss_WolfGaropaAttackEffectBReturn:                     ; CODE XREF: Boss_WolfGaropaLoadAttackEffectB+6   j  ; was: locret_50436
                 rts
-; End of function Boss_WolfGaropaBombTrigger
-; Second bomb check variant: load different compressed tile set
-Boss_WolfGaropaBombCheck2:                              ; CODE XREF: Boss_WolfGaropaBombTrigger+4   j  ; was: sub_50438
+; End of function Boss_WolfGaropaTryLoadAttackEffectB
+; Initialize attack effect B and load its compressed tiles
+Boss_WolfGaropaLoadAttackEffectB:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectB+4   j  ; was: sub_50438
                 cmpi.w  #$10,(dword_FFA900).w
-                bpl.s   locret_50436
+                bpl.s   Boss_WolfGaropaAttackEffectBReturn
                 move.b  #1,(byte_FF9DBA).w
                 moveq   #1,d0
                 move.w  #$DE,d1
-                bsr.w   Boss_ValkirieInitScreenPair
+                bsr.w   Effect_InitializeWolfGaropaBoundaryPair
                 move.b  #$D0,d0
                 jsr     (Sound_PlaySFX).l
-                lea     word_50466(pc),a0
+                lea     Boss_WolfGaropaAttackEffectBCompressedTiles(pc),a0
                 nop
                 jmp     Gfx_LoadCompressedTiles
-; End of function Boss_WolfGaropaBombCheck2
+; End of function Boss_WolfGaropaLoadAttackEffectB
 ; ---------------------------------------------------------------------------
-word_50466:     dc.w    $4458, $4000, $101, $3C3B, $3D3F
-                                        ; DATA XREF: Boss_WolfGaropaBombCheck2+22   o
+Boss_WolfGaropaAttackEffectBCompressedTiles:    dc.w    $4458, $4000, $101, $3C3B, $3D3F  ; was: word_50466
+                                        ; DATA XREF: Boss_WolfGaropaLoadAttackEffectB+22   o
 
-; Third bomb check variant: load additional compressed tile set
-Boss_WolfGaropaBombCheck3:
-                tst.b   (byte_FF9DBA).w                 ; was: sub_50470
-                beq.s   loc_50478
-locret_50476:                                           ; CODE XREF: Boss_WolfGaropaBombCheck3+E   j
+; Unreferenced loader for attack-effect graphics variant C
+Boss_WolfGaropaTryLoadAttackEffectC:                    ; was: sub_50470
+                tst.b   (byte_FF9DBA).w
+                beq.s   Boss_WolfGaropaLoadAttackEffectC
+Boss_WolfGaropaAttackEffectCReturn:                     ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectC+E   j  ; was: locret_50476
                 rts
 ; ---------------------------------------------------------------------------
-loc_50478:                                              ; CODE XREF: Boss_WolfGaropaBombCheck3+4   j
+Boss_WolfGaropaLoadAttackEffectC:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectC+4   j  ; was: loc_50478
                 cmpi.w  #$10,(dword_FFA900).w
-                bpl.s   locret_50476
+                bpl.s   Boss_WolfGaropaAttackEffectCReturn
                 move.b  #1,(byte_FF9DBA).w
-                lea     word_50492(pc),a0
+                lea     Boss_WolfGaropaAttackEffectCCompressedTiles(pc),a0
                 nop
                 jmp     Gfx_LoadCompressedTiles
-; End of function Boss_WolfGaropaBombCheck3
+; End of function Boss_WolfGaropaTryLoadAttackEffectC
 ; ---------------------------------------------------------------------------
-word_50492:     dc.w    $4C50, $4000, $301, $4243, $4445, $4647, $4849
-                                        ; DATA XREF: Boss_WolfGaropaBombCheck3+16   o
+Boss_WolfGaropaAttackEffectCCompressedTiles:    dc.w    $4C50, $4000, $301, $4243, $4445, $4647, $4849  ; was: word_50492
+                                        ; DATA XREF: Boss_WolfGaropaTryLoadAttackEffectC+16   o
 
-; Spawns projectile type 3
-Boss_WolfGaropaSpawnProjectile3:                        ; CODE XREF: Boss_WolfGaropaShootPattern5:loc_503A4   p  ; was: sub_504A0
+; Update the auxiliary orb mapping, center, radius, and attached endpoint
+Boss_WolfGaropaUpdateOrbPositionAndFrame:               ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb:Boss_WolfGaropaUpdateOrbFrameAndTiles   p  ; was: sub_504A0
                 subq.w  #4,$53C(a5)
-                bpl.s   loc_504AA
+                bpl.s   Boss_WolfGaropaCalculateOrbCenter
                 clr.w   $53C(a5)
-loc_504AA:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+4   j
+Boss_WolfGaropaCalculateOrbCenter:                      ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+4   j  ; was: loc_504AA
                 move.w  $A76(a5),d0
                 lea     (Math_SineTable).l,a0
                 move.w  Math_QuarterSineTable-Math_SineTable(a0,d0.w),d1
@@ -237,17 +237,17 @@ loc_504AA:                                              ; CODE XREF: Boss_WolfGa
                 swap    d1
                 swap    d2
                 cmpi.w  #$120,d0
-                bmi.s   loc_504DC
+                bmi.s   Boss_WolfGaropaApplyOrbVerticalBias
                 cmpi.w  #$1E0,d0
-                bmi.s   loc_504DE
-loc_504DC:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+34   j
+                bmi.s   Boss_WolfGaropaStoreOrbCenter
+Boss_WolfGaropaApplyOrbVerticalBias:                    ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+34   j  ; was: loc_504DC
                 addq.w  #6,d1
-loc_504DE:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+3A   j
+Boss_WolfGaropaStoreOrbCenter:                          ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+3A   j  ; was: loc_504DE
                 add.w   $974(a5),d1
                 add.w   $970(a5),d2
                 move.w  d1,$A34(a5)
                 move.w  d2,$A30(a5)
-                lea     off_50586(pc),a1
+                lea     Boss_WolfGaropaOrbDirectionalMappingTable(pc),a1
                 nop
                 movea.w #(byte_FFD040-M68K_RAM),a0
                 andi.w  #$E7FF,$E(a0)
@@ -256,31 +256,31 @@ loc_504DE:                                              ; CODE XREF: Boss_WolfGa
                 jsr     (loc_2A128).l
                 move.w  $6BC(a5),d0
                 btst    #3,$65E(a5)
-                beq.s   loc_5052A
+                beq.s   Boss_WolfGaropaReduceOrbEndpointRadius
                 addi.w  #$C,d0
                 cmpi.w  #$180,d0
-                bmi.s   loc_5053A
+                bmi.s   Boss_WolfGaropaStoreOrbEndpointRadius
                 move.w  #$180,d0
-                bra.s   loc_5053A
+                bra.s   Boss_WolfGaropaStoreOrbEndpointRadius
 ; ---------------------------------------------------------------------------
-loc_5052A:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+78   j
+Boss_WolfGaropaReduceOrbEndpointRadius:                 ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+78   j  ; was: loc_5052A
                 subq.w  #2,d0
-                bpl.s   loc_5053A
+                bpl.s   Boss_WolfGaropaStoreOrbEndpointRadius
                 bclr    #7,$B42(a5)
                 clr.w   $6BC(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_5053A:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+82   j
-                                        ; Boss_WolfGaropaSpawnProjectile3+88   j
+Boss_WolfGaropaStoreOrbEndpointRadius:                  ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+82   j  ; was: loc_5053A
+                                        ; Boss_WolfGaropaUpdateOrbPositionAndFrame+88   j
                 move.w  d0,$6BC(a5)
                 bset    #7,$B42(a5)
                 btst    #1,$65E(a5)
-                beq.s   loc_5055A
+                beq.s   Boss_WolfGaropaPositionOrbEndpoint
                 btst    #2,(word_FFA000+1).w
-                beq.s   loc_5055A
+                beq.s   Boss_WolfGaropaPositionOrbEndpoint
                 bclr    #7,$B42(a5)
-loc_5055A:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile3+AA   j
-                                        ; Boss_WolfGaropaSpawnProjectile3+B2   j
+Boss_WolfGaropaPositionOrbEndpoint:                     ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+AA   j  ; was: loc_5055A
+                                        ; Boss_WolfGaropaUpdateOrbPositionAndFrame+B2   j
                 move.w  $A76(a5),d3
                 lea     (Math_SineTable).l,a0
                 move.w  Math_QuarterSineTable-Math_SineTable(a0,d3.w),d1
@@ -294,86 +294,86 @@ loc_5055A:                                              ; CODE XREF: Boss_WolfGa
                 move.w  d1,$B54(a5)
                 move.w  d2,$B50(a5)
                 rts
-; End of function Boss_WolfGaropaSpawnProjectile3
+; End of function Boss_WolfGaropaUpdateOrbPositionAndFrame
 ; ---------------------------------------------------------------------------
-off_50586:      dc.l    word_ED190                      ; DATA XREF: Boss_WolfGaropaSpawnProjectile3+4E   o
+Boss_WolfGaropaOrbDirectionalMappingTable:  dc.l    word_ED190  ; DATA XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+4E   o  ; was: off_50586
                 dc.l    word_ED19C
                 dc.l    word_ED1AE
                 dc.l    word_ED1BA
 
-; Projectile main handler
-Projectile_WolfGaropaMain:                              ; CODE XREF: Boss_WolfGaropaShootPattern5+188   j  ; was: sub_50596
+; Select the orb tile-transfer descriptor from the global frame counter
+Gfx_UpdateWolfGaropaOrbTiles:                           ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+188   j  ; was: sub_50596
                 move.w  (word_FFA000).w,d0
                 asl.w   #1,d0
                 andi.w  #$C,d0
-                movea.l off_505AA(pc,d0.w),a0
+                movea.l Boss_WolfGaropaOrbTileTransferTable(pc,d0.w),a0
                 jmp     Gfx_LoadCompressedTiles
-; End of function Projectile_WolfGaropaMain
+; End of function Gfx_UpdateWolfGaropaOrbTiles
 ; ---------------------------------------------------------------------------
-off_505AA:      dc.l    byte_505BA                      ; DATA XREF: Projectile_WolfGaropaMain+A   r
-                dc.l    byte_505C2
-                dc.l    byte_505CA
-                dc.l    byte_505C2
-byte_505BA:     dc.b    $64, $92, $20, 0, 1, 0, $C, $D
-                                        ; DATA XREF: ROM:off_505AA   o
-byte_505C2:     dc.b    $64, $92, $20, 0, 1, 0, $E, $F
+Boss_WolfGaropaOrbTileTransferTable:    dc.l    Boss_WolfGaropaOrbTileTransferFrame0  ; DATA XREF: Gfx_UpdateWolfGaropaOrbTiles+A   r  ; was: off_505AA
+                dc.l    Boss_WolfGaropaOrbTileTransferFrame1
+                dc.l    Boss_WolfGaropaOrbTileTransferFrame2
+                dc.l    Boss_WolfGaropaOrbTileTransferFrame1
+Boss_WolfGaropaOrbTileTransferFrame0:   dc.b    $64, $92, $20, 0, 1, 0, $C, $D  ; was: byte_505BA
+                                        ; DATA XREF: ROM:Boss_WolfGaropaOrbTileTransferTable   o
+Boss_WolfGaropaOrbTileTransferFrame1:   dc.b    $64, $92, $20, 0, 1, 0, $E, $F  ; was: byte_505C2
                                         ; DATA XREF: ROM:000505AE   o
                                         ; ROM:000505B6   o
-byte_505CA:     dc.b    $64, $92, $20, 0, 1, 0, $10, $11
+Boss_WolfGaropaOrbTileTransferFrame2:   dc.b    $64, $92, $20, 0, 1, 0, $10, $11  ; was: byte_505CA
                                         ; DATA XREF: ROM:000505B2   o
 
-; Shooting pattern 6
-Boss_WolfGaropaShootPattern6:                           ; CODE XREF: Boss_WolfGaropaInitMultiPattern+E   p  ; was: sub_505D2
-                                        ; Boss_WolfGaropaShootPattern3+7A   p
+; Interpret pose-script commands and update all composite-part angles
+Boss_WolfGaropaAdvancePoseScript:                       ; CODE XREF: Boss_WolfGaropaUpdateInitialPose+E   p  ; was: sub_505D2
+                                        ; Boss_WolfGaropaUpdateHorizontalTargetMotion+7A   p
                 clr.b   $23E(a5)
                 tst.w   $C(a5)
-                bpl.s   loc_5064A
-loc_505DC:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+24   j
-                                        ; Boss_WolfGaropaShootPattern6+44   j
+                bpl.s   Boss_WolfGaropaTickPoseInterpolation
+Boss_WolfGaropaReadNextPoseCommand:                     ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+24   j  ; was: loc_505DC
+                                        ; Boss_WolfGaropaAdvancePoseScript+44   j
                 move.w  $58(a5),d0
-                bmi.w   loc_5065A
+                bmi.w   Boss_WolfGaropaStorePoseAngleGroup1
                 cmpi.b  #$80,(a1,d0.w)
-                bne.s   loc_505F8
+                bne.s   Boss_WolfGaropaCheckPoseControlCommand
                 move.b  1(a1,d0.w),$23E(a5)
                 addq.w  #2,$58(a5)
-                bra.s   loc_505DC
+                bra.s   Boss_WolfGaropaReadNextPoseCommand
 ; ---------------------------------------------------------------------------
-loc_505F8:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+18   j
+Boss_WolfGaropaCheckPoseControlCommand:                 ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+18   j  ; was: loc_505F8
                 move.w  (a1,d0.w),d3
                 cmpi.w  #$FFFE,d3
-                bne.s   loc_50608
+                bne.s   Boss_WolfGaropaHandlePoseLoopCommand
                 move.w  d3,$58(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_50608:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+2E   j
+Boss_WolfGaropaHandlePoseLoopCommand:                   ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+2E   j  ; was: loc_50608
                 cmpi.w  #$FFFF,d3
-                bne.s   loc_50618
+                bne.s   Boss_WolfGaropaBeginPoseCommandInterpolation
                 clr.w   $58(a5)
                 clr.w   $29C(a5)
-                bra.s   loc_505DC
+                bra.s   Boss_WolfGaropaReadNextPoseCommand
 ; ---------------------------------------------------------------------------
-loc_50618:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+3A   j
+Boss_WolfGaropaBeginPoseCommandInterpolation:           ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+3A   j  ; was: loc_50618
                 move.w  d3,(dword_FF8040).w
                 andi.w  #$FF,d3
                 move.w  2(a1,d0.w),d0
                 ext.l   d0
-                addi.l  #word_508A2,d0
+                addi.l  #Boss_WolfGaropaPoseTargets,d0
                 movea.l d0,a0
-                bsr.w   Boss_WolfGaropaSpawnProjectile1
+                bsr.w   Boss_WolfGaropaBeginPoseInterpolation
                 moveq   #0,d0
                 move.b  (dword_FF8040).w,d0
                 move.w  d0,$C(a5)
                 addq.w  #4,$58(a5)
                 addq.w  #1,$29C(a5)
                 tst.w   $C(a5)
-                bmi.s   loc_5065A
-loc_5064A:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+8   j
+                bmi.s   Boss_WolfGaropaStorePoseAngleGroup1
+Boss_WolfGaropaTickPoseInterpolation:                   ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+8   j  ; was: loc_5064A
                 subq.w  #1,$C(a5)
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #$12,d7
                 jsr     (Anim_ApplyInterpolationStep).l
-loc_5065A:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+E   j
-                                        ; Boss_WolfGaropaShootPattern6+76   j
+Boss_WolfGaropaStorePoseAngleGroup1:                    ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+E   j  ; was: loc_5065A
+                                        ; Boss_WolfGaropaAdvancePoseScript+76   j
                 move.w  #$1FE,d7
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 move.l  #word_ED304,d5
@@ -412,12 +412,12 @@ loc_5065A:                                              ; CODE XREF: Boss_WolfGa
                 and.w   d7,d2
                 move.l  d5,$368(a5)
                 cmpi.w  #$10,d2
-                bmi.s   loc_506E4
+                bmi.s   Boss_WolfGaropaStorePoseAngleGroup2
                 cmpi.w  #$100,d2
-                bpl.s   loc_506E4
+                bpl.s   Boss_WolfGaropaStorePoseAngleGroup2
                 move.l  d6,$368(a5)
-loc_506E4:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+106   j
-                                        ; Boss_WolfGaropaShootPattern6+10C   j
+Boss_WolfGaropaStorePoseAngleGroup2:                    ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+106   j  ; was: loc_506E4
+                                        ; Boss_WolfGaropaAdvancePoseScript+10C   j
                 move.b  $14(a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -438,12 +438,12 @@ loc_506E4:                                              ; CODE XREF: Boss_WolfGa
                 and.w   d7,d2
                 move.l  d5,$548(a5)
                 cmpi.w  #$10,d2
-                bmi.s   loc_5072C
+                bmi.s   Boss_WolfGaropaStorePoseAngleGroup3
                 cmpi.w  #$100,d2
-                bpl.s   loc_5072C
+                bpl.s   Boss_WolfGaropaStorePoseAngleGroup3
                 move.l  d6,$548(a5)
-loc_5072C:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+14E   j
-                                        ; Boss_WolfGaropaShootPattern6+154   j
+Boss_WolfGaropaStorePoseAngleGroup3:                    ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+14E   j  ; was: loc_5072C
+                                        ; Boss_WolfGaropaAdvancePoseScript+154   j
                 move.b  $20(a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -465,12 +465,12 @@ loc_5072C:                                              ; CODE XREF: Boss_WolfGa
                 and.w   d7,d2
                 move.l  d5,$728(a5)
                 cmpi.w  #$10,d2
-                bmi.s   loc_50778
+                bmi.s   Boss_WolfGaropaStorePoseAngleGroup4
                 cmpi.w  #$100,d2
-                bpl.s   loc_50778
+                bpl.s   Boss_WolfGaropaStorePoseAngleGroup4
                 move.l  d6,$728(a5)
-loc_50778:                                              ; CODE XREF: Boss_WolfGaropaShootPattern6+19A   j
-                                        ; Boss_WolfGaropaShootPattern6+1A0   j
+Boss_WolfGaropaStorePoseAngleGroup4:                    ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+19A   j  ; was: loc_50778
+                                        ; Boss_WolfGaropaAdvancePoseScript+1A0   j
                 move.b  $2C(a0),d0
                 asl.w   #1,d0
                 and.w   d7,d0
@@ -492,99 +492,99 @@ loc_50778:                                              ; CODE XREF: Boss_WolfGa
                 and.w   d7,d2
                 move.l  d5,$908(a5)
                 cmpi.w  #$10,d2
-                bmi.s   locret_507C4
+                bmi.s   Boss_WolfGaropaPoseScriptReturn
                 cmpi.w  #$100,d2
-                bpl.s   locret_507C4
+                bpl.s   Boss_WolfGaropaPoseScriptReturn
                 move.l  d6,$908(a5)
-locret_507C4:                                           ; CODE XREF: Boss_WolfGaropaShootPattern6+1E6   j
-                                        ; Boss_WolfGaropaShootPattern6+1EC   j
+Boss_WolfGaropaPoseScriptReturn:                        ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+1E6   j  ; was: locret_507C4
+                                        ; Boss_WolfGaropaAdvancePoseScript+1EC   j
                 rts
-; End of function Boss_WolfGaropaShootPattern6
-; Spawns projectile type 1
-Boss_WolfGaropaSpawnProjectile1:                        ; CODE XREF: Boss_WolfGaropaShootPattern6+5C   p  ; was: sub_507C6
-                lea     word_508A2(pc),a1
+; End of function Boss_WolfGaropaAdvancePoseScript
+; Initialize interpolation deltas for the next pose-script command
+Boss_WolfGaropaBeginPoseInterpolation:                  ; CODE XREF: Boss_WolfGaropaAdvancePoseScript+5C   p  ; was: sub_507C6
+                lea     Boss_WolfGaropaPoseTargets(pc),a1
                 nop
                 moveq   #$12,d7
                 movea.w #(dword_FF9400-M68K_RAM),a2
                 move.w  d3,$C(a5)
                 jmp     Anim_CalculateInterpolationDeltas
-; End of function Boss_WolfGaropaSpawnProjectile1
-; Load Wolf Garopa animation frame delays with count $12
-Anim_WolfGaropaLoadFrames:
-                moveq   #$12,d7                         ; was: sub_507DC
+; End of function Boss_WolfGaropaBeginPoseInterpolation
+; Load the 18 pose-component interpolation durations
+Anim_WolfGaropaLoadPoseDurations:                       ; was: sub_507DC
+                moveq   #$12,d7
                 movea.w #(dword_FF9400-M68K_RAM),a1
                 jmp     Anim_LoadFrameDelays
-; End of function Anim_WolfGaropaLoadFrames
+; End of function Anim_WolfGaropaLoadPoseDurations
 ; ---------------------------------------------------------------------------
                 dc.b    $FF, $FF
-word_507EA:     dc.w    $506, $36, $8089, $303, $48, $808A, $605, $5A, $808B, $205, $6C, $8004, $303, $6C, $80D, $12
-                                        ; DATA XREF: Boss_WolfGaropaShootPattern3+1C   o
-                                        ; Boss_WolfGaropaShootPattern3+50   o
+Boss_WolfGaropaHorizontalMotionPoseA:   dc.w    $506, $36, $8089, $303, $48, $808A, $605, $5A, $808B, $205, $6C, $8004, $303, $6C, $80D, $12  ; was: word_507EA
+                                        ; DATA XREF: Boss_WolfGaropaUpdateHorizontalTargetMotion+1C   o
+                                        ; Boss_WolfGaropaUpdateHorizontalTargetMotion+50   o
                 dc.w    $505, $12, $808, $24, $FFFE
-word_50814:     dc.w    $90A, $36, $8089, $404, $48, $808A, $807, $5A, $808B, $306, $6C, $8004, $303, $6C, $80D, $12
-                                        ; DATA XREF: Boss_WolfGaropaShootPattern3:loc_4FEB8   o
+Boss_WolfGaropaHorizontalMotionPoseB:   dc.w    $90A, $36, $8089, $404, $48, $808A, $807, $5A, $808B, $306, $6C, $8004, $303, $6C, $80D, $12  ; was: word_50814
+                                        ; DATA XREF: Boss_WolfGaropaUpdateHorizontalTargetMotion:Boss_WolfGaropaAccelerateTowardLeftTarget   o
                 dc.w    $505, $12, $808, $24, $FFFE
-word_5083E:     dc.w    $810, $B4, $606, $B4, $8040, $606, $B4, $8089, $FFFE
-                                        ; DATA XREF: Boss_WolfGaropaFalling:loc_5002C   o
-word_50850:     dc.w    $C0C, $7E, $808B, $A0A, $90, $8088, $C0C, $A2, $808A, $A0A, $B4, $8089, $FFFF
-                                        ; DATA XREF: Boss_WolfGaropaFalling:loc_500A8   o
-word_5086A:     dc.w    $408, $24, $808, $24, $FFFE
-                                        ; DATA XREF: Boss_WolfGaropaFalling2+10   o
-word_50874:     dc.w    $506, $36, $8089, $203, $48, $808A, $405, $5A, $808B, $104, $FC, $8044, $304, $FC, $A12, $C6
-                                        ; DATA XREF: Boss_WolfGaropaInitMultiPattern+8   o
+Boss_WolfGaropaBallisticTransitionBPose:    dc.w    $810, $B4, $606, $B4, $8040, $606, $B4, $8089, $FFFE  ; was: word_5083E
+                                        ; DATA XREF: Boss_WolfGaropaUpdateBallisticTransitionB:Boss_WolfGaropaAdvanceBallisticTransitionPose   o
+Boss_WolfGaropaHorizontalAirbornePose:  dc.w    $C0C, $7E, $808B, $A0A, $90, $8088, $C0C, $A2, $808A, $A0A, $B4, $8089, $FFFF  ; was: word_50850
+                                        ; DATA XREF: Boss_WolfGaropaUpdateBallisticTransitionB:Boss_WolfGaropaAdvanceAirbornePose   o
+Boss_WolfGaropaFinalBallisticPose:  dc.w    $408, $24, $808, $24, $FFFE  ; was: word_5086A
+                                        ; DATA XREF: Boss_WolfGaropaUpdateFinalBallisticMotion+10   o
+Boss_WolfGaropaLaunchPose:  dc.w    $506, $36, $8089, $203, $48, $808A, $405, $5A, $808B, $104, $FC, $8044, $304, $FC, $A12, $C6  ; was: word_50874
+                                        ; DATA XREF: Boss_WolfGaropaUpdateInitialPose+8   o
                                         ; sub_50160   o
                 dc.w    $A0A, $C6, $606, $D8, $606, $EA, $FFFE
-word_508A2:     binclude "data/other/word_508A2.bin"
-word_508A2_End:
+Boss_WolfGaropaPoseTargets: binclude "data/other/word_508A2.bin"  ; was: word_508A2
+Boss_WolfGaropaPoseTargetsEnd:                          ; was: word_508A2_End
 
-; Bullet projectile 2
-Projectile_WolfGaropaBullet2:                           ; CODE XREF: Projectile_WolfGaropaBullet1+BE   p  ; was: sub_509B0
+; Calculate the player angle and steer the orb toward it
+Boss_WolfGaropaSteerOrbAngleTowardPlayer:               ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+BE   p  ; was: sub_509B0
                 movea.w #(byte_FFD040-M68K_RAM),a5
                 jsr     (Math_CalculateAngleToPlayer).l
                 movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 moveq   #0,d3
                 moveq   #4,d7
                 cmpi.w  #$14,$4DE(a5)
-                beq.s   Boss_WolfGaropaSpawnProjectile4
+                beq.s   Boss_WolfGaropaApproachOrbAngle
                 tst.w   $4DE(a5)
-                bmi.s   Boss_WolfGaropaSpawnProjectile4
+                bmi.s   Boss_WolfGaropaApproachOrbAngle
                 moveq   #2,d7
-; End of function Projectile_WolfGaropaBullet2
-; Spawns projectile type 4
-Boss_WolfGaropaSpawnProjectile4:                        ; CODE XREF: Projectile_WolfGaropaBullet1+44   j  ; was: sub_509D2
-                                        ; Projectile_WolfGaropaBullet1+16C   p
+; End of function Boss_WolfGaropaSteerOrbAngleTowardPlayer
+; Approach the requested wrapped orb angle and report completion in D3
+Boss_WolfGaropaApproachOrbAngle:                        ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+44   j  ; was: sub_509D2
+                                        ; Boss_WolfGaropaUpdateBattleStartWait+16C   p
                 sub.w   $A76(a5),d2
-                bmi.w   loc_509F6
+                bmi.w   Boss_WolfGaropaCheckNegativeOrbAngleDelta
                 cmpi.w  #$C,d2
-                bmi.w   loc_50A10
+                bmi.w   Boss_WolfGaropaOrbAngleReached
                 cmpi.w  #$100,d2
-                bpl.w   loc_50A04
-loc_509EA:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile4+2E   j
+                bpl.w   Boss_WolfGaropaDecreaseOrbAngle
+Boss_WolfGaropaIncreaseOrbAngle:                        ; CODE XREF: Boss_WolfGaropaApproachOrbAngle+2E   j  ; was: loc_509EA
                 add.w   d7,$A76(a5)
                 andi.w  #$1FE,$A76(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_509F6:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile4+4   j
+Boss_WolfGaropaCheckNegativeOrbAngleDelta:              ; CODE XREF: Boss_WolfGaropaApproachOrbAngle+4   j  ; was: loc_509F6
                 cmpi.w  #$FFF4,d2
-                bpl.s   loc_50A10
+                bpl.s   Boss_WolfGaropaOrbAngleReached
                 cmpi.w  #$FF00,d2
-                bmi.w   loc_509EA
-loc_50A04:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile4+14   j
+                bmi.w   Boss_WolfGaropaIncreaseOrbAngle
+Boss_WolfGaropaDecreaseOrbAngle:                        ; CODE XREF: Boss_WolfGaropaApproachOrbAngle+14   j  ; was: loc_50A04
                 sub.w   d7,$A76(a5)
                 andi.w  #$1FE,$A76(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_50A10:                                              ; CODE XREF: Boss_WolfGaropaSpawnProjectile4+C   j
-                                        ; Boss_WolfGaropaSpawnProjectile4+28   j
+Boss_WolfGaropaOrbAngleReached:                         ; CODE XREF: Boss_WolfGaropaApproachOrbAngle+C   j  ; was: loc_50A10
+                                        ; Boss_WolfGaropaApproachOrbAngle+28   j
                 addq.w  #1,d3
                 rts
-; End of function Boss_WolfGaropaSpawnProjectile4
-; Homing projectile
-Projectile_WolfGaropaHoming:                            ; CODE XREF: Projectile_WolfGaropaBullet1+132   j  ; was: sub_50A14
+; End of function Boss_WolfGaropaApproachOrbAngle
+; Allocate the two records forming the orb-emitted projectile pair
+Boss_WolfGaropaSpawnOrbProjectilePair:                  ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+132   j  ; was: sub_50A14
                 move.w  #1,(word_FFA010).w
                 move.w  #1,(word_FFA014).w
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_50AEE
+                bne.w   Boss_WolfGaropaOrbProjectilePairReturn
                 movea.l #Weapon_SpreadShotInitialSpriteFrame,a1
                 jsr     (Sprite_InitFromTable).l
                 move.b  #4,$20(a0)
@@ -592,7 +592,7 @@ Projectile_WolfGaropaHoming:                            ; CODE XREF: Projectile_
                 movea.w a0,a3
                 move.w  #$1C,$53C(a5)
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_50AEE
+                bne.w   Boss_WolfGaropaOrbProjectilePairReturn
                 move.b  #$36,d0                         ; '6'
                 jsr     (Sound_PlaySFX).l
                 move.w  #$408,(a0)
@@ -631,58 +631,58 @@ Projectile_WolfGaropaHoming:                            ; CODE XREF: Projectile_
                 move.l  d3,$1C(a0)
                 move.l  d4,$18(a0)
                 move.w  #$8480,$E(a0)
-                jmp     Projectile_WolfGaropaLaser
+                jmp     Projectile_SelectWolfGaropaDirectionMapping
 ; ---------------------------------------------------------------------------
-locret_50AEE:                                           ; CODE XREF: Projectile_WolfGaropaHoming+12   j
-                                        ; Projectile_WolfGaropaHoming+3C   j
+Boss_WolfGaropaOrbProjectilePairReturn:                 ; CODE XREF: Boss_WolfGaropaSpawnOrbProjectilePair+12   j  ; was: locret_50AEE
+                                        ; Boss_WolfGaropaSpawnOrbProjectilePair+3C   j
                 rts
-; End of function Projectile_WolfGaropaHoming
+; End of function Boss_WolfGaropaSpawnOrbProjectilePair
 ; Wave projectile
-Projectile_WolfGaropaWave:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_50AF0
+Projectile_WolfGaropaOrbShot:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_50AF0
                 tst.w   (word_FF808C).w
-                bpl.s   loc_50B06
+                bpl.s   Projectile_WolfGaropaOrbShotFallback
                 btst    #7,$22(a5)
-                beq.s   loc_50B3A
+                beq.s   Projectile_WolfGaropaCheckOrbShotArenaBounds
                 btst    #4,$22(a5)
-                beq.s   loc_50B24
-loc_50B06:                                              ; CODE XREF: Projectile_WolfGaropaWave+4   j
+                beq.s   Projectile_WolfGaropaReflectOrbShotHorizontally
+Projectile_WolfGaropaOrbShotFallback:                   ; CODE XREF: Projectile_WolfGaropaOrbShot+4   j  ; was: loc_50B06
                 btst    #0,(dword_FFFF08+1).w
-                bne.s   loc_50B44
+                bne.s   Projectile_WolfGaropaMarkOrbShotForRemoval
                 jsr     (Pickup_SpawnSmallFromCurrentObject).l
                 ori.w   #$A00,2(a5)
                 move.l  #$FFFA8000,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_50B24:                                              ; CODE XREF: Projectile_WolfGaropaWave+14   j
+Projectile_WolfGaropaReflectOrbShotHorizontally:        ; CODE XREF: Projectile_WolfGaropaOrbShot+14   j  ; was: loc_50B24
                 neg.l   $18(a5)
-loc_50B28:                                              ; CODE XREF: Projectile_WolfGaropaWave+8C   j
+Projectile_WolfGaropaConvertOrbShotToType160:           ; CODE XREF: Projectile_WolfGaropaOrbShot+8C   j  ; was: loc_50B28
                 neg.l   $1C(a5)
                 move.l  #off_E95A4,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
-loc_50B3A:                                              ; CODE XREF: Projectile_WolfGaropaWave+C   j
+Projectile_WolfGaropaCheckOrbShotArenaBounds:           ; CODE XREF: Projectile_WolfGaropaOrbShot+C   j  ; was: loc_50B3A
                 move.w  $10(a5),d0
                 cmpi.w  #$78,d0                         ; 'x'
-                bpl.s   loc_50B4C
-loc_50B44:                                              ; CODE XREF: Projectile_WolfGaropaWave+1C   j
-                                        ; Projectile_WolfGaropaWave+60   j
+                bpl.s   Projectile_WolfGaropaCheckOrbShotRemainingBounds
+Projectile_WolfGaropaMarkOrbShotForRemoval:             ; CODE XREF: Projectile_WolfGaropaOrbShot+1C   j  ; was: loc_50B44
+                                        ; Projectile_WolfGaropaOrbShot+60   j
                 bset    #4,2(a5)
-locret_50B4A:                                           ; CODE XREF: Projectile_WolfGaropaWave+70   j
+Projectile_WolfGaropaOrbShotReturn:                     ; CODE XREF: Projectile_WolfGaropaOrbShot+70   j  ; was: locret_50B4A
                 rts
 ; ---------------------------------------------------------------------------
-loc_50B4C:                                              ; CODE XREF: Projectile_WolfGaropaWave+52   j
+Projectile_WolfGaropaCheckOrbShotRemainingBounds:       ; CODE XREF: Projectile_WolfGaropaOrbShot+52   j  ; was: loc_50B4C
                 cmpi.w  #$288,d0
-                bpl.s   loc_50B44
+                bpl.s   Projectile_WolfGaropaMarkOrbShotForRemoval
                 cmpi.w  #$98,$14(a5)
-                bmi.s   loc_50B44
+                bmi.s   Projectile_WolfGaropaMarkOrbShotForRemoval
                 cmpi.w  #$150,$14(a5)
-                bmi.s   locret_50B4A
+                bmi.s   Projectile_WolfGaropaOrbShotReturn
                 move.b  #$37,d0                         ; '7'
                 jsr     (Sound_PlaySFX).l
                 move.l  $18(a5),d0
                 asr.l   #2,d0
                 subi.l  #$28000,d0
                 move.l  d0,$18(a5)
-                bra.s   loc_50B28
-; End of function Projectile_WolfGaropaWave
+                bra.s   Projectile_WolfGaropaConvertOrbShotToType160
+; End of function Projectile_WolfGaropaOrbShot
 ; Defeat sequence init
