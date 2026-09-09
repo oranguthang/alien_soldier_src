@@ -138,7 +138,7 @@ locret_4214E:                                           ; CODE XREF: Boss_Sunset
 Boss_SunsetStingDescendAndActivate:                     ; DATA XREF: ROM:00041964   o  ; was: sub_42150
                 addi.l  #$400,$1C(a5)
                 move.l  #$200020,d1
-                jsr     (Projectile_SpawnWithRandomOffset).l
+                jsr     (Boss_SunsetStingSpawnRandomOffsetProjectile).l
                 cmpi.w  #$1C0,$14(a5)
                 bcs.w   loc_422C0
                 addq.w  #2,4(a5)
@@ -157,7 +157,7 @@ Boss_SunsetStingDescendAndActivate:                     ; DATA XREF: ROM:0004196
 ; Waits for timer then initializes body segments
 Boss_SunsetStingWaitAndInitSegments:                    ; DATA XREF: ROM:00041966   o  ; was: sub_421B0
                 move.l  #$400040,d1
-                jsr     (Projectile_SpawnWithRandomOffset).l
+                jsr     (Boss_SunsetStingSpawnRandomOffsetProjectile).l
                 subq.b  #1,$4B(a5)
                 bne.w   loc_422C0
                 addq.w  #2,4(a5)
@@ -175,7 +175,7 @@ loc_421DA:                                              ; CODE XREF: Boss_Sunset
 ; Descends boss to specific Y position
 Boss_SunsetStingDescendToPosition:                      ; DATA XREF: ROM:00041968   o  ; was: sub_421F2
                 move.l  #$400040,d1
-                jsr     (Projectile_SpawnWithRandomOffset).l
+                jsr     (Boss_SunsetStingSpawnRandomOffsetProjectile).l
                 addq.w  #1,(word_FFC73C).w
                 move.w  (word_FFC73C).w,d0
                 lsr.w   #2,d0

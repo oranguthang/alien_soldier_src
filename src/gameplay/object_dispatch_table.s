@@ -112,7 +112,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Stage12_YachtControllerMain
                 dc.l    Boss_GustheadSegmentMain
                 dc.l    Boss_SunsetStingInitDispatcher
-                dc.l    Effect_DebrisParticleAnimate
+                dc.l    Boss_SunsetStingDebrisPartMain
                 dc.l    Boss_SunsetStingMainDispatcher
                 dc.l    Object_UpdateRemovalTimer
                 dc.l    Enemy_TrailingExplosionSpawner

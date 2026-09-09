@@ -855,9 +855,10 @@ type-`$29C` chain in the documented Stage 13 Snake encounter at frames
 visual identity remains `hypothesis`; the state, movement, shot, and destruction
 names rely on static instruction-level evidence recorded in the name audit.
 
-The Sunset Sting controller and segment passes reduced the count to 7,924 and
-left both `bosses/sunset_sting_main.s` and
-`bosses/sunset_sting_segments.s` with no live address-derived definitions. It
+The Sunset Sting controller, segment, and early-form passes reduced the count
+to 7,880 and left `bosses/sunset_sting_core.s`,
+`bosses/sunset_sting_main.s`, and `bosses/sunset_sting_segments.s` with no live
+address-derived definitions. The controller audit
 corrected two labels falsely attributed to Viblack: states `$06` and `$08`
 belong to the Sunset Sting controller table and reposition its controller and
 visible core before returning to battle state `$04`; neither is a defeat
@@ -872,6 +873,16 @@ segment pass also separated primary type `$1F0`, secondary type `$1F4`, and
 defeat-core type `$20C` state machines. It rejected the former Viblack names
 for the attached-segment state and type-`$1F8` shot, because the only creator
 is the Sunset Sting secondary-segment controller.
+
+The early-form audit reconstructed the complete 22-entry state table at
+`0x040D02`, its weighted attack selectors, body-part hierarchy, pose-angle
+sequences, and health-zero transition into scattered body-part debris. It also
+rejected the former `CheckVictory` and `InitializeAttackPhase` descriptions:
+the first queues intro message selector five, while the second is reached from
+the shared-health-zero gate and begins the form's defeat transition. The six
+unreferenced bytes after the state table remain explicitly `unknown`; no use
+was invented for them. Exact visual ownership remains a runtime hypothesis
+until the pinned emulator can repeat the encounter capture.
 
 Four especially broad data labels are explicitly registered:
 

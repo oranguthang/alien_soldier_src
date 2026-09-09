@@ -206,7 +206,7 @@ loc_2A298:                                              ; CODE XREF: Projectile_
 Projectile_CheckLifetime:                               ; CODE XREF: Enemy_InitProjectileType+80   p  ; was: sub_2A2A2
                                         ; Projectile_TerrainCollision+36   j
                 movea.w a5,a0
-loc_2A2A4:                                              ; CODE XREF: Effect_DebrisParticleAnimate+30   p
+loc_2A2A4:                                              ; CODE XREF: Boss_SunsetStingDebrisPartMain+30   p
                                         ; Boss_SunsetStingUpdateFragment+30   p
                 move.w  #$C4,(a0)
                 move.l  #$FFFDC000,$1C(a0)
