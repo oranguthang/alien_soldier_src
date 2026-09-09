@@ -956,6 +956,70 @@ is not asserted. Exact visual ownership remains a runtime hypothesis until the
 pinned emulator can repeat the encounter capture; the state and object-family
 claims are static evidence recorded in the name audit.
 
+The first Epsilon 1 support pass reduced the count to 7,494 and rejected the
+old `epsilon_1_final_phase.s` boundary. That 417-line range is shared support,
+not a final-phase state machine: it steers the fixed-point battle center,
+builds the twenty-word buffer consumed by `Gfx_WriteScrollValues`, loads or
+clears four tile bands from screen-space visibility, queues animated tile DMA,
+and ends with a separate four-state intro-object controller. It now lives in
+`bosses/epsilon_1_shared_support.s` with no live address-derived definitions.
+
+Three especially broad Sonnet labels were contradicted directly. The former
+`SpawnProjectileRing` allocates no object and only integrates center motion;
+the former `BerserkCheck` cycles a Genesis palette color without checking
+health; and the former `UpdateRotationMatrix` writes a scroll profile rather
+than a matrix. The paired nonzero and zero-source compressed-tile descriptors
+in `epsilon_1_core.s` were also renamed as load/clear commands for four visible
+tile bands. These are static data-flow conclusions; exact visual presentation
+still awaits the pinned emulator.
+
+The Epsilon 1 core pass reduced the count further to 7,468. Its 561-line module
+now has 55 definitions and no live address-derived names. The audit covers the
+main presentation path, angle-history maintenance, linked-part positioning,
+the 64-entry ROM-ordered controller table, the first four controller states,
+and both initial compressed-tile load groups. In particular, the former broad
+`BattleSetup` is now limited to the state that clears encounter buffers and
+initializes the controller, linked parts, and twelve ring objects; the former
+`IntroTransition` is an initial fade-and-tile-load state. Later attack and
+defeat handlers referenced by the table remain separate review queues, so this
+pass does not treat their inherited semantic names as confirmed.
+
+The attack-controller pass reduced the count to 7,422. Its 588-line module has
+86 definitions and no live address-derived names. The ROM table proves that
+the former `Type1Main` through `Type5Main`, `Homing`, `Spiral`, `Wave`,
+`Bounce`, and `Laser` routines are consecutive Epsilon 1 controller states,
+not projectile handlers. Their actual data flow forms three attack branches:
+a paired spread launch, a ring-only cycle, and a vertical sweep that reserves
+two spread slots, attaches twelve projectile slots to the twelve ring objects,
+releases them, and returns the shared battle center to its selection height.
+The shared helper at `0x046674` returns zero only when the current angle equals
+all six delayed samples. These claims are backed by the controller table,
+object-slot addresses, allocations, and fixed-point position writes; names do
+not assert unobserved projectile visuals.
+
+The Epsilon 1 transition-and-defeat pass reduced the count to 7,376. Its
+548-line module has 86 definitions and no live address-derived names. The
+controller table and shared-center writes disprove seven inherited defeat
+claims at states `$4E-$5A`: these states align the angle history, leave the
+central horizontal interval, descend to Y `$100`, wait, return above Y `$40`,
+and resume attack selection. In particular, the former `WaitForLowHealth`
+state reads no health value. The true defeat sequence starts at state `$5C`,
+hides the controller and linked parts, destroys the parts and twelve fixed ring
+objects, drives two timed palette-fade intervals, publishes the post-battle
+sequence value, and finally removes the controller.
+
+The same pass reconstructed the five-state body-pose machine and eight-state
+linked-part machine. The former rotation states actually change the horizontal
+body offset through `+8`, `-8`, and zero; the main handler adds that word to
+controller X. The linked parts wait for a random/render-bit trigger, extend and
+retract their radial offset, then use distinct inactive, delayed-destruction,
+explosion-animation, debris-spawn, and debris-delay states. A legacy
+code-address subtraction that happened to encode RAM `$FFFF08` was replaced by
+the direct RAM symbol and verified byte-identical. All 86 names and the
+rejected health, shield, fade, cutscene, and rotation claims are recorded as
+static evidence in the name audit; exact visual presentation still awaits the
+pinned emulator.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

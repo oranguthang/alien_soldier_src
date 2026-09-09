@@ -72,7 +72,7 @@ Projectile_HomingAndRockSpriteFrames:   dc.l    $24480, $A00F4F4  ; DATA XREF: P
                 dc.l    $144FD, $FCFC
                 dc.w    $FFFF
 Weapon_SpreadShotInitialSpriteFrame:    dc.l    $24480, $A00F4F4  ; DATA XREF: Weapon_InitSpreadShot+16   o  ; was: dword_2ADC8
-                                        ; Projectile_Epsilon1SpreadSetup+16   o
+                                        ; Projectile_InitializeEpsilon1SpreadSlot+16   o
 Weapon_ProjectileSpriteFrames:  dc.l    $244D6, $A00F4F4  ; DATA XREF: Weapon_FireProjectile+70   o  ; was: dword_2ADD0
                 dc.l    $244DF, $A00F4F4
                 dc.l    $244D6, $A00F4F4

@@ -19,7 +19,7 @@
   },
   "unknowns": {
     "address_derived_name_pattern": "^(?:(?:loc|locret|nullsub|off|unk|unknown|byte|word|dword|flt|stru|asc)_[0-9A-F]+(?:_End)?|[A-Za-z_][A-Za-z0-9_]*_[0-9A-F]{4,}(?:_End)?)$",
-    "maximum_address_derived_definitions": 7550,
+    "maximum_address_derived_definitions": 7376,
     "note": "This is a burn-down ceiling, not a quality target. New address-derived definitions fail lint; evidence-backed renames reduce the count."
   }
 }

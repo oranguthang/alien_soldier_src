@@ -1,18 +1,18 @@
 ; Epsilon 1 and Valkirie sprite mappings
-word_EC046:     dc.w    $2018, $B00, $EFE8              ; DATA XREF: Boss_Epsilon1BattleSetup+AE   o
-                                        ; Boss_Epsilon1RotationEnd+6   o
+word_EC046:     dc.w    $2018, $B00, $EFE8              ; DATA XREF: Boss_Epsilon1InitializeBattleObjectsState+AE   o
+                                        ; Boss_Epsilon1HoldAlternateBodyPoseState+6   o
                 dc.w    $2818, $B00, $EF00
                 dc.w    $2024, $100, $DFF0
                 dc.w    $A824, $100, $DF08
-word_EC05E:     dc.w    $2026, $B00, $F0E8              ; DATA XREF: Boss_Epsilon1StartRotation:loc_46BAA   o
-                                        ; sub_46B8A:loc_46BD2   o
+word_EC05E:     dc.w    $2026, $B00, $F0E8              ; DATA XREF: Boss_Epsilon1SelectBodyPoseState:Boss_Epsilon1UseAlternateBodyPose   o
+                                        ; Boss_Epsilon1SelectBodyPoseState:Boss_Epsilon1StartHorizontalBodySway   o
                 dc.w    $2826, $B00, $F000
                 dc.w    $2024, $100, $E0F0
                 dc.w    $2824, $100, $E008
                 dc.w    $2032, 0, $10F8
                 dc.w    $A832, 0, $1000
-word_EC082:     dc.w    $2843, $100, $2F4               ; DATA XREF: Boss_Epsilon1BattleSetup+11E   o
-                                        ; Boss_Epsilon1BattleSetup+16C   o
+word_EC082:     dc.w    $2843, $100, $2F4               ; DATA XREF: Boss_Epsilon1InitializeBattleObjectsState+11E   o
+                                        ; Boss_Epsilon1InitializeBattleObjectsState+16C   o
                 dc.w    $A833, $F00, $F2FC
 word_EC08E:     dc.w    $2008, $A00, $1E8               ; DATA XREF: ROM:00048912   o
                 dc.w    $2808, $A00, $100

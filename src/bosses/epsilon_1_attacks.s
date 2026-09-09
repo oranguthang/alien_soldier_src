@@ -1,193 +1,193 @@
-Boss_Epsilon1AttackPhase1Init:                          ; DATA XREF: ROM:00045CF8   o  ; was: sub_461A6
+Boss_Epsilon1StartOpeningFadeDelayState:                ; DATA XREF: ROM:00045CF8   o  ; was: sub_461A6
                 bsr.w   Boss_Epsilon1ApplyPaletteFade
                 move.w  #$20,$48(a5)                    ; ' '
                 move.b  #$21,(byte_FFA95A).w            ; '!'
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_Epsilon1AttackPhase1Init
-; Sets up rotation parameters
-Boss_Epsilon1RotationSetup:                             ; DATA XREF: ROM:00045CFA   o  ; was: sub_461BC
+; End of function Boss_Epsilon1StartOpeningFadeDelayState
+; Finishes the opening delay and seeds angle-history motion
+Boss_Epsilon1OpeningFadeDelayState:                     ; DATA XREF: ROM:00045CFA   o  ; was: sub_461BC
                 bsr.w   Boss_Epsilon1ApplyPaletteFade
                 subq.w  #1,$48(a5)
-                bne.s   locret_461DC
+                bne.s   Boss_Epsilon1OpeningFadeDelayReturn
                 move.w  #4,(dword_FF9410).w
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #$E,$48(a5)
                 addq.w  #2,4(a5)
-locret_461DC:                                           ; CODE XREF: Boss_Epsilon1RotationSetup+8   j
+Boss_Epsilon1OpeningFadeDelayReturn:                    ; CODE XREF: Boss_Epsilon1OpeningFadeDelayState+8   j  ; was: locret_461DC
                 rts
-; End of function Boss_Epsilon1RotationSetup
-; Debug mode directional control for positioning
-Boss_Epsilon1DebugControl:
+; End of function Boss_Epsilon1OpeningFadeDelayState
+; Unreferenced input helper for manually adjusting the shared battle center
+Debug_Epsilon1AdjustBattleCenter:
                 btst    #5,(word_FFF706).w              ; was: sub_461DE
-                beq.s   locret_46216
+                beq.s   Debug_Epsilon1AdjustBattleCenterReturn
                 btst    #2,(word_FFF706).w
-                beq.s   loc_461F2
+                beq.s   Debug_Epsilon1CheckMoveRight
                 subq.w  #2,(dword_FFC690).w
-loc_461F2:                                              ; CODE XREF: Boss_Epsilon1DebugControl+E   j
+Debug_Epsilon1CheckMoveRight:                           ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+E   j  ; was: loc_461F2
                 btst    #3,(word_FFF706).w
-                beq.s   loc_461FE
+                beq.s   Debug_Epsilon1CheckMoveUp
                 addq.w  #2,(dword_FFC690).w
-loc_461FE:                                              ; CODE XREF: Boss_Epsilon1DebugControl+1A   j
+Debug_Epsilon1CheckMoveUp:                              ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+1A   j  ; was: loc_461FE
                 btst    #0,(word_FFF706).w
-                beq.s   loc_4620A
+                beq.s   Debug_Epsilon1CheckMoveDown
                 subq.w  #2,(dword_FFC694).w
-loc_4620A:                                              ; CODE XREF: Boss_Epsilon1DebugControl+26   j
+Debug_Epsilon1CheckMoveDown:                            ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+26   j  ; was: loc_4620A
                 btst    #1,(word_FFF706).w
-                beq.s   locret_46216
+                beq.s   Debug_Epsilon1AdjustBattleCenterReturn
                 addq.w  #2,(dword_FFC694).w
-locret_46216:                                           ; CODE XREF: Boss_Epsilon1DebugControl+6   j
-                                        ; Boss_Epsilon1DebugControl+32   j
+Debug_Epsilon1AdjustBattleCenterReturn:                 ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+6   j  ; was: locret_46216
+                                        ; Debug_Epsilon1AdjustBattleCenter+32   j
                 rts
-; End of function Boss_Epsilon1DebugControl
-; Palette fade with button check
-Boss_Epsilon1FadeWithButtonCheck:                       ; DATA XREF: ROM:00045CFC   o  ; was: sub_46218
+; End of function Debug_Epsilon1AdjustBattleCenter
+; Advances the opening palette fade after shared readiness bits clear
+Boss_Epsilon1FinishOpeningFadeState:                    ; DATA XREF: ROM:00045CFC   o  ; was: sub_46218
                 move.w  $48(a5),d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 movea.w #(word_FFE300-M68K_RAM),a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 btst    #0,(word_FFA000+1).w
-                bne.s   locret_46248
+                bne.s   Boss_Epsilon1FinishOpeningFadeReturn
                 btst    #1,(word_FFA000+1).w
-                bne.s   locret_46248
+                bne.s   Boss_Epsilon1FinishOpeningFadeReturn
                 subq.w  #1,$48(a5)
-                bge.s   locret_46248
+                bge.s   Boss_Epsilon1FinishOpeningFadeReturn
                 addq.w  #2,4(a5)
-locret_46248:                                           ; CODE XREF: Boss_Epsilon1FadeWithButtonCheck+1C   j
-                                        ; Boss_Epsilon1FadeWithButtonCheck+24   j
+Boss_Epsilon1FinishOpeningFadeReturn:                   ; CODE XREF: Boss_Epsilon1FinishOpeningFadeState+1C   j  ; was: locret_46248
+                                        ; Boss_Epsilon1FinishOpeningFadeState+24   j
                 rts
-; End of function Boss_Epsilon1FadeWithButtonCheck
-; Checks victory condition
-Boss_Epsilon1VictoryCheck:                              ; DATA XREF: ROM:00045CFE   o  ; was: sub_4624A
+; End of function Boss_Epsilon1FinishOpeningFadeState
+; Requests the shared boss message for Epsilon 1 and advances
+Boss_Epsilon1RequestBattleMessageState:                 ; DATA XREF: ROM:00045CFE   o  ; was: sub_4624A
                 move.w  #3,d0
                 jsr     (UI_CheckVictoryCondition).l
                 addq.w  #2,4(a5)
                 move.b  #$8D,d0
                 jsr     (Sys_WaitVBlank).l
                 rts
-; End of function Boss_Epsilon1VictoryCheck
-; Attack state 1 handler
-Boss_Epsilon1AttackState1:                              ; DATA XREF: ROM:00045D00   o  ; was: sub_46264
+; End of function Boss_Epsilon1RequestBattleMessageState
+; Waits for the shared boss message to finish before enabling attack selection
+Boss_Epsilon1WaitForBattleMessageState:                 ; DATA XREF: ROM:00045D00   o  ; was: sub_46264
                 tst.w   (word_FF80C2).w
-                bne.s   locret_46278
+                bne.s   Boss_Epsilon1WaitForBattleMessageReturn
                 addq.w  #2,4(a5)
                 clr.b   (byte_FF80EC).w
                 move.w  #$40,$48(a5)                    ; '@'
-locret_46278:                                           ; CODE XREF: Boss_Epsilon1AttackState1+4   j
+Boss_Epsilon1WaitForBattleMessageReturn:                ; CODE XREF: Boss_Epsilon1WaitForBattleMessageState+4   j  ; was: locret_46278
                 rts
-; End of function Boss_Epsilon1AttackState1
-; Attack state 2 handler
-Boss_Epsilon1AttackState2:                              ; DATA XREF: ROM:00045D02   o  ; was: sub_4627A
+; End of function Boss_Epsilon1WaitForBattleMessageState
+; Selects one of three attack branches when the ring controller is idle
+Boss_Epsilon1SelectAttackState:                         ; DATA XREF: ROM:00045D02   o  ; was: sub_4627A
                 clr.l   (dword_FFC698).w
                 tst.w   (word_FFC7A4).w
-                bne.s   locret_462AA
+                bne.s   Boss_Epsilon1SelectAttackReturn
                 tst.w   (word_FF9474).w
-                bne.s   loc_462A4
+                bne.s   Boss_Epsilon1SelectVerticalSweepAttack
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #1,d0
-                beq.s   loc_4629C
+                beq.s   Boss_Epsilon1SelectRingCycleAttack
                 move.w  #$14,4(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_4629C:                                              ; CODE XREF: Boss_Epsilon1AttackState2+18   j
+Boss_Epsilon1SelectRingCycleAttack:                     ; CODE XREF: Boss_Epsilon1SelectAttackState+18   j  ; was: loc_4629C
                 move.w  #$26,4(a5)                      ; '&'
                 rts
 ; ---------------------------------------------------------------------------
-loc_462A4:                                              ; CODE XREF: Boss_Epsilon1AttackState2+E   j
+Boss_Epsilon1SelectVerticalSweepAttack:                 ; CODE XREF: Boss_Epsilon1SelectAttackState+E   j  ; was: loc_462A4
                 move.w  #$32,4(a5)                      ; '2'
-locret_462AA:                                           ; CODE XREF: Boss_Epsilon1AttackState2+8   j
+Boss_Epsilon1SelectAttackReturn:                        ; CODE XREF: Boss_Epsilon1SelectAttackState+8   j  ; was: locret_462AA
                 rts
-; End of function Boss_Epsilon1AttackState2
-; Initializes first attack phase with projectile ring
-Boss_Epsilon1AttackPhase1Setup:                         ; DATA XREF: ROM:00045D04   o  ; was: sub_462AC
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1SelectAttackState
+; Begins the spread-ring branch by accelerating the angle history
+Boss_Epsilon1BeginSpreadRingAttackState:                ; DATA XREF: ROM:00045D04   o  ; was: sub_462AC
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  #8,(dword_FF9410).w
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_Epsilon1AttackPhase1Setup
-; Waits for timer before advancing phase
-Boss_Epsilon1AttackPhase2Wait:                          ; DATA XREF: ROM:00045D06   o  ; was: sub_462BC
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1BeginSpreadRingAttackState
+; Waits for the spread-ring angle to wrap below $60
+Boss_Epsilon1WaitForSpreadAttackAngleWrapState:         ; DATA XREF: ROM:00045D06   o  ; was: sub_462BC
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  (dword_FF9414).w,d0
                 andi.w  #$1FF,d0
                 cmpi.w  #$60,d0                         ; '`'
-                bcc.s   locret_462D2
+                bcc.s   Boss_Epsilon1WaitForSpreadAttackAngleWrapReturn
                 addq.w  #2,4(a5)
-locret_462D2:                                           ; CODE XREF: Boss_Epsilon1AttackPhase2Wait+10   j
+Boss_Epsilon1WaitForSpreadAttackAngleWrapReturn:        ; CODE XREF: Boss_Epsilon1WaitForSpreadAttackAngleWrapState+10   j  ; was: locret_462D2
                 rts
-; End of function Boss_Epsilon1AttackPhase2Wait
-; Sets up third attack phase with scaling
-Boss_Epsilon1AttackPhase3Setup:                         ; DATA XREF: ROM:00045D08   o  ; was: sub_462D4
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1WaitForSpreadAttackAngleWrapState
+; Stops at angle $80 and begins collapsing the spread ring
+Boss_Epsilon1PrepareSpreadRingCollapseState:            ; DATA XREF: ROM:00045D08   o  ; was: sub_462D4
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  (dword_FF9414).w,d0
                 andi.w  #$1FF,d0
                 cmpi.w  #$80,d0
-                bcs.s   locret_462FA
+                bcs.s   Boss_Epsilon1PrepareSpreadRingCollapseReturn
                 clr.w   (dword_FF9410).w
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #1,(dword_FFC69C).w
                 addq.w  #2,4(a5)
-locret_462FA:                                           ; CODE XREF: Boss_Epsilon1AttackPhase3Setup+10   j
+Boss_Epsilon1PrepareSpreadRingCollapseReturn:           ; CODE XREF: Boss_Epsilon1PrepareSpreadRingCollapseState+10   j  ; was: locret_462FA
                 rts
-; End of function Boss_Epsilon1AttackPhase3Setup
-; Handles boss scaling animation
-Boss_Epsilon1AttackPhase4Scale:                         ; DATA XREF: ROM:00045D0A   o  ; was: sub_462FC
+; End of function Boss_Epsilon1PrepareSpreadRingCollapseState
+; Collapses the spread ring until every delayed angle matches
+Boss_Epsilon1CollapseSpreadRingState:                   ; DATA XREF: ROM:00045D0A   o  ; was: sub_462FC
                 addi.l  #-$400,(dword_FFC69C).w
-                bsr.w   Boss_Epsilon1AttackPattern2
-                bne.s   locret_4631E
+                bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
+                bne.s   Boss_Epsilon1CollapseSpreadRingReturn
                 clr.l   (dword_FFC69C).w
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #4,(dword_FF9410).w
                 addq.w  #2,4(a5)
-locret_4631E:                                           ; CODE XREF: Boss_Epsilon1AttackPhase4Scale+C   j
+Boss_Epsilon1CollapseSpreadRingReturn:                  ; CODE XREF: Boss_Epsilon1CollapseSpreadRingState+C   j  ; was: locret_4631E
                 rts
-; End of function Boss_Epsilon1AttackPhase4Scale
-; Initializes fifth attack phase
-Boss_Epsilon1AttackPhase5Init:                          ; DATA XREF: ROM:00045D0C   o  ; was: sub_46320
+; End of function Boss_Epsilon1CollapseSpreadRingState
+; Activates the ring controller for the spread branch
+Boss_Epsilon1ActivateSpreadRingState:                   ; DATA XREF: ROM:00045D0C   o  ; was: sub_46320
                 tst.w   (word_FFC7A4).w
-                bne.s   locret_46336
+                bne.s   Boss_Epsilon1ActivateSpreadRingReturn
                 move.w  #0,(word_FFC7FE).w
                 nop
                 addq.w  #2,(word_FFC7A4).w
                 addq.w  #2,4(a5)
-locret_46336:                                           ; CODE XREF: Boss_Epsilon1AttackPhase5Init+4   j
+Boss_Epsilon1ActivateSpreadRingReturn:                  ; CODE XREF: Boss_Epsilon1ActivateSpreadRingState+4   j  ; was: locret_46336
                 rts
-; End of function Boss_Epsilon1AttackPhase5Init
-; Spawns projectile rings and waits
-Boss_Epsilon1AttackPhase6RingWait:                      ; DATA XREF: ROM:00045D0E   o  ; was: sub_46338
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1ActivateSpreadRingState
+; Waits for ring-controller state $0A, then releases that controller
+Boss_Epsilon1WaitForSpreadRingReadyState:               ; DATA XREF: ROM:00045D0E   o  ; was: sub_46338
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 cmpi.w  #$A,(word_FFC7A4).w
-                bne.s   locret_4634C
+                bne.s   Boss_Epsilon1WaitForSpreadRingReadyReturn
                 addq.w  #2,(word_FFC7A4).w
                 addq.w  #2,4(a5)
-locret_4634C:                                           ; CODE XREF: Boss_Epsilon1AttackPhase6RingWait+A   j
+Boss_Epsilon1WaitForSpreadRingReadyReturn:              ; CODE XREF: Boss_Epsilon1WaitForSpreadRingReadyState+A   j  ; was: locret_4634C
                 rts
-; End of function Boss_Epsilon1AttackPhase6RingWait
-; Spawns special entity during attack
-Boss_Epsilon1AttackPhase7SpawnEntity:                   ; DATA XREF: ROM:00045D10   o  ; was: sub_4634E
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1WaitForSpreadRingReadyState
+; Reserves the first projectile slot used by the spread pair
+Boss_Epsilon1ReserveFirstSpreadSlotState:               ; DATA XREF: ROM:00045D10   o  ; was: sub_4634E
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_46366
+                bne.s   Boss_Epsilon1ReserveFirstSpreadSlotReturn
                 move.w  #$10,(a0)
                 move.w  a0,(dword_FF941C).w
                 addq.w  #2,4(a5)
-locret_46366:                                           ; CODE XREF: Boss_Epsilon1AttackPhase7SpawnEntity+A   j
+Boss_Epsilon1ReserveFirstSpreadSlotReturn:              ; CODE XREF: Boss_Epsilon1ReserveFirstSpreadSlotState+A   j  ; was: locret_46366
                 rts
-; End of function Boss_Epsilon1AttackPhase7SpawnEntity
-; Spawns projectile ring and updates trajectory
-Boss_Epsilon1ProjectileRingAndUpdate:                   ; DATA XREF: ROM:00045D12   o  ; was: sub_46368
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1ReserveFirstSpreadSlotState
+; Reserves the second projectile slot used by the spread pair
+Boss_Epsilon1ReserveSecondSpreadSlotState:              ; DATA XREF: ROM:00045D12   o  ; was: sub_46368
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_46380
+                bne.s   Boss_Epsilon1ReserveSecondSpreadSlotReturn
                 move.w  #$10,(a0)
                 move.w  a0,(dword_FF941C+2).w
                 addq.w  #2,4(a5)
-locret_46380:                                           ; CODE XREF: Boss_Epsilon1ProjectileRingAndUpdate+A   j
+Boss_Epsilon1ReserveSecondSpreadSlotReturn:             ; CODE XREF: Boss_Epsilon1ReserveSecondSpreadSlotState+A   j  ; was: locret_46380
                 rts
-; End of function Boss_Epsilon1ProjectileRingAndUpdate
-; Calculates angle and spawns dual spread projectiles
-Boss_Epsilon1DualProjectileAim:                         ; DATA XREF: ROM:00045D14   o  ; was: sub_46382
+; End of function Boss_Epsilon1ReserveSecondSpreadSlotState
+; Aims and launches the reserved spread-projectile pair
+Boss_Epsilon1LaunchSpreadPairState:                     ; DATA XREF: ROM:00045D14   o  ; was: sub_46382
                 movea.w (dword_FF9420).w,a0
                 move.w  $10(a0),d0
                 move.w  $14(a0),d1
@@ -198,32 +198,32 @@ Boss_Epsilon1DualProjectileAim:                         ; DATA XREF: ROM:00045D1
                 addq.w  #8,d0
                 move.w  $14(a5),d1
                 movea.w (dword_FF941C).w,a0
-                bsr.s   Projectile_Epsilon1SpreadSetup
+                bsr.s   Projectile_PrepareEpsilon1ElevenStepSpread
                 move.w  $10(a5),d0
                 subq.w  #8,d0
                 move.w  $14(a5),d1
                 movea.w (dword_FF941C+2).w,a0
-                bsr.s   Projectile_Epsilon1SpreadSetup
+                bsr.s   Projectile_PrepareEpsilon1ElevenStepSpread
                 tst.w   (word_FFC7A4).w
-                beq.s   loc_463CA
+                beq.s   Boss_Epsilon1FinishSpreadPair
                 move.w  #$1E,4(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_463CA:                                              ; CODE XREF: Boss_Epsilon1DualProjectileAim+3E   j
+Boss_Epsilon1FinishSpreadPair:                          ; CODE XREF: Boss_Epsilon1LaunchSpreadPairState+3E   j  ; was: loc_463CA
                 move.w  #$12,4(a5)
                 rts
-; End of function Boss_Epsilon1DualProjectileAim
-; Defeat sequence initialization
-Boss_Epsilon1DefeatInit:                                ; CODE XREF: Projectile_Epsilon1WaveUpdate+30   p  ; was: sub_463D2
-                                        ; Projectile_Epsilon1WaveUpdate+46   p
+; End of function Boss_Epsilon1LaunchSpreadPairState
+; Selects the five-step spread callback before common projectile setup
+Projectile_PrepareEpsilon1FiveStepSpread:               ; CODE XREF: Boss_Epsilon1DescendAndReleaseRingState+30   p  ; was: sub_463D2
+                                        ; Boss_Epsilon1DescendAndReleaseRingState+46   p
                 move.l  #Projectile_Epsilon1SpreadInit,$48(a0)
-                bra.s   loc_463E4
-; End of function Boss_Epsilon1DefeatInit
-; Initializes spread projectile with trajectory data
-Projectile_Epsilon1SpreadSetup:                         ; CODE XREF: Boss_Epsilon1DualProjectileAim+28   p  ; was: sub_463DC
-                                        ; Boss_Epsilon1DualProjectileAim+38   p
+                bra.s   Projectile_InitializeEpsilon1SpreadSlot
+; End of function Projectile_PrepareEpsilon1FiveStepSpread
+; Selects the eleven-step spread callback before common projectile setup
+Projectile_PrepareEpsilon1ElevenStepSpread:             ; CODE XREF: Boss_Epsilon1LaunchSpreadPairState+28   p  ; was: sub_463DC
+                                        ; Boss_Epsilon1LaunchSpreadPairState+38   p
                 move.l  #Projectile_Epsilon1SpreadExpanding,$48(a0)
-loc_463E4:                                              ; CODE XREF: Boss_Epsilon1DefeatInit+8   j
+Projectile_InitializeEpsilon1SpreadSlot:                ; CODE XREF: Projectile_PrepareEpsilon1FiveStepSpread+8   j  ; was: loc_463E4
                 move.l  (dword_FFC69C).w,$1C(a0)
                 move.w  d2,$58(a0)
                 move.w  #$268,(a0)
@@ -232,123 +232,123 @@ loc_463E4:                                              ; CODE XREF: Boss_Epsilo
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
                 rts
-; End of function Projectile_Epsilon1SpreadSetup
-; Spawns projectile type 1
-Boss_Epsilon1SpawnProjectile1:                          ; DATA XREF: ROM:00045D16   o  ; was: sub_4640A
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Projectile_PrepareEpsilon1ElevenStepSpread
+; Begins the ring-only attack branch by accelerating the angle history
+Boss_Epsilon1BeginRingCycleAttackState:                 ; DATA XREF: ROM:00045D16   o  ; was: sub_4640A
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  #8,(dword_FF9410).w
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_Epsilon1SpawnProjectile1
-; Spawns projectile type 2
-Boss_Epsilon1SpawnProjectile2:                          ; DATA XREF: ROM:00045D18   o  ; was: sub_4641A
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1BeginRingCycleAttackState
+; Waits for the ring-cycle angle to wrap below $60
+Boss_Epsilon1WaitForRingCycleAngleWrapState:            ; DATA XREF: ROM:00045D18   o  ; was: sub_4641A
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  (dword_FF9414).w,d0
                 andi.w  #$1FF,d0
                 cmpi.w  #$60,d0                         ; '`'
-                bcc.s   locret_46430
+                bcc.s   Boss_Epsilon1WaitForRingCycleAngleWrapReturn
                 addq.w  #2,4(a5)
-locret_46430:                                           ; CODE XREF: Boss_Epsilon1SpawnProjectile2+10   j
+Boss_Epsilon1WaitForRingCycleAngleWrapReturn:           ; CODE XREF: Boss_Epsilon1WaitForRingCycleAngleWrapState+10   j  ; was: locret_46430
                 rts
-; End of function Boss_Epsilon1SpawnProjectile2
-; Spawns projectile type 3
-Boss_Epsilon1SpawnProjectile3:                          ; DATA XREF: ROM:00045D1A   o  ; was: sub_46432
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1WaitForRingCycleAngleWrapState
+; Stops at angle $80 and begins collapsing the ring-only branch
+Boss_Epsilon1PrepareRingCycleCollapseState:             ; DATA XREF: ROM:00045D1A   o  ; was: sub_46432
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  (dword_FF9414).w,d0
                 andi.w  #$1FF,d0
                 cmpi.w  #$80,d0
-                bcs.s   locret_46458
+                bcs.s   Boss_Epsilon1PrepareRingCycleCollapseReturn
                 clr.w   (dword_FF9410).w
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #1,(dword_FFC69C).w
                 addq.w  #2,4(a5)
-locret_46458:                                           ; CODE XREF: Boss_Epsilon1SpawnProjectile3+10   j
+Boss_Epsilon1PrepareRingCycleCollapseReturn:            ; CODE XREF: Boss_Epsilon1PrepareRingCycleCollapseState+10   j  ; was: locret_46458
                 rts
-; End of function Boss_Epsilon1SpawnProjectile3
-; Spawns projectile type 4
-Boss_Epsilon1SpawnProjectile4:                          ; DATA XREF: ROM:00045D1C   o  ; was: sub_4645A
+; End of function Boss_Epsilon1PrepareRingCycleCollapseState
+; Collapses the ring-only branch until every delayed angle matches
+Boss_Epsilon1CollapseRingCycleState:                    ; DATA XREF: ROM:00045D1C   o  ; was: sub_4645A
                 addi.l  #-$400,(dword_FFC69C).w
-                bsr.w   Boss_Epsilon1AttackPattern2
-                bne.s   locret_4647C
+                bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
+                bne.s   Boss_Epsilon1CollapseRingCycleReturn
                 clr.l   (dword_FFC69C).w
                 move.w  #1,(dword_FF9414+2).w
                 move.w  #8,(dword_FF9410).w
                 addq.w  #2,4(a5)
-locret_4647C:                                           ; CODE XREF: Boss_Epsilon1SpawnProjectile4+C   j
+Boss_Epsilon1CollapseRingCycleReturn:                   ; CODE XREF: Boss_Epsilon1CollapseRingCycleState+C   j  ; was: locret_4647C
                 rts
-; End of function Boss_Epsilon1SpawnProjectile4
-; Spawns projectile type 5
-Boss_Epsilon1SpawnProjectile5:                          ; DATA XREF: ROM:00045D1E   o  ; was: sub_4647E
+; End of function Boss_Epsilon1CollapseRingCycleState
+; Activates the ring controller with its alternate command flag
+Boss_Epsilon1ActivateRingCycleState:                    ; DATA XREF: ROM:00045D1E   o  ; was: sub_4647E
                 tst.w   (word_FFC7A4).w
-                bne.s   locret_46494
+                bne.s   Boss_Epsilon1ActivateRingCycleReturn
                 move.w  #1,(word_FFC7FE).w
                 nop
                 addq.w  #2,(word_FFC7A4).w
                 addq.w  #2,4(a5)
-locret_46494:                                           ; CODE XREF: Boss_Epsilon1SpawnProjectile5+4   j
+Boss_Epsilon1ActivateRingCycleReturn:                   ; CODE XREF: Boss_Epsilon1ActivateRingCycleState+4   j  ; was: locret_46494
                 rts
-; End of function Boss_Epsilon1SpawnProjectile5
-; Attack pattern 1 with spawn
-Boss_Epsilon1AttackPattern1:                            ; DATA XREF: ROM:00045D20   o  ; was: sub_46496
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1ActivateRingCycleState
+; Waits for the ring controller to complete, then returns to attack selection
+Boss_Epsilon1WaitForRingCycleCompleteState:             ; DATA XREF: ROM:00045D20   o  ; was: sub_46496
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 cmpi.w  #$C,(word_FFC7A4).w
-                bne.s   locret_464AC
+                bne.s   Boss_Epsilon1WaitForRingCycleCompleteReturn
                 addq.w  #2,(word_FFC7A4).w
                 move.w  #$12,4(a5)
-locret_464AC:                                           ; CODE XREF: Boss_Epsilon1AttackPattern1+A   j
+Boss_Epsilon1WaitForRingCycleCompleteReturn:            ; CODE XREF: Boss_Epsilon1WaitForRingCycleCompleteState+A   j  ; was: locret_464AC
                 rts
-; End of function Boss_Epsilon1AttackPattern1
-; Projectile type 1 main handler
-Projectile_Epsilon1Type1Main:                           ; DATA XREF: ROM:00045D22   o  ; was: sub_464AE
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1WaitForRingCycleCompleteState
+; Begins the vertical-sweep branch by accelerating the angle history
+Boss_Epsilon1BeginVerticalSweepAttackState:             ; DATA XREF: ROM:00045D22   o  ; was: sub_464AE
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  #8,(dword_FF9410).w
                 addq.w  #2,4(a5)
                 rts
-; End of function Projectile_Epsilon1Type1Main
-; Projectile type 2 main handler
-Projectile_Epsilon1Type2Main:                           ; DATA XREF: ROM:00045D24   o  ; was: sub_464BE
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1BeginVerticalSweepAttackState
+; Waits for the vertical-sweep angle to wrap below $60
+Boss_Epsilon1WaitForVerticalSweepAngleWrapState:        ; DATA XREF: ROM:00045D24   o  ; was: sub_464BE
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  (dword_FF9414).w,d0
                 andi.w  #$1FF,d0
                 cmpi.w  #$60,d0                         ; '`'
-                bcc.s   locret_464D4
+                bcc.s   Boss_Epsilon1WaitForVerticalSweepAngleWrapReturn
                 addq.w  #2,4(a5)
-locret_464D4:                                           ; CODE XREF: Projectile_Epsilon1Type2Main+10   j
+Boss_Epsilon1WaitForVerticalSweepAngleWrapReturn:       ; CODE XREF: Boss_Epsilon1WaitForVerticalSweepAngleWrapState+10   j  ; was: locret_464D4
                 rts
-; End of function Projectile_Epsilon1Type2Main
-; Projectile type 3 main handler
-Projectile_Epsilon1Type3Main:                           ; DATA XREF: ROM:00045D26   o  ; was: sub_464D6
-                bsr.w   Boss_Epsilon1SpawnProjectileRing
+; End of function Boss_Epsilon1WaitForVerticalSweepAngleWrapState
+; Stops at angle $80 and begins collapsing the vertical-sweep branch
+Boss_Epsilon1PrepareVerticalSweepCollapseState:         ; DATA XREF: ROM:00045D26   o  ; was: sub_464D6
+                bsr.w   Boss_Epsilon1UpdateBattleCenterMotion
                 move.w  (dword_FF9414).w,d0
                 andi.w  #$1FF,d0
                 cmpi.w  #$80,d0
-                bcs.s   locret_464FC
+                bcs.s   Boss_Epsilon1PrepareVerticalSweepCollapseReturn
                 clr.w   (dword_FF9410).w
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #1,(dword_FFC69C).w
                 addq.w  #2,4(a5)
-locret_464FC:                                           ; CODE XREF: Projectile_Epsilon1Type3Main+10   j
+Boss_Epsilon1PrepareVerticalSweepCollapseReturn:        ; CODE XREF: Boss_Epsilon1PrepareVerticalSweepCollapseState+10   j  ; was: locret_464FC
                 rts
-; End of function Projectile_Epsilon1Type3Main
-; Projectile type 4 main handler
-Projectile_Epsilon1Type4Main:                           ; DATA XREF: ROM:00045D28   o  ; was: sub_464FE
+; End of function Boss_Epsilon1PrepareVerticalSweepCollapseState
+; Collapses the vertical-sweep ring until every delayed angle matches
+Boss_Epsilon1CollapseVerticalSweepRingState:            ; DATA XREF: ROM:00045D28   o  ; was: sub_464FE
                 addi.l  #-$400,(dword_FFC69C).w
-                bsr.w   Boss_Epsilon1AttackPattern2
-                bne.s   locret_4652C
+                bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
+                bne.s   Boss_Epsilon1CollapseVerticalSweepRingReturn
                 clr.l   (dword_FFC69C).w
                 move.w  #1,(dword_FF9414+2).w
                 move.w  #$10,(dword_FF9410).w
                 move.w  #0,$58(a5)
                 bset    #4,$23(a5)
                 addq.w  #2,4(a5)
-locret_4652C:                                           ; CODE XREF: Projectile_Epsilon1Type4Main+C   j
+Boss_Epsilon1CollapseVerticalSweepRingReturn:           ; CODE XREF: Boss_Epsilon1CollapseVerticalSweepRingState+C   j  ; was: locret_4652C
                 rts
-; End of function Projectile_Epsilon1Type4Main
-; Projectile type 5 main handler
-Projectile_Epsilon1Type5Main:                           ; DATA XREF: ROM:00045D2A   o  ; was: sub_4652E
-                bsr.w   Boss_Epsilon1InitProjectileArray
+; End of function Boss_Epsilon1CollapseVerticalSweepRingState
+; Moves the shared battle center to the upper sweep height
+Boss_Epsilon1MoveToUpperSweepHeightState:               ; DATA XREF: ROM:00045D2A   o  ; was: sub_4652E
+                bsr.w   Boss_Epsilon1ApplyDirectionalVerticalStep
                 cmpi.w  #$40,(dword_FFC694).w           ; '@'
-                bgt.s   locret_4655E
+                bgt.s   Boss_Epsilon1MoveToUpperSweepHeightReturn
                 clr.l   (dword_FFC69C).w
                 move.l  #$400000,(dword_FFC694).w
                 move.w  #$60,(dword_FF9414).w           ; '`'
@@ -356,13 +356,13 @@ Projectile_Epsilon1Type5Main:                           ; DATA XREF: ROM:00045D2
                 clr.w   (dword_FF9410).w
                 clr.w   $48(a5)
                 addq.w  #2,4(a5)
-locret_4655E:                                           ; CODE XREF: Projectile_Epsilon1Type5Main+A   j
+Boss_Epsilon1MoveToUpperSweepHeightReturn:              ; CODE XREF: Boss_Epsilon1MoveToUpperSweepHeightState+A   j  ; was: locret_4655E
                 rts
-; End of function Projectile_Epsilon1Type5Main
-; Homing projectile initialization
-Projectile_Epsilon1HomingInit:                          ; DATA XREF: ROM:00045D2C   o  ; was: sub_46560
+; End of function Boss_Epsilon1MoveToUpperSweepHeightState
+; Reserves the two spread slots used after the vertical sweep
+Boss_Epsilon1ReserveSweepSpreadSlotsState:              ; DATA XREF: ROM:00045D2C   o  ; was: sub_46560
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_4658E
+                bne.s   Boss_Epsilon1ReserveSweepSpreadSlotsReturn
                 move.w  #$10,(a0)
                 lea     (dword_FF941C).w,a1
                 move.w  $48(a5),d0
@@ -370,20 +370,20 @@ Projectile_Epsilon1HomingInit:                          ; DATA XREF: ROM:00045D2
                 move.w  a0,(a1,d0.w)
                 addq.w  #1,$48(a5)
                 cmpi.w  #2,$48(a5)
-                bne.s   locret_4658E
+                bne.s   Boss_Epsilon1ReserveSweepSpreadSlotsReturn
                 clr.w   $48(a5)
                 addq.w  #2,4(a5)
-locret_4658E:                                           ; CODE XREF: Projectile_Epsilon1HomingInit+6   j
-                                        ; Projectile_Epsilon1HomingInit+24   j
+Boss_Epsilon1ReserveSweepSpreadSlotsReturn:             ; CODE XREF: Boss_Epsilon1ReserveSweepSpreadSlotsState+6   j  ; was: locret_4658E
+                                        ; Boss_Epsilon1ReserveSweepSpreadSlotsState+24   j
                 rts
-; End of function Projectile_Epsilon1HomingInit
-; Homing projectile tracking update
-Projectile_Epsilon1HomingUpdate:                        ; DATA XREF: ROM:00045D2E   o  ; was: sub_46590
+; End of function Boss_Epsilon1ReserveSweepSpreadSlotsState
+; Allocates one companion projectile for each of the twelve ring objects
+Boss_Epsilon1AttachRingProjectilesState:                ; DATA XREF: ROM:00045D2E   o  ; was: sub_46590
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_465DE
+                bne.s   Boss_Epsilon1AttachRingProjectilesReturn
                 move.w  $48(a5),d0
                 add.w   d0,d0
-                lea     word_46616(pc),a1
+                lea     Boss_Epsilon1RingObjectSlots(pc),a1
                 nop
                 movea.w (a1,d0.w),a1
                 move.w  a0,$4E(a1)
@@ -395,90 +395,96 @@ Projectile_Epsilon1HomingUpdate:                        ; DATA XREF: ROM:00045D2
                 move.w  #4,$20(a0)
                 addq.w  #1,$48(a5)
                 cmpi.w  #$C,$48(a5)
-                bne.s   locret_465DE
+                bne.s   Boss_Epsilon1AttachRingProjectilesReturn
                 addq.w  #2,4(a5)
-locret_465DE:                                           ; CODE XREF: Projectile_Epsilon1HomingUpdate+6   j
-                                        ; Projectile_Epsilon1HomingUpdate+48   j
+Boss_Epsilon1AttachRingProjectilesReturn:               ; CODE XREF: Boss_Epsilon1AttachRingProjectilesState+6   j  ; was: locret_465DE
+                                        ; Boss_Epsilon1AttachRingProjectilesState+48   j
                 rts
-; End of function Projectile_Epsilon1HomingUpdate
-; Spiral projectile initialization
-Projectile_Epsilon1SpiralInit:                          ; DATA XREF: ROM:00045D30   o  ; was: sub_465E0
+; End of function Boss_Epsilon1AttachRingProjectilesState
+; Waits until all twelve ring objects have returned to state zero
+Boss_Epsilon1WaitForRingObjectsInactiveState:           ; DATA XREF: ROM:00045D30   o  ; was: sub_465E0
                 clr.w   d0
                 move.w  #5,d7
-                lea     word_46616(pc),a2
+                lea     Boss_Epsilon1RingObjectSlots(pc),a2
                 nop
-loc_465EC:                                              ; CODE XREF: Projectile_Epsilon1SpiralInit+26   j
+Boss_Epsilon1CheckRingObjectPairsLoop:                  ; CODE XREF: Boss_Epsilon1WaitForRingObjectsInactiveState+26   j  ; was: loc_465EC
                 movea.w (a2,d0.w),a0
                 movea.w $C(a2,d0.w),a1
                 tst.w   4(a0)
-                bne.w   locret_46614
+                bne.w   Boss_Epsilon1WaitForRingObjectsInactiveReturn
                 tst.w   4(a1)
-                bne.w   locret_46614
+                bne.w   Boss_Epsilon1WaitForRingObjectsInactiveReturn
                 addq.w  #2,d0
-                dbf     d7,loc_465EC
+                dbf     d7,Boss_Epsilon1CheckRingObjectPairsLoop
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #2,4(a5)
-locret_46614:                                           ; CODE XREF: Projectile_Epsilon1SpiralInit+18   j
-                                        ; Projectile_Epsilon1SpiralInit+20   j
+Boss_Epsilon1WaitForRingObjectsInactiveReturn:          ; CODE XREF: Boss_Epsilon1WaitForRingObjectsInactiveState+18   j  ; was: locret_46614
+                                        ; Boss_Epsilon1WaitForRingObjectsInactiveState+20   j
                 rts
-; End of function Projectile_Epsilon1SpiralInit
+; End of function Boss_Epsilon1WaitForRingObjectsInactiveState
 ; ---------------------------------------------------------------------------
-word_46616:     dc.w    $C800, $C860, $C8C0, $C920, $C980, $C9E0, $CA40, $CAA0, $CB00, $CB60, $CBC0, $CC20
-                                        ; DATA XREF: Projectile_Epsilon1HomingUpdate+E   o
-                                        ; Projectile_Epsilon1SpiralInit+6   o
+Boss_Epsilon1RingObjectSlots:   dc.w    $C800, $C860, $C8C0, $C920, $C980, $C9E0, $CA40, $CAA0, $CB00, $CB60, $CBC0, $CC20  ; was: word_46616
+                                        ; DATA XREF: Boss_Epsilon1AttachRingProjectilesState+E   o
+                                        ; Boss_Epsilon1WaitForRingObjectsInactiveState+6   o
 
-; Spiral projectile movement
-Projectile_Epsilon1SpiralUpdate:                        ; DATA XREF: ROM:00045D32   o  ; was: sub_4662E
-                bsr.w   Boss_Epsilon1AttackPattern2
-                bne.s   locret_46672
+; Waits for angle-history alignment, then starts the vertical sweep
+Boss_Epsilon1StartAlignedVerticalSweepState:            ; DATA XREF: ROM:00045D32   o  ; was: sub_4662E
+                bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
+                bne.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
                 addq.w  #2,4(a5)
                 move.l  #$20000,(dword_FFC69C).w
                 move.l  #$4000,(dword_FF9478).w
                 move.w  #$120,(dword_FFC690).w
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #3,d0
-                beq.s   locret_46672
+                beq.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
                 cmpi.w  #1,d0
-                beq.s   locret_46672
+                beq.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
                 cmpi.w  #2,d0
-                beq.s   loc_4666C
+                beq.s   Boss_Epsilon1OffsetSweepStartRight
                 addi.w  #-$40,(dword_FFC690).w
-                bra.s   locret_46672
+                bra.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
 ; ---------------------------------------------------------------------------
-loc_4666C:                                              ; CODE XREF: Projectile_Epsilon1SpiralUpdate+34   j
+Boss_Epsilon1OffsetSweepStartRight:                     ; CODE XREF: Boss_Epsilon1StartAlignedVerticalSweepState+34   j  ; was: loc_4666C
                 addi.w  #$40,(dword_FFC690).w           ; '@'
-locret_46672:                                           ; CODE XREF: Projectile_Epsilon1SpiralUpdate+4   j
-                                        ; Projectile_Epsilon1SpiralUpdate+28   j
+Boss_Epsilon1StartAlignedVerticalSweepReturn:           ; CODE XREF: Boss_Epsilon1StartAlignedVerticalSweepState+4   j  ; was: locret_46672
+                                        ; Boss_Epsilon1StartAlignedVerticalSweepState+28   j
                 rts
-; End of function Projectile_Epsilon1SpiralUpdate
-; Attack pattern 2 with timing
-Boss_Epsilon1AttackPattern2:                            ; CODE XREF: Boss_Epsilon1AttackPhase4Scale+8   p  ; was: sub_46674
-                                        ; Boss_Epsilon1SpawnProjectile4+8   p
+; End of function Boss_Epsilon1StartAlignedVerticalSweepState
+; Returns zero only when the current angle matches all six delayed samples
+Boss_Epsilon1CheckAngleHistoryAligned:                  ; CODE XREF: Boss_Epsilon1CollapseSpreadRingState+8   p  ; was: sub_46674
+                                        ; Boss_Epsilon1CollapseRingCycleState+8   p
+                                        ; Boss_Epsilon1CollapseVerticalSweepRingState+8   p
+                                        ; Boss_Epsilon1StartAlignedVerticalSweepState   p
+                                        ; Boss_Epsilon1PrepareSweepRecoveryState   p
+                                        ; Boss_Epsilon1WaitForTransitionAngleAlignmentState   p
                 move.w  (dword_FF9414).w,d0
                 andi.w  #$1FE,d0
                 lea     (dword_FF9400).w,a0
                 move.w  #5,d7
-loc_46684:                                              ; CODE XREF: Boss_Epsilon1AttackPattern2+14   j
+Boss_Epsilon1CompareAngleHistoryLoop:                   ; CODE XREF: Boss_Epsilon1CheckAngleHistoryAligned+14   j  ; was: loc_46684
                 cmp.w   (a0)+,d0
-                bne.s   loc_4668C
-                dbf     d7,loc_46684
-loc_4668C:                                              ; CODE XREF: Boss_Epsilon1AttackPattern2+12   j
+                bne.s   Boss_Epsilon1ReturnAngleMismatchCount
+                dbf     d7,Boss_Epsilon1CompareAngleHistoryLoop
+Boss_Epsilon1ReturnAngleMismatchCount:                  ; CODE XREF: Boss_Epsilon1CheckAngleHistoryAligned+12   j  ; was: loc_4668C
                 addq.w  #1,d7
                 move.w  d7,d0
                 rts
-; End of function Boss_Epsilon1AttackPattern2
-; Wave projectile initialization
-Projectile_Epsilon1WaveInit:                            ; CODE XREF: Projectile_Epsilon1WaveUpdate   p  ; was: sub_46692
-                                        ; Projectile_Epsilon1BounceInit+A   p
+; End of function Boss_Epsilon1CheckAngleHistoryAligned
+; Applies the configured acceleration to shared vertical velocity
+Boss_Epsilon1ApplyVerticalAcceleration:                 ; CODE XREF: Boss_Epsilon1DescendAndReleaseRingState   p  ; was: sub_46692
+                                        ; Boss_Epsilon1RiseAfterRingReleaseState+A   p
+                                        ; Boss_Epsilon1WaitForReleasedRingObjectsState   p
+                                        ; Boss_Epsilon1RecoverBattleCenterState+6   p
                 move.l  (dword_FF9478).w,d0
                 add.l   d0,(dword_FFC69C).w
                 rts
-; End of function Projectile_Epsilon1WaveInit
-; Wave projectile sine movement
-Projectile_Epsilon1WaveUpdate:                          ; DATA XREF: ROM:00045D34   o  ; was: sub_4669C
-                bsr.s   Projectile_Epsilon1WaveInit
+; End of function Boss_Epsilon1ApplyVerticalAcceleration
+; Descends to Y $90, reverses acceleration, and releases the ring objects
+Boss_Epsilon1DescendAndReleaseRingState:                ; DATA XREF: ROM:00045D34   o  ; was: sub_4669C
+                bsr.s   Boss_Epsilon1ApplyVerticalAcceleration
                 cmpi.w  #$90,(dword_FFC694).w
-                bcs.s   locret_4670E
+                bcs.s   Boss_Epsilon1DescendAndReleaseRingReturn
                 bclr    #4,$23(a5)
                 move.l  #$FFFFC000,(dword_FF9478).w
                 move.w  #6,(dword_FF9410).w
@@ -487,67 +493,67 @@ Projectile_Epsilon1WaveUpdate:                          ; DATA XREF: ROM:00045D3
                 move.w  $14(a5),d1
                 movea.w (dword_FF941C).w,a0
                 move.w  #$7C,d2                         ; '|'
-                bsr.w   Boss_Epsilon1DefeatInit
+                bsr.w   Projectile_PrepareEpsilon1FiveStepSpread
                 move.w  $10(a5),d0
                 subq.w  #8,d0
                 move.w  $14(a5),d1
                 movea.w (dword_FF941C+2).w,a0
                 move.w  #$84,d2
-                bsr.w   Boss_Epsilon1DefeatInit
+                bsr.w   Projectile_PrepareEpsilon1FiveStepSpread
                 clr.w   $48(a5)
                 clr.w   d0
                 move.w  #5,d7
-                lea     word_46616(pc),a2
-loc_466F4:                                              ; CODE XREF: Projectile_Epsilon1WaveUpdate+6A   j
+                lea     Boss_Epsilon1RingObjectSlots(pc),a2
+Boss_Epsilon1ReleaseRingObjectPairsLoop:                ; CODE XREF: Boss_Epsilon1DescendAndReleaseRingState+6A   j  ; was: loc_466F4
                 movea.w (a2,d0.w),a0
                 movea.w $C(a2,d0.w),a1
                 addq.w  #2,4(a0)
                 addq.w  #2,4(a1)
                 addq.w  #2,d0
-                dbf     d7,loc_466F4
+                dbf     d7,Boss_Epsilon1ReleaseRingObjectPairsLoop
                 addq.w  #2,4(a5)
-locret_4670E:                                           ; CODE XREF: Projectile_Epsilon1WaveUpdate+8   j
+Boss_Epsilon1DescendAndReleaseRingReturn:               ; CODE XREF: Boss_Epsilon1DescendAndReleaseRingState+8   j  ; was: locret_4670E
                 rts
-; End of function Projectile_Epsilon1WaveUpdate
-; Bounce projectile initialization
-Projectile_Epsilon1BounceInit:                          ; DATA XREF: ROM:00045D36   o  ; was: sub_46710
+; End of function Boss_Epsilon1DescendAndReleaseRingState
+; Applies reverse acceleration until the turn angle reaches $180
+Boss_Epsilon1RiseAfterRingReleaseState:                 ; DATA XREF: ROM:00045D36   o  ; was: sub_46710
                 cmpi.l  #$FFFE0000,(dword_FFC69C).w
-                blt.s   loc_4671E
-                bsr.w   Projectile_Epsilon1WaveInit
-loc_4671E:                                              ; CODE XREF: Projectile_Epsilon1BounceInit+8   j
+                blt.s   Boss_Epsilon1CheckRingReleaseTurnAngle
+                bsr.w   Boss_Epsilon1ApplyVerticalAcceleration
+Boss_Epsilon1CheckRingReleaseTurnAngle:                 ; CODE XREF: Boss_Epsilon1RiseAfterRingReleaseState+8   j  ; was: loc_4671E
                 cmpi.w  #$180,(dword_FF9414).w
-                bcs.s   locret_4673C
+                bcs.s   Boss_Epsilon1RiseAfterRingReleaseReturn
                 move.w  #6,(dword_FF9414+2).w
                 clr.w   (dword_FF9410).w
                 move.l  #$800,(dword_FF9478).w
                 addq.w  #2,4(a5)
-locret_4673C:                                           ; CODE XREF: Projectile_Epsilon1BounceInit+14   j
+Boss_Epsilon1RiseAfterRingReleaseReturn:                ; CODE XREF: Boss_Epsilon1RiseAfterRingReleaseState+14   j  ; was: locret_4673C
                 rts
-; End of function Projectile_Epsilon1BounceInit
-; Bounce projectile physics
-Projectile_Epsilon1BounceUpdate:                        ; DATA XREF: ROM:00045D38   o  ; was: sub_4673E
-                bsr.w   Projectile_Epsilon1WaveInit
+; End of function Boss_Epsilon1RiseAfterRingReleaseState
+; Applies acceleration until all released ring objects become inactive
+Boss_Epsilon1WaitForReleasedRingObjectsState:           ; DATA XREF: ROM:00045D38   o  ; was: sub_4673E
+                bsr.w   Boss_Epsilon1ApplyVerticalAcceleration
                 clr.w   d0
                 move.w  #5,d7
-                lea     word_46616(pc),a0
-loc_4674C:                                              ; CODE XREF: Projectile_Epsilon1BounceUpdate+24   j
+                lea     Boss_Epsilon1RingObjectSlots(pc),a0
+Boss_Epsilon1CheckReleasedRingPairsLoop:                ; CODE XREF: Boss_Epsilon1WaitForReleasedRingObjectsState+24   j  ; was: loc_4674C
                 movea.w (a0,d0.w),a1
                 movea.w $C(a0,d0.w),a2
                 tst.w   4(a1)
-                bne.s   locret_4676A
+                bne.s   Boss_Epsilon1WaitForReleasedRingObjectsReturn
                 tst.w   4(a2)
-                bne.s   locret_4676A
+                bne.s   Boss_Epsilon1WaitForReleasedRingObjectsReturn
                 addq.w  #2,d0
-                dbf     d7,loc_4674C
+                dbf     d7,Boss_Epsilon1CheckReleasedRingPairsLoop
                 addq.w  #2,4(a5)
-locret_4676A:                                           ; CODE XREF: Projectile_Epsilon1BounceUpdate+1A   j
-                                        ; Projectile_Epsilon1BounceUpdate+20   j
+Boss_Epsilon1WaitForReleasedRingObjectsReturn:          ; CODE XREF: Boss_Epsilon1WaitForReleasedRingObjectsState+1A   j  ; was: locret_4676A
+                                        ; Boss_Epsilon1WaitForReleasedRingObjectsState+20   j
                 rts
-; End of function Projectile_Epsilon1BounceUpdate
-; Laser projectile initialization
-Projectile_Epsilon1LaserInit:                           ; DATA XREF: ROM:00045D3A   o  ; was: sub_4676C
-                bsr.w   Boss_Epsilon1AttackPattern2
-                bne.s   locret_4679A
+; End of function Boss_Epsilon1WaitForReleasedRingObjectsState
+; Waits for angle alignment and seeds the sweep-recovery motion
+Boss_Epsilon1PrepareSweepRecoveryState:                 ; DATA XREF: ROM:00045D3A   o  ; was: sub_4676C
+                bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
+                bne.s   Boss_Epsilon1PrepareSweepRecoveryReturn
                 clr.l   (dword_FFC69C).w
                 move.w  #1,(dword_FF9414+2).w
                 move.w  #$10,(dword_FF9410).w
@@ -555,28 +561,28 @@ Projectile_Epsilon1LaserInit:                           ; DATA XREF: ROM:00045D3
                 move.l  #$3000,(dword_FF9478).w
                 move.w  #$20,$48(a5)                    ; ' '
                 addq.w  #2,4(a5)
-locret_4679A:                                           ; CODE XREF: Projectile_Epsilon1LaserInit+4   j
+Boss_Epsilon1PrepareSweepRecoveryReturn:                ; CODE XREF: Boss_Epsilon1PrepareSweepRecoveryState+4   j  ; was: locret_4679A
                 rts
-; End of function Projectile_Epsilon1LaserInit
-; Laser projectile beam update
-Projectile_Epsilon1LaserUpdate:                         ; DATA XREF: ROM:00045D3C   o  ; was: sub_4679C
+; End of function Boss_Epsilon1PrepareSweepRecoveryState
+; Applies recovery motion, then returns the battle center to Y $40
+Boss_Epsilon1RecoverBattleCenterState:                  ; DATA XREF: ROM:00045D3C   o  ; was: sub_4679C
                 tst.w   $48(a5)
-                bmi.s   loc_467B0
-                bsr.w   Projectile_Epsilon1WaveInit
+                bmi.s   Boss_Epsilon1MoveToRecoveryHeight
+                bsr.w   Boss_Epsilon1ApplyVerticalAcceleration
                 subq.w  #1,$48(a5)
-                bpl.s   loc_467B0
+                bpl.s   Boss_Epsilon1MoveToRecoveryHeight
                 clr.l   (dword_FFC69C).w
-loc_467B0:                                              ; CODE XREF: Projectile_Epsilon1LaserUpdate+4   j
-                                        ; Projectile_Epsilon1LaserUpdate+E   j
-                bsr.w   Boss_Epsilon1InitProjectileArray
+Boss_Epsilon1MoveToRecoveryHeight:                      ; CODE XREF: Boss_Epsilon1RecoverBattleCenterState+4   j  ; was: loc_467B0
+                                        ; Boss_Epsilon1RecoverBattleCenterState+E   j
+                bsr.w   Boss_Epsilon1ApplyDirectionalVerticalStep
                 cmpi.w  #$40,(dword_FFC694).w           ; '@'
-                bgt.s   locret_467D6
+                bgt.s   Boss_Epsilon1RecoverBattleCenterReturn
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #4,(dword_FF9410).w
                 clr.w   (word_FF9474).w
                 clr.w   (word_FF9472).w
                 move.w  #$12,4(a5)
-locret_467D6:                                           ; CODE XREF: Projectile_Epsilon1LaserUpdate+1E   j
+Boss_Epsilon1RecoverBattleCenterReturn:                 ; CODE XREF: Boss_Epsilon1RecoverBattleCenterState+1E   j  ; was: locret_467D6
                 rts
-; End of function Projectile_Epsilon1LaserUpdate
+; End of function Boss_Epsilon1RecoverBattleCenterState
 ; Clears projectile pointers and initializes scrolling

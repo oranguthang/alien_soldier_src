@@ -241,7 +241,7 @@
                 include "src/bosses/epsilon_1_defeat.s"
                 include "src/bosses/epsilon_1_intro.s"
                 include "src/projectiles/epsilon_1.s"
-                include "src/bosses/epsilon_1_final_phase.s"
+                include "src/bosses/epsilon_1_shared_support.s"
                 include "src/bosses/sharpssteel_core.s"
                 include "src/bosses/sharpssteel_blades.s"
                 include "src/projectiles/sharpssteel.s"

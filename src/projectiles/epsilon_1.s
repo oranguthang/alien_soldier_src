@@ -1,10 +1,10 @@
-Projectile_Epsilon1SpreadInit:                          ; DATA XREF: Boss_Epsilon1DefeatInit   o  ; was: sub_470C2
+Projectile_Epsilon1SpreadInit:                          ; DATA XREF: Projectile_PrepareEpsilon1FiveStepSpread   o  ; was: sub_470C2
                 movea.w a5,a0
                 move.w  #5,$4A(a0)
                 bra.s   loc_470D4
 ; End of function Projectile_Epsilon1SpreadInit
 ; Expanding spread projectile with deceleration
-Projectile_Epsilon1SpreadExpanding:                     ; DATA XREF: Projectile_Epsilon1SpreadSetup   o  ; was: sub_470CC
+Projectile_Epsilon1SpreadExpanding:                     ; DATA XREF: Projectile_PrepareEpsilon1ElevenStepSpread   o  ; was: sub_470CC
                 movea.w a5,a0
                 move.w  #$B,$4A(a0)
 loc_470D4:                                              ; CODE XREF: Projectile_Epsilon1SpreadInit+8   j
@@ -38,7 +38,7 @@ loc_470D4:                                              ; CODE XREF: Projectile_
 ; End of function Projectile_Epsilon1SpreadExpanding
 ; Defeat debris projectiles
 Projectile_Epsilon1DefeatDebris:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_47146
-                bsr.w   Boss_Epsilon1CheckVulnerable
+                bsr.w   Projectile_Epsilon1ConvertOnGlobalMode
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$5C(a5)
@@ -171,7 +171,7 @@ locret_472BE:                                           ; CODE XREF: Projectile_
 ; End of function Projectile_Epsilon1CheckFlag
 ; Projectile main handler
 Projectile_Epsilon1IntroMain:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_472C0
-                bsr.w   Boss_Epsilon1CheckVulnerable
+                bsr.w   Projectile_Epsilon1ConvertOnGlobalMode
                 move.w  4(a5),d0
                 lea     off_472D0(pc,d0.w),a0
                 adda.w  (a0),a0
