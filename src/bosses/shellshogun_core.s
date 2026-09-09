@@ -218,7 +218,7 @@ Boss_ShellshogunDefeatLaunchState:                      ; DATA XREF: ROM:0003953
                 jsr     (Gfx_UpdatePaletteFade).l
                 tst.w   $BC(a5)
                 bpl.s   Boss_ShellshogunUpdateDefeatLaunch
-                jsr     (Gfx_QueueDMATransfer).l
+                jsr     (Boss_ApplyDefeatPaletteFade).l
                 addq.w  #4,6(a5)
                 cmpi.w  #$20,6(a5)                      ; ' '
                 bmi.s   Boss_ShellshogunUpdateDefeatLaunch
@@ -270,21 +270,21 @@ Boss_ShellshogunRenderDefeatLaunch:                     ; CODE XREF: Boss_Shells
 Boss_ShellshogunDefeatPaletteState:                     ; DATA XREF: ROM:00039536   o  ; was: sub_3987C
                 jsr     (Gfx_UpdatePaletteFade).l
                 subq.w  #1,$BC(a5)
-                bpl.s   Boss_ShellshogunDefeatPaletteRender
+                bpl.s   Boss_ShellshogunApplyDefeatPaletteFade
                 addq.w  #2,4(a5)
                 jsr     (Effect_InitPlayerSpawn).l
                 move.b  #4,(byte_FFA95A).w
-Boss_ShellshogunDefeatPaletteRender:                    ; CODE XREF: Boss_ShellshogunDefeatPaletteState+A   j  ; was: loc_39898
-                jmp     Gfx_QueueDMATransfer
+Boss_ShellshogunApplyDefeatPaletteFade:                 ; CODE XREF: Boss_ShellshogunDefeatPaletteState+A   j  ; was: loc_39898
+                jmp     Boss_ApplyDefeatPaletteFade
 ; End of function Boss_ShellshogunDefeatPaletteState
 ; Reduces the defeat-effect step before the final delay
 Boss_ShellshogunDefeatDissolveState:                    ; DATA XREF: ROM:00039538   o  ; was: sub_3989E
                 subq.w  #2,6(a5)
-                bne.s   Boss_ShellshogunDefeatDissolveRender
+                bne.s   Boss_ShellshogunApplyDefeatDissolvePaletteFade
                 addq.w  #2,4(a5)
                 move.w  #$E0,$BC(a5)
-Boss_ShellshogunDefeatDissolveRender:                   ; CODE XREF: Boss_ShellshogunDefeatDissolveState+4   j  ; was: loc_398AE
-                jmp     Gfx_QueueDMATransfer
+Boss_ShellshogunApplyDefeatDissolvePaletteFade:         ; CODE XREF: Boss_ShellshogunDefeatDissolveState+4   j  ; was: loc_398AE
+                jmp     Boss_ApplyDefeatPaletteFade
 ; End of function Boss_ShellshogunDefeatDissolveState
 ; Waits before marking the defeated boss object complete
 Boss_ShellshogunDefeatCompletionDelayState:             ; DATA XREF: ROM:0003953A   o  ; was: sub_398B4

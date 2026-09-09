@@ -1,3 +1,4 @@
+; Deep Strider controller, attack states, and linked-part rendering
 Boss_DeepStriderMain:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3E582
                 tst.w   4(a5)
                 beq.w   Boss_DeepStriderStateDispatch

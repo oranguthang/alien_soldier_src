@@ -234,7 +234,7 @@ Boss_XiTigerInlineSpriteDescriptorB:    dc.w    $62D8, $A00, $F4F4  ; DATA XREF:
 Boss_XiTigerInlineSpriteDescriptorC:    dc.w    $62E1, $A00, $F4F4  ; DATA XREF: ROM:00034D32   o  ; was: word_34CF0
                                         ; ROM:00034D4A   o
 Boss_XiTigerMetaspriteDescriptors:  dc.l    0           ; DATA XREF: Boss_XiTigerSetup+10   o  ; was: dword_34CF6
-                dc.l    word_EBA2C+$400000
+                dc.l    Boss_XiTigerGroundedBodyMapping+$400000
                 dc.l    word_EBA1A+$400000
                 dc.l    Boss_XiTigerRotationFramesC
                 dc.l    Boss_XiTigerInlineSpriteDescriptorB+1
@@ -274,7 +274,7 @@ Boss_XiTigerPartLinks:  dc.w    $8000, $8005, $8005     ; was: word_34D74
                 dc.w    $8726, $87E7, $87E7
                 dc.w    $88A7
 Boss_XiTigerNeutralPose:    dc.w    $2060, $70C0, $80A0  ; was: word_34DA6
-                                        ; DATA XREF: Boss_XiTigerCalculateDeltas   o
+                                        ; DATA XREF: Boss_XiTigerBeginPoseInterpolation   o
                 dc.w    $9080, $4000, $8000
                 dc.w    $E040, $4080
 ; Madam Barbar directional frames and metasprite definition

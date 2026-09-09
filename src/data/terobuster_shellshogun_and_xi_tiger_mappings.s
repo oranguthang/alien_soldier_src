@@ -103,32 +103,32 @@ word_EBA1A:     dc.w    $287E, $C00, $AEC               ; DATA XREF: ROM:00034CF
                                         ; ROM:00034D12   o
                 dc.w    $287A, $300, $F20C
                 dc.w    $A86A, $F00, $EAEC
-word_EBA2C:     dc.w    $2829, $E00, $E4FE              ; DATA XREF: ROM:00034CFA   o
-                                        ; Boss_XiTigerIdleState+16   o
+Boss_XiTigerGroundedBodyMapping:    dc.w    $2829, $E00, $E4FE  ; DATA XREF: ROM:00034CFA   o  ; was: word_EBA2C
+                                        ; Boss_XiTigerEnterIdleState+16   o
                 dc.w    $2844, $300, $ECF6
                 dc.w    $2838, $E00, $FCFE
                 dc.w    $2836, $100, $FC1E
                 dc.w    $A835, 0, $DCFE
-word_EBA4A:     dc.w    $2848, $E00, $FCFE              ; DATA XREF: Boss_XiTigerJumpRise+A   o
-                                        ; Boss_XiTigerAttackPattern1+C   o
+Boss_XiTigerAirborneBodyMapping:    dc.w    $2848, $E00, $FCFE  ; DATA XREF: Boss_XiTigerJumpRise+A   o  ; was: word_EBA4A
+                                        ; Boss_XiTigerBeginDefeatLeap+C   o
                 dc.w    $2829, $E00, $E4FE
                 dc.w    $2844, $300, $ECF6
                 dc.w    $2836, $100, $FC1E
                 dc.w    $A835, 0, $DCFE
-word_EBA68:     dc.w    $30A0, $E00, $F3CE              ; DATA XREF: Boss_XiTigerSetup+74   o
+Boss_XiTigerClawMappingA:   dc.w    $30A0, $E00, $F3CE  ; DATA XREF: Boss_XiTigerSetup+74   o  ; was: word_EBA68
                                         ; Boss_XiTigerSetup+7C   o
                 dc.w    $B0AC, $F00, $F3EE
-word_EBA74:     dc.w    $30EE, 0, $FE4                  ; DATA XREF: ROM:0003E170   o
+Boss_XiTigerClawMappingB:   dc.w    $30EE, 0, $FE4      ; DATA XREF: ROM:0003E170   o  ; was: word_EBA74
                                         ; ROM:0003E188   o
                 dc.w    $30E5, $A00, $17DD
                 dc.w    $B0D5, $F00, $F7EC
-word_EBA86:     dc.w    $28D3, $400, $A12               ; DATA XREF: ROM:0003E178   o
+Boss_XiTigerClawMappingD:   dc.w    $28D3, $400, $A12   ; DATA XREF: ROM:0003E178   o  ; was: word_EBA86
                                         ; ROM:0003E180   o
                 dc.w    $28CB, $D00, $120B
                 dc.w    $28CA, 0, $2F4
                 dc.w    $28C4, $900, $3FC
                 dc.w    $A8BC, $D00, $F3F5
-word_EBAA4:     dc.w    $2894, $B00, $14F3              ; DATA XREF: ROM:0003E174   o
+Boss_XiTigerClawMappingC:   dc.w    $2894, $B00, $14F3  ; DATA XREF: ROM:0003E174   o  ; was: word_EBAA4
                                         ; ROM:0003E184   o
                 dc.w    $A884, $F00, $F4F3
 word_EBAB0:     dc.w    $A123, $F00, $EFF1              ; DATA XREF: ROM:Boss_XiTigerRotationFramesA   o
@@ -165,7 +165,7 @@ word_EBB10:     dc.w    $B97F, $B00, $F8F7              ; DATA XREF: ROM:00034C9
                                         ; ROM:00034CC8   o
 word_EBB16:     dc.w    $B973, $B00, $F7F7              ; DATA XREF: ROM:00034CA0   o
                                         ; ROM:Boss_XiTigerRotationFramesD   o
-word_EBB1C:     dc.w    $28A0, $E00, $F613              ; DATA XREF: ROM:0003E17C   o
+Boss_XiTigerClawMappingE:   dc.w    $28A0, $E00, $F613  ; DATA XREF: ROM:0003E17C   o  ; was: word_EBB1C
                 dc.w    $A8AC, $F00, $EEF3
 word_EBB28:     dc.w    $603C, $500, $105               ; DATA XREF: ROM:00034DCA   o
                                         ; ROM:00034DDE   o
