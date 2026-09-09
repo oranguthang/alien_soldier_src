@@ -1,20 +1,3 @@
-Boss_JampanFlashToggle:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_49100
-                tst.w   (word_FF808C).w
-                bpl.s   loc_49126
-                bset    #7,2(a5)
-                move.w  $4A(a5),d0
-                andi.w  #1,d0
-                cmp.w   $48(a5),d0
-                beq.s   loc_49120
-                bclr    #7,2(a5)
-loc_49120:                                              ; CODE XREF: Boss_JampanFlashToggle+18   j
-                subq.w  #1,$4A(a5)
-                bpl.s   locret_4912C
-loc_49126:                                              ; CODE XREF: Boss_JampanFlashToggle+4   j
-                bset    #4,2(a5)
-locret_4912C:                                           ; CODE XREF: Boss_JampanFlashToggle+24   j
-                rts
-; End of function Boss_JampanFlashToggle
 ; Main boss handler
 Boss_JampanMain:                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4912E
                 bsr.w   Boss_JampanDispatcher

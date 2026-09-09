@@ -562,7 +562,7 @@ Boss_SharpssteelInlineSpriteDescriptorA:    dc.w    $63F9, $A00, $F4F4  ; DATA X
                                         ; ROM:0003523C   o
 Boss_SharpssteelInlineSpriteDescriptorB:    dc.w    $6402, $500, $F8F8  ; DATA XREF: ROM:00035240   o  ; was: word_3521A
                                         ; ROM:00035250   o
-Boss_SharpssteelMetaspriteDescriptors:  dc.l    word_EC142+$400000  ; DATA XREF: Boss_SharpssteelInit+E   o  ; was: off_35220
+Boss_SharpssteelMetaspriteDescriptors:  dc.l    word_EC142+$400000  ; DATA XREF: Boss_SharpssteelInitializeState+E   o  ; was: off_35220
                 dc.l    word_EC12A+$400000
                 dc.l    word_EC112+$400000
                 dc.l    word_EC15A+$400000
@@ -581,18 +581,18 @@ Boss_SharpssteelMetaspriteDescriptors:  dc.l    word_EC142+$400000  ; DATA XREF:
                 dc.l    0
                 dc.l    0
 Boss_SharpssteelPartRadii:  dc.w    $809C, $A098, $9894  ; was: word_35268
-                                        ; DATA XREF: Boss_SharpssteelInit+14   o
+                                        ; DATA XREF: Boss_SharpssteelInitializeState+14   o
                 dc.w    $9C90, $8E92, $9C90
                 dc.w    $8E92, $A0A0, $C0C0
 Boss_SharpssteelPartLinks:  dc.w    $8007, $8006, $8065  ; was: word_3527A
-                                        ; DATA XREF: Boss_SharpssteelInit+1A   o
+                                        ; DATA XREF: Boss_SharpssteelInitializeState+1A   o
                 dc.w    $8007, $8127, $8187
                 dc.w    $8066, $246, $2A6
                 dc.w    $8304, $8066, $3C6
                 dc.w    $426, $8484, $360
                 dc.w    $4E0, $360, $4E0
 Boss_SharpssteelNeutralPose:    dc.w    $8080, $8080, $8080, $8080  ; was: word_3529E
-                                        ; DATA XREF: Boss_SharpssteelCoreDefeat   o
+                                        ; DATA XREF: Boss_SharpssteelInitializeBladePoseInterpolation   o
 ; Wolf Garopa directional frames and metasprite definition
 Boss_WolfGaropaRotationFramesA: dc.l    word_ED1CC      ; DATA XREF: ROM:00035320   o  ; was: off_352A6
                                         ; ROM:00035334   o

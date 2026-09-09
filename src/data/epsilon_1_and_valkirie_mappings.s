@@ -22,7 +22,7 @@ word_EC0A6:     dc.w    $201D, $900, $8E8               ; DATA XREF: ROM:0004890
                 dc.w    $281D, $900, $800
                 dc.w    $2011, $B00, $E8E8
                 dc.w    $A811, $B00, $E800
-word_EC0BE:     dc.w    $2023, $B00, $ECEC              ; DATA XREF: ROM:off_4890A   o
+word_EC0BE:     dc.w    $2023, $B00, $ECEC              ; DATA XREF: ROM:Boss_SharpssteelBladeGraphicsMappingsB   o
                 dc.w    $202F, $800, $CEC
                 dc.w    $282F, $800, $CFC
                 dc.w    $A823, $B00, $ECFC
@@ -47,7 +47,7 @@ word_EC12A:     dc.w    $386D, $600, $E8                ; DATA XREF: ROM:0003522
                 dc.w    $286D, $600, $E8E8
                 dc.w    $A861, $E00, $E8F8
 word_EC142:     dc.w    $387F, $200, $FCEC              ; DATA XREF: ROM:Boss_SharpssteelMetaspriteDescriptors   o
-                                        ; ROM:off_48922   o
+                                        ; ROM:Boss_SharpssteelBladeGraphicsMappingsA   o
                 dc.w    $287F, $200, $ECEC
                 dc.w    $3873, $E00, $FCF4
                 dc.w    $A873, $E00, $ECF4

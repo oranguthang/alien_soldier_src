@@ -216,7 +216,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_BackStringerChainFalling
                 dc.l    Projectile_ShiperBouncingShot
                 dc.l    Projectile_BackStringerReboundShotMain
-                dc.l    Enemy_FallingBombLogic
+                dc.l    Projectile_SharpssteelFallingShotMain
                 dc.l    Stage12_TeddyBearMain
                 dc.l    Enemy_ShipPatrolController
                 dc.l    Boss_ShieldViperSpawnProjectile2
@@ -238,7 +238,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Stage21_AsteroidMain
                 dc.l    Enemy_FormationWaveMain
                 dc.l    Entity_DispatchStoredSubtype
-                dc.l    Effect_ShipDestructionDebris
+                dc.l    Effect_SharpssteelDefeatFragmentMain
                 dc.l    Entity_VictorSubtypeDispatcher
                 dc.l    Projectile_MissirayAndRisingShotMain
                 dc.l    Effect_RisingShotWaveControllerMain
@@ -260,7 +260,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_WolfGaropaWave
                 dc.l    Entity_EmptyState8
                 dc.l    Entity_ValkirieProjectileDispatcher
-                dc.l    Boss_JampanFlashToggle
+                dc.l    Projectile_SharpssteelBladeShotMain
                 dc.l    Boss_ValkirieForcePlayerToCeiling
                 dc.l    Boss_WolfGaropaPaletteUpdate
                 dc.l    Boss_ValkirieScreenTimer

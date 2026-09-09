@@ -126,9 +126,9 @@ Cutscene_PlanetInit:                                    ; DATA XREF: ROM:0000D9D
 ; End of function Cutscene_PlanetInit
 ; Spawns 4 projectiles in a pattern with velocity data
 Projectile_SpawnQuadPattern:                            ; CODE XREF: Boss_DeepStriderSpawnQuadVolley+8   j  ; was: sub_E288
-                                        ; Boss_SharpssteelMultiPhaseAttack+C6   p
+                                        ; Boss_SharpssteelOpeningVerticalTurnState+C6   p
                 moveq   #8,d3
-loc_E28A:                                               ; CODE XREF: Boss_SharpssteelRisingAttack+32   p
+loc_E28A:                                               ; CODE XREF: Boss_SharpssteelDiveAttackState+32   p
                 moveq   #0,d4
                 moveq   #3,d7
                 lea     dword_E2D6(pc),a4

@@ -1064,6 +1064,69 @@ narrow meanings of entity words eight and `$A`, exact visual presentation,
 and runtime timing remain deliberately unclaimed. All 77 definitions are
 recorded as static evidence in `config/name_audit.json`.
 
+The first Sharpssteel pass reduced the count to 7,280 and corrected the
+projectile boundary at the start of the former Jampan module. The 276-line
+`projectiles/sharpssteel.s` module now contains the complete producer and
+handler chains for three Sharpssteel object types and has 31 audited
+definitions with no live address-derived names. Type `$364` is emitted in two
+groups totalling ten falling shots; type `$3BC` comprises the fourteen
+embedded fragments initialized when Sharpssteel's health reaches zero; and
+type `$414` comprises six short-lived shots emitted from its final blade part.
+
+Static creation and dispatch edges disprove three inherited ownership claims.
+The former `Enemy_FallingBombLogic` handles only Sharpssteel's type `$364`, the
+former `Effect_ShipDestructionDebris` handles only its type `$3BC` defeat
+fragments, and the former `Boss_JampanFlashToggle` handles type `$414`, which
+is created only by Sharpssteel. That last handler at `0x049100-0x04912D` was
+moved out of `bosses/jampan_core.s`, so the Jampan module now begins at its
+actual main handler at `0x04912E`. The exact visual form of these shots and the
+identity of the object region used for the type-`$364` one-time deflection
+test remain deliberately unclaimed. All 31 definitions are recorded as
+static evidence in `config/name_audit.json`.
+
+The Sharpssteel main-controller pass reduced the count to 7,228. Its 750-line
+`bosses/sharpssteel_core.s` module has 90 definitions and no live
+address-derived names. The audit reconstructs the complete thirty-entry state
+table through the start of state `$2C`: encounter and blade entrance,
+assembly-trigger waits, alternating horizontal motion, randomized angle-shot
+emission, falling-shot cycles, distance-based blade attacks, a vertical dive,
+and the transition into the following complex phase. All five inherited
+`Boss_Jampan_State*` labels in this range were rejected because these entries
+are selected directly by the Sharpssteel table at states `$10`, `$14`, `$18`,
+`$1A`, and `$2A` and operate exclusively on its embedded blade fields.
+
+Several other Sonnet names were narrowed or disproved by direct data flow.
+The former `UpdateCore` shifts a six-word target history rather than moving the
+core; `DefeatStart` only loads the last history sample; and `BladeDefeat` is a
+live close-range attack with its own hitbox and sound trigger. The former
+`RisingAttack` increases screen Y until `$200`, so it is now the dive state.
+The visually specific meaning of several blade pose tables, the purpose of the
+otherwise unreferenced manual-control initializer, and the no-op hook below
+the falling-cycle `$60` threshold remain deliberately unclaimed. All 90
+definitions are recorded as static evidence in `config/name_audit.json`.
+
+The Sharpssteel blade-system pass reduced the count to 7,167. Its 700-line
+`bosses/sharpssteel_blades.s` module has 93 audited definitions and no live
+address-derived names. Together with the preceding controller, it completes
+states `$2C-$34`: alignment and acceleration lead into bounded vertical
+oscillation, three animation-triggered six-shot bursts, horizontal steering
+toward the shared target, and a final fall back to the post-dive selector.
+These are mechanically established state roles; the exact visual meaning of
+their pose command streams remains deliberately unclaimed.
+
+This pass also removes several materially false Sonnet descriptions. The
+former `VerticalMovementClamp` changes horizontal velocity toward
+`word_FF8248`; the routines described as enabling and disabling broad hitbox
+groups at field `$E` actually change the sprite-priority bit of embedded blade
+parts. Collision control instead uses bit six of field `$21` and values in
+field `$26`. The former palette-index writers update those collision values,
+the former palette-fade/core-idle pair writes collision-box group sizes, and
+the former core-defeat routine merely initializes pose interpolation. Blade
+graphics selection, core sprite-frame updates, palette animation, background
+fade, and the pose-command interpreter are now separated by their observed
+data flow. All 93 definitions and the rejected vertical, hitbox, palette, and
+defeat claims are recorded as static evidence in `config/name_audit.json`.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
