@@ -219,6 +219,7 @@
                 include "src/bosses/caterpillar.s"
                 include "src/bosses/xi_tiger_core.s"
                 include "src/bosses/deep_strider.s"
+                include "src/enemies/bouncing_object.s"
                 include "src/bosses/gusthead_core.s"
                 include "src/bosses/gusthead_combat.s"
                 include "src/bosses/gusthead_tentacles.s"

@@ -108,7 +108,7 @@ loc_48EEC:                                              ; CODE XREF: Enemy_Falli
                 andi.w  #$8000,d0
                 movem.l d0,-(sp)
                 move.l  #$FFFC8000,$1C(a5)
-                jsr     (loc_3F182).l
+                jsr     (Projectile_ConvertCurrentToSharedEffect).l
                 movem.l (sp)+,d0
                 or.w    d0,$E(a5)
                 rts

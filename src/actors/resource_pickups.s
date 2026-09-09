@@ -6,7 +6,7 @@ Entity_EmptyState6:                                     ; DATA XREF: ROM:Entity_
 Pickup_SpawnSmallFromCurrentObject:                     ; CODE XREF: Projectile_ExplodeOnWall:loc_2B0FA   p  ; was: sub_2BCFE
                                         ; sub_2B298:loc_2B306   p
                 movea.w a5,a0
-Pickup_SpawnSmall:                                      ; CODE XREF: Enemy_BounceOnFloorOrExplode+1E   p  ; was: loc_2BD00
+Pickup_SpawnSmall:                                      ; CODE XREF: Enemy_UpdateBouncingObject+1E   p  ; was: loc_2BD00
                                         ; Boss_ValkirieInitScreenPair+64   p
                 moveq   #0,d7
                 bra.w   Pickup_InitializeSelectedSize

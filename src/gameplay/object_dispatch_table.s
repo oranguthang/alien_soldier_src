@@ -211,7 +211,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Enemy_BugmaxDebrisFall
                 dc.l    Projectile_BugmaxDebrisSpawner
                 dc.l    Boss_ShieldViperMain
-                dc.l    Enemy_BounceOnFloorOrExplode
+                dc.l    Enemy_UpdateBouncingObject
                 dc.l    Boss_DefeatStateDispatcher
                 dc.l    Projectile_BackStringerChainFalling
                 dc.l    Projectile_ShiperBouncingShot

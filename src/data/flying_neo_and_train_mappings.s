@@ -110,27 +110,27 @@ word_EBD7A:     dc.w    $858, $500, $10EE               ; DATA XREF: Cutscene_Xi
                 dc.w    $848, $D00, $FE
                 dc.w    $842, $600, $E8E6
                 dc.w    $8836, $E00, $E8F6
-word_EBD9E:     dc.w    $A841, $D00, $F8F0              ; DATA XREF: ROM:00041554   o
-word_EBDA4:     dc.w    $B86D, $E00, $F3F1              ; DATA XREF: ROM:00041558   o
-word_EBDAA:     dc.w    $B851, $F00, $EFF0              ; DATA XREF: ROM:0004155C   o
-word_EBDB0:     dc.w    $B861, $B00, $EFF5              ; DATA XREF: ROM:00041560   o
-word_EBDB6:     dc.w    $B849, $700, $EFF8              ; DATA XREF: ROM:00041564   o
-word_EBDBC:     dc.w    $B061, $B00, $EFF4              ; DATA XREF: ROM:00041548   o
-word_EBDC2:     dc.w    $B051, $F00, $EFF1              ; DATA XREF: ROM:0004154C   o
-word_EBDC8:     dc.w    $B06D, $E00, $F2EF              ; DATA XREF: ROM:00041550   o
-word_EBDCE:     dc.w    $8040, $F00, $EDED              ; DATA XREF: ROM:0003EFBA   o
-word_EBDD4:     dc.w    $9860, $F00, $F0EF              ; DATA XREF: ROM:0003EFB6   o
-word_EBDDA:     dc.w    $187C, $200, $F309              ; DATA XREF: ROM:0003EFB2   o
+word_EBD9E:                         dc.w    $A841, $D00, $F8F0  ; DATA XREF: ROM:00041554   o
+word_EBDA4:                         dc.w    $B86D, $E00, $F3F1  ; DATA XREF: ROM:00041558   o
+word_EBDAA:                         dc.w    $B851, $F00, $EFF0  ; DATA XREF: ROM:0004155C   o
+word_EBDB0:                         dc.w    $B861, $B00, $EFF5  ; DATA XREF: ROM:00041560   o
+word_EBDB6:                         dc.w    $B849, $700, $EFF8  ; DATA XREF: ROM:00041564   o
+word_EBDBC:                         dc.w    $B061, $B00, $EFF4  ; DATA XREF: ROM:00041548   o
+word_EBDC2:                         dc.w    $B051, $F00, $EFF1  ; DATA XREF: ROM:0004154C   o
+word_EBDC8:                         dc.w    $B06D, $E00, $F2EF  ; DATA XREF: ROM:00041550   o
+Boss_DeepStriderRotationMappingA3:  dc.w    $8040, $F00, $EDED  ; DATA XREF: ROM:0003EFBA   o  ; was: word_EBDCE
+Boss_DeepStriderRotationMappingA2:  dc.w    $9860, $F00, $F0EF  ; DATA XREF: ROM:0003EFB6   o  ; was: word_EBDD4
+Boss_DeepStriderRotationMappingA1:  dc.w    $187C, $200, $F309  ; DATA XREF: ROM:0003EFB2   o  ; was: word_EBDDA
                 dc.w    $9870, $B00, $F3F1
-word_EBDE6:     dc.w    $9850, $F00, $F2F2              ; DATA XREF: ROM:off_3EFAE   o
+Boss_DeepStriderRotationMappingA0:  dc.w    $9850, $F00, $F2F2  ; DATA XREF: ROM:Boss_DeepStriderRotationFramesA   o  ; was: word_EBDE6
                 dc.w    $8900, $A00, $F2F4
                 dc.w    $8909, $700, $F1FA
                 dc.w    $90EF, $A00, $F4F3
                 dc.w    $90F8, $D00, $F7F1
-word_EBE04:     dc.w    $8000, $F00, $EDF1              ; DATA XREF: ROM:0003EFCA   o
-word_EBE0A:     dc.w    $9830, $F00, $EEF2              ; DATA XREF: ROM:0003EFC6   o
-word_EBE10:     dc.w    $9820, $F00, $EFEF              ; DATA XREF: ROM:0003EFC2   o
-word_EBE16:     dc.w    $9810, $F00, $EFF0              ; DATA XREF: ROM:off_3EFBE   o
+Boss_DeepStriderRotationMappingB3:  dc.w    $8000, $F00, $EDF1  ; DATA XREF: ROM:0003EFCA   o  ; was: word_EBE04
+Boss_DeepStriderRotationMappingB2:  dc.w    $9830, $F00, $EEF2  ; DATA XREF: ROM:0003EFC6   o  ; was: word_EBE0A
+Boss_DeepStriderRotationMappingB1:  dc.w    $9820, $F00, $EFEF  ; DATA XREF: ROM:0003EFC2   o  ; was: word_EBE10
+Boss_DeepStriderRotationMappingB0:  dc.w    $9810, $F00, $EFF0  ; DATA XREF: ROM:Boss_DeepStriderRotationFramesB   o  ; was: word_EBE16
                 dc.w    $8C2, 0, $FFE5
                 dc.w    $88BA, $D00, $F7ED
                 dc.w    $8CB, $200, $2F0
@@ -139,19 +139,19 @@ word_EBE16:     dc.w    $9810, $F00, $EFF0              ; DATA XREF: ROM:off_3EF
                 dc.w    $88CE, $700, $F4F9
                 dc.w    $10B8, $400, $80A
                 dc.w    $90B0, $D00, $F8F3
-word_EBE4C:     dc.w    $988B, $900, $F7F3              ; DATA XREF: ROM:0003EFDA   o
-                                        ; ROM:off_3EFDE   o
-word_EBE52:     dc.w    $987F, $600, $F6F9              ; DATA XREF: ROM:0003EFD6   o
+Boss_DeepStriderRotationMappingC3:  dc.w    $988B, $900, $F7F3  ; DATA XREF: ROM:0003EFDA   o  ; was: word_EBE4C
+                                        ; ROM:Boss_DeepStriderRotationFramesD   o
+Boss_DeepStriderRotationMappingC2:  dc.w    $987F, $600, $F6F9  ; DATA XREF: ROM:0003EFD6   o  ; was: word_EBE52
                                         ; ROM:0003EFE2   o
-word_EBE58:     dc.w    $8085, $600, $F7F9              ; DATA XREF: ROM:0003EFD2   o
+Boss_DeepStriderRotationMappingC1:  dc.w    $8085, $600, $F7F9  ; DATA XREF: ROM:0003EFD2   o  ; was: word_EBE58
                                         ; ROM:0003EFE6   o
-word_EBE5E:     dc.w    $8091, $900, $F8F8              ; DATA XREF: ROM:off_3EFCE   o
+Boss_DeepStriderRotationMappingC0:  dc.w    $8091, $900, $F8F8  ; DATA XREF: ROM:Boss_DeepStriderRotationFramesC   o  ; was: word_EBE5E
                                         ; ROM:0003EFEA   o
                 dc.w    $88D7, $900, $F9F2
                 dc.w    $88DD, $600, $F6FC
                 dc.w    $88E3, $600, $F7FB
                 dc.w    $88E9, $900, $F4F8
-word_EBE7C:     dc.w    $18A8, $D00, $F0                ; DATA XREF: ROM:off_3F000   o
+Boss_DeepStriderRootMapping:    dc.w    $18A8, $D00, $F0  ; DATA XREF: ROM:Boss_DeepStriderMetaspriteDescriptors   o  ; was: word_EBE7C
                                         ; ROM:0003F010   o
                 dc.w    $88A8, $D00, $F0F0
 word_EBE88:     dc.w    $5849, $D00, $F0                ; DATA XREF: ROM:000425AA   o

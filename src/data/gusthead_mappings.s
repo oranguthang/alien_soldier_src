@@ -1,9 +1,9 @@
 ; Gusthead sprite mappings
-word_EBFE0:     dc.w    $6828, $500, $11F8              ; DATA XREF: ROM:off_3F198   o
+Boss_GustheadRootMappingA:  dc.w    $6828, $500, $11F8  ; DATA XREF: ROM:Boss_GustheadRootMappings   o  ; was: word_EBFE0
                 dc.w    $6800, $D00, $E2F0
                 dc.w    $681C, $B00, $F2E8
                 dc.w    $E810, $B00, $F200
-word_EBFF8:     dc.w    $6808, $D00, $E2F0              ; DATA XREF: ROM:0003F19C   o
+Boss_GustheadRootMappingB:  dc.w    $6808, $D00, $E2F0  ; DATA XREF: ROM:0003F19C   o  ; was: word_EBFF8
                                         ; Boss_GustheadSetupParts+78   o
                 dc.w    $6828, $500, $11F8
                 dc.w    $681C, $B00, $F2E8

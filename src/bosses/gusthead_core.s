@@ -1,3 +1,8 @@
+; Gusthead root mappings alternate every eight frames
+Boss_GustheadRootMappings:  dc.l    Boss_GustheadRootMappingA  ; DATA XREF: Boss_GustheadMain+20   o  ; was: off_3F198
+                dc.l    Boss_GustheadRootMappingB
+
+; Wrapper for Gusthead boss main
 Boss_GustheadMainWrapper:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_3F1A0
                 bsr.s   Boss_GustheadMain
                 rts
@@ -12,7 +17,7 @@ Boss_GustheadMain:                                      ; CODE XREF: Boss_Gusthe
                 addq.w  #4,$58(a5)
                 andi.w  #4,$58(a5)
                 move.w  $58(a5),d0
-                lea     off_3F198(pc),a1
+                lea     Boss_GustheadRootMappings(pc),a1
                 move.l  (a1,d0.w),8(a5)
                 clr.w   $C(a5)
 loc_3F1D2:                                              ; CODE XREF: Boss_GustheadMain+10   j
@@ -145,7 +150,7 @@ Boss_GustheadSetupParts:                                ; DATA XREF: ROM:0003F24
                 move.w  #$16,$24(a5)
                 move.w  #$50,$26(a5)                    ; 'P'
                 move.w  #$300,$E(a5)
-                move.l  #word_EBFF8,8(a5)
+                move.l  #Boss_GustheadRootMappingB,8(a5)
                 move.w  #3,d7
                 movea.w a5,a0
                 lea     $60(a0),a0
