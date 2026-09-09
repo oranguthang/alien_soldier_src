@@ -500,7 +500,7 @@ Anim_ClearInterpolationBufferNextLongword:              ; CODE XREF: Anim_ClearI
                 rts
 ; End of function Anim_ClearInterpolationBuffer
 ; Selects an eight-direction mapping frame and applies rotation-dependent flip flags
-Sprite_UpdateRotatedFrame:                              ; CODE XREF: Projectile_BackStringerChainFalling:loc_45ACA   j  ; was: sub_34900
+Sprite_UpdateRotatedFrame:                              ; CODE XREF: Projectile_BackStringerChainFalling:Projectile_BackStringerUpdateFallingChainFrame   j  ; was: sub_34900
                 movea.l $4C(a5),a0
                 move.w  $E(a5),d2
                 move.w  $56(a5),d1

@@ -521,7 +521,7 @@ Boss_BackStringerRotationFramesD:   dc.l    word_EC3FA  ; DATA XREF: ROM:0003518
                 dc.l    word_EC3D6
                 dc.l    word_EC3D0
 Boss_BackStringerInlineSpriteDescriptor:    dc.w    $63DE, $A00, $F4F4  ; DATA XREF: ROM:Boss_BackStringerMetaspriteDescriptors   o  ; was: word_35166
-Boss_BackStringerMetaspriteDescriptors:     dc.l    Boss_BackStringerInlineSpriteDescriptor+1  ; DATA XREF: Boss_BackStringerSpawn+E   o  ; was: off_3516C
+Boss_BackStringerMetaspriteDescriptors:     dc.l    Boss_BackStringerInlineSpriteDescriptor+1  ; DATA XREF: Boss_BackStringerInitializeState+E   o  ; was: off_3516C
                 dc.l    0
                 dc.l    0
                 dc.l    Boss_BackStringerRotationFramesC+$18000000
@@ -542,11 +542,11 @@ Boss_BackStringerMetaspriteDescriptors:     dc.l    Boss_BackStringerInlineSprit
                 dc.l    Boss_BackStringerRotationFramesD
                 dc.l    Boss_BackStringerRotationFramesD
                 dc.l    Boss_BackStringerRotationFramesB
-Boss_BackStringerPartRadii: dc.w    $98, $9F96, $8E8C   ; DATA XREF: Boss_BackStringerSpawn+14   o  ; was: word_351C0
+Boss_BackStringerPartRadii: dc.w    $98, $9F96, $8E8C   ; DATA XREF: Boss_BackStringerInitializeState+14   o  ; was: word_351C0
                 dc.w    $968E, $8C92, $8A8C
                 dc.w    $928A, $8C96, $8E8C
                 dc.w    $968E, $8C00
-Boss_BackStringerPartLinks: dc.w    5, 4, 4             ; DATA XREF: Boss_BackStringerSpawn+1A   o  ; was: word_351D6
+Boss_BackStringerPartLinks: dc.w    5, 4, 4             ; DATA XREF: Boss_BackStringerInitializeState+1A   o  ; was: word_351D6
                 dc.w    6, $126, $186
                 dc.w    6, $246, $2A6
                 dc.w    6, $366, $3C6

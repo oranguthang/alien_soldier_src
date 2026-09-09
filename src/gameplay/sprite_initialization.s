@@ -171,7 +171,7 @@ Boss_SunsetStingObjectInitTable:    dc.w    $C620, $502C, $E41C, $E41C, $E41C, $
                 dc.w    $D400, $1004, $F010, $F010, $F808, $F808, $3200
                 dc.w    $FFFE
 Boss_BackStringerObjectInitTable:   dc.w    $C6E0, $1020, $F010, $F010, $F808, $F808, $2204  ; was: word_1BDC0
-                                        ; DATA XREF: Boss_BackStringerSpawn+68   o
+                                        ; DATA XREF: Boss_BackStringerInitializeState+68   o
                 dc.w    $C740, $1020, $F010, $F010, $F808, $F808, $2204
                 dc.w    $C7A0, $1038, $EC14, $EC14, $F808, $F808, $2280
                 dc.w    $FFFE

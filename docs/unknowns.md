@@ -936,6 +936,26 @@ the instructions: an oscillating transition displacement and ten paired
 transition offsets written through `$FFEC24` and `$FFEC28`; their exact
 renderer role remains unproven.
 
+The Back Stringer pass reduced the count to 7,550 and reconstructed its full
+23-entry controller, entrance, repeated attack selection, transformation,
+dive, tracking attack, and defeat sequence. It also corrected a false Epsilon
+1 ownership boundary. Back Stringer's falling-drop spawner creates type
+`$318`, its transformation creates two type-`$328` angled shots, and those
+shots create type `$360` when they rebound. The object dispatch table leads
+all three types back into the same contiguous ROM range, so the former
+`Boss_Epsilon1BounceProjectile`, `Boss_Epsilon1DebrisPhysics`, and
+`Boss_Epsilon1ProjectileRotation` names were rejected. The audited subsystem
+is now divided by behavior and ROM order into a 752-line controller, a
+510-line rendering/pose/tail support module, and a 261-line projectile module.
+
+The controller's alternate input branch is named only for the behavior visible
+in the instructions: it reads directional and button bits, moves the boss,
+updates its angle, and can spawn its angled shots. No ordinary state-table edge
+has yet been found that enables the branch, so a debug or development purpose
+is not asserted. Exact visual ownership remains a runtime hypothesis until the
+pinned emulator can repeat the encounter capture; the state and object-family
+claims are static evidence recorded in the name audit.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

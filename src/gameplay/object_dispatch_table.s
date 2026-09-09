@@ -197,11 +197,11 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Sprite_ShipDebrisUpdate
                 dc.l    Sprite_DebrisDispatcher
                 dc.l    Boss_BackStringerMain
-                dc.l    Boss_Epsilon1BounceProjectile
+                dc.l    Projectile_BackStringerFallingDropMain
                 dc.l    OrphanedCrossStageEntityDispatch
                 dc.l    Projectile_BackStringerRopeSegment
                 dc.l    Effect_BackStringerSegmentFlash
-                dc.l    Boss_Epsilon1DebrisPhysics
+                dc.l    Projectile_BackStringerAngledShotMain
                 dc.l    Effect_TriggerStage25Shake
                 dc.l    Effect_TriggerStage25DeathSound
                 dc.l    Object_RemoveOnFlagOrAnimationEnd
@@ -215,7 +215,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_DefeatStateDispatcher
                 dc.l    Projectile_BackStringerChainFalling
                 dc.l    Projectile_ShiperBouncingShot
-                dc.l    Boss_Epsilon1ProjectileRotation
+                dc.l    Projectile_BackStringerReboundShotMain
                 dc.l    Enemy_FallingBombLogic
                 dc.l    Stage12_TeddyBearMain
                 dc.l    Enemy_ShipPatrolController

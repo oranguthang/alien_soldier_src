@@ -1,75 +1,75 @@
-Boss_Epsilon1BounceProjectile:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4577C
+Projectile_BackStringerFallingDropMain:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4577C
                 tst.w   (word_FFC680).w
-                beq.s   loc_4578A
+                beq.s   Projectile_BackStringerRetireFallingDrop
                 cmpi.w  #$17C,$14(a5)
-                bmi.s   loc_45792
-loc_4578A:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+4   j
+                bmi.s   Projectile_BackStringerUpdateFallingDrop
+Projectile_BackStringerRetireFallingDrop:               ; CODE XREF: Projectile_BackStringerFallingDropMain+4   j  ; was: loc_4578A
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_45792:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+C   j
+Projectile_BackStringerUpdateFallingDrop:               ; CODE XREF: Projectile_BackStringerFallingDropMain+C   j  ; was: loc_45792
                 tst.w   (word_FF808C).w
-                bpl.s   loc_4579E
+                bpl.s   Projectile_BackStringerBounceFallingDrop
                 tst.w   $24(a5)
-                bpl.s   loc_457C2
-loc_4579E:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+1A   j
+                bpl.s   Projectile_BackStringerUpdateFallingDropMotion
+Projectile_BackStringerBounceFallingDrop:               ; CODE XREF: Projectile_BackStringerFallingDropMain+1A   j  ; was: loc_4579E
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
                 clr.b   $21(a5)
                 clr.w   $24(a5)
                 eori.w  #$1000,$E(a5)
                 move.l  #$FFFD0000,$1C(a5)
-                bsr.w   Boss_Epsilon1CalculateHorizontalVelocity
-loc_457C2:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+20   j
+                bsr.w   Projectile_BackStringerChooseFallingDropVelocity
+Projectile_BackStringerUpdateFallingDropMotion:         ; CODE XREF: Projectile_BackStringerFallingDropMain+20   j  ; was: loc_457C2
                 bset    #3,$E(a5)
                 addq.w  #1,$48(a5)
                 btst    #2,$49(a5)
-                bne.s   loc_457DA
+                bne.s   Projectile_BackStringerUpdateActiveFallingDrop
                 bclr    #3,$E(a5)
-loc_457DA:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+56   j
+Projectile_BackStringerUpdateActiveFallingDrop:         ; CODE XREF: Projectile_BackStringerFallingDropMain+56   j  ; was: loc_457DA
                 tst.b   $21(a5)
-                beq.w   loc_458A2
+                beq.w   Projectile_BackStringerUpdateReleasedFallingDrop
                 movea.w #(word_FFC680-M68K_RAM),a4
                 move.w  4(a5),d0
-                bne.w   loc_4588A
+                bne.w   Projectile_BackStringerAttachDropToCompanion
                 move.w  $48(a5),d0
                 andi.w  #7,d0
-                bne.s   loc_4580A
+                bne.s   Projectile_BackStringerSteerFallingDrop
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   $5C(a5),d0
                 move.w  d0,$5E(a5)
-loc_4580A:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+7A   j
+Projectile_BackStringerSteerFallingDrop:                ; CODE XREF: Projectile_BackStringerFallingDropMain+7A   j  ; was: loc_4580A
                 move.w  $5E(a5),d0
                 cmp.w   $10(a5),d0
-                bpl.s   loc_4582C
+                bpl.s   Projectile_BackStringerCheckRightwardDropSteering
                 tst.w   $18(a5)
-                bpl.s   loc_45822
+                bpl.s   Projectile_BackStringerAccelerateDropLeft
                 cmpi.w  #$FFFE,$18(a5)
-                bmi.s   loc_45842
-loc_45822:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+9C   j
+                bmi.s   Projectile_BackStringerApplyFallingDropGravity
+Projectile_BackStringerAccelerateDropLeft:              ; CODE XREF: Projectile_BackStringerFallingDropMain+9C   j  ; was: loc_45822
                 subi.l  #$1000,$18(a5)
-                bra.s   loc_45842
+                bra.s   Projectile_BackStringerApplyFallingDropGravity
 ; ---------------------------------------------------------------------------
-loc_4582C:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+96   j
+Projectile_BackStringerCheckRightwardDropSteering:      ; CODE XREF: Projectile_BackStringerFallingDropMain+96   j  ; was: loc_4582C
                 tst.w   $18(a5)
-                bmi.s   loc_4583A
+                bmi.s   Projectile_BackStringerAccelerateDropRight
                 cmpi.w  #2,$18(a5)
-                bpl.s   loc_45842
-loc_4583A:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+B4   j
+                bpl.s   Projectile_BackStringerApplyFallingDropGravity
+Projectile_BackStringerAccelerateDropRight:             ; CODE XREF: Projectile_BackStringerFallingDropMain+B4   j  ; was: loc_4583A
                 addi.l  #$1000,$18(a5)
-loc_45842:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+A4   j
-                                        ; Boss_Epsilon1BounceProjectile+AE   j
+Projectile_BackStringerApplyFallingDropGravity:         ; CODE XREF: Projectile_BackStringerFallingDropMain+A4   j  ; was: loc_45842
+                                        ; Projectile_BackStringerFallingDropMain+AE   j
                 addi.l  #$1800,$1C(a5)
                 cmpi.w  #$FFFF,$1C(a5)
-                bmi.s   loc_4585A
+                bmi.s   Projectile_BackStringerCheckFallingDropContact
                 move.l  #$FFFDC000,$1C(a5)
-loc_4585A:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+D4   j
+Projectile_BackStringerCheckFallingDropContact:         ; CODE XREF: Projectile_BackStringerFallingDropMain+D4   j  ; was: loc_4585A
                 move.w  $14(a5),d0
                 subi.w  #$A,d0
                 cmp.w   $14(a4),d0
-                bpl.s   locret_45888
+                bpl.s   Projectile_BackStringerFallingDropReturn
                 addq.w  #2,4(a5)
                 clr.l   $18(a5)
                 move.l  #$4000,$1C(a5)
@@ -77,10 +77,10 @@ loc_4585A:                                              ; CODE XREF: Boss_Epsilo
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$20,d0                         ; ' '
                 move.w  d0,$48(a5)
-locret_45888:                                           ; CODE XREF: Boss_Epsilon1BounceProjectile+EA   j
+Projectile_BackStringerFallingDropReturn:               ; CODE XREF: Projectile_BackStringerFallingDropMain+EA   j  ; was: locret_45888
                 rts
 ; ---------------------------------------------------------------------------
-loc_4588A:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+6E   j
+Projectile_BackStringerAttachDropToCompanion:           ; CODE XREF: Projectile_BackStringerFallingDropMain+6E   j  ; was: loc_4588A
                 bset    #0,$5E(a4)
                 addq.w  #1,$5C(a4)
                 move.w  $14(a4),d0
@@ -88,44 +88,44 @@ loc_4588A:                                              ; CODE XREF: Boss_Epsilo
                 move.w  d0,$14(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_458A2:                                              ; CODE XREF: Boss_Epsilon1BounceProjectile+62   j
+Projectile_BackStringerUpdateReleasedFallingDrop:       ; CODE XREF: Projectile_BackStringerFallingDropMain+62   j  ; was: loc_458A2
                 addi.l  #$4000,$1C(a5)
                 bset    #7,2(a5)
                 btst    #0,(word_FFA000+1).w
-                bne.s   locret_458BE
+                bne.s   Projectile_BackStringerReleasedFallingDropReturn
                 bclr    #7,2(a5)
-locret_458BE:                                           ; CODE XREF: Boss_Epsilon1BounceProjectile+13A   j
+Projectile_BackStringerReleasedFallingDropReturn:       ; CODE XREF: Projectile_BackStringerFallingDropMain+13A   j  ; was: locret_458BE
                 rts
-; End of function Boss_Epsilon1BounceProjectile
-; Calculates horizontal velocity from random value
-Boss_Epsilon1CalculateHorizontalVelocity:               ; CODE XREF: Boss_Epsilon1BounceProjectile+42   p  ; was: sub_458C0
+; End of function Projectile_BackStringerFallingDropMain
+; Chooses alternating random horizontal velocity for a bouncing drop
+Projectile_BackStringerChooseFallingDropVelocity:       ; CODE XREF: Projectile_BackStringerFallingDropMain+42   p  ; was: sub_458C0
                 move.w  (dword_FFFF08).w,d0
                 ext.l   d0
                 asl.l   #2,d0
                 btst    #1,(word_FFA000+1).w
-                bne.s   loc_458D2
+                bne.s   Projectile_BackStringerStoreFallingDropVelocity
                 neg.l   d0
-loc_458D2:                                              ; CODE XREF: Boss_Epsilon1CalculateHorizontalVelocity+E   j
+Projectile_BackStringerStoreFallingDropVelocity:        ; CODE XREF: Projectile_BackStringerChooseFallingDropVelocity+E   j  ; was: loc_458D2
                 move.l  d0,$18(a5)
                 rts
-; End of function Boss_Epsilon1CalculateHorizontalVelocity
-; Spawns two projectiles at different angles
-Boss_Epsilon1SpawnDualProjectiles:                      ; CODE XREF: Boss_BackStringerAttackStateMachine+34E   p  ; was: sub_458D8
+; End of function Projectile_BackStringerChooseFallingDropVelocity
+; Spawns the mirrored angled shots used during transformation
+Boss_BackStringerSpawnDualAngledShots:                  ; CODE XREF: Boss_BackStringerTransformationState+34E   p  ; was: sub_458D8
                 move.w  $70(a5),d5
                 move.w  $74(a5),d6
                 subi.w  #$10,d6
                 moveq   #2,d3
                 move.w  #$180,d4
                 moveq   #8,d7
-                bsr.s   Projectile_SpawnAngled
+                bsr.s   Projectile_SpawnBackStringerAngledShot
                 moveq   #$FFFFFFFE,d3
                 move.w  #$80,d4
                 moveq   #$FFFFFFF8,d7
-; End of function Boss_Epsilon1SpawnDualProjectiles
-; Spawns angled projectile with trajectory parameters
-Projectile_SpawnAngled:                                 ; CODE XREF: Boss_Epsilon1SpawnDualProjectiles+14   p  ; was: sub_458F6
+; End of function Boss_BackStringerSpawnDualAngledShots
+; Creates one transformation shot with caller-provided angle parameters
+Projectile_SpawnBackStringerAngledShot:                 ; CODE XREF: Boss_BackStringerSpawnDualAngledShots+14   p  ; was: sub_458F6
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   locret_45944
+                bne.s   Projectile_SpawnBackStringerAngledShotReturn
                 move.w  #$328,(a0)
                 move.w  #$CC80,2(a0)
                 move.l  #word_EC412,8(a0)
@@ -139,24 +139,24 @@ Projectile_SpawnAngled:                                 ; CODE XREF: Boss_Epsilo
                 move.w  d7,$48(a0)
                 move.w  d3,$4E(a0)
                 move.w  d4,$56(a0)
-locret_45944:                                           ; CODE XREF: Projectile_SpawnAngled+6   j
+Projectile_SpawnBackStringerAngledShotReturn:           ; CODE XREF: Projectile_SpawnBackStringerAngledShot+6   j  ; was: locret_45944
                 rts
-; End of function Projectile_SpawnAngled
-; Handles debris bouncing physics
-Boss_Epsilon1DebrisPhysics:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45946
+; End of function Projectile_SpawnBackStringerAngledShot
+; Updates an angled shot, its collision conversion, and its rebound copy
+Projectile_BackStringerAngledShotMain:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45946
                 tst.w   (word_FF808C).w
-                bpl.s   loc_45976
+                bpl.s   Projectile_BackStringerConvertAngledShotToImpact
                 bclr    #7,$22(a5)
-                beq.s   loc_4599C
+                beq.s   Projectile_BackStringerUpdateAngledShotFlight
                 bclr    #4,$22(a5)
-                beq.s   loc_45976
+                beq.s   Projectile_BackStringerConvertAngledShotToImpact
                 jsr     (Projectile_FindFreeSlot).l
-                bne.s   loc_45976
+                bne.s   Projectile_BackStringerConvertAngledShotToImpact
                 jsr     (Pickup_SpawnLarge).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-loc_45976:                                              ; CODE XREF: Boss_Epsilon1DebrisPhysics+4   j
-                                        ; Boss_Epsilon1DebrisPhysics+14   j
+Projectile_BackStringerConvertAngledShotToImpact:       ; CODE XREF: Projectile_BackStringerAngledShotMain+4   j  ; was: loc_45976
+                                        ; Projectile_BackStringerAngledShotMain+14   j
                 move.l  $18(a5),d0
                 asr.l   #3,d0
                 neg.l   d0
@@ -168,14 +168,14 @@ loc_45976:                                              ; CODE XREF: Boss_Epsilo
                 move.l  #off_E9584,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
-loc_4599C:                                              ; CODE XREF: Boss_Epsilon1DebrisPhysics+C   j
+Projectile_BackStringerUpdateAngledShotFlight:          ; CODE XREF: Projectile_BackStringerAngledShotMain+C   j  ; was: loc_4599C
                 subi.l  #$1000,$1C(a5)
                 cmpi.w  #$90,$14(a5)
-                bpl.s   loc_459B4
+                bpl.s   Projectile_BackStringerUpdateAngledShotSpin
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_459B4:                                              ; CODE XREF: Boss_Epsilon1DebrisPhysics+64   j
+Projectile_BackStringerUpdateAngledShotSpin:            ; CODE XREF: Projectile_BackStringerAngledShotMain+64   j  ; was: loc_459B4
                 move.w  $4C(a5),d0
                 add.w   $4E(a5),d0
                 andi.w  #6,d0
@@ -194,9 +194,9 @@ loc_459B4:                                              ; CODE XREF: Boss_Epsilo
                 asl.l   #4,d0
                 move.l  d0,$18(a5)
                 btst    #0,(word_FFA000+1).w
-                bne.s   locret_45A58
+                bne.s   Projectile_BackStringerAngledShotReturn
                 jsr     (Projectile_FindFreeSlot).l
-                bne.s   locret_45A58
+                bne.s   Projectile_BackStringerAngledShotReturn
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  $18(a5),d0
@@ -215,18 +215,18 @@ loc_459B4:                                              ; CODE XREF: Boss_Epsilo
                 move.l  #off_EC42A,8(a0)
                 move.w  $4E(a5),$4A(a0)
                 clr.b   $20(a0)
-locret_45A58:                                           ; CODE XREF: Boss_Epsilon1DebrisPhysics+BA   j
-                                        ; Boss_Epsilon1DebrisPhysics+C2   j
+Projectile_BackStringerAngledShotReturn:                ; CODE XREF: Projectile_BackStringerAngledShotMain+BA   j  ; was: locret_45A58
+                                        ; Projectile_BackStringerAngledShotMain+C2   j
                 rts
-; End of function Boss_Epsilon1DebrisPhysics
-; Updates projectile rotation based on spin direction
-Boss_Epsilon1ProjectileRotation:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45A5A
+; End of function Projectile_BackStringerAngledShotMain
+; Animates the rebound shot until its lifetime counter expires
+Projectile_BackStringerReboundShotMain:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45A5A
                 cmpi.w  #$80,$C(a5)
-                bmi.s   loc_45A6A
+                bmi.s   Projectile_BackStringerUpdateReboundShotFrame
                 move.w  #$1000,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_45A6A:                                              ; CODE XREF: Boss_Epsilon1ProjectileRotation+6   j
+Projectile_BackStringerUpdateReboundShotFrame:          ; CODE XREF: Projectile_BackStringerReboundShotMain+6   j  ; was: loc_45A6A
                 move.w  $48(a5),d0
                 add.w   $4A(a5),d0
                 andi.w  #6,d0
@@ -236,27 +236,26 @@ loc_45A6A:                                              ; CODE XREF: Boss_Epsilo
                 move.w  (a0,d0.w),d0
                 or.w    d0,$E(a5)
                 rts
-; End of function Boss_Epsilon1ProjectileRotation
+; End of function Projectile_BackStringerReboundShotMain
 ; Chain segment falling state
 Projectile_BackStringerChainFalling:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_45A90
                 cmpi.w  #$170,$14(a5)
-                bmi.s   loc_45AA0
+                bmi.s   Projectile_BackStringerUpdateFallingChain
                 bset    #4,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_45AA0:                                              ; CODE XREF: Projectile_BackStringerChainFalling+6   j
+Projectile_BackStringerUpdateFallingChain:              ; CODE XREF: Projectile_BackStringerChainFalling+6   j  ; was: loc_45AA0
                 addi.l  #$2000,$1C(a5)
                 move.w  $5C(a5),d0
                 add.w   d0,$56(a5)
                 tst.w   $48(a5)
-                bne.s   loc_45ACA
+                bne.s   Projectile_BackStringerUpdateFallingChainFrame
                 movea.w a5,a0
                 move.w  $56(a5),d0
                 move.w  #$8300,$E(a5)
                 move.w  $4A(a5),d1
-                bra.w   loc_44FE2
+                bra.w   Boss_BackStringerSelectPartFrameFromAngle
 ; ---------------------------------------------------------------------------
-loc_45ACA:                                              ; CODE XREF: Projectile_BackStringerChainFalling+24   j
+Projectile_BackStringerUpdateFallingChainFrame:         ; CODE XREF: Projectile_BackStringerChainFalling+24   j  ; was: loc_45ACA
                 jmp     Sprite_UpdateRotatedFrame
 ; End of function Projectile_BackStringerChainFalling
-; Main boss handler

@@ -55,7 +55,7 @@ word_EC32E:     dc.w    $7032, $500, $E808              ; DATA XREF: ROM:0004502
                 dc.w    $702A, $D00, $E8E8
                 dc.w    $7022, $700, $F808
                 dc.w    $F012, $F00, $F8E8
-word_EC346:     dc.w    $7887, $D00, $F0                ; DATA XREF: ROM:off_45012   o
+word_EC346:     dc.w    $7887, $D00, $F0                ; DATA XREF: ROM:Boss_BackStringerPartAngleFrameTable   o
                 dc.w    $E887, $D00, $F0F0
 word_EC352:     dc.w    $689E, $500, $FEF2              ; DATA XREF: ROM:00045016   o
                 dc.w    $6898, $600, $E6F2
@@ -103,15 +103,15 @@ word_EC3F4:     dc.w    $E0C3, $A00, $F4F4              ; DATA XREF: ROM:0003513
 word_EC3FA:     dc.w    $E0BD, $900, $F8F4              ; DATA XREF: ROM:00035142   o
                                         ; ROM:Boss_BackStringerRotationFramesD   o
                 dc.w    $E8BA, $800, $FCF4
-word_EC406:     dc.w    $E8D5, $A00, $F4F3              ; DATA XREF: Projectile_BackStringerSpawnDrops+46   o
+word_EC406:     dc.w    $E8D5, $A00, $F4F3              ; DATA XREF: Projectile_BackStringerSpawnFallingDrops+46   o
                 dc.w    $E0D5, $A00, $F4F6
-word_EC412:     dc.w    $E8EF, $F00, $F0F0              ; DATA XREF: Projectile_SpawnAngled+12   o
+word_EC412:     dc.w    $E8EF, $F00, $F0F0              ; DATA XREF: Projectile_SpawnBackStringerAngledShot+12   o
                                         ; ROM:off_EC42A   o
 word_EC418:     dc.w    $E8FF, $A00, $F4F4              ; DATA XREF: ROM:000EC42E   o
 word_EC41E:     dc.w    $E908, $500, $F8F8              ; DATA XREF: ROM:000EC432   o
 word_EC424:     dc.w    $E90C, 0, $FCFC                 ; DATA XREF: ROM:000EC436   o
                                         ; ROM:000EC43A   o
-off_EC42A:      dc.w    word_EC412-*                    ; DATA XREF: Boss_Epsilon1DebrisPhysics+100   o
+off_EC42A:      dc.w    word_EC412-*                    ; DATA XREF: Projectile_BackStringerAngledShotMain+100   o
                 dc.w    3
                 dc.w    word_EC418-*
                 dc.w    3
