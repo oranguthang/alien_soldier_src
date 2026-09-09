@@ -1,0 +1,770 @@
+; Add d0 to seven consecutive scroll-layer values at a0
+Gfx_UpdateMultipleScrollLayers:                         ; CODE XREF: Object_DestroyerMK2UpdateMovement:Object_DestroyerMK2ApplyMovementToScrollLayers   p  ; was: sub_4B68C
+                add.w   (word_FFE6E0).w,d0
+                move.w  #6,d7
+Gfx_UpdateMultipleScrollLayerBlocksLoop:                ; CODE XREF: Gfx_UpdateMultipleScrollLayers+1A   j  ; was: loc_4B694
+                move.w  d0,(a0)
+                move.w  d0,4(a0)
+                move.w  d0,8(a0)
+                move.w  d0,$C(a0)
+                lea     $10(a0),a0
+                dbf     d7,Gfx_UpdateMultipleScrollLayerBlocksLoop
+                rts
+; End of function Gfx_UpdateMultipleScrollLayers
+; Change the type-$248 component mapping after its delay
+Object_DestroyerMK2SwitchComponentMapping:              ; DATA XREF: ROM:0004B4A8   o  ; was: sub_4B6AC
+                subq.w  #1,$48(a5)
+                bne.s   Object_DestroyerMK2SwitchComponentMappingReturn
+                move.l  #word_EC2AA,8(a5)
+                move.w  #4,$48(a5)
+                addq.w  #2,4(a5)
+Object_DestroyerMK2SwitchComponentMappingReturn:        ; CODE XREF: Object_DestroyerMK2SwitchComponentMapping+4   j  ; was: locret_4B6C4
+                rts
+; End of function Object_DestroyerMK2SwitchComponentMapping
+; Decrement the type-$248 timer and advance when it expires
+Object_DestroyerMK2WaitThenAdvanceState:                ; DATA XREF: ROM:0004B4AA   o  ; was: sub_4B6C6
+                subq.w  #1,$48(a5)
+                bne.s   Object_DestroyerMK2WaitThenAdvanceReturn
+                addq.w  #2,4(a5)
+Object_DestroyerMK2WaitThenAdvanceReturn:               ; CODE XREF: Object_DestroyerMK2WaitThenAdvanceState+4   j  ; was: locret_4B6D0
+                rts
+; End of function Object_DestroyerMK2WaitThenAdvanceState
+; Deactivate the component after the stage gate and apply its scroll preset
+Object_DestroyerMK2DeactivateAndApplyScrollPreset:      ; DATA XREF: ROM:0004B4AC   o  ; was: sub_4B6D2
+                tst.w   (word_FFF720).w
+                bmi.w   Object_DestroyerMK2StageGateReturn
+                addq.w  #2,4(a5)
+                andi.w  #$7FFF,2(a5)
+                move.w  $4E(a5),d0
+                lea     Object_DestroyerMK2DeactivationScrollHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Object_DestroyerMK2DeactivateAndApplyScrollPreset
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2DeactivationScrollHandlers:  dc.w    Object_DestroyerMK2ApplyDeactivationScrollPresetA-*  ; DATA XREF: Object_DestroyerMK2DeactivateAndApplyScrollPreset+16   o  ; was: off_4B6F0
+                dc.w    Object_DestroyerMK2ApplyDeactivationScrollPresetB-*
+                dc.w    Object_DestroyerMK2ApplyDeactivationScrollPresetC-*
+                dc.w    Object_DestroyerMK2ApplyDeactivationScrollPresetD-*
+
+; Apply deactivation scroll preset A
+Object_DestroyerMK2ApplyDeactivationScrollPresetA:      ; DATA XREF: ROM:Object_DestroyerMK2DeactivationScrollHandlers   o  ; was: sub_4B6F8
+                move.l  #$448032C1,d0
+                jsr     (Scroll_UpdateStage14Scroll).l
+                rts
+; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetA
+; Apply deactivation scroll preset B
+Object_DestroyerMK2ApplyDeactivationScrollPresetB:      ; DATA XREF: ROM:0004B6F2   o  ; was: sub_4B706
+                move.l  #$449832A1,d0
+                jsr     (Scroll_UpdateStage14Scroll).l
+                rts
+; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetB
+; Apply deactivation scroll preset C
+Object_DestroyerMK2ApplyDeactivationScrollPresetC:      ; DATA XREF: ROM:0004B6F4   o  ; was: sub_4B714
+                move.l  #$4C8031C1,d0
+                jsr     (Scroll_UpdateStage14Scroll).l
+                rts
+; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetC
+; Apply deactivation scroll preset D
+Object_DestroyerMK2ApplyDeactivationScrollPresetD:      ; DATA XREF: ROM:0004B6F6   o  ; was: sub_4B722
+                move.l  #$4C9831A1,d0
+                jsr     (Scroll_UpdateStage14Scroll).l
+                rts
+; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetD
+; Reset the component for reuse after the stage gate
+Object_DestroyerMK2ResetAfterStageGate:                 ; DATA XREF: ROM:0004B4AE   o  ; was: sub_4B730
+                tst.w   (word_FFF720).w
+                bmi.s   Object_DestroyerMK2StageGateResetReturn
+                clr.w   4(a5)
+Object_DestroyerMK2StageGateResetReturn:                ; CODE XREF: Object_DestroyerMK2ResetAfterStageGate+4   j  ; was: locret_4B73A
+                rts
+; End of function Object_DestroyerMK2ResetAfterStageGate
+; Dispatch type-$25C moving parts by mode field $46
+Object_DestroyerMK2MovingPartMain:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4B73C
+                move.w  $46(a5),d0
+                lea     Object_DestroyerMK2MovingPartModeHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Object_DestroyerMK2MovingPartMain
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2MovingPartModeHandlers:  dc.w    Object_DestroyerMK2CentralPartStateDispatch-*  ; DATA XREF: Object_DestroyerMK2MovingPartMain+4   o  ; was: off_4B748
+                dc.w    Object_DestroyerMK2BouncingPartAStateDispatch-*
+                dc.w    Object_DestroyerMK2BouncingPartBStateDispatch-*
+
+; Dispatch the central moving part by state field 4
+Object_DestroyerMK2CentralPartStateDispatch:            ; DATA XREF: ROM:Object_DestroyerMK2MovingPartModeHandlers   o  ; was: sub_4B74E
+                move.w  4(a5),d0
+                lea     Object_DestroyerMK2CentralPartStateHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Object_DestroyerMK2CentralPartStateDispatch
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2CentralPartStateHandlers:    dc.w    Object_DestroyerMK2ReleaseCentralPart-*  ; DATA XREF: Object_DestroyerMK2CentralPartStateDispatch+4   o  ; was: off_4B75A
+                dc.w    Object_DestroyerMK2UpdateFallingCentralPart-*
+                dc.w    Object_DestroyerMK2MovingPartIdle-*
+
+; Release the central part after the controller transition or health trigger
+Object_DestroyerMK2ReleaseCentralPart:                  ; DATA XREF: ROM:Object_DestroyerMK2CentralPartStateHandlers   o  ; was: sub_4B760
+                cmpi.w  #$2A,(word_FFC624).w            ; '*'
+                bcc.s   Object_DestroyerMK2ReleaseCentralPartNow
+                tst.w   $24(a5)
+                bpl.s   Object_DestroyerMK2ReleaseCentralPartReturn
+Object_DestroyerMK2ReleaseCentralPartNow:               ; CODE XREF: Object_DestroyerMK2ReleaseCentralPart+6   j  ; was: loc_4B76E
+                move.b  #$BB,d0
+                jsr     (Sound_PlaySFX).l
+                subq.w  #1,(dword_FF9410).w
+                addq.w  #2,4(a5)
+                move.w  #$FFFC,$1C(a5)
+                move.w  (dword_FFA410).w,d0
+                sub.w   $10(a5),d0
+                bmi.s   Object_DestroyerMK2LaunchCentralPartRight
+                move.w  #$FFFE,$18(a5)
+                rts
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2LaunchCentralPartRight:              ; CODE XREF: Object_DestroyerMK2ReleaseCentralPart+2E   j  ; was: loc_4B798
+                move.w  #2,$18(a5)
+Object_DestroyerMK2ReleaseCentralPartReturn:            ; CODE XREF: Object_DestroyerMK2ReleaseCentralPart+C   j  ; was: locret_4B79E
+                rts
+; End of function Object_DestroyerMK2ReleaseCentralPart
+; Rotate and accelerate the released central part while emitting particles
+Object_DestroyerMK2UpdateFallingCentralPart:            ; DATA XREF: ROM:0004B75C   o  ; was: sub_4B7A0
+                addi.l  #$4000,$1C(a5)
+                addi.w  #$10,$4C(a5)
+                move.w  $4C(a5),d2
+                andi.w  #$1C0,d2
+                bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame
+                ori.w   #$8000,$E(a5)
+                move.w  (word_FFA000).w,d0
+                andi.w  #7,d0
+                bne.s   Object_DestroyerMK2CheckFallingCentralPartBounds
+                jsr     (Projectile_FindFreeSlot).l
+                bne.s   Object_DestroyerMK2CheckFallingCentralPartBounds
+                move.l  #off_E95DC,8(a0)
+                move.b  $20(a5),$20(a0)
+                move.l  $10(a5),$10(a0)
+                move.l  $14(a5),$14(a0)
+                jsr     (Projectile_InitType88).l
+                subq.b  #4,$20(a0)
+                ori.w   #$8000,$E(a0)
+Object_DestroyerMK2CheckFallingCentralPartBounds:       ; CODE XREF: Object_DestroyerMK2UpdateFallingCentralPart+28   j  ; was: loc_4B7FC
+                                        ; Object_DestroyerMK2UpdateFallingCentralPart+30   j
+                cmpi.w  #$180,$14(a5)
+                bcs.s   Object_DestroyerMK2FallingCentralPartReturn
+                move.w  #$1000,2(a5)
+Object_DestroyerMK2FallingCentralPartReturn:            ; CODE XREF: Object_DestroyerMK2UpdateFallingCentralPart+62   j  ; was: locret_4B80A
+                rts
+; End of function Object_DestroyerMK2UpdateFallingCentralPart
+Object_DestroyerMK2MovingPartIdle:                      ; DATA XREF: ROM:0004B75E   o  ; was: nullsub_106
+                rts
+; End of function Object_DestroyerMK2MovingPartIdle
+
+; Handle the first bouncing-part collision mode and dispatch its state
+Object_DestroyerMK2BouncingPartAStateDispatch:          ; DATA XREF: ROM:0004B74A   o  ; was: sub_4B80E
+                cmpi.w  #8,4(a5)
+                bcc.s   Object_DestroyerMK2DispatchBouncingPartAState
+                bclr    #7,$22(a5)
+                beq.s   Object_DestroyerMK2DispatchBouncingPartAState
+                bclr    #4,$22(a5)
+                beq.s   Object_DestroyerMK2ReflectBouncingPartA
+                move.l  #$FFFC0000,$1C(a5)
+Object_DestroyerMK2ReflectBouncingPartA:                ; CODE XREF: Object_DestroyerMK2BouncingPartAStateDispatch+16   j  ; was: loc_4B82E
+                neg.l   $18(a5)
+                clr.b   $21(a5)
+                move.w  #8,4(a5)
+Object_DestroyerMK2DispatchBouncingPartAState:          ; CODE XREF: Object_DestroyerMK2BouncingPartAStateDispatch+6   j  ; was: loc_4B83C
+                                        ; Object_DestroyerMK2BouncingPartAStateDispatch+E   j
+                move.w  4(a5),d0
+                lea     Object_DestroyerMK2BouncingPartAStateHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Object_DestroyerMK2BouncingPartAStateDispatch
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2BouncingPartAStateHandlers:  dc.w    Object_DestroyerMK2InitializeBouncingPartA-*  ; DATA XREF: Object_DestroyerMK2BouncingPartAStateDispatch+32   o  ; was: off_4B848
+                dc.w    Object_DestroyerMK2WaitAndStopBouncingPartA-*
+                dc.w    Object_DestroyerMK2RotateBouncingPartAThenLaunch-*
+                dc.w    Object_DestroyerMK2RotateBouncingPartAUntilXBound-*
+                dc.w    Object_DestroyerMK2AccelerateBouncingPartADownward-*
+
+; Initialize the first bouncing-part motion sequence
+Object_DestroyerMK2InitializeBouncingPartA:             ; DATA XREF: ROM:Object_DestroyerMK2BouncingPartAStateHandlers   o  ; was: sub_4B852
+                addq.w  #2,4(a5)
+                move.w  #$14,$48(a5)
+                move.w  #4,$18(a5)
+                btst    #0,$45(a5)
+                bne.s   Object_DestroyerMK2SetPositiveVerticalVelocityA
+                move.w  #$FFFF,$1C(a5)
+                rts
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2SetPositiveVerticalVelocityA:        ; CODE XREF: Object_DestroyerMK2InitializeBouncingPartA+16   j  ; was: loc_4B872
+                move.w  #1,$1C(a5)
+                rts
+; End of function Object_DestroyerMK2InitializeBouncingPartA
+; Stop the first bouncing part after its initial delay
+Object_DestroyerMK2WaitAndStopBouncingPartA:            ; DATA XREF: ROM:0004B84A   o  ; was: sub_4B87A
+                subq.w  #1,$48(a5)
+                bne.s   Object_DestroyerMK2BouncingPartAStopReturn
+                clr.w   $18(a5)
+                clr.w   $1C(a5)
+                move.w  #$10,$48(a5)
+                addq.w  #2,4(a5)
+Object_DestroyerMK2BouncingPartAStopReturn:             ; CODE XREF: Object_DestroyerMK2WaitAndStopBouncingPartA+4   j  ; was: locret_4B892
+                rts
+; End of function Object_DestroyerMK2WaitAndStopBouncingPartA
+; Rotate the first bouncing part, then seed its horizontal velocity
+Object_DestroyerMK2RotateBouncingPartAThenLaunch:       ; DATA XREF: ROM:0004B84C   o  ; was: sub_4B894
+                addi.w  #$10,$4C(a5)
+                move.w  $4C(a5),d2
+                andi.w  #$1FE,d2
+                bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame
+                subq.w  #1,$48(a5)
+                bne.s   Object_DestroyerMK2BouncingPartALaunchReturn
+                move.w  #2,$18(a5)
+                addq.w  #2,4(a5)
+Object_DestroyerMK2BouncingPartALaunchReturn:           ; CODE XREF: Object_DestroyerMK2RotateBouncingPartAThenLaunch+16   j  ; was: locret_4B8B6
+                rts
+; End of function Object_DestroyerMK2RotateBouncingPartAThenLaunch
+; Rotate the first bouncing part until its X coordinate reaches the bound
+Object_DestroyerMK2RotateBouncingPartAUntilXBound:      ; DATA XREF: ROM:0004B84E   o  ; was: sub_4B8B8
+                addi.w  #$10,$4C(a5)
+                move.w  $4C(a5),d2
+                andi.w  #$1FE,d2
+                bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame
+                cmpi.w  #$1E0,$10(a5)
+                bcs.s   Object_DestroyerMK2BouncingPartAXBoundReturn
+                move.w  #$1000,2(a5)
+Object_DestroyerMK2BouncingPartAXBoundReturn:           ; CODE XREF: Object_DestroyerMK2RotateBouncingPartAUntilXBound+18   j  ; was: locret_4B8D8
+                rts
+; End of function Object_DestroyerMK2RotateBouncingPartAUntilXBound
+; Rotate and accelerate the first bouncing part downward until its Y bound
+Object_DestroyerMK2AccelerateBouncingPartADownward:     ; DATA XREF: ROM:0004B850   o  ; was: sub_4B8DA
+                addi.w  #$10,$4C(a5)
+                move.w  $4C(a5),d2
+                andi.w  #$1FE,d2
+                bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame
+                addi.l  #$4000,$1C(a5)
+                cmpi.w  #$180,$14(a5)
+                blt.s   Object_DestroyerMK2BouncingPartAFallReturn
+                move.w  #$1000,2(a5)
+Object_DestroyerMK2BouncingPartAFallReturn:             ; CODE XREF: Object_DestroyerMK2AccelerateBouncingPartADownward+20   j  ; was: locret_4B902
+                rts
+; End of function Object_DestroyerMK2AccelerateBouncingPartADownward
+; Handle the second bouncing-part collision mode and dispatch its state
+Object_DestroyerMK2BouncingPartBStateDispatch:          ; DATA XREF: ROM:0004B74C   o  ; was: sub_4B904
+                cmpi.w  #8,4(a5)
+                bcc.s   Object_DestroyerMK2DispatchBouncingPartBState
+                tst.w   (dword_FF941C+2).w
+                beq.s   Object_DestroyerMK2CheckBouncingPartBCollision
+                move.w  $44(a5),$1C(a5)
+                bra.s   Object_DestroyerMK2ReflectBouncingPartB
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2CheckBouncingPartBCollision:         ; CODE XREF: Object_DestroyerMK2BouncingPartBStateDispatch+C   j  ; was: loc_4B91A
+                bclr    #7,$22(a5)
+                beq.s   Object_DestroyerMK2DispatchBouncingPartBState
+                bclr    #4,$22(a5)
+                beq.s   Object_DestroyerMK2ReflectBouncingPartB
+                move.l  #$FFFC0000,$1C(a5)
+Object_DestroyerMK2ReflectBouncingPartB:                ; CODE XREF: Object_DestroyerMK2BouncingPartBStateDispatch+14   j  ; was: loc_4B932
+                                        ; Object_DestroyerMK2BouncingPartBStateDispatch+24   j
+                move.w  #1,(dword_FF941C+2).w
+                neg.l   $18(a5)
+                clr.b   $21(a5)
+                move.w  #8,4(a5)
+Object_DestroyerMK2DispatchBouncingPartBState:          ; CODE XREF: Object_DestroyerMK2BouncingPartBStateDispatch+6   j  ; was: loc_4B946
+                                        ; Object_DestroyerMK2BouncingPartBStateDispatch+1C   j
+                move.w  4(a5),d0
+                lea     Object_DestroyerMK2BouncingPartBStateHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Object_DestroyerMK2BouncingPartBStateDispatch
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2BouncingPartBStateHandlers:  dc.w    Object_DestroyerMK2InitializeBouncingPartB-*  ; DATA XREF: Object_DestroyerMK2BouncingPartBStateDispatch+46   o  ; was: off_4B952
+                dc.w    Object_DestroyerMK2WaitAndStopBouncingPartB-*
+                dc.w    Object_DestroyerMK2RotateAndMoveBouncingPartB-*
+                dc.w    Object_DestroyerMK2RotateBouncingPartBUntilXBound-*
+                dc.w    Object_DestroyerMK2AccelerateBouncingPartBDownward-*
+
+; Initialize the second bouncing-part motion sequence
+Object_DestroyerMK2InitializeBouncingPartB:             ; DATA XREF: ROM:Object_DestroyerMK2BouncingPartBStateHandlers   o  ; was: sub_4B95C
+                addq.w  #2,4(a5)
+                move.w  #$14,$48(a5)
+                move.w  #4,$18(a5)
+                rts
+; End of function Object_DestroyerMK2InitializeBouncingPartB
+; Stop the second bouncing part after its initial delay
+Object_DestroyerMK2WaitAndStopBouncingPartB:            ; DATA XREF: ROM:0004B954   o  ; was: sub_4B96E
+                subq.w  #1,$48(a5)
+                bne.s   Object_DestroyerMK2BouncingPartBStopReturn
+                clr.w   $18(a5)
+                move.w  #$10,$48(a5)
+                addq.w  #2,4(a5)
+Object_DestroyerMK2BouncingPartBStopReturn:             ; CODE XREF: Object_DestroyerMK2WaitAndStopBouncingPartB+4   j  ; was: locret_4B982
+                rts
+; End of function Object_DestroyerMK2WaitAndStopBouncingPartB
+; Rotate and move the second bouncing part vertically during its timer
+Object_DestroyerMK2RotateAndMoveBouncingPartB:          ; DATA XREF: ROM:0004B956   o  ; was: sub_4B984
+                addi.w  #$10,$4C(a5)
+                move.w  $4C(a5),d2
+                andi.w  #$1FE,d2
+                bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame
+                move.w  $44(a5),d0
+                add.w   d0,$14(a5)
+                subq.w  #1,$48(a5)
+                bne.s   Object_DestroyerMK2BouncingPartBMoveReturn
+                move.w  #2,$18(a5)
+                addq.w  #2,4(a5)
+Object_DestroyerMK2BouncingPartBMoveReturn:             ; CODE XREF: Object_DestroyerMK2RotateAndMoveBouncingPartB+1E   j  ; was: locret_4B9AE
+                rts
+; End of function Object_DestroyerMK2RotateAndMoveBouncingPartB
+; Rotate the second bouncing part until its X coordinate reaches the bound
+Object_DestroyerMK2RotateBouncingPartBUntilXBound:      ; DATA XREF: ROM:0004B958   o  ; was: sub_4B9B0
+                addi.w  #$10,$4C(a5)
+                move.w  $4C(a5),d2
+                andi.w  #$1FE,d2
+                bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame
+                cmpi.w  #$1E0,$10(a5)
+                bcs.s   Object_DestroyerMK2BouncingPartBXBoundReturn
+                move.w  #$1000,2(a5)
+Object_DestroyerMK2BouncingPartBXBoundReturn:           ; CODE XREF: Object_DestroyerMK2RotateBouncingPartBUntilXBound+18   j  ; was: locret_4B9D0
+                rts
+; End of function Object_DestroyerMK2RotateBouncingPartBUntilXBound
+; Rotate and accelerate the second bouncing part downward until its Y bound
+Object_DestroyerMK2AccelerateBouncingPartBDownward:     ; DATA XREF: ROM:0004B95A   o  ; was: sub_4B9D2
+                addi.w  #$10,$4C(a5)
+                move.w  $4C(a5),d2
+                andi.w  #$1FE,d2
+                bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame
+                addi.l  #$4000,$1C(a5)
+                cmpi.w  #$180,$14(a5)
+                blt.s   Object_DestroyerMK2BouncingPartBFallReturn
+                move.w  #$1000,2(a5)
+Object_DestroyerMK2BouncingPartBFallReturn:             ; CODE XREF: Object_DestroyerMK2AccelerateBouncingPartBDownward+20   j  ; was: locret_4B9FA
+                rts
+; End of function Object_DestroyerMK2AccelerateBouncingPartBDownward
+; Dispatch type-$24C horizontal motion while the object remains in bounds
+Object_DestroyerMK2HorizontalPartMain:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4B9FC
+                move.w  $10(a5),d0
+                add.w   (dword_FFA900).w,d0
+                cmpi.w  #$C10,d0
+                bcs.s   Object_DestroyerMK2MarkHorizontalPartOutOfBounds
+                cmpi.w  #$E70,d0
+                bhi.s   Object_DestroyerMK2MarkHorizontalPartOutOfBounds
+                move.w  4(a5),d0
+                lea     Object_DestroyerMK2HorizontalPartStateHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Object_DestroyerMK2HorizontalPartMain
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2HorizontalPartStateHandlers: dc.w    Object_DestroyerMK2FlickerThenStartHorizontalPart-*  ; DATA XREF: Object_DestroyerMK2HorizontalPartMain+18   o  ; was: off_4BA1C
+                dc.w    Object_DestroyerMK2AccelerateHorizontalPart-*
+
+; Flicker during the delay, then start horizontal motion
+Object_DestroyerMK2FlickerThenStartHorizontalPart:      ; DATA XREF: ROM:Object_DestroyerMK2HorizontalPartStateHandlers   o  ; was: sub_4BA20
+                eori.w  #$8000,2(a5)
+                subq.w  #1,$48(a5)
+                bne.s   Object_DestroyerMK2HorizontalPartStartReturn
+                ori.w   #$8000,2(a5)
+                move.w  $4C(a5),$18(a5)
+                addq.w  #2,4(a5)
+Object_DestroyerMK2HorizontalPartStartReturn:           ; CODE XREF: Object_DestroyerMK2FlickerThenStartHorizontalPart+A   j  ; was: locret_4BA3C
+                rts
+; End of function Object_DestroyerMK2FlickerThenStartHorizontalPart
+; Add the stored acceleration to horizontal velocity
+Object_DestroyerMK2AccelerateHorizontalPart:            ; DATA XREF: ROM:0004BA1E   o  ; was: sub_4BA3E
+                move.l  $50(a5),d0
+                add.l   d0,$18(a5)
+                rts
+; End of function Object_DestroyerMK2AccelerateHorizontalPart
+; Mark the horizontal part when its world X is outside the allowed range
+Object_DestroyerMK2MarkHorizontalPartOutOfBounds:       ; CODE XREF: Object_DestroyerMK2HorizontalPartMain+C   j  ; was: sub_4BA48
+                                        ; Object_DestroyerMK2HorizontalPartMain+12   j
+                bset    #4,2(a5)
+                rts
+; End of function Object_DestroyerMK2MarkHorizontalPartOutOfBounds
+; Dispatch the type-$260 eight-fragment group controller
+Object_DestroyerMK2FragmentGroupMain:                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4BA50
+                move.w  4(a5),d0
+                lea     Object_DestroyerMK2FragmentGroupStateHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Object_DestroyerMK2FragmentGroupMain
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2FragmentGroupStateHandlers:  dc.w    Object_DestroyerMK2FragmentGroupIdle-*  ; DATA XREF: Object_DestroyerMK2FragmentGroupMain+4   o  ; was: off_4BA5C
+                dc.w    Object_DestroyerMK2InitializeFragmentGroup-*
+                dc.w    Object_DestroyerMK2WaitForFragmentGroupCompletion-*
+                dc.w    Object_DestroyerMK2ResetFragmentGroupAfterDelay-*
+
+Object_DestroyerMK2FragmentGroupIdle:                   ; DATA XREF: ROM:Object_DestroyerMK2FragmentGroupStateHandlers   o  ; was: nullsub_107
+                rts
+; End of function Object_DestroyerMK2FragmentGroupIdle
+
+; Initialize eight type-$260 fragment records with directional motion
+Object_DestroyerMK2InitializeFragmentGroup:             ; DATA XREF: ROM:0004BA5E   o  ; was: sub_4BA66
+                addq.w  #2,4(a5)
+                move.w  (dword_FFA410).w,d0
+                sub.w   $10(a5),d0
+                bmi.s   Object_DestroyerMK2SelectLeftFragmentMotion
+                move.w  #$30,d1                         ; '0'
+                move.w  #4,d2
+                bra.s   Object_DestroyerMK2CalculateFragmentDistance
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2SelectLeftFragmentMotion:            ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+C   j  ; was: loc_4BA7E
+                move.w  #$FFD0,d1
+                move.w  #$FFFC,d2
+Object_DestroyerMK2CalculateFragmentDistance:           ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+16   j  ; was: loc_4BA86
+                sub.w   d1,d0
+                bpl.s   Object_DestroyerMK2ScaleFragmentDistance
+                neg.w   d0
+Object_DestroyerMK2ScaleFragmentDistance:               ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+22   j  ; was: loc_4BA8C
+                lsr.w   #2,d0
+                cmpi.w  #$110,(dword_FFA414).w
+                bcs.s   Object_DestroyerMK2SelectUpwardFragmentVelocity
+                move.w  #4,d3
+                bra.s   Object_DestroyerMK2InitializeFragmentRecords
+; ---------------------------------------------------------------------------
+Object_DestroyerMK2SelectUpwardFragmentVelocity:        ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+2E   j  ; was: loc_4BA9C
+                move.w  #$FFFC,d3
+Object_DestroyerMK2InitializeFragmentRecords:           ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+34   j  ; was: loc_4BAA0
+                movea.w #(byte_FFCC20-M68K_RAM),a0
+                move.w  #7,d7
+                clr.w   d6
+Object_DestroyerMK2InitializeFragmentRecordLoop:        ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+9A   j  ; was: loc_4BAAA
+                move.w  #$260,(a0)
+                move.b  #$40,$21(a0)                    ; '@'
+                move.l  #$FF02FF02,$2C(a0)
+                move.w  #$80,$26(a0)
+                move.w  #$6D00,2(a0)
+                move.l  #off_E9680,8(a0)
+                move.w  #$8480,$E(a0)
+                clr.w   $C(a0)
+                move.l  $10(a5),$10(a0)
+                add.w   d1,$10(a0)
+                move.l  $14(a5),$14(a0)
+                move.w  d6,$48(a0)
+                move.w  d0,$4A(a0)
+                move.w  d2,$4C(a0)
+                move.w  d3,$50(a0)
+                addq.w  #4,d6
+                lea     $60(a0),a0
+                dbf     d7,Object_DestroyerMK2InitializeFragmentRecordLoop
+                move.w  #8,$52(a5)
+                rts
+; End of function Object_DestroyerMK2InitializeFragmentGroup
+; Wait for the fragment-group completion counter to clear
+Object_DestroyerMK2WaitForFragmentGroupCompletion:      ; DATA XREF: ROM:0004BA60   o  ; was: sub_4BB0C
+                tst.w   $52(a5)
+                bne.s   Object_DestroyerMK2FragmentGroupWaitReturn
+                move.w  #$20,$48(a5)                    ; ' '
+                addq.w  #2,4(a5)
+Object_DestroyerMK2FragmentGroupWaitReturn:             ; CODE XREF: Object_DestroyerMK2WaitForFragmentGroupCompletion+4   j  ; was: locret_4BB1C
+                rts
+; End of function Object_DestroyerMK2WaitForFragmentGroupCompletion
+; Return the fragment-group controller to idle after its delay
+Object_DestroyerMK2ResetFragmentGroupAfterDelay:        ; DATA XREF: ROM:0004BA62   o  ; was: sub_4BB1E
+                subq.w  #1,$48(a5)
+                bne.s   Object_DestroyerMK2FragmentGroupResetReturn
+                clr.w   4(a5)
+Object_DestroyerMK2FragmentGroupResetReturn:            ; CODE XREF: Object_DestroyerMK2ResetFragmentGroupAfterDelay+4   j  ; was: locret_4BB28
+                rts
+; End of function Object_DestroyerMK2ResetFragmentGroupAfterDelay
+; Dispatch persistent transition debris by state field 4
+Object_TransitionDebrisMain:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4BB2A
+                move.w  4(a5),d0
+                lea     Object_TransitionDebrisStateHandlers(pc,d0.w),a0
+                adda.w  (a0),a0
+                jmp     (a0)
+; End of function Object_TransitionDebrisMain
+; ---------------------------------------------------------------------------
+Object_TransitionDebrisStateHandlers:   dc.w    Object_TransitionDebrisDelayAndEnable-*  ; DATA XREF: Object_TransitionDebrisMain+4   o  ; was: off_4BB36
+                dc.w    Object_TransitionDebrisLaunchHorizontally-*
+                dc.w    Object_TransitionDebrisSwitchToVerticalMotion-*
+                dc.w    Object_TransitionDebrisResolveBoundsOrCollision-*
+
+; Delay, enable drawing, and advance the transition debris
+Object_TransitionDebrisDelayAndEnable:                  ; DATA XREF: ROM:Object_TransitionDebrisStateHandlers   o  ; was: sub_4BB3E
+                subq.w  #1,$48(a5)
+                bpl.s   Object_TransitionDebrisEnableReturn
+                move.w  #$10,$48(a5)
+                ori.w   #$8000,2(a5)
+                addq.w  #2,4(a5)
+Object_TransitionDebrisEnableReturn:                    ; CODE XREF: Object_TransitionDebrisDelayAndEnable+4   j  ; was: locret_4BB54
+                rts
+; End of function Object_TransitionDebrisDelayAndEnable
+; Load stored horizontal velocity after the launch delay
+Object_TransitionDebrisLaunchHorizontally:              ; DATA XREF: ROM:0004BB38   o  ; was: sub_4BB56
+                subq.w  #1,$48(a5)
+                bpl.s   Object_TransitionDebrisLaunchReturn
+                move.l  $4C(a5),$18(a5)
+                addq.w  #2,4(a5)
+                move.b  #$E8,d0
+                jsr     (Sound_PlaySFX).l
+Object_TransitionDebrisLaunchReturn:                    ; CODE XREF: Object_TransitionDebrisLaunchHorizontally+4   j  ; was: locret_4BB70
+                rts
+; End of function Object_TransitionDebrisLaunchHorizontally
+; Stop horizontal motion and switch to stored vertical velocity
+Object_TransitionDebrisSwitchToVerticalMotion:          ; DATA XREF: ROM:0004BB3A   o  ; was: sub_4BB72
+                subq.w  #1,$4A(a5)
+                bpl.s   Object_TransitionDebrisVerticalMotionReturn
+                clr.w   $18(a5)
+                move.l  $50(a5),$1C(a5)
+                addq.w  #2,4(a5)
+Object_TransitionDebrisVerticalMotionReturn:            ; CODE XREF: Object_TransitionDebrisSwitchToVerticalMotion+4   j  ; was: locret_4BB86
+                rts
+; End of function Object_TransitionDebrisSwitchToVerticalMotion
+; Remove out-of-bounds debris or convert collided debris to a type-$88 effect
+Object_TransitionDebrisResolveBoundsOrCollision:        ; DATA XREF: ROM:0004BB3C   o  ; was: sub_4BB88
+                cmpi.w  #$180,$14(a5)
+                bcc.s   Object_TransitionDebrisRemoveOutsideVerticalBounds
+                cmpi.w  #$80,$14(a5)
+                bls.s   Object_TransitionDebrisRemoveOutsideVerticalBounds
+                moveq   #0,d0
+                move.w  d0,d1
+                jsr     (Collision_InitBufferPointers).l
+                move.w  d2,d2
+                bne.s   Object_TransitionDebrisConvertAfterCollision
+                rts
+; ---------------------------------------------------------------------------
+Object_TransitionDebrisRemoveOutsideVerticalBounds:     ; CODE XREF: Object_TransitionDebrisResolveBoundsOrCollision+6   j  ; was: loc_4BBA8
+                                        ; Object_TransitionDebrisResolveBoundsOrCollision+E   j
+                subq.w  #1,(word_FFC792).w
+                move.w  #$1000,2(a5)
+                rts
+; ---------------------------------------------------------------------------
+Object_TransitionDebrisConvertAfterCollision:           ; CODE XREF: Object_TransitionDebrisResolveBoundsOrCollision+1C   j  ; was: loc_4BBB4
+                move.w  #$BC,d0
+                jsr     (Sound_PlaySFX).l
+                subq.w  #1,(word_FFC792).w
+                clr.b   $21(a5)
+                move.l  #off_E95DC,8(a5)
+                jsr     (Projectile_InitType88FromCurrent).l
+                move.w  $1C(a5),d0
+                neg.w   d0
+                asr.w   #1,d0
+                move.w  d0,$1C(a5)
+                move.w  (dword_FFFF08).w,d0
+                andi.w  #3,d0
+                subq.w  #2,d0
+                move.w  d0,$18(a5)
+                rts
+; End of function Object_TransitionDebrisResolveBoundsOrCollision
+; Cycles two palette-buffer words every four frames
+Gfx_DestroyerMK2CyclePaletteWords:                      ; CODE XREF: Boss_DestroyerMK2Main+5C   p  ; was: sub_4BBF0
+                move.w  (word_FFA000).w,d0
+                andi.w  #3,d0
+                bne.s   Gfx_DestroyerMK2PaletteCycleReturn
+                move.w  (dword_FF9418).w,d0
+                move.w  Gfx_DestroyerMK2PrimaryPaletteCycleTable(pc,d0.w),(word_FFE366).w
+                move.w  Gfx_DestroyerMK2SecondaryPaletteCycleTable(pc,d0.w),(word_FFE368).w
+                addq.w  #2,(dword_FF9418).w
+                cmpi.w  #$14,(dword_FF9418).w
+                bne.s   Gfx_DestroyerMK2PaletteCycleReturn
+                clr.w   (dword_FF9418).w
+Gfx_DestroyerMK2PaletteCycleReturn:                     ; CODE XREF: Gfx_DestroyerMK2CyclePaletteWords+8   j  ; was: locret_4BC1A
+                                        ; Gfx_DestroyerMK2CyclePaletteWords+24   j
+                rts
+; End of function Gfx_DestroyerMK2CyclePaletteWords
+; ---------------------------------------------------------------------------
+Gfx_DestroyerMK2PrimaryPaletteCycleTable:   dc.w    $2C8, $A6, $84, $62, $40, $20, $40, $62, $84, $A6  ; was: word_4BC1C
+                                        ; DATA XREF: Gfx_DestroyerMK2CyclePaletteWords+E   r
+Gfx_DestroyerMK2SecondaryPaletteCycleTable: dc.w    $64, $44, $42, $22, $20, 0, $20, $22, $42, $44  ; was: word_4BC30
+                                        ; DATA XREF: Gfx_DestroyerMK2CyclePaletteWords+14   r
+
+; Updates the fixed and orbiting linked-object geometry
+Boss_DestroyerMK2UpdateLinkedObjectGeometry:            ; CODE XREF: Boss_DestroyerMK2InitializeScrollDeformationState+C   p  ; was: sub_4BC44
+                                        ; sub_4ABC6   p
+                movea.w #(word_FFC680-M68K_RAM),a0
+                move.l  $10(a5),$10(a0)
+                move.l  $14(a5),$14(a0)
+                move.w  $4C(a0),d0
+                add.w   d0,$14(a0)
+                movea.w #(word_FFC6E0-M68K_RAM),a0
+                move.l  $10(a5),$10(a0)
+                move.l  $14(a5),$14(a0)
+                move.w  $4C(a0),d0
+                add.w   d0,$14(a0)
+                movea.w #(word_FFC740-M68K_RAM),a0
+                move.l  $10(a5),$10(a0)
+                move.l  $14(a5),$14(a0)
+                move.w  #3,d7
+                movea.w #(word_FFC7A0-M68K_RAM),a0
+Boss_DestroyerMK2UpdateLinkedComponentLoop:             ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+7E   j  ; was: loc_4BC8C
+                cmpi.w  #4,$4E(a0)
+                bcc.s   Boss_DestroyerMK2SelectLowerComponentScrollGroup
+                lea     (word_FFE52C).w,a1
+                bra.s   Boss_DestroyerMK2UpdateLinkedComponentPosition
+; ---------------------------------------------------------------------------
+Boss_DestroyerMK2SelectLowerComponentScrollGroup:       ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+4E   j  ; was: loc_4BC9A
+                lea     (word_FFE720).w,a1
+Boss_DestroyerMK2UpdateLinkedComponentPosition:         ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+54   j  ; was: loc_4BC9E
+                move.w  (a1),d0
+                addi.w  #$C0,d0
+                add.w   $4A(a0),d0
+                add.w   $58(a0),d0
+                move.w  d0,$10(a0)
+                move.l  $14(a5),$14(a0)
+                move.w  $4C(a0),d0
+                add.w   d0,$14(a0)
+                lea     $60(a0),a0
+                dbf     d7,Boss_DestroyerMK2UpdateLinkedComponentLoop
+                move.l  (dword_FF940C).w,d0
+                add.l   d0,(dword_FF9408).w
+                andi.w  #$1FF,(dword_FF9408).w
+                clr.w   d3
+                move.b  $20(a5),d3
+                movea.w #(word_FFC920-M68K_RAM),a0
+                move.w  (dword_FF9404).w,d5
+                move.w  (dword_FF9408).w,d6
+                lea     (Math_SineTable).l,a1
+                move.w  #7,d7
+Boss_DestroyerMK2UpdateOrbitingPartLoop:                ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+106   j  ; was: loc_4BCF0
+                tst.w   4(a0)
+                bne.w   Boss_DestroyerMK2AdvanceOrbitingPartLoop
+                move.w  $4C(a0),d0
+                add.w   d6,d0
+                andi.w  #$1FE,d0
+                move.w  (a1,d0.w),d1
+                move.w  $4A(a0),d2
+                add.w   d5,d2
+                muls.w  d2,d1
+                add.l   $10(a5),d1
+                move.l  d1,$10(a0)
+                move.l  $14(a5),$14(a0)
+                move.w  d0,d2
+                bsr.w   Boss_DestroyerMK2SelectOrbitingPartFrame
+                move.w  -$80(a1,d0.w),d1
+                muls.w  #$40,d1                         ; '@'
+                swap    d1
+                neg.w   d1
+                tst.w   d1
+                bpl.s   Boss_DestroyerMK2ClearOrbitingPartFlip
+                ori.w   #$8000,$E(a0)
+                bra.s   Boss_DestroyerMK2StoreOrbitingPartPriority
+; ---------------------------------------------------------------------------
+Boss_DestroyerMK2ClearOrbitingPartFlip:                 ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+EC   j  ; was: loc_4BD3A
+                andi.w  #$7FFF,$E(a0)
+Boss_DestroyerMK2StoreOrbitingPartPriority:             ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+F4   j  ; was: loc_4BD40
+                add.w   d3,d1
+                move.b  d1,$20(a0)
+Boss_DestroyerMK2AdvanceOrbitingPartLoop:               ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+B0   j  ; was: loc_4BD46
+                lea     $60(a0),a0
+                dbf     d7,Boss_DestroyerMK2UpdateOrbitingPartLoop
+                rts
+; End of function Boss_DestroyerMK2UpdateLinkedObjectGeometry
+; Select the current object and fall through to frame selection
+Boss_DestroyerMK2SelectCurrentObjectForFrame:           ; CODE XREF: Object_DestroyerMK2UpdateFallingCentralPart+16   p  ; was: sub_4BD50
+                                        ; Object_DestroyerMK2RotateBouncingPartAThenLaunch+E   p
+                movea.w a5,a0
+; End of function Boss_DestroyerMK2SelectCurrentObjectForFrame
+; Selects an orbiting part's mapping and sprite attributes from its angle
+Boss_DestroyerMK2SelectOrbitingPartFrame:               ; CODE XREF: Boss_DestroyerMK2UpdateLinkedObjectGeometry+DA   p  ; was: sub_4BD52
+                addi.w  #$20,d2                         ; ' '
+                andi.w  #$1C0,d2
+                lsr.w   #4,d2
+                move.l  Boss_DestroyerMK2OrbitingPartMappingTable(pc,d2.w),8(a0)
+                lsr.w   #1,d2
+                move.w  Boss_DestroyerMK2OrbitingPartSpriteAttributeTable(pc,d2.w),$E(a0)
+                rts
+; End of function Boss_DestroyerMK2SelectOrbitingPartFrame
+; ---------------------------------------------------------------------------
+Boss_DestroyerMK2OrbitingPartMappingTable:  dc.l    word_EC2C8  ; DATA XREF: Boss_DestroyerMK2SelectOrbitingPartFrame+A   r  ; was: off_4BD6C
+                dc.l    word_EC2CE
+                dc.l    word_EC2D4
+                dc.l    word_EC2CE
+                dc.l    word_EC2C8
+                dc.l    word_EC2DA
+                dc.l    word_EC2E0
+                dc.l    word_EC2DA
+Boss_DestroyerMK2OrbitingPartSpriteAttributeTable:  dc.w    $6300, $6300, $6300, $6B00, $6300, $6B00, $6300, $6300, $838, 0, $F706, $6728, $838, 5, $F706, $670C  ; was: word_4BD8C
+                                        ; DATA XREF: Boss_DestroyerMK2SelectOrbitingPartFrame+12   r
+
+; Activate idle linked records according to the encounter flag byte
+Boss_DestroyerMK2ActivateLinkedPartsFromFlags:
+                tst.w   (word_FFC804).w                 ; was: sub_4BDAC
+                bne.s   Boss_DestroyerMK2CheckConditionalNearPartActivation
+                move.w  #2,(word_FFC804).w
+Boss_DestroyerMK2CheckConditionalNearPartActivation:    ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+4   j  ; was: loc_4BDB8
+                btst    #6,(word_FFF706).w
+                beq.s   Boss_DestroyerMK2CheckFarPartActivationFlags
+                tst.w   (word_FFC7A4).w
+                bne.s   Boss_DestroyerMK2CheckFarPartActivationFlags
+                move.w  #2,(word_FFC7A4).w
+Boss_DestroyerMK2CheckFarPartActivationFlags:           ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+12   j  ; was: loc_4BDCC
+                                        ; Boss_DestroyerMK2ActivateLinkedPartsFromFlags+18   j
+                btst    #1,(word_FFF706).w
+                beq.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
+                btst    #5,(word_FFF706).w
+                beq.s   Boss_DestroyerMK2CheckSecondFarPartActivation
+                tst.w   (word_FFC8C4).w
+                bne.s   Boss_DestroyerMK2CheckSecondFarPartActivation
+                move.w  #2,(word_FFC8C4).w
+Boss_DestroyerMK2CheckSecondFarPartActivation:          ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+2E   j  ; was: loc_4BDE8
+                                        ; Boss_DestroyerMK2ActivateLinkedPartsFromFlags+34   j
+                btst    #6,(word_FFF706).w
+                beq.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
+                tst.w   (word_FFC864).w
+                bne.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
+                move.w  #2,(word_FFC864).w
+Boss_DestroyerMK2LinkedPartFlagActivationReturn:        ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+26   j  ; was: locret_4BDFC
+                                        ; Boss_DestroyerMK2ActivateLinkedPartsFromFlags+42   j
+                rts
+; End of function Boss_DestroyerMK2ActivateLinkedPartsFromFlags
+; Fills 40 foreground-scroll rows with the negated stage scroll position
+Gfx_DestroyerMK2UpdateForegroundScrollRows:             ; CODE XREF: Boss_DestroyerMK2Main+8   p  ; was: sub_4BDFE
+                lea     (word_FFE480).w,a0
+                move.w  (dword_FFA900).w,d0
+                neg.w   d0
+                move.w  #$27,d7                         ; '''
+Gfx_DestroyerMK2UpdateForegroundScrollRowsLoop:         ; CODE XREF: Gfx_DestroyerMK2UpdateForegroundScrollRows+12   j  ; was: loc_4BE0C
+                move.w  d0,(a0)
+                addq.w  #4,a0
+                dbf     d7,Gfx_DestroyerMK2UpdateForegroundScrollRowsLoop
+                rts
+; End of function Gfx_DestroyerMK2UpdateForegroundScrollRows
+; Update the controller debris effect and emit one randomized sprite particle
+Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Boss_DestroyerMK2RunDebrisTransitionTimer   p  ; was: sub_4BE16
+                                        ; DATA XREF: Boss_DestroyerMK2RunDebrisTransitionTimer   o
+                jsr     (Gfx_UpdatePaletteFade).l
+                jsr     (Projectile_UpdateWithExplosionSound).l
+                move.w  #2,(word_FFA014).w
+                move.w  #4,(word_FFA010).w
+                jsr     (Projectile_FindFreePrimarySlot).l
+                bne.s   Projectile_DestroyerMK2DebrisSpawnReturn
+                jsr     (Sprite_InitType160).l
+                clr.b   $20(a0)
+                move.w  #6,$18(a0)
+                move.w  (dword_FFFF08+2).w,$1A(a0)
+                move.b  (dword_FFFF08).w,d0
+                move.b  (dword_FFFF08+1).w,d1
+                andi.w  #$1F,d0
+                andi.w  #$3F,d1                         ; '?'
+                subi.w  #$24,d0                         ; '$'
+                subi.w  #$24,d1                         ; '$'
+                add.w   $10(a5),d0
+                add.w   $14(a5),d1
+                move.w  d0,$10(a0)
+                move.w  d1,$14(a0)
+                move.w  (dword_FFFF08).w,d0
+                ext.l   d0
+                asl.l   #2,d0
+                move.l  d0,$1C(a0)
+                move.b  (dword_FFFF08+1).w,d0
+                andi.w  #7,d0
+                add.w   d0,d0
+                add.w   d0,d0
+                move.l  Projectile_DestroyerMK2DebrisMappingTable(pc,d0.w),8(a0)
+                ori.w   #$8000,$E(a0)
+Projectile_DestroyerMK2DebrisSpawnReturn:               ; CODE XREF: Projectile_DestroyerMK2DebrisMain+1E   j  ; was: locret_4BE98
+                rts
+; End of function Projectile_DestroyerMK2DebrisMain
+; ---------------------------------------------------------------------------
+Projectile_DestroyerMK2DebrisMappingTable:  dc.l    off_E953C  ; DATA XREF: Projectile_DestroyerMK2DebrisMain+76   r  ; was: off_4BE9A
+                dc.l    off_E95A4
+                dc.l    off_E9560
+                dc.l    off_E95C0
+                dc.l    off_E9584
+                dc.l    off_E95DC
+                dc.l    off_E9584
+                dc.l    off_E9604
+
+Object_DestroyerMK2StageGateReturn:                     ; CODE XREF: Object_DestroyerMK2ActivateFromLinkedState+4   j  ; was: nullsub_108
+                                        ; Object_DestroyerMK2ActivateFromLinkedState+14   j
+                rts
+; End of function Object_DestroyerMK2StageGateReturn

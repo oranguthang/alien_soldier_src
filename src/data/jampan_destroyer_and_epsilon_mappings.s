@@ -20,22 +20,22 @@ word_EC280:     dc.w    $25, $700, $F0F0                ; DATA XREF: ROM:0004A4F
                 dc.w    $8825, $700, $F000
 word_EC28C:     dc.w    $880C, 0, $FCFC                 ; DATA XREF: ROM:0004950A   o
                                         ; ROM:0004950E   o
-word_EC292:     dc.w    $7F, $600, $F420                ; DATA XREF: Boss_DestroyerMK2ComponentSpawnProjectile+3A   o
+word_EC292:     dc.w    $7F, $600, $F420                ; DATA XREF: Object_DestroyerMK2SpawnProjectile+3A   o
                 dc.w    $873, $E00, $F400
                 dc.w    $87F, $600, $F4D0
                 dc.w    $8873, $E00, $F4E0
-word_EC2AA:     dc.w    $855, $800, $CEF                ; DATA XREF: Boss_DestroyerMK2Dispatcher+160   o
-                                        ; Boss_DestroyerMK2ComponentSwitchAnimation+6   o
+word_EC2AA:     dc.w    $855, $800, $CEF                ; DATA XREF: Boss_DestroyerMK2InitializeEncounterState+160   o
+                                        ; Object_DestroyerMK2SwitchComponentMapping+6   o
                 dc.w    $8845, $F00, $ECEF
-word_EC2B6:     dc.w    $86B, $D00, $CEF                ; DATA XREF: Boss_DestroyerMK2ComponentInitProjectile+8   o
+word_EC2B6:     dc.w    $86B, $D00, $CEF                ; DATA XREF: Object_DestroyerMK2InitializeProjectile+8   o
                 dc.w    $868, $800, $E4EF
                 dc.w    $8858, $F00, $ECEF
-word_EC2C8:     dc.w    $8885, $300, $EFFC              ; DATA XREF: ROM:off_4BD6C   o
+word_EC2C8:     dc.w    $8885, $300, $EFFC              ; DATA XREF: ROM:Boss_DestroyerMK2OrbitingPartMappingTable   o
                                         ; ROM:0004BD7C   o
 word_EC2CE:     dc.w    $8889, $B00, $EFF3              ; DATA XREF: ROM:0004BD70   o
                                         ; ROM:0004BD78   o
-word_EC2D4:     dc.w    $8895, $F00, $EFF0              ; DATA XREF: Boss_DestroyerMK2Dispatcher+1C0   o
-                                        ; Boss_DestroyerMK2SpawnThreeProjectiles+48   o
+word_EC2D4:     dc.w    $8895, $F00, $EFF0              ; DATA XREF: Boss_DestroyerMK2InitializeEncounterState+1C0   o
+                                        ; Boss_DestroyerMK2InitializeTripleProjectilePattern+48   o
 word_EC2DA:     dc.w    $88A5, $B00, $EFF5              ; DATA XREF: ROM:0004BD80   o
                                         ; ROM:0004BD88   o
 word_EC2E0:     dc.w    $88B1, $F00, $EFF0              ; DATA XREF: ROM:0004BD84   o

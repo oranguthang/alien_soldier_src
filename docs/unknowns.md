@@ -1211,6 +1211,74 @@ movement states. Static code alone does not prove its original debug purpose,
 nor the earlier claim that it has no visible effect, so both claims have been
 removed pending pinned runtime evidence.
 
+The Destroyer MK2 core pass reduced the count from 6,983 to 6,933. The
+703-line `bosses/destroyer_mk2_core.s` module now has 83 audited definitions
+and no live address-derived names; five directly used helpers in the adjacent
+modules were audited with it, for 88 new static records in total. Main state
+flow is now described as the code implements it: initialization constructs
+four inactive linked display records and eight active orbiting records, then
+drives stage-14 scroll deformation and the linked-part ring before entering
+the final-transition states.
+
+This pass rejects the generated attack and animation vocabulary in the core.
+The former `SpawnMissile` and `ProjectileMissile` only enable collision fields;
+the former `ProjectileLaser` clears them; `Land` initializes a 256-entry
+descending index table; and `CollisionCheck` swaps two randomly selected table
+entries. `ShootPattern1` writes four shuffled scroll rows, `HitReaction` seeds
+four signed row velocities, and `StunState` integrates the 255-row offset and
+velocity buffers. The other two `ShootPattern` helpers respectively cycle two
+palette words and update linked-object geometry, while `IntroRoar`,
+`PlayIntroSFX`, and `PlayFootstep` are scroll or frame-selection helpers and
+call no sound routine. The exact visual identity of the eight orbiting records
+remains deliberately unclaimed until pinned runtime evidence is available.
+
+The Destroyer MK2 pattern-and-component pass reduced the count from 6,933 to
+6,881. The misleading 600-line `bosses/destroyer_mk2_defeat.s` filename was
+replaced by `bosses/destroyer_mk2_patterns_and_components.s`; keeping this as
+one cohesive module is intentional because its size is already inside the
+300-1,000-line target and its three consecutive roles share the same
+controller, linked records, and transition state flow. All 92 definitions in
+the module now have exact static audit coverage, including the scroll helper
+audited in the preceding core pass; this pass adds 91 records and brings the
+name-audit total to 4,281.
+
+The old defeat and berserk vocabulary is rejected by direct control flow.
+The first half contains nested patterns selected by main state `$24`: it
+activates linked records according to player side, projects short angular
+sweeps, emits three delayed type-`$258` projectiles, or emits a ten-projectile
+spread. Main states `$26-$28` repeat those patterns. The actual final
+transition begins at state `$2A`: it waits for five linked records, disables
+collision, runs debris, performs two palette/tile changes, clears transition
+flags and most of the object pool, then removes the controller. The tail is
+the ten-state handler for entity type `$248`, covering linked-state activation,
+four stage-14 scroll presets, component-projectile creation, and indexed
+scroll-layer motion. The precise rendered identity of the projected effects
+and type-`$248` components remains deliberately unclaimed pending pinned
+runtime evidence. Provenance now contains 8,942 unique mappings.
+
+The adjacent Destroyer MK2 linked-parts-and-debris pass reduced the count from
+6,881 to 6,814 and raised provenance to 9,009 unique mappings. The former
+`bosses/destroyer_mk2_effects.s` module was renamed to the 770-line
+`bosses/destroyer_mk2_linked_parts_and_debris.s`; all 112 definitions have
+exact static audit coverage, with 108 records added here and four geometry or
+palette helpers already covered by the core pass. The name-audit total is now
+4,389.
+
+This pass establishes entity type `$25C` as a three-mode moving-part handler:
+its central mode waits for controller state `$2A` or a negative part field
+`$24`, launches with signed velocity, rotates while falling, and emits
+type-`$88` particles; its other two
+modes implement related collision, rotation, and bounce sequences. Type
+`$24C` is a separate bounded horizontal-motion object. Type `$260` controls an
+eight-record fragment group, while type `$264` is deliberately named generic
+transition debris because Epsilon 1 explicitly preserves it and the static
+code does not make it Destroyer-specific. The former `PlayRoar`, `PlayJump`,
+`PlayLand`, `DefeatShake`, `DefeatFlash`, spark, smoke, and weapon-timer claims
+were rejected: the affected code instead dispatches motion, initializes or
+waits for fragments, converts collided debris, or activates linked records
+from encounter flags. Exact on-screen identities of the moving parts and
+transition debris remain unclaimed pending pinned runtime evidence.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

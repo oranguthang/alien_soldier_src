@@ -1,3 +1,4 @@
+; Main handler for Bugmax boss
 Boss_BugmaxMain:                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4BEBC
                 tst.w   4(a5)
                 beq.w   Boss_BugmaxMainDispatch

@@ -144,14 +144,14 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_JampanShieldMain
                 dc.l    Boss_JampanPostDefeatObjectMain
                 dc.l    Boss_DestroyerMK2Main
-                dc.l    Boss_DestroyerMK2ComponentStateDispatch
-                dc.l    Enemy_CheckBoundsAndDispatch
+                dc.l    Object_DestroyerMK2ComponentMain
+                dc.l    Object_DestroyerMK2HorizontalPartMain
                 dc.l    UI_WeaponSelectionObject
                 dc.l    Effect_UpdateDashTrail
                 dc.l    Projectile_BulletWithDelayedPhysics
-                dc.l    Boss_DestroyerMK2PlayRoar
-                dc.l    Boss_DestroyerMK2DefeatFlash
-                dc.l    Boss_DestroyerMK2DefeatDebris
+                dc.l    Object_DestroyerMK2MovingPartMain
+                dc.l    Object_DestroyerMK2FragmentGroupMain
+                dc.l    Object_TransitionDebrisMain
                 dc.l    Boss_Epsilon1Main
                 dc.l    Anim_RunCallbackScript
                 dc.l    Object_MarkInactiveDirect

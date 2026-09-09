@@ -360,8 +360,8 @@ loc_2B468:                                              ; CODE XREF: Projectile_
                 bra.w   Sprite_InitFromTable
 ; End of function Projectile_BulletWithDelayedPhysics
 ; Updates boss sprite graphics
-Boss_DestroyerMK2UpdateSprite:                          ; CODE XREF: Boss_DestroyerMK2PlaySFX+18   p  ; was: sub_2B49E
-                                        ; Boss_DestroyerMK2DefeatLaserEffect+46   p
+Boss_DestroyerMK2UpdateSprite:                          ; CODE XREF: Boss_DestroyerMK2UpdateProjectedSweep+18   p  ; was: sub_2B49E
+                                        ; Boss_DestroyerMK2EmitFourProjectedEffects+46   p
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_2B4B4
                 move.w  d3,$10(a0)
