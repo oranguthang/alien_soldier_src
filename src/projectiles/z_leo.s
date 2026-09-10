@@ -118,7 +118,7 @@ Projectile_ZLeoOrbTrySpawnRemovalPickup:                ; CODE XREF: Projectile_
 Projectile_ZLeoOrbReflectVelocity:                      ; CODE XREF: Projectile_ZLeoOrbMain+14   j  ; was: loc_53080
                 neg.l   $18(a5)
                 neg.l   $1C(a5)
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_ZLeoOrbCheckBounds:                          ; CODE XREF: Projectile_ZLeoOrbMain+C   j  ; was: loc_53096
@@ -207,7 +207,7 @@ Projectile_ZLeoLaserResolveOrbitState:                  ; CODE XREF: Projectile_
                 bne.w   Projectile_ZLeoLaserLaunchHorizontal
 Projectile_ZLeoLaserConvertToParticle:                  ; CODE XREF: Projectile_ZLeoLaserMain+1C   j  ; was: loc_531B2
                 move.w  #3,(word_FFA010).w
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_ZLeoLaserUpdateExpandingOrbit:               ; CODE XREF: Projectile_ZLeoLaserMain+24   j  ; was: loc_531C6
@@ -270,7 +270,7 @@ Projectile_ZLeoHorizontalLaserMain:                     ; CODE XREF: Projectile_
                 move.w  #3,(word_FFA010).w
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                move.l  #off_E9850,8(a5)
+                move.l  #SharedCombatSpriteAnimation32,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_ZLeoHorizontalLaserTrySpawnTrail:            ; CODE XREF: Projectile_ZLeoLaserMain+106   j  ; was: loc_532B0
@@ -280,7 +280,7 @@ Projectile_ZLeoHorizontalLaserTrySpawnTrail:            ; CODE XREF: Projectile_
 Projectile_ZLeoLaserSpawnTrailParticle:                 ; CODE XREF: Projectile_ZLeoLaserMain+B2   j  ; was: loc_532BA
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Projectile_ZLeoLaserReturn
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Projectile_InitType88).l
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$F,d0

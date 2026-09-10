@@ -236,11 +236,11 @@ Boss_ViblackSpawnNearbyDefeatParticle:                  ; CODE XREF: Boss_Viblac
                 subi.w  #$10,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_ViblackInitializeNearbyDefeatParticle
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
 Boss_ViblackInitializeNearbyDefeatParticle:             ; CODE XREF: Boss_ViblackSpawnNearbyDefeatParticle+46   j  ; was: loc_44178
                 jsr     (Projectile_InitType88).l
                 move.w  (word_FFA000).w,d0
@@ -265,11 +265,11 @@ Boss_ViblackSpawnWideDefeatParticle:                    ; CODE XREF: Boss_Viblac
                 subi.w  #$80,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
-                move.l  #off_E96FC,8(a0)
+                move.l  #SharedCombatSpriteAnimation18,8(a0)
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_ViblackSelectWideDefeatParticleVelocity
-                move.l  #off_E95C0,8(a0)
+                move.l  #SharedCombatSpriteAnimation04,8(a0)
 Boss_ViblackSelectWideDefeatParticleVelocity:           ; CODE XREF: Boss_ViblackSpawnWideDefeatParticle+3E   j  ; was: loc_441D6
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #1,d0
@@ -298,11 +298,11 @@ Boss_ViblackInitializeTransitionParticle:               ; CODE XREF: Boss_Viblac
                 ext.l   d0
                 asl.l   #3,d0
                 move.l  d0,$18(a0)
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$FFFD,$1C(a0)
                 btst    #0,(dword_FFFF08).w
                 beq.s   Boss_ViblackPositionTransitionDebris
-                move.l  #off_E96FC,8(a0)
+                move.l  #SharedCombatSpriteAnimation18,8(a0)
                 clr.w   $1C(a0)
 Boss_ViblackPositionTransitionDebris:                   ; CODE XREF: Boss_ViblackSpawnTransitionDebris+22   j  ; was: loc_44246
                                         ; Boss_ViblackSpawnTransitionDebris+4C   j

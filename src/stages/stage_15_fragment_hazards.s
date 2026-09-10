@@ -142,7 +142,7 @@ Projectile_SpawnFragmentCluster:                        ; was: sub_30670
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Entity_UpdateReturn
                 move.w  #$ED00,2(a0)
-                move.l  #off_E968C,8(a0)
+                move.l  #SharedCombatSpriteAnimation13,8(a0)
                 move.w  #$3A4,(a0)
                 move.w  d3,$4E(a0)
                 move.w  d4,$50(a0)
@@ -255,14 +255,14 @@ Projectile_FragmentVelocityY:
                 dc.l    0, $FFFD2BEC
                 dc.l    $FFFC0000, $FFFD2BEC
 Projectile_FragmentSpriteFrames:
-                dc.l    word_E9530
-                dc.l    word_E9536
-                dc.l    word_E952A
-                dc.l    word_E9536
-                dc.l    word_E9530
-                dc.l    word_E9536
-                dc.l    word_E952A
-                dc.l    word_E9536
+                dc.l    SharedCombatSpriteFrame71
+                dc.l    SharedCombatSpriteFrame72
+                dc.l    SharedCombatSpriteFrame70
+                dc.l    SharedCombatSpriteFrame72
+                dc.l    SharedCombatSpriteFrame71
+                dc.l    SharedCombatSpriteFrame72
+                dc.l    SharedCombatSpriteFrame70
+                dc.l    SharedCombatSpriteFrame72
 Projectile_FragmentOrientationAttributes:
                 dc.w    $800, $1800, $1800, $1000, 0, 0, $800, $800
 
@@ -452,7 +452,7 @@ Projectile_FragmentConvertToImpact:                     ; was: sub_30A76
                 clr.b   $22(a5)
                 move.w  #$8480,$E(a5)
                 move.w  #$EC00,2(a5)
-                move.l  #off_E9850,8(a5)
+                move.l  #SharedCombatSpriteAnimation32,8(a5)
                 clr.w   $C(a5)
                 clr.b   $21(a5)
                 move.b  #$BC,d0

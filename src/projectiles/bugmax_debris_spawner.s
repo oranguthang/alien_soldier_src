@@ -54,11 +54,11 @@ Projectile_BugmaxDebrisSpawner_InitializeParticle:      ; CODE XREF: Projectile_
                 jsr     (Projectile_InitType88).l
                 btst    #0,(dword_FFFF08+2).w
                 beq.s   Projectile_BugmaxDebrisSpawner_UseAlternateMapping
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 bra.s   Projectile_BugmaxDebrisSpawner_SetRandomOffset
 ; ---------------------------------------------------------------------------
 Projectile_BugmaxDebrisSpawner_UseAlternateMapping:     ; CODE XREF: Projectile_BugmaxDebrisSpawner_SpawnParticle+2C   j  ; was: loc_2C2E4
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
 ; Positions the particle randomly inside the configured rectangle
 Projectile_BugmaxDebrisSpawner_SetRandomOffset:         ; CODE XREF: Projectile_BugmaxDebrisSpawner_SpawnParticle+36   j  ; was: loc_2C2EC
                 move.b  (dword_FFFF08).w,d0

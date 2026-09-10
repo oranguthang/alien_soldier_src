@@ -127,7 +127,7 @@ Projectile_Epsilon1AnimateSpreadProjectileReturn:       ; CODE XREF: Projectile_
 ; Converts a spread projectile to type-$88 debris after it crosses the lower bound
 Projectile_Epsilon1ConvertSpreadProjectileToDebris:     ; CODE XREF: Projectile_Epsilon1SpreadProjectileMain+16   j  ; was: sub_4724E
                 clr.b   $21(a5)
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
                 clr.l   $18(a5)
                 move.w  $1C(a5),d0
@@ -307,7 +307,7 @@ Projectile_Epsilon1BarrageRowFlightState:               ; DATA XREF: ROM:0004739
 
 ; Converts a barrage-row projectile to type-$88 debris below the playfield
 Projectile_Epsilon1ConvertBarrageRowProjectileToDebris:  ; CODE XREF: Projectile_Epsilon1BarrageRowProjectileMain+6   j  ; was: sub_47440
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
                 clr.l   $18(a5)
                 move.w  $1C(a5),d0
@@ -346,7 +346,7 @@ Boss_Epsilon1DeactivateRingObjectAndLink:               ; CODE XREF: Boss_Epsilo
                 movea.w $4E(a5),a0
                 beq.s   Boss_Epsilon1DispatchRingObjectState
                 jsr     (Projectile_InitType88).l
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  2(a5),d0
@@ -414,7 +414,7 @@ Boss_Epsilon1SelectRingLaunchAngleSample:               ; CODE XREF: Boss_Epsilo
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_Epsilon1WaitForRingLaunchWindowReturn
                 jsr     (Sprite_InitType160).l
-                move.l  #off_E95C0,8(a0)
+                move.l  #SharedCombatSpriteAnimation04,8(a0)
                 move.w  #$480,$E(a0)
                 move.w  $10(a5),$10(a0)
                 addi.w  #8,$10(a0)
@@ -422,7 +422,7 @@ Boss_Epsilon1SelectRingLaunchAngleSample:               ; CODE XREF: Boss_Epsilo
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_Epsilon1WaitForRingLaunchWindowReturn
                 jsr     (Sprite_InitType160).l
-                move.l  #off_E95C0,8(a0)
+                move.l  #SharedCombatSpriteAnimation04,8(a0)
                 move.w  #$480,$E(a0)
                 move.w  $10(a5),$10(a0)
                 addi.w  #-8,$10(a0)
@@ -516,7 +516,7 @@ Boss_Epsilon1PositionReleasedRingObjectLink:            ; CODE XREF: Boss_Epsilo
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  $1C(a5),d0
                 neg.w   d0
                 asr.w   #2,d0
@@ -559,7 +559,7 @@ Boss_Epsilon1SpawnRingObjectDefeatDebris:               ; CODE XREF: Boss_Epsilo
                 andi.w  #3,d0
                 subq.w  #2,d0
                 move.w  d0,$18(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
 Boss_Epsilon1UpdateRingObjectDefeatFallReturn:          ; CODE XREF: Boss_Epsilon1UpdateRingObjectDefeatFallState+18   j
                                         ; Boss_Epsilon1UpdateRingObjectDefeatFallState+20   j
                 rts
@@ -595,7 +595,7 @@ Boss_Epsilon1ExplodeRingObjectState:                    ; DATA XREF: ROM:0004750
                 lea     (dword_FF9466).w,a1
                 move.w  #$FF00,(a1,d0.w)
                 addq.w  #2,4(a5)
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 move.w  #$FFFF,$1C(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; End of function Boss_Epsilon1ExplodeRingObjectState

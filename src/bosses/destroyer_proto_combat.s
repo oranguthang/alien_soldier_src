@@ -219,7 +219,7 @@ Boss_DestroyerProtoSpawnSpreadProjectile:               ; CODE XREF: Boss_Destro
 Projectile_InitSharedHitReactiveShot:                   ; CODE XREF: Boss_VictorSpawnSplitShotWave+2E   p  ; was: loc_31B02
                                         ; Boss_VictorSpawnSplitShotWave+4E   p
                 move.w  #$EC00,2(a0)
-                move.l  #off_E96E0,8(a0)
+                move.l  #SharedCombatSpriteAnimation16,8(a0)
                 clr.w   $C(a0)
                 move.w  #$8480,$E(a0)
                 move.b  #$40,$21(a0)                    ; '@'

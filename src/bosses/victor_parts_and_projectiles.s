@@ -378,7 +378,7 @@ Entity_RemoveWithExplosionWhenEnabled:                  ; CODE XREF: Projectile_
                 bne.s   Entity_RemoveAfterExplosionAttempt
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Sprite_InitType160).l
 Entity_RemoveAfterExplosionAttempt:                     ; CODE XREF: Entity_RemoveWithExplosionWhenEnabled+E   j  ; was: loc_32DF6
                 move.w  #$1000,2(a5)

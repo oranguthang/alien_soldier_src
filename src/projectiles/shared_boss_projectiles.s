@@ -223,7 +223,7 @@ Effect_InitSharedExplosion:                             ; CODE XREF: Boss_Sunset
 Effect_ConfigureSharedExplosion:                        ; CODE XREF: Effect_InitSharedExplosionFromCurrent+1C   j  ; was: loc_2A2C8
                 move.w  d0,$E(a0)
                 move.w  #$E500,2(a0)
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 clr.w   $C(a0)
                 move.b  #$10,$20(a0)
                 move.w  #3,$48(a0)

@@ -22,7 +22,7 @@ Enemy_FormationWavePrepareAimedShot:                    ; CODE XREF: Enemy_Forma
                 jsr     (Enemy_SetProjectileDifficulty).l
 Enemy_FormationWaveFinishUpdate:                        ; CODE XREF: Enemy_FormationWaveMain+C   j  ; was: loc_32F24
                                         ; Enemy_FormationWaveMain+14   j
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; End of function Enemy_FormationWaveMain
 ; Dispatches a formation member through its motion-state table

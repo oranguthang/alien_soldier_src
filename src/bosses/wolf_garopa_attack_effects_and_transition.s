@@ -179,11 +179,11 @@ Boss_WolfGaropaTrySpawnDefeatDebris:                    ; CODE XREF: Boss_WolfGa
                 subi.w  #$20,d0                         ; ' '
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
-                move.l  #off_E96FC,8(a0)
+                move.l  #SharedCombatSpriteAnimation18,8(a0)
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_WolfGaropaInitializeDefeatDebris
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
 Boss_WolfGaropaInitializeDefeatDebris:                  ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+BE   j  ; was: loc_50F26
                 jsr     (Projectile_InitType88).l
                 move.w  (word_FFA000).w,d0

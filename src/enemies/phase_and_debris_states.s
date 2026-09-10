@@ -211,7 +211,7 @@ Effect_SetRandomParticleMapping:                        ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Effect_SetRandomParticleMapping
 ; ---------------------------------------------------------------------------
-Effect_RandomParticleMappings:  dc.l    off_E953C       ; DATA XREF: Effect_SetRandomParticleMapping+C   r  ; was: off_2D26C
-                dc.l    off_E9560
-                dc.l    off_E9584
-                dc.l    off_E9560
+Effect_RandomParticleMappings:  dc.l    SharedCombatSpriteAnimation00  ; DATA XREF: Effect_SetRandomParticleMapping+C   r  ; was: off_2D26C
+                dc.l    SharedCombatSpriteAnimation01
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation01

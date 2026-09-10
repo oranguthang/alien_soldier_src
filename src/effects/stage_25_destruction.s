@@ -1,7 +1,7 @@
 Effect_InitStage25DestructionParticle:                  ; CODE XREF: Effect_RunStage25DestructionParticle+6   p  ; was: sub_2BAB4
                 addq.w  #2,4(a5)
                 move.w  #$E700,2(a5)
-                move.l  #off_E97B8,8(a5)
+                move.l  #SharedCombatSpriteAnimation26,8(a5)
                 clr.w   $C(a5)
                 move.w  #$480,$E(a5)
                 clr.b   $20(a5)

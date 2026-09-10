@@ -155,7 +155,7 @@ Boss_SunsetStingSegmentReattachState:                   ; DATA XREF: ROM:0004337
 ; Converts a primary segment into generic defeat debris
 Boss_SunsetStingSegmentConvertToDebrisState:            ; DATA XREF: ROM:00043380   o  ; was: sub_434F6
                 jsr     (Projectile_InitType88FromCurrent).l
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 rts
 ; End of function Boss_SunsetStingSegmentConvertToDebrisState
 ; Secondary segment handler
@@ -521,7 +521,7 @@ Projectile_SpawnSunsetStingSegmentShot:                 ; CODE XREF: Boss_Sunset
                 move.w  #$8480,d0
                 or.w    (word_FF808A).w,d0
                 move.w  d0,$E(a0)
-                move.l  #word_E91FA,8(a0)
+                move.l  #SharedCombatSpriteFrame35,8(a0)
                 move.b  #4,$20(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

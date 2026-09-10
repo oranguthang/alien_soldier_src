@@ -711,7 +711,7 @@ Boss_SpawnSirenePeriodicProjectile:                     ; CODE XREF: Boss_Update
                 move.w  #$490,(a0)
                 move.w  #$E100,2(a0)
                 move.w  #$8480,$E(a0)
-                move.l  #off_E975C,8(a0)
+                move.l  #SharedCombatSpriteAnimation22,8(a0)
                 clr.w   $C(a0)
                 move.b  #4,$20(a0)
                 move.b  #$40,$21(a0)                    ; '@'
@@ -769,7 +769,7 @@ Projectile_ConvertSireneHomingToParticle:               ; CODE XREF: Projectile_
                                         ; Projectile_UpdateSireneHoming+40   j
                 move.b  #$2F,d0                         ; '/'
                 jsr     (Sound_PlaySFX).l
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_HomeSireneProjectileTowardPlayer:            ; CODE XREF: Projectile_UpdateSireneHoming+38   j  ; was: loc_57E7E

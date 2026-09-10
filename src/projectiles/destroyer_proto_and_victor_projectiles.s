@@ -56,22 +56,22 @@ Projectile_DestroyerProtoSpriteAttributeTable:  dc.w    $6B00, $6B00, $6B00, $6B
                 dc.w    $6300, $6300, $6300, $6300
                 dc.w    $7300, $7300, $7300, $7300
                 dc.w    $7B00, $7B00, $7B00, $7B00
-Boss_DestroyerProtoPartMappingFrameTable:   dc.l    word_ECF04  ; DATA XREF: Boss_DestroyerProtoAnimatedPartMain+1A   o  ; was: off_32118
-                dc.l    word_ECF16
-                dc.l    word_ECF28
-                dc.l    word_ECF40
-                dc.l    word_ECEF2
-                dc.l    word_ECF40
-                dc.l    word_ECF28
-                dc.l    word_ECF16
-                dc.l    word_ECF04
-                dc.l    word_ECF16
-                dc.l    word_ECF28
-                dc.l    word_ECF40
-                dc.l    word_ECEF2
-                dc.l    word_ECF40
-                dc.l    word_ECF28
-                dc.l    word_ECF16
+Boss_DestroyerProtoPartMappingFrameTable:   dc.l    Boss_DestroyerProtoSpriteFrame01  ; DATA XREF: Boss_DestroyerProtoAnimatedPartMain+1A   o  ; was: off_32118
+                dc.l    Boss_DestroyerProtoSpriteFrame02
+                dc.l    Boss_DestroyerProtoSpriteFrame03
+                dc.l    Boss_DestroyerProtoSpriteFrame04
+                dc.l    Boss_DestroyerProtoSpriteFrame00
+                dc.l    Boss_DestroyerProtoSpriteFrame04
+                dc.l    Boss_DestroyerProtoSpriteFrame03
+                dc.l    Boss_DestroyerProtoSpriteFrame02
+                dc.l    Boss_DestroyerProtoSpriteFrame01
+                dc.l    Boss_DestroyerProtoSpriteFrame02
+                dc.l    Boss_DestroyerProtoSpriteFrame03
+                dc.l    Boss_DestroyerProtoSpriteFrame04
+                dc.l    Boss_DestroyerProtoSpriteFrame00
+                dc.l    Boss_DestroyerProtoSpriteFrame04
+                dc.l    Boss_DestroyerProtoSpriteFrame03
+                dc.l    Boss_DestroyerProtoSpriteFrame02
 
 ; Initializes two fixed-slot Destroyer Proto projectiles from the inner parts
 Boss_DestroyerProtoLaunchTwinProjectiles:               ; CODE XREF: Boss_DestroyerProtoLaunchTwinShots+1A   p  ; was: sub_32158
@@ -89,7 +89,7 @@ Projectile_DestroyerProtoInitFromPart:                  ; CODE XREF: Projectile_
                 move.l  #$F808F808,$2C(a0)
                 move.l  #$F010F010,$28(a0)
                 move.w  #$64,$26(a0)                    ; 'd'
-                move.l  #off_E968C,8(a0)
+                move.l  #SharedCombatSpriteAnimation13,8(a0)
                 move.w  #$3B8,(a0)
                 move.w  $40(a4),d0
                 addi.w  #$10,d0
@@ -175,23 +175,23 @@ Projectile_DestroyerProtoSpawnNextSpreadCopy:           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_DestroyerProtoSpawnSpreadCopies
 ; ---------------------------------------------------------------------------
-Projectile_DestroyerProtoMappingFrameTable: dc.l    word_ECF52  ; DATA XREF: Projectile_DestroyerProtoActivateStreamShot+14   o  ; was: off_322C8
+Projectile_DestroyerProtoMappingFrameTable: dc.l    Boss_DestroyerProtoSpriteFrame05  ; DATA XREF: Projectile_DestroyerProtoActivateStreamShot+14   o  ; was: off_322C8
                                         ; Projectile_DestroyerProtoSpawnSpreadCopies+18   o
-                dc.l    word_ECF58
-                dc.l    word_ECF5E
-                dc.l    word_ECF64
-                dc.l    word_ECF6A
-                dc.l    word_ECF64
-                dc.l    word_ECF5E
-                dc.l    word_ECF58
-                dc.l    word_ECF52
-                dc.l    word_ECF58
-                dc.l    word_ECF5E
-                dc.l    word_ECF64
-                dc.l    word_ECF6A
-                dc.l    word_ECF64
-                dc.l    word_ECF5E
-                dc.l    word_ECF58
+                dc.l    Boss_DestroyerProtoSpriteFrame06
+                dc.l    Boss_DestroyerProtoSpriteFrame07
+                dc.l    Boss_DestroyerProtoSpriteFrame08
+                dc.l    Boss_DestroyerProtoSpriteFrame09
+                dc.l    Boss_DestroyerProtoSpriteFrame08
+                dc.l    Boss_DestroyerProtoSpriteFrame07
+                dc.l    Boss_DestroyerProtoSpriteFrame06
+                dc.l    Boss_DestroyerProtoSpriteFrame05
+                dc.l    Boss_DestroyerProtoSpriteFrame06
+                dc.l    Boss_DestroyerProtoSpriteFrame07
+                dc.l    Boss_DestroyerProtoSpriteFrame08
+                dc.l    Boss_DestroyerProtoSpriteFrame09
+                dc.l    Boss_DestroyerProtoSpriteFrame08
+                dc.l    Boss_DestroyerProtoSpriteFrame07
+                dc.l    Boss_DestroyerProtoSpriteFrame06
 
 ; Reflects horizontal velocity when collision flag 4 is set
 Projectile_DestroyerProtoCheckHorizontalReflection:     ; DATA XREF: ROM:00032220   o  ; was: sub_32308
@@ -264,7 +264,7 @@ Projectile_HitReactiveShotAllocateImpact:               ; CODE XREF: Projectile_
                 bne.s   Projectile_HitReactiveShotRemove
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Sprite_InitType160).l
 Projectile_HitReactiveShotRemove:                       ; CODE XREF: Projectile_HitReactiveShotMain+3C   j  ; was: loc_323DA
                 move.w  #$1000,2(a5)

@@ -165,7 +165,7 @@ Projectile_BackStringerConvertAngledShotToImpact:       ; CODE XREF: Projectile_
                 asr.l   #3,d0
                 neg.l   d0
                 move.l  d0,$1C(a5)
-                move.l  #off_E9584,8(a5)
+                move.l  #SharedCombatSpriteAnimation02,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_BackStringerUpdateAngledShotFlight:          ; CODE XREF: Projectile_BackStringerAngledShotMain+C   j  ; was: loc_4599C

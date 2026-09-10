@@ -4,7 +4,7 @@ Boss_ValkirieInitSubEntities:
                 lea     $360(a5),a0
 Boss_ValkirieInitSubEntityLoop:                         ; CODE XREF: Boss_ValkirieInitSubEntities+28   j  ; was: loc_548F6
                 move.w  #$10,(a0)
-                move.l  #off_E9680,8(a0)
+                move.l  #SharedCombatSpriteAnimation12,8(a0)
                 clr.w   $C(a0)
                 move.w  #$EC80,2(a0)
                 move.w  #$8480,$E(a0)
@@ -90,7 +90,7 @@ Entity_ValkirieProjectileInit:                          ; DATA XREF: ROM:Entity_
                 move.w  #$2B00,$E(a5)
                 move.b  #$14,$20(a5)
                 move.l  #$10000,$1C(a5)
-                move.l  #word_ECEAC,8(a5)
+                move.l  #Entity_ValkirieProjectileCompositeSpriteFrame,8(a5)
                 clr.w   $C(a5)
                 rts
 ; End of function Entity_ValkirieProjectileInit
@@ -142,7 +142,7 @@ Entity_ValkirieProjectileWaitTimer:                     ; DATA XREF: ROM:000549F
                 subq.w  #1,$4A(a5)
                 bpl.w   Entity_SevenForcesNoOpState
                 addq.w  #2,4(a5)
-                move.l  #off_ECE90,8(a5)
+                move.l  #Entity_ValkirieProjectileSpriteAnimation,8(a5)
                 clr.w   $C(a5)
                 rts
 ; End of function Entity_ValkirieProjectileWaitTimer
@@ -173,7 +173,7 @@ Entity_ValkirieProjectileTransferShrinkFrame:           ; CODE XREF: Entity_Valk
 ; Clears velocity and resets animation, sets completion flag
 Entity_ValkirieProjectileCleanup:                       ; DATA XREF: ROM:00054A00   o  ; was: sub_54B06
                 clr.l   $18(a5)
-                move.l  #word_ECEAC,8(a5)
+                move.l  #Entity_ValkirieProjectileCompositeSpriteFrame,8(a5)
                 clr.w   $C(a5)
                 move.b  #1,(byte_FFA958).w
                 rts

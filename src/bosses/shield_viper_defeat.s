@@ -54,7 +54,7 @@ Boss_ShieldViperDefeatObjectAccelerationReturn:         ; CODE XREF: Boss_Shield
 Boss_ShieldViperSpawnDefeatBurst:                       ; CODE XREF: Boss_ShieldViperActivateDefeatObject+14   p  ; was: sub_4F22C
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_ShieldViperDefeatBurstReturn
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)
                 move.w  $10(a5),$10(a0)
@@ -349,54 +349,54 @@ Boss_ShieldViperControllerAngularMappingRecords:    dc.w    0  ; field_0  ; was:
                                         ; DATA XREF: Boss_ShieldViperBeginStaggeredDefeat+14   o
                                         ; Gfx_ShieldViperUpdateBodyMappings+8   o
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF8E                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame04   ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECFA6                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame05   ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECFB8                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame06   ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECFD0                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame07   ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF8E                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame04   ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECFA6                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame05   ; field_4
                 dc.w    0                               ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECFB8                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame06   ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECFD0                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame07   ; field_4
 ; Eight body mapping records indexed by quantized angle
 Boss_ShieldViperBodyAngularMappingRecords:  dc.w    0   ; field_0  ; was: stru_4F598
                                         ; DATA XREF: Boss_ShieldViperBeginStaggeredDefeat+84   o
                                         ; Boss_ShieldViperBeginLinkedPartEjection+48   o
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF76                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF7C                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame01   ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF82                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame02   ; field_4
                 dc.w    $1000                           ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF88                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame03   ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF76                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame00   ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF7C                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame01   ; field_4
                 dc.w    0                               ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF82                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame02   ; field_4
                 dc.w    $800                            ; field_0
                 dc.w    $FFFF                           ; field_2
-                dc.l    word_ECF88                      ; field_4
+                dc.l    Boss_ShieldViperSpriteFrame03   ; field_4
 
 ; Debug routine that updates shield viper debugging features

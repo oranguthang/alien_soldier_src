@@ -257,14 +257,14 @@ locret_546DC:                                           ; CODE XREF: Segment_Mis
                 rts
 ; End of function Segment_MissirayType2SpawnDebris
 ; ---------------------------------------------------------------------------
-off_546DE:      dc.l    off_E953C                       ; DATA XREF: Segment_MissirayType2SpawnDebris+1E   r
-                dc.l    off_E95A4
-                dc.l    off_E95DC
-                dc.l    off_E96FC
-                dc.l    off_E953C
-                dc.l    off_E9710
-                dc.l    off_E95DC
-                dc.l    off_E9724
+off_546DE:      dc.l    SharedCombatSpriteAnimation00   ; DATA XREF: Segment_MissirayType2SpawnDebris+1E   r
+                dc.l    SharedCombatSpriteAnimation03
+                dc.l    SharedCombatSpriteAnimation05
+                dc.l    SharedCombatSpriteAnimation18
+                dc.l    SharedCombatSpriteAnimation00
+                dc.l    SharedCombatSpriteAnimation19
+                dc.l    SharedCombatSpriteAnimation05
+                dc.l    SharedCombatSpriteAnimation20
 
 nullsub_125:                                            ; DATA XREF: ROM:0005465A   o
                 rts
@@ -359,7 +359,7 @@ Boss_MissiraySpawnMissile:                              ; CODE XREF: Boss_Missir
                 bne.s   locret_54830
                 move.w  #$404,(a0)
                 move.w  #$EC00,2(a0)
-                move.l  #off_E9680,8(a0)
+                move.l  #SharedCombatSpriteAnimation12,8(a0)
                 move.w  #$8480,$E(a0)
                 move.w  d5,$10(a0)
                 move.w  d6,$14(a0)

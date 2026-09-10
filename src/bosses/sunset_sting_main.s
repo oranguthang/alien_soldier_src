@@ -639,7 +639,7 @@ Boss_SunsetStingSpawnDebrisRain:                        ; CODE XREF: Boss_Sunset
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 move.b  #$30,$20(a0)                    ; '0'
                 bset    #7,$E(a0)
                 move.w  (word_FFA000).w,d0

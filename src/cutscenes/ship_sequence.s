@@ -758,7 +758,7 @@ Sprite_ShipDebrisUpdate:                                ; DATA XREF: ROM:Entity_
 loc_928C:                                               ; CODE XREF: Sprite_ShipDebrisUpdate+4   j
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l

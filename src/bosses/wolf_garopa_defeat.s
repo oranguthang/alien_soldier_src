@@ -93,7 +93,7 @@ Boss_WolfGaropaSpawnOrbExplosion:                       ; CODE XREF: Boss_WolfGa
                                         ; DATA XREF: Boss_WolfGaropaApproachOrbAngleC0AndExplode+1E   o
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_WolfGaropaOrbExplosionReturn
-                move.l  #off_E962C,8(a0)
+                move.l  #SharedCombatSpriteAnimation07,8(a0)
                 jsr     (Effect_SpawnExplosionType188).l
                 move.b  #4,$20(a0)
                 move.w  #$EC00,2(a0)

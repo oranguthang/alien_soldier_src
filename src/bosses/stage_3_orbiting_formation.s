@@ -56,7 +56,7 @@ Boss_Stage3OrbitingFormationReleaseNextPart:            ; CODE XREF: Boss_Stage3
                 asl.l   #4,d1
                 move.l  d0,$18(a0)
                 move.l  d1,$1C(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (Sprite_InitType160).l
                 adda.w  #$60,a0                         ; '`'
                 dbf     d7,Boss_Stage3OrbitingFormationReleaseNextPart

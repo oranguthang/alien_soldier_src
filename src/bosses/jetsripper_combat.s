@@ -7,10 +7,10 @@ Projectile_SelectWolfGaropaDirectionMapping:            ; CODE XREF: Boss_WolfGa
                 rts
 ; End of function Projectile_SelectWolfGaropaDirectionMapping
 ; ---------------------------------------------------------------------------
-off_2B6C4:      dc.l    word_E90DA                      ; DATA XREF: Projectile_SelectWolfGaropaDirectionMapping+A   r
-                dc.l    word_E90E0
-                dc.l    word_E90D4
-                dc.l    word_E90E6
+off_2B6C4:      dc.l    SharedCombatSpriteFrame10       ; DATA XREF: Projectile_SelectWolfGaropaDirectionMapping+A   r
+                dc.l    SharedCombatSpriteFrame11
+                dc.l    SharedCombatSpriteFrame09
+                dc.l    SharedCombatSpriteFrame12
 
 ; Main update routine for Jetsripper boss
 Boss_JetsripperMain:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2B6D4
@@ -19,7 +19,7 @@ Boss_JetsripperMain:                                    ; DATA XREF: ROM:Entity_
                 move.w  $14(a5),$48(a5)
                 addq.w  #2,4(a5)
                 move.w  #$E300,2(a5)
-                move.l  #off_E975C,8(a5)
+                move.l  #SharedCombatSpriteAnimation22,8(a5)
                 move.w  #$C80,d0
                 btst    #1,$5F(a5)
                 beq.s   loc_2B704
@@ -166,7 +166,7 @@ loc_2B8C0:                                              ; CODE XREF: Projectile_
                 asr.l   #1,d0
                 move.l  d0,$18(a5)
                 move.l  #$FFFEC000,$1C(a5)
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; End of function Projectile_GravityBounce
 ; Spawns falling debris projectile with gravity and horizontal velocity
@@ -180,7 +180,7 @@ Projectile_SpawnFallingDebris:                          ; CODE XREF: Enemy_Proje
                 move.w  #$1D0,(a0)
                 move.w  #$EF00,2(a0)
                 move.w  #$C80,$E(a0)
-                move.l  #off_E975C,8(a0)
+                move.l  #SharedCombatSpriteAnimation22,8(a0)
                 move.b  #$3C,$20(a0)                    ; '<'
                 move.w  #$18,$26(a0)
                 move.b  #$40,$21(a0)                    ; '@'
@@ -199,7 +199,7 @@ Enemy_TrailingExplosionSpawner:                         ; DATA XREF: ROM:Entity_
                 bne.s   loc_2B990
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   loc_2B990
-                move.l  #off_E9638,8(a0)
+                move.l  #SharedCombatSpriteAnimation08,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.b  (dword_FFFF08).w,d0
@@ -225,7 +225,7 @@ loc_2B9AA:                                              ; CODE XREF: Enemy_Trail
                                         ; Enemy_TrailingExplosionSpawner+68   j
                 clr.l   $18(a5)
                 move.l  #$FFFF0000,$1C(a5)
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; End of function Enemy_TrailingExplosionSpawner
 ; Spawns falling hazard projectiles from top of screen at intervals
@@ -276,7 +276,7 @@ Projectile_TerrainCollision:                            ; DATA XREF: ROM:Entity_
                 tst.w   (word_FF808C).w
                 bmi.s   loc_2BA7A
 loc_2BA64:                                              ; CODE XREF: Projectile_TerrainCollision+4A   j
-                move.l  #off_E9584,8(a5)
+                move.l  #SharedCombatSpriteAnimation02,8(a5)
                 move.l  #$FFFF0000,$1C(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------

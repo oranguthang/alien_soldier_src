@@ -20,7 +20,7 @@ Projectile_BugmaxEmitPeriodicTrailParticle:             ; CODE XREF: Boss_Bugmax
                 move.b  $20(a5),$20(a0)
                 addq.b  #4,$20(a0)
                 andi.w  #$7FFF,$E(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (RandomNumber).l
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #3,d0
@@ -99,7 +99,7 @@ Projectile_BugmaxHandleSpecialHitFragmentCollision:     ; CODE XREF: Projectile_
 Projectile_BugmaxConvertHitFragmentToParticle:          ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+56   j  ; was: loc_4D4DC
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_BugmaxSettleSpecialHitFragmentAtFloor:       ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+2C   j  ; was: loc_4D4F2
@@ -159,7 +159,7 @@ Projectile_BugmaxFlipMaskSequence:  dc.w    $1000, $800, $1000, $800  ; was: wor
 Projectile_InitBugmaxSpread:                            ; CODE XREF: Boss_BugmaxSpawnSpreadProjectile+10   p  ; was: sub_4D568
                 move.w  #$33C,(a0)
                 move.w  #$EF80,2(a0)
-                move.l  #off_ECBD0,8(a0)
+                move.l  #Projectile_BugmaxSpreadSpriteAnimation,8(a0)
                 move.w  $E(a5),$E(a0)
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$FE02FC04,$2C(a0)
@@ -223,7 +223,7 @@ Projectile_BugmaxUpdateSpreadFlight:                    ; DATA XREF: ROM:Project
                 jsr     (Projectile_InitType88).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$FFFE,$1C(a0)
                 rts
 ; ---------------------------------------------------------------------------
@@ -237,7 +237,7 @@ Projectile_BugmaxCheckSpreadTerrainOrFinalTransition:   ; CODE XREF: Projectile_
                 tst.w   (dword_FF9428+2).w
                 beq.s   Projectile_BugmaxSpreadFlightReturn
 Projectile_BugmaxConvertSpreadToParticle:               ; CODE XREF: Projectile_BugmaxUpdateSpreadFlight+6C   j  ; was: loc_4D67C
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 move.w  #$FFFE,$1C(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
@@ -304,7 +304,7 @@ Gfx_ApplyBugmaxSpreadImpactPaletteLevel:                ; CODE XREF: Projectile_
 Projectile_InitBugmaxSine:                              ; CODE XREF: Boss_BugmaxSpawnSineProjectile+10   p  ; was: sub_4D718
                 move.w  #$340,(a0)
                 move.w  #$EF80,2(a0)
-                move.l  #off_ECBDC,8(a0)
+                move.l  #Projectile_BugmaxSineSpriteAnimation,8(a0)
                 move.w  $E(a5),$E(a0)
                 move.b  #$C0,$21(a0)
                 move.b  #$80,$23(a0)
@@ -538,5 +538,5 @@ Boss_BugmaxHitFragmentEmissionReturn:                   ; CODE XREF: Boss_Bugmax
                 rts
 ; End of function Boss_BugmaxEmitHitFragmentFromCurrentPart
 ; ---------------------------------------------------------------------------
-Boss_BugmaxStandardHitFragmentMappings: dc.l    word_ECB1C  ; DATA XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+F6   r  ; was: off_4DA1A
-                dc.l    word_ECB22
+Boss_BugmaxStandardHitFragmentMappings: dc.l    Boss_BugmaxSpriteFrame00  ; DATA XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+F6   r  ; was: off_4DA1A
+                dc.l    Boss_BugmaxSpriteFrame01

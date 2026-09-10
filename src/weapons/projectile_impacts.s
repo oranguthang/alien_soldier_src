@@ -79,7 +79,7 @@ Weapon_HandleExplosiveImpact_InitExplosion:             ; CODE XREF: Weapon_Hand
                 move.w  #$480,d0
                 or.w    (word_FF808A).w,d0
                 move.w  d0,$E(a5)
-                move.l  #off_E9560,8(a5)
+                move.l  #SharedCombatSpriteAnimation01,8(a5)
                 clr.w   $C(a5)
                 move.w  #5,$26(a5)
                 tst.w   (word_FFFF0E).w
@@ -238,7 +238,7 @@ Weapon_UpdateSeekingMissile:                            ; DATA XREF: ROM:Entity_
                 beq.s   Weapon_UpdateSeekingMissile_TickLifetime
 Weapon_UpdateSeekingMissile_InitImpact:                 ; CODE XREF: Weapon_UpdateSeekingMissile+6   j  ; was: loc_18D6E
                 move.w  #3,$48(a5)
-                move.l  #off_E9680,8(a5)
+                move.l  #SharedCombatSpriteAnimation12,8(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 jmp     Effect_InitType188FromCurrent
@@ -544,7 +544,7 @@ Effect_SpawnPlayerDeathSpark_Initialize:                ; CODE XREF: Effect_Spaw
                 move.w  #$480,$E(a0)
                 move.w  (word_FF808A).w,d0
                 or.w    d0,$E(a0)
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 clr.w   $C(a0)
                 lea     (Math_SineTable).l,a1
                 move.w  (dword_FFFF08).w,d0
@@ -606,7 +606,7 @@ Effect_InitPlayerMotionProjectile_SpawnChild:           ; CODE XREF: Effect_Init
                 moveq   #$B,d7
                 jsr     (Sys_FindFreeObjectSlot).l
                 bne.w   Effect_InitPlayerMotionProjectile_Return
-                move.l  #off_E9584,8(a0)
+                move.l  #SharedCombatSpriteAnimation02,8(a0)
                 jsr     (Sprite_InitType160).l
                 move.b  $20(a5),$20(a0)
                 lea     (Math_SineTable).l,a1

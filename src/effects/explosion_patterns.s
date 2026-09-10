@@ -2,7 +2,7 @@
 Effect_SpawnEightWayExplosionParticles:                 ; CODE XREF: Boss_Stage3OrbitingFormationCheckDefeat+78   p  ; was: sub_2BE56
                                         ; Boss_Stage3OrbitingFormationCheckDefeat+86   p
                 move.w  #3,d0
-                movea.l #off_E953C,a1
+                movea.l #SharedCombatSpriteAnimation00,a1
 ; End of function Effect_SpawnEightWayExplosionParticles
 ; Spawns a power-of-two radial particle pattern
 Effect_SpawnRadialParticlePattern:                      ; CODE XREF: Effect_ExplosionB_SpawnThreeRings+26   p  ; was: sub_2BE60
@@ -40,7 +40,7 @@ Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_Updat
                                         ; Enemy_UpdateAlternateDefeatProjectile+E   p
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Object_UpdateNoOpReturn
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$1A0,(a0)
                 move.w  #6,$4A(a0)
                 move.b  (dword_FFFF08).w,d0
@@ -57,7 +57,7 @@ Effect_SpawnExplosionB:                                 ; CODE XREF: Enemy_Proce
                 bne.w   Object_UpdateNoOpReturn
                 move.w  #8,$4A(a0)
                 move.w  #$1A4,(a0)
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #3,d0
                 move.w  d0,$4C(a0)
@@ -209,7 +209,7 @@ Effect_ExplosionALifetimeHandlers:  dc.w    Effect_ExplosionA_SpawnParticle-*  ;
 Effect_ExplosionA_SpawnParticle:                        ; DATA XREF: ROM:Effect_ExplosionALifetimeHandlers   o  ; was: sub_2C08C
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Object_UpdateNoOpReturn
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jsr     (Sprite_InitType160).l
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
@@ -270,7 +270,7 @@ Effect_ExplosionBParticleLoopHandlers:
 Effect_ExplosionB_SpawnRandomParticle:                  ; DATA XREF: ROM:Effect_ExplosionBParticleLoopHandlers   o  ; was: sub_2C112
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Object_UpdateNoOpReturn
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Sprite_InitType160).l
                 move.b  (dword_FFFF08).w,d0
                 andi.w  #$3F,d0                         ; '?'
@@ -309,17 +309,17 @@ Effect_ExplosionB_SpawnThreeRings:                      ; DATA XREF: ROM:0002C0F
                 move.w  #1,d0
                 move.w  #1,d1
                 move.w  $58(a5),d2
-                movea.l #off_E953C,a1
+                movea.l #SharedCombatSpriteAnimation00,a1
                 bsr.w   Effect_SpawnRadialParticlePattern
                 move.w  #1,d0
                 move.w  #3,d1
                 move.w  $58(a5),d2
-                movea.l #off_E953C,a1
+                movea.l #SharedCombatSpriteAnimation00,a1
                 bsr.w   Effect_SpawnRadialParticlePattern
                 move.w  #1,d0
                 move.w  #5,d1
                 move.w  $58(a5),d2
-                movea.l #off_E953C,a1
+                movea.l #SharedCombatSpriteAnimation00,a1
                 bsr.w   Effect_SpawnRadialParticlePattern
                 addq.w  #2,4(a5)
                 rts
@@ -334,14 +334,14 @@ Effect_ExplosionB_SpawnTwoRings:                        ; DATA XREF: ROM:0002C0F
                 move.w  #2,d0
                 move.w  #3,d1
                 move.w  $58(a5),d2
-                movea.l #off_E953C,a1
+                movea.l #SharedCombatSpriteAnimation00,a1
                 bsr.w   Effect_SpawnRadialParticlePattern
                 move.w  #2,d0
                 move.w  #5,d1
                 move.w  $58(a5),d2
                 addi.w  #$40,d2                         ; '@'
                 andi.w  #$1FE,d2
-                movea.l #off_E953C,a1
+                movea.l #SharedCombatSpriteAnimation00,a1
                 bsr.w   Effect_SpawnRadialParticlePattern
                 addq.w  #2,4(a5)
                 rts
@@ -356,7 +356,7 @@ Effect_ExplosionB_SpawnSingleRing:                      ; DATA XREF: ROM:0002C0F
                 move.w  #3,d0
                 move.w  #4,d1
                 move.w  $58(a5),d2
-                movea.l #off_E953C,a1
+                movea.l #SharedCombatSpriteAnimation00,a1
                 bsr.w   Effect_SpawnRadialParticlePattern
                 addq.w  #2,4(a5)
                 rts

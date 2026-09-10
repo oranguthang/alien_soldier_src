@@ -100,7 +100,7 @@ Projectile_SharpssteelSpawnPickupFromFallingShot:       ; CODE XREF: Projectile_
 Projectile_SharpssteelConvertFallingShotToDebris:       ; CODE XREF: Projectile_SharpssteelFallingShotMain+4   j
                                         ; Projectile_SharpssteelFallingShotMain+5E   j
                 clr.l   $1C(a5)
-                move.l  #off_E95A4,8(a5)
+                move.l  #SharedCombatSpriteAnimation03,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_SharpssteelHandleFallingShotLowerBoundary:   ; CODE XREF: Projectile_SharpssteelFallingShotMain+66   j
@@ -211,7 +211,7 @@ Effect_SharpssteelTryEmitDefeatFragmentDebris:          ; CODE XREF: Effect_Shar
                 neg.l   d0
                 asr.l   #3,d0
                 move.l  d0,$18(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (Projectile_InitType88).l
 Effect_SharpssteelUpdateDefeatFragmentVelocity:         ; CODE XREF: Effect_SharpssteelDefeatFragmentMain+2A   j
                                         ; Effect_SharpssteelDefeatFragmentMain+46   j

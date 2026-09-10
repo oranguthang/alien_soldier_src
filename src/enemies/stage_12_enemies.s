@@ -159,7 +159,7 @@ Enemy_ConvertStage12ObjectToDefeatDebris:               ; CODE XREF: Enemy_Stage
                 clr.l   $1C(a5)
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 clr.w   $C(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------

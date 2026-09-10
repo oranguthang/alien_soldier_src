@@ -106,13 +106,13 @@ Boss_BugmaxToggleCentralPartMapping:                    ; CODE XREF: Boss_Bugmax
                 andi.w  #3,d7
                 bne.s   Boss_BugmaxCentralPartMappingToggleReturn
                 movea.w #(word_FFC680-M68K_RAM),a0
-                cmpi.l  #word_ECB28,8(a0)
+                cmpi.l  #Boss_BugmaxSpriteFrame02,8(a0)
                 beq.s   Boss_BugmaxSelectAlternateCentralPartMapping
-                move.l  #word_ECB28,8(a0)
+                move.l  #Boss_BugmaxSpriteFrame02,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_BugmaxSelectAlternateCentralPartMapping:           ; CODE XREF: Boss_BugmaxToggleCentralPartMapping+16   j  ; was: loc_4DB72
-                move.l  #word_ECB3A,8(a0)
+                move.l  #Boss_BugmaxSpriteFrame03,8(a0)
 Boss_BugmaxCentralPartMappingToggleReturn:              ; CODE XREF: Boss_BugmaxToggleCentralPartMapping+8   j  ; was: locret_4DB7A
                 rts
 ; End of function Boss_BugmaxToggleCentralPartMapping

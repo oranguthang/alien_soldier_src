@@ -9,93 +9,93 @@ Object_SelectAlternatingGraphicsFrameReturn:            ; CODE XREF: Object_Sele
 ; End of function Object_SelectAlternatingGraphicsFrame
 ; ---------------------------------------------------------------------------
 ; Shared eight-direction frame-pointer tables used by Seven Forces parts
-SevenForcesRotationFrameTable0: dc.l    word_ECC86      ; DATA XREF: ROM:00059EB8   o  ; was: off_59D42
+SevenForcesRotationFrameTable0: dc.l    SevenForcesRotationSpriteFrame00  ; DATA XREF: ROM:00059EB8   o  ; was: off_59D42
                                         ; ROM:00059EE4   o
-                dc.l    word_ECC92
-                dc.l    word_ECC98
-                dc.l    word_ECCA4
-                dc.l    word_ECCAA
-                dc.l    word_ECCB6
-                dc.l    word_ECCBC
-                dc.l    word_ECCC8
-SevenForcesRotationFrameTable1: dc.l    word_ECCC8      ; DATA XREF: ROM:00059EA4   o  ; was: off_59D62
+                dc.l    SevenForcesRotationSpriteFrame01
+                dc.l    SevenForcesRotationSpriteFrame02
+                dc.l    SevenForcesRotationSpriteFrame03
+                dc.l    SevenForcesRotationSpriteFrame04
+                dc.l    SevenForcesRotationSpriteFrame05
+                dc.l    SevenForcesRotationSpriteFrame06
+                dc.l    SevenForcesRotationSpriteFrame07
+SevenForcesRotationFrameTable1: dc.l    SevenForcesRotationSpriteFrame07  ; DATA XREF: ROM:00059EA4   o  ; was: off_59D62
                                         ; ROM:00059ECC   o
-                dc.l    word_ECCBC
-                dc.l    word_ECCB6
-                dc.l    word_ECCAA
-                dc.l    word_ECCA4
-                dc.l    word_ECC98
-                dc.l    word_ECC92
-                dc.l    word_ECC86
-                dc.l    word_ECCDA
-                dc.l    word_ECCE0
-                dc.l    word_ECCE6
-                dc.l    word_ECCF2
-                dc.l    word_ECCF8
-                dc.l    word_ECCFE
-                dc.l    word_ECD04
-                dc.l    word_ECD10
-SevenForcesRotationFrameTable2: dc.l    word_ECD10      ; DATA XREF: ROM:00059EA0   o  ; was: off_59DA2
+                dc.l    SevenForcesRotationSpriteFrame06
+                dc.l    SevenForcesRotationSpriteFrame05
+                dc.l    SevenForcesRotationSpriteFrame04
+                dc.l    SevenForcesRotationSpriteFrame03
+                dc.l    SevenForcesRotationSpriteFrame02
+                dc.l    SevenForcesRotationSpriteFrame01
+                dc.l    SevenForcesRotationSpriteFrame00
+                dc.l    SevenForcesRotationSpriteFrame08
+                dc.l    SevenForcesRotationSpriteFrame09
+                dc.l    SevenForcesRotationSpriteFrame10
+                dc.l    SevenForcesRotationSpriteFrame11
+                dc.l    SevenForcesRotationSpriteFrame12
+                dc.l    SevenForcesRotationSpriteFrame13
+                dc.l    SevenForcesRotationSpriteFrame14
+                dc.l    SevenForcesRotationSpriteFrame15
+SevenForcesRotationFrameTable2: dc.l    SevenForcesRotationSpriteFrame15  ; DATA XREF: ROM:00059EA0   o  ; was: off_59DA2
                                         ; ROM:0005A034   o
-                dc.l    word_ECD04
-                dc.l    word_ECCFE
-                dc.l    word_ECCF8
-                dc.l    word_ECCF2
-                dc.l    word_ECCE6
-                dc.l    word_ECCE0
-                dc.l    word_ECCDA
-SevenForcesRotationFrameTable3: dc.l    word_ECD16      ; DATA XREF: ROM:00059EF4   o  ; was: off_59DC2
+                dc.l    SevenForcesRotationSpriteFrame14
+                dc.l    SevenForcesRotationSpriteFrame13
+                dc.l    SevenForcesRotationSpriteFrame12
+                dc.l    SevenForcesRotationSpriteFrame11
+                dc.l    SevenForcesRotationSpriteFrame10
+                dc.l    SevenForcesRotationSpriteFrame09
+                dc.l    SevenForcesRotationSpriteFrame08
+SevenForcesRotationFrameTable3: dc.l    SevenForcesRotationSpriteFrame16  ; DATA XREF: ROM:00059EF4   o  ; was: off_59DC2
                                         ; ROM:00059F6E   o
-                dc.l    word_ECD1C
-                dc.l    word_ECD22
-                dc.l    word_ECD28
-                dc.l    word_ECD2E
-                dc.l    word_ECD34
-                dc.l    word_ECD3A
-                dc.l    word_ECD40
-SevenForcesRotationFrameTable4: dc.l    word_ECD40      ; DATA XREF: ROM:00059EDC   o  ; was: off_59DE2
+                dc.l    SevenForcesRotationSpriteFrame17
+                dc.l    SevenForcesRotationSpriteFrame18
+                dc.l    SevenForcesRotationSpriteFrame19
+                dc.l    SevenForcesRotationSpriteFrame20
+                dc.l    SevenForcesRotationSpriteFrame21
+                dc.l    SevenForcesRotationSpriteFrame22
+                dc.l    SevenForcesRotationSpriteFrame23
+SevenForcesRotationFrameTable4: dc.l    SevenForcesRotationSpriteFrame23  ; DATA XREF: ROM:00059EDC   o  ; was: off_59DE2
                                         ; ROM:00059F66   o
-                dc.l    word_ECD3A
-                dc.l    word_ECD34
-                dc.l    word_ECD2E
-                dc.l    word_ECD28
-                dc.l    word_ECD22
-                dc.l    word_ECD1C
-                dc.l    word_ECD16
-SevenForcesRotationFrameTable5: dc.l    word_ECD46      ; DATA XREF: ROM:00059EC4   o  ; was: off_59E02
+                dc.l    SevenForcesRotationSpriteFrame22
+                dc.l    SevenForcesRotationSpriteFrame21
+                dc.l    SevenForcesRotationSpriteFrame20
+                dc.l    SevenForcesRotationSpriteFrame19
+                dc.l    SevenForcesRotationSpriteFrame18
+                dc.l    SevenForcesRotationSpriteFrame17
+                dc.l    SevenForcesRotationSpriteFrame16
+SevenForcesRotationFrameTable5: dc.l    SevenForcesRotationSpriteFrame24  ; DATA XREF: ROM:00059EC4   o  ; was: off_59E02
                                         ; ROM:00059EEC   o
-                dc.l    word_ECD4C
-                dc.l    word_ECD58
-                dc.l    word_ECD64
-                dc.l    word_ECD70
-                dc.l    word_ECD76
-                dc.l    word_ECD82
-                dc.l    word_ECD8E
-SevenForcesRotationFrameTable6: dc.l    word_ECD8E      ; DATA XREF: ROM:00059EB0   o  ; was: off_59E22
+                dc.l    SevenForcesRotationSpriteFrame25
+                dc.l    SevenForcesRotationSpriteFrame26
+                dc.l    SevenForcesRotationSpriteFrame27
+                dc.l    SevenForcesRotationSpriteFrame28
+                dc.l    SevenForcesRotationSpriteFrame29
+                dc.l    SevenForcesRotationSpriteFrame30
+                dc.l    SevenForcesRotationSpriteFrame31
+SevenForcesRotationFrameTable6: dc.l    SevenForcesRotationSpriteFrame31  ; DATA XREF: ROM:00059EB0   o  ; was: off_59E22
                                         ; ROM:00059ED4   o
-                dc.l    word_ECD82
-                dc.l    word_ECD76
-                dc.l    word_ECD70
-                dc.l    word_ECD64
-                dc.l    word_ECD58
-                dc.l    word_ECD4C
-                dc.l    word_ECD46
-SevenForcesRotationFrameTable7: dc.l    word_ECD9A      ; DATA XREF: ROM:00059EB4   o  ; was: off_59E42
-                dc.l    word_ECDA0
-                dc.l    word_ECDA6
-                dc.l    word_ECDAC
-                dc.l    word_ECDB2
-                dc.l    word_ECDB8
-                dc.l    word_ECDBE
-                dc.l    word_ECDC4
-SevenForcesRotationFrameTable8: dc.l    word_ECDC4      ; DATA XREF: ROM:00059EC8   o  ; was: off_59E62
-                dc.l    word_ECDBE
-                dc.l    word_ECDB8
-                dc.l    word_ECDB2
-                dc.l    word_ECDAC
-                dc.l    word_ECDA6
-                dc.l    word_ECDA0
-                dc.l    word_ECD9A
+                dc.l    SevenForcesRotationSpriteFrame30
+                dc.l    SevenForcesRotationSpriteFrame29
+                dc.l    SevenForcesRotationSpriteFrame28
+                dc.l    SevenForcesRotationSpriteFrame27
+                dc.l    SevenForcesRotationSpriteFrame26
+                dc.l    SevenForcesRotationSpriteFrame25
+                dc.l    SevenForcesRotationSpriteFrame24
+SevenForcesRotationFrameTable7: dc.l    SevenForcesRotationSpriteFrame32  ; DATA XREF: ROM:00059EB4   o  ; was: off_59E42
+                dc.l    SevenForcesRotationSpriteFrame33
+                dc.l    SevenForcesRotationSpriteFrame34
+                dc.l    SevenForcesRotationSpriteFrame35
+                dc.l    SevenForcesRotationSpriteFrame36
+                dc.l    SevenForcesRotationSpriteFrame37
+                dc.l    SevenForcesRotationSpriteFrame38
+                dc.l    SevenForcesRotationSpriteFrame39
+SevenForcesRotationFrameTable8: dc.l    SevenForcesRotationSpriteFrame39  ; DATA XREF: ROM:00059EC8   o  ; was: off_59E62
+                dc.l    SevenForcesRotationSpriteFrame38
+                dc.l    SevenForcesRotationSpriteFrame37
+                dc.l    SevenForcesRotationSpriteFrame36
+                dc.l    SevenForcesRotationSpriteFrame35
+                dc.l    SevenForcesRotationSpriteFrame34
+                dc.l    SevenForcesRotationSpriteFrame33
+                dc.l    SevenForcesRotationSpriteFrame32
 ; Inline descriptors: graphics word, mapping offset, and packed position
 SevenForcesInlinePartDescriptor0:   dc.w    $42D, $F00, $F0F0  ; DATA XREF: ROM:00059E98   o  ; was: word_59E82
                                         ; ROM:0005A038   o
@@ -104,7 +104,7 @@ SevenForcesInlinePartDescriptor1:   dc.w    $43D, $A00, $F4F4  ; DATA XREF: ROM:
 SevenForcesInlinePartDescriptor2:   dc.w    $446, $500, $F8F8  ; DATA XREF: ROM:00059EAC   o  ; was: word_59E8E
                                         ; ROM:00059EC0   o
 ; Primary Valkirie metasprite initialization and neutral-pose data
-Boss_ValkirieMetaspritePartDescriptors: dc.l    word_ECDCA+$400000  ; DATA XREF: Entity_InitValkirieBattleState0+10   o  ; was: off_59E94
+Boss_ValkirieMetaspritePartDescriptors: dc.l    Boss_ValkirieMetaspriteFrame+$400000  ; DATA XREF: Entity_InitValkirieBattleState0+10   o  ; was: off_59E94
                 dc.l    SevenForcesInlinePartDescriptor0+1
                 dc.l    SevenForcesInlinePartDescriptor1+1
                 dc.l    SevenForcesRotationFrameTable2-$40000000
@@ -162,7 +162,7 @@ Boss_ValkirieAuxiliaryMetaspritePartLinks:      dc.w    $C000, $C001, $C001  ; w
                                         ; DATA XREF: Entity_InitValkirieAuxiliaryGroup+2A   o
                 dc.w    $C001, $C001, 0
 ; Medusa metasprite initialization and neutral-pose data
-Boss_MedusaMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_InitMedusaState0+1C   o  ; was: off_59F88
+Boss_MedusaMetaspritePartDescriptors:   dc.l    Boss_ValkirieMetaspriteFrame+$400000  ; DATA XREF: Boss_InitMedusaState0+1C   o  ; was: off_59F88
                 dc.l    SevenForcesInlinePartDescriptor1+1
                 dc.l    SevenForcesRotationFrameTable0+$18000000
                 dc.l    SevenForcesRotationFrameTable0+$18000000
@@ -199,7 +199,7 @@ Boss_MedusaMetaspritePoseAngles:    dc.w    $8080, $8080, $8080  ; was: word_5A0
                                         ; DATA XREF: Boss_InitMedusaState0+34   o
                 dc.w    $8000
 ; Sylpheed metasprite initialization and neutral-pose data
-Boss_SylpheedMetaspritePartDescriptors: dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_SylpheedBattleStart+10   o  ; was: off_5A024
+Boss_SylpheedMetaspritePartDescriptors: dc.l    Boss_ValkirieMetaspriteFrame+$400000  ; DATA XREF: Boss_SylpheedBattleStart+10   o  ; was: off_5A024
                 dc.l    SevenForcesInlinePartDescriptor1+1
                 dc.l    SevenForcesInlinePartDescriptor2+1
                 dc.l    SevenForcesInlinePartDescriptor2+1
@@ -245,7 +245,7 @@ Boss_SylpheedMetaspritePoseAngles:  dc.w    $80, $C080, $4040  ; DATA XREF: Boss
                 dc.w    $80C0, $8080, $8080
 ; Artemis metasprite initialization and neutral-pose data
 Boss_ArtemisMetaspritePartDescriptors:  dc.l    SevenForcesInlinePartDescriptor0+1  ; DATA XREF: Boss_InitArtemisState0+10   o  ; was: off_5A0EE
-                dc.l    word_ECDCA+$400000
+                dc.l    Boss_ValkirieMetaspriteFrame+$400000
                 dc.l    SevenForcesInlinePartDescriptor1+1
                 dc.l    SevenForcesRotationFrameTable1-$80000000
                 dc.l    SevenForcesRotationFrameTable2
@@ -295,7 +295,7 @@ Boss_ArtemisMetaspritePoseAngles:   dc.w    $80, $C0, $C080  ; DATA XREF: Boss_I
                 dc.w    $8080, $A080, $8080
                 dc.w    $80F0
 ; Sirene metasprite initialization and neutral-pose data
-Boss_SireneMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_InitSireneMetasprite+10   o  ; was: off_5A1D4
+Boss_SireneMetaspritePartDescriptors:   dc.l    Boss_ValkirieMetaspriteFrame+$400000  ; DATA XREF: Boss_InitSireneMetasprite+10   o  ; was: off_5A1D4
                 dc.l    SevenForcesInlinePartDescriptor0+1
                 dc.l    SevenForcesRotationFrameTable2-$40000000
                 dc.l    0
@@ -343,7 +343,7 @@ Boss_SireneMetaspritePartLinks: dc.w    $C008, $C008, $C007  ; was: word_5A260
 Boss_SireneMetaspritePoseAngles:    dc.w    $2080, $60, $8080  ; DATA XREF: Boss_InitSireneMetasprite+28   o  ; was: word_5A298
                 dc.w    $C080, $4080
 ; Alternate Valkirie metasprite initialization and neutral-pose data
-Boss_ValkirieAlternateMetaspritePartDescriptors:    dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_ValkirieAlternateInit+10   o  ; was: off_5A2A2
+Boss_ValkirieAlternateMetaspritePartDescriptors:    dc.l    Boss_ValkirieMetaspriteFrame+$400000  ; DATA XREF: Boss_ValkirieAlternateInit+10   o  ; was: off_5A2A2
                 dc.l    SevenForcesInlinePartDescriptor0+1
                 dc.l    SevenForcesRotationFrameTable4
                 dc.l    SevenForcesRotationFrameTable6
@@ -383,7 +383,7 @@ Boss_ValkirieAlternateMetaspritePartLinks:  dc.w    $C002, $C003, $C001  ; was: 
 Boss_ValkirieAlternateMetaspritePoseAngles: dc.w    0, 0, $C0  ; DATA XREF: Boss_ValkirieAlternateInit+28   o  ; was: word_5A34A
                 dc.w    $E0C0, $20C0, $8080
 ; Unidentified Seven Force metasprite initialization and neutral-pose data
-Boss_UnidentifiedSevenForceMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_UnidentifiedSevenForceInit+10   o  ; was: off_5A356
+Boss_UnidentifiedSevenForceMetaspritePartDescriptors:   dc.l    Boss_ValkirieMetaspriteFrame+$400000  ; DATA XREF: Boss_UnidentifiedSevenForceInit+10   o  ; was: off_5A356
                 dc.l    SevenForcesInlinePartDescriptor0+1
                 dc.l    SevenForcesInlinePartDescriptor1+1
                 dc.l    SevenForcesRotationFrameTable1-$80000000

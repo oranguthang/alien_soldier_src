@@ -157,7 +157,7 @@ Projectile_RisingShotEmitShot:                          ; CODE XREF: Projectile_
                 andi.w  #$FEFF,2(a0)
                 move.b  $20(a5),$20(a0)
                 addq.b  #4,$20(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.b  $29(a5),d0
@@ -242,7 +242,7 @@ Projectile_Stage24RisingShotUpdateArc:                  ; DATA XREF: ROM:00033A6
                 add.l   d0,$1C(a5)
                 subq.w  #1,$48(a5)
                 bne.s   Projectile_Stage24RisingShotArcReturn
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_Stage24RisingShotArcReturn:                  ; CODE XREF: Projectile_Stage24RisingShotUpdateArc+16   j  ; was: locret_33C48
@@ -269,7 +269,7 @@ Projectile_Stage24RisingShotEmitTopEdgeTrail:           ; DATA XREF: ROM:00033A6
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Projectile_Stage24RisingShotResetTrailDelay
                 move.w  #$10,(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
                 move.l  #$FE02F40C,$2C(a0)
@@ -288,7 +288,7 @@ Projectile_Stage24RisingShotTrailReturn:                ; CODE XREF: Projectile_
 Projectile_Stage24RisingShotFinishTopEdgeBurst:         ; CODE XREF: Projectile_Stage24RisingShotEmitTopEdgeTrail+10   j  ; was: loc_33CD8
                 move.w  $4A(a5),d0
                 sub.w   d0,$14(a5)
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; End of function Projectile_Stage24RisingShotEmitTopEdgeTrail
 ; Spawns three radial particles and plays the burst sound
@@ -317,7 +317,7 @@ Projectile_Stage24RisingShotSpawnBurstParticle:         ; CODE XREF: Projectile_
                 bne.s   Projectile_Stage24RisingShotSpawnBurstParticleReturn
                 jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  d2,$18(a0)
@@ -329,7 +329,7 @@ Projectile_Stage24RisingShotSpawnBurstParticleReturn:   ; CODE XREF: Projectile_
 Projectile_InitMissirayBullet:                          ; CODE XREF: Orphaned_RisingShotPairFireMissirayShot+2C   p  ; was: sub_33D58
                                         ; Segment_MissirayType1Fire+54   p
                 move.w  #$3CC,(a0)
-                move.l  #off_ED152,8(a0)
+                move.l  #Projectile_MissirayBulletInitialSpriteAnimation,8(a0)
                 clr.w   $C(a0)
                 move.l  #$FC04FC04,$2C(a0)
                 move.l  #$F808F808,$28(a0)
@@ -405,7 +405,7 @@ Projectile_MissirayBulletBeginTransformDelay:           ; DATA XREF: ROM:00033DE
 Projectile_MissirayBulletTransform:                     ; DATA XREF: ROM:00033DF0   o  ; was: sub_33E32
                 subq.w  #1,$48(a5)
                 bne.s   Projectile_MissirayBulletTransformDelayReturn
-                move.l  #off_ED156,8(a5)
+                move.l  #Projectile_MissirayBulletTransformSpriteAnimation,8(a5)
                 clr.w   $C(a5)
                 move.l  #$FF01D62A,$2C(a5)
                 move.l  #$F808D030,$28(a5)
@@ -419,7 +419,7 @@ Projectile_MissirayBulletTransformDelayReturn:          ; CODE XREF: Projectile_
 Projectile_MissirayBulletWaitForTransformFrame:         ; DATA XREF: ROM:00033DF2   o  ; was: sub_33E66
                 cmpi.w  #$80,$C(a5)
                 bcs.s   Projectile_MissirayBulletTransformFrameReturn
-                move.l  #off_ED13E,8(a5)
+                move.l  #Projectile_MissirayBulletLoopSpriteAnimation,8(a5)
                 clr.w   $C(a5)
                 addq.w  #2,4(a5)
 Projectile_MissirayBulletTransformFrameReturn:          ; CODE XREF: Projectile_MissirayBulletWaitForTransformFrame+6   j  ; was: locret_33E7E
@@ -479,7 +479,7 @@ Projectile_MissirayBulletSpawnImpactParticle:           ; CODE XREF: Projectile_
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
                 andi.w  #$FEFF,2(a0)

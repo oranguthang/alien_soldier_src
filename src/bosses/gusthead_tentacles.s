@@ -52,7 +52,7 @@ Boss_GustheadSpawnScrollingDebris:                      ; CODE XREF: Boss_Gusthe
                 jsr     (Sound_PlaySFX).l
 Boss_GustheadSpawnScrollingDebrisObject:                ; CODE XREF: Boss_GustheadSpawnScrollingDebris+26   j  ; was: loc_401CC
                 move.w  #$1E4,(a0)
-                move.l  #word_E91FA,8(a0)
+                move.l  #SharedCombatSpriteFrame35,8(a0)
                 move.w  #$480,$E(a0)
                 move.w  #$CC40,2(a0)
                 move.b  #$7C,$20(a0)                    ; '|'
@@ -171,7 +171,7 @@ Enemy_GustheadDebrisBeginPickupRelease:                 ; CODE XREF: Enemy_Gusth
 Enemy_GustheadDebrisConvertToEffect:                    ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+14   j  ; was: loc_40342
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 Enemy_GustheadDebrisDispatchState:                      ; CODE XREF: Enemy_GustheadDebrisPhysicsMain+C   j  ; was: loc_40358
@@ -285,7 +285,7 @@ Boss_GustheadDebrisReleasePickup:                       ; CODE XREF: Boss_Gusthe
 Boss_GustheadDebrisConvertToEffect:                     ; CODE XREF: Boss_GustheadDebrisUpdate+14   j  ; was: loc_40486
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 Boss_GustheadDebrisApplyPhysics:                        ; CODE XREF: Boss_GustheadDebrisUpdate+C   j  ; was: loc_4049C
@@ -312,7 +312,7 @@ Boss_GustheadDebrisRemoveOutOfBounds:                   ; CODE XREF: Boss_Gusthe
 Enemy_GustheadDebrisConvertCurrentToEffect:             ; was: sub_404DC
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; End of function Enemy_GustheadDebrisConvertCurrentToEffect
 ; Checks ground collision and applies upward bounce velocity to debris
@@ -562,7 +562,7 @@ Enemy_GustheadDebrisReleasePickup:                      ; CODE XREF: Enemy_Gusth
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Enemy_GustheadSpawnPickupFromDebris
                 jsr     (Projectile_InitType88).l
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
 Enemy_GustheadSpawnPickupFromDebris:                    ; CODE XREF: Enemy_GustheadDebrisReleasePickup+E   j  ; was: loc_40798

@@ -7,7 +7,7 @@ OrphanedFloatingOscillator:                             ; DATA XREF: ROM:Entity_
                 move.w  #2,$46(a5)
                 move.w  #$C500,2(a5)
                 move.w  #$480,$E(a5)
-                move.l  #word_E907A,8(a5)
+                move.l  #SharedCombatSpriteFrame00,8(a5)
                 move.w  #$A050,$2A(a5)
                 move.w  $10(a5),$4C(a5)
                 move.w  $14(a5),$4E(a5)
@@ -484,7 +484,7 @@ Stage18_SegmentedWormUpdateFallingSegment:              ; DATA XREF: ROM:0002FF1
 Stage18_SegmentedWormEmitFallingParticle:               ; CODE XREF: Stage18_SegmentedWormUpdateFallingSegment+4E   j
                 jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.w   Entity_UpdateReturn
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 movea.w a0,a4
                 jsr     (Projectile_InitType88).l
                 bsr.w   Stage18_SegmentedWormInitializeParticleVelocity

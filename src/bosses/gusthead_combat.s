@@ -440,14 +440,14 @@ Boss_SpawnExplosionDebrisReturn:                        ; CODE XREF: Boss_SpawnE
                 rts
 ; End of function Boss_SpawnExplosionDebris
 ; ---------------------------------------------------------------------------
-Boss_ExplosionDebrisMappings:   dc.l    off_E953C       ; DATA XREF: Boss_SpawnExplosionDebris+76   r  ; was: off_3FFC4
-                dc.l    off_E95A4
-                dc.l    off_E9560
-                dc.l    off_E95C0
-                dc.l    off_E9584
-                dc.l    off_E95DC
-                dc.l    off_E9584
-                dc.l    off_E9604
+Boss_ExplosionDebrisMappings:   dc.l    SharedCombatSpriteAnimation00  ; DATA XREF: Boss_SpawnExplosionDebris+76   r  ; was: off_3FFC4
+                dc.l    SharedCombatSpriteAnimation03
+                dc.l    SharedCombatSpriteAnimation01
+                dc.l    SharedCombatSpriteAnimation04
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation05
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation06
 
 ; Stops scroll for defeat
 Boss_GustheadDefeatStopScroll:                          ; DATA XREF: ROM:0003F2AE   o  ; was: sub_3FFE4

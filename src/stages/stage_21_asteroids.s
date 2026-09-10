@@ -36,7 +36,7 @@ Stage21_AsteroidFieldStates:    dc.w    Stage21_AsteroidFieldInit-*  ; DATA XREF
 Stage21_AsteroidFieldInit:                              ; DATA XREF: ROM:Stage21_AsteroidFieldStates   o  ; was: sub_330F2
                 addq.w  #2,4(a5)
                 move.w  #$E000,2(a5)
-                move.l  #off_E9680,8(a5)
+                move.l  #SharedCombatSpriteAnimation12,8(a5)
                 move.w  #$8480,$E(a5)
                 move.w  #$1B0,$10(a5)
                 move.w  #$170,$14(a5)

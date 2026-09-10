@@ -72,7 +72,7 @@ Entity_InitSevenForcesIntro:                            ; CODE XREF: Entity_Seve
                 move.w  #$E900,2(a5)
                 move.w  #$2300,$E(a5)
                 move.b  #$14,$20(a5)
-                move.l  #off_ECE90,8(a5)
+                move.l  #Entity_ValkirieProjectileSpriteAnimation,8(a5)
                 clr.w   $C(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$60,$10(a5)                    ; '`'
@@ -289,7 +289,7 @@ Entity_SevenForcesSwitchTransformationFrameState6:      ; DATA XREF: ROM:00054B9
                 bmi.s   Entity_SevenForcesSwitchTransformationFrameReturn
                 addq.w  #2,4(a5)
                 move.w  #8,$48(a5)
-                move.l  #word_ECEAC,8(a5)
+                move.l  #Entity_ValkirieProjectileCompositeSpriteFrame,8(a5)
                 clr.w   $C(a5)
                 clr.l   $18(a5)
 Entity_SevenForcesSwitchTransformationFrameReturn:      ; CODE XREF: Entity_SevenForcesSwitchTransformationFrameState6+6   j  ; was: locret_54F6A
@@ -620,10 +620,10 @@ Entity_SevenForcesSpawnRandomExplosion:                 ; CODE XREF: Entity_Seve
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Entity_SevenForcesSpawnRandomExplosionReturn
                 jsr     (Sprite_InitType160).l
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 btst    #0,(dword_FFFF08).w
                 beq.s   Entity_SevenForcesInitRandomExplosionMotion
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
 Entity_SevenForcesInitRandomExplosionMotion:            ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+66   j  ; was: loc_5538A
                 move.b  #0,$20(a0)
                 moveq   #0,d0
@@ -762,7 +762,7 @@ Entity_InitSevenForcesTransitionSprite:                 ; CODE XREF: Entity_Star
                 move.b  #$14,$20(a5)
                 clr.w   $C(a5)
                 move.w  #$CD00,2(a5)
-                move.l  #word_ECDCA,8(a5)
+                move.l  #Boss_ValkirieMetaspriteFrame,8(a5)
                 move.w  #$6300,$E(a5)
                 move.w  (dword_FFC630).w,$10(a5)
                 move.w  (dword_FFC634).w,$14(a5)

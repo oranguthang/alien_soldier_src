@@ -2561,6 +2561,81 @@ symbols. Provenance rises from 10,748 to 10,783 mappings and the name-audit
 registry from 6,930 to 6,965 records. Module count and the 5,259
 address-derived ceiling are unchanged.
 
+The shared-combat sprite-mapping pass reconstructs the cohesive
+`data/shared_combat_sprite_mappings.s` bank as 73 ROM-ordered frame records
+and 34 relative-offset animation streams. `Anim_UpdateFrame` proves the
+format by reading a frame-relative offset and its duration/control word;
+`Sprite_PrepareOAM` then consumes the resolved frame. All 106 remaining
+`word_E...` and `off_E...` definitions in the bank are replaced with typed,
+stable indices, while the already semantic frame at `0x0E90C2` is audited
+again. Its generated `SharedCombatSpriteFrameDataBase` name is rejected:
+every animation offset is relative to the word containing it, so there is no
+single shared base address.
+
+The indices deliberately make no visual-content claim. Static consumers give
+the following narrower evidence; entries described as internal have no live
+reference outside this bank and remain visual-identity unknowns:
+
+| Animation indices | Proven consumers |
+|---|---|
+| `00-06` | Shared particles, debris, impacts, player shots, and enemy-projectile configurations. |
+| `07` | Wolf Garopa orb explosion. |
+| `08` | Trailing explosion spawner. |
+| `09-11` | Internal bank entries only. |
+| `12` | Homing projectiles, seeking missiles, asteroids, and related impacts. |
+| `13` | Weapon-selection display and fragment projectiles. |
+| `14` | Player homing-weapon effect. |
+| `15` | Internal bank entry only. |
+| `16` | Destroyer Proto and shared directional-projectile configuration. |
+| `17` | Internal bank entry only. |
+| `18-20` | Viblack, Wolf Garopa, and Missiray defeat/debris selection. |
+| `21` | Random debris effect. |
+| `22` | Jetsripper and shared falling debris. |
+| `23` | Internal bank entry only. |
+| `24` | Homing-projectile impacts and Shellshogun debris. |
+| `25` | Internal bank entry only. |
+| `26` | Stage 25 destruction particle. |
+| `27-28` | Large and small resource pickups, respectively. |
+| `29` | Internal bank entry only. |
+| `30` | Player damage-impact object. |
+| `31` | Internal bank entry only. |
+| `32` | Z-Leo laser and Stage 15 fragment impacts. |
+| `33` | Jetsripper type-`$C4` projectile. |
+
+This pass adds 106 truthful provenance mappings and 106 net audit records,
+raising those totals from 10,783 to 10,889 and from 6,965 to 7,071. It removes
+106 live address-derived definitions, lowering the enforced ceiling from
+5,259 to 5,153 without changing module count or ROM layout.
+
+The `0x0ECB1C-0x0ED171` mapping audit removes another inherited mixed-data
+container. The two Bugmax frames previously stranded at the end of
+`valkirie_sprite_mappings.s` now begin `bugmax_sprite_mappings.s`; the former
+`bugmax_and_medusa_mappings.s` is separated at exact consumer boundaries into
+Bugmax, shared Seven Forces/Valkirie, and Destroyer Proto modules. The four
+Shield Viper frames formerly stranded at its end are joined to the renamed
+`shield_viper_and_missiray_mappings.s`. This replaces three misleading layout
+entries with five natural ROM-ordered entries, taking the project from 337 to
+339 modules. The short Destroyer Proto data module is retained as a genuine
+entity boundary rather than padded with an unrelated boss merely to reach a
+line-count target.
+
+All 118 imported definitions in the affected range now state their proven
+type and owner. The 40 Seven Forces rotation frames are selected by the nine
+forward/reversed eight-direction tables in `seven_forces_metasprites.s`;
+Bugmax, Destroyer Proto, and Shield Viper frames are tied to their constructor
+or descriptor consumers. Valkirie, Bugmax, and Missiray relative-offset
+animations have explicit role names. Numeric frame suffixes preserve ROM
+order only: they do not claim an unverified pose, body part, or appearance.
+The unlabeled Bugmax mapping rows at `0x0ECBF0-0x0ECC85` remain a visual-role
+unknown rather than receiving a fabricated Medusa identity from the former
+filename.
+
+This pass adds 118 truthful provenance mappings and audit records, raising the
+totals from 10,889 to 11,007 and from 7,071 to 7,189. It removes 118 live
+address-derived definitions, lowering the enforced ceiling from 5,153 to
+5,035. Module ranges, symbols, and byte identity are checked against the new
+five-entry layout.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

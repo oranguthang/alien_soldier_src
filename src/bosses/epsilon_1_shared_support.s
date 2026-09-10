@@ -5,7 +5,7 @@ Projectile_Epsilon1ConvertOnGlobalMode:                 ; CODE XREF: Projectile_
                 btst    #2,(word_FFC66C).w
                 beq.s   Projectile_Epsilon1GlobalModeReturn
 Projectile_Epsilon1ConvertToType88:                     ; CODE XREF: Projectile_Epsilon1ConvertOnGlobalMode+6   j  ; was: loc_477E8
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_Epsilon1GlobalModeReturn:                    ; CODE XREF: Projectile_Epsilon1ConvertOnGlobalMode+E   j  ; was: locret_477F6

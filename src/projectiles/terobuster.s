@@ -13,7 +13,7 @@ Projectile_TerobusterHomingMissileConvertToImpact:      ; CODE XREF: Projectile_
                                         ; Projectile_TerobusterHomingMissileUpdate+12   j
                 neg.l   $18(a5)
                 neg.l   $1C(a5)
-                move.l  #off_E9584,8(a5)
+                move.l  #SharedCombatSpriteAnimation02,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_TerobusterHomingMissileUpdateFlight:         ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+1E   j  ; was: loc_38ED8

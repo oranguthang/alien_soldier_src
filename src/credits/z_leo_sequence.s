@@ -408,14 +408,14 @@ Boss_ZLeoSpawnParticles_Return:                         ; CODE XREF: Boss_ZLeoSp
 ; ---------------------------------------------------------------------------
 Boss_ZLeoParticleXOffsets:          dc.w    $20, 0, $FFE0, 0  ; DATA XREF: Boss_ZLeoSpawnParticles+46   r  ; was: word_2254C
 Boss_ZLeoParticleYOffsets:          dc.w    0, $A, $FFF0, 0  ; DATA XREF: Boss_ZLeoSpawnParticles+62   r  ; was: word_22554
-Boss_ZLeoParticleSpritePointers:    dc.l    off_E953C   ; DATA XREF: Boss_ZLeoSpawnParticles+7E   r  ; was: off_2255C
-                dc.l    off_E9560
-                dc.l    off_E9584
-                dc.l    off_E95A4
-                dc.l    off_E95A4
-                dc.l    off_E95DC
-                dc.l    off_E9584
-                dc.l    off_E953C
+Boss_ZLeoParticleSpritePointers:    dc.l    SharedCombatSpriteAnimation00  ; DATA XREF: Boss_ZLeoSpawnParticles+7E   r  ; was: off_2255C
+                dc.l    SharedCombatSpriteAnimation01
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation03
+                dc.l    SharedCombatSpriteAnimation03
+                dc.l    SharedCombatSpriteAnimation05
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation00
 
 ; Spawns the impact object that starts the Z-Leo ending transition
 Boss_ZLeoSpawnImpactObject:                             ; CODE XREF: Boss_ZLeoIntroSequence+68   p  ; was: sub_2257C

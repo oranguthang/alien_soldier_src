@@ -138,7 +138,7 @@ Object_DestroyerMK2UpdateFallingCentralPart:            ; DATA XREF: ROM:0004B75
                 bne.s   Object_DestroyerMK2CheckFallingCentralPartBounds
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Object_DestroyerMK2CheckFallingCentralPartBounds
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 move.b  $20(a5),$20(a0)
                 move.l  $10(a5),$10(a0)
                 move.l  $14(a5),$14(a0)
@@ -432,7 +432,7 @@ Object_DestroyerMK2InitializeFragmentRecordLoop:        ; CODE XREF: Object_Dest
                 move.l  #$FF02FF02,$2C(a0)
                 move.w  #$80,$26(a0)
                 move.w  #$6D00,2(a0)
-                move.l  #off_E9680,8(a0)
+                move.l  #SharedCombatSpriteAnimation12,8(a0)
                 move.w  #$8480,$E(a0)
                 clr.w   $C(a0)
                 move.l  $10(a5),$10(a0)
@@ -533,7 +533,7 @@ Object_TransitionDebrisConvertAfterCollision:           ; CODE XREF: Object_Tran
                 jsr     (Sound_PlaySFX).l
                 subq.w  #1,(word_FFC792).w
                 clr.b   $21(a5)
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
                 move.w  $1C(a5),d0
                 neg.w   d0
@@ -755,14 +755,14 @@ Projectile_DestroyerMK2DebrisSpawnReturn:               ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_DestroyerMK2DebrisMain
 ; ---------------------------------------------------------------------------
-Projectile_DestroyerMK2DebrisMappingTable:  dc.l    off_E953C  ; DATA XREF: Projectile_DestroyerMK2DebrisMain+76   r  ; was: off_4BE9A
-                dc.l    off_E95A4
-                dc.l    off_E9560
-                dc.l    off_E95C0
-                dc.l    off_E9584
-                dc.l    off_E95DC
-                dc.l    off_E9584
-                dc.l    off_E9604
+Projectile_DestroyerMK2DebrisMappingTable:  dc.l    SharedCombatSpriteAnimation00  ; DATA XREF: Projectile_DestroyerMK2DebrisMain+76   r  ; was: off_4BE9A
+                dc.l    SharedCombatSpriteAnimation03
+                dc.l    SharedCombatSpriteAnimation01
+                dc.l    SharedCombatSpriteAnimation04
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation05
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation06
 
 Object_DestroyerMK2StageGateReturn:                     ; CODE XREF: Object_DestroyerMK2ActivateFromLinkedState+4   j  ; was: nullsub_108
                                         ; Object_DestroyerMK2ActivateFromLinkedState+14   j

@@ -324,7 +324,7 @@ Projectile_SpawnRandomAngleShot:                        ; was: sub_3146C
                                         ; Boss_GustheadLinkedChainTerminalFallAndFire+28   p
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (Projectile_InitType88).l
                 movea.w a0,a4
                 jsr     (RandomNumber).l

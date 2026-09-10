@@ -427,11 +427,11 @@ Boss_ZLeoInitDefeatParticle:                            ; CODE XREF: Boss_ZLeoSp
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a0)
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$FFFE,$1C(a0)
                 btst    #0,(dword_FFFF08).w
                 beq.s   Boss_ZLeoPositionDefeatEffect
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 clr.w   $1C(a0)
 Boss_ZLeoPositionDefeatEffect:                          ; CODE XREF: Boss_ZLeoSpawnDefeatEffect+1E   j  ; was: loc_52A24
                                         ; Boss_ZLeoSpawnDefeatEffect+48   j

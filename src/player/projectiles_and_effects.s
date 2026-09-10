@@ -207,7 +207,7 @@ Player_SpawnTripleShot_FaceLeft:                        ; CODE XREF: Player_Spaw
                 move.w  #$1E0,d6
 Player_SpawnTripleShot_Loop:                            ; CODE XREF: Player_SpawnTripleShot+1A   j  ; was: loc_17664
                                         ; Player_SpawnTripleShot+30   j
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 bsr.s   Player_InitShotProjectile
                 addi.w  #$40,d6                         ; '@'
                 dbf     d7,Player_SpawnTripleShot_Loop
@@ -223,7 +223,7 @@ Player_SpawnRadialShot:
                 addi.w  #$80,d6
 Player_SpawnRadialShot_Loop:                            ; CODE XREF: Player_SpawnRadialShot+E   j  ; was: loc_1768C
                                         ; Player_SpawnRadialShot+22   j
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 bsr.s   Player_InitShotProjectile
                 addi.w  #$40,d6                         ; '@'
                 dbf     d7,Player_SpawnRadialShot_Loop

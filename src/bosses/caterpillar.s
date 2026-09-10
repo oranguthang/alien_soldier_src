@@ -526,7 +526,7 @@ Boss_CaterpillarShipDismantlePartsState:                ; DATA XREF: ROM:0003D55
                 bne.s   Boss_CaterpillarShipDismantlePartsReturn
                 movea.w $4A(a5),a0
                 lea     $60(a0),a0
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Projectile_InitType88).l
                 lea     $2A0(a5),a1
                 cmpa.w  a1,a0

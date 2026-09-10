@@ -14,7 +14,7 @@ Projectile_MadamBarbarDebrisInitializeType160:          ; CODE XREF: Projectile_
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #2,(word_FFA010).w
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_MadamBarbarDebrisUpdateActive:               ; CODE XREF: Projectile_MadamBarbarDebris+A   j  ; was: loc_3AE78

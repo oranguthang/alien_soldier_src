@@ -105,7 +105,7 @@ UI_InitWeaponSelectScreen:                              ; DATA XREF: ROM:0001799
                 bsr.w   Sys_ClearObjectBlocks17
                 movea.w #(byte_FFC2C0-M68K_RAM),a0
                 move.w  #$10,(a0)
-                move.l  #off_E968C,8(a0)
+                move.l  #SharedCombatSpriteAnimation13,8(a0)
                 move.w  #$E080,2(a0)
                 move.w  #$80,$10(a0)
                 move.w  #$80,$14(a0)

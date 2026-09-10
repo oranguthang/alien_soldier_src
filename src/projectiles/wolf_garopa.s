@@ -657,7 +657,7 @@ Projectile_WolfGaropaReflectOrbShotHorizontally:        ; CODE XREF: Projectile_
                 neg.l   $18(a5)
 Projectile_WolfGaropaConvertOrbShotToType160:           ; CODE XREF: Projectile_WolfGaropaOrbShot+8C   j  ; was: loc_50B28
                 neg.l   $1C(a5)
-                move.l  #off_E95A4,8(a5)
+                move.l  #SharedCombatSpriteAnimation03,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_WolfGaropaCheckOrbShotArenaBounds:           ; CODE XREF: Projectile_WolfGaropaOrbShot+C   j  ; was: loc_50B3A

@@ -247,7 +247,7 @@ Effect_CreateDebrisParticle:                            ; CODE XREF: Effect_Spaw
                 move.w  d2,$14(a0)
                 jsr     (Sprite_InitType160).l
                 move.w  #$334,(a0)
-                move.l  #off_E9738,8(a0)
+                move.l  #SharedCombatSpriteAnimation21,8(a0)
                 move.b  #$40,$21(a0)                    ; '@'
                 clr.b   $23(a0)
                 move.w  #1,$26(a0)

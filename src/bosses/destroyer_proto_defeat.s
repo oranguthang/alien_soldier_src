@@ -61,14 +61,14 @@ Boss_DestroyerProtoEmitDefeatParticle:                  ; CODE XREF: Boss_Destro
                 rts
 ; End of function Boss_DestroyerProtoEmitDefeatParticle
 ; ---------------------------------------------------------------------------
-Boss_DestroyerProtoDefeatParticleMappingTable:  dc.l    off_E953C  ; DATA XREF: Boss_DestroyerProtoEmitDefeatParticle+78   r  ; was: off_31E7C
-                dc.l    off_E95A4
-                dc.l    off_E9560
-                dc.l    off_E95C0
-                dc.l    off_E9584
-                dc.l    off_E95DC
-                dc.l    off_E9584
-                dc.l    off_E9604
+Boss_DestroyerProtoDefeatParticleMappingTable:  dc.l    SharedCombatSpriteAnimation00  ; DATA XREF: Boss_DestroyerProtoEmitDefeatParticle+78   r  ; was: off_31E7C
+                dc.l    SharedCombatSpriteAnimation03
+                dc.l    SharedCombatSpriteAnimation01
+                dc.l    SharedCombatSpriteAnimation04
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation05
+                dc.l    SharedCombatSpriteAnimation02
+                dc.l    SharedCombatSpriteAnimation06
 
 ; Runs the defeat particle, palette, and arena-rotation effects until removal
 Boss_DestroyerProtoUpdateDefeatExplosion:               ; DATA XREF: ROM:0003153E   o  ; was: sub_31E9C

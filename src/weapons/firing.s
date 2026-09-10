@@ -206,7 +206,7 @@ Weapon_SpawnHomingEffect_InitializeCompanion:           ; CODE XREF: Weapon_Spaw
                 move.l  $1C(a0),d0
                 asr.l   #2,d0
                 move.l  d0,$1C(a1)
-                move.l  #off_E9698,8(a1)
+                move.l  #SharedCombatSpriteAnimation14,8(a1)
                 move.w  $10(a0),$10(a1)
                 move.w  $14(a0),$14(a1)
                 movea.w a1,a0

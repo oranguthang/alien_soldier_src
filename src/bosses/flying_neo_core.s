@@ -335,7 +335,7 @@ Boss_FlyingNeoDefeatLaunchType88PartState:              ; DATA XREF: ROM:0003C0B
                 move.w  #$70,$48(a5)                    ; 'p'
                 bsr.w   Boss_FlyingNeoQueueFixedTileRowTransfer
                 movea.w #(word_FFC9E0-M68K_RAM),a0
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.l  #$FFFEE000,$18(a0)
                 tst.w   $54(a5)
                 beq.s   Boss_FlyingNeoInitializeLaunchedType88Part
@@ -356,7 +356,7 @@ Boss_FlyingNeoDefeatParticleRainState:                  ; DATA XREF: ROM:0003C0B
                 bne.s   Boss_FlyingNeoUpdateDefeatParticleRainTimer
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_FlyingNeoUpdateDefeatParticleRainTimer
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.l  #$FFFF1000,$1C(a0)
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)

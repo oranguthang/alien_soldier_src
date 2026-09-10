@@ -402,7 +402,7 @@ Player_CreateDamageImpactObject:                        ; CODE XREF: Player_Spaw
                 move.w  #$E900,2(a0)
                 move.b  #$50,$21(a0)                    ; 'P'
                 move.w  #8,$48(a0)
-                move.l  #off_E9800,8(a0)
+                move.l  #SharedCombatSpriteAnimation30,8(a0)
                 move.w  $E(a5),d7
                 andi.w  #$8000,d7
                 addi.w  #$480,d7

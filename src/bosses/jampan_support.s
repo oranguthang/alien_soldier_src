@@ -240,7 +240,7 @@ Boss_JampanFireShieldShotBurstState:                    ; DATA XREF: ROM:0004A21
                 bne.s   Boss_JampanFireShieldShotBurstReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_JampanResetShieldShotTimer
-                move.l  #off_E95A4,8(a0)
+                move.l  #SharedCombatSpriteAnimation03,8(a0)
                 move.l  $10(a5),$10(a0)
                 move.l  $14(a5),$14(a0)
                 move.l  #$4000,$1C(a0)
@@ -254,7 +254,7 @@ Boss_JampanFireShieldShotBurstReturn:                   ; CODE XREF: Boss_Jampan
 ; ---------------------------------------------------------------------------
 Boss_JampanConvertShieldToProjectile:                   ; CODE XREF: Boss_JampanShieldMain+6   j  ; was: loc_4A2F0
                                         ; Boss_JampanFireShieldShotBurstState+34   j
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; End of function Boss_JampanFireShieldShotBurstState
 Boss_JampanShieldNoOpState08:                           ; DATA XREF: ROM:0004A220   o  ; was: nullsub_102

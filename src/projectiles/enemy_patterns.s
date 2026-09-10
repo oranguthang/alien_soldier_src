@@ -172,7 +172,7 @@ Enemy_SetProjectileDifficulty:                          ; CODE XREF: Enemy_InitH
                 addi.w  #$480,d2
                 move.w  d2,$E(a0)
                 move.b  d3,$20(a0)
-                move.l  #off_E9680,8(a0)
+                move.l  #SharedCombatSpriteAnimation12,8(a0)
                 clr.w   $C(a0)
                 clr.b   $21(a0)
                 clr.b   $23(a0)
@@ -217,7 +217,7 @@ loc_2B2C0:                                              ; CODE XREF: Enemy_Homin
                 bpl.s   locret_2B2EE
                 addq.w  #2,4(a5)
                 move.b  #$40,$21(a5)                    ; '@'
-                move.l  #off_E9788,8(a5)
+                move.l  #SharedCombatSpriteAnimation24,8(a5)
                 clr.w   $C(a5)
                 move.l  $50(a5),$18(a5)
                 move.l  $54(a5),$1C(a5)
@@ -274,7 +274,7 @@ loc_2B35C:                                              ; CODE XREF: Boss_Jetsri
                 addi.w  #$480,d2
                 move.w  d2,$E(a0)
                 move.b  d3,$20(a0)
-                move.l  #off_E9680,8(a0)
+                move.l  #SharedCombatSpriteAnimation12,8(a0)
                 clr.w   $C(a0)
                 clr.b   $21(a0)
                 clr.b   $23(a0)
@@ -319,7 +319,7 @@ loc_2B40C:                                              ; CODE XREF: Projectile_
                 bpl.s   locret_2B43A
                 addq.w  #2,4(a5)
                 move.b  #$40,$21(a5)                    ; '@'
-                move.l  #off_E9788,8(a5)
+                move.l  #SharedCombatSpriteAnimation24,8(a5)
                 clr.w   $C(a5)
                 move.l  $50(a5),$18(a5)
                 move.l  $54(a5),$1C(a5)
@@ -416,14 +416,14 @@ stru_2B526:     dc.w    $37                             ; field_0
                                         ; DATA XREF: ROM:off_2B4B6   o
                                         ; sub_2B4BE   o
                 dc.w    9                               ; field_2
-                dc.l    off_E9604                       ; field_4
-                dc.l    off_E96E0                       ; field_8
+                dc.l    SharedCombatSpriteAnimation06   ; field_4
+                dc.l    SharedCombatSpriteAnimation16   ; field_8
                 dc.w    0                               ; field_C
 stru_2B534:     dc.w    $38                             ; field_0
                                         ; DATA XREF: ROM:0002B4BA   o
                 dc.w    $A                              ; field_2
-                dc.l    off_E9604                       ; field_4
-                dc.l    off_E96E0                       ; field_8
+                dc.l    SharedCombatSpriteAnimation06   ; field_4
+                dc.l    SharedCombatSpriteAnimation16   ; field_8
                 dc.w    1                               ; field_C
 
 ; Bouncing enemy projectile with screen bounds check
@@ -490,7 +490,7 @@ loc_2B5D2:                                              ; CODE XREF: Enemy_Bounc
                 asr.l   #2,d1
                 move.l  d0,$18(a0)
                 move.l  d1,$1C(a0)
-                move.l  #off_E9560,8(a0)
+                move.l  #SharedCombatSpriteAnimation01,8(a0)
                 jmp     Sprite_InitType160
 ; End of function Enemy_BouncingProjectile
 ; Spawns animated projectile from enemy with random animation offset

@@ -69,7 +69,7 @@ Enemy_BirdController:                                   ; DATA XREF: ROM:Entity_
                 jsr     (Sound_PlaySFX).l
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                move.l  #off_E953C,8(a5)
+                move.l  #SharedCombatSpriteAnimation00,8(a5)
                 clr.w   $C(a5)
                 jmp     Projectile_InitType88FromCurrent
 ; ---------------------------------------------------------------------------
@@ -437,13 +437,13 @@ Enemy_UpdateBirdDefeatDebris_EmitParticles:             ; CODE XREF: Enemy_Updat
                 bne.s   Enemy_UpdateBirdDefeatDebris_Return
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Sprite_InitType160).l
                 subq.w  #1,$4A(a5)
                 bne.s   Enemy_UpdateBirdDefeatDebris_Return
                 moveq   #2,d0
                 moveq   #4,d1
-                movea.l #off_E953C,a1
+                movea.l #SharedCombatSpriteAnimation00,a1
                 jsr     (Effect_SpawnRadialParticlePattern).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l

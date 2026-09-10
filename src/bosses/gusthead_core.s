@@ -182,7 +182,7 @@ Boss_GustheadStoreSegmentRadius:                        ; CODE XREF: Boss_Gusthe
                 dbf     d7,Boss_GustheadSetupArmLoop
                 move.w  #$10,(a0)
                 move.w  #$6100,2(a0)
-                move.l  #off_E9680,8(a0)
+                move.l  #SharedCombatSpriteAnimation12,8(a0)
                 move.w  #$480,$E(a0)
                 rts
 ; End of function Boss_GustheadSetupParts

@@ -25,7 +25,7 @@ Boss_JetsripperInitC4Projectile:                        ; CODE XREF: Boss_Jetsri
                 add.w   d1,d0
                 move.w  d0,$E(a0)
                 move.w  #$E100,2(a0)
-                move.l  #off_E9870,8(a0)
+                move.l  #SharedCombatSpriteAnimation33,8(a0)
                 clr.w   $C(a0)
                 move.b  #$10,$20(a0)
                 move.w  #3,$48(a0)
@@ -99,7 +99,7 @@ Boss_CaterpillarSpawnExplosion:                         ; CODE XREF: Boss_Caterp
                                         ; Boss_CaterpillarFourPhaseSegment+40   j
                 movea.w a5,a0
                 bsr.w   Projectile_InitType88
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 clr.l   $18(a0)
                 move.l  #$FFFC0000,$1C(a0)
                 move.b  #4,$20(a0)
@@ -208,7 +208,7 @@ Projectile_FallingSpawner:                              ; DATA XREF: ROM:Entity_
                 move.w  #2,$48(a5)
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Projectile_FallingSpawner_Return
-                move.l  #off_E95C0,8(a0)
+                move.l  #SharedCombatSpriteAnimation04,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.l  #$FFFEE000,$1C(a0)
@@ -222,7 +222,7 @@ Projectile_FallingSpawner_Return:                       ; CODE XREF: Projectile_
 Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_SpawnDifficultyProjectilePattern:loc_2D664   j  ; was: sub_2A5B6
                                         ; Projectile_ViblackSideShotBeginBurst+14   j
                 movea.w a5,a0
-                move.l  #off_E95DC,8(a5)
+                move.l  #SharedCombatSpriteAnimation05,8(a5)
                 bsr.w   Sprite_InitType160FromCurrent
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
@@ -233,7 +233,7 @@ Enemy_SpawnQuadProjectiles:                             ; CODE XREF: Enemy_Spawn
 Projectile_UpdateQuadSpawn:                             ; CODE XREF: Enemy_SpawnQuadProjectiles+48   j  ; was: loc_2A5D6
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Enemy_SpawnQuadProjectiles_Return
-                move.l  #off_E95A4,8(a0)
+                move.l  #SharedCombatSpriteAnimation03,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  (a2)+,$18(a0)
@@ -553,7 +553,7 @@ Effect_InitDebrisSprite:                                ; CODE XREF: Boss_JokerS
                 move.w  #$174,(a0)
                 move.w  #$EDC0,2(a0)
                 move.w  #$480,$E(a0)
-                move.l  #off_E95A4,8(a0)
+                move.l  #SharedCombatSpriteAnimation03,8(a0)
                 clr.w   $C(a0)
                 move.w  (word_FF808A).w,d0
                 or.w    d0,$E(a0)

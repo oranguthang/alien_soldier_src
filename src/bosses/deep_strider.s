@@ -554,7 +554,7 @@ Boss_DeepStriderSpawnNextDefeatBurst:                   ; CODE XREF: Boss_DeepSt
                 move.b  #$30,d0                         ; '0'
                 jsr     (Sound_PlaySFX).l
                 jsr     (Projectile_InitType1A8).l
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.l  d4,$1C(a0)
                 move.w  #$150,$14(a0)
                 move.w  d5,$10(a0)
@@ -578,11 +578,11 @@ Boss_DeepStriderSpawnDefeatDebris:                      ; CODE XREF: Boss_DeepSt
                 jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
                 jsr     (Sprite_InitType160).l
-                move.l  #off_E953C,8(a0)
+                move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.b  (dword_FFFF08).w,d1
                 andi.w  #3,d1
                 bne.s   Boss_DeepStriderApplyDefeatDebrisMotion
-                move.l  #off_E95DC,8(a0)
+                move.l  #SharedCombatSpriteAnimation05,8(a0)
 Boss_DeepStriderApplyDefeatDebrisMotion:                ; CODE XREF: Boss_DeepStriderSpawnDefeatDebris+32   j  ; was: loc_3ED62
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1F,d0

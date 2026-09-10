@@ -88,8 +88,8 @@ Pickup_InitializeSelectedSize:                          ; CODE XREF: Pickup_Spaw
 ; ---------------------------------------------------------------------------
 Pickup_SoundIds:        dc.b    $46, $47                ; DATA XREF: Pickup_SpawnSelectedSizeIfResourceNeeded+54   r  ; was: byte_2BDA2
 Pickup_ResourceAmounts: dc.w    $1E, $64                ; DATA XREF: Pickup_SpawnSelectedSizeIfResourceNeeded+5C   r  ; was: word_2BDA4
-Pickup_SpriteMappings:  dc.l    off_E97E0               ; DATA XREF: Pickup_SpawnSelectedSizeIfResourceNeeded+64   r  ; was: off_2BDA8
-                dc.l    off_E97D4
+Pickup_SpriteMappings:  dc.l    SharedCombatSpriteAnimation28  ; DATA XREF: Pickup_SpawnSelectedSizeIfResourceNeeded+64   r  ; was: off_2BDA8
+                dc.l    SharedCombatSpriteAnimation27
 
 ; Updates pickup lifetime, collection, display priority, and motion
 Pickup_Update:                                          ; CODE XREF: Effect_WolfGaropaBoundaryFollowerMain:Effect_UpdateWolfGaropaBoundaryFollowerSprite   j  ; was: sub_2BDB0
