@@ -1,0 +1,29 @@
+Boss_TerobusterSpriteMapping00: dc.w    $E86E, $D00, $F8F1  ; DATA XREF: ROM:00034A62   o  ; was: word_EB7CE
+Boss_TerobusterSpriteMapping01: dc.w    $E876, $E00, $F4F0  ; DATA XREF: ROM:00034A5E   o  ; was: word_EB7D4
+Boss_TerobusterSpriteMapping02: dc.w    $E882, $F00, $EFF0  ; DATA XREF: ROM:00034A5A   o  ; was: word_EB7DA
+Boss_TerobusterSpriteMapping03: dc.w    $E892, $B00, $F0F6  ; DATA XREF: ROM:00034A56   o  ; was: word_EB7E0
+Boss_TerobusterSpriteMapping04: dc.w    $F09E, $700, $F0F8  ; DATA XREF: ROM:00034A52   o  ; was: word_EB7E6
+Boss_TerobusterSpriteMapping05: dc.w    $F0A6, $B00, $F0F4  ; DATA XREF: ROM:00034A4E   o  ; was: word_EB7EC
+Boss_TerobusterSpriteMapping06: dc.w    $F0B2, $F00, $F0F0  ; DATA XREF: ROM:00034A4A   o  ; was: word_EB7F2
+Boss_TerobusterSpriteMapping07: dc.w    $F0C2, $E00, $F2F1  ; DATA XREF: ROM:Boss_TerobusterPrimaryRotationFrames   o  ; was: word_EB7F8
+Boss_TerobusterSpriteMapping08: dc.w    $60D6, $500, $F806  ; DATA XREF: ROM:Boss_TerobusterSecondaryRotationFrames   o  ; was: word_EB7FE
+                                        ; Boss_TerobusterDecisionState+2A0   o
+                dc.w    $E0CE, $D00, $F8E6
+Boss_TerobusterSpriteMapping09: dc.w    $60E2, $600, $F805  ; DATA XREF: ROM:00034A6A   o  ; was: word_EB80A
+                dc.w    $E0DA, $D00, $F8E5
+Boss_TerobusterSpriteMapping10: dc.w    $60F0, $900, $F8  ; DATA XREF: ROM:00034A6E   o  ; was: word_EB816
+                dc.w    $E0E8, $D00, $F0E8
+Boss_TerobusterSpriteMapping11: dc.w    $60FF, $A00, $1F5  ; DATA XREF: ROM:00034A72   o  ; was: word_EB822
+                dc.w    $E0F6, $A00, $E9ED
+Boss_TerobusterSpriteMapping12: dc.w    $6110, $500, $4F6  ; DATA XREF: ROM:00034A76   o  ; was: word_EB82E
+                dc.w    $E108, $700, $E4F6
+Boss_TerobusterSpriteMapping13: dc.w    $611C, $900, $2EE  ; DATA XREF: ROM:00034A7A   o  ; was: word_EB83A
+                dc.w    $E114, $700, $E2F6
+Boss_TerobusterSpriteMapping14: dc.w    $6126, $E00, $F7EA  ; DATA XREF: ROM:00034A7E   o  ; was: word_EB846
+                dc.w    $E122, $500, $E7FF
+Boss_TerobusterSpriteMapping15: dc.w    $613A, $600, $E705  ; DATA XREF: ROM:00034A82   o  ; was: word_EB852
+                dc.w    $E132, $D00, $F8E5
+                dc.w    $694C, $D00, $6F8
+                dc.w    $E940, $E00, $EEF0
+Boss_TerobusterSetupSpriteMapping:  dc.w    $695A, $E00, $F2EB  ; DATA XREF: Boss_TerobusterSetup+96   o  ; was: word_EB86A
+                dc.w    $E954, $600, $FA0B

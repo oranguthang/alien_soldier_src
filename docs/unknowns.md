@@ -2710,3 +2710,28 @@ adds 164 provenance mappings and 181 audit records, raising the totals from
 11,094 to 11,258 and from 7,282 to 7,463. It removes 166 address-derived
 definitions, lowering the enforced ceiling from 4,948 to 4,782. The canonical
 Japanese ROM remains byte-identical after the split and renames.
+
+The adjacent `0x0EB5E6-0x0EBBB7` sprite-mapping audit removes two more
+mixed-owner data containers. `caterpillar_jetsripper_and_antroid_mappings.s`
+and `terobuster_shellshogun_and_xi_tiger_mappings.s` interleaved records for
+eight independently consumed entities and omitted several of those owners from
+their filenames. They are now exact ROM-ordered modules for Caterpillar,
+Jetsripper, Antroid, Terobuster, Shellshogun, Shiper's tentacle, Xi-Tiger, and
+Madam Barbar. The split replaces two modules with eight and takes the layout
+from 341 to 347 modules.
+
+These mapping modules range from 8 to 91 source lines, below the preferred
+general-purpose size band. That is an intentional data-boundary exception, not
+arbitrary fragmentation: every file contains the complete contiguous mapping
+run for one entity, and combining them solely to increase line count would
+recreate the misleading mixed containers this reconstruction is removing.
+
+All 125 formerly address-derived definitions in the two original containers
+are selected by named pointer tables or direct mapping assignments. Names use
+the proven boss and sprite-mapping format while numeric suffixes retain ROM
+order without claiming an unverified visual pose. The seven existing semantic
+Xi-Tiger body and claw names were already backed by their grounded, airborne,
+and symmetric claw-angle consumers and remain unchanged. This pass adds 125
+provenance mappings and 125 audit records, raising the totals from 11,258 to
+11,383 and from 7,463 to 7,588. Address-derived definitions fall from 4,782 to
+4,657, and the rebuilt canonical Japanese ROM remains byte-identical.

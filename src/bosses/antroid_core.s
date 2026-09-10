@@ -162,7 +162,7 @@ Boss_AntroidNeutralState:                               ; CODE XREF: Boss_Antroi
                 bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderBlinkingPose
                 movea.w $11E(a5),a0
-                move.l  #word_EB77A,8(a0)
+                move.l  #Boss_AntroidSpriteMapping10,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_AntroidFinishNeutralAnimation:                     ; CODE XREF: Boss_AntroidReturnToNeutral+2E   j  ; was: loc_376A2
@@ -249,9 +249,9 @@ Boss_AntroidHealthRecoveryState:                        ; DATA XREF: ROM:0003754
                 nop
                 bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderPose
-                move.l  #word_EB77A,$548(a5)
+                move.l  #Boss_AntroidSpriteMapping10,$548(a5)
                 move.w  #$14E,$554(a5)
-                move.l  #word_EB77A,$968(a5)
+                move.l  #Boss_AntroidSpriteMapping10,$968(a5)
                 move.w  #$14E,$974(a5)
                 bra.w   Boss_AntroidSelectBlinkMetasprite
 ; End of function Boss_AntroidHealthRecoveryState
@@ -272,7 +272,7 @@ Boss_AntroidPrepareLeapAttackAAnimate:                  ; CODE XREF: Boss_Antroi
                 bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderBlinkingPose
                 movea.w $48(a5),a0
-                move.l  #word_EB77A,8(a0)
+                move.l  #Boss_AntroidSpriteMapping10,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
 ; Launches leap variant A after selecting state $0A
@@ -349,7 +349,7 @@ Boss_AntroidPrepareLeapAttackBAnimate:                  ; CODE XREF: Boss_Antroi
                 bsr.w   Boss_AntroidUpdatePoseAnimation
                 bsr.w   Boss_AntroidRenderBlinkingPose
                 movea.w $48(a5),a0
-                move.l  #word_EB77A,8(a0)
+                move.l  #Boss_AntroidSpriteMapping10,8(a0)
                 rts
 ; ---------------------------------------------------------------------------
 ; Launches leap variant B after selecting state $0E

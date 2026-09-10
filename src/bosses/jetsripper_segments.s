@@ -127,33 +127,33 @@ Boss_JetsripperUpdateBodyFrame:                         ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperUpdateBodySprite
 ; ---------------------------------------------------------------------------
-Boss_JetsripperHeadFrames:  dc.l    word_EB654          ; DATA XREF: Boss_JetsripperDeathInit+3E   o  ; was: off_35F6A
+Boss_JetsripperHeadFrames:  dc.l    Boss_JetsripperSpriteMapping00  ; DATA XREF: Boss_JetsripperDeathInit+3E   o  ; was: off_35F6A
                                         ; Boss_JetsripperUpdateAllSprites+2   o
-                dc.l    word_EB660
-                dc.l    word_EB672
-                dc.l    word_EB660
-Boss_JetsripperBodyDirectionFrames: dc.l    word_EB684  ; DATA XREF: Boss_JetsripperDeathInit+66   o  ; was: off_35F7A
+                dc.l    Boss_JetsripperSpriteMapping01
+                dc.l    Boss_JetsripperSpriteMapping02
+                dc.l    Boss_JetsripperSpriteMapping01
+Boss_JetsripperBodyDirectionFrames: dc.l    Boss_JetsripperSpriteMapping03  ; DATA XREF: Boss_JetsripperDeathInit+66   o  ; was: off_35F7A
                                         ; Boss_JetsripperUpdateAllSprites+C   o
-                dc.l    word_EB6C6
-                dc.l    word_EB6CC
-                dc.l    word_EB6D2
-                dc.l    word_EB6D8
-                dc.l    word_EB6D2
-                dc.l    word_EB6CC
-                dc.l    word_EB6C6
-                dc.l    word_EB684
-                dc.l    word_EB6BA
-                dc.l    word_EB68A
-                dc.l    word_EB6C0
-                dc.l    word_EB690
-                dc.l    word_EB6C0
-                dc.l    word_EB68A
-                dc.l    word_EB6BA
-Boss_JetsripperTailFrames:  dc.l    word_EB6A8          ; DATA XREF: Boss_JetsripperDeathInit+7E   o  ; was: off_35FBA
+                dc.l    Boss_JetsripperSpriteMapping12
+                dc.l    Boss_JetsripperSpriteMapping13
+                dc.l    Boss_JetsripperSpriteMapping14
+                dc.l    Boss_JetsripperSpriteMapping15
+                dc.l    Boss_JetsripperSpriteMapping14
+                dc.l    Boss_JetsripperSpriteMapping13
+                dc.l    Boss_JetsripperSpriteMapping12
+                dc.l    Boss_JetsripperSpriteMapping03
+                dc.l    Boss_JetsripperSpriteMapping10
+                dc.l    Boss_JetsripperSpriteMapping04
+                dc.l    Boss_JetsripperSpriteMapping11
+                dc.l    Boss_JetsripperSpriteMapping05
+                dc.l    Boss_JetsripperSpriteMapping11
+                dc.l    Boss_JetsripperSpriteMapping04
+                dc.l    Boss_JetsripperSpriteMapping10
+Boss_JetsripperTailFrames:  dc.l    Boss_JetsripperSpriteMapping07  ; DATA XREF: Boss_JetsripperDeathInit+7E   o  ; was: off_35FBA
                                         ; Boss_JetsripperUpdateAllSprites+16   o
-                dc.l    word_EB6AE
-                dc.l    word_EB6B4
-                dc.l    word_EB6AE
+                dc.l    Boss_JetsripperSpriteMapping08
+                dc.l    Boss_JetsripperSpriteMapping09
+                dc.l    Boss_JetsripperSpriteMapping08
 
 ; Fills angle buffer with constant value for segments
 Boss_JetsripperFillAngleBuffer:                         ; CODE XREF: Boss_JetsripperInitBody+B6   j  ; was: sub_35FCA

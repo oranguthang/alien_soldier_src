@@ -3,14 +3,14 @@
 ; Selects the blinking part descriptors, then renders the current pose
 Boss_AntroidRenderBlinkingPose:                         ; CODE XREF: Boss_AntroidIdleState+A   j  ; was: sub_37E8C
                                         ; Boss_AntroidReturnToNeutral+3A   p
-                move.l  #word_EB732,$C8(a5)
+                move.l  #Boss_AntroidSpriteMapping01,$C8(a5)
                 move.w  (word_FFA000).w,d0
                 andi.w  #$7F,d0
                 cmpi.w  #$20,d0                         ; ' '
                 bpl.s   Boss_AntroidRenderPose
                 btst    #1,d0
                 beq.s   Boss_AntroidRenderPose
-                move.l  #word_EB720,$C8(a5)
+                move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
 ; End of function Boss_AntroidRenderBlinkingPose
 ; Traverses the 25 Antroid metasprite parts for the pose in a1
 Boss_AntroidRenderPose:                                 ; CODE XREF: Boss_AntroidHealthRecoveryState+18   p  ; was: sub_37EB0
@@ -21,10 +21,10 @@ Boss_AntroidRenderPose:                                 ; CODE XREF: Boss_Antroi
 ; Selects alternate part descriptors on every other frame
 Boss_AntroidSelectBlinkMetasprite:                      ; CODE XREF: Boss_AntroidHealthRecoveryState+38   j  ; was: sub_37EB8
                                         ; Boss_AntroidPrepareJumpAttack+16   j
-                move.l  #word_EB732,$C8(a5)
+                move.l  #Boss_AntroidSpriteMapping01,$C8(a5)
                 btst    #1,(word_FFA000+1).w
                 beq.s   Boss_AntroidSelectBlinkMetaspriteReturn
-                move.l  #word_EB720,$C8(a5)
+                move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
 Boss_AntroidSelectBlinkMetaspriteReturn:                ; CODE XREF: Boss_AntroidSelectBlinkMetasprite+E   j  ; was: locret_37ED0
                 rts
 ; End of function Boss_AntroidSelectBlinkMetasprite
@@ -56,7 +56,7 @@ Boss_AntroidEnterStateBindParts:                        ; CODE XREF: Boss_Antroi
                 move.w  #$14E,$14(a0)
                 move.w  a1,$11E(a5)
                 move.w  a0,$17E(a5)
-                move.l  #word_EB732,$C8(a5)
+                move.l  #Boss_AntroidSpriteMapping01,$C8(a5)
                 rts
 ; End of function Boss_AntroidEnterStateWithSecondPartSlot
 ; Spawns a ram-impact particle at a random offset from Antroid

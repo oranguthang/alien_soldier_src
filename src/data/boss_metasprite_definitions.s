@@ -1,22 +1,22 @@
 ; Antroid directional frames, child descriptors, radii, links, and neutral pose
-Boss_AntroidPrimaryRotationFrames:  dc.l    word_EB774  ; DATA XREF: ROM:000349CA   o  ; was: off_3494C
+Boss_AntroidPrimaryRotationFrames:  dc.l    Boss_AntroidSpriteMapping09  ; DATA XREF: ROM:000349CA   o  ; was: off_3494C
                                         ; ROM:000349D2   o
-                dc.l    word_EB76E
-                dc.l    word_EB768
-                dc.l    word_EB762
-                dc.l    word_EB75C
-                dc.l    word_EB756
-                dc.l    word_EB750
-                dc.l    word_EB74A
-Boss_AntroidSecondaryRotationFrames:    dc.l    word_EB77A  ; DATA XREF: ROM:000349D6   o  ; was: off_3496C
+                dc.l    Boss_AntroidSpriteMapping08
+                dc.l    Boss_AntroidSpriteMapping07
+                dc.l    Boss_AntroidSpriteMapping06
+                dc.l    Boss_AntroidSpriteMapping05
+                dc.l    Boss_AntroidSpriteMapping04
+                dc.l    Boss_AntroidSpriteMapping03
+                dc.l    Boss_AntroidSpriteMapping02
+Boss_AntroidSecondaryRotationFrames:    dc.l    Boss_AntroidSpriteMapping10  ; DATA XREF: ROM:000349D6   o  ; was: off_3496C
                                         ; ROM:000349EE   o
-                dc.l    word_EB780
-                dc.l    word_EB78C
-                dc.l    word_EB798
-                dc.l    word_EB7A4
-                dc.l    word_EB7AA
-                dc.l    word_EB7B6
-                dc.l    word_EB7C2
+                dc.l    Boss_AntroidSpriteMapping11
+                dc.l    Boss_AntroidSpriteMapping12
+                dc.l    Boss_AntroidSpriteMapping13
+                dc.l    Boss_AntroidSpriteMapping14
+                dc.l    Boss_AntroidSpriteMapping15
+                dc.l    Boss_AntroidSpriteMapping16
+                dc.l    Boss_AntroidSpriteMapping17
 Boss_AntroidInlineSpriteDescriptorA:        dc.w    $305, $F00, $F0F0  ; DATA XREF: ROM:000349BA   o  ; was: word_3498C
 Boss_AntroidInlineSpriteDescriptorB:        dc.w    $325, $A00, $F4F4  ; DATA XREF: ROM:Boss_AntroidPrimaryMetaspriteDescriptors   o  ; was: word_34992
 Boss_AntroidInlineSpriteDescriptorC:        dc.w    $315, $F00, $F0F0  ; DATA XREF: ROM:000349C2   o  ; was: word_34998
@@ -26,7 +26,7 @@ Boss_AntroidInlineSpriteDescriptorF:        dc.w    $300, $500, $F8F8  ; DATA XR
 Boss_AntroidInlineSpriteDescriptorG:        dc.w    $304, 0, $FCFC  ; DATA XREF: ROM:000349EA   o  ; was: word_349B0
 Boss_AntroidPrimaryMetaspriteDescriptors:   dc.l    Boss_AntroidInlineSpriteDescriptorB+1  ; DATA XREF: Boss_AntroidInitPhase+E   o  ; was: off_349B6
                 dc.l    Boss_AntroidInlineSpriteDescriptorA+1
-                dc.l    word_EB732+$400000
+                dc.l    Boss_AntroidSpriteMapping01+$400000
                 dc.l    Boss_AntroidInlineSpriteDescriptorC+1
 Boss_AntroidSecondaryMetaspriteDescriptors: dc.l    Boss_AntroidInlineSpriteDescriptorD+1  ; DATA XREF: Boss_AntroidInitPhase+28   o  ; was: off_349C6
                 dc.l    Boss_AntroidPrimaryRotationFrames
@@ -58,24 +58,24 @@ Boss_AntroidNeutralPose:    dc.w    $8080, $C080, $E090  ; was: word_34A36
                 dc.w    $80E0, $9080, $8080
                 dc.w    $8080, $8000
 ; Terobuster directional frames and metasprite definition
-Boss_TerobusterPrimaryRotationFrames:   dc.l    word_EB7F8  ; DATA XREF: ROM:00034A90   o  ; was: off_34A46
+Boss_TerobusterPrimaryRotationFrames:   dc.l    Boss_TerobusterSpriteMapping07  ; DATA XREF: ROM:00034A90   o  ; was: off_34A46
                                         ; ROM:00034A98   o
-                dc.l    word_EB7F2
-                dc.l    word_EB7EC
-                dc.l    word_EB7E6
-                dc.l    word_EB7E0
-                dc.l    word_EB7DA
-                dc.l    word_EB7D4
-                dc.l    word_EB7CE
-Boss_TerobusterSecondaryRotationFrames: dc.l    word_EB7FE  ; DATA XREF: ROM:00034AA0   o  ; was: off_34A66
+                dc.l    Boss_TerobusterSpriteMapping06
+                dc.l    Boss_TerobusterSpriteMapping05
+                dc.l    Boss_TerobusterSpriteMapping04
+                dc.l    Boss_TerobusterSpriteMapping03
+                dc.l    Boss_TerobusterSpriteMapping02
+                dc.l    Boss_TerobusterSpriteMapping01
+                dc.l    Boss_TerobusterSpriteMapping00
+Boss_TerobusterSecondaryRotationFrames: dc.l    Boss_TerobusterSpriteMapping08  ; DATA XREF: ROM:00034AA0   o  ; was: off_34A66
                                         ; ROM:00034AB4   o
-                dc.l    word_EB80A
-                dc.l    word_EB816
-                dc.l    word_EB822
-                dc.l    word_EB82E
-                dc.l    word_EB83A
-                dc.l    word_EB846
-                dc.l    word_EB852
+                dc.l    Boss_TerobusterSpriteMapping09
+                dc.l    Boss_TerobusterSpriteMapping10
+                dc.l    Boss_TerobusterSpriteMapping11
+                dc.l    Boss_TerobusterSpriteMapping12
+                dc.l    Boss_TerobusterSpriteMapping13
+                dc.l    Boss_TerobusterSpriteMapping14
+                dc.l    Boss_TerobusterSpriteMapping15
 Boss_TerobusterInlineSpriteDescriptor:  dc.w    $E35E, $F00, $F0F0  ; DATA XREF: ROM:00034A94   o  ; was: word_34A86
                                         ; ROM:00034AA8   o
 Boss_TerobusterMetaspriteDescriptors:   dc.l    0       ; DATA XREF: Boss_TerobusterSetup+16   o  ; was: dword_34A8C
@@ -98,64 +98,64 @@ Boss_TerobusterPartLinks:   dc.w    5, 3, 1             ; DATA XREF: Boss_Terobu
 Boss_TerobusterNeutralPose: dc.w    $A080, $80A0, $8080  ; was: word_34ADA
                                         ; DATA XREF: Boss_TerobusterCalculateDeltas   o
 ; Shellshogun directional frames and metasprite definition
-Boss_ShellshogunRotationFramesA:    dc.l    word_EB984  ; DATA XREF: ROM:00034BE4   o  ; was: off_34AE0
+Boss_ShellshogunRotationFramesA:    dc.l    Boss_ShellshogunSpriteMapping26  ; DATA XREF: ROM:00034BE4   o  ; was: off_34AE0
                                         ; ROM:00034BEC   o
-                dc.l    word_EB97E
-                dc.l    word_EB978
-                dc.l    word_EB972
-                dc.l    word_EB96C
-                dc.l    word_EB966
-                dc.l    word_EB960
-                dc.l    word_EB95A
-Boss_ShellshogunRotationFramesB:    dc.l    word_EB8EE  ; DATA XREF: ROM:00034C08   o  ; was: off_34B00
-                dc.l    word_EB8E8
-                dc.l    word_EB8DC
-                dc.l    word_EB8D0
-                dc.l    word_EB8C4
-                dc.l    word_EB8BE
-                dc.l    word_EB8B2
-                dc.l    word_EB8AC
-Boss_ShellshogunRotationFramesC:    dc.l    word_EB94E  ; DATA XREF: ROM:00034BF0   o  ; was: off_34B20
-                dc.l    word_EB942
-                dc.l    word_EB936
-                dc.l    word_EB92A
-                dc.l    word_EB91E
-                dc.l    word_EB912
-                dc.l    word_EB906
-                dc.l    word_EB8FA
-Boss_ShellshogunRotationFramesD:    dc.l    word_EB95A  ; DATA XREF: ROM:00034BB8   o  ; was: off_34B40
+                dc.l    Boss_ShellshogunSpriteMapping25
+                dc.l    Boss_ShellshogunSpriteMapping24
+                dc.l    Boss_ShellshogunSpriteMapping23
+                dc.l    Boss_ShellshogunSpriteMapping22
+                dc.l    Boss_ShellshogunSpriteMapping21
+                dc.l    Boss_ShellshogunSpriteMapping20
+                dc.l    Boss_ShellshogunSpriteMapping19
+Boss_ShellshogunRotationFramesB:    dc.l    Boss_ShellshogunSpriteMapping10  ; DATA XREF: ROM:00034C08   o  ; was: off_34B00
+                dc.l    Boss_ShellshogunSpriteMapping09
+                dc.l    Boss_ShellshogunSpriteMapping08
+                dc.l    Boss_ShellshogunSpriteMapping07
+                dc.l    Boss_ShellshogunSpriteMapping06
+                dc.l    Boss_ShellshogunSpriteMapping05
+                dc.l    Boss_ShellshogunSpriteMapping04
+                dc.l    Boss_ShellshogunSpriteMapping03
+Boss_ShellshogunRotationFramesC:    dc.l    Boss_ShellshogunSpriteMapping18  ; DATA XREF: ROM:00034BF0   o  ; was: off_34B20
+                dc.l    Boss_ShellshogunSpriteMapping17
+                dc.l    Boss_ShellshogunSpriteMapping16
+                dc.l    Boss_ShellshogunSpriteMapping15
+                dc.l    Boss_ShellshogunSpriteMapping14
+                dc.l    Boss_ShellshogunSpriteMapping13
+                dc.l    Boss_ShellshogunSpriteMapping12
+                dc.l    Boss_ShellshogunSpriteMapping11
+Boss_ShellshogunRotationFramesD:    dc.l    Boss_ShellshogunSpriteMapping19  ; DATA XREF: ROM:00034BB8   o  ; was: off_34B40
                                         ; ROM:00034BC0   o
-                dc.l    word_EB960
-                dc.l    word_EB966
-                dc.l    word_EB96C
-                dc.l    word_EB972
-                dc.l    word_EB978
-                dc.l    word_EB97E
-                dc.l    word_EB984
-Boss_ShellshogunRotationFramesE:    dc.l    word_EB8AC  ; DATA XREF: ROM:00034BDC   o  ; was: off_34B60
-                dc.l    word_EB8B2
-                dc.l    word_EB8BE
-                dc.l    word_EB8C4
-                dc.l    word_EB8D0
-                dc.l    word_EB8DC
-                dc.l    word_EB8E8
-                dc.l    word_EB8EE
-Boss_ShellshogunRotationFramesF:    dc.l    word_EB8FA  ; DATA XREF: ROM:00034BC4   o  ; was: off_34B80
+                dc.l    Boss_ShellshogunSpriteMapping20
+                dc.l    Boss_ShellshogunSpriteMapping21
+                dc.l    Boss_ShellshogunSpriteMapping22
+                dc.l    Boss_ShellshogunSpriteMapping23
+                dc.l    Boss_ShellshogunSpriteMapping24
+                dc.l    Boss_ShellshogunSpriteMapping25
+                dc.l    Boss_ShellshogunSpriteMapping26
+Boss_ShellshogunRotationFramesE:    dc.l    Boss_ShellshogunSpriteMapping03  ; DATA XREF: ROM:00034BDC   o  ; was: off_34B60
+                dc.l    Boss_ShellshogunSpriteMapping04
+                dc.l    Boss_ShellshogunSpriteMapping05
+                dc.l    Boss_ShellshogunSpriteMapping06
+                dc.l    Boss_ShellshogunSpriteMapping07
+                dc.l    Boss_ShellshogunSpriteMapping08
+                dc.l    Boss_ShellshogunSpriteMapping09
+                dc.l    Boss_ShellshogunSpriteMapping10
+Boss_ShellshogunRotationFramesF:    dc.l    Boss_ShellshogunSpriteMapping11  ; DATA XREF: ROM:00034BC4   o  ; was: off_34B80
                                         ; sub_39EE4   o
-                dc.l    word_EB906
-                dc.l    word_EB912
-                dc.l    word_EB91E
-                dc.l    word_EB92A
-                dc.l    word_EB936
-                dc.l    word_EB942
-                dc.l    word_EB94E
+                dc.l    Boss_ShellshogunSpriteMapping12
+                dc.l    Boss_ShellshogunSpriteMapping13
+                dc.l    Boss_ShellshogunSpriteMapping14
+                dc.l    Boss_ShellshogunSpriteMapping15
+                dc.l    Boss_ShellshogunSpriteMapping16
+                dc.l    Boss_ShellshogunSpriteMapping17
+                dc.l    Boss_ShellshogunSpriteMapping18
 Boss_ShellshogunInlineSpriteDescriptorA:    dc.w    $6457, $A00, $F4F4  ; DATA XREF: ROM:00034BD0   o  ; was: word_34BA0
                                         ; ROM:00034BFC   o
 Boss_ShellshogunInlineSpriteDescriptorB:    dc.w    $6460, $500, $F8F8  ; DATA XREF: ROM:00034BBC   o  ; was: word_34BA6
                                         ; ROM:00034BD8   o
 Boss_ShellshogunMetaspriteDescriptors:  dc.l    0       ; DATA XREF: Boss_ShellshogunSetupPhase+3C   o  ; was: dword_34BAC
-                dc.l    word_EB876+$400000
-                dc.l    word_EB8A0+$400000
+                dc.l    Boss_ShellshogunSpriteMapping00+$400000
+                dc.l    Boss_ShellshogunSpriteMapping02+$400000
                 dc.l    Boss_ShellshogunRotationFramesD+$48000000
                 dc.l    Boss_ShellshogunInlineSpriteDescriptorB+1
                 dc.l    Boss_ShellshogunRotationFramesD+$48000000
@@ -166,7 +166,7 @@ Boss_ShellshogunMetaspriteDescriptors:  dc.l    0       ; DATA XREF: Boss_Shells
                 dc.l    Boss_ShellshogunRotationFramesD+$48000000
                 dc.l    Boss_ShellshogunInlineSpriteDescriptorB+1
                 dc.l    Boss_ShellshogunRotationFramesE+$48000000
-                dc.l    word_EB8A0+$400000
+                dc.l    Boss_ShellshogunSpriteMapping02+$400000
                 dc.l    Boss_ShellshogunRotationFramesA-$30000000
                 dc.l    Boss_ShellshogunInlineSpriteDescriptorB+1
                 dc.l    Boss_ShellshogunRotationFramesA-$30000000
@@ -193,40 +193,40 @@ Boss_ShellshogunNeutralPose:    dc.w    $40, $6070, $40E0  ; DATA XREF: Boss_She
                 dc.w    $8000, $4000, $7080
                 dc.w    $E080, $A000
 ; Xi-Tiger directional frames and metasprite definition
-Boss_XiTigerRotationFramesA:    dc.l    word_EBAB0      ; DATA XREF: ROM:00034D16   o  ; was: off_34C64
+Boss_XiTigerRotationFramesA:    dc.l    Boss_XiTigerSpriteMapping01  ; DATA XREF: ROM:00034D16   o  ; was: off_34C64
                                         ; ROM:00034D1E   o
-                dc.l    word_EBAB6
-                dc.l    word_EBABC
-                dc.l    word_EBAC2
-                dc.l    word_EBAC8
-                dc.l    word_EBACE
-                dc.l    word_EBAD4
-                dc.l    word_EBADA
-Boss_XiTigerRotationFramesB:    dc.l    word_EBAEC      ; DATA XREF: ROM:00034D3E   o  ; was: off_34C84
-                dc.l    word_EBAF2
-                dc.l    word_EBAF8
-                dc.l    word_EBAFE
-                dc.l    word_EBB04
-                dc.l    word_EBB0A
-                dc.l    word_EBB10
-                dc.l    word_EBB16
-Boss_XiTigerRotationFramesC:    dc.l    word_EBADA      ; DATA XREF: ROM:00034D02   o  ; was: off_34CA4
+                dc.l    Boss_XiTigerSpriteMapping02
+                dc.l    Boss_XiTigerSpriteMapping03
+                dc.l    Boss_XiTigerSpriteMapping04
+                dc.l    Boss_XiTigerSpriteMapping05
+                dc.l    Boss_XiTigerSpriteMapping06
+                dc.l    Boss_XiTigerSpriteMapping07
+                dc.l    Boss_XiTigerSpriteMapping08
+Boss_XiTigerRotationFramesB:    dc.l    Boss_XiTigerSpriteMapping10  ; DATA XREF: ROM:00034D3E   o  ; was: off_34C84
+                dc.l    Boss_XiTigerSpriteMapping11
+                dc.l    Boss_XiTigerSpriteMapping12
+                dc.l    Boss_XiTigerSpriteMapping13
+                dc.l    Boss_XiTigerSpriteMapping14
+                dc.l    Boss_XiTigerSpriteMapping15
+                dc.l    Boss_XiTigerSpriteMapping16
+                dc.l    Boss_XiTigerSpriteMapping17
+Boss_XiTigerRotationFramesC:    dc.l    Boss_XiTigerSpriteMapping08  ; DATA XREF: ROM:00034D02   o  ; was: off_34CA4
                                         ; ROM:00034D0A   o
-                dc.l    word_EBAD4
-                dc.l    word_EBACE
-                dc.l    word_EBAC8
-                dc.l    word_EBAC2
-                dc.l    word_EBABC
-                dc.l    word_EBAB6
-                dc.l    word_EBAB0
-Boss_XiTigerRotationFramesD:    dc.l    word_EBB16      ; DATA XREF: ROM:00034D56   o  ; was: off_34CC4
-                dc.l    word_EBB10
-                dc.l    word_EBB0A
-                dc.l    word_EBB04
-                dc.l    word_EBAFE
-                dc.l    word_EBAF8
-                dc.l    word_EBAF2
-                dc.l    word_EBAEC
+                dc.l    Boss_XiTigerSpriteMapping07
+                dc.l    Boss_XiTigerSpriteMapping06
+                dc.l    Boss_XiTigerSpriteMapping05
+                dc.l    Boss_XiTigerSpriteMapping04
+                dc.l    Boss_XiTigerSpriteMapping03
+                dc.l    Boss_XiTigerSpriteMapping02
+                dc.l    Boss_XiTigerSpriteMapping01
+Boss_XiTigerRotationFramesD:    dc.l    Boss_XiTigerSpriteMapping17  ; DATA XREF: ROM:00034D56   o  ; was: off_34CC4
+                dc.l    Boss_XiTigerSpriteMapping16
+                dc.l    Boss_XiTigerSpriteMapping15
+                dc.l    Boss_XiTigerSpriteMapping14
+                dc.l    Boss_XiTigerSpriteMapping13
+                dc.l    Boss_XiTigerSpriteMapping12
+                dc.l    Boss_XiTigerSpriteMapping11
+                dc.l    Boss_XiTigerSpriteMapping10
 Boss_XiTigerInlineSpriteDescriptorA:    dc.w    $62D4, $500, $F8F8  ; DATA XREF: ROM:00034D3A   o  ; was: word_34CE4
                                         ; ROM:00034D52   o
 Boss_XiTigerInlineSpriteDescriptorB:    dc.w    $62D8, $A00, $F4F4  ; DATA XREF: ROM:00034D06   o  ; was: word_34CEA
@@ -235,17 +235,17 @@ Boss_XiTigerInlineSpriteDescriptorC:    dc.w    $62E1, $A00, $F4F4  ; DATA XREF:
                                         ; ROM:00034D4A   o
 Boss_XiTigerMetaspriteDescriptors:  dc.l    0           ; DATA XREF: Boss_XiTigerSetup+10   o  ; was: dword_34CF6
                 dc.l    Boss_XiTigerGroundedBodyMapping+$400000
-                dc.l    word_EBA1A+$400000
+                dc.l    Boss_XiTigerSpriteMapping00+$400000
                 dc.l    Boss_XiTigerRotationFramesC
                 dc.l    Boss_XiTigerInlineSpriteDescriptorB+1
                 dc.l    Boss_XiTigerRotationFramesC
                 dc.l    0
-                dc.l    word_EBA1A-$7C00000
+                dc.l    Boss_XiTigerSpriteMapping00-$7C00000
                 dc.l    Boss_XiTigerRotationFramesA+$18000000
                 dc.l    Boss_XiTigerInlineSpriteDescriptorB+1-$8000000
                 dc.l    Boss_XiTigerRotationFramesA+$18000000
                 dc.l    0
-                dc.l    word_EBAE0+$400000
+                dc.l    Boss_XiTigerSpriteMapping09+$400000
                 dc.l    0
                 dc.l    Boss_XiTigerRotationFramesA+$18000000
                 dc.l    Boss_XiTigerInlineSpriteDescriptorC+1
@@ -278,42 +278,42 @@ Boss_XiTigerNeutralPose:    dc.w    $2060, $70C0, $80A0  ; was: word_34DA6
                 dc.w    $9080, $4000, $8000
                 dc.w    $E040, $4080
 ; Madam Barbar directional frames and metasprite definition
-Boss_MadamBarbarRotationFramesA:    dc.l    word_EBB7C  ; DATA XREF: ROM:00034E60   o  ; was: off_34DB6
+Boss_MadamBarbarRotationFramesA:    dc.l    Boss_MadamBarbarSpriteMapping07  ; DATA XREF: ROM:00034E60   o  ; was: off_34DB6
                                         ; ROM:00034E78   o
-                dc.l    word_EBB70
-                dc.l    word_EBB58
-                dc.l    word_EBB34
-                dc.l    word_EBB40
-                dc.l    word_EBB28
-                dc.l    word_EBB4C
-                dc.l    word_EBB64
-Boss_MadamBarbarRotationFramesB:    dc.l    word_EBB64  ; DATA XREF: ROM:00034E5C   o  ; was: off_34DD6
+                dc.l    Boss_MadamBarbarSpriteMapping06
+                dc.l    Boss_MadamBarbarSpriteMapping04
+                dc.l    Boss_MadamBarbarSpriteMapping01
+                dc.l    Boss_MadamBarbarSpriteMapping02
+                dc.l    Boss_MadamBarbarSpriteMapping00
+                dc.l    Boss_MadamBarbarSpriteMapping03
+                dc.l    Boss_MadamBarbarSpriteMapping05
+Boss_MadamBarbarRotationFramesB:    dc.l    Boss_MadamBarbarSpriteMapping05  ; DATA XREF: ROM:00034E5C   o  ; was: off_34DD6
                                         ; ROM:00034E74   o
-                dc.l    word_EBB4C
-                dc.l    word_EBB28
-                dc.l    word_EBB40
-                dc.l    word_EBB34
-                dc.l    word_EBB58
-                dc.l    word_EBB70
-                dc.l    word_EBB7C
-Boss_MadamBarbarRotationFramesC:    dc.l    word_EBB88  ; DATA XREF: ROM:00034E94   o  ; was: off_34DF6
+                dc.l    Boss_MadamBarbarSpriteMapping03
+                dc.l    Boss_MadamBarbarSpriteMapping00
+                dc.l    Boss_MadamBarbarSpriteMapping02
+                dc.l    Boss_MadamBarbarSpriteMapping01
+                dc.l    Boss_MadamBarbarSpriteMapping04
+                dc.l    Boss_MadamBarbarSpriteMapping06
+                dc.l    Boss_MadamBarbarSpriteMapping07
+Boss_MadamBarbarRotationFramesC:    dc.l    Boss_MadamBarbarSpriteMapping08  ; DATA XREF: ROM:00034E94   o  ; was: off_34DF6
                                         ; ROM:00034E9C   o
-                dc.l    word_EBB8E
-                dc.l    word_EBB94
-                dc.l    word_EBB9A
-                dc.l    word_EBBA0
-                dc.l    word_EBBA6
-                dc.l    word_EBBAC
-                dc.l    word_EBBB2
-Boss_MadamBarbarRotationFramesD:    dc.l    word_EBBB2  ; DATA XREF: ROM:00034E7C   o  ; was: off_34E16
+                dc.l    Boss_MadamBarbarSpriteMapping09
+                dc.l    Boss_MadamBarbarSpriteMapping10
+                dc.l    Boss_MadamBarbarSpriteMapping11
+                dc.l    Boss_MadamBarbarSpriteMapping12
+                dc.l    Boss_MadamBarbarSpriteMapping13
+                dc.l    Boss_MadamBarbarSpriteMapping14
+                dc.l    Boss_MadamBarbarSpriteMapping15
+Boss_MadamBarbarRotationFramesD:    dc.l    Boss_MadamBarbarSpriteMapping15  ; DATA XREF: ROM:00034E7C   o  ; was: off_34E16
                                         ; ROM:00034E84   o
-                dc.l    word_EBBAC
-                dc.l    word_EBBA6
-                dc.l    word_EBBA0
-                dc.l    word_EBB9A
-                dc.l    word_EBB94
-                dc.l    word_EBB8E
-                dc.l    word_EBB88
+                dc.l    Boss_MadamBarbarSpriteMapping14
+                dc.l    Boss_MadamBarbarSpriteMapping13
+                dc.l    Boss_MadamBarbarSpriteMapping12
+                dc.l    Boss_MadamBarbarSpriteMapping11
+                dc.l    Boss_MadamBarbarSpriteMapping10
+                dc.l    Boss_MadamBarbarSpriteMapping09
+                dc.l    Boss_MadamBarbarSpriteMapping08
 Boss_MadamBarbarInlineSpriteDescriptorA:    dc.w    $6390, $F00, $F0F0  ; DATA XREF: ROM:00034E58   o  ; was: word_34E36
                                         ; ROM:00034E70   o
 Boss_MadamBarbarInlineSpriteDescriptorB:    dc.w    $63A0, $A00, $F4F4  ; DATA XREF: ROM:00034E4C   o  ; was: word_34E3C

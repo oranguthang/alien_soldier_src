@@ -73,10 +73,10 @@ Boss_ShellshogunUpdateSpriteFlipReturn:                 ; CODE XREF: Boss_Shells
 ; End of function Boss_ShellshogunUpdateSpriteFlip
 ; Selects the alternating Shellshogun body frame mapping
 Boss_ShellshogunSelectBodyFrameMapping:                 ; CODE XREF: Boss_ShellshogunRenderSprites+10   p  ; was: sub_39F20
-                move.l  #word_EB876,$68(a5)
+                move.l  #Boss_ShellshogunSpriteMapping00,$68(a5)
                 btst    #3,(word_FFA000+1).w
                 bne.s   Boss_ShellshogunSelectBodyFrameMappingReturn
-                move.l  #word_EB888,$68(a5)
+                move.l  #Boss_ShellshogunSpriteMapping01,$68(a5)
 Boss_ShellshogunSelectBodyFrameMappingReturn:           ; CODE XREF: Boss_ShellshogunSelectBodyFrameMapping+E   j  ; was: locret_39F38
                 rts
 ; End of function Boss_ShellshogunSelectBodyFrameMapping
@@ -221,7 +221,7 @@ Boss_ShellshogunCalculateTrailingPartOffsets:           ; CODE XREF: Boss_Shells
                 rts
 ; End of function Boss_ShellshogunUpdateRotatingPart
 ; ---------------------------------------------------------------------------
-Boss_ShellshogunRotatingPartFrameTable: dc.l    word_EB9BA  ; DATA XREF: Boss_ShellshogunUpdateRotatingPart+4C   r  ; was: off_3A0DA
-                dc.l    word_EB9A2
-                dc.l    word_EB98A
-                dc.l    word_EB9A2
+Boss_ShellshogunRotatingPartFrameTable: dc.l    Boss_ShellshogunSpriteMapping29  ; DATA XREF: Boss_ShellshogunUpdateRotatingPart+4C   r  ; was: off_3A0DA
+                dc.l    Boss_ShellshogunSpriteMapping28
+                dc.l    Boss_ShellshogunSpriteMapping27
+                dc.l    Boss_ShellshogunSpriteMapping28

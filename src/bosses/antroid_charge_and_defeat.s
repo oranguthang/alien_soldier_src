@@ -74,7 +74,7 @@ Boss_AntroidUpdateRamAttackPose:                        ; CODE XREF: Boss_Antroi
                 jsr     Boss_AntroidUpdatePoseAnimation(pc)  ; (pc)
                 nop
                 bsr.w   Boss_AntroidRenderPose
-                move.l  #word_EB720,$C8(a5)
+                move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
                 bset    #4,$CE(a5)
                 eori.w  #$800,$CE(a5)
                 rts

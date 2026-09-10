@@ -516,11 +516,11 @@ Boss_ShiperTentaclePositionAdvanceChainPart:            ; CODE XREF: Boss_Shiper
                 rts
 ; End of function Boss_ShiperTentaclePosition
 ; ---------------------------------------------------------------------------
-Boss_ShiperTentacleDirectionFrames: dc.l    word_EBA02  ; DATA XREF: Boss_ShiperTentaclePosition+76   o  ; was: off_36FCE
-                dc.l    word_EB9FC
-                dc.l    word_EB9F6
-                dc.l    word_EB9F0
-                dc.l    word_EB9EA
-                dc.l    word_EBA14
-                dc.l    word_EBA0E
-                dc.l    word_EBA08
+Boss_ShiperTentacleDirectionFrames: dc.l    Boss_ShiperTentacleSpriteMapping04  ; DATA XREF: Boss_ShiperTentaclePosition+76   o  ; was: off_36FCE
+                dc.l    Boss_ShiperTentacleSpriteMapping03
+                dc.l    Boss_ShiperTentacleSpriteMapping02
+                dc.l    Boss_ShiperTentacleSpriteMapping01
+                dc.l    Boss_ShiperTentacleSpriteMapping00
+                dc.l    Boss_ShiperTentacleSpriteMapping07
+                dc.l    Boss_ShiperTentacleSpriteMapping06
+                dc.l    Boss_ShiperTentacleSpriteMapping05

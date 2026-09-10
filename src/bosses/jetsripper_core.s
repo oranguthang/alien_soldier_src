@@ -115,7 +115,7 @@ Boss_JetsripperInitNextSegment:                         ; CODE XREF: Boss_Jetsri
                 move.w  #$E8,(a0)
                 move.w  #$C000,2(a0)
                 move.w  #$8300,$E(a0)
-                move.l  #word_EB654,8(a0)
+                move.l  #Boss_JetsripperSpriteMapping00,8(a0)
                 move.b  #$20,$20(a0)                    ; ' '
                 move.w  d1,$48(a0)
                 move.b  #$50,$21(a0)                    ; 'P'
@@ -436,8 +436,8 @@ Boss_JetsripperSelectSprite:                            ; CODE XREF: Boss_Jetsri
                 rts
 ; End of function Boss_JetsripperUpdateMovement
 ; ---------------------------------------------------------------------------
-Boss_JetsripperBodyFrames:  dc.l    word_EB6F6          ; DATA XREF: Boss_JetsripperUpdateMovement+C0   r  ; was: off_35B1C
-                dc.l    word_EB70E
+Boss_JetsripperBodyFrames:  dc.l    Boss_JetsripperSpriteMapping16  ; DATA XREF: Boss_JetsripperUpdateMovement+C0   r  ; was: off_35B1C
+                dc.l    Boss_JetsripperSpriteMapping17
 
 ; Prepares dive attack with velocity calculation and sound
 Boss_JetsripperDivePrep:                                ; DATA XREF: ROM:000356F0   o  ; was: sub_35B24
@@ -531,7 +531,7 @@ Boss_JetsripperDiveUpdateWindupSegments:                ; CODE XREF: Boss_Jetsri
                 moveq   #$11,d7
                 jsr     (Sprite_UpdateLinkedPositions).l
                 bsr.w   Boss_JetsripperUpdateAllSprites
-                move.l  #word_EB696,8(a5)
+                move.l  #Boss_JetsripperSpriteMapping06,8(a5)
                 move.w  $E(a5),d0
                 andi.w  #$E7FF,d0
                 move.w  d0,$E(a5)
@@ -624,7 +624,7 @@ Boss_JetsripperDeathInit:                               ; DATA XREF: ROM:000356F
                 clr.w   4(a0)
                 move.w  #$CD00,2(a0)
                 move.w  #$8300,$E(a0)
-                move.l  #word_EB654,8(a0)
+                move.l  #Boss_JetsripperSpriteMapping00,8(a0)
                 move.l  #Boss_JetsripperHeadFrames,$4C(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)

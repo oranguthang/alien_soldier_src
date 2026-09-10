@@ -125,7 +125,7 @@ Boss_ShellshogunInitializeSecondaryObjects:             ; CODE XREF: Boss_Shells
                 dbf     d7,Boss_ShellshogunInitializeSecondaryObjects
                 move.w  #$8300,$A2E(a5)
                 move.w  #$C000,$A22(a5)
-                move.l  #word_EB98A,$A28(a5)
+                move.l  #Boss_ShellshogunSpriteMapping27,$A28(a5)
                 move.b  #$C,$A40(a5)
                 movea.l #Boss_ShellshogunObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
@@ -384,7 +384,7 @@ Boss_ShellshogunUpdateTimedStageAdvance:                ; CODE XREF: Boss_Shells
                 bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunUpdatePhysicsAndRender
                 move.w  #$148,$494(a5)
-                move.l  #word_EB888,$68(a5)
+                move.l  #Boss_ShellshogunSpriteMapping01,$68(a5)
                 rts
 ; End of function Boss_ShellshogunDecisionState
 ; Evaluates pose events and position before returning or starting a slam
@@ -492,7 +492,7 @@ Boss_ShellshogunUpdateSlamAnimation:                    ; CODE XREF: Boss_Shells
                 nop
                 bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunRenderSprites
-                move.l  #word_EB888,$68(a5)
+                move.l  #Boss_ShellshogunSpriteMapping01,$68(a5)
                 rts
 ; End of function Boss_ShellshogunUpdateSlamAnimation
 ; Initializes the facing-dependent directional attack
@@ -518,7 +518,7 @@ Boss_ShellshogunUpdateDirectionalAttackWindup:          ; CODE XREF: Boss_Shells
                 nop
                 bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunRenderSprites
-                move.l  #word_EB876,$68(a5)
+                move.l  #Boss_ShellshogunSpriteMapping00,$68(a5)
                 rts
 ; End of function Boss_ShellshogunDirectionalAttackWindupState
 ; Applies the facing-dependent horizontal motion and attack effects
@@ -570,7 +570,7 @@ Boss_ShellshogunRenderDirectionalAttack:                ; CODE XREF: Boss_Shells
                 nop
                 bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunRenderSprites
-                move.l  #word_EB888,$68(a5)
+                move.l  #Boss_ShellshogunSpriteMapping01,$68(a5)
                 bra.w   Boss_ShellshogunUpdateSpriteFlip
 ; End of function Boss_ShellshogunDirectionalAttackMotionState
 ; Initialize Shellshogun jump attack with position and animation setup
@@ -606,7 +606,7 @@ Boss_ShellshogunRenderJumpWindup:                       ; CODE XREF: Boss_Shells
                 nop
                 bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunRenderSprites
-                move.l  #word_EB888,$68(a5)
+                move.l  #Boss_ShellshogunSpriteMapping01,$68(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunBeginJumpAttackAirState:                ; CODE XREF: Boss_ShellshogunJumpAttackWindupState+4   j  ; was: loc_39C9A
@@ -650,7 +650,7 @@ Boss_ShellshogunLeapWindupState:                        ; DATA XREF: ROM:0003954
                 nop
                 bsr.w   Boss_ShellshogunUpdatePose
                 bsr.w   Boss_ShellshogunUpdatePhysicsAndRender
-                move.l  #word_EB876,$68(a5)
+                move.l  #Boss_ShellshogunSpriteMapping00,$68(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunBeginLeapFlight:                        ; CODE XREF: Boss_ShellshogunLeapWindupState+4   j  ; was: loc_39D20
