@@ -1847,6 +1847,68 @@ back builds the same descriptor with six zero indices. Both paths tail-call
 `Gfx_LoadCompressedTiles`. The new names describe descriptor structure and
 directional behavior without guessing what the artwork depicts.
 
+The Z-Leo tile-loader/HBlank pass reduced the address-derived unknown count
+from 6,125 to 6,120 and raised provenance to 9,703 mappings. Seven definitions
+in `$0527EA-$052879` now have exact static audit records, increasing the
+registry to 5,466 entries and reducing the rendering backlog from 29 to 24.
+
+The old `Boss_ZLeoAnimationUpdate1` contains no animation logic: both callers
+feed its two-index descriptor directly to `Gfx_LoadCompressedTiles`, so it is
+now `Boss_ZLeoLoadPrimaryTiles`. The neighboring phase loader has its own
+descriptor. `Boss_ZLeoGraphicsInit2` was likewise too vague: it writes four
+groups of VDP register values (`8Axx`, vertical value, `8Bxx`, `82xx`) into
+effect buffer `FF9E00`, with split lines derived from the stage coordinate.
+Its name now states that it builds the Z-Leo HBlank register buffer.
+
+The initial-graphics/defeat-effects pass reduced the address-derived unknown
+count from 6,120 to 6,111 and raised provenance to 9,712 mappings. Twelve
+definitions across `$05287A-$052A7F` now have exact static audit records,
+bringing the registry to 5,478 entries and the rendering backlog from 24 to
+15.
+
+`Boss_ZLeoGraphicsInit3` is now named for its two observable operations:
+loading the initial tile descriptor and setting pattern `$81` on four queued
+sprites. The blade pointer table is passed to the four-direction frame helper,
+and the former anonymous head tail writes three linked part positions.
+
+Two further Sonnet `AnimationUpdate` names were false. The first defeat-only
+helper updates the explosion and spawns either debris or a randomized type-160
+particle around Z-Leo. The second contains no animation logic at all: it adds
+`$800` to the defeat-stage velocity until coordinate `FFDB34` reaches `$200`,
+then clamps the coordinate and clears both stage-scroll control words.
+
+The Z-Leo pose-interpreter pass reduced the address-derived unknown count from
+6,111 to 6,096 and raised provenance to 9,727 mappings. All 15 remaining
+definitions in `z_leo_rendering.s`, spanning code `$052A8A-$052C33`, pose
+streams `$052C56-$052D67`, and keyframe blob `$052D68-$052EE1`, now have exact
+static audit records. The registry contains 5,493 entries.
+
+The interpreter consumes `$80xx` event commands, `$FFFF` loop commands,
+`$FFFE` terminal commands, and four-byte interpolation commands. For the last
+form, the low command byte configures interpolation, the following signed word
+selects a record relative to `Boss_ZLeoPoseKeyframeData`, and the high command
+byte becomes the frame duration. Fourteen interpolation channels are then
+projected into the linked segment chain and boss/camera coordinates. The six
+formerly anonymous streams are named from their exclusive state consumers.
+
+This completes a second subsystem milestone: both `z_leo_core.s` and
+`z_leo_rendering.s` now contain zero live address-derived definitions. The
+bounded Z-Leo backlog is now only the 31 definitions in `projectiles/z_leo.s`.
+
+The first Z-Leo projectile pass reduced the address-derived unknown count from
+6,096 to 6,090 and raised provenance to 9,733 mappings. Six definitions in
+`$052EFE-$053059` now have exact static audit records, bringing the registry
+to 5,499 entries and reducing the projectile backlog from 31 to 25.
+
+`Boss_ZLeoScrollUpdate` has separate positive- and negative-rate paths that
+integrate into `FFA90C`, normalize around their respective wrap boundaries,
+then pass a four-pair lookup table to the shared coordinate helper. The orb
+spawner gates itself to every fourth frame, selects one of two initial field
+values, allocates two projectile slots, and uses a segment angle to select one
+of eight signed spawn-offset pairs. The convergence label is deliberately
+named `FinishOrbVelocitySelection`: it is shared by both random outcomes and
+does not claim that either value is the canonical one.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

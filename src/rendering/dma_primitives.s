@@ -291,7 +291,7 @@ locret_11044:                                           ; CODE XREF: Gfx_LoadCom
 ; End of function Gfx_LoadCompressedTiles
 ; Sets sprite pattern index
 Gfx_SetSpritePattern:                                   ; CODE XREF: Stage_InitStage17Boss+98   p  ; was: sub_11046
-                                        ; Boss_ZLeoGraphicsInit3+12   j
+                                        ; Boss_ZLeoLoadInitialTilesAndPatterns+12   j
                 movea.w (word_FFF70C).w,a0
 loc_1104A:                                              ; CODE XREF: Gfx_SetSpritePattern+C   j
                 move.w  d0,$E(a0)

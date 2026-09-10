@@ -5,46 +5,46 @@ Entity_EmptyState8:                                     ; DATA XREF: ROM:Entity_
 Boss_ZLeoScrollUpdate:                                  ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoRenderScrollAcceleration   p  ; was: sub_52EE4
                                         ; Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoUpdateScrollingAttackFrame   p
                 move.l  $41C(a5),d0
-                bmi.s   loc_52EFE
+                bmi.s   Boss_ZLeoUpdateNegativeScroll
                 add.l   d0,(dword_FFA90C).w
                 move.w  (dword_FFA90C).w,d1
                 subi.w  #8,d1
-                bmi.s   loc_52F14
+                bmi.s   Boss_ZLeoApplyScrollLookup
                 addi.w  #-$1FFF,d1
-                bra.s   loc_52F14
+                bra.s   Boss_ZLeoApplyScrollLookup
 ; ---------------------------------------------------------------------------
-loc_52EFE:                                              ; CODE XREF: Boss_ZLeoScrollUpdate+4   j
+Boss_ZLeoUpdateNegativeScroll:                          ; CODE XREF: Boss_ZLeoScrollUpdate+4   j  ; was: loc_52EFE
                 add.l   d0,(dword_FFA90C).w
                 move.w  (dword_FFA90C).w,d1
                 subi.w  #$E8,d1
                 cmpi.w  #$E001,d1
-                bpl.s   loc_52F14
+                bpl.s   Boss_ZLeoApplyScrollLookup
                 subi.w  #$E000,d1
-loc_52F14:                                              ; CODE XREF: Boss_ZLeoScrollUpdate+12   j
+Boss_ZLeoApplyScrollLookup:                             ; CODE XREF: Boss_ZLeoScrollUpdate+12   j  ; was: loc_52F14
                                         ; Boss_ZLeoScrollUpdate+18   j
-                lea     word_52F22(pc),a0
+                lea     Boss_ZLeoScrollLookupTable(pc),a0
                 nop
                 moveq   #0,d0
                 jmp     loc_109E0
 ; End of function Boss_ZLeoScrollUpdate
 ; ---------------------------------------------------------------------------
-word_52F22:     dc.w    $FFFF, $7000, $FFFF, $6800, $FFFF, $4000, 0, $6000
-                                        ; DATA XREF: Boss_ZLeoScrollUpdate:loc_52F14   o
+Boss_ZLeoScrollLookupTable: dc.w    $FFFF, $7000, $FFFF, $6800, $FFFF, $4000, 0, $6000  ; was: word_52F22
+                                        ; DATA XREF: Boss_ZLeoScrollUpdate:Boss_ZLeoApplyScrollLookup   o
 
 ; Spawn orb projectile
 Boss_ZLeoSpawnOrb:                                      ; CODE XREF: Boss_ZLeoWaitForOrbAttackCue+1A   p  ; was: sub_52F32
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.w   locret_53038
+                bne.w   Boss_ZLeoSpawnOrbReturn
                 move.w  #4,(word_FFA010).w
                 move.w  #1,(word_FFA014).w
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_53038
+                bne.w   Boss_ZLeoSpawnOrbReturn
                 move.w  #$C000,$59E(a5)
                 btst    #0,(dword_FFFF08).w
-                bne.s   loc_52F68
+                bne.s   Boss_ZLeoFinishOrbVelocitySelection
                 move.w  #$8000,$59E(a5)
-loc_52F68:                                              ; CODE XREF: Boss_ZLeoSpawnOrb+2E   j
+Boss_ZLeoFinishOrbVelocitySelection:                    ; CODE XREF: Boss_ZLeoSpawnOrb+2E   j  ; was: loc_52F68
                 move.w  #3,$59C(a5)
                 movea.l #Weapon_SpreadShotInitialSpriteFrame,a1
                 jsr     (Sprite_InitFromTable).l
@@ -52,7 +52,7 @@ loc_52F68:                                              ; CODE XREF: Boss_ZLeoSp
                 move.w  #$8040,2(a0)
                 movea.w a0,a3
                 jsr     (Projectile_FindFreeSlot).l
-                bne.w   locret_53038
+                bne.w   Boss_ZLeoSpawnOrbReturn
                 move.b  #$36,d0                         ; '6'
                 jsr     (Sound_PlaySFX).l
                 move.w  #$468,(a0)
@@ -73,8 +73,8 @@ loc_52F68:                                              ; CODE XREF: Boss_ZLeoSp
                 addi.w  #$20,d0                         ; ' '
                 asr.w   #4,d0
                 andi.w  #$1C,d0
-                move.w  word_5303A(pc,d0.w),d5
-                move.w  word_5303A+2(pc,d0.w),d6
+                move.w  Boss_ZLeoOrbSpawnOffsetTable(pc,d0.w),d5
+                move.w  Boss_ZLeoOrbSpawnOffsetTable+2(pc,d0.w),d6
                 add.w   $254(a5),d5
                 add.w   $250(a5),d6
                 move.w  d5,$14(a0)
@@ -92,12 +92,12 @@ loc_52F68:                                              ; CODE XREF: Boss_ZLeoSp
                 move.w  #$C489,$E(a0)
                 move.w  #$A00,8(a0)
                 move.w  #$F4F4,$A(a0)
-locret_53038:                                           ; CODE XREF: Boss_ZLeoSpawnOrb+8   j
+Boss_ZLeoSpawnOrbReturn:                                ; CODE XREF: Boss_ZLeoSpawnOrb+8   j  ; was: locret_53038
                                         ; Boss_ZLeoSpawnOrb+1E   j
                 rts
 ; End of function Boss_ZLeoSpawnOrb
 ; ---------------------------------------------------------------------------
-word_5303A:     dc.w    0, $20, $18, $18, $20, 0, $18, $FFE8, 0, $FFE0, $FFE8, $FFE8, $FFE0, 0, $FFE8, $18
+Boss_ZLeoOrbSpawnOffsetTable:   dc.w    0, $20, $18, $18, $20, 0, $18, $FFE8, 0, $FFE0, $FFE8, $FFE8, $FFE0, 0, $FFE8, $18  ; was: word_5303A
                                         ; DATA XREF: Boss_ZLeoSpawnOrb+BC   r
                                         ; Boss_ZLeoSpawnOrb+C0   r
 

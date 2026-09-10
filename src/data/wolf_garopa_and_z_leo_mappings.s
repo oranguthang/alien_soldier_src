@@ -116,7 +116,7 @@ word_ED3E8:     dc.w    $A874, $A00, $F4F4              ; DATA XREF: ROM:000355D
                                         ; ROM:000355DC   o
 word_ED3EE:     dc.w    $A87D, $500, $F8F8              ; DATA XREF: ROM:000355C8   o
                                         ; ROM:000355D0   o
-word_ED3F4:     dc.w    $3889, $D00, $E0                ; DATA XREF: ROM:off_528C8   o
+word_ED3F4:     dc.w    $3889, $D00, $E0                ; DATA XREF: ROM:Boss_ZLeoBladeDirectionFrameTable   o
                 dc.w    $3881, $D00, 0
                 dc.w    $2889, $D00, $F0E0
                 dc.w    $A881, $D00, $F000
