@@ -105,7 +105,7 @@ Player_InitPhoenixAttack_FaceRight:                     ; CODE XREF: Player_Init
                 move.l  #$78000,$48(a5)
                 bset    #3,$E(a5)
 Player_InitPhoenixAttack_Finish:                        ; CODE XREF: Player_InitPhoenixAttack+5C   j  ; was: loc_1582A
-                move.l  #word_E86AA,8(a5)
+                move.l  #Player_PhoenixDashAttackSpriteMapping,8(a5)
                 bsr.w   Player_SpawnPhoenixTrails
                 moveq   #1,d0
                 rts
@@ -133,7 +133,7 @@ Player_PhoenixAttackUpdate_TryProjectile:               ; CODE XREF: Player_Phoe
                 bne.s   Player_PhoenixAttackUpdate_PlayBlockedSound
                 btst    #7,(byte_FF8245).w
                 bne.s   Player_PhoenixAttackUpdate_PlayBlockedSound
-                move.l  #word_E8E6A,8(a5)
+                move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
                 bsr.w   Player_SpawnProjectile
                 bra.s   Player_PhoenixAttackUpdate_UpdateCollision
 ; ---------------------------------------------------------------------------
@@ -165,7 +165,7 @@ Player_InitPhoenixTrail:                                ; CODE XREF: Player_Spaw
                 move.w  #$10,(a0)
                 clr.b   $21(a0)
                 move.w  #$C800,2(a0)
-                move.l  #word_E8680,8(a0)
+                move.l  #Player_DashTrailInitialSpriteMapping,8(a0)
                 move.w  $E(a5),d0
                 andi.w  #$FFFF,d0
                 move.w  d0,$E(a0)
@@ -227,7 +227,7 @@ Player_InitiateDashAttack_TryProjectile:                ; CODE XREF: Player_Init
                 btst    #7,(byte_FF8245).w
                 bne.s   Player_PlayDashAttackSound
                 bsr.w   Player_SpawnProjectile
-                move.l  #word_E8E6A,8(a5)
+                move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
                 move.w  #$78,(word_FF8304).w            ; 'x'
                 moveq   #1,d0
                 rts
@@ -237,7 +237,7 @@ Player_PlayDashAttackSound:                             ; CODE XREF: Player_Init
                                         ; Player_InitiateDashAttack+7E   j
                 move.b  #$A6,d0
                 jsr     (Sound_PlaySFX).l
-                move.l  #word_E86AA,8(a5)
+                move.l  #Player_PhoenixDashAttackSpriteMapping,8(a5)
                 move.w  #$78,(word_FF8304).w            ; 'x'
                 moveq   #1,d0
                 rts

@@ -426,7 +426,7 @@ Boss_ZLeoSpawnImpactObject:                             ; CODE XREF: Boss_ZLeoIn
                 move.w  #$230,(a0)
                 move.b  #$54,$21(a0)                    ; 'T'
                 move.w  #$4000,2(a0)
-                move.l  #word_E8F22,8(a0)
+                move.l  #Player_TeleportDashProjectileSpriteMapping,8(a0)
                 move.w  $E(a5),d0
                 andi.w  #$FFFF,d0
                 move.w  d0,$E(a0)

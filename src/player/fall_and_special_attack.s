@@ -174,12 +174,12 @@ Player_SelectFallPrimaryFrame:                          ; CODE XREF: Player_Hand
                 bmi.s   Player_SelectFallPrimaryFrame_UseDefault
                 cmpi.w  #3,$1C(a5)
                 bmi.s   Player_SelectFallPrimaryFrame_UseDefault
-                movea.l #word_E8C9A,a1
+                movea.l #Player_FastFallPrimarySpriteMapping,a1
                 rts
 ; ---------------------------------------------------------------------------
 Player_SelectFallPrimaryFrame_UseDefault:               ; CODE XREF: Player_SelectFallPrimaryFrame+4   j  ; was: loc_15E56
                                         ; Player_SelectFallPrimaryFrame+C   j
-                movea.l #word_E8C82,a1
+                movea.l #Player_FallPrimarySpriteMapping,a1
                 rts
 ; End of function Player_SelectFallPrimaryFrame
 ; Selects animation based on falling velocity
@@ -195,16 +195,16 @@ Player_SelectFallAnimation_UseAbsoluteSpeed:            ; CODE XREF: Player_Sele
                 bmi.s   Player_SelectFallAnimation_UseFastFrame
                 tst.w   $1C(a5)
                 bmi.s   Player_SelectFallAnimation_UseRisingFrame
-                movea.l #word_E8C6A,a2
+                movea.l #Player_FallingSecondarySpriteMapping,a2
                 rts
 ; ---------------------------------------------------------------------------
 Player_SelectFallAnimation_UseFastFrame:                ; CODE XREF: Player_SelectFallAnimation+C   j  ; was: loc_15E80
                                         ; Player_SelectFallAnimation+12   j
-                movea.l #word_E8C2A,a2
+                movea.l #Player_FastVerticalSecondarySpriteMapping,a2
                 rts
 ; ---------------------------------------------------------------------------
 Player_SelectFallAnimation_UseRisingFrame:              ; CODE XREF: Player_SelectFallAnimation+18   j  ; was: loc_15E88
-                movea.l #word_E8C52,a2
+                movea.l #Player_RisingSecondarySpriteMapping,a2
                 rts
 ; End of function Player_SelectFallAnimation
 ; Initializes hard landing state with terrain alignment and downward velocity
@@ -349,15 +349,15 @@ Player_HandleSpecialAttack_CancelToFall:                ; CODE XREF: Player_Hand
                 bra.w   Player_InitFallState_Finish
 ; ---------------------------------------------------------------------------
 Player_HandleSpecialAttack_SelectFrame:                 ; CODE XREF: Player_HandleSpecialAttack+6E   j  ; was: loc_16056
-                movea.l #word_E8F3A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
                 btst    #0,(word_FFA000+1).w
                 bne.s   Player_HandleSpecialAttack_Render
-                movea.l #word_E8F6A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_HandleSpecialAttack_Render:                      ; CODE XREF: Player_HandleSpecialAttack+9E   j  ; was: loc_1606A
                 btst    #4,$69(a5)
                 bne.w   Player_RenderSpecialAttackWithWeapon
                 bsr.w   Player_UpdateHorizontalFacing
-                movea.l #word_E8972,a1
+                movea.l #Player_CommonPrimarySpriteMapping,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 bra.w   Player_BuildSpritePieces

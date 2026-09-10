@@ -9,7 +9,7 @@ Player_SpawnProjectile:                                 ; CODE XREF: Player_Phoe
                 move.w  #$230,(a0)
                 move.b  #$54,$21(a0)                    ; 'T'
                 move.w  #$4000,2(a0)
-                move.l  #word_E8F22,8(a0)
+                move.l  #Player_TeleportDashProjectileSpriteMapping,8(a0)
                 move.w  $E(a5),d0
                 andi.w  #$FFFF,d0
                 move.w  d0,$E(a0)
@@ -327,10 +327,10 @@ Effect_CreateDashTrail:                                 ; CODE XREF: Player_Dash
                                         ; Player_TeleportDash+C8   j
                 tst.w   (word_FFC5C0).w
                 beq.s   Effect_CreateDashTrail_AllocateObjects
-                move.l  #word_E8EBA,8(a5)
+                move.l  #Player_TeleportDashTrailSpriteMapping,8(a5)
                 btst    #0,(word_FFA000+1).w
                 bne.w   Effect_CreateDashTrail_Return
-                move.l  #word_E8E6A,8(a5)
+                move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Effect_CreateDashTrail_AllocateObjects:                 ; CODE XREF: Effect_CreateDashTrail+4   j  ; was: loc_177D8
@@ -339,7 +339,7 @@ Effect_CreateDashTrail_AllocateObjects:                 ; CODE XREF: Effect_Crea
                 move.w  #$250,(a0)
                 clr.b   $21(a0)
                 move.w  #$C880,2(a0)
-                move.l  #word_E8680,8(a0)
+                move.l  #Player_DashTrailInitialSpriteMapping,8(a0)
                 move.w  $E(a5),d0
                 andi.w  #$FFFF,d0
                 move.w  d0,$E(a0)

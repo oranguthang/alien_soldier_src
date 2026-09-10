@@ -481,8 +481,8 @@ Player_HandleAirMovement:                               ; DATA XREF: ROM:0001506
 Player_RenderAirMovementFrame:                          ; CODE XREF: Player_HandleAirMovement+3C   j  ; was: loc_154E2
                 btst    #4,$69(a5)
                 bne.w   Player_RenderFallingSprite
-                movea.l #word_E8972,a1
-                movea.l #word_E89C2,a2
+                movea.l #Player_CommonPrimarySpriteMapping,a1
+                movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
                 moveq   #6,d6
                 bra.w   Player_BuildSpritePieces

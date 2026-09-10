@@ -2798,3 +2798,24 @@ lowers the enforced address-derived ceiling from 4,599 to 4,519. The direct
 pinned-toolchain preservation build remains byte-identical to the canonical
 Japanese ROM (`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`), and all
 37 project tests pass against the resulting source and audit data.
+
+The player sprite-mapping audit resolves all 70 imported `word_E...`
+definitions in the complete `0x0E8680-0x0E9079` bank. This remains one
+cohesive 959-line `data/player_sprite_mappings.s` module: it is a single
+consumer family, fits the agreed 1,000-line ceiling, and has no natural owner
+boundary that would justify a cosmetic split.
+
+The names follow three kinds of static evidence. Directional, state-animation,
+weapon-animation, defeat, terrain-layout, and death-particle records use their
+exact selector-table indices. Directly loaded records use the narrow shared
+role proven by their callers, such as the common primary stream, knockback
+primary stream, teleport-dash trail, or special-attack secondary variants.
+`Player_BuildSpritePieces` proves that these are primary/secondary sprite-piece
+streams; direct assignments to object mapping pointers prove the remaining
+records. Numeric suffixes express selector order only and do not claim an
+unverified visual pose.
+
+This pass adds 70 provenance mappings and 70 static audit records, raising the
+totals from 11,522 to 11,592 and from 7,755 to 7,825. Address-derived
+definitions fall from 4,519 to 4,449. Module count remains 349. The canonical
+Japanese ROM remains byte-identical and all 37 project tests pass.

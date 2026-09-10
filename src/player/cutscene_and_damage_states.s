@@ -36,15 +36,15 @@ Player_InitAirRecovery_Finish:                          ; CODE XREF: Player_Spec
 ; End of function Player_InitAirRecovery
 ; Renders the recovery pose with or without the weapon overlay
 Player_RenderSpecialMoveRecovery:                       ; CODE XREF: Player_SpecialMoveRecoveryState+4E   j  ; was: sub_16116
-                movea.l #word_E8F3A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
                 btst    #0,(word_FFA000+1).w
                 bne.s   Player_RenderSpecialMoveRecovery_SelectVariant
-                movea.l #word_E8F6A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_RenderSpecialMoveRecovery_SelectVariant:         ; CODE XREF: Player_RenderSpecialMoveRecovery+C   j  ; was: loc_1612A
                 btst    #4,$69(a5)
                 bne.w   Player_RenderSpecialMoveRecovery_WithWeapon
                 bsr.w   Player_UpdateHorizontalFacing
-                movea.l #word_E8972,a1
+                movea.l #Player_CommonPrimarySpriteMapping,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 bra.w   Player_BuildSpritePieces
@@ -109,12 +109,12 @@ Player_AlternateSpecialState:                           ; DATA XREF: ROM:000150B
                 move.w  #$46,4(a5)                      ; 'F'
                 bsr.w   Player_AutoFlipDirection
 Player_AlternateSpecialState_Render:                    ; CODE XREF: Player_AlternateSpecialState+3C   j  ; was: loc_161EE
-                movea.l #word_E8F3A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
                 btst    #0,(word_FFA000+1).w
                 bne.s   Player_AlternateSpecialState_SelectFrame
-                movea.l #word_E8F6A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_AlternateSpecialState_SelectFrame:               ; CODE XREF: Player_AlternateSpecialState+54   j  ; was: loc_16202
-                movea.l #word_E8972,a1
+                movea.l #Player_CommonPrimarySpriteMapping,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 bra.w   Player_BuildSpritePieces
@@ -230,8 +230,8 @@ Player_SetKnockbackVelocity_Return:                     ; CODE XREF: Player_SetK
 ; End of function Player_SetKnockbackVelocity
 ; Handles player knockback gravity and terrain contacts
 Player_KnockbackState:                                  ; DATA XREF: ROM:0001508C   o  ; was: sub_1635A
-                movea.l #word_E8BAA,a1
-                movea.l #word_E89C2,a2
+                movea.l #Player_KnockbackPrimarySpriteMapping,a1
+                movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFF,d6
                 bsr.w   Player_BuildSpritePieces

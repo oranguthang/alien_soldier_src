@@ -1,4 +1,4 @@
-word_E8680:     dc.w    $800, 0, $F00D                  ; DATA XREF: Player_InitPhoenixTrail+E   o
+Player_DashTrailInitialSpriteMapping:   dc.w    $800, 0, $F00D  ; DATA XREF: Player_InitPhoenixTrail+E   o  ; was: word_E8680
                                         ; Effect_CreateDashTrail+38   o
                 dc.w    $801, 0, $1818
                 dc.w    $802, $E00, $F0
@@ -6,7 +6,7 @@ word_E8680:     dc.w    $800, 0, $F00D                  ; DATA XREF: Player_Init
                 dc.w    $810, $600, $10
                 dc.w    $816, $100, $F0E5
                 dc.w    $8818, $F00, $E1ED
-word_E86AA:     dc.w    $800                            ; DATA XREF: Player_InitPhoenixAttack:Player_InitPhoenixAttack_Finish   o
+Player_PhoenixDashAttackSpriteMapping:  dc.w    $800    ; DATA XREF: Player_InitPhoenixAttack:Player_InitPhoenixAttack_Finish   o  ; was: word_E86AA
                                         ; Player_InitiateDashAttack+A0   o
                 dc.l    sprite_F2A28
                 dc.w    $F00D
@@ -28,7 +28,7 @@ word_E86AA:     dc.w    $800                            ; DATA XREF: Player_Init
                 dc.w    $8818
                 dc.l    sprite_F2826+$F000000
                 dc.w    $E1ED
-word_E86E2:     dc.w    $800                            ; DATA XREF: ROM:00016FA8   o
+Player_DirectionalPrimarySpriteMapping07:   dc.w    $800  ; DATA XREF: ROM:00016FA8   o  ; was: word_E86E2
                 dc.l    sprite_F2D34+$E000000
                 dc.w    $E0E9
                 dc.w    $80C
@@ -37,7 +37,7 @@ word_E86E2:     dc.w    $800                            ; DATA XREF: ROM:00016FA
                 dc.w    $880F
                 dc.l    sprite_F2F18+$1000000
                 dc.w    $D809
-word_E86FA:     dc.w    $800                            ; DATA XREF: ROM:Player_DirectionalMovementPrimaryFrames   o
+Player_DirectionalPrimarySpriteMapping00:   dc.w    $800  ; DATA XREF: ROM:Player_DirectionalMovementPrimaryFrames   o  ; was: word_E86FA
                 dc.l    sprite_F2F5A+$E000000
                 dc.w    $DFE7
                 dc.w    $80C
@@ -49,7 +49,7 @@ word_E86FA:     dc.w    $800                            ; DATA XREF: ROM:Player_
                 dc.w    $8811
                 dc.l    sprite_F30DC+$8000000
                 dc.w    $D7EF
-word_E871A:     dc.w    $800                            ; DATA XREF: ROM:00016F90   o
+Player_DirectionalPrimarySpriteMapping01:   dc.w    $800  ; DATA XREF: ROM:00016F90   o  ; was: word_E871A
                 dc.l    sprite_F3448
                 dc.w    $D80F
                 dc.w    $801
@@ -61,7 +61,7 @@ word_E871A:     dc.w    $800                            ; DATA XREF: ROM:00016F9
                 dc.w    $8808
                 dc.l    sprite_F31E2+$E000000
                 dc.w    $E0E7
-word_E873A:     dc.w    $800                            ; DATA XREF: ROM:00016F94   o
+Player_DirectionalPrimarySpriteMapping02:   dc.w    $800  ; DATA XREF: ROM:00016F94   o  ; was: word_E873A
                 dc.l    sprite_F346A+$E000000
                 dc.w    $E1E8
                 dc.w    $80C
@@ -76,7 +76,7 @@ word_E873A:     dc.w    $800                            ; DATA XREF: ROM:00016F9
                 dc.w    $8812
                 dc.l    sprite_F3C02+$4000000
                 dc.w    $F9E8
-word_E8762:     dc.w    $800                            ; DATA XREF: ROM:00016F98   o
+Player_DirectionalPrimarySpriteMapping03:   dc.w    $800  ; DATA XREF: ROM:00016F98   o  ; was: word_E8762
                 dc.l    sprite_F3896+$1000000
                 dc.w    $D80A
                 dc.w    $802
@@ -88,7 +88,7 @@ word_E8762:     dc.w    $800                            ; DATA XREF: ROM:00016F9
                 dc.w    $8808
                 dc.l    sprite_F36B2+$E000000
                 dc.w    $E0EA
-word_E8782:     dc.w    $800                            ; DATA XREF: ROM:00016F9C   o
+Player_DirectionalPrimarySpriteMapping04:   dc.w    $800  ; DATA XREF: ROM:00016F9C   o  ; was: word_E8782
                 dc.l    sprite_F3B9E+$4000000
                 dc.w    $F7FF
                 dc.w    $802
@@ -100,7 +100,7 @@ word_E8782:     dc.w    $800                            ; DATA XREF: ROM:00016F9
                 dc.w    $8806
                 dc.l    sprite_F393A+$F000000
                 dc.w    $D7EF
-word_E87A2:     dc.w    $800                            ; DATA XREF: ROM:00016FA0   o
+Player_DirectionalPrimarySpriteMapping05:   dc.w    $800  ; DATA XREF: ROM:00016FA0   o  ; was: word_E87A2
                 dc.l    sprite_F3F0A+$1000000
                 dc.w    $D80F
                 dc.w    $802
@@ -112,7 +112,7 @@ word_E87A2:     dc.w    $800                            ; DATA XREF: ROM:00016FA
                 dc.w    $8808
                 dc.l    sprite_F3C44+$F000000
                 dc.w    $E0E7
-word_E87C2:     dc.w    $800                            ; DATA XREF: ROM:00016FA4   o
+Player_DirectionalPrimarySpriteMapping06:   dc.w    $800  ; DATA XREF: ROM:00016FA4   o  ; was: word_E87C2
                 dc.l    sprite_F4192+$1000000
                 dc.w    $D90F
                 dc.w    $802
@@ -127,7 +127,7 @@ word_E87C2:     dc.w    $800                            ; DATA XREF: ROM:00016FA
                 dc.w    $880B
                 dc.l    sprite_F3F4C+$E000000
                 dc.w    $E1E7
-word_E87EA:     dc.w    $800                            ; DATA XREF: ROM:00016FC8   o
+Player_DirectionalSecondarySpriteMapping07: dc.w    $800  ; DATA XREF: ROM:00016FC8   o  ; was: word_E87EA
                 dc.l    sprite_F459E+$5000000
                 dc.w    $10FA
                 dc.w    $804
@@ -142,7 +142,7 @@ word_E87EA:     dc.w    $800                            ; DATA XREF: ROM:00016FC
                 dc.w    $8813
                 dc.l    sprite_F4236+$E000000
                 dc.w    $F8F8
-word_E8812:     dc.w    $800                            ; DATA XREF: ROM:Player_DirectionalMovementSecondaryFrames   o
+Player_DirectionalSecondarySpriteMapping00: dc.w    $800  ; DATA XREF: ROM:Player_DirectionalMovementSecondaryFrames   o  ; was: word_E8812
                 dc.l    sprite_F498A+$1000000
                 dc.w    $FFE7
                 dc.w    $802
@@ -160,7 +160,7 @@ word_E8812:     dc.w    $800                            ; DATA XREF: ROM:Player_
                 dc.w    $8811
                 dc.l    sprite_F4620+$E000000
                 dc.w    $F7F7
-word_E8842:     dc.w    $800                            ; DATA XREF: ROM:00016FB0   o
+Player_DirectionalSecondarySpriteMapping01: dc.w    $800  ; DATA XREF: ROM:00016FB0   o  ; was: word_E8842
                 dc.l    sprite_F4C32
                 dc.w    $F80F
                 dc.w    $801
@@ -175,7 +175,7 @@ word_E8842:     dc.w    $800                            ; DATA XREF: ROM:00016FB
                 dc.w    $880E
                 dc.l    sprite_F49CC+$B000000
                 dc.w    $F0F7
-word_E886A:     dc.w    $800                            ; DATA XREF: ROM:00016FB4   o
+Player_DirectionalSecondarySpriteMapping02: dc.w    $800  ; DATA XREF: ROM:00016FB4   o  ; was: word_E886A
                 dc.l    sprite_F5000
                 dc.w    $F90F
                 dc.w    $801
@@ -193,7 +193,7 @@ word_E886A:     dc.w    $800                            ; DATA XREF: ROM:00016FB
                 dc.w    $880C
                 dc.l    sprite_F4D16+$E000000
                 dc.w    $F9EF
-word_E889A:     dc.w    $800                            ; DATA XREF: ROM:00016FB8   o
+Player_DirectionalSecondarySpriteMapping03: dc.w    $800  ; DATA XREF: ROM:00016FB8   o  ; was: word_E889A
                 dc.l    sprite_F532A+$1000000
                 dc.w    $D
                 dc.w    $802
@@ -208,7 +208,7 @@ word_E889A:     dc.w    $800                            ; DATA XREF: ROM:00016FB
                 dc.w    $880E
                 dc.l    sprite_F5022+$E000000
                 dc.w    $F8ED
-word_E88C2:     dc.w    $800                            ; DATA XREF: ROM:00016FBC   o
+Player_DirectionalSecondarySpriteMapping04: dc.w    $800  ; DATA XREF: ROM:00016FBC   o  ; was: word_E88C2
                 dc.l    sprite_F5674+$9000000
                 dc.w    $FDF
                 dc.w    $806
@@ -223,7 +223,7 @@ word_E88C2:     dc.w    $800                            ; DATA XREF: ROM:00016FB
                 dc.w    $8812
                 dc.l    sprite_F536C+$E000000
                 dc.w    $F7F7
-word_E88EA:     dc.w    $800                            ; DATA XREF: ROM:00016FC0   o
+Player_DirectionalSecondarySpriteMapping05: dc.w    $800  ; DATA XREF: ROM:00016FC0   o  ; was: word_E88EA
                 dc.l    sprite_F5A60
                 dc.w    $F80F
                 dc.w    $801
@@ -241,7 +241,7 @@ word_E88EA:     dc.w    $800                            ; DATA XREF: ROM:00016FC
                 dc.w    $8814
                 dc.l    sprite_F5736+$9000000
                 dc.w    $F0F7
-word_E891A:     dc.w    $800                            ; DATA XREF: ROM:00016FC4   o
+Player_DirectionalSecondarySpriteMapping06: dc.w    $800  ; DATA XREF: ROM:00016FC4   o  ; was: word_E891A
                 dc.l    sprite_F5D4A
                 dc.w    $F90F
                 dc.w    $801
@@ -256,7 +256,7 @@ word_E891A:     dc.w    $800                            ; DATA XREF: ROM:00016FC
                 dc.w    $8811
                 dc.l    sprite_F5A82+$9000000
                 dc.w    $F1F7
-word_E8942:     dc.w    $800                            ; DATA XREF: Player_RenderIdleFrame+18   o
+Player_IdleSecondarySpriteMapping:  dc.w    $800        ; DATA XREF: Player_RenderIdleFrame+18   o  ; was: word_E8942
                                         ; Player_UpdateDashSprite+16   o
                 dc.l    sprite_F6036+$4000000
                 dc.w    $F0F8
@@ -275,7 +275,7 @@ word_E8942:     dc.w    $800                            ; DATA XREF: Player_Rend
                 dc.w    $880C
                 dc.l    sprite_F5D6C+$E000000
                 dc.w    $F8F0
-word_E8972:     dc.w    $800                            ; DATA XREF: Player_HandleAirMovement+60   o
+Player_CommonPrimarySpriteMapping:  dc.w    $800        ; DATA XREF: Player_HandleAirMovement+60   o  ; was: word_E8972
                                         ; Player_HandleSpecialAttack+B4   o
                 dc.l    sprite_F6078+$F000000
                 dc.w    $DAEC
@@ -288,7 +288,7 @@ word_E8972:     dc.w    $800                            ; DATA XREF: Player_Hand
                 dc.w    $8813
                 dc.l    sprite_F6036+$4000000
                 dc.w    $F0F8
-word_E8992:     dc.w    $800                            ; DATA XREF: ROM:0001704E   o
+Player_DashSecondarySpriteMapping:  dc.w    $800        ; DATA XREF: ROM:0001704E   o  ; was: word_E8992
                                         ; Player_UpdateDashSprite+2A   o
                 dc.l    sprite_F65E8
                 dc.w    $18E5
@@ -307,7 +307,7 @@ word_E8992:     dc.w    $800                            ; DATA XREF: ROM:0001704
                 dc.w    $880D
                 dc.l    sprite_F62DE+$E000000
                 dc.w    $F8EF
-word_E89C2:     dc.w    $800                            ; DATA XREF: Player_HandleAirMovement+66   o
+Player_CommonMovementSecondarySpriteMapping:    dc.w    $800  ; DATA XREF: Player_HandleAirMovement+66   o  ; was: word_E89C2
                                         ; Player_KnockbackState+6   o
                 dc.l    sprite_F6914
                 dc.w    $18DF
@@ -326,7 +326,7 @@ word_E89C2:     dc.w    $800                            ; DATA XREF: Player_Hand
                 dc.w    $8810
                 dc.l    sprite_F660A+$A000000
                 dc.w    $F8F7
-word_E89F2:     dc.w    $800                            ; DATA XREF: Player_RenderWithWeapon+32   o
+Player_WeaponSecondarySpriteMapping:    dc.w    $800    ; DATA XREF: Player_RenderWithWeapon+32   o  ; was: word_E89F2
                                         ; Player_RenderWithWeapon+6E   o
                 dc.l    sprite_F6ADE+$D000000
                 dc.w    $10F2
@@ -342,7 +342,7 @@ word_E89F2:     dc.w    $800                            ; DATA XREF: Player_Rend
                 dc.w    $880F
                 dc.l    sprite_F6936+$9000000
                 dc.w    $F2
-word_E8A1A:     dc.w    $800                            ; DATA XREF: ROM:Player_AnimationFrameTable   o
+Player_StateAnimationSpriteMapping00:   dc.w    $800    ; DATA XREF: ROM:Player_AnimationFrameTable   o  ; was: word_E8A1A
                 dc.l    sprite_F6E06
                 dc.w    $10E
                 dc.w    $801
@@ -360,7 +360,7 @@ word_E8A1A:     dc.w    $800                            ; DATA XREF: ROM:Player_
                 dc.w    $8812
                 dc.l    sprite_F6BE0+$E000000
                 dc.w    $EEEE
-word_E8A4A:     dc.w    $800                            ; DATA XREF: ROM:000171F0   o
+Player_StateAnimationSpriteMapping01:   dc.w    $800    ; DATA XREF: ROM:000171F0   o  ; was: word_E8A4A
                 dc.l    sprite_F72D8
                 dc.w    $E9F8
                 dc.w    $801
@@ -381,7 +381,7 @@ word_E8A4A:     dc.w    $800                            ; DATA XREF: ROM:000171F
                 dc.w    $8814
                 dc.l    sprite_F6FAC+$9000000
                 dc.w    $F1F8
-word_E8A82:     dc.w    $800                            ; DATA XREF: ROM:000171F4   o
+Player_StateAnimationSpriteMapping02:   dc.w    $800    ; DATA XREF: ROM:000171F4   o  ; was: word_E8A82
                 dc.l    sprite_F7686+$1000000
                 dc.w    $E2EE
                 dc.w    $802
@@ -402,7 +402,7 @@ word_E8A82:     dc.w    $800                            ; DATA XREF: ROM:000171F
                 dc.w    $880E
                 dc.l    sprite_F72FA+$F000000
                 dc.w    $F2EE
-word_E8ABA:     dc.w    $800                            ; DATA XREF: ROM:000171F8   o
+Player_StateAnimationSpriteMapping03:   dc.w    $800    ; DATA XREF: ROM:000171F8   o  ; was: word_E8ABA
                 dc.l    sprite_F79D0+$8000000
                 dc.w    $DF00
                 dc.w    $803
@@ -417,7 +417,7 @@ word_E8ABA:     dc.w    $800                            ; DATA XREF: ROM:000171F
                 dc.w    $8815
                 dc.l    sprite_F76C8+$9000000
                 dc.w    $7F0
-word_E8AE2:     dc.w    $1000                           ; DATA XREF: ROM:000171FC   o
+Player_StateAnimationSpriteMapping04:   dc.w    $1000   ; DATA XREF: ROM:000171FC   o  ; was: word_E8AE2
                 dc.l    sprite_F6E06
                 dc.w    $F7EC
                 dc.w    $1001
@@ -435,7 +435,7 @@ word_E8AE2:     dc.w    $1000                           ; DATA XREF: ROM:000171F
                 dc.w    $9012
                 dc.l    sprite_F6BE0+$E000000
                 dc.w    $FAF4
-word_E8B12:     dc.w    $1000                           ; DATA XREF: ROM:00017200   o
+Player_StateAnimationSpriteMapping05:   dc.w    $1000   ; DATA XREF: ROM:00017200   o  ; was: word_E8B12
                 dc.l    sprite_F72D8
                 dc.w    $F00
                 dc.w    $1001
@@ -456,7 +456,7 @@ word_E8B12:     dc.w    $1000                           ; DATA XREF: ROM:0001720
                 dc.w    $9014
                 dc.l    sprite_F6FAC+$9000000
                 dc.w    $FFF0
-word_E8B4A:     dc.w    $1000                           ; DATA XREF: ROM:00017204   o
+Player_StateAnimationSpriteMapping06:   dc.w    $1000   ; DATA XREF: ROM:00017204   o  ; was: word_E8B4A
                 dc.l    sprite_F7686+$1000000
                 dc.w    $E0A
                 dc.w    $1002
@@ -477,7 +477,7 @@ word_E8B4A:     dc.w    $1000                           ; DATA XREF: ROM:0001720
                 dc.w    $900E
                 dc.l    sprite_F72FA+$F000000
                 dc.w    $EEF2
-word_E8B82:     dc.w    $1000                           ; DATA XREF: ROM:00017208   o
+Player_StateAnimationSpriteMapping07:   dc.w    $1000   ; DATA XREF: ROM:00017208   o  ; was: word_E8B82
                 dc.l    sprite_F79D0+$8000000
                 dc.w    $18E8
                 dc.w    $1003
@@ -492,7 +492,7 @@ word_E8B82:     dc.w    $1000                           ; DATA XREF: ROM:0001720
                 dc.w    $9015
                 dc.l    sprite_F76C8+$9000000
                 dc.w    $E8F8
-word_E8BAA:     dc.w    $800                            ; DATA XREF: Player_KnockbackState   o
+Player_KnockbackPrimarySpriteMapping:   dc.w    $800    ; DATA XREF: Player_KnockbackState   o  ; was: word_E8BAA
                                         ; sub_1A122   o
                 dc.l    sprite_F7B76+$D000000
                 dc.w    $F3EE
@@ -502,7 +502,7 @@ word_E8BAA:     dc.w    $800                            ; DATA XREF: Player_Knoc
                 dc.w    $880C
                 dc.l    sprite_F7A32+$6000000
                 dc.w    $DBFE
-word_E8BC2:     dc.w    $800                            ; DATA XREF: ROM:Player_DefeatPrimaryFrameTable   o
+Player_DefeatPrimarySpriteMapping00:    dc.w    $800    ; DATA XREF: ROM:Player_DefeatPrimaryFrameTable   o  ; was: word_E8BC2
                 dc.l    sprite_F7EBE+$1000000
                 dc.w    $EAE5
                 dc.w    $802
@@ -514,7 +514,7 @@ word_E8BC2:     dc.w    $800                            ; DATA XREF: ROM:Player_
                 dc.w    $880C
                 dc.l    sprite_F7C78+$D000000
                 dc.w    $DAED
-word_E8BE2:     dc.w    $800                            ; DATA XREF: ROM:00017362   o
+Player_DefeatPrimarySpriteMapping01:    dc.w    $800    ; DATA XREF: ROM:00017362   o  ; was: word_E8BE2
                 dc.l    sprite_F8124+$1000000
                 dc.w    $E2E9
                 dc.w    $802
@@ -523,13 +523,13 @@ word_E8BE2:     dc.w    $800                            ; DATA XREF: ROM:0001736
                 dc.w    $8803
                 dc.l    sprite_F7F00+$F000000
                 dc.w    $DAF0
-word_E8BFA:     dc.w    $800                            ; DATA XREF: ROM:00017366   o
+Player_DefeatPrimarySpriteMapping02:    dc.w    $800    ; DATA XREF: ROM:00017366   o  ; was: word_E8BFA
                 dc.l    sprite_F8368+$1000000
                 dc.w    $E2EA
                 dc.w    $8802
                 dc.l    sprite_F8166+$F000000
                 dc.w    $DAF2
-word_E8C0A:     dc.w    $800                            ; DATA XREF: ROM:0001736A   o
+Player_DefeatPrimarySpriteMapping03:    dc.w    $800    ; DATA XREF: ROM:0001736A   o  ; was: word_E8C0A
                 dc.l    sprite_F8610+$8000000
                 dc.w    $EACF
                 dc.w    $803
@@ -541,7 +541,7 @@ word_E8C0A:     dc.w    $800                            ; DATA XREF: ROM:0001736
                 dc.w    $8806
                 dc.l    sprite_F83AA+$F000000
                 dc.w    $DAEF
-word_E8C2A:     dc.w    $800                            ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseFastFrame   o
+Player_FastVerticalSecondarySpriteMapping:  dc.w    $800  ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseFastFrame   o  ; was: word_E8C2A
                 dc.l    sprite_F891A
                 dc.w    $20F6
                 dc.w    $801
@@ -556,7 +556,7 @@ word_E8C2A:     dc.w    $800                            ; DATA XREF: Player_Sele
                 dc.w    $8812
                 dc.l    sprite_F8672+$C000000
                 dc.w    $F8EE
-word_E8C52:     dc.w    $800                            ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseRisingFrame   o
+Player_RisingSecondarySpriteMapping:    dc.w    $800    ; DATA XREF: Player_SelectFallAnimation:Player_SelectFallAnimation_UseRisingFrame   o  ; was: word_E8C52
                 dc.l    sprite_F8ABE+$4000000
                 dc.w    $EFF6
                 dc.w    $802
@@ -565,7 +565,7 @@ word_E8C52:     dc.w    $800                            ; DATA XREF: Player_Sele
                 dc.w    $880A
                 dc.l    sprite_F893C+$E000000
                 dc.w    $F7EE
-word_E8C6A:     dc.w    $800                            ; DATA XREF: Player_SelectFallAnimation+1A   o
+Player_FallingSecondarySpriteMapping:   dc.w    $800    ; DATA XREF: Player_SelectFallAnimation+1A   o  ; was: word_E8C6A
                 dc.l    sprite_F8D86+$7000000
                 dc.w    $10FA
                 dc.w    $808
@@ -574,7 +574,7 @@ word_E8C6A:     dc.w    $800                            ; DATA XREF: Player_Sele
                 dc.w    $880E
                 dc.l    sprite_F8C02+$9000000
                 dc.w    $F0F6
-word_E8C82:     dc.w    $800                            ; DATA XREF: Player_SelectFallPrimaryFrame:Player_SelectFallPrimaryFrame_UseDefault   o
+Player_FallPrimarySpriteMapping:    dc.w    $800        ; DATA XREF: Player_SelectFallPrimaryFrame:Player_SelectFallPrimaryFrame_UseDefault   o  ; was: word_E8C82
                 dc.l    sprite_F906E+$2000000
                 dc.w    $D70E
                 dc.w    $803
@@ -583,7 +583,7 @@ word_E8C82:     dc.w    $800                            ; DATA XREF: Player_Sele
                 dc.w    $8805
                 dc.l    sprite_F8EAA+$B000000
                 dc.w    $D7F6
-word_E8C9A:     dc.w    $800                            ; DATA XREF: Player_SelectFallPrimaryFrame+E   o
+Player_FastFallPrimarySpriteMapping:    dc.w    $800    ; DATA XREF: Player_SelectFallPrimaryFrame+E   o  ; was: word_E8C9A
                 dc.l    sprite_F92D8+$8000000
                 dc.w    $CFF6
                 dc.w    $803
@@ -598,7 +598,7 @@ word_E8C9A:     dc.w    $800                            ; DATA XREF: Player_Sele
                 dc.w    $880B
                 dc.l    sprite_F90D0+$D000000
                 dc.w    $DFF6
-word_E8CC2:     dc.w    $800                            ; DATA XREF: ROM:Player_WeaponAnimationFrames   o
+Player_WeaponAnimationSpriteMapping00:  dc.w    $800    ; DATA XREF: ROM:Player_WeaponAnimationFrames   o  ; was: word_E8CC2
                 dc.l    sprite_F951E+$9000000
                 dc.w    $10F6
                 dc.w    $806
@@ -607,13 +607,13 @@ word_E8CC2:     dc.w    $800                            ; DATA XREF: ROM:Player_
                 dc.w    $8809
                 dc.l    sprite_F933A+$E000000
                 dc.w    $F8EE
-word_E8CDA:     dc.w    $800                            ; DATA XREF: ROM:0001703E   o
+Player_WeaponAnimationSpriteMapping01:  dc.w    $800    ; DATA XREF: ROM:0001703E   o  ; was: word_E8CDA
                 dc.l    sprite_F95E0+$B000000
                 dc.w    $F0F8
                 dc.w    $880C
                 dc.l    sprite_F9762+$D000000
                 dc.w    $10F2
-word_E8CEA:     dc.w    $800                            ; DATA XREF: ROM:00017042   o
+Player_WeaponAnimationSpriteMapping02:  dc.w    $800    ; DATA XREF: ROM:00017042   o  ; was: word_E8CEA
                 dc.l    sprite_F99E6+$8000000
                 dc.w    $F0F8
                 dc.w    $803
@@ -628,7 +628,7 @@ word_E8CEA:     dc.w    $800                            ; DATA XREF: ROM:0001704
                 dc.w    $8811
                 dc.l    sprite_F9A48+$D000000
                 dc.w    $10F0
-word_E8D12:     dc.w    $800                            ; DATA XREF: ROM:00017046   o
+Player_WeaponAnimationSpriteMapping03:  dc.w    $800    ; DATA XREF: ROM:00017046   o  ; was: word_E8D12
                 dc.l    sprite_F9D10+$8000000
                 dc.w    $F0F8
                 dc.w    $803
@@ -637,7 +637,7 @@ word_E8D12:     dc.w    $800                            ; DATA XREF: ROM:0001704
                 dc.w    $8809
                 dc.l    sprite_F9B8E+$E000000
                 dc.w    $F8F0
-word_E8D2A:     dc.w    $800                            ; DATA XREF: ROM:0001704A   o
+Player_WeaponAnimationSpriteMapping04:  dc.w    $800    ; DATA XREF: ROM:0001704A   o  ; was: word_E8D2A
                 dc.l    sprite_FA0DC
                 dc.w    $18E9
                 dc.w    $801
@@ -652,7 +652,7 @@ word_E8D2A:     dc.w    $800                            ; DATA XREF: ROM:0001704
                 dc.w    $880D
                 dc.l    sprite_F9E34+$A000000
                 dc.w    $F0F8
-word_E8D52:     dc.w    $800                            ; DATA XREF: ROM:000172CC   o
+Player_PrimaryLayoutSpriteMapping04:    dc.w    $800    ; DATA XREF: ROM:000172CC   o  ; was: word_E8D52
                 dc.l    sprite_FA284+$4000000
                 dc.w    $F90B
                 dc.w    $802
@@ -664,7 +664,7 @@ word_E8D52:     dc.w    $800                            ; DATA XREF: ROM:000172C
                 dc.w    $8808
                 dc.l    sprite_FA0FE+$9000000
                 dc.w    $E1FB
-word_E8D72:     dc.w    $800                            ; DATA XREF: ROM:000172C8   o
+Player_PrimaryLayoutSpriteMapping03:    dc.w    $800    ; DATA XREF: ROM:000172C8   o  ; was: word_E8D72
                 dc.l    sprite_FA3C8
                 dc.w    $F018
                 dc.w    $801
@@ -676,7 +676,7 @@ word_E8D72:     dc.w    $800                            ; DATA XREF: ROM:000172C
                 dc.w    $8808
                 dc.l    sprite_FA2C6+$D000000
                 dc.w    $E8F8
-word_E8D92:     dc.w    $800                            ; DATA XREF: ROM:Player_PrimaryAnimationLayoutTable   o
+Player_PrimaryLayoutSpriteMapping00:    dc.w    $800    ; DATA XREF: ROM:Player_PrimaryAnimationLayoutTable   o  ; was: word_E8D92
                 dc.l    sprite_FA692+$9000000
                 dc.w    $E3DE
                 dc.w    $806
@@ -685,7 +685,7 @@ word_E8D92:     dc.w    $800                            ; DATA XREF: ROM:Player_
                 dc.w    $880C
                 dc.l    sprite_FA4CE+$D000000
                 dc.w    $DBF6
-word_E8DAA:     dc.w    $800                            ; DATA XREF: ROM:000172C4   o
+Player_PrimaryLayoutSpriteMapping02:    dc.w    $800    ; DATA XREF: ROM:000172C4   o  ; was: word_E8DAA
                 dc.l    sprite_FA8B8+$9000000
                 dc.w    $F3EC
                 dc.w    $806
@@ -694,7 +694,7 @@ word_E8DAA:     dc.w    $800                            ; DATA XREF: ROM:000172C
                 dc.w    $8808
                 dc.l    sprite_FA754+$A000000
                 dc.w    $DBF1
-word_E8DC2:     dc.w    $800                            ; DATA XREF: ROM:000172C0   o
+Player_PrimaryLayoutSpriteMapping01:    dc.w    $800    ; DATA XREF: ROM:000172C0   o  ; was: word_E8DC2
                 dc.l    sprite_FAABE+$6000000
                 dc.w    $F5F6
                 dc.w    $806
@@ -703,7 +703,7 @@ word_E8DC2:     dc.w    $800                            ; DATA XREF: ROM:000172C
                 dc.w    $8807
                 dc.l    sprite_FA97A+$A000000
                 dc.w    $DDEE
-word_E8DDA:     dc.w    $800                            ; DATA XREF: ROM:00017308   o
+Player_AlternateLayoutSpriteMapping04:  dc.w    $800    ; DATA XREF: ROM:00017308   o  ; was: word_E8DDA
                 dc.l    sprite_FAD44+$6000000
                 dc.w    $CBF3
                 dc.w    $806
@@ -712,7 +712,7 @@ word_E8DDA:     dc.w    $800                            ; DATA XREF: ROM:0001730
                 dc.w    $8808
                 dc.l    sprite_FAB80+$E000000
                 dc.w    $E3F3
-word_E8DF2:     dc.w    $800                            ; DATA XREF: ROM:00017304   o
+Player_AlternateLayoutSpriteMapping03:  dc.w    $800    ; DATA XREF: ROM:00017304   o  ; was: word_E8DF2
                 dc.l    sprite_FAF08+$5000000
                 dc.w    $F209
                 dc.w    $804
@@ -724,7 +724,7 @@ word_E8DF2:     dc.w    $800                            ; DATA XREF: ROM:0001730
                 dc.w    $880D
                 dc.l    sprite_FAE06+$D000000
                 dc.w    $E2F1
-word_E8E12:     dc.w    $800                            ; DATA XREF: ROM:Player_AlternateAnimationLayoutTable   o
+Player_AlternateLayoutSpriteMapping00:  dc.w    $800    ; DATA XREF: ROM:Player_AlternateAnimationLayoutTable   o  ; was: word_E8E12
                 dc.l    sprite_FB354
                 dc.w    $E4E5
                 dc.w    $801
@@ -736,7 +736,7 @@ word_E8E12:     dc.w    $800                            ; DATA XREF: ROM:Player_
                 dc.w    $8806
                 dc.l    sprite_FB0AE+$F000000
                 dc.w    $DCED
-word_E8E32:     dc.w    $800                            ; DATA XREF: ROM:00017300   o
+Player_AlternateLayoutSpriteMapping02:  dc.w    $800    ; DATA XREF: ROM:00017300   o  ; was: word_E8E32
                 dc.l    sprite_FB5FA+$5000000
                 dc.w    $F6DD
                 dc.w    $804
@@ -745,7 +745,7 @@ word_E8E32:     dc.w    $800                            ; DATA XREF: ROM:0001730
                 dc.w    $8808
                 dc.l    sprite_FB376+$F000000
                 dc.w    $DEEA
-word_E8E4A:     dc.w    $800                            ; DATA XREF: ROM:000172FC   o
+Player_AlternateLayoutSpriteMapping01:  dc.w    $800    ; DATA XREF: ROM:000172FC   o  ; was: word_E8E4A
                 dc.l    sprite_FB7FE+$4000000
                 dc.w    $ED0A
                 dc.w    $802
@@ -757,7 +757,7 @@ word_E8E4A:     dc.w    $800                            ; DATA XREF: ROM:000172F
                 dc.w    $8807
                 dc.l    sprite_FB67C+$B000000
                 dc.w    $DAF2
-word_E8E6A:     dc.w    0                               ; DATA XREF: Player_PhoenixAttackUpdate+4E   o
+Player_PhoenixAndTeleportDashSpriteMapping: dc.w    0   ; DATA XREF: Player_PhoenixAttackUpdate+4E   o  ; was: word_E8E6A
                                         ; Player_InitiateDashAttack+84   o
                 dc.l    sprite_FBEF6+$D000000
                 dc.w    $B09
@@ -788,7 +788,7 @@ word_E8E6A:     dc.w    0                               ; DATA XREF: Player_Phoe
                 dc.w    $802C
                 dc.l    sprite_FB966+$B000000
                 dc.w    $E3F1
-word_E8EBA:     dc.w    0                               ; DATA XREF: Player_InitTeleportDashReturnState+42   o
+Player_TeleportDashTrailSpriteMapping:  dc.w    0       ; DATA XREF: Player_InitTeleportDashReturnState+42   o  ; was: word_E8EBA
                                         ; Effect_CreateDashTrail+6   o
                 dc.l    sprite_FC728+$5000000
                 dc.w    $F430
@@ -819,7 +819,7 @@ word_E8EBA:     dc.w    0                               ; DATA XREF: Player_Init
                 dc.w    $803A
                 dc.l    sprite_FBFF8+$6000000
                 dc.w    $F4D0
-word_E8F0A:     dc.w    $800                            ; DATA XREF: Player_RenderAirborneFrame+1E   o
+Player_AirborneWeaponSecondarySpriteMapping:    dc.w    $800  ; DATA XREF: Player_RenderAirborneFrame+1E   o  ; was: word_E8F0A
                                         ; Player_RenderWithWeapon+1E   o
                 dc.l    sprite_FC8F0
                 dc.w    3
@@ -829,12 +829,12 @@ word_E8F0A:     dc.w    $800                            ; DATA XREF: Player_Rend
                 dc.w    $8807
                 dc.l    sprite_FC912+$B000000
                 dc.w    $EB
-word_E8F22:     dc.w    4, 0, $ECD8                     ; DATA XREF: Player_TeleportDash+60   o
+Player_TeleportDashProjectileSpriteMapping: dc.w    4, 0, $ECD8  ; DATA XREF: Player_TeleportDash+60   o  ; was: word_E8F22
                                         ; Player_SpawnProjectile+30   o
                 dc.w    5, $D00, $E4E0
                 dc.w    $D, $D00, $E400
                 dc.w    $8015, $500, $E420
-word_E8F3A:     dc.w    $800                            ; DATA XREF: Player_HandleSpecialAttack:Player_HandleSpecialAttack_SelectFrame   o
+Player_SpecialAttackSecondarySpriteMappingA:    dc.w    $800  ; DATA XREF: Player_HandleSpecialAttack:Player_HandleSpecialAttack_SelectFrame   o  ; was: word_E8F3A
                                         ; sub_16116   o
                 dc.l    sprite_FCF40+$5000000
                 dc.w    $17F9
@@ -853,7 +853,7 @@ word_E8F3A:     dc.w    $800                            ; DATA XREF: Player_Hand
                 dc.w    $8814
                 dc.l    sprite_FCA94+$A000000
                 dc.w    $EFF9
-word_E8F6A:     dc.w    $800                            ; DATA XREF: Player_HandleSpecialAttack+A0   o
+Player_SpecialAttackSecondarySpriteMappingB:    dc.w    $800  ; DATA XREF: Player_HandleSpecialAttack+A0   o  ; was: word_E8F6A
                                         ; Player_RenderSpecialMoveRecovery+E   o
                 dc.l    sprite_FCBB6+$E000000
                 dc.w    $EFF9
@@ -872,7 +872,7 @@ word_E8F6A:     dc.w    $800                            ; DATA XREF: Player_Hand
                 dc.w    $881E
                 dc.l    sprite_FCD38+$1000000
                 dc.w    $F7F1
-word_E8F9A:     dc.w    $800                            ; DATA XREF: ROM:Player_DeathParticleAnimationFrames   o
+Player_DeathParticleSpriteMapping00:    dc.w    $800    ; DATA XREF: ROM:Player_DeathParticleAnimationFrames   o  ; was: word_E8F9A
                 dc.l    sprite_FD0C4+$9000000
                 dc.w    $5F3
                 dc.w    $806
@@ -887,7 +887,7 @@ word_E8F9A:     dc.w    $800                            ; DATA XREF: ROM:Player_
                 dc.w    $8813
                 dc.l    sprite_FD1E8+$C000000
                 dc.w    $E204
-word_E8FC2:     dc.w    $800                            ; DATA XREF: ROM:00017246   o
+Player_DeathParticleSpriteMapping01:    dc.w    $800    ; DATA XREF: ROM:00017246   o  ; was: word_E8FC2
                 dc.l    sprite_FD0C4+$9000000
                 dc.w    $5F3
                 dc.w    $806
@@ -902,7 +902,7 @@ word_E8FC2:     dc.w    $800                            ; DATA XREF: ROM:0001724
                 dc.w    $8813
                 dc.l    sprite_FD1E8+$C000000
                 dc.w    $E204
-word_E8FEA:     dc.w    $800                            ; DATA XREF: ROM:0001724A   o
+Player_DeathParticleSpriteMapping02:    dc.w    $800    ; DATA XREF: ROM:0001724A   o  ; was: word_E8FEA
                 dc.l    sprite_FCFC2+$7000000
                 dc.w    $EAF5
                 dc.w    $808
@@ -917,7 +917,7 @@ word_E8FEA:     dc.w    $800                            ; DATA XREF: ROM:0001724
                 dc.w    $8813
                 dc.l    sprite_FD1E8+$C000000
                 dc.w    $E204
-word_E9012:     dc.w    $800                            ; DATA XREF: ROM:0001724E   o
+Player_DeathParticleSpriteMapping03:    dc.w    $800    ; DATA XREF: ROM:0001724E   o  ; was: word_E9012
                 dc.l    sprite_FCFC2+$7000000
                 dc.w    $ECF5
                 dc.w    $808
@@ -932,25 +932,25 @@ word_E9012:     dc.w    $800                            ; DATA XREF: ROM:0001724
                 dc.w    $8810
                 dc.l    sprite_FD1E8+$C000000
                 dc.w    $E204
-word_E903A:     dc.w    $800                            ; DATA XREF: ROM:00017252   o
+Player_DeathParticleSpriteMapping04:    dc.w    $800    ; DATA XREF: ROM:00017252   o  ; was: word_E903A
                 dc.l    sprite_FCFC2+$7000000
                 dc.w    $EDF5
                 dc.w    $8808
                 dc.l    sprite_FD186+$8000000
                 dc.w    $9F3
-word_E904A:     dc.w    $800                            ; DATA XREF: ROM:00017256   o
+Player_DeathParticleSpriteMapping05:    dc.w    $800    ; DATA XREF: ROM:00017256   o  ; was: word_E904A
                 dc.l    sprite_FCFC2+$7000000
                 dc.w    $EEF5
                 dc.w    $8808
                 dc.l    sprite_FD186+$8000000
                 dc.w    $9F3
-word_E905A:     dc.w    $800                            ; DATA XREF: ROM:0001725A   o
+Player_DeathParticleSpriteMapping06:    dc.w    $800    ; DATA XREF: ROM:0001725A   o  ; was: word_E905A
                 dc.l    sprite_FCFC2+$7000000
                 dc.w    $EAF5
                 dc.w    $8808
                 dc.l    sprite_FD186+$8000000
                 dc.w    $9F3
-word_E906A:     dc.w    $800                            ; DATA XREF: ROM:0001725E   o
+Player_DeathParticleSpriteMapping07:    dc.w    $800    ; DATA XREF: ROM:0001725E   o  ; was: word_E906A
                 dc.l    sprite_FCFC2+$7000000
                 dc.w    $E6F5
                 dc.w    $8808

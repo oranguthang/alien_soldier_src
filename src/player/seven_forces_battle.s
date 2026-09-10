@@ -192,14 +192,14 @@ Player_StartSevenForcesDashProjectile:                  ; CODE XREF: Player_TryS
                 btst    #7,(byte_FF8245).w
                 bne.s   Player_StartSevenForcesDashAlternateProjectile
                 jsr     (Player_SpawnProjectile).l
-                move.l  #word_E8E6A,8(a5)
+                move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
                 move.w  #$78,(word_FF8304).w            ; 'x'
                 moveq   #1,d0
                 rts
 ; ---------------------------------------------------------------------------
 Player_StartSevenForcesDashAlternateProjectile:         ; CODE XREF: Player_TryStartSevenForcesDash+78   j  ; was: loc_1A00A
                                         ; Player_TryStartSevenForcesDash+80   j
-                move.l  #word_E86AA,8(a5)
+                move.l  #Player_PhoenixDashAttackSpriteMapping,8(a5)
                 move.w  #$78,(word_FF8304).w            ; 'x'
                 moveq   #1,d0
 Player_TryStartSevenForcesDashReturn:                   ; CODE XREF: Player_TryStartSevenForcesDash+6   j  ; was: locret_1A01A
@@ -290,8 +290,8 @@ Player_SevenForcesDefeatStateReturn:                    ; CODE XREF: Player_Ente
 ; End of function Player_EnterSevenForcesDefeatStateA
 ; State A: render and time the player defeat animation
 Player_SevenForcesDefeatStateA:                         ; DATA XREF: ROM:00019E20   o  ; was: sub_1A122
-                movea.l #word_E8BAA,a1
-                movea.l #word_E89C2,a2
+                movea.l #Player_KnockbackPrimarySpriteMapping,a1
+                movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFF,d6
                 jsr     (Player_BuildSpritePieces).l
@@ -396,15 +396,15 @@ Player_DampenSevenForcesVelocity:                       ; CODE XREF: Player_Seve
 ; Render the ordinary Seven Forces battle frame with an optional weapon overlay
 Player_RenderSevenForcesBattleFrame:                    ; CODE XREF: Player_SevenForcesState0Render   j  ; was: sub_1A208
                                         ; Player_SevenForcesState2+36   j
-                movea.l #word_E8F3A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
                 btst    #0,(word_FFA000+1).w
                 bne.s   Player_RenderSevenForcesBattleSelectOverlay
-                movea.l #word_E8F6A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_RenderSevenForcesBattleSelectOverlay:            ; CODE XREF: Player_RenderSevenForcesBattleFrame+C   j  ; was: loc_1A21C
                 btst    #4,$69(a5)
                 bne.s   Player_RenderSevenForcesBattleWithWeapon
                 jsr     (Player_UpdateHorizontalFacing).l
-                movea.l #word_E8972,a1
+                movea.l #Player_CommonPrimarySpriteMapping,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 jmp     Player_BuildSpritePieces
@@ -418,12 +418,12 @@ Player_RenderSevenForcesBattleWithWeapon:               ; CODE XREF: Player_Rend
 ; End of function Player_RenderSevenForcesBattleFrame
 ; Render the fixed player frame used during state-4 transition
 Player_RenderSevenForcesTransitionFrame:                ; CODE XREF: Player_SevenForcesState4+E   j  ; was: sub_1A250
-                movea.l #word_E8F3A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
                 btst    #0,(word_FFA000+1).w
                 bne.s   Player_RenderSevenForcesTransitionSelectFrame
-                movea.l #word_E8F6A,a2
+                movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_RenderSevenForcesTransitionSelectFrame:          ; CODE XREF: Player_RenderSevenForcesTransitionFrame+C   j  ; was: loc_1A264
-                movea.l #word_E8972,a1
+                movea.l #Player_CommonPrimarySpriteMapping,a1
                 moveq   #$FFFFFFFF,d5
                 moveq   #$FFFFFFFE,d6
                 jmp     Player_BuildSpritePieces

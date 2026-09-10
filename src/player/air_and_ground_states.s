@@ -107,8 +107,8 @@ Player_HandleCrouchState:                               ; DATA XREF: ROM:0001508
 Player_RenderCrouchMovement:                            ; CODE XREF: Player_HandleCrouchState+3E   j  ; was: loc_1661A
                 btst    #4,$69(a5)
                 bne.w   Player_RenderGroundedFrame
-                movea.l #word_E8972,a1
-                movea.l #word_E89C2,a2
+                movea.l #Player_CommonPrimarySpriteMapping,a1
+                movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
                 moveq   #6,d6
                 bra.w   Player_BuildSpritePieces
@@ -389,7 +389,7 @@ Player_TeleportDash:                                    ; DATA XREF: ROM:000150B
                 move.w  #$230,(a0)
                 move.b  #$54,$21(a0)                    ; 'T'
                 move.w  #$4000,2(a0)
-                move.l  #word_E8F22,8(a0)
+                move.l  #Player_TeleportDashProjectileSpriteMapping,8(a0)
                 move.w  $E(a5),d0
                 andi.w  #$FFFF,d0
                 move.w  d0,$E(a0)
@@ -399,7 +399,7 @@ Player_TeleportDash:                                    ; DATA XREF: ROM:000150B
                 move.w  $14(a5),$14(a0)
                 move.b  #$E0,d0
                 jsr     (Sound_PlaySFX).l
-                move.l  #word_E8E6A,8(a5)
+                move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
 ; Applies velocity during player teleport dash
 Player_TeleportDash_ApplyVelocity:                      ; DATA XREF: ROM:000150B4   o  ; was: loc_169E0
                 tst.w   $48(a5)
@@ -442,14 +442,14 @@ Player_InitTeleportDashReturnState:                     ; DATA XREF: ROM:000150B
                 move.w  #$100,$14(a5)
                 bset    #3,$E(a5)
                 bclr    #4,$E(a5)
-                move.l  #word_E8E6A,8(a5)
+                move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
 ; Alternates sprite frames during the teleport-dash return state
 Player_TeleportDashReturnState:                         ; DATA XREF: ROM:000150C0   o  ; was: loc_16A86
                 bset    #4,$23(a5)
-                move.l  #word_E8EBA,8(a5)
+                move.l  #Player_TeleportDashTrailSpriteMapping,8(a5)
                 btst    #0,(word_FFA000+1).w
                 bne.w   Player_TeleportDashReturnState_Return
-                move.l  #word_E8E6A,8(a5)
+                move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
 Player_TeleportDashReturnState_Return:                  ; CODE XREF: Player_InitTeleportDashReturnState+50   j  ; was: locret_16AA6
                 rts
 ; End of function Player_InitTeleportDashReturnState

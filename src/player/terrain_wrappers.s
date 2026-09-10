@@ -238,8 +238,8 @@ Player_RenderIdleFrame:                                 ; CODE XREF: Player_Hand
                 andi.w  #6,d0
                 move.b  Player_IdleFrameOffsets(pc,d0.w),d5
                 move.b  Player_IdleFrameOffsets+1(pc,d0.w),d6
-                movea.l #word_E8972,a1
-                movea.l #word_E8942,a2
+                movea.l #Player_CommonPrimarySpriteMapping,a1
+                movea.l #Player_IdleSecondarySpriteMapping,a2
                 bra.w   Player_BuildSpritePieces
 ; End of function Player_RenderIdleFrame
 ; ---------------------------------------------------------------------------
@@ -258,16 +258,16 @@ Player_RenderAirborneFrame_UseAnimatedOffsets:          ; CODE XREF: Player_Jump
                 andi.w  #6,d0
                 move.b  Player_AirborneFrameOffsets(pc,d0.w),d5
                 move.b  Player_AirborneFrameOffsets+1(pc,d0.w),d6
-                movea.l #word_E8972,a1
-                movea.l #word_E8F0A,a2
+                movea.l #Player_CommonPrimarySpriteMapping,a1
+                movea.l #Player_AirborneWeaponSecondarySpriteMapping,a2
                 bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 ; Uses fixed offsets for the nonnegative animation state
 Player_RenderAirborneFrame_UseStaticOffsets:            ; CODE XREF: Player_RenderAirborneFrame+4   j  ; was: loc_16F1A
                 moveq   #0,d5
                 moveq   #8,d6
-                movea.l #word_E8972,a1
-                movea.l #word_E89C2,a2
+                movea.l #Player_CommonPrimarySpriteMapping,a1
+                movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 bra.w   Player_BuildSpritePieces
 ; End of function Player_RenderAirborneFrame
 ; ---------------------------------------------------------------------------

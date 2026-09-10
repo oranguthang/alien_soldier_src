@@ -31,23 +31,25 @@ Player_RenderDirectionalMovement_SubmitFrame:           ; CODE XREF: Player_Rend
                 bra.w   Player_BuildSpritePieces
 ; End of function Player_RenderDirectionalMovement
 ; ---------------------------------------------------------------------------
-Player_DirectionalMovementPrimaryFrames:    dc.l    word_E86FA  ; DATA XREF: Player_RenderDirectionalMovement:Player_RenderDirectionalMovement_SubmitFrame   r  ; was: off_16F8C
-                dc.l    word_E871A
-                dc.l    word_E873A
-                dc.l    word_E8762
-                dc.l    word_E8782
-                dc.l    word_E87A2
-                dc.l    word_E87C2
-                dc.l    word_E86E2
-Player_DirectionalMovementSecondaryFrames:  dc.l    word_E8812  ; DATA XREF: Player_RenderDirectionalMovement+4A   r  ; was: off_16FAC
+Player_DirectionalMovementPrimaryFrames:    dc.l    Player_DirectionalPrimarySpriteMapping00  ; was: off_16F8C
+                                        ; DATA XREF: Player_RenderDirectionalMovement:Player_RenderDirectionalMovement_SubmitFrame   r
+                dc.l    Player_DirectionalPrimarySpriteMapping01
+                dc.l    Player_DirectionalPrimarySpriteMapping02
+                dc.l    Player_DirectionalPrimarySpriteMapping03
+                dc.l    Player_DirectionalPrimarySpriteMapping04
+                dc.l    Player_DirectionalPrimarySpriteMapping05
+                dc.l    Player_DirectionalPrimarySpriteMapping06
+                dc.l    Player_DirectionalPrimarySpriteMapping07
+Player_DirectionalMovementSecondaryFrames:  dc.l    Player_DirectionalSecondarySpriteMapping00  ; was: off_16FAC
+                                        ; DATA XREF: Player_RenderDirectionalMovement+4A   r
                                         ; Player_CycleDashAnimation:Player_SetDashAnimationData   o
-                dc.l    word_E8842
-                dc.l    word_E886A
-                dc.l    word_E889A
-                dc.l    word_E88C2
-                dc.l    word_E88EA
-                dc.l    word_E891A
-                dc.l    word_E87EA
+                dc.l    Player_DirectionalSecondarySpriteMapping01
+                dc.l    Player_DirectionalSecondarySpriteMapping02
+                dc.l    Player_DirectionalSecondarySpriteMapping03
+                dc.l    Player_DirectionalSecondarySpriteMapping04
+                dc.l    Player_DirectionalSecondarySpriteMapping05
+                dc.l    Player_DirectionalSecondarySpriteMapping06
+                dc.l    Player_DirectionalSecondarySpriteMapping07
 
 ; Renders player weapon sprite with animation update
 Player_RenderWeaponSprite:                              ; CODE XREF: Player_CeilingAirControlState+40   p  ; was: sub_16FCC
@@ -95,12 +97,12 @@ Player_SetWeaponAnimationData:                          ; CODE XREF: Player_Upda
 ; ---------------------------------------------------------------------------
 Player_WeaponAnimationTileOffsets:  dc.w    $FFFF, $FFFF, 0, $FFFF, $FFFF, 0  ; was: word_1702E
                                         ; DATA XREF: Player_UpdateWeaponAnim+3C   r
-Player_WeaponAnimationFrames:   dc.l    word_E8CC2      ; DATA XREF: Player_UpdateWeaponAnim:loc_17022   r  ; was: off_1703A
-                dc.l    word_E8CDA
-                dc.l    word_E8CEA
-                dc.l    word_E8D12
-                dc.l    word_E8D2A
-                dc.l    word_E8992
+Player_WeaponAnimationFrames:   dc.l    Player_WeaponAnimationSpriteMapping00  ; DATA XREF: Player_UpdateWeaponAnim:loc_17022   r  ; was: off_1703A
+                dc.l    Player_WeaponAnimationSpriteMapping01
+                dc.l    Player_WeaponAnimationSpriteMapping02
+                dc.l    Player_WeaponAnimationSpriteMapping03
+                dc.l    Player_WeaponAnimationSpriteMapping04
+                dc.l    Player_DashSecondarySpriteMapping
 
 ; Updates player dash sprite
 Player_UpdateDashSprite:                                ; CODE XREF: Player_CeilingIdleState+66   j  ; was: sub_17052
@@ -111,14 +113,14 @@ Player_UpdateDashSprite:                                ; CODE XREF: Player_Ceil
                 moveq   #0,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
-                movea.l #word_E8942,a2
+                movea.l #Player_IdleSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_UpdateDashSprite_UseDefaultVariant:              ; CODE XREF: Player_UpdateDashSprite+4   j  ; was: loc_17072
                 lea     (word_19912).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #4,d6
-                movea.l #word_E8992,a2
+                movea.l #Player_DashSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_UpdateDashSprite
 ; Renders player special weapon sprite with conditional positioning
@@ -130,14 +132,14 @@ Player_RenderSpecialWeapon:                             ; CODE XREF: Player_Hand
                 moveq   #0,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
-                movea.l #word_E8942,a2
+                movea.l #Player_IdleSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_RenderSpecialWeapon_UseDefaultVariant:           ; CODE XREF: Player_RenderSpecialWeapon+4   j  ; was: loc_170A6
                 lea     (word_198D2).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #4,d6
-                movea.l #word_E8992,a2
+                movea.l #Player_DashSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderSpecialWeapon
 ; Renders player sprite with weapon state and metasprite selection
@@ -152,14 +154,14 @@ Player_RenderWithWeapon:                                ; CODE XREF: Player_Ceil
                 moveq   #$11,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
-                movea.l #word_E8F0A,a2
+                movea.l #Player_AirborneWeaponSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_RenderWithWeapon_UseDefaultVariant:              ; CODE XREF: Player_RenderWithWeapon+C   j  ; was: loc_170E2
                 lea     (word_19922).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #$13,d6
-                movea.l #word_E89F2,a2
+                movea.l #Player_WeaponSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
 ; ---------------------------------------------------------------------------
 Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_HandleAirState+62   j  ; was: loc_170F6
@@ -173,19 +175,19 @@ Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_Hand
                 moveq   #$11,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
                 nop
-                movea.l #word_E8F0A,a2
+                movea.l #Player_AirborneWeaponSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_RenderAirborneWithWeapon_UseDefaultVariant:      ; CODE XREF: Player_RenderWithWeapon+48   j  ; was: loc_1711E
                 lea     (word_198E2).l,a4
                 moveq   #0,d5
                 moveq   #$13,d6
-                movea.l #word_E89F2,a2
+                movea.l #Player_WeaponSecondarySpriteMapping,a2
                 bra.w   Player_PrepareSpriteRendering
 ; ---------------------------------------------------------------------------
 Player_RenderGroundedFrame:                             ; CODE XREF: Player_HandleCrouchState+5E   j  ; was: loc_17132
                                         ; Player_RenderWithWeapon+4   j
-                movea.l #word_E89C2,a2
+                movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
                 moveq   #$C,d6
                 lea     (word_19912).l,a4
@@ -194,7 +196,7 @@ Player_RenderGroundedFrame:                             ; CODE XREF: Player_Hand
 ; Prepares player falling/airborne sprite for rendering
 Player_RenderFallingSprite:                             ; CODE XREF: Player_HandleAirMovement+5C   j  ; was: sub_17146
                                         ; Player_RenderWithWeapon+40   j
-                movea.l #word_E89C2,a2
+                movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
                 moveq   #$C,d6
                 lea     (word_198D2).l,a4
@@ -266,14 +268,14 @@ Player_AdvanceAnimationFrame:                           ; CODE XREF: Player_Hand
                 rts
 ; End of function Player_AdvanceAnimationFrame
 ; ---------------------------------------------------------------------------
-Player_AnimationFrameTable: dc.l    word_E8A1A          ; DATA XREF: Player_AdvanceAnimationFrame+E   r  ; was: off_171EC
-                dc.l    word_E8A4A
-                dc.l    word_E8A82
-                dc.l    word_E8ABA
-                dc.l    word_E8AE2
-                dc.l    word_E8B12
-                dc.l    word_E8B4A
-                dc.l    word_E8B82
+Player_AnimationFrameTable: dc.l    Player_StateAnimationSpriteMapping00  ; DATA XREF: Player_AdvanceAnimationFrame+E   r  ; was: off_171EC
+                dc.l    Player_StateAnimationSpriteMapping01
+                dc.l    Player_StateAnimationSpriteMapping02
+                dc.l    Player_StateAnimationSpriteMapping03
+                dc.l    Player_StateAnimationSpriteMapping04
+                dc.l    Player_StateAnimationSpriteMapping05
+                dc.l    Player_StateAnimationSpriteMapping06
+                dc.l    Player_StateAnimationSpriteMapping07
 
 ; Renders multiple death particle sprites during player death sequence
 Player_RenderDeathParticles:                            ; CODE XREF: Player_HandleDeathSequence:Player_HandleDeathSequence_RenderParticles   j  ; was: sub_1720C
@@ -296,14 +298,14 @@ Player_DeathParticleLoop:                               ; CODE XREF: Player_Rend
                 rts
 ; End of function Player_RenderDeathParticles
 ; ---------------------------------------------------------------------------
-Player_DeathParticleAnimationFrames:    dc.l    word_E8F9A  ; DATA XREF: Player_RenderDeathParticles+2E   r  ; was: off_17242
-                dc.l    word_E8FC2
-                dc.l    word_E8FEA
-                dc.l    word_E9012
-                dc.l    word_E903A
-                dc.l    word_E904A
-                dc.l    word_E905A
-                dc.l    word_E906A
+Player_DeathParticleAnimationFrames:    dc.l    Player_DeathParticleSpriteMapping00  ; DATA XREF: Player_RenderDeathParticles+2E   r  ; was: off_17242
+                dc.l    Player_DeathParticleSpriteMapping01
+                dc.l    Player_DeathParticleSpriteMapping02
+                dc.l    Player_DeathParticleSpriteMapping03
+                dc.l    Player_DeathParticleSpriteMapping04
+                dc.l    Player_DeathParticleSpriteMapping05
+                dc.l    Player_DeathParticleSpriteMapping06
+                dc.l    Player_DeathParticleSpriteMapping07
 
 ; Creates single death particle sprite with tile and position data
 Player_WriteDeathParticleSprite:                        ; CODE XREF: Player_RenderDeathParticles:Player_DeathParticleLoop   p  ; was: sub_17262
@@ -344,20 +346,20 @@ Player_PrepareSpriteRendering_SelectFrame:              ; CODE XREF: Player_Prep
                 jmp     Weapon_UpdatePlayerFiring
 ; End of function Player_PrepareSpriteRendering
 ; ---------------------------------------------------------------------------
-Player_PrimaryAnimationLayoutTable: dc.l    word_E8D92  ; DATA XREF: Player_PrepareSpriteRendering   o  ; was: off_172BC
-                dc.l    word_E8DC2
-                dc.l    word_E8DAA
-                dc.l    word_E8D72
-                dc.l    word_E8D52
+Player_PrimaryAnimationLayoutTable: dc.l    Player_PrimaryLayoutSpriteMapping00  ; DATA XREF: Player_PrepareSpriteRendering   o  ; was: off_172BC
+                dc.l    Player_PrimaryLayoutSpriteMapping01
+                dc.l    Player_PrimaryLayoutSpriteMapping02
+                dc.l    Player_PrimaryLayoutSpriteMapping03
+                dc.l    Player_PrimaryLayoutSpriteMapping04
                 dc.w    $FDFF, $FDFE, $FDFD, $FDFE, $FEFF, $FD00, $FC01, $FD00
                 dc.w    $FEFE, $FDFF, $FC01, $FDFF, $FAFD, $FBFE, $FC00, $FBFE
                 dc.w    $FAFE, $FBFF, $FC00, $FBFF
-Player_AlternateAnimationLayoutTable:   dc.l    word_E8E12  ; DATA XREF: Player_HandleSpecialAttack+CC   o  ; was: off_172F8
+Player_AlternateAnimationLayoutTable:   dc.l    Player_AlternateLayoutSpriteMapping00  ; DATA XREF: Player_HandleSpecialAttack+CC   o  ; was: off_172F8
                                         ; Player_RenderSpecialMoveRecovery+3A   o
-                dc.l    word_E8E4A
-                dc.l    word_E8E32
-                dc.l    word_E8DF2
-                dc.l    word_E8DDA
+                dc.l    Player_AlternateLayoutSpriteMapping01
+                dc.l    Player_AlternateLayoutSpriteMapping02
+                dc.l    Player_AlternateLayoutSpriteMapping03
+                dc.l    Player_AlternateLayoutSpriteMapping04
                 dc.w    $FC02, $FC01, $FD00, $FC01, $FFFE, $FDFE, $FCFF, $FDFE
                 dc.w    $FEFF, $FD00, $FC01, $FD00, $FBFF, $FC00, $FD01, $FC00
                 dc.w    $FB00, $FC00, $FD01, $FC00
@@ -380,14 +382,14 @@ Player_UpdateDefeatAnimation:                           ; CODE XREF: Player_Anim
                 bra.w   Player_BuildSpritePieces
 ; End of function Player_AnimateDefeatSprite
 ; ---------------------------------------------------------------------------
-Player_DefeatPrimaryFrameTable: dc.l    word_E8BC2      ; DATA XREF: Player_AnimateDefeatSprite+14   r  ; was: off_1735E
-                dc.l    word_E8BE2
-                dc.l    word_E8BFA
-                dc.l    word_E8C0A
-Player_DefeatSecondaryFrameTable:   dc.l    word_E8942  ; DATA XREF: Player_AnimateDefeatSprite+18   r  ; was: off_1736E
-                dc.l    word_E89C2
-                dc.l    word_E89C2
-                dc.l    word_E89C2
+Player_DefeatPrimaryFrameTable: dc.l    Player_DefeatPrimarySpriteMapping00  ; DATA XREF: Player_AnimateDefeatSprite+14   r  ; was: off_1735E
+                dc.l    Player_DefeatPrimarySpriteMapping01
+                dc.l    Player_DefeatPrimarySpriteMapping02
+                dc.l    Player_DefeatPrimarySpriteMapping03
+Player_DefeatSecondaryFrameTable:   dc.l    Player_IdleSecondarySpriteMapping  ; DATA XREF: Player_AnimateDefeatSprite+18   r  ; was: off_1736E
+                dc.l    Player_CommonMovementSecondarySpriteMapping
+                dc.l    Player_CommonMovementSecondarySpriteMapping
+                dc.l    Player_CommonMovementSecondarySpriteMapping
 Player_DefeatFrameOffsets:  dc.b    0, 0, 0, 5, 0, 5, 4, 5  ; was: byte_1737E
                                         ; DATA XREF: Player_AnimateDefeatSprite+1E   r
                                         ; Player_AnimateDefeatSprite+22   r

@@ -592,7 +592,7 @@ Object_UpdateRemovalTimer_Return:                       ; CODE XREF: Object_Upda
 ; Initializes projectile sprite with position and velocity
 Effect_InitPlayerMotionProjectile:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_19188
                 bset    #7,2(a5)
-                cmpi.l  #word_E8EBA,(dword_FFA408).w
+                cmpi.l  #Player_TeleportDashTrailSpriteMapping,(dword_FFA408).w
                 beq.s   Effect_InitPlayerMotionProjectile_CopyPosition
                 bclr    #7,2(a5)
 Effect_InitPlayerMotionProjectile_CopyPosition:         ; CODE XREF: Effect_InitPlayerMotionProjectile+E   j  ; was: loc_1919E
