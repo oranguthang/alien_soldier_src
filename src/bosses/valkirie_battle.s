@@ -814,7 +814,7 @@ Entity_SetValkiriePlayerSideNegative:                   ; CODE XREF: Entity_GetV
 ; End of function Entity_GetValkiriePlayerDeltaAndSide
 ; Set Valkirie facing field $54 from the horizontal player delta
 Entity_FaceValkirieTowardPlayer:                        ; CODE XREF: Entity_UpdateValkirieBattleState8:Entity_RenderValkirieBattleState8   p  ; was: sub_56036
-                                        ; Boss_ArtemisSpawnProjectile6+6   p
+                                        ; Boss_UpdateArtemisStateE+6   p
                 jsr     (Physics_GetPlayerDelta).l
                 clr.w   $54(a5)
                 tst.w   d1

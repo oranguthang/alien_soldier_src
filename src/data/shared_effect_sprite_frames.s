@@ -8,7 +8,7 @@ Projectile_SpawnSpriteFrames:   dc.l    $1454B, $F00F0F0  ; DATA XREF: Projectil
                 dc.l    $244A4, $500F8F8
                 dc.l    $144A8, $500F8F8
                 dc.w    $FFFF
-Boss_ArtemisReflectedProjectileSpriteFrames:    dc.l    $1454B, $F00F0F0  ; DATA XREF: Boss_ArtemisSpawnReflectedProjectile+10   o  ; was: dword_2AC32
+Projectile_ArtemisReflectedShotSpriteFrames:    dc.l    $1454B, $F00F0F0  ; DATA XREF: Projectile_SpawnArtemisReflectedShot+10   o  ; was: dword_2AC32
                 dc.l    $1456C, $F00F0F0
                 dc.l    $24480, $A00F4F4
                 dc.l    $24489, $A00F4F4
@@ -123,7 +123,7 @@ Projectile_CollisionSpriteFrames:   dc.l    $144D6, $A00F4F4  ; DATA XREF: Weapo
                 dc.l    $144F3, $FCFC
                 dc.w    $FFFF
 Projectile_BombAndRadialSpriteFrames:   dc.l    $244D6, $A00F4F4  ; DATA XREF: Weapon_UpdateBombProjectile+10   o  ; was: dword_2AF1E
-                                        ; Boss_ArtemisSpawnRadialProjectile+12   o
+                                        ; Projectile_SpawnArtemisRadialShot+12   o
                 dc.l    $244DF, $A00F4F4
                 dc.l    $144BC, $500F8F8
                 dc.l    $144C0, $500F8F8

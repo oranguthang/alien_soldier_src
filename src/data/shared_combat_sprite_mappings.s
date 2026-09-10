@@ -16,7 +16,7 @@ word_E90B6:     dc.w    $C8AB, $F00, $F0F0              ; DATA XREF: ROM:000E955
                                         ; ROM:000E9578   o
 word_E90BC:     dc.w    $C8BB, $F00, $F0F0              ; DATA XREF: ROM:000E9558   o
                                         ; ROM:000E955C   o
-word_E90C2:     dc.w    $C800, $A00, $F4F4              ; DATA XREF: Boss_ArtemisUpdateSprites+2E   o
+SharedCombatSpriteFrameDataBase:    dc.w    $C800, $A00, $F4F4  ; DATA XREF: Boss_InitArtemisRadialEmitter+2E   o  ; was: word_E90C2
                                         ; ROM:off_E953C   o
 word_E90C8:     dc.w    $C8CB, $F00, $F0F0              ; DATA XREF: ROM:000E9540   o
                                         ; ROM:000E9564   o
@@ -258,7 +258,7 @@ word_E9530:     dc.w    $C8E0, $800, $FCF4              ; DATA XREF: ROM:off_308
                                         ; ROM:00030824   o
 word_E9536:     dc.w    $C8E3, $A00, $F4F4              ; DATA XREF: ROM:00030818   o
                                         ; ROM:00030820   o
-off_E953C:      dc.w    word_E90C2-*                    ; DATA XREF: Sprite_ShipDebrisUpdate+20   o
+off_E953C:      dc.w    SharedCombatSpriteFrameDataBase-*  ; DATA XREF: Sprite_ShipDebrisUpdate+20   o
                                         ; ROM:Boss_ZLeoParticleSpritePointers   o
                 dc.w    1
                 dc.w    word_E90C8-*
@@ -277,7 +277,7 @@ off_E953C:      dc.w    word_E90C2-*                    ; DATA XREF: Sprite_Ship
                 dc.w    2
                 dc.w    word_E90BC-*
                 dc.w    $FF
-off_E9560:      dc.w    word_E90C2-*                    ; DATA XREF: Player_SpawnTripleShot:Player_SpawnTripleShot_Loop   o
+off_E9560:      dc.w    SharedCombatSpriteFrameDataBase-*  ; DATA XREF: Player_SpawnTripleShot:Player_SpawnTripleShot_Loop   o
                                         ; sub_17678:Player_SpawnRadialShot_Loop   o
                 dc.w    1
                 dc.w    word_E90C8-*
@@ -313,7 +313,7 @@ off_E9584:      dc.w    word_E90C8-*                    ; DATA XREF: Effect_Init
                 dc.w    1
                 dc.w    word_E90BC-*
                 dc.w    $FF
-off_E95A4:      dc.w    word_E90C2-*                    ; DATA XREF: ROM:00022568   o
+off_E95A4:      dc.w    SharedCombatSpriteFrameDataBase-*  ; DATA XREF: ROM:00022568   o
                                         ; ROM:0002256C   o
                 dc.w    1
                 dc.w    word_E9188-*
@@ -328,7 +328,7 @@ off_E95A4:      dc.w    word_E90C2-*                    ; DATA XREF: ROM:0002256
                 dc.w    2
                 dc.w    word_E91A0-*
                 dc.w    $FF
-off_E95C0:      dc.w    word_E90C2-*                    ; DATA XREF: Projectile_FallingSpawner+1C   o
+off_E95C0:      dc.w    SharedCombatSpriteFrameDataBase-*  ; DATA XREF: Projectile_FallingSpawner+1C   o
                                         ; ROM:00031E88   o
                 dc.w    1
                 dc.w    word_E9188-*
@@ -343,14 +343,14 @@ off_E95C0:      dc.w    word_E90C2-*                    ; DATA XREF: Projectile_
                 dc.w    1
                 dc.w    word_E91A0-*
                 dc.w    $FF
-off_E95DC:      dc.w    word_E90C2-*                    ; DATA XREF: ROM:00022570   o
+off_E95DC:      dc.w    SharedCombatSpriteFrameDataBase-*  ; DATA XREF: ROM:00022570   o
                                         ; Enemy_SpawnQuadProjectiles+2   o
                 dc.w    1
                 dc.w    word_E90C8-*
                 dc.w    1
                 dc.w    word_E90CE-*
                 dc.w    1
-                dc.w    word_E90C2-*
+                dc.w    SharedCombatSpriteFrameDataBase-*
                 dc.w    1
                 dc.w    word_E91A6-*
                 dc.w    2
@@ -364,14 +364,14 @@ off_E95DC:      dc.w    word_E90C2-*                    ; DATA XREF: ROM:0002257
                 dc.w    2
                 dc.w    word_E91BE-*
                 dc.w    $FF
-off_E9604:      dc.w    word_E90C2-*                    ; DATA XREF: ROM:stru_2B526   o
+off_E9604:      dc.w    SharedCombatSpriteFrameDataBase-*  ; DATA XREF: ROM:stru_2B526   o
                                         ; ROM:stru_2B534   o
                 dc.w    1
                 dc.w    word_E90C8-*
                 dc.w    1
                 dc.w    word_E90CE-*
                 dc.w    1
-                dc.w    word_E90C2-*
+                dc.w    SharedCombatSpriteFrameDataBase-*
                 dc.w    1
                 dc.w    word_E91A6-*
                 dc.w    1
@@ -526,7 +526,7 @@ off_E9724:      dc.w    word_E93F2-*                    ; DATA XREF: ROM:000546F
                 dc.w    1
                 dc.w    word_E9404-*
                 dc.w    $FF
-off_E9738:      dc.w    word_E90C2-*                    ; DATA XREF: Effect_SpawnRandomDebris+46   o
+off_E9738:      dc.w    SharedCombatSpriteFrameDataBase-*  ; DATA XREF: Effect_SpawnRandomDebris+46   o
                 dc.w    1
                 dc.w    word_E93F2-*
                 dc.w    2
@@ -633,7 +633,7 @@ off_E97EC:      dc.w    word_E929C-*                    ; DATA XREF: ROM:000E97F
                 dc.w    0
 off_E9800:      dc.w    word_E9218-*                    ; DATA XREF: Player_CreateDamageImpactObject+2C   o
                 dc.w    1
-                dc.w    word_E90C2-*
+                dc.w    SharedCombatSpriteFrameDataBase-*
                 dc.w    1
                 dc.w    word_E90C8-*
                 dc.w    2

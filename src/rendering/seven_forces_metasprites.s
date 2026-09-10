@@ -244,7 +244,7 @@ Boss_SylpheedMetaspritePartLinks:   dc.w    $C00A, $C009, $C068  ; was: word_5A0
 Boss_SylpheedMetaspritePoseAngles:  dc.w    $80, $C080, $4040  ; DATA XREF: Boss_SylpheedBattleStart+28   o  ; was: word_5A0E2
                 dc.w    $80C0, $8080, $8080
 ; Artemis metasprite initialization and neutral-pose data
-Boss_ArtemisMetaspritePartDescriptors:  dc.l    SevenForcesInlinePartDescriptor0+1  ; DATA XREF: Boss_ArtemisBattleStart+10   o  ; was: off_5A0EE
+Boss_ArtemisMetaspritePartDescriptors:  dc.l    SevenForcesInlinePartDescriptor0+1  ; DATA XREF: Boss_InitArtemisState0+10   o  ; was: off_5A0EE
                 dc.l    word_ECDCA+$400000
                 dc.l    SevenForcesInlinePartDescriptor1+1
                 dc.l    SevenForcesRotationFrameTable1-$80000000
@@ -274,13 +274,13 @@ Boss_ArtemisMetaspritePartDescriptors:  dc.l    SevenForcesInlinePartDescriptor0
                 dc.l    SevenForcesRotationFrameTable6
                 dc.l    SevenForcesRotationFrameTable1
                 dc.l    SevenForcesRotationFrameTable3+$18000000
-Boss_ArtemisMetaspriteInitialAngles:    dc.w    $1C, $141A, $120A  ; DATA XREF: Boss_ArtemisBattleStart+16   o  ; was: word_5A166
+Boss_ArtemisMetaspriteInitialAngles:    dc.w    $1C, $141A, $120A  ; DATA XREF: Boss_InitArtemisState0+16   o  ; was: word_5A166
                 dc.w    $1020, $1020, $808
                 dc.w    $1020, $1020, $810
                 dc.w    $1010, $2208, $1010
                 dc.w    $1022, $812, $1212
 Boss_ArtemisMetaspritePartLinks:    dc.w    $C008, $C007, $C007  ; was: word_5A184
-                                        ; DATA XREF: Boss_ArtemisBattleStart+1C   o
+                                        ; DATA XREF: Boss_InitArtemisState0+1C   o
                 dc.w    $C067, $C126, $C061
                 dc.w    $C1E3, $C1E2, $C2A3
                 dc.w    $C2A1, $C361, $C060
@@ -290,7 +290,7 @@ Boss_ArtemisMetaspritePartLinks:    dc.w    $C008, $C007, $C007  ; was: word_5A1
                 dc.w    $C784, $C0CB, $C84C
                 dc.w    $C8AB, $C8AA, $C96A
                 dc.w    $C0C8, $CA27, $CA87
-Boss_ArtemisMetaspritePoseAngles:   dc.w    $80, $C0, $C080  ; DATA XREF: Boss_ArtemisBattleStart+28   o  ; was: word_5A1C0
+Boss_ArtemisMetaspritePoseAngles:   dc.w    $80, $C0, $C080  ; DATA XREF: Boss_InitArtemisState0+28   o  ; was: word_5A1C0
                 dc.w    $80C0, $C080, $80A0
                 dc.w    $8080, $A080, $8080
                 dc.w    $80F0

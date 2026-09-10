@@ -214,10 +214,10 @@ Boss_SireneObjectInitTable: dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $3
                 dc.w    $CCE0, $5000, $F010, $F010, $F010, $F010, $3810
                 dc.w    $FFFE
 Boss_ArtemisAttackObjectInitData:   dc.b    $D1, 0, $10, $40, $F8, 8, $F8  ; was: byte_1BF56
-                                        ; DATA XREF: Boss_ArtemisAttackState1+BA   o
+                                        ; DATA XREF: Boss_UpdateArtemisState4+BA   o
                 dc.b    8, 0, 0, 0, 0, 0, $88
-Boss_ArtemisProjectileInitTable:    dc.w    $C680, $5004, $F010, $F010, $EC14, $EC14, $2908  ; was: word_1BF64
-                                        ; DATA XREF: Projectile_ArtemisInitSprite1   o
+Boss_ArtemisAttackPartGroupInitTable:   dc.w    $C680, $5004, $F010, $F010, $EC14, $EC14, $2908  ; was: word_1BF64
+                                        ; DATA XREF: Boss_InitArtemisAttackPartGroup   o
                 dc.w    $C6E0, $5004, $F010, $F010, $EC14, $EC14, $2908
                 dc.w    $C7A0, $501C, $F808, $F808, $FA06, $FA06, $2905
                 dc.w    $FFFE

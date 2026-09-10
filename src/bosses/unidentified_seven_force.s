@@ -1,3 +1,4 @@
+; Main loop handler for the unidentified Seven Force form
 Boss_UnidentifiedSevenForceMain:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_58C62
                 tst.w   4(a5)
                 beq.w   Boss_UnidentifiedSevenForceDispatchState

@@ -283,6 +283,7 @@
                 include "src/bosses/sirene.s"
                 include "src/bosses/artemis_core.s"
                 include "src/bosses/artemis_rendering.s"
+                include "src/projectiles/artemis.s"
                 include "src/bosses/unidentified_seven_force.s"
                 include "src/bosses/valkirie_alternate.s"
                 include "src/bosses/sylpheed_core.s"

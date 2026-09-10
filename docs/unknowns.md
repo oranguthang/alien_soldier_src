@@ -2257,6 +2257,44 @@ provenance to 10,187 mappings, took the audit registry to 6,165 entries, and
 lowered the project ceiling to 5,636. The cohesive boss module remains 792
 lines and requires neither a split nor a size waiver.
 
+The Artemis controller span `0x057EBE-0x0584DB` is now expressed as a
+twelve-entry even-state machine (`0` through `$16`), with explicit state-entry
+transitions, active-part positioning, packed part commands, and the shared
+pose-rendering tail. Numeric state names are retained because the static flow
+proves their dispatch identity but not an attack or visual identity. In
+particular, the two inherited `Boss_Medusa_State*` labels are Artemis states
+6 and 8, while the old bullet, laser, homing, wave, spread, projectile-spawn,
+shooting-pattern, and attack-state labels mostly update the boss controller,
+part links, motion, or pose and do not describe projectile implementations.
+
+All 65 renamed definitions in `bosses/artemis_core.s` have exact-address
+static audit records. This eliminates all 38 address-derived definitions from
+the 522-line module, raises provenance to 10,225 mappings, takes the audit
+registry to 6,230 entries, and lowers the project ceiling to 5,598. The core
+controller remains a cohesive module within the ordinary 1,000-line limit;
+the adjacent Artemis rendering and projectile families remain separate audit
+work.
+
+The former 512-line `bosses/artemis_rendering.s` container is now divided at
+the actual entity boundary `0x0589E8`: a 312-line Artemis pose module owns the
+pose interpreter, interpolation pipeline, eleven state-selected streams, and
+380-byte frame block, while the 198-line `projectiles/artemis.s` owns creation
+and update of entity type `$488`, its radial emission, collision/reflection
+paths, conversion to a shared effect, and child-shot constructors. The latter
+is two lines below the preferred 200-line range because the ROM presents a
+clean subsystem boundary there; no unrelated bytes were retained merely to
+meet a statistical target.
+
+All 50 renamed definitions have 49 address-distinct audit records because
+`Artemis_PoseFrameDataEnd` and `Boss_SpawnArtemisRadialEmitter` intentionally
+share `0x0589E8`. This pass eliminates all 37 address-derived definitions from
+the old mixed module plus one supporting shared-data address label, lowering
+the project-wide ceiling from 5,598 to 5,560. Provenance rises to 10,263 mappings,
+the registry reaches 6,279 entries, and the ROM layout now contains 341
+natural modules. The old generic `AttackState`, `MovePattern`, `AnimationScript`,
+and `UpdateSprites` claims are replaced by the observable pose or type-$488
+entity operations they actually implement.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -30,7 +30,7 @@ Pickup_SpawnLarge:                                      ; CODE XREF: Boss_Jetsri
 Pickup_SpawnLargeFromCurrentObjectAlt:
                 movea.w a5,a0                           ; was: sub_2BD16
 Pickup_SelectLargeSize:                                 ; CODE XREF: Pickup_SpawnRandomFromCurrentObject+A   j  ; was: loc_2BD18
-                                        ; Boss_ArtemisAnimationScript+EC   p
+                                        ; Projectile_UpdateArtemisRadialEmitter+EC   p
                 moveq   #1,d7
                 bra.w   Pickup_SpawnSelectedSize
 ; End of function Pickup_SpawnLargeFromCurrentObjectAlt
