@@ -47,7 +47,7 @@ listing by `make verify-layout`.
 | `0x0537B8-0x05575D` | Missiray and Seven Forces projectile/introduction controller | 5 | hypothesis |
 | `0x05575E-0x057497` | Valkirie battle/rendering and Medusa | 3 | hypothesis |
 | `0x057498-0x058FED` | Sirene, Artemis, and an unidentified Seven Force | 4 | hypothesis |
-| `0x058FEE-0x05A43B` | alternate Valkirie, Sylpheed, and shared Seven Forces metasprite data | 3 | static/hypothesis |
+| `0x058FEE-0x05A43B` | alternate Valkirie, Sylpheed, and shared Seven Forces metasprite data | 4 | static/hypothesis |
 | `0x05A43C-0x082323` | final entity stub, included data, and first padding gap | 1 | static |
 | `0x082324-0x083E6F` | 68k sound driver, playback, and sequence commands | 6 | static |
 | `0x083E70-0x084A6F` | embedded Z80 sound program | 1 | static |

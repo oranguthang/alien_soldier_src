@@ -2295,6 +2295,26 @@ natural modules. The old generic `AttackState`, `MovePattern`, `AnimationScript`
 and `UpdateSprites` claims are replaced by the observable pose or type-$488
 entity operations they actually implement.
 
+The Sylpheed reconstruction replaces the former 754-line `sylpheed_core.s`
+container with a natural boundary at `0x059A00`. The 499-line core module owns
+the fifteen-state dispatcher, entrance and attack cycle, jump/dive/charge
+states, and target-directed velocity helpers. The 257-line
+`sylpheed_pose.s` module owns the twelve-channel pose projection, script
+interpreter, nine state-selected streams, and pose-frame data. Both modules
+have zero live address-derived definitions; the ROM layout now contains 342
+modules with no file above 1,000 lines and no generic container filename.
+
+All 82 definitions in `0x0593D4-0x059D2B` now have exact-address audit
+records. The pass removes 49 address-derived names, lowering the project-wide
+ceiling from 5,560 to 5,511, raises provenance to 10,312 mappings, and takes
+the name registry to 6,361 records. It also rejects inherited Sonnet ownership
+claims: the six `Sirene_Alt*` and `Artemis_Alt*` labels are entries in the
+Sylpheed state table, `DefeatInit` merely randomizes movement-target offsets,
+the four `ShootPattern*` routines only perform tracking and approach motion,
+and the old `AnimationScript` entry initializes state `$1A` rather than parsing
+animation data. The sole standalone RTS at `0x059BAA` remains explicitly
+`unknown` evidence because no static caller establishes a stronger role.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

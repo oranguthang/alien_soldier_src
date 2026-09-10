@@ -272,7 +272,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_UpdateArtemis
                 dc.l    Boss_UnidentifiedSevenForceMain
                 dc.l    Boss_ValkirieAlternateMain
-                dc.l    Boss_SylpheedIntroStop
+                dc.l    Boss_UpdateSylpheed
                 dc.l    Stage18_SegmentedWormMain
                 dc.l    Enemy_Stage11FishController
                 dc.l    Entity_UpdateMedusaFallingPart
