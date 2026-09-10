@@ -17,7 +17,7 @@ Boss_ValkirieAlternateUpdatePalette:                    ; CODE XREF: Boss_Valkir
                 lea     (word_3E4C).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 moveq   #$1E,d0
-                jsr     (Boss_ValkirieUpdatePalette).l
+                jsr     (Gfx_UpdateSevenForcesBattlePalette).l
 Boss_ValkirieAlternateDispatchState:                    ; CODE XREF: Boss_ValkirieAlternateMain+4   j  ; was: loc_5902E
                                         ; Boss_ValkirieAlternateMain+C   j
                 move.w  4(a5),d0

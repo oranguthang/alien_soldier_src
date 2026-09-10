@@ -17,7 +17,7 @@ loc_59400:                                              ; CODE XREF: Boss_Sylphe
                 lea     (word_3E4C).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 moveq   #$24,d0                         ; '$'
-                jsr     (Boss_ValkirieUpdatePalette).l
+                jsr     (Gfx_UpdateSevenForcesBattlePalette).l
                 cmpi.w  #$1E0,$10(a5)
                 bmi.s   loc_59424
                 move.w  #$1DF,$10(a5)

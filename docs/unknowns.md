@@ -2162,6 +2162,40 @@ by observable one-, three-, and four-range fades instead of being described
 as boss initialization, and the generic fourth effect is identified as the
 randomized transition-particle spawner used by the final fade.
 
+The complete 834-line Valkirie battle controller at `0x05575E-0x05605B` is
+now reconstructed as one coherent 19-entry state machine. All 108 definitions
+in `bosses/valkirie_battle.s` have exact static audit records, all 70 former
+address-derived definitions were replaced, provenance reached 10,009 mappings,
+and the audit registry reached 5,912 entries. The module now has zero live
+address-derived definitions without being split below its natural subsystem
+boundary.
+
+This pass also corrected several unsupported Sonnet-era descriptions. The
+four former `Camera_BossMode_State*` labels are ordinary Valkirie controller
+states `$04`, `$1A`, `$1E`, and `$24`; none writes camera state. The former
+`Boss_ValkirieSpawnProjectile1/2` helpers only disable an old pair of body-part
+objects and enable a new pair, while the former `SpawnProjectile3/4` labels are
+state `$1C` and `$20` handlers. The actual bullet allocator is isolated at
+`Projectile_SpawnValkirieBullet`, and the packed part-motion and part-hide
+tables now name the decoders that consume them.
+
+The companion 447-line `bosses/valkirie_rendering.s` module is also fully
+reconstructed. Its 50 definitions now cover the pose interpreter, twelve
+named pose streams, the included pose-frame block, the six-object auxiliary
+group, and the shared Seven Forces battle-palette flash. They have 49
+address-distinct audit records because `Valkirie_PoseFrameDataEnd` shares
+`0x0566B6` with the following initializer. This removed all 38 remaining
+address-derived definitions from the module, raised provenance to 10,047
+mappings, and took the audit registry to 5,960 exact-address entries.
+
+The former `Boss_ValkirieMovePattern1` is specifically the auxiliary-group
+initializer, while `MovePattern2` is that group's entity update handler with
+attached rotation, launch, and detached tracking paths. Two comments claiming
+Y velocity were corrected after tracing fields `$1F8/$1FC` as the auxiliary
+part's horizontal/vertical motion pair. The palette updater was renamed from
+Valkirie-specific to Seven Forces-wide because Valkirie, Medusa, Sirene,
+Artemis, Sylpheed, the alternate form, and the unidentified form all call it.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

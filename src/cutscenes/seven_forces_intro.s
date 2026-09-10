@@ -807,7 +807,7 @@ Effect_SpawnSevenForcesTransitionParticleReturn:        ; CODE XREF: Effect_Spaw
                 rts
 ; End of function Effect_SpawnSevenForcesTransitionParticle
 ; Dispatch the post-battle transition requested by the completed boss
-Boss_QueueSevenForcesPostBattleTransition:              ; CODE XREF: Boss_ValkirieIntroMove+26   j  ; was: sub_555C8
+Boss_QueueSevenForcesPostBattleTransition:              ; CODE XREF: Entity_UpdateValkirieBattle+26   j  ; was: sub_555C8
                                         ; Boss_MedusaAttackState1+26   j
                 bset    #0,(byte_FFA272).w
                 movea.w #(word_FFDC40-M68K_RAM),a5

@@ -17,7 +17,7 @@ loc_57EEA:                                              ; CODE XREF: Boss_Artemi
                 lea     (word_3E4C).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 moveq   #$12,d0
-                jsr     (Boss_ValkirieUpdatePalette).l
+                jsr     (Gfx_UpdateSevenForcesBattlePalette).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
@@ -229,7 +229,7 @@ Boss_ArtemisSpawnProjectile5Alt:
 Boss_ArtemisSpawnProjectile6:                           ; DATA XREF: ROM:00057F2C   o  ; was: sub_5818C
                 tst.w   $58(a5)
                 bpl.s   loc_58204
-                jsr     (Boss_ValkirieSetFacing).l
+                jsr     (Entity_FaceValkirieTowardPlayer).l
                 cmpi.w  #$A0,d0
                 bpl.s   loc_581B2
                 cmpi.w  #$E0,$BC(a5)
@@ -290,11 +290,11 @@ loc_5822C:                                              ; CODE XREF: Boss_Artemi
                 bsr.w   Projectile_ArtemisBullet2
                 move.w  a5,d0
                 move.w  a5,d1
-                jsr     (Boss_ValkirieSpawnProjectile2).l
+                jsr     (Entity_SelectValkirieActivePartPair).l
                 move.w  #$8000,(dword_FF8066).w
                 lea     word_582A0(pc),a0
                 nop
-                jsr     (Boss_ValkirieUpdateParts).l
+                jsr     (Entity_ApplyValkiriePartMotionCommands).l
 ; End of function Boss_ArtemisSpawnProjectile6
 ; Bullet projectile type 1
 Projectile_ArtemisBullet1:                              ; DATA XREF: ROM:00057F2E   o  ; was: sub_5826E
@@ -329,7 +329,7 @@ loc_582C2:                                              ; CODE XREF: Projectile_
                 move.w  #$C980,d1
                 bsr.w   Boss_ArtemisShootPattern5
                 lea     word_582B8(pc),a0
-                jsr     (Boss_ValkirieDestroyParts).l
+                jsr     (Entity_ApplyValkiriePartHideCommands).l
                 bsr.w   Projectile_ArtemisInitSprite1
                 move.b  #$C2,d0
                 jsr     (Sound_PlaySFX).l
@@ -474,7 +474,7 @@ Boss_ArtemisShootPattern4:                              ; CODE XREF: Boss_Artemi
 ; Shooting pattern 5
 Boss_ArtemisShootPattern5:                              ; CODE XREF: Boss_ArtemisAttackState1+A2   p  ; was: sub_5846E
                                         ; Boss_ArtemisSpawnProjectile4+1E   j
-                jsr     (Boss_ValkirieSpawnProjectile2).l
+                jsr     (Entity_SelectValkirieActivePartPair).l
                 bsr.s   Boss_ArtemisShootPattern4
                 move.w  d6,$14(a0)
                 rts

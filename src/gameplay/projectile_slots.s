@@ -287,7 +287,7 @@ Projectile_FindFreeOrRecycleSlot_Clear:                 ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_FindFreeOrRecycleSlot
 ; Clear 96 bytes of object data
-Object_Clear96Bytes:                                    ; CODE XREF: Boss_ValkirieMovePattern1:loc_566BC   p  ; was: sub_1C398
+Object_Clear96Bytes:                                    ; CODE XREF: Entity_InitValkirieAuxiliaryGroup:Entity_ClearValkirieAuxiliaryGroupLoop   p  ; was: sub_1C398
                 moveq   #0,d3
                 move.l  d3,(a0)
                 move.l  d3,4(a0)

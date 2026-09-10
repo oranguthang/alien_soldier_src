@@ -20,7 +20,7 @@ loc_574D4:                                              ; CODE XREF: Boss_Sirene
                 lea     (word_3E4C).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 moveq   #$C,d0
-                jsr     (Boss_ValkirieUpdatePalette).l
+                jsr     (Gfx_UpdateSevenForcesBattlePalette).l
 loc_574E8:                                              ; CODE XREF: Boss_SireneIntroInit+4   j
                                         ; Boss_SireneIntroInit+C   j
                 move.w  4(a5),d0

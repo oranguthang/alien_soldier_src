@@ -178,7 +178,7 @@ Sprite_ApplyMetaspriteEightFrameRotationCalculatePosition:  ; CODE XREF: Sprite_
                 rts
 ; End of function Sprite_ApplyMetaspriteEightFrameRotation
 ; Rotates Valkirie's parts, then aligns the entire group between two anchors
-Boss_ValkirieUpdateAnchoredMetasprite:                  ; CODE XREF: Boss_ValkirieUpdatePartPositions+2   j  ; was: sub_345B2
+Boss_ValkirieUpdateAnchoredMetasprite:                  ; CODE XREF: Entity_UpdateValkirieAuxiliaryAnchors+2   j  ; was: sub_345B2
                 movea.w a5,a4
                 move.w  d7,(dword_FF8040).w
                 lea     $60(a4),a4

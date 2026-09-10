@@ -104,7 +104,7 @@ SevenForcesInlinePartDescriptor1:   dc.w    $43D, $A00, $F4F4  ; DATA XREF: ROM:
 SevenForcesInlinePartDescriptor2:   dc.w    $446, $500, $F8F8  ; DATA XREF: ROM:00059EAC   o  ; was: word_59E8E
                                         ; ROM:00059EC0   o
 ; Primary Valkirie metasprite initialization and neutral-pose data
-Boss_ValkirieMetaspritePartDescriptors: dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_ValkirieIntroStop+10   o  ; was: off_59E94
+Boss_ValkirieMetaspritePartDescriptors: dc.l    word_ECDCA+$400000  ; DATA XREF: Entity_InitValkirieBattleState0+10   o  ; was: off_59E94
                 dc.l    SevenForcesInlinePartDescriptor0+1
                 dc.l    SevenForcesInlinePartDescriptor1+1
                 dc.l    SevenForcesRotationFrameTable2-$40000000
@@ -130,13 +130,13 @@ Boss_ValkirieMetaspritePartDescriptors: dc.l    word_ECDCA+$400000  ; DATA XREF:
                 dc.l    0
                 dc.l    SevenForcesRotationFrameTable3+$18000000
                 dc.l    SevenForcesInlinePartDescriptor2+1
-Boss_ValkirieMetaspriteInitialAngles:   dc.w    $12, $E15, $1F09  ; DATA XREF: Boss_ValkirieIntroStop+16   o  ; was: word_59EFC
+Boss_ValkirieMetaspriteInitialAngles:   dc.w    $12, $E15, $1F09  ; DATA XREF: Entity_InitValkirieBattleState0+16   o  ; was: word_59EFC
                 dc.w    $1212, $251F, $912
                 dc.w    $1225, $192C, $1426
                 dc.w    $E04, $192C, $1426
                 dc.w    $E04
 Boss_ValkirieMetaspritePartLinks:   dc.w    $C004, $C004, $C064  ; was: word_59F16
-                                        ; DATA XREF: Boss_ValkirieIntroStop+1C   o
+                                        ; DATA XREF: Entity_InitValkirieBattleState0+1C   o
                 dc.w    $C002, $C002, $C182
                 dc.w    $C182, $C241, $C240
                 dc.w    $C002, $C362, $C362
@@ -146,20 +146,20 @@ Boss_ValkirieMetaspritePartLinks:   dc.w    $C004, $C004, $C064  ; was: word_59F
                 dc.w    $C0C6, $C7E6, $C7E5
                 dc.w    $C8A4, $C8A5
 Boss_ValkirieMetaspritePoseAngles:  dc.w    $C080, $4000, $8080  ; was: word_59F4A
-                                        ; DATA XREF: Boss_ValkirieIntroStop+28   o
+                                        ; DATA XREF: Entity_InitValkirieBattleState0+28   o
                 dc.w    $8080, $80E0, $8080
                 dc.w    $80A0, $8080, $8080
                 dc.w    $8080
 ; Six-part auxiliary group created by Valkirie's movement initializer
-Boss_ValkirieAuxiliaryMetaspritePartDescriptors:    dc.l    SevenForcesInlinePartDescriptor1+1  ; DATA XREF: Boss_ValkirieMovePattern1+1E   o  ; was: off_59F5E
+Boss_ValkirieAuxiliaryMetaspritePartDescriptors:    dc.l    SevenForcesInlinePartDescriptor1+1  ; DATA XREF: Entity_InitValkirieAuxiliaryGroup+1E   o  ; was: off_59F5E
                 dc.l    SevenForcesRotationFrameTable1
                 dc.l    SevenForcesRotationFrameTable4
                 dc.l    SevenForcesRotationFrameTable0+$18000000
                 dc.l    SevenForcesRotationFrameTable3+$18000000
                 dc.l    0
-Boss_ValkirieAuxiliaryMetaspriteInitialAngles:  dc.w    $14, $2C14, $2C18  ; DATA XREF: Boss_ValkirieMovePattern1+24   o  ; was: word_59F76
+Boss_ValkirieAuxiliaryMetaspriteInitialAngles:  dc.w    $14, $2C14, $2C18  ; DATA XREF: Entity_InitValkirieAuxiliaryGroup+24   o  ; was: word_59F76
 Boss_ValkirieAuxiliaryMetaspritePartLinks:      dc.w    $C000, $C001, $C001  ; was: word_59F7C
-                                        ; DATA XREF: Boss_ValkirieMovePattern1+2A   o
+                                        ; DATA XREF: Entity_InitValkirieAuxiliaryGroup+2A   o
                 dc.w    $C001, $C001, 0
 ; Medusa metasprite initialization and neutral-pose data
 Boss_MedusaMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_MedusaAttackState2+1C   o  ; was: off_59F88

@@ -17,7 +17,7 @@ loc_569C8:                                              ; CODE XREF: Boss_Medusa
                 lea     (word_3E4C).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 moveq   #6,d0
-                jsr     (Boss_ValkirieUpdatePalette).l
+                jsr     (Gfx_UpdateSevenForcesBattlePalette).l
                 bsr.w   Boss_MedusaFlashDamage
 loc_569E0:                                              ; CODE XREF: Boss_MedusaAttackState1+4   j
                                         ; Boss_MedusaAttackState1+C   j

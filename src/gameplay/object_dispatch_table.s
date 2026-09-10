@@ -266,7 +266,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Effect_WolfGaropaBoundaryFollowerMain
                 dc.l    Projectile_TimerAndVisibility
                 dc.l    Entity_UpdateSevenForcesIntro
-                dc.l    Boss_ValkirieIntroMove
+                dc.l    Entity_UpdateValkirieBattle
                 dc.l    Boss_MedusaAttackState1
                 dc.l    Boss_SireneIntroInit
                 dc.l    Boss_ArtemisIntroStop
@@ -286,7 +286,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_ZLeoLaserFall
                 dc.l    Projectile_ZLeoSpawnDropProjectile
                 dc.l    Projectile_ZLeoDropProjectileMain
-                dc.l    Boss_ValkirieMovePattern2
+                dc.l    Entity_UpdateValkirieAuxiliaryGroup
                 dc.l    Projectile_ValkirieMain
                 dc.l    Boss_Epsilon1IntroController
                 dc.l    Boss_ArtemisAnimationScript

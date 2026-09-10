@@ -6,7 +6,7 @@ Boss_UnidentifiedSevenForceMain:                        ; DATA XREF: ROM:Entity_
                 lea     (word_3E4C).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 moveq   #$18,d0
-                jsr     (Boss_ValkirieUpdatePalette).l
+                jsr     (Gfx_UpdateSevenForcesBattlePalette).l
 Boss_UnidentifiedSevenForceDispatchState:               ; CODE XREF: Boss_UnidentifiedSevenForceMain+4   j  ; was: loc_58C84
                                         ; Boss_UnidentifiedSevenForceMain+C   j
                 move.w  4(a5),d0

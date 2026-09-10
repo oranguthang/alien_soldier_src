@@ -197,12 +197,12 @@ Boss_ZLeoObjectInitTable:   dc.w    $C620, $1018, $CC02, $EC14, 0, 0, $8F  ; was
                                         ; DATA XREF: Boss_ZLeoIntroInit+192   o
                 dc.w    $FFFE
 Boss_ValkirieIntroObjectInitTable:  dc.w    $C620, $5038, $F010, $F010, $EC14, $EC14, $6488  ; was: word_1BEC4
-                                        ; DATA XREF: Boss_ValkirieIntroStop+46   o
+                                        ; DATA XREF: Entity_InitValkirieBattleState0+46   o
                 dc.w    $C6E0, $500C, $F010, $F010, $F010, $F010, $6408
                 dc.w    $C7A0, $5000, $F60A, $F60A, $F010, $F010, $6410
                 dc.w    $C980, $5000, $F60A, $F60A, $F010, $F010, $6410
 Boss_ValkirieEffectObjectInitTable: dc.w    $CBC0, $5004, $F010, $F010, $FA06, $FA06, $640C  ; was: word_1BEFC
-                                        ; DATA XREF: Boss_ValkirieSpawnEffect   o
+                                        ; DATA XREF: Entity_SpawnValkirieTransitionEffect   o
                 dc.w    $CE00, $5004, $F010, $F010, $FA06, $FA06, $640C
                 dc.w    $FFFE
 Boss_MedusaObjectInitTable: dc.w    $C620, $5018, $E020, $E020, $E818, $E41C, $8088  ; was: word_1BF1A

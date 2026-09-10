@@ -1,4 +1,4 @@
-Projectile_CopyValkirieData:                            ; CODE XREF: Projectile_ValkirieBullet+1A   j  ; was: sub_2A03C
+Projectile_CopyValkirieData:                            ; CODE XREF: Projectile_SpawnValkirieBullet+1A   j  ; was: sub_2A03C
                 move.b  $20(a1),d2
                 move.w  #$100,d0
                 move.w  #$480,(a0)
