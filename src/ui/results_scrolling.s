@@ -147,7 +147,7 @@ loc_1FD7E:                                              ; CODE XREF: Results_Ini
 loc_1FD90:                                              ; CODE XREF: Results_InitializeDataDisplay+162   j
                 addq.w  #1,d0
                 movem.w a0,-(sp)
-                lea     (word_5A43E).l,a0
+                lea     (Math_PackedBCDLookup).l,a0
                 add.w   d0,d0
                 move.w  (a0,d0.w),d0
                 movem.w (sp)+,a0

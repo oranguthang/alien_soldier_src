@@ -123,7 +123,7 @@ loc_12C56:                                              ; CODE XREF: UI_RenderHU
                 rts
 ; ---------------------------------------------------------------------------
 loc_12C62:                                              ; CODE XREF: UI_RenderHUDElement1+F4   j
-                lea     (word_5A43E).l,a4
+                lea     (Math_PackedBCDLookup).l,a4
                 btst    #0,(word_FFA280+1).w
                 bne.w   UI_RenderHUDElement3
                 bsr.w   UI_RenderHUDElement2

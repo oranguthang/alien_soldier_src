@@ -2315,6 +2315,23 @@ and the old `AnimationScript` entry initializes state `$1A` rather than parsing
 animation data. The sole standalone RTS at `0x059BAA` remains explicitly
 `unknown` evidence because no static caller establishes a stronger role.
 
+The pre-sound data audit identifies `0x05A43E` as the shared packed-BCD lookup,
+not an anonymous word block. Its first 10,000 bytes are exactly 5,000
+big-endian packed-BCD words for values 0000 through 4999; options, password,
+HUD, player, results, and conversion code all index that base by even offsets.
+The preservation asset deliberately remains one of the pinned 579 segments:
+its final 36 bytes are recorded as opaque trailing data rather than split or
+assigned a speculative role. `PreSoundPreservedDataEnd` therefore names the
+asset boundary, not a claimed end of the logical BCD table.
+
+This evidence also corrects the Sonnet name `Math_LookupCosineValue`: the
+routine at `0x01B404` performs no trigonometry and is now
+`Math_LookupPackedBCDWord`. Four exact-address audit records cover the helper,
+the empty entity slot, the lookup base, and the preserved-data boundary. The
+two address-derived data definitions are removed, lowering the ceiling from
+5,511 to 5,509; provenance rises to 10,314 mappings and the registry to 6,365
+records.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

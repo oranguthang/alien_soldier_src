@@ -341,7 +341,7 @@ loc_9CDE:                                               ; CODE XREF: UI_OptionsS
 loc_9CE0:                                               ; CODE XREF: UI_OptionsSelectCharacter+26   j
                                         ; UI_OptionsSelectCharacter+38   j
                 move.b  d0,(dword_FF8066).w
-                lea     (word_5A43E).l,a0
+                lea     (Math_PackedBCDLookup).l,a0
                 asl.w   #1,d0
                 andi.w  #$1FE,d0
                 move.w  (a0,d0.w),d1
@@ -400,7 +400,7 @@ loc_9D6A:                                               ; CODE XREF: UI_OptionsS
 loc_9D6C:                                               ; CODE XREF: UI_OptionsSelectCharacter2+26   j
                                         ; UI_OptionsSelectCharacter2+38   j
                 move.b  d0,(dword_FF806A+2).w
-                lea     (word_5A43E).l,a0
+                lea     (Math_PackedBCDLookup).l,a0
                 asl.w   #1,d0
                 andi.w  #$1FE,d0
                 move.w  (a0,d0.w),d1

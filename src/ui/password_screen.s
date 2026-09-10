@@ -319,7 +319,7 @@ loc_A770:                                               ; CODE XREF: UI_HandlePa
                 nop
                 bsr.w   UI_RenderPasswordText
                 move.w  (dword_FF805E).w,d0
-                lea     (word_5A43E).l,a0
+                lea     (Math_PackedBCDLookup).l,a0
                 asl.w   #1,d0
                 move.w  (a0,d0.w),d0
                 move.b  d0,d1

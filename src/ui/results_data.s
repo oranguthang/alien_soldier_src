@@ -45,7 +45,7 @@ loc_202C4:                                              ; CODE XREF: UI_PrepareR
                 addq.w  #2,a3
                 addq.w  #2,a4
                 dbf     d7,loc_2026C
-                lea     (word_5A43E).l,a1
+                lea     (Math_PackedBCDLookup).l,a1
                 lea     (dword_FF9428).w,a0
                 move.w  (dword_FF9434).w,d6
                 bsr.w   Math_ConvertSecondsToTime

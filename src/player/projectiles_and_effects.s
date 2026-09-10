@@ -277,7 +277,7 @@ UI_RenderTransientValue_BuildSprites:                   ; CODE XREF: UI_RenderTr
                 move.b  (word_FF8262).w,d0
                 andi.w  #$10,d0
                 addi.w  #-$3841,d0
-                lea     (word_5A43E).l,a0
+                lea     (Math_PackedBCDLookup).l,a0
                 move.w  (word_FF8262).w,d4
                 andi.w  #$FFF,d4
                 asl.w   #1,d4

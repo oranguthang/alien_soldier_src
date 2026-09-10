@@ -2,8 +2,10 @@ Entity_EmptyState3:                                     ; DATA XREF: ROM:Entity_
                 rts
 ; End of function Entity_EmptyState3
 ; ---------------------------------------------------------------------------
-word_5A43E:     binclude "data/other/word_5A43E.bin"
-word_5A43E_End:
+; 5,000 packed-BCD words for values 0-4,999, followed by 36 opaque bytes
+; retained in the original preservation segment
+Math_PackedBCDLookup:   binclude "data/other/word_5A43E.bin"  ; was: word_5A43E
+PreSoundPreservedDataEnd:                               ; was: word_5A43E_End
                 ; dc.b [$257B2]$FF
                 org     $82324
 

@@ -56,7 +56,7 @@ Results_RenderScoreValues:                              ; CODE XREF: UI_Initiali
                 moveq   #0,d0
                 move.w  (StageTableIndex).w,d0
                 addq.w  #2,d0
-                jsr     (Math_LookupCosineValue).l
+                jsr     (Math_LookupPackedBCDWord).l
                 move.w  #$4302,d1
                 move.w  #$6B12,d4
                 moveq   #2,d7

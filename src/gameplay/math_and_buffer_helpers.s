@@ -1,8 +1,8 @@
-Math_LookupCosineValue:                                 ; CODE XREF: Results_RenderScoreValues+1C   p  ; was: sub_1B404
-                lea     (word_5A43E).l,a0
+Math_LookupPackedBCDWord:                               ; CODE XREF: Results_RenderScoreValues+1C   p  ; was: sub_1B404
+                lea     (Math_PackedBCDLookup).l,a0
                 move.w  (a0,d0.w),d0
                 rts
-; End of function Math_LookupCosineValue
+; End of function Math_LookupPackedBCDWord
 ; Returns the player's absolute horizontal and signed vertical deltas
 Physics_GetPlayerDelta:                                 ; CODE XREF: Boss_JetsripperMain:loc_2B72E   p  ; was: sub_1B410
                                         ; sub_2B77C:loc_2B7EA   p
