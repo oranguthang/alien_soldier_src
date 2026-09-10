@@ -267,7 +267,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_UpdateType424Visibility
                 dc.l    Entity_UpdateSevenForcesIntro
                 dc.l    Entity_UpdateValkirieBattle
-                dc.l    Boss_MedusaAttackState1
+                dc.l    Boss_UpdateMedusa
                 dc.l    Boss_SireneIntroInit
                 dc.l    Boss_ArtemisIntroStop
                 dc.l    Boss_UnidentifiedSevenForceMain
@@ -275,7 +275,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_SylpheedIntroStop
                 dc.l    Stage18_SegmentedWormMain
                 dc.l    Enemy_Stage11FishController
-                dc.l    Boss_MedusaDamageCheck
+                dc.l    Entity_UpdateMedusaFallingPart
                 dc.l    Stage11_FishWaveController
                 dc.l    Projectile_Stage21AsteroidDebrisMain
                 dc.l    Cutscene_XiTigerTrainEntranceController

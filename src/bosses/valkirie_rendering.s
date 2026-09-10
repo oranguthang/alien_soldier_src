@@ -424,7 +424,7 @@ Entity_AimValkirieAuxiliaryAtPlayer:                    ; CODE XREF: Entity_Upda
 ; End of function Entity_AimValkirieAuxiliaryAtPlayer
 ; Restore the shared Seven Forces colors or apply the frame-selected flash set
 Gfx_UpdateSevenForcesBattlePalette:                     ; CODE XREF: Entity_UpdateValkirieBattle+3A   p  ; was: sub_56942
-                                        ; Boss_MedusaAttackState1+3A   p
+                                        ; Boss_UpdateMedusa+3A   p
                 btst    #0,(word_FFA000+1).w
                 bne.s   Gfx_ApplySevenForcesBattleFlashPalette
                 move.w  (word_FFE3FA).w,(word_FFE37A).w

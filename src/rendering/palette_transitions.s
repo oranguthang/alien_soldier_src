@@ -529,7 +529,7 @@ word_3E2E:      dc.w    5                               ; DATA XREF: Gfx_BugmaxA
 word_3E3C:      dc.w    6                               ; DATA XREF: Boss_BugmaxMain+8   o
                 dc.w    $E362, $E372, $E374, $E376, $E37A, $E37C, $E37E
 word_3E4C:      dc.w    5                               ; DATA XREF: Entity_UpdateValkirieBattle:Entity_UpdateValkirieBattleActive   o
-                                        ; sub_5699C:loc_569C8   o
+                                        ; Boss_UpdateMedusa:Boss_UpdateMedusaBattleEffects   o
                 dc.w    $E362, $E36A, $E372, $E374, $E376, $E378
 
 ; RGB color fade processing with channel clamping

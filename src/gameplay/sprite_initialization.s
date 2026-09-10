@@ -206,7 +206,7 @@ Boss_ValkirieEffectObjectInitTable: dc.w    $CBC0, $5004, $F010, $F010, $FA06, $
                 dc.w    $CE00, $5004, $F010, $F010, $FA06, $FA06, $640C
                 dc.w    $FFFE
 Boss_MedusaObjectInitTable: dc.w    $C620, $5018, $E020, $E020, $E818, $E41C, $8088  ; was: word_1BF1A
-                                        ; DATA XREF: Boss_MedusaMovePattern2+4A   o
+                                        ; DATA XREF: Boss_UpdateMedusaState4+4A   o
                 dc.w    $FFFE
 Boss_SireneObjectInitTable: dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $3888  ; was: word_1BF2A
                                         ; DATA XREF: Boss_SireneShootPattern1+B4   o

@@ -162,7 +162,7 @@ Boss_ValkirieAuxiliaryMetaspritePartLinks:      dc.w    $C000, $C001, $C001  ; w
                                         ; DATA XREF: Entity_InitValkirieAuxiliaryGroup+2A   o
                 dc.w    $C001, $C001, 0
 ; Medusa metasprite initialization and neutral-pose data
-Boss_MedusaMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_MedusaAttackState2+1C   o  ; was: off_59F88
+Boss_MedusaMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_InitMedusaState0+1C   o  ; was: off_59F88
                 dc.l    SevenForcesInlinePartDescriptor1+1
                 dc.l    SevenForcesRotationFrameTable0+$18000000
                 dc.l    SevenForcesRotationFrameTable0+$18000000
@@ -183,12 +183,12 @@ Boss_MedusaMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF:
                 dc.l    SevenForcesRotationFrameTable0+$18000000
                 dc.l    SevenForcesRotationFrameTable0+$18000000
                 dc.l    SevenForcesRotationFrameTable3+$18000000
-Boss_MedusaMetaspriteInitialAngles: dc.w    $18, $1010, $100F  ; DATA XREF: Boss_MedusaAttackState2+22   o  ; was: word_59FDC
+Boss_MedusaMetaspriteInitialAngles: dc.w    $18, $1010, $100F  ; DATA XREF: Boss_InitMedusaState0+22   o  ; was: word_59FDC
                 dc.w    $1810, $1010, $F18
                 dc.w    $1010, $100F, $1810
                 dc.w    $1010, $F00
 Boss_MedusaMetaspritePartLinks: dc.w    $C005, $C003, $C064  ; was: word_59FF2
-                                        ; DATA XREF: Boss_MedusaAttackState2+28   o
+                                        ; DATA XREF: Boss_InitMedusaState0+28   o
                 dc.w    $C0C4, $C124, $C184
                 dc.w    $C003, $C244, $C2A4
                 dc.w    $C304, $C364, $C003
@@ -196,7 +196,7 @@ Boss_MedusaMetaspritePartLinks: dc.w    $C005, $C003, $C064  ; was: word_59FF2
                 dc.w    $C544, $C003, $C604
                 dc.w    $C664, $C6C4, $C724
 Boss_MedusaMetaspritePoseAngles:    dc.w    $8080, $8080, $8080  ; was: word_5A01C
-                                        ; DATA XREF: Boss_MedusaAttackState2+34   o
+                                        ; DATA XREF: Boss_InitMedusaState0+34   o
                 dc.w    $8000
 ; Sylpheed metasprite initialization and neutral-pose data
 Boss_SylpheedMetaspritePartDescriptors: dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_SylpheedBattleStart+10   o  ; was: off_5A024

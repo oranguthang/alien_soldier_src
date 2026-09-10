@@ -2211,6 +2211,36 @@ check a timer: both its entry points immediately configure the shared type-$C4
 explosion. The former random-frame helper instead animates Wolf Garopa's orb
 from the deterministic global animation phase.
 
+The lower Medusa block at `0x05717A-0x057435` is now separated conceptually
+from the battle AI above it. Its first entity is a three-state falling-part
+controller that synchronizes X to a source object and alternates terrain-wait
+and gravity states; the old damage, health, projectile-main, and defeat names
+did not describe those operations. The second routine consumes scroll-keyed
+eight-byte records that spawn ordinary entities, small or large pickups, or
+commands back into the Medusa controller.
+
+All 19 definitions in this block were reconstructed with 18 address-distinct
+audit records: `Medusa_ScriptedSpawnSequenceDataEnd` and the following
+`Medusa_StateASpawnSchedule` intentionally share `0x0573E6`. This removed 14
+more address-derived labels, raised provenance to 10,079 mappings, took the
+audit registry to 6,007 entries, and lowered the project ceiling to 5,744.
+
+The upper Medusa block at `0x05699C-0x057179` is now reconstructed as one
+11-entry even-state controller (`0, 2, 4, 6, 8, A, C, E, 10, 12, 14`) plus its
+horizontal targeting and pose-rendering pipeline. The state names deliberately
+remain numeric where static flow proves the state but does not prove an attack
+name. In particular, seven old `Boss_Valkirie_Behavior_*` labels were branches
+of this Medusa table, while the old shooting and four projectile-spawn helpers
+only interpret pose records, interpolate frames, distribute values across the
+20-part metasprite, and begin shared part traversal.
+
+All 80 renamed definitions have address-backed static audit records. This
+eliminated the remaining 56 address-derived definitions from `medusa.s`, raised
+provenance to 10,135 mappings, took the audit registry to 6,087 entries, and
+lowered the project ceiling to 5,688. The module remains a cohesive 794-line
+boss implementation, within the ordinary 1,000-line limit, so no split or
+size waiver is needed.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
