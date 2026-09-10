@@ -294,6 +294,7 @@
                 include "src/sound/command_dispatch_and_dac.s"
                 include "src/sound/playback_and_loading.s"
                 include "src/sound/hardware_interface.s"
+                include "src/sound/volume_transitions.s"
                 include "src/sound/sequence_commands.s"
                 include "src/sound/global_control.s"
                 include "src/sound/z80_program.s"

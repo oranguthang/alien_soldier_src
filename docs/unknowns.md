@@ -2396,6 +2396,56 @@ from 10,402 to 10,461 mappings, and 73 new exact-address records take the audit
 registry from 6,498 to 6,571 entries. The canonical Japanese ROM remains
 byte-identical at SHA-1 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
 
+The following structural pass replaces the mixed 337-line
+`sound/hardware_interface.s` range with a natural ROM boundary at `0x0836A0`:
+the 210-line hardware interface ends at `0x08369F`, and the 126-line
+`sound/volume_transitions.s` module owns the BGM attenuation/restore and
+voice-DAC handshake code through `0x08381F`. The 12-word FM pitch table at the
+tail stays ROM-adjacent rather than creating an artificial six-line data
+module. `src/main.s` and `rom_layout.json` now describe 343 modules in exact
+ROM order.
+
+This is deliberately a byte-preserving ownership change, not a semantic-name
+endorsement: the address-derived ceiling remains 5,363 until both new module
+ranges receive their instruction-backed naming audits. Layout verification and
+the direct canonical build both pass, with Japanese ROM SHA-1
+`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6` unchanged.
+
+The hardware-interface semantic pass audits all 27 definitions in the
+210-line `sound/hardware_interface.s` module at `0x0834D2-0x08369F`. It now
+exposes distinct YM2612 port-0 and port-1 write APIs, their Z80-bus and chip-
+busy polling states, the Z80-program copy loop, optional key-on/key-off paths,
+and the playback-state reset used by BGM loading. All callers across the sound
+driver use those narrowed interfaces.
+
+The pass rejects the Sonnet claims that channel override bit 2 was a pause
+flag, that a fall-through key-on routine merely checked flags, and that both
+YM2612 ports shared one unqualified register writer. It also narrows
+`Sound_ResetDriver` because the routine clears only the 68000 playback region
+and preserves its mode byte; Z80 loading is a separate entry. Thirteen live
+address-derived definitions are removed, lowering the ceiling from 5,363 to
+5,350. Provenance rises from 10,461 to 10,474 mappings, and 27 exact-address
+records take the audit registry from 6,571 to 6,598 entries.
+
+The volume-transition pass audits all 18 definitions in the natural 126-line
+`sound/volume_transitions.s` module at `0x0836A0-0x08381F`. Static state flow
+separates command-driven attenuation/restoration from voice-DAC ducking: Z80
+status `$A01FFC` bit 5 starts and ends the latter, and the retained FM/PSG
+steps are applied to the nine active BGM channels in matched add/subtract
+loops. The final twelve words are confirmed as the semitone-indexed FM
+frequency table consumed by `Sound_CalculatePitch`.
+
+The generated `Sound_ProcessVolumeFade` description is narrowed to
+`Sound_UpdateBGMVolumeTransitions`, because no envelope is accessed and each
+request applies a configured volume step rather than running an independent
+time-based fade. The below-target module length is retained as an explicit
+natural-boundary choice: merging it with Z80/YM2612 hardware arbitration would
+hide the independent transition state machine, while splitting its tiny pitch
+table would create an artificial wrapper. Seventeen address-derived
+definitions are removed, lowering the ceiling from 5,350 to 5,333; provenance
+rises from 10,474 to 10,491 mappings, and 18 audit records take the registry
+from 6,598 to 6,616 entries.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

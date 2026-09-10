@@ -13,7 +13,7 @@ Sound_UpdateDriver:                                     ; CODE XREF: Sound_Updat
                 clr.b   (byte_FFF80E).w
                 tst.b   (byte_FFF807).w
                 bne.w   Sound_ProcessPauseTransition
-                jsr     Sound_ProcessVolumeFade(pc)     ; (pc)
+                jsr     Sound_UpdateBGMVolumeTransitions(pc)  ; (pc)
                 jsr     Sound_ProcessTempoTick(pc)      ; (pc)
                 jsr     Sound_UpdateMusicFadeOut(pc)    ; (pc)
                 tst.l   (dword_FFF80A).w
@@ -224,7 +224,7 @@ Sound_ReadFMSequenceCommand:                            ; CODE XREF: Sound_Parse
                 bra.s   Sound_ReadFMSequenceCommand
 ; ---------------------------------------------------------------------------
 Sound_DecodeFMSequenceEvent:                            ; CODE XREF: Sound_ParseTrackData+10   j  ; was: loc_82594
-                jsr     Sound_CheckChannelFlags(pc)     ; (pc)
+                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
                 tst.b   d5
                 bpl.s   Sound_ParseNoteData
                 jsr     Sound_CalculatePitch(pc)        ; (pc)
@@ -249,7 +249,7 @@ Sound_CalculatePitch:                                   ; CODE XREF: Sound_Parse
                 divu.w  #$C,d5
                 swap    d5
                 lsl.w   #1,d5
-                lea     word_83808(pc),a0
+                lea     Sound_FMNoteFrequencyTable(pc),a0
                 move.w  (a0,d5.w),d6
                 swap    d5
                 andi.w  #7,d5
@@ -316,7 +316,7 @@ Sound_HandleNoteTimer:                                  ; CODE XREF: Sound_Proce
                 bset    #1,(a5)
                 tst.b   1(a5)
                 bmi.w   Sound_HandlePSGNoteTimeout
-                jsr     Sound_CheckChannelFlags(pc)     ; (pc)
+                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
                 addq.w  #4,sp
                 rts
 ; ---------------------------------------------------------------------------
@@ -389,10 +389,10 @@ Sound_WriteFrequencyBytes:                              ; CODE XREF: Sound_Updat
                 move.w  d6,d1
                 lsr.w   #8,d1
                 move.b  #$A4,d0
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
                 move.b  d6,d1
                 move.b  #$A0,d0
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
 Sound_UpdateChannelFrequencyReturn:                     ; CODE XREF: Sound_UpdateChannelFrequency+10   j  ; was: locret_82712
                                         ; Sound_UpdateChannelFrequency+18   j
                 rts
@@ -462,7 +462,7 @@ Sound_EndPitchEnvelopeWithRest:                         ; CODE XREF: Sound_Apply
                 bset    #1,(a5)
                 tst.b   1(a5)
                 bmi.s   Sound_EndPSGPitchEnvelopeWithRest
-                bra.w   Sound_CheckChannelFlags
+                bra.w   Sound_SendKeyOnIfAllowed
 ; ---------------------------------------------------------------------------
 Sound_EndPSGPitchEnvelopeWithRest:                      ; CODE XREF: Sound_EndPitchEnvelopeWithRest+8   j  ; was: loc_8279A
                 bra.w   Sound_CheckPSGMute
@@ -495,10 +495,10 @@ Sound_WriteNextFM3OperatorFrequency:                    ; CODE XREF: Sound_Updat
                 move.w  d1,d3
                 lsr.w   #8,d1
                 move.b  (a1)+,d0
-                jsr     Sound_WriteYM2612(pc)           ; (pc)
+                jsr     Sound_WriteYM2612Port0(pc)      ; (pc)
                 move.b  d3,d1
                 move.b  (a1)+,d0
-                jsr     Sound_WriteYM2612(pc)           ; (pc)
+                jsr     Sound_WriteYM2612Port0(pc)      ; (pc)
                 dbf     d5,Sound_WriteNextFM3OperatorFrequency
                 rts
 ; End of function Sound_UpdateFMOperators
@@ -621,7 +621,7 @@ Sound_ReleasePanUpdateZ80Bus:                           ; CODE XREF: Sound_Write
                 bne.s   Sound_WriteChannelPanAndAMSReturn
 Sound_WriteFMChannelPanAndAMS:                          ; CODE XREF: Sound_WriteChannelPanAndAMS+C   j  ; was: loc_828EC
                 move.b  #$B4,d0
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
 Sound_WriteChannelPanAndAMSReturn:                      ; CODE XREF: Sound_WriteChannelPanAndAMS+4   j  ; was: locret_828F4
                                         ; Sound_WriteChannelPanAndAMS+16   j
                 rts
@@ -646,7 +646,7 @@ Sound_WaitForZ80BusForPause:                            ; CODE XREF: Sound_Proce
                 tst.b   (byte_A01F2A).l
                 beq.s   Sound_MuteChannelsForPause
                 move.w  #0,(IO_Z80BUS).l
-                bsr.w   Sound_DelayNOP
+                bsr.w   Sound_DelayForZ80BusRetry
                 bra.s   Sound_RequestZ80BusForPause
 ; ---------------------------------------------------------------------------
 Sound_MuteChannelsForPause:                             ; CODE XREF: Sound_ProcessPauseTransition+36   j  ; was: loc_8293C
@@ -686,9 +686,9 @@ Sound_RestoreFMRegisterBankLoop:                        ; CODE XREF: Sound_Proce
                 moveq   #3,d3
 Sound_RestoreFMOperatorRegistersLoop:                   ; CODE XREF: Sound_ProcessPauseTransition+AA   j  ; was: loc_8298E
                 move.b  (a1,d0.w),d1
-                jsr     Sound_WriteYM2612(pc)           ; (pc)
+                jsr     Sound_WriteYM2612Port0(pc)      ; (pc)
                 move.b  $10(a1,d0.w),d1
-                jsr     Sound_WriteYM2612Register(pc)   ; (pc)
+                jsr     Sound_WriteYM2612Port1(pc)      ; (pc)
                 addq.w  #4,d0
                 dbf     d3,Sound_RestoreFMOperatorRegistersLoop
                 dbf     d2,Sound_RestoreFMRegisterBankLoop

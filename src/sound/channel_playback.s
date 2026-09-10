@@ -132,7 +132,7 @@ loc_84B8E:                                              ; CODE XREF: Sound_Proce
 ; End of function Sound_ProcessFMModulation
 ; Applies volume to PSG channel with mute check
 Sound_ApplyPSGVolume:                                   ; CODE XREF: Sound_UpdateMusicFadeOut+60   p  ; was: sub_84B98
-                                        ; Sound_ProcessVolumeFade+114   p
+                                        ; Sound_UpdateBGMVolumeTransitions+114   p
                 btst    #1,(a5)
                 bne.s   locret_84BB8
                 btst    #2,(a5)

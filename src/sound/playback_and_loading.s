@@ -7,7 +7,7 @@ Sound_LoadBGMRequest:                                   ; CODE XREF: Sound_Dispa
 Sound_InitializeBGM:                                    ; CODE XREF: Sound_LoadBGMRequest+4   j
                 jsr     Sound_StopSFXAndRestoreBGMChannels(pc)  ; (pc)
                 jsr     Sound_StopSpecialSFXAndRestoreBGMChannels(pc)  ; (pc)
-                jsr     Sound_ResetDriver(pc)           ; (pc)
+                jsr     Sound_ResetPlaybackState(pc)    ; (pc)
                 lea     BGM_PointerTable(pc),a4
                 subi.b  #$81,d7
                 lsl.w   #2,d7
@@ -101,7 +101,7 @@ Sound_RefreshBGMFMChannels:                             ; CODE XREF: Sound_LoadB
                 lea     (word_FFF870).w,a5
                 moveq   #5,d4
 Sound_RefreshNextBGMFMChannel:                          ; CODE XREF: Sound_LoadBGMRequest+120   j  ; was: loc_83086
-                jsr     Sound_CheckChannelFlags(pc)     ; (pc)
+                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
                 adda.w  d6,a5
                 dbf     d4,Sound_RefreshNextBGMFMChannel
                 moveq   #2,d4
@@ -295,7 +295,7 @@ Sound_StopSFXAndRestoreBGMChannels:                     ; CODE XREF: Sound_Dispa
                 clr.b   (byte_FFF800).w
                 moveq   #$27,d0                         ; '''
                 moveq   #0,d1
-                jsr     Sound_WriteYM2612Wrapper(pc)    ; (pc)
+                jsr     Sound_WriteYM2612Port0Thunk(pc)  ; (pc)
                 lea     (byte_FFFA20).w,a5
                 moveq   #5,d6
 Sound_StopNextSFXChannel:                               ; CODE XREF: Sound_StopSFXAndRestoreBGMChannels+9E   j  ; was: loc_832AE
@@ -305,7 +305,7 @@ Sound_StopNextSFXChannel:                               ; CODE XREF: Sound_StopS
                 moveq   #0,d3
                 move.b  1(a5),d3
                 bmi.s   Sound_RestoreBGMPSGChannel
-                jsr     Sound_CheckChannelFlags(pc)     ; (pc)
+                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
                 cmpi.b  #4,d3
                 bne.s   Sound_SelectOverriddenBGMFMChannel
                 tst.b   (word_FFFB40).w
@@ -481,7 +481,7 @@ Sound_SilenceCurrentFMOperators:                        ; CODE XREF: Sound_MuteA
                 moveq   #$7F,d1
 Sound_SetNextFMOperatorTotalLevel:                      ; CODE XREF: Sound_SilenceCurrentFMOperators+E   j  ; was: loc_8345A
                 move.b  d3,d0
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
                 addq.b  #4,d3
                 dbf     d4,Sound_SetNextFMOperatorTotalLevel
                 moveq   #3,d4
@@ -489,7 +489,7 @@ Sound_SetNextFMOperatorTotalLevel:                      ; CODE XREF: Sound_Silen
                 moveq   #$F,d1
 Sound_SetNextFMOperatorReleaseRate:                     ; CODE XREF: Sound_SilenceCurrentFMOperators+22   j  ; was: loc_8346E
                 move.b  d3,d0
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
                 addq.b  #4,d3
                 dbf     d4,Sound_SetNextFMOperatorReleaseRate
                 rts
@@ -501,9 +501,9 @@ Sound_KeyOffAllFMChannels:                              ; CODE XREF: Sound_StopA
                 moveq   #$28,d0                         ; '('
 Sound_KeyOffNextFMChannelPair:                          ; CODE XREF: Sound_KeyOffAllFMChannels+10   j  ; was: loc_83480
                 move.b  d2,d1
-                jsr     Sound_WriteYM2612(pc)           ; (pc)
+                jsr     Sound_WriteYM2612Port0(pc)      ; (pc)
                 addq.b  #4,d1
-                jsr     Sound_WriteYM2612(pc)           ; (pc)
+                jsr     Sound_WriteYM2612Port0(pc)      ; (pc)
                 dbf     d2,Sound_KeyOffNextFMChannelPair
 ; End of function Sound_KeyOffAllFMChannels
 ; Set maximum attenuation on every operator of all six FM channels
@@ -515,8 +515,8 @@ Sound_SetNextFMChannelOperatorLevels:                   ; CODE XREF: Sound_SetAl
                 add.w   d2,d0
                 moveq   #3,d3
 Sound_SetNextFMOperatorLevelMaximum:                    ; CODE XREF: Sound_SetAllFMOperatorLevelsMaximum+14   j  ; was: loc_8349A
-                jsr     Sound_WriteYM2612(pc)           ; (pc)
-                jsr     Sound_WriteYM2612Register(pc)   ; (pc)
+                jsr     Sound_WriteYM2612Port0(pc)      ; (pc)
+                jsr     Sound_WriteYM2612Port1(pc)      ; (pc)
                 addq.w  #4,d0
                 dbf     d3,Sound_SetNextFMOperatorLevelMaximum
                 dbf     d2,Sound_SetNextFMChannelOperatorLevels
@@ -527,7 +527,7 @@ Sound_StopAllPlayback:                                  ; CODE XREF: Sound_Dispa
                                         ; Sound_DispatchPendingRequest+70   j
                 moveq   #$27,d0                         ; '''
                 moveq   #0,d1
-                jsr     Sound_WriteYM2612Wrapper(pc)    ; (pc)
+                jsr     Sound_WriteYM2612Port0Thunk(pc)  ; (pc)
                 lea     (byte_FFF800).w,a0
                 move.w  #$E3,d0
 ; Clear the playback-state region in longwords

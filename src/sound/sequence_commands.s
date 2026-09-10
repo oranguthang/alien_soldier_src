@@ -1,3 +1,4 @@
+; Dispatches sound commands via jump table
 Sound_CommandDispatcher:                                ; CODE XREF: Sound_ProcessPCMSequence+1C   p  ; was: sub_83820
                                         ; Sound_ParseTrackData+12   p
                 subi.w  #$E0,d5
@@ -172,13 +173,13 @@ loc_83958:                                              ; CODE XREF: Sound_SetLF
                 btst    #7,d3
                 beq.s   loc_8396A
                 bset    #7,d1
-                jsr     Sound_CheckPauseFlag(pc)        ; (pc)
+                jsr     Sound_WriteCurrentFMRegisterIfNotOverridden(pc)  ; (pc)
 loc_8396A:                                              ; CODE XREF: Sound_SetLFO+1E   j
                 lsl.w   #1,d3
                 dbf     d6,loc_83958
                 move.b  (a4)+,d1
                 moveq   #$22,d0                         ; '"'
-                jsr     Sound_WriteYM2612Wrapper(pc)    ; (pc)
+                jsr     Sound_WriteYM2612Port0Thunk(pc)  ; (pc)
                 move.b  (a4)+,d1
                 move.b  $27(a5),d0
                 andi.b  #$C0,d0
@@ -210,13 +211,13 @@ Sound_AddPSGVolume:                                     ; CODE XREF: Sound_Comma
 Sound_WriteFMChannelRegister:                           ; CODE XREF: Sound_CommandDispatcher+3E   j  ; was: sub_839A8
                 move.b  (a4)+,d0
                 move.b  (a4)+,d1
-                bra.w   Sound_CheckPauseFlag
+                bra.w   Sound_WriteCurrentFMRegisterIfNotOverridden
 ; End of function Sound_WriteFMChannelRegister
 ; Writes a register on YM2612 port 0/FM1 (EE)
 Sound_WriteFM1Register:                                 ; CODE XREF: Sound_CommandDispatcher+42   j  ; was: sub_839B0
                 move.b  (a4)+,d0
                 move.b  (a4)+,d1
-                bra.w   Sound_WriteYM2612Wrapper
+                bra.w   Sound_WriteYM2612Port0Thunk
 ; End of function Sound_WriteFM1Register
 ; Selects instrument for sound channel
 Sound_SelectInstrument:                                 ; CODE XREF: Sound_CommandDispatcher+46   j  ; was: sub_839B8
@@ -246,13 +247,13 @@ loc_839EA:                                              ; CODE XREF: Sound_SetFM
                 move.b  d1,$25(a5)
                 move.b  d1,d4
                 move.b  #$B0,d0
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
                 lea     byte_83AF2(pc),a2
                 moveq   #$13,d3
 loc_83A00:                                              ; CODE XREF: Sound_SetFMInstrument+2C   j
                 move.b  (a2)+,d0
                 move.b  (a1)+,d1
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
                 dbf     d3,loc_83A00
                 moveq   #3,d5
                 andi.w  #7,d4
@@ -265,7 +266,7 @@ loc_83A1A:                                              ; CODE XREF: Sound_SetFM
                 bcc.s   loc_83A24
                 add.b   d3,d1
 loc_83A24:                                              ; CODE XREF: Sound_SetFMInstrument+44   j
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
                 dbf     d5,loc_83A1A
                 cmpi.b  #6,1(a5)
                 bne.w   Sound_SetChannelPanning
@@ -289,7 +290,7 @@ loc_83A6A:                                              ; CODE XREF: Sound_SetFM
 Sound_SetChannelPanning:                                ; CODE XREF: Sound_SetFMInstrument+56   j  ; was: loc_83A78
                 move.b  $27(a5),d1
                 move.b  #$B4,d0
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
 locret_83A84:                                           ; CODE XREF: Sound_SelectInstrument+C   j
                                         ; Sound_SetFMInstrument+60   j
                 rts
@@ -301,7 +302,7 @@ byte_83A86:     dc.b    8, 8, 8, 8, $A, $E, $E, $F
 
 ; Applies volume and pan to sound channel
 Sound_ApplyVolume:                                      ; CODE XREF: Sound_UpdateMusicFadeOut:Sound_ApplyBGMFMFadeVolume   p  ; was: sub_83A8E
-                                        ; Sound_ProcessVolumeFade+EE   p
+                                        ; Sound_UpdateBGMVolumeTransitions+EE   p
                 btst    #2,(a5)
                 bne.s   locret_83AF0
                 moveq   #0,d0
@@ -337,7 +338,7 @@ loc_83ADC:                                              ; CODE XREF: Sound_Apply
                 bcc.s   Sound_ApplyVolumeLoop
                 add.b   d3,d1
                 bcs.s   Sound_ApplyVolumeLoop
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
 ; Volume apply loop for operators
 Sound_ApplyVolumeLoop:                                  ; CODE XREF: Sound_ApplyVolume+54   j  ; was: loc_83AEC
                                         ; Sound_ApplyVolume+58   j
@@ -383,7 +384,7 @@ Sound_StopChannel:                                      ; CODE XREF: Sound_Comma
                 bmi.s   loc_83B5C
                 tst.b   (byte_FFF808).w
                 bmi.w   loc_83C00
-                jsr     Sound_CheckChannelFlags(pc)     ; (pc)
+                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
                 bra.s   loc_83B60
 ; ---------------------------------------------------------------------------
 loc_83B5C:                                              ; CODE XREF: Sound_StopChannel+C   j
@@ -426,7 +427,7 @@ loc_83BB0:                                              ; CODE XREF: Sound_StopC
                 bne.s   loc_83C00
                 moveq   #0,d1
                 moveq   #$27,d0                         ; '''
-                jsr     Sound_WriteYM2612Wrapper(pc)    ; (pc)
+                jsr     Sound_WriteYM2612Port0Thunk(pc)  ; (pc)
                 bra.s   loc_83C00
 ; ---------------------------------------------------------------------------
 loc_83BCA:                                              ; CODE XREF: Sound_StopChannel+32   j
@@ -555,7 +556,7 @@ loc_83CAA:                                              ; CODE XREF: Sound_SetCH
                 dbf     d0,loc_83CAA
                 move.b  #$27,d0                         ; '''
                 moveq   #$40,d1                         ; '@'
-                bra.w   Sound_WriteYM2612Wrapper
+                bra.w   Sound_WriteYM2612Port0Thunk
 ; End of function Sound_SetCH3SpecialMode
 ; ---------------------------------------------------------------------------
 word_83CC2:     dc.w    0, $180, $1F4, $260
@@ -568,10 +569,10 @@ Sound_SetSSGEG:                                         ; CODE XREF: Sound_Exten
 loc_83CD0:                                              ; CODE XREF: Sound_SetSSGEG+16   j
                 move.b  (a1)+,d0
                 move.b  (a4)+,d1
-                jsr     Sound_CheckPauseFlag(pc)        ; (pc)
+                jsr     Sound_WriteCurrentFMRegisterIfNotOverridden(pc)  ; (pc)
                 move.b  (a1)+,d0
                 moveq   #$1F,d1
-                jsr     Sound_CheckPauseFlag(pc)        ; (pc)
+                jsr     Sound_WriteCurrentFMRegisterIfNotOverridden(pc)  ; (pc)
                 dbf     d3,loc_83CD0
                 rts
 ; End of function Sound_SetSSGEG

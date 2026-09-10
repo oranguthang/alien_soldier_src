@@ -18,8 +18,8 @@ loc_83D0A:                                              ; CODE XREF: Sound_SetMu
                 bset    #0,(a5)
                 move.b  #$B4,d0
                 moveq   #0,d1
-                jsr     Sound_CheckPauseFlag(pc)        ; (pc)
-                jsr     Sound_CheckChannelFlags(pc)     ; (pc)
+                jsr     Sound_WriteCurrentFMRegisterIfNotOverridden(pc)  ; (pc)
+                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
 loc_83D28:                                              ; CODE XREF: Sound_SetMusicPaused+22   j
                 dbf     d4,loc_83D0A
                 moveq   #2,d4
@@ -55,7 +55,7 @@ loc_83D5E:                                              ; CODE XREF: Sound_SetMu
                 move.b  d2,d1
 loc_83D90:                                              ; CODE XREF: Sound_SetMusicPaused+9C   j
                 move.b  #$B6,d0
-                jsr     Sound_WriteYM2612Register(pc)   ; (pc)
+                jsr     Sound_WriteYM2612Port1(pc)      ; (pc)
 loc_83D98:                                              ; CODE XREF: Sound_SetMusicPaused+98   j
                 btst    #0,(a5)
                 beq.s   loc_83DA6
@@ -87,7 +87,7 @@ loc_83DDA:                                              ; CODE XREF: Sound_SetMu
                 bne.w   loc_83E02
 loc_83DFA:                                              ; CODE XREF: Sound_SetMusicPaused+DA   j
                 move.b  #$B4,d0
-                jsr     Sound_ProcessChannelBits(pc)    ; (pc)
+                jsr     Sound_WriteCurrentFMChannelRegister(pc)  ; (pc)
 loc_83E02:                                              ; CODE XREF: Sound_SetMusicPaused+C0   j
                                         ; Sound_SetMusicPaused+CE   j
                 dbf     d4,loc_83DA8
