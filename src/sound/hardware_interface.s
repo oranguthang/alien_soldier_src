@@ -26,7 +26,7 @@ Sound_LoadZ80Driver:                                    ; CODE XREF: Sound_InitD
 Sound_WaitForZ80BusForDriverLoad:                       ; CODE XREF: Sound_LoadZ80Driver+16   j  ; was: loc_8350A
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Sound_WaitForZ80BusForDriverLoad
-                lea     z80_data(pc),a0
+                lea     Sound_Z80DriverProgram(pc),a0
                 lea     (Z80_RAM).l,a1
                 move.w  #$BFF,d0
 Sound_CopyNextZ80DriverByte:                            ; CODE XREF: Sound_LoadZ80Driver+28   j  ; was: loc_83522

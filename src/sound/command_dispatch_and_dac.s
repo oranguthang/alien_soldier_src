@@ -105,15 +105,15 @@ Sound_ProcessVoiceDACRequest:                           ; CODE XREF: Sound_Dispa
                 subi.b  #$10,d7
                 ext.w   d7
                 asl.w   #3,d7
-                lea     (Sound_VoiceDACDescriptors).l,a0  ; 980 - PCMPart1
-                                        ; A00 - PCMPart2
-                                        ; A80 - PCMPart3
-                                        ; B00 - PCMPart4
-                                        ; B80 - PCMPart5
-                                        ; C00 - PCMPart6
-                                        ; C80 - PCMPart7
-                                        ; D00 - PCMPart8
-                                        ; D80 - PCMPart9
+                lea     (Sound_VoiceDACDescriptors).l,a0  ; 980 - Sound_PCMBank1
+                                        ; A00 - Sound_PCMBank2
+                                        ; A80 - Sound_PCMBank3
+                                        ; B00 - Sound_PCMBank4
+                                        ; B80 - Sound_PCMBank5
+                                        ; C00 - Sound_PCMBank6
+                                        ; C80 - Sound_PCMBank7
+                                        ; D00 - Sound_PCMBank8
+                                        ; D80 - Sound_PCMBank9
                 lea     (a0,d7.w),a0
                 btst    #0,5(a0)
                 bne.w   Sound_SelectVoiceDACPlaybackSlot
@@ -334,110 +334,110 @@ Sound_ReadDACSampleHeader:                              ; CODE XREF: Sound_Dispa
                 rts
 ; End of function Sound_ReadDACSampleHeader
 ; ---------------------------------------------------------------------------
-Sound_VoiceDACDescriptors:  dc.w    (PCMPart3 >> $8)    ; DATA XREF: Sound_DispatchPendingRequest+86   o  ; was: word_82DEC
-                                        ; 980 - PCMPart1
-                                        ; A00 - PCMPart2
-                                        ; A80 - PCMPart3
-                                        ; B00 - PCMPart4
-                                        ; B80 - PCMPart5
-                                        ; C00 - PCMPart6
-                                        ; C80 - PCMPart7
-                                        ; D00 - PCMPart8
-                                        ; D80 - PCMPart9
+Sound_VoiceDACDescriptors:  dc.w    (Sound_PCMBank3 >> $8)  ; DATA XREF: Sound_DispatchPendingRequest+86   o  ; was: word_82DEC
+                                        ; 980 - Sound_PCMBank1
+                                        ; A00 - Sound_PCMBank2
+                                        ; A80 - Sound_PCMBank3
+                                        ; B00 - Sound_PCMBank4
+                                        ; B80 - Sound_PCMBank5
+                                        ; C00 - Sound_PCMBank6
+                                        ; C80 - Sound_PCMBank7
+                                        ; D00 - Sound_PCMBank8
+                                        ; D80 - Sound_PCMBank9
                 dc.w    $880, $380, $C000
-                dc.w    (PCMPart3 >> $8)
+                dc.w    (Sound_PCMBank3 >> $8)
                 dc.w    $80, $1380, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $880, $180, $C000
-                dc.w    (PCMPart3 >> $8)
+                dc.w    (Sound_PCMBank3 >> $8)
                 dc.w    $80, $1B80, $C000
-                dc.w    (PCMPart3 >> $8)
+                dc.w    (Sound_PCMBank3 >> $8)
                 dc.w    $480, $4580, $C000
-                dc.w    (PCMPart5 >> $8)
+                dc.w    (Sound_PCMBank5 >> $8)
                 dc.w    $880, $1381, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $480, $1381, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $880, $1381, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $C80, $1381, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $1480, $1381, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $1880, $2081, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $1080, $13A1, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $480, $13A1, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $1880, $1381, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $2480, $4080, $C000
-                dc.w    (PCMPart3 >> $8)
+                dc.w    (Sound_PCMBank3 >> $8)
                 dc.w    $1080, $13C1, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $80, $1381, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $2080, $1381, $C000
-                dc.w    (PCMPart7 >> $8)
+                dc.w    (Sound_PCMBank7 >> $8)
                 dc.w    $C80, $1381, $C000
-                dc.w    (PCMPart5 >> $8)
+                dc.w    (Sound_PCMBank5 >> $8)
                 dc.w    $480, $280, $C000
-                dc.w    (PCMPart6 >> $8)
+                dc.w    (Sound_PCMBank6 >> $8)
                 dc.w    $80, $280, $C000
-                dc.w    (PCMPart5 >> $8)
+                dc.w    (Sound_PCMBank5 >> $8)
                 dc.w    $1080, $280, $C000
-                dc.w    (PCMPart6 >> $8)
+                dc.w    (Sound_PCMBank6 >> $8)
                 dc.w    $880, $280, $C000
-                dc.w    (PCMPart7 >> $8)
+                dc.w    (Sound_PCMBank7 >> $8)
                 dc.w    $480, $280, $C000
-                dc.w    (PCMPart7 >> $8)
+                dc.w    (Sound_PCMBank7 >> $8)
                 dc.w    $880, $280, $C000
-                dc.w    (PCMPart6 >> $8)
+                dc.w    (Sound_PCMBank6 >> $8)
                 dc.w    $480, $280, $C000
-                dc.w    (PCMPart5 >> $8)
+                dc.w    (Sound_PCMBank5 >> $8)
                 dc.w    $80, $1381, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $C80, $1381, $C000
-                dc.w    (PCMPart8 >> $8)
+                dc.w    (Sound_PCMBank8 >> $8)
                 dc.w    $480, $380, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $2480, $1A80, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $2480, $2780, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $2880, $1381, $C000
-                dc.w    (PCMPart5 >> $8)
+                dc.w    (Sound_PCMBank5 >> $8)
                 dc.w    $C80, $1381, $C000
-                dc.w    (PCMPart8 >> $8)
+                dc.w    (Sound_PCMBank8 >> $8)
                 dc.w    $80, $1381, $C000
-                dc.w    (PCMPart8 >> $8)
+                dc.w    (Sound_PCMBank8 >> $8)
                 dc.w    $880, $1381, $C000
-                dc.w    (PCMPart8 >> $8)
+                dc.w    (Sound_PCMBank8 >> $8)
                 dc.w    $C80, $1381, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $2080, $1880, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $2880, $1381, $C000
-                dc.w    (PCMPart6 >> $8)
+                dc.w    (Sound_PCMBank6 >> $8)
                 dc.w    $C80, $1381, $C000
-                dc.w    (PCMPart7 >> $8)
+                dc.w    (Sound_PCMBank7 >> $8)
                 dc.w    $1080, $1381, $C000
-                dc.w    (PCMPart8 >> $8)
+                dc.w    (Sound_PCMBank8 >> $8)
                 dc.w    $1080, $1381, $C000
-                dc.w    (PCMPart8 >> $8)
+                dc.w    (Sound_PCMBank8 >> $8)
                 dc.w    $1480, $1381, $C000
-                dc.w    (PCMPart9 >> $8)
+                dc.w    (Sound_PCMBank9 >> $8)
                 dc.w    $80, $1A80, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $1C80, $180, $C000
-                dc.w    (PCMPart7 >> $8)
+                dc.w    (Sound_PCMBank7 >> $8)
                 dc.w    $80, $280, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $1C80, $1381, $C000
-                dc.w    (PCMPart4 >> $8)
+                dc.w    (Sound_PCMBank4 >> $8)
                 dc.w    $2080, $1381, $C000
-                dc.w    (PCMPart2 >> $8)
+                dc.w    (Sound_PCMBank2 >> $8)
                 dc.w    $1C80, $180, $C000
 
 ; End of pending-request dispatch and voice DAC data

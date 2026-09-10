@@ -20,9 +20,10 @@ default evidence level is `hypothesis`. Correcting a semantic name must retain
 the same historical mapping unless a documented source correction proves that
 the mapping itself was wrong.
 
-Two definitions in the imported disassembly were already named `JumpTable1`
-and `JumpTable2` rather than by address. They are exact historical identifiers,
-not reconstructed semantics, so the policy admits only those two explicit
-exceptions. Their current pan-animation dispatch names retain the imported
-spelling in `config/name_audit.json`; this does not broaden the accepted
-address-derived source vocabulary.
+A few definitions in the imported disassembly were already named by an
+extraction role rather than by address. The provenance grammar admits only
+the exact historical `JumpTable1`, `JumpTable2`, and `PCMPart1` through
+`PCMPart9` forms in addition to the generated suffix pattern. These spellings
+are continuity evidence, not reconstructed semantics; their replacement names
+still require records in `config/name_audit.json`, and the exceptions do not
+broaden the accepted address-derived source vocabulary.

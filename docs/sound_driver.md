@@ -31,9 +31,11 @@ includes whose pointer positions and sizes match the reference.
 | PCM data | `$098000` |
 | Sound driver RAM | `$FFF800` |
 
-The Z80 driver occupies `$83E70-$84A6F` (3072 bytes). It is still included as
-binary data; the reference repository contains the same kind of binary dump,
-not Z80 source code.
+The Z80 driver occupies `$83E70-$84A6F` (3,072 bytes).
+`Sound_Z80DriverProgram` names the embedded image by its proven loader role:
+`Sound_LoadZ80Driver` copies exactly `$C00` bytes to `Z80_RAM`, pulses reset,
+then releases the bus. It remains a binary include because the reference
+repository also contains a dump rather than reconstructable Z80 source.
 
 ## Sound ID ranges
 
@@ -64,12 +66,12 @@ be established through call-site analysis or playback.
 
 ## Music IDs
 
-| ID | Track |
+| ID | Reference title |
 |---:|---|
 | `$81` | Runner, AD2025 |
 | `$82` | Blacksheep |
 | `$83` | Over!!! |
-| `$84` | Unnamed in the reference; currently `fromobjectornointro` |
+| `$84` | Unnamed; preservation asset `fromobjectornointro.bin` |
 | `$85` | With Treasure |
 | `$86` | !!! Shade |
 | `$87` | Sidelimits |
@@ -81,7 +83,7 @@ be established through call-site analysis or playback.
 | `$8D` | Perfect-Thing |
 | `$8E` | Slap-Up |
 | `$8F` | X-Ages |
-| `$90` | Oblivious Past; currently named `theend` in the disassembly |
+| `$90` | Oblivious Past; preservation asset `theend.bin` |
 | `$91` | Title Theme |
 | `$92` | Silent |
 | `$93` | Galaxy Desert |
@@ -93,8 +95,11 @@ be established through call-site analysis or playback.
 | `$99-$9E` | Aliases of Runner, AD2025 |
 | `$9F` | Song-format SFX sequence |
 
-The `$90` title differs from the existing `theend` label and should be checked
-against the in-game sound test before that label is changed.
+The source deliberately uses neutral `Sound_BGM_81` through `Sound_BGM_98`
+and `Sound_BGM_9F` labels. Titles come from the external reference rip rather
+than static game semantics; the `$90`/`theend.bin` mismatch remains visible
+here and should be checked in the in-game sound test before any title is
+promoted into a source symbol.
 
 ## Sequence commands
 
@@ -171,9 +176,13 @@ The game uses Treasure's DPCM DAC format. The music DAC table has IDs
 `$81-$96`; the voice table has IDs `$00-$2F`. Several IDs alias the same sample
 at different rates. The table layout is shared with Dynamite Headdy.
 
-The project currently preserves PCM as nine large `PCMPart` binary chunks.
-Splitting them into individual samples would change the asset layout and
-should only be attempted with byte-accurate ROM comparison available.
+The project preserves PCM as nine ROM-aligned `Sound_PCMBank` boundaries.
+The first eight are `$8000` bytes; the ninth is `$1A5E` bytes followed by an
+explicit `$E5A2`-byte `$FF` gap to `$E8000`. Descriptor tables select a bank's
+high address byte and add per-sample offsets, which proves the bank naming.
+The preservation assets retain their imported `PCMPart1.bin` through
+`PCMPart9.bin` filenames. Splitting them into individual samples remains a
+separate byte-verified reconstruction task.
 
 ## Audited 68000 update core
 
@@ -369,3 +378,17 @@ name because the selector indexes it by request ID and gives `$FF` a dedicated
 immediate-selection meaning. The BGM, ordinary-SFX, special-SFX, and low-range
 SFX names now share the `Sound_` namespace and state their distinct indexing
 roles.
+
+## Sound-effect track payloads
+
+The complete sound-effect payload range `0x094D4C-0x097FFF` is owned by
+`sound/sfx_tracks.s`. Its ROM order is `$A0-$EF`, `$40-$7F`, then `$F0-$FC`;
+that physical order is not the request-ID order. The three pointer-table views
+prove the stable identities: ordinary requests `$A0-$F8`, low-range requests
+`$40-$7F`, and special override requests `$F9-$FC`.
+
+The former four filenames were hexadecimal storage buckets, not subsystems.
+The single 765-line module preserves the natural data family and exact ROM
+order while remaining below the 1,000-line default ceiling. Its labels state
+only the proven request IDs; effect meanings are not guessed from payload
+bytes.

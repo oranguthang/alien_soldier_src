@@ -147,49 +147,49 @@ Sound_ProcessPCMSequenceReturn:                         ; CODE XREF: Sound_Proce
                 rts
 ; End of function Sound_ProcessPCMSequence
 ; ---------------------------------------------------------------------------
-Sound_PCMSampleDescriptors: dc.w    (PCMPart1 >> $8)    ; DATA XREF: Sound_ProcessPCMSequence+50   o  ; was: word_824A2
+Sound_PCMSampleDescriptors: dc.w    (Sound_PCMBank1 >> $8)  ; DATA XREF: Sound_ProcessPCMSequence+50   o  ; was: word_824A2
                 dc.w    $80, $500, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $480, $200, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $880, $100, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $C80, $700, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $1080, $700, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $1480, $100, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $1880, $D00, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $1C80, $100, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $1080, $300, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $1080, $900, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $1080, $F00, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2080, $A00, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2480, $1700, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2480, $800, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2480, $1000, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2480, $D00, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2480, $600, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2880, $100, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2C80, $100, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $3080, $500, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2480, $800, 0
-                dc.w    (PCMPart1 >> $8)
+                dc.w    (Sound_PCMBank1 >> $8)
                 dc.w    $2480, $E00, 0
 
 ; Processes individual sound channel state

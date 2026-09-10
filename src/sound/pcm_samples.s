@@ -1,20 +1,31 @@
-PCMPart1:       binclude "data/sound/PCMPart1.bin"
-PCMPart1_End:
-PCMPart2:       binclude "data/sound/PCMPart2.bin"
-PCMPart2_End:
-PCMPart3:       binclude "data/sound/PCMPart3.bin"
-PCMPart3_End:
-PCMPart4:       binclude "data/sound/PCMPart4.bin"
-PCMPart4_End:
-PCMPart5:       binclude "data/sound/PCMPart5.bin"
-PCMPart5_End:
-PCMPart6:       binclude "data/sound/PCMPart6.bin"
-PCMPart6_End:
-PCMPart7:       binclude "data/sound/PCMPart7.bin"
-PCMPart7_End:
-PCMPart8:       binclude "data/sound/PCMPart8.bin"
-PCMPart8_End:
-PCMPart9:       binclude "data/sound/PCMPart9.bin"
-PCMPart9_End:
-                ; dc.b [$E5A2]$FF
+; ROM-aligned DPCM banks addressed by descriptor high byte plus sample offset
+
+Sound_PCMBank1: binclude "data/sound/PCMPart1.bin"
+                ; was: PCMPart1
+Sound_PCMBank1_End:
+Sound_PCMBank2: binclude "data/sound/PCMPart2.bin"
+                ; was: PCMPart2
+Sound_PCMBank2_End:
+Sound_PCMBank3: binclude "data/sound/PCMPart3.bin"
+                ; was: PCMPart3
+Sound_PCMBank3_End:
+Sound_PCMBank4: binclude "data/sound/PCMPart4.bin"
+                ; was: PCMPart4
+Sound_PCMBank4_End:
+Sound_PCMBank5: binclude "data/sound/PCMPart5.bin"
+                ; was: PCMPart5
+Sound_PCMBank5_End:
+Sound_PCMBank6: binclude "data/sound/PCMPart6.bin"
+                ; was: PCMPart6
+Sound_PCMBank6_End:
+Sound_PCMBank7: binclude "data/sound/PCMPart7.bin"
+                ; was: PCMPart7
+Sound_PCMBank7_End:
+Sound_PCMBank8: binclude "data/sound/PCMPart8.bin"
+                ; was: PCMPart8
+Sound_PCMBank8_End:
+Sound_PCMBank9: binclude "data/sound/PCMPart9.bin"
+                ; was: PCMPart9
+Sound_PCMBank9_End:
+                ; Preserve the $E5A2-byte $FF gap after the final PCM bank
                 org     $E8000

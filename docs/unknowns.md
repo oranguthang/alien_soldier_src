@@ -2533,6 +2533,34 @@ was a Sonnet-name audit rather than a raw-label burn-down; provenance rises
 from 10,586 to 10,591 mappings, the audit registry rises from 6,768 to 6,773
 entries, and the ROM layout decreases from 341 to 340 modules.
 
+The sound-effect payload audit replaces the four hexadecimal storage buckets
+`sfx_a0_cf.s`, `sfx_d0_df.s`, `sfx_e0_fc.s`, and `sfx_40_7f.s` with the
+single ROM-ordered `sound/sfx_tracks.s` data-family module. All 157 track
+headers are now named by their proven request IDs in the `Sound_SFX_XX`
+namespace and have exact static audit/provenance records. No effect meaning is
+guessed from the payload bytes. The four `_End` definitions delimit extracted
+binary fragments and had no imported IDA symbols.
+
+This pass reduces the layout from 340 to 337 modules, raises provenance from
+10,591 to 10,748 mappings and the name-audit registry from 6,773 to 6,930
+records. The address-derived ceiling remains 5,259 because these were already
+request-ID names.
+
+The remaining binary-backed sound-boundary audit verifies 35 names without
+collapsing three genuinely distinct formats into one module. Twenty-five music
+payloads are now neutral `Sound_BGM_XX` request identities; external rip titles
+remain only in preservation filenames and the sound-driver reference table.
+This rejects treating the known `$90`/`theend.bin` mismatch as source truth.
+Nine `Sound_PCMBank` names are supported by the DAC descriptors' high-byte
+base plus offset addressing, and `Sound_Z80DriverProgram` is supported by the
+loader's exact `$C00`-byte copy into `Z80_RAM`.
+
+All 35 imported starts have exact static audit and provenance records. The
+associated `_End` labels are extraction boundaries rather than imported IDA
+symbols. Provenance rises from 10,748 to 10,783 mappings and the name-audit
+registry from 6,930 to 6,965 records. Module count and the 5,259
+address-derived ceiling are unchanged.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
