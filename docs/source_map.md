@@ -44,7 +44,7 @@ listing by `make verify-layout`.
 | `0x04BEBC-0x04DDD1` | Bugmax systems | 4 | hypothesis |
 | `0x04DDD2-0x050CD3` | Shield Viper and Wolf Garopa systems | 8 | hypothesis |
 | `0x050CD4-0x0537B7` | Valkirie transition, Z-Leo, and Valkirie Force | 8 | hypothesis |
-| `0x0537B8-0x05575D` | Missiray and Seven Forces introduction/forms | 6 | hypothesis |
+| `0x0537B8-0x05575D` | Missiray and Seven Forces projectile/introduction controller | 5 | hypothesis |
 | `0x05575E-0x057497` | Valkirie battle/rendering and Medusa | 3 | hypothesis |
 | `0x057498-0x058FED` | Sirene, Artemis, and an unidentified Seven Force | 4 | hypothesis |
 | `0x058FEE-0x05A43B` | alternate Valkirie, Sylpheed, and shared Seven Forces metasprite data | 3 | static/hypothesis |

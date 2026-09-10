@@ -2105,6 +2105,20 @@ visible behavior is alternating object graphics word `$E` between `$C4D6` and
 `$C4DF` from global-frame bit zero, so the narrower
 `Object_SelectAlternatingGraphicsFrame` name replaces the unsupported owner.
 
+The following Seven Forces cutscene ownership pass corrected the adjacent
+`0x054B84-0x05575D` boundary. `cutscenes/seven_forces_intro.s` contained the
+controller and its state-offset table through `0x054F9D`, while the states
+selected by that same table were isolated as `bosses/seven_forces_forms.s`.
+The two pieces are now one 939-line, ROM-ordered cutscene module, and
+`rom_layout.json` records the combined range as a single owner. This also
+reduces the layout from 341 to 340 modules without changing emitted bytes.
+
+This structural merge deliberately does not endorse the 46 address-derived
+or 52 inherited semantic definitions in the combined module. Their
+instruction-level audit is the next reconstruction pass; recording that
+separation prevents a better file boundary from being mistaken for semantic
+proof of the existing Sonnet names.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

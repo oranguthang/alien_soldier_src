@@ -277,7 +277,6 @@
                 include "src/bosses/missiray_segments.s"
                 include "src/projectiles/seven_forces_valkirie.s"
                 include "src/cutscenes/seven_forces_intro.s"
-                include "src/bosses/seven_forces_forms.s"
                 include "src/bosses/valkirie_battle.s"
                 include "src/bosses/valkirie_rendering.s"
                 include "src/bosses/medusa.s"
