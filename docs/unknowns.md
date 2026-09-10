@@ -2023,6 +2023,29 @@ one interpreter with explicit read, control-word, loop/interpolation, delta,
 step, and part-angle projection phases; the two anonymous data blocks are its
 shared state pose and keyframe base.
 
+The unidentified Seven Force pass reduced the address-derived unknown count
+from 6,024 to 6,009 and raised provenance to 9,814 mappings. All 15 anonymous
+definitions and all 11 existing semantic definitions in
+`bosses/unidentified_seven_force.s` now have exact static audit records, taking
+the registry to 5,605 entries. The module now has zero live address-derived
+definitions.
+
+The entity owns a three-entry dispatcher for states zero, two, and four. Its
+live initialization constructs the composite object group as type `$43C` and
+enters state four. State two provides controller-driven rotation, while the
+ordinary state-four entry selects the same looping pose; the common renderer
+updates an 18-channel interpolation buffer and projects it into chained and
+mirrored part angles. Separate state-two and timed state-four initialization
+entries have no static canonical references, so the audit records that limit
+instead of inventing callers.
+
+The former `Boss_Sylpheed_AltState1` is actually the state-four table entry of
+this unidentified form. The broad `Boss_Valkirie*` names on its angle and pose
+helpers have likewise been narrowed to the owning entity. The source does not
+establish which named Seven Force form type `$43C` represents, so this pass
+deliberately preserves the `UnidentifiedSevenForce` identity rather than
+turning a visual or ordinal guess into source-level fact.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

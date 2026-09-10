@@ -222,7 +222,7 @@ Boss_ArtemisProjectileInitTable:    dc.w    $C680, $5004, $F010, $F010, $EC14, $
                 dc.w    $C7A0, $501C, $F808, $F808, $FA06, $FA06, $2905
                 dc.w    $FFFE
 Boss_UnidentifiedSevenForceObjectInitTable: dc.w    $C620, $5044, $EC14, $EC14, $EC14, $EC14, $5B08  ; was: word_1BF90
-                                        ; DATA XREF: Boss_Unknown1InitMetasprite+46   o
+                                        ; DATA XREF: Boss_UnidentifiedSevenForceInit+46   o
                 dc.w    $FFFE
 Boss_ValkirieAlternateObjectInitTable:  dc.w    $C620, $5044, $EC14, $EC14, $EC14, $EC14, $5B08  ; was: word_1BFA0
                                         ; DATA XREF: Boss_ValkirieAlternateInit+46   o

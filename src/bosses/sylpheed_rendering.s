@@ -372,7 +372,7 @@ word_5A31A:     dc.w    $C002, $C003, $C001
                 dc.w    $C784, $C004, $C844
 word_5A34A:     dc.w    0, 0, $C0                       ; DATA XREF: Boss_ValkirieAlternateInit+28   o
                 dc.w    $E0C0, $20C0, $8080
-off_5A356:      dc.l    word_ECDCA+$400000              ; DATA XREF: Boss_Unknown1InitMetasprite+10   o
+off_5A356:      dc.l    word_ECDCA+$400000              ; DATA XREF: Boss_UnidentifiedSevenForceInit+10   o
                 dc.l    word_59E82+1
                 dc.l    word_59E88+1
                 dc.l    off_59D62-$80000000
@@ -402,13 +402,13 @@ off_5A356:      dc.l    word_ECDCA+$400000              ; DATA XREF: Boss_Unknow
                 dc.l    off_59D62
                 dc.l    off_59D62
                 dc.l    off_59DC2+$28000000
-word_5A3CE:     dc.w    $1C, $141A, $120A               ; DATA XREF: Boss_Unknown1InitMetasprite+16   o
+word_5A3CE:     dc.w    $1C, $141A, $120A               ; DATA XREF: Boss_UnidentifiedSevenForceInit+16   o
                 dc.w    $1020, $1020, $808
                 dc.w    $1020, $1020, $810
                 dc.w    $1010, $2008, $1010
                 dc.w    $1020, $812, $1212
 word_5A3EC:     dc.w    $C007, $C008, $C067
-                                        ; DATA XREF: Boss_Unknown1InitMetasprite+1C   o
+                                        ; DATA XREF: Boss_UnidentifiedSevenForceInit+1C   o
                 dc.w    $C007, $C126, $C001
                 dc.w    $C1E3, $C1E2, $C2A3
                 dc.w    $C2A1, $C361, $C000
@@ -418,7 +418,7 @@ word_5A3EC:     dc.w    $C007, $C008, $C067
                 dc.w    $C784, $C0CB, $C84C
                 dc.w    $C8AB, $C8AA, $C96A
                 dc.w    $C0C7, $CA27, $CA87
-word_5A428:     dc.w    $8080, $C0, $8080               ; DATA XREF: Boss_Unknown1InitMetasprite+28   o
+word_5A428:     dc.w    $8080, $C0, $8080               ; DATA XREF: Boss_UnidentifiedSevenForceInit+28   o
                 dc.w    $80C0, $8080, $80A0
                 dc.w    $8080, $A080, $8080
                 dc.w    $8080
