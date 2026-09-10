@@ -11,7 +11,7 @@ Boss_JokerMain:                                         ; DATA XREF: ROM:Entity_
                 beq.w   Boss_JokerBeginDefeatFall
 Boss_JokerUpdatePaletteAndScreenX:                      ; CODE XREF: Boss_JokerMain+14   j  ; was: loc_3B2C4
                                         ; Boss_JokerMain+1C   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)

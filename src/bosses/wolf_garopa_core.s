@@ -13,7 +13,7 @@ Boss_WolfGaropaUpdate:                                  ; DATA XREF: ROM:Entity_
 Boss_WolfGaropaRunDefeatEffects:                        ; CODE XREF: Boss_WolfGaropaUpdate+14   j  ; was: loc_4F916
                                         ; Boss_WolfGaropaUpdate+1C   j
                 bsr.w   Boss_WolfGaropaUpdateDefeatTransition
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
 Boss_WolfGaropaDispatchState:                           ; CODE XREF: Boss_WolfGaropaUpdate+4   j  ; was: loc_4F920
                                         ; Boss_WolfGaropaUpdate+C   j
                 move.w  4(a5),d0

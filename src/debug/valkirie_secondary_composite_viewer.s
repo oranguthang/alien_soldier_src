@@ -4,7 +4,7 @@ Debug_ValkirieType3F0Main:                              ; DATA XREF: ROM:Entity_
                 beq.w   Debug_ValkirieType3F0DispatchState
                 tst.w   8(a5)
                 beq.s   Debug_ValkirieType3F0DispatchState
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
 Debug_ValkirieType3F0DispatchState:                     ; CODE XREF: Debug_ValkirieType3F0Main+4   j  ; was: loc_515C2
                                         ; Debug_ValkirieType3F0Main+C   j
                 move.w  4(a5),d0

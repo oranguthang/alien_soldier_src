@@ -80,7 +80,7 @@ Boss_ViblackUpdateDefeatSoundAndParticles:              ; CODE XREF: Boss_Viblac
 Boss_ViblackUpdateDefeatEffectsAndParticles:            ; CODE XREF: Boss_ViblackDefeatInit:Boss_ViblackDefeatMoveToTargetState   p  ; was: sub_43FC4
                 bsr.s   Boss_ViblackUpdateScrollAndCompanion
                 lea     Boss_ViblackPaletteCycleEntries(pc),a4
-                jsr     (VBlank_UpdateSharpssteelPalette).l
+                jsr     (Gfx_UpdateRandomizedPaletteEntryList).l
                 bra.w   Boss_ViblackSpawnNearbyDefeatParticle
 ; End of function Boss_ViblackUpdateDefeatEffectsAndParticles
 ; Emits a wide particle, updates scroll state, and applies the palette effect
@@ -90,7 +90,7 @@ Boss_ViblackUpdateTransitionEffects:                    ; CODE XREF: Boss_Viblac
 Boss_ViblackUpdateScrollAndPalette:                     ; CODE XREF: Boss_ViblackFinishTransitionState+4   p  ; was: loc_43FD8
                 bsr.s   Boss_ViblackUpdateScrollAndCompanion
                 lea     Boss_ViblackPaletteCycleEntries(pc),a4
-                jmp     (VBlank_UpdateSharpssteelPalette).l
+                jmp     (Gfx_UpdateRandomizedPaletteEntryList).l
 ; End of function Boss_ViblackUpdateTransitionEffects
 ; Rebuilds the scroll profile and positions the companion object on it
 Boss_ViblackUpdateScrollAndCompanion:                   ; CODE XREF: Boss_ViblackEntranceDescentState+4   p  ; was: sub_43FE4

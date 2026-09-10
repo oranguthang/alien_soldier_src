@@ -1,0 +1,473 @@
+; List-driven palette fades, per-entry target fades, and RGB adjustment effects
+; Color-channel names follow Mega Drive CRAM order: red $00E, green $0E0, blue $E00
+
+; Loads the default entry list and falls through to clear the color-fade state
+Gfx_ResetDefaultColorFadeState:                         ; CODE XREF: Gfx_UpdateBossPalette+72   j  ; was: sub_3C08
+                                        ; Boss_SunsetStingLoadGraphics+1A   p
+                lea     PaletteFade_DefaultEntryOffsets(pc),a2
+                nop
+; End of function Gfx_ResetDefaultColorFadeState
+; Clears color fade state variables and status flags
+Gfx_ClearColorFadeState:                                ; CODE XREF: Boss_FlyingNeoSetup+E2   p  ; was: sub_3C0E
+                                        ; Boss_ViblackInit+AC   p
+                clr.w   (word_FF80EE).w
+                bclr    #0,(byte_FF80EC).w
+                bclr    #3,(byte_FF80EC).w
+                rts
+; End of function Gfx_ClearColorFadeState
+; Loads the default entry list and falls through to process one color-fade step
+Gfx_ProcessDefaultColorFade:                            ; CODE XREF: Boss_DestroyerProtoMain   p  ; was: sub_3C20
+                                        ; sub_323FA   p
+                lea     PaletteFade_DefaultEntryOffsets(pc),a2
+                nop
+; End of function Gfx_ProcessDefaultColorFade
+; Processes RGB color channel fading with clamping and interpolation
+Gfx_ProcessColorFade:                                   ; CODE XREF: Boss_FlyingNeoMain+1C   p  ; was: sub_3C26
+                                        ; Boss_ViblackMain+12   p
+                moveq   #0,d1
+                moveq   #0,d2
+                moveq   #0,d3
+                tst.w   (word_FF80EE).w
+                bne.s   Gfx_ProcessColorFade_AdvanceStep
+                bclr    #0,(byte_FF80EC).w
+                beq.w   Gfx_ProcessColorFade_Return
+                move.w  #$A,(word_FF80EE).w
+                bclr    #3,(byte_FF80EC).w
+                beq.w   Gfx_ProcessColorFade_AdvanceStep
+                move.w  #$19,(word_FF80EE).w
+Gfx_ProcessColorFade_AdvanceStep:                       ; CODE XREF: Gfx_ProcessColorFade+A   j  ; was: loc_3C52
+                                        ; Gfx_ProcessColorFade+22   j
+                moveq   #0,d2
+                subq.w  #5,(word_FF80EE).w
+                beq.s   Gfx_ProcessColorFade_PrepareChannelDeltas
+                move.w  (word_FF80EE).w,d2
+Gfx_ProcessColorFade_PrepareChannelDeltas:              ; CODE XREF: Gfx_ProcessColorFade+32   j  ; was: loc_3C5E
+                move.w  d2,d3
+                asl.w   #4,d3
+                andi.w  #$FFE0,d3
+                move.w  d3,d4
+                asl.w   #4,d4
+                andi.w  #$FE00,d4
+                move.w  (a2)+,d7
+Gfx_ProcessColorFade_ColorLoop:                         ; CODE XREF: Gfx_ProcessColorFade+9C   j  ; was: loc_3C70
+                movea.w (a2)+,a1
+                move.w  $80(a1),d0
+                move.w  d0,d5
+                andi.w  #$E,d5
+                add.w   d2,d5
+                bpl.s   Gfx_ProcessColorFade_ClampRedMaximum
+                moveq   #0,d5
+                bra.s   Gfx_ProcessColorFade_MergeRed
+; ---------------------------------------------------------------------------
+Gfx_ProcessColorFade_ClampRedMaximum:                   ; CODE XREF: Gfx_ProcessColorFade+58   j  ; was: loc_3C84
+                cmpi.w  #$F,d5
+                bmi.s   Gfx_ProcessColorFade_MergeRed
+                moveq   #$E,d5
+Gfx_ProcessColorFade_MergeRed:                          ; CODE XREF: Gfx_ProcessColorFade+5C   j  ; was: loc_3C8C
+                                        ; Gfx_ProcessColorFade+62   j
+                move.w  d0,d1
+                andi.w  #$E0,d1
+                add.w   d3,d1
+                bpl.s   Gfx_ProcessColorFade_ClampGreenMaximum
+                moveq   #0,d1
+                bra.s   Gfx_ProcessColorFade_MergeGreen
+; ---------------------------------------------------------------------------
+Gfx_ProcessColorFade_ClampGreenMaximum:                 ; CODE XREF: Gfx_ProcessColorFade+6E   j  ; was: loc_3C9A
+                cmpi.w  #$E1,d1
+                bmi.s   Gfx_ProcessColorFade_MergeGreen
+                move.w  #$E0,d1
+Gfx_ProcessColorFade_MergeGreen:                        ; CODE XREF: Gfx_ProcessColorFade+72   j  ; was: loc_3CA4
+                                        ; Gfx_ProcessColorFade+78   j
+                or.w    d1,d5
+                move.w  d0,d1
+                andi.w  #$E00,d1
+                add.w   d4,d1
+                bpl.s   Gfx_ProcessColorFade_ClampBlueMaximum
+                moveq   #0,d1
+                bra.s   Gfx_ProcessColorFade_StoreColor
+; ---------------------------------------------------------------------------
+Gfx_ProcessColorFade_ClampBlueMaximum:                  ; CODE XREF: Gfx_ProcessColorFade+88   j  ; was: loc_3CB4
+                cmpi.w  #$E01,d1
+                bmi.s   Gfx_ProcessColorFade_StoreColor
+                move.w  #$E00,d1
+Gfx_ProcessColorFade_StoreColor:                        ; CODE XREF: Gfx_ProcessColorFade+8C   j  ; was: loc_3CBE
+                                        ; Gfx_ProcessColorFade+92   j
+                or.w    d1,d5
+                move.w  d5,(a1)
+                dbf     d7,Gfx_ProcessColorFade_ColorLoop
+                bclr    #0,(byte_FF80EC).w
+Gfx_ProcessColorFade_Return:                            ; CODE XREF: Gfx_ProcessColorFade+12   j  ; was: locret_3CCC
+                rts
+; End of function Gfx_ProcessColorFade
+; Initializes color fade state by loading palette table and clearing fade variables
+Gfx_InitColorFadeState:
+                lea     PaletteFade_DefaultEntryOffsets(pc),a2  ; was: sub_3CCE
+                nop
+                clr.w   (word_FF8246).w
+                clr.w   (word_FF80EE).w
+                bclr    #0,(byte_FF80EC).w
+                rts
+; End of function Gfx_InitColorFadeState
+; Processes complex color fade effects with RGB component clamping
+Gfx_ProcessColorFadeEffect:
+                lea     PaletteFade_DefaultEntryOffsets(pc),a2  ; was: sub_3CE4
+                nop
+                moveq   #0,d1
+                moveq   #0,d2
+                moveq   #0,d3
+                tst.w   (word_FF8246).w
+                beq.w   Gfx_ProcessColorFadeEffect_AdvanceOscillation
+                bpl.s   Gfx_ProcessColorFadeEffect_StartRandomChannelFade
+                clr.w   (word_FF8246).w
+                bra.w   Gfx_FadeRGBColor_LoadEntryCount
+; ---------------------------------------------------------------------------
+Gfx_ProcessColorFadeEffect_StartRandomChannelFade:      ; CODE XREF: Gfx_ProcessColorFadeEffect+14   j  ; was: loc_3D02
+                move.w  #$FFFF,(word_FF8246).w
+                clr.w   (word_FF80EE).w
+                btst    #1,(byte_FF80EC).w
+                bne.w   Gfx_ProcessColorFadeEffect_Return
+                move.w  (word_FFA000).w,d0
+                move.w  d0,d4
+                asr.w   #4,d4
+                andi.w  #$E,d4
+                move.w  Gfx_RandomFadeChannelMaskTable(pc,d4.w),d4
+                neg.w   d0
+                andi.w  #$E,d0
+                addq.w  #4,d0
+                btst    #0,d4
+                beq.s   Gfx_ProcessColorFadeEffect_SelectGreenDelta
+                move.w  d0,d1
+Gfx_ProcessColorFadeEffect_SelectGreenDelta:            ; CODE XREF: Gfx_ProcessColorFadeEffect+4E   j  ; was: loc_3D36
+                btst    #1,d4
+                beq.s   Gfx_ProcessColorFadeEffect_SelectBlueDelta
+                move.w  d0,d2
+Gfx_ProcessColorFadeEffect_SelectBlueDelta:             ; CODE XREF: Gfx_ProcessColorFadeEffect+56   j  ; was: loc_3D3E
+                btst    #2,d4
+                beq.s   Gfx_ProcessColorFadeEffect_PrepareRandomDeltas
+                move.w  d0,d3
+Gfx_ProcessColorFadeEffect_PrepareRandomDeltas:         ; CODE XREF: Gfx_ProcessColorFadeEffect+5E   j  ; was: loc_3D46
+                asl.w   #4,d2
+                asl.w   #8,d3
+                bra.w   Gfx_FadeRGBColor_LoadEntryCount
+; ---------------------------------------------------------------------------
+Gfx_RandomFadeChannelMaskTable: dc.w    1, 2, 4, 3, 6, 5, 3, 5  ; was: word_3D4E
+; ---------------------------------------------------------------------------
+Gfx_ProcessColorFadeEffect_AdvanceOscillation:          ; CODE XREF: Gfx_ProcessColorFadeEffect+10   j  ; was: loc_3D5E
+                tst.w   (word_FF80EE).w
+                bne.s   Gfx_ProcessColorFadeEffect_PrepareOscillationDeltas
+                bclr    #0,(byte_FF80EC).w
+                beq.w   Gfx_ProcessColorFadeEffect_Return
+Gfx_ProcessColorFadeEffect_PrepareOscillationDeltas:    ; CODE XREF: Gfx_ProcessColorFadeEffect+7E   j  ; was: loc_3D6E
+                move.w  (word_FF80EE).w,d2
+                addq.w  #2,d2
+                andi.w  #$E,d2
+                move.w  d2,(word_FF80EE).w
+                beq.s   Gfx_ProcessColorFadeEffect_LoadOscillationTargets
+                subq.w  #6,d2
+Gfx_ProcessColorFadeEffect_LoadOscillationTargets:      ; CODE XREF: Gfx_ProcessColorFadeEffect+98   j  ; was: loc_3D80
+                andi.w  #$FFFE,d2
+                move.w  d2,d3
+                asl.w   #4,d3
+                andi.w  #$FFE0,d3
+                move.w  d3,d4
+                asl.w   #4,d4
+                andi.w  #$FE00,d4
+                move.w  (a2)+,d7
+Gfx_ProcessColorFadeEffect_ColorLoop:                   ; CODE XREF: Gfx_ProcessColorFadeEffect+104   j  ; was: loc_3D96
+                movea.w (a2)+,a1
+                move.w  $80(a1),d0
+                move.w  d0,d5
+                andi.w  #$E,d5
+                add.w   d2,d5
+                bpl.s   Gfx_ProcessColorFadeEffect_ClampRedMaximum
+                moveq   #0,d5
+                bra.s   Gfx_ProcessColorFadeEffect_MergeRed
+; ---------------------------------------------------------------------------
+Gfx_ProcessColorFadeEffect_ClampRedMaximum:             ; CODE XREF: Gfx_ProcessColorFadeEffect+C0   j  ; was: loc_3DAA
+                cmpi.w  #$F,d5
+                bmi.s   Gfx_ProcessColorFadeEffect_MergeRed
+                moveq   #$E,d5
+Gfx_ProcessColorFadeEffect_MergeRed:                    ; CODE XREF: Gfx_ProcessColorFadeEffect+C4   j  ; was: loc_3DB2
+                                        ; Gfx_ProcessColorFadeEffect+CA   j
+                move.w  d0,d1
+                andi.w  #$E0,d1
+                add.w   d3,d1
+                bpl.s   Gfx_ProcessColorFadeEffect_ClampGreenMaximum
+                moveq   #0,d1
+                bra.s   Gfx_ProcessColorFadeEffect_MergeGreen
+; ---------------------------------------------------------------------------
+Gfx_ProcessColorFadeEffect_ClampGreenMaximum:           ; CODE XREF: Gfx_ProcessColorFadeEffect+D6   j  ; was: loc_3DC0
+                cmpi.w  #$E1,d1
+                bmi.s   Gfx_ProcessColorFadeEffect_MergeGreen
+                move.w  #$E0,d1
+Gfx_ProcessColorFadeEffect_MergeGreen:                  ; CODE XREF: Gfx_ProcessColorFadeEffect+DA   j  ; was: loc_3DCA
+                                        ; Gfx_ProcessColorFadeEffect+E0   j
+                or.w    d1,d5
+                move.w  d0,d1
+                andi.w  #$E00,d1
+                add.w   d4,d1
+                bpl.s   Gfx_ProcessColorFadeEffect_ClampBlueMaximum
+                moveq   #0,d1
+                bra.s   Gfx_ProcessColorFadeEffect_StoreColor
+; ---------------------------------------------------------------------------
+Gfx_ProcessColorFadeEffect_ClampBlueMaximum:            ; CODE XREF: Gfx_ProcessColorFadeEffect+F0   j  ; was: loc_3DDA
+                cmpi.w  #$E01,d1
+                bmi.s   Gfx_ProcessColorFadeEffect_StoreColor
+                move.w  #$E00,d1
+Gfx_ProcessColorFadeEffect_StoreColor:                  ; CODE XREF: Gfx_ProcessColorFadeEffect+F4   j  ; was: loc_3DE4
+                                        ; Gfx_ProcessColorFadeEffect+FA   j
+                or.w    d1,d5
+                move.w  d5,(a1)
+                dbf     d7,Gfx_ProcessColorFadeEffect_ColorLoop
+                bclr    #0,(byte_FF80EC).w
+Gfx_ProcessColorFadeEffect_Return:                      ; CODE XREF: Gfx_ProcessColorFadeEffect+2E   j  ; was: locret_3DF2
+                                        ; Gfx_ProcessColorFadeEffect+86   j
+                rts
+; End of function Gfx_ProcessColorFadeEffect
+; ---------------------------------------------------------------------------
+PaletteFade_DefaultEntryOffsets:    dc.w    $D          ; DATA XREF: Gfx_ResetDefaultColorFadeState   o  ; was: word_3DF4
+                                        ; sub_3C20   o
+                dc.w    $E362, $E364, $E366, $E368, $E36A, $E36E, $E370, $E372
+                dc.w    $E374, $E376, $E378, $E37A, $E37C, $E37E
+PaletteFade_FlyingNeoEntryOffsets:  dc.w    $C          ; DATA XREF: Boss_FlyingNeoMain:Boss_FlyingNeoProcessMainColorFade   o  ; was: word_3E12
+                                        ; Boss_FlyingNeoMain+4E   o
+                dc.w    $E362, $E364, $E366, $E368, $E36A, $E370, $E372, $E374
+                dc.w    $E376, $E378, $E37A, $E37C, $E37E
+PaletteFade_BugmaxWaveEntryOffsets: dc.w    5           ; DATA XREF: Gfx_BugmaxApplyWavePaletteOffset+30   o  ; was: word_3E2E
+                dc.w    $E366, $E368, $E36A, $E36E, $E370, $E378
+PaletteFade_BugmaxEntryOffsets: dc.w    6               ; DATA XREF: Boss_BugmaxMain+8   o  ; was: word_3E3C
+                dc.w    $E362, $E372, $E374, $E376, $E37A, $E37C, $E37E
+PaletteFade_SevenForcesEntryOffsets:    dc.w    5       ; DATA XREF: Entity_UpdateValkirieBattle:Entity_UpdateValkirieBattleActive   o  ; was: word_3E4C
+                                        ; Boss_UpdateMedusa:Boss_UpdateMedusaBattleEffects   o
+                dc.w    $E362, $E36A, $E372, $E374, $E376, $E378
+
+; RGB color fade processing with channel clamping
+Gfx_FadeRGBColor:                                       ; CODE XREF: Palette_FadeEffect+8   p  ; was: sub_3E5A
+                                        ; Palette_FadeEffect+12   p
+                bsr.w   Gfx_PrepareRGBComponents
+Gfx_FadeRGBColor_LoadEntryCount:                        ; CODE XREF: Gfx_ProcessColorFadeEffect+1A   j  ; was: loc_3E5E
+                                        ; Gfx_ProcessColorFadeEffect+66   j
+                move.w  (a2)+,d5
+Gfx_FadeRGBColor_ColorLoop:                             ; CODE XREF: Gfx_FadeRGBColor+66   j  ; was: loc_3E60
+                movea.w (a2)+,a1
+                move.w  $80(a1),d6
+                move.w  d6,d7
+                andi.w  #$E,d7
+                add.w   d1,d7
+                bpl.s   Gfx_FadeRGBColor_ClampRedMaximum
+                clr.w   d7
+                bra.s   Gfx_FadeRGBColor_MergeRed
+; ---------------------------------------------------------------------------
+Gfx_FadeRGBColor_ClampRedMaximum:                       ; CODE XREF: Gfx_FadeRGBColor+14   j  ; was: loc_3E74
+                cmpi.w  #$F,d7
+                bmi.s   Gfx_FadeRGBColor_MergeRed
+                moveq   #$E,d7
+Gfx_FadeRGBColor_MergeRed:                              ; CODE XREF: Gfx_FadeRGBColor+18   j  ; was: loc_3E7C
+                                        ; Gfx_FadeRGBColor+1E   j
+                andi.w  #$FFF0,d6
+                or.w    d7,d6
+                move.w  d6,d7
+                andi.w  #$E0,d7
+                add.w   d2,d7
+                bpl.s   Gfx_FadeRGBColor_ClampGreenMaximum
+                clr.w   d7
+                bra.s   Gfx_FadeRGBColor_MergeGreen
+; ---------------------------------------------------------------------------
+Gfx_FadeRGBColor_ClampGreenMaximum:                     ; CODE XREF: Gfx_FadeRGBColor+30   j  ; was: loc_3E90
+                cmpi.w  #$E1,d7
+                bmi.s   Gfx_FadeRGBColor_MergeGreen
+                move.w  #$E0,d7
+Gfx_FadeRGBColor_MergeGreen:                            ; CODE XREF: Gfx_FadeRGBColor+34   j  ; was: loc_3E9A
+                                        ; Gfx_FadeRGBColor+3A   j
+                andi.w  #$FF0F,d6
+                or.w    d7,d6
+                move.w  d6,d7
+                andi.w  #$E00,d7
+                add.w   d3,d7
+                bpl.s   Gfx_FadeRGBColor_ClampBlueMaximum
+                clr.w   d7
+                bra.s   Gfx_FadeRGBColor_StoreColor
+; ---------------------------------------------------------------------------
+Gfx_FadeRGBColor_ClampBlueMaximum:                      ; CODE XREF: Gfx_FadeRGBColor+4E   j  ; was: loc_3EAE
+                cmpi.w  #$E01,d7
+                bmi.s   Gfx_FadeRGBColor_StoreColor
+                move.w  #$E00,d7
+; Merges the adjusted blue channel, stores the color, and advances the entry loop
+Gfx_FadeRGBColor_StoreColor:                            ; CODE XREF: Gfx_FadeRGBColor+52   j  ; was: loc_3EB8
+                                        ; Gfx_FadeRGBColor+58   j
+                andi.w  #$F0FF,d6
+                or.w    d7,d6
+                move.w  d6,(a1)
+                dbf     d5,Gfx_FadeRGBColor_ColorLoop
+                rts
+; End of function Gfx_FadeRGBColor
+; ---------------------------------------------------------------------------
+PaletteFade_StageScrollEntryOffsets:    dc.w    $3A, $E302, $E304, $E306, $E308, $E30A, $E30C, $E30E, $E310, $E312  ; was: word_3EC6
+                                        ; DATA XREF: Stage_UpdateScrollOffset+18   o
+                dc.w    $E314, $E316, $E318, $E31A, $E31C, $E31E, $E322, $E324, $E326, $E328
+                dc.w    $E32A, $E32C, $E32E, $E330, $E332, $E334, $E336, $E338, $E33A, $E33C
+                dc.w    $E33E, $E342, $E344, $E346, $E348, $E34A, $E34C, $E34E, $E350, $E352
+                dc.w    $E354, $E356, $E358, $E35A, $E35C, $E35E, $E362, $E364, $E366, $E368
+                dc.w    $E36A, $E36E, $E370, $E372, $E374, $E376, $E378, $E37A, $E37C, $E37E
+
+; Fades palette colors toward target RGB values by incrementing or decrementing each color channel separately
+Gfx_FadeToTargetColor:                                  ; CODE XREF: Boss_FlyingNeoMain+54   p  ; was: sub_3F3E
+                move.w  d0,d1
+                move.w  d1,d2
+                andi.w  #$E,d0
+                andi.w  #$E0,d1
+                andi.w  #$E00,d2
+                moveq   #0,d4
+                move.w  (a2)+,d5
+Gfx_FadeToTargetColor_ColorLoop:                        ; CODE XREF: Gfx_FadeToTargetColor+70   j  ; was: loc_3F52
+                movea.w (a2)+,a1
+                move.w  $80(a1),d6
+                move.w  d6,d7
+                andi.w  #$E,d7
+                cmp.w   d0,d7
+                beq.s   Gfx_FadeToTargetColor_MergeRed
+                bset    #0,d4
+                bpl.s   Gfx_FadeToTargetColor_DecreaseRed
+                addq.w  #2,d7
+                bra.s   Gfx_FadeToTargetColor_MergeRed
+; ---------------------------------------------------------------------------
+Gfx_FadeToTargetColor_DecreaseRed:                      ; CODE XREF: Gfx_FadeToTargetColor+28   j  ; was: loc_3F6C
+                subq.w  #2,d7
+Gfx_FadeToTargetColor_MergeRed:                         ; CODE XREF: Gfx_FadeToTargetColor+22   j  ; was: loc_3F6E
+                                        ; Gfx_FadeToTargetColor+2C   j
+                move.w  d7,d3
+                move.w  d6,d7
+                andi.w  #$E0,d7
+                cmp.w   d1,d7
+                beq.s   Gfx_FadeToTargetColor_MergeGreen
+                bset    #0,d4
+                bpl.s   Gfx_FadeToTargetColor_DecreaseGreen
+                addi.w  #$20,d7                         ; ' '
+                bra.s   Gfx_FadeToTargetColor_MergeGreen
+; ---------------------------------------------------------------------------
+Gfx_FadeToTargetColor_DecreaseGreen:                    ; CODE XREF: Gfx_FadeToTargetColor+40   j  ; was: loc_3F86
+                subi.w  #$20,d7                         ; ' '
+Gfx_FadeToTargetColor_MergeGreen:                       ; CODE XREF: Gfx_FadeToTargetColor+3A   j  ; was: loc_3F8A
+                                        ; Gfx_FadeToTargetColor+46   j
+                or.w    d7,d3
+                move.w  d6,d7
+                andi.w  #$E00,d7
+                cmp.w   d2,d7
+                beq.s   Gfx_FadeToTargetColor_StoreColor
+                bset    #0,d4
+                bpl.s   Gfx_FadeToTargetColor_DecreaseBlue
+                addi.w  #$200,d7
+                bra.s   Gfx_FadeToTargetColor_StoreColor
+; ---------------------------------------------------------------------------
+Gfx_FadeToTargetColor_DecreaseBlue:                     ; CODE XREF: Gfx_FadeToTargetColor+5C   j  ; was: loc_3FA2
+                subi.w  #$200,d7
+Gfx_FadeToTargetColor_StoreColor:                       ; CODE XREF: Gfx_FadeToTargetColor+56   j  ; was: loc_3FA6
+                                        ; Gfx_FadeToTargetColor+62   j
+                or.w    d7,d3
+                move.w  d3,(a1)
+                move.w  d3,$80(a1)
+                dbf     d5,Gfx_FadeToTargetColor_ColorLoop
+                move.w  d4,d4
+                rts
+; End of function Gfx_FadeToTargetColor
+; Processes palette fade effect with timing
+Palette_ProcessFadeEffect:                              ; CODE XREF: Boss_FlyingNeoUpdatePaletteFade+16   j  ; was: sub_3FB6
+                moveq   #0,d4
+                move.w  (a2)+,d5
+Palette_ProcessFadeEffect_ColorLoop:                    ; CODE XREF: Palette_ProcessFadeEffect+72   j  ; was: loc_3FBA
+                movea.w (a2)+,a1
+                move.w  $80(a1),d6
+                move.w  (a3)+,d0
+                move.w  d0,d1
+                move.w  d1,d2
+                andi.w  #$E,d0
+                andi.w  #$E0,d1
+                andi.w  #$E00,d2
+                move.w  d6,d7
+                andi.w  #$E,d7
+                cmp.w   d0,d7
+                beq.s   Palette_ProcessFadeEffect_MergeRed
+                bset    #0,d4
+                bpl.s   Palette_ProcessFadeEffect_DecreaseRed
+                addq.w  #2,d7
+                bra.s   Palette_ProcessFadeEffect_MergeRed
+; ---------------------------------------------------------------------------
+Palette_ProcessFadeEffect_DecreaseRed:                  ; CODE XREF: Palette_ProcessFadeEffect+2A   j  ; was: loc_3FE6
+                subq.w  #2,d7
+Palette_ProcessFadeEffect_MergeRed:                     ; CODE XREF: Palette_ProcessFadeEffect+24   j  ; was: loc_3FE8
+                                        ; Palette_ProcessFadeEffect+2E   j
+                move.w  d7,d3
+                move.w  d6,d7
+                andi.w  #$E0,d7
+                cmp.w   d1,d7
+                beq.s   Palette_ProcessFadeEffect_MergeGreen
+                bset    #0,d4
+                bpl.s   Palette_ProcessFadeEffect_DecreaseGreen
+                addi.w  #$20,d7                         ; ' '
+                bra.s   Palette_ProcessFadeEffect_MergeGreen
+; ---------------------------------------------------------------------------
+Palette_ProcessFadeEffect_DecreaseGreen:                ; CODE XREF: Palette_ProcessFadeEffect+42   j  ; was: loc_4000
+                subi.w  #$20,d7                         ; ' '
+Palette_ProcessFadeEffect_MergeGreen:                   ; CODE XREF: Palette_ProcessFadeEffect+3C   j  ; was: loc_4004
+                                        ; Palette_ProcessFadeEffect+48   j
+                or.w    d7,d3
+                move.w  d6,d7
+                andi.w  #$E00,d7
+                cmp.w   d2,d7
+                beq.s   Palette_ProcessFadeEffect_StoreColor
+                bset    #0,d4
+                bpl.s   Palette_ProcessFadeEffect_DecreaseBlue
+                addi.w  #$200,d7
+                bra.s   Palette_ProcessFadeEffect_StoreColor
+; ---------------------------------------------------------------------------
+Palette_ProcessFadeEffect_DecreaseBlue:                 ; CODE XREF: Palette_ProcessFadeEffect+5E   j  ; was: loc_401C
+                subi.w  #$200,d7
+Palette_ProcessFadeEffect_StoreColor:                   ; CODE XREF: Palette_ProcessFadeEffect+58   j  ; was: loc_4020
+                                        ; Palette_ProcessFadeEffect+64   j
+                or.w    d7,d3
+                move.w  d3,(a1)
+                move.w  d3,$80(a1)
+                dbf     d5,Palette_ProcessFadeEffect_ColorLoop
+                move.w  d4,d4
+                rts
+; End of function Palette_ProcessFadeEffect
+; Applies RGB color adjustment
+Gfx_ApplyRGBColorAdjust:                                ; CODE XREF: Gfx_Stage14PaletteMain   p  ; was: sub_4030
+                move.w  (word_FF8140).w,d0
+                asr.w   #4,d0
+                addi.w  #-$E,d0
+                moveq   #$FFFFFFF2,d1
+                move.w  #$FF20,d2
+                move.w  #$F200,d3
+                btst    #5,(byte_FF8142).w
+                beq.s   Gfx_ApplyRGBColorAdjust_SelectGreenDelta
+                move.w  d0,d1
+Gfx_ApplyRGBColorAdjust_SelectGreenDelta:               ; CODE XREF: Gfx_ApplyRGBColorAdjust+1A   j  ; was: loc_404E
+                btst    #6,(byte_FF8142).w
+                beq.s   Gfx_ApplyRGBColorAdjust_SelectBlueDelta
+                move.w  d0,d2
+                asl.w   #4,d2
+Gfx_ApplyRGBColorAdjust_SelectBlueDelta:                ; CODE XREF: Gfx_ApplyRGBColorAdjust+24   j  ; was: loc_405A
+                btst    #7,(byte_FF8142).w
+                beq.s   Gfx_ApplyRGBColorAdjust_ApplyPalette
+                move.w  d0,d3
+                asl.w   #8,d3
+Gfx_ApplyRGBColorAdjust_ApplyPalette:                   ; CODE XREF: Gfx_ApplyRGBColorAdjust+30   j  ; was: loc_4066
+                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(word_FFE380-M68K_RAM),a1
+                move.w  #$3F,d5                         ; '?'
+                move.w  #$E000,d0
+Gfx_ApplyRGBColorAdjust_ColorLoop:                      ; CODE XREF: Gfx_ApplyRGBColorAdjust+4E   j  ; was: loc_4076
+                move.w  (a1)+,d6
+                jsr     Gfx_AdjustSelectedColorChannels(pc)  ; (pc)
+                move.w  d6,(a0)+
+                dbf     d5,Gfx_ApplyRGBColorAdjust_ColorLoop
+                moveq   #0,d0
+                move.b  (byte_FF8143).w,d0
+                sub.w   d0,(word_FF8140).w
+                bpl.s   Gfx_ApplyRGBColorAdjust_Return
+                clr.w   (word_FF8140).w
+Gfx_ApplyRGBColorAdjust_Return:                         ; CODE XREF: Gfx_ApplyRGBColorAdjust+5C   j  ; was: locret_4092
+                rts
+; End of function Gfx_ApplyRGBColorAdjust
+; Main player state machine dispatcher

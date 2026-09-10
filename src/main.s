@@ -30,6 +30,7 @@
                 include "src/math/angles.s"
                 include "src/ui/score_math.s"
                 include "src/rendering/palette_transitions.s"
+                include "src/rendering/color_fades.s"
                 include "src/rendering/palette_effects.s"
                 include "src/ui/results_numbers.s"
                 include "src/rendering/text.s"

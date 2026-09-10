@@ -216,7 +216,7 @@ loc_1D8F4:                                              ; CODE XREF: UI_FadePale
                 move.w  (word_FF8014).w,d0
                 jsr     (Gfx_PrepareRGBComponents).l
                 moveq   #$FFFFFFFF,d0
-                jsr     (Gfx_AdjustPaletteBits).l
+                jsr     (Gfx_AdjustSelectedColorChannels).l
                 move.w  d6,(a2)+
                 dbf     d5,loc_1D8F4
                 movea.w #(dword_FFE3A0+2-M68K_RAM),a1
@@ -238,7 +238,7 @@ UI_FadePaletteRange:                                    ; CODE XREF: UI_FadePale
                 move.w  (word_FF8016).w,d0
                 jsr     (Gfx_PrepareRGBComponents).l
                 moveq   #$FFFFFFFF,d0
-                jsr     (Gfx_AdjustPaletteBits).l
+                jsr     (Gfx_AdjustSelectedColorChannels).l
                 move.w  d6,(a2)+
                 dbf     d5,UI_FadePaletteRange
                 rts

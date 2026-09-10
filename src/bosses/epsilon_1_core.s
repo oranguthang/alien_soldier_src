@@ -33,7 +33,7 @@ Boss_Epsilon1UpdatePeriodicSharedOffset:                ; CODE XREF: Boss_Epsilo
                 sub.w   d0,(word_FF8234).w
 Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilon1Main+4A   j  ; was: loc_45B30
                                         ; Boss_Epsilon1Main+54   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  (dword_FFC690).w,d0
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$4E(a5)

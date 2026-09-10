@@ -57,7 +57,7 @@ Boss_ZLeoApplyThirdPaletteFade:                         ; CODE XREF: Boss_ZLeoMa
                 move.w  $59E(a5),d7
                 jsr     (Gfx_ApplyPaletteFade).l
 Boss_ZLeoFinalizePaletteFades:                          ; CODE XREF: Boss_ZLeoMain+70   j  ; was: loc_51B64
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
 Boss_ZLeoDispatchStateAndClearProjectileFlag:           ; CODE XREF: Boss_ZLeoMain+4   j  ; was: loc_51B6A
                                         ; Boss_ZLeoMain+C   j
                 bsr.s   Boss_ZLeoDispatcher

@@ -110,7 +110,7 @@ Stage12_YachtBeginDestruction:                          ; CODE XREF: Stage12_Yac
 Stage12_YachtDestructionState:                          ; DATA XREF: ROM:0002F5E6   o  ; was: loc_2F706
                 lea     Stage12_YachtDestructionPaletteCycle(pc),a4
                 nop
-                jsr     (VBlank_UpdateSharpssteelPalette).l
+                jsr     (Gfx_UpdateRandomizedPaletteEntryList).l
                 bsr.w   Stage12_YachtClampHorizontalVelocity
                 bsr.w   Stage12_YachtSpawnDestructionDebris
                 bsr.w   Stage12_YachtUpdateVerticalBob

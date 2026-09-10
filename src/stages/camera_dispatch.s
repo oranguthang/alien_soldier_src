@@ -542,11 +542,11 @@ loc_CD72:                                               ; CODE XREF: Stage_Updat
                 sub.w   d0,d2
 loc_CD7C:                                               ; CODE XREF: Stage_UpdateScrollOffset+A   j
                 move.w  d2,d3
-                lea     (word_3EC6).l,a2
+                lea     (PaletteFade_StageScrollEntryOffsets).l,a2
                 moveq   #0,d1
                 asl.w   #4,d2
                 asl.w   #8,d3
-                jmp     (loc_3E5E).l
+                jmp     (Gfx_FadeRGBColor_LoadEntryCount).l
 ; End of function Stage_UpdateScrollOffset
 ; Post-intro transition clearing flags and advancing phase
 Stage_PostTerobusterIntro:                              ; DATA XREF: ROM:0000C890   o  ; was: sub_CD90

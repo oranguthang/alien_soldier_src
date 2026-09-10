@@ -15,7 +15,7 @@ Entity_StoredSubtypeHandlers:   dc.w    Boss_DestroyerProtoMain-*  ; DATA XREF: 
 
 ; Main boss handler
 Boss_DestroyerProtoMain:                                ; DATA XREF: ROM:Entity_StoredSubtypeHandlers   o  ; was: sub_314D8
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 bsr.w   Boss_DestroyerProtoCycleArenaEffect
                 cmpi.w  #$2E,4(a5)                      ; '.'
                 bcc.s   Boss_DestroyerProtoDispatchState

@@ -8,7 +8,7 @@ Boss_SunsetStingMain:                                   ; DATA XREF: ROM:Entity_
                 andi.w  #$FF,d0
                 cmpi.w  #$12,d0
                 bcc.s   Boss_SunsetStingMainReturn
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 tst.w   (word_FF8234).w
                 bne.s   Boss_SunsetStingMainCheckDefeatTrigger
                 move.w  4(a5),d0

@@ -12,7 +12,7 @@ Boss_SharpssteelMain:                                   ; DATA XREF: ROM:Entity_
                 beq.w   Boss_SharpssteelBeginDefeatFragmentBurst
 Boss_SharpssteelUpdatePaletteAndCore:                   ; CODE XREF: Boss_SharpssteelMain+14   j
                                         ; Boss_SharpssteelMain+1C   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 bsr.w   Boss_SharpssteelShiftBladeTargetHistory
 Boss_SharpssteelDispatchState:                          ; CODE XREF: Boss_SharpssteelMain+4   j
                                         ; Boss_SharpssteelMain+C   j

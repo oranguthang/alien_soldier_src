@@ -1,7 +1,7 @@
 ; Initializes the shared boss table pointer and dispatches the setup state
 Boss_SunsetStingInitDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40CEE
                 moveq   #4,d7
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  4(a5),d0
                 lea     Boss_SunsetStingEarlyFormStates(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -53,7 +53,7 @@ Boss_SunsetStingLoadGraphics:                           ; DATA XREF: ROM:00040D0
                 movea.l #Boss_SunsetStingObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 moveq   #6,d7
-                jsr     (Data_LoadPaletteTable).l
+                jsr     (Gfx_ResetDefaultColorFadeState).l
                 move.w  (a5),-(sp)
                 move.w  #$4300,$E(a5)
                 lea     Boss_SunsetStingBodyPartInitTable(pc),a1

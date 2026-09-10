@@ -3,7 +3,7 @@ Boss_ValkirieForceMain:                                 ; DATA XREF: ROM:Entity_
                 beq.w   Boss_ValkirieForceDispatchState
                 tst.w   8(a5)
                 beq.s   Boss_ValkirieForceDispatchState
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
 Boss_ValkirieForceDispatchState:                        ; CODE XREF: Boss_ValkirieForceMain+4   j  ; was: loc_53514
                                         ; Boss_ValkirieForceMain+C   j
                 move.w  4(a5),d0

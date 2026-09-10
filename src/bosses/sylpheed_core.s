@@ -14,7 +14,7 @@ Boss_UpdateSylpheed:                                    ; DATA XREF: ROM:Entity_
 ; ---------------------------------------------------------------------------
 Boss_UpdateSylpheedPaletteAndBounds:                    ; CODE XREF: Boss_UpdateSylpheed+14   j  ; was: loc_59400
                                         ; Boss_UpdateSylpheed+1C   j
-                lea     (word_3E4C).l,a2
+                lea     (PaletteFade_SevenForcesEntryOffsets).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 moveq   #$24,d0                         ; '$'
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l

@@ -33,7 +33,7 @@ Boss_JampanCheckDefeatTrigger:                          ; CODE XREF: Boss_Jampan
                 bset    #0,(byte_FFA272).w
 Boss_JampanUpdateScreenPositionAndMotion:               ; CODE XREF: Boss_JampanUpdateAndDispatch+2A   j
                                         ; Boss_JampanUpdateAndDispatch+32   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$58(a5)

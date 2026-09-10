@@ -3,7 +3,7 @@
 Boss_TerobusterMain:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_38518
                 tst.w   4(a5)
                 beq.w   Boss_TerobusterDispatchState
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 tst.w   8(a5)
                 beq.s   Boss_TerobusterDispatchState
                 btst    #2,(byte_FF80EC).w

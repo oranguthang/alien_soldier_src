@@ -26,7 +26,7 @@ Boss_DestroyerMK2CheckFinalTransitionTrigger:           ; CODE XREF: Boss_Destro
                 bset    #0,(byte_FFA272).w
 Boss_DestroyerMK2UpdateEncounterEffects:                ; CODE XREF: Boss_DestroyerMK2Main+2E   j  ; was: loc_4A8A4
                                         ; Boss_DestroyerMK2Main+36   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 bsr.w   Gfx_DestroyerMK2CyclePaletteWords
                 btst    #3,$4C(a5)
                 beq.s   Boss_DestroyerMK2AnchorToScrollPosition

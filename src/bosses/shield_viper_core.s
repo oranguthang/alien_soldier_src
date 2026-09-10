@@ -6,7 +6,7 @@ Boss_ShieldViperUpdate:                                 ; DATA XREF: ROM:Entity_
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$5A(a5)
                 bsr.w   Gfx_ShieldViperUpdateBodyMappings
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_ShieldViperUpdateGeometryUnlessTransitioning
                 tst.w   (word_FF8200).w

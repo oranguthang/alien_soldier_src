@@ -88,8 +88,8 @@ Gfx_BugmaxApplyIndexedWavePaletteOffset:                ; CODE XREF: Gfx_BugmaxA
                 add.w   d0,d0
                 move.w  (a0,d0.w),d0
                 move.w  #$E000,d7
-                lea     (word_3E2E).l,a4
-                jmp     (VBlank_SharpssteelPaletteEffect).l
+                lea     (PaletteFade_BugmaxWaveEntryOffsets).l,a4
+                jmp     (Gfx_AdjustPaletteEntryList).l
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxWavePaletteOffsetReturn:                      ; CODE XREF: Gfx_BugmaxApplyWavePaletteOffset+4   j  ; was: locret_4DB2A
                 rts

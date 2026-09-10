@@ -11,7 +11,7 @@ Boss_BackStringerMain:                                  ; DATA XREF: ROM:Entity_
                 beq.w   Boss_BackStringerDefeatInit
 Boss_BackStringerUpdateActiveFrame:                     ; CODE XREF: Boss_BackStringerMain+14   j  ; was: loc_446D4
                                         ; Boss_BackStringerMain+1C   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)

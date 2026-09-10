@@ -50,7 +50,7 @@ Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_Gusthe
                 bset    #0,(byte_FFA272).w
 Boss_GustheadUpdatePaletteAndScreenX:                   ; CODE XREF: Boss_GustheadMain+5E   j  ; was: loc_3F22E
                                         ; Boss_GustheadMain+66   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$5C(a5)

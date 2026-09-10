@@ -3,7 +3,7 @@ Debug_ValkirieCompositeViewerMain:                      ; DATA XREF: ROM:Entity_
                 beq.w   Debug_ValkirieViewerDispatchState
                 tst.w   8(a5)
                 beq.s   Debug_ValkirieViewerDispatchState
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
 Debug_ValkirieViewerDispatchState:                      ; CODE XREF: Debug_ValkirieCompositeViewerMain+4   j  ; was: loc_50FBA
                                         ; Debug_ValkirieCompositeViewerMain+C   j
                 move.w  4(a5),d0

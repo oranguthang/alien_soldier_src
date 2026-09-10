@@ -2,7 +2,7 @@
 Boss_BugmaxMain:                                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4BEBC
                 tst.w   4(a5)
                 beq.w   Boss_BugmaxDispatchMainState
-                lea     (word_3E3C).l,a2
+                lea     (PaletteFade_BugmaxEntryOffsets).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0

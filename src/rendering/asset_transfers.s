@@ -626,7 +626,7 @@ loc_11708:                                              ; CODE XREF: Gfx_UpdateB
                 beq.s   locret_11720
                 movea.l (dword_FF8040).w,a0
                 jsr     (Gfx_SyncPaletteBuffers).l
-                jmp     (Data_LoadPaletteTable).l
+                jmp     (Gfx_ResetDefaultColorFadeState).l
 ; ---------------------------------------------------------------------------
 locret_11720:                                           ; CODE XREF: Gfx_UpdateBossPalette+66   j
                 rts

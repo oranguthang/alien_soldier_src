@@ -64,7 +64,7 @@ Boss_JetsripperUpdateState:                             ; CODE XREF: Boss_Jetsri
 Boss_JetsripperUpdateActiveState:                       ; CODE XREF: Boss_JetsripperUpdateState+E   j  ; was: loc_356B2
                                         ; Boss_JetsripperUpdateState+16   j
                 bsr.w   Boss_JetsripperUpdatePalette
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$5E(a5)

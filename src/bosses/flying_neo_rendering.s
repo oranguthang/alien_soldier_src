@@ -305,7 +305,7 @@ Boss_FlyingNeoUpdatePaletteFade:                        ; CODE XREF: Boss_Flying
                 move.w  (word_FFA000).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_FlyingNeoUpdateLinkedPartOrbitsReturn
-                lea     (word_3E12).l,a2
+                lea     (PaletteFade_FlyingNeoEntryOffsets).l,a2
                 lea     Boss_FlyingNeoDefeatPaletteFadeParameters(pc),a3
                 nop
                 jmp     (Palette_ProcessFadeEffect).l

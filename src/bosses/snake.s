@@ -14,7 +14,7 @@ Boss_SnakeMain:                                         ; DATA XREF: ROM:Entity_
                 move.w  #$A,4(a5)
 Boss_SnakeUpdateBody:                                   ; CODE XREF: Boss_SnakeMain+1A   j  ; was: loc_407D4
                                         ; Boss_SnakeMain+22   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 swap    d0

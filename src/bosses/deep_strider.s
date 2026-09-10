@@ -12,7 +12,7 @@ Boss_DeepStriderMain:                                   ; DATA XREF: ROM:Entity_
                 beq.w   Boss_DeepStriderBeginDefeat
 Boss_DeepStriderUpdateStageRelativeX:                   ; CODE XREF: Boss_DeepStriderMain+14   j  ; was: loc_3E5A8
                                         ; Boss_DeepStriderMain+1C   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)

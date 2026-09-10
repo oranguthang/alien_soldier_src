@@ -16,7 +16,7 @@ Entity_VictorSubtypeHandlers:   dc.w    Boss_VictorMain-*  ; DATA XREF: Entity_V
 
 ; Updates Victor's palette fade and dispatches the current main state
 Boss_VictorMain:                                        ; DATA XREF: ROM:Entity_VictorSubtypeHandlers   o  ; was: sub_323FA
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 cmpi.w  #$1E,4(a5)
                 bcc.s   Boss_VictorDispatchState
                 tst.w   (word_FF8200).w

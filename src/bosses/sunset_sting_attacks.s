@@ -19,7 +19,7 @@ Boss_SunsetStingRefreshAimSample:                       ; CODE XREF: Boss_Sunset
 Boss_SunsetStingDispatchSecondFormState:                ; CODE XREF: Boss_SunsetStingMainDispatcher+8   j  ; was: loc_41932
                                         ; Boss_SunsetStingMainDispatcher+26   j
                 moveq   #4,d7
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  4(a5),d0
                 lea     Boss_SunsetStingSecondFormStates(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -81,7 +81,7 @@ Boss_SunsetStingSecondFormLoadGraphicsState:            ; DATA XREF: ROM:0004194
                 movea.l #Boss_SunsetStingSecondFormObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 moveq   #6,d7
-                jsr     (Data_LoadPaletteTable).l
+                jsr     (Gfx_ResetDefaultColorFadeState).l
                 move.w  (a5),-(sp)
                 move.w  #$3300,$E(a5)
                 lea     Boss_SunsetStingSecondFormBodyPartInitTable(pc),a1

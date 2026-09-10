@@ -11,7 +11,7 @@ Boss_ShellshogunMainHandler:                            ; DATA XREF: ROM:Entity_
                 beq.w   Boss_ShellshogunBeginDefeat
 Boss_ShellshogunUpdatePaletteAndScreenPosition:         ; CODE XREF: Boss_ShellshogunMainHandler+16   j  ; was: loc_39500
                                         ; Boss_ShellshogunMainHandler+1E   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$17E(a5)

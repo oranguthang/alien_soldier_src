@@ -19,7 +19,7 @@ Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_
 ; ---------------------------------------------------------------------------
 Boss_MadamBarbarPrepareStateDispatch:                   ; CODE XREF: Boss_MadamBarbarMain+14   j  ; was: loc_3A4C2
                                         ; Boss_MadamBarbarMain+1C   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)

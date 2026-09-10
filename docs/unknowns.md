@@ -2636,6 +2636,31 @@ address-derived definitions, lowering the enforced ceiling from 5,153 to
 5,035. Module ranges, symbols, and byte identity are checked against the new
 five-entry layout.
 
+The palette-transition control-flow audit splits the former 764-line
+`rendering/palette_transitions.s` at the exact `0x003C08` entry boundary. The
+296-line transition/channel-adjust module now ends at `0x003C07`; the
+470-line `rendering/color_fades.s` owns the list-driven and target-color fades
+through `0x004093`. Both are cohesive and remain inside the preferred module
+size range, taking the layout from 339 to 340 modules.
+
+All 87 imported branch/data labels now describe their verified loop, channel,
+clamp, merge, state, or table role. CRAM masks establish the channel naming:
+`$00E` is red, `$0E0` is green, and `$E00` is blue. Six generated semantic
+names are corrected as part of the same audit. In particular,
+`Gfx_AdjustPaletteBits` did not manipulate tile palette-selection bits and is
+now `Gfx_AdjustSelectedColorChannels`; the former
+`Gfx_ClampGreenChannel` is the common blue-channel merge/store path. Two
+Sharpsteel-only names are neutralized because Bugmax, Viblack, and ship code
+also use the counted entry-list updater. The former generic loader and init
+names at `0x003C08` and `0x003C20` now state their observable fall-through
+contracts: reset default fade state and process the default fade table.
+
+The 87 newly imported-name mappings raise provenance from 11,007 to 11,094.
+The 87 raw labels plus six corrected semantic entries add 93 audit records,
+raising the registry from 7,189 to 7,282. Address-derived definitions fall
+from 5,035 to 4,948; no inferred color or control-flow name depends on visual
+guesswork.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

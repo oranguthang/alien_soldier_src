@@ -1,7 +1,7 @@
 Boss_MissirayMain:                                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_537B8
                 tst.w   4(a5)
                 beq.w   loc_538AE
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
                 add.w   (dword_FFA900).w,d0
                 move.w  d0,$4C(a5)

@@ -16,7 +16,7 @@ Boss_ShiperMainHandler:                                 ; DATA XREF: ROM:Entity_
 ; ---------------------------------------------------------------------------
 Boss_ShiperUpdateActiveState:                           ; CODE XREF: Boss_ShiperMainHandler+18   j  ; was: loc_3644C
                                         ; Boss_ShiperMainHandler+20   j
-                jsr     (Gfx_InitPaletteFade).l
+                jsr     (Gfx_ProcessDefaultColorFade).l
                 clr.b   $49(a5)
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
