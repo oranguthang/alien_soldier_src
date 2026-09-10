@@ -319,7 +319,7 @@ Boss_Epsilon1StartPostBattleDelayState:                 ; DATA XREF: ROM:00045D6
 Boss_Epsilon1PublishBattleCompletionState:              ; DATA XREF: ROM:00045D6C   o  ; was: sub_46B3C
                 subq.w  #1,$48(a5)
                 bne.s   Boss_Epsilon1PublishBattleCompletionReturn
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 move.b  #1,(byte_FF80FA).w
                 move.w  #$1E0,$48(a5)
                 addq.w  #2,4(a5)

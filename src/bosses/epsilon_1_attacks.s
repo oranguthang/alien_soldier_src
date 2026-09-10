@@ -61,7 +61,7 @@ Boss_Epsilon1FinishOpeningFadeReturn:                   ; CODE XREF: Boss_Epsilo
 ; Requests the shared boss message for Epsilon 1 and advances
 Boss_Epsilon1RequestBattleMessageState:                 ; DATA XREF: ROM:00045CFE   o  ; was: sub_4624A
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 addq.w  #2,4(a5)
                 move.b  #$8D,d0
                 jsr     (Sound_QueueBGMRequest).l
@@ -69,7 +69,7 @@ Boss_Epsilon1RequestBattleMessageState:                 ; DATA XREF: ROM:00045CF
 ; End of function Boss_Epsilon1RequestBattleMessageState
 ; Waits for the shared boss message to finish before enabling attack selection
 Boss_Epsilon1WaitForBattleMessageState:                 ; DATA XREF: ROM:00045D00   o  ; was: sub_46264
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_Epsilon1WaitForBattleMessageReturn
                 addq.w  #2,4(a5)
                 clr.b   (byte_FF80EC).w

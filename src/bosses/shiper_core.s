@@ -377,7 +377,7 @@ Boss_ShiperBossMessageDelayState:                       ; DATA XREF: ROM:000364B
                 bpl.s   Boss_ShiperBossMessageDelayReturn
                 addq.w  #2,4(a5)
                 moveq   #2,d0
-                jmp     UI_StartBossMessage
+                jmp     BossMessage_Start
 ; ---------------------------------------------------------------------------
 Boss_ShiperBossMessageDelayReturn:                      ; CODE XREF: Boss_ShiperBossMessageDelayState+8   j  ; was: locret_368FE
                 rts
@@ -385,7 +385,7 @@ Boss_ShiperBossMessageDelayReturn:                      ; CODE XREF: Boss_Shiper
 ; Wait for the boss message and motion flags before returning to retreat
 Boss_ShiperWaitForBossMessageState:                     ; DATA XREF: ROM:000364B6   o  ; was: sub_36900
                 bsr.w   Boss_ShiperUpdateMain
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_ShiperWaitForBossMessageReturn
                 btst    #0,$5E(a5)
                 bne.s   Boss_ShiperWaitForBossMessageReturn

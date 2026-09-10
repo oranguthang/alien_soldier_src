@@ -29,7 +29,7 @@ off_FF36:       dc.l    Stage_Dispatcher
 Stage_TransitionToNextPhase:                            ; CODE XREF: Stage_UpdateLogic+14   j  ; was: sub_FF4A
                                         ; Camera_AutoScrollCheck+10   j
                 addq.w  #2,(word_FFA950).w
-                move.w  #$56,(word_FF80C2).w            ; 'V'
+                move.w  #$56,(MessageSequenceState).w   ; 'V'
 ; Sets palette transition values when entering boss battle phase
 Stage_SetBossTransitionPalette:                         ; CODE XREF: Stage_InitXiTigerBoss   p  ; was: loc_FF54
                 move.w  (StageTableIndex).w,d0

@@ -186,7 +186,7 @@ Boss_VictorFlyIn:                                       ; DATA XREF: ROM:0003242
                 bhi.w   Entity_UpdateReturn
                 clr.w   $18(a5)
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_VictorFlyIn
@@ -195,7 +195,7 @@ Boss_VictorWaitForArenaReady:                           ; DATA XREF: ROM:0003243
                 bsr.w   Boss_VictorSetScreenShake
                 bsr.w   Boss_VictorUpdateViewportOffset
                 bsr.w   Boss_VictorUpdateAnimation
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Entity_UpdateReturn
                 clr.b   (byte_FF80EC).w
                 andi.b  #$EF,$23(a5)

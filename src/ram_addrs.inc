@@ -165,10 +165,10 @@ word_FF809A             equ     $FFFF809A
 word_FF809C             equ     $FFFF809C
 word_FF809E             equ     $FFFF809E
 dword_FF80A0            equ     $FFFF80A0
-byte_FF80A8             equ     $FFFF80A8
+MessageSequenceFlags    equ     $FFFF80A8               ; was: byte_FF80A8
 word_FF80AA             equ     $FFFF80AA
 word_FF80AC             equ     $FFFF80AC
-word_FF80C2             equ     $FFFF80C2
+MessageSequenceState    equ     $FFFF80C2               ; was: word_FF80C2
 word_FF80C4             equ     $FFFF80C4
 word_FF80C6             equ     $FFFF80C6
 dword_FF80C8            equ     $FFFF80C8

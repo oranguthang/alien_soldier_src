@@ -177,7 +177,7 @@ Boss_ShellshogunPreBattleDelayState:                    ; DATA XREF: ROM:0003952
                 bpl.s   Boss_ShellshogunPreBattleDelayReturn
                 addq.w  #2,4(a5)
                 moveq   #4,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 move.b  #$8A,d0
                 jsr     (Sound_QueueBGMOrStop).l
 Boss_ShellshogunPreBattleDelayReturn:                   ; CODE XREF: Boss_ShellshogunPreBattleDelayState+1E   j  ; was: locret_39756
@@ -187,7 +187,7 @@ Boss_ShellshogunPreBattleDelayReturn:                   ; CODE XREF: Boss_Shells
 Boss_ShellshogunWaitForStageReadyState:                 ; DATA XREF: ROM:0003952A   o  ; was: sub_39758
                 move.w  #$10,$BC(a5)
                 bsr.w   Boss_ShellshogunDecisionState
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_ShellshogunWaitForStageReadyReturn
                 addq.w  #2,4(a5)
                 clr.b   (byte_FF80EC).w

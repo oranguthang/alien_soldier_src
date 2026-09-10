@@ -297,7 +297,7 @@ Entity_SevenForcesSwitchTransformationFrameReturn:      ; CODE XREF: Entity_Seve
 ; End of function Entity_SevenForcesSwitchTransformationFrameState6
 ; State 8: wait for the shared transition work and local timer
 Entity_SevenForcesWaitForTransformationState8:          ; DATA XREF: ROM:00054BA0   o  ; was: sub_54F6C
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Entity_SevenForcesWaitForTransformationReturn
                 subq.w  #1,$48(a5)
                 bpl.s   Entity_SevenForcesWaitForTransformationReturn
@@ -308,7 +308,7 @@ Entity_SevenForcesWaitForTransformationReturn:          ; CODE XREF: Entity_Seve
 ; End of function Entity_SevenForcesWaitForTransformationState8
 ; State A: arm the first form-transition state and sound
 Entity_SevenForcesBeginFormSequenceStateA:              ; DATA XREF: ROM:00054BA2   o  ; was: sub_54F7E
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Entity_SevenForcesBeginFormSequenceReturn
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
@@ -663,7 +663,7 @@ Entity_SevenForcesArmFinalFadeState3A:                  ; DATA XREF: ROM:00054BD
                 bne.s   Entity_SevenForcesArmFinalFadeReturn
                 addq.w  #2,4(a5)
                 clr.w   $5E(a5)
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 move.b  #1,(byte_FF80FA).w
 Entity_SevenForcesArmFinalFadeReturn:                   ; CODE XREF: Entity_SevenForcesArmFinalFadeState3A+6   j  ; was: locret_5540A
                 rts

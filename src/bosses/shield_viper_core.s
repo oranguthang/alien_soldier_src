@@ -425,14 +425,14 @@ Boss_ShieldViperMoveIntroToYThreshold:                  ; DATA XREF: ROM:0004DFE
                 addq.w  #2,4(a5)
                 move.w  #$FFF8,(dword_FF9400).w
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
 Boss_ShieldViperIntroMovementReturn:                    ; CODE XREF: Boss_ShieldViperMoveIntroToYThreshold+A   j  ; was: locret_4E2EE
                 rts
 ; End of function Boss_ShieldViperMoveIntroToYThreshold
 ; Keep rotating and moving until the stage-transition gate opens, then enter state $32
 Boss_ShieldViperWaitForStageTransitionAndEnterAttackSequence:  ; DATA XREF: ROM:0004DFEE   o  ; was: sub_4E2F0
                 bsr.w   Boss_ShieldViperRotateAndMoveRadially
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_ShieldViperStageTransitionWaitReturn
                 clr.b   (byte_FF80EC).w
                 move.w  #$32,4(a5)                      ; '2'

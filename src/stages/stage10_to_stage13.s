@@ -87,7 +87,7 @@ off_D95C:       dc.w    Stage_Stage10ScrollUpdate-Stage_Stage10ScrollUpdate
 ; Updates Stage 10 scroll positions
 Stage_Stage10ScrollUpdate:                              ; DATA XREF: Stage_InitStage10+46   o  ; was: sub_D9D2
                                         ; ROM:off_D95C   o
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
                 bsr.w   Stage_LoadStage10Graphics
 ; End of function Stage_Stage10ScrollUpdate
 ; Checks transition to next segment
@@ -293,7 +293,7 @@ Stage_Stage14Init:                                      ; DATA XREF: ROM:0000D97
 ; End of function Stage_Stage14Init
 ; Transitions to teleport after ship destruction
 Stage_TeleportTransition:                               ; DATA XREF: ROM:0000D980   o  ; was: sub_DBCE
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Stage_Stage10CheckTransition_Return
                 addq.w  #2,(word_FFA950).w
                 clr.w   (word_FF820C).w
@@ -377,7 +377,7 @@ loc_DCCE:                                               ; CODE XREF: Stage_Snake
                 subq.w  #1,(dword_FF806A+2).w
                 bpl.w   Stage_Stage10CheckTransition_Return
 Stage_SnakeTransitionBeginStage13:
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.b  #$89,d0
                 jsr     (Sound_QueueBGMOrStop).l
                 bra.w   Stage_InitStage13

@@ -130,11 +130,11 @@ Boss_JokerPhaseGateDelayState:                          ; DATA XREF: ROM:0003B2F
                 bpl.w   Boss_JokerUpdatePhaseGatePose
                 addq.w  #2,4(a5)
                 moveq   #5,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
 ; End of function Boss_JokerPhaseGateDelayState
 ; Waits for the player/UI sequence to finish
 Boss_JokerWaitForPlayerSequenceState:                   ; DATA XREF: ROM:0003B300   o  ; was: sub_3B434
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Boss_JokerUpdatePhaseGatePose
                 addq.w  #2,4(a5)
                 move.w  #$40,$11C(a5)                   ; '@'

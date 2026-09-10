@@ -180,7 +180,7 @@ Boss_SunsetStingIntroCheckEntryComplete:                ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingIntro
 ; Starts the shared battle-entry banner and input mode
 Boss_SunsetStingStartBattleBanner:                      ; was: sub_42C74
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 move.b  #$8A,d0
                 jsr     (Sound_QueueBGMOrStop).l
                 rts
@@ -199,7 +199,7 @@ Boss_SunsetStingIntroSelectOscillationLimit:            ; CODE XREF: Boss_Sunset
                 bne.s   Boss_SunsetStingIntroWaitForBanner
                 neg.l   $58(a5)
 Boss_SunsetStingIntroWaitForBanner:                     ; CODE XREF: Boss_SunsetStingWaitForBattleBanner+18   j  ; was: loc_42CA4
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Boss_SunsetStingReturn
                 clr.b   (byte_FF80EC).w
                 move.w  #$620,(word_FFA970).w

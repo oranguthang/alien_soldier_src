@@ -368,7 +368,7 @@ Boss_Epsilon1IntroControllerStates: dc.w    Boss_Epsilon1SpawnIntroProjectileSta
 
 ; Spawns the type-$278 intro object and initializes a two-cycle counter
 Boss_Epsilon1SpawnIntroProjectileState:                 ; DATA XREF: ROM:Boss_Epsilon1IntroControllerStates   o  ; was: sub_47BA2
-                tst.b   (word_FF80C2).w
+                tst.b   (MessageSequenceState).w
                 bne.s   Boss_Epsilon1SpawnIntroProjectileReturn
                 addq.w  #2,4(a5)
                 move.w  #2,$4A(a5)

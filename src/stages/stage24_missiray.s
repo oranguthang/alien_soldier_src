@@ -51,7 +51,7 @@ Boss_MissirayInit:                                      ; DATA XREF: ROM:0000F14
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_F8E6
                 addq.w  #2,(word_FFA950).w
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 move.b  #1,(byte_FF830E).w
 loc_F8E6:                                               ; CODE XREF: Boss_MissirayInit+4   j
                 bra.w   Stage24_GraphicsSetup
@@ -59,7 +59,7 @@ loc_F8E6:                                               ; CODE XREF: Boss_Missir
 ; Palette update handler
 Boss_MissirayPaletteUpdate:                             ; DATA XREF: ROM:0000F144   o  ; was: sub_F8EA
                 bsr.w   Stage24_GraphicsSetup
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   locret_F912
                 tst.w   (word_FF8230).w
                 bne.s   locret_F912

@@ -71,7 +71,7 @@ Sys_GameplayMainLoop_UpdateStage:                       ; CODE XREF: Sys_Gamepla
 Sys_GameplayMainLoop_UpdateSecondaryEffects:            ; CODE XREF: Sys_GameplayMainLoop+140   j  ; was: loc_1C7B0
                 jsr     (Gfx_SecondaryEffectDispatcher).l
                 bsr.w   Sys_UpdateObjectCount
-                jsr     (Player_BehaviorDispatcher).l
+                jsr     (MessageSequence_Dispatch).l
                 jsr     (UI_RenderHUDElement1).l
                 bsr.w   Effect_ScreenShakeUpdate
                 tst.b   (byte_FFF746).w

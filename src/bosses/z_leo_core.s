@@ -110,7 +110,7 @@ Boss_ZLeoNoOp:                                          ; CODE XREF: Boss_ZLeoIn
 
 ; Wait for the stage gate, prepare graphics, and advance to composite-part initialization
 Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZLeoStateTable   o  ; was: sub_51BBE
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Boss_ZLeoInitReturn
                 addq.w  #2,4(a5)
                 bset    #0,(byte_FF8245).w
@@ -423,11 +423,11 @@ Boss_ZLeoRunBossMessageDelay:                           ; DATA XREF: ROM:00051B9
 Boss_ZLeoStartBossMessage:                              ; CODE XREF: Boss_ZLeoRunBattleReadyPose+28   j  ; was: loc_5201C
                 addq.w  #2,4(a5)
                 moveq   #0,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
 ; End of function Boss_ZLeoRunBattleReadyPose
 ; Wait for the boss-message gate before entering the first attack-cycle state
 Boss_ZLeoWaitForBossMessage:                            ; DATA XREF: ROM:00051B9E   o  ; was: sub_52028
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_ZLeoRenderBossMessageWait
                 move.w  #$1E,4(a5)
                 clr.b   (byte_FF80EC).w

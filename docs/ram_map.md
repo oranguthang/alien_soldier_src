@@ -5,7 +5,8 @@
 still have neutral size/address names. The first reviewed semantic fields are
 `GameModeIndex`, `GameSubstateIndex`, `StageTableIndex`, `Entity_ObjectPool`,
 `DifficultyMode`, `MessageMode`, `SoundDisableFlags`, `StageTimeRemaining`,
-`StagePhaseSplitTimes`, `StageCompletionTimes`, and `StageResultVisits`;
+`StagePhaseSplitTimes`, `StageCompletionTimes`, `StageResultVisits`,
+`MessageSequenceState`, and `MessageSequenceFlags`;
 `VDPCommand` predates this review. All remain
 subject to the evidence policy in `docs/naming.md`.
 
@@ -49,6 +50,13 @@ The three history arrays are initialized together to `$FFFF`, the missing-value
 sentinel. `StageResultVisits` deliberately uses the neutral word
 “visit”: the ROM renders its aggregate under `TOTAL CONTINUE`, but static code
 alone does not yet prove the exact player-facing counting convention.
+
+## Reviewed message-sequence fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `MessageSequenceFlags` | `$FFFF80A8` | Bit zero prevents the dispatcher from mirroring controller direction state during the ship-name path. `ShipName_StartScript` sets it; `BossMessage_Start` clears it. |
+| `MessageSequenceState` | `$FFFF80C2` | The central dispatcher uses this even word directly as an offset into its handler table. Stage, result, boss, and ship-cutscene callers publish a starting state here and wait for it to return to zero. |
 
 ## Review policy
 

@@ -239,7 +239,7 @@ loc_1240C:                                              ; CODE XREF: Stage_InitS
                 clr.w   (word_FFA970).w
                 clr.w   (word_FFA974).w
                 move.w  #$A,(word_FF8220).w
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  #$40,(word_FFF74A).w            ; '@'
                 clr.w   (word_FFF74E).w
                 movea.w #(byte_FFEC12-M68K_RAM),a0

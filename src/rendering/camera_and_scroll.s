@@ -413,10 +413,10 @@ Stage_InitTransitionState:                              ; CODE XREF: Stage_Check
 ; Initializes transition between stage sections
 Stage_InitSectionChange:                                ; CODE XREF: Camera_Stage2PhaseHandler   p  ; was: sub_103B0
                                         ; sub_C98E   p
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   locret_103D2
                 addq.w  #2,(word_FFA950).w
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
 loc_103C0:                                              ; CODE XREF: Stage_InitTransitionState+1C   j
                 clr.w   (word_FF820C).w
                 addq.w  #2,(StageTableIndex).w
@@ -428,13 +428,13 @@ locret_103D2:                                           ; CODE XREF: Stage_InitS
 ; Initializes score display timer to 0x5C
 UI_InitScoreTimer:                                      ; CODE XREF: Camera_AntroidBossInit+A   p  ; was: sub_103D4
                                         ; Stage_InitPostBoss+12   p
-                move.w  #$5C,(word_FF80C2).w            ; '\'
+                move.w  #$5C,(MessageSequenceState).w   ; '\'
                 bra.s   loc_103E2
 ; End of function UI_InitScoreTimer
 ; Triggers transition to next stage phase
 Stage_TriggerPhaseTransition:                           ; CODE XREF: Camera_BossPhaseHandler+6   p  ; was: sub_103DC
                                         ; Stage_PostJokerBoss+A   p
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
 loc_103E2:                                              ; CODE XREF: UI_InitScoreTimer+6   j
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA209).w

@@ -91,7 +91,7 @@ Debug_ValkirieViewerConfigureInteractiveState:          ; CODE XREF: Debug_Valki
                 move.w  #$148,$914(a5)
 ; Interactive viewer update: facing, angle, pose, linked parts, and screen anchor
 Debug_ValkirieViewerUpdate:                             ; DATA XREF: ROM:00050FCC   o  ; was: loc_51116
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Debug_ValkirieViewerProcessFacingInput
                 move.b  #1,(byte_FFA958).w
 Debug_ValkirieViewerProcessFacingInput:                 ; CODE XREF: Debug_ValkirieViewerInitialize+14A   j  ; was: loc_51122

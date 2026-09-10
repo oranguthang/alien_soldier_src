@@ -225,12 +225,12 @@ Stage_IncrementVerticalPosition:                        ; CODE XREF: Stage_Flyin
 ; End of function Stage_FlyingNeoBattleStart
 ; Transitions to next stage after Flying-Neo defeat
 Stage_PostFlyingNeoTransition:                          ; DATA XREF: ROM:0000C8AA   o  ; was: sub_D08E
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Stage_FlyingNeoBattleUpdate
                 tst.w   (word_FF8230).w
                 bne.s   Stage_FlyingNeoBattleUpdate
                 move.l  #byte_1E6C6,(dword_FFA22C).w
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 beq.w   Stage_InitTransitionState
 ; End of function Stage_PostFlyingNeoTransition
 ; Updates Flying-Neo battle with vertical oscillation

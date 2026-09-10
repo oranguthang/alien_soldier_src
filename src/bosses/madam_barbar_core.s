@@ -132,7 +132,7 @@ Boss_MadamBarbarIntroCompletionState:                   ; DATA XREF: ROM:0003A4E
                 bpl.s   Boss_MadamBarbarUpdateIntroPose
                 addq.w  #2,4(a5)
                 moveq   #6,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 move.b  #$8A,d0
                 jsr     (Sound_QueueBGMOrStop).l
 Boss_MadamBarbarUpdateIntroPose:                        ; CODE XREF: Boss_MadamBarbarIntroApproachState+40   j  ; was: loc_3A65C
@@ -145,7 +145,7 @@ Boss_MadamBarbarUpdateIntroPose:                        ; CODE XREF: Boss_MadamB
 ; Waits for the player/UI sequence before entering the AI state
 Boss_MadamBarbarWaitForPlayerSequence:                  ; DATA XREF: ROM:0003A4EC   o  ; was: sub_3A66A
                 bsr.w   Boss_MadamBarbarSpawnAnimationEffect
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_MadamBarbarUpdateIntroPose
                 clr.b   (byte_FF80EC).w
                 subi.w  #$A0,(word_FFA970).w

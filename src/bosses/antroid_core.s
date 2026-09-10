@@ -100,14 +100,14 @@ Boss_AntroidPhaseGateState:                             ; DATA XREF: ROM:0003752
                 bmi.s   Boss_AntroidPhaseGateAdvance
                 addq.w  #2,4(a5)
                 moveq   #1,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 bra.w   Boss_AntroidUpdateDecisionAnimation
 ; ---------------------------------------------------------------------------
 Boss_AntroidPhaseGateAdvance:                           ; CODE XREF: Boss_AntroidInitPhase+90   j  ; was: loc_375FA
                 addq.w  #2,4(a5)
 ; Waits for the stage-ready flag before restoring battle state
 Boss_AntroidWaitForStageReady:                          ; DATA XREF: ROM:0003752A   o  ; was: loc_375FE
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_AntroidWaitForStageReadyAnimate
                 clr.b   (byte_FF80EC).w
                 subi.w  #$40,(word_FFA970).w            ; '@'

@@ -133,7 +133,7 @@ Boss_SnakeBattleState:                                  ; DATA XREF: ROM:0004084
                 bsr.w   Boss_SnakeSteerTowardTarget
                 bsr.w   Boss_SnakeSelectTargetPosition
                 bsr.w   Boss_SnakeRandomizeMotionAmplitudes
-                cmpi.w  #$56,(word_FF80C2).w            ; 'V'
+                cmpi.w  #$56,(MessageSequenceState).w   ; 'V'
                 bcs.s   Boss_SnakeBattleStateReturn
                 move.w  #$80,$48(a5)
                 addq.w  #2,4(a5)

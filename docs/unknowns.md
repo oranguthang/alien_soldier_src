@@ -1711,8 +1711,9 @@ unknown count from 6,200 to 6,187 and raised provenance to 9,636 unique
 mappings. Twenty-five new audit records bring the project-wide total to 5,379.
 The widely used `UI_CheckVictoryCondition` name was rejected: its callers are
 boss intro and phase gates, and the routine selects a text pointer, stores it
-in `FF80C8`, and publishes wait gate `FF80C2`; it never reads boss health or
-tests victory. It is now `UI_StartBossMessage`, with named special-message,
+in `FF80C8`, and publishes `MessageSequenceState` as its wait gate; it never reads boss health or
+tests victory. It was first corrected to `UI_StartBossMessage` and is now the
+more subsystem-specific `BossMessage_Start`, with named special-message,
 selector, pointer-store, and pointer-table labels. The derived Bugmax,
 Missiray, and Shiper victory/defeat names and several stale audit descriptions
 were corrected with it; those states only start or wait for the same message
@@ -2876,3 +2877,60 @@ and 58 static audit records, raising the totals from 11,659 to 11,700 and from
 address-derived names. A fresh pinned-toolchain build remains byte-identical
 to the canonical Japanese ROM, all 37 project tests pass, and the asset,
 source-inventory, and ROM-layout gates remain green.
+
+The stage-message audit rejects the generated interpretation of
+`ui/results_sequence.s` as a generic results module. The exact state table
+shows three distinct but cooperating flows in its 754-line ROM-ordered range:
+the `STAGE` number and flashing `EMERGENCY` entry banners (states `$50-$5E`),
+the post-boss remaining-time bonus (states `$2E-$40`), and the shared radial
+text/boss-message script support. The cohesive module is therefore renamed
+`ui/stage_message_sequences.s`; it remains within the agreed 300--1,000-line
+range and is not cosmetically fragmented.
+
+Cross-checking the glyph lists and consumers corrects the false names
+`Player_Initialize`, score display, grade display, victory message, and weapon
+acquired. The stage-number path renders the fixed `STAGE` label followed by
+two packed-BCD digits. The alleged grade glyph set is exactly the unique
+letters needed for `EMERGENCY`. The alleged weapon-acquired path records
+`StageTimeRemaining`, applies its four packed-BCD digits to the sprite tiles,
+and finally calls `UI_AddScoreBCD`, establishing it as the time-bonus flow.
+The shared battle-entry glyph list supports the `READY/FIGHT` banner.
+
+The nine encoded Japanese message scripts are named only by statically proven
+selector groups; their byte payloads are not treated as ASCII and no dialogue
+translation is invented. Selector two remains explicitly an unused static
+slot because no caller supplying that value is known. The final short script
+keeps a dual `ShipAndValkirieMessageScript` name because both the ship-name
+pointer table and Valkirie's selector-eight path demonstrably reference it.
+
+This package corrects 42 existing semantic ROM names, replaces 53 live
+address-derived ROM definitions, and promotes `MessageSequenceState` and
+`MessageSequenceFlags` in the RAM map. It adds 55 provenance mappings and 92
+net audit records, raising the totals from 11,700 to 11,755 and from 7,956 to
+8,048. The enforced address-derived ceiling falls from 4,341 to 4,286. Module
+count remains 349, and `ui/stage_message_sequences.s` contains no live
+address-derived definitions.
+
+The adjacent engine audit renames the misleading 497-line
+`ui/victory_sequence.s` to `ui/message_sequence_engine.s`. Its table is the
+single dispatcher for encoded boss dialogue, the `READY/FIGHT` battle-entry
+banner, post-boss time bonus, radial ship-name text, and stage-entry banners;
+it is neither player behavior nor a victory-only subsystem. The table and all
+of its state transitions now use the `MessageSequence_*`, `MessageScript_*`,
+and `BattleBanner_*` namespaces.
+
+Static ROM/VRAM operands also reject the former HScroll and compressed-tilemap
+claims. The two DMA helper families copy fixed font/tilemap data from
+`$180000` and `$180060` to the message VRAM destinations. Script command
+`$FFFE` masks an embedded ROM source address and queues a direct DMA; it does
+not invoke a decompressor. The glyph renderer treats each source nibble as a
+transparency decision, constructs a 64-byte tile, queues its transfer, and
+writes the corresponding tilemap words. Its eight local nibble branches are
+named by that proven operation rather than by guessed pixels or characters.
+
+This engine package corrects 24 existing semantic names and replaces all 28
+live address-derived definitions in the module. It adds 28 provenance mappings
+and 52 static audit records, raising the totals from 11,755 to 11,783 and from
+8,048 to 8,100. The enforced address-derived ceiling falls from 4,286 to
+4,258. Module count remains 349, and `ui/message_sequence_engine.s` contains
+no live address-derived definitions.

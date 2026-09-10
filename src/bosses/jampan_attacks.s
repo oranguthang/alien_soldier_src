@@ -554,7 +554,7 @@ Boss_JampanPostDefeatNoOpState68:                       ; DATA XREF: ROM:0004923
 ; Initializes the shared post-defeat timer and stage object count
 Boss_JampanInitializePostDefeatSequenceTimer:           ; CODE XREF: Boss_JampanReinitializePostDefeatObjectsState+42   p  ; was: sub_4A018
                 move.w  #$100,(dword_FF942C+2).w
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 rts
 ; End of function Boss_JampanInitializePostDefeatSequenceTimer
 ; Counts down the post-defeat timer and publishes its completion flag

@@ -129,7 +129,7 @@ loc_E640:                                               ; CODE XREF: Stage_Jampa
 ; End of function Stage_JampanDefeatCamera
 ; Post-defeat stage init
 Stage_JampanPostDefeatInit:                             ; DATA XREF: ROM:0000E44E   o  ; was: sub_E644
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   locret_E654
                 addq.w  #2,(word_FFA950).w
                 move.w  #$32,(word_FFA02A).w            ; '2'

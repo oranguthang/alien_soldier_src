@@ -173,12 +173,12 @@ Boss_JetsripperAttackTimer:                             ; DATA XREF: ROM:000356E
                 jsr     (Sound_PlaySFX).l
                 move.w  #8,$52(a5)
                 moveq   #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 bra.w   Boss_JetsripperUpdateMovement
 ; End of function Boss_JetsripperAttackTimer
 ; Ends attack phase and resets state parameters
 Boss_JetsripperEndAttack:                               ; DATA XREF: ROM:000356EE   o  ; was: sub_35814
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Boss_JetsripperUpdateMovement
                 move.w  #6,4(a5)
                 move.w  #8,$5C(a5)

@@ -229,7 +229,7 @@ Stage_CaterpillarScrollHandler:                         ; DATA XREF: ROM:0000C8B
                 bpl.s   locret_D41E
                 clr.w   (dword_FFA900).w
                 clr.l   (dword_FFA910).w
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   locret_D41E
                 tst.w   (word_FFA944).w
                 bpl.s   locret_D41E
@@ -293,7 +293,7 @@ Stage_XiTigerBossWait_CheckEntity:                      ; DATA XREF: ROM:0000C8B
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_D4BA
                 addq.w  #2,(word_FFA950).w
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 move.b  #1,(byte_FF80FA).w
                 move.w  #$1C0,(word_FF806E).w
 loc_D4BA:                                               ; CODE XREF: Stage_CaterpillarBossSetup+10   j
@@ -391,7 +391,7 @@ Stage_PostXiTigerTransition:                            ; DATA XREF: ROM:0000C8B
                 bne.s   locret_D5BA
                 move.b  #$86,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 beq.w   Stage_InitTransitionState
 locret_D5BA:                                            ; CODE XREF: Stage_PostXiTigerTransition+8   j
                                         ; Stage_PostXiTigerTransition+E   j

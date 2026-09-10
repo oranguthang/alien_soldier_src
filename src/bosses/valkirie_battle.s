@@ -123,7 +123,7 @@ Entity_UpdateValkirieBattleState4:                      ; DATA XREF: ROM:000557B
                 bpl.s   Entity_RenderValkirieBattleState4
                 addq.w  #2,4(a5)
                 moveq   #8,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
 Entity_RenderValkirieBattleState4:                      ; CODE XREF: Entity_StartValkirieBattleState4+3E   j  ; was: loc_55900
                 lea     Valkirie_State4To8PoseScript(pc),a1
                 nop
@@ -131,7 +131,7 @@ Entity_RenderValkirieBattleState4:                      ; CODE XREF: Entity_Star
 ; End of function Entity_StartValkirieBattleState4
 ; Wait in state six for the shared battle gate, then enter state eight
 Entity_UpdateValkirieBattleState6:                      ; DATA XREF: ROM:000557C0   o  ; was: sub_5590A
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Entity_RenderValkirieBattleState6
                 addq.w  #2,4(a5)
                 clr.b   (byte_FF80EC).w

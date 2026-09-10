@@ -1,7 +1,7 @@
 Stage_Stage20Init:                                      ; DATA XREF: ROM:0000E4A8   o  ; was: sub_E7D8
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA958).w
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
                 bset    #1,(byte_FF80F8).w
                 move.w  #$36,(word_FFA02A).w            ; '6'
                 bsr.w   Gfx_Stage20InitPlanes

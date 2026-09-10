@@ -49,7 +49,7 @@ UI_InitGameStateFromContinue_CopyAmmo:                  ; CODE XREF: UI_InitGame
                 clr.w   (word_FF8090).w
                 clr.b   (byte_FFFF31).w
                 bsr.s   UI_ResetMenuBufferAndState
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0
                 move.b  UI_ContinueDisplayValueTable(pc,d0.w),(dword_FF80C8).w
@@ -84,14 +84,14 @@ UI_ContinueDisplayValueTable:   dc.b    $18, $18, $18, $18, $18, $18, $18, $18, 
                 dc.b    $18, $18, $18, $18, $18, $18, $18, $18
 
 ; Stores the remaining packed-BCD timer at the intermediate phase boundary
-Results_StorePhaseSplitTime:                            ; CODE XREF: Text_AdvancePhase+30   p  ; was: sub_1CDF4
+Results_StorePhaseSplitTime:                            ; CODE XREF: BattleBanner_StartFightLine+30   p  ; was: sub_1CDF4
                 movea.w #(StagePhaseSplitTimes-M68K_RAM),a0
                 move.w  (StageTableIndex).w,d0
                 move.w  (StageTimeRemaining).w,(a0,d0.w)
                 rts
 ; End of function Results_StorePhaseSplitTime
 ; Stores the remaining packed-BCD timer when the stage result is finalized
-Results_StoreStageCompletionTime:                       ; CODE XREF: Text_CompleteWithSound:loc_B0FE   p  ; was: sub_1CE04
+Results_StoreStageCompletionTime:                       ; CODE XREF: Results_FinishTimeBonusSpin:Results_StoreTimeBonus   p  ; was: sub_1CE04
                                         ; Boss_ZLeoRunPostDefeatDelay+2E   j
                 movea.w #(StageCompletionTimes-M68K_RAM),a0
                 move.w  (StageTableIndex).w,d0
@@ -120,7 +120,7 @@ Results_InitializeStageHistoryLoop:                     ; CODE XREF: Results_Ini
                 rts
 ; End of function Results_InitializeStageHistory
 ; Loads the current stage's packed-BCD time limit into the live timer
-Stage_LoadTimeLimit:                                    ; CODE XREF: Player_Initialize+4   p  ; was: sub_1CE3A
+Stage_LoadTimeLimit:                                    ; CODE XREF: StageIntro_InitializeBanner+4   p  ; was: sub_1CE3A
                                         ; sub_1CDB4   p
                 lea     StageTimeLimitTable(pc),a0
                 nop

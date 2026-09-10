@@ -222,7 +222,7 @@ Camera_ShellshogunBossInit:                             ; DATA XREF: ROM:0000C86
                 clr.b   (byte_FFA95B).w
                 move.w  #$8000,(word_FF808A).w
                 addq.w  #2,(word_FFA950).w
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 clr.w   (dword_FFA90C).w
                 lea     (stru_11820).l,a0
                 jsr     (Data_ProcessPointer).l
@@ -306,7 +306,7 @@ Stage_CameraTransitionCheck:                            ; DATA XREF: ROM:0000C87
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_CB44
                 addq.w  #2,(word_FFA950).w
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 bra.s   Stage_ScrollWaitTransition
 ; ---------------------------------------------------------------------------
 loc_CB44:                                               ; CODE XREF: Stage_CameraTransitionCheck+4   j
@@ -338,7 +338,7 @@ loc_CB70:                                               ; CODE XREF: Camera_Clam
 Stage_ScrollWaitTransition:                             ; CODE XREF: Stage_CameraTransitionCheck+10   j  ; was: sub_CB78
                                         ; DATA XREF: ROM:0000C874   o
                 bsr.s   Camera_UpdateWithScroll
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   locret_CB8A
                 addq.w  #2,(word_FFA950).w
                 move.w  #2,(word_FFA02A).w
@@ -409,7 +409,7 @@ loc_CC1C:                                               ; CODE XREF: Stage_InitP
 ; End of function Stage_InitPostBoss
 ; Start a section change and request the default BGM when no delay is active
 Stage_InitSectionChangeWithDefaultBGM:                  ; DATA XREF: ROM:0000C880   o  ; was: sub_CC20
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Stage_InitSectionChangeWithDefaultBGM_Continue
                 move.b  #$81,d0
                 jsr     (Sound_QueueBGMRequest).l
@@ -558,14 +558,14 @@ Stage_PostTerobusterIntro:                              ; DATA XREF: ROM:0000C89
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 addq.w  #2,(word_FFA950).w
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 clr.w   (dword_FFA90C).w
 loc_CDB8:                                               ; CODE XREF: Stage_PostTerobusterIntro+C   j
                 bra.w   Camera_UpdateTowardsPlayer
 ; End of function Stage_PostTerobusterIntro
 ; Post-Terobuster transition clearing flags and advancing
 Stage_PostTerobusterTransition:                         ; DATA XREF: ROM:0000C892   o  ; was: sub_CDBC
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   loc_CDDE
                 move.b  #1,(byte_FF830E).w
                 move.w  #4,(word_FFA02A).w

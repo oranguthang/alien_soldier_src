@@ -826,7 +826,7 @@ Boss_BugmaxAccelerateFinalDescent:                      ; DATA XREF: ROM:0004C43
                 addi.l  #$800,$1C(a5)
                 cmpi.l  #$8000,$1C(a5)
                 bcs.s   Boss_BugmaxFinalDescentAccelerationReturn
-                move.w  #$5C,(word_FF80C2).w            ; '\'
+                move.w  #$5C,(MessageSequenceState).w   ; '\'
                 addq.w  #2,4(a5)
 Boss_BugmaxFinalDescentAccelerationReturn:              ; CODE XREF: Boss_BugmaxAccelerateFinalDescent+10   j  ; was: locret_4D39C
                 rts

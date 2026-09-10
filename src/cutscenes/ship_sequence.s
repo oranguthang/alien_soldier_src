@@ -118,7 +118,7 @@ Cutscene_ShipInitWait:                                  ; DATA XREF: ROM:off_880
 ; Displays ship name text using UI rendering system
 Cutscene_ShowShipName:                                  ; CODE XREF: Cutscene_ShipInitWait+8   j  ; was: sub_8864
                 move.w  #0,d0
-                jsr     (Cutscene_InitShipNameByDiff).l
+                jsr     (ShipName_StartScript).l
                 rts
 ; End of function Cutscene_ShowShipName
 ; Loads first batch of compressed ship tiles
@@ -199,7 +199,7 @@ Cutscene_WaitShipPosition:                              ; DATA XREF: ROM:0000881
                 cmpi.w  #$FF20,(dword_FF0134).l
                 bcs.w   locret_514E
                 move.w  #0,d0
-                jsr     (Cutscene_InitShipNameByDiff).l
+                jsr     (ShipName_StartScript).l
                 clr.w   (word_FF016A).l
                 addq.w  #2,(word_FF0132).l
                 rts

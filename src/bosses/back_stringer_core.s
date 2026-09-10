@@ -227,10 +227,10 @@ Boss_BackStringerPostEntranceDelayState:                ; DATA XREF: ROM:0004472
                 bpl.w   Boss_BackStringerUseOpeningDelayPoseAndRender
                 addq.w  #2,4(a5)
                 moveq   #1,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
 ; Waits for the shared battle-start gate, then seeds attack selection
 Boss_BackStringerWaitForBattleStartState:               ; DATA XREF: ROM:00044726   o  ; was: loc_4496A
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Boss_BackStringerUseOpeningDelayPoseAndRender
                 clr.b   (byte_FF80EC).w
                 move.w  #7,$41C(a5)
@@ -740,7 +740,7 @@ Boss_BackStringerDefeatFadeOutState:                    ; DATA XREF: ROM:0004473
 Boss_BackStringerCheckDefeatPhaseThreshold:             ; CODE XREF: Boss_BackStringerDefeatFadeOutState+12   j  ; was: loc_44F30
                 cmpi.w  #$1E0,$48(a5)
                 bne.s   Boss_BackStringerUpdateDefeatFade
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
 Boss_BackStringerUpdateDefeatFade:                      ; CODE XREF: Boss_BackStringerDefeatFadeOutState+24   j  ; was: loc_44F3E
                 jmp     (Gfx_UpdatePaletteFade).l
 ; ---------------------------------------------------------------------------

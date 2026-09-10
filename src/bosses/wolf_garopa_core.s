@@ -163,12 +163,12 @@ Boss_WolfGaropaUpdateLeftEntry:                         ; DATA XREF: Boss_WolfGa
                 beq.s   Boss_WolfGaropaUpdateMovementAndOrbTarget
                 addq.w  #2,4(a5)
                 moveq   #0,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 bra.s   Boss_WolfGaropaUpdateMovementAndOrbTarget
 ; End of function Boss_WolfGaropaUpdateLeftEntry
 ; Wait for the battle-ready flag, then begin the orb attack cycle
 Boss_WolfGaropaUpdateBattleStartWait:                   ; DATA XREF: Boss_WolfGaropaUpdate+46   o  ; was: sub_4FB3A
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_WolfGaropaUpdateMovementAndOrbTarget
                 addq.w  #2,4(a5)
                 clr.b   (byte_FF80EC).w

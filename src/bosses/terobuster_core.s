@@ -472,13 +472,13 @@ Boss_TerobusterStageGateDelay:                          ; DATA XREF: ROM:0003858
 Boss_TerobusterStartStageGate:                          ; CODE XREF: Boss_TerobusterStageGateDelay+4   j  ; was: loc_38A9A
                 addq.w  #2,4(a5)
                 moveq   #0,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 move.b  #$8A,d0
                 jsr     (Sound_QueueBGMRequest).l
 ; End of function Boss_TerobusterStageGateDelay
 ; Waits for the shared UI state to close before entering the battle decision state
 Boss_TerobusterWaitForStageReady:                       ; DATA XREF: ROM:00038590   o  ; was: sub_38AB0
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_TerobusterWaitForStageReadyAnimate
                 clr.b   (byte_FF80EC).w
                 subi.w  #$A0,(word_FFA970).w

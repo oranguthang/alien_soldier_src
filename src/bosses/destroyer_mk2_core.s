@@ -282,7 +282,7 @@ Boss_DestroyerMK2EnableLinkedCollisionState:            ; DATA XREF: ROM:0004A90
                 bne.s   Boss_DestroyerMK2EnableLinkedCollisionReturn
                 bsr.w   Boss_DestroyerMK2SetLinkedCollisionFields
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 addq.w  #2,4(a5)
 Boss_DestroyerMK2EnableLinkedCollisionReturn:           ; CODE XREF: Boss_DestroyerMK2EnableLinkedCollisionState+8   j  ; was: locret_4AC2E
                 rts
@@ -315,10 +315,10 @@ Boss_DestroyerMK2ClearLinkedCollisionLoop:              ; CODE XREF: Boss_Destro
                 dbf     d7,Boss_DestroyerMK2ClearLinkedCollisionLoop
                 rts
 ; End of function Boss_DestroyerMK2ClearLinkedCollisionFields
-; Waits for word_FF80C2, then updates external state and orbiting-part fields
+; Waits for MessageSequenceState, then updates external state and orbiting-part fields
 Boss_DestroyerMK2WaitForExternalEffectState:            ; DATA XREF: ROM:0004A910   o  ; was: sub_4AC7C
                 bsr.w   Boss_DestroyerMK2UpdateLinkedObjectGeometry
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_DestroyerMK2WaitForExternalEffectReturn
                 addq.w  #2,4(a5)
                 subi.w  #$A0,(word_FFA970).w

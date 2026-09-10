@@ -416,13 +416,13 @@ locret_53C78:                                           ; CODE XREF: Boss_Missir
 ; Start the boss-message sequence
 Boss_MissirayStartBossMessage:                          ; DATA XREF: ROM:000538CA   o  ; was: sub_53C7A
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_MissirayStartBossMessage
 ; Wait for the boss-message gate before advancing to attack setup
 Boss_MissirayWaitForBossMessage:                        ; DATA XREF: ROM:000538CC   o  ; was: sub_53C8A
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_MissirayWaitForBossMessageReturn
                 clr.b   (byte_FF80EC).w
                 addq.w  #2,4(a5)

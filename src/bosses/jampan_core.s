@@ -382,7 +382,7 @@ Boss_JampanFinishOpeningOffsetNormalization:            ; CODE XREF: Boss_Jampan
                 move.w  #2,(word_FFC792).w
                 addq.w  #2,4(a5)
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 move.b  #$8A,d0
                 jsr     (Sound_QueueBGMOrStop).l
                 rts
@@ -391,7 +391,7 @@ Boss_JampanFinishOpeningOffsetNormalization:            ; CODE XREF: Boss_Jampan
 Boss_JampanWaitForOpeningObjectClearState:              ; DATA XREF: ROM:000491E6   o  ; was: sub_496AA
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_JampanWaitForOpeningObjectClearReturn
                 clr.b   (byte_FF80EC).w
                 move.w  #1,(word_FFC732).w

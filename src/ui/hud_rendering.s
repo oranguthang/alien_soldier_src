@@ -289,7 +289,7 @@ loc_13170:                                              ; CODE XREF: Scroll_Upda
                 bra.s   loc_1311E
 ; End of function Scroll_UpdateShipScroll
 ; Processes multiple palette slots
-Gfx_ProcessPaletteSlots:                                ; CODE XREF: Player_ResetBehaviorPalette+C   j  ; was: sub_13178
+Gfx_ProcessPaletteSlots:                                ; CODE XREF: MessageSequence_FinishScript+C   j  ; was: sub_13178
                                         ; Stage_LoadXiTigerGraphics+34   p
                 move.w  (word_FFA24E).w,(dword_FF8040).w
                 clr.w   (word_FFA24E).w

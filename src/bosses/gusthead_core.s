@@ -263,7 +263,7 @@ Boss_GustheadStopBattleEntrySpinState:                  ; DATA XREF: ROM:0003F25
                 move.b  #$50,$21(a5)                    ; 'P'
                 addq.w  #2,4(a5)
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
 Boss_GustheadStopBattleEntrySpinReturn:                 ; CODE XREF: Boss_GustheadStopBattleEntrySpinState+1A   j  ; was: locret_3F4C0
                 rts
 ; End of function Boss_GustheadStopBattleEntrySpinState
@@ -272,7 +272,7 @@ Boss_GustheadWaitForBattleBannerState:                  ; DATA XREF: ROM:0003F25
                 bsr.w   Boss_GustheadAdvanceJointAngles
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_GustheadWaitForBattleBannerReturn
                 clr.b   (byte_FF80EC).w
                 ori.w   #$100,2(a5)

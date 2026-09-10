@@ -153,7 +153,7 @@ Boss_DestroyerProtoIntroMove:                           ; DATA XREF: ROM:0003151
                 cmpi.w  #$160,$10(a5)
                 bcc.w   Entity_UpdateReturn
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerProtoIntroMove
@@ -271,7 +271,7 @@ Boss_DestroyerProtoWaitForBattleStart:                  ; DATA XREF: ROM:0003151
                 move.w  #$10,d1
                 bsr.w   Boss_DestroyerProtoUpdatePartAngles
                 bsr.w   Boss_DestroyerProtoUpdateViewportOffset
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Entity_UpdateReturn
                 clr.b   (byte_FF80EC).w
                 andi.b  #$EF,$23(a5)

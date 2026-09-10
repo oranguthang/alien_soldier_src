@@ -172,7 +172,7 @@ Boss_DeepStriderIntroPoseAlignmentState:                ; DATA XREF: ROM:0003E5D
                 clr.w   $11E(a5)
                 clr.w   $17C(a5)
                 moveq   #0,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 bra.s   Boss_DeepStriderBattleEntryPoseState
 ; End of function Boss_DeepStriderIntroArcLandingState
 ; Holds the battle-entry pose before starting the repeating attack cycle
@@ -184,7 +184,7 @@ Boss_DeepStriderBattleEntryDelayState:                  ; DATA XREF: ROM:0003E5D
 ; Oscillates the linked-part pose while waiting for the battle-entry sequence
 Boss_DeepStriderBattleEntryPoseState:                   ; CODE XREF: Boss_DeepStriderIntroPoseAlignmentState+70   j  ; was: sub_3E7F2
                                         ; DATA XREF: ROM:0003E5DA   o
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_DeepStriderUpdateBattleEntryPose
                 addq.w  #2,4(a5)
                 move.w  #$40,$17E(a5)                   ; '@'

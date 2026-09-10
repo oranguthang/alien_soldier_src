@@ -1,6 +1,6 @@
 Stage_Stage14Scroll:                                    ; DATA XREF: ROM:0000D99C   o  ; was: sub_DE44
                 addq.w  #2,(word_FFA950).w
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
 ; Updates scroll for stage 14 progression
 Stage_Stage14Scroll_Update:                             ; DATA XREF: ROM:0000D99E   o  ; was: loc_DE4E
                 bsr.w   Gfx_UpdateScroll

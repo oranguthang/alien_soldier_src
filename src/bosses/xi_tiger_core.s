@@ -186,7 +186,7 @@ Boss_XiTigerBattleActive:                               ; DATA XREF: ROM:0003D89
                 bne.s   Boss_XiTigerUpdateActiveBattlePose
                 addq.w  #2,4(a5)
                 moveq   #5,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
 Boss_XiTigerUpdateActiveBattlePose:                     ; CODE XREF: Boss_XiTigerBattleStart+24   j  ; was: loc_3DA86
                                         ; Boss_XiTigerBattleActive+6   j
                 lea     Boss_XiTigerIdlePoseCommands(pc),a1
@@ -196,7 +196,7 @@ Boss_XiTigerUpdateActiveBattlePose:                     ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerBattleActive
 ; Waits for the player sequence to finish before entering the idle decision loop
 Boss_XiTigerWaitForSequenceState:                       ; DATA XREF: ROM:0003D892   o  ; was: sub_3DA94
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_XiTigerUpdateActiveBattlePose
                 clr.b   (byte_FF80EC).w
                 addi.w  #$40,(word_FFA974).w            ; '@'

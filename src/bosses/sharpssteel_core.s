@@ -59,7 +59,7 @@ Boss_SharpssteelStateReturn:                            ; CODE XREF: Boss_Sharps
 
 ; Waits for the shared player-ready word before initializing the encounter
 Boss_SharpssteelWaitForPlayerReadyState:                ; DATA XREF: ROM:Boss_SharpssteelStates   o  ; was: sub_47C96
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_SharpssteelWaitForPlayerReadyReturn
                 addq.w  #2,4(a5)
                 clr.w   8(a5)
@@ -165,11 +165,11 @@ Boss_SharpssteelRunBladeEntranceDelayState:             ; DATA XREF: ROM:00047C6
 Boss_SharpssteelFinishBladeEntranceDelay:               ; CODE XREF: Boss_SharpssteelRunBladeEntranceDelayState+4   j
                 addq.w  #2,4(a5)
                 moveq   #4,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
 ; End of function Boss_SharpssteelRunBladeEntranceDelayState
 ; Continues entrance motion until the shared player-ready word clears
 Boss_SharpssteelWaitForPlayerAfterBladeEntranceState:   ; DATA XREF: ROM:00047C6A   o  ; was: sub_47E02
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 beq.s   Boss_SharpssteelAdvanceFromBladeEntrance
                 bsr.w   Boss_SharpssteelUpdateHorizontalAttackMotion
                 bra.w   Boss_SharpssteelUpdateBladeAssembly

@@ -125,16 +125,16 @@ Boss_SunsetStingSecondFormTileAnimationOffsets:
 
 ; Queues the second-form intro message after the preceding transition
 Boss_SunsetStingQueueSecondFormIntroMessageState:       ; DATA XREF: ROM:0004194A   o  ; was: sub_41AAA
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Boss_SunsetStingSecondFormIntroUpdate
                 moveq   #5,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 addq.w  #2,4(a5)
                 bra.w   Boss_SunsetStingSecondFormIntroUpdate
 ; End of function Boss_SunsetStingQueueSecondFormIntroMessageState
 ; Waits for the second-form intro message to complete before advancing
 Boss_SunsetStingWaitForSecondFormIntroMessageState:     ; DATA XREF: ROM:0004194C   o  ; was: sub_41AC2
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_SunsetStingSecondFormIntroUpdate
                 clr.b   (byte_FF80EC).w
                 addq.w  #2,4(a5)

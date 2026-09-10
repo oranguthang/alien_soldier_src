@@ -621,7 +621,7 @@ Boss_BugmaxWaitAfterJitterAndStartBossMessage:          ; DATA XREF: ROM:0004C3D
                 subq.w  #1,$48(a5)
                 bne.s   Boss_BugmaxPostJitterWaitReturn
                 move.w  #3,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 addq.w  #2,4(a5)
 Boss_BugmaxPostJitterWaitReturn:                        ; CODE XREF: Boss_BugmaxWaitAfterJitterAndStartBossMessage+8   j  ; was: locret_4C65C
                 rts
@@ -629,7 +629,7 @@ Boss_BugmaxPostJitterWaitReturn:                        ; CODE XREF: Boss_Bugmax
 ; Wait for the opening transition gate and enable controller collision
 Boss_BugmaxWaitForOpeningTransition:                    ; DATA XREF: ROM:0004C3E0   o  ; was: sub_4C65E
                 bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_BugmaxOpeningTransitionWaitReturn
                 move.b  #$D0,$21(a5)
                 clr.b   (byte_FF80EC).w

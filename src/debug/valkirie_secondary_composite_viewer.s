@@ -35,7 +35,7 @@ Debug_ValkirieType3F0Initialize:                        ; DATA XREF: Debug_Valki
                 move.w  a5,$4A(a5)
 ; Type-$3F0 wait state: publish readiness when the global wait clears
 Debug_ValkirieType3F0UpdateWaitFlag:                    ; DATA XREF: ROM:000515D4   o  ; was: loc_51616
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Debug_ValkirieType3F0WaitReturn
                 move.b  #1,(byte_FFA958).w
 Debug_ValkirieType3F0WaitReturn:                        ; CODE XREF: Debug_ValkirieType3F0Initialize+44   j  ; was: locret_51622

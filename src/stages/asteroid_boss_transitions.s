@@ -87,7 +87,7 @@ loc_F2B0:                                               ; CODE XREF: Boss_Destro
 ; Initializes destroyer proto boss phase state
 Boss_DestroyerPhaseInit:                                ; DATA XREF: ROM:0000F128   o  ; was: sub_F304
                 move.w  #$C,(word_FFA950).w
-                clr.w   (word_FF80C2).w
+                clr.w   (MessageSequenceState).w
                 clr.w   (word_FF9DAE).w
                 move.b  #3,(word_FFF7E6+1).w
                 bra.w   loc_F2B0
@@ -135,7 +135,7 @@ loc_F398:                                               ; CODE XREF: Boss_Destro
                 tst.w   d7
                 bne.s   locret_F3DE
                 move.b  #1,(byte_FFA958).w
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  #$2A,(StageTableIndex).w        ; '*'
                 move.w  #$166,(dword_FF9D96).w
                 move.l  #$2000000,(dword_FF9DAA).w
@@ -258,7 +258,7 @@ Boss_ShieldViperFinalCleanup:                           ; DATA XREF: ROM:0000F11
 ; ---------------------------------------------------------------------------
 loc_F53E:                                               ; CODE XREF: Boss_ShieldViperFinalCleanup+C   j
                                         ; Boss_ShieldViperFinalCleanup+E   j
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   locret_F55E
                 move.b  #$89,d0
                 jsr     (Sound_QueueBGMOrStop).l
@@ -331,7 +331,7 @@ Boss_WolfGaropaDispatcher:                              ; DATA XREF: ROM:0000F12
                 tst.w   (word_FFA944).w
                 bpl.s   locret_F660
                 addq.w  #2,(word_FFA950).w
-                move.w  #$50,(word_FF80C2).w            ; 'P'
+                move.w  #$50,(MessageSequenceState).w   ; 'P'
                 clr.b   (byte_FFA209).w
                 move.w  #$494,(word_FFDB20).w
                 clr.w   (word_FFDB24).w
@@ -356,7 +356,7 @@ Boss_WolfGaropaIntroInit:                               ; DATA XREF: ROM:0000F12
 ; Intro movement
 Boss_WolfGaropaIntroMove:                               ; DATA XREF: ROM:0000F124   o  ; was: sub_F686
                 bsr.w   Boss_WolfGaropaIntroStop
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.w   Boss_DestroyerProtoTransition_Return
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FF9DBA).w
@@ -369,7 +369,7 @@ Boss_WolfGaropaSpawnProjectile2:                        ; DATA XREF: ROM:0000F12
                 tst.w   (Entity_ObjectPool).w
                 bne.s   locret_F6C2
                 move.w  #$30,(word_FFA950).w            ; '0'
-                move.w  #$2E,(word_FF80C2).w            ; '.'
+                move.w  #$2E,(MessageSequenceState).w   ; '.'
                 move.w  #$80,(dword_FF8128).w
 locret_F6C2:                                            ; CODE XREF: Boss_WolfGaropaSpawnProjectile2+8   j
                 rts
@@ -377,7 +377,7 @@ locret_F6C2:                                            ; CODE XREF: Boss_WolfGa
 ; Transition out of boss
 Boss_WolfGaropaTransitionOut:                           ; DATA XREF: ROM:0000F12C   o  ; was: sub_F6C4
                 bsr.w   Boss_WolfGaropaBattleStart
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   locret_F6F2
                 subq.w  #1,(dword_FF8128).w
                 bpl.s   locret_F6F2

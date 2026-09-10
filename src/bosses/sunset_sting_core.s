@@ -85,13 +85,13 @@ Boss_SunsetStingEarlyFormTileLoadCommands:
 ; Queues the phase-intro message and advances to its movement state
 Boss_SunsetStingQueueIntroMessageState:                 ; DATA XREF: ROM:00040D06   o  ; was: sub_40E24
                 moveq   #5,d0
-                jsr     (UI_StartBossMessage).l
+                jsr     (BossMessage_Start).l
                 addq.w  #2,4(a5)
                 bra.w   Boss_SunsetStingIntroUpdateMotion
 ; End of function Boss_SunsetStingQueueIntroMessageState
 ; Holds the intro flight pattern until the shared message timer expires
 Boss_SunsetStingWaitForIntroMessageState:               ; DATA XREF: ROM:00040D08   o  ; was: sub_40E34
-                tst.w   (word_FF80C2).w
+                tst.w   (MessageSequenceState).w
                 bne.s   Boss_SunsetStingIntroUpdateMotion
                 clr.b   (byte_FF80EC).w
                 subi.w  #$A0,(word_FFA970).w
