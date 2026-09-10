@@ -198,7 +198,7 @@ Object_ClearAllExceptTypes:                             ; CODE XREF: Cutscene_Sh
                 moveq   #0,d3
                 moveq   #$3C,d7                         ; '<'
 Object_ClearAllExceptTypes_Loop:                        ; CODE XREF: Object_ClearAllExceptTypes+76   j  ; was: loc_1C290
-                                        ; Boss_SireneBattleStart+74   p
+                                        ; Boss_UpdateSireneState4+74   p
                 move.w  (a0),d2
                 beq.s   Object_ClearAllExceptTypes_Next
                 cmp.w   d0,d2

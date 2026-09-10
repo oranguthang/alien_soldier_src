@@ -2237,9 +2237,25 @@ only interpret pose records, interpolate frames, distribute values across the
 All 80 renamed definitions have address-backed static audit records. This
 eliminated the remaining 56 address-derived definitions from `medusa.s`, raised
 provenance to 10,135 mappings, took the audit registry to 6,087 entries, and
-lowered the project ceiling to 5,688. The module remains a cohesive 794-line
+lowered the project ceiling to 5,688. After normalizing its inherited XREF
+comments, the module remains a cohesive 791-line
 boss implementation, within the ordinary 1,000-line limit, so no split or
 size waiver is needed.
+
+The adjacent Sirene block at `0x057498-0x057EBD` is now reconstructed as the
+same explicit 11-state shape (`0` through `$14` in even steps), its 28-part
+pose pipeline, the battle distortion/display effect, and the type-$490
+projectile update. Numeric state names are retained where control flow is
+stronger evidence than an attack interpretation. The old `Enemy_Projectile`
+state names were actually entries in Sirene's boss table; the old attack,
+movement, bullet, and two projectile labels around `0x05783C-0x057C99` were
+effect-buffer or pose operations rather than projectile handlers.
+
+All 78 renamed definitions have address-backed static audit records. This
+eliminated all 52 address-derived definitions from `sirene.s`, raised
+provenance to 10,187 mappings, took the audit registry to 6,165 entries, and
+lowered the project ceiling to 5,636. The cohesive boss module remains 792
+lines and requires neither a split nor a size waiver.
 
 Four especially broad data labels are explicitly registered:
 

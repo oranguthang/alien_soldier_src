@@ -295,7 +295,7 @@ Boss_ArtemisMetaspritePoseAngles:   dc.w    $80, $C0, $C080  ; DATA XREF: Boss_A
                 dc.w    $8080, $A080, $8080
                 dc.w    $80F0
 ; Sirene metasprite initialization and neutral-pose data
-Boss_SireneMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_SireneIntroStop+10   o  ; was: off_5A1D4
+Boss_SireneMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_InitSireneMetasprite+10   o  ; was: off_5A1D4
                 dc.l    SevenForcesInlinePartDescriptor0+1
                 dc.l    SevenForcesRotationFrameTable2-$40000000
                 dc.l    0
@@ -324,13 +324,13 @@ Boss_SireneMetaspritePartDescriptors:   dc.l    word_ECDCA+$400000  ; DATA XREF:
                 dc.l    SevenForcesRotationFrameTable3+$18000000
                 dc.l    SevenForcesRotationFrameTable3+$18000000
 Boss_SireneMetaspriteInitialAngles: dc.w    $8098, $9598, $8494  ; was: word_5A244
-                                        ; DATA XREF: Boss_SireneIntroStop+16   o
+                                        ; DATA XREF: Boss_InitSireneMetasprite+16   o
                 dc.w    $9090, $9097, $9797
                 dc.w    $9798, $8494, $9090
                 dc.w    $9097, $9797, $9794
                 dc.w    $8EA0, $9898
 Boss_SireneMetaspritePartLinks: dc.w    $C008, $C008, $C007  ; was: word_5A260
-                                        ; DATA XREF: Boss_SireneIntroStop+1C   o
+                                        ; DATA XREF: Boss_InitSireneMetasprite+1C   o
                 dc.w    $C000, $C125, $C124
                 dc.w    $C1E4, $C244, $C2A2
                 dc.w    $C303, $C303, $C303
@@ -340,7 +340,7 @@ Boss_SireneMetaspritePartLinks: dc.w    $C008, $C008, $C007  ; was: word_5A260
                 dc.w    $C6C3, $C6C3, $C068
                 dc.w    $68, $C908, $C968
                 dc.w    $C9C8
-Boss_SireneMetaspritePoseAngles:    dc.w    $2080, $60, $8080  ; DATA XREF: Boss_SireneIntroStop+28   o  ; was: word_5A298
+Boss_SireneMetaspritePoseAngles:    dc.w    $2080, $60, $8080  ; DATA XREF: Boss_InitSireneMetasprite+28   o  ; was: word_5A298
                 dc.w    $C080, $4080
 ; Alternate Valkirie metasprite initialization and neutral-pose data
 Boss_ValkirieAlternateMetaspritePartDescriptors:    dc.l    word_ECDCA+$400000  ; DATA XREF: Boss_ValkirieAlternateInit+10   o  ; was: off_5A2A2

@@ -209,7 +209,7 @@ Boss_MedusaObjectInitTable: dc.w    $C620, $5018, $E020, $E020, $E818, $E41C, $8
                                         ; DATA XREF: Boss_UpdateMedusaState4+4A   o
                 dc.w    $FFFE
 Boss_SireneObjectInitTable: dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $3888  ; was: word_1BF2A
-                                        ; DATA XREF: Boss_SireneShootPattern1+B4   o
+                                        ; DATA XREF: Boss_UpdateSireneState10   o
                 dc.w    $C920, $5000, $F010, $F010, $F010, $F010, $3810
                 dc.w    $CCE0, $5000, $F010, $F010, $F010, $F010, $3810
                 dc.w    $FFFE

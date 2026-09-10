@@ -268,7 +268,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Entity_UpdateSevenForcesIntro
                 dc.l    Entity_UpdateValkirieBattle
                 dc.l    Boss_UpdateMedusa
-                dc.l    Boss_SireneIntroInit
+                dc.l    Boss_UpdateSirene
                 dc.l    Boss_ArtemisIntroStop
                 dc.l    Boss_UnidentifiedSevenForceMain
                 dc.l    Boss_ValkirieAlternateMain
@@ -291,7 +291,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_Epsilon1IntroController
                 dc.l    Boss_ArtemisAnimationScript
                 dc.l    Entity_EmptyState9
-                dc.l    Projectile_SireneHoming
+                dc.l    Projectile_UpdateSireneHoming
                 dc.l    Boss_WolfGaropaRewardShowerMain
                 dc.l    Projectile_ZLeoHorizontalLaserMain
 
