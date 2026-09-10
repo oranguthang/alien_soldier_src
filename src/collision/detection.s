@@ -20,7 +20,7 @@ Collision_UpdateSystem_CheckResourceRefill:             ; CODE XREF: Collision_U
                 tst.w   (word_FF822A).w
                 beq.s   Collision_UpdateSystem_Return
                 move.w  (word_FFA218).w,(word_FFA216).w
-                move.w  #$5000,(word_FFA270).w
+                move.w  #$5000,(StageTimeRemaining).w
 Collision_UpdateSystem_Return:                          ; CODE XREF: Collision_UpdateSystem+4   j  ; was: locret_13B28
                                         ; Collision_UpdateSystem+3C   j
                 rts

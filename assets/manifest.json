@@ -5009,8 +5009,8 @@
       "sha1": "47d53cc29688e81a40f58f927aae0151f797b9bc"
     },
     {
-      "name": "word_20666",
-      "path": "other/word_20666.bin",
+      "name": "results_stage_detail_text",
+      "path": "other/results_stage_detail_text.bin",
       "region": "other",
       "address": "0x20666",
       "end": "0x20910",

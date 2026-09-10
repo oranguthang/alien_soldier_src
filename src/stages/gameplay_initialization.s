@@ -1,5 +1,5 @@
 Stage_InitPlayerAndScroll:                              ; DATA XREF: ROM:0001E850   o  ; was: sub_1EDC2
-                move.w  #$7FFF,(word_FFA270).w
+                move.w  #$7FFF,(StageTimeRemaining).w
                 jsr     (Player_InitializeStats).l
                 move.w  #$5C,(word_FFA404).w            ; '\'
                 move.b  #0,(word_FFF7F4+1).w
@@ -110,7 +110,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 move.w  #$12,(word_FFA02A).w
                 move.w  #$DA,(dword_FFA410).w
                 move.w  #$130,(dword_FFA414).w
-                move.w  #$330,(word_FFA270).w
+                move.w  #$330,(StageTimeRemaining).w
                 bset    #0,(byte_FFA272).w
                 move.w  #$8000,(word_FF808A).w
                 lea     (StageStartPaletteOffsetList).l,a4

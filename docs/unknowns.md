@@ -2819,3 +2819,60 @@ This pass adds 70 provenance mappings and 70 static audit records, raising the
 totals from 11,522 to 11,592 and from 7,755 to 7,825. Address-derived
 definitions fall from 4,519 to 4,449. Module count remains 349. The canonical
 Japanese ROM remains byte-identical and all 37 project tests pass.
+
+The results-scrolling pass reconstructs the complete 627-line
+`ui/results_scrolling.s` state machine. All 61 local address-derived targets
+now describe their observed jobs in data preparation, initial and scrolling
+row rendering, viewport completion, horizontal column snapping, vertical
+navigation, and packed-BCD formatting. Six adjacent text definitions in
+`ui/results_data.s` (five data objects plus the include end label) are also
+resolved from their direct consumers and custom-font bytes. The 682-byte
+private include is consequently renamed from
+`word_20666.bin` to `results_stage_detail_text.bin`; both render paths prove
+that it is a 31-record, 22-byte-per-record stage-detail text table.
+
+This audit also corrects seven generated semantic claims. The routine at
+`0x01FFF0` does not test a score: it submits the one-shot completion-music
+request `$85` once the vertical scroll reaches its trigger point. The final
+state at `0x020016` updates interactive browsing rather than waiting for an
+unseen transition, and its callee manages both axes of results navigation.
+The clear loop at `0x020236` specifically resets the 25-word second-interval
+array at `$FFAA80`. Finally, custom-font codes `$25`, `$2A`, and `$22` cannot
+be named from their ASCII code points: static use proves only a packed-BCD
+field separator and two missing-value glyphs, so the former percent-sign,
+asterisk, and quote claims have been removed.
+
+The package adds 67 provenance mappings and 73 static audit records, raising
+the totals from 11,592 to 11,659 and from 7,825 to 7,898. It lowers the
+enforced address-derived ceiling from 4,449 to 4,382. Module count remains
+349; `ui/results_scrolling.s` now contains no live address-derived names. A
+fresh `make split` reproduces all 579 canonical segments, the direct pinned
+build reproduces the Japanese ROM byte for byte, and all 37 project tests pass.
+
+The following results-data pass resolves all 37 remaining address-derived
+targets in the 413-line `ui/results_data.s` module. Its names now expose the
+25-entry summary accumulation, the three appended total rows, packed-BCD
+conversion, entering-row redraw during vertical scrolling, alternating
+selected-row highlight, and the otherwise unreferenced direct-scroll helper.
+The latter remains explicitly documented as having no known static caller;
+the rename describes its instructions without inventing a shipped route.
+
+Cross-module evidence disproves another Sonnet-generated “weapon selection”
+cluster. The table at `0x01CE4C` is a 25-entry packed-BCD stage time-limit
+table, and `Stage_LoadTimeLimit` copies its selected word to the live timer at
+`$FFFFA270`. Timer code decrements that word once per second and HUD code
+renders its nibbles. The former weapon-selection routines actually save that
+timer to the phase-split and stage-completion arrays at `$FFFFAA00` and
+`$FFFFAA80`. The alleged score incrementer updates a separate per-stage
+visit-count array at `$FFFFAB00`; its deliberately neutral name avoids
+claiming the exact counting convention implied by the displayed
+`TOTAL CONTINUE` label.
+
+This package corrects 17 existing semantic names, promotes four RAM fields,
+and replaces 37 local address-derived labels. It adds 41 provenance mappings
+and 58 static audit records, raising the totals from 11,659 to 11,700 and from
+7,898 to 7,956. The enforced address-derived ceiling falls from 4,382 to
+4,341. Module count remains 349, and `ui/results_data.s` now contains no live
+address-derived names. A fresh pinned-toolchain build remains byte-identical
+to the canonical Japanese ROM, all 37 project tests pass, and the asset,
+source-inventory, and ROM-layout gates remain green.

@@ -1,6 +1,6 @@
 UI_AddScoreBCD:                                         ; CODE XREF: Text_FinalizeAndSaveScore+14   p  ; was: sub_3954
                                         ; Collision_CheckWeaponProjectilesAgainstEnemies+E2   p
-                tst.w   (word_FFA270).w
+                tst.w   (StageTimeRemaining).w
                 beq.s   locret_397C
                 lea     (word_FFA216).w,a0
                 clr.b   (byte_FFA005).w

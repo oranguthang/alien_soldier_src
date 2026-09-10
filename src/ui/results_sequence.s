@@ -1,6 +1,6 @@
 Player_Initialize:                                      ; DATA XREF: ROM:0000A9F2   o  ; was: sub_AE9A
                 addq.w  #2,(word_FF80C2).w
-                jsr     (Enemy_UpdateBehavior).l
+                jsr     (Stage_LoadTimeLimit).l
                 bclr    #0,(byte_FFA272).w
                 move.l  #word_B534,(dword_FF80CE).w
                 move.w  #$5400,(word_FF80C4).w
@@ -202,12 +202,12 @@ loc_B0F4:                                               ; CODE XREF: Text_Comple
                 move.b  #$C4,d0
                 jsr     (Sound_PlaySFX).l
 loc_B0FE:                                               ; CODE XREF: Text_CompleteWithSound+1A   j
-                jsr     (UI_StoreWeaponToBuffer).l
-                tst.w   (word_FFA270).w
+                jsr     (Results_StoreStageCompletionTime).l
+                tst.w   (StageTimeRemaining).w
                 beq.s   loc_B122
                 addq.w  #2,(word_FF80C2).w
                 move.w  #$F0,(word_FF80D4).w
-                move.w  (word_FFA270).w,(word_FF822C).w
+                move.w  (StageTimeRemaining).w,(word_FF822C).w
                 andi.w  #$FFF0,(word_FF822C).w
                 rts
 ; ---------------------------------------------------------------------------
@@ -260,7 +260,7 @@ Text_FinalizeAndSaveScore:                              ; DATA XREF: ROM:0000A9E
                 bpl.s   locret_B1A6
                 clr.w   (word_FF80C2).w
                 moveq   #0,d0
-                move.w  (word_FFA270).w,d0
+                move.w  (StageTimeRemaining).w,d0
                 jsr     (UI_AddScoreBCD).l
 locret_B1A6:                                            ; CODE XREF: Text_FinalizeAndSaveScore+8   j
                 rts

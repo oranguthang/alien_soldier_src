@@ -3,61 +3,61 @@ Results_CheckSkipButton:                                ; CODE XREF: Results_Han
                 bsr.s   Results_DispatchHandler
                 move.w  (dword_FFA900).w,(dword_FFA908).w
                 tst.w   (word_FF9442).w
-                beq.s   locret_1FC0C
+                beq.s   Results_CheckSkipButtonReturn
                 btst    #7,(word_FFF708).w
-                beq.s   locret_1FC0C
+                beq.s   Results_CheckSkipButtonReturn
                 move.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-locret_1FC0C:                                           ; CODE XREF: Results_CheckSkipButton+C   j
+Results_CheckSkipButtonReturn:                          ; CODE XREF: Results_CheckSkipButton+C   j  ; was: locret_1FC0C
                                         ; Results_CheckSkipButton+14   j
                 rts
 ; End of function Results_CheckSkipButton
 ; Dispatches results screen handler by state
 Results_DispatchHandler:                                ; CODE XREF: Results_CheckSkipButton   p  ; was: sub_1FC0E
                 move.w  (dword_FF9400).w,d0
-                lea     off_1FC1A(pc,d0.w),a0
+                lea     Results_HandlerOffsets(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
 ; End of function Results_DispatchHandler
 ; ---------------------------------------------------------------------------
-off_1FC1A:      dc.w    Results_InitializeDataDisplay-*  ; DATA XREF: Results_DispatchHandler+4   o
+Results_HandlerOffsets: dc.w    Results_InitializeDataDisplay-*  ; DATA XREF: Results_DispatchHandler+4   o  ; was: off_1FC1A
                 dc.w    UI_RenderResultsDataRow-*
                 dc.w    UI_ScrollResultsScreen-*
                 dc.w    UI_RenderResultsRowWithScroll-*
                 dc.w    UI_CompleteResultsScroll-*
-                dc.w    UI_WaitForResultsTransition-*
+                dc.w    Results_UpdateBrowsingState-*
 
 ; Initializes results data display with score breakdown
-Results_InitializeDataDisplay:                          ; DATA XREF: ROM:off_1FC1A   o  ; was: sub_1FC26
+Results_InitializeDataDisplay:                          ; DATA XREF: ROM:Results_HandlerOffsets   o  ; was: sub_1FC26
                 addq.w  #2,(dword_FF9400).w
                 move.w  #1,d0
                 move.w  (word_FFFF46).w,(word_FF9442).w
                 clr.w   (word_FFFF46).w
                 tst.w   (word_FF9442).w
-                bne.s   loc_1FC50
+                bne.s   Results_SetExtendedScrollBounds
                 tst.w   d0
-                bne.s   loc_1FC50
+                bne.s   Results_SetExtendedScrollBounds
                 move.w  #$13,(dword_FF943C+2).w
                 move.w  #$FF40,(dword_FF943C).w
-                bra.s   loc_1FC5C
+                bra.s   Results_ConfigureInitialViewport
 ; ---------------------------------------------------------------------------
-loc_1FC50:                                              ; CODE XREF: Results_InitializeDataDisplay+16   j
+Results_SetExtendedScrollBounds:                        ; CODE XREF: Results_InitializeDataDisplay+16   j  ; was: loc_1FC50
                                         ; Results_InitializeDataDisplay+1A   j
                 move.w  #$17,(dword_FF943C+2).w
                 move.w  #$FEF0,(dword_FF943C).w
-loc_1FC5C:                                              ; CODE XREF: Results_InitializeDataDisplay+28   j
-                move.w  #$50,(dword_FFA90C).w           ; 'P'
+Results_ConfigureInitialViewport:                       ; CODE XREF: Results_InitializeDataDisplay+28   j  ; was: loc_1FC5C
+                move.w  #$50,(dword_FFA90C).w
                 move.w  #$F0,(dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 move.w  #$18,d7
                 lea     ((dword_FF944E+2)).w,a0
-                lea     (UI_StageWeaponSelectionTable).l,a1
-                lea     (word_FFAA00).w,a2
-                lea     (word_FFAA80).w,a3
-                lea     (word_FFAB00).w,a4
+                lea     (StageTimeLimitTable).l,a1
+                lea     (StagePhaseSplitTimes).w,a2
+                lea     (StageCompletionTimes).w,a3
+                lea     (StageResultVisits).w,a4
                 moveq   #1,d5
                 moveq   #0,d6
-loc_1FC8A:                                              ; CODE XREF: Results_InitializeDataDisplay+190   j
+Results_BuildStageRowsLoop:                             ; CODE XREF: Results_InitializeDataDisplay+190   j  ; was: loc_1FC8A
                 sub.w   d4,d4
                 abcd    d5,d6
                 move.w  d6,d0
@@ -67,105 +67,105 @@ loc_1FC8A:                                              ; CODE XREF: Results_Ini
                 move.w  (dword_FF9400+2).w,d0
                 addq.w  #2,(dword_FF9400+2).w
                 cmp.w   (StageTableIndex).w,d0
-                bhi.s   loc_1FCCC
+                bhi.s   Results_WriteMissingWeaponSelection
                 tst.w   (a2)
-                bpl.s   loc_1FCB4
+                bpl.s   Results_WriteWeaponSelection
                 cmp.w   (StageTableIndex).w,d0
-                bne.s   loc_1FCCC
-loc_1FCB4:                                              ; CODE XREF: Results_InitializeDataDisplay+86   j
+                bne.s   Results_WriteMissingWeaponSelection
+Results_WriteWeaponSelection:                           ; CODE XREF: Results_InitializeDataDisplay+86   j  ; was: loc_1FCB4
                 move.w  (a1),(dword_FF9408+2).w
                 move.b  (a1),d0
                 bsr.w   UI_ConvertBCDToDigits
-                bsr.w   UI_WritePercentSign
+                bsr.w   Results_WriteTimeSeparator
                 move.b  1(a1),d0
                 bsr.w   UI_ConvertBCDToDigits
-                bra.s   loc_1FCE0
+                bra.s   Results_AdvanceToFirstInterval
 ; ---------------------------------------------------------------------------
-loc_1FCCC:                                              ; CODE XREF: Results_InitializeDataDisplay+82   j
+Results_WriteMissingWeaponSelection:                    ; CODE XREF: Results_InitializeDataDisplay+82   j  ; was: loc_1FCCC
                                         ; Results_InitializeDataDisplay+8C   j
-                bsr.w   UI_WriteAsterisk
-                bsr.w   UI_WriteAsterisk
-                bsr.w   UI_WritePercentSign
-                bsr.w   UI_WriteAsterisk
-                bsr.w   UI_WriteAsterisk
-loc_1FCE0:                                              ; CODE XREF: Results_InitializeDataDisplay+A4   j
+                bsr.w   Results_WriteMissingGlyph
+                bsr.w   Results_WriteMissingGlyph
+                bsr.w   Results_WriteTimeSeparator
+                bsr.w   Results_WriteMissingGlyph
+                bsr.w   Results_WriteMissingGlyph
+Results_AdvanceToFirstInterval:                         ; CODE XREF: Results_InitializeDataDisplay+A4   j  ; was: loc_1FCE0
                 addq.w  #2,a1
                 bsr.w   UI_WriteNullByte
                 bsr.w   UI_WriteNullByte
                 move.w  (a2)+,(dword_FF940C).w
-                bmi.s   loc_1FD02
+                bmi.s   Results_WriteMissingFirstInterval
                 move.w  (dword_FF9408+2).w,(dword_FF9410+2).w
                 move.w  (dword_FF940C).w,(dword_FF9410).w
-                bsr.w   UI_FormatTimeDifference
-                bra.s   loc_1FD16
+                bsr.w   Results_FormatBCDTimeDifference
+                bra.s   Results_AdvanceToSecondInterval
 ; ---------------------------------------------------------------------------
-loc_1FD02:                                              ; CODE XREF: Results_InitializeDataDisplay+C8   j
+Results_WriteMissingFirstInterval:                      ; CODE XREF: Results_InitializeDataDisplay+C8   j  ; was: loc_1FD02
                 move.b  #$FF,d0
                 bsr.w   UI_ConvertBCDToDigits
-                bsr.w   UI_WritePercentSign
+                bsr.w   Results_WriteTimeSeparator
                 move.b  #$FF,d0
                 bsr.w   UI_ConvertBCDToDigits
-loc_1FD16:                                              ; CODE XREF: Results_InitializeDataDisplay+DA   j
+Results_AdvanceToSecondInterval:                        ; CODE XREF: Results_InitializeDataDisplay+DA   j  ; was: loc_1FD16
                 bsr.w   UI_WriteNullByte
                 bsr.w   UI_WriteNullByte
                 move.w  (a3)+,(dword_FF940C+2).w
-                bmi.s   loc_1FD36
+                bmi.s   Results_WriteMissingSecondInterval
                 move.w  (dword_FF940C).w,(dword_FF9410+2).w
                 move.w  (dword_FF940C+2).w,(dword_FF9410).w
-                bsr.w   UI_FormatTimeDifference
-                bra.s   loc_1FD4A
+                bsr.w   Results_FormatBCDTimeDifference
+                bra.s   Results_AdvanceToTotalInterval
 ; ---------------------------------------------------------------------------
-loc_1FD36:                                              ; CODE XREF: Results_InitializeDataDisplay+FC   j
+Results_WriteMissingSecondInterval:                     ; CODE XREF: Results_InitializeDataDisplay+FC   j  ; was: loc_1FD36
                 move.b  #$FF,d0
                 bsr.w   UI_ConvertBCDToDigits
-                bsr.w   UI_WritePercentSign
+                bsr.w   Results_WriteTimeSeparator
                 move.b  #$FF,d0
                 bsr.w   UI_ConvertBCDToDigits
-loc_1FD4A:                                              ; CODE XREF: Results_InitializeDataDisplay+10E   j
+Results_AdvanceToTotalInterval:                         ; CODE XREF: Results_InitializeDataDisplay+10E   j  ; was: loc_1FD4A
                 bsr.w   UI_WriteNullByte
                 bsr.w   UI_WriteNullByte
                 tst.w   (dword_FF940C+2).w
-                bmi.s   loc_1FD6A
+                bmi.s   Results_WriteMissingTotalInterval
                 move.w  (dword_FF9408+2).w,(dword_FF9410+2).w
                 move.w  (dword_FF940C+2).w,(dword_FF9410).w
-                bsr.w   UI_FormatTimeDifference
-                bra.s   loc_1FD7E
+                bsr.w   Results_FormatBCDTimeDifference
+                bra.s   Results_PrepareStageCount
 ; ---------------------------------------------------------------------------
-loc_1FD6A:                                              ; CODE XREF: Results_InitializeDataDisplay+130   j
+Results_WriteMissingTotalInterval:                      ; CODE XREF: Results_InitializeDataDisplay+130   j  ; was: loc_1FD6A
                 move.b  #$FF,d0
                 bsr.w   UI_ConvertBCDToDigits
-                bsr.w   UI_WritePercentSign
+                bsr.w   Results_WriteTimeSeparator
                 move.b  #$FF,d0
                 bsr.w   UI_ConvertBCDToDigits
-loc_1FD7E:                                              ; CODE XREF: Results_InitializeDataDisplay+142   j
+Results_PrepareStageCount:                              ; CODE XREF: Results_InitializeDataDisplay+142   j  ; was: loc_1FD7E
                 bsr.w   UI_WriteNullByte
                 bsr.w   UI_WriteNullByte
                 move.w  (a4)+,d0
-                bpl.s   loc_1FD90
+                bpl.s   Results_ConvertStageCountToBCD
                 tst.w   -2(a3)
-                bmi.s   loc_1FDA6
-loc_1FD90:                                              ; CODE XREF: Results_InitializeDataDisplay+162   j
+                bmi.s   Results_WriteStageCount
+Results_ConvertStageCountToBCD:                         ; CODE XREF: Results_InitializeDataDisplay+162   j  ; was: loc_1FD90
                 addq.w  #1,d0
                 movem.w a0,-(sp)
                 lea     (Math_PackedBCDLookup).l,a0
                 add.w   d0,d0
                 move.w  (a0,d0.w),d0
                 movem.w (sp)+,a0
-loc_1FDA6:                                              ; CODE XREF: Results_InitializeDataDisplay+168   j
+Results_WriteStageCount:                                ; CODE XREF: Results_InitializeDataDisplay+168   j  ; was: loc_1FDA6
                 bsr.w   UI_ConvertBCDWordToDigits
                 bsr.w   UI_WriteNullByte
                 bsr.w   UI_WriteNullByte
                 bsr.w   UI_WriteEndMarker
-                dbf     d7,loc_1FC8A
+                dbf     d7,Results_BuildStageRowsLoop
                 move.w  #5,d6
-loc_1FDBE:                                              ; CODE XREF: Results_InitializeDataDisplay+1A8   j
-                move.w  #$24,d7                         ; '$'
-loc_1FDC2:                                              ; CODE XREF: Results_InitializeDataDisplay+1A0   j
+Results_AppendBlankRowsLoop:                            ; CODE XREF: Results_InitializeDataDisplay+1A8   j  ; was: loc_1FDBE
+                move.w  #$24,d7
+Results_ClearBlankRowLoop:                              ; CODE XREF: Results_InitializeDataDisplay+1A0   j  ; was: loc_1FDC2
                 bsr.w   UI_WriteNullByte
-                dbf     d7,loc_1FDC2
+                dbf     d7,Results_ClearBlankRowLoop
                 bsr.w   UI_WriteEndMarker
-                dbf     d6,loc_1FDBE
-                bsr.w   UI_PrepareResultsData
+                dbf     d6,Results_AppendBlankRowsLoop
+                bsr.w   Results_ComputeSummaryData
                 clr.w   (dword_FF9400+2).w
                 clr.w   (dword_FF9404).w
                 clr.w   (dword_FF9404+2).w
@@ -183,61 +183,61 @@ UI_RenderResultsDataRow:                                ; DATA XREF: ROM:0001FC1
                 move.w  (StageTableIndex).w,d3
                 lsr.w   #1,d3
                 cmp.w   (dword_FF9400+2).w,d3
-                beq.s   loc_1FE2C
-                cmpi.b  #$2A,4(a0)                      ; '*'
-                bne.s   loc_1FE1A
+                beq.s   Results_SelectCurrentStageRow
+                cmpi.b  #$2A,4(a0)                      ; missing-field glyph
+                bne.s   Results_SelectAvailableRowPalette
                 move.w  #$2300,d0
-                bra.s   loc_1FE1E
+                bra.s   Results_CheckInitialRowCursor
 ; ---------------------------------------------------------------------------
-loc_1FE1A:                                              ; CODE XREF: UI_RenderResultsDataRow+26   j
+Results_SelectAvailableRowPalette:                      ; CODE XREF: UI_RenderResultsDataRow+26   j  ; was: loc_1FE1A
                 move.w  #$4300,d0
-loc_1FE1E:                                              ; CODE XREF: UI_RenderResultsDataRow+2C   j
+Results_CheckInitialRowCursor:                          ; CODE XREF: UI_RenderResultsDataRow+2C   j  ; was: loc_1FE1E
                 cmp.w   (dword_FF9418).w,d4
-                bne.s   loc_1FE40
+                bne.s   Results_RenderInitialPrimaryLine
                 move.w  #$FFFF,(dword_FF9418).w
-                bra.s   loc_1FE40
+                bra.s   Results_RenderInitialPrimaryLine
 ; ---------------------------------------------------------------------------
-loc_1FE2C:                                              ; CODE XREF: UI_RenderResultsDataRow+1E   j
+Results_SelectCurrentStageRow:                          ; CODE XREF: UI_RenderResultsDataRow+1E   j  ; was: loc_1FE2C
                 move.w  #$6300,d0
                 move.w  (dword_FF9404+2).w,(dword_FF9414+2).w
                 move.w  (dword_FF941C+2).w,(dword_FF9420).w
                 move.w  d4,(dword_FF9418).w
-loc_1FE40:                                              ; CODE XREF: UI_RenderResultsDataRow+36   j
+Results_RenderInitialPrimaryLine:                       ; CODE XREF: UI_RenderResultsDataRow+36   j  ; was: loc_1FE40
                                         ; UI_RenderResultsDataRow+3E   j
                 jsr     (UI_RenderTextStringWrapped).l
                 movea.w (dword_FF9420+2).w,a0
                 move.b  $B(a0),d0
-                cmpi.b  #$22,d0                         ; '"'
-                bne.s   loc_1FE6E
-                cmpi.b  #$2A,4(a0)                      ; '*'
-                bne.s   loc_1FE62
+                cmpi.b  #$22,d0                         ; missing-BCD glyph
+                bne.s   Results_SelectInitialDetailText
+                cmpi.b  #$2A,4(a0)                      ; missing-field glyph
+                bne.s   Results_SelectMissingDetailPalette
                 move.w  #$2300,d0
-                bra.s   loc_1FE66
+                bra.s   Results_SelectMissingDetailText
 ; ---------------------------------------------------------------------------
-loc_1FE62:                                              ; CODE XREF: UI_RenderResultsDataRow+6E   j
+Results_SelectMissingDetailPalette:                     ; CODE XREF: UI_RenderResultsDataRow+6E   j  ; was: loc_1FE62
                 move.w  #$4300,d0
-loc_1FE66:                                              ; CODE XREF: UI_RenderResultsDataRow+74   j
-                lea     word_20650(pc),a0
+Results_SelectMissingDetailText:                        ; CODE XREF: UI_RenderResultsDataRow+74   j  ; was: loc_1FE66
+                lea     Results_MissingDetailText(pc),a0
                 nop
-                bra.s   loc_1FE7C
+                bra.s   Results_RenderInitialDetailLine
 ; ---------------------------------------------------------------------------
-loc_1FE6E:                                              ; CODE XREF: UI_RenderResultsDataRow+66   j
+Results_SelectInitialDetailText:                        ; CODE XREF: UI_RenderResultsDataRow+66   j  ; was: loc_1FE6E
                 move.w  #$6300,d0
-                lea     word_20666(pc),a0
+                lea     Results_StageDetailTextTable(pc),a0
                 nop
                 adda.w  (dword_FF941C+2).w,a0
-loc_1FE7C:                                              ; CODE XREF: UI_RenderResultsDataRow+80   j
+Results_RenderInitialDetailLine:                        ; CODE XREF: UI_RenderResultsDataRow+80   j  ; was: loc_1FE7C
                 move.w  #$4050,d4
                 add.w   (dword_FF9404).w,d4
                 jsr     (UI_RenderTextStringWrapped).l
                 addi.w  #$100,(dword_FF9404).w
-                addi.w  #$26,(dword_FF9404+2).w         ; '&'
+                addi.w  #$26,(dword_FF9404+2).w
                 addi.w  #$16,(dword_FF941C+2).w
                 addq.w  #1,(dword_FF9400+2).w
                 cmpi.w  #$A,(dword_FF9400+2).w
-                bcs.s   locret_1FEAC
+                bcs.s   Results_RenderInitialRowReturn
                 addq.w  #2,(dword_FF9400).w
-locret_1FEAC:                                           ; CODE XREF: UI_RenderResultsDataRow+BA   j
+Results_RenderInitialRowReturn:                         ; CODE XREF: UI_RenderResultsDataRow+BA   j  ; was: locret_1FEAC
                 rts
 ; End of function UI_RenderResultsDataRow
 ; Handles vertical scrolling of results screen with position updates
@@ -245,10 +245,10 @@ UI_ScrollResultsScreen:                                 ; DATA XREF: ROM:0001FC1
                 subq.w  #2,(dword_FFA90C).w
                 subq.w  #2,(dword_FFA904).w
                 cmpi.w  #$90,(dword_FFA904).w
-                bne.s   locret_1FEE0
+                bne.s   Results_InitialScrollReturn
                 addq.w  #2,(dword_FF9400).w
                 tst.w   (word_FF9442).w
-                bne.s   loc_1FEDA
+                bne.s   Results_SetExtendedScrollTarget
                 move.w  (StageTableIndex).w,d0
                 lsl.w   #3,d0
                 neg.w   d0
@@ -256,19 +256,19 @@ UI_ScrollResultsScreen:                                 ; DATA XREF: ROM:0001FC1
                 move.w  d0,(dword_FF9408).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_1FEDA:                                              ; CODE XREF: UI_ScrollResultsScreen+18   j
+Results_SetExtendedScrollTarget:                        ; CODE XREF: UI_ScrollResultsScreen+18   j  ; was: loc_1FEDA
                 move.w  #$FEF0,(dword_FF9408).w
-locret_1FEE0:                                           ; CODE XREF: UI_ScrollResultsScreen+E   j
+Results_InitialScrollReturn:                            ; CODE XREF: UI_ScrollResultsScreen+E   j  ; was: locret_1FEE0
                 rts
 ; End of function UI_ScrollResultsScreen
 ; Renders results data row while handling screen scroll position
 UI_RenderResultsRowWithScroll:                          ; DATA XREF: ROM:0001FC20   o  ; was: sub_1FEE2
-                bsr.w   UI_CheckResultsScoreReached
+                bsr.w   Results_QueueCompletionMusicAtScrollThreshold
                 move.w  (dword_FF9408).w,d0
                 cmp.w   (dword_FFA904).w,d0
-                beq.s   loc_1FEF4
+                beq.s   Results_RenderScrolledRow
                 subq.w  #2,(dword_FFA904).w
-loc_1FEF4:                                              ; CODE XREF: UI_RenderResultsRowWithScroll+C   j
+Results_RenderScrolledRow:                              ; CODE XREF: UI_RenderResultsRowWithScroll+C   j  ; was: loc_1FEF4
                 lea     ((dword_FF944E+2)).w,a0
                 adda.w  (dword_FF9404+2).w,a0
                 move.w  a0,(dword_FF9420+2).w
@@ -277,72 +277,72 @@ loc_1FEF4:                                              ; CODE XREF: UI_RenderRe
                 move.w  (StageTableIndex).w,d3
                 lsr.w   #1,d3
                 cmp.w   (dword_FF9400+2).w,d3
-                beq.s   loc_1FF28
-                cmpi.b  #$2A,4(a0)                      ; '*'
-                bne.s   loc_1FF22
+                beq.s   Results_SelectScrolledCurrentStageRow
+                cmpi.b  #$2A,4(a0)                      ; missing-field glyph
+                bne.s   Results_SelectScrolledAvailablePalette
                 move.w  #$2300,d0
-                bra.s   loc_1FF3C
+                bra.s   Results_RenderScrolledPrimaryLine
 ; ---------------------------------------------------------------------------
-loc_1FF22:                                              ; CODE XREF: UI_RenderResultsRowWithScroll+38   j
+Results_SelectScrolledAvailablePalette:                 ; CODE XREF: UI_RenderResultsRowWithScroll+38   j  ; was: loc_1FF22
                 move.w  #$4300,d0
-                bra.s   loc_1FF3C
+                bra.s   Results_RenderScrolledPrimaryLine
 ; ---------------------------------------------------------------------------
-loc_1FF28:                                              ; CODE XREF: UI_RenderResultsRowWithScroll+30   j
+Results_SelectScrolledCurrentStageRow:                  ; CODE XREF: UI_RenderResultsRowWithScroll+30   j  ; was: loc_1FF28
                 move.w  #$6300,d0
                 move.w  (dword_FF9404+2).w,(dword_FF9414+2).w
                 move.w  (dword_FF941C+2).w,(dword_FF9420).w
                 move.w  d4,(dword_FF9418).w
-loc_1FF3C:                                              ; CODE XREF: UI_RenderResultsRowWithScroll+3E   j
+Results_RenderScrolledPrimaryLine:                      ; CODE XREF: UI_RenderResultsRowWithScroll+3E   j  ; was: loc_1FF3C
                                         ; UI_RenderResultsRowWithScroll+44   j
                 jsr     (UI_RenderTextStringWrapped).l
                 movea.w (dword_FF9420+2).w,a0
                 move.b  $B(a0),d0
-                cmpi.b  #$22,d0                         ; '"'
-                bne.s   loc_1FF6A
-                cmpi.b  #$2A,4(a0)                      ; '*'
-                bne.s   loc_1FF5E
+                cmpi.b  #$22,d0                         ; missing-BCD glyph
+                bne.s   Results_SelectScrolledDetailText
+                cmpi.b  #$2A,4(a0)                      ; missing-field glyph
+                bne.s   Results_SelectScrolledMissingDetailPalette
                 move.w  #$2300,d0
-                bra.s   loc_1FF62
+                bra.s   Results_SelectScrolledMissingDetailText
 ; ---------------------------------------------------------------------------
-loc_1FF5E:                                              ; CODE XREF: UI_RenderResultsRowWithScroll+74   j
+Results_SelectScrolledMissingDetailPalette:             ; CODE XREF: UI_RenderResultsRowWithScroll+74   j  ; was: loc_1FF5E
                 move.w  #$4300,d0
-loc_1FF62:                                              ; CODE XREF: UI_RenderResultsRowWithScroll+7A   j
-                lea     word_20650(pc),a0
+Results_SelectScrolledMissingDetailText:                ; CODE XREF: UI_RenderResultsRowWithScroll+7A   j  ; was: loc_1FF62
+                lea     Results_MissingDetailText(pc),a0
                 nop
-                bra.s   loc_1FF78
+                bra.s   Results_RenderScrolledDetailLine
 ; ---------------------------------------------------------------------------
-loc_1FF6A:                                              ; CODE XREF: UI_RenderResultsRowWithScroll+6C   j
+Results_SelectScrolledDetailText:                       ; CODE XREF: UI_RenderResultsRowWithScroll+6C   j  ; was: loc_1FF6A
                 move.w  #$6300,d0
-                lea     word_20666(pc),a0
+                lea     Results_StageDetailTextTable(pc),a0
                 nop
                 adda.w  (dword_FF941C+2).w,a0
-loc_1FF78:                                              ; CODE XREF: UI_RenderResultsRowWithScroll+86   j
+Results_RenderScrolledDetailLine:                       ; CODE XREF: UI_RenderResultsRowWithScroll+86   j  ; was: loc_1FF78
                 move.w  #$4050,d4
                 add.w   (dword_FF9404).w,d4
                 jsr     (UI_RenderTextStringWrapped).l
                 addi.w  #$16,(dword_FF941C+2).w
                 addi.w  #$100,(dword_FF9404).w
-                addi.w  #$26,(dword_FF9404+2).w         ; '&'
+                addi.w  #$26,(dword_FF9404+2).w
                 addq.w  #1,(dword_FF9400+2).w
                 cmpi.w  #$10,(dword_FF9400+2).w
-                bcs.s   locret_1FFA8
+                bcs.s   Results_RenderScrolledRowReturn
                 addq.w  #2,(dword_FF9400).w
-locret_1FFA8:                                           ; CODE XREF: UI_RenderResultsRowWithScroll+C0   j
+Results_RenderScrolledRowReturn:                        ; CODE XREF: UI_RenderResultsRowWithScroll+C0   j  ; was: locret_1FFA8
                 rts
 ; End of function UI_RenderResultsRowWithScroll
 ; Completes results screen scroll animation and advances state
 UI_CompleteResultsScroll:                               ; DATA XREF: ROM:0001FC22   o  ; was: sub_1FFAA
-                bsr.w   UI_CheckResultsScoreReached
+                bsr.w   Results_QueueCompletionMusicAtScrollThreshold
                 bsr.s   UI_CheckResultsScrollBounds
                 tst.w   (dword_FF941C).w
-                beq.s   loc_1FFC4
+                beq.s   Results_FinishScrollPhase
                 bsr.s   UI_CheckResultsScrollBounds
                 tst.w   (dword_FF941C).w
-                beq.s   loc_1FFC4
-                bsr.w   UI_RenderResultsCursor
+                beq.s   Results_FinishScrollPhase
+                bsr.w   Results_RenderSelectedRowHighlight
                 rts
 ; ---------------------------------------------------------------------------
-loc_1FFC4:                                              ; CODE XREF: UI_CompleteResultsScroll+A   j
+Results_FinishScrollPhase:                              ; CODE XREF: UI_CompleteResultsScroll+A   j  ; was: loc_1FFC4
                                         ; UI_CompleteResultsScroll+12   j
                 addq.w  #2,(dword_FF9400).w
                 rts
@@ -352,167 +352,167 @@ UI_CheckResultsScrollBounds:                            ; CODE XREF: UI_Complete
                                         ; UI_CompleteResultsScroll+C   p
                 move.w  (dword_FF9408).w,d0
                 cmp.w   (dword_FFA904).w,d0
-                beq.s   loc_1FFEA
+                beq.s   Results_StopViewportUpdate
                 move.w  (dword_FFA904).w,d0
                 cmp.w   (dword_FF943C).w,d0
-                ble.s   loc_1FFEA
+                ble.s   Results_StopViewportUpdate
                 move.w  #$FFFF,(dword_FF941C).w
-                bsr.w   UI_UpdateResultsViewport
+                bsr.w   Results_UpdateViewport
                 rts
 ; ---------------------------------------------------------------------------
-loc_1FFEA:                                              ; CODE XREF: UI_CheckResultsScrollBounds+8   j
+Results_StopViewportUpdate:                             ; CODE XREF: UI_CheckResultsScrollBounds+8   j  ; was: loc_1FFEA
                                         ; UI_CheckResultsScrollBounds+12   j
                 clr.w   (dword_FF941C).w
                 rts
 ; End of function UI_CheckResultsScrollBounds
-; Checks if results screen scroll reached score threshold and plays sound
-UI_CheckResultsScoreReached:                            ; CODE XREF: UI_RenderResultsRowWithScroll   p  ; was: sub_1FFF0
+; Queues the completion music once the scrolling rows reach the trigger point
+Results_QueueCompletionMusicAtScrollThreshold:          ; CODE XREF: UI_RenderResultsRowWithScroll   p  ; was: sub_1FFF0
                                         ; sub_1FFAA   p
                 tst.w   (dword_FF9424).w
-                bne.s   locret_20014
+                bne.s   Results_CompletionMusicReturn
                 move.w  (dword_FF9408).w,d0
-                addi.w  #$48,d0                         ; 'H'
+                addi.w  #$48,d0
                 cmp.w   (dword_FFA904).w,d0
-                blt.s   locret_20014
+                blt.s   Results_CompletionMusicReturn
                 move.w  #1,(dword_FF9424).w
                 move.b  #$85,d0
                 jsr     (Sound_PlaySFX).l
-locret_20014:                                           ; CODE XREF: UI_CheckResultsScoreReached+4   j
-                                        ; UI_CheckResultsScoreReached+12   j
+Results_CompletionMusicReturn:                          ; CODE XREF: Results_QueueCompletionMusicAtScrollThreshold+4   j  ; was: locret_20014
+                                        ; Results_QueueCompletionMusicAtScrollThreshold+12   j
                 rts
-; End of function UI_CheckResultsScoreReached
-; Waits for results screen transition with double call pattern
-UI_WaitForResultsTransition:                            ; DATA XREF: ROM:0001FC24   o  ; was: sub_20016
-                bsr.w   Input_HandleResultsNavigation
-                bsr.w   Input_HandleResultsNavigation
-                bsr.w   UI_RenderResultsCursor
+; End of function Results_QueueCompletionMusicAtScrollThreshold
+; Updates the interactive results view and draws its flashing row cursor
+Results_UpdateBrowsingState:                            ; DATA XREF: ROM:0001FC24   o  ; was: sub_20016
+                bsr.w   Results_HandleNavigation
+                bsr.w   Results_HandleNavigation
+                bsr.w   Results_RenderSelectedRowHighlight
                 rts
-; End of function UI_WaitForResultsTransition
-; Handles D-pad input and navigation for results screen browsing
-Input_HandleResultsNavigation:                          ; CODE XREF: UI_WaitForResultsTransition   p  ; was: sub_20024
-                                        ; UI_WaitForResultsTransition+4   p
+; End of function Results_UpdateBrowsingState
+; Handles D-pad scrolling and column snapping for results screen browsing
+Results_HandleNavigation:                               ; CODE XREF: Results_UpdateBrowsingState   p  ; was: sub_20024
+                                        ; Results_UpdateBrowsingState+4   p
                 btst    #2,(word_FFF706).w
-                beq.s   loc_2004C
+                beq.s   Results_CheckRightNavigation
                 move.w  (dword_FFA900).w,d0
                 addi.w  #-1,d0
                 cmpi.w  #0,d0
-                blt.s   loc_20074
+                blt.s   Results_StopHorizontalNavigation
                 move.w  #1,(dword_FF9438+2).w
                 move.w  #$FFFF,(dword_FF9418+2).w
                 addi.w  #-1,(dword_FFA900).w
-loc_2004C:                                              ; CODE XREF: Input_HandleResultsNavigation+6   j
+Results_CheckRightNavigation:                           ; CODE XREF: Results_HandleNavigation+6   j  ; was: loc_2004C
                 btst    #3,(word_FFF706).w
-                beq.s   loc_2008C
+                beq.s   Results_CheckUpNavigation
                 move.w  (dword_FFA900).w,d0
                 addq.w  #1,d0
                 cmpi.w  #$D0,d0
-                bgt.s   loc_20074
+                bgt.s   Results_StopHorizontalNavigation
                 move.w  #1,(dword_FF9438+2).w
                 move.w  #1,(dword_FF9418+2).w
                 addi.w  #1,(dword_FFA900).w
-                bra.s   loc_2008C
+                bra.s   Results_CheckUpNavigation
 ; ---------------------------------------------------------------------------
-loc_20074:                                              ; CODE XREF: Input_HandleResultsNavigation+14   j
-                                        ; Input_HandleResultsNavigation+3A   j
+Results_StopHorizontalNavigation:                       ; CODE XREF: Results_HandleNavigation+14   j  ; was: loc_20074
+                                        ; Results_HandleNavigation+3A   j
                 tst.w   (dword_FF9438+2).w
-                beq.s   loc_20088
+                beq.s   Results_ClearHorizontalStep
                 clr.w   (dword_FF9438+2).w
                 move.b  #$DB,d0
                 jsr     (Sound_PlaySFX).l
-loc_20088:                                              ; CODE XREF: Input_HandleResultsNavigation+54   j
+Results_ClearHorizontalStep:                            ; CODE XREF: Results_HandleNavigation+54   j  ; was: loc_20088
                 clr.w   (dword_FF9418+2).w
-loc_2008C:                                              ; CODE XREF: Input_HandleResultsNavigation+2E   j
-                                        ; Input_HandleResultsNavigation+4E   j
+Results_CheckUpNavigation:                              ; CODE XREF: Results_HandleNavigation+2E   j  ; was: loc_2008C
+                                        ; Results_HandleNavigation+4E   j
                 btst    #0,(word_FFF706).w
-                beq.s   loc_200A8
+                beq.s   Results_CheckDownNavigation
                 move.w  (dword_FFA904).w,d0
                 addq.w  #1,d0
                 cmpi.w  #$90,d0
-                bgt.s   loc_200CA
+                bgt.s   Results_StopVerticalNavigation
                 move.w  #1,(dword_FF941C).w
-                bra.s   loc_200C4
+                bra.s   Results_UpdateVerticalViewport
 ; ---------------------------------------------------------------------------
-loc_200A8:                                              ; CODE XREF: Input_HandleResultsNavigation+6E   j
+Results_CheckDownNavigation:                            ; CODE XREF: Results_HandleNavigation+6E   j  ; was: loc_200A8
                 btst    #1,(word_FFF706).w
-                beq.w   loc_200D0
+                beq.w   Results_ContinueHorizontalStep
                 move.w  (dword_FFA904).w,d0
                 subq.w  #1,d0
                 cmp.w   (dword_FF943C).w,d0
-                blt.s   loc_200CA
+                blt.s   Results_StopVerticalNavigation
                 move.w  #$FFFF,(dword_FF941C).w
-loc_200C4:                                              ; CODE XREF: Input_HandleResultsNavigation+82   j
-                bsr.w   UI_UpdateResultsViewport
+Results_UpdateVerticalViewport:                         ; CODE XREF: Results_HandleNavigation+82   j  ; was: loc_200C4
+                bsr.w   Results_UpdateViewport
                 rts
 ; ---------------------------------------------------------------------------
-loc_200CA:                                              ; CODE XREF: Input_HandleResultsNavigation+7A   j
-                                        ; Input_HandleResultsNavigation+98   j
+Results_StopVerticalNavigation:                         ; CODE XREF: Results_HandleNavigation+7A   j  ; was: loc_200CA
+                                        ; Results_HandleNavigation+98   j
                 clr.w   (dword_FF941C).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_200D0:                                              ; CODE XREF: Input_HandleResultsNavigation+8A   j
+Results_ContinueHorizontalStep:                         ; CODE XREF: Results_HandleNavigation+8A   j  ; was: loc_200D0
                 tst.w   (dword_FF9418+2).w
-                beq.s   loc_2012C
+                beq.s   Results_ClampHorizontalMaximum
                 move.w  (dword_FF9418+2).w,d0
                 add.w   d0,(dword_FFA900).w
                 move.w  (dword_FFA900).w,d0
                 andi.w  #$F,d0
-                bne.s   loc_2012C
+                bne.s   Results_ClampHorizontalMaximum
                 tst.w   (dword_FFA900).w
-                beq.s   loc_2010E
-                cmpi.w  #$30,(dword_FFA900).w           ; '0'
-                beq.s   loc_2010E
-                cmpi.w  #$60,(dword_FFA900).w           ; '`'
-                beq.s   loc_2010E
+                beq.s   Results_HandleHorizontalSnapPoint
+                cmpi.w  #$30,(dword_FFA900).w
+                beq.s   Results_HandleHorizontalSnapPoint
+                cmpi.w  #$60,(dword_FFA900).w
+                beq.s   Results_HandleHorizontalSnapPoint
                 cmpi.w  #$A0,(dword_FFA900).w
-                beq.s   loc_2010E
+                beq.s   Results_HandleHorizontalSnapPoint
                 cmpi.w  #$D0,(dword_FFA900).w
-                bne.s   loc_2012C
-loc_2010E:                                              ; CODE XREF: Input_HandleResultsNavigation+C8   j
-                                        ; Input_HandleResultsNavigation+D0   j
+                bne.s   Results_ClampHorizontalMaximum
+Results_HandleHorizontalSnapPoint:                      ; CODE XREF: Results_HandleNavigation+C8   j  ; was: loc_2010E
+                                        ; Results_HandleNavigation+D0   j
                 tst.b   (word_FFF706).w
-                bne.s   loc_20128
+                bne.s   Results_ClearHorizontalStepAtSnap
                 tst.w   (dword_FF9438+2).w
-                beq.s   loc_20128
+                beq.s   Results_ClearHorizontalStepAtSnap
                 clr.w   (dword_FF9438+2).w
                 move.b  #$DB,d0
                 jsr     (Sound_PlaySFX).l
-loc_20128:                                              ; CODE XREF: Input_HandleResultsNavigation+EE   j
-                                        ; Input_HandleResultsNavigation+F4   j
+Results_ClearHorizontalStepAtSnap:                      ; CODE XREF: Results_HandleNavigation+EE   j  ; was: loc_20128
+                                        ; Results_HandleNavigation+F4   j
                 clr.w   (dword_FF9418+2).w
-loc_2012C:                                              ; CODE XREF: Input_HandleResultsNavigation+B0   j
-                                        ; Input_HandleResultsNavigation+C2   j
+Results_ClampHorizontalMaximum:                         ; CODE XREF: Results_HandleNavigation+B0   j  ; was: loc_2012C
+                                        ; Results_HandleNavigation+C2   j
                 cmpi.w  #$D0,(dword_FFA900).w
-                blt.s   loc_2013E
+                blt.s   Results_ClampHorizontalMinimum
                 move.w  #$D0,(dword_FFA900).w
                 clr.w   (dword_FF9418+2).w
-loc_2013E:                                              ; CODE XREF: Input_HandleResultsNavigation+10E   j
+Results_ClampHorizontalMinimum:                         ; CODE XREF: Results_HandleNavigation+10E   j  ; was: loc_2013E
                 cmpi.w  #0,(dword_FFA900).w
-                bgt.s   loc_20150
+                bgt.s   Results_ContinueVerticalStep
                 move.w  #0,(dword_FFA900).w
                 clr.w   (dword_FF9418+2).w
-loc_20150:                                              ; CODE XREF: Input_HandleResultsNavigation+120   j
+Results_ContinueVerticalStep:                           ; CODE XREF: Results_HandleNavigation+120   j  ; was: loc_20150
                 tst.w   (dword_FF941C).w
-                beq.s   loc_20168
-                bsr.w   UI_UpdateResultsViewport
+                beq.s   Results_ClampVerticalUpperBound
+                bsr.w   Results_UpdateViewport
                 move.w  (dword_FFA904).w,d0
                 andi.w  #$F,d0
-                bne.s   loc_20168
+                bne.s   Results_ClampVerticalUpperBound
                 clr.w   (dword_FF941C).w
-loc_20168:                                              ; CODE XREF: Input_HandleResultsNavigation+130   j
-                                        ; Input_HandleResultsNavigation+13E   j
+Results_ClampVerticalUpperBound:                        ; CODE XREF: Results_HandleNavigation+130   j  ; was: loc_20168
+                                        ; Results_HandleNavigation+13E   j
                 cmpi.w  #$90,(dword_FFA904).w
-                blt.s   loc_2017A
+                blt.s   Results_ClampVerticalLowerBound
                 move.w  #$90,(dword_FFA904).w
                 clr.w   (dword_FF941C).w
-loc_2017A:                                              ; CODE XREF: Input_HandleResultsNavigation+14A   j
+Results_ClampVerticalLowerBound:                        ; CODE XREF: Results_HandleNavigation+14A   j  ; was: loc_2017A
                 move.w  (dword_FFA904).w,d0
                 cmp.w   (dword_FF943C).w,d0
-                bgt.s   locret_2018E
+                bgt.s   Results_NavigationReturn
                 move.w  (dword_FF943C).w,(dword_FFA904).w
                 clr.w   (dword_FF941C).w
-locret_2018E:                                           ; CODE XREF: Input_HandleResultsNavigation+15E   j
+Results_NavigationReturn:                               ; CODE XREF: Results_HandleNavigation+15E   j  ; was: locret_2018E
                 rts
-; End of function Input_HandleResultsNavigation
+; End of function Results_HandleNavigation
 ; Writes end marker (0xFF) to UI text buffer
 UI_WriteEndMarker:                                      ; CODE XREF: Results_InitializeDataDisplay+18C   p  ; was: sub_20190
                                         ; Results_InitializeDataDisplay+1A4   p
@@ -525,23 +525,23 @@ UI_WriteNullByte:                                       ; CODE XREF: Results_Ini
                 move.b  #0,(a0)+
                 rts
 ; End of function UI_WriteNullByte
-; Writes percent sign character to UI buffer
-UI_WritePercentSign:                                    ; CODE XREF: Results_InitializeDataDisplay+98   p  ; was: sub_2019C
+; Writes the custom-font separator between packed-BCD time fields
+Results_WriteTimeSeparator:                             ; CODE XREF: Results_InitializeDataDisplay+98   p  ; was: sub_2019C
                                         ; Results_InitializeDataDisplay+AE   p
-                move.b  #$25,(a0)+                      ; '%'
+                move.b  #$25,(a0)+
                 rts
-; End of function UI_WritePercentSign
-; Writes asterisk character to UI buffer
-UI_WriteAsterisk:                                       ; CODE XREF: Results_InitializeDataDisplay:loc_1FCCC   p  ; was: sub_201A2
+; End of function Results_WriteTimeSeparator
+; Writes one custom-font glyph used to mark a missing result field
+Results_WriteMissingGlyph:                              ; CODE XREF: Results_InitializeDataDisplay:Results_WriteMissingWeaponSelection   p  ; was: sub_201A2
                                         ; Results_InitializeDataDisplay+AA   p
-                move.b  #$2A,(a0)+                      ; '*'
+                move.b  #$2A,(a0)+
                 rts
-; End of function UI_WriteAsterisk
+; End of function Results_WriteMissingGlyph
 ; Converts BCD-encoded byte to two digit characters for display
 UI_ConvertBCDToDigits:                                  ; CODE XREF: Results_InitializeDataDisplay+6A   p  ; was: sub_201A8
                                         ; Results_InitializeDataDisplay+94   p
                 tst.b   d0
-                bmi.s   loc_201BE
+                bmi.s   Results_WriteMissingBCDByte
                 move.b  d0,d1
                 lsr.b   #4,d1
                 addq.b  #1,d1
@@ -551,15 +551,15 @@ UI_ConvertBCDToDigits:                                  ; CODE XREF: Results_Ini
                 move.b  d0,(a0)+
                 rts
 ; ---------------------------------------------------------------------------
-loc_201BE:                                              ; CODE XREF: UI_ConvertBCDToDigits+2   j
-                move.b  #$22,(a0)+                      ; '"'
-                move.b  #$22,(a0)+                      ; '"'
+Results_WriteMissingBCDByte:                            ; CODE XREF: UI_ConvertBCDToDigits+2   j  ; was: loc_201BE
+                move.b  #$22,(a0)+                      ; missing-BCD glyph
+                move.b  #$22,(a0)+                      ; missing-BCD glyph
                 rts
 ; End of function UI_ConvertBCDToDigits
 ; Converts BCD-encoded word to three digit characters for display
-UI_ConvertBCDWordToDigits:                              ; CODE XREF: Results_InitializeDataDisplay:loc_1FDA6   p  ; was: sub_201C8
+UI_ConvertBCDWordToDigits:                              ; CODE XREF: Results_InitializeDataDisplay:Results_WriteStageCount   p  ; was: sub_201C8
                 tst.w   d0
-                bmi.s   loc_201E6
+                bmi.s   Results_WriteMissingBCDWord
                 move.w  d0,d1
                 lsr.w   #8,d1
                 addq.b  #1,d1
@@ -573,26 +573,26 @@ UI_ConvertBCDWordToDigits:                              ; CODE XREF: Results_Ini
                 move.b  d0,(a0)+
                 rts
 ; ---------------------------------------------------------------------------
-loc_201E6:                                              ; CODE XREF: UI_ConvertBCDWordToDigits+2   j
-                move.b  #$22,(a0)+                      ; '"'
-                move.b  #$22,(a0)+                      ; '"'
-                move.b  #$22,(a0)+                      ; '"'
+Results_WriteMissingBCDWord:                            ; CODE XREF: UI_ConvertBCDWordToDigits+2   j  ; was: loc_201E6
+                move.b  #$22,(a0)+                      ; missing-BCD glyph
+                move.b  #$22,(a0)+                      ; missing-BCD glyph
+                move.b  #$22,(a0)+                      ; missing-BCD glyph
                 rts
 ; End of function UI_ConvertBCDWordToDigits
-; Formats time difference between two BCD values with percent separator
-UI_FormatTimeDifference:                                ; CODE XREF: Results_InitializeDataDisplay+D6   p  ; was: sub_201F4
+; Formats the difference between two packed-BCD times with a field separator
+Results_FormatBCDTimeDifference:                        ; CODE XREF: Results_InitializeDataDisplay+D6   p  ; was: sub_201F4
                                         ; Results_InitializeDataDisplay+10A   p
                 bsr.s   Math_CalculateBCDDifference
                 move.b  d2,d0
                 bsr.w   UI_ConvertBCDToDigits
-                bsr.w   UI_WritePercentSign
+                bsr.w   Results_WriteTimeSeparator
                 move.b  d3,d0
                 bsr.w   UI_ConvertBCDToDigits
                 rts
-; End of function UI_FormatTimeDifference
+; End of function Results_FormatBCDTimeDifference
 ; Calculates BCD subtraction between two time values with borrowing
-Math_CalculateBCDDifference:                            ; CODE XREF: UI_FormatTimeDifference   p  ; was: sub_20208
-                                        ; UI_PrepareResultsData+5C   p
+Math_CalculateBCDDifference:                            ; CODE XREF: Results_FormatBCDTimeDifference   p  ; was: sub_20208
+                                        ; Results_ComputeSummaryData+5C   p
                 move.b  (dword_FF9410+2).w,d0
                 move.b  (dword_FF9410).w,d1
                 sub.w   d4,d4
@@ -601,27 +601,26 @@ Math_CalculateBCDDifference:                            ; CODE XREF: UI_FormatTi
                 move.b  (dword_FF9410+3).w,d0
                 move.b  (dword_FF9410+1).w,d1
                 cmp.b   d1,d0
-                bcc.s   loc_2022E
+                bcc.s   Results_SubtractBCDLowByte
                 moveq   #1,d3
                 sub.w   d4,d4
                 sbcd    d3,d2
-                moveq   #$60,d3                         ; '`'
+                moveq   #$60,d3
                 sub.w   d4,d4
                 abcd    d3,d0
-loc_2022E:                                              ; CODE XREF: Math_CalculateBCDDifference+18   j
+Results_SubtractBCDLowByte:                             ; CODE XREF: Math_CalculateBCDDifference+18   j  ; was: loc_2022E
                 sub.w   d4,d4
                 sbcd    d1,d0
                 move.b  d0,d3
                 rts
 ; End of function Math_CalculateBCDDifference
 ; Clears 25 word entries in memory array at FFAA80
-Data_ClearWordArray:
-                move.w  #$18,d7                         ; was: sub_20236
+Results_ClearSecondIntervalArray:                       ; was: sub_20236
+                move.w  #$18,d7
                 move.w  #0,d0
-                lea     (word_FFAA80).w,a0
-loc_20242:                                              ; CODE XREF: Data_ClearWordArray+E   j
+                lea     (StageCompletionTimes).w,a0
+Results_ClearSecondIntervalArrayLoop:                   ; CODE XREF: Results_ClearSecondIntervalArray+E   j  ; was: loc_20242
                 move.w  d0,(a0)+
-                dbf     d7,loc_20242
+                dbf     d7,Results_ClearSecondIntervalArrayLoop
                 rts
-; End of function Data_ClearWordArray
-; Processes stage completion times and calculates totals for results screen
+; End of function Results_ClearSecondIntervalArray

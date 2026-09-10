@@ -55,7 +55,7 @@ Player_Update:                                          ; CODE XREF: Sys_Gamepla
                 beq.s   Player_Update_CheckGameplayReady
                 bpl.w   Player_HandleInvulnerabilityTimer
 Player_Update_CheckGameplayReady:                       ; CODE XREF: Player_Update+2A   j  ; was: loc_14FC8
-                tst.w   (word_FFA270).w
+                tst.w   (StageTimeRemaining).w
                 beq.w   Player_InitInvulnerabilityState
                 tst.w   (word_FFA216).w
                 beq.w   Player_InitInvulnerabilityState

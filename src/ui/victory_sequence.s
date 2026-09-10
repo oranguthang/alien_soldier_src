@@ -171,7 +171,7 @@ Text_AdvancePhase:                                      ; DATA XREF: ROM:0000A9C
                 clr.l   (dword_FF80CE).w
                 move.l  #$20000,(dword_FF80C8).w
                 bclr    #0,(byte_FFA272).w
-                jsr     (UI_StoreWeaponSelection).l
+                jsr     (Results_StorePhaseSplitTime).l
                 rts
 ; End of function Text_AdvancePhase
 ; Animates text movement with deceleration

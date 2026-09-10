@@ -13,7 +13,7 @@ Results_UpdateAndDisplay:                               ; DATA XREF: ROM:0001D7D
                 bclr    #0,(word_FF80F4).w
                 beq.s   locret_1DCB0
                 addq.w  #2,(GameSubstateIndex).w
-                jsr     (UI_IncrementScoreCounter).l
+                jsr     (Results_IncrementStageVisitCount).l
                 lea     stru_1DCB2(pc),a0
                 nop
                 jsr     (LoadObjData).l
@@ -120,7 +120,7 @@ Results_RenderAllStats:                                 ; CODE XREF: Results_Ini
                 cmp.l   (dword_FFFF2C).w,d0
                 bmi.s   loc_1DDE0
                 move.l  d0,(dword_FFFF2C).w
-                move.w  #$FFFF,(word_FFA270).w
+                move.w  #$FFFF,(StageTimeRemaining).w
 loc_1DDE0:                                              ; CODE XREF: Results_RenderAllStats+8   j
                 bsr.w   Results_DisplayTime
                 bsr.w   Results_DisplayScore
@@ -170,7 +170,7 @@ Results_DisplayTime:                                    ; CODE XREF: Results_Upd
                 move.w  #$C302,d1
                 move.w  #$52AA,d4
                 moveq   #8,d7
-                cmpi.w  #$FFFF,(word_FFA270).w
+                cmpi.w  #$FFFF,(StageTimeRemaining).w
                 bne.s   loc_1DEC6
                 btst    #1,(word_FFA000+1).w
                 bne.s   loc_1DEC6
@@ -186,7 +186,7 @@ Results_DisplayScore:                                   ; CODE XREF: Results_Upd
                 move.w  #$C302,d1
                 move.w  #$53AA,d4
                 moveq   #8,d7
-                cmpi.w  #$FFFF,(word_FFA270).w
+                cmpi.w  #$FFFF,(StageTimeRemaining).w
                 bne.s   loc_1DEF2
                 btst    #1,(word_FFA000+1).w
                 bne.s   loc_1DEF2

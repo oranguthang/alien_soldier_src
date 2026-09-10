@@ -75,7 +75,7 @@ loc_12BDA:                                              ; CODE XREF: UI_RenderHU
                 bmi.s   loc_12C30
                 btst    #0,(byte_FFA272).w
                 bne.s   loc_12C30
-                tst.w   (word_FFA270).w
+                tst.w   (StageTimeRemaining).w
                 beq.s   loc_12C30
                 tst.w   (word_FF813C).w
                 bpl.s   loc_12C30
@@ -83,24 +83,24 @@ loc_12BDA:                                              ; CODE XREF: UI_RenderHU
                 bpl.s   loc_12C30
                 move.b  #$3B,(byte_FF8204).w            ; ';'
                 moveq   #1,d0
-                move.b  (word_FFA270+1).w,d2
+                move.b  (StageTimeRemaining+1).w,d2
                 sub.w   d4,d4
                 sbcd    d0,d2
                 cmpi.b  #$99,d2
                 bne.s   loc_12C2C
-                move.b  (word_FFA270).w,d2
+                move.b  (StageTimeRemaining).w,d2
                 sub.w   d4,d4
                 sbcd    d0,d2
                 cmpi.b  #$99,d2
                 bne.s   loc_12C24
-                clr.w   (word_FFA270).w
+                clr.w   (StageTimeRemaining).w
                 bra.s   loc_12C30
 ; ---------------------------------------------------------------------------
 loc_12C24:                                              ; CODE XREF: UI_RenderHUDElement1+B2   j
-                move.b  d2,(word_FFA270).w
+                move.b  d2,(StageTimeRemaining).w
                 move.b  #$59,d2                         ; 'Y'
 loc_12C2C:                                              ; CODE XREF: UI_RenderHUDElement1+A4   j
-                move.b  d2,(word_FFA270+1).w
+                move.b  d2,(StageTimeRemaining+1).w
 loc_12C30:                                              ; CODE XREF: UI_RenderHUDElement1+74   j
                                         ; UI_RenderHUDElement1+7C   j
                 bclr    #0,(byte_FF8260).w

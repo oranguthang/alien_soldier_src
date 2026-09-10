@@ -488,7 +488,7 @@ word_FFA268             equ     $FFFFA268
 word_FFA26A             equ     $FFFFA26A
 word_FFA26C             equ     $FFFFA26C
 word_FFA26E             equ     $FFFFA26E
-word_FFA270             equ     $FFFFA270
+StageTimeRemaining      equ     $FFFFA270               ; was: word_FFA270
 byte_FFA272             equ     $FFFFA272
 word_FFA280             equ     $FFFFA280
 word_FFA282             equ     $FFFFA282
@@ -556,9 +556,9 @@ word_FFA980             equ     $FFFFA980
 word_FFA9C0             equ     $FFFFA9C0
 dword_FFA9D0            equ     $FFFFA9D0
 dword_FFA9D4            equ     $FFFFA9D4
-word_FFAA00             equ     $FFFFAA00
-word_FFAA80             equ     $FFFFAA80
-word_FFAB00             equ     $FFFFAB00
+StagePhaseSplitTimes    equ     $FFFFAA00               ; was: word_FFAA00
+StageCompletionTimes    equ     $FFFFAA80               ; was: word_FFAA80
+StageResultVisits       equ     $FFFFAB00               ; was: word_FFAB00
 dword_FFB200            equ     $FFFFB200
 dword_FFB400            equ     $FFFFB400
 dword_FFB480            equ     $FFFFB480

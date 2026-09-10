@@ -4,8 +4,10 @@
 976 observed 68000 work-RAM addresses and 28 observed Z80-RAM addresses. Most
 still have neutral size/address names. The first reviewed semantic fields are
 `GameModeIndex`, `GameSubstateIndex`, `StageTableIndex`, `Entity_ObjectPool`,
-`DifficultyMode`, `MessageMode`, and `SoundDisableFlags`; `VDPCommand` predates
-this review. All remain subject to the evidence policy in `docs/naming.md`.
+`DifficultyMode`, `MessageMode`, `SoundDisableFlags`, `StageTimeRemaining`,
+`StagePhaseSplitTimes`, `StageCompletionTimes`, and `StageResultVisits`;
+`VDPCommand` predates this review. All remain
+subject to the evidence policy in `docs/naming.md`.
 
 ## Address spaces
 
@@ -33,6 +35,20 @@ absolute-long operands were reconstructed.
 that makes that row user-visible is not yet proven. Its runtime effect on boss
 messages therefore remains an open validation item rather than a confirmed
 behavioral claim.
+
+## Reviewed stage-results fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `StageTimeRemaining` | `$FFFFA270` | Loaded from the 25-entry packed-BCD stage time-limit table, decremented once per second, rendered by the HUD, and saved at phase/result boundaries. |
+| `StagePhaseSplitTimes` | `$FFFFAA00` | `Results_StorePhaseSplitTime` stores one word selected by `StageTableIndex`; the results builder traverses 25 entries. |
+| `StageCompletionTimes` | `$FFFFAA80` | `Results_StoreStageCompletionTime` stores the final per-stage timer snapshot; the results builder traverses 25 entries and derives elapsed intervals. |
+| `StageResultVisits` | `$FFFFAB00` | The results transition increments the current stage entry, saturating at 999, and the summary traverses the same 25 words. |
+
+The three history arrays are initialized together to `$FFFF`, the missing-value
+sentinel. `StageResultVisits` deliberately uses the neutral word
+“visit”: the ROM renders its aggregate under `TOTAL CONTINUE`, but static code
+alone does not yet prove the exact player-facing counting convention.
 
 ## Review policy
 

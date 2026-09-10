@@ -547,7 +547,7 @@ Boss_ZLeoRestorePostDefeatUi:                           ; CODE XREF: Boss_ZLeoRu
                 move.b  #$80,(byte_FFF705).w
                 move.w  #2,(word_FFA29C).w
                 move.w  #4,(word_FF8230).w
-                jmp     UI_StoreWeaponToBuffer
+                jmp     Results_StoreStageCompletionTime
 ; End of function Boss_ZLeoRunPostDefeatDelay
 ; Inert post-defeat state
 Boss_ZLeoPostDefeatNoOp:                                ; DATA XREF: ROM:00051B90   o  ; was: nullsub_121
