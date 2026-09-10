@@ -1980,6 +1980,28 @@ state. The trailing eight-word table was also misplaced semantically: only
 Missiray code consumes its `$C680-$C920` RAM addresses, so it is now
 `Boss_MissiraySegmentObjectPointers`.
 
+The Seven Forces Valkirie projectile pass reduced the address-derived unknown
+count from 6,051 to 6,037 and raised provenance to 9,786 mappings. All 14
+anonymous definitions in `projectiles/seven_forces_valkirie.s` and two
+incorrect existing semantic labels now have exact static audit records, taking
+the registry to 5,556 entries. The module now has zero live address-derived
+definitions.
+
+The setup loop initializes nine consecutive `$60`-byte sub-entities, and the
+position updater anchors one plus four helpers to the primary object and four
+to its `$180`-offset companion. The projectile itself uses an eight-state
+relative dispatcher whose single-return base is also reused as a deliberate
+wait target by the Valkirie and top-level Seven Forces handlers. Its shared
+shadow at `FFDB80` follows with offsets X `$0B` and Y `$10`; growth and shrink
+states use field `$48` to select five 10-byte tile-transfer descriptors.
+
+Two Sonnet names were structurally wrong. `Boss_ValkirieApplyGravity` modifies
+horizontal velocity `$18`, subtracting `$C00` during the leftward states, so it
+is now `Entity_ValkirieProjectileAccelerateLeft`. The former
+`Boss_ValkirieDMATransferTable` is executable code rather than data; it is now
+`Entity_ValkirieProjectileTransferAnimationTiles`, separate from the actual
+five-pointer descriptor table that follows it.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -1,6 +1,6 @@
 Boss_ValkirieMain:                                      ; DATA XREF: ROM:00054BA4   o  ; was: sub_54F9E
                 subq.w  #1,$48(a5)
-                bpl.w   nullsub_126
+                bpl.w   Entity_SevenForcesNoOpState
                 addq.w  #1,$5E(a5)
                 cmpi.w  #$E,$5E(a5)
                 bmi.s   loc_54FE0

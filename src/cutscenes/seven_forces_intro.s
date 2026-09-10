@@ -1,6 +1,6 @@
 Entity_SevenForcesMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_54B84
                 move.w  4(a5),d0
-                beq.w   nullsub_126
+                beq.w   Entity_SevenForcesNoOpState
                 movea.w off_54B98(pc,d0.w),a0
                 adda.l  #Entity_SevenForcesDispatcher,a0
                 jmp     (a0)
