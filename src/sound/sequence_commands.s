@@ -387,7 +387,7 @@ Sound_StopSequenceChannel:                              ; CODE XREF: Sound_Dispa
                 bra.s   Sound_CheckStoppedSFXChannelRestore
 ; ---------------------------------------------------------------------------
 Sound_MuteStoppedPSGChannel:                            ; CODE XREF: Sound_StopSequenceChannel+C   j  ; was: loc_83B5C
-                jsr     Sound_CheckPSGMute(pc)          ; (pc)
+                jsr     Sound_MutePSGIfNotOverridden(pc)  ; (pc)
 Sound_CheckStoppedSFXChannelRestore:                    ; CODE XREF: Sound_StopSequenceChannel+1A   j  ; was: loc_83B60
                 tst.b   (byte_FFF80E).w
                 bpl.w   Sound_ExitStoppedSequenceChannel
@@ -611,7 +611,7 @@ Sound_PauseNextBGMPSGChannel:                           ; CODE XREF: Sound_SetBG
                 beq.s   Sound_ContinueBGMPSGPauseLoop
                 bclr    #7,(a5)
                 bset    #0,(a5)
-                jsr     Sound_CheckPSGMute(pc)          ; (pc)
+                jsr     Sound_MutePSGIfNotOverridden(pc)  ; (pc)
 Sound_ContinueBGMPSGPauseLoop:                          ; CODE XREF: Sound_SetBGMPlaybackPaused+46   j  ; was: loc_83D42
                 dbf     d4,Sound_PauseNextBGMPSGChannel
                 movea.l a3,a5

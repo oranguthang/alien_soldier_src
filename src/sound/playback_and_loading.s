@@ -8,7 +8,7 @@ Sound_InitializeBGM:                                    ; CODE XREF: Sound_LoadB
                 jsr     Sound_StopSFXAndRestoreBGMChannels(pc)  ; (pc)
                 jsr     Sound_StopSpecialSFXAndRestoreBGMChannels(pc)  ; (pc)
                 jsr     Sound_ResetPlaybackState(pc)    ; (pc)
-                lea     BGM_PointerTable(pc),a4
+                lea     Sound_BGMPointerTable(pc),a4
                 subi.b  #$81,d7
                 lsl.w   #2,d7
                 movea.l (a4,d7.w),a4
@@ -106,7 +106,7 @@ Sound_RefreshNextBGMFMChannel:                          ; CODE XREF: Sound_LoadB
                 dbf     d4,Sound_RefreshNextBGMFMChannel
                 moveq   #2,d4
 Sound_RefreshBGMPSGChannels:                            ; CODE XREF: Sound_LoadBGMRequest+12C   j  ; was: loc_83092
-                jsr     Sound_CheckPSGMute(pc)          ; (pc)
+                jsr     Sound_MutePSGIfNotOverridden(pc)  ; (pc)
                 adda.w  d6,a5
                 dbf     d4,Sound_RefreshBGMPSGChannels
                 btst    #2,(byte_FFF9F0).w
@@ -129,7 +129,7 @@ Sound_LoadSFX:                                          ; CODE XREF: Sound_Dispa
                 rts
 ; ---------------------------------------------------------------------------
 Sound_SelectLowRangeSFXPointerTable:                    ; CODE XREF: Sound_LoadSFX+4   j  ; was: loc_830C6
-                lea     SFX_PointerTable(pc),a0
+                lea     Sound_OrdinarySFXPointerTableBase(pc),a0
                 addi.w  #$1D,d7
                 bra.w   Sound_ResolveSFXHeader
 ; ---------------------------------------------------------------------------
@@ -139,7 +139,7 @@ Sound_ValidateHighRangeSFXRequest:                      ; CODE XREF: Sound_Dispa
                 rts
 ; ---------------------------------------------------------------------------
 Sound_SelectHighRangeSFXPointerTable:                   ; CODE XREF: Sound_LoadSFX+1A   j  ; was: loc_830DC
-                lea     SFX_PointerTable(pc),a0
+                lea     Sound_OrdinarySFXPointerTableBase(pc),a0
                 subi.b  #$A0,d7
 Sound_ResolveSFXHeader:                                 ; CODE XREF: Sound_LoadSFX+12   j  ; was: loc_830E4
                 lsl.w   #2,d7
@@ -227,7 +227,7 @@ Sound_LoadSpecialSFX:                                   ; CODE XREF: Sound_Dispa
                 rts
 ; ---------------------------------------------------------------------------
 Sound_ResolveSpecialSFXHeader:                          ; CODE XREF: Sound_LoadSpecialSFX+4   j  ; was: loc_831E0
-                lea     SpecialSFX_PointerTable(pc),a0
+                lea     Sound_SpecialSFXPointerTable(pc),a0
                 subi.b  #$F9,d7
                 lsl.w   #2,d7
                 movea.l (a0,d7.w),a3
@@ -331,7 +331,7 @@ Sound_RestoreBGMFMChannel:                              ; CODE XREF: Sound_StopS
                 bra.s   Sound_ContinueSFXChannelStopLoop
 ; ---------------------------------------------------------------------------
 Sound_RestoreBGMPSGChannel:                             ; CODE XREF: Sound_StopSFXAndRestoreBGMChannels+22   j  ; was: loc_83300
-                jsr     Sound_CheckPSGMute(pc)          ; (pc)
+                jsr     Sound_MutePSGIfNotOverridden(pc)  ; (pc)
                 lea     (word_FFFB70).w,a0
                 cmpi.b  #$E0,d3
                 beq.s   Sound_MarkBGMPSGChannelRestored

@@ -2367,7 +2367,7 @@ dispatches sound IDs and does not interpret an envelope; and
 `Sound_ReadEnvelopeData` reconstructs a PCM address and reads a four-byte DPCM
 sample header. The adjacent `$81-$9F` entry is also corrected from the false
 `Sound_ProcessDAC` to `Sound_LoadBGMRequest`, since it indexes
-`BGM_PointerTable` and initializes music channels. Thirty-nine exact-address
+`Sound_BGMPointerTable` and initializes music channels. Thirty-nine exact-address
 audit records cover the complete module and those two BGM entries. The pass
 removes 33 address-derived definitions, lowering the project ceiling from
 5,454 to 5,421; provenance rises from 10,369 to 10,402 mappings and the audit
@@ -2487,6 +2487,51 @@ step and its later restoration through the transition state audited above.
 Twenty address-derived definitions are removed, lowering the ceiling from
 5,293 to 5,273. Provenance rises from 10,532 to 10,552 mappings, and 24
 exact-address records take the audit registry from 6,694 to 6,718 entries.
+
+The PSG playback-and-envelope pass replaces the artificial adjacent
+`sound/channel_playback.s` and `sound/frequency_and_envelopes.s` files with the
+cohesive 307-line `sound/psg_playback_and_envelopes.s` module covering
+`0x084A70-0x084E77`. All 51 definitions now have exact-address audit records;
+50 are new because `Sound_ProcessPSGChannel` was already audited with the
+driver core. The shared layout consequently contains 341 modules.
+
+Static consumers establish separate pitch and loudness data families. Channel
+field `$0A` selects one of eight signed pitch-offset streams through
+`Sound_PitchEnvelopePointerTable`, while field `$0B` selects one of ten PSG
+attenuation streams through `Sound_PSGVolumeEnvelopePointerTable`. The latter
+interpreter handles cursor commands `$80-$82` and termination command `$83`.
+This directly rejects the generated `Sound_ProcessFMModulation` claim: the
+routine neither selects an FM channel nor writes the YM2612.
+
+The period table and mute paths are likewise narrowed to their observable PSG
+roles. One mixed nine-longword driver table at `0x084CA4` has no static source
+reference; its current name describes the pointers and scalar it contains,
+without claiming a runtime consumer. Because the initial disassembly emitted
+that block without a definition, its audit records `unlabeled_84CA4` as the
+legacy identity and deliberately adds no false provenance marker. Fourteen
+live address-derived definitions are eliminated, lowering the project ceiling
+from 5,273 to 5,259. Thirty-four truthful imported-name markers raise
+provenance from 10,552 to 10,586 mappings, and 50 new exact-address records
+take the audit registry from 6,718 to 6,768 entries. The fresh assembler listing
+contains zero errors and zero warnings.
+
+The request-table pass merges the adjacent 50-line
+`sound/music_and_priority_tables.s` and 160-line
+`sound/sfx_pointer_tables.s` containers into the cohesive 213-line
+`sound/request_and_track_tables.s` range at `0x084E78-0x085265`. Its five
+definitions are all instruction-backed: BGM IDs `$81-$9F`, the 256-byte
+request-priority map, ordinary SFX IDs `$A0-$F8`, special override IDs
+`$F9-$FC`, and low-range SFX IDs `$40-$7F`.
+
+The low and high ordinary-SFX paths prove why the two pointer blocks belong
+together. High IDs subtract `$A0` from the shared base; low IDs add `$1D`, then
+the common four-byte scale lands at the low-range table exactly `$174` bytes
+after that base. Five inherited semantic names now have exact static audit
+records and truthful `off_84E78`, `byte_84EF4`, `off_84FF2`, `off_85156`, and
+`off_85166` provenance. The address-derived ceiling remains 5,259 because this
+was a Sonnet-name audit rather than a raw-label burn-down; provenance rises
+from 10,586 to 10,591 mappings, the audit registry rises from 6,768 to 6,773
+entries, and the ROM layout decreases from 341 to 340 modules.
 
 Four especially broad data labels are explicitly registered:
 

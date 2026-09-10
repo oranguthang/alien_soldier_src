@@ -1,5 +1,5 @@
 SFX_40:         dc.b    0, $1A, 1, 1, $80, $A0, 0, $A, $E5, 0, $F5, 1, $C0, 5, $BD, $A, $EC, 2, $F7, 0, 4, $FF, $F8, $EC, $F8, $F2
-                                        ; DATA XREF: ROM:SFX_40_7F_PointerTable   o
+                                        ; DATA XREF: Sound_LowRangeSFXPointerTable   o
 SFX_41:         dc.b    0, $1A, 1, 1, $80, 5, 0, $A, 0, 3, $80, 1, $EF, 0, $F0, 0, 1, $EE, $FF, $98, 4, $EF, 1, $97, $1E, $F2, $38, $34, $31, $70, $13, $1F
                                         ; DATA XREF: ROM:0008516A   o
                 dc.b    $1F, $F, $1F, $1F, $1F, $1F, $1F, 0, 0, 0, 0, $2F, $F, $F, $F, $1C, $17, 0, $80, $3A, $F, $71, 0, 7, $C, $12, $12, $1F, $F, $1F, $1F, $1F
@@ -271,7 +271,7 @@ SFX_F8:         dc.b    0, $1C, 1, 1, $80, 5, 0, $A, 0, 2, $80, 1, $EF, 0, $F0, 
                 dc.b    $F, $1B, $1F, $1F, 6, $1E, $1F, $1D, $F, 1, $E, 0, $10, $31, $1F, $F, $1F, $21, $10, 0, $80, $31, $F, $2F, $20, $F, $1B, $1F, $1F, 4, $1E, $1F
                 dc.b    $1D, $F, 6, 0, 7, 5, 1, $1F, $F, $1F, $20, $17, $16, $80
 SFX_F9:         dc.b    0, $1C, 1, 1, $80, 4, 0, $A, $18, $D, $80, 1, $EF, 0, $F0, 0, 1, $1C, 1, $87, 7, $E7, $8C, 7, $F6, $FF, $F9, $F2, $32, 8, $10, $70
-                                        ; DATA XREF: ROM:SpecialSFX_PointerTable   o
+                                        ; DATA XREF: Sound_SpecialSFXPointerTable   o
                 dc.b    $2E, $1B, $F, $F, $D, $1F, $F, $1F, $1F, 0, $C, 0, 8, $1F, $F, $F, $F, $29, $10, $1A, $80, 0
 SFX_FA:         dc.b    0, $19, 1, 1, $80, 4, 0, $A, $A, 6, $80, 1, $EF, 0, $F0, 1, 1, $22, $FF, $88, 7, $F6, $FF, $FC, $F2, $30, 2, $31, 1, 2, $1B, $1F
                                         ; DATA XREF: ROM:0008515A   o

@@ -1,6 +1,6 @@
 Sound_SelectPendingRequest:                             ; CODE XREF: Sound_UpdateDriver+1E   p  ; was: sub_829AA
                                         ; DATA XREF: Sound_UpdateDriver+1E   o
-                lea     SoundPriorityTable(pc),a0
+                lea     Sound_RequestPriorityTable(pc),a0
                 lea     (byte_FFF80E).w,a1
                 move.b  (byte_FFF800).w,d3
                 moveq   #3,d4

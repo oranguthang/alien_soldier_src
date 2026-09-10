@@ -321,7 +321,7 @@ Sound_HandleNoteTimer:                                  ; CODE XREF: Sound_Proce
                 rts
 ; ---------------------------------------------------------------------------
 Sound_HandlePSGNoteTimeout:                             ; CODE XREF: Sound_HandleNoteTimer+14   j  ; was: loc_8266C
-                jsr     Sound_CheckPSGMute(pc)          ; (pc)
+                jsr     Sound_MutePSGIfNotOverridden(pc)  ; (pc)
                 addq.w  #4,sp
 Sound_HandleNoteTimerReturn:                            ; CODE XREF: Sound_HandleNoteTimer+4   j  ; was: locret_82672
                                         ; Sound_HandleNoteTimer+A   j
@@ -399,13 +399,13 @@ Sound_UpdateChannelFrequencyReturn:                     ; CODE XREF: Sound_Updat
 ; End of function Sound_UpdateChannelFrequency
 ; Applies pitch effects including detune transpose and modulation to frequency
 Sound_ApplyPitchEffects:                                ; CODE XREF: Sound_UpdateChannelFrequency+24   p  ; was: sub_82714
-                                        ; Sound_UpdatePSGFrequency+1E   p
+                                        ; Sound_UpdatePSGChannelFrequency+1E   p
                                         ; DATA XREF:
                 moveq   #0,d6
                 move.b  $A(a5),d0
                 andi.w  #$7F,d0
                 beq.s   Sound_ApplyDetuneAndBasePitch
-                lea     ModulationEnvelopePointerTable(pc),a0
+                lea     Sound_PitchEnvelopePointerTable(pc),a0
                 subq.w  #1,d0
                 lsl.w   #2,d0
                 movea.l (a0,d0.w),a0
@@ -465,7 +465,7 @@ Sound_EndPitchEnvelopeWithRest:                         ; CODE XREF: Sound_Apply
                 bra.w   Sound_SendFMKeyOffIfAllowed
 ; ---------------------------------------------------------------------------
 Sound_EndPSGPitchEnvelopeWithRest:                      ; CODE XREF: Sound_EndPitchEnvelopeWithRest+8   j  ; was: loc_8279A
-                bra.w   Sound_CheckPSGMute
+                bra.w   Sound_MutePSGIfNotOverridden
 ; End of function Sound_EndPitchEnvelopeWithRest
 ; Jump the pitch-envelope cursor after command $82
 Sound_JumpPitchEnvelope:                                ; CODE XREF: Sound_ApplyPitchEffects+3E   j  ; was: sub_8279E

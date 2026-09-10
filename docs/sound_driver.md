@@ -42,10 +42,10 @@ not Z80 source code.
 | `$00` | Stop all sound |
 | `$01-$0F` | Driver commands; `$05-$0F` are unused |
 | `$10-$3F` | DAC SFX |
-| `$40-$7F` | Sequence SFX through `SFX_40_7F_PointerTable` |
+| `$40-$7F` | Sequence SFX through `Sound_LowRangeSFXPointerTable` |
 | `$81-$9F` | Music/song-format sequences |
-| `$A0-$F8` | Sequence SFX through `SFX_PointerTable` |
-| `$F9-$FC` | Special override SFX through `SpecialSFX_PointerTable` |
+| `$A0-$F8` | Sequence SFX through `Sound_OrdinarySFXPointerTableBase` |
+| `$F9-$FC` | Special override SFX through `Sound_SpecialSFXPointerTable` |
 | `$FD-$FF` | Unused |
 
 The filenames in `smps-rips` toggle bit 7 of the runtime SFX ID:
@@ -209,7 +209,7 @@ All 47 voice IDs `$10-$3E` index eight-byte records in
 `Sound_ReadEnvelopeData` reconstructs a packed sample address and reads its
 four-byte DPCM header. The adjacent `$81-$9F` handler formerly called
 `Sound_ProcessDAC` is now `Sound_LoadBGMRequest`, because its sole data source
-is `BGM_PointerTable` and it initializes the song's DAC, FM, and PSG channel
+is `Sound_BGMPointerTable` and it initializes the song's DAC, FM, and PSG channel
 records.
 
 ## Audited playback and loading core
@@ -309,3 +309,63 @@ Those handlers pause or resume the ten BGM PCM/FM/PSG records, assign their
 common tick multiplier, request one manual attenuation step, and request its
 restoration. The merged module is slightly above the preferred 700-line band
 but remains cohesive and below the 1,000-line ceiling.
+
+## PSG playback and envelope data
+
+The contiguous `0x084A70-0x084E77` range is now the 307-line
+`sound/psg_playback_and_envelopes.s` module. The former 204-line
+`channel_playback.s` and 101-line `frequency_and_envelopes.s` split separated
+the PSG parser and output path from the period, pitch-envelope, and volume-
+envelope tables that those routines consume. Keeping all 51 definitions
+together produces a natural subsystem module inside the preferred size band
+and reduces the ROM layout from 342 to 341 modules.
+
+The PSG update loop parses commands until it reaches a note, rest, or duration,
+then derives the tone period through `Sound_PSGNotePeriodTable`. Sustained-note
+updates independently advance note timeout, the selected PSG volume envelope,
+custom vibrato, and the selected pitch envelope. The frequency writer packs
+the low four and following six period bits into the two writes expected by the
+VDP PSG. Rest and envelope-termination paths use
+`Sound_MutePSGIfNotOverridden`, so an active SFX override retains ownership of
+the hardware channel.
+
+This audit rejects the generated `Sound_ProcessFMModulation` name: the routine
+is reached only from PSG playback, indexes channel field `$0B` through
+`Sound_PSGVolumeEnvelopePointerTable`, and never touches FM hardware. Its
+commands are now explicit: `$80` restarts the stream, `$81` repeats the prior
+attenuation value, `$82` replaces the cursor, and `$83` marks the channel
+resting and conditionally mutes it. The former generic modulation table is
+separately named `Sound_PitchEnvelopePointerTable`, because its signed stream
+values are added to pitch by `Sound_ApplyPitchEffects`.
+
+The nine-longword block at `0x084CA4` is retained as
+`Sound_DriverInterfaceTable`. It contains sound-table pointers, both envelope
+table pointers, scalar `$A0`, and the `Sound_UpdateDriver` code pointer, but no
+static source reference reaches the block. The initial disassembly emitted it
+without a label, so its audit uses the explicit `unlabeled_84CA4` legacy
+identity and does not invent a `; was:` marker.
+
+## Request priority and track-pointer tables
+
+The contiguous `0x084E78-0x085265` metadata range is now the 213-line
+`sound/request_and_track_tables.s` module. The former 50-line
+`music_and_priority_tables.s` and 160-line `sfx_pointer_tables.s` files split a
+single lookup family immediately before the track payloads. The merged module
+contains the BGM request pointers, all 256 request priorities, the ordinary
+SFX arithmetic base, the four dedicated override-SFX pointers, and the 64
+low-range SFX pointers. The ROM layout now contains 340 modules.
+
+The ordinary-SFX layout is intentionally non-obvious. Requests `$A0-$F8`
+subtract `$A0` and index `Sound_OrdinarySFXPointerTableBase` directly. Requests
+`$40-$7F` instead add `$1D`; after the common four-byte scaling this lands on
+`Sound_LowRangeSFXPointerTable`, exactly `$174` bytes after the shared base.
+The separate pointer published by `Sound_DriverInterfaceTable` reaches that
+same low-range block. This proves that the adjacent tables form one lookup
+contract rather than unrelated data containers.
+
+All five inherited semantic names now have exact static audits and retained
+IDA provenance. `Sound_RequestPriorityTable` replaces the unqualified priority
+name because the selector indexes it by request ID and gives `$FF` a dedicated
+immediate-selection meaning. The BGM, ordinary-SFX, special-SFX, and low-range
+SFX names now share the `Sound_` namespace and state their distinct indexing
+roles.

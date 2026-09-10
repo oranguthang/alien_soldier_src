@@ -1,5 +1,5 @@
 SFX_A0:         dc.b    0, $34, 1, 2, $80, 4, 0, $10, 0, 0, $80, $C0, 0, $22, 0, 0, $80, 1, $EF, 0, $F0, 0, 1, $FC, $FF, $96, 3, $80, 1, $EF, 1, $85
-                                        ; DATA XREF: ROM:SFX_PointerTable   o
+                                        ; DATA XREF: Sound_OrdinarySFXPointerTableBase   o
                 dc.b    $40, $F2, $80, 1, $F5, 0, $F3, $E7, $F0, 0, 1, 1, $FF, $96, 3, $80, 1, $C0, $40, $F2, $35, 1, $40, 0, 0, $1F, $1F, $1E, $1F, $F, $1F, $1F
                 dc.b    $1F, $1F, $C, 0, 0, $1F, $F, $F, $F, 6, $80, $80, $80, $39, $2D, $41, $17, $7F, $1F, $1F, $1E, $1F, $1F, $1F, $1F, $A, $D, $10, $D, $D, $1F, $F
                 dc.b    $F, $3F, 3, 9, 5, $80
