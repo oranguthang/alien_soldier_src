@@ -1909,6 +1909,57 @@ of eight signed spawn-offset pairs. The convergence label is deliberately
 named `FinishOrbVelocitySelection`: it is shared by both random outcomes and
 does not claim that either value is the canonical one.
 
+The Z-Leo orb-lifecycle pass reduced the address-derived unknown count from
+6,090 to 6,082 and raised provenance to 9,741 mappings. Eight definitions in
+`$053070-$0530ED` now have exact static audit records, taking the registry to
+5,507 entries and the projectile backlog from 25 to 17.
+
+The ordinary orb path enforces horizontal bounds `$80-$1BF` and a lower
+vertical bound of `$70`, then reflects positive vertical velocity when the orb
+crosses the external stage coordinate. A status-bit path reflects both
+velocity components and changes sprite data; the removal path has a one-in-four
+RNG branch to `Pickup_SpawnSmallFromCurrentObject`. Frame-counter bit zero
+alternates the two sprite attribute words. The following dispatch target is a
+confirmed one-instruction no-op rather than an unexplained `nullsub`.
+
+The Z-Leo laser-lifecycle pass reduced the address-derived unknown count from
+6,082 to 6,072 and raised provenance to 9,751 mappings. Ten anonymous
+definitions in `$053180-$053317` and one existing semantic label now have exact
+static audit records, taking the registry to 5,518 entries and the projectile
+backlog from 17 to 7.
+
+The initial projectile starts with radius four and a frame-derived angular
+phase. While its vertical coordinate remains in `$80-$17F`, the ordinary path
+advances the angle by six and radius by five, then derives position and velocity
+from the sine table around the center at `FFC630/FFC634`. Its status paths can
+convert it to a type-160 particle or change it to object type `$498`, clear
+vertical velocity, and launch it horizontally in a direction selected by bit
+three of `FFA40E`.
+
+The old `Projectile_ZLeoLaser_CollisionCheck` name understated its role. Object
+type `$498` dispatches directly to this full horizontal-laser handler: status
+bit seven converts the laser to an impact effect, while its ordinary path emits
+a trail every fourth frame. Both phases share the trail spawner, which creates
+a type-`$88` particle at a randomized nearby coordinate with velocity opposite
+the source laser.
+
+The final Z-Leo projectile pass reduced the address-derived unknown count from
+6,072 to 6,065 and raised provenance to 9,758 mappings. All seven remaining
+definitions in `projectiles/z_leo.s`, spanning `$0533BC-$0534FF`, now have exact
+static audit records, taking the registry to 5,525 entries.
+
+The scrolling-attack pair has a shared allocation-failure return, and its
+timed laser applies `$80000` of negative vertical acceleration until lifetime
+expiry. The drop-attack spawner selects horizontal velocity `+$60000` below X
+`$120` and `-$60000` at or above that coordinate. Its companion moves upward
+to Y `$F0`, pauses for `$10` ticks, then continues subtracting `$20` from Y
+until it leaves the screen. This corrects the former Sonnet prose claim that
+the post-pause motion fell downward.
+
+This completes the Z-Leo subsystem milestone: `z_leo_core.s`,
+`z_leo_rendering.s`, and `projectiles/z_leo.s` now contain zero live
+address-derived definitions.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
