@@ -1,4 +1,4 @@
-Sound_CommandDispatcher:                                ; CODE XREF: Sound_PlayPSGSequence+1C   p  ; was: sub_83820
+Sound_CommandDispatcher:                                ; CODE XREF: Sound_ProcessPCMSequence+1C   p  ; was: sub_83820
                                         ; Sound_ParseTrackData+12   p
                 subi.w  #$E0,d5
                 lsl.w   #2,d5
@@ -95,7 +95,7 @@ Sound_SetPanAndAMS:                                     ; CODE XREF: Sound_Comma
                 andi.b  #$37,d0                         ; '7'
                 or.b    d0,d1
                 move.b  d1,$27(a5)
-                jmp     Sound_SendPSGVolumeUpdate(pc)   ; (pc)
+                jmp     Sound_WriteChannelPanAndAMS(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
 locret_838DE:                                           ; CODE XREF: Sound_SetPanAndAMS+6   j
                 rts
@@ -112,7 +112,7 @@ Sound_SetCommunication:                                 ; CODE XREF: Sound_Comma
 ; End of function Sound_SetCommunication
 ; Mutes all channels then stops the current channel
 Sound_MuteAndStop:                                      ; CODE XREF: Sound_CommandDispatcher+16   j  ; was: sub_838EC
-                jsr     Sound_MuteAllChannels(pc)       ; (pc)
+                jsr     Sound_SilenceCurrentFMOperators(pc)  ; (pc)
                 bra.w   Sound_StopChannel
 ; End of function Sound_MuteAndStop
 ; Configures or disables pan animation (E4)
@@ -128,7 +128,7 @@ Sound_SetPanAnimation:                                  ; CODE XREF: Sound_Comma
 ; ---------------------------------------------------------------------------
 loc_83910:                                              ; CODE XREF: Sound_SetPanAnimation+4   j
                 move.b  $27(a5),d1
-                jmp     Sound_SendPSGVolumeUpdate(pc)   ; (pc)
+                jmp     Sound_WriteChannelPanAndAMS(pc)  ; (pc)
 ; End of function Sound_SetPanAnimation
 ; Adds separate PSG/FM volume offsets, selecting by channel type (E5)
 Sound_AddPSGFMVolume:                                   ; CODE XREF: Sound_CommandDispatcher+1E   j  ; was: sub_83918
@@ -184,7 +184,7 @@ loc_8396A:                                              ; CODE XREF: Sound_SetLF
                 andi.b  #$C0,d0
                 or.b    d0,d1
                 move.b  d1,$27(a5)
-                jmp     Sound_SendPSGVolumeUpdate(pc)   ; (pc)
+                jmp     Sound_WriteChannelPanAndAMS(pc)  ; (pc)
 ; End of function Sound_SetLFO
 ; ---------------------------------------------------------------------------
 byte_8398C:     dc.b    $60, $68, $64, $6C              ; DATA XREF: Sound_SetLFO+10   o
@@ -233,8 +233,8 @@ Sound_SelectInstrument:                                 ; CODE XREF: Sound_Comma
                 movea.l (dword_FFF824).w,a1
 ; End of function Sound_SelectInstrument
 ; Sets FM channel instrument parameters registers and envelope data
-Sound_SetFMInstrument:                                  ; CODE XREF: Sound_ProcessFM+5C   p  ; was: sub_839DC
-                                        ; Sound_ProcessSpecialChannels+2E   p
+Sound_SetFMInstrument:                                  ; CODE XREF: Sound_StopSFXAndRestoreBGMChannels+5C   p  ; was: sub_839DC
+                                        ; Sound_StopSpecialSFXAndRestoreBGMChannels+2E   p
                 subq.w  #1,d0
                 bmi.s   loc_839EA
                 move.w  #$19,d1
@@ -300,7 +300,7 @@ byte_83A86:     dc.b    8, 8, 8, 8, $A, $E, $E, $F
                                         ; Sound_ApplyVolume+42   r
 
 ; Applies volume and pan to sound channel
-Sound_ApplyVolume:                                      ; CODE XREF: Sound_InitializeChannels:loc_833F4   p  ; was: sub_83A8E
+Sound_ApplyVolume:                                      ; CODE XREF: Sound_UpdateMusicFadeOut:Sound_ApplyBGMFMFadeVolume   p  ; was: sub_83A8E
                                         ; Sound_ProcessVolumeFade+EE   p
                 btst    #2,(a5)
                 bne.s   locret_83AF0
@@ -395,7 +395,7 @@ loc_83B60:                                              ; CODE XREF: Sound_StopC
                 moveq   #0,d0
                 move.b  1(a5),d0
                 bmi.s   loc_83BCA
-                lea     dword_83196(pc),a0
+                lea     Sound_BGMChannelRecordPointers(pc),a0
                 movea.l a5,a3
                 cmpi.b  #4,d0
                 bne.s   loc_83B90
@@ -438,7 +438,7 @@ loc_83BCA:                                              ; CODE XREF: Sound_StopC
                 cmpi.b  #$C0,d0
                 beq.s   loc_83BE8
 loc_83BDE:                                              ; CODE XREF: Sound_StopChannel+90   j
-                lea     dword_83196(pc),a0
+                lea     Sound_BGMChannelRecordPointers(pc),a0
                 lsr.b   #3,d0
                 movea.l (a0,d0.w),a0
 loc_83BE8:                                              ; CODE XREF: Sound_StopChannel+96   j

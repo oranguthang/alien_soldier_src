@@ -1,5 +1,5 @@
-SFX_PointerTable:   dc.l    SFX_A0                      ; DATA XREF: Sound_LoadSFX:loc_830C6   o
-                                        ; sub_830BC:loc_830DC   o
+SFX_PointerTable:   dc.l    SFX_A0                      ; DATA XREF: Sound_LoadSFX:Sound_SelectLowRangeSFXPointerTable   o
+                                        ; Sound_LoadSFX:Sound_SelectHighRangeSFXPointerTable   o
                 dc.l    SFX_A1
                 dc.l    SFX_A2
                 dc.l    SFX_A3
@@ -88,7 +88,7 @@ SFX_PointerTable:   dc.l    SFX_A0                      ; DATA XREF: Sound_LoadS
                 dc.l    SFX_F6
                 dc.l    SFX_F7
                 dc.l    SFX_F8
-SpecialSFX_PointerTable:    dc.l    SFX_F9              ; DATA XREF: Sound_LoadSpecialSFX:loc_831E0   o
+SpecialSFX_PointerTable:    dc.l    SFX_F9              ; DATA XREF: Sound_LoadSpecialSFX:Sound_ResolveSpecialSFXHeader   o
                                         ; ROM:00084CA8   o
                 dc.l    SFX_FA
                 dc.l    SFX_FB

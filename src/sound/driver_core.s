@@ -12,124 +12,124 @@ Sound_UpdateDriver:                                     ; CODE XREF: Sound_Updat
                                         ; DATA XREF: Sound_UpdateThunk   o
                 clr.b   (byte_FFF80E).w
                 tst.b   (byte_FFF807).w
-                bne.w   Sound_HandleZ80BusRequest
+                bne.w   Sound_ProcessPauseTransition
                 jsr     Sound_ProcessVolumeFade(pc)     ; (pc)
                 jsr     Sound_ProcessTempoTick(pc)      ; (pc)
-                jsr     Sound_InitializeChannels(pc)    ; (pc)
+                jsr     Sound_UpdateMusicFadeOut(pc)    ; (pc)
                 tst.l   (dword_FFF80A).w
-                beq.s   loc_8234E
-                jsr     Sound_ProcessFade(pc)           ; (pc)
-loc_8234E:                                              ; CODE XREF: Sound_UpdateDriver+1C   j
-                jsr     Sound_UpdateEnvelope(pc)        ; (pc)
+                beq.s   Sound_UpdateActiveChannels
+                jsr     Sound_SelectPendingRequest(pc)  ; (pc)
+Sound_UpdateActiveChannels:                             ; CODE XREF: Sound_UpdateDriver+1C   j  ; was: loc_8234E
+                jsr     Sound_DispatchPendingRequest(pc)  ; (pc)
                 lea     (byte_FFF840).w,a5
                 tst.b   (a5)
-                bpl.s   loc_8235E
-                jsr     Sound_PlayPSGSequence(pc)       ; (pc)
-loc_8235E:                                              ; CODE XREF: Sound_UpdateDriver+2C   j
+                bpl.s   Sound_ProcessBGMFMChannels
+                jsr     Sound_ProcessPCMSequence(pc)    ; (pc)
+Sound_ProcessBGMFMChannels:                             ; CODE XREF: Sound_UpdateDriver+2C   j  ; was: loc_8235E
                 clr.b   (byte_FFF808).w
                 moveq   #5,d7
-loc_82364:                                              ; CODE XREF: Sound_UpdateDriver:loc_82370   j
+Sound_ProcessNextBGMFMChannel:                          ; CODE XREF: Sound_UpdateDriver:Sound_ContinueBGMFMChannelLoop   j  ; was: loc_82364
                 adda.w  #$30,a5                         ; '0'
                 tst.b   (a5)
-                bpl.s   loc_82370
+                bpl.s   Sound_ContinueBGMFMChannelLoop
                 jsr     Sound_ProcessChannel(pc)        ; (pc)
-loc_82370:                                              ; CODE XREF: Sound_UpdateDriver+3E   j
-                dbf     d7,loc_82364
+Sound_ContinueBGMFMChannelLoop:                         ; CODE XREF: Sound_UpdateDriver+3E   j  ; was: loc_82370
+                dbf     d7,Sound_ProcessNextBGMFMChannel
                 moveq   #2,d7
-loc_82376:                                              ; CODE XREF: Sound_UpdateDriver:loc_82382   j
+Sound_ProcessBGMPSGChannels:                            ; CODE XREF: Sound_UpdateDriver:Sound_ContinueBGMPSGChannelLoop   j  ; was: loc_82376
                 adda.w  #$30,a5                         ; '0'
                 tst.b   (a5)
-                bpl.s   loc_82382
-                jsr     Sound_SetFMFrequency(pc)        ; (pc)
-loc_82382:                                              ; CODE XREF: Sound_UpdateDriver+50   j
-                dbf     d7,loc_82376
+                bpl.s   Sound_ContinueBGMPSGChannelLoop
+                jsr     Sound_ProcessPSGChannel(pc)     ; (pc)
+Sound_ContinueBGMPSGChannelLoop:                        ; CODE XREF: Sound_UpdateDriver+50   j  ; was: loc_82382
+                dbf     d7,Sound_ProcessBGMPSGChannels
                 move.b  #$80,(byte_FFF80E).w
                 moveq   #2,d7
-loc_8238E:                                              ; CODE XREF: Sound_UpdateDriver:loc_8239A   j
+Sound_ProcessSFXFMChannels:                             ; CODE XREF: Sound_UpdateDriver:Sound_ContinueSFXFMChannelLoop   j  ; was: loc_8238E
                 adda.w  #$30,a5                         ; '0'
                 tst.b   (a5)
-                bpl.s   loc_8239A
+                bpl.s   Sound_ContinueSFXFMChannelLoop
                 jsr     Sound_ProcessChannel(pc)        ; (pc)
-loc_8239A:                                              ; CODE XREF: Sound_UpdateDriver+68   j
-                dbf     d7,loc_8238E
+Sound_ContinueSFXFMChannelLoop:                         ; CODE XREF: Sound_UpdateDriver+68   j  ; was: loc_8239A
+                dbf     d7,Sound_ProcessSFXFMChannels
                 moveq   #2,d7
-loc_823A0:                                              ; CODE XREF: Sound_UpdateDriver:loc_823AC   j
+Sound_ProcessSFXPSGChannels:                            ; CODE XREF: Sound_UpdateDriver:Sound_ContinueSFXPSGChannelLoop   j  ; was: loc_823A0
                 adda.w  #$30,a5                         ; '0'
                 tst.b   (a5)
-                bpl.s   loc_823AC
-                jsr     Sound_SetFMFrequency(pc)        ; (pc)
-loc_823AC:                                              ; CODE XREF: Sound_UpdateDriver+7A   j
-                dbf     d7,loc_823A0
+                bpl.s   Sound_ContinueSFXPSGChannelLoop
+                jsr     Sound_ProcessPSGChannel(pc)     ; (pc)
+Sound_ContinueSFXPSGChannelLoop:                        ; CODE XREF: Sound_UpdateDriver+7A   j  ; was: loc_823AC
+                dbf     d7,Sound_ProcessSFXPSGChannels
                 move.b  #$40,(byte_FFF80E).w            ; '@'
                 moveq   #1,d7
-loc_823B8:                                              ; CODE XREF: Sound_UpdateDriver:loc_823D0   j
+Sound_ProcessSpecialSFXChannels:                        ; CODE XREF: Sound_UpdateDriver:loc_823D0   j  ; was: loc_823B8
                 adda.w  #$30,a5                         ; '0'
                 tst.b   (a5)
-                bpl.s   Sound_UpdateDriverLoop
+                bpl.s   Sound_ContinueSpecialSFXChannelLoop
                 tst.b   1(a5)
-                bmi.s   loc_823CC
+                bmi.s   Sound_ProcessSpecialSFXPSGChannel
                 jsr     Sound_ProcessChannel(pc)        ; (pc)
-                bra.s   Sound_UpdateDriverLoop
+                bra.s   Sound_ContinueSpecialSFXChannelLoop
 ; ---------------------------------------------------------------------------
-loc_823CC:                                              ; CODE XREF: Sound_UpdateDriver+98   j
-                jsr     Sound_SetFMFrequency(pc)        ; (pc)
+Sound_ProcessSpecialSFXPSGChannel:                      ; CODE XREF: Sound_UpdateDriver+98   j  ; was: loc_823CC
+                jsr     Sound_ProcessPSGChannel(pc)     ; (pc)
 ; Main driver update loop iteration
-Sound_UpdateDriverLoop:                                 ; CODE XREF: Sound_UpdateDriver+92   j  ; was: loc_823D0
+Sound_ContinueSpecialSFXChannelLoop:                    ; CODE XREF: Sound_UpdateDriver+92   j  ; was: loc_823D0
                                         ; Sound_UpdateDriver+9E   j
-                dbf     d7,loc_823B8
+                dbf     d7,Sound_ProcessSpecialSFXChannels
                 rts
 ; End of function Sound_UpdateDriver
-; Plays PSG sequence with Z80 bus arbitration and priority checking
-Sound_PlayPSGSequence:                                  ; CODE XREF: Sound_UpdateDriver+2E   p  ; was: sub_823D6
+; Process the DAC/PCM sequence and submit eligible samples to the Z80 driver
+Sound_ProcessPCMSequence:                               ; CODE XREF: Sound_UpdateDriver+2E   p  ; was: sub_823D6
                                         ; DATA XREF: Sound_UpdateDriver+2E   o
                 subq.b  #1,$E(a5)
-                bne.w   locret_824A0
+                bne.w   Sound_ProcessPCMSequenceReturn
                 move.b  #$80,(byte_FFF808).w
                 movea.l 4(a5),a4
-loc_823E8:                                              ; CODE XREF: Sound_PlayPSGSequence+20   j
+Sound_ReadPCMSequenceCommand:                           ; CODE XREF: Sound_ProcessPCMSequence+20   j  ; was: loc_823E8
                 moveq   #0,d5
                 move.b  (a4)+,d5
                 cmpi.b  #$E0,d5
-                bcs.s   loc_823F8
+                bcs.s   Sound_DecodePCMSequenceEvent
                 jsr     Sound_CommandDispatcher(pc)     ; (pc)
-                bra.s   loc_823E8
+                bra.s   Sound_ReadPCMSequenceCommand
 ; ---------------------------------------------------------------------------
-loc_823F8:                                              ; CODE XREF: Sound_PlayPSGSequence+1A   j
+Sound_DecodePCMSequenceEvent:                           ; CODE XREF: Sound_ProcessPCMSequence+1A   j  ; was: loc_823F8
                 tst.b   d5
-                bpl.s   loc_8240E
+                bpl.s   Sound_CalculatePCMSequenceDuration
                 move.b  d5,$10(a5)
                 move.b  (a4)+,d5
-                bpl.s   loc_8240E
+                bpl.s   Sound_CalculatePCMSequenceDuration
                 subq.w  #1,a4
                 move.b  $F(a5),$E(a5)
-                bra.s   loc_82412
+                bra.s   Sound_SavePCMSequencePosition
 ; ---------------------------------------------------------------------------
-loc_8240E:                                              ; CODE XREF: Sound_PlayPSGSequence+24   j
-                                        ; Sound_PlayPSGSequence+2C   j
+Sound_CalculatePCMSequenceDuration:                     ; CODE XREF: Sound_ProcessPCMSequence+24   j  ; was: loc_8240E
+                                        ; Sound_ProcessPCMSequence+2C   j
                 jsr     Sound_CalculateDuration(pc)     ; (pc)
-loc_82412:                                              ; CODE XREF: Sound_PlayPSGSequence+36   j
+Sound_SavePCMSequencePosition:                          ; CODE XREF: Sound_ProcessPCMSequence+36   j  ; was: loc_82412
                 move.l  a4,4(a5)
                 moveq   #0,d0
                 move.b  $10(a5),d0
                 subi.b  #$81,d0
-                bcs.s   locret_824A0
+                bcs.s   Sound_ProcessPCMSequenceReturn
                 ext.w   d0
                 asl.w   #3,d0
-                lea     word_824A2(pc,d0.w),a3
+                lea     Sound_PCMSampleDescriptors(pc,d0.w),a3
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_82438:                                              ; CODE XREF: Sound_PlayPSGSequence+6A   j
+Sound_WaitForPCMZ80Bus:                                 ; CODE XREF: Sound_ProcessPCMSequence+6A   j  ; was: loc_82438
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_82438
+                bne.s   Sound_WaitForPCMZ80Bus
                 tst.b   (byte_A01FFD).l
-                bmi.s   loc_82496
+                bmi.s   Sound_ReleasePCMZ80Bus
                 move.b  (byte_A01FFC).l,d0
                 andi.b  #$C0,d0
                 move.b  5(a3),d1
                 andi.b  #$C0,d1
                 cmp.b   d0,d1
-                bcs.w   loc_82496
+                bcs.w   Sound_ReleasePCMZ80Bus
                 move.b  #1,(byte_A01FFD).l
                 move.b  (a3)+,(byte_A01FE8).l
                 move.b  (a3)+,(byte_A01FE9).l
@@ -138,16 +138,16 @@ loc_82438:                                              ; CODE XREF: Sound_PlayP
                 move.b  (a3)+,(byte_A01FFE).l
                 move.b  (a3)+,(byte_A01FFB).l
                 move.b  $27(a5),(byte_A01FF9).l
-loc_82496:                                              ; CODE XREF: Sound_PlayPSGSequence+72   j
-                                        ; Sound_PlayPSGSequence+88   j
+Sound_ReleasePCMZ80Bus:                                 ; CODE XREF: Sound_ProcessPCMSequence+72   j  ; was: loc_82496
+                                        ; Sound_ProcessPCMSequence+88   j
                 move.w  #0,(IO_Z80BUS).l
                 move    (sp)+,sr
-locret_824A0:                                           ; CODE XREF: Sound_PlayPSGSequence+4   j
-                                        ; Sound_PlayPSGSequence+4A   j
+Sound_ProcessPCMSequenceReturn:                         ; CODE XREF: Sound_ProcessPCMSequence+4   j  ; was: locret_824A0
+                                        ; Sound_ProcessPCMSequence+4A   j
                 rts
-; End of function Sound_PlayPSGSequence
+; End of function Sound_ProcessPCMSequence
 ; ---------------------------------------------------------------------------
-word_824A2:     dc.w    (PCMPart1 >> $8)                ; DATA XREF: Sound_PlayPSGSequence+50   o
+Sound_PCMSampleDescriptors: dc.w    (PCMPart1 >> $8)    ; DATA XREF: Sound_ProcessPCMSequence+50   o  ; was: word_824A2
                 dc.w    $80, $500, 0
                 dc.w    (PCMPart1 >> $8)
                 dc.w    $480, $200, 0
@@ -196,34 +196,34 @@ word_824A2:     dc.w    (PCMPart1 >> $8)                ; DATA XREF: Sound_PlayP
 Sound_ProcessChannel:                                   ; CODE XREF: Sound_UpdateDriver+40   p  ; was: sub_82552
                                         ; Sound_UpdateDriver+6A   p
                 subq.b  #1,$E(a5)
-                bne.s   Sound_ProcessChannelIdle
+                bne.s   Sound_UpdateFMChannelEffects
                 bclr    #4,(a5)
                 jsr     Sound_ParseTrackData(pc)        ; (pc)
                 jsr     Sound_UpdateChannelFrequency(pc)  ; (pc)
-                jsr     Sound_ProcessChannelCommand(pc)  ; (pc)
+                jsr     Sound_TriggerPanAnimationForNote(pc)  ; (pc)
                 bra.w   Sound_SendKeyOff
 ; ---------------------------------------------------------------------------
-; Processes channel when idle
-Sound_ProcessChannelIdle:                               ; CODE XREF: Sound_ProcessChannel+4   j  ; was: loc_8256C
+; Update note timeout, pan animation, and vibrato between FM sequence events
+Sound_UpdateFMChannelEffects:                           ; CODE XREF: Sound_ProcessChannel+4   j  ; was: loc_8256C
                 jsr     Sound_HandleNoteTimer(pc)       ; (pc)
-                jsr     Sound_ProcessModulation(pc)     ; (pc)
+                jsr     Sound_UpdatePanAnimation(pc)    ; (pc)
                 jsr     Sound_ProcessVibrato(pc)        ; (pc)
-                bra.w   loc_826D0
+                bra.w   Sound_UpdateSustainedFMFrequency
 ; End of function Sound_ProcessChannel
 ; Parses and interprets sound track data
 Sound_ParseTrackData:                                   ; CODE XREF: Sound_ProcessChannel+A   p  ; was: sub_8257C
                                         ; DATA XREF: Sound_ProcessChannel+A   o
                 movea.l 4(a5),a4
                 bclr    #1,(a5)
-loc_82584:                                              ; CODE XREF: Sound_ParseTrackData+16   j
+Sound_ReadFMSequenceCommand:                            ; CODE XREF: Sound_ParseTrackData+16   j  ; was: loc_82584
                 moveq   #0,d5
                 move.b  (a4)+,d5
                 cmpi.b  #$E0,d5
-                bcs.s   loc_82594
+                bcs.s   Sound_DecodeFMSequenceEvent
                 jsr     Sound_CommandDispatcher(pc)     ; (pc)
-                bra.s   loc_82584
+                bra.s   Sound_ReadFMSequenceCommand
 ; ---------------------------------------------------------------------------
-loc_82594:                                              ; CODE XREF: Sound_ParseTrackData+10   j
+Sound_DecodeFMSequenceEvent:                            ; CODE XREF: Sound_ParseTrackData+10   j  ; was: loc_82594
                 jsr     Sound_CheckChannelFlags(pc)     ; (pc)
                 tst.b   d5
                 bpl.s   Sound_ParseNoteData
@@ -243,7 +243,7 @@ Sound_ParseNoteData:                                    ; CODE XREF: Sound_Parse
 Sound_CalculatePitch:                                   ; CODE XREF: Sound_ParseTrackData+20   p  ; was: sub_825B2
                                         ; DATA XREF: Sound_ParseTrackData+20   o
                 subi.b  #$80,d5
-                beq.s   Sound_ClearChannelState
+                beq.s   Sound_MarkFMChannelRest
                 add.b   8(a5),d5
                 andi.l  #$7F,d5
                 divu.w  #$C,d5
@@ -260,39 +260,39 @@ Sound_CalculatePitch:                                   ; CODE XREF: Sound_Parse
                 rts
 ; End of function Sound_CalculatePitch
 ; Calculates note duration timing
-Sound_CalculateDuration:                                ; CODE XREF: Sound_PlayPSGSequence:loc_8240E   p  ; was: sub_825E4
+Sound_CalculateDuration:                                ; CODE XREF: Sound_ProcessPCMSequence:Sound_CalculatePCMSequenceDuration   p  ; was: sub_825E4
                                         ; sub_8257C:loc_825AA   p
                 move.b  d5,d0
                 move.b  2(a5),d1
-loc_825EA:                                              ; CODE XREF: Sound_CalculateDuration+C   j
+Sound_MultiplyDurationByTickScale:                      ; CODE XREF: Sound_CalculateDuration+C   j  ; was: loc_825EA
                 subq.b  #1,d1
-                beq.s   loc_825F2
+                beq.s   Sound_StoreChannelDuration
                 add.b   d5,d0
-                bra.s   loc_825EA
+                bra.s   Sound_MultiplyDurationByTickScale
 ; ---------------------------------------------------------------------------
-loc_825F2:                                              ; CODE XREF: Sound_CalculateDuration+8   j
+Sound_StoreChannelDuration:                             ; CODE XREF: Sound_CalculateDuration+8   j  ; was: loc_825F2
                 move.b  d0,$F(a5)
                 move.b  d0,$E(a5)
                 rts
 ; End of function Sound_CalculateDuration
-; Clears sound channel state by setting flags and clearing registers
-Sound_ClearChannelState:                                ; CODE XREF: Sound_CalculatePitch+4   j  ; was: sub_825FC
+; Mark a rest event and clear the FM pitch word
+Sound_MarkFMChannelRest:                                ; CODE XREF: Sound_CalculatePitch+4   j  ; was: sub_825FC
                 bset    #1,(a5)
                 clr.w   $10(a5)
-; End of function Sound_ClearChannelState
+; End of function Sound_MarkFMChannelRest
 ; Saves channel state and envelope data
 Sound_SaveChannelState:                                 ; CODE XREF: Sound_ParseTrackData+2A   j  ; was: sub_82604
                                         ; Sound_ParseTrackData+32   j
                 move.l  a4,4(a5)
                 move.b  $F(a5),$E(a5)
                 btst    #4,(a5)
-                bne.s   locret_8264A
+                bne.s   Sound_SaveChannelStateReturn
                 move.b  $13(a5),$12(a5)
                 clr.b   $C(a5)
                 clr.b   $26(a5)
                 clr.b   3(a5)
                 btst    #7,$A(a5)
-                beq.s   locret_8264A
+                beq.s   Sound_SaveChannelStateReturn
                 movea.l $14(a5),a0
                 move.b  (a0)+,$18(a5)
                 move.b  (a0)+,$19(a5)
@@ -301,7 +301,7 @@ Sound_SaveChannelState:                                 ; CODE XREF: Sound_Parse
                 lsr.b   #1,d0
                 move.b  d0,$1B(a5)
                 clr.w   $1C(a5)
-locret_8264A:                                           ; CODE XREF: Sound_SaveChannelState+E   j
+Sound_SaveChannelStateReturn:                           ; CODE XREF: Sound_SaveChannelState+E   j  ; was: locret_8264A
                                         ; Sound_SaveChannelState+28   j
                 rts
 ; End of function Sound_SaveChannelState
@@ -310,40 +310,40 @@ Sound_HandleNoteTimer:                                  ; CODE XREF: Sound_Proce
                                         ; sub_84A70:loc_84A86   p
                                         ; DATA XREF:
                 tst.b   $12(a5)
-                beq.s   locret_82672
+                beq.s   Sound_HandleNoteTimerReturn
                 subq.b  #1,$12(a5)
-                bne.s   locret_82672
+                bne.s   Sound_HandleNoteTimerReturn
                 bset    #1,(a5)
                 tst.b   1(a5)
-                bmi.w   loc_8266C
+                bmi.w   Sound_HandlePSGNoteTimeout
                 jsr     Sound_CheckChannelFlags(pc)     ; (pc)
                 addq.w  #4,sp
                 rts
 ; ---------------------------------------------------------------------------
-loc_8266C:                                              ; CODE XREF: Sound_HandleNoteTimer+14   j
+Sound_HandlePSGNoteTimeout:                             ; CODE XREF: Sound_HandleNoteTimer+14   j  ; was: loc_8266C
                 jsr     Sound_CheckPSGMute(pc)          ; (pc)
                 addq.w  #4,sp
-locret_82672:                                           ; CODE XREF: Sound_HandleNoteTimer+4   j
+Sound_HandleNoteTimerReturn:                            ; CODE XREF: Sound_HandleNoteTimer+4   j  ; was: locret_82672
                                         ; Sound_HandleNoteTimer+A   j
                 rts
 ; End of function Sound_HandleNoteTimer
 ; Processes sound vibrato effect modulating pitch with oscillation
 Sound_ProcessVibrato:                                   ; CODE XREF: Sound_ProcessChannel+22   p  ; was: sub_82674
-                                        ; Sound_SetFMFrequency+1E   p
+                                        ; Sound_ProcessPSGChannel+1E   p
                                         ; DATA XREF:
                 btst    #7,$A(a5)
-                beq.s   locret_826C2
+                beq.s   Sound_ProcessVibratoReturn
                 tst.b   $18(a5)
-                beq.s   loc_82688
+                beq.s   Sound_CountDownVibratoStepDelay
                 subq.b  #1,$18(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_82688:                                              ; CODE XREF: Sound_ProcessVibrato+C   j
+Sound_CountDownVibratoStepDelay:                        ; CODE XREF: Sound_ProcessVibrato+C   j  ; was: loc_82688
                 subq.b  #1,$19(a5)
-                beq.s   loc_82690
+                beq.s   Sound_ReloadVibratoStep
                 rts
 ; ---------------------------------------------------------------------------
-loc_82690:                                              ; CODE XREF: Sound_ProcessVibrato+18   j
+Sound_ReloadVibratoStep:                                ; CODE XREF: Sound_ProcessVibrato+18   j  ; was: loc_82690
                 movea.l $14(a5),a0
                 move.b  1(a0),$19(a5)
                 tst.b   $1B(a5)
@@ -360,25 +360,25 @@ Sound_ApplyVibratoOffset:                               ; CODE XREF: Sound_Proce
                 add.w   $1C(a5),d6
                 move.w  d6,$1C(a5)
                 add.w   $10(a5),d6
-locret_826C2:                                           ; CODE XREF: Sound_ProcessVibrato+6   j
+Sound_ProcessVibratoReturn:                             ; CODE XREF: Sound_ProcessVibrato+6   j  ; was: locret_826C2
                 rts
 ; End of function Sound_ProcessVibrato
 ; Updates FM channel frequency registers with calculated pitch
 Sound_UpdateChannelFrequency:                           ; CODE XREF: Sound_ProcessChannel+E   p  ; was: sub_826C4
                                         ; DATA XREF: Sound_ProcessChannel+E   o
                 move.w  $10(a5),d6
-                bne.s   loc_826D8
+                bne.s   Sound_CheckFMFrequencyWriteFlags
                 bset    #1,(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_826D0:                                              ; CODE XREF: Sound_ProcessChannel+26   j
+Sound_UpdateSustainedFMFrequency:                       ; CODE XREF: Sound_ProcessChannel+26   j  ; was: loc_826D0
                 tst.b   $A(a5)
-                beq.w   locret_82712
-loc_826D8:                                              ; CODE XREF: Sound_UpdateChannelFrequency+4   j
+                beq.w   Sound_UpdateChannelFrequencyReturn
+Sound_CheckFMFrequencyWriteFlags:                       ; CODE XREF: Sound_UpdateChannelFrequency+4   j  ; was: loc_826D8
                 btst    #1,(a5)
-                bne.w   locret_82712
+                bne.w   Sound_UpdateChannelFrequencyReturn
                 btst    #2,(a5)
-                bne.w   locret_82712
+                bne.w   Sound_UpdateChannelFrequencyReturn
                 jsr     Sound_ApplyPitchEffects(pc)     ; (pc)
                 tst.b   (byte_FFF80F).w
                 beq.s   Sound_WriteFrequencyBytes
@@ -393,7 +393,7 @@ Sound_WriteFrequencyBytes:                              ; CODE XREF: Sound_Updat
                 move.b  d6,d1
                 move.b  #$A0,d0
                 jsr     Sound_ProcessChannelBits(pc)    ; (pc)
-locret_82712:                                           ; CODE XREF: Sound_UpdateChannelFrequency+10   j
+Sound_UpdateChannelFrequencyReturn:                     ; CODE XREF: Sound_UpdateChannelFrequency+10   j  ; was: locret_82712
                                         ; Sound_UpdateChannelFrequency+18   j
                 rts
 ; End of function Sound_UpdateChannelFrequency
@@ -404,91 +404,91 @@ Sound_ApplyPitchEffects:                                ; CODE XREF: Sound_Updat
                 moveq   #0,d6
                 move.b  $A(a5),d0
                 andi.w  #$7F,d0
-                beq.s   loc_82764
+                beq.s   Sound_ApplyDetuneAndBasePitch
                 lea     ModulationEnvelopePointerTable(pc),a0
                 subq.w  #1,d0
                 lsl.w   #2,d0
                 movea.l (a0,d0.w),a0
-loc_8272C:                                              ; CODE XREF: Sound_ClearPitchFlag+4   j
-                                        ; Sound_DecrementPitchCounter+4   j
+Sound_ReadPitchEnvelopeCommand:                         ; CODE XREF: Sound_RestartPitchEnvelope+4   j  ; was: loc_8272C
+                                        ; Sound_RepeatPitchEnvelopeValue+4   j
                 moveq   #0,d0
                 move.b  $26(a5),d0
                 addq.b  #1,$26(a5)
                 move.b  (a0,d0.w),d6
-                bpl.s   loc_8275A
+                bpl.s   Sound_ScalePitchEnvelopeValue
                 cmpi.b  #$80,d6
-                beq.s   Sound_ClearPitchFlag
+                beq.s   Sound_RestartPitchEnvelope
                 cmpi.b  #$81,d6
-                beq.s   Sound_DecrementPitchCounter
+                beq.s   Sound_RepeatPitchEnvelopeValue
                 cmpi.b  #$83,d6
-                beq.s   Sound_SetRestFlag
+                beq.s   Sound_EndPitchEnvelopeWithRest
                 cmpi.b  #$82,d6
-                beq.s   Sound_LoadPitchValue
+                beq.s   Sound_JumpPitchEnvelope
                 cmpi.b  #$84,d6
-                beq.s   Sound_AddTransposeAlt
-loc_8275A:                                              ; CODE XREF: Sound_ApplyPitchEffects+26   j
+                beq.s   Sound_AddPitchEnvelopeTranspose
+Sound_ScalePitchEnvelopeValue:                          ; CODE XREF: Sound_ApplyPitchEffects+26   j  ; was: loc_8275A
                 ext.w   d6
                 move.b  3(a5),d0
                 ext.w   d0
                 mulu.w  d0,d6
-loc_82764:                                              ; CODE XREF: Sound_ApplyPitchEffects+A   j
+Sound_ApplyDetuneAndBasePitch:                          ; CODE XREF: Sound_ApplyPitchEffects+A   j  ; was: loc_82764
                 move.b  $1E(a5),d0
                 ext.w   d0
                 add.w   d0,d6
                 add.w   $10(a5),d6
                 tst.b   $A(a5)
-                bpl.s   locret_8277A
+                bpl.s   Sound_ApplyPitchEffectsReturn
                 add.w   $1C(a5),d6
-locret_8277A:                                           ; CODE XREF: Sound_ApplyPitchEffects+60   j
+Sound_ApplyPitchEffectsReturn:                          ; CODE XREF: Sound_ApplyPitchEffects+60   j  ; was: locret_8277A
                 rts
 ; End of function Sound_ApplyPitchEffects
-; Adjusts stack pointer to skip return address in pitch effect processing
-Sound_SkipPitchReturn:
-                addq.w  #4,sp                           ; was: sub_8277C
+; Statically unreferenced stack-skip helper between pitch-envelope commands
+Sound_PitchEnvelopeUnusedSkipReturn:                    ; was: sub_8277C
+                addq.w  #4,sp
                 rts
-; End of function Sound_SkipPitchReturn
-; Clears pitch effect flag and continues sound processing
-Sound_ClearPitchFlag:                                   ; CODE XREF: Sound_ApplyPitchEffects+2C   j  ; was: sub_82780
+; End of function Sound_PitchEnvelopeUnusedSkipReturn
+; Restart the pitch-envelope cursor after command $80
+Sound_RestartPitchEnvelope:                             ; CODE XREF: Sound_ApplyPitchEffects+2C   j  ; was: sub_82780
                 clr.b   $26(a5)
-                bra.s   loc_8272C
-; End of function Sound_ClearPitchFlag
-; Decrements pitch counter by 2 and continues processing
-Sound_DecrementPitchCounter:                            ; CODE XREF: Sound_ApplyPitchEffects+32   j  ; was: sub_82786
+                bra.s   Sound_ReadPitchEnvelopeCommand
+; End of function Sound_RestartPitchEnvelope
+; Repeat the preceding pitch-envelope value after command $81
+Sound_RepeatPitchEnvelopeValue:                         ; CODE XREF: Sound_ApplyPitchEffects+32   j  ; was: sub_82786
                 subq.b  #2,$26(a5)
-                bra.s   loc_8272C
-; End of function Sound_DecrementPitchCounter
-; Sets rest flag and branches to appropriate channel check
-Sound_SetRestFlag:                                      ; CODE XREF: Sound_ApplyPitchEffects+38   j  ; was: sub_8278C
+                bra.s   Sound_ReadPitchEnvelopeCommand
+; End of function Sound_RepeatPitchEnvelopeValue
+; End a pitch envelope with a rest after command $83
+Sound_EndPitchEnvelopeWithRest:                         ; CODE XREF: Sound_ApplyPitchEffects+38   j  ; was: sub_8278C
                 bset    #1,(a5)
                 tst.b   1(a5)
-                bmi.s   loc_8279A
+                bmi.s   Sound_EndPSGPitchEnvelopeWithRest
                 bra.w   Sound_CheckChannelFlags
 ; ---------------------------------------------------------------------------
-loc_8279A:                                              ; CODE XREF: Sound_SetRestFlag+8   j
+Sound_EndPSGPitchEnvelopeWithRest:                      ; CODE XREF: Sound_EndPitchEnvelopeWithRest+8   j  ; was: loc_8279A
                 bra.w   Sound_CheckPSGMute
-; End of function Sound_SetRestFlag
-; Loads pitch effect value from track data into channel structure
-Sound_LoadPitchValue:                                   ; CODE XREF: Sound_ApplyPitchEffects+3E   j  ; was: sub_8279E
+; End of function Sound_EndPitchEnvelopeWithRest
+; Jump the pitch-envelope cursor after command $82
+Sound_JumpPitchEnvelope:                                ; CODE XREF: Sound_ApplyPitchEffects+3E   j  ; was: sub_8279E
                 move.b  1(a0,d0.w),$26(a5)
-                bra.s   loc_8272C
-; End of function Sound_LoadPitchValue
-; Adds transpose value from track data to channel transpose parameter
-Sound_AddTransposeAlt:                                  ; CODE XREF: Sound_ApplyPitchEffects+44   j  ; was: sub_827A6
+                bra.s   Sound_ReadPitchEnvelopeCommand
+; End of function Sound_JumpPitchEnvelope
+; Add pitch-envelope transposition after command $84
+Sound_AddPitchEnvelopeTranspose:                        ; CODE XREF: Sound_ApplyPitchEffects+44   j  ; was: sub_827A6
                 move.b  1(a0,d0.w),d0
                 add.b   d0,3(a5)
                 addq.b  #1,$26(a5)
-                bra.w   loc_8272C
-; End of function Sound_AddTransposeAlt
+                bra.w   Sound_ReadPitchEnvelopeCommand
+; End of function Sound_AddPitchEnvelopeTranspose
 ; Updates YM2612 frequency registers for all 4 FM operators per channel
 Sound_UpdateFMOperators:                                ; CODE XREF: Sound_UpdateChannelFrequency+34   j  ; was: sub_827B6
-                lea     byte_827E8(pc),a1
+                lea     Sound_FM3OperatorFrequencyRegisters(pc),a1
                 lea     (word_FFF810).w,a2
                 tst.b   (byte_FFF80E).w
-                beq.s   loc_827C8
+                beq.s   Sound_SelectFM3FrequencyShadowBank
                 lea     (word_FFF818).w,a2
-loc_827C8:                                              ; CODE XREF: Sound_UpdateFMOperators+C   j
+Sound_SelectFM3FrequencyShadowBank:                     ; CODE XREF: Sound_UpdateFMOperators+C   j  ; was: loc_827C8
                 moveq   #3,d5
-loc_827CA:                                              ; CODE XREF: Sound_UpdateFMOperators+2C   j
+Sound_WriteNextFM3OperatorFrequency:                    ; CODE XREF: Sound_UpdateFMOperators+2C   j  ; was: loc_827CA
                 move.w  d6,d1
                 move.w  (a2)+,d0
                 add.w   d0,d1
@@ -499,82 +499,82 @@ loc_827CA:                                              ; CODE XREF: Sound_Updat
                 move.b  d3,d1
                 move.b  (a1)+,d0
                 jsr     Sound_WriteYM2612(pc)           ; (pc)
-                dbf     d5,loc_827CA
+                dbf     d5,Sound_WriteNextFM3OperatorFrequency
                 rts
 ; End of function Sound_UpdateFMOperators
 ; ---------------------------------------------------------------------------
-byte_827E8:     dc.b    $AD, $A9, $AC, $A8, $AE, $AA, $A6, $A2
+Sound_FM3OperatorFrequencyRegisters:    dc.b    $AD, $A9, $AC, $A8, $AE, $AA, $A6, $A2  ; was: byte_827E8
                                         ; DATA XREF: Sound_UpdateFMOperators   o
 
-; Processes sound channel command
-Sound_ProcessChannelCommand:                            ; CODE XREF: Sound_ProcessChannel+12   p  ; was: sub_827F0
+; Dispatch the note-trigger behavior for the configured pan-animation mode
+Sound_TriggerPanAnimationForNote:                       ; CODE XREF: Sound_ProcessChannel+12   p  ; was: sub_827F0
                                         ; DATA XREF: Sound_ProcessChannel+12   o
                 btst    #1,(a5)
-                bne.s   JumpTable1
+                bne.s   Sound_PanAnimationNoteModeDispatch
                 moveq   #0,d0
                 move.b  $1F(a5),d0
                 lsl.w   #1,d0
-                jmp     JumpTable1(pc,d0.w)
-; End of function Sound_ProcessChannelCommand
-JumpTable1:                                             ; CODE XREF: Sound_ProcessChannelCommand+4   j
-                                        ; Sound_ProcessChannelCommand+E   j
+                jmp     Sound_PanAnimationNoteModeDispatch(pc,d0.w)
+; End of function Sound_TriggerPanAnimationForNote
+Sound_PanAnimationNoteModeDispatch:                     ; CODE XREF: Sound_TriggerPanAnimationForNote+4   j
+                                        ; Sound_TriggerPanAnimationForNote+E   j
                                         ; DATA XREF:
                 rts
 ; ---------------------------------------------------------------------------
-                bra.s   loc_8282E
+                bra.s   Sound_UpdatePanAnimationStepTimer
 ; ---------------------------------------------------------------------------
-                bra.s   Sound_ProcessTremolo
+                bra.s   Sound_RestartPanAnimation
 ; ---------------------------------------------------------------------------
-                bra.s   Sound_ProcessTremolo
-; End of function JumpTable1
+                bra.s   Sound_RestartPanAnimation
+; End of function Sound_PanAnimationNoteModeDispatch
 
-; Processes sound modulation effects using jump table dispatcher
-Sound_ProcessModulation:                                ; CODE XREF: Sound_ProcessChannel+1E   p  ; was: sub_8280A
+; Dispatch the per-tick behavior for the configured pan-animation mode
+Sound_UpdatePanAnimation:                               ; CODE XREF: Sound_ProcessChannel+1E   p  ; was: sub_8280A
                                         ; DATA XREF: Sound_ProcessChannel+1E   o
                 btst    #1,(a5)
-                bne.s   JumpTable2
+                bne.s   Sound_PanAnimationTickModeDispatch
                 moveq   #0,d0
                 move.b  $1F(a5),d0
                 lsl.w   #1,d0
-                jmp     JumpTable2(pc,d0.w)
+                jmp     Sound_PanAnimationTickModeDispatch(pc,d0.w)
 ; ---------------------------------------------------------------------------
-JumpTable2:                                             ; CODE XREF: Sound_ProcessModulation+4   j
-                                        ; Sound_ProcessModulation+E   j
+Sound_PanAnimationTickModeDispatch:                     ; CODE XREF: Sound_UpdatePanAnimation+4   j
+                                        ; Sound_UpdatePanAnimation+E   j
                                         ; DATA XREF:
                 rts
 ; ---------------------------------------------------------------------------
                 rts
 ; ---------------------------------------------------------------------------
-                bra.s   loc_8282E
+                bra.s   Sound_UpdatePanAnimationStepTimer
 ; ---------------------------------------------------------------------------
-                bra.s   loc_8282E
-; End of function Sound_ProcessModulation
-; Processes sound tremolo effect with volume oscillation
-Sound_ProcessTremolo:                                   ; CODE XREF: JumpTable1+4   j  ; was: sub_82824
-                                        ; JumpTable1+6   j
+                bra.s   Sound_UpdatePanAnimationStepTimer
+; End of function Sound_UpdatePanAnimation
+; Restart a pan animation and immediately evaluate its first frame
+Sound_RestartPanAnimation:                              ; CODE XREF: Sound_PanAnimationNoteModeDispatch+4   j  ; was: sub_82824
+                                        ; Sound_PanAnimationNoteModeDispatch+6   j
                 move.b  $23(a5),$24(a5)
                 clr.b   $21(a5)
-loc_8282E:                                              ; CODE XREF: JumpTable1+2   j
-                                        ; Sound_ProcessModulation+16   j
+Sound_UpdatePanAnimationStepTimer:                      ; CODE XREF: Sound_PanAnimationNoteModeDispatch+2   j  ; was: loc_8282E
+                                        ; Sound_UpdatePanAnimation+16   j
                 move.b  $24(a5),d0
                 cmp.b   $23(a5),d0
-                bne.s   Sound_ProcessTremoloEnvelope
+                bne.s   Sound_ApplyPanAnimationFrame
                 move.b  $22(a5),d3
                 cmp.b   $21(a5),d3
-                bpl.s   loc_8284E
+                bpl.s   Sound_AdvancePanAnimationStep
                 cmpi.b  #2,$1F(a5)
-                beq.s   locret_82882
+                beq.s   Sound_UpdatePanAnimationReturn
                 clr.b   $21(a5)
-loc_8284E:                                              ; CODE XREF: Sound_ProcessTremolo+1C   j
+Sound_AdvancePanAnimationStep:                          ; CODE XREF: Sound_RestartPanAnimation+1C   j  ; was: loc_8284E
                 clr.b   $24(a5)
                 addq.b  #1,$21(a5)
-; Processes tremolo envelope lookup
-Sound_ProcessTremoloEnvelope:                           ; CODE XREF: Sound_ProcessTremolo+12   j  ; was: loc_82856
+; Resolve and apply the current pan-animation frame
+Sound_ApplyPanAnimationFrame:                           ; CODE XREF: Sound_RestartPanAnimation+12   j  ; was: loc_82856
                 moveq   #0,d0
                 move.b  $20(a5),d0
                 subq.w  #1,d0
                 lsl.w   #2,d0
-                movea.l PanAnimationPointerTable(pc,d0.w),a0
+                movea.l Sound_PanAnimationPointerTable(pc,d0.w),a0
                 moveq   #0,d0
                 move.b  $21(a5),d0
                 subq.w  #1,d0
@@ -582,74 +582,74 @@ Sound_ProcessTremoloEnvelope:                           ; CODE XREF: Sound_Proce
                 move.b  $27(a5),d0
                 andi.b  #$37,d0                         ; '7'
                 or.b    d0,d1
-                jsr     Sound_SendPSGVolumeUpdate(pc)   ; (pc)
+                jsr     Sound_WriteChannelPanAndAMS(pc)  ; (pc)
                 addq.b  #1,$24(a5)
-locret_82882:                                           ; CODE XREF: Sound_ProcessTremolo+24   j
+Sound_UpdatePanAnimationReturn:                         ; CODE XREF: Sound_RestartPanAnimation+24   j  ; was: locret_82882
                 rts
-; End of function Sound_ProcessTremolo
+; End of function Sound_RestartPanAnimation
 ; ---------------------------------------------------------------------------
-PanAnimationPointerTable:   dc.l    PanAnimation_1      ; DATA XREF: Sound_ProcessTremolo+3C   r
-                dc.l    PanAnimation_2
-                dc.l    PanAnimation_3
-PanAnimation_1: dc.b    $40, $80                        ; DATA XREF: ROM:PanAnimationPointerTable   o
-PanAnimation_2: dc.b    $40, $C0, $80                   ; DATA XREF: ROM:00082888   o
-PanAnimation_3: dc.b    $C0, $80, $C0, $40, 0
+Sound_PanAnimationPointerTable: dc.l    Sound_PanAnimationSequence1  ; DATA XREF: Sound_RestartPanAnimation+3C   r
+                dc.l    Sound_PanAnimationSequence2
+                dc.l    Sound_PanAnimationSequence3
+Sound_PanAnimationSequence1:    dc.b    $40, $80        ; DATA XREF: ROM:Sound_PanAnimationPointerTable   o
+Sound_PanAnimationSequence2:    dc.b    $40, $C0, $80   ; DATA XREF: ROM:00082888   o
+Sound_PanAnimationSequence3:    dc.b    $C0, $80, $C0, $40, 0
                                         ; DATA XREF: ROM:0008288C   o
 
-; Sends PSG volume update via Z80 bus with arbitration
-Sound_SendPSGVolumeUpdate:                              ; CODE XREF: Sound_ProcessTremolo+56   p  ; was: sub_8289A
+; Write pan/AMS state to the PCM mailbox or the current FM channel
+Sound_WriteChannelPanAndAMS:                            ; CODE XREF: Sound_RestartPanAnimation+56   p  ; was: sub_8289A
                                         ; Sound_SetPanAndAMS+16   j
                 btst    #2,(a5)
-                bne.s   locret_828F4
+                bne.s   Sound_WriteChannelPanAndAMSReturn
                 cmpi.b  #6,1(a5)
-                bne.w   loc_828EC
+                bne.w   Sound_WriteFMChannelPanAndAMS
                 cmpa.l  #$40,a5                         ; '@'
-                beq.w   locret_828F4
+                beq.w   Sound_WriteChannelPanAndAMSReturn
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_828C2:                                              ; CODE XREF: Sound_SendPSGVolumeUpdate+30   j
+Sound_WaitForPanUpdateZ80Bus:                           ; CODE XREF: Sound_WriteChannelPanAndAMS+30   j  ; was: loc_828C2
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_828C2
+                bne.s   Sound_WaitForPanUpdateZ80Bus
                 move.b  (byte_A01FFD).l,d0
-                beq.w   loc_828DE
+                beq.w   Sound_ReleasePanUpdateZ80Bus
                 move.b  $27(a5),(byte_A01FF8).l
-loc_828DE:                                              ; CODE XREF: Sound_SendPSGVolumeUpdate+38   j
+Sound_ReleasePanUpdateZ80Bus:                           ; CODE XREF: Sound_WriteChannelPanAndAMS+38   j  ; was: loc_828DE
                 move.w  #0,(IO_Z80BUS).l
                 move    (sp)+,sr
                 tst.b   d0
-                bne.s   locret_828F4
-loc_828EC:                                              ; CODE XREF: Sound_SendPSGVolumeUpdate+C   j
+                bne.s   Sound_WriteChannelPanAndAMSReturn
+Sound_WriteFMChannelPanAndAMS:                          ; CODE XREF: Sound_WriteChannelPanAndAMS+C   j  ; was: loc_828EC
                 move.b  #$B4,d0
                 jsr     Sound_ProcessChannelBits(pc)    ; (pc)
-locret_828F4:                                           ; CODE XREF: Sound_SendPSGVolumeUpdate+4   j
-                                        ; Sound_SendPSGVolumeUpdate+16   j
+Sound_WriteChannelPanAndAMSReturn:                      ; CODE XREF: Sound_WriteChannelPanAndAMS+4   j  ; was: locret_828F4
+                                        ; Sound_WriteChannelPanAndAMS+16   j
                 rts
-; End of function Sound_SendPSGVolumeUpdate
-; Manages Z80 bus arbitration and sound RAM backup/restore during conflicts
-Sound_HandleZ80BusRequest:                              ; CODE XREF: Sound_UpdateDriver+8   j  ; was: sub_828F6
+; End of function Sound_WriteChannelPanAndAMS
+; Apply pause or resume transitions requested by the input/VBlank path
+Sound_ProcessPauseTransition:                           ; CODE XREF: Sound_UpdateDriver+8   j  ; was: sub_828F6
                 cmpi.b  #$FF,(byte_FFF807).w
-                bne.w   loc_82902
+                bne.w   Sound_BeginPauseTransition
                 rts
 ; ---------------------------------------------------------------------------
-loc_82902:                                              ; CODE XREF: Sound_HandleZ80BusRequest+6   j
+Sound_BeginPauseTransition:                             ; CODE XREF: Sound_ProcessPauseTransition+6   j  ; was: loc_82902
                 tst.b   (byte_FFF807).w
-                bmi.s   loc_8296E
+                bmi.s   Sound_ResumeFromPause
                 move.b  #$FF,(byte_FFF807).w
                 move    sr,-(sp)
                 ori     #$700,sr
-loc_82914:                                              ; CODE XREF: Sound_HandleZ80BusRequest+44   j
+Sound_RequestZ80BusForPause:                            ; CODE XREF: Sound_ProcessPauseTransition+44   j  ; was: loc_82914
                 move.w  #$100,(IO_Z80BUS).l
-loc_8291C:                                              ; CODE XREF: Sound_HandleZ80BusRequest+2E   j
+Sound_WaitForZ80BusForPause:                            ; CODE XREF: Sound_ProcessPauseTransition+2E   j  ; was: loc_8291C
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_8291C
+                bne.s   Sound_WaitForZ80BusForPause
                 tst.b   (byte_A01F2A).l
-                beq.s   loc_8293C
+                beq.s   Sound_MuteChannelsForPause
                 move.w  #0,(IO_Z80BUS).l
                 bsr.w   Sound_DelayNOP
-                bra.s   loc_82914
+                bra.s   Sound_RequestZ80BusForPause
 ; ---------------------------------------------------------------------------
-loc_8293C:                                              ; CODE XREF: Sound_HandleZ80BusRequest+36   j
+Sound_MuteChannelsForPause:                             ; CODE XREF: Sound_ProcessPauseTransition+36   j  ; was: loc_8293C
                 move    (sp)+,sr
                 lea     (dword_FFFBE0).w,a1
                 move.l  (a1)+,-(sp)
@@ -660,7 +660,7 @@ loc_8293C:                                              ; CODE XREF: Sound_Handl
                 move.l  (a1)+,-(sp)
                 move.l  (a1)+,-(sp)
                 move.l  (a1)+,-(sp)
-                jsr     Sound_SetMaxVolume(pc)          ; (pc)
+                jsr     Sound_SetAllFMOperatorLevelsMaximum(pc)  ; (pc)
                 lea     (dword_FFFC00).w,a1
                 move.l  (sp)+,-(a1)
                 move.l  (sp)+,-(a1)
@@ -672,7 +672,7 @@ loc_8293C:                                              ; CODE XREF: Sound_Handl
                 move.l  (sp)+,-(a1)
                 bra.w   Sound_MuteAllPSGChannels
 ; ---------------------------------------------------------------------------
-loc_8296E:                                              ; CODE XREF: Sound_HandleZ80BusRequest+10   j
+Sound_ResumeFromPause:                                  ; CODE XREF: Sound_ProcessPauseTransition+10   j  ; was: loc_8296E
                 clr.b   (byte_FFF807).w
                 move    sr,-(sp)
                 ori     #$700,sr
@@ -680,18 +680,18 @@ loc_8296E:                                              ; CODE XREF: Sound_Handl
                 move    (sp)+,sr
                 lea     (byte_FFFBA0).w,a1
                 moveq   #2,d2
-loc_82988:                                              ; CODE XREF: Sound_HandleZ80BusRequest+AE   j
+Sound_RestoreFMRegisterBankLoop:                        ; CODE XREF: Sound_ProcessPauseTransition+AE   j  ; was: loc_82988
                 moveq   #$40,d0                         ; '@'
                 add.w   d2,d0
                 moveq   #3,d3
-loc_8298E:                                              ; CODE XREF: Sound_HandleZ80BusRequest+AA   j
+Sound_RestoreFMOperatorRegistersLoop:                   ; CODE XREF: Sound_ProcessPauseTransition+AA   j  ; was: loc_8298E
                 move.b  (a1,d0.w),d1
                 jsr     Sound_WriteYM2612(pc)           ; (pc)
                 move.b  $10(a1,d0.w),d1
                 jsr     Sound_WriteYM2612Register(pc)   ; (pc)
                 addq.w  #4,d0
-                dbf     d3,loc_8298E
-                dbf     d2,loc_82988
+                dbf     d3,Sound_RestoreFMOperatorRegistersLoop
+                dbf     d2,Sound_RestoreFMRegisterBankLoop
                 rts
-; End of function Sound_HandleZ80BusRequest
-; Processes sound fade and volume changes
+; End of function Sound_ProcessPauseTransition
+; End of sound driver core

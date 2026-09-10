@@ -172,3 +172,66 @@ at different rates. The table layout is shared with Dynamite Headdy.
 The project currently preserves PCM as nine large `PCMPart` binary chunks.
 Splitting them into individual samples would change the asset layout and
 should only be attempted with byte-accurate ROM comparison available.
+
+## Audited 68000 update core
+
+The complete `0x082324-0x0829A9` update core is now instruction-audited. Its
+93 definitions distinguish the DAC/PCM sequence path, the BGM, ordinary SFX,
+and special-SFX FM/PSG channel loops, FM pitch-envelope and vibrato handling,
+FM3 special-frequency writes, pan animation, and pause/resume restoration.
+The adjacent entry at `0x084A70` is also identified as the common PSG channel
+processor.
+
+This pass rejects four misleading generated descriptions. The old
+`Sound_PlayPSGSequence` writes a DAC sample descriptor to the Z80 mailbox;
+`Sound_SetFMFrequency` parses and updates PSG channels; the supposed tremolo
+path consumes the three pan-animation sequences documented above; and the old
+`Sound_HandleZ80BusRequest` implements the complete pause/resume transition,
+with bus arbitration only as one implementation detail. The standalone
+stack-skip helper at `0x08277C` has no static caller and remains explicitly
+registered with `unknown` evidence.
+
+## Audited request and voice-DAC dispatcher
+
+The `0x0829AA-0x082F6B` block is now the cohesive
+`sound/command_dispatch_and_dac.s` module rather than the misleading former
+`fades_and_envelopes.s`. It selects one request from the four queue bytes at
+`$FFF80A-$FFF80D`, dispatches the documented control, voice DAC, SFX, BGM, and
+special-SFX ID ranges, and routes voice descriptors either through the
+immediate Z80 command mailbox or through the primary and secondary playback
+slots at `$A01F80` and `$A01FA0`.
+
+All 47 voice IDs `$10-$3E` index eight-byte records in
+`Sound_VoiceDACDescriptors`; `$3F` is explicitly rejected. The former
+`Sound_UpdateEnvelope` actually performs this ID dispatch, and the former
+`Sound_ReadEnvelopeData` reconstructs a packed sample address and reads its
+four-byte DPCM header. The adjacent `$81-$9F` handler formerly called
+`Sound_ProcessDAC` is now `Sound_LoadBGMRequest`, because its sole data source
+is `BGM_PointerTable` and it initializes the song's DAC, FM, and PSG channel
+records.
+
+## Audited playback and loading core
+
+The complete `0x082F6C-0x0834D1` span is now the cohesive 542-line
+`sound/playback_and_loading.s` module. Its 75 definitions cover BGM FM/PSG
+record initialization, ordinary and dedicated SFX loading, displaced-channel
+override bookkeeping, SFX stop-and-restore paths, the 40-step music fade-out,
+tempo ticks, and global FM/PSG shutdown. This is one connected playback-state
+subsystem and fits the preferred 200-700-line range without a mechanical
+split.
+
+Several inherited semantic labels were contradicted by the instructions.
+`Sound_ProcessFM` and `Sound_ProcessSpecialChannels` stop SFX records and
+restore the BGM channels they displaced. `Sound_WriteRegister` only starts the
+music fade-out. `Sound_InitializeChannels` advances that fade once every four
+frames. `Sound_MuteAllChannels` writes maximum attenuation and release rate to
+the current FM channel's four operators, while `Sound_KeyOffAllChannels`
+addresses only the six FM channels. Finally, `Sound_UpdateFMEnvelope` clears
+the playback RAM and silences every FM and PSG channel.
+
+The 24-byte block at `0x083284` is preserved as
+`Sound_UnreferencedSFXChannelPointers`. It contains six big-endian pointers to
+the BGM/SFX records at `$FFF900`, `$FFF9F0`, `$FFFA50`, `$FFFB10`, `$FFFB40`,
+and `$FFFB70`. No static source reference reaches the block, so the name states
+only its observable format and current reference status rather than inventing
+a runtime role.

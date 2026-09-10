@@ -291,7 +291,7 @@
                 include "src/rendering/seven_forces_metasprites.s"
                 include "src/data/pre_sound_padding.s"
                 include "src/sound/driver_core.s"
-                include "src/sound/fades_and_envelopes.s"
+                include "src/sound/command_dispatch_and_dac.s"
                 include "src/sound/playback_and_loading.s"
                 include "src/sound/hardware_interface.s"
                 include "src/sound/sequence_commands.s"

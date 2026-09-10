@@ -1,111 +1,111 @@
-Sound_ProcessFade:                                      ; CODE XREF: Sound_UpdateDriver+1E   p  ; was: sub_829AA
+Sound_SelectPendingRequest:                             ; CODE XREF: Sound_UpdateDriver+1E   p  ; was: sub_829AA
                                         ; DATA XREF: Sound_UpdateDriver+1E   o
                 lea     SoundPriorityTable(pc),a0
                 lea     (byte_FFF80E).w,a1
                 move.b  (byte_FFF800).w,d3
                 moveq   #3,d4
-loc_829B8:                                              ; CODE XREF: Sound_ProcessFade:loc_829E8   j
+Sound_ScanNextPendingRequestSlot:                       ; CODE XREF: Sound_SelectPendingRequest:Sound_ContinuePendingRequestScan   j  ; was: loc_829B8
                 move.b  -(a1),d0
                 move.b  d0,d1
                 clr.b   (a1)
                 subq.b  #1,d0
-                bcs.s   loc_829E8
+                bcs.s   Sound_ContinuePendingRequestScan
                 andi.w  #$FF,d0
                 move.b  (a0,d0.w),d2
                 cmpi.b  #$FF,d2
-                beq.w   loc_829F6
+                beq.w   Sound_SelectPriorityBypassRequest
                 move.b  d2,d5
                 andi.b  #$7F,d5
                 move.b  d3,d6
                 andi.b  #$7F,d6
                 cmp.b   d6,d5
-                bcs.s   loc_829E8
+                bcs.s   Sound_ContinuePendingRequestScan
                 move.b  d2,d3
                 move.b  d1,(byte_FFF809).w
-loc_829E8:                                              ; CODE XREF: Sound_ProcessFade+16   j
-                                        ; Sound_ProcessFade+36   j
-                dbf     d4,loc_829B8
+Sound_ContinuePendingRequestScan:                       ; CODE XREF: Sound_SelectPendingRequest+16   j  ; was: loc_829E8
+                                        ; Sound_SelectPendingRequest+36   j
+                dbf     d4,Sound_ScanNextPendingRequestSlot
                 tst.b   d3
-                bmi.s   locret_829F4
+                bmi.s   Sound_SelectPendingRequestReturn
                 move.b  d3,(byte_FFF800).w
-locret_829F4:                                           ; CODE XREF: Sound_ProcessFade+44   j
+Sound_SelectPendingRequestReturn:                       ; CODE XREF: Sound_SelectPendingRequest+44   j  ; was: locret_829F4
                 rts
 ; ---------------------------------------------------------------------------
-loc_829F6:                                              ; CODE XREF: Sound_ProcessFade+24   j
+Sound_SelectPriorityBypassRequest:                      ; CODE XREF: Sound_SelectPendingRequest+24   j  ; was: loc_829F6
                 move.b  d1,(byte_FFF809).w
-                bra.s   loc_82A14
+                bra.s   Sound_ContinuePendingRequestClearLoop
 ; ---------------------------------------------------------------------------
-loc_829FC:                                              ; CODE XREF: Sound_ProcessFade:loc_82A14   j
+Sound_ClearNextPendingRequestSlot:                      ; CODE XREF: Sound_SelectPendingRequest:Sound_ContinuePendingRequestClearLoop   j  ; was: loc_829FC
                 move.b  -(a1),d0
                 subq.b  #1,d0
-                bcs.s   loc_82A12
+                bcs.s   Sound_ClearCurrentPendingRequestSlot
                 andi.w  #$FF,d0
                 move.b  (a0,d0.w),d2
                 cmpi.b  #$FF,d2
-                beq.w   loc_82A14
-loc_82A12:                                              ; CODE XREF: Sound_ProcessFade+56   j
+                beq.w   Sound_ContinuePendingRequestClearLoop
+Sound_ClearCurrentPendingRequestSlot:                   ; CODE XREF: Sound_SelectPendingRequest+56   j  ; was: loc_82A12
                 clr.b   (a1)
-loc_82A14:                                              ; CODE XREF: Sound_ProcessFade+50   j
-                                        ; Sound_ProcessFade+64   j
-                dbf     d4,loc_829FC
+Sound_ContinuePendingRequestClearLoop:                  ; CODE XREF: Sound_SelectPendingRequest+50   j  ; was: loc_82A14
+                                        ; Sound_SelectPendingRequest+64   j
+                dbf     d4,Sound_ClearNextPendingRequestSlot
                 rts
-; End of function Sound_ProcessFade
-; Updates sound envelope parameters
-Sound_UpdateEnvelope:                                   ; CODE XREF: Sound_UpdateDriver:loc_8234E   p  ; was: sub_82A1A
-                                        ; DATA XREF: Sound_UpdateDriver:loc_8234E   o
+; End of function Sound_SelectPendingRequest
+; Dispatch the selected driver-control, DAC, music, or SFX request by ID range
+Sound_DispatchPendingRequest:                           ; CODE XREF: Sound_UpdateDriver:Sound_UpdateActiveChannels   p  ; was: sub_82A1A
+                                        ; DATA XREF: Sound_UpdateDriver:Sound_UpdateActiveChannels   o
                 moveq   #0,d7
                 move.b  (byte_FFF809).w,d7
                 move.b  #$FF,(byte_FFF809).w
                 tst.b   d7
                 beq.w   Sound_LoadZ80Driver
                 cmpi.b  #$FF,d7
-                beq.s   locret_82A6A
+                beq.s   Sound_DispatchPendingRequestReturn
                 cmpi.b  #1,d7
-                bcs.w   Sound_UpdateFMEnvelope
+                bcs.w   Sound_StopAllPlayback
                 cmpi.b  #$10,d7
-                bcs.w   loc_82A6C
+                bcs.w   Sound_ValidateControlRequest
                 cmpi.b  #$40,d7                         ; '@'
-                bcs.w   loc_82A8E
+                bcs.w   Sound_ValidateVoiceDACRequest
                 cmpi.b  #$81,d7
                 bcs.w   Sound_LoadSFX
                 cmpi.b  #$A0,d7
-                bcs.w   Sound_ProcessDAC
+                bcs.w   Sound_LoadBGMRequest
                 cmpi.b  #$F9,d7
-                bcs.w   loc_830D2
+                bcs.w   Sound_ValidateHighRangeSFXRequest
                 cmpi.b  #$FD,d7
                 bcs.w   Sound_LoadSpecialSFX
-locret_82A6A:                                           ; CODE XREF: Sound_UpdateEnvelope+16   j
+Sound_DispatchPendingRequestReturn:                     ; CODE XREF: Sound_DispatchPendingRequest+16   j  ; was: locret_82A6A
                 rts
 ; ---------------------------------------------------------------------------
-loc_82A6C:                                              ; CODE XREF: Sound_UpdateEnvelope+24   j
+Sound_ValidateControlRequest:                           ; CODE XREF: Sound_DispatchPendingRequest+24   j  ; was: loc_82A6C
                 cmpi.b  #5,d7
-                bcs.w   loc_82A76
+                bcs.w   Sound_DispatchControlRequest
                 rts
 ; ---------------------------------------------------------------------------
-loc_82A76:                                              ; CODE XREF: Sound_UpdateEnvelope+56   j
+Sound_DispatchControlRequest:                           ; CODE XREF: Sound_DispatchPendingRequest+56   j  ; was: loc_82A76
                 subq.b  #1,d7
                 lsl.w   #2,d7
-                jmp     loc_82A7E(pc,d7.w)
+                jmp     Sound_ControlRequestBranches(pc,d7.w)
 ; ---------------------------------------------------------------------------
-loc_82A7E:                                              ; CODE XREF: Sound_UpdateEnvelope+60   j
-                bra.w   Sound_WriteRegister
+Sound_ControlRequestBranches:                           ; CODE XREF: Sound_DispatchPendingRequest+60   j  ; was: loc_82A7E
+                bra.w   Sound_StartMusicFadeOut
 ; ---------------------------------------------------------------------------
-                bra.w   Sound_ProcessFM
+                bra.w   Sound_StopSFXAndRestoreBGMChannels
 ; ---------------------------------------------------------------------------
-                bra.w   Sound_ProcessSpecialChannels
+                bra.w   Sound_StopSpecialSFXAndRestoreBGMChannels
 ; ---------------------------------------------------------------------------
-                bra.w   Sound_UpdateFMEnvelope
+                bra.w   Sound_StopAllPlayback
 ; ---------------------------------------------------------------------------
-loc_82A8E:                                              ; CODE XREF: Sound_UpdateEnvelope+2C   j
+Sound_ValidateVoiceDACRequest:                          ; CODE XREF: Sound_DispatchPendingRequest+2C   j  ; was: loc_82A8E
                 cmpi.b  #$3F,d7                         ; '?'
-                bcs.w   loc_82A98
+                bcs.w   Sound_ProcessVoiceDACRequest
                 rts
 ; ---------------------------------------------------------------------------
-loc_82A98:                                              ; CODE XREF: Sound_UpdateEnvelope+78   j
+Sound_ProcessVoiceDACRequest:                           ; CODE XREF: Sound_DispatchPendingRequest+78   j  ; was: loc_82A98
                 subi.b  #$10,d7
                 ext.w   d7
                 asl.w   #3,d7
-                lea     (word_82DEC).l,a0               ; 980 - PCMPart1
+                lea     (Sound_VoiceDACDescriptors).l,a0  ; 980 - PCMPart1
                                         ; A00 - PCMPart2
                                         ; A80 - PCMPart3
                                         ; B00 - PCMPart4
@@ -116,13 +116,13 @@ loc_82A98:                                              ; CODE XREF: Sound_Updat
                                         ; D80 - PCMPart9
                 lea     (a0,d7.w),a0
                 btst    #0,5(a0)
-                bne.w   loc_82BA2
+                bne.w   Sound_SelectVoiceDACPlaybackSlot
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_82AC2:                                              ; CODE XREF: Sound_UpdateEnvelope+B0   j
+Sound_WaitForVoiceDACStatusZ80Bus:                      ; CODE XREF: Sound_DispatchPendingRequest+B0   j  ; was: loc_82AC2
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_82AC2
+                bne.s   Sound_WaitForVoiceDACStatusZ80Bus
                 move.b  (byte_A01FFC).l,d1
                 move.b  (byte_A01F87).l,d2
                 move.b  (byte_A01FA7).l,d3
@@ -132,29 +132,29 @@ loc_82AC2:                                              ; CODE XREF: Sound_Updat
                 move.b  5(a0),d0
                 andi.b  #$C0,d0
                 btst    #0,d1
-                bne.w   loc_82B06
+                bne.w   Sound_CompareActiveVoiceDACSlots
                 andi.b  #$C0,d1
                 cmp.b   d1,d0
-                bcc.w   loc_82B1C
+                bcc.w   Sound_SubmitImmediateVoiceDACRequest
                 rts
 ; ---------------------------------------------------------------------------
-loc_82B06:                                              ; CODE XREF: Sound_UpdateEnvelope+DC   j
+Sound_CompareActiveVoiceDACSlots:                       ; CODE XREF: Sound_DispatchPendingRequest+DC   j  ; was: loc_82B06
                 andi.b  #$C0,d2
                 andi.b  #$C0,d3
                 cmp.b   d2,d0
-                bcs.w   locret_82BA0
+                bcs.w   Sound_ProcessVoiceDACRequestReturn
                 cmp.b   d3,d0
-                bcc.w   loc_82B1C
+                bcc.w   Sound_SubmitImmediateVoiceDACRequest
                 rts
 ; ---------------------------------------------------------------------------
-loc_82B1C:                                              ; CODE XREF: Sound_UpdateEnvelope+E6   j
-                                        ; Sound_UpdateEnvelope+FC   j
+Sound_SubmitImmediateVoiceDACRequest:                   ; CODE XREF: Sound_DispatchPendingRequest+E6   j  ; was: loc_82B1C
+                                        ; Sound_DispatchPendingRequest+FC   j
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_82B2A:                                              ; CODE XREF: Sound_UpdateEnvelope+118   j
+Sound_WaitForImmediateVoiceDACZ80Bus:                   ; CODE XREF: Sound_DispatchPendingRequest+118   j  ; was: loc_82B2A
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_82B2A
+                bne.s   Sound_WaitForImmediateVoiceDACZ80Bus
                 move.b  #$80,(byte_A01FFD).l
                 move.b  0.w(a0),(byte_A01FE8).l
                 move.b  1(a0),(byte_A01FE9).l
@@ -166,23 +166,23 @@ loc_82B2A:                                              ; CODE XREF: Sound_Updat
                 move.w  #0,(IO_Z80BUS).l
                 move    (sp)+,sr
                 btst    #5,5(a0)
-                beq.w   locret_82BA0
+                beq.w   Sound_ProcessVoiceDACRequestReturn
                 btst    #5,d6
-                bne.w   locret_82BA0
+                bne.w   Sound_ProcessVoiceDACRequestReturn
                 cmpi.b  #2,(byte_FFF82B).w
-                beq.w   locret_82BA0
+                beq.w   Sound_ProcessVoiceDACRequestReturn
                 move.b  #1,(byte_FFF82B).w
-locret_82BA0:                                           ; CODE XREF: Sound_UpdateEnvelope+F6   j
-                                        ; Sound_UpdateEnvelope+16A   j
+Sound_ProcessVoiceDACRequestReturn:                     ; CODE XREF: Sound_DispatchPendingRequest+F6   j  ; was: locret_82BA0
+                                        ; Sound_DispatchPendingRequest+16A   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_82BA2:                                              ; CODE XREF: Sound_UpdateEnvelope+96   j
+Sound_SelectVoiceDACPlaybackSlot:                       ; CODE XREF: Sound_DispatchPendingRequest+96   j  ; was: loc_82BA2
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_82BB0:                                              ; CODE XREF: Sound_UpdateEnvelope+19E   j
+Sound_WaitForVoiceDACSlotStatusZ80Bus:                  ; CODE XREF: Sound_DispatchPendingRequest+19E   j  ; was: loc_82BB0
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_82BB0
+                bne.s   Sound_WaitForVoiceDACSlotStatusZ80Bus
                 move.b  (byte_A01FFC).l,d1
                 move.b  (byte_A01F87).l,d2
                 move.b  (byte_A01FA7).l,d3
@@ -194,66 +194,66 @@ loc_82BB0:                                              ; CODE XREF: Sound_Updat
                 move.b  5(a0),d0
                 andi.b  #$C0,d0
                 btst    #0,d1
-                bne.w   loc_82BFE
+                bne.w   Sound_EvaluateVoiceDACSlotSelection
                 andi.b  #$C0,d1
                 cmp.b   d1,d0
-                bcs.w   locret_82C2E
-loc_82BFE:                                              ; CODE XREF: Sound_UpdateEnvelope+1D6   j
+                bcs.w   Sound_RejectVoiceDACSlotRequest
+Sound_EvaluateVoiceDACSlotSelection:                    ; CODE XREF: Sound_DispatchPendingRequest+1D6   j  ; was: loc_82BFE
                 andi.b  #$C0,d2
                 andi.b  #$C0,d3
                 move.b  6(a0),d1
                 andi.b  #$C0,d1
-                beq.w   loc_82C30
+                beq.w   Sound_SelectAvailableVoiceDACSlot
                 cmpi.b  #$C0,d1
-                beq.w   loc_82C30
+                beq.w   Sound_SelectAvailableVoiceDACSlot
                 tst.b   d1
-                bpl.w   loc_82C28
+                bpl.w   Sound_CompareSecondaryVoiceDACPriority
                 cmp.b   d2,d0
-                bcc.w   loc_82C62
+                bcc.w   Sound_StartPrimaryVoiceDACSlot
                 rts
 ; ---------------------------------------------------------------------------
-loc_82C28:                                              ; CODE XREF: Sound_UpdateEnvelope+202   j
+Sound_CompareSecondaryVoiceDACPriority:                 ; CODE XREF: Sound_DispatchPendingRequest+202   j  ; was: loc_82C28
                 cmp.b   d3,d0
-                bcc.w   loc_82D12
-locret_82C2E:                                           ; CODE XREF: Sound_UpdateEnvelope+1E0   j
+                bcc.w   Sound_StartSecondaryVoiceDACSlot
+Sound_RejectVoiceDACSlotRequest:                        ; CODE XREF: Sound_DispatchPendingRequest+1E0   j  ; was: locret_82C2E
                 rts
 ; ---------------------------------------------------------------------------
-loc_82C30:                                              ; CODE XREF: Sound_UpdateEnvelope+1F4   j
-                                        ; Sound_UpdateEnvelope+1FC   j
+Sound_SelectAvailableVoiceDACSlot:                      ; CODE XREF: Sound_DispatchPendingRequest+1F4   j  ; was: loc_82C30
+                                        ; Sound_DispatchPendingRequest+1FC   j
                 tst.b   d4
-                beq.w   loc_82C62
+                beq.w   Sound_StartPrimaryVoiceDACSlot
                 tst.b   d5
-                beq.w   loc_82D12
+                beq.w   Sound_StartSecondaryVoiceDACSlot
                 btst    #0,(byte_FFF82C).w
-                bne.w   loc_82C54
+                bne.w   Sound_SelectVoiceDACSlotByToggle
                 cmp.b   d2,d0
-                bcc.w   loc_82C62
+                bcc.w   Sound_StartPrimaryVoiceDACSlot
                 cmp.b   d3,d0
-                bcc.w   loc_82D12
+                bcc.w   Sound_StartSecondaryVoiceDACSlot
                 rts
 ; ---------------------------------------------------------------------------
-loc_82C54:                                              ; CODE XREF: Sound_UpdateEnvelope+228   j
+Sound_SelectVoiceDACSlotByToggle:                       ; CODE XREF: Sound_DispatchPendingRequest+228   j  ; was: loc_82C54
                 cmp.b   d3,d0
-                bcc.w   loc_82D12
+                bcc.w   Sound_StartSecondaryVoiceDACSlot
                 cmp.b   d2,d0
-                bcc.w   loc_82C62
+                bcc.w   Sound_StartPrimaryVoiceDACSlot
                 rts
 ; ---------------------------------------------------------------------------
-loc_82C62:                                              ; CODE XREF: Sound_UpdateEnvelope+208   j
-                                        ; Sound_UpdateEnvelope+218   j
+Sound_StartPrimaryVoiceDACSlot:                         ; CODE XREF: Sound_DispatchPendingRequest+208   j  ; was: loc_82C62
+                                        ; Sound_DispatchPendingRequest+218   j
                 bset    #0,(byte_FFF82C).w
-                bsr.w   Sound_ReadEnvelopeData
+                bsr.w   Sound_ReadDACSampleHeader
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_82C7A:                                              ; CODE XREF: Sound_UpdateEnvelope+268   j
+Sound_WaitForPrimaryVoiceDACZ80Bus:                     ; CODE XREF: Sound_DispatchPendingRequest+268   j  ; was: loc_82C7A
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_82C7A
+                bne.s   Sound_WaitForPrimaryVoiceDACZ80Bus
                 btst    #0,d6
-                bne.w   loc_82C9C
+                bne.w   Sound_WritePrimaryVoiceDACMailbox
                 move.b  #$80,(byte_A01FFE).l
                 move.b  #$80,(byte_A01FFD).l
-loc_82C9C:                                              ; CODE XREF: Sound_UpdateEnvelope+26E   j
+Sound_WritePrimaryVoiceDACMailbox:                      ; CODE XREF: Sound_DispatchPendingRequest+26E   j  ; was: loc_82C9C
                 move.b  #$80,(byte_A01F86).l
                 move.b  0.w(a0),(byte_A01F80).l
                 move.b  1(a0),(byte_A01F81).l
@@ -267,32 +267,32 @@ loc_82C9C:                                              ; CODE XREF: Sound_Updat
                 move.w  #0,(IO_Z80BUS).l
                 move    (sp)+,sr
                 btst    #5,5(a0)
-                beq.w   locret_82D10
+                beq.w   Sound_StartPrimaryVoiceDACSlotReturn
                 btst    #5,d6
-                bne.w   locret_82D10
+                bne.w   Sound_StartPrimaryVoiceDACSlotReturn
                 cmpi.b  #2,(byte_FFF82B).w
-                beq.w   locret_82D10
+                beq.w   Sound_StartPrimaryVoiceDACSlotReturn
                 move.b  #1,(byte_FFF82B).w
-locret_82D10:                                           ; CODE XREF: Sound_UpdateEnvelope+2DA   j
-                                        ; Sound_UpdateEnvelope+2E2   j
+Sound_StartPrimaryVoiceDACSlotReturn:                   ; CODE XREF: Sound_DispatchPendingRequest+2DA   j  ; was: locret_82D10
+                                        ; Sound_DispatchPendingRequest+2E2   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_82D12:                                              ; CODE XREF: Sound_UpdateEnvelope+210   j
-                                        ; Sound_UpdateEnvelope+21E   j
+Sound_StartSecondaryVoiceDACSlot:                       ; CODE XREF: Sound_DispatchPendingRequest+210   j  ; was: loc_82D12
+                                        ; Sound_DispatchPendingRequest+21E   j
                 bclr    #0,(byte_FFF82C).w
-                bsr.w   Sound_ReadEnvelopeData
+                bsr.w   Sound_ReadDACSampleHeader
                 move    sr,-(sp)
                 ori     #$700,sr
                 move.w  #$100,(IO_Z80BUS).l
-loc_82D2A:                                              ; CODE XREF: Sound_UpdateEnvelope+318   j
+Sound_WaitForSecondaryVoiceDACZ80Bus:                   ; CODE XREF: Sound_DispatchPendingRequest+318   j  ; was: loc_82D2A
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_82D2A
+                bne.s   Sound_WaitForSecondaryVoiceDACZ80Bus
                 btst    #0,d6
-                bne.w   Sound_WriteZ80DACSample
+                bne.w   Sound_WriteSecondaryVoiceDACMailbox
                 move.b  #$80,(byte_A01FFE).l
                 move.b  #$80,(byte_A01FFD).l
-; Writes DAC sample data to Z80 RAM
-Sound_WriteZ80DACSample:                                ; CODE XREF: Sound_UpdateEnvelope+31E   j  ; was: loc_82D4C
+; Write the selected sample header and descriptor fields to the secondary Z80 DAC mailbox
+Sound_WriteSecondaryVoiceDACMailbox:                    ; CODE XREF: Sound_DispatchPendingRequest+31E   j  ; was: loc_82D4C
                 move.b  #$80,(byte_A01FA6).l
                 move.b  0.w(a0),(byte_A01FA0).l
                 move.b  1(a0),(byte_A01FA1).l
@@ -306,19 +306,19 @@ Sound_WriteZ80DACSample:                                ; CODE XREF: Sound_Updat
                 move.w  #0,(IO_Z80BUS).l
                 move    (sp)+,sr
                 btst    #5,5(a0)
-                beq.w   locret_82DC0
+                beq.w   Sound_StartSecondaryVoiceDACSlotReturn
                 btst    #5,d6
-                bne.w   locret_82DC0
+                bne.w   Sound_StartSecondaryVoiceDACSlotReturn
                 cmpi.b  #2,(byte_FFF82B).w
-                beq.w   locret_82DC0
+                beq.w   Sound_StartSecondaryVoiceDACSlotReturn
                 move.b  #1,(byte_FFF82B).w
-locret_82DC0:                                           ; CODE XREF: Sound_UpdateEnvelope+38A   j
-                                        ; Sound_UpdateEnvelope+392   j
+Sound_StartSecondaryVoiceDACSlotReturn:                 ; CODE XREF: Sound_DispatchPendingRequest+38A   j  ; was: locret_82DC0
+                                        ; Sound_DispatchPendingRequest+392   j
                 rts
-; End of function Sound_UpdateEnvelope
-; Reads sound envelope data bytes from memory pointer into registers
-Sound_ReadEnvelopeData:                                 ; CODE XREF: Sound_UpdateEnvelope+24E   p  ; was: sub_82DC2
-                                        ; Sound_UpdateEnvelope+2FE   p
+; End of function Sound_DispatchPendingRequest
+; Resolve the packed sample pointer and read the four-byte DPCM sample header
+Sound_ReadDACSampleHeader:                              ; CODE XREF: Sound_DispatchPendingRequest+24E   p  ; was: sub_82DC2
+                                        ; Sound_DispatchPendingRequest+2FE   p
                 moveq   #0,d0
                 move.w  0.w(a0),d0
                 lsl.l   #8,d0
@@ -332,9 +332,9 @@ Sound_ReadEnvelopeData:                                 ; CODE XREF: Sound_Updat
                 move.b  2(a2,d0.w),d4
                 move.b  3(a2,d0.w),d5
                 rts
-; End of function Sound_ReadEnvelopeData
+; End of function Sound_ReadDACSampleHeader
 ; ---------------------------------------------------------------------------
-word_82DEC:     dc.w    (PCMPart3 >> $8)                ; DATA XREF: Sound_UpdateEnvelope+86   o
+Sound_VoiceDACDescriptors:  dc.w    (PCMPart3 >> $8)    ; DATA XREF: Sound_DispatchPendingRequest+86   o  ; was: word_82DEC
                                         ; 980 - PCMPart1
                                         ; A00 - PCMPart2
                                         ; A80 - PCMPart3
@@ -440,4 +440,4 @@ word_82DEC:     dc.w    (PCMPart3 >> $8)                ; DATA XREF: Sound_Updat
                 dc.w    (PCMPart2 >> $8)
                 dc.w    $1C80, $180, $C000
 
-; Processes DAC digital audio channel
+; End of pending-request dispatch and voice DAC data

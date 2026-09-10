@@ -2332,6 +2332,70 @@ two address-derived data definitions are removed, lowering the ceiling from
 5,511 to 5,509; provenance rises to 10,314 mappings and the registry to 6,365
 records.
 
+The first 68000 sound-driver reconstruction audits all 93 definitions in the
+cohesive 698-line `sound/driver_core.s` span at `0x082324-0x0829A9`, plus the
+shared PSG processor entry at `0x084A70`. The update loop now explicitly walks
+the DAC, BGM FM/PSG, ordinary SFX FM/PSG, and special-SFX channel families.
+Its event parsing, duration, FM pitch, vibrato, FM3 special-frequency, pan
+animation, Z80 PCM-mailbox, and pause/resume paths have instruction-backed
+names. The module fits the preferred 200-700-line range without an artificial
+split or size waiver.
+
+This pass rejects the inherited Sonnet claims that the DAC sequence processor
+was a PSG player, the common PSG update was an FM-frequency setter, the pan
+animation was tremolo, and the pause/resume state machine merely handled a Z80
+bus request. All 94 address-distinct definitions have audit records; the
+standalone stack-skip helper at `0x08277C` remains honestly `unknown` because
+no static caller reaches it. The 55 live address-derived definitions are
+eliminated, lowering the project ceiling from 5,509 to 5,454. Provenance rises
+to 10,369 mappings and the audit registry reaches 6,459 records. The direct
+canonical build remains byte-identical to SHA-1
+`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
+
+The following sound pass replaces the misleading 443-line
+`sound/fades_and_envelopes.s` container with the cohesive 444-line
+`sound/command_dispatch_and_dac.s` module at `0x0829AA-0x082F6B`. Static flow
+shows a four-slot pending-request selector, the complete sound-ID range
+dispatcher, the 47-entry voice-DAC descriptor table, immediate Z80 command
+submission, and primary/secondary voice-DAC mailbox selection. The module has
+37 definitions and no live address-derived names; its filename and contents
+now agree without an artificial split.
+
+This pass corrects three more generated claims: `Sound_ProcessFade` selects a
+queued request by priority and does not fade volume; `Sound_UpdateEnvelope`
+dispatches sound IDs and does not interpret an envelope; and
+`Sound_ReadEnvelopeData` reconstructs a PCM address and reads a four-byte DPCM
+sample header. The adjacent `$81-$9F` entry is also corrected from the false
+`Sound_ProcessDAC` to `Sound_LoadBGMRequest`, since it indexes
+`BGM_PointerTable` and initializes music channels. Thirty-nine exact-address
+audit records cover the complete module and those two BGM entries. The pass
+removes 33 address-derived definitions, lowering the project ceiling from
+5,454 to 5,421; provenance rises from 10,369 to 10,402 mappings and the audit
+registry reaches 6,498 records. The canonical ROM remains byte-identical.
+
+The playback-and-loading sound pass audits the complete 542-line
+`sound/playback_and_loading.s` span at `0x082F6C-0x0834D1`. All 75 definitions
+now have exact-address records; 73 are new because the two BGM dispatcher
+entries were already covered by the preceding pass. BGM channel construction,
+ordinary and dedicated SFX loading, channel-override restoration, fade-out,
+tempo, and all-channel shutdown remain together as one connected subsystem
+inside the preferred 200-700-line range.
+
+This pass corrects the generated claims that the two SFX stop routines were
+generic FM/special-channel processors, that control request one wrote a chip
+register, that the fade updater initialized channels, and that the global
+shutdown routine updated an FM envelope. It also narrows the old
+`Sound_MuteAllChannels` and `Sound_KeyOffAllChannels` claims to their observed
+FM-only scopes. The preserved 24-byte `unused_10` block is six pointers to
+sound channel records and has no static reference; it is therefore retained as
+`Sound_UnreferencedSFXChannelPointers` without a speculative runtime purpose.
+
+The 58 live address-derived definitions are eliminated, lowering the project
+ceiling from 5,421 to 5,363. The added preserved-data marker raises provenance
+from 10,402 to 10,461 mappings, and 73 new exact-address records take the audit
+registry from 6,498 to 6,571 entries. The canonical Japanese ROM remains
+byte-identical at SHA-1 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

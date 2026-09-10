@@ -1,4 +1,4 @@
-BGM_PointerTable:   dc.l    runnerad2025                ; DATA XREF: Sound_ProcessDAC+16   o
+BGM_PointerTable:   dc.l    runnerad2025                ; DATA XREF: Sound_LoadBGMRequest+16   o
                                         ; ROM:00084CAC   o
                 dc.l    blacksheep
                 dc.l    over
@@ -31,7 +31,7 @@ BGM_PointerTable:   dc.l    runnerad2025                ; DATA XREF: Sound_Proce
                 dc.l    runnerad2025
                 dc.l    specialsfxtrack
 SoundPriorityTable: dc.b    $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
-                                        ; DATA XREF: Sound_ProcessFade   o
+                                        ; DATA XREF: Sound_SelectPendingRequest   o
                                         ; ROM:00084CA4   o
                 dc.b    $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
                 dc.b    $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF

@@ -1,4 +1,4 @@
-Sound_SetFMFrequency:                                   ; CODE XREF: Sound_UpdateDriver+52   p  ; was: sub_84A70
+Sound_ProcessPSGChannel:                                ; CODE XREF: Sound_UpdateDriver+52   p  ; was: sub_84A70
                                         ; Sound_UpdateDriver+7C   p
                 subq.b  #1,$E(a5)
                 bne.s   Sound_PSGChannelIdle
@@ -8,15 +8,15 @@ Sound_SetFMFrequency:                                   ; CODE XREF: Sound_Updat
                 bra.w   loc_84B4E
 ; ---------------------------------------------------------------------------
 ; PSG channel idle processing
-Sound_PSGChannelIdle:                                   ; CODE XREF: Sound_SetFMFrequency+4   j  ; was: loc_84A86
+Sound_PSGChannelIdle:                                   ; CODE XREF: Sound_ProcessPSGChannel+4   j  ; was: loc_84A86
                 jsr     Sound_HandleNoteTimer(pc)       ; (pc)
                 jsr     Sound_ProcessFMModulation(pc)   ; (pc)
                 jsr     Sound_ProcessVibrato(pc)        ; (pc)
                 bra.w   loc_84B06
-; End of function Sound_SetFMFrequency
+; End of function Sound_ProcessPSGChannel
 ; Parses sound sequence data processing note and command bytes
-Sound_ParseSequenceData:                                ; CODE XREF: Sound_SetFMFrequency+A   p  ; was: sub_84A96
-                                        ; DATA XREF: Sound_SetFMFrequency+A   o
+Sound_ParseSequenceData:                                ; CODE XREF: Sound_ProcessPSGChannel+A   p  ; was: sub_84A96
+                                        ; DATA XREF: Sound_ProcessPSGChannel+A   o
                 bclr    #1,(a5)
                 movea.l 4(a5),a4
 loc_84A9E:                                              ; CODE XREF: Sound_ParseSequenceData+16   j
@@ -62,14 +62,14 @@ loc_84AE8:                                              ; CODE XREF: Sound_Proce
                 bra.w   Sound_CheckPSGMute
 ; End of function Sound_ProcessNoteData
 ; Updates PSG channel frequency with pitch calculation
-Sound_UpdatePSGFrequency:                               ; CODE XREF: Sound_SetFMFrequency+E   p  ; was: sub_84AFA
-                                        ; DATA XREF: Sound_SetFMFrequency+E   o
+Sound_UpdatePSGFrequency:                               ; CODE XREF: Sound_ProcessPSGChannel+E   p  ; was: sub_84AFA
+                                        ; DATA XREF: Sound_ProcessPSGChannel+E   o
                 move.w  $10(a5),d6
                 bpl.s   loc_84B0C
                 bset    #1,(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_84B06:                                              ; CODE XREF: Sound_SetFMFrequency+22   j
+loc_84B06:                                              ; CODE XREF: Sound_ProcessPSGChannel+22   j
                 tst.b   $A(a5)
                 beq.s   locret_84B44
 loc_84B0C:                                              ; CODE XREF: Sound_UpdatePSGFrequency+4   j
@@ -96,11 +96,11 @@ locret_84B44:                                           ; CODE XREF: Sound_Updat
                 rts
 ; End of function Sound_UpdatePSGFrequency
 ; Processes FM channel frequency modulation from envelope table
-Sound_ProcessFMModulation:                              ; CODE XREF: Sound_SetFMFrequency+1A   p  ; was: sub_84B46
-                                        ; DATA XREF: Sound_SetFMFrequency+1A   o
+Sound_ProcessFMModulation:                              ; CODE XREF: Sound_ProcessPSGChannel+1A   p  ; was: sub_84B46
+                                        ; DATA XREF: Sound_ProcessPSGChannel+1A   o
                 tst.b   $B(a5)
                 beq.w   locret_84BB8
-loc_84B4E:                                              ; CODE XREF: Sound_SetFMFrequency+12   j
+loc_84B4E:                                              ; CODE XREF: Sound_ProcessPSGChannel+12   j
                 move.b  9(a5),d6
                 moveq   #0,d0
                 move.b  $B(a5),d0
@@ -131,7 +131,7 @@ loc_84B8E:                                              ; CODE XREF: Sound_Proce
                 moveq   #$F,d6
 ; End of function Sound_ProcessFMModulation
 ; Applies volume to PSG channel with mute check
-Sound_ApplyPSGVolume:                                   ; CODE XREF: Sound_InitializeChannels+60   p  ; was: sub_84B98
+Sound_ApplyPSGVolume:                                   ; CODE XREF: Sound_UpdateMusicFadeOut+60   p  ; was: sub_84B98
                                         ; Sound_ProcessVolumeFade+114   p
                 btst    #1,(a5)
                 bne.s   locret_84BB8
@@ -183,7 +183,7 @@ Sound_CheckPSGMute:                                     ; CODE XREF: Sound_Handl
                 bne.s   locret_84BFE
 ; End of function Sound_CheckPSGMute
 ; Mutes PSG channel by setting maximum attenuation
-Sound_MutePSGChannel:                                   ; CODE XREF: Sound_ProcessSpecialChannels+44   p  ; was: sub_84BF0
+Sound_MutePSGChannel:                                   ; CODE XREF: Sound_StopSpecialSFXAndRestoreBGMChannels+44   p  ; was: sub_84BF0
                 move.b  1(a5),d0
                 ori.b   #$1F,d0
                 move.b  d0,(VDP_PSG).l
@@ -191,8 +191,8 @@ locret_84BFE:                                           ; CODE XREF: Sound_Check
                 rts
 ; End of function Sound_MutePSGChannel
 ; Mutes all four PSG channels by writing $9F,$BF,$DF,$FF to PSG port
-Sound_MuteAllPSGChannels:                               ; CODE XREF: Sound_HandleZ80BusRequest+74   j  ; was: sub_84C00
-                                        ; Sound_UpdateFMEnvelope+20   j
+Sound_MuteAllPSGChannels:                               ; CODE XREF: Sound_ProcessPauseTransition+74   j  ; was: sub_84C00
+                                        ; Sound_StopAllPlayback+20   j
                 lea     (VDP_PSG).l,a0
                 move.b  #$9F,(a0)
                 move.b  #$BF,(a0)

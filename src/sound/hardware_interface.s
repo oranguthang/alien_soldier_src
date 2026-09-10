@@ -1,5 +1,5 @@
-Sound_ResetDriver:                                      ; CODE XREF: Sound_ProcessDAC+12   p  ; was: sub_834D2
-                                        ; DATA XREF: Sound_ProcessDAC+12   o
+Sound_ResetDriver:                                      ; CODE XREF: Sound_LoadBGMRequest+12   p  ; was: sub_834D2
+                                        ; DATA XREF: Sound_LoadBGMRequest+12   o
                 moveq   #$27,d0                         ; '''
                 moveq   #0,d1
                 jsr     Sound_WriteYM2612Wrapper(pc)    ; (pc)
@@ -18,7 +18,7 @@ Sound_ResetRAMLoop:                                     ; CODE XREF: Sound_Reset
 ; End of function Sound_ResetDriver
 ; Loads Z80 sound driver code with bus request and reset sequence
 Sound_LoadZ80Driver:                                    ; CODE XREF: Sound_InitDriverThunk   j  ; was: sub_834FC
-                                        ; Sound_UpdateEnvelope+E   j
+                                        ; Sound_DispatchPendingRequest+E   j
                                         ; DATA XREF:
                 move    sr,-(sp)
                 ori     #$700,sr
@@ -50,7 +50,7 @@ loc_83522:                                              ; CODE XREF: Sound_LoadZ
                 move.w  #$100,(IO_Z80RES).l
                 move.w  #0,(IO_Z80BUS).l
                 move    (sp)+,sr
-                bra.w   Sound_UpdateFMEnvelope
+                bra.w   Sound_StopAllPlayback
 ; End of function Sound_LoadZ80Driver
 ; Sends key off command to FM channel stopping note
 Sound_SendKeyOff:                                       ; CODE XREF: Sound_ProcessChannel+16   j  ; was: sub_83562
@@ -76,7 +76,7 @@ Sound_CheckChannelFlags:                                ; CODE XREF: Sound_Parse
                 bne.s   nullsub_137
 ; End of function Sound_CheckChannelFlags
 ; Sends key on command to FM channel starting note
-Sound_SendKeyOn:                                        ; CODE XREF: Sound_ProcessSpecialChannels+12   p  ; was: sub_8358A
+Sound_SendKeyOn:                                        ; CODE XREF: Sound_StopSpecialSFXAndRestoreBGMChannels+12   p  ; was: sub_8358A
                 moveq   #$28,d0                         ; '('
                 move.b  1(a5),d1
                 bra.w   Sound_WriteYM2612Wrapper
@@ -95,8 +95,8 @@ Sound_CheckPauseFlag:                                   ; CODE XREF: Sound_SetLF
 ; End of function Sound_CheckPauseFlag
 ; Attributes: thunk
 ; Wrapper function redirecting to YM2612 register write
-Sound_WriteYM2612Wrapper:                               ; CODE XREF: Sound_ProcessFM+8   p  ; was: sub_835A0
-                                        ; Sound_UpdateFMEnvelope+4   p
+Sound_WriteYM2612Wrapper:                               ; CODE XREF: Sound_StopSFXAndRestoreBGMChannels+8   p  ; was: sub_835A0
+                                        ; Sound_StopAllPlayback+4   p
                 bra.w   Sound_WriteYM2612
 ; End of function Sound_WriteYM2612Wrapper
 ; Processes YM2612 sound chip channel bit flags
@@ -149,8 +149,8 @@ Sound_AddChannelOffset:                                 ; CODE XREF: Sound_Proce
                 add.b   d2,d0
 ; End of function Sound_AddChannelOffset
 ; Writes data to YM2612 FM chip via Z80 bus with sync
-Sound_WriteYM2612Register:                              ; CODE XREF: Sound_HandleZ80BusRequest+A4   p  ; was: sub_83618
-                                        ; Sound_SetMaxVolume+E   p
+Sound_WriteYM2612Register:                              ; CODE XREF: Sound_ProcessPauseTransition+A4   p  ; was: sub_83618
+                                        ; Sound_SetAllFMOperatorLevelsMaximum+E   p
                 cmpi.b  #$50,d0                         ; 'P'
                 bcc.w   loc_83634
                 cmpi.b  #$40,d0                         ; '@'
@@ -187,7 +187,7 @@ Sound_WriteYM2612DataLoop:                              ; CODE XREF: Sound_Write
                 rts
 ; End of function Sound_WriteYM2612Register
 ; Delay function with NOP instructions for timing
-Sound_DelayNOP:                                         ; CODE XREF: Sound_HandleZ80BusRequest+40   p  ; was: sub_8367E
+Sound_DelayNOP:                                         ; CODE XREF: Sound_ProcessPauseTransition+40   p  ; was: sub_8367E
                                         ; Sound_WriteYM2612+44   p
                 nop
                 nop

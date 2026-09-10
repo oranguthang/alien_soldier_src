@@ -281,7 +281,7 @@ SFX_FB:         dc.b    0, $32, 1, 1, $80, 4, 0, $A, $E9, 3, $FB, $17, $EF, 0, $
                 dc.b    4, $F7, 0, $30, $FF, $FA, $94, 4, $E6, 1, $F7, 0, $15, $FF, $F8, $EB, 3, $F2, $34, 1, $30, $11, 6, $1B, $1F, $1F, $12, $E, $1F, $E, $1F, 1
                 dc.b    0, 9, 0, 1, $1F, $1F, $F, 6, $10, 9, $80, 0
 SFX_FC:         dc.b    0, $19, 1, 1, $80, 4, 0, $A, $E0, $A, $EF, 0, $E7, $F0, 0, 1, $15, $15, $AB, $2C, $E7, $F6, $FF, $FB, $F2, $32, $36, 0, $76, $D, $1B, $1F
-                                        ; DATA XREF: ROM:word_82DEC   t
+                                        ; DATA XREF: ROM:Sound_VoiceDACDescriptors   t
                                         ; ROM:00085162   o
                 dc.b    $F, $F, $1E, $1F, $1D, $1F, 0, 0, 0, 0, 1, $1F, $F, $F, $25, $17, $2F, $80
                 align   $8000                           ; PCM data must be 32KB aligned for Z80 bank switching
