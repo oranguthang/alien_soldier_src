@@ -271,7 +271,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_SireneIntroInit
                 dc.l    Boss_ArtemisIntroStop
                 dc.l    Boss_Unknown1MainLoop
-                dc.l    Boss_ValkirieMainAlt
+                dc.l    Boss_ValkirieAlternateMain
                 dc.l    Boss_SylpheedIntroStop
                 dc.l    Stage18_SegmentedWormMain
                 dc.l    Enemy_Stage11FishController

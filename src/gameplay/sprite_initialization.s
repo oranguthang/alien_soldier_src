@@ -225,7 +225,7 @@ Boss_UnidentifiedSevenForceObjectInitTable: dc.w    $C620, $5044, $EC14, $EC14, 
                                         ; DATA XREF: Boss_Unknown1InitMetasprite+46   o
                 dc.w    $FFFE
 Boss_ValkirieAlternateObjectInitTable:  dc.w    $C620, $5044, $EC14, $EC14, $EC14, $EC14, $5B08  ; was: word_1BFA0
-                                        ; DATA XREF: Boss_ValkirieInitAlt+46   o
+                                        ; DATA XREF: Boss_ValkirieAlternateInit+46   o
                 dc.w    $FFFE
 Boss_SylpheedObjectInitTable:   dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14, $5B88  ; was: word_1BFB0
                                         ; DATA XREF: Boss_SylpheedAnimationScript+68   o

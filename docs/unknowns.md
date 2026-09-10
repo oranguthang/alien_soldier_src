@@ -2002,6 +2002,27 @@ is now `Entity_ValkirieProjectileAccelerateLeft`. The former
 `Entity_ValkirieProjectileTransferAnimationTiles`, separate from the actual
 five-pointer descriptor table that follows it.
 
+The alternate Valkirie pass reduced the address-derived unknown count from
+6,037 to 6,024 and raised provenance to 9,799 mappings. All 13 anonymous
+definitions and all 10 existing semantic definitions in
+`bosses/valkirie_alternate.s` now have exact static audit records, taking the
+registry to 5,579 entries. The module now has zero live address-derived
+definitions.
+
+The alternate entity dispatches states zero, two, and four. State zero builds
+the metasprite and enters state four; the separate state-two initializer and
+the state-four initializer reset the same pose/motion fields. States two and
+four both select one looping pose and converge on a renderer that updates a
+12-channel interpolation buffer, reflects paired part angles around `$100`,
+and begins metasprite traversal.
+
+This pass corrects the contradictory Sonnet state names: the former
+`Boss_ValkirieState3Setup` is the state-two table entry, while
+`Boss_Valkirie_AltState2` is the state-four entry. The pose code is now named as
+one interpreter with explicit read, control-word, loop/interpolation, delta,
+step, and part-angle projection phases; the two anonymous data blocks are its
+shared state pose and keyframe base.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

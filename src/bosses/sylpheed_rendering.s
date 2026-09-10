@@ -333,7 +333,7 @@ word_5A260:     dc.w    $C008, $C008, $C007
                 dc.w    $C9C8
 word_5A298:     dc.w    $2080, $60, $8080               ; DATA XREF: Boss_SireneIntroStop+28   o
                 dc.w    $C080, $4080
-off_5A2A2:      dc.l    word_ECDCA+$400000              ; DATA XREF: Boss_ValkirieInitAlt+10   o
+off_5A2A2:      dc.l    word_ECDCA+$400000              ; DATA XREF: Boss_ValkirieAlternateInit+10   o
                 dc.l    word_59E82+1
                 dc.l    off_59DE2
                 dc.l    off_59E22
@@ -357,12 +357,12 @@ off_5A2A2:      dc.l    word_ECDCA+$400000              ; DATA XREF: Boss_Valkir
                 dc.l    off_59DE2
                 dc.l    word_59E82+1
                 dc.l    off_59DC2+$18000000
-word_5A302:     dc.w    $1A, $1814, $1D15               ; DATA XREF: Boss_ValkirieInitAlt+16   o
+word_5A302:     dc.w    $1A, $1814, $1D15               ; DATA XREF: Boss_ValkirieAlternateInit+16   o
                 dc.w    $1515, $151D, $1515
                 dc.w    $1515, $1428, $1014
                 dc.w    $2810, $1412, $1412
 word_5A31A:     dc.w    $C002, $C003, $C001
-                                        ; DATA XREF: Boss_ValkirieInitAlt+1C   o
+                                        ; DATA XREF: Boss_ValkirieAlternateInit+1C   o
                 dc.w    $C068, $C002, $C182
                 dc.w    $C1E2, $C242, $C2A2
                 dc.w    $C002, $C362, $C3C2
@@ -370,7 +370,7 @@ word_5A31A:     dc.w    $C002, $C003, $C001
                 dc.w    $C063, $C5A2, $C063
                 dc.w    $C063, $C6C2, $C004
                 dc.w    $C784, $C004, $C844
-word_5A34A:     dc.w    0, 0, $C0                       ; DATA XREF: Boss_ValkirieInitAlt+28   o
+word_5A34A:     dc.w    0, 0, $C0                       ; DATA XREF: Boss_ValkirieAlternateInit+28   o
                 dc.w    $E0C0, $20C0, $8080
 off_5A356:      dc.l    word_ECDCA+$400000              ; DATA XREF: Boss_Unknown1InitMetasprite+10   o
                 dc.l    word_59E82+1
