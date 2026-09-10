@@ -128,7 +128,7 @@ Boss_SunsetStingQueueSecondFormIntroMessageState:       ; DATA XREF: ROM:0004194
                 tst.w   (word_FF80C2).w
                 bne.w   Boss_SunsetStingSecondFormIntroUpdate
                 moveq   #5,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 addq.w  #2,4(a5)
                 bra.w   Boss_SunsetStingSecondFormIntroUpdate
 ; End of function Boss_SunsetStingQueueSecondFormIntroMessageState

@@ -92,7 +92,7 @@ UI_StoreWeaponSelection:                                ; CODE XREF: Text_Advanc
 ; End of function UI_StoreWeaponSelection
 ; Store weapon selection to buffer
 UI_StoreWeaponToBuffer:                                 ; CODE XREF: Text_CompleteWithSound:loc_B0FE   p  ; was: sub_1CE04
-                                        ; Boss_ZLeoDefeatedDelay+2E   j
+                                        ; Boss_ZLeoRunPostDefeatDelay+2E   j
                 movea.w #(word_FFAA80-M68K_RAM),a0
                 move.w  (StageTableIndex).w,d0
                 move.w  (word_FFA270).w,(a0,d0.w)

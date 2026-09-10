@@ -1,117 +1,117 @@
-; Main Z-Leo boss handler
+; Advance palette fades, run the selected state, and clear the per-frame projectile flag
 Boss_ZLeoMain:                                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_51AD6
                 tst.w   4(a5)
-                beq.w   loc_51B6A
+                beq.w   Boss_ZLeoDispatchStateAndClearProjectileFlag
                 tst.w   8(a5)
-                beq.w   loc_51B6A
+                beq.w   Boss_ZLeoDispatchStateAndClearProjectileFlag
                 btst    #2,(byte_FF80EC).w
-                bne.s   loc_51AFE
+                bne.s   Boss_ZLeoUpdateFirstPaletteFade
                 btst    #1,(byte_FF80EC).w
-                bne.s   loc_51AFE
+                bne.s   Boss_ZLeoUpdateFirstPaletteFade
                 tst.w   (word_FF8200).w
-                beq.w   Boss_ZLeoAttackPattern2
-loc_51AFE:                                              ; CODE XREF: Boss_ZLeoMain+16   j
+                beq.w   Boss_ZLeoBeginDefeatSequence
+Boss_ZLeoUpdateFirstPaletteFade:                        ; CODE XREF: Boss_ZLeoMain+16   j  ; was: loc_51AFE
                                         ; Boss_ZLeoMain+1E   j
                 move.w  $4DC(a5),d0
-                beq.s   loc_51B20
-                bpl.s   loc_51B0A
+                beq.s   Boss_ZLeoUpdateSecondPaletteFade
+                bpl.s   Boss_ZLeoDecreaseFirstPaletteFade
                 addq.w  #1,d0
-                bra.s   loc_51B0C
+                bra.s   Boss_ZLeoApplyFirstPaletteFade
 ; ---------------------------------------------------------------------------
-loc_51B0A:                                              ; CODE XREF: Boss_ZLeoMain+2E   j
+Boss_ZLeoDecreaseFirstPaletteFade:                      ; CODE XREF: Boss_ZLeoMain+2E   j  ; was: loc_51B0A
                 subq.w  #1,d0
-loc_51B0C:                                              ; CODE XREF: Boss_ZLeoMain+32   j
+Boss_ZLeoApplyFirstPaletteFade:                         ; CODE XREF: Boss_ZLeoMain+32   j  ; was: loc_51B0C
                 move.w  d0,$4DC(a5)
                 movea.w #(word_FFE302-M68K_RAM),a0
                 moveq   #$E,d5
                 move.w  $4DE(a5),d7
                 jsr     (Gfx_ApplyPaletteFade).l
-loc_51B20:                                              ; CODE XREF: Boss_ZLeoMain+2C   j
+Boss_ZLeoUpdateSecondPaletteFade:                       ; CODE XREF: Boss_ZLeoMain+2C   j  ; was: loc_51B20
                 move.w  $53C(a5),d0
-                beq.s   loc_51B42
-                bpl.s   loc_51B2C
+                beq.s   Boss_ZLeoUpdateThirdPaletteFade
+                bpl.s   Boss_ZLeoDecreaseSecondPaletteFade
                 addq.w  #1,d0
-                bra.s   loc_51B2E
+                bra.s   Boss_ZLeoApplySecondPaletteFade
 ; ---------------------------------------------------------------------------
-loc_51B2C:                                              ; CODE XREF: Boss_ZLeoMain+50   j
+Boss_ZLeoDecreaseSecondPaletteFade:                     ; CODE XREF: Boss_ZLeoMain+50   j  ; was: loc_51B2C
                 subq.w  #1,d0
-loc_51B2E:                                              ; CODE XREF: Boss_ZLeoMain+54   j
+Boss_ZLeoApplySecondPaletteFade:                        ; CODE XREF: Boss_ZLeoMain+54   j  ; was: loc_51B2E
                 move.w  d0,$53C(a5)
                 movea.w #(byte_FFE322-M68K_RAM),a0
                 moveq   #$1E,d5
                 move.w  $53E(a5),d7
                 jsr     (Gfx_ApplyPaletteFade).l
-loc_51B42:                                              ; CODE XREF: Boss_ZLeoMain+4E   j
+Boss_ZLeoUpdateThirdPaletteFade:                        ; CODE XREF: Boss_ZLeoMain+4E   j  ; was: loc_51B42
                 move.w  $59C(a5),d0
-                beq.s   loc_51B64
-                bpl.s   loc_51B4E
+                beq.s   Boss_ZLeoFinalizePaletteFades
+                bpl.s   Boss_ZLeoDecreaseThirdPaletteFade
                 addq.w  #1,d0
-                bra.s   loc_51B50
+                bra.s   Boss_ZLeoApplyThirdPaletteFade
 ; ---------------------------------------------------------------------------
-loc_51B4E:                                              ; CODE XREF: Boss_ZLeoMain+72   j
+Boss_ZLeoDecreaseThirdPaletteFade:                      ; CODE XREF: Boss_ZLeoMain+72   j  ; was: loc_51B4E
                 subq.w  #1,d0
-loc_51B50:                                              ; CODE XREF: Boss_ZLeoMain+76   j
+Boss_ZLeoApplyThirdPaletteFade:                         ; CODE XREF: Boss_ZLeoMain+76   j  ; was: loc_51B50
                 move.w  d0,$59C(a5)
                 movea.w #(word_FFE362-M68K_RAM),a0
                 moveq   #$E,d5
                 move.w  $59E(a5),d7
                 jsr     (Gfx_ApplyPaletteFade).l
-loc_51B64:                                              ; CODE XREF: Boss_ZLeoMain+70   j
+Boss_ZLeoFinalizePaletteFades:                          ; CODE XREF: Boss_ZLeoMain+70   j  ; was: loc_51B64
                 jsr     (Gfx_InitPaletteFade).l
-loc_51B6A:                                              ; CODE XREF: Boss_ZLeoMain+4   j
+Boss_ZLeoDispatchStateAndClearProjectileFlag:           ; CODE XREF: Boss_ZLeoMain+4   j  ; was: loc_51B6A
                                         ; Boss_ZLeoMain+C   j
                 bsr.s   Boss_ZLeoDispatcher
                 clr.w   (word_FF9500).w
                 rts
 ; End of function Boss_ZLeoMain
-; Boss state dispatcher
-Boss_ZLeoDispatcher:                                    ; CODE XREF: Boss_ZLeoMain:loc_51B6A   p  ; was: sub_51B72
+; Dispatch the even-valued state through the ROM-ordered state table
+Boss_ZLeoDispatcher:                                    ; CODE XREF: Boss_ZLeoMain:Boss_ZLeoDispatchStateAndClearProjectileFlag   p  ; was: sub_51B72
                 move.w  4(a5),d0
-                movea.w off_51B82(pc,d0.w),a0
-                adda.l  #nullsub_120,a0
+                movea.w Boss_ZLeoStateTable(pc,d0.w),a0
+                adda.l  #Boss_ZLeoNoOp,a0
                 jmp     (a0)
 ; End of function Boss_ZLeoDispatcher
 ; ---------------------------------------------------------------------------
-off_51B82:      dc.w    Boss_ZLeoInit-nullsub_120
+Boss_ZLeoStateTable:    dc.w    Boss_ZLeoInit-Boss_ZLeoNoOp  ; was: off_51B82
                                         ; DATA XREF: Boss_ZLeoDispatcher+4   r
-                dc.w    Boss_ZLeoIntroInit-nullsub_120
-                dc.w    Boss_ZLeoAttack_State8-nullsub_120
-                dc.w    Boss_ZLeoAttack_State10-nullsub_120
-                dc.w    Boss_ZLeoAttack_State12-nullsub_120
-                dc.w    Boss_ZLeoDefeatedFadeout-nullsub_120
-                dc.w    Boss_ZLeoDefeatedDelay-nullsub_120
-                dc.w    Boss_ZLeoEmptyState-nullsub_120
-                dc.w    Boss_ZLeoIntroMove-nullsub_120
-                dc.w    Boss_ZLeoBattleStart-nullsub_120
-                dc.w    Boss_ZLeoAttack_State14-nullsub_120
-                dc.w    Boss_ZLeoBattleState1-nullsub_120
-                dc.w    Boss_ZLeoBattleState2-nullsub_120
-                dc.w    Boss_ZLeoAttack_State20-nullsub_120
-                dc.w    Boss_ZLeoDefeatCheck-nullsub_120
-                dc.w    Boss_ZLeo_AttackPattern1_WaitLoop-nullsub_120
-                dc.w    Boss_ZLeoAttackState1-nullsub_120
-                dc.w    Boss_ZLeoAttack_State28-nullsub_120
-                dc.w    Boss_ZLeoAttack_State30-nullsub_120
-                dc.w    Boss_ZLeoAttack_State32-nullsub_120
-                dc.w    Boss_ZLeoAttackSequence-nullsub_120
-                dc.w    Boss_ZLeoAttack_State38-nullsub_120
-                dc.w    Boss_ZLeoAttack_State40-nullsub_120
-                dc.w    Boss_ZLeoAttack_State42-nullsub_120
-                dc.w    Boss_ZLeoAttack_State44-nullsub_120
-                dc.w    Boss_ZLeoAttack_State46-nullsub_120
-                dc.w    Boss_ZLeoAttack_State48-nullsub_120
-                dc.w    Boss_ZLeoAttack_State50-nullsub_120
-                dc.w    Boss_ZLeoAttack_State36-nullsub_120
+                dc.w    Boss_ZLeoIntroInit-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunIntroDescent-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunDefeatTransition-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunDefeatFade-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunDefeatWhiteout-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunPostDefeatDelay-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoPostDefeatNoOp-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunIntroCountdown-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunBattleEntry-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoWaitForBattlePose-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunBattlePose-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunBattleReadyPose-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunBossMessageDelay-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoWaitForBossMessage-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoSelectAttackState-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttackState1-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State28-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State30-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State32-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttackSequence-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State38-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State40-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State42-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State44-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State46-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State48-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoAttack_State50-Boss_ZLeoNoOp
+                dc.w    Boss_ZLeoRunLaserOpeningDelay-Boss_ZLeoNoOp
 
-nullsub_120:                                            ; CODE XREF: Boss_ZLeoIntroInit+E   j
+Boss_ZLeoNoOp:                                          ; CODE XREF: Boss_ZLeoIntroInit+E   j  ; was: nullsub_120
                                         ; Boss_ZLeoTileUpdate+16   j
                 rts
-; End of function nullsub_120
+; End of function Boss_ZLeoNoOp
 
-; Boss initialization
-Boss_ZLeoInit:                                          ; DATA XREF: ROM:off_51B82   o  ; was: sub_51BBE
+; Wait for the stage gate, prepare graphics, and advance to composite-part initialization
+Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZLeoStateTable   o  ; was: sub_51BBE
                 tst.w   (word_FF80C2).w
-                bne.w   locret_51C30
+                bne.w   Boss_ZLeoInitReturn
                 addq.w  #2,4(a5)
                 bset    #0,(byte_FF8245).w
                 move.w  #$3F8,d0
@@ -133,15 +133,15 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:off_51B
                 move.w  #0,(word_FFA946).w
                 move.w  #$F600,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
-locret_51C30:                                           ; CODE XREF: Boss_ZLeoInit+4   j
+Boss_ZLeoInitReturn:                                    ; CODE XREF: Boss_ZLeoInit+4   j  ; was: locret_51C30
                 rts
 ; End of function Boss_ZLeoInit
-; Intro sequence init
+; Initialize the composite parts, mappings, and intro display state
 Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B84   o  ; was: sub_51C32
                 bsr.w   Boss_ZLeoGraphicsInit2
                 jsr     (Gfx_RenderScrollingBackground).l
                 tst.w   (word_FFA944).w
-                bpl.w   nullsub_120
+                bpl.w   Boss_ZLeoNoOp
                 move.w  #1,8(a5)
                 movea.w a5,a4
                 move.w  #$380,(dword_FF8040).w
@@ -191,10 +191,10 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 move.w  #$4B80,d2
                 movea.w #(word_FFCDA0-M68K_RAM),a0
                 moveq   #2,d7
-loc_51D1E:                                              ; CODE XREF: Boss_ZLeoIntroInit+110   j
+Boss_ZLeoInitializeIntroPartRows:                       ; CODE XREF: Boss_ZLeoIntroInit+110   j  ; was: loc_51D1E
                 moveq   #$10,d3
                 moveq   #2,d6
-loc_51D22:                                              ; CODE XREF: Boss_ZLeoIntroInit+10C   j
+Boss_ZLeoInitializeIntroPartRow:                        ; CODE XREF: Boss_ZLeoIntroInit+10C   j  ; was: loc_51D22
                 move.w  d0,(a0)
                 move.w  d1,2(a0)
                 move.w  d2,$E(a0)
@@ -202,8 +202,8 @@ loc_51D22:                                              ; CODE XREF: Boss_ZLeoIn
                 subq.w  #4,d3
                 move.l  #word_ED3B8,8(a0)
                 lea     $60(a0),a0
-                dbf     d6,loc_51D22
-                dbf     d7,loc_51D1E
+                dbf     d6,Boss_ZLeoInitializeIntroPartRow
+                dbf     d7,Boss_ZLeoInitializeIntroPartRows
                 move.l  #word_ED3BE,d4
                 move.l  d4,$848(a5)
                 move.l  d4,$968(a5)
@@ -211,13 +211,13 @@ loc_51D22:                                              ; CODE XREF: Boss_ZLeoIn
                 movea.w #(byte_FFD100-M68K_RAM),a0
                 moveq   #$50,d3                         ; 'P'
                 moveq   #5,d7
-loc_51D60:                                              ; CODE XREF: Boss_ZLeoIntroInit+140   j
+Boss_ZLeoInitializeLowerIntroParts:                     ; CODE XREF: Boss_ZLeoIntroInit+140   j  ; was: loc_51D60
                 move.w  d0,(a0)
                 move.w  d1,2(a0)
                 move.w  d2,$E(a0)
                 move.b  d3,$20(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_51D60
+                dbf     d7,Boss_ZLeoInitializeLowerIntroParts
                 move.l  #word_ED478,$AE8(a5)
                 move.l  #word_ED39A,$B48(a5)
                 move.l  #word_ED394,$BA8(a5)
@@ -234,11 +234,11 @@ loc_51D60:                                              ; CODE XREF: Boss_ZLeoIn
                 clr.l   $2FC(a5)
                 clr.l   $35C(a5)
                 move.w  #2,$1DE(a5)
-                bra.w   loc_51E82
+                bra.w   Boss_ZLeoPrepareIntroMovement
 ; End of function Boss_ZLeoIntroInit
-; Initializes Z-Leo boss intro sequence - sets position ($120,$1A0), clears state, animates Y position down to $E8
-Boss_ZLeoIntroSetup:
-                move.w  #$120,$2FC(a5)                  ; was: sub_51DE2
+; Prepare the intro descent from $1A0 to $E8
+Boss_ZLeoPrepareIntroDescent:                           ; was: sub_51DE2
+                move.w  #$120,$2FC(a5)
                 move.w  #$1A0,$35C(a5)
                 move.w  #4,4(a5)
                 clr.w   $58(a5)
@@ -247,48 +247,48 @@ Boss_ZLeoIntroSetup:
                 clr.l   $1C(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
-; Z-Leo boss movement state
-Boss_ZLeoAttack_State8:                                 ; DATA XREF: ROM:00051B86   o  ; was: loc_51E0E
+; Lower the selected composite position until it reaches $E8
+Boss_ZLeoRunIntroDescent:                               ; DATA XREF: ROM:00051B86   o  ; was: loc_51E0E
                 subq.w  #1,$35C(a5)
                 cmpi.w  #$E8,$35C(a5)
-                bpl.s   loc_51E24
+                bpl.s   Boss_ZLeoUpdateIntroDescentPose
                 move.w  #$E8,$35C(a5)
                 clr.b   (byte_FF80EC).w
-loc_51E24:                                              ; CODE XREF: Boss_ZLeoIntroSetup+36   j
+Boss_ZLeoUpdateIntroDescentPose:                        ; CODE XREF: Boss_ZLeoPrepareIntroDescent+36   j  ; was: loc_51E24
                 move.w  $5B4(a5),d0
                 addi.w  #0,d0
                 move.w  d0,(dword_FFDB34).w
                 lea     word_52C56(pc),a1
                 nop
                 bra.w   loc_5262E
-; End of function Boss_ZLeoIntroSetup
-; Debug controller handler for Z-Leo - allows manual position and angle adjustments via controller buttons
-Boss_ZLeoDebugControl:
-                btst    #2,(word_FFF706).w              ; was: sub_51E3A
-                beq.s   loc_51E46
+; End of function Boss_ZLeoPrepareIntroDescent
+; Unreferenced controller entry for adjusting position and the shared scroll coordinate
+Debug_ZLeoPositionAndStartIntro:                        ; was: sub_51E3A
+                btst    #2,(word_FFF706).w
+                beq.s   Debug_ZLeoCheckMoveRightInput
                 subq.w  #3,$10(a5)
-loc_51E46:                                              ; CODE XREF: Boss_ZLeoDebugControl+6   j
+Debug_ZLeoCheckMoveRightInput:                          ; CODE XREF: Debug_ZLeoPositionAndStartIntro+6   j  ; was: loc_51E46
                 btst    #3,(word_FFF706).w
-                beq.s   loc_51E52
+                beq.s   Debug_ZLeoCheckMoveUpInput
                 addq.w  #3,$10(a5)
-loc_51E52:                                              ; CODE XREF: Boss_ZLeoDebugControl+12   j
+Debug_ZLeoCheckMoveUpInput:                             ; CODE XREF: Debug_ZLeoPositionAndStartIntro+12   j  ; was: loc_51E52
                 btst    #0,(word_FFF706).w
-                beq.s   loc_51E5E
+                beq.s   Debug_ZLeoCheckMoveDownInput
                 subq.w  #2,$14(a5)
-loc_51E5E:                                              ; CODE XREF: Boss_ZLeoDebugControl+1E   j
+Debug_ZLeoCheckMoveDownInput:                           ; CODE XREF: Debug_ZLeoPositionAndStartIntro+1E   j  ; was: loc_51E5E
                 btst    #1,(word_FFF706).w
-                beq.s   loc_51E6A
+                beq.s   Debug_ZLeoCheckIncreaseScrollInput
                 addq.w  #2,$14(a5)
-loc_51E6A:                                              ; CODE XREF: Boss_ZLeoDebugControl+2A   j
+Debug_ZLeoCheckIncreaseScrollInput:                     ; CODE XREF: Debug_ZLeoPositionAndStartIntro+2A   j  ; was: loc_51E6A
                 btst    #6,(word_FFF706).w
-                beq.s   loc_51E76
+                beq.s   Debug_ZLeoCheckDecreaseScrollInput
                 addq.w  #2,(dword_FFDB34).w
-loc_51E76:                                              ; CODE XREF: Boss_ZLeoDebugControl+36   j
+Debug_ZLeoCheckDecreaseScrollInput:                     ; CODE XREF: Debug_ZLeoPositionAndStartIntro+36   j  ; was: loc_51E76
                 btst    #4,(word_FFF706).w
-                beq.s   loc_51E82
+                beq.s   Boss_ZLeoPrepareIntroMovement
                 subq.w  #2,(dword_FFDB34).w
-loc_51E82:                                              ; CODE XREF: Boss_ZLeoIntroInit+1AC   j
-                                        ; Boss_ZLeoDebugControl+42   j
+Boss_ZLeoPrepareIntroMovement:                          ; CODE XREF: Boss_ZLeoIntroInit+1AC   j  ; was: loc_51E82
+                                        ; Debug_ZLeoPositionAndStartIntro+42   j
                 move.w  #$10,4(a5)
                 move.w  #$1C0,$11C(a5)
                 move.w  #$120,$2FC(a5)
@@ -299,49 +299,49 @@ loc_51E82:                                              ; CODE XREF: Boss_ZLeoIn
                 move.w  a5,$4A(a5)
                 move.b  #$95,d0
                 jsr     (Sys_WaitVBlank).l
-; End of function Boss_ZLeoDebugControl
-; Intro movement sequence
-Boss_ZLeoIntroMove:                                     ; DATA XREF: ROM:00051B92   o  ; was: sub_51EB6
+; End of function Debug_ZLeoPositionAndStartIntro
+; Count down the intro hold, play its cue, and hand off to battle entry
+Boss_ZLeoRunIntroCountdown:                             ; DATA XREF: ROM:00051B92   o  ; was: sub_51EB6
                 cmpi.w  #$1B8,$11C(a5)
-                bne.s   loc_51EC8
+                bne.s   Boss_ZLeoAdvanceIntroCountdown
                 move.b  #$F7,d0
                 jsr     (Sound_PlaySFX).l
-loc_51EC8:                                              ; CODE XREF: Boss_ZLeoIntroMove+6   j
+Boss_ZLeoAdvanceIntroCountdown:                         ; CODE XREF: Boss_ZLeoRunIntroCountdown+6   j  ; was: loc_51EC8
                 subq.w  #1,$11C(a5)
-                bmi.s   loc_51EDE
+                bmi.s   Boss_ZLeoBeginBattleEntry
                 move.w  #2,(word_FFA014).w
                 lea     word_52C7A(pc),a1
                 nop
                 bra.w   loc_5262E
 ; ---------------------------------------------------------------------------
-loc_51EDE:                                              ; CODE XREF: Boss_ZLeoIntroMove+16   j
+Boss_ZLeoBeginBattleEntry:                              ; CODE XREF: Boss_ZLeoRunIntroCountdown+16   j  ; was: loc_51EDE
                 addq.w  #2,4(a5)
                 move.w  #$E000,$59E(a5)
                 move.w  #$FFF6,$11C(a5)
                 clr.w   $11E(a5)
-                lea     stru_51F50(pc),a0
+                lea     Boss_ZLeoBattleEntryEffectDescriptor(pc),a0
                 nop
                 jsr     (Data_ProcessPointer).l
-; End of function Boss_ZLeoIntroMove
-; Battle start handler
-Boss_ZLeoBattleStart:                                   ; DATA XREF: ROM:00051B94   o  ; was: sub_51EFE
+; End of function Boss_ZLeoRunIntroCountdown
+; Move the composite coordinate toward $F0 while pulsing the entry fade
+Boss_ZLeoRunBattleEntry:                                ; DATA XREF: ROM:00051B94   o  ; was: sub_51EFE
                 subi.l  #$8000,$35C(a5)
                 cmpi.w  #$F0,$35C(a5)
-                bmi.s   loc_51F5A
+                bmi.s   Boss_ZLeoFinishBattleEntry
                 tst.w   $11E(a5)
-                bne.s   loc_51F20
+                bne.s   Boss_ZLeoPulseBattleEntryFade
                 cmpi.w  #$144,$35C(a5)
-                bpl.s   loc_51F34
+                bpl.s   Boss_ZLeoRenderBattleEntry
                 addq.w  #1,$11E(a5)
-loc_51F20:                                              ; CODE XREF: Boss_ZLeoBattleStart+14   j
+Boss_ZLeoPulseBattleEntryFade:                          ; CODE XREF: Boss_ZLeoRunBattleEntry+14   j  ; was: loc_51F20
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
-                bne.s   loc_51F34
+                bne.s   Boss_ZLeoRenderBattleEntry
                 addq.w  #1,$11C(a5)
-                bmi.s   loc_51F34
+                bmi.s   Boss_ZLeoRenderBattleEntry
                 clr.w   $11C(a5)
-loc_51F34:                                              ; CODE XREF: Boss_ZLeoBattleStart+1C   j
-                                        ; Boss_ZLeoBattleStart+2A   j
+Boss_ZLeoRenderBattleEntry:                             ; CODE XREF: Boss_ZLeoRunBattleEntry+1C   j  ; was: loc_51F34
+                                        ; Boss_ZLeoRunBattleEntry+2A   j
                 move.w  $11C(a5),$59C(a5)
                 move.w  #3,(word_FFA010).w
                 move.w  #1,(word_FFA014).w
@@ -349,27 +349,27 @@ loc_51F34:                                              ; CODE XREF: Boss_ZLeoBa
                 nop
                 bra.w   loc_5262E
 ; ---------------------------------------------------------------------------
-stru_51F50:     dc.w    6                               ; field_0
-                                        ; DATA XREF: Boss_ZLeoIntroMove+3C   o
+Boss_ZLeoBattleEntryEffectDescriptor:   dc.w    6       ; field_0  ; was: stru_51F50
+                                        ; DATA XREF: Boss_ZLeoRunIntroCountdown+3C   o
                 dc.l    byte_1C8CB4                     ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    $FFFF
 ; ---------------------------------------------------------------------------
-loc_51F5A:                                              ; CODE XREF: Boss_ZLeoBattleStart+E   j
+Boss_ZLeoFinishBattleEntry:                             ; CODE XREF: Boss_ZLeoRunBattleEntry+E   j  ; was: loc_51F5A
                 addq.w  #2,4(a5)
                 move.w  #$F0,$35C(a5)
                 move.w  #$20,$11C(a5)                   ; ' '
                 move.w  #4,(word_FFA010).w
                 move.w  #3,(word_FFA014).w
-; Z-Leo boss attack pattern
-Boss_ZLeoAttack_State14:                                ; DATA XREF: ROM:00051B96   o  ; was: loc_51F76
+; Hold the entry pose before enabling its animated parts
+Boss_ZLeoWaitForBattlePose:                             ; DATA XREF: ROM:00051B96   o  ; was: loc_51F76
                 subq.w  #1,$11C(a5)
-                bmi.s   loc_51F86
+                bmi.s   Boss_ZLeoBeginBattlePose
                 lea     word_52C7A(pc),a1
                 nop
                 bra.w   loc_5262E
 ; ---------------------------------------------------------------------------
-loc_51F86:                                              ; CODE XREF: Boss_ZLeoBattleStart+7C   j
+Boss_ZLeoBeginBattlePose:                               ; CODE XREF: Boss_ZLeoRunBattleEntry+7C   j  ; was: loc_51F86
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
@@ -377,69 +377,69 @@ loc_51F86:                                              ; CODE XREF: Boss_ZLeoBa
                 move.w  #4,(word_FFA010).w
                 move.w  #3,(word_FFA014).w
                 bsr.w   Boss_ZLeoAnimationUpdate1
-; End of function Boss_ZLeoBattleStart
-; Battle state 1 handler
-Boss_ZLeoBattleState1:                                  ; DATA XREF: ROM:00051B98   o  ; was: sub_51FAA
+; End of function Boss_ZLeoRunBattleEntry
+; Run the battle pose and respond to its part-enable event
+Boss_ZLeoRunBattlePose:                                 ; DATA XREF: ROM:00051B98   o  ; was: sub_51FAA
                 tst.w   $58(a5)
-                bmi.s   loc_51FC6
+                bmi.s   Boss_ZLeoBeginBattleReadySequence
                 bclr    #0,$23E(a5)
-                beq.s   loc_51FBC
+                beq.s   Boss_ZLeoRenderBattlePose
                 bsr.w   Boss_ZLeoEnableParts
-loc_51FBC:                                              ; CODE XREF: Boss_ZLeoBattleState1+C   j
+Boss_ZLeoRenderBattlePose:                              ; CODE XREF: Boss_ZLeoRunBattlePose+C   j  ; was: loc_51FBC
                 lea     word_52C8C(pc),a1
                 nop
                 bra.w   loc_5262E
 ; ---------------------------------------------------------------------------
-loc_51FC6:                                              ; CODE XREF: Boss_ZLeoBattleState1+4   j
+Boss_ZLeoBeginBattleReadySequence:                      ; CODE XREF: Boss_ZLeoRunBattlePose+4   j  ; was: loc_51FC6
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$60,$11C(a5)                   ; '`'
-                bsr.w   Boss_ZLeoLoadDefeatTiles
+                bsr.w   Boss_ZLeoLoadPhaseTiles
                 move.b  #$EC,d0
                 jsr     (Sound_PlaySFX).l
-; End of function Boss_ZLeoBattleState1
-; Battle state 2 handler
-Boss_ZLeoBattleState2:                                  ; DATA XREF: ROM:00051B9A   o  ; was: sub_51FE8
+; End of function Boss_ZLeoRunBattlePose
+; Run the timed battle-ready pose
+Boss_ZLeoRunBattleReadyPose:                            ; DATA XREF: ROM:00051B9A   o  ; was: sub_51FE8
                 subq.w  #1,$11C(a5)
-                bmi.s   loc_51FF8
+                bmi.s   Boss_ZLeoBeginBossMessageDelay
                 lea     word_52C9C(pc),a1
                 nop
                 bra.w   loc_52624
 ; ---------------------------------------------------------------------------
-loc_51FF8:                                              ; CODE XREF: Boss_ZLeoBattleState2+4   j
+Boss_ZLeoBeginBossMessageDelay:                         ; CODE XREF: Boss_ZLeoRunBattleReadyPose+4   j  ; was: loc_51FF8
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$40,$11C(a5)                   ; '@'
-; Z-Leo boss combo phase
-Boss_ZLeoAttack_State20:                                ; DATA XREF: ROM:00051B9C   o  ; was: loc_5200C
+; Hold the final pose before starting the boss message
+Boss_ZLeoRunBossMessageDelay:                           ; DATA XREF: ROM:00051B9C   o  ; was: loc_5200C
                 subq.w  #1,$11C(a5)
-                bmi.s   loc_5201C
+                bmi.s   Boss_ZLeoStartBossMessage
                 lea     word_52CB0(pc),a1
                 nop
                 bra.w   loc_52624
 ; ---------------------------------------------------------------------------
-loc_5201C:                                              ; CODE XREF: Boss_ZLeoBattleState2+28   j
+Boss_ZLeoStartBossMessage:                              ; CODE XREF: Boss_ZLeoRunBattleReadyPose+28   j  ; was: loc_5201C
                 addq.w  #2,4(a5)
                 moveq   #0,d0
-                jsr     (UI_CheckVictoryCondition).l
-; End of function Boss_ZLeoBattleState2
-; Check defeat condition
-Boss_ZLeoDefeatCheck:                                   ; DATA XREF: ROM:00051B9E   o  ; was: sub_52028
+                jsr     (UI_StartBossMessage).l
+; End of function Boss_ZLeoRunBattleReadyPose
+; Wait for the boss-message gate before entering the first attack-cycle state
+Boss_ZLeoWaitForBossMessage:                            ; DATA XREF: ROM:00051B9E   o  ; was: sub_52028
                 tst.w   (word_FF80C2).w
-                bne.s   loc_5203C
+                bne.s   Boss_ZLeoRenderBossMessageWait
                 move.w  #$1E,4(a5)
                 clr.b   (byte_FF80EC).w
-                bra.w   Boss_ZLeo_AttackPattern1_WaitLoop
+                bra.w   Boss_ZLeoSelectAttackState
 ; ---------------------------------------------------------------------------
-loc_5203C:                                              ; CODE XREF: Boss_ZLeoDefeatCheck+4   j
+Boss_ZLeoRenderBossMessageWait:                         ; CODE XREF: Boss_ZLeoWaitForBossMessage+4   j  ; was: loc_5203C
                 lea     word_52CB0(pc),a1
                 nop
                 bra.w   loc_52624
-; End of function Boss_ZLeoDefeatCheck
-; Attack pattern 2 handler
-Boss_ZLeoAttackPattern2:                                ; CODE XREF: Boss_ZLeoMain+24   j  ; was: sub_52046
+; End of function Boss_ZLeoWaitForBossMessage
+; Enter the health-zero defeat sequence and initialize its transition
+Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMain+24   j  ; was: sub_52046
                 move.w  #6,4(a5)
                 move.b  #$40,(byte_FFF705).w            ; '@'
                 move.w  #8,(word_FF808C).w
@@ -454,10 +454,10 @@ Boss_ZLeoAttackPattern2:                                ; CODE XREF: Boss_ZLeoMa
                 move.w  #$C0,$11C(a5)
                 bsr.w   Boss_ZLeoAnimationUpdate1
                 move.b  #1,(byte_FF830E).w
-; Z-Leo boss transition state
-Boss_ZLeoAttack_State10:                                ; DATA XREF: ROM:00051B88   o  ; was: loc_52096
+; Run the initial defeat transition
+Boss_ZLeoRunDefeatTransition:                           ; DATA XREF: ROM:00051B88   o  ; was: loc_52096
                 subq.w  #1,$11C(a5)
-                bmi.s   loc_520C0
+                bmi.s   Boss_ZLeoBeginDefeatFade
                 move.w  #4,(word_FFA010).w
                 move.w  #1,(word_FFA014).w
                 jsr     (Gfx_UpdatePaletteFade).l
@@ -467,25 +467,25 @@ Boss_ZLeoAttack_State10:                                ; DATA XREF: ROM:00051B8
                 nop
                 bra.w   loc_5262E
 ; ---------------------------------------------------------------------------
-loc_520C0:                                              ; CODE XREF: Boss_ZLeoAttackPattern2+54   j
+Boss_ZLeoBeginDefeatFade:                               ; CODE XREF: Boss_ZLeoBeginDefeatSequence+54   j  ; was: loc_520C0
                 addq.w  #2,4(a5)
                 clr.w   $11C(a5)
-; Z-Leo boss special move
-Boss_ZLeoAttack_State12:                                ; DATA XREF: ROM:00051B8A   o  ; was: loc_520C8
+; Advance the defeat fade before whiteout
+Boss_ZLeoRunDefeatFade:                                 ; DATA XREF: ROM:00051B8A   o  ; was: loc_520C8
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.s   loc_520DE
+                bne.s   Boss_ZLeoUpdateDefeatFade
                 addq.w  #1,$11C(a5)
                 cmpi.w  #8,$11C(a5)
-                beq.s   loc_520F0
-loc_520DE:                                              ; CODE XREF: Boss_ZLeoAttackPattern2+8A   j
+                beq.s   Boss_ZLeoBeginDefeatWhiteout
+Boss_ZLeoUpdateDefeatFade:                              ; CODE XREF: Boss_ZLeoBeginDefeatSequence+8A   j  ; was: loc_520DE
                 bsr.w   Boss_ZLeoFadeoutPalette
                 bsr.w   Boss_ZLeoAnimationUpdate2
                 lea     word_52C68(pc),a1
                 nop
                 bra.w   loc_5262E
 ; ---------------------------------------------------------------------------
-loc_520F0:                                              ; CODE XREF: Boss_ZLeoAttackPattern2+96   j
+Boss_ZLeoBeginDefeatWhiteout:                           ; CODE XREF: Boss_ZLeoBeginDefeatSequence+96   j  ; was: loc_520F0
                 addq.w  #2,4(a5)
                 clr.w   $11C(a5)
                 movea.w #(byte_FFDB80-M68K_RAM),a0
@@ -497,28 +497,28 @@ loc_520F0:                                              ; CODE XREF: Boss_ZLeoAt
                 move.w  #$6000,d0
                 moveq   #3,d7
                 jsr     (Gfx_AdjustTileIndices).l
-                lea     word_52154(pc),a0
+                lea     Boss_ZLeoDefeatTileLoadDescriptor(pc),a0
                 nop
                 jsr     (Gfx_LoadCompressedTiles).l
                 move.b  #$14,d0
                 jsr     (Sound_PlaySFX).l
-; End of function Boss_ZLeoAttackPattern2
-; Z-Leo defeat sequence - increments timer to $11, triggers sprite clearing and palette fade to white ($EEE)
-Boss_ZLeoDefeatedFadeout:                               ; DATA XREF: ROM:00051B8C   o  ; was: sub_52138
+; End of function Boss_ZLeoBeginDefeatSequence
+; Advance defeat whiteout, clear objects, and fill both palette banks with white
+Boss_ZLeoRunDefeatWhiteout:                             ; DATA XREF: ROM:00051B8C   o  ; was: sub_52138
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
-                bne.s   loc_5214E
+                bne.s   Boss_ZLeoUpdateDefeatWhiteoutFade
                 addq.w  #1,$11C(a5)
                 cmpi.w  #$11,$11C(a5)
-                beq.s   loc_5215E
-loc_5214E:                                              ; CODE XREF: Boss_ZLeoDefeatedFadeout+8   j
+                beq.s   Boss_ZLeoFinishDefeatWhiteout
+Boss_ZLeoUpdateDefeatWhiteoutFade:                      ; CODE XREF: Boss_ZLeoRunDefeatWhiteout+8   j  ; was: loc_5214E
                 bsr.w   Boss_ZLeoFadeoutPalette
                 rts
 ; ---------------------------------------------------------------------------
-word_52154:     dc.w    $4618, $2000, $300, $405, $607
-                                        ; DATA XREF: Boss_ZLeoAttackPattern2+DC   o
+Boss_ZLeoDefeatTileLoadDescriptor:  dc.w    $4618, $2000, $300, $405, $607  ; was: word_52154
+                                        ; DATA XREF: Boss_ZLeoBeginDefeatSequence+DC   o
 ; ---------------------------------------------------------------------------
-loc_5215E:                                              ; CODE XREF: Boss_ZLeoDefeatedFadeout+14   j
+Boss_ZLeoFinishDefeatWhiteout:                          ; CODE XREF: Boss_ZLeoRunDefeatWhiteout+14   j  ; was: loc_5215E
                 addq.w  #2,4(a5)
                 clr.w   8(a5)
                 move.w  #$120,$48(a5)
@@ -528,18 +528,18 @@ loc_5215E:                                              ; CODE XREF: Boss_ZLeoDe
                 movea.w #(word_FFE380-M68K_RAM),a0
                 move.w  #$EEE,d0
                 moveq   #$3F,d7                         ; '?'
-loc_52182:                                              ; CODE XREF: Boss_ZLeoDefeatedFadeout+50   j
+Boss_ZLeoFillDefeatWhitePalettes:                       ; CODE XREF: Boss_ZLeoRunDefeatWhiteout+50   j  ; was: loc_52182
                 move.w  d0,-$80(a0)
                 move.w  d0,(a0)+
-                dbf     d7,loc_52182
-; End of function Boss_ZLeoDefeatedFadeout
-; Delay state after Z-Leo defeat - waits for timer, then initializes battle UI and weapon display
-Boss_ZLeoDefeatedDelay:                                 ; DATA XREF: ROM:00051B8E   o  ; was: sub_5218C
+                dbf     d7,Boss_ZLeoFillDefeatWhitePalettes
+; End of function Boss_ZLeoRunDefeatWhiteout
+; Wait after defeat, then restore the shared UI and weapon display state
+Boss_ZLeoRunPostDefeatDelay:                            ; DATA XREF: ROM:00051B8E   o  ; was: sub_5218C
                 subq.w  #1,$48(a5)
-                bmi.s   loc_52194
+                bmi.s   Boss_ZLeoRestorePostDefeatUi
                 rts
 ; ---------------------------------------------------------------------------
-loc_52194:                                              ; CODE XREF: Boss_ZLeoDefeatedDelay+4   j
+Boss_ZLeoRestorePostDefeatUi:                           ; CODE XREF: Boss_ZLeoRunPostDefeatDelay+4   j  ; was: loc_52194
                 addq.w  #2,4(a5)
                 move.w  #$8002,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
@@ -548,83 +548,83 @@ loc_52194:                                              ; CODE XREF: Boss_ZLeoDe
                 move.w  #2,(word_FFA29C).w
                 move.w  #4,(word_FF8230).w
                 jmp     UI_StoreWeaponToBuffer
-; End of function Boss_ZLeoDefeatedDelay
-; Empty Z-Leo boss state handler
-Boss_ZLeoEmptyState:                                    ; DATA XREF: ROM:00051B90   o  ; was: nullsub_121
+; End of function Boss_ZLeoRunPostDefeatDelay
+; Inert post-defeat state
+Boss_ZLeoPostDefeatNoOp:                                ; DATA XREF: ROM:00051B90   o  ; was: nullsub_121
                 rts
-; End of function Boss_ZLeoEmptyState
-; Attack pattern 1 handler
-Boss_ZLeoAttackPattern1:                                ; CODE XREF: Boss_ZLeoAttackState1+5E   j  ; was: sub_521C2
+; End of function Boss_ZLeoPostDefeatNoOp
+; Reset the shared pose state before returning to attack selection
+Boss_ZLeoBeginAttackSelection:                          ; CODE XREF: Boss_ZLeoAttackState1+5E   j  ; was: sub_521C2
                                         ; Boss_ZLeoRisingAttack+C6   j
                 move.w  #$1E,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 clr.b   $47C(a5)
-; Main attack pattern state with timer and laser spawning
-Boss_ZLeo_AttackPattern1_WaitLoop:                      ; CODE XREF: Boss_ZLeoDefeatCheck+10   j  ; was: loc_521D6
+; Select an opening from health thresholds and frame-derived random bits
+Boss_ZLeoSelectAttackState:                             ; CODE XREF: Boss_ZLeoWaitForBossMessage+10   j  ; was: loc_521D6
                                         ; DATA XREF: ROM:00051BA0   o
                 subq.w  #1,$11C(a5)
-                bpl.s   loc_52200
+                bpl.s   Boss_ZLeoRenderAttackSelectionWait
                 cmpi.w  #$4200,(word_FF8200).w
-                bpl.s   loc_521F8
+                bpl.s   Boss_ZLeoSelectLaserOpening
                 moveq   #3,d1
                 cmpi.w  #$2500,(word_FF8200).w
-                bpl.s   loc_521F0
+                bpl.s   Boss_ZLeoApplyLowHealthRandomMask
                 moveq   #1,d1
-loc_521F0:                                              ; CODE XREF: Boss_ZLeoAttackPattern1+2A   j
+Boss_ZLeoApplyLowHealthRandomMask:                      ; CODE XREF: Boss_ZLeoBeginAttackSelection+2A   j  ; was: loc_521F0
                 move.w  (dword_FFFF08).w,d0
                 and.w   d1,d0
-                beq.s   loc_521FC
-loc_521F8:                                              ; CODE XREF: Boss_ZLeoAttackPattern1+20   j
-                bra.w   loc_5220A
+                beq.s   Boss_ZLeoSelectAlternateOpening
+Boss_ZLeoSelectLaserOpening:                            ; CODE XREF: Boss_ZLeoBeginAttackSelection+20   j  ; was: loc_521F8
+                bra.w   Boss_ZLeoBeginLaserOpening
 ; ---------------------------------------------------------------------------
-loc_521FC:                                              ; CODE XREF: Boss_ZLeoAttackPattern1+34   j
+Boss_ZLeoSelectAlternateOpening:                        ; CODE XREF: Boss_ZLeoBeginAttackSelection+34   j  ; was: loc_521FC
                 bra.w   Boss_ZLeoAttackInit
 ; ---------------------------------------------------------------------------
-loc_52200:                                              ; CODE XREF: Boss_ZLeoAttackPattern1+18   j
+Boss_ZLeoRenderAttackSelectionWait:                     ; CODE XREF: Boss_ZLeoBeginAttackSelection+18   j  ; was: loc_52200
                 lea     word_52CB0(pc),a1
                 nop
                 bra.w   loc_52624
 ; ---------------------------------------------------------------------------
-loc_5220A:                                              ; CODE XREF: Boss_ZLeoAttackPattern1:loc_521F8   j
+Boss_ZLeoBeginLaserOpening:                             ; CODE XREF: Boss_ZLeoBeginAttackSelection:Boss_ZLeoSelectLaserOpening   j  ; was: loc_5220A
                 move.w  #$38,4(a5)                      ; '8'
                 bsr.w   Boss_ZLeoAnimationUpdate1
                 move.w  #$80,$11C(a5)
                 bsr.w   Boss_ZLeoSpawnLaser
                 move.w  #4,$B28(a5)
                 move.w  #4,$C48(a5)
-; Z-Leo boss advanced attack
-Boss_ZLeoAttack_State36:                                ; DATA XREF: ROM:00051BBA   o  ; was: loc_5222A
+; Hold the laser opening, swap phase tiles, and select its pose table
+Boss_ZLeoRunLaserOpeningDelay:                          ; DATA XREF: ROM:00051BBA   o  ; was: loc_5222A
                 cmpi.w  #$60,$11C(a5)                   ; '`'
-                bne.s   loc_52236
-                bsr.w   Boss_ZLeoLoadDefeatTiles
-loc_52236:                                              ; CODE XREF: Boss_ZLeoAttackPattern1+6E   j
+                bne.s   Boss_ZLeoAdvanceLaserOpeningDelay
+                bsr.w   Boss_ZLeoLoadPhaseTiles
+Boss_ZLeoAdvanceLaserOpeningDelay:                      ; CODE XREF: Boss_ZLeoBeginAttackSelection+6E   j  ; was: loc_52236
                 subq.w  #1,$11C(a5)
-                bpl.s   loc_52252
+                bpl.s   Boss_ZLeoRenderLaserOpeningDelay
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$C,d0
                 move.w  d0,$47E(a5)
-                move.l  off_5225C(pc,d0.w),$3BC(a5)
-                bra.w   loc_5226C
+                move.l  Boss_ZLeoOpeningPoseTable(pc,d0.w),$3BC(a5)
+                bra.w   Boss_ZLeoBeginOrbAttackPose
 ; ---------------------------------------------------------------------------
-loc_52252:                                              ; CODE XREF: Boss_ZLeoAttackPattern1+78   j
+Boss_ZLeoRenderLaserOpeningDelay:                       ; CODE XREF: Boss_ZLeoBeginAttackSelection+78   j  ; was: loc_52252
                 lea     word_52CB0(pc),a1
                 nop
                 bra.w   loc_52624
 ; ---------------------------------------------------------------------------
-off_5225C:      dc.l    word_52CCC                      ; DATA XREF: Boss_ZLeoAttackPattern1+86   r
+Boss_ZLeoOpeningPoseTable:  dc.l    word_52CCC          ; DATA XREF: Boss_ZLeoBeginAttackSelection+86   r  ; was: off_5225C
                 dc.l    word_52CE0
                 dc.l    word_52CF4
                 dc.l    word_52D08
 ; ---------------------------------------------------------------------------
-loc_5226C:                                              ; CODE XREF: Boss_ZLeoAttackPattern1+8C   j
+Boss_ZLeoBeginOrbAttackPose:                            ; CODE XREF: Boss_ZLeoBeginAttackSelection+8C   j  ; was: loc_5226C
                 move.w  #$20,4(a5)                      ; ' '
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 clr.b   $23E(a5)
                 move.b  #$D1,d0
                 jsr     (Sound_PlaySFX).l
-; End of function Boss_ZLeoAttackPattern1
+; End of function Boss_ZLeoBeginAttackSelection
 ; Attack state 1 handler
 Boss_ZLeoAttackState1:                                  ; DATA XREF: ROM:00051BA2   o  ; was: sub_5228A
                 bclr    #0,$23E(a5)
@@ -660,7 +660,7 @@ loc_522DC:                                              ; CODE XREF: Boss_ZLeoAt
                 tst.w   $58(a5)
                 bpl.s   loc_522EC
                 move.w  #$40,$11C(a5)                   ; '@'
-                bra.w   Boss_ZLeoAttackPattern1
+                bra.w   Boss_ZLeoBeginAttackSelection
 ; ---------------------------------------------------------------------------
 loc_522EC:                                              ; CODE XREF: Boss_ZLeoAttackState1+56   j
                 lea     word_52CC2(pc),a1
@@ -668,7 +668,7 @@ loc_522EC:                                              ; CODE XREF: Boss_ZLeoAt
                 bra.w   loc_52624
 ; End of function Boss_ZLeoAttackState1
 ; Initializes Z-Leo attack state - sets state $26, clears animation, enables screen effects and attack flags
-Boss_ZLeoAttackInit:                                    ; CODE XREF: Boss_ZLeoAttackPattern1:loc_521FC   j  ; was: sub_522F6
+Boss_ZLeoAttackInit:                                    ; CODE XREF: Boss_ZLeoBeginAttackSelection:Boss_ZLeoSelectAlternateOpening   j  ; was: sub_522F6
                 move.w  #$26,4(a5)                      ; '&'
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)

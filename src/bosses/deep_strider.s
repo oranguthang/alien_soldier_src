@@ -172,7 +172,7 @@ Boss_DeepStriderIntroPoseAlignmentState:                ; DATA XREF: ROM:0003E5D
                 clr.w   $11E(a5)
                 clr.w   $17C(a5)
                 moveq   #0,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 bra.s   Boss_DeepStriderBattleEntryPoseState
 ; End of function Boss_DeepStriderIntroArcLandingState
 ; Holds the battle-entry pose before starting the repeating attack cycle

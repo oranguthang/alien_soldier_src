@@ -61,7 +61,7 @@ Boss_Epsilon1FinishOpeningFadeReturn:                   ; CODE XREF: Boss_Epsilo
 ; Requests the shared boss message for Epsilon 1 and advances
 Boss_Epsilon1RequestBattleMessageState:                 ; DATA XREF: ROM:00045CFE   o  ; was: sub_4624A
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 addq.w  #2,4(a5)
                 move.b  #$8D,d0
                 jsr     (Sys_WaitVBlank).l

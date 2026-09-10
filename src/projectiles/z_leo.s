@@ -158,7 +158,7 @@ nullsub_122:
 ; End of function nullsub_122
 
 ; Spawn laser projectile
-Boss_ZLeoSpawnLaser:                                    ; CODE XREF: Boss_ZLeoAttackPattern1+58   p  ; was: sub_530EE
+Boss_ZLeoSpawnLaser:                                    ; CODE XREF: Boss_ZLeoBeginAttackSelection+58   p  ; was: sub_530EE
                 move.w  (dword_FFFF08).w,d7
                 andi.w  #$100,d7
                 jsr     (Projectile_FindFreeSlot).l

@@ -425,7 +425,7 @@ Boss_ShieldViperMoveIntroToYThreshold:                  ; DATA XREF: ROM:0004DFE
                 addq.w  #2,4(a5)
                 move.w  #$FFF8,(dword_FF9400).w
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
 Boss_ShieldViperIntroMovementReturn:                    ; CODE XREF: Boss_ShieldViperMoveIntroToYThreshold+A   j  ; was: locret_4E2EE
                 rts
 ; End of function Boss_ShieldViperMoveIntroToYThreshold

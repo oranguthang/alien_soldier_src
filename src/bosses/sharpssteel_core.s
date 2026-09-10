@@ -165,7 +165,7 @@ Boss_SharpssteelRunBladeEntranceDelayState:             ; DATA XREF: ROM:00047C6
 Boss_SharpssteelFinishBladeEntranceDelay:               ; CODE XREF: Boss_SharpssteelRunBladeEntranceDelayState+4   j
                 addq.w  #2,4(a5)
                 moveq   #4,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
 ; End of function Boss_SharpssteelRunBladeEntranceDelayState
 ; Continues entrance motion until the shared player-ready word clears
 Boss_SharpssteelWaitForPlayerAfterBladeEntranceState:   ; DATA XREF: ROM:00047C6A   o  ; was: sub_47E02

@@ -180,7 +180,7 @@ Boss_SunsetStingIntroCheckEntryComplete:                ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingIntro
 ; Starts the shared battle-entry banner and input mode
 Boss_SunsetStingStartBattleBanner:                      ; was: sub_42C74
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
                 jsr     (Input_CheckButtonMode).l
                 rts

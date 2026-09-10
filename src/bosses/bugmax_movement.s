@@ -30,7 +30,7 @@ Boss_BugmaxOpeningHorizontalSteeringReturn:             ; CODE XREF: Boss_Bugmax
                 rts
 ; End of function Boss_BugmaxSteerOpeningControllerToHorizontalTarget
 ; Clamp eight opening object records to their per-record horizontal bounds
-Boss_BugmaxClampOpeningObjectHorizontalPositions:       ; CODE XREF: Boss_BugmaxWaitAfterJitterAndCheckVictory   p  ; was: sub_4DA8C
+Boss_BugmaxClampOpeningObjectHorizontalPositions:       ; CODE XREF: Boss_BugmaxWaitAfterJitterAndStartBossMessage   p  ; was: sub_4DA8C
                                         ; Boss_BugmaxWaitForOpeningTransition   p
                 move.w  #$168,d2
                 sub.w   (dword_FFA908).w,d2

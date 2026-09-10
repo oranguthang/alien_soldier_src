@@ -1668,6 +1668,79 @@ unknown. The separate files are retained because they are adjacent,
 self-contained ROM ranges of roughly 230 lines and use different pose-target
 tables.
 
+The first Z-Leo core pass reduced the address-derived unknown count from 6,236
+to 6,212 and raised provenance to 9,611 unique mappings. It gives exact static
+audit coverage to all 31 definitions in ROM range `$051AD6-$051EB4`, bringing
+the project-wide name-audit total to 5,335.
+
+The main handler advances three independent signed palette-fade counters
+toward zero, applies them to palette ranges `FFE302`, `FFE322`, and `FFE362`,
+dispatches the even-valued boss state, then clears `FF9500`. The latter is
+called a per-frame projectile flag because the Z-Leo drop-projectile handler
+sets it and the Z-Leo rendering path tests it; no broader lifetime or global
+meaning is claimed. The 29-entry state table remains ROM ordered, and its
+single-instruction subtraction anchor is now the neutral `Boss_ZLeoNoOp`
+rather than the imported ordinal `nullsub_120`.
+
+The initialization block now distinguishes the stage gate, composite-part
+setup, three-by-three intro-part rows, six lower intro parts, descent setup,
+and shared rendering handoff. The old `Attack_State8` name was misleading:
+that state only lowers the selected composite coordinate to `$E8` and clears
+an intro flag. The adjacent controller-reading entry has no static caller and
+is recorded as `Debug_ZLeoPositionAndStartIntro`; its directional movement and
+two adjustments of shared coordinate `FFDB34` are observable, while its
+original menu wiring and intended developer workflow remain unknown.
+
+The second Z-Leo core pass reduced the address-derived unknown count from
+6,212 to 6,200 and raised provenance to 9,623 unique mappings. All 19
+definitions in ROM range `$051EB6-$052045` now have exact static audit
+coverage, bringing the project-wide name-audit total to 5,354.
+
+This range is now expressed as a continuous transition rather than a list of
+numbered "attack states": intro countdown, battle-entry movement and fade,
+entry-pose hold, animated battle pose, timed battle-ready pose, boss-message
+delay, and the message wait gate. In particular, former `Attack_State14` only
+waits on an entry-pose timer, while former `Attack_State20` only holds the
+final pose before starting the shared boss message; neither name justified an
+attack claim. The exact visual meaning of the pose tables remains outside this
+pass, so the new names describe control flow and observable side effects
+rather than inventing animation titles.
+
+The boss-message and Z-Leo health-zero correction reduced the address-derived
+unknown count from 6,200 to 6,187 and raised provenance to 9,636 unique
+mappings. Twenty-five new audit records bring the project-wide total to 5,379.
+The widely used `UI_CheckVictoryCondition` name was rejected: its callers are
+boss intro and phase gates, and the routine selects a text pointer, stores it
+in `FF80C8`, and publishes wait gate `FF80C2`; it never reads boss health or
+tests victory. It is now `UI_StartBossMessage`, with named special-message,
+selector, pointer-store, and pointer-table labels. The derived Bugmax,
+Missiray, and Shiper victory/defeat names and several stale audit descriptions
+were corrected with it; those states only start or wait for the same message
+gate before ordinary battle flow resumes.
+
+That cross-call evidence also separates Z-Leo's pre-message states from its
+actual defeat. The former states at `$051FC6-$052045` prepare phase tiles,
+pose, and message timing before entering the first attack cycle. The true
+defeat spans `$052046-$0521C1`, reached directly from `Boss_ZLeoMain` only when
+shared health `FF8200` is zero, then runs transition, fade, whiteout, object
+clearing, paired palette fill, post-defeat delay, and an inert final state.
+`Boss_ZLeoLoadPhaseTiles` replaces the false defeat-only helper name because a
+later live attack phase calls the same tile loader.
+
+The first Z-Leo attack-selection pass reduced the address-derived unknown
+count from 6,187 to 6,178 and raised provenance to 9,645 unique mappings. All
+12 definitions in ROM range `$0521C2-$052289` now have exact static audit
+coverage, bringing the project-wide name-audit total to 5,391.
+
+The old `AttackPattern1` wrapper only resets pose state and returns to selector
+state `$1E`. That selector waits on its timer, uses health thresholds `$4200`
+and `$2500` to choose a random mask, then branches to either the alternate
+initializer or a laser opening. The latter starts one laser, holds for `$80`
+ticks, swaps the shared phase tiles at `$60`, and selects one of four pose
+streams before entering the orb-attack pose. Names in this range describe
+that control flow without assigning an unsupported visual identity to the
+alternate opening.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

@@ -186,7 +186,7 @@ Boss_VictorFlyIn:                                       ; DATA XREF: ROM:0003242
                 bhi.w   Entity_UpdateReturn
                 clr.w   $18(a5)
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_VictorFlyIn

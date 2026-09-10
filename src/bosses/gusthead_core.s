@@ -263,7 +263,7 @@ Boss_GustheadStopBattleEntrySpinState:                  ; DATA XREF: ROM:0003F25
                 move.b  #$50,$21(a5)                    ; 'P'
                 addq.w  #2,4(a5)
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
 Boss_GustheadStopBattleEntrySpinReturn:                 ; CODE XREF: Boss_GustheadStopBattleEntrySpinState+1A   j  ; was: locret_3F4C0
                 rts
 ; End of function Boss_GustheadStopBattleEntrySpinState

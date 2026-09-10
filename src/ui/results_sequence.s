@@ -548,33 +548,33 @@ dword_B43E:     dc.l    $C6A0010A                       ; DATA XREF: Text_Update
 dword_B446:     dc.l    $C6AA00FF                       ; DATA XREF: Text_AnimateMovement+1E   o
                 dc.l    $680B0006
 
-; Checks conditions for victory message display
-UI_CheckVictoryCondition:                               ; CODE XREF: Boss_DestroyerProtoIntroMove+28   p  ; was: sub_B44E
+; Start the boss-message sequence and publish its wait gate
+UI_StartBossMessage:                                    ; CODE XREF: Boss_DestroyerProtoIntroMove+28   p  ; was: sub_B44E
                                         ; Boss_VictorFlyIn+1E   p
                 bclr    #1,(byte_FFA209).w
-                bne.s   loc_B464
+                bne.s   UI_StartSpecialBossMessage
                 bclr    #0,(byte_FF80A8).w
                 cmpi.w  #4,(word_FFFF2A).w
-                bmi.s   loc_B480
-loc_B464:                                               ; CODE XREF: UI_CheckVictoryCondition+6   j
+                bmi.s   UI_SelectBossMessage
+UI_StartSpecialBossMessage:                             ; CODE XREF: UI_StartBossMessage+6   j  ; was: loc_B464
                 move.w  #$1E,(word_FF80C2).w
                 move.l  #word_B544,(dword_FF80CE).w
                 move.w  #$5400,(word_FF80C4).w
                 move.b  #4,(word_FFF7F4+1).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_B480:                                               ; CODE XREF: UI_CheckVictoryCondition+14   j
+UI_SelectBossMessage:                                   ; CODE XREF: UI_StartBossMessage+14   j  ; was: loc_B480
                 asl.w   #3,d0
                 cmpi.w  #2,(word_FFFF2A).w
-                bne.s   loc_B48E
+                bne.s   UI_StoreBossMessagePointer
                 addi.w  #4,d0
-loc_B48E:                                               ; CODE XREF: UI_CheckVictoryCondition+3A   j
+UI_StoreBossMessagePointer:                             ; CODE XREF: UI_StartBossMessage+3A   j  ; was: loc_B48E
                 move.w  #$10,(word_FF80C2).w
-                move.l  off_B49C(pc,d0.w),(dword_FF80C8).w
+                move.l  UI_BossMessagePointerTable(pc,d0.w),(dword_FF80C8).w
                 rts
-; End of function UI_CheckVictoryCondition
+; End of function UI_StartBossMessage
 ; ---------------------------------------------------------------------------
-off_B49C:       dc.l    byte_B710
+UI_BossMessagePointerTable: dc.l    byte_B710           ; was: off_B49C
                 dc.l    byte_B710
                 dc.l    byte_B6B6
                 dc.l    byte_B6B6
@@ -614,7 +614,7 @@ word_B534:      dc.w    $102, $304, $506, $708, $90A, $1D1E, $B11, $FFF
                                         ; DATA XREF: Player_Initialize+10   o
 word_B544:      dc.w    $1C0F, $B0E, $2310, $1311, $121E, $2929, $29FF
                                         ; DATA XREF: Player_ProcessBehaviorTimer+C   o
-                                        ; UI_CheckVictoryCondition+1C   o
+                                        ; UI_StartBossMessage+1C   o
 word_B552:      dc.w    $102, $304, $506, $708, $90A, $1D1E, $B11, $F0D
                                         ; DATA XREF: Text_InitVictoryMessage+4   o
                 dc.w    $161C, $C19, $181F, $FF00
@@ -682,7 +682,7 @@ byte_B6B6:      dc.b    0, 6, 0, $18, $FF, $FF, $D0, $90
                 dc.b    $5C, $67, $D9, $90, $85, $30, $32, $65
                 dc.b    $D9, $FF
 byte_B710:      dc.b    0, 6, 0, $1C, $FF, $FF, $D0, $90
-                                        ; DATA XREF: ROM:off_B49C   o
+                                        ; DATA XREF: ROM:UI_BossMessagePointerTable   o
                                         ; ROM:0000B4A0   o
                 dc.b    $87, $80, $88, $86, $DB, $87, $80, $88
                 dc.b    $86, $DB, $BD, $8D, $81, $9C, $81, $85

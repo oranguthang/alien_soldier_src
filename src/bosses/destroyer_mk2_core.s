@@ -282,7 +282,7 @@ Boss_DestroyerMK2EnableLinkedCollisionState:            ; DATA XREF: ROM:0004A90
                 bne.s   Boss_DestroyerMK2EnableLinkedCollisionReturn
                 bsr.w   Boss_DestroyerMK2SetLinkedCollisionFields
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 addq.w  #2,4(a5)
 Boss_DestroyerMK2EnableLinkedCollisionReturn:           ; CODE XREF: Boss_DestroyerMK2EnableLinkedCollisionState+8   j  ; was: locret_4AC2E
                 rts

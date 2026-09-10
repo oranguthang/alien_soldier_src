@@ -94,8 +94,8 @@ off_538BA:      dc.w    Boss_MissirayDispatcher-*       ; DATA XREF: Boss_Missir
                 dc.w    Boss_MissirayAttackState2-*
                 dc.w    Boss_MissiraySegmentsInit-*
                 dc.w    Boss_MissiraySegmentsCheck-*
-                dc.w    Boss_MissirayCheckVictory-*
-                dc.w    Boss_MissirayWaitDefeatCheck-*
+                dc.w    Boss_MissirayStartBossMessage-*
+                dc.w    Boss_MissirayWaitForBossMessage-*
                 dc.w    Boss_MissirayResetCounters-*
                 dc.w    Boss_MissirayMainAttackLoop-*
                 dc.w    Boss_MissirayLoopAttacks-*
@@ -413,22 +413,22 @@ loc_53C5E:                                              ; CODE XREF: Boss_Missir
 locret_53C78:                                           ; CODE XREF: Boss_MissiraySegmentsCheck+C   j
                 rts
 ; End of function Boss_MissiraySegmentsCheck
-; Check victory condition
-Boss_MissirayCheckVictory:                              ; DATA XREF: ROM:000538CA   o  ; was: sub_53C7A
+; Start the boss-message sequence
+Boss_MissirayStartBossMessage:                          ; DATA XREF: ROM:000538CA   o  ; was: sub_53C7A
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 addq.w  #2,4(a5)
                 rts
-; End of function Boss_MissirayCheckVictory
-; Wait for defeat check
-Boss_MissirayWaitDefeatCheck:                           ; DATA XREF: ROM:000538CC   o  ; was: sub_53C8A
+; End of function Boss_MissirayStartBossMessage
+; Wait for the boss-message gate before advancing to attack setup
+Boss_MissirayWaitForBossMessage:                        ; DATA XREF: ROM:000538CC   o  ; was: sub_53C8A
                 tst.w   (word_FF80C2).w
-                bne.s   locret_53C98
+                bne.s   Boss_MissirayWaitForBossMessageReturn
                 clr.b   (byte_FF80EC).w
                 addq.w  #2,4(a5)
-locret_53C98:                                           ; CODE XREF: Boss_MissirayWaitDefeatCheck+4   j
+Boss_MissirayWaitForBossMessageReturn:                  ; CODE XREF: Boss_MissirayWaitForBossMessage+4   j  ; was: locret_53C98
                 rts
-; End of function Boss_MissirayWaitDefeatCheck
+; End of function Boss_MissirayWaitForBossMessage
 ; Reset attack counters
 Boss_MissirayResetCounters:                             ; DATA XREF: ROM:000538CE   o  ; was: sub_53C9A
                 clr.w   (dword_FF9400).w

@@ -382,7 +382,7 @@ Boss_JampanFinishOpeningOffsetNormalization:            ; CODE XREF: Boss_Jampan
                 move.w  #2,(word_FFC792).w
                 addq.w  #2,4(a5)
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
                 jsr     (Input_CheckButtonMode).l
                 rts

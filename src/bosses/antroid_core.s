@@ -94,13 +94,13 @@ Boss_AntroidInitPhase:                                  ; DATA XREF: ROM:0003751
 Boss_AntroidBeginPhaseGate:                             ; CODE XREF: Boss_AntroidReturnToNeutral+62   j  ; was: loc_375D8
                 move.w  #$1A,4(a5)
                 move.w  #$30,$11C(a5)                   ; '0'
-; Advances the phase gate and requests a victory-condition check
+; Advance the phase gate and start the boss-message sequence
 Boss_AntroidPhaseGateState:                             ; DATA XREF: ROM:00037528   o  ; was: loc_375E4
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_AntroidPhaseGateAdvance
                 addq.w  #2,4(a5)
                 moveq   #1,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 bra.w   Boss_AntroidUpdateDecisionAnimation
 ; ---------------------------------------------------------------------------
 Boss_AntroidPhaseGateAdvance:                           ; CODE XREF: Boss_AntroidInitPhase+90   j  ; was: loc_375FA

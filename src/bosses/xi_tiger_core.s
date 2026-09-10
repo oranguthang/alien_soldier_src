@@ -186,7 +186,7 @@ Boss_XiTigerBattleActive:                               ; DATA XREF: ROM:0003D89
                 bne.s   Boss_XiTigerUpdateActiveBattlePose
                 addq.w  #2,4(a5)
                 moveq   #5,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
 Boss_XiTigerUpdateActiveBattlePose:                     ; CODE XREF: Boss_XiTigerBattleStart+24   j  ; was: loc_3DA86
                                         ; Boss_XiTigerBattleActive+6   j
                 lea     Boss_XiTigerIdlePoseCommands(pc),a1

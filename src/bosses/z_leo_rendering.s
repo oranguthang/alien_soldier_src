@@ -72,20 +72,20 @@ Boss_ZLeoAttack_State50:                                ; DATA XREF: ROM:00051BB
                 subq.w  #1,$11C(a5)
                 bpl.s   loc_5261A
                 move.w  #$80,$11C(a5)
-                bra.w   Boss_ZLeoAttackPattern1
+                bra.w   Boss_ZLeoBeginAttackSelection
 ; ---------------------------------------------------------------------------
 loc_5261A:                                              ; CODE XREF: Boss_ZLeoRisingAttack+BE   j
                 lea     word_52D5E(pc),a1
                 nop
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
-loc_52624:                                              ; CODE XREF: Boss_ZLeoBattleState2+C   j
-                                        ; Boss_ZLeoBattleState2+30   j
+loc_52624:                                              ; CODE XREF: Boss_ZLeoRunBattleReadyPose+C   j
+                                        ; Boss_ZLeoRunBattleReadyPose+30   j
                 move.w  $5B4(a5),d0
                 addq.w  #4,d0
                 move.w  d0,(dword_FFDB34).w
-loc_5262E:                                              ; CODE XREF: Boss_ZLeoIntroSetup+54   j
-                                        ; Boss_ZLeoIntroMove+24   j
+loc_5262E:                                              ; CODE XREF: Boss_ZLeoPrepareIntroDescent+54   j
+                                        ; Boss_ZLeoRunIntroCountdown+24   j
                 bsr.w   Boss_ZLeoUpdateSegments
                 moveq   #$F,d7
                 jsr     (Sprite_BeginMetaspritePartTraversal).l
@@ -119,16 +119,16 @@ Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoAt
                 move.w  (word_FF9600).w,d7
                 move.w  (dword_FFA904).w,d0
                 addi.w  #$20,d0                         ; ' '
-                bmi.w   nullsub_120
+                bmi.w   Boss_ZLeoNoOp
                 move.w  (word_FF9602).w,d1
                 move.w  d0,(word_FF9602).w
                 cmp.w   d1,d0
-                beq.w   nullsub_120
+                beq.w   Boss_ZLeoNoOp
                 lea     word_5270E(pc),a0
                 nop
                 bpl.s   loc_526E2
                 cmp.w   2(a0,d7.w),d0
-                bpl.w   nullsub_120
+                bpl.w   Boss_ZLeoNoOp
                 addq.w  #2,(word_FF9600).w
                 move.w  (a4,d7.w),(a3)+
                 move.w  #$2000,(a3)+
@@ -144,7 +144,7 @@ Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoAt
 ; ---------------------------------------------------------------------------
 loc_526E2:                                              ; CODE XREF: Boss_ZLeoTileUpdate+2E   j
                 cmp.w   (a0,d7.w),d0
-                bmi.w   nullsub_120
+                bmi.w   Boss_ZLeoNoOp
                 subq.w  #2,(word_FF9600).w
                 move.w  -2(a4,d7.w),(a3)+
                 move.w  #$2000,(a3)+
@@ -180,7 +180,7 @@ byte_52760:     dc.b    $17, $18, $19, $1A, $1B, $1C
                                         ; DATA XREF: ROM:0005273E   o
 
 ; Enable boss parts flags
-Boss_ZLeoEnableParts:                                   ; CODE XREF: Boss_ZLeoBattleState1+E   p  ; was: sub_52766
+Boss_ZLeoEnableParts:                                   ; CODE XREF: Boss_ZLeoRunBattlePose+E   p  ; was: sub_52766
                 moveq   #7,d0
                 bset    d0,$7EE(a5)
                 bset    d0,$90E(a5)
@@ -218,20 +218,20 @@ Boss_ZLeoGraphicsInit1:                                 ; CODE XREF: Boss_ZLeoIn
                 move.w  d7,$4C(a0)
                 rts
 ; End of function Boss_ZLeoGraphicsInit1
-; Load defeat tiles
-Boss_ZLeoLoadDefeatTiles:                               ; CODE XREF: Boss_ZLeoBattleState1+30   p  ; was: sub_527DE
-                                        ; Boss_ZLeoAttackPattern1+70   p
+; Load the tile set used by Z-Leo phase transitions
+Boss_ZLeoLoadPhaseTiles:                                ; CODE XREF: Boss_ZLeoRunBattlePose+30   p  ; was: sub_527DE
+                                        ; Boss_ZLeoBeginAttackSelection+70   p
                 lea     word_527EA(pc),a0
                 nop
                 jmp     Gfx_LoadCompressedTiles
-; End of function Boss_ZLeoLoadDefeatTiles
+; End of function Boss_ZLeoLoadPhaseTiles
 ; ---------------------------------------------------------------------------
 word_527EA:     dc.w    $4820, $2000, $100, $B0C
-                                        ; DATA XREF: Boss_ZLeoLoadDefeatTiles   o
+                                        ; DATA XREF: Boss_ZLeoLoadPhaseTiles   o
 
 ; Animation update handler 1
-Boss_ZLeoAnimationUpdate1:                              ; CODE XREF: Boss_ZLeoBattleStart+A8   p  ; was: sub_527F2
-                                        ; Boss_ZLeoAttackPattern2+46   p
+Boss_ZLeoAnimationUpdate1:                              ; CODE XREF: Boss_ZLeoRunBattleEntry+A8   p  ; was: sub_527F2
+                                        ; Boss_ZLeoBeginDefeatSequence+46   p
                 lea     word_527FE(pc),a0
                 nop
                 jmp     Gfx_LoadCompressedTiles
@@ -386,8 +386,8 @@ loc_5295E:                                              ; CODE XREF: Boss_ZLeoUp
                 rts
 ; End of function Boss_ZLeoUpdateHeadPosition
 ; Applies palette fade effect to Z-Leo colors - fades palettes at $FFE302 and $FFE342 towards black ($E000)
-Boss_ZLeoFadeoutPalette:                                ; CODE XREF: Boss_ZLeoAttackPattern2:loc_520DE   p  ; was: sub_52990
-                                        ; sub_52138:loc_5214E   p
+Boss_ZLeoFadeoutPalette:                                ; CODE XREF: Boss_ZLeoBeginDefeatSequence:Boss_ZLeoUpdateDefeatFade   p  ; was: sub_52990
+                                        ; sub_52138:Boss_ZLeoUpdateDefeatWhiteoutFade   p
                 move.w  #6,(word_FFA010).w
                 move.w  #2,(word_FFA014).w
                 move.w  $11C(a5),d0
@@ -407,8 +407,8 @@ loc_529AA:                                              ; CODE XREF: Boss_ZLeoFa
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Boss_ZLeoFadeoutPalette
 ; Animation update handler 2
-Boss_ZLeoAnimationUpdate2:                              ; CODE XREF: Boss_ZLeoAttackPattern2+68   p  ; was: sub_529CE
-                                        ; Boss_ZLeoAttackPattern2+9C   p
+Boss_ZLeoAnimationUpdate2:                              ; CODE XREF: Boss_ZLeoBeginDefeatSequence+68   p  ; was: sub_529CE
+                                        ; Boss_ZLeoBeginDefeatSequence+9C   p
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   locret_52A52
@@ -447,7 +447,7 @@ locret_52A52:                                           ; CODE XREF: Boss_ZLeoAn
                 rts
 ; End of function Boss_ZLeoAnimationUpdate2
 ; Animation update handler 3
-Boss_ZLeoAnimationUpdate3:                              ; CODE XREF: Boss_ZLeoAttackPattern2+6C   p  ; was: sub_52A54
+Boss_ZLeoAnimationUpdate3:                              ; CODE XREF: Boss_ZLeoBeginDefeatSequence+6C   p  ; was: sub_52A54
                 tst.w   (word_FFF74A).w
                 beq.s   locret_52A7E
                 cmpi.w  #$200,(dword_FFDB34).w
@@ -645,30 +645,30 @@ Boss_ZLeoAnimationLoadDelays:
 ; End of function Boss_ZLeoAnimationLoadDelays
 ; ---------------------------------------------------------------------------
 word_52C56:     dc.w    $810, $E, $1010, $E, $810, $1C, $1010, $1C, $FFFF
-                                        ; DATA XREF: Boss_ZLeoIntroSetup+4E   o
+                                        ; DATA XREF: Boss_ZLeoPrepareIntroDescent+4E   o
 word_52C68:     dc.w    $3030, $62, $C18, $70, $3030, $70, $C18, $62, $FFFF
-                                        ; DATA XREF: Boss_ZLeoAttackPattern2+70   o
-                                        ; Boss_ZLeoAttackPattern2+A0   o
+                                        ; DATA XREF: Boss_ZLeoBeginDefeatSequence+70   o
+                                        ; Boss_ZLeoBeginDefeatSequence+A0   o
 word_52C7A:     dc.w    $810, $E, $1010, $E, $810, $1C, $1010, $1C, $FFFF
-                                        ; DATA XREF: Boss_ZLeoIntroMove+1E   o
-                                        ; Boss_ZLeoBattleStart+48   o
+                                        ; DATA XREF: Boss_ZLeoRunIntroCountdown+1E   o
+                                        ; Boss_ZLeoRunBattleEntry+48   o
 word_52C8C:     dc.w    $1818, $2A, $8001, $1010, $38, $2020, $46, $FFFE
-                                        ; DATA XREF: Boss_ZLeoBattleState1:loc_51FBC   o
+                                        ; DATA XREF: Boss_ZLeoRunBattlePose:Boss_ZLeoRenderBattlePose   o
 word_52C9C:     dc.w    $218, $46, $278, $54, $FFFF, $2020, $54, $1010, $54, $FFFF
-                                        ; DATA XREF: Boss_ZLeoBattleState2+6   o
+                                        ; DATA XREF: Boss_ZLeoRunBattleReadyPose+6   o
 word_52CB0:     dc.w    $1020, $7E, $2020, $7E, $1020, $8C, $2020, $8C, $FFFF
-                                        ; DATA XREF: Boss_ZLeoBattleState2+2A   o
-                                        ; sub_52028:loc_5203C   o
+                                        ; DATA XREF: Boss_ZLeoRunBattleReadyPose+2A   o
+                                        ; Boss_ZLeoWaitForBossMessage:Boss_ZLeoRenderBossMessageWait   o
 word_52CC2:     dc.w    $1020, $8C, $2020, $8C, $FFFE
                                         ; DATA XREF: Boss_ZLeoAttackState1:loc_522EC   o
 word_52CCC:     dc.w    $2830, $9A, $3030, $9A, $8001, $5060, $A8, $4040, $A8, $FFFE
-                                        ; DATA XREF: Boss_ZLeoAttackPattern1:off_5225C   o
+                                        ; DATA XREF: Boss_ZLeoBeginAttackSelection:Boss_ZLeoOpeningPoseTable   o
 word_52CE0:     dc.w    $2830, $B6, $3030, $B6, $8001, $5060, $C4, $4040, $C4, $FFFE
-                                        ; DATA XREF: Boss_ZLeoAttackPattern1+9E   o
+                                        ; DATA XREF: Boss_ZLeoBeginAttackSelection+9E   o
 word_52CF4:     dc.w    $2830, $D2, $3030, $D2, $8001, $5060, $E0, $4040, $E0, $FFFE
-                                        ; DATA XREF: Boss_ZLeoAttackPattern1+A2   o
+                                        ; DATA XREF: Boss_ZLeoBeginAttackSelection+A2   o
 word_52D08:     dc.w    $2830, $EE, $3030, $EE, $8001, $5060, $FC, $4040, $FC, $FFFE
-                                        ; DATA XREF: Boss_ZLeoAttackPattern1+A6   o
+                                        ; DATA XREF: Boss_ZLeoBeginAttackSelection+A6   o
 word_52D1C:     dc.w    $1218, $10A, $707, $10A, $1014, $118, $1A1A, $118, $340, $126, $8001, $90E, $126, $1A1A, $126, $1818
                                         ; DATA XREF: Boss_ZLeoAttackInit+2C   o
                                         ; sub_52368:loc_5238C   o

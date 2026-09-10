@@ -221,7 +221,7 @@ Boss_FlyingNeoUpdateIntroPose:                          ; CODE XREF: Boss_Flying
 Boss_FlyingNeoAdvanceToPlayerSequenceWait:              ; CODE XREF: Boss_FlyingNeoIntroDelayState+4   j  ; was: loc_3C2B4
                 addq.w  #2,4(a5)
                 moveq   #7,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
 ; Waits for the player sequence to finish before starting the attack delay
 Boss_FlyingNeoWaitForPlayerSequenceState:               ; DATA XREF: ROM:0003C0B0   o  ; was: sub_3C2C0
                 tst.w   (word_FF80C2).w

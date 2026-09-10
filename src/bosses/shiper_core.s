@@ -52,8 +52,8 @@ Boss_ShiperStates:  dc.w    Boss_ShiperBeginEncounter-Boss_ShiperBeginEncounter 
                 dc.w    Boss_ShiperRiseState-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperHoverState-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperWaitForMotionThreshold-Boss_ShiperBeginEncounter
-                dc.w    Boss_ShiperDefeatWait-Boss_ShiperBeginEncounter
-                dc.w    Boss_ShiperDeathHandler-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperBossMessageDelayState-Boss_ShiperBeginEncounter
+                dc.w    Boss_ShiperWaitForBossMessageState-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperPhaseCheck-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperDefeatSequence-Boss_ShiperBeginEncounter
                 dc.w    Boss_ShiperDefeatFadeOut-Boss_ShiperBeginEncounter
@@ -370,36 +370,36 @@ Boss_ShiperWaitForMotionThreshold:                      ; DATA XREF: ROM:000364B
 Boss_ShiperWaitForMotionThresholdReturn:                ; CODE XREF: Boss_ShiperWaitForMotionThreshold+A   j  ; was: locret_368E6
                 rts
 ; End of function Boss_ShiperWaitForMotionThreshold
-; Boss defeat state with timer counting down to victory check
-Boss_ShiperDefeatWait:                                  ; DATA XREF: ROM:000364B4   o  ; was: sub_368E8
+; Count down to the shared boss-message gate while updating Shiper
+Boss_ShiperBossMessageDelayState:                       ; DATA XREF: ROM:000364B4   o  ; was: sub_368E8
                 bsr.w   Boss_ShiperUpdateMain
                 subq.w  #1,$5A(a5)
-                bpl.s   Boss_ShiperDefeatWaitReturn
+                bpl.s   Boss_ShiperBossMessageDelayReturn
                 addq.w  #2,4(a5)
                 moveq   #2,d0
-                jmp     UI_CheckVictoryCondition
+                jmp     UI_StartBossMessage
 ; ---------------------------------------------------------------------------
-Boss_ShiperDefeatWaitReturn:                            ; CODE XREF: Boss_ShiperDefeatWait+8   j  ; was: locret_368FE
+Boss_ShiperBossMessageDelayReturn:                      ; CODE XREF: Boss_ShiperBossMessageDelayState+8   j  ; was: locret_368FE
                 rts
-; End of function Boss_ShiperDefeatWait
-; Boss death handler checking multiple conditions before triggering defeat sequence
-Boss_ShiperDeathHandler:                                ; DATA XREF: ROM:000364B6   o  ; was: sub_36900
+; End of function Boss_ShiperBossMessageDelayState
+; Wait for the boss message and motion flags before returning to retreat
+Boss_ShiperWaitForBossMessageState:                     ; DATA XREF: ROM:000364B6   o  ; was: sub_36900
                 bsr.w   Boss_ShiperUpdateMain
                 tst.w   (word_FF80C2).w
-                bne.s   Boss_ShiperDeathHandlerReturn
+                bne.s   Boss_ShiperWaitForBossMessageReturn
                 btst    #0,$5E(a5)
-                bne.s   Boss_ShiperDeathHandlerReturn
+                bne.s   Boss_ShiperWaitForBossMessageReturn
                 cmpi.w  #2,$174(a5)
-                bne.s   Boss_ShiperDeathHandlerReturn
+                bne.s   Boss_ShiperWaitForBossMessageReturn
                 subi.w  #$A0,(word_FFA970).w
                 clr.b   (byte_FF80EC).w
                 move.w  #$104,(word_FFDB20).w
                 bra.w   Boss_ShiperRetreatState
 ; ---------------------------------------------------------------------------
-Boss_ShiperDeathHandlerReturn:                          ; CODE XREF: Boss_ShiperDeathHandler+8   j  ; was: locret_3692E
-                                        ; Boss_ShiperDeathHandler+10   j
+Boss_ShiperWaitForBossMessageReturn:                    ; CODE XREF: Boss_ShiperWaitForBossMessageState+8   j  ; was: locret_3692E
+                                        ; Boss_ShiperWaitForBossMessageState+10   j
                 rts
-; End of function Boss_ShiperDeathHandler
+; End of function Boss_ShiperWaitForBossMessageState
 ; Sets boss defeat flags clears state and increments stage counter
 Boss_ShiperInitDefeat:                                  ; CODE XREF: Boss_ShiperMainHandler+2E   j  ; was: sub_36930
                 move.b  #2,(byte_FF80EC).w

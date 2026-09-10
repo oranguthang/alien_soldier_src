@@ -126,13 +126,13 @@ Boss_MadamBarbarIntroApproachState:                     ; CODE XREF: Boss_MadamB
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #7,$17E(a5)
-; Madam Barbar intro sequence with victory check
+; Madam Barbar intro sequence ending at the shared boss-message gate
 Boss_MadamBarbarIntroCompletionState:                   ; DATA XREF: ROM:0003A4EA   o  ; was: loc_3A640
                 tst.w   $17E(a5)
                 bpl.s   Boss_MadamBarbarUpdateIntroPose
                 addq.w  #2,4(a5)
                 moveq   #6,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
                 jsr     (Input_CheckButtonMode).l
 Boss_MadamBarbarUpdateIntroPose:                        ; CODE XREF: Boss_MadamBarbarIntroApproachState+40   j  ; was: loc_3A65C

@@ -153,7 +153,7 @@ Boss_DestroyerProtoIntroMove:                           ; DATA XREF: ROM:0003151
                 cmpi.w  #$160,$10(a5)
                 bcc.w   Entity_UpdateReturn
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerProtoIntroMove

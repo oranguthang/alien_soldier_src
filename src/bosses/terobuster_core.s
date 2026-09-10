@@ -472,7 +472,7 @@ Boss_TerobusterStageGateDelay:                          ; DATA XREF: ROM:0003858
 Boss_TerobusterStartStageGate:                          ; CODE XREF: Boss_TerobusterStageGateDelay+4   j  ; was: loc_38A9A
                 addq.w  #2,4(a5)
                 moveq   #0,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
                 jsr     (Sys_WaitVBlank).l
 ; End of function Boss_TerobusterStageGateDelay

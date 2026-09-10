@@ -123,7 +123,7 @@ Camera_BossMode_State2:                                 ; DATA XREF: ROM:000557B
                 bpl.s   loc_55900
                 addq.w  #2,4(a5)
                 moveq   #8,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
 loc_55900:                                              ; CODE XREF: Boss_ValkirieIdleState+3E   j
                 lea     word_56262(pc),a1
                 nop

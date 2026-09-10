@@ -428,7 +428,7 @@ Boss_BugmaxDispatchMainState:                           ; CODE XREF: Boss_Bugmax
 Boss_BugmaxMainStateHandlers:   dc.w    Boss_BugmaxInitializeEncounterState-*  ; DATA XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+2D4   o  ; was: off_4C3D8
                 dc.w    Boss_BugmaxInitializeHorizontalJitterState-*
                 dc.w    Boss_BugmaxUpdateHorizontalJitterState-*
-                dc.w    Boss_BugmaxWaitAfterJitterAndCheckVictory-*
+                dc.w    Boss_BugmaxWaitAfterJitterAndStartBossMessage-*
                 dc.w    Boss_BugmaxWaitForOpeningTransition-*
                 dc.w    Boss_BugmaxWaitForFirstOpeningScrollThreshold-*
                 dc.w    Boss_BugmaxWaitForSecondOpeningScrollThreshold-*
@@ -615,17 +615,17 @@ Boss_BugmaxFinishHorizontalJitterState:                 ; CODE XREF: Boss_Bugmax
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_BugmaxUpdateHorizontalJitterState
-; Wait after the jitter, clamp linked positions, and call the victory check
-Boss_BugmaxWaitAfterJitterAndCheckVictory:              ; DATA XREF: ROM:0004C3DE   o  ; was: sub_4C644
+; Wait after the jitter, clamp linked positions, and start the boss message
+Boss_BugmaxWaitAfterJitterAndStartBossMessage:          ; DATA XREF: ROM:0004C3DE   o  ; was: sub_4C644
                 bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
                 subq.w  #1,$48(a5)
                 bne.s   Boss_BugmaxPostJitterWaitReturn
                 move.w  #3,d0
-                jsr     (UI_CheckVictoryCondition).l
+                jsr     (UI_StartBossMessage).l
                 addq.w  #2,4(a5)
-Boss_BugmaxPostJitterWaitReturn:                        ; CODE XREF: Boss_BugmaxWaitAfterJitterAndCheckVictory+8   j  ; was: locret_4C65C
+Boss_BugmaxPostJitterWaitReturn:                        ; CODE XREF: Boss_BugmaxWaitAfterJitterAndStartBossMessage+8   j  ; was: locret_4C65C
                 rts
-; End of function Boss_BugmaxWaitAfterJitterAndCheckVictory
+; End of function Boss_BugmaxWaitAfterJitterAndStartBossMessage
 ; Wait for the opening transition gate and enable controller collision
 Boss_BugmaxWaitForOpeningTransition:                    ; DATA XREF: ROM:0004C3E0   o  ; was: sub_4C65E
                 bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
