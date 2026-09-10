@@ -27,7 +27,7 @@ loc_53E88:                                              ; CODE XREF: Boss_Missir
                 rts
 ; ---------------------------------------------------------------------------
 loc_53EA8:                                              ; CODE XREF: Boss_MissirayWaitSegmentsReady+22   j
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   loc_53EB6
                 move.w  #4,$4A(a5)
                 rts
@@ -70,7 +70,7 @@ Boss_MissirayShootPattern2:                             ; DATA XREF: ROM:00053E7
 loc_53F10:                                              ; CODE XREF: Boss_MissirayShootPattern2+1C   j
                 move.b  #1,$51(a0)
                 clr.w   $48(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   loc_53F28
                 move.w  #$60,$48(a5)                    ; '`'
                 bra.s   loc_53F2E

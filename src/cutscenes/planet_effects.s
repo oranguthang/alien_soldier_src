@@ -547,7 +547,7 @@ Cutscene_PlanetZoomMainLoop:                            ; DATA XREF: ROM:00007C4
                 cmpi.w  #$80,(word_FF0106).l
                 bne.w   locret_514E
                 move.b  #1,d0
-                jmp     (Input_ProcessButtons).l
+                jmp     (Sound_QueueRequest).l
 ; End of function Cutscene_PlanetZoomMainLoop
 ; Calculates 3D rotation perspective and updates scroll buffers
 Cutscene_Calculate3DRotation:                           ; CODE XREF: Cutscene_PlanetZoomMainLoop+1E   p  ; was: sub_850A

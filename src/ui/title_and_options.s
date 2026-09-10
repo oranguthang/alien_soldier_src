@@ -231,7 +231,7 @@ UI_ConfirmMenuSelection:                                ; CODE XREF: UI_WaitForB
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 move.b  #1,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 bra.w   UI_UpdateMenuState
 ; End of function UI_WaitForButtonPress
 ; Empty UI menu state handler

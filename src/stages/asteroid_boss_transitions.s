@@ -261,7 +261,7 @@ loc_F53E:                                               ; CODE XREF: Boss_Shield
                 tst.w   (word_FF80C2).w
                 bne.s   locret_F55E
                 move.b  #$89,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
                 addq.w  #2,(word_FFA950).w
                 addq.w  #2,(StageTableIndex).w
                 move.l  #$10000,(dword_FF9DB6).w

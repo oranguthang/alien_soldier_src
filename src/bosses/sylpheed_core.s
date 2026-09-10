@@ -272,7 +272,7 @@ Boss_UpdateSylpheedAttackHoldMotion:                    ; CODE XREF: Boss_EnterS
 Boss_EnterSylpheedDecisionState4:                       ; CODE XREF: Boss_UpdateSylpheedJumpFallStateC+4   j  ; was: sub_59738
                                         ; Boss_UpdateSylpheedClimbState10+4   j
                 move.w  #$60,$11E(a5)                   ; '`'
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_ResetSylpheedDecisionState4
                 move.w  #$40,$11E(a5)                   ; '@'
 Boss_ResetSylpheedDecisionState4:                       ; CODE XREF: Boss_EnterSylpheedDecisionState4+A   j  ; was: loc_5974A
@@ -293,7 +293,7 @@ Boss_UpdateSylpheedDecisionState4:                      ; DATA XREF: ROM:0005944
                 subq.w  #1,$11E(a5)
                 bpl.s   Boss_RenderSylpheedDecisionPose
                 move.w  #$FFFF,$11E(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_CheckSylpheedForcedCharge
                 cmpi.w  #$2858,(word_FF8200).w
                 bmi.s   Boss_CountDownSylpheedDecisionTimer

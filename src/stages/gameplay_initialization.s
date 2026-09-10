@@ -61,7 +61,7 @@ loc_1EE74:                                              ; CODE XREF: Stage_Handl
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 move.b  #$97,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 jmp     UI_TransitionToStageLoad
 ; End of function Stage_HandleCreditsOrAdvance
 ; Initializes stage start with full game setup
@@ -118,7 +118,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 bsr.w   Gfx_SetupWeaponSprites
                 jsr     (Gfx_LoadPaletteData).l
                 move.b  #$8E,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 move.l  #$1400000,(dword_FF8130).w
                 clr.w   (dword_FF8134).w
                 bset    #6,(word_FFF7D2+1).w
@@ -245,7 +245,7 @@ loc_1F0F8:                                              ; CODE XREF: Sys_UpdateG
                 move.l  #byte_1E444,(dword_FFA22C).w    ; text?
                 move.w  #$34,(GameModeIndex).w          ; '4'
                 clr.w   (GameSubstateIndex).w
-                jsr     (Input_GetMappedButton).l
+                jsr     (Sound_QueueStageBGMOrStop).l
                 jmp     UI_InitializeGameVariables
 ; ---------------------------------------------------------------------------
 ; Transitions to continue screen after stage end

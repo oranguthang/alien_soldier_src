@@ -19,7 +19,7 @@ Weapon_CircleAttack_CheckSlots:                         ; CODE XREF: Player_Spaw
                 subi.w  #$A,$10(a4)
 Weapon_CircleAttack_SelectAmmoCost:                     ; CODE XREF: Player_SpawnCircleAttack+40   j  ; was: loc_18578
                 move.w  #$8C,d0
-                tst.b   (word_FFFF0E).w
+                tst.b   (DifficultyMode).w
                 bne.s   Weapon_CircleAttack_SubtractAmmo
                 move.w  #$8C,d0
 Weapon_CircleAttack_SubtractAmmo:                       ; CODE XREF: Player_SpawnCircleAttack+50   j  ; was: loc_18586
@@ -78,7 +78,7 @@ Weapon_CircleAttack_SpawnLoop:                          ; CODE XREF: Player_Spaw
                 clr.b   $21(a0)
                 move.b  #4,$23(a0)
                 move.w  #$D,$26(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Weapon_SetCircleAttackProperties
                 move.w  #$E,$26(a0)
 ; Sets sprite properties for circular attack pattern projectiles
@@ -138,7 +138,7 @@ Weapon_FireHomingShot_Initialize:                       ; CODE XREF: Weapon_Fire
                 subq.w  #2,$10(a4)
 Weapon_FireHomingShot_SelectAmmoCost:                   ; CODE XREF: Weapon_FireHomingShot+3A   j  ; was: loc_18722
                 move.w  #3,d0
-                tst.b   (word_FFFF0E).w
+                tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireHomingShot_SubtractAmmo
                 move.w  #2,d0
 Weapon_FireHomingShot_SubtractAmmo:                     ; CODE XREF: Weapon_FireHomingShot+48   j  ; was: loc_18730
@@ -158,7 +158,7 @@ Weapon_FireHomingShot_SetupObject:                      ; CODE XREF: Weapon_Fire
                 move.b  #$40,$21(a0)                    ; '@'
                 move.b  #4,$23(a0)
                 move.w  #3,$26(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Weapon_SetHomingProjectileData
                 move.w  #4,$26(a0)
 ; Sets homing projectile velocity and sprite animation data

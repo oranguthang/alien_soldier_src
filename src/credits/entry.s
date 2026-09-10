@@ -63,12 +63,12 @@ Credits_UpdateEffects:                                  ; DATA XREF: Sys_Dispatc
                 jsr     (Effect_PaletteDispatcher).l
                 rts
 ; End of function Credits_UpdateEffects
-; Checks button input mode and branches to handler
-Input_CheckButtonModeAndBranch:                         ; CODE XREF: UI_InitializeWeaponSelect+12   j  ; was: sub_1E254
+; Queue a pending stage BGM request, then continue to stage loading
+UI_QueuePendingBGMAndTransitionToStageLoad:             ; CODE XREF: UI_InitializeWeaponSelect+12   j  ; was: sub_1E254
                 move.b  (byte_FFA230).w,d0
-                beq.s   Input_CheckButtonModeAndBranch_Transition
-                jsr     (Input_CheckButtonMode).l
-Input_CheckButtonModeAndBranch_Transition:              ; CODE XREF: Input_CheckButtonModeAndBranch+4   j  ; was: loc_1E260
+                beq.s   UI_TransitionAfterOptionalStageBGM
+                jsr     (Sound_QueueBGMOrStop).l
+UI_TransitionAfterOptionalStageBGM:                     ; CODE XREF: UI_QueuePendingBGMAndTransitionToStageLoad+4   j  ; was: loc_1E260
                 bra.w   UI_TransitionToStageLoad
-; End of function Input_CheckButtonModeAndBranch
+; End of function UI_QueuePendingBGMAndTransitionToStageLoad
 ; Initializes weapon selection screen

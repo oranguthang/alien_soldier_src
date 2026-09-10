@@ -126,60 +126,60 @@ Input_ReadControllerPort:                               ; CODE XREF: Input_ReadC
                 or.b    d3,d0
                 rts
 ; End of function Input_ReadControllerPort
-; Waits for VBlank interrupt
-Sys_WaitVBlank:                                         ; CODE XREF: Cutscene_InitCreditsScreen+A0   p  ; was: sub_34DA
+; Queue a BGM request unless music playback is disabled in the options flags
+Sound_QueueBGMRequest:                                  ; CODE XREF: Cutscene_InitCreditsScreen+A0   p  ; was: sub_34DA
                                         ; Text_CompleteWithSound+14   p
-                btst    #1,(word_FFFF38+1).w
-                beq.s   Input_ProcessButtons
+                btst    #1,(SoundDisableFlags+1).w
+                beq.s   Sound_QueueRequest
                 rts
-; End of function Sys_WaitVBlank
+; End of function Sound_QueueBGMRequest
 ; Plays sound effect with ID parameter
 Sound_PlaySFX:                                          ; CODE XREF: Gfx_AnimateLettersExpand+158   p  ; was: sub_34E4
                                         ; Gfx_AnimateLettersExpandLarge+10E   p
-                btst    #2,(word_FFFF38+1).w
-                beq.s   Input_ProcessButtons
+                btst    #2,(SoundDisableFlags+1).w
+                beq.s   Sound_QueueRequest
                 rts
 ; End of function Sound_PlaySFX
-; Processes joypad button state
-Input_ProcessButtons:                                   ; CODE XREF: RegionRestricted+E   p  ; was: sub_34EE
+; Add one sound-driver request to the first empty slot, suppressing duplicates
+Sound_QueueRequest:                                     ; CODE XREF: RegionRestricted+E   p  ; was: sub_34EE
                                         ; Sys_VBlankEventHandler+1A   p
                 tst.b   (dword_FFF80A).w
-                bpl.w   Input_ProcessButtons_StoreFirst
+                bpl.w   Sound_QueueRequestStoreSlot0
                 cmp.b   (dword_FFF80A).w,d0
-                bne.w   Input_ProcessButtons_CheckSecond
-Input_ProcessButtons_StoreFirst:                        ; CODE XREF: Input_ProcessButtons+4   j  ; was: loc_34FE
+                bne.w   Sound_QueueRequestCheckSlot1
+Sound_QueueRequestStoreSlot0:                           ; CODE XREF: Sound_QueueRequest+4   j  ; was: loc_34FE
                 move.b  d0,(dword_FFF80A).w
                 rts
 ; ---------------------------------------------------------------------------
-Input_ProcessButtons_CheckSecond:                       ; CODE XREF: Input_ProcessButtons+C   j  ; was: loc_3504
+Sound_QueueRequestCheckSlot1:                           ; CODE XREF: Sound_QueueRequest+C   j  ; was: loc_3504
                 tst.b   (dword_FFF80A+1).w
-                bpl.w   Input_ProcessButtons_StoreSecond
+                bpl.w   Sound_QueueRequestStoreSlot1
                 cmp.b   (dword_FFF80A+1).w,d0
-                bne.w   Input_ProcessButtons_CheckThird
-Input_ProcessButtons_StoreSecond:                       ; CODE XREF: Input_ProcessButtons+1A   j  ; was: loc_3514
+                bne.w   Sound_QueueRequestCheckSlot2
+Sound_QueueRequestStoreSlot1:                           ; CODE XREF: Sound_QueueRequest+1A   j  ; was: loc_3514
                 move.b  d0,(dword_FFF80A+1).w
                 rts
 ; ---------------------------------------------------------------------------
-Input_ProcessButtons_CheckThird:                        ; CODE XREF: Input_ProcessButtons+22   j  ; was: loc_351A
+Sound_QueueRequestCheckSlot2:                           ; CODE XREF: Sound_QueueRequest+22   j  ; was: loc_351A
                 tst.b   (dword_FFF80A+2).w
-                bpl.w   Input_ProcessButtons_StoreThird
+                bpl.w   Sound_QueueRequestStoreSlot2
                 cmp.b   (dword_FFF80A+2).w,d0
-                bne.w   Input_ProcessButtons_CheckFourth
-Input_ProcessButtons_StoreThird:                        ; CODE XREF: Input_ProcessButtons+30   j  ; was: loc_352A
+                bne.w   Sound_QueueRequestCheckSlot3
+Sound_QueueRequestStoreSlot2:                           ; CODE XREF: Sound_QueueRequest+30   j  ; was: loc_352A
                 move.b  d0,(dword_FFF80A+2).w
                 rts
 ; ---------------------------------------------------------------------------
-Input_ProcessButtons_CheckFourth:                       ; CODE XREF: Input_ProcessButtons+38   j  ; was: loc_3530
+Sound_QueueRequestCheckSlot3:                           ; CODE XREF: Sound_QueueRequest+38   j  ; was: loc_3530
                 tst.b   (dword_FFF80A+3).w
-                bpl.w   Input_ProcessButtons_StoreFourth
+                bpl.w   Sound_QueueRequestStoreSlot3
                 cmp.b   (dword_FFF80A+3).w,d0
-                bne.w   Input_ProcessButtons_NoFreeSlot
-Input_ProcessButtons_StoreFourth:                       ; CODE XREF: Input_ProcessButtons+46   j  ; was: loc_3540
+                bne.w   Sound_QueueRequestNoFreeSlot
+Sound_QueueRequestStoreSlot3:                           ; CODE XREF: Sound_QueueRequest+46   j  ; was: loc_3540
                 move.b  d0,(dword_FFF80A+3).w
                 rts
 ; ---------------------------------------------------------------------------
-Input_ProcessButtons_NoFreeSlot:                        ; CODE XREF: Input_ProcessButtons+4E   j  ; was: loc_3546
+Sound_QueueRequestNoFreeSlot:                           ; CODE XREF: Sound_QueueRequest+4E   j  ; was: loc_3546
                 clr.b   d0
                 rts
-; End of function Input_ProcessButtons
+; End of function Sound_QueueRequest
 ; Calculates angle from object to player center

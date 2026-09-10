@@ -378,7 +378,7 @@ Boss_SunsetStingAdvancePartPose:                        ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingAnimatePartSequence
 ; Spawns projectiles at random positions using jump table
 Boss_SunsetStingSpawnRandomProjectile:                  ; CODE XREF: Boss_SunsetStingUpdateMovement+EE   p  ; was: sub_41DBE
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.w   Boss_SunsetStingSpawnRandomProjectileReturn
 Boss_SunsetStingSpawnRandomProjectileFromPart:          ; CODE XREF: Boss_SunsetStingMoveAndShoot+26   p  ; was: loc_41DC6
                 jsr     (RandomNumber).l

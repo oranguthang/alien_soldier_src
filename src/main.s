@@ -45,6 +45,7 @@
                 include "src/cutscenes/ship_sequence.s"
                 include "src/ui/title_screen.s"
                 include "src/ui/options_screen.s"
+                include "src/ui/password_cursor_mappings.s"
                 include "src/ui/password_screen.s"
                 include "src/ui/victory_sequence.s"
                 include "src/ui/results_sequence.s"

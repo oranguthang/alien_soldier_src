@@ -17,7 +17,7 @@ Player_SpawnProjectile:                                 ; CODE XREF: Player_Phoe
                 move.b  $20(a5),$20(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Player_SpawnProjectile_UseAlternateParameters
                 move.w  #$26,$26(a0)                    ; '&'
                 subi.w  #$1E,(word_FFA216).w

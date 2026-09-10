@@ -245,7 +245,7 @@ Stage_CaterpillarScrollHandler:                         ; DATA XREF: ROM:0000C8B
                 tst.b   (byte_FFA209).w
                 beq.s   loc_D412
                 move.b  #$82,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 bra.w   loc_D450
 ; ---------------------------------------------------------------------------
 loc_D412:                                               ; CODE XREF: Stage_CaterpillarScrollHandler+5C   j

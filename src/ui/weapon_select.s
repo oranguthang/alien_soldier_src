@@ -3,7 +3,7 @@ UI_InitializeWeaponSelect:                              ; DATA XREF: Sys_Dispatc
                 bne.s   UI_WeaponSelectTransition
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                bra.w   Input_CheckButtonModeAndBranch
+                bra.w   UI_QueuePendingBGMAndTransitionToStageLoad
 ; End of function UI_InitializeWeaponSelect
 ; Prepares weapon select graphics
 UI_PrepareWeaponSelectGfx:
@@ -32,7 +32,7 @@ loc_1E2C6:                                              ; CODE XREF: UI_WeaponSe
                 clr.w   (GameSubstateIndex).w
                 move.b  (byte_FFA230).w,d0
                 beq.s   loc_1E2DC
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
 loc_1E2DC:                                              ; CODE XREF: UI_WeaponSelectTransition+2E   j
                 lea     off_1E334(pc),a0
                 nop
@@ -108,7 +108,7 @@ loc_1E3D6:                                              ; CODE XREF: UI_HandleMe
                 bclr    #1,(word_FF80F4).w
                 beq.s   locret_1E3D4
 ; Transitions from menu to stage loading
-UI_TransitionToStageLoad:                               ; CODE XREF: Input_CheckButtonModeAndBranch:Input_CheckButtonModeAndBranch_Transition   j  ; was: loc_1E3DE
+UI_TransitionToStageLoad:                               ; CODE XREF: UI_QueuePendingBGMAndTransitionToStageLoad:UI_TransitionAfterOptionalStageBGM   j  ; was: loc_1E3DE
                                         ; Stage_HandleCreditsOrAdvance+32   j
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w

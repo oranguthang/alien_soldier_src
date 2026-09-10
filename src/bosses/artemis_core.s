@@ -244,7 +244,7 @@ Boss_SelectArtemisStateEFollowup:                       ; CODE XREF: Boss_Update
                 btst    #0,(dword_FFFF08).w
                 beq.s   Boss_ResetArtemisStateEPoseScript
                 move.w  #$1800,$11C(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_CheckArtemisStateEAngleGate
                 move.w  (word_FFA000).w,d4
                 andi.w  #7,d4
@@ -378,7 +378,7 @@ Boss_EnterArtemisState14:                               ; CODE XREF: Boss_Update
                 jsr     (Sound_PlaySFX).l
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$1C,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_SelectArtemisState14Motion
                 moveq   #0,d0
 Boss_SelectArtemisState14Motion:                        ; CODE XREF: Boss_EnterArtemisState14+38   j  ; was: loc_5836E

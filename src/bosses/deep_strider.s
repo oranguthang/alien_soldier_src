@@ -297,7 +297,7 @@ Boss_DeepStriderBeginBattleDecisionState:               ; CODE XREF: Boss_DeepSt
                 move.w  #$CB00,$4A(a5)
                 clr.l   $4F8(a5)
                 clr.l   $4FC(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_DeepStriderRandomizeBattleDecisionDelay
                 move.w  #$10,$11C(a5)
                 bra.s   Boss_DeepStriderBattleDecisionState

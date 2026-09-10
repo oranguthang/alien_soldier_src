@@ -939,7 +939,7 @@ dword_FFFF00            equ     $FFFFFF00
 byte_FFFF06             equ     $FFFFFF06
 byte_FFFF07             equ     $FFFFFF07
 dword_FFFF08            equ     $FFFFFF08
-word_FFFF0E             equ     $FFFFFF0E
+DifficultyMode          equ     $FFFFFF0E               ; was: word_FFFF0E
 dword_FFFF10            equ     $FFFFFF10
 dword_FFFF14            equ     $FFFFFF14
 byte_FFFF20             equ     $FFFFFF20
@@ -950,12 +950,12 @@ byte_FFFF24             equ     $FFFFFF24
 byte_FFFF25             equ     $FFFFFF25
 byte_FFFF26             equ     $FFFFFF26
 word_FFFF28             equ     $FFFFFF28
-word_FFFF2A             equ     $FFFFFF2A
+MessageMode             equ     $FFFFFF2A               ; was: word_FFFF2A
 dword_FFFF2C            equ     $FFFFFF2C
 byte_FFFF30             equ     $FFFFFF30
 byte_FFFF31             equ     $FFFFFF31
 word_FFFF36             equ     $FFFFFF36
-word_FFFF38             equ     $FFFFFF38
+SoundDisableFlags       equ     $FFFFFF38               ; was: word_FFFF38
 dword_FFFF3A            equ     $FFFFFF3A
 word_FFFF3E             equ     $FFFFFF3E
 word_FFFF40             equ     $FFFFFF40

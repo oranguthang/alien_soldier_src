@@ -255,32 +255,32 @@ Sys_ClearRAMBuffer8K_Loop:                              ; CODE XREF: Sys_ClearRA
                 dbf     d7,Sys_ClearRAMBuffer8K_Loop
                 rts
 ; End of function Sys_ClearRAMBuffer8K
-; Checks button mode flag before processing input buttons
-Input_CheckButtonMode:                                  ; CODE XREF: Stage_SnakeTransition+24   p  ; was: sub_1B8B8
+; Queue the requested BGM ID, or stop playback when BGM is disabled
+Sound_QueueBGMOrStop:                                   ; CODE XREF: Stage_SnakeTransition+24   p  ; was: sub_1B8B8
                                         ; Stage_BugmaxTransitionCheck+1C   p
-                btst    #1,(word_FFFF38+1).w
-                beq.s   Input_CheckButtonMode_Process
+                btst    #1,(SoundDisableFlags+1).w
+                beq.s   Sound_QueueBGMOrStopSubmit
                 move.b  #4,d0
-Input_CheckButtonMode_Process:                          ; CODE XREF: Input_CheckButtonMode+6   j  ; was: loc_1B8C4
-                jmp     (Input_ProcessButtons).l
-; End of function Input_CheckButtonMode
-; Maps button input based on game state
-Input_GetMappedButton:                                  ; CODE XREF: UI_InitializePasswordScreen+56   j  ; was: sub_1B8CA
+Sound_QueueBGMOrStopSubmit:                             ; CODE XREF: Sound_QueueBGMOrStop+6   j  ; was: loc_1B8C4
+                jmp     (Sound_QueueRequest).l
+; End of function Sound_QueueBGMOrStop
+; Queue the BGM selected for the current stage, or stop disabled playback
+Sound_QueueStageBGMOrStop:                              ; CODE XREF: UI_InitializePasswordScreen+56   j  ; was: sub_1B8CA
                                         ; Password_HandleInput+22   j
-                btst    #1,(word_FFFF38+1).w
-                beq.s   Input_GetAttackButton
+                btst    #1,(SoundDisableFlags+1).w
+                beq.s   Sound_SelectAndQueueStageBGM
                 move.b  #4,d0
-                jmp     (Input_ProcessButtons).l
+                jmp     (Sound_QueueRequest).l
 ; ---------------------------------------------------------------------------
-; Gets mapped attack button input based on control configuration
-Input_GetAttackButton:                                  ; CODE XREF: Input_GetMappedButton+6   j  ; was: loc_1B8DC
+; Select the current stage's BGM request and submit it to the sound queue
+Sound_SelectAndQueueStageBGM:                           ; CODE XREF: Sound_QueueStageBGMOrStop+6   j  ; was: loc_1B8DC
                 move.w  (StageTableIndex).w,d0
                 asr.w   #1,d0
-                move.b  Input_StageButtonMap(pc,d0.w),d0
-                jmp     (Input_ProcessButtons).l
-; End of function Input_GetMappedButton
+                move.b  Sound_StageBGMRequestTable(pc,d0.w),d0
+                jmp     (Sound_QueueRequest).l
+; End of function Sound_QueueStageBGMOrStop
 ; ---------------------------------------------------------------------------
-Input_StageButtonMap:   dc.b    $81, $81, $81, $81, $81, $81, $81, $89, $89, $86  ; was: byte_1B8EC
-                                        ; DATA XREF: Input_GetMappedButton+18   r
+Sound_StageBGMRequestTable: dc.b    $81, $81, $81, $81, $81, $81, $81, $89, $89, $86  ; was: byte_1B8EC
+                                        ; DATA XREF: Sound_QueueStageBGMOrStop+18   r
                 dc.b    $86, $86, $89, $92, $92, $8B, $8B, $97, $97, 0
                 dc.b    $93, $93, $89, $8F, $9F, 0

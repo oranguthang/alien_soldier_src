@@ -251,7 +251,7 @@ Enemy_HomingAttack_BeginWait:                           ; CODE XREF: Enemy_Homin
                 move.w  #2,4(a5)
                 move.w  #4,$5C(a5)
                 lea     Enemy_HomingAttackInitialDelays(pc),a0
-                move.w  (word_FFFF0E).w,d0
+                move.w  (DifficultyMode).w,d0
                 move.w  (a0,d0.w),$48(a5)
 ; Waits for timer countdown before transitioning
 Enemy_HomingAttackWaitState:                            ; DATA XREF: ROM:0002CE4A   o  ; was: loc_2CE72
@@ -264,7 +264,7 @@ Enemy_HomingAttack_BeginBurst:                          ; CODE XREF: Enemy_Homin
                 move.w  #$80,$C(a5)
                 clr.w   $48(a5)
                 lea     Enemy_HomingAttackShotCounts(pc),a0
-                move.w  (word_FFFF0E).w,d0
+                move.w  (DifficultyMode).w,d0
                 move.w  (a0,d0.w),$4A(a5)
 ; Main loop for homing projectile with angle updates and spawning
 Enemy_HomingAttackBurstState:                           ; DATA XREF: ROM:0002CE4C   o  ; was: loc_2CE96

@@ -376,9 +376,10 @@ loc_DCCE:                                               ; CODE XREF: Stage_Snake
                 bsr.w   Stage_TeleportUpdateScroll
                 subq.w  #1,(dword_FF806A+2).w
                 bpl.w   Stage_Stage10CheckTransition_Return
+Stage_SnakeTransitionBeginStage13:
                 move.w  #$50,(word_FF80C2).w            ; 'P'
                 move.b  #$89,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
                 bra.w   Stage_InitStage13
 ; End of function Stage_SnakeTransition
 ; Updates scroll position during teleport
@@ -479,7 +480,7 @@ Stage_BugmaxTransitionCheck:                            ; DATA XREF: ROM:0000D99
                 tst.w   (word_FF8138).w
                 bne.w   Stage_Stage10CheckTransition_Return
                 move.b  #$92,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
                 move.l  #byte_1E587,(dword_FFA22C).w
                 bra.w   Stage_InitTransitionState
 ; End of function Stage_BugmaxTransitionCheck

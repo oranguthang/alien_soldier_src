@@ -422,7 +422,7 @@ Collision_CheckPlayerAgainstHostiles_StoreDamageFeedback:  ; CODE XREF: Collisio
                 move.w  #4,(word_FF813C).w
                 move.w  #$10,d0
                 move.w  #$3C,d1                         ; '<'
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Collision_CheckPlayerAgainstHostiles_SelectLowerResponse
                 move.w  #$20,d0                         ; ' '
                 move.w  #$78,d1                         ; 'x'

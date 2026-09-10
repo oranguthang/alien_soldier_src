@@ -2753,3 +2753,48 @@ records, raising the totals from 11,383 to 11,441 and from 7,588 to 7,646.
 Address-derived definitions fall from 4,657 to 4,599. The preservation build
 remains the unchanged canonical Japanese ROM. The complete project suite then
 passes all 37 tests against this split and rename set.
+
+The game-side sound-request and options-screen audit corrects a cluster of
+misleading generated names. `Sound_QueueRequest` at `0x0034EE` does not read
+buttons: it deduplicates a request ID and inserts it into the first free byte
+of the four-slot `$FFF80A-$FFF80D` queue consumed by the sound driver.
+`Sound_QueueBGMRequest` at `0x0034DA` does not wait for VBlank: it gates the
+request on the BGM-disable option. The related stage, frontend, and Xi-Tiger
+credits helpers now name their observed BGM selection, fade request, queueing,
+and transition roles. Twenty-two corrected entry/branch/table names have exact
+static evidence in `config/name_audit.json`.
+
+The normal options screen is now described by its six proven rows: difficulty,
+BGM enable, SFX enable, BGM test, SFX test, and voice test. Its 704-byte BGM
+test include is renamed `options_bgm_test_entries.bin`; each selected 32-byte
+record provides one request ID and fifteen displayed tile words. The SFX and
+voice handlers are distinguished by their request tables and bounds, rather
+than the former generated character-selection names. The review corrects 12
+existing semantic names, replaces 76 address-derived option definitions, and
+promotes `DifficultyMode`, `MessageMode`, and `SoundDisableFlags` in the RAM
+map.
+
+Two password cursor mappings at `0x00A394-0x00A39F` were not options data. They
+now form the exact ROM-ordered `ui/password_cursor_mappings.s` boundary between
+the 890-line options module and the password code. The intentionally short
+three-line data module preserves a real consumer/ownership boundary; merging
+it back only to meet an average line target would misstate that ownership.
+This takes the layout from 348 to 349 modules.
+
+One secondary-options behavior remains unresolved. Its handler-index words are
+`6, 8, $A, $C, $E`, while the local navigation clamp reaches only the first
+four. Values `6`, `8`, and `$A` dispatch the three sound-test handlers. Value
+`$C` makes the relative dispatch read opcode word `$43FA` immediately after
+the six-entry primary handler table; adding it to base `0x0098E0` lands exactly
+at `Stage_SnakeTransitionBeginStage13` (`0x00DCDA`). This is verified as a
+code/data overlay, but its purpose and whether a shipped path intentionally
+selects it remain unknown. The `$E` entry is unreachable through this local
+navigation clamp.
+
+This package adds 80 provenance mappings from address/RAM labels plus one
+restored SFX-table marker, raising provenance from 11,441 to 11,522. It adds
+109 evidence records, raising the name-audit registry from 7,646 to 7,755, and
+lowers the enforced address-derived ceiling from 4,599 to 4,519. The direct
+pinned-toolchain preservation build remains byte-identical to the canonical
+Japanese ROM (`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`), and all
+37 project tests pass against the resulting source and audit data.

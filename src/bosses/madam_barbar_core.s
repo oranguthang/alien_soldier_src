@@ -134,7 +134,7 @@ Boss_MadamBarbarIntroCompletionState:                   ; DATA XREF: ROM:0003A4E
                 moveq   #6,d0
                 jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
 Boss_MadamBarbarUpdateIntroPose:                        ; CODE XREF: Boss_MadamBarbarIntroApproachState+40   j  ; was: loc_3A65C
                                         ; Boss_MadamBarbarWaitForPlayerSequence+8   j
                 lea     Boss_MadamBarbarIntroIdlePoseCommands(pc),a1

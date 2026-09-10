@@ -235,7 +235,7 @@ Stage21_AsteroidSpawnDestructionResult:                 ; CODE XREF: Stage21_Ast
                 move.w  #1,$48(a5)
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Stage21_AsteroidDestructionReturn
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Stage21_AsteroidUseDenseRewardMask
                 move.w  #3,d1
                 bra.s   Stage21_AsteroidChooseDestructionResult

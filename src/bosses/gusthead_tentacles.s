@@ -191,7 +191,7 @@ Enemy_GustheadDebrisInit:                               ; DATA XREF: ROM:Enemy_G
                 move.l  (dword_FF8240).w,d0
                 add.l   d0,d0
                 add.l   d0,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Enemy_GustheadDebrisStoreHorizontalDrift
                 add.l   d0,d0
 Enemy_GustheadDebrisStoreHorizontalDrift:               ; CODE XREF: Enemy_GustheadDebrisInit+10   j  ; was: loc_4037E
@@ -370,7 +370,7 @@ Boss_GustheadUpdateArenaScrollVelocity:                 ; CODE XREF: Boss_Gusthe
                 move.l  (dword_FF9414).w,d0
                 beq.s   Boss_GustheadStoreArenaScrollVelocity
 Boss_GustheadScaleArenaScrollVelocity:                  ; CODE XREF: Boss_GustheadUpdateArenaScrollVelocity+4   j  ; was: loc_40596
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_GustheadUseFullArenaScrollVelocity
                 asr.l   #5,d0
                 bra.s   Boss_GustheadStoreArenaScrollVelocity

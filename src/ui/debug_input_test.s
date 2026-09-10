@@ -13,9 +13,9 @@ UI_RenderHUDElement1:                                   ; CODE XREF: Sys_Gamepla
 ; Description: Debug input handling routine that was disabled during development
 ; Tests word_FF8228 flag and processes controller button inputs
 ; by checking specific bits in word_FFF708 (controller state):
-; - Bit 6: Calls Input_ProcessButtons with value from word_FF8228
-; - Bit 4: Calls Input_ProcessButtons with parameter 1
-; - Bit 5: Calls Input_ProcessButtons with parameter 4
+; - Bit 6: Calls Sound_QueueRequest with value from word_FF8228
+; - Bit 4: Calls Sound_QueueRequest with parameter 1
+; - Bit 5: Calls Sound_QueueRequest with parameter 4
 ;
 ; Purpose: Likely a developer testing/debug feature that allowed manual control
 ; or parameter manipulation during UI/HUD rendering. The code was
@@ -43,21 +43,21 @@ Debug_InputTestMenu:                                    ; UNREFERENCED DEBUG COD
                 btst    #6,(word_FFF708+1).w
                 beq.s   loc_12B92
                 move.b  (word_FF8228).w,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 bra.s   loc_12BB8
 ; ---------------------------------------------------------------------------
 loc_12B92:                                              ; CODE XREF: UI_RenderHUDElement1+1A   j
                 btst    #4,(word_FFF708+1).w
                 beq.s   loc_12BA6
                 move.b  #1,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 bra.s   loc_12BB8
 ; ---------------------------------------------------------------------------
 loc_12BA6:                                              ; CODE XREF: UI_RenderHUDElement1+2E   j
                 btst    #5,(word_FFF708+1).w
                 beq.s   loc_12BB8
                 move.b  #4,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
 loc_12BB8:                                              ; CODE XREF: UI_RenderHUDElement1+12   j
                                         ; UI_RenderHUDElement1+26   j
                 tst.w   (word_FF8226).w

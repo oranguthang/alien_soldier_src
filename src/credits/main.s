@@ -91,10 +91,10 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 clr.w   (dword_FFA90C).w
                 clr.w   (dword_FFA908).w
                 jsr     (Gfx_SetupScrollPlanes).l
-                move.w  (word_FFFF38).w,(word_FFFF60).w
-                move.w  #0,(word_FFFF38).w
+                move.w  (SoundDisableFlags).w,(word_FFFF60).w
+                move.w  #0,(SoundDisableFlags).w
                 move.b  #$90,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 addq.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 bset    #6,(word_FFF7D2+1).w
@@ -181,7 +181,7 @@ Credits_StateReturn:                                    ; CODE XREF: Credits_Fad
 ; Scrolls credits text with color cycling palette effect
 Credits_ScrollWithColorCycle:                           ; DATA XREF: ROM:00020BC2   o  ; was: sub_20C32
                 jsr     (UI_SelectionMenuDispatcher).l
-                bsr.w   Credits_XiTigerVBlankSync
+                bsr.w   Credits_HandleXiTigerMusicCues
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 nop
                 bsr.w   Credits_CyclePaletteColors
@@ -204,7 +204,7 @@ Credits_ScrollWithColorCycle:                           ; DATA XREF: ROM:00020BC
 ; Waits for timer to reach specific value before advancing state
 Credits_WaitForTimerEnd:                                ; DATA XREF: ROM:00020BC4   o  ; was: sub_20C88
                 jsr     (UI_SelectionMenuDispatcher).l
-                bsr.w   Credits_XiTigerVBlankSync
+                bsr.w   Credits_HandleXiTigerMusicCues
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 nop
                 bsr.w   Credits_CyclePaletteColors
@@ -290,7 +290,7 @@ Credits_UpdateScrollTables_LowerReverseLoop:            ; CODE XREF: Credits_Upd
 ; Fades out palette and clears VRAM plane data
 Credits_FadeOutAndClearVRAM:                            ; DATA XREF: ROM:00020BC6   o  ; was: sub_20D74
                 jsr     (UI_SelectionMenuDispatcher).l
-                bsr.w   Credits_XiTigerVBlankSync
+                bsr.w   Credits_HandleXiTigerMusicCues
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 move.w  (word_FFA000).w,d0
                 andi.w  #7,d0
@@ -331,7 +331,7 @@ Credits_FadeOutAndClearVRAM_PlaneBLoop:                 ; CODE XREF: Credits_Fad
 ; Fades palette from black to normal colors
 Credits_FadeInFromBlack:                                ; DATA XREF: ROM:00020BC8   o  ; was: sub_20E1A
                 jsr     (UI_SelectionMenuDispatcher).l
-                bsr.w   Credits_XiTigerVBlankSync
+                bsr.w   Credits_HandleXiTigerMusicCues
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 bne.w   Credits_StateReturn
@@ -349,7 +349,7 @@ Credits_FadeInFromBlack:                                ; DATA XREF: ROM:00020BC
 ; Waits for scroll sequence to complete before advancing
 Credits_WaitForScrollEnd:                               ; DATA XREF: ROM:00020BCA   o  ; was: sub_20E5E
                 jsr     (UI_SelectionMenuDispatcher).l
-                bsr.w   Credits_XiTigerVBlankSync
+                bsr.w   Credits_HandleXiTigerMusicCues
                 bsr.w   Credits_ScrollStateDispatcher
                 tst.w   (word_FF0188).l
                 bne.w   Credits_StateReturn
@@ -368,32 +368,32 @@ Credits_FadeOutAndExit:                                 ; DATA XREF: ROM:00020BC
                 cmpi.w  #$FFF2,(word_FF0176).l
                 bne.w   Credits_StateReturn
                 move.w  #1,(word_FFFF46).w
-                move.w  (word_FFFF60).w,(word_FFFF38).w
+                move.w  (word_FFFF60).w,(SoundDisableFlags).w
                 jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #$84,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 rts
 ; End of function Credits_FadeOutAndExit
-; Xi-Tiger VBlank sync
-Credits_XiTigerVBlankSync:                              ; CODE XREF: Credits_ScrollWithColorCycle+6   p  ; was: sub_20ECC
+; Queue the Xi-Tiger credits music cues at their three scroll milestones
+Credits_HandleXiTigerMusicCues:                         ; CODE XREF: Credits_ScrollWithColorCycle+6   p  ; was: sub_20ECC
                                         ; Credits_WaitForTimerEnd+6   p
                 cmpi.w  #$1F40,(word_FF0188).l
-                beq.s   Credits_XiTigerVBlankSync_WaitMode1
+                beq.s   Credits_QueueXiTigerMusicFadeOut
                 cmpi.w  #$1EC0,(word_FF0188).l
-                beq.s   Credits_XiTigerVBlankSync_WaitMode94
+                beq.s   Credits_QueueXiTigerBGM94
                 cmpi.w  #$A0,(word_FF0188).l
-                beq.s   Credits_XiTigerVBlankSync_WaitMode1
+                beq.s   Credits_QueueXiTigerMusicFadeOut
                 rts
 ; ---------------------------------------------------------------------------
-Credits_XiTigerVBlankSync_WaitMode1:                    ; CODE XREF: Credits_XiTigerVBlankSync+8   j  ; was: loc_20EEC
-                                        ; Credits_XiTigerVBlankSync+1C   j
+Credits_QueueXiTigerMusicFadeOut:                       ; CODE XREF: Credits_HandleXiTigerMusicCues+8   j  ; was: loc_20EEC
+                                        ; Credits_HandleXiTigerMusicCues+1C   j
                 move.b  #1,d0
-                jmp     (Sys_WaitVBlank).l
+                jmp     (Sound_QueueBGMRequest).l
 ; ---------------------------------------------------------------------------
-Credits_XiTigerVBlankSync_WaitMode94:                   ; CODE XREF: Credits_XiTigerVBlankSync+12   j  ; was: loc_20EF6
+Credits_QueueXiTigerBGM94:                              ; CODE XREF: Credits_HandleXiTigerMusicCues+12   j  ; was: loc_20EF6
                 move.b  #$94,d0
-                jmp     (Sys_WaitVBlank).l
-; End of function Credits_XiTigerVBlankSync
+                jmp     (Sound_QueueBGMRequest).l
+; End of function Credits_HandleXiTigerMusicCues
 ; Dispatches to scroll sequence state handler
 Credits_ScrollStateDispatcher:                          ; CODE XREF: Credits_WaitForScrollEnd+A   p  ; was: sub_20F00
                 move.w  (word_FF017C).l,d0

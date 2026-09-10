@@ -531,7 +531,7 @@ Object_DestroyerMK2SpawnProjectile:                     ; DATA XREF: ROM:0004B4A
                 move.w  Object_DestroyerMK2ProjectileDirectionTable(pc,d0.w),$4C(a0)
                 add.w   d0,d0
                 move.l  Object_DestroyerMK2ProjectileVelocityTable(pc,d0.w),$50(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Object_DestroyerMK2SetNormalProjectileDelay
                 move.w  #$C,$48(a5)
                 move.w  #$C,$48(a0)

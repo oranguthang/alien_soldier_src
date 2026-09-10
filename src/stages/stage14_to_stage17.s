@@ -100,7 +100,7 @@ Stage_ViblackScroll:                                    ; DATA XREF: ROM:0000D9B
 Stage_ViblackStartBattle:                               ; CODE XREF: Stage_ViblackScroll+6   j  ; was: sub_DF5E
                 addq.w  #2,(word_FFA950).w
                 move.b  #$8B,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
 ; End of function Stage_ViblackStartBattle
 ; Initializes Viblack mini-boss
 Stage_ViblackInit:                                      ; DATA XREF: ROM:0000D9B2   o  ; was: sub_DF6C

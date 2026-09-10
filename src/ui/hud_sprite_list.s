@@ -10,7 +10,7 @@ UI_AppendHUDSpriteList:                                 ; CODE XREF: UI_RenderDe
                 beq.w   UI_AppendHUDSpriteList_AppendBaseIndicator
                 btst    #4,(word_FFF706).w
                 bne.w   UI_AppendHUDSpriteList_AppendBaseIndicator
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   UI_AppendHUDSpriteList_SelectModeEntries
                 btst    #2,(word_FFF708).w
                 beq.s   UI_AppendHUDSpriteList_CheckFrameSkipIncrease
@@ -39,7 +39,7 @@ UI_AppendHUDSpriteList_SelectModeEntries:               ; CODE XREF: UI_BuildHUD
                 bra.s   UI_AppendHUDSpriteList_AppendBaseIndicator
 ; ---------------------------------------------------------------------------
 UI_AppendHUDSpriteList_AppendAlternateModeEntries:      ; CODE XREF: UI_BuildHUDSpriteList+5C   j  ; was: loc_132FA
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   UI_AppendHUDSpriteList_AppendBaseIndicator
                 move.w  #$150,d0
                 move.w  d0,(a1)+

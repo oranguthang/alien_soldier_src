@@ -28,7 +28,7 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
 UI_InitGameStateFromContinue:                           ; CODE XREF: UI_TransitionFromContinue+28   j  ; was: sub_1CD3A
                                         ; UI_UpdatePasswordDisplay+12   j
                 move.w  (word_FFA218).w,(word_FFA216).w
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   UI_InitGameStateFromContinue_CopyAmmo
                 move.w  #$3E8,d0
                 move.w  d0,(word_FFA268).w
@@ -65,7 +65,7 @@ UI_ClearPasswordFlags:                                  ; CODE XREF: Password_Ha
 UI_ResetMenuBufferAndState:                             ; CODE XREF: UI_InitGameStateFromContinue+58   p  ; was: sub_1CDB4
                 bsr.w   Enemy_UpdateBehavior
 UI_ResetMenuBufferAndState_Clear:                       ; CODE XREF: UI_UpdateOptionsScreen+12   j  ; was: loc_1CDB8
-                                        ; Sys_RunOptionsMenuLoop+12   j
+                                        ; UI_UpdateSecondaryOptionsMenu+12   j
                 movea.w #(word_FFE300-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #$3F,d7                         ; '?'
@@ -73,7 +73,7 @@ UI_ResetMenuBufferAndState_Clear:                       ; CODE XREF: UI_UpdateOp
 UI_ClearMenuBuffer:                                     ; CODE XREF: UI_ResetMenuBufferAndState+E   j  ; was: loc_1CDC0
                 move.l  d0,(a0)+
                 dbf     d7,UI_ClearMenuBuffer
-                move.w  #4,(word_FFFF2A).w
+                move.w  #4,(MessageMode).w
                 rts
 ; End of function UI_ResetMenuBufferAndState
 ; ---------------------------------------------------------------------------

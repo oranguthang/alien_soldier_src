@@ -488,7 +488,7 @@ Projectile_FragmentDeflectRight:
 ; End of function Projectile_FragmentBeginDeflectedFall
 ; Set entity HP value based on difficulty level check
 Projectile_SetCurrentFragmentHealth:                    ; was: sub_30B0E
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Projectile_SetCurrentFragmentHighHealth
                 move.w  #$64,$26(a5)                    ; 'd'
                 rts
@@ -499,7 +499,7 @@ Projectile_SetCurrentFragmentHighHealth:
 ; End of function Projectile_SetCurrentFragmentHealth
 ; Set entity HP value based on difficulty level check
 Projectile_SetNewFragmentHealth:                        ; was: sub_30B24
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Projectile_SetNewFragmentHighHealth
                 move.w  #$64,$26(a0)                    ; 'd'
                 rts
@@ -526,7 +526,7 @@ Stage15_FallingRockWaveInit:                            ; was: sub_30B4A
                 move.w  #$8000,$E(a5)
                 move.l  #off_1A0F76,8(a5)
                 addq.w  #2,4(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.w   Stage15_FallingRockWaveUseAlternateSchedule
                 move.l  #Stage15_FallingRockSchedulePrimary,$40(a5)
                 rts

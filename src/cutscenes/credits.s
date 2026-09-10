@@ -28,7 +28,7 @@ Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_Trans
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
                 move.b  #$88,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w

@@ -295,7 +295,7 @@ Boss_Stage3OrbitingFormationPrepareHomingShot:          ; DATA XREF: ROM:0003418
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 move.w  d0,$48(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.w   Boss_Stage3OrbitingFormationReturn
                 addi.w  #$40,$48(a5)                    ; '@'
                 rts
@@ -326,7 +326,7 @@ Boss_Stage3OrbitingFormationFirePartRadialShots:        ; DATA XREF: ROM:0003419
                 subi.l  #$800,$50(a5)
                 bne.w   Boss_Stage3OrbitingFormationReturn
                 addq.w  #2,4(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.w   Boss_Stage3OrbitingFormationReturn
                 move.w  #$20,$48(a5)                    ; ' '
                 movem.w a5,-(sp)

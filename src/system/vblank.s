@@ -123,7 +123,7 @@ Sys_VBlankEventHandler:                                 ; CODE XREF: VBLANK+96  
 Sys_VBlankEventHandler_CheckInput:                      ; CODE XREF: Sys_VBlankEventHandler+4   j  ; was: loc_BE6
                 move.b  (byte_FFF764).w,d0
                 beq.w   Sys_VBlankEventHandler_UpdateSound
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 beq.w   Sys_VBlankEventHandler_UpdateSound
                 clr.b   (byte_FFF764).w
 Sys_VBlankEventHandler_UpdateSound:                     ; CODE XREF: Sys_VBlankEventHandler+E   j  ; was: loc_BFC
@@ -191,8 +191,8 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    UI_UpdatePasswordDisplay
                 dc.l    UI_InitPasswordScreen
                 dc.l    UI_UpdatePasswordScreen
-                dc.l    Sys_InitOptionsMenuState
-                dc.l    Sys_RunOptionsMenuLoop
+                dc.l    UI_InitSecondaryOptionsMenu
+                dc.l    UI_UpdateSecondaryOptionsMenu
                 dc.l    Stage_InitializeStageSelect
                 dc.l    Password_InitializeScreen
                 dc.l    Password_HandleInput

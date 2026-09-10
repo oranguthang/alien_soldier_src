@@ -36,7 +36,7 @@ loc_275E2:                                              ; CODE XREF: Stage_InitG
                 move.w  a1,(word_FFF70C).w
                 move.w  #1,(dword_FF807E).w
                 move.b  #4,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 rts
 ; End of function Stage_InitGameOver
 ; ---------------------------------------------------------------------------

@@ -55,7 +55,7 @@ Stage12_YachtRevealPan:                                 ; DATA XREF: ROM:0002F5D
                 bset    #7,(dword_FFA20E).w
                 addq.w  #2,4(a5)
                 move.b  #$8B,d0
-                jmp     Input_CheckButtonMode
+                jmp     Sound_QueueBGMOrStop
 ; End of function Stage12_YachtRevealPan
 ; Starts the yacht's active vertical-motion phase
 Stage12_YachtBeginMotion:                               ; DATA XREF: ROM:0002F5DE   o  ; was: sub_2F672

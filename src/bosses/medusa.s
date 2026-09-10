@@ -741,7 +741,7 @@ Entity_ProcessMedusaSpawnSequenceEntry:                 ; CODE XREF: Entity_Upda
                 addq.w  #8,(word_FF9800).w
                 move.w  2(a4,d1.w),d5
                 beq.w   Entity_ApplyMedusaSpawnSequenceCommand
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Entity_SpawnMedusaSequenceObject
                 tst.w   d5
                 bmi.s   Entity_UpdateMedusaSpawnSequenceReturn

@@ -62,7 +62,7 @@ EnemySpawn_ResetDelay:                                  ; CODE XREF: EnemySpawn_
 ; Selects the vertical origin for the terrain search
 EnemySpawn_SelectSearchOriginY:                         ; CODE XREF: EnemySpawn_StartDirectorTimer+1E   p  ; was: sub_2C3CE
                 move.w  #$1D0,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   EnemySpawn_SelectSearchOriginY_Return
                 cmpi.w  #2,(dword_FFA910).w
                 bpl.s   EnemySpawn_SelectSearchOriginY_Return
@@ -296,7 +296,7 @@ Enemy_SpawnTrackedProjectile_Initialize:                ; CODE XREF: Enemy_Spawn
                 neg.w   d0
 ; Completes tracked-projectile parameters and difficulty selection
 Enemy_SpawnTrackedProjectile_SetParameters:             ; CODE XREF: Enemy_SpawnTrackedProjectile+22   j  ; was: loc_2C612
-                move.w  (word_FFFF0E).w,d7
+                move.w  (DifficultyMode).w,d7
                 asr.w   #1,d7
                 addi.w  #9,d7
                 jmp     Enemy_SetProjectileDifficulty

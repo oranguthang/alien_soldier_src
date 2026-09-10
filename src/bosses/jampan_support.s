@@ -4,7 +4,7 @@
 Boss_JampanTrackPlayerX:                                ; CODE XREF: Boss_JampanSelectAttackState   p  ; was: sub_4A07E
                                         ; sub_498F2   p
                 bsr.s   Boss_JampanStepTowardPlayerX
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_JampanTrackPlayerXReturn
                 bsr.s   Boss_JampanStepTowardPlayerX
 Boss_JampanTrackPlayerXReturn:                          ; CODE XREF: Boss_JampanTrackPlayerX+6   j  ; was: locret_4A088

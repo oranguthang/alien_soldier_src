@@ -62,7 +62,7 @@ Boss_BackStringerWaitForActivationState:                ; DATA XREF: Boss_BackSt
                 bmi.s   Boss_BackStringerWaitForActivationReturn
                 addq.w  #2,4(a5)
                 move.b  #$8C,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
 Boss_BackStringerWaitForActivationReturn:               ; CODE XREF: Boss_BackStringerWaitForActivationState+8   j  ; was: locret_44758
                 rts
 ; End of function Boss_BackStringerWaitForActivationState

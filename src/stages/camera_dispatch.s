@@ -32,7 +32,7 @@ off_C84A:       dc.w    Stage_UpdateLogic-Stage_UpdateLogic
                 dc.w    Stage_AutoScroll_UpdateLoop-Stage_UpdateLogic
                 dc.w    Boss_MadamBarbarScrollInit-Stage_UpdateLogic
                 dc.w    Stage_InitPostBoss-Stage_UpdateLogic
-                dc.w    Stage_TransitionWithVBlank-Stage_UpdateLogic
+                dc.w    Stage_InitSectionChangeWithDefaultBGM-Stage_UpdateLogic
                 dc.w    Stage_CheckScrollTransition-Stage_UpdateLogic
                 dc.w    Stage_InitJokerBoss-Stage_UpdateLogic
                 dc.w    Stage_PostJokerBoss-Stage_UpdateLogic
@@ -258,7 +258,7 @@ loc_CAB0:                                               ; CODE XREF: Camera_Lock
 ; Updates camera with smooth interpolation
 Camera_UpdateSmooth:                                    ; DATA XREF: ROM:0000C86A   o  ; was: sub_CAB4
                 move.b  #$81,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 addq.w  #2,(word_FFA950).w
                 jsr     (Stage_StateDispatcher).l
                 bra.w   *+4
@@ -407,17 +407,17 @@ Stage_InitPostBoss:                                     ; DATA XREF: ROM:0000C87
 loc_CC1C:                                               ; CODE XREF: Stage_InitPostBoss+4   j
                 bra.w   Camera_UpdateTowardsPlayer
 ; End of function Stage_InitPostBoss
-; Stage section transition waiting for VBlank and updating camera
-Stage_TransitionWithVBlank:                             ; DATA XREF: ROM:0000C880   o  ; was: sub_CC20
+; Start a section change and request the default BGM when no delay is active
+Stage_InitSectionChangeWithDefaultBGM:                  ; DATA XREF: ROM:0000C880   o  ; was: sub_CC20
                 tst.w   (word_FF80C2).w
-                bne.s   loc_CC30
+                bne.s   Stage_InitSectionChangeWithDefaultBGM_Continue
                 move.b  #$81,d0
-                jsr     (Sys_WaitVBlank).l
-loc_CC30:                                               ; CODE XREF: Stage_TransitionWithVBlank+4   j
+                jsr     (Sound_QueueBGMRequest).l
+Stage_InitSectionChangeWithDefaultBGM_Continue:         ; CODE XREF: Stage_InitSectionChangeWithDefaultBGM+4   j  ; was: loc_CC30
                 clr.w   (word_FF808A).w
                 bsr.w   Stage_InitSectionChange
                 bra.w   Camera_UpdateTowardsPlayer
-; End of function Stage_TransitionWithVBlank
+; End of function Stage_InitSectionChangeWithDefaultBGM
 ; Checks scroll position for stage phase transition trigger
 Stage_CheckScrollTransition:                            ; DATA XREF: ROM:0000C882   o  ; was: sub_CC3C
                 bsr.w   Gfx_UpdateScroll

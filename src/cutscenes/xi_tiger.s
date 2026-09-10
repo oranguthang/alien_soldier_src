@@ -179,7 +179,7 @@ Cutscene_XiTigerScrollSetup:                            ; DATA XREF: ROM:0001E91
                 subq.w  #1,(dword_FF8130).w
                 bpl.w   locret_1E9AE
                 move.b  #$82,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 addq.w  #2,(dword_FF8128).w
                 clr.w   (word_FFE3BA).w
                 clr.w   (word_FFE3BC).w

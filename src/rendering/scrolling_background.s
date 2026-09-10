@@ -127,7 +127,7 @@ Scroll_GetForegroundPosition:                           ; CODE XREF: Cutscene_Xi
                 move.w  (dword_FFA904).w,d1
 ; End of function Scroll_GetForegroundPosition
 ; Loads pointer to data table 2
-Data_LoadPointerTable2:                                 ; CODE XREF: Sys_InitOptionsMenuState+50   p  ; was: sub_10AF4
+Data_LoadPointerTable2:                                 ; CODE XREF: UI_InitSecondaryOptionsMenu+50   p  ; was: sub_10AF4
                                         ; UI_InitPasswordScreen+5A   p
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop

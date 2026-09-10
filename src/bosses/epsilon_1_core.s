@@ -10,7 +10,7 @@ Boss_Epsilon1UpdateProximityTimer:                      ; CODE XREF: Boss_Epsilo
                 tst.w   (word_FF9474).w
                 bne.s   Boss_Epsilon1UpdatePeriodicSharedOffset
                 addq.w  #1,(word_FF9472).w
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_Epsilon1UseShortProximityLimit
                 move.w  #$80,d0
                 bra.s   Boss_Epsilon1CheckProximityLimit

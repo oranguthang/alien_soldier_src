@@ -240,7 +240,7 @@ loc_2B9D2:                                              ; CODE XREF: Enemy_Spawn
                 bpl.s   locret_2BA56
                 lea     word_2BA58(pc),a0
                 nop
-                move.w  (word_FFFF0E).w,d1
+                move.w  (DifficultyMode).w,d1
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 add.w   (a0,d1.w),d0

@@ -70,7 +70,7 @@ Boss_SunsetStingSegmentLaunchFromRing:                  ; CODE XREF: Boss_Sunset
                 asr.l   #1,d0
                 move.l  d1,$1C(a5)
                 move.l  #$1800,$58(a5)
-                move.w  (word_FFFF0E).w,d0
+                move.w  (DifficultyMode).w,d0
                 lsr.w   #1,d0
                 addq.w  #1,d0
                 move.w  d0,$48(a5)
@@ -255,7 +255,7 @@ Boss_SunsetStingSecondarySegmentTimingMasks:
 
 ; Updates a released secondary segment and tests for floor or player contact
 Boss_SunsetStingSecondarySegmentFlightState:            ; DATA XREF: ROM:00043578   o  ; was: sub_4361A
-                move.w  (word_FFFF0E).w,d2
+                move.w  (DifficultyMode).w,d2
                 move.w  Boss_SunsetStingSecondarySegmentTimingMasks(pc,d2.w),d1
                 move.b  $48(a5),d2
                 ext.w   d2
@@ -264,7 +264,7 @@ Boss_SunsetStingSecondarySegmentFlightState:            ; DATA XREF: ROM:0004357
                 subq.b  #1,$49(a5)
                 bne.s   Boss_SunsetStingSecondarySegmentUpdatePosition
                 moveq   #$FFFFFFFC,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_SunsetStingSecondarySegmentStoreFrameStep
                 add.b   d0,d0
 Boss_SunsetStingSecondarySegmentStoreFrameStep:         ; CODE XREF: Boss_SunsetStingSecondarySegmentFlightState+20   j  ; was: loc_4363E
@@ -288,7 +288,7 @@ Boss_SunsetStingSecondarySegmentUpdatePosition:         ; CODE XREF: Boss_Sunset
 Boss_SunsetStingSecondarySegmentBeginFall:              ; CODE XREF: Boss_SunsetStingSecondarySegmentFlightState+C0   j  ; was: loc_4366E
                 move.w  6(a5),$48(a5)
                 asr.l   #1,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_SunsetStingSecondarySegmentReverseYVelocity
                 move.l  d1,d2
                 asr.l   #2,d2

@@ -151,7 +151,7 @@ Boss_Epsilon1ClearTrackingRingAttributeBit:             ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1CreateSpreadAimMarkerState+50   j
                 andi.w  #$7FFF,2(a5)
 Boss_Epsilon1SelectTrackingRingFinishDelay:             ; CODE XREF: Boss_Epsilon1CreateSpreadAimMarkerState+5E   j  ; was: loc_46F08
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_Epsilon1UseShortTrackingRingFinishDelay
                 move.w  #$10,$48(a5)
                 rts
@@ -258,7 +258,7 @@ Boss_Epsilon1ReserveBarrageEmitterState:                ; DATA XREF: ROM:00046F7
                 move.w  #$10,(a0)
                 move.w  a0,$4C(a5)
                 addq.w  #2,4(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_Epsilon1UseShortBarrageRingSetupDelay
                 move.w  #$28,$48(a5)                    ; '('
                 bra.s   Boss_Epsilon1PositionBarrageRingState

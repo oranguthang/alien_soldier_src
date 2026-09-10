@@ -329,7 +329,7 @@ loc_8B06:                                               ; CODE XREF: Cutscene_Sh
                 dbf     d1,loc_8B06
                 clr.w   (word_FF0164).l
                 move.b  #$30,d0                         ; '0'
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 move.l  #$8000,(dword_FF0138).l
                 move.w  #$8000,(word_FF808A).w
                 bsr.w   Gfx_ClearPlaneBuffer

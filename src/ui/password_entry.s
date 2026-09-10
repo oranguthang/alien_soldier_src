@@ -14,7 +14,7 @@ UI_InitializePasswordScreen:                            ; DATA XREF: Sys_Dispatc
                 move.b  #0,(word_FFF7F4+1).w
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
-                jmp     Input_GetMappedButton
+                jmp     Sound_QueueStageBGMOrStop
 ; End of function UI_InitializePasswordScreen
 ; ---------------------------------------------------------------------------
 stru_1E012:     dc.w    3                               ; field_0
@@ -100,7 +100,7 @@ Password_HandleInput:                                   ; DATA XREF: Sys_Dispatc
                 jsr     (UI_ClearPasswordFlags).l
                 lea     stru_1E012(pc),a0
                 jsr     (LoadObjData).l
-                jmp     Input_GetMappedButton
+                jmp     Sound_QueueStageBGMOrStop
 ; ---------------------------------------------------------------------------
 loc_1E14C:                                              ; CODE XREF: Password_HandleInput+6   j
                 tst.w   (word_FF80F2).w

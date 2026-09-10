@@ -26,7 +26,7 @@ Boss_InitArtemisRadialEmitter:                          ; CODE XREF: Boss_SpawnA
                 move.l  d0,$1C(a0)
                 move.l  d1,$18(a0)
                 move.w  d6,$48(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_StoreArtemisEmitterAcceleration
                 moveq   #0,d4
                 moveq   #0,d5

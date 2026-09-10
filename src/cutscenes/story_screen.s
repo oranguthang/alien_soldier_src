@@ -112,7 +112,7 @@ UI_WaitForTimerAndButton:                               ; DATA XREF: ROM:0000497
                 cmpi.w  #$18C0,(word_FF0106).l
                 bne.w   locret_514E
                 move.b  #1,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function UI_WaitForTimerAndButton
@@ -182,7 +182,7 @@ Gfx_WaitForFadeAndLoadTiles:                            ; DATA XREF: ROM:0000497
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.b  #$88,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_WaitForFadeAndLoadTiles
@@ -207,7 +207,7 @@ UI_WaitForTimerShort:                                   ; DATA XREF: ROM:0000497
                 cmpi.w  #$80,(word_FF0106).l
                 bne.w   locret_514E
                 move.b  #1,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function UI_WaitForTimerShort

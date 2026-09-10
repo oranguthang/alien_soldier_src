@@ -329,7 +329,7 @@ Entity_SevenForcesValkirieFadeInStateC:                 ; DATA XREF: ROM:00054BA
                 move.w  #$34,$48(a5)                    ; '4'
                 clr.w   2(a5)
                 move.b  #$96,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 move.b  #$23,d0                         ; '#'
                 jsr     (Sound_PlaySFX).l
                 lea     (SevenForcesValkirieAssetSet).l,a1

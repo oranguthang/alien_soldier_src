@@ -114,11 +114,11 @@ GameProgram:                                            ; CODE XREF: Reset+17C  
                 move.l  #'TREA',(dword_FFFF10).w
                 move.l  #'SURE',(dword_FFFF14).w
                 move.b  (IO_PCBVER+1).l,(byte_FFFF26).w
-                move.w  #2,(word_FFFF0E).w
+                move.w  #2,(DifficultyMode).w
                 move.l  #$100000,(dword_FFFF2C).w
-                move.w  #0,(word_FFFF2A).w
+                move.w  #0,(MessageMode).w
                 move.b  #0,(byte_FFFF30).w
-                clr.w   (word_FFFF38).w
+                clr.w   (SoundDisableFlags).w
                 clr.w   (word_FFFF3E).w
                 move.w  #0,(word_FFFF36).w
                 move.l  #$1010101,(dword_FFFF3A).w

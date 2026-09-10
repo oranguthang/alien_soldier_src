@@ -5189,8 +5189,8 @@
       "sha1": "e7280f288641cf3f84f31b0c6cc49d08eb3dd420"
     },
     {
-      "name": "word_998C",
-      "path": "other/word_998C.bin",
+      "name": "options_bgm_test_entries",
+      "path": "other/options_bgm_test_entries.bin",
       "region": "other",
       "address": "0x998C",
       "end": "0x9C4C",

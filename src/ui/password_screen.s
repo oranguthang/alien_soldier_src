@@ -1,8 +1,9 @@
+; Initializes password entry screen with input fields
 UI_InitPasswordScreen:                                  ; DATA XREF: Sys_DispatchGameState+9A   o  ; was: sub_A3A0
                 tst.w   (GameSubstateIndex).w
                 bne.s   UI_InitPasswordDisplay
                 jsr     (Sys_InitGameMode).l
-                movea.l #stru_A1F8,a0
+                movea.l #Options_AssetLoadDescriptors,a0
                 jsr     (LoadObjData).l
                 jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
@@ -136,13 +137,13 @@ loc_A592:                                               ; CODE XREF: UI_HandlePa
                                         ; UI_HandlePasswordInput+3C   j
                 movem.l d0-d1,-(sp)
                 move.b  #$DB,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 movem.l (sp)+,d0-d1
 loc_A5A4:                                               ; CODE XREF: UI_HandlePasswordInput+24   j
                                         ; UI_HandlePasswordInput+2C   j
                 move.w  d0,(dword_FF8066+2).w
                 move.w  d1,(word_FF806E).w
-                move.l  #word_A394,(dword_FFC628).w
+                move.l  #Password_CharacterCursorSpriteMapping,(dword_FFC628).w
                 cmpi.w  #8,d0
                 beq.w   loc_A716
                 lea     byte_A8F6(pc),a0
@@ -187,7 +188,7 @@ loc_A61C:                                               ; CODE XREF: UI_HandlePa
 loc_A630:                                               ; CODE XREF: UI_HandlePasswordInput+B4   j
                                         ; UI_HandlePasswordInput+C2   j
                 move.w  (dword_FF8066+2).w,d4
-                movea.w #(word_FFFF38+1-M68K_RAM),a0
+                movea.w #(SoundDisableFlags+1-M68K_RAM),a0
 loc_A638:                                               ; CODE XREF: UI_HandlePasswordInput+EC   j
                 addq.w  #1,a0
                 subq.w  #2,d4
@@ -282,7 +283,7 @@ word_A70C:      dc.w    $F4, $104, $114, $124, $14C
                                         ; DATA XREF: UI_HandlePasswordInput:loc_A6CE   o
 ; ---------------------------------------------------------------------------
 loc_A716:                                               ; CODE XREF: UI_HandlePasswordInput+68   j
-                move.l  #word_A39A,(dword_FFC628).w
+                move.l  #Password_ConfirmCursorSpriteMapping,(dword_FFC628).w
                 move.b  #$F,(dword_FF806A).w
                 move.w  #$18,(dword_FF806A+2).w
                 tst.w   (word_FF806E).w
@@ -336,9 +337,9 @@ loc_A770:                                               ; CODE XREF: UI_HandlePa
                 subq.w  #1,d0
                 asl.w   #1,d0
                 move.w  d0,(StageTableIndex).w
-                move.w  (word_FF805C).w,(word_FFFF0E).w
+                move.w  (word_FF805C).w,(DifficultyMode).w
                 move.b  #$AD,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 move.w  #$70,(GameModeIndex).w          ; 'p'
                 clr.w   (GameSubstateIndex).w
                 jmp     UI_SetPasswordConfirmFlag
@@ -355,7 +356,7 @@ loc_A7DC:                                               ; CODE XREF: UI_HandlePa
                 btst    #5,(word_FFF708).w
                 beq.s   locret_A7DA
                 move.b  #$BB,d0
-                jmp     (Input_ProcessButtons).l
+                jmp     (Sound_QueueRequest).l
 ; End of function UI_HandlePasswordInput
 ; Sets text buffer pointer to first password display row
 UI_SetPasswordRow1Buffer:                               ; CODE XREF: UI_HandlePasswordInput+72   p  ; was: sub_A7FC

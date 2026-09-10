@@ -758,7 +758,7 @@ Projectile_ProcessSireneHomingInBounds:                 ; CODE XREF: Projectile_
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Projectile_ConvertSireneHomingToParticle
                 moveq   #1,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Projectile_InitSireneHomingPickupDrop
                 move.w  #7,d0
 Projectile_InitSireneHomingPickupDrop:                  ; CODE XREF: Projectile_UpdateSireneHoming+5A   j  ; was: loc_57E54

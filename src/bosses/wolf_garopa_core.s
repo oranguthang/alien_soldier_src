@@ -387,7 +387,7 @@ Boss_WolfGaropaSelectOrbNeutralMapping:                 ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaSelectOrbNeutralMapping
 ; Optionally place a type-$424 record at Y=$C8 and configure the upper sequence
 Boss_WolfGaropaBeginUpperType424Sequence:               ; CODE XREF: Boss_WolfGaropaSelectType424Sequence+1E   j  ; was: sub_4FD80
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_WolfGaropaConfigureUpperType424Sequence
                 jsr     (Projectile_SpawnWolfGaropaType424).l
                 bne.s   Boss_WolfGaropaConfigureUpperType424Sequence
@@ -438,7 +438,7 @@ Boss_WolfGaropaUpdateUpperSequenceCooldown:             ; DATA XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaUpdateUpperType424Sequence
 ; Optionally place a type-$424 record at Y=$130 and configure the lower sequence
 Boss_WolfGaropaBeginLowerType424Sequence:               ; CODE XREF: Boss_WolfGaropaSelectType424Sequence+1A   j  ; was: sub_4FE18
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_WolfGaropaConfigureLowerType424Sequence
                 jsr     (Projectile_SpawnWolfGaropaType424).l
                 bne.s   Boss_WolfGaropaConfigureLowerType424Sequence

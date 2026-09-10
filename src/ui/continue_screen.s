@@ -9,7 +9,7 @@ Results_UpdateTimeDisplay:                              ; CODE XREF: UI_UpdateRe
                                         ; UI_UpdateContinueDisplay+C   p
                 move.w  #$4302,d1
 loc_1D95E:                                              ; CODE XREF: UI_UpdateResultsDisplay+C   j
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   loc_1D966
                 rts
 ; ---------------------------------------------------------------------------
@@ -70,7 +70,7 @@ Results_RenderScoreValues:                              ; CODE XREF: UI_Initiali
                 move.w  #$6B1A,d4
                 jsr     (UI_RenderTextStringWrapped).l
                 lea     (byte_47C1).l,a0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   loc_1DA36
                 lea     (byte_47C6).l,a0
 loc_1DA36:                                              ; CODE XREF: Results_RenderScoreValues+64   j
@@ -88,7 +88,7 @@ UI_RenderContinueText:                                  ; CODE XREF: UI_Initiali
                 asl.w   #2,d0
                 addi.l  #word_A82A,d0
                 moveq   #0,d1
-                move.w  (word_FFFF0E).w,d1
+                move.w  (DifficultyMode).w,d1
                 asl.w   #1,d1
                 add.l   d1,d0
                 movea.l d0,a0
@@ -132,7 +132,7 @@ loc_1DABC:                                              ; CODE XREF: UI_Initiali
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   loc_1DB24
                 bra.w   UI_RenderResultsHeaders
 ; ---------------------------------------------------------------------------
@@ -150,7 +150,7 @@ UI_UpdateContinueDisplay:                               ; DATA XREF: ROM:0001D7D
                 beq.s   locret_1DB5A
                 addq.w  #2,(GameSubstateIndex).w
                 move.b  #$94,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
 locret_1DB5A:                                           ; CODE XREF: UI_UpdateContinueDisplay+22   j
                 rts
 ; End of function UI_UpdateContinueDisplay
@@ -162,7 +162,7 @@ UI_HandleContinueInput:                                 ; DATA XREF: ROM:0001D7D
                 andi.b  #$70,d0                         ; 'p'
                 beq.s   loc_1DB80
                 move.b  #$A2,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 subq.w  #1,(dword_FF8066+2).w
                 bmi.s   loc_1DB8E
                 bra.s   loc_1DBC0
@@ -174,7 +174,7 @@ loc_1DB80:                                              ; CODE XREF: UI_HandleCo
 loc_1DB8E:                                              ; CODE XREF: UI_HandleContinueInput+20   j
                 addq.w  #4,(GameSubstateIndex).w
                 move.b  #1,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -184,18 +184,18 @@ loc_1DBB0:                                              ; CODE XREF: UI_HandleCo
                 cmp.w   (dword_FF8066+2).w,d0
                 beq.s   loc_1DBC0
                 move.b  #$A2,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
 loc_1DBC0:                                              ; CODE XREF: UI_HandleContinueInput+22   j
                                         ; UI_HandleContinueInput+58   j
                 btst    #7,(word_FFF708).w
                 beq.s   loc_1DBFA
                 addq.w  #2,(GameSubstateIndex).w
                 move.b  #1,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   loc_1DBFA
                 sub.w   d0,d0
                 move.b  (word_FFA228+1).w,d0
@@ -212,7 +212,7 @@ UI_TransitionFromContinue:                              ; DATA XREF: ROM:0001D7D
                 bsr.w   UI_UpdateResultsDisplay
                 bclr    #1,(word_FF80F4).w
                 beq.s   loc_1DBFA
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   loc_1DC24
                 move.w  #$3C,(GameModeIndex).w          ; '<'
                 clr.w   (GameSubstateIndex).w

@@ -30,7 +30,7 @@ Boss_FlyingNeoProcessMainColorFade:                     ; CODE XREF: Boss_Flying
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoSelectHealthFadeThreshold:                ; CODE XREF: Boss_FlyingNeoMain+3E   j  ; was: loc_3C05A
                 move.w  #$2580,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_FlyingNeoCheckHealthFadeThreshold
                 move.w  #$3880,d0
 Boss_FlyingNeoCheckHealthFadeThreshold:                 ; CODE XREF: Boss_FlyingNeoMain+6C   j  ; was: loc_3C068

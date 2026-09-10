@@ -89,7 +89,7 @@ UI_InitializeSEGAScreen:                                ; DATA XREF: UI_Dispatch
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
                 lea     (FrontendFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
-                movea.l #stru_A1B6,a0
+                movea.l #Frontend_TitleAssetLoadDescriptors,a0
                 jsr     (LoadObjData).l
                 movea.l #$FFFF2020,a0
                 move.w  #$8000,d0
@@ -130,7 +130,7 @@ loc_1D006:                                              ; CODE XREF: UI_Initiali
                 clr.w   (word_FF00EC).l
                 clr.w   (word_FF0178).l
                 move.b  #$87,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 addq.w  #2,(GameSubstateIndex).w
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w

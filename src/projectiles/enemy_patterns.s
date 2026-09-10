@@ -156,7 +156,7 @@ dword_2B166:    dc.l    0, $1C170                       ; DATA XREF: Projectile_
 Enemy_InitHomingProjectile:                             ; CODE XREF: Enemy_UpdateCircularMotionAndFire+5A   p  ; was: sub_2B206
                                         ; Enemy_Stage11FishFireVolleyState+48   p
                 moveq   #$A,d7
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Enemy_SetProjectileDifficulty
                 moveq   #$B,d7
 ; Initializes enemy homing projectile with velocity and angle
@@ -260,7 +260,7 @@ loc_2B31C:                                              ; CODE XREF: Enemy_Homin
 ; Spawns bullet for Jetsripper boss with calculated velocity
 Boss_JetsripperSpawnBullet:                             ; DATA XREF: ROM:0002AFDA   o  ; was: sub_2B352
                 moveq   #9,d7
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   loc_2B35C
                 moveq   #$A,d7
 loc_2B35C:                                              ; CODE XREF: Boss_JetsripperSpawnBullet+6   j

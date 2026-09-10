@@ -134,7 +134,7 @@ UI_UpdateStageScroll:                                   ; DATA XREF: UI_Dispatch
                 bne.s   loc_1D800
 loc_1D7F6:                                              ; CODE XREF: UI_UpdateStageScroll+A   j
                 move.b  #$1D,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
 loc_1D800:                                              ; CODE XREF: UI_UpdateStageScroll+12   j
                 cmpi.w  #$3C0,(dword_FFA900).w
                 bmi.s   loc_1D86A

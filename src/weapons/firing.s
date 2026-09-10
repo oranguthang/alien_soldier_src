@@ -68,7 +68,7 @@ Weapon_FireProjectile_Initialize:                       ; CODE XREF: Weapon_Fire
                 subq.w  #2,$10(a4)
 Weapon_FireProjectile_SelectAmmoCost:                   ; CODE XREF: Weapon_FireProjectile+3E   j  ; was: loc_17F86
                 move.w  #2,d0
-                tst.b   (word_FFFF0E).w
+                tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireProjectile_SubtractAmmo
                 move.w  #1,d0
 Weapon_FireProjectile_SubtractAmmo:                     ; CODE XREF: Weapon_FireProjectile+4C   j  ; was: loc_17F94
@@ -83,7 +83,7 @@ Weapon_FireProjectile_SetupObject:                      ; CODE XREF: Weapon_Fire
                 move.l  #Weapon_ProjectileSpriteFrames,$54(a0)
                 move.w  #$8C80,2(a0)
                 move.w  #3,$26(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Weapon_FireProjectile_SetDamageAndVelocity
                 move.w  #4,$26(a0)
 Weapon_FireProjectile_SetDamageAndVelocity:             ; CODE XREF: Weapon_FireProjectile+88   j  ; was: loc_17FD2
@@ -276,7 +276,7 @@ Weapon_InitSpreadShot:                                  ; CODE XREF: Weapon_Cons
                 move.w  #$8C80,2(a0)
                 clr.b   $21(a0)
                 move.w  #1,$26(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Weapon_InitSpreadShot_SetVelocity
                 move.w  #2,$26(a0)
 Weapon_InitSpreadShot_SetVelocity:                      ; CODE XREF: Weapon_InitSpreadShot+32   j  ; was: loc_18276
@@ -315,7 +315,7 @@ Weapon_FireFourShotSpread:                              ; CODE XREF: Weapon_Fire
 Weapon_FireFourShotSpread_SelectAmmoCost:               ; CODE XREF: Weapon_FireFourShotSpread+16   j  ; was: loc_182D8
                 move.w  #4,(word_FF8238).w
                 move.w  #$14,d0
-                tst.b   (word_FFFF0E).w
+                tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireFourShotSpread_SubtractAmmo
                 move.w  #$12,d0
 Weapon_FireFourShotSpread_SubtractAmmo:                 ; CODE XREF: Weapon_FireFourShotSpread+2A   j  ; was: loc_182EC
@@ -368,7 +368,7 @@ Weapon_FireBulletHandler_Initialize:                    ; CODE XREF: Weapon_Fire
                 subq.w  #2,$10(a4)
 Weapon_FireBulletHandler_SelectAmmoCost:                ; CODE XREF: Weapon_FireBulletHandler+3C   j  ; was: loc_1836A
                 move.w  #4,d0
-                tst.b   (word_FFFF0E).w
+                tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireBulletHandler_SubtractAmmo
                 move.w  #3,d0
 Weapon_FireBulletHandler_SubtractAmmo:                  ; CODE XREF: Weapon_FireBulletHandler+4A   j  ; was: loc_18378
@@ -383,7 +383,7 @@ Weapon_FireBulletHandler_SetupObject:                   ; CODE XREF: Weapon_Fire
                 move.b  #$40,$21(a0)                    ; '@'
                 move.b  #8,$23(a0)
                 move.w  #3,$26(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Weapon_FireBulletHandler_SetDamage
                 move.w  #4,$26(a0)
 Weapon_FireBulletHandler_SetDamage:                     ; CODE XREF: Weapon_FireBulletHandler+82   j  ; was: loc_183B2
@@ -440,7 +440,7 @@ Weapon_FireBeamWeapon_Initialize:                       ; CODE XREF: Weapon_Fire
                 subq.w  #4,$10(a4)
 Weapon_FireBeamWeapon_SelectAmmoCost:                   ; CODE XREF: Weapon_FireBeamWeapon+4A   j  ; was: loc_1844E
                 move.w  #2,d0
-                tst.b   (word_FFFF0E).w
+                tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireBeamWeapon_SubtractAmmo
                 move.w  #1,d0
 Weapon_FireBeamWeapon_SubtractAmmo:                     ; CODE XREF: Weapon_FireBeamWeapon+58   j  ; was: loc_1845C
@@ -450,7 +450,7 @@ Weapon_FireBeamWeapon_SubtractAmmo:                     ; CODE XREF: Weapon_Fire
 Weapon_FireBeamWeapon_SetupObject:                      ; CODE XREF: Weapon_FireBeamWeapon+62   j  ; was: loc_18466
                 move.w  #$6C,(a0)                       ; 'l'
                 move.w  #1,$26(a0)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Weapon_SetBeamProjectileData
                 move.w  #2,$26(a0)
 ; Sets beam projectile sprite properties and velocity data

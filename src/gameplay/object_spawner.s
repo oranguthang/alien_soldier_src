@@ -93,7 +93,7 @@ Sys_SpawnObject_InitializeSlot:                         ; CODE XREF: Sys_SpawnOb
                 move.w  4(a4),d0
                 bclr    #0,d0
                 beq.s   Sys_SpawnObject_CheckSecondDifficultyFlag
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Sys_SpawnObject_Populate
 Sys_SpawnObject_ReturnWithoutSpawn:                     ; CODE XREF: Sys_SpawnObject+38   j  ; was: locret_1A350
                 rts
@@ -101,7 +101,7 @@ Sys_SpawnObject_ReturnWithoutSpawn:                     ; CODE XREF: Sys_SpawnOb
 Sys_SpawnObject_CheckSecondDifficultyFlag:              ; CODE XREF: Sys_SpawnObject+24   j  ; was: loc_1A352
                 bclr    #1,d0
                 beq.s   Sys_SpawnObject_Populate
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Sys_SpawnObject_ReturnWithoutSpawn
 Sys_SpawnObject_Populate:                               ; CODE XREF: Sys_SpawnObject+2A   j  ; was: loc_1A35E
                                         ; Sys_SpawnObject+32   j

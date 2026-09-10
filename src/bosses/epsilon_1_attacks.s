@@ -64,7 +64,7 @@ Boss_Epsilon1RequestBattleMessageState:                 ; DATA XREF: ROM:00045CF
                 jsr     (UI_StartBossMessage).l
                 addq.w  #2,4(a5)
                 move.b  #$8D,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 rts
 ; End of function Boss_Epsilon1RequestBattleMessageState
 ; Waits for the shared boss message to finish before enabling attack selection

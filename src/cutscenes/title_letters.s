@@ -2,7 +2,7 @@ Gfx_SetupTitleScreenLetters:                            ; DATA XREF: ROM:0000498
                 tst.w   (word_FF0106).l
                 bne.w   locret_514E
                 move.b  #4,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 move.b  #0,(word_FFF7F4+1).w
@@ -464,7 +464,7 @@ loc_5102:                                               ; CODE XREF: Sys_StorySc
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 move.b  #1,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 move.w  #$18,(GameSubstateIndex).w
                 rts
 ; End of function Sys_TransitionToTitleScreen

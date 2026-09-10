@@ -3,7 +3,7 @@ UI_InitTitleScreen:                                     ; DATA XREF: Sys_Dispatc
                 bne.s   loc_936C
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                lea     stru_A1B6(pc),a0
+                lea     Frontend_TitleAssetLoadDescriptors(pc),a0
                 nop
                 jsr     (LoadObjData).l
                 move.w  #4,(word_FF80F2).w
@@ -42,7 +42,7 @@ loc_936C:                                               ; CODE XREF: UI_InitTitl
                 move.b  #0,(word_FFF7F4+1).w
                 move.w  #2,(dword_FF8066+2).w
                 move.b  #$91,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 jsr     (Gfx_SetupScrollPlanes).l
                 lea     (byte_46B4).l,a0
                 move.w  #$A300,d0
@@ -77,7 +77,7 @@ UI_HandleTitleInput:                                    ; DATA XREF: Sys_Dispatc
                 andi.b  #$C,d0
                 beq.s   loc_9494
                 move.b  #$DB,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
 loc_9494:                                               ; CODE XREF: UI_HandleTitleInput+10   j
                 move.w  (dword_FF8066+2).w,d0
                 btst    #2,(word_FFF708).w
@@ -108,7 +108,7 @@ loc_94DA:                                               ; CODE XREF: UI_HandleTi
                 beq.s   loc_9538
                 move.b  #2,(byte_FF830E).w
                 move.b  #$C4,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 clr.w   (GameSubstateIndex).w
                 tst.w   (word_FFFF5A).w
                 beq.s   loc_9510
@@ -140,7 +140,7 @@ loc_9538:                                               ; CODE XREF: UI_HandleTi
                 cmpi.w  #$200,(word_FFA000).w
                 bne.s   loc_954E
                 move.b  #$10,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
 loc_954E:                                               ; CODE XREF: UI_HandleTitleInput+CA   j
                 move.w  #$A300,d0
                 cmpi.w  #2,(dword_FF8066+2).w

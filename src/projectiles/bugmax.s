@@ -489,7 +489,7 @@ Boss_BugmaxAllocateHitFragment:                         ; CODE XREF: Boss_Bugmax
                 subq.b  #8,$20(a0)
                 jsr     (RandomNumber).l
                 move.b  (dword_FFFF08).w,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_BugmaxSelectHigherSpecialHitFragmentRate
                 andi.b  #7,d0
                 bne.s   Boss_BugmaxConfigureStandardHitFragment

@@ -316,7 +316,7 @@ Enemy_ResetCirclingState:                               ; CODE XREF: Enemy_Circl
 ; End of function Enemy_ResetCirclingState
 ; Adds one directional projectile above the base difficulty, then fires the base pattern
 Enemy_SpawnDifficultyProjectilePattern:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2D640
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Enemy_SpawnDifficultyProjectilePattern_Base
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Enemy_SpawnDifficultyProjectilePattern_Base

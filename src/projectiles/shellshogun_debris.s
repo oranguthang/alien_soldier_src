@@ -3,7 +3,7 @@
 ; Spawns falling debris projectiles at random horizontal positions during Shellshogun boss fight
 Boss_ShellshogunSpawnFallingDebris:
                 moveq   #0,d7                           ; was: sub_37160
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_ShellshogunSpawnFallingDebrisNext
                 moveq   #2,d7
 Boss_ShellshogunSpawnFallingDebrisNext:                 ; CODE XREF: Boss_ShellshogunSpawnFallingDebris+6   j  ; was: loc_3716A

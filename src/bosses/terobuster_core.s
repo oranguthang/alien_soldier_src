@@ -160,7 +160,7 @@ Boss_TerobusterDecisionTick:                            ; CODE XREF: Boss_Terobu
                 addi.w  #$28,d1                         ; '('
                 tst.w   d1
                 bmi.s   Boss_TerobusterDecisionCheckWorldPosition
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_TerobusterDecisionSelectAttack
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #3,d0
@@ -474,7 +474,7 @@ Boss_TerobusterStartStageGate:                          ; CODE XREF: Boss_Terobu
                 moveq   #0,d0
                 jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
 ; End of function Boss_TerobusterStageGateDelay
 ; Waits for the shared UI state to close before entering the battle decision state
 Boss_TerobusterWaitForStageReady:                       ; DATA XREF: ROM:00038590   o  ; was: sub_38AB0

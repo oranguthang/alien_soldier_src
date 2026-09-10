@@ -147,7 +147,7 @@ Sys_SetState3CWithInput:
                 move.w  #$3C,(GameModeIndex).w          ; '<'  ; was: sub_1C89E
                 clr.w   (GameSubstateIndex).w
                 move.b  #1,d0
-                jmp     (Input_ProcessButtons).l
+                jmp     (Sound_QueueRequest).l
 ; End of function Sys_SetState3CWithInput
 ; Converts the stage table index to the BCD stage number used by results
 UI_UpdateStageNumberBCD:                                ; CODE XREF: Sys_GameplayMainLoop+72   p  ; was: sub_1C8B2

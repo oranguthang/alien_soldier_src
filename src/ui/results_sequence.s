@@ -195,7 +195,7 @@ Text_CompleteWithSound:                                 ; DATA XREF: ROM:0000A9D
                 tst.b   (byte_FF80FA).w
                 beq.s   loc_B0F4
                 move.b  #$83,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
                 bra.s   loc_B0FE
 ; ---------------------------------------------------------------------------
 loc_B0F4:                                               ; CODE XREF: Text_CompleteWithSound+E   j
@@ -554,7 +554,7 @@ UI_StartBossMessage:                                    ; CODE XREF: Boss_Destro
                 bclr    #1,(byte_FFA209).w
                 bne.s   UI_StartSpecialBossMessage
                 bclr    #0,(byte_FF80A8).w
-                cmpi.w  #4,(word_FFFF2A).w
+                cmpi.w  #4,(MessageMode).w
                 bmi.s   UI_SelectBossMessage
 UI_StartSpecialBossMessage:                             ; CODE XREF: UI_StartBossMessage+6   j  ; was: loc_B464
                 move.w  #$1E,(word_FF80C2).w
@@ -565,7 +565,7 @@ UI_StartSpecialBossMessage:                             ; CODE XREF: UI_StartBos
 ; ---------------------------------------------------------------------------
 UI_SelectBossMessage:                                   ; CODE XREF: UI_StartBossMessage+14   j  ; was: loc_B480
                 asl.w   #3,d0
-                cmpi.w  #2,(word_FFFF2A).w
+                cmpi.w  #2,(MessageMode).w
                 bne.s   UI_StoreBossMessagePointer
                 addi.w  #4,d0
 UI_StoreBossMessagePointer:                             ; CODE XREF: UI_StartBossMessage+3A   j  ; was: loc_B48E
@@ -598,7 +598,7 @@ Cutscene_InitShipNameByDiff:                            ; CODE XREF: Cutscene_Sh
                                         ; Cutscene_WaitShipPosition+10   p
                 bset    #0,(byte_FF80A8).w
                 asl.w   #3,d0
-                cmpi.w  #2,(word_FFFF2A).w
+                cmpi.w  #2,(MessageMode).w
                 bne.s   loc_B4F8
                 addi.w  #4,d0
 loc_B4F8:                                               ; CODE XREF: Cutscene_InitShipNameByDiff+E   j

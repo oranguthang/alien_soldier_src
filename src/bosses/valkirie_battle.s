@@ -231,7 +231,7 @@ Entity_ValkirieBattleStateASelectMediumVelocity:        ; CODE XREF: Entity_Upda
                 bra.s   Entity_ValkirieBattleStateAStartCharge
 ; ---------------------------------------------------------------------------
 Entity_ValkirieBattleStateASelectFarVelocity:           ; CODE XREF: Entity_UpdateValkirieBattleStateA+40   j  ; was: loc_55A1C
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Entity_ValkirieBattleStateAStartCharge
                 move.l  #$FFFDC000,d0
 Entity_ValkirieBattleStateAStartCharge:                 ; CODE XREF: Entity_UpdateValkirieBattleStateA+34   j  ; was: loc_55A28
@@ -421,7 +421,7 @@ Entity_CheckValkirieState10PartEvents:                  ; CODE XREF: Entity_Upda
 Entity_CheckValkirieState10CollisionEvent:              ; CODE XREF: Entity_UpdateValkirieBattleState10+3E   j  ; was: loc_55C3A
                 bclr    #3,$23E(a5)
                 beq.s   Entity_RenderValkirieBattleState10
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Entity_RenderValkirieBattleState10
                 bsr.w   Entity_GetValkiriePlayerDeltaAndSide
                 bmi.s   Entity_RenderValkirieBattleState10
@@ -606,7 +606,7 @@ Valkirie_State12PartHideCommands:   dc.w    $BD00, $540, $600, $6C0, 0  ; was: w
 
 ; Consume damage-flash event six and return the current frame phase in Z
 Entity_TestValkirieDamageFlash:                         ; was: sub_55E68
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Entity_TestValkirieDamageFlashReturn
                 bclr    #6,$23E(a5)
                 beq.s   Entity_TestValkirieDamageFlashReturn

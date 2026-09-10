@@ -243,7 +243,7 @@ Stage18_SegmentedWormInitCollision:                     ; CODE XREF: Stage18_Seg
                 move.l  #$F010F010,$28(a5)
                 move.w  #$28,$26(a5)                    ; '('
                 move.w  #$100,$24(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.w   Entity_UpdateReturn
                 move.w  #$104,$24(a5)
                 rts

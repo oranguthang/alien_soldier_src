@@ -37,12 +37,35 @@ The Z80 driver occupies `$83E70-$84A6F` (3,072 bytes).
 then releases the bus. It remains a binary include because the reference
 repository also contains a dump rather than reconstructable Z80 source.
 
+## 68000 request interface
+
+`Sound_QueueRequest` at `$0034EE` is the game-side front end to the driver. It
+does not process controller input, despite its former generated name. The
+routine scans the four request bytes at `$FFF80A-$FFF80D`, suppresses a request
+already present there, and writes a new ID into the first free slot. The driver
+clears and prioritizes those same four slots in `Sound_SelectPendingRequest`.
+
+`Sound_QueueBGMRequest` tests bit 1 of `SoundDisableFlags`; it queues the
+request in `d0` only when BGM is enabled. Some callers submit control request
+`$01` as well as `$81-$9F` music IDs, so the name deliberately says “request”
+rather than “play track.” `Sound_PlaySFX` applies the analogous bit-2 gate.
+`Sound_QueueBGMOrStop` instead replaces a disabled BGM request with control
+request `$04`, which stops all playback, before using the common queue.
+
+The options screen exposes six normal rows: difficulty, BGM, SFX, BGM test,
+SFX test, and voice test. The BGM test uses 32-byte records consisting of one
+request byte, one padding byte, and fifteen tile words. The SFX tests map their
+numeric selections through low- and high-range request tables; the voice test
+uses the driver’s voice-DAC request range. These static consumers are the
+basis for the corresponding source names and audit records.
+
 ## Sound ID ranges
 
 | IDs | Meaning |
 |---|---|
-| `$00` | Stop all sound |
-| `$01-$0F` | Driver commands; `$05-$0F` are unused |
+| `$00` | Reinitialize/load the Z80 DAC driver |
+| `$01-$04` | Fade music, stop ordinary SFX, stop special SFX, stop all playback |
+| `$05-$0F` | Unused driver-control IDs |
 | `$10-$3F` | DAC SFX |
 | `$40-$7F` | Sequence SFX through `Sound_LowRangeSFXPointerTable` |
 | `$81-$9F` | Music/song-format sequences |

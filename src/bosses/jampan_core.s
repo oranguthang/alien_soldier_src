@@ -384,7 +384,7 @@ Boss_JampanFinishOpeningOffsetNormalization:            ; CODE XREF: Boss_Jampan
                 move.w  #3,d0
                 jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
                 rts
 ; End of function Boss_JampanNormalizeOpeningOffsetState
 ; Waits for the stage-owned object counter to clear
@@ -422,7 +422,7 @@ Boss_JampanSelectAttackState:                           ; DATA XREF: ROM:000491E
                 tst.w   (word_FF8234).w
                 ble.w   Boss_JampanSelectNoTargetsRecovery
                 move.w  (word_FFA000).w,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_JampanUseFastAttackSelectionPeriod
                 andi.w  #$3F,d0                         ; '?'
                 bne.w   Boss_JampanSelectAttackReturn
@@ -662,7 +662,7 @@ Boss_JampanSpawnOffsetAttackObjectState:                ; DATA XREF: ROM:000491F
                 move.w  #$80,$26(a0)
                 andi.w  #$7FFF,(word_FFC862).w
                 addq.w  #2,4(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_JampanUseShortOffsetAttackDelay
                 move.w  #$40,$48(a5)                    ; '@'
                 rts

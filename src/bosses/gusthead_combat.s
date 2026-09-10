@@ -1,6 +1,6 @@
 Boss_GustheadSpawnFragmentCluster:                      ; CODE XREF: Boss_GustheadBeginFragmentPattern+4E   j  ; was: sub_3FA7C
                                         ; Boss_GustheadBeginFinalPhaseTransitionState+4E   p
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_GustheadSpawnFragmentClusterReturn
                 move.w  #2,d3
                 move.w  $674(a5),d6
@@ -326,7 +326,7 @@ Boss_GustheadFinalBattleAttackState:                    ; DATA XREF: ROM:0003F2A
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadMoveTowardVerticalTarget
                 move.w  (dword_FFA900).w,d1
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_GustheadOffsetArenaAngleForRightSide
                 addi.w  #$40,d1                         ; '@'
                 bra.s   Boss_GustheadCheckFinalBattleAttackAngle

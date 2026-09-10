@@ -16,7 +16,7 @@ RegionRestricted:                                       ; CODE XREF: Sys_CheckRe
                 clr.w   (word_FFFF28).w
                 jsr     (Sys_InitFullGame).l
                 move.b  #4,d0
-                jsr     (Input_ProcessButtons).l
+                jsr     (Sound_QueueRequest).l
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 jsr     (Gfx_QueueLargeFontDMACommand81).l

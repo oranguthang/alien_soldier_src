@@ -298,7 +298,7 @@ Boss_ZLeoPrepareIntroMovement:                          ; CODE XREF: Boss_ZLeoIn
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 move.b  #$95,d0
-                jsr     (Sys_WaitVBlank).l
+                jsr     (Sound_QueueBGMRequest).l
 ; End of function Debug_ZLeoPositionAndStartIntro
 ; Count down the intro hold, play its cue, and hand off to battle entry
 Boss_ZLeoRunIntroCountdown:                             ; DATA XREF: ROM:00051B92   o  ; was: sub_51EB6

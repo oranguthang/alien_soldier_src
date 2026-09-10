@@ -221,7 +221,7 @@ Boss_TerobusterUpdateMetaspriteAndProjectile:           ; CODE XREF: Boss_Terobu
 ; Periodically spawns homing missiles from Terobuster boss body position
 Boss_TerobusterSpawnHomingMissile:                      ; CODE XREF: Boss_TerobusterDecisionState:Boss_TerobusterMissileAttackAUpdate   p  ; was: sub_38E1C
                                         ; Boss_TerobusterDecisionState:Boss_TerobusterMissileAttackBUpdate   p
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Boss_TerobusterTrySpawnHomingMissile
                 cmpi.w  #$1190,$BC(a5)
                 bmi.s   Boss_TerobusterSpawnHomingMissileReturn

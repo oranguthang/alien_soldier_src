@@ -179,7 +179,7 @@ Boss_ShellshogunPreBattleDelayState:                    ; DATA XREF: ROM:0003952
                 moveq   #4,d0
                 jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
 Boss_ShellshogunPreBattleDelayReturn:                   ; CODE XREF: Boss_ShellshogunPreBattleDelayState+1E   j  ; was: locret_39756
                 rts
 ; End of function Boss_ShellshogunPreBattleDelayState

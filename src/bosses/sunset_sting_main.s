@@ -182,7 +182,7 @@ Boss_SunsetStingIntroCheckEntryComplete:                ; CODE XREF: Boss_Sunset
 Boss_SunsetStingStartBattleBanner:                      ; was: sub_42C74
                 jsr     (UI_StartBossMessage).l
                 move.b  #$8A,d0
-                jsr     (Input_CheckButtonMode).l
+                jsr     (Sound_QueueBGMOrStop).l
                 rts
 ; End of function Boss_SunsetStingStartBattleBanner
 ; Oscillates vertically while the battle-entry banner remains active
@@ -408,7 +408,7 @@ Boss_SunsetStingRotateSegmentsPositiveSelect:           ; CODE XREF: Boss_Sunset
                 bne.w   Boss_SunsetStingReturn
                 jsr     (RandomNumber).l
                 andi.b  #$3F,d0                         ; '?'
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_SunsetStingRotateSegmentsPositiveArm
                 lsr.b   #1,d0
 Boss_SunsetStingRotateSegmentsPositiveArm:              ; CODE XREF: Boss_SunsetStingRotateSegmentsPositiveState+88   j  ; was: loc_42F54
@@ -490,7 +490,7 @@ Boss_SunsetStingRotateSegmentsNegativeSelect:           ; CODE XREF: Boss_Sunset
                 bne.w   Boss_SunsetStingReturn
                 jsr     (RandomNumber).l
                 andi.b  #$7F,d0
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   Boss_SunsetStingRotateSegmentsNegativeArm
                 lsr.b   #1,d0
 Boss_SunsetStingRotateSegmentsNegativeArm:              ; CODE XREF: Boss_SunsetStingRotateSegmentsNegativeState+8A   j  ; was: loc_43034

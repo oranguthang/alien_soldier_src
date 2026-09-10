@@ -295,7 +295,7 @@ Boss_MissirayCheckPlayerProximity:                      ; CODE XREF: Boss_Missir
                 bmi.s   loc_5475A
                 jsr     (Physics_GetPlayerDelta).l
                 move.w  #$20,d1                         ; ' '
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 beq.s   loc_5474E
                 add.w   d1,d1
 loc_5474E:                                              ; CODE XREF: Boss_MissirayCheckPlayerProximity+1C   j

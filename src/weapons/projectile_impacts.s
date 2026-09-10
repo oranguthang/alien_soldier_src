@@ -82,7 +82,7 @@ Weapon_HandleExplosiveImpact_InitExplosion:             ; CODE XREF: Weapon_Hand
                 move.l  #SharedCombatSpriteAnimation01,8(a5)
                 clr.w   $C(a5)
                 move.w  #5,$26(a5)
-                tst.w   (word_FFFF0E).w
+                tst.w   (DifficultyMode).w
                 bne.s   Weapon_HandleExplosiveImpact_Return
                 move.w  #6,$26(a5)
 Weapon_HandleExplosiveImpact_Return:                    ; CODE XREF: Weapon_HandleExplosiveImpact+60   j  ; was: locret_18B92
