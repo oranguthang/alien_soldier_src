@@ -287,7 +287,7 @@
                 include "src/bosses/unidentified_seven_force.s"
                 include "src/bosses/valkirie_alternate.s"
                 include "src/bosses/sylpheed_core.s"
-                include "src/bosses/sylpheed_rendering.s"
+                include "src/rendering/seven_forces_metasprites.s"
                 include "src/data/pre_sound_padding.s"
                 include "src/sound/driver_core.s"
                 include "src/sound/fades_and_envelopes.s"

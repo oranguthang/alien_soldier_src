@@ -2084,6 +2084,27 @@ the Sylpheed/Sirene projectile names are player states, velocity helpers, and
 renderers. None of those routines accesses the named boss entity or performs
 the operation claimed by the old name.
 
+The shared Seven Forces metasprite-data pass then reduced the address-derived
+unknown count from 5,974 to 5,930 and raised provenance to 9,893 mappings. All
+44 anonymous definitions and the one inherited semantic definition in the
+`0x059D2C-0x05A43B` module now have exact static audit records, taking the
+registry to 5,706 entries. The 435-line module has zero live address-derived
+definitions.
+
+The old `bosses/sylpheed_rendering.s` ownership was false: the range contains
+metasprite initialization tables for Valkirie, Medusa, Sylpheed, Artemis,
+Sirene, alternate Valkirie, and the unidentified Seven Force. It now lives at
+`rendering/seven_forces_metasprites.s`. Each form's `a0`, `a1`, and `a2`
+inputs are identified as part descriptors, initial angles, and packed parent
+links from the reads in `Sprite_InitMetaspriteComplex`; the tables stored at
+object offset `$2FC` are identified as pose-angle targets from their later use
+by `Anim_CalculateInterpolationDeltas`.
+
+The former `Boss_SylpheedSetGraphics` also has no Sylpheed reference. Its only
+visible behavior is alternating object graphics word `$E` between `$C4D6` and
+`$C4DF` from global-frame bit zero, so the narrower
+`Object_SelectAlternatingGraphicsFrame` name replaces the unsupported owner.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

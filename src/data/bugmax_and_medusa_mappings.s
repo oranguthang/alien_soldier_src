@@ -77,7 +77,7 @@ off_ECBDC:      dc.w    word_ECBB8-*                    ; DATA XREF: Projectile_
                 dc.w    $E900, $500, $F8F8
                 dc.w    $E904, $500, $F8F8
                 dc.w    $E908, 0, $FCFC
-word_ECC86:     dc.w    $4E, 0, $FAE7                   ; DATA XREF: ROM:off_59D42   o
+word_ECC86:     dc.w    $4E, 0, $FAE7                   ; DATA XREF: ROM:SevenForcesRotationFrameTable0   o
                                         ; ROM:00059D7E   o
                 dc.w    $8042, $E00, $F2EF
 word_ECC92:     dc.w    $8036, $E00, $F2EF              ; DATA XREF: ROM:00059D46   o
@@ -96,7 +96,7 @@ word_ECCBC:     dc.w    $1867, 0, $90D                  ; DATA XREF: ROM:00059D5
                                         ; ROM:00059D66   o
                 dc.w    $985B, $B00, $F1F5
 word_ECCC8:     dc.w    $984F, $E00, $F3F3              ; DATA XREF: ROM:00059D5E   o
-                                        ; ROM:off_59D62   o
+                                        ; ROM:SevenForcesRotationFrameTable1   o
                 dc.w    $184E, 0, $FD12
                 dc.w    $9842, $E00, $F5F2
 word_ECCDA:     dc.w    $8074, $A00, $F3F5              ; DATA XREF: ROM:00059D82   o
@@ -116,8 +116,8 @@ word_ECD04:     dc.w    $188F, 0, $FCEC                 ; DATA XREF: ROM:00059D9
                                         ; ROM:00059DA6   o
                 dc.w    $9886, $A00, $F4F4
 word_ECD10:     dc.w    $987D, $A00, $F4F4              ; DATA XREF: ROM:00059D9E   o
-                                        ; ROM:off_59DA2   o
-word_ECD16:     dc.w    $88D9, $900, $F7F3              ; DATA XREF: ROM:off_59DC2   o
+                                        ; ROM:SevenForcesRotationFrameTable2   o
+word_ECD16:     dc.w    $88D9, $900, $F7F3              ; DATA XREF: ROM:SevenForcesRotationFrameTable3   o
                                         ; ROM:00059DFE   o
 word_ECD1C:     dc.w    $98D3, $900, $F7F3              ; DATA XREF: ROM:00059DC6   o
                                         ; ROM:00059DFA   o
@@ -132,8 +132,8 @@ word_ECD34:     dc.w    $90C4, $600, $F5F8              ; DATA XREF: ROM:00059DD
 word_ECD3A:     dc.w    $90CA, $A00, $F5F6              ; DATA XREF: ROM:00059DDA   o
                                         ; ROM:00059DE6   o
 word_ECD40:     dc.w    $90D3, $900, $F7F6              ; DATA XREF: ROM:00059DDE   o
-                                        ; ROM:off_59DE2   o
-word_ECD46:     dc.w    $8105, $D00, $F7EE              ; DATA XREF: ROM:off_59E02   o
+                                        ; ROM:SevenForcesRotationFrameTable4   o
+word_ECD46:     dc.w    $8105, $D00, $F7EE              ; DATA XREF: ROM:SevenForcesRotationFrameTable5   o
                                         ; ROM:00059E3E   o
 word_ECD4C:     dc.w    $101, $500, $F6FF               ; DATA XREF: ROM:00059E06   o
                                         ; ROM:00059E3A   o
@@ -153,9 +153,9 @@ word_ECD82:     dc.w    $8F5, $700, $EDEE               ; DATA XREF: ROM:00059E1
                                         ; ROM:00059E26   o
                 dc.w    $88EF, $600, $F5FE
 word_ECD8E:     dc.w    $901, $500, $F6F2               ; DATA XREF: ROM:00059E1E   o
-                                        ; ROM:off_59E22   o
+                                        ; ROM:SevenForcesRotationFrameTable6   o
                 dc.w    $88FD, $500, $F902
-word_ECD9A:     dc.w    $891D, $500, $F8F8              ; DATA XREF: ROM:off_59E42   o
+word_ECD9A:     dc.w    $891D, $500, $F8F8              ; DATA XREF: ROM:SevenForcesRotationFrameTable7   o
                                         ; ROM:00059E7E   o
 word_ECDA0:     dc.w    $8921, $500, $F8F8              ; DATA XREF: ROM:00059E46   o
                                         ; ROM:00059E7A   o
@@ -170,9 +170,9 @@ word_ECDB8:     dc.w    $9111, $500, $F8F9              ; DATA XREF: ROM:00059E5
 word_ECDBE:     dc.w    $9115, $500, $F9FA              ; DATA XREF: ROM:00059E5A   o
                                         ; ROM:00059E66   o
 word_ECDC4:     dc.w    $9119, $500, $F9F9              ; DATA XREF: ROM:00059E5E   o
-                                        ; ROM:off_59E62   o
+                                        ; ROM:SevenForcesRotationFrameTable8   o
 word_ECDCA:     dc.w    $961, $100, $4EC                ; DATA XREF: Boss_MedusaIntroMove+10   o
-                                        ; ROM:off_59E94   o
+                                        ; ROM:Boss_ValkirieMetaspritePartDescriptors   o
                 dc.w    $956, $200, $ECEC
                 dc.w    $959, $D00, $4F4
                 dc.w    $894A, $E00, $ECF4

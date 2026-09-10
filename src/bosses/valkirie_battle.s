@@ -58,11 +58,11 @@ Boss_ValkirieIntroStop:                                 ; DATA XREF: Boss_Valkir
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$19,d7
-                movea.l #off_59E94,a0
-                movea.l #word_59EFC,a1
-                movea.l #word_59F16,a2
+                movea.l #Boss_ValkirieMetaspritePartDescriptors,a0
+                movea.l #Boss_ValkirieMetaspriteInitialAngles,a1
+                movea.l #Boss_ValkirieMetaspritePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
-                move.l  #word_59F4A,$2FC(a5)
+                move.l  #Boss_ValkirieMetaspritePoseAngles,$2FC(a5)
                 move.l  #word_563E6,$35C(a5)
                 move.w  #$42C,(a5)
                 move.w  #$CC00,2(a5)

@@ -38,11 +38,11 @@ Boss_ValkirieAlternateInit:                             ; DATA XREF: Boss_Valkir
                 movea.w a5,a4
                 move.w  #$8300,(dword_FF8040).w
                 moveq   #$17,d7
-                movea.l #off_5A2A2,a0
-                movea.l #word_5A302,a1
-                movea.l #word_5A31A,a2
+                movea.l #Boss_ValkirieAlternateMetaspritePartDescriptors,a0
+                movea.l #Boss_ValkirieAlternateMetaspriteInitialAngles,a1
+                movea.l #Boss_ValkirieAlternateMetaspritePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
-                move.l  #word_5A34A,$2FC(a5)
+                move.l  #Boss_ValkirieAlternateMetaspritePoseAngles,$2FC(a5)
                 move.l  #Boss_ValkirieAlternatePoseKeyframeData,$35C(a5)
                 move.w  #$440,(a5)
                 move.w  #$CC00,2(a5)

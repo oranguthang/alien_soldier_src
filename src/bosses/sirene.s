@@ -56,11 +56,11 @@ Boss_SireneIntroStop:                                   ; CODE XREF: Boss_Sirene
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$1B,d7
-                movea.l #off_5A1D4,a0
-                movea.l #word_5A244,a1
-                movea.l #word_5A260,a2
+                movea.l #Boss_SireneMetaspritePartDescriptors,a0
+                movea.l #Boss_SireneMetaspriteInitialAngles,a1
+                movea.l #Boss_SireneMetaspritePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
-                move.l  #word_5A298,$2FC(a5)
+                move.l  #Boss_SireneMetaspritePoseAngles,$2FC(a5)
                 move.l  #word_57D18,$35C(a5)
                 move.w  #$434,(a5)
                 move.w  #$CC00,2(a5)

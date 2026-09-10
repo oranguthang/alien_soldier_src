@@ -374,7 +374,7 @@
     { "file": "src/bosses/unidentified_seven_force.s", "subsystem": "bosses", "start": "0x058C62", "end": "0x058FED" },
     { "file": "src/bosses/valkirie_alternate.s", "subsystem": "bosses", "start": "0x058FEE", "end": "0x0593D3" },
     { "file": "src/bosses/sylpheed_core.s", "subsystem": "bosses", "start": "0x0593D4", "end": "0x059D2B" },
-    { "file": "src/bosses/sylpheed_rendering.s", "subsystem": "bosses", "start": "0x059D2C", "end": "0x05A43B" },
+    { "file": "src/rendering/seven_forces_metasprites.s", "subsystem": "rendering", "start": "0x059D2C", "end": "0x05A43B" },
     { "file": "src/data/pre_sound_padding.s", "subsystem": "data", "start": "0x05A43C", "end": "0x082323" },
     { "file": "src/sound/driver_core.s", "subsystem": "sound", "start": "0x082324", "end": "0x0829A9" },
     { "file": "src/sound/fades_and_envelopes.s", "subsystem": "sound", "start": "0x0829AA", "end": "0x082F6B" },

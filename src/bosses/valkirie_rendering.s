@@ -227,9 +227,9 @@ loc_566BC:                                              ; CODE XREF: Boss_Valkir
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #5,d7
-                movea.l #off_59F5E,a0
-                movea.l #word_59F76,a1
-                movea.l #word_59F7C,a2
+                movea.l #Boss_ValkirieAuxiliaryMetaspritePartDescriptors,a0
+                movea.l #Boss_ValkirieAuxiliaryMetaspriteInitialAngles,a1
+                movea.l #Boss_ValkirieAuxiliaryMetaspritePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
                 move.w  #$47C,(a5)
                 move.w  #$8C00,2(a5)

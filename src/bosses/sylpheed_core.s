@@ -59,11 +59,11 @@ Boss_SylpheedBattleStart:                               ; DATA XREF: Boss_Sylphe
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$1A,d7
-                movea.l #off_5A024,a0
-                movea.l #word_5A090,a1
-                movea.l #word_5A0AC,a2
+                movea.l #Boss_SylpheedMetaspritePartDescriptors,a0
+                movea.l #Boss_SylpheedMetaspriteInitialAngles,a1
+                movea.l #Boss_SylpheedMetaspritePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
-                move.l  #word_5A0E2,$2FC(a5)
+                move.l  #Boss_SylpheedMetaspritePoseAngles,$2FC(a5)
                 move.l  #word_59C9C,$35C(a5)
                 move.w  #$444,(a5)
                 move.w  #$CC00,2(a5)

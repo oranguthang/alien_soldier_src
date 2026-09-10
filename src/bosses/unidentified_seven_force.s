@@ -27,11 +27,11 @@ Boss_UnidentifiedSevenForceInit:                        ; DATA XREF: Boss_Uniden
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$19,d7
-                movea.l #off_5A356,a0
-                movea.l #word_5A3CE,a1
-                movea.l #word_5A3EC,a2
+                movea.l #Boss_UnidentifiedSevenForceMetaspritePartDescriptors,a0
+                movea.l #Boss_UnidentifiedSevenForceMetaspriteInitialAngles,a1
+                movea.l #Boss_UnidentifiedSevenForceMetaspritePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
-                move.l  #word_5A428,$2FC(a5)
+                move.l  #Boss_UnidentifiedSevenForceMetaspritePoseAngles,$2FC(a5)
                 move.l  #Boss_UnidentifiedSevenForcePoseKeyframeData,$35C(a5)
                 move.w  #$43C,(a5)
                 move.w  #$CC00,2(a5)

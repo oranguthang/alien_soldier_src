@@ -51,11 +51,11 @@ Boss_ArtemisBattleStart:                                ; DATA XREF: Boss_Artemi
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$1D,d7
-                movea.l #off_5A0EE,a0
-                movea.l #word_5A166,a1
-                movea.l #word_5A184,a2
+                movea.l #Boss_ArtemisMetaspritePartDescriptors,a0
+                movea.l #Boss_ArtemisMetaspriteInitialAngles,a1
+                movea.l #Boss_ArtemisMetaspritePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
-                move.l  #word_5A1C0,$2FC(a5)
+                move.l  #Boss_ArtemisMetaspritePoseAngles,$2FC(a5)
                 move.l  #word_5886C,$35C(a5)
                 move.w  #$438,(a5)
                 move.w  #$8C00,2(a5)

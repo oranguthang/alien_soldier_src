@@ -49,11 +49,11 @@ Boss_MedusaAttackState2:                                ; DATA XREF: Boss_Medusa
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$14,d7
-                movea.l #off_59F88,a0
-                movea.l #word_59FDC,a1
-                movea.l #word_59FF2,a2
+                movea.l #Boss_MedusaMetaspritePartDescriptors,a0
+                movea.l #Boss_MedusaMetaspriteInitialAngles,a1
+                movea.l #Boss_MedusaMetaspritePartLinks,a2
                 jsr     (Sprite_InitMetaspriteComplex).l
-                move.l  #word_5A01C,$2FC(a5)
+                move.l  #Boss_MedusaMetaspritePoseAngles,$2FC(a5)
                 move.l  #word_57132,$35C(a5)
                 move.w  #$430,(a5)
                 move.w  #$CC00,2(a5)
