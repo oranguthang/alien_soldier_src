@@ -3,7 +3,7 @@ Enemy_ConvertToAlternateDefeatProjectile:               ; CODE XREF: Enemy_Homin
                 clr.w   $24(a5)
                 clr.b   $21(a5)
                 clr.b   $22(a5)
-                move.l  #off_EA69C,8(a5)
+                move.l  #Enemy_ProjectileAnimation08,8(a5)
                 clr.w   $C(a5)
                 move.w  #$10,$48(a5)
                 move.l  #$FFFB2000,$1C(a5)

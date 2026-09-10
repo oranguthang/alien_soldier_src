@@ -2735,3 +2735,21 @@ and symmetric claw-angle consumers and remain unchanged. This pass adds 125
 provenance mappings and 125 audit records, raising the totals from 11,258 to
 11,383 and from 7,463 to 7,588. Address-derived definitions fall from 4,782 to
 4,657, and the rebuilt canonical Japanese ROM remains byte-identical.
+
+The `0x0EA05A-0x0EA86B` animation-data audit separates the former
+`projectile_and_bird_animation_mappings.s` at the exact `0x0EA6B4` owner
+boundary. The 387-line `enemy_projectile_animation_mappings.s` contains the
+ten streams selected by `Enemy_ProjectileAnimationPointers` and their shared
+sprite mappings. The 133-line `bird_animation_mappings.s` contains the four
+streams selected by `Enemy_BirdAnimationMappings` and their mappings. This
+natural split takes the layout from 347 to 348 modules.
+
+All 58 definitions now state the consumer-proven family and format. Animation
+suffixes match the selector-table index; sprite-mapping suffixes preserve ROM
+order without inventing pose names. The relative mapping-and-delay entries and
+their restart or termination words establish the stream format independently
+of visual inspection. This pass adds 58 provenance mappings and 58 audit
+records, raising the totals from 11,383 to 11,441 and from 7,588 to 7,646.
+Address-derived definitions fall from 4,657 to 4,599. The preservation build
+remains the unchanged canonical Japanese ROM. The complete project suite then
+passes all 37 tests against this split and rename set.

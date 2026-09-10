@@ -368,16 +368,16 @@ Anim_UpdateProjectileAnimation_Return:                  ; CODE XREF: Anim_Update
                 rts
 ; End of function Anim_UpdateProjectileAnimation
 ; ---------------------------------------------------------------------------
-Enemy_ProjectileAnimationPointers:  dc.l    off_EA5DC   ; DATA XREF: Anim_UpdateProjectileAnimation+8   r  ; was: off_2CA90
-                dc.l    off_EA5B8
-                dc.l    off_EA5F8
-                dc.l    off_EA61C
-                dc.l    off_EA634
-                dc.l    off_EA64C
-                dc.l    off_EA664
-                dc.l    off_EA67C
-                dc.l    off_EA69C
-                dc.l    off_EA6A8
+Enemy_ProjectileAnimationPointers:  dc.l    Enemy_ProjectileAnimation00  ; DATA XREF: Anim_UpdateProjectileAnimation+8   r  ; was: off_2CA90
+                dc.l    Enemy_ProjectileAnimation01
+                dc.l    Enemy_ProjectileAnimation02
+                dc.l    Enemy_ProjectileAnimation03
+                dc.l    Enemy_ProjectileAnimation04
+                dc.l    Enemy_ProjectileAnimation05
+                dc.l    Enemy_ProjectileAnimation06
+                dc.l    Enemy_ProjectileAnimation07
+                dc.l    Enemy_ProjectileAnimation08
+                dc.l    Enemy_ProjectileAnimation09
 
 ; Sets horizontal velocity based on entity flip direction
 Physics_SetHorizontalVelocityByFlip:                    ; CODE XREF: Enemy_ProjectileAttackInit+9E   j  ; was: sub_2CAB8
@@ -444,13 +444,13 @@ Sprite_SetDirectionalAnimation:                         ; CODE XREF: Enemy_Calcu
                 rts
 ; End of function Enemy_CalculateDirectionalSprite
 ; ---------------------------------------------------------------------------
-Enemy_DirectionalAnimationPointers: dc.l    off_EA61C   ; DATA XREF: Enemy_CalculateDirectionalSprite+12   o  ; was: off_2CB56
-                dc.l    off_EA664
-                dc.l    off_EA634
-                dc.l    off_EA664+1
-                dc.l    off_EA61C+1
-                dc.l    off_EA634+1
-                dc.l    off_EA64C
-                dc.l    off_EA634
+Enemy_DirectionalAnimationPointers: dc.l    Enemy_ProjectileAnimation03  ; DATA XREF: Enemy_CalculateDirectionalSprite+12   o  ; was: off_2CB56
+                dc.l    Enemy_ProjectileAnimation06
+                dc.l    Enemy_ProjectileAnimation04
+                dc.l    Enemy_ProjectileAnimation06+1
+                dc.l    Enemy_ProjectileAnimation03+1
+                dc.l    Enemy_ProjectileAnimation04+1
+                dc.l    Enemy_ProjectileAnimation05
+                dc.l    Enemy_ProjectileAnimation04
 Enemy_DirectionalSpriteOffsets: dc.w    $12F8, $C06, 0, $F406, $EEF8, $F4E8, $E4, $CE8  ; was: word_2CB76
                                         ; DATA XREF: Enemy_CalculateDirectionalSprite+36   o

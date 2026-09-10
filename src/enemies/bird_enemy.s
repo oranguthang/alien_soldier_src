@@ -32,10 +32,10 @@ Enemy_UpdateBirdAnimation_Return:                       ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdateBirdAnimation
 ; ---------------------------------------------------------------------------
-Enemy_BirdAnimationMappings:    dc.l    off_EA7E0       ; DATA XREF: Enemy_UpdateBirdAnimation+8   r  ; was: off_2DAA0
-                dc.l    off_EA814
-                dc.l    off_EA848
-                dc.l    off_EA85C
+Enemy_BirdAnimationMappings:    dc.l    Enemy_BirdAnimation00  ; DATA XREF: Enemy_UpdateBirdAnimation+8   r  ; was: off_2DAA0
+                dc.l    Enemy_BirdAnimation01
+                dc.l    Enemy_BirdAnimation02
+                dc.l    Enemy_BirdAnimation03
 
 ; Updates sprite horizontal flip based on velocity
 Enemy_UpdateHorizontalFlipFromVelocity:                 ; CODE XREF: Enemy_BirdController+5C   j  ; was: sub_2DAB0
