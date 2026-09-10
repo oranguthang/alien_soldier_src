@@ -11,7 +11,7 @@ Input_ReadPlayerInput_Return:                           ; CODE XREF: Input_ReadP
 ; End of function Input_ReadPlayerInput
 ; Updates weapon switch timer and cooldown
 Player_UpdateWeaponSwitchTimer:                         ; CODE XREF: Player_Update:Player_Update_RunState   p  ; was: sub_16B24
-                                        ; sub_19DAE:loc_19DC8   p
+                                        ; sub_19DAE:Player_UpdateSevenForcesBattleDispatchState   p
                 subq.w  #1,(word_FF826A).w
                 bmi.s   Player_UpdateWeaponSwitchTimer_CheckRestart
                 btst    #4,$6A(a5)
@@ -33,7 +33,7 @@ Player_UpdateWeaponSwitchTimer_UpdatePositionDelta:     ; CODE XREF: Player_Upda
 ; End of function Player_UpdateWeaponSwitchTimer
 ; Updates player direction bit from controller state
 Player_UpdateDirectionBit:                              ; CODE XREF: Player_Update:loc_15038   p  ; was: sub_16B5C
-                                        ; sub_19DAE:loc_19DE4   p
+                                        ; sub_19DAE:Player_UpdateSevenForcesBattleFinalizeFrame   p
                 btst    #5,(byte_FF8244).w
                 bne.s   Player_UpdateDirectionBit_Return
                 bclr    #7,$E(a5)
@@ -44,7 +44,7 @@ Player_UpdateDirectionBit_Return:                       ; CODE XREF: Player_Upda
 ; End of function Player_UpdateDirectionBit
 ; Sets player hit box collision boundaries with direction mirroring
 Player_SetHitbox:                                       ; CODE XREF: Player_Update+AE   p  ; was: sub_16B74
-                                        ; Boss_SylpheedSpawnProjectile1+48   p
+                                        ; Player_UpdateSevenForcesBattle+48   p
                 move.w  $5C(a5),d0
                 beq.s   Player_SetHitbox_Return
                 clr.w   $5C(a5)
@@ -73,7 +73,7 @@ Player_HitboxBoundsTable:   dc.l    $E01EF808, $FC1EF808, $E018F808, $E01CF808, 
 
 ; Calculates player center position from hitbox bounds
 Player_CalculateCenterPosition:                         ; CODE XREF: Player_Update+B6   j  ; was: sub_16BCE
-                                        ; Boss_SylpheedSpawnProjectile1+52   j
+                                        ; Player_UpdateSevenForcesBattle+52   j
                 move.b  $2A(a5),d0
                 ext.w   d0
                 move.b  $2B(a5),d1
@@ -94,7 +94,7 @@ Player_CalculateCenterPosition:                         ; CODE XREF: Player_Upda
 ; End of function Player_CalculateCenterPosition
 ; Manages player invulnerability and flash timer
 Player_UpdateInvulnerabilityTimer:                      ; CODE XREF: Player_Update+AA   p  ; was: sub_16C00
-                                        ; Boss_SylpheedSpawnProjectile1+42   p
+                                        ; Player_UpdateSevenForcesBattle+42   p
                 bset    #7,2(a5)
                 subq.w  #1,$5E(a5)
                 bpl.s   Player_UpdateInvulnerabilityTimer_Active

@@ -2046,6 +2046,44 @@ establish which named Seven Force form type `$43C` represents, so this pass
 deliberately preserves the `UnidentifiedSevenForce` identity rather than
 turning a visual or ordinal guess into source-level fact.
 
+The player/Seven Forces ownership pass corrected a structural Sonnet error at
+`0x019DAE-0x01A27F`. The first `$C2` bytes had been left at the end of
+`cutscenes/stage_intros.s`, while the following contiguous range was called
+`bosses/seven_force_projectiles.s`. Both ranges operate on the player object;
+`Player_Update` selects them through special battle flags set by Stage 3 and
+the Seven Forces transition. They now form one 437-line, ROM-ordered module at
+`player/seven_forces_battle.s`, and `rom_layout.json` records the corrected
+cutscene/player boundary at `0x019DAD/0x019DAE`.
+
+This structural pass deliberately does not endorse the inherited mixed
+Sylpheed, Artemis, Sirene, and Destroyer Proto labels inside that module. Their
+instruction-level audit and replacement are the next reconstruction queue;
+keeping that distinction prevents a file move from being presented as proof
+of unverified names.
+
+The subsequent Seven Forces player-state pass reduced the address-derived
+unknown count from 6,009 to 5,974 and raised provenance to 9,849 mappings. All
+35 anonymous definitions and all 21 inherited semantic definitions in
+`player/seven_forces_battle.s` now have exact static audit records, taking the
+registry to 5,661 entries. The 437-line module now has zero live
+address-derived definitions.
+
+The code is a seven-entry player dispatcher for states `0/2/4/6/8/A/C`.
+States zero and two handle input, special activation, dash entry, damage, and
+player rendering; state four waits through a weapon transition; state six is
+the active dash; state eight is timed damage; state A is the defeat animation;
+and state C resets the battle state. Directional state two accelerates toward
+sine-derived velocity targets using a 16-byte input-angle map. The player
+update tail then applies its fall clamp, direction, invulnerability, hitbox,
+and center-position work.
+
+This pass rejects every inherited boss attribution in the module. The former
+`Gfx_LoadArtemisTiles` starts the player dash, `Gfx_LoadArtemisPalette` updates
+dash state six, `Boss_DestroyerProtoDefeat*` is the player's defeat path, and
+the Sylpheed/Sirene projectile names are player states, velocity helpers, and
+renderers. None of those routines accesses the named boss entity or performs
+the operation claimed by the old name.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

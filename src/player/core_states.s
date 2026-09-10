@@ -60,9 +60,9 @@ Player_Update_CheckGameplayReady:                       ; CODE XREF: Player_Upda
                 tst.w   (word_FFA216).w
                 beq.w   Player_InitInvulnerabilityState
                 btst    #0,(byte_FF8144).w
-                bne.w   Boss_SylpheedSpawnProjectile1
+                bne.w   Player_UpdateSevenForcesBattle
                 btst    #2,(byte_FF8144).w
-                bne.w   Gfx_SireneBackground
+                bne.w   Player_UpdateSevenForcesBattleVisible
                 bsr.w   Gfx_LoadPlayerPaletteData
                 bsr.w   Input_ProcessDirectionInput
                 bclr    #6,$22(a5)

@@ -101,7 +101,7 @@
                 include "src/system/object_pool_clearing.s"
                 include "src/ui/targeting_reticle.s"
                 include "src/cutscenes/stage_intros.s"
-                include "src/bosses/seven_force_projectiles.s"
+                include "src/player/seven_forces_battle.s"
                 include "src/gameplay/object_spawner.s"
                 include "src/gameplay/math_and_buffer_helpers.s"
                 include "src/gameplay/sprite_initialization.s"
