@@ -1741,6 +1741,59 @@ streams before entering the orb-attack pose. Names in this range describe
 that control flow without assigning an unsupported visual identity to the
 alternate opening.
 
+The following Z-Leo orb-sequence pass reduced the address-derived unknown
+count from 6,178 to 6,169 and raised provenance to 9,654 unique mappings. Its
+12 code and data definitions at `$05228A-$0522F5` and
+`$052CC2-$052D1B` have exact static audit records, bringing the name-audit
+total to 5,403.
+
+The four opening pose streams all issue event command `$8001`; the state at
+`$05228A` consumes event bit zero before entering state `$22`. That state
+calls `Boss_ZLeoSpawnOrb` while the selected pose is active. Its terminal
+`$FFFE` command makes the pose cursor negative, which starts state `$24` and
+the shared recovery pose. Recovery returns to attack selection only after
+that pose also terminates. This evidence replaces the old numeric `State1`,
+`State28`, and `State30` labels with roles in the observed orb sequence.
+
+The scrolling-laser entry pass reduced the address-derived unknown count from
+6,169 to 6,165 and raised provenance to 9,658 mappings. Seven definitions in
+code range `$0522F6-$0523A9` plus pose stream `$052D1C-$052D43` now have exact
+static audit records, taking the audit registry to 5,410 entries.
+
+This is the selector's alternate branch: it installs state `$26` and waits
+for event `$8001` from a dedicated entry pose. The event enables stage-motion
+flags, seeds a negative scroll velocity, and advances to state `$28`. That
+state stops the initial velocity at coordinate `$40`, keeps rendering the
+same pose, and on `$FFFE` initializes the following laser-spawn counter to
+three. The previous `AttackInit`, `AttackSequence`, and
+`ultimate move` wording overstated what these entry states alone establish.
+
+The laser-burst loop pass reduced the address-derived unknown count from
+6,165 to 6,160 and raised provenance to 9,663 mappings. Six definitions in
+`$0523AA-$0523FF` and pose stream `$052D44-$052D57` now have exact static
+audit records; the registry contains 5,416 unique entries.
+
+State `$2A` restarts the same pose whenever it reaches `$FFFE`. Each pass
+emits event `$8001`, selects one of two anchor objects, and calls
+`Projectile_ZLeoSpawnLasers`, which creates two laser projectiles. Although
+the counter begins at three, it is decremented before the signed-negative
+test, so the transition occurs after four events. The fourth event enters
+state `$2C`, enables the scrolling flag, clears its acceleration field, and
+starts an `$80`-frame interval.
+
+The scroll acceleration/cruise pass reduced the address-derived unknown count
+from 6,160 to 6,155 and raised provenance to 9,668 mappings. Seven definitions
+across `$052400-$05248D` now have exact static audit records, taking the
+registry to 5,423 entries.
+
+State `$2C` raises its local scroll rate by `$4000` per frame to a `$78000`
+ceiling, integrates four times that rate into Z-Leo's vertical base, clamps
+the base at `$180`, and updates the stage scroll for `$80` frames. State
+`$2E` then holds the established motion for a second `$80`-frame interval.
+Its expiry seeds the reverse stage coordinate and velocity, adjusts the two
+scroll bounds, and enters state `$30`. The prior numbered `final attack 1/2`
+comments conveyed none of this control flow and have been removed.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

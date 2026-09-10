@@ -2,8 +2,8 @@ Entity_EmptyState8:                                     ; DATA XREF: ROM:Entity_
                 rts
 ; End of function Entity_EmptyState8
 ; Updates Z-Leo vertical scroll position based on velocity, handles screen wrap-around boundary checks
-Boss_ZLeoScrollUpdate:                                  ; CODE XREF: Boss_ZLeoAttackSequence:loc_52438   p  ; was: sub_52EE4
-                                        ; sub_52368:loc_52456   p
+Boss_ZLeoScrollUpdate:                                  ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoRenderScrollAcceleration   p  ; was: sub_52EE4
+                                        ; Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoUpdateScrollingAttackFrame   p
                 move.l  $41C(a5),d0
                 bmi.s   loc_52EFE
                 add.l   d0,(dword_FFA90C).w
@@ -32,7 +32,7 @@ word_52F22:     dc.w    $FFFF, $7000, $FFFF, $6800, $FFFF, $4000, 0, $6000
                                         ; DATA XREF: Boss_ZLeoScrollUpdate:loc_52F14   o
 
 ; Spawn orb projectile
-Boss_ZLeoSpawnOrb:                                      ; CODE XREF: Boss_ZLeoAttackState1+1A   p  ; was: sub_52F32
+Boss_ZLeoSpawnOrb:                                      ; CODE XREF: Boss_ZLeoWaitForOrbAttackCue+1A   p  ; was: sub_52F32
                 move.w  (word_FFA000).w,d0
                 andi.w  #3,d0
                 bne.w   locret_53038
@@ -305,7 +305,7 @@ locret_53316:                                           ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_ZLeoLaserMain
 ; Spawns two Z-Leo laser projectiles at different positions with velocities and angles
-Projectile_ZLeoSpawnLasers:                             ; CODE XREF: Boss_ZLeoAttackSequence+60   p  ; was: sub_53318
+Projectile_ZLeoSpawnLasers:                             ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+60   p  ; was: sub_53318
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   locret_533BC
                 move.w  #$188,(a0)
@@ -351,7 +351,7 @@ loc_533CC:                                              ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_ZLeoLaserFall
 ; Spawns falling projectile with graphics setup and horizontal velocity based on screen position
-Projectile_ZLeoSpawnDropProjectile:                     ; CODE XREF: Boss_ZLeoAttackSequence+1A2   p  ; was: sub_533D6
+Projectile_ZLeoSpawnDropProjectile:                     ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+1A2   p  ; was: sub_533D6
                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   locret_534AA

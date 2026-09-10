@@ -1,4 +1,4 @@
-Boss_ZLeoPaletteRotate:                                 ; CODE XREF: Boss_ZLeoAttackSequence:loc_524F6   p  ; was: sub_52512
+Boss_ZLeoPaletteRotate:                                 ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:loc_524F6   p  ; was: sub_52512
                                         ; Boss_ZLeoRisingAttack+60   p
                 move.w  (word_FFA000).w,d0
                 asl.w   #3,d0
@@ -14,7 +14,7 @@ word_52530:     dc.w    $2A2, $EEE, $6C6, 0, $AEC, $40, $4E8, 0, $EEC, $62, $6EC
                                         ; Boss_ZLeoPaletteRotate+10   r
 
 ; Z-Leo rising attack phase - moves boss upward while tracking player position and spawning projectiles
-Boss_ZLeoRisingAttack:                                  ; CODE XREF: Boss_ZLeoAttackSequence+18C   j  ; was: sub_52550
+Boss_ZLeoRisingAttack:                                  ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+18C   j  ; was: sub_52550
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
@@ -111,7 +111,7 @@ loc_5267A:                                              ; CODE XREF: Boss_ZLeoRi
                 rts
 ; End of function Boss_ZLeoRisingAttack
 ; Tile update handler
-Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoAttackSequence+F2   p  ; was: sub_52682
+Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+F2   p  ; was: sub_52682
                                         ; Boss_ZLeoRisingAttack+112   p
                 movea.w #(byte_FF9604-M68K_RAM),a3
                 lea     word_5271E(pc),a4
@@ -659,23 +659,23 @@ word_52C9C:     dc.w    $218, $46, $278, $54, $FFFF, $2020, $54, $1010, $54, $FF
 word_52CB0:     dc.w    $1020, $7E, $2020, $7E, $1020, $8C, $2020, $8C, $FFFF
                                         ; DATA XREF: Boss_ZLeoRunBattleReadyPose+2A   o
                                         ; Boss_ZLeoWaitForBossMessage:Boss_ZLeoRenderBossMessageWait   o
-word_52CC2:     dc.w    $1020, $8C, $2020, $8C, $FFFE
-                                        ; DATA XREF: Boss_ZLeoAttackState1:loc_522EC   o
-word_52CCC:     dc.w    $2830, $9A, $3030, $9A, $8001, $5060, $A8, $4040, $A8, $FFFE
+Boss_ZLeoOrbRecoveryPose:   dc.w    $1020, $8C, $2020, $8C, $FFFE  ; was: word_52CC2
+                                        ; DATA XREF: Boss_ZLeoWaitForOrbAttackCue:Boss_ZLeoRenderOrbRecovery   o
+Boss_ZLeoOrbOpeningPose0:   dc.w    $2830, $9A, $3030, $9A, $8001, $5060, $A8, $4040, $A8, $FFFE  ; was: word_52CCC
                                         ; DATA XREF: Boss_ZLeoBeginAttackSelection:Boss_ZLeoOpeningPoseTable   o
-word_52CE0:     dc.w    $2830, $B6, $3030, $B6, $8001, $5060, $C4, $4040, $C4, $FFFE
+Boss_ZLeoOrbOpeningPose1:   dc.w    $2830, $B6, $3030, $B6, $8001, $5060, $C4, $4040, $C4, $FFFE  ; was: word_52CE0
                                         ; DATA XREF: Boss_ZLeoBeginAttackSelection+9E   o
-word_52CF4:     dc.w    $2830, $D2, $3030, $D2, $8001, $5060, $E0, $4040, $E0, $FFFE
+Boss_ZLeoOrbOpeningPose2:   dc.w    $2830, $D2, $3030, $D2, $8001, $5060, $E0, $4040, $E0, $FFFE  ; was: word_52CF4
                                         ; DATA XREF: Boss_ZLeoBeginAttackSelection+A2   o
-word_52D08:     dc.w    $2830, $EE, $3030, $EE, $8001, $5060, $FC, $4040, $FC, $FFFE
+Boss_ZLeoOrbOpeningPose3:   dc.w    $2830, $EE, $3030, $EE, $8001, $5060, $FC, $4040, $FC, $FFFE  ; was: word_52D08
                                         ; DATA XREF: Boss_ZLeoBeginAttackSelection+A6   o
-word_52D1C:     dc.w    $1218, $10A, $707, $10A, $1014, $118, $1A1A, $118, $340, $126, $8001, $90E, $126, $1A1A, $126, $1818
-                                        ; DATA XREF: Boss_ZLeoAttackInit+2C   o
-                                        ; sub_52368:loc_5238C   o
+Boss_ZLeoScrollingLaserEntryPose:   dc.w    $1218, $10A, $707, $10A, $1014, $118, $1A1A, $118, $340, $126, $8001, $90E, $126, $1A1A, $126, $1818  ; was: word_52D1C
+                                        ; DATA XREF: Boss_ZLeoBeginScrollingLaserAttack+2C   o
+                                        ; Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoRenderScrollingLaserEntryPose   o
                 dc.w    $134, $343C, $142, $FFFE
-word_52D44:     dc.w    $60A, $142, $A0A, $142, $8001, $103, $150, $303, $150, $FFFE
-                                        ; DATA XREF: Boss_ZLeoAttackSequence:loc_523E2   o
-                                        ; Boss_ZLeoAttackSequence+D4   o
+Boss_ZLeoScrollingLaserBurstPose:   dc.w    $60A, $142, $A0A, $142, $8001, $103, $150, $303, $150, $FFFE  ; was: word_52D44
+                                        ; DATA XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoRenderScrollingLaserBurstPose   o
+                                        ; Boss_ZLeoRunScrollingLaserEntryPose+D4   o
 word_52D58:     dc.w    $404, $15E, $FFFE               ; DATA XREF: Boss_ZLeoRisingAttack:loc_525DA   o
 word_52D5E:     dc.w    $810, $16C, $3030, $16C, $FFFE
                                         ; DATA XREF: Boss_ZLeoRisingAttack+4A   o
