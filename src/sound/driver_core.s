@@ -91,7 +91,7 @@ Sound_ReadPCMSequenceCommand:                           ; CODE XREF: Sound_Proce
                 move.b  (a4)+,d5
                 cmpi.b  #$E0,d5
                 bcs.s   Sound_DecodePCMSequenceEvent
-                jsr     Sound_CommandDispatcher(pc)     ; (pc)
+                jsr     Sound_DispatchSequenceCommand(pc)  ; (pc)
                 bra.s   Sound_ReadPCMSequenceCommand
 ; ---------------------------------------------------------------------------
 Sound_DecodePCMSequenceEvent:                           ; CODE XREF: Sound_ProcessPCMSequence+1A   j  ; was: loc_823F8
@@ -201,7 +201,7 @@ Sound_ProcessChannel:                                   ; CODE XREF: Sound_Updat
                 jsr     Sound_ParseTrackData(pc)        ; (pc)
                 jsr     Sound_UpdateChannelFrequency(pc)  ; (pc)
                 jsr     Sound_TriggerPanAnimationForNote(pc)  ; (pc)
-                bra.w   Sound_SendKeyOff
+                bra.w   Sound_SendFMKeyOn
 ; ---------------------------------------------------------------------------
 ; Update note timeout, pan animation, and vibrato between FM sequence events
 Sound_UpdateFMChannelEffects:                           ; CODE XREF: Sound_ProcessChannel+4   j  ; was: loc_8256C
@@ -220,11 +220,11 @@ Sound_ReadFMSequenceCommand:                            ; CODE XREF: Sound_Parse
                 move.b  (a4)+,d5
                 cmpi.b  #$E0,d5
                 bcs.s   Sound_DecodeFMSequenceEvent
-                jsr     Sound_CommandDispatcher(pc)     ; (pc)
+                jsr     Sound_DispatchSequenceCommand(pc)  ; (pc)
                 bra.s   Sound_ReadFMSequenceCommand
 ; ---------------------------------------------------------------------------
 Sound_DecodeFMSequenceEvent:                            ; CODE XREF: Sound_ParseTrackData+10   j  ; was: loc_82594
-                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
+                jsr     Sound_SendFMKeyOffIfAllowed(pc)  ; (pc)
                 tst.b   d5
                 bpl.s   Sound_ParseNoteData
                 jsr     Sound_CalculatePitch(pc)        ; (pc)
@@ -316,7 +316,7 @@ Sound_HandleNoteTimer:                                  ; CODE XREF: Sound_Proce
                 bset    #1,(a5)
                 tst.b   1(a5)
                 bmi.w   Sound_HandlePSGNoteTimeout
-                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
+                jsr     Sound_SendFMKeyOffIfAllowed(pc)  ; (pc)
                 addq.w  #4,sp
                 rts
 ; ---------------------------------------------------------------------------
@@ -462,7 +462,7 @@ Sound_EndPitchEnvelopeWithRest:                         ; CODE XREF: Sound_Apply
                 bset    #1,(a5)
                 tst.b   1(a5)
                 bmi.s   Sound_EndPSGPitchEnvelopeWithRest
-                bra.w   Sound_SendKeyOnIfAllowed
+                bra.w   Sound_SendFMKeyOffIfAllowed
 ; ---------------------------------------------------------------------------
 Sound_EndPSGPitchEnvelopeWithRest:                      ; CODE XREF: Sound_EndPitchEnvelopeWithRest+8   j  ; was: loc_8279A
                 bra.w   Sound_CheckPSGMute
@@ -598,7 +598,7 @@ Sound_PanAnimationSequence3:    dc.b    $C0, $80, $C0, $40, 0
 
 ; Write pan/AMS state to the PCM mailbox or the current FM channel
 Sound_WriteChannelPanAndAMS:                            ; CODE XREF: Sound_RestartPanAnimation+56   p  ; was: sub_8289A
-                                        ; Sound_SetPanAndAMS+16   j
+                                        ; Sound_SetSequencePanning+16   j
                 btst    #2,(a5)
                 bne.s   Sound_WriteChannelPanAndAMSReturn
                 cmpi.b  #6,1(a5)

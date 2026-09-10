@@ -98,50 +98,52 @@ against the in-game sound test before that label is changed.
 
 ## Sequence commands
 
-Commands `$E0-$FE` are dispatched by `Sound_CommandDispatcher`. `$FF` falls
-through to `Sound_ExtendedCommandDispatch` and reads a second command byte.
+Commands `$E0-$FE` are dispatched by `Sound_DispatchSequenceCommand`. The
+`$FF` index lands on `Sound_DispatchExtendedSequenceCommand`, which reads a
+second command byte.
 
 | Command | Meaning |
 |---:|---|
-| `$E0` | Pan and YM2612 AMS/FMS |
+| `$E0` | Replace panning bits while retaining the stored YM2612 AMS/FMS bits |
 | `$E1` | Detune |
 | `$E2` | Set communication byte |
-| `$E3` | Mute and stop track |
+| `$E3` | Silence the current FM operators, then stop the track |
 | `$E4` | Pan animation |
 | `$E5` | Separate PSG/FM volume change |
 | `$E6` | FM volume change |
 | `$E7` | Hold next note |
 | `$E8` | Note stop timeout |
-| `$E9` | YM2612 LFO and AMS/FMS |
+| `$E9` | YM2612 LFO, operator AM enable, and channel AMS/FMS |
 | `$EA` | Set tempo |
 | `$EB` | Queue another sound ID |
 | `$EC` | PSG volume change |
 | `$ED` | Write register on current FM channel |
-| `$EE` | Write register on YM2612 port 0/FM1 |
+| `$EE` | Write an arbitrary register directly on YM2612 port 0 |
 | `$EF` | Select FM instrument |
-| `$F0` | Set custom modulation parameters |
-| `$F1` | Select separate PSG/FM modulation envelopes |
+| `$F0` | Configure custom vibrato parameters |
+| `$F1` | Select separate PSG/FM pitch envelopes |
 | `$F2` | Stop track |
 | `$F3` | Set PSG noise mode |
-| `$F4` | Select modulation envelope |
-| `$F5` | Select PSG instrument |
+| `$F4` | Select pitch envelope |
+| `$F5` | Select PSG volume envelope |
 | `$F6` | Relative jump |
 | `$F7` | Counted loop |
 | `$F8` | Call relative sequence subroutine |
 | `$F9` | Return from sequence subroutine |
 | `$FA` | Set current track tick multiplier |
 | `$FB` | Add transposition |
-| `$FC` | Enable modulation |
-| `$FD` | Disable modulation |
+| `$FC` | Enable custom vibrato |
+| `$FD` | Disable custom vibrato |
 | `$FE` | Configure YM2612 channel 3 special mode |
 | `$FF $00` | Configure SSG-EG/full attack |
 | `$FF $01` | Pause or resume music |
-| `$FF $02` | Set tick multiplier for all tracks |
-| `$FF $03` | Start special fade |
-| `$FF $04` | Stop special fade |
+| `$FF $02` | Set the tick multiplier for all ten BGM tracks |
+| `$FF $03` | Request one BGM attenuation step |
+| `$FF $04` | Request restoration of the attenuated BGM volume |
 
-Relative pointers used by `$F6-$F8` are relative to the byte after the pointer
-field, matching the standard SMPS 68k pointer format.
+Relative displacements used by `$F6-$F8` are applied from the low displacement
+byte: after consuming the two-byte value, the interpreter adds it to the next
+cursor and then subtracts one.
 
 ## Envelopes and pan animation
 
@@ -262,12 +264,19 @@ bit, and retry after the same fixed sixteen-NOP delay.
 
 This corrects several generated descriptions. `Sound_CheckPauseFlag` checks
 the per-channel BGM-override bit and conditionally writes a register; it never
-reads the pause state. `Sound_CheckChannelFlags` conditionally sends key-on
-rather than returning a flag result. The former unqualified YM2612 writers
-are now explicitly `Sound_WriteYM2612Port0` and `Sound_WriteYM2612Port1`.
-Finally, `Sound_ResetDriver` is narrowed to `Sound_ResetPlaybackState`: it
-clears the 68000 playback records while preserving the driver mode byte, but
-does not reload the Z80 program.
+reads the pause state. The former unqualified YM2612 writers are now
+explicitly `Sound_WriteYM2612Port0` and `Sound_WriteYM2612Port1`. Finally,
+`Sound_ResetDriver` is narrowed to `Sound_ResetPlaybackState`: it clears the
+68000 playback records while preserving the driver mode byte, but does not
+reload the Z80 program.
+
+The later sequence-command audit also caught a reversed hardware claim. For
+YM2612 register `$28`, upper nibble `$F` enables all four operators; an upper
+nibble of zero disables them. The routine at `0x083562`, which writes
+`$F0 | channel`, is therefore `Sound_SendFMKeyOn`. The fall-through entry at
+`0x08358A`, which writes only the channel selector, is
+`Sound_SendFMKeyOff`. Their conditional wrappers and all callers now use the
+same hardware-correct terminology.
 
 The 126-line transition half is also fully audited. Manual command state 1
 applies one configured attenuation step and state `$80` restores it. The
@@ -282,3 +291,21 @@ back into hardware arbitration would obscure its independent state machine.
 The twelve words at `Sound_FMNoteFrequencyTable` are the semitone F-numbers
 used by `Sound_CalculatePitch`; keeping that tiny ROM-adjacent table at the
 module tail avoids a content-free wrapper file.
+
+The 726-line `sound/sequence_commands.s` module is now audited at every one of
+its 102 definitions. Its two dispatch tables explicitly cover commands
+`$E0-$FE` and extended commands `$FF $00-$04`; each handler name follows the
+field or hardware action established by its instructions. In particular,
+`$EE` writes arbitrary YM2612 port-0 registers rather than an FM1-only API,
+`$F0`, `$FC`, and `$FD` control custom vibrato, `$F1`/`$F4` select pitch
+envelopes, and `$F5` selects a PSG volume envelope. The FM instrument path now
+names its 25-byte records, operator-register order, algorithm carrier masks,
+and carrier-only attenuation update directly.
+
+The former 144-line `sound/global_control.s` was not retained as an artificial
+small module: its four handlers are the contiguous implementation tail of the
+extended command table and now remain with that table through `0x083E6F`.
+Those handlers pause or resume the ten BGM PCM/FM/PSG records, assign their
+common tick multiplier, request one manual attenuation step, and request its
+restoration. The merged module is slightly above the preferred 700-line band
+but remains cohesive and below the 1,000-line ceiling.

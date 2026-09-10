@@ -101,7 +101,7 @@ Sound_RefreshBGMFMChannels:                             ; CODE XREF: Sound_LoadB
                 lea     (word_FFF870).w,a5
                 moveq   #5,d4
 Sound_RefreshNextBGMFMChannel:                          ; CODE XREF: Sound_LoadBGMRequest+120   j  ; was: loc_83086
-                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
+                jsr     Sound_SendFMKeyOffIfAllowed(pc)  ; (pc)
                 adda.w  d6,a5
                 dbf     d4,Sound_RefreshNextBGMFMChannel
                 moveq   #2,d4
@@ -305,7 +305,7 @@ Sound_StopNextSFXChannel:                               ; CODE XREF: Sound_StopS
                 moveq   #0,d3
                 move.b  1(a5),d3
                 bmi.s   Sound_RestoreBGMPSGChannel
-                jsr     Sound_SendKeyOnIfAllowed(pc)    ; (pc)
+                jsr     Sound_SendFMKeyOffIfAllowed(pc)  ; (pc)
                 cmpi.b  #4,d3
                 bne.s   Sound_SelectOverriddenBGMFMChannel
                 tst.b   (word_FFFB40).w
@@ -326,7 +326,7 @@ Sound_RestoreBGMFMChannel:                              ; CODE XREF: Sound_StopS
                 bclr    #2,(a5)
                 bset    #1,(a5)
                 move.b  $B(a5),d0
-                jsr     Sound_SetFMInstrument(pc)       ; (pc)
+                jsr     Sound_ProgramFMInstrument(pc)   ; (pc)
                 movea.l a3,a5
                 bra.s   Sound_ContinueSFXChannelStopLoop
 ; ---------------------------------------------------------------------------
@@ -363,7 +363,7 @@ Sound_StopSpecialSFXAndRestoreBGMChannels:              ; CODE XREF: Sound_Dispa
                 bclr    #7,(a5)
                 btst    #2,(a5)
                 bne.s   Sound_StopSpecialSFXPSGChannel
-                jsr     Sound_SendKeyOn(pc)             ; (pc)
+                jsr     Sound_SendFMKeyOff(pc)          ; (pc)
                 lea     (byte_FFF900).w,a5
                 bclr    #2,(a5)
                 bset    #1,(a5)
@@ -371,7 +371,7 @@ Sound_StopSpecialSFXAndRestoreBGMChannels:              ; CODE XREF: Sound_Dispa
                 bpl.s   Sound_StopSpecialSFXPSGChannel
                 movea.l (dword_FFF820).w,a1
                 move.b  $B(a5),d0
-                jsr     Sound_SetFMInstrument(pc)       ; (pc)
+                jsr     Sound_ProgramFMInstrument(pc)   ; (pc)
 Sound_StopSpecialSFXPSGChannel:                         ; CODE XREF: Sound_StopSpecialSFXAndRestoreBGMChannels+6   j  ; was: loc_83372
                                         ; Sound_StopSpecialSFXAndRestoreBGMChannels+10   j
                 lea     (word_FFFB70).w,a5
@@ -427,7 +427,7 @@ Sound_FadeNextBGMFMChannel:                             ; CODE XREF: Sound_Updat
                 bra.s   Sound_ContinueBGMFMFadeLoop
 ; ---------------------------------------------------------------------------
 Sound_ApplyBGMFMFadeVolume:                             ; CODE XREF: Sound_UpdateMusicFadeOut+30   j  ; was: loc_833F4
-                jsr     Sound_ApplyVolume(pc)           ; (pc)
+                jsr     Sound_ApplyFMVolumeOffset(pc)   ; (pc)
 Sound_ContinueBGMFMFadeLoop:                            ; CODE XREF: Sound_UpdateMusicFadeOut+2A   j  ; was: loc_833F8
                                         ; Sound_UpdateMusicFadeOut+36   j
                 adda.w  #$30,a5                         ; '0'
@@ -475,7 +475,7 @@ Sound_ProcessTempoTickReturn:                           ; CODE XREF: Sound_Proce
                 rts
 ; End of function Sound_ProcessTempoTick
 ; Maximize total level and release rate for all operators of the current FM channel
-Sound_SilenceCurrentFMOperators:                        ; CODE XREF: Sound_MuteAndStop   p  ; was: sub_83454
+Sound_SilenceCurrentFMOperators:                        ; CODE XREF: Sound_SilenceFMOperatorsAndStopChannel   p  ; was: sub_83454
                 moveq   #3,d4
                 moveq   #$40,d3                         ; '@'
                 moveq   #$7F,d1

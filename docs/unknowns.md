@@ -2419,13 +2419,14 @@ and the playback-state reset used by BGM loading. All callers across the sound
 driver use those narrowed interfaces.
 
 The pass rejects the Sonnet claims that channel override bit 2 was a pause
-flag, that a fall-through key-on routine merely checked flags, and that both
-YM2612 ports shared one unqualified register writer. It also narrows
-`Sound_ResetDriver` because the routine clears only the 68000 playback region
-and preserves its mode byte; Z80 loading is a separate entry. Thirteen live
-address-derived definitions are removed, lowering the ceiling from 5,363 to
-5,350. Provenance rises from 10,461 to 10,474 mappings, and 27 exact-address
-records take the audit registry from 6,571 to 6,598 entries.
+flag and that both YM2612 ports shared one unqualified register writer. It
+also narrows `Sound_ResetDriver` because the routine clears only the 68000
+playback region and preserves its mode byte; Z80 loading is a separate entry.
+Its initial direction assigned to the conditional key-register helper is
+superseded by the hardware-bit correction in the later sequence-command pass.
+Thirteen live address-derived definitions are removed, lowering the ceiling
+from 5,363 to 5,350. Provenance rises from 10,461 to 10,474 mappings, and 27
+exact-address records take the audit registry from 6,571 to 6,598 entries.
 
 The volume-transition pass audits all 18 definitions in the natural 126-line
 `sound/volume_transitions.s` module at `0x0836A0-0x08381F`. Static state flow
@@ -2445,6 +2446,47 @@ table would create an artificial wrapper. Seventeen address-derived
 definitions are removed, lowering the ceiling from 5,350 to 5,333; provenance
 rises from 10,474 to 10,491 mappings, and 18 audit records take the registry
 from 6,598 to 6,616 entries.
+
+The sequence-command pass audits all 78 definitions in the cohesive 583-line
+`sound/sequence_commands.s` module at `0x083820-0x083CED`. Static parser and
+consumer flow confirms both ordered dispatch tables, the complete `$E0-$FE`
+command family, extended prefix `$FF`, FM instrument programming, carrier-only
+volume adjustment, stopped-SFX BGM restoration, relative control flow, and
+FM3/SSG-EG configuration. Forty live address-derived definitions are removed,
+lowering the project ceiling from 5,333 to 5,293. The newly restored markers,
+including the original `loc_83928` identity recovered from the initial
+disassembly, raise provenance from 10,491 to 10,532 mappings; 78 exact-address
+records take the audit registry from 6,616 to 6,694 entries.
+
+This pass rejects several plausible but incorrect generated descriptions.
+Command `$E0` replaces panning while preserving the stored AMS/FMS bits, and
+`$EE` is a general YM2612 port-0 write rather than an FM1-only register API.
+The fields previously described generically as modulation divide into custom
+vibrato controls, pitch-envelope selection, and PSG volume-envelope selection.
+Most importantly, YM2612 register `$28` proves that the two previously audited
+key names were reversed: `$F0 | channel` enables all four FM operators, while
+the bare channel selector disables them. The corrected
+`Sound_SendFMKeyOn`/`Sound_SendFMKeyOff` names and their wrappers are now used
+by note start, note timeout, pause, SFX stop, and sequence-stop callers.
+
+The following global-control pass audits all 24 definitions in the former
+144-line `sound/global_control.s` range at `0x083CEE-0x083E6F`. These are not a
+separate subsystem: all four public entries are direct handlers of the
+extended sequence-command table immediately before them in ROM. The range is
+therefore merged into `sound/sequence_commands.s`, producing one cohesive
+726-line, 102-definition module and reducing the declared ROM layout from 343
+to 342 modules without changing a byte.
+
+The pause command is now explicit about the ten BGM records it changes: one
+PCM sequence record, six FM records, and three PSG records. Its resume half
+also restores DAC panning through the Z80 mailbox and avoids replacing FM6
+panning while DAC playback owns that channel. The generated
+`Sound_InitializeFadeParams` and `Sound_CheckFadeComplete` claims are rejected;
+extended commands `$FF $03` and `$FF $04` request one manual BGM attenuation
+step and its later restoration through the transition state audited above.
+Twenty address-derived definitions are removed, lowering the ceiling from
+5,293 to 5,273. Provenance rises from 10,532 to 10,552 mappings, and 24
+exact-address records take the audit registry from 6,694 to 6,718 entries.
 
 Four especially broad data labels are explicitly registered:
 

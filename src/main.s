@@ -296,7 +296,6 @@
                 include "src/sound/hardware_interface.s"
                 include "src/sound/volume_transitions.s"
                 include "src/sound/sequence_commands.s"
-                include "src/sound/global_control.s"
                 include "src/sound/z80_program.s"
                 include "src/sound/channel_playback.s"
                 include "src/sound/frequency_and_envelopes.s"

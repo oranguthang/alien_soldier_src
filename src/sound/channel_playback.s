@@ -24,7 +24,7 @@ loc_84A9E:                                              ; CODE XREF: Sound_Parse
                 move.b  (a4)+,d5
                 cmpi.b  #$E0,d5
                 bcs.s   loc_84AAE
-                jsr     Sound_CommandDispatcher(pc)     ; (pc)
+                jsr     Sound_DispatchSequenceCommand(pc)  ; (pc)
                 bra.s   loc_84A9E
 ; ---------------------------------------------------------------------------
 loc_84AAE:                                              ; CODE XREF: Sound_ParseSequenceData+10   j

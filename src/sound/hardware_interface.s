@@ -52,43 +52,43 @@ Sound_CopyNextZ80DriverByte:                            ; CODE XREF: Sound_LoadZ
                 move    (sp)+,sr
                 bra.w   Sound_StopAllPlayback
 ; End of function Sound_LoadZ80Driver
-; Sends key off command to FM channel stopping note
-Sound_SendKeyOff:                                       ; CODE XREF: Sound_ProcessChannel+16   j  ; was: sub_83562
+; Send key-on for all four FM operators unless the channel is held or overridden
+Sound_SendFMKeyOn:                                      ; CODE XREF: Sound_ProcessChannel+16   j  ; was: sub_83562
                 btst    #1,(a5)
-                bne.s   Sound_SendKeyOffReturn
+                bne.s   Sound_SendFMKeyOnReturn
                 btst    #2,(a5)
-                bne.s   Sound_SendKeyOffReturn
+                bne.s   Sound_SendFMKeyOnReturn
                 moveq   #$28,d0                         ; '('
                 move.b  1(a5),d1
                 ori.b   #$F0,d1
                 bra.w   Sound_WriteYM2612Port0Thunk
 ; ---------------------------------------------------------------------------
-Sound_SendKeyOffReturn:                                 ; CODE XREF: Sound_SendKeyOff+4   j  ; was: locret_8357C
-                                        ; Sound_SendKeyOff+A   j
+Sound_SendFMKeyOnReturn:                                ; CODE XREF: Sound_SendFMKeyOn+4   j  ; was: locret_8357C
+                                        ; Sound_SendFMKeyOn+A   j
                 rts
-; End of function Sound_SendKeyOff
-; Checks sound channel flags before processing operations
-Sound_SendKeyOnIfAllowed:                               ; CODE XREF: Sound_ParseTrackData:Sound_DecodeFMSequenceEvent   p  ; was: sub_8357E
+; End of function Sound_SendFMKeyOn
+; Send key-off unless the sequence hold or SFX-override flags suppress it
+Sound_SendFMKeyOffIfAllowed:                            ; CODE XREF: Sound_ParseTrackData:Sound_DecodeFMSequenceEvent   p  ; was: sub_8357E
                                         ; Sound_HandleNoteTimer+18   p
                 btst    #4,(a5)
-                bne.s   Sound_SendKeyOnSkippedReturn
+                bne.s   Sound_SendFMKeyOffSkippedReturn
                 btst    #2,(a5)
-                bne.s   Sound_SendKeyOnSkippedReturn
-; End of function Sound_SendKeyOnIfAllowed
-; Sends key on command to FM channel starting note
-Sound_SendKeyOn:                                        ; CODE XREF: Sound_StopSpecialSFXAndRestoreBGMChannels+12   p  ; was: sub_8358A
+                bne.s   Sound_SendFMKeyOffSkippedReturn
+; End of function Sound_SendFMKeyOffIfAllowed
+; Send key-off for all four FM operators on the current channel
+Sound_SendFMKeyOff:                                     ; CODE XREF: Sound_StopSpecialSFXAndRestoreBGMChannels+12   p  ; was: sub_8358A
                 moveq   #$28,d0                         ; '('
                 move.b  1(a5),d1
                 bra.w   Sound_WriteYM2612Port0Thunk
-; End of function Sound_SendKeyOn
-Sound_SendKeyOnSkippedReturn:                           ; CODE XREF: Sound_SendKeyOnIfAllowed+4   j  ; was: nullsub_137
-                                        ; Sound_SendKeyOnIfAllowed+A   j
+; End of function Sound_SendFMKeyOff
+Sound_SendFMKeyOffSkippedReturn:                        ; CODE XREF: Sound_SendFMKeyOffIfAllowed+4   j  ; was: nullsub_137
+                                        ; Sound_SendFMKeyOffIfAllowed+A   j
                 rts
-; End of function Sound_SendKeyOnSkippedReturn
+; End of function Sound_SendFMKeyOffSkippedReturn
 
 ; Suppress a current-channel register write while its BGM channel is overridden
-Sound_WriteCurrentFMRegisterIfNotOverridden:            ; CODE XREF: Sound_SetLFO+24   p  ; was: sub_83596
-                                        ; Sound_WriteFMChannelRegister+4   j
+Sound_WriteCurrentFMRegisterIfNotOverridden:            ; CODE XREF: Sound_ConfigureFMLFOAndAmplitudeModulation+24   p  ; was: sub_83596
+                                        ; Sound_WriteCurrentFMRegisterFromSequence+4   j
                 btst    #2,(a5)
                 beq.w   Sound_WriteCurrentFMChannelRegister
                 rts

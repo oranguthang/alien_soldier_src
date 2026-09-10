@@ -71,7 +71,7 @@ Sound_AttenuateNextBGMFMChannel:                        ; CODE XREF: Sound_Updat
                 bpl.s   Sound_ContinueBGMFMAttenuationLoop
                 add.b   d6,9(a5)
                 bmi.s   Sound_ContinueBGMFMAttenuationLoop
-                jsr     Sound_ApplyVolume(pc)           ; (pc)
+                jsr     Sound_ApplyFMVolumeOffset(pc)   ; (pc)
 Sound_ContinueBGMFMAttenuationLoop:                     ; CODE XREF: Sound_UpdateBGMVolumeTransitions+E6   j  ; was: loc_83792
                                         ; Sound_UpdateBGMVolumeTransitions+EC   j
                 adda.w  #$30,a5                         ; '0'
@@ -101,7 +101,7 @@ Sound_RestoreNextBGMFMChannelVolume:                    ; CODE XREF: Sound_Updat
                 tst.b   (a5)
                 bpl.s   Sound_ContinueBGMFMVolumeRestoreLoop
                 sub.b   d6,9(a5)
-                jsr     Sound_ApplyVolume(pc)           ; (pc)
+                jsr     Sound_ApplyFMVolumeOffset(pc)   ; (pc)
 Sound_ContinueBGMFMVolumeRestoreLoop:                   ; CODE XREF: Sound_UpdateBGMVolumeTransitions+12E   j  ; was: loc_837D8
                 adda.w  #$30,a5                         ; '0'
                 dbf     d7,Sound_RestoreNextBGMFMChannelVolume
