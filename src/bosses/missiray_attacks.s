@@ -56,7 +56,7 @@ Boss_MissirayShootPattern2:                             ; DATA XREF: ROM:00053E7
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #7,d0
                 add.w   d0,d0
-                lea     word_537A8(pc),a2
+                lea     Boss_MissiraySegmentObjectPointers(pc),a2
                 movea.w (a2,d0.w),a0
                 tst.b   $52(a0)
                 bne.s   locret_53F42
@@ -136,7 +136,7 @@ Boss_MissirayAttackPattern3Fire:                        ; DATA XREF: ROM:00053F6
                 lsl.w   #2,d5
                 move.w  word_53FF6(pc,d5.w),d0
                 move.w  word_53FF6+2(pc,d5.w),d1
-                lea     word_537A8(pc),a1
+                lea     Boss_MissiraySegmentObjectPointers(pc),a1
                 movea.w (a1,d0.w),a2
                 tst.b   $52(a2)
                 bne.s   locret_53FF4

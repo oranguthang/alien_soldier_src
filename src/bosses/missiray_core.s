@@ -367,7 +367,7 @@ Boss_MissiraySegmentsSeparate:
                 lsl.w   #2,d5
                 move.w  word_53C30(pc,d5.w),d0
                 move.w  word_53C30+2(pc,d5.w),d1
-                lea     word_537A8(pc),a1
+                lea     Boss_MissiraySegmentObjectPointers(pc),a1
                 movea.w (a1,d0.w),a2
                 movea.w (a1,d1.w),a3
                 move.w  $14(a5),d0

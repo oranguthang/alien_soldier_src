@@ -1960,6 +1960,26 @@ This completes the Z-Leo subsystem milestone: `z_leo_core.s`,
 `z_leo_rendering.s`, and `projectiles/z_leo.s` now contain zero live
 address-derived definitions.
 
+The Valkirie Force pose pass reduced the address-derived unknown count from
+6,065 to 6,051 and raised provenance to 9,772 mappings. All 14 anonymous
+definitions in `bosses/valkirie_force.s` and one incorrect existing semantic
+label now have exact static audit records, taking the registry to 5,540
+entries. The module now has zero live address-derived definitions.
+
+The two-state dispatcher initializes the shared Z-Leo/Valkirie Force
+metasprite, then enters an interactive state that maps controller bits two and
+three to opposing changes in a wrapped nine-bit rotation. Its pose interpreter
+uses the same command classes established for Z-Leo: `$80xx` events, `$FFFF`
+loop, `$FFFE` terminal, and ordinary four-byte interpolation commands. The
+ordinary form uses the low byte for delta setup, a signed following offset into
+the keyframe block, and the high byte as duration before projecting the
+interpolated buffer into linked-part angles.
+
+The former `Boss_Sirene_State2` is now correctly the Valkirie Force interactive
+state. The trailing eight-word table was also misplaced semantically: only
+Missiray code consumes its `$C680-$C920` RAM addresses, so it is now
+`Boss_MissiraySegmentObjectPointers`.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
