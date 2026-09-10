@@ -643,7 +643,7 @@ Boss_SunsetStingDebrisPartReturn:                       ; CODE XREF: Boss_Sunset
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingDebrisPartRemove:                       ; CODE XREF: Boss_SunsetStingDebrisPartMain+A   j  ; was: loc_41484
                 lea     (a5),a0
-                jsr     (loc_2A2A4).l
+                jsr     (Effect_InitSharedExplosion).l
                 clr.b   $21(a5)
                 rts
 ; End of function Boss_SunsetStingDebrisPartMain

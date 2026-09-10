@@ -435,7 +435,7 @@ Boss_SunsetStingUpdateScatteredBodyPartReturn:          ; CODE XREF: Boss_Sunset
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingConvertBodyPartToExplosion:             ; CODE XREF: Boss_SunsetStingUpdateScatteredBodyPart+A   j  ; was: loc_42506
                 lea     (a5),a0
-                jsr     (loc_2A2A4).l
+                jsr     (Effect_InitSharedExplosion).l
                 clr.b   $21(a5)
                 rts
 ; End of function Boss_SunsetStingUpdateScatteredBodyPart

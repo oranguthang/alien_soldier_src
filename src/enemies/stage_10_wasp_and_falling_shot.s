@@ -61,7 +61,7 @@ Projectile_FallingShotUpdate_StopOnImpact:              ; CODE XREF: Projectile_
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #$C8,$26(a5)
-                jmp     Projectile_CheckLifetime
+                jmp     Effect_InitSharedExplosionFromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_FallingShotUpdate_Return:                    ; CODE XREF: Projectile_FallingShotInit+90   j  ; was: locret_2E046
                                         ; Projectile_FallingShotInit+A2   j

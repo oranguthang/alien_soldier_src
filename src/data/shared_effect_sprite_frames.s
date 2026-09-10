@@ -1,5 +1,5 @@
-Projectile_SpawnSpriteFrames:   dc.l    $1454B, $F00F0F0  ; DATA XREF: Projectile_UpdateWithSpawning+24   o  ; was: dword_2ABF0
-                                        ; Projectile_UpdateWithSpawning+A4   o
+Projectile_SpawnSpriteFrames:   dc.l    $1454B, $F00F0F0  ; DATA XREF: Projectile_UpdateDirectionalSpawner+24   o  ; was: dword_2ABF0
+                                        ; Projectile_UpdateDirectionalSpawner+A4   o
                 dc.l    $1456C, $F00F0F0                ; make offsets?
                 dc.l    $14480, $A00F4F4
                 dc.l    $34489, $A00F4F4

@@ -419,7 +419,7 @@ Projectile_Stage21AsteroidDebrisCheckPlayer:            ; DATA XREF: ROM:000335F
                 cmpi.w  #$10,d0
                 bpl.s   Projectile_Stage21AsteroidDebrisReturn
                 move.w  #$C8,$26(a5)
-                jsr     (Projectile_CheckLifetime).l
+                jsr     (Effect_InitSharedExplosionFromCurrent).l
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
 Projectile_Stage21AsteroidDebrisReturn:                 ; CODE XREF: Projectile_Stage21AsteroidDebrisCheckPlayer+A   j  ; was: locret_33660

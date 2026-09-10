@@ -377,7 +377,7 @@ Projectile_ZLeoSpawnDropProjectile:                     ; CODE XREF: Boss_ZLeoRu
                 move.w  #$424,(a0)
                 move.w  #$8080,2(a0)
                 move.b  #4,$20(a0)
-                jsr     (Gfx_SetupTileGraphics).l
+                jsr     (Projectile_InitZLeoDropGraphics).l
                 move.w  #$20,$48(a0)                    ; ' '
                 move.w  (dword_FFFF08).w,d0
                 andi.w  #$E000,d0

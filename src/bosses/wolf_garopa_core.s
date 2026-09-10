@@ -389,7 +389,7 @@ Boss_WolfGaropaSelectOrbNeutralMapping:                 ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaBeginUpperType424Sequence:               ; CODE XREF: Boss_WolfGaropaSelectType424Sequence+1E   j  ; was: sub_4FD80
                 tst.w   (word_FFFF0E).w
                 bne.s   Boss_WolfGaropaConfigureUpperType424Sequence
-                jsr     (Projectile_InitType424).l
+                jsr     (Projectile_SpawnWolfGaropaType424).l
                 bne.s   Boss_WolfGaropaConfigureUpperType424Sequence
                 move.w  #$1A8,$10(a0)
                 move.w  #$C8,$14(a0)
@@ -440,7 +440,7 @@ Boss_WolfGaropaUpdateUpperSequenceCooldown:             ; DATA XREF: Boss_WolfGa
 Boss_WolfGaropaBeginLowerType424Sequence:               ; CODE XREF: Boss_WolfGaropaSelectType424Sequence+1A   j  ; was: sub_4FE18
                 tst.w   (word_FFFF0E).w
                 bne.s   Boss_WolfGaropaConfigureLowerType424Sequence
-                jsr     (Projectile_InitType424).l
+                jsr     (Projectile_SpawnWolfGaropaType424).l
                 bne.s   Boss_WolfGaropaConfigureLowerType424Sequence
                 move.w  #$1A8,$10(a0)
                 move.w  #$130,$14(a0)

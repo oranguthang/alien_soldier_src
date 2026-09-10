@@ -22,7 +22,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_DirectionalInitMain
                 dc.l    Projectile_BouncingWithGravity
                 dc.l    Physics_AccelerateDownward
-                dc.l    Projectile_UpdateWithSpawning
+                dc.l    Projectile_UpdateDirectionalSpawner
                 dc.l    Weapon_UpdateSeekingProjectile
                 dc.l    Weapon_HandleSeekingProjectileCollision
                 dc.l    Anim_UpdateWithPaletteSwap
@@ -31,7 +31,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Weapon_UpdateBombProjectile
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Effect_UpdateDeathSparkMotion
-                dc.l    Projectile_ApplyGravityEffect
+                dc.l    Projectile_UpdateGravityAndHorizontalDrag
                 dc.l    Projectile_GravityBounce
                 dc.l    Physics_ApplyGravity
                 dc.l    Enemy_ProjectileAttackController
@@ -264,7 +264,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Effect_WolfGaropaBoundaryMain
                 dc.l    Boss_WolfGaropaPaletteUpdate
                 dc.l    Effect_WolfGaropaBoundaryFollowerMain
-                dc.l    Projectile_TimerAndVisibility
+                dc.l    Projectile_UpdateType424Visibility
                 dc.l    Entity_UpdateSevenForcesIntro
                 dc.l    Entity_UpdateValkirieBattle
                 dc.l    Boss_MedusaAttackState1
@@ -287,7 +287,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_ZLeoSpawnDropProjectile
                 dc.l    Projectile_ZLeoDropProjectileMain
                 dc.l    Entity_UpdateValkirieAuxiliaryGroup
-                dc.l    Projectile_ValkirieMain
+                dc.l    Projectile_UpdateValkirieBullet
                 dc.l    Boss_Epsilon1IntroController
                 dc.l    Boss_ArtemisAnimationScript
                 dc.l    Entity_EmptyState9

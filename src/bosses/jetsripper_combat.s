@@ -97,7 +97,7 @@ loc_2B7EA:                                              ; CODE XREF: Enemy_InitP
                 bpl.s   locret_2B806
 loc_2B7F6:                                              ; CODE XREF: Enemy_InitProjectileType+64   j
                 move.w  #$64,$26(a5)                    ; 'd'
-                jsr     (Projectile_CheckLifetime).l
+                jsr     (Effect_InitSharedExplosionFromCurrent).l
                 clr.l   $1C(a5)
 locret_2B806:                                           ; CODE XREF: Enemy_InitProjectileType+78   j
                 rts
@@ -286,7 +286,7 @@ loc_2BA7A:                                              ; CODE XREF: Projectile_
                 clr.l   $18(a5)
                 move.l  #$FFFF0000,$1C(a5)
                 move.w  #$62,$26(a5)                    ; 'b'
-                jmp     Projectile_CheckLifetime
+                jmp     Effect_InitSharedExplosionFromCurrent
 ; ---------------------------------------------------------------------------
 loc_2BA9A:                                              ; CODE XREF: Projectile_TerrainCollision+22   j
                 btst    #7,$22(a5)

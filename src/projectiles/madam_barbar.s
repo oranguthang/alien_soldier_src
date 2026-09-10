@@ -265,7 +265,7 @@ Projectile_MadamBarbarDropConvertToExplosion:           ; CODE XREF: Projectile_
                                         ; Projectile_MadamBarbarDropUpdate+86   j
                 clr.l   $18(a5)
                 move.w  #$FFFE,$1C(a5)
-                jmp     Projectile_CheckLifetime
+                jmp     Effect_InitSharedExplosionFromCurrent
 ; End of function Projectile_MadamBarbarDropUpdate
 ; ---------------------------------------------------------------------------
 Boss_MadamBarbarAnimationEffectFrames:  dc.l    $163BC, $FCFC, $163BD, $FCFC, $163BE, $FCFC, $263BF  ; was: dword_3B178

@@ -139,7 +139,7 @@
                 include "src/effects/transition_scroll.s"
                 include "src/cutscenes/game_over_and_tunnel.s"
                 include "src/rendering/vdp_layouts.s"
-                include "src/projectiles/valkirie.s"
+                include "src/projectiles/shared_boss_projectiles.s"
                 include "src/actors/shared_object_helpers.s"
                 include "src/debug/sprite_editor.s"
                 include "src/data/shared_effect_sprite_frames.s"

@@ -455,7 +455,7 @@ Projectile_SpawnValkirieBulletReturn:                   ; CODE XREF: Projectile_
 ; ---------------------------------------------------------------------------
 Projectile_InitValkirieBullet:                          ; CODE XREF: Projectile_SpawnValkirieBullet+14   j  ; was: loc_55CA4
                 moveq   #0,d4
-                jmp     Projectile_CopyValkirieData
+                jmp     Projectile_InitValkirieBulletFromSource
 ; End of function Projectile_SpawnValkirieBullet
 ; ---------------------------------------------------------------------------
 ; Start state $14, select its visible parts, and reset the auxiliary group

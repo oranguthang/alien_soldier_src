@@ -106,7 +106,7 @@ Projectile_BugmaxSettleSpecialHitFragmentAtFloor:       ; CODE XREF: Projectile_
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #$32,$26(a5)                    ; '2'
-                jmp     Projectile_CheckLifetime
+                jmp     Effect_InitSharedExplosionFromCurrent
 ; End of function Projectile_BugmaxUpdateHitFragmentMotion
 ; Cycle the special hit fragment among three mapping/tile values
 Projectile_BugmaxCycleSpecialHitFragmentMapping:        ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+E   p  ; was: sub_4D506
@@ -387,7 +387,7 @@ Projectile_BugmaxExpireSineProjectile:                  ; CODE XREF: Projectile_
                 clr.l   $1C(a5)
                 move.w  #$C8,$26(a5)
                 move.l  #$FC04F808,$2C(a5)
-                jmp     Projectile_CheckLifetime
+                jmp     Effect_InitSharedExplosionFromCurrent
 ; End of function Projectile_BugmaxInitializeSineBounceCounter
 ; Convert collision-terminated type-$340 projectiles into a random pickup
 Projectile_BugmaxDropRandomPickupFromSineProjectile:    ; CODE XREF: Projectile_BugmaxSineController+16   j  ; was: sub_4D854

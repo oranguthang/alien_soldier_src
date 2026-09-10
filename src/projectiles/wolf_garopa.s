@@ -253,7 +253,7 @@ Boss_WolfGaropaStoreOrbCenter:                          ; CODE XREF: Boss_WolfGa
                 andi.w  #$E7FF,$E(a0)
                 jsr     (Sprite_UpdateFourDirectionFrame).l
                 movea.w #(byte_FFD160-M68K_RAM),a0
-                jsr     (loc_2A128).l
+                jsr     (Gfx_AnimateWolfGaropaOrbAtA0).l
                 move.w  $6BC(a5),d0
                 btst    #3,$65E(a5)
                 beq.s   Boss_WolfGaropaReduceOrbEndpointRadius

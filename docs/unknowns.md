@@ -2196,6 +2196,21 @@ part's horizontal/vertical motion pair. The palette updater was renamed from
 Valkirie-specific to Seven Forces-wide because Valkirie, Medusa, Sirene,
 Artemis, Sylpheed, the alternate form, and the unidentified form all call it.
 
+The ROM span `0x02A03C-0x02A30D` is no longer presented as a Valkirie-only
+source file. It is now the 236-line
+`projectiles/shared_boss_projectiles.s`, reflecting its actual mix of Valkirie
+bullet logic, Z-Leo drop graphics, Wolf Garopa type-$424 and orb helpers, a
+two-phase directional spawner, gravity/drag, and the explosion initializer
+shared by several bosses and enemies.
+
+All 29 definitions in that module have exact static audit records and its 18
+address-derived labels were eliminated. Provenance reached 10,065 mappings,
+the audit registry reached 5,989 entries, and the project-wide unknown ceiling
+fell to 5,758. In particular, the former `Projectile_CheckLifetime` does not
+check a timer: both its entry points immediately configure the shared type-$C4
+explosion. The former random-frame helper instead animates Wolf Garopa's orb
+from the deterministic global animation phase.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |
