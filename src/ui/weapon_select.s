@@ -22,7 +22,7 @@ UI_WeaponSelectTransition:                              ; CODE XREF: UI_Initiali
                 beq.s   loc_1E2C6
                 tst.b   (word_FFF720).w
                 bmi.w   locret_1E40A
-                jsr     (VDP_TransferFontTile).l
+                jsr     (Gfx_QueueNextFontTileDMA).l
                 bpl.w   locret_1E40A
                 addq.w  #2,(GameSubstateIndex).w
                 rts

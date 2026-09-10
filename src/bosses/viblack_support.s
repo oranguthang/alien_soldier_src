@@ -4,8 +4,8 @@ Boss_ViblackTransitionTimerState:                       ; DATA XREF: ROM:000439F
                 addq.w  #2,4(a5)
                 bclr    #1,(byte_FF80F8).w
                 movea.w #(word_FFC6E0-M68K_RAM),a0
-                lea     (stru_114D0).l,a1
-                jsr     (loc_116AC).l
+                lea     (Boss_BackStringerAssetSet).l,a1
+                jsr     (Boss_LoadAssetSetAtObject).l
 Boss_ViblackUpdateTransitionTimerMotion:                ; CODE XREF: Boss_ViblackTransitionTimerState+4   j  ; was: loc_43F10
                 move.w  $48(a5),d0
                 cmpi.w  #$100,d0
@@ -67,8 +67,8 @@ Boss_ViblackCompleteStageTransition:                    ; CODE XREF: Boss_Viblac
                 clr.b   (word_FFF7E6+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
-                lea     (byte_C484).l,a0
-                jmp     LoadPalette
+                lea     (Boss_ViblackPostBattlePaletteCommand).l,a0
+                jmp     Gfx_LoadPaletteCommand
 ; End of function Boss_ViblackFinishTransitionState
 ; Plays the periodic effect sound and emits a defeat particle
 Boss_ViblackUpdateDefeatSoundAndParticles:              ; CODE XREF: Boss_ViblackDefeatWaitState   p  ; was: sub_43FBC

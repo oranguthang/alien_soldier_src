@@ -55,8 +55,8 @@ Boss_DestroyerProtoTransition:                          ; DATA XREF: ROM:0000F10
                 subq.w  #1,(word_FF9DB0).w
                 bpl.w   Boss_DestroyerProtoTransition_Return
                 addq.w  #2,(word_FFA950).w
-                lea     (stru_11568).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_DestroyerProtoAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Boss_DestroyerProtoTransition
 ; Boss initialization
 Boss_DestroyerProtoInit:                                ; DATA XREF: ROM:0000F106   o  ; was: sub_F288
@@ -66,8 +66,8 @@ Boss_DestroyerProtoInit:                                ; DATA XREF: ROM:0000F10
                 move.w  #$1C,(word_FF9DAE).w
                 bsr.w   Boss_DestroyerProtoPaletteInit
                 jsr     (UI_InitScoreTimer).l
-                lea     (byte_C212).l,a0
-                jsr     (LoadPalette).l
+                lea     (DestroyerProtoIntroPaletteCommands).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
 loc_F2B0:                                               ; CODE XREF: Boss_DestroyerPhaseInit+14   j
                 clr.b   (byte_FFA958).w
                 move.w  #$50,(word_FFF74A).w            ; 'P'
@@ -78,7 +78,7 @@ loc_F2B0:                                               ; CODE XREF: Boss_Destro
                 move.l  #$8000,(dword_FF9DA2).w
                 move.l  #$2000000,(dword_FF9DAA).w
                 move.l  #$1E80000,(dword_FF9DB2).w
-                move.l  #dword_11326,(dword_FFA940).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 clr.w   (word_FFA946).w
                 move.w  #$F500,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
@@ -170,8 +170,8 @@ Boss_ShieldViperInit:                                   ; DATA XREF: ROM:0000F10
                 bsr.w   Boss_ShieldViperScrollSetup
                 move.b  #0,(byte_FFA958).w
                 jsr     (Stage_TransitionToNextPhase).l
-                lea     (stru_11554).l,a1
-                jsr     (Gfx_UpdateBossPalette).l
+                lea     (Boss_ShieldViperAssetSet).l,a1
+                jsr     (Boss_LoadAssetSet).l
                 clr.w   (word_FF9DFC).w
                 clr.w   (word_FF9DFE).w
                 rts
@@ -194,7 +194,7 @@ Boss_ShieldViperPaletteSetup:                           ; DATA XREF: ROM:0000F11
                 bne.w   Boss_DestroyerProtoTransition_Return
                 move.b  #1,(byte_FF830E).w
                 addq.w  #2,(word_FFA950).w
-                move.l  #dword_11326,(dword_FFA940).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 clr.w   (word_FFA946).w
                 move.w  #$F100,(word_FFA948).w
                 move.w  #$10,(word_FFA944).w
@@ -209,7 +209,7 @@ Boss_ShieldViperGraphicsCleanup:                        ; DATA XREF: ROM:0000F11
                 bpl.w   Boss_DestroyerProtoTransition_Return
                 addq.w  #2,(word_FFA950).w
                 move.w  #$20,(dword_FF8128).w           ; ' '
-                move.l  #dword_11346,(dword_FFA940).w
+                move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
                 clr.w   (word_FFA946).w
                 move.w  #$F400,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
@@ -299,7 +299,7 @@ loc_F5A8:                                               ; CODE XREF: Boss_WolfGa
                 clr.b   (word_FFF7E6+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
-                move.l  #dword_11326,(dword_FFA940).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 move.w  #$1F,(word_FFA944).w
                 clr.w   (word_FFA946).w
                 move.w  #$F400,(word_FFA948).w
@@ -360,8 +360,8 @@ Boss_WolfGaropaIntroMove:                               ; DATA XREF: ROM:0000F12
                 bne.w   Boss_DestroyerProtoTransition_Return
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FF9DBA).w
-                lea     (stru_11584).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_WolfGaropaAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Boss_WolfGaropaIntroMove
 ; Spawns projectile type 2
 Boss_WolfGaropaSpawnProjectile2:                        ; DATA XREF: ROM:0000F126   o  ; was: sub_F6A6
@@ -459,7 +459,7 @@ Boss_WolfGaropaInit:                                    ; CODE XREF: Boss_WolfGa
                 moveq   #0,d0
                 move.w  (dword_FFA90C).w,d1
                 subi.w  #$F8,d1
-                lea     (dword_11346).l,a0
+                lea     (Gfx_ScrollVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Boss_WolfGaropaInit
 ; Graphics initialization
@@ -467,7 +467,7 @@ Boss_WolfGaropaGraphicsInit:                            ; CODE XREF: Boss_Shield
                                         ; Boss_WolfGaropaPaletteSetup+5C   j
                 movea.l #$FFFF4300,a0
                 moveq   #$30,d7                         ; '0'
-                jmp     Gfx_AdjustTileIndices
+                jmp     Gfx_AdjustTileIndexRows
 ; End of function Boss_WolfGaropaGraphicsInit
 ; Initializes stage scroll parameters and timers
 Stage_InitScrollParams:

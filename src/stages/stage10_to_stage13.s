@@ -115,8 +115,8 @@ Stage_DeepStriderTransition:                            ; DATA XREF: ROM:0000D96
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                lea     (stru_11440).l,a1
-                bra.w   Gfx_UpdateBossPalette
+                lea     (Boss_DeepStriderAssetSet).l,a1
+                bra.w   Boss_LoadAssetSet
 ; End of function Stage_DeepStriderTransition
 ; Deep Strider battle stage handler
 Stage_DeepStriderBattle:                                ; DATA XREF: ROM:0000D962   o  ; was: sub_DA22
@@ -161,8 +161,8 @@ Stage_GustheadTransition:                               ; DATA XREF: ROM:0000D96
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                lea     (stru_11454).l,a1
-                bsr.w   Gfx_UpdateBossPalette
+                lea     (Boss_GustheadAssetSet).l,a1
+                bsr.w   Boss_LoadAssetSet
                 clr.l   (dword_FFA960).w
                 clr.w   (word_FFA968).w
 locret_DA92:                                            ; CODE XREF: Stage_GustheadTransition+10   j
@@ -281,8 +281,8 @@ Stage_SharpssteelTransition:                            ; DATA XREF: ROM:0000D97
                 bne.w   Stage_Stage10CheckTransition_Return
                 move.w  #9,(word_FF808C).w
                 bsr.w   Stage_TransitionToNextPhase
-                lea     (stru_11468).l,a1
-                bra.w   Gfx_UpdateBossPalette
+                lea     (Boss_SharpssteelAssetSet).l,a1
+                bra.w   Boss_LoadAssetSet
 ; End of function Stage_SharpssteelTransition
 ; Initializes Stage 14
 Stage_Stage14Init:                                      ; DATA XREF: ROM:0000D97E   o  ; was: sub_DBBC
@@ -457,8 +457,8 @@ Stage_InitBugmaxBattle:                                 ; CODE XREF: Stage_Bugma
                 move.w  #$7000,(word_FF8202).w
                 move.w  #$1E0,(word_FF8234).w
                 move.w  #$1E0,(word_FF8236).w
-                lea     (stru_1147C).l,a1
-                bra.w   Gfx_UpdateBossPalette
+                lea     (Boss_BugmaxAssetSet).l,a1
+                bra.w   Boss_LoadAssetSet
 ; End of function Stage_BugmaxWaitDMA
 ; Starts Bugmax battle phase
 Stage_BugmaxStartBattle:                                ; DATA XREF: ROM:0000D998   o  ; was: sub_DDE8

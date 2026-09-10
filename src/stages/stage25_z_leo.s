@@ -21,8 +21,8 @@ Boss_ZLeoTransition:                                    ; DATA XREF: ROM:0000F17
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                lea     (stru_11618).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_ZLeoAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Boss_ZLeoTransition
 ; Checks trigger flag and starts phase transition
 Stage_CheckTransitionTrigger:                           ; DATA XREF: ROM:0000F178   o  ; was: sub_FAE0
@@ -74,7 +74,7 @@ Stage_AsteroidsGraphicsUpdate:                          ; CODE XREF: Stage_Aster
                 moveq   #0,d0
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$F8,d1
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Stage_AsteroidsGraphicsUpdate
 ; Scroll update handler 1

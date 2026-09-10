@@ -137,7 +137,7 @@ Cutscene_SegaScreenFadeOut:                             ; DATA XREF: ROM:00007C4
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 jsr     (Sys_ClearEntityObjectPool).l
-                move.l  #dword_11326,(dword_FFA940).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 move.w  #$800,(word_FFA946).w
                 move.w  #0,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
@@ -158,7 +158,7 @@ Cutscene_InitPlanetScene:                               ; DATA XREF: ROM:00007C4
                 jsr     (Gfx_RenderScrollingBackground).l
                 tst.w   (word_FFA944).w
                 bpl.w   locret_514E
-                lea     (word_B982).l,a4
+                lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$FFF2,(word_FF010C).l
                 move.b  #6,(word_FFF7E6+1).w

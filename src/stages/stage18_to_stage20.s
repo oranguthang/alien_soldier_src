@@ -34,8 +34,8 @@ Stage_DestroyerMK2Init:                                 ; DATA XREF: ROM:0000E43
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
                 move.w  #$8000,(word_FF808A).w
-                lea     (stru_1151C).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_DestroyerMK2AssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_DestroyerMK2Init
 ; Updates boss health
 Boss_DestroyerMK2UpdateHealth:                          ; DATA XREF: ROM:0000E43E   o  ; was: sub_E54E
@@ -116,8 +116,8 @@ Stage_JampanPostBattle:                                 ; DATA XREF: ROM:0000E44
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                lea     (stru_114E4).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_JampanAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_JampanPostBattle
 ; Camera during defeat sequence
 Stage_JampanDefeatCamera:                               ; DATA XREF: ROM:0000E44C   o  ; was: sub_E636
@@ -166,8 +166,8 @@ Stage_InitBossPhase1:                                   ; DATA XREF: ROM:0000E46
                 move.w  #$40,(word_FFA970).w            ; '@'
                 move.w  #$80,(word_FFA974).w
                 move.b  #1,(byte_FF830E).w
-                lea     (stru_114E4).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_JampanAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_InitBossPhase1
 ; Wait for flag clear then advance and update camera
 Stage_WaitFlagUpdateCamera1:                            ; DATA XREF: ROM:0000E462   o  ; was: sub_E6AC
@@ -186,13 +186,9 @@ Stage_CheckEnemiesTransit1:                             ; DATA XREF: ROM:0000E46
                 move.l  #byte_1E4E5,(dword_FFA22C).w
                 bra.w   Stage_InitTransitionState
 ; End of function Stage_CheckEnemiesTransit1
-; ===============================================================================
-; UNUSED BOSS LOADER: Lambda Bunny Palette Loader
-; Description: Loads palette data for unused Lambda Bunny boss ($03EC)
-; Target Structure: stru_115A8 (line 21055)
-; Palette Source: byte_C5BE (line 13697)
-; Status: Complete loader function, never called by stage dispatcher
-; ===============================================================================
+; Load the entity-type $3EC resources for a late Stage 18 phase. This entry is
+; present in the stage state table; static evidence does not establish the
+; community-supplied character identity or normal-play reachability
 ; Initialize boss phase with palette update 2
 Stage_InitBossPhase2:                                   ; DATA XREF: ROM:0000E468   o  ; was: sub_E6D6
                 bsr.w   Stage_TransitionToNextPhase
@@ -200,8 +196,8 @@ Stage_InitBossPhase2:                                   ; DATA XREF: ROM:0000E46
                 move.w  #$40,(word_FFA970).w            ; '@'
                 move.w  #$80,(word_FFA974).w
                 move.b  #1,(byte_FF830E).w
-                lea     (stru_115A8).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (EntityType3ECAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_InitBossPhase2
 ; Wait for flag clear then advance and update camera
 Stage_WaitFlagUpdateCamera2:                            ; DATA XREF: ROM:0000E46A   o  ; was: sub_E6FC
@@ -221,13 +217,8 @@ Stage_CheckEnemiesTransit2:                             ; DATA XREF: ROM:0000E46
                 move.l  #byte_1E4E5,(dword_FFA22C).w
                 bra.w   Stage_InitTransitionState
 ; End of function Stage_CheckEnemiesTransit2
-; ===============================================================================
-; UNUSED BOSS LOADER: Unknown Boss $3F0 Palette Loader
-; Description: Loads palette data for unknown unused boss ($3F0)
-; Target Structure: stru_115C4 (line 21076)
-; Palette Source: byte_C5DE (line 13700)
-; Status: Complete loader function, never called by stage dispatcher
-; ===============================================================================
+; Load the entity-type $3F0 resources for the next late Stage 18 phase. The
+; record is statically proven; its intended character identity is not
 ; Initialize boss phase with palette update 3
 Stage_InitBossPhase3:                                   ; DATA XREF: ROM:0000E470   o  ; was: sub_E72C
                 bsr.w   Stage_TransitionToNextPhase
@@ -235,8 +226,8 @@ Stage_InitBossPhase3:                                   ; DATA XREF: ROM:0000E47
                 move.w  #$40,(word_FFA970).w            ; '@'
                 move.w  #$80,(word_FFA974).w
                 move.b  #1,(byte_FF830E).w
-                lea     (stru_115C4).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (EntityType3F0AssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_InitBossPhase3
 ; Wait for flag clear then advance and update camera
 Stage_WaitFlagUpdateCamera3:                            ; DATA XREF: ROM:0000E472   o  ; was: sub_E752
@@ -256,14 +247,8 @@ Stage_CheckEnemiesTransit3:                             ; DATA XREF: ROM:0000E47
                 move.l  #byte_1E4E5,(dword_FFA22C).w
                 bra.w   Stage_InitTransitionState
 ; End of function Stage_CheckEnemiesTransit3
-; ===============================================================================
-; UNUSED BOSS LOADER: Unknown Boss $3F4 Palette Loader
-; Description: Loads palette data for unknown unused boss ($3F4)
-; Target Structure: stru_115E0 (line 21120)
-; Palette Source: byte_C5FE (line 13742)
-; Status: Complete loader function, never called by stage dispatcher
-; Note: Possibly for Praying Mantis or Sigma Fox from Jampan Area
-; ===============================================================================
+; Load the entity-type $3F4 resources for the following late Stage 18 phase
+; External identity guesses remain research notes rather than source names
 ; Initialize boss phase with palette update 4
 Stage_InitBossPhase4:                                   ; DATA XREF: ROM:0000E478   o  ; was: sub_E782
                 bsr.w   Stage_TransitionToNextPhase
@@ -271,8 +256,8 @@ Stage_InitBossPhase4:                                   ; DATA XREF: ROM:0000E47
                 move.w  #$40,(word_FFA970).w            ; '@'
                 move.w  #$80,(word_FFA974).w
                 move.b  #1,(byte_FF830E).w
-                lea     (stru_115E0).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (EntityType3F4AssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_InitBossPhase4
 ; Wait for flag clear then advance and update camera
 Stage_WaitFlagUpdateCamera4:                            ; DATA XREF: ROM:0000E47A   o  ; was: sub_E7A8

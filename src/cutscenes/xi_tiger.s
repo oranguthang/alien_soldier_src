@@ -30,7 +30,7 @@ Cutscene_LoadInitialAssets:                             ; DATA XREF: ROM:off_1E8
                 lea     stru_1E8A4(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                lea     (word_B9A0).l,a4
+                lea     (XiTigerCutscenePaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  (word_FFA216).w,(word_FF820A).w
                 move.w  #$7000,d0

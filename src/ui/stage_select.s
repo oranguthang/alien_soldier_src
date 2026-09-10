@@ -27,13 +27,13 @@ loc_1D688:                                              ; CODE XREF: UI_Initiali
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_QueueVRAMCommand
+                jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
 loc_1D69C:                                              ; CODE XREF: UI_InitializeStageSelect+4   j
                 move.w  #$30,(GameModeIndex).w          ; '0'
                 clr.w   (GameSubstateIndex).w
-                lea     (byte_BAF0).l,a0
-                jsr     (LoadPalette).l
+                lea     (StageSelectFullPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
                 clr.w   (word_FF8014).w
                 move.w  #$FFF2,(word_FF8016).w
@@ -88,13 +88,13 @@ Stage_InitializeStageSelect:                            ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     VDP_SetupPaletteTransfer
+                jmp     Gfx_QueueSmallFontDMA
 ; ---------------------------------------------------------------------------
 loc_1D778:                                              ; CODE XREF: Stage_InitializeStageSelect+4   j
                 move.w  #$30,(GameModeIndex).w          ; '0'
                 move.w  #6,(GameSubstateIndex).w
-                lea     (byte_BAF0).l,a0
-                jsr     (LoadPalette).l
+                lea     (StageSelectFullPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w

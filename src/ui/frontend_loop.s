@@ -23,7 +23,7 @@ UI_LoadResultsPalette:                                  ; CODE XREF: UI_Initiali
                 move.w  #0,d0
                 move.w  #0,d1
                 jsr     (Data_LoadPointerTable2).l
-                movea.l #word_B988,a4
+                movea.l #EarlyStagePaletteOffsetList,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
@@ -86,9 +86,9 @@ UI_InitializeSEGAScreen:                                ; DATA XREF: UI_Dispatch
                                         ; ROM:off_1CF72   o
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                jsr     (Gfx_QueueVRAMCommand).l
-                lea     (byte_BA4A).l,a0
-                jsr     (LoadPalette).l
+                jsr     (Gfx_QueueLargeFontDMACommand81).l
+                lea     (FrontendFullPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 movea.l #stru_A1B6,a0
                 jsr     (LoadObjData).l
                 movea.l #$FFFF2020,a0
@@ -104,7 +104,7 @@ loc_1CFD0:                                              ; CODE XREF: UI_Initiali
                 ori.l   #$E000E000,d1
                 move.l  d1,(a0)+
                 dbf     d0,loc_1CFD0
-                lea     (dword_11336).l,a0
+                lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
                 move.w  d0,(dword_FFA908).w

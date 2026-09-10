@@ -30,8 +30,8 @@ Cutscene_XiTigerTrainEntranceInit:                      ; DATA XREF: ROM:Cutscen
 ; Loads the palette and common object parameters used by both entrances
 Cutscene_XiTigerActorSetup:                             ; CODE XREF: Cutscene_XiTigerTrainEntranceInit+A   p  ; was: sub_2EF7E
                                         ; Cutscene_XiTigerBossEntranceInit+4   p
-                lea     (byte_C1C2).l,a0
-                jsr     (LoadPalette).l
+                lea     (XiTigerCutscenePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$CD00,2(a5)
                 move.w  #$E400,$E(a5)
                 move.l  #$F010F808,$2C(a5)
@@ -110,8 +110,8 @@ Cutscene_XiTigerTrainEntranceFinish:                    ; DATA XREF: ROM:0002EF4
                 bne.s   Cutscene_XiTigerTrainEntranceFinish_Return
                 move.w  #$1000,2(a5)
                 clr.w   (word_FFA02A).w
-                lea     (byte_C1A2).l,a0
-                jmp     LoadPalette
+                lea     (SharedStagePaletteCommand).l,a0
+                jmp     Gfx_LoadPaletteCommand
 ; ---------------------------------------------------------------------------
 Cutscene_XiTigerTrainEntranceFinish_Return:             ; CODE XREF: Cutscene_XiTigerTrainEntranceFinish+4   j  ; was: locret_2F08A
                 rts

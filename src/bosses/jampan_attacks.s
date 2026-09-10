@@ -485,8 +485,8 @@ Boss_JampanPreparePostDefeatControllerState:            ; DATA XREF: ROM:0004923
 Boss_JampanReinitializePostDefeatObjectsState:          ; DATA XREF: ROM:00049238   o  ; was: sub_49F40
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanReinitializePostDefeatObjectsReturn
-                lea     (byte_C55E).l,a0
-                jsr     (Gfx_SyncPaletteBuffers).l
+                lea     (Boss_JampanPaletteCommand).l,a0
+                jsr     (Gfx_LoadPalettePreservingSharedColor).l
                 bsr.w   Boss_JampanInitializeLinkedObjectGraph
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 move.w  #$FFF8,(dword_FF9424).w

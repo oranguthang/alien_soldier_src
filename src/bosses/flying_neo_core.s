@@ -95,7 +95,7 @@ Boss_FlyingNeoInit:                                     ; DATA XREF: Boss_Flying
                 moveq   #$C,d0
                 jsr     (Math_CalculateSineCosineTable).l
                 bsr.s   Boss_FlyingNeoClearPaletteHighBits
-                move.l  #dword_11346,(dword_FFA940).w
+                move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
                 move.w  #$F00,(word_FFA946).w
                 move.w  #$F760,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
@@ -185,8 +185,8 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 bsr.w   Boss_FlyingNeoInitializeAuxiliarySprites
                 movea.l #Boss_FlyingNeoObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
-                lea     (byte_C330).l,a0
-                jsr     (Gfx_SyncPaletteBuffers).l
+                lea     (Boss_FlyingNeoPaletteCommands).l,a0
+                jsr     (Gfx_LoadPalettePreservingSharedColor).l
                 lea     (PaletteFade_FlyingNeoEntryOffsets).l,a2
                 jsr     (Gfx_ClearColorFadeState).l
                 move.w  #$28,(word_FFF74A).w            ; '('

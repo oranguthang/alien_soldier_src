@@ -193,8 +193,8 @@ Stage_FlyingNeoBattleStart:                             ; DATA XREF: ROM:0000C8A
                 subq.w  #1,(dword_FFA960+2).w
                 bpl.s   loc_D040
                 addq.w  #2,(word_FFA950).w
-                lea     (stru_11408).l,a1
-                jsr     (Gfx_UpdateBossPalette).l
+                lea     (Boss_FlyingNeoAssetSet).l,a1
+                jsr     (Boss_LoadAssetSet).l
                 lea     byte_CE52(pc),a1
                 bsr.w   Stage_WriteBossParams
                 bsr.w   Stage_FlyingNeoInitBoss

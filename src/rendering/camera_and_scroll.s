@@ -6,7 +6,7 @@ loc_1002A:                                              ; CODE XREF: Gfx_LoadDes
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$158,d0
                 move.w  (dword_FFA904).w,d1
-                lea     dword_11326(pc),a0
+                lea     Gfx_DefaultVRAMTransferParameters(pc),a0
                 nop
                 bra.w   loc_10704
 ; End of function Gfx_LoadStage18Tiles
@@ -285,7 +285,7 @@ loc_1028A:                                              ; CODE XREF: Scroll_Incr
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$158,d0
                 move.w  #$F700,d1
-                lea     dword_11346(pc),a0
+                lea     Gfx_ScrollVRAMTransferParameters(pc),a0
                 nop
                 jmp     loc_10704(pc)                   ; (pc)
 ; End of function Scroll_ApplyAcceleration
@@ -306,7 +306,7 @@ Scroll_UpdateCameraPositions:                           ; CODE XREF: Stage_Flyin
                 subi.w  #$60,d0                         ; '`'
                 move.w  (dword_FFA904).w,d1
                 addi.w  #-$910,d1
-                lea     dword_11346(pc),a0
+                lea     Gfx_ScrollVRAMTransferParameters(pc),a0
                 nop
                 jmp     loc_109E0(pc)                   ; (pc)
 ; End of function Scroll_UpdateCameraPositions

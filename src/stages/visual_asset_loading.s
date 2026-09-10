@@ -82,8 +82,8 @@ off_11E6A:      dc.l    tiles_1001D6                    ; DATA XREF: Gfx_LoadTil
 
 ; Loads stage palette data
 Gfx_LoadStagePalette:                                   ; DATA XREF: ROM:off_11DE6   o  ; was: sub_11E86
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11E9C(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -94,8 +94,8 @@ word_11E9C:     dc.w    0, $6000, 2, $7000, 4, $8000, $FFFF
 
 ; Loads stage palette and tile data
 Stage_LoadVisualAssets:                                 ; DATA XREF: ROM:00011DE8   o  ; was: sub_11EAA
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11EC0(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -106,8 +106,8 @@ word_11EC0:     dc.w    0, $6000, 2, $7000, $C, $8000, $FFFF
 
 ; Loads Stage 3 palette and tile graphics
 Stage_LoadStage3Assets:                                 ; DATA XREF: ROM:00011DEA   o  ; was: sub_11ECE
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11EE4(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -118,8 +118,8 @@ word_11EE4:     dc.w    0, $7000, 8, $8000, $FFFF
 
 ; Loads stage 5 palette and first tileset via DMA
 Stage_LoadPaletteAndTilesA:                             ; DATA XREF: ROM:00011DEC   o  ; was: sub_11EEE
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F04(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -130,8 +130,8 @@ word_11F04:     dc.w    0, $7000, 8, $8000, $FFFF
 
 ; Loads stage 5 palette and second tileset via DMA
 Stage_LoadPaletteAndTilesB:                             ; DATA XREF: ROM:00011DEE   o  ; was: sub_11F0E
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F24(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -142,8 +142,8 @@ word_11F24:     dc.w    0, $6000, 2, $7000, 6, $8000, $FFFF
 
 ; Loads Stage 6 palette and tile graphics data to VRAM
 Stage_LoadStage6Graphics:                               ; DATA XREF: ROM:00011DF0   o  ; was: sub_11F32
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F48(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -154,8 +154,8 @@ word_11F48:     dc.w    0, $6000, 2, $7000, 4, $8000, $FFFF
 
 ; Loads Stage 7 palette and tile graphics data to VRAM
 Stage_LoadStage7Graphics:                               ; DATA XREF: ROM:00011DF2   o  ; was: sub_11F56
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F6C(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -166,8 +166,8 @@ word_11F6C:     dc.w    0, $6000, 4, $7000, 7, $10, $4F32, $8000, $FFFF
 
 ; Loads train stage tile graphics to VRAM
 Stage_LoadTrainGraphics:                                ; DATA XREF: ROM:00011DF4   o  ; was: sub_11F7E
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F94(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -178,8 +178,8 @@ word_11F94:     dc.w    0, $6000, 7, $11, $63AE, $8000, $FFFF
 
 ; Loads palette and tile graphics for flies stage
 Stage_LoadFliesGraphics:                                ; DATA XREF: ROM:00011DF6   o  ; was: sub_11FA2
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11FB8(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -189,8 +189,8 @@ word_11FB8:     dc.w    $C, $8000, $FFFF                ; DATA XREF: Stage_LoadF
 
 ; Loads palette and tile graphics for Stage 10
 Stage_LoadStage10Assets:                                ; DATA XREF: ROM:00011DF8   o  ; was: sub_11FBE
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11FD4(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -201,8 +201,8 @@ word_11FD4:     dc.w    0, $6000, 6, $7000, $A, $8000, $FFFF
 
 ; Loads palette and tile assets
 Stage_LoadStage11Assets:                                ; DATA XREF: ROM:00011DFA   o  ; was: sub_11FE2
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11FF8(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -213,8 +213,8 @@ word_11FF8:     dc.w    0, $6000, 6, $7000, 4, $8000, $FFFF
 
 ; Loads Stage 12 palette and tiles
 Stage_LoadStage12Assets:                                ; DATA XREF: ROM:00011DFC   o  ; was: sub_12006
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_1201C(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -225,8 +225,8 @@ word_1201C:     dc.w    0, $6000, 6, $7000, $A, $8000, $FFFF
 
 ; Loads Snake boss palette
 Gfx_LoadSnakePalette:                                   ; DATA XREF: ROM:00011DFE   o  ; was: sub_1202A
-                lea     (byte_C3F0).l,a0
-                jmp     LoadPalette
+                lea     (Boss_SnakePaletteCommand).l,a0
+                jmp     Gfx_LoadPaletteCommand
 ; End of function Gfx_LoadSnakePalette
 ; Loads tile data for Stage 4 at VRAM $6000
 Gfx_LoadStage4Tiles:
@@ -240,8 +240,8 @@ word_12040:     dc.w    0, $6000, $FFFF                 ; DATA XREF: Gfx_LoadSta
 ; Loads Stage 14 graphics
 Stage_LoadStage14Graphics:                              ; DATA XREF: ROM:00011E00   o  ; was: sub_12046
                 bset    #0,(byte_FF80F8).w
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_12062(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -252,8 +252,8 @@ word_12062:     dc.w    0, $6000, $FFFF                 ; DATA XREF: Stage_LoadS
 ; Loads Stage 5 palette and graphics data
 Stage_LoadStage5Graphics:                               ; DATA XREF: ROM:00011E02   o  ; was: sub_12068
                 bset    #0,(byte_FF80F8).w
-                lea     (byte_C1E2).l,a0
-                jsr     (LoadPalette).l
+                lea     (Stage5PaletteCommands).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     stru_12086(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l
@@ -267,8 +267,8 @@ stru_12086:     dc.w    7                               ; field_0
 
 ; Loads Stage 17 graphics
 Stage_LoadStage17Graphics:                              ; DATA XREF: ROM:00011E04   o  ; was: sub_12090
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_120A6(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -279,15 +279,15 @@ word_120A6:     dc.w    $C, $6000, 7, $12, $3172, $7000, $FFFF
 
 ; Loads palettes for stage 17
 Gfx_LoadStage17Palettes:                                ; DATA XREF: ROM:00011E06   o  ; was: sub_120B4
-                lea     (byte_BF2C).l,a0
-                jsr     (LoadPalette).l
-                lea     (byte_C4DE).l,a0
-                jmp     Gfx_SyncPaletteBuffers
+                lea     (Stage17PaletteCommandBank).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
+                lea     (Boss_Epsilon1PaletteCommands).l,a0
+                jmp     Gfx_LoadPalettePreservingSharedColor
 ; End of function Gfx_LoadStage17Palettes
 ; Background graphics setup
 Gfx_Stage18Background:                                  ; DATA XREF: ROM:00011E08   o  ; was: sub_120CC
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_120E2(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -298,8 +298,8 @@ word_120E2:     dc.w    $C, $6000, 7, $10, $5B9E, $7000, $FFFF
 
 ; Loads Stage 19 graphics
 Gfx_LoadStage19Graphics:                                ; DATA XREF: ROM:00011E0A   o  ; was: sub_120F0
-                lea     (byte_C1A2).l,a0
-                jsr     (LoadPalette).l
+                lea     (SharedStagePaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_12106(pc),a0
                 nop
                 bra.w   Gfx_LoadTileData
@@ -464,6 +464,6 @@ stru_121FE:     dc.w    $76                             ; field_0
                 dc.w    0                               ; field_16
                 dc.b    $F0                             ; field_18
                 dc.b    $A8                             ; field_19
-                dc.l    word_B99A                       ; field_1A
+                dc.l    Stage8AlternatePaletteOffsetList  ; field_1A
 
 ; Initializes stage state including RAM clear and player stats

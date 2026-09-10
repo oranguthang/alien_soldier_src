@@ -203,8 +203,8 @@ Boss_UpdateSireneState10:                               ; DATA XREF: ROM:0005750
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_RenderSireneState10
                 bsr.w   Gfx_InitSireneBattleEffect
-                lea     (byte_C05C).l,a0
-                jsr     (LoadPalette).l
+                lea     (SireneAndLateStagePaletteCommandBank).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 move.b  #$F9,d0
                 jsr     (Sound_PlaySFX).l
                 clr.w   (word_FFA02A).w

@@ -94,8 +94,8 @@ Stage_InitBossIntro:                                    ; DATA XREF: ROM:0000C84
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                lea     (stru_11366).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_JetsripperAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_InitBossIntro
 ; Camera handler checking boss presence
 Camera_BossPhaseHandler:                                ; DATA XREF: ROM:0000C850   o  ; was: sub_C910
@@ -137,8 +137,8 @@ Camera_TransitionToBossArena:                           ; DATA XREF: ROM:0000C85
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                lea     (stru_1137A).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_AntroidAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Camera_TransitionToBossArena
 ; Initializes camera for Antroid boss fight
 Camera_AntroidBossInit:                                 ; DATA XREF: ROM:0000C858   o  ; was: sub_C978
@@ -210,8 +210,8 @@ Camera_LockToBossArena:                                 ; DATA XREF: ROM:0000C86
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                lea     (stru_1138E).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_ShellshogunAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Camera_LockToBossArena
 ; Initializes camera for Shellshogun boss fight
 Camera_ShellshogunBossInit:                             ; DATA XREF: ROM:0000C866   o  ; was: sub_CA2C
@@ -227,7 +227,7 @@ Camera_ShellshogunBossInit:                             ; DATA XREF: ROM:0000C86
                 lea     (stru_11820).l,a0
                 jsr     (Data_ProcessPointer).l
                 move.w  #4,(word_FF8220).w
-                lea     (word_B98C).l,a4
+                lea     (ShellshogunStagePaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.l  #dword_CA8A,(dword_FFA940).w
                 clr.w   (word_FFA946).w
@@ -289,8 +289,8 @@ Camera_FollowTarget:                                    ; DATA XREF: ROM:0000C86
                 move.w  d0,(word_FFA974).w
                 move.b  #$10,(byte_FFA95A).w
                 move.b  #4,(byte_FFA95B).w
-                lea     (stru_113AA).l,a1
-                jsr     (Gfx_UpdateBossPalette).l
+                lea     (Boss_ShiperAssetSet).l,a1
+                jsr     (Boss_LoadAssetSet).l
                 bsr.s   Camera_ClampToBounds
 locret_CB24:                                            ; CODE XREF: Camera_FollowTarget+E   j
                 rts
@@ -394,8 +394,8 @@ Boss_MadamBarbarScrollInit:                             ; DATA XREF: ROM:0000C87
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
                 move.w  #$8000,(word_FF808A).w
-                lea     (stru_113B4).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_MadamBarbarAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Boss_MadamBarbarScrollInit
 ; Initializes stage after boss defeat with score timer and camera
 Stage_InitPostBoss:                                     ; DATA XREF: ROM:0000C87E   o  ; was: sub_CC06
@@ -441,8 +441,8 @@ Stage_InitJokerBoss:                                    ; DATA XREF: ROM:0000C88
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
                 move.w  #$8000,(word_FF808A).w
-                lea     (stru_113D0).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_JokerAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_InitJokerBoss
 ; Post-boss initialization triggering stage phase transition
 Stage_PostJokerBoss:                                    ; DATA XREF: ROM:0000C886   o  ; was: sub_CC84
@@ -524,8 +524,8 @@ Stage_InitTerobusterBoss:                               ; DATA XREF: ROM:0000C88
                 bpl.s   locret_CCFE
                 addq.w  #2,(word_FFA950).w
                 move.w  #$8000,(word_FF808A).w
-                lea     (stru_113EC).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_TerobusterAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_InitTerobusterBoss
 ; Updates stage scroll offset with directional calculation
 Stage_UpdateScrollOffset:                               ; CODE XREF: Stage_InitTerobusterBoss+8   p  ; was: sub_CD66

@@ -187,7 +187,7 @@ Gfx_RenderMenuTextLoop:                                 ; CODE XREF: Gfx_LoadMen
                 addi.w  #8,(dword_FF8040).w
                 cmpi.w  #$40,(dword_FF8040).w           ; '@'
                 bne.s   Gfx_RenderMenuTextLoop
-                lea     (word_B954).l,a4
+                lea     (TitleAndOptionsPaletteOffsetList).l,a4
                 jmp     Gfx_LoadMultiplePalettes
 ; End of function Gfx_LoadMenuGraphics
 ; ---------------------------------------------------------------------------

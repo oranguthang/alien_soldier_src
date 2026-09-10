@@ -19,8 +19,8 @@ Stage_InitBossPaletteScroll:                            ; DATA XREF: ROM:0000D9A
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                lea     (stru_11498).l,a1
-                bra.w   Gfx_UpdateBossPalette
+                lea     (Boss_VictorAssetSet).l,a1
+                bra.w   Boss_LoadAssetSet
 ; End of function Stage_InitBossPaletteScroll
 ; Initialize score timer and clear scroll variables
 Stage_InitScoreTimerClear:                              ; DATA XREF: ROM:0000D9A2   o  ; was: sub_DE8E
@@ -70,8 +70,8 @@ Stage_SunsetStingTransition:                            ; DATA XREF: ROM:0000D9A
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                lea     (stru_114B4).l,a1
-                bra.w   Gfx_UpdateBossPalette
+                lea     (Boss_SunsetStingAssetSet).l,a1
+                bra.w   Boss_LoadAssetSet
 ; End of function Stage_SunsetStingTransition
 ; Waits for battle to start
 Stage_SunsetStingWaitBattle:                            ; DATA XREF: ROM:0000D9AC   o  ; was: sub_DF26
@@ -158,8 +158,8 @@ Stage_ViblackPostBattleScroll2:                         ; DATA XREF: ROM:0000D9B
                 addq.w  #2,(word_FFA950).w
                 move.w  #$660,(word_FFA970).w
                 move.w  #$660,(word_FFA974).w
-                lea     (byte_C4A4).l,a0
-                jsr     (LoadPalette).l
+                lea     (ViblackPostBattleScrollPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
 loc_E028:                                               ; CODE XREF: Stage_ViblackPostBattleScroll2+1E   j
                                         ; Stage_ViblackPostBattleScroll2+2C   j
                 move.w  (dword_FF806A).w,d0
@@ -186,7 +186,7 @@ Stage_PostViblackTransition:                            ; DATA XREF: ROM:0000D9B
                 move.w  d0,(dword_FFA904).w
                 move.w  d0,(word_FFA92C).w
                 clr.w   (word_FFA914).w
-                move.l  #dword_11326,(dword_FFA940).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 move.w  #$1000,(word_FFA946).w
                 move.w  #0,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w

@@ -16,8 +16,8 @@
 ; Segment type: Pure code
 ; segment "ROM"
 ; ROM segment
-Sys_VectorTable:    dc.l    $FFFFFF00                   ; DATA XREF: ROM:stru_113AA   o  ; was: dword_0
-                                        ; ROM:stru_11408   o
+Sys_VectorTable:    dc.l    $FFFFFF00                   ; DATA XREF: ROM:Boss_ShiperAssetSet   o  ; was: dword_0
+                                        ; ROM:Boss_FlyingNeoAssetSet   o
                 dc.l    Reset
                 dc.l    BusErr
                 dc.l    AdrErr
@@ -95,50 +95,8 @@ ModemCode:      dc.b    '            '
 Reserved:       dc.b    '                                        '
 CountryCode:    dc.b    'B               '
 
-; ===============================================================================
-; UNUSED/SCRAPPED CONTENT DOCUMENTATION
-; Sources: The Cutting Room Floor - https://tcrf.net/Alien_Soldier
-; YouTube Research (Zetaman, Oct-Nov 2021)
-; ===============================================================================
-; This disassembly contains several complete but unused game elements that were
-; cut during development. All structures remain fully intact in the ROM
-;
-; UNUSED BOSSES (6 total):
-; - $01C0 "Love Penguin"  : Hand-shaped boss (line ~21034)
-; - $03EC "Lambda Bunny"  : Cowboy rabbit boss (stru_115A8, line ~21092)
-; - $03FC "Dragon"        : Dragon boss (line ~21138)
-; - $3F0  Unknown Boss    : Identity unknown (stru_115C4, line ~21098)
-; - $3F4  Unknown Boss    : Possibly Mantis or Sigma Fox (stru_115E0, line ~21120)
-; - Additional bosses in unused Jampan Area (Praying Mantis, Sigma Fox)
-;
-; UNUSED GRAPHICS (2 structures):
-; - Intro Cutscene Sprites: Kaede + unknown man (stru_12910, line ~23283)
-; - Unknown Graphics      : 314 bytes, purpose unknown (stru_128F2, line ~23266)
-;
-; UNUSED STAGES/AREAS:
-; - Jampan Area: 3-4 unused boss stages (activate via ROM patches)
-; - Laboratory Stage: Plays cutscene then crashes
-; - Epsilon 1 Cutscene: Pre-battle cutscene from magazine preview
-;
-; UNUSED FEATURES:
-; - Dialogue System: Pre-boss battle dialogue exchanges (ROM 0x00B462)
-; - Story Text Screens: Narrative text between stages (ROM 0x01E276)
-; - Seven Force Variants: Harpy Force & Nemesis Force (non-functional)
-;
-; INPUT-DRIVEN INTERNAL CONTROL:
-; - Boss_JampanAdjustOrbitParametersFromInput changes Jampan orbit parameters
-; from held button combinations; its original debug/gameplay purpose is unknown
-;
-; LOADER FUNCTIONS:
-; -Stage_InitBossPhase2 (line ~16561): Lambda Bunny palette loader
-; -Stage_InitBossPhase3 (line ~16598): Unknown boss $3F0 palette loader
-; -Stage_InitBossPhase4 (line ~16646): Unknown boss $3F4 palette loader
-; -Stage_InitCutsceneData (line ~22688): Intro sprite loader
-;
-; ACTIVATION CODES:
-; See docs/unused_content_activation.md for ROM patch codes
-; Global enable: ROM 0x00036C = 4E71 4E71 (NOP NOP)
-;
-; All unused content is marked with "UNUSED:" comments at relevant locations
-; No code logic has been modified - documentation only
-; ===============================================================================
+; External research associates several dormant records and patch experiments
+; with prerelease content. The ROM itself proves entity types, resource lists,
+; and call paths, but does not prove every community-supplied character name or
+; that every reachable-looking record is unused. Keep those claims out of the
+; source API; docs/unused_content.md records them with explicit evidence limits

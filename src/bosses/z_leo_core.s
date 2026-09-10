@@ -125,11 +125,11 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 movea.l #$FFFF4520,a0
                 move.w  #$A000,d0
                 moveq   #5,d7
-                jsr     (Gfx_AdjustTileIndices).l
+                jsr     (Gfx_AdjustTileIndexRows).l
                 bsr.w   Boss_ZLeoGraphicsInit1
                 bsr.w   Boss_ZLeoBuildHBlankRegisterBuffer
                 bsr.w   Boss_ZLeoLoadInitialTilesAndPatterns
-                move.l  #dword_11316,(dword_FFA940).w
+                move.l  #Gfx_TitleAndZLeoVRAMTransferParameters,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
                 move.w  #$F600,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
@@ -160,7 +160,7 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 movea.l #$FFFF2080,a0
                 move.w  #$E000,d0
                 moveq   #3,d7
-                jsr     (Gfx_AdjustTileIndices).l
+                jsr     (Gfx_AdjustTileIndexRows).l
                 move.w  #$7FFF,d0
                 lea     (byte_FF2080).l,a0
                 and.w   d0,(a0)
@@ -496,7 +496,7 @@ Boss_ZLeoBeginDefeatWhiteout:                           ; CODE XREF: Boss_ZLeoBe
                 movea.l #$FFFF2080,a0
                 move.w  #$6000,d0
                 moveq   #3,d7
-                jsr     (Gfx_AdjustTileIndices).l
+                jsr     (Gfx_AdjustTileIndexRows).l
                 lea     Boss_ZLeoDefeatTileLoadDescriptor(pc),a0
                 nop
                 jsr     (Gfx_LoadCompressedTiles).l

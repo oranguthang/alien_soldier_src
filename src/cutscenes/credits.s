@@ -12,11 +12,11 @@ Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_Trans
                 move.w  #1,(dword_FF8044+2).w
                 jsr     (Gfx_LoadTilesLoop).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
                 jsr     (Gfx_DirectVRAMTransfer).l
-                lea     (word_B982).l,a4
+                lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$FFF2,(word_FF010C).l
                 move.w  (word_FF010C).l,d0

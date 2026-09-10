@@ -346,7 +346,7 @@ Cutscene_ShipInitScene_RenderLoop:                      ; DATA XREF: ROM:0000881
                 movea.l #word_8DE4,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 clr.w   (word_FF808A).w
-                move.l  #dword_11346,(dword_FFA940).w
+                move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
                 move.w  #0,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w

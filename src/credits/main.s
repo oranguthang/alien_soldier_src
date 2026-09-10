@@ -2,7 +2,7 @@ Credits_InitXiTiger:                                    ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 jsr     (Sys_InitGameMode).l
-                jsr     (Gfx_QueueVRAMCommand).l
+                jsr     (Gfx_QueueLargeFontDMACommand81).l
                 movea.l #Credits_XiTigerAssetLoadList,a0
                 jsr     (LoadObjData).l
                 lea     (word_FF5000).l,a0
@@ -27,15 +27,15 @@ Credits_InitXiTiger_ClearTilemapBufferLoop:             ; CODE XREF: Credits_Ini
                 move.l  #$81828300,(dword_FF6194).l
                 move.l  #$85868700,(dword_FF619C).l
                 move.l  #$898A8B00,(dword_FF61A4).l
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
                 jsr     (Gfx_DirectVRAMTransfer).l
-                lea     (dword_11346).l,a0
+                lea     (Gfx_ScrollVRAMTransferParameters).l,a0
                 move.w  #$800,d0
                 move.w  #0,d1
                 jsr     (Gfx_DirectVRAMTransfer).l
-                lea     (word_B982).l,a4
+                lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$EA8,(word_FFE3A8).w
                 move.w  #$E86,(word_FFE3AA).w

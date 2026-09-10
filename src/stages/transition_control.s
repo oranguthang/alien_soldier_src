@@ -10,7 +10,7 @@ Sys_TransitionToStageInit:                              ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_WriteVDPCommand
+                jmp     Gfx_QueueLargeFontDMA
 ; ---------------------------------------------------------------------------
 loc_1E7A8:                                              ; CODE XREF: Sys_TransitionToStageInit+4   j
                 addq.w  #4,(GameModeIndex).w

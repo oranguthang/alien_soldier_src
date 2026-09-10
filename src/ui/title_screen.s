@@ -13,7 +13,7 @@ UI_InitTitleScreen:                                     ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_QueueVRAMCommand
+                jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
 loc_936C:                                               ; CODE XREF: UI_InitTitleScreen+4   j
                 move.w  #$18,(GameModeIndex).w
@@ -21,19 +21,19 @@ loc_936C:                                               ; CODE XREF: UI_InitTitl
                 movea.l #$FFFF4020,a0
                 move.w  #$C180,d0
                 moveq   #$26,d7                         ; '&'
-                jsr     (Gfx_AdjustTileIndices).l
+                jsr     (Gfx_AdjustTileIndexRows).l
                 movea.l #$FFFF2020,a0
                 move.w  #$6000,d0
                 move.w  #$FF00,d1
                 move.w  #$BF,d7
                 jsr     (Gfx_UpdateTilemapIndices).l
-                lea     (dword_11316).l,a0
+                lea     (Gfx_TitleAndZLeoVRAMTransferParameters).l,a0
                 moveq   #0,d0
                 moveq   #0,d1
                 move.w  d0,(dword_FFA900).w
                 move.w  d1,(dword_FFA904).w
                 jsr     (Gfx_DirectVRAMTransfer).l
-                lea     (dword_11336).l,a0
+                lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
                 move.w  d0,(dword_FFA908).w
@@ -60,8 +60,8 @@ loc_936C:                                               ; CODE XREF: UI_InitTitl
                 move.w  #$A300,d0
                 move.w  #$4C0C,d4
                 jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_BA4A).l,a0
-                jsr     (LoadPalette).l
+                lea     (FrontendFullPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
                 jmp     (Gfx_FadePaletteTransition).l

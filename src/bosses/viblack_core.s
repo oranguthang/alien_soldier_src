@@ -116,19 +116,19 @@ Boss_ViblackIntroSetup:                                 ; DATA XREF: ROM:000439D
                 move.b  #$20,$21(a4)                    ; ' '
                 move.w  #4,$46(a4)
                 move.l  #$FF770088,$28(a4)
-                lea     (byte_C464).l,a0
-                jsr     (LoadPalette).l
+                lea     (Boss_ViblackIntroPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     Boss_ViblackPaletteCycleEntries(pc),a2
                 nop
                 jsr     (Gfx_ClearColorFadeState).l
                 lea     Boss_ViblackTileLoadCommand(pc),a0
                 nop
                 move.w  #$8000,d0
-                jsr     (Stage_LoadShipGraphics).l
+                jsr     (Gfx_AdjustSelectedTileBlocks).l
                 movea.l #$FFFF5520,a0
                 move.w  #$2000,d0
                 moveq   #$49,d7                         ; 'I'
-                jsr     (Gfx_AdjustTileIndices).l
+                jsr     (Gfx_AdjustTileIndexRows).l
                 lea     Boss_ViblackCompressedTileLoadCommand(pc),a0
                 nop
                 jsr     (Gfx_LoadCompressedTiles).l

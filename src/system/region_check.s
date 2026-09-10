@@ -19,9 +19,9 @@ RegionRestricted:                                       ; CODE XREF: Sys_CheckRe
                 jsr     (Input_ProcessButtons).l
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
-                jsr     (Gfx_QueueVRAMCommand).l
-                lea     (byte_BA4A).l,a0
-                jsr     (LoadPalette).l
+                jsr     (Gfx_QueueLargeFontDMACommand81).l
+                lea     (FrontendFullPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$8300,d0
                 move.w  #$438C,d4
                 lea     RegionLock_DevelopedForUseText(pc),a0

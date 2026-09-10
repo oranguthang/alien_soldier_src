@@ -67,8 +67,8 @@ locret_E1D4:                                            ; CODE XREF: Stage_Epsil
 Stage_Epsilon1BattleStart:                              ; DATA XREF: ROM:0000D9CC   o  ; was: sub_E1D6
                 bsr.w   Stage_Epsilon1UpdateScrollParallax
                 addq.w  #2,(word_FFA950).w
-                lea     (stru_11500).l,a1
-                bra.w   Gfx_UpdateBossPalette
+                lea     (Boss_Epsilon1AssetSet).l,a1
+                bra.w   Boss_LoadAssetSet
 ; End of function Stage_Epsilon1BattleStart
 ; Waits for boss intro completion
 Stage_Epsilon1WaitIntroComplete:                        ; DATA XREF: ROM:0000D9CE   o  ; was: sub_E1E8

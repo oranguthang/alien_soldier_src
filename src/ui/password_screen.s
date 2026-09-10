@@ -12,7 +12,7 @@ UI_InitPasswordScreen:                                  ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_QueueVRAMCommand
+                jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
 ; Initializes password screen display with graphics data and palette loading
 UI_InitPasswordDisplay:                                 ; CODE XREF: UI_InitPasswordScreen+4   j  ; was: loc_A3EA
@@ -21,14 +21,14 @@ UI_InitPasswordDisplay:                                 ; CODE XREF: UI_InitPass
                 move.w  #$400,d0
                 moveq   #0,d1
                 jsr     (Data_LoadPointerTable2).l
-                lea     (dword_11336).l,a0
+                lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
                 move.w  d0,(dword_FFA908).w
                 move.w  d1,(dword_FFA90C).w
                 jsr     (Gfx_DirectVRAMTransfer).l
-                lea     (byte_BA4A).l,a0
-                jsr     (LoadPalette).l
+                lea     (FrontendFullPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_A4AC(pc),a0
                 nop
                 movea.w #(byte_FFE322-M68K_RAM),a1

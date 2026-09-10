@@ -8,7 +8,7 @@ Scroll_CalculateOffsets1:
                 move.w  (dword_FFA908).w,d0             ; was: sub_106D0
                 addi.w  #$180,d0
                 move.w  (dword_FFA90C).w,d1
-                lea     dword_11336(pc),a0
+                lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0
                 nop
                 bra.s   loc_10704
 ; End of function Scroll_CalculateOffsets1
@@ -29,7 +29,7 @@ Gfx_GetCameraPosition:                                  ; CODE XREF: Stage_InitT
 ; Renders tilemap tiles to VRAM planes
 Gfx_RenderTilemap:                                      ; CODE XREF: Stage_TeleportFadeSequence+4A   j  ; was: sub_106FE
                                         ; Stage_MedusaCamera+46   p
-                lea     dword_11316(pc),a0
+                lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
 loc_10704:                                              ; CODE XREF: Stage_CaterpillarShipMovement+52   p
                                         ; Gfx_LoadStage18Tiles+1A   j
@@ -185,7 +185,7 @@ Camera_Stage18Lock:                                     ; CODE XREF: Gfx_LoadSta
                 subi.w  #$1000,d1
 loc_108A4:                                              ; CODE XREF: Stage_MedusaCamera+62   p
                                         ; Scroll_RenderTilemapVertOffset+10   j
-                lea     dword_11326(pc),a0
+                lea     Gfx_DefaultVRAMTransferParameters(pc),a0
                 nop
                 neg.w   d1
                 moveq   #8,d7

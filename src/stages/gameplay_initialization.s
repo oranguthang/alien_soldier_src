@@ -6,7 +6,7 @@ Stage_InitPlayerAndScroll:                              ; DATA XREF: ROM:0001E85
                 lea     stru_1EE12(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                lea     (word_B9E6).l,a4
+                lea     (Stage33PaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$1000,(dword_FFA900).w
                 move.w  #$EC00,(dword_FFA904).w
@@ -80,7 +80,7 @@ UI_InitializeStageStart:                                ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_WriteVDPCommand
+                jmp     Gfx_QueueLargeFontDMA
 ; ---------------------------------------------------------------------------
 ; Loads stage graphics palettes and initializes systems
 UI_LoadStageGraphics:                                   ; CODE XREF: UI_InitializeStageStart+4   j  ; was: loc_1EEEA
@@ -92,7 +92,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 move.b  #1,(byte_FF7001).l
                 clr.w   d0
                 clr.w   d1
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 jsr     (Gfx_DirectVRAMTransfer).l
                 jsr     (nullsub_1).l
                 bsr.w   Stage_InitializeState
@@ -113,7 +113,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 move.w  #$330,(word_FFA270).w
                 bset    #0,(byte_FFA272).w
                 move.w  #$8000,(word_FF808A).w
-                lea     (word_B94E).l,a4
+                lea     (StageStartPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bsr.w   Gfx_SetupWeaponSprites
                 jsr     (Gfx_LoadPaletteData).l

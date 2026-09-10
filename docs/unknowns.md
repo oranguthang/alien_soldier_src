@@ -2672,3 +2672,41 @@ Four especially broad data labels are explicitly registered:
 
 Semantic names with `; was:` history are a second review queue. Their default
 level is `hypothesis`, not `confirmed`; see `docs/provenance.md`.
+
+The `0x00B900-0x011721` palette and asset-loading audit replaces the former
+address vocabulary with names derived from the actual command consumers. A
+palette command begins with destination and inclusive word-count bytes followed
+by CRAM words. `Gfx_LoadPaletteCommand` copies those words to the selected
+palette buffer and its shadow. `Gfx_LoadMultiplePalettes` first clears eight
+palette blocks, loads the common command, then follows signed offsets relative
+to `Gfx_LoadPalettePreservingSharedColor`. Boss asset-set records contain an
+entity-type word and optional graphics-list and palette-command pointers;
+`Boss_LoadAssetSet` initializes the object and consumes both lists.
+
+This evidence corrects twelve generated semantic claims. Notably, the former
+`Gfx_UpdateBossPalette` also loads graphics and initializes the selected entity,
+so it is now `Boss_LoadAssetSet`. The former `VDP_SetupPaletteTransfer` points
+at font tiles and VRAM `$6000`, so it is now `Gfx_QueueSmallFontDMA`. The former
+`Stage_LoadShipGraphics` adjusts selected tile blocks rather than loading ship
+art. The exact corrections and evidence levels are recorded in
+`config/name_audit.json`.
+
+External research calls some resource sets Love Penguin, Lambda Bunny, Dragon,
+Praying Mantis, or Sigma Fox. Static ROM evidence establishes only entity types
+`$1C0`, `$3EC`, `$3F0`, `$3F4`, and `$3FC` and their asset records. The source
+therefore uses `EntityType*` names and keeps those identities in
+`docs/unused_content.md` as unproven attributions. The `$3EC`, `$3F0`, and
+`$3F4` loaders are entries in the late Stage 18 state table, so the earlier
+claim that they were unreferenced unused loaders was also removed.
+
+The mixed `rendering/asset_transfers.s` container is split at the exact
+`0x011316` boundary into the 172-line `rendering/vdp_asset_transfers.s`
+(`0x011170-0x011315`) and 440-line `rendering/boss_asset_sets.s`
+(`0x011316-0x011721`). This takes the layout from 340 to 341 modules. The pass
+also renames `data/xi_tiger_and_unused_boss_art.s` to the evidence-neutral
+`data/xi_tiger_and_boss_art.s`; neither its filename nor its comments now
+assert that the externally attributed entity art is unused. The pass
+adds 164 provenance mappings and 181 audit records, raising the totals from
+11,094 to 11,258 and from 7,282 to 7,463. It removes 166 address-derived
+definitions, lowering the enforced ceiling from 4,948 to 4,782. The canonical
+Japanese ROM remains byte-identical after the split and renames.

@@ -1,0 +1,171 @@
+Gfx_AdjustSelectedTileBlocks:                           ; CODE XREF: Stage_LoadStage10Enemies+1C   j  ; was: sub_11170
+                                        ; Boss_ViblackInit+BC   p
+                moveq   #$FFFFFFFF,d1
+                move.w  (a0)+,d1
+                movea.l d1,a1
+                moveq   #5,d3
+                bra.s   Gfx_AdjustSelectedTileBlocks_ReadBlockIndex
+; ---------------------------------------------------------------------------
+Gfx_AdjustSelectedTileBlocks_ProcessBlock:              ; CODE XREF: Gfx_AdjustSelectedTileBlocks+2A   j  ; was: loc_1117A
+                asl.w   d3,d1
+                moveq   #$F,d7
+Gfx_AdjustSelectedTileBlocks_WordLoop:                  ; CODE XREF: Gfx_AdjustSelectedTileBlocks+1E   j  ; was: loc_1117E
+                move.w  (a1,d1.w),d2
+                andi.w  #$1FFF,d2
+                add.w   d0,d2
+                move.w  d2,(a1,d1.w)
+                addq.w  #2,d1
+                dbf     d7,Gfx_AdjustSelectedTileBlocks_WordLoop
+Gfx_AdjustSelectedTileBlocks_ReadBlockIndex:            ; CODE XREF: Gfx_AdjustSelectedTileBlocks+8   j  ; was: loc_11192
+                moveq   #0,d1
+                move.b  (a0)+,d1
+                cmpi.w  #$FF,d1
+                bne.s   Gfx_AdjustSelectedTileBlocks_ProcessBlock
+                rts
+; End of function Gfx_AdjustSelectedTileBlocks
+; Adjusts tile pattern indices
+Gfx_AdjustTileIndexRows:                                ; CODE XREF: UI_InitTitleScreen+60   p  ; was: sub_1119E
+                                        ; Boss_WolfGaropaGraphicsInit+8   j
+                moveq   #$F,d6
+Gfx_AdjustTileIndexRows_WordLoop:                       ; CODE XREF: Gfx_AdjustTileIndexRows+C   j  ; was: loc_111A0
+                move.w  (a0),d2
+                andi.w  #$1FFF,d2
+                add.w   d0,d2
+                move.w  d2,(a0)+
+                dbf     d6,Gfx_AdjustTileIndexRows_WordLoop
+                dbf     d7,Gfx_AdjustTileIndexRows
+                rts
+; End of function Gfx_AdjustTileIndexRows
+; Updates tilemap tile indices and palette bits with offset
+Gfx_UpdateTilemapIndices:                               ; CODE XREF: UI_InitTitleScreen+78   p  ; was: sub_111B4
+                                        ; Boss_SireneSpawnProjectile2+2C   p
+                moveq   #$F,d6
+Gfx_UpdateTilemapIndices_WordLoop:                      ; CODE XREF: Gfx_UpdateTilemapIndices+1C   j  ; was: loc_111B6
+                move.w  (a0),d2
+                move.w  d2,d3
+                andi.w  #$1800,d3
+                andi.w  #$7FF,d2
+                beq.s   Gfx_UpdateTilemapIndices_StoreWord
+                add.w   d1,d2
+                andi.w  #$7FF,d2
+Gfx_UpdateTilemapIndices_StoreWord:                     ; CODE XREF: Gfx_UpdateTilemapIndices+E   j  ; was: loc_111CA
+                or.w    d3,d2
+                add.w   d0,d2
+                move.w  d2,(a0)+
+                dbf     d6,Gfx_UpdateTilemapIndices_WordLoop
+                dbf     d7,Gfx_UpdateTilemapIndices
+                rts
+; End of function Gfx_UpdateTilemapIndices
+; Transfers a single font tile to VRAM
+Gfx_QueueNextFontTileDMA:                               ; CODE XREF: UI_WeaponSelectTransition+10   p  ; was: sub_111DA
+                tst.w   (word_FF8148).w
+                bmi.w   Gfx_QueueNextFontTileDMA_Return
+                movea.w (word_FFF70C).w,a1
+                move.w  (word_FF8146).w,d0
+                move.w  d0,d1
+                andi.w  #$3FFE,d0
+                addi.w  #$4000,d0
+                andi.w  #$C000,d1
+                moveq   #$E,d2
+                lsr.w   d2,d1
+                addi.w  #$80,d1
+                move.w  d1,-(a1)
+                move.w  d0,-(a1)
+                move.l  #$94029300,d4
+                moveq   #0,d0
+                move.w  (word_FF814A).w,d0
+                addi.l  #tiles_font,d0
+                lsr.l   #1,d0
+                move.l  d0,(dword_FF8040).w
+                move.b  (dword_FF8040+2).w,d2
+                move.b  (dword_FF8040+1).w,d3
+                andi.w  #$7F,d3
+                move.b  d0,-(a1)
+                move.b  #$95,-(a1)
+                move.b  d2,-(a1)
+                move.b  #$96,-(a1)
+                move.b  d3,-(a1)
+                move.b  #$97,-(a1)
+                move.w  #$8F02,-(a1)
+                move.l  d4,-(a1)
+                move.w  a1,(word_FFF70C).w
+                addi.w  #$400,(word_FF8146).w
+                addi.w  #$400,(word_FF814A).w
+                subq.w  #1,(word_FF8148).w
+Gfx_QueueNextFontTileDMA_Return:                        ; CODE XREF: Gfx_QueueNextFontTileDMA+4   j  ; was: locret_11254
+                rts
+; End of function Gfx_QueueNextFontTileDMA
+; Writes VDP command registers
+Gfx_QueueLargeFontDMA:                                  ; CODE XREF: Sys_TransitionToStageInit+36   j  ; was: sub_11256
+                                        ; UI_InitializeStageStart+46   j
+                movea.w (word_FFF70C).w,a1
+                move.w  #$80,-(a1)
+                move.w  #$6000,-(a1)
+                move.l  #$94209000,d4
+                bra.s   Gfx_BuildQueuedFontDMA
+; End of function Gfx_QueueLargeFontDMA
+; Sets up VDP command to transfer to palette RAM
+Gfx_QueueSmallFontDMA:                                  ; CODE XREF: Stage_InitializeStageSelect+3E   j  ; was: sub_1126A
+                movea.w (word_FFF70C).w,a1
+                move.w  #$80,-(a1)
+                move.w  #$6000,-(a1)
+                move.l  #$94069300,d4
+                bra.s   Gfx_BuildQueuedFontDMA
+; End of function Gfx_QueueSmallFontDMA
+; Queues VRAM write command for plane A at address 0x6000
+Gfx_QueueLargeFontDMACommand81:                         ; CODE XREF: RegionRestricted+1E   p  ; was: sub_1127E
+                                        ; UI_InitTitleScreen+44   j
+                movea.w (word_FFF70C).w,a1
+                move.w  #$81,-(a1)
+                move.w  #$6000,-(a1)
+                move.l  #$94209000,d4
+                bra.s   Gfx_BuildQueuedFontDMA
+; End of function Gfx_QueueLargeFontDMACommand81
+; Queues DMA transfer for font tiles to VRAM with Z80 sync
+Gfx_QueueSmallFontDMACommand83:                         ; CODE XREF: UI_InitializePasswordScreen+10   p  ; was: sub_11292
+                                        ; UI_InitializePasswordScreen+32   p
+                movea.w (word_FFF70C).w,a1
+                move.w  #$83,-(a1)
+                move.w  #$5400,-(a1)
+                move.l  #$94059300,d4
+Gfx_BuildQueuedFontDMA:                                 ; CODE XREF: Gfx_QueueLargeFontDMA+12   j  ; was: loc_112A4
+                                        ; Gfx_QueueSmallFontDMA+12   j
+                move.l  #tiles_font,d0
+                lsr.l   #1,d0
+                move.l  d0,(dword_FF8040).w
+                move.b  (dword_FF8040+2).w,d2
+                move.b  (dword_FF8040+1).w,d3
+                andi.w  #$7F,d3
+                move.b  d0,-(a1)
+                move.b  #$95,-(a1)
+                move.b  d2,-(a1)
+                move.b  #$96,-(a1)
+                move.b  d3,-(a1)
+                move.b  #$97,-(a1)
+                move.w  #$8F02,-(a1)
+                move.l  d4,-(a1)
+                move    sr,-(sp)
+                move    #$2700,sr
+Gfx_BuildQueuedFontDMA_AcquireZ80Bus:                   ; CODE XREF: Gfx_QueueSmallFontDMACommand83+50   j  ; was: loc_112DA
+                bset    #0,(IO_Z80BUS).l
+                bne.s   Gfx_BuildQueuedFontDMA_AcquireZ80Bus
+                lea     (VDP_CTRL).l,a0
+                move.w  (word_FFF7D2).w,d0
+                bset    #4,d0
+                move.w  d0,(a0)
+                move.l  (a1)+,(a0)
+                move.l  (a1)+,(a0)
+                move.l  (a1)+,(a0)
+                move.w  (a1)+,(a0)
+                move.w  (a1)+,(a0)
+                move.w  (word_FFF7D2).w,d0
+                bclr    #4,d0
+                move.w  d0,(a0)
+; Releases Z80 bus control and restores status register
+Gfx_ReleaseZ80Bus:                                      ; CODE XREF: Gfx_QueueSmallFontDMACommand83+7E   j  ; was: loc_11308
+                bclr    #0,(IO_Z80BUS).l
+                beq.s   Gfx_ReleaseZ80Bus
+                move    (sp)+,sr
+                rts
+; End of function Gfx_QueueSmallFontDMACommand83
+; ---------------------------------------------------------------------------

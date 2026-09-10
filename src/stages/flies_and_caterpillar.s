@@ -273,8 +273,8 @@ Stage_InitXiTigerBoss:                                  ; DATA XREF: ROM:0000C8C
 loc_D450:                                               ; CODE XREF: Stage_CaterpillarScrollHandler+68   j
                 move.w  #$70,(word_FFA950).w            ; 'p'
                 move.w  #$10,(dword_FF8062).w
-                lea     (stru_11424).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_XiTigerAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Stage_InitXiTigerBoss
 ; Waits for boss spawn with palette setup
 Stage_XiTigerBossWait:                                  ; DATA XREF: ROM:0000C8BA   o  ; was: sub_D468

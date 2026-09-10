@@ -12,7 +12,7 @@ Stage_InitializeTransition:                             ; DATA XREF: ROM:0001CF7
                 clr.b   (byte_FFF755).w
                 movea.l #stru_1D420,a0
                 jsr     (LoadObjData).l
-                movea.l #word_B978,a4
+                movea.l #StageTransitionPaletteOffsetLists,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$400,d0
                 move.w  #0,d1

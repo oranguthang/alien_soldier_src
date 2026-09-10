@@ -43,8 +43,8 @@ Boss_MissirayTransition:                                ; DATA XREF: ROM:0000F14
                 subq.w  #1,(word_FF9DB0).w
                 bpl.w   Boss_DestroyerProtoTransition_Return
                 addq.w  #2,(word_FFA950).w
-                lea     (stru_1163C).l,a1
-                jmp     Gfx_UpdateBossPalette
+                lea     (Boss_MissirayAssetSet).l,a1
+                jmp     Boss_LoadAssetSet
 ; End of function Boss_MissirayTransition
 ; Boss initialization
 Boss_MissirayInit:                                      ; DATA XREF: ROM:0000F142   o  ; was: sub_F8D0

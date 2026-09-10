@@ -2,7 +2,7 @@ Scroll_CalculateOffsets2:
                 move.w  (dword_FFA908).w,d0             ; was: sub_109A8
                 subi.w  #$60,d0                         ; '`'
                 move.w  (dword_FFA90C).w,d1
-                lea     dword_11336(pc),a0
+                lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0
                 nop
                 bra.s   loc_109E0
 ; End of function Scroll_CalculateOffsets2
@@ -21,7 +21,7 @@ Gfx_RenderSylpheedBackground:                           ; CODE XREF: Stage_Stage
                 subi.w  #$60,d0                         ; '`'
                 move.w  (dword_FFA904).w,d1
 loc_109DA:                                              ; CODE XREF: Scroll_Stage21CameraOffset+10   j
-                lea     dword_11316(pc),a0
+                lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
 loc_109E0:                                              ; CODE XREF: Stage_SylpheedCameraLock+4A   j
                                         ; Gfx_LoadSylpheedTiles+20   j
@@ -116,7 +116,7 @@ Scroll_GetBackgroundPosition:                           ; CODE XREF: Cutscene_Xi
 ; End of function Scroll_GetBackgroundPosition
 ; Loads pointer to data table 1
 Data_LoadPointerTable1:                                 ; CODE XREF: UI_InitializeResultsScreen+50   p  ; was: sub_10AE4
-                lea     dword_11336(pc),a0
+                lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0
                 nop
                 bra.s   Gfx_DirectVRAMTransfer
 ; End of function Data_LoadPointerTable1
@@ -129,7 +129,7 @@ Scroll_GetForegroundPosition:                           ; CODE XREF: Cutscene_Xi
 ; Loads pointer to data table 2
 Data_LoadPointerTable2:                                 ; CODE XREF: Sys_InitOptionsMenuState+50   p  ; was: sub_10AF4
                                         ; UI_InitPasswordScreen+5A   p
-                lea     dword_11316(pc),a0
+                lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
 ; End of function Data_LoadPointerTable2
 ; Performs direct VRAM transfer with Z80 bus control and DMA setup

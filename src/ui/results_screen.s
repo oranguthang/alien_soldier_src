@@ -20,7 +20,7 @@ Results_UpdateAndDisplay:                               ; DATA XREF: ROM:0001D7D
                 movea.l #$FFFF2020,a0
                 move.w  #$4000,d0
                 moveq   #$F,d7
-                jsr     (Gfx_AdjustTileIndices).l
+                jsr     (Gfx_AdjustTileIndexRows).l
                 movea.l #byte_1DCC4,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 clr.w   (dword_FFA908).w
@@ -88,7 +88,7 @@ Results_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_QueueVRAMCommand
+                jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
 locret_1DD88:                                           ; CODE XREF: Results_InitializeScreen+60   j
                 rts
@@ -98,7 +98,7 @@ loc_1DD8A:                                              ; CODE XREF: Results_Ini
                 bmi.s   locret_1DD88
                 addq.w  #4,(GameModeIndex).w
                 move.w  #2,(GameSubstateIndex).w
-                lea     (word_B96E).l,a4
+                lea     (ResultsScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bsr.w   Results_RenderAllStats
                 move.b  #$12,(word_FFF7F4+1).w

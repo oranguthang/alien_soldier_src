@@ -152,7 +152,7 @@ stru_127A8:     dc.w    0                               ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $B0                             ; field_19
-                dc.l    word_B988                       ; field_1A
+                dc.l    EarlyStagePaletteOffsetList     ; field_1A
 stru_127C6:     dc.w    $A                              ; field_0
                                         ; DATA XREF: Stage_InitStage2Data   o
                 dc.l    Stage2_ObjectSpawnList          ; field_2
@@ -168,7 +168,7 @@ stru_127C6:     dc.w    $A                              ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $B0                             ; field_19
-                dc.l    word_B988                       ; field_1A
+                dc.l    EarlyStagePaletteOffsetList     ; field_1A
 stru_127E4:     dc.w    $12                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2ConfigAlt   o
                 dc.l    Stage2_AlternateObjectSpawnList  ; field_2
@@ -184,7 +184,7 @@ stru_127E4:     dc.w    $12                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $B0                             ; field_19
-                dc.l    word_B988                       ; field_1A
+                dc.l    EarlyStagePaletteOffsetList     ; field_1A
 stru_12802:     dc.w    $22                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2Config2   o
                 dc.l    Stage2_SecondObjectSpawnList    ; field_2
@@ -200,7 +200,7 @@ stru_12802:     dc.w    $22                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $B0                             ; field_19
-                dc.l    word_B98C                       ; field_1A
+                dc.l    ShellshogunStagePaletteOffsetList  ; field_1A
 stru_12820:     dc.w    $2E                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2Config3   o
                 dc.l    Stage2_ThirdObjectSpawnList     ; field_2
@@ -216,7 +216,7 @@ stru_12820:     dc.w    $2E                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $B0                             ; field_19
-                dc.l    word_B992                       ; field_1A
+                dc.l    Stage2LatePaletteOffsetList     ; field_1A
 stru_1283E:     dc.w    $38                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2Config4   o
                 dc.l    Stage2_FourthObjectSpawnList    ; field_2
@@ -232,7 +232,7 @@ stru_1283E:     dc.w    $38                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $B0                             ; field_19
-                dc.l    word_B992                       ; field_1A
+                dc.l    Stage2LatePaletteOffsetList     ; field_1A
 stru_1285C:     dc.w    $40                             ; field_0
                                         ; DATA XREF: Stage_LoadStage2Config5   o
                 dc.l    Stage2_FifthObjectSpawnList     ; field_2
@@ -248,7 +248,7 @@ stru_1285C:     dc.w    $40                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $B0                             ; field_19
-                dc.l    word_B992                       ; field_1A
+                dc.l    Stage2LatePaletteOffsetList     ; field_1A
 stru_1287A:     dc.w    $50                             ; field_0
                                         ; DATA XREF: Stage_InitStage8Data   o
                 dc.l    Stage8_ObjectSpawnList          ; field_2
@@ -264,7 +264,7 @@ stru_1287A:     dc.w    $50                             ; field_0
                 dc.w    8                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $A0                             ; field_19
-                dc.l    word_B996                       ; field_1A
+                dc.l    Stage8InitialPaletteOffsetList  ; field_1A
 stru_12898:     dc.w    $62                             ; field_0
                                         ; DATA XREF: Stage_InitStage8Palettes   o
                 dc.l    Stage8_EmptyObjectSpawnList     ; field_2
@@ -280,7 +280,7 @@ stru_12898:     dc.w    $62                             ; field_0
                 dc.w    8                               ; field_16
                 dc.b    $60                             ; field_18
                 dc.b    $A8                             ; field_19
-                dc.l    word_B99A                       ; field_1A
+                dc.l    Stage8AlternatePaletteOffsetList  ; field_1A
 stru_128B6:     dc.w    0                               ; field_0
                                         ; DATA XREF: Stage_InitStage10Data   o
                 dc.l    Stage10_ObjectSpawnList         ; field_2
@@ -296,7 +296,7 @@ stru_128B6:     dc.w    0                               ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $78                             ; field_19
-                dc.l    word_B9A4                       ; field_1A
+                dc.l    Stage10PaletteOffsetList        ; field_1A
 stru_128D4:     dc.w    $A                              ; field_0
                                         ; DATA XREF: Stage_LoadStage10ConfigAlt   o
                 dc.l    Stage10_AlternateObjectSpawnList  ; field_2
@@ -312,7 +312,7 @@ stru_128D4:     dc.w    $A                              ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $A0                             ; field_18
                 dc.b    $78                             ; field_19
-                dc.l    word_B9A4                       ; field_1A
+                dc.l    Stage10PaletteOffsetList        ; field_1A
 ; ===============================================================================
 ; UNUSED GRAPHICS: Unknown Purpose
 ; Source: TCRF research (ROM offset 0x1291DE)
@@ -337,7 +337,7 @@ stru_128F2:     dc.w    $14                             ; Structure size/ID
                 dc.w    4                               ; field_16
                 dc.b    $5C                             ; field_18
                 dc.b    $70                             ; field_19
-                dc.l    word_B9A4                       ; field_1A
+                dc.l    Stage10PaletteOffsetList        ; field_1A
 ; ===============================================================================
 ; UNUSED INTRO SPRITES: Kaede and Unknown Man
 ; Source: TCRF https://tcrf.net/Alien_Soldier (ROM offset 0x188A16)
@@ -363,7 +363,7 @@ stru_12910:     dc.w    $34                             ; Structure size/ID
                 dc.w    4                               ; Sprite height (tiles)
                 dc.b    $40                             ; Palette bank
                 dc.b    $80                             ; Palette index
-                dc.l    word_B9A4                       ; Animation/mapping data
+                dc.l    Stage10PaletteOffsetList        ; Animation/mapping data
 stru_1292E:     dc.w    $40                             ; field_0
                                         ; DATA XREF: Stage_LoadStage13ConfigAlt   o
                 dc.l    Stage13_AlternateObjectSpawnList  ; field_2
@@ -379,7 +379,7 @@ stru_1292E:     dc.w    $40                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $58                             ; field_18
                 dc.b    $90                             ; field_19
-                dc.l    word_B9A8                       ; field_1A
+                dc.l    Stage13To16PaletteOffsetList    ; field_1A
 stru_1294C:     dc.w    $4A                             ; field_0
                                         ; DATA XREF: Stage_LoadStage14Config   o
                 dc.l    Stage14_ObjectSpawnList         ; field_2
@@ -395,7 +395,7 @@ stru_1294C:     dc.w    $4A                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $90                             ; field_19
-                dc.l    word_B9A8                       ; field_1A
+                dc.l    Stage13To16PaletteOffsetList    ; field_1A
 stru_1296A:     dc.w    $56                             ; field_0
                                         ; DATA XREF: Stage_InitStage16Data   o
                 dc.l    Stage_EmptyObjectSpawnList      ; field_2
@@ -411,7 +411,7 @@ stru_1296A:     dc.w    $56                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $A0                             ; field_18
                 dc.b    $C0                             ; field_19
-                dc.l    word_B9A8                       ; field_1A
+                dc.l    Stage13To16PaletteOffsetList    ; field_1A
 stru_12988:     dc.w    $6C                             ; field_0
                                         ; DATA XREF: Stage_InitStage17Boss+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; field_2
@@ -427,7 +427,7 @@ stru_12988:     dc.w    $6C                             ; field_0
                 dc.w    8                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $80                             ; field_19
-                dc.l    word_B9AC                       ; field_1A
+                dc.l    Stage17PaletteOffsetList        ; field_1A
 stru_129A6:     dc.w    0                               ; field_0
                                         ; DATA XREF: Gfx_Stage18Foreground   o
                 dc.l    Stage18_ObjectSpawnList         ; field_2
@@ -443,7 +443,7 @@ stru_129A6:     dc.w    0                               ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $90                             ; field_19
-                dc.l    word_B9B0                       ; field_1A
+                dc.l    Stage18PaletteOffsetList        ; field_1A
 stru_129C4:     dc.w    $A                              ; field_0
                                         ; DATA XREF: Stage_LoadStage18ConfigAlt   o
                 dc.l    Stage18_AlternateObjectSpawnList  ; field_2
@@ -459,7 +459,7 @@ stru_129C4:     dc.w    $A                              ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $90                             ; field_19
-                dc.l    word_B9B0                       ; field_1A
+                dc.l    Stage18PaletteOffsetList        ; field_1A
 stru_129E2:     dc.w    $28                             ; field_0
                                         ; DATA XREF: Stage_LoadStage20Config1   o
                 dc.l    $80000000                       ; field_2
@@ -475,7 +475,7 @@ stru_129E2:     dc.w    $28                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $90                             ; field_19
-                dc.l    word_B9B4                       ; field_1A
+                dc.l    Stage20PaletteOffsetList        ; field_1A
 stru_12A00:     dc.w    $30                             ; field_0
                                         ; DATA XREF: Stage_LoadStage20Config2   o
                 dc.l    $80000000                       ; field_2
@@ -491,7 +491,7 @@ stru_12A00:     dc.w    $30                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $90                             ; field_19
-                dc.l    word_B9B4                       ; field_1A
+                dc.l    Stage20PaletteOffsetList        ; field_1A
 stru_12A1E:     dc.w    $38                             ; field_0
                                         ; DATA XREF: Stage_LoadStage20Config3   o
                 dc.l    $80000000                       ; field_2
@@ -507,7 +507,7 @@ stru_12A1E:     dc.w    $38                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $90                             ; field_19
-                dc.l    word_B9B4                       ; field_1A
+                dc.l    Stage20PaletteOffsetList        ; field_1A
 stru_12A3C:     dc.w    $40                             ; field_0
                                         ; DATA XREF: Stage_LoadStage20Config4   o
                 dc.l    $80000000                       ; field_2
@@ -523,7 +523,7 @@ stru_12A3C:     dc.w    $40                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $90                             ; field_19
-                dc.l    word_B9B4                       ; field_1A
+                dc.l    Stage20PaletteOffsetList        ; field_1A
 stru_12A5A:     dc.w    $70                             ; field_0
                                         ; DATA XREF: Stage_InitStage25Tilemap+18   o
                 dc.l    $80000000                       ; field_2
@@ -539,7 +539,7 @@ stru_12A5A:     dc.w    $70                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $80                             ; field_18
                 dc.b    0                               ; field_19
-                dc.l    word_B9B8                       ; field_1A
+                dc.l    Stage25PaletteOffsetLists       ; field_1A
 stru_12A78:     dc.w    0                               ; field_0
                                         ; DATA XREF: Stage_InitStage26Config+C   o
                 dc.l    Stage_EmptyObjectSpawnList      ; field_2
@@ -555,7 +555,7 @@ stru_12A78:     dc.w    0                               ; field_0
                 dc.w    8                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $A0                             ; field_19
-                dc.l    word_B9C6                       ; field_1A
+                dc.l    Stage26PaletteOffsetList        ; field_1A
 stru_12A96:     dc.w    $2C                             ; field_0
                                         ; DATA XREF: Stage_InitStage27Config+C   o
                 dc.l    Stage_EmptyObjectSpawnList      ; field_2
@@ -571,7 +571,7 @@ stru_12A96:     dc.w    $2C                             ; field_0
                 dc.w    8                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $A0                             ; field_19
-                dc.l    word_B9CC                       ; field_1A
+                dc.l    Stage27PaletteOffsetList        ; field_1A
 stru_12AB4:     dc.w    $2E                             ; field_0
                                         ; DATA XREF: Stage_InitStage28Config+C   o
                 dc.l    Stage28_EmptyObjectSpawnList    ; field_2
@@ -587,7 +587,7 @@ stru_12AB4:     dc.w    $2E                             ; field_0
                 dc.w    0                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $A0                             ; field_19
-                dc.l    word_B9C6                       ; field_1A
+                dc.l    Stage26PaletteOffsetList        ; field_1A
 stru_12AD2:     dc.w    $40                             ; field_0
                                         ; DATA XREF: Stage_InitStage29Config   o
                 dc.l    Stage_EmptyObjectSpawnList      ; field_2
@@ -603,7 +603,7 @@ stru_12AD2:     dc.w    $40                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $A0                             ; field_19
-                dc.l    word_B9D2                       ; field_1A
+                dc.l    Stage29PaletteOffsetList        ; field_1A
 stru_12AF0:     dc.w    $4E                             ; field_0
                                         ; DATA XREF: Stage_InitStage30Config+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; field_2
@@ -619,7 +619,7 @@ stru_12AF0:     dc.w    $4E                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $A0                             ; field_19
-                dc.l    word_B9D8                       ; field_1A
+                dc.l    Stage30PaletteOffsetList        ; field_1A
 stru_12B0E:     dc.w    $62                             ; field_0
                                         ; DATA XREF: Stage_InitStage31Config+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; field_2
@@ -635,7 +635,7 @@ stru_12B0E:     dc.w    $62                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $A0                             ; field_19
-                dc.l    word_B9DE                       ; field_1A
+                dc.l    Stage31PaletteOffsetList        ; field_1A
 stru_12B2C:     dc.w    $76                             ; field_0
                                         ; DATA XREF: Stage_InitStage32Config   o
                 dc.l    Stage32_ObjectSpawnList         ; field_2
@@ -651,7 +651,7 @@ stru_12B2C:     dc.w    $76                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $60                             ; field_19
-                dc.l    word_B9E2                       ; field_1A
+                dc.l    Stage32PaletteOffsetList        ; field_1A
 stru_12B4A:     dc.w    $8A                             ; field_0
                                         ; DATA XREF: Stage_InitStage33Config   o
                 dc.l    Stage_EmptyObjectSpawnList      ; field_2
@@ -667,7 +667,7 @@ stru_12B4A:     dc.w    $8A                             ; field_0
                 dc.w    4                               ; field_16
                 dc.b    $40                             ; field_18
                 dc.b    $A0                             ; field_19
-                dc.l    word_B9E6                       ; field_1A
+                dc.l    Stage33PaletteOffsetList        ; field_1A
 
 nullsub_1:                                              ; CODE XREF: Stage_LoadXiTigerGraphics+4   p
                                         ; Sys_InitStageState+4   p

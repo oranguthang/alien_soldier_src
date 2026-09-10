@@ -151,7 +151,7 @@ Gfx_FadeToTargetAndSetupScroll:                         ; DATA XREF: ROM:0000497
                 jsr     (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FFF720).w
                 bmi.w   locret_514E
-                move.l  #dword_11346,(dword_FFA940).w
+                move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
                 clr.w   (dword_FFA908).w
                 clr.w   (dword_FFA90C).w
@@ -173,7 +173,7 @@ Gfx_WaitForFadeAndLoadTiles:                            ; DATA XREF: ROM:0000497
                 jsr     (Gfx_RenderScrollingBackground).l
                 tst.w   (word_FFA944).w
                 bpl.w   locret_514E
-                lea     (word_B944).l,a4
+                lea     (StoryScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$FFF2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0

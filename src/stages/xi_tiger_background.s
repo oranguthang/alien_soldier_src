@@ -87,12 +87,12 @@ Stage_JumpToHandler:                                    ; DATA XREF: Stage_XiTig
                 jmp     Stage_ProcessHandler
 ; End of function Stage_LoadBackgroundGraphics
 ; ---------------------------------------------------------------------------
-off_1C536:      dc.l    dword_11316                     ; DATA XREF: Stage_LoadBackgroundGraphics+76   o
+off_1C536:      dc.l    Gfx_TitleAndZLeoVRAMTransferParameters  ; DATA XREF: Stage_LoadBackgroundGraphics+76   o
                                         ; sub_1C3FA:loc_1C48E   o
-off_1C53A:      dc.l    dword_11326                     ; DATA XREF: Stage_XiTigerHandler+DA   r
-off_1C53E:      dc.l    dword_11336                     ; DATA XREF: Stage_LoadBackgroundGraphics:loc_1C4E2   o
+off_1C53A:      dc.l    Gfx_DefaultVRAMTransferParameters  ; DATA XREF: Stage_XiTigerHandler+DA   r
+off_1C53E:      dc.l    Gfx_FrontendAlternateVRAMTransferParameters  ; DATA XREF: Stage_LoadBackgroundGraphics:loc_1C4E2   o
                                         ; sub_1C546:loc_1C61C   o
-                dc.l    dword_11346
+                dc.l    Gfx_ScrollVRAMTransferParameters
 
 ; Xi Tiger stage initialization
 Stage_XiTigerHandler:                                   ; DATA XREF: Sys_DispatchGameState+D6   o  ; was: sub_1C546

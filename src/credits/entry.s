@@ -6,8 +6,8 @@ Credits_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 lea     Credits_IntroAssetLoadList(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                lea     (byte_BB72).l,a0
-                jsr     (LoadPalette).l
+                lea     (CreditsAndEarlyStagePaletteCommandBank).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w

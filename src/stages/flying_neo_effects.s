@@ -23,8 +23,8 @@ byte_D74E:      dc.b    $66, $68, $40, 0, 1, 2, $1C, $1D, $21, $22, $26, $27
 ; Initializes Flying-Neo boss entity for battle
 Stage_FlyingNeoInitBoss:                                ; CODE XREF: Stage_FlyingNeoBattleStart+1E   p  ; was: sub_D75A
                                         ; Stage_InitStage9Flies+24   p
-                lea     (byte_BE1E).l,a0
-                jmp     LoadPalette
+                lea     (FlyingNeoAndMidgamePaletteCommandBank).l,a0
+                jmp     Gfx_LoadPaletteCommand
 ; End of function Stage_FlyingNeoInitBoss
 ; Spawns random lightning effects with position variation
 Effect_SpawnRandomLightning:                            ; CODE XREF: Stage_TrainScrollPhysics+8   p  ; was: sub_D766

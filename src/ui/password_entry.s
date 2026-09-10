@@ -2,15 +2,15 @@ UI_InitializePasswordScreen:                            ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 jsr     (Sys_InitGameMode).l
-                jsr     (Gfx_QueueFontDMATransfer).l
+                jsr     (Gfx_QueueSmallFontDMACommand83).l
                 jsr     (Stage_DispatchObjectLoader).l
                 movea.l #stru_1E012,a0
                 jsr     (LoadObjData).l
                 addq.w  #4,(GameModeIndex).w
                 move.w  #$40,(GameSubstateIndex).w      ; '@'
-                jsr     (Gfx_QueueFontDMATransfer).l
-                lea     (byte_BAD2).l,a0
-                jsr     (LoadPalette).l
+                jsr     (Gfx_QueueSmallFontDMACommand83).l
+                lea     (PasswordEntryPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 move.b  #0,(word_FFF7F4+1).w
                 bset    #6,(word_FFF7D2+1).w
                 move.b  #$80,(byte_FFF755).w
@@ -59,8 +59,8 @@ Password_InitializeScreen:                              ; DATA XREF: Sys_Dispatc
                 jsr     (Sys_InitGameMode).l
                 jsr     (Stage_DispatchObjectLoader).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                lea     (byte_BAF0).l,a0
-                jsr     (LoadPalette).l
+                lea     (StageSelectFullPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -68,7 +68,7 @@ Password_InitializeScreen:                              ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 move.b  #0,(word_FFF7F4+1).w
-                jmp     Gfx_QueueVRAMCommand
+                jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
 loc_1E0C4:                                              ; CODE XREF: Password_InitializeScreen+4   j
                 addq.w  #4,(GameModeIndex).w

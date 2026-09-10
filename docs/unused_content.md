@@ -1,7 +1,13 @@
-# Alien Soldier - Unused Content Activation Codes
+# External Dormant-Content Research Notes
 
-Source: YouTube videos by Zetaman (Oct-Nov 2021)
-<https://www.youtube.com/c/Zetaman>
+This file preserves community patch notes collected from Zetaman videos and
+The Cutting Room Floor. It is not authoritative evidence for source naming.
+Unless a claim is tied to a live ROM consumer or a recorded runtime trace,
+character identities, intended placement, and “unused” status remain external
+attributions. Source symbols therefore use neutral entity-type names.
+
+The patch bytes below are research inputs and have not yet been reproduced by
+the release runtime suite. They must not be applied to the preservation build.
 
 ## Global Activation Code
 
@@ -13,12 +19,12 @@ This patches out a check that prevents unused content from loading. The bytes `4
 
 ---
 
-## Unused Bosses
+## Externally Attributed Entity Records
 
-### Love Penguin (Boss ID $01C0)
-**Video:** <https://www.youtube.com/watch?v=...> (28 Oct 2021)
+### Entity Type `$01C0`
 
-Appears in magazine previews as "Love Penguin". Hand-shaped boss.
+Community material associates this record with “Love Penguin”. Static ROM
+evidence establishes only the entity type and its resource set.
 
 **Activation:**
 ```
@@ -27,18 +33,19 @@ ROM 0x01147C: 01 C0 00 01 15 42 00 00 C4 04
 ```
 Encounter at Stage 13.
 
-**Disassembly Location:**
-- Boss structure: Line 20999 (stru_11542)
-- Graphics: byte_11A8FC
-- Palette: byte_C404
+**Current source locations:**
+
+- Asset set: `EntityType1C0AssetSet`
+- Graphics list: `EntityType1C0GraphicsLoadList`
+- Graphics data: `tiles_11A8FC`
+- Palette command: `EntityType1C0PaletteCommand`
 
 ---
 
-### Lambda Bunny (Boss ID $03EC)
-**Video:** <https://www.youtube.com/watch?v=...> (2 Nov 2021)
+### Entity Type `$03EC`
 
-Cowboy rabbit boss from box art sketches.
-Source: <https://twitter.com/megadriveshock/st...>
+Community material associates this record with “Lambda Bunny”. That identity
+is not encoded by the asset-set record or its Stage 18 table consumer.
 
 **Activation:**
 ```
@@ -47,52 +54,60 @@ ROM 0x0113B4: 03 EC 00 01 15 B2 00 00 C5 BE
 ```
 Encounter at Stage 5 (convenient spawn area).
 
-Video shows unused animation of boss firing its gun.
+**Current source locations:**
 
-**Disassembly Location:**
-- Boss structure: Line 21055 (stru_115A8)
-- Graphics: byte_125902
-- Palette: byte_C5BE
-- Loader: sub_E6D6 (line 16561)
-
----
-
-### Dragon (Boss ID $03FC)
-**Source:** TCRF research
-
-**Disassembly Location:**
-- Boss structure: Line 21126
-- Graphics: byte_12D012
-- Palette: byte_C63E
-
-**Status:** Activation code unknown
+- Asset set: `EntityType3ECAssetSet`
+- Graphics list: `EntityType3ECGraphicsLoadList`
+- Graphics data: `tiles_125902`
+- Palette command: `EntityType3ECPaletteCommand`
+- Stage entry: `Stage_InitBossPhase2`
 
 ---
 
-### Unknown Boss $3F0
-**Disassembly Location:**
-- Boss structure: Line 21098 (stru_115C4)
-- Graphics: byte_12772E
-- Palette: byte_C5DE
-- Loader: sub_E72C (line 16598)
+### Entity Type `$03FC`
 
-**Status:** Activation code unknown
+TCRF research associates this record with a dragon. Static source evidence
+uses the neutral entity identity.
+
+**Current source locations:**
+
+- Asset set: `EntityType3FCAssetSet`
+- Graphics list: `EntityType3FCGraphicsLoadList`
+- Graphics data: `tiles_12D012`
+- Palette commands: `EntityType3FCPaletteCommands`
 
 ---
 
-### Unknown Boss $3F4
-**Disassembly Location:**
-- Boss structure: Line 21110 (stru_115E0)
-- Graphics: byte_12E96C
-- Palette: byte_C5FE
-- Loader: sub_E782 (line 16639)
+### Entity Type `$03F0`
 
-**Status:** Activation code unknown, possibly Praying Mantis or Sigma Fox
+**Current source locations:**
+
+- Asset set: `EntityType3F0AssetSet`
+- Graphics list: `EntityType3F0GraphicsLoadList`
+- Graphics data: `tiles_12772E`
+- Palette command: `EntityType3F0PaletteCommand`
+- Stage entry: `Stage_InitBossPhase3`
+
+---
+
+### Entity Type `$03F4`
+
+Community guesses include Praying Mantis and Sigma Fox, but the ROM record does
+not distinguish either identity.
+
+**Current source locations:**
+
+- Asset set: `EntityType3F4AssetSet`
+- Graphics list: `EntityType3F4GraphicsLoadList`
+- Graphics data: `tiles_12E96C`
+- Palette commands: `EntityType3F4PaletteCommands`
+- Stage entry: `Stage_InitBossPhase4`
 
 ---
 
 ## Jampan Area Unused Stages
-**Video:** <https://www.youtube.com/watch?v=...> (4 Nov 2021)
+Community video note collected 4 November 2021; the original per-video URL was
+not preserved in the imported notes.
 
 Entirely unused area with 3-4 bosses meant to take place after snowy mountains.
 
@@ -118,7 +133,8 @@ Human versions of Lambda Bunny and Mantis visible in background graphics:
 ---
 
 ## Unused Dialogue System
-**Video:** <https://www.youtube.com/watch?v=...> (31 Oct 2021)
+Community video note collected 31 October 2021; the original per-video URL was
+not preserved in the imported notes.
 
 Pre-battle dialogue exchanges before each boss fight. Translations by Charles Norwood.
 
@@ -149,7 +165,8 @@ ROM 0x00B462: 67
 ---
 
 ## Unused Story Text Screens
-**Video:** <https://www.youtube.com/watch?v=...> (3 Nov 2021)
+Community video note collected 3 November 2021; the original per-video URL was
+not preserved in the imported notes.
 
 Text screens giving story updates between stages. Translations by Charles Norwood.
 
@@ -194,7 +211,8 @@ ROM 0x01E276: 4E 71 4E 71
 ---
 
 ## Laboratory Stage
-**Video:** <https://www.youtube.com/watch?v=...> (5 Nov 2021)
+Community video note collected 5 November 2021; the original per-video URL was
+not preserved in the imported notes.
 
 Unused "stage" meant to take place after Missiray elevator fight.
 
@@ -213,7 +231,8 @@ ROM 0x01229C: 03 1A
 ---
 
 ## Epsilon 1 Unused Cutscene
-**Video:** <https://www.youtube.com/watch?v=...> (13 Nov 2021)
+Community video note collected 13 November 2021; the original per-video URL was
+not preserved in the imported notes.
 
 Cutscene meant to play at beginning of Stage 17 before Epsilon 1 fight.
 Appeared in prerelease magazine build:
@@ -235,7 +254,8 @@ ROM 0x01247F: 12
 ---
 
 ## Seven Force Unused Forms
-**Video:** <https://www.youtube.com/watch?v=...> (6 Nov 2021)
+Community video note collected 6 November 2021; the original per-video URL was
+not preserved in the imported notes.
 
 Code exists to play "Harpy Force" and "Nemesis Force" sound effects and load Eagle Force graphics, but doesn't work properly.
 

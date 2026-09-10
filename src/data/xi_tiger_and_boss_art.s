@@ -8,9 +8,8 @@ byte_11A61A:    dc.b    0, $27, $31, 0, 1, $12, $13, $84, $14, $12, $14, $15, $1
                 dc.b    $27, $28, $29, $84, $2F, $80, 7, $A4, $34, $FF
 byte_11A644:    binclude "data/mappings/byte_11A644.bin"
 byte_11A644_End:
-tiles_11A8FC:   binclude "data/artcomp/tiles_11A8FC.bin"  ; UNUSED: Love Penguin boss graphics
-                                        ; Referenced by: stru_11542 (Boss ID $01C0)
-                                        ; See line 20999 for boss structure
+tiles_11A8FC:   binclude "data/artcomp/tiles_11A8FC.bin"  ; entity type $1C0 art
+                                        ; Referenced by EntityType1C0GraphicsLoadList
 tiles_11A8FC_End:
 tiles_11B542:   binclude "data/artcomp/tiles_11B542.bin"
 tiles_11B542_End:
@@ -32,23 +31,19 @@ tiles_12453E:   binclude "data/artcomp/tiles_12453E.bin"
 tiles_12453E_End:
 tiles_124CCE:   binclude "data/artcomp/tiles_124CCE.bin"
 tiles_124CCE_End:
-tiles_125902:   binclude "data/artcomp/tiles_125902.bin"  ; UNUSED: Lambda Bunny boss graphics
-                                        ; Referenced by: stru_115B2 (Boss ID $03EC)
-                                        ; See stru_115A8 for complete boss structure (line 21055)
+tiles_125902:   binclude "data/artcomp/tiles_125902.bin"  ; entity type $3EC art
+                                        ; Referenced by EntityType3ECGraphicsLoadList
 tiles_125902_End:
-tiles_12772E:   binclude "data/artcomp/tiles_12772E.bin"  ; UNUSED: Unknown boss $3F0 graphics
-                                        ; Referenced by: stru_115CE (Boss ID $3F0)
-                                        ; See stru_115C4 for complete boss structure (line 21076)
+tiles_12772E:   binclude "data/artcomp/tiles_12772E.bin"  ; entity type $3F0 art
+                                        ; Referenced by EntityType3F0GraphicsLoadList
 tiles_12772E_End:
 tiles_12AB8C:   binclude "data/artcomp/tiles_12AB8C.bin"
 tiles_12AB8C_End:
-tiles_12D012:   binclude "data/artcomp/tiles_12D012.bin"  ; UNUSED: Dragon boss graphics
-                                        ; Referenced by: Boss ID $03FC (line 21104)
+tiles_12D012:   binclude "data/artcomp/tiles_12D012.bin"  ; entity type $3FC art
+                                        ; Referenced by EntityType3FCGraphicsLoadList
 tiles_12D012_End:
-tiles_12E96C:   binclude "data/artcomp/tiles_12E96C.bin"  ; UNUSED: Unknown boss $3F4 graphics
-                                        ; Referenced by: stru_115EA (Boss ID $3F4)
-                                        ; See stru_115E0 for complete boss structure (line 21120)
-                                        ; Possibly Praying Mantis or Sigma Fox
+tiles_12E96C:   binclude "data/artcomp/tiles_12E96C.bin"  ; entity type $3F4 art
+                                        ; Referenced by EntityType3F4GraphicsLoadList
 tiles_12E96C_End:
 tiles_130B4E:   binclude "data/artcomp/tiles_130B4E.bin"
 tiles_130B4E_End:

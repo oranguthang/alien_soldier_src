@@ -12,19 +12,19 @@ UI_InitOptionsScreen:                                   ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_QueueVRAMCommand
+                jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
 loc_9612:                                               ; CODE XREF: UI_InitOptionsScreen+4   j
                 cmpi.w  #4,(GameSubstateIndex).w
                 beq.w   loc_9728
                 addq.w  #2,(GameSubstateIndex).w
-                lea     (dword_11336).l,a0
+                lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
                 move.w  d0,(dword_FFA908).w
                 move.w  d1,(dword_FFA90C).w
                 jsr     (Gfx_DirectVRAMTransfer).l
-                lea     (word_B948).l,a4
+                lea     (OptionsScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 jsr     (Gfx_FadePaletteTransition).l
                 move.b  #0,(word_FFF7F4+1).w
@@ -453,7 +453,7 @@ Sys_InitOptionsMenuState:                               ; DATA XREF: Sys_Dispatc
                 bclr    #6,(word_FFF7D2+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_QueueVRAMCommand
+                jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
 loc_9E12:                                               ; CODE XREF: Sys_InitOptionsMenuState+4   j
                 addq.w  #4,(GameModeIndex).w
@@ -461,8 +461,8 @@ loc_9E12:                                               ; CODE XREF: Sys_InitOpt
                 move.w  #$800,d0
                 moveq   #0,d1
                 jsr     (Data_LoadPointerTable2).l
-                lea     (byte_BA4A).l,a0
-                jsr     (LoadPalette).l
+                lea     (FrontendFullPaletteCommand).l,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
                 move.b  #0,(word_FFF7F4+1).w
                 bset    #6,(word_FFF7D2+1).w

@@ -119,7 +119,7 @@ loc_1DABC:                                              ; CODE XREF: UI_Initiali
                 addq.w  #2,(GameSubstateIndex).w
                 move.l  #$A0000,(dword_FF8066+2).w
                 subi.l  #$200,(dword_FF8066+2).w
-                lea     (word_B95A).l,a4
+                lea     (ContinueScreenPaletteOffsetLists).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bsr.w   UI_RenderContinuePrompt
                 bsr.w   Results_RenderScoreValues

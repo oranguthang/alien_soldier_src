@@ -23,7 +23,8 @@ the mapping itself was wrong.
 A few definitions in the imported disassembly were already named by an
 extraction role rather than by address. The provenance grammar admits only
 the exact historical `JumpTable1`, `JumpTable2`, and `PCMPart1` through
-`PCMPart9` forms in addition to the generated suffix pattern. These spellings
-are continuity evidence, not reconstructed semantics; their replacement names
-still require records in `config/name_audit.json`, and the exceptions do not
-broaden the accepted address-derived source vocabulary.
+`PCMPart9` forms, plus the imported semantic `LoadPalette` label, in addition
+to the generated suffix pattern. These spellings are continuity evidence, not
+reconstructed semantics; their replacement names still require records in
+`config/name_audit.json`, and the exceptions do not broaden the accepted
+address-derived source vocabulary.

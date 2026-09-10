@@ -24,8 +24,8 @@ Gfx_SetupTitleScreenLetters:                            ; DATA XREF: ROM:0000498
 loc_4B96:                                               ; CODE XREF: Gfx_SetupTitleScreenLetters+74   j
                 move.w  d0,(a1)
                 dbf     d1,loc_4B96
-                movea.l #byte_BA4A,a0
-                jsr     (LoadPalette).l
+                movea.l #FrontendFullPaletteCommand,a0
+                jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$8300,d0
                 move.w  #$4680,d4
                 movea.l #byte_4CCC,a0

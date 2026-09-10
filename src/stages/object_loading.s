@@ -259,7 +259,7 @@ Stage_LoadStage10Enemies:                               ; DATA XREF: ROM:0001174
                 lea     byte_119BC(pc),a0
                 nop
                 move.w  #$A000,d0
-                jmp     Stage_LoadShipGraphics
+                jmp     Gfx_AdjustSelectedTileBlocks
 ; End of function Stage_LoadStage10Enemies
 ; ---------------------------------------------------------------------------
 stru_1195A:     dc.w    7                               ; field_0

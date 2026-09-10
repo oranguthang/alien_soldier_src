@@ -2,7 +2,7 @@
 ; Color-channel names follow Mega Drive CRAM order: red $00E, green $0E0, blue $E00
 
 ; Loads the default entry list and falls through to clear the color-fade state
-Gfx_ResetDefaultColorFadeState:                         ; CODE XREF: Gfx_UpdateBossPalette+72   j  ; was: sub_3C08
+Gfx_ResetDefaultColorFadeState:                         ; CODE XREF: Boss_LoadAssetSet+72   j  ; was: sub_3C08
                                         ; Boss_SunsetStingLoadGraphics+1A   p
                 lea     PaletteFade_DefaultEntryOffsets(pc),a2
                 nop

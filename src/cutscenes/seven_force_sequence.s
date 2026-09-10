@@ -188,7 +188,7 @@ loc_EC66:                                               ; CODE XREF: Stage_Sylph
 loc_EC74:                                               ; CODE XREF: Stage_SylpheedCameraLock+36   j
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$F8,d1
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Stage_SylpheedCameraLock
 ; Loads Sylpheed tiles
@@ -202,7 +202,7 @@ loc_EC96:                                               ; CODE XREF: Gfx_LoadSyl
                 moveq   #0,d0
                 move.w  (dword_FFA90C).w,d1
                 subi.w  #$F8,d1
-                lea     (dword_11336).l,a0
+                lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Gfx_LoadSylpheedTiles
 ; Loads Sylpheed palette
@@ -228,7 +228,7 @@ loc_ECE0:                                               ; CODE XREF: Gfx_Artemis
                 moveq   #0,d0
                 move.w  (dword_FFA904).w,d1
                 addi.w  #$100,d1
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Gfx_ArtemisPlaneUpdate
 ; Tile update handler
@@ -272,7 +272,7 @@ loc_ED6A:                                               ; CODE XREF: Stage_Siren
                 moveq   #0,d0
                 move.w  (dword_FFA904).w,d1
                 addi.w  #$100,d1
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Stage_SireneGraphicsInit
 ; Loads Sirene palette
@@ -282,7 +282,7 @@ Gfx_LoadSirenePalette:                                  ; CODE XREF: Stage_Siren
                 moveq   #0,d0
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$100,d1
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Gfx_LoadSirenePalette
 ; Loads Sirene tiles
@@ -303,7 +303,7 @@ loc_EDC8:                                               ; CODE XREF: Gfx_LoadSir
                 move.w  #$200,d0
                 move.w  (dword_FFA90C).w,d1
                 subi.w  #$100,d1
-                lea     (dword_11336).l,a0
+                lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Gfx_LoadSireneTiles
 nullsub_28:
@@ -320,7 +320,7 @@ loc_EDF6:                                               ; CODE XREF: Cutscene_Se
                 moveq   #0,d0
                 move.w  (dword_FFA904).w,d1
                 addi.w  #$F8,d1
-                lea     (dword_11326).l,a0
+                lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Cutscene_SevenForcesCamera1
 ; Camera scroll handler 2
@@ -334,7 +334,7 @@ loc_EE20:                                               ; CODE XREF: Cutscene_Se
                 move.w  #$200,d0
                 move.w  (dword_FFA90C).w,d1
                 addi.w  #$F8,d1
-                lea     (dword_11336).l,a0
+                lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Cutscene_SevenForcesCamera2
 ; Camera scroll handler 3
@@ -347,7 +347,7 @@ loc_EE4C:                                               ; CODE XREF: Cutscene_Se
                 move.w  #$200,d0
                 move.w  (dword_FFA90C).w,d1
                 addi.w  #$F8,d1
-                lea     (dword_11336).l,a0
+                lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 bra.w   loc_109E0
 ; End of function Cutscene_SevenForcesCamera3
 ; Camera position update
@@ -402,7 +402,7 @@ Stage_ArtemisCameraLock:                                ; CODE XREF: Stage_Artem
                 move.w  #$F8,d1
                 moveq   #1,d7
                 jsr     (Gfx_UpdateTilemapIndices).l
-                move.l  #dword_11336,(dword_FFA940).w
+                move.l  #Gfx_FrontendAlternateVRAMTransferParameters,(dword_FFA940).w
                 move.w  #$200,(word_FFA946).w
                 move.w  #$E400,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
@@ -414,7 +414,7 @@ locret_EF26:                                            ; CODE XREF: Stage_Artem
 Stage_ArtemisGraphicsInit:                              ; CODE XREF: Stage_ArtemisCamera   p  ; was: sub_EF28
                 jsr     (Gfx_RenderScrollingBackground).l
                 bpl.s   locret_EF4A
-                move.l  #dword_11326,(dword_FFA940).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 clr.w   (word_FFA946).w
                 move.w  #$E400,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
@@ -442,7 +442,7 @@ locret_EF78:                                            ; CODE XREF: Gfx_RenderB
 ; End of function Gfx_RenderBackgroundWrapper
 ; Loads cutscene graphics
 Cutscene_SevenForcesLoadGraphics:                       ; CODE XREF: Cutscene_SevenForcesState2+1A   p  ; was: sub_EF7A
-                lea     (word_B9C0).l,a4
+                lea     (SevenForcesCutscenePaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 lea     stru_EF92(pc),a0
                 nop
@@ -470,7 +470,7 @@ Gfx_InitTilemapUpdate:                                  ; CODE XREF: Cutscene_Se
                 move.w  #$F8,d1
                 moveq   #$7E,d7                         ; '~'
                 jsr     (Gfx_UpdateTilemapIndices).l
-                move.l  #dword_11326,(dword_FFA940).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 clr.w   (word_FFA946).w
                 clr.w   (word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
