@@ -1794,6 +1794,59 @@ Its expiry seeds the reverse stage coordinate and velocity, adjusts the two
 scroll bounds, and enters state `$30`. The prior numbered `final attack 1/2`
 comments conveyed none of this control flow and have been removed.
 
+The reversal/drop-attack pass reduced the address-derived unknown count from
+6,155 to 6,147 and raised provenance to 9,676 mappings. Eleven definitions
+across `$05248E-$05254F` now have exact static audit records, bringing the
+registry to 5,434 entries.
+
+State `$30` clears stage-motion flags at coordinate `$C0`, subtracts `$880`
+per frame from the external velocity until it crosses zero, and simultaneously
+drives Z-Leo's local rate toward signed `$FFF88000`. Once external motion has
+stopped, its `$80`-frame delay counts down into state `$32`. Both states share
+an update that rotates three attack-palette entries and, after the stage
+trigger clears, spawns a drop projectile every 16 frames. State `$32` holds
+that behavior until scroll coordinate `FFA90C` falls below `$240`, then enters
+the rising phase. This replaces the unsupported `final attack 3/4` wording.
+
+The rising-return pass reduced the address-derived unknown count from 6,147
+to 6,139 and raised provenance to 9,684 mappings. Eleven definitions in code
+range `$052550-$052623` and data range `$052D58-$052D67` now have exact static
+audit records, increasing the registry to 5,445 entries.
+
+The `$240` scroll threshold starts state `$34` with Z-Leo's vertical base at
+`$240` and the existing signed-negative local rate. Each frame integrates
+that rate and updates stage scroll until the vertical base passes below
+`$F0`. The transition then restores scroll/base values, clears the attack
+flag, and enters state `$36`; after a `$20`-frame pose delay it installs the
+normal `$80` selection delay and returns to `Boss_ZLeoBeginAttackSelection`.
+This proves the old `rising attack`, `final attack 5`, and `ultimate finale`
+descriptions were backwards: the block returns from the attack.
+
+The shared Z-Leo render-tail pass reduced the address-derived unknown count
+from 6,139 to 6,136 and raised provenance to 9,687 mappings. The three labels
+at `$052624-$052681` now have exact static audit records, increasing the
+registry to 5,448 entries. The first synchronizes the external stage
+coordinate; the common tail then updates pose segments, composite parts,
+camera coordinates, tiles, graphics, and the frame-dependent flash color.
+
+This pass also establishes a subsystem milestone: `z_leo_core.s` now contains
+zero live address-derived definitions. The remaining Z-Leo backlog is 40 in
+`z_leo_rendering.s` and 31 in `projectiles/z_leo.s`; those figures are recorded
+as a bounded continuation target rather than hidden by semantic guesses.
+
+The Z-Leo tile-stream pass reduced the address-derived unknown count from
+6,136 to 6,125 and raised provenance to 9,698 mappings. Eleven definitions in
+`$0526E2-$052765` now have exact static audit records, bringing the registry
+to 5,459 entries. The rendering-module backlog fell from 40 to 29.
+
+`Boss_ZLeoTileUpdate` compares the signed stage scroll coordinate with an
+ordered threshold table and moves a stream index in either direction. Moving
+forward selects one of six VRAM destinations and copies a corresponding
+six-byte tile-source-index row into a generated one-row descriptor. Moving
+back builds the same descriptor with six zero indices. Both paths tail-call
+`Gfx_LoadCompressedTiles`. The new names describe descriptor structure and
+directional behavior without guessing what the artwork depicts.
+
 Four especially broad data labels are explicitly registered:
 
 | Symbol | ROM address | Evidence | Current statement |

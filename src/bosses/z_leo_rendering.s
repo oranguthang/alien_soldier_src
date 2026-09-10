@@ -1,20 +1,20 @@
-Boss_ZLeoPaletteRotate:                                 ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:loc_524F6   p  ; was: sub_52512
-                                        ; Boss_ZLeoRisingAttack+60   p
+Boss_ZLeoRotateAttackPalette:                           ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoUpdateScrollingDropAttack   p  ; was: sub_52512
+                                        ; Boss_ZLeoBeginRisingReturn+60   p
                 move.w  (word_FFA000).w,d0
                 asl.w   #3,d0
                 andi.w  #$18,d0
-                move.w  word_52530(pc,d0.w),(word_FFE364).w
-                move.w  word_52530+2(pc,d0.w),(word_FFE37C).w
-                move.w  word_52530+4(pc,d0.w),(word_FFE37E).w
+                move.w  Boss_ZLeoAttackPaletteCycleTable(pc,d0.w),(word_FFE364).w
+                move.w  Boss_ZLeoAttackPaletteCycleTable+2(pc,d0.w),(word_FFE37C).w
+                move.w  Boss_ZLeoAttackPaletteCycleTable+4(pc,d0.w),(word_FFE37E).w
                 rts
-; End of function Boss_ZLeoPaletteRotate
+; End of function Boss_ZLeoRotateAttackPalette
 ; ---------------------------------------------------------------------------
-word_52530:     dc.w    $2A2, $EEE, $6C6, 0, $AEC, $40, $4E8, 0, $EEC, $62, $6EC, 0, $EEE, $AEA, $EEC, 0
-                                        ; DATA XREF: Boss_ZLeoPaletteRotate+A   r
-                                        ; Boss_ZLeoPaletteRotate+10   r
+Boss_ZLeoAttackPaletteCycleTable:   dc.w    $2A2, $EEE, $6C6, 0, $AEC, $40, $4E8, 0, $EEC, $62, $6EC, 0, $EEE, $AEA, $EEC, 0  ; was: word_52530
+                                        ; DATA XREF: Boss_ZLeoRotateAttackPalette+A   r
+                                        ; Boss_ZLeoRotateAttackPalette+10   r
 
-; Z-Leo rising attack phase - moves boss upward while tracking player position and spawning projectiles
-Boss_ZLeoRisingAttack:                                  ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+18C   j  ; was: sub_52550
+; Begin the rising return from the scrolling drop attack
+Boss_ZLeoBeginRisingReturn:                             ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+18C   j  ; was: sub_52550
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
@@ -24,67 +24,69 @@ Boss_ZLeoRisingAttack:                                  ; CODE XREF: Boss_ZLeoRu
                 move.w  #$E000,$59E(a5)
                 clr.w   $11C(a5)
                 move.w  #$200,$5B4(a5)
-; Z-Leo boss final attack 5
-Boss_ZLeoAttack_State48:                                ; DATA XREF: ROM:00051BB6   o  ; was: loc_5257E
+; Raise the vertical base to $F0, then enter the post-attack delay
+Boss_ZLeoRunRisingReturn:                               ; DATA XREF: ROM:00051BB6   o  ; was: loc_5257E
                 move.l  $41C(a5),d0
                 add.l   d0,$35C(a5)
                 bsr.w   Boss_ZLeoScrollUpdate
                 tst.w   $11C(a5)
-                beq.w   loc_525A4
-loc_52592:                                              ; CODE XREF: Boss_ZLeoRisingAttack+88   j
+                beq.w   Boss_ZLeoPrepareRisingReturnPose
+Boss_ZLeoCheckRisingReturnComplete:                     ; CODE XREF: Boss_ZLeoBeginRisingReturn+88   j  ; was: loc_52592
                 cmpi.w  #$F0,$35C(a5)
-                bmi.s   loc_525E4
-                lea     word_52D5E(pc),a1
+                bmi.s   Boss_ZLeoBeginPostAttackDelay
+                lea     Boss_ZLeoRisingReturnPose(pc),a1
                 nop
-                bra.w   loc_52624
+                bra.w   Boss_ZLeoSyncStageCoordinateAndRender
 ; ---------------------------------------------------------------------------
-loc_525A4:                                              ; CODE XREF: Boss_ZLeoRisingAttack+3E   j
+Boss_ZLeoPrepareRisingReturnPose:                       ; CODE XREF: Boss_ZLeoBeginRisingReturn+3E   j  ; was: loc_525A4
                 move.w  #$FFF6,$59C(a5)
                 tst.w   (word_FF9500).w
-                beq.s   loc_525B4
-                bsr.w   Boss_ZLeoPaletteRotate
-loc_525B4:                                              ; CODE XREF: Boss_ZLeoRisingAttack+5E   j
+                beq.s   Boss_ZLeoSelectRisingReturnPose
+                bsr.w   Boss_ZLeoRotateAttackPalette
+Boss_ZLeoSelectRisingReturnPose:                        ; CODE XREF: Boss_ZLeoBeginRisingReturn+5E   j  ; was: loc_525B4
                 move.w  $5B4(a5),d0
                 addq.w  #4,d0
                 cmp.w   (dword_FFDB34).w,d0
-                bpl.s   loc_525DA
+                bpl.s   Boss_ZLeoRenderRisingThresholdPose
                 move.b  #$F0,d0
                 jsr     (Sound_PlaySFX).l
                 addq.w  #1,$11C(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                bra.s   loc_52592
+                bra.s   Boss_ZLeoCheckRisingReturnComplete
 ; ---------------------------------------------------------------------------
-loc_525DA:                                              ; CODE XREF: Boss_ZLeoRisingAttack+6E   j
-                lea     word_52D58(pc),a1
+Boss_ZLeoRenderRisingThresholdPose:                     ; CODE XREF: Boss_ZLeoBeginRisingReturn+6E   j  ; was: loc_525DA
+                lea     Boss_ZLeoRisingThresholdPose(pc),a1
                 nop
-                bra.w   loc_5262E
+                bra.w   Boss_ZLeoRenderCompositeFrame
 ; ---------------------------------------------------------------------------
-loc_525E4:                                              ; CODE XREF: Boss_ZLeoRisingAttack+48   j
+Boss_ZLeoBeginPostAttackDelay:                          ; CODE XREF: Boss_ZLeoBeginRisingReturn+48   j  ; was: loc_525E4
                 addq.w  #2,4(a5)
                 move.l  #$100000,(dword_FFA90C).w
                 move.l  #$F00000,$35C(a5)
                 move.w  #$20,$11C(a5)                   ; ' '
                 bclr    #1,(byte_FF80EC).w
                 move.b  #$10,$21(a5)
-; Z-Leo boss ultimate finale
-Boss_ZLeoAttack_State50:                                ; DATA XREF: ROM:00051BB8   o  ; was: loc_5260A
+; Hold the restored position before returning to attack selection
+Boss_ZLeoRunPostAttackDelay:                            ; DATA XREF: ROM:00051BB8   o  ; was: loc_5260A
                 subq.w  #1,$11C(a5)
-                bpl.s   loc_5261A
+                bpl.s   Boss_ZLeoRenderPostAttackDelay
                 move.w  #$80,$11C(a5)
                 bra.w   Boss_ZLeoBeginAttackSelection
 ; ---------------------------------------------------------------------------
-loc_5261A:                                              ; CODE XREF: Boss_ZLeoRisingAttack+BE   j
-                lea     word_52D5E(pc),a1
+Boss_ZLeoRenderPostAttackDelay:                         ; CODE XREF: Boss_ZLeoBeginRisingReturn+BE   j  ; was: loc_5261A
+                lea     Boss_ZLeoRisingReturnPose(pc),a1
                 nop
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
-loc_52624:                                              ; CODE XREF: Boss_ZLeoRunBattleReadyPose+C   j
+; Synchronize the external stage coordinate before the common render tail
+Boss_ZLeoSyncStageCoordinateAndRender:                  ; CODE XREF: Boss_ZLeoRunBattleReadyPose+C   j  ; was: loc_52624
                                         ; Boss_ZLeoRunBattleReadyPose+30   j
                 move.w  $5B4(a5),d0
                 addq.w  #4,d0
                 move.w  d0,(dword_FFDB34).w
-loc_5262E:                                              ; CODE XREF: Boss_ZLeoPrepareIntroDescent+54   j
+; Update pose segments, composite sprites, tiles, graphics, and flash color
+Boss_ZLeoRenderCompositeFrame:                          ; CODE XREF: Boss_ZLeoPrepareIntroDescent+54   j  ; was: loc_5262E
                                         ; Boss_ZLeoRunIntroCountdown+24   j
                 bsr.w   Boss_ZLeoUpdateSegments
                 moveq   #$F,d7
@@ -102,19 +104,19 @@ loc_5262E:                                              ; CODE XREF: Boss_ZLeoPr
                 bsr.w   Boss_ZLeoTileUpdate
                 bsr.w   Boss_ZLeoGraphicsInit2
                 btst    #1,(word_FFA000+1).w
-                bne.s   loc_5267A
+                bne.s   Boss_ZLeoUseAlternateFlashColor
                 move.w  #$8C,(word_FFE37E).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_5267A:                                              ; CODE XREF: Boss_ZLeoRisingAttack+120   j
+Boss_ZLeoUseAlternateFlashColor:                        ; CODE XREF: Boss_ZLeoBeginRisingReturn+120   j  ; was: loc_5267A
                 move.w  #$2EE,(word_FFE37E).w
                 rts
-; End of function Boss_ZLeoRisingAttack
+; End of function Boss_ZLeoBeginRisingReturn
 ; Tile update handler
 Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+F2   p  ; was: sub_52682
-                                        ; Boss_ZLeoRisingAttack+112   p
+                                        ; Boss_ZLeoBeginRisingReturn+112   p
                 movea.w #(byte_FF9604-M68K_RAM),a3
-                lea     word_5271E(pc),a4
+                lea     Boss_ZLeoTileVramDestinations(pc),a4
                 nop
                 move.w  (word_FF9600).w,d7
                 move.w  (dword_FFA904).w,d0
@@ -124,9 +126,9 @@ Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRu
                 move.w  d0,(word_FF9602).w
                 cmp.w   d1,d0
                 beq.w   Boss_ZLeoNoOp
-                lea     word_5270E(pc),a0
+                lea     Boss_ZLeoTileScrollThresholds(pc),a0
                 nop
-                bpl.s   loc_526E2
+                bpl.s   Boss_ZLeoQueueTileChunkClear
                 cmp.w   2(a0,d7.w),d0
                 bpl.w   Boss_ZLeoNoOp
                 addq.w  #2,(word_FF9600).w
@@ -134,15 +136,16 @@ Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRu
                 move.w  #$2000,(a3)+
                 move.b  #5,(a3)+
                 move.b  #0,(a3)+
-                lea     off_5272A(pc),a1
+                lea     Boss_ZLeoTileChunkIndexTable(pc),a1
                 nop
                 asl.w   #1,d7
                 movea.l (a1,d7.w),a1
                 move.l  (a1)+,(a3)+
                 move.w  (a1)+,(a3)+
-                bra.w   loc_52704
+                bra.w   Boss_ZLeoExecuteTileChunkTransfer
 ; ---------------------------------------------------------------------------
-loc_526E2:                                              ; CODE XREF: Boss_ZLeoTileUpdate+2E   j
+; Queue a zero-index row when scrolling back across a tile-stream threshold
+Boss_ZLeoQueueTileChunkClear:                           ; CODE XREF: Boss_ZLeoTileUpdate+2E   j  ; was: loc_526E2
                 cmp.w   (a0,d7.w),d0
                 bmi.w   Boss_ZLeoNoOp
                 subq.w  #2,(word_FF9600).w
@@ -153,30 +156,30 @@ loc_526E2:                                              ; CODE XREF: Boss_ZLeoTi
                 moveq   #0,d0
                 move.l  d0,(a3)+
                 move.w  d0,(a3)+
-loc_52704:                                              ; CODE XREF: Boss_ZLeoTileUpdate+5C   j
+Boss_ZLeoExecuteTileChunkTransfer:                      ; CODE XREF: Boss_ZLeoTileUpdate+5C   j  ; was: loc_52704
                 movea.w #(byte_FF9604-M68K_RAM),a0
                 jmp     Gfx_LoadCompressedTiles
 ; End of function Boss_ZLeoTileUpdate
 ; ---------------------------------------------------------------------------
-word_5270E:     dc.w    $7FFF, $C0, $A0, $80, $60, $40, $20, 0
+Boss_ZLeoTileScrollThresholds:  dc.w    $7FFF, $C0, $A0, $80, $60, $40, $20, 0  ; was: word_5270E
                                         ; DATA XREF: Boss_ZLeoTileUpdate+28   o
-word_5271E:     dc.w    $4410, $4610, $4810, $4A10, $4C10, $4E10
+Boss_ZLeoTileVramDestinations:  dc.w    $4410, $4610, $4810, $4A10, $4C10, $4E10  ; was: word_5271E
                                         ; DATA XREF: Boss_ZLeoTileUpdate+4   o
-off_5272A:      dc.l    byte_52742                      ; DATA XREF: Boss_ZLeoTileUpdate+4C   o
-                dc.l    byte_52748
-                dc.l    byte_5274E
-                dc.l    byte_52754
-                dc.l    byte_5275A
-                dc.l    byte_52760
-byte_52742:     dc.b    0, 0, 1, 2, 0, 0                ; DATA XREF: ROM:off_5272A   o
-byte_52748:     dc.b    3, 4, 5, 6, 7, 8                ; DATA XREF: ROM:0005272E   o
-byte_5274E:     dc.b    9, $A, $B, $C, $D, $E
+Boss_ZLeoTileChunkIndexTable:   dc.l    Boss_ZLeoTileChunkIndices0  ; DATA XREF: Boss_ZLeoTileUpdate+4C   o  ; was: off_5272A
+                dc.l    Boss_ZLeoTileChunkIndices1
+                dc.l    Boss_ZLeoTileChunkIndices2
+                dc.l    Boss_ZLeoTileChunkIndices3
+                dc.l    Boss_ZLeoTileChunkIndices4
+                dc.l    Boss_ZLeoTileChunkIndices5
+Boss_ZLeoTileChunkIndices0: dc.b    0, 0, 1, 2, 0, 0    ; DATA XREF: ROM:Boss_ZLeoTileChunkIndexTable   o  ; was: byte_52742
+Boss_ZLeoTileChunkIndices1: dc.b    3, 4, 5, 6, 7, 8    ; DATA XREF: ROM:0005272E   o  ; was: byte_52748
+Boss_ZLeoTileChunkIndices2: dc.b    9, $A, $B, $C, $D, $E  ; was: byte_5274E
                                         ; DATA XREF: ROM:00052732   o
-byte_52754:     dc.b    0, $F, $10, $11, $12, 0
+Boss_ZLeoTileChunkIndices3: dc.b    0, $F, $10, $11, $12, 0  ; was: byte_52754
                                         ; DATA XREF: ROM:00052736   o
-byte_5275A:     dc.b    0, $13, $14, $15, $16, 0
+Boss_ZLeoTileChunkIndices4: dc.b    0, $13, $14, $15, $16, 0  ; was: byte_5275A
                                         ; DATA XREF: ROM:0005273A   o
-byte_52760:     dc.b    $17, $18, $19, $1A, $1B, $1C
+Boss_ZLeoTileChunkIndices5: dc.b    $17, $18, $19, $1A, $1B, $1C  ; was: byte_52760
                                         ; DATA XREF: ROM:0005273E   o
 
 ; Enable boss parts flags
@@ -296,7 +299,7 @@ word_52892:     dc.w    $4E00, $4000, $900, $2A2B, $2A2B, $2A2B, $2A2B, $2A2B, $
                                         ; DATA XREF: Boss_ZLeoGraphicsInit3   o
 
 ; Update blade sprite
-Boss_ZLeoUpdateBladeSprite:                             ; CODE XREF: Boss_ZLeoRisingAttack+106   p  ; was: sub_528B2
+Boss_ZLeoUpdateBladeSprite:                             ; CODE XREF: Boss_ZLeoBeginRisingReturn+106   p  ; was: sub_528B2
                 lea     off_528C8(pc),a1
                 nop
                 movea.w #(word_FFC860-M68K_RAM),a0
@@ -310,7 +313,7 @@ off_528C8:      dc.l    word_ED3F4                      ; DATA XREF: Boss_ZLeoUp
                 dc.l    word_ED43C
 
 ; Update wing sprites
-Boss_ZLeoUpdateWingSprites:                             ; CODE XREF: Boss_ZLeoRisingAttack+10A   p  ; was: sub_528D8
+Boss_ZLeoUpdateWingSprites:                             ; CODE XREF: Boss_ZLeoBeginRisingReturn+10A   p  ; was: sub_528D8
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 move.b  $34(a0),d2
                 ext.w   d2
@@ -354,7 +357,7 @@ Boss_ZLeoUpdateWingPositions:                           ; CODE XREF: Boss_ZLeoUp
                 rts
 ; End of function Boss_ZLeoUpdateWingPositions
 ; Sprite update handler
-Boss_ZLeoSpriteUpdate:                                  ; CODE XREF: Boss_ZLeoRisingAttack+10E   p  ; was: sub_5293C
+Boss_ZLeoSpriteUpdate:                                  ; CODE XREF: Boss_ZLeoBeginRisingReturn+10E   p  ; was: sub_5293C
                 movea.w #(byte_FFD100-M68K_RAM),a0
                 move.w  #$FFDE,d0
                 bsr.s   Boss_ZLeoUpdateHeadPosition
@@ -464,7 +467,7 @@ locret_52A7E:                                           ; CODE XREF: Boss_ZLeoAn
                 rts
 ; End of function Boss_ZLeoAnimationUpdate3
 ; Update boss segments
-Boss_ZLeoUpdateSegments:                                ; CODE XREF: Boss_ZLeoRisingAttack:loc_5262E   p  ; was: sub_52A80
+Boss_ZLeoUpdateSegments:                                ; CODE XREF: Boss_ZLeoBeginRisingReturn:Boss_ZLeoRenderCompositeFrame   p  ; was: sub_52A80
                 clr.b   $23E(a5)
                 tst.w   $C(a5)
                 bpl.s   loc_52AF8
@@ -676,10 +679,10 @@ Boss_ZLeoScrollingLaserEntryPose:   dc.w    $1218, $10A, $707, $10A, $1014, $118
 Boss_ZLeoScrollingLaserBurstPose:   dc.w    $60A, $142, $A0A, $142, $8001, $103, $150, $303, $150, $FFFE  ; was: word_52D44
                                         ; DATA XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoRenderScrollingLaserBurstPose   o
                                         ; Boss_ZLeoRunScrollingLaserEntryPose+D4   o
-word_52D58:     dc.w    $404, $15E, $FFFE               ; DATA XREF: Boss_ZLeoRisingAttack:loc_525DA   o
-word_52D5E:     dc.w    $810, $16C, $3030, $16C, $FFFE
-                                        ; DATA XREF: Boss_ZLeoRisingAttack+4A   o
-                                        ; sub_52550:loc_5261A   o
+Boss_ZLeoRisingThresholdPose:   dc.w    $404, $15E, $FFFE  ; DATA XREF: Boss_ZLeoBeginRisingReturn:Boss_ZLeoRenderRisingThresholdPose   o  ; was: word_52D58
+Boss_ZLeoRisingReturnPose:      dc.w    $810, $16C, $3030, $16C, $FFFE  ; was: word_52D5E
+                                        ; DATA XREF: Boss_ZLeoBeginRisingReturn+4A   o
+                                        ; sub_52550:Boss_ZLeoRenderPostAttackDelay   o
 word_52D68:     binclude "data/other/word_52D68.bin"
 word_52D68_End:
 
