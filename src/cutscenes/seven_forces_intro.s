@@ -1,53 +1,54 @@
-Entity_SevenForcesMain:                                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_54B84
+Entity_UpdateSevenForcesIntro:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_54B84
                 move.w  4(a5),d0
                 beq.w   Entity_SevenForcesNoOpState
-                movea.w off_54B98(pc,d0.w),a0
-                adda.l  #Entity_SevenForcesDispatcher,a0
+                movea.w Entity_SevenForcesIntroStateOffsets(pc,d0.w),a0
+                adda.l  #Entity_SevenForcesIntroInitState0,a0
                 jmp     (a0)
-; End of function Entity_SevenForcesMain
+; End of function Entity_UpdateSevenForcesIntro
 ; ---------------------------------------------------------------------------
-off_54B98:      dc.w    Entity_SevenForcesDispatcher-Entity_SevenForcesDispatcher
-                                        ; DATA XREF: Entity_SevenForcesMain+8   r
-                dc.w    Entity_SevenForcesDispatcher-Entity_SevenForcesDispatcher
-                dc.w    Entity_SevenForcesIntroMove-Entity_SevenForcesDispatcher
-                dc.w    Entity_SevenForcesTextInit-Entity_SevenForcesDispatcher
-                dc.w    Entity_SevenForcesTextUpdate-Entity_SevenForcesDispatcher
-                dc.w    Entity_SevenForcesTransform-Entity_SevenForcesDispatcher
-                dc.w    Boss_ValkirieMain-Entity_SevenForcesDispatcher
-                dc.w    Boss_ValkirieDispatcher-Entity_SevenForcesDispatcher
-                dc.w    Boss_MedusaMain-Entity_SevenForcesDispatcher
-                dc.w    Boss_Medusa_IntroFallLoop-Entity_SevenForcesDispatcher
-                dc.w    Boss_MedusaDispatcher-Entity_SevenForcesDispatcher
-                dc.w    Boss_MedusaUpdateSprites-Entity_SevenForcesDispatcher
-                dc.w    Boss_SylpheedMain-Entity_SevenForcesDispatcher
-                dc.w    Boss_Sylpheed_IntroFallLoop-Entity_SevenForcesDispatcher
-                dc.w    Boss_SylpheedDispatcher-Entity_SevenForcesDispatcher
-                dc.w    Boss_SylpheedIntroInit-Entity_SevenForcesDispatcher
-                dc.w    Boss_SylpheedUpdateSprites-Entity_SevenForcesDispatcher
-                dc.w    Boss_ArtemisMain-Entity_SevenForcesDispatcher
-                dc.w    Boss_Artemis_IntroRiseLoop-Entity_SevenForcesDispatcher
-                dc.w    Boss_SevenForcesWaitIntroComplete-Entity_SevenForcesDispatcher
-                dc.w    Boss_ArtemisDispatcher-Entity_SevenForcesDispatcher
-                dc.w    Stage_SireneTransition-Entity_SevenForcesDispatcher
-                dc.w    Boss_Sirene_IntroFallLoop-Entity_SevenForcesDispatcher
-                dc.w    Boss_SireneMain-Entity_SevenForcesDispatcher
-                dc.w    Boss_SireneShootPattern3-Entity_SevenForcesDispatcher
-                dc.w    Boss_SireneDeathFlash1-Entity_SevenForcesDispatcher
-                dc.w    Boss_SireneDeathFlash2-Entity_SevenForcesDispatcher
-                dc.w    Cutscene_SevenForcesExplosions-Entity_SevenForcesDispatcher
-                dc.w    Cutscene_SevenForcesWaitState-Entity_SevenForcesDispatcher
-                dc.w    Cutscene_SevenForcesEffect1-Entity_SevenForcesDispatcher
-                dc.w    Cutscene_SevenForcesEffect2-Entity_SevenForcesDispatcher
-                dc.w    Cutscene_SevenForcesEffect3-Entity_SevenForcesDispatcher
+Entity_SevenForcesIntroStateOffsets:    dc.w    Entity_SevenForcesIntroInitState0-Entity_SevenForcesIntroInitState0  ; was: off_54B98
+                                        ; DATA XREF: Entity_UpdateSevenForcesIntro+8   r
+                dc.w    Entity_SevenForcesIntroInitState0-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesEntranceState4-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesSwitchTransformationFrameState6-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesWaitForTransformationState8-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesBeginFormSequenceStateA-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesValkirieFadeInStateC-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesValkirieFadeOutStateE-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesStartMedusaEntranceState10-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesUpdateMedusaEntranceState12-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesMedusaHoldState14-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesMedusaFadeOutState16-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesStartSylpheedEntranceState18-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesUpdateSylpheedEntranceState1A-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesSylpheedHoldState1C-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesWaitForSylpheedScrollState1E-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesSylpheedFadeOutState20-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesStartArtemisEntranceState22-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesUpdateArtemisEntranceState24-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesWaitForArtemisSignalState26-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesArtemisFadeOutState28-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesStartSireneEntranceState2A-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesUpdateSireneEntranceState2C-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesSireneHoldState2E-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesResetState30-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesSirenePaletteEventState32-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesSirenePaletteEventState34-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesExplosionSequenceState36-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesExplosionWaitState38-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesArmFinalFadeState3A-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesFinalFadeState3C-Entity_SevenForcesIntroInitState0
+                dc.w    Entity_SevenForcesFinishIntroState3E-Entity_SevenForcesIntroInitState0
 
-; Seven Forces dispatcher
-Entity_SevenForcesDispatcher:                           ; DATA XREF: Entity_SevenForcesMain+C   o  ; was: sub_54BD8
-                                        ; ROM:off_54B98   o
-                bra.w   Entity_SevenForcesIntro
-; End of function Entity_SevenForcesDispatcher
-; Initializes Seven Forces boss encounter with VDP and DMA setup
-Boss_SevenForcesInit:
-                move.w  #4,4(a5)                        ; was: sub_54BDC
+; State 0/2 entry: initialize the Seven Forces intro entity
+Entity_SevenForcesIntroInitState0:                      ; DATA XREF: Entity_UpdateSevenForcesIntro+C   o  ; was: sub_54BD8
+                                        ; ROM:Entity_SevenForcesIntroStateOffsets   o
+                bra.w   Entity_InitSevenForcesIntro
+; End of function Entity_SevenForcesIntroInitState0
+; Configure the Seven Forces intro state and three VDP DMA channels
+; No static caller is present in the reconstructed ROM
+SevenForces_SetupIntroDma:                              ; was: sub_54BDC
+                move.w  #4,4(a5)
                 move.b  #6,(word_FFF7E6+1).w
                 move.b  #$8A,(word_FFF7F2+1).w
                 move.b  #3,(byte_FFA95A).w
@@ -64,9 +65,9 @@ Boss_SevenForcesInit:
                 move.w  #0,(word_FFA946).w
                 jsr     (VDP_SetupDMA).l
                 rts
-; End of function Boss_SevenForcesInit
-; Seven Forces intro animation
-Entity_SevenForcesIntro:                                ; CODE XREF: Entity_SevenForcesDispatcher   j  ; was: sub_54C3C
+; End of function SevenForces_SetupIntroDma
+; Initialize the Seven Forces entrance sprite and palette
+Entity_InitSevenForcesIntro:                            ; CODE XREF: Entity_SevenForcesIntroInitState0   j  ; was: sub_54C3C
                 move.w  #4,4(a5)
                 move.w  #$E900,2(a5)
                 move.w  #$2300,$E(a5)
@@ -78,61 +79,62 @@ Entity_SevenForcesIntro:                                ; CODE XREF: Entity_Seve
                 move.w  #$128,$14(a5)
                 lea     (byte_C81E).l,a0
                 jmp     LoadPalette
-; End of function Entity_SevenForcesIntro
-; Seven Forces intro movement
-Entity_SevenForcesIntroMove:                            ; DATA XREF: ROM:00054B9C   o  ; was: sub_54C7E
-                bra.w   Entity_SevenForcesTextDisplay
-; End of function Entity_SevenForcesIntroMove
-; Debug mode parallax scroll test with directional input and reset
-Debug_SevenForcesScrollTest:
-                btst    #6,(word_FFF706).w              ; was: sub_54C82
-                beq.s   loc_54CEA
+; End of function Entity_InitSevenForcesIntro
+; State 4 entry thunk for the Seven Forces entrance timer
+Entity_SevenForcesEntranceState4:                       ; DATA XREF: ROM:00054B9C   o  ; was: sub_54C7E
+                bra.w   Entity_UpdateSevenForcesEntranceState4
+; End of function Entity_SevenForcesEntranceState4
+; Exercise paired scroll-table generators with live directional input
+; No static caller is present in the reconstructed ROM
+Debug_SevenForcesScrollTableTest:                       ; was: sub_54C82
+                btst    #6,(word_FFF706).w
+                beq.s   Debug_SevenForcesScrollTableTestCheckAlternateLayerInput
                 btst    #0,(word_FFF706).w
-                beq.s   loc_54CA2
+                beq.s   Debug_SevenForcesScrollTableTestCheckVerticalPositiveInput
                 subi.l  #$800,(dword_FF9404).w
                 subi.l  #$400,(dword_FF940C).w
-loc_54CA2:                                              ; CODE XREF: Debug_SevenForcesScrollTest+E   j
+Debug_SevenForcesScrollTableTestCheckVerticalPositiveInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+E   j  ; was: loc_54CA2
                 btst    #1,(word_FFF706).w
-                beq.s   loc_54CBA
+                beq.s   Debug_SevenForcesScrollTableTestCheckHorizontalPositiveInput
                 addi.l  #$800,(dword_FF9404).w
                 addi.l  #$400,(dword_FF940C).w
-loc_54CBA:                                              ; CODE XREF: Debug_SevenForcesScrollTest+26   j
+Debug_SevenForcesScrollTableTestCheckHorizontalPositiveInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+26   j  ; was: loc_54CBA
                 btst    #3,(word_FFF706).w
-                beq.s   loc_54CD2
+                beq.s   Debug_SevenForcesScrollTableTestCheckHorizontalNegativeInput
                 addi.l  #$800,(dword_FF9400).w
                 addi.l  #$400,(dword_FF9408).w
-loc_54CD2:                                              ; CODE XREF: Debug_SevenForcesScrollTest+3E   j
+Debug_SevenForcesScrollTableTestCheckHorizontalNegativeInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+3E   j  ; was: loc_54CD2
                 btst    #2,(word_FFF706).w
-                beq.s   loc_54CEA
+                beq.s   Debug_SevenForcesScrollTableTestCheckAlternateLayerInput
                 subi.l  #$800,(dword_FF9400).w
                 subi.l  #$400,(dword_FF9408).w
-loc_54CEA:                                              ; CODE XREF: Debug_SevenForcesScrollTest+6   j
-                                        ; Debug_SevenForcesScrollTest+56   j
+Debug_SevenForcesScrollTableTestCheckAlternateLayerInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+6   j  ; was: loc_54CEA
+                                        ; Debug_SevenForcesScrollTableTest+56   j
                 btst    #4,(word_FFF706).w
-                beq.s   loc_54D52
+                beq.s   Debug_SevenForcesScrollTableTestCheckResetInput
                 btst    #0,(word_FFF706).w
-                beq.s   loc_54D0A
+                beq.s   Debug_SevenForcesScrollTableTestCheckAlternateVerticalPositiveInput
                 subi.l  #$800,(dword_FF9414).w
                 subi.l  #$400,(dword_FF941C).w
-loc_54D0A:                                              ; CODE XREF: Debug_SevenForcesScrollTest+76   j
+Debug_SevenForcesScrollTableTestCheckAlternateVerticalPositiveInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+76   j  ; was: loc_54D0A
                 btst    #1,(word_FFF706).w
-                beq.s   loc_54D22
+                beq.s   Debug_SevenForcesScrollTableTestCheckAlternateHorizontalPositiveInput
                 addi.l  #$800,(dword_FF9414).w
                 addi.l  #$400,(dword_FF941C).w
-loc_54D22:                                              ; CODE XREF: Debug_SevenForcesScrollTest+8E   j
+Debug_SevenForcesScrollTableTestCheckAlternateHorizontalPositiveInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+8E   j  ; was: loc_54D22
                 btst    #3,(word_FFF706).w
-                beq.s   loc_54D3A
+                beq.s   Debug_SevenForcesScrollTableTestCheckAlternateHorizontalNegativeInput
                 addi.l  #$800,(dword_FF9410).w
                 addi.l  #$400,(dword_FF9418).w
-loc_54D3A:                                              ; CODE XREF: Debug_SevenForcesScrollTest+A6   j
+Debug_SevenForcesScrollTableTestCheckAlternateHorizontalNegativeInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+A6   j  ; was: loc_54D3A
                 btst    #2,(word_FFF706).w
-                beq.s   loc_54D52
+                beq.s   Debug_SevenForcesScrollTableTestCheckResetInput
                 subi.l  #$800,(dword_FF9410).w
                 subi.l  #$400,(dword_FF9418).w
-loc_54D52:                                              ; CODE XREF: Debug_SevenForcesScrollTest+6E   j
-                                        ; Debug_SevenForcesScrollTest+BE   j
+Debug_SevenForcesScrollTableTestCheckResetInput:        ; CODE XREF: Debug_SevenForcesScrollTableTest+6E   j  ; was: loc_54D52
+                                        ; Debug_SevenForcesScrollTableTest+BE   j
                 btst    #5,(word_FFF706).w
-                beq.s   loc_54D9A
+                beq.s   Debug_SevenForcesScrollTableTestAccumulateOffsets
                 clr.l   (dword_FF9400).w
                 clr.l   (dword_FF9408).w
                 clr.l   (dword_FF9410).w
@@ -149,7 +151,7 @@ loc_54D52:                                              ; CODE XREF: Debug_Seven
                 clr.l   (dword_FF942C).w
                 clr.l   (dword_FF9434).w
                 clr.l   (dword_FF943C).w
-loc_54D9A:                                              ; CODE XREF: Debug_SevenForcesScrollTest+D6   j
+Debug_SevenForcesScrollTableTestAccumulateOffsets:      ; CODE XREF: Debug_SevenForcesScrollTableTest+D6   j  ; was: loc_54D9A
                 move.l  (dword_FF9400).w,d0
                 add.l   d0,(dword_FF9420).w
                 move.l  (dword_FF9408).w,d0
@@ -171,18 +173,18 @@ loc_54D9A:                                              ; CODE XREF: Debug_Seven
                 move.l  (dword_FF9424).w,d5
                 move.l  (dword_FF9434).w,d6
                 btst    #0,(word_FFA000+1).w
-                bne.s   loc_54E02
+                bne.s   Debug_SevenForcesScrollTableTestBuildTables
                 move.l  (dword_FF9428).w,d3
                 move.l  (dword_FF9438).w,d4
                 move.l  (dword_FF942C).w,d5
                 move.l  (dword_FF943C).w,d6
-loc_54E02:                                              ; CODE XREF: Debug_SevenForcesScrollTest+16E   j
+Debug_SevenForcesScrollTableTestBuildTables:            ; CODE XREF: Debug_SevenForcesScrollTableTest+16E   j  ; was: loc_54E02
                 movea.w #(word_FFE400-M68K_RAM),a0
                 movea.w #(byte_FFE800-M68K_RAM),a1
                 moveq   #$F,d7
                 moveq   #0,d1
                 moveq   #0,d2
-loc_54E10:                                              ; CODE XREF: Debug_SevenForcesScrollTest+1B6   j
+Debug_SevenForcesScrollTableTestBuildPrimaryLoop:       ; CODE XREF: Debug_SevenForcesScrollTableTest+1B6   j  ; was: loc_54E10
                 lea     -$20(a1),a1
                 swap    d1
                 move.w  d1,(a0)
@@ -199,13 +201,13 @@ loc_54E10:                                              ; CODE XREF: Debug_Seven
                 swap    d2
                 add.l   d4,d2
                 lea     $20(a0),a0
-                dbf     d7,loc_54E10
+                dbf     d7,Debug_SevenForcesScrollTableTestBuildPrimaryLoop
                 movea.w #(word_FFEC00-M68K_RAM),a0
                 movea.w #(byte_FFEC50-M68K_RAM),a1
                 moveq   #9,d7
                 moveq   #0,d1
                 moveq   #0,d2
-loc_54E4A:                                              ; CODE XREF: Debug_SevenForcesScrollTest+1E4   j
+Debug_SevenForcesScrollTableTestBuildSecondaryLoop:     ; CODE XREF: Debug_SevenForcesScrollTableTest+1E4   j  ; was: loc_54E4A
                 swap    d1
                 swap    d2
                 move.w  d1,(a0)+
@@ -220,7 +222,7 @@ loc_54E4A:                                              ; CODE XREF: Debug_Seven
                 swap    d2
                 add.l   d5,d1
                 add.l   d6,d2
-                dbf     d7,loc_54E4A
+                dbf     d7,Debug_SevenForcesScrollTableTestBuildSecondaryLoop
                 movea.w #(word_FF9600-M68K_RAM),a0
                 move.l  #$CCCCCCCC,d0
                 move.l  d0,(a0)+
@@ -247,7 +249,7 @@ loc_54E4A:                                              ; CODE XREF: Debug_Seven
                 jsr     (VDP_QueueCommand_Build).l
                 move.w  #0,(word_FFE318).w
                 btst    #0,(word_FFA000+1).w
-                bne.s   loc_54EF2
+                bne.s   Debug_SevenForcesScrollTableTestWriteAlternateMarkers
                 move.w  #$FCCC,(word_FF9608).w
                 move.w  #$ECCC,(word_FF961A).w
                 move.w  #$2CCC,(word_FF9628).w
@@ -258,7 +260,7 @@ loc_54E4A:                                              ; CODE XREF: Debug_Seven
                 move.w  #$E0,(word_FFE304).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_54EF2:                                              ; CODE XREF: Debug_SevenForcesScrollTest+23C   j
+Debug_SevenForcesScrollTableTestWriteAlternateMarkers:  ; CODE XREF: Debug_SevenForcesScrollTableTest+23C   j  ; was: loc_54EF2
                 move.w  #$CCEC,(dword_FF9610).w
                 move.w  #$CCFC,(word_FF9602).w
                 move.w  #$CC2C,(word_FF9630).w
@@ -268,61 +270,61 @@ loc_54EF2:                                              ; CODE XREF: Debug_Seven
                 move.w  #$E0,(word_FFE302).w
                 move.w  #$E0,(word_FFE304).w
                 rts
-; End of function Debug_SevenForcesScrollTest
-; Text display handler
-Entity_SevenForcesTextDisplay:                          ; CODE XREF: Entity_SevenForcesIntroMove   j  ; was: sub_54F24
+; End of function Debug_SevenForcesScrollTableTest
+; Finish state 4 after its timer and advance the stage entrance phase
+Entity_UpdateSevenForcesEntranceState4:                 ; CODE XREF: Entity_SevenForcesEntranceState4   j  ; was: sub_54F24
                 subq.w  #1,$48(a5)
-                bpl.s   locret_54F46
+                bpl.s   Entity_UpdateSevenForcesEntranceState4Return
                 addq.w  #2,4(a5)
                 move.l  #$10000,$18(a5)
                 bset    #0,(byte_FFA272).w
                 jsr     (Stage_TransitionToNextPhase).l
                 subq.w  #2,(word_FFA950).w
-locret_54F46:                                           ; CODE XREF: Entity_SevenForcesTextDisplay+4   j
+Entity_UpdateSevenForcesEntranceState4Return:           ; CODE XREF: Entity_UpdateSevenForcesEntranceState4+4   j  ; was: locret_54F46
                 rts
-; End of function Entity_SevenForcesTextDisplay
-; Text initialization
-Entity_SevenForcesTextInit:                             ; DATA XREF: ROM:00054B9E   o  ; was: sub_54F48
+; End of function Entity_UpdateSevenForcesEntranceState4
+; State 6: switch the entity mapping after it reaches X=$E0
+Entity_SevenForcesSwitchTransformationFrameState6:      ; DATA XREF: ROM:00054B9E   o  ; was: sub_54F48
                 cmpi.w  #$E0,$10(a5)
-                bmi.s   locret_54F6A
+                bmi.s   Entity_SevenForcesSwitchTransformationFrameReturn
                 addq.w  #2,4(a5)
                 move.w  #8,$48(a5)
                 move.l  #word_ECEAC,8(a5)
                 clr.w   $C(a5)
                 clr.l   $18(a5)
-locret_54F6A:                                           ; CODE XREF: Entity_SevenForcesTextInit+6   j
+Entity_SevenForcesSwitchTransformationFrameReturn:      ; CODE XREF: Entity_SevenForcesSwitchTransformationFrameState6+6   j  ; was: locret_54F6A
                 rts
-; End of function Entity_SevenForcesTextInit
-; Text update handler
-Entity_SevenForcesTextUpdate:                           ; DATA XREF: ROM:00054BA0   o  ; was: sub_54F6C
+; End of function Entity_SevenForcesSwitchTransformationFrameState6
+; State 8: wait for the shared transition work and local timer
+Entity_SevenForcesWaitForTransformationState8:          ; DATA XREF: ROM:00054BA0   o  ; was: sub_54F6C
                 tst.w   (word_FF80C2).w
-                bne.s   locret_54F7C
+                bne.s   Entity_SevenForcesWaitForTransformationReturn
                 subq.w  #1,$48(a5)
-                bpl.s   locret_54F7C
+                bpl.s   Entity_SevenForcesWaitForTransformationReturn
                 addq.w  #2,4(a5)
-locret_54F7C:                                           ; CODE XREF: Entity_SevenForcesTextUpdate+4   j
-                                        ; Entity_SevenForcesTextUpdate+A   j
+Entity_SevenForcesWaitForTransformationReturn:          ; CODE XREF: Entity_SevenForcesWaitForTransformationState8+4   j  ; was: locret_54F7C
+                                        ; Entity_SevenForcesWaitForTransformationState8+A   j
                 rts
-; End of function Entity_SevenForcesTextUpdate
-; Transformation sequence
-Entity_SevenForcesTransform:                            ; DATA XREF: ROM:00054BA2   o  ; was: sub_54F7E
+; End of function Entity_SevenForcesWaitForTransformationState8
+; State A: arm the first form-transition state and sound
+Entity_SevenForcesBeginFormSequenceStateA:              ; DATA XREF: ROM:00054BA2   o  ; was: sub_54F7E
                 tst.w   (word_FF80C2).w
-                bne.s   locret_54F9C
+                bne.s   Entity_SevenForcesBeginFormSequenceReturn
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 clr.w   $5E(a5)
                 move.b  #$A5,d0
                 jsr     (Sound_PlaySFX).l
-locret_54F9C:                                           ; CODE XREF: Entity_SevenForcesTransform+4   j
+Entity_SevenForcesBeginFormSequenceReturn:              ; CODE XREF: Entity_SevenForcesBeginFormSequenceStateA+4   j  ; was: locret_54F9C
                 rts
-; End of function Entity_SevenForcesTransform
-; Main boss handler
-Boss_ValkirieMain:                                      ; DATA XREF: ROM:00054BA4   o  ; was: sub_54F9E
+; End of function Entity_SevenForcesBeginFormSequenceStateA
+; State C: fade in the Valkirie palette, then arm its hold timer
+Entity_SevenForcesValkirieFadeInStateC:                 ; DATA XREF: ROM:00054BA4   o  ; was: sub_54F9E
                 subq.w  #1,$48(a5)
                 bpl.w   Entity_SevenForcesNoOpState
                 addq.w  #1,$5E(a5)
                 cmpi.w  #$E,$5E(a5)
-                bmi.s   loc_54FE0
+                bmi.s   Entity_SevenForcesValkirieFadeInApplyPalette
                 addq.w  #2,4(a5)
                 move.w  #$34,$48(a5)                    ; '4'
                 clr.w   2(a5)
@@ -332,35 +334,35 @@ Boss_ValkirieMain:                                      ; DATA XREF: ROM:00054BA
                 jsr     (Sound_PlaySFX).l
                 lea     (stru_11658).l,a1
                 jsr     (Gfx_UpdateBossPalette).l
-loc_54FE0:                                              ; CODE XREF: Boss_ValkirieMain+12   j
-                bra.w   Boss_ValkirieIntroInit
-; End of function Boss_ValkirieMain
-; Boss state dispatcher
-Boss_ValkirieDispatcher:                                ; DATA XREF: ROM:00054BA6   o  ; was: sub_54FE4
+Entity_SevenForcesValkirieFadeInApplyPalette:           ; CODE XREF: Entity_SevenForcesValkirieFadeInStateC+12   j  ; was: loc_54FE0
+                bra.w   Gfx_UpdateSevenForcesValkiriePaletteFade
+; End of function Entity_SevenForcesValkirieFadeInStateC
+; State E: count down Valkirie hold and fade-out values, then reset
+Entity_SevenForcesValkirieFadeOutStateE:                ; DATA XREF: ROM:00054BA6   o  ; was: sub_54FE4
                 subq.w  #1,$48(a5)
-                bpl.w   Boss_ValkirieIntroInit
+                bpl.w   Gfx_UpdateSevenForcesValkiriePaletteFade
                 subq.w  #1,$5E(a5)
-                bpl.w   Boss_ValkirieIntroInit
-loc_54FF4:                                              ; CODE XREF: Boss_MedusaUpdateSprites+16   j
-                                        ; Boss_SylpheedUpdateSprites+16   j
+                bpl.w   Gfx_UpdateSevenForcesValkiriePaletteFade
+Entity_SevenForcesResetState:                           ; CODE XREF: Entity_SevenForcesMedusaFadeOutState16+16   j  ; was: loc_54FF4
+                                        ; Entity_SevenForcesSylpheedFadeOutState20+16   j
                 clr.w   4(a5)
                 rts
-; End of function Boss_ValkirieDispatcher
-; Main boss handler
-Boss_MedusaMain:                                        ; DATA XREF: ROM:00054BA8   o  ; was: sub_54FFA
+; End of function Entity_SevenForcesValkirieFadeOutStateE
+; State $10: launch the Medusa entrance trajectory
+Entity_SevenForcesStartMedusaEntranceState10:           ; DATA XREF: ROM:00054BA8   o  ; was: sub_54FFA
                 addq.w  #2,4(a5)
                 move.l  #$FFFCC000,$1C(a5)
                 move.l  #$12000,$18(a5)
                 cmpi.w  #$150,$10(a5)
-                bmi.s   Boss_Medusa_IntroFallLoop
+                bmi.s   Entity_SevenForcesUpdateMedusaEntranceState12
                 neg.l   $18(a5)
-; Seven Forces Medusa intro applies gravity and checks landing
-Boss_Medusa_IntroFallLoop:                              ; CODE XREF: Boss_MedusaMain+1A   j  ; was: loc_5501A
+; State $12: apply gravity until Medusa reaches the landing threshold
+Entity_SevenForcesUpdateMedusaEntranceState12:          ; CODE XREF: Entity_SevenForcesStartMedusaEntranceState10+1A   j  ; was: loc_5501A
                                         ; DATA XREF: ROM:00054BAA   o
                 addi.l  #$2800,$1C(a5)
-                bmi.s   loc_55056
+                bmi.s   Entity_SevenForcesUpdateMedusaEntrancePalette
                 cmpi.w  #$F0,$14(a5)
-                bmi.s   loc_55056
+                bmi.s   Entity_SevenForcesUpdateMedusaEntrancePalette
                 addq.w  #2,4(a5)
                 clr.w   2(a5)
                 move.w  #$40,$48(a5)                    ; '@'
@@ -369,48 +371,48 @@ Boss_Medusa_IntroFallLoop:                              ; CODE XREF: Boss_Medusa
                 lea     (stru_1166C).l,a1
                 jsr     (Gfx_UpdateBossPalette).l
                 move.b  #1,(byte_FFA958).w
-loc_55056:                                              ; CODE XREF: Boss_MedusaMain+28   j
-                                        ; Boss_MedusaMain+30   j
-                bra.w   Boss_MedusaIntroInit
-; End of function Boss_MedusaMain
-; Boss state dispatcher
-Boss_MedusaDispatcher:                                  ; DATA XREF: ROM:00054BAC   o  ; was: sub_5505A
+Entity_SevenForcesUpdateMedusaEntrancePalette:          ; CODE XREF: Entity_SevenForcesStartMedusaEntranceState10+28   j  ; was: loc_55056
+                                        ; Entity_SevenForcesStartMedusaEntranceState10+30   j
+                bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+; End of function Entity_SevenForcesStartMedusaEntranceState10
+; State $14: hold Medusa, play the timed cue, and update its palette
+Entity_SevenForcesMedusaHoldState14:                    ; DATA XREF: ROM:00054BAC   o  ; was: sub_5505A
                 subq.w  #1,$48(a5)
-                bpl.s   loc_55064
+                bpl.s   Entity_SevenForcesMedusaHoldCheckSound
                 addq.w  #2,4(a5)
-loc_55064:                                              ; CODE XREF: Boss_MedusaDispatcher+4   j
+Entity_SevenForcesMedusaHoldCheckSound:                 ; CODE XREF: Entity_SevenForcesMedusaHoldState14+4   j  ; was: loc_55064
                 cmpi.w  #$38,$48(a5)                    ; '8'
-                bne.s   loc_55076
+                bne.s   Entity_SevenForcesMedusaHoldApplyPalette
                 move.b  #$25,d0                         ; '%'
                 jsr     (Sound_PlaySFX).l
-loc_55076:                                              ; CODE XREF: Boss_MedusaDispatcher+10   j
-                bra.w   Boss_MedusaIntroInit
-; End of function Boss_MedusaDispatcher
-; Updates boss sprites
-Boss_MedusaUpdateSprites:                               ; DATA XREF: ROM:00054BAE   o  ; was: sub_5507A
+Entity_SevenForcesMedusaHoldApplyPalette:               ; CODE XREF: Entity_SevenForcesMedusaHoldState14+10   j  ; was: loc_55076
+                bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+; End of function Entity_SevenForcesMedusaHoldState14
+; State $16: advance Medusa's fade value on alternate frames, then reset
+Entity_SevenForcesMedusaFadeOutState16:                 ; DATA XREF: ROM:00054BAE   o  ; was: sub_5507A
                 btst    #0,(word_FFA000+1).w
-                beq.w   Boss_MedusaIntroInit
+                beq.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 addq.w  #1,$5E(a5)
-                beq.w   Boss_MedusaIntroInit
-                bmi.w   Boss_MedusaIntroInit
-                bra.w   loc_54FF4
-; End of function Boss_MedusaUpdateSprites
-; Main boss handler
-Boss_SylpheedMain:                                      ; DATA XREF: ROM:00054BB0   o  ; was: sub_55094
+                beq.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+                bmi.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+                bra.w   Entity_SevenForcesResetState
+; End of function Entity_SevenForcesMedusaFadeOutState16
+; State $18: launch the Sylpheed entrance trajectory
+Entity_SevenForcesStartSylpheedEntranceState18:         ; DATA XREF: ROM:00054BB0   o  ; was: sub_55094
                 move.b  #1,(byte_FFA958).w
                 addq.w  #2,4(a5)
                 move.l  #$FFFC8000,$1C(a5)
                 move.l  #$18000,$18(a5)
                 cmpi.w  #$120,$10(a5)
-                bmi.s   Boss_Sylpheed_IntroFallLoop
+                bmi.s   Entity_SevenForcesUpdateSylpheedEntranceState1A
                 neg.l   $18(a5)
-; Seven Forces Sylpheed intro applies gravity and checks landing
-Boss_Sylpheed_IntroFallLoop:                            ; CODE XREF: Boss_SylpheedMain+20   j  ; was: loc_550BA
+; State $1A: apply gravity until Sylpheed reaches the landing threshold
+Entity_SevenForcesUpdateSylpheedEntranceState1A:        ; CODE XREF: Entity_SevenForcesStartSylpheedEntranceState18+20   j  ; was: loc_550BA
                                         ; DATA XREF: ROM:00054BB2   o
                 addi.l  #$2800,$1C(a5)
-                bmi.s   loc_550F0
+                bmi.s   Entity_SevenForcesUpdateSylpheedEntrancePalette
                 cmpi.w  #$F0,$14(a5)
-                bmi.s   loc_550F0
+                bmi.s   Entity_SevenForcesUpdateSylpheedEntrancePalette
                 addq.w  #2,4(a5)
                 clr.w   2(a5)
                 move.w  #$20,$48(a5)                    ; ' '
@@ -418,39 +420,39 @@ Boss_Sylpheed_IntroFallLoop:                            ; CODE XREF: Boss_Sylphe
                 jsr     (Sound_PlaySFX).l
                 lea     (stru_1169E).l,a1
                 jsr     (Gfx_UpdateBossPalette).l
-loc_550F0:                                              ; CODE XREF: Boss_SylpheedMain+2E   j
-                                        ; Boss_SylpheedMain+36   j
-                bra.w   Boss_MedusaIntroInit
-; End of function Boss_SylpheedMain
-; Boss state dispatcher
-Boss_SylpheedDispatcher:                                ; DATA XREF: ROM:00054BB4   o  ; was: sub_550F4
+Entity_SevenForcesUpdateSylpheedEntrancePalette:        ; CODE XREF: Entity_SevenForcesStartSylpheedEntranceState18+2E   j  ; was: loc_550F0
+                                        ; Entity_SevenForcesStartSylpheedEntranceState18+36   j
+                bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+; End of function Entity_SevenForcesStartSylpheedEntranceState18
+; State $1C: hold Sylpheed, play the timed cue, and update its palette
+Entity_SevenForcesSylpheedHoldState1C:                  ; DATA XREF: ROM:00054BB4   o  ; was: sub_550F4
                 subq.w  #1,$48(a5)
-                bpl.s   loc_55108
+                bpl.s   Entity_SevenForcesSylpheedHoldApplyPalette
                 addq.w  #2,4(a5)
                 move.b  #$24,d0                         ; '$'
                 jsr     (Sound_PlaySFX).l
-loc_55108:                                              ; CODE XREF: Boss_SylpheedDispatcher+4   j
-                bra.w   Boss_MedusaIntroInit
-; End of function Boss_SylpheedDispatcher
-; Intro animation init
-Boss_SylpheedIntroInit:                                 ; DATA XREF: ROM:00054BB6   o  ; was: sub_5510C
+Entity_SevenForcesSylpheedHoldApplyPalette:             ; CODE XREF: Entity_SevenForcesSylpheedHoldState1C+4   j  ; was: loc_55108
+                bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+; End of function Entity_SevenForcesSylpheedHoldState1C
+; State $1E: wait for the Sylpheed scroll threshold
+Entity_SevenForcesWaitForSylpheedScrollState1E:         ; DATA XREF: ROM:00054BB6   o  ; was: sub_5510C
                 cmpi.w  #$F760,(dword_FFA904).w
-                bpl.s   loc_55118
+                bpl.s   Entity_SevenForcesWaitForSylpheedScrollApplyPalette
                 addq.w  #2,4(a5)
-loc_55118:                                              ; CODE XREF: Boss_SylpheedIntroInit+6   j
-                bra.w   Boss_MedusaIntroInit
-; End of function Boss_SylpheedIntroInit
-; Updates boss sprites
-Boss_SylpheedUpdateSprites:                             ; DATA XREF: ROM:00054BB8   o  ; was: sub_5511C
+Entity_SevenForcesWaitForSylpheedScrollApplyPalette:    ; CODE XREF: Entity_SevenForcesWaitForSylpheedScrollState1E+6   j  ; was: loc_55118
+                bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+; End of function Entity_SevenForcesWaitForSylpheedScrollState1E
+; State $20: advance Sylpheed's fade value on alternate frames, then reset
+Entity_SevenForcesSylpheedFadeOutState20:               ; DATA XREF: ROM:00054BB8   o  ; was: sub_5511C
                 btst    #0,(word_FFA000+1).w
-                beq.w   Boss_MedusaIntroInit
+                beq.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 addq.w  #1,$5E(a5)
-                beq.w   Boss_MedusaIntroInit
-                bmi.w   Boss_MedusaIntroInit
-                bra.w   loc_54FF4
-; End of function Boss_SylpheedUpdateSprites
-; Main boss handler
-Boss_ArtemisMain:                                       ; DATA XREF: ROM:00054BBA   o  ; was: sub_55136
+                beq.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+                bmi.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+                bra.w   Entity_SevenForcesResetState
+; End of function Entity_SevenForcesSylpheedFadeOutState20
+; State $22: configure and launch the Artemis entrance trajectory
+Entity_SevenForcesStartArtemisEntranceState22:          ; DATA XREF: ROM:00054BBA   o  ; was: sub_55136
                 addq.w  #2,4(a5)
                 bclr    #0,(byte_FF8144).w
                 bclr    #4,(word_FFA40E).w
@@ -463,31 +465,31 @@ Boss_ArtemisMain:                                       ; DATA XREF: ROM:00054BB
                 move.l  #$38000,$1C(a5)
                 move.l  #$22000,$18(a5)
                 cmpi.w  #$120,$10(a5)
-                bmi.s   Boss_Artemis_IntroRiseLoop
+                bmi.s   Entity_SevenForcesUpdateArtemisEntranceState24
                 neg.l   $18(a5)
-; Seven Forces Artemis intro applies upward momentum
-Boss_Artemis_IntroRiseLoop:                             ; CODE XREF: Boss_ArtemisMain+46   j  ; was: loc_55182
+; State $24: decelerate Artemis upward until it reaches the height threshold
+Entity_SevenForcesUpdateArtemisEntranceState24:         ; CODE XREF: Entity_SevenForcesStartArtemisEntranceState22+46   j  ; was: loc_55182
                                         ; DATA XREF: ROM:00054BBC   o
                 subi.l  #$1000,(dword_FFA41C).w
                 subi.l  #$2000,$1C(a5)
-                bpl.s   loc_551BA
+                bpl.s   Entity_SevenForcesUpdateArtemisEntrancePalette
                 cmpi.w  #$100,$14(a5)
-                bpl.s   loc_551BA
+                bpl.s   Entity_SevenForcesUpdateArtemisEntrancePalette
                 addq.w  #2,4(a5)
                 clr.w   2(a5)
                 move.b  #$A5,d0
                 jsr     (Sound_PlaySFX).l
                 lea     (stru_11680).l,a1
                 jsr     (Gfx_UpdateBossPalette).l
-loc_551BA:                                              ; CODE XREF: Boss_ArtemisMain+5C   j
-                                        ; Boss_ArtemisMain+64   j
-                bra.w   Boss_MedusaIntroInit
-; End of function Boss_ArtemisMain
-; Waits for intro animation complete flag, then initializes Medusa phase
-Boss_SevenForcesWaitIntroComplete:                      ; DATA XREF: ROM:00054BBE   o  ; was: sub_551BE
+Entity_SevenForcesUpdateArtemisEntrancePalette:         ; CODE XREF: Entity_SevenForcesStartArtemisEntranceState22+5C   j  ; was: loc_551BA
+                                        ; Entity_SevenForcesStartArtemisEntranceState22+64   j
+                bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+; End of function Entity_SevenForcesStartArtemisEntranceState22
+; State $26: wait for the Artemis completion signal and configure its hold
+Entity_SevenForcesWaitForArtemisSignalState26:          ; DATA XREF: ROM:00054BBE   o  ; was: sub_551BE
                 subi.l  #$1000,(dword_FFA41C).w
                 tst.b   (byte_FFA958).w
-                bne.s   loc_551F2
+                bne.s   Entity_SevenForcesWaitForArtemisSignalApplyPalette
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$10,$4A(a5)
@@ -495,135 +497,134 @@ Boss_SevenForcesWaitIntroComplete:                      ; DATA XREF: ROM:00054BB
                 move.w  #$FF84,(dword_FFA414).w
                 move.w  #$D0,(dword_FFA410).w
                 bset    #0,(word_FFA402).w
-loc_551F2:                                              ; CODE XREF: Boss_SevenForcesWaitIntroComplete+C   j
-                bra.w   Boss_MedusaIntroInit
-; End of function Boss_SevenForcesWaitIntroComplete
-; Boss state dispatcher
-Boss_ArtemisDispatcher:                                 ; DATA XREF: ROM:00054BC0   o  ; was: sub_551F6
+Entity_SevenForcesWaitForArtemisSignalApplyPalette:     ; CODE XREF: Entity_SevenForcesWaitForArtemisSignalState26+C   j  ; was: loc_551F2
+                bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
+; End of function Entity_SevenForcesWaitForArtemisSignalState26
+; State $28: run Artemis hold timers and fade-out, then reset
+Entity_SevenForcesArtemisFadeOutState28:                ; DATA XREF: ROM:00054BC0   o  ; was: sub_551F6
                 tst.w   $48(a5)
-                bmi.s   loc_55210
+                bmi.s   Entity_SevenForcesArtemisFadeOutUpdateTimer
                 subq.w  #1,$48(a5)
-                bpl.w   Boss_ArtemisIntroInit
+                bpl.w   Gfx_UpdateSevenForcesArtemisPaletteFade
                 move.b  #1,(byte_FFA958).w
                 bclr    #2,(byte_FF8245).w
-loc_55210:                                              ; CODE XREF: Boss_ArtemisDispatcher+4   j
+Entity_SevenForcesArtemisFadeOutUpdateTimer:            ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+4   j  ; was: loc_55210
                 subq.w  #1,$4A(a5)
-                bne.s   loc_5521E
+                bne.s   Entity_SevenForcesArtemisFadeOutApplyPalette
                 jsr     (Gfx_ArtemisPaletteUpdate).l
-                bra.s   loc_55222
+                bra.s   Entity_SevenForcesArtemisFadeOutCheckReset
 ; ---------------------------------------------------------------------------
-loc_5521E:                                              ; CODE XREF: Boss_ArtemisDispatcher+1E   j
-                bpl.w   Boss_ArtemisIntroInit
-loc_55222:                                              ; CODE XREF: Boss_ArtemisDispatcher+26   j
+Entity_SevenForcesArtemisFadeOutApplyPalette:           ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+1E   j  ; was: loc_5521E
+                bpl.w   Gfx_UpdateSevenForcesArtemisPaletteFade
+Entity_SevenForcesArtemisFadeOutCheckReset:             ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+26   j  ; was: loc_55222
                 btst    #0,(word_FFA000+1).w
-                beq.w   Boss_ArtemisIntroInit
+                beq.w   Gfx_UpdateSevenForcesArtemisPaletteFade
                 addq.w  #1,$5E(a5)
-                beq.w   Boss_ArtemisIntroInit
-                bmi.w   Boss_ArtemisIntroInit
-                bra.w   loc_54FF4
-; End of function Boss_ArtemisDispatcher
-; Transition to Sirene form
-Stage_SireneTransition:                                 ; DATA XREF: ROM:00054BC2   o  ; was: sub_5523C
+                beq.w   Gfx_UpdateSevenForcesArtemisPaletteFade
+                bmi.w   Gfx_UpdateSevenForcesArtemisPaletteFade
+                bra.w   Entity_SevenForcesResetState
+; End of function Entity_SevenForcesArtemisFadeOutState28
+; State $2A: launch the Sirene entrance trajectory
+Entity_SevenForcesStartSireneEntranceState2A:           ; DATA XREF: ROM:00054BC2   o  ; was: sub_5523C
                 addq.w  #2,4(a5)
                 move.w  #$34,(word_FFA02A).w            ; '4'
                 move.l  #$FFFC8000,$1C(a5)
                 move.l  #$22000,$18(a5)
                 cmpi.w  #$120,$10(a5)
-                bmi.s   Boss_Sirene_IntroFallLoop
+                bmi.s   Entity_SevenForcesUpdateSireneEntranceState2C
                 neg.l   $18(a5)
-; Seven Forces Sirene intro applies downward momentum
-Boss_Sirene_IntroFallLoop:                              ; CODE XREF: Stage_SireneTransition+20   j  ; was: loc_55262
+; State $2C: apply gravity until Sirene reaches the lower threshold
+Entity_SevenForcesUpdateSireneEntranceState2C:          ; CODE XREF: Entity_SevenForcesStartSireneEntranceState2A+20   j  ; was: loc_55262
                                         ; DATA XREF: ROM:00054BC4   o
                 addi.l  #$2000,$1C(a5)
-                bmi.s   loc_55282
+                bmi.s   Entity_SevenForcesUpdateSireneEntrancePalette
                 cmpi.w  #$170,$14(a5)
-                bmi.s   loc_55282
+                bmi.s   Entity_SevenForcesUpdateSireneEntrancePalette
                 addq.w  #2,4(a5)
                 clr.w   2(a5)
                 move.w  #$40,$48(a5)                    ; '@'
-loc_55282:                                              ; CODE XREF: Stage_SireneTransition+2E   j
-                                        ; Stage_SireneTransition+36   j
-                bra.w   Boss_ArtemisIntroInit
-; End of function Stage_SireneTransition
-; Main boss handler
-Boss_SireneMain:                                        ; DATA XREF: ROM:00054BC6   o  ; was: sub_55286
+Entity_SevenForcesUpdateSireneEntrancePalette:          ; CODE XREF: Entity_SevenForcesStartSireneEntranceState2A+2E   j  ; was: loc_55282
+                                        ; Entity_SevenForcesStartSireneEntranceState2A+36   j
+                bra.w   Gfx_UpdateSevenForcesArtemisPaletteFade
+; End of function Entity_SevenForcesStartSireneEntranceState2A
+; State $2E: hold Sirene while advancing its palette counter
+Entity_SevenForcesSireneHoldState2E:                    ; DATA XREF: ROM:00054BC6   o  ; was: sub_55286
                 subq.w  #1,$48(a5)
-                bpl.s   loc_552AC
+                bpl.s   Entity_SevenForcesSireneHoldUpdatePalette
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '
                 move.b  #$28,d0                         ; '('
                 jsr     (Sound_PlaySFX).l
                 lea     (stru_11676).l,a1
                 jsr     (Gfx_UpdateBossPalette).l
-loc_552AC:                                              ; CODE XREF: Boss_SireneMain+4   j
+Entity_SevenForcesSireneHoldUpdatePalette:              ; CODE XREF: Entity_SevenForcesSireneHoldState2E+4   j  ; was: loc_552AC
                 addq.w  #1,$5E(a5)
-                beq.w   Boss_ArtemisIntroInit
-                bmi.w   Boss_ArtemisIntroInit
+                beq.w   Gfx_UpdateSevenForcesArtemisPaletteFade
+                bmi.w   Gfx_UpdateSevenForcesArtemisPaletteFade
                 rts
-; End of function Boss_SireneMain
-; Attributes: thunk
-; Shooting pattern 3
-Boss_SireneShootPattern3:                               ; DATA XREF: ROM:00054BC8   o  ; was: sub_552BA
-                bra.w   loc_54FF4
-; End of function Boss_SireneShootPattern3
-; Plays death sound effects and updates palette at frame $9C
-Boss_SireneDeathFlash1:                                 ; DATA XREF: ROM:00054BCA   o  ; was: sub_552BE
+; End of function Entity_SevenForcesSireneHoldState2E
+; State $30: reset the Seven Forces intro controller
+Entity_SevenForcesResetState30:                         ; DATA XREF: ROM:00054BC8   o  ; was: sub_552BA
+                bra.w   Entity_SevenForcesResetState
+; End of function Entity_SevenForcesResetState30
+; State $32: apply the first timed Sirene palette and sound event
+Entity_SevenForcesSirenePaletteEventState32:            ; DATA XREF: ROM:00054BCA   o  ; was: sub_552BE
                 cmpi.w  #$9C,(word_FFA950).w
-                bne.s   locret_552EA
+                bne.s   Entity_SevenForcesSirenePaletteEventState32Return
                 move.b  #$27,d0                         ; '''
                 jsr     (Sound_PlaySFX).l
                 move.b  #$A5,d0
                 jsr     (Sound_PlaySFX).l
                 lea     (stru_11694).l,a1
                 jsr     (Gfx_UpdateBossPalette).l
-                bra.w   loc_54FF4
+                bra.w   Entity_SevenForcesResetState
 ; ---------------------------------------------------------------------------
-locret_552EA:                                           ; CODE XREF: Boss_SireneDeathFlash1+6   j
+Entity_SevenForcesSirenePaletteEventState32Return:      ; CODE XREF: Entity_SevenForcesSirenePaletteEventState32+6   j  ; was: locret_552EA
                 rts
-; End of function Boss_SireneDeathFlash1
-; Plays death sound effects and updates palette at frame $A6
-Boss_SireneDeathFlash2:                                 ; DATA XREF: ROM:00054BCC   o  ; was: sub_552EC
+; End of function Entity_SevenForcesSirenePaletteEventState32
+; State $34: apply the second timed Sirene palette and sound event
+Entity_SevenForcesSirenePaletteEventState34:            ; DATA XREF: ROM:00054BCC   o  ; was: sub_552EC
                 cmpi.w  #$A6,(word_FFA950).w
-                bne.s   locret_55318
+                bne.s   Entity_SevenForcesSirenePaletteEventState34Return
                 move.b  #$26,d0                         ; '&'
                 jsr     (Sound_PlaySFX).l
                 move.b  #$A5,d0
                 jsr     (Sound_PlaySFX).l
                 lea     (stru_1168A).l,a1
                 jsr     (Gfx_UpdateBossPalette).l
-                bra.w   loc_54FF4
+                bra.w   Entity_SevenForcesResetState
 ; ---------------------------------------------------------------------------
-locret_55318:                                           ; CODE XREF: Boss_SireneDeathFlash2+6   j
+Entity_SevenForcesSirenePaletteEventState34Return:      ; CODE XREF: Entity_SevenForcesSirenePaletteEventState34+6   j  ; was: locret_55318
                 rts
-; End of function Boss_SireneDeathFlash2
-; Spawns explosion effects
-Cutscene_SevenForcesExplosions:                         ; DATA XREF: ROM:00054BCE   o  ; was: sub_5531A
+; End of function Entity_SevenForcesSirenePaletteEventState34
+; State $36: run the random explosion sequence and arm its wait state
+Entity_SevenForcesExplosionSequenceState36:             ; DATA XREF: ROM:00054BCE   o  ; was: sub_5531A
                 addq.w  #1,$48(a5)
                 cmpi.w  #2,$48(a5)
-                bne.s   loc_55330
+                bne.s   Entity_SevenForcesExplosionSequenceCheckTransition
                 move.b  #3,d0
                 jsr     (Sound_PlaySFX).l
-loc_55330:                                              ; CODE XREF: Cutscene_SevenForcesExplosions+A   j
-                bsr.w   Boss_ArtemisIntroInit
+Entity_SevenForcesExplosionSequenceCheckTransition:     ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+A   j  ; was: loc_55330
+                bsr.w   Gfx_UpdateSevenForcesArtemisPaletteFade
                 cmpi.w  #$98,(word_FFA950).w
-                bne.s   loc_55352
+                bne.s   Entity_SevenForcesSpawnRandomExplosion
                 addq.w  #2,4(a5)
                 move.w  #$200,$48(a5)
                 move.b  #1,(byte_FF830E).w
                 move.w  #$C0,(word_FF809E).w
-loc_55352:                                              ; CODE XREF: Cutscene_SevenForcesExplosions+20   j
-                                        ; sub_553CC:loc_553DC   p
+Entity_SevenForcesSpawnRandomExplosion:                 ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+20   j  ; was: loc_55352
+                                        ; sub_553CC:Entity_SevenForcesExplosionWaitUpdate   p
                 move.w  #2,(word_FFA010).w
                 move.w  #2,(word_FFA014).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
-                bne.s   locret_553CA
+                bne.s   Entity_SevenForcesSpawnRandomExplosionReturn
                 jsr     (Sprite_InitType160).l
                 move.l  #off_E953C,8(a0)
                 btst    #0,(dword_FFFF08).w
-                beq.s   loc_5538A
+                beq.s   Entity_SevenForcesInitRandomExplosionMotion
                 move.l  #off_E9560,8(a0)
-loc_5538A:                                              ; CODE XREF: Cutscene_SevenForcesExplosions+66   j
+Entity_SevenForcesInitRandomExplosionMotion:            ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+66   j  ; was: loc_5538A
                 move.b  #0,$20(a0)
                 moveq   #0,d0
                 move.w  (dword_FFFF08).w,d0
@@ -640,66 +641,66 @@ loc_5538A:                                              ; CODE XREF: Cutscene_Se
                 addi.w  #$F0,d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-locret_553CA:                                           ; CODE XREF: Cutscene_SevenForcesExplosions+50   j
+Entity_SevenForcesSpawnRandomExplosionReturn:           ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+50   j  ; was: locret_553CA
                 rts
-; End of function Cutscene_SevenForcesExplosions
-; Wait state with timer
-Cutscene_SevenForcesWaitState:                          ; DATA XREF: ROM:00054BD0   o  ; was: sub_553CC
+; End of function Entity_SevenForcesExplosionSequenceState36
+; State $38: keep spawning explosions until the wait timer expires
+Entity_SevenForcesExplosionWaitState38:                 ; DATA XREF: ROM:00054BD0   o  ; was: sub_553CC
                 subq.w  #1,$48(a5)
-                bpl.s   loc_553DC
+                bpl.s   Entity_SevenForcesExplosionWaitUpdate
                 addq.w  #2,4(a5)
                 move.b  #1,(byte_FFA958).w
-loc_553DC:                                              ; CODE XREF: Cutscene_SevenForcesWaitState+4   j
-                bsr.w   loc_55352
+Entity_SevenForcesExplosionWaitUpdate:                  ; CODE XREF: Entity_SevenForcesExplosionWaitState38+4   j  ; was: loc_553DC
+                bsr.w   Entity_SevenForcesSpawnRandomExplosion
                 addq.w  #1,$5E(a5)
-                beq.w   Boss_ArtemisIntroInit
-                bmi.w   Boss_ArtemisIntroInit
+                beq.w   Gfx_UpdateSevenForcesArtemisPaletteFade
+                bmi.w   Gfx_UpdateSevenForcesArtemisPaletteFade
                 rts
-; End of function Cutscene_SevenForcesWaitState
-; Visual effect handler 1
-Cutscene_SevenForcesEffect1:                            ; DATA XREF: ROM:00054BD2   o  ; was: sub_553EE
+; End of function Entity_SevenForcesExplosionWaitState38
+; State $3A: wait for the final-fade trigger and arm shared transition work
+Entity_SevenForcesArmFinalFadeState3A:                  ; DATA XREF: ROM:00054BD2   o  ; was: sub_553EE
                 cmpi.w  #$A2,(word_FFA950).w
-                bne.s   locret_5540A
+                bne.s   Entity_SevenForcesArmFinalFadeReturn
                 addq.w  #2,4(a5)
                 clr.w   $5E(a5)
                 move.w  #$2E,(word_FF80C2).w            ; '.'
                 move.b  #1,(byte_FF80FA).w
-locret_5540A:                                           ; CODE XREF: Cutscene_SevenForcesEffect1+6   j
+Entity_SevenForcesArmFinalFadeReturn:                   ; CODE XREF: Entity_SevenForcesArmFinalFadeState3A+6   j  ; was: locret_5540A
                 rts
-; End of function Cutscene_SevenForcesEffect1
-; Visual effect handler 2
-Cutscene_SevenForcesEffect2:                            ; DATA XREF: ROM:00054BD4   o  ; was: sub_5540C
-                bsr.w   Cutscene_SevenForcesEffect4
+; End of function Entity_SevenForcesArmFinalFadeState3A
+; State $3C: spawn transition particles while fading the palette
+Entity_SevenForcesFinalFadeState3C:                     ; DATA XREF: ROM:00054BD4   o  ; was: sub_5540C
+                bsr.w   Effect_SpawnSevenForcesTransitionParticle
                 subq.w  #1,$5E(a5)
                 cmpi.w  #$FFF2,$5E(a5)
-                bpl.s   loc_55426
+                bpl.s   Entity_SevenForcesApplyFinalFade
                 addq.w  #2,4(a5)
                 move.w  #$210,$48(a5)
-loc_55426:                                              ; CODE XREF: Cutscene_SevenForcesEffect2+E   j
+Entity_SevenForcesApplyFinalFade:                       ; CODE XREF: Entity_SevenForcesFinalFadeState3C+E   j  ; was: loc_55426
                 move.w  $5E(a5),d0
                 movea.w #(word_FFE300-M68K_RAM),a0
                 moveq   #$1F,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
-; End of function Cutscene_SevenForcesEffect2
-; Visual effect handler 3
-Cutscene_SevenForcesEffect3:                            ; DATA XREF: ROM:00054BD6   o  ; was: sub_5543A
-                bsr.w   Cutscene_SevenForcesEffect4
+; End of function Entity_SevenForcesFinalFadeState3C
+; State $3E: spawn transition particles and enter the next stage state
+Entity_SevenForcesFinishIntroState3E:                   ; DATA XREF: ROM:00054BD6   o  ; was: sub_5543A
+                bsr.w   Effect_SpawnSevenForcesTransitionParticle
                 subq.w  #1,$48(a5)
-                bpl.s   locret_5545E
+                bpl.s   Entity_SevenForcesFinishIntroReturn
                 tst.w   (word_FF8230).w
-                bne.s   locret_5545E
+                bne.s   Entity_SevenForcesFinishIntroReturn
                 move.b  #$93,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
                 jmp     Stage_InitTransitionState
 ; ---------------------------------------------------------------------------
-locret_5545E:                                           ; CODE XREF: Cutscene_SevenForcesEffect3+8   j
-                                        ; Cutscene_SevenForcesEffect3+E   j
+Entity_SevenForcesFinishIntroReturn:                    ; CODE XREF: Entity_SevenForcesFinishIntroState3E+8   j  ; was: locret_5545E
+                                        ; Entity_SevenForcesFinishIntroState3E+E   j
                 rts
-; End of function Cutscene_SevenForcesEffect3
-; Intro animation init
-Boss_ValkirieIntroInit:                                 ; CODE XREF: Boss_ValkirieMain:loc_54FE0   j  ; was: sub_55460
-                                        ; Boss_ValkirieDispatcher+4   j
+; End of function Entity_SevenForcesFinishIntroState3E
+; Apply Valkirie's single-range intro palette fade
+Gfx_UpdateSevenForcesValkiriePaletteFade:               ; CODE XREF: Entity_SevenForcesValkirieFadeInStateC:Entity_SevenForcesValkirieFadeInApplyPalette   j  ; was: sub_55460
+                                        ; Entity_SevenForcesValkirieFadeOutStateE+4   j
                 move.w  $5E(a5),d0
                 movea.w #(word_FFE300-M68K_RAM),a0
                 moveq   #$3F,d5                         ; '?'
@@ -707,10 +708,10 @@ Boss_ValkirieIntroInit:                                 ; CODE XREF: Boss_Valkir
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.w  #$EEE,(word_FFE364).w
                 rts
-; End of function Boss_ValkirieIntroInit
-; Intro animation init
-Boss_MedusaIntroInit:                                   ; CODE XREF: Boss_MedusaMain:loc_55056   j  ; was: sub_5547C
-                                        ; sub_5505A:loc_55076   j
+; End of function Gfx_UpdateSevenForcesValkiriePaletteFade
+; Apply the shared three-range Seven Forces palette fade
+Gfx_UpdateSevenForcesMultiRangePaletteFade:             ; CODE XREF: Entity_SevenForcesStartMedusaEntranceState10:Entity_SevenForcesUpdateMedusaEntrancePalette   j  ; was: sub_5547C
+                                        ; sub_5505A:Entity_SevenForcesMedusaHoldApplyPalette   j
                 movea.w #(word_FFE320-M68K_RAM),a0
                 moveq   #$F,d5
                 move.w  $5E(a5),d0
@@ -728,10 +729,10 @@ Boss_MedusaIntroInit:                                   ; CODE XREF: Boss_Medusa
                 moveq   #$E,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
-; End of function Boss_MedusaIntroInit
-; Intro animation init
-Boss_ArtemisIntroInit:                                  ; CODE XREF: Boss_ArtemisDispatcher+A   j  ; was: sub_554C0
-                                        ; sub_551F6:loc_5521E   j
+; End of function Gfx_UpdateSevenForcesMultiRangePaletteFade
+; Apply Artemis's four-range intro palette fade
+Gfx_UpdateSevenForcesArtemisPaletteFade:                ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+A   j  ; was: sub_554C0
+                                        ; sub_551F6:Entity_SevenForcesArtemisFadeOutApplyPalette   j
                 move.w  $5E(a5),d0
                 movea.w #(word_FFE302-M68K_RAM),a0
                 moveq   #$E,d5
@@ -754,10 +755,10 @@ Boss_ArtemisIntroInit:                                  ; CODE XREF: Boss_Artemi
                 moveq   #$1B,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
-; End of function Boss_ArtemisIntroInit
-; Intro movement
-Boss_MedusaIntroMove:                                   ; CODE XREF: Boss_MedusaIdleState+6   p  ; was: sub_55518
-                                        ; Boss_SylpheedIntroMove+6   p
+; End of function Gfx_UpdateSevenForcesArtemisPaletteFade
+; Initialize the shared form-transition sprite from camera coordinates
+Entity_InitSevenForcesTransitionSprite:                 ; CODE XREF: Entity_StartSevenForcesMedusaTransition+6   p  ; was: sub_55518
+                                        ; Entity_StartSevenForcesSylpheedTransition+6   p
                 move.b  #$14,$20(a5)
                 clr.w   $C(a5)
                 move.w  #$CD00,2(a5)
@@ -768,12 +769,12 @@ Boss_MedusaIntroMove:                                   ; CODE XREF: Boss_Medusa
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 rts
-; End of function Boss_MedusaIntroMove
-; Visual effect handler 4
-Cutscene_SevenForcesEffect4:                            ; CODE XREF: Cutscene_SevenForcesEffect2   p  ; was: sub_5554C
+; End of function Entity_InitSevenForcesTransitionSprite
+; Spawn a randomized particle during the final Seven Forces transition
+Effect_SpawnSevenForcesTransitionParticle:              ; CODE XREF: Entity_SevenForcesFinalFadeState3C   p  ; was: sub_5554C
                                         ; sub_5543A   p
                 jsr     (Projectile_FindFreeSlot).l
-                bne.s   locret_555C6
+                bne.s   Effect_SpawnSevenForcesTransitionParticleReturn
                 move.w  #$188,(a0)
                 move.w  #$8400,2(a0)
                 move.w  #$10,$48(a0)
@@ -797,105 +798,105 @@ Cutscene_SevenForcesEffect4:                            ; CODE XREF: Cutscene_Se
                 move.w  d1,$14(a0)
                 move.w  #$44F4,$E(a0)
                 btst    #0,(dword_FFFF08).w
-                bne.s   loc_555BA
+                bne.s   Effect_InitSevenForcesTransitionParticleMapping
                 move.w  #$44F5,$E(a0)
-loc_555BA:                                              ; CODE XREF: Cutscene_SevenForcesEffect4+66   j
+Effect_InitSevenForcesTransitionParticleMapping:        ; CODE XREF: Effect_SpawnSevenForcesTransitionParticle+66   j  ; was: loc_555BA
                 move.w  #0,8(a0)
                 move.w  #$FCFC,$A(a0)
-locret_555C6:                                           ; CODE XREF: Cutscene_SevenForcesEffect4+6   j
+Effect_SpawnSevenForcesTransitionParticleReturn:        ; CODE XREF: Effect_SpawnSevenForcesTransitionParticle+6   j  ; was: locret_555C6
                 rts
-; End of function Cutscene_SevenForcesEffect4
-; Intro stop position
-Boss_MedusaIntroStop:                                   ; CODE XREF: Boss_ValkirieIntroMove+26   j  ; was: sub_555C8
+; End of function Effect_SpawnSevenForcesTransitionParticle
+; Dispatch the post-battle transition requested by the completed boss
+Boss_QueueSevenForcesPostBattleTransition:              ; CODE XREF: Boss_ValkirieIntroMove+26   j  ; was: sub_555C8
                                         ; Boss_MedusaAttackState1+26   j
                 bset    #0,(byte_FFA272).w
                 movea.w #(word_FFDC40-M68K_RAM),a5
-                bsr.s   Boss_MedusaBattleStart
+                bsr.s   Entity_DispatchSevenForcesPostBattleTransition
                 movea.w #(Entity_ObjectPool-M68K_RAM),a5
                 rts
-; End of function Boss_MedusaIntroStop
-; Battle start initialization
-Boss_MedusaBattleStart:                                 ; CODE XREF: Boss_MedusaIntroStop+A   p  ; was: sub_555DA
-                movea.w off_555E6(pc,d0.w),a1
-                adda.l  #Boss_MedusaResetState,a1
+; End of function Boss_QueueSevenForcesPostBattleTransition
+; Dispatch a post-battle transition by the caller-supplied even index
+Entity_DispatchSevenForcesPostBattleTransition:         ; CODE XREF: Boss_QueueSevenForcesPostBattleTransition+A   p  ; was: sub_555DA
+                movea.w Entity_SevenForcesPostBattleTransitionOffsets(pc,d0.w),a1
+                adda.l  #Entity_ResetSevenForcesTransitionController,a1
                 jmp     (a1)
-; End of function Boss_MedusaBattleStart
+; End of function Entity_DispatchSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
-off_555E6:      dc.w    Boss_MedusaResetState-Boss_MedusaResetState
-                                        ; DATA XREF: Boss_MedusaBattleStart   r
-                dc.w    Boss_MedusaIdleState-Boss_MedusaResetState
-                dc.w    Boss_SylpheedIntroMove-Boss_MedusaResetState
-                dc.w    Boss_ArtemisIntroMove-Boss_MedusaResetState
-                dc.w    Boss_SireneDispatcher-Boss_MedusaResetState
-                dc.w    Boss_SireneEndBattle1-Boss_MedusaResetState
-                dc.w    Boss_SireneEndBattle2-Boss_MedusaResetState
-                dc.w    Cutscene_SevenForcesTransition-Boss_MedusaResetState
-                dc.w    Cutscene_SevenForcesEmptyTransition-Boss_MedusaResetState
+Entity_SevenForcesPostBattleTransitionOffsets:  dc.w    Entity_ResetSevenForcesTransitionController-Entity_ResetSevenForcesTransitionController  ; was: off_555E6
+                                        ; DATA XREF: Entity_DispatchSevenForcesPostBattleTransition   r
+                dc.w    Entity_StartSevenForcesMedusaTransition-Entity_ResetSevenForcesTransitionController
+                dc.w    Entity_StartSevenForcesSylpheedTransition-Entity_ResetSevenForcesTransitionController
+                dc.w    Entity_StartSevenForcesArtemisTransition-Entity_ResetSevenForcesTransitionController
+                dc.w    Entity_StartSevenForcesSireneTransition-Entity_ResetSevenForcesTransitionController
+                dc.w    Entity_ResumeSevenForcesIntroState24-Entity_ResetSevenForcesTransitionController
+                dc.w    Entity_ResumeSevenForcesIntroState26-Entity_ResetSevenForcesTransitionController
+                dc.w    Entity_StartSevenForcesFinalTransition-Entity_ResetSevenForcesTransitionController
+                dc.w    Entity_SevenForcesPostBattleNoOp-Entity_ResetSevenForcesTransitionController
 
-; Resets boss state word at offset 4 to 0, called from Medusa battle start
-Boss_MedusaResetState:                                  ; DATA XREF: Boss_MedusaBattleStart+4   o  ; was: sub_555F8
-                                        ; ROM:off_555E6   o
+; Reset the Seven Forces transition controller state
+Entity_ResetSevenForcesTransitionController:            ; DATA XREF: Entity_DispatchSevenForcesPostBattleTransition+4   o  ; was: sub_555F8
+                                        ; ROM:Entity_SevenForcesPostBattleTransitionOffsets   o
                 move.w  #0,4(a5)
                 rts
-; End of function Boss_MedusaResetState
-; Idle state handler
-Boss_MedusaIdleState:                                   ; DATA XREF: ROM:000555E8   o  ; was: sub_55600
+; End of function Entity_ResetSevenForcesTransitionController
+; Start the Medusa form transition after Valkirie completes
+Entity_StartSevenForcesMedusaTransition:                ; DATA XREF: ROM:000555E8   o  ; was: sub_55600
                 move.w  #$10,4(a5)
-                bsr.w   Boss_MedusaIntroMove
+                bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$FFF4,$5E(a5)
-                bsr.w   Boss_MedusaIntroInit
+                bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
-; End of function Boss_MedusaIdleState
-; Intro movement
-Boss_SylpheedIntroMove:                                 ; DATA XREF: ROM:000555EA   o  ; was: sub_5562A
+; End of function Entity_StartSevenForcesMedusaTransition
+; Start the Sylpheed form transition after Medusa completes
+Entity_StartSevenForcesSylpheedTransition:              ; DATA XREF: ROM:000555EA   o  ; was: sub_5562A
                 move.w  #$18,4(a5)
-                bsr.w   Boss_MedusaIntroMove
+                bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 lea     (byte_C00C).l,a0
                 jsr     (LoadPalette).l
                 move.w  #$FFF2,$5E(a5)
-                bsr.w   Boss_MedusaIntroInit
+                bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 clr.b   (word_FFF7E6+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
-; End of function Boss_SylpheedIntroMove
-; Intro movement
-Boss_ArtemisIntroMove:                                  ; DATA XREF: ROM:000555EC   o  ; was: sub_5566C
+; End of function Entity_StartSevenForcesSylpheedTransition
+; Start the Artemis form transition after Sylpheed completes
+Entity_StartSevenForcesArtemisTransition:               ; DATA XREF: ROM:000555EC   o  ; was: sub_5566C
                 move.b  #1,(byte_FFA958).w
                 move.w  #$22,4(a5)                      ; '"'
-                bsr.w   Boss_MedusaIntroMove
+                bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 lea     (byte_C01C).l,a0
                 jsr     (LoadPalette).l
                 move.w  #$FFF2,$5E(a5)
-                bsr.w   Boss_MedusaIntroInit
+                bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
-; End of function Boss_ArtemisIntroMove
-; Boss state dispatcher
-Boss_SireneDispatcher:                                  ; DATA XREF: ROM:000555EE   o  ; was: sub_556A8
+; End of function Entity_StartSevenForcesArtemisTransition
+; Start the Sirene form transition after Artemis completes
+Entity_StartSevenForcesSireneTransition:                ; DATA XREF: ROM:000555EE   o  ; was: sub_556A8
                 move.w  #$2A,4(a5)                      ; '*'
-                bsr.w   Boss_MedusaIntroMove
+                bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$FFF2,$5E(a5)
-                bsr.w   Boss_MedusaIntroInit
+                bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
-; End of function Boss_SireneDispatcher
-; Sets state to $24, flags transition, clears sprites except $428, plays sound $30
-Boss_SireneEndBattle1:                                  ; DATA XREF: ROM:000555F0   o  ; was: sub_556D2
+; End of function Entity_StartSevenForcesSireneTransition
+; Resume the intro controller at state $24 and clear obsolete objects
+Entity_ResumeSevenForcesIntroState24:                   ; DATA XREF: ROM:000555F0   o  ; was: sub_556D2
                 move.w  #$24,4(a5)                      ; '$'
                 move.b  #1,(byte_FFA958).w
                 move.w  #$428,d0
@@ -903,9 +904,9 @@ Boss_SireneEndBattle1:                                  ; DATA XREF: ROM:000555F
                 jsr     (Object_ClearAllExceptTypes).l
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
-; End of function Boss_SireneEndBattle1
-; Sets state to $26, flags transition, clears sprites except $428, plays sound $30
-Boss_SireneEndBattle2:                                  ; DATA XREF: ROM:000555F2   o  ; was: sub_556F4
+; End of function Entity_ResumeSevenForcesIntroState24
+; Resume the intro controller at state $26 and clear obsolete objects
+Entity_ResumeSevenForcesIntroState26:                   ; DATA XREF: ROM:000555F2   o  ; was: sub_556F4
                 move.w  #$26,4(a5)                      ; '&'
                 move.b  #1,(byte_FFA958).w
                 move.w  #$428,d0
@@ -913,9 +914,9 @@ Boss_SireneEndBattle2:                                  ; DATA XREF: ROM:000555F
                 jsr     (Object_ClearAllExceptTypes).l
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
-; End of function Boss_SireneEndBattle2
-; Transition after victory
-Cutscene_SevenForcesTransition:                         ; DATA XREF: ROM:000555F4   o  ; was: sub_55716
+; End of function Entity_ResumeSevenForcesIntroState26
+; Start the final explosion sequence after Sirene completes
+Entity_StartSevenForcesFinalTransition:                 ; DATA XREF: ROM:000555F4   o  ; was: sub_55716
                 move.w  #$36,4(a5)                      ; '6'
                 bclr    #0,(word_FFA402).w
                 bset    #0,(byte_FF8144).w
@@ -929,11 +930,10 @@ Cutscene_SevenForcesTransition:                         ; DATA XREF: ROM:000555F
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$FFF2,$5E(a5)
-                bsr.w   Boss_MedusaIntroInit
+                bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 rts
-; End of function Cutscene_SevenForcesTransition
-; Empty Seven Forces cutscene transition
-Cutscene_SevenForcesEmptyTransition:                    ; DATA XREF: ROM:000555F6   o  ; was: nullsub_127
+; End of function Entity_StartSevenForcesFinalTransition
+; Intentional no-op post-battle transition entry
+Entity_SevenForcesPostBattleNoOp:                       ; DATA XREF: ROM:000555F6   o  ; was: nullsub_127
                 rts
-; End of function Cutscene_SevenForcesEmptyTransition
-; Intro movement
+; End of function Entity_SevenForcesPostBattleNoOp

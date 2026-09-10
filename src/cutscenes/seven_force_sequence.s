@@ -423,7 +423,7 @@ locret_EF4A:                                            ; CODE XREF: Stage_Artem
                 rts
 ; End of function Stage_ArtemisGraphicsInit
 ; Palette update handler
-Gfx_ArtemisPaletteUpdate:                               ; CODE XREF: Boss_ArtemisDispatcher+20   p  ; was: sub_EF4C
+Gfx_ArtemisPaletteUpdate:                               ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+20   p  ; was: sub_EF4C
                 lea     word_EF58(pc),a0
                 nop
                 jmp     Gfx_LoadCompressedTiles

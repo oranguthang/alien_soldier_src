@@ -151,9 +151,9 @@ byte_BF2C:      dc.b    $62, $E, 2, 0, $E, $EE, 0, $6E, 6, $EE, 2, $84, 8, $EA, 
                 dc.b    2, $22, $E, $CC, 2, $24, 2, $66, 4, $88, $C, $CC, 0, $44, 8, $AA
                 dc.b    4, $46, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF, 2, $44, 2, $42
 byte_C00C:      dc.b    $22, 6, 8, $CC, 2, $44, 4, $66, 6, $88, 8, $AA, 4, $66, 6, $88
-                                        ; DATA XREF: Boss_SylpheedIntroMove+16   o
+                                        ; DATA XREF: Entity_StartSevenForcesSylpheedTransition+16   o
 byte_C01C:      dc.b    2, $1E, 0, 0, 0, $22, 2, $42, 6, $64, 0, $22, 2, $44, 4, $66
-                                        ; DATA XREF: Boss_ArtemisIntroMove+1C   o
+                                        ; DATA XREF: Entity_StartSevenForcesArtemisTransition+1C   o
                 dc.b    6, $88, $FF, $FF, 0, $22, 2, $44, 2, $66, 4, $AC, $A, $CE, $FF, $FF
                 dc.b    0, 0, 0, 0, 2, 0, 2, $22, 6, $44, 2, 0, 4, 0, 6, 0
                 dc.b    6, $20, 8, $42, $A, $64, $C, $86, $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
@@ -326,7 +326,7 @@ byte_C7DE:      dc.b    $62, $E, 0, 0, $E, $EE, $E, $88, 8, $44, 4, $22, $F, $FF
                 dc.b    $62, $E, 0, 0, $E, $EE, $F, $FF, $F, $FF, 0, $28, 0, 8, 0, $6C
                 dc.b    0, $AE, 4, 2, 6, $24, 8, $46, $C, $8A, 0, 6, 2, $C, 6, $6E
 byte_C81E:      dc.b    $62, $E, 0, 0, $E, $EE, $A, $CE, 4, $8C, 2, $68, $FF, $FF, $A, $AA
-                                        ; DATA XREF: Entity_SevenForcesIntro+36   o
+                                        ; DATA XREF: Entity_InitSevenForcesIntro+36   o
                 dc.b    6, $66, $E, $CC, $C, $AA, 8, $66, 6, $42, 4, $22, $E, $CC, $FF, $FF
 
 ; Main stage dispatcher jump table

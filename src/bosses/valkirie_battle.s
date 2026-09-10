@@ -10,7 +10,7 @@ Boss_ValkirieIntroMove:                                 ; DATA XREF: ROM:Entity_
                 tst.w   (word_FF8200).w
                 bne.s   loc_5578A
                 moveq   #2,d0
-                jmp     Boss_MedusaIntroStop
+                jmp     Boss_QueueSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
 loc_5578A:                                              ; CODE XREF: Boss_ValkirieIntroMove+14   j
                                         ; Boss_ValkirieIntroMove+1C   j

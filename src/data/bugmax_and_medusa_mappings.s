@@ -171,7 +171,7 @@ word_ECDBE:     dc.w    $9115, $500, $F9FA              ; DATA XREF: ROM:00059E5
                                         ; ROM:00059E66   o
 word_ECDC4:     dc.w    $9119, $500, $F9F9              ; DATA XREF: ROM:00059E5E   o
                                         ; ROM:SevenForcesRotationFrameTable8   o
-word_ECDCA:     dc.w    $961, $100, $4EC                ; DATA XREF: Boss_MedusaIntroMove+10   o
+word_ECDCA:     dc.w    $961, $100, $4EC                ; DATA XREF: Entity_InitSevenForcesTransitionSprite+10   o
                                         ; ROM:Boss_ValkirieMetaspritePartDescriptors   o
                 dc.w    $956, $200, $ECEC
                 dc.w    $959, $D00, $4F4
@@ -206,7 +206,7 @@ word_ECE7E:     dc.w    $486C, $700, $F8                ; DATA XREF: ROM:000ECEA
                 dc.w    $4832, $400, $FBF6
                 dc.w    $C82A, $700, $DBF6
 off_ECE90:      dc.w    word_ECDF4-*                    ; DATA XREF: Entity_ValkirieProjectileWaitTimer+C   o
-                                        ; Entity_SevenForcesIntro+18   o
+                                        ; Entity_InitSevenForcesIntro+18   o
                 dc.w    9
                 dc.w    word_ECE18-*
                 dc.w    8

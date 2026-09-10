@@ -265,7 +265,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_WolfGaropaPaletteUpdate
                 dc.l    Effect_WolfGaropaBoundaryFollowerMain
                 dc.l    Projectile_TimerAndVisibility
-                dc.l    Entity_SevenForcesMain
+                dc.l    Entity_UpdateSevenForcesIntro
                 dc.l    Boss_ValkirieIntroMove
                 dc.l    Boss_MedusaAttackState1
                 dc.l    Boss_SireneIntroInit

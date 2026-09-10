@@ -10,7 +10,7 @@ Boss_MedusaAttackState1:                                ; DATA XREF: ROM:Entity_
                 tst.w   (word_FF8200).w
                 bne.s   loc_569C8
                 moveq   #4,d0
-                jmp     Boss_MedusaIntroStop
+                jmp     Boss_QueueSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
 loc_569C8:                                              ; CODE XREF: Boss_MedusaAttackState1+14   j
                                         ; Boss_MedusaAttackState1+1C   j

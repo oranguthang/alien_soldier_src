@@ -2109,7 +2109,7 @@ The following Seven Forces cutscene ownership pass corrected the adjacent
 `0x054B84-0x05575D` boundary. `cutscenes/seven_forces_intro.s` contained the
 controller and its state-offset table through `0x054F9D`, while the states
 selected by that same table were isolated as `bosses/seven_forces_forms.s`.
-The two pieces are now one 939-line, ROM-ordered cutscene module, and
+The two pieces are now one 941-line, ROM-ordered cutscene module, and
 `rom_layout.json` records the combined range as a single owner. This also
 reduces the layout from 341 to 340 modules without changing emitted bytes.
 
@@ -2118,6 +2118,49 @@ or 52 inherited semantic definitions in the combined module. Their
 instruction-level audit is the next reconstruction pass; recording that
 separation prevents a better file boundary from being mistaken for semantic
 proof of the existing Sonnet names.
+
+The first semantic pass over that combined controller reduced the
+address-derived count from 5,930 to 5,912 and raised provenance to 9,911
+mappings. All 28 definitions in `0x054B84-0x054F9D` now have exact static
+audit records, taking the registry to 5,734 entries; 18 anonymous labels were
+replaced.
+
+The state table now exposes the initial `0/2/4/6/8/A` entrance sequence. In
+particular, the former `Entity_SevenForcesText*` routines never access text:
+they finish the entrance timer, switch the transformation mapping, and wait
+for shared transition work. The isolated `0x054C82` routine is retained as a
+debug scroll-table test because it reads live directional input and builds
+paired scroll buffers, but its audit explicitly records that no static caller
+is present. The same no-caller limit is recorded for the adjacent three-DMA
+intro setup routine instead of inventing a live execution path.
+
+The second controller pass reconstructed all 51 definitions in states
+`C-E` and `$10-$3E`. It reduced the address-derived count from 5,912 to 5,887,
+raised provenance to 9,936 mappings, and took the audit registry to 5,785
+entries. The sequence now explicitly follows Valkirie, Medusa, Sylpheed,
+Artemis, and Sirene entrance/hold/fade states before the random-explosion and
+final stage-transition states.
+
+This removes several unsupported action names: the former boss `Main` and
+`Dispatcher` routines are states of the introduction controller, both
+`*UpdateSprites` routines only advance palette-fade counters, the former
+`Boss_SireneShootPattern3` only resets controller state, and the generic
+`Cutscene_SevenForcesEffect*` labels are now named for their observable
+explosion, final-fade, and transition behavior.
+
+The final Seven Forces intro pass audited all 19 definitions in
+`0x055460-0x05575D`, removed the last three address-derived labels from the
+941-line module, raised provenance to 9,939 mappings, and took the registry to
+5,804 entries. `cutscenes/seven_forces_intro.s` now has zero live
+address-derived definitions.
+
+The former `Boss_MedusaBattleStart` is actually a nine-entry post-battle
+transition dispatcher shared by completed Seven Force bosses. Its caller
+supplies indices for the next form, controller resume states, the final
+explosion transition, or a no-op. The palette helpers are likewise separated
+by observable one-, three-, and four-range fades instead of being described
+as boss initialization, and the generic fourth effect is identified as the
+randomized transition-particle spawner used by the final fade.
 
 Four especially broad data labels are explicitly registered:
 

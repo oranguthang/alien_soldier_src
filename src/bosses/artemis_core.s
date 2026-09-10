@@ -10,7 +10,7 @@ Boss_ArtemisIntroStop:                                  ; DATA XREF: ROM:Entity_
                 tst.w   (word_FF8200).w
                 bne.s   loc_57EEA
                 moveq   #8,d0
-                jmp     Boss_MedusaIntroStop
+                jmp     Boss_QueueSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
 loc_57EEA:                                              ; CODE XREF: Boss_ArtemisIntroStop+14   j
                                         ; Boss_ArtemisIntroStop+1C   j

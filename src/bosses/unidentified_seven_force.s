@@ -87,7 +87,7 @@ Boss_UnidentifiedSevenForceInitTimedState4:
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_UnidentifiedSevenForceRenderTimedState4Frame
                 moveq   #8,d0
-                jmp     Boss_MedusaIntroStop
+                jmp     Boss_QueueSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
 Boss_UnidentifiedSevenForceRenderTimedState4Frame:      ; CODE XREF: Boss_UnidentifiedSevenForceInitTimedState4+42   j  ; was: loc_58DA0
                 lea     Boss_UnidentifiedSevenForceSharedPose(pc),a1

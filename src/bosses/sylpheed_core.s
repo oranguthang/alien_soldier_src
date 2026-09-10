@@ -10,7 +10,7 @@ Boss_SylpheedIntroStop:                                 ; DATA XREF: ROM:Entity_
                 tst.w   (word_FF8200).w
                 bne.s   loc_59400
                 moveq   #6,d0
-                jmp     Boss_MedusaIntroStop
+                jmp     Boss_QueueSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
 loc_59400:                                              ; CODE XREF: Boss_SylpheedIntroStop+14   j
                                         ; Boss_SylpheedIntroStop+1C   j

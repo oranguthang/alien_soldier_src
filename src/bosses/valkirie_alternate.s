@@ -10,7 +10,7 @@ Boss_ValkirieAlternateMain:                             ; DATA XREF: ROM:Entity_
                 tst.w   (word_FF8200).w
                 bne.s   Boss_ValkirieAlternateUpdatePalette
                 moveq   #$C,d0
-                jmp     Boss_MedusaIntroStop
+                jmp     Boss_QueueSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
 Boss_ValkirieAlternateUpdatePalette:                    ; CODE XREF: Boss_ValkirieAlternateMain+14   j  ; was: loc_5901A
                                         ; Boss_ValkirieAlternateMain+1C   j

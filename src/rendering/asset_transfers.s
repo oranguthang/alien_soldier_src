@@ -547,7 +547,7 @@ stru_11646:     dc.w    7                               ; field_0
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 stru_11658:     dc.w    $42C                            ; field_0
-                                        ; DATA XREF: Boss_ValkirieMain+36   o
+                                        ; DATA XREF: Entity_SevenForcesValkirieFadeInStateC+36   o
                 dc.l    stru_11662                      ; field_2
                 dc.l    byte_C67E                       ; field_6
 stru_11662:     dc.w    7                               ; field_0
@@ -557,27 +557,27 @@ stru_11662:     dc.w    7                               ; field_0
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 stru_1166C:     dc.w    $430                            ; field_0
-                                        ; DATA XREF: Boss_MedusaMain+4A   o
+                                        ; DATA XREF: Entity_SevenForcesStartMedusaEntranceState10+4A   o
                 dc.l    0                               ; field_2
                 dc.l    byte_C69E                       ; field_6
 stru_11676:     dc.w    $434                            ; field_0
-                                        ; DATA XREF: Boss_SireneMain+1A   o
+                                        ; DATA XREF: Entity_SevenForcesSireneHoldState2E+1A   o
                 dc.l    0                               ; field_2
                 dc.l    byte_C6FE                       ; field_6
 stru_11680:     dc.w    $438                            ; field_0
-                                        ; DATA XREF: Boss_ArtemisMain+78   o
+                                        ; DATA XREF: Entity_SevenForcesStartArtemisEntranceState22+78   o
                 dc.l    0                               ; field_2
                 dc.l    byte_C6DE                       ; field_6
 stru_1168A:     dc.w    $43C                            ; field_0
-                                        ; DATA XREF: Boss_SireneDeathFlash2+1C   o
+                                        ; DATA XREF: Entity_SevenForcesSirenePaletteEventState34+1C   o
                 dc.l    0                               ; field_2
                 dc.l    byte_C73E                       ; field_6
 stru_11694:     dc.w    $440                            ; field_0
-                                        ; DATA XREF: Boss_SireneDeathFlash1+1C   o
+                                        ; DATA XREF: Entity_SevenForcesSirenePaletteEventState32+1C   o
                 dc.l    stru_11662                      ; field_2
                 dc.l    byte_C71E                       ; field_6
 stru_1169E:     dc.w    $444                            ; field_0
-                                        ; DATA XREF: Boss_SylpheedMain+50   o
+                                        ; DATA XREF: Entity_SevenForcesStartSylpheedEntranceState18+50   o
                 dc.l    0                               ; field_2
                 dc.l    byte_C6BE                       ; field_6
 

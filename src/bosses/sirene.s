@@ -13,7 +13,7 @@ Boss_SireneIntroInit:                                   ; DATA XREF: ROM:Entity_
                 jsr     (Sound_PlaySFX).l
                 bclr    #7,(byte_FF8245).w
                 moveq   #$E,d0
-                jmp     Boss_MedusaIntroStop
+                jmp     Boss_QueueSevenForcesPostBattleTransition
 ; ---------------------------------------------------------------------------
 loc_574D4:                                              ; CODE XREF: Boss_SireneIntroInit+14   j
                                         ; Boss_SireneIntroInit+1C   j
