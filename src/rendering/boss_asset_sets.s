@@ -324,7 +324,7 @@ EntityType3FCGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_ZLeoAssetSet:  dc.w    $3F8                        ; field_0  ; was: stru_11618
-                                        ; DATA XREF: Boss_ZLeoTransition+2A   o
+                                        ; DATA XREF: StageTransition_LoadZLeoAssets+2A   o
                 dc.l    Boss_ZLeoGraphicsLoadList       ; field_2
                 dc.l    Boss_ZLeoPaletteCommands        ; field_6
 Boss_ZLeoGraphicsLoadList:  dc.w    7                   ; field_0  ; was: stru_11622

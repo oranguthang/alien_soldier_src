@@ -137,7 +137,7 @@ Sys_ClearEntityObjectPool_Loop:                         ; CODE XREF: Sys_ClearEn
 VDP_QueueCommand:                                       ; CODE XREF: Scroll_UpdateSnakeBackground+64   p  ; was: sub_1B784
                 move.w  #$8F02,d3
                 movea.w (VDPStagingDataCursor).w,a0
-VDP_QueueCommand_Build:                                 ; CODE XREF: Boss_ShieldViperRenderBackground+32   j  ; was: loc_1B78C
+VDP_QueueCommand_Build:                                 ; CODE XREF: StageTransition_QueueShieldViperBackdropRow+32   j  ; was: loc_1B78C
                                         ; WeaponSetup_UpdateBackgroundEffect+190   j
                 movea.w (VDPCommandQueueHead).w,a1
                 move.w  d0,d1

@@ -4033,7 +4033,7 @@ honest unreferenced names because neither the transition table nor another
 static call site selects them.
 
 The audit also follows the type-$41C records initialized by two transition
-states into `stages/boss_stage_rendering.s`. They are paired Stage 23 arena
+states into `stages/wolf_garopa_arena_boundaries.s`. They are paired Stage 23 arena
 boundary records, not Wolf Garopa attack states, and their update handler
 changes screen-relative position and a shared bound without touching palette
 memory. Four definitions there are corrected and audited with the owning
@@ -4048,7 +4048,8 @@ mean; the largest module remains 986 lines, with zero files above 1,000 lines
 and zero generic container filenames.
 
 The following Stage 24 and Missiray transition pass audits all 25 definitions
-in `stages/stage24_missiray.s`. The first five dispatch states form a cohesive
+formerly isolated in `stages/stage24_missiray.s` and now joined to the complete
+transition-state module. The first five dispatch states form a cohesive
 Missiray entry and exit sequence: they initialize two type-$3E0 scene objects,
 update full-, half-, and quarter-speed vertical parallax, load the explicit
 Missiray asset set, start message sequence `$2E`, and wait for the message and
@@ -4072,3 +4073,59 @@ narrowed. Provenance rises from 13,298 to 13,310, the name-audit registry from
 10,246 to 10,271, and the enforced address-derived ceiling falls from 2,750 to
 2,738. The layout remains 362 modules with a 328.3-line mean, zero files above
 1,000 lines, and zero generic container filenames.
+
+The adjacent Z-Leo and shared-scroll pass completes the transition dispatcher
+through address `0x00FB23`. The Z-Leo table states update the approach camera,
+load the explicit boss asset set, wait for the object pool to clear, and then
+hand off to the next phase. The former `Stage_SetStage25ScrollTimer` does
+neither stage timing nor scrolling: game-mode table evidence proves that its
+`$8C` write selects `Credits_InitXiTiger`, so it is now named
+`StageTransition_StartXiTigerCredits`.
+
+This pass also repairs the earlier formal file slicing. The Missiray, Stage 24,
+and Z-Leo state families selected by one relative-offset table now live with
+that table in the cohesive 862-line
+`stages/stage_and_boss_transition_states.s` module. The following
+`0x00FB24-0x00FC73` range is shared by the asteroid-field and Destroyer Proto
+states: it integrates their fixed-point positions, fills alternating V-scroll
+words, damps two backdrop velocities, and builds the segmented backdrop
+pattern. It therefore becomes the naturally short 143-line
+`stages/asteroid_and_destroyer_proto_scroll.s` helper module rather than
+remaining under a misleading Stage 25 filename.
+
+All 29 definitions in the reviewed range have exact-address static audit
+records. Twelve address-derived branches and loops receive
+provenance-preserving behavioral names, while seventeen inherited semantic
+names are confirmed, corrected, or narrowed. Provenance rises from 13,310 to
+13,322, the name-audit registry from 10,271 to 10,300, and the enforced
+address-derived ceiling falls from 2,738 to 2,726. Rejoining the artificial
+slices reduces the layout from 362 to 361 modules and changes the mean to 329.2
+lines; the largest module remains 986 lines, with zero files above 1,000 lines
+and zero generic container filenames.
+
+The following transition-backdrop audit removes another semantic container:
+`stages/boss_stage_rendering.s` mixed the raster workspaces shared by
+Destroyer Proto, Shield Viper, and Wolf Garopa with the independent type-$41C
+Wolf Garopa arena-boundary entity. The shared `0x00FC74-0x00FE9F` code now
+forms the 229-line `stages/stage_transition_backdrop_effects.s` module, while
+the already audited initializer and entity update occupy the naturally short
+40-line `stages/wolf_garopa_arena_boundaries.s` module.
+
+Static callers disprove the inherited owner claims. The former
+`Boss_DestroyerProtoRenderSegments` is called from all three encounter
+transitions and does not render boss objects; it builds clipped and
+interpolated RAM buffers consumed by the backdrop raster effect. The former
+`Boss_DestroyerProtoPaletteInit` is also shared with Shield Viper and updates
+two palette-fade ranges rather than merely initializing one. The former
+`Stage22_GraphicsUpdate1` advances fixed-point accumulators and builds the
+common per-line offset workspace. Shield Viper's two wrappers are narrowed to
+their observable V-scroll copy and queued backdrop-row operations.
+
+All 24 definitions in the shared backdrop-effects range now have exact-address
+static audit records. Nineteen address-derived branches, loops, and returns
+receive provenance-preserving behavioral names, while five inherited semantic
+names are corrected or narrowed. Provenance rises from 13,322 to 13,341, the
+name-audit registry from 10,300 to 10,324, and the enforced address-derived
+ceiling falls from 2,726 to 2,707. The entity split changes the layout from 361
+to 362 modules and the mean to 328.3 lines; the largest module remains 986
+lines, with zero files above 1,000 lines and zero generic container filenames.

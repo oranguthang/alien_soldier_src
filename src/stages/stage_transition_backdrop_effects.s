@@ -1,34 +1,35 @@
-Boss_ShieldViperScrollSetup:                            ; CODE XREF: StageTransition_LoadShieldViperAssets+4   p  ; was: sub_FC74
+; Updates shared line offsets and copies them into Shield Viper's V-scroll plane
+StageTransition_UpdateShieldViperVScroll:               ; CODE XREF: StageTransition_LoadShieldViperAssets+4   p  ; was: sub_FC74
                                         ; StageTransition_UpdateShieldViperBackdrop+4   p
-                bsr.w   Stage22_GraphicsUpdate1
+                bsr.w   StageTransition_BuildBossBackdropLineOffsets
                 movea.w #(byte_FFE580-M68K_RAM),a1
                 movea.w #(word_FF9E00-M68K_RAM),a0
                 moveq   #$7F,d7
-loc_FC82:                                               ; CODE XREF: Boss_ShieldViperScrollSetup+12   j
+StageTransition_CopyShieldViperVScrollLoop:             ; CODE XREF: StageTransition_UpdateShieldViperVScroll+12   j  ; was: loc_FC82
                 move.w  (a0)+,(a1)
                 addq.w  #4,a1
-                dbf     d7,loc_FC82
+                dbf     d7,StageTransition_CopyShieldViperVScrollLoop
                 rts
-; End of function Boss_ShieldViperScrollSetup
-; Graphics update 1
-Stage22_GraphicsUpdate1:                                ; CODE XREF: Boss_ShieldViperScrollSetup   p  ; was: sub_FC8C
+; End of function StageTransition_UpdateShieldViperVScroll
+; Builds per-line offsets shared by the three encounter-transition backdrops
+StageTransition_BuildBossBackdropLineOffsets:           ; CODE XREF: StageTransition_UpdateShieldViperVScroll   p  ; was: sub_FC8C
                                         ; sub_FD32   p
                 move.l  #$FFF88000,(dword_FF8062).w
                 move.l  (dword_FF8062).w,d0
                 add.l   d0,(dword_FF8066).w
                 move.w  (dword_FF8066).w,d0
-                bpl.s   loc_FCAA
+                bpl.s   StageTransition_AdjustPositiveBackdropLineOffset
                 addi.w  #$40,d0                         ; '@'
-                bmi.s   loc_FCB0
-                bra.s   loc_FCB4
+                bmi.s   StageTransition_StoreAdjustedBackdropLineOffset
+                bra.s   StageTransition_BuildInterpolatedBackdropLineOffsets
 ; ---------------------------------------------------------------------------
-loc_FCAA:                                               ; CODE XREF: Stage22_GraphicsUpdate1+14   j
+StageTransition_AdjustPositiveBackdropLineOffset:       ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+14   j  ; was: loc_FCAA
                 subi.w  #$40,d0                         ; '@'
-                bmi.s   loc_FCB4
-loc_FCB0:                                               ; CODE XREF: Stage22_GraphicsUpdate1+1A   j
+                bmi.s   StageTransition_BuildInterpolatedBackdropLineOffsets
+StageTransition_StoreAdjustedBackdropLineOffset:        ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+1A   j  ; was: loc_FCB0
                 move.w  d0,(dword_FF8066).w
-loc_FCB4:                                               ; CODE XREF: Stage22_GraphicsUpdate1+1C   j
-                                        ; Stage22_GraphicsUpdate1+22   j
+StageTransition_BuildInterpolatedBackdropLineOffsets:   ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+1C   j  ; was: loc_FCB4
+                                        ; StageTransition_BuildBossBackdropLineOffsets+22   j
                 move.l  (dword_FF8066).w,d0
                 divs.w  #$7000,d0
                 ext.l   d0
@@ -36,36 +37,36 @@ loc_FCB4:                                               ; CODE XREF: Stage22_Gra
                 movea.w #(byte_FF9F00-M68K_RAM),a0
                 move.l  (dword_FF8066).w,d1
                 moveq   #$5F,d7                         ; '_'
-loc_FCCA:                                               ; CODE XREF: Stage22_GraphicsUpdate1+46   j
+StageTransition_FillInterpolatedBackdropLineOffsets:    ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+46   j  ; was: loc_FCCA
                 swap    d1
                 move.w  d1,-(a0)
                 swap    d1
                 sub.l   d0,d1
-                dbf     d7,loc_FCCA
+                dbf     d7,StageTransition_FillInterpolatedBackdropLineOffsets
                 move.l  (dword_FF8062).w,d0
                 add.l   d0,(dword_FF806A).w
                 move.w  (dword_FF806A).w,d1
                 asr.w   #4,d1
                 moveq   #$17,d7
-loc_FCE6:                                               ; CODE XREF: Stage22_GraphicsUpdate1+5C   j
+StageTransition_FillBackdropTailLineOffsets:            ; CODE XREF: StageTransition_BuildBossBackdropLineOffsets+5C   j  ; was: loc_FCE6
                 move.w  d1,-(a0)
-                dbf     d7,loc_FCE6
+                dbf     d7,StageTransition_FillBackdropTailLineOffsets
                 move.w  (dword_FF9D96).w,d1
                 move.w  d1,-(a0)
                 rts
-; End of function Stage22_GraphicsUpdate1
-; Palette initialization
-Boss_DestroyerProtoPaletteInit:                         ; CODE XREF: StageTransition_InitializeDestroyerProtoBackdrop+12   p  ; was: sub_FCF4
+; End of function StageTransition_BuildBossBackdropLineOffsets
+; Updates the shared Destroyer Proto and Shield Viper backdrop palette fade
+StageTransition_UpdateBossBackdropPaletteFade:          ; CODE XREF: StageTransition_InitializeDestroyerProtoBackdrop+12   p  ; was: sub_FCF4
                                         ; StageTransition_UpdateDestroyerProtoBackdropFade+8   p
                 tst.w   (word_FF9DAE).w
-                bne.s   loc_FCFC
+                bne.s   StageTransition_AdvanceBossBackdropPaletteFade
                 rts
 ; ---------------------------------------------------------------------------
-loc_FCFC:                                               ; CODE XREF: Boss_DestroyerProtoPaletteInit+4   j
+StageTransition_AdvanceBossBackdropPaletteFade:         ; CODE XREF: StageTransition_UpdateBossBackdropPaletteFade+4   j  ; was: loc_FCFC
                 btst    #0,(FrameCounter+1).w
-                bne.s   loc_FD08
+                bne.s   StageTransition_ApplyBossBackdropPaletteFade
                 subq.w  #1,(word_FF9DAE).w
-loc_FD08:                                               ; CODE XREF: StageTransition_BeginShieldViperFade+38   j
+StageTransition_ApplyBossBackdropPaletteFade:           ; CODE XREF: StageTransition_BeginShieldViperFade+38   j  ; was: loc_FD08
                                         ; StageTransition_CompleteShieldViperFade   p
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 move.w  #$E000,d7
@@ -78,15 +79,15 @@ loc_FD08:                                               ; CODE XREF: StageTransi
                 move.w  #$C000,d7
                 moveq   #$F,d5
                 jmp     (Gfx_ApplyPaletteFade).l
-; End of function Boss_DestroyerProtoPaletteInit
-; Renders boss segments
-Boss_DestroyerProtoRenderSegments:                      ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+10   p  ; was: sub_FD32
+; End of function StageTransition_UpdateBossBackdropPaletteFade
+; Builds raster workspaces shared by three encounter-transition backdrops
+StageTransition_BuildBossBackdropRasterBuffers:         ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+10   p  ; was: sub_FD32
                                         ; StageTransition_UpdatePostDestroyerProtoScroll+8   p
-                bsr.w   Stage22_GraphicsUpdate1
+                bsr.w   StageTransition_BuildBossBackdropLineOffsets
                 movea.w #(dword_FF9A00-M68K_RAM),a0
                 movea.w #(byte_FF9B00-M68K_RAM),a1
                 moveq   #6,d7
-loc_FD40:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+1E   j
+StageTransition_CopyBossBackdropWorkspace:              ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+1E   j  ; was: loc_FD40
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
@@ -95,7 +96,7 @@ loc_FD40:                                               ; CODE XREF: Boss_Destro
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
-                dbf     d7,loc_FD40
+                dbf     d7,StageTransition_CopyBossBackdropWorkspace
                 move.w  (dword_FF9DAA).w,d0
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,(word_FF9D94).w
@@ -117,15 +118,15 @@ loc_FD40:                                               ; CODE XREF: Boss_Destro
                 movea.w #(byte_FF9B1E-M68K_RAM),a0
                 movea.w #(byte_FF981E-M68K_RAM),a1
                 moveq   #$17,d7
-loc_FD94:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+82   j
+StageTransition_FillBossBackdropBandBuffers:            ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+82   j  ; was: loc_FD94
                 move.w  d3,d0
                 move.w  d2,d2
-                bmi.s   loc_FD9E
+                bmi.s   StageTransition_UseBossBackdropBandFallback
                 cmp.w   d5,d2
-                bmi.s   loc_FDA0
-loc_FD9E:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+66   j
+                bmi.s   StageTransition_StoreBossBackdropBandValues
+StageTransition_UseBossBackdropBandFallback:            ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+66   j  ; was: loc_FD9E
                 move.w  d6,d0
-loc_FDA0:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+6A   j
+StageTransition_StoreBossBackdropBandValues:            ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+6A   j  ; was: loc_FDA0
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
@@ -136,32 +137,32 @@ loc_FDA0:                                               ; CODE XREF: Boss_Destro
                 move.w  d1,(a1)+
                 addq.w  #8,d2
                 subq.w  #8,d6
-                dbf     d7,loc_FD94
+                dbf     d7,StageTransition_FillBossBackdropBandBuffers
                 cmpi.w  #$60,(dword_FF9D90).w           ; '`'
-                bpl.s   loc_FDE2
+                bpl.s   StageTransition_CalculateExpandedBackdropStep
                 move.w  (dword_FF9D90).w,d1
-                bne.s   loc_FDCE
+                bne.s   StageTransition_CalculateCompressedBackdropStep
                 move.l  #$FFFE0000,d0
-                bra.s   loc_FDF4
+                bra.s   StageTransition_ConfigureBossBackdropRasterFill
 ; ---------------------------------------------------------------------------
-loc_FDCE:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+92   j
+StageTransition_CalculateCompressedBackdropStep:        ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+92   j  ; was: loc_FDCE
                 move.l  #$6000,d0
                 divu.w  d1,d0
                 subi.w  #$100,d0
                 ext.l   d0
                 asl.l   #8,d0
                 asl.l   #1,d0
-                bra.s   loc_FDF4
+                bra.s   StageTransition_ConfigureBossBackdropRasterFill
 ; ---------------------------------------------------------------------------
-loc_FDE2:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+8C   j
+StageTransition_CalculateExpandedBackdropStep:          ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+8C   j  ; was: loc_FDE2
                 move.l  (dword_FF9D90).w,d0
                 divu.w  #$3000,d0
                 subi.w  #$200,d0
                 neg.w   d0
                 ext.l   d0
                 asl.l   #7,d0
-loc_FDF4:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+9A   j
-                                        ; Boss_DestroyerProtoRenderSegments+AE   j
+StageTransition_ConfigureBossBackdropRasterFill:        ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+9A   j  ; was: loc_FDF4
+                                        ; StageTransition_BuildBossBackdropRasterBuffers+AE   j
                 moveq   #0,d1
                 move.w  (word_FF9D94).w,d1
                 neg.w   d1
@@ -180,20 +181,20 @@ loc_FDF4:                                               ; CODE XREF: Boss_Destro
                 move.w  (word_FF9D94).w,d3
                 neg.w   d3
                 moveq   #8,d7
-loc_FE2E:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+108   j
+StageTransition_CopyBossBackdropLeadingBands:           ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+108   j  ; was: loc_FE2E
                 cmpa.w  #$9C00,a0
-                bpl.s   locret_FE66
+                bpl.s   StageTransition_BossBackdropRasterBuildReturn
                 move.w  d3,(a0)+
                 move.w  (a1)+,d4
                 move.w  d4,(a2)+
-                dbf     d7,loc_FE2E
+                dbf     d7,StageTransition_CopyBossBackdropLeadingBands
                 movea.w #(word_FF9E40-M68K_RAM),a1
                 move.w  (word_FF9D94).w,d2
                 neg.w   d2
                 move.w  #$9C00,d6
-loc_FE4C:                                               ; CODE XREF: Boss_DestroyerProtoRenderSegments+132   j
+StageTransition_FillBossBackdropRemainingBands:         ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+132   j  ; was: loc_FE4C
                 cmpa.w  d6,a0
-                bpl.s   locret_FE66
+                bpl.s   StageTransition_BossBackdropRasterBuildReturn
                 swap    d1
                 move.w  d1,(a0)+
                 move.w  d1,d3
@@ -203,22 +204,22 @@ loc_FE4C:                                               ; CODE XREF: Boss_Destro
                 asl.w   #1,d3
                 move.w  (a1,d3.w),(a2)+
                 subq.w  #2,d2
-                bra.s   loc_FE4C
+                bra.s   StageTransition_FillBossBackdropRemainingBands
 ; ---------------------------------------------------------------------------
-locret_FE66:                                            ; CODE XREF: Boss_DestroyerProtoRenderSegments+100   j
-                                        ; Boss_DestroyerProtoRenderSegments+11C   j
+StageTransition_BossBackdropRasterBuildReturn:          ; CODE XREF: StageTransition_BuildBossBackdropRasterBuffers+100   j  ; was: locret_FE66
+                                        ; StageTransition_BuildBossBackdropRasterBuffers+11C   j
                 rts
-; End of function Boss_DestroyerProtoRenderSegments
-; Renders background
-Boss_ShieldViperRenderBackground:                       ; CODE XREF: StageTransition_UpdateShieldViperBackdrop+8   p  ; was: sub_FE68
+; End of function StageTransition_BuildBossBackdropRasterBuffers
+; Fills and queues the next Shield Viper backdrop tile row
+StageTransition_QueueShieldViperBackdropRow:            ; CODE XREF: StageTransition_UpdateShieldViperBackdrop+8   p  ; was: sub_FE68
                 movea.w #(byte_FF9B80-M68K_RAM),a0
                 movea.w a0,a1
                 moveq   #$3F,d7                         ; '?'
                 move.w  (word_FF9DFE).w,d0
                 addi.w  #-$7E2C,d0
-loc_FE78:                                               ; CODE XREF: Boss_ShieldViperRenderBackground+12   j
+StageTransition_FillShieldViperBackdropRow:             ; CODE XREF: StageTransition_QueueShieldViperBackdropRow+12   j  ; was: loc_FE78
                 move.w  d0,(a1)+
-                dbf     d7,loc_FE78
+                dbf     d7,StageTransition_FillShieldViperBackdropRow
                 move.w  (word_FF9DFC).w,d0
                 addi.w  #-$1800,d0
                 addi.w  #$80,(word_FF9DFC).w
@@ -226,44 +227,4 @@ loc_FE78:                                               ; CODE XREF: Boss_Shield
                 move.w  #$8F02,d3
                 move.l  #$94009340,d4
                 jmp     VDP_QueueCommand_Build
-; End of function Boss_ShieldViperRenderBackground
-; Initializes the two Wolf Garopa arena-boundary records
-StageTransition_InitializeWolfGaropaArenaBoundaries:    ; CODE XREF: StageTransition_UpdateWolfGaropaApproach+28   p  ; was: sub_FEA0
-                                        ; StageTransition_RestartWolfGaropaBackdropFinalize+E   p
-                movea.w #(byte_FFDB80-M68K_RAM),a0
-                clr.w   $48(a0)
-                move.w  #$D0,$10(a0)
-                bsr.s   StageTransition_InitializeWolfGaropaArenaBoundary
-                movea.w #(word_FFDBE0-M68K_RAM),a0
-                move.w  #1,$48(a0)
-                move.w  #$170,$10(a0)
-; End of function StageTransition_InitializeWolfGaropaArenaBoundaries
-; Initializes one Wolf Garopa arena-boundary record
-StageTransition_InitializeWolfGaropaArenaBoundary:      ; CODE XREF: StageTransition_InitializeWolfGaropaArenaBoundaries+E   p  ; was: sub_FEC0
-                move.w  #$41C,(a0)
-                clr.w   2(a0)
-                move.b  #$80,$21(a0)
-                move.b  #$10,$23(a0)
-                move.l  #$40827E,$28(a0)
-                rts
-; End of function StageTransition_InitializeWolfGaropaArenaBoundary
-; Updates one Wolf Garopa arena-boundary record
-Stage23_UpdateWolfGaropaArenaBoundary:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_FEDE
-                move.b  #$80,$21(a5)
-                move.w  #$F3E0,d0
-                sub.w   (dword_FFA904).w,d0
-                move.w  #$150,d1
-                sub.w   d0,d1
-                move.w  d1,$14(a5)
-                tst.w   $48(a5)
-                bne.s   Stage23_WolfGaropaArenaBoundaryReturn
-                subi.w  #$20,d1                         ; ' '
-                cmp.w   (dword_FFA414).w,d1
-                bpl.s   Stage23_WolfGaropaArenaBoundaryReturn
-                move.w  d1,(dword_FFA414).w
-                subq.w  #1,(dword_FFA414).w
-Stage23_WolfGaropaArenaBoundaryReturn:                  ; CODE XREF: Stage23_UpdateWolfGaropaArenaBoundary+1C   j  ; was: locret_FF0E
-                                        ; Stage23_UpdateWolfGaropaArenaBoundary+26   j
-                rts
-; End of function Stage23_UpdateWolfGaropaArenaBoundary
-; Clears scroll animation timer at FFA960
+; End of function StageTransition_QueueShieldViperBackdropRow
