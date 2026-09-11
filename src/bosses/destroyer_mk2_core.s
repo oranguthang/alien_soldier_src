@@ -163,7 +163,7 @@ Boss_DestroyerMK2InitializeLinkedPartLoop:              ; CODE XREF: Boss_Destro
                 move.b  #$10,$23(a0)
                 move.w  #$96,$26(a0)
                 move.b  d1,$20(a0)
-                move.l  #word_EC2AA,8(a0)
+                move.l  #Boss_DestroyerMK2ComponentMapping,8(a0)
                 move.w  (a1)+,$4E(a0)
                 move.w  (a1)+,$4A(a0)
                 move.w  (a1)+,$4C(a0)
@@ -183,7 +183,7 @@ Boss_DestroyerMK2InitializeOrbitingPartLoop:            ; CODE XREF: Boss_Destro
                 move.l  #$F010F010,$28(a0)
                 move.w  #$30,$24(a0)                    ; '0'
                 move.b  d1,$20(a0)
-                move.l  #word_EC2D4,8(a0)
+                move.l  #Boss_DestroyerMK2OrbitingPartMapping2,8(a0)
                 move.w  #$EB00,$E(a0)
                 move.w  d6,$4C(a0)
                 addi.w  #$40,d6                         ; '@'

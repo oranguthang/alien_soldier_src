@@ -180,7 +180,7 @@ Boss_DestroyerMK2SpawnNextTripleProjectile:             ; DATA XREF: ROM:0004B1A
                 move.l  #$F010F010,$28(a0)
                 move.w  #$30,$24(a0)                    ; '0'
                 move.b  d1,$20(a0)
-                move.l  #word_EC2D4,8(a0)
+                move.l  #Boss_DestroyerMK2OrbitingPartMapping2,8(a0)
                 move.w  #$EB00,$E(a0)
                 clr.w   $4C(a0)
                 move.w  #2,$46(a0)
@@ -231,7 +231,7 @@ Boss_DestroyerMK2ProjectileSpreadSpawnLoop:             ; CODE XREF: Boss_Destro
                 move.l  #$F010F010,$28(a0)
                 move.w  #$30,$24(a0)                    ; '0'
                 move.b  d1,$20(a0)
-                move.l  #word_EC2D4,8(a0)
+                move.l  #Boss_DestroyerMK2OrbitingPartMapping2,8(a0)
                 move.w  #$EB00,$E(a0)
                 clr.w   $4C(a0)
                 move.w  #4,$46(a0)
@@ -500,7 +500,7 @@ Object_DestroyerMK2LinkedObjectAddressTable:    dc.w    $C800, $C7A0, $C8C0, $C8
 Object_DestroyerMK2InitializeProjectile:                ; DATA XREF: ROM:0004B4A0   o  ; was: sub_4B524
                 tst.w   (word_FFF720).w
                 bmi.w   Object_DestroyerMK2StageGateReturn
-                move.l  #word_EC2B6,8(a5)
+                move.l  #Boss_DestroyerMK2ProjectileMapping,8(a5)
                 move.w  #4,$48(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -518,7 +518,7 @@ Object_DestroyerMK2SpawnProjectile:                     ; DATA XREF: ROM:0004B4A
                 move.l  #$FC04D42C,$2C(a0)
                 move.w  #$100,$26(a0)
                 move.w  #$CD00,2(a0)
-                move.l  #word_EC292,8(a0)
+                move.l  #Boss_DestroyerMK2SpawnedProjectileMapping,8(a0)
                 move.w  #$4300,$E(a0)
                 move.b  $20(a5),$20(a0)
                 move.l  $10(a5),$10(a0)

@@ -128,7 +128,7 @@ Projectile_SpawnBackStringerAngledShot:                 ; CODE XREF: Boss_BackSt
                 bne.s   Projectile_SpawnBackStringerAngledShotReturn
                 move.w  #$328,(a0)
                 move.w  #$CC80,2(a0)
-                move.l  #word_EC412,8(a0)
+                move.l  #Projectile_BackStringerAngledShotMappingA,8(a0)
                 move.w  #$A300,$E(a0)
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$FE02FE02,$2C(a0)
@@ -212,7 +212,7 @@ Projectile_BackStringerUpdateAngledShotSpin:            ; CODE XREF: Projectile_
                 move.w  #$360,(a0)
                 move.w  #$EC80,2(a0)
                 move.w  #$A300,$E(a0)
-                move.l  #off_EC42A,8(a0)
+                move.l  #Projectile_BackStringerReboundShotAnimation,8(a0)
                 move.w  $4E(a5),$4A(a0)
                 clr.b   $20(a0)
 Projectile_BackStringerAngledShotReturn:                ; CODE XREF: Projectile_BackStringerAngledShotMain+BA   j  ; was: locret_45A58

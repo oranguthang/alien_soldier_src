@@ -3805,3 +3805,33 @@ the mean to 334.0 lines; the largest module remains 986 lines, with zero files
 above 1,000 lines and zero generic container filenames. A fresh pinned-toolchain
 build and direct verification reproduce the canonical Japanese ROM byte for
 byte at SHA-1 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
+
+The Jampan through Valkirie mapping pass rejects the inherited
+`data/jampan_destroyer_and_epsilon_mappings.s` identity. No Epsilon 1 consumer
+references this ROM interval. Static references instead establish Jampan,
+Destroyer MK2, Back Stringer, and shared Valkirie rotation-C groups. The bytes
+at `0x0EC43E-0x0EC6BF` form complete high-bit-terminated sprite mappings but
+have no source-level pointer or direct assignment; they are isolated as
+`data/unreferenced_post_back_stringer_sprite_mappings.s` rather than assigned
+to the adjacent boss by conjecture.
+
+The named groups become four owner modules around that neutral block:
+`data/jampan_sprite_mappings.s` (`0x0EC238-0x0EC291`),
+`data/destroyer_mk2_sprite_mappings.s` (`0x0EC292-0x0EC2E5`),
+`data/back_stringer_sprite_mappings.s` (`0x0EC2E6-0x0EC43D`), and
+`data/valkirie_shared_rotation_c_mappings.s` (`0x0EC6C0-0x0EC6EF`).
+Jampan's initializer and two frame tables prove its shield, orbiting-part,
+linked-part, and linked-animation roles. Destroyer MK2's direct assignments
+and eight-entry angular table prove its projectile, component, and five
+orbiting-part mappings. Back Stringer's angle table, forward/reverse rotation
+tables, and projectile controllers establish its mapping indices and rebound
+animation. The primary and alternate Valkirie definitions demonstrably share
+the final three records.
+
+All 49 formerly address-derived definitions have exact-address static audit
+records. Provenance rises from 13,066 to 13,115, the name-audit registry from
+9,921 to 9,970, and the enforced address-derived ceiling falls from 2,982 to
+2,933. The natural split raises the layout from 356 to 360 modules and changes
+the mean to 330.2 lines; the largest module remains 986 lines, with zero files
+above 1,000 lines and zero generic container filenames. A fresh build remains
+byte-identical to the canonical Japanese ROM.

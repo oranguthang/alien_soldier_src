@@ -486,12 +486,12 @@ Boss_JampanAdvanceLinkedAnimationFramesReturn:          ; CODE XREF: Boss_Jampan
                 rts
 ; End of function Boss_JampanAdvanceLinkedAnimationFramesState
 ; ---------------------------------------------------------------------------
-Boss_JampanLinkedAnimationFrameSequence:    dc.l    word_EC268  ; DATA XREF: Boss_JampanAdvanceLinkedAnimationFramesState+10   r  ; was: off_4A4F4
-                dc.l    word_EC274
-                dc.l    word_EC280
-                dc.l    word_EC274
-                dc.l    word_EC268
-                dc.l    word_EC25C
+Boss_JampanLinkedAnimationFrameSequence:    dc.l    Boss_JampanLinkedAnimationMappingA  ; DATA XREF: Boss_JampanAdvanceLinkedAnimationFramesState+10   r  ; was: off_4A4F4
+                dc.l    Boss_JampanLinkedAnimationMappingB
+                dc.l    Boss_JampanLinkedAnimationMappingC
+                dc.l    Boss_JampanLinkedAnimationMappingB
+                dc.l    Boss_JampanLinkedAnimationMappingA
+                dc.l    Boss_JampanLinkedPartMappingB
 
 ; Hides the linked object and resolves the signed animation signal
 Boss_JampanHoldLinkedAnimationHiddenState:              ; DATA XREF: ROM:0004A476   o  ; was: sub_4A50C

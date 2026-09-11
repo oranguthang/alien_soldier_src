@@ -484,42 +484,42 @@ Boss_JokerPartLinks:    dc.w    0, $728, $720           ; DATA XREF: Boss_JokerS
 Boss_JokerNeutralPose:  dc.w    $80, $8080, $E080       ; DATA XREF: Boss_JokerCalculatePoseDeltas   o  ; was: word_350DC
                 dc.w    $A0A0, $8060
 ; Back Stringer directional frames and dual-position segment-chain definition
-Boss_BackStringerRotationFramesA:   dc.l    word_EC38E  ; DATA XREF: ROM:00035180   o  ; was: off_350E6
+Boss_BackStringerRotationFramesA:   dc.l    Boss_BackStringerRotationMappingA0  ; DATA XREF: ROM:00035180   o  ; was: off_350E6
                                         ; ROM:00035198   o
-                dc.l    word_EC394
-                dc.l    word_EC39A
-                dc.l    word_EC3A6
-                dc.l    word_EC3AC
-                dc.l    word_EC3B2
-                dc.l    word_EC3B8
-                dc.l    word_EC3C4
-Boss_BackStringerRotationFramesB:   dc.l    word_EC3C4  ; DATA XREF: ROM:0003518C   o  ; was: off_35106
+                dc.l    Boss_BackStringerRotationMappingA1
+                dc.l    Boss_BackStringerRotationMappingA2
+                dc.l    Boss_BackStringerRotationMappingA3
+                dc.l    Boss_BackStringerRotationMappingA4
+                dc.l    Boss_BackStringerRotationMappingA5
+                dc.l    Boss_BackStringerRotationMappingA6
+                dc.l    Boss_BackStringerRotationMappingA7
+Boss_BackStringerRotationFramesB:   dc.l    Boss_BackStringerRotationMappingA7  ; DATA XREF: ROM:0003518C   o  ; was: off_35106
                                         ; ROM:000351A4   o
-                dc.l    word_EC3B8
-                dc.l    word_EC3B2
-                dc.l    word_EC3AC
-                dc.l    word_EC3A6
-                dc.l    word_EC39A
-                dc.l    word_EC394
-                dc.l    word_EC38E
-Boss_BackStringerRotationFramesC:   dc.l    word_EC3D0  ; DATA XREF: ROM:00035178   o  ; was: off_35126
+                dc.l    Boss_BackStringerRotationMappingA6
+                dc.l    Boss_BackStringerRotationMappingA5
+                dc.l    Boss_BackStringerRotationMappingA4
+                dc.l    Boss_BackStringerRotationMappingA3
+                dc.l    Boss_BackStringerRotationMappingA2
+                dc.l    Boss_BackStringerRotationMappingA1
+                dc.l    Boss_BackStringerRotationMappingA0
+Boss_BackStringerRotationFramesC:   dc.l    Boss_BackStringerRotationMappingC0  ; DATA XREF: ROM:00035178   o  ; was: off_35126
                                         ; ROM:0003517C   o
-                dc.l    word_EC3D6
-                dc.l    word_EC3DC
-                dc.l    word_EC3E2
-                dc.l    word_EC3E8
-                dc.l    word_EC3EE
-                dc.l    word_EC3F4
-                dc.l    word_EC3FA
-Boss_BackStringerRotationFramesD:   dc.l    word_EC3FA  ; DATA XREF: ROM:00035184   o  ; was: off_35146
+                dc.l    Boss_BackStringerRotationMappingC1
+                dc.l    Boss_BackStringerRotationMappingC2
+                dc.l    Boss_BackStringerRotationMappingC3
+                dc.l    Boss_BackStringerRotationMappingC4
+                dc.l    Boss_BackStringerRotationMappingC5
+                dc.l    Boss_BackStringerRotationMappingC6
+                dc.l    Boss_BackStringerRotationMappingC7
+Boss_BackStringerRotationFramesD:   dc.l    Boss_BackStringerRotationMappingC7  ; DATA XREF: ROM:00035184   o  ; was: off_35146
                                         ; ROM:00035188   o
-                dc.l    word_EC3F4
-                dc.l    word_EC3EE
-                dc.l    word_EC3E8
-                dc.l    word_EC3E2
-                dc.l    word_EC3DC
-                dc.l    word_EC3D6
-                dc.l    word_EC3D0
+                dc.l    Boss_BackStringerRotationMappingC6
+                dc.l    Boss_BackStringerRotationMappingC5
+                dc.l    Boss_BackStringerRotationMappingC4
+                dc.l    Boss_BackStringerRotationMappingC3
+                dc.l    Boss_BackStringerRotationMappingC2
+                dc.l    Boss_BackStringerRotationMappingC1
+                dc.l    Boss_BackStringerRotationMappingC0
 Boss_BackStringerInlineSpriteDescriptor:    dc.w    $63DE, $A00, $F4F4  ; DATA XREF: ROM:Boss_BackStringerMetaspriteDescriptors   o  ; was: word_35166
 Boss_BackStringerMetaspriteDescriptors:     dc.l    Boss_BackStringerInlineSpriteDescriptor+1  ; DATA XREF: Boss_BackStringerInitializeState+E   o  ; was: off_3516C
                 dc.l    0
@@ -681,15 +681,15 @@ Boss_ValkirieRotationFramesB:   dc.l    word_EC72C      ; DATA XREF: ROM:0003542
                 dc.l    word_EC750
                 dc.l    word_EC756
                 dc.l    word_EC762
-Boss_ValkirieRotationFramesC:   dc.l    word_EC6C0      ; DATA XREF: ROM:00035454   o  ; was: off_353FC
+Boss_ValkirieRotationFramesC:   dc.l    Boss_ValkirieSharedRotationCMappingA  ; DATA XREF: ROM:00035454   o  ; was: off_353FC
                                         ; ROM:00035464   o
-                dc.l    word_EC6D2
-                dc.l    word_EC6D2
-                dc.l    word_EC6E4
-                dc.l    word_EC6E4
-                dc.l    word_EC6E4
-                dc.l    word_EC6E4
-                dc.l    word_EC6C0
+                dc.l    Boss_ValkirieSharedRotationCMappingB
+                dc.l    Boss_ValkirieSharedRotationCMappingB
+                dc.l    Boss_ValkirieSharedRotationCMappingC
+                dc.l    Boss_ValkirieSharedRotationCMappingC
+                dc.l    Boss_ValkirieSharedRotationCMappingC
+                dc.l    Boss_ValkirieSharedRotationCMappingC
+                dc.l    Boss_ValkirieSharedRotationCMappingA
 Boss_ValkirieMetaspriteDescriptors: dc.l    word_EC7D4+$400000  ; DATA XREF: Debug_ValkirieViewerInitialize+18   o  ; was: off_3541C
                 dc.l    0
                 dc.l    word_EC82E+$400000
@@ -741,15 +741,15 @@ Boss_ValkirieAlternateRotationFramesB:  dc.l    word_EC72C  ; DATA XREF: ROM:000
                 dc.l    word_EC750
                 dc.l    word_EC756
                 dc.l    word_EC762
-Boss_ValkirieAlternateRotationFramesC:  dc.l    word_EC6C0  ; DATA XREF: ROM:00035548   o  ; was: off_354F0
+Boss_ValkirieAlternateRotationFramesC:  dc.l    Boss_ValkirieSharedRotationCMappingA  ; DATA XREF: ROM:00035548   o  ; was: off_354F0
                                         ; ROM:00035558   o
-                dc.l    word_EC6D2
-                dc.l    word_EC6D2
-                dc.l    word_EC6E4
-                dc.l    word_EC6E4
-                dc.l    word_EC6E4
-                dc.l    word_EC6E4
-                dc.l    word_EC6C0
+                dc.l    Boss_ValkirieSharedRotationCMappingB
+                dc.l    Boss_ValkirieSharedRotationCMappingB
+                dc.l    Boss_ValkirieSharedRotationCMappingC
+                dc.l    Boss_ValkirieSharedRotationCMappingC
+                dc.l    Boss_ValkirieSharedRotationCMappingC
+                dc.l    Boss_ValkirieSharedRotationCMappingC
+                dc.l    Boss_ValkirieSharedRotationCMappingA
                 dc.l    word_EC7D4+$400000
                 dc.l    0
                 dc.l    word_EC82E+$400000

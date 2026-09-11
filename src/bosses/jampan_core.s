@@ -162,28 +162,28 @@ Boss_JampanInitializeLinkedObjectGraph:                 ; CODE XREF: Boss_Jampan
                 lea     $60(a0),a0
                 move.w  #$224,(a0)
                 move.w  #$4D00,2(a0)
-                move.l  #word_EC25C,8(a0)
+                move.l  #Boss_JampanLinkedPartMappingB,8(a0)
                 move.w  #$6B00,$E(a0)
                 move.b  #4,$20(a0)
                 move.w  #$C8C0,$50(a0)
                 lea     $60(a0),a0
                 move.w  #$220,(a0)
                 move.w  #$CD00,2(a0)
-                move.l  #word_EC244,8(a0)
+                move.l  #Boss_JampanLinkedPartMappingA,8(a0)
                 move.w  #$6B00,$E(a0)
                 move.b  #4,$20(a0)
                 move.w  #$C8C0,$50(a0)
                 lea     $60(a0),a0
                 move.w  #$224,(a0)
                 move.w  #$4D00,2(a0)
-                move.l  #word_EC25C,8(a0)
+                move.l  #Boss_JampanLinkedPartMappingB,8(a0)
                 move.w  #$6B00,$E(a0)
                 move.b  #4,$20(a0)
                 move.w  #$C920,$50(a0)
                 lea     $60(a0),a0
                 move.w  #$220,(a0)
                 move.w  #$CD00,2(a0)
-                move.l  #word_EC244,8(a0)
+                move.l  #Boss_JampanLinkedPartMappingA,8(a0)
                 move.w  #$6B00,$E(a0)
                 move.b  #4,$20(a0)
                 move.w  #$C920,$50(a0)
@@ -227,7 +227,7 @@ Boss_JampanInitializeShieldSlotLoop:                    ; CODE XREF: Boss_Jampan
                 move.w  #$10,(a0)
                 move.w  #$4D00,2(a0)
                 move.w  #$6B00,$E(a0)
-                move.l  #word_EC238,8(a0)
+                move.l  #Boss_JampanShieldAndOrbitingPartMapping,8(a0)
                 lea     $60(a0),a0
                 dbf     d7,Boss_JampanInitializeShieldSlotLoop
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
@@ -253,22 +253,22 @@ Boss_JampanOrbitingPartPrimaryAngles:   dc.w    $80, $A8, $58, $20, $40, $60, $8
                                         ; DATA XREF: Boss_JampanInitializeEncounterState+18C   o
 Boss_JampanOrbitingPartSecondaryAngles: dc.w    $FFE0, $FF80, $FF80, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40, $40
                                         ; DATA XREF: Boss_JampanInitializeEncounterState+198   o
-Boss_JampanOrbitingPartSpriteFrames:    dc.l    word_EC238  ; DATA XREF: Boss_JampanInitializeEncounterState+1A6   o
-                dc.l    word_EC250
-                dc.l    word_EC250
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
-                dc.l    word_EC28C
+Boss_JampanOrbitingPartSpriteFrames:    dc.l    Boss_JampanShieldAndOrbitingPartMapping  ; DATA XREF: Boss_JampanInitializeEncounterState+1A6   o
+                dc.l    Boss_JampanOrbitingPartMappingA
+                dc.l    Boss_JampanOrbitingPartMappingA
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
+                dc.l    Boss_JampanOrbitingPartMappingB
 
 ; Waits before activating the opening-sequence linked parts
 Boss_JampanWaitForOpeningDelayState:                    ; DATA XREF: ROM:000491DA   o  ; was: sub_4953E
@@ -654,7 +654,7 @@ Boss_JampanSpawnOffsetAttackObjectState:                ; DATA XREF: ROM:000491F
                 andi.w  #$7FFF,(word_FFC862).w
                 move.w  #$238,(a0)
                 move.w  #$CD00,2(a0)
-                move.l  #word_EC238,8(a0)
+                move.l  #Boss_JampanShieldAndOrbitingPartMapping,8(a0)
                 move.w  #$EB00,$E(a0)
                 move.l  (dword_FFC870).w,$10(a0)
                 move.l  (dword_FFC874).w,$14(a0)

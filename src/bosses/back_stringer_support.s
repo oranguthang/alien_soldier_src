@@ -63,14 +63,14 @@ Boss_BackStringerLoadPartAngleFrame:                    ; CODE XREF: Boss_BackSt
                 rts
 ; End of function Boss_BackStringerUpdatePartFrameFromAngle
 ; ---------------------------------------------------------------------------
-Boss_BackStringerPartAngleFrameTable:   dc.l    word_EC346  ; DATA XREF: Boss_BackStringerUpdatePartFrameFromAngle+30   r ; was: off_45012
-                dc.l    word_EC352
-                dc.l    word_EC36A
-                dc.l    word_EC376
-                dc.l    word_EC2E6
-                dc.l    word_EC2FE
-                dc.l    word_EC316
-                dc.l    word_EC32E
+Boss_BackStringerPartAngleFrameTable:   dc.l    Boss_BackStringerPartAngleMapping0  ; DATA XREF: Boss_BackStringerUpdatePartFrameFromAngle+30   r ; was: off_45012
+                dc.l    Boss_BackStringerPartAngleMapping1
+                dc.l    Boss_BackStringerPartAngleMapping2
+                dc.l    Boss_BackStringerPartAngleMapping3
+                dc.l    Boss_BackStringerPartAngleMapping4
+                dc.l    Boss_BackStringerPartAngleMapping5
+                dc.l    Boss_BackStringerPartAngleMapping6
+                dc.l    Boss_BackStringerPartAngleMapping7
 
 ; Copies the base colors and applies the timed transformation highlights
 Boss_BackStringerUpdateTransformationPalette:           ; CODE XREF: Boss_BackStringerTransformationState   p  ; was: sub_45032
@@ -491,7 +491,7 @@ Projectile_BackStringerSpawnNextFallingDrop:            ; CODE XREF: Projectile_
                 move.w  #$318,(a0)
                 move.w  #$CD00,2(a0)
                 move.w  #$8300,$E(a0)
-                move.l  #word_EC406,8(a0)
+                move.l  #Projectile_BackStringerFallingDropMapping,8(a0)
                 move.b  #4,$20(a0)
                 move.b  #$80,$21(a0)
                 move.l  #$F404FC04,$28(a0)

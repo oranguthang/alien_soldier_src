@@ -15,7 +15,7 @@ Gfx_UpdateMultipleScrollLayerBlocksLoop:                ; CODE XREF: Gfx_UpdateM
 Object_DestroyerMK2SwitchComponentMapping:              ; DATA XREF: ROM:0004B4A8   o  ; was: sub_4B6AC
                 subq.w  #1,$48(a5)
                 bne.s   Object_DestroyerMK2SwitchComponentMappingReturn
-                move.l  #word_EC2AA,8(a5)
+                move.l  #Boss_DestroyerMK2ComponentMapping,8(a5)
                 move.w  #4,$48(a5)
                 addq.w  #2,4(a5)
 Object_DestroyerMK2SwitchComponentMappingReturn:        ; CODE XREF: Object_DestroyerMK2SwitchComponentMapping+4   j  ; was: locret_4B6C4
@@ -664,14 +664,14 @@ Boss_DestroyerMK2SelectOrbitingPartFrame:               ; CODE XREF: Boss_Destro
                 rts
 ; End of function Boss_DestroyerMK2SelectOrbitingPartFrame
 ; ---------------------------------------------------------------------------
-Boss_DestroyerMK2OrbitingPartMappingTable:  dc.l    word_EC2C8  ; DATA XREF: Boss_DestroyerMK2SelectOrbitingPartFrame+A   r  ; was: off_4BD6C
-                dc.l    word_EC2CE
-                dc.l    word_EC2D4
-                dc.l    word_EC2CE
-                dc.l    word_EC2C8
-                dc.l    word_EC2DA
-                dc.l    word_EC2E0
-                dc.l    word_EC2DA
+Boss_DestroyerMK2OrbitingPartMappingTable:  dc.l    Boss_DestroyerMK2OrbitingPartMapping0  ; DATA XREF: Boss_DestroyerMK2SelectOrbitingPartFrame+A   r  ; was: off_4BD6C
+                dc.l    Boss_DestroyerMK2OrbitingPartMapping1
+                dc.l    Boss_DestroyerMK2OrbitingPartMapping2
+                dc.l    Boss_DestroyerMK2OrbitingPartMapping1
+                dc.l    Boss_DestroyerMK2OrbitingPartMapping0
+                dc.l    Boss_DestroyerMK2OrbitingPartMapping3
+                dc.l    Boss_DestroyerMK2OrbitingPartMapping4
+                dc.l    Boss_DestroyerMK2OrbitingPartMapping3
 Boss_DestroyerMK2OrbitingPartSpriteAttributeTable:  dc.w    $6300, $6300, $6300, $6B00, $6300, $6B00, $6300, $6300, $838, 0, $F706, $6728, $838, 5, $F706, $670C  ; was: word_4BD8C
                                         ; DATA XREF: Boss_DestroyerMK2SelectOrbitingPartFrame+12   r
 
