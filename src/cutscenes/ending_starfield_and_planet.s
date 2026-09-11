@@ -1,6 +1,6 @@
 ; Completes the fade-in, initializes 59 star sprites and four particle banks
 EndingStarfield_Initialize:                             ; DATA XREF: ROM:00007C3E   o  ; was: sub_7D68
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Cutscene_Return
                 subq.w  #2,(CutscenePaletteStep).l
@@ -76,7 +76,7 @@ EndingStarfield_Update:                                 ; CODE XREF: EndingStarf
                 lea     (dword_FF1800).l,a1
                 lea     (dword_FF1C00).l,a4
                 lea     (dword_FF2000).l,a5
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 lsl.w   #8,d0
                 adda.w  d0,a2
@@ -96,7 +96,7 @@ EndingStarfield_IntegrateNextParticle:                  ; CODE XREF: EndingStarf
                 lea     (word_FF1000).l,a2
                 lea     (word_FF1400).l,a3
                 lea     (dword_FF1800).l,a1
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 lsl.w   #8,d0
                 adda.w  d0,a2
@@ -491,7 +491,7 @@ EndingPlanet_UpdateZoomPalette:                         ; CODE XREF: EndingPlane
                                         ; EndingPlanet_ExitScreen+8   p
                 tst.w   (CutscenePaletteStep).l
                 beq.w   Cutscene_Return
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #1,d0
                 bne.w   Cutscene_Return
                 subq.w  #2,(CutscenePaletteStep).l
@@ -504,7 +504,7 @@ EndingPlanet_UpdateZoomPalette:                         ; CODE XREF: EndingPlane
 ; Cycles the planet object's tile attributes through four frame phases
 EndingPlanet_AnimateTileAttributes:                     ; CODE XREF: EndingPlanet_ApproachCenter   p  ; was: sub_846C
                                         ; EndingPlanet_PauseAtCenter   p
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 lsl.w   #1,d0
                 move.w  EndingPlanet_TileAttributeCycle(pc,d0.w),(word_FFC62E).w

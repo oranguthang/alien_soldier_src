@@ -113,7 +113,7 @@ EndingSequence_HoldCredits:                             ; DATA XREF: ROM:00007C3
 EndingSequence_AnimateAccentColors:                     ; CODE XREF: EndingSequence_HoldCredits   p  ; was: sub_7CAC
                                         ; EndingStarfield_Initialize:EndingStarfield_UpdateAndHold   p
                 lea     (word_FFE366).w,a1
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #1,d0
                 bne.s   EndingSequence_UseOddAccentColors
                 lea     EndingSequence_EvenAccentColors(pc),a0
@@ -135,7 +135,7 @@ EndingSequence_OddAccentColors:     dc.w    $A2A, $828, $626  ; DATA XREF: Endin
 
 ; Fades out the credits, loads starfield tiles, and seeds its first object
 EndingSequence_FadeOutCredits:                          ; DATA XREF: ROM:00007C3A   o  ; was: sub_7CDE
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
                 addq.w  #2,(CutscenePaletteStep).l

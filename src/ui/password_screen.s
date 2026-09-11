@@ -53,7 +53,7 @@ UI_InitPasswordDisplay:                                 ; CODE XREF: UI_InitPass
                 move.w  #$F4,d0
                 move.w  #$DA,d1
                 move.l  #$A394,d2
-                bsr.w   UI_InitCursorSprite
+                bsr.w   FrontendCursor_Initialize
                 clr.w   (dword_FF8062+2).w
                 clr.w   (dword_FF8066+2).w
                 move.b  #$F,(dword_FF806A).w
@@ -87,8 +87,8 @@ loc_A4CE:                                               ; CODE XREF: UI_UpdatePa
                 move.w  #$E000,(word_FF80F4).w
 loc_A4EC:                                               ; CODE XREF: UI_UpdatePasswordScreen+1C   j
                                         ; UI_UpdatePasswordScreen+24   j
-                jsr     (Gfx_UpdateCursorFlash).l
-                jsr     (Gfx_UpdateMenuPalette).l
+                jsr     (FrontendCursor_UpdateFlash).l
+                jsr     (Frontend_AnimateMenuPalette).l
                 jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
@@ -167,7 +167,7 @@ loc_A5E8:                                               ; CODE XREF: UI_HandlePa
                 bpl.s   loc_A606
                 move.w  #$FFFF,(dword_FF806A+2).w
                 movea.w #(word_FFF706-M68K_RAM),a1
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 beq.s   loc_A630
 loc_A606:                                               ; CODE XREF: UI_HandlePasswordInput+A2   j
                 btst    #0,(a1)

@@ -490,7 +490,7 @@ word_FFA26C             equ     $FFFFA26C
 word_FFA26E             equ     $FFFFA26E
 StageTimeRemaining      equ     $FFFFA270               ; was: word_FFA270
 byte_FFA272             equ     $FFFFA272
-word_FFA280             equ     $FFFFA280
+VBlankFrameCounter      equ     $FFFFA280               ; was: word_FFA280
 word_FFA282             equ     $FFFFA282
 GameModeIndex           equ     $FFFFA284               ; was: word_FFA284
 GameSubstateIndex       equ     $FFFFA286               ; was: word_FFA286

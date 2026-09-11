@@ -542,7 +542,7 @@ WeaponSetup_UpdateHighlightPalette:                     ; CODE XREF: WeaponSetup
                                         ; WeaponSetup_HandleControlTypeInput+4   p
                 move.w  (dword_FF8134).w,d0
                 bne.s   WeaponSetup_AdvanceHighlightPaletteCycle
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 bne.s   WeaponSetup_WriteHighlightPaletteColors
                 addq.w  #2,d0
                 bra.s   WeaponSetup_WriteHighlightPaletteColors

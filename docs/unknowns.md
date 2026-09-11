@@ -3413,3 +3413,29 @@ Twenty-two static audit records raise the registry from 9,211 to 9,233, and
 the enforced address-derived ceiling falls from 3,512 to 3,496. Module count
 remains 347, and a clean rebuild of the canonical Japanese ROM remains
 byte-identical.
+
+The strict options/frontend-helper re-audit covers all 99 definitions at the
+98 unique addresses in the 890-line `ui/options_screen.s` module. The
+co-addressed `Options_BGMTestEntries_End` alias is represented by its owning
+record rather than violating the audit's unique-address rule. Fourteen new
+records fill the former coverage gap, and twenty existing records now cite
+the exact input bits, table consumers, cursor deltas, staged tile rows, and
+palette writes that justify their names instead of generic control-flow text.
+
+This pass also corrects subsystem ownership that the earlier formal rename
+left behind. The BCD tile builders, staged DMA helper, and toggle-label path
+are private `Options_*` routines rather than generic `Gfx_*` services. Cursor
+initialization, no-op type-`$F8` update, flash colors, and the two-color menu
+cycle are shared by options and password/title paths and therefore use the
+`FrontendCursor_*` or `Frontend_*` namespace. The central word incremented by
+`Sys_UpdateTimers` on every VBlank is now `VBlankFrameCounter`, distinct from
+the separately maintained `FrameCounter` at `$FFFFA000`.
+
+Thirty source definitions receive corrected scope names without inventing new
+behavior. Promoting the VBlank counter adds one provenance mapping and removes
+one live address-derived RAM definition: provenance rises from 12,546 to
+12,547, the audit registry from 9,233 to 9,247, and the enforced unknown-name
+ceiling from 3,496 to 3,495. Module count remains 347.
+The package gate re-extracts all 579 assets, reproduces canonical SHA-1
+`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`, passes all 37 tests, and leaves
+both formatter and lint clean.

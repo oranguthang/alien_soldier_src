@@ -203,7 +203,7 @@ loc_135C6:                                              ; CODE XREF: UI_UpdateDe
                 clr.w   (word_FF8660).w
 loc_135DE:                                              ; CODE XREF: UI_UpdateDebugMenu+42   j
                                         ; UI_UpdateDebugMenu+4E   j
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 bne.s   loc_135FE
                 bsr.w   UI_LoadStatusTileMap1
                 bsr.w   UI_DispatchStatusUpdate

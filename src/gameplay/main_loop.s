@@ -195,7 +195,7 @@ UI_DisplayPauseGraphics:
                 or.b    (word_FFF706+1).w,d0
                 andi.b  #$40,d0                         ; '@'
                 bne.w   UI_DisplayPauseGraphics_Return
-                btst    #4,(word_FFA280+1).w
+                btst    #4,(VBlankFrameCounter+1).w
                 bne.w   UI_DisplayPauseGraphics_Render
 UI_DisplayPauseGraphics_Return:                         ; CODE XREF: UI_DisplayPauseGraphics+4   j  ; was: locret_1C944
                                         ; UI_DisplayPauseGraphics+C   j

@@ -126,7 +126,7 @@ StoryScreen_WaitToBeginFade:                            ; DATA XREF: ROM:0000497
 ; End of function StoryScreen_WaitToBeginFade
 ; Fades out palette to dark then loads new graphics data
 StoryScreen_FadeOutAndLoadTitleAssets:                  ; DATA XREF: ROM:00004976   o  ; was: sub_49CE
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
                 subq.w  #2,(word_FF0176).l
@@ -188,7 +188,7 @@ StoryScreen_WaitForScrollAndLoadPalette:                ; DATA XREF: ROM:0000497
 ; End of function StoryScreen_WaitForScrollAndLoadPalette
 ; Fades in palette from dark to normal brightness
 StoryScreen_FadeInTitleScene:                           ; DATA XREF: ROM:0000497C   o  ; was: sub_4ACE
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
                 addq.w  #2,(word_FF0176).l

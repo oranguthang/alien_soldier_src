@@ -44,7 +44,7 @@ Effect_FloatingIconInit:                                ; DATA XREF: ROM:Effect_
                 asl.l   #3,d1
                 move.l  d0,$18(a5)
                 move.l  d1,$1C(a5)
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 add.w   d0,$4C(a5)
                 andi.w  #$1FE,$4C(a5)
                 rts

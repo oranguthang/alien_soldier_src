@@ -1,5 +1,5 @@
 UI_UpdateResultsDisplay:                                ; CODE XREF: UI_TransitionFromContinue   p  ; was: sub_1D94C
-                btst    #1,(word_FFA280+1).w
+                btst    #1,(VBlankFrameCounter+1).w
                 bne.s   Results_UpdateTimeDisplay
                 move.w  #$2302,d1
                 bra.s   loc_1D95E

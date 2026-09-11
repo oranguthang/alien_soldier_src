@@ -145,7 +145,7 @@ Cutscene_FillNextPatternVRAMWord:                       ; CODE XREF: Cutscene_Fi
 ; Restores one selected nibble in the ship pattern and queues its row DMA
 Cutscene_RevealShipPatternStep:                         ; CODE XREF: Cutscene_RevealFirstShipGrid+C   p  ; was: sub_77F8
                                         ; Cutscene_RevealSecondShipGrid+C   p
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 and.w   (ShipPatternFrameMask).l,d0
                 bne.w   Cutscene_Return
                 move.w  (ShipPatternStep).l,d0
@@ -174,7 +174,7 @@ Cutscene_FillShipRevealRow:                             ; CODE XREF: Cutscene_Re
 ; Erases one selected nibble in the ship pattern and queues its row DMA
 Cutscene_EraseShipPatternStep:                          ; CODE XREF: Cutscene_EraseFirstShipGrid+C   p  ; was: sub_785C
                                         ; Cutscene_EraseSecondShipGrid+12   p
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 and.w   (ShipPatternFrameMask).l,d0
                 bne.w   Cutscene_Return
                 move.w  (ShipPatternStep).l,d0
@@ -203,7 +203,7 @@ Cutscene_FillShipEraseRow:                              ; CODE XREF: Cutscene_Er
 ; Restores one selected nibble in the planet pattern and queues its row DMA
 Cutscene_RevealPlanetPatternStep:                       ; CODE XREF: Cutscene_RevealFirstPlanetGrid+C   p  ; was: sub_78C0
                                         ; Cutscene_RevealSecondPlanetGrid+C   p
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 and.w   (PatternFrameMask).l,d0
                 bne.w   Cutscene_Return
                 move.w  (PatternDissolveStep).l,d0
@@ -232,7 +232,7 @@ Cutscene_FillPlanetRevealRow:                           ; CODE XREF: Cutscene_Re
 ; Erases one selected nibble in the planet pattern and queues its row DMA
 Cutscene_ErasePlanetPatternStep:                        ; CODE XREF: Cutscene_EraseFirstPlanetGrid+C   p  ; was: sub_7924
                                         ; Cutscene_EraseSecondPlanetGrid+12   p
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 and.w   (PatternFrameMask).l,d0
                 bne.w   Cutscene_Return
                 move.w  (PatternDissolveStep).l,d0
@@ -316,7 +316,7 @@ Cutscene_QueuePlanetPatternRows:                        ; CODE XREF: Cutscene_Er
                 lea     (M68K_RAM).l,a2
                 lea     Cutscene_AlternatingRowMasks(pc),a3
                 nop
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #1,d0
                 bne.s   Cutscene_SelectPlanetRowMasks
                 adda.l  #4,a3
@@ -349,7 +349,7 @@ Cutscene_QueueShipPatternRows:                          ; CODE XREF: Cutscene_Er
                 lea     (dword_FF0020).l,a2
                 lea     Cutscene_AlternatingRowMasks(pc),a3
                 nop
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #1,d0
                 bne.s   Cutscene_SelectShipRowMasks
                 adda.l  #4,a3

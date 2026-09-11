@@ -85,9 +85,9 @@ Sys_ClearBufferFFA200_Loop:                             ; CODE XREF: Sys_ClearBu
                 dbf     d1,Sys_ClearBufferFFA200_Loop
                 rts
 ; End of function Sys_ClearBufferFFA200
-; Clears FFA280 timer/state buffer area
+; Clears the VBlank counter and the following timer/state buffer
 Sys_ClearTimerBuffer:
-                lea     (word_FFA280).w,a0              ; was: sub_2F4E
+                lea     (VBlankFrameCounter).w,a0       ; was: sub_2F4E
                 moveq   #0,d0
                 move.w  #7,d1
 Sys_ClearTimerBuffer_Loop:                              ; CODE XREF: Sys_ClearTimerBuffer+12   j  ; was: loc_2F58

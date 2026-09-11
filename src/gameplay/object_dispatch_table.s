@@ -61,7 +61,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_JetsripperSegmentPhysics
                 dc.l    Boss_ShiperMainHandler
                 dc.l    Boss_ShellshogunMainHandler
-                dc.l    Entity_EmptyState5
+                dc.l    FrontendCursor_NoOpUpdate
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    TerrainTileAnimation_OddFrameHandler
                 dc.l    Enemy_SpawnFallingHazard

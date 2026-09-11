@@ -6,7 +6,7 @@ Gfx_FadePaletteTransition:                              ; CODE XREF: StoryScreen
                 move.w  (word_FF80F2).w,d0
                 beq.w   Gfx_FadePaletteTransition_Return
                 moveq   #0,d5
-                move.w  (word_FFA280).w,d1
+                move.w  (VBlankFrameCounter).w,d1
                 andi.w  #3,d1
                 btst    #1,d0
                 bne.s   Gfx_FadePaletteTransition_HandleSecondMode

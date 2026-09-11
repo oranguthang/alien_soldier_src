@@ -18,7 +18,7 @@ off_1373E:      dc.w    UI_MenuSelectStage-UI_MenuSelectStage
 UI_MenuSelectStage:                                     ; DATA XREF: UI_DispatchStatusUpdate+C   o  ; was: sub_13748
                                         ; ROM:off_1373E   o
                 clr.w   (word_FF8666).w
-                btst    #3,(word_FFA280+1).w
+                btst    #3,(VBlankFrameCounter+1).w
                 bne.s   loc_1375A
                 move.w  #$C7E5,(word_FF8512).w
 loc_1375A:                                              ; CODE XREF: UI_MenuSelectStage+A   j
@@ -71,7 +71,7 @@ locret_137BE:                                           ; CODE XREF: UI_MenuSele
 ; End of function UI_MenuSelectStage
 ; Handles weapon selection menu navigation
 UI_MenuSelectWeapon:                                    ; DATA XREF: ROM:00013740   o  ; was: sub_137C0
-                btst    #3,(word_FFA280+1).w
+                btst    #3,(VBlankFrameCounter+1).w
                 bne.s   loc_137CE
                 move.w  #$C7E5,(word_FF8572).w
 loc_137CE:                                              ; CODE XREF: UI_MenuSelectWeapon+6   j
@@ -101,7 +101,7 @@ UI_MenuResetOption:                                     ; DATA XREF: ROM:0001374
                 beq.s   loc_13808
                 clr.w   (word_FF8200).w
 loc_13808:                                              ; CODE XREF: UI_MenuResetOption+6   j
-                btst    #3,(word_FFA280+1).w
+                btst    #3,(VBlankFrameCounter+1).w
                 bne.s   locret_13816
                 move.w  #$C7E5,(word_FF8522).w
 locret_13816:                                           ; CODE XREF: UI_MenuResetOption+12   j
@@ -109,7 +109,7 @@ locret_13816:                                           ; CODE XREF: UI_MenuRese
 ; End of function UI_MenuResetOption
 ; Handles up/down menu navigation
 UI_MenuNavigateVertical:                                ; DATA XREF: ROM:00013744   o  ; was: sub_13818
-                btst    #3,(word_FFA280+1).w
+                btst    #3,(VBlankFrameCounter+1).w
                 bne.s   loc_13826
                 move.w  #$C7E5,(word_FF8582).w
 loc_13826:                                              ; CODE XREF: UI_MenuNavigateVertical+6   j
@@ -123,7 +123,7 @@ locret_1383A:                                           ; CODE XREF: UI_MenuNavi
 ; End of function UI_MenuNavigateVertical
 ; Handles RGB color picker navigation
 UI_MenuColorPicker:                                     ; DATA XREF: ROM:00013746   o  ; was: sub_1383C
-                btst    #3,(word_FFA280+1).w
+                btst    #3,(VBlankFrameCounter+1).w
                 bne.s   loc_13858
                 tst.w   (word_FF8666).w
                 beq.s   loc_13852
@@ -185,7 +185,7 @@ loc_138CE:                                              ; CODE XREF: UI_MenuColo
 ; End of function UI_MenuColorPicker
 ; Renders menu selection cursor
 UI_RenderMenuSelection1:                                ; CODE XREF: UI_UpdateDebugMenu+80   p  ; was: sub_138D6
-                btst    #2,(word_FFA280+1).w
+                btst    #2,(VBlankFrameCounter+1).w
                 bne.s   locret_138EC
                 move.w  (word_FF8664).w,d0
                 addi.w  #-$7A6C,d0
@@ -198,7 +198,7 @@ locret_138EC:                                           ; CODE XREF: UI_RenderMe
 UI_RenderColorCursor:                                   ; CODE XREF: UI_UpdateDebugMenu+6C   p  ; was: sub_138EE
                 tst.w   (word_FF8666).w
                 beq.s   locret_1390A
-                btst    #2,(word_FFA280+1).w
+                btst    #2,(VBlankFrameCounter+1).w
                 bne.s   locret_1390A
                 move.w  (word_FF8668).w,d0
                 addi.w  #-$7AAA,d0

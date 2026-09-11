@@ -136,13 +136,13 @@ Sys_VBlankEventHandler_UpdateSound:                     ; CODE XREF: Sys_VBlankE
 Sys_VBlankEventHandler_Return:                          ; CODE XREF: Sys_VBlankEventHandler+2C   j  ; was: locret_C14
                 rts
 ; End of function Sys_VBlankEventHandler
-; Updates global game timers including word_FFA282 countdown and word_FFA280 frame counter
+; Updates the global countdown and advances the VBlank frame counter
 Sys_UpdateTimers:                                       ; CODE XREF: Sys_VBlankHandler+58   p  ; was: sub_C16
                 tst.w   (word_FFA282).w
                 beq.s   Sys_UpdateTimers_AdvanceFrame
                 subq.w  #1,(word_FFA282).w
 Sys_UpdateTimers_AdvanceFrame:                          ; CODE XREF: Sys_UpdateTimers+4   j  ; was: loc_C20
-                addq.w  #1,(word_FFA280).w
+                addq.w  #1,(VBlankFrameCounter).w
                 bra.s   Sys_DispatchGameState_Run
 ; End of function Sys_UpdateTimers
 ; Checks game flags and dispatches to current game state handler via jump table

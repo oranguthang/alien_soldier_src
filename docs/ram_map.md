@@ -12,7 +12,8 @@ still have neutral size/address names. The first reviewed semantic fields are
 `WeaponMenuAngle`, `WeaponStateCooldown`, `WeaponMenuAngularStep`, and
 `WeaponMenuSlotOffset`, `ShootingMode`, `ControlLayoutFlags`, and
 `RandomNumberState`, `DemoPlaybackActive`, `DemoPlaybackState`,
-`DemoStageTableIndex`, `FrameCounter`, `PaletteEffectControl`,
+`DemoStageTableIndex`, `VBlankFrameCounter`, `FrameCounter`,
+`PaletteEffectControl`,
 `PaletteEntryLists`, `PalettePrimaryIndex`, and `PaletteSecondaryIndex`;
 `VDPCommand` predates this review. All remain
 subject to the evidence policy in `docs/naming.md`.
@@ -134,6 +135,7 @@ alone does not yet prove the exact player-facing counting convention.
 
 | Symbol | Address | Static evidence |
 |---|---:|---|
+| `VBlankFrameCounter` | `$FFFFA280` | `Sys_UpdateTimers` increments this word on every VBlank dispatch. Frontend, cutscene, HUD, effect, and boss code use its low bits for cadence and animation; demo initialization clears it. |
 | `FrameCounter` | `$FFFFA000` | Gameplay and frontend loops increment this word once per completed frame. Animation, palette, projectile, and boss code use its low bits as periodic phase selectors, while demo initialization clears it before deterministic playback. |
 | `PaletteEffectControl` | `$FFFF8218` | Palette handlers consume this word as a countdown, RGB delta, or bitfield controlling selected color-cycle slots; producers set it together with an effect selector. |
 | `PaletteEntryLists` | `$FFFF821A` | Stage 8 and 9 lightning flows point this longword at two consecutive counted palette-entry lists; the paired-list handler applies opposite RGB deltas to them. |

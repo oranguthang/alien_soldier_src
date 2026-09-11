@@ -186,7 +186,7 @@ Gfx_CalculateParallaxScroll:                            ; CODE XREF: UI_HandleSt
                 move.w  #$6F,d7                         ; 'o'
                 move.l  d1,d2
                 addi.l  #0,d2
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 bne.s   loc_1D8CC
                 exg     d1,d2
 loc_1D8CC:                                              ; CODE XREF: Gfx_CalculateParallaxScroll+1C   j

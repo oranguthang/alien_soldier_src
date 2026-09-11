@@ -216,9 +216,9 @@ Boss_ZLeoWaitFinalDelay_Return:                         ; CODE XREF: Boss_ZLeoWa
 Boss_ZLeoFadeToEnding:                                  ; DATA XREF: ROM:0002210A   o  ; was: sub_2232E
                 move.w  (dword_FF9400+2).w,d0
                 bsr.w   Credits_ApplyFadeStep
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 bne.s   Boss_ZLeoFadeToEnding_UpdateParticles
-                btst    #1,(word_FFA280+1).w
+                btst    #1,(VBlankFrameCounter+1).w
                 bne.s   Boss_ZLeoFadeToEnding_UpdateParticles
                 addq.w  #1,(dword_FF9400+2).w
                 cmpi.w  #$E,(dword_FF9400+2).w
@@ -258,9 +258,9 @@ Boss_ZLeoPrepareEndingExit_Return:                      ; CODE XREF: Boss_ZLeoPr
 Boss_ZLeoWaitEndingExit:                                ; DATA XREF: ROM:0002210E   o  ; was: sub_223A0
                 move.w  (dword_FF9400+2).w,d0
                 bsr.w   Credits_ApplyFadeStep
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 bne.s   Boss_ZLeoWaitEndingExit_Return
-                btst    #1,(word_FFA280+1).w
+                btst    #1,(VBlankFrameCounter+1).w
                 bne.s   Boss_ZLeoWaitEndingExit_Return
                 subq.w  #1,(dword_FF9400+2).w
                 bpl.s   Boss_ZLeoWaitEndingExit_Return

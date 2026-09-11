@@ -26,7 +26,7 @@ UI_AppendHUDSpriteList_CheckFrameSkipIncrease:          ; CODE XREF: UI_BuildHUD
                 move.w  #3,(word_FFFF3E).w
 UI_AppendHUDSpriteList_SelectModeEntries:               ; CODE XREF: UI_BuildHUDSpriteList+28   j  ; was: loc_132CE
                                         ; UI_BuildHUDSpriteList+36   j
-                btst    #1,(word_FFA280+1).w
+                btst    #1,(VBlankFrameCounter+1).w
                 bne.w   UI_AppendHUDSpriteList_AppendAlternateModeEntries
                 move.w  #$A2,(a1)+
                 move.w  #$C00,(a1)+
@@ -71,7 +71,7 @@ UI_AppendHUDSpriteList_AppendBaseIndicator:             ; CODE XREF: UI_BuildHUD
                 move.w  #$80,(a1)+
                 move.w  #$B00,(a1)+
                 move.w  #$C6F0,(a1)+
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 bne.s   UI_AppendHUDSpriteList_UseFixedIndicatorValue
                 tst.b   (byte_FFFF31).w
                 beq.s   UI_AppendHUDSpriteList_UseSelectedIndicatorValue

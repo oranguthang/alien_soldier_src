@@ -270,7 +270,7 @@ loc_1311E:                                              ; CODE XREF: UI_RenderHU
 ; Updates scroll for ship section
 Scroll_UpdateShipScroll:                                ; CODE XREF: UI_RenderHUDElement3+D0   j  ; was: sub_13142
                 moveq   #$1A,d7
-                btst    #1,(word_FFA280+1).w
+                btst    #1,(VBlankFrameCounter+1).w
                 bne.s   loc_1316C
                 move.w  #$C7F8,(a0)+
                 move.w  #$C7B4,d5

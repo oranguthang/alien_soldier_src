@@ -166,7 +166,7 @@ TitleScreen_DrawOptions:                                ; CODE XREF: TitleScreen
                 move.w  #$C300,d0
 TitleScreen_DrawPassword:                               ; CODE XREF: TitleScreen_Update+106   j  ; was: loc_9584
                 bsr.w   TitleScreen_QueuePassword
-                jsr     Gfx_UpdateMenuPalette(pc)       ; (pc)
+                jsr     Frontend_AnimateMenuPalette(pc)  ; (pc)
                 nop
                 jsr     (Gfx_FadePaletteTransition).l
                 jmp     Gfx_SetupScrollPlanes

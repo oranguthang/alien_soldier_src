@@ -124,7 +124,7 @@ loc_12C56:                                              ; CODE XREF: UI_RenderHU
 ; ---------------------------------------------------------------------------
 loc_12C62:                                              ; CODE XREF: UI_RenderHUDElement1+F4   j
                 lea     (Math_PackedBCDLookup).l,a4
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 bne.w   UI_RenderHUDElement3
                 bsr.w   UI_RenderHUDElement2
                 tst.b   (byte_FFF705).w
@@ -176,7 +176,7 @@ loc_12CE8:                                              ; CODE XREF: UI_RenderHU
                 moveq   #$13,d7
                 cmpi.w  #2,(word_FFA216).w
                 bpl.s   loc_12D10
-                move.w  (word_FFA280).w,d1
+                move.w  (VBlankFrameCounter).w,d1
                 btst    #4,d1
                 bne.s   loc_12D10
                 andi.w  #3,d1
@@ -191,7 +191,7 @@ loc_12D10:                                              ; CODE XREF: UI_RenderHU
                                         ; UI_RenderHUDElement1+190   j
                 tst.w   (word_FF8304).w
                 bne.s   loc_12D2C
-                btst    #1,(word_FFA280+1).w
+                btst    #1,(VBlankFrameCounter+1).w
                 bne.s   loc_12D2C
                 move.w  #$C551,d0
 loc_12D22:                                              ; CODE XREF: UI_RenderHUDElement1+1BA   j
@@ -257,7 +257,7 @@ loc_12DB4:                                              ; CODE XREF: UI_RenderHU
                 move.w  (word_FF8268).w,d0
                 cmpi.w  #$12,d0
                 bmi.s   loc_12DCC
-                btst    #2,(word_FFA280+1).w
+                btst    #2,(VBlankFrameCounter+1).w
                 bne.s   loc_12E16
 loc_12DCC:                                              ; CODE XREF: UI_RenderHUDElement1+258   j
                 move.w  #$C7BF,d2

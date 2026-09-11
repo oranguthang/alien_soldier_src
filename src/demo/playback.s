@@ -5,7 +5,7 @@ Demo_PlaybackSystem:                                    ; CODE XREF: Sys_Dispatc
                 tst.w   (DemoPlaybackState).w
                 bne.w   Demo_PlaybackSystem_Update
                 move.l  #$8522BD7A,(RandomNumberState).w
-                clr.w   (word_FFA280).w
+                clr.w   (VBlankFrameCounter).w
                 clr.w   (FrameCounter).w
                 move.w  (DifficultyMode).w,(word_FFFF5E).w
                 move.w  (SoundDisableFlags).w,(word_FFFF60).w

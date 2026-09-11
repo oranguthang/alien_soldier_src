@@ -154,7 +154,7 @@ Stage11_RisingHazardLauncherFinalDescent:               ; was: sub_30F68
 ; End of function Stage11_RisingHazardLauncherFinalDescent
 ; Creates projectile every 4 frames and negates vertical velocity for upward firing
 Stage11_RisingHazardLauncherFireUpward:                 ; was: sub_30F7E
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
@@ -220,7 +220,7 @@ Stage11_RisingHazardRiseAndReact:                       ; was: sub_31048
 ; End of function Stage11_RisingHazardRiseAndReact
 ; Checks frame counter mod 4 for timing projectile spawn
 Stage11_RisingHazardAdvancePaletteEveryFourthFrame:     ; was: sub_3106A
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Entity_UpdateReturn
 ; End of function Stage11_RisingHazardAdvancePaletteEveryFourthFrame

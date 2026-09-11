@@ -282,7 +282,7 @@ WeaponSetup_HandleLoadoutState:                         ; DATA XREF: WeaponSetup
                 move.w  #$12,(word_FFA02A).w
                 bsr.w   WeaponSetup_RefillAmmo
                 bsr.w   WeaponSetup_HandleLoadoutInput
-                btst    #0,(word_FFA280+1).w
+                btst    #0,(VBlankFrameCounter+1).w
                 bne.s   WeaponSetup_RenderSelectedSlotCursor
                 rts
 ; ---------------------------------------------------------------------------

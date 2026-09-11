@@ -331,7 +331,7 @@ Results_RenderSelectedRowHighlight:                     ; CODE XREF: UI_Complete
                                         ; Results_UpdateBrowsingState+8   p
                 tst.b   (dword_FF9418).w
                 bmi.s   Results_RenderSelectedRowHighlightReturn
-                btst    #1,(word_FFA280+1).w
+                btst    #1,(VBlankFrameCounter+1).w
                 beq.s   Results_SelectAlternateHighlightPalette
                 move.w  #$300,d0
                 move.w  d0,(dword_FF9404+2).w

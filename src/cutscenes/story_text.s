@@ -32,7 +32,7 @@ StoryText_Initialize:                                   ; DATA XREF: ROM:StoryTe
 StoryText_AnimateAccentColors:                          ; CODE XREF: StoryText_UpdateScroll   p  ; was: sub_5904
                 move.w  #$200,(word_FFE342).w
                 move.w  #2,(word_FFE362).w
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #1,d0
                 bne.s   StoryText_UseAlternateAccentColors
                 move.w  #$EEE,(word_FFE344).w
@@ -47,7 +47,7 @@ StoryText_UseAlternateAccentColors:                     ; CODE XREF: StoryText_A
 ; Scrolls every fourth frame and streams a row pair every twenty-four ticks
 StoryText_UpdateScroll:                                 ; DATA XREF: ROM:000058A6   o  ; was: sub_5936
                 bsr.w   StoryText_AnimateAccentColors
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
                 subq.w  #1,(dword_FFA904).w

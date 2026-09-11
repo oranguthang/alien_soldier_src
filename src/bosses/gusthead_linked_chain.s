@@ -208,7 +208,7 @@ Boss_GustheadLinkedChainTerminalRetractAndFire:         ; DATA XREF: ROM:000313B
 ; Fires the shared random-angle shot on one frame out of four
 Boss_GustheadLinkedChainTryRandomShot:                  ; CODE XREF: Boss_GustheadLinkedChainExpandRadiusAndFire+4   p  ; was: sub_3130E
                                         ; Boss_GustheadLinkedChainTerminalRetractAndFire+4   p
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 beq.w   Boss_GustheadLinkedChainFireRandomShot
                 rts
@@ -298,7 +298,7 @@ Boss_GustheadLinkedChainTerminalFallAndFire:            ; DATA XREF: ROM:000313C
                 addi.l  #$1800,$1C(a5)
                 cmpi.w  #$1A0,$14(a5)
                 bcc.w   Boss_GustheadLinkedChainRemoveSegment
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
@@ -313,7 +313,7 @@ Boss_GustheadLinkedChainSegmentFallAndFire:             ; DATA XREF: ROM:000311A
                 addi.l  #$1000,$1C(a5)
                 cmpi.w  #$180,$14(a5)
                 bcc.s   Boss_GustheadLinkedChainRemoveSegment
-                move.w  (word_FFA280).w,d0
+                move.w  (VBlankFrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
