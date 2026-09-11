@@ -91,10 +91,10 @@ Enemy_UpdatePhasePatternAnimation_Return:               ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdatePhasePatternAnimation
 ; ---------------------------------------------------------------------------
-Enemy_PhasePatternAnimationMappings:    dc.l    off_EADEA  ; DATA XREF: Enemy_UpdatePhasePatternAnimation+8   r  ; was: off_2D004
-                dc.l    off_EADCA
-                dc.l    off_EADDA
-                dc.l    off_EAE06
-                dc.l    off_EAE3A
-                dc.l    off_EAE4A
-                dc.l    off_EAE5A
+Enemy_PhasePatternAnimationMappings:    dc.l    Enemy_PhasePatternSelector04Animation  ; DATA XREF: Enemy_UpdatePhasePatternAnimation+8   r  ; was: off_2D004
+                dc.l    Enemy_PhasePatternSelector08Animation
+                dc.l    Enemy_PhasePatternSelector0CAnimation
+                dc.l    Enemy_PhasePatternSelector10Animation
+                dc.l    Enemy_PhasePatternSelector14Animation
+                dc.l    Enemy_PhasePatternSelector18Animation
+                dc.l    Enemy_PhasePatternSelector1CAnimation

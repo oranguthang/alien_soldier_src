@@ -101,10 +101,10 @@ Enemy_UpdateStage10WaspAnimation_Return:                ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdateStage10WaspAnimation
 ; ---------------------------------------------------------------------------
-Enemy_Stage10WaspAnimationMappings: dc.l    off_EB278   ; DATA XREF: Enemy_UpdateStage10WaspAnimation+8   r  ; was: off_2E0AE
-                dc.l    off_EB294
-                dc.l    off_EB2B4
-                dc.l    off_EB2CC
+Enemy_Stage10WaspAnimationMappings: dc.l    Enemy_Stage10WaspSelector04Animation  ; DATA XREF: Enemy_UpdateStage10WaspAnimation+8   r  ; was: off_2E0AE
+                dc.l    Enemy_Stage10WaspSelector08Animation
+                dc.l    Enemy_Stage10WaspSelector0CAnimation
+                dc.l    Enemy_Stage10WaspSelector10Animation
 
 ; Updates the Stage 10 wasp state machine or converts it to defeat debris
 Enemy_Stage10WaspController:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E0BE
@@ -255,7 +255,7 @@ Enemy_ConvertStage10WaspToDefeatDebris:                 ; CODE XREF: Enemy_Stage
                 clr.w   $24(a5)
                 clr.b   $21(a5)
                 clr.b   $22(a5)
-                move.l  #off_EB2B4,8(a5)
+                move.l  #Enemy_Stage10WaspSelector0CAnimation,8(a5)
                 clr.w   $C(a5)
                 move.w  #$10,$48(a5)
                 move.l  #$FFFB2000,$1C(a5)

@@ -35,7 +35,7 @@ Enemy_UpdateCirclingAnimation_Return:                   ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdateCirclingAnimation
 ; ---------------------------------------------------------------------------
-Enemy_CirclingAnimationMappings:    dc.l    off_EB320   ; DATA XREF: Enemy_UpdateCirclingAnimation+E   r  ; was: off_2D2EC
+Enemy_CirclingAnimationMappings:    dc.l    Enemy_CirclingLoopAnimation  ; DATA XREF: Enemy_UpdateCirclingAnimation+E   r  ; was: off_2D2EC
 
 ; Selects sprite mapping and attributes from the current rotation angle
 Enemy_UpdateCirclingRotationSprite:                     ; CODE XREF: Enemy_CirclingOrbitState+E   p  ; was: sub_2D2F0
@@ -56,22 +56,22 @@ Enemy_UpdateCirclingRotationSprite:                     ; CODE XREF: Enemy_Circl
                 rts
 ; End of function Enemy_UpdateCirclingRotationSprite
 ; ---------------------------------------------------------------------------
-Enemy_CirclingRotationMappings: dc.l    word_EB31A      ; DATA XREF: Enemy_UpdateCirclingRotationSprite+E   r  ; was: off_2D326
-                dc.l    word_EB314
-                dc.l    word_EB30E
-                dc.l    word_EB308
-                dc.l    word_EB302
-                dc.l    word_EB308
-                dc.l    word_EB30E
-                dc.l    word_EB314
-                dc.l    word_EB31A
-                dc.l    word_EB314
-                dc.l    word_EB30E
-                dc.l    word_EB308
-                dc.l    word_EB302
-                dc.l    word_EB308
-                dc.l    word_EB30E
-                dc.l    word_EB314
+Enemy_CirclingRotationMappings: dc.l    Enemy_CirclingRotationSpriteMapping0  ; DATA XREF: Enemy_UpdateCirclingRotationSprite+E   r  ; was: off_2D326
+                dc.l    Enemy_CirclingRotationSpriteMapping1
+                dc.l    Enemy_CirclingRotationSpriteMapping2
+                dc.l    Enemy_CirclingRotationSpriteMapping3
+                dc.l    Enemy_CirclingRotationSpriteMapping4
+                dc.l    Enemy_CirclingRotationSpriteMapping3
+                dc.l    Enemy_CirclingRotationSpriteMapping2
+                dc.l    Enemy_CirclingRotationSpriteMapping1
+                dc.l    Enemy_CirclingRotationSpriteMapping0
+                dc.l    Enemy_CirclingRotationSpriteMapping1
+                dc.l    Enemy_CirclingRotationSpriteMapping2
+                dc.l    Enemy_CirclingRotationSpriteMapping3
+                dc.l    Enemy_CirclingRotationSpriteMapping4
+                dc.l    Enemy_CirclingRotationSpriteMapping3
+                dc.l    Enemy_CirclingRotationSpriteMapping2
+                dc.l    Enemy_CirclingRotationSpriteMapping1
 Enemy_CirclingRotationAttributes:
                 dc.w    $800, $1800, $1800, $1800, $1800, $1000, $1000, $1000  ; DATA XREF: Enemy_UpdateCirclingRotationSprite+26   r  ; was: word_2D366
                 dc.w    0, 0, 0, 0, $800, $800, $800, $800

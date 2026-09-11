@@ -3702,3 +3702,32 @@ Provenance rises from 12,860 to 12,911, the name-audit registry from 9,715 to
 The 155-line module has zero live address-derived definitions and remains
 below the preferred 200-line band only because splitting or padding this
 private mapping group would reduce cohesion without improving readability.
+
+The phase-pattern, Stage 10 wasp, and circling-enemy mapping pass rejects the
+former `data/ship_and_stage10_animation_mappings.s` container: no ship consumer
+exists in its ROM range. Static pointer tables instead establish three natural
+owners. The original `0x0EA86C-0x0EB337` range is now the adjacent
+`data/phase_pattern_sprite_mappings.s` (`0x0EA86C-0x0EAE75`, 335 lines),
+`data/stage10_wasp_sprite_mappings.s` (`0x0EAE76-0x0EB2E3`, 241 lines), and
+`data/circling_enemy_sprite_mappings.s` (`0x0EB2E4-0x0EB337`, 31 lines).
+The short circling module is one complete animation/rotation mapping set; merging
+it back into an unrelated entity solely to reach the preferred line band would
+make ownership less accurate.
+
+The seven-entry phase-pattern pointer table proves the exact `$5C` selector for
+each animation stream. The four-entry Stage 10 wasp table provides the same
+evidence for its streams, and the circling handler separately proves one loop
+animation plus five unique angle-selected mappings. Mapping letters identify
+distinct records in ROM order; they do not claim unsupported visual frame
+meanings. Four complete high-bit-terminated mappings at `0x0EAE76-0x0EAF1D`
+have no source-level static reference. They are named
+`UnreferencedPreWaspSpriteMappingA-D` to record their position and lack of a
+consumer without asserting that their visual owner is the wasp.
+
+All 52 imported address-derived definitions have exact-address static audit
+records. Provenance rises from 12,911 to 12,963, the name-audit registry from
+9,766 to 9,818, and the enforced address-derived ceiling falls from 3,137 to
+3,085. The natural split raises the module count from 348 to 350 and changes
+the mean to 339.8 lines; there are still no modules over 1,000 lines and no
+generic container filenames. A fresh rebuild preserves the canonical Japanese
+ROM byte for byte.

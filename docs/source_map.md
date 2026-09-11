@@ -54,7 +54,7 @@ listing by `make verify-layout`.
 | `0x084A70-0x085265` | channel playback and sound lookup tables | 4 | static |
 | `0x085266-0x097FFF` | music tracks and sound effects | 5 | static |
 | `0x098000-0x0E7FFF` | PCM sample banks and second padding gap | 1 | static |
-| `0x0E8000-0x0ED4B3` | frontend, player, enemy, projectile, and boss sprite mappings | 19 | hypothesis |
+| `0x0E8000-0x0ED4B3` | frontend, player, enemy, projectile, and boss sprite mappings | 21 | hypothesis |
 | `0x0ED4B4-0x1412B5` | gameplay tile art, player sprite art, and stage mappings | 5 | static |
 | `0x1412B6-0x14AE07` | Japanese font assets | 1 | static |
 | `0x14AE08-0x17FFFF` | credits scene assets and third padding gap | 1 | static |

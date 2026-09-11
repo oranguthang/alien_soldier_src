@@ -13,11 +13,11 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 - The ROM and all 579 extracted segments have pinned sizes, ranges, and hashes.
 - Vendored assembler/converter files and the emulator commit are pinned.
 - Ordinary cleanup preserves extracted private assets.
-- `src/main.s` is an address-ordered index over 348 modules with a checked
-  1,000-line ceiling; the current mean is 341.7 lines and no waiver is active.
+- `src/main.s` is an address-ordered index over 350 modules with a checked
+  1,000-line ceiling; the current mean is 339.8 lines and no waiver is active.
 - `config/rom_layout.json` is checked against listing addresses, landmarks,
   padding ranges, and the built image.
-- Naming/evidence rules, 12,911 provenance mappings, and the remaining 3,137
+- Naming/evidence rules, 12,963 provenance mappings, and the remaining 3,085
   address-derived definitions are policy checked.
 - Source/subsystem and RAM orientation maps exist without overstating the
   automatically generated semantic names.
@@ -40,7 +40,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 ## Reconstruction backlog after 0.5
 
 The contract does not require invented semantics. Most of the RAM inventory and
-3,137 address-derived definitions intentionally remain in the unknowns backlog.
+3,085 address-derived definitions intentionally remain in the unknowns backlog.
 Promote or correct them only with recorded static/runtime evidence.
 The older source-mutating analysis workflows are also outside the release
 interface until made module-aware; see `docs/tooling_status.md`.
