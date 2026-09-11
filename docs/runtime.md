@@ -22,4 +22,6 @@ Run `make runtime`. Captures are reproducible outputs under `runtime/captures/`
 and are ignored by Git. The current Gens helper writes zero in the header frame
 field when a dump accompanies a screenshot, so the zero header is not used as
 evidence; the requested frame is encoded in the capture filename and chosen by
-the emulator's screenshot interval.
+the emulator's screenshot interval. Each emulator invocation has a 300-second
+deadline; the credits checkpoint at frame 70000 can exceed three minutes on a
+loaded Windows host even though the shorter checkpoints complete promptly.

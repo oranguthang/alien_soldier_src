@@ -35,7 +35,7 @@ def main() -> int:
     parser.add_argument("--gens", default="../gens_automation/Output/Gens.exe")
     parser.add_argument("--rom", default="asbuilt.bin")
     parser.add_argument("--output-dir", default="runtime/captures")
-    parser.add_argument("--timeout", type=int, default=180)
+    parser.add_argument("--timeout", type=int, default=300)
     args = parser.parse_args()
 
     root = Path.cwd()

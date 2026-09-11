@@ -28,7 +28,7 @@ Gfx_GetCameraPosition:                                  ; CODE XREF: Stage_InitT
 ; End of function Gfx_GetCameraPosition
 ; Renders tilemap tiles to VRAM planes
 Gfx_RenderTilemap:                                      ; CODE XREF: Stage_TeleportFadeSequence+4A   j  ; was: sub_106FE
-                                        ; Stage_MedusaCamera+46   p
+                                        ; Stage_SevenForcesUpdateMedusaCameraAndParallax+46   p
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
 loc_10704:                                              ; CODE XREF: Stage_CaterpillarShipMovement+52   p
@@ -183,7 +183,7 @@ Camera_Stage18Lock:                                     ; CODE XREF: Gfx_LoadSta
                 addi.w  #$158,d0
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$1000,d1
-loc_108A4:                                              ; CODE XREF: Stage_MedusaCamera+62   p
+loc_108A4:                                              ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+62   p
                                         ; Scroll_RenderTilemapVertOffset+10   j
                 lea     Gfx_DefaultVRAMTransferParameters(pc),a0
                 nop

@@ -316,31 +316,31 @@ off_E438:       dc.w    Stage_Stage18StartBattle-Stage_Stage18EmptyHandler
                 dc.w    Stage_Stage18EmptyHandler-Stage_Stage18EmptyHandler
                 dc.w    Stage_Stage18EmptyHandler-Stage_Stage18EmptyHandler
                 dc.w    Stage_Stage18EmptyHandler-Stage_Stage18EmptyHandler
-                dc.w    Stage_Stage20Init-Stage_Stage18EmptyHandler
-                dc.w    Stage_Stage20Scroll-Stage_Stage18EmptyHandler
-                dc.w    Stage_MedusaTransition-Stage_Stage18EmptyHandler
-                dc.w    Stage_SylpheedTransition-Stage_Stage18EmptyHandler
-                dc.w    Stage_SylpheedCamera-Stage_Stage18EmptyHandler
-                dc.w    Stage_SylpheedCameraUpdate-Stage_Stage18EmptyHandler
-                dc.w    Stage_SylpheedGraphicsInit-Stage_Stage18EmptyHandler
-                dc.w    Stage_SylpheedGraphicsUpdate-Stage_Stage18EmptyHandler
-                dc.w    Stage_ArtemisTransition-Stage_Stage18EmptyHandler
-                dc.w    Stage_ArtemisCamera-Stage_Stage18EmptyHandler
-                dc.w    Stage_ArtemisGraphicsUpdate-Stage_Stage18EmptyHandler
-                dc.w    Gfx_ArtemisBackground-Stage_Stage18EmptyHandler
-                dc.w    Gfx_ArtemisForeground-Stage_Stage18EmptyHandler
-                dc.w    Stage_SireneIntroSequence-Stage_Stage18EmptyHandler
-                dc.w    Stage_SireneUpdate1-Stage_Stage18EmptyHandler
-                dc.w    Stage_SireneUpdate2-Stage_Stage18EmptyHandler
-                dc.w    Boss_SireneSpawnProjectile1-Stage_Stage18EmptyHandler
-                dc.w    Boss_SireneSpawnProjectile2-Stage_Stage18EmptyHandler
-                dc.w    Cutscene_SevenForcesWinInit-Stage_Stage18EmptyHandler
-                dc.w    Cutscene_SevenForcesState1-Stage_Stage18EmptyHandler
-                dc.w    Cutscene_SevenForcesState2-Stage_Stage18EmptyHandler
-                dc.w    Cutscene_SevenForcesState3-Stage_Stage18EmptyHandler
-                dc.w    Cutscene_SevenForcesState4-Stage_Stage18EmptyHandler
-                dc.w    Cutscene_SevenForcesState5-Stage_Stage18EmptyHandler
-                dc.w    Cutscene_SevenForcesState6-Stage_Stage18EmptyHandler
-                dc.w    Cutscene_SevenForcesEmptyState-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesInitializeStage20-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesUpdateStage20Scroll-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesAdvanceToMedusa-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesFinishMedusaScroll-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesInitializeSylpheedScroll-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesUpdateSylpheedScroll-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesAdvanceSylpheedForeground-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesFinishSylpheedForeground-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesBeginArtemisTransition-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesWaitForArtemisBackground-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesWaitForArtemisTrigger-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesScrollArtemisBackground-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesScrollArtemisForeground-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesBeginSireneTransition-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesAdvanceSireneTransition-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesFinishSireneTransition-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesWaitBeforeVictory-Stage_Stage18EmptyHandler
+                dc.w    Stage_SevenForcesInitializeVictoryTransition-Stage_Stage18EmptyHandler
+                dc.w    Cutscene_SevenForcesVictoryState0-Stage_Stage18EmptyHandler
+                dc.w    Cutscene_SevenForcesVictoryState1-Stage_Stage18EmptyHandler
+                dc.w    Cutscene_SevenForcesVictoryState2-Stage_Stage18EmptyHandler
+                dc.w    Cutscene_SevenForcesVictoryState3-Stage_Stage18EmptyHandler
+                dc.w    Cutscene_SevenForcesVictoryState4-Stage_Stage18EmptyHandler
+                dc.w    Cutscene_SevenForcesVictoryState5-Stage_Stage18EmptyHandler
+                dc.w    Cutscene_SevenForcesVictoryState6-Stage_Stage18EmptyHandler
+                dc.w    Cutscene_SevenForcesVictoryIdleState-Stage_Stage18EmptyHandler
 
 ; Empty handler called from stage 18 battle start

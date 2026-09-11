@@ -23,8 +23,8 @@ Gfx_RenderSylpheedBackground:                           ; CODE XREF: Stage_Stage
 loc_109DA:                                              ; CODE XREF: Scroll_Stage21CameraOffset+10   j
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
-loc_109E0:                                              ; CODE XREF: Stage_SylpheedCameraLock+4A   j
-                                        ; Gfx_LoadSylpheedTiles+20   j
+loc_109E0:                                              ; CODE XREF: Stage_SevenForcesUpdateSylpheedPrimaryPlane+4A   j
+                                        ; Stage_SevenForcesUpdateSylpheedSecondaryPlane+20   j
                 neg.w   d1
                 moveq   #$F,d7
                 move.w  d1,d2

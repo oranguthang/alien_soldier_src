@@ -3933,3 +3933,53 @@ lines, with zero files above 1,000 lines and zero generic container filenames.
 A fresh pinned-toolchain build and direct verification reproduce the canonical
 Japanese ROM byte for byte at SHA-1
 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
+
+The Seven Forces stage-state pass replaces the vague singular
+`stages/seven_force_stages.s` identity with the proper 255-line
+`stages/seven_forces_stage_states.s` module at `0x00E7D8-0x00EA75`. The
+dispatch table in `stages/epsilon1_and_stage18.s` proves the exact ROM order:
+Stage 20 setup and scrolling lead through the Medusa, Sylpheed, Artemis, and
+Sirene transitions and then into the Seven Forces victory sequence.
+
+This pass also rejects two especially misleading Sonnet claims. The former
+`Boss_SireneSpawnProjectile1` only counts down a transition timer and updates
+the camera; the former `Boss_SireneSpawnProjectile2` initializes the victory
+timer, tilemap indices, and display-transition word. Neither allocates an
+object or emits a projectile. They are now the pre-victory wait and victory
+transition initializer. The remaining exported handlers use the shared
+Seven Forces stage owner because their state-table role is stronger evidence
+than the adjacent form named by the earlier labels.
+
+All 21 address-derived branches and returns receive behavior-specific names
+and exact-address static audit records. The same audit explicitly corrects 19
+existing Sonnet semantic names, for 40 new records in total. Provenance rises
+from 13,203 to 13,224, the name-audit registry from 10,057 to 10,097, and the
+enforced address-derived ceiling falls from 2,845 to 2,824. The layout remains
+363 modules with a 327.4-line mean, zero files above 1,000 lines, and zero
+generic container filenames. A fresh pinned-toolchain build and direct
+verification reproduce the canonical Japanese ROM byte for byte at SHA-1
+`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
+
+The companion Seven Forces transition-graphics pass rehomes the cohesive
+529-line `stages/seven_forces_transition_graphics.s` module from the misleading
+`cutscenes/seven_force_sequence.s` path. The ROM block combines the eight-state
+victory sequence with the shared Stage 20, Medusa, Sylpheed, Artemis, and Sirene
+plane-transition helpers used by the immediately preceding stage-state table;
+keeping the block together preserves those direct state-to-renderer relations.
+
+The audit rejects 30 inherited semantic claims. In particular, the alleged
+Sylpheed and Sirene tile/palette loaders only advance scroll positions and
+render planes, the alleged Artemis palette updater passes a stream to the
+compressed-tile decoder, and `Boss_ArtemisShootPattern1` fills a 64-word
+tilemap row without allocating or firing an object. The former generic RAM-flag
+clearer is the matching tilemap-mode clear, while four already accurate camera
+and cutscene-loader names are retained with explicit evidence.
+
+All 77 definitions in the module now have exact-address static audit records.
+The 43 formerly address-derived definitions receive provenance-preserving
+behavioral names, raising provenance from 13,224 to 13,267 and the name-audit
+registry from 10,097 to 10,174. The enforced address-derived ceiling falls from
+2,824 to 2,781. Module count remains 363 with a 327.4-line mean, zero files over
+1,000 lines, and zero generic container filenames. A fresh pinned-toolchain
+build reproduces the canonical Japanese ROM byte for byte at SHA-1
+`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.

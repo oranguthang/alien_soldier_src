@@ -511,7 +511,7 @@ Entity_SevenForcesArtemisFadeOutState28:                ; DATA XREF: ROM:00054BC
 Entity_SevenForcesArtemisFadeOutUpdateTimer:            ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+4   j  ; was: loc_55210
                 subq.w  #1,$4A(a5)
                 bne.s   Entity_SevenForcesArtemisFadeOutApplyPalette
-                jsr     (Gfx_ArtemisPaletteUpdate).l
+                jsr     (Gfx_LoadArtemisCompressedTiles).l
                 bra.s   Entity_SevenForcesArtemisFadeOutCheckReset
 ; ---------------------------------------------------------------------------
 Entity_SevenForcesArtemisFadeOutApplyPalette:           ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+1E   j  ; was: loc_5521E

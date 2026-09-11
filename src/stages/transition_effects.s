@@ -1,3 +1,4 @@
+; Clamps palette fade value and applies fade
 Gfx_PaletteFadeClamp:
                 move.w  (word_FF9620).w,d0              ; was: sub_F064
                 bpl.s   loc_F074
@@ -18,7 +19,7 @@ loc_F078:                                               ; CODE XREF: Gfx_Palette
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Gfx_PaletteFadeClamp
 ; Spawns projectile type 1
-Boss_ArtemisSpawnProjectile1:                           ; CODE XREF: Stage_ArtemisTransition+4   p  ; was: sub_F08C
+Boss_ArtemisSpawnProjectile1:                           ; CODE XREF: Stage_SevenForcesBeginArtemisTransition+4   p  ; was: sub_F08C
                 tst.l   (dword_FF8240).w
                 beq.s   locret_F0B2
                 bpl.s   loc_F0A4
@@ -36,7 +37,7 @@ locret_F0B2:                                            ; CODE XREF: Boss_Artemi
                 rts
 ; End of function Boss_ArtemisSpawnProjectile1
 ; Foreground graphics setup
-Gfx_SylpheedForeground:                                 ; CODE XREF: Stage_SylpheedGraphicsInit:loc_E8BC   j  ; was: sub_F0B4
+Gfx_SylpheedForeground:                                 ; CODE XREF: Stage_SevenForcesAdvanceSylpheedForeground:Stage_SevenForcesUpdateSylpheedForeground   j  ; was: sub_F0B4
                 btst    #3,(word_FFA40E).w
                 bne.s   loc_F0CC
                 subi.l  #$1000,(dword_FF8240).w
