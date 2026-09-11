@@ -721,14 +721,14 @@ Boss_SunsetStingUpdatePartAnglesReturn:                 ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingUpdatePartAngles
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingPartAnimationMappings:
-                dc.l    word_EBDBC
-                dc.l    word_EBDC2
-                dc.l    word_EBDC8
-                dc.l    word_EBD9E
-                dc.l    word_EBDA4
-                dc.l    word_EBDAA
-                dc.l    word_EBDB0
-                dc.l    word_EBDB6
+                dc.l    Boss_SunsetStingPartAnimationMapping0
+                dc.l    Boss_SunsetStingPartAnimationMapping1
+                dc.l    Boss_SunsetStingPartAnimationMapping2
+                dc.l    Boss_SunsetStingPartAnimationMapping3
+                dc.l    Boss_SunsetStingPartAnimationMapping4
+                dc.l    Boss_SunsetStingPartAnimationMapping5
+                dc.l    Boss_SunsetStingPartAnimationMapping6
+                dc.l    Boss_SunsetStingPartAnimationMapping7
 Boss_SunsetStingBodyPartInitTable:
                 dc.w    $E, $BDB0, $80, 0, $8000, 1, $2004, $D2E, $83, $140, $6004, $1548  ; was: word_41568
                                         ; DATA XREF: Boss_SunsetStingLoadGraphics+28   o

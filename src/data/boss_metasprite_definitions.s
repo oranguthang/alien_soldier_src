@@ -368,26 +368,26 @@ Boss_MadamBarbarPartLinks:  dc.w    $8000, $8007, $8066  ; was: word_34EDA
 Boss_MadamBarbarNeutralPose:    dc.w    $8080, $80, $80  ; DATA XREF: Boss_MadamBarbarCalculatePoseDeltas   o  ; was: word_34F14
                 dc.w    $80, $8080, $8080
 ; Flying Neo directional frames and metasprite definition
-Boss_FlyingNeoRotationFrames:   dc.l    word_EBBDC      ; DATA XREF: ROM:00034F4A   o  ; was: off_34F20
+Boss_FlyingNeoRotationFrames:   dc.l    Boss_FlyingNeoRotationMapping0  ; DATA XREF: ROM:00034F4A   o  ; was: off_34F20
                                         ; ROM:00034F52   o
-                dc.l    word_EBBE2
-                dc.l    word_EBBE8
-                dc.l    word_EBBEE
-                dc.l    word_EBBF4
-                dc.l    word_EBBFA
-                dc.l    word_EBC00
-                dc.l    word_EBC06
+                dc.l    Boss_FlyingNeoRotationMapping1
+                dc.l    Boss_FlyingNeoRotationMapping2
+                dc.l    Boss_FlyingNeoRotationMapping3
+                dc.l    Boss_FlyingNeoRotationMapping4
+                dc.l    Boss_FlyingNeoRotationMapping5
+                dc.l    Boss_FlyingNeoRotationMapping6
+                dc.l    Boss_FlyingNeoRotationMapping7
 Boss_FlyingNeoInlineSpriteDescriptor:   dc.w    $6380, $600, $F8F4  ; DATA XREF: ROM:00034F4E   o  ; was: word_34F40
                                         ; ROM:00034F5E   o
 Boss_FlyingNeoMetaspriteDescriptors:    dc.l    0       ; DATA XREF: Boss_FlyingNeoSetup+C   o  ; was: dword_34F46
                 dc.l    Boss_FlyingNeoRotationFrames+$18000000
                 dc.l    Boss_FlyingNeoInlineSpriteDescriptor+1
                 dc.l    Boss_FlyingNeoRotationFrames+$18000000
-                dc.l    word_EBC18+$8400000
+                dc.l    Boss_FlyingNeoAnchorPartMappingB+$8400000
                 dc.l    Boss_FlyingNeoRotationFrames+$18000000
                 dc.l    Boss_FlyingNeoInlineSpriteDescriptor+1
                 dc.l    Boss_FlyingNeoRotationFrames+$18000000
-                dc.l    word_EBC18+$8400000
+                dc.l    Boss_FlyingNeoAnchorPartMappingB+$8400000
 Boss_FlyingNeoPartRadii:    dc.w    8, $1810, $1F08     ; DATA XREF: Boss_FlyingNeoSetup+12   o  ; was: word_34F6A
                 dc.w    $1810, $1F00
 Boss_FlyingNeoPartLinks:    dc.w    0, $8065, $C064     ; DATA XREF: Boss_FlyingNeoSetup+18   o  ; was: word_34F74
@@ -395,58 +395,58 @@ Boss_FlyingNeoPartLinks:    dc.w    0, $8065, $C064     ; DATA XREF: Boss_Flying
                 dc.w    $C06A, $82AA, $82A9
 Boss_FlyingNeoNeutralPose:  dc.w    $A0A0, $A0A0        ; DATA XREF: Boss_FlyingNeoBeginPoseInterpolation   o  ; was: word_34F86
 ; Joker directional frames and metasprite definition
-Boss_JokerRotationFramesA:  dc.l    word_EBC24          ; DATA XREF: ROM:0003507E   o  ; was: off_34F8A
+Boss_JokerRotationFramesA:  dc.l    Boss_JokerRotationMappingA0  ; DATA XREF: ROM:0003507E   o  ; was: off_34F8A
                                         ; ROM:00035086   o
-                dc.l    word_EBC2A
-                dc.l    word_EBC30
-                dc.l    word_EBC36
-                dc.l    word_EBC3C
-                dc.l    word_EBC42
-                dc.l    word_EBC48
-                dc.l    word_EBC4E
-Boss_JokerRotationFramesB:  dc.l    word_EBC4E          ; DATA XREF: ROM:0003505A   o  ; was: off_34FAA
+                dc.l    Boss_JokerRotationMappingA1
+                dc.l    Boss_JokerRotationMappingA2
+                dc.l    Boss_JokerRotationMappingA3
+                dc.l    Boss_JokerRotationMappingA4
+                dc.l    Boss_JokerRotationMappingA5
+                dc.l    Boss_JokerRotationMappingA6
+                dc.l    Boss_JokerRotationMappingA7
+Boss_JokerRotationFramesB:  dc.l    Boss_JokerRotationMappingA7  ; DATA XREF: ROM:0003505A   o  ; was: off_34FAA
                                         ; ROM:00035062   o
-                dc.l    word_EBC48
-                dc.l    word_EBC42
-                dc.l    word_EBC3C
-                dc.l    word_EBC36
-                dc.l    word_EBC30
-                dc.l    word_EBC2A
-                dc.l    word_EBC24
-Boss_JokerRotationFramesC:  dc.l    word_EBC54          ; DATA XREF: ROM:0003508E   o  ; was: off_34FCA
+                dc.l    Boss_JokerRotationMappingA6
+                dc.l    Boss_JokerRotationMappingA5
+                dc.l    Boss_JokerRotationMappingA4
+                dc.l    Boss_JokerRotationMappingA3
+                dc.l    Boss_JokerRotationMappingA2
+                dc.l    Boss_JokerRotationMappingA1
+                dc.l    Boss_JokerRotationMappingA0
+Boss_JokerRotationFramesC:  dc.l    Boss_JokerRotationMappingC0  ; DATA XREF: ROM:0003508E   o  ; was: off_34FCA
                                         ; ROM:00035096   o
-                dc.l    word_EBC5A
-                dc.l    word_EBC60
-                dc.l    word_EBC66
-                dc.l    word_EBC6C
-                dc.l    word_EBC72
-                dc.l    word_EBC78
-                dc.l    word_EBC7E
-Boss_JokerRotationFramesD:  dc.l    word_EBC7E          ; DATA XREF: ROM:0003506A   o  ; was: off_34FEA
+                dc.l    Boss_JokerRotationMappingC1
+                dc.l    Boss_JokerRotationMappingC2
+                dc.l    Boss_JokerRotationMappingC3
+                dc.l    Boss_JokerRotationMappingC4
+                dc.l    Boss_JokerRotationMappingC5
+                dc.l    Boss_JokerRotationMappingC6
+                dc.l    Boss_JokerRotationMappingC7
+Boss_JokerRotationFramesD:  dc.l    Boss_JokerRotationMappingC7  ; DATA XREF: ROM:0003506A   o  ; was: off_34FEA
                                         ; ROM:00035072   o
-                dc.l    word_EBC78
-                dc.l    word_EBC72
-                dc.l    word_EBC6C
-                dc.l    word_EBC66
-                dc.l    word_EBC60
-                dc.l    word_EBC5A
-                dc.l    word_EBC54
-Boss_JokerRotationFramesE:  dc.l    word_EBC84          ; DATA XREF: ROM:0003509E   o  ; was: off_3500A
-                dc.l    word_EBC8A
-                dc.l    word_EBC9C
-                dc.l    word_EBCA8
-                dc.l    word_EBCAE
-                dc.l    word_EBCB4
-                dc.l    word_EBCC6
-                dc.l    word_EBCD2
-Boss_JokerRotationFramesF:  dc.l    word_EBCD2          ; DATA XREF: ROM:0003507A   o  ; was: off_3502A
-                dc.l    word_EBCC6
-                dc.l    word_EBCB4
-                dc.l    word_EBCAE
-                dc.l    word_EBCA8
-                dc.l    word_EBC9C
-                dc.l    word_EBC8A
-                dc.l    word_EBC84
+                dc.l    Boss_JokerRotationMappingC6
+                dc.l    Boss_JokerRotationMappingC5
+                dc.l    Boss_JokerRotationMappingC4
+                dc.l    Boss_JokerRotationMappingC3
+                dc.l    Boss_JokerRotationMappingC2
+                dc.l    Boss_JokerRotationMappingC1
+                dc.l    Boss_JokerRotationMappingC0
+Boss_JokerRotationFramesE:  dc.l    Boss_JokerRotationMappingE0  ; DATA XREF: ROM:0003509E   o  ; was: off_3500A
+                dc.l    Boss_JokerRotationMappingE1
+                dc.l    Boss_JokerRotationMappingE2
+                dc.l    Boss_JokerRotationMappingE3
+                dc.l    Boss_JokerRotationMappingE4
+                dc.l    Boss_JokerRotationMappingE5
+                dc.l    Boss_JokerRotationMappingE6
+                dc.l    Boss_JokerRotationMappingE7
+Boss_JokerRotationFramesF:  dc.l    Boss_JokerRotationMappingE7  ; DATA XREF: ROM:0003507A   o  ; was: off_3502A
+                dc.l    Boss_JokerRotationMappingE6
+                dc.l    Boss_JokerRotationMappingE5
+                dc.l    Boss_JokerRotationMappingE4
+                dc.l    Boss_JokerRotationMappingE3
+                dc.l    Boss_JokerRotationMappingE2
+                dc.l    Boss_JokerRotationMappingE1
+                dc.l    Boss_JokerRotationMappingE0
 Boss_JokerInlineSpriteDescriptorA:  dc.w    $636E, $500, $F8F8  ; DATA XREF: ROM:0003506E   o  ; was: word_3504A
                                         ; ROM:00035092   o
 Boss_JokerInlineSpriteDescriptorB:  dc.w    $6366, $500, $F8F8  ; DATA XREF: ROM:00035066   o  ; was: word_35050

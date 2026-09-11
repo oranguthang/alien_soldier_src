@@ -491,7 +491,7 @@ Boss_SunsetStingSecondFormBodyPartInitTable:
                 dc.l    $100140
                 dc.l    $80000000
                 dc.l    $80000001
-                dc.l    word_EBE88
+                dc.l    Boss_SunsetStingSecondFormSpriteMapping
                 dc.l    $A10000
                 dc.l    $80000001
                 dc.l    Boss_SunsetStingBodyPartSpriteDescriptorC

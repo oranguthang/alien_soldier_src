@@ -3769,3 +3769,39 @@ The asset split raises the layout from 350 to 351 modules and changes the mean
 to 338.8 lines, with zero modules above 1,000 lines and zero generic container
 filenames. A fresh rebuild again reproduces the canonical Japanese ROM byte
 for byte.
+
+The Flying Neo through Sunset Sting mapping pass rejects the partial
+`data/flying_neo_and_train_mappings.s` identity. Only five records are shared
+by the Stage 8 train and boss entrance controllers, and those records belong
+to Xi-Tiger. The same ROM interval also contains independent Flying Neo,
+Joker, Sunset Sting, and Deep Strider sprite mappings.
+
+Static consumers establish six natural ROM-ordered modules:
+`data/flying_neo_sprite_mappings.s` (`0x0EBBB8-0x0EBC23`),
+`data/joker_sprite_mappings.s` (`0x0EBC24-0x0EBCD7`),
+`data/xi_tiger_entrance_sprite_mappings.s` (`0x0EBCD8-0x0EBD9D`),
+`data/sunset_sting_part_sprite_mappings.s` (`0x0EBD9E-0x0EBDCD`),
+`data/deep_strider_sprite_mappings.s` (`0x0EBDCE-0x0EBE87`), and
+`data/sunset_sting_second_form_sprite_mapping.s`
+(`0x0EBE88-0x0EBE93`). The small modules are complete private mapping sets;
+combining unrelated bosses merely to approach the preferred line band would
+make ownership less accurate.
+
+Flying Neo's named rotation table proves eight indexed mappings. Direct field
+assignments separately prove its two auxiliary-part mappings and two
+stage-relative anchor-part mappings. Joker's A, C, and E tables each select
+eight physical mappings, while B, D, and F traverse those same sets in reverse.
+Xi-Tiger's two entrance controllers distinguish a shared grounded mapping,
+pre-jump/landing mapping, airborne mapping, and the ordered two-frame boss
+landing pair. Sunset Sting's part table proves indices zero through seven; its
+second-form body-part initialization table proves the final two-piece mapping.
+No visual pose is inferred beyond those observed state and table roles.
+
+All 50 formerly address-derived definitions have exact-address static audit
+records. Provenance rises from 13,016 to 13,066, the name-audit registry from
+9,871 to 9,921, and the enforced address-derived ceiling falls from 3,032 to
+2,982. The natural split raises the layout from 351 to 356 modules and changes
+the mean to 334.0 lines; the largest module remains 986 lines, with zero files
+above 1,000 lines and zero generic container filenames. A fresh pinned-toolchain
+build and direct verification reproduce the canonical Japanese ROM byte for
+byte at SHA-1 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.

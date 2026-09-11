@@ -158,7 +158,7 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 move.w  d0,(a0)
                 move.w  #$C080,2(a0)
                 move.w  #$4300,$E(a0)
-                move.l  #word_EBBB8,8(a0)
+                move.l  #Boss_FlyingNeoAuxiliaryPartMappingA,8(a0)
                 move.b  #$18,$20(a0)
                 movea.w #(word_FFC680-M68K_RAM),a0
                 move.w  d0,(a0)
@@ -454,8 +454,8 @@ Boss_FlyingNeoBeginPursuitState:                        ; CODE XREF: Boss_Flying
 Boss_FlyingNeoSetNeutralPartAnchors:                    ; CODE XREF: Boss_FlyingNeoRisingArcState+12   j  ; was: loc_3C57A
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
-                move.l  #word_EBC18,$1E8(a5)
-                move.l  #word_EBC18,$368(a5)
+                move.l  #Boss_FlyingNeoAnchorPartMappingB,$1E8(a5)
+                move.l  #Boss_FlyingNeoAnchorPartMappingB,$368(a5)
 ; End of function Boss_FlyingNeoBeginPursuitState
 ; Pursues the player while applying vertical oscillation and timed reversals
 Boss_FlyingNeoPursuitState:                             ; DATA XREF: ROM:0003C0C2   o  ; was: sub_3C592
@@ -597,8 +597,8 @@ Boss_FlyingNeoAccelerateDownward:                       ; CODE XREF: Boss_Flying
 Boss_FlyingNeoBeginHorizontalSwoopState:                ; CODE XREF: Boss_FlyingNeoPursuitState+4   j  ; was: sub_3C6F2
                                         ; Boss_FlyingNeoUpdatePursuitHorizontalMotion+1E   j
                 move.w  #$1C,4(a5)
-                move.l  #word_EBC18,$1E8(a5)
-                move.l  #word_EBC18,$368(a5)
+                move.l  #Boss_FlyingNeoAnchorPartMappingB,$1E8(a5)
+                move.l  #Boss_FlyingNeoAnchorPartMappingB,$368(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 clr.w   $58(a5)

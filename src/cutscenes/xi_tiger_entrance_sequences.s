@@ -23,7 +23,7 @@ Cutscene_XiTigerTrainEntranceInit:                      ; DATA XREF: ROM:Cutscen
                 move.w  #$100,$10(a5)
                 move.w  (dword_FFA904).w,d0
                 bsr.w   Cutscene_XiTigerAlignToTrainRoof
-                move.l  #word_EBD32,8(a5)
+                move.l  #Cutscene_XiTigerEntranceGroundedMapping,8(a5)
                 clr.w   $C(a5)
                 rts
 ; End of function Cutscene_XiTigerTrainEntranceInit
@@ -53,7 +53,7 @@ Cutscene_XiTigerTrainEntranceWait:                      ; DATA XREF: ROM:0002EF4
                 bsr.w   Cutscene_XiTigerAlignToTrainRoof
                 subq.w  #1,$48(a5)
                 bne.s   Cutscene_XiTigerTrainEntranceWait_Return
-                move.l  #word_EBD5C,8(a5)
+                move.l  #Cutscene_XiTigerEntrancePreJumpAndLandingMapping,8(a5)
                 clr.w   $C(a5)
                 move.w  #$10,$48(a5)
                 addq.w  #2,4(a5)
@@ -65,7 +65,7 @@ Cutscene_XiTigerTrainEntrancePrepareJump:               ; DATA XREF: ROM:0002EF4
                 bsr.w   Cutscene_XiTigerAlignToTrainRoof
                 subq.w  #1,$48(a5)
                 bne.s   Cutscene_XiTigerTrainEntrancePrepareJump_Return
-                move.l  #word_EBD32,8(a5)
+                move.l  #Cutscene_XiTigerEntranceGroundedMapping,8(a5)
                 clr.w   $C(a5)
                 move.l  #$FFFA0000,$1C(a5)
                 move.w  #$FFFC,$18(a5)
@@ -78,7 +78,7 @@ Cutscene_XiTigerTrainEntrancePrepareJump_Return:        ; CODE XREF: Cutscene_Xi
 Cutscene_XiTigerTrainEntranceSwitchAirbornePose:        ; DATA XREF: ROM:0002EF48   o  ; was: sub_2F01A
                 subq.w  #1,$48(a5)
                 bne.s   Cutscene_XiTigerTrainEntranceSwitchAirbornePose_Return
-                move.l  #word_EBD7A,8(a5)
+                move.l  #Cutscene_XiTigerEntranceAirborneMapping,8(a5)
                 clr.w   $C(a5)
                 addq.w  #2,4(a5)
 Cutscene_XiTigerTrainEntranceSwitchAirbornePose_Return:  ; CODE XREF: Cutscene_XiTigerTrainEntranceSwitchAirbornePose+4   j  ; was: locret_2F030
@@ -99,7 +99,7 @@ Cutscene_XiTigerTrainEntranceApplyGravity:              ; CODE XREF: Cutscene_Xi
 Cutscene_XiTigerTrainEntranceOnLanding:                 ; CODE XREF: Cutscene_XiTigerTrainEntranceUpdateJump+14   j  ; was: loc_2F052
                 clr.l   $18(a5)
                 move.w  #$80,$48(a5)
-                move.l  #word_EBD32,8(a5)
+                move.l  #Cutscene_XiTigerEntranceGroundedMapping,8(a5)
                 clr.w   $C(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -155,7 +155,7 @@ Cutscene_XiTigerBossEntranceWaitForScroll:              ; DATA XREF: ROM:0002F09
                 bpl.s   Cutscene_XiTigerBossEntranceWaitForScroll_Return
                 move.l  #$FFFA0000,$1C(a5)
                 move.w  #2,$18(a5)
-                move.l  #word_EBD7A,8(a5)
+                move.l  #Cutscene_XiTigerEntranceAirborneMapping,8(a5)
                 addq.w  #2,4(a5)
 Cutscene_XiTigerBossEntranceWaitForScroll_Return:       ; CODE XREF: Cutscene_XiTigerBossEntranceWaitForScroll+E   j  ; was: locret_2F0F4
                 rts
@@ -173,7 +173,7 @@ Cutscene_XiTigerBossEntranceApplyGravity:               ; CODE XREF: Cutscene_Xi
 ; ---------------------------------------------------------------------------
 Cutscene_XiTigerBossEntranceOnLanding:                  ; CODE XREF: Cutscene_XiTigerBossEntranceUpdateJump+14   j  ; was: loc_2F116
                 clr.l   $18(a5)
-                move.l  #word_EBD5C,8(a5)
+                move.l  #Cutscene_XiTigerEntrancePreJumpAndLandingMapping,8(a5)
                 clr.w   $C(a5)
                 move.w  #$10,$48(a5)
                 addq.w  #2,4(a5)
@@ -184,7 +184,7 @@ Cutscene_XiTigerBossEntranceLandingDelay:               ; DATA XREF: ROM:0002F0A
                 bsr.w   Cutscene_XiTigerBossEntranceUpdateY
                 subq.w  #1,$48(a5)
                 bne.s   Cutscene_XiTigerBossEntranceLandingDelay_Return
-                move.l  #word_EBD32,8(a5)
+                move.l  #Cutscene_XiTigerEntranceGroundedMapping,8(a5)
                 clr.w   $C(a5)
                 move.w  #$20,$48(a5)                    ; ' '
                 clr.w   $4A(a5)
@@ -213,8 +213,8 @@ Cutscene_XiTigerBossEntranceCycleLandingFrames_Return:  ; CODE XREF: Cutscene_Xi
                 rts
 ; End of function Cutscene_XiTigerBossEntranceCycleLandingFrames
 ; ---------------------------------------------------------------------------
-Cutscene_XiTigerBossEntranceLandingFrameTable:  dc.l    word_EBD02  ; DATA XREF: Cutscene_XiTigerBossEntranceCycleLandingFrames+10   r  ; was: off_2F194
-                dc.l    word_EBCD8
+Cutscene_XiTigerBossEntranceLandingFrameTable:  dc.l    Cutscene_XiTigerEntranceLandingMappingA  ; DATA XREF: Cutscene_XiTigerBossEntranceCycleLandingFrames+10   r  ; was: off_2F194
+                dc.l    Cutscene_XiTigerEntranceLandingMappingB
 
 ; Holds Xi-Tiger at the stage-relative boss-entrance position
 Cutscene_XiTigerBossEntranceHoldPose:                   ; DATA XREF: ROM:0002F0A6   o  ; was: sub_2F19C

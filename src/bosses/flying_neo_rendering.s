@@ -42,7 +42,7 @@ Boss_FlyingNeoRenderRisingRetreat:                      ; CODE XREF: Boss_Flying
                 nop
                 bsr.w   Boss_FlyingNeoUpdatePoseAnimation
                 bsr.w   Boss_FlyingNeoUpdateSprites
-                move.l  #word_EBBCA,$3C8(a5)
+                move.l  #Boss_FlyingNeoAuxiliaryPartMappingB,$3C8(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoBeginDivingArcState:                      ; CODE XREF: Boss_FlyingNeoRisingRetreatState+6   j  ; was: loc_3C84E
@@ -77,9 +77,9 @@ Boss_FlyingNeoSelectDivingArcPose:                      ; CODE XREF: Boss_Flying
 Boss_FlyingNeoRenderArc:                                ; CODE XREF: Boss_FlyingNeoRisingArcState+38   j  ; was: loc_3C8AE
                 bsr.w   Boss_FlyingNeoUpdatePoseAnimation
                 bsr.w   Boss_FlyingNeoUpdateSprites
-                move.l  #word_EBBB8,$3C8(a5)
-                move.l  #word_EBC0C,d0
-                move.l  #word_EBC18,d1
+                move.l  #Boss_FlyingNeoAuxiliaryPartMappingA,$3C8(a5)
+                move.l  #Boss_FlyingNeoAnchorPartMappingA,d0
+                move.l  #Boss_FlyingNeoAnchorPartMappingB,d1
                 cmpi.w  #2,6(a5)
                 bpl.s   Boss_FlyingNeoStoreArcPartMappings
                 exg     d0,d1
@@ -160,12 +160,12 @@ Boss_FlyingNeoBindPartAnchorRecord:                     ; CODE XREF: Boss_Flying
 ; End of function Boss_FlyingNeoHoverDecisionState
 ; Selects one of two mappings for a linked anchor part from its Y position
 Boss_FlyingNeoUpdatePartAnchorMapping:                  ; CODE XREF: Boss_FlyingNeoHoverDecisionState+208   p  ; was: sub_3C9C0
-                move.l  #word_EBC0C,8(a0)
+                move.l  #Boss_FlyingNeoAnchorPartMappingA,8(a0)
                 move.w  (dword_FFA904).w,d0
                 addi.w  #$B2,d0
                 cmp.w   $14(a0),d0
                 bmi.s   Boss_FlyingNeoUpdatePartAnchorMappingReturn
-                move.l  #word_EBC18,8(a0)
+                move.l  #Boss_FlyingNeoAnchorPartMappingB,8(a0)
 Boss_FlyingNeoUpdatePartAnchorMappingReturn:            ; CODE XREF: Boss_FlyingNeoUpdatePartAnchorMapping+14   j  ; was: locret_3C9DE
                 rts
 ; End of function Boss_FlyingNeoUpdatePartAnchorMapping
@@ -204,13 +204,13 @@ Boss_FlyingNeoPartPositionOffsetCycle:  dc.b    4, $FE, 3, $FF, 2, 0, 3, 0  ; wa
 
 ; Updates auxiliary positions, angle history, and eight linked-part orbits
 Boss_FlyingNeoUpdateLinkedPartOrbits:                   ; CODE XREF: Boss_FlyingNeoUpdateSprites+3C   p  ; was: sub_3CA3C
-                move.l  #word_EBBB8,$3C8(a5)
+                move.l  #Boss_FlyingNeoAuxiliaryPartMappingA,$3C8(a5)
                 move.w  (FrameCounter).w,d0
                 btst    #7,d0
                 beq.s   Boss_FlyingNeoPositionAuxiliaryParts
                 btst    #3,d0
                 beq.s   Boss_FlyingNeoPositionAuxiliaryParts
-                move.l  #word_EBBCA,$3C8(a5)
+                move.l  #Boss_FlyingNeoAuxiliaryPartMappingB,$3C8(a5)
 Boss_FlyingNeoPositionAuxiliaryParts:                   ; CODE XREF: Boss_FlyingNeoUpdateLinkedPartOrbits+10   j  ; was: loc_3CA5C
                                         ; Boss_FlyingNeoUpdateLinkedPartOrbits+16   j
                 lea     Boss_FlyingNeoPartPositionOffsetCycle(pc),a0
