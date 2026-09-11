@@ -95,7 +95,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 clr.w   d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 jsr     (Gfx_DirectVRAMTransfer).l
-                jsr     (nullsub_1).l
+                jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   WeaponSetup_ClearLoadoutAndRefillAmmo
                 jsr     (Player_InitializeStats).l
                 bsr.w   Gfx_InitColorTables

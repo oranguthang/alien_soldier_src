@@ -169,7 +169,7 @@ VDP_QueueCommand_Build:                                 ; CODE XREF: Boss_Shield
                 rts
 ; End of function VDP_QueueCommand
 ; Graphics update 2
-Stage22_GraphicsUpdate2:                                ; CODE XREF: Stage_LoadTiles2+54   j  ; was: sub_1B7DC
+Stage22_GraphicsUpdate2:                                ; CODE XREF: Gfx_PrepareStage3Phase2ResampledTiles+54   j  ; was: sub_1B7DC
                 move.w  #$8F02,d3
                 move    sr,-(sp)
                 move    #$2700,sr

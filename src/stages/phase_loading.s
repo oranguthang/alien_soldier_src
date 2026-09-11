@@ -3,7 +3,7 @@ Stage_LoadStage16Objects:                               ; DATA XREF: ROM:0001175
                 move.w  #4,(word_FFA206).w
                 lea     stru_11A6E(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage16Objects
@@ -40,7 +40,7 @@ Stage_LoadStage2Phase1:                                 ; DATA XREF: ROM:0001175
                 move.w  #4,(word_FFA206).w
                 lea     stru_11AC2(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage2Phase1
@@ -72,7 +72,7 @@ Gfx_LoadStage18Palette:                                 ; DATA XREF: ROM:0001175
                 move.w  #8,(word_FFA206).w
                 lea     stru_11B06(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Gfx_LoadStage18Palette
@@ -118,7 +118,7 @@ Stage_LoadStage2Phase2:
                 move.w  #8,(word_FFA206).w              ; was: sub_11B60
                 lea     stru_11B72(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage2Phase2
@@ -146,7 +146,7 @@ Gfx_LoadStage20Tiles:                                   ; DATA XREF: ROM:0001175
                 move.w  #8,(word_FFA206).w
                 lea     stru_11BAE(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Gfx_LoadStage20Tiles
@@ -197,11 +197,11 @@ Stage_LoadStage3Phase2:                                 ; DATA XREF: ROM:0001175
                 move.w  #$C,(word_FFA206).w
                 bset    #0,(byte_FF8144).w
                 bset    #7,(byte_FFA959).w
-                bsr.w   Stage_LoadTiles2
+                bsr.w   Gfx_PrepareStage3Phase2ResampledTiles
 loc_11C2A:                                              ; CODE XREF: Stage_LoadStage3Phase1+12   j
                 lea     stru_11C36(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage3Phase2
@@ -235,7 +235,7 @@ Stage_LoadStage3Phase3:                                 ; DATA XREF: ROM:0001176
                 move.w  #$C,(word_FFA206).w
                 lea     stru_11C82(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage3Phase3
@@ -266,7 +266,7 @@ Stage_LoadStage3Phase4:
                 move.w  #$C,(word_FFA206).w             ; was: sub_11CB4
                 lea     stru_11CC6(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage3Phase4
@@ -297,7 +297,7 @@ Stage_LoadStage3Phase5:
                 move.w  #$C,(word_FFA206).w             ; was: sub_11CF8
                 lea     stru_11D0A(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage3Phase5
@@ -325,7 +325,7 @@ Stage_LoadStage3Phase6:                                 ; DATA XREF: ROM:0001176
                 move.w  #$C,(word_FFA206).w
                 lea     stru_11D46(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage3Phase6
@@ -366,7 +366,7 @@ Stage_LoadStage3Phase7:                                 ; DATA XREF: ROM:0001176
                 bset    #0,(byte_FF8144).w
                 lea     stru_11DA8(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage3Phase7

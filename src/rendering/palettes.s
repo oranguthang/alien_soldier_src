@@ -40,35 +40,35 @@ StageTransitionPaletteOffsetLists:  dc.w    $26A, 0, $2F6, $336, 0  ; was: word_
                                         ; DATA XREF: Stage_InitializeTransition+16   o
 CreditsAndPlanetPaletteOffsetList:  dc.w    $B14, $B54, 0  ; DATA XREF: EndingSequence_Initialize+5E   o  ; was: word_B982
                                         ; EndingPlanet_Initialize+20   o
-EarlyStagePaletteOffsetList:    dc.w    $34C, 0         ; DATA XREF: ROM:stru_127A8   o  ; was: word_B988
-                                        ; ROM:stru_127C6   o
+EarlyStagePaletteOffsetList:    dc.w    $34C, 0         ; DATA XREF: ROM:Stage1ConfigRecord   o  ; was: word_B988
+                                        ; ROM:Stage2ConfigRecord   o
 ShellshogunStagePaletteOffsetList:  dc.w    $34C, $38E, 0  ; DATA XREF: Camera_ShellshogunBossInit+38   o  ; was: word_B98C
-                                        ; ROM:stru_12802   o
-Stage2LatePaletteOffsetList:    dc.w    $3B0, 0         ; DATA XREF: ROM:stru_12820   o  ; was: word_B992
-                                        ; ROM:stru_1283E   o
-Stage8InitialPaletteOffsetList:     dc.w    $3F2, 0     ; DATA XREF: ROM:stru_1287A   o  ; was: word_B996
+                                        ; ROM:Stage2SecondConfigRecord   o
+Stage2LatePaletteOffsetList:    dc.w    $3B0, 0         ; DATA XREF: ROM:Stage2ThirdConfigRecord   o  ; was: word_B992
+                                        ; ROM:Stage2FourthConfigRecord   o
+Stage8InitialPaletteOffsetList:     dc.w    $3F2, 0     ; DATA XREF: ROM:Stage8ConfigRecord   o  ; was: word_B996
 Stage8AlternatePaletteOffsetList:   dc.w    $3F2, $966, 0  ; DATA XREF: ROM:stru_121FE   o  ; was: word_B99A
-                                        ; ROM:stru_12898   o
+                                        ; ROM:Stage8AlternatePaletteConfigRecord   o
 XiTigerCutscenePaletteOffsetList:   dc.w    $442, 0     ; DATA XREF: XiTigerCutscene_LoadAssets+C   o  ; was: word_B9A0
-Stage10PaletteOffsetList:           dc.w    $482, 0     ; DATA XREF: ROM:stru_128B6   o  ; was: word_B9A4
-                                        ; ROM:stru_128D4   o
-Stage13To16PaletteOffsetList:   dc.w    $4C2, 0         ; DATA XREF: ROM:stru_1292E   o  ; was: word_B9A8
-                                        ; ROM:stru_1294C   o
-Stage17PaletteOffsetList:   dc.w    $502, 0             ; DATA XREF: ROM:stru_12988   o  ; was: word_B9AC
-Stage18PaletteOffsetList:   dc.w    $562, 0             ; DATA XREF: ROM:stru_129A6   o  ; was: word_B9B0
-                                        ; ROM:stru_129C4   o
-Stage20PaletteOffsetList:   dc.w    $5A2, 0             ; DATA XREF: ROM:stru_129E2   o  ; was: word_B9B4
-                                        ; ROM:stru_12A00   o
-Stage25PaletteOffsetLists:              dc.w    $5E2, 0, $632, 0  ; DATA XREF: ROM:stru_12A5A   o  ; was: word_B9B8
+Stage10PaletteOffsetList:           dc.w    $482, 0     ; DATA XREF: ROM:Stage10ConfigRecord   o  ; was: word_B9A4
+                                        ; ROM:Stage10AlternateConfigRecord   o
+Stage13To16PaletteOffsetList:   dc.w    $4C2, 0         ; DATA XREF: ROM:Stage13AlternateConfigRecord   o  ; was: word_B9A8
+                                        ; ROM:Stage14ConfigRecord   o
+Stage17PaletteOffsetList:   dc.w    $502, 0             ; DATA XREF: ROM:Stage17BossConfigRecord   o  ; was: word_B9AC
+Stage18PaletteOffsetList:   dc.w    $562, 0             ; DATA XREF: ROM:Stage18ForegroundConfigRecord   o  ; was: word_B9B0
+                                        ; ROM:Stage18AlternateConfigRecord   o
+Stage20PaletteOffsetList:   dc.w    $5A2, 0             ; DATA XREF: ROM:Stage20FirstConfigRecord   o  ; was: word_B9B4
+                                        ; ROM:Stage20SecondConfigRecord   o
+Stage25PaletteOffsetLists:              dc.w    $5E2, 0, $632, 0  ; DATA XREF: ROM:Stage25ConfigRecord   o  ; was: word_B9B8
 SevenForcesCutscenePaletteOffsetList:   dc.w    $690, $6B0, 0  ; DATA XREF: Cutscene_SevenForcesLoadGraphics   o  ; was: word_B9C0
-Stage26PaletteOffsetList:               dc.w    $6B8, $818, 0  ; DATA XREF: ROM:stru_12A78   o  ; was: word_B9C6
-                                        ; ROM:stru_12AB4   o
-Stage27PaletteOffsetList:   dc.w    $6B8, $828, 0       ; DATA XREF: ROM:stru_12A96   o  ; was: word_B9CC
-Stage29PaletteOffsetList:   dc.w    $6F8, $848, 0       ; DATA XREF: ROM:stru_12AD2   o  ; was: word_B9D2
-Stage30PaletteOffsetList:   dc.w    $718, $E34, 0       ; DATA XREF: ROM:stru_12AF0   o  ; was: word_B9D8
-Stage31PaletteOffsetList:   dc.w    $738, 0             ; DATA XREF: ROM:stru_12B0E   o  ; was: word_B9DE
-Stage32PaletteOffsetList:   dc.w    $758, 0             ; DATA XREF: ROM:stru_12B2C   o  ; was: word_B9E2
-Stage33PaletteOffsetList:   dc.w    $798, 0             ; DATA XREF: ROM:stru_12B4A   o  ; was: word_B9E6
+Stage26PaletteOffsetList:               dc.w    $6B8, $818, 0  ; DATA XREF: ROM:Stage26ConfigRecord   o  ; was: word_B9C6
+                                        ; ROM:Stage28ConfigRecord   o
+Stage27PaletteOffsetList:   dc.w    $6B8, $828, 0       ; DATA XREF: ROM:Stage27ConfigRecord   o  ; was: word_B9CC
+Stage29PaletteOffsetList:   dc.w    $6F8, $848, 0       ; DATA XREF: ROM:Stage29ConfigRecord   o  ; was: word_B9D2
+Stage30PaletteOffsetList:   dc.w    $718, $E34, 0       ; DATA XREF: ROM:Stage30ConfigRecord   o  ; was: word_B9D8
+Stage31PaletteOffsetList:   dc.w    $738, 0             ; DATA XREF: ROM:Stage31ConfigRecord   o  ; was: word_B9DE
+Stage32PaletteOffsetList:   dc.w    $758, 0             ; DATA XREF: ROM:Stage32ConfigRecord   o  ; was: word_B9E2
+Stage33PaletteOffsetList:   dc.w    $798, 0             ; DATA XREF: ROM:Stage33ConfigRecord   o  ; was: word_B9E6
                                         ; Stage_InitPlayerAndScroll+24   o
 
 ; Loads a palette command while preserving the shared color at palette slot $36

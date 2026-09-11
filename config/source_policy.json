@@ -13,7 +13,7 @@
   "provenance": {
     "marker": "; was:",
     "minimum_unique_mappings": 4828,
-    "legacy_name_pattern": "^(?:[A-Za-z_][A-Za-z0-9_]*_[0-9A-F]+(?:_End)?|JumpTable[12]|PCMPart[1-9]|LoadPalette)$",
+    "legacy_name_pattern": "^(?:[A-Za-z_][A-Za-z0-9_]*_[0-9A-F]+(?:_End)?|JumpTable[12]|PCMPart[1-9]|LoadPalette|CheckFlagsLoadObjData)$",
     "default_evidence": "hypothesis",
     "note": "Earlier semantic names were generated automatically. A marker maps the most recent definition to its unique imported name, even when the marker is printed on the first instruction."
   },

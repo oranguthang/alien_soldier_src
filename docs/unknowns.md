@@ -2670,7 +2670,7 @@ Four especially broad data labels are explicitly registered:
 | `UnidentifiedSegaTilemap` | `0x0E8020` | hypothesis | 48 sequential tile words adjacent to the SEGA art; no live pointer has been found. |
 | `MessageDisplay_FontPatternFillSource` | `0x180000` | static | The message engine directly uses the 48 repeated `$C7F8` words as the source of fixed 32-word and 40-word pattern-fill DMAs. |
 | `Credits_UnidentifiedTrailingData` | `0x0225CC` | unknown | Opaque block ending at the demo subsystem boundary; no live reference has been found, so neither purpose nor unused status is asserted. |
-| `Stage11_UnidentifiedAsset` | `0x01AE96` | unknown | 314-byte asset selected by the Stage 11 configuration; its format and intended use are not established by a live consumer. |
+| `Stage11_ObjectSpawnList` | `0x01AE96` | static | 314 bytes form 26 twelve-byte records plus a `$7FFF` terminator; `Sys_ProcessSpawnList` consumes this exact format through the Stage 11 configuration pointer. |
 
 Semantic names with `; was:` history are a second review queue. Their default
 level is `hypothesis`, not `confirmed`; see `docs/provenance.md`.
@@ -3631,3 +3631,47 @@ Provenance rises from 12,764 to 12,812, the name-audit registry from 9,599 to
 9,662, and the enforced address-derived ceiling falls from 3,283 to 3,235. The
 renamed module has no live address-derived definitions, remains below the
 1,000-line ceiling, and preserves the original ROM range and include order.
+
+The stage-configuration pass reconstructs all 49 definitions in the former
+`stages/configuration_loader.s` range and two directly coupled definitions in
+the preceding configuration module. The former file boundary mixed two
+unrelated jobs. ROM `0x012648-0x012733` is now the focused 99-line
+`rendering/stage3_tile_resampling.s`; ROM `0x012734-0x012B69` is the 592-line
+`stages/configuration_records.s`. Both remain adjacent in `src/main.s`, so the
+ROM order is unchanged.
+
+Static data flow disproves the inherited `Stage_LoadPalette` name. Its only
+caller is the Stage 3 phase-2 path. The code gathers packed bytes from
+`byte_1C09B2`, reverses their nibble order in scratch RAM, and resamples them
+through a 96-entry fixed-point step table into `$FFFF0000` before the caller
+uploads the result. No CRAM address or palette command is involved. The new
+module and labels describe the observable packed-tile transformation without
+claiming what the rendered graphic depicts.
+
+The imported `CheckFlagsLoadObjData` name is also narrowed. The routine does
+not inspect an unspecified flags structure: it compares `GameModeIndex` with
+`$3C`, `$0C`, and `$10`. Those three modes tail-call `LoadObjData`; every other
+mode tail-calls `Data_ProcessPointer`. Its exact historical spelling is kept as
+a provenance-only exception and its new dispatcher name has a static audit
+record. The former `Stage_LoadConfigData` is documented as a consumer of one
+exact 30-byte record. Its field offsets and destinations are listed beside the
+records rather than assigning unsupported gameplay meanings to the unknown
+stage globals.
+
+That field review also rejects two older commentary blocks. The 314-byte
+`Stage11_ObjectSpawnList` is not unidentified graphics: it contains exactly 26
+twelve-byte records followed by the `$7FFF` terminator consumed by
+`Sys_ProcessSpawnList`. The alleged cut-intro configuration is the Stage 12
+entry at byte index `$18` in the ordered stage-initializer table. Neither its
+initializer nor its 30-byte record performs a cutscene-specific operation, so
+the unsupported Kaede, sprite-size, unused-content, and TCRF attribution
+comments are removed.
+
+All 51 primary-pass definitions plus the corrected Stage 12 initializer and
+Stage 11 spawn list have exact-address static audit records. The pass
+removes 47 live address-derived identifiers, raises provenance from 12,812 to
+12,860 and the name-audit registry from 9,662 to 9,715, and lowers the enforced
+address-derived ceiling from 3,235 to 3,188. The natural split raises the
+module count from 347 to 348 and changes the mean to 341.7 lines; there are
+still no modules over 1,000 lines and no generic container filenames. A fresh
+post-split rebuild reproduces the canonical Japanese ROM byte for byte.

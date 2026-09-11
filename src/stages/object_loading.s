@@ -55,7 +55,7 @@ Stage_LoadStage1Objects:                                ; CODE XREF: Stage_LoadS
                 clr.w   (word_FFA206).w
                 lea     stru_11790(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage1Objects
@@ -99,7 +99,7 @@ Stage_LoadStage1Phase1:                                 ; DATA XREF: ROM:0001173
                 bsr.w   Stage_LoadStage1Objects
                 lea     stru_117F6(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage1Phase1
@@ -142,7 +142,7 @@ Stage_LoadStage1Phase2:                                 ; DATA XREF: ROM:0001173
                 clr.w   (word_FFA206).w
                 lea     stru_11852(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage1Phase2
@@ -176,7 +176,7 @@ Stage_LoadStage8Objects:                                ; DATA XREF: ROM:0001174
                 clr.w   (word_FFA206).w
                 lea     stru_1189C(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage8Objects
@@ -210,7 +210,7 @@ Stage_LoadStage1Phase3:                                 ; DATA XREF: ROM:0001174
                 clr.w   (word_FFA206).w
                 lea     stru_118E6(pc),a0
                 nop
-                jmp     CheckFlagsLoadObjData(pc)       ; (pc)
+                jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
 ; End of function Stage_LoadStage1Phase3
@@ -254,7 +254,7 @@ Stage_LoadStage10Enemies:                               ; DATA XREF: ROM:0001174
                 move.w  #4,(word_FFA206).w
                 lea     stru_1195A(pc),a0
                 nop
-                jsr     CheckFlagsLoadObjData(pc)       ; (pc)
+                jsr     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
                 nop
                 lea     byte_119BC(pc),a0
                 nop

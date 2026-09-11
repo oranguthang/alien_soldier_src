@@ -409,7 +409,7 @@ stru_12194:     dc.w    7                               ; field_0
 ; Loads Xi-Tiger boss tile graphics
 Stage_LoadXiTigerGraphics:                              ; CODE XREF: Stage_XiTigerHandler+22   p  ; was: sub_1219E
                 clr.w   (word_FF807A).w
-                jsr     (nullsub_1).l
+                jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   Sys_ClearRAMBuffer
                 clr.w   (word_FFFF3E).w
                 move.w  (WeaponStateIndex).w,d0
@@ -445,7 +445,7 @@ Stage_LoadXiTigerSprites:                               ; DATA XREF: Stage_LoadX
                                         ; ROM:off_121EE   o
                 lea     stru_121FE(pc),a0
                 nop
-                bsr.w   Stage_LoadConfigData
+                bsr.w   Stage_ApplyConfigurationRecord
                 bra.w   loc_1233A
 ; End of function Stage_LoadXiTigerSprites
 ; ---------------------------------------------------------------------------
