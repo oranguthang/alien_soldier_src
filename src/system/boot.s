@@ -121,7 +121,7 @@ GameProgram:                                            ; CODE XREF: Reset+17C  
                 clr.w   (SoundDisableFlags).w
                 clr.w   (word_FFFF3E).w
                 move.w  #0,(word_FFFF36).w
-                move.l  #$1010101,(dword_FFFF3A).w
+                move.l  #$1010101,(PasswordDigits).w
 Reset_InitDefaults:                                     ; CODE XREF: Reset+14C   j  ; was: loc_3C8
                 move.b  #0,(byte_FFFF31).w
                 move.b  #6,(byte_FFFF20).w

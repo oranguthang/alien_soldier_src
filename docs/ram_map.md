@@ -12,7 +12,7 @@ still have neutral size/address names. The first reviewed semantic fields are
 `WeaponMenuAngle`, `WeaponStateCooldown`, `WeaponMenuAngularStep`, and
 `WeaponMenuSlotOffset`, `ShootingMode`, `ControlLayoutFlags`, and
 `RandomNumberState`, `DemoPlaybackActive`, `DemoPlaybackState`,
-`DemoStageTableIndex`, `VBlankFrameCounter`, `FrameCounter`,
+`DemoStageTableIndex`, `VBlankFrameCounter`, `PasswordDigits`, `FrameCounter`,
 `PaletteEffectControl`,
 `PaletteEntryLists`, `PalettePrimaryIndex`, and `PaletteSecondaryIndex`;
 `VDPCommand` predates this review. All remain
@@ -67,6 +67,12 @@ alone does not yet prove the exact player-facing counting convention.
 | Symbol | Address | Static evidence |
 |---|---:|---|
 | `RandomNumberState` | `$FFFFFF08` | `RandomNumber` replaces this longword on every call, and gameplay consumers sample its bytes and words. Demo playback writes a fixed seed here so its recorded input remains deterministic. |
+
+## Reviewed password field
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PasswordDigits` | `$FFFFFF3A` | Boot initializes the four bytes to one. The title-menu editor changes and clamps each byte from one through `$0A`, validates the longword against `Password_StageCodeTable`, and the Continue display stores the selected stage code back into the same field. |
 
 ## Reviewed demo-playback fields
 

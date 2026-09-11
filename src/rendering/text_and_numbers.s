@@ -419,7 +419,7 @@ Text_VoiceTest: dc.b    $20, $19, $13, $D, $F, 0, $1E, $F  ; was: byte_4771
                 dc.b    $1D, $1E, $FF
 Text_PressStartToExit:  dc.b    $1A, $1C, $F, $1D, $1D, 0, $1D, $1E, $B, $1C  ; was: byte_477C
                                         ; DATA XREF: UI_InitOptionsScreen+14A   o
-                                        ; UI_InitPasswordScreen+F6   o
+                                        ; PasswordMenu_Initialize+F6   o
                 dc.b    $1E, 0, $1E, $19, 0, $F, $22, $13, $1E, $FF
 Text_Continue:  dc.b    $D, $19, $18, $1E, $13, $18, $1F, $F, $FF  ; was: byte_4790
                                         ; DATA XREF: UI_RenderContinuePrompt+4   o

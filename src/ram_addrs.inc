@@ -956,7 +956,7 @@ ControlLayoutFlags      equ     $FFFFFF30               ; was: byte_FFFF30
 byte_FFFF31             equ     $FFFFFF31
 word_FFFF36             equ     $FFFFFF36
 SoundDisableFlags       equ     $FFFFFF38               ; was: word_FFFF38
-dword_FFFF3A            equ     $FFFFFF3A
+PasswordDigits          equ     $FFFFFF3A               ; was: dword_FFFF3A
 word_FFFF3E             equ     $FFFFFF3E
 word_FFFF40             equ     $FFFFFF40
 word_FFFF42             equ     $FFFFFF42

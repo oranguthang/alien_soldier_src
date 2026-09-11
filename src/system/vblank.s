@@ -189,8 +189,8 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    UI_HandleMenuTextTransition
                 dc.l    UI_InitializePasswordScreen
                 dc.l    UI_UpdatePasswordDisplay
-                dc.l    UI_InitPasswordScreen
-                dc.l    UI_UpdatePasswordScreen
+                dc.l    PasswordMenu_Initialize
+                dc.l    PasswordMenu_Update
                 dc.l    UI_InitSecondaryOptionsMenu
                 dc.l    UI_UpdateSecondaryOptionsMenu
                 dc.l    Stage_InitializeStageSelect

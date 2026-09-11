@@ -3439,3 +3439,38 @@ ceiling from 3,496 to 3,495. Module count remains 347.
 The package gate re-extracts all 579 assets, reproduces canonical SHA-1
 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`, passes all 37 tests, and leaves
 both formatter and lint clean.
+
+The password-menu package audits all 51 ROM definitions across the exact
+`ui/password_cursor_mappings.s` and `ui/password_screen.s` ranges. The
+two-record cursor file remains intentionally short: it is the complete
+password-owned mapping range between the options module and password code,
+not a mechanically split fragment. The 430-line screen module remains one
+cohesive editor, validation, cursor-motion, and text-data unit.
+
+Static flow proves that `Password_StageCodeTable` contains 25 records with two
+four-byte codes per stage. The first and second code select difficulty offsets
+zero and two; the Continue display independently indexes the same table by
+`StageTableIndex` and `DifficultyMode`. `PasswordDigits` names the four-byte
+RAM value initialized to `01 01 01 01`, edited bytewise in the range one
+through `$0A`, and compared as a longword during validation. Successful input
+stores the zero-based even stage-table index and difficulty before entering
+game mode `$70`.
+
+The message streams are now named from their decoded glyphs and exact
+consumers. A formerly hidden record at `$00A942` decodes as
+`STAGE...LEVEL.NORMAL`; no reconstructed reference selects it, so the audit
+records that negative evidence instead of claiming it is reachable. The five
+palette words at `$00A4AC` are named only as password-menu overrides: the code
+provably writes them to active-palette entries beginning at `$FFFFE322`, while
+also copying them through the post-load `a2` value. No broader palette intent
+is inferred from that unusual second write.
+
+This package replaces 41 live address-derived ROM definitions and promotes
+`PasswordDigits`, lowering the enforced ceiling from 3,495 to 3,453. The 41
+renames, one RAM field, and newly exposed `$00A942` record add 43 provenance
+mappings, raising the total from 12,547 to 12,590. Forty-nine screen records
+plus the RAM record expand the already audited two cursor mappings, taking the
+name-audit registry from 9,247 to 9,297. Module count remains 347.
+The package gate re-extracts all 579 assets, reproduces canonical SHA-1
+`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`, passes all 37 tests, exports
+16,057 canonical addresses, and leaves formatter and lint clean.

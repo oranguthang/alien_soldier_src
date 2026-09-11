@@ -86,7 +86,7 @@ UI_RenderContinueText:                                  ; CODE XREF: UI_Initiali
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  (StageTableIndex).w,d0
                 asl.w   #2,d0
-                addi.l  #word_A82A,d0
+                addi.l  #Password_StageCodeTable,d0
                 moveq   #0,d1
                 move.w  (DifficultyMode).w,d1
                 asl.w   #1,d1
@@ -94,7 +94,7 @@ UI_RenderContinueText:                                  ; CODE XREF: UI_Initiali
                 movea.l d0,a0
                 movea.w #(byte_FF9980-M68K_RAM),a1
                 move.l  (a0),(a1)+
-                move.l  (a0),(dword_FFFF3A).w
+                move.l  (a0),(PasswordDigits).w
                 move.b  #$FF,(a1)
                 movea.w #(byte_FF9980-M68K_RAM),a0
                 move.w  #$4300,d0

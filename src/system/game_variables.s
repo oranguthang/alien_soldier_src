@@ -1,5 +1,5 @@
 ; Sets the password confirmation flag and continues shared initialization
-UI_SetPasswordConfirmFlag:                              ; CODE XREF: UI_HandlePasswordInput+284   j  ; was: sub_1CCEC
+UI_SetPasswordConfirmFlag:                              ; CODE XREF: PasswordMenu_HandleInput+284   j  ; was: sub_1CCEC
                 bset    #0,(byte_FFA209).w
                 bra.s   UI_InitializeGameVariables_Common
 ; End of function UI_SetPasswordConfirmFlag
