@@ -1,3 +1,4 @@
+; Loads Stage 18 tiles
 Gfx_LoadStage18Tiles:                                   ; CODE XREF: Stage_Stage18StartBattle+6   p  ; was: sub_10026
                                         ; sub_E4FC   p
                 bsr.w   Gfx_AccelerateScroll

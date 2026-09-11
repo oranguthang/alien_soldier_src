@@ -1,4 +1,4 @@
-Stage_Dispatcher:                                       ; DATA XREF: ROM:off_FF36   o  ; was: sub_C83E
+Stage_Dispatcher:                                       ; DATA XREF: ROM:Stage_ProcessHandlerTable   o  ; was: sub_C83E
                                         ; ROM:0000FF46   o
                 movea.w off_C84A(pc,d0.w),a0
                 adda.l  #Stage_UpdateLogic,a0

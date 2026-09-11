@@ -262,7 +262,7 @@ Stage_XiTigerEmptyHandler:                              ; CODE XREF: Stage_XiTig
 ; End of function Stage_XiTigerEmptyHandler
 ; Initializes Xi-Tiger boss stage parameters
 Stage_InitXiTigerBoss:                                  ; DATA XREF: ROM:0000C8C0   o  ; was: sub_D422
-                bsr.w   Stage_SetBossTransitionPalette
+                bsr.w   Stage_InitializeBossHealthAndCounter
                 move.w  (word_FF8200).w,(word_FF8206).w
                 move.w  (word_FFA216).w,(word_FF820A).w
                 move.b  #$10,(byte_FFA95A).w

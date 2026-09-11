@@ -4129,3 +4129,31 @@ name-audit registry from 10,300 to 10,324, and the enforced address-derived
 ceiling falls from 2,726 to 2,707. The entity split changes the layout from 361
 to 362 modules and the mean to 328.3 lines; the largest module remains 986
 lines, with zero files above 1,000 lines and zero generic container filenames.
+
+The next ROM-adjacent audit replaces the generic
+`stages/dispatch_helpers.s` filename with the behavioral
+`stages/stage_process_dispatch.s`. The block is naturally short because it
+contains the complete five-entry top-level stage-process table, the gate that
+dispatches it, and the two default tables consumed when a stage advances to
+the next encounter phase. The orphaned Stage 18 comment at its former end now
+correctly precedes the Stage 18 tile routine in the following camera module.
+
+The inherited `Stage_SetBossTransitionPalette` name is contradicted directly:
+the routine never touches palette RAM. It indexes the stage table and writes
+the paired boss-health fields at `$FFFF8200/$FFFF8202` and combat-counter
+fields at `$FFFF8234/$FFFF8236`. The constant `$7000` table is therefore
+`Stage_BossHealthDefaults`, while the mostly `$01E0` table retains the
+neutral `Stage_BossCombatCounterDefaults` name because individual bosses use
+the counter in different directions. The first routine at `0x00FF10` has no
+static caller and clears a scratch word reused for unrelated stage and boss
+purposes, so its speculative scroll-animation owner is replaced with an
+explicitly unreferenced name.
+
+All eight definitions in the block now have exact-address static audit
+records. Four address-derived control/data labels receive
+provenance-preserving names; the other four inherited semantic names are
+retained, narrowed, or corrected. Provenance rises from 13,341 to 13,345, the
+name-audit registry from 10,324 to 10,332, and the enforced address-derived
+ceiling falls from 2,707 to 2,703. The layout remains 362 modules with a
+328.3-line mean, zero files above 1,000 lines, and zero generic container
+filenames.

@@ -63,7 +63,7 @@
                 include "src/stages/asteroid_and_destroyer_proto_scroll.s"
                 include "src/stages/stage_transition_backdrop_effects.s"
                 include "src/stages/wolf_garopa_arena_boundaries.s"
-                include "src/stages/dispatch_helpers.s"
+                include "src/stages/stage_process_dispatch.s"
                 include "src/rendering/camera_and_scroll.s"
                 include "src/rendering/scroll_plane_commands.s"
                 include "src/rendering/tilemap_rendering.s"

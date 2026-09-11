@@ -84,7 +84,7 @@ loc_1C4FE:                                              ; CODE XREF: Stage_LoadB
                 move.b  #$80,(PaletteDMAHIntEnabled).w
 ; Jumps to stage handler routine after setup completion
 Stage_JumpToHandler:                                    ; DATA XREF: Stage_XiTigerHandler+88   r  ; was: loc_1C530
-                jmp     Stage_ProcessHandler
+                jmp     Stage_DispatchSelectedProcess
 ; End of function Stage_LoadBackgroundGraphics
 ; ---------------------------------------------------------------------------
 off_1C536:      dc.l    Gfx_TitleAndZLeoVRAMTransferParameters  ; DATA XREF: Stage_LoadBackgroundGraphics+76   o
@@ -165,6 +165,6 @@ loc_1C636:                                              ; CODE XREF: Stage_XiTig
                 move.w  #$8004,(word_FF80F2).w
                 move.w  #$10,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
-                jmp     Stage_ProcessHandler
+                jmp     Stage_DispatchSelectedProcess
 ; End of function Stage_XiTigerHandler
 ; Main gameplay loop processing player

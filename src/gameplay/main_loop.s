@@ -63,7 +63,7 @@ Sys_GameplayMainLoop_UpdateStageEffects:                ; CODE XREF: Sys_Gamepla
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #0,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateStage:                       ; CODE XREF: Sys_GameplayMainLoop+122   j  ; was: loc_1C792
-                jsr     (Stage_ProcessHandler).l
+                jsr     (Stage_DispatchSelectedProcess).l
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateSecondaryEffects
                 move.l  #$C0420000,(VDP_CTRL).l

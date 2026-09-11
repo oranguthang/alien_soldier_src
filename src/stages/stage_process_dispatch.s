@@ -1,25 +1,26 @@
-Stage_ClearScrollAnimTimer:
+; Unreferenced helper that clears the high word of shared stage scratch $FFFFA960
+UnreferencedClearStageScratchWord:
                 clr.w   (dword_FFA960).w                ; was: sub_FF10
                 rts
-; End of function Stage_ClearScrollAnimTimer
-; Processes stage handler entry point
-Stage_ProcessHandler:                                   ; CODE XREF: Stage_LoadBackgroundGraphics:loc_1C530   j  ; was: sub_FF16
+; End of function UnreferencedClearStageScratchWord
+; Dispatches the selected stage process while gameplay updates are active
+Stage_DispatchSelectedProcess:                          ; CODE XREF: Stage_LoadBackgroundGraphics:loc_1C530   j  ; was: sub_FF16
                                         ; Stage_XiTigerHandler+110   j
                 tst.b   (byte_FF813E).w
-                bpl.s   loc_FF1E
+                bpl.s   Stage_RunSelectedProcess
                 rts
 ; ---------------------------------------------------------------------------
-loc_FF1E:                                               ; CODE XREF: Stage_ProcessHandler+4   j
+Stage_RunSelectedProcess:                               ; CODE XREF: Stage_DispatchSelectedProcess+4   j  ; was: loc_FF1E
                 jsr     Gfx_SetupScrollPlanes(pc)       ; (pc)
                 nop
                 movea.w #(word_FFA400-M68K_RAM),a5
                 move.w  (word_FFA950).w,d0
                 move.w  (word_FFA206).w,d1
-                movea.l off_FF36(pc,d1.w),a0
+                movea.l Stage_ProcessHandlerTable(pc,d1.w),a0
                 jmp     (a0)
-; End of function Stage_ProcessHandler
+; End of function Stage_DispatchSelectedProcess
 ; ---------------------------------------------------------------------------
-off_FF36:       dc.l    Stage_Dispatcher
+Stage_ProcessHandlerTable:  dc.l    Stage_Dispatcher    ; was: off_FF36
                 dc.l    Stage_InitStage10
                 dc.l    Stage_Stage18Scroll
                 dc.l    Stage_DispatchTransitionState
@@ -30,12 +31,12 @@ Stage_TransitionToNextPhase:                            ; CODE XREF: Stage_Updat
                                         ; Camera_AutoScrollCheck+10   j
                 addq.w  #2,(word_FFA950).w
                 move.w  #$56,(MessageSequenceState).w   ; 'V'
-; Sets palette transition values when entering boss battle phase
-Stage_SetBossTransitionPalette:                         ; CODE XREF: Stage_InitXiTigerBoss   p  ; was: loc_FF54
+; Initializes shared boss health and combat-counter values for the next phase
+Stage_InitializeBossHealthAndCounter:                   ; CODE XREF: Stage_InitXiTigerBoss   p  ; was: loc_FF54
                 move.w  (StageTableIndex).w,d0
-                lea     word_FF7E(pc),a0
+                lea     Stage_BossHealthDefaults(pc),a0
                 nop
-                lea     word_FFD2(pc),a1
+                lea     Stage_BossCombatCounterDefaults(pc),a1
                 nop
                 move.w  (a0,d0.w),(word_FF8202).w
                 move.w  (a0,d0.w),(word_FF8200).w
@@ -44,7 +45,7 @@ Stage_SetBossTransitionPalette:                         ; CODE XREF: Stage_InitX
                 rts
 ; End of function Stage_TransitionToNextPhase
 ; ---------------------------------------------------------------------------
-word_FF7E:      dc.w    $7000, $7000                    ; DATA XREF: Stage_TransitionToNextPhase+E   o
+Stage_BossHealthDefaults:   dc.w    $7000, $7000        ; DATA XREF: Stage_TransitionToNextPhase+E   o  ; was: word_FF7E
                 dc.w    $7000, $7000
                 dc.w    $7000, $7000
                 dc.w    $7000, $7000
@@ -65,7 +66,7 @@ word_FF7E:      dc.w    $7000, $7000                    ; DATA XREF: Stage_Trans
                 dc.w    $7000, $7000
                 dc.w    $7000, $7000
                 dc.w    $7000, $7000
-word_FFD2:      dc.w    $1E0, $1E0                      ; DATA XREF: Stage_TransitionToNextPhase+14   o
+Stage_BossCombatCounterDefaults:    dc.w    $1E0, $1E0  ; DATA XREF: Stage_TransitionToNextPhase+14   o  ; was: word_FFD2
                 dc.w    $1E0, $1E0
                 dc.w    $1E0, $1E0
                 dc.w    $1E0, $1E0
@@ -86,5 +87,3 @@ word_FFD2:      dc.w    $1E0, $1E0                      ; DATA XREF: Stage_Trans
                 dc.w    $1E0, $1E0
                 dc.w    $1E0, $1E0
                 dc.w    $1E0, $1E0
-
-; Loads Stage 18 tiles
