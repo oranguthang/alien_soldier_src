@@ -3901,3 +3901,35 @@ and changes the mean to 327.4 lines; the largest module remains 986 lines, with
 zero files above 1,000 lines and zero generic container filenames. A fresh
 pinned-toolchain build and direct verification again reproduce the canonical
 Japanese ROM byte for byte.
+
+The Valkirie mapping pass reviews the complete 80-line
+`data/valkirie_sprite_mappings.s` module at `0x0EC6F0-0x0ECB1B` without
+splitting one cohesive owner merely to enlarge small files. The primary and
+alternate rotation tables prove all eight indices of both the A and B mapping
+sets. Their shared use is explicit in the names; no visual pose is inferred
+from the raw sprite records.
+
+The composite viewer supplies stronger direct evidence for its private data.
+Its initializer assigns the direct mapping, both repeated part-pair mappings,
+and the extended-gun mapping to exact object fields. The pair-position update
+selects the pair alternate, while the eight-entry quantized-angle gun table
+proves each gun mapping index. The primary and alternate Valkirie metasprite
+descriptor blocks independently prove the four neutral A-through-D mappings.
+
+The final record at `0x0EC82E` is a manifest-backed 750-byte asset rather than
+a single six-byte mapping. Both metasprite descriptor blocks reference it, and
+its size covers 125 six-byte sprite records. It is therefore named as packed
+Valkirie sprite mappings, with an exclusive end at `0x0ECB1C`. That end is
+co-addressed with `Boss_BugmaxSpriteFrame00`, so the boundary retains its own
+provenance marker but deliberately shares the next module's one address-level
+audit record instead of creating a duplicate.
+
+All 35 live address-derived definitions now have evidence-backed names. The 34
+unique start addresses receive exact-address static audit records. Provenance
+rises from 13,168 to 13,203, the name-audit registry from 10,023 to 10,057,
+and the enforced address-derived ceiling falls from 2,880 to 2,845. The layout
+remains 363 modules with a 327.4-line mean; the largest module remains 986
+lines, with zero files above 1,000 lines and zero generic container filenames.
+A fresh pinned-toolchain build and direct verification reproduce the canonical
+Japanese ROM byte for byte at SHA-1
+`8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.

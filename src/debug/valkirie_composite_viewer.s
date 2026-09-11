@@ -45,33 +45,33 @@ Debug_ValkirieViewerInitialize:                         ; DATA XREF: ROM:Debug_V
                 move.w  d2,$7E2(a5)
                 move.w  d1,$7EE(a5)
                 move.b  #$20,$800(a5)                   ; ' '
-                move.l  #word_EC7C2,$7E8(a5)
+                move.l  #Debug_ValkirieViewerPartPairMappingA,$7E8(a5)
                 move.w  d0,$840(a5)
                 move.w  d2,$842(a5)
                 move.w  d1,$84E(a5)
                 move.b  #$1C,$860(a5)
-                move.l  #word_EC7CE,$848(a5)
+                move.l  #Debug_ValkirieViewerPartPairMappingC,$848(a5)
                 move.w  d0,$8A0(a5)
                 move.w  d2,$8A2(a5)
                 move.w  d1,$8AE(a5)
                 move.b  #$28,$8C0(a5)                   ; '('
-                move.l  #word_EC7C2,$8A8(a5)
+                move.l  #Debug_ValkirieViewerPartPairMappingA,$8A8(a5)
                 move.w  d0,$900(a5)
                 move.w  d2,$902(a5)
                 move.w  d1,$90E(a5)
                 move.b  #$24,$920(a5)                   ; '$'
-                move.l  #word_EC7CE,$908(a5)
+                move.l  #Debug_ValkirieViewerPartPairMappingC,$908(a5)
                 move.w  #$C300,d1
                 move.w  d0,$960(a5)
                 move.w  d2,$962(a5)
                 move.w  d1,$96E(a5)
                 move.b  #$18,$980(a5)
-                move.l  #word_EC6F0,$968(a5)
+                move.l  #Debug_ValkirieViewerFixedPartMapping,$968(a5)
                 move.w  d0,$9C0(a5)
                 move.w  d2,$9C2(a5)
                 move.w  d1,$9CE(a5)
                 move.b  #$18,$9E0(a5)
-                move.l  #word_EC792,$9C8(a5)
+                move.l  #Debug_ValkirieViewerExtendedGunMapping,$9C8(a5)
                 movea.l #Boss_ValkirieObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 bsr.w   Debug_ValkirieViewerLoadLeftTiles
@@ -130,12 +130,12 @@ Debug_ValkirieViewerPositionUpperPartPair:              ; CODE XREF: Debug_Valki
                 add.w   $640(a5),d0
                 move.w  d0,$820(a5)
                 move.w  d0,$880(a5)
-                move.l  #word_EC7C2,$7E8(a5)
+                move.l  #Debug_ValkirieViewerPartPairMappingA,$7E8(a5)
                 move.b  $38(a0),d0
                 ext.w   d0
                 cmpi.w  #4,d0
                 bmi.s   Debug_ValkirieViewerStoreUpperPartPairPosition
-                move.l  #word_EC7C8,$7E8(a5)
+                move.l  #Debug_ValkirieViewerPartPairMappingB,$7E8(a5)
 Debug_ValkirieViewerStoreUpperPartPairPosition:         ; CODE XREF: Debug_ValkirieViewerInitialize+1CE   j  ; was: loc_511A8
                 add.w   $644(a5),d0
                 addi.w  #$28,d0                         ; '('
@@ -145,12 +145,12 @@ Debug_ValkirieViewerStoreUpperPartPairPosition:         ; CODE XREF: Debug_Valki
                 add.w   $7C0(a5),d0
                 move.w  d0,$8E0(a5)
                 move.w  d0,$940(a5)
-                move.l  #word_EC7C2,$8A8(a5)
+                move.l  #Debug_ValkirieViewerPartPairMappingA,$8A8(a5)
                 move.b  $3C(a0),d0
                 ext.w   d0
                 cmpi.w  #4,d0
                 bmi.s   Debug_ValkirieViewerStoreLowerPartPairPosition
-                move.l  #word_EC7C8,$8A8(a5)
+                move.l  #Debug_ValkirieViewerPartPairMappingB,$8A8(a5)
 Debug_ValkirieViewerStoreLowerPartPairPosition:         ; CODE XREF: Debug_ValkirieViewerInitialize+208   j  ; was: loc_511E2
                 add.w   $7C4(a5),d0
                 addi.w  #$28,d0                         ; '('
@@ -180,7 +180,7 @@ Debug_ValkirieViewerPositionGun:                        ; CODE XREF: Debug_Valki
 ; ---------------------------------------------------------------------------
 Debug_ValkirieViewerPositionExtendedGun:                ; CODE XREF: Debug_ValkirieViewerInitialize+254   j  ; was: loc_5123E
                 lea     (Math_SineTable).l,a0
-                move.l  #word_EC792,$9C8(a5)
+                move.l  #Debug_ValkirieViewerExtendedGunMapping,$9C8(a5)
                 bset    #3,$9CE(a5)
                 move.w  #$1A0,d7
                 tst.w   $54(a5)
@@ -285,14 +285,14 @@ Debug_ValkirieViewerUpdateGunMapping:                   ; CODE XREF: Debug_Valki
                 rts
 ; End of function Debug_ValkirieViewerUpdateGunMapping
 ; ---------------------------------------------------------------------------
-Debug_ValkirieViewerGunMappingTable:    dc.l    word_EC7E6  ; DATA XREF: Debug_ValkirieViewerUpdateGunMapping+20   r  ; was: off_5139A
-                dc.l    word_EC7EC
-                dc.l    word_EC7F2
-                dc.l    word_EC7FE
-                dc.l    word_EC80A
-                dc.l    word_EC810
-                dc.l    word_EC816
-                dc.l    word_EC822
+Debug_ValkirieViewerGunMappingTable:    dc.l    Debug_ValkirieViewerGunMapping0  ; DATA XREF: Debug_ValkirieViewerUpdateGunMapping+20   r  ; was: off_5139A
+                dc.l    Debug_ValkirieViewerGunMapping1
+                dc.l    Debug_ValkirieViewerGunMapping2
+                dc.l    Debug_ValkirieViewerGunMapping3
+                dc.l    Debug_ValkirieViewerGunMapping4
+                dc.l    Debug_ValkirieViewerGunMapping5
+                dc.l    Debug_ValkirieViewerGunMapping6
+                dc.l    Debug_ValkirieViewerGunMapping7
 
 ; Interpret pose commands and update all sixteen composite-part values
 Debug_ValkirieViewerAdvancePoseScript:                  ; CODE XREF: Debug_ValkirieViewerInitialize:Debug_ValkirieViewerUpdatePoseAndParts   p  ; was: sub_513BA

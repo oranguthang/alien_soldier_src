@@ -663,24 +663,24 @@ Boss_WolfGaropaPartLinks:   dc.w    0, 0, 0             ; DATA XREF: Boss_WolfGa
                 dc.w    $189, $47E8, $7E9
                 dc.w    $48A8
 ; Valkirie directional frames and primary metasprite definition
-Boss_ValkirieRotationFramesA:   dc.l    word_EC6FC      ; DATA XREF: ROM:00035438   o  ; was: off_353BC
+Boss_ValkirieRotationFramesA:   dc.l    Boss_ValkirieRotationAMapping0  ; DATA XREF: ROM:00035438   o  ; was: off_353BC
                                         ; ROM:0003544C   o
-                dc.l    word_EC702
-                dc.l    word_EC708
-                dc.l    word_EC70E
-                dc.l    word_EC714
-                dc.l    word_EC71A
-                dc.l    word_EC720
-                dc.l    word_EC726
-Boss_ValkirieRotationFramesB:   dc.l    word_EC72C      ; DATA XREF: ROM:0003542C   o  ; was: off_353DC
+                dc.l    Boss_ValkirieRotationAMapping1
+                dc.l    Boss_ValkirieRotationAMapping2
+                dc.l    Boss_ValkirieRotationAMapping3
+                dc.l    Boss_ValkirieRotationAMapping4
+                dc.l    Boss_ValkirieRotationAMapping5
+                dc.l    Boss_ValkirieRotationAMapping6
+                dc.l    Boss_ValkirieRotationAMapping7
+Boss_ValkirieRotationFramesB:   dc.l    Boss_ValkirieRotationBMapping0  ; DATA XREF: ROM:0003542C   o  ; was: off_353DC
                                         ; ROM:00035434   o
-                dc.l    word_EC732
-                dc.l    word_EC738
-                dc.l    word_EC744
-                dc.l    word_EC74A
-                dc.l    word_EC750
-                dc.l    word_EC756
-                dc.l    word_EC762
+                dc.l    Boss_ValkirieRotationBMapping1
+                dc.l    Boss_ValkirieRotationBMapping2
+                dc.l    Boss_ValkirieRotationBMapping3
+                dc.l    Boss_ValkirieRotationBMapping4
+                dc.l    Boss_ValkirieRotationBMapping5
+                dc.l    Boss_ValkirieRotationBMapping6
+                dc.l    Boss_ValkirieRotationBMapping7
 Boss_ValkirieRotationFramesC:   dc.l    Boss_ValkirieSharedRotationCMappingA  ; DATA XREF: ROM:00035454   o  ; was: off_353FC
                                         ; ROM:00035464   o
                 dc.l    Boss_ValkirieSharedRotationCMappingB
@@ -690,27 +690,27 @@ Boss_ValkirieRotationFramesC:   dc.l    Boss_ValkirieSharedRotationCMappingA  ; 
                 dc.l    Boss_ValkirieSharedRotationCMappingC
                 dc.l    Boss_ValkirieSharedRotationCMappingC
                 dc.l    Boss_ValkirieSharedRotationCMappingA
-Boss_ValkirieMetaspriteDescriptors: dc.l    word_EC7D4+$400000  ; DATA XREF: Debug_ValkirieViewerInitialize+18   o  ; was: off_3541C
+Boss_ValkirieMetaspriteDescriptors: dc.l    Boss_ValkirieMetaspriteMappingB+$400000  ; DATA XREF: Debug_ValkirieViewerInitialize+18   o  ; was: off_3541C
                 dc.l    0
-                dc.l    word_EC82E+$400000
+                dc.l    Boss_ValkiriePackedSpriteMappings+$400000
                 dc.l    0
                 dc.l    Boss_ValkirieRotationFramesB+$18000000
-                dc.l    word_EC7DA+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingC+$400000
                 dc.l    Boss_ValkirieRotationFramesB+$18000000
                 dc.l    Boss_ValkirieRotationFramesA+$18000000
                 dc.l    0
                 dc.l    Boss_ValkirieRotationFramesB+$18000000
-                dc.l    word_EC7DA+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingC+$400000
                 dc.l    Boss_ValkirieRotationFramesB+$18000000
                 dc.l    Boss_ValkirieRotationFramesA+$18000000
                 dc.l    0
                 dc.l    Boss_ValkirieRotationFramesC
-                dc.l    word_EC7E0+$400000
-                dc.l    word_EC7B0+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingD+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingA+$400000
                 dc.l    0
                 dc.l    Boss_ValkirieRotationFramesC
-                dc.l    word_EC7E0+$400000
-                dc.l    word_EC7B0+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingD+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingA+$400000
 Boss_ValkiriePartRadii: dc.w    0, $A, $8A95            ; DATA XREF: Debug_ValkirieViewerInitialize+1E   o  ; was: word_35470
                 dc.w    $909D, $A0A, $1510
                 dc.w    $1D0A, $E1C, $100A
@@ -723,24 +723,24 @@ Boss_ValkiriePartLinks: dc.w    $8009, 0, $8007         ; DATA XREF: Debug_Valki
                 dc.w    $84E9, $85A8, $C0
                 dc.w    $866C, $866B, $872A
 ; Alternate Valkirie data reused as rotation frames and interpolation pose bytes
-Boss_ValkirieAlternateRotationFramesAndNeutralPose: dc.l    word_EC6FC  ; DATA XREF: ROM:0003552C   o  ; was: off_354B0
+Boss_ValkirieAlternateRotationFramesAndNeutralPose: dc.l    Boss_ValkirieRotationAMapping0  ; DATA XREF: ROM:0003552C   o  ; was: off_354B0
                                         ; ROM:00035540   o
-                dc.l    word_EC702
-                dc.l    word_EC708
-                dc.l    word_EC70E
-                dc.l    word_EC714
-                dc.l    word_EC71A
-                dc.l    word_EC720
-                dc.l    word_EC726
-Boss_ValkirieAlternateRotationFramesB:  dc.l    word_EC72C  ; DATA XREF: ROM:00035520   o  ; was: off_354D0
+                dc.l    Boss_ValkirieRotationAMapping1
+                dc.l    Boss_ValkirieRotationAMapping2
+                dc.l    Boss_ValkirieRotationAMapping3
+                dc.l    Boss_ValkirieRotationAMapping4
+                dc.l    Boss_ValkirieRotationAMapping5
+                dc.l    Boss_ValkirieRotationAMapping6
+                dc.l    Boss_ValkirieRotationAMapping7
+Boss_ValkirieAlternateRotationFramesB:  dc.l    Boss_ValkirieRotationBMapping0  ; DATA XREF: ROM:00035520   o  ; was: off_354D0
                                         ; ROM:00035528   o
-                dc.l    word_EC732
-                dc.l    word_EC738
-                dc.l    word_EC744
-                dc.l    word_EC74A
-                dc.l    word_EC750
-                dc.l    word_EC756
-                dc.l    word_EC762
+                dc.l    Boss_ValkirieRotationBMapping1
+                dc.l    Boss_ValkirieRotationBMapping2
+                dc.l    Boss_ValkirieRotationBMapping3
+                dc.l    Boss_ValkirieRotationBMapping4
+                dc.l    Boss_ValkirieRotationBMapping5
+                dc.l    Boss_ValkirieRotationBMapping6
+                dc.l    Boss_ValkirieRotationBMapping7
 Boss_ValkirieAlternateRotationFramesC:  dc.l    Boss_ValkirieSharedRotationCMappingA  ; DATA XREF: ROM:00035548   o  ; was: off_354F0
                                         ; ROM:00035558   o
                 dc.l    Boss_ValkirieSharedRotationCMappingB
@@ -750,27 +750,27 @@ Boss_ValkirieAlternateRotationFramesC:  dc.l    Boss_ValkirieSharedRotationCMapp
                 dc.l    Boss_ValkirieSharedRotationCMappingC
                 dc.l    Boss_ValkirieSharedRotationCMappingC
                 dc.l    Boss_ValkirieSharedRotationCMappingA
-                dc.l    word_EC7D4+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingB+$400000
                 dc.l    0
-                dc.l    word_EC82E+$400000
+                dc.l    Boss_ValkiriePackedSpriteMappings+$400000
                 dc.l    0
                 dc.l    Boss_ValkirieAlternateRotationFramesB+$18000000
-                dc.l    word_EC7DA+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingC+$400000
                 dc.l    Boss_ValkirieAlternateRotationFramesB+$18000000
                 dc.l    Boss_ValkirieAlternateRotationFramesAndNeutralPose+$18000000
                 dc.l    0
                 dc.l    Boss_ValkirieAlternateRotationFramesB+$18000000
-                dc.l    word_EC7DA+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingC+$400000
                 dc.l    Boss_ValkirieAlternateRotationFramesB+$18000000
                 dc.l    Boss_ValkirieAlternateRotationFramesAndNeutralPose+$18000000
                 dc.l    0
                 dc.l    Boss_ValkirieAlternateRotationFramesC
-                dc.l    word_EC7E0+$400000
-                dc.l    word_EC7B0+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingD+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingA+$400000
                 dc.l    0
                 dc.l    Boss_ValkirieAlternateRotationFramesC
-                dc.l    word_EC7E0+$400000
-                dc.l    word_EC7B0+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingD+$400000
+                dc.l    Boss_ValkirieMetaspriteMappingA+$400000
                 dc.w    0, $A, $8A95
                 dc.w    $909D, $A0A, $1510
                 dc.w    $1D0A, $E1C, $100A
