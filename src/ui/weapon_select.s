@@ -36,7 +36,7 @@ loc_1E2C6:                                              ; CODE XREF: UI_WeaponSe
 loc_1E2DC:                                              ; CODE XREF: UI_WeaponSelectTransition+2E   j
                 lea     off_1E334(pc),a0
                 nop
-                jsr     (Gfx_LoadFourPalettes).l
+                jsr     (Palette_LoadFourOptionalBlocks).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w

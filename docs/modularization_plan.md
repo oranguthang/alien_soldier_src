@@ -77,7 +77,7 @@ data are checked.
 | `0x001356` | `VBlank_DispatchRasterEffect` | VBlank/HBlank raster-effect dispatcher |
 | `0x0015BC` | `Effect_InitTransitionFade` | transition effects |
 | `0x00195C` | `VBlank_Epsilon1ScrollEffect` | HBlank/scroll effects |
-| `0x001D32` | `Gfx_QueueDMAClear` | DMA command queue |
+| `0x001D32` | `Gfx_QueueHeaderedZeroStreamDMA` | DMA command queue |
 | `0x002016` | `Sys_ProcessObjectList` | object update engine |
 | `0x0021F0` | `Sys_InitObjectPointers` | object/sprite initialization |
 | `0x00263E` | `LoadObjData` | object data loading |

@@ -3088,7 +3088,7 @@ promotes three raster-control RAM fields. It adds 30 provenance mappings and
 3,913; module count remains 349, and the audited module contains no live
 address-derived definitions.
 
-The HBlank raster audit reconstructs the adjacent 371-line
+The HBlank raster audit reconstructs the adjacent 375-line
 `rendering/hblank_effects.s` module without splitting one ordered group of
 effect installers and their copied handlers. The Epsilon 1 path computes a
 VScroll value and interrupt line, then installs a handler that writes VSRAM
@@ -3116,3 +3116,30 @@ all 14 live address-derived ROM definitions in
 audit records plus three confirmations of retained semantic names, raising
 the totals from 12,128 to 12,142 and from 8,589 to 8,613. The enforced
 address-derived ceiling falls from 3,913 to 3,899; module count remains 349.
+
+The DMA-queue audit reconstructs the 337-line
+`rendering/dma_queue.s` block as two pairs of byte-stream encoders, decimal
+and hexadecimal digit formatters, a low-level DMA-command encoder, and the
+adjacent optional palette-block loader. Both stream formats expand bytes to
+words in `VDPStagingDataCursor`, use `$FE` between records and `$FF` at the
+end, and prepend 16-byte commands below `VDPCommandQueueHead`; the first
+format additionally skips a two-byte header before each VDP destination
+command. Separate entry points choose copied bytes or zero-filled words.
+
+This audit fixes a data/code boundary that semantic renaming alone could not
+repair. The alleged `Gfx_QueueBCDDisplay` function at `$001EC0` was actually
+the ten-byte table `1, 10, 100, 1000, 10000`, consumed by the preceding
+decimal formatter. Re-expressing it as `DecimalDigitDivisors` reveals the
+previously unlabeled hexadecimal formatter at `$001ECA`; its own table holds
+powers of sixteen. The canonical ROM remains byte-identical after replacing
+the accidental instruction rendering with explicit `dc.w` data. The palette
+tail is retained here because splitting 39 contiguous helper lines would
+create an artificial undersized module while the combined block remains
+inside the project target.
+
+This package corrects or refines eight generated semantic names, replaces all
+24 live address-derived ROM definitions in `rendering/dma_queue.s`, and adds
+two missing code-entry labels. It adds 24 provenance mappings and 34 static
+audit records, raising the totals from 12,142 to 12,166 and from 8,613 to
+8,647. The enforced address-derived ceiling falls from 3,899 to 3,875; module
+count remains 349.

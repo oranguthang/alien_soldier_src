@@ -1,15 +1,16 @@
-Gfx_QueueDMAClear:
-                clr.b   d3                              ; was: sub_1D32
-                bra.s   loc_1D3A
-; End of function Gfx_QueueDMAClear
-; Queues DMA commands with tile data processing and transfer
-Gfx_QueueDMATileData:
-                move.b  #1,d3                           ; was: sub_1D36
-loc_1D3A:                                               ; CODE XREF: Gfx_QueueDMAClear+2   j
+; Queues zero-filled DMA records using the headered $FE/$FF byte-stream format
+Gfx_QueueHeaderedZeroStreamDMA:                         ; was: sub_1D32
+                clr.b   d3
+                bra.s   Gfx_QueueHeaderedByteStreamDMA_InitializeQueue
+; End of function Gfx_QueueHeaderedZeroStreamDMA
+; Expands headered source bytes to words and queues one DMA command per record
+Gfx_QueueHeaderedByteStreamDMA:                         ; was: sub_1D36
+                move.b  #1,d3
+Gfx_QueueHeaderedByteStreamDMA_InitializeQueue:         ; CODE XREF: Gfx_QueueHeaderedZeroStreamDMA+2   j  ; was: loc_1D3A
                 movea.w (VDPCommandQueueHead).w,a1
                 movea.w (VDPStagingDataCursor).w,a2
-loc_1D42:                                               ; CODE XREF: Gfx_QueueDMATileData+66   j
-                                        ; Gfx_QueueDMATileData+6A   j
+Gfx_QueueHeaderedByteStreamDMA_BeginRecord:             ; CODE XREF: Gfx_QueueHeaderedByteStreamDMA+66   j  ; was: loc_1D42
+                                        ; Gfx_QueueHeaderedByteStreamDMA+6A   j
                 move.w  (a0)+,d0
                 move.l  (a0)+,-(a1)
                 move.l  a2,d1
@@ -28,49 +29,51 @@ loc_1D42:                                               ; CODE XREF: Gfx_QueueDM
                 move.w  d2,-(a1)
                 move.w  #$8F02,-(a1)
                 move.l  #$94009300,d1
-loc_1D76:                                               ; CODE XREF: Gfx_QueueDMATileData+56   j
-                                        ; Gfx_QueueDMATileData+5C   j
+Gfx_QueueHeaderedByteStreamDMA_ReadByte:                ; CODE XREF: Gfx_QueueHeaderedByteStreamDMA+56   j  ; was: loc_1D76
+                                        ; Gfx_QueueHeaderedByteStreamDMA+5C   j
                 move.b  (a0)+,d0
                 cmpi.b  #$FE,d0
-                beq.s   loc_1D94
+                beq.s   Gfx_QueueHeaderedByteStreamDMA_FinishRecord
                 cmpi.b  #$FF,d0
-                beq.s   loc_1DA2
+                beq.s   Gfx_QueueHeaderedByteStreamDMA_FinishStream
                 tst.b   d3
-                beq.s   loc_1D8E
+                beq.s   Gfx_QueueHeaderedByteStreamDMA_StageZero
                 move.w  d0,(a2)+
                 addq.b  #1,d1
-                bra.s   loc_1D76
+                bra.s   Gfx_QueueHeaderedByteStreamDMA_ReadByte
 ; ---------------------------------------------------------------------------
-loc_1D8E:                                               ; CODE XREF: Gfx_QueueDMATileData+50   j
+Gfx_QueueHeaderedByteStreamDMA_StageZero:               ; CODE XREF: Gfx_QueueHeaderedByteStreamDMA+50   j  ; was: loc_1D8E
                 clr.w   (a2)+
                 addq.b  #1,d1
-                bra.s   loc_1D76
+                bra.s   Gfx_QueueHeaderedByteStreamDMA_ReadByte
 ; ---------------------------------------------------------------------------
-loc_1D94:                                               ; CODE XREF: Gfx_QueueDMATileData+46   j
+Gfx_QueueHeaderedByteStreamDMA_FinishRecord:            ; CODE XREF: Gfx_QueueHeaderedByteStreamDMA+46   j  ; was: loc_1D94
                 move.l  d1,-(a1)
                 move.w  a0,d2
                 btst    #0,d2
-                beq.s   loc_1D42
+                beq.s   Gfx_QueueHeaderedByteStreamDMA_BeginRecord
                 addq.l  #1,a0
-                bra.s   loc_1D42
+                bra.s   Gfx_QueueHeaderedByteStreamDMA_BeginRecord
 ; ---------------------------------------------------------------------------
-loc_1DA2:                                               ; CODE XREF: Gfx_QueueDMATileData+4C   j
+Gfx_QueueHeaderedByteStreamDMA_FinishStream:            ; CODE XREF: Gfx_QueueHeaderedByteStreamDMA+4C   j  ; was: loc_1DA2
                 move.l  d1,-(a1)
                 move.w  a1,(VDPCommandQueueHead).w
                 move.w  a2,(VDPStagingDataCursor).w
                 rts
-; End of function Gfx_QueueDMATileData
-; Queues DMA commands for pattern/tile data with alternate format
-Gfx_QueueDMAPattern:
-                clr.b   d3                              ; was: sub_1DAE
-                bra.s   loc_1DB6
-; ---------------------------------------------------------------------------
+; End of function Gfx_QueueHeaderedByteStreamDMA
+; Queues zero-filled DMA records using the headerless $FE/$FF byte-stream format
+Gfx_QueueZeroStreamDMA:                                 ; was: sub_1DAE
+                clr.b   d3
+                bra.s   Gfx_QueueByteStreamDMA_InitializeQueue
+; End of function Gfx_QueueZeroStreamDMA
+; Expands source bytes to words and queues one DMA command per record
+Gfx_QueueByteStreamDMA:
                 move.b  #1,d3
-loc_1DB6:                                               ; CODE XREF: Gfx_QueueDMAPattern+2   j
+Gfx_QueueByteStreamDMA_InitializeQueue:                 ; CODE XREF: Gfx_QueueZeroStreamDMA+2   j  ; was: loc_1DB6
                 movea.w (VDPCommandQueueHead).w,a1
                 movea.w (VDPStagingDataCursor).w,a2
-loc_1DBE:                                               ; CODE XREF: Gfx_QueueDMAPattern+68   j
-                                        ; Gfx_QueueDMAPattern+6C   j
+Gfx_QueueByteStreamDMA_BeginRecord:                     ; CODE XREF: Gfx_QueueZeroStreamDMA+68   j  ; was: loc_1DBE
+                                        ; Gfx_QueueZeroStreamDMA+6C   j
                 move.l  (a0)+,-(a1)
                 move.l  a2,d1
                 andi.l  #$FFFFFF,d1
@@ -88,106 +91,40 @@ loc_1DBE:                                               ; CODE XREF: Gfx_QueueDM
                 move.w  d2,-(a1)
                 move.w  #$8F02,-(a1)
                 move.l  #$94009300,d1
-loc_1DF0:                                               ; CODE XREF: Gfx_QueueDMAPattern+58   j
-                                        ; Gfx_QueueDMAPattern+5E   j
+Gfx_QueueByteStreamDMA_ReadByte:                        ; CODE XREF: Gfx_QueueZeroStreamDMA+58   j  ; was: loc_1DF0
+                                        ; Gfx_QueueZeroStreamDMA+5E   j
                 move.b  (a0)+,d0
                 cmpi.b  #$FE,d0
-                beq.s   loc_1E0E
+                beq.s   Gfx_QueueByteStreamDMA_FinishRecord
                 cmpi.b  #$FF,d0
-                beq.s   loc_1E1C
+                beq.s   Gfx_QueueByteStreamDMA_FinishStream
                 tst.b   d3
-                beq.s   loc_1E08
+                beq.s   Gfx_QueueByteStreamDMA_StageZero
                 move.w  d0,(a2)+
                 addq.b  #1,d1
-                bra.s   loc_1DF0
+                bra.s   Gfx_QueueByteStreamDMA_ReadByte
 ; ---------------------------------------------------------------------------
-loc_1E08:                                               ; CODE XREF: Gfx_QueueDMAPattern+52   j
+Gfx_QueueByteStreamDMA_StageZero:                       ; CODE XREF: Gfx_QueueZeroStreamDMA+52   j  ; was: loc_1E08
                 clr.w   (a2)+
                 addq.b  #1,d1
-                bra.s   loc_1DF0
+                bra.s   Gfx_QueueByteStreamDMA_ReadByte
 ; ---------------------------------------------------------------------------
-loc_1E0E:                                               ; CODE XREF: Gfx_QueueDMAPattern+48   j
+Gfx_QueueByteStreamDMA_FinishRecord:                    ; CODE XREF: Gfx_QueueZeroStreamDMA+48   j  ; was: loc_1E0E
                 move.l  d1,-(a1)
                 move.w  a0,d2
                 btst    #0,d2
-                beq.s   loc_1DBE
+                beq.s   Gfx_QueueByteStreamDMA_BeginRecord
                 addq.l  #1,a0
-                bra.s   loc_1DBE
+                bra.s   Gfx_QueueByteStreamDMA_BeginRecord
 ; ---------------------------------------------------------------------------
-loc_1E1C:                                               ; CODE XREF: Gfx_QueueDMAPattern+4E   j
+Gfx_QueueByteStreamDMA_FinishStream:                    ; CODE XREF: Gfx_QueueZeroStreamDMA+4E   j  ; was: loc_1E1C
                 move.l  d1,-(a1)
                 move.w  a1,(VDPCommandQueueHead).w
                 move.w  a2,(VDPStagingDataCursor).w
                 rts
-; End of function Gfx_QueueDMAPattern
-; Converts number to ASCII digits and queues DMA for text display
-Gfx_QueueNumberDisplay:
-                movea.w (VDPCommandQueueHead).w,a1      ; was: sub_1E28
-                movea.w (VDPStagingDataCursor).w,a2
-                move.l  d2,-(a1)
-                move.l  a2,d4
-                andi.l  #$FFFFFF,d4
-                lsr.l   #1,d4
-                move.w  #$9500,d2
-                move.b  d4,d2
-                move.w  d2,-(a1)
-                lsr.l   #8,d4
-                move.w  #$9600,d2
-                move.b  d4,d2
-                move.w  d2,-(a1)
-                lsr.l   #8,d4
-                move.w  #$9700,d2
-                move.b  d4,d2
-                move.w  d2,-(a1)
-                move.w  d3,d2
-                bne.w   loc_1E6E
-                moveq   #5,d3
-                move.w  #8,d2
-                andi.l  #$FFFF,d1
-                bra.w   loc_1E7C
-; ---------------------------------------------------------------------------
-loc_1E6E:                                               ; CODE XREF: Gfx_QueueNumberDisplay+32   j
-                subq.w  #1,d2
-                asl.w   #1,d2
-                andi.l  #$FFFF,d1
-                bra.w   loc_1E94
-; ---------------------------------------------------------------------------
-loc_1E7C:                                               ; CODE XREF: Gfx_QueueNumberDisplay+42   j
-                                        ; Gfx_QueueNumberDisplay+66   j
-                divu.w  Gfx_QueueBCDDisplay(pc,d2.w),d1
-                bne.w   loc_1E98
-                move.b  #$B4,d0
-                move.w  d0,(a2)+
-                swap    d1
-                subq.w  #2,d2
-                bpl.s   loc_1E7C
-                bra.w   loc_1EA8
-; ---------------------------------------------------------------------------
-loc_1E94:                                               ; CODE XREF: Gfx_QueueNumberDisplay+50   j
-                                        ; Gfx_QueueNumberDisplay+7E   j
-                divu.w  Gfx_QueueBCDDisplay(pc,d2.w),d1
-loc_1E98:                                               ; CODE XREF: Gfx_QueueNumberDisplay+58   j
-                addi.b  #-$4B,d1
-                move.b  d1,d0
-                move.w  d0,(a2)+
-                clr.w   d1
-                swap    d1
-                subq.w  #2,d2
-                bpl.s   loc_1E94
-loc_1EA8:                                               ; CODE XREF: Gfx_QueueNumberDisplay+68   j
-                move.w  #$8F02,-(a1)
-                move.l  #$94009300,d2
-                add.b   d3,d2
-                move.l  d2,-(a1)
-                move.w  a1,(VDPCommandQueueHead).w
-                move.w  a2,(VDPStagingDataCursor).w
-                rts
-; End of function Gfx_QueueNumberDisplay
-; Converts number to BCD/ASCII with leading zeros for score display
-Gfx_QueueBCDDisplay:
-                ori.b   #$A,d1                          ; was: sub_1EC0
-                ori.w   #$3E8,-(a4)
-                move.l  (a0),-(a3)
+; End of function Gfx_QueueByteStreamDMA
+; Converts a value to decimal digit tile indices and queues their DMA transfer
+Gfx_QueueDecimalDigitsDMA:                              ; was: sub_1E28
                 movea.w (VDPCommandQueueHead).w,a1
                 movea.w (VDPStagingDataCursor).w,a2
                 move.l  d2,-(a1)
@@ -206,41 +143,41 @@ Gfx_QueueBCDDisplay:
                 move.b  d4,d2
                 move.w  d2,-(a1)
                 move.w  d3,d2
-                bne.w   loc_1F10
+                bne.w   Gfx_QueueDecimalDigitsDMA_UseRequestedWidth
                 moveq   #5,d3
                 move.w  #8,d2
                 andi.l  #$FFFF,d1
-                bra.w   loc_1F1E
+                bra.w   Gfx_QueueDecimalDigitsDMA_WriteLeadingBlankOrDigit
 ; ---------------------------------------------------------------------------
-loc_1F10:                                               ; CODE XREF: Gfx_QueueBCDDisplay+3C   j
+Gfx_QueueDecimalDigitsDMA_UseRequestedWidth:            ; CODE XREF: Gfx_QueueDecimalDigitsDMA+32   j  ; was: loc_1E6E
                 subq.w  #1,d2
                 asl.w   #1,d2
                 andi.l  #$FFFF,d1
-                bra.w   loc_1F36
+                bra.w   Gfx_QueueDecimalDigitsDMA_WriteDigit
 ; ---------------------------------------------------------------------------
-loc_1F1E:                                               ; CODE XREF: Gfx_QueueBCDDisplay+4C   j
-                                        ; Gfx_QueueBCDDisplay+70   j
-                divu.w  word_1F62(pc,d2.w),d1
-                bne.w   loc_1F3A
+Gfx_QueueDecimalDigitsDMA_WriteLeadingBlankOrDigit:     ; CODE XREF: Gfx_QueueDecimalDigitsDMA+42   j  ; was: loc_1E7C
+                                        ; Gfx_QueueDecimalDigitsDMA+66   j
+                divu.w  DecimalDigitDivisors(pc,d2.w),d1
+                bne.w   Gfx_QueueDecimalDigitsDMA_EmitDigit
                 move.b  #$B4,d0
                 move.w  d0,(a2)+
                 swap    d1
                 subq.w  #2,d2
-                bpl.s   loc_1F1E
-                bra.w   loc_1F4A
+                bpl.s   Gfx_QueueDecimalDigitsDMA_WriteLeadingBlankOrDigit
+                bra.w   Gfx_QueueDecimalDigitsDMA_FinalizeQueue
 ; ---------------------------------------------------------------------------
-loc_1F36:                                               ; CODE XREF: Gfx_QueueBCDDisplay+5A   j
-                                        ; Gfx_QueueBCDDisplay+88   j
-                divu.w  word_1F62(pc,d2.w),d1
-loc_1F3A:                                               ; CODE XREF: Gfx_QueueBCDDisplay+62   j
+Gfx_QueueDecimalDigitsDMA_WriteDigit:                   ; CODE XREF: Gfx_QueueDecimalDigitsDMA+50   j  ; was: loc_1E94
+                                        ; Gfx_QueueDecimalDigitsDMA+7E   j
+                divu.w  DecimalDigitDivisors(pc,d2.w),d1
+Gfx_QueueDecimalDigitsDMA_EmitDigit:                    ; CODE XREF: Gfx_QueueDecimalDigitsDMA+58   j  ; was: loc_1E98
                 addi.b  #-$4B,d1
                 move.b  d1,d0
                 move.w  d0,(a2)+
                 clr.w   d1
                 swap    d1
                 subq.w  #2,d2
-                bpl.s   loc_1F36
-loc_1F4A:                                               ; CODE XREF: Gfx_QueueBCDDisplay+72   j
+                bpl.s   Gfx_QueueDecimalDigitsDMA_WriteDigit
+Gfx_QueueDecimalDigitsDMA_FinalizeQueue:                ; CODE XREF: Gfx_QueueDecimalDigitsDMA+68   j  ; was: loc_1EA8
                 move.w  #$8F02,-(a1)
                 move.l  #$94009300,d2
                 add.b   d3,d2
@@ -248,12 +185,78 @@ loc_1F4A:                                               ; CODE XREF: Gfx_QueueBC
                 move.w  a1,(VDPCommandQueueHead).w
                 move.w  a2,(VDPStagingDataCursor).w
                 rts
-; End of function Gfx_QueueBCDDisplay
-; ---------------------------------------------------------------------------
-word_1F62:      dc.w    1, $10, $100, $1000
+; End of function Gfx_QueueDecimalDigitsDMA
+; Powers of ten indexed from the least-significant decimal digit
+DecimalDigitDivisors:   dc.w    1, 10, 100, 1000, 10000  ; was: sub_1EC0
 
-; Configures VDP DMA registers for data transfer
-Gfx_SetupDMATransfer:                                   ; CODE XREF: Sprite_RenderDynamicObject+50   p  ; was: sub_1F6A
+; Converts a value to hexadecimal digit tile indices and queues their DMA transfer
+Gfx_QueueHexDigitsDMA:
+                movea.w (VDPCommandQueueHead).w,a1
+                movea.w (VDPStagingDataCursor).w,a2
+                move.l  d2,-(a1)
+                move.l  a2,d4
+                andi.l  #$FFFFFF,d4
+                lsr.l   #1,d4
+                move.w  #$9500,d2
+                move.b  d4,d2
+                move.w  d2,-(a1)
+                lsr.l   #8,d4
+                move.w  #$9600,d2
+                move.b  d4,d2
+                move.w  d2,-(a1)
+                lsr.l   #8,d4
+                move.w  #$9700,d2
+                move.b  d4,d2
+                move.w  d2,-(a1)
+                move.w  d3,d2
+                bne.w   Gfx_QueueHexDigitsDMA_UseRequestedWidth
+                moveq   #5,d3
+                move.w  #8,d2
+                andi.l  #$FFFF,d1
+                bra.w   Gfx_QueueHexDigitsDMA_WriteLeadingBlankOrDigit
+; ---------------------------------------------------------------------------
+Gfx_QueueHexDigitsDMA_UseRequestedWidth:                ; CODE XREF: Gfx_QueueHexDigitsDMA+32   j  ; was: loc_1F10
+                subq.w  #1,d2
+                asl.w   #1,d2
+                andi.l  #$FFFF,d1
+                bra.w   Gfx_QueueHexDigitsDMA_WriteDigit
+; ---------------------------------------------------------------------------
+Gfx_QueueHexDigitsDMA_WriteLeadingBlankOrDigit:         ; CODE XREF: Gfx_QueueHexDigitsDMA+42   j  ; was: loc_1F1E
+                                        ; Gfx_QueueHexDigitsDMA+66   j
+                divu.w  HexDigitDivisors(pc,d2.w),d1
+                bne.w   Gfx_QueueHexDigitsDMA_EmitDigit
+                move.b  #$B4,d0
+                move.w  d0,(a2)+
+                swap    d1
+                subq.w  #2,d2
+                bpl.s   Gfx_QueueHexDigitsDMA_WriteLeadingBlankOrDigit
+                bra.w   Gfx_QueueHexDigitsDMA_FinalizeQueue
+; ---------------------------------------------------------------------------
+Gfx_QueueHexDigitsDMA_WriteDigit:                       ; CODE XREF: Gfx_QueueHexDigitsDMA+50   j  ; was: loc_1F36
+                                        ; Gfx_QueueHexDigitsDMA+7E   j
+                divu.w  HexDigitDivisors(pc,d2.w),d1
+Gfx_QueueHexDigitsDMA_EmitDigit:                        ; CODE XREF: Gfx_QueueHexDigitsDMA+58   j  ; was: loc_1F3A
+                addi.b  #-$4B,d1
+                move.b  d1,d0
+                move.w  d0,(a2)+
+                clr.w   d1
+                swap    d1
+                subq.w  #2,d2
+                bpl.s   Gfx_QueueHexDigitsDMA_WriteDigit
+Gfx_QueueHexDigitsDMA_FinalizeQueue:                    ; CODE XREF: Gfx_QueueHexDigitsDMA+68   j  ; was: loc_1F4A
+                move.w  #$8F02,-(a1)
+                move.l  #$94009300,d2
+                add.b   d3,d2
+                move.l  d2,-(a1)
+                move.w  a1,(VDPCommandQueueHead).w
+                move.w  a2,(VDPStagingDataCursor).w
+                rts
+; End of function Gfx_QueueHexDigitsDMA
+; ---------------------------------------------------------------------------
+HexDigitDivisors:   dc.w    1, $10, $100, $1000         ; was: word_1F62
+
+; Prepends a 16-byte VDP DMA command for the length-prefixed source at a1
+Gfx_PrependDMATransferCommand:                          ; CODE XREF: Sprite_RenderDynamicObject+50   p  ; was: sub_1F6A
                                         ; Sprite_RenderDynamicObjectWithEntryAttributes+62   p
                 move.w  (a1)+,d1
                 move.w  d0,d7
@@ -290,22 +293,22 @@ Gfx_SetupDMATransfer:                                   ; CODE XREF: Sprite_Rend
                 move.b  d1,d7
                 move.w  d7,-(a0)
                 rts
-; End of function Gfx_SetupDMATransfer
-; Loads four palette blocks from pointers into the active and shadow buffers
-Gfx_LoadFourPalettes:                                   ; CODE XREF: UI_WeaponSelectTransition+3C   p  ; was: sub_1FC8
+; End of function Gfx_PrependDMATransferCommand
+; Loads four optional palette blocks into matching active and shadow slots
+Palette_LoadFourOptionalBlocks:                         ; CODE XREF: UI_WeaponSelectTransition+3C   p  ; was: sub_1FC8
                 lea     (PaletteActiveBuffer).w,a2
                 lea     (PaletteShadowBuffer).w,a3
-                bsr.w   Gfx_CopyPaletteBlock
-                bsr.w   Gfx_CopyPaletteBlock
-                bsr.w   Gfx_CopyPaletteBlock
-                bsr.w   Gfx_CopyPaletteBlock
+                bsr.w   Palette_CopyOptionalBlock
+                bsr.w   Palette_CopyOptionalBlock
+                bsr.w   Palette_CopyOptionalBlock
+                bsr.w   Palette_CopyOptionalBlock
                 rts
-; End of function Gfx_LoadFourPalettes
-; Copies 32-byte palette block from pointer to dual buffers
-Gfx_CopyPaletteBlock:                                   ; CODE XREF: Gfx_LoadFourPalettes+8   p  ; was: sub_1FE2
-                                        ; Gfx_LoadFourPalettes+C   p
+; End of function Palette_LoadFourOptionalBlocks
+; Copies one optional 32-byte palette block into active and shadow buffers
+Palette_CopyOptionalBlock:                              ; CODE XREF: Palette_LoadFourOptionalBlocks+8   p  ; was: sub_1FE2
+                                        ; Palette_LoadFourOptionalBlocks+C   p
                 move.l  (a0)+,d0
-                beq.w   loc_200C
+                beq.w   Palette_CopyOptionalBlock_SkipNull
                 movea.l d0,a1
                 move.l  (a1),(a2)+
                 move.l  (a1)+,(a3)+
@@ -325,9 +328,9 @@ Gfx_CopyPaletteBlock:                                   ; CODE XREF: Gfx_LoadFou
                 move.l  (a1)+,(a3)+
                 rts
 ; ---------------------------------------------------------------------------
-loc_200C:                                               ; CODE XREF: Gfx_CopyPaletteBlock+2   j
+Palette_CopyOptionalBlock_SkipNull:                     ; CODE XREF: Palette_CopyOptionalBlock+2   j  ; was: loc_200C
                 lea     $20(a2),a2
                 lea     $20(a3),a3
                 rts
-; End of function Gfx_CopyPaletteBlock
+; End of function Palette_CopyOptionalBlock
 ; Main object processing loop - iterates through active objects

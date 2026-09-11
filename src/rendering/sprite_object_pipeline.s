@@ -74,7 +74,7 @@ Sprite_RenderDynamicObject_Active:                      ; CODE XREF: Sprite_Rend
                 move.w  $DA(a5),d0
 Sprite_RenderDynamicObject_QueueDMATransfersLoop:       ; CODE XREF: Sprite_RenderDynamicObject+58   j  ; was: loc_20DC
                 movea.l (a4)+,a1
-                jsr     (Gfx_SetupDMATransfer).l
+                jsr     (Gfx_PrependDMATransferCommand).l
                 cmpa.w  a4,a2
                 bhi.s   Sprite_RenderDynamicObject_QueueDMATransfersLoop
                 move.w  a0,(VDPCommandQueueHead).w
@@ -115,7 +115,7 @@ Sprite_RenderDynamicObjectWithEntryAttributes_UpdateCache:  ; CODE XREF: Sprite_
                 move.w  $DA(a5),d0
 Sprite_RenderDynamicObjectWithEntryAttributes_QueueDMATransfersLoop:  ; CODE XREF: Sprite_RenderDynamicObjectWithEntryAttributes+6A   j  ; was: loc_214E
                 movea.l (a4)+,a1
-                jsr     (Gfx_SetupDMATransfer).l
+                jsr     (Gfx_PrependDMATransferCommand).l
                 cmpa.w  a4,a2
                 bhi.s   Sprite_RenderDynamicObjectWithEntryAttributes_QueueDMATransfersLoop
                 move.w  a0,(VDPCommandQueueHead).w
