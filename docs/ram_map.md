@@ -192,6 +192,26 @@ alone does not yet prove the exact player-facing counting convention.
 | `PlanetZoomAngle` | `$FFFF011A` | Planet zoom initializes this word to `$1A0`, subtracts four per frame, and passes it to the sine/cosine lookup. |
 | `PlanetZoomRadius` | `$FFFF011C` | Planet zoom initializes this fixed-point radius to `$200000` and subtracts `$8000` per frame until it reaches zero. |
 
+## Reviewed ship-sequence fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `ShipPieceScriptCursor` | `$FFFF0128` | Timeline initialization points this cursor at `ShipPiece_SpawnScript`; each matching seven-word record advances it to the following ship-piece event. |
+| `ShipDebrisCursor` | `$FFFF012C` | Timeline initialization points this cursor at `ShipDebris_SpawnScript`; each matching four-word record advances it to the following debris event. |
+| `ShipSequenceFrame` | `$FFFF0130` | The controller increments this master timeline frame, and both spawn scripts compare their next event trigger with it. |
+| `ShipSequenceState` | `$FFFF0132` | The controller uses this even word directly as the sixteen-entry `ShipSequence_TimelineStates` index. |
+| `ShipVerticalPosition` | `$FFFF0134` | Scroll integration adds velocity to this signed 16.16 position and publishes its integer word to vertical-scroll bands. |
+| `ShipVerticalVelocity` | `$FFFF0138` | Arrival and flash states adjust this signed 16.16 velocity before the scroll updater integrates it. |
+| `ShipTileLoadTimer` | `$FFFF013C` | The five arrival tile loaders use this word for their repeated `$20`-frame spacing. |
+| `ShipRowRevealProgress` | `$FFFF0140` | Eighteen consecutive words independently track the next shuffled nibble for each pattern row. |
+| `ShipRevealFrame` | `$FFFF0164` | The revealer divides this incrementing frame by eight to activate up to eighteen rows progressively. |
+| `ShipMainFadeStep` | `$FFFF0166` | The final state raises this main-palette fade step from `$FFF2` toward two. |
+| `ShipAccentFadeStep` | `$FFFF0168` | The final state lowers this accent-palette fade step from `$000E` every fourth frame. |
+| `ShipFlashState` | `$FFFF016A` | The arrival-flash dispatcher uses this even word directly as its three-entry state index. |
+| `ShipFlashTimer` | `$FFFF016C` | The active and restart flash states count this word through `$40`- and `$60`-frame phases. |
+| `ShipJitterState` | `$FFFF016E` | Only the statically unreferenced vertical-jitter dispatcher reads this private three-state index. |
+| `ShipJitterTimer` | `$FFFF0170` | Only the statically unreferenced vertical-jitter states initialize and count down this private timer. |
+
 ## Reviewed VBlank transfer and VDP-shadow fields
 
 | Symbol | Address | Static evidence |

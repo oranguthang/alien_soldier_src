@@ -1,5 +1,5 @@
 ; Finds the first free slot in the forward projectile/object pool
-Projectile_FindFreePrimarySlot:                         ; CODE XREF: Effect_SpawnStarParticle   p  ; was: sub_1C050
+Projectile_FindFreePrimarySlot:                         ; CODE XREF: ShipSequence_SpawnStarParticle   p  ; was: sub_1C050
                                         ; Projectile_FindFreeOrRecycleSlot+4   p
                 movea.w #(word_FFCF80-M68K_RAM),a0
                 move.w  (a0),d0
@@ -192,7 +192,7 @@ Math_ClearD0D1:
                 moveq   #0,d1
 ; End of function Math_ClearD0D1
 ; Clears all objects except specified types
-Object_ClearAllExceptTypes:                             ; CODE XREF: Cutscene_ShipAnimationLoop+26   j  ; was: sub_1C288
+Object_ClearAllExceptTypes:                             ; CODE XREF: ShipSequence_Update+26   j  ; was: sub_1C288
                                         ; Stage_CaterpillarShipMovement+A0   p
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 moveq   #0,d3

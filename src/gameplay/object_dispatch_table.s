@@ -193,9 +193,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_ViblackSideShotSequenceController
                 dc.l    Boss_BugmaxMain
                 dc.l    Effect_UpdateFacingFlags
-                dc.l    Cutscene_ShipObjectDispatcher
-                dc.l    Sprite_ShipDebrisUpdate
-                dc.l    Sprite_DebrisDispatcher
+                dc.l    ShipSequence_Controller
+                dc.l    ShipPiece_UpdateCountdown
+                dc.l    ShipDebris_Dispatch
                 dc.l    Boss_BackStringerMain
                 dc.l    Projectile_BackStringerFallingDropMain
                 dc.l    OrphanedCrossStageEntityDispatch

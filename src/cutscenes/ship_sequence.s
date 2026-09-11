@@ -1,22 +1,22 @@
-Cutscene_ShipObjectDispatcher:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_86F0
-                cmpi.w  #$16,(word_FF0132).l
-                bcc.s   loc_86FC
-                bsr.s   Cutscene_UpdateShipPaletteAlt
-loc_86FC:                                               ; CODE XREF: Cutscene_ShipObjectDispatcher+8   j
+ShipSequence_Controller:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_86F0
+                cmpi.w  #$16,(ShipSequenceState).l
+                bcc.s   ShipSequence_DispatchObjectState
+                bsr.s   ShipSequence_AnimateArrivalPalette
+ShipSequence_DispatchObjectState:                       ; CODE XREF: ShipSequence_Controller+8   j  ; was: loc_86FC
                 move.w  4(a5),d0
-                lea     off_8708(pc,d0.w),a0
+                lea     ShipSequence_ObjectStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Cutscene_ShipObjectDispatcher
+; End of function ShipSequence_Controller
 ; ---------------------------------------------------------------------------
-off_8708:       dc.w    Cutscene_InitShipData-*         ; DATA XREF: Cutscene_ShipObjectDispatcher+10   o
-                dc.w    Cutscene_ShipAnimationLoop-*
+ShipSequence_ObjectStates:  dc.w    ShipSequence_InitializeTimeline-*  ; DATA XREF: ShipSequence_Controller+10   o  ; was: off_8708
+                dc.w    ShipSequence_Update-*
 
-; Updates ship palette based on game state flag
-Cutscene_UpdateShipPaletteAlt:                          ; CODE XREF: Cutscene_ShipObjectDispatcher+A   p  ; was: sub_870C
+; Alternates the arrival palette between its shadow colors and a bright frame
+ShipSequence_AnimateArrivalPalette:                     ; CODE XREF: ShipSequence_Controller+A   p  ; was: sub_870C
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 btst    #0,(FrameCounter+1).w
-                bne.s   loc_8760
+                bne.s   ShipSequence_ApplyBrightArrivalPalette
                 movea.w #(PaletteShadowBuffer-M68K_RAM),a1
                 move.w  $64(a1),$64(a0)
                 move.w  $66(a1),$66(a0)
@@ -31,7 +31,7 @@ Cutscene_UpdateShipPaletteAlt:                          ; CODE XREF: Cutscene_Sh
                 move.w  $7C(a1),$7C(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_8760:                                               ; CODE XREF: Cutscene_UpdateShipPaletteAlt+A   j
+ShipSequence_ApplyBrightArrivalPalette:                 ; CODE XREF: ShipSequence_AnimateArrivalPalette+A   j  ; was: loc_8760
                 moveq   #$20,d0                         ; ' '
                 move.w  #$CEE,$64(a0)
                 move.w  #$2E,$66(a0)                    ; '.'
@@ -45,305 +45,305 @@ loc_8760:                                               ; CODE XREF: Cutscene_Up
                 add.w   d0,$7A(a0)
                 add.w   d0,$7C(a0)
                 rts
-; End of function Cutscene_UpdateShipPaletteAlt
-; Initializes ship cutscene data pointers and state
-Cutscene_InitShipData:                                  ; DATA XREF: ROM:off_8708   o  ; was: sub_879C
-                move.l  #word_900E,(dword_FF0128).l
-                move.l  #word_917A,(dword_FF012C).l
-                clr.w   (word_FF0130).l
-                clr.w   (word_FF0132).l
+; End of function ShipSequence_AnimateArrivalPalette
+; Initializes both timed spawn-script cursors and the sequence clocks
+ShipSequence_InitializeTimeline:                        ; DATA XREF: ROM:ShipSequence_ObjectStates   o  ; was: sub_879C
+                move.l  #ShipPiece_SpawnScript,(ShipPieceScriptCursor).l
+                move.l  #ShipDebris_SpawnScript,(ShipDebrisCursor).l
+                clr.w   (ShipSequenceFrame).l
+                clr.w   (ShipSequenceState).l
                 addq.w  #2,4(a5)
                 rts
-; End of function Cutscene_InitShipData
-; Main ship animation loop with frame counter and completion check
-Cutscene_ShipAnimationLoop:                             ; DATA XREF: ROM:0000870A   o  ; was: sub_87C2
-                addq.w  #1,(word_FF0130).l
-                bsr.w   Cutscene_SpawnShipSprite
-                bsr.w   Cutscene_SpawnDebrisSprite
-                bsr.w   Cutscene_ShipUpdateDispatcher
-                cmpi.w  #$6C0,(word_FF0130).l
-                bmi.s   locret_87EE
+; End of function ShipSequence_InitializeTimeline
+; Runs timed piece/debris spawning, the scene timeline, and final cleanup
+ShipSequence_Update:                                    ; DATA XREF: ROM:0000870A   o  ; was: sub_87C2
+                addq.w  #1,(ShipSequenceFrame).l
+                bsr.w   ShipSequence_SpawnScheduledPiece
+                bsr.w   ShipSequence_SpawnScheduledDebris
+                bsr.w   ShipSequence_UpdateStateAndScroll
+                cmpi.w  #$6C0,(ShipSequenceFrame).l
+                bmi.s   ShipSequence_UpdateReturn
                 bclr    #0,(byte_FFA958).w
                 moveq   #0,d0
                 moveq   #0,d1
                 jmp     Object_ClearAllExceptTypes
 ; ---------------------------------------------------------------------------
-locret_87EE:                                            ; CODE XREF: Cutscene_ShipAnimationLoop+1A   j
+ShipSequence_UpdateReturn:                              ; CODE XREF: ShipSequence_Update+1A   j  ; was: locret_87EE
                 rts
-; End of function Cutscene_ShipAnimationLoop
-; Dispatches ship update and rendering subsystems
-Cutscene_ShipUpdateDispatcher:                          ; CODE XREF: Cutscene_ShipAnimationLoop+E   p  ; was: sub_87F0
-                bsr.w   Cutscene_ShipStateDispatcher
-                bra.w   Cutscene_ShipUpdateScroll
-; End of function Cutscene_ShipUpdateDispatcher
-; Jumps to current ship cutscene state handler
-Cutscene_ShipStateDispatcher:                           ; CODE XREF: Cutscene_ShipUpdateDispatcher   p  ; was: sub_87F8
-                move.w  (word_FF0132).l,d0
-                lea     off_8806(pc,d0.w),a0
+; End of function ShipSequence_Update
+; Advances the current timeline state and then integrates vertical scrolling
+ShipSequence_UpdateStateAndScroll:                      ; CODE XREF: ShipSequence_Update+E   p  ; was: sub_87F0
+                bsr.w   ShipSequence_DispatchTimelineState
+                bra.w   ShipSequence_UpdateVerticalScroll
+; End of function ShipSequence_UpdateStateAndScroll
+; Dispatches the sixteen-state ship and pattern-reveal timeline
+ShipSequence_DispatchTimelineState:                     ; CODE XREF: ShipSequence_UpdateStateAndScroll   p  ; was: sub_87F8
+                move.w  (ShipSequenceState).l,d0
+                lea     ShipSequence_TimelineStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Cutscene_ShipStateDispatcher
+; End of function ShipSequence_DispatchTimelineState
 ; ---------------------------------------------------------------------------
-off_8806:       dc.w    Cutscene_ShipInitWait-*         ; DATA XREF: Cutscene_ShipStateDispatcher+6   o
-                dc.w    Cutscene_LoadShipTiles1-*
-                dc.w    Cutscene_LoadShipTiles2-*
-                dc.w    Cutscene_LoadShipTiles3-*
-                dc.w    Cutscene_LoadShipTiles4-*
-                dc.w    Cutscene_LoadShipTiles5-*
-                dc.w    Cutscene_ShipTilesComplete-*
-                dc.w    Cutscene_ShipFadeInAlt-*
-                dc.w    Cutscene_ShipZoomInAlt-*
-                dc.w    Cutscene_WaitShipPosition-*
-                dc.w    Cutscene_ShipExitPrepare-*
-                dc.w    Cutscene_ShipInitScene-*
-                dc.w    Cutscene_ShipInitScene_RenderLoop-*
-                dc.w    Cutscene_ShipRenderLoop-*
-                dc.w    Cutscene_ShipFadeTransition-*
-                dc.w    nullsub_20-*
+ShipSequence_TimelineStates:    dc.w    ShipSequence_WaitForNameAndArrival-*  ; DATA XREF: ShipSequence_DispatchTimelineState+6   o  ; was: off_8806
+                dc.w    ShipSequence_LoadTileBatch1-*
+                dc.w    ShipSequence_LoadTileBatch2-*
+                dc.w    ShipSequence_LoadTileBatch3-*
+                dc.w    ShipSequence_LoadTileBatch4-*
+                dc.w    ShipSequence_LoadTileBatch5-*
+                dc.w    ShipSequence_WaitForTileBatches-*
+                dc.w    ShipSequence_DecelerateVerticalScroll-*
+                dc.w    ShipSequence_AccelerateVerticalScroll-*
+                dc.w    ShipSequence_WaitForVerticalPosition-*
+                dc.w    ShipSequence_FlashAndClearObjects-*
+                dc.w    ShipSequence_InitializePatternReveal-*
+                dc.w    ShipSequence_RevealPattern-*
+                dc.w    ShipSequence_WaitForBackgroundLoad-*
+                dc.w    ShipSequence_FadeOutPattern-*
+                dc.w    ShipSequence_Complete-*
 
-; Waits for frame threshold then initializes ship sprite
-Cutscene_ShipInitWait:                                  ; DATA XREF: ROM:off_8806   o  ; was: sub_8826
-                cmpi.w  #$40,(word_FF0130).l            ; '@'
-                beq.s   Cutscene_ShowShipName
-                cmpi.w  #$200,(word_FF0130).l
+; Shows the ship name at frame `$40`, then starts the arrival at frame `$200`
+ShipSequence_WaitForNameAndArrival:                     ; DATA XREF: ROM:ShipSequence_TimelineStates   o  ; was: sub_8826
+                cmpi.w  #$40,(ShipSequenceFrame).l      ; '@'
+                beq.s   ShipSequence_ShowName
+                cmpi.w  #$200,(ShipSequenceFrame).l
                 bcs.w   Cutscene_Return
                 move.b  #1,(byte_FFA95A).w
-                move.l  #$FFC00000,(dword_FF0134).l
-                clr.l   (dword_FF0138).l
-                addq.w  #2,(word_FF0132).l
+                move.l  #$FFC00000,(ShipVerticalPosition).l
+                clr.l   (ShipVerticalVelocity).l
+                addq.w  #2,(ShipSequenceState).l
                 move.b  #$D5,d0
                 jsr     (Sound_PlaySFX).l
                 rts
-; End of function Cutscene_ShipInitWait
-; Displays ship name text using UI rendering system
-Cutscene_ShowShipName:                                  ; CODE XREF: Cutscene_ShipInitWait+8   j  ; was: sub_8864
+; End of function ShipSequence_WaitForNameAndArrival
+; Starts ship-name script zero in the shared message-sequence engine
+ShipSequence_ShowName:                                  ; CODE XREF: ShipSequence_WaitForNameAndArrival+8   j  ; was: sub_8864
                 move.w  #0,d0
                 jsr     (ShipName_StartScript).l
                 rts
-; End of function Cutscene_ShowShipName
-; Loads first batch of compressed ship tiles
-Cutscene_LoadShipTiles1:                                ; DATA XREF: ROM:00008808   o  ; was: sub_8870
-                movea.l #word_8DA4,a0
+; End of function ShipSequence_ShowName
+; Loads the first arrival tile batch and starts upward scrolling at -1 pixel/frame
+ShipSequence_LoadTileBatch1:                            ; DATA XREF: ROM:00008808   o  ; was: sub_8870
+                movea.l #ShipSequence_TileBatch1,a0
                 jsr     (Gfx_LoadCompressedTiles).l
-                move.w  #$20,(word_FF013C).l            ; ' '
-                move.w  #$FFFF,(dword_FF0138).l
-                addq.w  #2,(word_FF0132).l
+                move.w  #$20,(ShipTileLoadTimer).l      ; ' '
+                move.w  #$FFFF,(ShipVerticalVelocity).l
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_LoadShipTiles1
-; Loads second batch of compressed ship tiles
-Cutscene_LoadShipTiles2:                                ; DATA XREF: ROM:0000880A   o  ; was: sub_8894
-                subq.w  #1,(word_FF013C).l
+; End of function ShipSequence_LoadTileBatch1
+; Loads the second arrival tile batch after a `$20`-frame delay
+ShipSequence_LoadTileBatch2:                            ; DATA XREF: ROM:0000880A   o  ; was: sub_8894
+                subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
-                movea.l #word_8DAC,a0
+                movea.l #ShipSequence_TileBatch2,a0
                 jsr     (Gfx_LoadCompressedTiles).l
-                move.w  #$20,(word_FF013C).l            ; ' '
-                addq.w  #2,(word_FF0132).l
+                move.w  #$20,(ShipTileLoadTimer).l      ; ' '
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_LoadShipTiles2
-; Loads third batch of compressed ship tiles
-Cutscene_LoadShipTiles3:                                ; DATA XREF: ROM:0000880C   o  ; was: sub_88BA
-                subq.w  #1,(word_FF013C).l
+; End of function ShipSequence_LoadTileBatch2
+; Loads the third arrival tile batch after a `$20`-frame delay
+ShipSequence_LoadTileBatch3:                            ; DATA XREF: ROM:0000880C   o  ; was: sub_88BA
+                subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
-                movea.l #word_8DB4,a0
+                movea.l #ShipSequence_TileBatch3,a0
                 jsr     (Gfx_LoadCompressedTiles).l
-                move.w  #$20,(word_FF013C).l            ; ' '
-                addq.w  #2,(word_FF0132).l
+                move.w  #$20,(ShipTileLoadTimer).l      ; ' '
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_LoadShipTiles3
-; Loads fourth batch of compressed ship tiles
-Cutscene_LoadShipTiles4:                                ; DATA XREF: ROM:0000880E   o  ; was: sub_88E0
-                subq.w  #1,(word_FF013C).l
+; End of function ShipSequence_LoadTileBatch3
+; Loads the fourth arrival tile batch after a `$20`-frame delay
+ShipSequence_LoadTileBatch4:                            ; DATA XREF: ROM:0000880E   o  ; was: sub_88E0
+                subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
-                movea.l #word_8DBC,a0
+                movea.l #ShipSequence_TileBatch4,a0
                 jsr     (Gfx_LoadCompressedTiles).l
-                move.w  #$20,(word_FF013C).l            ; ' '
-                addq.w  #2,(word_FF0132).l
+                move.w  #$20,(ShipTileLoadTimer).l      ; ' '
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_LoadShipTiles4
-; Loads fifth batch of compressed ship tiles
-Cutscene_LoadShipTiles5:                                ; DATA XREF: ROM:00008810   o  ; was: sub_8906
-                subq.w  #1,(word_FF013C).l
+; End of function ShipSequence_LoadTileBatch4
+; Loads the fifth arrival tile batch after a `$20`-frame delay
+ShipSequence_LoadTileBatch5:                            ; DATA XREF: ROM:00008810   o  ; was: sub_8906
+                subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
-                movea.l #word_8DC4,a0
+                movea.l #ShipSequence_TileBatch5,a0
                 jsr     (Gfx_LoadCompressedTiles).l
-                move.w  #$20,(word_FF013C).l            ; ' '
-                addq.w  #2,(word_FF0132).l
+                move.w  #$20,(ShipTileLoadTimer).l      ; ' '
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_LoadShipTiles5
-; Advances to next state after all ship tiles loaded
-Cutscene_ShipTilesComplete:                             ; DATA XREF: ROM:00008812   o  ; was: sub_892C
-                subq.w  #1,(word_FF013C).l
+; End of function ShipSequence_LoadTileBatch5
+; Holds the fifth arrival tile batch for its final `$20`-frame delay
+ShipSequence_WaitForTileBatches:                        ; DATA XREF: ROM:00008812   o  ; was: sub_892C
+                subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
-                addq.w  #2,(word_FF0132).l
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_ShipTilesComplete
-; Gradually fades in ship sprite by incrementing alpha
-Cutscene_ShipFadeInAlt:                                 ; DATA XREF: ROM:00008814   o  ; was: sub_893E
-                addi.l  #$10000,(dword_FF0138).l
-                tst.w   (dword_FF0138).l
+; End of function ShipSequence_WaitForTileBatches
+; Raises the signed 16.16 vertical velocity from -1 to zero, then enables priority
+ShipSequence_DecelerateVerticalScroll:                  ; DATA XREF: ROM:00008814   o  ; was: sub_893E
+                addi.l  #$10000,(ShipVerticalVelocity).l
+                tst.w   (ShipVerticalVelocity).l
                 bmi.w   Cutscene_Return
-                bsr.w   Gfx_EnablePriorityPlane
-                addq.w  #2,(word_FF0132).l
+                bsr.w   ShipSequence_EnableArrivalPlanePriority
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_ShipFadeInAlt
-; Zooms in ship sprite by incrementing scale factor
-Cutscene_ShipZoomInAlt:                                 ; DATA XREF: ROM:00008816   o  ; was: sub_895E
-                addi.l  #$2000,(dword_FF0138).l
-                cmpi.l  #$8000,(dword_FF0138).l
+; End of function ShipSequence_DecelerateVerticalScroll
+; Accelerates the vertical scroll velocity from zero to `$00008000`
+ShipSequence_AccelerateVerticalScroll:                  ; DATA XREF: ROM:00008816   o  ; was: sub_895E
+                addi.l  #$2000,(ShipVerticalVelocity).l
+                cmpi.l  #$8000,(ShipVerticalVelocity).l
                 bcs.w   Cutscene_Return
-                addq.w  #2,(word_FF0132).l
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_ShipZoomInAlt
-; Waits for ship to reach position before advancing state
-Cutscene_WaitShipPosition:                              ; DATA XREF: ROM:00008818   o  ; was: sub_897E
-                cmpi.w  #$FF20,(dword_FF0134).l
+; End of function ShipSequence_AccelerateVerticalScroll
+; Waits for vertical position `$FF20`, restarts the name script, and arms flashing
+ShipSequence_WaitForVerticalPosition:                   ; DATA XREF: ROM:00008818   o  ; was: sub_897E
+                cmpi.w  #$FF20,(ShipVerticalPosition).l
                 bcs.w   Cutscene_Return
                 move.w  #0,d0
                 jsr     (ShipName_StartScript).l
-                clr.w   (word_FF016A).l
-                addq.w  #2,(word_FF0132).l
+                clr.w   (ShipFlashState).l
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_WaitShipPosition
-; Prepares ship exit animation by toggling sprite flag
-Cutscene_ShipExitPrepare:                               ; DATA XREF: ROM:0000881A   o  ; was: sub_89A2
-                bsr.w   Cutscene_ShipFlashDispatcher
+; End of function ShipSequence_WaitForVerticalPosition
+; Runs the ship flash until frame `$588`, then clears 46 arrival objects
+ShipSequence_FlashAndClearObjects:                      ; DATA XREF: ROM:0000881A   o  ; was: sub_89A2
+                bsr.w   ShipSequence_DispatchFlashState
                 eori.w  #$8000,(word_FFC6EE).w
-                cmpi.w  #$588,(word_FF0130).l
+                cmpi.w  #$588,(ShipSequenceFrame).l
                 bcs.w   Cutscene_Return
-                bsr.w   Gfx_DisablePriorityPlane
+                bsr.w   ShipSequence_DisableArrivalPlanePriority
                 lea     (word_FFC6E2).w,a0
                 move.w  #$2D,d0                         ; '-'
-loc_89C4:                                               ; CODE XREF: Cutscene_ShipExitPrepare+2A   j
+ShipSequence_ClearNextObject:                           ; CODE XREF: ShipSequence_FlashAndClearObjects+2A   j  ; was: loc_89C4
                 move.w  #$1000,(a0)
                 adda.w  #$60,a0                         ; '`'
-                dbf     d0,loc_89C4
-                addq.w  #2,(word_FF0132).l
+                dbf     d0,ShipSequence_ClearNextObject
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_ShipExitPrepare
-; Dispatches to ship flash animation state handlers
-Cutscene_ShipFlashDispatcher:                           ; CODE XREF: Cutscene_ShipExitPrepare   p  ; was: sub_89D8
-                move.w  (word_FF016A).l,d0
-                lea     off_89E6(pc,d0.w),a0
+; End of function ShipSequence_FlashAndClearObjects
+; Dispatches the three-state arrival flash loop
+ShipSequence_DispatchFlashState:                        ; CODE XREF: ShipSequence_FlashAndClearObjects   p  ; was: sub_89D8
+                move.w  (ShipFlashState).l,d0
+                lea     ShipSequence_FlashStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Cutscene_ShipFlashDispatcher
+; End of function ShipSequence_DispatchFlashState
 ; ---------------------------------------------------------------------------
-off_89E6:       dc.w    Cutscene_InitShipFlash-*        ; DATA XREF: Cutscene_ShipFlashDispatcher+6   o
-                dc.w    Cutscene_ShipFlashLoop-*
-                dc.w    Cutscene_RestartShipFlash-*
+ShipSequence_FlashStates:   dc.w    ShipSequence_StartFlash-*  ; DATA XREF: ShipSequence_DispatchFlashState+6   o  ; was: off_89E6
+                dc.w    ShipSequence_UpdateFlash-*
+                dc.w    ShipSequence_RestartFlash-*
 
-; Initializes ship flash effect with sound and timer
-Cutscene_InitShipFlash:                                 ; CODE XREF: Cutscene_RestartShipFlash+A   j  ; was: sub_89EC
-                                        ; DATA XREF: ROM:off_89E6   o
-                move.l  #$4000,(dword_FF0138).l
-                move.w  #$40,(word_FF016C).l            ; '@'
-                move.w  #2,(word_FF016A).l
+; Starts one flash cycle with velocity `$4000`, a `$40`-frame timer, and SFX `$D8`
+ShipSequence_StartFlash:                                ; CODE XREF: ShipSequence_RestartFlash+A   j  ; was: sub_89EC
+                                        ; DATA XREF: ROM:ShipSequence_FlashStates   o
+                move.l  #$4000,(ShipVerticalVelocity).l
+                move.w  #$40,(ShipFlashTimer).l         ; '@'
+                move.w  #2,(ShipFlashState).l
                 move.b  #$D8,d0
                 jsr     (Sound_PlaySFX).l
                 rts
-; End of function Cutscene_InitShipFlash
-; Animates ship flash by toggling palette colors
-Cutscene_ShipFlashLoop:                                 ; DATA XREF: ROM:000089E8   o  ; was: sub_8A12
-                bsr.w   Cutscene_UpdateShipColor
+; End of function ShipSequence_StartFlash
+; Toggles the first H-scroll word while advancing the flash timer and position
+ShipSequence_UpdateFlash:                               ; DATA XREF: ROM:000089E8   o  ; was: sub_8A12
+                bsr.w   ShipSequence_StepFlashPosition
                 eori.w  #2,(HScrollBuffer).w
-                subq.w  #1,(word_FF016C).l
+                subq.w  #1,(ShipFlashTimer).l
                 bne.w   Cutscene_Return
-                move.l  #$FFFFC000,(dword_FF0138).l
-                move.w  #$60,(word_FF016C).l            ; '`'
-                addq.w  #2,(word_FF016A).l
+                move.l  #$FFFFC000,(ShipVerticalVelocity).l
+                move.w  #$60,(ShipFlashTimer).l         ; '`'
+                addq.w  #2,(ShipFlashState).l
                 rts
-; End of function Cutscene_ShipFlashLoop
-; Updates ship color palette index periodically
-Cutscene_UpdateShipColor:                               ; CODE XREF: Cutscene_ShipFlashLoop   p  ; was: sub_8A40
-                move.w  (word_FF016C).l,d0
+; End of function ShipSequence_UpdateFlash
+; Moves the vertical position four pixels every `$20` flash ticks
+ShipSequence_StepFlashPosition:                         ; CODE XREF: ShipSequence_UpdateFlash   p  ; was: sub_8A40
+                move.w  (ShipFlashTimer).l,d0
                 andi.w  #$1F,d0
                 bne.w   Cutscene_Return
-                addi.w  #4,(dword_FF0134).l
+                addi.w  #4,(ShipVerticalPosition).l
                 rts
-; End of function Cutscene_UpdateShipColor
-; Restarts ship flash animation after delay
-Cutscene_RestartShipFlash:                              ; DATA XREF: ROM:000089EA   o  ; was: sub_8A58
-                subq.w  #1,(word_FF016C).l
+; End of function ShipSequence_StepFlashPosition
+; Restarts the flash cycle after its `$60`-frame second phase
+ShipSequence_RestartFlash:                              ; DATA XREF: ROM:000089EA   o  ; was: sub_8A58
+                subq.w  #1,(ShipFlashTimer).l
                 bne.w   Cutscene_Return
-                bra.w   Cutscene_InitShipFlash
-; End of function Cutscene_RestartShipFlash
-; Dispatches to ship visual effect handlers
-Cutscene_ShipEffectDispatcher:
-                move.w  (word_FF016E).l,d0              ; was: sub_8A66
-                lea     off_8A74(pc,d0.w),a0
+                bra.w   ShipSequence_StartFlash
+; End of function ShipSequence_RestartFlash
+; Unreferenced three-state vertical-jitter experiment retained from the ROM
+OrphanedShipJitter_Dispatch:
+                move.w  (ShipJitterState).l,d0          ; was: sub_8A66
+                lea     OrphanedShipJitter_States(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Cutscene_ShipEffectDispatcher
+; End of function OrphanedShipJitter_Dispatch
 ; ---------------------------------------------------------------------------
-off_8A74:       dc.w    Cutscene_InitShipEffect-*       ; DATA XREF: Cutscene_ShipEffectDispatcher+6   o
-                dc.w    Cutscene_ShipTimerCheck-*
-                dc.w    Cutscene_ShipFlickerControl-*
+OrphanedShipJitter_States:  dc.w    OrphanedShipJitter_Start-*  ; DATA XREF: OrphanedShipJitter_Dispatch+6   o  ; was: off_8A74
+                dc.w    OrphanedShipJitter_StartDelay-*
+                dc.w    OrphanedShipJitter_Update-*
 
-; Initializes ship visual effect and advances state
-Cutscene_InitShipEffect:                                ; DATA XREF: ROM:off_8A74   o  ; was: sub_8A7A
-                move.w  #1,(word_FF0170).l
-                addq.w  #2,(word_FF016E).l
+; Seeds the orphaned jitter timer and advances to its delay state
+OrphanedShipJitter_Start:                               ; DATA XREF: ROM:OrphanedShipJitter_States   o  ; was: sub_8A7A
+                move.w  #1,(ShipJitterTimer).l
+                addq.w  #2,(ShipJitterState).l
                 rts
-; End of function Cutscene_InitShipEffect
-; Decrements timer and advances cutscene state when timer expires
-Cutscene_ShipTimerCheck:                                ; DATA XREF: ROM:00008A76   o  ; was: sub_8A8A
-                subq.w  #1,(word_FF0170).l
+; End of function OrphanedShipJitter_Start
+; Waits one tick, loads a `$20`-frame jitter interval, and advances state
+OrphanedShipJitter_StartDelay:                          ; DATA XREF: ROM:00008A76   o  ; was: sub_8A8A
+                subq.w  #1,(ShipJitterTimer).l
                 bne.w   Cutscene_Return
-                move.w  #$20,(word_FF0170).l            ; ' '
-                addq.w  #2,(word_FF016E).l
+                move.w  #$20,(ShipJitterTimer).l        ; ' '
+                addq.w  #2,(ShipJitterState).l
                 rts
-; End of function Cutscene_ShipTimerCheck
-; Toggles flicker effect and adjusts ship vertical position
-Cutscene_ShipFlickerControl:                            ; DATA XREF: ROM:00008A78   o  ; was: sub_8AA4
+; End of function OrphanedShipJitter_StartDelay
+; Alternates a shared scroll word and offsets vertical position by one pixel
+OrphanedShipJitter_Update:                              ; DATA XREF: ROM:00008A78   o  ; was: sub_8AA4
                 eori.w  #2,(dword_FFA900).w
                 tst.w   (dword_FFA900).w
-                bne.s   Cutscene_ShipMoveUp
-                subi.w  #1,(dword_FF0134).l
-                bra.s   loc_8AC2
-; End of function Cutscene_ShipFlickerControl
-; Increments ship position and manages timer for upward movement
-Cutscene_ShipMoveUp:                                    ; CODE XREF: Cutscene_ShipFlickerControl+A   j  ; was: sub_8ABA
-                addi.w  #1,(dword_FF0134).l
-loc_8AC2:                                               ; CODE XREF: Cutscene_ShipFlickerControl+14   j
-                subq.w  #1,(word_FF0170).l
+                bne.s   OrphanedShipJitter_IncrementPosition
+                subi.w  #1,(ShipVerticalPosition).l
+                bra.s   OrphanedShipJitter_Tick
+; End of function OrphanedShipJitter_Update
+; Applies the positive half of the jitter and advances its repeating timer
+OrphanedShipJitter_IncrementPosition:                   ; CODE XREF: OrphanedShipJitter_Update+A   j  ; was: sub_8ABA
+                addi.w  #1,(ShipVerticalPosition).l
+OrphanedShipJitter_Tick:                                ; CODE XREF: OrphanedShipJitter_Update+14   j  ; was: loc_8AC2
+                subq.w  #1,(ShipJitterTimer).l
                 bne.w   Cutscene_Return
-                move.w  #$88,(word_FF0170).l
-                subq.w  #2,(word_FF016E).l
+                move.w  #$88,(ShipJitterTimer).l
+                subq.w  #2,(ShipJitterState).l
                 rts
-; End of function Cutscene_ShipMoveUp
-; Initializes Sega screen ship scene with sprites and effects
-Cutscene_ShipInitScene:                                 ; DATA XREF: ROM:0000881C   o  ; was: sub_8ADC
+; End of function OrphanedShipJitter_IncrementPosition
+; Queues eighteen pattern-row tilemaps and clears their reveal progress
+ShipSequence_InitializePatternReveal:                   ; DATA XREF: ROM:0000881C   o  ; was: sub_8ADC
                 move.w  #$A400,d0
                 move.w  #$6022,d4
-                movea.l #word_8EFE,a0
+                movea.l #ShipPattern_RowTileStreams,a0
                 move.w  #$11,d7
-loc_8AEE:                                               ; CODE XREF: Cutscene_ShipInitScene+1C   j
-                jsr     Gfx_BuildDMATransfer(pc)        ; (pc)
+ShipSequence_QueueNextPatternRow:                       ; CODE XREF: ShipSequence_InitializePatternReveal+1C   j  ; was: loc_8AEE
+                jsr     ShipPattern_QueueRowTilemap(pc)  ; (pc)
                 nop
                 addi.w  #$80,d4
-                dbf     d7,loc_8AEE
-                lea     (word_FF0140).l,a0
+                dbf     d7,ShipSequence_QueueNextPatternRow
+                lea     (ShipRowRevealProgress).l,a0
                 move.w  #$11,d1
-loc_8B06:                                               ; CODE XREF: Cutscene_ShipInitScene+2C   j
+ShipSequence_ClearNextRowProgress:                      ; CODE XREF: ShipSequence_InitializePatternReveal+2C   j  ; was: loc_8B06
                 clr.w   (a0)+
-                dbf     d1,loc_8B06
-                clr.w   (word_FF0164).l
+                dbf     d1,ShipSequence_ClearNextRowProgress
+                clr.w   (ShipRevealFrame).l
                 move.b  #$30,d0                         ; '0'
                 jsr     (Sound_QueueRequest).l
-                move.l  #$8000,(dword_FF0138).l
+                move.l  #$8000,(ShipVerticalVelocity).l
                 move.w  #$8000,(word_FF808A).w
-                bsr.w   Gfx_ClearPlaneBuffer
-                addq.w  #2,(word_FF0132).l
-; Renders SEGA logo animation and loads ship tiles
-Cutscene_ShipInitScene_RenderLoop:                      ; DATA XREF: ROM:0000881E   o  ; was: loc_8B36
+                bsr.w   ShipPattern_ClearBuffer
+                addq.w  #2,(ShipSequenceState).l
+; Reveals the staged pattern row by row while emitting radial star particles
+ShipSequence_RevealPattern:                             ; DATA XREF: ROM:0000881E   o  ; was: loc_8B36
                 bset    #0,(byte_FFA958).w
-                bsr.w   Gfx_SetupSegaPalette
-                bsr.w   Gfx_RenderAnimatedText
-                bsr.w   Gfx_WriteVDPCommands
-                bsr.w   Effect_SpawnStarParticle
-                cmpi.w  #$668,(word_FF0130).l
+                bsr.w   ShipSequence_ApplyPatternPalette
+                bsr.w   ShipPattern_RevealRows
+                bsr.w   ShipPattern_QueueBufferUpload
+                bsr.w   ShipSequence_SpawnStarParticle
+                cmpi.w  #$668,(ShipSequenceFrame).l
                 bcs.w   Cutscene_Return
-                movea.l #word_8DE4,a0
+                movea.l #ShipSequence_ClearedArrivalTiles,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 clr.w   (word_FF808A).w
                 move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
@@ -351,55 +351,55 @@ Cutscene_ShipInitScene_RenderLoop:                      ; DATA XREF: ROM:0000881
                 move.w  #0,(word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
                 bclr    #0,(byte_FFA958).w
-                move.w  #$10,(dword_FF0134).l
-                clr.l   (dword_FF0138).l
-                bsr.w   Cutscene_ShipUpdateScroll
-                addq.w  #2,(word_FF0132).l
+                move.w  #$10,(ShipVerticalPosition).l
+                clr.l   (ShipVerticalVelocity).l
+                bsr.w   ShipSequence_UpdateVerticalScroll
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_ShipInitScene
-; Renders scrolling background multiple times per frame
-Cutscene_ShipRenderLoop:                                ; DATA XREF: ROM:00008820   o  ; was: sub_8BA2
-                bsr.w   Gfx_SetupSegaPalette
+; End of function ShipSequence_InitializePatternReveal
+; Advances background loading four steps per frame before starting the final fade
+ShipSequence_WaitForBackgroundLoad:                     ; DATA XREF: ROM:00008820   o  ; was: sub_8BA2
+                bsr.w   ShipSequence_ApplyPatternPalette
                 jsr     (Gfx_RenderScrollingBackground).l
                 jsr     (Gfx_RenderScrollingBackground).l
                 jsr     (Gfx_RenderScrollingBackground).l
                 jsr     (Gfx_RenderScrollingBackground).l
                 tst.w   (word_FFA944).w
                 bpl.w   Cutscene_Return
-                move.w  #$FFF2,(word_FF0166).l
-                move.w  #$E,(word_FF0168).l
-                addq.w  #2,(word_FF0132).l
+                move.w  #$FFF2,(ShipMainFadeStep).l
+                move.w  #$E,(ShipAccentFadeStep).l
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_ShipRenderLoop
-; Applies palette fade transition effects to ship scene
-Cutscene_ShipFadeTransition:                            ; DATA XREF: ROM:00008822   o  ; was: sub_8BDE
+; End of function ShipSequence_WaitForBackgroundLoad
+; Fades the main and accent palettes in opposite directions, then removes the controller
+ShipSequence_FadeOutPattern:                            ; DATA XREF: ROM:00008822   o  ; was: sub_8BDE
                 lea     (PaletteActiveBuffer).w,a0
-                move.w  (word_FF0166).l,d0
+                move.w  (ShipMainFadeStep).l,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 lea     (word_FFE320).w,a0
-                move.w  (word_FF0168).l,d0
+                move.w  (ShipAccentFadeStep).l,d0
                 move.w  #$F,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
-                subq.w  #2,(word_FF0168).l
-                addq.w  #2,(word_FF0166).l
-                cmpi.w  #2,(word_FF0166).l
+                subq.w  #2,(ShipAccentFadeStep).l
+                addq.w  #2,(ShipMainFadeStep).l
+                cmpi.w  #2,(ShipMainFadeStep).l
                 bne.w   Cutscene_Return
                 move.w  #$1000,2(a5)
-                addq.w  #2,(word_FF0132).l
+                addq.w  #2,(ShipSequenceState).l
                 rts
-; End of function Cutscene_ShipFadeTransition
-nullsub_20:                                             ; DATA XREF: ROM:00008824   o
+; End of function ShipSequence_FadeOutPattern
+ShipSequence_Complete:                                  ; DATA XREF: ROM:00008824   o  ; was: nullsub_20
                 rts
-; End of function nullsub_20
+; End of function ShipSequence_Complete
 
-; Spawns star particles with random trajectory calculations
-Effect_SpawnStarParticle:                               ; CODE XREF: Cutscene_ShipInitScene+6C   p  ; was: sub_8C42
+; Spawns one radial star particle around the moving pattern center
+ShipSequence_SpawnStarParticle:                         ; CODE XREF: ShipSequence_InitializePatternReveal+6C   p  ; was: sub_8C42
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Cutscene_Return
                 lea     (Effect_StarParticleSpriteFrames).l,a1
@@ -424,8 +424,8 @@ Effect_SpawnStarParticle:                               ; CODE XREF: Cutscene_Sh
                 move.l  d1,d3
                 swap    d1
                 addi.w  #$180,d1
-                add.w   (dword_FF0134).l,d1
-                move.w  (word_FF0130).l,d0
+                add.w   (ShipVerticalPosition).l,d1
+                move.w  (ShipSequenceFrame).l,d0
                 subi.w  #$5C0,d0
                 lsr.w   #1,d0
                 add.w   d0,d1
@@ -435,10 +435,10 @@ Effect_SpawnStarParticle:                               ; CODE XREF: Cutscene_Sh
                 asr.l   #4,d3
                 move.l  d3,$1C(a0)
                 rts
-; End of function Effect_SpawnStarParticle
-; Sets up palette fade for Sega screen with gradient colors
-Gfx_SetupSegaPalette:                                   ; CODE XREF: Cutscene_ShipInitScene+60   p  ; was: sub_8CC0
-                                        ; sub_8BA2   p
+; End of function ShipSequence_SpawnStarParticle
+; Applies fixed fade steps and restores five grayscale accent colors
+ShipSequence_ApplyPatternPalette:                       ; CODE XREF: ShipSequence_InitializePatternReveal+60   p  ; was: sub_8CC0
+                                        ; ShipSequence_WaitForBackgroundLoad   p
                 lea     (PaletteActiveBuffer).w,a0
                 move.w  #$FFF2,d0
                 move.w  #$3F,d5                         ; '?'
@@ -455,96 +455,96 @@ Gfx_SetupSegaPalette:                                   ; CODE XREF: Cutscene_Sh
                 move.w  #$888,(word_FFE37C).w
                 move.w  #$AAA,(word_FFE37E).w
                 rts
-; End of function Gfx_SetupSegaPalette
-; Updates horizontal scrolling values for ship parallax effect
-Cutscene_ShipUpdateScroll:                              ; CODE XREF: Cutscene_ShipUpdateDispatcher+4   j  ; was: sub_8D0C
-                                        ; Cutscene_ShipInitScene+BA   p
-                cmpi.w  #$1A,(word_FF0132).l
+; End of function ShipSequence_ApplyPatternPalette
+; Integrates signed 16.16 vertical position and publishes it to V-scroll bands
+ShipSequence_UpdateVerticalScroll:                      ; CODE XREF: ShipSequence_UpdateStateAndScroll+4   j  ; was: sub_8D0C
+                                        ; ShipSequence_InitializePatternReveal+BA   p
+                cmpi.w  #$1A,(ShipSequenceState).l
                 bcc.w   Cutscene_Return
-                move.l  (dword_FF0138).l,d0
-                add.l   (dword_FF0134).l,d0
-                move.l  d0,(dword_FF0134).l
+                move.l  (ShipVerticalVelocity).l,d0
+                add.l   (ShipVerticalPosition).l,d0
+                move.l  d0,(ShipVerticalPosition).l
                 lea     (VScrollBuffer).w,a0
-                move.w  (dword_FF0134).l,d0
+                move.w  (ShipVerticalPosition).l,d0
                 neg.w   d0
                 move.w  #$F,d7
-loc_8D3A:                                               ; CODE XREF: Cutscene_ShipUpdateScroll+32   j
+ShipSequence_WriteMainVScroll:                          ; CODE XREF: ShipSequence_UpdateVerticalScroll+32   j  ; was: loc_8D3A
                 move.w  d0,(a0)
                 addq.w  #4,a0
-                dbf     d7,loc_8D3A
-                cmpi.w  #$18,(word_FF0132).l
+                dbf     d7,ShipSequence_WriteMainVScroll
+                cmpi.w  #$18,(ShipSequenceState).l
                 bcs.w   Cutscene_Return
                 lea     (word_FFEC22).w,a0
                 move.w  #4,d7
-loc_8D56:                                               ; CODE XREF: Cutscene_ShipUpdateScroll+4E   j
+ShipSequence_WriteLowerVScroll:                         ; CODE XREF: ShipSequence_UpdateVerticalScroll+4E   j  ; was: loc_8D56
                 move.w  d0,(a0)
                 addq.w  #4,a0
-                dbf     d7,loc_8D56
+                dbf     d7,ShipSequence_WriteLowerVScroll
                 rts
-; End of function Cutscene_ShipUpdateScroll
-; Sets priority bit on plane tiles and loads compressed graphics
-Gfx_EnablePriorityPlane:                                ; CODE XREF: Cutscene_ShipFadeInAlt+14   p  ; was: sub_8D60
+; End of function ShipSequence_UpdateVerticalScroll
+; Sets priority on `$160` staged arrival tiles and reloads their descriptor
+ShipSequence_EnableArrivalPlanePriority:                ; CODE XREF: ShipSequence_DecelerateVerticalScroll+14   p  ; was: sub_8D60
                 lea     (word_FF2020).l,a0
                 move.w  #$15F,d1
-loc_8D6A:                                               ; CODE XREF: Gfx_EnablePriorityPlane+12   j
+ShipSequence_SetNextPriorityBit:                        ; CODE XREF: ShipSequence_EnableArrivalPlanePriority+12   j  ; was: loc_8D6A
                 move.w  (a0),d0
                 ori.w   #$8000,d0
                 move.w  d0,(a0)+
-                dbf     d1,loc_8D6A
-                movea.l #word_8DCE,a0
+                dbf     d1,ShipSequence_SetNextPriorityBit
+                movea.l #ShipSequence_ArrivalPriorityTiles,a0
                 jmp     Gfx_LoadCompressedTiles
-; End of function Gfx_EnablePriorityPlane
-; Clears priority bit on plane tiles and loads compressed graphics
-Gfx_DisablePriorityPlane:                               ; CODE XREF: Cutscene_ShipExitPrepare+16   p  ; was: sub_8D82
+; End of function ShipSequence_EnableArrivalPlanePriority
+; Clears priority on `$160` staged arrival tiles and reloads their descriptor
+ShipSequence_DisableArrivalPlanePriority:               ; CODE XREF: ShipSequence_FlashAndClearObjects+16   p  ; was: sub_8D82
                 lea     (word_FF2020).l,a0
                 move.w  #$15F,d1
-loc_8D8C:                                               ; CODE XREF: Gfx_DisablePriorityPlane+12   j
+ShipSequence_ClearNextPriorityBit:                      ; CODE XREF: ShipSequence_DisableArrivalPlanePriority+12   j  ; was: loc_8D8C
                 move.w  (a0),d0
                 andi.w  #$7FFF,d0
                 move.w  d0,(a0)+
-                dbf     d1,loc_8D8C
-                movea.l #word_8DCE,a0
+                dbf     d1,ShipSequence_ClearNextPriorityBit
+                movea.l #ShipSequence_ArrivalPriorityTiles,a0
                 jmp     Gfx_LoadCompressedTiles
-; End of function Gfx_DisablePriorityPlane
+; End of function ShipSequence_DisableArrivalPlanePriority
 ; ---------------------------------------------------------------------------
-word_8DA4:      dc.w    $4020, $2000, $100, $102
-                                        ; DATA XREF: Cutscene_LoadShipTiles1   o
-word_8DAC:      dc.w    $4220, $2000, $100, $304
-                                        ; DATA XREF: Cutscene_LoadShipTiles2+A   o
-word_8DB4:      dc.w    $4420, $2000, $100, $506
-                                        ; DATA XREF: Cutscene_LoadShipTiles3+A   o
-word_8DBC:      dc.w    $4620, $2000, $100, $708
-                                        ; DATA XREF: Cutscene_LoadShipTiles4+A   o
-word_8DC4:      dc.w    $4820, $2000, $200, $90A, $BFF
-                                        ; DATA XREF: Cutscene_LoadShipTiles5+A   o
-word_8DCE:      dc.w    $4020, $2000, $204, $102, 3, $400, $506, 7, $800, $90A, $BFF
-                                        ; DATA XREF: Gfx_EnablePriorityPlane+16   o
-                                        ; Gfx_DisablePriorityPlane+16   o
-word_8DE4:      dc.w    $4020, $2000, $204, 0, 0, 0, 0, 0, 0, 0, $FF
-                                        ; DATA XREF: Cutscene_ShipInitScene+7C   o
+ShipSequence_TileBatch1:    dc.w    $4020, $2000, $100, $102  ; was: word_8DA4
+                                        ; DATA XREF: ShipSequence_LoadTileBatch1   o
+ShipSequence_TileBatch2:    dc.w    $4220, $2000, $100, $304  ; was: word_8DAC
+                                        ; DATA XREF: ShipSequence_LoadTileBatch2+A   o
+ShipSequence_TileBatch3:    dc.w    $4420, $2000, $100, $506  ; was: word_8DB4
+                                        ; DATA XREF: ShipSequence_LoadTileBatch3+A   o
+ShipSequence_TileBatch4:    dc.w    $4620, $2000, $100, $708  ; was: word_8DBC
+                                        ; DATA XREF: ShipSequence_LoadTileBatch4+A   o
+ShipSequence_TileBatch5:    dc.w    $4820, $2000, $200, $90A, $BFF  ; was: word_8DC4
+                                        ; DATA XREF: ShipSequence_LoadTileBatch5+A   o
+ShipSequence_ArrivalPriorityTiles:  dc.w    $4020, $2000, $204, $102, 3, $400, $506, 7, $800, $90A, $BFF  ; was: word_8DCE
+                                        ; DATA XREF: ShipSequence_EnableArrivalPlanePriority+16   o
+                                        ; ShipSequence_DisableArrivalPlanePriority+16   o
+ShipSequence_ClearedArrivalTiles:   dc.w    $4020, $2000, $204, 0, 0, 0, 0, 0, 0, 0, $FF  ; was: word_8DE4
+                                        ; DATA XREF: ShipSequence_InitializePatternReveal+7C   o
 
-; Renders animated text reveal effect character by character
-Gfx_RenderAnimatedText:                                 ; CODE XREF: Cutscene_ShipInitScene+64   p  ; was: sub_8DFA
-                move.w  (word_FF0164).l,d1
-                addq.w  #1,(word_FF0164).l
+; Reveals progressively more of eighteen rows, one shuffled nibble per active row
+ShipPattern_RevealRows:                                 ; CODE XREF: ShipSequence_InitializePatternReveal+64   p  ; was: sub_8DFA
+                move.w  (ShipRevealFrame).l,d1
+                addq.w  #1,(ShipRevealFrame).l
                 lsr.w   #3,d1
                 cmpi.w  #$11,d1
-                bcs.s   loc_8E12
+                bcs.s   ShipPattern_ClampVisibleRow
                 move.w  #$11,d1
-loc_8E12:                                               ; CODE XREF: Gfx_RenderAnimatedText+12   j
-                lea     (word_FF0140).l,a0
+ShipPattern_ClampVisibleRow:                            ; CODE XREF: ShipPattern_RevealRows+12   j  ; was: loc_8E12
+                lea     (ShipRowRevealProgress).l,a0
                 lea     (word_FF1000).l,a2
-loc_8E1E:                                               ; CODE XREF: Gfx_RenderAnimatedText+36   j
+ShipPattern_RevealNextRow:                              ; CODE XREF: ShipPattern_RevealRows+36   j  ; was: loc_8E1E
                 movem.l a2,-(sp)
-                bsr.w   Gfx_UpdateTextPixel
+                bsr.w   ShipPattern_RevealNextNibble
                 movem.l (sp)+,a2
                 addq.w  #2,a0
                 adda.w  #$20,a2                         ; ' '
-                dbf     d1,loc_8E1E
+                dbf     d1,ShipPattern_RevealNextRow
                 rts
-; End of function Gfx_RenderAnimatedText
-; Updates individual pixel/tile data for text animation
-Gfx_UpdateTextPixel:                                    ; CODE XREF: Gfx_RenderAnimatedText+28   p  ; was: sub_8E36
+; End of function ShipPattern_RevealRows
+; ORs the next shuffled four-bit mask into one word of a pattern row
+ShipPattern_RevealNextNibble:                           ; CODE XREF: ShipPattern_RevealRows+28   p  ; was: sub_8E36
                 move.w  (a0),d0
                 cmpi.w  #$40,d0                         ; '@'
                 beq.w   Cutscene_Return
@@ -556,7 +556,7 @@ Gfx_UpdateTextPixel:                                    ; CODE XREF: Gfx_RenderA
                 move.l  d2,d3
                 andi.b  #3,d2
                 lsl.b   #1,d2
-                lea     word_8E6C(pc,d2.w),a4
+                lea     ShipPattern_NibbleMasks(pc,d2.w),a4
                 move.w  (a4),d2
                 andi.b  #$3C,d3                         ; '<'
                 lsr.b   #1,d3
@@ -565,21 +565,21 @@ Gfx_UpdateTextPixel:                                    ; CODE XREF: Gfx_RenderA
                 or.w    d2,d4
                 move.w  d4,(a2)
                 rts
-; End of function Gfx_UpdateTextPixel
+; End of function ShipPattern_RevealNextNibble
 ; ---------------------------------------------------------------------------
-word_8E6C:      dc.w    $F000, $F00, $F0, $F
+ShipPattern_NibbleMasks:    dc.w    $F000, $F00, $F0, $F  ; was: word_8E6C
 
-; Clears plane buffer memory with zeros
-Gfx_ClearPlaneBuffer:                                   ; CODE XREF: Cutscene_ShipInitScene+50   p  ; was: sub_8E74
+; Clears the complete `$240`-byte pattern workspace
+ShipPattern_ClearBuffer:                                ; CODE XREF: ShipSequence_InitializePatternReveal+50   p  ; was: sub_8E74
                 lea     (word_FF1000).l,a1
                 moveq   #0,d0
                 move.w  #$8F,d1
-loc_8E80:                                               ; CODE XREF: Gfx_ClearPlaneBuffer+E   j
+ShipPattern_ClearNextLongword:                          ; CODE XREF: ShipPattern_ClearBuffer+E   j  ; was: loc_8E80
                 move.l  d0,(a1)+
-                dbf     d1,loc_8E80
-; End of function Gfx_ClearPlaneBuffer
-; Writes VDP command sequence to command buffer
-Gfx_WriteVDPCommands:                                   ; CODE XREF: Cutscene_ShipInitScene+68   p  ; was: sub_8E86
+                dbf     d1,ShipPattern_ClearNextLongword
+; End of function ShipPattern_ClearBuffer
+; Queues the fixed DMA command that uploads the pattern workspace
+ShipPattern_QueueBufferUpload:                          ; CODE XREF: ShipSequence_InitializePatternReveal+68   p  ; was: sub_8E86
                 movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$10,a0
                 move.w  a0,(VDPCommandQueueHead).w
@@ -588,20 +588,20 @@ Gfx_WriteVDPCommands:                                   ; CODE XREF: Cutscene_Sh
                 move.l  #$96889500,(a0)+
                 move.l  #$4D800082,(a0)+
                 rts
-; End of function Gfx_WriteVDPCommands
-; Builds DMA transfer command list for VDP operations
-Gfx_BuildDMATransfer:                                   ; CODE XREF: Cutscene_ShipInitScene:loc_8AEE   p  ; was: sub_8EAC
+; End of function ShipPattern_QueueBufferUpload
+; Expands one `$FF`-terminated byte stream to words and queues its row DMA
+ShipPattern_QueueRowTilemap:                            ; CODE XREF: ShipSequence_InitializePatternReveal:ShipSequence_QueueNextPatternRow   p  ; was: sub_8EAC
                 movea.w (VDPStagingDataCursor).w,a1
                 moveq   #0,d3
-loc_8EB2:                                               ; CODE XREF: Gfx_BuildDMATransfer+12   j
+ShipPattern_CopyNextTileIndex:                          ; CODE XREF: ShipPattern_QueueRowTilemap+12   j  ; was: loc_8EB2
                 move.b  (a0)+,d0
                 cmpi.b  #$FF,d0
-                beq.s   loc_8EC0
+                beq.s   ShipPattern_EmitRowDMA
                 move.w  d0,(a1)+
                 addq.w  #1,d3
-                bra.s   loc_8EB2
+                bra.s   ShipPattern_CopyNextTileIndex
 ; ---------------------------------------------------------------------------
-loc_8EC0:                                               ; CODE XREF: Gfx_BuildDMATransfer+C   j
+ShipPattern_EmitRowDMA:                                 ; CODE XREF: ShipPattern_QueueRowTilemap+C   j  ; was: loc_8EC0
                 movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 move.w  d4,-(a1)
@@ -620,10 +620,10 @@ loc_8EC0:                                               ; CODE XREF: Gfx_BuildDM
                 asl.w   #1,d3
                 add.w   d3,(VDPStagingDataCursor).w
                 rts
-; End of function Gfx_BuildDMATransfer
+; End of function ShipPattern_QueueRowTilemap
 ; ---------------------------------------------------------------------------
-word_8EFE:      dc.w    $6C6C, $6C6C, $6C6C, $6CFF
-                                        ; DATA XREF: Cutscene_ShipInitScene+8   o
+ShipPattern_RowTileStreams: dc.w    $6C6C, $6C6C, $6C6C, $6CFF  ; was: word_8EFE
+                                        ; DATA XREF: ShipSequence_InitializePatternReveal+8   o
                 dc.w    $6D6D, $6D6D, $6D6D, $6DFF
                 dc.w    $6E6E, $6E6E, $6E6E, $6EFF
                 dc.w    $6F6F, $6F6F, $6F6F, $6FFF
@@ -643,10 +643,10 @@ word_8EFE:      dc.w    $6C6C, $6C6C, $6C6C, $6CFF
                 dc.w    $FF7D, $7D7D, $7D7D, $7D7D
                 dc.w    $7DFF
 
-; Spawns ship sprite at specific frame with animation data
-Cutscene_SpawnShipSprite:                               ; CODE XREF: Cutscene_ShipAnimationLoop+6   p  ; was: sub_8F90
-                movea.l (dword_FF0128).l,a0
-                move.w  (word_FF0130).l,d0
+; Spawns one ship piece when the timeline reaches its next script record
+ShipSequence_SpawnScheduledPiece:                       ; CODE XREF: ShipSequence_Update+6   p  ; was: sub_8F90
+                movea.l (ShipPieceScriptCursor).l,a0
+                move.w  (ShipSequenceFrame).l,d0
                 cmp.w   (a0)+,d0
                 bne.w   Cutscene_Return
                 movea.l #$FFFFC620,a4
@@ -657,25 +657,25 @@ Cutscene_SpawnShipSprite:                               ; CODE XREF: Cutscene_Sh
                 move.b  #$78,$20(a4)                    ; 'x'
                 clr.l   $18(a4)
                 move.w  (a0)+,d0
-                move.l  off_8FEE(pc,d0.w),8(a4)
-                move.l  word_8FFE(pc,d0.w),$1C(a4)
+                move.l  ShipPiece_SpriteFrameTable(pc,d0.w),8(a4)
+                move.l  ShipPiece_InitialYVelocities(pc,d0.w),$1C(a4)
                 move.w  (a0)+,$10(a4)
                 move.w  (a0)+,$14(a4)
                 move.w  (a0)+,$40(a4)
                 move.w  (a0)+,d0
                 ext.l   d0
                 move.l  d0,$18(a4)
-                move.l  a0,(dword_FF0128).l
+                move.l  a0,(ShipPieceScriptCursor).l
                 rts
-; End of function Cutscene_SpawnShipSprite
+; End of function ShipSequence_SpawnScheduledPiece
 ; ---------------------------------------------------------------------------
-off_8FEE:       dc.l    word_1A9B9E
-                dc.l    word_1A9BA4
-                dc.l    word_1A9BAA
-                dc.l    word_1A9BC2
-word_8FFE:      dc.w    $FFFF, $E800, $FFFF, $E000, $FFFF, $D000, $FFFF, $D800
-word_900E:      dc.w    1, $11A0, 0, $100, $148, $490, 0, $28
-                                        ; DATA XREF: Cutscene_InitShipData   o
+ShipPiece_SpriteFrameTable: dc.l    ShipPiece_SpriteFrame0  ; was: off_8FEE
+                dc.l    ShipPiece_SpriteFrame1
+                dc.l    ShipPiece_SpriteFrame2
+                dc.l    ShipPiece_SpriteFrame3
+ShipPiece_InitialYVelocities:   dc.w    $FFFF, $E800, $FFFF, $E000, $FFFF, $D000, $FFFF, $D800  ; was: word_8FFE
+ShipPiece_SpawnScript:          dc.w    1, $11A0, 0, $100, $148, $490, 0, $28  ; was: word_900E
+                                        ; DATA XREF: ShipSequence_InitializeTimeline   o
                 dc.w    $1140, 0, $F8, $148, $490, $FE00, $29, $10E0
                 dc.w    0, $108, $148, $4D0, $200, $68, $1080, 0
                 dc.w    $F0, $148, $490, $FC80, $B0, $1020, 0, $E8
@@ -686,10 +686,10 @@ word_900E:      dc.w    1, $11A0, 0, $100, $148, $490, 0, $28
                 dc.w    $5A0, 8, $100, $158, $378, 0, $1B0, $540
                 dc.w    $C, $160, $158, $378, 0, 0
 
-; Spawns debris sprite with velocity and plays sound effect
-Cutscene_SpawnDebrisSprite:                             ; CODE XREF: Cutscene_ShipAnimationLoop+A   p  ; was: sub_90AA
-                movea.l (dword_FF012C).l,a0
-                move.w  (word_FF0130).l,d0
+; Spawns one debris object when the timeline reaches its next script record
+ShipSequence_SpawnScheduledDebris:                      ; CODE XREF: ShipSequence_Update+A   p  ; was: sub_90AA
+                movea.l (ShipDebrisCursor).l,a0
+                move.w  (ShipSequenceFrame).l,d0
                 cmp.w   (a0)+,d0
                 bne.w   Cutscene_Return
                 movea.l #$FFFFC620,a4
@@ -701,35 +701,35 @@ Cutscene_SpawnDebrisSprite:                             ; CODE XREF: Cutscene_Sh
                 move.b  #$70,$20(a4)                    ; 'p'
                 move.w  #$50,$14(a4)                    ; 'P'
                 move.w  (a0)+,d0
-                move.l  off_911A(pc,d0.w),8(a4)
-                move.l  dword_913A(pc,d0.w),$18(a4)
-                move.l  word_915A(pc,d0.w),$1C(a4)
+                move.l  ShipDebris_SpriteFrameTable(pc,d0.w),8(a4)
+                move.l  ShipDebris_InitialXVelocities(pc,d0.w),$18(a4)
+                move.l  ShipDebris_InitialYVelocities(pc,d0.w),$1C(a4)
                 move.w  (a0)+,$10(a4)
                 tst.l   $18(a4)
-                bpl.s   loc_9108
+                bpl.s   ShipDebris_StoreScriptCursor
                 ori.w   #$800,$E(a4)
-loc_9108:                                               ; CODE XREF: Cutscene_SpawnDebrisSprite+56   j
-                move.l  a0,(dword_FF012C).l
+ShipDebris_StoreScriptCursor:                           ; CODE XREF: ShipSequence_SpawnScheduledDebris+56   j  ; was: loc_9108
+                move.l  a0,(ShipDebrisCursor).l
                 move.b  #$59,d0                         ; 'Y'
                 jsr     (Sound_PlaySFX).l
                 rts
-; End of function Cutscene_SpawnDebrisSprite
+; End of function ShipSequence_SpawnScheduledDebris
 ; ---------------------------------------------------------------------------
-off_911A:       dc.l    word_1A9BC8
-                dc.l    word_1A9BE6
-                dc.l    word_1A9BE6
-                dc.l    word_1A9C04
-                dc.l    word_1A9C2E
-                dc.l    word_1A9C2E
-                dc.l    word_1A9C58
-                dc.l    word_1A9C82
-dword_913A:     dc.l    0, $FFFF8000, $8000
+ShipDebris_SpriteFrameTable:    dc.l    ShipDebris_SpriteFrame0  ; was: off_911A
+                dc.l    ShipDebris_SpriteFrame1
+                dc.l    ShipDebris_SpriteFrame1
+                dc.l    ShipDebris_SpriteFrame2
+                dc.l    ShipDebris_SpriteFrame3
+                dc.l    ShipDebris_SpriteFrame3
+                dc.l    ShipDebris_SpriteFrame4
+                dc.l    ShipDebris_SpriteFrame5
+ShipDebris_InitialXVelocities:  dc.l    0, $FFFF8000, $8000  ; was: dword_913A
                 dc.l    0, $FFFE0000, $20000
                 dc.l    0, 0
-word_915A:      dc.w    4, 0, 4, 0, 4, 0, $10, 0
+ShipDebris_InitialYVelocities:  dc.w    4, 0, 4, 0, 4, 0, $10, 0  ; was: word_915A
                 dc.w    $10, 0, $10, 0, $20, 0, $20, 0
-word_917A:      dc.w    $480, $FC0, 0, $120, $488, $F60, 4, $110
-                                        ; DATA XREF: Cutscene_InitShipData+A   o
+ShipDebris_SpawnScript: dc.w    $480, $FC0, 0, $120, $488, $F60, 4, $110  ; was: word_917A
+                                        ; DATA XREF: ShipSequence_InitializeTimeline+A   o
                 dc.w    $490, $F00, 8, $D0, $498, $EA0, 0, $F0
                 dc.w    $4A0, $E40, 8, $150, $4A8, $DE0, 4, $E0
                 dc.w    $4B0, $D80, 0, $170, $4B8, $D20, 8, $130
@@ -746,16 +746,16 @@ word_917A:      dc.w    $480, $FC0, 0, $120, $488, $F60, 4, $110
                 dc.w    $540, $180, $18, $148, $544, $120, $18, $F0
                 dc.w    $548, $C0, $1C, $128, 0
 
-; Updates ship debris sprite countdown and transitions state
-Sprite_ShipDebrisUpdate:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_9274
+; Counts down a ship piece, removing it above Y `$60` or converting it to an explosion
+ShipPiece_UpdateCountdown:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_9274
                 subq.w  #1,$40(a5)
-                beq.s   loc_928C
+                beq.s   ShipPiece_ConvertToExplosion
                 cmpi.w  #$60,$14(a5)                    ; '`'
                 bcc.w   Cutscene_Return
                 move.w  #$1000,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_928C:                                               ; CODE XREF: Sprite_ShipDebrisUpdate+4   j
+ShipPiece_ConvertToExplosion:                           ; CODE XREF: ShipPiece_UpdateCountdown+4   j  ; was: loc_928C
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
@@ -763,22 +763,22 @@ loc_928C:                                               ; CODE XREF: Sprite_Ship
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
                 rts
-; End of function Sprite_ShipDebrisUpdate
-; Dispatches debris sprite update to appropriate handler
-Sprite_DebrisDispatcher:                                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_92AE
+; End of function ShipPiece_UpdateCountdown
+; Dispatches the four-state falling-debris lifecycle
+ShipDebris_Dispatch:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_92AE
                 move.w  4(a5),d0
-                lea     off_92BA(pc,d0.w),a0
+                lea     ShipDebris_States(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Sprite_DebrisDispatcher
+; End of function ShipDebris_Dispatch
 ; ---------------------------------------------------------------------------
-off_92BA:       dc.w    Object_CheckYPosAndPause-*      ; DATA XREF: Sprite_DebrisDispatcher+4   o
-                dc.w    Object_RestoreAfterTimer-*
-                dc.w    Object_SetDestroyFlag-*
-                dc.w    nullsub_21-*
+ShipDebris_States:  dc.w    ShipDebris_PauseAtLowerBoundary-*  ; DATA XREF: ShipDebris_Dispatch+4   o  ; was: off_92BA
+                dc.w    ShipDebris_ResumeAfterDelay-*
+                dc.w    ShipDebris_RemoveBelowScreen-*
+                dc.w    ShipDebris_Complete-*
 
-; Checks if Y position >= 240 then pauses object movement
-Object_CheckYPosAndPause:                               ; DATA XREF: ROM:off_92BA   o  ; was: sub_92C2
+; Saves velocity and pauses debris for `$60` frames at Y `$F0`
+ShipDebris_PauseAtLowerBoundary:                        ; DATA XREF: ROM:ShipDebris_States   o  ; was: sub_92C2
                 cmpi.w  #$F0,$14(a5)
                 bcs.w   Cutscene_Return
                 move.w  #$60,$48(a5)                    ; '`'
@@ -791,24 +791,22 @@ Object_CheckYPosAndPause:                               ; DATA XREF: ROM:off_92B
                 bne.w   Cutscene_Return
                 addq.w  #4,4(a5)
                 rts
-; End of function Object_CheckYPosAndPause
-; Counts down timer and restores velocity when done
-Object_RestoreAfterTimer:                               ; DATA XREF: ROM:000092BC   o  ; was: sub_92F8
+; End of function ShipDebris_PauseAtLowerBoundary
+; Restores the saved X/Y velocities after the `$60`-frame pause
+ShipDebris_ResumeAfterDelay:                            ; DATA XREF: ROM:000092BC   o  ; was: sub_92F8
                 subq.w  #1,$48(a5)
                 bne.w   Cutscene_Return
                 move.l  $40(a5),$1C(a5)
                 move.l  $44(a5),$18(a5)
                 rts
-; End of function Object_RestoreAfterTimer
-; Sets destroy flag when Y position >= 400
-Object_SetDestroyFlag:                                  ; DATA XREF: ROM:000092BE   o  ; was: sub_930E
+; End of function ShipDebris_ResumeAfterDelay
+; Removes debris after it falls below Y `$190`
+ShipDebris_RemoveBelowScreen:                           ; DATA XREF: ROM:000092BE   o  ; was: sub_930E
                 cmpi.w  #$190,$14(a5)
                 bcs.w   Cutscene_Return
                 move.w  #$1000,2(a5)
                 rts
-; End of function Object_SetDestroyFlag
-nullsub_21:                                             ; DATA XREF: ROM:000092C0   o
+; End of function ShipDebris_RemoveBelowScreen
+ShipDebris_Complete:                                    ; DATA XREF: ROM:000092C0   o  ; was: nullsub_21
                 rts
-; End of function nullsub_21
-
-; Initializes title screen mode with graphics data and text rendering
+; End of function ShipDebris_Complete

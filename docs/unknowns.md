@@ -3364,3 +3364,27 @@ new provenance mappings raise the total from 12,438 to 12,463; 57 audit records
 raise the total from 9,039 to 9,096. The enforced address-derived ceiling falls
 from 3,603 to 3,578. Module count remains 347 and the reconstructed Japanese ROM
 remains byte-identical.
+
+The ship-sequence package audits all 90 ROM definitions in the cohesive
+`cutscenes/ship_sequence.s` range, promotes fifteen private RAM fields, and
+identifies ten sprite-frame records in `data/stage2_phase1_assets.s`. The module
+retains its complete sixteen-state timeline, three-state flash loop, orphaned
+three-state jitter experiment, eighteen-row pattern reveal, two timed spawn
+scripts, and both object families. Keeping these directly coupled components in
+one source file avoids another formal container split; the module remains below
+the 1,000-line ceiling without a waiver.
+
+Static data flow corrects the strongest earlier generated claims. The alleged
+fade-in and zoom states change signed 16.16 vertical velocity, not alpha or
+sprite scale. The alleged color updater changes vertical position and never
+touches palette memory. The supposed animated-text renderer reveals shuffled
+four-bit masks in eighteen pattern rows without reading character data, while
+the supposed Sega-palette helper is only proven to apply fixed fades and five
+grayscale accents. The unused effect dispatcher is now explicitly orphaned:
+no static caller reaches its one-pixel vertical-jitter states.
+
+This package replaces 66 live address-derived definitions and adds 115 static
+audit records, covering every ROM definition in the module plus its RAM and
+sprite-frame dependencies. Provenance rises from 12,463 to 12,529 and the audit
+registry from 9,096 to 9,211. The enforced address-derived ceiling falls from
+3,578 to 3,512; module count remains 347.

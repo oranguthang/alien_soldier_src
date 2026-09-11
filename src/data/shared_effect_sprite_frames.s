@@ -129,7 +129,7 @@ Projectile_BombAndRadialSpriteFrames:   dc.l    $244D6, $A00F4F4  ; DATA XREF: W
                 dc.l    $144C0, $500F8F8
                 dc.l    $144F3, $FCFC
                 dc.w    $FFFF
-Effect_StarParticleSpriteFrames:    dc.l    $844F4, $FCFC  ; DATA XREF: Effect_SpawnStarParticle+A   o  ; was: dword_2AF48
+Effect_StarParticleSpriteFrames:    dc.l    $844F4, $FCFC  ; DATA XREF: ShipSequence_SpawnStarParticle+A   o  ; was: dword_2AF48
                                         ; sub_18F58   o
                 dc.l    $844F5, $FCFC
                 dc.w    $FFFF

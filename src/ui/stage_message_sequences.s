@@ -595,8 +595,8 @@ BossMessageScriptPointerTable:  dc.l    BossMessageScript_DeepStriderGroup  ; wa
                 dc.l    ShipAndValkirieMessageScript
 
 ; Starts the ship-name script, selecting the configured message-mode entry
-ShipName_StartScript:                                   ; CODE XREF: Cutscene_ShowShipName+4   p  ; was: sub_B4E4
-                                        ; Cutscene_WaitShipPosition+10   p
+ShipName_StartScript:                                   ; CODE XREF: ShipSequence_ShowName+4   p  ; was: sub_B4E4
+                                        ; ShipSequence_WaitForVerticalPosition+10   p
                 bset    #0,(MessageSequenceFlags).w
                 asl.w   #3,d0
                 cmpi.w  #2,(MessageMode).w

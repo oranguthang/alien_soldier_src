@@ -203,7 +203,7 @@ loc_10F0C:                                              ; CODE XREF: VDP_SetupDM
 ; End of function VDP_SetupDMATransferQuad
 ; Loads compressed tile data to VRAM
 Gfx_LoadCompressedTiles:                                ; CODE XREF: EndingSequence_FadeOutCredits+3C   p  ; was: sub_10F4E
-                                        ; Cutscene_LoadShipTiles1+6   p
+                                        ; ShipSequence_LoadTileBatch1+6   p
                 move.w  (VDPStagingDataCursor).w,(word_FF805C).w
                 move.l  #$94009300,(dword_FF8058).w
                 moveq   #0,d0

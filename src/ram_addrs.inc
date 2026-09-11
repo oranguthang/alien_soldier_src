@@ -49,21 +49,21 @@ PlanetZoomAngle         equ     $FFFF011A               ; was: word_FF011A
 PlanetZoomRadius        equ     $FFFF011C               ; was: dword_FF011C
 StoryFontGlyphCursor    equ     $FFFF0120               ; was: dword_FF0120
 StoryFontState          equ     $FFFF0126               ; was: word_FF0126
-dword_FF0128            equ     $FFFF0128
-dword_FF012C            equ     $FFFF012C
-word_FF0130             equ     $FFFF0130
-word_FF0132             equ     $FFFF0132
-dword_FF0134            equ     $FFFF0134
-dword_FF0138            equ     $FFFF0138
-word_FF013C             equ     $FFFF013C
-word_FF0140             equ     $FFFF0140
-word_FF0164             equ     $FFFF0164
-word_FF0166             equ     $FFFF0166
-word_FF0168             equ     $FFFF0168
-word_FF016A             equ     $FFFF016A
-word_FF016C             equ     $FFFF016C
-word_FF016E             equ     $FFFF016E
-word_FF0170             equ     $FFFF0170
+ShipPieceScriptCursor   equ     $FFFF0128               ; was: dword_FF0128
+ShipDebrisCursor        equ     $FFFF012C               ; was: dword_FF012C
+ShipSequenceFrame       equ     $FFFF0130               ; was: word_FF0130
+ShipSequenceState       equ     $FFFF0132               ; was: word_FF0132
+ShipVerticalPosition    equ     $FFFF0134               ; was: dword_FF0134
+ShipVerticalVelocity    equ     $FFFF0138               ; was: dword_FF0138
+ShipTileLoadTimer       equ     $FFFF013C               ; was: word_FF013C
+ShipRowRevealProgress   equ     $FFFF0140               ; was: word_FF0140
+ShipRevealFrame         equ     $FFFF0164               ; was: word_FF0164
+ShipMainFadeStep        equ     $FFFF0166               ; was: word_FF0166
+ShipAccentFadeStep      equ     $FFFF0168               ; was: word_FF0168
+ShipFlashState          equ     $FFFF016A               ; was: word_FF016A
+ShipFlashTimer          equ     $FFFF016C               ; was: word_FF016C
+ShipJitterState         equ     $FFFF016E               ; was: word_FF016E
+ShipJitterTimer         equ     $FFFF0170               ; was: word_FF0170
 StoryTextAccentCursor   equ     $FFFF0172               ; was: dword_FF0172
 word_FF0176             equ     $FFFF0176
 StoryTextState          equ     $FFFF0178               ; was: word_FF0178

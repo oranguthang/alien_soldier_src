@@ -253,7 +253,7 @@ Sprite_InitCurrentFromTable:                            ; CODE XREF: Weapon_Hand
                 movea.w a5,a0
 ; End of function Sprite_InitCurrentFromTable
 ; Initializes sprite object from data table
-Sprite_InitFromTable:                                   ; CODE XREF: Effect_SpawnStarParticle+10   p  ; was: sub_2A616
+Sprite_InitFromTable:                                   ; CODE XREF: ShipSequence_SpawnStarParticle+10   p  ; was: sub_2A616
                                         ; Effect_SpawnParticle+24   p
                 move.w  #$38,(a0)                       ; '8'
                 move.w  #$8D40,2(a0)
@@ -430,7 +430,7 @@ Anim_UpdateLoopingScript_Restart:                       ; CODE XREF: Anim_Update
                 bra.s   Anim_UpdateLoopingScript_ReadFrame
 ; End of function Anim_UpdateLoopingScript
 ; Initializes the current object as projectile type 88
-Projectile_InitType88FromCurrent:                       ; CODE XREF: Sprite_ShipDebrisUpdate+28   p  ; was: sub_2A79C
+Projectile_InitType88FromCurrent:                       ; CODE XREF: ShipPiece_UpdateCountdown+28   p  ; was: sub_2A79C
                                         ; Projectile_GravityBounce+50   j
                 movea.w a5,a0
 ; End of function Projectile_InitType88FromCurrent

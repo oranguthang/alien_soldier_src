@@ -16,32 +16,32 @@ byte_1A9AD8:    dc.b    0, $C4, $34, 0, 1, $63, 3, $94, 7, 1, 6, $63, $98, $11, 
                 dc.b    $60, $63, $2E, $2F, $94, $BF, 0, $33, $8C, $C5, 0, $37, $61, $63, $38, $2B, $2C, $8C, $D1, 0, $30, $60, $63, $31, $32, $84, $D9, 0, $34, $60, $63, $35
                 dc.b    $36, $84, $E1, 0, $39, $61, $63, $3A, $3B, $3C, $8C, $ED, 2, $3D, $63, $3E, $36, 0, $62, $63, $3F, $40, $41, $42, $95, $17, 0, $44, $BD, $29, 0, $43
                 dc.b    $95, $31, 0, $45, $D1, $49
-word_1A9B9E:    dc.w    $A84F, $100, $F6FD              ; DATA XREF: ROM:off_8FEE   o
-word_1A9BA4:    dc.w    $A851, $600, $F0F7              ; DATA XREF: ROM:00008FF2   o
-word_1A9BAA:    dc.w    $28A9, 0, $E0FE                 ; DATA XREF: ROM:00008FF6   o
+ShipPiece_SpriteFrame0: dc.w    $A84F, $100, $F6FD      ; DATA XREF: ROM:ShipPiece_SpriteFrameTable   o  ; was: word_1A9B9E
+ShipPiece_SpriteFrame1: dc.w    $A851, $600, $F0F7      ; DATA XREF: ROM:00008FF2   o  ; was: word_1A9BA4
+ShipPiece_SpriteFrame2: dc.w    $28A9, 0, $E0FE         ; DATA XREF: ROM:00008FF6   o  ; was: word_1A9BAA
                 dc.w    $28A3, $600, $F8E6
                 dc.w    $2897, $E00, $8F6
                 dc.w    $A887, $F00, $E8F6
-word_1A9BC2:    dc.w    $A881, $900, $FBF6              ; DATA XREF: ROM:00008FFA   o
-word_1A9BC8:    dc.w    $2847, $300, $30FC              ; DATA XREF: ROM:off_911A   o
+ShipPiece_SpriteFrame3:     dc.w    $A881, $900, $FBF6  ; DATA XREF: ROM:00008FFA   o  ; was: word_1A9BC2
+ShipDebris_SpriteFrame0:    dc.w    $2847, $300, $30FC  ; DATA XREF: ROM:ShipDebris_SpriteFrameTable   o  ; was: word_1A9BC8
                 dc.w    $2847, $300, $10FC
                 dc.w    $2847, $300, $F0FC
                 dc.w    $2847, $300, $D0FC
                 dc.w    $A847, $300, $B0FC
-word_1A9BE6:    dc.w    $284B, $300, $B0F5              ; DATA XREF: ROM:0000911E   o
+ShipDebris_SpriteFrame1:    dc.w    $284B, $300, $B0F5  ; DATA XREF: ROM:0000911E   o  ; was: word_1A9BE6
                                         ; ROM:00009122   o
                 dc.w    $284B, $300, $D0F9
                 dc.w    $284B, $300, $3005
                 dc.w    $284B, $300, $1001
                 dc.w    $A84B, $300, $F0FD
-word_1A9C04:    dc.w    $2878, 0, $A8FC                 ; DATA XREF: ROM:00009126   o
+ShipDebris_SpriteFrame2:    dc.w    $2878, 0, $A8FC     ; DATA XREF: ROM:00009126   o  ; was: word_1A9C04
                 dc.w    $3878, 0, $50FC
                 dc.w    $286B, $300, $30FC
                 dc.w    $286B, $300, $B0FC
                 dc.w    $286B, $300, $10FC
                 dc.w    $286B, $300, $F0FC
                 dc.w    $A86B, $300, $D0FC
-word_1A9C2E:    dc.w    $3878, 0, $5008                 ; DATA XREF: ROM:0000912A   o
+ShipDebris_SpriteFrame3:    dc.w    $3878, 0, $5008     ; DATA XREF: ROM:0000912A   o  ; was: word_1A9C2E
                                         ; ROM:0000912E   o
                 dc.w    $2878, 0, $A8F3
                 dc.w    $2867, $300, $B0F6
@@ -49,14 +49,14 @@ word_1A9C2E:    dc.w    $3878, 0, $5008                 ; DATA XREF: ROM:0000912
                 dc.w    $2867, $300, $D0FA
                 dc.w    $2867, $300, $1002
                 dc.w    $A867, $300, $F0FE
-word_1A9C58:    dc.w    $3879, $500, $A0F8              ; DATA XREF: ROM:00009132   o
+ShipDebris_SpriteFrame4:    dc.w    $3879, $500, $A0F8  ; DATA XREF: ROM:00009132   o  ; was: word_1A9C58
                 dc.w    $2879, $500, $50F8
                 dc.w    $286F, $700, $30F8
                 dc.w    $286F, $700, $10F8
                 dc.w    $286F, $700, $F0F8
                 dc.w    $286F, $700, $D0F8
                 dc.w    $A86F, $700, $B0F8
-word_1A9C82:    dc.w    $2057, $F00, $3000              ; DATA XREF: ROM:00009136   o
+ShipDebris_SpriteFrame5:    dc.w    $2057, $F00, $3000  ; DATA XREF: ROM:00009136   o  ; was: word_1A9C82
                 dc.w    $2057, $F00, $1000
                 dc.w    $2857, $F00, $30E0
                 dc.w    $2857, $F00, $10E0

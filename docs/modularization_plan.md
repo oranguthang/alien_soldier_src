@@ -99,7 +99,7 @@ data are checked.
 | `0x007B30` | `EndingSequence_Initialize` | ending credits and credits-to-planet dispatch |
 | `0x007D68` | `EndingStarfield_Initialize` | ending starfield and planet sequence |
 | `0x008618` | `Math_LookupSineCosinePair` | sine/cosine lookup helpers and table |
-| `0x0086F0` | `Cutscene_ShipObjectDispatcher` | ship object family; continues past old file boundary |
+| `0x0086F0` | `ShipSequence_Controller` | ship arrival, pattern reveal, and scripted debris |
 
 The former `Player_StateDispatcher` was contradicted by its dispatch variable
 and targets, which update palettes, scroll, and tiles. The complete static

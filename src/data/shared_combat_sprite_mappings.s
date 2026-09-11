@@ -265,7 +265,7 @@ SharedCombatSpriteFrame72:  dc.w    $C8E3, $A00, $F4F4  ; DATA XREF: ROM:0003081
 ; ---------------------------------------------------------------------------
 ; Anim_ResolveTimedMappingFrame reads each stream as frame-relative offsets paired with
 ; duration or control words, then passes the resolved frame to Sprite_RenderMapping
-SharedCombatSpriteAnimation00:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF: Sprite_ShipDebrisUpdate+20   o  ; was: off_E953C
+SharedCombatSpriteAnimation00:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF: ShipPiece_UpdateCountdown+20   o  ; was: off_E953C
                                         ; ROM:Boss_ZLeoParticleSpritePointers   o
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame07-*
