@@ -212,19 +212,19 @@ Sys_ClearBufferFFB200_Loop:                             ; CODE XREF: Sys_ClearBu
                 dbf     d1,Sys_ClearBufferFFB200_Loop
                 rts
 ; End of function Sys_ClearBufferFFB200
-; Clears tile processing buffer at $FFB400 by writing zeros for $40 iterations (256 bytes)
-Gfx_ClearTileBuffer:                                    ; CODE XREF: Gfx_InitVideoMode   p  ; was: sub_303C
-                lea     (dword_FFB400).w,a0
+; Clears the shared 1 KiB graphics staging buffer at $FFFFB400
+Gfx_ClearGraphicsStagingBuffer:                         ; CODE XREF: Gfx_InitVideoMode   p  ; was: sub_303C
+                lea     (GraphicsStagingBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$3F,d1                         ; '?'
-Gfx_ClearTileBuffer_Loop:                               ; CODE XREF: Gfx_ClearTileBuffer+12   j  ; was: loc_3046
+Gfx_ClearGraphicsStagingBuffer_Loop:                    ; CODE XREF: Gfx_ClearGraphicsStagingBuffer+12   j  ; was: loc_3046
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Gfx_ClearTileBuffer_Loop
+                dbf     d1,Gfx_ClearGraphicsStagingBuffer_Loop
                 rts
-; End of function Gfx_ClearTileBuffer
+; End of function Gfx_ClearGraphicsStagingBuffer
 ; Clears FFB800 buffer area (192 bytes)
 Sys_ClearBufferFFB800:                                  ; CODE XREF: Sys_ClearGameBuffers+8   p  ; was: sub_3054
                 lea     (dword_FFB800).w,a0

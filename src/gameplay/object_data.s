@@ -85,10 +85,10 @@ Gfx_LoadAndDecompTiles:                                 ; DATA XREF: ROM:0000265
                 ror.w   d2,d3
                 move.w  d2,(dword_FFF730).w
                 move.w  d3,(dword_FFF730+2).w
-                bsr.w   Sys_ClearDMABuffer
+                bsr.w   TileCodec_ClearDecodeBuffer
 Gfx_LoadAndDecompTiles_Loop:                            ; CODE XREF: Gfx_LoadAndDecompTiles+26   j  ; was: loc_26F2
-                bsr.w   Gfx_ProcessTileData
-                bsr.w   Gfx_PackTileData
+                bsr.w   TileCodec_DecodeTile
+                bsr.w   TileCodec_PackDecodedTile
                 dbf     d1,Gfx_LoadAndDecompTiles_Loop
                 rts
 ; End of function Gfx_LoadAndDecompTiles
@@ -105,11 +105,11 @@ Gfx_LoadCompressedGfx:                                  ; DATA XREF: ROM:0000265
                 ror.w   d2,d3
                 move.w  d2,(dword_FFF730).w
                 move.w  d3,(dword_FFF730+2).w
-                bsr.w   Sys_ClearDMABuffer
+                bsr.w   TileCodec_ClearDecodeBuffer
 ; Loop that repeatedly calls decompression functions to process graphics data tiles
 Gfx_DecompLoop:                                         ; CODE XREF: Gfx_LoadCompressedGfx+26   j  ; was: loc_271E
-                bsr.w   Gfx_ProcessTileData
-                bsr.w   Gfx_WriteTilesToVRAM
+                bsr.w   TileCodec_DecodeTile
+                bsr.w   TileCodec_WriteDecodedTileToVRAM
                 dbf     d1,Gfx_DecompLoop
                 rts
 ; End of function Gfx_LoadCompressedGfx
@@ -140,12 +140,12 @@ LoadCompressedMappings:                                 ; DATA XREF: ROM:0000266
                 move.w  (a0)+,d0
                 movea.l d0,a3
 LoadCompressedMappings_BlockLoop:                       ; CODE XREF: LoadCompressedMappings+56   j  ; was: loc_2756
-                lea     (dword_FFB400).w,a2
+                lea     (GraphicsStagingBuffer).w,a2
                 bsr.w   LZSSDecomp
                 cmpa.l  a4,a1
                 bcc.w   LoadCompressedMappings_FinalBlock
                 move.w  #$FF,d1
-                lea     (dword_FFB400).w,a2
+                lea     (GraphicsStagingBuffer).w,a2
                 lea     (VDP_CTRL).l,a5
                 move    sr,-(sp)
                 move    #$2700,sr
@@ -168,7 +168,7 @@ LoadCompressedMappings_FinalBlock:                      ; CODE XREF: LoadCompres
                 move.w  a2,d1
                 subi.w  #$B400,d1
                 lsr.w   #1,d1
-                lea     (dword_FFB400).w,a2
+                lea     (GraphicsStagingBuffer).w,a2
                 lea     (VDP_CTRL).l,a5
                 move    sr,-(sp)
                 move    #$2700,sr
@@ -216,7 +216,7 @@ Data_ProcessPointer_ReadCompressedHeader:               ; CODE XREF: Data_Proces
                 ror.w   d2,d3
                 move.w  d3,(dword_FFF730+2).w
                 move.l  a1,(dword_FFF728).w
-                bra.w   Sys_ClearDMABuffer
+                bra.w   TileCodec_ClearDecodeBuffer
 ; ---------------------------------------------------------------------------
 Data_ProcessPointer_ReadWordLength:                     ; CODE XREF: Data_ProcessPointer+14   j  ; was: loc_282E
                 moveq   #0,d1
@@ -297,7 +297,7 @@ Gfx_DMATransferWithWait_BatchLoop:                      ; CODE XREF: Gfx_DMATran
                 bge.w   Gfx_DMATransferWithWait_ExecuteBatch
                 move.w  d0,d1
 Gfx_DMATransferWithWait_ExecuteBatch:                   ; CODE XREF: Gfx_DMATransferWithWait+12   j  ; was: loc_28DA
-                bsr.w   Gfx_ExecuteDMATransfer
+                bsr.w   Gfx_QueueDMATransferAndAdvance
 Gfx_DMATransferWithWait_Wait:                           ; CODE XREF: Gfx_DMATransferWithWait+20   j  ; was: loc_28DE
                 tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DMATransferWithWait_Wait
@@ -312,8 +312,8 @@ Gfx_DecompTilesToRAM:                                   ; DATA XREF: ROM:0000289
                 move.w  (word_FFF722).w,d0
                 subq.w  #1,d0
 Gfx_DecompTilesToRAM_Loop:                              ; CODE XREF: Gfx_DecompTilesToRAM+16   j  ; was: loc_28F8
-                bsr.w   Gfx_ProcessTileData
-                bsr.w   Gfx_PackTileData
+                bsr.w   TileCodec_DecodeTile
+                bsr.w   TileCodec_PackDecodedTile
                 dbf     d0,Gfx_DecompTilesToRAM_Loop
                 rts
 ; End of function Gfx_DecompTilesToRAM
@@ -323,7 +323,7 @@ Gfx_DecompTilesToVRAMBatched:                           ; DATA XREF: ROM:0000289
                 movea.l (dword_FFF72C).w,a3
                 move.w  (word_FFF722).w,d0
 Gfx_DecompTilesToVRAMBatched_BatchLoop:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+44   j  ; was: loc_2912
-                lea     (dword_FFB600).w,a2
+                lea     (TileDMABatchBuffer).w,a2
                 move.w  #$10,d2
                 cmp.w   d2,d0
                 bge.w   Gfx_DecompTilesToVRAMBatched_PrepareBatch
@@ -334,21 +334,21 @@ Gfx_DecompTilesToVRAMBatched_PrepareBatch:              ; CODE XREF: Gfx_DecompT
                 sub.w   d2,d0
                 subq.w  #1,d2
 Gfx_DecompTilesToVRAMBatched_DecodeLoop:                ; CODE XREF: Gfx_DecompTilesToVRAMBatched+2C   j  ; was: loc_292A
-                bsr.w   Gfx_ProcessTileData
-                bsr.w   Gfx_PackTileData
+                bsr.w   TileCodec_DecodeTile
+                bsr.w   TileCodec_PackDecodedTile
                 dbf     d2,Gfx_DecompTilesToVRAMBatched_DecodeLoop
                 tst.w   d0
                 beq.w   Gfx_DecompTilesToVRAMBatched_FinalBatch
-                lea     (dword_FFB600).w,a2
-                bsr.w   Gfx_ExecuteDMATransfer
+                lea     (TileDMABatchBuffer).w,a2
+                bsr.w   Gfx_QueueDMATransferAndAdvance
 Gfx_DecompTilesToVRAMBatched_WaitBatch:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+42   j  ; was: loc_2944
                 tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DecompTilesToVRAMBatched_WaitBatch
                 bra.s   Gfx_DecompTilesToVRAMBatched_BatchLoop
 ; ---------------------------------------------------------------------------
 Gfx_DecompTilesToVRAMBatched_FinalBatch:                ; CODE XREF: Gfx_DecompTilesToVRAMBatched+32   j  ; was: loc_294C
-                lea     (dword_FFB600).w,a2
-                bsr.w   Gfx_ExecuteDMATransfer
+                lea     (TileDMABatchBuffer).w,a2
+                bsr.w   Gfx_QueueDMATransferAndAdvance
 Gfx_DecompTilesToVRAMBatched_WaitFinal:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+52   j  ; was: loc_2954
                 tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DecompTilesToVRAMBatched_WaitFinal
@@ -372,13 +372,13 @@ Gfx_DecompressLZSSToVRAMBatched:                        ; DATA XREF: ROM:000028A
                 movea.l (dword_FFF72C).w,a3
                 movea.l (dword_FFF730).w,a4
 Gfx_DecompressLZSSToVRAMBatched_BlockLoop:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+2C   j  ; was: loc_297E
-                lea     (dword_FFB400).w,a2
+                lea     (GraphicsStagingBuffer).w,a2
                 bsr.w   LZSSDecomp
                 cmpa.l  a4,a1
                 bcc.w   Gfx_DecompressLZSSToVRAMBatched_FinalBlock
                 move.w  #$400,d1
-                lea     (dword_FFB400).w,a2
-                bsr.w   Gfx_ExecuteDMATransfer
+                lea     (GraphicsStagingBuffer).w,a2
+                bsr.w   Gfx_QueueDMATransferAndAdvance
 Gfx_DecompressLZSSToVRAMBatched_WaitBlock:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+2A   j  ; was: loc_2998
                 tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitBlock
@@ -387,8 +387,8 @@ Gfx_DecompressLZSSToVRAMBatched_WaitBlock:              ; CODE XREF: Gfx_Decompr
 Gfx_DecompressLZSSToVRAMBatched_FinalBlock:             ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+16   j  ; was: loc_29A0
                 move.w  a2,d1
                 subi.w  #$B400,d1
-                lea     (dword_FFB400).w,a2
-                bsr.w   Gfx_ExecuteDMATransfer
+                lea     (GraphicsStagingBuffer).w,a2
+                bsr.w   Gfx_QueueDMATransferAndAdvance
 Gfx_DecompressLZSSToVRAMBatched_WaitFinal:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+40   j  ; was: loc_29AE
                 tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitFinal

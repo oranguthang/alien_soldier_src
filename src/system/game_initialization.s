@@ -69,7 +69,7 @@ Sys_ClearGameBuffers:                                   ; CODE XREF: Reset+224  
 ; Initializes video mode and clears VRAM
 Gfx_InitVideoMode:                                      ; CODE XREF: Sys_InitFullGame+14   p  ; was: sub_2DFE
                                         ; Sys_InitGameMode+14   p
-                bsr.w   Gfx_ClearTileBuffer
+                bsr.w   Gfx_ClearGraphicsStagingBuffer
                 bsr.w   Gfx_ClearVRAM
                 rts
 ; End of function Gfx_InitVideoMode

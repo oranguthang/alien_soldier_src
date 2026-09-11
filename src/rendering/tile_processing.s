@@ -1,25 +1,26 @@
-Sys_ClearDMABuffer:                                     ; CODE XREF: Gfx_LoadAndDecompTiles+1A   p  ; was: sub_2A58
+; Clears the 128-byte word-per-pixel workspace used by one decoded tile
+TileCodec_ClearDecodeBuffer:                            ; CODE XREF: Gfx_LoadAndDecompTiles+1A   p  ; was: sub_2A58
                                         ; Gfx_LoadCompressedGfx+1A   p
-                lea     (dword_FFB400).w,a5
+                lea     (GraphicsStagingBuffer).w,a5
                 moveq   #0,d6
                 moveq   #$1F,d7
-loc_2A60:                                               ; CODE XREF: Sys_ClearDMABuffer+A   j
+TileCodec_ClearDecodeBuffer_Loop:                       ; CODE XREF: TileCodec_ClearDecodeBuffer+A   j  ; was: loc_2A60
                 move.l  d6,(a5)+
-                dbf     d7,loc_2A60
+                dbf     d7,TileCodec_ClearDecodeBuffer_Loop
                 rts
-; End of function Sys_ClearDMABuffer
-; Processes and converts compressed tile bitplane data extracting pixel patterns from packed format
-Gfx_ProcessTileData:                                    ; CODE XREF: Gfx_LoadAndDecompTiles:Gfx_LoadAndDecompTiles_Loop   p  ; was: sub_2A68
+; End of function TileCodec_ClearDecodeBuffer
+; Decodes one compressed 8x8 tile into 64 word-sized palette indices
+TileCodec_DecodeTile:                                   ; CODE XREF: Gfx_LoadAndDecompTiles:Gfx_LoadAndDecompTiles_Loop   p  ; was: sub_2A68
                                         ; sub_2700:loc_271E   p
                 movem.l d2-d7/a4-a5,-(sp)
                 move.w  (dword_FFF730).w,d2
                 move.w  (dword_FFF730+2).w,d3
-                lea     (dword_FFB400).w,a5
-                lea     dword_FFB480-dword_FFB400(a5),a4
-loc_2A7C:                                               ; CODE XREF: Gfx_ProcessTileData+162   j
+                lea     (GraphicsStagingBuffer).w,a5
+                lea     TileDecodeBufferEnd-GraphicsStagingBuffer(a5),a4
+TileCodec_DecodeTile_ReadToken:                         ; CODE XREF: TileCodec_DecodeTile+162   j  ; was: loc_2A7C
                 subq.w  #5,d2
-                bgt.w   loc_2AAA
-                beq.w   loc_2A9E
+                bgt.w   TileCodec_DecodeTile_UseBufferedToken
+                beq.w   TileCodec_DecodeTile_ReloadTokenAtWordBoundary
                 move.w  d2,d7
                 addq.w  #5,d2
                 lsl.l   d2,d3
@@ -29,123 +30,123 @@ loc_2A7C:                                               ; CODE XREF: Gfx_Process
                 addi.w  #$B,d2
                 move.l  d3,d7
                 swap    d7
-                bra.w   loc_2AAE
+                bra.w   TileCodec_DecodeTile_InterpretToken
 ; ---------------------------------------------------------------------------
-loc_2A9E:                                               ; CODE XREF: Gfx_ProcessTileData+1A   j
+TileCodec_DecodeTile_ReloadTokenAtWordBoundary:         ; CODE XREF: TileCodec_DecodeTile+1A   j  ; was: loc_2A9E
                 moveq   #$10,d2
                 rol.w   #5,d3
                 move.w  d3,d7
                 move.w  (a1)+,d3
-                bra.w   loc_2AAE
+                bra.w   TileCodec_DecodeTile_InterpretToken
 ; ---------------------------------------------------------------------------
-loc_2AAA:                                               ; CODE XREF: Gfx_ProcessTileData+16   j
+TileCodec_DecodeTile_UseBufferedToken:                  ; CODE XREF: TileCodec_DecodeTile+16   j  ; was: loc_2AAA
                 rol.w   #5,d3
                 move.w  d3,d7
-loc_2AAE:                                               ; CODE XREF: Gfx_ProcessTileData+32   j
-                                        ; Gfx_ProcessTileData+3E   j
+TileCodec_DecodeTile_InterpretToken:                    ; CODE XREF: TileCodec_DecodeTile+32   j  ; was: loc_2AAE
+                                        ; TileCodec_DecodeTile+3E   j
                 andi.w  #$1F,d7
                 lsr.w   #1,d7
-                bcs.w   loc_2AC6
+                bcs.w   TileCodec_DecodeTile_BeginMarkerSequence
                 move.w  d7,d4
                 move.w  d4,(a5)+
                 move.w  d4,d5
                 ori.w   #$8000,d5
-                bra.w   loc_2B4C
+                bra.w   TileCodec_DecodeTile_BeginRunLength
 ; ---------------------------------------------------------------------------
-loc_2AC6:                                               ; CODE XREF: Gfx_ProcessTileData+4C   j
+TileCodec_DecodeTile_BeginMarkerSequence:               ; CODE XREF: TileCodec_DecodeTile+4C   j  ; was: loc_2AC6
                 move.w  d7,d4
                 move.w  d4,(a5)+
                 move.w  d4,d5
                 bset    #$F,d5
                 moveq   #0,d6
-loc_2AD2:                                               ; CODE XREF: Gfx_ProcessTileData+A6   j
-                                        ; Gfx_ProcessTileData+D8   j
+TileCodec_DecodeTile_ReadMarkerOffset:                  ; CODE XREF: TileCodec_DecodeTile+A6   j  ; was: loc_2AD2
+                                        ; TileCodec_DecodeTile+D8   j
                 subq.w  #2,d2
-                bgt.w   loc_2AF8
-                beq.w   loc_2AEC
+                bgt.w   TileCodec_DecodeTile_UseBufferedOffset
+                beq.w   TileCodec_DecodeTile_ReloadOffsetAtWordBoundary
                 moveq   #$F,d2
                 add.w   d3,d3
                 move.w  (a1)+,d3
                 addx.w  d3,d3
                 move.w  d3,d7
                 addx.w  d7,d7
-                bra.w   loc_2AFC
+                bra.w   TileCodec_DecodeTile_InterpretMarkerOffset
 ; ---------------------------------------------------------------------------
-loc_2AEC:                                               ; CODE XREF: Gfx_ProcessTileData+70   j
+TileCodec_DecodeTile_ReloadOffsetAtWordBoundary:        ; CODE XREF: TileCodec_DecodeTile+70   j  ; was: loc_2AEC
                 moveq   #$10,d2
                 rol.w   #2,d3
                 move.w  d3,d7
                 move.w  (a1)+,d3
-                bra.w   loc_2AFC
+                bra.w   TileCodec_DecodeTile_InterpretMarkerOffset
 ; ---------------------------------------------------------------------------
-loc_2AF8:                                               ; CODE XREF: Gfx_ProcessTileData+6C   j
+TileCodec_DecodeTile_UseBufferedOffset:                 ; CODE XREF: TileCodec_DecodeTile+6C   j  ; was: loc_2AF8
                 rol.w   #2,d3
                 move.w  d3,d7
-loc_2AFC:                                               ; CODE XREF: Gfx_ProcessTileData+80   j
-                                        ; Gfx_ProcessTileData+8C   j
+TileCodec_DecodeTile_InterpretMarkerOffset:             ; CODE XREF: TileCodec_DecodeTile+80   j  ; was: loc_2AFC
+                                        ; TileCodec_DecodeTile+8C   j
                 andi.w  #3,d7
-                beq.w   loc_2B10
+                beq.w   TileCodec_DecodeTile_ReadExtendedMarkerOffset
                 addq.w  #6,d7
                 add.w   d7,d7
                 add.w   d7,d6
                 move.w  d5,-2(a5,d6.w)
-                bra.s   loc_2AD2
+                bra.s   TileCodec_DecodeTile_ReadMarkerOffset
 ; ---------------------------------------------------------------------------
-loc_2B10:                                               ; CODE XREF: Gfx_ProcessTileData+98   j
+TileCodec_DecodeTile_ReadExtendedMarkerOffset:          ; CODE XREF: TileCodec_DecodeTile+98   j  ; was: loc_2B10
                 subq.w  #1,d2
-                bne.w   loc_2B1E
+                bne.w   TileCodec_DecodeTile_ReadExtendedMarkerBit
                 moveq   #$10,d2
                 add.w   d3,d3
                 move.w  (a1)+,d3
                 roxr.w  #1,d3
-loc_2B1E:                                               ; CODE XREF: Gfx_ProcessTileData+AA   j
+TileCodec_DecodeTile_ReadExtendedMarkerBit:             ; CODE XREF: TileCodec_DecodeTile+AA   j  ; was: loc_2B1E
                 addx.w  d3,d3
-                bcc.w   loc_2B4C
+                bcc.w   TileCodec_DecodeTile_BeginRunLength
                 subq.w  #1,d2
-                bne.w   loc_2B32
+                bne.w   TileCodec_DecodeTile_SelectExtendedMarkerOffset
                 moveq   #$10,d2
                 add.w   d3,d3
                 move.w  (a1)+,d3
                 roxr.w  #1,d3
-loc_2B32:                                               ; CODE XREF: Gfx_ProcessTileData+BE   j
+TileCodec_DecodeTile_SelectExtendedMarkerOffset:        ; CODE XREF: TileCodec_DecodeTile+BE   j  ; was: loc_2B32
                 addx.w  d3,d3
-                bcs.w   loc_2B42
+                bcs.w   TileCodec_DecodeTile_StoreOffset20Marker
                 addi.w  #$C,d6
                 move.w  d5,-2(a5,d6.w)
-                bra.s   loc_2AD2
+                bra.s   TileCodec_DecodeTile_ReadMarkerOffset
 ; ---------------------------------------------------------------------------
-loc_2B42:                                               ; CODE XREF: Gfx_ProcessTileData+CC   j
+TileCodec_DecodeTile_StoreOffset20Marker:               ; CODE XREF: TileCodec_DecodeTile+CC   j  ; was: loc_2B42
                 addi.w  #$14,d6
                 move.w  d5,-2(a5,d6.w)
-                bra.s   loc_2AD2
+                bra.s   TileCodec_DecodeTile_ReadMarkerOffset
 ; ---------------------------------------------------------------------------
-loc_2B4C:                                               ; CODE XREF: Gfx_ProcessTileData+5A   j
-                                        ; Gfx_ProcessTileData+B8   j
+TileCodec_DecodeTile_BeginRunLength:                    ; CODE XREF: TileCodec_DecodeTile+5A   j  ; was: loc_2B4C
+                                        ; TileCodec_DecodeTile+B8   j
                 moveq   #0,d7
                 moveq   #1,d6
-loc_2B50:                                               ; CODE XREF: Gfx_ProcessTileData+FC   j
-                                        ; Gfx_ProcessTileData+106   j
+TileCodec_DecodeTile_ReadRunLengthPrefix:               ; CODE XREF: TileCodec_DecodeTile+FC   j  ; was: loc_2B50
+                                        ; TileCodec_DecodeTile+106   j
                 addq.w  #1,d7
                 add.w   d6,d6
                 subq.w  #1,d2
-                bne.w   loc_2B6C
+                bne.w   TileCodec_DecodeTile_ReadBufferedPrefix
                 moveq   #$10,d2
                 add.w   d3,d3
-                bcc.w   loc_2B66
+                bcc.w   TileCodec_DecodeTile_ReloadPrefixAtWordBoundary
                 move.w  (a1)+,d3
-                bra.s   loc_2B50
+                bra.s   TileCodec_DecodeTile_ReadRunLengthPrefix
 ; ---------------------------------------------------------------------------
-loc_2B66:                                               ; CODE XREF: Gfx_ProcessTileData+F6   j
+TileCodec_DecodeTile_ReloadPrefixAtWordBoundary:        ; CODE XREF: TileCodec_DecodeTile+F6   j  ; was: loc_2B66
                 move.w  (a1)+,d3
-                bra.w   loc_2B70
+                bra.w   TileCodec_DecodeTile_ReadRunLengthPayload
 ; ---------------------------------------------------------------------------
-loc_2B6C:                                               ; CODE XREF: Gfx_ProcessTileData+EE   j
+TileCodec_DecodeTile_ReadBufferedPrefix:                ; CODE XREF: TileCodec_DecodeTile+EE   j  ; was: loc_2B6C
                 add.w   d3,d3
-                bcs.s   loc_2B50
-loc_2B70:                                               ; CODE XREF: Gfx_ProcessTileData+100   j
+                bcs.s   TileCodec_DecodeTile_ReadRunLengthPrefix
+TileCodec_DecodeTile_ReadRunLengthPayload:              ; CODE XREF: TileCodec_DecodeTile+100   j  ; was: loc_2B70
                 sub.w   d7,d2
-                bgt.w   loc_2BA6
-                beq.w   loc_2B96
+                bgt.w   TileCodec_DecodeTile_UseBufferedPayload
+                beq.w   TileCodec_DecodeTile_ReloadPayloadAtWordBoundary
                 swap    d3
                 clr.w   d3
                 swap    d3
@@ -158,50 +159,50 @@ loc_2B70:                                               ; CODE XREF: Gfx_Process
                 sub.w   d7,d2
                 move.l  d3,d7
                 swap    d7
-                bra.w   loc_2BB0
+                bra.w   TileCodec_DecodeTile_EmitRun
 ; ---------------------------------------------------------------------------
-loc_2B96:                                               ; CODE XREF: Gfx_ProcessTileData+10E   j
+TileCodec_DecodeTile_ReloadPayloadAtWordBoundary:       ; CODE XREF: TileCodec_DecodeTile+10E   j  ; was: loc_2B96
                 moveq   #$10,d2
                 swap    d3
                 clr.w   d3
                 rol.l   d7,d3
                 move.w  d3,d7
                 move.w  (a1)+,d3
-                bra.w   loc_2BB0
+                bra.w   TileCodec_DecodeTile_EmitRun
 ; ---------------------------------------------------------------------------
-loc_2BA6:                                               ; CODE XREF: Gfx_ProcessTileData+10A   j
+TileCodec_DecodeTile_UseBufferedPayload:                ; CODE XREF: TileCodec_DecodeTile+10A   j  ; was: loc_2BA6
                 swap    d3
                 clr.w   d3
                 rol.l   d7,d3
                 move.w  d3,d7
                 swap    d3
-loc_2BB0:                                               ; CODE XREF: Gfx_ProcessTileData+12A   j
-                                        ; Gfx_ProcessTileData+13A   j
+TileCodec_DecodeTile_EmitRun:                           ; CODE XREF: TileCodec_DecodeTile+12A   j  ; was: loc_2BB0
+                                        ; TileCodec_DecodeTile+13A   j
                 add.w   d7,d6
                 subq.w  #3,d6
-                bcs.w   loc_2BC8
-loc_2BB8:                                               ; CODE XREF: Gfx_ProcessTileData+15C   j
+                bcs.w   TileCodec_DecodeTile_CheckComplete
+TileCodec_DecodeTile_EmitPixel:                         ; CODE XREF: TileCodec_DecodeTile+15C   j  ; was: loc_2BB8
                 move.w  (a5),d7
-                bpl.w   loc_2BC2
+                bpl.w   TileCodec_DecodeTile_StorePixel
                 move.w  d7,d5
                 move.b  d5,d4
-loc_2BC2:                                               ; CODE XREF: Gfx_ProcessTileData+152   j
+TileCodec_DecodeTile_StorePixel:                        ; CODE XREF: TileCodec_DecodeTile+152   j  ; was: loc_2BC2
                 move.w  d4,(a5)+
-                dbf     d6,loc_2BB8
-loc_2BC8:                                               ; CODE XREF: Gfx_ProcessTileData+14C   j
+                dbf     d6,TileCodec_DecodeTile_EmitPixel
+TileCodec_DecodeTile_CheckComplete:                     ; CODE XREF: TileCodec_DecodeTile+14C   j  ; was: loc_2BC8
                 cmpa.l  a4,a5
-                bcs.w   loc_2A7C
+                bcs.w   TileCodec_DecodeTile_ReadToken
                 move.w  d2,(dword_FFF730).w
                 move.w  d3,(dword_FFF730+2).w
                 movem.l (sp)+,d2-d7/a4-a5
                 rts
-; End of function Gfx_ProcessTileData
-; Packs 8 tile words into 4 longwords for output
-Gfx_PackTileData:                                       ; CODE XREF: Gfx_LoadAndDecompTiles+22   p  ; was: sub_2BDC
+; End of function TileCodec_DecodeTile
+; Packs 64 decoded palette-index words into one 32-byte 4bpp tile
+TileCodec_PackDecodedTile:                              ; CODE XREF: Gfx_LoadAndDecompTiles+22   p  ; was: sub_2BDC
                                         ; Gfx_DecompTilesToRAM+12   p
-                lea     (dword_FFB400).w,a5
+                lea     (GraphicsStagingBuffer).w,a5
                 moveq   #7,d6
-loc_2BE2:                                               ; CODE XREF: Gfx_PackTileData+26   j
+TileCodec_PackDecodedTile_RowLoop:                      ; CODE XREF: TileCodec_PackDecodedTile+26   j  ; was: loc_2BE2
                 move.w  (a5)+,d7
                 lsl.w   #4,d7
                 add.w   (a5)+,d7
@@ -218,11 +219,11 @@ loc_2BE2:                                               ; CODE XREF: Gfx_PackTil
                 lsl.w   #4,d7
                 add.w   (a5)+,d7
                 move.l  d7,(a2)+
-                dbf     d6,loc_2BE2
+                dbf     d6,TileCodec_PackDecodedTile_RowLoop
                 rts
-; End of function Gfx_PackTileData
-; Writes decoded tiles to VRAM via DMA by packing 8 tile words into longwords for VDP_DATA
-Gfx_WriteTilesToVRAM:                                   ; CODE XREF: Gfx_LoadCompressedGfx+22   p  ; was: sub_2C08
+; End of function TileCodec_PackDecodedTile
+; Packs one decoded tile and writes its eight rows directly to the VDP data port
+TileCodec_WriteDecodedTileToVRAM:                       ; CODE XREF: Gfx_LoadCompressedGfx+22   p  ; was: sub_2C08
                 lea     (VDP_CTRL).l,a4
                 move    sr,-(sp)
                 move    #$2700,sr
@@ -237,9 +238,9 @@ Gfx_WriteTilesToVRAM:                                   ; CODE XREF: Gfx_LoadCom
                 move.l  d7,(a4)
                 lea     $20(a3),a3
                 lea     (VDP_DATA).l,a4
-                lea     (dword_FFB400).w,a5
+                lea     (GraphicsStagingBuffer).w,a5
                 moveq   #7,d6
-loc_2C3A:                                               ; CODE XREF: Gfx_WriteTilesToVRAM+52   j
+TileCodec_WriteDecodedTileToVRAM_RowLoop:               ; CODE XREF: TileCodec_WriteDecodedTileToVRAM+52   j  ; was: loc_2C3A
                 move.w  (a5)+,d7
                 lsl.w   #4,d7
                 add.w   (a5)+,d7
@@ -256,12 +257,12 @@ loc_2C3A:                                               ; CODE XREF: Gfx_WriteTi
                 lsl.w   #4,d7
                 add.w   (a5)+,d7
                 move.l  d7,(a4)
-                dbf     d6,loc_2C3A
+                dbf     d6,TileCodec_WriteDecodedTileToVRAM_RowLoop
                 move    (sp)+,sr
                 rts
-; End of function Gfx_WriteTilesToVRAM
-; Executes DMA transfer with VDP register setup
-Gfx_ExecuteDMATransfer:                                 ; CODE XREF: Gfx_DMATransferWithWait:Gfx_DMATransferWithWait_ExecuteBatch   p  ; was: sub_2C62
+; End of function TileCodec_WriteDecodedTileToVRAM
+; Queues one DMA command, advances source/destination pointers, and marks it pending
+Gfx_QueueDMATransferAndAdvance:                         ; CODE XREF: Gfx_DMATransferWithWait:Gfx_DMATransferWithWait_ExecuteBatch   p  ; was: sub_2C62
                                         ; Gfx_DecompTilesToVRAMBatched+3A   p
                 move    sr,-(sp)
                 move    #$2700,sr
@@ -305,10 +306,10 @@ Gfx_ExecuteDMATransfer:                                 ; CODE XREF: Gfx_DMATran
                 move.w  a5,(VDPCommandQueueHead).w
                 move    (sp)+,sr
                 rts
-; End of function Gfx_ExecuteDMATransfer
-; Queues DMA transfer command from ROM data
-Gfx_QueueDMAFromROM:
-                movea.w (VDPCommandQueueHead).w,a1      ; was: sub_2CD8
+; End of function Gfx_QueueDMATransferAndAdvance
+; Queues one DMA command from a length-prefixed ROM block and returns its next VRAM destination
+Gfx_QueueLengthPrefixedROMDMA:                          ; was: sub_2CD8
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  d0,-(sp)
                 move.w  d0,d2
                 rol.w   #2,d2
@@ -346,5 +347,5 @@ Gfx_QueueDMAFromROM:
                 move.w  (sp)+,d0
                 move.w  a1,(VDPCommandQueueHead).w
                 rts
-; End of function Gfx_QueueDMAFromROM
+; End of function Gfx_QueueLengthPrefixedROMDMA
 ; Full game initialization with all subsystems

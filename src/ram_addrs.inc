@@ -560,9 +560,9 @@ StagePhaseSplitTimes    equ     $FFFFAA00               ; was: word_FFAA00
 StageCompletionTimes    equ     $FFFFAA80               ; was: word_FFAA80
 StageResultVisits       equ     $FFFFAB00               ; was: word_FFAB00
 dword_FFB200            equ     $FFFFB200
-dword_FFB400            equ     $FFFFB400
-dword_FFB480            equ     $FFFFB480
-dword_FFB600            equ     $FFFFB600
+GraphicsStagingBuffer   equ     $FFFFB400               ; was: dword_FFB400
+TileDecodeBufferEnd     equ     $FFFFB480               ; was: dword_FFB480
+TileDMABatchBuffer      equ     $FFFFB600               ; was: dword_FFB600
 dword_FFB800            equ     $FFFFB800
 SpriteOAMEntryCount     equ     $FFFFBE00               ; was: byte_FFBE00
 SpriteOAMFreeSlots      equ     $FFFFBE01               ; was: byte_FFBE01

@@ -81,7 +81,7 @@ data are checked.
 | `0x002016` | `Sys_ProcessObjectList` | object update engine |
 | `0x0021F0` | `Sys_InitObjectPointers` | object/sprite initialization |
 | `0x00263E` | `LoadObjData` | object data loading |
-| `0x002A58` | `Sys_ClearDMABuffer` | tile and DMA preparation |
+| `0x002A58` | `TileCodec_ClearDecodeBuffer` | tile codec and DMA preparation |
 | `0x002D40` | `Sys_InitFullGame` | game initialization |
 | `0x002E7E` | `Input_InitControllers` | memory and controller initialization |
 | `0x003134` | `Sys_ClearVDPCommandBuffer` | VDP clearing and command buffers |

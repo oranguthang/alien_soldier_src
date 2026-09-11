@@ -3143,3 +3143,29 @@ two missing code-entry labels. It adds 24 provenance mappings and 34 static
 audit records, raising the totals from 12,142 to 12,166 and from 8,613 to
 8,647. The enforced address-derived ceiling falls from 3,899 to 3,875; module
 count remains 349.
+
+The tile-codec audit reconstructs the complete 351-line
+`rendering/tile_processing.s` module. One compressed tile expands into 64
+word-sized palette indices in the first 128 bytes of
+`GraphicsStagingBuffer`; the packing paths then combine their low nibbles
+into one 32-byte Mega Drive 4bpp tile for RAM or direct VDP output. The
+decoder now exposes its five-bit tokens, optional tagged color-marker offsets,
+prefix/payload run-length code, word-boundary reloads, and exact 64-pixel
+termination instead of a flat sequence of `loc_` labels.
+
+The audit also separates three scopes that the generated names had conflated.
+`TileCodec_ClearDecodeBuffer` clears only the 128-byte per-tile workspace,
+not a DMA queue. The startup helper clears the entire 1 KiB graphics staging
+region—not the documented 256 bytes—and that region is shared by tile and
+LZSS loaders. Finally, the former `Gfx_ExecuteDMATransfer` does not touch VDP
+hardware: it queues a 16-byte command, advances its pointers, and sets
+`VDPTransferPending`; VBlank performs the actual transfer later. The
+overloaded `$FFFFF730` state remains raw because the tile codec treats it as
+two bitstream words while other loader modes store an end pointer there.
+
+This package corrects or refines eight generated semantic names, replaces all
+27 live address-derived ROM definitions in `rendering/tile_processing.s`,
+and promotes three graphics-staging RAM addresses. It adds 30 provenance
+mappings and 38 static audit records, raising the totals from 12,166 to
+12,196 and from 8,647 to 8,685. The enforced address-derived ceiling falls
+from 3,875 to 3,845; module count remains 349.
