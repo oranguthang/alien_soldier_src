@@ -3087,3 +3087,32 @@ promotes three raster-control RAM fields. It adds 30 provenance mappings and
 8,540 to 8,589. The enforced address-derived ceiling falls from 3,943 to
 3,913; module count remains 349, and the audited module contains no live
 address-derived definitions.
+
+The HBlank raster audit reconstructs the adjacent 371-line
+`rendering/hblank_effects.s` module without splitting one ordered group of
+effect installers and their copied handlers. The Epsilon 1 path computes a
+VScroll value and interrupt line, then installs a handler that writes VSRAM
+slot two before changing scroll mode and the plane-A table base. The generic
+buffered-control path streams VDP control words without claiming an unproven
+scene owner. Destroyer Proto reuses the common VScroll-zero handler, Z-Leo
+consumes a buffered sequence of control and VScroll commands, and the Seven
+Forces intro installs delayed window-position writes. The module remains
+within the 300--1,000-line target and now has no live address-derived
+definitions.
+
+Port commands and caller context disprove three generated descriptions. The
+Destroyer Proto initializer does not update sprites; it installs a VScroll
+writer and selects its buffer. Z-Leo's handler is not limited to parallax
+scroll because its stream also supplies direct VDP-control commands. The
+former scroll-and-sprite writer never touches sprite RAM: it writes one word
+to the horizontal-scroll table at VRAM `$F000` and one word to VSRAM slot
+zero. The generic stage-effect name is narrowed to Seven Forces because its
+dispatcher slot is selected by `SevenForces_SetupIntroDma`, and its installed
+handler writes VDP window registers 17 and 18.
+
+This package corrects or refines eight generated semantic names and replaces
+all 14 live address-derived ROM definitions in
+`rendering/hblank_effects.s`. It adds 14 provenance mappings and 21 rename
+audit records plus three confirmations of retained semantic names, raising
+the totals from 12,128 to 12,142 and from 8,589 to 8,613. The enforced
+address-derived ceiling falls from 3,913 to 3,899; module count remains 349.

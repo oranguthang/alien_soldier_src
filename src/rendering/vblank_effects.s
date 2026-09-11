@@ -22,11 +22,11 @@ VBlankRasterEffectHandlerTable: dc.l    VBlank_DisableHBlankEffect  ; was: off_1
                 dc.l    VBlank_InitLettersVScrollEffect
                 dc.l    VBlank_Epsilon1ScrollEffect
                 dc.l    Effect_InitStoryEffect
-                dc.l    VBlank_InitCutsceneEffect
+                dc.l    VBlank_InitBufferedVDPControlEffect
                 dc.l    VBlank_InitScrollEffect
-                dc.l    Boss_DestroyerProtoUpdateSprites
-                dc.l    Boss_ZLeoVBlankEffect
-                dc.l    VBlank_InitStageEffect
+                dc.l    VBlank_InitDestroyerProtoVScrollEffect
+                dc.l    VBlank_InitZLeoRasterEffect
+                dc.l    VBlank_InitSevenForcesWindowEffect
 ; End of function VBlank_DispatchRasterEffect
 ; Disables the installed HBlank effect and replaces its RAM entry with RTE
 VBlank_DisableHBlankEffect:                             ; DATA XREF: VBlank_DispatchRasterEffect:VBlankRasterEffectHandlerTable   o  ; was: sub_13BC
