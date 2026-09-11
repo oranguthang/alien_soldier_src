@@ -11,7 +11,7 @@ Stage_DispatchSelectedProcess:                          ; CODE XREF: Stage_LoadB
                 rts
 ; ---------------------------------------------------------------------------
 Stage_RunSelectedProcess:                               ; CODE XREF: Stage_DispatchSelectedProcess+4   j  ; was: loc_FF1E
-                jsr     Gfx_SetupScrollPlanes(pc)       ; (pc)
+                jsr     Scroll_PreparePlaneBuffersAndRegisterShadows(pc)  ; (pc)
                 nop
                 movea.w #(word_FFA400-M68K_RAM),a5
                 move.w  (word_FFA950).w,d0

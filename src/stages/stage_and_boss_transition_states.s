@@ -153,7 +153,7 @@ StageTransition_InitializeDestroyerProtoBackdrop:       ; DATA XREF: ROM:0000F10
                 bne.w   StageTransition_SharedReturn
                 move.w  #$1C,(word_FF9DAE).w
                 bsr.w   StageTransition_UpdateBossBackdropPaletteFade
-                jsr     (UI_InitScoreTimer).l
+                jsr     (Stage_StartPostBannerDelayAndPreloadNextPhase).l
                 lea     (DestroyerProtoIntroPaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
 StageTransition_ConfigureDestroyerProtoBackdrop:        ; CODE XREF: StageTransition_RestartDestroyerProtoBackdrop+14   j  ; was: loc_F2B0
@@ -332,7 +332,7 @@ StageTransition_CompleteShieldViperVramTransfer:        ; CODE XREF: StageTransi
                 clr.l   (dword_FF9DAA).w
                 clr.w   (dword_FFA908).w
                 move.w  #$F4E2,(dword_FFA90C).w
-                jmp     Stage_TriggerPhaseTransition
+                jmp     Stage_StartTimeBonusAndPreloadNextPhase
 ; End of function StageTransition_CompleteShieldViperVramTransfer
 ; Waits for the Shield Viper exit conditions
 StageTransition_WaitForShieldViperExit:                 ; DATA XREF: ROM:0000F118   o  ; was: sub_F528
@@ -475,7 +475,7 @@ StageTransition_WaitForWolfGaropaTransitionTrigger:     ; DATA XREF: ROM:0000F12
                 bne.s   StageTransition_WolfGaropaTriggerWaitReturn
                 move.b  #$8F,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; ---------------------------------------------------------------------------
 StageTransition_WolfGaropaTriggerWaitReturn:            ; CODE XREF: StageTransition_WaitForWolfGaropaTransitionTrigger+8   j  ; was: locret_F6F2
                                         ; StageTransition_WaitForWolfGaropaTransitionTrigger+E   j
@@ -652,7 +652,7 @@ StageTransition_WaitForMissirayExitSignals:             ; DATA XREF: ROM:0000F14
                 bne.s   StageTransition_MissirayExitWaitReturn
                 move.b  #$9F,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; ---------------------------------------------------------------------------
 StageTransition_MissirayExitWaitReturn:                 ; CODE XREF: StageTransition_WaitForMissirayExitSignals+8   j  ; was: locret_F912
                                         ; StageTransition_WaitForMissirayExitSignals+E   j
@@ -776,7 +776,7 @@ StageTransition_WaitForStage24CompletionSignals:        ; DATA XREF: ROM:0000F15
                 addq.w  #2,(StageTableIndex).w
                 move.b  #$8F,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; ---------------------------------------------------------------------------
 StageTransition_Stage24CompletionWaitReturn:            ; CODE XREF: StageTransition_WaitForStage24CompletionSignals+4   j  ; was: locret_FA82
                                         ; StageTransition_WaitForStage24CompletionSignals+A   j
@@ -820,7 +820,7 @@ StageTransition_LoadZLeoAssets:                         ; DATA XREF: ROM:0000F17
 StageTransition_WaitForZLeoObjectClear:                 ; DATA XREF: ROM:0000F178   o  ; was: sub_FAE0
                 tst.w   (Entity_ObjectPool).w
                 bne.s   StageTransition_ZLeoObjectClearWaitReturn
-                bsr.w   Stage_TriggerPhaseTransition
+                bsr.w   Stage_StartTimeBonusAndPreloadNextPhase
 StageTransition_ZLeoObjectClearWaitReturn:              ; CODE XREF: StageTransition_WaitForZLeoObjectClear+4   j  ; was: locret_FAEA
                 rts
 ; End of function StageTransition_WaitForZLeoObjectClear
@@ -831,7 +831,7 @@ StageTransition_UpdateZLeoCamera:                       ; DATA XREF: ROM:0000F17
 ; End of function StageTransition_UpdateZLeoCamera
 ; Unreferenced section-change and camera update entry
 UnreferencedInitializeSectionAndZLeoCamera:
-                bsr.w   Stage_InitSectionChange         ; was: sub_FAF0
+                bsr.w   Stage_StartNextPhaseBanner      ; was: sub_FAF0
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function UnreferencedInitializeSectionAndZLeoCamera
 ; Derives the Z-Leo transition's secondary scroll value from the stage position

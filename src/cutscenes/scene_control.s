@@ -20,7 +20,7 @@ Stage_InitializeTransition:                             ; DATA XREF: ROM:0001CF7
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function Stage_InitializeTransition
 ; ---------------------------------------------------------------------------
 stru_1D420:     dc.w    7                               ; field_0
@@ -42,9 +42,9 @@ stru_1D420:     dc.w    7                               ; field_0
                 dc.w    $FFFF
 
 ; Attributes: thunk
-; Thunk to Gfx_SetupScrollPlanes
+; Thunk to Scroll_PreparePlaneBuffersAndRegisterShadows
 Stage_SetupScrollPlanesThunk:                           ; DATA XREF: ROM:0001CF7C   o  ; was: sub_1D44A
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function Stage_SetupScrollPlanesThunk
 ; Initializes cutscene with data loading
 Cutscene_InitializeScene:                               ; DATA XREF: ROM:0001CF7E   o  ; was: sub_1D450
@@ -60,7 +60,7 @@ Cutscene_InitializeScene:                               ; DATA XREF: ROM:0001CF7
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Gfx_DecompressCutsceneData).l
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function Cutscene_InitializeScene
 ; ---------------------------------------------------------------------------
 stru_1D492:     dc.w    7                               ; field_0
@@ -107,7 +107,7 @@ loc_1D4F0:                                              ; CODE XREF: Cutscene_Ha
 ; Updates cutscene and scroll planes
 Cutscene_UpdateAndSetupPlanes:                          ; DATA XREF: Cutscene_HandleScrollInput+48   r  ; was: sub_1D508
                 bsr.w   Cutscene_AnimateScroll
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function Cutscene_UpdateAndSetupPlanes
 ; Animates cutscene scrolling
 Cutscene_AnimateScroll:                                 ; CODE XREF: Cutscene_UpdateAndSetupPlanes   p  ; was: sub_1D512

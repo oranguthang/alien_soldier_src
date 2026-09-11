@@ -144,7 +144,7 @@ UI_UpdateContinueDisplay:                               ; DATA XREF: ROM:0001D7D
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 bsr.w   Results_UpdateTimeDisplay
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #0,(word_FF80F4).w
                 beq.s   locret_1DB5A
@@ -205,7 +205,7 @@ loc_1DBC0:                                              ; CODE XREF: UI_HandleCo
 loc_1DBFA:                                              ; CODE XREF: UI_HandleContinueInput+50   j
                                         ; UI_HandleContinueInput+6A   j
                 jsr     (Gfx_FadePaletteTransition).l
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function UI_HandleContinueInput
 ; Transitions away from continue screen based on choice
 UI_TransitionFromContinue:                              ; DATA XREF: ROM:0001D7DE   o  ; was: sub_1DC06

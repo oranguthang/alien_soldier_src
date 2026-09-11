@@ -8,7 +8,7 @@ Results_UpdateAndDisplay:                               ; DATA XREF: ROM:0001D7D
                 addq.w  #1,(FrameCounter).w
                 bsr.w   Results_DisplayTime
                 bsr.w   Results_DisplayScore
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #0,(word_FF80F4).w
                 beq.s   locret_1DCB0
@@ -47,7 +47,7 @@ Results_HandleCompletion:                               ; DATA XREF: ROM:0001D7D
                 jsr     (Results_CheckSkipButton).l
                 bsr.w   Results_DisplayTime
                 bsr.w   Results_DisplayScore
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
                 btst    #7,(word_FFF708).w
                 beq.s   locret_1DD14
@@ -232,7 +232,7 @@ Results_MainLoop:                                       ; DATA XREF: Sys_Dispatc
                 bsr.w   Results_DisplayTime
                 bsr.w   Results_DisplayScore
 loc_1DF52:                                              ; CODE XREF: Results_MainLoop+8   j
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
                 cmpi.w  #2,(GameSubstateIndex).w
                 bne.s   loc_1DF74

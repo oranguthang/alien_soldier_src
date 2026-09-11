@@ -2,7 +2,7 @@ Stage_Epsilon1Init:                                     ; DATA XREF: ROM:0000D9C
                 tst.w   (word_FF8230).w
                 bne.s   locret_E14C
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                jsr     (Stage_InitTransitionState).l
+                jsr     (Stage_StartWeaponSelectTransition).l
                 move.w  #$8002,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w

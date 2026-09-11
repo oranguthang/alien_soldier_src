@@ -31,7 +31,7 @@ StoryScreen_ClearPlaneB:                                ; CODE XREF: StoryScreen
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 addq.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 rts
@@ -74,7 +74,7 @@ StoryScreen_RunFrame:                                   ; CODE XREF: StoryScreen
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 addq.w  #1,(FrameCounter).w
                 rts
 ; End of function StoryScreen_MainLoop

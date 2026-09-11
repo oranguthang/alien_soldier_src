@@ -51,7 +51,7 @@ loc_1E2DC:                                              ; CODE XREF: UI_WeaponSe
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w
                 clr.w   (dword_FFA908).w
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function UI_WeaponSelectTransition
 ; ---------------------------------------------------------------------------
 off_1E334:      dc.l    dword_1E344                     ; DATA XREF: UI_WeaponSelectTransition:loc_1E2DC   o

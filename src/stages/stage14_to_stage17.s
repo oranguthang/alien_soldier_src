@@ -26,7 +26,7 @@ Stage_InitBossPaletteScroll:                            ; DATA XREF: ROM:0000D9A
 Stage_InitScoreTimerClear:                              ; DATA XREF: ROM:0000D9A2   o  ; was: sub_DE8E
                 tst.w   (Entity_ObjectPool).w
                 bne.s   locret_DEA0
-                bsr.w   UI_InitScoreTimer
+                bsr.w   Stage_StartPostBannerDelayAndPreloadNextPhase
                 clr.w   (dword_FFA908).w
                 clr.w   (dword_FFA90C).w
 locret_DEA0:                                            ; CODE XREF: Stage_InitScoreTimerClear+4   j
@@ -34,7 +34,7 @@ locret_DEA0:                                            ; CODE XREF: Stage_InitS
 ; End of function Stage_InitScoreTimerClear
 ; Transitions to Stage 15
 Stage_Stage15Transition:                                ; DATA XREF: ROM:0000D9A4   o  ; was: sub_DEA2
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_Stage15Transition
 ; Stage 15 scroll handler
@@ -77,13 +77,13 @@ Stage_SunsetStingTransition:                            ; DATA XREF: ROM:0000D9A
 Stage_SunsetStingWaitBattle:                            ; DATA XREF: ROM:0000D9AC   o  ; was: sub_DF26
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_DF30
-                bsr.w   Stage_TriggerPhaseTransition
+                bsr.w   Stage_StartTimeBonusAndPreloadNextPhase
 loc_DF30:                                               ; CODE XREF: Stage_SunsetStingWaitBattle+4   j
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_SunsetStingWaitBattle
 ; Transition after Sunset Sting
 Stage_PostSunsetStingTransition:                        ; DATA XREF: ROM:0000D9AE   o  ; was: sub_DF34
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostSunsetStingTransition
 ; Viblack stage scroll handler

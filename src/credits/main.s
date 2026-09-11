@@ -90,7 +90,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w
                 clr.w   (dword_FFA908).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.w  (SoundDisableFlags).w,(word_FFFF60).w
                 move.w  #0,(SoundDisableFlags).w
                 move.b  #$90,d0
@@ -131,7 +131,7 @@ Credits_MainLoop:                                       ; DATA XREF: Sys_Dispatc
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 addq.w  #1,(FrameCounter).w
                 rts
 ; End of function Credits_MainLoop

@@ -75,7 +75,7 @@ loc_1E0C4:                                              ; CODE XREF: Password_In
                 jsr     (Gfx_FadePaletteTransition).l
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA904).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 lea     (Text_YouLostThreeChances).l,a0

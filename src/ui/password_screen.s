@@ -49,7 +49,7 @@ PasswordMenu_Activate:                                  ; CODE XREF: PasswordMen
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.w  #$F4,d0
                 move.w  #$DA,d1
                 move.l  #Password_CharacterCursorSpriteMapping,d2
@@ -105,7 +105,7 @@ PasswordMenu_UpdateFrame:                               ; CODE XREF: PasswordMen
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function PasswordMenu_Update
 ; Handles field navigation, digit editing, and password validation
 PasswordMenu_HandleInput:                               ; CODE XREF: PasswordMenu_Update+54   p  ; was: sub_A550

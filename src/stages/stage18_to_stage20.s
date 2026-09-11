@@ -41,14 +41,14 @@ Stage_DestroyerMK2Init:                                 ; DATA XREF: ROM:0000E43
 Boss_DestroyerMK2UpdateHealth:                          ; DATA XREF: ROM:0000E43E   o  ; was: sub_E54E
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_E558
-                bsr.w   Stage_TriggerPhaseTransition
+                bsr.w   Stage_StartTimeBonusAndPreloadNextPhase
 loc_E558:                                               ; CODE XREF: Boss_DestroyerMK2UpdateHealth+4   j
                 jsr     (Camera_UpdateHorizontalTowardsPlayer).l
                 bra.w   Stage_Stage18Transition
 ; End of function Boss_DestroyerMK2UpdateHealth
 ; Stage 19 initialization
 Stage_Stage19Init:                                      ; DATA XREF: ROM:0000E440   o  ; was: sub_E562
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
                 jsr     (Camera_UpdateHorizontalTowardsPlayer).l
                 bra.w   Stage_Stage18Transition
 ; End of function Stage_Stage19Init
@@ -145,7 +145,7 @@ Stage_JampanPostDefeatCheck:                            ; DATA XREF: ROM:0000E45
                 bne.s   locret_E678
                 move.b  #0,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; ---------------------------------------------------------------------------
 locret_E678:                                            ; CODE XREF: Stage_JampanPostDefeatCheck+8   j
                                         ; Stage_JampanPostDefeatCheck+E   j
@@ -184,7 +184,7 @@ Stage_CheckEnemiesTransit1:                             ; DATA XREF: ROM:0000E46
                 tst.w   (word_FF8138).w
                 bne.w   Stage_Stage18EmptyHandler
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; End of function Stage_CheckEnemiesTransit1
 ; Load the entity-type $3EC resources for a late Stage 18 phase. This entry is
 ; present in the stage state table; static evidence does not establish the
@@ -215,7 +215,7 @@ Stage_CheckEnemiesTransit2:                             ; DATA XREF: ROM:0000E46
                 bne.w   Stage_Stage18EmptyHandler
                 move.b  #$8F,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; End of function Stage_CheckEnemiesTransit2
 ; Load the entity-type $3F0 resources for the next late Stage 18 phase. The
 ; record is statically proven; its intended character identity is not
@@ -245,7 +245,7 @@ Stage_CheckEnemiesTransit3:                             ; DATA XREF: ROM:0000E47
                 bne.w   Stage_Stage18EmptyHandler
                 move.b  #$8F,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; End of function Stage_CheckEnemiesTransit3
 ; Load the entity-type $3F4 resources for the following late Stage 18 phase
 ; External identity guesses remain research notes rather than source names
@@ -275,6 +275,6 @@ Stage_CheckEnemiesTransit4:                             ; DATA XREF: ROM:0000E47
                 bne.w   Stage_Stage18EmptyHandler
                 move.b  #$96,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; End of function Stage_CheckEnemiesTransit4
 ; Stage 20 initialization

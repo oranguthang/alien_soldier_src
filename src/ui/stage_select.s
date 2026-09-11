@@ -45,7 +45,7 @@ loc_1D69C:                                              ; CODE XREF: UI_Initiali
                 move.w  #$FF00,(dword_FFA90C).w
                 move.w  #$10,(dword_FFA908).w
                 move.b  #4,(byte_FFA95B).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
 ; Resets stage select variables and frame counter
 UI_ResetStageSelectVars:                                ; CODE XREF: Stage_InitializeStageSelect+86   j  ; was: loc_1D6F4
                 move.b  #3,(VDPReg11Shadow+1).w
@@ -100,7 +100,7 @@ loc_1D778:                                              ; CODE XREF: Stage_Initi
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 move.w  #$FF00,(dword_FFA90C).w
                 move.w  #0,(dword_FFA908).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.w  #2,(dword_FF8066+2).w
                 bra.w   UI_ResetStageSelectVars
 ; End of function Stage_InitializeStageSelect
@@ -164,7 +164,7 @@ UI_HandleStageFadeOut:                                  ; DATA XREF: ROM:0001D7D
 loc_1D86A:                                              ; CODE XREF: UI_UpdateStageScroll+24   j
                                         ; UI_UpdateStageScroll+3A   j
                 jsr     (Gfx_FadePaletteTransition).l
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.l  #$FFFF0000,d0
                 bsr.w   Gfx_CalculateParallaxScroll
                 addq.w  #8,(dword_FFA900).w

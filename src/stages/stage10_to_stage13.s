@@ -122,7 +122,7 @@ Stage_DeepStriderTransition:                            ; DATA XREF: ROM:0000D96
 Stage_DeepStriderBattle:                                ; DATA XREF: ROM:0000D962   o  ; was: sub_DA22
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Camera_UpdateDeepStrider
-                bsr.w   Stage_TriggerPhaseTransition
+                bsr.w   Stage_StartTimeBonusAndPreloadNextPhase
 ; Updates camera for Deep Strider boss battle with phase transition check
 Camera_UpdateDeepStrider:                               ; CODE XREF: Stage_DeepStriderBattle+4   j  ; was: loc_DA2C
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
@@ -130,7 +130,7 @@ Camera_UpdateDeepStrider:                               ; CODE XREF: Stage_DeepS
 ; End of function Stage_DeepStriderBattle
 ; Initializes Deep Strider battle
 Stage_DeepStriderBattleInit:                            ; DATA XREF: ROM:0000D964   o  ; was: sub_DA34
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Scroll_AccumulateQuarterHorizontalDelta
 ; End of function Stage_DeepStriderBattleInit
@@ -172,13 +172,13 @@ locret_DA92:                                            ; CODE XREF: Stage_Gusth
 Stage_GustheadDefeatTransition:                         ; DATA XREF: ROM:0000D96C   o  ; was: sub_DA94
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_DAA0
-                jsr     (Stage_TriggerPhaseTransition).l
+                jsr     (Stage_StartTimeBonusAndPreloadNextPhase).l
 loc_DAA0:                                               ; CODE XREF: Stage_GustheadDefeatTransition+4   j
                 bra.w   loc_DAA8
 ; End of function Stage_GustheadDefeatTransition
 ; Initializes Stage 12
 Stage_Stage12Init:                                      ; DATA XREF: ROM:0000D96E   o  ; was: sub_DAA4
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
 loc_DAA8:                                               ; CODE XREF: Stage_GustheadDefeatTransition:loc_DAA0   j
                 tst.w   (word_FFA968).w
                 beq.s   loc_DAE2
@@ -289,7 +289,7 @@ Stage_Stage14Init:                                      ; DATA XREF: ROM:0000D97
                 tst.w   (Entity_ObjectPool).w
                 bne.w   Stage_Stage10CheckTransition_Return
                 move.w  #$FFFF,(word_FFDB44).w
-                bra.w   Stage_TriggerPhaseTransition
+                bra.w   Stage_StartTimeBonusAndPreloadNextPhase
 ; End of function Stage_Stage14Init
 ; Transitions to teleport after ship destruction
 Stage_TeleportTransition:                               ; DATA XREF: ROM:0000D980   o  ; was: sub_DBCE
@@ -482,7 +482,7 @@ Stage_BugmaxTransitionCheck:                            ; DATA XREF: ROM:0000D99
                 move.b  #$92,d0
                 jsr     (Sound_QueueBGMOrStop).l
                 move.l  #byte_1E587,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; End of function Stage_BugmaxTransitionCheck
 ; Loads Stage 10 tile graphics and palette
 Stage_LoadStage10Graphics:                              ; CODE XREF: Stage_Stage10ScrollUpdate+6   p  ; was: sub_DE2E

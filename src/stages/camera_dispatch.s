@@ -32,7 +32,7 @@ off_C84A:       dc.w    Stage_UpdateLogic-Stage_UpdateLogic
                 dc.w    Stage_AutoScroll_UpdateLoop-Stage_UpdateLogic
                 dc.w    Boss_MadamBarbarScrollInit-Stage_UpdateLogic
                 dc.w    Stage_InitPostBoss-Stage_UpdateLogic
-                dc.w    Stage_InitSectionChangeWithDefaultBGM-Stage_UpdateLogic
+                dc.w    Stage_StartNextPhaseBannerWithDefaultBGM-Stage_UpdateLogic
                 dc.w    Stage_CheckScrollTransition-Stage_UpdateLogic
                 dc.w    Stage_InitJokerBoss-Stage_UpdateLogic
                 dc.w    Stage_PostJokerBoss-Stage_UpdateLogic
@@ -101,7 +101,7 @@ Stage_InitBossIntro:                                    ; DATA XREF: ROM:0000C84
 Camera_BossPhaseHandler:                                ; DATA XREF: ROM:0000C850   o  ; was: sub_C910
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Camera_UpdateBossPhase
-                bsr.w   Stage_TriggerPhaseTransition
+                bsr.w   Stage_StartTimeBonusAndPreloadNextPhase
 ; Updates camera position during boss battle phase
 Camera_UpdateBossPhase:                                 ; CODE XREF: Camera_BossPhaseHandler+4   j  ; was: loc_C91A
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
@@ -109,7 +109,7 @@ Camera_UpdateBossPhase:                                 ; CODE XREF: Camera_Boss
 ; End of function Camera_BossPhaseHandler
 ; Stage 2 camera with transition check
 Camera_Stage2PhaseHandler:                              ; DATA XREF: ROM:0000C852   o  ; was: sub_C922
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Scroll_UpdateQuarterHorizontalPosition
 ; End of function Camera_Stage2PhaseHandler
@@ -145,7 +145,7 @@ Camera_AntroidBossInit:                                 ; DATA XREF: ROM:0000C85
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Camera_UpdateAntroidBoss
                 clr.w   (dword_FFA90C).w
-                bsr.w   UI_InitScoreTimer
+                bsr.w   Stage_StartPostBannerDelayAndPreloadNextPhase
 ; Updates camera for Antroid boss with score timer initialization
 Camera_UpdateAntroidBoss:                               ; CODE XREF: Camera_AntroidBossInit+4   j  ; was: loc_C986
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
@@ -153,7 +153,7 @@ Camera_UpdateAntroidBoss:                               ; CODE XREF: Camera_Antr
 ; End of function Camera_AntroidBossInit
 ; Stage 3 camera with section transition
 Camera_Stage3Transition:                                ; DATA XREF: ROM:0000C85A   o  ; was: sub_C98E
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Scroll_UpdateQuarterHorizontalPosition
 ; End of function Camera_Stage3Transition
@@ -250,7 +250,7 @@ Camera_LockPosition:                                    ; DATA XREF: ROM:0000C86
                 bra.s   loc_CAB0
 ; ---------------------------------------------------------------------------
 loc_CAAC:                                               ; CODE XREF: Camera_LockPosition+A   j
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
 loc_CAB0:                                               ; CODE XREF: Camera_LockPosition+4   j
                                         ; Camera_LockPosition+10   j
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
@@ -362,7 +362,7 @@ Stage_CheckTransitionReady:                             ; DATA XREF: ROM:0000C87
                 tst.w   (word_FF8138).w
                 bne.s   locret_CBB8
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_InitTransitionState
+                bra.w   Stage_StartWeaponSelectTransition
 ; ---------------------------------------------------------------------------
 locret_CBB8:                                            ; CODE XREF: Stage_CheckTransitionReady+6   j
                                         ; Stage_CheckTransitionReady+C   j
@@ -403,21 +403,21 @@ Stage_InitPostBoss:                                     ; DATA XREF: ROM:0000C87
                 bne.s   loc_CC1C
                 clr.w   (dword_FFA90C).w
                 move.l  #Stage2_FifthRuntimeSpawnList,(dword_FFA20E).w
-                bsr.w   UI_InitScoreTimer
+                bsr.w   Stage_StartPostBannerDelayAndPreloadNextPhase
 loc_CC1C:                                               ; CODE XREF: Stage_InitPostBoss+4   j
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_InitPostBoss
 ; Start a section change and request the default BGM when no delay is active
-Stage_InitSectionChangeWithDefaultBGM:                  ; DATA XREF: ROM:0000C880   o  ; was: sub_CC20
+Stage_StartNextPhaseBannerWithDefaultBGM:               ; DATA XREF: ROM:0000C880   o  ; was: sub_CC20
                 tst.w   (MessageSequenceState).w
-                bne.s   Stage_InitSectionChangeWithDefaultBGM_Continue
+                bne.s   Stage_StartNextPhaseBannerWithDefaultBGM_Continue
                 move.b  #$81,d0
                 jsr     (Sound_QueueBGMRequest).l
-Stage_InitSectionChangeWithDefaultBGM_Continue:         ; CODE XREF: Stage_InitSectionChangeWithDefaultBGM+4   j  ; was: loc_CC30
+Stage_StartNextPhaseBannerWithDefaultBGM_Continue:      ; CODE XREF: Stage_StartNextPhaseBannerWithDefaultBGM+4   j  ; was: loc_CC30
                 clr.w   (word_FF808A).w
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
-; End of function Stage_InitSectionChangeWithDefaultBGM
+; End of function Stage_StartNextPhaseBannerWithDefaultBGM
 ; Checks scroll position for stage phase transition trigger
 Stage_CheckScrollTransition:                            ; DATA XREF: ROM:0000C882   o  ; was: sub_CC3C
                 bsr.w   Camera_UpdateAndRenderStageTilemap
@@ -449,14 +449,14 @@ Stage_PostJokerBoss:                                    ; DATA XREF: ROM:0000C88
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_CC92
                 clr.w   (dword_FFA90C).w
-                bsr.w   Stage_TriggerPhaseTransition
+                bsr.w   Stage_StartTimeBonusAndPreloadNextPhase
 loc_CC92:                                               ; CODE XREF: Stage_PostJokerBoss+4   j
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostJokerBoss
 ; Post-Joker transition clearing flags and updating camera
 Stage_PostJokerTransition:                              ; DATA XREF: ROM:0000C888   o  ; was: sub_CC96
                 clr.w   (word_FF808A).w
-                bsr.w   Stage_InitSectionChange
+                bsr.w   Stage_StartNextPhaseBanner
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostJokerTransition
 ; Initializes Stage 7 with scroll setup and palette loading

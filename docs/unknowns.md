@@ -4163,7 +4163,7 @@ behavioral ROM-ordered modules. The `0x010026-0x01038F` range is now the
 404-line `rendering/camera_tracking_and_stage_scroll.s` module. It contains
 the horizontal and vertical camera-follow algorithms together with the stage
 wrappers that select them. The independent six-state phase-transition table at
-`0x010390-0x0103F9` is the naturally short 44-line
+`0x010390-0x0103F9` is the naturally short 43-line
 `stages/stage_phase_transition_control.s` module. The following scroll-plane
 setup was joined to its consumers in the 252-line
 `rendering/scroll_plane_buffers.s` module instead of remaining separated from
@@ -4188,3 +4188,38 @@ address-derived ceiling falls from 2,703 to 2,669. The natural split changes
 the layout from 362 to 363 modules and the mean to 327.4 lines; the largest
 module remains 986 lines, with zero files above 1,000 lines and zero generic
 container filenames.
+
+The phase-transition and scroll-buffer follow-up audits all 24 definitions in
+the adjacent `0x010390-0x0106C5` range. The message handler table disproves
+two especially misleading inherited names. `UI_InitScoreTimer` writes message
+state `$5C`, which starts `StageIntro_InitializePostBannerDelay`; it neither
+reads nor writes the score. `Stage_TriggerPhaseTransition` writes state `$2E`,
+which starts `Results_InitializeTimeBonus`. Both routines then advance the
+stage controller, temporarily select the following `StageTableIndex`, and
+dispatch that phase's visual-asset loader.
+
+The generic stage-transition initializer is narrowed as well. Its post-fade
+selector is 3; the gameplay loop maps that value to game mode `$34`, and the
+game-state table maps `$34` to `UI_InitializeWeaponSelect`. The section-change
+path instead selects message state `$50`, the stage-number banner initializer.
+These table relationships support exact names without guessing about the
+unrenamed shared RAM fields. The already-audited adjacent wrapper is therefore
+refined from generic section initialization to
+`Stage_StartNextPhaseBannerWithDefaultBGM` as well, without adding a duplicate
+audit record.
+
+The following scroll module now distinguishes horizontal and vertical buffer
+operations. The top-level routine selects the plane-base register shadows and
+prepares both planes' interleaved scroll workspaces. Horizontal flags select a
+direct value, a 224-line constant fill, a 28-cell constant fill, or a profile
+from `$FFFF8800`; vertical flags select a direct value, a 20-column fill, or a
+20-word profile from `$FFFF8A00`. The old singular/plural
+`Gfx_WriteScrollValue(s)` pair concealed that material distinction.
+
+Seventeen address-derived branches, loops, and returns receive
+provenance-preserving behavioral names, while seven inherited semantic names
+are corrected or narrowed. Provenance rises from 13,379 to 13,396, the
+name-audit registry from 10,387 to 10,411, and the enforced address-derived
+ceiling falls from 2,669 to 2,652. The layout remains 363 modules with a
+327.4-line mean, zero files above 1,000 lines, and zero generic container
+filenames.

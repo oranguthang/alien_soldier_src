@@ -1,5 +1,5 @@
 Stage_StateDispatcher:                                  ; CODE XREF: Camera_UpdateSmooth+E   p  ; was: sub_11DD2
-                                        ; Stage_TriggerPhaseTransition+12   p
+                                        ; Stage_StartTimeBonusAndPreloadNextPhase+12   p
                 clr.b   (byte_FFA230).w
                 move.w  (StageTableIndex).w,d0
                 movea.w off_11DE6(pc,d0.w),a0

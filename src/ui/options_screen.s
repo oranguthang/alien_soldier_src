@@ -32,7 +32,7 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 clr.w   (dword_FF8062+2).w
                 clr.w   (dword_FF8062).w
                 clr.b   (dword_FF805E+3).w
@@ -125,7 +125,7 @@ UI_UpdateOptionsScreenFrame:                            ; CODE XREF: UI_UpdateOp
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function UI_UpdateOptionsScreen
 ; Processes directional input and button presses in options menu
 UI_HandleOptionsInput:                                  ; CODE XREF: UI_UpdateOptionsScreen+5E   p  ; was: sub_97EE
@@ -469,7 +469,7 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 move.w  #$FFF0,(dword_FFA904).w
                 clr.w   (dword_FFA900).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 clr.w   (dword_FF8062+2).w
                 clr.w   (dword_FF8062).w
                 clr.w   (dword_FF805E).w
@@ -508,7 +508,7 @@ UI_UpdateSecondaryOptionsMenuFrame:                     ; CODE XREF: UI_UpdateSe
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function UI_UpdateSecondaryOptionsMenu
 ; Processes D-pad input for options menu cursor
 UI_HandleSecondaryOptionsInput:                         ; CODE XREF: UI_UpdateSecondaryOptionsMenu+52   p  ; was: sub_9EF6

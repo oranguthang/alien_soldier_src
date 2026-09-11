@@ -692,7 +692,7 @@ Entity_SevenForcesFinishIntroState3E:                   ; DATA XREF: ROM:00054BD
                 bne.s   Entity_SevenForcesFinishIntroReturn
                 move.b  #$93,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
-                jmp     Stage_InitTransitionState
+                jmp     Stage_StartWeaponSelectTransition
 ; ---------------------------------------------------------------------------
 Entity_SevenForcesFinishIntroReturn:                    ; CODE XREF: Entity_SevenForcesFinishIntroState3E+8   j  ; was: locret_5545E
                                         ; Entity_SevenForcesFinishIntroState3E+E   j

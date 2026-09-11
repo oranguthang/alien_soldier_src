@@ -45,7 +45,7 @@ TitleScreen_FinalizeInitialization:                     ; CODE XREF: TitleScreen
                 move.w  #2,(dword_FF8066+2).w
                 move.b  #$91,d0
                 jsr     (Sound_QueueRequest).l
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 lea     (Text_TitleFeatureList).l,a0
                 move.w  #$A300,d0
                 move.w  #$4086,d4
@@ -169,7 +169,7 @@ TitleScreen_DrawPassword:                               ; CODE XREF: TitleScreen
                 jsr     Frontend_AnimateMenuPalette(pc)  ; (pc)
                 nop
                 jsr     (Gfx_FadePaletteTransition).l
-                jmp     Gfx_SetupScrollPlanes
+                jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function TitleScreen_Update
 ; Queues the GAME START string with the tile attributes already selected in d0
 TitleScreen_QueueGameStart:                             ; CODE XREF: TitleScreen_Update:TitleScreen_DrawGameStart   p  ; was: sub_959A

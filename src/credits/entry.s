@@ -26,7 +26,7 @@ Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_Ini
                 jsr     (Gfx_DirectVRAMTransfer).l
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA904).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.w  #0,(word_FF807A).w
                 jsr     (Effect_TransitionDispatcher).l
                 bset    #6,(VDPReg1Shadow+1).w

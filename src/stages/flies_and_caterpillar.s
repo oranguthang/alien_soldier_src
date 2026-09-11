@@ -392,7 +392,7 @@ Stage_PostXiTigerTransition:                            ; DATA XREF: ROM:0000C8B
                 move.b  #$86,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
                 tst.w   (MessageSequenceState).w
-                beq.w   Stage_InitTransitionState
+                beq.w   Stage_StartWeaponSelectTransition
 locret_D5BA:                                            ; CODE XREF: Stage_PostXiTigerTransition+8   j
                                         ; Stage_PostXiTigerTransition+E   j
                 rts

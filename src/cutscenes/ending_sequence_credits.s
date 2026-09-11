@@ -34,7 +34,7 @@ EndingSequence_Initialize:                              ; CODE XREF: Stage_Trans
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w
                 clr.w   (dword_FFA908).w
-                jsr     (Gfx_SetupScrollPlanes).l
+                jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 clr.w   (dword_FF8128+2).w
                 rts
 ; End of function EndingSequence_Initialize

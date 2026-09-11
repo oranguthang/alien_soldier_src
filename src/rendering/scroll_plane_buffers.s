@@ -1,13 +1,13 @@
-; Sets up VDP scroll plane registers
-Gfx_SetupScrollPlanes:                                  ; CODE XREF: StoryScreen_Initialize+8A   p  ; was: sub_103FA
+; Select plane table bases and populate their horizontal and vertical scroll buffers
+Scroll_PreparePlaneBuffersAndRegisterShadows:           ; CODE XREF: StoryScreen_Initialize+8A   p  ; was: sub_103FA
                                         ; StoryScreen_MainLoop+56   p
                 move.w  #$8230,(VDPReg2Shadow).w
                 move.w  #$8407,(VDPReg4Shadow).w
                 tst.w   (word_FF8640).w
-                beq.s   loc_10418
+                beq.s   Scroll_PreparePlaneBufferValues
                 move.w  #$8238,(VDPReg2Shadow).w
                 move.w  #$8406,(VDPReg4Shadow).w
-loc_10418:                                              ; CODE XREF: Gfx_SetupScrollPlanes+10   j
+Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_PreparePlaneBuffersAndRegisterShadows+10   j  ; was: loc_10418
                 move.b  (VDPReg11Shadow+1).w,d3
                 move.b  d3,d4
                 andi.w  #3,d3
@@ -20,13 +20,13 @@ loc_10418:                                              ; CODE XREF: Gfx_SetupSc
                 move.w  (dword_FFA900).w,d0
                 neg.w   d0
                 move.w  (word_FFA012).w,d1
-                bsr.w   Gfx_WriteScrollValue
+                bsr.w   Scroll_WriteHorizontalPlaneBuffer
                 movea.w #(VScrollBuffer-M68K_RAM),a0
                 adda.w  (word_FF8640).w,a0
                 move.w  (dword_FFA904).w,d0
                 neg.w   d0
                 add.w   (word_FFA012).w,d0
-                bsr.w   Gfx_WriteScrollValues
+                bsr.w   Scroll_WriteVerticalPlaneBuffer
                 move.b  (byte_FFA95B).w,d5
                 movea.w #(word_FFE402-M68K_RAM),a0
                 movea.w #(byte_FFE482-M68K_RAM),a1
@@ -35,45 +35,45 @@ loc_10418:                                              ; CODE XREF: Gfx_SetupSc
                 move.w  (dword_FFA908).w,d0
                 neg.w   d0
                 move.w  (word_FFA016).w,d1
-                bsr.w   Gfx_WriteScrollValue
+                bsr.w   Scroll_WriteHorizontalPlaneBuffer
                 movea.w #(word_FFEC02-M68K_RAM),a0
                 suba.w  (word_FF8640).w,a0
                 move.w  (dword_FFA90C).w,d0
                 neg.w   d0
                 add.w   (word_FFA016).w,d0
-                bra.w   Gfx_WriteScrollValues
-; End of function Gfx_SetupScrollPlanes
-; Writes scroll value with flag checks
-Gfx_WriteScrollValue:                                   ; CODE XREF: Gfx_SetupScrollPlanes+4A   p  ; was: sub_10496
-                                        ; Gfx_SetupScrollPlanes+82   p
+                bra.w   Scroll_WriteVerticalPlaneBuffer
+; End of function Scroll_PreparePlaneBuffersAndRegisterShadows
+; Populate one plane's horizontal-scroll entries according to its mode flags
+Scroll_WriteHorizontalPlaneBuffer:                      ; CODE XREF: Scroll_PreparePlaneBuffersAndRegisterShadows+4A   p  ; was: sub_10496
+                                        ; Scroll_PreparePlaneBuffersAndRegisterShadows+82   p
                 btst    #2,d5
-                bne.w   loc_104CA
+                bne.w   Scroll_FillHorizontalPlaneBuffer
                 btst    #4,d5
-                bne.w   loc_105CE
+                bne.w   Scroll_CopyHorizontalProfile
                 btst    #0,d5
-                bne.s   locret_104AE
+                bne.s   Scroll_HorizontalPlaneWriteReturn
                 move.w  d0,(a0)
-locret_104AE:                                           ; CODE XREF: Gfx_WriteScrollValue+14   j
+Scroll_HorizontalPlaneWriteReturn:                      ; CODE XREF: Scroll_WriteHorizontalPlaneBuffer+14   j  ; was: locret_104AE
                 rts
-; End of function Gfx_WriteScrollValue
-; Writes scroll values to VRAM with various modes
-Gfx_WriteScrollValues:                                  ; CODE XREF: Gfx_SetupScrollPlanes+60   p  ; was: sub_104B0
-                                        ; Gfx_SetupScrollPlanes+98   j
+; End of function Scroll_WriteHorizontalPlaneBuffer
+; Populate one plane's vertical-scroll entries according to its mode flags
+Scroll_WriteVerticalPlaneBuffer:                        ; CODE XREF: Scroll_PreparePlaneBuffersAndRegisterShadows+60   p  ; was: sub_104B0
+                                        ; Scroll_PreparePlaneBuffersAndRegisterShadows+98   j
                 btst    #3,d5
-                bne.w   loc_10664
+                bne.w   Scroll_FillVerticalColumnEntries
                 btst    #5,d5
-                bne.w   loc_106B4
+                bne.w   Scroll_CopyVerticalColumnProfile
                 btst    #1,d5
-                bne.s   locret_104C8
+                bne.s   Scroll_VerticalPlaneWriteReturn
                 move.w  d0,(a0)
-locret_104C8:                                           ; CODE XREF: Gfx_WriteScrollValues+14   j
+Scroll_VerticalPlaneWriteReturn:                        ; CODE XREF: Scroll_WriteVerticalPlaneBuffer+14   j  ; was: locret_104C8
                 rts
 ; ---------------------------------------------------------------------------
-loc_104CA:                                              ; CODE XREF: Gfx_WriteScrollValue+4   j
+Scroll_FillHorizontalPlaneBuffer:                       ; CODE XREF: Scroll_WriteHorizontalPlaneBuffer+4   j  ; was: loc_104CA
                 cmpi.b  #2,d3
-                beq.w   loc_1055E
+                beq.w   Scroll_FillHorizontalCellEntries
                 move.w  #6,d7
-loc_104D6:                                              ; CODE XREF: Gfx_WriteScrollValues+A8   j
+Scroll_FillHorizontalLineEntriesLoop:                   ; CODE XREF: Scroll_FillHorizontalLineEntriesLoop+82   j  ; was: loc_104D6
                 move.w  d0,(a0)
                 move.w  d0,4(a0)
                 move.w  d0,8(a0)
@@ -107,10 +107,10 @@ loc_104D6:                                              ; CODE XREF: Gfx_WriteSc
                 move.w  d0,$78(a0)
                 move.w  d0,$7C(a0)
                 lea     $80(a0),a0
-                dbf     d7,loc_104D6
+                dbf     d7,Scroll_FillHorizontalLineEntriesLoop
                 rts
 ; ---------------------------------------------------------------------------
-loc_1055E:                                              ; CODE XREF: Gfx_WriteScrollValues+1E   j
+Scroll_FillHorizontalCellEntries:                       ; CODE XREF: Scroll_FillHorizontalPlaneBuffer+4   j  ; was: loc_1055E
                 move.w  d0,(a0)
                 move.w  d0,$20(a0)
                 move.w  d0,$40(a0)
@@ -141,31 +141,31 @@ loc_1055E:                                              ; CODE XREF: Gfx_WriteSc
                 move.w  d0,$360(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_105CE:                                              ; CODE XREF: Gfx_WriteScrollValue+C   j
+Scroll_CopyHorizontalProfile:                           ; CODE XREF: Scroll_WriteHorizontalPlaneBuffer+C   j  ; was: loc_105CE
                 movea.w #(byte_FF8800-M68K_RAM),a2
                 moveq   #0,d0
                 cmpi.b  #2,d3
-                beq.s   loc_10600
+                beq.s   Scroll_CopyHorizontalCellProfile
                 move.w  d1,d0
                 move.w  #$BF,d7
                 move.w  d0,d6
-                bmi.s   loc_105E6
+                bmi.s   Scroll_SelectHorizontalProfileStart
                 clr.w   d6
-loc_105E6:                                              ; CODE XREF: Gfx_WriteScrollValues+132   j
+Scroll_SelectHorizontalProfileStart:                    ; CODE XREF: Scroll_CopyHorizontalProfile+14   j  ; was: loc_105E6
                 asl.w   #1,d0
                 adda.l  d0,a2
-loc_105EA:                                              ; CODE XREF: Gfx_WriteScrollValues+13E   j
+Scroll_CopyHorizontalLineProfileLoop:                   ; CODE XREF: Scroll_CopyHorizontalLineProfileLoop+4   j  ; was: loc_105EA
                 move.w  (a2)+,(a1)
                 addq.w  #4,a1
-                dbf     d7,loc_105EA
+                dbf     d7,Scroll_CopyHorizontalLineProfileLoop
                 move.w  -2(a2),d0
-loc_105F6:                                              ; CODE XREF: Gfx_WriteScrollValues+14A   j
+Scroll_RepeatHorizontalProfileEdgeLoop:                 ; CODE XREF: Scroll_RepeatHorizontalProfileEdgeLoop+4   j  ; was: loc_105F6
                 move.w  d0,(a1)
                 addq.w  #4,a1
-                dbf     d6,loc_105F6
+                dbf     d6,Scroll_RepeatHorizontalProfileEdgeLoop
                 rts
 ; ---------------------------------------------------------------------------
-loc_10600:                                              ; CODE XREF: Gfx_WriteScrollValues+128   j
+Scroll_CopyHorizontalCellProfile:                       ; CODE XREF: Scroll_CopyHorizontalProfile+A   j  ; was: loc_10600
                 moveq   #$20,d0                         ; ' '
                 move.w  (a2)+,(a1)
                 adda.w  d0,a1
@@ -217,7 +217,7 @@ loc_10600:                                              ; CODE XREF: Gfx_WriteSc
                 adda.w  d0,a1
                 rts
 ; ---------------------------------------------------------------------------
-loc_10664:                                              ; CODE XREF: Gfx_WriteScrollValues+4   j
+Scroll_FillVerticalColumnEntries:                       ; CODE XREF: Scroll_WriteVerticalPlaneBuffer+4   j  ; was: loc_10664
                 move.w  d0,(a0)
                 move.w  d0,4(a0)
                 move.w  d0,8(a0)
@@ -240,12 +240,12 @@ loc_10664:                                              ; CODE XREF: Gfx_WriteSc
                 move.w  d0,$4C(a0)
                 rts
 ; ---------------------------------------------------------------------------
-loc_106B4:                                              ; CODE XREF: Gfx_WriteScrollValues+C   j
+Scroll_CopyVerticalColumnProfile:                       ; CODE XREF: Scroll_WriteVerticalPlaneBuffer+C   j  ; was: loc_106B4
                 movea.w #(dword_FF8A00-M68K_RAM),a2
                 move.w  #$13,d7
-loc_106BC:                                              ; CODE XREF: Gfx_WriteScrollValues+210   j
+Scroll_CopyVerticalColumnProfileLoop:                   ; CODE XREF: Scroll_CopyVerticalColumnProfileLoop+4   j  ; was: loc_106BC
                 move.w  (a2)+,(a0)
                 addq.w  #4,a0
-                dbf     d7,loc_106BC
+                dbf     d7,Scroll_CopyVerticalColumnProfileLoop
                 rts
-; End of function Gfx_WriteScrollValues
+; End of function Scroll_WriteVerticalPlaneBuffer
