@@ -345,10 +345,10 @@ Boss_SnakeConfigureShot:                                ; CODE XREF: Boss_SnakeS
                 rts
 ; End of function Boss_SnakeConfigureShot
 ; ---------------------------------------------------------------------------
-Boss_SnakeShotMappingChoices:   dc.l    off_1A0E96      ; DATA XREF: Boss_SnakeConfigureShot+34   r  ; was: off_40BEC
-                dc.l    off_1A0E86
-                dc.l    off_1A0E96
-                dc.l    off_1A0EA6
+Boss_SnakeShotMappingChoices:   dc.l    SharedProjectileDuration4Animation  ; DATA XREF: Boss_SnakeConfigureShot+34   r  ; was: off_40BEC
+                dc.l    SharedProjectileDuration2Animation
+                dc.l    SharedProjectileDuration4Animation
+                dc.l    SharedProjectileDuration8Animation
 
 ; Turns toward the target and derives signed axis velocities
 Boss_SnakeSteerTowardTarget:                            ; CODE XREF: Boss_SnakeBeginEncounterState   p  ; was: sub_40BFC

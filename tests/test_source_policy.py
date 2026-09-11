@@ -21,7 +21,7 @@ class SourcePolicyTests(unittest.TestCase):
         self.assertGreaterEqual(
             len(inventory.provenance), policy["provenance"]["minimum_unique_mappings"]
         )
-        self.assertEqual(3085, len(inventory.address_derived))
+        self.assertEqual(3032, len(inventory.address_derived))
 
     def test_style_violations_are_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

@@ -294,7 +294,7 @@ stru_1195A:     dc.w    7                               ; field_0
                 dc.l    byte_19BA44                     ; field_2
                 dc.w    $7400                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A0FDA                     ; field_2
+                dc.l    Stage10TeleportSharedAssetData  ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
@@ -348,7 +348,7 @@ stru_119FA:     dc.w    7                               ; field_0
                 dc.l    byte_19BA44                     ; field_2
                 dc.w    $7400                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A0FDA                     ; field_2
+                dc.l    Stage10TeleportSharedAssetData  ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    tiles_120E1C                    ; field_2

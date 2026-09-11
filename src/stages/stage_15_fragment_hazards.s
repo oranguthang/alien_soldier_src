@@ -13,7 +13,7 @@ Stage15_FragmentEmitterWaveStates:
 Stage15_FragmentEmitterWaveInit:                        ; was: sub_304F4
                 move.w  #$6000,2(a5)
                 move.w  #$8000,$E(a5)
-                move.l  #off_1A0F76,8(a5)
+                move.l  #SharedTeddyHazardLoopAnimation,8(a5)
                 move.l  #Stage15_FragmentEmitterSchedule,$40(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -524,7 +524,7 @@ Stage15_FallingRockWaveStates:
 Stage15_FallingRockWaveInit:                            ; was: sub_30B4A
                 move.w  #$6000,2(a5)
                 move.w  #$8000,$E(a5)
-                move.l  #off_1A0F76,8(a5)
+                move.l  #SharedTeddyHazardLoopAnimation,8(a5)
                 addq.w  #2,4(a5)
                 tst.w   (DifficultyMode).w
                 bne.w   Stage15_FallingRockWaveUseAlternateSchedule

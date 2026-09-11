@@ -18,7 +18,7 @@ Projectile_SharpssteelEmitFallingShotLoop:              ; CODE XREF: Boss_Sharps
                 move.w  #$364,(a0)
                 move.w  #$EC00,2(a0)
                 move.w  #0,$E(a0)
-                move.l  #off_1A0F1A,8(a0)
+                move.l  #SharedFloaterDebrisProjectileAlternating5And4Animation,8(a0)
                 move.b  #$20,$20(a0)                    ; ' '
                 moveq   #0,d0
                 move.b  Projectile_SharpssteelFallingShotAngleIndices(pc,d5.w),d0

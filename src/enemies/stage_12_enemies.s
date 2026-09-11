@@ -33,8 +33,8 @@ Enemy_UpdateStage12FloatingAnimation_Return:            ; CODE XREF: Enemy_Updat
                 rts
 ; End of function Enemy_UpdateStage12FloatingAnimation
 ; ---------------------------------------------------------------------------
-Enemy_Stage12FloatingAnimationMappings: dc.l    off_1A0F1A  ; DATA XREF: Enemy_UpdateStage12FloatingAnimation+8   r  ; was: off_2E320
-                dc.l    off_1A0F2E
+Enemy_Stage12FloatingAnimationMappings: dc.l    SharedFloaterDebrisProjectileAlternating5And4Animation  ; DATA XREF: Enemy_UpdateStage12FloatingAnimation+8   r  ; was: off_2E320
+                dc.l    SharedFloaterDebrisProjectileAlternating3And2Animation
 
 ; Updates the Stage 12 floater or converts it to shared defeat debris
 Enemy_Stage12FloaterController:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2E328
@@ -134,7 +134,7 @@ Enemy_ConvertStage12FallingObjectToEffect:              ; CODE XREF: Projectile_
                                         ; Enemy_UpdateStage12FallingObject+1E   j
                 movea.w a5,a0
                 jsr     (Projectile_InitType88FromCurrent).l
-                move.l  #off_1A0E96,8(a5)
+                move.l  #SharedProjectileDuration4Animation,8(a5)
                 move.w  #$C000,$E(a5)
                 move.l  #$FFFD8000,$1C(a5)
                 rts

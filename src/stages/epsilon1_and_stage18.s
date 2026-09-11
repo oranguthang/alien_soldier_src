@@ -138,7 +138,7 @@ Projectile_InitializeLoop:                              ; CODE XREF: Projectile_
                 jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   locret_E2D4
                 jsr     (Projectile_InitType1A8).l
-                move.l  #off_1A0E96,8(a0)
+                move.l  #SharedProjectileDuration4Animation,8(a0)
                 move.w  (word_FF808A).w,d0
                 addi.w  #$4000,d0
                 move.w  d0,$E(a0)
@@ -166,7 +166,7 @@ Enemy_SpawnProjectileAtAngle:                           ; CODE XREF: Stage11_Ris
                 bne.s   locret_E34A
                 jsr     (Projectile_InitType1A8).l
                 clr.b   $21(a0)
-                move.l  #off_1A0E96,8(a0)
+                move.l  #SharedProjectileDuration4Animation,8(a0)
                 move.w  (word_FF808A).w,d0
                 addi.w  #$4000,d0
                 move.w  d0,$E(a0)

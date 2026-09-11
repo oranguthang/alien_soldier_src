@@ -3731,3 +3731,41 @@ records. Provenance rises from 12,911 to 12,963, the name-audit registry from
 the mean to 339.8 lines; there are still no modules over 1,000 lines and no
 generic container filenames. A fresh rebuild preserves the canonical Japanese
 ROM byte for byte.
+
+The shared stage-object mapping pass rejects the inherited
+`data/ship_and_destroyer_mappings.s` identity. Its 53 definitions have no Ship
+or Destroyer consumer. The actual references establish a shared projectile
+mapping set used by Snake, Gusthead, Stage 12, Stage 18, and generic projectile
+handlers; a pair of streams shared by Stage 12 floating objects, Gusthead
+debris, and a Sharpssteel projectile; one Stage 18 moving-platform mapping; one
+Stage 10 beetle animation; and the Stage 12 Teddy Bear mapping group.
+
+The reconstructed `data/shared_stage_object_sprite_mappings.s` keeps those
+interleaved mapping records together in their natural 299-line ROM bank. Names
+encode proven consumers, exact per-frame durations, or stable record letters;
+they do not invent visual poses. Four self-looping streams have no external
+source reference and are therefore recorded as
+`UnreferencedTeddyGroupAnimationA-D` instead of being assigned speculative
+states. The three mappings used both by the Teddy Bear and Stage 15 hazard-wave
+initializers are explicitly marked shared rather than owned by either caller.
+The consumer audit also rejects an apparent `PilotLoop` interpretation: the
+pilot-start routine writes that stream and then overwrites the mapping field in
+the same straight-line path before returning. It is therefore named
+`Stage12_TeddyBearOverwrittenPilotAnimation`; the surrounding live streams use
+their proven rescue, pre-boarding, boarding-delay, landed, and boarding/pilot
+transition roles.
+
+The final 76 bytes are not sprite mappings. Both the Stage 10 enemy asset list
+and teleport graphics asset list load them with type 6 at destination `$7800`,
+so they now form the adjacent eight-line
+`data/stage10_and_teleport_shared_asset.s` module at
+`0x1A0FDA-0x1A1025`. The mapping bank retains `0x1A0CA6-0x1A0FD9`; the include
+order and emitted bytes are unchanged.
+
+All 53 imported definitions have exact-address static audit records.
+Provenance rises from 12,963 to 13,016, the name-audit registry from 9,818 to
+9,871, and the enforced address-derived ceiling falls from 3,085 to 3,032.
+The asset split raises the layout from 350 to 351 modules and changes the mean
+to 338.8 lines, with zero modules above 1,000 lines and zero generic container
+filenames. A fresh rebuild again reproduces the canonical Japanese ROM byte
+for byte.

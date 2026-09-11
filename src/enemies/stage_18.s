@@ -61,7 +61,7 @@ Stage18_MovingPlatform:                                 ; DATA XREF: ROM:Entity_
                 move.w  #$4470,$E(a5)
                 cmpi.w  #$18,(StageTableIndex).w
                 bcc.s   Stage18_MovingPlatform_FinishInit
-                move.l  #word_1A0CD0,8(a5)
+                move.l  #Stage18_MovingPlatformSpriteMapping,8(a5)
                 move.w  #$4000,$E(a5)
 Stage18_MovingPlatform_FinishInit:                      ; CODE XREF: Stage18_MovingPlatform+34   j
                 move.b  #$20,$21(a5)                    ; ' '

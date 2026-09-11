@@ -631,7 +631,7 @@ Boss_GustheadFourWayArcVolleyLoop:                      ; CODE XREF: Boss_Gusthe
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 addi.w  #$10,$14(a0)
-                move.l  #off_1A0E96,8(a0)
+                move.l  #SharedProjectileDuration4Animation,8(a0)
                 move.w  #$4000,$E(a0)
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)

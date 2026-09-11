@@ -26,7 +26,7 @@ Boss_GustheadDetachedSegmentFallState:                  ; DATA XREF: ROM:0004012
                 clr.l   $1C(a5)
                 clr.l   $18(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
-                move.l  #off_1A0E96,8(a5)
+                move.l  #SharedProjectileDuration4Animation,8(a5)
                 move.w  #$4000,$E(a5)
 Boss_GustheadDetachedSegmentFallReturn:                 ; CODE XREF: Boss_GustheadDetachedSegmentFallState+E   j  ; was: locret_40196
                 rts
@@ -152,10 +152,10 @@ Enemy_GustheadDebrisSetSprite:                          ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Enemy_GustheadDebrisSetSprite
 ; ---------------------------------------------------------------------------
-Enemy_GustheadDebrisMappings:   dc.l    off_1A0F1A      ; DATA XREF: Enemy_GustheadDebrisSetSprite+12   r  ; was: off_40318
-                dc.l    off_1A0F42
-                dc.l    off_1A0F2E
-                dc.l    off_1A0F42
+Enemy_GustheadDebrisMappings:   dc.l    SharedFloaterDebrisProjectileAlternating5And4Animation  ; DATA XREF: Enemy_GustheadDebrisSetSprite+12   r  ; was: off_40318
+                dc.l    Enemy_Stage10BeetleLoopAnimation
+                dc.l    SharedFloaterDebrisProjectileAlternating3And2Animation
+                dc.l    Enemy_Stage10BeetleLoopAnimation
 
 ; Main physics handler for debris
 Enemy_GustheadDebrisPhysicsMain:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_40328
@@ -320,7 +320,7 @@ Boss_GustheadDebrisGroundBounce:                        ; CODE XREF: Enemy_Gusth
                                         ; Boss_GustheadDebrisUpdate+62   j
                 cmpi.w  #$150,$14(a5)
                 blt.s   Boss_GustheadDebrisGroundBounceReturn
-                move.l  #off_1A0E96,8(a5)
+                move.l  #SharedProjectileDuration4Animation,8(a5)
                 jsr     (Projectile_InitType88FromCurrent).l
                 move.w  #$C000,$E(a5)
                 move.l  #$FFFD8000,$1C(a5)

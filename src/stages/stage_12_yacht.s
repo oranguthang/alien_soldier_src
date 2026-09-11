@@ -332,7 +332,7 @@ Stage12_TeddyBearInit:                                  ; DATA XREF: Stage12_Ted
                 addq.w  #4,4(a5)
                 move.w  #$ED00,2(a5)
                 move.w  #$8000,$E(a5)
-                move.l  #off_1A0F76,8(a5)
+                move.l  #SharedTeddyHazardLoopAnimation,8(a5)
                 clr.w   $C(a5)
                 move.b  #$3C,$20(a5)                    ; '<'
                 move.w  #$800,$24(a5)
@@ -353,7 +353,7 @@ Stage12_TeddyBearScanObjects:                           ; CODE XREF: Stage12_Ted
                 bset    #0,(byte_FFA272).w
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
-                move.l  #off_1A0F62,8(a5)
+                move.l  #Stage12_TeddyBearRescueAnimation,8(a5)
                 clr.w   $C(a5)
                 clr.b   $21(a5)
                 rts
@@ -367,7 +367,7 @@ Stage12_TeddyBearRemainCaptive:                         ; CODE XREF: Stage12_Ted
 Stage12_TeddyBearDisableCollision:                      ; CODE XREF: Stage12_TeddyBearInit+7E   j
                 clr.b   $21(a5)
                 move.w  #2,4(a5)
-                move.l  #off_1A0FD2,8(a5)
+                move.l  #Stage12_TeddyBearInitialPoseAnimation,8(a5)
                 clr.w   $C(a5)
                 bclr    #0,(byte_FFA272).w
                 rts
@@ -383,7 +383,7 @@ Stage12_TeddyBearBeginDrop:                             ; DATA XREF: ROM:0002F92
                 bpl.s   Stage12_TeddyBearReturn
                 addq.w  #2,4(a5)
                 move.l  #$FFFD8000,$1C(a5)
-                move.l  #off_1A0EB6,8(a5)
+                move.l  #Stage12_TeddyBearDropAndPilotAnimation,8(a5)
                 clr.w   $C(a5)
 ; Applies gravity until the teddy bear reaches floor position Y=$120
 Stage12_TeddyBearLand:                                  ; DATA XREF: ROM:0002F926   o  ; was: loc_2FA00
@@ -395,7 +395,7 @@ Stage12_TeddyBearLand:                                  ; DATA XREF: ROM:0002F92
                 move.w  #$20,$48(a5)                    ; ' '
                 move.w  #$120,$14(a5)
                 clr.l   $1C(a5)
-                move.l  #off_1A0FA6,8(a5)
+                move.l  #Stage12_TeddyBearLandedAnimation,8(a5)
                 clr.w   $C(a5)
                 btst    #0,(byte_FFA209).w
                 bne.w   Stage12_TeddyBearBeginBoardingJump
@@ -408,7 +408,7 @@ Stage12_TeddyBearFacePlayerDelay:                       ; DATA XREF: ROM:0002F92
                 bpl.s   Stage12_TeddyBearReturn
                 addq.w  #2,4(a5)
                 move.w  #$A0,$48(a5)
-                move.l  #off_1A0F8A,8(a5)
+                move.l  #Stage12_TeddyBearPreBoardingAnimation,8(a5)
                 clr.w   $C(a5)
 ; Continues facing the player, then selects the boarding animation
 Stage12_TeddyBearWaitBeforeBoarding:                    ; DATA XREF: ROM:0002F92A   o  ; was: loc_2FA5E
@@ -418,7 +418,7 @@ Stage12_TeddyBearWaitBeforeBoarding:                    ; DATA XREF: ROM:0002F92
                 addq.w  #2,4(a5)
                 bclr    #3,$E(a5)
                 move.w  #$40,$48(a5)                    ; '@'
-                move.l  #off_1A0FB2,8(a5)
+                move.l  #Stage12_TeddyBearBoardingDelayAnimation,8(a5)
                 clr.w   $C(a5)
 ; Waits before the teddy bear's boarding jump
 Stage12_TeddyBearBoardingDelay:                         ; DATA XREF: ROM:0002F92C   o  ; was: loc_2FA86
@@ -426,7 +426,7 @@ Stage12_TeddyBearBoardingDelay:                         ; DATA XREF: ROM:0002F92
                 bpl.w   Stage12_TeddyBearReturn
 Stage12_TeddyBearBeginBoardingJump:                     ; CODE XREF: Stage12_TeddyBearBeginDrop+56   j
                 move.w  #$10,4(a5)
-                move.l  #off_1A0EDE,8(a5)
+                move.l  #Stage12_TeddyBearBoardingPilotLoopAnimation,8(a5)
                 clr.w   $C(a5)
                 move.b  (byte_FFA420).w,$20(a5)
                 move.l  #$FFFF5000,$18(a5)
@@ -448,7 +448,7 @@ Stage12_TeddyBearPilotAttachDelay:                      ; DATA XREF: ROM:0002F93
                 bpl.w   Stage12_TeddyBearReturn
                 addq.w  #2,4(a5)
                 move.w  #$20,$48(a5)                    ; ' '
-                move.l  #off_1A0EDE,8(a5)
+                move.l  #Stage12_TeddyBearBoardingPilotLoopAnimation,8(a5)
                 clr.w   $C(a5)
                 move.b  #$18,d0
                 jmp     (Sound_PlaySFX).l
@@ -459,13 +459,13 @@ Stage12_TeddyBearPilotStart:                            ; DATA XREF: ROM:0002F93
                 subq.w  #1,$48(a5)
                 bpl.w   Stage12_TeddyBearReturn
                 addq.w  #2,4(a5)
-                move.l  #off_1A0ED2,8(a5)
+                move.l  #Stage12_TeddyBearOverwrittenPilotAnimation,8(a5)
                 clr.w   $C(a5)
                 addq.w  #2,(word_FFA950).w
                 addq.w  #2,(word_FFDB24).w
                 move.w  #$F,(word_FF829E).w
                 bclr    #0,(byte_FFA272).w
-                move.l  #off_1A0EB6,8(a5)
+                move.l  #Stage12_TeddyBearDropAndPilotAnimation,8(a5)
                 rts
 ; End of function Stage12_TeddyBearPilotStart
 ; Copies the current stage palette selector while attached to the yacht
@@ -476,7 +476,7 @@ Stage12_TeddyBearPilotUpdatePalette:                    ; DATA XREF: ROM:0002F93
 ; Selects the attached firing animation
 Stage12_TeddyBearPilotPrepareShot:                      ; DATA XREF: ROM:0002F936   o  ; was: sub_2FB54
                 addq.w  #2,4(a5)
-                move.l  #off_1A0EDE,8(a5)
+                move.l  #Stage12_TeddyBearBoardingPilotLoopAnimation,8(a5)
                 clr.w   $C(a5)
 ; Runs the teddy bear's periodic downward-shot helper
 Stage12_TeddyBearPilotFire:                             ; DATA XREF: ROM:0002F938   o  ; was: loc_2FB64
@@ -485,7 +485,7 @@ Stage12_TeddyBearPilotFire:                             ; DATA XREF: ROM:0002F93
 ; Releases the teddy bear from the yacht attachment
 Stage12_TeddyBearPilotRelease:                          ; DATA XREF: ROM:0002F93A   o  ; was: sub_2FB68
                 addq.w  #2,4(a5)
-                move.l  #off_1A0FD6,8(a5)
+                move.l  #Stage12_TeddyBearPilotReleasePoseAnimation,8(a5)
                 clr.w   $C(a5)
                 move.w  #$EE00,2(a5)
 ; Applies downward acceleration after release

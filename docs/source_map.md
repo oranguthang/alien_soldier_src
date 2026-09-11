@@ -60,7 +60,7 @@ listing by `make verify-layout`.
 | `0x14AE08-0x17FFFF` | credits scene assets and third padding gap | 1 | static |
 | `0x180000-0x189D37` | message-display pattern templates and frontend scene assets | 1 | static/hypothesis |
 | `0x189D38-0x18E5D1` | planet, credits, and menu assets | 2 | static |
-| `0x18E5D2-0x1A1025` | stage object art and sprite mappings | 4 | hypothesis |
+| `0x18E5D2-0x1A1025` | stage object art, sprite mappings, and shared asset data | 5 | static/hypothesis |
 | `0x1A1026-0x1CE4F7` | stage phase and Seven Force cutscene assets | 7 | static |
 | `0x1CE4F8-0x1FFFFF` | late-stage mappings, Stage 3 phase 3 tiles, ROM padding, and final byte | 4 | static |
 

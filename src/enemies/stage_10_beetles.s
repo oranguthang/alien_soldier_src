@@ -86,7 +86,7 @@ Enemy_Stage10BeetleInit:                                ; CODE XREF: Enemy_Stage
                 move.b  2(a0,d0.w),d1
                 asl.w   #4,d1
                 move.w  d1,$5A(a5)
-                move.l  #off_1A0F42,8(a5)
+                move.l  #Enemy_Stage10BeetleLoopAnimation,8(a5)
                 clr.w   $C(a5)
                 rts
 ; End of function Enemy_Stage10BeetleInit
@@ -109,7 +109,7 @@ Enemy_Stage10BeetleController_UpdateState:              ; CODE XREF: Enemy_Stage
                 bsr.w   Enemy_UpdateHorizontalFlipFromVelocity
                 tst.l   $1C(a5)
                 bne.s   Enemy_Stage10BeetleController_Return
-                move.l  #off_1A0F42,8(a5)
+                move.l  #Enemy_Stage10BeetleLoopAnimation,8(a5)
                 clr.w   $C(a5)
 Enemy_Stage10BeetleController_Return:                   ; CODE XREF: Enemy_Stage10BeetleController+2A   j  ; was: locret_2E804
                 rts
