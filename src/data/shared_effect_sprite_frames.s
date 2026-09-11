@@ -87,12 +87,12 @@ Effect_DashTrailSecondarySpriteFrames:  dc.l    $24D62, $FCFC  ; DATA XREF: Effe
                 dc.l    $34D61, $400F8FC
                 dc.l    $44D60, $800F4FC
                 dc.w    $FFFF
-Cutscene_XiTigerCompletionSpriteFrames: dc.l    $4455D, $200FCF4  ; DATA XREF: Cutscene_XiTigerComplete+2A   o  ; was: dword_2AE2E
+Effect_SharedBurstParticleSpriteFrames: dc.l    $4455D, $200FCF4  ; DATA XREF: XiTigerCutscene_SpawnRandomParticle+2A   o  ; was: dword_2AE2E
                                         ; Boss_ViblackSpawnDefeatParticle+34   o
                 dc.l    $4455E, $100FCF8
                 dc.l    $4455F, $FCFC
                 dc.w    $FFFF
-Cutscene_XiTigerSkipSpriteFrames:   dc.l    $244D6, $A00F4F4  ; DATA XREF: Cutscene_XiTigerSkipCheck+14   o  ; was: dword_2AE48
+XiTigerCutscene_MarkerSpriteFrames: dc.l    $244D6, $A00F4F4  ; DATA XREF: XiTigerCutscene_SpawnMarker+14   o  ; was: dword_2AE48
                 dc.l    $244DF, $A00F4F4
 Effect_SharedParticleSpriteFrames:  dc.l    $244BC, $500F8F8  ; DATA XREF: Effect_SpawnParticle+1E   o  ; was: dword_2AE58
                                         ; Player_SpawnPhoenixParticles+3E   o

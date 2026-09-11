@@ -49,7 +49,7 @@ Stage2LatePaletteOffsetList:    dc.w    $3B0, 0         ; DATA XREF: ROM:stru_12
 Stage8InitialPaletteOffsetList:     dc.w    $3F2, 0     ; DATA XREF: ROM:stru_1287A   o  ; was: word_B996
 Stage8AlternatePaletteOffsetList:   dc.w    $3F2, $966, 0  ; DATA XREF: ROM:stru_121FE   o  ; was: word_B99A
                                         ; ROM:stru_12898   o
-XiTigerCutscenePaletteOffsetList:   dc.w    $442, 0     ; DATA XREF: Cutscene_LoadInitialAssets+C   o  ; was: word_B9A0
+XiTigerCutscenePaletteOffsetList:   dc.w    $442, 0     ; DATA XREF: XiTigerCutscene_LoadAssets+C   o  ; was: word_B9A0
 Stage10PaletteOffsetList:           dc.w    $482, 0     ; DATA XREF: ROM:stru_128B6   o  ; was: word_B9A4
                                         ; ROM:stru_128D4   o
 Stage13To16PaletteOffsetList:   dc.w    $4C2, 0         ; DATA XREF: ROM:stru_1292E   o  ; was: word_B9A8

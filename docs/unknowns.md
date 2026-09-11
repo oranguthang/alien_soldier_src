@@ -3497,3 +3497,27 @@ to 12,596. Six new static audit records raise the registry from 9,297 to 9,303,
 and the two RAM promotions lower the enforced address-derived ceiling from
 3,453 to 3,451. The three newly labelled ROM boundaries raise the canonical
 symbol export from 16,057 to 16,060 addresses; module count remains 347.
+
+The stage-transition and Xi Tiger cutscene audit moves the shared route
+dispatchers at `0x01E83E-0x01E869` out of the Xi Tiger module and into
+`stages/transition_control.s`. Their three-entry initialization and update
+tables select Xi Tiger, gameplay, or credits handlers through the shared
+transition route index. `cutscenes/xi_tiger.s` now begins at its natural
+`0x01E86A` asset-loading entry and remains a cohesive 464-line module.
+
+Static control-flow review also rejects four invented Sonnet claims. The
+former `Cutscene_XiTigerWaitForInput` and `Cutscene_XiTigerSkipCheck` routines
+never read controller state: they allocate two symmetric marker sprites. The
+former `Cutscene_XiTigerComplete` only allocates a randomly positioned burst
+particle, while the former `Cutscene_XiTigerProcessCommands` parses no command
+stream and instead derives paired-object and layer positions from a fixed-point
+phase. The shared particle animation is used by both this cutscene and Viblack
+defeat code, so its old cutscene-completion-only name was also removed.
+
+The package replaces all 24 live address-derived definitions across the two
+modules and records exact static evidence for their 49 definitions plus the two
+corrected sprite-frame tables. Provenance rises from 12,596 to 12,620, the
+name-audit registry from 9,303 to 9,353, and the enforced address-derived
+ceiling falls from 3,451 to 3,427. Module count remains 347 and the canonical
+symbol count remains 16,060 because the source boundary moved without adding
+or removing any ROM address.

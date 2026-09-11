@@ -348,7 +348,7 @@ Physics_AccelerateDownward:                             ; DATA XREF: ROM:Entity_
                 addi.l  #$8000,$1C(a5)
 ; End of function Physics_AccelerateDownward
 ; Updates sprite animation frame timer and data
-Anim_UpdateSpriteFrame:                                 ; CODE XREF: Cutscene_XiTigerFadeOut+C   p  ; was: sub_2A6D8
+Anim_UpdateSpriteFrame:                                 ; CODE XREF: XiTigerCutscene_UpdateMarker+C   p  ; was: sub_2A6D8
                                         ; sub_2A692   p
                 subq.w  #1,$4C(a5)
                 bne.s   Anim_UpdateSpriteFrame_Return

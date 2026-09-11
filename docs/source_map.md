@@ -19,8 +19,8 @@ listing by `make verify-layout`.
 | `0x0146FC-0x016F35` | player terrain and state families | 9 | hypothesis |
 | `0x016F36-0x019A6B` | player rendering, weapons, projectiles, and weapon UI | 7 | hypothesis |
 | `0x019A6C-0x01C3F9` | stage intros, Seven Forces player states, object utilities, and projectile slots | 6 | hypothesis |
-| `0x01C3FA-0x01E83D` | stage background, gameplay, frontend, results, and transitions | 14 | hypothesis |
-| `0x01E83E-0x020249` | cutscenes, stage initialization, menus, and results scrolling | 5 | hypothesis |
+| `0x01C3FA-0x01E869` | stage background, gameplay, frontend, results, and transitions | 14 | hypothesis |
+| `0x01E86A-0x020249` | cutscenes, stage initialization, menus, and results scrolling | 5 | hypothesis |
 | `0x02024A-0x023CB9` | results data, credits, selection UI, and floating icons | 6 | hypothesis |
 | `0x023CBA-0x02A30D` | demo, cutscene, transition, VDP layout, and Valkirie systems | 8 | hypothesis |
 | `0x02A30E-0x02B6B1` | shared combat helpers, sprite debug tooling, and enemy projectiles | 3 | hypothesis |

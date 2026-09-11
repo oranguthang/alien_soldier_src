@@ -156,7 +156,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Anim_RunCallbackScript
                 dc.l    Object_MarkInactiveDirect
                 dc.l    Weapon_UpdateBombProjectile
-                dc.l    Cutscene_XiTigerFadeOut
+                dc.l    XiTigerCutscene_UpdateMarker
                 dc.l    Boss_Epsilon1RingController
                 dc.l    Projectile_Epsilon1SpreadProjectileMain
                 dc.l    Projectile_Epsilon1BarrageRowProjectileMain

@@ -110,7 +110,7 @@ loc_10A88:                                              ; CODE XREF: Gfx_RenderS
                 rts
 ; End of function Gfx_RenderSylpheedBackground
 ; Gets background scroll position
-Scroll_GetBackgroundPosition:                           ; CODE XREF: Cutscene_XiTigerScrollSetup+72   j  ; was: sub_10ADC
+Scroll_GetBackgroundPosition:                           ; CODE XREF: XiTigerCutscene_InitializeReveal+72   j  ; was: sub_10ADC
                 move.w  (dword_FFA908).w,d0
                 move.w  (dword_FFA90C).w,d1
 ; End of function Scroll_GetBackgroundPosition
@@ -121,7 +121,7 @@ Data_LoadPointerTable1:                                 ; CODE XREF: UI_Initiali
                 bra.s   Gfx_DirectVRAMTransfer
 ; End of function Data_LoadPointerTable1
 ; Gets foreground scroll position
-Scroll_GetForegroundPosition:                           ; CODE XREF: Cutscene_XiTigerScrollSetup+66   p  ; was: sub_10AEC
+Scroll_GetForegroundPosition:                           ; CODE XREF: XiTigerCutscene_InitializeReveal+66   p  ; was: sub_10AEC
                                         ; Stage_InitPlayerAndScroll+3C   p
                 move.w  (dword_FFA900).w,d0
                 move.w  (dword_FFA904).w,d1

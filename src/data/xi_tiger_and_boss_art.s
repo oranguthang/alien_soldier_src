@@ -1,4 +1,4 @@
-word_1198D2:    dc.w    $4818, $300, $F3EB              ; DATA XREF: Cutscene_XiTigerInit+10   o
+word_1198D2:    dc.w    $4818, $300, $F3EB              ; DATA XREF: XiTigerCutscene_InitializeDisplayObject+10   o
                 dc.w    $4810, $D00, $3F3
                 dc.w    $C800, $F00, $E3F3
 tiles_1198E4:   binclude "data/artcomp/tiles_1198E4.bin"

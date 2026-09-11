@@ -338,7 +338,7 @@ Boss_ViblackSpawnDefeatParticle:                        ; CODE XREF: Boss_Viblac
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$A0,d0
                 move.w  d0,$14(a0)
-                lea     (Cutscene_XiTigerCompletionSpriteFrames).l,a1
+                lea     (Effect_SharedBurstParticleSpriteFrames).l,a1
                 move.w  #9,$1C(a0)
                 jmp     Sprite_InitFromTable
 ; End of function Boss_ViblackSpawnDefeatParticle

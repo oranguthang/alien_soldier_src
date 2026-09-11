@@ -1,5 +1,5 @@
 Gfx_DecompressCutsceneData:                             ; CODE XREF: Cutscene_InitializeScene+36   p  ; was: sub_260A2
-                                        ; Cutscene_LoadInitialAssets+34   j
+                                        ; XiTigerCutscene_LoadAssets+34   j
                 move.l  #$1FFFE,(dword_FF9F08).w
                 move.w  #$1E,(word_FF9F10).w
                 move.w  #$B,(word_FF9F12).w
@@ -11,7 +11,7 @@ Gfx_DecompressCutsceneData:                             ; CODE XREF: Cutscene_In
 ; End of function Gfx_DecompressCutsceneData
 ; Loads cutscene frame to video memory
 Gfx_LoadCutsceneFrame:                                  ; CODE XREF: Cutscene_HandleScrollInput+4E   j  ; was: sub_260CE
-                                        ; Cutscene_XiTigerWaitComplete+44   j
+                                        ; XiTigerCutscene_WaitBeforeReveal+44   j
                 movea.l #$FFFF0400,a0
                 move.w  #$9400,(dword_FF8040).w
                 move.w  #$C400,(dword_FF8040+2).w

@@ -1,6 +1,6 @@
 Sys_TransitionToStageInit:                              ; DATA XREF: Sys_DispatchGameState+BE   o  ; was: sub_1E76C
                 tst.w   (GameSubstateIndex).w
-                bne.s   loc_1E7A8
+                bne.s   StageTransition_BeginSelectedRoute
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
@@ -12,7 +12,7 @@ Sys_TransitionToStageInit:                              ; DATA XREF: Sys_Dispatc
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMA
 ; ---------------------------------------------------------------------------
-loc_1E7A8:                                              ; CODE XREF: Sys_TransitionToStageInit+4   j
+StageTransition_BeginSelectedRoute:                     ; CODE XREF: Sys_TransitionToStageInit+4   j  ; was: loc_1E7A8
                 addq.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 bset    #0,(byte_FFA209).w
@@ -21,7 +21,7 @@ loc_1E7A8:                                              ; CODE XREF: Sys_Transit
                 move.l  d0,(dword_FF812C).w
                 move.l  d0,(dword_FF8130).w
                 move.l  d0,(dword_FF8134).w
-                bsr.w   Cutscene_DispatchInit
+                bsr.w   StageTransition_DispatchInitialize
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 jmp     (Gfx_FadePaletteTransition).l
@@ -32,25 +32,51 @@ Sys_StageTransitionUpdate:                              ; DATA XREF: Sys_Dispatc
                 jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
-                bsr.w   Cutscene_DispatchUpdate
+                bsr.w   StageTransition_DispatchUpdate
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Gfx_SetupScrollPlanes).l
                 addq.w  #1,(FrameCounter).w
                 bclr    #0,(word_FF80F4).w
-                beq.s   loc_1E824
+                beq.s   StageTransition_CheckCompletionFlags
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_1E824:                                              ; CODE XREF: Sys_StageTransitionUpdate+3E   j
+StageTransition_CheckCompletionFlags:                   ; CODE XREF: Sys_StageTransitionUpdate+3E   j  ; was: loc_1E824
                 bclr    #1,(word_FF80F4).w
-                beq.s   locret_1E83C
+                beq.s   StageTransition_Return
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 jmp     Stage_DispatchObjectLoader
 ; ---------------------------------------------------------------------------
-locret_1E83C:                                           ; CODE XREF: Sys_StageTransitionUpdate+4C   j
+StageTransition_Return:                                 ; CODE XREF: Sys_StageTransitionUpdate+4C   j  ; was: locret_1E83C
                 rts
 ; End of function Sys_StageTransitionUpdate
-; Dispatcher for cutscene init
+
+; Dispatches initialization for the selected transition route
+StageTransition_DispatchInitialize:                     ; CODE XREF: Sys_TransitionToStageInit+5C   p  ; was: sub_1E83E
+                move.w  (word_FFA29C).w,d0
+                movea.w StageTransition_InitializeHandlerTable(pc,d0.w),a0
+                adda.l  #StageTransition_DispatchUpdate,a0
+                jmp     (a0)
+; End of function StageTransition_DispatchInitialize
+; ---------------------------------------------------------------------------
+StageTransition_InitializeHandlerTable: dc.w    XiTigerCutscene_LoadAssets-StageTransition_DispatchUpdate  ; was: off_1E84E
+                                        ; DATA XREF: StageTransition_DispatchInitialize+4   r
+                dc.w    Stage_InitPlayerAndScroll-StageTransition_DispatchUpdate
+                dc.w    Stage_TransitionToCredits-StageTransition_DispatchUpdate
+
+; Dispatches the per-frame handler for the selected transition route
+StageTransition_DispatchUpdate:                         ; CODE XREF: Sys_StageTransitionUpdate+18   p  ; was: sub_1E854
+                                        ; DATA XREF: StageTransition_DispatchInitialize+8   o
+                move.w  (word_FFA29C).w,d0
+                movea.w StageTransition_UpdateHandlerTable(pc,d0.w),a0
+                adda.l  #XiTigerCutscene_LoadAssets,a0
+                jmp     (a0)
+; End of function StageTransition_DispatchUpdate
+; ---------------------------------------------------------------------------
+StageTransition_UpdateHandlerTable: dc.w    XiTigerCutscene_Update-XiTigerCutscene_LoadAssets  ; was: off_1E864
+                                        ; DATA XREF: StageTransition_DispatchUpdate+4   r
+                dc.w    Stage_UpdateGameplay-XiTigerCutscene_LoadAssets
+                dc.w    Stage_HandleCreditsOrAdvance-XiTigerCutscene_LoadAssets

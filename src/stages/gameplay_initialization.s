@@ -1,3 +1,4 @@
+; Initializes the post-transition player, stage assets, palettes, and scroll position
 Stage_InitPlayerAndScroll:                              ; DATA XREF: ROM:0001E850   o  ; was: sub_1EDC2
                 move.w  #$7FFF,(StageTimeRemaining).w
                 jsr     (Player_InitializeStats).l
