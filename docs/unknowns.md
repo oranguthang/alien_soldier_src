@@ -3675,3 +3675,30 @@ address-derived ceiling from 3,235 to 3,188. The natural split raises the
 module count from 347 to 348 and changes the mean to 341.7 lines; there are
 still no modules over 1,000 lines and no generic container filenames. A fresh
 post-split rebuild reproduces the canonical Japanese ROM byte for byte.
+
+The Wolf Garopa and Z-Leo mapping-data pass resolves all 51 definitions in
+`data/wolf_garopa_and_z_leo_mappings.s`. The file remains a compact shared
+data module rather than being split into artificial owner files of roughly 90
+and 60 lines. Explicit owner comments separate the two contiguous groups while
+preserving their original ROM order.
+
+Wolf Garopa's 35 definitions are established by three named eight-entry
+rotation pointer tables, the four-entry orb-direction table, direct
+initializer assignments, and the audited player-relative mapping selector.
+The two pose-angle mappings deliberately describe only the proven selection
+ranges: one is used outside normalized angles `$10-$FE`, the other inside that
+range. No visual pose identity is inferred from tile numbers.
+
+Z-Leo's 16 definitions are established by its four-entry blade-direction
+table, direct intro-part assignments, the metasprite table shared with
+Valkirie Force, and the laser/drop-projectile initializers. The five shared
+mappings use stable letter identities because the descriptor table reuses them
+at several non-consecutive positions; pretending those letters were animation
+frame numbers would overstate the evidence.
+
+Every definition in the module now has an exact-address static audit record.
+Provenance rises from 12,860 to 12,911, the name-audit registry from 9,715 to
+9,766, and the enforced address-derived ceiling falls from 3,188 to 3,137.
+The 155-line module has zero live address-derived definitions and remains
+below the preferred 200-line band only because splitting or padding this
+private mapping group would reduce cohesion without improving readability.

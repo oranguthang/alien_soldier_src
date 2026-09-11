@@ -90,21 +90,21 @@ Boss_WolfGaropaPositionOrbFacingPart:                   ; CODE XREF: Boss_WolfGa
                 move.b  $38(a0),d7
                 cmpi.w  #$30,d7                         ; '0'
                 bmi.s   Boss_WolfGaropaSelectNearPlayerMapping
-                move.l  #word_ED352,d1
+                move.l  #Boss_WolfGaropaFarPlayerMapping,d1
                 addi.w  #$24,d2                         ; '$'
                 addi.w  #-6,d3
                 bra.s   Boss_WolfGaropaStorePlayerRelativeMapping
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaSelectNearPlayerMapping:                 ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+11C   j  ; was: loc_5034E
-                move.l  #word_ED33A,d1
+                move.l  #Boss_WolfGaropaNearPlayerMapping,d1
                 addi.w  #$1E,d2
                 addi.w  #-$12,d3
 Boss_WolfGaropaStorePlayerRelativeMapping:              ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+12C   j  ; was: loc_5035C
                 move.l  d1,$A88(a5)
-                move.l  #word_ED310,d1
+                move.l  #Boss_WolfGaropaOrbNeutralMapping,d1
                 cmpi.w  #$40,d7                         ; '@'
                 bpl.s   Boss_WolfGaropaStoreOrbMappingAndPosition
-                move.l  #word_ED328,d1
+                move.l  #Boss_WolfGaropaOrbAlternateMapping,d1
 Boss_WolfGaropaStoreOrbMappingAndPosition:              ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+14A   j  ; was: loc_50372
                 move.l  d1,$AE8(a5)
                 move.b  $44(a0),d6
@@ -296,10 +296,10 @@ Boss_WolfGaropaPositionOrbEndpoint:                     ; CODE XREF: Boss_WolfGa
                 rts
 ; End of function Boss_WolfGaropaUpdateOrbPositionAndFrame
 ; ---------------------------------------------------------------------------
-Boss_WolfGaropaOrbDirectionalMappingTable:  dc.l    word_ED190  ; DATA XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+4E   o  ; was: off_50586
-                dc.l    word_ED19C
-                dc.l    word_ED1AE
-                dc.l    word_ED1BA
+Boss_WolfGaropaOrbDirectionalMappingTable:  dc.l    Boss_WolfGaropaOrbDirectionMapping0  ; DATA XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+4E   o  ; was: off_50586
+                dc.l    Boss_WolfGaropaOrbDirectionMapping1
+                dc.l    Boss_WolfGaropaOrbDirectionMapping2
+                dc.l    Boss_WolfGaropaOrbDirectionMapping3
 
 ; Select the orb tile-transfer descriptor from the global frame counter
 Gfx_UpdateWolfGaropaOrbTiles:                           ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+188   j  ; was: sub_50596
@@ -376,8 +376,8 @@ Boss_WolfGaropaStorePoseAngleGroup1:                    ; CODE XREF: Boss_WolfGa
                                         ; Boss_WolfGaropaAdvancePoseScript+76   j
                 move.w  #$1FE,d7
                 movea.w #(dword_FF9400-M68K_RAM),a0
-                move.l  #word_ED304,d5
-                move.l  #word_ED30A,d6
+                move.l  #Boss_WolfGaropaPoseAngleOutsideRangeMapping,d5
+                move.l  #Boss_WolfGaropaPoseAngleMidRangeMapping,d6
                 move.b  (a0),d0
                 ext.w   d0
                 move.w  d0,d1

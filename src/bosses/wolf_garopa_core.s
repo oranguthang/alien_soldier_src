@@ -78,24 +78,24 @@ Boss_WolfGaropaInitialize:                              ; DATA XREF: Boss_WolfGa
                 move.w  d2,$9CE(a5)
                 move.b  d3,$9E0(a5)
                 addq.b  #4,$9E0(a5)
-                move.l  #word_ED172,$9C8(a5)
+                move.l  #Boss_WolfGaropaInitialPartMapping,$9C8(a5)
                 move.w  d0,$A20(a5)
                 move.w  d1,$A22(a5)
                 move.w  d2,$A2E(a5)
                 move.b  #8,$A40(a5)
-                move.l  #word_ED190,$A28(a5)
+                move.l  #Boss_WolfGaropaOrbDirectionMapping0,$A28(a5)
                 move.w  #$2A88,d2
                 move.w  d0,$A80(a5)
                 move.w  d1,$A82(a5)
                 move.w  d2,$A8E(a5)
                 move.b  d3,$AA0(a5)
                 addq.b  #4,$AA0(a5)
-                move.l  #word_ED33A,$A88(a5)
+                move.l  #Boss_WolfGaropaNearPlayerMapping,$A88(a5)
                 move.w  d0,$AE0(a5)
                 move.w  d1,$AE2(a5)
                 move.w  d2,$AEE(a5)
                 move.b  d3,$B00(a5)
-                move.l  #word_ED328,$AE8(a5)
+                move.l  #Boss_WolfGaropaOrbAlternateMapping,$AE8(a5)
                 move.w  #$10,$B40(a5)
                 move.w  #$8000,$B42(a5)
                 move.w  #0,$B50(a5)
@@ -382,7 +382,7 @@ Boss_WolfGaropaEmptyState:                              ; DATA XREF: Boss_WolfGa
 ; Select the neutral orb mapping pointer
 Boss_WolfGaropaSelectOrbNeutralMapping:                 ; CODE XREF: Boss_WolfGaropaApproachOrbAngleC0AndExplode+34   j  ; was: sub_4FD76
                                         ; Boss_WolfGaropaApproachOrbAngle140+4   p
-                move.l  #word_ED310,$AE8(a5)
+                move.l  #Boss_WolfGaropaOrbNeutralMapping,$AE8(a5)
                 rts
 ; End of function Boss_WolfGaropaSelectOrbNeutralMapping
 ; Optionally place a type-$424 record at Y=$C8 and configure the upper sequence

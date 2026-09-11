@@ -594,33 +594,33 @@ Boss_SharpssteelPartLinks:  dc.w    $8007, $8006, $8065  ; was: word_3527A
 Boss_SharpssteelNeutralPose:    dc.w    $8080, $8080, $8080, $8080  ; was: word_3529E
                                         ; DATA XREF: Boss_SharpssteelInitializeBladePoseInterpolation   o
 ; Wolf Garopa directional frames and metasprite definition
-Boss_WolfGaropaRotationFramesA: dc.l    word_ED1CC      ; DATA XREF: ROM:00035320   o  ; was: off_352A6
+Boss_WolfGaropaRotationFramesA: dc.l    Boss_WolfGaropaRotationMappingA0  ; DATA XREF: ROM:00035320   o  ; was: off_352A6
                                         ; ROM:00035334   o
-                dc.l    word_ED1D2
-                dc.l    word_ED1DE
-                dc.l    word_ED1E4
-                dc.l    word_ED1F0
-                dc.l    word_ED1F6
-                dc.l    word_ED202
-                dc.l    word_ED208
-Boss_WolfGaropaRotationFramesB: dc.l    word_ED214      ; DATA XREF: ROM:00035348   o  ; was: off_352C6
+                dc.l    Boss_WolfGaropaRotationMappingA1
+                dc.l    Boss_WolfGaropaRotationMappingA2
+                dc.l    Boss_WolfGaropaRotationMappingA3
+                dc.l    Boss_WolfGaropaRotationMappingA4
+                dc.l    Boss_WolfGaropaRotationMappingA5
+                dc.l    Boss_WolfGaropaRotationMappingA6
+                dc.l    Boss_WolfGaropaRotationMappingA7
+Boss_WolfGaropaRotationFramesB: dc.l    Boss_WolfGaropaRotationMappingB0  ; DATA XREF: ROM:00035348   o  ; was: off_352C6
                                         ; ROM:0003535C   o
-                dc.l    word_ED226
-                dc.l    word_ED238
-                dc.l    word_ED24A
-                dc.l    word_ED25C
-                dc.l    word_ED26E
-                dc.l    word_ED280
-                dc.l    word_ED292
-Boss_WolfGaropaRotationFramesC: dc.l    word_ED2A4      ; DATA XREF: ROM:00035328   o  ; was: off_352E6
+                dc.l    Boss_WolfGaropaRotationMappingB1
+                dc.l    Boss_WolfGaropaRotationMappingB2
+                dc.l    Boss_WolfGaropaRotationMappingB3
+                dc.l    Boss_WolfGaropaRotationMappingB4
+                dc.l    Boss_WolfGaropaRotationMappingB5
+                dc.l    Boss_WolfGaropaRotationMappingB6
+                dc.l    Boss_WolfGaropaRotationMappingB7
+Boss_WolfGaropaRotationFramesC: dc.l    Boss_WolfGaropaRotationMappingC0  ; DATA XREF: ROM:00035328   o  ; was: off_352E6
                                         ; ROM:0003533C   o
-                dc.l    word_ED2B0
-                dc.l    word_ED2BC
-                dc.l    word_ED2C8
-                dc.l    word_ED2D4
-                dc.l    word_ED2E0
-                dc.l    word_ED2EC
-                dc.l    word_ED2F8
+                dc.l    Boss_WolfGaropaRotationMappingC1
+                dc.l    Boss_WolfGaropaRotationMappingC2
+                dc.l    Boss_WolfGaropaRotationMappingC3
+                dc.l    Boss_WolfGaropaRotationMappingC4
+                dc.l    Boss_WolfGaropaRotationMappingC5
+                dc.l    Boss_WolfGaropaRotationMappingC6
+                dc.l    Boss_WolfGaropaRotationMappingC7
 Boss_WolfGaropaInlineSpriteDescriptor:  dc.w    $63DE, $500, $F8F8  ; DATA XREF: ROM:00035324   o  ; was: word_35306
                                         ; ROM:0003532C   o
 Boss_WolfGaropaMetaspriteDescriptors:   dc.l    0       ; DATA XREF: Boss_WolfGaropaInitialize+1E   o  ; was: dword_3530C
@@ -632,22 +632,22 @@ Boss_WolfGaropaMetaspriteDescriptors:   dc.l    0       ; DATA XREF: Boss_WolfGa
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
                 dc.l    Boss_WolfGaropaRotationFramesC+$18000000
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
-                dc.l    word_ED304+$8400000
+                dc.l    Boss_WolfGaropaPoseAngleOutsideRangeMapping+$8400000
                 dc.l    Boss_WolfGaropaRotationFramesA+$18000000
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
                 dc.l    Boss_WolfGaropaRotationFramesC+$18000000
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
-                dc.l    word_ED304+$8400000
+                dc.l    Boss_WolfGaropaPoseAngleOutsideRangeMapping+$8400000
                 dc.l    Boss_WolfGaropaRotationFramesB+$18000000
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
                 dc.l    Boss_WolfGaropaRotationFramesC+$18000000
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
-                dc.l    word_ED304+$8400000
+                dc.l    Boss_WolfGaropaPoseAngleOutsideRangeMapping+$8400000
                 dc.l    Boss_WolfGaropaRotationFramesB+$18000000
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
                 dc.l    Boss_WolfGaropaRotationFramesC+$18000000
                 dc.l    Boss_WolfGaropaInlineSpriteDescriptor+1
-                dc.l    word_ED304+$8400000
+                dc.l    Boss_WolfGaropaPoseAngleOutsideRangeMapping+$8400000
 Boss_WolfGaropaPartRadii:   dc.w    $2C, $2612, $1891   ; DATA XREF: Boss_WolfGaropaInitialize+24   o  ; was: word_35370
                 dc.w    $A290, $9F88, $1122
                 dc.w    $F1F, $893, $A694
@@ -787,19 +787,19 @@ Boss_ZLeoValkirieForceSharedMetaspriteData: dc.l    0   ; DATA XREF: Boss_ZLeoIn
                                         ; Boss_ValkirieForceInit+10   o
                 dc.l    0
                 dc.l    0
-                dc.l    word_ED3C4+$400000
-                dc.l    word_ED3DC+$400000
-                dc.l    word_ED3C4+$400000
-                dc.l    word_ED424+$400000
-                dc.l    word_ED3C4+$400000
-                dc.l    word_ED3DC+$400000
-                dc.l    word_ED3EE+$400000
-                dc.l    word_ED3DC+$400000
-                dc.l    word_ED3EE+$400000
-                dc.l    word_ED3E8+$400000
-                dc.l    word_ED3EE+$400000
-                dc.l    word_ED3E8+$400000
-                dc.l    word_ED3AC+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingA+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingB+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingA+$400000
+                dc.l    Boss_ZLeoBladeDirectionMapping2+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingA+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingB+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingC+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingB+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingC+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingD+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingC+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingD+$400000
+                dc.l    Boss_ZLeoValkirieForceSharedMappingE+$400000
 Boss_ZLeoPartRadii: dc.w    $38, $3818, $1818           ; DATA XREF: Boss_ZLeoIntroInit+28   o  ; was: word_355E4
                 dc.w    $1E18, $280C, $1C10
                 dc.w    $200C, $1C1A

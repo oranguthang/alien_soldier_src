@@ -200,11 +200,11 @@ Boss_ZLeoInitializeIntroPartRow:                        ; CODE XREF: Boss_ZLeoIn
                 move.w  d2,$E(a0)
                 move.b  d3,$20(a0)
                 subq.w  #4,d3
-                move.l  #word_ED3B8,8(a0)
+                move.l  #Boss_ZLeoIntroPartRowMapping,8(a0)
                 lea     $60(a0),a0
                 dbf     d6,Boss_ZLeoInitializeIntroPartRow
                 dbf     d7,Boss_ZLeoInitializeIntroPartRows
-                move.l  #word_ED3BE,d4
+                move.l  #Boss_ZLeoIntroLowerPartMapping,d4
                 move.l  d4,$848(a5)
                 move.l  d4,$968(a5)
                 move.l  d4,$A88(a5)
@@ -218,12 +218,12 @@ Boss_ZLeoInitializeLowerIntroParts:                     ; CODE XREF: Boss_ZLeoIn
                 move.b  d3,$20(a0)
                 lea     $60(a0),a0
                 dbf     d7,Boss_ZLeoInitializeLowerIntroParts
-                move.l  #word_ED478,$AE8(a5)
-                move.l  #word_ED39A,$B48(a5)
-                move.l  #word_ED394,$BA8(a5)
-                move.l  #word_ED478,$C08(a5)
-                move.l  #word_ED39A,$C68(a5)
-                move.l  #word_ED394,$CC8(a5)
+                move.l  #Boss_ZLeoIntroOuterPartMapping,$AE8(a5)
+                move.l  #Boss_ZLeoIntroSidePartMapping,$B48(a5)
+                move.l  #Boss_ZLeoIntroFarSidePartMapping,$BA8(a5)
+                move.l  #Boss_ZLeoIntroOuterPartMapping,$C08(a5)
+                move.l  #Boss_ZLeoIntroSidePartMapping,$C68(a5)
+                move.l  #Boss_ZLeoIntroFarSidePartMapping,$CC8(a5)
                 bclr    #3,$AEE(a5)
                 bclr    #3,$B4E(a5)
                 bclr    #3,$BAE(a5)

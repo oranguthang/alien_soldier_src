@@ -307,10 +307,10 @@ Boss_ZLeoUpdateBladeSprite:                             ; CODE XREF: Boss_ZLeoBe
                 jmp     Sprite_UpdateFourDirectionFrame
 ; End of function Boss_ZLeoUpdateBladeSprite
 ; ---------------------------------------------------------------------------
-Boss_ZLeoBladeDirectionFrameTable:  dc.l    word_ED3F4  ; DATA XREF: Boss_ZLeoUpdateBladeSprite   o  ; was: off_528C8
-                dc.l    word_ED40C
-                dc.l    word_ED424
-                dc.l    word_ED43C
+Boss_ZLeoBladeDirectionFrameTable:  dc.l    Boss_ZLeoBladeDirectionMapping0  ; DATA XREF: Boss_ZLeoUpdateBladeSprite   o  ; was: off_528C8
+                dc.l    Boss_ZLeoBladeDirectionMapping1
+                dc.l    Boss_ZLeoBladeDirectionMapping2
+                dc.l    Boss_ZLeoBladeDirectionMapping3
 
 ; Update wing sprites
 Boss_ZLeoUpdateWingSprites:                             ; CODE XREF: Boss_ZLeoBeginRisingReturn+10A   p  ; was: sub_528D8
