@@ -32,7 +32,7 @@ Projectile_TerobusterHomingMissileUpdateFlight:         ; CODE XREF: Projectile_
                 bmi.s   Projectile_TerobusterHomingMissileTrySpawnTrail
                 eori.w  #$1800,$E(a5)
 Projectile_TerobusterHomingMissileTrySpawnTrail:        ; CODE XREF: Projectile_TerobusterHomingMissileUpdate+66   j  ; was: loc_38F10
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_TerobusterHomingMissileUpdateVelocity
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -132,7 +132,7 @@ Projectile_TerobusterHomingMissileDirectionFrames:  dc.w    $D478, $400, $F8FC, 
 
 ; Spawns 8-way directional projectiles with animated effects from table data
 Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_TerobusterDecisionState+294   p  ; was: sub_3902C
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  #$14,$23C(a5)
@@ -167,7 +167,7 @@ Boss_TerobusterFallingRockParametersB:  dc.w    $30, $FFC4, $10, $FFD0, $C  ; wa
 
 ; Spawns falling rocks with randomized position offsets and downward velocity
 Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_TerobusterDecisionState+27A   p  ; was: sub_3909A
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_TerobusterSpawnFallingRockReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_TerobusterSpawnFallingRockReturn

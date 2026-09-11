@@ -9,7 +9,7 @@ Projectile_BugmaxEmitPeriodicTrailParticle:             ; CODE XREF: Boss_Bugmax
                                         ; Projectile_BugmaxScatteredPartFall+C   j
                 move.w  a5,d7
                 lsr.w   #4,d7
-                add.w   (word_FFA000).w,d7
+                add.w   (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Projectile_BugmaxTrailParticleEmissionReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -112,7 +112,7 @@ Projectile_BugmaxSettleSpecialHitFragmentAtFloor:       ; CODE XREF: Projectile_
 Projectile_BugmaxCycleSpecialHitFragmentMapping:        ; CODE XREF: Projectile_BugmaxUpdateHitFragmentMotion+E   p  ; was: sub_4D506
                 tst.b   $5F(a5)
                 beq.s   Projectile_BugmaxSpecialHitFragmentMappingReturn
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 beq.s   Projectile_BugmaxSpecialHitFragmentMappingReturn
                 cmpi.w  #1,d0
@@ -139,7 +139,7 @@ Projectile_BugmaxHitFragmentInactiveState:              ; DATA XREF: ROM:0004D46
 ; Cycle a four-entry XOR mask across the fragment's sprite attribute word
 Projectile_BugmaxCycleFlipMask:                         ; CODE XREF: Projectile_BugmaxHitFragmentController+8   p  ; was: sub_4D53C
                                         ; sub_4D608   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_BugmaxFlipMaskCycleReturn
                 addq.w  #1,$4A(a5)
@@ -180,7 +180,7 @@ Projectile_InitBugmaxSpread:                            ; CODE XREF: Boss_Bugmax
 Projectile_BugmaxSpreadController:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4D5C8
                 tst.l   $1C(a5)
                 beq.s   Projectile_BugmaxDispatchSpreadState
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #1,d0
                 beq.s   Projectile_BugmaxApplyPositiveJitterOffset
                 subi.w  #$20,$10(a5)                    ; ' '
@@ -268,7 +268,7 @@ Projectile_BugmaxImpactPaletteHoldReturn:               ; CODE XREF: Projectile_
 ; Restore the two palette ranges and release the shared impact lock
 Projectile_BugmaxRestoreImpactPalettes:                 ; DATA XREF: ROM:0004D604   o  ; was: sub_4D6BE
                 bsr.w   Gfx_ApplyBugmaxSpreadImpactPaletteLevel
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$1F,d7
                 bne.s   Projectile_BugmaxImpactPaletteRestoreReturn
                 addq.w  #2,$5C(a5)

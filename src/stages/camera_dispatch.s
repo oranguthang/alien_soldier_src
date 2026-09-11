@@ -226,7 +226,7 @@ Camera_ShellshogunBossInit:                             ; DATA XREF: ROM:0000C86
                 clr.w   (dword_FFA90C).w
                 lea     (stru_11820).l,a0
                 jsr     (Data_ProcessPointer).l
-                move.w  #4,(word_FF8220).w
+                move.w  #4,(PalettePrimaryIndex).w
                 lea     (ShellshogunStagePaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.l  #dword_CA8A,(dword_FFA940).w

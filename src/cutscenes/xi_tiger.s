@@ -137,7 +137,7 @@ locret_1E9AE:                                           ; CODE XREF: Cutscene_Xi
 ; Updates scroll position and fade during Xi Tiger cutscene
 Cutscene_XiTigerScrollUpdate:                           ; DATA XREF: ROM:0001E916   o  ; was: sub_1E9B0
                 subi.l  #$1800,(dword_FF9F08).w
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   loc_1E9D2
                 addq.w  #2,(dword_FF8130+2).w
@@ -202,7 +202,7 @@ Cutscene_XiTigerScrollSetup:                            ; DATA XREF: ROM:0001E91
 ; End of function Cutscene_XiTigerScrollSetup
 ; Scrolls and fades in Xi Tiger
 Cutscene_XiTigerScrollFadeIn:                           ; DATA XREF: ROM:0001E91A   o  ; was: sub_1EA9A
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Cutscene_XiTigerScrollFadeIn_CheckInput
                 subq.w  #2,(dword_FF8130+2).w
@@ -212,7 +212,7 @@ Cutscene_XiTigerScrollFadeIn:                           ; DATA XREF: ROM:0001E91
 Cutscene_XiTigerScrollFadeIn_CheckInput:                ; CODE XREF: Cutscene_XiTigerScrollFadeIn+8   j  ; was: loc_1EAAE
                                         ; Cutscene_XiTigerScrollFadeIn+E   j
                                         ; DATA XREF:
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   loc_1EAC0
                 addq.w  #1,(dword_FF8134+2).w
                 bmi.s   loc_1EAC0
@@ -389,7 +389,7 @@ loc_1EC54:                                              ; CODE XREF: Cutscene_Xi
                 btst    #6,(dword_FF8130+1).w
                 beq.s   loc_1ECA0
                 eori.w  #$3F,d0                         ; '?'
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   loc_1ECA0
                 addq.w  #1,(dword_FF8130).w
 loc_1ECA0:                                              ; CODE XREF: Cutscene_XiTigerUpdateScroll+5A   j
@@ -428,7 +428,7 @@ loc_1ECA0:                                              ; CODE XREF: Cutscene_Xi
                 move.w  d1,(word_FFEC24).w
                 move.w  d1,(word_FFEC28).w
                 move.w  d1,(word_FFEC2C).w
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #2,d0
                 asl.w   #2,d0
                 move.w  word_1ED28(pc,d0.w),(word_FFE326).w
@@ -479,7 +479,7 @@ Cutscene_XiTigerComplete:                               ; CODE XREF: Cutscene_Xi
                 addi.w  #$100,d0
                 move.w  d0,$14(a0)
                 lea     (Cutscene_XiTigerCompletionSpriteFrames).l,a1
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 addq.w  #8,d0
                 neg.w   d0

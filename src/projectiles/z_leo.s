@@ -33,7 +33,7 @@ Boss_ZLeoScrollLookupTable: dc.w    $FFFF, $7000, $FFFF, $6800, $FFFF, $4000, 0,
 
 ; Spawn orb projectile
 Boss_ZLeoSpawnOrb:                                      ; CODE XREF: Boss_ZLeoWaitForOrbAttackCue+1A   p  ; was: sub_52F32
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Boss_ZLeoSpawnOrbReturn
                 move.w  #4,(word_FFA010).w
@@ -144,7 +144,7 @@ Projectile_ZLeoOrbBounceAtStageBoundary:                ; CODE XREF: Projectile_
                 neg.l   $1C(a5)
 Projectile_ZLeoOrbSelectFlashFrame:                     ; CODE XREF: Projectile_ZLeoOrbMain+64   j  ; was: loc_530D4
                                         ; Projectile_ZLeoOrbMain+6A   j
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_ZLeoOrbUseAlternateFlashFrame
                 move.w  #$E489,$E(a5)
                 rts
@@ -235,11 +235,11 @@ Projectile_ZLeoLaserUpdateExpandingOrbit:               ; CODE XREF: Projectile_
                 add.l   (dword_FFC630).w,d2
                 move.l  d1,$14(a5)
                 move.l  d2,$10(a5)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #1,d0
                 andi.w  #6,d0
                 move.w  Projectile_ZLeoLaserOrbitSpriteAttributes(pc,d0.w),$E(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Projectile_ZLeoLaserSpawnTrailParticle
                 rts
 ; ---------------------------------------------------------------------------
@@ -274,7 +274,7 @@ Projectile_ZLeoHorizontalLaserMain:                     ; CODE XREF: Projectile_
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_ZLeoHorizontalLaserTrySpawnTrail:            ; CODE XREF: Projectile_ZLeoLaserMain+106   j  ; was: loc_532B0
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_ZLeoLaserReturn
 Projectile_ZLeoLaserSpawnTrailParticle:                 ; CODE XREF: Projectile_ZLeoLaserMain+B2   j  ; was: loc_532BA

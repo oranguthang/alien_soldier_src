@@ -245,9 +245,9 @@ Stage12_YachtStoreHorizontalVelocity:                   ; CODE XREF: Stage12_Yac
 ; Alternates between two stage-scroll presets on selected frames
 Stage12_YachtUpdateScrollPreset:                        ; CODE XREF: Stage12_YachtBeginMotion+42   p  ; was: sub_2F868
                                         ; Stage12_YachtBeginMotion+6E   p
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.s   Stage12_YachtScrollPresetReturn
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 beq.s   Stage12_YachtUseAlternateScrollPreset
                 move.l  #$4C705B01,d0
                 jsr     (Scroll_UpdateStage14Scroll).l
@@ -496,7 +496,7 @@ Stage12_TeddyBearPilotFall:                             ; DATA XREF: ROM:0002F93
 ; Periodically fires downward projectiles with sound effect
 Stage12_TeddyBearFireDownwardShot:                      ; CODE XREF: Stage12_TeddyBearInit+80   j  ; was: sub_2FB88
                                         ; sub_2FB54:loc_2FB64   j
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Stage12_TeddyBearShotReturn
                 move.b  #$2C,d0                         ; ','

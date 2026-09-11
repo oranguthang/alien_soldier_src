@@ -73,7 +73,7 @@ Boss_Epsilon1ApplyBattleCenterVerticalStep:             ; CODE XREF: Boss_Epsilo
                 bsr.w   Boss_Epsilon1ApplyDirectionalVerticalStep
                 cmpi.w  #0,$58(a5)
                 beq.w   Boss_Epsilon1RetargetHorizontalAcceleration
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #3,d7
                 bne.s   Boss_Epsilon1IntegrateBattleCenterHorizontalMotion
 Boss_Epsilon1RetargetHorizontalAcceleration:            ; CODE XREF: Boss_Epsilon1UpdateBattleCenterMotion+3C   j  ; was: loc_4787C
@@ -104,7 +104,7 @@ Boss_Epsilon1IntegrateBattleCenterHorizontalMotion:     ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1UpdateBattleCenterMotion
 ; Advances the Epsilon 1 palette-color cycle once every four frames
 Boss_Epsilon1CyclePaletteColor:                         ; CODE XREF: Boss_Epsilon1Main+16E   p  ; was: sub_478C2
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_Epsilon1CyclePaletteColorReturn
                 move.w  $52(a5),d0
@@ -225,7 +225,7 @@ Boss_Epsilon1StoreRotatingShapeRowSample:               ; CODE XREF: Boss_Epsilo
 Boss_Epsilon1UpdateVisibleTileBands:                    ; CODE XREF: Boss_Epsilon1Main+B4   p  ; was: sub_47A0E
                 tst.b   (word_FFF720).w
                 bmi.w   Boss_Epsilon1TileStreamingReturn
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 tst.w   d0
                 beq.s   Boss_Epsilon1SelectVisibleTileBands

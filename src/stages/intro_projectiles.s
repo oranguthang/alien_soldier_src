@@ -6,7 +6,7 @@ Stage_InitProjectileSpawn:                              ; CODE XREF: Stage_InitS
 ; Spawns intro projectiles with timing and position
 Stage_SpawnIntroProjectile:                             ; CODE XREF: Stage_Stage7ScrollUpdate+3E   j  ; was: sub_D5C8
                                         ; sub_CD0A   p
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   locret_D622
                 movea.w #(byte_FFD700-M68K_RAM),a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckEnemyRange).l
@@ -40,7 +40,7 @@ loc_D632:                                               ; CODE XREF: Projectile_
                 sub.w   (dword_FFA900).w,d0
                 move.w  d0,$10(a5)
                 bset    #7,2(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   locret_D652
                 bclr    #7,2(a5)
 locret_D652:                                            ; CODE XREF: Projectile_IntroFalling+26   j
@@ -54,7 +54,7 @@ Stage_LoadTerobusterTiles:                              ; CODE XREF: Stage_InitT
                 bmi.s   loc_D67A
                 lea     byte_D6C6(pc),a0
                 nop
-                btst    #3,(word_FFA000+1).w
+                btst    #3,(FrameCounter+1).w
                 bne.s   loc_D672
                 lea     byte_D6CE(pc),a0
                 nop
@@ -65,7 +65,7 @@ locret_D678:                                            ; CODE XREF: Stage_LoadT
                 rts
 ; ---------------------------------------------------------------------------
 loc_D67A:                                               ; CODE XREF: Stage_LoadTerobusterTiles+8   j
-                move.w  (word_FFA000).w,d1
+                move.w  (FrameCounter).w,d1
                 andi.w  #7,d1
                 bne.s   locret_D678
                 movea.l off_D692(pc,d0.w),a0

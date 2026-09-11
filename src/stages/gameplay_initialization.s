@@ -228,7 +228,7 @@ Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_Dispatc
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Gfx_SetupScrollPlanes).l
-                addq.w  #1,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
                 bclr    #0,(word_FF80F4).w
                 beq.s   loc_1F0EE
                 addq.w  #2,(GameSubstateIndex).w

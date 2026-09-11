@@ -1,6 +1,6 @@
 Boss_ZLeoRotateAttackPalette:                           ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoUpdateScrollingDropAttack   p  ; was: sub_52512
                                         ; Boss_ZLeoBeginRisingReturn+60   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #3,d0
                 andi.w  #$18,d0
                 move.w  Boss_ZLeoAttackPaletteCycleTable(pc,d0.w),(word_FFE364).w
@@ -103,7 +103,7 @@ Boss_ZLeoRenderCompositeFrame:                          ; CODE XREF: Boss_ZLeoPr
                 bsr.w   Boss_ZLeoSpriteUpdate
                 bsr.w   Boss_ZLeoTileUpdate
                 bsr.w   Boss_ZLeoBuildHBlankRegisterBuffer
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Boss_ZLeoUseAlternateFlashColor
                 move.w  #$8C,(word_FFE37E).w
                 rts

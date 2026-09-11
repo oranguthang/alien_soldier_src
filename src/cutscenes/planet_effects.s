@@ -123,7 +123,7 @@ loc_7EF4:                                               ; CODE XREF: Effect_Upda
 ; Fades out Sega screen and initializes scrolling background system
 Cutscene_SegaScreenFadeOut:                             ; DATA XREF: ROM:00007C42   o  ; was: sub_7F06
                 bsr.w   Effect_UpdateStarfield
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   locret_514E
                 subq.w  #2,(word_FF010C).l
@@ -246,7 +246,7 @@ Cutscene_ResetPlanetFade:                               ; CODE XREF: Cutscene_In
 ; End of function Cutscene_ResetPlanetFade
 ; Gradually fades in planet scene palette every 8 frames
 Cutscene_PlanetFadeInStep:                              ; CODE XREF: Cutscene_PlanetSequenceCtrl   p  ; was: sub_813A
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   locret_514E
                 tst.w   (word_FF010C).l
@@ -624,7 +624,7 @@ Cutscene_FinalizePlanetZoom:                            ; CODE XREF: Cutscene_Pl
 ; Handles fade out during planet zoom with completion check
 Cutscene_PlanetZoomFadeOut:                             ; DATA XREF: ROM:00007C4E   o  ; was: sub_85CC
                 bsr.w   Cutscene_Calculate3DRotation
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   locret_514E
                 subq.w  #2,(word_FF010C).l

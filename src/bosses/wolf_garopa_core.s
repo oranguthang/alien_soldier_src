@@ -265,7 +265,7 @@ Boss_WolfGaropaUpdateOrbShotCountdown:                  ; CODE XREF: Boss_WolfGa
                 clr.b   $65E(a5)
                 clr.w   $6BC(a5)
 Boss_WolfGaropaTickOrbShotCountdown:                    ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+114   j  ; was: loc_4FC5E
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_WolfGaropaReturnFromOrbAttackCycle
                 subq.w  #1,$4DE(a5)

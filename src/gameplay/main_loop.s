@@ -25,7 +25,7 @@ Sys_GameplayMainLoop_UpdatePrimaryEffects:              ; CODE XREF: Sys_Gamepla
                 jsr     (Sprite_InitializePriorityBuckets).l
                 bsr.w   Sys_BeginVisibleObjectList
                 bsr.w   UI_UpdateStageNumberBCD
-                jsr     (Gfx_PrimaryEffectDispatcher).l
+                jsr     (Palette_UpdatePrimaryEffect).l
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_BuildHUDSprites
                 move.l  #$C0420000,(VDP_CTRL).l
@@ -69,7 +69,7 @@ Sys_GameplayMainLoop_UpdateStage:                       ; CODE XREF: Sys_Gamepla
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$EEE,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateSecondaryEffects:            ; CODE XREF: Sys_GameplayMainLoop+140   j  ; was: loc_1C7B0
-                jsr     (Gfx_SecondaryEffectDispatcher).l
+                jsr     (Palette_UpdateSecondaryEffect).l
                 bsr.w   Sys_UpdateObjectCount
                 jsr     (MessageSequence_Dispatch).l
                 jsr     (UI_RenderHUDElement1).l
@@ -120,7 +120,7 @@ Sys_GameplayMainLoop_UpdateFrameTiming:                 ; CODE XREF: Sys_Gamepla
                                         ; Sys_GameplayMainLoop+1C0   j
                 tst.b   (byte_FFF705).w
                 bmi.s   Sys_GameplayMainLoop_FinishFrame
-                addq.w  #1,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
                 subq.w  #1,(word_FF813C).w
                 bpl.s   Sys_GameplayMainLoop_SetActiveFrame
                 move.w  #$FFFF,(word_FF813C).w
@@ -227,7 +227,7 @@ Object_ApplyCameraMotion:                               ; CODE XREF: Sys_StorySc
 ; ---------------------------------------------------------------------------
 Object_ApplyCameraMotion_Begin:                         ; CODE XREF: Object_ApplyCameraMotion+4   j  ; was: loc_1C982
                 movea.l #Object_CameraPriorityTable,a0
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #1,d0
                 andi.w  #6,d0
                 move.w  (a0,d0.w),(word_FF8092).w

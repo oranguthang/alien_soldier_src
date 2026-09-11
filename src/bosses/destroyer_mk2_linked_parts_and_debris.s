@@ -133,7 +133,7 @@ Object_DestroyerMK2UpdateFallingCentralPart:            ; DATA XREF: ROM:0004B75
                 andi.w  #$1C0,d2
                 bsr.w   Boss_DestroyerMK2SelectCurrentObjectForFrame
                 ori.w   #$8000,$E(a5)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Object_DestroyerMK2CheckFallingCentralPartBounds
                 jsr     (Projectile_FindFreeSlot).l
@@ -547,7 +547,7 @@ Object_TransitionDebrisConvertAfterCollision:           ; CODE XREF: Object_Tran
 ; End of function Object_TransitionDebrisResolveBoundsOrCollision
 ; Cycles two palette-buffer words every four frames
 Gfx_DestroyerMK2CyclePaletteWords:                      ; CODE XREF: Boss_DestroyerMK2Main+5C   p  ; was: sub_4BBF0
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Gfx_DestroyerMK2PaletteCycleReturn
                 move.w  (dword_FF9418).w,d0

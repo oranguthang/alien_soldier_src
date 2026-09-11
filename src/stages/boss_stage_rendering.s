@@ -62,7 +62,7 @@ Boss_DestroyerProtoPaletteInit:                         ; CODE XREF: Boss_Destro
                 rts
 ; ---------------------------------------------------------------------------
 loc_FCFC:                                               ; CODE XREF: Boss_DestroyerProtoPaletteInit+4   j
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   loc_FD08
                 subq.w  #1,(word_FF9DAE).w
 loc_FD08:                                               ; CODE XREF: Boss_ShieldViperPaletteSetup+38   j

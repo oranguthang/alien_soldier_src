@@ -573,7 +573,7 @@ Boss_DeepStriderDefeatCompletionDelayReturn:            ; CODE XREF: Boss_DeepSt
 Boss_DeepStriderSpawnDefeatDebris:                      ; CODE XREF: Boss_DeepStriderBeginDefeat+6A   p  ; was: sub_3ED26
                 move.w  #2,(word_FFA010).w
                 move.w  #1,(word_FFA014).w
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
                 jsr     (Projectile_FindFreeOrRecycleSlot).l
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
@@ -591,7 +591,7 @@ Boss_DeepStriderApplyDefeatDebrisMotion:                ; CODE XREF: Boss_DeepSt
                 add.w   d0,$10(a0)
                 move.w  $4F4(a5),$14(a0)
                 move.l  #$FFFC2000,$1C(a0)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
                 move.b  #$BC,d0
@@ -659,7 +659,7 @@ Boss_DeepStriderEmitTimedDiveVolley:                    ; CODE XREF: Boss_DeepSt
                 bsr.w   Boss_DeepStriderSpawnQuadVolley
 Boss_DeepStriderUpdateDiveRotation:                     ; CODE XREF: Boss_DeepStriderDiveSequence+1A   j  ; was: loc_3EE40
                 subq.w  #4,$56(a5)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_DeepStriderAdjustDivePrimaryJoint
                 addq.w  #1,$56(a5)
@@ -829,7 +829,7 @@ Boss_DeepStriderPartLinks:  dc.w    $C007, $C006, $C065  ; was: word_3F046
 
 ; Fires angled projectile from Deep Strider boss using sine table
 Boss_DeepStriderFireAngleProjectile:                    ; CODE XREF: Boss_DeepStriderBeginBattleCycle+230   p  ; was: sub_3F062
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Boss_DeepStriderFireAngleProjectileReturn
                 jsr     (Projectile_FindFreePrimarySlot).l

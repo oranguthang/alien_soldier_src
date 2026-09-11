@@ -336,7 +336,7 @@ Boss_JetsripperUpdateSegmentsNextSegment:               ; CODE XREF: Boss_Jetsri
 Boss_JetsripperUpdatePalette:                           ; CODE XREF: Boss_JetsripperUpdateState:Boss_JetsripperUpdateActiveState   p  ; was: sub_3619C
                 movea.w #(word_FFE37A-M68K_RAM),a0
                 moveq   #0,d0
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Boss_JetsripperUpdatePaletteSelectFlash
                 moveq   #8,d0
 Boss_JetsripperUpdatePaletteSelectFlash:                ; CODE XREF: Boss_JetsripperUpdatePalette+C   j  ; was: loc_361AC

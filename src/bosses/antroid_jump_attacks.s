@@ -277,7 +277,7 @@ Boss_AntroidWaitCountdown:                              ; DATA XREF: ROM:0003752
 ; ---------------------------------------------------------------------------
 Boss_AntroidWaitUpdateActive:                           ; CODE XREF: Boss_AntroidWaitState+36   j  ; was: loc_37D0C
                                         ; Boss_AntroidWaitState+3C   j
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 beq.s   Boss_AntroidWaitSpawnProjectileAndAnimate
                 subq.w  #1,(word_FF8234).w
 Boss_AntroidWaitSpawnProjectileAndAnimate:              ; CODE XREF: Boss_AntroidWaitState+68   j  ; was: loc_37D18

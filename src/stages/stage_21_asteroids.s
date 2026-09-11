@@ -318,7 +318,7 @@ Stage21_AsteroidInitSprite:                             ; CODE XREF: Stage21_Ast
 ; End of function Stage21_AsteroidInitSprite
 ; Periodically creates a non-colliding ambient rock at a table-selected position
 Stage21_AsteroidFieldSpawnAmbientRock:                  ; CODE XREF: Stage21_AsteroidFieldControllerMain:Stage21_AsteroidFieldSpawnAndDispatch   p  ; was: sub_334FE
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Stage21_AsteroidAmbientSpawnReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -395,7 +395,7 @@ Projectile_Stage21AsteroidDebrisInitDelay:              ; DATA XREF: ROM:Project
                 addq.w  #2,4(a5)
 ; Applies sine wave vertical offset to Y position based on frame counter
 Projectile_Stage21AsteroidDebrisDelay:                  ; DATA XREF: ROM:000335FC   o  ; was: loc_3360C
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #3,d0
                 move.b  Projectile_Stage21AsteroidDebrisBobTable(pc,d0.w),d0

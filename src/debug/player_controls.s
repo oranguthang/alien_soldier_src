@@ -18,7 +18,7 @@ Effect_ScreenShakeUpdate:                               ; CODE XREF: Sys_Gamepla
                 bmi.s   Effect_ScreenShakeUpdate_Return
                 move.w  (word_FFA012).w,(word_FF8086).w
                 move.w  (word_FFA016).w,(word_FF8088).w
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 tst.w   (word_FFA010).w
                 bne.s   Effect_ScreenShakeUpdate_UpdateHorizontal
 Effect_ScreenShakeUpdate_ClearHorizontal:               ; CODE XREF: Effect_ScreenShakeUpdate+26   j  ; was: loc_1CB76

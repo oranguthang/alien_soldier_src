@@ -14,7 +14,7 @@ Effect_TerobusterDefeatPartInitialize:                  ; CODE XREF: Effect_Tero
                 bra.s   Effect_TerobusterDefeatPartLaunchBounce
 ; ---------------------------------------------------------------------------
 Effect_TerobusterDefeatPartUpdateBounce:                ; CODE XREF: Effect_TerobusterDefeatPartUpdate+A   j  ; was: loc_39120
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.s   Effect_TerobusterDefeatPartApplyGravity
                 tst.w   $54(a5)
                 bpl.s   Effect_TerobusterDefeatPartDecreaseRotationStep

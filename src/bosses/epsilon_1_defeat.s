@@ -119,7 +119,7 @@ Boss_Epsilon1FallWithDefeatDebrisState:                 ; DATA XREF: ROM:00045D5
                 addi.l  #$2000,$1C(a5)
                 cmpi.w  #$148,$14(a5)
                 bgt.s   Boss_Epsilon1FinishDefeatFall
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_Epsilon1FallWithDefeatDebrisReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -243,9 +243,9 @@ Boss_Epsilon1DefeatDebrisDelayReturn:                   ; CODE XREF: Boss_Epsilo
 Boss_Epsilon1AdvanceDefeatFadeState:                    ; DATA XREF: ROM:00045D60   o  ; was: sub_46A92
                 jsr     (Boss_SpawnExplosionDebris).l
                 bsr.s   Boss_Epsilon1ApplyTimedPaletteFade
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_Epsilon1AdvanceDefeatFadeReturn
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Boss_Epsilon1AdvanceDefeatFadeReturn
                 addq.w  #1,$48(a5)
                 cmpi.w  #$F,$48(a5)
@@ -281,9 +281,9 @@ Boss_Epsilon1ClearObjectsAfterDefeatFadeReturn:         ; CODE XREF: Boss_Epsilo
 ; Applies the final timed palette fade and decrements its timer every fourth tick
 Boss_Epsilon1FinalDefeatFadeCountdownState:             ; DATA XREF: ROM:00045D64   o  ; was: sub_46AF2
                 bsr.w   Boss_Epsilon1ApplyTimedPaletteFade
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_Epsilon1FinalDefeatFadeCountdownReturn
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Boss_Epsilon1FinalDefeatFadeCountdownReturn
                 subq.w  #1,$48(a5)
                 bne.s   Boss_Epsilon1FinalDefeatFadeCountdownReturn
@@ -356,7 +356,7 @@ Boss_Epsilon1BodyPoseStates:    dc.w    Boss_Epsilon1SelectBodyPoseState-*  ; DA
 Boss_Epsilon1SelectBodyPoseState:                       ; DATA XREF: ROM:Boss_Epsilon1BodyPoseStates   o  ; was: sub_46B8A
                 bclr    #6,$22(a5)
                 bne.s   Boss_Epsilon1StartHorizontalBodySway
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
 Boss_Epsilon1CheckRandomBodyPoseTrigger:                ; was: loc_46B96
                 move.w  d0,d1
                 andi.w  #$FF,d0

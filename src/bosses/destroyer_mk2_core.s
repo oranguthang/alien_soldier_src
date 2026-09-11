@@ -6,7 +6,7 @@ Boss_DestroyerMK2Main:                                  ; DATA XREF: ROM:Entity_
                 bsr.w   Gfx_DestroyerMK2UpdateForegroundScrollRows
                 btst    #1,$4C(a5)
                 bne.s   Boss_DestroyerMK2CheckFinalTransitionTrigger
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_DestroyerMK2CheckFinalTransitionTrigger
                 move.w  $50(a5),d0
@@ -541,7 +541,7 @@ Boss_DestroyerMK2ScrollWaveDurationTable:   dc.w    $2000, $8000, $2000, $8000, 
 Boss_DestroyerMK2AnimateScrollWaveState:                ; DATA XREF: ROM:0004A91A   o  ; was: sub_4AEAC
                 bsr.w   Boss_DestroyerMK2UpdateLinkedObjectGeometry
                 bsr.w   Boss_DestroyerMK2IntegrateScrollVelocities
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$E,d0
                 move.w  $48(a5),d7
                 bsr.w   Gfx_DestroyerMK2ApplyPaletteFadeWithBase
@@ -558,7 +558,7 @@ Boss_DestroyerMK2AnimateScrollWaveReturn:               ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2WriteScrollWaveState:                  ; DATA XREF: ROM:0004A91C   o  ; was: sub_4AEDE
                 bsr.w   Boss_DestroyerMK2UpdateLinkedObjectGeometry
                 bsr.w   Boss_DestroyerMK2IntegrateScrollVelocities
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$E,d0
                 move.w  $48(a5),d7
                 bsr.w   Gfx_DestroyerMK2ApplyPaletteFadeWithBase
@@ -578,7 +578,7 @@ Boss_DestroyerMK2WriteScrollWaveReturn:                 ; CODE XREF: Boss_Destro
 ; Expands the orbiting-ring angle to $D0, then restores collision fields
 Boss_DestroyerMK2ExpandOrbitingPartsState:              ; DATA XREF: ROM:0004A91E   o  ; was: sub_4AF14
                 bsr.w   Boss_DestroyerMK2UpdateLinkedObjectGeometry
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$E,d0
                 bsr.w   Gfx_DestroyerMK2ApplyPaletteFade
                 bsr.w   Boss_DestroyerMK2ToggleOrbitingPartsActive

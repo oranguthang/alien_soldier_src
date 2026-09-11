@@ -4,7 +4,7 @@
 Boss_AntroidRenderBlinkingPose:                         ; CODE XREF: Boss_AntroidIdleState+A   j  ; was: sub_37E8C
                                         ; Boss_AntroidReturnToNeutral+3A   p
                 move.l  #Boss_AntroidSpriteMapping01,$C8(a5)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$7F,d0
                 cmpi.w  #$20,d0                         ; ' '
                 bpl.s   Boss_AntroidRenderPose
@@ -22,7 +22,7 @@ Boss_AntroidRenderPose:                                 ; CODE XREF: Boss_Antroi
 Boss_AntroidSelectBlinkMetasprite:                      ; CODE XREF: Boss_AntroidHealthRecoveryState+38   j  ; was: sub_37EB8
                                         ; Boss_AntroidPrepareJumpAttack+16   j
                 move.l  #Boss_AntroidSpriteMapping01,$C8(a5)
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 beq.s   Boss_AntroidSelectBlinkMetaspriteReturn
                 move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
 Boss_AntroidSelectBlinkMetaspriteReturn:                ; CODE XREF: Boss_AntroidSelectBlinkMetasprite+E   j  ; was: locret_37ED0
@@ -61,7 +61,7 @@ Boss_AntroidEnterStateBindParts:                        ; CODE XREF: Boss_Antroi
 ; End of function Boss_AntroidEnterStateWithSecondPartSlot
 ; Spawns a ram-impact particle at a random offset from Antroid
 Boss_AntroidSpawnRamDebris:                             ; CODE XREF: Boss_AntroidUpdateRamAttackPose   p  ; was: sub_37F26
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_AntroidSpawnRamDebrisReturn
                 jsr     (Projectile_UpdateWithImpactFrames).l
                 bne.s   Boss_AntroidSpawnRamDebrisReturn

@@ -1,7 +1,7 @@
 ; Spawn an orbit-centered star particle while the orb charges
 Boss_WolfGaropaSpawnOrbitStar:                          ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+EC   j  ; was: sub_50B7E
                                         ; Boss_WolfGaropaUpdateBattleStartWait+118   j
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Boss_WolfGaropaOrbitStarReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_WolfGaropaOrbitStarReturn
@@ -41,7 +41,7 @@ Boss_WolfGaropaSpawnOrbitSpark:                         ; CODE XREF: Boss_WolfGa
                 tst.w   $5FC(a5)
                 bmi.w   Boss_WolfGaropaOrbitSparkReturn
                 subq.w  #1,$5FC(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Boss_WolfGaropaOrbitSparkReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_WolfGaropaOrbitSparkReturn

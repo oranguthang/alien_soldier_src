@@ -295,7 +295,7 @@ Boss_ShiperPositionUpdateStoreVerticalMotion:           ; CODE XREF: Boss_Shiper
                 move.b  (RandomNumberState).w,d2
                 andi.w  #3,d2
                 add.w   d2,d0
-                btst    #4,(word_FFA000+1).w
+                btst    #4,(FrameCounter+1).w
                 bne.s   Boss_ShiperPositionUpdateStorePrimaryJitter
                 addq.w  #1,d1
 Boss_ShiperPositionUpdateStorePrimaryJitter:            ; CODE XREF: Boss_ShiperPositionUpdate+A8   j  ; was: loc_36D5C
@@ -306,12 +306,12 @@ Boss_ShiperPositionUpdateStorePrimaryJitter:            ; CODE XREF: Boss_Shiper
                 addi.w  #-$D,d0
                 addi.w  #-$27,d1
                 move.w  d1,d7
-                btst    #2,(word_FFA000+1).w
+                btst    #2,(FrameCounter+1).w
                 bne.s   Boss_ShiperPositionUpdateStoreSecondaryX
                 addq.w  #1,d1
 Boss_ShiperPositionUpdateStoreSecondaryX:               ; CODE XREF: Boss_ShiperPositionUpdate+CC   j  ; was: loc_36D80
                 move.w  d0,$190(a5)
-                btst    #3,(word_FFA000+1).w
+                btst    #3,(FrameCounter+1).w
                 beq.s   Boss_ShiperPositionUpdateStoreSecondaryPosition
                 addq.w  #2,d0
 Boss_ShiperPositionUpdateStoreSecondaryPosition:        ; CODE XREF: Boss_ShiperPositionUpdate+DA   j  ; was: loc_36D8E

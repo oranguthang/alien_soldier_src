@@ -90,7 +90,7 @@ data are checked.
 | `0x00354A` | `Math_CalculateAngleToPlayer` | angle/vector math |
 | `0x003954` | `Score_AddPackedBCD` | packed-BCD score arithmetic and shared PRNG |
 | `0x0039AA` | `Gfx_FadePaletteTransition` | palette transitions |
-| `0x004094` | `Gfx_PrimaryEffectDispatcher` | primary graphics-effect dispatch |
+| `0x004094` | `Palette_UpdatePrimaryEffect` | primary palette-effect dispatch |
 | `0x004386` | `Results_UpdateNumbers` | results-number rendering |
 | `0x004594` | `Gfx_BuildVDPCommandList` | text/VDP command construction |
 | `0x004840` | `Gfx_ClearPlanesAndInit` | story-screen initialization |

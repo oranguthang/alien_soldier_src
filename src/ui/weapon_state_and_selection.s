@@ -347,7 +347,7 @@ Weapon_FinishState4Indicators:                          ; CODE XREF: Weapon_Conf
 ; End of function Weapon_ConfigureState4Indicators
 ; Configures state-six velocity and its ammo-indexed motion table
 Weapon_ConfigureState6Motion:                           ; DATA XREF: ROM:0001798A   o  ; was: sub_17CB4
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 btst    #7,d0
                 bne.s   Weapon_State6SelectSpeedFromAmmo
                 andi.w  #$7F,d0
@@ -496,7 +496,7 @@ Weapon_State10ClampGaugeLevel:                          ; CODE XREF: Weapon_Conf
                 move.l  -8(a2,d0.w),(dword_FF802C).w
 ; Writes the state-ten gauge color to both palette buffers
 Weapon_UpdateState10GaugePalette:                       ; CODE XREF: Weapon_ConfigureState10Gauge+14   j  ; was: loc_17E26
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #1,d0
                 andi.w  #6,d0
                 move.w  Weapon_State10GaugePaletteCycle(pc,d0.w),(word_FFE36C).w

@@ -447,7 +447,7 @@ Player_InitTeleportDashReturnState:                     ; DATA XREF: ROM:000150B
 Player_TeleportDashReturnState:                         ; DATA XREF: ROM:000150C0   o  ; was: loc_16A86
                 bset    #4,$23(a5)
                 move.l  #Player_TeleportDashTrailSpriteMapping,8(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Player_TeleportDashReturnState_Return
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
 Player_TeleportDashReturnState_Return:                  ; CODE XREF: Player_InitTeleportDashReturnState+50   j  ; was: locret_16AA6

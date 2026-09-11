@@ -318,7 +318,7 @@ Boss_ShellshogunInitializeDecisionState:                ; CODE XREF: Boss_Shells
 Boss_ShellshogunDecisionState:                          ; CODE XREF: Boss_ShellshogunPreBattleDelayState+16   p  ; was: sub_398FE
                                         ; Boss_ShellshogunWaitForStageReadyState+6   p
                                         ; DATA XREF:
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_ShellshogunCheckDecisionTimer
                 bsr.w   Boss_ShellshogunUpdateFacingPartFlags

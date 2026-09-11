@@ -277,7 +277,7 @@ Boss_WolfGaropaTransition:                              ; DATA XREF: ROM:0000F11
                 bpl.s   locret_F58C
                 addq.w  #2,(word_FFA950).w
                 clr.w   (dword_FFA90C+2).w
-                move.w  #$12,(word_FF8220).w
+                move.w  #$12,(PalettePrimaryIndex).w
                 bsr.w   Boss_WolfGaropaAttackState3
 locret_F58C:                                            ; CODE XREF: Boss_WolfGaropaTransition+18   j
                 rts

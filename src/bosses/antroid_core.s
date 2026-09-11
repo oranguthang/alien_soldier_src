@@ -220,7 +220,7 @@ Boss_AntroidUpdateDecisionAnimation:                    ; CODE XREF: Boss_Antroi
                                         ; sub_37558:Boss_AntroidWaitForStageReadyAnimate   j
                 lea     Boss_AntroidDecisionPoseCommandsA(pc),a1
                 nop
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$FF,d0
                 cmpi.w  #$E0,d0
                 bmi.s   Boss_AntroidUpdateDecisionPose

@@ -102,7 +102,7 @@ Gfx_BugmaxNegativeWavePaletteOffsets:   dc.w    8, 6, 6, 4, 4, 2, 2, 0, 0  ; was
 
 ; Alternate the central linked part between two mapping records every four frames
 Boss_BugmaxToggleCentralPartMapping:                    ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+292   p  ; was: sub_4DB50
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #3,d7
                 bne.s   Boss_BugmaxCentralPartMappingToggleReturn
                 movea.w #(word_FFC680-M68K_RAM),a0
@@ -165,7 +165,7 @@ Boss_BugmaxStoreWaveDisplacement:                       ; CODE XREF: Boss_Bugmax
 ; Update bounded horizontal steering toward the explicit target or player X
 Boss_BugmaxUpdateHorizontalSteering:                    ; CODE XREF: Boss_BugmaxApproachSpreadVolleyTarget+4   p  ; was: sub_4DBDE
                                         ; Boss_BugmaxSpawnSpreadProjectile+4   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$1FE,d0
                 move.l  (a0,d0.w),d6
                 ext.l   d6
@@ -213,7 +213,7 @@ Boss_BugmaxHandleInBoundsHorizontalMode:                ; CODE XREF: Boss_Bugmax
                 bra.w   Boss_BugmaxSelectNegativeHorizontalAcceleration
 ; ---------------------------------------------------------------------------
 Boss_BugmaxGateHorizontalTargetUpdate:                  ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+64   j  ; was: loc_4DC60
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$7F,d7
                 bne.s   Boss_BugmaxApplyHorizontalAcceleration
 Boss_BugmaxSelectHorizontalSteeringTarget:              ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+5C   j  ; was: loc_4DC6A

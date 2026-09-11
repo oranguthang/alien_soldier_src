@@ -520,9 +520,9 @@ locret_53D78:                                           ; CODE XREF: Boss_Missir
 Boss_MissirayGraphicsUpdate2:                           ; DATA XREF: ROM:000538DA   o  ; was: sub_53D7A
                 jsr     (Boss_SpawnExplosionDebris).l
                 bsr.s   Boss_MissirayGraphicsUpdate3
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   locret_53DB6
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   locret_53DB6
                 addq.w  #1,$48(a5)
                 cmpi.w  #$F,$48(a5)
@@ -580,9 +580,9 @@ locret_53E0E:                                           ; CODE XREF: Boss_Missir
 ; Graphics update handler 7
 Boss_MissirayGraphicsUpdate7:                           ; DATA XREF: ROM:000538E2   o  ; was: sub_53E10
                 bsr.s   Boss_MissirayGraphicsUpdate3
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   locret_53E30
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   locret_53E30
                 subq.w  #1,$48(a5)
                 tst.w   $48(a5)
@@ -611,7 +611,7 @@ Boss_MissirayUpdatePalette:                             ; DATA XREF: ROM:off_53C
                 bsr.s   Boss_MissirayAttackDispatcher
                 tst.w   (dword_FF9404).w
                 beq.s   locret_53E5E
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 add.w   d0,d0
                 move.w  word_53E60(pc,d0.w),(word_FFE37E).w

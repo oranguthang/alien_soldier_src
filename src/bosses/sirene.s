@@ -350,7 +350,7 @@ Boss_ClampSireneEffectSecondaryXMaximum:                ; CODE XREF: Boss_Update
                 add.l   d6,$6BC(a5)
                 move.l  $4DC(a5),d3
                 move.l  $53C(a5),d5
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_SelectSireneEffectAlternatePhase
                 move.l  $65C(a5),d3
                 move.l  $6BC(a5),d5
@@ -415,7 +415,7 @@ Gfx_UpdateSireneBattleEffectPattern:                    ; CODE XREF: Boss_Update
                 movea.w #(word_FF9500-M68K_RAM),a0
                 move.l  #$D0D0D0D0,d0
                 move.l  #$DDDDDDDD,d1
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Gfx_WriteSireneBattlePattern
                 exg     d0,d1
 Gfx_WriteSireneBattlePattern:                           ; CODE XREF: Gfx_UpdateSireneBattleEffectPattern+16   j  ; was: loc_57A0E
@@ -432,7 +432,7 @@ Gfx_WriteSireneBattlePattern:                           ; CODE XREF: Gfx_UpdateS
                 move.w  #$8F02,d3
                 move.l  #$94009310,d4
                 jsr     (VDP_QueueCommand_Build).l
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Gfx_UseSireneAlternateBattlePattern
                 move.w  #$F000,(word_FF9508).w
                 move.w  #$E000,(word_FF951A).w
@@ -702,7 +702,7 @@ Entity_EmptyState9:                                     ; DATA XREF: ROM:Entity_
 ; End of function Entity_EmptyState9
 ; Spawn Sirene's type-$490 projectile on the 32-frame interval
 Boss_SpawnSirenePeriodicProjectile:                     ; CODE XREF: Boss_UpdateSireneState12   p  ; was: sub_57D88
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.s   Boss_SpawnSirenePeriodicProjectileReturn
                 movea.w #(byte_FFD880-M68K_RAM),a0
@@ -752,7 +752,7 @@ Projectile_ProcessSireneHomingInBounds:                 ; CODE XREF: Projectile_
                 beq.s   Projectile_HomeSireneProjectileTowardPlayer
                 bclr    #4,$22(a5)
                 beq.s   Projectile_ConvertSireneHomingToParticle
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$50,d0                         ; 'P'
                 bne.s   Projectile_ConvertSireneHomingToParticle
                 jsr     (Projectile_FindFreeSlot).l

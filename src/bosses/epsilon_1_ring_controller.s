@@ -84,7 +84,7 @@ Boss_Epsilon1TrackPlayerWithRingReturn:                 ; CODE XREF: Boss_Epsilo
 ; Turns the controller toward the player and derives fixed-point velocity
 Boss_Epsilon1SteerRingTowardPlayer:                     ; CODE XREF: Boss_Epsilon1TrackPlayerWithRingState   p  ; was: sub_46E30
                                         ; Boss_Epsilon1FinishTrackingRingPassState   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_Epsilon1ApplyRingSteeringVelocity
                 jsr     (Math_CalculateAngleToPlayer).l

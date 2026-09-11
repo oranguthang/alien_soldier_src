@@ -12,7 +12,7 @@ Boss_JampanUpdateAndDispatch:                           ; CODE XREF: Boss_Jampan
                 beq.w   Boss_JampanDispatchState
                 btst    #1,$4C(a5)
                 bne.s   Boss_JampanCheckDefeatTrigger
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_JampanCheckDefeatTrigger
                 move.w  $4E(a5),d0
@@ -421,7 +421,7 @@ Boss_JampanSelectAttackState:                           ; DATA XREF: ROM:000491E
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 tst.w   (word_FF8234).w
                 ble.w   Boss_JampanSelectNoTargetsRecovery
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 tst.w   (DifficultyMode).w
                 bne.s   Boss_JampanUseFastAttackSelectionPeriod
                 andi.w  #$3F,d0                         ; '?'

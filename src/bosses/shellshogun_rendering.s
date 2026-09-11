@@ -74,7 +74,7 @@ Boss_ShellshogunUpdateSpriteFlipReturn:                 ; CODE XREF: Boss_Shells
 ; Selects the alternating Shellshogun body frame mapping
 Boss_ShellshogunSelectBodyFrameMapping:                 ; CODE XREF: Boss_ShellshogunRenderSprites+10   p  ; was: sub_39F20
                 move.l  #Boss_ShellshogunSpriteMapping00,$68(a5)
-                btst    #3,(word_FFA000+1).w
+                btst    #3,(FrameCounter+1).w
                 bne.s   Boss_ShellshogunSelectBodyFrameMappingReturn
                 move.l  #Boss_ShellshogunSpriteMapping01,$68(a5)
 Boss_ShellshogunSelectBodyFrameMappingReturn:           ; CODE XREF: Boss_ShellshogunSelectBodyFrameMapping+E   j  ; was: locret_39F38

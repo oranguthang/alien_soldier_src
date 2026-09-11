@@ -40,7 +40,7 @@ Stage_FliesCheckTransition:                             ; DATA XREF: ROM:0000C8A
 ; End of function Stage_FliesCheckTransition
 ; Updates Stage 9 scroll with parallax and lightning
 Stage_FliesScrollUpdate:                                ; CODE XREF: Stage_FliesCheckTransition+6   j  ; was: sub_D166
-                move.l  #word_D8B2,(dword_FF821A).w
+                move.l  #word_D8B2,(PaletteEntryLists).w
                 bsr.w   Effect_SpawnRandomLightning
                 bsr.w   Camera_UpdateTowardsPlayer
                 bsr.w   Gfx_CalculateScrollPosition
@@ -95,7 +95,7 @@ Stage_InitCaterpillarShip:                              ; CODE XREF: Stage_Flies
 ; End of function Stage_InitCaterpillarShip
 ; Sets up caterpillar boss with lightning and camera
 Stage_CaterpillarBossSetup:
-                move.l  #word_D8B2,(dword_FF821A).w     ; was: sub_D1EA
+                move.l  #word_D8B2,(PaletteEntryLists).w  ; was: sub_D1EA
                 bsr.w   Effect_SpawnRandomLightning
                 bsr.w   Camera_UpdateTowardsPlayer
                 bra.w   loc_D4BA
@@ -127,7 +127,7 @@ loc_D216:                                               ; CODE XREF: Stage_Flies
                 bmi.s   loc_D256
                 clr.l   (dword_FF8240).w
 loc_D256:                                               ; CODE XREF: Stage_FliesSpawnEnemies+52   j
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   locret_D264
                 addq.w  #1,(dword_FF8058).w
@@ -304,7 +304,7 @@ loc_D4BA:                                               ; CODE XREF: Stage_Cater
 Stage_CaterpillarScrollUpdate:                          ; CODE XREF: Stage_CaterpillarShipMovement+5E   p  ; was: sub_D4BE
                                         ; Stage_CaterpillarScrollHandler+12   p
                 bsr.w   Gfx_CalculateScrollPosition
-                move.l  #word_D8B2,(dword_FF821A).w
+                move.l  #word_D8B2,(PaletteEntryLists).w
                 bsr.w   Effect_SpawnRandomLightning
                 tst.w   (dword_FFA960).w
                 bmi.s   loc_D4FA

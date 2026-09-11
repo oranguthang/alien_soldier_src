@@ -7,7 +7,7 @@ Boss_BackStringerUpdateRender:                          ; CODE XREF: Boss_BackSt
 ; End of function Boss_BackStringerUpdateRender
 ; Updates palette cycling
 Boss_BackStringerUpdatePalette:                         ; CODE XREF: Boss_BackStringerUpdateRender   p  ; was: sub_44F60
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #$E,d0
                 movea.w #(byte_FFE374-M68K_RAM),a0
@@ -148,7 +148,7 @@ Boss_BackStringerUpdateTailSegmentPositions:            ; CODE XREF: Boss_BackSt
                 move.l  d0,d1
                 add.l   $D4(a5),d1
                 moveq   #3,d3
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_BackStringerPrepareTailSegmentLoop
                 moveq   #0,d3
 Boss_BackStringerPrepareTailSegmentLoop:                ; CODE XREF: Boss_BackStringerUpdateTailSegmentPositions+12   j  ; was: loc_45124
@@ -221,7 +221,7 @@ Effect_BackStringerSegmentFlash:                        ; DATA XREF: ROM:Entity_
 ; ---------------------------------------------------------------------------
 Effect_BackStringerSegmentFlashUpdate:                  ; CODE XREF: Effect_BackStringerSegmentFlash+4   j  ; was: loc_451F6
                 bset    #3,$E(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Effect_BackStringerSegmentFlashSelectFrame
                 bclr    #3,$E(a5)
 Effect_BackStringerSegmentFlashSelectFrame:             ; CODE XREF: Effect_BackStringerSegmentFlash+1C   j  ; was: loc_4520A
@@ -475,7 +475,7 @@ Projectile_BackStringerSpawnFallingDrops:               ; CODE XREF: Boss_BackSt
                                         ; Boss_BackStringerSweepingAttackState   p
                 tst.w   (word_FFC680).w
                 beq.w   Projectile_BackStringerSpawnFallingDropsReturn
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.s   Projectile_BackStringerSpawnFallingDropsReturn
                 tst.w   $47C(a5)

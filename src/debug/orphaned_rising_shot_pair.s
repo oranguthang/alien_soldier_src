@@ -97,7 +97,7 @@ Orphaned_RisingShotPairFirePeriodReturn:                ; CODE XREF: Orphaned_Ri
 ; End of function Orphaned_RisingShotPairFirePeriod
 ; Periodically creates a type-$3C4 Missiray falling shot
 Orphaned_RisingShotPairFireFallingShot:                 ; CODE XREF: Orphaned_RisingShotPairInitDelay:loc_33806   p  ; was: sub_338EC
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 bne.s   Orphaned_RisingShotPairFallingShotReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -116,7 +116,7 @@ Orphaned_RisingShotPairFallingShotReturn:               ; CODE XREF: Orphaned_Ri
 ; End of function Orphaned_RisingShotPairFireFallingShot
 ; Periodically creates a type-$3CC Missiray shot
 Orphaned_RisingShotPairFireMissirayShot:                ; CODE XREF: Orphaned_RisingShotPairFirePeriod   p  ; was: sub_33924
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 bne.s   Orphaned_RisingShotPairMissirayShotReturn
                 jsr     (Projectile_FindFreePrimarySlot).l

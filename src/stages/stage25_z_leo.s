@@ -183,7 +183,7 @@ loc_FC10:                                               ; CODE XREF: Stage_Scrol
                 move.w  (a0)+,d1
                 move.w  (a0)+,d2
                 move.w  (a0)+,d3
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.s   loc_FC44
                 asr.w   #1,d0
                 asr.w   #1,d1
@@ -203,7 +203,7 @@ loc_FC4C:                                               ; CODE XREF: Stage_Scrol
                 addq.w  #4,a0
                 dbf     d7,loc_FC4C
                 move.l  (dword_FF9DB2).w,d0
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   loc_FC6E
                 asr.l   #1,d0
 loc_FC6E:                                               ; CODE XREF: Stage_ScrollUpdate3+C2   j

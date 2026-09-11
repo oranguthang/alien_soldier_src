@@ -60,7 +60,7 @@ loc_1CF2E:                                              ; CODE XREF: Sys_UpdateG
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
-                addq.w  #1,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
                 rts
 ; End of function Sys_UpdateGameLoop
 ; Dispatches to menu state handler based on index

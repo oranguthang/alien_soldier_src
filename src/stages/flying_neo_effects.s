@@ -31,9 +31,9 @@ Effect_SpawnRandomLightning:                            ; CODE XREF: Stage_Train
                                         ; Stage_FlyingNeoVerticalScroll+3A   p
                 move.w  (word_FF821E).w,d7
                 bmi.w   locret_D838
-                tst.w   (word_FF8220).w
+                tst.w   (PalettePrimaryIndex).w
                 bne.w   locret_D838
-                tst.w   (word_FF8222).w
+                tst.w   (PaletteSecondaryIndex).w
                 bne.w   locret_D838
                 addq.w  #1,(dword_FF8062).w
                 cmpi.w  #$42,(dword_FF8062).w           ; 'B'
@@ -48,16 +48,16 @@ Effect_SpawnRandomLightning:                            ; CODE XREF: Stage_Train
                 move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 addq.w  #3,d0
-                move.w  d0,(word_FF8218).w
-                move.w  #8,(word_FF8220).w
+                move.w  d0,(PaletteEffectControl).w
+                move.w  #8,(PalettePrimaryIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 loc_D7BA:                                               ; CODE XREF: Effect_SpawnRandomLightning+3C   j
-                move.w  #2,(word_FF8222).w
+                move.w  #2,(PaletteSecondaryIndex).w
                 move.b  (RandomNumberState).w,d0
                 andi.w  #6,d0
                 addq.w  #8,d0
-                move.w  d0,(word_FF8218).w
+                move.w  d0,(PaletteEffectControl).w
                 cmpi.w  #2,d7
                 beq.s   Effect_CreateLightningSprite
                 move.b  #$1A,d0

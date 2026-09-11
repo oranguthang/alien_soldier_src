@@ -148,7 +148,7 @@ Gfx_CalculateFadeParams:                                ; CODE XREF: Gfx_UpdateP
                                         ; sub_3ADE   p
                 moveq   #$E,d0
                 move.w  #$E000,d7
-                move.w  (word_FFA000).w,d1
+                move.w  (FrameCounter).w,d1
                 andi.w  #$7F,d1
                 bne.s   Gfx_CalculateFadeParams_UseRandomizedParams
                 btst    #2,(RandomNumberState+1).w
@@ -158,7 +158,7 @@ Gfx_CalculateFadeParams_UseRandomizedParams:            ; CODE XREF: Gfx_Calcula
                 andi.w  #3,d0
                 addq.w  #6,d0
                 move.w  #$8000,d7
-                move.w  (word_FFA000).w,d1
+                move.w  (FrameCounter).w,d1
                 andi.w  #$1F,d1
                 beq.s   Gfx_CalculateFadeParams_Return
                 move.b  (RandomNumberState).w,d1
@@ -172,7 +172,7 @@ Gfx_CalculateFadeParams_Return:                         ; CODE XREF: Gfx_Calcula
                 rts
 ; End of function Gfx_CalculateFadeParams
 ; Sets palette fade operation parameters for screen transitions
-Gfx_SetFadeParams:                                      ; CODE XREF: Gfx_PaletteFadeEffect+16   p  ; was: sub_3B28
+Gfx_SetFadeParams:                                      ; CODE XREF: Palette_UpdateMidgameFadeAndColors+16   p  ; was: sub_3B28
                                         ; sub_DBF4:loc_DC6A   j
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #$3F,d5                         ; '?'

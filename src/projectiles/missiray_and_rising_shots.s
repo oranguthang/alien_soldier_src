@@ -128,14 +128,14 @@ Projectile_MissirayFallingShotGravityReturn:            ; CODE XREF: Projectile_
 ; Emits a type-$88 child every fourth frame
 Projectile_RisingShotEmitOnInterval:                    ; CODE XREF: Projectile_MissirayFallingShotDescend   p  ; was: sub_33AE0
                                         ; Projectile_MissirayFallingShotDecelerate   p
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #3,d7
                 beq.s   Projectile_RisingShotEmitShot
                 rts
 ; End of function Projectile_RisingShotEmitOnInterval
 ; Unreferenced alternate emitter that strengthens the spawned shot's collision box
 Orphaned_RisingShotEmitHomingShot:                      ; was: sub_33AEC
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #3,d7
                 bne.s   Orphaned_RisingShotEmitHomingReturn
                 bsr.s   Projectile_RisingShotEmitShot

@@ -6,14 +6,14 @@ UI_InitWeaponSelectionObject:                           ; CODE XREF: UI_WeaponSe
                 move.b  #$30,$23(a5)                    ; '0'
                 move.l  #$F808F808,$2C(a5)
                 move.l  #$FC04FC04,$28(a5)
-                move.w  (word_FFA000).w,$48(a5)
+                move.w  (FrameCounter).w,$48(a5)
                 move.w  #$FFFF,$4C(a5)
                 rts
 ; End of function UI_InitWeaponSelectionObject
 ; Updates weapon-selection animation, input, and selected-weapon state
 UI_UpdateWeaponSelectionObject:                         ; CODE XREF: UI_WeaponSelectionObject:loc_2BCF8   j  ; was: sub_2BBC0
                 move.b  #$7C,$20(a5)                    ; '|'
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   UI_UpdateWeaponSelectionObject_UpdateFrameTimer
                 clr.b   $20(a5)
 UI_UpdateWeaponSelectionObject_UpdateFrameTimer:        ; CODE XREF: UI_UpdateWeaponSelectionObject+C   j  ; was: loc_2BBD2

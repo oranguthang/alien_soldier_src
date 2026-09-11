@@ -84,7 +84,7 @@ off_7C36:       dc.w    Cutscene_FadeInCredits-*        ; DATA XREF: Cutscene_Cr
 
 ; Fades in credits screen palette incrementally until fully visible
 Cutscene_FadeInCredits:                                 ; DATA XREF: ROM:off_7C36   o  ; was: sub_7C50
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   locret_514E
                 addq.w  #2,(word_FF010C).l

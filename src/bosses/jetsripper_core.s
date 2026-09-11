@@ -429,7 +429,7 @@ Boss_JetsripperMovementUpdateSegmentDisplay:            ; CODE XREF: Boss_Jetsri
                 move.w  #$144,$14(a5)
 ; Selects sprite frame based on animation timer
 Boss_JetsripperSelectSprite:                            ; CODE XREF: Boss_JetsripperUpdateMovement+B0   j  ; was: loc_35B06
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #4,d0
                 move.l  Boss_JetsripperBodyFrames(pc,d0.w),8(a5)
                 bclr    #4,$E(a5)

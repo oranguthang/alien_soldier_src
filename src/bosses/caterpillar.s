@@ -228,7 +228,7 @@ Boss_CaterpillarUpdateFourPhaseMapping:                 ; CODE XREF: Boss_Caterp
                 bpl.s   Boss_CaterpillarSelectFourPhaseMapping
                 move.w  #$80,$48(a5)
 Boss_CaterpillarSelectFourPhaseMapping:                 ; CODE XREF: Boss_CaterpillarFourPhaseSegment+6A   j  ; was: loc_3D36A
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$C,d0
                 move.l  Boss_CaterpillarFourPhaseSegmentMappings(pc,d0.w),8(a5)
                 rts
@@ -275,7 +275,7 @@ Boss_CaterpillarUpdateTwoPhaseMapping:                  ; CODE XREF: Boss_Caterp
                 bpl.s   Boss_CaterpillarSelectTwoPhaseMapping
                 nop
 Boss_CaterpillarSelectTwoPhaseMapping:                  ; CODE XREF: Boss_CaterpillarTwoPhaseSegment+6A   j  ; was: loc_3D3F8
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #1,d0
                 andi.w  #4,d0
                 move.l  Boss_CaterpillarTwoPhaseSegmentMappings(pc,d0.w),8(a5)
@@ -557,7 +557,7 @@ Boss_CaterpillarShipDefeatCompleteState:                ; DATA XREF: ROM:0003D56
 ; Steers the ship angle toward its target and derives polar velocity
 Boss_CaterpillarUpdateShipSteering:                     ; CODE XREF: Boss_CaterpillarShipBeginOscillationState   p  ; was: sub_3D78C
                                         ; Boss_CaterpillarShipOscillationState   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_CaterpillarApplyShipPolarVelocity
                 move.w  (dword_FF9408).w,d0

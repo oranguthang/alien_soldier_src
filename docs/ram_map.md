@@ -11,7 +11,8 @@ still have neutral size/address names. The first reviewed semantic fields are
 `WeaponSlotOffset`, `WeaponSavedSlotOffset`, `WeaponMenuRadius`,
 `WeaponMenuAngle`, `WeaponStateCooldown`, `WeaponMenuAngularStep`, and
 `WeaponMenuSlotOffset`, `ShootingMode`, `ControlLayoutFlags`, and
-`RandomNumberState`;
+`RandomNumberState`, `FrameCounter`, `PaletteEffectControl`,
+`PaletteEntryLists`, `PalettePrimaryIndex`, and `PaletteSecondaryIndex`;
 `VDPCommand` predates this review. All remain
 subject to the evidence policy in `docs/naming.md`.
 
@@ -119,6 +120,16 @@ alone does not yet prove the exact player-facing counting convention.
 | `VDPReg1Shadow` | `$FFFFF7D2` | The VDP settings loader writes this `$81xx` command word; display helpers clear or restore register 1 display-enable bit 6. |
 | `VDPReg7Shadow` | `$FFFFF7DE` | The VDP settings loader writes this `$87xx` command word, and backdrop helpers restore it after diagnostic writes. |
 | `PaletteFillColor` | `$FFFFFF28` | With palette DMA disabled, VBlank fills all 64 CRAM entries with this word; zero/nonzero also selects the black/white endpoint in the full-screen fade engine. |
+
+## Reviewed palette-effect control fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `FrameCounter` | `$FFFFA000` | Gameplay and frontend loops increment this word once per completed frame. Animation, palette, projectile, and boss code use its low bits as periodic phase selectors, while demo initialization clears it before deterministic playback. |
+| `PaletteEffectControl` | `$FFFF8218` | Palette handlers consume this word as a countdown, RGB delta, or bitfield controlling selected color-cycle slots; producers set it together with an effect selector. |
+| `PaletteEntryLists` | `$FFFF821A` | Stage 8 and 9 lightning flows point this longword at two consecutive counted palette-entry lists; the paired-list handler applies opposite RGB deltas to them. |
+| `PalettePrimaryIndex` | `$FFFF8220` | Stage configuration writes this even selector, and the primary dispatcher uses it directly as an offset into its ten-entry handler table. |
+| `PaletteSecondaryIndex` | `$FFFF8222` | Stage configuration and transition code write this even selector, and the secondary dispatcher uses it directly as an offset into its four-entry handler table. |
 
 ## Reviewed VBlank transfer and VDP-shadow fields
 

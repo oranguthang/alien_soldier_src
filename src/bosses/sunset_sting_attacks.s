@@ -1,9 +1,9 @@
 ; Main boss control routine with state machine dispatch
 Boss_SunsetStingMainDispatcher:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_418FC
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_SunsetStingDispatchSecondFormState
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 beq.s   Boss_SunsetStingRefreshAimSample
                 lea     (word_FFA400).w,a4

@@ -42,7 +42,7 @@ Boss_TerobusterUpdateDefeatDebris:                      ; CODE XREF: Boss_Terobu
                 bsr.w   Boss_TerobusterUpdateDefeatScreenPosition
                 cmpi.w  #$40,$48(a5)                    ; '@'
                 bpl.s   Boss_TerobusterTrySpawnDefeatDebris
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_TerobusterTrySpawnDefeatDebris
                 move.w  #$FFD0,(dword_FFA90C).w
 Boss_TerobusterTrySpawnDefeatDebris:                    ; CODE XREF: Boss_TerobusterDefeatDebrisState+18   j  ; was: loc_38BE8
@@ -52,7 +52,7 @@ Boss_TerobusterTrySpawnDefeatDebris:                    ; CODE XREF: Boss_Terobu
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_TerobusterDefeatDebrisReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Boss_TerobusterInitializeDefeatDebris
                 movea.l #Boss_TerobusterProjectileSpriteFrames,a1
                 move.l  #$FFFD2000,$1C(a0)
@@ -71,7 +71,7 @@ Boss_TerobusterInitializeDefeatDebris:                  ; CODE XREF: Boss_Terobu
                 add.w   d3,d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_TerobusterDefeatDebrisReturn
                 move.b  #$BB,d0
@@ -132,7 +132,7 @@ Boss_TerobusterSetFadeParams:                           ; CODE XREF: Boss_Terobu
 ; End of function Boss_TerobusterSetFadeParams
 ; Publishes a symmetric eight-step oscillation to two shared part values
 Boss_TerobusterUpdateSharedOscillation:                 ; CODE XREF: Boss_TerobusterUpdateMetaspriteAndProjectile+C   p  ; was: sub_38CF4
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #$E,d0
                 move.w  Boss_TerobusterOscillationValues(pc,d0.w),d0
@@ -192,7 +192,7 @@ Boss_TerobusterStoreProjectileOffset:                   ; CODE XREF: Boss_Terobu
 ; End of function Boss_TerobusterUpdateBodyParts
 ; Spawns projectiles with trajectory and velocity updates
 Boss_TerobusterSpawnProjectile:                         ; CODE XREF: Boss_TerobusterUpdateMetaspriteAndProjectile+10   j  ; was: sub_38DC4
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_TerobusterSpawnProjectileReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -226,7 +226,7 @@ Boss_TerobusterSpawnHomingMissile:                      ; CODE XREF: Boss_Terobu
                 cmpi.w  #$1190,$BC(a5)
                 bmi.s   Boss_TerobusterSpawnHomingMissileReturn
 Boss_TerobusterTrySpawnHomingMissile:                   ; CODE XREF: Boss_TerobusterSpawnHomingMissile+4   j  ; was: loc_38E2A
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 btst    #8,d0
                 bne.s   Boss_TerobusterSpawnHomingMissileReturn
                 andi.w  #$1F,d0

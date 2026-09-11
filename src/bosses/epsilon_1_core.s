@@ -25,7 +25,7 @@ Boss_Epsilon1UpdatePeriodicSharedOffset:                ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1Main+22   j
                 btst    #1,$4C(a5)
                 bne.s   Boss_Epsilon1UpdatePresentation
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_Epsilon1UpdatePresentation
                 move.w  $50(a5),d0
@@ -252,11 +252,11 @@ Boss_Epsilon1BattleStartDelayReturn:                    ; CODE XREF: Boss_Epsilo
 ; Clears encounter buffers and initializes the controller, linked parts, and twelve ring objects
 Boss_Epsilon1InitializeBattleObjectsState:              ; DATA XREF: ROM:00045CF4   o  ; was: sub_45D9A
                 bsr.w   Boss_Epsilon1ApplyTimedPaletteFade
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Boss_Epsilon1InitializeBattleObjectsReturn
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.w   Boss_Epsilon1InitializeBattleObjectsReturn
-                btst    #2,(word_FFA000+1).w
+                btst    #2,(FrameCounter+1).w
                 bne.w   Boss_Epsilon1InitializeBattleObjectsReturn
                 addq.w  #1,$48(a5)
                 cmpi.w  #$F,$48(a5)

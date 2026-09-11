@@ -296,13 +296,13 @@ Enemy_Stage12TurretSpawnPeriodicShot:                   ; CODE XREF: Enemy_Stage
                 move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 bne.s   Enemy_Stage12TurretSpawnPeriodicShot_CheckSlowInterval
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$FF,d7
                 bne.s   Enemy_Stage12TurretSpawnPeriodicShot_Return
                 bra.s   Enemy_Stage12TurretSpawnPeriodicShot_Spawn
 ; ---------------------------------------------------------------------------
 Enemy_Stage12TurretSpawnPeriodicShot_CheckSlowInterval:  ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicShot+8   j  ; was: loc_2E5BE
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$1FF,d7
                 bne.s   Enemy_Stage12TurretSpawnPeriodicShot_Return
 Enemy_Stage12TurretSpawnPeriodicShot_Spawn:             ; CODE XREF: Enemy_Stage12TurretSpawnPeriodicShot+14   j  ; was: loc_2E5C8

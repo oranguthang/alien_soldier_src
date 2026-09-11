@@ -399,7 +399,7 @@ Weapon_FireBulletHandler_SetDamage:                     ; CODE XREF: Weapon_Fire
                 move.l  d1,$1C(a0)
                 move.l  d2,$18(a0)
                 move.w  d5,$56(a0)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Weapon_FireBulletHandler_Return
                 move.b  #$EB,d0

@@ -38,7 +38,7 @@ Boss_SunsetStingUpdateAllChainRadii:                    ; CODE XREF: Boss_Sunset
 ; Oscillates the chain angles while moving between vertical bounds
 Boss_SunsetStingOscillateChainsState:                   ; DATA XREF: ROM:00041960   o  ; was: sub_4205E
                 move.w  #1,d1
-                btst    #0,(word_FFA000).w
+                btst    #0,(FrameCounter).w
                 bne.s   Boss_SunsetStingAdvanceChainOscillationPhase
                 neg.w   d1
 Boss_SunsetStingAdvanceChainOscillationPhase:           ; CODE XREF: Boss_SunsetStingOscillateChainsState+A   j  ; was: loc_4206C

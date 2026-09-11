@@ -380,7 +380,7 @@ WeaponSetup_RenderShootingModeOptions:                  ; CODE XREF: WeaponSetup
                 move.w  #$8100,d0
                 cmpi.w  #2,(word_FFA29C).w
                 bne.s   WeaponSetup_SelectShootingModeLabelColor
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   WeaponSetup_RenderShootingModeLabel
 WeaponSetup_SelectShootingModeLabelColor:               ; CODE XREF: WeaponSetup_RenderShootingModeOptions+A   j  ; was: loc_1F63A
                 move.w  #$A100,d0
@@ -493,7 +493,7 @@ WeaponSetup_UpdateHorizontalScrollReturn:               ; CODE XREF: WeaponSetup
 ; Renders the four loadout-slot sprites while their display flag is set
 WeaponSetup_RenderSlotSprites:                          ; CODE XREF: WeaponSetup_HandleLoadoutState   p  ; was: sub_1F73C
                                         ; WeaponSetup_HandleShootingModeInput   p
-                btst    #3,(word_FFA000+1).w
+                btst    #3,(FrameCounter+1).w
                 bne.s   WeaponSetup_RenderSlotSpriteLoop
                 rts
 ; ---------------------------------------------------------------------------
@@ -518,7 +518,7 @@ WeaponSetup_RenderSlotSpriteLoop:                       ; CODE XREF: WeaponSetup
 ; End of function WeaponSetup_RenderSlotSprites
 ; Renders the two-sprite confirmation prompt while its input flag is set
 WeaponSetup_RenderConfirmPromptSprites:                 ; CODE XREF: WeaponSetup_WaitForConfirmInput   p  ; was: sub_1F784
-                btst    #3,(word_FFA000+1).w
+                btst    #3,(FrameCounter+1).w
                 bne.s   WeaponSetup_BuildConfirmPromptSprites
                 rts
 ; ---------------------------------------------------------------------------

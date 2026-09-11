@@ -334,7 +334,7 @@ Boss_ZLeoRunBattleEntry:                                ; DATA XREF: ROM:00051B9
                 bpl.s   Boss_ZLeoRenderBattleEntry
                 addq.w  #1,$11E(a5)
 Boss_ZLeoPulseBattleEntryFade:                          ; CODE XREF: Boss_ZLeoRunBattleEntry+14   j  ; was: loc_51F20
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_ZLeoRenderBattleEntry
                 addq.w  #1,$11C(a5)
@@ -472,7 +472,7 @@ Boss_ZLeoBeginDefeatFade:                               ; CODE XREF: Boss_ZLeoBe
                 clr.w   $11C(a5)
 ; Advance the defeat fade before whiteout
 Boss_ZLeoRunDefeatFade:                                 ; DATA XREF: ROM:00051B8A   o  ; was: loc_520C8
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_ZLeoUpdateDefeatFade
                 addq.w  #1,$11C(a5)
@@ -505,7 +505,7 @@ Boss_ZLeoBeginDefeatWhiteout:                           ; CODE XREF: Boss_ZLeoBe
 ; End of function Boss_ZLeoBeginDefeatSequence
 ; Advance defeat whiteout, clear objects, and fill both palette banks with white
 Boss_ZLeoRunDefeatWhiteout:                             ; DATA XREF: ROM:00051B8C   o  ; was: sub_52138
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_ZLeoUpdateDefeatWhiteoutFade
                 addq.w  #1,$11C(a5)
@@ -826,7 +826,7 @@ Boss_ZLeoUpdateScrollingDropAttack:                     ; CODE XREF: Boss_ZLeoRu
                 bsr.w   Boss_ZLeoRotateAttackPalette
                 tst.w   (word_FFA02A).w
                 bne.s   Boss_ZLeoRenderScrollingDropAttack
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_ZLeoRenderScrollingDropAttack
                 bsr.w   Projectile_ZLeoSpawnDropProjectile

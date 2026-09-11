@@ -544,7 +544,7 @@ Boss_OffsetMedusaPosePartGroup:                         ; CODE XREF: Boss_ApplyM
 ; Plays sound effect every 4th frame during animation
 Boss_MedusaPlaySFXEvery4Frames:                         ; CODE XREF: Boss_RenderMedusaState10   p  ; was: sub_57020
                                         ; Boss_RenderMedusaState14   p
-                move.w  (word_FFA000).w,d1
+                move.w  (FrameCounter).w,d1
                 andi.w  #3,d1
                 bne.s   Boss_PlayMedusaSFXEvery4FramesReturn
                 jmp     (Sound_PlaySFX).l
@@ -554,7 +554,7 @@ Boss_PlayMedusaSFXEvery4FramesReturn:                   ; CODE XREF: Boss_Medusa
 ; End of function Boss_MedusaPlaySFXEvery4Frames
 ; Plays sound effect every 8th frame during animation
 Boss_MedusaPlaySFXEvery8Frames:                         ; CODE XREF: Boss_UpdateMedusaStateCTarget   p  ; was: sub_57032
-                move.w  (word_FFA000).w,d1
+                move.w  (FrameCounter).w,d1
                 andi.w  #7,d1
                 bne.s   Boss_PlayMedusaSFXEvery8FramesReturn
                 jmp     (Sound_PlaySFX).l

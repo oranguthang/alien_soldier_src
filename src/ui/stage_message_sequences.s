@@ -505,7 +505,7 @@ Message_RenderLineWithOffsets:                          ; CODE XREF: BattleBanne
 ; Renders a message sprite line without position offsets
 Message_RenderLine:                                     ; CODE XREF: BattleBanner_HoldReadyLine+6   p  ; was: sub_B3F0
                                         ; BattleBanner_StartFightLine+6   p
-                btst    #3,(word_FFA000+1).w
+                btst    #3,(FrameCounter+1).w
                 bne.s   Message_RenderLineReturn
                 moveq   #0,d5
                 moveq   #0,d6

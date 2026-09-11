@@ -4,7 +4,7 @@ Collision_UpdateSystem:                                 ; CODE XREF: Sys_Gamepla
                 bmi.s   Collision_UpdateSystem_Return
                 bsr.w   Collision_BuildEntityLists
                 movea.w #(dword_FFBFC0-M68K_RAM),a5
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Collision_UpdateSystem_RunDynamicChecks
                 movea.w #(byte_FFC020-M68K_RAM),a5
 Collision_UpdateSystem_RunDynamicChecks:                ; CODE XREF: Collision_UpdateSystem+14   j  ; was: loc_13AF8
@@ -50,7 +50,7 @@ Collision_BuildEntityLists_ScanLoop:                    ; CODE XREF: Collision_B
                 move.b  d6,d4
                 andi.b  #$42,d4                         ; 'B'
                 beq.s   Collision_BuildEntityLists_CheckTargetFlags
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Collision_BuildEntityLists_CheckEvenSlot
                 btst    #0,d7
                 beq.s   Collision_BuildEntityLists_CheckTargetFlags

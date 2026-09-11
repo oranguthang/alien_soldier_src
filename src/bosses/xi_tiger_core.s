@@ -272,7 +272,7 @@ Boss_XiTigerUpdateIdlePose:                             ; CODE XREF: Boss_XiTige
                 nop
                 bsr.w   Boss_XiTigerUpdatePoseAnimation
                 bsr.w   Boss_XiTigerUpdateSprites
-                move.w  (word_FFA000).w,d5
+                move.w  (FrameCounter).w,d5
                 andi.w  #$F,d5
                 beq.w   Boss_XiTigerSetFacingDirection
                 rts
@@ -690,7 +690,7 @@ Boss_XiTigerSelectPrimaryBodyAnchor:                    ; CODE XREF: Boss_XiTige
 ; Selects one of two body mappings from the global frame bit
 Boss_XiTigerSelectBodyMapping:                          ; CODE XREF: Boss_XiTigerCloseRangeAI+68   p  ; was: sub_3E0DC
                 move.l  #Boss_XiTigerGroundedBodyMapping,$68(a5)
-                btst    #3,(word_FFA000+1).w
+                btst    #3,(FrameCounter+1).w
                 bne.s   Boss_XiTigerSelectBodyMappingReturn
                 move.l  #Boss_XiTigerAirborneBodyMapping,$68(a5)
 Boss_XiTigerSelectBodyMappingReturn:                    ; CODE XREF: Boss_XiTigerSelectBodyMapping+E   j  ; was: locret_3E0F4

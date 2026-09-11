@@ -47,9 +47,9 @@ Boss_Epsilon1FinishOpeningFadeState:                    ; DATA XREF: ROM:00045CF
                 move.w  #$E000,d7
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 jsr     (Gfx_ApplyPaletteFade).l
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_Epsilon1FinishOpeningFadeReturn
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Boss_Epsilon1FinishOpeningFadeReturn
                 subq.w  #1,$48(a5)
                 bge.s   Boss_Epsilon1FinishOpeningFadeReturn

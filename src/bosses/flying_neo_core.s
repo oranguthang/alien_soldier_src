@@ -18,7 +18,7 @@ Boss_FlyingNeoProcessMainColorFade:                     ; CODE XREF: Boss_Flying
                 tst.w   $23C(a5)
                 bmi.s   Boss_FlyingNeoCheckDefeat
                 beq.s   Boss_FlyingNeoSelectHealthFadeThreshold
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_FlyingNeoCheckDefeat
                 move.w  #$620,d0
@@ -351,7 +351,7 @@ Boss_FlyingNeoDefeatParticleRainState:                  ; DATA XREF: ROM:0003C0B
                 bsr.w   Boss_FlyingNeoUpdatePaletteFade
                 bsr.w   Boss_FlyingNeoUpdateDefeatEffectOrigin
                 bsr.w   Boss_FlyingNeoBuildLineScrollTables
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_FlyingNeoUpdateDefeatParticleRainTimer
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -374,7 +374,7 @@ Boss_FlyingNeoPositionDefeatRainParticle:               ; CODE XREF: Boss_Flying
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_FlyingNeoUpdateDefeatParticleRainTimer
                 move.b  #$BC,d0
@@ -478,7 +478,7 @@ Boss_FlyingNeoUpdatePursuitPose:                        ; CODE XREF: Boss_Flying
 Boss_FlyingNeoUpdatePursuitHorizontalMotion:            ; CODE XREF: Boss_FlyingNeoPursuitState+10   p  ; was: sub_3C5BC
                 move.b  (RandomNumberState+1).w,d5
                 move.b  (RandomNumberState).w,d6
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 asr.w   #2,d7
                 andi.w  #$40,d7                         ; '@'
                 add.w   d7,d0
@@ -538,7 +538,7 @@ Boss_FlyingNeoSelectCloseRangeManeuver:                 ; CODE XREF: Boss_Flying
                                         ; Boss_FlyingNeoUpdatePursuitHorizontalMotion+84   p
                 cmpi.w  #$D4,d0
                 bpl.s   Boss_FlyingNeoCloseRangeManeuverReturn
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 btst    #9,d0
                 beq.s   Boss_FlyingNeoStartPursuitReversal
                 andi.w  #1,d0

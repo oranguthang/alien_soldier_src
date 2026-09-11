@@ -14,7 +14,7 @@ Debug_ShieldViperSelectOrbitShotAction:                 ; was: sub_4F5E6
 Boss_ShieldViperEmitOrbitShotOnFrameGate:               ; CODE XREF: Boss_ShieldViperEmitTimedOrbitShotStream+8   p  ; was: sub_4F5F0
                 bsr.w   Boss_ShieldViperUpdateOrbitingRecord
                 bsr.w   Gfx_ShieldViperUpdateHorizontalFlipFromFrameBit
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_ShieldViperOrbitShotFrameGateReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_ShieldViperOrbitShotFrameGateReturn
@@ -115,7 +115,7 @@ Debug_ShieldViperManualRadialMoveReturn:                ; CODE XREF: Debug_Shiel
 ; End of function Debug_ShieldViperMoveRadiallyWhileButtonHeld
 ; On even frames, rebuild and queue the type-$3A8 pattern-effect workspace
 Gfx_ShieldViperPatternEffectMain:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4F70C
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Gfx_ShieldViperPatternEffectReturn
                 bsr.w   Boss_ShieldViperClearPatternBuffer
                 bsr.w   Boss_ShieldViperUpdatePatternPhaseA
@@ -308,7 +308,7 @@ Effect_CopyNextIndexedOffsetHighWord:                   ; CODE XREF: Effect_Accu
 ; Increment or decrement four consecutive counters according to frame parity
 Effect_OscillateFourCountersByFrameParity:              ; was: sub_4F8D0
                 movea.w #(byte_FFE370-M68K_RAM),a0
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Effect_DecrementFourOscillatingCounters
                 addq.w  #1,(a0)+
                 addq.w  #1,(a0)+

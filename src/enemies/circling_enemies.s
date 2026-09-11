@@ -88,7 +88,7 @@ Enemy_UpdateCircularMotionAndFire:                      ; CODE XREF: Enemy_Circl
                 muls.w  d3,d1
                 move.l  d0,$18(a5)
                 move.l  d1,$1C(a5)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 add.w   a5,d0
                 andi.w  #$7F,d0
                 bne.s   Enemy_UpdateCircularMotionAndFire_Return

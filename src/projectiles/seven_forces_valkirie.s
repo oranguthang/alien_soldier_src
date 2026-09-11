@@ -125,7 +125,7 @@ Entity_ValkirieProjectileContinueShadowSync:            ; CODE XREF: Entity_Valk
 ; Grows projectile sprite by incrementing animation frame counter
 Entity_ValkirieProjectileGrowAnimation:                 ; DATA XREF: ROM:000549F8   o  ; was: sub_54A80
                 move.w  #$150,(word_FFDB94).w
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Entity_ValkirieProjectileTransferGrowthFrame
                 addq.w  #4,$48(a5)
@@ -157,7 +157,7 @@ Entity_ValkirieProjectileMoveLeft:                      ; DATA XREF: ROM:000549F
 ; Shrink the animation, then give the shadow a negative vertical velocity
 Entity_ValkirieProjectileShrinkAndLaunch:               ; DATA XREF: ROM:000549FE   o  ; was: sub_54AD8
                 bsr.w   Entity_ValkirieProjectileAccelerateLeft
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Entity_ValkirieProjectileTransferShrinkFrame
                 subq.w  #4,$48(a5)

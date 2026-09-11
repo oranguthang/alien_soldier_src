@@ -284,7 +284,7 @@ Stage9_FlyFormationAllocateSlotsState_Return:           ; CODE XREF: Stage9_FlyF
 ; End of function Stage9_FlyFormationAllocateSlotsState
 ; Activates one staged fly at a time, then repeats from the alternate side
 Stage9_FlyFormationActivateWaveState:                   ; DATA XREF: ROM:0002D8FA   o  ; was: sub_2D954
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$F,d7
                 bne.s   Stage9_FlyFormationActivateWaveState_Return
                 subq.w  #2,$48(a5)

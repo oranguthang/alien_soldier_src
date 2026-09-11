@@ -270,7 +270,7 @@ Boss_SunsetStingSecondarySegmentFlightState:            ; DATA XREF: ROM:0004357
 Boss_SunsetStingSecondarySegmentStoreFrameStep:         ; CODE XREF: Boss_SunsetStingSecondarySegmentFlightState+20   j  ; was: loc_4363E
                 move.b  d0,$48(a5)
 Boss_SunsetStingSecondarySegmentAdvanceFrame:           ; CODE XREF: Boss_SunsetStingSecondarySegmentFlightState+12   j  ; was: loc_43642
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 and.w   d1,d0
                 bne.s   Boss_SunsetStingSecondarySegmentUpdatePosition
                 addq.b  #1,$48(a5)
@@ -463,7 +463,7 @@ Boss_SunsetStingDefeatCoreMain:                         ; DATA XREF: ROM:Entity_
                 beq.s   Boss_SunsetStingDefeatCoreAnimate
                 clr.b   $21(a5)
 Boss_SunsetStingDefeatCoreAnimate:                      ; CODE XREF: Boss_SunsetStingDefeatCoreMain+E   j  ; was: loc_4386C
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_SunsetStingDefeatCoreReturn
                 addq.w  #4,6(a5)

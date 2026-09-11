@@ -2,7 +2,7 @@
 
 ; Spawns a type $158 shot with randomized launch velocity
 Boss_AntroidSpawnWaitProjectile:                        ; CODE XREF: Boss_AntroidWaitState:Boss_AntroidWaitSpawnProjectileAndAnimate   p  ; was: sub_37FEC
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Boss_AntroidSpawnWaitProjectileReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Boss_AntroidSpawnWaitProjectileReturn

@@ -26,7 +26,7 @@ Boss_SunsetStingMainCheckDefeatTrigger:                 ; CODE XREF: Boss_Sunset
                 bset    #7,(a4)
                 move.w  #$12,4(a5)
 Boss_SunsetStingMainCycleTiles:                         ; CODE XREF: Boss_SunsetStingMain+48   j  ; was: loc_42A6A
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_SunsetStingMainReturn
                 move.b  $48(a5),d0
@@ -395,7 +395,7 @@ Boss_SunsetStingRotateSegmentsPositiveMotion:           ; CODE XREF: Boss_Sunset
                 bsr.s   Boss_SunsetStingMoveCoreTowardPlayer
                 move.w  #$300,d7
                 bsr.s   Boss_SunsetStingUpdateSegmentRotation
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_SunsetStingRotateSegmentsPositiveSelect
                 cmpi.w  #8,4(a4)
@@ -477,7 +477,7 @@ Boss_SunsetStingRotateSegmentsNegativeMotion:           ; CODE XREF: Boss_Sunset
                 bsr.w   Boss_SunsetStingMoveCoreTowardPlayer
                 move.w  #$1000,d7
                 bsr.s   Boss_SunsetStingUpdateSegmentRotation
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_SunsetStingRotateSegmentsNegativeSelect
                 cmpi.w  #$FFF8,4(a4)
@@ -642,7 +642,7 @@ Boss_SunsetStingSpawnDebrisRain:                        ; CODE XREF: Boss_Sunset
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
                 move.b  #$30,$20(a0)                    ; '0'
                 bset    #7,$E(a0)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Boss_SunsetStingReturn
                 move.b  #$BB,d0

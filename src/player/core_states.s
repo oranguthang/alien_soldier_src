@@ -185,7 +185,7 @@ Player_HandleDeathSequence_SetFlags:                    ; DATA XREF: ROM:0001509
                 bset    #5,(byte_FF8244).w
                 bset    #0,(byte_FF8244).w
                 move.b  #8,$20(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Player_HandleDeathSequence_ClampEnergy
                 subq.w  #1,(word_FFA216).w
 Player_HandleDeathSequence_ClampEnergy:                 ; CODE XREF: Player_HandleDeathSequence+8A   j  ; was: loc_15152

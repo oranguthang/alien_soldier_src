@@ -2,7 +2,7 @@
 Gfx_ShieldViperUpdateHorizontalFlipFromFrameBit:        ; CODE XREF: Boss_ShieldViperBeginOrbitShotBurstDelay+C   p  ; was: sub_4E5C0
                                         ; Boss_ShieldViperWaitOrbitShotBurstDelay+6   p
                 moveq   #0,d0
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Gfx_ShieldViperApplyFrameSelectedHorizontalFlip
                 move.w  #$2000,d0
 Gfx_ShieldViperApplyFrameSelectedHorizontalFlip:        ; CODE XREF: Gfx_ShieldViperUpdateHorizontalFlipFromFrameBit+8   j  ; was: loc_4E5CE

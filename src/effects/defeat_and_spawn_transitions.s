@@ -162,7 +162,7 @@ Effect_UpdateTransition:                                ; DATA XREF: ROM:00026A1
                 move.w  $10(a5),(dword_FF807E).w
                 move.w  $14(a5),(dword_FF807E+2).w
                 subi.l  #$3C0,(dword_FF80A0).w
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #1,d0
                 addq.w  #1,d0
                 add.w   d0,(word_FF807C).w

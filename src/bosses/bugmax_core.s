@@ -600,7 +600,7 @@ Boss_BugmaxUpdateHorizontalJitterState:                 ; DATA XREF: ROM:0004C3D
                 subq.w  #1,$48(a5)
                 beq.s   Boss_BugmaxFinishHorizontalJitterState
                 move.w  $4A(a5),d0
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #2,d7
                 beq.s   Boss_BugmaxStoreJitteredBodyAnchor
                 addi.w  #$60,d0                         ; '`'
@@ -739,7 +739,7 @@ Boss_BugmaxAccelerateLinkedPartSpin:                    ; DATA XREF: ROM:0004C3E
                 subq.w  #2,d0
                 add.w   $4A(a5),d0
                 move.w  d0,(dword_FFC874).w
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Boss_BugmaxLinkedPartSpinAccelerationReturn
                 addq.w  #1,$48(a5)
@@ -868,7 +868,7 @@ Boss_BugmaxPrepareJumpReturn:                           ; CODE XREF: Boss_Bugmax
 ; Update the body anchor from the saved value and current scroll side
 Boss_BugmaxUpdateBodyAnchorFromScrollPhase:             ; CODE XREF: Boss_BugmaxRotateLinkedAssemblyToward180AndStartBattle+8   p  ; was: sub_4C90C
                 move.w  $4A(a5),d0
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 btst    #0,d7
                 bne.s   Boss_BugmaxAdjustBodyAnchorForScrollSide
                 move.w  d0,$5C(a5)

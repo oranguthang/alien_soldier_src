@@ -38,7 +38,7 @@ Player_GetWeaponTableOffset:
                 bset    #1,(byte_FF8244).w
 Player_GetWeaponTableOffset_SelectFrame:                ; CODE XREF: Player_GetWeaponTableOffset   j  ; was: loc_17498
                 movea.l $48(a5),a0
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #1,d0
                 andi.w  #$C,d0
                 rts
@@ -159,7 +159,7 @@ Player_SpawnPhoenixParticles:
                 bpl.s   Player_SpawnPhoenixParticles_CheckSoundFrame
                 clr.w   (word_FF8304).w
 Player_SpawnPhoenixParticles_CheckSoundFrame:           ; CODE XREF: Player_SpawnPhoenixParticles+1C   j  ; was: loc_175DA
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Player_SpawnPhoenixParticles_Allocate
                 move.b  #$AC,d0
@@ -269,7 +269,7 @@ UI_RenderTransientValue_Return:                         ; CODE XREF: UI_RenderTr
                 rts
 ; ---------------------------------------------------------------------------
 UI_RenderTransientValue_UpdatePosition:                 ; CODE XREF: UI_RenderTransientValue+12   j  ; was: loc_1771C
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   UI_RenderTransientValue_BuildSprites
                 subq.w  #1,(word_FF8266).w
 UI_RenderTransientValue_BuildSprites:                   ; CODE XREF: UI_RenderTransientValue+C   j  ; was: loc_17728
@@ -328,7 +328,7 @@ Effect_CreateDashTrail:                                 ; CODE XREF: Player_Dash
                 tst.w   (word_FFC5C0).w
                 beq.s   Effect_CreateDashTrail_AllocateObjects
                 move.l  #Player_TeleportDashTrailSpriteMapping,8(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Effect_CreateDashTrail_Return
                 move.l  #Player_PhoenixAndTeleportDashSpriteMapping,8(a5)
                 rts

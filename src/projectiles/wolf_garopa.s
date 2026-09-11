@@ -117,7 +117,7 @@ Boss_WolfGaropaStoreOrbMappingAndPosition:              ; CODE XREF: Boss_WolfGa
                 bra.s   Boss_WolfGaropaUpdateOrbFrameAndTiles
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaAdvanceOrbPalettePhase:                  ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+16A   j  ; was: loc_5038E
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_WolfGaropaUpdateOrbFrameAndTiles
                 addi.w  #$20,(word_FFE37E).w            ; ' '
@@ -276,7 +276,7 @@ Boss_WolfGaropaStoreOrbEndpointRadius:                  ; CODE XREF: Boss_WolfGa
                 bset    #7,$B42(a5)
                 btst    #1,$65E(a5)
                 beq.s   Boss_WolfGaropaPositionOrbEndpoint
-                btst    #2,(word_FFA000+1).w
+                btst    #2,(FrameCounter+1).w
                 beq.s   Boss_WolfGaropaPositionOrbEndpoint
                 bclr    #7,$B42(a5)
 Boss_WolfGaropaPositionOrbEndpoint:                     ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+AA   j  ; was: loc_5055A
@@ -303,7 +303,7 @@ Boss_WolfGaropaOrbDirectionalMappingTable:  dc.l    word_ED190  ; DATA XREF: Bos
 
 ; Select the orb tile-transfer descriptor from the global frame counter
 Gfx_UpdateWolfGaropaOrbTiles:                           ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+188   j  ; was: sub_50596
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #1,d0
                 andi.w  #$C,d0
                 movea.l Boss_WolfGaropaOrbTileTransferTable(pc,d0.w),a0

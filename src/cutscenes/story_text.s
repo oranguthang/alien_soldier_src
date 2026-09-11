@@ -114,7 +114,7 @@ byte_675D_End:
 ; Dispatches Japanese text rendering state machine
 UI_JapaneseTextDispatcher:                              ; CODE XREF: Sys_StoryScreenMainLoop+40   p  ; was: sub_7484
                 subq.w  #1,(word_FF0180).l
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   UI_JapaneseTextDispatchJump
                 subq.w  #1,(word_FF0180).l
 ; Jump table dispatcher for Japanese text rendering

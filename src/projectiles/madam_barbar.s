@@ -19,7 +19,7 @@ Projectile_MadamBarbarDebrisInitializeType160:          ; CODE XREF: Projectile_
 ; ---------------------------------------------------------------------------
 Projectile_MadamBarbarDebrisUpdateActive:               ; CODE XREF: Projectile_MadamBarbarDebris+A   j  ; was: loc_3AE78
                 bclr    #3,$E(a5)
-                btst    #2,(word_FFA000+1).w
+                btst    #2,(FrameCounter+1).w
                 bne.s   Projectile_MadamBarbarDebrisDispatchMotionState
                 bset    #3,$E(a5)
 Projectile_MadamBarbarDebrisDispatchMotionState:        ; CODE XREF: Projectile_MadamBarbarDebris+4E   j  ; was: loc_3AE8C
@@ -187,7 +187,7 @@ Boss_MadamBarbarSpawnObjectReturn:                      ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarSpawnAnimationEffect
 ; Spawn falling projectile from Madam Barbar boss
 Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamBarbarSelectAttackState+244   p  ; was: sub_3B068
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_MadamBarbarSpawnObjectReturn
                 jsr     (Projectile_FindFreePrimarySlot).l

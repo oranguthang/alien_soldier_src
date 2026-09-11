@@ -52,7 +52,7 @@ UI_CalculateReticlePosition:                            ; CODE XREF: Weapon_Conf
                 add.w   $10(a0),d2
                 move.w  d2,d3
                 movea.w #(dword_FFA100-M68K_RAM),a1
-                move.w  (word_FFA000).w,d4
+                move.w  (FrameCounter).w,d4
                 andi.w  #7,d4
                 asl.w   #1,d4
                 neg.w   d4

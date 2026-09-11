@@ -350,7 +350,7 @@ Player_HandleSpecialAttack_CancelToFall:                ; CODE XREF: Player_Hand
 ; ---------------------------------------------------------------------------
 Player_HandleSpecialAttack_SelectFrame:                 ; CODE XREF: Player_HandleSpecialAttack+6E   j  ; was: loc_16056
                 movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Player_HandleSpecialAttack_Render
                 movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_HandleSpecialAttack_Render:                      ; CODE XREF: Player_HandleSpecialAttack+9E   j  ; was: loc_1606A

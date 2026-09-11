@@ -73,9 +73,9 @@ Boss_ShieldViperRunFinalDefeatPaletteFade:              ; DATA XREF: ROM:0004E05
                 move.w  #$E000,d7
                 lea     (PaletteActiveBuffer).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_ShieldViperFinalDefeatPaletteFadeReturn
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Boss_ShieldViperFinalDefeatPaletteFadeReturn
                 addq.w  #1,$48(a5)
                 cmpi.w  #$E,$48(a5)
@@ -286,7 +286,7 @@ Projectile_ShieldViperPatternShotActivationWaitReturn:  ; CODE XREF: Projectile_
 ; Rotate and blink the pattern shot for sixteen frames before loading its velocity
 Projectile_ShieldViperBlinkPatternShotBeforeLaunch:     ; DATA XREF: ROM:0004EF6C   o  ; was: sub_4EFA4
                 bsr.w   Gfx_ShieldViperUpdateCurrentPatternShotAngularMapping
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.s   Projectile_ShieldViperShowPatternShotDuringBlink
                 bclr    #7,2(a5)
                 bra.s   Projectile_ShieldViperContinuePatternShotLaunchDelay
@@ -411,9 +411,9 @@ Projectile_InitShieldViperOrbitShot:                    ; CODE XREF: Boss_Shield
                 move.w  #$28,$26(a0)                    ; '('
                 move.w  #$10,$48(a0)
                 clr.w   $C(a0)
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Projectile_ShieldViperOrbitShotInitializationReturn
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_ShieldViperOrbitShotInitializationReturn
                 move.b  #$58,d0                         ; 'X'
                 jsr     (Sound_PlaySFX).l

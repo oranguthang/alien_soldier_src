@@ -42,7 +42,7 @@ Enemy_UpdateGroundCollision:                            ; CODE XREF: Enemy_MainS
 ; Toggles sprite visibility flag
 Enemy_ToggleSpriteVisibility:                           ; CODE XREF: Enemy_UpdateBouncingDebrisSpawner   p  ; was: sub_2CF70
                                         ; sub_2DEFE   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #1,d0
                 beq.s   Enemy_ToggleSpriteVisibility_Set
                 andi.w  #$7FFF,2(a5)

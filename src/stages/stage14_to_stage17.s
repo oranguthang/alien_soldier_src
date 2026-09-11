@@ -54,7 +54,7 @@ Stage_ScrollCheckTransition:                            ; DATA XREF: ROM:0000D9A
                 bmi.w   Stage_Stage10CheckTransition_Return
                 bclr    #0,(byte_FF80F8).w
                 move.w  #$FFE4,(dword_FF8066+2).w
-                move.w  #6,(word_FF8222).w
+                move.w  #6,(PaletteSecondaryIndex).w
                 bra.w   Stage_TransitionToNextPhase
 ; End of function Stage_ScrollCheckTransition
 ; Transitions to Sunset Sting boss
@@ -148,7 +148,7 @@ Stage_ViblackPostBattleScroll2:                         ; DATA XREF: ROM:0000D9B
                 bset    #1,(byte_FF80F8).w
                 move.l  (dword_FF8062+2).w,d0
                 add.l   d0,(dword_FFA904).w
-                move.w  #5,(word_FF8218).w
+                move.w  #5,(PaletteEffectControl).w
                 subq.w  #1,(dword_FF806A).w
                 cmpi.w  #$FFF2,(dword_FF806A).w
                 bpl.s   loc_E028

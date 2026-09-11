@@ -60,7 +60,7 @@ Boss_DestroyerProtoStates:  dc.w    Boss_DestroyerProtoIntroInit-*  ; DATA XREF:
 
 ; Cycles two arena-effect words every fourth tick
 Boss_DestroyerProtoCycleArenaEffect:                    ; CODE XREF: Boss_DestroyerProtoMain+6   p  ; was: sub_31540
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Entity_UpdateReturn
                 move.w  (dword_FF9400).w,d0

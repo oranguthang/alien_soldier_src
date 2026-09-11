@@ -34,7 +34,7 @@ Projectile_UpdateValkirieBullet:                        ; DATA XREF: ROM:Entity_
 ; ---------------------------------------------------------------------------
 Projectile_UpdateValkirieBulletVisibility:              ; CODE XREF: Projectile_UpdateValkirieBullet+4   j  ; was: loc_2A0A0
                 bset    #7,2(a5)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #1,d0
                 move.w  $4A(a5),d1
                 eor.w   d0,d1
@@ -85,7 +85,7 @@ Projectile_UpdateType424VisibilityReturn:               ; CODE XREF: Projectile_
 Gfx_AnimateWolfGaropaOrb:                               ; was: sub_2A126
                 movea.w a5,a0
 Gfx_AnimateWolfGaropaOrbAtA0:                           ; CODE XREF: Boss_WolfGaropaUpdateOrbPositionAndFrame+68   p  ; was: loc_2A128
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #2,d0
                 andi.w  #$C,d0
                 move.w  WolfGaropa_OrbAnimationFrames(pc,d0.w),$E(a0)
@@ -126,7 +126,7 @@ Projectile_UpdateDirectionalSpawner:                    ; DATA XREF: ROM:Entity_
                 subq.w  #1,$48(a5)
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Projectile_UpdateDirectionalSpawnerDelayReturn
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_UpdateDirectionalSpawnerDelayReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -168,7 +168,7 @@ Projectile_AccelerateDirectionalSpawnerUpward:          ; CODE XREF: Projectile_
                 subi.l  #$2000,$1C(a5)
 Projectile_SpawnDirectionalSpawnerTrail:                ; CODE XREF: Projectile_UpdateDirectionalSpawner+66   j  ; was: loc_2A234
                                         ; Projectile_UpdateDirectionalSpawner+76   j
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_UpdateDirectionalSpawnerReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Projectile_UpdateDirectionalSpawnerReturn

@@ -105,7 +105,7 @@ Projectile_Epsilon1EmitSpreadCloneReturn:               ; CODE XREF: Projectile_
 ; End of function Projectile_Epsilon1EmitSpreadCloneState
 ; Selects the spread projectile art from the global animation phase
 Projectile_Epsilon1AnimateSpreadProjectileState:        ; DATA XREF: ROM:0004719C   o  ; was: sub_47220
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 beq.s   Projectile_Epsilon1AnimateSpreadProjectileReturn
                 cmpi.w  #1,d0
@@ -545,7 +545,7 @@ Boss_Epsilon1UpdateRingObjectDefeatFallState:           ; DATA XREF: ROM:0004750
                 rts
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1SpawnRingObjectDefeatDebris:               ; CODE XREF: Boss_Epsilon1UpdateRingObjectDefeatFallState+8   j
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_Epsilon1UpdateRingObjectDefeatFallReturn
                 jsr     (Projectile_FindFreePrimarySlot).l

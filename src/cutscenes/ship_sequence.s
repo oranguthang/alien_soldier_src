@@ -15,7 +15,7 @@ off_8708:       dc.w    Cutscene_InitShipData-*         ; DATA XREF: Cutscene_Sh
 ; Updates ship palette based on game state flag
 Cutscene_UpdateShipPaletteAlt:                          ; CODE XREF: Cutscene_ShipObjectDispatcher+A   p  ; was: sub_870C
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   loc_8760
                 movea.w #(PaletteShadowBuffer-M68K_RAM),a1
                 move.w  $64(a1),$64(a0)
@@ -383,7 +383,7 @@ Cutscene_ShipFadeTransition:                            ; DATA XREF: ROM:0000882
                 move.w  #$F,d5
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   locret_514E
                 subq.w  #2,(word_FF0168).l

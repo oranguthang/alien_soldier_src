@@ -165,7 +165,7 @@ Boss_BackStringerOpeningPoseState:                      ; DATA XREF: ROM:0004471
                 move.w  #2,(word_FFA010).w
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_BackStringerStartOpeningDelay
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 addi.w  #8,d0
                 move.w  d0,$B4(a5)
@@ -438,7 +438,7 @@ Boss_BackStringerCheckTransformationContraction:        ; CODE XREF: Boss_BackSt
                                         ; Boss_BackStringerTransformationState+34C   j
                 cmpi.w  #2,$29C(a5)
                 bne.s   Boss_BackStringerAnimateTransformationAndRender
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_BackStringerAnimateTransformationAndRender
                 subq.w  #1,$B4(a5)
                 subq.w  #1,$114(a5)

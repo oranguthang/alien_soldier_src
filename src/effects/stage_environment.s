@@ -7,7 +7,7 @@ TerrainTileAnimation_EvenFrameHandler:                  ; DATA XREF: ROM:Entity_
 TerrainTileAnimation_OddFrameHandler:                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F39A
                 move.w  #1,d0
 TerrainTileAnimation_SetFramePhase:                     ; CODE XREF: TerrainTileAnimation_EvenFrameHandler+2   j  ; was: loc_2F39E
-                move.w  (word_FFA000).w,d1
+                move.w  (FrameCounter).w,d1
                 andi.w  #1,d1
                 eor.w   d0,d1
                 move.w  d1,$48(a5)

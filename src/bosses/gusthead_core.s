@@ -11,7 +11,7 @@ Boss_GustheadMainWrapper:                               ; DATA XREF: ROM:Entity_
 Boss_GustheadMain:                                      ; CODE XREF: Boss_GustheadMainWrapper   p  ; was: sub_3F1A4
                 tst.w   4(a5)
                 beq.w   Boss_GustheadDispatchState
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_GustheadAfterRootMappingToggle
                 addq.w  #4,$58(a5)
@@ -194,7 +194,7 @@ Boss_GustheadStartIntro:                                ; DATA XREF: ROM:0003F25
 ; End of function Boss_GustheadStartIntro
 ; Intro flicker animation
 Boss_GustheadIntroFlicker:                              ; DATA XREF: ROM:0003F252   o  ; was: sub_3F3D4
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_GustheadIntroFlickerCountDown
                 eori.w  #$8000,2(a5)
@@ -208,7 +208,7 @@ Boss_GustheadIntroFlickerReturn:                        ; CODE XREF: Boss_Gusthe
 ; End of function Boss_GustheadIntroFlicker
 ; Reveals boss with tentacle setup
 Boss_GustheadIntroReveal:                               ; DATA XREF: ROM:0003F254   o  ; was: sub_3F3F6
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #1,d0
                 bne.s   Boss_GustheadIntroRevealCountDown
                 eori.w  #$8000,2(a5)

@@ -1,7 +1,7 @@
 Stage_InitStage10:                                      ; DATA XREF: ROM:0000FF3A   o  ; was: sub_D90E
                 cmpi.w  #$40,(word_FFA950).w            ; '@'
                 bpl.s   Stage_DispatchStage10Handler
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Stage_DispatchStage10Handler
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 movea.w a0,a1

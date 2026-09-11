@@ -3192,3 +3192,29 @@ four RAM fields: the BCD prefix byte, BCD addend, score, and PRNG state. It adds
 seven provenance mappings and eight static audit records, raising the totals
 from 12,196 to 12,203 and from 8,685 to 8,693. The enforced address-derived
 ceiling falls from 3,845 to 3,838; module count remains 349.
+
+The palette-effect audit reconstructs the complete 272-line
+`rendering/palette_effects.s` module as two per-frame dispatchers and their
+stage/boss color handlers. The primary selector indexes ten slots for shared
+animation, the Stage 2 blink, lightning, Epsilon-1, midgame, Shield Viper,
+three-highlight, and Wolf Garopa effects. The secondary selector indexes a
+paired-list RGB adjustment and two midgame fade variants. Every dispatched
+target writes active or shadow palette RAM; none manipulates camera scroll or
+loads graphics.
+
+Static data flow therefore rejects several generated semantic claims. The
+former `Stage_SetScrollOffset` only alternates one palette color, and the
+former `Scroll_AnimateOffset` implements the timed lightning flash. The
+former Shield Viper and Wolf Garopa `LoadTiles` entries never access the VDP
+or tile data; they animate fixed palette entries. The broad Sega-branded
+handler is narrowed to the three highlight colors it actually toggles. The
+two consecutive counted lists assigned by the Stage 8/9 lightning flows also
+establish the exact paired-list contract without guessing a visual owner for
+the shared primitive.
+
+This package replaces all 27 live address-derived ROM definitions in
+`rendering/palette_effects.s` and promotes five RAM fields: the global frame
+counter and four palette-effect controls. It adds 27 provenance mappings and
+44 static audit records, raising the totals from 12,203 to 12,230 and from
+8,693 to 8,737. The enforced address-derived ceiling falls from 3,838 to
+3,811; module count remains 349.

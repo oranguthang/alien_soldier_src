@@ -75,7 +75,7 @@ loc_491C:                                               ; CODE XREF: Sys_StorySc
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Gfx_SetupScrollPlanes).l
-                addq.w  #1,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
                 rts
 ; End of function Sys_StoryScreenMainLoop
 ; Dispatches story screen state machine based on timer

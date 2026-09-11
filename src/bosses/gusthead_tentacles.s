@@ -40,12 +40,12 @@ Boss_GustheadSpawnScrollingDebris:                      ; CODE XREF: Boss_Gusthe
                                         ; Boss_GustheadWaitForMiddleJointZeroState+C   p
                 tst.l   (dword_FF9428).w
                 beq.w   Boss_GustheadUpdateSegmentPositionsReturn
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Boss_GustheadUpdateSegmentPositionsReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Boss_GustheadUpdateSegmentPositionsReturn
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_GustheadSpawnScrollingDebrisObject
                 move.w  #$D1,d0
@@ -111,7 +111,7 @@ Enemy_GustheadDebrisRemove:                             ; CODE XREF: Enemy_Gusth
 ; End of function Enemy_GustheadDebrisMain
 ; Spawns falling debris at the arena edge selected by scroll direction
 Boss_GustheadSpawnEdgeDebris:                           ; CODE XREF: Boss_GustheadWaitForMiddleJointZeroState+18   p  ; was: sub_4028E
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.s   Boss_GustheadSpawnEdgeDebrisReturn
                 tst.l   (dword_FF8240).w

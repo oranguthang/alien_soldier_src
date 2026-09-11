@@ -142,7 +142,7 @@ Boss_SnakeBattleStateReturn:                            ; CODE XREF: Boss_SnakeB
 ; End of function Boss_SnakeBattleState
 ; Periodically advances the head-target pattern
 Boss_SnakeSelectTargetPosition:                         ; CODE XREF: Boss_SnakeBattleState+4   p  ; was: sub_4098C
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$7F,d0
                 bne.s   Boss_SnakeLoadTargetPosition
                 addq.w  #1,$52(a5)
@@ -168,7 +168,7 @@ Boss_SnakeTargetYPositions: dc.w    $150, $140, $150, $140, $F0  ; was: word_409
 
 ; Randomizes the horizontal and vertical movement amplitudes
 Boss_SnakeRandomizeMotionAmplitudes:                    ; CODE XREF: Boss_SnakeBattleState+8   p  ; was: sub_409F0
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_SnakeRandomizeMotionAmplitudesReturn
                 move.b  (RandomNumberState).w,d0
@@ -303,7 +303,7 @@ Boss_SnakeSegmentFireState:                             ; DATA XREF: ROM:Boss_Sn
                 bsr.s   Boss_SnakeConfigureShot
                 move.w  #8,$48(a5)
                 addq.w  #2,4(a5)
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Boss_SnakeSegmentFireReturn
                 move.b  #$4C,d0                         ; 'L'
@@ -353,7 +353,7 @@ Boss_SnakeShotMappingChoices:   dc.l    off_1A0E96      ; DATA XREF: Boss_SnakeC
 ; Turns toward the target and derives signed axis velocities
 Boss_SnakeSteerTowardTarget:                            ; CODE XREF: Boss_SnakeBeginEncounterState   p  ; was: sub_40BFC
                                         ; Boss_SnakeBattleState   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_SnakeApplyTurnAndVelocity
                 move.w  (dword_FF9404+2).w,d0
@@ -395,7 +395,7 @@ Boss_SnakeApplyTurnAndVelocity:                         ; CODE XREF: Boss_SnakeS
 ; Advances the shared thirty-step segment animation
 Boss_SnakeAdvanceAnimation:                             ; CODE XREF: Boss_SnakeMain+96   p  ; was: sub_40C82
                                         ; Boss_SnakeSegmentMain   p
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #1,d7
                 bne.s   Boss_SnakeAdvanceAnimationReturn
                 addq.w  #1,$54(a5)

@@ -37,7 +37,7 @@ Player_InitAirRecovery_Finish:                          ; CODE XREF: Player_Spec
 ; Renders the recovery pose with or without the weapon overlay
 Player_RenderSpecialMoveRecovery:                       ; CODE XREF: Player_SpecialMoveRecoveryState+4E   j  ; was: sub_16116
                 movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Player_RenderSpecialMoveRecovery_SelectVariant
                 movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_RenderSpecialMoveRecovery_SelectVariant:         ; CODE XREF: Player_RenderSpecialMoveRecovery+C   j  ; was: loc_1612A
@@ -110,7 +110,7 @@ Player_AlternateSpecialState:                           ; DATA XREF: ROM:000150B
                 bsr.w   Player_AutoFlipDirection
 Player_AlternateSpecialState_Render:                    ; CODE XREF: Player_AlternateSpecialState+3C   j  ; was: loc_161EE
                 movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Player_AlternateSpecialState_SelectFrame
                 movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_AlternateSpecialState_SelectFrame:               ; CODE XREF: Player_AlternateSpecialState+54   j  ; was: loc_16202
@@ -180,7 +180,7 @@ Player_InitKnockbackState:                              ; CODE XREF: Player_Upda
                 move.w  #$C,$48(a5)
                 tst.w   $5E(a5)
                 bpl.s   Player_InitKnockbackState_SetAlternateVerticalVelocity
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Player_InitKnockbackState_SetDefaultVelocity
                 move.b  #$19,d0

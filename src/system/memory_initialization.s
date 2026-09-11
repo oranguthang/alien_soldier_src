@@ -52,7 +52,7 @@ Sys_ClearObjectRAM_Loop:                                ; CODE XREF: Sys_ClearOb
 ; Clears sprite buffer areas
 Sys_ClearSpriteBuffers:                                 ; CODE XREF: Sys_InitFullGame+20   p  ; was: sub_2F08
                                         ; Sys_InitGameMode+1C   p
-                lea     (word_FFA000).w,a0
+                lea     (FrameCounter).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
 Sys_ClearSpriteBuffers_FirstLoop:                       ; CODE XREF: Sys_ClearSpriteBuffers+12   j  ; was: loc_2F12

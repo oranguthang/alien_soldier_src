@@ -83,7 +83,7 @@ Boss_JokerBuildBodyHeightRasterValuesNextPair:          ; CODE XREF: Boss_JokerR
                 movea.w #(dword_FF9610-M68K_RAM),a1
                 lea     Boss_JokerCyclingTileWords(pc),a2
                 nop
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$1C,d0
                 move.w  (a2,d0.w),d1
                 move.w  2(a2,d0.w),d2
@@ -101,13 +101,13 @@ Boss_JokerBuildBodyHeightRasterValuesNextPair:          ; CODE XREF: Boss_JokerR
                 addi.w  #$800,d4
                 move.w  d4,4(a1)
                 move.w  d3,6(a1)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_JokerUpdateSecondaryTileFrameIndex
                 eori.w  #1,$29E(a5)
 Boss_JokerUpdateSecondaryTileFrameIndex:                ; CODE XREF: Boss_JokerRenderBody+14E   j  ; was: loc_3BB70
                 move.w  $29C(a5),d0
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_JokerApplySecondaryTileFrame
                 tst.w   $29E(a5)
                 bne.w   Boss_JokerIncreaseSecondaryTileFrameIndex
@@ -395,7 +395,7 @@ Projectile_JokerDescendingShotEmitterUpdatePreShotJitter:  ; CODE XREF: Projecti
                 cmpi.w  #$30,$48(a5)                    ; '0'
                 bpl.s   Projectile_JokerDescendingShotEmitterReturn
                 move.w  #$F7F8,$A(a5)
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Projectile_JokerDescendingShotEmitterReturn
                 move.w  #$F9F8,$A(a5)
                 rts

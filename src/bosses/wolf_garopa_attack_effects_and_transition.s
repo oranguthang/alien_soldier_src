@@ -159,13 +159,13 @@ Boss_WolfGaropaClampDefeatFadeStep:                     ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaAdvanceDefeatPaletteFade:                ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+40   j  ; was: loc_50EBA
                 jsr     (Gfx_UpdatePaletteFade).l
 Boss_WolfGaropaEmitDefeatDebris:                        ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+58   j  ; was: loc_50EC0
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_WolfGaropaTrySpawnDefeatDebris
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
 Boss_WolfGaropaTrySpawnDefeatDebris:                    ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+6A   j  ; was: loc_50ED4
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_WolfGaropaDefeatTransitionReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_WolfGaropaDefeatTransitionReturn
@@ -186,7 +186,7 @@ Boss_WolfGaropaTrySpawnDefeatDebris:                    ; CODE XREF: Boss_WolfGa
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
 Boss_WolfGaropaInitializeDefeatDebris:                  ; CODE XREF: Boss_WolfGaropaUpdateDefeatTransition+BE   j  ; was: loc_50F26
                 jsr     (Projectile_InitType88).l
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 subi.w  #8,d0
                 move.w  d0,$18(a0)

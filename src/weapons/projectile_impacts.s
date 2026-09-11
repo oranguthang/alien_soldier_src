@@ -189,7 +189,7 @@ Effect_UpdateImpactParticleSpawner_SetVelocity:         ; CODE XREF: Effect_Upda
                 nop
                 move.l  (a1,d5.w),d0
                 move.l  $20(a1,d5.w),d1
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Effect_UpdateImpactParticleSpawner_ApplyDirection
                 neg.l   d0
                 neg.l   d1
@@ -253,7 +253,7 @@ Weapon_UpdateSeekingMissile_TickLifetime:               ; CODE XREF: Weapon_Upda
 ; ---------------------------------------------------------------------------
 Weapon_UpdateSeekingMissile_SelectTrackingSlot:         ; CODE XREF: Weapon_UpdateSeekingMissile+3A   j  ; was: loc_18DA2
                 move.w  a5,d0
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Weapon_UpdateSeekingMissile_CheckAlternateSlot
                 btst    #5,d0
                 beq.s   Weapon_UpdateSeekingMissile_SelectTargetAngle
@@ -339,7 +339,7 @@ Weapon_SeekingMissileTiles: dc.w    $45A0, $45A0, $45A4, $45AD, $45AD, $45B6, $4
 ; Matches sprite position and properties to parent sprite
 Effect_UpdateCompanionFromParent:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18E92
                 movea.w a5,a0
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Effect_UpdateCompanionFromAlternateParent
                 suba.w  #$300,a0
                 bra.s   Effect_UpdateCompanion_CheckParent
@@ -550,7 +550,7 @@ Effect_SpawnPlayerDeathSpark_Initialize:                ; CODE XREF: Effect_Spaw
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #5,d0
                 andi.w  #$1FE,d0
                 move.w  (a1,d0.w),d2
@@ -610,7 +610,7 @@ Effect_InitPlayerMotionProjectile_SpawnChild:           ; CODE XREF: Effect_Init
                 jsr     (Sprite_InitType160).l
                 move.b  $20(a5),$20(a0)
                 lea     (Math_SineTable).l,a1
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #5,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
@@ -618,7 +618,7 @@ Effect_InitPlayerMotionProjectile_SpawnChild:           ; CODE XREF: Effect_Init
                 asl.l   #3,d1
                 move.l  d1,$1C(a0)
                 swap    d1
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Effect_InitPlayerMotionProjectile_ApplyFacing
                 neg.w   d1
                 neg.l   $1C(a0)

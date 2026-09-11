@@ -108,7 +108,7 @@ Player_UpdateInvulnerabilityTimer_Active:               ; CODE XREF: Player_Upda
                 bset    #4,$23(a5)
                 btst    #5,(byte_FF8244).w
                 bne.s   Player_UpdateInvulnerabilityTimer_Return
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.s   Player_UpdateInvulnerabilityTimer_Return
                 bclr    #7,2(a5)
 Player_UpdateInvulnerabilityTimer_Return:               ; CODE XREF: Player_UpdateInvulnerabilityTimer+18   j  ; was: locret_16C3E
@@ -142,7 +142,7 @@ Gfx_LoadPlayerPaletteData:                              ; CODE XREF: Player_Upda
                                         ; sub_19DAE   p
                 tst.w   (word_FF8304).w
                 bne.s   Gfx_LoadPlayerPaletteData_SelectVariantA
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 btst    #4,d0
                 bne.s   Gfx_LoadPlayerPaletteData_SelectVariantA
                 andi.w  #3,d0

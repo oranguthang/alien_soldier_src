@@ -174,7 +174,7 @@ Boss_MadamBarbarUpdateBulletBarrage:                    ; CODE XREF: Boss_MadamB
                 bsr.w   Boss_MadamBarbarUpdateParts
                 cmpi.w  #$38,$11C(a5)                   ; '8'
                 bpl.s   Boss_MadamBarbarBulletBarrageReturn
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Boss_MadamBarbarDisableAllPartFlag7
                 moveq   #7,d0
                 moveq   #$1C,d7
@@ -495,7 +495,7 @@ Boss_MadamBarbarOffsetPositiveXNegativeYGroupB:         ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarUpdateParts
 ; Applies the frame-indexed wobble offsets to the root object
 Boss_MadamBarbarUpdateWobble:                           ; CODE XREF: Boss_MadamBarbarSetupState+C6   p  ; was: sub_3AA86
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$F,d7
                 move.b  Boss_MadamBarbarWobbleOffsets(pc,d7.w),d0
                 addq.w  #8,d7
@@ -549,7 +549,7 @@ Boss_MadamBarbarUpdateRotationBounds:                   ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarUpdateRotationBounds
 ; Moves one rotation-control word between limits 8 and $20
 Boss_MadamBarbarUpdateRotationBound:                    ; CODE XREF: Boss_MadamBarbarUpdateRotationBounds+4   p  ; was: sub_3AB20
-                btst    #2,(word_FFA000+1).w
+                btst    #2,(FrameCounter+1).w
                 bne.s   Boss_MadamBarbarIncreaseRotationBound
                 subq.w  #8,(a0)
                 cmpi.w  #8,(a0)
@@ -783,7 +783,7 @@ Boss_MadamBarbarInitializePoseChannels:                 ; CODE XREF: Boss_MadamB
 ; Spawns debris projectiles with random velocity and trajectory
 Boss_MadamBarbarSpawnDebris:                            ; CODE XREF: Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarPlayerLeftSidePoseState   p  ; was: sub_3ADB0
                                         ; Boss_MadamBarbarSelectAttackState:Boss_MadamBarbarPlayerRightSidePoseState   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_MadamBarbarSpawnDebrisReturn
                 movea.w #(byte_FFD700-M68K_RAM),a0

@@ -5,7 +5,7 @@ Results_InitializeDisplay:                              ; CODE XREF: UI_Initiali
 ; Updates results screen with score and time display
 Results_UpdateAndDisplay:                               ; DATA XREF: ROM:0001D7D2   o  ; was: sub_1DC52
                 move.w  #$50,(dword_FFA90C).w           ; 'P'
-                addq.w  #1,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
                 bsr.w   Results_DisplayTime
                 bsr.w   Results_DisplayScore
                 jsr     (Gfx_SetupScrollPlanes).l
@@ -43,7 +43,7 @@ byte_1DCC4:     dc.b    $69, 0, $20, 0, $F, 0, 1, 2, 3, 4
 
 ; Handles results screen completion and button input
 Results_HandleCompletion:                               ; DATA XREF: ROM:0001D7D4   o  ; was: sub_1DCDA
-                addq.w  #1,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
                 jsr     (Results_CheckSkipButton).l
                 bsr.w   Results_DisplayTime
                 bsr.w   Results_DisplayScore
@@ -172,7 +172,7 @@ Results_DisplayTime:                                    ; CODE XREF: Results_Upd
                 moveq   #8,d7
                 cmpi.w  #$FFFF,(StageTimeRemaining).w
                 bne.s   loc_1DEC6
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   loc_1DEC6
                 move.w  #$8302,d1
 loc_1DEC6:                                              ; CODE XREF: Results_DisplayTime+14   j
@@ -188,7 +188,7 @@ Results_DisplayScore:                                   ; CODE XREF: Results_Upd
                 moveq   #8,d7
                 cmpi.w  #$FFFF,(StageTimeRemaining).w
                 bne.s   loc_1DEF2
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   loc_1DEF2
                 move.w  #$8302,d1
                 move.l  (dword_FFFF2C).w,d0
@@ -225,7 +225,7 @@ Results_DisplayBonus:                                   ; CODE XREF: Results_Ren
 ; End of function Results_DisplayBonus
 ; Main loop for results screen
 Results_MainLoop:                                       ; DATA XREF: Sys_DispatchGameState+DE   o  ; was: sub_1DF3A
-                addq.w  #1,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
                 tst.w   (GameSubstateIndex).w
                 bne.s   loc_1DF52
                 jsr     (Results_CheckSkipButton).l

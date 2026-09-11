@@ -415,7 +415,7 @@ Boss_SharpssteelStoreBladeGroupSizes:                   ; CODE XREF: Boss_Sharps
 ; Loads 3 palette colors based on frame counter
 Boss_SharpssteelUpdateFlashingPaletteColors:
                 moveq   #6,d0                           ; was: sub_4895E
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_SharpssteelSelectFlashingPaletteTriplet
                 moveq   #0,d0
 Boss_SharpssteelSelectFlashingPaletteTriplet:           ; CODE XREF: Boss_SharpssteelUpdateFlashingPaletteColors+8   j
@@ -439,7 +439,7 @@ Boss_SharpssteelUpdateBackgroundPaletteFade:            ; CODE XREF: Boss_Sharps
 Boss_SharpssteelSelectBackgroundFadeStep:               ; CODE XREF: Boss_SharpssteelUpdateBackgroundPaletteFade+4   j
                 move.w  $3BC(a5),d7
                 bne.s   Boss_SharpssteelApplyBackgroundFadeMode
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_SharpssteelApplyBackgroundFadeMode
                 moveq   #1,d7
 Boss_SharpssteelApplyBackgroundFadeMode:                ; CODE XREF: Boss_SharpssteelUpdateBackgroundPaletteFade+C   j

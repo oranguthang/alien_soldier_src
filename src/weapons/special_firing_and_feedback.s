@@ -120,7 +120,7 @@ Weapon_FireHomingShot:                                  ; DATA XREF: ROM:00017F2
                 move.w  #$E0,(word_FF8140).w
                 move.b  #$80,(byte_FF8142).w
                 move.b  #8,(byte_FF8143).w
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Weapon_FireHomingShot_Return
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
@@ -184,7 +184,7 @@ Weapon_SetHomingProjectileData:                         ; CODE XREF: Weapon_Fire
                 move.w  d0,$E(a0)
                 move.w  $10(a1,d6.w),8(a0)
                 move.w  $20(a1,d6.w),$A(a0)
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Weapon_FireHomingShot_SoundReturn
                 move.b  #$B3,d0
                 jmp     (Sound_PlaySFX).l
@@ -221,7 +221,7 @@ Weapon_CalculateOffsetPosition_ApplyFacing:             ; CODE XREF: Weapon_Calc
 ; Spawns random debris particle with velocity
 Effect_SpawnRandomDebris:                               ; CODE XREF: Weapon_FireProjectile+4   j  ; was: sub_18846
                                         ; Weapon_FireMultipleShots+4   j
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Effect_SpawnRandomDebris_Return
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
@@ -264,7 +264,7 @@ Effect_CreateDebrisParticle:                            ; CODE XREF: Effect_Spaw
                 move.l  d0,$1C(a0)
                 add.l   (dword_FF8240).w,d1
                 move.l  d1,$18(a0)
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Effect_CreateDebrisParticle_Return
                 move.b  #$D3,d0
                 jsr     (Sound_PlaySFX).l
@@ -311,7 +311,7 @@ Player_UpdateTargetSight:                               ; DATA XREF: ROM:Entity_
                 cmp.w   $48(a5),d0
                 bne.s   Player_UpdateTargetSight_Return
                 movea.w #(byte_FFC2C0-M68K_RAM),a0
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Player_UpdateTargetSight_ShowMarker
                 bclr    #7,2(a0)
                 rts

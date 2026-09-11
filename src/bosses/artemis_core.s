@@ -246,7 +246,7 @@ Boss_SelectArtemisStateEFollowup:                       ; CODE XREF: Boss_Update
                 move.w  #$1800,$11C(a5)
                 tst.w   (DifficultyMode).w
                 bne.s   Boss_CheckArtemisStateEAngleGate
-                move.w  (word_FFA000).w,d4
+                move.w  (FrameCounter).w,d4
                 andi.w  #7,d4
                 bne.s   Boss_SelectArtemisState10
 Boss_CheckArtemisStateEAngleGate:                       ; CODE XREF: Boss_UpdateArtemisStateE+38   j  ; was: loc_581D0

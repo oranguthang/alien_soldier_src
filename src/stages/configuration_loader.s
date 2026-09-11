@@ -116,8 +116,8 @@ Stage_LoadConfigData:                                   ; CODE XREF: Stage_LoadX
                 move.w  (a0)+,(word_FFA950).w
                 move.l  (a0)+,(dword_FFA20E).w
                 move.w  (a0)+,(word_FF8114).w
-                move.b  (a0)+,(word_FF8220+1).w
-                move.b  (a0)+,(word_FF8222+1).w
+                move.b  (a0)+,(PalettePrimaryIndex+1).w
+                move.b  (a0)+,(PaletteSecondaryIndex+1).w
                 move.w  (a0)+,(word_FF808A).w
                 move.w  (a0)+,(dword_FFA900).w
                 move.w  (a0)+,(dword_FFA904).w

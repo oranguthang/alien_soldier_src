@@ -233,7 +233,7 @@ Physics_StoreHorizontalVelocity:                        ; CODE XREF: Player_Dece
 ; Renders the player's unarmed idle frame with cycling offsets
 Player_RenderIdleFrame:                                 ; CODE XREF: Player_HandleJump+60   j  ; was: sub_16EC8
                                         ; Player_HandleGroundedState+1E   j
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #6,d0
                 move.b  Player_IdleFrameOffsets(pc,d0.w),d5
@@ -253,7 +253,7 @@ Player_RenderAirborneFrame:                             ; CODE XREF: Player_Hand
                 tst.w   $48(a5)
                 bpl.s   Player_RenderAirborneFrame_UseStaticOffsets
 Player_RenderAirborneFrame_UseAnimatedOffsets:          ; CODE XREF: Player_JumpApexState+12   j  ; was: loc_16EF8
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #6,d0
                 move.b  Player_AirborneFrameOffsets(pc,d0.w),d5

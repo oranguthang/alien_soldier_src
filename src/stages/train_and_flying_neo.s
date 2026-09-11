@@ -67,7 +67,7 @@ loc_CEB8:                                               ; CODE XREF: Stage_InitS
 ; Train scroll physics with velocity updates
 Stage_TrainScrollPhysics:                               ; CODE XREF: Stage_TrainToFlyingNeoTransition+4   p  ; was: sub_CEBC
                                         ; Stage_FlyingNeoScrollUpdate+24   j
-                move.l  #word_D84A,(dword_FF821A).w
+                move.l  #word_D84A,(PaletteEntryLists).w
                 bsr.w   Effect_SpawnRandomLightning
                 bsr.w   Stage_TrainParallaxCalc
                 tst.w   (dword_FFA960).w
@@ -100,7 +100,7 @@ Stage_TrainParallaxCalc:                                ; CODE XREF: Stage_Train
                 subi.w  #$10,(word_FF8A0C).w
                 subi.w  #$13,(word_FF8A10).w
                 move.w  #$C,d6
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #2,d0
                 movea.w #(word_FF8A04-M68K_RAM),a0
                 and.w   d6,d0
@@ -184,7 +184,7 @@ Stage_UpdateVerticalScroll:                             ; CODE XREF: Stage_Flyin
                 add.l   d0,(dword_FFA904).w
                 bsr.w   Scroll_UpdateCameraPositions
                 bsr.w   Stage_TrainParallaxCalc
-                move.l  #word_D864,(dword_FF821A).w
+                move.l  #word_D864,(PaletteEntryLists).w
                 bsr.w   Effect_SpawnRandomLightning
                 rts
 ; End of function Stage_FlyingNeoVerticalScroll
@@ -200,7 +200,7 @@ Stage_FlyingNeoBattleStart:                             ; DATA XREF: ROM:0000C8A
                 bsr.w   Stage_FlyingNeoInitBoss
 loc_D040:                                               ; CODE XREF: Stage_FlyingNeoBattleStart+4   j
                                         ; Stage_FlyingNeoBattleUpdate+4   j
-                move.l  #word_D864,(dword_FF821A).w
+                move.l  #word_D864,(PaletteEntryLists).w
                 bsr.w   Effect_SpawnRandomLightning
                 move.w  (dword_FFA900).w,(dword_FFA908).w
                 move.w  (dword_FFA904).w,(dword_FFA90C).w

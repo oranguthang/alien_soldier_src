@@ -99,7 +99,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 clr.w   (GameSubstateIndex).w
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                clr.w   (word_FFA000).w
+                clr.w   (FrameCounter).w
                 rts
 ; End of function Credits_InitXiTiger
 ; ---------------------------------------------------------------------------
@@ -132,7 +132,7 @@ Credits_MainLoop:                                       ; DATA XREF: Sys_Dispatc
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Gfx_SetupScrollPlanes).l
-                addq.w  #1,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
                 rts
 ; End of function Credits_MainLoop
 ; Dispatches to current credits state handler based on state index
@@ -156,7 +156,7 @@ Credits_StateHandlers:  dc.w    Credits_FadeInState-*   ; DATA XREF: Credits_Sta
 Credits_FadeInState:                                    ; DATA XREF: ROM:Credits_StateHandlers   o  ; was: sub_20BCE
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 nop
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 cmpi.w  #$80,d0
                 bcs.w   Credits_StateReturn
                 andi.w  #$F,d0
@@ -185,7 +185,7 @@ Credits_ScrollWithColorCycle:                           ; DATA XREF: ROM:00020BC
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 nop
                 bsr.w   Credits_CyclePaletteColors
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 cmpi.w  #$11C0,d0
                 bcs.w   Credits_StateReturn
                 andi.w  #$F,d0
@@ -292,7 +292,7 @@ Credits_FadeOutAndClearVRAM:                            ; DATA XREF: ROM:00020BC
                 jsr     (UI_SelectionMenuDispatcher).l
                 bsr.w   Credits_HandleXiTigerMusicCues
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Credits_StateReturn
                 subq.w  #2,(word_FF0176).l
@@ -332,7 +332,7 @@ Credits_FadeOutAndClearVRAM_PlaneBLoop:                 ; CODE XREF: Credits_Fad
 Credits_FadeInFromBlack:                                ; DATA XREF: ROM:00020BC8   o  ; was: sub_20E1A
                 jsr     (UI_SelectionMenuDispatcher).l
                 bsr.w   Credits_HandleXiTigerMusicCues
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Credits_StateReturn
                 addq.w  #2,(word_FF0176).l
@@ -554,7 +554,7 @@ Credits_PrepareSpecialScenePalette:                     ; DATA XREF: ROM:00020F1
 ; Fades out the rolling credits and loads the treasure scene
 Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F18   o  ; was: sub_2130A
                 subq.w  #1,(word_FF018E).l
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Credits_StateReturn
                 subq.w  #2,(word_FF0176).l
@@ -598,7 +598,7 @@ Credits_WaitForSpecialSceneActivation:                  ; DATA XREF: ROM:00020F1
 Credits_FadeInSpecialScene:                             ; DATA XREF: ROM:00020F1C   o  ; was: sub_213B0
                                         ; ROM:00020F24   o
                 subq.w  #1,(word_FF018E).l
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Credits_StateReturn
                 addq.w  #2,(word_FF0176).l
@@ -615,7 +615,7 @@ Credits_FadeInSpecialScene:                             ; DATA XREF: ROM:00020F1
 ; Fades out the treasure scene and loads the SEGA presentation
 Credits_LoadSegaScene:                                  ; DATA XREF: ROM:00020F20   o  ; was: sub_213F2
                 subq.w  #1,(word_FF018E).l
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Credits_StateReturn
                 subq.w  #2,(word_FF0176).l

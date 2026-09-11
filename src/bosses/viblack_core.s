@@ -93,7 +93,7 @@ Boss_ViblackInit:                                       ; DATA XREF: Boss_Viblac
                 move.b  #4,(VDPReg11Shadow+1).w
                 move.b  #8,(byte_FFA95A).w
                 move.b  #$20,(byte_FFA95B).w            ; ' '
-                move.w  #1,(word_FF8218).w
+                move.w  #1,(PaletteEffectControl).w
                 move.w  #$30,$48(a5)                    ; '0'
                 move.b  #6,(byte_FF80EC).w
 ; Sets up intro graphics and position
@@ -258,7 +258,7 @@ Boss_ViblackRadialShotAttackState:                      ; DATA XREF: ROM:000439E
                 bmi.w   Boss_ViblackSelectNextAttackTarget
                 cmpi.w  #$20,$48(a5)                    ; ' '
                 bmi.w   Boss_ViblackStateReturn
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Boss_ViblackStateReturn
                 lea     Boss_ViblackShotAngleSequence(pc),a1
                 nop

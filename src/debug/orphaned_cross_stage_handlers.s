@@ -30,7 +30,7 @@ OrphanedTerrainTileAnimationInit:                       ; DATA XREF: OrphanedCro
                 ori.w   #$8000,2(a5)
                 move.w  #$500,8(a5)
                 move.w  #$F8F8,$A(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   OrphanedTerrainTileUseAlternateTile
                 move.w  #$C4AC,$E(a5)
                 bra.s   OrphanedTerrainTileStoreDescriptor

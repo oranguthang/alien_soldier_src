@@ -172,7 +172,7 @@ Debug_SevenForcesScrollTableTestAccumulateOffsets:      ; CODE XREF: Debug_Seven
                 move.l  (dword_FF9430).w,d4
                 move.l  (dword_FF9424).w,d5
                 move.l  (dword_FF9434).w,d6
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Debug_SevenForcesScrollTableTestBuildTables
                 move.l  (dword_FF9428).w,d3
                 move.l  (dword_FF9438).w,d4
@@ -248,7 +248,7 @@ Debug_SevenForcesScrollTableTestBuildSecondaryLoop:     ; CODE XREF: Debug_Seven
                 move.l  #$94009320,d4
                 jsr     (VDP_QueueCommand_Build).l
                 move.w  #0,(word_FFE318).w
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Debug_SevenForcesScrollTableTestWriteAlternateMarkers
                 move.w  #$FCCC,(word_FF9608).w
                 move.w  #$ECCC,(word_FF961A).w
@@ -390,7 +390,7 @@ Entity_SevenForcesMedusaHoldApplyPalette:               ; CODE XREF: Entity_Seve
 ; End of function Entity_SevenForcesMedusaHoldState14
 ; State $16: advance Medusa's fade value on alternate frames, then reset
 Entity_SevenForcesMedusaFadeOutState16:                 ; DATA XREF: ROM:00054BAE   o  ; was: sub_5507A
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 addq.w  #1,$5E(a5)
                 beq.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
@@ -444,7 +444,7 @@ Entity_SevenForcesWaitForSylpheedScrollApplyPalette:    ; CODE XREF: Entity_Seve
 ; End of function Entity_SevenForcesWaitForSylpheedScrollState1E
 ; State $20: advance Sylpheed's fade value on alternate frames, then reset
 Entity_SevenForcesSylpheedFadeOutState20:               ; DATA XREF: ROM:00054BB8   o  ; was: sub_5511C
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 addq.w  #1,$5E(a5)
                 beq.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
@@ -517,7 +517,7 @@ Entity_SevenForcesArtemisFadeOutUpdateTimer:            ; CODE XREF: Entity_Seve
 Entity_SevenForcesArtemisFadeOutApplyPalette:           ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+1E   j  ; was: loc_5521E
                 bpl.w   Gfx_UpdateSevenForcesArtemisPaletteFade
 Entity_SevenForcesArtemisFadeOutCheckReset:             ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+26   j  ; was: loc_55222
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.w   Gfx_UpdateSevenForcesArtemisPaletteFade
                 addq.w  #1,$5E(a5)
                 beq.w   Gfx_UpdateSevenForcesArtemisPaletteFade

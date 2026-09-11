@@ -247,7 +247,7 @@ Effect_UpdateScrollPosition:                            ; CODE XREF: Boss_Defeat
                 subi.w  #$40,d0                         ; '@'
                 bpl.s   Effect_UpdateScrollPosition_SelectPattern
                 move.w  #$EEE,d0
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Effect_UpdateScrollPosition_StoreInitialPattern
                 btst    #0,(RandomNumberState).w
                 bne.s   Effect_UpdateScrollPosition_StoreInitialPattern

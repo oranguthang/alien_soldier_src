@@ -96,8 +96,8 @@ loc_94B8:                                               ; CODE XREF: UI_HandleTi
                                         ; UI_HandleTitleInput+34   j
                 andi.w  #6,d0
                 move.w  d0,(dword_FF8066+2).w
-                cmpi.w  #$780,(word_FFA000).w
-                cmpi.w  #$700,(word_FFA000).w
+                cmpi.w  #$780,(FrameCounter).w
+                cmpi.w  #$700,(FrameCounter).w
                 bne.s   loc_94DA
                 move.w  #1,(word_FFFF5A).w
                 clr.w   (word_FFFF5C).w
@@ -136,8 +136,8 @@ loc_952C:                                               ; CODE XREF: UI_HandleTi
 ; ---------------------------------------------------------------------------
 loc_9538:                                               ; CODE XREF: UI_HandleTitleInput+4   j
                                         ; UI_HandleTitleInput+68   j
-                addq.w  #1,(word_FFA000).w
-                cmpi.w  #$200,(word_FFA000).w
+                addq.w  #1,(FrameCounter).w
+                cmpi.w  #$200,(FrameCounter).w
                 bne.s   loc_954E
                 move.b  #$10,d0
                 jsr     (Sound_QueueRequest).l

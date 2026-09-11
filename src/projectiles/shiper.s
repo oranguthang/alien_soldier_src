@@ -2,7 +2,7 @@
 
 ; Spawns Shiper's oscillating shot at a frame-counter interval
 Boss_ShiperSpawnOscillatingShot:                        ; CODE XREF: Boss_ShiperUpdateAttackAndSpawnProjectile+26   p  ; was: sub_371E8
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.w   Boss_ShiperSpawnOscillatingShotReturn
                 movea.w #(byte_FFD700-M68K_RAM),a0

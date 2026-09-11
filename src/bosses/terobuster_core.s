@@ -16,7 +16,7 @@ Boss_TerobusterUpdatePartOscillation:                   ; CODE XREF: Boss_Terobu
                                         ; Boss_TerobusterMain+22   j
                 lea     Boss_TerobusterPartOscillation(pc),a0
                 nop
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #1,d0
                 andi.w  #6,d0
                 move.w  (a0,d0.w),$1DE(a5)
@@ -168,7 +168,7 @@ Boss_TerobusterDecisionTick:                            ; CODE XREF: Boss_Terobu
                 bra.s   Boss_TerobusterDecisionSelectAttack
 ; ---------------------------------------------------------------------------
 Boss_TerobusterDecisionCheckWorldPosition:              ; CODE XREF: Boss_TerobusterDecisionState+2E   j  ; was: loc_38732
-                btst    #7,(word_FFA000+1).w
+                btst    #7,(FrameCounter+1).w
                 beq.s   Boss_TerobusterDecisionSelectAttack
                 cmpi.w  #$1180,$BC(a5)
                 bmi.w   Boss_TerobusterBeginFallingRockAttack

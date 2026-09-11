@@ -397,7 +397,7 @@ Player_DampenSevenForcesVelocity:                       ; CODE XREF: Player_Seve
 Player_RenderSevenForcesBattleFrame:                    ; CODE XREF: Player_SevenForcesState0Render   j  ; was: sub_1A208
                                         ; Player_SevenForcesState2+36   j
                 movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Player_RenderSevenForcesBattleSelectOverlay
                 movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_RenderSevenForcesBattleSelectOverlay:            ; CODE XREF: Player_RenderSevenForcesBattleFrame+C   j  ; was: loc_1A21C
@@ -419,7 +419,7 @@ Player_RenderSevenForcesBattleWithWeapon:               ; CODE XREF: Player_Rend
 ; Render the fixed player frame used during state-4 transition
 Player_RenderSevenForcesTransitionFrame:                ; CODE XREF: Player_SevenForcesState4+E   j  ; was: sub_1A250
                 movea.l #Player_SpecialAttackSecondarySpriteMappingA,a2
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Player_RenderSevenForcesTransitionSelectFrame
                 movea.l #Player_SpecialAttackSecondarySpriteMappingB,a2
 Player_RenderSevenForcesTransitionSelectFrame:          ; CODE XREF: Player_RenderSevenForcesTransitionFrame+C   j  ; was: loc_1A264

@@ -64,7 +64,7 @@ Projectile_UpdateArtemisEmitterAnchorJitter:            ; CODE XREF: Projectile_
                 add.w   (word_FFD114).w,d0
                 move.w  d0,$14(a5)
                 bset    #7,2(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Projectile_SpawnArtemisRadialShot
                 bclr    #7,2(a5)
                 bra.w   Projectile_SpawnArtemisRadialShot
@@ -122,7 +122,7 @@ Projectile_InitArtemisEmitterEffect:                    ; CODE XREF: Projectile_
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
 Projectile_ReflectArtemisEmitter:                       ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+CE   j  ; was: loc_58B7C
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #1,d0
                 andi.w  #6,d0
                 move.w  Projectile_ArtemisEmitterSpriteAttributes(pc,d0.w),$E(a5)
@@ -142,7 +142,7 @@ Projectile_ArtemisEmitterSpriteAttributes:  dc.w    $4489, $4492, $449B, $4492  
 ; Spawn a projectile in a phase-selected radial direction from the emitter
 Projectile_SpawnArtemisRadialShot:                      ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+6E   j  ; was: sub_58BAA
                                         ; Projectile_UpdateArtemisRadialEmitter+78   j
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Projectile_SpawnArtemisRadialShotReturn
                 jsr     (Projectile_FindFreeSlot).l
@@ -168,7 +168,7 @@ Projectile_SpawnArtemisRadialShotReturn:                ; CODE XREF: Projectile_
                 rts
 ; Spawn a projectile with the emitter's velocity reversed
 Projectile_SpawnArtemisReflectedShot:                   ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+13E   j  ; was: sub_58C02
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_SpawnArtemisReflectedShotReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Projectile_SpawnArtemisReflectedShotReturn

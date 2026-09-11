@@ -30,7 +30,7 @@ loc_2B704:                                              ; CODE XREF: Boss_Jetsri
 loc_2B70E:                                              ; CODE XREF: Boss_JetsripperMain+4   j
                 btst    #0,$5F(a5)
                 beq.s   loc_2B72E
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #3,d0
                 move.b  byte_2B778(pc,d0.w),d0
@@ -78,7 +78,7 @@ Enemy_InitProjectileType:                               ; DATA XREF: ROM:Entity_
                 move.w  #$F8F8,$A(a5)
                 move.b  #$10,$20(a5)
 loc_2B7BA:                                              ; CODE XREF: Enemy_InitProjectileType+4   j
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #2,d0
                 andi.w  #3,d0
                 move.b  byte_2B808(pc,d0.w),d0

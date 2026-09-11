@@ -291,7 +291,7 @@ Player_DeathParticleLoop:                               ; CODE XREF: Player_Rend
                 bpl.s   Player_DeathParticleLoop
                 move.w  #$FFFF,(a1)+
                 jsr     (Sprite_AppendOAMEntries).l
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asl.w   #2,d0
                 andi.w  #$1C,d0
                 move.l  Player_DeathParticleAnimationFrames(pc,d0.w),8(a5)
@@ -337,7 +337,7 @@ Player_PrepareSpriteRendering_SelectFrame:              ; CODE XREF: Player_Prep
                 move.w  (a1,d1.w),d0
                 movea.l (a0,d0.w),a1
                 asl.w   #1,d0
-                move.w  (word_FFA000).w,d1
+                move.w  (FrameCounter).w,d1
                 andi.w  #6,d1
                 add.w   d1,d0
                 add.b   $14(a0,d0.w),d6

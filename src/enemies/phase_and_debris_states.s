@@ -168,7 +168,7 @@ Enemy_UpdateBouncingDebrisSpawner_SpawnParticle:        ; CODE XREF: Enemy_Updat
                                         ; Enemy_UpdateBouncingDebrisSpawner+2A   j
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Enemy_UpdateBouncingDebrisSpawner_Return
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Enemy_UpdateBouncingDebrisSpawner_InitParticle
                 move.b  #$BB,d0

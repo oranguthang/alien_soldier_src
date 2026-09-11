@@ -36,7 +36,7 @@ Boss_FlyingNeoDisableOrbitImpulsePhase:                 ; CODE XREF: Boss_Flying
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoApplyLowAngleOrbitPhaseGate:              ; CODE XREF: Boss_FlyingNeoUpdateOrbitAngularImpulse+46   j  ; was: loc_3CDFC
                 moveq   #3,d2
-                btst    #0,(word_FFA000).w
+                btst    #0,(FrameCounter).w
                 beq.s   Boss_FlyingNeoTestLowAngleOrbitPhaseGate
                 moveq   #7,d2
 Boss_FlyingNeoTestLowAngleOrbitPhaseGate:               ; CODE XREF: Boss_FlyingNeoUpdateOrbitAngularImpulse+56   j  ; was: loc_3CE08

@@ -348,7 +348,7 @@ Entity_ValkirieBattleStateEUseHighPattern:              ; CODE XREF: Entity_Star
 Entity_ValkirieBattleStateECheckMidPattern:             ; CODE XREF: Entity_StartValkirieBattleStateE+34   j  ; was: loc_55B6C
                 cmpi.w  #$E0,(dword_FFA414).w
                 bmi.s   Entity_ValkirieBattleStateEChooseRandomPattern
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Entity_ValkirieBattleStateEUseMidPattern
                 tst.w   (dword_FFA41C).w
                 bmi.s   Entity_ValkirieBattleStateEUseLowPattern
@@ -446,7 +446,7 @@ Projectile_SpawnValkirieBullet:                         ; CODE XREF: Entity_Star
                                         ; Entity_UpdateValkirieBattleState10:Entity_RenderValkirieBattleState10   p
                 movea.w #(byte_FFCCE0-M68K_RAM),a1
                 moveq   #$18,d3
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_SpawnValkirieBulletReturn
                 jsr     (Projectile_FindFreeSlot).l
                 beq.s   Projectile_InitValkirieBullet

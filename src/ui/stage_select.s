@@ -51,7 +51,7 @@ UI_ResetStageSelectVars:                                ; CODE XREF: Stage_Initi
                 move.b  #3,(VDPReg11Shadow+1).w
                 move.b  #0,(VDPReg18Shadow+1).w
                 bsr.w   Results_InitializeDisplay
-                clr.w   (word_FFA000).w
+                clr.w   (FrameCounter).w
                 rts
 ; End of function UI_InitializeStageSelect
 ; ---------------------------------------------------------------------------
@@ -127,10 +127,10 @@ off_1D7CE:      dc.w    UI_UpdateStageScroll-UI_UpdateStageScroll
 ; Updates stage select scroll position and checks input
 UI_UpdateStageScroll:                                   ; DATA XREF: UI_DispatchStageState+8   o  ; was: sub_1D7E2
                                         ; ROM:off_1D7CE   o
-                addq.w  #1,(word_FFA000).w
-                cmpi.w  #$20,(word_FFA000).w            ; ' '
+                addq.w  #1,(FrameCounter).w
+                cmpi.w  #$20,(FrameCounter).w           ; ' '
                 beq.s   loc_1D7F6
-                cmpi.w  #$24,(word_FFA000).w            ; '$'
+                cmpi.w  #$24,(FrameCounter).w           ; '$'
                 bne.s   loc_1D800
 loc_1D7F6:                                              ; CODE XREF: UI_UpdateStageScroll+A   j
                 move.b  #$1D,d0

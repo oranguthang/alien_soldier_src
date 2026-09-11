@@ -26,7 +26,7 @@ Boss_WolfGaropaRewardShowerInit:                        ; DATA XREF: ROM:Boss_Wo
 Boss_WolfGaropaSpawnFiniteRewardPickups:                ; DATA XREF: ROM:00032E0C   o  ; was: sub_32E3C
                 move.w  #$1D0,$10(a5)
                 move.w  #$120,$14(a5)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
@@ -49,7 +49,7 @@ Boss_WolfGaropaRemoveRewardEmitter:                     ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaSpawnFiniteRewardPickups
 ; Emits a countdown-controlled stream of stationary random pickups
 Boss_WolfGaropaSpawnTimedRewardPickups:                 ; DATA XREF: ROM:00032E0E   o  ; was: sub_32EA2
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l

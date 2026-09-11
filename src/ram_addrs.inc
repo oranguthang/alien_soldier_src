@@ -219,11 +219,11 @@ word_FF8206             equ     $FFFF8206
 word_FF820A             equ     $FFFF820A
 word_FF820C             equ     $FFFF820C
 word_FF8210             equ     $FFFF8210
-word_FF8218             equ     $FFFF8218
-dword_FF821A            equ     $FFFF821A
+PaletteEffectControl    equ     $FFFF8218               ; was: word_FF8218
+PaletteEntryLists       equ     $FFFF821A               ; was: dword_FF821A
 word_FF821E             equ     $FFFF821E
-word_FF8220             equ     $FFFF8220
-word_FF8222             equ     $FFFF8222
+PalettePrimaryIndex     equ     $FFFF8220               ; was: word_FF8220
+PaletteSecondaryIndex   equ     $FFFF8222               ; was: word_FF8222
 word_FF8224             equ     $FFFF8224
 word_FF8226             equ     $FFFF8226
 word_FF8228             equ     $FFFF8228
@@ -438,7 +438,7 @@ word_FF9F14             equ     $FFFF9F14
 byte_FF9F80             equ     $FFFF9F80
 word_FF9FC0             equ     $FFFF9FC0
 byte_FF9FF8             equ     $FFFF9FF8
-word_FFA000             equ     $FFFFA000
+FrameCounter            equ     $FFFFA000               ; was: word_FFA000
 ScoreAddendPrefixByte   equ     $FFFFA005               ; was: byte_FFA005
 ScoreAddendBCD          equ     $FFFFA006               ; was: dword_FFA006
 word_FFA00A             equ     $FFFFA00A

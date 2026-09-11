@@ -325,7 +325,7 @@ Enemy_BirdOscillateMovement_AccelerateLeft:             ; CODE XREF: Enemy_BirdO
 ; End of function Enemy_BirdOscillateMovement
 ; Bird AI tracks player position with velocity adjustments and randomization
 Enemy_BirdAITracking:                                   ; CODE XREF: Enemy_BirdAttackState   p  ; was: sub_2DDB0
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #$1F,d7
                 bne.s   Enemy_BirdAITracking_UpdateTarget
                 move.b  (RandomNumberState).w,d0
@@ -381,7 +381,7 @@ Enemy_BirdAITracking_Return:                            ; CODE XREF: Enemy_BirdA
 ; Spawns a falling bird shot in the current horizontal direction
 Enemy_BirdSpawnShot:                                    ; CODE XREF: Enemy_BirdFireState   p  ; was: sub_2DE70
                                         ; Enemy_BirdAttackState+4   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.s   Enemy_BirdSpawnShot_Return
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -430,7 +430,7 @@ Enemy_UpdateBirdDefeatDebris:                           ; DATA XREF: ROM:Entity_
                 addq.w  #2,4(a5)
 Enemy_UpdateBirdDefeatDebris_EmitParticles:             ; CODE XREF: Enemy_UpdateBirdDefeatDebris+10   j  ; was: loc_2DF1A
                                         ; Enemy_UpdateBirdDefeatDebris+16   j
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Enemy_UpdateBirdDefeatDebris_Return
                 jsr     (Projectile_FindFreePrimarySlot).l

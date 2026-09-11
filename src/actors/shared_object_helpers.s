@@ -46,7 +46,7 @@ Projectile_UpdateAfterGlobalDelay:                      ; CODE XREF: Enemy_ShipS
 ; Updates a projectile and selects one of two shared impact-frame tables
 Projectile_UpdateWithImpactFrames:                      ; CODE XREF: Boss_ShiperSpawnDebris+6   p  ; was: sub_2A39C
                                         ; Boss_AntroidSpawnRamDebris+8   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 move.w  d0,d1
                 andi.w  #$1F,d1
                 beq.s   Projectile_UpdateWithImpactFrames_PlaySound
@@ -78,7 +78,7 @@ Projectile_UpdateWithExplosionSound:                    ; CODE XREF: Boss_Destro
                 subq.w  #1,(word_FF809E).w
                 bpl.s   Projectile_UpdateWithImpactFrames_Update
                 move.w  #$FFFF,(word_FF809E).w
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 move.w  d0,d1
                 andi.w  #$1F,d1
                 beq.s   Projectile_UpdateWithExplosionSound_Play
@@ -322,7 +322,7 @@ Sprite_InitTypeA4FromTable:                             ; CODE XREF: Effect_Upda
 Anim_UpdateWithPaletteSwap:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A692
                 bsr.w   Anim_UpdateSpriteFrame
                 andi.w  #$9FFF,$E(a5)
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Anim_UpdateWithPaletteSwap_UseAlternatePalette
                 ori.w   #$4000,$E(a5)
                 rts
@@ -530,14 +530,14 @@ Projectile_UpdatePriorityBySlot:                        ; CODE XREF: Projectile_
                 move.w  a5,d0
                 btst    #5,d0
                 beq.s   Projectile_UpdatePriorityBySlot_CheckFrameParity
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_UpdatePriorityBySlot_ClearPriority
 Projectile_UpdatePriorityBySlot_SetPriority:            ; CODE XREF: Projectile_UpdatePriorityBySlot+1E   j  ; was: loc_2A844
                 bset    #7,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_UpdatePriorityBySlot_CheckFrameParity:       ; CODE XREF: Projectile_UpdatePriorityBySlot+6   j  ; was: loc_2A84C
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_UpdatePriorityBySlot_SetPriority
 Projectile_UpdatePriorityBySlot_ClearPriority:          ; CODE XREF: Projectile_UpdatePriorityBySlot+E   j  ; was: loc_2A854
                 bclr    #7,2(a5)

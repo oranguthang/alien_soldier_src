@@ -222,7 +222,7 @@ Boss_ViblackSetRandomTarget:                            ; CODE XREF: Boss_Viblac
 ; End of function Boss_ViblackSetRandomTarget
 ; Emits a type-$88 defeat particle near Viblack
 Boss_ViblackSpawnNearbyDefeatParticle:                  ; CODE XREF: Boss_ViblackUpdateDefeatEffectsAndParticles+C   j  ; was: sub_44128
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Boss_ViblackSpawnNearbyDefeatParticleReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_ViblackSpawnNearbyDefeatParticleReturn
@@ -243,7 +243,7 @@ Boss_ViblackSpawnNearbyDefeatParticle:                  ; CODE XREF: Boss_Viblac
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
 Boss_ViblackInitializeNearbyDefeatParticle:             ; CODE XREF: Boss_ViblackSpawnNearbyDefeatParticle+46   j  ; was: loc_44178
                 jsr     (Projectile_InitType88).l
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 addq.w  #5,d0
                 move.w  d0,$1C(a0)
@@ -282,7 +282,7 @@ Boss_ViblackSpawnWideDefeatParticleReturn:              ; CODE XREF: Boss_Viblac
 ; End of function Boss_ViblackSpawnWideDefeatParticle
 ; Emits transition debris or a type-$88 particle near Viblack
 Boss_ViblackSpawnTransitionDebris:                      ; CODE XREF: Boss_ViblackFinishTransitionState   p  ; was: sub_441EC
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Boss_ViblackSpawnTransitionDebrisReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Boss_ViblackSpawnTransitionDebrisReturn
@@ -326,7 +326,7 @@ Boss_ViblackSpawnTransitionDebrisReturn:                ; CODE XREF: Boss_Viblac
 ; End of function Boss_ViblackSpawnTransitionDebris
 ; Emits one defeat sprite at a random screen position
 Boss_ViblackSpawnDefeatParticle:                        ; CODE XREF: Boss_ViblackUpdateDefeatSoundAndParticles+4   p  ; was: sub_4427C
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.w   Boss_ViblackStateReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Boss_ViblackStateReturn
@@ -403,7 +403,7 @@ Boss_ViblackMoveToTargetReturn:                         ; CODE XREF: Sound_Vibla
 ; Plays Viblack sound effect every 4 frames
 Sound_ViblackPeriodic:                                  ; CODE XREF: Boss_ViblackEntranceDescentState   p  ; was: sub_44354
                                         ; Boss_ViblackFinishEntranceMotionState   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_ViblackMoveToTargetReturn
                 move.b  #$CD,d0
@@ -412,7 +412,7 @@ Sound_ViblackPeriodic:                                  ; CODE XREF: Boss_Viblac
 ; Periodically spawns side shots from alternating horizontal positions
 Boss_ViblackSpawnSideShot:                              ; CODE XREF: Boss_ViblackMoveToAttackTargetState+4   p  ; was: sub_44368
                                         ; Boss_ViblackChainAttackWaitState+4   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$FF,d0
                 cmpi.w  #$2F,d0                         ; '/'
                 bpl.w   Boss_ViblackStateReturn
@@ -421,7 +421,7 @@ Boss_ViblackSpawnSideShot:                              ; CODE XREF: Boss_Viblac
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Boss_ViblackStateReturn
                 move.w  #$6F0,d0
-                btst    #0,(word_FFA000).w
+                btst    #0,(FrameCounter).w
                 bne.s   Boss_ViblackSpawnSideShotAtSelectedX
                 move.w  #$810,d0
 Boss_ViblackSpawnSideShotAtSelectedX:                   ; CODE XREF: Boss_ViblackSpawnSideShot+2C   j  ; was: loc_4439A

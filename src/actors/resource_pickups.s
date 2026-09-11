@@ -99,7 +99,7 @@ Pickup_Update:                                          ; CODE XREF: Effect_Wolf
                 cmpi.w  #$20,$4A(a5)                    ; ' '
                 bpl.s   Pickup_CheckCollection
                 bset    #7,2(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Pickup_CheckCollection
                 bclr    #7,2(a5)
 Pickup_CheckCollection:                                 ; CODE XREF: Pickup_Update+C   j  ; was: loc_2BDD2
@@ -132,7 +132,7 @@ Pickup_UpdateMotion:                                    ; CODE XREF: Pickup_Upda
                                         ; Pickup_Update+30   j
                 andi.w  #$E7FF,$E(a5)
                 lea     (Object_CameraPriorityTable).l,a0
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 asr.w   #1,d0
                 andi.w  #6,d0
                 move.w  (a0,d0.w),d0

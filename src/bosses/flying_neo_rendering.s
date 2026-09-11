@@ -66,7 +66,7 @@ Boss_FlyingNeoDivingArcState:                           ; CODE XREF: Boss_Flying
                 bpl.s   Boss_FlyingNeoUpdateDivingArcSound
                 addi.l  #$4800,$1C(a5)
 Boss_FlyingNeoUpdateDivingArcSound:                     ; CODE XREF: Boss_FlyingNeoDivingArcState+12   j  ; was: loc_3C894
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_FlyingNeoSelectDivingArcPose
                 move.b  #$D1,d0
@@ -205,7 +205,7 @@ Boss_FlyingNeoPartPositionOffsetCycle:  dc.b    4, $FE, 3, $FF, 2, 0, 3, 0  ; wa
 ; Updates auxiliary positions, angle history, and eight linked-part orbits
 Boss_FlyingNeoUpdateLinkedPartOrbits:                   ; CODE XREF: Boss_FlyingNeoUpdateSprites+3C   p  ; was: sub_3CA3C
                 move.l  #word_EBBB8,$3C8(a5)
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 btst    #7,d0
                 beq.s   Boss_FlyingNeoPositionAuxiliaryParts
                 btst    #3,d0
@@ -214,7 +214,7 @@ Boss_FlyingNeoUpdateLinkedPartOrbits:                   ; CODE XREF: Boss_Flying
 Boss_FlyingNeoPositionAuxiliaryParts:                   ; CODE XREF: Boss_FlyingNeoUpdateLinkedPartOrbits+10   j  ; was: loc_3CA5C
                                         ; Boss_FlyingNeoUpdateLinkedPartOrbits+16   j
                 lea     Boss_FlyingNeoPartPositionOffsetCycle(pc),a0
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #6,d0
                 move.b  (a0,d0.w),d4
                 move.b  1(a0,d0.w),d5
@@ -302,7 +302,7 @@ Boss_FlyingNeoUpdateLinkedPartOrbitsReturn:             ; CODE XREF: Boss_Flying
 ; Updates palette fade effect for boss
 Boss_FlyingNeoUpdatePaletteFade:                        ; CODE XREF: Boss_FlyingNeoDefeatConvertForwardSlotRangeState   p  ; was: sub_3CB40
                                         ; sub_3C3AE   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Boss_FlyingNeoUpdateLinkedPartOrbitsReturn
                 lea     (PaletteFade_FlyingNeoEntryOffsets).l,a2
@@ -423,7 +423,7 @@ Boss_FlyingNeoQueueAnimatedTileRowTransfer:             ; CODE XREF: Boss_Flying
                 moveq   #$1B,d7
                 lea     Boss_FlyingNeoTileRowPatternA(pc),a1
                 nop
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Boss_FlyingNeoSelectTileRowFacingHalf
                 lea     Boss_FlyingNeoTileRowPatternB(pc),a1
                 nop

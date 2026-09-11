@@ -126,7 +126,7 @@ Gfx_ProcessColorFadeEffect_StartRandomChannelFade:      ; CODE XREF: Gfx_Process
                 clr.w   (word_FF80EE).w
                 btst    #1,(byte_FF80EC).w
                 bne.w   Gfx_ProcessColorFadeEffect_Return
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 move.w  d0,d4
                 asr.w   #4,d4
                 andi.w  #$E,d4
@@ -242,8 +242,8 @@ PaletteFade_SevenForcesEntryOffsets:    dc.w    5       ; DATA XREF: Entity_Upda
                 dc.w    $E362, $E36A, $E372, $E374, $E376, $E378
 
 ; RGB color fade processing with channel clamping
-Gfx_FadeRGBColor:                                       ; CODE XREF: Palette_FadeEffect+8   p  ; was: sub_3E5A
-                                        ; Palette_FadeEffect+12   p
+Gfx_FadeRGBColor:                                       ; CODE XREF: Palette_UpdatePairedEntryLists+8   p  ; was: sub_3E5A
+                                        ; Palette_UpdatePairedEntryLists+12   p
                 bsr.w   Gfx_PrepareRGBComponents
 Gfx_FadeRGBColor_LoadEntryCount:                        ; CODE XREF: Gfx_ProcessColorFadeEffect+1A   j  ; was: loc_3E5E
                                         ; Gfx_ProcessColorFadeEffect+66   j
@@ -432,7 +432,7 @@ Palette_ProcessFadeEffect_StoreColor:                   ; CODE XREF: Palette_Pro
                 rts
 ; End of function Palette_ProcessFadeEffect
 ; Applies RGB color adjustment
-Gfx_ApplyRGBColorAdjust:                                ; CODE XREF: Gfx_Stage14PaletteMain   p  ; was: sub_4030
+Gfx_ApplyRGBColorAdjust:                                ; CODE XREF: Palette_UpdateMidgameAdjustedColors   p  ; was: sub_4030
                 move.w  (word_FF8140).w,d0
                 asr.w   #4,d0
                 addi.w  #-$E,d0

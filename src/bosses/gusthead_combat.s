@@ -27,7 +27,7 @@ Boss_GustheadFragmentPatternFlashState:                 ; DATA XREF: ROM:0003F27
                 bsr.w   Boss_GustheadUpdateArenaScrollVelocity
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_GustheadFragmentPatternFlashCountDown
                 eori.w  #$8000,2(a5)
@@ -68,7 +68,7 @@ Boss_GustheadDecelerateFragmentPatternRotationState:    ; DATA XREF: ROM:0003F27
                 bsr.w   Boss_GustheadUpdateArenaScrollVelocity
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_GustheadFragmentPatternRotationCountDown
                 eori.w  #$8000,2(a5)
@@ -171,7 +171,7 @@ Boss_GustheadFinalPhaseFlashState:                      ; DATA XREF: ROM:0003F29
                 bsr.w   Boss_GustheadUpdateArenaScrollVelocity
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_GustheadFinalPhaseFlashCountDown
                 eori.w  #$8000,2(a5)
@@ -206,7 +206,7 @@ Boss_GustheadDecelerateFinalPhaseRotationState:         ; DATA XREF: ROM:0003F29
                 bsr.w   Boss_GustheadUpdateArenaScrollVelocity
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadUpdateVerticalBounce
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   Boss_GustheadFinalPhaseRotationCountDown
                 eori.w  #$8000,2(a5)

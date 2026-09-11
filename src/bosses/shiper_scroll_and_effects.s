@@ -99,7 +99,7 @@ Boss_ShiperScrollFillLowerSpan:                         ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperScrollUpdate
 ; Spawns angled projectile with sine/cosine calculated velocity
 Boss_ShiperSpawnAngledProjectile:
-                btst    #0,(word_FFA000+1).w            ; was: sub_37104
+                btst    #0,(FrameCounter+1).w           ; was: sub_37104
                 bne.s   Boss_ShiperSpawnAngledProjectileReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_ShiperSpawnAngledProjectileReturn

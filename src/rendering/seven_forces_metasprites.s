@@ -1,7 +1,7 @@
 ; Alternate an object's graphics word on successive global frames
 Object_SelectAlternatingGraphicsFrame:                  ; was: sub_59D2C
                 move.w  #$C4D6,$E(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 beq.s   Object_SelectAlternatingGraphicsFrameReturn
                 move.w  #$C4DF,$E(a5)
 Object_SelectAlternatingGraphicsFrameReturn:            ; CODE XREF: Object_SelectAlternatingGraphicsFrame+C   j  ; was: locret_59D40

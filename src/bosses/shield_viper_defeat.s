@@ -179,7 +179,7 @@ Boss_ShieldViperTargetRotationSelectionReturn:          ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperChooseRotationTowardTarget
 ; Every eight frames, choose rotation toward the player position
 Boss_ShieldViperChooseRotationTowardPlayerEveryEightFrames:  ; was: sub_4F3BA
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Boss_ShieldViperPlayerTargetRotationReturn
                 move.w  (word_FF8248).w,d0
@@ -190,7 +190,7 @@ Boss_ShieldViperPlayerTargetRotationReturn:             ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperChooseRotationTowardPlayerEveryEightFrames
 ; Every eight frames, choose rotation toward arena point ($120,$F0)
 Boss_ShieldViperChooseRotationTowardArenaCenterEveryEightFrames:  ; CODE XREF: Boss_ShieldViperSteerTowardCenterAndDoubleStepAtQuarterTurn   p  ; was: sub_4F3D2
-                move.w  (word_FFA000).w,d7
+                move.w  (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Boss_ShieldViperCenterTargetRotationReturn
                 move.w  #$120,d0

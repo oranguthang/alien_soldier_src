@@ -316,9 +316,9 @@ Results_UpdateViewportReturn:                           ; CODE XREF: Results_Upd
 ; End of function Results_UpdateViewport
 ; Queues request $EF once per four-frame interval during interactive scrolling
 Results_QueuePeriodicScrollSound:                       ; CODE XREF: Results_UpdateViewport+15E   p  ; was: sub_20592
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Results_PeriodicScrollSoundReturn
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Results_PeriodicScrollSoundReturn
                 move.b  #$EF,d0
                 jsr     (Sound_PlaySFX).l

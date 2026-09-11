@@ -91,7 +91,7 @@ Projectile_BackStringerAttachDropToCompanion:           ; CODE XREF: Projectile_
 Projectile_BackStringerUpdateReleasedFallingDrop:       ; CODE XREF: Projectile_BackStringerFallingDropMain+62   j  ; was: loc_458A2
                 addi.l  #$4000,$1C(a5)
                 bset    #7,2(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_BackStringerReleasedFallingDropReturn
                 bclr    #7,2(a5)
 Projectile_BackStringerReleasedFallingDropReturn:       ; CODE XREF: Projectile_BackStringerFallingDropMain+13A   j  ; was: locret_458BE
@@ -102,7 +102,7 @@ Projectile_BackStringerChooseFallingDropVelocity:       ; CODE XREF: Projectile_
                 move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #2,d0
-                btst    #1,(word_FFA000+1).w
+                btst    #1,(FrameCounter+1).w
                 bne.s   Projectile_BackStringerStoreFallingDropVelocity
                 neg.l   d0
 Projectile_BackStringerStoreFallingDropVelocity:        ; CODE XREF: Projectile_BackStringerChooseFallingDropVelocity+E   j  ; was: loc_458D2
@@ -193,7 +193,7 @@ Projectile_BackStringerUpdateAngledShotSpin:            ; CODE XREF: Projectile_
                 ext.l   d0
                 asl.l   #4,d0
                 move.l  d0,$18(a5)
-                btst    #0,(word_FFA000+1).w
+                btst    #0,(FrameCounter+1).w
                 bne.s   Projectile_BackStringerAngledShotReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Projectile_BackStringerAngledShotReturn

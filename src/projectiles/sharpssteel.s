@@ -197,7 +197,7 @@ Effect_SharpssteelDefeatFragmentMain:                   ; DATA XREF: ROM:Entity_
 Effect_SharpssteelApplyDefeatFragmentFlashPhase:        ; CODE XREF: Effect_SharpssteelDefeatFragmentMain+1E   j
                 andi.w  #7,d0
                 bne.s   Effect_SharpssteelUpdateDefeatFragmentVelocity
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0
                 bne.s   Effect_SharpssteelTryEmitDefeatFragmentDebris
                 move.b  #$BC,d0

@@ -432,7 +432,7 @@ Boss_UpdateSylpheedClimbState10:                        ; DATA XREF: ROM:0005945
 ; Periodically randomize the current movement-target offsets
 Boss_RandomizeSylpheedTargetOffsets:                    ; CODE XREF: Boss_EnterSylpheedDecisionState4:Boss_RenderSylpheedDecisionPose   p  ; was: sub_59950
                                         ; sub_59818:Boss_UpdateSylpheedRecoveryTarget   p
-                move.w  (word_FFA000).w,d0
+                move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0
                 bne.s   Boss_AdjustSylpheedVerticalVelocityTowardTarget
                 move.b  (RandomNumberState).w,d0
