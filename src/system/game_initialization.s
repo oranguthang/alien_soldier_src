@@ -43,7 +43,7 @@ Sys_InitGraphicsChain:                                  ; CODE XREF: Sys_InitFul
                 bsr.w   Gfx_InitializeChain
                 bsr.w   Sys_ClearBufferFFA800
                 bsr.w   Sprite_ClearOAMBuildState
-                bsr.w   Gfx_ClearGraphicsChain
+                bsr.w   Sprite_ClearOAMBuffer
                 bsr.w   VDP_ClearData
                 rts
 ; End of function Sys_InitGraphicsChain
@@ -60,8 +60,8 @@ Sys_ClearGameBuffers:                                   ; CODE XREF: Reset+224  
                 bsr.w   Sys_ClearSpriteBuffer
                 bsr.w   Sys_ClearBufferFFB800
                 bsr.w   Input_InitControllerState
-                move.w  #$F400,(word_FFF70C).w
-                move.w  #$F400,(word_FFF70E).w
+                move.w  #$F400,(VDPCommandQueueHead).w
+                move.w  #$F400,(VDPStagingDataCursor).w
                 move.l  #$FFFFE400,(HScrollDMASource).w
                 move.l  #$FFFFEC00,(VScrollDMASource).w
                 rts
@@ -77,7 +77,7 @@ Gfx_InitVideoMode:                                      ; CODE XREF: Sys_InitFul
 Gfx_InitVDPRegisters:                                   ; CODE XREF: Reset+218   p  ; was: sub_2E08
                                         ; ShowRedScreen   p
                 lea     Gfx_InitialVDPRegisterValues(pc),a0
-                lea     (word_FFF7D0).w,a1
+                lea     (VDPReg0Shadow).w,a1
                 move.w  #$8000,d0
                 moveq   #$17,d7
 Gfx_InitVDPRegisters_Loop:                              ; CODE XREF: Gfx_InitVDPRegisters+1C   j  ; was: loc_2E16
@@ -98,7 +98,7 @@ Gfx_LoadVDPRegisters:                                   ; CODE XREF: Sys_InitGam
                                         ; Stage_LoadBackgroundGraphics+26   p
                 lea     Gfx_GameVDPRegisterValues(pc),a0
 Gfx_LoadVDPRegisters_Setup:                             ; CODE XREF: Gfx_LoadVDPRegistersAlt+4   j  ; was: loc_2E36
-                lea     (word_FFF7D0).w,a1
+                lea     (VDPReg0Shadow).w,a1
                 move.w  #$8000,d0
                 moveq   #23,d7
 ; Loop that loads VDP register values from table incrementing register number for each write

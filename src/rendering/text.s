@@ -1,10 +1,10 @@
 Gfx_BuildVDPCommandList:                                ; CODE XREF: Results_UpdateNumbers+128   p  ; was: sub_4594
                                         ; Results_UpdateNumbers+132   j
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 move.w  d4,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -14,15 +14,15 @@ Gfx_BuildVDPCommandList:                                ; CODE XREF: Results_Upd
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009300,-(a1)
                 move.b  d3,3(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 asl.w   #1,d3
-                add.w   d3,(word_FFF70E).w
+                add.w   d3,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_BuildVDPCommandList
 ; Renders text string to VRAM using tile indices
 UI_RenderTextString:                                    ; CODE XREF: Results_RenderAllStats+32   p  ; was: sub_45D2
                                         ; Results_RenderAllStats+46   p
-                movea.w (word_FFF70E).w,a1
+                movea.w (VDPStagingDataCursor).w,a1
                 moveq   #0,d7
 loc_45D8:                                               ; CODE XREF: UI_RenderTextString+18   j
                 moveq   #0,d2
@@ -38,7 +38,7 @@ loc_45D8:                                               ; CODE XREF: UI_RenderTe
 loc_45EC:                                               ; CODE XREF: UI_RenderTextString+E   j
                 move.w  d7,d3
                 subq.w  #1,d3
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
 loc_45F4:                                               ; CODE XREF: UI_RenderTextString+28   j
                 move.w  (a0)+,d0
                 addq.w  #1,d0
@@ -55,7 +55,7 @@ loc_45F4:                                               ; CODE XREF: UI_RenderTe
 ; Renders text string with plane wrapping support
 UI_RenderTextStringWrapped:                             ; CODE XREF: RegionRestricted+3E   p  ; was: sub_4614
                                         ; RegionRestricted+52   p
-                movea.w (word_FFF70E).w,a1
+                movea.w (VDPStagingDataCursor).w,a1
                 moveq   #0,d7
 loc_461A:                                               ; CODE XREF: UI_RenderTextStringWrapped+18   j
                 moveq   #0,d2
@@ -71,7 +71,7 @@ loc_461A:                                               ; CODE XREF: UI_RenderTe
 loc_462E:                                               ; CODE XREF: UI_RenderTextStringWrapped+E   j
                 move.w  d7,d3
                 subq.w  #1,d3
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
 loc_4636:                                               ; CODE XREF: UI_RenderTextStringWrapped+28   j
                 move.w  (a0)+,d0
                 addq.w  #1,d0

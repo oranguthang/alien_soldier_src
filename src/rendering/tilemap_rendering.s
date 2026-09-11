@@ -75,7 +75,7 @@ loc_10736:                                              ; CODE XREF: Gfx_RenderT
                 bne.w   loc_1081E
                 subi.w  #$100,d1
                 move.w  d1,d2
-                move.w  (word_FFF70E).w,d3
+                move.w  (VDPStagingDataCursor).w,d3
                 lsr.w   #2,d2
                 andi.w  #$38,d2                         ; '8'
                 add.w   d2,d3
@@ -119,12 +119,12 @@ loc_107DA:                                              ; CODE XREF: Gfx_RenderT
                 move.w  d0,d2
                 lsr.w   #2,d2
                 andi.w  #$7E,d2                         ; '~'
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 add.w   (a0),d2
                 move.w  d2,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -133,13 +133,13 @@ loc_107DA:                                              ; CODE XREF: Gfx_RenderT
                 move.b  #$96,-(a1)
                 move.l  #$8F80977F,-(a1)
                 move.l  #$94009320,-(a1)
-                move.w  a1,(word_FFF70C).w
-                addi.w  #$40,(word_FFF70E).w            ; '@'
+                move.w  a1,(VDPCommandQueueHead).w
+                addi.w  #$40,(VDPStagingDataCursor).w   ; '@'
                 rts
 ; ---------------------------------------------------------------------------
 loc_1081E:                                              ; CODE XREF: Gfx_RenderTilemap+6C   j
                 move.w  d1,d2
-                move.w  (word_FFF70E).w,d3
+                move.w  (VDPStagingDataCursor).w,d3
                 lsr.w   #2,d2
                 andi.w  #$38,d2                         ; '8'
                 add.w   d2,d3
@@ -229,7 +229,7 @@ loc_108DC:                                              ; CODE XREF: Camera_Stag
                 bne.w   loc_10968
                 subi.w  #$100,d1
                 move.w  d1,d2
-                move.w  (word_FFF70E).w,d3
+                move.w  (VDPStagingDataCursor).w,d3
                 lsr.w   #2,d2
                 andi.w  #$38,d2                         ; '8'
                 add.w   d2,d3

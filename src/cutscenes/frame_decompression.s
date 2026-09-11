@@ -48,7 +48,7 @@ loc_2611C:                                              ; CODE XREF: Gfx_LoadCut
                 dbf     d7,loc_2611C
                 addq.w  #2,d3
                 dbf     d6,loc_260F2
-                movea.w (word_FFF70C).w,a4
+                movea.w (VDPCommandQueueHead).w,a4
                 move.w  (dword_FF8040+2).w,d0
                 move.w  (word_FF9F12).w,d7
 loc_26142:                                              ; CODE XREF: Gfx_LoadCutsceneFrame+B2   j
@@ -70,7 +70,7 @@ loc_26142:                                              ; CODE XREF: Gfx_LoadCut
                 addi.w  #$80,d0
                 addi.w  #$80,(dword_FF8040).w
                 dbf     d7,loc_26142
-                move.w  a4,(word_FFF70C).w
+                move.w  a4,(VDPCommandQueueHead).w
                 moveq   #$F,d0
                 move.l  (dword_FF9F0C).w,d1
                 movea.w #(byte_FF9F80-M68K_RAM),a1

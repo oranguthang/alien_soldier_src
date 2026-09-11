@@ -182,7 +182,7 @@ nullsub_18:                                             ; DATA XREF: ROM:000074A
 ; Sets up DMA transfer for font tile data to VRAM
 Gfx_SetupFontDMATransfer:                               ; CODE XREF: UI_RenderJapaneseFontChar+38   p  ; was: sub_755A
                                         ; DATA XREF: UI_RenderJapaneseFontChar+38   o
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$82,-(a1)
                 move.w  d4,-(a1)
                 lsr.l   #1,d0
@@ -196,13 +196,13 @@ Gfx_SetupFontDMATransfer:                               ; CODE XREF: UI_RenderJa
                 move.b  #$97,-(a1)
                 move.w  #$8F02,-(a1)
                 move.l  #$94009340,-(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function Gfx_SetupFontDMATransfer
 ; Renders list of text tiles with sequential indexing
 UI_RenderTextTileList:                                  ; CODE XREF: UI_InitJapaneseTextDisplay+E   p  ; was: sub_758C
                                         ; DATA XREF: UI_InitJapaneseTextDisplay+E   o
-                movea.w (word_FFF70E).w,a1
+                movea.w (VDPStagingDataCursor).w,a1
                 moveq   #0,d7
 loc_7592:                                               ; CODE XREF: UI_RenderTextTileList+18   j
                 moveq   #0,d2
@@ -218,7 +218,7 @@ loc_7592:                                               ; CODE XREF: UI_RenderTe
 loc_75A6:                                               ; CODE XREF: UI_RenderTextTileList+E   j
                 move.w  d7,d3
                 subq.w  #1,d3
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
 loc_75AE:                                               ; CODE XREF: UI_RenderTextTileList+28   j
                 move.w  (a0)+,d0
                 addq.w  #1,d0
@@ -231,11 +231,11 @@ loc_75AE:                                               ; CODE XREF: UI_RenderTe
 ; End of function UI_RenderTextTileList
 ; Queues DMA command for tile data transfer to VRAM
 Gfx_QueueTileDMACommand:                                ; CODE XREF: UI_RenderTextTileList+2E   p  ; was: sub_75C4
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$82,-(a1)
                 move.w  d4,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -245,9 +245,9 @@ Gfx_QueueTileDMACommand:                                ; CODE XREF: UI_RenderTe
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009300,-(a1)
                 move.b  d3,3(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 asl.w   #1,d3
-                add.w   d3,(word_FFF70E).w
+                add.w   d3,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_QueueTileDMACommand
 ; ---------------------------------------------------------------------------

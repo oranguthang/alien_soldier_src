@@ -76,14 +76,14 @@ Demo_PlaybackSystem_ClearBufferLoop:                    ; CODE XREF: Demo_Playba
                 move.l  d0,(a0)+
                 dbf     d1,Demo_PlaybackSystem_ClearBufferLoop
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 move.w  (VDPReg1Shadow).w,(VDP_CTRL).l
-                move.b  #0,(word_FFF7F4+1).w
-                move.w  (word_FFF7F4).w,(VDP_CTRL).l
+                move.b  #0,(VDPReg18Shadow+1).w
+                move.w  (VDPReg18Shadow).w,(VDP_CTRL).l
                 move.b  #$10,(VDPReg7Shadow+1).w
                 move.w  (VDPReg7Shadow).w,(VDP_CTRL).l
-                andi.b  #$EF,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                andi.b  #$EF,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
                 rts
 ; End of function Demo_PlaybackSystem
 ; Handles demo playback mode with input recording and frame timing

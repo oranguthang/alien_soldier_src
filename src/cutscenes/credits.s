@@ -1,6 +1,6 @@
 Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_TransitionToCredits+6   j  ; was: sub_7B30
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_InitGameMode).l
                 move.w  #1,(word_FF010E).l
                 movea.l #stru_7BF2,a0
@@ -24,9 +24,9 @@ Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_Trans
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 move.b  #$88,d0
                 jsr     (Sound_QueueBGMRequest).l
                 clr.w   (dword_FFA904).w

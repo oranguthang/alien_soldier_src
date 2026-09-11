@@ -201,7 +201,7 @@ Boss_DestroyerMK2LinkedPartDescriptors: dc.w    0, $FFD4, $FFC4, $F300  ; was: w
 
 ; Publishes player mode 3 and advances to tile loading
 Boss_DestroyerMK2SetIntroPlayerModeState:               ; DATA XREF: ROM:0004A902   o  ; was: sub_4AB38
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerMK2SetIntroPlayerModeState

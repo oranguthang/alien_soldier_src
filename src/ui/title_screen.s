@@ -11,7 +11,7 @@ UI_InitTitleScreen:                                     ; DATA XREF: Sys_Dispatc
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
@@ -39,7 +39,7 @@ loc_936C:                                               ; CODE XREF: UI_InitTitl
                 move.w  d0,(dword_FFA908).w
                 move.w  d1,(dword_FFA90C).w
                 jsr     (Gfx_DirectVRAMTransfer).l
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 move.w  #2,(dword_FF8066+2).w
                 move.b  #$91,d0
                 jsr     (Sound_QueueRequest).l
@@ -63,7 +63,7 @@ loc_936C:                                               ; CODE XREF: UI_InitTitl
                 lea     (FrontendFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 jmp     (Gfx_FadePaletteTransition).l
 ; End of function UI_InitTitleScreen
 ; ---------------------------------------------------------------------------

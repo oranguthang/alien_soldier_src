@@ -111,7 +111,7 @@ Palette_UpdateFullScreenFade_BeginToBlackStoreColor:    ; CODE XREF: Palette_Upd
                 move.w  #$1000,(PaletteFadeProgress).w
                 clr.w   (PaletteFadeStep).w
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
 Palette_UpdateFullScreenFade_BeginToBlackReturn:        ; CODE XREF: Palette_UpdateFullScreenFade+106   j  ; was: locret_1012
                 rts
 ; ---------------------------------------------------------------------------
@@ -160,7 +160,7 @@ Palette_UpdateFullScreenFade_ToBlackStoreColor:         ; CODE XREF: Palette_Upd
                 move.w  #$1000,(PaletteFadeProgress).w
                 clr.w   (PaletteFadeStep).w
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
 Palette_UpdateFullScreenFade_ToBlackReturn:             ; CODE XREF: Palette_UpdateFullScreenFade+186   j  ; was: locret_1092
                 rts
 ; ---------------------------------------------------------------------------
@@ -261,7 +261,7 @@ Palette_UpdateFullScreenFade_BeginToWhiteStoreColor:    ; CODE XREF: Palette_Upd
                 move.w  #$1000,(PaletteFadeProgress).w
                 clr.w   (PaletteFadeStep).w
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
 Palette_UpdateFullScreenFade_BeginToWhiteReturn:        ; CODE XREF: Palette_UpdateFullScreenFade+2A0   j  ; was: locret_11AC
                 rts
 ; ---------------------------------------------------------------------------
@@ -307,14 +307,14 @@ Palette_UpdateFullScreenFade_ToWhiteStoreColor:         ; CODE XREF: Palette_Upd
                 move.w  #$1000,(PaletteFadeProgress).w
                 clr.w   (PaletteFadeStep).w
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
 Palette_UpdateFullScreenFade_ToWhiteReturn:             ; CODE XREF: Palette_UpdateFullScreenFade+326   j  ; was: locret_1232
                 rts
 ; End of function Palette_UpdateFullScreenFade
 ; Queues the horizontal-scroll table DMA to VRAM $F000. VDP register 11 bit 1
 ; selects the two-word full-screen value or the 448-word per-line table
 Gfx_QueueHorizontalScrollDMA:                           ; was: sub_1234
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 move.l  #$70000083,-(a0)
                 move.l  (HScrollDMASource).w,d0
                 andi.l  #$FFFFFF,d0
@@ -331,7 +331,7 @@ Gfx_QueueHorizontalScrollDMA:                           ; was: sub_1234
                 move.b  d0,d1
                 move.w  d1,-(a0)
                 move.w  #$8F02,-(a0)
-                btst    #1,(word_FFF7E6+1).w
+                btst    #1,(VDPReg11Shadow+1).w
                 bne.w   Gfx_QueueHorizontalScrollDMA_UsePerLineLength
                 move.l  #$94009302,-(a0)
                 bra.w   Gfx_QueueHorizontalScrollDMA_CommitCommand
@@ -339,13 +339,13 @@ Gfx_QueueHorizontalScrollDMA:                           ; was: sub_1234
 Gfx_QueueHorizontalScrollDMA_UsePerLineLength:          ; CODE XREF: Gfx_QueueHorizontalScrollDMA+3C   j  ; was: loc_127E
                 move.l  #$940193C0,-(a0)
 Gfx_QueueHorizontalScrollDMA_CommitCommand:             ; CODE XREF: Gfx_QueueHorizontalScrollDMA+46   j  ; was: loc_1284
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 rts
 ; End of function Gfx_QueueHorizontalScrollDMA
 ; Queues the vertical-scroll table DMA to VSRAM. VDP register 11 bit 2 selects
 ; the two-word full-screen value or the 40-word per-column table
 Gfx_QueueVerticalScrollDMA:                             ; was: sub_128A
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 move.l  #$40000090,-(a0)
                 move.l  (VScrollDMASource).w,d0
                 andi.l  #$FFFFFF,d0
@@ -362,7 +362,7 @@ Gfx_QueueVerticalScrollDMA:                             ; was: sub_128A
                 move.b  d0,d1
                 move.w  d1,-(a0)
                 move.w  #$8F02,-(a0)
-                btst    #2,(word_FFF7E6+1).w
+                btst    #2,(VDPReg11Shadow+1).w
                 bne.w   Gfx_QueueVerticalScrollDMA_UsePerColumnLength
                 move.l  #$94009302,-(a0)
                 bra.w   Gfx_QueueVerticalScrollDMA_CommitCommand
@@ -370,7 +370,7 @@ Gfx_QueueVerticalScrollDMA:                             ; was: sub_128A
 Gfx_QueueVerticalScrollDMA_UsePerColumnLength:          ; CODE XREF: Gfx_QueueVerticalScrollDMA+3C   j  ; was: loc_12D4
                 move.l  #$94009328,-(a0)
 Gfx_QueueVerticalScrollDMA_CommitCommand:               ; CODE XREF: Gfx_QueueVerticalScrollDMA+46   j  ; was: loc_12DA
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 rts
 ; End of function Gfx_QueueVerticalScrollDMA
 ; Closes a frame-timing debug pass by cycling backdrop color indices 15..0,

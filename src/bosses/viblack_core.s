@@ -90,7 +90,7 @@ Boss_ViblackInit:                                       ; DATA XREF: Boss_Viblac
                 addq.w  #2,4(a5)
                 move.w  #$C2F8,(word_FF8110).w
                 move.w  #$20,(word_FF8112).w            ; ' '
-                move.b  #4,(word_FFF7E6+1).w
+                move.b  #4,(VDPReg11Shadow+1).w
                 move.b  #8,(byte_FFA95A).w
                 move.b  #$20,(byte_FFA95B).w            ; ' '
                 move.w  #1,(word_FF8218).w

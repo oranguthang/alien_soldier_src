@@ -20,7 +20,7 @@ Boss_DestroyerProtoScatterNextPart:                     ; CODE XREF: Boss_Destro
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 clr.b   (byte_FFA95A).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerProtoBeginDefeatScatter

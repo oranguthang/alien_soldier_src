@@ -446,14 +446,14 @@ loc_103E2:                                              ; CODE XREF: UI_InitScor
 ; Sets up VDP scroll plane registers
 Gfx_SetupScrollPlanes:                                  ; CODE XREF: Gfx_ClearPlanesAndInit+8A   p  ; was: sub_103FA
                                         ; Sys_StoryScreenMainLoop+56   p
-                move.w  #$8230,(word_FFF7D4).w
-                move.w  #$8407,(word_FFF7D8).w
+                move.w  #$8230,(VDPReg2Shadow).w
+                move.w  #$8407,(VDPReg4Shadow).w
                 tst.w   (word_FF8640).w
                 beq.s   loc_10418
-                move.w  #$8238,(word_FFF7D4).w
-                move.w  #$8406,(word_FFF7D8).w
+                move.w  #$8238,(VDPReg2Shadow).w
+                move.w  #$8406,(VDPReg4Shadow).w
 loc_10418:                                              ; CODE XREF: Gfx_SetupScrollPlanes+10   j
-                move.b  (word_FFF7E6+1).w,d3
+                move.b  (VDPReg11Shadow+1).w,d3
                 move.b  d3,d4
                 andi.w  #3,d3
                 andi.w  #4,d4

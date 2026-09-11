@@ -299,7 +299,7 @@ Gfx_DMATransferWithWait_BatchLoop:                      ; CODE XREF: Gfx_DMATran
 Gfx_DMATransferWithWait_ExecuteBatch:                   ; CODE XREF: Gfx_DMATransferWithWait+12   j  ; was: loc_28DA
                 bsr.w   Gfx_ExecuteDMATransfer
 Gfx_DMATransferWithWait_Wait:                           ; CODE XREF: Gfx_DMATransferWithWait+20   j  ; was: loc_28DE
-                tst.b   (byte_FFF754).w
+                tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DMATransferWithWait_Wait
                 sub.w   d1,d0
                 bne.s   Gfx_DMATransferWithWait_BatchLoop
@@ -342,7 +342,7 @@ Gfx_DecompTilesToVRAMBatched_DecodeLoop:                ; CODE XREF: Gfx_DecompT
                 lea     (dword_FFB600).w,a2
                 bsr.w   Gfx_ExecuteDMATransfer
 Gfx_DecompTilesToVRAMBatched_WaitBatch:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+42   j  ; was: loc_2944
-                tst.b   (byte_FFF754).w
+                tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DecompTilesToVRAMBatched_WaitBatch
                 bra.s   Gfx_DecompTilesToVRAMBatched_BatchLoop
 ; ---------------------------------------------------------------------------
@@ -350,7 +350,7 @@ Gfx_DecompTilesToVRAMBatched_FinalBatch:                ; CODE XREF: Gfx_DecompT
                 lea     (dword_FFB600).w,a2
                 bsr.w   Gfx_ExecuteDMATransfer
 Gfx_DecompTilesToVRAMBatched_WaitFinal:                 ; CODE XREF: Gfx_DecompTilesToVRAMBatched+52   j  ; was: loc_2954
-                tst.b   (byte_FFF754).w
+                tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DecompTilesToVRAMBatched_WaitFinal
                 rts
 ; End of function Gfx_DecompTilesToVRAMBatched
@@ -380,7 +380,7 @@ Gfx_DecompressLZSSToVRAMBatched_BlockLoop:              ; CODE XREF: Gfx_Decompr
                 lea     (dword_FFB400).w,a2
                 bsr.w   Gfx_ExecuteDMATransfer
 Gfx_DecompressLZSSToVRAMBatched_WaitBlock:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+2A   j  ; was: loc_2998
-                tst.b   (byte_FFF754).w
+                tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitBlock
                 bra.s   Gfx_DecompressLZSSToVRAMBatched_BlockLoop
 ; ---------------------------------------------------------------------------
@@ -390,7 +390,7 @@ Gfx_DecompressLZSSToVRAMBatched_FinalBlock:             ; CODE XREF: Gfx_Decompr
                 lea     (dword_FFB400).w,a2
                 bsr.w   Gfx_ExecuteDMATransfer
 Gfx_DecompressLZSSToVRAMBatched_WaitFinal:              ; CODE XREF: Gfx_DecompressLZSSToVRAMBatched+40   j  ; was: loc_29AE
-                tst.b   (byte_FFF754).w
+                tst.b   (VDPTransferPending).w
                 bne.s   Gfx_DecompressLZSSToVRAMBatched_WaitFinal
                 rts
 ; End of function Gfx_DecompressLZSSToVRAMBatched

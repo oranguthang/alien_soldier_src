@@ -8,7 +8,7 @@ UI_InitializeWeaponSelect:                              ; DATA XREF: Sys_Dispatc
 ; Prepares weapon select graphics
 UI_PrepareWeaponSelectGfx:
                 bclr    #6,(VDPReg1Shadow+1).w          ; was: sub_1E27A
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 move.w  #$6000,(word_FF8146).w
                 move.w  #$F,(word_FF8148).w
@@ -43,9 +43,9 @@ loc_1E2DC:                                              ; CODE XREF: UI_WeaponSe
                 jsr     (Gfx_FadePaletteTransition).l
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 bsr.w   UI_RenderMenuText
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w

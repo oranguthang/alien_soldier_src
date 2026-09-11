@@ -13,8 +13,8 @@ Credits_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
-                move.b  #0,(word_FFF7F4+1).w
+                clr.b   (PaletteDMAHIntEnabled).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 rts
 ; ---------------------------------------------------------------------------
 Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_InitializeScreen+4   j  ; was: loc_1E1BE
@@ -30,7 +30,7 @@ Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_Ini
                 move.w  #0,(word_FF807A).w
                 jsr     (Effect_TransitionDispatcher).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 rts
 ; End of function Credits_InitializeScreen
 ; ---------------------------------------------------------------------------

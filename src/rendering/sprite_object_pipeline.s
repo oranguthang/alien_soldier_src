@@ -70,14 +70,14 @@ Sprite_RenderDynamicObject_Active:                      ; CODE XREF: Sprite_Rend
                 lea     $E0(a5),a4
                 cmpa.w  a4,a2
                 beq.w   Sprite_RenderDynamicObject_Return
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 move.w  $DA(a5),d0
 Sprite_RenderDynamicObject_QueueDMATransfersLoop:       ; CODE XREF: Sprite_RenderDynamicObject+58   j  ; was: loc_20DC
                 movea.l (a4)+,a1
                 jsr     (Gfx_SetupDMATransfer).l
                 cmpa.w  a4,a2
                 bhi.s   Sprite_RenderDynamicObject_QueueDMATransfersLoop
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
 Sprite_RenderDynamicObject_Return:                      ; CODE XREF: Sprite_RenderDynamicObject+8   j  ; was: locret_20EC
                                         ; Sprite_RenderDynamicObject+16   j
                 rts
@@ -111,14 +111,14 @@ Sprite_RenderDynamicObjectWithEntryAttributes_UpdateCache:  ; CODE XREF: Sprite_
                 lea     $E0(a5),a4
                 cmpa.w  a4,a2
                 beq.w   Sprite_RenderDynamicObjectWithEntryAttributes_Return
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 move.w  $DA(a5),d0
 Sprite_RenderDynamicObjectWithEntryAttributes_QueueDMATransfersLoop:  ; CODE XREF: Sprite_RenderDynamicObjectWithEntryAttributes+6A   j  ; was: loc_214E
                 movea.l (a4)+,a1
                 jsr     (Gfx_SetupDMATransfer).l
                 cmpa.w  a4,a2
                 bhi.s   Sprite_RenderDynamicObjectWithEntryAttributes_QueueDMATransfersLoop
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
 Sprite_RenderDynamicObjectWithEntryAttributes_Return:   ; CODE XREF: Sprite_RenderDynamicObjectWithEntryAttributes+8   j  ; was: locret_215E
                                         ; Sprite_RenderDynamicObjectWithEntryAttributes+E   j
                 rts

@@ -104,7 +104,7 @@ UI_RenderContinueText:                                  ; CODE XREF: UI_Initiali
 ; Initializes continue screen with palettes and graphics
 UI_InitializeContinueScreen:                            ; DATA XREF: ROM:0001D7D8   o  ; was: sub_1DA90
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 clr.l   (dword_FFA900).w
                 clr.l   (dword_FFA904).w
                 clr.l   (dword_FFA908).w
@@ -142,7 +142,7 @@ loc_1DB24:                                              ; CODE XREF: UI_Initiali
 ; Updates continue screen display with fade effects
 UI_UpdateContinueDisplay:                               ; DATA XREF: ROM:0001D7DA   o  ; was: sub_1DB28
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 bsr.w   Results_UpdateTimeDisplay
                 jsr     (Gfx_SetupScrollPlanes).l
                 jsr     (Gfx_FadePaletteTransition).l

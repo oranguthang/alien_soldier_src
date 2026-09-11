@@ -1,6 +1,6 @@
 Results_UpdateNumbers:                                  ; CODE XREF: Results_UpdateTimeDisplay+18   j  ; was: sub_4386
                                         ; Results_DisplayStageNumber+10   p
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 moveq   #0,d5
                 move.l  d0,(dword_FF8040).w
                 move.w  d7,d2
@@ -143,7 +143,7 @@ loc_4484:                                               ; CODE XREF: Results_Upd
                 asl.w   #1,d2
                 add.w   d1,d2
                 move.w  d2,(a0)+
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 movea.w a0,a1
                 move.w  d7,d2
                 asl.w   #1,d2
@@ -163,8 +163,8 @@ loc_44A2:                                               ; CODE XREF: Results_Upd
 ; End of function Results_UpdateNumbers
 ; Converts 32-bit number to individual digit tiles for display
 UI_ConvertNumberToDigits:
-                movea.w (word_FFF70E).w,a0              ; was: sub_44BC
-                movea.w (word_FFF70E).w,a1
+                movea.w (VDPStagingDataCursor).w,a0     ; was: sub_44BC
+                movea.w (VDPStagingDataCursor).w,a1
                 move.w  d7,d2
                 asl.w   #1,d2
                 adda.w  d2,a1

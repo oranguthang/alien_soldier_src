@@ -1,6 +1,6 @@
 Credits_InitXiTiger:                                    ; DATA XREF: Sys_DispatchGameState+E2   o  ; was: sub_20956
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
                 movea.l #Credits_XiTigerAssetLoadList,a0
@@ -40,7 +40,7 @@ Credits_InitXiTiger_ClearTilemapBufferLoop:             ; CODE XREF: Credits_Ini
                 move.w  #$EA8,(word_FFE3A8).w
                 move.w  #$E86,(word_FFE3AA).w
                 move.w  #$E64,(word_FFE3AC).w
-                move.b  #6,(word_FFF7E6+1).w
+                move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
                 clr.l   (dword_FF0110).l
@@ -85,7 +85,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w
@@ -98,7 +98,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 addq.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 clr.w   (word_FFA000).w
                 rts
 ; End of function Credits_InitXiTiger
@@ -447,7 +447,7 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 clr.l   $1C(a5)
                 move.b  #$60,$20(a5)                    ; '`'
                 clr.w   (word_FFE306).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 move.b  #1,(byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
                 lea     (HScrollBuffer).w,a0
@@ -567,7 +567,7 @@ Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F1
                 bne.w   Credits_StateReturn
                 clr.w   (word_FFC680).w
                 clr.w   (word_FFC6E0).w
-                move.b  #0,(word_FFF7E6+1).w
+                move.b  #0,(VDPReg11Shadow+1).w
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA908).w
                 move.b  #4,(byte_FFA95A).w

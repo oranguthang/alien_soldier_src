@@ -1,7 +1,7 @@
 Stage24_Init:                                           ; DATA XREF: ROM:0000F13C   o  ; was: sub_F7FA
                 addq.w  #2,(word_FFA950).w
                 move.l  #$FFFE0000,(dword_FFA960).w
-                move.b  #4,(word_FFF7E6+1).w
+                move.b  #4,(VDPReg11Shadow+1).w
                 move.b  #2,(byte_FFA95A).w
                 move.b  #8,(byte_FFA95B).w
                 move.w  #$200,(word_FF9DB0).w

@@ -2,7 +2,7 @@ Stage_InitPlayerAndScroll:                              ; DATA XREF: ROM:0001E85
                 move.w  #$7FFF,(StageTimeRemaining).w
                 jsr     (Player_InitializeStats).l
                 move.w  #$5C,(word_FFA404).w            ; '\'
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 lea     stru_1EE12(pc),a0
                 nop
                 jsr     (LoadObjData).l
@@ -44,7 +44,7 @@ Stage_UpdateGameplay:                                   ; DATA XREF: ROM:0001E86
 ; End of function Stage_UpdateGameplay
 ; Transitions to credits screen
 Stage_TransitionToCredits:                              ; DATA XREF: ROM:0001E852   o  ; was: sub_1EE5A
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 jmp     (Cutscene_InitCreditsScreen).l
 ; End of function Stage_TransitionToCredits
 ; Handles credits or advances stage
@@ -78,7 +78,7 @@ UI_InitializeStageStart:                                ; DATA XREF: Sys_Dispatc
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMA
 ; ---------------------------------------------------------------------------
@@ -122,7 +122,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 move.l  #$1400000,(dword_FF8130).w
                 clr.w   (dword_FF8134).w
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 jmp     (Gfx_FadePaletteTransition).l
 ; End of function UI_InitializeStageStart
 ; ---------------------------------------------------------------------------

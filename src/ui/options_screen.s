@@ -10,7 +10,7 @@ UI_InitOptionsScreen:                                   ; DATA XREF: Sys_Dispatc
                 clr.b   (word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
@@ -27,9 +27,9 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 lea     (OptionsScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 jsr     (Gfx_FadePaletteTransition).l
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 jsr     (Gfx_SetupScrollPlanes).l
@@ -230,7 +230,7 @@ UI_UpdateBGMTest:                                       ; CODE XREF: UI_InitOpti
                 jmp     (Sound_QueueRequest).l
 ; ---------------------------------------------------------------------------
 UI_RenderBGMTestEntry:                                  ; CODE XREF: UI_UpdateBGMTest+12   j  ; was: loc_991A
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 adda.l  #2,a1
                 movea.l a1,a2
                 moveq   #$E,d7
@@ -451,7 +451,7 @@ UI_InitSecondaryOptionsMenu:                            ; DATA XREF: Sys_Dispatc
                 clr.b   (word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
@@ -464,9 +464,9 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
                 lea     (FrontendFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 move.w  #$FFF0,(dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 jsr     (Gfx_SetupScrollPlanes).l
@@ -560,7 +560,7 @@ UI_SecondaryOptionsHandlerIndices:  dc.w    6, 8, $A, $C, $E  ; was: word_9F84
 
 ; Renders three decimal digits to VRAM for numeric display
 Gfx_RenderDecimalDigits3:                               ; CODE XREF: UI_UpdateSFXTest+AC   j  ; was: sub_9F8E
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 move.b  d1,d2
                 move.w  d1,d3
                 asr.b   #4,d1
@@ -591,7 +591,7 @@ Gfx_RenderDecimalDigits3:                               ; CODE XREF: UI_UpdateSF
 ; End of function Gfx_RenderDecimalDigits3
 ; Renders two decimal digits to VRAM for numeric display
 Gfx_RenderDecimalDigits2:                               ; CODE XREF: UI_UpdateVoiceTest+88   j  ; was: sub_9FDA
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 move.b  d1,d2
                 asr.b   #4,d1
                 andi.w  #$F,d1
@@ -614,11 +614,11 @@ Gfx_RenderDecimalDigits2:                               ; CODE XREF: UI_UpdateVo
 ; Queues VRAM write command with auto-increment for DMA transfer
 Gfx_QueueVRAMWrite:                                     ; CODE XREF: UI_UpdateBGMTest+86   p  ; was: sub_A00E
                                         ; UI_UpdateBGMTest+90   j
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 move.w  d0,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -628,9 +628,9 @@ Gfx_QueueVRAMWrite:                                     ; CODE XREF: UI_UpdateBG
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009300,-(a1)
                 move.b  d3,3(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 asl.w   #1,d3
-                add.w   d3,(word_FFF70E).w
+                add.w   d3,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_QueueVRAMWrite
 ; Renders toggle option tiles with on/off state highlighting
@@ -662,7 +662,7 @@ Gfx_SelectToggleLabelPalettes:                          ; CODE XREF: Gfx_RenderT
                 move.w  #$2000,d2
                 move.w  #$4000,d1
 Gfx_BeginToggleLabelRendering:                          ; CODE XREF: Gfx_RenderToggleTiles+32   j  ; was: loc_A088
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 moveq   #0,d7
 Gfx_CopyFirstToggleLabel:                               ; CODE XREF: Gfx_RenderToggleTiles+50   j  ; was: loc_A08E
                 move.w  (a1)+,d0
@@ -684,7 +684,7 @@ Gfx_CopySecondToggleLabel:                              ; CODE XREF: Gfx_RenderT
                 bra.s   Gfx_CopySecondToggleLabel
 ; ---------------------------------------------------------------------------
 Gfx_BeginToggleLabelSecondRow:                          ; CODE XREF: Gfx_RenderToggleTiles+58   j  ; was: loc_A0AE
-                movea.w (word_FFF70E).w,a1
+                movea.w (VDPStagingDataCursor).w,a1
                 move.w  d7,d3
 Gfx_CopyToggleLabelsSecondRow:                          ; CODE XREF: Gfx_RenderToggleTiles+6E   j  ; was: loc_A0B4
                 move.w  (a1)+,d0

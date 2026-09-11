@@ -3037,3 +3037,28 @@ promotes 12 palette, scroll, VDP-shadow, and timing-debug RAM fields. It adds
 60 provenance mappings and 76 static audit records, raising the totals from
 12,006 to 12,066 and from 8,427 to 8,503. The enforced address-derived ceiling
 falls from 4,035 to 3,975; module count remains 349.
+
+The VBlank-transfer audit reconstructs the complete 167-line
+`rendering/vblank_dma.s` service as one cohesive unit. It uploads the
+640-byte hardware sprite table, either fills CRAM or uploads the active
+palette, drains the descending 16-byte VDP-command queue, uploads horizontal
+and vertical scroll tables, emits four optional command blocks, restores the
+VDP DMA state, and clears the transfer-pending flag. The module is shorter
+than the preferred 300-line average, but joining it to an adjacent subsystem
+would create artificial ownership; the size rule remains a project average
+and a 1,000-line ceiling rather than a per-file minimum.
+
+This audit also removes two unsafe generated claims. `Gfx_UpdateVDPDisplay`
+did not control the display-enable bit: it writes VDP register 0 and
+conditionally clears bit 4, the horizontal-interrupt enable bit. The alleged
+graphics-chain buffer at `$FFFFE000` is the hardware sprite table: OAM
+renderers build eight-byte entries there and VBlank transfers 80 entries to
+VRAM `$F400`. The VDP register words are now named from their exact positions
+in the contiguous 24-register shadow table, not from inferred scene behavior.
+
+This package corrects or refines five generated semantic names, replaces all
+14 live address-derived ROM definitions in `rendering/vblank_dma.s`, and
+promotes 18 sprite, command-queue, transfer-state, and VDP-shadow RAM fields.
+It adds 32 provenance mappings and 37 static audit records, raising the totals
+from 12,066 to 12,098 and from 8,503 to 8,540. The enforced address-derived
+ceiling falls from 3,975 to 3,943; module count remains 349.

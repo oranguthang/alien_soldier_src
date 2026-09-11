@@ -144,7 +144,7 @@ Boss_JokerApplySecondaryTileFrame:                      ; CODE XREF: Boss_JokerR
                 move.w  d3,2(a1)
                 move.l  #$8F02977F,d0
                 move.l  #$94009308,d1
-                movea.w (word_FFF70C).w,a4
+                movea.w (VDPCommandQueueHead).w,a4
                 move.w  #$83,-(a4)
                 move.w  #$6188,-(a4)
                 move.w  #$9500,-(a4)
@@ -157,7 +157,7 @@ Boss_JokerApplySecondaryTileFrame:                      ; CODE XREF: Boss_JokerR
                 move.w  #$96CB,-(a4)
                 move.l  d0,-(a4)
                 move.l  d1,-(a4)
-                move.w  a4,(word_FFF70C).w
+                move.w  a4,(VDPCommandQueueHead).w
                 rts
 ; End of function Boss_JokerRenderBody
 ; ---------------------------------------------------------------------------

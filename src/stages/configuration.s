@@ -234,7 +234,7 @@ loc_1240C:                                              ; CODE XREF: Stage_InitS
                 move.w  d1,(a3)+
                 dbf     d7,loc_1240C
                 move.b  #$82,(byte_FF7AFF).l
-                move.b  #4,(word_FFF7E6+1).w
+                move.b  #4,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95B).w
                 clr.w   (word_FFA970).w
                 clr.w   (word_FFA974).w

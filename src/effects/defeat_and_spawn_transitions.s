@@ -63,7 +63,7 @@ Boss_DefeatSetupState:                                  ; DATA XREF: ROM:0002693
                 move.w  #$14,(word_FF8090).w
                 move.w  #4,(word_FFF74A).w
                 clr.w   (word_FFF74E).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 move.w  #8,(word_FF807A).w
                 move.b  #$CA,d0
@@ -143,7 +143,7 @@ Effect_StartTransition:                                 ; DATA XREF: ROM:00026A1
                 move.w  #4,(word_FF8090).w
                 move.w  #$10,(word_FFF74A).w
                 clr.w   (word_FFF74E).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 move.b  #$CA,d0
                 jsr     (Sound_PlaySFX).l
@@ -199,7 +199,7 @@ Effect_InitTransitionModeStandardA:                     ; DATA XREF: Effect_Tran
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #$10,(word_FFF74A).w
                 clr.w   (word_FFF74E).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 rts
 ; End of function Effect_InitTransitionModeStandardA
@@ -209,7 +209,7 @@ Effect_InitTransitionModeStandardB:                     ; DATA XREF: ROM:00026B0
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #$10,(word_FFF74A).w
                 clr.w   (word_FFF74E).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 rts
 ; End of function Effect_InitTransitionModeStandardB
@@ -219,7 +219,7 @@ Effect_InitTransitionModeLong:                          ; DATA XREF: ROM:00026B0
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #4,(word_FFF74A).w
                 clr.w   (word_FFF74E).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 rts
 ; End of function Effect_InitTransitionModeLong
@@ -230,7 +230,7 @@ Effect_InitTransitionModeKeepProgress:                  ; DATA XREF: ROM:00026B0
                 move.b  #$80,(byte_FFA95B).w
                 move.w  #$10,(word_FFF74A).w
                 clr.w   (word_FFF74E).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 rts
 ; End of function Effect_InitTransitionModeKeepProgress
 ; Palette effect dispatcher

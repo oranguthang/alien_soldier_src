@@ -64,7 +64,7 @@ Boss_ViblackCompleteStageTransition:                    ; CODE XREF: Boss_Viblac
                 move.w  #$1000,2(a5)
                 move.l  #$60A45441,d0
                 jsr     (Scroll_UpdateStage14Scroll).l
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 lea     (Boss_ViblackPostBattlePaletteCommand).l,a0

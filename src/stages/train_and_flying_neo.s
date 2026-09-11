@@ -46,7 +46,7 @@ Stage_InitStage8Train:                                  ; DATA XREF: ROM:0000C89
                 move.w  #0,(dword_FFA904).w
                 move.w  (dword_FFA900).w,(word_FFA928).w
                 move.w  (dword_FFA904).w,(word_FFA92C).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 move.b  #$30,(byte_FFA95A).w            ; '0'
                 move.b  #4,(byte_FFA95B).w
                 lea     byte_CE4C(pc),a1

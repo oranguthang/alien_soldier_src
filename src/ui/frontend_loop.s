@@ -5,9 +5,9 @@ UI_InitializeResultsScreen:                             ; DATA XREF: Sys_Dispatc
                 movea.l #stru_1CEFC,a0
                 jsr     (LoadObjData).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
-                clr.b   (word_FFF7F4+1).w
+                clr.b   (VDPReg18Shadow+1).w
                 clr.w   (word_FF00EC).l
                 clr.w   (word_FF0178).l
                 rts
@@ -26,7 +26,7 @@ UI_LoadResultsPalette:                                  ; CODE XREF: UI_Initiali
                 movea.l #EarlyStagePaletteOffsetList,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 rts
 ; End of function UI_InitializeResultsScreen
 ; ---------------------------------------------------------------------------
@@ -85,7 +85,7 @@ off_1CF72:      dc.w    UI_InitializeSEGAScreen-UI_InitializeSEGAScreen
 UI_InitializeSEGAScreen:                                ; DATA XREF: UI_DispatchMenuState+8   o  ; was: sub_1CF82
                                         ; ROM:off_1CF72   o
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
                 lea     (FrontendFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
@@ -142,7 +142,7 @@ loc_1D006:                                              ; CODE XREF: UI_Initiali
 loc_1D09E:                                              ; CODE XREF: UI_InitializeSEGAScreen+11E   j
                 move.l  (a0)+,(a1)+
                 dbf     d7,loc_1D09E
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 move.w  #$82,-(a0)
                 move.w  #$6000,-(a0)
                 move.l  #sega_tiles,d0
@@ -156,7 +156,7 @@ loc_1D09E:                                              ; CODE XREF: UI_Initiali
                 move.b  #$97,-(a0)
                 move.w  #$8F02,-(a0)
                 move.l  #$94039300,-(a0)
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move    #$2300,sr
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #$10,(a0)
@@ -167,7 +167,7 @@ loc_1D09E:                                              ; CODE XREF: UI_Initiali
                 move.w  #$120,$10(a0)
                 move.w  #$E8,$14(a0)
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 rts
 ; End of function UI_InitializeSEGAScreen
 ; Copies two palette lines between RAM buffers

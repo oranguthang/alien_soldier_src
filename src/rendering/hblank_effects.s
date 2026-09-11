@@ -2,12 +2,12 @@ VBlank_Epsilon1ScrollEffect:                            ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_198A
                 addq.w  #4,(word_FFF74E).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_19CC(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_198A:                                               ; CODE XREF: VBlank_Epsilon1ScrollEffect+4   j
                 move.w  (dword_FF8128).w,d1
                 neg.w   d1
@@ -21,10 +21,10 @@ loc_198A:                                               ; CODE XREF: VBlank_Epsi
                 move.w  #$E2,d1
 loc_19AA:                                               ; CODE XREF: VBlank_Epsilon1ScrollEffect+48   j
                 andi.w  #$FF,d1
-                move.b  d1,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
-                move.w  (word_FFF7E6).w,(VDP_CTRL).l
-                move.w  (word_FFF7D8).w,(VDP_CTRL).l
+                move.b  d1,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg11Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg4Shadow).w,(VDP_CTRL).l
                 rts
 ; End of function VBlank_Epsilon1ScrollEffect
 ; ---------------------------------------------------------------------------
@@ -121,14 +121,14 @@ VBlank_InitCutsceneEffect:                              ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_1AB2
                 addq.w  #4,(word_FFF74E).w
-                move.b  #3,(word_FFF7E4+1).w
+                move.b  #3,(VDPReg10Shadow+1).w
                 lea     stru_1AC8(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
+                ori.b   #$10,(VDPReg0Shadow+1).w
 loc_1AB2:                                               ; CODE XREF: VBlank_InitCutsceneEffect+4   j
                 move.w  (VDPReg7Shadow).w,(VDP_CTRL).l
-                move.w  (word_FFF7E8).w,(VDP_CTRL).l
+                move.w  (VDPReg12Shadow).w,(VDP_CTRL).l
                 movea.w #(word_FF9C00-M68K_RAM),a6
                 rts
 ; End of function VBlank_InitCutsceneEffect
@@ -150,15 +150,15 @@ Boss_DestroyerProtoUpdateSprites:                       ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_1B0E
                 addq.w  #4,(word_FFF74E).w
-                move.b  #1,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #1,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1418(pc),a0
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_1B0E:                                               ; CODE XREF: Boss_DestroyerProtoUpdateSprites+4   j
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     (word_FF9C00).w,a6
                 rts
 ; End of function Boss_DestroyerProtoUpdateSprites
@@ -167,17 +167,17 @@ Boss_ZLeoVBlankEffect:                                  ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_1B50
                 addq.w  #4,(word_FFF74E).w
-                move.b  #0,(word_FFF7E4+1).w
+                move.b  #0,(VDPReg10Shadow+1).w
                 lea     stru_1B6E(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_1B50:                                               ; CODE XREF: Boss_ZLeoVBlankEffect+4   j
-                move.w  (word_FFF7E6).w,(VDP_CTRL).l
-                move.w  (word_FFF7D4).w,(VDP_CTRL).l
+                move.w  (VDPReg11Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg2Shadow).w,(VDP_CTRL).l
                 lea     (word_FF9E40).w,a6
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 rts
 ; End of function Boss_ZLeoVBlankEffect
 ; ---------------------------------------------------------------------------
@@ -266,17 +266,17 @@ VBlank_InitStageEffect:                                 ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_1C4A
                 addq.w  #4,(word_FFF74E).w
-                move.b  #$80,(word_FFF7E4+1).w
+                move.b  #$80,(VDPReg10Shadow+1).w
                 lea     stru_1C6C(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_1C4A:                                               ; CODE XREF: VBlank_InitStageEffect+4   j
-                move.w  (word_FFF7D4).w,(VDP_CTRL).l
-                move.w  (word_FFF7D8).w,(VDP_CTRL).l
-                move.w  (word_FFF7F2).w,(VDP_CTRL).l
-                move.w  (word_FFF7F4).w,(VDP_CTRL).l
+                move.w  (VDPReg2Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg4Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg17Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg18Shadow).w,(VDP_CTRL).l
                 rts
 ; End of function VBlank_InitStageEffect
 ; ---------------------------------------------------------------------------

@@ -136,10 +136,10 @@ Sys_ClearEntityObjectPool_Loop:                         ; CODE XREF: Sys_ClearEn
 ; Queues VDP command for DMA
 VDP_QueueCommand:                                       ; CODE XREF: Scroll_UpdateSnakeBackground+64   p  ; was: sub_1B784
                 move.w  #$8F02,d3
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
 VDP_QueueCommand_Build:                                 ; CODE XREF: Boss_ShieldViperRenderBackground+32   j  ; was: loc_1B78C
                                         ; WeaponSetup_UpdateBackgroundEffect+190   j
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  d0,d1
                 moveq   #0,d2
                 roxl.w  #1,d0
@@ -165,7 +165,7 @@ VDP_QueueCommand_Build:                                 ; CODE XREF: Boss_Shield
                 move.b  #$97,-(a1)
                 move.w  d3,-(a1)
                 move.l  d4,-(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function VDP_QueueCommand
 ; Graphics update 2

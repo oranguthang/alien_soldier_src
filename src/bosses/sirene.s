@@ -403,7 +403,7 @@ Gfx_InitSireneBattleEffect:                             ; CODE XREF: Boss_Update
                 clr.b   $23(a0)
                 move.w  #$120,$10(a0)
                 move.w  #$F8,$14(a0)
-                move.b  #6,(word_FFF7E6+1).w
+                move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #$C,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
                 move.w  #0,(word_FFE320).w

@@ -3,7 +3,7 @@ Stage_InitGameOver:                                     ; DATA XREF: Sys_Dispatc
                 bne.s   loc_275E2
                 jsr     (Sys_InitGameMode).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
@@ -12,28 +12,28 @@ loc_275E2:                                              ; CODE XREF: Stage_InitG
                 clr.w   (GameSubstateIndex).w
                 move.w  #$4C,(word_FFF74A).w            ; 'L'
                 clr.w   (word_FFF74E).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 move.w  #$12,(word_FF8090).w
-                move.b  #$28,(word_FFF7D4+1).w          ; '('
-                move.b  #5,(word_FFF7D8+1).w
-                move.b  #0,(word_FFF7F4+1).w
-                move.b  #$11,(word_FFF7F0+1).w
+                move.b  #$28,(VDPReg2Shadow+1).w        ; '('
+                move.b  #5,(VDPReg4Shadow+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
+                move.b  #$11,(VDPReg16Shadow+1).w
                 lea     stru_27676(pc),a0
                 nop
                 jsr     (LoadObjData).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 move.w  #$2C,(word_FFE302).w            ; ','
                 move.w  #0,(word_FFE304).w
                 bsr.w   Gfx_InitDitherPatterns1
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$80,-(a1)
                 move.w  #$4020,-(a1)
                 move.w  #$9500,-(a1)
                 move.w  #$96CA,-(a1)
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009340,-(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 move.w  #1,(dword_FF807E).w
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
@@ -348,7 +348,7 @@ Stage_TunnelStartEffect:                                ; DATA XREF: Stage_Tunne
                 move.w  #4,(word_FF8090).w
                 move.w  #$10,(word_FFF74A).w
                 clr.w   (word_FFF74E).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 move.b  #$AA,d0
                 jsr     (Sound_PlaySFX).l

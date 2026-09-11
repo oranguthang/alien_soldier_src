@@ -62,21 +62,21 @@ Sprite_SetupDMA:                                        ; CODE XREF: Stage_InitT
                                         ; Stage_CaterpillarScrollHandler+4   p
                 tst.w   (word_FFA944).w
                 bmi.w   locret_10E12
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 move.w  (word_FFA946).w,d0
                 moveq   #$3F,d7                         ; '?'
 loc_10DC4:                                              ; CODE XREF: Sprite_SetupDMA+14   j
                 move.w  d0,(a0)+
                 dbf     d7,loc_10DC4
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 moveq   #$1F,d0
                 sub.w   (word_FFA944).w,d0
                 asl.w   #7,d0
                 add.w   (dword_FFA940).w,d0
                 move.w  d0,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -85,8 +85,8 @@ loc_10DC4:                                              ; CODE XREF: Sprite_Setu
                 move.b  #$96,-(a1)
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009340,-(a1)
-                move.w  a1,(word_FFF70C).w
-                addi.w  #$80,(word_FFF70E).w
+                move.w  a1,(VDPCommandQueueHead).w
+                addi.w  #$80,(VDPStagingDataCursor).w
                 subq.w  #1,(word_FFA944).w
 locret_10E12:                                           ; CODE XREF: Sprite_SetupDMA+4   j
                 rts
@@ -154,7 +154,7 @@ Scroll_UpdateStage14Scroll:                             ; CODE XREF: Stage_ShipD
                 move.l  d0,d1
                 swap    d1
 loc_10ECA:                                              ; CODE XREF: Gfx_CopyTileBlock8x8+40   j
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 moveq   #3,d7
 loc_10ED0:                                              ; CODE XREF: Scroll_UpdateStage14Scroll+36   j
                 move.w  #$83,-(a0)
@@ -172,12 +172,12 @@ loc_10ED0:                                              ; CODE XREF: Scroll_Upda
                 addq.w  #8,d0
                 addi.w  #$80,d1
                 dbf     d7,loc_10ED0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 rts
 ; End of function Scroll_UpdateStage14Scroll
 ; Sets up 4 VDP DMA commands for tile transfers
 VDP_SetupDMATransferQuad:
-                movea.w (word_FFF70C).w,a0              ; was: sub_10F06
+                movea.w (VDPCommandQueueHead).w,a0      ; was: sub_10F06
                 moveq   #3,d7
 loc_10F0C:                                              ; CODE XREF: VDP_SetupDMATransferQuad+3E   j
                 move.w  #$83,-(a0)
@@ -198,13 +198,13 @@ loc_10F0C:                                              ; CODE XREF: VDP_SetupDM
                 addq.w  #8,d0
                 addi.w  #$80,d1
                 dbf     d7,loc_10F0C
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 rts
 ; End of function VDP_SetupDMATransferQuad
 ; Loads compressed tile data to VRAM
 Gfx_LoadCompressedTiles:                                ; CODE XREF: Cutscene_FadeOutCredits+3C   p  ; was: sub_10F4E
                                         ; Cutscene_LoadShipTiles1+6   p
-                move.w  (word_FFF70E).w,(word_FF805C).w
+                move.w  (VDPStagingDataCursor).w,(word_FF805C).w
                 move.l  #$94009300,(dword_FF8058).w
                 moveq   #0,d0
                 move.b  4(a0),d0
@@ -217,8 +217,8 @@ Gfx_LoadCompressedTiles:                                ; CODE XREF: Cutscene_Fa
                 move.w  d0,(dword_FF805E).w
                 movea.l a0,a1
                 adda.l  #6,a1
-                movea.w (word_FFF70E).w,a3
-                movea.w (word_FFF70C).w,a4
+                movea.w (VDPStagingDataCursor).w,a3
+                movea.w (VDPCommandQueueHead).w,a4
                 moveq   #0,d4
                 moveq   #0,d7
                 move.b  5(a0),d7
@@ -245,8 +245,8 @@ loc_10F9C:                                              ; CODE XREF: Gfx_LoadCom
                 andi.w  #$EFFE,d2
                 add.w   d4,d2
                 move.w  d2,-(a4)
-                move.b  (word_FFF70E).w,d2
-                move.b  (word_FFF70E+1).w,d3
+                move.b  (VDPStagingDataCursor).w,d2
+                move.b  (VDPStagingDataCursor+1).w,d3
                 asr.b   #1,d2
                 roxr.b  #1,d3
                 move.b  d3,-(a4)
@@ -255,13 +255,13 @@ loc_10F9C:                                              ; CODE XREF: Gfx_LoadCom
                 move.b  #$96,-(a4)
                 move.l  #$8F02977F,-(a4)
                 move.l  (dword_FF8058).w,-(a4)
-                move.w  a3,(word_FFF70E).w
+                move.w  a3,(VDPStagingDataCursor).w
                 addq.w  #8,d1
                 addi.w  #$80,d4
                 dbf     d6,loc_10F92
                 adda.w  (dword_FF805E).w,a1
                 dbf     d7,loc_10F8E
-                move.w  a4,(word_FFF70C).w
+                move.w  a4,(VDPCommandQueueHead).w
                 btst    #0,1(a0)
                 beq.s   locret_11044
                 movea.w (word_FF805C).w,a1
@@ -292,7 +292,7 @@ locret_11044:                                           ; CODE XREF: Gfx_LoadCom
 ; Sets sprite pattern index
 Gfx_SetSpritePattern:                                   ; CODE XREF: Stage_InitStage17Boss+98   p  ; was: sub_11046
                                         ; Boss_ZLeoLoadInitialTilesAndPatterns+12   j
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
 loc_1104A:                                              ; CODE XREF: Gfx_SetSpritePattern+C   j
                 move.w  d0,$E(a0)
                 lea     $10(a0),a0
@@ -302,7 +302,7 @@ loc_1104A:                                              ; CODE XREF: Gfx_SetSpri
 ; DMA transfers tile data to VRAM with VDP commands
 Gfx_DMATransferTiles:                                   ; CODE XREF: Stage_FlyingNeoSpawn+24   j  ; was: sub_11058
                                         ; Gfx_LoadWolfGaropaTiles+6   p
-                move.w  (word_FFF70E).w,(word_FF805C).w
+                move.w  (VDPStagingDataCursor).w,(word_FF805C).w
                 move.l  #$94009300,(dword_FF8058).w
                 moveq   #0,d0
                 move.b  5(a0),d0
@@ -314,8 +314,8 @@ Gfx_DMATransferTiles:                                   ; CODE XREF: Stage_Flyin
                 move.w  d0,(dword_FF805E).w
                 movea.l a0,a1
                 adda.l  #6,a1
-                movea.w (word_FFF70E).w,a3
-                movea.w (word_FFF70C).w,a4
+                movea.w (VDPStagingDataCursor).w,a3
+                movea.w (VDPCommandQueueHead).w,a4
                 moveq   #0,d4
                 moveq   #0,d7
                 move.b  4(a0),d7
@@ -347,8 +347,8 @@ loc_110AC:                                              ; CODE XREF: Gfx_DMATran
                 andi.w  #$EFFE,d2
                 add.w   d4,d2
                 move.w  d2,-(a4)
-                move.b  (word_FFF70E).w,d2
-                move.b  (word_FFF70E+1).w,d3
+                move.b  (VDPStagingDataCursor).w,d2
+                move.b  (VDPStagingDataCursor+1).w,d3
                 asr.b   #1,d2
                 roxr.b  #1,d3
                 move.b  d3,-(a4)
@@ -357,13 +357,13 @@ loc_110AC:                                              ; CODE XREF: Gfx_DMATran
                 move.b  #$96,-(a4)
                 move.l  #$8F80977F,-(a4)
                 move.l  (dword_FF8058).w,-(a4)
-                move.w  a3,(word_FFF70E).w
+                move.w  a3,(VDPStagingDataCursor).w
                 addq.w  #2,d1
                 addq.w  #2,d4
                 dbf     d6,loc_1109A
                 addq.w  #1,a1
                 dbf     d7,loc_11096
-                move.w  a4,(word_FFF70C).w
+                move.w  a4,(VDPCommandQueueHead).w
                 btst    #0,1(a0)
                 beq.s   locret_11158
                 movea.w (word_FF805C).w,a1

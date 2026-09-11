@@ -411,7 +411,7 @@ Boss_FlyingNeoFillPlaneHorizontalScrollRegion:          ; CODE XREF: Boss_Flying
 ; End of function Boss_FlyingNeoBuildLineScrollTables
 ; Fills a 28-word row with tile $193 and queues its transfer
 Boss_FlyingNeoQueueFixedTileRowTransfer:                ; CODE XREF: Boss_FlyingNeoDefeatLaunchType88PartState+1C   p  ; was: sub_3CC56
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 moveq   #$1B,d7
 Boss_FlyingNeoFillFixedTileRow:                         ; CODE XREF: Boss_FlyingNeoQueueFixedTileRowTransfer+A   j  ; was: loc_3CC5C
                 move.w  #$193,(a0)+
@@ -419,7 +419,7 @@ Boss_FlyingNeoFillFixedTileRow:                         ; CODE XREF: Boss_Flying
                 bra.s   Boss_FlyingNeoQueueTileRowTransfer
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoQueueAnimatedTileRowTransfer:             ; CODE XREF: Boss_FlyingNeoUpdateSprites+40   j  ; was: loc_3CC66
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 moveq   #$1B,d7
                 lea     Boss_FlyingNeoTileRowPatternA(pc),a1
                 nop
@@ -437,11 +437,11 @@ Boss_FlyingNeoCopyTileRowPattern:                       ; CODE XREF: Boss_Flying
                 dbf     d7,Boss_FlyingNeoCopyTileRowPattern
 ; Queues a 56-byte transfer from the row buffer to VRAM $6B80
 Boss_FlyingNeoQueueTileRowTransfer:                     ; CODE XREF: Boss_FlyingNeoQueueFixedTileRowTransfer+E   j  ; was: loc_3CC92
-                movea.w (word_FFF70C).w,a4
+                movea.w (VDPCommandQueueHead).w,a4
                 move.w  #$83,-(a4)
                 move.w  #$6B80,-(a4)
-                move.b  (word_FFF70E).w,d2
-                move.b  (word_FFF70E+1).w,d3
+                move.b  (VDPStagingDataCursor).w,d2
+                move.b  (VDPStagingDataCursor+1).w,d3
                 asr.b   #1,d2
                 roxr.b  #1,d3
                 move.b  d3,-(a4)
@@ -450,8 +450,8 @@ Boss_FlyingNeoQueueTileRowTransfer:                     ; CODE XREF: Boss_Flying
                 move.b  #$96,-(a4)
                 move.l  #$8F02977F,-(a4)
                 move.l  #$9400931C,-(a4)
-                move.w  a4,(word_FFF70C).w
-                addi.w  #$38,(word_FFF70E).w            ; '8'
+                move.w  a4,(VDPCommandQueueHead).w
+                addi.w  #$38,(VDPStagingDataCursor).w   ; '8'
                 rts
 ; End of function Boss_FlyingNeoQueueFixedTileRowTransfer
 ; ---------------------------------------------------------------------------

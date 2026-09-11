@@ -63,7 +63,7 @@ loc_10A14:                                              ; CODE XREF: Gfx_RenderS
                 move.b  (a1,d2.w),d4
                 lsl.w   #5,d4
                 move.w  d0,d2
-                move.w  (word_FFF70E).w,d3
+                move.w  (VDPStagingDataCursor).w,d3
                 lsr.w   #2,d2
                 andi.w  #$78,d2                         ; 'x'
                 add.w   d2,d3
@@ -91,12 +91,12 @@ loc_10A88:                                              ; CODE XREF: Gfx_RenderS
                 move.w  d1,d2
                 lsl.w   #4,d2
                 andi.w  #$F80,d2
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 add.w   $E(a0),d2
                 move.w  d2,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -105,8 +105,8 @@ loc_10A88:                                              ; CODE XREF: Gfx_RenderS
                 move.b  #$96,-(a1)
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009340,-(a1)
-                move.w  a1,(word_FFF70C).w
-                addi.w  #$80,(word_FFF70E).w
+                move.w  a1,(VDPCommandQueueHead).w
+                addi.w  #$80,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_RenderSylpheedBackground
 ; Gets background scroll position
@@ -264,7 +264,7 @@ loc_10C28:                                              ; CODE XREF: Gfx_RenderS
                 move.b  (a1,d2.w),d4
                 lsl.w   #5,d4
                 move.w  d0,d2
-                move.w  (word_FFF70E).w,d3
+                move.w  (VDPStagingDataCursor).w,d3
                 lsr.w   #2,d2
                 andi.w  #$78,d2                         ; 'x'
                 add.w   d2,d3
@@ -300,12 +300,12 @@ loc_10CBA:                                              ; CODE XREF: Gfx_RenderS
                 move.w  d1,d2
                 lsl.w   #4,d2
                 andi.w  #$F80,d2
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 add.w   $E(a0),d2
                 move.w  d2,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -314,8 +314,8 @@ loc_10CBA:                                              ; CODE XREF: Gfx_RenderS
                 move.b  #$96,-(a1)
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009340,-(a1)
-                move.w  a1,(word_FFF70C).w
-                addi.w  #$80,(word_FFF70E).w
+                move.w  a1,(VDPCommandQueueHead).w
+                addi.w  #$80,(VDPStagingDataCursor).w
                 subq.w  #8,(word_FFA948).w
                 subq.w  #1,(word_FFA944).w
                 rts

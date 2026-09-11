@@ -4,11 +4,11 @@ Gfx_SetupTitleScreenLetters:                            ; DATA XREF: ROM:0000498
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
-                move.b  #0,(word_FFF7F4+1).w
+                clr.b   (PaletteDMAHIntEnabled).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 clr.w   (word_FFF74A).w
                 clr.w   (word_FFF74E).w
-                move.b  #0,(word_FFF7E6+1).w
+                move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
                 jsr     (VDP_SetupDMA).l
@@ -102,7 +102,7 @@ Sys_ReleaseZ80BusAndAdvance:                            ; CODE XREF: Gfx_SetupTi
                 move    (sp)+,sr
                 move    #$2300,sr
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_SetupTitleScreenLetters
@@ -241,9 +241,9 @@ loc_4E5C:                                               ; CODE XREF: Gfx_Animate
                 bra.w   loc_4E56
 ; ---------------------------------------------------------------------------
 loc_4E70:                                               ; CODE XREF: Gfx_AnimateLettersExpand+122   j
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$10,a0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move.l  #$94059300,(a0)+
                 move.l  #$8F02977F,(a0)+
                 move.l  #$96889500,(a0)+
@@ -342,7 +342,7 @@ Sys_CompleteZ80BusReleaseAndAdvance:                    ; CODE XREF: Gfx_Animate
                 move    (sp)+,sr
                 move    #$2300,sr
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function Gfx_AnimateLettersExpand
@@ -473,7 +473,7 @@ Sys_ExitStoryScreen:                                    ; DATA XREF: ROM:0000498
                 bclr    #1,(word_FF80F4).w
                 beq.w   locret_514E
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
 locret_514E:                                            ; CODE XREF: UI_WaitForTimerAndButton+8   j

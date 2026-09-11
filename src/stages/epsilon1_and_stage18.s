@@ -198,7 +198,7 @@ Scroll_UpdateSnakeBackground:                           ; CODE XREF: Stage_Telep
                 nop
                 lea     word_E3EC(pc),a2
                 nop
-                movea.w (word_FFF70E).w,a4
+                movea.w (VDPStagingDataCursor).w,a4
                 moveq   #3,d7
 loc_E364:                                               ; CODE XREF: Scroll_UpdateSnakeBackground+56   j
                 bsr.w   Scroll_AccumulateOffset
@@ -225,7 +225,7 @@ loc_E386:                                               ; CODE XREF: Scroll_Upda
                 move.w  #$1BC0,d0
                 move.l  #$94009310,d4
                 jsr     (VDP_QueueCommand).l
-                addi.w  #$20,(word_FFF70E).w            ; ' '
+                addi.w  #$20,(VDPStagingDataCursor).w   ; ' '
                 rts
 ; End of function Scroll_UpdateSnakeBackground
 ; Accumulates scroll offset from acceleration table for snake background

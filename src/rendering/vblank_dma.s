@@ -1,4 +1,5 @@
-Gfx_VBlankDMATransfer:                                  ; CODE XREF: Sys_VBlankHandler+1C   p  ; was: sub_D12
+; Runs the fixed sprite, palette, queued-command, and scroll transfers during VBlank
+Gfx_RunVBlankTransfers:                                 ; CODE XREF: Sys_VBlankHandler+1C   p  ; was: sub_D12
                 move    sr,-(sp)
                 move    #$2700,sr
                 lea     (VDP_CTRL).l,a0
@@ -14,8 +15,8 @@ Gfx_VBlankDMATransfer:                                  ; CODE XREF: Sys_VBlankH
                                         ; DO_OPERATION_USING_DMA
                 move.w  (VDPCommand).w,(a0)
                 move.w  (VDPCommand+2).w,(a0)
-                tst.b   (byte_FFF755).w
-                bne.w   loc_D7E
+                tst.b   (PaletteDMAHIntEnabled).w
+                bne.w   Gfx_RunVBlankTransfers_UploadPalette
                 move.w  #$8F02,(a0)
                 move.l  #$C0000000,(a0)
                 lea     (VDP_DATA).l,a1
@@ -24,12 +25,12 @@ Gfx_VBlankDMATransfer:                                  ; CODE XREF: Sys_VBlankH
                 swap    d1
                 move.w  d0,d1
                 move.w  #$1F,d0
-loc_D74:                                                ; CODE XREF: Gfx_VBlankDMATransfer+64   j
+Gfx_RunVBlankTransfers_FillCRAMLoop:                    ; CODE XREF: Gfx_RunVBlankTransfers+64   j  ; was: loc_D74
                 move.l  d1,(a1)
-                dbf     d0,loc_D74
-                bra.w   loc_DA4
+                dbf     d0,Gfx_RunVBlankTransfers_FillCRAMLoop
+                bra.w   Gfx_RunVBlankTransfers_FlushCommandQueue
 ; ---------------------------------------------------------------------------
-loc_D7E:                                                ; CODE XREF: Gfx_VBlankDMATransfer+40   j
+Gfx_RunVBlankTransfers_UploadPalette:                   ; CODE XREF: Gfx_RunVBlankTransfers+40   j  ; was: loc_D7E
                 move.w  #$8F02,(a0)
                 move.l  #$93409400,(a0)
                 move.w  #$9580,(a0)
@@ -39,31 +40,31 @@ loc_D7E:                                                ; CODE XREF: Gfx_VBlankD
                                         ; DO_OPERATION_USING_DMA
                 move.w  (VDPCommand).w,(a0)
                 move.w  (VDPCommand+2).w,(a0)
-loc_DA4:                                                ; CODE XREF: Gfx_VBlankDMATransfer+68   j
+Gfx_RunVBlankTransfers_FlushCommandQueue:               ; CODE XREF: Gfx_RunVBlankTransfers+68   j  ; was: loc_DA4
                 lea     (word_FFF400).w,a2
-                movea.w (word_FFF70C).w,a3
+                movea.w (VDPCommandQueueHead).w,a3
                 cmpa.w  a2,a3
-                beq.w   loc_DC8
-loc_DB2:                                                ; CODE XREF: Gfx_VBlankDMATransfer+AC   j
+                beq.w   Gfx_RunVBlankTransfers_UploadHorizontalScroll
+Gfx_RunVBlankTransfers_CommandLoop:                     ; CODE XREF: Gfx_RunVBlankTransfers+AC   j  ; was: loc_DB2
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.w  (a3)+,(a0)
                 move.w  (a3)+,(a0)
                 cmpa.w  a2,a3
-                bne.s   loc_DB2
-                move.w  a3,(word_FFF70C).w
-                move.w  a3,(word_FFF70E).w
-loc_DC8:                                                ; CODE XREF: Gfx_VBlankDMATransfer+9C   j
+                bne.s   Gfx_RunVBlankTransfers_CommandLoop
+                move.w  a3,(VDPCommandQueueHead).w
+                move.w  a3,(VDPStagingDataCursor).w
+Gfx_RunVBlankTransfers_UploadHorizontalScroll:          ; CODE XREF: Gfx_RunVBlankTransfers+9C   j  ; was: loc_DC8
                 move.w  #$8F02,(a0)
-                btst    #1,(word_FFF7E6+1).w
-                bne.s   loc_DDC
+                btst    #1,(VDPReg11Shadow+1).w
+                bne.s   Gfx_RunVBlankTransfers_UsePerLineHScrollLength
                 move.l  #$93029400,(a0)
-                bra.s   loc_DE2
+                bra.s   Gfx_RunVBlankTransfers_StartHorizontalScrollDMA
 ; ---------------------------------------------------------------------------
-loc_DDC:                                                ; CODE XREF: Gfx_VBlankDMATransfer+C0   j
+Gfx_RunVBlankTransfers_UsePerLineHScrollLength:         ; CODE XREF: Gfx_RunVBlankTransfers+C0   j  ; was: loc_DDC
                 move.l  #$93C09401,(a0)
-loc_DE2:                                                ; CODE XREF: Gfx_VBlankDMATransfer+C8   j
+Gfx_RunVBlankTransfers_StartHorizontalScrollDMA:        ; CODE XREF: Gfx_RunVBlankTransfers+C8   j  ; was: loc_DE2
                 move.w  #$9500,(a0)
                 move.w  #$96F2,(a0)
                 move.w  #$977F,(a0)
@@ -72,14 +73,14 @@ loc_DE2:                                                ; CODE XREF: Gfx_VBlankD
                 move.w  (VDPCommand).w,(a0)
                 move.w  (VDPCommand+2).w,(a0)
                 move.w  #$8F02,(a0)
-                btst    #2,(word_FFF7E6+1).w
-                bne.s   loc_E12
+                btst    #2,(VDPReg11Shadow+1).w
+                bne.s   Gfx_RunVBlankTransfers_UsePerColumnVScrollLength
                 move.l  #$93029400,(a0)
-                bra.s   loc_E18
+                bra.s   Gfx_RunVBlankTransfers_StartVerticalScrollDMA
 ; ---------------------------------------------------------------------------
-loc_E12:                                                ; CODE XREF: Gfx_VBlankDMATransfer+F6   j
+Gfx_RunVBlankTransfers_UsePerColumnVScrollLength:       ; CODE XREF: Gfx_RunVBlankTransfers+F6   j  ; was: loc_E12
                 move.l  #$93289400,(a0)
-loc_E18:                                                ; CODE XREF: Gfx_VBlankDMATransfer+FE   j
+Gfx_RunVBlankTransfers_StartVerticalScrollDMA:          ; CODE XREF: Gfx_RunVBlankTransfers+FE   j  ; was: loc_E18
                 move.w  #$9500,(a0)
                 move.w  #$96F6,(a0)
                 move.w  #$977F,(a0)
@@ -89,35 +90,35 @@ loc_E18:                                                ; CODE XREF: Gfx_VBlankD
                 move.w  (VDPCommand+2).w,(a0)
                 movea.w #(dword_FF84A0-M68K_RAM),a3
                 tst.w   (a3)
-                beq.s   loc_E46
+                beq.s   Gfx_RunVBlankTransfers_CheckOptionalCommandBlock2
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.w  (a3)+,(a0)
                 move.w  (a3)+,(a0)
-loc_E46:                                                ; CODE XREF: Gfx_VBlankDMATransfer+128   j
+Gfx_RunVBlankTransfers_CheckOptionalCommandBlock2:      ; CODE XREF: Gfx_RunVBlankTransfers+128   j  ; was: loc_E46
                 movea.w #(dword_FF8560-M68K_RAM),a3
                 tst.w   (a3)
-                beq.s   loc_E58
+                beq.s   Gfx_RunVBlankTransfers_CheckOptionalCommandBlock3
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.w  (a3)+,(a0)
                 move.w  (a3)+,(a0)
-loc_E58:                                                ; CODE XREF: Gfx_VBlankDMATransfer+13A   j
+Gfx_RunVBlankTransfers_CheckOptionalCommandBlock3:      ; CODE XREF: Gfx_RunVBlankTransfers+13A   j  ; was: loc_E58
                 movea.w #(dword_FF8500-M68K_RAM),a3
                 tst.w   (a3)
-                beq.s   loc_E6A
+                beq.s   Gfx_RunVBlankTransfers_CheckConditionalCommandBlock
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.w  (a3)+,(a0)
                 move.w  (a3)+,(a0)
-loc_E6A:                                                ; CODE XREF: Gfx_VBlankDMATransfer+14C   j
+Gfx_RunVBlankTransfers_CheckConditionalCommandBlock:    ; CODE XREF: Gfx_RunVBlankTransfers+14C   j  ; was: loc_E6A
                 move.w  (word_FFA21E).w,d0
-                beq.s   loc_E8A
+                beq.s   Gfx_RunVBlankTransfers_Finish
                 cmpi.w  #1,(word_FFA21E).w
-                bne.s   loc_E8A
+                bne.s   Gfx_RunVBlankTransfers_Finish
                 clr.w   (word_FFA21E).w
                 movea.w #(byte_FF8478-M68K_RAM),a3
                 move.l  (a3)+,(a0)
@@ -125,42 +126,41 @@ loc_E6A:                                                ; CODE XREF: Gfx_VBlankD
                 move.l  (a3)+,(a0)
                 move.w  (a3)+,(a0)
                 move.w  (a3)+,(a0)
-loc_E8A:                                                ; CODE XREF: Gfx_VBlankDMATransfer+15C   j
-                                        ; Gfx_VBlankDMATransfer+164   j
+Gfx_RunVBlankTransfers_Finish:                          ; CODE XREF: Gfx_RunVBlankTransfers+15C   j  ; was: loc_E8A
+                                        ; Gfx_RunVBlankTransfers+164   j
                 move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a0)
                 move    (sp)+,sr
-                clr.b   (byte_FFF754).w
+                clr.b   (VDPTransferPending).w
                 rts
-; End of function Gfx_VBlankDMATransfer
-; Writes VDP register values from RAM buffer to hardware
-Gfx_ApplyVDPSettings:                                   ; CODE XREF: Sys_VBlankHandler+20   p  ; was: sub_E9C
+; End of function Gfx_RunVBlankTransfers
+; Writes the persistent register-command shadows used by the frame renderer
+Gfx_ApplyVDPRegisterShadows:                            ; CODE XREF: Sys_VBlankHandler+20   p  ; was: sub_E9C
                 lea     (VDP_CTRL).l,a0
                 move.w  (VDPReg1Shadow).w,(a0)
-                move.w  (word_FFF7D4).w,(a0)
-                move.w  (word_FFF7D6).w,(a0)
-                move.w  (word_FFF7D8).w,(a0)
-                move.w  (word_FFF7DA).w,(a0)
+                move.w  (VDPReg2Shadow).w,(a0)
+                move.w  (VDPReg3Shadow).w,(a0)
+                move.w  (VDPReg4Shadow).w,(a0)
+                move.w  (VDPReg5Shadow).w,(a0)
                 move.w  (VDPReg7Shadow).w,(a0)
-                move.w  (word_FFF7E4).w,(a0)
-                move.w  (word_FFF7E6).w,(a0)
-                move.w  (word_FFF7E8).w,(a0)
-                move.w  (word_FFF7EA).w,(a0)
-                move.w  (word_FFF7EE).w,(a0)
-                move.w  (word_FFF7F0).w,(a0)
-                move.w  (word_FFF7F2).w,(a0)
-                move.w  (word_FFF7F4).w,(a0)
+                move.w  (VDPReg10Shadow).w,(a0)
+                move.w  (VDPReg11Shadow).w,(a0)
+                move.w  (VDPReg12Shadow).w,(a0)
+                move.w  (VDPReg13Shadow).w,(a0)
+                move.w  (VDPReg15Shadow).w,(a0)
+                move.w  (VDPReg16Shadow).w,(a0)
+                move.w  (VDPReg17Shadow).w,(a0)
+                move.w  (VDPReg18Shadow).w,(a0)
                 rts
-; End of function Gfx_ApplyVDPSettings
-; Updates VDP display register handling display enable flag
-Gfx_UpdateVDPDisplay:                                   ; CODE XREF: VBLANK+48   p  ; was: sub_EDC
-                move.w  (word_FFF7D0).w,d0
-                tst.b   (byte_FFF755).w
-                bne.w   loc_EEC
+; End of function Gfx_ApplyVDPRegisterShadows
+; Applies the register 0 shadow, suppressing horizontal interrupts while palette DMA is disabled
+Gfx_ApplyHInterruptState:                               ; CODE XREF: VBLANK+48   p  ; was: sub_EDC
+                move.w  (VDPReg0Shadow).w,d0
+                tst.b   (PaletteDMAHIntEnabled).w
+                bne.w   Gfx_ApplyHInterruptState_WriteReg0
                 bclr    #4,d0
-loc_EEC:                                                ; CODE XREF: Gfx_UpdateVDPDisplay+8   j
+Gfx_ApplyHInterruptState_WriteReg0:                     ; CODE XREF: Gfx_ApplyHInterruptState+8   j  ; was: loc_EEC
                 move.w  d0,(VDP_CTRL).l
                 rts
-; End of function Gfx_UpdateVDPDisplay
-; Updates palette fade effect by adjusting RGB color components
+; End of function Gfx_ApplyHInterruptState

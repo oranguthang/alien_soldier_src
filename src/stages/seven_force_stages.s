@@ -12,7 +12,7 @@ Stage_Stage20Init:                                      ; DATA XREF: ROM:0000E4A
                 movea.w #(word_FFDC40-M68K_RAM),a0
                 move.w  #$428,(a0)
                 move.w  #2,4(a0)
-                move.b  #2,(word_FFF7E6+1).w
+                move.b  #2,(VDPReg11Shadow+1).w
                 move.b  #4,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
                 rts

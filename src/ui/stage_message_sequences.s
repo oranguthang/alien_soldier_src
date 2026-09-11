@@ -485,14 +485,14 @@ Message_CopyGlyphTile:                                  ; CODE XREF: Message_Loa
 Message_CopyGlyphTileLoop:                              ; CODE XREF: Message_LoadNextGlyphTile+2A   j  ; was: loc_B3B4
                 move.l  (a0)+,(a1)+
                 dbf     d7,Message_CopyGlyphTileLoop
-                movea.w (word_FFF70C).w,a5
+                movea.w (VDPCommandQueueHead).w,a5
                 move.w  #$83,-(a5)
                 move.w  (word_FF80C4).w,-(a5)
                 move.w  #$9580,-(a5)
                 move.w  #$96D1,-(a5)
                 move.l  #$8F02977F,-(a5)
                 move.l  #$94009320,-(a5)
-                move.w  a5,(word_FFF70C).w
+                move.w  a5,(VDPCommandQueueHead).w
                 addi.w  #$40,(word_FF80C4).w            ; '@'
                 rts
 ; End of function Message_LoadNextGlyphTile
@@ -561,7 +561,7 @@ BossMessage_StartReadyFightBanner:                      ; CODE XREF: BossMessage
                 move.w  #$1E,(MessageSequenceState).w
                 move.l  #BattleBanner_GlyphSourceList,(dword_FF80CE).w
                 move.w  #$5400,(word_FF80C4).w
-                move.b  #4,(word_FFF7F4+1).w
+                move.b  #4,(VDPReg18Shadow+1).w
                 rts
 ; ---------------------------------------------------------------------------
 BossMessage_SelectScript:                               ; CODE XREF: BossMessage_Start+14   j  ; was: loc_B480

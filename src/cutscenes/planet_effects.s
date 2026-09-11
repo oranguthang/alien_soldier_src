@@ -135,7 +135,7 @@ Cutscene_SegaScreenFadeOut:                             ; DATA XREF: ROM:00007C4
                 cmpi.w  #$FFF2,(word_FF010C).l
                 bne.w   locret_514E
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_ClearEntityObjectPool).l
                 move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 move.w  #$800,(word_FFA946).w
@@ -161,7 +161,7 @@ Cutscene_InitPlanetScene:                               ; DATA XREF: ROM:00007C4
                 lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$FFF2,(word_FF010C).l
-                move.b  #6,(word_FFF7E6+1).w
+                move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95A).w
                 clr.l   (dword_FF0110).l
                 clr.l   (dword_FF0114).l
@@ -219,7 +219,7 @@ loc_7FEE:                                               ; CODE XREF: Cutscene_In
                 clr.w   (word_FF00C6).l
                 jsr     Cutscene_PlanetRotate(pc)       ; (pc)
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 bsr.w   Cutscene_ResetPlanetFade
                 addq.w  #2,(dword_FF8128+2).w
                 rts
@@ -636,7 +636,7 @@ Cutscene_PlanetZoomFadeOut:                             ; DATA XREF: ROM:00007C4
                 cmpi.w  #$FFF2,(word_FF010C).l
                 bne.w   locret_514E
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 move.w  #1,(dword_FF8128).w
                 rts
 ; End of function Cutscene_PlanetZoomFadeOut

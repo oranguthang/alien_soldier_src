@@ -436,7 +436,7 @@ Boss_JampanFadeDefeatPaletteOutState:                   ; DATA XREF: ROM:0004923
                 bne.s   Boss_JampanFadeDefeatPaletteOutReturn
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 addq.w  #2,4(a5)
 Boss_JampanFadeDefeatPaletteOutReturn:                  ; CODE XREF: Boss_JampanFadeDefeatPaletteOutState+C   j
                 rts

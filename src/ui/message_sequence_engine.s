@@ -95,7 +95,7 @@ MessageSequence_FinalizeScriptGraphics:                 ; CODE XREF: BattleBanne
 ; End of function MessageSequence_FinishScript
 ; Queues three fixed font-base tile transfers from ROM `$180060-$180083`
 Message_QueueFontBaseTileDMAs:                          ; CODE XREF: MessageSequence_FinishScript+A   p  ; was: sub_AA26
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.l  #$180060,d0
                 move.w  #$5080,d7
                 bsr.s   Message_QueueFontBaseTileDMA
@@ -105,7 +105,7 @@ Message_QueueFontBaseTileDMAs:                          ; CODE XREF: MessageSequ
                 move.l  #$180078,d0
                 move.w  #$5180,d7
                 bsr.s   Message_QueueFontBaseTileDMA
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function Message_QueueFontBaseTileDMAs
 ; Queues one fixed font-base tile transfer to the supplied VRAM destination
@@ -251,12 +251,12 @@ MessageSequence_Idle:                                   ; DATA XREF: ROM:Message
 ; End of function MessageSequence_Idle
 ; Queues two fixed script-tilemap DMA transfers
 Message_QueueScriptTilemapDMAs:                         ; was: sub_ABD2
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$5290,d0
                 bsr.s   Message_QueueScriptTilemapDMA
                 move.w  #$5310,d0
                 bsr.s   Message_QueueScriptTilemapDMA
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function Message_QueueScriptTilemapDMAs
 ; Queues one script-tilemap transfer to the supplied VRAM destination
@@ -282,14 +282,14 @@ Message_QueueScriptTilemapDMA:                          ; CODE XREF: Message_Que
 ; Queues the three fixed font-tile transfers used by message scripts
 Message_QueueFontTileDMAs:                              ; CODE XREF: MessageScript_Begin+A   p  ; was: sub_AC20
                                         ; MessageScript_WaitAndRefreshGlyph+10   p
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$5080,d0
                 bsr.s   Message_QueueFontTileDMA
                 move.w  #$5100,d0
                 bsr.s   Message_QueueFontTileDMA
                 move.w  #$5180,d0
                 bsr.s   Message_QueueFontTileDMA
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function Message_QueueFontTileDMAs
 ; Queues one font-tile transfer from ROM `$180000`
@@ -367,22 +367,22 @@ MessageScript_CheckGlyphNibble8:                        ; CODE XREF: MessageScri
 MessageScript_StoreGlyphRow:                            ; CODE XREF: MessageScript_RenderGlyph+88   j  ; was: loc_AD02
                 move.l  d2,(a1)+
                 dbf     d7,MessageScript_CopyGlyphRowLoop
-                movea.w (word_FFF70C).w,a5
+                movea.w (VDPCommandQueueHead).w,a5
                 move.w  #$83,-(a5)
                 move.w  (word_FF80C4).w,-(a5)
                 move.w  #$9580,-(a5)
                 move.w  #$96D1,-(a5)
                 move.l  #$8F02977F,-(a5)
                 move.l  #$94009320,-(a5)
-                movea.w (word_FFF70E).w,a0
+                movea.w (VDPStagingDataCursor).w,a0
                 move.w  (word_FF80D2).w,d0
                 move.w  d0,(a0)+
                 addq.w  #1,d0
                 move.w  d0,(a0)+
                 move.w  #$83,-(a5)
                 move.w  (word_FF80CC).w,-(a5)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a5)
@@ -391,8 +391,8 @@ MessageScript_StoreGlyphRow:                            ; CODE XREF: MessageScri
                 move.b  #$96,-(a5)
                 move.l  #$8F80977F,-(a5)
                 move.l  #$94009302,-(a5)
-                move.w  a5,(word_FFF70C).w
-                addq.w  #4,(word_FFF70E).w
+                move.w  a5,(VDPCommandQueueHead).w
+                addq.w  #4,(VDPStagingDataCursor).w
                 addi.w  #$40,(word_FF80C4).w            ; '@'
                 addq.l  #1,(dword_FF80CE).w
                 addq.w  #2,(word_FF80CC).w
@@ -430,7 +430,7 @@ MessageScript_QueueTilemapDMA:                          ; CODE XREF: MessageScri
                 move.w  -4(a0),d1
                 andi.w  #$E000,d1
                 move.w  d1,(word_FF80D4).w
-                movea.w (word_FFF70C).w,a5
+                movea.w (VDPCommandQueueHead).w,a5
                 move.w  #$83,-(a5)
                 move.w  #$5E00,-(a5)
                 lsr.l   #1,d0
@@ -445,7 +445,7 @@ MessageScript_QueueTilemapDMA:                          ; CODE XREF: MessageScri
                 move.b  #$97,-(a5)
                 move.w  #$8F02,-(a5)
                 move.l  #$94019300,-(a5)
-                move.w  a5,(word_FFF70C).w
+                move.w  a5,(VDPCommandQueueHead).w
                 rts
 ; End of function MessageScript_QueueTilemapDMA
 ; Writes one four-word chunk of the script-provided tilemap
@@ -463,7 +463,7 @@ MessageScript_SelectTilemapHalf:                        ; CODE XREF: MessageScri
                 beq.s   MessageScript_WriteTilemapChunk
                 addq.w  #8,d0
 MessageScript_WriteTilemapChunk:                        ; CODE XREF: MessageScript_RenderTilemapChunk+1E   j  ; was: loc_AE30
-                movea.w (word_FFF70E).w,a1
+                movea.w (VDPStagingDataCursor).w,a1
                 move.w  MessageScript_TileIndexGroups(pc,d0.w),d1
                 add.w   d2,d1
                 move.w  d1,(a1)+
@@ -473,11 +473,11 @@ MessageScript_WriteTilemapChunk:                        ; CODE XREF: MessageScri
                 move.w  d1,(a1)+
                 addq.w  #1,d1
                 move.w  d1,(a1)+
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 move.w  MessageScript_TilemapVRAMDestinations(pc,d3.w),-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -486,8 +486,8 @@ MessageScript_WriteTilemapChunk:                        ; CODE XREF: MessageScri
                 move.b  #$96,-(a1)
                 move.l  #$8F80977F,-(a1)
                 move.l  #$94009304,-(a1)
-                move.w  a1,(word_FFF70C).w
-                addq.w  #8,(word_FFF70E).w
+                move.w  a1,(VDPCommandQueueHead).w
+                addq.w  #8,(VDPStagingDataCursor).w
                 rts
 ; End of function MessageScript_RenderTilemapChunk
 ; ---------------------------------------------------------------------------

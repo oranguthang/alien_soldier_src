@@ -9,7 +9,7 @@ Stage_TransitionGraphics:                               ; DATA XREF: Stage_Trans
                 move.l  #$10000,(dword_FFA960).w
                 move.l  #$7000,(dword_FF9D9E).w
                 move.l  #$C000,(dword_FF9DA2).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 move.b  #1,(byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
                 move.w  #$3AC,(Entity_ObjectPool).w
@@ -89,7 +89,7 @@ Boss_DestroyerPhaseInit:                                ; DATA XREF: ROM:0000F12
                 move.w  #$C,(word_FFA950).w
                 clr.w   (MessageSequenceState).w
                 clr.w   (word_FF9DAE).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 bra.w   loc_F2B0
 ; End of function Boss_DestroyerPhaseInit
 ; Animation script interpreter
@@ -296,7 +296,7 @@ loc_F5A8:                                               ; CODE XREF: Boss_WolfGa
                 clr.w   (word_FFF74A).w
                 clr.w   (word_FFF74E).w
                 clr.w   (word_FF8090).w
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
@@ -474,7 +474,7 @@ Stage_InitScrollParams:
                 addq.w  #2,(word_FFA950).w              ; was: sub_F7BA
                 move.b  #$40,(byte_FFA958).w            ; '@'
                 move.w  #$FFFE,(dword_FFA960).w
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 rts
 ; End of function Stage_InitScrollParams
 ; Updates asteroids scroll until position reached

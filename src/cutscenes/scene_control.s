@@ -9,7 +9,7 @@ locret_1D3D8:                                           ; CODE XREF: Effect_Fade
 ; Initializes stage transition
 Stage_InitializeTransition:                             ; DATA XREF: ROM:0001CF7A   o  ; was: sub_1D3DA
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 movea.l #stru_1D420,a0
                 jsr     (LoadObjData).l
                 movea.l #StageTransitionPaletteOffsetLists,a4
@@ -18,7 +18,7 @@ Stage_InitializeTransition:                             ; DATA XREF: ROM:0001CF7
                 move.w  #0,d1
                 jsr     (Data_LoadPointerTable2).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_SetupScrollPlanes
 ; End of function Stage_InitializeTransition
@@ -50,14 +50,14 @@ Stage_SetupScrollPlanesThunk:                           ; DATA XREF: ROM:0001CF7
 Cutscene_InitializeScene:                               ; DATA XREF: ROM:0001CF7E   o  ; was: sub_1D450
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA904).w
-                clr.b   (word_FFF7F2+1).w
-                clr.b   (word_FFF7F4+1).w
+                clr.b   (VDPReg17Shadow+1).w
+                clr.b   (VDPReg18Shadow+1).w
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 movea.l #stru_1D492,a0
                 jsr     (LoadObjData).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Gfx_DecompressCutsceneData).l
                 jmp     Gfx_SetupScrollPlanes

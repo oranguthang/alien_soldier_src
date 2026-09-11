@@ -34,8 +34,8 @@ Effect_NullHandler:                                     ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   locret_13DC
                 addq.w  #4,(word_FFF74E).w
-                andi.b  #$EF,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                andi.b  #$EF,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
                 move.w  #$4E73,(word_FFEE00).w
 locret_13DC:                                            ; CODE XREF: Effect_NullHandler+4   j
                 rts
@@ -45,13 +45,13 @@ Effect_InitLettersEffect:                               ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   Effect_PrepareLettersBuffer
                 addq.w  #4,(word_FFF74E).w
-                move.b  #0,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #0,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1418(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 ; Branch target that loads buffer address for letters effect after initialization
 Effect_PrepareLettersBuffer:                            ; CODE XREF: Effect_InitLettersEffect+4   j  ; was: loc_1412
                 lea     (word_FF9E00).w,a6
@@ -77,16 +77,16 @@ Effect_InitStage2DemoEffect:                            ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   Effect_SetStage2Registers
                 addq.w  #4,(word_FFF74E).w
-                move.b  #1,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #1,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1418(pc),a0
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 ; Branch target that configures VDP registers for Stage 2 demo effect display
 Effect_SetStage2Registers:                              ; CODE XREF: Effect_InitStage2DemoEffect+4   j  ; was: loc_1468
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     (word_FF9E00).w,a6
                 rts
 ; End of function Effect_InitStage2DemoEffect
@@ -95,12 +95,12 @@ VBlank_InitFliesEffect:                                 ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_14B0
                 addq.w  #4,(word_FFF74E).w
-                move.b  #7,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #7,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1418(pc),a0
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_14B0:                                               ; CODE XREF: VBlank_InitFliesEffect+4   j
                 lea     (word_FF9E00).w,a6
                 rts
@@ -110,12 +110,12 @@ VBlank_InitXiTigerEffect:                               ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_14E8
                 addq.w  #4,(word_FFF74E).w
-                move.b  #7,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #7,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1418(pc),a0
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_14E8:                                               ; CODE XREF: VBlank_InitXiTigerEffect+4   j
                 lea     (word_FF9FC0).w,a6
                 rts
@@ -125,13 +125,13 @@ VBlank_InitCRAMEffect:                                  ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_1522
                 addq.w  #4,(word_FFF74E).w
-                move.b  #0,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #0,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1528(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_1522:                                               ; CODE XREF: VBlank_InitCRAMEffect+4   j
                 lea     (word_FF9E00).w,a6
                 rts
@@ -156,17 +156,17 @@ VBlank_LoadSpriteData:                                  ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.s   loc_1572
                 addq.w  #4,(word_FFF74E).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1594(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_1572:                                               ; CODE XREF: VBlank_LoadSpriteData+4   j
                 move.l  #$40020010,(VDP_CTRL).l
                 move.w  (word_FFEC04).w,(VDP_DATA).l
-                move.b  (byte_FFC66B).w,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  (byte_FFC66B).w,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 rts
 ; End of function VBlank_LoadSpriteData
 ; ---------------------------------------------------------------------------
@@ -189,12 +189,12 @@ Effect_InitTransitionFade:                              ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_15EE
                 addq.w  #4,(word_FFF74E).w
-                move.b  #1,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #1,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1528(pc),a0
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_15EE:                                               ; CODE XREF: Effect_InitTransitionFade+4   j
                 lea     (word_FF9E00).w,a6
                 rts
@@ -204,12 +204,12 @@ VBlank_InitFadeTransition:                              ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_1626
                 addq.w  #4,(word_FFF74E).w
-                move.b  #3,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #3,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1528(pc),a0
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_1626:                                               ; CODE XREF: VBlank_InitFadeTransition+4   j
                 lea     (word_FF9E00).w,a6
                 rts
@@ -219,12 +219,12 @@ VBlank_InitFlyingNeoEffect:                             ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.s   Effect_LoadFlyingNeoBuffer
                 addq.w  #4,(word_FFF74E).w
-                move.b  #7,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #7,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1528(pc),a0
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 ; Loads buffer address for Flying Neo stage VBlank effect after initialization
 Effect_LoadFlyingNeoBuffer:                             ; CODE XREF: VBlank_InitFlyingNeoEffect+4   j  ; was: loc_165C
                 lea     (word_FF9E00).w,a6
@@ -235,12 +235,12 @@ VBlank_InitSunsetStingEffect:                           ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_1694
                 addq.w  #4,(word_FFF74E).w
-                move.b  #1,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #1,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1418(pc),a0
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_1694:                                               ; CODE XREF: VBlank_InitSunsetStingEffect+4   j
                 lea     (word_FF9C00).w,a6
                 rts
@@ -250,17 +250,17 @@ Effect_InitStoryEffect:                                 ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   Effect_SetStoryRegisters
                 addq.w  #4,(word_FFF74E).w
-                move.b  #$C0,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #$C0,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_16E6(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
-                move.w  (word_FFF7F4).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg18Shadow).w,(VDP_CTRL).l
 ; Branch target that sets VDP control register for story screen effect after initialization
 Effect_SetStoryRegisters:                               ; CODE XREF: Effect_InitStoryEffect+4   j  ; was: loc_16D6
-                move.w  (word_FFF7D4).w,(VDP_CTRL).l
+                move.w  (VDPReg2Shadow).w,(VDP_CTRL).l
                 lea     (VDP_CTRL).l,a6
                 rts
 ; End of function Effect_InitStoryEffect
@@ -291,13 +291,13 @@ VBlank_InitScrollEffect:                                ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_175E
                 addq.w  #4,(word_FFF74E).w
-                move.b  #1,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #1,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_1764(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_175E:                                               ; CODE XREF: VBlank_InitScrollEffect+4   j
                 movea.w #(byte_FF9C04-M68K_RAM),a6
                 rts
@@ -322,16 +322,16 @@ VBlank_InitStage10Effect:                               ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_17B6
                 addq.w  #4,(word_FFF74E).w
-                move.b  #$C8,(word_FFF7E4+1).w
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
+                move.b  #$C8,(VDPReg10Shadow+1).w
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_183C(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                ori.b   #$10,(VDPReg0Shadow+1).w
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
 loc_17B6:                                               ; CODE XREF: VBlank_InitStage10Effect+4   j
-                move.w  (word_FFF7D4).w,(VDP_CTRL).l
-                move.w  (word_FFF7D8).w,(VDP_CTRL).l
+                move.w  (VDPReg2Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg4Shadow).w,(VDP_CTRL).l
                 move.w  (VDPReg7Shadow).w,(VDP_CTRL).l
                 move.l  #$70020003,(VDP_CTRL).l
                 move.w  (word_FFE402).w,(VDP_DATA).l
@@ -431,14 +431,14 @@ VBlank_InitScreenMode:                                  ; DATA XREF: VBlank_Effe
                 move.w  (word_FFF74E).w,d0
                 bne.w   loc_1928
                 addq.w  #4,(word_FFF74E).w
-                move.b  #3,(word_FFF7E4+1).w
+                move.b  #3,(VDPReg10Shadow+1).w
                 lea     stru_193E(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                ori.b   #$10,(word_FFF7D0+1).w
+                ori.b   #$10,(VDPReg0Shadow+1).w
 loc_1928:                                               ; CODE XREF: VBlank_InitScreenMode+4   j
-                move.w  (word_FFF7E4).w,(VDP_CTRL).l
-                move.w  (word_FFF7D0).w,(VDP_CTRL).l
+                move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
+                move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
                 lea     (word_FF9800).w,a6
                 rts
 ; End of function VBlank_InitScreenMode

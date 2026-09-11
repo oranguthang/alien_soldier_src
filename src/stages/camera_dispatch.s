@@ -217,7 +217,7 @@ Camera_LockToBossArena:                                 ; DATA XREF: ROM:0000C86
 Camera_ShellshogunBossInit:                             ; DATA XREF: ROM:0000C866   o  ; was: sub_CA2C
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_CA86
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 move.w  #$8000,(word_FF808A).w
@@ -297,7 +297,7 @@ locret_CB24:                                            ; CODE XREF: Camera_Foll
 ; End of function Camera_FollowTarget
 ; Sets camera boundary limits
 Camera_SetBounds:                                       ; DATA XREF: ROM:0000C870   o  ; was: sub_CB26
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 bsr.w   Gfx_CalculateScrollPosition
                 bra.s   Camera_ClampToBounds
 ; End of function Camera_SetBounds
@@ -554,7 +554,7 @@ Stage_PostTerobusterIntro:                              ; DATA XREF: ROM:0000C89
                 bsr.w   Stage_LoadTerobusterTiles
                 tst.w   (Entity_ObjectPool).w
                 bne.s   loc_CDB8
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 addq.w  #2,(word_FFA950).w

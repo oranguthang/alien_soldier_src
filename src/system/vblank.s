@@ -19,7 +19,7 @@ Int_VBlank_DebugDelayLoop:                              ; CODE XREF: VBLANK:Int_
                 dbf     d0,Int_VBlank_DebugDelayLoop
 Int_VBlank_RunEffects:                                  ; CODE XREF: VBLANK+36   j  ; was: loc_ABC
                 jsr     (VBlank_EffectDispatcher).l
-                bsr.w   Gfx_UpdateVDPDisplay
+                bsr.w   Gfx_ApplyHInterruptState
                 tst.b   (byte_FF830E).w
                 beq.s   Int_VBlank_UpdateFrameDivider
                 subq.b  #1,(byte_FF830E).w
@@ -61,8 +61,8 @@ Sys_VBlankHandler_RunUpdate:                            ; CODE XREF: Sys_VBlankH
                                         ; Sys_VBlankHandler+A   j
                 clr.b   (byte_FFF704).w
                 bsr.w   Sound_AcquireZ80Bus
-                bsr.w   Gfx_VBlankDMATransfer
-                bsr.w   Gfx_ApplyVDPSettings
+                bsr.w   Gfx_RunVBlankTransfers
+                bsr.w   Gfx_ApplyVDPRegisterShadows
                 jsr     (Sys_InitVDPRegisters).l
 Sys_VBlankHandler_AcquireZ80BusForExit:                 ; CODE XREF: Sys_VBlankHandler+32   j  ; was: loc_B44
                 bset    #0,(IO_Z80BUS).l
@@ -157,7 +157,7 @@ Sys_DispatchGameState:
                 cmpi.b  #$70,d0                         ; 'p'
                 bne.w   Sys_DispatchGameState_Run
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 move.b  #4,(dword_FFF80A).w
                 clr.b   (byte_FFF807).w
                 clr.w   (word_FFF720).w

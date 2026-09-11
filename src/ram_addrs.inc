@@ -749,7 +749,7 @@ word_FFDC40             equ     $FFFFDC40
 word_FFDC50             equ     $FFFFDC50
 dword_FFDC58            equ     $FFFFDC58
 dword_FFDC5C            equ     $FFFFDC5C
-dword_FFE000            equ     $FFFFE000
+SpriteOAMBuffer         equ     $FFFFE000               ; was: dword_FFE000
 PaletteActiveBuffer     equ     $FFFFE300               ; was: word_FFE300
 word_FFE302             equ     $FFFFE302
 word_FFE304             equ     $FFFFE304
@@ -861,8 +861,8 @@ byte_FFF705             equ     $FFFFF705
 word_FFF706             equ     $FFFFF706
 word_FFF708             equ     $FFFFF708
 word_FFF70A             equ     $FFFFF70A
-word_FFF70C             equ     $FFFFF70C
-word_FFF70E             equ     $FFFFF70E
+VDPCommandQueueHead     equ     $FFFFF70C               ; was: word_FFF70C
+VDPStagingDataCursor    equ     $FFFFF70E               ; was: word_FFF70E
 HScrollDMASource        equ     $FFFFF710               ; was: dword_FFF710
 VScrollDMASource        equ     $FFFFF714               ; was: dword_FFF714
 word_FFF720             equ     $FFFFF720
@@ -876,8 +876,8 @@ byte_FFF745             equ     $FFFFF745
 FrameTimingDebugFlag    equ     $FFFFF746               ; was: byte_FFF746
 word_FFF74A             equ     $FFFFF74A
 word_FFF74E             equ     $FFFFF74E
-byte_FFF754             equ     $FFFFF754
-byte_FFF755             equ     $FFFFF755
+VDPTransferPending      equ     $FFFFF754               ; was: byte_FFF754
+PaletteDMAHIntEnabled   equ     $FFFFF755               ; was: byte_FFF755
 SpriteOAMStartCount     equ     $FFFFF756               ; was: word_FFF756
 word_FFF758             equ     $FFFFF758
 word_FFF75A             equ     $FFFFF75A
@@ -885,21 +885,21 @@ PaletteFadeStep         equ     $FFFFF75C               ; was: word_FFF75C
 PaletteFadeProgress     equ     $FFFFF75E               ; was: word_FFF75E
 word_FFF762             equ     $FFFFF762
 byte_FFF764             equ     $FFFFF764
-word_FFF7D0             equ     $FFFFF7D0
+VDPReg0Shadow           equ     $FFFFF7D0               ; was: word_FFF7D0
 VDPReg1Shadow           equ     $FFFFF7D2               ; was: word_FFF7D2
-word_FFF7D4             equ     $FFFFF7D4
-word_FFF7D6             equ     $FFFFF7D6
-word_FFF7D8             equ     $FFFFF7D8
-word_FFF7DA             equ     $FFFFF7DA
+VDPReg2Shadow           equ     $FFFFF7D4               ; was: word_FFF7D4
+VDPReg3Shadow           equ     $FFFFF7D6               ; was: word_FFF7D6
+VDPReg4Shadow           equ     $FFFFF7D8               ; was: word_FFF7D8
+VDPReg5Shadow           equ     $FFFFF7DA               ; was: word_FFF7DA
 VDPReg7Shadow           equ     $FFFFF7DE               ; was: word_FFF7DE
-word_FFF7E4             equ     $FFFFF7E4
-word_FFF7E6             equ     $FFFFF7E6
-word_FFF7E8             equ     $FFFFF7E8
-word_FFF7EA             equ     $FFFFF7EA
-word_FFF7EE             equ     $FFFFF7EE
-word_FFF7F0             equ     $FFFFF7F0
-word_FFF7F2             equ     $FFFFF7F2
-word_FFF7F4             equ     $FFFFF7F4
+VDPReg10Shadow          equ     $FFFFF7E4               ; was: word_FFF7E4
+VDPReg11Shadow          equ     $FFFFF7E6               ; was: word_FFF7E6
+VDPReg12Shadow          equ     $FFFFF7E8               ; was: word_FFF7E8
+VDPReg13Shadow          equ     $FFFFF7EA               ; was: word_FFF7EA
+VDPReg15Shadow          equ     $FFFFF7EE               ; was: word_FFF7EE
+VDPReg16Shadow          equ     $FFFFF7F0               ; was: word_FFF7F0
+VDPReg17Shadow          equ     $FFFFF7F2               ; was: word_FFF7F2
+VDPReg18Shadow          equ     $FFFFF7F4               ; was: word_FFF7F4
 byte_FFF800             equ     $FFFFF800
 byte_FFF801             equ     $FFFFF801
 byte_FFF802             equ     $FFFFF802

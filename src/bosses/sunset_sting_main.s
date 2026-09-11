@@ -154,7 +154,7 @@ Boss_SunsetStingIntro:                                  ; DATA XREF: ROM:00042A9
                 move.w  #$90,$14(a3)
                 clr.b   (byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
-                move.b  #0,(word_FFF7E6+1).w
+                move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$34,(word_FFF74A).w            ; '4'
                 clr.w   (word_FFF74E).w
                 bclr    #0,(a4)
@@ -285,7 +285,7 @@ Boss_SunsetStingBeginCoreRepositionState:               ; DATA XREF: ROM:00042AA
                 bne.s   Boss_SunsetStingBeginCoreRepositionDelay
                 clr.b   (byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
-                move.b  #0,(word_FFF7E6+1).w
+                move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$34,(word_FFF74A).w            ; '4'
                 clr.w   (word_FFF74E).w
                 bclr    #0,(a4)
@@ -376,8 +376,8 @@ Boss_SunsetStingRotateSegmentsPositiveState:            ; DATA XREF: ROM:00042AA
                 bne.s   Boss_SunsetStingRotateSegmentsPositiveUpdate
                 move.b  #4,(byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
-                andi.b  #$EF,(word_FFF7D0+1).w
-                move.b  #3,(word_FFF7E6+1).w
+                andi.b  #$EF,(VDPReg0Shadow+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 bset    #0,(a4)
                 jsr     (RandomNumber).l
                 andi.w  #$3F,d0                         ; '?'
@@ -458,8 +458,8 @@ Boss_SunsetStingRotateSegmentsNegativeState:            ; DATA XREF: ROM:00042AA
                 bne.s   Boss_SunsetStingRotateSegmentsNegativeUpdate
                 move.b  #4,(byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
-                andi.b  #$EF,(word_FFF7D0+1).w
-                move.b  #3,(word_FFF7E6+1).w
+                andi.b  #$EF,(VDPReg0Shadow+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 bset    #0,(a4)
                 jsr     (RandomNumber).l
                 andi.w  #$3F,d0                         ; '?'
@@ -540,7 +540,7 @@ Boss_SunsetStingWaitForArenaTransitionState:            ; DATA XREF: ROM:00042AA
                 bne.s   Boss_SunsetStingArenaTransitionUpdate
                 clr.b   (byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
-                move.b  #0,(word_FFF7E6+1).w
+                move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$34,(word_FFF74A).w            ; '4'
                 clr.w   (word_FFF74E).w
                 bclr    #0,(a4)
@@ -576,7 +576,7 @@ Boss_SunsetStingBeginDefeatState:                       ; DATA XREF: ROM:00042AA
                 bne.s   Boss_SunsetStingBeginDefeatMoveIntoPosition
                 clr.b   (byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
-                move.b  #0,(word_FFF7E6+1).w
+                move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$34,(word_FFF74A).w            ; '4'
                 clr.w   (word_FFF74E).w
                 bclr    #0,(a4)

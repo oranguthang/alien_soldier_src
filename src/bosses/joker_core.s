@@ -276,7 +276,7 @@ Boss_JokerCleanup:                                      ; DATA XREF: ROM:0003B30
                 bset    #4,2(a5)
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
 Boss_JokerCleanupReturn:                                ; CODE XREF: Boss_JokerCleanup+4   j  ; was: locret_3B600
                 rts
 ; End of function Boss_JokerCleanup

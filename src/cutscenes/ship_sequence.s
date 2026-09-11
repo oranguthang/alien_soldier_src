@@ -580,9 +580,9 @@ loc_8E80:                                               ; CODE XREF: Gfx_ClearPl
 ; End of function Gfx_ClearPlaneBuffer
 ; Writes VDP command sequence to command buffer
 Gfx_WriteVDPCommands:                                   ; CODE XREF: Cutscene_ShipInitScene+68   p  ; was: sub_8E86
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$10,a0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move.l  #$94019320,(a0)+
                 move.l  #$8F02977F,(a0)+
                 move.l  #$96889500,(a0)+
@@ -591,7 +591,7 @@ Gfx_WriteVDPCommands:                                   ; CODE XREF: Cutscene_Sh
 ; End of function Gfx_WriteVDPCommands
 ; Builds DMA transfer command list for VDP operations
 Gfx_BuildDMATransfer:                                   ; CODE XREF: Cutscene_ShipInitScene:loc_8AEE   p  ; was: sub_8EAC
-                movea.w (word_FFF70E).w,a1
+                movea.w (VDPStagingDataCursor).w,a1
                 moveq   #0,d3
 loc_8EB2:                                               ; CODE XREF: Gfx_BuildDMATransfer+12   j
                 move.b  (a0)+,d0
@@ -602,11 +602,11 @@ loc_8EB2:                                               ; CODE XREF: Gfx_BuildDM
                 bra.s   loc_8EB2
 ; ---------------------------------------------------------------------------
 loc_8EC0:                                               ; CODE XREF: Gfx_BuildDMATransfer+C   j
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 move.w  d4,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -616,9 +616,9 @@ loc_8EC0:                                               ; CODE XREF: Gfx_BuildDM
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009300,-(a1)
                 move.b  d3,3(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 asl.w   #1,d3
-                add.w   d3,(word_FFF70E).w
+                add.w   d3,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_BuildDMATransfer
 ; ---------------------------------------------------------------------------

@@ -6,7 +6,7 @@ Stage_LoadBackgroundGraphics:                           ; DATA XREF: Sys_Dispatc
                 move.w  (GameSubstateIndex).w,d0
                 bne.s   loc_1C44A
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_InitGraphicsChain).l
                 jsr     (Gfx_LoadVDPRegisters).l
                 jsr     (Stage_StateDispatcher).l
@@ -81,7 +81,7 @@ loc_1C4FE:                                              ; CODE XREF: Stage_LoadB
                 clr.w   (GameSubstateIndex).w
                 clr.b   (byte_FFF705).w
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
 ; Jumps to stage handler routine after setup completion
 Stage_JumpToHandler:                                    ; DATA XREF: Stage_XiTigerHandler+88   r  ; was: loc_1C530
                 jmp     Stage_ProcessHandler
@@ -110,7 +110,7 @@ Stage_XiTigerHandler:                                   ; DATA XREF: Sys_Dispatc
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 move.w  #$1F,(word_FFA944).w
                 move.w  (dword_FFA900).w,(word_FFA946).w

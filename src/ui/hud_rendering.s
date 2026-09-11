@@ -319,7 +319,7 @@ Gfx_LoadPaletteData:                                    ; CODE XREF: Gfx_Process
 Sprite_SetupTileVDP:                                    ; CODE XREF: WeaponSetup_InitializeTextAndTiles+20   p  ; was: sub_131AE
                 asl.w   #1,d0
                 addi.w  #-$3A7C,d0
-                movea.w (word_FFF70E).w,a1
+                movea.w (VDPStagingDataCursor).w,a1
                 move.w  d0,(a1)+
                 addq.w  #1,d0
                 move.w  d0,(a1)+
@@ -327,11 +327,11 @@ Sprite_SetupTileVDP:                                    ; CODE XREF: WeaponSetup
                 move.w  d0,(a1)+
                 addq.w  #1,d0
                 move.w  d0,(a1)+
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 bsr.s   Gfx_SetupTileDMA
                 addq.w  #2,d3
                 bsr.s   Gfx_SetupTileDMA
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function Sprite_SetupTileVDP
 ; Sets up DMA for tile transfer
@@ -339,8 +339,8 @@ Gfx_SetupTileDMA:                                       ; CODE XREF: Sprite_Setu
                                         ; Sprite_SetupTileVDP+20   p
                 move.w  #$83,-(a1)
                 move.w  d3,-(a1)
-                move.b  (word_FFF70E).w,d1
-                move.b  (word_FFF70E+1).w,d2
+                move.b  (VDPStagingDataCursor).w,d1
+                move.b  (VDPStagingDataCursor+1).w,d2
                 asr.b   #1,d1
                 roxr.b  #1,d2
                 move.b  d2,-(a1)
@@ -349,7 +349,7 @@ Gfx_SetupTileDMA:                                       ; CODE XREF: Sprite_Setu
                 move.b  #$96,-(a1)
                 move.l  #$8F80977F,-(a1)
                 move.l  #$94009302,-(a1)
-                addq.w  #4,(word_FFF70E).w
+                addq.w  #4,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_SetupTileDMA
 ; Copies indexed word from lookup table

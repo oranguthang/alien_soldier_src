@@ -49,8 +49,8 @@ Entity_SevenForcesIntroInitState0:                      ; DATA XREF: Entity_Upda
 ; No static caller is present in the reconstructed ROM
 SevenForces_SetupIntroDma:                              ; was: sub_54BDC
                 move.w  #4,4(a5)
-                move.b  #6,(word_FFF7E6+1).w
-                move.b  #$8A,(word_FFF7F2+1).w
+                move.b  #6,(VDPReg11Shadow+1).w
+                move.b  #$8A,(VDPReg17Shadow+1).w
                 move.b  #3,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
                 move.w  #$58,(word_FFF74A).w            ; 'X'
@@ -862,7 +862,7 @@ Entity_StartSevenForcesSylpheedTransition:              ; DATA XREF: ROM:000555E
                 jsr     (Gfx_LoadPaletteCommand).l
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 move.b  #$30,d0                         ; '0'
@@ -922,7 +922,7 @@ Entity_StartSevenForcesFinalTransition:                 ; DATA XREF: ROM:000555F
                 bset    #0,(byte_FF8144).w
                 bclr    #2,(byte_FF8144).w
                 clr.w   $48(a5)
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 move.b  #1,(byte_FFA958).w

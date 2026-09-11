@@ -8,8 +8,8 @@ Effect_InitWaveScroll:
 ; End of function Effect_InitWaveScroll
 ; Stops scrolling effect by resetting state variables and counters
 Stage_StopScrollEffect:
-                move.b  #4,(word_FFF7D0+1).w            ; was: sub_26286
-                move.b  #$30,(word_FFF7D4+1).w          ; '0'
+                move.b  #4,(VDPReg0Shadow+1).w          ; was: sub_26286
+                move.b  #$30,(VDPReg2Shadow+1).w        ; '0'
                 move.w  #0,(word_FF8100).w
                 move.w  #0,(word_FFEC02).w
                 rts
@@ -113,9 +113,9 @@ Effect_ClearWaveOutputBuffer_Loop:                      ; CODE XREF: Effect_Clea
 ; Generates sine wave deformation tables for screen warping effect
 Gfx_GenerateWaveDeformation:                            ; CODE XREF: Effect_WaveInitialize+6   p  ; was: sub_2638A
                                         ; Effect_WaveHoldState+6   p
-                move.b  #$14,(word_FFF7D0+1).w
-                move.b  #0,(word_FFF7E4+1).w
-                move.b  #$38,(word_FFF7D4+1).w          ; '8'
+                move.b  #$14,(VDPReg0Shadow+1).w
+                move.b  #0,(VDPReg10Shadow+1).w
+                move.b  #$38,(VDPReg2Shadow+1).w        ; '8'
                 move.w  (word_FF8102).w,d0
                 movea.l #Effect_WaveStepTable,a0
                 move.w  (a0,d0.w),d0

@@ -339,7 +339,7 @@ Gfx_DestroyerMK2SecondTransitionTileLoadDescriptor: dc.w    $4490, $4000, $104, 
 ; Release transition input/display flags and advance the main state
 Boss_DestroyerMK2ClearTransitionControlFlags:           ; DATA XREF: ROM:0004A932   o  ; was: sub_4B3B6
                 bsr.s   Gfx_DestroyerMK2ApplyTransitionPaletteFade
-                clr.b   (word_FFF7E6+1).w
+                clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 bclr    #3,$4C(a5)

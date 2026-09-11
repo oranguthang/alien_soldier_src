@@ -11,7 +11,7 @@ UI_InitPasswordScreen:                                  ; DATA XREF: Sys_Dispatc
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
@@ -44,9 +44,9 @@ UI_InitPasswordDisplay:                                 ; CODE XREF: UI_InitPass
                 move.w  (a0),(a1)+
                 move.w  (a0)+,(a2)+
                 jsr     (Gfx_FadePaletteTransition).l
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 jsr     (Gfx_SetupScrollPlanes).l

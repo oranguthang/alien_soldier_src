@@ -16,7 +16,7 @@ Stage_InitStage9Flies:                                  ; DATA XREF: ROM:0000C8A
                 move.l  #$180000,(dword_FFA960+2).w
                 clr.w   (word_FFA970).w
                 move.w  #$A0,(word_FFA974).w
-                move.b  #3,(word_FFF7E6+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
                 move.b  #4,(byte_FFA95A).w
                 move.b  #$30,(byte_FFA95B).w            ; '0'
                 move.w  #$2C,(word_FFF74A).w            ; ','
@@ -115,14 +115,14 @@ loc_D216:                                               ; CODE XREF: Stage_Flies
                 move.b  #0,(a0,d0.w)
                 adda.w  #$20,a0                         ; ' '
                 dbf     d7,loc_D216
-                movea.w (word_FFF70C).w,a4
+                movea.w (VDPCommandQueueHead).w,a4
                 move.w  #$80,-(a4)
                 move.w  #$7AC0,-(a4)
                 move.w  #$9500,-(a4)
                 move.w  #$96CB,-(a4)
                 move.l  #$8F02977F,-(a4)
                 move.l  #$94019310,-(a4)
-                move.w  a4,(word_FFF70C).w
+                move.w  a4,(VDPCommandQueueHead).w
                 addi.l  #$200,(dword_FF8240).w
                 bmi.s   loc_D256
                 clr.l   (dword_FF8240).w
@@ -153,7 +153,7 @@ Stage_CaterpillarShipUpdate:                            ; CODE XREF: Stage_InitC
 ; End of function Stage_CaterpillarShipUpdate
 ; Handles caterpillar ship movement physics
 Stage_CaterpillarShipMovement:                          ; DATA XREF: ROM:0000C8B4   o  ; was: sub_D2B6
-                move.b  #6,(word_FFF7E6+1).w
+                move.b  #6,(VDPReg11Shadow+1).w
 loc_D2BC:                                               ; CODE XREF: Stage_CaterpillarShipUpdate+2E   j
                 tst.b   (word_FFF720).w
                 bmi.s   loc_D2CE
@@ -191,7 +191,7 @@ loc_D332:                                               ; CODE XREF: Stage_Cater
                 cmpi.w  #$A00,d5
                 bmi.s   locret_D38A
                 bsr.w   Stage_TransitionToNextPhase
-                move.b  #2,(word_FFF7E6+1).w
+                move.b  #2,(VDPReg11Shadow+1).w
                 move.b  #$10,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
                 clr.w   (dword_FFA90C).w
@@ -285,7 +285,7 @@ Stage_XiTigerBossWait:                                  ; DATA XREF: ROM:0000C8B
                 bpl.w   Stage_XiTigerEmptyHandler
                 move.b  #$41,(byte_FFF705).w            ; 'A'
                 addq.w  #2,(word_FFA950).w
-                move.b  #2,(word_FFF7E6+1).w
+                move.b  #2,(VDPReg11Shadow+1).w
                 move.b  #1,(byte_FFA95A).w
                 move.b  #4,(byte_FFA95B).w
 ; Waits for entity to clear before boss transition
@@ -350,7 +350,7 @@ Stage_FliesVerticalScroll:                              ; CODE XREF: Stage_Flies
                 add.l   (dword_FFA918).w,d0
                 swap    d0
                 neg.w   d0
-                cmpi.b  #3,(word_FFF7E6+1).w
+                cmpi.b  #3,(VDPReg11Shadow+1).w
                 beq.s   loc_D576
                 moveq   #$20,d1                         ; ' '
                 moveq   #$12,d7

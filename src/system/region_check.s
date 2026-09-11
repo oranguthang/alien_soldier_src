@@ -18,7 +18,7 @@ RegionRestricted:                                       ; CODE XREF: Sys_CheckRe
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
                 lea     (FrontendFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
@@ -48,7 +48,7 @@ RegionRestricted:                                       ; CODE XREF: Sys_CheckRe
                 nop
                 jsr     (UI_RenderTextStringWrapped).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #4,(GameSubstateIndex).w
 RegionCheck_Return:                                     ; CODE XREF: Sys_CheckRegionLock+4   j  ; was: locret_580
                 rts

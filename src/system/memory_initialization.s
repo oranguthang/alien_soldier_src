@@ -279,19 +279,19 @@ Sys_ClearBufferFFBFC0_Loop:                             ; CODE XREF: Sys_ClearBu
                 dbf     d1,Sys_ClearBufferFFBFC0_Loop
                 rts
 ; End of function Sys_ClearBufferFFBFC0
-; Clears graphics processing chain buffer at $FFE000 by writing zeros for $27 iterations
-Gfx_ClearGraphicsChain:                                 ; CODE XREF: Sys_InitGraphicsChain+C   p  ; was: sub_30BC
-                lea     (dword_FFE000).w,a0
+; Clears the 624-byte used prefix of the sprite table uploaded to VRAM $F400 each VBlank
+Sprite_ClearOAMBuffer:                                  ; CODE XREF: Sys_InitGraphicsChain+C   p  ; was: sub_30BC
+                lea     (SpriteOAMBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$26,d1                         ; '&'
-Gfx_ClearGraphicsChain_Loop:                            ; CODE XREF: Gfx_ClearGraphicsChain+12   j  ; was: loc_30C6
+Sprite_ClearOAMBuffer_Loop:                             ; CODE XREF: Sprite_ClearOAMBuffer+12   j  ; was: loc_30C6
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Gfx_ClearGraphicsChain_Loop
+                dbf     d1,Sprite_ClearOAMBuffer_Loop
                 rts
-; End of function Gfx_ClearGraphicsChain
+; End of function Sprite_ClearOAMBuffer
 ; Clears palette buffer to black
 Palette_ClearBuffers:                                   ; CODE XREF: Sys_ClearPaletteBuffers   p  ; was: sub_30D4
                 lea     (PaletteActiveBuffer).w,a0

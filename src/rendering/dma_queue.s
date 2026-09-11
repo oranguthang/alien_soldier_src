@@ -6,8 +6,8 @@ Gfx_QueueDMAClear:
 Gfx_QueueDMATileData:
                 move.b  #1,d3                           ; was: sub_1D36
 loc_1D3A:                                               ; CODE XREF: Gfx_QueueDMAClear+2   j
-                movea.w (word_FFF70C).w,a1
-                movea.w (word_FFF70E).w,a2
+                movea.w (VDPCommandQueueHead).w,a1
+                movea.w (VDPStagingDataCursor).w,a2
 loc_1D42:                                               ; CODE XREF: Gfx_QueueDMATileData+66   j
                                         ; Gfx_QueueDMATileData+6A   j
                 move.w  (a0)+,d0
@@ -56,8 +56,8 @@ loc_1D94:                                               ; CODE XREF: Gfx_QueueDM
 ; ---------------------------------------------------------------------------
 loc_1DA2:                                               ; CODE XREF: Gfx_QueueDMATileData+4C   j
                 move.l  d1,-(a1)
-                move.w  a1,(word_FFF70C).w
-                move.w  a2,(word_FFF70E).w
+                move.w  a1,(VDPCommandQueueHead).w
+                move.w  a2,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_QueueDMATileData
 ; Queues DMA commands for pattern/tile data with alternate format
@@ -67,8 +67,8 @@ Gfx_QueueDMAPattern:
 ; ---------------------------------------------------------------------------
                 move.b  #1,d3
 loc_1DB6:                                               ; CODE XREF: Gfx_QueueDMAPattern+2   j
-                movea.w (word_FFF70C).w,a1
-                movea.w (word_FFF70E).w,a2
+                movea.w (VDPCommandQueueHead).w,a1
+                movea.w (VDPStagingDataCursor).w,a2
 loc_1DBE:                                               ; CODE XREF: Gfx_QueueDMAPattern+68   j
                                         ; Gfx_QueueDMAPattern+6C   j
                 move.l  (a0)+,-(a1)
@@ -116,14 +116,14 @@ loc_1E0E:                                               ; CODE XREF: Gfx_QueueDM
 ; ---------------------------------------------------------------------------
 loc_1E1C:                                               ; CODE XREF: Gfx_QueueDMAPattern+4E   j
                 move.l  d1,-(a1)
-                move.w  a1,(word_FFF70C).w
-                move.w  a2,(word_FFF70E).w
+                move.w  a1,(VDPCommandQueueHead).w
+                move.w  a2,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_QueueDMAPattern
 ; Converts number to ASCII digits and queues DMA for text display
 Gfx_QueueNumberDisplay:
-                movea.w (word_FFF70C).w,a1              ; was: sub_1E28
-                movea.w (word_FFF70E).w,a2
+                movea.w (VDPCommandQueueHead).w,a1      ; was: sub_1E28
+                movea.w (VDPStagingDataCursor).w,a2
                 move.l  d2,-(a1)
                 move.l  a2,d4
                 andi.l  #$FFFFFF,d4
@@ -179,8 +179,8 @@ loc_1EA8:                                               ; CODE XREF: Gfx_QueueNu
                 move.l  #$94009300,d2
                 add.b   d3,d2
                 move.l  d2,-(a1)
-                move.w  a1,(word_FFF70C).w
-                move.w  a2,(word_FFF70E).w
+                move.w  a1,(VDPCommandQueueHead).w
+                move.w  a2,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_QueueNumberDisplay
 ; Converts number to BCD/ASCII with leading zeros for score display
@@ -188,8 +188,8 @@ Gfx_QueueBCDDisplay:
                 ori.b   #$A,d1                          ; was: sub_1EC0
                 ori.w   #$3E8,-(a4)
                 move.l  (a0),-(a3)
-                movea.w (word_FFF70C).w,a1
-                movea.w (word_FFF70E).w,a2
+                movea.w (VDPCommandQueueHead).w,a1
+                movea.w (VDPStagingDataCursor).w,a2
                 move.l  d2,-(a1)
                 move.l  a2,d4
                 andi.l  #$FFFFFF,d4
@@ -245,8 +245,8 @@ loc_1F4A:                                               ; CODE XREF: Gfx_QueueBC
                 move.l  #$94009300,d2
                 add.b   d3,d2
                 move.l  d2,-(a1)
-                move.w  a1,(word_FFF70C).w
-                move.w  a2,(word_FFF70E).w
+                move.w  a1,(VDPCommandQueueHead).w
+                move.w  a2,(VDPStagingDataCursor).w
                 rts
 ; End of function Gfx_QueueBCDDisplay
 ; ---------------------------------------------------------------------------

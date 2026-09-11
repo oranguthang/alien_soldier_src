@@ -60,7 +60,7 @@ Gfx_UpdateTilemapIndices_StoreWord:                     ; CODE XREF: Gfx_UpdateT
 Gfx_QueueNextFontTileDMA:                               ; CODE XREF: UI_WeaponSelectTransition+10   p  ; was: sub_111DA
                 tst.w   (word_FF8148).w
                 bmi.w   Gfx_QueueNextFontTileDMA_Return
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  (word_FF8146).w,d0
                 move.w  d0,d1
                 andi.w  #$3FFE,d0
@@ -88,7 +88,7 @@ Gfx_QueueNextFontTileDMA:                               ; CODE XREF: UI_WeaponSe
                 move.b  #$97,-(a1)
                 move.w  #$8F02,-(a1)
                 move.l  d4,-(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 addi.w  #$400,(word_FF8146).w
                 addi.w  #$400,(word_FF814A).w
                 subq.w  #1,(word_FF8148).w
@@ -98,7 +98,7 @@ Gfx_QueueNextFontTileDMA_Return:                        ; CODE XREF: Gfx_QueueNe
 ; Writes VDP command registers
 Gfx_QueueLargeFontDMA:                                  ; CODE XREF: Sys_TransitionToStageInit+36   j  ; was: sub_11256
                                         ; UI_InitializeStageStart+46   j
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$80,-(a1)
                 move.w  #$6000,-(a1)
                 move.l  #$94209000,d4
@@ -106,7 +106,7 @@ Gfx_QueueLargeFontDMA:                                  ; CODE XREF: Sys_Transit
 ; End of function Gfx_QueueLargeFontDMA
 ; Sets up VDP command to transfer to palette RAM
 Gfx_QueueSmallFontDMA:                                  ; CODE XREF: Stage_InitializeStageSelect+3E   j  ; was: sub_1126A
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$80,-(a1)
                 move.w  #$6000,-(a1)
                 move.l  #$94069300,d4
@@ -115,7 +115,7 @@ Gfx_QueueSmallFontDMA:                                  ; CODE XREF: Stage_Initi
 ; Queues VRAM write command for plane A at address 0x6000
 Gfx_QueueLargeFontDMACommand81:                         ; CODE XREF: RegionRestricted+1E   p  ; was: sub_1127E
                                         ; UI_InitTitleScreen+44   j
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$81,-(a1)
                 move.w  #$6000,-(a1)
                 move.l  #$94209000,d4
@@ -124,7 +124,7 @@ Gfx_QueueLargeFontDMACommand81:                         ; CODE XREF: RegionRestr
 ; Queues DMA transfer for font tiles to VRAM with Z80 sync
 Gfx_QueueSmallFontDMACommand83:                         ; CODE XREF: UI_InitializePasswordScreen+10   p  ; was: sub_11292
                                         ; UI_InitializePasswordScreen+32   p
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 move.w  #$5400,-(a1)
                 move.l  #$94059300,d4

@@ -160,9 +160,9 @@ Cutscene_FadeInShip:                                    ; CODE XREF: Cutscene_Sh
 loc_782E:                                               ; CODE XREF: Cutscene_FadeInShip+38   j
                 move.w  d4,(a2)+
                 dbf     d7,loc_782E
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$10,a0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move.l  #$94009310,(a0)+
                 move.l  #$8F20977F,(a0)+
                 move.l  #$96809530,(a0)+
@@ -189,9 +189,9 @@ Cutscene_FadeOutShip:                                   ; CODE XREF: Cutscene_Sh
 loc_7892:                                               ; CODE XREF: Cutscene_FadeOutShip+38   j
                 move.w  d4,(a2)+
                 dbf     d7,loc_7892
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$10,a0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move.l  #$94009310,(a0)+
                 move.l  #$8F20977F,(a0)+
                 move.l  #$96809530,(a0)+
@@ -218,9 +218,9 @@ Gfx_UpdateVDPRegistersWithMask:                         ; CODE XREF: Cutscene_Pl
 loc_78F6:                                               ; CODE XREF: Gfx_UpdateVDPRegistersWithMask+38   j
                 move.w  d4,(a2)+
                 dbf     d7,loc_78F6
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$10,a0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move.l  #$94009310,(a0)+
                 move.l  #$8F20977F,(a0)+
                 move.l  #$96809520,(a0)+
@@ -247,9 +247,9 @@ Gfx_FadeOutPalette:                                     ; CODE XREF: Cutscene_Pl
 loc_795A:                                               ; CODE XREF: Gfx_FadeOutPalette+38   j
                 move.w  d4,(a2)+
                 dbf     d7,loc_795A
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$10,a0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move.l  #$94009310,(a0)+
                 move.l  #$8F20977F,(a0)+
                 move.l  #$96809520,(a0)+
@@ -328,9 +328,9 @@ loc_7A5A:                                               ; CODE XREF: Gfx_UpdateP
                 dbf     d6,loc_7A5A
                 move.l  (dword_FF00C0).l,d6
                 ori.l   #$80,d6
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$100,a0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move.w  #$F,d0
 loc_7A80:                                               ; CODE XREF: Gfx_UpdatePlanetPalette+66   j
                 move.l  #$94009310,(a0)+
@@ -361,9 +361,9 @@ loc_7AC6:                                               ; CODE XREF: Gfx_UpdateS
                 dbf     d6,loc_7AC6
                 move.l  (dword_FF00CA).l,d6
                 ori.l   #$80,d6
-                movea.w (word_FFF70C).w,a0
+                movea.w (VDPCommandQueueHead).w,a0
                 suba.w  #$100,a0
-                move.w  a0,(word_FFF70C).w
+                move.w  a0,(VDPCommandQueueHead).w
                 move.w  #$F,d0
 loc_7AEC:                                               ; CODE XREF: Gfx_UpdateShipPalette+66   j
                 move.l  #$94009310,(a0)+

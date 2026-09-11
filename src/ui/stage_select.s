@@ -25,7 +25,7 @@ loc_1D636:                                              ; CODE XREF: UI_Initiali
                 move.w  #$9999,(word_FFFF40).w
 loc_1D688:                                              ; CODE XREF: UI_InitializeStageSelect+58   j
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
@@ -39,7 +39,7 @@ loc_1D69C:                                              ; CODE XREF: UI_Initiali
                 move.w  #$FFF2,(word_FF8016).w
                 bsr.w   UI_FadePaletteColors
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 move.w  #$FF00,(dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 move.w  #$FF00,(dword_FFA90C).w
@@ -48,8 +48,8 @@ loc_1D69C:                                              ; CODE XREF: UI_Initiali
                 jsr     (Gfx_SetupScrollPlanes).l
 ; Resets stage select variables and frame counter
 UI_ResetStageSelectVars:                                ; CODE XREF: Stage_InitializeStageSelect+86   j  ; was: loc_1D6F4
-                move.b  #3,(word_FFF7E6+1).w
-                move.b  #0,(word_FFF7F4+1).w
+                move.b  #3,(VDPReg11Shadow+1).w
+                move.b  #0,(VDPReg18Shadow+1).w
                 bsr.w   Results_InitializeDisplay
                 clr.w   (word_FFA000).w
                 rts
@@ -86,7 +86,7 @@ Stage_InitializeStageSelect:                            ; DATA XREF: Sys_Dispatc
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
-                clr.b   (byte_FFF755).w
+                clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueSmallFontDMA
 ; ---------------------------------------------------------------------------
@@ -97,7 +97,7 @@ loc_1D778:                                              ; CODE XREF: Stage_Initi
                 jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
                 bset    #6,(VDPReg1Shadow+1).w
-                move.b  #$80,(byte_FFF755).w
+                move.b  #$80,(PaletteDMAHIntEnabled).w
                 move.w  #$FF00,(dword_FFA90C).w
                 move.w  #0,(dword_FFA908).w
                 jsr     (Gfx_SetupScrollPlanes).l
@@ -149,8 +149,8 @@ UI_HandleStageFadeOut:                                  ; DATA XREF: ROM:0001D7D
                 bclr    #1,(word_FF80F4).w
                 beq.s   loc_1D86A
                 addq.w  #2,(GameSubstateIndex).w
-                clr.b   (word_FFF7E6+1).w
-                move.b  #$12,(word_FFF7F4+1).w
+                clr.b   (VDPReg11Shadow+1).w
+                move.b  #$12,(VDPReg18Shadow+1).w
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w

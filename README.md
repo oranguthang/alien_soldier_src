@@ -248,7 +248,7 @@ A custom binary tracing system was added to the Gens-automation emulator for deb
 
 ### Documented Functions (~200+ labels renamed)
 - **System**: `Sys_VBlankHandler`, `Sys_MainGameLoop`, `Sys_InitGameMode`
-- **Graphics**: `Gfx_VBlankDMATransfer`, `Gfx_FadePaletteTransition`, `Gfx_InitVideoMode`
+- **Graphics**: `Gfx_RunVBlankTransfers`, `Gfx_FadePaletteTransition`, `Gfx_InitVideoMode`
 - **Sprites**: `Sprite_ProcessDMAQueue`, `Sprite_PrepareOAM`, `Sprite_CalculatePosition`
 - **Animation**: `Anim_UpdateFrame`, `Anim_AdvanceFrameOffset`
 - **Input**: `Input_ReadController`, `Input_ProcessButtons`

@@ -265,7 +265,7 @@ Gfx_ExecuteDMATransfer:                                 ; CODE XREF: Gfx_DMATran
                                         ; Gfx_DecompTilesToVRAMBatched+3A   p
                 move    sr,-(sp)
                 move    #$2700,sr
-                movea.w (word_FFF70C).w,a5
+                movea.w (VDPCommandQueueHead).w,a5
                 move.w  a3,d7
                 rol.w   #2,d7
                 andi.w  #3,d7
@@ -301,14 +301,14 @@ Gfx_ExecuteDMATransfer:                                 ; CODE XREF: Gfx_DMATran
                 move.w  d6,-(a5)
                 adda.w  d1,a2
                 adda.w  d1,a3
-                move.b  #1,(byte_FFF754).w
-                move.w  a5,(word_FFF70C).w
+                move.b  #1,(VDPTransferPending).w
+                move.w  a5,(VDPCommandQueueHead).w
                 move    (sp)+,sr
                 rts
 ; End of function Gfx_ExecuteDMATransfer
 ; Queues DMA transfer command from ROM data
 Gfx_QueueDMAFromROM:
-                movea.w (word_FFF70C).w,a1              ; was: sub_2CD8
+                movea.w (VDPCommandQueueHead).w,a1      ; was: sub_2CD8
                 move.w  d0,-(sp)
                 move.w  d0,d2
                 rol.w   #2,d2
@@ -344,7 +344,7 @@ Gfx_QueueDMAFromROM:
                 move.b  d1,d2
                 move.w  d2,-(a1)
                 move.w  (sp)+,d0
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function Gfx_QueueDMAFromROM
 ; Full game initialization with all subsystems

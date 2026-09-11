@@ -483,14 +483,14 @@ Effect_MaskScrollByte_SelectNibble:                     ; CODE XREF: Effect_Mask
                 move.b  d1,$40(a0,d2.w)
 Effect_QueueTransitionVdpRegisters:                     ; CODE XREF: Effect_ClearTransitionPatternBuffer+12   j  ; was: loc_27376
                                         ; Effect_BuildTransitionPattern+40   j
-                movea.w (word_FFF70C).w,a1
+                movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$82,-(a1)
                 move.w  #$73A0,-(a1)
                 move.w  #$9500,-(a1)
                 move.w  #$96CA,-(a1)
                 move.l  #$8F02977F,-(a1)
                 move.l  #$94009330,-(a1)
-                move.w  a1,(word_FFF70C).w
+                move.w  a1,(VDPCommandQueueHead).w
                 rts
 ; End of function Effect_MaskScrollByte
 ; ---------------------------------------------------------------------------
