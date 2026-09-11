@@ -131,6 +131,16 @@ alone does not yet prove the exact player-facing counting convention.
 | `PalettePrimaryIndex` | `$FFFF8220` | Stage configuration writes this even selector, and the primary dispatcher uses it directly as an offset into its ten-entry handler table. |
 | `PaletteSecondaryIndex` | `$FFFF8222` | Stage configuration and transition code write this even selector, and the secondary dispatcher uses it directly as an offset into its four-entry handler table. |
 
+## Reviewed cutscene and story-title fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `StoryTitleGlyphCursor` | `$FFFF0100` | Only the story-title reveal stores and advances this longword pointer through the twelve glyph codes in `StoryTitle_LogoRevealCharacters`. |
+| `CutsceneTimer` | `$FFFF0106` | Story, credits, starfield, and planet states initialize and decrement this shared word as their state timer; planet zoom also uses its low bits for update cadence. |
+| `StoryTitleExpandSpan` | `$FFFF0108` | Only the story-title states initialize this word to `$21`, reduce it by four, and use it as the horizontal pixel and scroll-run span. |
+| `StoryTitleGlyphsLeft` | `$FFFF010A` | Only the story-title reveal initializes this word to twelve and decrements it after each revealed `ALIENSOLDIER` glyph. |
+| `CutscenePaletteStep` | `$FFFF010C` | Story-title, credits, starfield, and planet states use this shared word as the signed or indexed step supplied to their palette-update routines. |
+
 ## Reviewed VBlank transfer and VDP-shadow fields
 
 | Symbol | Address | Static evidence |

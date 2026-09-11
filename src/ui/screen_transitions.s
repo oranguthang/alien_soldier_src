@@ -168,6 +168,6 @@ loc_1D3A8:                                              ; CODE XREF: Sys_UpdateG
                 beq.w   locret_1D3D8
 loc_1D3BC:                                              ; CODE XREF: Effect_UpdateGameRotation+30   j
                 move.w  #$28,(GameModeIndex).w          ; '('
-                jmp     (loc_5102).l
+                jmp     (StoryScreen_StartExitFade).l
 ; End of function Effect_UpdateGameRotation
 ; Clears boss data and transitions to story screen

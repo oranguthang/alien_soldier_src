@@ -106,7 +106,7 @@ Cutscene_ShipInitWait:                                  ; DATA XREF: ROM:off_880
                 cmpi.w  #$40,(word_FF0130).l            ; '@'
                 beq.s   Cutscene_ShowShipName
                 cmpi.w  #$200,(word_FF0130).l
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 move.b  #1,(byte_FFA95A).w
                 move.l  #$FFC00000,(dword_FF0134).l
                 clr.l   (dword_FF0138).l
@@ -133,7 +133,7 @@ Cutscene_LoadShipTiles1:                                ; DATA XREF: ROM:0000880
 ; Loads second batch of compressed ship tiles
 Cutscene_LoadShipTiles2:                                ; DATA XREF: ROM:0000880A   o  ; was: sub_8894
                 subq.w  #1,(word_FF013C).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 movea.l #word_8DAC,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 move.w  #$20,(word_FF013C).l            ; ' '
@@ -143,7 +143,7 @@ Cutscene_LoadShipTiles2:                                ; DATA XREF: ROM:0000880
 ; Loads third batch of compressed ship tiles
 Cutscene_LoadShipTiles3:                                ; DATA XREF: ROM:0000880C   o  ; was: sub_88BA
                 subq.w  #1,(word_FF013C).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 movea.l #word_8DB4,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 move.w  #$20,(word_FF013C).l            ; ' '
@@ -153,7 +153,7 @@ Cutscene_LoadShipTiles3:                                ; DATA XREF: ROM:0000880
 ; Loads fourth batch of compressed ship tiles
 Cutscene_LoadShipTiles4:                                ; DATA XREF: ROM:0000880E   o  ; was: sub_88E0
                 subq.w  #1,(word_FF013C).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 movea.l #word_8DBC,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 move.w  #$20,(word_FF013C).l            ; ' '
@@ -163,7 +163,7 @@ Cutscene_LoadShipTiles4:                                ; DATA XREF: ROM:0000880
 ; Loads fifth batch of compressed ship tiles
 Cutscene_LoadShipTiles5:                                ; DATA XREF: ROM:00008810   o  ; was: sub_8906
                 subq.w  #1,(word_FF013C).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 movea.l #word_8DC4,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 move.w  #$20,(word_FF013C).l            ; ' '
@@ -173,7 +173,7 @@ Cutscene_LoadShipTiles5:                                ; DATA XREF: ROM:0000881
 ; Advances to next state after all ship tiles loaded
 Cutscene_ShipTilesComplete:                             ; DATA XREF: ROM:00008812   o  ; was: sub_892C
                 subq.w  #1,(word_FF013C).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #2,(word_FF0132).l
                 rts
 ; End of function Cutscene_ShipTilesComplete
@@ -181,7 +181,7 @@ Cutscene_ShipTilesComplete:                             ; DATA XREF: ROM:0000881
 Cutscene_ShipFadeInAlt:                                 ; DATA XREF: ROM:00008814   o  ; was: sub_893E
                 addi.l  #$10000,(dword_FF0138).l
                 tst.w   (dword_FF0138).l
-                bmi.w   locret_514E
+                bmi.w   Cutscene_Return
                 bsr.w   Gfx_EnablePriorityPlane
                 addq.w  #2,(word_FF0132).l
                 rts
@@ -190,14 +190,14 @@ Cutscene_ShipFadeInAlt:                                 ; DATA XREF: ROM:0000881
 Cutscene_ShipZoomInAlt:                                 ; DATA XREF: ROM:00008816   o  ; was: sub_895E
                 addi.l  #$2000,(dword_FF0138).l
                 cmpi.l  #$8000,(dword_FF0138).l
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 addq.w  #2,(word_FF0132).l
                 rts
 ; End of function Cutscene_ShipZoomInAlt
 ; Waits for ship to reach position before advancing state
 Cutscene_WaitShipPosition:                              ; DATA XREF: ROM:00008818   o  ; was: sub_897E
                 cmpi.w  #$FF20,(dword_FF0134).l
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 move.w  #0,d0
                 jsr     (ShipName_StartScript).l
                 clr.w   (word_FF016A).l
@@ -209,7 +209,7 @@ Cutscene_ShipExitPrepare:                               ; DATA XREF: ROM:0000881
                 bsr.w   Cutscene_ShipFlashDispatcher
                 eori.w  #$8000,(word_FFC6EE).w
                 cmpi.w  #$588,(word_FF0130).l
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 bsr.w   Gfx_DisablePriorityPlane
                 lea     (word_FFC6E2).w,a0
                 move.w  #$2D,d0                         ; '-'
@@ -247,7 +247,7 @@ Cutscene_ShipFlashLoop:                                 ; DATA XREF: ROM:000089E
                 bsr.w   Cutscene_UpdateShipColor
                 eori.w  #2,(HScrollBuffer).w
                 subq.w  #1,(word_FF016C).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.l  #$FFFFC000,(dword_FF0138).l
                 move.w  #$60,(word_FF016C).l            ; '`'
                 addq.w  #2,(word_FF016A).l
@@ -257,14 +257,14 @@ Cutscene_ShipFlashLoop:                                 ; DATA XREF: ROM:000089E
 Cutscene_UpdateShipColor:                               ; CODE XREF: Cutscene_ShipFlashLoop   p  ; was: sub_8A40
                 move.w  (word_FF016C).l,d0
                 andi.w  #$1F,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addi.w  #4,(dword_FF0134).l
                 rts
 ; End of function Cutscene_UpdateShipColor
 ; Restarts ship flash animation after delay
 Cutscene_RestartShipFlash:                              ; DATA XREF: ROM:000089EA   o  ; was: sub_8A58
                 subq.w  #1,(word_FF016C).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 bra.w   Cutscene_InitShipFlash
 ; End of function Cutscene_RestartShipFlash
 ; Dispatches to ship visual effect handlers
@@ -288,7 +288,7 @@ Cutscene_InitShipEffect:                                ; DATA XREF: ROM:off_8A7
 ; Decrements timer and advances cutscene state when timer expires
 Cutscene_ShipTimerCheck:                                ; DATA XREF: ROM:00008A76   o  ; was: sub_8A8A
                 subq.w  #1,(word_FF0170).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  #$20,(word_FF0170).l            ; ' '
                 addq.w  #2,(word_FF016E).l
                 rts
@@ -306,7 +306,7 @@ Cutscene_ShipMoveUp:                                    ; CODE XREF: Cutscene_Sh
                 addi.w  #1,(dword_FF0134).l
 loc_8AC2:                                               ; CODE XREF: Cutscene_ShipFlickerControl+14   j
                 subq.w  #1,(word_FF0170).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  #$88,(word_FF0170).l
                 subq.w  #2,(word_FF016E).l
                 rts
@@ -342,7 +342,7 @@ Cutscene_ShipInitScene_RenderLoop:                      ; DATA XREF: ROM:0000881
                 bsr.w   Gfx_WriteVDPCommands
                 bsr.w   Effect_SpawnStarParticle
                 cmpi.w  #$668,(word_FF0130).l
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 movea.l #word_8DE4,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 clr.w   (word_FF808A).w
@@ -365,7 +365,7 @@ Cutscene_ShipRenderLoop:                                ; DATA XREF: ROM:0000882
                 jsr     (Gfx_RenderScrollingBackground).l
                 jsr     (Gfx_RenderScrollingBackground).l
                 tst.w   (word_FFA944).w
-                bpl.w   locret_514E
+                bpl.w   Cutscene_Return
                 move.w  #$FFF2,(word_FF0166).l
                 move.w  #$E,(word_FF0168).l
                 addq.w  #2,(word_FF0132).l
@@ -385,11 +385,11 @@ Cutscene_ShipFadeTransition:                            ; DATA XREF: ROM:0000882
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 subq.w  #2,(word_FF0168).l
                 addq.w  #2,(word_FF0166).l
                 cmpi.w  #2,(word_FF0166).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  #$1000,2(a5)
                 addq.w  #2,(word_FF0132).l
                 rts
@@ -401,7 +401,7 @@ nullsub_20:                                             ; DATA XREF: ROM:0000882
 ; Spawns star particles with random trajectory calculations
 Effect_SpawnStarParticle:                               ; CODE XREF: Cutscene_ShipInitScene+6C   p  ; was: sub_8C42
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 jsr     (RandomNumber).l
@@ -460,7 +460,7 @@ Gfx_SetupSegaPalette:                                   ; CODE XREF: Cutscene_Sh
 Cutscene_ShipUpdateScroll:                              ; CODE XREF: Cutscene_ShipUpdateDispatcher+4   j  ; was: sub_8D0C
                                         ; Cutscene_ShipInitScene+BA   p
                 cmpi.w  #$1A,(word_FF0132).l
-                bcc.w   locret_514E
+                bcc.w   Cutscene_Return
                 move.l  (dword_FF0138).l,d0
                 add.l   (dword_FF0134).l,d0
                 move.l  d0,(dword_FF0134).l
@@ -473,7 +473,7 @@ loc_8D3A:                                               ; CODE XREF: Cutscene_Sh
                 addq.w  #4,a0
                 dbf     d7,loc_8D3A
                 cmpi.w  #$18,(word_FF0132).l
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 lea     (word_FFEC22).w,a0
                 move.w  #4,d7
 loc_8D56:                                               ; CODE XREF: Cutscene_ShipUpdateScroll+4E   j
@@ -547,7 +547,7 @@ loc_8E1E:                                               ; CODE XREF: Gfx_RenderA
 Gfx_UpdateTextPixel:                                    ; CODE XREF: Gfx_RenderAnimatedText+28   p  ; was: sub_8E36
                 move.w  (a0),d0
                 cmpi.w  #$40,d0                         ; '@'
-                beq.w   locret_514E
+                beq.w   Cutscene_Return
                 addq.w  #1,(a0)
                 lea     byte_79BA(pc),a3
                 lea     (a3,d0.w),a3
@@ -648,7 +648,7 @@ Cutscene_SpawnShipSprite:                               ; CODE XREF: Cutscene_Sh
                 movea.l (dword_FF0128).l,a0
                 move.w  (word_FF0130).l,d0
                 cmp.w   (a0)+,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 movea.l #$FFFFC620,a4
                 adda.w  (a0)+,a4
                 move.w  #$CC00,2(a4)
@@ -691,7 +691,7 @@ Cutscene_SpawnDebrisSprite:                             ; CODE XREF: Cutscene_Sh
                 movea.l (dword_FF012C).l,a0
                 move.w  (word_FF0130).l,d0
                 cmp.w   (a0)+,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 movea.l #$FFFFC620,a4
                 adda.w  (a0)+,a4
                 move.w  #$CC00,2(a4)
@@ -751,7 +751,7 @@ Sprite_ShipDebrisUpdate:                                ; DATA XREF: ROM:Entity_
                 subq.w  #1,$40(a5)
                 beq.s   loc_928C
                 cmpi.w  #$60,$14(a5)                    ; '`'
-                bcc.w   locret_514E
+                bcc.w   Cutscene_Return
                 move.w  #$1000,2(a5)
                 rts
 ; ---------------------------------------------------------------------------
@@ -780,7 +780,7 @@ off_92BA:       dc.w    Object_CheckYPosAndPause-*      ; DATA XREF: Sprite_Debr
 ; Checks if Y position >= 240 then pauses object movement
 Object_CheckYPosAndPause:                               ; DATA XREF: ROM:off_92BA   o  ; was: sub_92C2
                 cmpi.w  #$F0,$14(a5)
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 move.w  #$60,$48(a5)                    ; '`'
                 move.l  $1C(a5),$40(a5)
                 move.l  $18(a5),$44(a5)
@@ -788,14 +788,14 @@ Object_CheckYPosAndPause:                               ; DATA XREF: ROM:off_92B
                 clr.l   $18(a5)
                 addq.w  #2,4(a5)
                 cmpa.w  #$C6E0,a5
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #4,4(a5)
                 rts
 ; End of function Object_CheckYPosAndPause
 ; Counts down timer and restores velocity when done
 Object_RestoreAfterTimer:                               ; DATA XREF: ROM:000092BC   o  ; was: sub_92F8
                 subq.w  #1,$48(a5)
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.l  $40(a5),$1C(a5)
                 move.l  $44(a5),$18(a5)
                 rts
@@ -803,7 +803,7 @@ Object_RestoreAfterTimer:                               ; DATA XREF: ROM:000092B
 ; Sets destroy flag when Y position >= 400
 Object_SetDestroyFlag:                                  ; DATA XREF: ROM:000092BE   o  ; was: sub_930E
                 cmpi.w  #$190,$14(a5)
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 move.w  #$1000,2(a5)
                 rts
 ; End of function Object_SetDestroyFlag

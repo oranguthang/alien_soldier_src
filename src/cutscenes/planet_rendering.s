@@ -146,9 +146,9 @@ Cutscene_FadeInShip:                                    ; CODE XREF: Cutscene_Sh
                                         ; Cutscene_ShipZoomOut+C   p
                 move.w  (word_FFA280).w,d0
                 and.w   (word_FF00D2).l,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  (word_FF00D0).l,d0
-                bmi.w   locret_514E
+                bmi.w   Cutscene_Return
                 subq.w  #1,(word_FF00D0).l
                 bsr.w   Gfx_CalculatePaletteMask
                 eori.w  #$FFFF,d2
@@ -175,10 +175,10 @@ Cutscene_FadeOutShip:                                   ; CODE XREF: Cutscene_Sh
                                         ; Cutscene_ShipZoomIn+12   p
                 move.w  (word_FFA280).w,d0
                 and.w   (word_FF00D2).l,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  (word_FF00D0).l,d0
                 cmpi.w  #$40,d0                         ; '@'
-                beq.w   locret_514E
+                beq.w   Cutscene_Return
                 addq.w  #1,(word_FF00D0).l
                 bsr.w   Gfx_CalculatePaletteMask
                 move.w  (a2),d4
@@ -204,9 +204,9 @@ Gfx_UpdateVDPRegistersWithMask:                         ; CODE XREF: Cutscene_Pl
                                         ; Cutscene_PlanetFadeInAlt+C   p
                 move.w  (word_FFA280).w,d0
                 and.w   (word_FF00C8).l,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  (word_FF00C6).l,d0
-                bmi.w   locret_514E
+                bmi.w   Cutscene_Return
                 subq.w  #1,(word_FF00C6).l
                 bsr.w   Gfx_CalculatePaletteOffset
                 eori.w  #$FFFF,d2
@@ -233,10 +233,10 @@ Gfx_FadeOutPalette:                                     ; CODE XREF: Cutscene_Pl
                                         ; Cutscene_PlanetFadeOutAlt+12   p
                 move.w  (word_FFA280).w,d0
                 and.w   (word_FF00C8).l,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  (word_FF00C6).l,d0
                 cmpi.w  #$40,d0                         ; '@'
-                beq.w   locret_514E
+                beq.w   Cutscene_Return
                 addq.w  #1,(word_FF00C6).l
                 bsr.w   Gfx_CalculatePaletteOffset
                 move.w  (a2),d4

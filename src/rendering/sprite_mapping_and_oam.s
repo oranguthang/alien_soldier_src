@@ -1,6 +1,6 @@
 ; Initializes the 64 priority buckets used to link generated OAM entries
 Sprite_InitializePriorityBuckets:                       ; CODE XREF: Sprite_RenderObjectList+8   p  ; was: sub_21F0
-                                        ; Sys_StoryScreenMainLoop+26   p
+                                        ; StoryScreen_MainLoop+26   p
                 moveq   #$3F,d2                         ; '?'
                 lea     (SpritePriorityBuckets).w,a0
                 move.l  #$BE0A,d0

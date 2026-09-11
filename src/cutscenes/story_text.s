@@ -1,6 +1,6 @@
-UI_StoryTextDispatcher:                                 ; CODE XREF: Sys_StoryScreenMainLoop+3C   p  ; was: sub_588C
+UI_StoryTextDispatcher:                                 ; CODE XREF: StoryScreen_MainLoop+3C   p  ; was: sub_588C
                 cmpi.w  #$18,(GameSubstateIndex).w
-                beq.w   locret_514E
+                beq.w   Cutscene_Return
                 move.w  (word_FF0178).l,d0
                 lea     off_58A4(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -48,10 +48,10 @@ UI_UpdateStoryTextScroll:                               ; DATA XREF: ROM:000058A
                 bsr.w   Gfx_BlinkTextColors
                 move.w  (word_FFA280).w,d0
                 andi.w  #3,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 subq.w  #1,(dword_FFA904).w
                 subq.w  #1,(word_FF00FC).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  #$18,(word_FF00FC).l
                 move.w  #$C300,d0
                 move.w  (word_FF00F6).l,d4
@@ -97,7 +97,7 @@ UI_WrapTextVRAMAddress:                                 ; CODE XREF: UI_UpdateSt
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
                 addi.w  #$180,(word_FF00F6).l
                 cmpi.w  #$5000,(word_FF00F6).l
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 subi.w  #$1000,(word_FF00F6).l
                 rts
 ; End of function UI_UpdateStoryTextScroll
@@ -112,7 +112,7 @@ byte_675D:      binclude "data/other/byte_675D.bin"
 byte_675D_End:
 
 ; Dispatches Japanese text rendering state machine
-UI_JapaneseTextDispatcher:                              ; CODE XREF: Sys_StoryScreenMainLoop+40   p  ; was: sub_7484
+UI_JapaneseTextDispatcher:                              ; CODE XREF: StoryScreen_MainLoop+40   p  ; was: sub_7484
                 subq.w  #1,(word_FF0180).l
                 btst    #0,(FrameCounter+1).w
                 bne.s   UI_JapaneseTextDispatchJump
@@ -149,7 +149,7 @@ UI_RenderJapaneseFontChar:                              ; DATA XREF: ROM:000074A
                 move.w  (word_FF0182).l,d0
                 sub.w   (word_FF0180).l,d0
                 cmpi.w  #$10,d0
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 subi.w  #$10,(word_FF0182).l
                 movea.l (dword_FF0120).l,a0
                 move.w  (a0),d0
@@ -171,7 +171,7 @@ UI_WrapJapaneseFontVRAM:                                ; CODE XREF: UI_RenderJa
                 addq.l  #2,(dword_FF0120).l
                 movea.l (dword_FF0120).l,a0
                 tst.w   (a0)
-                bpl.w   locret_514E
+                bpl.w   Cutscene_Return
                 addq.w  #2,(word_FF0126).l
                 rts
 ; End of function UI_RenderJapaneseFontChar

@@ -8,7 +8,7 @@ Gfx_FrontendAlternateVRAMTransferParameters:    dc.l    $FFFF7000, $FFFF6800, $F
                                         ; DATA XREF: UI_InitTitleScreen+96   o
                                         ; UI_InitOptionsScreen+56   o
 Gfx_ScrollVRAMTransferParameters:   dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $6000  ; was: dword_11346
-                                        ; DATA XREF: Gfx_FadeToTargetAndSetupScroll+1E   o
+                                        ; DATA XREF: StoryScreen_FadeInAndStartScroll+1E   o
                                         ; Cutscene_ShipInitScene+8C   o
 Gfx_ScrollWideVRAMTransferParameters:   dc.l    $FFFF7400, $FFFF6800, $FFFF4000, $14000
 

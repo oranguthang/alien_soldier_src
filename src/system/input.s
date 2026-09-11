@@ -134,8 +134,8 @@ Sound_QueueBGMRequest:                                  ; CODE XREF: Cutscene_In
                 rts
 ; End of function Sound_QueueBGMRequest
 ; Plays sound effect with ID parameter
-Sound_PlaySFX:                                          ; CODE XREF: Gfx_AnimateLettersExpand+158   p  ; was: sub_34E4
-                                        ; Gfx_AnimateLettersExpandLarge+10E   p
+Sound_PlaySFX:                                          ; CODE XREF: StoryTitle_RevealLogoCharacters+158   p  ; was: sub_34E4
+                                        ; StoryTitle_ExpandCompletedLogo+10E   p
                 btst    #2,(SoundDisableFlags+1).w
                 beq.s   Sound_QueueRequest
                 rts

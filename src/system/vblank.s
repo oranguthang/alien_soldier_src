@@ -181,8 +181,8 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    UI_HandleTitleInput
                 dc.l    UI_InitOptionsScreen
                 dc.l    UI_UpdateOptionsScreen
-                dc.l    Gfx_ClearPlanesAndInit
-                dc.l    Sys_StoryScreenMainLoop
+                dc.l    StoryScreen_Initialize
+                dc.l    StoryScreen_MainLoop
                 dc.l    UI_InitializeStageSelect
                 dc.l    UI_DispatchStageState
                 dc.l    UI_InitializeWeaponSelect

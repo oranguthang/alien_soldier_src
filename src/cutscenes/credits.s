@@ -18,8 +18,8 @@ Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_Trans
                 jsr     (Gfx_DirectVRAMTransfer).l
                 lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                move.w  #$FFF2,(word_FF010C).l
-                move.w  (word_FF010C).l,d0
+                move.w  #$FFF2,(CutscenePaletteStep).l
+                move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
@@ -86,25 +86,25 @@ off_7C36:       dc.w    Cutscene_FadeInCredits-*        ; DATA XREF: Cutscene_Cr
 Cutscene_FadeInCredits:                                 ; DATA XREF: ROM:off_7C36   o  ; was: sub_7C50
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
-                bne.w   locret_514E
-                addq.w  #2,(word_FF010C).l
-                move.w  (word_FF010C).l,d0
+                bne.w   Cutscene_Return
+                addq.w  #2,(CutscenePaletteStep).l
+                move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                tst.w   (word_FF010C).l
-                bne.w   locret_514E
-                move.w  #$80,(word_FF0106).l
+                tst.w   (CutscenePaletteStep).l
+                bne.w   Cutscene_Return
+                move.w  #$80,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
 ; End of function Cutscene_FadeInCredits
 ; Waits for credits display timer while animating palette colors
 Cutscene_WaitCreditsTimer:                              ; DATA XREF: ROM:00007C38   o  ; was: sub_7C92
                 bsr.w   Gfx_AnimateCreditsColors
-                subq.w  #1,(word_FF0106).l
-                bne.w   locret_514E
-                clr.w   (word_FF010C).l
+                subq.w  #1,(CutsceneTimer).l
+                bne.w   Cutscene_Return
+                clr.w   (CutscenePaletteStep).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
 ; End of function Cutscene_WaitCreditsTimer
@@ -136,15 +136,15 @@ word_7CD8:      dc.w    $A2A, $828, $626                ; DATA XREF: Gfx_Animate
 Cutscene_FadeOutCredits:                                ; DATA XREF: ROM:00007C3A   o  ; was: sub_7CDE
                 move.w  (word_FFA280).w,d0
                 andi.w  #3,d0
-                bne.w   locret_514E
-                addq.w  #2,(word_FF010C).l
-                move.w  (word_FF010C).l,d0
+                bne.w   Cutscene_Return
+                addq.w  #2,(CutscenePaletteStep).l
+                move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                cmpi.w  #$E,(word_FF010C).l
-                bne.w   locret_514E
+                cmpi.w  #$E,(CutscenePaletteStep).l
+                bne.w   Cutscene_Return
                 movea.l #byte_7D48,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 lea     (Entity_ObjectPool).w,a5
@@ -152,7 +152,7 @@ Cutscene_FadeOutCredits:                                ; DATA XREF: ROM:00007C3
                 move.w  #$E8,$14(a5)
                 jsr     (Object_ClearForTransition).l
                 move.w  #$2C8,(a5)
-                move.w  #$10,(word_FF0106).l
+                move.w  #$10,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
 ; End of function Cutscene_FadeOutCredits
@@ -162,8 +162,8 @@ byte_7D48:      dc.b    $44, $20, $40, 0, 2, 2, $80, $84, $88, $84, $88, $80, $8
 
 ; Waits for timer countdown and advances to next state
 Cutscene_WaitForTimer:                                  ; DATA XREF: ROM:00007C3C   o  ; was: sub_7D58
-                subq.w  #1,(word_FF0106).l
-                bne.w   locret_514E
+                subq.w  #1,(CutsceneTimer).l
+                bne.w   Cutscene_Return
                 addq.w  #2,(dword_FF8128+2).w
                 rts
 ; End of function Cutscene_WaitForTimer

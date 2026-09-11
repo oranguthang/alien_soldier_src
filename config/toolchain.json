@@ -49,14 +49,14 @@
       "version": "docker-mingw-build",
       "role": "Replays recorded inputs and captures runtime evidence",
       "source": "https://github.com/oranguthang/gens_automation.git",
-      "source_commit": "a97abb671a0a17f3c1541372ed08683a586d72c2",
+      "source_commit": "f62b2cf50cb1697eff335e846c8270e7b81f2d2a",
       "provenance": "source-built",
       "verification": "make verify-toolchain",
       "identity": "source_commit",
       "identity_note": "The source commit is authoritative because locally built PE files contain build-time fields; the observed executable hash records the current evidence runner.",
       "files": {
         "any": [
-          {"path": "../gens_automation/Output/Gens.exe", "size": 9657270, "sha256": "b63a8f5a5cbd6bcc6a939da98c4abb63a6c2655d6fb86b0f11acc438a418c60c", "observed_only": true}
+          {"path": "../gens_automation/Output/Gens.exe", "size": 9658397, "sha256": "d536817f33cc9871e2749bc0d5ced8956502d3182541a07e1d44279fdf45d141", "observed_only": true}
         ]
       }
     }

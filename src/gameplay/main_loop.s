@@ -165,7 +165,7 @@ UI_StageNumberBcdTable: dc.b    1, 2, 3, 4, 5, 6, 7, 8, 9, $10  ; was: byte_1C8C
                 dc.b    $41, $42, $43, $44, $45, $46, $47, $48, $49, $50
 
 ; Initializes the visible-object list cursor when frame processing is active
-Sys_BeginVisibleObjectList:                             ; CODE XREF: Sys_StoryScreenMainLoop+2C   p  ; was: sub_1C8F2
+Sys_BeginVisibleObjectList:                             ; CODE XREF: StoryScreen_MainLoop+2C   p  ; was: sub_1C8F2
                                         ; UI_UpdateOptionsScreen+52   p
                 tst.b   (byte_FF813E).w
                 bmi.w   Sys_BeginVisibleObjectList_Return
@@ -174,7 +174,7 @@ Sys_BeginVisibleObjectList_Return:                      ; CODE XREF: Sys_BeginVi
                 rts
 ; End of function Sys_BeginVisibleObjectList
 ; Calculates number of active visible objects from list pointer
-Sys_UpdateObjectCount:                                  ; CODE XREF: Sys_StoryScreenMainLoop+44   p  ; was: sub_1C902
+Sys_UpdateObjectCount:                                  ; CODE XREF: StoryScreen_MainLoop+44   p  ; was: sub_1C902
                                         ; UI_UpdateOptionsScreen+62   p
                 tst.b   (byte_FF813E).w
                 bmi.w   Sys_UpdateObjectCount_Return
@@ -219,7 +219,7 @@ Object_CameraPriorityTable: dc.w    0, $800, $1800, $1000  ; was: word_1C972
                                         ; Pickup_Update+7C   o
 
 ; Applies camera deltas and shared motion biases to active objects
-Object_ApplyCameraMotion:                               ; CODE XREF: Sys_StoryScreenMainLoop:loc_491C   p  ; was: sub_1C97A
+Object_ApplyCameraMotion:                               ; CODE XREF: StoryScreen_MainLoop:StoryScreen_RunFrame   p  ; was: sub_1C97A
                                         ; UI_UpdateOptionsScreen+46   p
                 tst.b   (byte_FF813E).w
                 bpl.s   Object_ApplyCameraMotion_Begin

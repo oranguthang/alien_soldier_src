@@ -1,8 +1,8 @@
 ; Palette transition stepping and selected-channel CRAM adjustments
 ; The selected-channel mask uses bits 15, 14, and 13 for red, green, and blue
 
-Gfx_FadePaletteTransition:                              ; CODE XREF: Sys_StoryScreenMainLoop+50   p  ; was: sub_39AA
-                                        ; Sys_TransitionToTitleScreen+20   p
+Gfx_FadePaletteTransition:                              ; CODE XREF: StoryScreen_MainLoop+50   p  ; was: sub_39AA
+                                        ; StoryScreen_WaitThenStartExitFade+20   p
                 move.w  (word_FF80F2).w,d0
                 beq.w   Gfx_FadePaletteTransition_Return
                 moveq   #0,d5
@@ -180,7 +180,7 @@ Gfx_SetFadeParams:                                      ; CODE XREF: Palette_Upd
 ; End of function Gfx_SetFadeParams
 ; Applies fade to palette colors with RGB adjustment
 Gfx_ApplyPaletteFade:                                   ; CODE XREF: Gfx_UpdatePaletteFade+14   p  ; was: sub_3B32
-                                        ; Gfx_FadeOutToDark+24   p
+                                        ; StoryScreen_FadeOutAndLoadTitleAssets+24   p
                 movea.w a0,a1
                 lea     $80(a1),a1
                 bsr.w   Gfx_PrepareRGBComponents

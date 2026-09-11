@@ -1,5 +1,5 @@
 ; Loads multiple palettes from a pointer table sequentially
-Gfx_LoadMultiplePalettes:                               ; CODE XREF: Gfx_WaitForFadeAndLoadTiles+3C   p  ; was: sub_B900
+Gfx_LoadMultiplePalettes:                               ; CODE XREF: StoryScreen_WaitForScrollAndLoadPalette+3C   p  ; was: sub_B900
                                         ; Cutscene_InitCreditsScreen+64   p
                 moveq   #0,d0
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
@@ -28,7 +28,7 @@ Gfx_LoadPaletteFromRelativeOffset:                      ; CODE XREF: Gfx_LoadMul
                 bra.s   Gfx_LoadMultiplePalettes_NextOffset
 ; End of function Gfx_LoadMultiplePalettes
 ; ---------------------------------------------------------------------------
-StoryScreenPaletteOffsetList:               dc.w    $20A, 0  ; DATA XREF: Gfx_WaitForFadeAndLoadTiles+36   o  ; was: word_B944
+StoryScreenPaletteOffsetList:               dc.w    $20A, 0  ; DATA XREF: StoryScreen_WaitForScrollAndLoadPalette+36   o  ; was: word_B944
 OptionsScreenPaletteOffsetList:             dc.w    $60, $E2, 0  ; DATA XREF: UI_InitOptionsScreen+72   o  ; was: word_B948
 StageStartPaletteOffsetList:                dc.w    $28A, $2B0, 0  ; DATA XREF: UI_InitializeStageStart+DC   o  ; was: word_B94E
 WeaponSetupControlTestPaletteOffsetList:    dc.w    $2D0, $2D6, 0  ; DATA XREF: WeaponSetup_LoadControlTestText+32   o  ; was: word_B954
@@ -83,7 +83,7 @@ Gfx_LoadPalettePreservingSharedColor:                   ; CODE XREF: Boss_LoadAs
 ; Command header: destination byte, inclusive word count, then CRAM words
 ; The destination byte selects matching target and shadow buffers $80 bytes apart
 Gfx_LoadPaletteCommand:                                 ; CODE XREF: RegionRestricted+2A   p  ; was: LoadPalette
-                                        ; Gfx_SetupTitleScreenLetters+7E   p
+                                        ; StoryTitle_SetupLogoReveal+7E   p
                 moveq   #0,d0
                 move.b  (a0)+,d0
                 addi.w  #-$1D00,d0
@@ -111,7 +111,7 @@ CommonPaletteCommand:   dc.b    $42, $E, 0, 0, $E, $EE, 0, $EE, 0, $AE, 0, $6E, 
                 dc.b    0, $48, 2, $20, 4, $42, 8, $86, $C, $CA, 6, 0, 8, $40, $C, $84
 FrontendFullPaletteCommand: dc.b    0, $3F, 0, 0, 0, $60, $C, $EA, 0, 0, 0, 0, 0, 0, 0, 0  ; was: byte_BA4A
                                         ; DATA XREF: RegionRestricted+24   o
-                                        ; Gfx_SetupTitleScreenLetters+78   o
+                                        ; StoryTitle_SetupLogoReveal+78   o
                 dc.b    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                 dc.b    0, 0, 0, 0, 6, 0, $E, $EC, 0, 0, 0, 0, 0, 0, 0, 0
                 dc.b    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

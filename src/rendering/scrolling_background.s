@@ -232,8 +232,8 @@ loc_10C0A:                                              ; CODE XREF: Gfx_DirectV
                 rts
 ; End of function Gfx_DirectVRAMTransfer
 ; Renders scrolling background tiles with double buffering
-Gfx_RenderScrollingBackground:                          ; CODE XREF: Gfx_WaitForFadeAndLoadTiles+16   p  ; was: sub_10C18
-                                        ; Gfx_WaitForFadeAndLoadTiles+1C   p
+Gfx_RenderScrollingBackground:                          ; CODE XREF: StoryScreen_WaitForScrollAndLoadPalette+16   p  ; was: sub_10C18
+                                        ; StoryScreen_WaitForScrollAndLoadPalette+1C   p
                 movea.l (dword_FFA940).w,a0
                 move.w  (word_FFA946).w,d0
                 move.w  (word_FFA948).w,d1

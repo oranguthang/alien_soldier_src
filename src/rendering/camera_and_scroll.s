@@ -444,8 +444,8 @@ loc_103E2:                                              ; CODE XREF: UI_InitScor
                 rts
 ; End of function Stage_TriggerPhaseTransition
 ; Sets up VDP scroll plane registers
-Gfx_SetupScrollPlanes:                                  ; CODE XREF: Gfx_ClearPlanesAndInit+8A   p  ; was: sub_103FA
-                                        ; Sys_StoryScreenMainLoop+56   p
+Gfx_SetupScrollPlanes:                                  ; CODE XREF: StoryScreen_Initialize+8A   p  ; was: sub_103FA
+                                        ; StoryScreen_MainLoop+56   p
                 move.w  #$8230,(VDPReg2Shadow).w
                 move.w  #$8407,(VDPReg4Shadow).w
                 tst.w   (word_FF8640).w

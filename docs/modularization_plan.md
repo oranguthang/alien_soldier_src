@@ -92,7 +92,7 @@ data are checked.
 | `0x0039AA` | `Gfx_FadePaletteTransition` | palette transitions |
 | `0x004094` | `Palette_UpdatePrimaryEffect` | primary palette-effect dispatch |
 | `0x004386` | `Text_QueueTrimmedPackedBCDDigits` | packed-BCD and text tile command construction |
-| `0x004840` | `Gfx_ClearPlanesAndInit` | story-screen initialization |
+| `0x004840` | `StoryScreen_Initialize` | story screen and title-logo transition state machine |
 | `0x005150` | `Cutscene_PlanetDispatcher` | planet sequence |
 | `0x00588C` | `UI_StoryTextDispatcher` | story text |
 | `0x007644` | `Cutscene_UpdateStarPositions` | planet/star rendering |

@@ -381,12 +381,13 @@ The former eye/small-eye terminology is not supported by the code and has been
 replaced with neutral controller/segment/terminal names. Likewise,
 `Enemy_GustheadGetAngleToPlayer` was demonstrably false: it reads no player
 state and is an instruction-identical duplicate of the sine/cosine pair
-lookup, with callers in Stage 18 and Destroyer Proto. A provisional run on the
-currently unpinned emulator placed types `$390`, `$394`, and `$398` at frames
-21,989 and 22,000 immediately before the documented Gusthead fight. Because
-the sibling emulator moved away from pinned commit `a97abb6`, that ownership
-remains `hypothesis` in the name audit until the same breakpoints are replayed
-with the pinned toolchain. The coherent 352-line implementation now lives in
+lookup, with callers in Stage 18 and Destroyer Proto. A provisional run placed
+types `$390`, `$394`, and `$398` at frames 21,989 and 22,000 immediately before
+the documented Gusthead fight. The evidence runner used for that observation
+is now pinned at commit `f62b2cf`, including its Z80 sound-register tracing
+support. The visual ownership remains `hypothesis` in the name audit because
+the capture proves timing and object presence, not the exact player-facing
+identity. The coherent 352-line implementation now lives in
 `src/bosses/gusthead_linked_chain.s`; the unrelated type-`$3B8` subtype
 dispatcher was moved to the adjacent Destroyer Proto module. Forty new audit
 records and two corrected earlier records cover the pass.
@@ -3251,3 +3252,41 @@ mappings and 73 static audit records, raising the totals from 12,230 to
 12,292 and from 8,737 to 8,810. The enforced address-derived ceiling falls
 from 3,811 to 3,749; the coherent merge reduces the module count from 349 to
 348.
+
+The story/title-transition audit joins the adjacent 214-line
+`cutscenes/story_screen.s` and 483-line `cutscenes/title_letters.s` ranges as
+the cohesive 687-line `cutscenes/story_screen_and_title_transition.s`. The
+former boundary separated one thirteen-state dispatch table from its last five
+handlers. The merged module now follows the complete path from plane clearing
+and timed story cues through asset loading, the per-character logo reveal, the
+full-logo expansion, exit fade, and transfer to title-screen mode `$14`.
+
+Static inspection narrows several earlier generated claims. The alleged
+button handlers only wait for exact timer values and queue sound cues. The
+former generic title-letter setup clears both planes and the pattern workspace,
+renders font codes `$00-$27`, stages the first glyph of `ALIENSOLDIER`, and
+performs a direct pattern DMA. Its following state expands each of twelve
+characters around the screen center, builds the spaced `ALIEN SOLDIER` pattern,
+and uploads it; the next state expands that complete pattern and rebuilds the
+centered horizontal-scroll table. The supposed immediate title transition
+instead waits for a timer and starts an exit fade; only the final state selects
+the title initializer after fade-complete bit 1 is observed.
+
+The shared return at `$00514E` is intentionally named `Cutscene_Return`, not
+as private story code: 109 conditional branches in the story, text, planet,
+ship, rendering, and credits modules target this one `RTS`. Five adjacent RAM
+fields are also promoted with their actual scope. Three are private to the
+logo reveal (`StoryTitleGlyphCursor`, `StoryTitleExpandSpan`, and
+`StoryTitleGlyphsLeft`); `CutsceneTimer` and `CutscenePaletteStep` are shared by
+the story, credits, starfield, and planet flows.
+
+This package replaces 54 live address-derived ROM definitions and promotes
+five RAM fields. It adds 59 provenance mappings and 79 static audit records,
+raising the totals from 12,292 to 12,351 and from 8,810 to 8,889. The enforced
+address-derived ceiling falls from 3,749 to 3,690; the coherent merge reduces
+the module count from 348 to 347, with a mean of 342.7 lines. The rebuilt
+Japanese ROM remains byte-identical after all boundary, symbol, and shared-RAM
+changes. The runtime toolchain is also repinned to the clean current
+`gens_automation` commit `f62b2cf`, and its observed executable identity is
+recorded in `config/toolchain.json`; standalone `make build` and `make verify`
+therefore validate the same checked-out evidence runner.

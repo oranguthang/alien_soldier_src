@@ -189,7 +189,7 @@ LoadCompressedMappings_WriteFinalBlock:                 ; CODE XREF: LoadCompres
 
 ; Processes data pointers with state bits
 Data_ProcessPointer:                                    ; CODE XREF: Sys_DispatchDataLoader+16   p  ; was: sub_27D8
-                                        ; Gfx_FadeOutToDark+3C   p
+                                        ; StoryScreen_FadeOutAndLoadTitleAssets+3C   p
                 move.w  (a0)+,d0
                 bmi.w   Data_ProcessPointer_Return
                 bset    #$F,d0

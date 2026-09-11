@@ -36,11 +36,11 @@ word_FF00F6             equ     $FFFF00F6
 dword_FF00F8            equ     $FFFF00F8
 word_FF00FC             equ     $FFFF00FC
 word_FF00FE             equ     $FFFF00FE
-dword_FF0100            equ     $FFFF0100
-word_FF0106             equ     $FFFF0106
-word_FF0108             equ     $FFFF0108
-word_FF010A             equ     $FFFF010A
-word_FF010C             equ     $FFFF010C
+StoryTitleGlyphCursor   equ     $FFFF0100               ; was: dword_FF0100
+CutsceneTimer           equ     $FFFF0106               ; was: word_FF0106
+StoryTitleExpandSpan    equ     $FFFF0108               ; was: word_FF0108
+StoryTitleGlyphsLeft    equ     $FFFF010A               ; was: word_FF010A
+CutscenePaletteStep     equ     $FFFF010C               ; was: word_FF010C
 word_FF010E             equ     $FFFF010E
 dword_FF0110            equ     $FFFF0110
 dword_FF0114            equ     $FFFF0114

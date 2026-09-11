@@ -1,15 +1,15 @@
 Effect_InitializeStarfield:                             ; DATA XREF: ROM:00007C3E   o  ; was: sub_7D68
                 move.w  (word_FFA280).w,d0
                 andi.w  #7,d0
-                bne.w   locret_514E
-                subq.w  #2,(word_FF010C).l
-                move.w  (word_FF010C).l,d0
+                bne.w   Cutscene_Return
+                subq.w  #2,(CutscenePaletteStep).l
+                move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                tst.w   (word_FF010C).l
-                bne.w   locret_514E
+                tst.w   (CutscenePaletteStep).l
+                bne.w   Cutscene_Return
                 lea     (word_FFC680).w,a5
                 move.w  #$3A,d7                         ; ':'
 loc_7DA4:                                               ; CODE XREF: Effect_InitializeStarfield+5C   j
@@ -55,15 +55,15 @@ loc_7DEA:                                               ; CODE XREF: Effect_Init
                 move.l  d0,$C00(a1)
                 clr.l   (a1)+
                 dbf     d7,loc_7DEA
-                move.w  #$1A0,(word_FF0106).l
+                move.w  #$1A0,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
 ; Animates credits colors and updates starfield
 Effect_InitializeStarfield_WaitLoop:                    ; DATA XREF: ROM:00007C40   o  ; was: loc_7E48
                 bsr.w   Gfx_AnimateCreditsColors
                 bsr.w   Effect_UpdateStarfield
-                subq.w  #1,(word_FF0106).l
-                bne.w   locret_514E
-                clr.w   (word_FF010C).l
+                subq.w  #1,(CutsceneTimer).l
+                bne.w   Cutscene_Return
+                clr.w   (CutscenePaletteStep).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
 ; End of function Effect_InitializeStarfield
@@ -125,15 +125,15 @@ Cutscene_SegaScreenFadeOut:                             ; DATA XREF: ROM:00007C4
                 bsr.w   Effect_UpdateStarfield
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
-                bne.w   locret_514E
-                subq.w  #2,(word_FF010C).l
-                move.w  (word_FF010C).l,d0
+                bne.w   Cutscene_Return
+                subq.w  #2,(CutscenePaletteStep).l
+                move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                cmpi.w  #$FFF2,(word_FF010C).l
-                bne.w   locret_514E
+                cmpi.w  #$FFF2,(CutscenePaletteStep).l
+                bne.w   Cutscene_Return
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_ClearEntityObjectPool).l
@@ -157,10 +157,10 @@ Cutscene_InitPlanetScene:                               ; DATA XREF: ROM:00007C4
                 jsr     (Gfx_RenderScrollingBackground).l
                 jsr     (Gfx_RenderScrollingBackground).l
                 tst.w   (word_FFA944).w
-                bpl.w   locret_514E
+                bpl.w   Cutscene_Return
                 lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                move.w  #$FFF2,(word_FF010C).l
+                move.w  #$FFF2,(CutscenePaletteStep).l
                 move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95A).w
                 clr.l   (dword_FF0110).l
@@ -230,30 +230,30 @@ Cutscene_PlanetSequenceCtrl:                            ; DATA XREF: ROM:00007C4
                 bsr.w   Cutscene_PlanetPaletteUpdate
                 bsr.w   Gfx_AnimateCreditsColors
                 bsr.w   Cutscene_PlanetScroll
-                tst.w   (word_FF010C).l
-                bne.w   locret_514E
+                tst.w   (CutscenePaletteStep).l
+                bne.w   Cutscene_Return
                 bsr.w   Gfx_FadeOutPalette
                 cmpi.w  #$40,(word_FF00C6).l            ; '@'
-                bcs.w   locret_514E
-                move.w  #$100,(word_FF0106).l
+                bcs.w   Cutscene_Return
+                move.w  #$100,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
 ; End of function Cutscene_PlanetSequenceCtrl
 ; Resets planet fade value to -14 and continues fade logic
 Cutscene_ResetPlanetFade:                               ; CODE XREF: Cutscene_InitPlanetScene+168   p  ; was: sub_8130
-                move.w  #$FFF2,(word_FF010C).l
+                move.w  #$FFF2,(CutscenePaletteStep).l
                 bra.s   loc_8156
 ; End of function Cutscene_ResetPlanetFade
 ; Gradually fades in planet scene palette every 8 frames
 Cutscene_PlanetFadeInStep:                              ; CODE XREF: Cutscene_PlanetSequenceCtrl   p  ; was: sub_813A
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
-                bne.w   locret_514E
-                tst.w   (word_FF010C).l
-                beq.w   locret_514E
-                addq.w  #2,(word_FF010C).l
+                bne.w   Cutscene_Return
+                tst.w   (CutscenePaletteStep).l
+                beq.w   Cutscene_Return
+                addq.w  #2,(CutscenePaletteStep).l
 loc_8156:                                               ; CODE XREF: Cutscene_ResetPlanetFade+8   j
-                move.w  (word_FF010C).l,d0
+                move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
@@ -262,8 +262,8 @@ loc_8156:                                               ; CODE XREF: Cutscene_Re
 ; Planet fade out effect
 Cutscene_PlanetFadeOut:                                 ; DATA XREF: ROM:00007C48   o  ; was: sub_816E
                 bsr.w   Cutscene_PlanetPaletteUpdate
-                subq.w  #1,(word_FF0106).l
-                bne.w   locret_514E
+                subq.w  #1,(CutsceneTimer).l
+                bne.w   Cutscene_Return
                 addq.w  #2,(dword_FF8128+2).w
                 rts
 ; End of function Cutscene_PlanetFadeOut
@@ -274,10 +274,10 @@ Cutscene_PlanetTransition:                              ; DATA XREF: ROM:00007C4
                 bsr.w   Cutscene_PlanetScroll
                 bsr.w   Gfx_UpdateVDPRegistersWithMask
                 tst.w   (word_FF00C6).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 clr.w   (word_FFC6E2).w
                 clr.w   (word_FF0118).l
-                move.w  #$140,(word_FF0106).l
+                move.w  #$140,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
 ; End of function Cutscene_PlanetTransition
@@ -316,7 +316,7 @@ Cutscene_PlanetStarfield:                               ; DATA XREF: ROM:off_81D
 Cutscene_PlanetShipApproach:                            ; DATA XREF: ROM:000081DA   o  ; was: sub_81EC
                 addi.l  #$200,$1C(a5)
                 cmpi.l  #$4000,$1C(a5)
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #2,4(a5)
                 rts
 ; End of function Cutscene_PlanetShipApproach
@@ -324,7 +324,7 @@ Cutscene_PlanetShipApproach:                            ; DATA XREF: ROM:000081D
 Cutscene_PlanetTextDisplay:                             ; DATA XREF: ROM:000081DC   o  ; was: sub_8206
                 subi.l  #$200,$1C(a5)
                 cmpi.l  #$FFFFC000,$1C(a5)
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 subq.w  #2,4(a5)
                 rts
 ; End of function Cutscene_PlanetTextDisplay
@@ -351,7 +351,7 @@ Cutscene_InitPlanetZoom:                                ; DATA XREF: ROM:off_823
                 move.l  #$200000,(dword_FF011C).l
                 move.b  #$30,d0                         ; '0'
                 jsr     (Sound_PlaySFX).l
-                move.w  #$10,(word_FF010C).l
+                move.w  #$10,(CutscenePaletteStep).l
                 addq.w  #2,4(a5)
                 bra.w   Stage_Stage18Init
 ; End of function Cutscene_InitPlanetZoom
@@ -374,7 +374,7 @@ Cutscene_PlanetZoomInStep:                              ; DATA XREF: ROM:0000823
                 asr.l   #8,d1
                 move.l  d1,$1C(a5)
                 tst.l   (dword_FF011C).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #$20,$40(a5)                    ; ' '
@@ -385,10 +385,10 @@ Cutscene_PlanetZoomInStep:                              ; DATA XREF: ROM:0000823
 Cutscene_PlanetZoomPause:                               ; DATA XREF: ROM:00008234   o  ; was: sub_82D2
                 bsr.w   Cutscene_AnimatePlanetSprite
                 subq.w  #1,$40(a5)
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.b  #$31,d0                         ; '1'
                 jsr     (Sound_PlaySFX).l
-                move.w  #8,(word_FF010C).l
+                move.w  #8,(CutscenePaletteStep).l
                 move.l  #$74000,$18(a5)
                 move.l  #$57000,$1C(a5)
                 addq.w  #2,4(a5)
@@ -403,7 +403,7 @@ Cutscene_PlanetZoomComplete:                            ; DATA XREF: ROM:0000823
                 subi.l  #$4000,$18(a5)
                 subi.l  #$3000,$1C(a5)
                 cmpi.w  #$120,$10(a5)
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 clr.w   2(a5)
                 addq.w  #2,4(a6)
                 rts
@@ -433,7 +433,7 @@ Effect_UpdatePlanetDebris:                              ; CODE XREF: Cutscene_Pl
                 addi.l  #$4000,dword_FFD838-word_FFD820(a4)
                 addi.l  #$3000,$1C(a4)
                 cmpi.w  #$80,$C(a4)
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 clr.w   2(a4)
                 rts
 ; End of function Effect_UpdatePlanetDebris
@@ -481,20 +481,20 @@ loc_841A:                                               ; CODE XREF: Effect_Clea
 ; Checks if sprite animation counter exceeds threshold and clears
 Effect_CheckAndClearSprite:                             ; CODE XREF: Effect_ClearOffscreenSprites:loc_841A   p  ; was: sub_8428
                 cmpi.w  #$80,$C(a5)
-                bcs.w   locret_514E
+                bcs.w   Cutscene_Return
                 clr.w   2(a5)
                 rts
 ; End of function Effect_CheckAndClearSprite
 ; Fades out planet palette gradually with timing control
 Cutscene_PlanetFadeOutStep:                             ; CODE XREF: Cutscene_PlanetZoomInStep+8   p  ; was: sub_8438
                                         ; Cutscene_PlanetZoomComplete+8   p
-                tst.w   (word_FF010C).l
-                beq.w   locret_514E
+                tst.w   (CutscenePaletteStep).l
+                beq.w   Cutscene_Return
                 move.w  (word_FFA280).w,d0
                 andi.w  #1,d0
-                bne.w   locret_514E
-                subq.w  #2,(word_FF010C).l
-                move.w  (word_FF010C).l,d0
+                bne.w   Cutscene_Return
+                subq.w  #2,(CutscenePaletteStep).l
+                move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
@@ -516,19 +516,19 @@ word_847E:      dc.w    1, $801, $1801, $1001
 Cutscene_PlanetZoomProgress:                            ; CODE XREF: Cutscene_PlanetZoomInStep+4   p  ; was: sub_8486
                                         ; Cutscene_PlanetZoomComplete+4   p
                 cmpi.w  #$3E,(word_FF0118).l            ; '>'
-                beq.w   locret_514E
+                beq.w   Cutscene_Return
                 cmpi.w  #$20,(word_FF0118).l            ; ' '
                 bcc.s   loc_84B2
-                move.w  (word_FF0106).l,d0
+                move.w  (CutsceneTimer).l,d0
                 andi.w  #3,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #2,(word_FF0118).l
                 rts
 ; ---------------------------------------------------------------------------
 loc_84B2:                                               ; CODE XREF: Cutscene_PlanetZoomProgress+14   j
-                move.w  (word_FF0106).l,d0
+                move.w  (CutsceneTimer).l,d0
                 andi.w  #1,d0
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #2,(word_FF0118).l
                 rts
 ; End of function Cutscene_PlanetZoomProgress
@@ -542,10 +542,10 @@ Cutscene_PlanetZoomMainLoop:                            ; DATA XREF: ROM:00007C4
                 move.w  (word_FF0118).l,d1
                 bsr.w   Sprite_SetGraphicsPointer
                 bsr.w   Cutscene_Calculate3DRotation
-                subq.w  #1,(word_FF0106).l
+                subq.w  #1,(CutsceneTimer).l
                 beq.w   Cutscene_FinalizePlanetZoom
-                cmpi.w  #$80,(word_FF0106).l
-                bne.w   locret_514E
+                cmpi.w  #$80,(CutsceneTimer).l
+                bne.w   Cutscene_Return
                 move.b  #1,d0
                 jmp     (Sound_QueueRequest).l
 ; End of function Cutscene_PlanetZoomMainLoop
@@ -617,7 +617,7 @@ loc_85AA:                                               ; CODE XREF: Cutscene_Ca
 ; End of function Cutscene_Calculate3DRotation
 ; Finalizes planet zoom cutscene and sets transition timer
 Cutscene_FinalizePlanetZoom:                            ; CODE XREF: Cutscene_PlanetZoomMainLoop+28   j  ; was: sub_85BE
-                clr.w   (word_FF010C).l
+                clr.w   (CutscenePaletteStep).l
                 move.w  #$18,(dword_FF8128+2).w
                 rts
 ; End of function Cutscene_FinalizePlanetZoom
@@ -626,15 +626,15 @@ Cutscene_PlanetZoomFadeOut:                             ; DATA XREF: ROM:00007C4
                 bsr.w   Cutscene_Calculate3DRotation
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
-                bne.w   locret_514E
-                subq.w  #2,(word_FF010C).l
-                move.w  (word_FF010C).l,d0
+                bne.w   Cutscene_Return
+                subq.w  #2,(CutscenePaletteStep).l
+                move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                cmpi.w  #$FFF2,(word_FF010C).l
-                bne.w   locret_514E
+                cmpi.w  #$FFF2,(CutscenePaletteStep).l
+                bne.w   Cutscene_Return
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 move.w  #1,(dword_FF8128).w

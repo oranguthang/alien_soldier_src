@@ -26,7 +26,7 @@ Cutscene_InitPlanetState:                               ; DATA XREF: ROM:off_515
 ; Sets up planet rotation cutscene with sprite parameters and VDP settings
 Cutscene_SetupPlanetRotate:                             ; DATA XREF: ROM:00005160   o  ; was: sub_5184
                 subq.w  #1,(word_FF00F2).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 lea     (word_FFC9E0).w,a5
                 move.w  #$CC00,word_FFC9E2-word_FFC9E0(a5)
                 move.w  #$10,(a5)
@@ -57,7 +57,7 @@ Cutscene_PlanetZoomIn:                                  ; DATA XREF: ROM:0000516
                 bsr.w   Gfx_FadeOutPalette
                 bsr.w   Gfx_UpdatePlanetPalette
                 cmpi.w  #$40,(word_FF00C6).l            ; '@'
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  #$80,(word_FF00F2).l
                 addq.w  #2,(word_FF00EE).l
                 rts
@@ -67,7 +67,7 @@ Cutscene_PlanetHold:                                    ; DATA XREF: ROM:0000516
                 bsr.w   Cutscene_CopyPlanetCoords
                 bsr.w   Gfx_UpdatePlanetPalette
                 subq.w  #1,(word_FF00F2).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
 ; End of function Cutscene_PlanetHold
 ; Advances planet cutscene to next state by incrementing state index
 Cutscene_AdvancePlanetState:
@@ -82,7 +82,7 @@ Cutscene_PlanetZoomOut:                                 ; DATA XREF: ROM:0000516
                 bsr.w   Gfx_UpdateVDPRegistersWithMask
                 bsr.w   Gfx_UpdatePlanetPalette
                 tst.w   (word_FF00C6).l
-                bpl.w   locret_514E
+                bpl.w   Cutscene_Return
                 clr.l   (dword_FFC9F8).w
                 move.w  #$100,(word_FF00F2).l
                 addq.w  #2,(word_FF00EE).l
@@ -93,7 +93,7 @@ Cutscene_InitPlanetZoomIn:                              ; DATA XREF: ROM:0000516
                 bsr.w   Cutscene_CopyPlanetCoords
                 bsr.w   Gfx_UpdatePlanetPalette
                 subq.w  #1,(word_FF00F2).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 lea     (word_FFC9E0).w,a5
                 move.w  #$CC00,word_FFC9E2-word_FFC9E0(a5)
                 move.w  #$10,(a5)
@@ -126,7 +126,7 @@ Cutscene_PlanetFadeOutAlt:                              ; DATA XREF: ROM:0000516
                 bsr.w   Gfx_FadeOutPalette
                 bsr.w   Gfx_UpdatePlanetPalette
                 cmpi.w  #$40,(word_FF00C6).l            ; '@'
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
 ; End of function Cutscene_PlanetFadeOutAlt
 ; Sets delay timer to $80 frames and advances cutscene state
 Cutscene_SetDelayAndAdvance:
@@ -142,7 +142,7 @@ Cutscene_UpdatePlanetGraphics:                          ; DATA XREF: ROM:0000516
 ; Waits for delay timer to expire before advancing cutscene state
 Cutscene_WaitDelayTimer:
                 subq.w  #1,(word_FF00F2).l              ; was: sub_536C
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #2,(word_FF00EE).l
                 rts
 ; End of function Cutscene_WaitDelayTimer
@@ -153,7 +153,7 @@ Cutscene_PlanetFadeInAlt:                               ; DATA XREF: ROM:0000517
                 bsr.w   Gfx_UpdateVDPRegistersWithMask
                 bsr.w   Gfx_UpdatePlanetPalette
                 tst.w   (word_FF00C6).l
-                bpl.w   locret_514E
+                bpl.w   Cutscene_Return
                 clr.w   (word_FFC9E2).w
                 addq.w  #2,(word_FF00EE).l
                 rts
@@ -190,7 +190,7 @@ Cutscene_InitShipDelay:                                 ; DATA XREF: ROM:off_53B
 ; Initializes ship sprite data during Sega screen cutscene
 Cutscene_InitShipSprite:                                ; DATA XREF: ROM:000053BA   o  ; was: sub_53DC
                 subq.w  #1,(word_FF00F4).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 lea     (word_FFCA40).w,a5
                 move.w  #$CC00,word_FFCA42-word_FFCA40(a5)
                 move.w  #$10,(a5)
@@ -221,7 +221,7 @@ Cutscene_ShipFadeOut:                                   ; DATA XREF: ROM:000053B
                 bsr.w   Cutscene_FadeOutShip
                 bsr.w   Gfx_UpdateShipPalette
                 cmpi.w  #$40,(word_FF00D0).l            ; '@'
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  #$80,(word_FF00F4).l
                 addq.w  #2,(word_FF00F0).l
                 rts
@@ -231,7 +231,7 @@ Cutscene_WaitShipDelay:                                 ; DATA XREF: ROM:000053B
                 bsr.w   Cutscene_RenderSpriteGrid
                 bsr.w   Gfx_UpdateShipPalette
                 subq.w  #1,(word_FF00F4).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #2,(word_FF00F0).l
                 rts
 ; End of function Cutscene_WaitShipDelay
@@ -242,7 +242,7 @@ Cutscene_ShipFadeIn:                                    ; DATA XREF: ROM:000053C
                 bsr.w   Cutscene_FadeInShip
                 bsr.w   Gfx_UpdateShipPalette
                 tst.w   (word_FF00D0).l
-                bpl.w   locret_514E
+                bpl.w   Cutscene_Return
                 clr.l   (dword_FFCA58).w
                 move.w  #$100,(word_FF00F4).l
                 addq.w  #2,(word_FF00F0).l
@@ -253,7 +253,7 @@ Cutscene_InitShipSprite2:                               ; DATA XREF: ROM:000053C
                 bsr.w   Cutscene_RenderSpriteGrid
                 bsr.w   Gfx_UpdateShipPalette
                 subq.w  #1,(word_FF00F4).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 lea     (word_FFCA40).w,a5
                 move.w  #$CC00,word_FFCA42-word_FFCA40(a5)
                 move.w  #$10,(a5)
@@ -286,7 +286,7 @@ Cutscene_ShipZoomIn:                                    ; DATA XREF: ROM:000053C
                 bsr.w   Cutscene_FadeOutShip
                 bsr.w   Gfx_UpdateShipPalette
                 cmpi.w  #$40,(word_FF00D0).l            ; '@'
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  #$80,(word_FF00F4).l
                 addq.w  #2,(word_FF00F0).l
                 rts
@@ -296,7 +296,7 @@ Cutscene_WaitShipDelay2:                                ; DATA XREF: ROM:000053C
                 bsr.w   Cutscene_RenderSpriteGrid
                 bsr.w   Gfx_UpdateShipPalette
                 subq.w  #1,(word_FF00F4).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #2,(word_FF00F0).l
                 rts
 ; End of function Cutscene_WaitShipDelay2
@@ -307,7 +307,7 @@ Cutscene_ShipZoomOut:                                   ; DATA XREF: ROM:000053C
                 bsr.w   Cutscene_FadeInShip
                 bsr.w   Gfx_UpdateShipPalette
                 tst.w   (word_FF00D0).l
-                bpl.w   locret_514E
+                bpl.w   Cutscene_Return
                 clr.w   (word_FFCA42).w
                 addq.w  #2,(word_FF00F0).l
                 rts
@@ -340,7 +340,7 @@ Cutscene_InitStarDelay:                                 ; DATA XREF: ROM:off_561
 ; Initializes multiple star sprite objects for parallax effect
 Cutscene_InitStarSprites:                               ; DATA XREF: ROM:00005612   o  ; was: sub_562C
                 subq.w  #1,(word_FF00FE).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 lea     (Entity_ObjectPool).w,a5
                 move.w  #$CC00,word_FFC622-Entity_ObjectPool(a5)
                 move.w  #$10,(a5)
@@ -440,7 +440,7 @@ Cutscene_AnimateStars:                                  ; DATA XREF: ROM:0000561
                 addq.w  #1,(word_FF00E8).l
                 bsr.w   Cutscene_UpdateStarPositions
                 cmpi.w  #$14,(word_FF00E8).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 move.w  #$40,(word_FF00FE).l            ; '@'
                 addq.w  #2,(word_FF00EA).l
                 rts
@@ -448,7 +448,7 @@ Cutscene_AnimateStars:                                  ; DATA XREF: ROM:0000561
 ; Waits for timer countdown before advancing cutscene state
 Cutscene_WaitTimerDelay:                                ; DATA XREF: ROM:00005616   o  ; was: sub_584A
                 subq.w  #1,(word_FF00FE).l
-                bne.w   locret_514E
+                bne.w   Cutscene_Return
                 addq.w  #2,(word_FF00EA).l
                 rts
 ; End of function Cutscene_WaitTimerDelay
@@ -457,7 +457,7 @@ Cutscene_FadeStarObjects:                               ; DATA XREF: ROM:0000561
                 subq.w  #1,(word_FF00E8).l
                 bsr.w   Cutscene_UpdateStarPositions
                 tst.w   (word_FF00E8).l
-                bpl.w   locret_514E
+                bpl.w   Cutscene_Return
                 lea     (word_FFC622).w,a0
                 move.w  #9,d0
 loc_5878:                                               ; CODE XREF: Cutscene_FadeStarObjects+22   j

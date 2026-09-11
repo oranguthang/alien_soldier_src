@@ -92,8 +92,8 @@ locret_10E12:                                           ; CODE XREF: Sprite_Setu
                 rts
 ; End of function Sprite_SetupDMA
 ; Sets up VDP DMA for VRAM transfer
-VDP_SetupDMA:                                           ; CODE XREF: Gfx_SetupTitleScreenLetters+3E   p  ; was: sub_10E14
-                                        ; Gfx_SetupTitleScreenLetters+50   p
+VDP_SetupDMA:                                           ; CODE XREF: StoryTitle_SetupLogoReveal+3E   p  ; was: sub_10E14
+                                        ; StoryTitle_SetupLogoReveal+50   p
                 move    sr,-(sp)
                 move    #$2700,sr
 loc_10E1A:                                              ; CODE XREF: VDP_SetupDMA+E   j

@@ -14,7 +14,7 @@ Sys_UpdateObjectSpawner_ProcessList:                    ; CODE XREF: Sys_UpdateO
                 nop
 ; End of function Sys_UpdateObjectSpawner
 ; Processes all objects with screen bounds culling
-Sys_ProcessVisibleObjects:                              ; CODE XREF: Sys_StoryScreenMainLoop+32   p  ; was: sub_1A29C
+Sys_ProcessVisibleObjects:                              ; CODE XREF: StoryScreen_MainLoop+32   p  ; was: sub_1A29C
                                         ; UI_UpdateOptionsScreen+58   p
                 lea     (Entity_ObjectPool).w,a5
 Sys_ProcessVisibleObjects_Loop:                         ; CODE XREF: Sys_ProcessVisibleObjects+5A   j  ; was: loc_1A2A0

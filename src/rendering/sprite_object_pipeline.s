@@ -1,5 +1,5 @@
 ; Traverses display objects, resolves mappings, builds OAM, and queues dynamic art DMA
-Sprite_RenderObjectList:                                ; CODE XREF: Sys_StoryScreenMainLoop+4A   p  ; was: sub_2016
+Sprite_RenderObjectList:                                ; CODE XREF: StoryScreen_MainLoop+4A   p  ; was: sub_2016
                                         ; UI_UpdateOptionsScreen+68   p
                 tst.b   (SpriteOAMBuildActive).w
                 bne.w   Sprite_RenderObjectList_Begin
