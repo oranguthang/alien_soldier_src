@@ -320,7 +320,7 @@ UI_RenderTransientValue_UseClampedY:                    ; CODE XREF: UI_RenderTr
                 move.w  d5,(a0)+
                 move.w  #$FFFF,(a0)
                 movea.w #(dword_FFA100-M68K_RAM),a0
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function UI_RenderTransientValue
 ; Creates visual dash trail effect behind player
 Effect_CreateDashTrail:                                 ; CODE XREF: Player_DashAttackState+B8   j  ; was: sub_177B6

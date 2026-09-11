@@ -2986,3 +2986,29 @@ address-derived ROM definitions, and promotes `ShootingMode` and
 static audit records, raising the totals from 11,838 to 11,946 and from 8,181
 to 8,323. The enforced address-derived ceiling falls from 4,203 to 4,095;
 module count remains 349.
+
+The sprite-renderer audit moves the misleading `gameplay/object_update.s` and
+the overly broad `rendering/sprites.s` into the ROM-ordered 204-line
+`rendering/sprite_object_pipeline.s` and 496-line
+`rendering/sprite_mapping_and_oam.s`. The first module traverses display
+objects, resolves timed and offset-based mapping sequences, caches dynamic-art
+sources, and queues changed sources for DMA. The second owns the 64 priority
+buckets, Genesis OAM entry generation, mapping expansion, clipping,
+reflection, and terminated static-entry appenders. Both modules are cohesive,
+within the project size target, and contain no live address-derived
+definitions.
+
+The instruction-level behavior corrects two especially unsafe generated
+interpretations. Tile-attribute bit 11 selects horizontal reflection and the
+following helper negates each mapping entry's X offset using its encoded
+width; it is not a large-sprite path. The six-byte frame-table variant retains
+bit 15 of the object's tile attributes and then XOR-merges the entry word;
+that bit is the Genesis sprite priority bit, not horizontal flip. Names that
+distinguish dynamic mappings with retained entry attributes are limited to
+what the masks and DMA-source cache prove.
+
+This package corrects 44 generated semantic names, replaces 54 live
+address-derived ROM definitions, and promotes six OAM-pipeline fields in the
+RAM map. It adds 60 provenance mappings and 104 static audit records, raising
+the totals from 11,946 to 12,006 and from 8,323 to 8,427. The enforced
+address-derived ceiling falls from 4,095 to 4,035; module count remains 349.

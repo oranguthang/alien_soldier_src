@@ -238,19 +238,19 @@ Sys_ClearBufferFFB800_Loop:                             ; CODE XREF: Sys_ClearBu
                 dbf     d1,Sys_ClearBufferFFB800_Loop
                 rts
 ; End of function Sys_ClearBufferFFB800
-; Clears FFBE00 OAM sprite buffer area
-Sys_ClearOAMBuffer:                                     ; CODE XREF: Sys_InitGraphicsChain+8   p  ; was: sub_306C
-                lea     (byte_FFBE00).w,a0
+; Clears the OAM-build counters and priority-bucket workspace at $FFBE00-$FFBFBF
+Sprite_ClearOAMBuildState:                              ; CODE XREF: Sys_InitGraphicsChain+8   p  ; was: sub_306C
+                lea     (SpriteOAMEntryCount).w,a0
                 moveq   #0,d0
                 move.w  #$1B,d1
-Sys_ClearOAMBuffer_Loop:                                ; CODE XREF: Sys_ClearOAMBuffer+12   j  ; was: loc_3076
+Sprite_ClearOAMBuildState_Loop:                         ; CODE XREF: Sprite_ClearOAMBuildState+12   j  ; was: loc_3076
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearOAMBuffer_Loop
+                dbf     d1,Sprite_ClearOAMBuildState_Loop
                 rts
-; End of function Sys_ClearOAMBuffer
+; End of function Sprite_ClearOAMBuildState
 ; Initializes graphics chain with RAM clear operations
 Gfx_InitializeChain:                                    ; CODE XREF: Sys_InitGraphicsChain   p  ; was: sub_3084
                 bsr.w   Sys_ClearDualObjectBuffers

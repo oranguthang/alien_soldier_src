@@ -253,8 +253,8 @@ loc_1F4A:                                               ; CODE XREF: Gfx_QueueBC
 word_1F62:      dc.w    1, $10, $100, $1000
 
 ; Configures VDP DMA registers for data transfer
-Gfx_SetupDMATransfer:                                   ; CODE XREF: Sprite_ProcessDMAQueue+50   p  ; was: sub_1F6A
-                                        ; Sprite_ProcessDMAQueueAlt+62   p
+Gfx_SetupDMATransfer:                                   ; CODE XREF: Sprite_RenderDynamicObject+50   p  ; was: sub_1F6A
+                                        ; Sprite_RenderDynamicObjectWithEntryAttributes+62   p
                 move.w  (a1)+,d1
                 move.w  d0,d7
                 rol.w   #2,d7

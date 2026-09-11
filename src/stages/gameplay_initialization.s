@@ -215,7 +215,7 @@ WeaponSetup_RefillAmmoLoop:                             ; CODE XREF: WeaponSetup
 Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_DispatchGameState+CA   o  ; was: sub_1F084
                 jsr     (Object_ApplyCameraMotion).l
                 jsr     (Collision_UpdateSystem).l
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (UI_BuildHUDSpriteList).l
                 jsr     (UI_RenderHUDElement1).l
@@ -225,7 +225,7 @@ Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_Dispatc
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   WeaponSetup_UpdateAndDispatchState
                 jsr     (Sys_UpdateObjectCount).l
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Gfx_SetupScrollPlanes).l
                 addq.w  #1,(word_FFA000).w
@@ -296,7 +296,7 @@ WeaponSetup_RenderSelectedSlotCursor:                   ; CODE XREF: WeaponSetup
                 move.w  #$C6F0,(a1)+
                 move.w  WeaponSetup_SlotCursorXPositions(pc,d0.w),(a1)+
                 move.w  #$FFFF,(a1)+
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function WeaponSetup_HandleLoadoutState
 ; ---------------------------------------------------------------------------
 WeaponSetup_SlotCursorXPositions:   dc.w    $97, $127, $97, $127, $97, $127  ; was: word_1F19A

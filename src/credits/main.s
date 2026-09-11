@@ -124,12 +124,12 @@ Credits_XiTigerAssetLoadList:   dc.w    7               ; field_0  ; was: stru_2
 ; Main loop for credits sequence processing objects and graphics
 Credits_MainLoop:                                       ; DATA XREF: Sys_DispatchGameState+E6   o  ; was: sub_20B74
                 jsr     (Object_ApplyCameraMotion).l
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   Credits_StateDispatcher
                 jsr     (Sys_UpdateObjectCount).l
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Gfx_SetupScrollPlanes).l
                 addq.w  #1,(word_FFA000).w

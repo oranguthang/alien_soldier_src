@@ -90,7 +90,7 @@ loc_A4EC:                                               ; CODE XREF: UI_UpdatePa
                 jsr     (Gfx_UpdateCursorFlash).l
                 jsr     (Gfx_UpdateMenuPalette).l
                 jsr     (Object_ApplyCameraMotion).l
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 bsr.w   UI_HandlePasswordInput
                 movea.w #(word_FF9900-M68K_RAM),a0
@@ -103,7 +103,7 @@ loc_A4EC:                                               ; CODE XREF: UI_UpdatePa
                 jsr     (UI_RenderTextStringWrapped).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 jsr     (Sys_UpdateObjectCount).l
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jmp     Gfx_SetupScrollPlanes
 ; End of function UI_UpdatePasswordScreen

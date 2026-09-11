@@ -514,7 +514,7 @@ WeaponSetup_RenderSlotSpriteLoop:                       ; CODE XREF: WeaponSetup
                 move.w  #$C2DC,(a1)+
                 move.w  #$198,(a1)+
                 move.w  #$FFFF,(a1)+
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function WeaponSetup_RenderSlotSprites
 ; Renders the two-sprite confirmation prompt while its input flag is set
 WeaponSetup_RenderConfirmPromptSprites:                 ; CODE XREF: WeaponSetup_WaitForConfirmInput   p  ; was: sub_1F784
@@ -535,7 +535,7 @@ WeaponSetup_BuildConfirmPromptSprites:                  ; CODE XREF: WeaponSetup
                 move.w  #$C2E2,(a1)+
                 move.w  #$184,(a1)+
                 move.w  #$FFFF,(a1)+
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function WeaponSetup_RenderConfirmPromptSprites
 ; Advances the weapon-setup highlight palette cycle
 WeaponSetup_UpdateHighlightPalette:                     ; CODE XREF: WeaponSetup_HandleLoadoutState+4   p  ; was: sub_1F7BE

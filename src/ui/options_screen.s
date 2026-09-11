@@ -118,12 +118,12 @@ UI_UpdateOptionsScreenFrame:                            ; CODE XREF: UI_UpdateOp
                 jsr     Gfx_UpdateMenuPalette(pc)       ; (pc)
                 nop
                 jsr     (Object_ApplyCameraMotion).l
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   UI_HandleOptionsInput
                 jsr     (Sys_UpdateObjectCount).l
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jmp     Gfx_SetupScrollPlanes
 ; End of function UI_UpdateOptionsScreen
@@ -501,12 +501,12 @@ UI_UpdateSecondaryOptionsMenuActive:                    ; CODE XREF: UI_UpdateSe
 UI_UpdateSecondaryOptionsMenuFrame:                     ; CODE XREF: UI_UpdateSecondaryOptionsMenu+1C   j  ; was: loc_9EC2
                                         ; UI_UpdateSecondaryOptionsMenu+24   j
                 jsr     (Object_ApplyCameraMotion).l
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   UI_HandleSecondaryOptionsInput
                 jsr     (Sys_UpdateObjectCount).l
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jmp     Gfx_SetupScrollPlanes
 ; End of function UI_UpdateSecondaryOptionsMenu

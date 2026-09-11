@@ -42,7 +42,7 @@ Sys_InitGraphicsChain:                                  ; CODE XREF: Sys_InitFul
                                         ; Sys_InitGameMode+C   p
                 bsr.w   Gfx_InitializeChain
                 bsr.w   Sys_ClearBufferFFA800
-                bsr.w   Sys_ClearOAMBuffer
+                bsr.w   Sprite_ClearOAMBuildState
                 bsr.w   Gfx_ClearGraphicsChain
                 bsr.w   VDP_ClearData
                 rts

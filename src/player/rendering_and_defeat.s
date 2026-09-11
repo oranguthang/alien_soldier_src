@@ -290,7 +290,7 @@ Player_DeathParticleLoop:                               ; CODE XREF: Player_Rend
                 subq.w  #1,d0
                 bpl.s   Player_DeathParticleLoop
                 move.w  #$FFFF,(a1)+
-                jsr     (Sprite_AddToOAMBuffer).l
+                jsr     (Sprite_AppendOAMEntries).l
                 move.w  (word_FFA000).w,d0
                 asl.w   #2,d0
                 andi.w  #$1C,d0

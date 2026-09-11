@@ -14,7 +14,7 @@ Stage_InitStage10:                                      ; DATA XREF: ROM:0000FF3
                 move.w  #0,(a1)+
                 clr.w   (a1)+
                 move.w  #$FFFF,(a1)
-                jsr     (Sprite_AddToOAMBuffer).l
+                jsr     (Sprite_AppendOAMEntries).l
 ; Dispatches to appropriate stage 10 scroll handler based on phase
 Stage_DispatchStage10Handler:                           ; CODE XREF: Stage_InitStage10+6   j  ; was: loc_D94C
                                         ; Stage_InitStage10+E   j

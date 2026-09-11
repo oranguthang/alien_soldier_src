@@ -29,12 +29,12 @@ loc_1E7A8:                                              ; CODE XREF: Sys_Transit
 ; Updates stage transition
 Sys_StageTransitionUpdate:                              ; DATA XREF: Sys_DispatchGameState+C2   o  ; was: sub_1E7DE
                 jsr     (Object_ApplyCameraMotion).l
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   Cutscene_DispatchUpdate
                 jsr     (Sys_UpdateObjectCount).l
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Gfx_SetupScrollPlanes).l
                 addq.w  #1,(word_FFA000).w

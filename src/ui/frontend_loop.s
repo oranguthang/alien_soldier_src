@@ -53,12 +53,12 @@ Sys_UpdateGameLoop:                                     ; DATA XREF: Sys_Dispatc
 loc_1CF2E:                                              ; CODE XREF: Sys_UpdateGameLoop+4   j
                                         ; Sys_UpdateGameLoop+C   j
                 jsr     (Object_ApplyCameraMotion).l
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   UI_DispatchMenuState
                 jsr     (Sys_UpdateObjectCount).l
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 addq.w  #1,(word_FFA000).w
                 rts

@@ -63,7 +63,7 @@ loc_76E8:                                               ; CODE XREF: Cutscene_Pl
                 addi.w  #$20,d0                         ; ' '
                 dbf     d3,loc_76E0
                 move.w  #$FFFF,(a1)
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function Cutscene_PlanetScroll
 ; Renders grid of sprites for cutscene with calculated centered positions
 Cutscene_RenderSpriteGrid:                              ; CODE XREF: Cutscene_ShipFadeOut+8   p  ; was: sub_770C
@@ -102,7 +102,7 @@ loc_776A:                                               ; CODE XREF: Cutscene_Re
                 addi.w  #$20,d0                         ; ' '
                 dbf     d3,loc_7762
                 move.w  #$FFFF,(a1)
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function Cutscene_RenderSpriteGrid
 ; Clears sprite buffer and initiates DMA transfer for cutscene graphics
 Cutscene_ClearSpriteBuffer:                             ; CODE XREF: Cutscene_InitShipSprite+82   p  ; was: sub_778E

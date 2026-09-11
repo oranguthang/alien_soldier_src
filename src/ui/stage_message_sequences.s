@@ -70,7 +70,7 @@ StageIntro_WriteStageLabelSprites:                      ; CODE XREF: StageIntro_
                 move.w  d1,6(a0)
                 move.w  d2,4(a0)
                 lea     (dword_FFA100).w,a0
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function StageIntro_UpdateStageNumberBanner
 ; Initializes the flashing EMERGENCY banner
 StageIntro_InitializeEmergencyBanner:                   ; DATA XREF: ROM:0000A9F8   o  ; was: sub_AF82
@@ -118,7 +118,7 @@ StageIntro_WriteEmergencySprites:                       ; CODE XREF: StageIntro_
                 addq.w  #8,a0
                 dbf     d7,StageIntro_WriteEmergencySprites
                 lea     (dword_FFA100).w,a0
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function StageIntro_UpdateEmergencyFlash
 ; Initializes pause timer before text exit
 StageIntro_InitializePostBannerDelay:                   ; DATA XREF: ROM:0000A9FE   o  ; was: sub_B00E
@@ -303,7 +303,7 @@ Results_RenderSpinningTimeBonus:                        ; CODE XREF: Results_Spi
                 bsr.w   Message_LoadSpriteTileIndices
                 bsr.w   Results_PositionTimeBonusSprites
                 lea     (dword_FFA100).w,a0
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function Results_RenderSpinningTimeBonus
 ; Renders the linear form of the remaining-time bonus
 Results_RenderLinearTimeBonus:                          ; CODE XREF: Results_AnimateTimeBonusEntry   p  ; was: sub_B1F8
@@ -314,7 +314,7 @@ Results_RenderLinearTimeBonus:                          ; CODE XREF: Results_Ani
                 bsr.w   Results_ApplyTimeDigitTileOffsets
                 bsr.w   Results_PositionTimeBonusSprites
                 lea     (dword_FFA100).w,a0
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function Results_RenderLinearTimeBonus
 ; Renders the generic radial-text sprite arrangement
 Message_RenderRadialText:                               ; CODE XREF: Message_FadeInRadialText   p  ; was: sub_B214
@@ -324,7 +324,7 @@ Message_RenderRadialText:                               ; CODE XREF: Message_Fad
                 bsr.w   Message_LoadSpriteTileIndices
                 bsr.w   Message_PositionRadialTextSprites
                 lea     (dword_FFA100).w,a0
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function Message_RenderRadialText
 ; Writes the remaining-time bonus sprite positions
 Results_PositionTimeBonusSprites:                       ; CODE XREF: Results_RenderSpinningTimeBonus+A   p  ; was: sub_B22C
@@ -512,7 +512,7 @@ Message_RenderLine:                                     ; CODE XREF: BattleBanne
 Message_RenderLineWithCurrentOffsets:                   ; CODE XREF: Message_RenderLineWithOffsets+8   j  ; was: loc_B3FC
                 bsr.s   Message_WriteSpriteLine
                 lea     (dword_FFA100).w,a0
-                jsr     (Sprite_AddToOAMBuffer).l
+                jsr     (Sprite_AppendOAMEntries).l
 Message_RenderLineReturn:                               ; CODE XREF: Message_RenderLine+6   j  ; was: locret_B408
                 rts
 ; End of function Message_RenderLine

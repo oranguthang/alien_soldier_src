@@ -84,7 +84,7 @@ UI_CalculateReticlePosition:                            ; CODE XREF: Weapon_Conf
                 move.w  d3,(a1)+
                 move.w  #$FFFF,(a1)+
                 movea.w #(dword_FFA100-M68K_RAM),a0
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function UI_RenderTargetingReticle
 ; ---------------------------------------------------------------------------
                 dc.l    dword_193B2

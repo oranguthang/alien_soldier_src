@@ -125,7 +125,7 @@ Input_ProcessDebugMovement_Return:                      ; CODE XREF: Input_Proce
 Sprite_DisplayDebugMarker:
                 lea     Sprite_DebugMarkerData(pc),a0   ; was: sub_1CC98
                 nop
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function Sprite_DisplayDebugMarker
 ; ---------------------------------------------------------------------------
 Sprite_DebugMarkerData: dc.w    $100, $F80, $4300, $100, $140, $F80, $8300, $140, $FFFF  ; was: word_1CCA4

@@ -296,7 +296,7 @@ Cutscene_XiTigerFrameUpdate:                            ; CODE XREF: Cutscene_Xi
                 bsr.s   Cutscene_XiTigerLoadFrame
                 move.w  #$FFFF,(a0)
                 movea.w #(dword_FFA100-M68K_RAM),a0
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function Cutscene_XiTigerFrameUpdate
 ; Loads cutscene frame data to VRAM
 Cutscene_XiTigerLoadFrame:                              ; CODE XREF: Cutscene_XiTigerFrameUpdate+14   p  ; was: sub_1EB9E

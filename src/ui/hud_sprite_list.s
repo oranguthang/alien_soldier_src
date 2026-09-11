@@ -114,7 +114,7 @@ UI_AppendHUDSpriteList_DynamicStripLoop:                ; CODE XREF: UI_BuildHUD
 UI_SubmitHUDSpriteList:                                 ; CODE XREF: UI_BuildHUDSpriteList+116   j  ; was: loc_133C2
                                         ; UI_BuildHUDSpriteList+126   j
                 move.w  #$FFFF,(a1)
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function UI_BuildHUDSpriteList
 ; ---------------------------------------------------------------------------
 UI_WeaponIndicatorXTable:   dc.w    $160, $178, $190, $1A8  ; was: word_133CC

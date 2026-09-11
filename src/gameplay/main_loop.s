@@ -22,7 +22,7 @@ Sys_GameplayMainLoop_UpdateCollision:                   ; CODE XREF: Sys_Gamepla
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdatePrimaryEffects:              ; CODE XREF: Sys_GameplayMainLoop+54   j  ; was: loc_1C6C4
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 bsr.w   Sys_BeginVisibleObjectList
                 bsr.w   UI_UpdateStageNumberBCD
                 jsr     (Gfx_PrimaryEffectDispatcher).l
@@ -79,7 +79,7 @@ Sys_GameplayMainLoop_UpdateSecondaryEffects:            ; CODE XREF: Sys_Gamepla
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E,(VDP_DATA).l
 Sys_GameplayMainLoop_ProcessObjects:                    ; CODE XREF: Sys_GameplayMainLoop+172   j  ; was: loc_1C7E2
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 tst.b   (byte_FFF746).w
                 bpl.s   Sys_GameplayMainLoop_UpdateFade
                 move.l  #$C0420000,(VDP_CTRL).l
@@ -211,7 +211,7 @@ UI_DisplayPauseGraphics_Render:                         ; CODE XREF: UI_DisplayP
                 move.w  #$C7EF,(a1)+
                 move.w  #$E0,(a1)+
                 move.w  #$FFFF,(a1)
-                jmp     (Sprite_AddToOAMBuffer).l
+                jmp     (Sprite_AppendOAMEntries).l
 ; End of function UI_DisplayPauseGraphics
 ; ---------------------------------------------------------------------------
 Object_CameraPriorityTable: dc.w    0, $800, $1800, $1000  ; was: word_1C972

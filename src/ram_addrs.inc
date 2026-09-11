@@ -564,10 +564,10 @@ dword_FFB400            equ     $FFFFB400
 dword_FFB480            equ     $FFFFB480
 dword_FFB600            equ     $FFFFB600
 dword_FFB800            equ     $FFFFB800
-byte_FFBE00             equ     $FFFFBE00
-byte_FFBE01             equ     $FFFFBE01
-word_FFBE02             equ     $FFFFBE02
-dword_FFBE04            equ     $FFFFBE04
+SpriteOAMEntryCount     equ     $FFFFBE00               ; was: byte_FFBE00
+SpriteOAMFreeSlots      equ     $FFFFBE01               ; was: byte_FFBE01
+SpriteOAMWritePointer   equ     $FFFFBE02               ; was: word_FFBE02
+SpritePriorityBuckets   equ     $FFFFBE04               ; was: dword_FFBE04
 dword_FFBFC0            equ     $FFFFBFC0
 byte_FFC020             equ     $FFFFC020
 byte_FFC2C0             equ     $FFFFC2C0
@@ -871,14 +871,14 @@ dword_FFF724            equ     $FFFFF724
 dword_FFF728            equ     $FFFFF728
 dword_FFF72C            equ     $FFFFF72C
 dword_FFF730            equ     $FFFFF730
-byte_FFF744             equ     $FFFFF744
+SpriteOAMBuildActive    equ     $FFFFF744               ; was: byte_FFF744
 byte_FFF745             equ     $FFFFF745
 byte_FFF746             equ     $FFFFF746
 word_FFF74A             equ     $FFFFF74A
 word_FFF74E             equ     $FFFFF74E
 byte_FFF754             equ     $FFFFF754
 byte_FFF755             equ     $FFFFF755
-word_FFF756             equ     $FFFFF756
+SpriteOAMStartCount     equ     $FFFFF756               ; was: word_FFF756
 word_FFF758             equ     $FFFFF758
 word_FFF75A             equ     $FFFFF75A
 word_FFF75C             equ     $FFFFF75C

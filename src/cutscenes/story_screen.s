@@ -65,14 +65,14 @@ Sys_StoryScreenMainLoop:                                ; DATA XREF: Sys_Dispatc
 loc_491C:                                               ; CODE XREF: Sys_StoryScreenMainLoop+6   j
                                         ; Sys_StoryScreenMainLoop+E   j
                 jsr     (Object_ApplyCameraMotion).l
-                jsr     (Sys_InitObjectPointers).l
+                jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   Sys_StoryScreenDispatcher
                 bsr.w   UI_StoryTextDispatcher
                 bsr.w   UI_JapaneseTextDispatcher
                 jsr     (Sys_UpdateObjectCount).l
-                jsr     (Sys_ProcessObjectList).l
+                jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Gfx_SetupScrollPlanes).l
                 addq.w  #1,(word_FFA000).w
