@@ -126,42 +126,42 @@ loc_1DDE0:                                              ; CODE XREF: Results_Ren
                 bsr.w   Results_DisplayScore
                 bsr.w   Results_DisplayContinues
                 bsr.w   Results_DisplayBonus
-                lea     (byte_47FE).l,a0
+                lea     (Text_Results).l,a0
                 move.w  #$E300,d0
                 move.w  #$5120,d4
-                jsr     (UI_RenderTextString).l
-                lea     (byte_4806).l,a0
+                jsr     (Text_QueueDoubleHeightString).l
+                lea     (Text_HighScore).l,a0
                 move.w  #$8300,d0
                 move.w  #$528A,d4
-                jsr     (UI_RenderTextString).l
-                lea     (byte_468C).l,a0
+                jsr     (Text_QueueDoubleHeightString).l
+                lea     (Text_EightDigitPointsPlaceholder).l,a0
                 move.w  #$A300,d0
                 move.w  #$52AA,d4
-                jsr     (UI_RenderTextString).l
-                lea     (byte_4811).l,a0
+                jsr     (Text_QueueDoubleHeightString).l
+                lea     (Text_Score).l,a0
                 move.w  #$8300,d0
                 move.w  #$538A,d4
-                jsr     (UI_RenderTextString).l
-                lea     (byte_468C).l,a0
+                jsr     (Text_QueueDoubleHeightString).l
+                lea     (Text_EightDigitPointsPlaceholder).l,a0
                 move.w  #$A300,d0
                 move.w  #$53AA,d4
-                jsr     (UI_RenderTextString).l
-                lea     (byte_4820).l,a0
+                jsr     (Text_QueueDoubleHeightString).l
+                lea     (Text_DestroyedEnemies).l,a0
                 move.w  #$8300,d0
                 move.w  #$558A,d4
-                jsr     (UI_RenderTextString).l
-                lea     (byte_4687).l,a0
+                jsr     (Text_QueueDoubleHeightString).l
+                lea     (Text_FourDigitPlaceholder).l,a0
                 move.w  #$A300,d0
                 move.w  #$55B8,d4
-                jsr     (UI_RenderTextString).l
-                lea     (byte_4832).l,a0
+                jsr     (Text_QueueDoubleHeightString).l
+                lea     (Text_PlayerDamage).l,a0
                 move.w  #$8300,d0
                 move.w  #$568A,d4
-                jsr     (UI_RenderTextString).l
-                lea     (byte_4687).l,a0
+                jsr     (Text_QueueDoubleHeightString).l
+                lea     (Text_FourDigitPlaceholder).l,a0
                 move.w  #$A300,d0
                 move.w  #$56B8,d4
-                jmp     (UI_RenderTextString).l
+                jmp     (Text_QueueDoubleHeightString).l
 ; End of function Results_RenderAllStats
 ; Display completion time
 Results_DisplayTime:                                    ; CODE XREF: Results_UpdateAndDisplay+A   p  ; was: sub_1DEA4
@@ -177,7 +177,7 @@ Results_DisplayTime:                                    ; CODE XREF: Results_Upd
                 move.w  #$8302,d1
 loc_1DEC6:                                              ; CODE XREF: Results_DisplayTime+14   j
                                         ; Results_DisplayTime+1C   j
-                jmp     (Results_UpdateNumbers).l
+                jmp     (Text_QueueTrimmedPackedBCDDigits).l
 ; End of function Results_DisplayTime
 ; Display score value
 Results_DisplayScore:                                   ; CODE XREF: Results_UpdateAndDisplay+E   p  ; was: sub_1DECC
@@ -194,7 +194,7 @@ Results_DisplayScore:                                   ; CODE XREF: Results_Upd
                 move.l  (dword_FFFF2C).w,d0
 loc_1DEF2:                                              ; CODE XREF: Results_DisplayScore+14   j
                                         ; Results_DisplayScore+1C   j
-                jmp     (Results_UpdateNumbers).l
+                jmp     (Text_QueueTrimmedPackedBCDDigits).l
 ; End of function Results_DisplayScore
 ; Displays stage bonus value
 Results_DisplayStageBonus:
@@ -203,7 +203,7 @@ Results_DisplayStageBonus:
                 move.w  #$C302,d1
                 move.w  #$5538,d4
                 moveq   #4,d7
-                jmp     (Results_UpdateNumbers).l
+                jmp     (Text_QueueTrimmedPackedBCDDigits).l
 ; End of function Results_DisplayStageBonus
 ; Display continues used
 Results_DisplayContinues:                               ; CODE XREF: Results_RenderAllStats+1C   p  ; was: sub_1DF0E
@@ -212,7 +212,7 @@ Results_DisplayContinues:                               ; CODE XREF: Results_Ren
                 move.w  #$C302,d1
                 move.w  #$55B8,d4
                 moveq   #4,d7
-                jmp     (Results_UpdateNumbers).l
+                jmp     (Text_QueueTrimmedPackedBCDDigits).l
 ; End of function Results_DisplayContinues
 ; Display bonus points
 Results_DisplayBonus:                                   ; CODE XREF: Results_RenderAllStats+20   p  ; was: sub_1DF24
@@ -221,7 +221,7 @@ Results_DisplayBonus:                                   ; CODE XREF: Results_Ren
                 move.w  #$C302,d1
                 move.w  #$56B8,d4
                 moveq   #4,d7
-                jmp     (Results_UpdateNumbers).l
+                jmp     (Text_QueueTrimmedPackedBCDDigits).l
 ; End of function Results_DisplayBonus
 ; Main loop for results screen
 Results_MainLoop:                                       ; DATA XREF: Sys_DispatchGameState+DE   o  ; was: sub_1DF3A

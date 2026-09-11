@@ -29,7 +29,7 @@ loc_4B96:                                               ; CODE XREF: Gfx_SetupTi
                 move.w  #$8300,d0
                 move.w  #$4680,d4
                 movea.l #byte_4CCC,a0
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  #$3C,(RasterEffectIndex).w      ; '<'
                 clr.w   (RasterEffectInitState).w
                 move.w  #$21,(word_FF0108).l            ; '!'

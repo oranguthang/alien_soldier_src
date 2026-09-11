@@ -13,11 +13,11 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 - The ROM and all 579 extracted segments have pinned sizes, ranges, and hashes.
 - Vendored assembler/converter files and the emulator commit are pinned.
 - Ordinary cleanup preserves extracted private assets.
-- `src/main.s` is an address-ordered index over 349 modules with a checked
-  1,000-line ceiling; the current mean is 340.7 lines and no waiver is active.
+- `src/main.s` is an address-ordered index over 348 modules with a checked
+  1,000-line ceiling; the current mean is 341.7 lines and no waiver is active.
 - `config/rom_layout.json` is checked against listing addresses, landmarks,
   padding ranges, and the built image.
-- Naming/evidence rules, 12,230 provenance mappings, and the remaining 3,811
+- Naming/evidence rules, 12,292 provenance mappings, and the remaining 3,749
   address-derived definitions are policy checked.
 - Source/subsystem and RAM orientation maps exist without overstating the
   automatically generated semantic names.
@@ -25,7 +25,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   `make test`.
 - Six pinned runtime scenarios check 13 named RAM expectations across boot,
   title, gameplay, boss entry, stage change, and credits.
-- The listing exports 16,051 canonical ROM/RAM/hardware addresses; layout
+- The listing exports 16,056 canonical ROM/RAM/hardware addresses; layout
   landmarks and runtime symbols are checked by `make verify-symbols`.
 - `make clean` is restricted to reproducible build/runtime outputs and Python
   caches; extracted assets, traces, workflow files, and source backups survive.
@@ -40,7 +40,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 ## Reconstruction backlog after 0.5
 
 The contract does not require invented semantics. Most of the RAM inventory and
-3,811 address-derived definitions intentionally remain in the unknowns backlog.
+3,749 address-derived definitions intentionally remain in the unknowns backlog.
 Promote or correct them only with recorded static/runtime evidence.
 The older source-mutating analysis workflows are also outside the release
 interface until made module-aware; see `docs/tooling_status.md`.

@@ -59,7 +59,7 @@ UI_UpdateStoryTextScroll:                               ; DATA XREF: ROM:000058A
                 cmpi.b  #$FE,(a0)
                 bne.s   loc_5980
                 movea.l #word_5A14,a0
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 bra.s   loc_59D2
 ; ---------------------------------------------------------------------------
 loc_5980:                                               ; CODE XREF: UI_UpdateStoryTextScroll+3A   j
@@ -76,13 +76,13 @@ loc_5994:                                               ; CODE XREF: UI_UpdateSt
                 bra.s   loc_59A8
 ; ---------------------------------------------------------------------------
 loc_59A2:                                               ; CODE XREF: UI_UpdateStoryTextScroll+60   j
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
 loc_59A8:                                               ; CODE XREF: UI_UpdateStoryTextScroll+6A   j
                 addi.l  #$22,(dword_FF0172).l           ; '"'
                 move.w  #$C300,d0
                 move.w  (word_FF00F6).l,d4
                 movea.l (dword_FF00F8).l,a0
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 addi.l  #$22,(dword_FF00F8).l           ; '"'
 loc_59D2:                                               ; CODE XREF: UI_UpdateStoryTextScroll+48   j
                 move.w  #$C300,d0
@@ -94,7 +94,7 @@ loc_59D2:                                               ; CODE XREF: UI_UpdateSt
 ; Wraps VRAM address for text rendering across plane boundary
 UI_WrapTextVRAMAddress:                                 ; CODE XREF: UI_UpdateStoryTextScroll+AE   j  ; was: loc_59EA
                 movea.l #word_5A14,a0
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 addi.w  #$180,(word_FF00F6).l
                 cmpi.w  #$5000,(word_FF00F6).l
                 bcs.w   locret_514E

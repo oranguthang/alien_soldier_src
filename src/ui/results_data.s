@@ -252,7 +252,7 @@ Results_AdjustEnteringSummaryRow:                       ; CODE XREF: Results_Upd
                 addi.w  #$2A,d4
 Results_RenderEnteringPrimaryLine:                      ; CODE XREF: Results_UpdateViewport+AE   j  ; was: loc_204F0
                                         ; Results_UpdateViewport+B6   j
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  (dword_FF9414).w,d0
                 cmpi.w  #$1B,d0
                 bne.s   Results_CheckTotalClearTimeRow
@@ -277,7 +277,7 @@ Results_RenderEnteringSummaryLabel:                     ; CODE XREF: Results_Upd
                 move.w  #$300,d0
                 move.w  (dword_FF9404).w,d4
                 addi.w  #$4006,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
 Results_SelectEnteringDetailLine:                       ; CODE XREF: Results_UpdateViewport+EC   j  ; was: loc_20534
                 movea.w (dword_FF9420+2).w,a0
                 move.b  $B(a0),d0
@@ -303,7 +303,7 @@ Results_SelectAvailableEnteringDetailText:              ; CODE XREF: Results_Upd
 Results_RenderEnteringDetailLine:                       ; CODE XREF: Results_UpdateViewport+12C   j  ; was: loc_2056A
                 move.w  (dword_FF9404).w,d4
                 addi.w  #$4050,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
 Results_ApplyVerticalScrollStep:                        ; CODE XREF: Results_UpdateViewport+26   j  ; was: loc_20578
                 move.w  (dword_FF941C).w,d0
                 add.w   d0,(dword_FFA904).w
@@ -347,7 +347,7 @@ Results_PrepareSelectedRowHighlight:                    ; CODE XREF: Results_Ren
                 move.w  (dword_FF9418).w,d4
                 btst    #$E,d4
                 beq.s   Results_SelectSelectedDetailText
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
 Results_SelectSelectedDetailText:                       ; CODE XREF: Results_RenderSelectedRowHighlight+34   j  ; was: loc_205EA
                 movea.w (dword_FF9420+2).w,a0
                 move.b  $B(a0),d0
@@ -367,7 +367,7 @@ Results_RenderSelectedDetailHighlight:                  ; CODE XREF: Results_Ren
                 addi.w  #$4A,d4
                 btst    #$E,d4
                 beq.s   Results_RenderSelectedRowHighlightReturn
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
 Results_RenderSelectedRowHighlightReturn:               ; CODE XREF: Results_RenderSelectedRowHighlight+4   j  ; was: locret_20622
                                         ; Results_RenderSelectedRowHighlight+6C   j
                 rts

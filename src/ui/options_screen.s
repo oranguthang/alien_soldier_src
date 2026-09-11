@@ -39,38 +39,38 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 clr.b   (dword_FF8066).w
                 clr.b   (dword_FF806A+2).w
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
-                lea     (byte_46A3).l,a0
+                lea     (Text_Options).l,a0
                 move.w  #$8300,d0
                 move.w  #$4122,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_4734).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_Level).l,a0
                 move.w  #$8300,d0
                 move.w  #$4290,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_4749).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_BGMSwitch).l,a0
                 move.w  #$8300,d0
                 move.w  #$4490,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_4754).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_SFXSwitch).l,a0
                 move.w  #$8300,d0
                 move.w  #$4590,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_475F).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_BGMTest).l,a0
                 move.w  #$8300,d0
                 move.w  #$4710,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_4768).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_SFXTest).l,a0
                 move.w  #$8300,d0
                 move.w  #$4810,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_4771).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_VoiceTest).l,a0
                 move.w  #$8300,d0
                 move.w  #$4910,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_477C).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_PressStartToExit).l,a0
                 move.w  #$A300,d0
                 move.w  #$4B14,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; ---------------------------------------------------------------------------
 UI_ActivateOptionsScreen:                               ; CODE XREF: UI_InitOptionsScreen+4E   j  ; was: loc_9728
                 move.w  #$20,(GameModeIndex).w          ; ' '

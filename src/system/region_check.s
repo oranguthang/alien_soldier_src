@@ -26,27 +26,27 @@ RegionRestricted:                                       ; CODE XREF: Sys_CheckRe
                 move.w  #$438C,d4
                 lea     RegionLock_DevelopedForUseText(pc),a0
                 nop
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  #$8300,d0
                 move.w  #$4518,d4
                 lea     RegionLock_NTSCDomesticText(pc),a0
                 nop
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  #$8300,d0
                 move.w  #$46A4,d4
                 lea     RegionLock_AndText(pc),a0
                 nop
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  #$8300,d0
                 move.w  #$4808,d4
                 lea     RegionLock_PALSecamText(pc),a0
                 nop
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  #$8300,d0
                 move.w  #$49A0,d4
                 lea     RegionLock_SystemsText(pc),a0
                 nop
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #4,(GameSubstateIndex).w

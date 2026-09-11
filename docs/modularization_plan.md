@@ -91,8 +91,7 @@ data are checked.
 | `0x003954` | `Score_AddPackedBCD` | packed-BCD score arithmetic and shared PRNG |
 | `0x0039AA` | `Gfx_FadePaletteTransition` | palette transitions |
 | `0x004094` | `Palette_UpdatePrimaryEffect` | primary palette-effect dispatch |
-| `0x004386` | `Results_UpdateNumbers` | results-number rendering |
-| `0x004594` | `Gfx_BuildVDPCommandList` | text/VDP command construction |
+| `0x004386` | `Text_QueueTrimmedPackedBCDDigits` | packed-BCD and text tile command construction |
 | `0x004840` | `Gfx_ClearPlanesAndInit` | story-screen initialization |
 | `0x005150` | `Cutscene_PlanetDispatcher` | planet sequence |
 | `0x00588C` | `UI_StoryTextDispatcher` | story text |

@@ -85,7 +85,7 @@ loc_1E38E:                                              ; CODE XREF: UI_HandleMe
                 asl.w   #7,d4
                 addi.w  #$400C,d4
                 move.w  #$C300,d0
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 asr.w   #1,d3
                 addq.w  #2,d3
                 ext.l   d3
@@ -139,10 +139,10 @@ byte_1E40C:     dc.b    $18, 0, 0                       ; DATA XREF: UI_HandleMe
 
 ; Renders static menu text
 UI_RenderMenuText:                                      ; CODE XREF: UI_WeaponSelectTransition+74   p  ; was: sub_1E430
-                lea     (byte_47F2).l,a0
+                lea     (Text_PressStart).l,a0
                 move.w  #$C100,d0
                 move.w  #$4B9E,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function UI_RenderMenuText
 ; ---------------------------------------------------------------------------
 byte_1E444:     dc.b    3, $DA, 0, $58, $79, $42, $36, $3F, $34, $43, $39, 0, $3E, $3B, $42, $D8

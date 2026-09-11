@@ -44,22 +44,22 @@ loc_936C:                                               ; CODE XREF: UI_InitTitl
                 move.b  #$91,d0
                 jsr     (Sound_QueueRequest).l
                 jsr     (Gfx_SetupScrollPlanes).l
-                lea     (byte_46B4).l,a0
+                lea     (Text_TitleFeatureList).l,a0
                 move.w  #$A300,d0
                 move.w  #$4086,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_46D9).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_MegaDriveTagline).l,a0
                 move.w  #$A300,d0
                 move.w  #$4202,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_4701).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_ForMegaDriversCustom).l,a0
                 move.w  #$8300,d0
                 move.w  #$4892,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_4718).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_SegaCopyright1995).l,a0
                 move.w  #$A300,d0
                 move.w  #$4C0C,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 lea     (FrontendFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 bset    #6,(VDPReg1Shadow+1).w
@@ -167,20 +167,20 @@ loc_9584:                                               ; CODE XREF: UI_HandleTi
 ; End of function UI_HandleTitleInput
 ; Renders first menu option text on title screen
 UI_RenderTitleOption1:                                  ; CODE XREF: UI_HandleTitleInput:loc_955E   p  ; was: sub_959A
-                movea.l #byte_4698,a0
+                movea.l #Text_GameStart,a0
                 move.w  #$4A9E,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function UI_RenderTitleOption1
 ; Renders second menu option text on title screen
 UI_RenderTitleOption2:                                  ; CODE XREF: UI_HandleTitleInput:loc_9572   p  ; was: sub_95AA
-                movea.l #byte_46A3,a0
+                movea.l #Text_Options,a0
                 move.w  #$4ABA,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function UI_RenderTitleOption2
 ; Renders third menu option text on title screen
 UI_RenderTitleOption3:                                  ; CODE XREF: UI_HandleTitleInput:loc_9584   p  ; was: sub_95BA
-                movea.l #byte_46AB,a0
+                movea.l #Text_Password,a0
                 move.w  #$4A86,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function UI_RenderTitleOption3
 ; Initializes options screen with objects and text elements

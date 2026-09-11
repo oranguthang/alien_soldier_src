@@ -18,25 +18,25 @@ loc_1D966:                                              ; CODE XREF: Results_Upd
                 move.w  (word_FFA228).w,d0
                 move.w  #$6B42,d4
                 moveq   #2,d7
-                jmp     (Results_UpdateNumbers).l
+                jmp     (Text_QueueTrimmedPackedBCDDigits).l
 ; End of function Results_UpdateTimeDisplay
 ; Renders text headers for results screen
 UI_RenderResultsHeaders:                                ; CODE XREF: UI_InitializeContinueScreen+90   j  ; was: sub_1D978
-                lea     (byte_47B2).l,a0
+                lea     (Text_CreditPeriod).l,a0
                 move.w  #$2300,d0
                 move.w  #$6B34,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_4689).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_TwoDigitPlaceholder).l,a0
                 move.w  #$300,d0
                 move.w  #$6B42,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function UI_RenderResultsHeaders
 ; Renders continue prompt text on screen
 UI_RenderContinuePrompt:                                ; CODE XREF: UI_InitializeContinueScreen+4C   p  ; was: sub_1D9A0
                 move.w  #$6300,d0
-                movea.l #byte_4790,a0
+                movea.l #Text_Continue,a0
                 move.w  #$669E,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function UI_RenderContinuePrompt
 ; Displays current stage number on results
 Results_DisplayStageNumber:                             ; CODE XREF: UI_HandleContinueInput+4   p  ; was: sub_1D9B4
@@ -45,14 +45,14 @@ Results_DisplayStageNumber:                             ; CODE XREF: UI_HandleCo
                 move.w  #$4302,d1
                 move.w  #$66B0,d4
                 moveq   #1,d7
-                jsr     (Results_UpdateNumbers).l
+                jsr     (Text_QueueTrimmedPackedBCDDigits).l
 ; End of function Results_DisplayStageNumber
 ; Renders score values and labels on results
 Results_RenderScoreValues:                              ; CODE XREF: UI_InitializeContinueScreen+50   p  ; was: sub_1D9CA
-                lea     (byte_47A1).l,a0
+                lea     (Text_StagePeriod).l,a0
                 move.w  #$2300,d0
                 move.w  #$6B06,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 moveq   #0,d0
                 move.w  (StageTableIndex).w,d0
                 addq.w  #2,d0
@@ -60,30 +60,30 @@ Results_RenderScoreValues:                              ; CODE XREF: UI_Initiali
                 move.w  #$4302,d1
                 move.w  #$6B12,d4
                 moveq   #2,d7
-                jsr     (Results_UpdateNumbers).l
-                lea     (byte_4689).l,a0
+                jsr     (Text_QueueTrimmedPackedBCDDigits).l
+                lea     (Text_TwoDigitPlaceholder).l,a0
                 move.w  #$300,d0
                 move.w  #$6B12,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_47BA).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_LevelPeriod).l,a0
                 move.w  #$2300,d0
                 move.w  #$6B1A,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_47C1).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_Easy).l,a0
                 tst.w   (DifficultyMode).w
                 beq.s   loc_1DA36
-                lea     (byte_47C6).l,a0
+                lea     (Text_Hard).l,a0
 loc_1DA36:                                              ; CODE XREF: Results_RenderScoreValues+64   j
                 move.w  #$4300,d0
                 move.w  #$6B26,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function Results_RenderScoreValues
 ; Renders continue text with stage name
 UI_RenderContinueText:                                  ; CODE XREF: UI_InitializeContinueScreen:loc_1DB24   j  ; was: sub_1DA44
-                lea     (byte_47A8).l,a0
+                lea     (Text_PasswordPeriod).l,a0
                 move.w  #$2300,d0
                 move.w  #$6B32,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  (StageTableIndex).w,d0
                 asl.w   #2,d0
                 addi.l  #word_A82A,d0
@@ -99,7 +99,7 @@ UI_RenderContinueText:                                  ; CODE XREF: UI_Initiali
                 movea.w #(byte_FF9980-M68K_RAM),a0
                 move.w  #$4300,d0
                 move.w  #$6B44,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function UI_RenderContinueText
 ; Initializes continue screen with palettes and graphics
 UI_InitializeContinueScreen:                            ; DATA XREF: ROM:0001D7D8   o  ; was: sub_1DA90

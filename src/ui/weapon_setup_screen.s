@@ -184,7 +184,7 @@ WeaponSetup_RenderControlTestTextLoop:                  ; CODE XREF: WeaponSetup
                 move.w  (a1,d1.w),d0
                 move.w  2(a1,d1.w),d4
                 movea.l 4(a1,d1.w),a0
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 addi.w  #8,(dword_FF8040).w
                 cmpi.w  #$40,(dword_FF8040).w           ; '@'
                 bne.s   WeaponSetup_RenderControlTestTextLoop
@@ -349,7 +349,7 @@ WeaponSetup_RenderForceName:                            ; CODE XREF: WeaponSetup
                 move.w  (a1,d1.w),d4
                 asl.w   #1,d1
                 movea.l $C(a1,d1.w),a0
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 addq.w  #2,(dword_FF8040).w
                 cmpi.w  #$C,(dword_FF8040).w
                 bne.s   WeaponSetup_RenderForceNameLoop
@@ -372,7 +372,7 @@ WeaponSetup_RenderHeading:                              ; CODE XREF: WeaponSetup
                 lea     WeaponSetup_HeadingText(pc),a0
                 nop
                 move.w  #$6294,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function WeaponSetup_RenderHeading
 ; Renders and highlights the MOVING/FIX shooting-mode options
 WeaponSetup_RenderShootingModeOptions:                  ; CODE XREF: WeaponSetup_HandleShootingModeInput+66   j  ; was: sub_1F626
@@ -388,7 +388,7 @@ WeaponSetup_RenderShootingModeLabel:                    ; CODE XREF: WeaponSetup
                 lea     WeaponSetup_ShootingModeText(pc),a0
                 nop
                 move.w  #$680E,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  #$8100,d0
                 tst.w   (ShootingMode).w
                 beq.s   WeaponSetup_RenderMovingModeOption
@@ -397,7 +397,7 @@ WeaponSetup_RenderMovingModeOption:                     ; CODE XREF: WeaponSetup
                 lea     WeaponSetup_MovingModeText(pc),a0
                 nop
                 move.w  #$6830,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 move.w  #$8100,d0
                 tst.w   (ShootingMode).w
                 bne.s   WeaponSetup_RenderFixedModeOption
@@ -406,7 +406,7 @@ WeaponSetup_RenderFixedModeOption:                      ; CODE XREF: WeaponSetup
                 lea     WeaponSetup_FixedModeText(pc),a0
                 nop
                 move.w  #$6840,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function WeaponSetup_RenderShootingModeOptions
 ; Begins the controller-layout page with its selected highlight color
 WeaponSetup_RenderControlTypePage:                      ; CODE XREF: WeaponSetup_HandleControlTypeInput+72   j  ; was: sub_1F68A
@@ -422,7 +422,7 @@ WeaponSetup_RenderStatusWindowLabelWithColor:           ; CODE XREF: WeaponSetup
                 lea     WeaponSetup_StatusWindowText(pc),a0
                 nop
                 move.w  #$680E,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 bra.s   WeaponSetup_RenderSelectedControlType
 ; End of function WeaponSetup_RenderStatusWindowLabel
 ; Maps stored controller-layout flags to one of the 26 displayed types
@@ -455,7 +455,7 @@ WeaponSetup_RenderSelectedControlType:                  ; CODE XREF: WeaponSetup
                 move.w  #$8100,d0
 WeaponSetup_RenderSelectedControlTypeWithColor:         ; CODE XREF: WeaponSetup_RenderSelectedControlType+22   j  ; was: loc_1F6F6
                 move.w  #$6830,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function WeaponSetup_RenderSelectedControlType
 ; Begins the exit page with its selected highlight color
 WeaponSetup_RenderExitOption:                           ; CODE XREF: WeaponSetup_HandleExitInput+38   j  ; was: sub_1F700
@@ -471,7 +471,7 @@ WeaponSetup_RenderExitTextWithColor:                    ; CODE XREF: WeaponSetup
                 lea     WeaponSetup_ExitText(pc),a0
                 nop
                 move.w  #$690E,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function WeaponSetup_RenderExitText
 ; Moves the weapon-setup screen toward its target horizontal scroll
 WeaponSetup_UpdateHorizontalScroll:                     ; CODE XREF: WeaponSetup_HandleLoadoutState+8   p  ; was: sub_1F720

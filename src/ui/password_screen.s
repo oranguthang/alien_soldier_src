@@ -59,10 +59,10 @@ UI_InitPasswordDisplay:                                 ; CODE XREF: UI_InitPass
                 move.b  #$F,(dword_FF806A).w
                 move.w  #$18,(dword_FF806A+2).w
                 clr.w   (word_FF806E).w
-                lea     (byte_477C).l,a0
+                lea     (Text_PressStartToExit).l,a0
                 move.w  #$A300,d0
                 move.w  #$4A14,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 rts
 ; End of function UI_InitPasswordScreen
 ; ---------------------------------------------------------------------------
@@ -96,11 +96,11 @@ loc_A4EC:                                               ; CODE XREF: UI_UpdatePa
                 movea.w #(word_FF9900-M68K_RAM),a0
                 move.w  #$8300,d0
                 move.w  #$4714,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 movea.w #(byte_FF9980-M68K_RAM),a0
                 move.w  #$8300,d0
                 move.w  #$4814,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
@@ -251,7 +251,7 @@ loc_A686:                                               ; CODE XREF: UI_HandlePa
                 movea.w #(word_FF9800-M68K_RAM),a0
                 move.w  #$A300,d0
                 move.w  #$451C,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; ---------------------------------------------------------------------------
 loc_A6CE:                                               ; CODE XREF: UI_HandlePasswordInput+4   j
                 movea.l #word_A70C,a0

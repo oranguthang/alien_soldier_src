@@ -204,7 +204,7 @@ Results_SelectCurrentStageRow:                          ; CODE XREF: UI_RenderRe
                 move.w  d4,(dword_FF9418).w
 Results_RenderInitialPrimaryLine:                       ; CODE XREF: UI_RenderResultsDataRow+36   j  ; was: loc_1FE40
                                         ; UI_RenderResultsDataRow+3E   j
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 movea.w (dword_FF9420+2).w,a0
                 move.b  $B(a0),d0
                 cmpi.b  #$22,d0                         ; missing-BCD glyph
@@ -229,7 +229,7 @@ Results_SelectInitialDetailText:                        ; CODE XREF: UI_RenderRe
 Results_RenderInitialDetailLine:                        ; CODE XREF: UI_RenderResultsDataRow+80   j  ; was: loc_1FE7C
                 move.w  #$4050,d4
                 add.w   (dword_FF9404).w,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 addi.w  #$100,(dword_FF9404).w
                 addi.w  #$26,(dword_FF9404+2).w
                 addi.w  #$16,(dword_FF941C+2).w
@@ -294,7 +294,7 @@ Results_SelectScrolledCurrentStageRow:                  ; CODE XREF: UI_RenderRe
                 move.w  d4,(dword_FF9418).w
 Results_RenderScrolledPrimaryLine:                      ; CODE XREF: UI_RenderResultsRowWithScroll+3E   j  ; was: loc_1FF3C
                                         ; UI_RenderResultsRowWithScroll+44   j
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 movea.w (dword_FF9420+2).w,a0
                 move.b  $B(a0),d0
                 cmpi.b  #$22,d0                         ; missing-BCD glyph
@@ -319,7 +319,7 @@ Results_SelectScrolledDetailText:                       ; CODE XREF: UI_RenderRe
 Results_RenderScrolledDetailLine:                       ; CODE XREF: UI_RenderResultsRowWithScroll+86   j  ; was: loc_1FF78
                 move.w  #$4050,d4
                 add.w   (dword_FF9404).w,d4
-                jsr     (UI_RenderTextStringWrapped).l
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
                 addi.w  #$16,(dword_FF941C+2).w
                 addi.w  #$100,(dword_FF9404).w
                 addi.w  #$26,(dword_FF9404+2).w

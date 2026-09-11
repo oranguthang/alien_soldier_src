@@ -3218,3 +3218,36 @@ counter and four palette-effect controls. It adds 27 provenance mappings and
 44 static audit records, raising the totals from 12,203 to 12,230 and from
 8,693 to 8,737. The enforced address-derived ceiling falls from 3,838 to
 3,811; module count remains 349.
+
+The frontend text audit joins the former 260-line `ui/results_numbers.s` and
+205-line `rendering/text.s` into the ROM-contiguous 469-line
+`rendering/text_and_numbers.s`. This is a control-flow repair, not a cosmetic
+merge: the unreferenced fixed-width BCD entry at `$0044BC` deliberately falls
+through across the former include boundary into the shared staged-word DMA
+queue routine at `$004594`. The combined module now owns two packed-BCD glyph
+builders, two double-height string builders, their common queue primitive,
+and the immediately following frontend string table.
+
+The first BCD routine is not a generic number updater. All callers already
+provide packed BCD; it suppresses leading zero nibbles, advances the VRAM
+destination for each omission, derives the lower glyph row by adding one to
+each top-row tile, and queues both rows. The alternate entry renders every
+requested nibble and has no static caller. The former broad
+`Gfx_BuildVDPCommandList` name is narrowed because it creates exactly one
+16-byte staged-word DMA record and advances `VDPStagingDataCursor`.
+
+The text data now exposes the strings encoded by the byte values rather than
+address labels, including the title tagline, options rows, password prompts,
+continue labels, and results headings. Five previously unlabeled string
+boundaries were added without moving bytes. The `$C9--$CD` sequence remains
+neutral because its glyph meanings and caller are not established. The
+overloaded four-byte scratch area at `$FFFF8040` also remains raw: unrelated
+rendering, decompression, player, weapon, stage, effect, and boss code reuse
+it for incompatible temporary values.
+
+This package replaces all 62 live address-derived definitions in the two
+former modules and adds five missing data labels. It adds 62 provenance
+mappings and 73 static audit records, raising the totals from 12,230 to
+12,292 and from 8,737 to 8,810. The enforced address-derived ceiling falls
+from 3,811 to 3,749; the coherent merge reduces the module count from 349 to
+348.

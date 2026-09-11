@@ -40,16 +40,16 @@ loc_1E03C:                                              ; CODE XREF: UI_UpdatePa
                 move.w  d0,(GameSubstateIndex).w
                 andi.w  #8,d0
                 bne.s   loc_1E05A
-                movea.l #byte_4660,a0
+                movea.l #Text_BlankPasswordStatus,a0
                 move.w  #$C6A0,d0
                 move.w  #$46A0,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; ---------------------------------------------------------------------------
 loc_1E05A:                                              ; CODE XREF: UI_UpdatePasswordDisplay+20   j
-                movea.l #byte_4671,a0
+                movea.l #Text_SpacedReady,a0
                 move.w  #$C6A0,d0
                 move.w  #$46A0,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function UI_UpdatePasswordDisplay
 ; Initializes password screen
 Password_InitializeScreen:                              ; DATA XREF: Sys_DispatchGameState+AE   o  ; was: sub_1E06E
@@ -78,18 +78,18 @@ loc_1E0C4:                                              ; CODE XREF: Password_In
                 jsr     (Gfx_SetupScrollPlanes).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                lea     (byte_47D1).l,a0
+                lea     (Text_YouLostThreeChances).l,a0
                 move.w  #$C300,d0
                 move.w  #$4198,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_47E6).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_TryAgain).l,a0
                 move.w  #$C300,d0
                 move.w  #$448A,d4
-                jsr     (UI_RenderTextStringWrapped).l
-                lea     (byte_47F2).l,a0
+                jsr     (Text_QueueDoubleHeightStringWrapped).l
+                lea     (Text_PressStart).l,a0
                 move.w  #$C300,d0
                 move.w  #$4A9C,d4
-                jmp     (UI_RenderTextStringWrapped).l
+                jmp     (Text_QueueDoubleHeightStringWrapped).l
 ; End of function Password_InitializeScreen
 ; Handles password screen input
 Password_HandleInput:                                   ; DATA XREF: Sys_DispatchGameState+B2   o  ; was: sub_1E124
