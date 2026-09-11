@@ -543,7 +543,7 @@ Boss_MissirayGraphicsUpdate3:                           ; CODE XREF: Boss_Missir
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 rts
 ; End of function Boss_MissirayGraphicsUpdate3

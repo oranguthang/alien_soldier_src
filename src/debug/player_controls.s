@@ -7,7 +7,7 @@ Input_ToggleDebugFlag:
                 or.b    (word_FFF708+1).w,d0
                 btst    #5,d0
                 beq.w   Input_ToggleDebugFlag_Return
-                eori.b  #$80,(byte_FFF746).w
+                eori.b  #$80,(FrameTimingDebugFlag).w
 Input_ToggleDebugFlag_Return:                           ; CODE XREF: Input_ToggleDebugFlag+4   j  ; was: locret_1CB58
                                         ; Input_ToggleDebugFlag+C   j
                 rts

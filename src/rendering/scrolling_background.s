@@ -141,7 +141,7 @@ loc_10B00:                                              ; CODE XREF: Gfx_DirectV
                 bset    #0,(IO_Z80BUS).l
                 bne.s   loc_10B00
                 lea     (VDP_CTRL).l,a4
-                move.w  (word_FFF7D2).w,d2
+                move.w  (VDPReg1Shadow).w,d2
                 bset    #4,d2
                 move.w  d2,(a4)
                 neg.w   d1
@@ -222,7 +222,7 @@ loc_10BB4:                                              ; CODE XREF: Gfx_DirectV
                 subi.w  #$200,d0
                 addq.w  #8,d1
                 dbf     d6,loc_10B1E
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a4)
 loc_10C0A:                                              ; CODE XREF: Gfx_DirectVRAMTransfer+118   j

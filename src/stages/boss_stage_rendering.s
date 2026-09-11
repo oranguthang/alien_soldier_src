@@ -67,7 +67,7 @@ loc_FCFC:                                               ; CODE XREF: Boss_Destro
                 subq.w  #1,(word_FF9DAE).w
 loc_FD08:                                               ; CODE XREF: Boss_ShieldViperPaletteSetup+38   j
                                         ; sub_F484   p
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 move.w  #$E000,d7
                 move.w  (word_FF9DAE).w,d0
                 moveq   #$3F,d5                         ; '?'

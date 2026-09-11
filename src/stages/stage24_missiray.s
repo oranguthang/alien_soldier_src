@@ -83,7 +83,7 @@ Stage24_GraphicsSetup:                                  ; CODE XREF: Stage24_Ini
                 move.w  d0,d2
                 asr.w   #1,d1
                 asr.w   #2,d2
-                move.w  d0,(word_FFEC00).w
+                move.w  d0,(VScrollBuffer).w
                 move.w  d0,(word_FFEC04).w
                 move.w  d0,(word_FFEC48).w
                 move.w  d0,(word_FFEC4C).w

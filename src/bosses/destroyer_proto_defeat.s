@@ -147,7 +147,7 @@ Boss_DestroyerProtoApplyDefeatPaletteFade:              ; CODE XREF: Boss_Destro
                 sub.w   $4A(a5),d0
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Boss_DestroyerProtoApplyDefeatPaletteFade
 ; Updates an ordinary linked part, or culls it after scatter activation

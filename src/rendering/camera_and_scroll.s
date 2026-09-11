@@ -458,7 +458,7 @@ loc_10418:                                              ; CODE XREF: Gfx_SetupSc
                 andi.w  #3,d3
                 andi.w  #4,d4
                 move.b  (byte_FFA95A).w,d5
-                movea.w #(word_FFE400-M68K_RAM),a0
+                movea.w #(HScrollBuffer-M68K_RAM),a0
                 movea.w #(word_FFE480-M68K_RAM),a1
                 adda.w  (word_FF8640).w,a0
                 adda.w  (word_FF8640).w,a1
@@ -466,7 +466,7 @@ loc_10418:                                              ; CODE XREF: Gfx_SetupSc
                 neg.w   d0
                 move.w  (word_FFA012).w,d1
                 bsr.w   Gfx_WriteScrollValue
-                movea.w #(word_FFEC00-M68K_RAM),a0
+                movea.w #(VScrollBuffer-M68K_RAM),a0
                 adda.w  (word_FF8640).w,a0
                 move.w  (dword_FFA904).w,d0
                 neg.w   d0

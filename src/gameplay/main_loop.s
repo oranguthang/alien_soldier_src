@@ -1,23 +1,23 @@
 Sys_GameplayMainLoop:                                   ; DATA XREF: Sys_DispatchGameState+66   o  ; was: sub_1C65C
                 bsr.w   Sys_GameplayPreUpdateNoOp
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateCamera
                 move.w  #$C7F0,(word_FF8110).w
                 move.w  #$20,(word_FF8112).w            ; ' '
 Sys_GameplayMainLoop_UpdateCamera:                      ; CODE XREF: Sys_GameplayMainLoop+8   j  ; was: loc_1C672
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_ApplyCameraMotion
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$822,(VDP_DATA).l
 Sys_GameplayMainLoop_ApplyCameraMotion:                 ; CODE XREF: Sys_GameplayMainLoop+1A   j  ; was: loc_1C68A
                 bsr.w   Object_ApplyCameraMotion
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateCollision
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$EEE,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateCollision:                   ; CODE XREF: Sys_GameplayMainLoop+36   j  ; was: loc_1C6A6
                 jsr     (Collision_UpdateSystem).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdatePrimaryEffects
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E,(VDP_DATA).l
@@ -26,45 +26,45 @@ Sys_GameplayMainLoop_UpdatePrimaryEffects:              ; CODE XREF: Sys_Gamepla
                 bsr.w   Sys_BeginVisibleObjectList
                 bsr.w   UI_UpdateStageNumberBCD
                 jsr     (Gfx_PrimaryEffectDispatcher).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_BuildHUDSprites
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E00,(VDP_DATA).l
 Sys_GameplayMainLoop_BuildHUDSprites:                   ; CODE XREF: Sys_GameplayMainLoop+80   j  ; was: loc_1C6F0
                 jsr     (UI_BuildHUDSpriteList).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdatePlayer
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E0,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdatePlayer:                      ; CODE XREF: Sys_GameplayMainLoop+9E   j  ; was: loc_1C70E
                 jsr     (Player_Update).l
                 jsr     (Weapon_UpdateStateAndSlotAnimations).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateSpawner
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateSpawner:                     ; CODE XREF: Sys_GameplayMainLoop+C2   j  ; was: loc_1C732
                 jsr     (Sys_UpdateObjectSpawner).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateProjectiles
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E00,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateProjectiles:                 ; CODE XREF: Sys_GameplayMainLoop+E0   j  ; was: loc_1C750
                 jsr     (Sys_ProcessProjectiles).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateStageEffects
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #0,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateStageEffects:                ; CODE XREF: Sys_GameplayMainLoop+FE   j  ; was: loc_1C76E
                 jsr     (EnemySpawn_UpdateDirector).l
                 jsr     (Effect_PaletteDispatcher).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateStage
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #0,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateStage:                       ; CODE XREF: Sys_GameplayMainLoop+122   j  ; was: loc_1C792
                 jsr     (Stage_ProcessHandler).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateSecondaryEffects
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$EEE,(VDP_DATA).l
@@ -74,13 +74,13 @@ Sys_GameplayMainLoop_UpdateSecondaryEffects:            ; CODE XREF: Sys_Gamepla
                 jsr     (MessageSequence_Dispatch).l
                 jsr     (UI_RenderHUDElement1).l
                 bsr.w   Effect_ScreenShakeUpdate
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_ProcessObjects
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E,(VDP_DATA).l
 Sys_GameplayMainLoop_ProcessObjects:                    ; CODE XREF: Sys_GameplayMainLoop+172   j  ; was: loc_1C7E2
                 jsr     (Sprite_RenderObjectList).l
-                tst.b   (byte_FFF746).w
+                tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateFade
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #0,(VDP_DATA).l
@@ -134,7 +134,7 @@ Sys_GameplayMainLoop_StoreFrameFlag:                    ; CODE XREF: Sys_Gamepla
 Sys_GameplayMainLoop_FinishFrame:                       ; CODE XREF: Sys_GameplayMainLoop+208   j  ; was: loc_1C884
                 move.b  (byte_FFF705).w,d0
                 or.b    d0,(byte_FF813E).w
-                jmp     (Gfx_ClearBackgroundColor).l
+                jmp     (Gfx_CycleBackdropColorIndices).l
 ; End of function Sys_GameplayMainLoop
 ; Set game state to $40
 Sys_SetState40:

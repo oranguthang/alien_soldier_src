@@ -291,10 +291,10 @@ Gfx_SetupDMATransfer:                                   ; CODE XREF: Sprite_Rend
                 move.w  d7,-(a0)
                 rts
 ; End of function Gfx_SetupDMATransfer
-; Loads 4 palette blocks from pointers to FFE300/FFE380 buffers
+; Loads four palette blocks from pointers into the active and shadow buffers
 Gfx_LoadFourPalettes:                                   ; CODE XREF: UI_WeaponSelectTransition+3C   p  ; was: sub_1FC8
-                lea     (word_FFE300).w,a2
-                lea     (word_FFE380).w,a3
+                lea     (PaletteActiveBuffer).w,a2
+                lea     (PaletteShadowBuffer).w,a3
                 bsr.w   Gfx_CopyPaletteBlock
                 bsr.w   Gfx_CopyPaletteBlock
                 bsr.w   Gfx_CopyPaletteBlock

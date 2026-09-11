@@ -1,3 +1,4 @@
+; VBlank effect dispatcher routing to effect handlers
 VBlank_EffectDispatcher:                                ; CODE XREF: VBLANK:Int_VBlank_RunEffects   p  ; was: sub_1356
                 move.w  (word_FFF74A).w,d0
                 movea.l off_1360(pc,d0.w),a0
@@ -331,23 +332,23 @@ VBlank_InitStage10Effect:                               ; DATA XREF: VBlank_Effe
 loc_17B6:                                               ; CODE XREF: VBlank_InitStage10Effect+4   j
                 move.w  (word_FFF7D4).w,(VDP_CTRL).l
                 move.w  (word_FFF7D8).w,(VDP_CTRL).l
-                move.w  (word_FFF7DE).w,(VDP_CTRL).l
+                move.w  (VDPReg7Shadow).w,(VDP_CTRL).l
                 move.l  #$70020003,(VDP_CTRL).l
                 move.w  (word_FFE402).w,(VDP_DATA).l
                 move.l  #$70000003,(VDP_CTRL).l
-                move.w  (word_FFE400).w,(VDP_DATA).l
+                move.w  (HScrollBuffer).w,(VDP_DATA).l
                 move.l  #$40020010,(VDP_CTRL).l
                 move.w  (word_FFEC02).w,(VDP_DATA).l
                 move.l  #$40000010,(VDP_CTRL).l
-                move.w  (word_FFEC00).w,(VDP_DATA).l
+                move.w  (VScrollBuffer).w,(VDP_DATA).l
                 movea.w #(byte_FF9FF8-M68K_RAM),a0
-                move.w  (word_FFEC00).w,(a0)+
+                move.w  (VScrollBuffer).w,(a0)+
                 move.w  (word_FFEC02).w,(a0)+
                 move.w  (word_FFA928).w,d0
                 neg.w   d0
                 cmpi.w  #$30,(word_FFF74A).w            ; '0'
                 beq.s   Effect_SetStage10Scroll
-                move.w  (word_FFE400).w,d0
+                move.w  (HScrollBuffer).w,d0
 ; Branch target that sets scroll value for Stage 10 effect and prepares sprite buffer
 Effect_SetStage10Scroll:                                ; CODE XREF: VBlank_InitStage10Effect+AC   j  ; was: loc_1834
                 move.w  d0,(a0)+

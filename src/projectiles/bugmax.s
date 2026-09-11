@@ -291,7 +291,7 @@ Gfx_ApplyBugmaxSpreadImpactPaletteLevel:                ; CODE XREF: Projectile_
                 move.w  $5C(a5),d0
                 move.w  #$1F,d5
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.w  $5C(a5),d0
                 move.w  #$F,d5

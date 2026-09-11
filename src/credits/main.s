@@ -1,5 +1,5 @@
 Credits_InitXiTiger:                                    ; DATA XREF: Sys_DispatchGameState+E2   o  ; was: sub_20956
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
@@ -46,13 +46,13 @@ Credits_InitXiTiger_ClearTilemapBufferLoop:             ; CODE XREF: Credits_Ini
                 clr.l   (dword_FF0110).l
                 move.l  #$1000,(dword_FF0114).l
                 move.l  #$FFF80000,d0
-                lea     (word_FFE400).w,a0
+                lea     (HScrollBuffer).w,a0
                 move.w  #$1B,d7
 Credits_InitXiTiger_InitHorizontalScrollLoop:           ; CODE XREF: Credits_InitXiTiger+102   j  ; was: loc_20A52
                 move.l  d0,(a0)
                 adda.w  #$20,a0                         ; ' '
                 dbf     d7,Credits_InitXiTiger_InitHorizontalScrollLoop
-                lea     (word_FFEC00).w,a0
+                lea     (VScrollBuffer).w,a0
                 move.w  #$13,d7
 Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_InitXiTiger+110   j  ; was: loc_20A64
                 move.l  d0,(a0)+
@@ -81,7 +81,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 clr.w   (word_FFE386).w
                 move.w  #$FFF2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -97,7 +97,7 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 jsr     (Sound_QueueBGMRequest).l
                 addq.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 clr.w   (word_FFA000).w
                 rts
@@ -163,7 +163,7 @@ Credits_FadeInState:                                    ; DATA XREF: ROM:Credits
                 bne.w   Credits_StateReturn
                 addq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 move.w  #$2F,d5                         ; '/'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -361,7 +361,7 @@ Credits_WaitForScrollEnd:                               ; DATA XREF: ROM:00020BC
 Credits_FadeOutAndExit:                                 ; DATA XREF: ROM:00020BCC   o  ; was: sub_20E84
                 subq.w  #2,(word_FF0176).l
                 move.w  (word_FF0176).l,d0
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
@@ -450,7 +450,7 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 move.b  #3,(word_FFF7E6+1).w
                 move.b  #1,(byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
-                lea     (word_FFE400).w,a0
+                lea     (HScrollBuffer).w,a0
                 move.l  #$7F008000,d1
                 move.w  #$EF,d0
 Credits_InitializeSceneSequence_FillPaletteBufferLoop:  ; CODE XREF: Credits_InitializeSceneSequence+B2   j  ; was: loc_20FD8
@@ -509,7 +509,7 @@ Gfx_FadeInPaletteEntry:                                 ; CODE XREF: Credits_Upd
                 bcc.w   Credits_StateReturn
                 addq.w  #2,(word_FF0194).l
                 move.w  Credits_PaletteFadeOrder(pc,d0.w),d1
-                lea     (word_FFE400).w,a0
+                lea     (HScrollBuffer).w,a0
                 move.l  (a0,d1.w),d2
                 subi.l  #$7FFF8,d2
                 move.l  d2,(a0,d1.w)
@@ -521,7 +521,7 @@ Credits_PaletteFadeOrder_End:                           ; was: word_210CE_End
 
 ; Fade all palette entries in buffer
 Gfx_FadeAllPaletteEntries:                              ; CODE XREF: Credits_UpdateScene+4   p  ; was: sub_212AE
-                lea     (word_FFE400).w,a0
+                lea     (HScrollBuffer).w,a0
                 move.l  #$7FFF8,d1
                 move.w  #$EF,d0
 Credits_FadeAllPaletteEntries_Loop:                     ; CODE XREF: Gfx_FadeAllPaletteEntries+20   j  ; was: loc_212BC

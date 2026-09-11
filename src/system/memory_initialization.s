@@ -293,44 +293,44 @@ Gfx_ClearGraphicsChain_Loop:                            ; CODE XREF: Gfx_ClearGr
                 rts
 ; End of function Gfx_ClearGraphicsChain
 ; Clears palette buffer to black
-Palette_ClearBuffer:                                    ; CODE XREF: Sys_ClearPaletteBuffer   p  ; was: sub_30D4
-                lea     (word_FFE300).w,a0
+Palette_ClearBuffers:                                   ; CODE XREF: Sys_ClearPaletteBuffers   p  ; was: sub_30D4
+                lea     (PaletteActiveBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
-Palette_ClearBuffer_Loop:                               ; CODE XREF: Palette_ClearBuffer+12   j  ; was: loc_30DE
+Palette_ClearBuffers_Loop:                              ; CODE XREF: Palette_ClearBuffers+12   j  ; was: loc_30DE
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Palette_ClearBuffer_Loop
+                dbf     d1,Palette_ClearBuffers_Loop
                 rts
-; End of function Palette_ClearBuffer
-; Clears screen buffer at $FFE400 by writing zeros for $80 iterations (512 bytes)
-Sys_ClearScreenBuffer:                                  ; CODE XREF: Sys_InitSubsystems+10   p  ; was: sub_30EC
-                lea     (word_FFE400).w,a0
+; End of function Palette_ClearBuffers
+; Clears the 2,048-byte horizontal-scroll workspace in 128 iterations
+Gfx_ClearHScrollBuffer:                                 ; CODE XREF: Sys_InitSubsystems+10   p  ; was: sub_30EC
+                lea     (HScrollBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$7F,d1
-Sys_ClearScreenBuffer_Loop:                             ; CODE XREF: Sys_ClearScreenBuffer+12   j  ; was: loc_30F6
+Gfx_ClearHScrollBuffer_Loop:                            ; CODE XREF: Gfx_ClearHScrollBuffer+12   j  ; was: loc_30F6
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearScreenBuffer_Loop
+                dbf     d1,Gfx_ClearHScrollBuffer_Loop
                 rts
-; End of function Sys_ClearScreenBuffer
-; Clears enemy entity buffer resetting all slots
-Sys_ClearEnemyBuffer:                                   ; CODE XREF: Sys_InitSubsystems+18   p  ; was: sub_3104
-                lea     (word_FFEC00).w,a0
+; End of function Gfx_ClearHScrollBuffer
+; Clears the 160-byte vertical-scroll workspace in ten iterations
+Gfx_ClearVScrollBuffer:                                 ; CODE XREF: Sys_InitSubsystems+18   p  ; was: sub_3104
+                lea     (VScrollBuffer).w,a0
                 moveq   #0,d0
                 move.w  #9,d1
-Sys_ClearEnemyBuffer_Loop:                              ; CODE XREF: Sys_ClearEnemyBuffer+12   j  ; was: loc_310E
+Gfx_ClearVScrollBuffer_Loop:                            ; CODE XREF: Gfx_ClearVScrollBuffer+12   j  ; was: loc_310E
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearEnemyBuffer_Loop
+                dbf     d1,Gfx_ClearVScrollBuffer_Loop
                 rts
-; End of function Sys_ClearEnemyBuffer
+; End of function Gfx_ClearVScrollBuffer
 ; Clears sprite metasprite buffer for new stage
 Sys_ClearSpriteBuffer:                                  ; CODE XREF: Sys_ClearGameBuffers+4   p  ; was: sub_311C
                 lea     (dword_FFF000).w,a0

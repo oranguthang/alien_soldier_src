@@ -3,7 +3,7 @@ Sys_InitFullGame:                                       ; CODE XREF: RegionRestr
                 bsr.w   Gfx_LoadVDPRegistersAlt
                 bsr.w   Sys_InitSubsystems
                 bsr.w   Sys_InitGraphicsChain
-                bsr.w   Sys_ClearPaletteBuffer
+                bsr.w   Sys_ClearPaletteBuffers
                 bsr.w   Gfx_InitVideoMode
                 bsr.w   Sys_ClearGameBuffers
                 bsr.w   Sys_ClearBufferFFA200
@@ -18,7 +18,7 @@ Sys_InitGameMode:                                       ; CODE XREF: Cutscene_In
                 bsr.w   Gfx_LoadVDPRegisters
                 bsr.w   Sys_InitSubsystems
                 bsr.w   Sys_InitGraphicsChain
-                bsr.w   Sys_ClearPaletteBuffer
+                bsr.w   Sys_ClearPaletteBuffers
                 bsr.w   Gfx_InitVideoMode
                 bsr.w   Sys_ClearGameBuffers
                 bsr.w   Sys_ClearSpriteBuffers
@@ -32,9 +32,9 @@ Sys_InitSubsystems:                                     ; CODE XREF: Sys_InitFul
                 bsr.w   Gfx_ClearVRAMPlane
                 bsr.w   Sys_ClearRAM
                 bsr.w   Sys_ClearScrollBuffer
-                bsr.w   Sys_ClearScreenBuffer
+                bsr.w   Gfx_ClearHScrollBuffer
                 bsr.w   Boss_ZLeoClearVRAM
-                bsr.w   Sys_ClearEnemyBuffer
+                bsr.w   Gfx_ClearVScrollBuffer
                 bra.w   Gfx_ClearVRAMData
 ; End of function Sys_InitSubsystems
 ; Initializes graphics subsystem chain
@@ -48,11 +48,11 @@ Sys_InitGraphicsChain:                                  ; CODE XREF: Sys_InitFul
                 rts
 ; End of function Sys_InitGraphicsChain
 ; Wrapper to clear palette buffer
-Sys_ClearPaletteBuffer:                                 ; CODE XREF: Sys_InitFullGame+10   p  ; was: sub_2DCA
+Sys_ClearPaletteBuffers:                                ; CODE XREF: Sys_InitFullGame+10   p  ; was: sub_2DCA
                                         ; Sys_InitGameMode+10   p
-                bsr.w   Palette_ClearBuffer
+                bsr.w   Palette_ClearBuffers
                 rts
-; End of function Sys_ClearPaletteBuffer
+; End of function Sys_ClearPaletteBuffers
 ; Clears multiple game buffers including VDP command buffer sprite buffer and input state
 Sys_ClearGameBuffers:                                   ; CODE XREF: Reset+224   p  ; was: sub_2DD0
                                         ; Sys_InitFullGame+18   p
@@ -62,8 +62,8 @@ Sys_ClearGameBuffers:                                   ; CODE XREF: Reset+224  
                 bsr.w   Input_InitControllerState
                 move.w  #$F400,(word_FFF70C).w
                 move.w  #$F400,(word_FFF70E).w
-                move.l  #$FFFFE400,(dword_FFF710).w
-                move.l  #$FFFFEC00,(dword_FFF714).w
+                move.l  #$FFFFE400,(HScrollDMASource).w
+                move.l  #$FFFFEC00,(VScrollDMASource).w
                 rts
 ; End of function Sys_ClearGameBuffers
 ; Initializes video mode and clears VRAM

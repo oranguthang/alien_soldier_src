@@ -320,7 +320,7 @@ Gfx_DestroyerMK2ApplyTransitionPaletteFade:             ; CODE XREF: Gfx_Destroy
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 rts
 ; End of function Gfx_DestroyerMK2ApplyTransitionPaletteFade

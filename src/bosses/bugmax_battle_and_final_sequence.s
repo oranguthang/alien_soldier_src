@@ -737,7 +737,7 @@ Boss_BugmaxRunFinalPalettePulse:                        ; DATA XREF: ROM:0004C43
                 move.w  Boss_BugmaxFinalPalettePulseLevels(pc,d0.w),d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jmp     (Gfx_ApplyPaletteFade).l
 ; ---------------------------------------------------------------------------
 Boss_BugmaxFinalPalettePulseLevels: dc.w    0, 2, 4, 6, 8, $A, $C, $E, $E, $C, $A, 8, 6, 4, 2, 0  ; was: word_4D252

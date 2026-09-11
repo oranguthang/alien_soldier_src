@@ -750,7 +750,7 @@ word_FFDC50             equ     $FFFFDC50
 dword_FFDC58            equ     $FFFFDC58
 dword_FFDC5C            equ     $FFFFDC5C
 dword_FFE000            equ     $FFFFE000
-word_FFE300             equ     $FFFFE300
+PaletteActiveBuffer     equ     $FFFFE300               ; was: word_FFE300
 word_FFE302             equ     $FFFFE302
 word_FFE304             equ     $FFFFE304
 word_FFE306             equ     $FFFFE306
@@ -789,7 +789,7 @@ word_FFE378             equ     $FFFFE378
 word_FFE37A             equ     $FFFFE37A
 word_FFE37C             equ     $FFFFE37C
 word_FFE37E             equ     $FFFFE37E
-word_FFE380             equ     $FFFFE380
+PaletteShadowBuffer     equ     $FFFFE380               ; was: word_FFE380
 word_FFE382             equ     $FFFFE382
 word_FFE386             equ     $FFFFE386
 dword_FFE3A0            equ     $FFFFE3A0
@@ -808,7 +808,7 @@ word_FFE3EC             equ     $FFFFE3EC
 word_FFE3FA             equ     $FFFFE3FA
 word_FFE3FC             equ     $FFFFE3FC
 word_FFE3FE             equ     $FFFFE3FE
-word_FFE400             equ     $FFFFE400
+HScrollBuffer           equ     $FFFFE400               ; was: word_FFE400
 word_FFE402             equ     $FFFFE402
 byte_FFE40A             equ     $FFFFE40A
 byte_FFE412             equ     $FFFFE412
@@ -825,7 +825,7 @@ byte_FFE602             equ     $FFFFE602
 word_FFE6E0             equ     $FFFFE6E0
 word_FFE720             equ     $FFFFE720
 byte_FFE800             equ     $FFFFE800
-word_FFEC00             equ     $FFFFEC00
+VScrollBuffer           equ     $FFFFEC00               ; was: word_FFEC00
 word_FFEC02             equ     $FFFFEC02
 word_FFEC04             equ     $FFFFEC04
 word_FFEC08             equ     $FFFFEC08
@@ -863,8 +863,8 @@ word_FFF708             equ     $FFFFF708
 word_FFF70A             equ     $FFFFF70A
 word_FFF70C             equ     $FFFFF70C
 word_FFF70E             equ     $FFFFF70E
-dword_FFF710            equ     $FFFFF710
-dword_FFF714            equ     $FFFFF714
+HScrollDMASource        equ     $FFFFF710               ; was: dword_FFF710
+VScrollDMASource        equ     $FFFFF714               ; was: dword_FFF714
 word_FFF720             equ     $FFFFF720
 word_FFF722             equ     $FFFFF722
 dword_FFF724            equ     $FFFFF724
@@ -873,7 +873,7 @@ dword_FFF72C            equ     $FFFFF72C
 dword_FFF730            equ     $FFFFF730
 SpriteOAMBuildActive    equ     $FFFFF744               ; was: byte_FFF744
 byte_FFF745             equ     $FFFFF745
-byte_FFF746             equ     $FFFFF746
+FrameTimingDebugFlag    equ     $FFFFF746               ; was: byte_FFF746
 word_FFF74A             equ     $FFFFF74A
 word_FFF74E             equ     $FFFFF74E
 byte_FFF754             equ     $FFFFF754
@@ -881,17 +881,17 @@ byte_FFF755             equ     $FFFFF755
 SpriteOAMStartCount     equ     $FFFFF756               ; was: word_FFF756
 word_FFF758             equ     $FFFFF758
 word_FFF75A             equ     $FFFFF75A
-word_FFF75C             equ     $FFFFF75C
-word_FFF75E             equ     $FFFFF75E
+PaletteFadeStep         equ     $FFFFF75C               ; was: word_FFF75C
+PaletteFadeProgress     equ     $FFFFF75E               ; was: word_FFF75E
 word_FFF762             equ     $FFFFF762
 byte_FFF764             equ     $FFFFF764
 word_FFF7D0             equ     $FFFFF7D0
-word_FFF7D2             equ     $FFFFF7D2
+VDPReg1Shadow           equ     $FFFFF7D2               ; was: word_FFF7D2
 word_FFF7D4             equ     $FFFFF7D4
 word_FFF7D6             equ     $FFFFF7D6
 word_FFF7D8             equ     $FFFFF7D8
 word_FFF7DA             equ     $FFFFF7DA
-word_FFF7DE             equ     $FFFFF7DE
+VDPReg7Shadow           equ     $FFFFF7DE               ; was: word_FFF7DE
 word_FFF7E4             equ     $FFFFF7E4
 word_FFF7E6             equ     $FFFFF7E6
 word_FFF7E8             equ     $FFFFF7E8
@@ -949,7 +949,7 @@ byte_FFFF23             equ     $FFFFFF23
 byte_FFFF24             equ     $FFFFFF24
 byte_FFFF25             equ     $FFFFFF25
 byte_FFFF26             equ     $FFFFFF26
-word_FFFF28             equ     $FFFFFF28
+PaletteFillColor        equ     $FFFFFF28               ; was: word_FFFF28
 MessageMode             equ     $FFFFFF2A               ; was: word_FFFF2A
 dword_FFFF2C            equ     $FFFFFF2C
 ControlLayoutFlags      equ     $FFFFFF30               ; was: byte_FFFF30

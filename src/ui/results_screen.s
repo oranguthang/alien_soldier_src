@@ -85,7 +85,7 @@ Results_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 clr.w   (dword_FF84A0).w
                 clr.w   (dword_FF8500).w
                 clr.w   (dword_FF8560).w
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
@@ -102,7 +102,7 @@ loc_1DD8A:                                              ; CODE XREF: Results_Ini
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bsr.w   Results_RenderAllStats
                 move.b  #$12,(word_FFF7F4+1).w
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 jmp     (Gfx_FadePaletteTransition).l
 ; End of function Results_InitializeScreen

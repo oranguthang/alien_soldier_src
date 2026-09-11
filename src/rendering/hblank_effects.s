@@ -127,7 +127,7 @@ VBlank_InitCutsceneEffect:                              ; DATA XREF: VBlank_Effe
                 jsr     (LoadObjData).l
                 ori.b   #$10,(word_FFF7D0+1).w
 loc_1AB2:                                               ; CODE XREF: VBlank_InitCutsceneEffect+4   j
-                move.w  (word_FFF7DE).w,(VDP_CTRL).l
+                move.w  (VDPReg7Shadow).w,(VDP_CTRL).l
                 move.w  (word_FFF7E8).w,(VDP_CTRL).l
                 movea.w #(word_FF9C00-M68K_RAM),a6
                 rts

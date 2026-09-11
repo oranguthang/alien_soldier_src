@@ -2,7 +2,7 @@ Gfx_VBlankDMATransfer:                                  ; CODE XREF: Sys_VBlankH
                 move    sr,-(sp)
                 move    #$2700,sr
                 lea     (VDP_CTRL).l,a0
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bset    #4,d0
                 move.w  d0,(a0)
                 move.w  #$8F02,(a0)
@@ -19,7 +19,7 @@ Gfx_VBlankDMATransfer:                                  ; CODE XREF: Sys_VBlankH
                 move.w  #$8F02,(a0)
                 move.l  #$C0000000,(a0)
                 lea     (VDP_DATA).l,a1
-                move.w  (word_FFFF28).w,d1
+                move.w  (PaletteFillColor).w,d1
                 move.w  d1,d0
                 swap    d1
                 move.w  d0,d1
@@ -127,7 +127,7 @@ loc_E6A:                                                ; CODE XREF: Gfx_VBlankD
                 move.w  (a3)+,(a0)
 loc_E8A:                                                ; CODE XREF: Gfx_VBlankDMATransfer+15C   j
                                         ; Gfx_VBlankDMATransfer+164   j
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a0)
                 move    (sp)+,sr
@@ -137,12 +137,12 @@ loc_E8A:                                                ; CODE XREF: Gfx_VBlankD
 ; Writes VDP register values from RAM buffer to hardware
 Gfx_ApplyVDPSettings:                                   ; CODE XREF: Sys_VBlankHandler+20   p  ; was: sub_E9C
                 lea     (VDP_CTRL).l,a0
-                move.w  (word_FFF7D2).w,(a0)
+                move.w  (VDPReg1Shadow).w,(a0)
                 move.w  (word_FFF7D4).w,(a0)
                 move.w  (word_FFF7D6).w,(a0)
                 move.w  (word_FFF7D8).w,(a0)
                 move.w  (word_FFF7DA).w,(a0)
-                move.w  (word_FFF7DE).w,(a0)
+                move.w  (VDPReg7Shadow).w,(a0)
                 move.w  (word_FFF7E4).w,(a0)
                 move.w  (word_FFF7E6).w,(a0)
                 move.w  (word_FFF7E8).w,(a0)

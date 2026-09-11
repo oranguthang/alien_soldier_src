@@ -156,7 +156,7 @@ Sys_DispatchGameState:
                 andi.b  #$70,d0                         ; 'p'
                 cmpi.b  #$70,d0                         ; 'p'
                 bne.w   Sys_DispatchGameState_Run
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 move.b  #4,(dword_FFF80A).w
                 clr.b   (byte_FFF807).w

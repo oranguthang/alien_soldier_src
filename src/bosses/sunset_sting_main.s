@@ -700,7 +700,7 @@ Boss_SunsetStingApplyDefeatFade:                        ; CODE XREF: Boss_Sunset
                                         ; sub_43294:loc_4329E   p
                 move.w  6(a5),d0
                 asr.w   #1,d0
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 moveq   #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l

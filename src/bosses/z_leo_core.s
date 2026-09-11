@@ -525,7 +525,7 @@ Boss_ZLeoFinishDefeatWhiteout:                          ; CODE XREF: Boss_ZLeoRu
                 move.w  #$3F8,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                movea.w #(word_FFE380-M68K_RAM),a0
+                movea.w #(PaletteShadowBuffer-M68K_RAM),a0
                 move.w  #$EEE,d0
                 moveq   #$3F,d7                         ; '?'
 Boss_ZLeoFillDefeatWhitePalettes:                       ; CODE XREF: Boss_ZLeoRunDefeatWhiteout+50   j  ; was: loc_52182

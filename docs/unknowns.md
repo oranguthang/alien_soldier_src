@@ -3012,3 +3012,28 @@ address-derived ROM definitions, and promotes six OAM-pipeline fields in the
 RAM map. It adds 60 provenance mappings and 104 static audit records, raising
 the totals from 11,946 to 12,006 and from 8,323 to 8,427. The enforced
 address-derived ceiling falls from 4,095 to 4,035; module count remains 349.
+
+The palette/VDP-control audit reconstructs the complete 415-line ROM block at
+`0x000EF4-0x001354` without slicing it into undersized files. Its dominant
+routine is the 64-color full-screen fade engine; the contiguous tail contains
+the two scroll-table DMA builders and three frame-timing diagnostic helpers.
+This keeps the module inside the 300--1,000-line target while making every
+branch role explicit and retaining the ROM order.
+
+The audit removes several plausible but mechanically false generated claims.
+The old Plane B helper targets the horizontal-scroll table in VRAM `$F000`,
+while the old Plane A helper targets VSRAM; their transfer lengths follow the
+horizontal per-line and vertical per-column bits in VDP register 11. The old
+background-color clearer actually cycles VDP register 7 color indices during
+a debug timing pass, and the alleged display-layer helpers blank or restore
+the global display and backdrop state. Two initialization loops previously
+described as screen and enemy buffers are the 2,048-byte horizontal-scroll
+and 160-byte vertical-scroll workspaces. A menu-buffer claim was also removed:
+that loop clears the adjacent active and shadow palette buffers.
+
+This package audits or corrects 16 generated semantic names, replaces all 48
+live address-derived ROM definitions in `rendering/palette_fades.s`, and
+promotes 12 palette, scroll, VDP-shadow, and timing-debug RAM fields. It adds
+60 provenance mappings and 76 static audit records, raising the totals from
+12,006 to 12,066 and from 8,427 to 8,503. The enforced address-derived ceiling
+falls from 4,035 to 3,975; module count remains 349.

@@ -150,7 +150,7 @@ Gfx_BuildQueuedFontDMA_AcquireZ80Bus:                   ; CODE XREF: Gfx_QueueSm
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Gfx_BuildQueuedFontDMA_AcquireZ80Bus
                 lea     (VDP_CTRL).l,a0
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bset    #4,d0
                 move.w  d0,(a0)
                 move.l  (a1)+,(a0)
@@ -158,7 +158,7 @@ Gfx_BuildQueuedFontDMA_AcquireZ80Bus:                   ; CODE XREF: Gfx_QueueSm
                 move.l  (a1)+,(a0)
                 move.w  (a1)+,(a0)
                 move.w  (a1)+,(a0)
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a0)
 ; Releases Z80 bus control and restores status register

@@ -77,7 +77,7 @@ UI_InitializeStageStart:                                ; DATA XREF: Sys_Dispatc
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMA
@@ -121,7 +121,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 jsr     (Sound_QueueBGMRequest).l
                 move.l  #$1400000,(dword_FF8130).w
                 clr.w   (dword_FF8134).w
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 jmp     (Gfx_FadePaletteTransition).l
 ; End of function UI_InitializeStageStart
@@ -252,7 +252,7 @@ loc_1F0F8:                                              ; CODE XREF: Sys_UpdateG
 UI_TransitionToContinueScreen:                          ; CODE XREF: Sys_UpdateGameplayLoop+78   j  ; was: loc_1F11C
                 move.w  #$3C,(GameModeIndex).w          ; '<'
                 clr.w   (GameSubstateIndex).w
-                jmp     UI_ResetMenuBufferAndState_Clear
+                jmp     UI_ResetPaletteAndMessageMode_Clear
 ; End of function Sys_UpdateGameplayLoop
 ; Updates the setup background and dispatches the current setup-screen state
 WeaponSetup_UpdateAndDispatchState:                     ; CODE XREF: Sys_UpdateGameplayLoop+3C   p  ; was: sub_1F12C

@@ -448,7 +448,7 @@ Boss_JampanApplyDefeatPaletteFade:                      ; CODE XREF: Boss_Jampan
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Boss_JampanApplyDefeatPaletteFade
 ; Clears encounter objects and initializes the player-spawn transition

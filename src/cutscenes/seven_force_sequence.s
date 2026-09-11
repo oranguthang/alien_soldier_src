@@ -98,7 +98,7 @@ Camera_UpdateScrollPosition:
                 move.w  (dword_FFA908).w,d0
                 addi.w  #$40,d0                         ; '@'
                 neg.w   d0
-                move.w  d0,(word_FFE400).w
+                move.w  d0,(HScrollBuffer).w
                 move.w  (dword_FFA900).w,(dword_FFA908).w
                 rts
 ; End of function Camera_UpdateScrollPosition

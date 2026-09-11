@@ -4,7 +4,7 @@ UI_InitializeResultsScreen:                             ; DATA XREF: Sys_Dispatc
                 jsr     (Sys_InitGameMode).l
                 movea.l #stru_1CEFC,a0
                 jsr     (LoadObjData).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 clr.b   (word_FFF7F4+1).w
@@ -25,7 +25,7 @@ UI_LoadResultsPalette:                                  ; CODE XREF: UI_Initiali
                 jsr     (Data_LoadPointerTable2).l
                 movea.l #EarlyStagePaletteOffsetList,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 rts
 ; End of function UI_InitializeResultsScreen
@@ -84,7 +84,7 @@ off_1CF72:      dc.w    UI_InitializeSEGAScreen-UI_InitializeSEGAScreen
 ; Initializes SEGA logo screen with graphics and palettes
 UI_InitializeSEGAScreen:                                ; DATA XREF: UI_DispatchMenuState+8   o  ; was: sub_1CF82
                                         ; ROM:off_1CF72   o
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
                 lea     (FrontendFullPaletteCommand).l,a0
@@ -166,7 +166,7 @@ loc_1D09E:                                              ; CODE XREF: UI_Initiali
                 move.l  #word_E98B0,8(a0)
                 move.w  #$120,$10(a0)
                 move.w  #$E8,$14(a0)
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 rts
 ; End of function UI_InitializeSEGAScreen

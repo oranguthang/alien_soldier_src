@@ -71,7 +71,7 @@ Boss_ShieldViperRunFinalDefeatPaletteFade:              ; DATA XREF: ROM:0004E05
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 btst    #0,(word_FFA000+1).w
                 bne.s   Boss_ShieldViperFinalDefeatPaletteFadeReturn
@@ -92,7 +92,7 @@ Boss_ShieldViperHoldFinalDefeatPaletteAndRemove:        ; DATA XREF: ROM:0004E05
                 move.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 subq.w  #1,$48(a5)
                 bne.s   Boss_ShieldViperFinalRemovalWaitReturn

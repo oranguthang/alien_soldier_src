@@ -179,7 +179,7 @@ Debug_SevenForcesScrollTableTestAccumulateOffsets:      ; CODE XREF: Debug_Seven
                 move.l  (dword_FF942C).w,d5
                 move.l  (dword_FF943C).w,d6
 Debug_SevenForcesScrollTableTestBuildTables:            ; CODE XREF: Debug_SevenForcesScrollTableTest+16E   j  ; was: loc_54E02
-                movea.w #(word_FFE400-M68K_RAM),a0
+                movea.w #(HScrollBuffer-M68K_RAM),a0
                 movea.w #(byte_FFE800-M68K_RAM),a1
                 moveq   #$F,d7
                 moveq   #0,d1
@@ -202,7 +202,7 @@ Debug_SevenForcesScrollTableTestBuildPrimaryLoop:       ; CODE XREF: Debug_Seven
                 add.l   d4,d2
                 lea     $20(a0),a0
                 dbf     d7,Debug_SevenForcesScrollTableTestBuildPrimaryLoop
-                movea.w #(word_FFEC00-M68K_RAM),a0
+                movea.w #(VScrollBuffer-M68K_RAM),a0
                 movea.w #(byte_FFEC50-M68K_RAM),a1
                 moveq   #9,d7
                 moveq   #0,d1
@@ -678,7 +678,7 @@ Entity_SevenForcesFinalFadeState3C:                     ; DATA XREF: ROM:00054BD
                 move.w  #$210,$48(a5)
 Entity_SevenForcesApplyFinalFade:                       ; CODE XREF: Entity_SevenForcesFinalFadeState3C+E   j  ; was: loc_55426
                 move.w  $5E(a5),d0
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #$1F,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
@@ -702,7 +702,7 @@ Entity_SevenForcesFinishIntroReturn:                    ; CODE XREF: Entity_Seve
 Gfx_UpdateSevenForcesValkiriePaletteFade:               ; CODE XREF: Entity_SevenForcesValkirieFadeInStateC:Entity_SevenForcesValkirieFadeInApplyPalette   j  ; was: sub_55460
                                         ; Entity_SevenForcesValkirieFadeOutStateE+4   j
                 move.w  $5E(a5),d0
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l

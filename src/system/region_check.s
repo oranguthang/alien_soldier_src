@@ -13,11 +13,11 @@ Sys_SetGameModeFlags:                                   ; CODE XREF: Sys_CheckRe
                 rts
 ; End of function Sys_CheckRegionLock
 RegionRestricted:                                       ; CODE XREF: Sys_CheckRegionLock+14   j
-                clr.w   (word_FFFF28).w
+                clr.w   (PaletteFillColor).w
                 jsr     (Sys_InitFullGame).l
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
                 lea     (FrontendFullPaletteCommand).l,a0
@@ -47,7 +47,7 @@ RegionRestricted:                                       ; CODE XREF: Sys_CheckRe
                 lea     RegionLock_SystemsText(pc),a0
                 nop
                 jsr     (UI_RenderTextStringWrapped).l
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 addq.w  #4,(GameSubstateIndex).w
 RegionCheck_Return:                                     ; CODE XREF: Sys_CheckRegionLock+4   j  ; was: locret_580

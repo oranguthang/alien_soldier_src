@@ -134,7 +134,7 @@ Cutscene_SegaScreenFadeOut:                             ; DATA XREF: ROM:00007C4
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$FFF2,(word_FF010C).l
                 bne.w   locret_514E
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 jsr     (Sys_ClearEntityObjectPool).l
                 move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
@@ -166,13 +166,13 @@ Cutscene_InitPlanetScene:                               ; DATA XREF: ROM:00007C4
                 clr.l   (dword_FF0110).l
                 clr.l   (dword_FF0114).l
                 moveq   #0,d0
-                lea     (word_FFE400).w,a0
+                lea     (HScrollBuffer).w,a0
                 move.w  #$1B,d7
 loc_7FDC:                                               ; CODE XREF: Cutscene_InitPlanetScene+5C   j
                 move.l  d0,(a0)
                 adda.w  #$20,a0                         ; ' '
                 dbf     d7,loc_7FDC
-                lea     (word_FFEC00).w,a0
+                lea     (VScrollBuffer).w,a0
                 move.w  #9,d7
 loc_7FEE:                                               ; CODE XREF: Cutscene_InitPlanetScene+6A   j
                 move.l  d0,(a0)+
@@ -218,7 +218,7 @@ loc_7FEE:                                               ; CODE XREF: Cutscene_In
                 move.w  #1,(word_FF00C8).l
                 clr.w   (word_FF00C6).l
                 jsr     Cutscene_PlanetRotate(pc)       ; (pc)
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 bsr.w   Cutscene_ResetPlanetFade
                 addq.w  #2,(dword_FF8128+2).w
@@ -635,7 +635,7 @@ Cutscene_PlanetZoomFadeOut:                             ; DATA XREF: ROM:00007C4
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$FFF2,(word_FF010C).l
                 bne.w   locret_514E
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 move.w  #1,(dword_FF8128).w
                 rts

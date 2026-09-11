@@ -25,7 +25,7 @@ Boss_SunsetStingCheckFlightBoundsReturn:                ; CODE XREF: Boss_Sunset
 Boss_SunsetStingUpdateWaveScreen:                       ; CODE XREF: Boss_SunsetStingMain+A   p  ; was: sub_428E0
                 cmpi.b  #$FF,(a4)
                 bne.s   Boss_SunsetStingUpdateWaveEffect
-                move.w  #$60,(word_FFE400).w            ; '`'
+                move.w  #$60,(HScrollBuffer).w          ; '`'
                 rts
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingUpdateWaveEffect:                       ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+4   j  ; was: loc_428EE
@@ -53,7 +53,7 @@ Boss_SunsetStingGenerateWaveCurveLoop:                  ; CODE XREF: Boss_Sunset
                 add.l   d2,d1
                 dbf     d7,Boss_SunsetStingGenerateWaveCurveLoop
                 move.l  d0,$10(a5)
-                lea     (word_FFE400).w,a0
+                lea     (HScrollBuffer).w,a0
                 move.w  $14(a5),d0
                 move.w  d0,d1
                 subi.w  #$AC,d1
@@ -88,7 +88,7 @@ Boss_SunsetStingMergeWaveRowsLoop:                      ; CODE XREF: Boss_Sunset
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingBuildWaveTransitionBuffer:              ; CODE XREF: Boss_SunsetStingUpdateWaveScreen+16   j  ; was: loc_42996
                 swap    d0
-                move.w  d0,(word_FFE400).w
+                move.w  d0,(HScrollBuffer).w
                 lea     (word_FF9CE0).w,a0
                 moveq   #0,d0
                 move.w  #$158,d7

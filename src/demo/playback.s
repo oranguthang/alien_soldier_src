@@ -69,19 +69,19 @@ Demo_PlaybackSystem_Exit:                               ; CODE XREF: Demo_Playba
                 addq.w  #2,(word_FFFF62).w
                 andi.w  #6,(word_FFFF62).w
                 move.b  #4,(dword_FFF80A).w
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$3F,d1                         ; '?'
 Demo_PlaybackSystem_ClearBufferLoop:                    ; CODE XREF: Demo_PlaybackSystem+11A   j  ; was: loc_23DD2
                 move.l  d0,(a0)+
                 dbf     d1,Demo_PlaybackSystem_ClearBufferLoop
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
-                move.w  (word_FFF7D2).w,(VDP_CTRL).l
+                move.w  (VDPReg1Shadow).w,(VDP_CTRL).l
                 move.b  #0,(word_FFF7F4+1).w
                 move.w  (word_FFF7F4).w,(VDP_CTRL).l
-                move.b  #$10,(word_FFF7DE+1).w
-                move.w  (word_FFF7DE).w,(VDP_CTRL).l
+                move.b  #$10,(VDPReg7Shadow+1).w
+                move.w  (VDPReg7Shadow).w,(VDP_CTRL).l
                 andi.b  #$EF,(word_FFF7D0+1).w
                 move.w  (word_FFF7D0).w,(VDP_CTRL).l
                 rts

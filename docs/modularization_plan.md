@@ -73,7 +73,7 @@ data are checked.
 | `0x0005DC` | `off_5DC` | top-level object handler table |
 | `0x000A7A` | `VBLANK` | vertical-blank dispatcher |
 | `0x000D12` | `Gfx_VBlankDMATransfer` | VBlank DMA processing |
-| `0x000EF4` | `Effect_UpdatePaletteFade` | palette fade engine |
+| `0x000EF4` | `Palette_UpdateFullScreenFade` | full-screen palette fade and adjacent VDP control helpers |
 | `0x001356` | `VBlank_EffectDispatcher` | VBlank effects |
 | `0x0015BC` | `Effect_InitTransitionFade` | transition effects |
 | `0x00195C` | `VBlank_Epsilon1ScrollEffect` | HBlank/scroll effects |

@@ -224,7 +224,7 @@ Boss_ZLeoFadeToEnding:                                  ; DATA XREF: ROM:0002210
                 cmpi.w  #$E,(dword_FF9400+2).w
                 bls.s   Boss_ZLeoFadeToEnding_Return
                 addq.w  #2,(dword_FF9400).w
-                lea     (word_FFE380).w,a0
+                lea     (PaletteShadowBuffer).w,a0
                 move.w  #$1F,d7
                 moveq   #0,d0
 Boss_ZLeoFadeToEnding_ClearPaletteBufferLoop:           ; CODE XREF: Boss_ZLeoFadeToEnding+34   j  ; was: loc_22360
@@ -280,7 +280,7 @@ Credits_ApplyFadeStep:                                  ; CODE XREF: Boss_ZLeoFa
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Credits_ApplyFadeStep
 ; Integrates the Z-Leo scroll velocity

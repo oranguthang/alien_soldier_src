@@ -2,7 +2,7 @@ Stage_InitGameOver:                                     ; DATA XREF: Sys_Dispatc
                 tst.w   (GameSubstateIndex).w
                 bne.s   loc_275E2
                 jsr     (Sys_InitGameMode).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
@@ -21,7 +21,7 @@ loc_275E2:                                              ; CODE XREF: Stage_InitG
                 lea     stru_27676(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 move.w  #$2C,(word_FFE302).w            ; ','
                 move.w  #0,(word_FFE304).w

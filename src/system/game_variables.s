@@ -22,7 +22,7 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
                 clr.w   (word_FF8090).w
                 clr.b   (byte_FFFF31).w
                 bsr.w   Results_InitializeStageHistory
-                bra.s   UI_ResetMenuBufferAndState_Clear
+                bra.s   UI_ResetPaletteAndMessageMode_Clear
 ; End of function UI_InitializeGameVariables
 ; Initializes game state after continue, sets weapon ammo and clears menu flags
 UI_InitGameStateFromContinue:                           ; CODE XREF: UI_TransitionFromContinue+28   j  ; was: sub_1CD3A
@@ -48,7 +48,7 @@ UI_InitGameStateFromContinue_CopyAmmo:                  ; CODE XREF: UI_InitGame
                 clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
                 clr.b   (byte_FFFF31).w
-                bsr.s   UI_ResetMenuBufferAndState
+                bsr.s   UI_ResetPaletteAndMessageMode
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0
@@ -61,21 +61,21 @@ UI_ClearPasswordFlags:                                  ; CODE XREF: Password_Ha
                 clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
 ; End of function UI_ClearPasswordFlags
-; Clears menu buffer at FFE300 and resets menu state to 4
-UI_ResetMenuBufferAndState:                             ; CODE XREF: UI_InitGameStateFromContinue+58   p  ; was: sub_1CDB4
+; Clears both 128-byte palette buffers and resets the message option to 4
+UI_ResetPaletteAndMessageMode:                          ; CODE XREF: UI_InitGameStateFromContinue+58   p  ; was: sub_1CDB4
                 bsr.w   Stage_LoadTimeLimit
-UI_ResetMenuBufferAndState_Clear:                       ; CODE XREF: UI_UpdateOptionsScreen+12   j  ; was: loc_1CDB8
+UI_ResetPaletteAndMessageMode_Clear:                    ; CODE XREF: UI_UpdateOptionsScreen+12   j  ; was: loc_1CDB8
                                         ; UI_UpdateSecondaryOptionsMenu+12   j
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #$3F,d7                         ; '?'
-; Clears menu buffer at word_FFE300 with 64 iterations
-UI_ClearMenuBuffer:                                     ; CODE XREF: UI_ResetMenuBufferAndState+E   j  ; was: loc_1CDC0
+; Clears 64 longwords spanning the active and shadow palette buffers
+UI_ClearPaletteBuffers:                                 ; CODE XREF: UI_ResetPaletteAndMessageMode+E   j  ; was: loc_1CDC0
                 move.l  d0,(a0)+
-                dbf     d7,UI_ClearMenuBuffer
+                dbf     d7,UI_ClearPaletteBuffers
                 move.w  #4,(MessageMode).w
                 rts
-; End of function UI_ResetMenuBufferAndState
+; End of function UI_ResetPaletteAndMessageMode
 ; ---------------------------------------------------------------------------
 UI_ContinueDisplayValueTable:   dc.b    $18, $18, $18, $18, $18, $18, $18, $18, $18, $18  ; was: byte_1CDCE
                                         ; DATA XREF: UI_InitGameStateFromContinue+66   r

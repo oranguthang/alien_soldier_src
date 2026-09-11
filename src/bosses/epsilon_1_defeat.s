@@ -262,7 +262,7 @@ Boss_Epsilon1ApplyTimedPaletteFade:                     ; CODE XREF: Boss_Epsilo
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 rts
 ; End of function Boss_Epsilon1ApplyTimedPaletteFade

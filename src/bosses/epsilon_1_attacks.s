@@ -45,7 +45,7 @@ Boss_Epsilon1FinishOpeningFadeState:                    ; DATA XREF: ROM:00045CF
                 move.w  $48(a5),d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 btst    #0,(word_FFA000+1).w
                 bne.s   Boss_Epsilon1FinishOpeningFadeReturn

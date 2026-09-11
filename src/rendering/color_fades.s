@@ -453,8 +453,8 @@ Gfx_ApplyRGBColorAdjust_SelectBlueDelta:                ; CODE XREF: Gfx_ApplyRG
                 move.w  d0,d3
                 asl.w   #8,d3
 Gfx_ApplyRGBColorAdjust_ApplyPalette:                   ; CODE XREF: Gfx_ApplyRGBColorAdjust+30   j  ; was: loc_4066
-                movea.w #(word_FFE300-M68K_RAM),a0
-                movea.w #(word_FFE380-M68K_RAM),a1
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
+                movea.w #(PaletteShadowBuffer-M68K_RAM),a1
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d0
 Gfx_ApplyRGBColorAdjust_ColorLoop:                      ; CODE XREF: Gfx_ApplyRGBColorAdjust+4E   j  ; was: loc_4076

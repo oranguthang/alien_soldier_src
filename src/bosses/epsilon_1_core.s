@@ -154,7 +154,7 @@ Boss_Epsilon1DispatchAndPublishScroll:                  ; CODE XREF: Boss_Epsilo
                 bsr.w   Boss_Epsilon1DispatchState
                 move.w  (dword_FFA908).w,d0
                 neg.w   d0
-                move.w  d0,(word_FFE400).w
+                move.w  d0,(HScrollBuffer).w
                 rts
 ; End of function Boss_Epsilon1Main
 ; Dispatches the controller's ROM-ordered state table
@@ -387,7 +387,7 @@ Boss_Epsilon1ApplyPaletteFade:                          ; CODE XREF: Boss_Epsilo
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jsr     (Gfx_ApplyPaletteFade).l
                 rts
 ; End of function Boss_Epsilon1ApplyPaletteFade

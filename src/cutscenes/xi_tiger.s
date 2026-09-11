@@ -350,7 +350,7 @@ loc_1EBE4:                                              ; CODE XREF: Cutscene_Xi
 ; Applies palette fade effect to cutscene
 Cutscene_XiTigerApplyFade:                              ; CODE XREF: Cutscene_XiTigerScrollUpdate:loc_1E9D2   p  ; was: sub_1EC20
                                         ; Cutscene_XiTigerScrollFadeIn+58   p
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 move.w  #$E000,d7
                 moveq   #$3F,d5                         ; '?'
 loc_1EC2A:                                              ; CODE XREF: Cutscene_XiTigerFlashEffect+26   p

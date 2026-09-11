@@ -114,8 +114,8 @@ Gfx_UpdateStage14Palette:                               ; CODE XREF: Gfx_Stage14
                                         ; Gfx_PaletteFadeEffect+1A   j
                                         ; DATA XREF:
                 move.w  (word_FFA000).w,d0
-                movea.w #(word_FFE300-M68K_RAM),a0
-                movea.w #(word_FFE380-M68K_RAM),a1
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
+                movea.w #(PaletteShadowBuffer-M68K_RAM),a1
                 move.w  (word_FF8218).w,d3
                 move.w  d0,d1
                 asr.w   #1,d1
@@ -199,7 +199,7 @@ word_42C2:      dc.w    0, 2, $24, $46, $68, $8A, $AC, $CE
 
 ; Updates Sega screen palette based on state bit
 Gfx_UpdateSega3Palette:                                 ; DATA XREF: ROM:000040BC   o  ; was: sub_42E2
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 btst    #0,(word_FFA000+1).w
                 bne.s   loc_4302
                 move.w  #$EEE,4(a0)

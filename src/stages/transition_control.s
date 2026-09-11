@@ -7,7 +7,7 @@ Sys_TransitionToStageInit:                              ; DATA XREF: Sys_Dispatc
                 move.w  #$FFF4,(word_FF80F0).w
                 clr.b   (word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMA
@@ -22,7 +22,7 @@ loc_1E7A8:                                              ; CODE XREF: Sys_Transit
                 move.l  d0,(dword_FF8130).w
                 move.l  d0,(dword_FF8134).w
                 bsr.w   Cutscene_DispatchInit
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 jmp     (Gfx_FadePaletteTransition).l
 ; End of function Sys_TransitionToStageInit

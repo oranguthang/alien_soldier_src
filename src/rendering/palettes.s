@@ -2,7 +2,7 @@
 Gfx_LoadMultiplePalettes:                               ; CODE XREF: Gfx_WaitForFadeAndLoadTiles+3C   p  ; was: sub_B900
                                         ; Cutscene_InitCreditsScreen+64   p
                 moveq   #0,d0
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 move.w  d0,(a0)
                 move.w  d0,$80(a0)
                 move.w  d0,$20(a0)

@@ -177,7 +177,7 @@ Stage22_GraphicsUpdate2_RequestZ80Bus:                  ; CODE XREF: Stage22_Gra
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Stage22_GraphicsUpdate2_RequestZ80Bus
                 lea     (VDP_CTRL).l,a4
-                move.w  (word_FFF7D2).w,d2
+                move.w  (VDPReg1Shadow).w,d2
                 bset    #4,d2
                 move.w  d2,(a4)
                 move.w  d3,(a4)
@@ -209,7 +209,7 @@ Stage22_GraphicsUpdate2_RequestZ80Bus:                  ; CODE XREF: Stage22_Gra
                 move.w  d1,(VDPCommand+2).w
                 move.w  (VDPCommand+2).w,(a4)
                 move.w  (VDPCommand).w,(a4)
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a4)
 Stage22_GraphicsUpdate2_ReleaseZ80Bus:                  ; CODE XREF: Stage22_GraphicsUpdate2+90   j  ; was: loc_1B864

@@ -67,8 +67,8 @@ Gfx_FadePaletteTransition_DecreaseSecondModeStep:       ; CODE XREF: Gfx_FadePal
                 moveq   #$FFFFFFFE,d5
 Gfx_FadePaletteTransition_ApplyStep:                    ; CODE XREF: Gfx_FadePaletteTransition+2C   j  ; was: loc_3A3E
                                         ; Gfx_FadePaletteTransition+46   j
-                movea.w #(word_FFE380-M68K_RAM),a0
-                movea.w #(word_FFE300-M68K_RAM),a1
+                movea.w #(PaletteShadowBuffer-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a1
                 move.w  (word_FF80F0).w,d0
                 move.w  d0,d1
                 move.w  d0,d2
@@ -174,7 +174,7 @@ Gfx_CalculateFadeParams_Return:                         ; CODE XREF: Gfx_Calcula
 ; Sets palette fade operation parameters for screen transitions
 Gfx_SetFadeParams:                                      ; CODE XREF: Gfx_PaletteFadeEffect+16   p  ; was: sub_3B28
                                         ; sub_DBF4:loc_DC6A   j
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #$3F,d5                         ; '?'
                 move.w  #$E000,d7
 ; End of function Gfx_SetFadeParams

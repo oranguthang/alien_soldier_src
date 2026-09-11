@@ -14,10 +14,10 @@ off_8708:       dc.w    Cutscene_InitShipData-*         ; DATA XREF: Cutscene_Sh
 
 ; Updates ship palette based on game state flag
 Cutscene_UpdateShipPaletteAlt:                          ; CODE XREF: Cutscene_ShipObjectDispatcher+A   p  ; was: sub_870C
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 btst    #0,(word_FFA000+1).w
                 bne.s   loc_8760
-                movea.w #(word_FFE380-M68K_RAM),a1
+                movea.w #(PaletteShadowBuffer-M68K_RAM),a1
                 move.w  $64(a1),$64(a0)
                 move.w  $66(a1),$66(a0)
                 move.w  $68(a1),$68(a0)
@@ -245,7 +245,7 @@ Cutscene_InitShipFlash:                                 ; CODE XREF: Cutscene_Re
 ; Animates ship flash by toggling palette colors
 Cutscene_ShipFlashLoop:                                 ; DATA XREF: ROM:000089E8   o  ; was: sub_8A12
                 bsr.w   Cutscene_UpdateShipColor
-                eori.w  #2,(word_FFE400).w
+                eori.w  #2,(HScrollBuffer).w
                 subq.w  #1,(word_FF016C).l
                 bne.w   locret_514E
                 move.l  #$FFFFC000,(dword_FF0138).l
@@ -373,7 +373,7 @@ Cutscene_ShipRenderLoop:                                ; DATA XREF: ROM:0000882
 ; End of function Cutscene_ShipRenderLoop
 ; Applies palette fade transition effects to ship scene
 Cutscene_ShipFadeTransition:                            ; DATA XREF: ROM:00008822   o  ; was: sub_8BDE
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 move.w  (word_FF0166).l,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
@@ -439,7 +439,7 @@ Effect_SpawnStarParticle:                               ; CODE XREF: Cutscene_Sh
 ; Sets up palette fade for Sega screen with gradient colors
 Gfx_SetupSegaPalette:                                   ; CODE XREF: Cutscene_ShipInitScene+60   p  ; was: sub_8CC0
                                         ; sub_8BA2   p
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 move.w  #$FFF2,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
@@ -464,7 +464,7 @@ Cutscene_ShipUpdateScroll:                              ; CODE XREF: Cutscene_Sh
                 move.l  (dword_FF0138).l,d0
                 add.l   (dword_FF0134).l,d0
                 move.l  d0,(dword_FF0134).l
-                lea     (word_FFEC00).w,a0
+                lea     (VScrollBuffer).w,a0
                 move.w  (dword_FF0134).l,d0
                 neg.w   d0
                 move.w  #$F,d7

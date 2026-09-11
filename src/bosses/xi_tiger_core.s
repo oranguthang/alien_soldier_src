@@ -761,7 +761,7 @@ Boss_ApplyDefeatPaletteFade:                            ; CODE XREF: Boss_Shells
                                         ; Boss_ShellshogunDefeatPaletteState:Boss_ShellshogunApplyDefeatPaletteFade   j
                 move.w  6(a5),d0
                 asr.w   #1,d0
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #$3F,d5                         ; '?'
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l

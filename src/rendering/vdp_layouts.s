@@ -97,7 +97,7 @@ Gfx_SetupVRAMLayout2:                                   ; DATA XREF: ROM:00029E5
                 moveq   #6,d7
                 bsr.w   Sys_SetupVRAMLayout
                 movea.w #(byte_FF9000-M68K_RAM),a2
-                movea.w #(word_FFE400-M68K_RAM),a3
+                movea.w #(HScrollBuffer-M68K_RAM),a3
                 moveq   #$D,d7
                 bra.w   Sys_SetupVRAMLayout
 ; End of function Gfx_SetupVRAMLayout2
@@ -108,7 +108,7 @@ Boss_DestroyerProtoVRAMSetup:                           ; DATA XREF: ROM:00029E5
                 moveq   #3,d7
                 bsr.w   Sys_SetupVRAMLayout
                 movea.w #(word_FF9800-M68K_RAM),a2
-                movea.w #(word_FFE400-M68K_RAM),a3
+                movea.w #(HScrollBuffer-M68K_RAM),a3
                 moveq   #$D,d7
                 bra.w   Sys_ClearVRAMRange
 ; End of function Boss_DestroyerProtoVRAMSetup

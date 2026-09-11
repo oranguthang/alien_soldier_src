@@ -12,7 +12,7 @@ loc_F074:                                               ; CODE XREF: Gfx_Palette
 loc_F078:                                               ; CODE XREF: Gfx_PaletteFadeClamp+A   j
                                         ; Gfx_PaletteFadeClamp+E   j
                 move.w  d0,(word_FF9620).w
-                movea.w #(word_FFE300-M68K_RAM),a0
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #$1F,d5
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l

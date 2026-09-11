@@ -467,7 +467,7 @@ Gfx_ApplyBossPaletteFade:                               ; CODE XREF: Boss_Gusthe
                 andi.w  #$E,d0
                 move.w  #$3F,d5                         ; '?'
                 move.w  #$E000,d7
-                lea     (word_FFE300).w,a0
+                lea     (PaletteActiveBuffer).w,a0
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Gfx_ApplyBossPaletteFade
 ; Checks if defeat sequence complete

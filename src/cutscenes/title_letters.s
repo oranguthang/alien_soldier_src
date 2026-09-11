@@ -3,7 +3,7 @@ Gfx_SetupTitleScreenLetters:                            ; DATA XREF: ROM:0000498
                 bne.w   locret_514E
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 move.b  #0,(word_FFF7F4+1).w
                 clr.w   (word_FFF74A).w
@@ -80,7 +80,7 @@ loc_4C60:                                               ; CODE XREF: Gfx_SetupTi
                 bset    #0,(IO_Z80BUS).l
                 bne.s   loc_4C60
                 lea     (VDP_CTRL).l,a0
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bset    #4,d0
                 move.w  d0,(a0)
                 move.w  #$8F02,(a0)
@@ -92,7 +92,7 @@ loc_4C60:                                               ; CODE XREF: Gfx_SetupTi
                                         ; DO_OPERATION_USING_DMA
                 move.w  (VDPCommand).w,(a0)
                 move.w  (VDPCommand+2).w,(a0)
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a0)
 ; Releases Z80 bus control and advances state machine
@@ -101,7 +101,7 @@ Sys_ReleaseZ80BusAndAdvance:                            ; CODE XREF: Gfx_SetupTi
                 beq.s   Sys_ReleaseZ80BusAndAdvance
                 move    (sp)+,sr
                 move    #$2300,sr
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
@@ -320,7 +320,7 @@ loc_4F5C:                                               ; CODE XREF: Gfx_Animate
                 bset    #0,(IO_Z80BUS).l
                 bne.s   loc_4F5C
                 lea     (VDP_CTRL).l,a0
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bset    #4,d0
                 move.w  d0,(a0)
                 move.w  #$8F02,(a0)
@@ -332,7 +332,7 @@ loc_4F5C:                                               ; CODE XREF: Gfx_Animate
                                         ; DO_OPERATION_USING_DMA
                 move.w  (VDPCommand).w,(a0)
                 move.w  (VDPCommand+2).w,(a0)
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a0)
 ; Completes Z80 bus release and advances to next state
@@ -341,7 +341,7 @@ Sys_CompleteZ80BusReleaseAndAdvance:                    ; CODE XREF: Gfx_Animate
                 beq.s   Sys_CompleteZ80BusReleaseAndAdvance
                 move    (sp)+,sr
                 move    #$2300,sr
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
@@ -472,7 +472,7 @@ loc_5102:                                               ; CODE XREF: Sys_StorySc
 Sys_ExitStoryScreen:                                    ; DATA XREF: ROM:00004988   o  ; was: sub_5130
                 bclr    #1,(word_FF80F4).w
                 beq.w   locret_514E
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w

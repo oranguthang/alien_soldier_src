@@ -9,7 +9,7 @@ UI_InitOptionsScreen:                                   ; DATA XREF: Sys_Dispatc
                 move.w  #$FFF4,(word_FF80F0).w
                 clr.b   (word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
@@ -28,7 +28,7 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 jsr     (Gfx_LoadMultiplePalettes).l
                 jsr     (Gfx_FadePaletteTransition).l
                 move.b  #0,(word_FFF7F4+1).w
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
@@ -101,7 +101,7 @@ UI_UpdateOptionsScreen:                                 ; DATA XREF: Sys_Dispatc
                 beq.s   UI_UpdateOptionsScreenActive
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                jmp     UI_ResetMenuBufferAndState_Clear
+                jmp     UI_ResetPaletteAndMessageMode_Clear
 ; ---------------------------------------------------------------------------
 UI_UpdateOptionsScreenActive:                           ; CODE XREF: UI_UpdateOptionsScreen+6   j  ; was: loc_978C
                 tst.w   (word_FF80F2).w
@@ -450,7 +450,7 @@ UI_InitSecondaryOptionsMenu:                            ; DATA XREF: Sys_Dispatc
                 move.w  #$FFF4,(word_FF80F0).w
                 clr.b   (word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
@@ -465,7 +465,7 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
                 jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
                 move.b  #0,(word_FFF7F4+1).w
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 move.w  #$FFF0,(dword_FFA904).w
                 clr.w   (dword_FFA900).w
@@ -487,7 +487,7 @@ UI_UpdateSecondaryOptionsMenu:                          ; DATA XREF: Sys_Dispatc
                 beq.s   UI_UpdateSecondaryOptionsMenuActive
                 move.w  #$54,(GameModeIndex).w          ; 'T'
                 clr.w   (GameSubstateIndex).w
-                jmp     UI_ResetMenuBufferAndState_Clear
+                jmp     UI_ResetPaletteAndMessageMode_Clear
 ; ---------------------------------------------------------------------------
 UI_UpdateSecondaryOptionsMenuActive:                    ; CODE XREF: UI_UpdateSecondaryOptionsMenu+6   j  ; was: loc_9EA0
                 tst.w   (word_FF80F2).w

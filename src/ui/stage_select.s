@@ -24,7 +24,7 @@ loc_1D636:                                              ; CODE XREF: UI_Initiali
                 bcc.s   loc_1D688
                 move.w  #$9999,(word_FFFF40).w
 loc_1D688:                                              ; CODE XREF: UI_InitializeStageSelect+58   j
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
@@ -38,7 +38,7 @@ loc_1D69C:                                              ; CODE XREF: UI_Initiali
                 clr.w   (word_FF8014).w
                 move.w  #$FFF2,(word_FF8016).w
                 bsr.w   UI_FadePaletteColors
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 move.w  #$FF00,(dword_FFA904).w
                 clr.w   (dword_FFA900).w
@@ -85,7 +85,7 @@ Stage_InitializeStageSelect:                            ; DATA XREF: Sys_Dispatc
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #6,(word_FFF7D2+1).w
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (byte_FFF755).w
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueSmallFontDMA
@@ -96,7 +96,7 @@ loc_1D778:                                              ; CODE XREF: Stage_Initi
                 lea     (StageSelectFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
-                bset    #6,(word_FFF7D2+1).w
+                bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(byte_FFF755).w
                 move.w  #$FF00,(dword_FFA90C).w
                 move.w  #0,(dword_FFA908).w
@@ -180,7 +180,7 @@ loc_1D86A:                                              ; CODE XREF: UI_UpdateSt
 ; End of function UI_HandleStageFadeOut
 ; Calculates parallax scrolling for background
 Gfx_CalculateParallaxScroll:                            ; CODE XREF: UI_HandleStageFadeOut+5E   p  ; was: sub_1D8AC
-                movea.w #(word_FFE400-M68K_RAM),a0
+                movea.w #(HScrollBuffer-M68K_RAM),a0
                 move.l  (dword_FFA900).w,d1
                 neg.l   d1
                 move.w  #$6F,d7                         ; 'o'

@@ -100,7 +100,7 @@ loc_10E1A:                                              ; CODE XREF: VDP_SetupDM
                 bset    #0,(IO_Z80BUS).l
                 bne.s   loc_10E1A
                 lea     (VDP_CTRL).l,a4
-                move.w  (word_FFF7D2).w,d2
+                move.w  (VDPReg1Shadow).w,d2
                 bset    #4,d2
                 move.w  d2,(a4)
                 movea.l #$FFFF2000,a0
@@ -117,7 +117,7 @@ loc_10E42:                                              ; CODE XREF: VDP_SetupDM
                 move.w  #$83,(VDPCommand).w
                 move.w  (dword_FFA940).w,(a4)
                 move.w  (VDPCommand).w,(a4)
-                move.w  (word_FFF7D2).w,d0
+                move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a4)
 loc_10E76:                                              ; CODE XREF: VDP_SetupDMA+6A   j
