@@ -177,8 +177,8 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    Sys_UpdateGameLoop
                 dc.l    Stage_LoadBackgroundGraphics
                 dc.l    Sys_GameplayMainLoop
-                dc.l    UI_InitTitleScreen
-                dc.l    UI_HandleTitleInput
+                dc.l    TitleScreen_Initialize
+                dc.l    TitleScreen_Update
                 dc.l    UI_InitOptionsScreen
                 dc.l    UI_UpdateOptionsScreen
                 dc.l    StoryScreen_Initialize

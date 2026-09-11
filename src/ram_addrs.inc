@@ -969,12 +969,12 @@ word_FFFF50             equ     $FFFFFF50
 word_FFFF52             equ     $FFFFFF52
 word_FFFF56             equ     $FFFFFF56
 word_FFFF58             equ     $FFFFFF58
-word_FFFF5A             equ     $FFFFFF5A
-word_FFFF5C             equ     $FFFFFF5C
+DemoPlaybackActive      equ     $FFFFFF5A               ; was: word_FFFF5A
+DemoPlaybackState       equ     $FFFFFF5C               ; was: word_FFFF5C
 word_FFFF5E             equ     $FFFFFF5E
 word_FFFF60             equ     $FFFFFF60
 word_FFFF62             equ     $FFFFFF62
-word_FFFF64             equ     $FFFFFF64
+DemoStageTableIndex     equ     $FFFFFF64               ; was: word_FFFF64
 byte_FFFF66             equ     $FFFFFF66
 byte_FFFFFF             equ     $FFFFFFFF
 Z80_RAM                 equ     $A00000

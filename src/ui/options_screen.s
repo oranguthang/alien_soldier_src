@@ -777,7 +777,7 @@ Gfx_ApplyCursorFlashColor:                              ; CODE XREF: Gfx_UpdateC
 UI_CursorFlashColors:   dc.w    $200, $400, $620, $840, $A60, $C82, $EA4, $EC6  ; was: word_A180
 
 ; Updates menu palette based on frame counter for color cycling
-Gfx_UpdateMenuPalette:                                  ; CODE XREF: UI_HandleTitleInput+110   p  ; was: sub_A190
+Gfx_UpdateMenuPalette:                                  ; CODE XREF: TitleScreen_Update+110   p  ; was: sub_A190
                                         ; sub_9774:UI_UpdateOptionsScreenFrame   p
                 move.w  (word_FFA280).w,d1
                 asl.w   #1,d1
@@ -792,7 +792,7 @@ Gfx_UpdateMenuPalette:                                  ; CODE XREF: UI_HandleTi
 ; ---------------------------------------------------------------------------
 UI_MenuPaletteCycleColors:          dc.w    $E00, $E44, $4C4, $40  ; was: word_A1AE
 Frontend_TitleAssetLoadDescriptors: dc.w    3           ; field_0  ; was: stru_A1B6
-                                        ; DATA XREF: UI_InitTitleScreen+12   o
+                                        ; DATA XREF: TitleScreen_Initialize+12   o
                                         ; UI_InitializeSEGAScreen+1C   o
                 dc.l    byte_182F24                     ; field_2
                 dc.w    0                               ; field_6

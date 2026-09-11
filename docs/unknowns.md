@@ -3388,3 +3388,28 @@ audit records, covering every ROM definition in the module plus its RAM and
 sprite-frame dependencies. Provenance rises from 12,463 to 12,529 and the audit
 registry from 9,096 to 9,211. The enforced address-derived ceiling falls from
 3,578 to 3,512; module count remains 347.
+
+The title-screen package audits all 19 ROM definitions in the 192-line
+`ui/title_screen.s` module and promotes three shared demo-playback RAM fields.
+The module remains a natural standalone range: joining it to the following
+890-line options module would cross the 1,000-line ceiling, while splitting
+its short initialization and update paths would only create formal fragments.
+
+Static flow establishes the complete three-choice encoding: zero opens the
+password screen, two starts the game, and four opens options. At frame `$700`
+the same updater activates deterministic demo playback; confirming while that
+flag is active copies the selected demo-stage entry into `StageTableIndex`.
+Two odd instruction pairs are documented without being normalized away: the
+comparison with `$780` is overwritten by the following comparison with `$700`,
+and the second consecutive zero-branch in selection dispatch is unreachable.
+Both remain byte-significant source. The adjacent 26-byte preserved block is
+24 zero bytes followed by `$FF00`; because no static reference reaches it, its
+name records only title-range ownership and unreferenced status.
+
+This package replaces thirteen local address labels and promotes three RAM
+fields. The unreferenced-data marker adds one more historical mapping, so the
+seventeen new provenance records raise the total from 12,529 to 12,546.
+Twenty-two static audit records raise the registry from 9,211 to 9,233, and
+the enforced address-derived ceiling falls from 3,512 to 3,496. Module count
+remains 347, and a clean rebuild of the canonical Japanese ROM remains
+byte-identical.

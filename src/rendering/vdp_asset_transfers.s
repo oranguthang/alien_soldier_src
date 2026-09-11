@@ -24,7 +24,7 @@ Gfx_AdjustSelectedTileBlocks_ReadBlockIndex:            ; CODE XREF: Gfx_AdjustS
                 rts
 ; End of function Gfx_AdjustSelectedTileBlocks
 ; Adjusts tile pattern indices
-Gfx_AdjustTileIndexRows:                                ; CODE XREF: UI_InitTitleScreen+60   p  ; was: sub_1119E
+Gfx_AdjustTileIndexRows:                                ; CODE XREF: TitleScreen_Initialize+60   p  ; was: sub_1119E
                                         ; Boss_WolfGaropaGraphicsInit+8   j
                 moveq   #$F,d6
 Gfx_AdjustTileIndexRows_WordLoop:                       ; CODE XREF: Gfx_AdjustTileIndexRows+C   j  ; was: loc_111A0
@@ -37,7 +37,7 @@ Gfx_AdjustTileIndexRows_WordLoop:                       ; CODE XREF: Gfx_AdjustT
                 rts
 ; End of function Gfx_AdjustTileIndexRows
 ; Updates tilemap tile indices and palette bits with offset
-Gfx_UpdateTilemapIndices:                               ; CODE XREF: UI_InitTitleScreen+78   p  ; was: sub_111B4
+Gfx_UpdateTilemapIndices:                               ; CODE XREF: TitleScreen_Initialize+78   p  ; was: sub_111B4
                                         ; Boss_SireneSpawnProjectile2+2C   p
                 moveq   #$F,d6
 Gfx_UpdateTilemapIndices_WordLoop:                      ; CODE XREF: Gfx_UpdateTilemapIndices+1C   j  ; was: loc_111B6
@@ -114,7 +114,7 @@ Gfx_QueueSmallFontDMA:                                  ; CODE XREF: Stage_Initi
 ; End of function Gfx_QueueSmallFontDMA
 ; Queues VRAM write command for plane A at address 0x6000
 Gfx_QueueLargeFontDMACommand81:                         ; CODE XREF: RegionRestricted+1E   p  ; was: sub_1127E
-                                        ; UI_InitTitleScreen+44   j
+                                        ; TitleScreen_Initialize+44   j
                 movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$81,-(a1)
                 move.w  #$6000,-(a1)

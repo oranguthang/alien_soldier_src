@@ -4,8 +4,8 @@ UI_SetPasswordConfirmFlag:                              ; CODE XREF: UI_HandlePa
                 bra.s   UI_InitializeGameVariables_Common
 ; End of function UI_SetPasswordConfirmFlag
 ; Initializes game state variables for menu/title screen
-UI_InitializeGameVariables:                             ; CODE XREF: UI_HandleTitleInput+8A   p  ; was: sub_1CCF4
-                                        ; UI_HandleTitleInput+BA   j
+UI_InitializeGameVariables:                             ; CODE XREF: TitleScreen_Update+8A   p  ; was: sub_1CCF4
+                                        ; TitleScreen_Update+BA   j
                 clr.w   (StageTableIndex).w
                 move.w  #2,(ShootingMode).w
                 clr.b   (byte_FFA209).w

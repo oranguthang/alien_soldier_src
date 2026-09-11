@@ -11,7 +11,8 @@ still have neutral size/address names. The first reviewed semantic fields are
 `WeaponSlotOffset`, `WeaponSavedSlotOffset`, `WeaponMenuRadius`,
 `WeaponMenuAngle`, `WeaponStateCooldown`, `WeaponMenuAngularStep`, and
 `WeaponMenuSlotOffset`, `ShootingMode`, `ControlLayoutFlags`, and
-`RandomNumberState`, `FrameCounter`, `PaletteEffectControl`,
+`RandomNumberState`, `DemoPlaybackActive`, `DemoPlaybackState`,
+`DemoStageTableIndex`, `FrameCounter`, `PaletteEffectControl`,
 `PaletteEntryLists`, `PalettePrimaryIndex`, and `PaletteSecondaryIndex`;
 `VDPCommand` predates this review. All remain
 subject to the evidence policy in `docs/naming.md`.
@@ -65,6 +66,14 @@ alone does not yet prove the exact player-facing counting convention.
 | Symbol | Address | Static evidence |
 |---|---:|---|
 | `RandomNumberState` | `$FFFFFF08` | `RandomNumber` replaces this longword on every call, and gameplay consumers sample its bytes and words. Demo playback writes a fixed seed here so its recorded input remains deterministic. |
+
+## Reviewed demo-playback fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `DemoPlaybackActive` | `$FFFFFF5A` | The title timer sets this word at frame `$700`; `Demo_PlaybackSystem` gates all initialization and updates on it and clears it when returning to title mode. |
+| `DemoPlaybackState` | `$FFFFFF5C` | The title trigger clears this word; demo playback treats zero as initialization and advances it by four before using the continuing playback path. |
+| `DemoStageTableIndex` | `$FFFFFF64` | Demo initialization stores an entry from `Demo_StageIndexTable` here, and title confirmation copies it to `StageTableIndex` before gameplay starts. |
 
 ## Reviewed message-sequence fields
 

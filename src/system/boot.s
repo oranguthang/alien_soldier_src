@@ -130,7 +130,7 @@ Reset_InitDefaults:                                     ; CODE XREF: Reset+14C  
                 move.b  #4,(byte_FFFF23).w
                 move.b  #5,(byte_FFFF24).w
                 move.b  #5,(byte_FFFF25).w
-                clr.w   (word_FFFF5A).w
+                clr.w   (DemoPlaybackActive).w
                 clr.w   (word_FFFF62).w
 Reset_WaitForBlanking:                                  ; CODE XREF: Reset+204   j  ; was: loc_3FA
                 move.w  (VDP_CTRL).l,d0

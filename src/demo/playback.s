@@ -1,8 +1,8 @@
 Demo_PlaybackSystem:                                    ; CODE XREF: Sys_DispatchGameState:Sys_DispatchGameState_Run   p  ; was: sub_23CBA
-                tst.w   (word_FFFF5A).w
+                tst.w   (DemoPlaybackActive).w
                 beq.w   Demo_PlaybackSystem_Return
                 move.w  #0,(word_FFFF56).w
-                tst.w   (word_FFFF5C).w
+                tst.w   (DemoPlaybackState).w
                 bne.w   Demo_PlaybackSystem_Update
                 move.l  #$8522BD7A,(RandomNumberState).w
                 clr.w   (word_FFA280).w
@@ -18,14 +18,14 @@ Demo_PlaybackSystem:                                    ; CODE XREF: Sys_Dispatc
                 andi.w  #6,d0
                 lea     Demo_StageIndexTable(pc),a0
                 nop
-                move.w  (a0,d0.w),(word_FFFF64).w
+                move.w  (a0,d0.w),(DemoStageTableIndex).w
                 lsl.w   #1,d0
                 jsr     Demo_GetInputPointer(pc)        ; (pc)
                 nop
                 move.w  (a0)+,(word_FFFF4A).w
                 move.l  a0,(dword_FFFF4C).w
                 move.w  #$1000,(word_FFFF58).w
-                addq.w  #4,(word_FFFF5C).w
+                addq.w  #4,(DemoPlaybackState).w
                 tst.w   (word_FFFF56).w
                 beq.w   Demo_PlaybackSystem_Return
                 clr.w   (word_FFFF50).w
@@ -60,7 +60,7 @@ Demo_PlaybackSystem_Exit:                               ; CODE XREF: Demo_Playba
                 clr.b   (byte_FFF807).w
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                clr.w   (word_FFFF5A).w
+                clr.w   (DemoPlaybackActive).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.w  (word_FFFF5E).w,(DifficultyMode).w

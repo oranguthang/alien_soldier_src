@@ -1,11 +1,11 @@
 Gfx_TitleAndZLeoVRAMTransferParameters: dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $14000  ; was: dword_11316
-                                        ; DATA XREF: UI_InitTitleScreen+7E   o
+                                        ; DATA XREF: TitleScreen_Initialize+7E   o
                                         ; sub_106FE   o
 Gfx_DefaultVRAMTransferParameters:  dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $4000  ; was: dword_11326
                                         ; DATA XREF: EndingSequence_Initialize+4A   o
                                         ; EndingStarfield_FadeOutAndPreparePlanet+4A   o
 Gfx_FrontendAlternateVRAMTransferParameters:    dc.l    $FFFF7000, $FFFF6800, $FFFF2000, $6000  ; was: dword_11336
-                                        ; DATA XREF: UI_InitTitleScreen+96   o
+                                        ; DATA XREF: TitleScreen_Initialize+96   o
                                         ; UI_InitOptionsScreen+56   o
 Gfx_ScrollVRAMTransferParameters:   dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $6000  ; was: dword_11346
                                         ; DATA XREF: StoryScreen_FadeInAndStartScroll+1E   o

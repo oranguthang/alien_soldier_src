@@ -4712,8 +4712,8 @@
       "sha1": "be9e82c5c09058d7699751392df0f1fdaf005e34"
     },
     {
-      "name": "unused_1",
-      "path": "other/unused_1.bin",
+      "name": "title_screen_unreferenced",
+      "path": "other/title_screen_unreferenced.bin",
       "region": "other",
       "address": "0x945E",
       "end": "0x9478",

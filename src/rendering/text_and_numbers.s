@@ -369,31 +369,31 @@ Text_EightDigitPointsPlaceholder:   dc.b    1, 1, 1, 1, 1, 1, 1, 1, $1A, $1E, $1
                                         ; DATA XREF: Results_RenderAllStats+4C   o
                                         ; Results_RenderAllStats+74   o
 Text_GameStart: dc.b    $11, $B, $17, $F, 0, $1D, $1E, $B  ; was: byte_4698
-                                        ; DATA XREF: UI_RenderTitleOption1   o
+                                        ; DATA XREF: TitleScreen_QueueGameStart   o
                 dc.b    $1C, $1E, $FF
 Text_Options:   dc.b    $19, $1A, $1E, $13, $19, $18, $1D, $FF  ; was: byte_46A3
-                                        ; DATA XREF: UI_RenderTitleOption2   o
+                                        ; DATA XREF: TitleScreen_QueueOptions   o
                                         ; UI_InitOptionsScreen+BE   o
 Text_Password:  dc.b    $1A, $B, $1D, $1D, $21, $19, $1C, $E, $FF  ; was: byte_46AB
-                                        ; DATA XREF: UI_RenderTitleOption3   o
+                                        ; DATA XREF: TitleScreen_QueuePassword   o
 Text_TitleFeatureList:  dc.b    $20, $13, $1D, $1F, $B, $16, $1D, $12  ; was: byte_46B4
-                                        ; DATA XREF: UI_InitTitleScreen+CE   o
+                                        ; DATA XREF: TitleScreen_Initialize+CE   o
                 dc.b    $19, $D, $15, $29, 0, $1D, $1A, $F
                 dc.b    $F, $E, $1D, $12, $19, $D, $15, $29
                 dc.b    0, $1D, $19, $1F, $18, $E, $1D, $12
                 dc.b    $19, $D, $15, $29, $FF
 Text_MegaDriveTagline:  dc.b    $18, $19, $21, 0, $13, $1D, 0, $1E  ; was: byte_46D9
-                                        ; DATA XREF: UI_InitTitleScreen+E2   o
+                                        ; DATA XREF: TitleScreen_Initialize+E2   o
                 dc.b    $13, $17, $F, 0, $1E, $19, 0, $1E
                 dc.b    $12, $F, 0, 7, 9, 1, 1, 1
                 dc.b    0, $12, $F, $B, $1C, $1E, 0, $19
                 dc.b    $18, 0, $10, $13, $1C, $F, $29, $FF
 Text_ForMegaDriversCustom:  dc.b    $10, $19, $1C, 0, $17, $F, $11, $B  ; was: byte_4701
-                                        ; DATA XREF: UI_InitTitleScreen+F6   o
+                                        ; DATA XREF: TitleScreen_Initialize+F6   o
                 dc.b    $E, $1C, $13, $20, $F, $1C, $1D, 0
                 dc.b    $D, $1F, $1D, $1E, $19, $17, $FF
 Text_SegaCopyright1995: dc.b    0, $2F, $1D, $F, $11, $B, 0, $F  ; was: byte_4718
-                                        ; DATA XREF: UI_InitTitleScreen+10A   o
+                                        ; DATA XREF: TitleScreen_Initialize+10A   o
                 dc.b    $18, $1E, $F, $1C, $1A, $1C, $13, $1D
                 dc.b    $F, $1D, $26, $16, $1E, $E, $25, 2
                 dc.b    $A, $A, 6, $FF
