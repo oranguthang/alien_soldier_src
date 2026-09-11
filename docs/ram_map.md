@@ -182,6 +182,16 @@ alone does not yet prove the exact player-facing counting convention.
 | `StoryFontNextGlyphY` | `$FFFF0182` | The glyph streamer compares this threshold with `StoryFontScrollY` and subtracts `$10` after each queued glyph. |
 | `StoryFontVRAMAddress` | `$FFFF0184` | The glyph streamer advances this circular destination by `$80` and wraps from `$8000` to `$7000`. |
 
+## Reviewed ending-starfield and planet fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `EndingScrollPhase` | `$FFFF0110` | The ending planet and credits perspective effects integrate their signed fixed-point scroll position here before deriving symmetric H/V scroll bands. |
+| `EndingScrollRate` | `$FFFF0114` | Perspective states add `$80` acceleration to this longword and then add the resulting rate to `EndingScrollPhase`. |
+| `PlanetZoomFrameIndex` | `$FFFF0118` | The zoom loop advances this word up to `$3E` and uses it to select fixed-size entries from `Sprite_SharedGraphicsFrameTable`. |
+| `PlanetZoomAngle` | `$FFFF011A` | Planet zoom initializes this word to `$1A0`, subtracts four per frame, and passes it to the sine/cosine lookup. |
+| `PlanetZoomRadius` | `$FFFF011C` | Planet zoom initializes this fixed-point radius to `$200000` and subtracts `$8000` per frame until it reaches zero. |
+
 ## Reviewed VBlank transfer and VDP-shadow fields
 
 | Symbol | Address | Static evidence |

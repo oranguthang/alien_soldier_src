@@ -47,7 +47,7 @@ word_189DEC:    dc.w    $2810, $F00, $20E0              ; DATA XREF: Cutscene_Se
                 dc.w    $A810, $F00, $E020
 tiles_189E4C:   binclude "data/artcomp/tiles_189E4C.bin"
 tiles_189E4C_End:
-word_18B04A:    dc.w    $873, 0, $734                   ; DATA XREF: Cutscene_InitPlanetScene+EA   o
+word_18B04A:    dc.w    $873, 0, $734                   ; DATA XREF: EndingPlanet_Initialize+EA   o
                 dc.w    $800, $900, $BFF4
                 dc.w    $8E5, $100, $1742
                 dc.w    $826, $F00, $CFCC
@@ -69,7 +69,7 @@ word_18B04A:    dc.w    $873, 0, $734                   ; DATA XREF: Cutscene_In
                 dc.w    $83E, $F00, $EF12
                 dc.w    $816, $F00, $CFEA
                 dc.w    $8806, $F00, $CF0A
-word_18B0CE:    dc.w    $291B, 0, $AEB                  ; DATA XREF: Cutscene_InitPlanetScene+B6   o
+word_18B0CE:    dc.w    $291B, 0, $AEB                  ; DATA XREF: EndingPlanet_Initialize+B6   o
                 dc.w    $2900, $700, $F2E3
                 dc.w    $28F8, $D00, $E2DB
                 dc.w    $28F7, 0, $EAFB
@@ -86,7 +86,7 @@ word_18B10A:    dc.w    $891F, $500, $F8F8              ; DATA XREF: ROM:off_18B
 word_18B110:    dc.w    $8923, $500, $F8F8              ; DATA XREF: ROM:0018B140   o
 word_18B116:    dc.w    $8927, $500, $F8F8              ; DATA XREF: ROM:0018B144   o
                                         ; ROM:0018B148   o
-off_18B11C:     dc.w    word_18B0F8-*                   ; DATA XREF: Stage_Stage18Init+12   o
+off_18B11C:     dc.w    word_18B0F8-*                   ; DATA XREF: EndingPlanet_InitializeBurst+12   o
                 dc.w    5
                 dc.w    word_18B0FE-*
                 dc.w    5
@@ -102,7 +102,7 @@ off_18B11C:     dc.w    word_18B0F8-*                   ; DATA XREF: Stage_Stage
                 dc.w    5
                 dc.w    word_18B104-*
                 dc.w    $FF
-off_18B13C:     dc.w    word_18B10A-*                   ; DATA XREF: Effect_CreatePlanetDebris+E   o
+off_18B13C:     dc.w    word_18B10A-*                   ; DATA XREF: EndingPlanet_CreateDebris+E   o
                 dc.w    2
                 dc.w    word_18B110-*
                 dc.w    2

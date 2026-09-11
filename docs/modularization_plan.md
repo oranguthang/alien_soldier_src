@@ -97,7 +97,7 @@ data are checked.
 | `0x00588C` | `StoryText_Dispatch` | scrolling story rows and Japanese-font streaming |
 | `0x007644` | `Cutscene_UpdateStarRowPositions` | sprite-grid rendering and pattern-dissolve effects |
 | `0x007B30` | `EndingSequence_Initialize` | ending credits and credits-to-planet dispatch |
-| `0x007D68` | `Effect_InitializeStarfield` | starfield/planet effects |
+| `0x007D68` | `EndingStarfield_Initialize` | ending starfield and planet sequence |
 | `0x008618` | `Math_LookupSineCosinePair` | sine/cosine lookup helpers and table |
 | `0x0086F0` | `Cutscene_ShipObjectDispatcher` | ship object family; continues past old file boundary |
 

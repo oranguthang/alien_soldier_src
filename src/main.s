@@ -38,7 +38,7 @@
                 include "src/cutscenes/story_text.s"
                 include "src/cutscenes/sprite_grid_and_pattern_effects.s"
                 include "src/cutscenes/ending_sequence_credits.s"
-                include "src/cutscenes/planet_effects.s"
+                include "src/cutscenes/ending_starfield_and_planet.s"
                 include "src/math/sine.s"
                 include "src/cutscenes/ship_sequence.s"
                 include "src/ui/title_screen.s"

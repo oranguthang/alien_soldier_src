@@ -73,15 +73,15 @@ EndingSequence_States:  dc.w    EndingSequence_FadeInCredits-*  ; DATA XREF: End
                 dc.w    EndingSequence_HoldCredits-*
                 dc.w    EndingSequence_FadeOutCredits-*
                 dc.w    EndingSequence_WaitStarfieldDelay-*
-                dc.w    Effect_InitializeStarfield-*
-                dc.w    Effect_InitializeStarfield_WaitLoop-*
-                dc.w    Cutscene_SegaScreenFadeOut-*
-                dc.w    Cutscene_InitPlanetScene-*
-                dc.w    Cutscene_PlanetSequenceCtrl-*
-                dc.w    Cutscene_PlanetFadeOut-*
-                dc.w    Cutscene_PlanetTransition-*
-                dc.w    Cutscene_PlanetZoomMainLoop-*
-                dc.w    Cutscene_PlanetZoomFadeOut-*
+                dc.w    EndingStarfield_Initialize-*
+                dc.w    EndingStarfield_UpdateAndHold-*
+                dc.w    EndingStarfield_FadeOutAndPreparePlanet-*
+                dc.w    EndingPlanet_Initialize-*
+                dc.w    EndingPlanet_ShowAndDissolve-*
+                dc.w    EndingPlanet_HoldDissolved-*
+                dc.w    EndingPlanet_RevealPattern-*
+                dc.w    EndingPlanet_RunZoom-*
+                dc.w    EndingPlanet_FadeOutZoom-*
 
 ; Advances the credits palette fade every eighth frame until step zero
 EndingSequence_FadeInCredits:                           ; DATA XREF: ROM:EndingSequence_States   o  ; was: sub_7C50
@@ -111,7 +111,7 @@ EndingSequence_HoldCredits:                             ; DATA XREF: ROM:00007C3
 ; End of function EndingSequence_HoldCredits
 ; Alternates three accent palette words used throughout the ending sequence
 EndingSequence_AnimateAccentColors:                     ; CODE XREF: EndingSequence_HoldCredits   p  ; was: sub_7CAC
-                                        ; sub_7D68:loc_7E48   p
+                                        ; EndingStarfield_Initialize:EndingStarfield_UpdateAndHold   p
                 lea     (word_FFE366).w,a1
                 move.w  (word_FFA280).w,d0
                 andi.w  #1,d0

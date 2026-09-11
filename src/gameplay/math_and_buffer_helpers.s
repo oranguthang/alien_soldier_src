@@ -101,7 +101,7 @@ Data_CheckAndResetEntry_Return:                         ; CODE XREF: Data_CheckA
 ; End of function Data_CheckAndResetEntry
 ; Clears the complete entity object pool
 Sys_ClearEntityObjectPool:                              ; CODE XREF: EndingSequence_Initialize+44   p  ; was: sub_1B746
-                                        ; Cutscene_SegaScreenFadeOut+44   p
+                                        ; EndingStarfield_FadeOutAndPreparePlanet+44   p
                 moveq   #0,d0
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
 Sys_ClearEntityObjectPool_Loop:                         ; CODE XREF: Sys_ClearEntityObjectPool+3A   j  ; was: loc_1B74C

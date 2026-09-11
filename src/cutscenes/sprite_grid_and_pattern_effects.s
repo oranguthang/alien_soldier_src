@@ -30,8 +30,8 @@ Cutscene_CopyPlanetGridCenter:                          ; CODE XREF: Cutscene_Er
                 move.w  (word_FFC9F0).w,(SpriteGridCenterX).l
 ; End of function Cutscene_CopyPlanetGridCenter
 ; Builds a centered planet sprite grid and appends it to the OAM buffer
-Cutscene_RenderPlanetSpriteGrid:                        ; CODE XREF: Cutscene_PlanetSequenceCtrl+C   p  ; was: sub_769A
-                                        ; Cutscene_PlanetTransition+8   p
+Cutscene_RenderPlanetSpriteGrid:                        ; CODE XREF: EndingPlanet_ShowAndDissolve+C   p  ; was: sub_769A
+                                        ; EndingPlanet_RevealPattern+8   p
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1
                 clr.w   d5

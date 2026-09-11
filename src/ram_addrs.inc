@@ -42,11 +42,11 @@ StoryTitleExpandSpan    equ     $FFFF0108               ; was: word_FF0108
 StoryTitleGlyphsLeft    equ     $FFFF010A               ; was: word_FF010A
 CutscenePaletteStep     equ     $FFFF010C               ; was: word_FF010C
 word_FF010E             equ     $FFFF010E
-dword_FF0110            equ     $FFFF0110
-dword_FF0114            equ     $FFFF0114
-word_FF0118             equ     $FFFF0118
-word_FF011A             equ     $FFFF011A
-dword_FF011C            equ     $FFFF011C
+EndingScrollPhase       equ     $FFFF0110               ; was: dword_FF0110
+EndingScrollRate        equ     $FFFF0114               ; was: dword_FF0114
+PlanetZoomFrameIndex    equ     $FFFF0118               ; was: word_FF0118
+PlanetZoomAngle         equ     $FFFF011A               ; was: word_FF011A
+PlanetZoomRadius        equ     $FFFF011C               ; was: dword_FF011C
 StoryFontGlyphCursor    equ     $FFFF0120               ; was: dword_FF0120
 StoryFontState          equ     $FFFF0126               ; was: word_FF0126
 dword_FF0128            equ     $FFFF0128

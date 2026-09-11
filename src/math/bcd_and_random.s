@@ -27,7 +27,7 @@ Numeric_NoOp:                                           ; was: nullsub_14
 
 ; Advances the shared pseudo-random state and returns a mixed result in d0
 RandomNumber:                                           ; CODE XREF: Sys_VBlankHandler+52   p
-                                        ; sub_7D68:loc_7DEA   p
+                                        ; EndingStarfield_Initialize:EndingStarfield_InitializeNextParticle   p
                 move.l  d1,-(sp)
                 move.l  (RandomNumberState).w,d1
                 bne.s   RandomNumber_AdvanceState

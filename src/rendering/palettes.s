@@ -39,7 +39,7 @@ ResultsScreenPaletteOffsetList: dc.w    $EE, $F4, $FA, $100, 0  ; was: word_B96E
 StageTransitionPaletteOffsetLists:  dc.w    $26A, 0, $2F6, $336, 0  ; was: word_B978
                                         ; DATA XREF: Stage_InitializeTransition+16   o
 CreditsAndPlanetPaletteOffsetList:  dc.w    $B14, $B54, 0  ; DATA XREF: EndingSequence_Initialize+5E   o  ; was: word_B982
-                                        ; Cutscene_InitPlanetScene+20   o
+                                        ; EndingPlanet_Initialize+20   o
 EarlyStagePaletteOffsetList:    dc.w    $34C, 0         ; DATA XREF: ROM:stru_127A8   o  ; was: word_B988
                                         ; ROM:stru_127C6   o
 ShellshogunStagePaletteOffsetList:  dc.w    $34C, $38E, 0  ; DATA XREF: Camera_ShellshogunBossInit+38   o  ; was: word_B98C

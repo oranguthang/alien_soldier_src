@@ -3341,3 +3341,26 @@ from 12,406 to 12,438; 50 static audit records raise the total from 8,989 to
 9,039. The enforced address-derived ceiling falls from 3,635 to 3,603. Both
 modules remain in the normal size band and the extracted-asset manifest retains
 the original ranges, sizes, and hashes under their semantic paths.
+
+The ending-starfield and planet package audits all 52 ROM definitions in the
+644-line `cutscenes/ending_starfield_and_planet.s` range and promotes five
+shared ending-state RAM fields. The filename now describes the complete
+sequence: four interleaved star-particle banks, the transition-buffer setup,
+planet reveal and dissolve states, the secondary zoom object, randomized burst
+objects, graphics-frame animation, and the symmetric perspective-scroll tail.
+
+Static control and data flow correct several generated claims. The starfield
+exit is not Sega-screen-specific; it fades the ending stars and prepares the
+planet buffers. The former planet palette dispatcher only changes the secondary
+object's vertical velocity. The alleged stage-18 initializer creates 32 burst
+objects around the ending planet, while its alleged offscreen cleanup tests an
+object lifetime field rather than coordinates. The supposed 3D-rotation
+routine integrates an accelerating scroll phase and writes mirrored horizontal
+and vertical scroll bands; it performs no coordinate rotation.
+
+This package replaces 25 live address-derived ROM definitions and records all
+52 ROM definitions plus five RAM fields in the static name audit. Twenty-five
+new provenance mappings raise the total from 12,438 to 12,463; 57 audit records
+raise the total from 9,039 to 9,096. The enforced address-derived ceiling falls
+from 3,603 to 3,578. Module count remains 347 and the reconstructed Japanese ROM
+remains byte-identical.

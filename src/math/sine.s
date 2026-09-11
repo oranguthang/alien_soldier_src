@@ -1,6 +1,6 @@
 ; In: d0.w = even angle-table offset. Out: d0.w = cosine, d1.w = sine
-Math_LookupSineCosinePair:                              ; CODE XREF: Effect_InitializeStarfield+98   p  ; was: sub_8618
-                                        ; Cutscene_PlanetZoomInStep+24   p
+Math_LookupSineCosinePair:                              ; CODE XREF: EndingStarfield_Initialize+98   p  ; was: sub_8618
+                                        ; EndingPlanet_ApproachCenter+24   p
                 lea     (Math_QuarterSineTable).l,a0
                 move.w  (a0,d0.w),d1
                 addi.w  #$80,d0
@@ -10,8 +10,8 @@ Math_LookupSineCosinePair:                              ; CODE XREF: Effect_Init
 ; End of function Math_LookupSineCosinePair
 ; ---------------------------------------------------------------------------
 Sprite_SharedGraphicsFrameTable:    dc.w    $8000       ; field_0  ; was: stru_8630
-                                        ; DATA XREF: Cutscene_InitPlanetScene+7C   o
-                                        ; Sprite_SetGraphicsPointer+8   o
+                                        ; DATA XREF: EndingPlanet_Initialize+7C   o
+                                        ; Sprite_SelectSharedGraphicsFrame+8   o
                 dc.l    $F00F0F0                        ; field_2
                 dc.w    $8010                           ; field_0
                 dc.l    $F00F0F0                        ; field_2

@@ -408,7 +408,7 @@ Boss_SnakeApplyAnimationFrame:                          ; CODE XREF: Boss_SnakeA
                 add.w   d0,d0
                 move.w  Boss_SnakeAnimationFrameSequence(pc,d0.w),d1
                 add.w   d1,d1
-                jsr     (Sprite_SetGraphicsPointer).l
+                jsr     (Sprite_SelectSharedGraphicsFrame).l
 Boss_SnakeAdvanceAnimationReturn:                       ; CODE XREF: Boss_SnakeAdvanceAnimation+8   j  ; was: locret_40CAE
                 rts
 ; End of function Boss_SnakeAdvanceAnimation

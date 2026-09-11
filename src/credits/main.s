@@ -43,8 +43,8 @@ Credits_InitXiTiger_ClearTilemapBufferLoop:             ; CODE XREF: Credits_Ini
                 move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
-                clr.l   (dword_FF0110).l
-                move.l  #$1000,(dword_FF0114).l
+                clr.l   (EndingScrollPhase).l
+                move.l  #$1000,(EndingScrollRate).l
                 move.l  #$FFF80000,d0
                 lea     (HScrollBuffer).w,a0
                 move.w  #$1B,d7
@@ -225,9 +225,9 @@ Credits_CyclePaletteColors:                             ; CODE XREF: Credits_Scr
 ; Updates horizontal scroll tables with 3D rotation effect
 Credits_UpdateScrollTables:                             ; CODE XREF: Credits_FadeInState   p  ; was: sub_20CCA
                                         ; Credits_ScrollWithColorCycle+A   p
-                move.l  (dword_FF0114).l,d0
-                add.l   d0,(dword_FF0110).l
-                move.l  (dword_FF0110).l,d1
+                move.l  (EndingScrollRate).l,d0
+                add.l   d0,(EndingScrollPhase).l
+                move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d3
                 asr.l   #2,d3
                 move.l  d1,d0
@@ -243,7 +243,7 @@ Credits_UpdateScrollTables_UpperForwardLoop:            ; CODE XREF: Credits_Upd
                 sub.l   d1,d0
                 adda.w  #$20,a0                         ; ' '
                 dbf     d7,Credits_UpdateScrollTables_UpperForwardLoop
-                move.l  (dword_FF0110).l,d1
+                move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d0
                 asr.l   #1,d0
                 lea     (word_FFE5A2).w,a0
@@ -256,7 +256,7 @@ Credits_UpdateScrollTables_UpperReverseLoop:            ; CODE XREF: Credits_Upd
                 add.l   d1,d0
                 suba.w  #$20,a0                         ; ' '
                 dbf     d7,Credits_UpdateScrollTables_UpperReverseLoop
-                move.l  (dword_FF0110).l,d1
+                move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d3
                 asr.l   #1,d3
                 move.l  d1,d0
@@ -272,7 +272,7 @@ Credits_UpdateScrollTables_LowerForwardLoop:            ; CODE XREF: Credits_Upd
                 sub.l   d1,d0
                 adda.w  #4,a0
                 dbf     d7,Credits_UpdateScrollTables_LowerForwardLoop
-                move.l  (dword_FF0110).l,d1
+                move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d0
                 asl.l   #1,d1
                 lea     (word_FFEC26).w,a0

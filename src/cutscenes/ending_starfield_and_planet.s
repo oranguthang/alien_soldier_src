@@ -1,5 +1,5 @@
-; Initializes the ending starfield with 59 objects at randomized positions
-Effect_InitializeStarfield:                             ; DATA XREF: ROM:00007C3E   o  ; was: sub_7D68
+; Completes the fade-in, initializes 59 star sprites and four particle banks
+EndingStarfield_Initialize:                             ; DATA XREF: ROM:00007C3E   o  ; was: sub_7D68
                 move.w  (word_FFA280).w,d0
                 andi.w  #7,d0
                 bne.w   Cutscene_Return
@@ -13,21 +13,21 @@ Effect_InitializeStarfield:                             ; DATA XREF: ROM:00007C3
                 bne.w   Cutscene_Return
                 lea     (word_FFC680).w,a5
                 move.w  #$3A,d7                         ; ':'
-loc_7DA4:                                               ; CODE XREF: Effect_InitializeStarfield+5C   j
+EndingStarfield_InitializeNextSprite:                   ; CODE XREF: EndingStarfield_Initialize+5C   j  ; was: loc_7DA4
                 move.w  #$8C00,2(a5)
                 move.w  #0,8(a5)
                 move.w  #$FCFC,$A(a5)
                 move.w  #$10,(a5)
                 move.w  #$6364,$E(a5)
                 adda.w  #$60,a5                         ; '`'
-                dbf     d7,loc_7DA4
+                dbf     d7,EndingStarfield_InitializeNextSprite
                 lea     (word_FF1000).l,a2
                 lea     (word_FF1400).l,a3
                 lea     (dword_FF1800).l,a1
                 lea     (dword_FF1C00).l,a4
                 lea     (dword_FF2000).l,a5
                 move.w  #$FF,d7
-loc_7DEA:                                               ; CODE XREF: Effect_InitializeStarfield+D0   j
+EndingStarfield_InitializeNextParticle:                 ; CODE XREF: EndingStarfield_Initialize+D0   j  ; was: loc_7DEA
                 jsr     (RandomNumber).l
                 move.w  d0,d2
                 andi.w  #$7F,d2
@@ -55,22 +55,22 @@ loc_7DEA:                                               ; CODE XREF: Effect_Init
                 swap    d0
                 move.l  d0,$C00(a1)
                 clr.l   (a1)+
-                dbf     d7,loc_7DEA
+                dbf     d7,EndingStarfield_InitializeNextParticle
                 move.w  #$1A0,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
-; Animates credits colors and updates starfield
-Effect_InitializeStarfield_WaitLoop:                    ; DATA XREF: ROM:00007C40   o  ; was: loc_7E48
+; Updates the starfield and accent colors during its $1A0-frame hold
+EndingStarfield_UpdateAndHold:                          ; DATA XREF: ROM:00007C40   o  ; was: loc_7E48
                 bsr.w   EndingSequence_AnimateAccentColors
-                bsr.w   Effect_UpdateStarfield
+                bsr.w   EndingStarfield_Update
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
                 clr.w   (CutscenePaletteStep).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Effect_InitializeStarfield
-; Updates starfield sprite positions using velocity buffers
-Effect_UpdateStarfield:                                 ; CODE XREF: Effect_InitializeStarfield+E4   p  ; was: sub_7E66
-                                        ; sub_7F06   p
+; End of function EndingStarfield_Initialize
+; Integrates one of four particle banks and publishes it to 59 star sprites
+EndingStarfield_Update:                                 ; CODE XREF: EndingStarfield_Initialize+E4   p  ; was: sub_7E66
+                                        ; EndingStarfield_FadeOutAndPreparePlanet   p
                 lea     (word_FF1000).l,a2
                 lea     (word_FF1400).l,a3
                 lea     (dword_FF1800).l,a1
@@ -85,14 +85,14 @@ Effect_UpdateStarfield:                                 ; CODE XREF: Effect_Init
                 adda.w  d0,a4
                 adda.w  d0,a5
                 move.w  #$3A,d7                         ; ':'
-loc_7E9C:                                               ; CODE XREF: Effect_UpdateStarfield+44   j
+EndingStarfield_IntegrateNextParticle:                  ; CODE XREF: EndingStarfield_Update+44   j  ; was: loc_7E9C
                 move.l  (a4)+,d0
                 add.l   d0,(a2)+
                 move.l  (a5)+,d0
                 add.l   d0,(a3)+
                 move.l  $C00(a1),d0
                 add.l   d0,(a1)+
-                dbf     d7,loc_7E9C
+                dbf     d7,EndingStarfield_IntegrateNextParticle
                 lea     (word_FF1000).l,a2
                 lea     (word_FF1400).l,a3
                 lea     (dword_FF1800).l,a1
@@ -104,7 +104,7 @@ loc_7E9C:                                               ; CODE XREF: Effect_Upda
                 adda.w  d0,a1
                 lea     (word_FFC680).w,a5
                 move.w  #$3A,d7                         ; ':'
-loc_7ED8:                                               ; CODE XREF: Effect_UpdateStarfield+9A   j
+EndingStarfield_UpdateNextSprite:                       ; CODE XREF: EndingStarfield_Update+9A   j  ; was: loc_7ED8
                 move.l  (a2)+,$10(a5)
                 move.l  (a3)+,$14(a5)
                 move.w  (a1),d0
@@ -112,18 +112,18 @@ loc_7ED8:                                               ; CODE XREF: Effect_Upda
                 andi.w  #$FFF0,d0
                 lsr.w   #4,d0
                 cmpi.w  #3,d0
-                bcs.s   loc_7EF4
+                bcs.s   EndingStarfield_StoreSpriteFrame
                 move.w  #2,d0
-loc_7EF4:                                               ; CODE XREF: Effect_UpdateStarfield+88   j
+EndingStarfield_StoreSpriteFrame:                       ; CODE XREF: EndingStarfield_Update+88   j  ; was: loc_7EF4
                 addi.w  #$6364,d0
                 move.w  d0,$E(a5)
                 adda.w  #$60,a5                         ; '`'
-                dbf     d7,loc_7ED8
+                dbf     d7,EndingStarfield_UpdateNextSprite
                 rts
-; End of function Effect_UpdateStarfield
-; Fades out Sega screen and initializes scrolling background system
-Cutscene_SegaScreenFadeOut:                             ; DATA XREF: ROM:00007C42   o  ; was: sub_7F06
-                bsr.w   Effect_UpdateStarfield
+; End of function EndingStarfield_Update
+; Fades out the starfield, clears its objects, and seeds planet-background loading
+EndingStarfield_FadeOutAndPreparePlanet:                ; DATA XREF: ROM:00007C42   o  ; was: sub_7F06
+                bsr.w   EndingStarfield_Update
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Cutscene_Return
@@ -145,14 +145,14 @@ Cutscene_SegaScreenFadeOut:                             ; DATA XREF: ROM:00007C4
                 lea     (dword_FF4000).l,a0
                 move.l  #$80008000,d1
                 move.w  #$7FF,d0
-loc_7F7A:                                               ; CODE XREF: Cutscene_SegaScreenFadeOut+76   j
+EndingPlanet_SetNextBufferHighBits:                     ; CODE XREF: EndingStarfield_FadeOutAndPreparePlanet+76   j  ; was: loc_7F7A
                 or.l    d1,(a0)+
-                dbf     d0,loc_7F7A
+                dbf     d0,EndingPlanet_SetNextBufferHighBits
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_SegaScreenFadeOut
-; Initializes planet cutscene with scrolling background and palettes
-Cutscene_InitPlanetScene:                               ; DATA XREF: ROM:00007C44   o  ; was: sub_7F86
+; End of function EndingStarfield_FadeOutAndPreparePlanet
+; Finishes background loading and configures the ending planet scene
+EndingPlanet_Initialize:                                ; DATA XREF: ROM:00007C44   o  ; was: sub_7F86
                 jsr     (Gfx_RenderScrollingBackground).l
                 jsr     (Gfx_RenderScrollingBackground).l
                 jsr     (Gfx_RenderScrollingBackground).l
@@ -164,20 +164,20 @@ Cutscene_InitPlanetScene:                               ; DATA XREF: ROM:00007C4
                 move.w  #$FFF2,(CutscenePaletteStep).l
                 move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95A).w
-                clr.l   (dword_FF0110).l
-                clr.l   (dword_FF0114).l
+                clr.l   (EndingScrollPhase).l
+                clr.l   (EndingScrollRate).l
                 moveq   #0,d0
                 lea     (HScrollBuffer).w,a0
                 move.w  #$1B,d7
-loc_7FDC:                                               ; CODE XREF: Cutscene_InitPlanetScene+5C   j
+EndingPlanet_ClearNextHScrollBlock:                     ; CODE XREF: EndingPlanet_Initialize+5C   j  ; was: loc_7FDC
                 move.l  d0,(a0)
                 adda.w  #$20,a0                         ; ' '
-                dbf     d7,loc_7FDC
+                dbf     d7,EndingPlanet_ClearNextHScrollBlock
                 lea     (VScrollBuffer).w,a0
                 move.w  #9,d7
-loc_7FEE:                                               ; CODE XREF: Cutscene_InitPlanetScene+6A   j
+EndingPlanet_ClearNextVScrollPair:                      ; CODE XREF: EndingPlanet_Initialize+6A   j  ; was: loc_7FEE
                 move.l  d0,(a0)+
-                dbf     d7,loc_7FEE
+                dbf     d7,EndingPlanet_ClearNextVScrollPair
                 lea     (Entity_ObjectPool).w,a5
                 move.w  #$CC00,word_FFC622-Entity_ObjectPool(a5)
                 move.w  #$10,(a5)
@@ -221,14 +221,14 @@ loc_7FEE:                                               ; CODE XREF: Cutscene_In
                 jsr     Cutscene_FillPlanetPattern(pc)  ; (pc)
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                bsr.w   Cutscene_ResetPlanetFade
+                bsr.w   EndingPlanet_StartFadeIn
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_InitPlanetScene
-; Main controller for planet cutscene sequence with fade and scroll
-Cutscene_PlanetSequenceCtrl:                            ; DATA XREF: ROM:00007C46   o  ; was: sub_80F8
-                bsr.w   Cutscene_PlanetFadeInStep
-                bsr.w   Cutscene_PlanetPaletteUpdate
+; End of function EndingPlanet_Initialize
+; Fades in the planet, animates its vertical motion, then dissolves its pattern
+EndingPlanet_ShowAndDissolve:                           ; DATA XREF: ROM:00007C46   o  ; was: sub_80F8
+                bsr.w   EndingPlanet_UpdateFadeIn
+                bsr.w   EndingPlanet_DispatchVerticalMotion
                 bsr.w   EndingSequence_AnimateAccentColors
                 bsr.w   Cutscene_RenderPlanetSpriteGrid
                 tst.w   (CutscenePaletteStep).l
@@ -239,51 +239,51 @@ Cutscene_PlanetSequenceCtrl:                            ; DATA XREF: ROM:00007C4
                 move.w  #$100,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_PlanetSequenceCtrl
-; Resets planet fade value to -14 and continues fade logic
-Cutscene_ResetPlanetFade:                               ; CODE XREF: Cutscene_InitPlanetScene+168   p  ; was: sub_8130
+; End of function EndingPlanet_ShowAndDissolve
+; Starts the planet fade at step -14 and immediately applies that step
+EndingPlanet_StartFadeIn:                               ; CODE XREF: EndingPlanet_Initialize+168   p  ; was: sub_8130
                 move.w  #$FFF2,(CutscenePaletteStep).l
-                bra.s   loc_8156
-; End of function Cutscene_ResetPlanetFade
-; Gradually fades in planet scene palette every 8 frames
-Cutscene_PlanetFadeInStep:                              ; CODE XREF: Cutscene_PlanetSequenceCtrl   p  ; was: sub_813A
+                bra.s   EndingPlanet_ApplyFadeStep
+; End of function EndingPlanet_StartFadeIn
+; Advances and applies the planet fade every eighth frame until step zero
+EndingPlanet_UpdateFadeIn:                              ; CODE XREF: EndingPlanet_ShowAndDissolve   p  ; was: sub_813A
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Cutscene_Return
                 tst.w   (CutscenePaletteStep).l
                 beq.w   Cutscene_Return
                 addq.w  #2,(CutscenePaletteStep).l
-loc_8156:                                               ; CODE XREF: Cutscene_ResetPlanetFade+8   j
+EndingPlanet_ApplyFadeStep:                             ; CODE XREF: EndingPlanet_StartFadeIn+8   j  ; was: loc_8156
                 move.w  (CutscenePaletteStep).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
-; End of function Cutscene_PlanetFadeInStep
-; Planet fade out effect
-Cutscene_PlanetFadeOut:                                 ; DATA XREF: ROM:00007C48   o  ; was: sub_816E
-                bsr.w   Cutscene_PlanetPaletteUpdate
+; End of function EndingPlanet_UpdateFadeIn
+; Holds the dissolved planet while its timer and vertical-motion state continue
+EndingPlanet_HoldDissolved:                             ; DATA XREF: ROM:00007C48   o  ; was: sub_816E
+                bsr.w   EndingPlanet_DispatchVerticalMotion
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_PlanetFadeOut
-; Transition to next stage
-Cutscene_PlanetTransition:                              ; DATA XREF: ROM:00007C4A   o  ; was: sub_8182
-                bsr.w   Cutscene_PlanetPaletteUpdate
+; End of function EndingPlanet_HoldDissolved
+; Restores the planet pattern, hides the secondary object, and starts the zoom delay
+EndingPlanet_RevealPattern:                             ; DATA XREF: ROM:00007C4A   o  ; was: sub_8182
+                bsr.w   EndingPlanet_DispatchVerticalMotion
                 bsr.w   EndingSequence_AnimateAccentColors
                 bsr.w   Cutscene_RenderPlanetSpriteGrid
                 bsr.w   Cutscene_RevealPlanetPatternStep
                 tst.w   (PatternDissolveStep).l
                 bne.w   Cutscene_Return
                 clr.w   (word_FFC6E2).w
-                clr.w   (word_FF0118).l
+                clr.w   (PlanetZoomFrameIndex).l
                 move.w  #$140,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_PlanetTransition
-; Sets sprite graphics pointer from table
-Sprite_SetGraphicsPointer:                              ; CODE XREF: Cutscene_PlanetZoomMainLoop+1A   p  ; was: sub_81B4
+; End of function EndingPlanet_RevealPattern
+; Selects a fixed-size entry in the shared sprite graphics-frame table
+Sprite_SelectSharedGraphicsFrame:                       ; CODE XREF: EndingPlanet_RunZoom+1A   p  ; was: sub_81B4
                                         ; Boss_SnakeAdvanceAnimation+26   p
                 moveq   #0,d0
                 move.w  d1,d0
@@ -292,80 +292,80 @@ Sprite_SetGraphicsPointer:                              ; CODE XREF: Cutscene_Pl
                 addi.l  #Sprite_SharedGraphicsFrameTable,d0
                 move.l  d0,8(a5)
                 rts
-; End of function Sprite_SetGraphicsPointer
-; Updates planet palette
-Cutscene_PlanetPaletteUpdate:                           ; CODE XREF: Cutscene_PlanetSequenceCtrl+4   p  ; was: sub_81C8
-                                        ; sub_816E   p
+; End of function Sprite_SelectSharedGraphicsFrame
+; Dispatches the secondary planet object's vertical-velocity state
+EndingPlanet_DispatchVerticalMotion:                    ; CODE XREF: EndingPlanet_ShowAndDissolve+4   p  ; was: sub_81C8
+                                        ; EndingPlanet_HoldDissolved   p
                 lea     (word_FFC680).w,a5
                 move.w  word_FFC684-word_FFC680(a5),d0
-                lea     off_81D8(pc,d0.w),a0
+                lea     EndingPlanet_VerticalMotionStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Cutscene_PlanetPaletteUpdate
+; End of function EndingPlanet_DispatchVerticalMotion
 ; ---------------------------------------------------------------------------
-off_81D8:       dc.w    Cutscene_PlanetStarfield-*      ; DATA XREF: Cutscene_PlanetPaletteUpdate+8   o
-                dc.w    Cutscene_PlanetShipApproach-*
-                dc.w    Cutscene_PlanetTextDisplay-*
+EndingPlanet_VerticalMotionStates:  dc.w    EndingPlanet_StartRising-*  ; DATA XREF: EndingPlanet_DispatchVerticalMotion+8   o  ; was: off_81D8
+                dc.w    EndingPlanet_AccelerateDownward-*
+                dc.w    EndingPlanet_AccelerateUpward-*
 
-; Starfield background effect
-Cutscene_PlanetStarfield:                               ; DATA XREF: ROM:off_81D8   o  ; was: sub_81DE
+; Starts the secondary planet object with upward velocity
+EndingPlanet_StartRising:                               ; DATA XREF: ROM:EndingPlanet_VerticalMotionStates   o  ; was: sub_81DE
                 move.l  #$FFFFC000,$1C(a5)
                 addq.w  #2,4(a5)
                 rts
-; End of function Cutscene_PlanetStarfield
-; Ship approaching planet
-Cutscene_PlanetShipApproach:                            ; DATA XREF: ROM:000081DA   o  ; was: sub_81EC
+; End of function EndingPlanet_StartRising
+; Accelerates its vertical velocity downward until it reaches `$4000`
+EndingPlanet_AccelerateDownward:                        ; DATA XREF: ROM:000081DA   o  ; was: sub_81EC
                 addi.l  #$200,$1C(a5)
                 cmpi.l  #$4000,$1C(a5)
                 bne.w   Cutscene_Return
                 addq.w  #2,4(a5)
                 rts
-; End of function Cutscene_PlanetShipApproach
-; Text display handler
-Cutscene_PlanetTextDisplay:                             ; DATA XREF: ROM:000081DC   o  ; was: sub_8206
+; End of function EndingPlanet_AccelerateDownward
+; Accelerates its vertical velocity upward and loops the motion state
+EndingPlanet_AccelerateUpward:                          ; DATA XREF: ROM:000081DC   o  ; was: sub_8206
                 subi.l  #$200,$1C(a5)
                 cmpi.l  #$FFFFC000,$1C(a5)
                 bne.w   Cutscene_Return
                 subq.w  #2,4(a5)
                 rts
-; End of function Cutscene_PlanetTextDisplay
-; Dispatches to planet sprite handler based on state value
-Cutscene_PlanetSpriteHandler:                           ; CODE XREF: Cutscene_PlanetZoomMainLoop+8   p  ; was: sub_8220
+; End of function EndingPlanet_AccelerateUpward
+; Dispatches the primary planet object's five zoom states
+EndingPlanet_DispatchZoomObject:                        ; CODE XREF: EndingPlanet_RunZoom+8   p  ; was: sub_8220
                 lea     (Entity_ObjectPool).w,a5
                 move.w  word_FFC624-Entity_ObjectPool(a5),d0
-                lea     off_8230(pc,d0.w),a0
+                lea     EndingPlanet_ZoomObjectStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Cutscene_PlanetSpriteHandler
+; End of function EndingPlanet_DispatchZoomObject
 ; ---------------------------------------------------------------------------
-off_8230:       dc.w    Cutscene_InitPlanetZoom-*       ; DATA XREF: Cutscene_PlanetSpriteHandler+8   o
-                dc.w    Cutscene_PlanetZoomInStep-*
-                dc.w    Cutscene_PlanetZoomPause-*
-                dc.w    Cutscene_PlanetZoomComplete-*
-                dc.w    nullsub_19-*
+EndingPlanet_ZoomObjectStates:  dc.w    EndingPlanet_StartZoom-*  ; DATA XREF: EndingPlanet_DispatchZoomObject+8   o  ; was: off_8230
+                dc.w    EndingPlanet_ApproachCenter-*
+                dc.w    EndingPlanet_PauseAtCenter-*
+                dc.w    EndingPlanet_ExitScreen-*
+                dc.w    EndingPlanet_ZoomObjectComplete-*
 
-; Initializes planet zoom effect with sound and stage setup
-Cutscene_InitPlanetZoom:                                ; DATA XREF: ROM:off_8230   o  ; was: sub_823A
+; Initializes the zoom orbit, palette step, sound, and 32-object burst
+EndingPlanet_StartZoom:                                 ; DATA XREF: ROM:EndingPlanet_ZoomObjectStates   o  ; was: sub_823A
                 andi.w  #$7FFF,(word_FFC682).w
                 ori.w   #$8000,2(a5)
-                move.w  #$1A0,(word_FF011A).l
-                move.l  #$200000,(dword_FF011C).l
+                move.w  #$1A0,(PlanetZoomAngle).l
+                move.l  #$200000,(PlanetZoomRadius).l
                 move.b  #$30,d0                         ; '0'
                 jsr     (Sound_PlaySFX).l
                 move.w  #$10,(CutscenePaletteStep).l
                 addq.w  #2,4(a5)
-                bra.w   Stage_Stage18Init
-; End of function Cutscene_InitPlanetZoom
-; Zooms planet sprite toward center with scaling and velocity
-Cutscene_PlanetZoomInStep:                              ; DATA XREF: ROM:00008232   o  ; was: sub_8272
-                bsr.w   Cutscene_AnimatePlanetSprite
-                bsr.w   Cutscene_PlanetZoomProgress
-                bsr.w   Cutscene_PlanetFadeOutStep
-                subi.l  #$8000,(dword_FF011C).l
-                subi.w  #4,(word_FF011A).l
-                move.w  (word_FF011A).l,d0
+                bra.w   EndingPlanet_InitializeBurst
+; End of function EndingPlanet_StartZoom
+; Shrinks the orbit radius to zero while updating velocity from sine/cosine
+EndingPlanet_ApproachCenter:                            ; DATA XREF: ROM:00008232   o  ; was: sub_8272
+                bsr.w   EndingPlanet_AnimateTileAttributes
+                bsr.w   EndingPlanet_AdvanceFrameIndex
+                bsr.w   EndingPlanet_UpdateZoomPalette
+                subi.l  #$8000,(PlanetZoomRadius).l
+                subi.w  #4,(PlanetZoomAngle).l
+                move.w  (PlanetZoomAngle).l,d0
                 bsr.w   Math_LookupSineCosinePair
-                move.l  (dword_FF011C).l,d2
+                move.l  (PlanetZoomRadius).l,d2
                 asl.l   #8,d2
                 swap    d2
                 muls.w  d2,d0
@@ -374,17 +374,17 @@ Cutscene_PlanetZoomInStep:                              ; DATA XREF: ROM:0000823
                 muls.w  d2,d1
                 asr.l   #8,d1
                 move.l  d1,$1C(a5)
-                tst.l   (dword_FF011C).l
+                tst.l   (PlanetZoomRadius).l
                 bne.w   Cutscene_Return
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #$20,$40(a5)                    ; ' '
                 addq.w  #2,4(a5)
                 rts
-; End of function Cutscene_PlanetZoomInStep
-; Pauses between zoom phases and plays sound effect
-Cutscene_PlanetZoomPause:                               ; DATA XREF: ROM:00008234   o  ; was: sub_82D2
-                bsr.w   Cutscene_AnimatePlanetSprite
+; End of function EndingPlanet_ApproachCenter
+; Holds at the center for `$20` frames, then launches the planet and debris
+EndingPlanet_PauseAtCenter:                             ; DATA XREF: ROM:00008234   o  ; was: sub_82D2
+                bsr.w   EndingPlanet_AnimateTileAttributes
                 subq.w  #1,$40(a5)
                 bne.w   Cutscene_Return
                 move.b  #$31,d0                         ; '1'
@@ -393,14 +393,14 @@ Cutscene_PlanetZoomPause:                               ; DATA XREF: ROM:0000823
                 move.l  #$74000,$18(a5)
                 move.l  #$57000,$1C(a5)
                 addq.w  #2,4(a5)
-                bra.w   Effect_CreatePlanetDebris
-; End of function Cutscene_PlanetZoomPause
-; Completes planet zoom by moving sprite off-screen
-Cutscene_PlanetZoomComplete:                            ; DATA XREF: ROM:00008236   o  ; was: sub_8308
-                bsr.w   Cutscene_AnimatePlanetSprite
-                bsr.w   Cutscene_PlanetZoomProgress
-                bsr.w   Cutscene_PlanetFadeOutStep
-                bsr.w   Effect_UpdatePlanetDebris
+                bra.w   EndingPlanet_CreateDebris
+; End of function EndingPlanet_PauseAtCenter
+; Accelerates the planet and debris until the planet crosses X `$120`
+EndingPlanet_ExitScreen:                                ; DATA XREF: ROM:00008236   o  ; was: sub_8308
+                bsr.w   EndingPlanet_AnimateTileAttributes
+                bsr.w   EndingPlanet_AdvanceFrameIndex
+                bsr.w   EndingPlanet_UpdateZoomPalette
+                bsr.w   EndingPlanet_UpdateDebris
                 subi.l  #$4000,$18(a5)
                 subi.l  #$3000,$1C(a5)
                 cmpi.w  #$120,$10(a5)
@@ -408,13 +408,13 @@ Cutscene_PlanetZoomComplete:                            ; DATA XREF: ROM:0000823
                 clr.w   2(a5)
                 addq.w  #2,4(a6)
                 rts
-; End of function Cutscene_PlanetZoomComplete
-nullsub_19:                                             ; DATA XREF: ROM:00008238   o
+; End of function EndingPlanet_ExitScreen
+EndingPlanet_ZoomObjectComplete:                        ; DATA XREF: ROM:00008238   o  ; was: nullsub_19
                 rts
-; End of function nullsub_19
+; End of function EndingPlanet_ZoomObjectComplete
 
-; Creates debris sprite with velocity for planet explosion effect
-Effect_CreatePlanetDebris:                              ; CODE XREF: Cutscene_PlanetZoomPause+32   j  ; was: sub_833E
+; Creates the single planet-debris object at the planet's current position
+EndingPlanet_CreateDebris:                              ; CODE XREF: EndingPlanet_PauseAtCenter+32   j  ; was: sub_833E
                 lea     (word_FFD820).w,a4
                 move.w  #$EC00,word_FFD822-word_FFD820(a4)
                 move.w  #$10,(a4)
@@ -427,9 +427,9 @@ Effect_CreatePlanetDebris:                              ; CODE XREF: Cutscene_Pl
                 move.l  #$FFFC0000,$18(a4)
                 move.l  #$FFFD0000,$1C(a4)
                 rts
-; End of function Effect_CreatePlanetDebris
-; Updates debris sprite position and clears when off-screen
-Effect_UpdatePlanetDebris:                              ; CODE XREF: Cutscene_PlanetZoomComplete+C   p  ; was: sub_8380
+; End of function EndingPlanet_CreateDebris
+; Accelerates the debris and clears it when its lifetime counter reaches `$80`
+EndingPlanet_UpdateDebris:                              ; CODE XREF: EndingPlanet_ExitScreen+C   p  ; was: sub_8380
                 lea     (word_FFD820).w,a4
                 addi.l  #$4000,dword_FFD838-word_FFD820(a4)
                 addi.l  #$3000,$1C(a4)
@@ -437,12 +437,12 @@ Effect_UpdatePlanetDebris:                              ; CODE XREF: Cutscene_Pl
                 bcs.w   Cutscene_Return
                 clr.w   2(a4)
                 rts
-; End of function Effect_UpdatePlanetDebris
-; Stage 18 initialization
-Stage_Stage18Init:                                      ; CODE XREF: Cutscene_InitPlanetZoom+34   j  ; was: sub_83A4
+; End of function EndingPlanet_UpdateDebris
+; Initializes 32 randomized burst objects around the planet center
+EndingPlanet_InitializeBurst:                           ; CODE XREF: EndingPlanet_StartZoom+34   j  ; was: sub_83A4
                 lea     (word_FFC740).w,a4
                 move.w  #$1F,d7
-loc_83AC:                                               ; CODE XREF: Stage_Stage18Init+68   j
+EndingPlanet_InitializeNextBurstObject:                 ; CODE XREF: EndingPlanet_InitializeBurst+68   j  ; was: loc_83AC
                 move.w  #$EC00,2(a4)
                 move.w  #$10,(a4)
                 move.l  #off_18B11C,8(a4)
@@ -466,29 +466,29 @@ loc_83AC:                                               ; CODE XREF: Stage_Stage
                 asr.l   #5,d0
                 move.l  d0,$1C(a4)
                 adda.w  #$60,a4                         ; '`'
-                dbf     d7,loc_83AC
+                dbf     d7,EndingPlanet_InitializeNextBurstObject
                 rts
-; End of function Stage_Stage18Init
-; Iterates through sprites and clears those beyond screen bounds
-Effect_ClearOffscreenSprites:                           ; CODE XREF: Cutscene_PlanetZoomMainLoop+C   p  ; was: sub_8412
+; End of function EndingPlanet_InitializeBurst
+; Scans all 32 burst objects and clears those whose lifetime reached `$80`
+EndingPlanet_ClearExpiredBurstObjects:                  ; CODE XREF: EndingPlanet_RunZoom+C   p  ; was: sub_8412
                 lea     (word_FFC740).w,a5
                 move.w  #$1F,d7
-loc_841A:                                               ; CODE XREF: Effect_ClearOffscreenSprites+10   j
-                bsr.w   Effect_CheckAndClearSprite
+EndingPlanet_CheckNextBurstObject:                      ; CODE XREF: EndingPlanet_ClearExpiredBurstObjects+10   j  ; was: loc_841A
+                bsr.w   EndingPlanet_ClearExpiredBurstObject
                 adda.w  #$60,a5                         ; '`'
-                dbf     d7,loc_841A
+                dbf     d7,EndingPlanet_CheckNextBurstObject
                 rts
-; End of function Effect_ClearOffscreenSprites
-; Checks if sprite animation counter exceeds threshold and clears
-Effect_CheckAndClearSprite:                             ; CODE XREF: Effect_ClearOffscreenSprites:loc_841A   p  ; was: sub_8428
+; End of function EndingPlanet_ClearExpiredBurstObjects
+; Clears one burst object when its lifetime field reaches `$80`
+EndingPlanet_ClearExpiredBurstObject:                   ; CODE XREF: EndingPlanet_ClearExpiredBurstObjects:EndingPlanet_CheckNextBurstObject   p  ; was: sub_8428
                 cmpi.w  #$80,$C(a5)
                 bcs.w   Cutscene_Return
                 clr.w   2(a5)
                 rts
-; End of function Effect_CheckAndClearSprite
-; Fades out planet palette gradually with timing control
-Cutscene_PlanetFadeOutStep:                             ; CODE XREF: Cutscene_PlanetZoomInStep+8   p  ; was: sub_8438
-                                        ; Cutscene_PlanetZoomComplete+8   p
+; End of function EndingPlanet_ClearExpiredBurstObject
+; Moves the zoom palette step toward zero on alternate frames
+EndingPlanet_UpdateZoomPalette:                         ; CODE XREF: EndingPlanet_ApproachCenter+8   p  ; was: sub_8438
+                                        ; EndingPlanet_ExitScreen+8   p
                 tst.w   (CutscenePaletteStep).l
                 beq.w   Cutscene_Return
                 move.w  (word_FFA280).w,d0
@@ -500,63 +500,63 @@ Cutscene_PlanetFadeOutStep:                             ; CODE XREF: Cutscene_Pl
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jmp     (Gfx_ApplyPaletteFade).l
-; End of function Cutscene_PlanetFadeOutStep
-; Animates planet sprite attribute cycling through 4 values
-Cutscene_AnimatePlanetSprite:                           ; CODE XREF: Cutscene_PlanetZoomInStep   p  ; was: sub_846C
-                                        ; sub_82D2   p
+; End of function EndingPlanet_UpdateZoomPalette
+; Cycles the planet object's tile attributes through four frame phases
+EndingPlanet_AnimateTileAttributes:                     ; CODE XREF: EndingPlanet_ApproachCenter   p  ; was: sub_846C
+                                        ; EndingPlanet_PauseAtCenter   p
                 move.w  (word_FFA280).w,d0
                 andi.w  #3,d0
                 lsl.w   #1,d0
-                move.w  word_847E(pc,d0.w),(word_FFC62E).w
+                move.w  EndingPlanet_TileAttributeCycle(pc,d0.w),(word_FFC62E).w
                 rts
-; End of function Cutscene_AnimatePlanetSprite
+; End of function EndingPlanet_AnimateTileAttributes
 ; ---------------------------------------------------------------------------
-word_847E:      dc.w    1, $801, $1801, $1001
+EndingPlanet_TileAttributeCycle:    dc.w    1, $801, $1801, $1001  ; was: word_847E
 
-; Increments planet zoom level with variable speed
-Cutscene_PlanetZoomProgress:                            ; CODE XREF: Cutscene_PlanetZoomInStep+4   p  ; was: sub_8486
-                                        ; Cutscene_PlanetZoomComplete+4   p
-                cmpi.w  #$3E,(word_FF0118).l            ; '>'
+; Advances the shared graphics-frame index, doubling cadence after `$20`
+EndingPlanet_AdvanceFrameIndex:                         ; CODE XREF: EndingPlanet_ApproachCenter+4   p  ; was: sub_8486
+                                        ; EndingPlanet_ExitScreen+4   p
+                cmpi.w  #$3E,(PlanetZoomFrameIndex).l   ; '>'
                 beq.w   Cutscene_Return
-                cmpi.w  #$20,(word_FF0118).l            ; ' '
-                bcc.s   loc_84B2
+                cmpi.w  #$20,(PlanetZoomFrameIndex).l   ; ' '
+                bcc.s   EndingPlanet_AdvanceFrameIndexFast
                 move.w  (CutsceneTimer).l,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
-                addq.w  #2,(word_FF0118).l
+                addq.w  #2,(PlanetZoomFrameIndex).l
                 rts
 ; ---------------------------------------------------------------------------
-loc_84B2:                                               ; CODE XREF: Cutscene_PlanetZoomProgress+14   j
+EndingPlanet_AdvanceFrameIndexFast:                     ; CODE XREF: EndingPlanet_AdvanceFrameIndex+14   j  ; was: loc_84B2
                 move.w  (CutsceneTimer).l,d0
                 andi.w  #1,d0
                 bne.w   Cutscene_Return
-                addq.w  #2,(word_FF0118).l
+                addq.w  #2,(PlanetZoomFrameIndex).l
                 rts
-; End of function Cutscene_PlanetZoomProgress
-; Main loop for planet zoom cutscene with subsystem coordination
-Cutscene_PlanetZoomMainLoop:                            ; DATA XREF: ROM:00007C4C   o  ; was: sub_84C8
+; End of function EndingPlanet_AdvanceFrameIndex
+; Coordinates the zoom object, particles, frame selection, scroll, timer, and sound
+EndingPlanet_RunZoom:                                   ; DATA XREF: ROM:00007C4C   o  ; was: sub_84C8
                 bsr.w   EndingSequence_AnimateAccentColors
-                bsr.w   Cutscene_PlanetPaletteUpdate
-                bsr.w   Cutscene_PlanetSpriteHandler
-                bsr.w   Effect_ClearOffscreenSprites
+                bsr.w   EndingPlanet_DispatchVerticalMotion
+                bsr.w   EndingPlanet_DispatchZoomObject
+                bsr.w   EndingPlanet_ClearExpiredBurstObjects
                 lea     (Entity_ObjectPool).w,a5
-                move.w  (word_FF0118).l,d1
-                bsr.w   Sprite_SetGraphicsPointer
-                bsr.w   Cutscene_Calculate3DRotation
+                move.w  (PlanetZoomFrameIndex).l,d1
+                bsr.w   Sprite_SelectSharedGraphicsFrame
+                bsr.w   EndingPlanet_UpdatePerspectiveScroll
                 subq.w  #1,(CutsceneTimer).l
-                beq.w   Cutscene_FinalizePlanetZoom
+                beq.w   EndingPlanet_FinishZoom
                 cmpi.w  #$80,(CutsceneTimer).l
                 bne.w   Cutscene_Return
                 move.b  #1,d0
                 jmp     (Sound_QueueRequest).l
-; End of function Cutscene_PlanetZoomMainLoop
-; Calculates 3D rotation perspective and updates scroll buffers
-Cutscene_Calculate3DRotation:                           ; CODE XREF: Cutscene_PlanetZoomMainLoop+1E   p  ; was: sub_850A
-                                        ; sub_85CC   p
-                addi.l  #$80,(dword_FF0114).l
-                move.l  (dword_FF0114).l,d0
-                add.l   d0,(dword_FF0110).l
-                move.l  (dword_FF0110).l,d1
+; End of function EndingPlanet_RunZoom
+; Integrates an accelerating phase and builds symmetric H/V perspective scroll bands
+EndingPlanet_UpdatePerspectiveScroll:                   ; CODE XREF: EndingPlanet_RunZoom+1E   p  ; was: sub_850A
+                                        ; EndingPlanet_FadeOutZoom   p
+                addi.l  #$80,(EndingScrollRate).l
+                move.l  (EndingScrollRate).l,d0
+                add.l   d0,(EndingScrollPhase).l
+                move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d3
                 asr.l   #2,d3
                 move.l  d1,d0
@@ -564,28 +564,28 @@ Cutscene_Calculate3DRotation:                           ; CODE XREF: Cutscene_Pl
                 neg.l   d0
                 lea     (word_FFE5C0).w,a0
                 move.w  #$D,d7
-loc_8538:                                               ; CODE XREF: Cutscene_Calculate3DRotation+3C   j
+EndingPlanet_WriteForwardHScroll:                       ; CODE XREF: EndingPlanet_UpdatePerspectiveScroll+3C   j  ; was: loc_8538
                 move.l  d0,d2
                 swap    d2
                 move.w  d2,(a0)
                 add.l   d3,d1
                 sub.l   d1,d0
                 adda.w  #$20,a0                         ; ' '
-                dbf     d7,loc_8538
-                move.l  (dword_FF0110).l,d1
+                dbf     d7,EndingPlanet_WriteForwardHScroll
+                move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d0
                 asr.l   #1,d0
                 lea     (word_FFE5A0).w,a0
                 move.w  #$D,d7
-loc_855C:                                               ; CODE XREF: Cutscene_Calculate3DRotation+60   j
+EndingPlanet_WriteReverseHScroll:                       ; CODE XREF: EndingPlanet_UpdatePerspectiveScroll+60   j  ; was: loc_855C
                 move.l  d0,d2
                 swap    d2
                 move.w  d2,(a0)
                 add.l   d3,d1
                 add.l   d1,d0
                 suba.w  #$20,a0                         ; ' '
-                dbf     d7,loc_855C
-                move.l  (dword_FF0110).l,d1
+                dbf     d7,EndingPlanet_WriteReverseHScroll
+                move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d3
                 asr.l   #1,d3
                 move.l  d1,d0
@@ -593,38 +593,38 @@ loc_855C:                                               ; CODE XREF: Cutscene_Ca
                 asl.l   #1,d1
                 lea     (word_FFEC28).w,a0
                 move.w  #9,d7
-loc_8586:                                               ; CODE XREF: Cutscene_Calculate3DRotation+8A   j
+EndingPlanet_WriteForwardVScroll:                       ; CODE XREF: EndingPlanet_UpdatePerspectiveScroll+8A   j  ; was: loc_8586
                 move.l  d0,d2
                 swap    d2
                 move.w  d2,(a0)
                 add.l   d3,d1
                 sub.l   d1,d0
                 adda.w  #4,a0
-                dbf     d7,loc_8586
-                move.l  (dword_FF0110).l,d1
+                dbf     d7,EndingPlanet_WriteForwardVScroll
+                move.l  (EndingScrollPhase).l,d1
                 move.l  d1,d0
                 asl.l   #1,d1
                 lea     (word_FFEC24).w,a0
                 move.w  #9,d7
-loc_85AA:                                               ; CODE XREF: Cutscene_Calculate3DRotation+AE   j
+EndingPlanet_WriteReverseVScroll:                       ; CODE XREF: EndingPlanet_UpdatePerspectiveScroll+AE   j  ; was: loc_85AA
                 move.l  d0,d2
                 swap    d2
                 move.w  d2,(a0)
                 add.l   d3,d1
                 add.l   d1,d0
                 suba.w  #4,a0
-                dbf     d7,loc_85AA
+                dbf     d7,EndingPlanet_WriteReverseVScroll
                 rts
-; End of function Cutscene_Calculate3DRotation
-; Finalizes planet zoom cutscene and sets transition timer
-Cutscene_FinalizePlanetZoom:                            ; CODE XREF: Cutscene_PlanetZoomMainLoop+28   j  ; was: sub_85BE
+; End of function EndingPlanet_UpdatePerspectiveScroll
+; Selects the final ending state after the zoom timer expires
+EndingPlanet_FinishZoom:                                ; CODE XREF: EndingPlanet_RunZoom+28   j  ; was: sub_85BE
                 clr.w   (CutscenePaletteStep).l
                 move.w  #$18,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_FinalizePlanetZoom
-; Handles fade out during planet zoom with completion check
-Cutscene_PlanetZoomFadeOut:                             ; DATA XREF: ROM:00007C4E   o  ; was: sub_85CC
-                bsr.w   Cutscene_Calculate3DRotation
+; End of function EndingPlanet_FinishZoom
+; Continues perspective scroll while fading out and handing control to credits mode
+EndingPlanet_FadeOutZoom:                               ; DATA XREF: ROM:00007C4E   o  ; was: sub_85CC
+                bsr.w   EndingPlanet_UpdatePerspectiveScroll
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Cutscene_Return
@@ -640,5 +640,4 @@ Cutscene_PlanetZoomFadeOut:                             ; DATA XREF: ROM:00007C4
                 clr.b   (PaletteDMAHIntEnabled).w
                 move.w  #1,(dword_FF8128).w
                 rts
-; End of function Cutscene_PlanetZoomFadeOut
-; Looks up sine and cosine values from table with angle wrapping
+; End of function EndingPlanet_FadeOutZoom
