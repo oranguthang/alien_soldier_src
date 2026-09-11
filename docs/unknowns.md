@@ -2934,3 +2934,55 @@ and 52 static audit records, raising the totals from 11,755 to 11,783 and from
 8,048 to 8,100. The enforced address-derived ceiling falls from 4,286 to
 4,258. Module count remains 349, and `ui/message_sequence_engine.s` contains
 no live address-derived definitions.
+
+The weapon-state audit rejects the generated interpretation of
+`ui/weapon_display.s` as a display-only module. The ROM-ordered 544-line range
+contains the shared weapon-state dispatcher, state-specific damage, motion,
+targeting, gauge, and icon setup, plus the circular four-slot selection
+overlay. It is therefore renamed `ui/weapon_state_and_selection.s`; the file
+is cohesive and lies inside the agreed 300--1,000-line range.
+
+The handler table proves only the even state values `$00` through `$14`, so
+the state-specific routines deliberately retain numeric names instead of
+inventing weapon identities. Direct consumers disprove the former health-bar,
+enemy-velocity, and generic graphics claims: state two derives projectile
+damage from the active slot's remaining ammo, state six builds sine/cosine
+motion and selects an ammo-indexed data table, state eight selects an eligible
+target, state ten animates a gauge palette, and state twelve queues icon DMA.
+States `$12` and `$14` initialize and update the four-slot selection overlay.
+
+This package corrects 26 generated semantic names, replaces 47 live
+address-derived ROM definitions, and promotes eight weapon fields in the RAM
+map. It adds 55 provenance mappings and 81 static audit records, raising the
+totals from 11,783 to 11,838 and from 8,100 to 8,181. The enforced
+address-derived ceiling falls from 4,258 to 4,203. Module count remains 349,
+and `ui/weapon_state_and_selection.s` contains no live address-derived
+definitions.
+
+The weapon-setup audit replaces the misleading `ui/title_and_options.s` and
+`cutscenes/planet_3d.s` containers with the ROM-ordered 568-line
+`ui/weapon_setup_screen.s` and 265-line
+`ui/weapon_setup_background_and_text.s`. The former contains the setup state
+handlers, four-slot loadout controller, controller-layout selection, screen
+renderers, and palette cycles. The latter contains the animated dithered
+background generator and every encoded string consumed by those handlers.
+Both modules are cohesive, fall within the release size policy, and now have
+zero live address-derived definitions.
+
+The embedded text directly disproves several generated interpretations. The
+screen heading is `SETUP YOUR WEAPONS`; its six force names are `BUSTER`,
+`RANGER`, `FLAME`, `HOMING`, `SWORD`, and `LANCER`. The alleged difficulty
+selector is a 26-entry controller-layout selector whose strings are exactly
+`TYPE 1` through `TYPE 26`. The remaining pages select `MOVING` or `FIX`
+shooting mode, render `EXIT`, and show the `CONTROL TEST` assignments. Static
+call flow also does not establish a planet: the former 3D-planet routine runs
+on every weapon-setup update, builds line-offset and dither tables, writes a
+tile buffer, and queues the result to the VDP, so its name is kept at the
+provable background-effect level.
+
+This package corrects 35 generated semantic names, replaces 106 live
+address-derived ROM definitions, and promotes `ShootingMode` and
+`ControlLayoutFlags` in the RAM map. It adds 108 provenance mappings and 142
+static audit records, raising the totals from 11,838 to 11,946 and from 8,181
+to 8,323. The enforced address-derived ceiling falls from 4,203 to 4,095;
+module count remains 349.

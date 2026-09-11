@@ -155,7 +155,7 @@ Gfx_LoadPlayerPaletteData_SelectVariantA:               ; CODE XREF: Gfx_LoadPla
                                         ; Gfx_LoadPlayerPaletteData+E   j
                 lea     Player_PaletteVariantA(pc),a0
                 nop
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 beq.s   Gfx_CopyPlayerPaletteWords
                 lea     Player_PaletteVariantB(pc),a0
                 nop

@@ -72,7 +72,7 @@ Player_CheckAlternateSpecialActivation:                 ; CODE XREF: Player_Spec
                 rts
 ; ---------------------------------------------------------------------------
 Player_CheckAlternateSpecialActivation_CheckAvailability:  ; CODE XREF: Player_CheckAlternateSpecialActivation+E   j  ; was: loc_16174
-                tst.w   (word_FF8038).w
+                tst.w   (WeaponStateCooldown).w
                 bmi.s   Player_InitAlternateSpecialState
 Player_CheckAlternateSpecialActivation_NotActivated:    ; CODE XREF: Player_CheckAlternateSpecialActivation+6   j  ; was: loc_1617A
                 moveq   #0,d0
@@ -81,8 +81,8 @@ Player_CheckAlternateSpecialActivation_NotActivated:    ; CODE XREF: Player_Chec
 ; ---------------------------------------------------------------------------
 ; Initializes state 0x54 after alternate-special activation
 Player_InitAlternateSpecialState:                       ; CODE XREF: Player_CheckAlternateSpecialActivation+1C   j  ; was: loc_1617E
-                move.w  (word_FFA24E).w,(word_FFA220).w
-                move.w  #$12,(word_FFA21C).w
+                move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
+                move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(byte_FF830F).w
                 move.w  #0,(word_FF8032).w
                 move.w  #$FFEE,(word_FF8034).w
@@ -104,7 +104,7 @@ Player_AlternateSpecialState:                           ; DATA XREF: ROM:000150B
                 bsr.w   Physics_RisingTerrainCheckWrapper
                 btst    #1,6(a5)
                 bne.w   Player_InitCeilingLandingState
-                cmpi.w  #$12,(word_FFA21C).w
+                cmpi.w  #$12,(WeaponStateIndex).w
                 bpl.s   Player_AlternateSpecialState_Render
                 move.w  #$46,4(a5)                      ; 'F'
                 bsr.w   Player_AutoFlipDirection
@@ -311,7 +311,7 @@ Player_CeilingIdleState:                                ; DATA XREF: ROM:0001507
                 bne.w   Player_InitCeilingDamageKnockback
                 btst    #4,$69(a5)
                 beq.s   Player_CeilingIdleState_CheckDashInput
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Player_CeilingIdleState_Render
 Player_CeilingIdleState_CheckDashInput:                 ; CODE XREF: Player_CeilingIdleState+36   j  ; was: loc_16440
                 btst    #0,$69(a5)

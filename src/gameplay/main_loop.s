@@ -38,7 +38,7 @@ Sys_GameplayMainLoop_BuildHUDSprites:                   ; CODE XREF: Sys_Gamepla
                 move.w  #$E0,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdatePlayer:                      ; CODE XREF: Sys_GameplayMainLoop+9E   j  ; was: loc_1C70E
                 jsr     (Player_Update).l
-                jsr     (UI_UpdateWeaponDisplay).l
+                jsr     (Weapon_UpdateStateAndSlotAnimations).l
                 tst.b   (byte_FFF746).w
                 bpl.s   Sys_GameplayMainLoop_UpdateSpawner
                 move.l  #$C0420000,(VDP_CTRL).l

@@ -39,7 +39,7 @@ off_1342A:      dc.l    sprite_FD30E                    ; DATA XREF: UI_SetupSco
                 dc.l    sprite_FD86E
 
 ; Sets up VDP DMA transfer registers
-Gfx_SetupVDPDMA:                                        ; CODE XREF: Gfx_LoadWeaponIcon+4C   j  ; was: sub_1344A
+Gfx_SetupVDPDMA:                                        ; CODE XREF: Weapon_UpdateState12Icon+4C   j  ; was: sub_1344A
                 move.w  #1,(word_FFA21E).w
                 movea.w #(byte_FF8488-M68K_RAM),a0
                 move.w  #$82,-(a0)

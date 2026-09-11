@@ -105,7 +105,7 @@ Stage24_ScrollHandler:                                  ; DATA XREF: ROM:Entity_
                 bne.s   locret_F9B4
                 bclr    #0,6(a5)
                 beq.s   loc_F9AA
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 beq.s   loc_F976
                 btst    #2,(byte_FF8244).w
                 bne.s   loc_F9AA

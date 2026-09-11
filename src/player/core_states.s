@@ -21,7 +21,7 @@ Player_InitializeStats:                                 ; CODE XREF: Stage_LoadX
                 move.w  #$40,$5E(a5)                    ; '@'
                 move.l  #$74000,(dword_FFA938).w
                 move.l  #$74000,(dword_FFA93C).w
-                jmp     UI_IncrementWeaponSelection
+                jmp     Weapon_AdvanceCurrentState
 ; End of function Player_InitializeStats
 ; Clears the player's object identifier and display flags
 Player_ClearObjectHeader:                               ; CODE XREF: Player_Update+A   j  ; was: sub_14F82
@@ -264,7 +264,7 @@ Player_HandleJump:                                      ; DATA XREF: ROM:Player_
                 bne.w   Player_HandleDamageKnockback
                 btst    #4,$69(a5)
                 beq.s   Player_HandleJump_CheckMovementInput
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Player_HandleJump_Render
 Player_HandleJump_CheckMovementInput:                   ; CODE XREF: Player_HandleJump+34   j  ; was: loc_1525A
                 btst    #1,$69(a5)
@@ -431,7 +431,7 @@ Player_HandleAirState:                                  ; DATA XREF: ROM:0001507
                 move.w  #$FFFF,$48(a5)
                 btst    #4,$69(a5)
                 beq.s   Player_HandleAirState_CheckJumpInput
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Player_CheckAirStateTransition
 Player_HandleAirState_CheckJumpInput:                   ; CODE XREF: Player_HandleAirState+46   j  ; was: loc_15456
                 btst    #1,$69(a5)
@@ -549,15 +549,15 @@ Player_HandleSpecialMove:                               ; CODE XREF: Player_Hand
                 beq.s   Player_HandleSpecialMove_NotActivated
                 btst    #1,$69(a5)
                 bne.w   Player_ToggleAlternateModeWithInputMask
-                tst.w   (word_FF8038).w
+                tst.w   (WeaponStateCooldown).w
                 bmi.s   Player_HandleSpecialMove_Activate
 Player_HandleSpecialMove_NotActivated:                  ; CODE XREF: Player_HandleSpecialMove+6   j  ; was: loc_155C8
                 moveq   #0,d0
                 rts
 ; ---------------------------------------------------------------------------
 Player_HandleSpecialMove_Activate:                      ; CODE XREF: Player_HandleSpecialMove+16   j  ; was: loc_155CC
-                move.w  (word_FFA24E).w,(word_FFA220).w
-                move.w  #$12,(word_FFA21C).w
+                move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
+                move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(byte_FF830F).w
                 move.w  #0,(word_FF8032).w
                 move.w  #$FFEE,(word_FF8034).w
@@ -580,7 +580,7 @@ Player_HandleGroundedState:                             ; DATA XREF: ROM:0001506
                 bsr.w   Physics_LowerTerrainCheckWrapper
                 btst    #0,6(a5)
                 beq.w   Player_InitFallState
-                cmpi.w  #$12,(word_FFA21C).w
+                cmpi.w  #$12,(WeaponStateIndex).w
                 bmi.w   Player_InitAirState
                 bra.w   Player_RenderIdleFrame
 ; End of function Player_HandleGroundedState
@@ -588,7 +588,7 @@ Player_HandleGroundedState:                             ; DATA XREF: ROM:0001506
 Player_ToggleAlternateModeWithInputMask:                ; CODE XREF: Player_HandleSpecialMove+E   j  ; was: sub_15632
                                         ; Player_CheckAlternateSpecialActivation+10   p
                 move.b  #$7F,(byte_FF830F).w
-                eori.w  #2,(word_FFA22A).w
+                eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
                 jsr     (Sound_PlaySFX).l
                 moveq   #0,d0
@@ -599,7 +599,7 @@ Player_CheckWallCollisionJump:                          ; CODE XREF: Player_Hand
                                         ; Player_HandleJump+56   j
                 btst    #4,$69(a5)
                 beq.s   Player_InitWallBounceState
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 beq.s   Player_CheckWallCollisionJump_CheckFacing
                 rts
 ; ---------------------------------------------------------------------------
@@ -607,7 +607,7 @@ Player_CheckWallCollisionFromMovement:                  ; CODE XREF: Player_Hand
                                         ; Player_HandleAirMovement+4E   j
                 btst    #4,$69(a5)
                 beq.s   Player_InitWallBounceState
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.w   Player_InitAirState
 Player_CheckWallCollisionJump_CheckFacing:              ; CODE XREF: Player_CheckWallCollisionJump+C   j  ; was: loc_1566C
                 btst    #3,$69(a5)

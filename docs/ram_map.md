@@ -6,7 +6,10 @@ still have neutral size/address names. The first reviewed semantic fields are
 `GameModeIndex`, `GameSubstateIndex`, `StageTableIndex`, `Entity_ObjectPool`,
 `DifficultyMode`, `MessageMode`, `SoundDisableFlags`, `StageTimeRemaining`,
 `StagePhaseSplitTimes`, `StageCompletionTimes`, `StageResultVisits`,
-`MessageSequenceState`, and `MessageSequenceFlags`;
+`MessageSequenceState`, `MessageSequenceFlags`, `WeaponStateIndex`,
+`WeaponSlotOffset`, `WeaponSavedSlotOffset`, `WeaponMenuRadius`,
+`WeaponMenuAngle`, `WeaponStateCooldown`, `WeaponMenuAngularStep`, and
+`WeaponMenuSlotOffset`, `ShootingMode`, and `ControlLayoutFlags`;
 `VDPCommand` predates this review. All remain
 subject to the evidence policy in `docs/naming.md`.
 
@@ -57,6 +60,26 @@ alone does not yet prove the exact player-facing counting convention.
 |---|---:|---|
 | `MessageSequenceFlags` | `$FFFF80A8` | Bit zero prevents the dispatcher from mirroring controller direction state during the ship-name path. `ShipName_StartScript` sets it; `BossMessage_Start` clears it. |
 | `MessageSequenceState` | `$FFFF80C2` | The central dispatcher uses this even word directly as an offset into its handler table. Stage, result, boss, and ship-cutscene callers publish a starting state here and wait for it to return to zero. |
+
+## Reviewed weapon-state and selection fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `WeaponStateIndex` | `$FFFFA21C` | This even word directly indexes `Weapon_StateHandlerOffsets`; values `$12` and `$14` enter the four-slot selection-overlay initializer and updater. |
+| `WeaponSlotOffset` | `$FFFFA24E` | Values `0`, `2`, `4`, and `6` select the active weapon record at `$FFFFA250`. |
+| `WeaponSavedSlotOffset` | `$FFFFA220` | The special-state transition saves and restores this slot before recovering the active weapon record. |
+| `WeaponMenuRadius` | `$FFFF8030` | Selection initialization sets `$A0`; the open-state update contracts it to `$20` before accepting input. |
+| `WeaponMenuAngle` | `$FFFF8036` | The updater compares this angle with `WeaponSelect_TargetAngles` and advances it by the signed angular step. |
+| `WeaponStateCooldown` | `$FFFF8038` | The shared updater decrements this field; the selection close path sets it to eight before committing the transition. |
+| `WeaponMenuAngularStep` | `$FFFF803A` | Rotation input writes `+$10` or `-$10`, which the angle updater consumes. |
+| `WeaponMenuSlotOffset` | `$FFFF803C` | Directional input maps to one of four slot offsets; the commit helper copies it to `WeaponSlotOffset`. |
+
+## Reviewed weapon-setup fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `ShootingMode` | `$FFFFA22A` | The setup screen selects and highlights the encoded `MOVING`/`FIX` options from this zero-or-two word. Player rendering and every weapon-fire family branch on the same value. |
+| `ControlLayoutFlags` | `$FFFFFF30` | The setup screen maps this stored byte through a 26-entry controller-layout table and displays the matching `TYPE 1`--`TYPE 26` string. HUD/input-prompt code tests its bits, while demo playback saves and restores it. |
 
 ## Review policy
 

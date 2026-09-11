@@ -132,13 +132,13 @@ dword_FF8020            equ     $FFFF8020
 dword_FF8024            equ     $FFFF8024
 dword_FF8028            equ     $FFFF8028
 dword_FF802C            equ     $FFFF802C
-word_FF8030             equ     $FFFF8030
+WeaponMenuRadius        equ     $FFFF8030               ; was: word_FF8030
 word_FF8032             equ     $FFFF8032
 word_FF8034             equ     $FFFF8034
-word_FF8036             equ     $FFFF8036
-word_FF8038             equ     $FFFF8038
-word_FF803A             equ     $FFFF803A
-word_FF803C             equ     $FFFF803C
+WeaponMenuAngle         equ     $FFFF8036               ; was: word_FF8036
+WeaponStateCooldown     equ     $FFFF8038               ; was: word_FF8038
+WeaponMenuAngularStep   equ     $FFFF803A               ; was: word_FF803A
+WeaponMenuSlotOffset    equ     $FFFF803C               ; was: word_FF803C
 dword_FF8040            equ     $FFFF8040
 dword_FF8044            equ     $FFFF8044
 word_FF8048             equ     $FFFF8048
@@ -467,14 +467,14 @@ dword_FFA20E            equ     $FFFFA20E
 dword_FFA212            equ     $FFFFA212
 word_FFA216             equ     $FFFFA216
 word_FFA218             equ     $FFFFA218
-word_FFA21C             equ     $FFFFA21C
+WeaponStateIndex        equ     $FFFFA21C               ; was: word_FFA21C
 word_FFA21E             equ     $FFFFA21E
-word_FFA220             equ     $FFFFA220
+WeaponSavedSlotOffset   equ     $FFFFA220               ; was: word_FFA220
 word_FFA228             equ     $FFFFA228
-word_FFA22A             equ     $FFFFA22A
+ShootingMode            equ     $FFFFA22A               ; was: word_FFA22A
 dword_FFA22C            equ     $FFFFA22C
 byte_FFA230             equ     $FFFFA230
-word_FFA24E             equ     $FFFFA24E
+WeaponSlotOffset        equ     $FFFFA24E               ; was: word_FFA24E
 word_FFA250             equ     $FFFFA250
 word_FFA252             equ     $FFFFA252
 word_FFA254             equ     $FFFFA254
@@ -952,7 +952,7 @@ byte_FFFF26             equ     $FFFFFF26
 word_FFFF28             equ     $FFFFFF28
 MessageMode             equ     $FFFFFF2A               ; was: word_FFFF2A
 dword_FFFF2C            equ     $FFFFFF2C
-byte_FFFF30             equ     $FFFFFF30
+ControlLayoutFlags      equ     $FFFFFF30               ; was: byte_FFFF30
 byte_FFFF31             equ     $FFFFFF31
 word_FFFF36             equ     $FFFFFF36
 SoundDisableFlags       equ     $FFFFFF38               ; was: word_FFFF38

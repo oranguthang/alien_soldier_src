@@ -42,16 +42,16 @@ UI_UpdateWeaponSelectionObject_SelectFrame:             ; CODE XREF: UI_UpdateWe
                 moveq   #0,d1
                 move.w  d1,$48(a5)
 UI_UpdateWeaponSelectionObject_LoadAnimatedFrame:       ; CODE XREF: UI_UpdateWeaponSelectionObject+50   j  ; was: loc_2BC18
-                lea     (UI_WeaponSelectionSpriteFrames).l,a0
+                lea     (WeaponSelect_SpriteFramePointers).l,a0
                 move.l  (a0,d1.w),8(a5)
 UI_UpdateWeaponSelectionObject_ProcessFlags:            ; CODE XREF: UI_UpdateWeaponSelectionObject+3C   j  ; was: loc_2BC24
                 bclr    #3,$22(a5)
                 beq.s   UI_UpdateWeaponSelectionObject_CheckConfirm
                 btst    #4,$22(a5)
                 bne.w   UI_UpdateWeaponSelectionObject_CheckConfirm
-                jsr     (UI_GetWeaponIconData).l
+                jsr     (Weapon_GetStateDisplayIndex).l
                 beq.s   UI_UpdateWeaponSelectionObject_CheckConfirm
-                movea.w (word_FFA24E).w,a0
+                movea.w (WeaponSlotOffset).w,a0
                 adda.w  #$A250,a0
                 move.w  (a0),d0
                 asl.w   #5,d0
@@ -65,9 +65,9 @@ UI_UpdateWeaponSelectionObject_CheckConfirm:            ; CODE XREF: UI_UpdateWe
                 bne.w   UI_UpdateWeaponSelectionObject_ClearInputFlags
                 move.b  #$A7,d0
                 jsr     (Sound_PlaySFX).l
-                jsr     (UI_GetWeaponIconData).l
+                jsr     (Weapon_GetStateDisplayIndex).l
                 beq.s   UI_UpdateWeaponSelectionObject_Hide
-                movea.w (word_FFA24E).w,a0
+                movea.w (WeaponSlotOffset).w,a0
                 adda.w  #$A250,a0
                 move.w  $48(a5),d1
                 asr.w   #5,d1
@@ -81,10 +81,10 @@ UI_UpdateWeaponSelectionObject_ApplySelection:          ; CODE XREF: UI_UpdateWe
                 move.w  d1,(a0)
                 clr.w   8(a0)
                 addq.w  #2,d1
-                move.w  d1,(word_FFA21C).w
+                move.w  d1,(WeaponStateIndex).w
                 asl.w   #1,d1
                 move.w  d1,(word_FFA21E).w
-                jsr     (UI_ClearWeaponCounters).l
+                jsr     (Weapon_ClearRuntimeParameters).l
                 jsr     (Sys_ClearObjectBlocks16).l
                 jsr     (Gfx_LoadPaletteData).l
                 bra.s   UI_UpdateWeaponSelectionObject_SyncValue

@@ -106,7 +106,7 @@ Player_WeaponAnimationFrames:   dc.l    Player_WeaponAnimationSpriteMapping00  ;
 
 ; Updates player dash sprite
 Player_UpdateDashSprite:                                ; CODE XREF: Player_CeilingIdleState+66   j  ; was: sub_17052
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 beq.s   Player_UpdateDashSprite_UseDefaultVariant
                 lea     (word_198F2).l,a4
                 moveq   #0,d5
@@ -125,7 +125,7 @@ Player_UpdateDashSprite_UseDefaultVariant:              ; CODE XREF: Player_Upda
 ; End of function Player_UpdateDashSprite
 ; Renders player special weapon sprite with conditional positioning
 Player_RenderSpecialWeapon:                             ; CODE XREF: Player_HandleJump+64   j  ; was: sub_17086
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 beq.s   Player_RenderSpecialWeapon_UseDefaultVariant
                 lea     (word_198B2).l,a4
                 moveq   #0,d5
@@ -147,7 +147,7 @@ Player_RenderWithWeapon:                                ; CODE XREF: Player_Ceil
                                         ; Player_CeilingLandingState+76   j
                 tst.w   $48(a5)
                 bpl.w   Player_RenderGroundedFrame
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 beq.s   Player_RenderWithWeapon_UseDefaultVariant
                 lea     (word_19902).l,a4
                 moveq   #0,d5
@@ -168,7 +168,7 @@ Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_Hand
                                         ; Player_HandleLandingState+7A   j
                 tst.w   $48(a5)
                 bpl.w   Player_RenderFallingSprite
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 beq.s   Player_RenderAirborneWithWeapon_UseDefaultVariant
                 lea     (word_198C2).l,a4
                 moveq   #0,d5

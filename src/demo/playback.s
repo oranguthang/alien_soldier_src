@@ -9,10 +9,10 @@ Demo_PlaybackSystem:                                    ; CODE XREF: Sys_Dispatc
                 clr.w   (word_FFA000).w
                 move.w  (DifficultyMode).w,(word_FFFF5E).w
                 move.w  (SoundDisableFlags).w,(word_FFFF60).w
-                move.b  (byte_FFFF30).w,(byte_FFFF66).w
+                move.b  (ControlLayoutFlags).w,(byte_FFFF66).w
                 move.w  #2,(DifficultyMode).w
                 move.w  #0,(SoundDisableFlags).w
-                move.b  #0,(byte_FFFF30).w
+                move.b  #0,(ControlLayoutFlags).w
                 clr.w   (word_FFFF48).w
                 move.w  (word_FFFF62).w,d0
                 andi.w  #6,d0
@@ -65,7 +65,7 @@ Demo_PlaybackSystem_Exit:                               ; CODE XREF: Demo_Playba
                 clr.w   (word_FFF74E).w
                 move.w  (word_FFFF5E).w,(DifficultyMode).w
                 move.w  (word_FFFF60).w,(SoundDisableFlags).w
-                move.b  (byte_FFFF66).w,(byte_FFFF30).w
+                move.b  (byte_FFFF66).w,(ControlLayoutFlags).w
                 addq.w  #2,(word_FFFF62).w
                 andi.w  #6,(word_FFFF62).w
                 move.b  #4,(dword_FFF80A).w

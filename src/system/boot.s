@@ -117,7 +117,7 @@ GameProgram:                                            ; CODE XREF: Reset+17C  
                 move.w  #2,(DifficultyMode).w
                 move.l  #$100000,(dword_FFFF2C).w
                 move.w  #0,(MessageMode).w
-                move.b  #0,(byte_FFFF30).w
+                move.b  #0,(ControlLayoutFlags).w
                 clr.w   (SoundDisableFlags).w
                 clr.w   (word_FFFF3E).w
                 move.w  #0,(word_FFFF36).w

@@ -15,7 +15,7 @@ Player_GroundedMovementState:                           ; DATA XREF: ROM:0001506
                 bne.w   Player_InitJumpCancelState
                 btst    #4,$69(a5)
                 beq.s   Player_GroundedMovementState_CheckHorizontalInput
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.w   Player_InitAirJumpState
 Player_GroundedMovementState_CheckHorizontalInput:      ; CODE XREF: Player_GroundedMovementState+3A   j  ; was: loc_156FC
                 btst    #2,$69(a5)

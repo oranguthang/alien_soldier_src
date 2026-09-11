@@ -70,7 +70,7 @@ UI_InitializeStageStart:                                ; DATA XREF: Sys_Dispatc
                 bne.s   UI_LoadStageGraphics
                 clr.w   (word_FFA29C).w
                 clr.b   (byte_FFFF31).w
-                move.w  #2,(word_FFA22A).w
+                move.w  #2,(ShootingMode).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
                 move.w  #4,(word_FF80F2).w
@@ -95,7 +95,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 jsr     (Gfx_DirectVRAMTransfer).l
                 jsr     (nullsub_1).l
-                bsr.w   Stage_InitializeState
+                bsr.w   WeaponSetup_ClearLoadoutAndRefillAmmo
                 jsr     (Player_InitializeStats).l
                 bsr.w   Gfx_InitColorTables
                 move.w  #$20,(word_FFF74A).w            ; ' '
@@ -115,7 +115,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 move.w  #$8000,(word_FF808A).w
                 lea     (StageStartPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                bsr.w   Gfx_SetupWeaponSprites
+                bsr.w   WeaponSetup_InitializeTextAndTiles
                 jsr     (Gfx_LoadPaletteData).l
                 move.b  #$8E,d0
                 jsr     (Sound_QueueBGMRequest).l
@@ -171,46 +171,46 @@ loc_1F01A:                                              ; CODE XREF: Gfx_InitCol
                 move.b  #$82,(byte_FF78FF).l
                 rts
 ; End of function Gfx_InitColorTables
-; Sets up weapon sprite tiles in VDP
-Gfx_SetupWeaponSprites:                                 ; CODE XREF: UI_InitializeStageStart+E8   p  ; was: sub_1F02E
-                bsr.w   UI_RenderDifficultyText
-                bsr.w   UI_MapDifficultyIndex
-                bsr.w   UI_RenderControlsText
-                bsr.w   UI_RenderSoundText
-                lea     word_1F5EE(pc),a2
+; Initializes weapon-setup text and the six force-name tile regions
+WeaponSetup_InitializeTextAndTiles:                     ; CODE XREF: UI_InitializeStageStart+E8   p  ; was: sub_1F02E
+                bsr.w   WeaponSetup_RenderHeading
+                bsr.w   WeaponSetup_FindControlTypeIndex
+                bsr.w   WeaponSetup_RenderStatusWindowLabel
+                bsr.w   WeaponSetup_RenderExitText
+                lea     WeaponSetup_ForceTextLayout(pc),a2
                 nop
                 moveq   #0,d7
-loc_1F046:                                              ; CODE XREF: Gfx_SetupWeaponSprites+2C   j
+WeaponSetup_InitializeForceTileLoop:                    ; CODE XREF: WeaponSetup_InitializeTextAndTiles+2C   j  ; was: loc_1F046
                 move.w  (a2,d7.w),d3
                 subq.w  #6,d3
                 move.w  d7,d0
                 jsr     (Sprite_SetupTileVDP).l
                 addq.w  #2,d7
                 cmpi.w  #$C,d7
-                bmi.s   loc_1F046
-locret_1F05C:                                           ; CODE XREF: Stage_HandleTransition+C   j
-                                        ; UI_HandleMenuNavigation+C   j
+                bmi.s   WeaponSetup_InitializeForceTileLoop
+WeaponSetup_StateWaitReturn:                            ; CODE XREF: WeaponSetup_HandleLoadoutState+C   j  ; was: locret_1F05C
+                                        ; WeaponSetup_HandleControlTypeInput+C   j
                 rts
-; End of function Gfx_SetupWeaponSprites
-; Initializes stage state machine
-Stage_InitializeState:                                  ; CODE XREF: UI_InitializeStageStart+7E   p  ; was: sub_1F05E
-                clr.w   (word_FFA24E).w
+; End of function WeaponSetup_InitializeTextAndTiles
+; Clears all four loadout slots, then refills their runtime ammunition
+WeaponSetup_ClearLoadoutAndRefillAmmo:                  ; CODE XREF: UI_InitializeStageStart+7E   p  ; was: sub_1F05E
+                clr.w   (WeaponSlotOffset).w
                 clr.w   (word_FFA250).w
                 clr.w   (word_FFA252).w
                 clr.w   (word_FFA254).w
                 clr.w   (word_FFA256).w
-; End of function Stage_InitializeState
-; Updates UI menu state and rendering
-UI_UpdateMenuState:                                     ; CODE XREF: Stage_HandleTransition+16   p  ; was: sub_1F072
-                                        ; UI_HandleTitleMenuInput+C   p
+; End of function WeaponSetup_ClearLoadoutAndRefillAmmo
+; Refills the eight weapon-ammunition words used by the setup screen
+WeaponSetup_RefillAmmo:                                 ; CODE XREF: WeaponSetup_HandleLoadoutState+16   p  ; was: sub_1F072
+                                        ; WeaponSetup_HandleShootingModeInput+C   p
                 movea.w #(word_FFA260-M68K_RAM),a0
                 move.w  #$3E8,d0
                 moveq   #7,d7
-loc_1F07C:                                              ; CODE XREF: UI_UpdateMenuState+C   j
+WeaponSetup_RefillAmmoLoop:                             ; CODE XREF: WeaponSetup_RefillAmmo+C   j  ; was: loc_1F07C
                 move.w  d0,(a0)+
-                dbf     d7,loc_1F07C
+                dbf     d7,WeaponSetup_RefillAmmoLoop
                 rts
-; End of function UI_UpdateMenuState
+; End of function WeaponSetup_RefillAmmo
 ; Main gameplay loop with player physics and rendering
 Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_DispatchGameState+CA   o  ; was: sub_1F084
                 jsr     (Object_ApplyCameraMotion).l
@@ -220,10 +220,10 @@ Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_Dispatc
                 jsr     (UI_BuildHUDSpriteList).l
                 jsr     (UI_RenderHUDElement1).l
                 jsr     (Player_Update).l
-                jsr     (UI_UpdateWeaponDisplay).l
+                jsr     (Weapon_UpdateStateAndSlotAnimations).l
                 jsr     (Sys_ProcessProjectiles).l
                 jsr     (Sys_ProcessVisibleObjects).l
-                bsr.w   Stage_LoadAssets
+                bsr.w   WeaponSetup_UpdateAndDispatchState
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sys_ProcessObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
@@ -254,54 +254,52 @@ UI_TransitionToContinueScreen:                          ; CODE XREF: Sys_UpdateG
                 clr.w   (GameSubstateIndex).w
                 jmp     UI_ResetMenuBufferAndState_Clear
 ; End of function Sys_UpdateGameplayLoop
-; Loads stage assets and data
-Stage_LoadAssets:                                       ; CODE XREF: Sys_UpdateGameplayLoop+3C   p  ; was: sub_1F12C
-                bsr.w   Gfx_Update3DPlanetEffect
+; Updates the setup background and dispatches the current setup-screen state
+WeaponSetup_UpdateAndDispatchState:                     ; CODE XREF: Sys_UpdateGameplayLoop+3C   p  ; was: sub_1F12C
+                bsr.w   WeaponSetup_UpdateBackgroundEffect
                 move.w  (word_FFA29C).w,d0
-                movea.w off_1F140(pc,d0.w),a0
-                adda.l  #Stage_HandleTransition,a0
+                movea.w WeaponSetup_StateHandlerOffsets(pc,d0.w),a0
+                adda.l  #WeaponSetup_HandleLoadoutState,a0
                 jmp     (a0)
-; End of function Stage_LoadAssets
+; End of function WeaponSetup_UpdateAndDispatchState
 ; ---------------------------------------------------------------------------
-off_1F140:      dc.w    Stage_HandleTransition-Stage_HandleTransition
-                                        ; DATA XREF: Stage_LoadAssets+8   r
-                dc.w    UI_HandleMenuNavigation-Stage_HandleTransition
-                dc.w    UI_HandleWeaponMenuNavigation-Stage_HandleTransition
-                dc.w    Sprite_ExecuteFadeTransition-Stage_HandleTransition
-                dc.w    Gfx_LoadMenuGraphics-Stage_HandleTransition
-                dc.w    UI_WaitForButtonPress-Stage_HandleTransition
-                dc.w    UI_MenuEmptyState-Stage_HandleTransition
+WeaponSetup_StateHandlerOffsets:    dc.w    WeaponSetup_HandleLoadoutState-WeaponSetup_HandleLoadoutState  ; was: off_1F140
+                                        ; DATA XREF: WeaponSetup_UpdateAndDispatchState+8   r
+                dc.w    WeaponSetup_HandleControlTypeInput-WeaponSetup_HandleLoadoutState
+                dc.w    WeaponSetup_HandleExitInput-WeaponSetup_HandleLoadoutState
+                dc.w    WeaponSetup_UpdateSlotFade-WeaponSetup_HandleLoadoutState
+                dc.w    WeaponSetup_LoadControlTestText-WeaponSetup_HandleLoadoutState
+                dc.w    WeaponSetup_WaitForConfirmInput-WeaponSetup_HandleLoadoutState
+                dc.w    WeaponSetup_IdleState-WeaponSetup_HandleLoadoutState
 
-; Handles stage state transitions
-Stage_HandleTransition:                                 ; DATA XREF: Stage_LoadAssets+C   o  ; was: sub_1F14E
-                                        ; ROM:off_1F140   o
-                bsr.w   Gfx_RenderMenuSprites
-                bsr.w   Gfx_UpdatePaletteIndices
-                bsr.w   Gfx_InterpolateScrollPosition
-                bne.w   locret_1F05C
+; Handles the four-slot loadout-selection state
+WeaponSetup_HandleLoadoutState:                         ; DATA XREF: WeaponSetup_UpdateAndDispatchState+C   o  ; was: sub_1F14E
+                                        ; ROM:WeaponSetup_StateHandlerOffsets   o
+                bsr.w   WeaponSetup_RenderSlotSprites
+                bsr.w   WeaponSetup_UpdateHighlightPalette
+                bsr.w   WeaponSetup_UpdateHorizontalScroll
+                bne.w   WeaponSetup_StateWaitReturn
                 move.w  #$12,(word_FFA02A).w
-                bsr.w   UI_UpdateMenuState
-                bsr.w   UI_HandleOptionSelection
+                bsr.w   WeaponSetup_RefillAmmo
+                bsr.w   WeaponSetup_HandleLoadoutInput
                 btst    #0,(word_FFA280+1).w
-                bne.s   Gfx_RenderWeaponCursor
+                bne.s   WeaponSetup_RenderSelectedSlotCursor
                 rts
 ; ---------------------------------------------------------------------------
-; Renders weapon selection cursor sprite
-Gfx_RenderWeaponCursor:                                 ; CODE XREF: Stage_HandleTransition+24   j  ; was: loc_1F176
+; Renders the cursor for the currently selected loadout slot
+WeaponSetup_RenderSelectedSlotCursor:                   ; CODE XREF: WeaponSetup_HandleLoadoutState+24   j  ; was: loc_1F176
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 movea.w a0,a1
                 move.w  (dword_FF8128).w,d0
-                move.w  word_1F1A6(pc,d0.w),(a1)+
+                move.w  WeaponSetup_SlotCursorYPositions(pc,d0.w),(a1)+
                 move.w  #$B00,(a1)+
                 move.w  #$C6F0,(a1)+
-                move.w  word_1F19A(pc,d0.w),(a1)+
+                move.w  WeaponSetup_SlotCursorXPositions(pc,d0.w),(a1)+
                 move.w  #$FFFF,(a1)+
                 jmp     (Sprite_AddToOAMBuffer).l
-; End of function Stage_HandleTransition
+; End of function WeaponSetup_HandleLoadoutState
 ; ---------------------------------------------------------------------------
-word_1F19A:     dc.w    $97, $127, $97, $127, $97, $127
-                                        ; DATA XREF: Stage_HandleTransition+3E   r
-word_1F1A6:     dc.w    $B8, $B8, $C8, $C8, $D8, $D8
-                                        ; DATA XREF: Stage_HandleTransition+32   r
-
-; Processes menu navigation input and state changes for title screen
+WeaponSetup_SlotCursorXPositions:   dc.w    $97, $127, $97, $127, $97, $127  ; was: word_1F19A
+                                        ; DATA XREF: WeaponSetup_HandleLoadoutState+3E   r
+WeaponSetup_SlotCursorYPositions:   dc.w    $B8, $B8, $C8, $C8, $D8, $D8  ; was: word_1F1A6
+                                        ; DATA XREF: WeaponSetup_HandleLoadoutState+32   r

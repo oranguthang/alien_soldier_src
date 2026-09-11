@@ -82,7 +82,7 @@ UI_AppendHUDSpriteList_UseFixedIndicatorValue:          ; CODE XREF: UI_BuildHUD
 UI_AppendHUDSpriteList_UseSelectedIndicatorValue:       ; CODE XREF: UI_BuildHUDSpriteList+F0   j  ; was: loc_13370
                 lea     UI_WeaponIndicatorXTable(pc),a2
                 nop
-                move.w  (word_FFA24E).w,d1
+                move.w  (WeaponSlotOffset).w,d1
                 move.w  (a2,d1.w),(a1)+
 UI_AppendHUDSpriteList_AppendCommonEntry:               ; CODE XREF: UI_BuildHUDSpriteList+F6   j  ; was: loc_1337E
                 move.w  #$80,(a1)+

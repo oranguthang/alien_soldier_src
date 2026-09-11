@@ -443,7 +443,7 @@ SharedCombatSpriteAnimation12:  dc.w    SharedCombatSpriteFrame37-*  ; DATA XREF
                 dc.w    1
                 dc.w    SharedCombatSpriteAnimation12-*
                 dc.w    0
-SharedCombatSpriteAnimation13:  dc.w    SharedCombatSpriteFrame37-*  ; DATA XREF: UI_InitWeaponSelectScreen+54   o  ; was: off_E968C
+SharedCombatSpriteAnimation13:  dc.w    SharedCombatSpriteFrame37-*  ; DATA XREF: WeaponSelect_Initialize+54   o  ; was: off_E968C
                                         ; Projectile_SpawnFragmentCluster+10   o
                 dc.w    2
                 dc.w    SharedCombatSpriteFrame38-*

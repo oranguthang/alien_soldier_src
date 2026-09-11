@@ -74,7 +74,7 @@ Player_SevenForcesState0:                               ; DATA XREF: ROM:Player_
                 bne.w   Player_EnterSevenForcesDamageState8
                 btst    #4,$69(a5)
                 beq.s   Player_SevenForcesState0CheckDirectionalInput
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Player_SevenForcesState0Render
 Player_SevenForcesState0CheckDirectionalInput:          ; CODE XREF: Player_SevenForcesState0+2C   j  ; was: loc_19E8A
                 move.b  $69(a5),d0
@@ -90,15 +90,15 @@ Player_CheckSevenForcesSpecialActivation:               ; CODE XREF: Player_Seve
                 beq.s   Player_CheckSevenForcesSpecialActivationNotActivated
                 btst    #1,$69(a5)
                 bne.w   Player_ToggleSevenForcesWeaponMode
-                tst.w   (word_FF8038).w
+                tst.w   (WeaponStateCooldown).w
                 bmi.s   Player_ActivateSevenForcesSpecialState4
 Player_CheckSevenForcesSpecialActivationNotActivated:   ; CODE XREF: Player_CheckSevenForcesSpecialActivation+6   j  ; was: loc_19EB2
                 moveq   #0,d0
                 rts
 ; ---------------------------------------------------------------------------
 Player_ActivateSevenForcesSpecialState4:                ; CODE XREF: Player_CheckSevenForcesSpecialActivation+16   j  ; was: loc_19EB6
-                move.w  (word_FFA24E).w,(word_FFA220).w
-                move.w  #$12,(word_FFA21C).w
+                move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
+                move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(byte_FF830F).w
                 move.w  #0,(word_FF8032).w
                 move.w  #$FFEE,(word_FF8034).w
@@ -109,7 +109,7 @@ Player_ActivateSevenForcesSpecialState4:                ; CODE XREF: Player_Chec
 ; End of function Player_CheckSevenForcesSpecialActivation
 ; State 4: damp movement until the weapon transition completes
 Player_SevenForcesState4:                               ; DATA XREF: ROM:00019E1A   o  ; was: sub_19EE4
-                cmpi.w  #$12,(word_FFA21C).w
+                cmpi.w  #$12,(WeaponStateIndex).w
                 bmi.w   Player_ResetSevenForcesBattleState
                 bsr.w   Player_DampenSevenForcesVelocity
                 bra.w   Player_RenderSevenForcesTransitionFrame
@@ -117,7 +117,7 @@ Player_SevenForcesState4:                               ; DATA XREF: ROM:00019E1
 ; Toggle the selected weapon mode and play its feedback sound
 Player_ToggleSevenForcesWeaponMode:                     ; CODE XREF: Player_CheckSevenForcesSpecialActivation+E   j  ; was: sub_19EF6
                 move.b  #$7F,(byte_FF830F).w
-                eori.w  #2,(word_FFA22A).w
+                eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
                 jsr     (Sound_PlaySFX).l
                 moveq   #0,d0
@@ -147,7 +147,7 @@ Player_SevenForcesState2:                               ; DATA XREF: ROM:00019E1
                 bne.w   Player_EnterSevenForcesDamageState8
                 btst    #4,$69(a5)
                 beq.s   Player_SevenForcesState2CheckDirectionalInput
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.w   Player_ResetSevenForcesBattleState
 Player_SevenForcesState2CheckDirectionalInput:          ; CODE XREF: Player_SevenForcesState2+1C   j  ; was: loc_19F5C
                 move.b  $69(a5),d0

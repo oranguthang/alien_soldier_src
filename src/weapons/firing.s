@@ -13,14 +13,14 @@ Weapon_UpdatePlayerFiring_ApplyMuzzleOffset:            ; CODE XREF: Weapon_Upda
                 add.w   $10(a5),d1
                 add.w   $14(a5),d2
                 move.b  Weapon_DirectionIndexTable(pc,d6.w),d6
-                movea.w (word_FFA24E).w,a4
+                movea.w (WeaponSlotOffset).w,a4
                 adda.w  #$A250,a4
                 tst.w   $10(a4)
                 beq.s   Weapon_DispatchSelectedType
                 bset    #2,(byte_FF8244).w
 ; Dispatches the handler selected by the current weapon type
 Weapon_DispatchSelectedType:                            ; CODE XREF: Weapon_UpdatePlayerFiring+34   j  ; was: loc_17F14
-                move.w  (word_FFA21C).w,d0
+                move.w  (WeaponStateIndex).w,d0
                 movea.w Weapon_FireHandlerOffsets(pc,d0.w),a0
                 adda.l  #Weapon_DirectionIndexTable,a0
                 jmp     (a0)
@@ -63,7 +63,7 @@ Weapon_FireProjectile_Initialize:                       ; CODE XREF: Weapon_Fire
                 move.w  #$80,(word_FF8140).w
                 move.b  #$E0,(byte_FF8142).w
                 move.b  #4,(byte_FF8143).w
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Weapon_FireProjectile_SelectAmmoCost
                 subq.w  #2,$10(a4)
 Weapon_FireProjectile_SelectAmmoCost:                   ; CODE XREF: Weapon_FireProjectile+3E   j  ; was: loc_17F86
@@ -309,7 +309,7 @@ Weapon_FireFourShotSpread:                              ; CODE XREF: Weapon_Fire
                 move.w  #$E0,(word_FF8140).w
                 move.b  #$E0,(byte_FF8142).w
                 move.b  #4,(byte_FF8143).w
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Weapon_FireFourShotSpread_SelectAmmoCost
                 subq.w  #8,$10(a4)
 Weapon_FireFourShotSpread_SelectAmmoCost:               ; CODE XREF: Weapon_FireFourShotSpread+16   j  ; was: loc_182D8
@@ -363,7 +363,7 @@ Weapon_FireBulletHandler_FindSlot:                      ; CODE XREF: Weapon_Fire
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_FireBulletHandler_Initialize:                    ; CODE XREF: Weapon_FireBulletHandler+2C   j  ; was: loc_18360
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Weapon_FireBulletHandler_SelectAmmoCost
                 subq.w  #2,$10(a4)
 Weapon_FireBulletHandler_SelectAmmoCost:                ; CODE XREF: Weapon_FireBulletHandler+3C   j  ; was: loc_1836A
@@ -435,7 +435,7 @@ Weapon_FireBeamWeapon_Return:                           ; CODE XREF: Weapon_Fire
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_FireBeamWeapon_Initialize:                       ; CODE XREF: Weapon_FireBeamWeapon+3A   j  ; was: loc_18444
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Weapon_FireBeamWeapon_SelectAmmoCost
                 subq.w  #4,$10(a4)
 Weapon_FireBeamWeapon_SelectAmmoCost:                   ; CODE XREF: Weapon_FireBeamWeapon+4A   j  ; was: loc_1844E

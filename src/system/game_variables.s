@@ -7,7 +7,7 @@ UI_SetPasswordConfirmFlag:                              ; CODE XREF: UI_HandlePa
 UI_InitializeGameVariables:                             ; CODE XREF: UI_HandleTitleInput+8A   p  ; was: sub_1CCF4
                                         ; UI_HandleTitleInput+BA   j
                 clr.w   (StageTableIndex).w
-                move.w  #2,(word_FFA22A).w
+                move.w  #2,(ShootingMode).w
                 clr.b   (byte_FFA209).w
 UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPasswordConfirmFlag+6   j  ; was: loc_1CD02
                 move.w  #$200,(word_FFA216).w
@@ -45,7 +45,7 @@ UI_InitGameStateFromContinue_CopyAmmo:                  ; CODE XREF: UI_InitGame
                 clr.w   (word_FFFF42).w
                 clr.w   (word_FFFF44).w
                 clr.w   (word_FFFF3E).w
-                clr.w   (word_FFA21C).w
+                clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
                 clr.b   (byte_FFFF31).w
                 bsr.s   UI_ResetMenuBufferAndState
@@ -58,7 +58,7 @@ UI_InitGameStateFromContinue_CopyAmmo:                  ; CODE XREF: UI_InitGame
 ; Clears password input flags and menu state variables
 UI_ClearPasswordFlags:                                  ; CODE XREF: Password_HandleInput+12   p  ; was: sub_1CDA8
                 clr.w   (word_FF822A).w
-                clr.w   (word_FFA21C).w
+                clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
 ; End of function UI_ClearPasswordFlags
 ; Clears menu buffer at FFE300 and resets menu state to 4

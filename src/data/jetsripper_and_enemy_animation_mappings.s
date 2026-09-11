@@ -1,7 +1,7 @@
 word_E9952:     dc.w    $4480, $A00, $F4F4              ; DATA XREF: UI_UpdateWeaponSelectionObject:UI_UpdateWeaponSelectionObject_UseIdleFrame   o
                 dc.w    $47F0, $500, $F8F0
                 dc.w    $CFF0, $500, $F8FF
-word_E9964:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:UI_WeaponSelectionSpriteFrames   o
+word_E9964:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:WeaponSelect_SpriteFramePointers   o
                 dc.w    $4FF0, $500, $F8FF
                 dc.w    $C584, $500, $F8F8
 word_E9976:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:000178EA   o

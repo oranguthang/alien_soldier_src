@@ -56,7 +56,7 @@ Player_CeilingDashState_UpdateMovement:                 ; CODE XREF: Player_Ceil
                 move.w  #$FFFF,$48(a5)
                 btst    #4,$69(a5)
                 beq.s   Player_CeilingDashState_CheckDashInput
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Player_CeilingDashState_Render
 Player_CeilingDashState_CheckDashInput:                 ; CODE XREF: Player_CeilingDashState+58   j  ; was: loc_1658C
                 btst    #0,$69(a5)
@@ -176,15 +176,15 @@ Player_CheckCounterInput:                               ; CODE XREF: Player_Ceil
                 beq.s   Player_CheckCounterInput_NotActivated
                 btst    #0,$69(a5)
                 bne.w   Player_ToggleAlternateMode
-                tst.w   (word_FF8038).w
+                tst.w   (WeaponStateCooldown).w
                 bmi.s   Player_CheckCounterInput_Activate
 Player_CheckCounterInput_NotActivated:                  ; CODE XREF: Player_CheckCounterInput+6   j  ; was: loc_16702
                 moveq   #0,d0
                 rts
 ; ---------------------------------------------------------------------------
 Player_CheckCounterInput_Activate:                      ; CODE XREF: Player_CheckCounterInput+16   j  ; was: loc_16706
-                move.w  (word_FFA24E).w,(word_FFA220).w
-                move.w  #$12,(word_FFA21C).w
+                move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
+                move.w  #$12,(WeaponStateIndex).w
                 move.b  #$7F,(byte_FF830F).w
                 move.w  #0,(word_FF8032).w
                 move.w  #0,(word_FF8034).w
@@ -201,7 +201,7 @@ Player_CheckCounterInput_ReturnActivated:               ; CODE XREF: Player_Chec
 ; End of function Player_CheckCounterInput
 ; Handles the counter state while upper-terrain contact remains valid
 Player_CounterState:                                    ; DATA XREF: ROM:00015082   o  ; was: sub_1674A
-                cmpi.w  #$12,(word_FFA21C).w
+                cmpi.w  #$12,(WeaponStateIndex).w
                 bmi.w   Player_InitCeilingIdleState
                 jsr     Physics_WallCheckWrapper(pc)    ; (pc)
                 nop
@@ -213,7 +213,7 @@ Player_CounterState:                                    ; DATA XREF: ROM:0001508
 ; End of function Player_CounterState
 ; Toggles the shared alternate-mode flag and plays its sound
 Player_ToggleAlternateMode:                             ; CODE XREF: Player_CheckCounterInput+E   j  ; was: sub_1676E
-                eori.w  #2,(word_FFA22A).w
+                eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
                 jsr     (Sound_PlaySFX).l
                 moveq   #0,d0
@@ -224,7 +224,7 @@ Player_InitWallKickState:                               ; CODE XREF: Player_Ceil
                                         ; Player_CeilingIdleState+58   j
                 btst    #4,$69(a5)
                 beq.s   Player_InitWallKickAnimation
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 beq.s   Player_InitWallKickState_CheckFacing
                 rts
 ; ---------------------------------------------------------------------------
@@ -232,7 +232,7 @@ Player_InitWallKickFromMovement:                        ; CODE XREF: Player_Hand
                                         ; Player_HandleCrouchState+50   j
                 btst    #4,$69(a5)
                 beq.s   Player_InitWallKickAnimation
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.w   Player_InitCeilingIdleState
 Player_InitWallKickState_CheckFacing:                   ; CODE XREF: Player_InitWallKickState+C   j  ; was: loc_167A2
                 btst    #3,$69(a5)
@@ -279,7 +279,7 @@ Player_CeilingMovementState:                            ; DATA XREF: ROM:0001507
                 bne.w   Player_InitDashState
                 btst    #4,$69(a5)
                 beq.s   Player_CeilingMovementState_CheckHorizontalInput
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.w   Player_InitCrouchState
 Player_CeilingMovementState_CheckHorizontalInput:       ; CODE XREF: Player_CeilingMovementState+3C   j  ; was: loc_16834
                 btst    #2,$69(a5)

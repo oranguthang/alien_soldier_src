@@ -75,7 +75,7 @@ Input_ProcessDirectionInput:                            ; CODE XREF: Player_Upda
                 tst.w   (word_FFA02A).w
                 bne.w   Input_ProcessDirectionInput_Return
                 move.b  $69(a5),d1
-                move.w  (word_FFA22A).w,d0
+                move.w  (ShootingMode).w,d0
                 beq.s   Input_ProcessDirectionInput_CheckAlternateGate
                 btst    #4,$69(a5)
                 bne.s   Input_ProcessDirectionInput_ApplyHorizontalInput
@@ -125,7 +125,7 @@ Input_DirectionIndexTable:  dc.b    0, 6, 2, 0, 4, 5, 3, 0, 0, 7, 1, 0, 0, 0, 0,
 ; Auto-flips player direction based on weapon aim angle constraints
 Player_AutoFlipDirection:                               ; CODE XREF: Player_InitAirState+2A   j  ; was: sub_16DF6
                                         ; Player_InitJumpCancelState+2E   j
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Player_AutoFlipDirection_Return
                 btst    #4,$69(a5)
                 beq.s   Player_AutoFlipDirection_Return

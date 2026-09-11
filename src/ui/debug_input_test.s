@@ -138,7 +138,7 @@ loc_12C62:                                              ; CODE XREF: UI_RenderHU
 loc_12C90:                                              ; CODE XREF: UI_RenderHUDElement1+110   j
                                         ; UI_RenderHUDElement1+118   j
                 movea.w #(byte_FF84B0-M68K_RAM),a0
-                btst    #4,(byte_FFFF30).w
+                btst    #4,(ControlLayoutFlags).w
                 beq.s   loc_12CAE
                 move.w  #$C7E2,d0
                 move.w  d0,(a0)+
@@ -201,7 +201,7 @@ loc_12D22:                                              ; CODE XREF: UI_RenderHU
 ; ---------------------------------------------------------------------------
 loc_12D2C:                                              ; CODE XREF: UI_RenderHUDElement1+1AA   j
                                         ; UI_RenderHUDElement1+1B2   j
-                btst    #0,(byte_FFFF30).w
+                btst    #0,(ControlLayoutFlags).w
                 beq.s   loc_12D76
                 move.w  #$C7B4,d5
                 move.w  (word_FF820A).w,d0

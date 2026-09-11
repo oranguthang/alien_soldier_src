@@ -14,7 +14,7 @@ Weapon_CircleAttack_CheckSlots:                         ; CODE XREF: Player_Spaw
                 move.w  #$E0,(word_FF8140).w
                 move.b  #$C0,(byte_FF8142).w
                 move.b  #4,(byte_FF8143).w
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Weapon_CircleAttack_SelectAmmoCost
                 subi.w  #$A,$10(a4)
 Weapon_CircleAttack_SelectAmmoCost:                     ; CODE XREF: Player_SpawnCircleAttack+40   j  ; was: loc_18578
@@ -133,7 +133,7 @@ Weapon_FireHomingShot_Return:                           ; CODE XREF: Weapon_Fire
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_FireHomingShot_Initialize:                       ; CODE XREF: Weapon_FireHomingShot+2A   j  ; was: loc_18718
-                tst.w   (word_FFA22A).w
+                tst.w   (ShootingMode).w
                 bne.s   Weapon_FireHomingShot_SelectAmmoCost
                 subq.w  #2,$10(a4)
 Weapon_FireHomingShot_SelectAmmoCost:                   ; CODE XREF: Weapon_FireHomingShot+3A   j  ; was: loc_18722
@@ -290,8 +290,8 @@ Player_UpdateTargetSight:                               ; DATA XREF: ROM:Entity_
                 move.w  $14(a0),d6
                 add.w   (word_FF8032).w,d5
                 add.w   (word_FF8034).w,d6
-                move.w  (word_FF8030).w,d0
-                move.w  (word_FF8036).w,d7
+                move.w  (WeaponMenuRadius).w,d0
+                move.w  (WeaponMenuAngle).w,d7
                 add.w   $50(a5),d7
                 andi.w  #$1FE,d7
                 movea.l #Math_SineTable,a2
@@ -307,7 +307,7 @@ Player_UpdateTargetSight:                               ; DATA XREF: ROM:Entity_
                 add.w   d5,d2
                 move.w  d1,$14(a5)
                 move.w  d2,$10(a5)
-                move.w  (word_FF803C).w,d0
+                move.w  (WeaponMenuSlotOffset).w,d0
                 cmp.w   $48(a5),d0
                 bne.s   Player_UpdateTargetSight_Return
                 movea.w #(byte_FFC2C0-M68K_RAM),a0

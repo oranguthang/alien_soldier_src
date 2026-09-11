@@ -410,8 +410,8 @@ Effect_UpdateFacingFlags_Return:                        ; CODE XREF: Effect_Upda
                 rts
 ; End of function Effect_UpdateFacingFlags
 ; ---------------------------------------------------------------------------
-UI_WeaponDisplayStepDelays:     dc.w    0, 1, 3, 3, $12, 5  ; DATA XREF: UI_UpdateWeaponDisplay+1E   o  ; was: word_178DA
-UI_WeaponSelectionSpriteFrames: dc.l    word_E9964      ; DATA XREF: UI_InitWeaponSelectScreen+8A   o  ; was: off_178E6
+Weapon_SlotAnimationStepDelays:     dc.w    0, 1, 3, 3, $12, 5  ; DATA XREF: Weapon_UpdateStateAndSlotAnimations+1E   o  ; was: word_178DA
+WeaponSelect_SpriteFramePointers:   dc.l    word_E9964  ; DATA XREF: WeaponSelect_Initialize+8A   o  ; was: off_178E6
                                         ; sub_2BBC0:UI_UpdateWeaponSelectionObject_LoadAnimatedFrame   o
                 dc.l    word_E9976
                 dc.l    word_E9988

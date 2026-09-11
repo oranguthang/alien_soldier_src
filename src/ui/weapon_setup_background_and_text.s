@@ -1,0 +1,265 @@
+; Updates the animated dithered background of the weapon-setup screen
+WeaponSetup_UpdateBackgroundEffect:                     ; CODE XREF: WeaponSetup_UpdateAndDispatchState   p  ; was: sub_1F82E
+                cmpi.w  #$A,(word_FFA29C).w
+                bpl.s   WeaponSetup_IncreaseBackgroundPhase
+                subi.l  #$18000,(dword_FF8130).w
+                cmpi.l  #$B00000,(dword_FF8130).w
+                bpl.s   WeaponSetup_RenderBackgroundPhase
+                move.l  #$1500000,(dword_FF8130).w
+                bra.s   WeaponSetup_RenderBackgroundPhase
+; ---------------------------------------------------------------------------
+WeaponSetup_IncreaseBackgroundPhase:                    ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+6   j  ; was: loc_1F852
+                addi.l  #$18000,(dword_FF8130).w
+                cmpi.l  #$1500000,(dword_FF8130).w
+                bmi.s   WeaponSetup_RenderBackgroundPhase
+                move.l  #$B00000,(dword_FF8130).w
+WeaponSetup_RenderBackgroundPhase:                      ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+18   j  ; was: loc_1F86C
+                                        ; WeaponSetup_UpdateBackgroundEffect+22   j
+                move.w  (dword_FF8130).w,d0
+                asr.w   #3,d0
+                subi.w  #$16,d0
+                andi.w  #$1E,d0
+                move.w  WeaponSetup_BackgroundPaletteColor1Cycle(pc,d0.w),(word_FFE37C).w
+                move.w  WeaponSetup_BackgroundPaletteColor2Cycle(pc,d0.w),(word_FFE37E).w
+                movea.w #(byte_FF9C1E-M68K_RAM),a0
+                moveq   #1,d0
+                move.w  #$60,d7                         ; '`'
+WeaponSetup_InitializeLineOffsetLoop:                   ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+66   j  ; was: loc_1F890
+                move.w  d0,(a0)+
+                subq.w  #2,d0
+                dbf     d7,WeaponSetup_InitializeLineOffsetLoop
+                movea.w #(byte_FF9C80-M68K_RAM),a0
+                move.l  (dword_FF8130).w,d0
+                subi.l  #Z80_RAM,d0
+                move.l  d0,d1
+                move.l  d0,d2
+                lsr.l   #1,d2
+                sub.l   d2,d0
+WeaponSetup_BuildFirstOffsetTableLoop:                  ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+AE   j  ; was: loc_1F8AE
+                swap    d0
+                move.w  d0,d3
+                addq.w  #6,d3
+                neg.w   d3
+                move.w  d0,d2
+                andi.w  #$FFFE,d2
+                move.w  d3,(a0,d2.w)
+                move.w  d0,d3
+                addq.w  #4,d3
+                move.w  d0,d2
+                addq.w  #2,d2
+                neg.w   d2
+                andi.w  #$FFFE,d2
+                move.w  d3,(a0,d2.w)
+                swap    d0
+                add.l   d1,d0
+                cmpi.l  #$600000,d0
+                bmi.s   WeaponSetup_BuildFirstOffsetTableLoop
+                move.l  (dword_FF8130).w,d0
+                move.l  d0,d1
+                move.l  d0,d2
+                lsr.l   #1,d2
+                sub.l   d2,d0
+WeaponSetup_BuildSecondOffsetTableLoop:                 ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+EA   j  ; was: loc_1F8EA
+                swap    d0
+                move.w  d0,d3
+                addq.w  #2,d3
+                neg.w   d3
+                move.w  d0,d2
+                andi.w  #$FFFE,d2
+                move.w  d3,(a0,d2.w)
+                move.w  d0,d3
+                subq.w  #8,d3
+                move.w  d0,d2
+                addq.w  #2,d2
+                neg.w   d2
+                andi.w  #$FFFE,d2
+                move.w  d3,(a0,d2.w)
+                swap    d0
+                add.l   d1,d0
+                cmpi.l  #$600000,d0
+                bmi.s   WeaponSetup_BuildSecondOffsetTableLoop
+                movea.w #(dword_FF9400-M68K_RAM),a0
+                move.l  #$EEEEEEEE,d0
+                moveq   #$FFFFFFFF,d1
+                moveq   #0,d2
+                moveq   #$13,d7
+WeaponSetup_ClearBackgroundTileLoop:                    ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+10C   j  ; was: loc_1F92A
+                move.l  d0,(a0)+
+                move.l  d2,(a0)+
+                move.l  d2,(a0)+
+                move.l  d2,(a0)+
+                move.l  d1,(a0)+
+                move.l  d2,(a0)+
+                move.l  d2,(a0)+
+                move.l  d2,(a0)+
+                dbf     d7,WeaponSetup_ClearBackgroundTileLoop
+                move.l  (dword_FF8130).w,d0
+                subi.l  #Z80_RAM,d0
+                move.l  d0,d1
+                move.l  d0,d2
+                lsr.l   #1,d2
+                sub.l   d2,d0
+WeaponSetup_DrawFirstDitherBandLoop:                    ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+148   j  ; was: loc_1F950
+                swap    d0
+                btst    #0,d0
+                beq.s   WeaponSetup_SelectFirstEvenDitherPattern
+                move.w  #$F,d1
+                move.w  #$F,d2
+                bra.s   WeaponSetup_DrawFirstDitherBandColumn
+; ---------------------------------------------------------------------------
+WeaponSetup_SelectFirstEvenDitherPattern:               ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+128   j  ; was: loc_1F962
+                move.w  #$F0,d1
+                move.w  #$FF,d2
+WeaponSetup_DrawFirstDitherBandColumn:                  ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+132   j  ; was: loc_1F96A
+                bsr.s   WeaponSetup_WriteDitherColumn
+                swap    d0
+                add.l   d1,d0
+                cmpi.l  #Z80_RAM,d0
+                bmi.s   WeaponSetup_DrawFirstDitherBandLoop
+                move.l  (dword_FF8130).w,d0
+                move.l  d0,d1
+                move.l  d0,d2
+                lsr.l   #1,d2
+                sub.l   d2,d0
+WeaponSetup_DrawSecondDitherBandLoop:                   ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+17C   j  ; was: loc_1F984
+                swap    d0
+                btst    #0,d0
+                beq.s   WeaponSetup_SelectSecondEvenDitherPattern
+                move.w  #$E,d1
+                move.w  #$FE,d2
+                bra.s   WeaponSetup_DrawSecondDitherBandColumn
+; ---------------------------------------------------------------------------
+WeaponSetup_SelectSecondEvenDitherPattern:              ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+15C   j  ; was: loc_1F996
+                move.w  #$E0,d1
+                move.w  #$EF,d2
+WeaponSetup_DrawSecondDitherBandColumn:                 ; CODE XREF: WeaponSetup_UpdateBackgroundEffect+166   j  ; was: loc_1F99E
+                bsr.s   WeaponSetup_WriteDitherColumn
+                swap    d0
+                add.l   d1,d0
+                cmpi.l  #Z80_RAM,d0
+                bmi.s   WeaponSetup_DrawSecondDitherBandLoop
+                movea.w #(dword_FF9400-M68K_RAM),a0
+                move.w  #$7000,d0
+                move.w  #$8F02,d3
+                move.l  #$94019340,d4
+                jmp     VDP_QueueCommand_Build
+; End of function WeaponSetup_UpdateBackgroundEffect
+; Writes a seven-row dither column into the background tile buffer
+WeaponSetup_WriteDitherColumn:                          ; CODE XREF: WeaponSetup_UpdateBackgroundEffect:WeaponSetup_DrawFirstDitherBandColumn   p  ; was: sub_1F9C4
+                                        ; WeaponSetup_UpdateBackgroundEffect:WeaponSetup_DrawSecondDitherBandColumn   p
+                move.w  d0,d3
+                move.w  d0,d4
+                asr.w   #1,d3
+                andi.w  #3,d3
+                andi.w  #$FFF8,d4
+                asl.w   #2,d4
+                add.w   d3,d4
+                addi.w  #-$6C00,d4
+                movea.w d4,a0
+                move.b  d1,4(a0)
+                move.b  d1,8(a0)
+                move.b  d1,$C(a0)
+                move.b  d2,$10(a0)
+                move.b  d1,$14(a0)
+                move.b  d1,$18(a0)
+                move.b  d1,$1C(a0)
+                rts
+; End of function WeaponSetup_WriteDitherColumn
+; ---------------------------------------------------------------------------
+WeaponSetup_HeadingText:    dc.b    0, $1D, $F, $1E, $1F, $1A, 0, $23, $19, $1F, $1C, 0, $21, $F, $B, $1A  ; was: byte_1F9FA
+                                        ; DATA XREF: WeaponSetup_RenderHeading+4   o
+                dc.b    $19, $18, $1D, 0, $FF
+WeaponSetup_BusterForceText:    dc.b    $C, $1F, $1D, $1E, $F, $1C, 0, $10, $19, $1C, $D, $F, $FF  ; was: byte_1FA0F
+                                        ; DATA XREF: ROM:0001F5FA   o
+WeaponSetup_RangerForceText:    dc.b    $1C, $B, $18, $11, $F, $1C, 0, $10, $19, $1C, $D, $F, $FF  ; was: byte_1FA1C
+                                        ; DATA XREF: ROM:0001F5FE   o
+WeaponSetup_FlameForceText: dc.b    $10, $16, $B, $17, $F, 0, $10, $19, $1C, $D, $F, $FF  ; was: byte_1FA29
+                                        ; DATA XREF: ROM:0001F602   o
+WeaponSetup_HomingForceText:    dc.b    $12, $19, $17, $13, $18, $11, 0, $10, $19, $1C, $D, $F, $FF  ; was: byte_1FA35
+                                        ; DATA XREF: ROM:0001F606   o
+WeaponSetup_SwordForceText: dc.b    $1D, $21, $19, $1C, $E, 0, $10, $19, $1C, $D, $F, $FF  ; was: byte_1FA42
+                                        ; DATA XREF: ROM:0001F60A   o
+WeaponSetup_LancerForceText:    dc.b    $16, $B, $18, $D, $F, $1C, 0, $10, $19, $1C, $D, $F, $FF  ; was: byte_1FA4E
+                                        ; DATA XREF: ROM:0001F60E   o
+WeaponSetup_ShootingModeText:   dc.b    $1D, $12, $19, $19, $1E, $13, $18, $11, 0, $17, $19, $E, $F, $FF  ; was: byte_1FA5B
+                                        ; DATA XREF: WeaponSetup_RenderShootingModeOptions:WeaponSetup_RenderShootingModeLabel   o
+WeaponSetup_MovingModeText: dc.b    $17, $19, $20, $13, $18, $11, $FF  ; was: byte_1FA69
+                                        ; DATA XREF: WeaponSetup_RenderShootingModeOptions:WeaponSetup_RenderMovingModeOption   o
+WeaponSetup_FixedModeText:      dc.b    $10, $13, $22, $FF  ; DATA XREF: WeaponSetup_RenderShootingModeOptions:WeaponSetup_RenderFixedModeOption   o  ; was: byte_1FA70
+WeaponSetup_StatusWindowText:   dc.b    $1D, $1E, $B, $1E, $1F, $1D, 0, $21, $13, $18, $E, $19, $21, $FF  ; was: byte_1FA74
+                                        ; DATA XREF: WeaponSetup_RenderStatusWindowLabel:WeaponSetup_RenderStatusWindowLabelWithColor   o
+WeaponSetup_ControlType01Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 0, $FF  ; was: byte_1FA82
+                                        ; DATA XREF: ROM:WeaponSetup_ControlTypeTextPointers   o
+WeaponSetup_ControlType02Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 0, $FF  ; was: byte_1FA8A
+                                        ; DATA XREF: ROM:0001F2D6   o
+WeaponSetup_ControlType03Text:  dc.b    $1E, $23, $1A, $F, $2E, 4, 0, $FF  ; was: byte_1FA92
+                                        ; DATA XREF: ROM:0001F2DA   o
+WeaponSetup_ControlType04Text:  dc.b    $1E, $23, $1A, $F, $2E, 5, 0, $FF  ; was: byte_1FA9A
+                                        ; DATA XREF: ROM:0001F2DE   o
+WeaponSetup_ControlType05Text:  dc.b    $1E, $23, $1A, $F, $2E, 6, 0, $FF  ; was: byte_1FAA2
+                                        ; DATA XREF: ROM:0001F2E2   o
+WeaponSetup_ControlType06Text:  dc.b    $1E, $23, $1A, $F, $2E, 7, 0, $FF  ; was: byte_1FAAA
+                                        ; DATA XREF: ROM:0001F2E6   o
+WeaponSetup_ControlType07Text:  dc.b    $1E, $23, $1A, $F, $2E, 8, 0, $FF  ; was: byte_1FAB2
+                                        ; DATA XREF: ROM:0001F2EA   o
+WeaponSetup_ControlType08Text:  dc.b    $1E, $23, $1A, $F, $2E, 9, 0, $FF  ; was: byte_1FABA
+                                        ; DATA XREF: ROM:0001F2EE   o
+WeaponSetup_ControlType09Text:  dc.b    $1E, $23, $1A, $F, $2E, $A, 0, $FF  ; was: byte_1FAC2
+                                        ; DATA XREF: ROM:0001F2F2   o
+WeaponSetup_ControlType10Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 1, $FF  ; was: byte_1FACA
+                                        ; DATA XREF: ROM:0001F2F6   o
+WeaponSetup_ControlType11Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 2, $FF  ; was: byte_1FAD2
+                                        ; DATA XREF: ROM:0001F2FA   o
+WeaponSetup_ControlType12Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 3, $FF  ; was: byte_1FADA
+                                        ; DATA XREF: ROM:0001F2FE   o
+WeaponSetup_ControlType13Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 4, $FF  ; was: byte_1FAE2
+                                        ; DATA XREF: ROM:0001F302   o
+WeaponSetup_ControlType14Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 5, $FF  ; was: byte_1FAEA
+                                        ; DATA XREF: ROM:0001F306   o
+WeaponSetup_ControlType15Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 6, $FF  ; was: byte_1FAF2
+                                        ; DATA XREF: ROM:0001F30A   o
+WeaponSetup_ControlType16Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 7, $FF  ; was: byte_1FAFA
+                                        ; DATA XREF: ROM:0001F30E   o
+WeaponSetup_ControlType17Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 8, $FF  ; was: byte_1FB02
+                                        ; DATA XREF: ROM:0001F312   o
+WeaponSetup_ControlType18Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, 9, $FF  ; was: byte_1FB0A
+                                        ; DATA XREF: ROM:0001F316   o
+WeaponSetup_ControlType19Text:  dc.b    $1E, $23, $1A, $F, $2E, 2, $A, $FF  ; was: byte_1FB12
+                                        ; DATA XREF: ROM:0001F31A   o
+WeaponSetup_ControlType20Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 1, $FF  ; was: byte_1FB1A
+                                        ; DATA XREF: ROM:0001F31E   o
+WeaponSetup_ControlType21Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 2, $FF  ; was: byte_1FB22
+                                        ; DATA XREF: ROM:0001F322   o
+WeaponSetup_ControlType22Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 3, $FF  ; was: byte_1FB2A
+                                        ; DATA XREF: ROM:0001F326   o
+WeaponSetup_ControlType23Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 4, $FF  ; was: byte_1FB32
+                                        ; DATA XREF: ROM:0001F32A   o
+WeaponSetup_ControlType24Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 5, $FF  ; was: byte_1FB3A
+                                        ; DATA XREF: ROM:0001F32E   o
+WeaponSetup_ControlType25Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 6, $FF  ; was: byte_1FB42
+                                        ; DATA XREF: ROM:0001F332   o
+WeaponSetup_ControlType26Text:  dc.b    $1E, $23, $1A, $F, $2E, 3, 7, $FF  ; was: byte_1FB4A
+                                        ; DATA XREF: ROM:0001F336   o
+WeaponSetup_ExitText:   dc.b    $F, $22, $13, $1E, $FF  ; was: byte_1FB52
+                                        ; DATA XREF: WeaponSetup_RenderExitText:WeaponSetup_RenderExitTextWithColor   o
+WeaponSetup_ControlTestText:    dc.b    $D, $19, $18, $1E, $1C, $19, $16, 0, $1E, $F, $1D, $1E, $FF  ; was: byte_1FB57
+                                        ; DATA XREF: ROM:WeaponSetup_ControlTestTextLayout   o
+WeaponSetup_WeaponSelectControlText:    dc.b    $21, $F, $B, $1A, $19, $18, 0, $1D, $F, $16, $F, $D, $1E, 0, $2E, 0  ; was: byte_1FB64
+                                        ; DATA XREF: ROM:0001F42C   o
+                dc.b    $E0, $E1, $FF
+WeaponSetup_ShotControlText:    dc.b    $1D, $12, $19, $1E, 0, $2E, 0, $E2, $E3, $FF  ; was: byte_1FB77
+                                        ; DATA XREF: ROM:0001F434   o
+WeaponSetup_JumpControlText:    dc.b    $14, $1F, $17, $1A, 0, $2E, 0, $E4, $E5, $FF  ; was: byte_1FB81
+                                        ; DATA XREF: ROM:0001F43C   o
+WeaponSetup_ShootingModeChangeControlText:  dc.b    $1D, $12, $19, $19, $1E, 0, $17, $19, $E, $F, 0, $D, $12, $B, $18, $11  ; was: byte_1FB8B
+                                        ; DATA XREF: ROM:0001F444   o
+                dc.b    $F, 0, $2E, 0, $E6, $E7, 0, $E8, 0, $E0, $E1, $FF
+WeaponSetup_ZeroTeleportControlText:    dc.b    $24, $F, $1C, $19, 0, $1E, $F, $16, $F, $1A, $19, $1C, $1E, 0, $2E, 0  ; was: byte_1FBA7
+                                        ; DATA XREF: ROM:0001F44C   o
+                dc.b    $E6, $E7, 0, $E8, 0, $E4, $E5, $FF
+WeaponSetup_CounterForceControlText:    dc.b    $D, $19, $1F, $18, $1E, $F, $1C, 0, $10, $19, $1C, $D, $F, 0, $2E, 0  ; was: byte_1FBBF
+                                        ; DATA XREF: ROM:0001F454   o
+                dc.b    $E2, $E3, 0, $E8, 0, $E2, $E3, $FF
+WeaponSetup_HoveringControlText:    dc.b    $12, $19, $20, $F, $1C, $13, $18, $11, 0, $2E, 0, $14, $1F, $17, $1A, 0  ; was: byte_1FBD7
+                                        ; DATA XREF: ROM:0001F45C   o
+                dc.b    $E8, 0, $E4, $E5, $FF

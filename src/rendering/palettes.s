@@ -28,11 +28,11 @@ Gfx_LoadPaletteFromRelativeOffset:                      ; CODE XREF: Gfx_LoadMul
                 bra.s   Gfx_LoadMultiplePalettes_NextOffset
 ; End of function Gfx_LoadMultiplePalettes
 ; ---------------------------------------------------------------------------
-StoryScreenPaletteOffsetList:       dc.w    $20A, 0     ; DATA XREF: Gfx_WaitForFadeAndLoadTiles+36   o  ; was: word_B944
-OptionsScreenPaletteOffsetList:     dc.w    $60, $E2, 0  ; DATA XREF: UI_InitOptionsScreen+72   o  ; was: word_B948
-StageStartPaletteOffsetList:        dc.w    $28A, $2B0, 0  ; DATA XREF: UI_InitializeStageStart+DC   o  ; was: word_B94E
-TitleAndOptionsPaletteOffsetList:   dc.w    $2D0, $2D6, 0  ; DATA XREF: Gfx_LoadMenuGraphics+32   o  ; was: word_B954
-ContinueScreenPaletteOffsetLists:   dc.w    $EE, $F4, $FA, $100, 0, $EE, $F4, $FA, $100, 0  ; was: word_B95A
+StoryScreenPaletteOffsetList:               dc.w    $20A, 0  ; DATA XREF: Gfx_WaitForFadeAndLoadTiles+36   o  ; was: word_B944
+OptionsScreenPaletteOffsetList:             dc.w    $60, $E2, 0  ; DATA XREF: UI_InitOptionsScreen+72   o  ; was: word_B948
+StageStartPaletteOffsetList:                dc.w    $28A, $2B0, 0  ; DATA XREF: UI_InitializeStageStart+DC   o  ; was: word_B94E
+WeaponSetupControlTestPaletteOffsetList:    dc.w    $2D0, $2D6, 0  ; DATA XREF: WeaponSetup_LoadControlTestText+32   o  ; was: word_B954
+ContinueScreenPaletteOffsetLists:           dc.w    $EE, $F4, $FA, $100, 0, $EE, $F4, $FA, $100, 0  ; was: word_B95A
                                         ; DATA XREF: UI_InitializeContinueScreen+40   o
 ResultsScreenPaletteOffsetList: dc.w    $EE, $F4, $FA, $100, 0  ; was: word_B96E
                                         ; DATA XREF: Results_InitializeScreen+6C   o

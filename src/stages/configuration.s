@@ -3,7 +3,7 @@ Sys_InitStageState:                                     ; CODE XREF: Stage_LoadB
                 jsr     (nullsub_1).l
                 bsr.w   Sys_ClearRAMBuffer
                 clr.w   (word_FFFF3E).w
-                move.w  (word_FFA21C).w,d0
+                move.w  (WeaponStateIndex).w,d0
                 beq.s   loc_12242
                 cmpi.w  #$10,d0
                 bpl.s   loc_12242
@@ -13,7 +13,7 @@ Sys_InitStageState:                                     ; CODE XREF: Stage_LoadB
 ; ---------------------------------------------------------------------------
 loc_12242:                                              ; CODE XREF: Sys_InitStageState+16   j
                                         ; Sys_InitStageState+1C   j
-                move.w  #2,(word_FFA21C).w
+                move.w  #2,(WeaponStateIndex).w
                 move.w  #4,(word_FFA21E).w
 loc_1224E:                                              ; CODE XREF: Sys_InitStageState+24   j
                 bsr.s   Stage_DispatchInitializer

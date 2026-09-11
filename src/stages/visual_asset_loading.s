@@ -412,7 +412,7 @@ Stage_LoadXiTigerGraphics:                              ; CODE XREF: Stage_XiTig
                 jsr     (nullsub_1).l
                 bsr.w   Sys_ClearRAMBuffer
                 clr.w   (word_FFFF3E).w
-                move.w  (word_FFA21C).w,d0
+                move.w  (WeaponStateIndex).w,d0
                 beq.s   loc_121C4
                 cmpi.w  #$10,d0
                 bpl.s   loc_121C4
@@ -422,7 +422,7 @@ Stage_LoadXiTigerGraphics:                              ; CODE XREF: Stage_XiTig
 ; ---------------------------------------------------------------------------
 loc_121C4:                                              ; CODE XREF: Stage_LoadXiTigerGraphics+16   j
                                         ; Stage_LoadXiTigerGraphics+1C   j
-                move.w  #2,(word_FFA21C).w
+                move.w  #2,(WeaponStateIndex).w
                 move.w  #4,(word_FFA21E).w
 loc_121D0:                                              ; CODE XREF: Stage_LoadXiTigerGraphics+24   j
                 bsr.s   Stage_LoadXiTigerPalette

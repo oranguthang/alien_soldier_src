@@ -1,8 +1,8 @@
-UI_RenderTargetingReticle:                              ; CODE XREF: UI_CalculateHealthBarSegments+22   j  ; was: sub_19292
+UI_RenderTargetingReticle:                              ; CODE XREF: Weapon_ConfigureState2Damage+22   j  ; was: sub_19292
                                         ; sub_17C7C:loc_17CB0   j
                 subq.w  #1,(word_FF8642).w
                 bpl.s   locret_192CE
-loc_19298:                                              ; CODE XREF: UI_ProcessTargetingSystem+7E   j
+loc_19298:                                              ; CODE XREF: Weapon_ConfigureState8Targeting+7E   j
                 clr.w   (word_FF8642).w
                 moveq   #0,d6
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
@@ -27,7 +27,7 @@ locret_192CE:                                           ; CODE XREF: UI_RenderTa
                 rts
 ; ---------------------------------------------------------------------------
 ; Calculates targeting reticle sprite position from enemy hitbox
-UI_CalculateReticlePosition:                            ; CODE XREF: UI_ProcessTargetingSystem+84   j  ; was: loc_192D0
+UI_CalculateReticlePosition:                            ; CODE XREF: Weapon_ConfigureState8Targeting+84   j  ; was: loc_192D0
                                         ; UI_RenderTargetingReticle+30   j
                 cmpi.w  #$160,$14(a0)
                 bpl.w   locret_192CE
@@ -91,7 +91,7 @@ UI_CalculateReticlePosition:                            ; CODE XREF: UI_ProcessT
                 dc.l    dword_193B2
                 dc.l    dword_193B2
                 dc.l    dword_193B2
-off_1938E:      dc.l    dword_193B2                     ; DATA XREF: UI_ProcessWeaponState+8   o
+Weapon_MotionTablePointers: dc.l    dword_193B2         ; DATA XREF: Weapon_UpdateCurrentState+8   o  ; was: off_1938E
                 dc.l    dword_19452
                 dc.l    dword_194F2
                 dc.l    dword_19592
@@ -157,7 +157,7 @@ dword_196D2:    dc.l    0, $22550, $4357C, $61C68, $7C72C
                 dc.l    $FFFBCA84, $FFFDDAB0, 0, $22550, $4357C
                 dc.l    $61C68, $7C72C, $92548, $A2980, $AC9DC
 dword_19772:    dc.l    0, $25740, $49770, $6AAA0, $87C30
-                                        ; DATA XREF: UI_UpdateWeaponGaugeSprite+C   o
+                                        ; DATA XREF: Weapon_ConfigureState10Gauge+C   o
                                         ; Weapon_SpawnHomingEffect+74   o
                 dc.l    $9FA20, $B1600, $BC4F0, $C0000, $BC4F0
                 dc.l    $B1600, $9FA20, $87C30, $6AAA0, $49770
@@ -167,7 +167,7 @@ dword_19772:    dc.l    0, $25740, $49770, $6AAA0, $87C30
                 dc.l    $FFFB6890, $FFFDA8C0, 0, $25740, $49770
                 dc.l    $6AAA0, $87C30, $9FA20, $B1600, $BC4F0
 dword_19812:    dc.l    0, $28930, $4F964, $738D8, $93134
-                                        ; DATA XREF: Enemy_CalculateVelocityFromPlayer+70   o
+                                        ; DATA XREF: Weapon_ConfigureState6Motion+70   o
                                         ; Weapon_FireProjectile+AE   o
                 dc.l    $ACEF8, $C0280, $CC004, $D0000, $CC004
                 dc.l    $C0280, $ACEF8, $93134, $738D8, $4F964

@@ -112,7 +112,7 @@ UI_TransitionToStageLoad:                               ; CODE XREF: UI_QueuePen
                                         ; Stage_HandleCreditsOrAdvance+32   j
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                jsr     (UI_UpdateWeaponSelection).l
+                jsr     (Weapon_CommitStateTransition).l
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0

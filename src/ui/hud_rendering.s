@@ -1,10 +1,10 @@
 UI_RenderHUDElement2:                                   ; CODE XREF: UI_RenderHUDElement1+108   p  ; was: sub_12E50
                 movea.w #(byte_FF8510-M68K_RAM),a0
                 movea.w a0,a3
-                move.w  (word_FFA24E).w,d0
+                move.w  (WeaponSlotOffset).w,d0
                 addi.w  #-$5DA0,d0
                 movea.w d0,a2
-                btst    #5,(byte_FFFF30).w
+                btst    #5,(ControlLayoutFlags).w
                 beq.s   loc_12E7A
                 move.w  #$C7E2,d0
                 move.w  d0,(a0)+
@@ -15,7 +15,7 @@ UI_RenderHUDElement2:                                   ; CODE XREF: UI_RenderHU
                 bra.w   loc_12F2C
 ; ---------------------------------------------------------------------------
 loc_12E7A:                                              ; CODE XREF: UI_RenderHUDElement2+16   j
-                btst    #1,(byte_FFFF30).w
+                btst    #1,(ControlLayoutFlags).w
                 beq.s   loc_12EB6
                 move.w  #$C7B4,d5
                 move.w  (a2),d0
@@ -165,7 +165,7 @@ loc_13000:                                              ; CODE XREF: UI_RenderHU
                 move.w  d1,(a0)+
 loc_13032:                                              ; CODE XREF: UI_RenderHUDElement3+14   j
                 movea.w #(byte_FF8570-M68K_RAM),a0
-                btst    #3,(byte_FFFF30).w
+                btst    #3,(ControlLayoutFlags).w
                 beq.s   loc_13056
                 move.w  #$C7E2,d0
                 move.w  d0,(a0)+
@@ -201,7 +201,7 @@ loc_13088:                                              ; CODE XREF: UI_RenderHU
                                         ; UI_RenderHUDElement3+B6   j
                 tst.w   (word_FF829E).w
                 bne.w   Scroll_UpdateShipScroll
-                btst    #2,(byte_FFFF30).w
+                btst    #2,(ControlLayoutFlags).w
                 beq.s   loc_130E2
                 move.w  #$C7B4,d5
                 move.w  (word_FF8206).w,d0
@@ -291,15 +291,15 @@ loc_13170:                                              ; CODE XREF: Scroll_Upda
 ; Processes multiple palette slots
 Gfx_ProcessPaletteSlots:                                ; CODE XREF: MessageSequence_FinishScript+C   j  ; was: sub_13178
                                         ; Stage_LoadXiTigerGraphics+34   p
-                move.w  (word_FFA24E).w,(dword_FF8040).w
-                clr.w   (word_FFA24E).w
+                move.w  (WeaponSlotOffset).w,(dword_FF8040).w
+                clr.w   (WeaponSlotOffset).w
                 moveq   #3,d7
 ; Processes each of 4 palette slots in sequence
 Gfx_ProcessPaletteSlotsLoop:                            ; CODE XREF: Gfx_ProcessPaletteSlots+12   j  ; was: loc_13184
                 bsr.s   Gfx_LoadPaletteData
-                addq.w  #2,(word_FFA24E).w
+                addq.w  #2,(WeaponSlotOffset).w
                 dbf     d7,Gfx_ProcessPaletteSlotsLoop
-                move.w  (dword_FF8040).w,(word_FFA24E).w
+                move.w  (dword_FF8040).w,(WeaponSlotOffset).w
                 rts
 ; End of function Gfx_ProcessPaletteSlots
 ; ---------------------------------------------------------------------------
@@ -309,14 +309,14 @@ word_13196:     dc.w    $50B8, $50BE, $50C4, $50CA
 ; Loads palette data from offset table
 Gfx_LoadPaletteData:                                    ; CODE XREF: Gfx_ProcessPaletteSlots:loc_13184   p  ; was: sub_1319E
                                         ; UI_InitializeStageStart+EC   p
-                move.w  (word_FFA24E).w,d0
+                move.w  (WeaponSlotOffset).w,d0
                 move.w  word_13196(pc,d0.w),d3
                 movea.w d0,a0
                 adda.w  #$A250,a0
                 move.w  (a0),d0
 ; End of function Gfx_LoadPaletteData
 ; Sets up VDP registers for sprite tiles
-Sprite_SetupTileVDP:                                    ; CODE XREF: Gfx_SetupWeaponSprites+20   p  ; was: sub_131AE
+Sprite_SetupTileVDP:                                    ; CODE XREF: WeaponSetup_InitializeTextAndTiles+20   p  ; was: sub_131AE
                 asl.w   #1,d0
                 addi.w  #-$3A7C,d0
                 movea.w (word_FFF70E).w,a1

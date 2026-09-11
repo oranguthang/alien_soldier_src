@@ -138,7 +138,7 @@ VDP_QueueCommand:                                       ; CODE XREF: Scroll_Upda
                 move.w  #$8F02,d3
                 movea.w (word_FFF70E).w,a0
 VDP_QueueCommand_Build:                                 ; CODE XREF: Boss_ShieldViperRenderBackground+32   j  ; was: loc_1B78C
-                                        ; Gfx_Update3DPlanetEffect+190   j
+                                        ; WeaponSetup_UpdateBackgroundEffect+190   j
                 movea.w (word_FFF70C).w,a1
                 move.w  d0,d1
                 moveq   #0,d2
