@@ -1,7 +1,7 @@
-VBlank_Epsilon1ScrollEffect:                            ; DATA XREF: VBlank_EffectDispatcher+4A   o  ; was: sub_195C
-                move.w  (word_FFF74E).w,d0
+VBlank_Epsilon1ScrollEffect:                            ; DATA XREF: VBlank_DispatchRasterEffect+4A   o  ; was: sub_195C
+                move.w  (RasterEffectInitState).w,d0
                 bne.w   loc_198A
-                addq.w  #4,(word_FFF74E).w
+                addq.w  #4,(RasterEffectInitState).w
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
                 lea     stru_19CC(pc),a0
                 nop
@@ -117,10 +117,10 @@ HBlank_SetModeWithDelay:
                 rte
 ; End of function HBlank_SetModeWithDelay
 ; Initializes VBlank effect for cutscene and story displays
-VBlank_InitCutsceneEffect:                              ; DATA XREF: VBlank_EffectDispatcher+52   o  ; was: sub_1A8E
-                move.w  (word_FFF74E).w,d0
+VBlank_InitCutsceneEffect:                              ; DATA XREF: VBlank_DispatchRasterEffect+52   o  ; was: sub_1A8E
+                move.w  (RasterEffectInitState).w,d0
                 bne.w   loc_1AB2
-                addq.w  #4,(word_FFF74E).w
+                addq.w  #4,(RasterEffectInitState).w
                 move.b  #3,(VDPReg10Shadow+1).w
                 lea     stru_1AC8(pc),a0
                 nop
@@ -146,13 +146,13 @@ HBlank_WriteVDPControl:
                 rte
 ; End of function HBlank_WriteVDPControl
 ; Updates boss sprites
-Boss_DestroyerProtoUpdateSprites:                       ; DATA XREF: VBlank_EffectDispatcher+5A   o  ; was: sub_1ADC
-                move.w  (word_FFF74E).w,d0
+Boss_DestroyerProtoUpdateSprites:                       ; DATA XREF: VBlank_DispatchRasterEffect+5A   o  ; was: sub_1ADC
+                move.w  (RasterEffectInitState).w,d0
                 bne.w   loc_1B0E
-                addq.w  #4,(word_FFF74E).w
+                addq.w  #4,(RasterEffectInitState).w
                 move.b  #1,(VDPReg10Shadow+1).w
                 move.w  (VDPReg10Shadow).w,(VDP_CTRL).l
-                lea     stru_1418(pc),a0
+                lea     HBlank_WriteVScroll0_InstallList(pc),a0
                 jsr     (LoadObjData).l
                 ori.b   #$10,(VDPReg0Shadow+1).w
                 move.w  (VDPReg0Shadow).w,(VDP_CTRL).l
@@ -163,10 +163,10 @@ loc_1B0E:                                               ; CODE XREF: Boss_Destro
                 rts
 ; End of function Boss_DestroyerProtoUpdateSprites
 ; VBlank effect handler
-Boss_ZLeoVBlankEffect:                                  ; DATA XREF: VBlank_EffectDispatcher+5E   o  ; was: sub_1B24
-                move.w  (word_FFF74E).w,d0
+Boss_ZLeoVBlankEffect:                                  ; DATA XREF: VBlank_DispatchRasterEffect+5E   o  ; was: sub_1B24
+                move.w  (RasterEffectInitState).w,d0
                 bne.w   loc_1B50
-                addq.w  #4,(word_FFF74E).w
+                addq.w  #4,(RasterEffectInitState).w
                 move.b  #0,(VDPReg10Shadow+1).w
                 lea     stru_1B6E(pc),a0
                 nop
@@ -262,10 +262,10 @@ HBlank_ZLeoScrollEffect:
                 rte
 ; End of function HBlank_ZLeoScrollEffect
 ; Initializes VBlank special stage effect with multiple layers
-VBlank_InitStageEffect:                                 ; DATA XREF: VBlank_EffectDispatcher+62   o  ; was: sub_1C1E
-                move.w  (word_FFF74E).w,d0
+VBlank_InitStageEffect:                                 ; DATA XREF: VBlank_DispatchRasterEffect+62   o  ; was: sub_1C1E
+                move.w  (RasterEffectInitState).w,d0
                 bne.w   loc_1C4A
-                addq.w  #4,(word_FFF74E).w
+                addq.w  #4,(RasterEffectInitState).w
                 move.b  #$80,(VDPReg10Shadow+1).w
                 lea     stru_1C6C(pc),a0
                 nop

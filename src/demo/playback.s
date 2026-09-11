@@ -61,8 +61,8 @@ Demo_PlaybackSystem_Exit:                               ; CODE XREF: Demo_Playba
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 clr.w   (word_FFFF5A).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.w  (word_FFFF5E).w,(DifficultyMode).w
                 move.w  (word_FFFF60).w,(SoundDisableFlags).w
                 move.b  (byte_FFFF66).w,(ControlLayoutFlags).w

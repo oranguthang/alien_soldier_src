@@ -3062,3 +3062,28 @@ promotes 18 sprite, command-queue, transfer-state, and VDP-shadow RAM fields.
 It adds 32 provenance mappings and 37 static audit records, raising the totals
 from 12,066 to 12,098 and from 8,503 to 8,540. The enforced address-derived
 ceiling falls from 3,975 to 3,943; module count remains 349.
+
+The raster-effect audit reconstructs the complete 460-line
+`rendering/vblank_effects.s` module and its 23-entry dispatcher. These are
+two-stage effects: the selected VBlank handler copies a ROM code block to
+`HBlankRAMCode` at `$FFFFEE00`, selects a scanline-data buffer and VDP
+register state, then the level-4 interrupt executes that installed code.
+The seven operation lists now identify the installed handler and its explicit
+copy-length field instead of retaining anonymous `stru_`/`word_` pairs.
+
+Port commands disprove four generated interpretations. The alleged null
+handler disables horizontal interrupts and writes an `RTE` opcode over the
+RAM handler entry. The alleged CRAM initializer installs a VSRAM-address-two
+writer. The alleged sprite-data path is a one-shot vertical-scroll split, and
+its HBlank handler neither touches sprite RAM nor horizontal scroll. The
+former generic screen-mode handler installs a buffered writer specifically
+for CRAM color index five. Story and Stage 10 update routines are also
+identified as HBlank code rather than ordinary VBlank rendering.
+
+This package corrects or refines 19 generated semantic names, replaces all 27
+live address-derived ROM definitions in `rendering/vblank_effects.s`, and
+promotes three raster-control RAM fields. It adds 30 provenance mappings and
+49 static audit records, raising the totals from 12,098 to 12,128 and from
+8,540 to 8,589. The enforced address-derived ceiling falls from 3,943 to
+3,913; module count remains 349, and the audited module contains no live
+address-derived definitions.

@@ -125,8 +125,8 @@ Boss_ShiperSetupState:                                  ; DATA XREF: ROM:000364A
                 move.w  #$14,4(a5)
                 move.w  #4,$174(a5)
                 addq.w  #2,(word_FFA950).w
-                move.w  #$24,(word_FFF74A).w            ; '$'
-                clr.w   (word_FFF74E).w
+                move.w  #$24,(RasterEffectIndex).w      ; '$'
+                clr.w   (RasterEffectInitState).w
                 move.w  #$A,(word_FF8090).w
                 move.b  #3,(byte_FFA95B).w
                 move.w  #8,$5A(a5)
@@ -448,8 +448,8 @@ Boss_ShiperDefeatSequenceBeginCleanup:                  ; CODE XREF: Boss_Shiper
                 move.w  #$40,$5A(a5)                    ; '@'
                 clr.w   6(a5)
                 move.w  #$30,$4A(a5)                    ; '0'
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 clr.w   (word_FF8090).w
                 move.b  #4,(byte_FFA95B).w
                 move.w  #$24,d0                         ; '$'

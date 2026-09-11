@@ -161,8 +161,8 @@ Boss_BugmaxEnablePrimaryLinkedPartCollisionLoop:        ; CODE XREF: Boss_Bugmax
                 lea     $60(a0),a0
                 dbf     d7,Boss_BugmaxEnablePrimaryLinkedPartCollisionLoop
                 move.w  #$10,$48(a5)
-                move.w  #$10,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #$10,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #2,(byte_FFA95B).w
                 move.w  #$E,(word_FF8090).w
                 move.w  #$140,(dword_FF940C).w

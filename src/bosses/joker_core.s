@@ -106,8 +106,8 @@ Boss_JokerEnableLinkedPartFlag7:                        ; CODE XREF: Boss_JokerS
                 move.w  #2,$35C(a5)
                 move.w  #$238,$10(a5)
                 move.w  #$40,$1DC(a5)                   ; '@'
-                move.w  #$10,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #$10,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.w  #$E,(word_FF8090).w
                 move.b  #2,(byte_FFA95B).w
                 bra.w   Boss_JokerBeginDiveState

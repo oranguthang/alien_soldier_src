@@ -61,8 +61,8 @@ Boss_DefeatSetupState:                                  ; DATA XREF: ROM:0002693
                 addq.w  #2,4(a5)
                 move.b  #3,(byte_FFA95B).w
                 move.w  #$14,(word_FF8090).w
-                move.w  #4,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #4,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 move.w  #8,(word_FF807A).w
@@ -141,8 +141,8 @@ Effect_StartTransition:                                 ; DATA XREF: ROM:00026A1
                 addq.w  #2,4(a5)
                 move.b  #3,(byte_FFA95B).w
                 move.w  #4,(word_FF8090).w
-                move.w  #$10,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #$10,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 move.b  #$CA,d0
@@ -170,8 +170,8 @@ Effect_UpdateTransition:                                ; DATA XREF: ROM:00026A1
                 bmi.w   Effect_ApplyTransitionMask
 Effect_UpdateTransition_Finish:                         ; CODE XREF: Boss_DefeatScrollUpdate+1E   j  ; was: loc_26ACE
                 clr.w   (word_FF807A).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 clr.w   (word_FF8090).w
                 bset    #4,2(a5)
                 move.b  #4,(byte_FFA95B).w
@@ -197,8 +197,8 @@ Effect_InitTransitionModeStandardA:                     ; DATA XREF: Effect_Tran
                                         ; ROM:Effect_TransitionModeOffsets   o
                 move.w  #4,(word_FF8090).w
                 move.b  #$80,(byte_FFA95B).w
-                move.w  #$10,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #$10,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 rts
@@ -207,8 +207,8 @@ Effect_InitTransitionModeStandardA:                     ; DATA XREF: Effect_Tran
 Effect_InitTransitionModeStandardB:                     ; DATA XREF: ROM:00026B00   o  ; was: sub_26B2A
                 move.w  #4,(word_FF8090).w
                 move.b  #$80,(byte_FFA95B).w
-                move.w  #$10,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #$10,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 rts
@@ -217,8 +217,8 @@ Effect_InitTransitionModeStandardB:                     ; DATA XREF: ROM:00026B0
 Effect_InitTransitionModeLong:                          ; DATA XREF: ROM:00026B06   o  ; was: sub_26B4C
                 move.w  #$14,(word_FF8090).w
                 move.b  #$80,(byte_FFA95B).w
-                move.w  #4,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #4,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 rts
@@ -228,8 +228,8 @@ Effect_InitTransitionModeKeepProgress:                  ; DATA XREF: ROM:00026B0
                                         ; ROM:00026B04   o
                 move.w  #4,(word_FF8090).w
                 move.b  #$80,(byte_FFA95B).w
-                move.w  #$10,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #$10,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 rts
 ; End of function Effect_InitTransitionModeKeepProgress

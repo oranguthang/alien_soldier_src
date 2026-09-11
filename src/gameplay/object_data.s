@@ -1,5 +1,5 @@
-LoadObjData:                                            ; CODE XREF: Effect_InitLettersEffect+20   p
-                                        ; Effect_InitStage2DemoEffect+1E   p
+LoadObjData:                                            ; CODE XREF: VBlank_InitLettersVScrollEffect+20   p
+                                        ; VBlank_InitStage2DemoVScrollEffect+1E   p
                 move.w  (a0)+,d0
                 bmi.w   LoadObjData_Return
                 lsl.w   #2,d0

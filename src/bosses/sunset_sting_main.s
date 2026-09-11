@@ -155,8 +155,8 @@ Boss_SunsetStingIntro:                                  ; DATA XREF: ROM:00042A9
                 clr.b   (byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
                 move.b  #0,(VDPReg11Shadow+1).w
-                move.w  #$34,(word_FFF74A).w            ; '4'
-                clr.w   (word_FFF74E).w
+                move.w  #$34,(RasterEffectIndex).w      ; '4'
+                clr.w   (RasterEffectInitState).w
                 bclr    #0,(a4)
                 move.l  #$FFFFF000,$58(a5)
                 move.w  #1,$1C(a5)
@@ -286,8 +286,8 @@ Boss_SunsetStingBeginCoreRepositionState:               ; DATA XREF: ROM:00042AA
                 clr.b   (byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
                 move.b  #0,(VDPReg11Shadow+1).w
-                move.w  #$34,(word_FFF74A).w            ; '4'
-                clr.w   (word_FFF74E).w
+                move.w  #$34,(RasterEffectIndex).w      ; '4'
+                clr.w   (RasterEffectInitState).w
                 bclr    #0,(a4)
                 move.w  #$14,$4A(a5)
 Boss_SunsetStingBeginCoreRepositionDelay:               ; CODE XREF: Boss_SunsetStingBeginCoreRepositionState+6   j  ; was: loc_42DB4
@@ -541,8 +541,8 @@ Boss_SunsetStingWaitForArenaTransitionState:            ; DATA XREF: ROM:00042AA
                 clr.b   (byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
                 move.b  #0,(VDPReg11Shadow+1).w
-                move.w  #$34,(word_FFF74A).w            ; '4'
-                clr.w   (word_FFF74E).w
+                move.w  #$34,(RasterEffectIndex).w      ; '4'
+                clr.w   (RasterEffectInitState).w
                 bclr    #0,(a4)
                 move.w  #$14,$4A(a5)
                 move.l  #$FFFFF000,$58(a5)
@@ -577,8 +577,8 @@ Boss_SunsetStingBeginDefeatState:                       ; DATA XREF: ROM:00042AA
                 clr.b   (byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
                 move.b  #0,(VDPReg11Shadow+1).w
-                move.w  #$34,(word_FFF74A).w            ; '4'
-                clr.w   (word_FFF74E).w
+                move.w  #$34,(RasterEffectIndex).w      ; '4'
+                clr.w   (RasterEffectInitState).w
                 bclr    #0,(a4)
                 move.w  $10(a3),$10(a5)
                 bsr.w   Physics_ClearVelocity
@@ -674,8 +674,8 @@ Boss_SunsetStingFinalDefeatUpdate:                      ; CODE XREF: Boss_Sunset
                 bra.w   Boss_SunsetStingNextState
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingFinalDefeatDisableCollision:            ; CODE XREF: Boss_SunsetStingFinalDefeatState+18   j  ; was: loc_43278
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #4,(byte_FFA95A).w
                 clr.w   2(a5)
                 move.b  #$FF,(a4)

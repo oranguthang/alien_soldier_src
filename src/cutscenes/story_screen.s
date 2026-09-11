@@ -25,8 +25,8 @@ Gfx_ClearPlaneB:                                        ; CODE XREF: Gfx_ClearPl
                 clr.w   (word_FF00EC).l
                 clr.w   (word_FF0178).l
                 move.b  #4,(VDPReg18Shadow+1).w
-                move.w  #$44,(word_FFF74A).w            ; 'D'
-                clr.w   (word_FFF74E).w
+                move.w  #$44,(RasterEffectIndex).w      ; 'D'
+                clr.w   (RasterEffectInitState).w
                 clr.w   (word_FF0176).l
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w

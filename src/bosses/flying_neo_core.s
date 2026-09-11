@@ -189,8 +189,8 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 jsr     (Gfx_LoadPalettePreservingSharedColor).l
                 lea     (PaletteFade_FlyingNeoEntryOffsets).l,a2
                 jsr     (Gfx_ClearColorFadeState).l
-                move.w  #$28,(word_FFF74A).w            ; '('
-                clr.w   (word_FFF74E).w
+                move.w  #$28,(RasterEffectIndex).w      ; '('
+                clr.w   (RasterEffectInitState).w
                 move.w  #$C,(word_FF8090).w
                 move.b  #3,(byte_FFA95B).w
                 move.w  #6,4(a5)

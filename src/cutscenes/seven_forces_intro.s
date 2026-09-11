@@ -53,8 +53,8 @@ SevenForces_SetupIntroDma:                              ; was: sub_54BDC
                 move.b  #$8A,(VDPReg17Shadow+1).w
                 move.b  #3,(byte_FFA95A).w
                 move.b  #3,(byte_FFA95B).w
-                move.w  #$58,(word_FFF74A).w            ; 'X'
-                clr.w   (word_FFF74E).w
+                move.w  #$58,(RasterEffectIndex).w      ; 'X'
+                clr.w   (RasterEffectInitState).w
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #1,(word_FFA946).w
                 jsr     (VDP_SetupDMA).l

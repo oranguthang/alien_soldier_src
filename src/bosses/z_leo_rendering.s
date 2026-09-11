@@ -451,14 +451,14 @@ Boss_ZLeoSpawnDefeatEffectReturn:                       ; CODE XREF: Boss_ZLeoSp
 ; End of function Boss_ZLeoSpawnDefeatEffect
 ; Accelerate the defeat-stage scroll and stop it at coordinate $200
 Boss_ZLeoUpdateDefeatStageScroll:                       ; CODE XREF: Boss_ZLeoBeginDefeatSequence+6C   p  ; was: sub_52A54
-                tst.w   (word_FFF74A).w
+                tst.w   (RasterEffectIndex).w
                 beq.s   Boss_ZLeoUpdateDefeatStageScrollReturn
                 cmpi.w  #$200,(dword_FFDB34).w
                 bmi.s   Boss_ZLeoAccelerateDefeatStageScroll
                 clr.l   $1C(a5)
                 move.w  #$200,(dword_FFDB34).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ZLeoAccelerateDefeatStageScroll:                   ; CODE XREF: Boss_ZLeoUpdateDefeatStageScroll+C   j  ; was: loc_52A76

@@ -19,8 +19,8 @@ Stage_InitStage9Flies:                                  ; DATA XREF: ROM:0000C8A
                 move.b  #3,(VDPReg11Shadow+1).w
                 move.b  #4,(byte_FFA95A).w
                 move.b  #$30,(byte_FFA95B).w            ; '0'
-                move.w  #$2C,(word_FFF74A).w            ; ','
-                clr.w   (word_FFF74E).w
+                move.w  #$2C,(RasterEffectIndex).w      ; ','
+                clr.w   (RasterEffectInitState).w
                 move.w  #8,(word_FF8090).w
                 clr.b   (byte_FF780C).l
                 jmp     loc_12340
@@ -33,8 +33,8 @@ Stage_FliesCheckTransition:                             ; DATA XREF: ROM:0000C8A
                 nop
                 jsr     (Data_ProcessPointer).l
                 addq.w  #2,(word_FFA950).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 clr.w   (word_FF8090).w
                 bra.s   Stage_InitCaterpillarShip
 ; End of function Stage_FliesCheckTransition

@@ -240,8 +240,8 @@ loc_1240C:                                              ; CODE XREF: Stage_InitS
                 clr.w   (word_FFA974).w
                 move.w  #$A,(word_FF8220).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
-                move.w  #$40,(word_FFF74A).w            ; '@'
-                clr.w   (word_FFF74E).w
+                move.w  #$40,(RasterEffectIndex).w      ; '@'
+                clr.w   (RasterEffectInitState).w
                 movea.w #(byte_FFEC12-M68K_RAM),a0
                 moveq   #$FFFFFFF0,d0
                 moveq   #$B,d7

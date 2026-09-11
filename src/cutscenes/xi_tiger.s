@@ -187,8 +187,8 @@ Cutscene_XiTigerScrollSetup:                            ; DATA XREF: ROM:0001E91
                 move.l  #$1820000,(dword_FF812C).w
                 clr.w   (dword_FF8130).w
                 move.w  #$FFE0,(dword_FF8134+2).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #7,(VDPReg11Shadow+1).w
                 move.b  #6,(byte_FFA95A).w
                 move.b  #9,(byte_FFA95B).w

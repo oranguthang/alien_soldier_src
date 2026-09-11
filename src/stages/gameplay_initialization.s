@@ -98,8 +98,8 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 bsr.w   WeaponSetup_ClearLoadoutAndRefillAmmo
                 jsr     (Player_InitializeStats).l
                 bsr.w   Gfx_InitColorTables
-                move.w  #$20,(word_FFF74A).w            ; ' '
-                clr.w   (word_FFF74E).w
+                move.w  #$20,(RasterEffectIndex).w      ; ' '
+                clr.w   (RasterEffectInitState).w
                 move.w  #6,(word_FF8090).w
                 move.b  #2,(byte_FFA95A).w
                 move.w  #$7000,d0

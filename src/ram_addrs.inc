@@ -852,7 +852,7 @@ word_FFEC48             equ     $FFFFEC48
 word_FFEC4C             equ     $FFFFEC4C
 byte_FFEC50             equ     $FFFFEC50
 word_FFED00             equ     $FFFFED00
-word_FFEE00             equ     $FFFFEE00
+HBlankRAMCode           equ     $FFFFEE00               ; was: word_FFEE00
 dword_FFF000            equ     $FFFFF000
 word_FFF400             equ     $FFFFF400
 VDPCommand              equ     $FFFFF700
@@ -874,8 +874,8 @@ dword_FFF730            equ     $FFFFF730
 SpriteOAMBuildActive    equ     $FFFFF744               ; was: byte_FFF744
 byte_FFF745             equ     $FFFFF745
 FrameTimingDebugFlag    equ     $FFFFF746               ; was: byte_FFF746
-word_FFF74A             equ     $FFFFF74A
-word_FFF74E             equ     $FFFFF74E
+RasterEffectIndex       equ     $FFFFF74A               ; was: word_FFF74A
+RasterEffectInitState   equ     $FFFFF74E               ; was: word_FFF74E
 VDPTransferPending      equ     $FFFFF754               ; was: byte_FFF754
 PaletteDMAHIntEnabled   equ     $FFFFF755               ; was: byte_FFF755
 SpriteOAMStartCount     equ     $FFFFF756               ; was: word_FFF756

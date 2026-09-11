@@ -4,8 +4,8 @@ Gfx_DecompressCutsceneData:                             ; CODE XREF: Cutscene_In
                 move.w  #$1E,(word_FF9F10).w
                 move.w  #$B,(word_FF9F12).w
                 move.w  #0,(word_FF9F14).w
-                move.w  #8,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #8,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.w  #2,(word_FF8090).w
                 rts
 ; End of function Gfx_DecompressCutsceneData

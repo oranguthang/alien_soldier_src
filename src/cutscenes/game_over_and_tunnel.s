@@ -10,8 +10,8 @@ Stage_InitGameOver:                                     ; DATA XREF: Sys_Dispatc
 loc_275E2:                                              ; CODE XREF: Stage_InitGameOver+4   j
                 addq.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                move.w  #$4C,(word_FFF74A).w            ; 'L'
-                clr.w   (word_FFF74E).w
+                move.w  #$4C,(RasterEffectIndex).w      ; 'L'
+                clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 move.w  #$12,(word_FF8090).w
                 move.b  #$28,(VDPReg2Shadow+1).w        ; '('
@@ -346,8 +346,8 @@ Stage_TunnelStartEffect:                                ; DATA XREF: Stage_Tunne
                 addq.w  #2,4(a5)
                 move.b  #3,(byte_FFA95B).w
                 move.w  #4,(word_FF8090).w
-                move.w  #$10,(word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                move.w  #$10,(RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 clr.w   (word_FF807C).w
                 move.b  #$AA,d0
@@ -373,8 +373,8 @@ Stage_TunnelUpdate:                                     ; DATA XREF: Stage_Tunne
                 cmpi.w  #$7F,(word_FF807C).w
                 bmi.s   loc_27A1A
                 clr.w   (word_FF807A).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 clr.w   (word_FF8090).w
                 bset    #4,2(a5)
                 move.b  #4,(byte_FFA95B).w

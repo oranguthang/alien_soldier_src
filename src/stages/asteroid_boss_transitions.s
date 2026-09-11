@@ -70,8 +70,8 @@ Boss_DestroyerProtoInit:                                ; DATA XREF: ROM:0000F10
                 jsr     (Gfx_LoadPaletteCommand).l
 loc_F2B0:                                               ; CODE XREF: Boss_DestroyerPhaseInit+14   j
                 clr.b   (byte_FFA958).w
-                move.w  #$50,(word_FFF74A).w            ; 'P'
-                clr.w   (word_FFF74E).w
+                move.w  #$50,(RasterEffectIndex).w      ; 'P'
+                clr.w   (RasterEffectInitState).w
                 move.w  #$16,(word_FF8090).w
                 move.w  #$60,(word_FF9D94).w            ; '`'
                 move.l  #$4000,(dword_FF9D9E).w
@@ -158,8 +158,8 @@ Boss_ShieldViperTransition:                             ; DATA XREF: ROM:0000F10
                 cmpi.w  #$FF80,(dword_FF9D96).w
                 bpl.s   locret_F400
                 addq.w  #2,(word_FFA950).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 clr.w   (word_FF8090).w
 locret_F400:                                            ; CODE XREF: Boss_ShieldViperTransition+E   j
                 rts
@@ -236,8 +236,8 @@ Boss_ShieldViperVRAMCleanup:                            ; CODE XREF: Boss_Shield
                 jsr     (Sprite_SetupDMA).l
                 tst.w   (word_FFA944).w
                 bpl.w   Boss_DestroyerProtoTransition_Return
-                move.w  #$50,(word_FFF74A).w            ; 'P'
-                clr.w   (word_FFF74E).w
+                move.w  #$50,(RasterEffectIndex).w      ; 'P'
+                clr.w   (RasterEffectInitState).w
                 move.w  #$16,(word_FF8090).w
                 clr.l   (dword_FF8066).w
                 move.l  #$600000,(dword_FF9D90).w
@@ -293,8 +293,8 @@ loc_F5A8:                                               ; CODE XREF: Boss_WolfGa
                 cmpi.w  #$F3E0,(dword_FFA90C).w
                 bpl.w   Boss_DestroyerProtoTransition_Return
                 addq.w  #2,(word_FFA950).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 clr.w   (word_FF8090).w
                 clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w

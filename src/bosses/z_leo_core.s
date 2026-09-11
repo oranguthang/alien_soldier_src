@@ -117,8 +117,8 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 move.w  #$3F8,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                move.w  #$54,(word_FFF74A).w            ; 'T'
-                clr.w   (word_FFF74E).w
+                move.w  #$54,(RasterEffectIndex).w      ; 'T'
+                clr.w   (RasterEffectInitState).w
                 move.w  #$18,(word_FF8090).w
                 bset    #7,(byte_FFA959).w
                 bset    #6,(byte_FFA959).w

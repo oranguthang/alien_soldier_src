@@ -213,8 +213,8 @@ Scroll_ApplyVelocity:                                   ; CODE XREF: Stage_Stage
 ; Updates Stage 12 scroll
 Stage_Stage12ScrollUpdate:                              ; DATA XREF: ROM:0000D970   o  ; was: sub_DAF4
                 move.b  #$40,(byte_FFA420).w            ; '@'
-                move.w  #$30,(word_FFF74A).w            ; '0'
-                clr.w   (word_FFF74E).w
+                move.w  #$30,(RasterEffectIndex).w      ; '0'
+                clr.w   (RasterEffectInitState).w
 ; Updates stage 12 scrolling with delta at position $1580
 Stage_Stage12_ScrollLoop:                               ; DATA XREF: ROM:0000D972   o  ; was: loc_DB04
                 bsr.w   Gfx_UpdateScroll
@@ -405,8 +405,8 @@ Stage_InitStage13:                                      ; CODE XREF: Stage_Snake
                 move.w  #$36,(word_FFA950).w            ; '6'
                 move.w  #$298,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
-                move.w  #$30,(word_FFF74A).w            ; '0'
-                clr.w   (word_FFF74E).w
+                move.w  #$30,(RasterEffectIndex).w      ; '0'
+                clr.w   (RasterEffectInitState).w
                 jsr     (Stage_LoadStage13Graphics).l
 ; End of function Stage_InitStage13
 ; Waits for scroll position before boss
@@ -435,8 +435,8 @@ Stage_BugmaxTransition:                                 ; DATA XREF: ROM:0000D99
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.w  #$1F,(word_FFA944).w
                 clr.w   (word_FFA946).w
                 move.w  #$6000,(dword_FFA940).w
@@ -487,8 +487,8 @@ Stage_BugmaxTransitionCheck:                            ; DATA XREF: ROM:0000D99
 ; Loads Stage 10 tile graphics and palette
 Stage_LoadStage10Graphics:                              ; CODE XREF: Stage_Stage10ScrollUpdate+6   p  ; was: sub_DE2E
                                         ; sub_DA40   p
-                move.w  #$30,(word_FFF74A).w            ; '0'
-                clr.w   (word_FFF74E).w
+                move.w  #$30,(RasterEffectIndex).w      ; '0'
+                clr.w   (RasterEffectInitState).w
                 jsr     (Stage10_InitAmbientParticles).l
                 addq.w  #2,(word_FFA950).w
                 rts

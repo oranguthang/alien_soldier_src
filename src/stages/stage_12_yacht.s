@@ -50,7 +50,7 @@ Stage12_YachtRevealPan:                                 ; DATA XREF: ROM:0002F5D
                 addq.w  #8,$50(a5)
                 cmpi.w  #$90,$50(a5)
                 bmi.w   Stage12_YachtControllerReturn
-                move.w  #$38,(word_FFF74A).w            ; '8'
+                move.w  #$38,(RasterEffectIndex).w      ; '8'
                 move.b  #3,(byte_FFA95A).w
                 bset    #7,(dword_FFA20E).w
                 addq.w  #2,4(a5)

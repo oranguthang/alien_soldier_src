@@ -6,8 +6,8 @@ Gfx_SetupTitleScreenLetters:                            ; DATA XREF: ROM:0000498
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 move.b  #0,(VDPReg18Shadow+1).w
-                clr.w   (word_FFF74A).w
-                clr.w   (word_FFF74E).w
+                clr.w   (RasterEffectIndex).w
+                clr.w   (RasterEffectInitState).w
                 move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
@@ -30,8 +30,8 @@ loc_4B96:                                               ; CODE XREF: Gfx_SetupTi
                 move.w  #$4680,d4
                 movea.l #byte_4CCC,a0
                 jsr     (UI_RenderTextStringWrapped).l
-                move.w  #$3C,(word_FFF74A).w            ; '<'
-                clr.w   (word_FFF74E).w
+                move.w  #$3C,(RasterEffectIndex).w      ; '<'
+                clr.w   (RasterEffectInitState).w
                 move.w  #$21,(word_FF0108).l            ; '!'
                 clr.w   (word_FF010C).l
                 bsr.w   Gfx_SetTitlePaletteColors

@@ -18,7 +18,7 @@ Int_VBlank_WaitForBlanking:                             ; CODE XREF: VBLANK+2E  
 Int_VBlank_DebugDelayLoop:                              ; CODE XREF: VBLANK:Int_VBlank_DebugDelayLoop   j  ; was: loc_AB8
                 dbf     d0,Int_VBlank_DebugDelayLoop
 Int_VBlank_RunEffects:                                  ; CODE XREF: VBLANK+36   j  ; was: loc_ABC
-                jsr     (VBlank_EffectDispatcher).l
+                jsr     (VBlank_DispatchRasterEffect).l
                 bsr.w   Gfx_ApplyHInterruptState
                 tst.b   (byte_FF830E).w
                 beq.s   Int_VBlank_UpdateFrameDivider
