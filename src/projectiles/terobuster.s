@@ -141,7 +141,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 move.w  (a4)+,d0
                 move.w  (a4)+,d1
                 move.w  (a4)+,d2
-                jsr     (Projectile_SpawnDirectional8Way).l
+                jsr     (Projectile_InitializeEightDirectionShot).l
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -154,7 +154,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 move.l  d0,$18(a0)
                 move.w  (a4)+,d1
                 move.w  (a4)+,d2
-                jsr     (Enemy_SpawnAnimatedProjectile).l
+                jsr     (Projectile_InitializeTerobusterGravityShot).l
 Boss_TerobusterSpawnMultiDirectionalReturn:             ; CODE XREF: Boss_TerobusterSpawnMultiDirectional+8   j  ; was: locret_39084
                                         ; Boss_TerobusterSpawnMultiDirectional+16   j
                 rts

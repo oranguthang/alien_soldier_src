@@ -286,7 +286,7 @@ UI_DecrementCounterBCD_Return:                          ; CODE XREF: UI_Decremen
                 rts
 ; End of function UI_DecrementCounterBCD
 ; Gets entity position coordinates for collision detection
-Collision_GetEntityPosition:                            ; CODE XREF: Enemy_BouncingProjectile:loc_2B5C0   p  ; was: sub_144CC
+Collision_GetEntityPosition:                            ; CODE XREF: Projectile_UpdateDelayedCollisionShot:Projectile_CheckDelayedCollisionShotTerrainDepth   p  ; was: sub_144CC
                                         ; sub_2B88A:loc_2B8AA   p
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
@@ -419,8 +419,8 @@ Physics_GetTerrainTileData_Return:                      ; CODE XREF: Physics_Get
                 rts
 ; End of function Physics_GetTerrainTileData
 ; Checks projectile collision with terrain tile map
-Collision_CheckProjectileTile:                          ; CODE XREF: Enemy_HomingProjectileMain:loc_2B30E   p  ; was: sub_145F4
-                                        ; sub_2B3E4:loc_2B45A   p
+Collision_CheckProjectileTile:                          ; CODE XREF: Projectile_UpdateTwoSpeedShotCollision:Projectile_CheckTwoSpeedShotTerrain   p  ; was: sub_145F4
+                                        ; sub_2B3E4:Projectile_CheckType254TwoSpeedShotTerrain   p
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
                 lea     (M68K_RAM).l,a0

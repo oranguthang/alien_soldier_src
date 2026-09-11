@@ -18,9 +18,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    UI_DebugSpriteEditor
                 dc.l    Enemy_ProcessObject
                 dc.l    Boss_JetsripperMain
-                dc.l    Projectile_ExplodeOnWall
-                dc.l    Projectile_DirectionalInitMain
-                dc.l    Projectile_BouncingWithGravity
+                dc.l    Projectile_UpdateEightDirectionShotCollision
+                dc.l    Projectile_ActivateEightDirectionShot
+                dc.l    Projectile_UpdateTerobusterGravityShot
                 dc.l    Physics_AccelerateDownward
                 dc.l    Projectile_UpdateDirectionalSpawner
                 dc.l    Weapon_UpdateSeekingProjectile
@@ -81,7 +81,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_CaterpillarHomingProjectileSegment
                 dc.l    Boss_CaterpillarFourPhaseSegment
                 dc.l    Boss_CaterpillarTwoPhaseSegment
-                dc.l    Enemy_HomingProjectileMain
+                dc.l    Projectile_UpdateTwoSpeedShotCollision
                 dc.l    Boss_ShellshogunDecisionPoseCommands
                 dc.l    Effect_TransitionObjectDispatcher
                 dc.l    Boss_FlyingNeoMain
@@ -94,7 +94,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Entity_FlyingNeoGravityAccel
                 dc.l    Projectile_FallingDebris
                 dc.l    Projectile_IntroFalling
-                dc.l    Enemy_BouncingProjectile
+                dc.l    Projectile_UpdateDelayedCollisionShot
                 dc.l    Projectile_FallingSpawner
                 dc.l    Sprite_InitCurrentFromTable
                 dc.l    Enemy_DelayedHide
@@ -148,7 +148,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Object_DestroyerMK2HorizontalPartMain
                 dc.l    UI_WeaponSelectionObject
                 dc.l    Effect_UpdateDashTrail
-                dc.l    Projectile_BulletWithDelayedPhysics
+                dc.l    Projectile_UpdateType254TwoSpeedShotCollision
                 dc.l    Object_DestroyerMK2MovingPartMain
                 dc.l    Object_DestroyerMK2FragmentGroupMain
                 dc.l    Object_TransitionDebrisMain

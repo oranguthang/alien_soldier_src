@@ -269,7 +269,7 @@ Enemy_Stage11FishFireVolleyState_UseUnflippedOrigin:    ; CODE XREF: Enemy_Stage
 Enemy_Stage11FishFireVolleyState_SpawnShot:             ; CODE XREF: Enemy_Stage11FishFireVolleyState+3A   j  ; was: loc_2ECE0
                 moveq   #0,d1
                 move.w  #$8004,d2
-                jsr     (Enemy_InitHomingProjectile).l
+                jsr     (Projectile_InitializeDifficultyScaledTwoSpeedShot).l
                 movem.w (sp)+,a5
                 btst    #3,$E(a5)
                 beq.s   Enemy_Stage11FishFireVolleyState_SetPositiveShotSpeed

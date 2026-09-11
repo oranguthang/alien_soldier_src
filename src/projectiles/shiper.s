@@ -58,7 +58,7 @@ Projectile_ShiperOscillatingShotUpdate:                 ; CODE XREF: Projectile_
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  #$8004,d2
-                jsr     (Enemy_InitDirectionalProjectile).l
+                jsr     (Projectile_InitializeAimedDelayedCollisionShot).l
 Projectile_ShiperOscillatingShotBurst:                  ; CODE XREF: Projectile_ShiperOscillatingShot+1A   j  ; was: loc_372B6
                                         ; Projectile_ShiperOscillatingShot+28   j
                 clr.l   $18(a5)

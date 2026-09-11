@@ -182,7 +182,7 @@ Boss_CaterpillarInitializeHomingProjectile:             ; CODE XREF: Boss_Caterp
                 move.w  Boss_CaterpillarHomingProjectileParameters+2(pc,d7.w),d0
                 move.w  Boss_CaterpillarHomingProjectileParameters+4(pc,d7.w),d1
                 move.w  #$8000,d2
-                jsr     (Enemy_InitHomingProjectile).l
+                jsr     (Projectile_InitializeDifficultyScaledTwoSpeedShot).l
                 move.l  #$FFFEE000,$18(a0)
                 subi.l  #$12000,$50(a0)
                 rts

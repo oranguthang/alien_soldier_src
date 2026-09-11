@@ -371,8 +371,8 @@ SharedCombatSpriteAnimation05:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF
                 dc.w    2
                 dc.w    SharedCombatSpriteFrame30-*
                 dc.w    $FF
-SharedCombatSpriteAnimation06:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF: ROM:stru_2B526   o  ; was: off_E9604
-                                        ; ROM:stru_2B534   o
+SharedCombatSpriteAnimation06:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF: ROM:Projectile_AimedDelayedCollisionShotDescriptor   o  ; was: off_E9604
+                                        ; ROM:Projectile_FixedAngleDelayedCollisionShotDescriptor   o
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame07-*
                 dc.w    1
@@ -437,7 +437,7 @@ SharedCombatSpriteAnimation11:  dc.w    SharedCombatSpriteFrame35-*  ; DATA XREF
                 dc.w    SharedCombatSpriteFrame35-*
                 dc.w    $FF
 SharedCombatSpriteAnimation12:  dc.w    SharedCombatSpriteFrame37-*  ; DATA XREF: Weapon_UpdateSeekingMissile+16   o  ; was: off_E9680
-                                        ; Enemy_InitHomingProjectile+34   o
+                                        ; Projectile_InitializeDifficultyScaledTwoSpeedShot+34   o
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame38-*
                 dc.w    1
@@ -487,8 +487,8 @@ SharedCombatSpriteAnimation15:  dc.w    SharedCombatSpriteFrame37-*  ; DATA XREF
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame40-*
                 dc.w    $FF
-SharedCombatSpriteAnimation16:  dc.w    SharedCombatSpriteFrame40-*  ; DATA XREF: ROM:stru_2B526   o  ; was: off_E96E0
-                                        ; ROM:stru_2B534   o
+SharedCombatSpriteAnimation16:  dc.w    SharedCombatSpriteFrame40-*  ; DATA XREF: ROM:Projectile_AimedDelayedCollisionShotDescriptor   o  ; was: off_E96E0
+                                        ; ROM:Projectile_FixedAngleDelayedCollisionShotDescriptor   o
                 dc.w    2
                 dc.w    SharedCombatSpriteFrame42-*
                 dc.w    2
@@ -574,8 +574,8 @@ SharedCombatSpriteAnimation23:  dc.w    SharedCombatSpriteFrame09-*  ; DATA XREF
                 dc.w    1
                 dc.w    SharedCombatSpriteAnimation23-*
                 dc.w    0
-SharedCombatSpriteAnimation24:  dc.w    SharedCombatSpriteFrame09-*  ; DATA XREF: Enemy_HomingProjectileMain+3E   o  ; was: off_E9788
-                                        ; Projectile_BulletWithDelayedPhysics+3E   o
+SharedCombatSpriteAnimation24:  dc.w    SharedCombatSpriteFrame09-*  ; DATA XREF: Projectile_UpdateTwoSpeedShotCollision+3E   o  ; was: off_E9788
+                                        ; Projectile_UpdateType254TwoSpeedShotCollision+3E   o
                 dc.w    2
                 dc.w    SharedCombatSpriteFrame11-*
                 dc.w    2

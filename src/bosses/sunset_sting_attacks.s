@@ -411,7 +411,7 @@ Boss_SunsetStingInitHomingProjectile:                   ; CODE XREF: Boss_Sunset
                 move.w  #0,d0
                 move.w  #0,d1
                 move.w  #$8000,d2
-                jsr     (Enemy_InitHomingProjectile).l
+                jsr     (Projectile_InitializeDifficultyScaledTwoSpeedShot).l
 Boss_SunsetStingInitHomingProjectileReturn:             ; CODE XREF: Boss_SunsetStingInitHomingProjectile+14   j  ; was: locret_41E2A
                 rts
 ; End of function Boss_SunsetStingInitHomingProjectile

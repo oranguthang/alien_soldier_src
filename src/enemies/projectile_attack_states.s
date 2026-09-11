@@ -281,7 +281,7 @@ Enemy_HomingAttackBurstState:                           ; DATA XREF: ROM:0002CE4
                 move.w  (word_FF808A).w,d2
                 addi.w  #$40,d2                         ; '@'
                 moveq   #$A,d7
-                jmp     Enemy_SetProjectileDifficulty
+                jmp     Projectile_InitializeTwoSpeedShot
 ; ---------------------------------------------------------------------------
 Enemy_HomingAttack_Return:                              ; CODE XREF: Enemy_HomingAttackInit+4E   j  ; was: locret_2CEC8
                                         ; Enemy_HomingAttackInit+62   j

@@ -311,7 +311,7 @@ Boss_Stage3OrbitingFormationFireHomingShot:             ; DATA XREF: ROM:0003419
                 move.w  #$FFE8,d0
                 clr.w   d1
                 move.w  #$8004,d2
-                jsr     (Enemy_InitHomingProjectile).l
+                jsr     (Projectile_InitializeDifficultyScaledTwoSpeedShot).l
                 move.w  #$A,4(a5)
 Boss_Stage3OrbitingFormationWaitForOrbitAlignment:      ; CODE XREF: Boss_Stage3OrbitingFormationFireHomingShot+4   j  ; was: loc_34326
                 tst.l   $54(a5)
@@ -342,7 +342,7 @@ Boss_Stage3OrbitingFormationFireFromNextPart:           ; CODE XREF: Boss_Stage3
                 add.w   (word_FFC66C).w,d6
                 andi.w  #$FF,d6
                 add.w   d6,d6
-                jsr     (Enemy_InitHomingProjectile).l
+                jsr     (Projectile_InitializeDifficultyScaledTwoSpeedShot).l
                 adda.w  #$60,a5                         ; '`'
                 dbf     d4,Boss_Stage3OrbitingFormationFireFromNextPart
 Boss_Stage3OrbitingFormationFinishPartRadialShots:      ; CODE XREF: Boss_Stage3OrbitingFormationFirePartRadialShots+30   j  ; was: loc_34396

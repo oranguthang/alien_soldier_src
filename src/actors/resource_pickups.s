@@ -3,8 +3,8 @@ Entity_EmptyState6:                                     ; DATA XREF: ROM:Entity_
                 rts
 ; End of function Entity_EmptyState6
 ; Creates the small pickup variant from the current object
-Pickup_SpawnSmallFromCurrentObject:                     ; CODE XREF: Projectile_ExplodeOnWall:loc_2B0FA   p  ; was: sub_2BCFE
-                                        ; sub_2B298:loc_2B306   p
+Pickup_SpawnSmallFromCurrentObject:                     ; CODE XREF: Projectile_UpdateEightDirectionShotCollision:Projectile_ConvertEightDirectionShotToPickup   p  ; was: sub_2BCFE
+                                        ; sub_2B298:Projectile_ConvertTwoSpeedShotToPickup   p
                 movea.w a5,a0
 Pickup_SpawnSmall:                                      ; CODE XREF: Enemy_UpdateBouncingObject+1E   p  ; was: loc_2BD00
                                         ; Effect_InitializeWolfGaropaBoundaryPair+64   p

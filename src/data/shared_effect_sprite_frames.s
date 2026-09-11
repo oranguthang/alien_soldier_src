@@ -31,7 +31,7 @@ Weapon_ImpactSpriteFrames:  dc.l    $244AC, $500F8F8    ; DATA XREF: Weapon_Hand
                 dc.l    $244B8, $500F8F8
                 dc.l    $144E8, $500F8F8
                 dc.w    $FFFF
-Enemy_AnimatedProjectileSpriteFrames:   dc.l    $244F6, $FCFC  ; DATA XREF: Enemy_SpawnAnimatedProjectile+A   o  ; was: dword_2ACD0
+Enemy_AnimatedProjectileSpriteFrames:   dc.l    $244F6, $FCFC  ; DATA XREF: Projectile_InitializeTerobusterGravityShot+A   o  ; was: dword_2ACD0
                 dc.l    $244F7, $FCFC
                 dc.l    $244F8, $FCFC
                 dc.l    $24CF7, $FCFC
@@ -42,7 +42,7 @@ Enemy_AnimatedProjectileSpriteFrames:   dc.l    $244F6, $FCFC  ; DATA XREF: Enem
                 dc.l    $FFFF0002
                 dc.w    $ACD0
 Effect_KnockbackImpactSpriteFrames: dc.l    $244AC, $500F8F8  ; DATA XREF: Effect_UpdateKnockbackParticle+70   o  ; was: dword_2AD16
-                                        ; Projectile_ExplodeOnWall+A0   o
+                                        ; Projectile_UpdateEightDirectionShotCollision+A0   o
                 dc.l    $244C4, $500F8F8
                 dc.w    $FFFF
 Boss_TerobusterProjectileSpriteFrames:  dc.l    $364CC, $500F8F8  ; DATA XREF: Boss_TerobusterDefeatDebrisState+4A   o  ; was: dword_2AD28

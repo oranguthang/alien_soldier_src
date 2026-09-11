@@ -299,7 +299,7 @@ Enemy_SpawnTrackedProjectile_SetParameters:             ; CODE XREF: Enemy_Spawn
                 move.w  (DifficultyMode).w,d7
                 asr.w   #1,d7
                 addi.w  #9,d7
-                jmp     Enemy_SetProjectileDifficulty
+                jmp     Projectile_InitializeTwoSpeedShot
 ; End of function Enemy_SpawnTrackedProjectile
 ; Converts a defeated enemy into the shared falling defeat object
 Enemy_ConvertToDefeatProjectile:                        ; CODE XREF: Enemy_BehaviorController+A   j  ; was: sub_2C622

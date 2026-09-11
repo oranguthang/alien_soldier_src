@@ -12,7 +12,7 @@ Math_CalculateDirectionIndex:                           ; CODE XREF: Boss_Caterp
                 rts
 ; End of function Math_CalculateAngleToPlayer
 ; Calculates angle between two entities using arctan lookup
-Math_CalculateAngleBetween:                             ; CODE XREF: Enemy_InitDirectionalProjectile+44   p  ; was: sub_3564
+Math_CalculateAngleBetween:                             ; CODE XREF: Projectile_InitializeAimedDelayedCollisionShot+44   p  ; was: sub_3564
                 movea.w a5,a4
                 movea.w a0,a5
                 bsr.s   Math_CalculateAngleToPlayer

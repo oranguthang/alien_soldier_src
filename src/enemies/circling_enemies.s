@@ -104,7 +104,7 @@ Enemy_UpdateCircularMotionAndFire:                      ; CODE XREF: Enemy_Circl
                 clr.w   d1
                 move.w  #$8004,d2
                 movea.w $56(a5),a0
-                jsr     (Enemy_InitHomingProjectile).l
+                jsr     (Projectile_InitializeDifficultyScaledTwoSpeedShot).l
 Enemy_UpdateCircularMotionAndFire_Return:               ; CODE XREF: Enemy_UpdateCircularMotionAndFire+2C   j  ; was: locret_2D3E6
                                         ; Enemy_UpdateCircularMotionAndFire+38   j
                 rts
@@ -323,7 +323,7 @@ Enemy_SpawnDifficultyProjectilePattern:                 ; DATA XREF: ROM:Entity_
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  #$8004,d2
-                jsr     (Enemy_InitDirectionalProjectile).l
+                jsr     (Projectile_InitializeAimedDelayedCollisionShot).l
 ; Fires the base four-projectile pattern on every difficulty
 Enemy_SpawnDifficultyProjectilePattern_Base:            ; CODE XREF: Enemy_SpawnDifficultyProjectilePattern+4   j  ; was: loc_2D664
                                         ; Enemy_SpawnDifficultyProjectilePattern+C   j

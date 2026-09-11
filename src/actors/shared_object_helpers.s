@@ -409,7 +409,7 @@ Anim_UpdateScriptAndHide_Hide:                          ; CODE XREF: Anim_Update
                 rts
 ; End of function Anim_UpdateScriptAndHide
 ; Animates sprite tile and size from script table with loop support
-Anim_UpdateLoopingScript:                               ; CODE XREF: Projectile_BouncingWithGravity:loc_2B6A4   p  ; was: sub_2A76E
+Anim_UpdateLoopingScript:                               ; CODE XREF: Projectile_UpdateTerobusterGravityShot:Projectile_AnimateAndAccelerateTerobusterGravityShot   p  ; was: sub_2A76E
                 subq.w  #1,$4C(a5)
                 bne.s   Anim_UpdateLoopingScript_Return
 Anim_UpdateLoopingScript_ReadFrame:                     ; CODE XREF: Anim_UpdateLoopingScript+2C   j  ; was: loc_2A774

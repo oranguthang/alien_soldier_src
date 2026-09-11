@@ -132,7 +132,7 @@ Boss_DestroyerMK2UpdateProjectedSweep:                  ; DATA XREF: ROM:0004B11
                 move.w  $14(a5),d4
                 move.w  $5A(a5),d6
                 andi.w  #$1FE,d6
-                jsr     (Boss_DestroyerMK2UpdateSprite).l
+                jsr     (Boss_DestroyerMK2SpawnProjectedShot).l
                 btst    #7,$58(a5)
                 bmi.s   Boss_DestroyerMK2AdvanceSweepAngleBackward
                 addi.w  #$10,$5A(a5)
@@ -401,7 +401,7 @@ Boss_DestroyerMK2ProjectedEffectLoop:                   ; CODE XREF: Boss_Destro
                 move.w  $58(a5),d3
                 move.w  $14(a5),d4
                 move.w  $5A(a5),d6
-                jsr     (Boss_DestroyerMK2UpdateSprite).l
+                jsr     (Boss_DestroyerMK2SpawnProjectedShot).l
                 addi.w  #$20,$5A(a5)                    ; ' '
                 subq.w  #1,$5C(a5)
                 bne.s   Boss_DestroyerMK2ProjectedEffectLoop

@@ -19,7 +19,7 @@ Enemy_FormationWavePrepareAimedShot:                    ; CODE XREF: Enemy_Forma
                 moveq   #0,d0
                 moveq   #1,d1
                 move.w  (word_FF808A).w,d2
-                jsr     (Enemy_SetProjectileDifficulty).l
+                jsr     (Projectile_InitializeTwoSpeedShot).l
 Enemy_FormationWaveFinishUpdate:                        ; CODE XREF: Enemy_FormationWaveMain+C   j  ; was: loc_32F24
                                         ; Enemy_FormationWaveMain+14   j
                 move.l  #SharedCombatSpriteAnimation00,8(a5)

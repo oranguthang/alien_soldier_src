@@ -3606,3 +3606,28 @@ from 12,726 to 12,764, the name-audit registry from 9,536 to 9,599, and the
 enforced address-derived ceiling falls from 3,321 to 3,283. All three Missiray
 modules now contain zero live address-derived definitions, remain cohesive at
 622, 616, and 436 lines, and preserve their original ROM order.
+
+The shared directional-and-gravity projectile pass reconstructs all 63
+definitions in ROM range `0x02AFBE-0x02B6A4` and renames the former
+`projectiles/enemy_patterns.s` container to the concrete 554-line
+`projectiles/directional_and_gravity_shots.s`. All 48 live address-derived
+definitions are removed and every definition receives an exact-address static
+audit record. The module contains the staged eight-direction type-`$50/$4C`
+shot, the type-`$148` two-speed shot family, an otherwise unidentified duplicate
+handler at object type `$254`, descriptor-driven type-`$17C` delayed-collision
+shots, and Terobuster's type-`$54` gravity shot.
+
+This pass rejects several earlier generated descriptions. The alleged homing
+shots never recalculate their heading after initialization: they use one-quarter
+of their stored velocity for three ticks and then switch to full velocity. The
+alleged bouncing type-`$17C` shot instead waits for its first animation to
+finish, arms collision, and creates a reverse-velocity impact object without
+bouncing. `Boss_DestroyerMK2UpdateSprite` allocates and initializes one projected
+shot rather than updating boss graphics. The type-`$254` handler remains
+owner-neutral because the object dispatch table proves the type, but no static
+producer proves an entity owner.
+
+Provenance rises from 12,764 to 12,812, the name-audit registry from 9,599 to
+9,662, and the enforced address-derived ceiling falls from 3,283 to 3,235. The
+renamed module has no live address-derived definitions, remains below the
+1,000-line ceiling, and preserves the original ROM range and include order.

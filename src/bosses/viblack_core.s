@@ -276,7 +276,7 @@ Boss_ViblackSpawnShotPairLoop:                          ; CODE XREF: Boss_Viblac
                 bpl.s   Boss_ViblackInitializeStandardRadialShot
                 move.w  #$8008,d2
                 moveq   #$24,d7                         ; '$'
-                jsr     (Enemy_SetProjectileDifficulty).l
+                jsr     (Projectile_InitializeTwoSpeedShot).l
                 bra.s   Boss_ViblackPositionRadialShot
 ; ---------------------------------------------------------------------------
 Boss_ViblackInitializeStandardRadialShot:               ; CODE XREF: Boss_ViblackRadialShotAttackState+48   j  ; was: loc_43CCE
