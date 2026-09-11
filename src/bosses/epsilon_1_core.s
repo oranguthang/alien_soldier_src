@@ -292,7 +292,7 @@ Boss_Epsilon1ClearAngleHistoryRowLoop:                  ; CODE XREF: Boss_Epsilo
                 move.w  $14(a5),(dword_FF940C+2).w
                 move.w  #2,$48(a5)
                 move.b  #$40,$20(a5)                    ; '@'
-                move.l  #word_EC046,8(a5)
+                move.l  #Boss_Epsilon1PrimaryBodyMapping,8(a5)
                 move.w  #$4300,$E(a5)
                 move.w  #$CC80,2(a5)
                 move.b  #$90,$21(a5)
@@ -311,7 +311,7 @@ Boss_Epsilon1ClearAngleHistoryRowLoop:                  ; CODE XREF: Boss_Epsilo
                 movea.w #(word_FFC6E0-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.b  $20(a5),$20(a0)
-                move.l  #word_EC082,8(a0)
+                move.l  #Boss_Epsilon1LinkedSidePartMapping,8(a0)
                 move.w  #$4B00,$E(a0)
                 move.w  #$CC80,2(a0)
                 move.l  #$F404F40A,$28(a0)
@@ -324,7 +324,7 @@ Boss_Epsilon1ClearAngleHistoryRowLoop:                  ; CODE XREF: Boss_Epsilo
                 movea.w #(word_FFC740-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.b  $20(a5),$20(a0)
-                move.l  #word_EC082,8(a0)
+                move.l  #Boss_Epsilon1LinkedSidePartMapping,8(a0)
                 move.w  #$4300,$E(a0)
                 move.w  #$CC80,2(a0)
                 move.l  #$F404F60C,$28(a0)

@@ -315,10 +315,10 @@ Boss_SharpssteelUpdateCoreSpriteFrames:                 ; CODE XREF: Boss_Sharps
                 jmp     Sprite_UpdateFourDirectionFrame
 ; End of function Boss_SharpssteelUpdateCoreSpriteFrames
 ; ---------------------------------------------------------------------------
-Boss_SharpssteelCoreDirectionalSpriteFrames:    dc.l    word_EC196  ; DATA XREF: Boss_SharpssteelUpdateCoreSpriteFrames   o
-                dc.l    word_EC21A
-                dc.l    word_EC1BA
-                dc.l    word_EC1DE
+Boss_SharpssteelCoreDirectionalSpriteFrames:    dc.l    Boss_SharpssteelCoreDirectionalMapping0  ; DATA XREF: Boss_SharpssteelUpdateCoreSpriteFrames   o
+                dc.l    Boss_SharpssteelCoreDirectionalMapping1
+                dc.l    Boss_SharpssteelCoreDirectionalMapping2
+                dc.l    Boss_SharpssteelCoreDirectionalMapping3
 
 ; Configures blade-part mappings and tile attributes for graphics set A
 Boss_SharpssteelConfigureBladeGraphicsSetA:             ; CODE XREF: Boss_SharpssteelInitializeState+46   p  ; was: sub_48856
@@ -375,18 +375,18 @@ Boss_SharpssteelApplyBladeGraphicsSetLoop:              ; CODE XREF: Boss_Sharps
                 rts
 ; End of function Boss_SharpssteelConfigureBladeGraphicsSetB
 ; ---------------------------------------------------------------------------
-Boss_SharpssteelBladeGraphicsMappingsB: dc.l    word_EC0BE  ; DATA XREF: Boss_SharpssteelConfigureBladeGraphicsSetB:Boss_SharpssteelSelectBladeGraphicsTableB   o
-                dc.l    word_EC0A6
-                dc.l    word_EC08E
-                dc.l    word_EC0D6
-                dc.l    word_EC0E2
-                dc.l    word_EC0EE
-Boss_SharpssteelBladeGraphicsMappingsA: dc.l    word_EC142  ; DATA XREF: Boss_SharpssteelConfigureBladeGraphicsSetA:Boss_SharpssteelSelectBladeGraphicsTableA   o
-                dc.l    word_EC12A
-                dc.l    word_EC112
-                dc.l    word_EC15A
-                dc.l    word_EC166
-                dc.l    word_EC172
+Boss_SharpssteelBladeGraphicsMappingsB: dc.l    Boss_SharpssteelBladeGraphicsBMapping0  ; DATA XREF: Boss_SharpssteelConfigureBladeGraphicsSetB:Boss_SharpssteelSelectBladeGraphicsTableB   o
+                dc.l    Boss_SharpssteelBladeGraphicsBMapping1
+                dc.l    Boss_SharpssteelBladeGraphicsBMapping2
+                dc.l    Boss_SharpssteelBladeGraphicsBMapping3
+                dc.l    Boss_SharpssteelBladeGraphicsBMapping4
+                dc.l    Boss_SharpssteelBladeGraphicsBMapping5
+Boss_SharpssteelBladeGraphicsMappingsA: dc.l    Boss_SharpssteelBladeGraphicsAMapping0  ; DATA XREF: Boss_SharpssteelConfigureBladeGraphicsSetA:Boss_SharpssteelSelectBladeGraphicsTableA   o
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping1
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping2
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping3
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping4
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping5
 
 ; Sets collision-box group sizes for the outer blade group
 Boss_SharpssteelSetOuterBladeGroupSizes:                ; CODE XREF: Boss_SharpssteelCloseRangeBladeAttackState+32   p  ; was: sub_4893A

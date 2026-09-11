@@ -562,20 +562,20 @@ Boss_SharpssteelInlineSpriteDescriptorA:    dc.w    $63F9, $A00, $F4F4  ; DATA X
                                         ; ROM:0003523C   o
 Boss_SharpssteelInlineSpriteDescriptorB:    dc.w    $6402, $500, $F8F8  ; DATA XREF: ROM:00035240   o  ; was: word_3521A
                                         ; ROM:00035250   o
-Boss_SharpssteelMetaspriteDescriptors:  dc.l    word_EC142+$400000  ; DATA XREF: Boss_SharpssteelInitializeState+E   o  ; was: off_35220
-                dc.l    word_EC12A+$400000
-                dc.l    word_EC112+$400000
-                dc.l    word_EC15A+$400000
-                dc.l    word_EC166+$400000
-                dc.l    word_EC172+$400000
+Boss_SharpssteelMetaspriteDescriptors:  dc.l    Boss_SharpssteelBladeGraphicsAMapping0+$400000  ; DATA XREF: Boss_SharpssteelInitializeState+E   o  ; was: off_35220
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping1+$400000
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping2+$400000
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping3+$400000
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping4+$400000
+                dc.l    Boss_SharpssteelBladeGraphicsAMapping5+$400000
                 dc.l    Boss_SharpssteelInlineSpriteDescriptorA+1
                 dc.l    Boss_SharpssteelInlineSpriteDescriptorA+1
                 dc.l    Boss_SharpssteelInlineSpriteDescriptorB+1
-                dc.l    word_EC196+$400000
+                dc.l    Boss_SharpssteelCoreDirectionalMapping0+$400000
                 dc.l    Boss_SharpssteelInlineSpriteDescriptorA+1
                 dc.l    Boss_SharpssteelInlineSpriteDescriptorA+1
                 dc.l    Boss_SharpssteelInlineSpriteDescriptorB+1
-                dc.l    word_EC196+$400000
+                dc.l    Boss_SharpssteelCoreDirectionalMapping0+$400000
                 dc.l    0
                 dc.l    0
                 dc.l    0

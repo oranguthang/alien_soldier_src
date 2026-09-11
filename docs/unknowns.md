@@ -3867,3 +3867,37 @@ the mean to 328.4 lines; the largest module remains 986 lines, with zero files
 above 1,000 lines and zero generic container filenames. A fresh pinned-toolchain
 build and direct verification reproduce the canonical Japanese ROM byte for
 byte at SHA-1 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
+
+The Gusthead through Sharpssteel mapping pass corrects another imported owner
+claim. `data/epsilon_1_and_valkirie_mappings.s` contains no Valkirie mapping:
+its first three records are assigned by Epsilon 1, while every remaining record
+is selected by Sharpssteel's blade-graphics, core-direction, or metasprite
+tables. The boundary is exact because the final Epsilon linked-side-part
+mapping ends at `0x0EC08D` and Sharpssteel's first mapping begins at
+`0x0EC08E`.
+
+The Epsilon records now form the 14-line
+`data/epsilon_1_sprite_mappings.s` module at `0x0EC046-0x0EC08D`: one primary
+body mapping, one alternate body mapping, and the mapping installed on both
+linked side parts. The Sharpssteel records form the 73-line
+`data/sharpssteel_sprite_mappings.s` module at `0x0EC08E-0x0EC237`. Its two
+six-entry blade-graphics tables and four-entry directional-core table establish
+every index; the metasprite descriptor table independently reuses all six set-A
+mappings and the first core mapping.
+
+The adjacent Gusthead bank remains one cohesive owner rather than being split
+to satisfy a line target. It is renamed to the explicit 19-line
+`data/gusthead_sprite_mappings.s` module at `0x0EBFE0-0x0EC045`. Gusthead's
+root table already proved the first two records, while the sixteen-entry
+angle-quantized segment table proves the remaining seven distinct mappings and
+their repeated ranges. Neutral letters distinguish physical mapping records
+without inventing visual pose semantics.
+
+All 26 newly reviewed address-derived definitions have exact-address static
+audit records. Provenance rises from 13,142 to 13,168, the name-audit registry
+from 9,997 to 10,023, and the enforced address-derived ceiling falls from 2,906
+to 2,880. The corrected owner split raises the layout from 362 to 363 modules
+and changes the mean to 327.4 lines; the largest module remains 986 lines, with
+zero files above 1,000 lines and zero generic container filenames. A fresh
+pinned-toolchain build and direct verification again reproduce the canonical
+Japanese ROM byte for byte.

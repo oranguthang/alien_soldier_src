@@ -369,7 +369,7 @@ Boss_Epsilon1SelectBodyPoseReturn:                      ; CODE XREF: Boss_Epsilo
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1UseAlternateBodyPose:                      ; CODE XREF: Boss_Epsilon1SelectBodyPoseState+12   j  ; was: loc_46BAA
                                         ; Boss_Epsilon1SelectBodyPoseState+1C   j
-                move.l  #word_EC05E,8(a5)
+                move.l  #Boss_Epsilon1AlternateBodyMapping,8(a5)
                 move.w  #8,(dword_FF9420+2).w
                 move.w  #2,(dword_FF9418+2).w
                 cmpi.w  #$10,4(a5)
@@ -379,7 +379,7 @@ Boss_Epsilon1UseAlternateBodyPose:                      ; CODE XREF: Boss_Epsilo
                 rts
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1StartHorizontalBodySway:                   ; CODE XREF: Boss_Epsilon1SelectBodyPoseState+6   j  ; was: loc_46BD2
-                move.l  #word_EC05E,8(a5)
+                move.l  #Boss_Epsilon1AlternateBodyMapping,8(a5)
                 move.w  #2,(dword_FF9420+2).w
                 move.w  #4,(dword_FF9418+2).w
                 move.b  #$52,d0                         ; 'R'
@@ -390,7 +390,7 @@ Boss_Epsilon1StartHorizontalBodySway:                   ; CODE XREF: Boss_Epsilo
 Boss_Epsilon1HoldAlternateBodyPoseState:                ; DATA XREF: ROM:00046B82   o  ; was: sub_46BF2
                 subq.w  #1,(dword_FF9420+2).w
                 bne.s   Boss_Epsilon1HoldAlternateBodyPoseReturn
-                move.l  #word_EC046,8(a5)
+                move.l  #Boss_Epsilon1PrimaryBodyMapping,8(a5)
                 move.w  #0,(dword_FF9418+2).w
 Boss_Epsilon1HoldAlternateBodyPoseReturn:               ; CODE XREF: Boss_Epsilon1HoldAlternateBodyPoseState+4   j  ; was: locret_46C06
                 rts
@@ -424,7 +424,7 @@ Boss_Epsilon1ReturnBodyOffsetToCenterState:             ; DATA XREF: ROM:00046B8
                 rts
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1FinishHorizontalBodySway:                  ; CODE XREF: Boss_Epsilon1ReturnBodyOffsetToCenterState+10   j  ; was: loc_46C46
-                move.l  #word_EC046,8(a5)
+                move.l  #Boss_Epsilon1PrimaryBodyMapping,8(a5)
                 bclr    #6,$22(a5)
                 move.w  #0,(dword_FF9418+2).w
 Boss_Epsilon1ReturnBodyOffsetToCenterReturn:            ; CODE XREF: Boss_Epsilon1ReturnBodyOffsetToCenterState+A   j  ; was: locret_46C5A

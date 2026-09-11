@@ -345,22 +345,22 @@ Boss_GustheadUpdateSegmentMapping:                      ; CODE XREF: Boss_Gusthe
                 rts
 ; End of function Boss_GustheadUpdateSegmentMapping
 ; ---------------------------------------------------------------------------
-Boss_GustheadSegmentMappings:   dc.l    word_EC010      ; DATA XREF: Boss_GustheadUpdateSegmentMapping+18   r  ; was: off_4054A
-                dc.l    word_EC010
-                dc.l    word_EC010
-                dc.l    word_EC016
-                dc.l    word_EC016
-                dc.l    word_EC01C
-                dc.l    word_EC01C
-                dc.l    word_EC022
-                dc.l    word_EC022
-                dc.l    word_EC028
-                dc.l    word_EC028
-                dc.l    word_EC02E
-                dc.l    word_EC02E
-                dc.l    word_EC034
-                dc.l    word_EC034
-                dc.l    word_EC034
+Boss_GustheadSegmentMappings:   dc.l    Boss_GustheadSegmentMappingA  ; DATA XREF: Boss_GustheadUpdateSegmentMapping+18   r  ; was: off_4054A
+                dc.l    Boss_GustheadSegmentMappingA
+                dc.l    Boss_GustheadSegmentMappingA
+                dc.l    Boss_GustheadSegmentMappingB
+                dc.l    Boss_GustheadSegmentMappingB
+                dc.l    Boss_GustheadSegmentMappingC
+                dc.l    Boss_GustheadSegmentMappingC
+                dc.l    Boss_GustheadSegmentMappingD
+                dc.l    Boss_GustheadSegmentMappingD
+                dc.l    Boss_GustheadSegmentMappingE
+                dc.l    Boss_GustheadSegmentMappingE
+                dc.l    Boss_GustheadSegmentMappingF
+                dc.l    Boss_GustheadSegmentMappingF
+                dc.l    Boss_GustheadSegmentMappingG
+                dc.l    Boss_GustheadSegmentMappingG
+                dc.l    Boss_GustheadSegmentMappingG
 
 ; Derives arena scroll velocity from the active joint speed
 Boss_GustheadUpdateArenaScrollVelocity:                 ; CODE XREF: Boss_GustheadSweepOuterJointState+8   p  ; was: sub_4058A

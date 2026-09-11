@@ -162,7 +162,7 @@ Boss_GustheadSetupSegmentLoop:                          ; CODE XREF: Boss_Gusthe
                 move.w  #$1BC,(a0)
                 move.w  #$4C00,2(a0)
                 move.w  #$B00,$E(a0)
-                move.l  #word_EC022,8(a0)
+                move.l  #Boss_GustheadSegmentMappingD,8(a0)
                 tst.b   d0
                 bne.s   Boss_GustheadUseInnerSegmentRadius
                 move.w  #$28,$48(a0)                    ; '('
