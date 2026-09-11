@@ -663,7 +663,7 @@ StoryScreen_WaitThenStartExitFade:                      ; DATA XREF: ROM:0000498
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
 StoryScreen_StartExitFade:                              ; was: loc_5102
-                                        ; Effect_UpdateGameRotation+44   j
+                                        ; Effect_RevealGamePattern+44   j
                 bclr    #0,(word_FF80F4).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w

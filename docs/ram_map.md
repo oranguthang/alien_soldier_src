@@ -141,6 +141,34 @@ alone does not yet prove the exact player-facing counting convention.
 | `StoryTitleGlyphsLeft` | `$FFFF010A` | Only the story-title reveal initializes this word to twelve and decrements it after each revealed `ALIENSOLDIER` glyph. |
 | `CutscenePaletteStep` | `$FFFF010C` | Story-title, credits, starfield, and planet states use this shared word as the signed or indexed step supplied to their palette-update routines. |
 
+## Reviewed cutscene grid and pattern-dissolve fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PatternVDPCommand` | `$FFFF00C0` | Planet and frontend setups store the base VDP write command here; dissolve selection adds its chosen pattern-word offset before queuing DMA. |
+| `PatternDissolveStep` | `$FFFF00C6` | Erase and reveal routines move this signed index through the 64-entry shuffled word order and test its `$40` and negative endpoints. |
+| `PatternFrameMask` | `$FFFF00C8` | Pattern-step routines AND the frame counter with this value to select their update cadence. |
+| `ShipPatternVDPCommand` | `$FFFF00CA` | Ship-grid setup stores the pattern VRAM command here; ship dissolve selection adds the selected word offset. |
+| `ShipPatternStep` | `$FFFF00D0` | Ship erase and reveal routines move this signed index through the common dissolve order. |
+| `ShipPatternFrameMask` | `$FFFF00D2` | Ship pattern-step routines AND the frame counter with this value to select their cadence. |
+| `SpriteGridCenterY` | `$FFFF00D4` | The planet-object copier and frontend setups write the vertical center consumed by the generic grid renderer. |
+| `SpriteGridCenterX` | `$FFFF00D6` | The planet-object copier and frontend setups write the horizontal center consumed by the generic grid renderer. |
+| `SpriteGridRowLimit` | `$FFFF00D8` | The generic renderer uses this DBF limit both to center and enumerate grid rows. |
+| `SpriteGridColumnLimit` | `$FFFF00DA` | The generic renderer uses this DBF limit both to center and enumerate grid columns. |
+| `SpriteGridFirstTile` | `$FFFF00DC` | Setup code stores the first tile attribute here and the renderer increments it across emitted cells. |
+| `ShipGridCenterY` | `$FFFF00DE` | The ship-grid renderer copies the object's vertical coordinate here before centering rows. |
+| `ShipGridCenterX` | `$FFFF00E0` | The ship-grid renderer copies the object's horizontal coordinate here before centering columns. |
+| `ShipGridRowLimit` | `$FFFF00E2` | The ship renderer uses this DBF limit to center and enumerate its rows. |
+| `ShipGridColumnLimit` | `$FFFF00E4` | The ship renderer uses this DBF limit to center and enumerate its columns. |
+| `ShipGridFirstTile` | `$FFFF00E6` | Ship-grid setup stores the first tile attribute here and the renderer increments it across emitted cells. |
+| `StarRowSeparation` | `$FFFF00E8` | Expansion and collapse change this word while the updater subtracts it from the upper row and adds it to the lower row. |
+| `StarRowState` | `$FFFF00EA` | The star-row dispatcher uses this even word directly as its six-entry table index. |
+| `PlanetGridState` | `$FFFF00EE` | The planet-grid dispatcher uses this even word directly as its eleven-entry table index. |
+| `ShipGridState` | `$FFFF00F0` | The ship-grid dispatcher uses this even word directly as its ten-entry table index. |
+| `PlanetGridTimer` | `$FFFF00F2` | Planet-grid setup and hold states load and decrement this word as their frame timer. |
+| `ShipGridTimer` | `$FFFF00F4` | Ship-grid delay and hold states load and decrement this word as their frame timer. |
+| `StarRowTimer` | `$FFFF00FE` | Star-row delay and hold states load and decrement this word as their frame timer. |
+
 ## Reviewed VBlank transfer and VDP-shadow fields
 
 | Symbol | Address | Static evidence |

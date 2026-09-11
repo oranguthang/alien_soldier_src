@@ -20,6 +20,11 @@ default evidence level is `hypothesis`. Correcting a semantic name must retain
 the same historical mapping unless a documented source correction proves that
 the mapping itself was wrong.
 
+The current reconstruction carries 12,406 checked mappings. The total grows
+when a live address-derived ROM or RAM definition receives an evidence-backed
+name; corrections to an already renamed symbol retain its existing imported
+IDA mapping and therefore do not inflate this count.
+
 A few definitions in the imported disassembly were already named by an
 extraction role rather than by address. The provenance grammar admits only
 the exact historical `JumpTable1`, `JumpTable2`, and `PCMPart1` through

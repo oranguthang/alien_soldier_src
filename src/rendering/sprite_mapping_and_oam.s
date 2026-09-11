@@ -421,8 +421,8 @@ Anim_SelectTableFrame_ResolveEntry:                     ; CODE XREF: Anim_Select
                 rts
 ; End of function Anim_SelectTableFrame
 ; Appends terminated eight-byte OAM entries and links them through their priority buckets
-Sprite_AppendOAMEntries:                                ; CODE XREF: Cutscene_PlanetScroll+6C   j  ; was: sub_258C
-                                        ; Cutscene_RenderSpriteGrid+7C   j
+Sprite_AppendOAMEntries:                                ; CODE XREF: Cutscene_RenderPlanetSpriteGrid+6C   j  ; was: sub_258C
+                                        ; Cutscene_RenderShipSpriteGrid+7C   j
                 movea.l a0,a4
                 move.b  (SpriteOAMEntryCount).w,d4
                 movea.w (SpriteOAMWritePointer).w,a3

@@ -1,4 +1,4 @@
-word_189D38:    dc.w    $2880, $F00, $C0                ; DATA XREF: Cutscene_SetupPlanetRotate+18   o
+word_189D38:    dc.w    $2880, $F00, $C0                ; DATA XREF: Cutscene_SetupFirstPlanetGrid+18   o
                 dc.w    $2870, $F00, $E0
                 dc.w    $2860, $F00, 0
                 dc.w    $2850, $F00, $20
@@ -6,14 +6,14 @@ word_189D38:    dc.w    $2880, $F00, $C0                ; DATA XREF: Cutscene_Se
                 dc.w    $2830, $F00, $E0E0
                 dc.w    $2820, $F00, $E000
                 dc.w    $A810, $F00, $E020
-word_189D68:    dc.w    $28C0, $400, $AF0               ; DATA XREF: Cutscene_InitStarSprites+18   o
-                                        ; Cutscene_InitStarSprites+48   o
+word_189D68:    dc.w    $28C0, $400, $AF0               ; DATA XREF: Cutscene_SetupStarRows+18   o
+                                        ; Cutscene_SetupStarRows+48   o
                 dc.w    $28BC, $C00, $A00
                 dc.w    $28B8, $C00, $A20
                 dc.w    $28B0, $700, $EAF0
                 dc.w    $28A0, $F00, $EA00
                 dc.w    $A890, $F00, $EA20
-word_189D8C:    dc.w    $2880, $F00, $C0                ; DATA XREF: Cutscene_InitShipSprite+18   o
+word_189D8C:    dc.w    $2880, $F00, $C0                ; DATA XREF: Cutscene_SetupFirstShipGrid+18   o
                 dc.w    $2870, $F00, $E0
                 dc.w    $2860, $F00, 0
                 dc.w    $2850, $F00, $20
@@ -21,7 +21,7 @@ word_189D8C:    dc.w    $2880, $F00, $C0                ; DATA XREF: Cutscene_In
                 dc.w    $2830, $F00, $E0E0
                 dc.w    $2820, $F00, $E000
                 dc.w    $A810, $F00, $E020
-word_189DBC:    dc.w    $2880, $F00, $20E0              ; DATA XREF: Cutscene_InitPlanetZoomIn+20   o
+word_189DBC:    dc.w    $2880, $F00, $20E0              ; DATA XREF: Cutscene_SetupSecondPlanetGrid+20   o
                 dc.w    $2870, $F00, $E0
                 dc.w    $2860, $F00, $E0E0
                 dc.w    $2850, $F00, $C0E0
@@ -29,7 +29,7 @@ word_189DBC:    dc.w    $2880, $F00, $20E0              ; DATA XREF: Cutscene_In
                 dc.w    $2830, $F00, 0
                 dc.w    $2820, $F00, $E000
                 dc.w    $A810, $F00, $C000
-word_189DEC:    dc.w    $2810, $F00, $20E0              ; DATA XREF: Cutscene_InitShipSprite2+20   o
+word_189DEC:    dc.w    $2810, $F00, $20E0              ; DATA XREF: Cutscene_SetupSecondShipGrid+20   o
                 dc.w    $2820, $F00, $E0
                 dc.w    $2830, $F00, $E0E0
                 dc.w    $2840, $F00, $C0E0

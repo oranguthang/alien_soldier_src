@@ -549,7 +549,7 @@ Gfx_UpdateTextPixel:                                    ; CODE XREF: Gfx_RenderA
                 cmpi.w  #$40,d0                         ; '@'
                 beq.w   Cutscene_Return
                 addq.w  #1,(a0)
-                lea     byte_79BA(pc),a3
+                lea     PatternDissolveWordOrder(pc),a3
                 lea     (a3,d0.w),a3
                 moveq   #0,d2
                 move.b  (a3),d2

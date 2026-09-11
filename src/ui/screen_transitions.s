@@ -7,13 +7,13 @@ UI_DispatchCutsceneState:                               ; DATA XREF: ROM:0001CF7
 ; ---------------------------------------------------------------------------
 off_1D14C:      dc.w    Effect_FadeOutPlanet-*          ; DATA XREF: UI_DispatchCutsceneState+6   o
                 dc.w    Sys_WaitForFrameDelay-*
-                dc.w    Effect_UpdatePlanetRotation-*
+                dc.w    Effect_RevealPlanetPattern-*
 
 ; Fades out planet graphic and transitions state
 Effect_FadeOutPlanet:                                   ; DATA XREF: ROM:off_1D14C   o  ; was: sub_1D152
-                jsr     (Cutscene_PlanetScroll).l
-                jsr     (Gfx_FadeOutPalette).l
-                cmpi.w  #$40,(word_FF00C6).l            ; '@'
+                jsr     (Cutscene_RenderPlanetSpriteGrid).l
+                jsr     (Cutscene_ErasePlanetPatternStep).l
+                cmpi.w  #$40,(PatternDissolveStep).l    ; '@'
                 bne.w   locret_1D3D8
                 move.w  #$40,(word_FF8100).w            ; '@'
                 addq.w  #2,(word_FF00EC).l
@@ -26,16 +26,16 @@ Sys_WaitForFrameDelay:                                  ; DATA XREF: ROM:0001D14
                 addq.w  #2,(word_FF00EC).l
                 rts
 ; End of function Sys_WaitForFrameDelay
-; Updates planet rotation effect and checks completion
-Effect_UpdatePlanetRotation:                            ; DATA XREF: ROM:0001D150   o  ; was: sub_1D188
-                jsr     (Cutscene_PlanetScroll).l
-                jsr     (Gfx_UpdateVDPRegistersWithMask).l
-                tst.w   (word_FF00C6).l
+; Restores the planet-pattern dissolve and checks for completion
+Effect_RevealPlanetPattern:                             ; DATA XREF: ROM:0001D150   o  ; was: sub_1D188
+                jsr     (Cutscene_RenderPlanetSpriteGrid).l
+                jsr     (Cutscene_RevealPlanetPatternStep).l
+                tst.w   (PatternDissolveStep).l
                 bpl.w   locret_1D3D8
                 move.w  #$80,(word_FF8100).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
-; End of function Effect_UpdatePlanetRotation
+; End of function Effect_RevealPlanetPattern
 ; Sets up title screen with palettes and graphics
 UI_InitializeTitleScreen:                               ; DATA XREF: ROM:0001CF76   o  ; was: sub_1D1AA
                 addq.w  #2,(GameSubstateIndex).w
@@ -56,17 +56,17 @@ UI_LoadTitleData:                                       ; CODE XREF: UI_Initiali
                 move.l  #word_E98C2,8(a0)
                 move.w  #$120,$10(a0)
                 move.w  #$E4,$14(a0)
-                move.w  #$400,(word_FF00DC).l
-                move.w  #$E8,(word_FF00D4).l
-                move.w  #$120,(word_FF00D6).l
-                move.w  #2,(word_FF00D8).l
-                move.w  #1,(word_FF00DA).l
-                move.l  #$40000002,(dword_FF00C0).l
+                move.w  #$400,(SpriteGridFirstTile).l
+                move.w  #$E8,(SpriteGridCenterY).l
+                move.w  #$120,(SpriteGridCenterX).l
+                move.w  #2,(SpriteGridRowLimit).l
+                move.w  #1,(SpriteGridColumnLimit).l
+                move.l  #$40000002,(PatternVDPCommand).l
                 move.w  #$F,(word_FF00C4).l
-                move.w  #0,(word_FF00C8).l
-                clr.w   (word_FF00C6).l
-                jsr     (Cutscene_PlanetRotate).l
-                jsr     (Cutscene_PlanetScroll).l
+                move.w  #0,(PatternFrameMask).l
+                clr.w   (PatternDissolveStep).l
+                jsr     (Cutscene_FillPlanetPattern).l
+                jsr     (Cutscene_RenderPlanetSpriteGrid).l
                 clr.w   (word_FF00EC).l
                 rts
 ; End of function UI_InitializeTitleScreen
@@ -94,15 +94,15 @@ off_1D28C:      dc.w    Effect_FadeOutStoryScreen-*     ; DATA XREF: UI_Dispatch
                 dc.w    UI_InitializeGameScreen-*
                 dc.w    Effect_FadeOutStoryScreen-*
                 dc.w    Sys_WaitForGameDelay-*
-                dc.w    Effect_UpdateGameRotation-*
+                dc.w    Effect_RevealGamePattern-*
                 dc.w    Sys_TransitionToStoryScreen-*
 
 ; Fades out story screen and transitions
 Effect_FadeOutStoryScreen:                              ; DATA XREF: ROM:off_1D28C   o  ; was: sub_1D29A
                                         ; ROM:0001D292   o
-                jsr     (Cutscene_PlanetScroll).l
-                jsr     (Gfx_FadeOutPalette).l
-                cmpi.w  #$40,(word_FF00C6).l            ; '@'
+                jsr     (Cutscene_RenderPlanetSpriteGrid).l
+                jsr     (Cutscene_ErasePlanetPatternStep).l
+                cmpi.w  #$40,(PatternDissolveStep).l    ; '@'
                 bne.w   locret_1D3D8
                 move.w  #$40,(word_FF8100).w            ; '@'
                 addq.w  #2,(word_FF00EC).l
@@ -115,11 +115,11 @@ Sys_WaitForStoryDelay:                                  ; DATA XREF: ROM:0001D28
                 addq.w  #2,(word_FF00EC).l
                 rts
 ; End of function Sys_WaitForStoryDelay
-; Initializes game screen with DMA and rotation setup
+; Restores the game-transition pattern, then configures the next sprite grid
 UI_InitializeGameScreen:                                ; DATA XREF: ROM:0001D290   o  ; was: sub_1D2D0
-                jsr     (Cutscene_PlanetScroll).l
-                jsr     (Gfx_UpdateVDPRegistersWithMask).l
-                tst.w   (word_FF00C6).l
+                jsr     (Cutscene_RenderPlanetSpriteGrid).l
+                jsr     (Cutscene_RevealPlanetPatternStep).l
+                tst.w   (PatternDissolveStep).l
                 bpl.w   locret_1D3D8
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 move.w  #$10,(a0)
@@ -129,17 +129,17 @@ UI_InitializeGameScreen:                                ; DATA XREF: ROM:0001D29
                 move.l  #word_1D5E0,8(a0)
                 move.w  #$120,$10(a0)
                 move.w  #$E8,$14(a0)
-                move.w  #$400,(word_FF00DC).l
-                move.w  #$E8,(word_FF00D4).l
-                move.w  #$120,(word_FF00D6).l
-                move.w  #1,(word_FF00D8).l
-                move.w  #5,(word_FF00DA).l
-                move.l  #$40000002,(dword_FF00C0).l
+                move.w  #$400,(SpriteGridFirstTile).l
+                move.w  #$E8,(SpriteGridCenterY).l
+                move.w  #$120,(SpriteGridCenterX).l
+                move.w  #1,(SpriteGridRowLimit).l
+                move.w  #5,(SpriteGridColumnLimit).l
+                move.l  #$40000002,(PatternVDPCommand).l
                 move.w  #$F,(word_FF00C4).l
-                move.w  #0,(word_FF00C8).l
-                clr.w   (word_FF00C6).l
-                jsr     (Cutscene_PlanetRotate).l
-                jsr     (Cutscene_PlanetScroll).l
+                move.w  #0,(PatternFrameMask).l
+                clr.w   (PatternDissolveStep).l
+                jsr     (Cutscene_FillPlanetPattern).l
+                jsr     (Cutscene_RenderPlanetSpriteGrid).l
                 addq.w  #2,(word_FF00EC).l
                 rts
 ; End of function UI_InitializeGameScreen
@@ -150,11 +150,11 @@ Sys_WaitForGameDelay:                                   ; DATA XREF: ROM:0001D29
                 addq.w  #2,(word_FF00EC).l
                 rts
 ; End of function Sys_WaitForGameDelay
-; Updates game rotation effect and checks state
-Effect_UpdateGameRotation:                              ; DATA XREF: ROM:0001D296   o  ; was: sub_1D37E
-                jsr     (Cutscene_PlanetScroll).l
-                jsr     (Gfx_UpdateVDPRegistersWithMask).l
-                tst.w   (word_FF00C6).l
+; Restores the game-transition pattern and advances to gameplay setup
+Effect_RevealGamePattern:                               ; DATA XREF: ROM:0001D296   o  ; was: sub_1D37E
+                jsr     (Cutscene_RenderPlanetSpriteGrid).l
+                jsr     (Cutscene_RevealPlanetPatternStep).l
+                tst.w   (PatternDissolveStep).l
                 bpl.w   locret_1D3D8
                 clr.w   (word_FFC622).w
                 move.w  #6,(GameSubstateIndex).w
@@ -166,8 +166,8 @@ loc_1D3A8:                                              ; CODE XREF: Sys_UpdateG
                 bne.s   loc_1D3BC
                 cmpi.w  #$C,(word_FF00EC).l
                 beq.w   locret_1D3D8
-loc_1D3BC:                                              ; CODE XREF: Effect_UpdateGameRotation+30   j
+loc_1D3BC:                                              ; CODE XREF: Effect_RevealGamePattern+30   j
                 move.w  #$28,(GameModeIndex).w          ; '('
                 jmp     (StoryScreen_StartExitFade).l
-; End of function Effect_UpdateGameRotation
+; End of function Effect_RevealGamePattern
 ; Clears boss data and transitions to story screen

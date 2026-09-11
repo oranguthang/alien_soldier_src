@@ -208,16 +208,16 @@ loc_7FEE:                                               ; CODE XREF: Cutscene_In
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 clr.w   4(a5)
-                move.w  #$4E0,(word_FF00DC).l
-                move.w  #$D0,(word_FF00D4).l
-                move.w  #$118,(word_FF00D6).l
-                move.w  #4,(word_FF00D8).l
-                move.w  #4,(word_FF00DA).l
-                move.l  #$5C000002,(dword_FF00C0).l
+                move.w  #$4E0,(SpriteGridFirstTile).l
+                move.w  #$D0,(SpriteGridCenterY).l
+                move.w  #$118,(SpriteGridCenterX).l
+                move.w  #4,(SpriteGridRowLimit).l
+                move.w  #4,(SpriteGridColumnLimit).l
+                move.l  #$5C000002,(PatternVDPCommand).l
                 move.w  #$F,(word_FF00C4).l
-                move.w  #1,(word_FF00C8).l
-                clr.w   (word_FF00C6).l
-                jsr     Cutscene_PlanetRotate(pc)       ; (pc)
+                move.w  #1,(PatternFrameMask).l
+                clr.w   (PatternDissolveStep).l
+                jsr     Cutscene_FillPlanetPattern(pc)  ; (pc)
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 bsr.w   Cutscene_ResetPlanetFade
@@ -229,11 +229,11 @@ Cutscene_PlanetSequenceCtrl:                            ; DATA XREF: ROM:00007C4
                 bsr.w   Cutscene_PlanetFadeInStep
                 bsr.w   Cutscene_PlanetPaletteUpdate
                 bsr.w   Gfx_AnimateCreditsColors
-                bsr.w   Cutscene_PlanetScroll
+                bsr.w   Cutscene_RenderPlanetSpriteGrid
                 tst.w   (CutscenePaletteStep).l
                 bne.w   Cutscene_Return
-                bsr.w   Gfx_FadeOutPalette
-                cmpi.w  #$40,(word_FF00C6).l            ; '@'
+                bsr.w   Cutscene_ErasePlanetPatternStep
+                cmpi.w  #$40,(PatternDissolveStep).l    ; '@'
                 bcs.w   Cutscene_Return
                 move.w  #$100,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
@@ -271,9 +271,9 @@ Cutscene_PlanetFadeOut:                                 ; DATA XREF: ROM:00007C4
 Cutscene_PlanetTransition:                              ; DATA XREF: ROM:00007C4A   o  ; was: sub_8182
                 bsr.w   Cutscene_PlanetPaletteUpdate
                 bsr.w   Gfx_AnimateCreditsColors
-                bsr.w   Cutscene_PlanetScroll
-                bsr.w   Gfx_UpdateVDPRegistersWithMask
-                tst.w   (word_FF00C6).l
+                bsr.w   Cutscene_RenderPlanetSpriteGrid
+                bsr.w   Cutscene_RevealPlanetPatternStep
+                tst.w   (PatternDissolveStep).l
                 bne.w   Cutscene_Return
                 clr.w   (word_FFC6E2).w
                 clr.w   (word_FF0118).l

@@ -1,3 +1,4 @@
+; Initializes the credits screen graphics and palette-fade state
 Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_TransitionToCredits+6   j  ; was: sub_7B30
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w

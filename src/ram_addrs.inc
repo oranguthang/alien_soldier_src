@@ -7,35 +7,35 @@ word_FF0040             equ     $FFFF0040
 word_FF0060             equ     $FFFF0060
 word_FF0080             equ     $FFFF0080
 word_FF00A0             equ     $FFFF00A0
-dword_FF00C0            equ     $FFFF00C0
+PatternVDPCommand       equ     $FFFF00C0               ; was: dword_FF00C0
 word_FF00C4             equ     $FFFF00C4
-word_FF00C6             equ     $FFFF00C6
-word_FF00C8             equ     $FFFF00C8
-dword_FF00CA            equ     $FFFF00CA
+PatternDissolveStep     equ     $FFFF00C6               ; was: word_FF00C6
+PatternFrameMask        equ     $FFFF00C8               ; was: word_FF00C8
+ShipPatternVDPCommand   equ     $FFFF00CA               ; was: dword_FF00CA
 word_FF00CE             equ     $FFFF00CE
-word_FF00D0             equ     $FFFF00D0
-word_FF00D2             equ     $FFFF00D2
-word_FF00D4             equ     $FFFF00D4
-word_FF00D6             equ     $FFFF00D6
-word_FF00D8             equ     $FFFF00D8
-word_FF00DA             equ     $FFFF00DA
-word_FF00DC             equ     $FFFF00DC
-word_FF00DE             equ     $FFFF00DE
-word_FF00E0             equ     $FFFF00E0
-word_FF00E2             equ     $FFFF00E2
-word_FF00E4             equ     $FFFF00E4
-word_FF00E6             equ     $FFFF00E6
-word_FF00E8             equ     $FFFF00E8
-word_FF00EA             equ     $FFFF00EA
+ShipPatternStep         equ     $FFFF00D0               ; was: word_FF00D0
+ShipPatternFrameMask    equ     $FFFF00D2               ; was: word_FF00D2
+SpriteGridCenterY       equ     $FFFF00D4               ; was: word_FF00D4
+SpriteGridCenterX       equ     $FFFF00D6               ; was: word_FF00D6
+SpriteGridRowLimit      equ     $FFFF00D8               ; was: word_FF00D8
+SpriteGridColumnLimit   equ     $FFFF00DA               ; was: word_FF00DA
+SpriteGridFirstTile     equ     $FFFF00DC               ; was: word_FF00DC
+ShipGridCenterY         equ     $FFFF00DE               ; was: word_FF00DE
+ShipGridCenterX         equ     $FFFF00E0               ; was: word_FF00E0
+ShipGridRowLimit        equ     $FFFF00E2               ; was: word_FF00E2
+ShipGridColumnLimit     equ     $FFFF00E4               ; was: word_FF00E4
+ShipGridFirstTile       equ     $FFFF00E6               ; was: word_FF00E6
+StarRowSeparation       equ     $FFFF00E8               ; was: word_FF00E8
+StarRowState            equ     $FFFF00EA               ; was: word_FF00EA
 word_FF00EC             equ     $FFFF00EC
-word_FF00EE             equ     $FFFF00EE
-word_FF00F0             equ     $FFFF00F0
-word_FF00F2             equ     $FFFF00F2
-word_FF00F4             equ     $FFFF00F4
+PlanetGridState         equ     $FFFF00EE               ; was: word_FF00EE
+ShipGridState           equ     $FFFF00F0               ; was: word_FF00F0
+PlanetGridTimer         equ     $FFFF00F2               ; was: word_FF00F2
+ShipGridTimer           equ     $FFFF00F4               ; was: word_FF00F4
 word_FF00F6             equ     $FFFF00F6
 dword_FF00F8            equ     $FFFF00F8
 word_FF00FC             equ     $FFFF00FC
-word_FF00FE             equ     $FFFF00FE
+StarRowTimer            equ     $FFFF00FE               ; was: word_FF00FE
 StoryTitleGlyphCursor   equ     $FFFF0100               ; was: dword_FF0100
 CutsceneTimer           equ     $FFFF0106               ; was: word_FF0106
 StoryTitleExpandSpan    equ     $FFFF0108               ; was: word_FF0108

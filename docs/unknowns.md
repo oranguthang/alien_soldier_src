@@ -3290,3 +3290,28 @@ changes. The runtime toolchain is also repinned to the clean current
 `gens_automation` commit `f62b2cf`, and its observed executable identity is
 recorded in `config/toolchain.json`; standalone `make build` and `make verify`
 therefore validate the same checked-out evidence runner.
+
+The planet-grid package audits the complete 473-line
+`cutscenes/planet_ship_and_star_sequences.s` controller and the nonadjacent
+382-line `cutscenes/sprite_grid_and_pattern_effects.s` implementation. They
+remain separate because story-text bytes lie between their ROM ranges, while
+their names now make the cross-range relationship explicit. The first module
+contains three independent state machines: two planet grids, two ship grids,
+and a ten-object pair of expanding and collapsing star rows. The second builds
+their centered OAM grids and implements the shared pattern effect.
+
+Static data flow disproves the earlier generated palette and rotation names.
+The effect initializes 32-byte all-one masks, changes one selected 4-bit nibble
+per step in a shuffled 64-entry order, expands that word across one staged row,
+and queues VRAM DMA. The two alleged palette-update routines instead compose
+and queue sixteen pattern rows, and neither accesses palette RAM. The supposed
+planet scroll routine emits OAM cells, while the supposed star fade changes row
+separation and finally clears ten object slots.
+
+This package audits all 75 ROM definitions in the two modules, corrects two
+caller-state names that falsely claimed rotation, and promotes 23 shared or
+sequence-private RAM fields. Fifty-five new provenance mappings raise the total
+from 12,351 to 12,406; 100 static audit records raise the total from 8,889 to
+8,989. The enforced address-derived ceiling falls from 3,690 to 3,635. Module
+count remains 347, both files stay in the normal size band, and the rebuilt
+Japanese ROM remains byte-identical.

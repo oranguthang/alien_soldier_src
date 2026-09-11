@@ -1,3 +1,4 @@
+; Dispatches story-screen text rendering states
 UI_StoryTextDispatcher:                                 ; CODE XREF: StoryScreen_MainLoop+3C   p  ; was: sub_588C
                 cmpi.w  #$18,(GameSubstateIndex).w
                 beq.w   Cutscene_Return

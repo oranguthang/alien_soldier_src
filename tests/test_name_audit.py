@@ -24,7 +24,9 @@ class NameAuditTests(unittest.TestCase):
         self.assertEqual(len(addresses), len(set(addresses)))
         self.assertEqual(len(names), len(set(names)))
         for record in records:
-            self.assertRegex(record["address"], r"^0x[0-9A-F]{6}$")
+            self.assertRegex(
+                record["address"], r"^0x(?:[0-9A-F]{6}|FFFF[0-9A-F]{4})$"
+            )
             self.assertRegex(record["legacy_name"], legacy_name_pattern)
             self.assertIn(record["evidence"], EVIDENCE_LEVELS)
             self.assertGreater(len(record["basis"]), 0)

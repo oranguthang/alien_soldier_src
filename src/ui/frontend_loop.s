@@ -116,17 +116,17 @@ loc_1CFD0:                                              ; CODE XREF: UI_Initiali
 loc_1D006:                                              ; CODE XREF: UI_InitializeSEGAScreen+86   j
                 move.l  d0,(a0)+
                 dbf     d1,loc_1D006
-                move.w  #$400,(word_FF00DC).l
-                move.w  #$E8,(word_FF00D4).l
-                move.w  #$120,(word_FF00D6).l
-                move.w  #0,(word_FF00D8).l
-                move.w  #2,(word_FF00DA).l
-                move.l  #$40000002,(dword_FF00C0).l
+                move.w  #$400,(SpriteGridFirstTile).l
+                move.w  #$E8,(SpriteGridCenterY).l
+                move.w  #$120,(SpriteGridCenterX).l
+                move.w  #0,(SpriteGridRowLimit).l
+                move.w  #2,(SpriteGridColumnLimit).l
+                move.l  #$40000002,(PatternVDPCommand).l
                 move.w  #$F,(word_FF00C4).l
-                move.w  #0,(word_FF00C8).l
-                clr.w   (word_FF00C6).l
-                jsr     (Cutscene_PlanetRotate).l
-                jsr     (Cutscene_PlanetScroll).l
+                move.w  #0,(PatternFrameMask).l
+                clr.w   (PatternDissolveStep).l
+                jsr     (Cutscene_FillPlanetPattern).l
+                jsr     (Cutscene_RenderPlanetSpriteGrid).l
                 clr.w   (word_FF00EC).l
                 clr.w   (word_FF0178).l
                 move.b  #$87,d0
