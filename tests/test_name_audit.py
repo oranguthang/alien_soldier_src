@@ -10,6 +10,9 @@ ROOT = Path(__file__).resolve().parents[1]
 AUDIT = ROOT / "config" / "name_audit.json"
 SOURCE_POLICY = ROOT / "config" / "source_policy.json"
 EVIDENCE_LEVELS = {"unknown", "hypothesis", "static", "runtime", "confirmed"}
+DEFINITION = re.compile(
+    r"^([A-Za-z_][A-Za-z0-9_]*)(?::|\s+equ\b)", re.IGNORECASE | re.MULTILINE
+)
 
 
 class NameAuditTests(unittest.TestCase):
@@ -33,15 +36,19 @@ class NameAuditTests(unittest.TestCase):
 
     def test_audited_current_names_exist_in_source(self) -> None:
         audit = json.loads(AUDIT.read_text(encoding="utf-8"))
-        source = "\n".join(
-            path.read_text(encoding="utf-8") for path in (ROOT / "src").rglob("*")
-            if path.suffix in {".s", ".inc"}
+        source_names: set[str] = set()
+        for path in (ROOT / "src").rglob("*"):
+            if path.suffix in {".s", ".inc"}:
+                source_names.update(
+                    DEFINITION.findall(path.read_text(encoding="utf-8"))
+                )
+
+        missing = sorted(
+            record["current_name"]
+            for record in audit["records"]
+            if record["current_name"] not in source_names
         )
-        for record in audit["records"]:
-            definition = re.compile(
-                rf"^{re.escape(record['current_name'])}(?::|\s+equ\b)", re.MULTILINE
-            )
-            self.assertRegex(source, definition)
+        self.assertEqual([], missing)
 
 
 if __name__ == "__main__":

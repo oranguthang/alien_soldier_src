@@ -14,6 +14,12 @@ Read-only trace parsing and report generation do not mutate source and remain
 useful, but their output is evidence only when its ROM, movie, emulator commit,
 frame range, and interpretation are recorded.
 
+The name-audit test discovers definitions across every `.s` and `.inc` module
+in one pass and compares the resulting symbol set with the audit registry. This
+preserves the exact missing-name check while avoiding one whole-source regular
+expression scan per audit record; at 9,818 records the local test time fell from
+about 271 seconds to less than one second.
+
 `make trace` passes an inert screenshot interval to the pinned emulator. This
 is required because that emulator currently evaluates its maximum-frame and
 movie-finished termination checks only while screenshot automation is enabled.
