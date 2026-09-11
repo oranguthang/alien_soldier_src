@@ -1,148 +1,149 @@
-Boss_MissirayAttackDispatcher:                          ; CODE XREF: Boss_MissirayUpdatePalette   p  ; was: sub_53E68
+; Dispatches the repeated single-projectile attack through a random segment
+Boss_MissirayRandomSegmentAttackDispatcher:             ; CODE XREF: Boss_MissirayRunAttackAndCyclePalette   p  ; was: sub_53E68
                 move.w  (dword_FF9400).w,d0
-                lea     off_53E74(pc,d0.w),a0
+                lea     Boss_MissirayRandomSegmentAttackStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_MissirayAttackDispatcher
+; End of function Boss_MissirayRandomSegmentAttackDispatcher
 ; ---------------------------------------------------------------------------
-off_53E74:      dc.w    Boss_MissirayWaitSegmentsReady-*  ; DATA XREF: Boss_MissirayAttackDispatcher+4   o
-                dc.w    Boss_MissirayShootPattern1-*
-                dc.w    Boss_MissirayShootPattern2-*
-                dc.w    Boss_MissirayAttackDelay-*
+Boss_MissirayRandomSegmentAttackStates: dc.w    Boss_MissirayPrepareRandomSegmentAttack-*  ; DATA XREF: Boss_MissirayRandomSegmentAttackDispatcher+4   o  ; was: off_53E74
+                dc.w    Boss_MissirayAllocateRandomSegmentProjectile-*
+                dc.w    Boss_MissirayArmRandomSegment-*
+                dc.w    Boss_MissirayWaitAndRepeatRandomSegmentAttack-*
 
-; Wait for segments ready
-Boss_MissirayWaitSegmentsReady:                         ; DATA XREF: ROM:off_53E74   o  ; was: sub_53E7C
+; Waits until all eight linked segments are idle and selects the repeat count
+Boss_MissirayPrepareRandomSegmentAttack:                ; DATA XREF: ROM:Boss_MissirayRandomSegmentAttackStates   o  ; was: sub_53E7C
                 move.w  #7,d7
                 lea     $60(a5),a0
                 movea.w #(dword_FF9414-M68K_RAM),a1
-loc_53E88:                                              ; CODE XREF: Boss_MissirayWaitSegmentsReady+16   j
+Boss_MissirayCheckNextReadySegment:                     ; CODE XREF: Boss_MissirayPrepareRandomSegmentAttack+16   j  ; was: loc_53E88
                 tst.b   $52(a0)
-                bne.s   locret_53EBC
+                bne.s   Boss_MissirayPrepareRandomSegmentAttackReturn
                 lea     $60(a0),a0
-                dbf     d7,loc_53E88
+                dbf     d7,Boss_MissirayCheckNextReadySegment
                 addq.w  #2,(dword_FF9400).w
                 tst.w   (dword_FF9404).w
-                bne.s   loc_53EA8
+                bne.s   Boss_MissiraySetAlternateShotRepeatCount
                 move.w  #8,$4A(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_53EA8:                                              ; CODE XREF: Boss_MissirayWaitSegmentsReady+22   j
+Boss_MissiraySetAlternateShotRepeatCount:               ; CODE XREF: Boss_MissirayPrepareRandomSegmentAttack+22   j  ; was: loc_53EA8
                 tst.w   (DifficultyMode).w
-                bne.s   loc_53EB6
+                bne.s   Boss_MissiraySetExtendedShotRepeatCount
                 move.w  #4,$4A(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_53EB6:                                              ; CODE XREF: Boss_MissirayWaitSegmentsReady+30   j
+Boss_MissiraySetExtendedShotRepeatCount:                ; CODE XREF: Boss_MissirayPrepareRandomSegmentAttack+30   j  ; was: loc_53EB6
                 move.w  #8,$4A(a5)
-locret_53EBC:                                           ; CODE XREF: Boss_MissirayWaitSegmentsReady+10   j
+Boss_MissirayPrepareRandomSegmentAttackReturn:          ; CODE XREF: Boss_MissirayPrepareRandomSegmentAttack+10   j  ; was: locret_53EBC
                 rts
-; End of function Boss_MissirayWaitSegmentsReady
-; Shooting pattern 1
-Boss_MissirayShootPattern1:                             ; DATA XREF: ROM:00053E76   o  ; was: sub_53EBE
+; End of function Boss_MissirayPrepareRandomSegmentAttack
+; Allocates the projectile record used by the next randomly selected segment
+Boss_MissirayAllocateRandomSegmentProjectile:           ; DATA XREF: ROM:00053E76   o  ; was: sub_53EBE
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   loc_53ED4
+                bne.s   Boss_MissiraySkipFailedRandomSegmentShot
                 move.w  #$10,(a0)
                 move.w  a0,(dword_FF9414).w
                 addq.w  #2,(dword_FF9400).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_53ED4:                                              ; CODE XREF: Boss_MissirayShootPattern1+6   j
+Boss_MissiraySkipFailedRandomSegmentShot:               ; CODE XREF: Boss_MissirayAllocateRandomSegmentProjectile+6   j  ; was: loc_53ED4
                 addq.w  #4,(dword_FF9400).w
                 move.w  #8,$48(a5)
                 rts
-; End of function Boss_MissirayShootPattern1
-; Shooting pattern 2
-Boss_MissirayShootPattern2:                             ; DATA XREF: ROM:00053E78   o  ; was: sub_53EE0
+; End of function Boss_MissirayAllocateRandomSegmentProjectile
+; Selects an idle segment and arms it with the allocated projectile
+Boss_MissirayArmRandomSegment:                          ; DATA XREF: ROM:00053E78   o  ; was: sub_53EE0
                 move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 add.w   d0,d0
                 lea     Boss_MissiraySegmentObjectPointers(pc),a2
                 movea.w (a2,d0.w),a0
                 tst.b   $52(a0)
-                bne.s   locret_53F42
+                bne.s   Boss_MissirayArmRandomSegmentReturn
                 tst.w   (dword_FF9404).w
-                bne.s   loc_53F10
+                bne.s   Boss_MissirayConfigureAlternateSegmentShot
                 move.b  #0,$51(a0)
                 clr.w   $48(a0)
                 move.w  #$20,$48(a5)                    ; ' '
-                bra.s   loc_53F2E
+                bra.s   Boss_MissirayCommitRandomSegmentShot
 ; ---------------------------------------------------------------------------
-loc_53F10:                                              ; CODE XREF: Boss_MissirayShootPattern2+1C   j
+Boss_MissirayConfigureAlternateSegmentShot:             ; CODE XREF: Boss_MissirayArmRandomSegment+1C   j  ; was: loc_53F10
                 move.b  #1,$51(a0)
                 clr.w   $48(a0)
                 tst.w   (DifficultyMode).w
-                bne.s   loc_53F28
+                bne.s   Boss_MissirayUseShortAlternateShotDelay
                 move.w  #$60,$48(a5)                    ; '`'
-                bra.s   loc_53F2E
+                bra.s   Boss_MissirayCommitRandomSegmentShot
 ; ---------------------------------------------------------------------------
-loc_53F28:                                              ; CODE XREF: Boss_MissirayShootPattern2+3E   j
+Boss_MissirayUseShortAlternateShotDelay:                ; CODE XREF: Boss_MissirayArmRandomSegment+3E   j  ; was: loc_53F28
                 move.w  #$30,$48(a5)                    ; '0'
-loc_53F2E:                                              ; CODE XREF: Boss_MissirayShootPattern2+2E   j
-                                        ; Boss_MissirayShootPattern2+46   j
+Boss_MissirayCommitRandomSegmentShot:                   ; CODE XREF: Boss_MissirayArmRandomSegment+2E   j  ; was: loc_53F2E
+                                        ; Boss_MissirayArmRandomSegment+46   j
                 move.b  #0,$50(a0)
                 move.w  (dword_FF9414).w,$54(a0)
                 addq.w  #2,4(a0)
                 addq.w  #2,(dword_FF9400).w
-locret_53F42:                                           ; CODE XREF: Boss_MissirayShootPattern2+16   j
+Boss_MissirayArmRandomSegmentReturn:                    ; CODE XREF: Boss_MissirayArmRandomSegment+16   j  ; was: locret_53F42
                 rts
-; End of function Boss_MissirayShootPattern2
-; Attack delay timer
-Boss_MissirayAttackDelay:                               ; DATA XREF: ROM:00053E7A   o  ; was: sub_53F44
+; End of function Boss_MissirayArmRandomSegment
+; Waits between random-segment shots and repeats until the counter expires
+Boss_MissirayWaitAndRepeatRandomSegmentAttack:          ; DATA XREF: ROM:00053E7A   o  ; was: sub_53F44
                 subq.w  #1,$48(a5)
-                bne.s   locret_53F56
+                bne.s   Boss_MissirayRandomSegmentAttackDelayReturn
                 subq.w  #1,$4A(a5)
-                beq.w   loc_53F58
+                beq.w   Boss_MissirayFinishRandomSegmentAttack
                 subq.w  #4,(dword_FF9400).w
-locret_53F56:                                           ; CODE XREF: Boss_MissirayAttackDelay+4   j
+Boss_MissirayRandomSegmentAttackDelayReturn:            ; CODE XREF: Boss_MissirayWaitAndRepeatRandomSegmentAttack+4   j  ; was: locret_53F56
                 rts
 ; ---------------------------------------------------------------------------
-loc_53F58:                                              ; CODE XREF: Boss_MissirayAttackDelay+A   j
-                bra.w   Boss_MissirayResetAttackState
-; End of function Boss_MissirayAttackDelay
-; Attack pattern 3 dispatcher
-Boss_MissirayAttackPattern3:                            ; DATA XREF: ROM:00053CBC   o  ; was: sub_53F5C
+Boss_MissirayFinishRandomSegmentAttack:                 ; CODE XREF: Boss_MissirayWaitAndRepeatRandomSegmentAttack+A   j  ; was: loc_53F58
+                bra.w   Boss_MissirayFinishAttack
+; End of function Boss_MissirayWaitAndRepeatRandomSegmentAttack
+; Dispatches the attack that activates four ordered pairs of segments
+Boss_MissiraySegmentPairAttackDispatcher:               ; DATA XREF: ROM:00053CBC   o  ; was: sub_53F5C
                 move.w  (dword_FF9400).w,d0
-                lea     off_53F68(pc,d0.w),a0
+                lea     Boss_MissiraySegmentPairAttackStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_MissirayAttackPattern3
+; End of function Boss_MissiraySegmentPairAttackDispatcher
 ; ---------------------------------------------------------------------------
-off_53F68:      dc.w    Boss_MissirayAttackPattern3Init-*  ; DATA XREF: Boss_MissirayAttackPattern3+4   o
-                dc.w    Boss_MissirayAttackPattern3Init_SpawnRing-*
-                dc.w    Boss_MissirayAttackPattern3Fire-*
-                dc.w    Boss_MissirayAttackPattern3Delay-*
+Boss_MissiraySegmentPairAttackStates:   dc.w    Boss_MissirayInitializeSegmentPairAttack-*  ; DATA XREF: Boss_MissiraySegmentPairAttackDispatcher+4   o  ; was: off_53F68
+                dc.w    Boss_MissirayAllocatePairAttackProjectiles-*
+                dc.w    Boss_MissirayActivateNextSegmentPair-*
+                dc.w    Boss_MissirayWaitAndRepeatSegmentPairAttack-*
 
-; Attack pattern 3 init
-Boss_MissirayAttackPattern3Init:                        ; DATA XREF: ROM:off_53F68   o  ; was: sub_53F70
+; Initializes the four-pair countdown
+Boss_MissirayInitializeSegmentPairAttack:               ; DATA XREF: ROM:Boss_MissiraySegmentPairAttackStates   o  ; was: sub_53F70
                 move.w  #3,$4A(a5)
                 addq.w  #2,(dword_FF9400).w
-; Spawn bullet ring and advance attack state
-Boss_MissirayAttackPattern3Init_SpawnRing:              ; DATA XREF: ROM:00053F6A   o  ; was: loc_53F7A
-                bsr.w   Boss_MissiraySpawnBulletRing
-                bne.s   loc_53F86
+; Allocates the eight projectile records consumed by the four segment pairs
+Boss_MissirayAllocatePairAttackProjectiles:             ; DATA XREF: ROM:00053F6A   o  ; was: loc_53F7A
+                bsr.w   Boss_MissirayAllocateSegmentProjectileSet
+                bne.s   Boss_MissirayFinishPairAttackAfterAllocationFailure
                 addq.w  #2,(dword_FF9400).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_53F86:                                              ; CODE XREF: Boss_MissirayAttackPattern3Init+E   j
-                bra.w   Boss_MissirayResetAttackState
-; End of function Boss_MissirayAttackPattern3Init
-nullsub_123:
+Boss_MissirayFinishPairAttackAfterAllocationFailure:    ; CODE XREF: Boss_MissirayInitializeSegmentPairAttack+E   j  ; was: loc_53F86
+                bra.w   Boss_MissirayFinishAttack
+; End of function Boss_MissirayInitializeSegmentPairAttack
+Boss_MissirayUnusedNoOp00:                              ; was: nullsub_123
                 rts
-; End of function nullsub_123
+; End of function Boss_MissirayUnusedNoOp00
 
-; Attack pattern 3 fire
-Boss_MissirayAttackPattern3Fire:                        ; DATA XREF: ROM:00053F6C   o  ; was: sub_53F8C
+; Activates the next pair when both selected segments are idle
+Boss_MissirayActivateNextSegmentPair:                   ; DATA XREF: ROM:00053F6C   o  ; was: sub_53F8C
                 move.w  $4A(a5),d5
                 lsl.w   #2,d5
-                move.w  word_53FF6(pc,d5.w),d0
-                move.w  word_53FF6+2(pc,d5.w),d1
+                move.w  Boss_MissirayPairAttackActivationOrder(pc,d5.w),d0
+                move.w  Boss_MissirayPairAttackActivationOrder+2(pc,d5.w),d1
                 lea     Boss_MissiraySegmentObjectPointers(pc),a1
                 movea.w (a1,d0.w),a2
                 tst.b   $52(a2)
-                bne.s   locret_53FF4
+                bne.s   Boss_MissirayActivateSegmentPairReturn
                 movea.w (a1,d1.w),a3
                 tst.b   $52(a3)
-                bne.s   locret_53FF4
+                bne.s   Boss_MissirayActivateSegmentPairReturn
                 lea     (dword_FF9414).w,a0
                 move.b  #0,$50(a2)
                 move.b  #0,$51(a2)
@@ -156,81 +157,81 @@ Boss_MissirayAttackPattern3Fire:                        ; DATA XREF: ROM:00053F6
                 addq.w  #2,4(a3)
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #2,(dword_FF9400).w
-locret_53FF4:                                           ; CODE XREF: Boss_MissirayAttackPattern3Fire+1A   j
-                                        ; Boss_MissirayAttackPattern3Fire+24   j
+Boss_MissirayActivateSegmentPairReturn:                 ; CODE XREF: Boss_MissirayActivateNextSegmentPair+1A   j  ; was: locret_53FF4
+                                        ; Boss_MissirayActivateNextSegmentPair+24   j
                 rts
-; End of function Boss_MissirayAttackPattern3Fire
+; End of function Boss_MissirayActivateNextSegmentPair
 ; ---------------------------------------------------------------------------
-word_53FF6:     dc.w    0, 4, $A, $E, 2, 6, 8, $C
-                                        ; DATA XREF: Boss_MissirayAttackPattern3Fire+6   r
-                                        ; Boss_MissirayAttackPattern3Fire+A   r
+Boss_MissirayPairAttackActivationOrder: dc.w    0, 4, $A, $E, 2, 6, 8, $C  ; was: word_53FF6
+                                        ; DATA XREF: Boss_MissirayActivateNextSegmentPair+6   r
+                                        ; Boss_MissirayActivateNextSegmentPair+A   r
 
-; Attack pattern 3 delay
-Boss_MissirayAttackPattern3Delay:                       ; DATA XREF: ROM:00053F6E   o  ; was: sub_54006
+; Waits between pairs and repeats until all four pairs have been activated
+Boss_MissirayWaitAndRepeatSegmentPairAttack:            ; DATA XREF: ROM:00053F6E   o  ; was: sub_54006
                 subq.w  #1,$48(a5)
-                bne.s   locret_54016
+                bne.s   Boss_MissiraySegmentPairDelayReturn
                 subq.w  #1,$4A(a5)
-                bmi.s   loc_54018
+                bmi.s   Boss_MissirayFinishSegmentPairAttack
                 subq.w  #2,(dword_FF9400).w
-locret_54016:                                           ; CODE XREF: Boss_MissirayAttackPattern3Delay+4   j
+Boss_MissiraySegmentPairDelayReturn:                    ; CODE XREF: Boss_MissirayWaitAndRepeatSegmentPairAttack+4   j  ; was: locret_54016
                 rts
 ; ---------------------------------------------------------------------------
-loc_54018:                                              ; CODE XREF: Boss_MissirayAttackPattern3Delay+A   j
-                bra.w   Boss_MissirayResetAttackState
-; End of function Boss_MissirayAttackPattern3Delay
-nullsub_124:
+Boss_MissirayFinishSegmentPairAttack:                   ; CODE XREF: Boss_MissirayWaitAndRepeatSegmentPairAttack+A   j  ; was: loc_54018
+                bra.w   Boss_MissirayFinishAttack
+; End of function Boss_MissirayWaitAndRepeatSegmentPairAttack
+Boss_MissirayUnusedNoOp01:                              ; was: nullsub_124
                 rts
-; End of function nullsub_124
+; End of function Boss_MissirayUnusedNoOp01
 
-; Dispatcher for Missiray bullet ring attack pattern state machine
-Boss_MissirayAttack1Dispatcher:                         ; DATA XREF: ROM:00053CBE   o  ; was: sub_5401E
+; Dispatches the attack that arms all eight segments with staggered delays
+Boss_MissirayAllSegmentAttackDispatcher:                ; DATA XREF: ROM:00053CBE   o  ; was: sub_5401E
                 move.w  (dword_FF9400).w,d0
-                lea     off_5402A(pc,d0.w),a0
+                lea     Boss_MissirayAllSegmentAttackStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_MissirayAttack1Dispatcher
+; End of function Boss_MissirayAllSegmentAttackDispatcher
 ; ---------------------------------------------------------------------------
-off_5402A:      dc.w    Boss_MissirayAttack1Init-*      ; DATA XREF: Boss_MissirayAttack1Dispatcher+4   o
-                dc.w    Boss_MissirayAttack1Init_SpawnBullets-*
-                dc.w    Boss_MissirayAttack1WaitBullets-*
-                dc.w    Boss_MissirayAttack1SetupDelays-*
-                dc.w    Boss_MissirayAttack1SetWaitTimer-*
-                dc.w    Boss_MissirayAttack1WaitTimer-*
-                dc.w    Boss_MissirayAttack1Loop-*
+Boss_MissirayAllSegmentAttackStates:    dc.w    Boss_MissirayInitializeAllSegmentAttack-*  ; DATA XREF: Boss_MissirayAllSegmentAttackDispatcher+4   o  ; was: off_5402A
+                dc.w    Boss_MissirayAllocateAllSegmentProjectiles-*
+                dc.w    Boss_MissirayWaitForAllSegmentsReady-*
+                dc.w    Boss_MissirayAssignAllSegmentActivationDelays-*
+                dc.w    Boss_MissirayBeginAllSegmentAttackHold-*
+                dc.w    Boss_MissirayWaitAllSegmentAttackHold-*
+                dc.w    Boss_MissirayFinishOrRepeatAllSegmentAttack-*
 
-; Initializes bullet ring attack and spawns first ring of projectiles
-Boss_MissirayAttack1Init:                               ; DATA XREF: ROM:off_5402A   o  ; was: sub_54038
+; Initializes the all-segment attack
+Boss_MissirayInitializeAllSegmentAttack:                ; DATA XREF: ROM:Boss_MissirayAllSegmentAttackStates   o  ; was: sub_54038
                 move.w  #1,$4A(a5)
                 addq.w  #2,(dword_FF9400).w
-; Spawn bullet ring for attack pattern 1
-Boss_MissirayAttack1Init_SpawnBullets:                  ; DATA XREF: ROM:0005402C   o  ; was: loc_54042
-                bsr.w   Boss_MissiraySpawnBulletRing
-                bne.s   loc_5404E
+; Allocates one projectile record for each linked segment
+Boss_MissirayAllocateAllSegmentProjectiles:             ; DATA XREF: ROM:0005402C   o  ; was: loc_54042
+                bsr.w   Boss_MissirayAllocateSegmentProjectileSet
+                bne.s   Boss_MissiraySkipFailedAllSegmentAttack
                 addq.w  #2,(dword_FF9400).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_5404E:                                              ; CODE XREF: Boss_MissirayAttack1Init+E   j
+Boss_MissiraySkipFailedAllSegmentAttack:                ; CODE XREF: Boss_MissirayInitializeAllSegmentAttack+E   j  ; was: loc_5404E
                 addi.w  #$A,(dword_FF9400).w
                 rts
-; End of function Boss_MissirayAttack1Init
-; Waits for all 8 bullet segments to become inactive before proceeding
-Boss_MissirayAttack1WaitBullets:                        ; DATA XREF: ROM:0005402E   o  ; was: sub_54056
+; End of function Boss_MissirayInitializeAllSegmentAttack
+; Waits for all eight linked segments to become idle before proceeding
+Boss_MissirayWaitForAllSegmentsReady:                   ; DATA XREF: ROM:0005402E   o  ; was: sub_54056
                 move.w  #7,d7
                 lea     $60(a5),a0
                 movea.w #(dword_FF9414-M68K_RAM),a1
-loc_54062:                                              ; CODE XREF: Boss_MissirayAttack1WaitBullets+16   j
+Boss_MissirayCheckNextAllSegmentReady:                  ; CODE XREF: Boss_MissirayWaitForAllSegmentsReady+16   j  ; was: loc_54062
                 tst.b   $52(a0)
-                bne.s   locret_54074
+                bne.s   Boss_MissirayWaitForAllSegmentsReadyReturn
                 lea     $60(a0),a0
-                dbf     d7,loc_54062
+                dbf     d7,Boss_MissirayCheckNextAllSegmentReady
                 addq.w  #2,(dword_FF9400).w
-locret_54074:                                           ; CODE XREF: Boss_MissirayAttack1WaitBullets+10   j
+Boss_MissirayWaitForAllSegmentsReadyReturn:             ; CODE XREF: Boss_MissirayWaitForAllSegmentsReady+10   j  ; was: locret_54074
                 rts
-; End of function Boss_MissirayAttack1WaitBullets
-; Sets up randomized delay timers for 8 bullet segments to fire
-Boss_MissirayAttack1SetupDelays:                        ; DATA XREF: ROM:00054030   o  ; was: sub_54076
+; End of function Boss_MissirayWaitForAllSegmentsReady
+; Selects one of four delay patterns and arms all eight segments
+Boss_MissirayAssignAllSegmentActivationDelays:          ; DATA XREF: ROM:00054030   o  ; was: sub_54076
                 movea.w #(dword_FF9414-M68K_RAM),a1
-                lea     word_540C2(pc),a2
+                lea     Boss_MissirayAllSegmentActivationDelayPatterns(pc),a2
                 nop
                 move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
@@ -239,7 +240,7 @@ Boss_MissirayAttack1SetupDelays:                        ; DATA XREF: ROM:0005403
                 move.w  #7,d7
                 moveq   #0,d6
                 lea     $60(a5),a0
-loc_54098:                                              ; CODE XREF: Boss_MissirayAttack1SetupDelays+42   j
+Boss_MissirayAssignNextSegmentActivationDelay:          ; CODE XREF: Boss_MissirayAssignAllSegmentActivationDelays+42   j  ; was: loc_54098
                 move.b  #0,$50(a0)
                 move.b  #0,$51(a0)
                 move.w  (a2,d6.w),$48(a0)
@@ -247,65 +248,65 @@ loc_54098:                                              ; CODE XREF: Boss_Missir
                 addq.w  #2,4(a0)
                 addq.w  #2,d6
                 lea     $60(a0),a0
-                dbf     d7,loc_54098
+                dbf     d7,Boss_MissirayAssignNextSegmentActivationDelay
                 addq.w  #2,(dword_FF9400).w
                 rts
-; End of function Boss_MissirayAttack1SetupDelays
+; End of function Boss_MissirayAssignAllSegmentActivationDelays
 ; ---------------------------------------------------------------------------
-word_540C2:     dc.w    0, $10, $20, $30, $40, $50, $60, $70, $70, $60, $50, $40, $30, $20, $10, 0
-                                        ; DATA XREF: Boss_MissirayAttack1SetupDelays+4   o
+Boss_MissirayAllSegmentActivationDelayPatterns: dc.w    0, $10, $20, $30, $40, $50, $60, $70, $70, $60, $50, $40, $30, $20, $10, 0  ; was: word_540C2
+                                        ; DATA XREF: Boss_MissirayAssignAllSegmentActivationDelays+4   o
                 dc.w    0, $20, $40, $60, $60, $40, $20, 0, $60, $40, $20, 0, 0, $20, $40, $60
 
-; Sets wait timer to $80 frames before bullet firing sequence
-Boss_MissirayAttack1SetWaitTimer:                       ; DATA XREF: ROM:00054032   o  ; was: sub_54102
+; Starts the $80-frame hold after all segments have been armed
+Boss_MissirayBeginAllSegmentAttackHold:                 ; DATA XREF: ROM:00054032   o  ; was: sub_54102
                 move.w  #$80,$48(a5)
                 addq.w  #2,(dword_FF9400).w
                 rts
-; End of function Boss_MissirayAttack1SetWaitTimer
-; Waits for timer countdown then advances to next attack state
-Boss_MissirayAttack1WaitTimer:                          ; DATA XREF: ROM:00054034   o  ; was: sub_5410E
+; End of function Boss_MissirayBeginAllSegmentAttackHold
+; Waits for the all-segment hold to expire
+Boss_MissirayWaitAllSegmentAttackHold:                  ; DATA XREF: ROM:00054034   o  ; was: sub_5410E
                 subq.w  #1,$48(a5)
-                bne.s   locret_54118
+                bne.s   Boss_MissirayAllSegmentAttackHoldReturn
                 addq.w  #2,(dword_FF9400).w
-locret_54118:                                           ; CODE XREF: Boss_MissirayAttack1WaitTimer+4   j
+Boss_MissirayAllSegmentAttackHoldReturn:                ; CODE XREF: Boss_MissirayWaitAllSegmentAttackHold+4   j  ; was: locret_54118
                 rts
-; End of function Boss_MissirayAttack1WaitTimer
-; Decrements attack repetition counter and loops or resets attack state
-Boss_MissirayAttack1Loop:                               ; DATA XREF: ROM:00054036   o  ; was: sub_5411A
+; End of function Boss_MissirayWaitAllSegmentAttackHold
+; Repeats from allocation while the repetition counter remains nonzero
+Boss_MissirayFinishOrRepeatAllSegmentAttack:            ; DATA XREF: ROM:00054036   o  ; was: sub_5411A
                 subq.w  #1,$4A(a5)
-                beq.w   Boss_MissirayResetAttackState
+                beq.w   Boss_MissirayFinishAttack
                 move.w  #2,(dword_FF9400).w
                 rts
-; End of function Boss_MissirayAttack1Loop
-; Dispatcher for Missiray wave attack pattern state machine
-Boss_MissirayAttack2Dispatcher:                         ; DATA XREF: ROM:00053CC0   o  ; was: sub_5412A
+; End of function Boss_MissirayFinishOrRepeatAllSegmentAttack
+; Dispatches the shuffled-segment attack and its vertical boss movement
+Boss_MissiraySequentialSegmentAttackDispatcher:         ; DATA XREF: ROM:00053CC0   o  ; was: sub_5412A
                                         ; ROM:00053CC8   o
                 move.w  (dword_FF9400).w,d0
-                lea     off_54136(pc,d0.w),a0
+                lea     Boss_MissiraySequentialSegmentAttackStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_MissirayAttack2Dispatcher
+; End of function Boss_MissiraySequentialSegmentAttackDispatcher
 ; ---------------------------------------------------------------------------
-off_54136:      dc.w    Boss_MissirayAttack2Init-*      ; DATA XREF: Boss_MissirayAttack2Dispatcher+4   o
-                dc.w    Boss_MissirayAttack2Init_FadeLoop-*
-                dc.w    Boss_MissirayShuffleSegmentOrder-*
-                dc.w    Boss_MissirayActivateNextSegment-*
-                dc.w    Boss_MissiraySegmentActivationDelay-*
-                dc.w    Boss_MissirayMoveHorizontal-*
-                dc.w    Boss_MissirayFinishSegmentPattern-*
+Boss_MissiraySequentialSegmentAttackStates: dc.w    Boss_MissirayInitializeSequentialSegmentAttack-*  ; DATA XREF: Boss_MissiraySequentialSegmentAttackDispatcher+4   o  ; was: off_54136
+                dc.w    Boss_MissirayFadeAndInitializeSegmentOrder-*
+                dc.w    Boss_MissirayShuffleSegmentActivationOrder-*
+                dc.w    Boss_MissirayActivateNextShuffledSegment-*
+                dc.w    Boss_MissirayWaitBeforeNextShuffledSegment-*
+                dc.w    Boss_MissirayMoveVerticallyAndResetSegmentOffsets-*
+                dc.w    Boss_MissirayFinishSequentialSegmentAttack-*
 
-; Initializes wave attack with rotating segment setup and angle initialization
-Boss_MissirayAttack2Init:                               ; DATA XREF: ROM:off_54136   o  ; was: sub_54144
+; Enables the segment render flag and initializes the palette-fade direction
+Boss_MissirayInitializeSequentialSegmentAttack:         ; DATA XREF: ROM:Boss_MissiraySequentialSegmentAttackStates   o  ; was: sub_54144
                 bset    #4,$23(a5)
                 clr.w   (dword_FF940C+2).w
                 move.w  #$8000,(dword_FF9410+2).w
                 addq.w  #2,(dword_FF9400).w
-; Execute palette fade during attack 2 initialization
-Boss_MissirayAttack2Init_FadeLoop:                      ; DATA XREF: ROM:00054138   o  ; was: loc_54158
-                bsr.w   Gfx_ApplyPaletteFadeWrapper
+; Advances the palette fade and then records all eight segment pointers
+Boss_MissirayFadeAndInitializeSegmentOrder:             ; DATA XREF: ROM:00054138   o  ; was: loc_54158
+                bsr.w   Boss_MissirayApplyPaletteFadeStep
                 addq.w  #1,(dword_FF940C+2).w
                 cmpi.w  #$E,(dword_FF940C+2).w
-                bne.w   locret_54192
+                bne.w   Boss_MissiraySequentialSegmentFadeReturn
                 lea     (dword_FF9414).w,a1
                 move.w  #$C680,(a1)+
                 move.w  #$C6E0,(a1)+
@@ -316,17 +317,17 @@ Boss_MissirayAttack2Init_FadeLoop:                      ; DATA XREF: ROM:0005413
                 move.w  #$C8C0,(a1)+
                 move.w  #$C920,(a1)+
                 addq.w  #2,(dword_FF9400).w
-locret_54192:                                           ; CODE XREF: Boss_MissirayAttack2Init+22   j
+Boss_MissiraySequentialSegmentFadeReturn:               ; CODE XREF: Boss_MissirayInitializeSequentialSegmentAttack+22   j  ; was: locret_54192
                 rts
-; End of function Boss_MissirayAttack2Init
-; Randomizes order of 8 segment pointers in array for attack sequence
-Boss_MissirayShuffleSegmentOrder:                       ; DATA XREF: ROM:0005413A   o  ; was: sub_54194
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayInitializeSequentialSegmentAttack
+; Randomizes the order in which the eight linked segments are activated
+Boss_MissirayShuffleSegmentActivationOrder:             ; DATA XREF: ROM:0005413A   o  ; was: sub_54194
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 lea     (dword_FF9414).w,a1
                 move.w  #7,d6
-loc_541A0:                                              ; CODE XREF: Boss_MissirayShuffleSegmentOrder+3C   j
+Boss_MissirayShuffleSegmentActivationOuterLoop:         ; CODE XREF: Boss_MissirayShuffleSegmentActivationOrder+3C   j  ; was: loc_541A0
                 move.w  #7,d7
-loc_541A4:                                              ; CODE XREF: Boss_MissirayShuffleSegmentOrder+38   j
+Boss_MissirayShuffleSegmentActivationInnerLoop:         ; CODE XREF: Boss_MissirayShuffleSegmentActivationOrder+38   j  ; was: loc_541A4
                 jsr     (RandomNumber).l
                 move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
@@ -337,279 +338,279 @@ loc_541A4:                                              ; CODE XREF: Boss_Missir
                 move.w  (a1,d0.w),d2
                 move.w  (a1,d1.w),(a1,d0.w)
                 move.w  d2,(a1,d1.w)
-                dbf     d7,loc_541A4
-                dbf     d6,loc_541A0
+                dbf     d7,Boss_MissirayShuffleSegmentActivationInnerLoop
+                dbf     d6,Boss_MissirayShuffleSegmentActivationOuterLoop
                 addq.w  #2,(dword_FF9400).w
                 clr.w   $4A(a5)
                 tst.w   (dword_FF9404).w
-                beq.s   loc_541F6
+                beq.s   Boss_MissirayConfigureModeZeroSequentialMotion
                 move.w  #$B8,(dword_FF9408).w
                 addi.w  #-$10,$4E(a5)
                 move.w  #$B8,$50(a5)
                 rts
 ; ---------------------------------------------------------------------------
-loc_541F6:                                              ; CODE XREF: Boss_MissirayShuffleSegmentOrder+4C   j
+Boss_MissirayConfigureModeZeroSequentialMotion:         ; CODE XREF: Boss_MissirayShuffleSegmentActivationOrder+4C   j  ; was: loc_541F6
                 move.w  #$C8,(dword_FF9408).w
                 addi.w  #$10,$4E(a5)
                 move.w  #$FF48,$50(a5)
                 rts
-; End of function Boss_MissirayShuffleSegmentOrder
-; Activates next segment from shuffled array for attack pattern
-Boss_MissirayActivateNextSegment:                       ; DATA XREF: ROM:0005413C   o  ; was: sub_5420A
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayShuffleSegmentActivationOrder
+; Activates the next idle segment from the shuffled pointer array
+Boss_MissirayActivateNextShuffledSegment:               ; DATA XREF: ROM:0005413C   o  ; was: sub_5420A
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 lea     (dword_FF9414).w,a1
                 move.w  $4A(a5),d0
                 movea.w (a1,d0.w),a0
                 tst.b   $52(a0)
-                bne.s   locret_5423A
+                bne.s   Boss_MissirayActivateShuffledSegmentReturn
                 addq.w  #2,4(a0)
                 move.b  #1,$50(a0)
                 move.w  $50(a5),$4E(a0)
                 move.w  #$18,$48(a5)
                 addq.w  #2,(dword_FF9400).w
-locret_5423A:                                           ; CODE XREF: Boss_MissirayActivateNextSegment+14   j
+Boss_MissirayActivateShuffledSegmentReturn:             ; CODE XREF: Boss_MissirayActivateNextShuffledSegment+14   j  ; was: locret_5423A
                 rts
-; End of function Boss_MissirayActivateNextSegment
-; Delays between segment activations, plays sound when all ready
-Boss_MissiraySegmentActivationDelay:                    ; DATA XREF: ROM:0005413E   o  ; was: sub_5423C
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayActivateNextShuffledSegment
+; Waits between activations and starts vertical movement after the eighth
+Boss_MissirayWaitBeforeNextShuffledSegment:             ; DATA XREF: ROM:0005413E   o  ; was: sub_5423C
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 subq.w  #1,$48(a5)
-                bne.s   locret_54256
+                bne.s   Boss_MissiraySequentialSegmentDelayReturn
                 addq.w  #2,$4A(a5)
                 cmpi.w  #$10,$4A(a5)
-                beq.s   loc_54258
+                beq.s   Boss_MissirayBeginSequentialVerticalMotion
                 subq.w  #2,(dword_FF9400).w
-locret_54256:                                           ; CODE XREF: Boss_MissiraySegmentActivationDelay+8   j
+Boss_MissiraySequentialSegmentDelayReturn:              ; CODE XREF: Boss_MissirayWaitBeforeNextShuffledSegment+8   j  ; was: locret_54256
                 rts
 ; ---------------------------------------------------------------------------
-loc_54258:                                              ; CODE XREF: Boss_MissiraySegmentActivationDelay+14   j
+Boss_MissirayBeginSequentialVerticalMotion:             ; CODE XREF: Boss_MissirayWaitBeforeNextShuffledSegment+14   j  ; was: loc_54258
                 move.w  #$50,$48(a5)                    ; 'P'
                 addq.w  #2,(dword_FF9400).w
                 move.b  #$57,d0                         ; 'W'
                 jsr     (Sound_PlaySFX).l
                 btst    #7,$50(a5)
-                bne.s   loc_5427C
+                bne.s   Boss_MissirayUseUpwardSequentialVelocity
                 move.w  #2,(dword_FF9408+2).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_5427C:                                              ; CODE XREF: Boss_MissiraySegmentActivationDelay+36   j
+Boss_MissirayUseUpwardSequentialVelocity:               ; CODE XREF: Boss_MissirayWaitBeforeNextShuffledSegment+36   j  ; was: loc_5427C
                 move.w  #$FFFE,(dword_FF9408+2).w
                 rts
-; End of function Boss_MissiraySegmentActivationDelay
-; Moves boss horizontally and initializes segment positions
-Boss_MissirayMoveHorizontal:                            ; DATA XREF: ROM:00054140   o  ; was: sub_54284
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayWaitBeforeNextShuffledSegment
+; Moves the boss vertically, then clears every segment motion offset
+Boss_MissirayMoveVerticallyAndResetSegmentOffsets:      ; DATA XREF: ROM:00054140   o  ; was: sub_54284
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 move.w  (dword_FF9408+2).w,d0
                 add.w   d0,$14(a5)
                 subq.w  #1,$48(a5)
-                bne.s   locret_542BE
+                bne.s   Boss_MissirayVerticalMotionReturn
                 clr.w   (dword_FF9408+2).w
                 addq.w  #2,(dword_FF9400).w
                 move.w  $14(a5),$4E(a5)
                 moveq   #0,d0
                 move.w  #7,d7
                 lea     $60(a5),a0
-loc_542AE:                                              ; CODE XREF: Boss_MissirayMoveHorizontal+36   j
+Boss_MissirayClearNextSegmentMotionOffset:              ; CODE XREF: Boss_MissirayMoveVerticallyAndResetSegmentOffsets+36   j  ; was: loc_542AE
                 move.w  d0,$4C(a0)
                 move.w  d0,$4E(a0)
                 lea     $60(a0),a0
-                dbf     d7,loc_542AE
-locret_542BE:                                           ; CODE XREF: Boss_MissirayMoveHorizontal+10   j
+                dbf     d7,Boss_MissirayClearNextSegmentMotionOffset
+Boss_MissirayVerticalMotionReturn:                      ; CODE XREF: Boss_MissirayMoveVerticallyAndResetSegmentOffsets+10   j  ; was: locret_542BE
                 rts
-; End of function Boss_MissirayMoveHorizontal
-; Clears attack flag and resets to idle state after pattern
-Boss_MissirayFinishSegmentPattern:                      ; DATA XREF: ROM:00054142   o  ; was: sub_542C0
+; End of function Boss_MissirayMoveVerticallyAndResetSegmentOffsets
+; Clears the segment render flag and completes the sequential attack
+Boss_MissirayFinishSequentialSegmentAttack:             ; DATA XREF: ROM:00054142   o  ; was: sub_542C0
                 bclr    #4,$23(a5)
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
-                bra.w   Boss_MissirayResetAttackState
-; End of function Boss_MissirayFinishSegmentPattern
-; Dispatcher for attack pattern 4 (facing right attack)
-Boss_MissirayAttackPattern4Dispatcher:                  ; DATA XREF: ROM:00053CCA   o  ; was: sub_542CE
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
+                bra.w   Boss_MissirayFinishAttack
+; End of function Boss_MissirayFinishSequentialSegmentAttack
+; Dispatches the graphics transition that restores mode zero
+Boss_MissirayPrimaryModeTransitionDispatcher:           ; DATA XREF: ROM:00053CCA   o  ; was: sub_542CE
                 move.w  (dword_FF9400).w,d0
-                lea     off_542DA(pc,d0.w),a0
+                lea     Boss_MissirayPrimaryModeTransitionStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_MissirayAttackPattern4Dispatcher
+; End of function Boss_MissirayPrimaryModeTransitionDispatcher
 ; ---------------------------------------------------------------------------
-off_542DA:      dc.w    Boss_MissirayAttackPattern4Init-*  ; DATA XREF: Boss_MissirayAttackPattern4Dispatcher+4   o
-                dc.w    Boss_MissirayAttackPattern4Wait1-*
-                dc.w    Boss_MissirayAttackPattern4Wait2-*
-                dc.w    Boss_MissirayAttackPattern4Wait3-*
-                dc.w    Boss_MissirayAttackPattern4Loop-*
+Boss_MissirayPrimaryModeTransitionStates:   dc.w    Boss_MissirayInitializePrimaryModeTransition-*  ; DATA XREF: Boss_MissirayPrimaryModeTransitionDispatcher+4   o  ; was: off_542DA
+                dc.w    Boss_MissirayWaitThenLoadPrimaryTransferSet-*
+                dc.w    Boss_MissirayWaitThenLoadPrimaryCompressedSet-*
+                dc.w    Boss_MissirayWaitThenLoadPrimaryFinalSet-*
+                dc.w    Boss_MissirayFadePrimaryModePalette-*
 
-; Initializes attack pattern 4 with graphics and direction
-Boss_MissirayAttackPattern4Init:                        ; DATA XREF: ROM:off_542DA   o  ; was: sub_542E4
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; Selects mode zero, its vertical target, and shared render fields
+Boss_MissirayInitializePrimaryModeTransition:           ; DATA XREF: ROM:Boss_MissirayPrimaryModeTransitionStates   o  ; was: sub_542E4
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 move.w  #0,(dword_FF9404).w
                 move.w  #$A0,(dword_FF9404+2).w
                 move.l  #$F40CE41C,$2C(a5)
                 move.l  #$F010E41C,$28(a5)
                 addq.w  #2,(dword_FF9400).w
                 rts
-; End of function Boss_MissirayAttackPattern4Init
-; Waits for screen fade completion before continuing pattern
-Boss_MissirayAttackPattern4Wait1:                       ; DATA XREF: ROM:000542DC   o  ; was: sub_5430A
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayInitializePrimaryModeTransition
+; Waits for the previous transfer before starting direct tile set 00
+Boss_MissirayWaitThenLoadPrimaryTransferSet:            ; DATA XREF: ROM:000542DC   o  ; was: sub_5430A
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   locret_5431C
+                bmi.s   Boss_MissirayPrimaryTransferSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bra.w   Gfx_MissirayLoadTilesSet1
+                bra.w   Boss_MissirayLoadTileTransferSet00
 ; ---------------------------------------------------------------------------
-locret_5431C:                                           ; CODE XREF: Boss_MissirayAttackPattern4Wait1+8   j
+Boss_MissirayPrimaryTransferSetWaitReturn:              ; CODE XREF: Boss_MissirayWaitThenLoadPrimaryTransferSet+8   j  ; was: locret_5431C
                 rts
-; End of function Boss_MissirayAttackPattern4Wait1
-; Waits for fade and triggers battle start for pattern 4
-Boss_MissirayAttackPattern4Wait2:                       ; DATA XREF: ROM:000542DE   o  ; was: sub_5431E
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayWaitThenLoadPrimaryTransferSet
+; Waits for the direct transfer before starting compressed tile set 00
+Boss_MissirayWaitThenLoadPrimaryCompressedSet:          ; DATA XREF: ROM:000542DE   o  ; was: sub_5431E
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   locret_54330
+                bmi.s   Boss_MissirayPrimaryCompressedSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bra.w   Boss_MissirayBattleStart
+                bra.w   Boss_MissirayLoadCompressedTileSet00
 ; ---------------------------------------------------------------------------
-locret_54330:                                           ; CODE XREF: Boss_MissirayAttackPattern4Wait2+8   j
+Boss_MissirayPrimaryCompressedSetWaitReturn:            ; CODE XREF: Boss_MissirayWaitThenLoadPrimaryCompressedSet+8   j  ; was: locret_54330
                 rts
-; End of function Boss_MissirayAttackPattern4Wait2
-; Waits for fade, sets idle state and timer for pattern 4
-Boss_MissirayAttackPattern4Wait3:                       ; DATA XREF: ROM:000542E0   o  ; was: sub_54332
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayWaitThenLoadPrimaryCompressedSet
+; Waits for that transfer before loading compressed tile set 03
+Boss_MissirayWaitThenLoadPrimaryFinalSet:               ; DATA XREF: ROM:000542E0   o  ; was: sub_54332
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   locret_5434A
+                bmi.s   Boss_MissirayPrimaryFinalSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bsr.w   Boss_MissirayIdleState
+                bsr.w   Boss_MissirayLoadCompressedTileSet03
                 move.w  #$E,(dword_FF940C+2).w
-locret_5434A:                                           ; CODE XREF: Boss_MissirayAttackPattern4Wait3+8   j
+Boss_MissirayPrimaryFinalSetWaitReturn:                 ; CODE XREF: Boss_MissirayWaitThenLoadPrimaryFinalSet+8   j  ; was: locret_5434A
                 rts
-; End of function Boss_MissirayAttackPattern4Wait3
-; Updates graphics animation during attack pattern 4
-Boss_MissirayAttackPattern4Loop:                        ; DATA XREF: ROM:000542E2   o  ; was: sub_5434C
-                bsr.w   Gfx_ApplyPaletteFadeWrapper
+; End of function Boss_MissirayWaitThenLoadPrimaryFinalSet
+; Applies the fourteen-step mode-zero palette fade and completes the transition
+Boss_MissirayFadePrimaryModePalette:                    ; DATA XREF: ROM:000542E2   o  ; was: sub_5434C
+                bsr.w   Boss_MissirayApplyPaletteFadeStep
                 subq.w  #1,(dword_FF940C+2).w
-                bpl.s   locret_5435A
-                bra.w   Boss_MissirayResetAttackState
+                bpl.s   Boss_MissirayPrimaryModePaletteFadeReturn
+                bra.w   Boss_MissirayFinishAttack
 ; ---------------------------------------------------------------------------
-locret_5435A:                                           ; CODE XREF: Boss_MissirayAttackPattern4Loop+8   j
+Boss_MissirayPrimaryModePaletteFadeReturn:              ; CODE XREF: Boss_MissirayFadePrimaryModePalette+8   j  ; was: locret_5435A
                 rts
-; End of function Boss_MissirayAttackPattern4Loop
-; Dispatcher for attack pattern 5 (facing left attack)
-Boss_MissirayAttackPattern5Dispatcher:                  ; DATA XREF: ROM:00053CC2   o  ; was: sub_5435C
+; End of function Boss_MissirayFadePrimaryModePalette
+; Dispatches the graphics transition that selects mode one
+Boss_MissirayAlternateModeTransitionDispatcher:         ; DATA XREF: ROM:00053CC2   o  ; was: sub_5435C
                 move.w  (dword_FF9400).w,d0
-                lea     off_54368(pc,d0.w),a0
+                lea     Boss_MissirayAlternateModeTransitionStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_MissirayAttackPattern5Dispatcher
+; End of function Boss_MissirayAlternateModeTransitionDispatcher
 ; ---------------------------------------------------------------------------
-off_54368:      dc.w    Boss_MissirayAttackPattern5Init-*  ; DATA XREF: Boss_MissirayAttackPattern5Dispatcher+4   o
-                dc.w    Boss_MissirayAttackPattern5Wait1-*
-                dc.w    Boss_MissirayAttackPattern5Wait2-*
-                dc.w    Boss_MissirayAttackPattern5Wait3-*
-                dc.w    Boss_MissirayAttackPattern5Loop-*
+Boss_MissirayAlternateModeTransitionStates: dc.w    Boss_MissirayInitializeAlternateModeTransition-*  ; DATA XREF: Boss_MissirayAlternateModeTransitionDispatcher+4   o  ; was: off_54368
+                dc.w    Boss_MissirayWaitThenLoadAlternateTransferSet-*
+                dc.w    Boss_MissirayWaitThenLoadAlternateCompressedSet-*
+                dc.w    Boss_MissirayWaitThenLoadAlternateFinalSet-*
+                dc.w    Boss_MissirayFadeAlternateModePalette-*
 
-; Initializes attack pattern 5 with graphics and direction
-Boss_MissirayAttackPattern5Init:                        ; DATA XREF: ROM:off_54368   o  ; was: sub_54372
+; Selects mode one, its vertical target, and shared render fields
+Boss_MissirayInitializeAlternateModeTransition:         ; DATA XREF: ROM:Boss_MissirayAlternateModeTransitionStates   o  ; was: sub_54372
                 move.w  #1,(dword_FF9404).w
                 move.l  #$F40CE41C,$2C(a5)
                 move.l  #$F010E41C,$28(a5)
                 move.w  #$C0,(dword_FF9404+2).w
                 addq.w  #2,(dword_FF9400).w
                 rts
-; End of function Boss_MissirayAttackPattern5Init
-; Waits for screen fade completion before continuing pattern
-Boss_MissirayAttackPattern5Wait1:                       ; DATA XREF: ROM:0005436A   o  ; was: sub_54394
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayInitializeAlternateModeTransition
+; Waits for the previous transfer before starting direct tile set 01
+Boss_MissirayWaitThenLoadAlternateTransferSet:          ; DATA XREF: ROM:0005436A   o  ; was: sub_54394
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   locret_543A6
+                bmi.s   Boss_MissirayAlternateTransferSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bra.w   Gfx_MissirayLoadTilesSet2
+                bra.w   Boss_MissirayLoadTileTransferSet01
 ; ---------------------------------------------------------------------------
-locret_543A6:                                           ; CODE XREF: Boss_MissirayAttackPattern5Wait1+8   j
+Boss_MissirayAlternateTransferSetWaitReturn:            ; CODE XREF: Boss_MissirayWaitThenLoadAlternateTransferSet+8   j  ; was: locret_543A6
                 rts
-; End of function Boss_MissirayAttackPattern5Wait1
-; Waits for fade before next phase of pattern 5
-Boss_MissirayAttackPattern5Wait2:                       ; DATA XREF: ROM:0005436C   o  ; was: sub_543A8
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayWaitThenLoadAlternateTransferSet
+; Waits for the direct transfer before starting compressed tile set 01
+Boss_MissirayWaitThenLoadAlternateCompressedSet:        ; DATA XREF: ROM:0005436C   o  ; was: sub_543A8
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   locret_543BA
+                bmi.s   Boss_MissirayAlternateCompressedSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bra.w   Gfx_MissirayLoadCompressedSet1
+                bra.w   Boss_MissirayLoadCompressedTileSet01
 ; ---------------------------------------------------------------------------
-locret_543BA:                                           ; CODE XREF: Boss_MissirayAttackPattern5Wait2+8   j
+Boss_MissirayAlternateCompressedSetWaitReturn:          ; CODE XREF: Boss_MissirayWaitThenLoadAlternateCompressedSet+8   j  ; was: locret_543BA
                 rts
-; End of function Boss_MissirayAttackPattern5Wait2
-; Waits for fade, sets up idle state and timer for pattern 5
-Boss_MissirayAttackPattern5Wait3:                       ; DATA XREF: ROM:0005436E   o  ; was: sub_543BC
-                bsr.w   Boss_MissirayUpdateGraphicsFrame
+; End of function Boss_MissirayWaitThenLoadAlternateCompressedSet
+; Waits for that transfer before loading compressed tile set 04
+Boss_MissirayWaitThenLoadAlternateFinalSet:             ; DATA XREF: ROM:0005436E   o  ; was: sub_543BC
+                bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   locret_543D4
+                bmi.s   Boss_MissirayAlternateFinalSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bsr.w   Gfx_MissirayLoadCompressedSet2
+                bsr.w   Boss_MissirayLoadCompressedTileSet04
                 move.w  #$E,(dword_FF940C+2).w
-locret_543D4:                                           ; CODE XREF: Boss_MissirayAttackPattern5Wait3+8   j
+Boss_MissirayAlternateFinalSetWaitReturn:               ; CODE XREF: Boss_MissirayWaitThenLoadAlternateFinalSet+8   j  ; was: locret_543D4
                 rts
-; End of function Boss_MissirayAttackPattern5Wait3
-; Updates graphics animation during attack pattern 5
-Boss_MissirayAttackPattern5Loop:                        ; DATA XREF: ROM:00054370   o  ; was: sub_543D6
-                bsr.w   Gfx_ApplyPaletteFadeWrapper
+; End of function Boss_MissirayWaitThenLoadAlternateFinalSet
+; Applies the fourteen-step mode-one palette fade and completes the transition
+Boss_MissirayFadeAlternateModePalette:                  ; DATA XREF: ROM:00054370   o  ; was: sub_543D6
+                bsr.w   Boss_MissirayApplyPaletteFadeStep
                 subq.w  #1,(dword_FF940C+2).w
-                bpl.s   locret_543E4
-                bra.w   Boss_MissirayResetAttackState
+                bpl.s   Boss_MissirayAlternateModePaletteFadeReturn
+                bra.w   Boss_MissirayFinishAttack
 ; ---------------------------------------------------------------------------
-locret_543E4:                                           ; CODE XREF: Boss_MissirayAttackPattern5Loop+8   j
+Boss_MissirayAlternateModePaletteFadeReturn:            ; CODE XREF: Boss_MissirayFadeAlternateModePalette+8   j  ; was: locret_543E4
                 rts
-; End of function Boss_MissirayAttackPattern5Loop
-; Dispatcher for idle delay state between attacks
-Boss_MissirayIdleDelayDispatcher:
+; End of function Boss_MissirayFadeAlternateModePalette
+; Dispatches the fixed delay used between selected attacks
+Boss_MissirayInterAttackDelayDispatcher:
                 move.w  (dword_FF9400).w,d0             ; was: sub_543E6
-                lea     off_543F2(pc,d0.w),a0
+                lea     Boss_MissirayInterAttackDelayStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Boss_MissirayIdleDelayDispatcher
+; End of function Boss_MissirayInterAttackDelayDispatcher
 ; ---------------------------------------------------------------------------
-off_543F2:      dc.w    Boss_MissirayIdleDelayCountdown-*  ; DATA XREF: Boss_MissirayIdleDelayDispatcher+4   o
-                dc.w    Boss_MissirayIdleDelayCountdown_WaitLoop-*
+Boss_MissirayInterAttackDelayStates:    dc.w    Boss_MissirayBeginInterAttackDelay-*  ; DATA XREF: Boss_MissirayInterAttackDelayDispatcher+4   o  ; was: off_543F2
+                dc.w    Boss_MissirayTickInterAttackDelay-*
 
-; Counts down idle timer and returns to attack state
-Boss_MissirayIdleDelayCountdown:                        ; DATA XREF: ROM:off_543F2   o  ; was: sub_543F6
+; Starts the fixed inter-attack delay
+Boss_MissirayBeginInterAttackDelay:                     ; DATA XREF: ROM:Boss_MissirayInterAttackDelayStates   o  ; was: sub_543F6
                 move.w  #$80,$48(a5)
                 addq.w  #2,(dword_FF9400).w
-; Countdown timer during idle delay before reset
-Boss_MissirayIdleDelayCountdown_WaitLoop:               ; DATA XREF: ROM:000543F4   o  ; was: loc_54400
+; Counts down the delay and returns to attack selection
+Boss_MissirayTickInterAttackDelay:                      ; DATA XREF: ROM:000543F4   o  ; was: loc_54400
                 subq.w  #1,$48(a5)
-                bne.s   locret_5440A
-                bra.w   Boss_MissirayResetAttackState
+                bne.s   Boss_MissirayInterAttackDelayReturn
+                bra.w   Boss_MissirayFinishAttack
 ; ---------------------------------------------------------------------------
-locret_5440A:                                           ; CODE XREF: Boss_MissirayIdleDelayCountdown+E   j
+Boss_MissirayInterAttackDelayReturn:                    ; CODE XREF: Boss_MissirayBeginInterAttackDelay+E   j  ; was: locret_5440A
                 rts
-; End of function Boss_MissirayIdleDelayCountdown
-; Spawn ring of bullets
-Boss_MissiraySpawnBulletRing:                           ; CODE XREF: Boss_MissirayAttackPattern3Init:loc_53F7A   p  ; was: sub_5440C
-                                        ; sub_54038:loc_54042   p
+; End of function Boss_MissirayBeginInterAttackDelay
+; Allocates eight projectile records or retires a partially allocated set
+Boss_MissirayAllocateSegmentProjectileSet:              ; CODE XREF: Boss_MissirayAllocatePairAttackProjectiles   p  ; was: sub_5440C
+                                        ; Boss_MissirayAllocateAllSegmentProjectiles   p
                 move.w  #7,d7
                 lea     (dword_FF9414).w,a3
                 moveq   #0,d0
-loc_54416:                                              ; CODE XREF: Boss_MissiraySpawnBulletRing+C   j
+Boss_MissirayClearNextProjectilePointer:                ; CODE XREF: Boss_MissirayAllocateSegmentProjectileSet+C   j  ; was: loc_54416
                 move.w  d0,(a3)+
-                dbf     d7,loc_54416
+                dbf     d7,Boss_MissirayClearNextProjectilePointer
                 move.w  #7,d7
                 lea     (dword_FF9414).w,a3
-loc_54424:                                              ; CODE XREF: Boss_MissiraySpawnBulletRing+26   j
+Boss_MissirayAllocateNextSegmentProjectile:             ; CODE XREF: Boss_MissirayAllocateSegmentProjectileSet+26   j  ; was: loc_54424
                 jsr     (Projectile_FindFreePrimarySlot).l
-                bne.s   loc_5443C
+                bne.s   Boss_MissirayCleanUpFailedProjectileSet
                 move.w  #$10,(a0)
                 move.w  a0,(a3)+
-                dbf     d7,loc_54424
+                dbf     d7,Boss_MissirayAllocateNextSegmentProjectile
                 move.w  #0,d0
                 rts
 ; ---------------------------------------------------------------------------
-loc_5443C:                                              ; CODE XREF: Boss_MissiraySpawnBulletRing+1E   j
+Boss_MissirayCleanUpFailedProjectileSet:                ; CODE XREF: Boss_MissirayAllocateSegmentProjectileSet+1E   j  ; was: loc_5443C
                 move.w  #7,d7
                 lea     (dword_FF9414).w,a3
-loc_54444:                                              ; CODE XREF: Boss_MissiraySpawnBulletRing+42   j
+Boss_MissirayRetireNextAllocatedProjectile:             ; CODE XREF: Boss_MissirayAllocateSegmentProjectileSet+42   j  ; was: loc_54444
                 movea.w (a3)+,a0
-                beq.s   locret_54456
+                beq.s   Boss_MissirayAllocateProjectileSetReturn
                 move.w  #$1000,2(a0)
-                dbf     d7,loc_54444
+                dbf     d7,Boss_MissirayRetireNextAllocatedProjectile
                 move.w  #1,d0
-locret_54456:                                           ; CODE XREF: Boss_MissiraySpawnBulletRing+3A   j
+Boss_MissirayAllocateProjectileSetReturn:               ; CODE XREF: Boss_MissirayAllocateSegmentProjectileSet+3A   j  ; was: locret_54456
                 rts
-; End of function Boss_MissiraySpawnBulletRing
+; End of function Boss_MissirayAllocateSegmentProjectileSet
 ; Segment part main handler

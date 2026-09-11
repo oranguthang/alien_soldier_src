@@ -244,7 +244,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Effect_RisingShotWaveControllerMain
                 dc.l    Projectile_MissirayBulletMain
                 dc.l    Boss_MissirayMain
-                dc.l    Segment_MissirayPartMain
+                dc.l    Segment_MissirayMain
                 dc.l    Entity_EmptyState4
                 dc.l    Stage18_MovingPlatform
                 dc.l    Stage24_ScrollHandler
@@ -256,7 +256,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_ZLeoMain
                 dc.l    Boss_ValkirieForceMain
                 dc.l    Weapon_ProcessProjectileHit
-                dc.l    Projectile_MissirayMissileMain
+                dc.l    Projectile_MissirayProximityShotMain
                 dc.l    Projectile_WolfGaropaOrbShot
                 dc.l    Entity_EmptyState8
                 dc.l    Entity_ValkirieProjectileDispatcher

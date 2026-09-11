@@ -3521,3 +3521,88 @@ name-audit registry from 9,303 to 9,353, and the enforced address-derived
 ceiling falls from 3,451 to 3,427. Module count remains 347 and the canonical
 symbol count remains 16,060 because the source boundary moved without adding
 or removing any ROM address.
+
+The Missiray core pass reconstructs all 89 definitions in the cohesive
+`0x0537B8-0x053E67` state-machine module. Its 22-entry main-state table now
+names initialization, four transfer-gated opening stages, vertical placement,
+linked-segment activation, message gating, the nine-entry attack sequence, and
+the complete defeat pipeline. The direct and compressed graphics descriptors
+use owner-scoped numeric set names because their transfer format and callers
+are statically proven while their visual frame identity is not.
+
+The audit rejects several inherited Sonnet descriptions. The former
+`Boss_MissirayDispatcher` is the state-zero initializer, not another
+dispatcher. `Boss_MissirayIntroMove` changes no position, and
+`Boss_MissirayIntroStop` tests no stop coordinate; both are transfer gates.
+`Boss_MissirayBattleStart` and `Boss_MissirayIdleState` are loader-only
+routines also reused by attack states. The former `AttackState1/2` pair raises
+the boss and initializes counters, while `GraphicsUpdate1` through
+`GraphicsUpdate7` are the ordered defeat-motion, palette-fade, and tile-load
+stages. The timed symmetric segment-separation helper is named by its body but
+explicitly retains the fact that no live static caller is known.
+
+All 51 live address-derived definitions in `bosses/missiray_core.s` are
+eliminated and all 89 module definitions have exact-address audit coverage;
+three message-gate records already existed, so 86 records are added. Provenance
+rises from 12,620 to 12,671, the name-audit registry from 9,353 to 9,439, and
+the enforced address-derived ceiling falls from 3,427 to 3,376. Module count
+remains 347, the Missiray core remains a natural 622-line unit, and the
+canonical ROM remains byte-identical.
+
+The contiguous `bosses/missiray_attacks.s` pass reconstructs all 97
+definitions in the `0x053E68-0x054456` attack-state module and removes its 55
+live address-derived names. The first four-state machine repeatedly allocates
+one type-`$10` projectile record and assigns it to a randomly selected idle
+segment. The following state machines activate four ordered segment pairs,
+arm all eight segments with one of four staggered delay patterns, and activate
+the eight segments in a shuffled order before moving the controller vertically.
+The shared allocation helper reserves eight projectile records atomically and
+retires the partial set when allocation fails.
+
+Static instruction review rejects the inherited `ShootPattern1` and
+`ShootPattern2` split: these are consecutive allocation and segment-arming
+states of one random-segment attack. The former `Attack1` and `Attack2` names
+are replaced by their observable all-segment and shuffled sequential roles.
+Most importantly, `Boss_MissirayMoveHorizontal` writes object Y at offset
+`$14`, not X. The former facing-right/facing-left `AttackPattern4/5` claims
+have no direct evidence; their five-state pipelines instead set Missiray mode
+zero or one, wait for three named graphics transfers, and apply a fourteen-step
+palette fade. `SpawnBulletRing` is also narrowed to allocation because the
+helper creates and records type-`$10` objects but does not itself position or
+fire them. The two standalone RTS bodies remain honest owner-scoped unused
+no-ops because no live static reference reaches either address.
+
+All 97 definitions now have exact-address static evidence in
+`config/name_audit.json`. Provenance rises from 12,671 to 12,726, the audit
+registry from 9,439 to 9,536, and the enforced address-derived ceiling falls
+from 3,376 to 3,321. The cohesive module remains below the 1,000-line ceiling;
+byte identity and the complete project gates are rechecked with this package.
+
+The final Missiray pass reconstructs all 63 definitions in the contiguous
+`bosses/missiray_segments.s` module and removes its 38 live address-derived
+names. The three top-level segment modes are now explicit: ordinary projectile
+launch, sine-derived offset transition, and the timed defeat flight. The
+ordinary sequence initializes one of the projectile records reserved by the
+attack controller, advances two differently scaled sine arcs, and returns to
+idle after a fixed hold. The defeat sequence waits on its per-segment timer,
+integrates vertical velocity, emits type-`$160` particles, and retires the
+segment after it crosses Y `$180`.
+
+This audit rejects four important inherited descriptions. The former
+`Boss_MissirayUpdateGraphicsFrame` does not select a sprite frame: it walks a
+15-word `E..0..E` wave consumed by the palette-fade wrapper. That wrapper is
+Missiray-owned rather than a general graphics primitive. The unreferenced
+`Boss_ValkirieInputControl` is neither Valkirie code nor horizontal movement;
+its body gates on input modifier bit 6 and adjusts the active object's Y and
+base-Y fields, so it is retained as an owner-neutral orphaned input helper.
+Finally, the supposed missile identity is not statically established. The
+proximity-gated producer and type-`$404`
+state machine are named as proximity shots: an anchor follows its owner for
+`$20` ticks, replaces itself with a moving record, and that record subsequently
+adds a signed acceleration to vertical velocity.
+
+All 63 definitions have exact-address static audit records. Provenance rises
+from 12,726 to 12,764, the name-audit registry from 9,536 to 9,599, and the
+enforced address-derived ceiling falls from 3,321 to 3,283. All three Missiray
+modules now contain zero live address-derived definitions, remain cohesive at
+622, 616, and 436 lines, and preserve their original ROM order.

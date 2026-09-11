@@ -1,6 +1,6 @@
 ; Shared type-$3C4 Missiray falling shots and delayed rising-wave members
 Projectile_InitMissirayFallingShot:                     ; CODE XREF: Orphaned_RisingShotPairFireFallingShot+32   p  ; was: sub_33956
-                                        ; Segment_MissirayType1Fire+34   p
+                                        ; Segment_MissirayLaunchConfiguredProjectile+34   p
                 move.b  #0,$47(a0)
                 move.l  #word_EB3D8,8(a0)
                 move.l  #$F010FE02,$2C(a0)
@@ -327,7 +327,7 @@ Projectile_Stage24RisingShotSpawnBurstParticleReturn:   ; CODE XREF: Projectile_
 ; End of function Projectile_Stage24RisingShotSpawnBurstParticle
 ; Initializes Missiray bullet projectile with graphics and parameters
 Projectile_InitMissirayBullet:                          ; CODE XREF: Orphaned_RisingShotPairFireMissirayShot+2C   p  ; was: sub_33D58
-                                        ; Segment_MissirayType1Fire+54   p
+                                        ; Segment_MissirayLaunchConfiguredProjectile+54   p
                 move.w  #$3CC,(a0)
                 move.l  #Projectile_MissirayBulletInitialSpriteAnimation,8(a0)
                 clr.w   $C(a0)

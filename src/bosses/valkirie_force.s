@@ -224,7 +224,7 @@ Boss_ValkirieForcePoseKeyframeData: dc.w    $4000, $C094, $C010, $EC40, $F060, $
                                         ; DATA XREF: Boss_ValkirieForceAnimUpdate+54   o
                 dc.w    $10E0, $E000
 Boss_MissiraySegmentObjectPointers: dc.w    $C680, $C6E0, $C740, $C7A0, $C800, $C860, $C8C0, $C920  ; was: word_537A8
-                                        ; DATA XREF: Boss_MissiraySegmentsSeparate+1A   o
-                                        ; Boss_MissirayShootPattern2+A   o
+                                        ; DATA XREF: Boss_MissirayUpdateTimedSegmentPairSeparation+1A   o
+                                        ; Boss_MissirayArmRandomSegment+A   o
 
 ; Main boss handler
