@@ -4046,3 +4046,29 @@ name-audit registry from 10,185 to 10,246. The enforced address-derived ceiling
 falls from 2,774 to 2,750. The layout remains 362 modules with a 328.3-line
 mean; the largest module remains 986 lines, with zero files above 1,000 lines
 and zero generic container filenames.
+
+The following Stage 24 and Missiray transition pass audits all 25 definitions
+in `stages/stage24_missiray.s`. The first five dispatch states form a cohesive
+Missiray entry and exit sequence: they initialize two type-$3E0 scene objects,
+update full-, half-, and quarter-speed vertical parallax, load the explicit
+Missiray asset set, start message sequence `$2E`, and wait for the message and
+shared activity signals before starting the outgoing transition. The former
+`Boss_MissirayInit` does not initialize the boss controller, and the former
+`Boss_MissirayPaletteUpdate` writes no palette data; both claims are corrected.
+
+The second state family initializes type-$410 and type-$10 Stage 24 scene
+objects, accelerates the vertical scroll to `$00C0`, derives a bounded offset
+from the first object's Y coordinate, and waits for the completion byte and
+shared activity words before advancing the stage table. Its older generic
+camera, scroll, and phase names are narrowed to their observed transition
+roles. Entity type `$3E4` is also identified as the one-operation controller
+that advances the global transition state; the adjacent table entry is its
+inert return state.
+
+All 25 definitions now have exact-address static audit records. The twelve
+formerly address-derived branches and returns receive provenance-preserving
+behavioral names, while thirteen inherited semantic names are corrected or
+narrowed. Provenance rises from 13,298 to 13,310, the name-audit registry from
+10,246 to 10,271, and the enforced address-derived ceiling falls from 2,750 to
+2,738. The layout remains 362 modules with a 328.3-line mean, zero files above
+1,000 lines, and zero generic container filenames.

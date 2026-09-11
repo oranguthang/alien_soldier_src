@@ -339,7 +339,7 @@ Boss_ZLeoGraphicsLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_MissirayAssetSet:  dc.w    $3D0                    ; field_0  ; was: stru_1163C
-                                        ; DATA XREF: Boss_MissirayTransition+10   o
+                                        ; DATA XREF: StageTransition_LoadMissirayAssets+10   o
                 dc.l    Boss_MissirayGraphicsLoadList   ; field_2
                 dc.l    Boss_MissirayPaletteCommand     ; field_6
 Boss_MissirayGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_11646

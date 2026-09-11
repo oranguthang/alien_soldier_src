@@ -1,4 +1,4 @@
-Stage24_Init:                                           ; DATA XREF: ROM:0000F13C   o  ; was: sub_F7FA
+StageTransition_InitializeMissirayEntryScene:           ; DATA XREF: ROM:0000F13C   o  ; was: sub_F7FA
                 addq.w  #2,(word_FFA950).w
                 move.l  #$FFFE0000,(dword_FFA960).w
                 move.b  #4,(VDPReg11Shadow+1).w
@@ -29,53 +29,53 @@ Stage24_Init:                                           ; DATA XREF: ROM:0000F13
                 move.w  #$D0,$10(a1)
                 move.w  d7,$14(a1)
                 move.w  #$3C8,(word_FFDBE0).w
-; Stage 24 initialization loop with graphics and timer
-Stage24_InitLoop:                                       ; DATA XREF: ROM:0000F13E   o  ; was: loc_F89C
-                bsr.w   Stage24_GraphicsSetup
+; Updates the Missiray entry parallax until the scene delay expires
+StageTransition_UpdateMissirayEntryDelay:               ; DATA XREF: ROM:0000F13E   o  ; was: loc_F89C
+                bsr.w   StageTransition_UpdateMissirayParallax
                 subq.w  #1,(word_FF9DB0).w
                 bpl.w   Boss_DestroyerProtoTransition_Return
                 move.w  #$80,(word_FF9DB0).w
                 jmp     Stage_TransitionToNextPhase
-; End of function Stage24_Init
-; Transition to boss
-Boss_MissirayTransition:                                ; DATA XREF: ROM:0000F140   o  ; was: sub_F8B4
-                bsr.w   Stage24_GraphicsSetup
+; End of function StageTransition_InitializeMissirayEntryScene
+; Waits for the entry delay, then starts loading the Missiray asset set
+StageTransition_LoadMissirayAssets:                     ; DATA XREF: ROM:0000F140   o  ; was: sub_F8B4
+                bsr.w   StageTransition_UpdateMissirayParallax
                 subq.w  #1,(word_FF9DB0).w
                 bpl.w   Boss_DestroyerProtoTransition_Return
                 addq.w  #2,(word_FFA950).w
                 lea     (Boss_MissirayAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
-; End of function Boss_MissirayTransition
-; Boss initialization
-Boss_MissirayInit:                                      ; DATA XREF: ROM:0000F142   o  ; was: sub_F8D0
+; End of function StageTransition_LoadMissirayAssets
+; Waits for the first object slot to clear before starting the Missiray message
+StageTransition_WaitForMissirayObjectClear:             ; DATA XREF: ROM:0000F142   o  ; was: sub_F8D0
                 tst.w   (Entity_ObjectPool).w
-                bne.s   loc_F8E6
+                bne.s   StageTransition_UpdateMissirayEntryScene
                 addq.w  #2,(word_FFA950).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 move.b  #1,(byte_FF830E).w
-loc_F8E6:                                               ; CODE XREF: Boss_MissirayInit+4   j
-                bra.w   Stage24_GraphicsSetup
-; End of function Boss_MissirayInit
-; Palette update handler
-Boss_MissirayPaletteUpdate:                             ; DATA XREF: ROM:0000F144   o  ; was: sub_F8EA
-                bsr.w   Stage24_GraphicsSetup
+StageTransition_UpdateMissirayEntryScene:               ; CODE XREF: StageTransition_WaitForMissirayObjectClear+4   j  ; was: loc_F8E6
+                bra.w   StageTransition_UpdateMissirayParallax
+; End of function StageTransition_WaitForMissirayObjectClear
+; Waits for the Missiray message and shared activity signals before leaving the scene
+StageTransition_WaitForMissirayExitSignals:             ; DATA XREF: ROM:0000F144   o  ; was: sub_F8EA
+                bsr.w   StageTransition_UpdateMissirayParallax
                 tst.w   (MessageSequenceState).w
-                bne.s   locret_F912
+                bne.s   StageTransition_MissirayExitWaitReturn
                 tst.w   (word_FF8230).w
-                bne.s   locret_F912
+                bne.s   StageTransition_MissirayExitWaitReturn
                 tst.w   (word_FF8138).w
-                bne.s   locret_F912
+                bne.s   StageTransition_MissirayExitWaitReturn
                 move.b  #$9F,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
                 bra.w   Stage_InitTransitionState
 ; ---------------------------------------------------------------------------
-locret_F912:                                            ; CODE XREF: Boss_MissirayPaletteUpdate+8   j
-                                        ; Boss_MissirayPaletteUpdate+E   j
+StageTransition_MissirayExitWaitReturn:                 ; CODE XREF: StageTransition_WaitForMissirayExitSignals+8   j  ; was: locret_F912
+                                        ; StageTransition_WaitForMissirayExitSignals+E   j
                 rts
-; End of function Boss_MissirayPaletteUpdate
-; Graphics setup
-Stage24_GraphicsSetup:                                  ; CODE XREF: Stage24_Init:loc_F89C   p  ; was: sub_F914
-                                        ; sub_F8B4   p
+; End of function StageTransition_WaitForMissirayExitSignals
+; Applies the Missiray scene's full-, half-, and quarter-speed vertical parallax
+StageTransition_UpdateMissirayParallax:                 ; CODE XREF: StageTransition_InitializeMissirayEntryScene:StageTransition_UpdateMissirayEntryDelay   p  ; was: sub_F914
+                                        ; StageTransition_LoadMissirayAssets   p
                 move.l  (dword_FFA960).w,d0
                 sub.l   d0,(dword_FFA904).w
                 move.w  (dword_FFA904).w,d0
@@ -91,47 +91,47 @@ Stage24_GraphicsSetup:                                  ; CODE XREF: Stage24_Ini
                 move.w  d1,(word_FFEC44).w
                 movea.w #(word_FFEC0C-M68K_RAM),a0
                 moveq   #$D,d7
-loc_F946:                                               ; CODE XREF: Stage24_GraphicsSetup+36   j
+StageTransition_FillMissirayQuarterSpeedVScroll:        ; CODE XREF: StageTransition_UpdateMissirayParallax+36   j  ; was: loc_F946
                 move.w  d2,(a0)
                 addq.w  #4,a0
-                dbf     d7,loc_F946
+                dbf     d7,StageTransition_FillMissirayQuarterSpeedVScroll
                 rts
-; End of function Stage24_GraphicsSetup
-; Scroll handler
-Stage24_ScrollHandler:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_F950
+; End of function StageTransition_UpdateMissirayParallax
+; Updates either member of the linked Missiray scene-object pair
+StageTransition_UpdateMissiraySceneObject:              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_F950
                 move.b  (byte_FFA420).w,$20(a5)
                 subq.b  #4,$20(a5)
                 tst.w   $56(a5)
-                bne.s   locret_F9B4
+                bne.s   StageTransition_MissiraySceneObjectReturn
                 bclr    #0,6(a5)
-                beq.s   loc_F9AA
+                beq.s   StageTransition_SyncMissiraySceneObjectHeight
                 tst.w   (ShootingMode).w
-                beq.s   loc_F976
+                beq.s   StageTransition_CheckMissiraySceneUpInput
                 btst    #2,(byte_FF8244).w
-                bne.s   loc_F9AA
-loc_F976:                                               ; CODE XREF: Stage24_ScrollHandler+1C   j
+                bne.s   StageTransition_SyncMissiraySceneObjectHeight
+StageTransition_CheckMissiraySceneUpInput:              ; CODE XREF: StageTransition_UpdateMissiraySceneObject+1C   j  ; was: loc_F976
                 btst    #0,(word_FFF706).w
-                beq.s   loc_F990
+                beq.s   StageTransition_CheckMissiraySceneDownInput
                 subq.w  #1,$14(a5)
                 cmpi.w  #$D0,$14(a5)
-                bpl.s   loc_F9AA
+                bpl.s   StageTransition_SyncMissiraySceneObjectHeight
                 move.w  #$D0,$14(a5)
-loc_F990:                                               ; CODE XREF: Stage24_ScrollHandler+2C   j
+StageTransition_CheckMissiraySceneDownInput:            ; CODE XREF: StageTransition_UpdateMissiraySceneObject+2C   j  ; was: loc_F990
                 btst    #1,(word_FFF706).w
-                beq.s   loc_F9AA
+                beq.s   StageTransition_SyncMissiraySceneObjectHeight
                 addq.w  #1,$14(a5)
                 cmpi.w  #$160,$14(a5)
-                bmi.s   loc_F9AA
+                bmi.s   StageTransition_SyncMissiraySceneObjectHeight
                 move.w  #$160,$14(a5)
-loc_F9AA:                                               ; CODE XREF: Stage24_ScrollHandler+16   j
-                                        ; Stage24_ScrollHandler+24   j
+StageTransition_SyncMissiraySceneObjectHeight:          ; CODE XREF: StageTransition_UpdateMissiraySceneObject+16   j  ; was: loc_F9AA
+                                        ; StageTransition_UpdateMissiraySceneObject+24   j
                 movea.w #(byte_FFDB80-M68K_RAM),a0
                 move.w  $14(a5),$14(a0)
-locret_F9B4:                                            ; CODE XREF: Stage24_ScrollHandler+E   j
+StageTransition_MissiraySceneObjectReturn:              ; CODE XREF: StageTransition_UpdateMissiraySceneObject+E   j  ; was: locret_F9B4
                 rts
-; End of function Stage24_ScrollHandler
-; Initializes stage 24 cutscene objects and sound
-Stage24_InitCutscene:                                   ; DATA XREF: ROM:0000F14A   o  ; was: sub_F9B6
+; End of function StageTransition_UpdateMissiraySceneObject
+; Initializes the Stage 24 scene objects, vertical range, and sound
+StageTransition_InitializeStage24SceneObjects:          ; DATA XREF: ROM:0000F14A   o  ; was: sub_F9B6
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA958).w
                 movea.w #(word_FFDB20-M68K_RAM),a0
@@ -149,60 +149,59 @@ Stage24_InitCutscene:                                   ; DATA XREF: ROM:0000F14
                 clr.l   (dword_FF8066+2).w
                 move.b  #$C9,d0
                 jsr     (Sound_PlaySFX).l
-; End of function Stage24_InitCutscene
-; Accelerates vertical scroll until target reached
-Camera_ScrollAccelerate:                                ; DATA XREF: ROM:0000F14C   o  ; was: sub_FA0E
+; End of function StageTransition_InitializeStage24SceneObjects
+; Accelerates the Stage 24 vertical scroll until coordinate $C0
+StageTransition_AccelerateStage24VerticalScroll:        ; DATA XREF: ROM:0000F14C   o  ; was: sub_FA0E
                 cmpi.w  #2,(dword_FF8066+2).w
-                bpl.s   loc_FA1E
+                bpl.s   StageTransition_ApplyStage24VerticalScroll
                 addi.l  #$1000,(dword_FF8066+2).w
-loc_FA1E:                                               ; CODE XREF: Camera_ScrollAccelerate+6   j
+StageTransition_ApplyStage24VerticalScroll:             ; CODE XREF: StageTransition_AccelerateStage24VerticalScroll+6   j  ; was: loc_FA1E
                 move.l  (dword_FF8066+2).w,d0
                 add.l   d0,(dword_FFA900).w
                 cmpi.w  #$C0,(dword_FFA900).w
-                bmi.s   locret_FA38
+                bmi.s   StageTransition_Stage24VerticalScrollReturn
                 addq.w  #2,(word_FFA950).w
                 move.w  #$C0,(dword_FFA900).w
-locret_FA38:                                            ; CODE XREF: Camera_ScrollAccelerate+1E   j
+StageTransition_Stage24VerticalScrollReturn:            ; CODE XREF: StageTransition_AccelerateStage24VerticalScroll+1E   j  ; was: locret_FA38
                 rts
-; End of function Camera_ScrollAccelerate
-; Clamps vertical scroll position to bounds
-Scroll_ClampVerticalPos:                                ; DATA XREF: ROM:0000F14E   o  ; was: sub_FA3A
+; End of function StageTransition_AccelerateStage24VerticalScroll
+; Derives and clamps the Stage 24 vertical offset from the first scene object
+StageTransition_UpdateStage24VerticalOffset:            ; DATA XREF: ROM:0000F14E   o  ; was: sub_FA3A
                 move.w  #$100,d0
                 sub.w   (dword_FFDB34).w,d0
-                bmi.s   loc_FA46
+                bmi.s   StageTransition_CheckStage24VerticalOffsetLimit
                 moveq   #0,d0
-loc_FA46:                                               ; CODE XREF: Scroll_ClampVerticalPos+8   j
+StageTransition_CheckStage24VerticalOffsetLimit:        ; CODE XREF: StageTransition_UpdateStage24VerticalOffset+8   j  ; was: loc_FA46
                 cmpi.w  #$FFE0,d0
-                bpl.s   loc_FA54
+                bpl.s   StageTransition_StoreStage24VerticalOffset
                 addq.w  #2,(word_FFA950).w
                 move.w  #$FFE0,d0
-loc_FA54:                                               ; CODE XREF: Scroll_ClampVerticalPos+10   j
+StageTransition_StoreStage24VerticalOffset:             ; CODE XREF: StageTransition_UpdateStage24VerticalOffset+10   j  ; was: loc_FA54
                 move.w  d0,(dword_FFA904).w
                 rts
-; End of function Scroll_ClampVerticalPos
-; Checks if stage phase complete and transitions
-Stage_CheckPhaseComplete:                               ; DATA XREF: ROM:0000F150   o  ; was: sub_FA5A
+; End of function StageTransition_UpdateStage24VerticalOffset
+; Waits for Stage 24 completion and shared activity signals before advancing
+StageTransition_WaitForStage24CompletionSignals:        ; DATA XREF: ROM:0000F150   o  ; was: sub_FA5A
                 tst.b   (byte_FFA958).w
-                beq.s   locret_FA82
+                beq.s   StageTransition_Stage24CompletionWaitReturn
                 tst.w   (word_FF8230).w
-                bne.s   locret_FA82
+                bne.s   StageTransition_Stage24CompletionWaitReturn
                 tst.w   (word_FF8138).w
-                bne.s   locret_FA82
+                bne.s   StageTransition_Stage24CompletionWaitReturn
                 addq.w  #2,(StageTableIndex).w
                 move.b  #$8F,(byte_FFA230).w
                 move.l  #byte_1E4E5,(dword_FFA22C).w
                 bra.w   Stage_InitTransitionState
 ; ---------------------------------------------------------------------------
-locret_FA82:                                            ; CODE XREF: Stage_CheckPhaseComplete+4   j
-                                        ; Stage_CheckPhaseComplete+A   j
+StageTransition_Stage24CompletionWaitReturn:            ; CODE XREF: StageTransition_WaitForStage24CompletionSignals+4   j  ; was: locret_FA82
+                                        ; StageTransition_WaitForStage24CompletionSignals+A   j
                 rts
-; End of function Stage_CheckPhaseComplete
-; Increments stage phase counter
-Stage_IncrementPhase:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_FA84
+; End of function StageTransition_WaitForStage24CompletionSignals
+; Advances the global transition state when invoked by its controller object
+StageTransition_AdvanceStateFromObject:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_FA84
                                         ; ROM:0000F15E   o
                 addq.w  #2,(word_FFA950).w
-; Return after incrementing stage phase
-Stage_IncrementPhase_Return:                            ; DATA XREF: ROM:0000F160   o  ; was: locret_FA88
+; Shared inert transition state and return after advancing the state
+StageTransition_StateAdvanceReturn:                     ; DATA XREF: ROM:0000F160   o  ; was: locret_FA88
                 rts
-; End of function Stage_IncrementPhase
-; Stage transition init
+; End of function StageTransition_AdvanceStateFromObject

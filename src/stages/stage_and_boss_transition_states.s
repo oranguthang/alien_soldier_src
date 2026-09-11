@@ -37,25 +37,25 @@ Stage_TransitionStateOffsets:   dc.w    StageTransition_InitializeAsteroidField-
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
-                dc.w    Stage24_Init-StageTransition_InitializeAsteroidField
-                dc.w    Stage24_InitLoop-StageTransition_InitializeAsteroidField
-                dc.w    Boss_MissirayTransition-StageTransition_InitializeAsteroidField
-                dc.w    Boss_MissirayInit-StageTransition_InitializeAsteroidField
-                dc.w    Boss_MissirayPaletteUpdate-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_InitializeMissirayEntryScene-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_UpdateMissirayEntryDelay-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_LoadMissirayAssets-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_WaitForMissirayObjectClear-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_WaitForMissirayExitSignals-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
-                dc.w    Stage24_InitCutscene-StageTransition_InitializeAsteroidField
-                dc.w    Camera_ScrollAccelerate-StageTransition_InitializeAsteroidField
-                dc.w    Scroll_ClampVerticalPos-StageTransition_InitializeAsteroidField
-                dc.w    Stage_CheckPhaseComplete-StageTransition_InitializeAsteroidField
-                dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
-                dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
-                dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_InitializeStage24SceneObjects-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_AccelerateStage24VerticalScroll-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_UpdateStage24VerticalOffset-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_WaitForStage24CompletionSignals-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
-                dc.w    Stage_IncrementPhase-StageTransition_InitializeAsteroidField
-                dc.w    Stage_IncrementPhase_Return-StageTransition_InitializeAsteroidField
+                dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
+                dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
+                dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_AdvanceStateFromObject-StageTransition_InitializeAsteroidField
+                dc.w    StageTransition_StateAdvanceReturn-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField
                 dc.w    Boss_DestroyerProtoTransition_Return-StageTransition_InitializeAsteroidField

@@ -247,8 +247,8 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Segment_MissirayMain
                 dc.l    Entity_EmptyState4
                 dc.l    Stage18_MovingPlatform
-                dc.l    Stage24_ScrollHandler
-                dc.l    Stage_IncrementPhase
+                dc.l    StageTransition_UpdateMissiraySceneObject
+                dc.l    StageTransition_AdvanceStateFromObject
                 dc.l    Boss_WolfGaropaUpdate
                 dc.l    Debug_ValkirieCompositeViewerMain
                 dc.l    Debug_ValkirieType3F0Main
