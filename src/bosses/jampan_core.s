@@ -432,7 +432,7 @@ Boss_JampanUseFastAttackSelectionPeriod:                ; CODE XREF: Boss_Jampan
                 andi.w  #$1F,d0
                 bne.w   Boss_JampanSelectAttackReturn
 Boss_JampanChooseRandomAttack:                          ; CODE XREF: Boss_JampanSelectAttackState+2E   j
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.b  #7,d0
                 beq.s   Boss_JampanSelectShieldCycle
                 cmpi.w  #1,d0

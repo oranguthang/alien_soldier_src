@@ -187,7 +187,7 @@ Boss_AntroidBattleDecision:                             ; CODE XREF: Boss_Antroi
                 beq.s   Boss_AntroidUpdateDecisionAnimation
                 tst.w   (word_FF8234).w
                 beq.w   Boss_AntroidBeginHealthRecovery
-                move.w  (dword_FFFF08).w,d7
+                move.w  (RandomNumberState).w,d7
                 move.w  d7,d0
                 andi.w  #$C800,d0
                 beq.w   Boss_AntroidEnterWaitState
@@ -316,11 +316,11 @@ Boss_AntroidLeapAttackAChooseFollowup:                  ; CODE XREF: Boss_Antroi
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$70,d0                         ; 'p'
                 bpl.s   Boss_AntroidEnterLeapAttackBPreparation
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1E,d0
                 beq.s   Boss_AntroidEnterLeapAttackBPreparation
                 bsr.w   Boss_AntroidSwapPoseSides
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #6,d0
                 beq.w   Boss_AntroidEnterJumpSlamPreparation
                 bra.w   Boss_AntroidEnterJumpAttackPreparation
@@ -390,10 +390,10 @@ Boss_AntroidLeapAttackBChooseFollowup:                  ; CODE XREF: Boss_Antroi
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$70,d0                         ; 'p'
                 bpl.w   Boss_AntroidEnterLeapAttackAPreparation
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7800,d0
                 beq.w   Boss_AntroidEnterLeapAttackAPreparation
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #6,d0
                 beq.w   Boss_AntroidEnterJumpSlamPreparation
                 bra.w   Boss_AntroidEnterJumpAttackPreparation

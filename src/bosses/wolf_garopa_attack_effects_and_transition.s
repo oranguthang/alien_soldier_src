@@ -169,18 +169,18 @@ Boss_WolfGaropaTrySpawnDefeatDebris:                    ; CODE XREF: Boss_WolfGa
                 bne.s   Boss_WolfGaropaDefeatTransitionReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_WolfGaropaDefeatTransitionReturn
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$20,d0                         ; ' '
                 add.w   $14(a5),d0
                 move.w  d0,$14(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$20,d0                         ; ' '
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
                 move.l  #SharedCombatSpriteAnimation18,8(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_WolfGaropaInitializeDefeatDebris
                 move.l  #SharedCombatSpriteAnimation00,8(a0)

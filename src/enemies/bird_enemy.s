@@ -328,11 +328,11 @@ Enemy_BirdAITracking:                                   ; CODE XREF: Enemy_BirdA
                 move.w  (word_FFA000).w,d7
                 andi.w  #$1F,d7
                 bne.s   Enemy_BirdAITracking_UpdateTarget
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 subi.w  #$40,d0                         ; '@'
                 move.w  d0,$4C(a5)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,$4E(a5)

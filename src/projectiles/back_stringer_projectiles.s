@@ -35,7 +35,7 @@ Projectile_BackStringerUpdateActiveFallingDrop:         ; CODE XREF: Projectile_
                 move.w  $48(a5),d0
                 andi.w  #7,d0
                 bne.s   Projectile_BackStringerSteerFallingDrop
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   $5C(a5),d0
@@ -73,7 +73,7 @@ Projectile_BackStringerCheckFallingDropContact:         ; CODE XREF: Projectile_
                 addq.w  #2,4(a5)
                 clr.l   $18(a5)
                 move.l  #$4000,$1C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$20,d0                         ; ' '
                 move.w  d0,$48(a5)
@@ -99,7 +99,7 @@ Projectile_BackStringerReleasedFallingDropReturn:       ; CODE XREF: Projectile_
 ; End of function Projectile_BackStringerFallingDropMain
 ; Chooses alternating random horizontal velocity for a bouncing drop
 Projectile_BackStringerChooseFallingDropVelocity:       ; CODE XREF: Projectile_BackStringerFallingDropMain+42   p  ; was: sub_458C0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #2,d0
                 btst    #1,(word_FFA000+1).w

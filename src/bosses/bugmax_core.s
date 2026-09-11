@@ -734,7 +734,7 @@ Boss_BugmaxInitializeLinkedPartSpin:                    ; DATA XREF: ROM:0004C3E
 Boss_BugmaxAccelerateLinkedPartSpin:                    ; DATA XREF: ROM:0004C3E8   o  ; was: sub_4C794
                 movea.w #(word_FFC680-M68K_RAM),a0
                 bsr.w   Boss_BugmaxSelectCentralPartFrameByAngle
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
                 add.w   $4A(a5),d0
@@ -822,12 +822,12 @@ Boss_BugmaxSelectLowerAngleCentralPartFrame:            ; CODE XREF: Boss_Bugmax
 Boss_BugmaxReverseLinkedPartSpin:                       ; DATA XREF: ROM:0004C3EA   o  ; was: sub_4C884
                 movea.w #(word_FFC680-M68K_RAM),a0
                 bsr.w   Boss_BugmaxSelectCentralPartFrameByAngle
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
                 add.w   $4A(a5),d0
                 move.w  d0,(dword_FFC874).w
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 subq.w  #1,d0
                 addi.w  #8,d0

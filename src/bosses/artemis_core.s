@@ -241,7 +241,7 @@ Boss_UpdateArtemisStateE:                               ; DATA XREF: ROM:00057F2
 ; ---------------------------------------------------------------------------
 Boss_SelectArtemisStateEFollowup:                       ; CODE XREF: Boss_UpdateArtemisStateE+10   j  ; was: loc_581B2
                                         ; Boss_UpdateArtemisStateE+18   j
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Boss_ResetArtemisStateEPoseScript
                 move.w  #$1800,$11C(a5)
                 tst.w   (DifficultyMode).w
@@ -261,7 +261,7 @@ Boss_ResetArtemisStateEPoseScript:                      ; CODE XREF: Boss_Return
                                         ; Boss_UpdateArtemisStateE+2C   j
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 andi.w  #$1C,d1
                 bne.s   Boss_SelectArtemisStateERandomPose
                 move.b  #$39,d0                         ; '9'
@@ -376,7 +376,7 @@ Boss_EnterArtemisState14:                               ; CODE XREF: Boss_Update
                 move.b  #4,$3BC(a5)
                 move.b  #$DC,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1C,d0
                 tst.w   (DifficultyMode).w
                 bne.s   Boss_SelectArtemisState14Motion

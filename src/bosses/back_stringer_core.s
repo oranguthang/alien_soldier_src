@@ -240,7 +240,7 @@ Boss_BackStringerSelectRotationOrAttack:                ; CODE XREF: Boss_BackSt
                                         ; Boss_BackStringerDiveRecoveryDelayState+4   j
                 subq.w  #1,$41C(a5)
                 bpl.s   Boss_BackStringerStartAttackDelay
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 addq.w  #2,d0
                 move.w  d0,$41C(a5)
@@ -249,7 +249,7 @@ Boss_BackStringerSelectRotationOrAttack:                ; CODE XREF: Boss_BackSt
                 bra.w   Boss_BackStringerStartHalfTurnRotation
 ; ---------------------------------------------------------------------------
 Boss_BackStringerStartAttackDelay:                      ; CODE XREF: Boss_BackStringerWaitForBattleStartState+142   j  ; was: loc_449A8
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 addi.w  #$C,d0
                 move.w  d0,$11C(a5)
@@ -291,7 +291,7 @@ Boss_BackStringerStartSweepingAttack:                   ; CODE XREF: Boss_BackSt
                 clr.w   $58(a5)
                 clr.w   $29C(a5)
                 move.w  #$FFFF,$C(a5)
-                move.b  (dword_FFFF08+2).w,d0
+                move.b  (RandomNumberState+2).w,d0
                 andi.w  #7,d0
                 addq.w  #1,d0
                 move.w  d0,$17C(a5)
@@ -299,7 +299,7 @@ Boss_BackStringerStartSweepingAttack:                   ; CODE XREF: Boss_BackSt
                 bmi.s   Boss_BackStringerAimSweepTowardPlayerX
                 cmpi.w  #$1B0,$10(a5)
                 bpl.s   Boss_BackStringerAimSweepTowardPlayerX
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_BackStringerChooseRandomSweepDirection
 Boss_BackStringerAimSweepTowardPlayerX:                 ; CODE XREF: Boss_BackStringerStartSweepingAttack+1F6   j  ; was: loc_44A54
@@ -312,7 +312,7 @@ Boss_BackStringerAimSweepTowardPlayerX:                 ; CODE XREF: Boss_BackSt
 ; ---------------------------------------------------------------------------
 Boss_BackStringerChooseRandomSweepDirection:            ; CODE XREF: Boss_BackStringerStartSweepingAttack+208   j  ; was: loc_44A64
                                         ; Boss_BackStringerStartSweepingAttack+212   j
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$8000,d0
                 move.w  d0,$17E(a5)
                 move.w  #0,$17C(a5)
@@ -380,7 +380,7 @@ Boss_BackStringerNormalizeSweepTargetDistance:          ; CODE XREF: Boss_BackSt
                 bmi.s   Boss_BackStringerStartTransformation
                 cmpi.w  #$30,d0                         ; '0'
                 bpl.s   Boss_BackStringerAnimateSweepAndRender
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 beq.s   Boss_BackStringerAnimateSweepAndRender
                 bra.s   Boss_BackStringerStartTransformation
@@ -641,7 +641,7 @@ Boss_BackStringerStoreBoundaryTargetAngle:              ; CODE XREF: Boss_BackSt
 Boss_BackStringerUpdateTargetAngleTimer:                ; CODE XREF: Boss_BackStringerTrackingAttackState+AE   j  ; was: loc_44DF8
                 subq.w  #1,$11E(a5)
                 bpl.w   Boss_BackStringerApplyTrackingAngle
-                btst    #0,(dword_FFFF08+1).w
+                btst    #0,(RandomNumberState+1).w
                 beq.s   Boss_BackStringerChooseRandomTargetAngle
                 jsr     (Math_CalculateAngleToPlayer).l
                 addi.w  #$80,d2
@@ -651,10 +651,10 @@ Boss_BackStringerUpdateTargetAngleTimer:                ; CODE XREF: Boss_BackSt
                 bra.s   Boss_BackStringerApplyTrackingAngle
 ; ---------------------------------------------------------------------------
 Boss_BackStringerChooseRandomTargetAngle:               ; CODE XREF: Boss_BackStringerTrackingAttackState+CA   j  ; was: loc_44E22
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1F8,d0
                 move.w  d0,$11C(a5)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 addq.w  #8,d0
                 move.w  d0,$11E(a5)

@@ -84,7 +84,7 @@ Boss_Epsilon1SelectAttackState:                         ; DATA XREF: ROM:00045D0
                 bne.s   Boss_Epsilon1SelectAttackReturn
                 tst.w   (word_FF9474).w
                 bne.s   Boss_Epsilon1SelectVerticalSweepAttack
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 beq.s   Boss_Epsilon1SelectRingCycleAttack
                 move.w  #$14,4(a5)
@@ -435,7 +435,7 @@ Boss_Epsilon1StartAlignedVerticalSweepState:            ; DATA XREF: ROM:00045D3
                 move.l  #$20000,(dword_FFC69C).w
                 move.l  #$4000,(dword_FF9478).w
                 move.w  #$120,(dword_FFC690).w
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
                 cmpi.w  #1,d0

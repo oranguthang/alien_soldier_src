@@ -183,11 +183,11 @@ Boss_WolfGaropaUpdateOrbTarget:                         ; CODE XREF: Boss_WolfGa
                 beq.s   Boss_WolfGaropaChooseRandomOrbAngleTarget
                 move.w  #$1C,$53C(a5)
 Boss_WolfGaropaChooseRandomOrbAngleTarget:              ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+1C   j  ; was: loc_4FB5E
-                move.b  (dword_FFFF08).w,d2
+                move.b  (RandomNumberState).w,d2
                 andi.w  #$E,d2
                 addi.w  #$1A0,d2
                 move.w  d2,$53E(a5)
-                move.w  (dword_FFFF08).w,d2
+                move.w  (RandomNumberState).w,d2
                 andi.w  #$E,d2
                 addi.w  #$170,d2
                 moveq   #0,d3
@@ -196,7 +196,7 @@ Boss_WolfGaropaChooseRandomOrbAngleTarget:              ; CODE XREF: Boss_WolfGa
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaBeginOrbAttackCycle:                     ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+E   j  ; was: loc_4FB82
                                         ; Boss_WolfGaropaUpdateUpperType424Sequence+46   j
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1C0,d0
                 addi.w  #$100,d0
                 move.w  d0,$11C(a5)
@@ -221,10 +221,10 @@ Boss_WolfGaropaUpdateOrbCycleMotion:                    ; CODE XREF: Boss_WolfGa
                                         ; Boss_WolfGaropaUpdateBattleStartWait+72   j
                 subq.w  #1,$11E(a5)
                 bpl.s   Boss_WolfGaropaUpdateOrbCycleEffects
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 move.w  d0,$11E(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$C8,d0
                 move.w  d0,$47C(a5)
@@ -270,7 +270,7 @@ Boss_WolfGaropaTickOrbShotCountdown:                    ; CODE XREF: Boss_WolfGa
                 bne.s   Boss_WolfGaropaReturnFromOrbAttackCycle
                 subq.w  #1,$4DE(a5)
                 bpl.w   Boss_WolfGaropaSpawnOrbProjectilePair
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$80,d0
                 move.w  d0,$4DC(a5)
@@ -365,7 +365,7 @@ Boss_WolfGaropaSelectType424Sequence:                   ; DATA XREF: Boss_WolfGa
                 subq.w  #1,$11E(a5)
                 bpl.s   Boss_WolfGaropaInactiveState20
                 bset    #3,$AEE(a5)
-                btst    #0,(dword_FFFF08+1).w
+                btst    #0,(RandomNumberState+1).w
                 bne.w   Boss_WolfGaropaBeginLowerType424Sequence
                 bra.w   Boss_WolfGaropaBeginUpperType424Sequence
 ; ---------------------------------------------------------------------------
@@ -397,7 +397,7 @@ Boss_WolfGaropaConfigureUpperType424Sequence:           ; CODE XREF: Boss_WolfGa
                                         ; Boss_WolfGaropaBeginUpperType424Sequence+C   j
                 move.w  #$A,4(a5)
                 bset    #1,$41C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #2,d0
                 addq.w  #1,d0
                 move.w  d0,$11C(a5)
@@ -448,7 +448,7 @@ Boss_WolfGaropaConfigureLowerType424Sequence:           ; CODE XREF: Boss_WolfGa
                                         ; Boss_WolfGaropaBeginLowerType424Sequence+C   j
                 move.w  #$E,4(a5)
                 bset    #2,$41C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 move.w  d0,$11C(a5)
                 bset    #3,$9CE(a5)

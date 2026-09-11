@@ -357,10 +357,10 @@ Boss_ZLeoSpawnParticles_Loop:                           ; CODE XREF: Boss_ZLeoSp
                 bne.w   Boss_ZLeoSpawnParticles_Return
                 jsr     (Sprite_InitType160).l
                 move.b  #$60,$20(a0)                    ; '`'
-                move.b  (dword_FFFF08+2).w,d6
+                move.b  (RandomNumberState+2).w,d6
                 andi.w  #3,d6
                 add.w   d6,d6
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 move.w  (dword_FF9414+2).w,d1
                 and.w   d1,d0
                 and.w   d1,d0
@@ -370,7 +370,7 @@ Boss_ZLeoSpawnParticles_Loop:                           ; CODE XREF: Boss_ZLeoSp
                 add.w   (dword_FF9410+2).w,d0
                 add.w   Boss_ZLeoParticleXOffsets(pc,d6.w),d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 move.w  (dword_FF9418).w,d1
                 and.w   d1,d0
                 addq.w  #1,d1
@@ -382,14 +382,14 @@ Boss_ZLeoSpawnParticles_Loop:                           ; CODE XREF: Boss_ZLeoSp
                 move.l  (dword_FF9408+2).w,d0
                 asr.l   #1,d0
                 move.l  d0,$18(a0)
-                move.b  (dword_FFFF08+2).w,d0
+                move.b  (RandomNumberState+2).w,d0
                 andi.w  #7,d0
                 lsl.w   #2,d0
                 move.l  Boss_ZLeoParticleSpritePointers(pc,d0.w),8(a0)
                 dbf     d7,Boss_ZLeoSpawnParticles_Loop
                 tst.w   (dword_FF941C).w
                 beq.s   Boss_ZLeoSpawnParticles_Return
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 and.w   (dword_FF941C).w,d0
                 bne.s   Boss_ZLeoSpawnParticles_Return
                 cmpi.w  #$18,(dword_FF9400).w

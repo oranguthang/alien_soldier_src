@@ -9,7 +9,7 @@ Projectile_InitBugmaxDebris:                            ; CODE XREF: Boss_Bugmax
                 move.w  d1,$4C(a0)
                 move.w  d2,$4E(a0)
                 jsr     (RandomNumber).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 move.w  d0,$48(a0)
                 rts
@@ -46,13 +46,13 @@ Projectile_BugmaxDebrisSpawner_SpawnParticle:           ; DATA XREF: ROM:0002C29
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Projectile_BugmaxDebrisSpawner_SpawnParticle_Return
                 jsr     (RandomNumber).l
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Projectile_BugmaxDebrisSpawner_InitializeParticle
                 move.b  #$BB,d0
                 jsr     (Sound_PlaySFX).l
 Projectile_BugmaxDebrisSpawner_InitializeParticle:      ; CODE XREF: Projectile_BugmaxDebrisSpawner_SpawnParticle+14   j  ; was: loc_2C2CC
                 jsr     (Projectile_InitType88).l
-                btst    #0,(dword_FFFF08+2).w
+                btst    #0,(RandomNumberState+2).w
                 beq.s   Projectile_BugmaxDebrisSpawner_UseAlternateMapping
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 bra.s   Projectile_BugmaxDebrisSpawner_SetRandomOffset
@@ -61,7 +61,7 @@ Projectile_BugmaxDebrisSpawner_UseAlternateMapping:     ; CODE XREF: Projectile_
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
 ; Positions the particle randomly inside the configured rectangle
 Projectile_BugmaxDebrisSpawner_SetRandomOffset:         ; CODE XREF: Projectile_BugmaxDebrisSpawner_SpawnParticle+36   j  ; was: loc_2C2EC
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 move.w  $4C(a5),d1
                 move.w  d1,d2
                 subq.w  #1,d1
@@ -70,7 +70,7 @@ Projectile_BugmaxDebrisSpawner_SetRandomOffset:         ; CODE XREF: Projectile_
                 sub.w   d2,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 move.w  $4E(a5),d1
                 move.w  d1,d2
                 subq.w  #1,d1

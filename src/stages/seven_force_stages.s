@@ -164,7 +164,7 @@ Stage_SireneIntroSequence:                              ; DATA XREF: ROM:0000E4C
                 move.w  #$E400,(word_FFA92C).w
 loc_E98A:                                               ; CODE XREF: Stage_SireneUpdate1:loc_EA02   j
                                         ; sub_EA06:loc_EA20   j
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 addq.w  #4,d0
                 move.w  d0,(word_FFA010).w

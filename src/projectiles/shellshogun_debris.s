@@ -22,12 +22,12 @@ Boss_ShellshogunSpawnFallingDebrisNext:                 ; CODE XREF: Boss_Shells
                 move.l  #$FE06FE06,$28(a0)
                 move.l  #$FFFF6000,$18(a0)
                 move.w  #2,$1C(a0)
-                move.w  (dword_FFFF08).w,$1E(a0)
+                move.w  (RandomNumberState).w,$1E(a0)
                 move.w  #$90,$14(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 add.w   d0,$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 add.w   (dword_FFA410).w,d0
                 move.w  d0,$10(a0)

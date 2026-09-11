@@ -104,9 +104,9 @@ Boss_ShiperRotationState0:                              ; DATA XREF: ROM:00036AD
 Boss_ShiperRotationInitUpdateAngle:                     ; CODE XREF: Boss_ShiperRotationInit+1E   j  ; was: loc_36B0A
                 subq.w  #1,$17E(a5)
                 move.w  $17E(a5),d3
-                move.b  (dword_FFFF08).w,d4
+                move.b  (RandomNumberState).w,d4
                 andi.w  #$1F,d4
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 addq.w  #4,d0
 Boss_ShiperUpdateOscillatingRotation:                   ; CODE XREF: Boss_ShiperRotationAccelAlt+3E   j  ; was: loc_36B24
@@ -214,9 +214,9 @@ Boss_ShiperRotationState2:                              ; DATA XREF: ROM:00036AD
 Boss_ShiperRotationAccelAltUpdateAngle:                 ; CODE XREF: Boss_ShiperRotationAccelAlt+1A   j  ; was: loc_36C2E
                 subq.w  #1,$17E(a5)
                 move.w  $17E(a5),d3
-                move.b  (dword_FFFF08).w,d4
+                move.b  (RandomNumberState).w,d4
                 andi.w  #7,d4
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 addq.w  #8,d0
                 bra.w   Boss_ShiperUpdateOscillatingRotation
@@ -292,7 +292,7 @@ Boss_ShiperPositionUpdateStoreVerticalMotion:           ; CODE XREF: Boss_Shiper
                 move.w  $14(a5),d1
                 addi.w  #-5,d0
                 addi.w  #-$33,d1
-                move.b  (dword_FFFF08).w,d2
+                move.b  (RandomNumberState).w,d2
                 andi.w  #3,d2
                 add.w   d2,d0
                 btst    #4,(word_FFA000+1).w
@@ -317,7 +317,7 @@ Boss_ShiperPositionUpdateStoreSecondaryX:               ; CODE XREF: Boss_Shiper
 Boss_ShiperPositionUpdateStoreSecondaryPosition:        ; CODE XREF: Boss_ShiperPositionUpdate+DA   j  ; was: loc_36D8E
                 move.w  d0,$130(a5)
                 move.w  d1,$194(a5)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 move.w  $16A(a5),d1
                 tst.w   $168(a5)
@@ -343,7 +343,7 @@ Boss_ShiperPositionUpdateStoreBobbingOffset:            ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperPositionUpdate
 ; Calculates and positions boss tentacle appendages using trigonometric sine/cosine tables
 Boss_ShiperTentaclePosition:                            ; CODE XREF: Boss_ShiperSetupState+13C   p  ; was: sub_36DD0
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 addq.w  #1,d0
                 move.w  #$1FE,d1
@@ -366,7 +366,7 @@ Boss_ShiperTentacleDecreaseFirstSwing:                  ; CODE XREF: Boss_Shiper
 Boss_ShiperTentacleStoreFirstAngle:                     ; CODE XREF: Boss_ShiperTentaclePosition+22   j  ; was: loc_36E06
                                         ; Boss_ShiperTentaclePosition+2A   j
                 move.w  d2,$228(a5)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 addq.w  #3,d0
                 move.w  $22A(a5),d2

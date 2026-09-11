@@ -572,7 +572,7 @@ Boss_ZLeoSelectAttackState:                             ; CODE XREF: Boss_ZLeoWa
                 bpl.s   Boss_ZLeoApplyLowHealthRandomMask
                 moveq   #1,d1
 Boss_ZLeoApplyLowHealthRandomMask:                      ; CODE XREF: Boss_ZLeoBeginAttackSelection+2A   j  ; was: loc_521F0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 and.w   d1,d0
                 beq.s   Boss_ZLeoSelectAlternateOpening
 Boss_ZLeoSelectLaserOpening:                            ; CODE XREF: Boss_ZLeoBeginAttackSelection+20   j  ; was: loc_521F8
@@ -601,7 +601,7 @@ Boss_ZLeoRunLaserOpeningDelay:                          ; DATA XREF: ROM:00051BB
 Boss_ZLeoAdvanceLaserOpeningDelay:                      ; CODE XREF: Boss_ZLeoBeginAttackSelection+6E   j  ; was: loc_52236
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_ZLeoRenderLaserOpeningDelay
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$C,d0
                 move.w  d0,$47E(a5)
                 move.l  Boss_ZLeoOpeningPoseTable(pc,d0.w),$3BC(a5)

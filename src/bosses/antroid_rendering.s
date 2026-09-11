@@ -69,8 +69,8 @@ Boss_AntroidSpawnRamDebris:                             ; CODE XREF: Boss_Antroi
                 jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)
                 move.l  #$FFFE8000,$1C(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$3F,d0                         ; '?'
                 andi.w  #$F,d1
                 subi.w  #$20,d0                         ; ' '

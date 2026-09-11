@@ -53,12 +53,12 @@ Projectile_UpdateArtemisRadialEmitter:                  ; DATA XREF: ROM:Entity_
                 bra.s   Projectile_UpdateArtemisEmitterFlight
 ; ---------------------------------------------------------------------------
 Projectile_UpdateArtemisEmitterAnchorJitter:            ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+A   j  ; was: loc_58A9C
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   (word_FFD110).w,d0
                 move.w  d0,$10(a5)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   (word_FFD114).w,d0
@@ -152,7 +152,7 @@ Projectile_SpawnArtemisRadialShot:                      ; CODE XREF: Projectile_
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.b  $20(a5),$20(a0)
-                move.w  (dword_FFFF08).w,d5
+                move.w  (RandomNumberState).w,d5
                 andi.w  #$1FE,d5
                 lea     (Math_SineTable).l,a1
                 move.w  Math_QuarterSineTable-Math_SineTable(a1,d5.w),d0
@@ -174,12 +174,12 @@ Projectile_SpawnArtemisReflectedShot:                   ; CODE XREF: Projectile_
                 bne.s   Projectile_SpawnArtemisReflectedShotReturn
                 lea     (Projectile_ArtemisReflectedShotSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subi.w  #8,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subi.w  #8,d0
                 add.w   $14(a5),d0

@@ -4,7 +4,7 @@ Boss_FlyingNeoUpdateOrbitAngularImpulse:                ; CODE XREF: Boss_Flying
                 clr.w   $23E(a5)
                 move.w  $536(a5),d0
                 andi.w  #$3FC,d0
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 andi.w  #$F,d1
                 beq.s   Boss_FlyingNeoOrbitAngularImpulseReturn
                 tst.w   $17C(a5)

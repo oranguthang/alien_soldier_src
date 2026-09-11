@@ -154,11 +154,11 @@ Weapon_SpawnHomingEffect_Return:                        ; CODE XREF: Weapon_Spaw
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_SpawnHomingEffect_Initialize:                    ; CODE XREF: Weapon_SpawnHomingEffect+14   j  ; was: loc_180AC
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   d0,d1
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   d0,d2
@@ -465,7 +465,7 @@ Weapon_SetBeamProjectileData:                           ; CODE XREF: Weapon_Fire
                 move.b  #$42,$23(a0)                    ; 'B'
                 move.w  #4,$48(a0)
                 clr.w   $56(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 move.b  Weapon_BeamJitterOffsets(pc,d0.w),d0
                 add.b   Weapon_DirectionTableOffsets(pc,d6.w),d0

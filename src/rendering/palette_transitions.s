@@ -151,17 +151,17 @@ Gfx_CalculateFadeParams:                                ; CODE XREF: Gfx_UpdateP
                 move.w  (word_FFA000).w,d1
                 andi.w  #$7F,d1
                 bne.s   Gfx_CalculateFadeParams_UseRandomizedParams
-                btst    #2,(dword_FFFF08+1).w
+                btst    #2,(RandomNumberState+1).w
                 beq.s   Gfx_CalculateFadeParams_Return
 Gfx_CalculateFadeParams_UseRandomizedParams:            ; CODE XREF: Gfx_CalculateFadeParams+E   j  ; was: loc_3AFC
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #3,d0
                 addq.w  #6,d0
                 move.w  #$8000,d7
                 move.w  (word_FFA000).w,d1
                 andi.w  #$1F,d1
                 beq.s   Gfx_CalculateFadeParams_Return
-                move.b  (dword_FFFF08).w,d1
+                move.b  (RandomNumberState).w,d1
                 andi.w  #3,d1
                 beq.s   Gfx_CalculateFadeParams_Return
                 neg.w   d0

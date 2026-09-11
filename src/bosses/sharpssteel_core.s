@@ -362,7 +362,7 @@ Boss_SharpssteelUpdateHorizontalTargetAndVelocity:      ; CODE XREF: Boss_Sharps
                 cmp.w   $11E(a5),d0
                 bmi.s   Boss_SharpssteelAccelerateHorizontalMotionRight
                 move.w  #$FFFF,$11C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addq.w  #8,d0
                 neg.w   d0
@@ -390,7 +390,7 @@ Boss_SharpssteelHandleLeftwardTarget:                   ; CODE XREF: Boss_Sharps
                 cmp.w   $11E(a5),d0
                 bpl.s   Boss_SharpssteelAccelerateHorizontalMotionLeft
                 move.w  #1,$11C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addq.w  #8,d0
                 add.w   $10(a5),d0
@@ -418,7 +418,7 @@ Boss_SharpssteelUseHighSpeedBladePose:                  ; CODE XREF: Boss_Sharps
 ; Emits the requested count of generic shots at randomized angles
 Boss_SharpssteelSpawnRandomAngleShots:                  ; CODE XREF: Boss_SharpssteelUpdateHorizontalAttackMotion+E   p  ; was: sub_4809A
                 move.w  #$150,d6
-                movea.w #(dword_FFFF08-M68K_RAM),a4
+                movea.w #(RandomNumberState-M68K_RAM),a4
 Boss_SharpssteelSpawnRandomAngleShotsLoop:              ; CODE XREF: Boss_SharpssteelSpawnRandomAngleShots+1A   j
                 move.b  (a4)+,d4
                 andi.w  #$3E,d4                         ; '>'
@@ -447,11 +447,11 @@ Boss_SharpssteelAdvanceAttackSelection:                 ; CODE XREF: Boss_Sharps
                                         ; Boss_SharpssteelInitializeAttackSelection+E   j
                 subq.w  #1,$35C(a5)
                 bpl.s   Boss_SharpssteelChooseAttackByPlayerDistance
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 addi.w  #$20,d0                         ; ' '
                 move.w  d0,$11C(a5)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 addq.w  #1,d0
                 move.w  d0,$35C(a5)
@@ -459,7 +459,7 @@ Boss_SharpssteelAdvanceAttackSelection:                 ; CODE XREF: Boss_Sharps
 ; ---------------------------------------------------------------------------
 Boss_SharpssteelChooseAttackByPlayerDistance:           ; CODE XREF: Boss_SharpssteelInitializeAttackSelection+22   j
                 jsr     (Physics_GetPlayerDelta).l
-                move.b  (dword_FFFF08).w,d2
+                move.b  (RandomNumberState).w,d2
                 clr.w   $54(a5)
                 tst.w   d1
                 bmi.w   Boss_SharpssteelCheckPlayerHorizontalDistance
@@ -579,7 +579,7 @@ Boss_SharpssteelUpdateDiveAttackPose:                   ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelDiveAttackState
 ; Stops vertical motion and initializes the fixed post-dive delay
 Boss_SharpssteelInitializePostDiveDelay:                ; CODE XREF: Boss_SharpssteelOpeningVerticalTurnState+DC   j  ; was: sub_48298
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 move.w  #$F,d0
                 addi.w  #$10,d0
                 move.w  d0,$11C(a5)
@@ -598,7 +598,7 @@ Boss_SharpssteelPostDiveDelayState:                     ; DATA XREF: ROM:00047C8
 Boss_SharpssteelSelectPostDiveCycle:                    ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState+112   j
                 subq.w  #1,$35C(a5)
                 bpl.s   Boss_SharpssteelInitializeFallingShotCycleFromDelay
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 addq.w  #6,d0
                 move.w  d0,$35C(a5)

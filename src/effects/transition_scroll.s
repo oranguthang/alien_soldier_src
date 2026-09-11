@@ -249,7 +249,7 @@ Effect_UpdateScrollPosition:                            ; CODE XREF: Boss_Defeat
                 move.w  #$EEE,d0
                 btst    #0,(word_FFA000+1).w
                 bne.s   Effect_UpdateScrollPosition_StoreInitialPattern
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 bne.s   Effect_UpdateScrollPosition_StoreInitialPattern
                 move.w  #$8CE,d0
 Effect_UpdateScrollPosition_StoreInitialPattern:        ; CODE XREF: Effect_UpdateScrollPosition+18   j  ; was: loc_26E72

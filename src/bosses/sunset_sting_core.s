@@ -659,8 +659,8 @@ Boss_SunsetStingSpawnRandomOffsetProjectile:            ; CODE XREF: Boss_Sunset
                 move.l  $1C(a5),$1C(a0)
                 neg.l   $18(a0)
                 neg.l   $1C(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 move.w  (sp),d2
                 add.w   d2,d2
                 subq.w  #1,d2

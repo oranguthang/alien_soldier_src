@@ -111,7 +111,7 @@ Boss_ShieldViperChooseRandomVerticalTarget:             ; DATA XREF: ROM:0004E01
                 bsr.w   Boss_ShieldViperRotateAndMoveRadially
                 addq.w  #2,4(a5)
                 move.w  #$120,d0
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 bne.s   Boss_ShieldViperSelectLowerVerticalTarget
                 move.w  #$80,$4A(a5)
                 move.w  #$80,d1
@@ -354,7 +354,7 @@ Boss_ShieldViperBuildPatternProjectileIndexOrder:       ; CODE XREF: Boss_Shield
 Boss_ShieldViperBuildFirstPatternIndexGroupLoop:        ; CODE XREF: Boss_ShieldViperBuildPatternProjectileIndexOrder+22   j  ; was: loc_4EACE
                 jsr     (RandomNumber).l
                 move.w  d6,d0
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Boss_ShieldViperStoreFirstPatternIndex
                 addi.w  #$A,d0
 Boss_ShieldViperStoreFirstPatternIndex:                 ; CODE XREF: Boss_ShieldViperBuildPatternProjectileIndexOrder+18   j  ; was: loc_4EAE2
@@ -366,7 +366,7 @@ Boss_ShieldViperStoreFirstPatternIndex:                 ; CODE XREF: Boss_Shield
 Boss_ShieldViperBuildSecondPatternIndexGroupLoop:       ; CODE XREF: Boss_ShieldViperBuildPatternProjectileIndexOrder+46   j  ; was: loc_4EAF2
                 jsr     (RandomNumber).l
                 move.w  d6,d0
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Boss_ShieldViperStoreSecondPatternIndex
                 addi.w  #6,d0
 Boss_ShieldViperStoreSecondPatternIndex:                ; CODE XREF: Boss_ShieldViperBuildPatternProjectileIndexOrder+3C   j  ; was: loc_4EB06
@@ -378,7 +378,7 @@ Boss_ShieldViperStoreSecondPatternIndex:                ; CODE XREF: Boss_Shield
                 moveq   #0,d6
 Boss_ShieldViperShufflePatternIndexLoop:                ; CODE XREF: Boss_ShieldViperBuildPatternProjectileIndexOrder+74   j  ; was: loc_4EB18
                 jsr     (RandomNumber).l
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 andi.w  #$F,d1
                 add.w   d1,d1
                 move.w  (a0,d6.w),d2

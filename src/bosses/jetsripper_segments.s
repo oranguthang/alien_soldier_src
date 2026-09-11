@@ -340,7 +340,7 @@ Boss_JetsripperUpdatePalette:                           ; CODE XREF: Boss_Jetsri
                 bne.s   Boss_JetsripperUpdatePaletteSelectFlash
                 moveq   #8,d0
 Boss_JetsripperUpdatePaletteSelectFlash:                ; CODE XREF: Boss_JetsripperUpdatePalette+C   j  ; was: loc_361AC
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 andi.w  #$F0,d1
                 bne.s   Boss_JetsripperWritePalette
                 moveq   #$10,d0

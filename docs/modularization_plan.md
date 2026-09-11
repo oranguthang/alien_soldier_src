@@ -88,7 +88,7 @@ data are checked.
 | `0x00339A` | `Data_Copy16Bytes` | ownership unresolved; audit before move |
 | `0x0033A4` | `Input_InitControllerState` | controller input family |
 | `0x00354A` | `Math_CalculateAngleToPlayer` | angle/vector math |
-| `0x003954` | `UI_AddScoreBCD` | BCD score arithmetic |
+| `0x003954` | `Score_AddPackedBCD` | packed-BCD score arithmetic and shared PRNG |
 | `0x0039AA` | `Gfx_FadePaletteTransition` | palette transitions |
 | `0x004094` | `Gfx_PrimaryEffectDispatcher` | primary graphics-effect dispatch |
 | `0x004386` | `Results_UpdateNumbers` | results-number rendering |

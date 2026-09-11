@@ -403,7 +403,7 @@ UI_RenderShipHealthDisplay:                             ; CODE XREF: UI_RenderHU
                 move.w  #$C7F7,(a0)+
                 move.w  #$C7BF,(a0)+
                 move.w  #$C7B4,d5
-                movea.w #(dword_FFA212-M68K_RAM),a1
+                movea.w #(ScoreValueBCD-M68K_RAM),a1
                 moveq   #3,d7
                 bsr.w   Scroll_ShipScrollPattern
                 move.w  #$C7D2,(a0)+

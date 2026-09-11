@@ -220,7 +220,7 @@ Boss_ShiperUpdateAttackAndSpawnProjectile:              ; CODE XREF: Boss_Shiper
                 beq.s   Boss_ShiperAttackDecisionReturn
 Boss_ShiperSelectAttackDirection:                       ; CODE XREF: Boss_ShiperCheckHealthTransition+34   j  ; was: loc_3673C
                 jsr     (Physics_GetPlayerDelta).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 addq.w  #1,d0
                 move.w  d0,$5A(a5)

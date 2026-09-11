@@ -164,13 +164,13 @@ Boss_SharpssteelInitializeDefeatFragmentLoop:           ; CODE XREF: Boss_Sharps
                 bset    #3,2(a0)
                 bset    #2,2(a0)
                 move.w  d5,$48(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 swap    d0
                 asr.l   #1,d0
                 addi.l  #$12000,d0
                 move.l  d0,$18(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 addq.w  #1,d6
                 btst    #0,d6

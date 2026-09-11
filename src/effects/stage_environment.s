@@ -108,7 +108,7 @@ TerrainTileAnimation_RewindFrame:                       ; DATA XREF: ROM:0002F3E
                 subq.w  #1,$4E(a5)
                 bmi.s   TerrainTileAnimation_Complete
                 move.w  #2,4(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$40,d0                         ; '@'
                 move.w  d0,$4A(a5)
@@ -163,18 +163,18 @@ Stage10_InitAmbientParticle:                            ; CODE XREF: Stage10_Ini
 Stage10_ResetAmbientParticle:                           ; CODE XREF: Stage10_UpdateAmbientParticle+8   j  ; was: loc_2F53E
                                         ; Stage10_UpdateAmbientParticle+12   j
                 moveq   #0,d0
-                move.w  (dword_FFFF08+2).w,d0
+                move.w  (RandomNumberState+2).w,d0
                 andi.w  #$7FFF,d0
                 addi.w  #-$8000,d0
                 move.l  d0,$1C(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 addi.w  #$A0,d0
                 move.w  (dword_FFA900).w,d1
                 sub.w   $48(a0),d1
                 add.w   d1,d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$80,d0
                 move.w  d0,$14(a0)

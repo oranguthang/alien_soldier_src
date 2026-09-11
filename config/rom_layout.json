@@ -115,7 +115,7 @@
     { "file": "src/system/memory_clearing.s", "subsystem": "system", "start": "0x003134", "end": "0x0033A3" },
     { "file": "src/system/input.s", "subsystem": "system", "start": "0x0033A4", "end": "0x003549" },
     { "file": "src/math/angles.s", "subsystem": "math", "start": "0x00354A", "end": "0x003953" },
-    { "file": "src/ui/score_math.s", "subsystem": "ui", "start": "0x003954", "end": "0x0039A9" },
+    { "file": "src/math/bcd_and_random.s", "subsystem": "math", "start": "0x003954", "end": "0x0039A9" },
     { "file": "src/rendering/palette_transitions.s", "subsystem": "rendering", "start": "0x0039AA", "end": "0x003C07" },
     { "file": "src/rendering/color_fades.s", "subsystem": "rendering", "start": "0x003C08", "end": "0x004093" },
     { "file": "src/rendering/palette_effects.s", "subsystem": "rendering", "start": "0x004094", "end": "0x004385" },

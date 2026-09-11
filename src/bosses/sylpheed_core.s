@@ -284,7 +284,7 @@ Boss_ResetSylpheedDecisionState4:                       ; CODE XREF: Boss_EnterS
 Boss_ArmSylpheedDecisionTimer:                          ; CODE XREF: Boss_EnterSylpheedAttackLaunchState1A+90   j  ; was: loc_5975E
                 move.w  #$160,$3BC(a5)
                 move.w  #$F0,$3BE(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$10,d0
                 move.w  d0,$11C(a5)
@@ -306,7 +306,7 @@ Boss_CountDownSylpheedDecisionTimer:                    ; CODE XREF: Boss_EnterS
                                         ; Boss_EnterSylpheedDecisionState4+62   j
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_RenderSylpheedDecisionPose
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.w   Boss_EnterSylpheedJumpRiseStateA
                 bra.w   Boss_EnterSylpheedDiveStateE
 ; ---------------------------------------------------------------------------
@@ -435,11 +435,11 @@ Boss_RandomizeSylpheedTargetOffsets:                    ; CODE XREF: Boss_EnterS
                 move.w  (word_FFA000).w,d0
                 andi.w  #$1F,d0
                 bne.s   Boss_AdjustSylpheedVerticalVelocityTowardTarget
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 move.w  d0,$41E(a5)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 move.w  d0,$41C(a5)

@@ -57,7 +57,7 @@ Boss_GustheadSpawnScrollingDebrisObject:                ; CODE XREF: Boss_Gusthe
                 move.w  #$CC40,2(a0)
                 move.b  #$7C,$20(a0)                    ; '|'
                 move.w  #$100,$48(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 addi.w  #$F0,d0
@@ -143,7 +143,7 @@ Boss_GustheadUseRightDebrisSpawnX:                      ; CODE XREF: Boss_Gusthe
 Enemy_GustheadDebrisSetSprite:                          ; CODE XREF: Boss_GustheadSpawnEdgeDebris+22   p  ; was: sub_402F8
                                         ; Boss_GustheadSpawnFourWayDebris+46   p
                 jsr     (RandomNumber).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 add.w   d0,d0
                 add.w   d0,d0
@@ -196,7 +196,7 @@ Enemy_GustheadDebrisInit:                               ; DATA XREF: ROM:Enemy_G
                 add.l   d0,d0
 Enemy_GustheadDebrisStoreHorizontalDrift:               ; CODE XREF: Enemy_GustheadDebrisInit+10   j  ; was: loc_4037E
                 move.l  d0,$18(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FFF,d0
                 subi.w  #$800,d0
                 ext.l   d0

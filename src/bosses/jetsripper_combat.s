@@ -41,7 +41,7 @@ loc_2B72E:                                              ; CODE XREF: Boss_Jetsri
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$10,d0
                 bpl.s   locret_2B776
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_SpawnPeriodicProjectile
                 jsr     (Projectile_FindFreePrimarySlot).l
@@ -125,7 +125,7 @@ Boss_SpawnTargetedProjectile:                           ; CODE XREF: Enemy_Updat
                 movea.w a0,a1
                 jsr     (Physics_GetPlayerDelta).l
                 moveq   #0,d0
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 subq.w  #8,d0
                 swap    d0
@@ -137,7 +137,7 @@ Boss_SpawnTargetedProjectile:                           ; CODE XREF: Enemy_Updat
 Projectile_SetHorizontalVelocity:                       ; CODE XREF: Boss_SpawnTargetedProjectile+68   j  ; was: loc_2B878
                 move.l  d0,$18(a1)
                 move.w  #$FFFA,$1C(a1)
-                move.w  (dword_FFFF08).w,$1E(a1)
+                move.w  (RandomNumberState).w,$1E(a1)
 locret_2B888:                                           ; CODE XREF: Boss_SpawnTargetedProjectile+6   j
                 rts
 ; End of function Boss_SpawnTargetedProjectile
@@ -202,11 +202,11 @@ Enemy_TrailingExplosionSpawner:                         ; DATA XREF: ROM:Entity_
                 move.l  #SharedCombatSpriteAnimation08,8(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.b  #7,d0
                 subq.w  #4,d0
                 add.w   d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.b  #7,d0
                 subq.w  #4,d0
                 add.w   d0,$14(a0)
@@ -241,7 +241,7 @@ loc_2B9D2:                                              ; CODE XREF: Enemy_Spawn
                 lea     word_2BA58(pc),a0
                 nop
                 move.w  (DifficultyMode).w,d1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 add.w   (a0,d1.w),d0
                 move.w  d0,$48(a5)
@@ -259,7 +259,7 @@ loc_2B9D2:                                              ; CODE XREF: Enemy_Spawn
                 move.l  #$FFFF6000,$18(a0)
                 move.w  #3,$1C(a0)
                 move.w  #$A0,$14(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$120,d0
                 move.w  d0,$10(a0)

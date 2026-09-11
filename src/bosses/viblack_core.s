@@ -199,7 +199,7 @@ Boss_ViblackMoveToAttackTargetState:                    ; DATA XREF: ROM:000439E
                 bsr.w   Boss_ViblackSpawnSideShot
                 bsr.w   Boss_ViblackMoveToTarget
                 bne.s   Boss_ViblackStateReturn
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 subq.w  #1,$5A(a5)
                 bpl.s   Boss_ViblackStartChainAttack
                 move.w  #$10,4(a5)
@@ -221,7 +221,7 @@ Boss_ViblackStartChainAttack:                           ; CODE XREF: Boss_Viblac
 ; ---------------------------------------------------------------------------
 ; Sets random delay timer for actions
 Boss_ViblackSetRandomDelay:                             ; CODE XREF: Boss_ViblackMoveToAttackTargetState+4A   j  ; was: loc_43C36
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$40,d0                         ; '@'
                 addq.w  #8,d0
                 move.w  d0,$48(a5)

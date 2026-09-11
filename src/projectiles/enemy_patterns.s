@@ -114,7 +114,7 @@ loc_2B11A:                                              ; CODE XREF: Projectile_
                 bne.s   locret_2B112
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3C,d0                         ; '<'
                 add.w   $48(a5),d0
                 subi.w  #$5C,d0                         ; '\'
@@ -500,7 +500,7 @@ Enemy_SpawnAnimatedProjectile:                          ; CODE XREF: Boss_Terobu
                 move.l  #Enemy_AnimatedProjectileSpriteFrames,$48(a0)
                 move.w  #1,$4C(a0)
                 moveq   #0,d0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$18,d0
                 add.l   d0,$48(a0)
                 moveq   #0,d0
@@ -533,7 +533,7 @@ loc_2B66A:                                              ; CODE XREF: Projectile_
                 addq.w  #1,$5E(a5)
                 clr.l   $1C(a5)
                 moveq   #0,d0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FFFC,d0
                 subi.w  #$6000,d0
                 asl.l   #2,d0

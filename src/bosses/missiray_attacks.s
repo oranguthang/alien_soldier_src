@@ -53,7 +53,7 @@ loc_53ED4:                                              ; CODE XREF: Boss_Missir
 ; End of function Boss_MissirayShootPattern1
 ; Shooting pattern 2
 Boss_MissirayShootPattern2:                             ; DATA XREF: ROM:00053E78   o  ; was: sub_53EE0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 add.w   d0,d0
                 lea     Boss_MissiraySegmentObjectPointers(pc),a2
@@ -232,7 +232,7 @@ Boss_MissirayAttack1SetupDelays:                        ; DATA XREF: ROM:0005403
                 movea.w #(dword_FF9414-M68K_RAM),a1
                 lea     word_540C2(pc),a2
                 nop
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 lsl.w   #4,d0
                 lea     (a2,d0.w),a2
@@ -328,10 +328,10 @@ loc_541A0:                                              ; CODE XREF: Boss_Missir
                 move.w  #7,d7
 loc_541A4:                                              ; CODE XREF: Boss_MissirayShuffleSegmentOrder+38   j
                 jsr     (RandomNumber).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 add.w   d0,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #7,d1
                 add.w   d1,d1
                 move.w  (a1,d0.w),d2

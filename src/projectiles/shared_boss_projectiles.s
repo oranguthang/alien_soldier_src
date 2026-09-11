@@ -135,7 +135,7 @@ Projectile_UpdateDirectionalSpawner:                    ; DATA XREF: ROM:Entity_
                 bsr.w   Sprite_InitFromTable
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 movea.l #Math_SineTable,a1
                 move.w  -$80(a1,d0.w),d1

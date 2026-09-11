@@ -28,11 +28,11 @@ Stage10_BeetleWaveSpawnState:                           ; DATA XREF: ROM:0002E6D
                 move.w  #$2D4,(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  $5E(a5),$5E(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
                 add.w   d0,$14(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.b  #1,d0
                 beq.s   Stage10_BeetleWaveSpawnState_PlaceAtLeftEdge
                 move.w  #$1C8,$10(a0)
@@ -163,7 +163,7 @@ Enemy_Stage10BeetleRoamState_UpdateMotion:              ; CODE XREF: Enemy_Stage
                 subq.w  #1,$48(a5)
                 bne.s   Enemy_Stage10BeetleRoamState_Return
                 bsr.w   Enemy_Stage10BeetleLoadNextMoveDelay
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
                 lea     (Math_SineTable).l,a1

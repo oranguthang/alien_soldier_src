@@ -96,11 +96,11 @@ Boss_Epsilon1StartLinkedPartDestructionState:           ; DATA XREF: ROM:00045D4
                 bne.s   Boss_Epsilon1StartLinkedPartDestructionReturn
                 cmpi.w  #6,4(a1)
                 bne.s   Boss_Epsilon1StartLinkedPartDestructionReturn
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 move.w  d0,$48(a0)
                 addq.w  #2,4(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$7F,d0
                 move.w  d0,$48(a1)
                 addq.w  #2,4(a1)
@@ -457,7 +457,7 @@ Boss_Epsilon1LinkedPartStates:  dc.w    Boss_Epsilon1WaitToExtendLinkedPartState
 
 ; Waits for a random trigger or cleared render bit before extending the part
 Boss_Epsilon1WaitToExtendLinkedPartState:               ; DATA XREF: ROM:Boss_Epsilon1LinkedPartStates   o  ; was: sub_46C8E
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 beq.s   Boss_Epsilon1BeginLinkedPartExtension
                 bclr    #3,$22(a1)
@@ -516,14 +516,14 @@ Boss_Epsilon1SpawnLinkedPartDebrisState:                ; DATA XREF: ROM:00046C8
                 bne.s   Boss_Epsilon1SpawnLinkedPartDebrisReturn
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (Projectile_InitType88).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 add.w   a5,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
                 move.w  d0,$18(a0)
                 move.w  #2,$48(a1)
                 addq.w  #2,4(a1)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 add.w   a5,d0
                 andi.w  #1,d0
                 beq.s   Boss_Epsilon1UseBattleCenterForDebris

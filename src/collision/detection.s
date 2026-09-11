@@ -251,7 +251,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_MarkFlaggedHit:  ; CODE XREF: Col
                 btst    #7,$23(a3)
                 bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth
                 moveq   #$11,d0
-                jsr     (UI_AddScoreBCD).l
+                jsr     (Score_AddPackedBCD).l
 Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+DE   j  ; was: loc_13DB2
                 move.w  $26(a3),d4
                 move.w  #$FFFF,$26(a3)
@@ -306,7 +306,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_AwardStandardHit:  ; CODE XREF: C
                 btst    #7,$23(a3)
                 bne.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
                 moveq   #$21,d0                         ; '!'
-                jsr     (UI_AddScoreBCD).l
+                jsr     (Score_AddPackedBCD).l
                 bra.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
 ; ---------------------------------------------------------------------------
 Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBlockedHit:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+8E   j  ; was: loc_13E7E

@@ -235,7 +235,7 @@ Boss_DestroyerMK2ShuffleScrollDeformationState:         ; DATA XREF: ROM:0004A90
                 bsr.w   Boss_DestroyerMK2ShuffleScrollIndexPair
                 bsr.w   Boss_DestroyerMK2ShuffleScrollIndexPair
                 bsr.w   Boss_DestroyerMK2ShuffleScrollIndexPair
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$E,d0
                 bsr.w   Gfx_DestroyerMK2ApplyPaletteFade
                 subq.w  #1,$48(a5)
@@ -250,7 +250,7 @@ Boss_DestroyerMK2ShuffleScrollDeformationReturn:        ; CODE XREF: Boss_Destro
 ; Writes $E0 to four selected scroll rows per frame until all 256 are covered
 Boss_DestroyerMK2WriteInitialScrollBandsState:          ; DATA XREF: ROM:0004A90A   o  ; was: sub_4ABC6
                 bsr.w   Boss_DestroyerMK2UpdateLinkedObjectGeometry
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$E,d0
                 bsr.w   Gfx_DestroyerMK2ApplyPaletteFade
                 move.w  #$E0,d0
@@ -415,7 +415,7 @@ Boss_DestroyerMK2WaitForLinkedComponentsState:          ; DATA XREF: ROM:0004A91
                 bsr.s   Boss_DestroyerMK2ShuffleScrollIndexPair
                 bsr.s   Boss_DestroyerMK2ShuffleScrollIndexPair
                 bsr.s   Boss_DestroyerMK2ShuffleScrollIndexPair
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$E,d0
                 bsr.w   Gfx_DestroyerMK2ApplyPaletteFade
                 cmpi.w  #$40,$48(a5)                    ; '@'
@@ -435,9 +435,9 @@ Boss_DestroyerMK2WaitForLinkedComponentsReturn:         ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2ShuffleScrollIndexPair:                ; CODE XREF: Boss_DestroyerMK2ShuffleScrollDeformationState   p  ; was: sub_4AD9E
                                         ; Boss_DestroyerMK2ShuffleScrollDeformationState+4   p
                 jsr     (RandomNumber).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
-                move.w  (dword_FFFF08+2).w,d1
+                move.w  (RandomNumberState+2).w,d1
                 andi.w  #$FF,d1
                 add.w   d0,d0
                 add.w   d1,d1

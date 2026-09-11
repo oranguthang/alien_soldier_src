@@ -162,7 +162,7 @@ Boss_TerobusterDecisionTick:                            ; CODE XREF: Boss_Terobu
                 bmi.s   Boss_TerobusterDecisionCheckWorldPosition
                 tst.w   (DifficultyMode).w
                 beq.s   Boss_TerobusterDecisionSelectAttack
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 bne.w   Boss_TerobusterBeginMissileAttackBDelayed
                 bra.s   Boss_TerobusterDecisionSelectAttack
@@ -174,13 +174,13 @@ Boss_TerobusterDecisionCheckWorldPosition:              ; CODE XREF: Boss_Terobu
                 bmi.w   Boss_TerobusterBeginFallingRockAttack
 Boss_TerobusterDecisionSelectAttack:                    ; CODE XREF: Boss_TerobusterDecisionState+34   j  ; was: loc_38744
                                         ; Boss_TerobusterDecisionState+42   j
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 addq.w  #1,d0
                 move.w  d0,$11C(a5)
                 cmpi.w  #$1190,$BC(a5)
                 bpl.w   Boss_TerobusterBeginMissileAttackA
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.w   Boss_TerobusterBeginMissileAttackBDelayed
                 bra.w   Boss_TerobusterBeginMissileAttackB
@@ -337,7 +337,7 @@ Boss_TerobusterBindFallingRockAttackParts:              ; CODE XREF: Boss_Terobu
                 move.w  d0,$48(a5)
                 move.w  d0,$4A(a5)
                 move.w  d1,$11E(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 move.w  d0,$11C(a5)
                 move.w  #$38,$17C(a5)                   ; '8'

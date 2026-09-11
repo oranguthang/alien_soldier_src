@@ -10,7 +10,7 @@ Effect_TerobusterDefeatPartUpdate:                      ; DATA XREF: ROM:Entity_
                 move.w  #$8F00,2(a5)
 Effect_TerobusterDefeatPartInitialize:                  ; CODE XREF: Effect_TerobusterDefeatPartUpdate+1A   j  ; was: loc_39112
                 move.w  #1,$48(a5)
-                move.w  (dword_FFFF08+2).w,$56(a5)
+                move.w  (RandomNumberState+2).w,$56(a5)
                 bra.s   Effect_TerobusterDefeatPartLaunchBounce
 ; ---------------------------------------------------------------------------
 Effect_TerobusterDefeatPartUpdateBounce:                ; CODE XREF: Effect_TerobusterDefeatPartUpdate+A   j  ; was: loc_39120
@@ -39,7 +39,7 @@ Effect_TerobusterDefeatPartApplyGravity:                ; CODE XREF: Effect_Tero
 Effect_TerobusterDefeatPartLaunchBounce:                ; CODE XREF: Effect_TerobusterDefeatPartInitialize+E   j  ; was: loc_39164
                 move.l  #$FFFCF000,$1C(a5)
                 moveq   #0,d0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 swap    d0
                 subi.l  #$38000,d0

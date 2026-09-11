@@ -1,7 +1,7 @@
 Boss_FlyingNeoHoverDecisionState:                       ; DATA XREF: ROM:0003C0C6   o  ; was: sub_3C7B2
                 subq.w  #1,$1DE(a5)
                 bpl.s   Boss_FlyingNeoUpdateHoverDecisionPose
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 beq.w   Boss_FlyingNeoBeginPartAnchorState
                 bra.w   Boss_FlyingNeoBeginPursuitState

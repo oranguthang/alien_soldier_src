@@ -232,8 +232,8 @@ Boss_Epsilon1FillBarrageRingOrderLoop:                  ; CODE XREF: Boss_Epsilo
 ; Randomizes the barrage order with eight successful pair swaps
 Boss_Epsilon1ShuffleBarrageRingOrderState:              ; DATA XREF: ROM:00046F72   o  ; was: loc_46FA2
                 lea     $50(a5),a0
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #7,d0
                 andi.w  #7,d1
                 cmp.w   d0,d1
@@ -243,7 +243,7 @@ Boss_Epsilon1ShuffleBarrageRingOrderState:              ; DATA XREF: ROM:00046F7
                 move.b  d2,(a0,d1.w)
                 subq.w  #1,$48(a5)
                 bne.s   Boss_Epsilon1ShuffleBarrageRingOrderReturn
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 move.w  d0,$4E(a5)
                 addq.w  #2,4(a5)

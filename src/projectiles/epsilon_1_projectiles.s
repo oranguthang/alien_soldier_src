@@ -134,7 +134,7 @@ Projectile_Epsilon1ConvertSpreadProjectileToDebris:     ; CODE XREF: Projectile_
                 neg.w   d0
                 asr.w   #1,d0
                 move.w  d0,$1C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 add.w   a5,d0
                 andi.w  #7,d0
                 subq.w  #4,d0
@@ -314,7 +314,7 @@ Projectile_Epsilon1ConvertBarrageRowProjectileToDebris:  ; CODE XREF: Projectile
                 neg.w   d0
                 asr.w   #1,d0
                 move.w  d0,$1C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 add.w   a5,d0
                 andi.w  #7,d0
                 subq.w  #4,d0
@@ -554,7 +554,7 @@ Boss_Epsilon1SpawnRingObjectDefeatDebris:               ; CODE XREF: Boss_Epsilo
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.w  #$FFFE,$1C(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 add.w   a5,d0
                 andi.w  #3,d0
                 subq.w  #2,d0

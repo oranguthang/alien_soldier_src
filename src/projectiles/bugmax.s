@@ -22,10 +22,10 @@ Projectile_BugmaxEmitPeriodicTrailParticle:             ; CODE XREF: Boss_Bugmax
                 andi.w  #$7FFF,$E(a0)
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
                 jsr     (RandomNumber).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_BugmaxTrailParticleEmissionReturn
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #6,d0
                 move.w  Projectile_BugmaxTrailSoundSequence(pc,d0.w),d0
                 andi.w  #$FF,d0
@@ -55,7 +55,7 @@ Projectile_BugmaxHitFragmentStateHandlers:  dc.w    Projectile_BugmaxInitializeH
 Projectile_BugmaxInitializeHitFragment:                 ; DATA XREF: ROM:Projectile_BugmaxHitFragmentStateHandlers   o  ; was: sub_4D462
                 move.w  #2,$48(a5)
                 addq.w  #2,4(a5)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 beq.s   Projectile_BugmaxHitFragmentInitializationReturn
                 ori.w   #$8000,$E(a5)
@@ -168,7 +168,7 @@ Projectile_InitBugmaxSpread:                            ; CODE XREF: Boss_Bugmax
                 move.w  #$14,$26(a0)
                 move.w  #$18,$24(a0)
                 move.w  $10(a5),$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$40,d0                         ; '@'
                 add.w   d0,$10(a0)
@@ -315,7 +315,7 @@ Projectile_InitBugmaxSine:                              ; CODE XREF: Boss_Bugmax
                 move.w  #$14,$26(a0)
                 move.w  #$FF,$24(a0)
                 move.w  $10(a5),$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 addi.w  #$40,(dword_FF9428).w           ; '@'
                 move.w  (dword_FF9428).w,d0
                 andi.w  #$1FE,d0
@@ -369,7 +369,7 @@ Projectile_BugmaxUpdateSineBounceMotion:                ; DATA XREF: ROM:0004D7D
                 neg.l   d0
                 move.l  d0,$1C(a5)
                 jsr     (RandomNumber).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 subq.w  #4,d0
                 move.w  d0,$18(a5)
@@ -488,7 +488,7 @@ Boss_BugmaxAllocateHitFragment:                         ; CODE XREF: Boss_Bugmax
                 move.b  $20(a5),$20(a0)
                 subq.b  #8,$20(a0)
                 jsr     (RandomNumber).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 tst.w   (DifficultyMode).w
                 bne.s   Boss_BugmaxSelectHigherSpecialHitFragmentRate
                 andi.b  #7,d0
@@ -509,7 +509,7 @@ Boss_BugmaxConfigureSpecialHitFragment:                 ; CODE XREF: Boss_Bugmax
                 move.w  #$14,$26(a0)
                 move.w  #2,$24(a0)
                 move.l  #$FFFC0000,$1C(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #3,d0
                 addq.w  #1,d0
                 neg.w   d0
@@ -520,16 +520,16 @@ Boss_BugmaxConfigureSpecialHitFragment:                 ; CODE XREF: Boss_Bugmax
 Boss_BugmaxConfigureStandardHitFragment:                ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+8A   j  ; was: loc_4D9E0
                                         ; Boss_BugmaxEmitHitFragmentFromCurrentPart+92   j
                 move.w  #$CF80,2(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #1,d0
                 lsl.w   #2,d0
                 move.l  Boss_BugmaxStandardHitFragmentMappings(pc,d0.w),8(a0)
                 move.w  $E(a5),$E(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #3,d0
                 neg.w   d0
                 move.w  d0,$18(a0)
-                move.b  (dword_FFFF08+2).w,d0
+                move.b  (RandomNumberState+2).w,d0
                 andi.w  #7,d0
                 subq.w  #4,d0
                 move.w  d0,$1C(a0)

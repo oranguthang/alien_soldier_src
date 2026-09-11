@@ -762,7 +762,7 @@ Boss_BugmaxScatterPrimaryObjectPoolLoop:                ; CODE XREF: Boss_Bugmax
                 clr.b   $21(a0)
                 move.w  #$FFFE,$1C(a0)
                 jsr     (RandomNumber).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
                 move.w  d0,$18(a0)
@@ -776,7 +776,7 @@ Boss_BugmaxScatterSecondaryObjectPoolLoop:              ; CODE XREF: Boss_Bugmax
                 clr.b   $21(a0)
                 move.w  #$FFFE,$1C(a0)
                 jsr     (RandomNumber).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
                 move.w  d0,$18(a0)

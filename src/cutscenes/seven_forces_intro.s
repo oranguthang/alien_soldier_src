@@ -621,18 +621,18 @@ Entity_SevenForcesSpawnRandomExplosion:                 ; CODE XREF: Entity_Seve
                 bne.s   Entity_SevenForcesSpawnRandomExplosionReturn
                 jsr     (Sprite_InitType160).l
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Entity_SevenForcesInitRandomExplosionMotion
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
 Entity_SevenForcesInitRandomExplosionMotion:            ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+66   j  ; was: loc_5538A
                 move.b  #0,$20(a0)
                 moveq   #0,d0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 asl.w   #1,d0
                 addi.l  #$80000,d0
                 move.l  d0,$1C(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$FF,d0
                 andi.w  #$FF,d1
                 subi.w  #$80,d0
@@ -779,7 +779,7 @@ Effect_SpawnSevenForcesTransitionParticle:              ; CODE XREF: Entity_Seve
                 move.w  #$8400,2(a0)
                 move.w  #$10,$48(a0)
                 moveq   #0,d0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 addq.w  #8,d0
                 swap    d0
@@ -787,8 +787,8 @@ Effect_SpawnSevenForcesTransitionParticle:              ; CODE XREF: Entity_Seve
                 move.l  d0,$1C(a0)
                 move.l  d0,$18(a0)
                 move.b  #$70,$20(a0)                    ; 'p'
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$FF,d0
                 andi.w  #$7F,d1
                 subi.w  #$80,d0
@@ -797,7 +797,7 @@ Effect_SpawnSevenForcesTransitionParticle:              ; CODE XREF: Entity_Seve
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
                 move.w  #$44F4,$E(a0)
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 bne.s   Effect_InitSevenForcesTransitionParticleMapping
                 move.w  #$44F5,$E(a0)
 Effect_InitSevenForcesTransitionParticleMapping:        ; CODE XREF: Effect_SpawnSevenForcesTransitionParticle+66   j  ; was: loc_555BA

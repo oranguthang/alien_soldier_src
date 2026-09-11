@@ -12,7 +12,7 @@ UI_InitializeGameVariables:                             ; CODE XREF: UI_HandleTi
 UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPasswordConfirmFlag+6   j  ; was: loc_1CD02
                 move.w  #$200,(word_FFA216).w
                 move.w  #$200,(word_FFA218).w
-                clr.l   (dword_FFA212).w
+                clr.l   (ScoreValueBCD).w
                 clr.w   (word_FF822A).w
                 move.w  #3,(word_FFA228).w
                 clr.w   (word_FFFF40).w
@@ -40,7 +40,7 @@ UI_InitGameStateFromContinue_CopyAmmo:                  ; CODE XREF: UI_InitGame
                 move.w  (word_FFA26A).w,(word_FFA262).w
                 move.w  (word_FFA26C).w,(word_FFA264).w
                 move.w  (word_FFA26E).w,(word_FFA266).w
-                clr.l   (dword_FFA212).w
+                clr.l   (ScoreValueBCD).w
                 clr.w   (word_FF822A).w
                 clr.w   (word_FFFF42).w
                 clr.w   (word_FFFF44).w

@@ -24,14 +24,14 @@ Debug_RadialParticleTestPrepareBurstState:              ; DATA XREF: ROM:0002F1B
                 move.w  #7,d7
 Debug_RadialParticleTestPrepareBurstLoop:               ; CODE XREF: Debug_RadialParticleTestPrepareBurstState:Debug_RadialParticleTestNextBurstSlot   j  ; was: loc_2F1D8
                 jsr     (RandomNumber).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1FF,d0
                 move.w  d0,$52(a5)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 move.w  d0,$54(a5)
-                move.b  (dword_FFFF08+2).w,d0
+                move.b  (RandomNumberState+2).w,d0
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 move.w  d0,$56(a5)

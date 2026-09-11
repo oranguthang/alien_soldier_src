@@ -168,10 +168,10 @@ Entity_ValkirieBattleState8CheckRandomAttack:           ; CODE XREF: Entity_Upda
                 bmi.s   Entity_ValkirieBattleState8CheckDualShot
                 cmpi.w  #$840,$BC(a5)
                 bpl.s   Entity_ValkirieBattleState8CheckDualShot
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.w   Entity_StartValkirieBattleState14
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.w   Entity_StartValkirieBattleState18
 Entity_ValkirieBattleState8CheckDualShot:               ; CODE XREF: Entity_UpdateValkirieBattleState8+1E   j  ; was: loc_5598E
@@ -358,7 +358,7 @@ Entity_ValkirieBattleStateEUseMidPattern:               ; CODE XREF: Entity_Star
                 bra.s   Entity_UpdateValkirieAirborneStateEOr16
 ; ---------------------------------------------------------------------------
 Entity_ValkirieBattleStateEChooseRandomPattern:         ; CODE XREF: Entity_StartValkirieBattleStateE+4C   j  ; was: loc_55B8C
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Entity_ValkirieBattleStateEUseHighPattern
 Entity_ValkirieBattleStateEUseLowPattern:               ; CODE XREF: Entity_StartValkirieBattleStateE+5A   j  ; was: loc_55B96
@@ -536,7 +536,7 @@ Entity_StartValkirieBattleState12:                      ; CODE XREF: Entity_Upda
                 clr.b   $23E(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 addq.w  #4,d0
                 move.w  d0,$11C(a5)
@@ -577,7 +577,7 @@ Entity_CheckValkirieState12ExitEvent:                   ; CODE XREF: Entity_Upda
                 bmi.w   Entity_ExitValkirieBattleState12
                 cmpi.w  #$80,d0
                 bmi.s   Entity_RenderValkirieBattleState12
-                btst    #0,(dword_FFFF08+1).w
+                btst    #0,(RandomNumberState+1).w
                 beq.w   Entity_ExitValkirieBattleState12
                 lea     Valkirie_State12PartHideCommands(pc),a0
                 nop
@@ -610,7 +610,7 @@ Entity_TestValkirieDamageFlash:                         ; was: sub_55E68
                 beq.s   Entity_TestValkirieDamageFlashReturn
                 bclr    #6,$23E(a5)
                 beq.s   Entity_TestValkirieDamageFlashReturn
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
 Entity_TestValkirieDamageFlashReturn:                   ; CODE XREF: Entity_TestValkirieDamageFlash+4   j  ; was: locret_55E7C
                                         ; Entity_TestValkirieDamageFlash+C   j
                 rts

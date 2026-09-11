@@ -539,7 +539,7 @@ Object_TransitionDebrisConvertAfterCollision:           ; CODE XREF: Object_Tran
                 neg.w   d0
                 asr.w   #1,d0
                 move.w  d0,$1C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 subq.w  #2,d0
                 move.w  d0,$18(a5)
@@ -730,9 +730,9 @@ Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Boss_Destro
                 jsr     (Sprite_InitType160).l
                 clr.b   $20(a0)
                 move.w  #6,$18(a0)
-                move.w  (dword_FFFF08+2).w,$1A(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.w  (RandomNumberState+2).w,$1A(a0)
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$1F,d0
                 andi.w  #$3F,d1                         ; '?'
                 subi.w  #$24,d0                         ; '$'
@@ -741,11 +741,11 @@ Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Boss_Destro
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$1C(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #7,d0
                 add.w   d0,d0
                 add.w   d0,d0

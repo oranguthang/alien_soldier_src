@@ -52,7 +52,7 @@ Projectile_UpdateWithImpactFrames:                      ; CODE XREF: Boss_Shiper
                 beq.s   Projectile_UpdateWithImpactFrames_PlaySound
                 andi.w  #7,d1
                 bne.s   Projectile_UpdateWithImpactFrames_Update
-                btst    #3,(dword_FFFF08).w
+                btst    #3,(RandomNumberState).w
                 beq.s   Projectile_UpdateWithImpactFrames_Update
 Projectile_UpdateWithImpactFrames_PlaySound:            ; CODE XREF: Projectile_UpdateWithImpactFrames+A   j  ; was: loc_2A3B6
                 move.b  #$BC,d0
@@ -62,7 +62,7 @@ Projectile_UpdateWithImpactFrames_Update:               ; CODE XREF: Projectile_
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Projectile_UpdateWithImpactFrames_Return
                 movea.l #Projectile_SpawnSpriteFrames,a1  ; make offsets?
-                move.w  (dword_FFFF08).w,d6
+                move.w  (RandomNumberState).w,d6
                 move.w  d6,d1
                 andi.w  #$300,d6
                 bne.s   Projectile_UpdateWithImpactFrames_UseSelectedFrames
@@ -84,7 +84,7 @@ Projectile_UpdateWithExplosionSound:                    ; CODE XREF: Boss_Destro
                 beq.s   Projectile_UpdateWithExplosionSound_Play
                 andi.w  #7,d1
                 bne.s   Projectile_UpdateWithExplosionSound_Return
-                btst    #3,(dword_FFFF08).w
+                btst    #3,(RandomNumberState).w
                 beq.s   Projectile_UpdateWithExplosionSound_Return
 Projectile_UpdateWithExplosionSound_Play:               ; CODE XREF: Projectile_UpdateWithExplosionSound+16   j  ; was: loc_2A40C
                 move.b  #$BC,d0
@@ -167,15 +167,15 @@ Effect_SpawnParticleLoop_Spawn:                         ; CODE XREF: Effect_Spaw
                 bne.w   Effect_SpawnParticleLoop_Return
                 movea.l #Effect_ParticleLoopSpriteFrames,a1
                 bsr.w   Sprite_InitTypeA4FromTable
-                move.b  (dword_FFFF08+1).w,d0
-                move.b  (dword_FFFF08+2).w,d1
+                move.b  (RandomNumberState+1).w,d0
+                move.b  (RandomNumberState+2).w,d1
                 andi.w  #$F,d0
                 andi.w  #$F,d1
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Effect_SpawnParticleLoop_CheckYSign
                 neg.w   d0
 Effect_SpawnParticleLoop_CheckYSign:                    ; CODE XREF: Effect_SpawnParticleLoop+42   j  ; was: loc_2A534
-                btst    #1,(dword_FFFF08).w
+                btst    #1,(RandomNumberState).w
                 beq.s   Effect_SpawnParticleLoop_StorePosition
                 neg.w   d1
 Effect_SpawnParticleLoop_StorePosition:                 ; CODE XREF: Effect_SpawnParticleLoop+4C   j  ; was: loc_2A53E
@@ -558,11 +558,11 @@ Effect_InitDebrisSprite:                                ; CODE XREF: Boss_JokerS
                 move.w  (word_FF808A).w,d0
                 or.w    d0,$E(a0)
                 clr.b   $21(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #3,d0
                 move.l  d0,$18(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 neg.w   d0
                 move.w  d0,$1C(a0)

@@ -470,11 +470,11 @@ Cutscene_XiTigerFadeOut:                                ; DATA XREF: ROM:Entity_
 Cutscene_XiTigerComplete:                               ; CODE XREF: Cutscene_XiTigerWaitComplete:loc_1E9FA   p  ; was: sub_1ED7C
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   locret_1E9AE
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 addi.w  #$A0,d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$100,d0
                 move.w  d0,$14(a0)

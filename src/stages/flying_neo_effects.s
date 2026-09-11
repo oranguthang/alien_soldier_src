@@ -38,14 +38,14 @@ Effect_SpawnRandomLightning:                            ; CODE XREF: Stage_Train
                 addq.w  #1,(dword_FF8062).w
                 cmpi.w  #$42,(dword_FF8062).w           ; 'B'
                 bne.w   locret_D838
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addq.w  #1,d0
                 move.w  d0,(dword_FF8062).w
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   loc_D7BA
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 addq.w  #3,d0
                 move.w  d0,(word_FF8218).w
@@ -54,7 +54,7 @@ Effect_SpawnRandomLightning:                            ; CODE XREF: Stage_Train
 ; ---------------------------------------------------------------------------
 loc_D7BA:                                               ; CODE XREF: Effect_SpawnRandomLightning+3C   j
                 move.w  #2,(word_FF8222).w
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #6,d0
                 addq.w  #8,d0
                 move.w  d0,(word_FF8218).w
@@ -69,16 +69,16 @@ Effect_CreateLightningSprite:                           ; CODE XREF: Effect_Spaw
                 movea.w #(word_FFDB20-M68K_RAM),a0
                 move.w  #$160,(a0)
                 move.w  #$E100,2(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$C,d0
                 move.l  off_D83A(pc,d0.w),8(a0)
                 clr.w   $C(a0)
                 move.w  #$1E8,$E(a0)
                 move.b  #$70,$20(a0)                    ; 'p'
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$800,d0
                 or.w    d0,$E(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 addi.w  #$A0,d0
                 move.w  d0,$10(a0)

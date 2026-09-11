@@ -353,7 +353,7 @@ Weapon_ConfigureState6Motion:                           ; DATA XREF: ROM:0001798
                 andi.w  #$7F,d0
                 cmpi.w  #$40,d0                         ; '@'
                 bmi.s   Weapon_State6SelectSpeedFromAmmo
-                move.w  (dword_FFFF08).w,d3
+                move.w  (RandomNumberState).w,d3
                 andi.w  #1,d3
                 addq.w  #3,d3
                 bra.s   Weapon_State6CalculateVelocity
@@ -371,7 +371,7 @@ Weapon_State6SelectSpeedFromAmmo:                       ; CODE XREF: Weapon_Conf
 Weapon_State6CalculateVelocity:                         ; CODE XREF: Weapon_ConfigureState6Motion+1E   j  ; was: loc_17CEA
                                         ; Weapon_ConfigureState6Motion+2A   j
                 movea.l #Math_SineTable,a0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a0,d0.w),d1
                 move.w  (a0,d0.w),d2

@@ -379,7 +379,7 @@ Projectile_JokerDescendingShotEmitterUpdateTimer:       ; CODE XREF: Projectile_
                 move.w  $14(a5),$14(a0)
                 move.w  #$8004,d2
                 jsr     (Enemy_InitDirectionalProjectile).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$50,d0                         ; 'P'
                 move.w  d0,$48(a5)

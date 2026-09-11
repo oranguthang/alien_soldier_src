@@ -258,7 +258,7 @@ Boss_EnterSireneState14:                                ; CODE XREF: Boss_Update
                 lea     Sirene_State14PoseScriptSet1(pc),a0
                 nop
 Boss_SelectSireneState14PoseScript:                     ; CODE XREF: Boss_EnterSireneState14   j  ; was: loc_577F8
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$C,d0
                 move.l  (a0,d0.w),$71C(a5)
 ; State $14 plays a direction-selected pose script, then returns to state $12
@@ -719,7 +719,7 @@ Boss_SpawnSirenePeriodicProjectile:                     ; CODE XREF: Boss_Update
                 clr.b   $23(a0)
                 move.w  #$50,$26(a0)                    ; 'P'
                 move.w  $70(a5),$10(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 add.w   $74(a5),d0

@@ -235,11 +235,11 @@ Effect_SpawnRandomDebris_Return:                        ; CODE XREF: Effect_Spaw
 ; ---------------------------------------------------------------------------
 ; Creates random debris particle effect with velocity
 Effect_CreateDebrisParticle:                            ; CODE XREF: Effect_SpawnRandomDebris+10   j  ; was: loc_18862
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   d0,d1
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   d0,d2
@@ -339,7 +339,7 @@ Effect_UpdateKnockbackParticle:                         ; DATA XREF: ROM:Entity_
                 bne.s   Effect_UpdateKnockbackParticle_InitImpact
 Effect_UpdateKnockbackParticle_BeginMotion:             ; CODE XREF: Effect_UpdateKnockbackParticle+6   j  ; was: loc_189A6
                 movea.l #Math_SineTable,a1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
                 move.w  (a1,d0.w),d2
@@ -384,7 +384,7 @@ Effect_InitSharedImpactMotion:                          ; CODE XREF: Weapon_Hand
                 clr.b   $21(a5)
                 lea     dword_19632(pc),a1
                 nop
-                move.w  (dword_FFFF08).w,d6
+                move.w  (RandomNumberState).w,d6
                 andi.w  #$7C,d6                         ; '|'
                 move.l  (a1,d6.w),d0
                 move.l  $20(a1,d6.w),d1

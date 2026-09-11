@@ -171,12 +171,12 @@ Boss_SnakeRandomizeMotionAmplitudes:                    ; CODE XREF: Boss_SnakeB
                 move.w  (word_FFA000).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_SnakeRandomizeMotionAmplitudesReturn
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 addi.w  #$10,d0
                 move.w  d0,(dword_FF9408+2).w
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 addi.w  #$10,d0
@@ -328,15 +328,15 @@ Boss_SnakeSegmentInactiveState:                         ; DATA XREF: ROM:00040B5
 Boss_SnakeConfigureShot:                                ; CODE XREF: Boss_SnakeSegmentFireState+22   p  ; was: sub_40BAA
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #3,d0
                 subq.w  #4,d0
                 move.w  d0,$18(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 neg.w   d0
                 move.w  d0,$1C(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 add.w   d0,d0
                 add.w   d0,d0

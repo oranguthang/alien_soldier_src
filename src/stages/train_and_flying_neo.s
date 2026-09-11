@@ -92,7 +92,7 @@ Stage_TrainParallaxCalc:                                ; CODE XREF: Stage_Train
                                         ; Stage_FlyingNeoVerticalScroll+2E   p
                 movea.w #(byte_FF8800-M68K_RAM),a5
                 subi.l  #$28000,(dword_FF8A00).w
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 addq.w  #8,d0
                 subi.w  #$41,(word_FF8A04).w            ; 'A'

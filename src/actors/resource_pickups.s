@@ -41,7 +41,7 @@ Pickup_SpawnRandomFromCurrentObject:                    ; CODE XREF: Enemy_Updat
 Pickup_SelectRandomSize:                                ; CODE XREF: Stage18_SegmentedWormScatterSegments+36   p  ; was: loc_2BD20
                                         ; Boss_WolfGaropaSpawnFiniteRewardPickups+2A   p
                 moveq   #0,d7
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 and.w   d0,d1
                 beq.s   Pickup_SelectLargeSize
                 bra.w   *+4
@@ -111,7 +111,7 @@ Pickup_CheckCollection:                                 ; CODE XREF: Pickup_Upda
                 move.b  $4C(a5),d0
                 jsr     (Sound_PlaySFX).l
                 move.l  #$500,d0
-                jsr     (UI_AddScoreBCD).l
+                jsr     (Score_AddPackedBCD).l
                 move.w  (word_FFA216).w,d0
                 beq.s   Pickup_StoreResourceValue
                 bmi.s   Pickup_StoreResourceValue

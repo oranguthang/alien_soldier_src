@@ -169,7 +169,7 @@ Enemy_CirclingInitApproachVelocity:                     ; CODE XREF: Enemy_Circl
                 move.w  (dword_FFA900).w,d0
                 add.w   d0,$52(a5)
                 move.w  $14(a5),$54(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
                 lea     (Math_SineTable).l,a1
@@ -186,7 +186,7 @@ Enemy_CirclingInitApproachVelocity:                     ; CODE XREF: Enemy_Circl
 ; Steers toward a randomized point around the stored target position
 Enemy_CirclingSteerTowardTarget:                        ; CODE XREF: Enemy_CirclingApproachState+20   j  ; was: sub_2D4B2
                 move.w  $52(a5),d0
-                move.b  (dword_FFFF08).w,d7
+                move.b  (RandomNumberState).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 subi.w  #$20,d7                         ; ' '
                 add.w   d7,d0
@@ -210,7 +210,7 @@ Enemy_CirclingSteerTowardTarget_AccelerateRight:        ; CODE XREF: Enemy_Circl
 Enemy_CirclingSteerTowardTarget_UpdateVertical:         ; CODE XREF: Enemy_CirclingSteerTowardTarget+1C   j  ; was: loc_2D50A
                                         ; Enemy_CirclingSteerTowardTarget+32   j
                 move.w  $54(a5),d0
-                move.b  (dword_FFFF08+1).w,d7
+                move.b  (RandomNumberState+1).w,d7
                 andi.w  #$3F,d7                         ; '?'
                 subi.w  #$20,d7                         ; ' '
                 add.w   d7,d0
@@ -254,7 +254,7 @@ Enemy_CirclingOrbitState:                               ; DATA XREF: ROM:0002D42
                 bra.s   Enemy_CirclingOrbitState_UpdateLifetime
 ; ---------------------------------------------------------------------------
 Enemy_CirclingOrbitState_AdjustRotation:                ; CODE XREF: Enemy_CirclingOrbitState+30   j  ; was: loc_2D59E
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 move.w  d0,$48(a5)
                 jsr     (Math_CalculateAngleToPlayer).l

@@ -63,8 +63,8 @@ Boss_TerobusterInitializeDefeatDebris:                  ; CODE XREF: Boss_Terobu
                 move.w  $14(a5),d1
                 subi.w  #$3C,d0                         ; '<'
                 subi.w  #$34,d1                         ; '4'
-                move.b  (dword_FFFF08).w,d2
-                move.b  (dword_FFFF08+1).w,d3
+                move.b  (RandomNumberState).w,d2
+                move.b  (RandomNumberState+1).w,d3
                 andi.w  #$3C,d2                         ; '<'
                 andi.w  #$3C,d3                         ; '<'
                 add.w   d2,d0

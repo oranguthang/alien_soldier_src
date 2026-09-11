@@ -5,11 +5,13 @@
 still have neutral size/address names. The first reviewed semantic fields are
 `GameModeIndex`, `GameSubstateIndex`, `StageTableIndex`, `Entity_ObjectPool`,
 `DifficultyMode`, `MessageMode`, `SoundDisableFlags`, `StageTimeRemaining`,
+`ScoreValueBCD`, `ScoreAddendBCD`, `ScoreAddendPrefixByte`,
 `StagePhaseSplitTimes`, `StageCompletionTimes`, `StageResultVisits`,
 `MessageSequenceState`, `MessageSequenceFlags`, `WeaponStateIndex`,
 `WeaponSlotOffset`, `WeaponSavedSlotOffset`, `WeaponMenuRadius`,
 `WeaponMenuAngle`, `WeaponStateCooldown`, `WeaponMenuAngularStep`, and
-`WeaponMenuSlotOffset`, `ShootingMode`, and `ControlLayoutFlags`;
+`WeaponMenuSlotOffset`, `ShootingMode`, `ControlLayoutFlags`, and
+`RandomNumberState`;
 `VDPCommand` predates this review. All remain
 subject to the evidence policy in `docs/naming.md`.
 
@@ -44,6 +46,9 @@ behavioral claim.
 
 | Symbol | Address | Static evidence |
 |---|---:|---|
+| `ScoreAddendPrefixByte` | `$FFFFA005` | The packed-BCD score adder clears this byte immediately before staging its four-byte operand at the following address. No other source reference accesses it independently. |
+| `ScoreAddendBCD` | `$FFFFA006` | The score adder writes `d0` here and consumes all four bytes with predecrement `ABCD` instructions. |
+| `ScoreValueBCD` | `$FFFFA212` | Gameplay rewards and the result time bonus add packed-BCD values here; initialization clears it, while the HUD and results screen render all eight digits. |
 | `StageTimeRemaining` | `$FFFFA270` | Loaded from the 25-entry packed-BCD stage time-limit table, decremented once per second, rendered by the HUD, and saved at phase/result boundaries. |
 | `StagePhaseSplitTimes` | `$FFFFAA00` | `Results_StorePhaseSplitTime` stores one word selected by `StageTableIndex`; the results builder traverses 25 entries. |
 | `StageCompletionTimes` | `$FFFFAA80` | `Results_StoreStageCompletionTime` stores the final per-stage timer snapshot; the results builder traverses 25 entries and derives elapsed intervals. |
@@ -53,6 +58,12 @@ The three history arrays are initialized together to `$FFFF`, the missing-value
 sentinel. `StageResultVisits` deliberately uses the neutral word
 “visit”: the ROM renders its aggregate under `TOTAL CONTINUE`, but static code
 alone does not yet prove the exact player-facing counting convention.
+
+## Reviewed pseudo-random state
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `RandomNumberState` | `$FFFFFF08` | `RandomNumber` replaces this longword on every call, and gameplay consumers sample its bytes and words. Demo playback writes a fixed seed here so its recorded input remains deterministic. |
 
 ## Reviewed message-sequence fields
 

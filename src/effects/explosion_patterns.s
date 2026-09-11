@@ -43,7 +43,7 @@ Effect_SpawnExplosionA:                                 ; CODE XREF: Enemy_Updat
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$1A0,(a0)
                 move.w  #6,$4A(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 move.w  d0,$4C(a0)
                 move.b  #$BB,d0
@@ -58,7 +58,7 @@ Effect_SpawnExplosionB:                                 ; CODE XREF: Enemy_Proce
                 move.w  #8,$4A(a0)
                 move.w  #$1A4,(a0)
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 move.w  d0,$4C(a0)
                 move.b  #$BC,d0
@@ -159,7 +159,7 @@ Effect_ExplosionASpiralHandlers:    dc.w    Effect_ExplosionA_InitRandomSpiral-*
 
 ; Seeds the spiral angle from the random state
 Effect_ExplosionA_InitRandomSpiral:                     ; DATA XREF: ROM:Effect_ExplosionASpiralHandlers   o  ; was: sub_2C01A
-                move.w  (dword_FFFF08).w,$5E(a5)
+                move.w  (RandomNumberState).w,$5E(a5)
                 addq.w  #2,$4E(a5)
 ; Converts the current spiral angle into velocity
 Effect_ExplosionA_SetSpiralVelocity:                    ; DATA XREF: ROM:0002C016   o  ; was: loc_2C024
@@ -272,10 +272,10 @@ Effect_ExplosionB_SpawnRandomParticle:                  ; DATA XREF: ROM:Effect_
                 bne.w   Object_UpdateNoOpReturn
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Sprite_InitType160).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$20,d0                         ; ' '
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$3F,d1                         ; '?'
                 subi.w  #$20,d1                         ; ' '
                 add.w   $10(a5),d0
@@ -303,7 +303,7 @@ Effect_ExplosionB_FinishParticleLoop:                   ; CODE XREF: Effect_Expl
 Effect_ExplosionB_SpawnThreeRings:                      ; DATA XREF: ROM:0002C0FA   o  ; was: sub_2C17A
                 tst.w   4(a5)
                 bne.w   Object_UpdateNoOpReturn
-                move.w  (dword_FFFF08).w,d2
+                move.w  (RandomNumberState).w,d2
                 andi.w  #$1FE,d2
                 move.w  d2,$58(a5)
                 move.w  #1,d0
@@ -328,7 +328,7 @@ Effect_ExplosionB_SpawnThreeRings:                      ; DATA XREF: ROM:0002C0F
 Effect_ExplosionB_SpawnTwoRings:                        ; DATA XREF: ROM:0002C0FC   o  ; was: sub_2C1D6
                 tst.w   4(a5)
                 bne.w   Object_UpdateNoOpReturn
-                move.w  (dword_FFFF08).w,d2
+                move.w  (RandomNumberState).w,d2
                 andi.w  #$1FE,d2
                 move.w  d2,$58(a5)
                 move.w  #2,d0
@@ -350,7 +350,7 @@ Effect_ExplosionB_SpawnTwoRings:                        ; DATA XREF: ROM:0002C0F
 Effect_ExplosionB_SpawnSingleRing:                      ; DATA XREF: ROM:0002C0FE   o  ; was: sub_2C224
                 tst.w   4(a5)
                 bne.w   Object_UpdateNoOpReturn
-                move.w  (dword_FFFF08).w,d2
+                move.w  (RandomNumberState).w,d2
                 andi.w  #$1FE,d2
                 move.w  d2,$58(a5)
                 move.w  #3,d0

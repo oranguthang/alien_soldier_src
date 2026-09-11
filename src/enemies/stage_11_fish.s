@@ -213,9 +213,9 @@ Enemy_Stage11FishChoosePassState:                       ; DATA XREF: ROM:0002EB7
                 bsr.w   Enemy_AdjustStage11FishVerticalVelocity
                 subq.w  #1,$48(a5)
                 bne.s   Enemy_Stage11FishChoosePassState_Return
-                btst    #0,(dword_FFFF08+1).w
+                btst    #0,(RandomNumberState+1).w
                 bne.s   Enemy_Stage11FishChoosePassState_PrepareVolley
-                btst    #1,(dword_FFFF08+1).w
+                btst    #1,(RandomNumberState+1).w
                 bne.s   Enemy_Stage11FishChoosePassState_PrepareVolley
                 move.w  #$10,4(a5)
                 move.l  #word_EB432,8(a5)

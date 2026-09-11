@@ -629,8 +629,8 @@ Boss_SunsetStingSpawnDebrisRain:                        ; CODE XREF: Boss_Sunset
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Boss_SunsetStingReturn
                 jsr     (Projectile_InitType88).l
-                move.w  (dword_FFFF08).w,d0
-                move.w  (dword_FFFF08+2).w,d1
+                move.w  (RandomNumberState).w,d0
+                move.w  (RandomNumberState+2).w,d1
                 andi.w  #$3F,d0                         ; '?'
                 andi.w  #$3F,d1                         ; '?'
                 subi.w  #$20,d0                         ; ' '

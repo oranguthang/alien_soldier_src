@@ -176,12 +176,12 @@ Enemy_UpdateBouncingDebrisSpawner_SpawnParticle:        ; CODE XREF: Enemy_Updat
 Enemy_UpdateBouncingDebrisSpawner_InitParticle:         ; CODE XREF: Enemy_UpdateBouncingDebrisSpawner+4E   j  ; was: loc_2D206
                 bsr.s   Effect_SetRandomParticleMapping
                 jsr     (Projectile_InitType88).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$20,d0                         ; ' '
                 move.w  $10(a5),$10(a0)
                 add.w   d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 subi.w  #$20,d0                         ; ' '
                 move.w  $14(a5),$14(a0)
@@ -203,7 +203,7 @@ Effect_SetRandomParticleMappingFromCurrentObject:
 ; End of function Effect_SetRandomParticleMappingFromCurrentObject
 ; Sets random animation pointer from 4-entry table based on random number bits 0-1
 Effect_SetRandomParticleMapping:                        ; CODE XREF: Enemy_UpdateBouncingDebrisSpawner:Enemy_UpdateBouncingDebrisSpawner_InitParticle   p  ; was: sub_2D258
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 add.w   d0,d0
                 add.w   d0,d0

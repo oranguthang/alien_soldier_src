@@ -2893,7 +2893,7 @@ acquired. The stage-number path renders the fixed `STAGE` label followed by
 two packed-BCD digits. The alleged grade glyph set is exactly the unique
 letters needed for `EMERGENCY`. The alleged weapon-acquired path records
 `StageTimeRemaining`, applies its four packed-BCD digits to the sprite tiles,
-and finally calls `UI_AddScoreBCD`, establishing it as the time-bonus flow.
+and finally calls `Score_AddPackedBCD`, establishing it as the time-bonus flow.
 The shared battle-entry glyph list supports the `READY/FIGHT` banner.
 
 The nine encoded Japanese message scripts are named only by statically proven
@@ -3169,3 +3169,26 @@ and promotes three graphics-staging RAM addresses. It adds 30 provenance
 mappings and 38 static audit records, raising the totals from 12,166 to
 12,196 and from 8,647 to 8,685. The enforced address-derived ceiling falls
 from 3,875 to 3,845; module count remains 349.
+
+The numeric-primitives audit corrects the ownership of the 0x003954--0x0039A9
+block. It is now `math/bcd_and_random.s`, not a UI-only score module: the first
+routine adds packed-BCD rewards from collision, pickup, and results flows,
+while `RandomNumber` advances a shared PRNG state consumed throughout gameplay,
+effects, projectiles, and bosses. Keeping this compact ROM-contiguous block is
+an intentional cohesion exception; merging it into the following palette code
+merely to increase its line count would assign false ownership.
+
+The former `UI_AddScoreBCD` name is narrowed to `Score_AddPackedBCD` because
+the routine performs no rendering. Four `ABCD` instructions add the staged
+eight-digit operand to `ScoreValueBCD`, and carry saturates the result at
+`99999999`. The adjacent one-instruction entry has no static references and is
+therefore named only `Numeric_NoOp`, without guessing a caller or purpose.
+The PRNG keeps its established `RandomNumber` entry name; its zero-state seed,
+multiply-and-fold step, global state, and deterministic demo seed are now
+documented explicitly.
+
+This package replaces three live address-derived ROM definitions and promotes
+four RAM fields: the BCD prefix byte, BCD addend, score, and PRNG state. It adds
+seven provenance mappings and eight static audit records, raising the totals
+from 12,196 to 12,203 and from 8,685 to 8,693. The enforced address-derived
+ceiling falls from 3,845 to 3,838; module count remains 349.

@@ -34,7 +34,7 @@ EnemySpawn_UpdateDirectorTimer:                         ; DATA XREF: ROM:0002C35
                 bne.w   EnemySpawn_DirectorReturn
                 bsr.w   EnemySpawn_SelectSearchOriginY
                 move.w  #$158,d1
-                move.w  (dword_FFFF08).w,(dword_FF8040).w
+                move.w  (RandomNumberState).w,(dword_FF8040).w
                 andi.w  #1,(dword_FF8040).w
                 bsr.w   EnemySpawn_FindTerrainPosition
                 bne.w   EnemySpawn_DirectorReturn
@@ -53,7 +53,7 @@ EnemySpawn_ClearDirectorData:
 ; End of function EnemySpawn_ClearDirectorData
 ; Chooses the next randomized spawn delay
 EnemySpawn_ResetDelay:                                  ; CODE XREF: EnemySpawn_StartDirectorTimer+12   p  ; was: sub_2C3BC
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$20,d0                         ; ' '
                 move.w  d0,(dword_FF8116).w
@@ -68,7 +68,7 @@ EnemySpawn_SelectSearchOriginY:                         ; CODE XREF: EnemySpawn_
                 bpl.s   EnemySpawn_SelectSearchOriginY_Return
                 cmpi.w  #$C0,(dword_FFA410).w
                 bmi.s   EnemySpawn_SelectSearchOriginY_Return
-                move.b  (dword_FFFF08).w,d1
+                move.b  (RandomNumberState).w,d1
                 andi.w  #3,d1
                 bne.s   EnemySpawn_SelectSearchOriginY_Return
                 move.w  #$70,d0                         ; 'p'

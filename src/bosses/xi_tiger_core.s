@@ -262,7 +262,7 @@ Boss_XiTigerIdleAttackDecisionState:                    ; DATA XREF: ROM:0003D89
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$A0,d0
                 bmi.w   Boss_XiTigerBeginDashRecoveryPose
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 bne.w   Boss_XiTigerBeginDashPreparation
                 bra.w   Boss_XiTigerBeginCloseRangeJumpPreparation
 ; ---------------------------------------------------------------------------
@@ -331,7 +331,7 @@ Boss_XiTigerUpdatePostDashDecision:                     ; CODE XREF: Boss_XiTige
                 bmi.w   Boss_XiTigerEnterIdleState
                 clr.l   $498(a5)
                 bsr.w   Boss_XiTigerSetFacingDirection
-                move.w  (dword_FFFF08).w,d5
+                move.w  (RandomNumberState).w,d5
                 cmpi.w  #$98,d0
                 bmi.w   Boss_XiTigerBeginDashRecoveryPose
                 andi.w  #2,d5
@@ -360,7 +360,7 @@ Boss_XiTigerDashRecoveryPoseState:                      ; DATA XREF: ROM:0003D89
 Boss_XiTigerBeginCloseRangeDecisionState:               ; CODE XREF: Boss_XiTigerDashDecelerate+7A   j  ; was: loc_3DCBC
                                         ; Boss_XiTigerCloseRangeAI+24   j
                 move.w  #$28,4(a5)                      ; '('
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$C,d0
                 addq.w  #4,d0
                 move.w  d0,$17E(a5)
@@ -376,7 +376,7 @@ Boss_XiTigerCloseRangeAI:                               ; DATA XREF: ROM:0003D8B
                 bsr.w   Boss_XiTigerSetFacingDirection
                 tst.w   (word_FF8234).w
                 bmi.w   Boss_XiTigerEnterIdleState
-                move.w  (dword_FFFF08).w,d5
+                move.w  (RandomNumberState).w,d5
                 cmpi.w  #$98,d0
                 bpl.s   Boss_XiTigerChooseDistantCloseRangeAttack
                 andi.w  #3,d5
@@ -486,7 +486,7 @@ Boss_XiTigerLandedState:                                ; DATA XREF: ROM:0003D8A
                 bsr.w   Boss_XiTigerSetFacingDirection
                 tst.w   (word_FF8234).w
                 bmi.w   Boss_XiTigerEnterIdleState
-                move.w  (dword_FFFF08).w,d5
+                move.w  (RandomNumberState).w,d5
                 cmpi.w  #$A0,d0
                 bpl.w   Boss_XiTigerBeginDashPreparation
                 andi.w  #4,d5
@@ -775,9 +775,9 @@ Boss_XiTigerSpawnDefeatParticle:                        ; CODE XREF: Boss_XiTige
                 jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)
                 move.w  #$FFFD,$1C(a0)
-                move.w  (dword_FFFF08+2).w,$1E(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.w  (RandomNumberState+2).w,$1E(a0)
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$3F,d0                         ; '?'
                 andi.w  #$3F,d1                         ; '?'
                 subi.w  #$20,d0                         ; ' '
@@ -786,7 +786,7 @@ Boss_XiTigerSpawnDefeatParticle:                        ; CODE XREF: Boss_XiTige
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a0)

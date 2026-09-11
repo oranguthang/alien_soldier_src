@@ -616,11 +616,11 @@ Boss_WolfGaropaSpawnOrbProjectilePair:                  ; CODE XREF: Boss_WolfGa
                 add.w   $A30(a5),d6
                 move.w  d5,$14(a0)
                 move.w  d6,$10(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 subq.w  #4,d0
                 add.w   d0,d5
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #7,d0
                 subq.w  #4,d0
                 add.w   d0,d6
@@ -646,7 +646,7 @@ Projectile_WolfGaropaOrbShot:                           ; DATA XREF: ROM:Entity_
                 btst    #4,$22(a5)
                 beq.s   Projectile_WolfGaropaReflectOrbShotHorizontally
 Projectile_WolfGaropaOrbShotFallback:                   ; CODE XREF: Projectile_WolfGaropaOrbShot+4   j  ; was: loc_50B06
-                btst    #0,(dword_FFFF08+1).w
+                btst    #0,(RandomNumberState+1).w
                 bne.s   Projectile_WolfGaropaMarkOrbShotForRemoval
                 jsr     (Pickup_SpawnSmallFromCurrentObject).l
                 ori.w   #$A00,2(a5)

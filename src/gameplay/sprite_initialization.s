@@ -5,19 +5,19 @@ Effect_InitRandomizedObject:
 Effect_InitRandomizedObject_Initialize:                 ; CODE XREF: Effect_InitRandomizedObject   j  ; was: loc_1B90A
                 bne.w   Effect_InitRandomizedObject_Return
                 move.l  d7,$48(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 add.w   $14(a5),d0
                 move.w  d0,$14(a0)
                 move.w  #1,$18(a0)
                 move.l  #$FFFFE000,$58(a0)
-                move.b  (dword_FFFF08+2).w,d0
+                move.b  (RandomNumberState+2).w,d0
                 andi.w  #$C,d0
                 move.l  Effect_RandomVerticalVelocityTable(pc,d0.w),$1C(a0)
                 move.l  #$800,$5C(a0)

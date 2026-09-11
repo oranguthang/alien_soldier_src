@@ -292,7 +292,7 @@ Boss_Stage3OrbitingFormationWaitForAttackPosition:      ; DATA XREF: ROM:0003418
 ; Selects a random delay for the next aimed homing shot
 Boss_Stage3OrbitingFormationPrepareHomingShot:          ; DATA XREF: ROM:0003418E   o  ; was: sub_342D6
                 addq.w  #2,4(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 move.w  d0,$48(a5)
                 tst.w   (DifficultyMode).w

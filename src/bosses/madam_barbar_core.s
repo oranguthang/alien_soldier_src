@@ -248,7 +248,7 @@ Boss_MadamBarbarBeginAIState:                           ; CODE XREF: Boss_MadamB
 Boss_MadamBarbarSelectAttackState:                      ; DATA XREF: ROM:0003A4F2   o  ; was: sub_3A79C
                 tst.w   $17E(a5)
                 bpl.s   Boss_MadamBarbarUpdateAttackSelectionPose
-                move.w  (dword_FFFF08).w,d7
+                move.w  (RandomNumberState).w,d7
                 move.w  (dword_FFA410).w,d0
                 sub.w   $10(a5),d0
                 move.w  d0,d1
@@ -423,7 +423,7 @@ Boss_MadamBarbarBeginDropProjectileState:               ; CODE XREF: Boss_MadamB
                 move.w  a5,$48(a5)
                 move.w  #$CFE0,$4A(a5)
                 move.w  #$C8,$9D4(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1E,d0
                 addq.w  #7,d0
                 move.w  d0,$17E(a5)
@@ -599,9 +599,9 @@ Boss_MadamBarbarSpawnBarrageParticle:                   ; CODE XREF: Boss_MadamB
                 jsr     (Sprite_InitTypeA4FromTable).l
                 move.b  #0,$20(a0)
                 move.w  #1,$1C(a0)
-                move.w  (dword_FFFF08+2).w,$1E(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.w  (RandomNumberState+2).w,$1E(a0)
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$7F,d0
                 andi.w  #$3F,d1                         ; '?'
                 subi.w  #$40,d0                         ; '@'
@@ -610,7 +610,7 @@ Boss_MadamBarbarSpawnBarrageParticle:                   ; CODE XREF: Boss_MadamB
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a0)
@@ -805,7 +805,7 @@ Boss_MadamBarbarSpawnDebris:                            ; CODE XREF: Boss_MadamB
                 clr.w   $4A(a0)
                 moveq   #3,d0
                 swap    d0
-                btst    #4,(dword_FFFF08).w
+                btst    #4,(RandomNumberState).w
                 beq.s   Boss_MadamBarbarApplyDebrisDirection
                 neg.l   d0
 Boss_MadamBarbarApplyDebrisDirection:                   ; CODE XREF: Boss_MadamBarbarSpawnDebris+6E   j  ; was: loc_3AE22

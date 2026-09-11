@@ -282,9 +282,9 @@ Stage12_YachtSpawnDestructionDebris:                    ; CODE XREF: Stage12_Yac
                 jsr     (Sprite_InitFromTable).l
                 move.b  #0,$20(a0)
                 move.w  #$FFFD,$1C(a0)
-                move.w  (dword_FFFF08+2).w,$1E(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.w  (RandomNumberState+2).w,$1E(a0)
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$3F,d0                         ; '?'
                 andi.w  #$3F,d1                         ; '?'
                 subi.w  #$10,d0
@@ -293,7 +293,7 @@ Stage12_YachtSpawnDestructionDebris:                    ; CODE XREF: Stage12_Yac
                 add.w   $14(a5),d1
                 move.w  d0,$10(a0)
                 move.w  d1,$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a0)

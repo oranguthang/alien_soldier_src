@@ -104,7 +104,7 @@ Enemy_Stage12FloaterReleaseState:                       ; DATA XREF: ROM:0002E36
                 move.b  #$C0,$21(a5)
                 move.l  #$FFFB8000,$1C(a5)
                 move.w  #8,$5C(a5)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
                 lea     (Math_SineTable).l,a1
@@ -270,7 +270,7 @@ Enemy_Stage12TurretActivateLauncherState:               ; DATA XREF: ROM:0002E51
                 move.w  #$2E4,(a0)
                 addq.w  #2,4(a5)
                 move.w  #$38,$4E(a0)                    ; '8'
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$50,d0                         ; 'P'
                 move.w  d0,$4C(a0)
@@ -293,7 +293,7 @@ Enemy_Stage12TurretResetDelayState_Return:              ; CODE XREF: Enemy_Stage
 ; End of function Enemy_Stage12TurretResetDelayState
 ; Periodically spawns the turret's type-$90 shot
 Enemy_Stage12TurretSpawnPeriodicShot:                   ; CODE XREF: Enemy_Stage12TurretController+1C   j  ; was: sub_2E5A8
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 bne.s   Enemy_Stage12TurretSpawnPeriodicShot_CheckSlowInterval
                 move.w  (word_FFA000).w,d7

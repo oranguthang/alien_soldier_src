@@ -10,7 +10,7 @@ Boss_WolfGaropaSpawnOrbitStar:                          ; CODE XREF: Boss_WolfGa
                 move.b  #4,$20(a0)
                 move.w  #$8C40,2(a0)
                 bsr.w   Boss_WolfGaropaCalculateOrbEmitterPosition
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a2,d0.w),d1
                 move.w  (a2,d0.w),d2
@@ -50,11 +50,11 @@ Boss_WolfGaropaSpawnOrbitSpark:                         ; CODE XREF: Boss_WolfGa
                 move.b  #4,$20(a0)
                 move.w  #$8C00,2(a0)
                 bsr.w   Boss_WolfGaropaCalculateOrbEmitterPosition
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 subq.w  #4,d0
                 add.w   d0,d3
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #7,d0
                 subq.w  #4,d0
                 add.w   d0,d4

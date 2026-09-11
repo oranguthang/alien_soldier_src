@@ -41,7 +41,7 @@ Boss_ZLeoSpawnOrb:                                      ; CODE XREF: Boss_ZLeoWa
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_ZLeoSpawnOrbReturn
                 move.w  #$C000,$59E(a5)
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 bne.s   Boss_ZLeoFinishOrbVelocitySelection
                 move.w  #$8000,$59E(a5)
 Boss_ZLeoFinishOrbVelocitySelection:                    ; CODE XREF: Boss_ZLeoSpawnOrb+2E   j  ; was: loc_52F68
@@ -79,11 +79,11 @@ Boss_ZLeoFinishOrbVelocitySelection:                    ; CODE XREF: Boss_ZLeoSp
                 add.w   $250(a5),d6
                 move.w  d5,$14(a0)
                 move.w  d6,$10(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   d0,d5
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   d0,d6
@@ -110,7 +110,7 @@ Projectile_ZLeoOrbMain:                                 ; DATA XREF: ROM:Entity_
                 btst    #4,$22(a5)
                 beq.s   Projectile_ZLeoOrbReflectVelocity
 Projectile_ZLeoOrbTrySpawnRemovalPickup:                ; CODE XREF: Projectile_ZLeoOrbMain+4   j  ; was: loc_53070
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_ZLeoOrbRemove
                 jmp     Pickup_SpawnSmallFromCurrentObject
@@ -159,7 +159,7 @@ Projectile_ZLeoOrbNoOpState:                            ; was: nullsub_122
 
 ; Spawn the expanding-orbit laser projectile
 Boss_ZLeoSpawnLaser:                                    ; CODE XREF: Boss_ZLeoBeginAttackSelection+58   p  ; was: sub_530EE
-                move.w  (dword_FFFF08).w,d7
+                move.w  (RandomNumberState).w,d7
                 andi.w  #$100,d7
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_ZLeoSpawnLaserReturn
@@ -282,12 +282,12 @@ Projectile_ZLeoLaserSpawnTrailParticle:                 ; CODE XREF: Projectile_
                 bne.s   Projectile_ZLeoLaserReturn
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 jsr     (Projectile_InitType88).l
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subi.w  #8,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 subi.w  #8,d0
                 add.w   $14(a5),d0
@@ -379,12 +379,12 @@ Projectile_ZLeoSpawnDropProjectile:                     ; CODE XREF: Boss_ZLeoRu
                 move.b  #4,$20(a0)
                 jsr     (Projectile_InitZLeoDropGraphics).l
                 move.w  #$20,$48(a0)                    ; ' '
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$E000,d0
                 ext.l   d0
                 move.l  d0,$56(a3)
                 move.w  #$14C,$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$70,d0                         ; 'p'
                 subi.w  #$38,d0                         ; '8'
                 add.w   (dword_FFA410).w,d0

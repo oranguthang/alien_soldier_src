@@ -8,8 +8,8 @@ Boss_ShellshogunSpawnDefeatDebris:                      ; CODE XREF: Boss_Shells
                 move.l  $1C(a5),$1C(a0)
                 neg.l   $18(a0)
                 neg.l   $1C(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$3F,d0                         ; '?'
                 andi.w  #$3F,d1                         ; '?'
                 subi.w  #$20,d0                         ; ' '

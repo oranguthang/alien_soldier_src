@@ -439,8 +439,8 @@ byte_FF9F80             equ     $FFFF9F80
 word_FF9FC0             equ     $FFFF9FC0
 byte_FF9FF8             equ     $FFFF9FF8
 word_FFA000             equ     $FFFFA000
-byte_FFA005             equ     $FFFFA005
-dword_FFA006            equ     $FFFFA006
+ScoreAddendPrefixByte   equ     $FFFFA005               ; was: byte_FFA005
+ScoreAddendBCD          equ     $FFFFA006               ; was: dword_FFA006
 word_FFA00A             equ     $FFFFA00A
 word_FFA00C             equ     $FFFFA00C
 word_FFA00E             equ     $FFFFA00E
@@ -464,7 +464,7 @@ StageTableIndex         equ     $FFFFA204               ; was: word_FFA204
 word_FFA206             equ     $FFFFA206
 byte_FFA209             equ     $FFFFA209
 dword_FFA20E            equ     $FFFFA20E
-dword_FFA212            equ     $FFFFA212
+ScoreValueBCD           equ     $FFFFA212               ; was: dword_FFA212
 word_FFA216             equ     $FFFFA216
 word_FFA218             equ     $FFFFA218
 WeaponStateIndex        equ     $FFFFA21C               ; was: word_FFA21C
@@ -938,7 +938,7 @@ dword_FFFC00            equ     $FFFFFC00
 dword_FFFF00            equ     $FFFFFF00
 byte_FFFF06             equ     $FFFFFF06
 byte_FFFF07             equ     $FFFFFF07
-dword_FFFF08            equ     $FFFFFF08
+RandomNumberState       equ     $FFFFFF08               ; was: dword_FFFF08
 DifficultyMode          equ     $FFFFFF0E               ; was: word_FFFF0E
 dword_FFFF10            equ     $FFFFFF10
 dword_FFFF14            equ     $FFFFFF14

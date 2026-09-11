@@ -285,7 +285,7 @@ Boss_GustheadWaitForBattleBannerReturn:                 ; CODE XREF: Boss_Gusthe
 Boss_GustheadChoosePatternState:                        ; DATA XREF: ROM:0003F25C   o  ; was: sub_3F4EA
                 cmpi.w  #$3200,(word_FF8200).w
                 bcs.s   Boss_GustheadTriggerFinalPhaseTransition
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 tst.w   d0
                 beq.s   Boss_GustheadChooseOscillationPattern
@@ -514,7 +514,7 @@ Boss_GustheadBrakeOuterJointState:                      ; DATA XREF: ROM:0003F26
                 sub.l   d0,(dword_FF940C).w
                 bne.s   Boss_GustheadBrakeOuterJointReturn
                 addq.w  #2,4(a5)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 beq.s   Boss_GustheadBrakeOuterJointReturn
                 neg.l   (dword_FF9418).w

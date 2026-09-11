@@ -238,7 +238,7 @@ Boss_JetsripperIdleCheckAlternateTransition:            ; CODE XREF: Boss_Jetsri
                                         ; Boss_JetsripperIdleState+1A   j
                 cmpi.w  #$12,(word_FF8234).w
                 bmi.w   Boss_JetsripperUpdateSegmentDisplay
-                btst    #0,(dword_FFFF08+1).w
+                btst    #0,(RandomNumberState+1).w
                 beq.w   Boss_JetsripperUpdateSegmentDisplay
                 cmpi.w  #0,$56(a5)
                 bne.w   Boss_JetsripperUpdateSegmentDisplay
@@ -297,7 +297,7 @@ Boss_JetsripperPatrolCheckAlternateTransition:          ; CODE XREF: Boss_Jetsri
                                         ; Boss_JetsripperPatrolState+1A   j
                 cmpi.w  #$12,(word_FF8234).w
                 bmi.w   Boss_JetsripperUpdateSegmentDisplay
-                btst    #0,(dword_FFFF08+1).w
+                btst    #0,(RandomNumberState+1).w
                 bne.w   Boss_JetsripperUpdateSegmentDisplay
                 cmpi.w  #$100,$56(a5)
                 bne.w   Boss_JetsripperUpdateSegmentDisplay
@@ -368,7 +368,7 @@ Boss_JetsripperUpdateMovement:                          ; CODE XREF: Boss_Jetsri
                                         ; Boss_JetsripperAttackTimer+24   j
                 addi.w  #2,(word_FF8234).w
                 move.w  $56(a5),d0
-                move.b  (dword_FFFF08).w,d1
+                move.b  (RandomNumberState).w,d1
                 andi.w  #$F,d1
                 addi.w  #$18,d1
                 tst.w   $4C(a5)

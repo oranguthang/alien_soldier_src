@@ -415,7 +415,7 @@ Boss_ZLeoSpawnDefeatEffect:                             ; CODE XREF: Boss_ZLeoBe
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Boss_ZLeoSpawnDefeatEffectReturn
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_ZLeoInitDefeatParticle
                 jsr     (Effect_InitDebrisSprite).l
@@ -423,21 +423,21 @@ Boss_ZLeoSpawnDefeatEffect:                             ; CODE XREF: Boss_ZLeoBe
 ; ---------------------------------------------------------------------------
 Boss_ZLeoInitDefeatParticle:                            ; CODE XREF: Boss_ZLeoSpawnDefeatEffect+16   j  ; was: loc_529F0
                 jsr     (Sprite_InitType160).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a0)
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$FFFE,$1C(a0)
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Boss_ZLeoPositionDefeatEffect
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 clr.w   $1C(a0)
 Boss_ZLeoPositionDefeatEffect:                          ; CODE XREF: Boss_ZLeoSpawnDefeatEffect+1E   j  ; was: loc_52A24
                                         ; Boss_ZLeoSpawnDefeatEffect+48   j
                 move.b  #0,$20(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$7F,d0
                 andi.w  #$7F,d1
                 subi.w  #$40,d0                         ; '@'

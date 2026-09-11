@@ -210,11 +210,11 @@ Boss_ViblackPositionCompanionReturn:                    ; CODE XREF: Boss_Viblac
 ; Sets random target position
 Boss_ViblackSetRandomTarget:                            ; CODE XREF: Boss_ViblackChainAttackWaitState+14   j  ; was: sub_44100
                 move.w  #2,$50(a5)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$740,d0
                 move.w  d0,$52(a5)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$1F,d0
                 addi.w  #$E0,d0
                 move.w  d0,$54(a5)
@@ -226,18 +226,18 @@ Boss_ViblackSpawnNearbyDefeatParticle:                  ; CODE XREF: Boss_Viblac
                 bne.s   Boss_ViblackSpawnNearbyDefeatParticleReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_ViblackSpawnNearbyDefeatParticleReturn
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 addq.w  #8,d0
                 add.w   $14(a5),d0
                 move.w  d0,$14(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_ViblackInitializeNearbyDefeatParticle
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
@@ -255,23 +255,23 @@ Boss_ViblackSpawnNearbyDefeatParticleReturn:            ; CODE XREF: Boss_Viblac
 Boss_ViblackSpawnWideDefeatParticle:                    ; CODE XREF: Boss_ViblackUpdateTransitionEffects   p  ; was: sub_4418E
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_ViblackSpawnWideDefeatParticleReturn
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 subq.w  #8,d0
                 add.w   $14(a5),d0
                 move.w  d0,$14(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
                 move.l  #SharedCombatSpriteAnimation18,8(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_ViblackSelectWideDefeatParticleVelocity
                 move.l  #SharedCombatSpriteAnimation04,8(a0)
 Boss_ViblackSelectWideDefeatParticleVelocity:           ; CODE XREF: Boss_ViblackSpawnWideDefeatParticle+3E   j  ; was: loc_441D6
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #1,d0
                 subq.w  #3,d0
                 move.w  d0,$1C(a0)
@@ -286,7 +286,7 @@ Boss_ViblackSpawnTransitionDebris:                      ; CODE XREF: Boss_Viblac
                 bne.w   Boss_ViblackSpawnTransitionDebrisReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Boss_ViblackSpawnTransitionDebrisReturn
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_ViblackInitializeTransitionParticle
                 jsr     (Effect_InitDebrisSprite).l
@@ -294,24 +294,24 @@ Boss_ViblackSpawnTransitionDebris:                      ; CODE XREF: Boss_Viblac
 ; ---------------------------------------------------------------------------
 Boss_ViblackInitializeTransitionParticle:               ; CODE XREF: Boss_ViblackSpawnTransitionDebris+1A   j  ; was: loc_44212
                 jsr     (Projectile_InitType88).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #3,d0
                 move.l  d0,$18(a0)
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$FFFD,$1C(a0)
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Boss_ViblackPositionTransitionDebris
                 move.l  #SharedCombatSpriteAnimation18,8(a0)
                 clr.w   $1C(a0)
 Boss_ViblackPositionTransitionDebris:                   ; CODE XREF: Boss_ViblackSpawnTransitionDebris+22   j  ; was: loc_44246
                                         ; Boss_ViblackSpawnTransitionDebris+4C   j
-                move.b  (dword_FFFF08+2).w,d0
+                move.b  (RandomNumberState+2).w,d0
                 andi.w  #8,d0
                 addi.w  #$C,d0
                 move.b  d0,$20(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$F,d0
                 andi.w  #7,d1
                 subq.w  #8,d0
@@ -330,11 +330,11 @@ Boss_ViblackSpawnDefeatParticle:                        ; CODE XREF: Boss_Viblac
                 bne.w   Boss_ViblackStateReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.w   Boss_ViblackStateReturn
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 addi.w  #$A0,d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$A0,d0
                 move.w  d0,$14(a0)

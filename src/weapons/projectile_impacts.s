@@ -169,7 +169,7 @@ Effect_UpdateImpactParticleSpawner_SpawnChild:          ; CODE XREF: Effect_Upda
                 jsr     (Sprite_AllocateSlot).l
                 bne.w   Effect_UpdateImpactParticleSpawner_Deactivate
                 lea     (Effect_ParticlePrimarySpriteFrames).l,a1
-                btst    #7,(dword_FFFF08).w
+                btst    #7,(RandomNumberState).w
                 bne.s   Effect_UpdateImpactParticleSpawner_InitChild
                 lea     (Effect_ParticleSecondarySpriteFrames).l,a1
 Effect_UpdateImpactParticleSpawner_InitChild:           ; CODE XREF: Effect_UpdateImpactParticleSpawner+32   j  ; was: loc_18C8C
@@ -265,7 +265,7 @@ Weapon_UpdateSeekingMissile_CheckAlternateSlot:         ; CODE XREF: Weapon_Upda
 Weapon_UpdateSeekingMissile_SelectTargetAngle:          ; CODE XREF: Weapon_UpdateSeekingMissile+54   j  ; was: loc_18DBC
                 move.w  (word_FF801C).w,d0
                 bne.s   Weapon_UpdateSeekingMissile_ComputeTargetAngle
-                move.w  (dword_FFFF08).w,d2
+                move.w  (RandomNumberState).w,d2
                 bra.s   Weapon_UpdateSeekingMissile_AdjustHeading
 ; ---------------------------------------------------------------------------
 Weapon_UpdateSeekingMissile_ComputeTargetAngle:         ; CODE XREF: Weapon_UpdateSeekingMissile+62   j  ; was: loc_18DC8
@@ -281,7 +281,7 @@ Weapon_UpdateSeekingMissile_ComputeTargetAngle:         ; CODE XREF: Weapon_Upda
                 move.b  (dword_FF8040).w,d2
 Weapon_UpdateSeekingMissile_AdjustHeading:              ; CODE XREF: Weapon_UpdateSeekingMissile+68   j  ; was: loc_18DEE
                 andi.w  #$7C,d2                         ; '|'
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #6,d0
                 addq.w  #6,d0
                 sub.w   $56(a5),d2
@@ -414,14 +414,14 @@ Effect_SpawnExplosion:                                  ; CODE XREF: Weapon_Hand
                 lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.w  #$8C80,2(a0)
-                move.b  (dword_FFFF08).w,d3
-                move.b  (dword_FFFF08+1).w,d4
+                move.b  (RandomNumberState).w,d3
+                move.b  (RandomNumberState+1).w,d4
                 andi.w  #1,d3
                 andi.w  #1,d4
                 addq.w  #3,d3
                 addq.w  #3,d4
                 movea.l #Math_SineTable,a1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
                 move.w  (a1,d0.w),d2
@@ -504,14 +504,14 @@ Effect_CreateExplosionDebris:                           ; CODE XREF: Weapon_Upda
                 lea     (Effect_StarParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 move.w  #$8C80,2(a0)
-                move.b  (dword_FFFF08).w,d3
-                move.b  (dword_FFFF08+1).w,d4
+                move.b  (RandomNumberState).w,d3
+                move.b  (RandomNumberState+1).w,d4
                 andi.w  #1,d3
                 andi.w  #1,d4
                 addq.w  #2,d3
                 addq.w  #2,d4
                 movea.l #Math_SineTable,a1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
                 move.w  (a1,d0.w),d2
@@ -547,7 +547,7 @@ Effect_SpawnPlayerDeathSpark_Initialize:                ; CODE XREF: Effect_Spaw
                 move.l  #SharedCombatSpriteAnimation01,8(a0)
                 clr.w   $C(a0)
                 lea     (Math_SineTable).l,a1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
                 move.w  (word_FFA000).w,d0

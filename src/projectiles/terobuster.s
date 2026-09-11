@@ -148,7 +148,7 @@ Boss_TerobusterSpawnMultiDirectional:                   ; CODE XREF: Boss_Terobu
                 bne.s   Boss_TerobusterSpawnMultiDirectionalReturn
                 move.w  #1,$1C(a0)
                 moveq   #0,d0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 asl.l   #1,d0
                 addi.l  #$28000,d0
                 move.l  d0,$18(a0)
@@ -171,10 +171,10 @@ Boss_TerobusterSpawnFallingRock:                        ; CODE XREF: Boss_Terobu
                 bne.s   Boss_TerobusterSpawnFallingRockReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_TerobusterSpawnFallingRockReturn
-                move.b  (dword_FFFF08).w,d1
+                move.b  (RandomNumberState).w,d1
                 andi.w  #7,d1
                 subi.w  #4,d1
-                move.b  (dword_FFFF08+1).w,d2
+                move.b  (RandomNumberState+1).w,d2
                 andi.w  #7,d2
                 subi.w  #4,d2
                 add.w   2(a4),d1

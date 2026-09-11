@@ -244,12 +244,12 @@ Boss_ShellshogunInitializeDefeatLaunch:                 ; CODE XREF: Boss_Shells
                 move.l  #$FFFBA000,$1C(a5)
                 move.w  #4,(word_FFA010).w
                 move.w  #4,(word_FFA014).w
-                move.w  (dword_FFFF08).w,$1A(a5)
+                move.w  (RandomNumberState).w,$1A(a5)
                 cmpi.w  #$12A8,$17E(a5)
                 bmi.s   Boss_ShellshogunSetPositiveDefeatVelocity
                 cmpi.w  #$1328,$17E(a5)
                 bpl.s   Boss_ShellshogunSetNegativeDefeatVelocity
-                btst    #3,(dword_FFFF08+1).w
+                btst    #3,(RandomNumberState+1).w
                 bne.s   Boss_ShellshogunSetNegativeDefeatVelocity
 Boss_ShellshogunSetPositiveDefeatVelocity:              ; CODE XREF: Boss_ShellshogunDefeatLaunchState+86   j  ; was: loc_3985C
                 move.w  #2,$18(a5)
@@ -335,7 +335,7 @@ Boss_ShellshogunSelectAttackByDistance:                 ; CODE XREF: Boss_Shells
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$D0,d0
                 bpl.s   Boss_ShellshogunSelectLongRangeAttack
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 beq.s   Boss_ShellshogunBeginPoseGateState
                 btst    #1,d0
@@ -345,7 +345,7 @@ Boss_ShellshogunSelectAttackByDistance:                 ; CODE XREF: Boss_Shells
                 bra.w   Boss_ShellshogunInitLeapAttack
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunSelectLongRangeAttack:                  ; CODE XREF: Boss_ShellshogunDecisionState+36   j  ; was: loc_39954
-                btst    #3,(dword_FFFF08).w
+                btst    #3,(RandomNumberState).w
                 bne.w   Boss_ShellshogunInitDirectionalAttack
 Boss_ShellshogunBeginPoseGateState:                     ; CODE XREF: Boss_ShellshogunDecisionState+40   j  ; was: loc_3995E
                 move.w  #$C,4(a5)
@@ -670,7 +670,7 @@ Boss_ShellshogunLeapFlightState:                        ; DATA XREF: ROM:0003954
                 move.w  #3,(word_FFA014).w
                 subi.w  #$7D,(word_FF8234).w            ; '}'
                 moveq   #0,d0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 asl.l   #1,d0
                 addi.l  #$13000,d0
                 move.l  d0,$18(a5)

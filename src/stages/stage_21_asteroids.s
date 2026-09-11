@@ -40,7 +40,7 @@ Stage21_AsteroidFieldInit:                              ; DATA XREF: ROM:Stage21
                 move.w  #$8480,$E(a5)
                 move.w  #$1B0,$10(a5)
                 move.w  #$170,$14(a5)
-                move.w  (dword_FFFF08).w,$5C(a5)
+                move.w  (RandomNumberState).w,$5C(a5)
                 andi.w  #3,$5C(a5)
                 rts
 ; End of function Stage21_AsteroidFieldInit
@@ -120,7 +120,7 @@ Stage21_AsteroidFieldAdvanceSpawnPoint:                 ; DATA XREF: ROM:000330F
                 andi.w  #3,d0
                 lsl.w   #4,d0
                 lea     (a1,d0.w),a1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 add.w   d0,d0
                 add.w   d0,d0
@@ -243,7 +243,7 @@ Stage21_AsteroidSpawnDestructionResult:                 ; CODE XREF: Stage21_Ast
 Stage21_AsteroidUseDenseRewardMask:                     ; CODE XREF: Stage21_AsteroidSpawnDestructionResult+1C   j  ; was: loc_33426
                 move.w  #$F,d1
 Stage21_AsteroidChooseDestructionResult:                ; CODE XREF: Stage21_AsteroidSpawnDestructionResult+22   j  ; was: loc_3342A
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 and.w   d1,d0
                 beq.s   Stage21_AsteroidSpawnDebris
                 btst    #0,$5E(a5)
@@ -328,7 +328,7 @@ Stage21_AsteroidFieldSpawnAmbientRock:                  ; CODE XREF: Stage21_Ast
                 clr.b   $21(a0)
                 move.b  #$60,$20(a0)                    ; '`'
                 bset    #0,$5F(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #3,d0
                 add.w   d0,d0
                 add.w   d0,d0

@@ -103,7 +103,7 @@ Effect_SpawnParticle:                                   ; CODE XREF: Player_Hand
                                         ; Player_CeilingIdleState+16   p
                 btst    #4,$69(a5)
                 bne.w   Effect_SpawnParticle_Return
-                move.w  (dword_FFFF08+2).w,d0
+                move.w  (RandomNumberState+2).w,d0
                 andi.w  #$E000,d0
                 bne.w   Effect_SpawnParticle_Return
                 bsr.w   Sprite_AllocateSlot
@@ -111,16 +111,16 @@ Effect_SpawnParticle:                                   ; CODE XREF: Player_Hand
                 lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 lea     (Math_SineTable).l,a1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
                 move.w  (a1,d0.w),d2
                 ext.l   d1
                 ext.l   d2
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 asl.l   d0,d1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 asr.w   #1,d0
                 andi.w  #3,d0
                 asl.l   d0,d2
@@ -129,7 +129,7 @@ Effect_SpawnParticle:                                   ; CODE XREF: Player_Hand
                 movem.l a0,-(sp)
                 jsr     (RandomNumber).l
                 movem.l (sp)+,a0
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 add.w   $10(a5),d0
@@ -139,7 +139,7 @@ Effect_SpawnParticle:                                   ; CODE XREF: Player_Hand
                 beq.s   Effect_SpawnParticle_SetPosition
                 moveq   #$10,d1
 Effect_SpawnParticle_SetPosition:                       ; CODE XREF: Effect_SpawnParticle+8C   j  ; was: loc_175A4
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$1F,d0
                 sub.w   d1,d0
                 add.w   $14(a5),d0
@@ -170,7 +170,7 @@ Player_SpawnPhoenixParticles_Allocate:                  ; CODE XREF: Player_Spaw
                 lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
                 lea     (Math_SineTable).l,a1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1FE,d0
                 move.w  -$80(a1,d0.w),d1
                 move.w  (a1,d0.w),d2
@@ -368,7 +368,7 @@ Effect_SetDashTrailProperties:                          ; CODE XREF: Effect_Crea
                 move.b  $20(a5),$20(a0)
                 subq.b  #4,$20(a0)
                 move.w  $10(a5),$10(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 add.w   $14(a5),d0

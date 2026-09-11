@@ -285,7 +285,7 @@ Boss_JokerSpawnDefeatEffect:                            ; CODE XREF: Boss_JokerD
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Boss_JokerSpawnDefeatEffectReturn
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 bne.s   Boss_JokerInitializeType160DefeatEffect
                 jsr     (Effect_InitDebrisSprite).l
@@ -294,21 +294,21 @@ Boss_JokerSpawnDefeatEffect:                            ; CODE XREF: Boss_JokerD
 Boss_JokerInitializeType160DefeatEffect:                ; CODE XREF: Boss_JokerSpawnDefeatEffect+16   j  ; was: loc_3B624
                 jsr     (Sprite_InitType160).l
                 bset    #7,3(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 asl.l   #2,d0
                 move.l  d0,$18(a0)
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
                 move.w  #$FFFE,$1C(a0)
-                btst    #0,(dword_FFFF08).w
+                btst    #0,(RandomNumberState).w
                 beq.s   Boss_JokerPositionDefeatEffect
                 move.l  #SharedCombatSpriteAnimation06,8(a0)
                 clr.w   $1C(a0)
 Boss_JokerPositionDefeatEffect:                         ; CODE XREF: Boss_JokerSpawnDefeatEffect+1E   j  ; was: loc_3B65E
                                         ; Boss_JokerSpawnDefeatEffect+4E   j
                 move.b  #0,$20(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$3F,d0                         ; '?'
                 andi.w  #$3F,d1                         ; '?'
                 subi.w  #$20,d0                         ; ' '
@@ -344,13 +344,13 @@ Boss_JokerSelectNextState:                              ; CODE XREF: Boss_JokerP
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$6A,d0                         ; 'j'
                 bpl.s   Boss_JokerSelectDistantPlayerState
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.w   Boss_JokerBeginDiveState
                 bra.w   Boss_JokerBeginJumpSequence
 ; ---------------------------------------------------------------------------
 Boss_JokerSelectDistantPlayerState:                     ; CODE XREF: Boss_JokerSelectNextState+3C   j  ; was: loc_3B6E8
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 beq.w   Boss_JokerBeginJumpSequence
                 bra.w   Boss_JokerBeginDiveState
@@ -414,7 +414,7 @@ Boss_JokerSelectDiveHorizontalMotion:                   ; CODE XREF: Boss_JokerD
 Boss_JokerSetPlayerDirectedDiveMotion:                  ; CODE XREF: Boss_JokerDivePrep+60   j  ; was: loc_3B7B4
                 jsr     (Physics_GetPlayerDelta).l
                 move.l  #$10000,d0
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 tst.w   d1
                 bpl.s   Boss_JokerStoreDiveHorizontalVelocity
                 neg.l   d0

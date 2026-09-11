@@ -127,7 +127,7 @@ Boss_CaterpillarHomingProjectileSegment:                ; DATA XREF: ROM:Entity_
                 move.l  #Boss_CaterpillarHomingProjectileSegmentMapping,8(a5)
                 move.w  #$43,$24(a5)                    ; 'C'
                 jsr     (RandomNumber).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 move.w  d0,$48(a5)
                 move.w  #3,$4A(a5)
@@ -159,7 +159,7 @@ Boss_CaterpillarTryHomingProjectileVolley:              ; CODE XREF: Boss_Caterp
                 move.w  #4,$4C(a5)
                 subq.w  #1,$4A(a5)
                 bpl.s   Boss_CaterpillarSpawnHomingProjectile
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$20,d0                         ; ' '
                 move.w  d0,$48(a5)
@@ -201,7 +201,7 @@ Boss_CaterpillarFourPhaseSegment:                       ; DATA XREF: ROM:Entity_
                 move.l  #$F010F010,$28(a5)
                 move.w  #$58,$24(a5)                    ; 'X'
                 jsr     (RandomNumber).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 move.w  d0,$48(a5)
                 move.w  #8,$4A(a5)
@@ -248,7 +248,7 @@ Boss_CaterpillarTwoPhaseSegment:                        ; DATA XREF: ROM:Entity_
                 move.l  #$F010F010,$28(a5)
                 move.w  #$6E,$24(a5)                    ; 'n'
                 jsr     (RandomNumber).l
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 move.w  d0,$48(a5)
                 move.w  #8,$4A(a5)

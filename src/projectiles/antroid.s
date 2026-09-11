@@ -26,14 +26,14 @@ Boss_AntroidSpawnWaitProjectile:                        ; CODE XREF: Boss_Antroi
                 move.w  #$20,d1                         ; ' '
                 sub.w   $11C(a5),d1
                 addq.w  #2,d1
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 add.w   d1,d0
                 swap    d0
                 asr.l   #2,d0
                 move.l  d0,$18(a0)
                 moveq   #0,d0
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #3,d0
                 swap    d0
                 neg.l   d0

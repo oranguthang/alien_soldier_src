@@ -128,7 +128,7 @@ Gfx_ShieldViperPatternEffectMain:                       ; DATA XREF: ROM:Entity_
                 bra.s   Gfx_ShieldViperStorePatternPaletteColor
 ; ---------------------------------------------------------------------------
 Gfx_ShieldViperSelectRandomPatternColor:                ; CODE XREF: Gfx_ShieldViperPatternEffectMain+18   j  ; was: loc_4F736
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$EEE,d0
 Gfx_ShieldViperStorePatternPaletteColor:                ; CODE XREF: Gfx_ShieldViperPatternEffectMain+28   j  ; was: loc_4F73E
                 move.w  d0,(word_FFE310).w

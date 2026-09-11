@@ -57,7 +57,7 @@ Enemy_MainStateMachine_StartMove:                       ; CODE XREF: Enemy_MainS
                 bne.w   Enemy_MainStateMachine_SelectMovement
                 move.w  #2,4(a5)
                 move.w  #4,$5C(a5)
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 andi.w  #$3F,d1                         ; '?'
                 addi.w  #8,d1
                 move.w  d1,$48(a5)
@@ -94,7 +94,7 @@ Enemy_MainStateMachine_BeginMovement:                   ; CODE XREF: Enemy_MainS
                                         ; Enemy_MainStateMachine+7C   j
                 move.w  #4,4(a5)
                 move.w  #8,$5C(a5)
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 andi.w  #$7F,d1
                 addi.w  #$80,d1
                 move.w  d1,$48(a5)

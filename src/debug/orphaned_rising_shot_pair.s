@@ -49,7 +49,7 @@ Orphaned_RisingShotPairHandleAllocationFailure:         ; CODE XREF: Orphaned_Ri
 ; End of function Orphaned_RisingShotPairAllocate
 ; Launches the pair from a random table-selected X coordinate
 Orphaned_RisingShotPairLaunch:                          ; DATA XREF: ROM:000337F6   o  ; was: sub_33852
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 add.w   d0,d0
                 move.w  Orphaned_RisingShotPairXPositions(pc,d0.w),d0
@@ -102,7 +102,7 @@ Orphaned_RisingShotPairFireFallingShot:                 ; CODE XREF: Orphaned_Ri
                 bne.s   Orphaned_RisingShotPairFallingShotReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Orphaned_RisingShotPairFallingShotReturn
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 addi.w  #$120,d0
@@ -121,7 +121,7 @@ Orphaned_RisingShotPairFireMissirayShot:                ; CODE XREF: Orphaned_Ri
                 bne.s   Orphaned_RisingShotPairMissirayShotReturn
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Orphaned_RisingShotPairMissirayShotReturn
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 addi.w  #$120,d0

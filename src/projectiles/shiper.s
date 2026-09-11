@@ -30,7 +30,7 @@ Boss_ShiperSpawnOscillatingShotInitialize:              ; CODE XREF: Boss_Shiper
                 addi.w  #-8,$10(a0)
                 move.w  $14(a1),$14(a0)
                 addi.w  #-$24,$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 addi.w  #$60,d0                         ; '`'
                 move.w  d0,$48(a0)
@@ -77,13 +77,13 @@ Projectile_ShiperOscillatingShotSteer:                  ; CODE XREF: Projectile_
                 move.w  #$F4FA,$A(a5)
 Projectile_ShiperOscillatingShotChooseVelocity:         ; CODE XREF: Projectile_ShiperOscillatingShot+6A   j  ; was: loc_372F4
                 jsr     (RandomNumber).l
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 andi.w  #$1FFF,d1
                 addi.w  #$1000,d1
                 ext.l   d1
                 move.w  $4A(a5),d3
                 andi.w  #$7F,d3
-                move.w  (dword_FFFF08).w,d2
+                move.w  (RandomNumberState).w,d2
                 andi.w  #$3F,d2                         ; '?'
                 add.w   d3,d2
                 add.w   (dword_FFC634).w,d2
@@ -144,7 +144,7 @@ Boss_ShiperSpawnCircleShotNext:                         ; CODE XREF: Boss_Shiper
                 move.w  Boss_ShiperCircleShotObjectParameters+6(pc,d5.w),$26(a0)
                 addq.w  #8,d5
                 lea     (Math_SineTable).l,a1
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3E,d0                         ; '>'
                 subi.w  #$20,d0                         ; ' '
                 addi.w  #$160,d0

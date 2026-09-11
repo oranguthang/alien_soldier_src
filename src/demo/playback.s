@@ -4,7 +4,7 @@ Demo_PlaybackSystem:                                    ; CODE XREF: Sys_Dispatc
                 move.w  #0,(word_FFFF56).w
                 tst.w   (word_FFFF5C).w
                 bne.w   Demo_PlaybackSystem_Update
-                move.l  #$8522BD7A,(dword_FFFF08).w
+                move.l  #$8522BD7A,(RandomNumberState).w
                 clr.w   (word_FFA280).w
                 clr.w   (word_FFA000).w
                 move.w  (DifficultyMode).w,(word_FFFF5E).w

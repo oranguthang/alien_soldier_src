@@ -262,7 +262,7 @@ Results_ApplyRemainingTimeBonus:                        ; DATA XREF: ROM:0000A9E
                 clr.w   (MessageSequenceState).w
                 moveq   #0,d0
                 move.w  (StageTimeRemaining).w,d0
-                jsr     (UI_AddScoreBCD).l
+                jsr     (Score_AddPackedBCD).l
 Results_ApplyRemainingTimeBonusReturn:                  ; CODE XREF: Results_ApplyRemainingTimeBonus+8   j  ; was: locret_B1A6
                 rts
 ; End of function Results_ApplyRemainingTimeBonus

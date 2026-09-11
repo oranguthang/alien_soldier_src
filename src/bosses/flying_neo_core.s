@@ -360,8 +360,8 @@ Boss_FlyingNeoDefeatParticleRainState:                  ; DATA XREF: ROM:0003C0B
                 move.l  #$FFFF1000,$1C(a0)
                 jsr     (Projectile_InitType88).l
                 clr.b   $20(a0)
-                move.b  (dword_FFFF08).w,d0
-                move.b  (dword_FFFF08+1).w,d1
+                move.b  (RandomNumberState).w,d0
+                move.b  (RandomNumberState+1).w,d1
                 andi.w  #$3F,d0                         ; '?'
                 andi.w  #$1F,d1
                 subi.w  #$20,d0                         ; ' '
@@ -446,7 +446,7 @@ Boss_FlyingNeoBeginPursuitState:                        ; CODE XREF: Boss_Flying
                 move.w  #$1A,4(a5)
                 clr.w   $17E(a5)
                 clr.w   $1DC(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3FF,d0
                 addi.w  #$40,d0                         ; '@'
                 move.w  d0,$1DE(a5)
@@ -476,8 +476,8 @@ Boss_FlyingNeoUpdatePursuitPose:                        ; CODE XREF: Boss_Flying
 ; End of function Boss_FlyingNeoPursuitState
 ; Accelerates toward the player or runs the active short reversal
 Boss_FlyingNeoUpdatePursuitHorizontalMotion:            ; CODE XREF: Boss_FlyingNeoPursuitState+10   p  ; was: sub_3C5BC
-                move.b  (dword_FFFF08+1).w,d5
-                move.b  (dword_FFFF08).w,d6
+                move.b  (RandomNumberState+1).w,d5
+                move.b  (RandomNumberState).w,d6
                 move.w  (word_FFA000).w,d7
                 asr.w   #2,d7
                 andi.w  #$40,d7                         ; '@'
@@ -556,7 +556,7 @@ Boss_FlyingNeoUpdateVerticalOscillation:                ; CODE XREF: Boss_Flying
                                         ; Boss_FlyingNeoPursuitState+8   p
                 move.w  $14(a5),d7
                 move.l  $1C(a5),d6
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 tst.w   $17E(a5)
                 bne.w   Boss_FlyingNeoSelectDownwardOscillation
 Boss_FlyingNeoSelectUpwardOscillation:                  ; CODE XREF: Boss_FlyingNeoUpdateVerticalOscillation+48   j  ; was: loc_3C69C
@@ -637,7 +637,7 @@ Boss_FlyingNeoBeginHoverDecisionState:                  ; CODE XREF: Boss_Flying
                 clr.l   $1C(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$20,d0                         ; ' '
                 move.w  d0,$1DE(a5)

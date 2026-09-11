@@ -497,7 +497,7 @@ Projectile_BackStringerSpawnNextFallingDrop:            ; CODE XREF: Projectile_
                 move.l  #$F404FC04,$28(a0)
                 move.w  #2,$24(a0)
                 move.w  #$14F,$14(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 subi.w  #$80,d0
                 addi.w  #$120,d0

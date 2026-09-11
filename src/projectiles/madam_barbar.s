@@ -52,12 +52,12 @@ Projectile_MadamBarbarDebrisUpdateHorizontalMotionTimer:  ; CODE XREF: Projectil
                 bmi.s   Projectile_MadamBarbarDebrisRestartHorizontalMotion
                 cmpi.w  #$FFE0,$48(a5)
                 bpl.s   Projectile_MadamBarbarDebrisHorizontalTimerReturn
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Projectile_MadamBarbarDebrisHorizontalTimerReturn
 Projectile_MadamBarbarDebrisRestartHorizontalMotion:    ; CODE XREF: Projectile_MadamBarbarDebris+AA   j  ; was: loc_3AEF4
                 move.l  $4C(a5),$18(a5)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 addq.w  #8,d0
                 move.w  d0,$48(a5)
@@ -171,12 +171,12 @@ Boss_MadamBarbarSpawnAnimationEffect:                   ; CODE XREF: Boss_MadamB
                 move.w  #$8100,2(a0)
                 move.b  #$20,$20(a0)                    ; ' '
 Boss_MadamBarbarPositionSpawnedObject:                  ; CODE XREF: Boss_MadamBarbarSpawnDropProjectile+54   j  ; was: loc_3B03E
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 add.w   $10(a5),d0
                 move.w  d0,$10(a0)
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.w  #$F,d0
                 addi.w  #8,d0
                 add.w   $14(a5),d0
@@ -202,7 +202,7 @@ Boss_MadamBarbarSpawnDropProjectile:                    ; CODE XREF: Boss_MadamB
                 move.b  #4,$20(a0)
                 move.w  #$F,$48(a0)
                 move.w  #2,$4A(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 ext.l   d0
                 move.l  d0,$18(a0)
                 bra.w   Boss_MadamBarbarPositionSpawnedObject
@@ -251,7 +251,7 @@ Projectile_MadamBarbarDropMotionReturn:                 ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_MadamBarbarDropHandleFinalTerrainContact:    ; CODE XREF: Projectile_MadamBarbarDropUpdate+64   j  ; was: loc_3B136
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 bne.s   Projectile_MadamBarbarDropConvertToExplosion
                 jsr     (Projectile_FindFreeSlot).l

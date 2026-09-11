@@ -132,13 +132,13 @@ Boss_AntroidJumpSlamCheckAlternateScreenBound:          ; CODE XREF: Boss_Antroi
                 cmpi.w  #$C48,$BC(a5)
                 bmi.s   Boss_AntroidJumpSlamBeginDeceleration
 Boss_AntroidJumpSlamChooseFollowup:                     ; CODE XREF: Boss_AntroidJumpSlamAttack+90   j  ; was: loc_37B2E
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$380,d0
                 beq.s   Boss_AntroidJumpSlamBeginDeceleration
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$88,d0
                 bmi.w   Boss_AntroidJumpSlamBeginRetryWait
-                move.b  (dword_FFFF08+2).w,d0
+                move.b  (RandomNumberState+2).w,d0
                 andi.w  #$2A00,d0
                 beq.w   Boss_AntroidJumpSlamBeginRetryWait
 Boss_AntroidJumpSlamBeginDeceleration:                  ; CODE XREF: Boss_AntroidJumpSlamAttack+80   j  ; was: loc_37B52

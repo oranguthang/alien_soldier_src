@@ -116,7 +116,7 @@ stru_1DDC2:     dc.w    7                               ; field_0
 ; Renders all statistics on results screen
 Results_RenderAllStats:                                 ; CODE XREF: Results_InitializeDisplay   p  ; was: sub_1DDCC
                                         ; Results_InitializeScreen+78   p
-                move.l  (dword_FFA212).w,d0
+                move.l  (ScoreValueBCD).w,d0
                 cmp.l   (dword_FFFF2C).w,d0
                 bmi.s   loc_1DDE0
                 move.l  d0,(dword_FFFF2C).w
@@ -182,7 +182,7 @@ loc_1DEC6:                                              ; CODE XREF: Results_Dis
 ; Display score value
 Results_DisplayScore:                                   ; CODE XREF: Results_UpdateAndDisplay+E   p  ; was: sub_1DECC
                                         ; Results_HandleCompletion+E   p
-                move.l  (dword_FFA212).w,d0
+                move.l  (ScoreValueBCD).w,d0
                 move.w  #$C302,d1
                 move.w  #$53AA,d4
                 moveq   #8,d7

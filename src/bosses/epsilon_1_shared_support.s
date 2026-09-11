@@ -55,10 +55,10 @@ Boss_Epsilon1UpdateBattleCenterMotion:                  ; CODE XREF: Boss_Epsilo
                 bcs.s   Boss_Epsilon1SelectPositiveVerticalStep
                 cmpi.w  #$E0,(dword_FFC694).w
                 bhi.s   Boss_Epsilon1SelectNegativeVerticalStep
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 bne.s   Boss_Epsilon1ApplyBattleCenterVerticalStep
-                move.b  (dword_FFFF08+1).w,d0
+                move.b  (RandomNumberState+1).w,d0
                 andi.b  #1,d0
                 beq.s   Boss_Epsilon1SelectNegativeVerticalStep
 Boss_Epsilon1SelectPositiveVerticalStep:                ; CODE XREF: Boss_Epsilon1UpdateBattleCenterMotion+6   j  ; was: loc_47856

@@ -28,10 +28,10 @@ Boss_ViblackAllocateChainObjectLoop:                    ; CODE XREF: Boss_Viblac
                 move.w  #$2E,$24(a0)                    ; '.'
                 move.w  #$80,$40(a0)
                 move.w  #$10,$44(a0)
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #2,d0
                 move.w  d0,$42(a0)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$7E,d0                         ; '~'
                 addi.w  #$140,d0
                 move.w  d0,6(a0)

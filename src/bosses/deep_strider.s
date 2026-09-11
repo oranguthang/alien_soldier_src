@@ -228,11 +228,11 @@ Boss_DeepStriderCountDownBattleEntryPause:              ; CODE XREF: Boss_DeepSt
 ; ---------------------------------------------------------------------------
 Boss_DeepStriderRandomizeNextBattleEntryPose:           ; CODE XREF: Boss_DeepStriderBattleEntryPoseState+46   j  ; was: loc_3E872
                                         ; Boss_DeepStriderBattleEntryPoseState+4C   j
-                move.b  (dword_FFFF08).w,d0
+                move.b  (RandomNumberState).w,d0
                 andi.w  #$F,d0
                 addq.w  #6,d0
                 move.w  d0,$11C(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 move.w  d0,$11E(a5)
                 eori.w  #1,$17C(a5)
@@ -303,7 +303,7 @@ Boss_DeepStriderBeginBattleDecisionState:               ; CODE XREF: Boss_DeepSt
                 bra.s   Boss_DeepStriderBattleDecisionState
 ; ---------------------------------------------------------------------------
 Boss_DeepStriderRandomizeBattleDecisionDelay:           ; CODE XREF: Boss_DeepStriderBeginBattleCycle+EC   j  ; was: loc_3E98C
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addq.w  #4,d0
                 move.w  d0,$11C(a5)
@@ -324,7 +324,7 @@ Boss_DeepStriderBattleDecisionState:                    ; CODE XREF: Boss_DeepSt
                 beq.w   Boss_DeepStriderTestDiveRandomSelection
                 moveq   #1,d0
 Boss_DeepStriderTestDiveRandomSelection:                ; CODE XREF: Boss_DeepStriderBeginBattleCycle+134   j  ; was: loc_3E9D0
-                move.w  (dword_FFFF08).w,d1
+                move.w  (RandomNumberState).w,d1
                 and.w   d0,d1
                 beq.s   Boss_DeepStriderBeginHoverAndShoot
                 bra.w   Boss_DeepStriderBeginDiveAttack
@@ -579,12 +579,12 @@ Boss_DeepStriderSpawnDefeatDebris:                      ; CODE XREF: Boss_DeepSt
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
                 jsr     (Sprite_InitType160).l
                 move.l  #SharedCombatSpriteAnimation00,8(a0)
-                move.b  (dword_FFFF08).w,d1
+                move.b  (RandomNumberState).w,d1
                 andi.w  #3,d1
                 bne.s   Boss_DeepStriderApplyDefeatDebrisMotion
                 move.l  #SharedCombatSpriteAnimation05,8(a0)
 Boss_DeepStriderApplyDefeatDebrisMotion:                ; CODE XREF: Boss_DeepStriderSpawnDefeatDebris+32   j  ; was: loc_3ED62
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$1F,d0
                 subi.w  #$10,d0
                 move.w  $4F0(a5),$10(a0)
@@ -843,7 +843,7 @@ Boss_DeepStriderFireAngleProjectile:                    ; CODE XREF: Boss_DeepSt
                 move.b  #$40,$21(a0)                    ; '@'
                 move.w  #$50,$26(a0)                    ; 'P'
                 move.l  #$FF01FF01,$2C(a0)
-                move.w  (dword_FFFF08).w,d3
+                move.w  (RandomNumberState).w,d3
                 ext.l   d3
                 asl.l   #2,d3
                 lea     (Math_SineTable).l,a1

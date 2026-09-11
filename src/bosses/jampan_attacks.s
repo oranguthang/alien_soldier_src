@@ -508,7 +508,7 @@ Boss_JampanInitializePostDefeatMovementState:           ; DATA XREF: ROM:0004923
                 bsr.w   Boss_JampanAdjustOrbitParametersFromInput
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 addq.w  #2,4(a5)
-                move.w  (dword_FFFF08).w,d0
+                move.w  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 addi.w  #$40,d0                         ; '@'
                 move.w  d0,$48(a5)
