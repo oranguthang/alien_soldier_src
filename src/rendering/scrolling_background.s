@@ -16,7 +16,7 @@ Scroll_Stage21CameraOffset:
 ; End of function Scroll_Stage21CameraOffset
 ; Renders multi-layer Sylpheed stage background using tile lookups
 Gfx_RenderSylpheedBackground:                           ; CODE XREF: Stage_Stage17Transition+24   p  ; was: sub_109CE
-                                        ; Scroll_RenderSylpheedWithUpdate+4   j
+                                        ; Scroll_UpdateAndRenderSylpheedBackdrop+4   j
                 move.w  (dword_FFA900).w,d0
                 subi.w  #$60,d0                         ; '`'
                 move.w  (dword_FFA904).w,d1

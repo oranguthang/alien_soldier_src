@@ -795,7 +795,7 @@ StageTransition_InitializeZLeoApproach:                 ; DATA XREF: ROM:0000F17
                 move.w  #$20,(dword_FFA90C).w           ; ' '
 ; Updates the Z-Leo approach until the stage position reaches $480
 StageTransition_UpdateZLeoApproach:                     ; DATA XREF: ROM:0000F174   o  ; was: loc_FA94
-                bsr.w   Gfx_UpdateScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
                 bsr.w   StageTransition_UpdateZLeoDerivedScroll
                 cmpi.w  #$480,(dword_FFA900).w
                 bmi.w   StageTransition_SharedReturn
@@ -803,7 +803,7 @@ StageTransition_UpdateZLeoApproach:                     ; DATA XREF: ROM:0000F17
 ; End of function StageTransition_InitializeZLeoApproach
 ; Loads the Z-Leo assets after the stage position reaches $500
 StageTransition_LoadZLeoAssets:                         ; DATA XREF: ROM:0000F176   o  ; was: sub_FAAA
-                bsr.w   Gfx_LoadBossTiles
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 bsr.w   StageTransition_UpdateZLeoDerivedScroll
                 cmpi.w  #$500,(dword_FFA900).w
                 bmi.w   StageTransition_SharedReturn
@@ -832,7 +832,7 @@ StageTransition_UpdateZLeoCamera:                       ; DATA XREF: ROM:0000F17
 ; Unreferenced section-change and camera update entry
 UnreferencedInitializeSectionAndZLeoCamera:
                 bsr.w   Stage_InitSectionChange         ; was: sub_FAF0
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function UnreferencedInitializeSectionAndZLeoCamera
 ; Derives the Z-Leo transition's secondary scroll value from the stage position
 StageTransition_UpdateZLeoDerivedScroll:                ; CODE XREF: StageTransition_InitializeZLeoApproach+E   p  ; was: sub_FAF8
@@ -856,7 +856,7 @@ UnreferencedAdvanceTransitionAndSetVerticalScroll:
 ; End of function UnreferencedAdvanceTransitionAndSetVerticalScroll
 ; Runs the standard scroll update for transition-table state $8C
 StageTransition_UpdateStandardScroll:                   ; DATA XREF: ROM:0000F188   o  ; was: sub_FB1E
-                bsr.w   Gfx_UpdateScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
                 rts
 ; End of function StageTransition_UpdateStandardScroll
 ; Renders the asteroid field after updating its scroll state

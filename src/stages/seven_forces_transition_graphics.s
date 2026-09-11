@@ -14,7 +14,7 @@ Cutscene_SevenForcesUpdateClosingOffsets:               ; CODE XREF: Cutscene_Se
                 addq.w  #8,(word_FFA970).w
                 subq.w  #8,(word_FFA974).w
 Cutscene_SevenForcesUpdateCamera:                       ; CODE XREF: Cutscene_SevenForcesVictoryState0+1A   j  ; was: loc_EA9E
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 rts
 ; End of function Cutscene_SevenForcesVictoryState0
 ; Cutscene state handler 1
@@ -94,8 +94,8 @@ Cutscene_SevenForcesVictoryIdleState:                   ; CODE XREF: Cutscene_Se
 ; End of function Cutscene_SevenForcesVictoryIdleState
 ; Updates camera position and calculates scroll
 UnreferencedSevenForcesCameraScrollUpdate:
-                bsr.w   Camera_UpdateTowardsPlayer      ; was: sub_EB5E
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer  ; was: sub_EB5E
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 move.w  (dword_FFA908).w,d0
                 addi.w  #$40,d0                         ; '@'
                 neg.w   d0

@@ -42,8 +42,8 @@ Stage_FliesCheckTransition:                             ; DATA XREF: ROM:0000C8A
 Stage_FliesScrollUpdate:                                ; CODE XREF: Stage_FliesCheckTransition+6   j  ; was: sub_D166
                 move.l  #word_D8B2,(PaletteEntryLists).w
                 bsr.w   Effect_SpawnRandomLightning
-                bsr.w   Camera_UpdateTowardsPlayer
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 bsr.w   Stage_FliesVerticalScroll
                 bsr.w   Stage_TrainParallaxCalc
                 cmpi.w  #$60,(dword_FFA960+2).w         ; '`'
@@ -97,7 +97,7 @@ Stage_InitCaterpillarShip:                              ; CODE XREF: Stage_Flies
 Stage_CaterpillarBossSetup:
                 move.l  #word_D8B2,(PaletteEntryLists).w  ; was: sub_D1EA
                 bsr.w   Effect_SpawnRandomLightning
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   loc_D4BA
 ; End of function Stage_CaterpillarBossSetup
 ; Spawns fly enemies with formation pattern
@@ -163,7 +163,7 @@ loc_D2BC:                                               ; CODE XREF: Stage_Cater
 loc_D2CE:                                               ; CODE XREF: Stage_CaterpillarShipMovement+A   j
                                         ; Stage_CaterpillarShipMovement+12   j
                 move.l  (dword_FFA900).w,(dword_FF8040).w
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 move.l  (dword_FFA900).w,d7
                 sub.l   (dword_FF8040).w,d7
                 addi.l  #$12000,d7
@@ -298,12 +298,12 @@ Stage_XiTigerBossWait_CheckEntity:                      ; DATA XREF: ROM:0000C8B
                 move.w  #$1C0,(word_FF806E).w
 loc_D4BA:                                               ; CODE XREF: Stage_CaterpillarBossSetup+10   j
                                         ; Stage_XiTigerBossWait+3A   j
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_XiTigerBossWait
 ; Updates caterpillar stage scroll with oscillation
 Stage_CaterpillarScrollUpdate:                          ; CODE XREF: Stage_CaterpillarShipMovement+5E   p  ; was: sub_D4BE
                                         ; Stage_CaterpillarScrollHandler+12   p
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 move.l  #word_D8B2,(PaletteEntryLists).w
                 bsr.w   Effect_SpawnRandomLightning
                 tst.w   (dword_FFA960).w

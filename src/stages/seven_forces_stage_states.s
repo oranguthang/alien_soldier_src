@@ -24,7 +24,7 @@ Stage_SevenForcesUpdateStage20Scroll:                   ; DATA XREF: ROM:0000E4A
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA958).w
 Stage_SevenForcesStage20UpdateCamera:                   ; CODE XREF: Stage_SevenForcesUpdateStage20Scroll+4   j ; was: loc_E83E
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Gfx_UpdateSevenForcesParallaxRows
 ; End of function Stage_SevenForcesUpdateStage20Scroll
 ; Transition to Medusa form
@@ -138,7 +138,7 @@ Stage_SevenForcesScrollArtemisBackgroundReturn:         ; CODE XREF: Stage_Seven
 ; Scroll the Artemis foreground and prepare the Sirene transition
 Stage_SevenForcesScrollArtemisForeground:               ; DATA XREF: ROM:0000E4C0   o  ; was: sub_E930
                 bsr.w   Stage_SevenForcesUpdateArtemisForegroundMotion
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 tst.b   (byte_FFA958).w
                 beq.s   Stage_SevenForcesScrollArtemisForegroundReturn
                 addq.w  #2,(word_FFA950).w
@@ -171,7 +171,7 @@ Stage_SevenForcesUpdateSireneShake:                     ; CODE XREF: Stage_Seven
                 move.w  #1,(word_FFA014).w
 Stage_SevenForcesUpdateSireneCamera:                    ; CODE XREF: Stage_SevenForcesBeginSireneTransition+A   j ; was: loc_E99E
                                         ; Stage_SevenForcesWaitBeforeVictory+14   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_SevenForcesBeginSireneTransition
 ; Center the Sirene camera and close its split offsets
 Stage_SevenForcesCenterSireneCamera:                    ; CODE XREF: Stage_SevenForcesAdvanceSireneTransition   p  ; was: sub_E9A2
@@ -236,7 +236,7 @@ Stage_SevenForcesWaitBeforeVictoryUpdateCamera:         ; CODE XREF: Stage_Seven
                 bra.w   Stage_SevenForcesUpdateSireneCamera
 ; Initialize the tilemap and timer for the Seven Forces victory sequence
 Stage_SevenForcesInitializeVictoryTransition:           ; DATA XREF: ROM:0000E4CA   o  ; was: sub_EA3C
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 tst.b   (byte_FFA958).w
                 beq.s   Stage_SevenForcesInitializeVictoryTransitionReturn
                 addq.w  #2,(word_FFA950).w

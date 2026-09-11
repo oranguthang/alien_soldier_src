@@ -5,7 +5,7 @@ Stage_Stage18EmptyHandler:                              ; CODE XREF: Stage_Stage
 ; Starts boss battle
 Stage_Stage18StartBattle:                               ; DATA XREF: ROM:off_E438   o  ; was: sub_E4DE
                 bset    #6,(byte_FF8245).w
-                jsr     (Gfx_LoadStage18Tiles).l
+                jsr     (Stage18_UpdateScrollAndRenderTilemap).l
                 bsr.w   Stage_Stage18Transition
                 cmpi.w  #$820,(dword_FFA900).w
                 bmi.s   Stage_Stage18EmptyHandler
@@ -15,7 +15,7 @@ locret_E4FA:                                            ; CODE XREF: Stage_LoadS
 ; End of function Stage_Stage18StartBattle
 ; Pre-boss battle setup
 Stage_Stage18PreBoss:                                   ; DATA XREF: ROM:0000E43A   o  ; was: sub_E4FC
-                jsr     (Gfx_LoadStage18Tiles).l
+                jsr     (Stage18_UpdateScrollAndRenderTilemap).l
                 bsr.w   Stage_Stage18Transition
                 cmpi.w  #$BF0,(dword_FFA900).w
                 bmi.s   Stage_Stage18EmptyHandler
@@ -23,7 +23,7 @@ Stage_Stage18PreBoss:                                   ; DATA XREF: ROM:0000E43
 ; End of function Stage_Stage18PreBoss
 ; Destroyer-MK2 boss initialization
 Stage_DestroyerMK2Init:                                 ; DATA XREF: ROM:0000E43C   o  ; was: sub_E512
-                jsr     (Gfx_LoadDestroyerMK2Tiles).l
+                jsr     (Stage18_UpdateDestroyerMk2Scroll).l
                 bsr.w   Stage_Stage18Transition
                 cmpi.w  #$C70,(dword_FFA900).w
                 bmi.s   Stage_Stage18EmptyHandler
@@ -43,18 +43,18 @@ Boss_DestroyerMK2UpdateHealth:                          ; DATA XREF: ROM:0000E43
                 bne.s   loc_E558
                 bsr.w   Stage_TriggerPhaseTransition
 loc_E558:                                               ; CODE XREF: Boss_DestroyerMK2UpdateHealth+4   j
-                jsr     (Camera_UpdateTowardsPlayer).l
+                jsr     (Camera_UpdateHorizontalTowardsPlayer).l
                 bra.w   Stage_Stage18Transition
 ; End of function Boss_DestroyerMK2UpdateHealth
 ; Stage 19 initialization
 Stage_Stage19Init:                                      ; DATA XREF: ROM:0000E440   o  ; was: sub_E562
                 bsr.w   Stage_InitSectionChange
-                jsr     (Camera_UpdateTowardsPlayer).l
+                jsr     (Camera_UpdateHorizontalTowardsPlayer).l
                 bra.w   Stage_Stage18Transition
 ; End of function Stage_Stage19Init
 ; Stage 19 scroll handler
 Stage_Stage19Scroll:                                    ; DATA XREF: ROM:0000E442   o  ; was: sub_E570
-                jsr     (Gfx_LoadStage18Tiles).l
+                jsr     (Stage18_UpdateScrollAndRenderTilemap).l
                 bsr.w   Stage_Stage18Transition
                 cmpi.w  #$D80,(dword_FFA900).w
                 bmi.w   Stage_Stage18EmptyHandler
@@ -81,7 +81,7 @@ stru_E594:      dc.w    7                               ; field_0
 
 ; Stage transition to boss
 Stage_Stage19Transition:                                ; DATA XREF: ROM:0000E444   o  ; was: sub_E5B6
-                jsr     (Gfx_UpdateScroll).l
+                jsr     (Camera_UpdateAndRenderStageTilemap).l
                 bsr.w   Stage_Stage18Transition
                 cmpi.w  #$1120,(dword_FFA900).w
                 bmi.w   Stage_Stage18EmptyHandler
@@ -90,7 +90,7 @@ Stage_Stage19Transition:                                ; DATA XREF: ROM:0000E44
 ; End of function Stage_Stage19Transition
 ; Jampan boss initialization
 Stage_JampanInit:                                       ; DATA XREF: ROM:0000E446   o  ; was: sub_E5D0
-                jsr     (Gfx_UpdateScroll).l
+                jsr     (Camera_UpdateAndRenderStageTilemap).l
                 bsr.w   Stage_Stage18Transition
                 cmpi.w  #$1200,(dword_FFA900).w
                 bmi.w   Stage_Stage18EmptyHandler
@@ -99,7 +99,7 @@ Stage_JampanInit:                                       ; DATA XREF: ROM:0000E44
 ; End of function Stage_JampanInit
 ; Jampan battle start
 Stage_JampanBattleStart:                                ; DATA XREF: ROM:0000E448   o  ; was: sub_E5EA
-                jsr     (Gfx_UpdateScroll).l
+                jsr     (Camera_UpdateAndRenderStageTilemap).l
                 bsr.w   Stage_Stage18Transition
                 cmpi.w  #$1200,(dword_FFA900).w
                 bmi.w   Stage_Stage18EmptyHandler
@@ -107,7 +107,7 @@ Stage_JampanBattleStart:                                ; DATA XREF: ROM:0000E44
 ; End of function Stage_JampanBattleStart
 ; Post-battle cleanup
 Stage_JampanPostBattle:                                 ; DATA XREF: ROM:0000E44A   o  ; was: sub_E602
-                jsr     (Gfx_LoadBossTiles).l
+                jsr     (Camera_UpdateBossApproachAndRenderTilemap).l
                 cmpi.w  #$1280,(dword_FFA900).w
                 bmi.w   Stage_Stage18EmptyHandler
                 addq.w  #2,(word_FFA950).w
@@ -125,7 +125,7 @@ Stage_JampanDefeatCamera:                               ; DATA XREF: ROM:0000E44
                 beq.s   loc_E640
                 addq.w  #2,(word_FFA950).w
 loc_E640:                                               ; CODE XREF: Stage_JampanDefeatCamera+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_JampanDefeatCamera
 ; Post-defeat stage init
 Stage_JampanPostDefeatInit:                             ; DATA XREF: ROM:0000E44E   o  ; was: sub_E644
@@ -138,7 +138,7 @@ locret_E654:                                            ; CODE XREF: Stage_Jampa
 ; End of function Stage_JampanPostDefeatInit
 ; Post-defeat checks and transition
 Stage_JampanPostDefeatCheck:                            ; DATA XREF: ROM:0000E450   o  ; was: sub_E656
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 tst.w   (word_FF8230).w
                 bne.s   locret_E678
                 tst.w   (word_FF8138).w
@@ -175,7 +175,7 @@ Stage_WaitFlagUpdateCamera1:                            ; DATA XREF: ROM:0000E46
                 beq.s   loc_E6B6
                 addq.w  #2,(word_FFA950).w
 loc_E6B6:                                               ; CODE XREF: Stage_WaitFlagUpdateCamera1+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_WaitFlagUpdateCamera1
 ; Check for active enemies then init transition
 Stage_CheckEnemiesTransit1:                             ; DATA XREF: ROM:0000E464   o  ; was: sub_E6BA
@@ -205,7 +205,7 @@ Stage_WaitFlagUpdateCamera2:                            ; DATA XREF: ROM:0000E46
                 beq.s   loc_E706
                 addq.w  #2,(word_FFA950).w
 loc_E706:                                               ; CODE XREF: Stage_WaitFlagUpdateCamera2+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_WaitFlagUpdateCamera2
 ; Check for enemies then init transition with sound
 Stage_CheckEnemiesTransit2:                             ; DATA XREF: ROM:0000E46C   o  ; was: sub_E70A
@@ -235,7 +235,7 @@ Stage_WaitFlagUpdateCamera3:                            ; DATA XREF: ROM:0000E47
                 beq.s   loc_E75C
                 addq.w  #2,(word_FFA950).w
 loc_E75C:                                               ; CODE XREF: Stage_WaitFlagUpdateCamera3+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_WaitFlagUpdateCamera3
 ; Check for enemies then init transition with sound
 Stage_CheckEnemiesTransit3:                             ; DATA XREF: ROM:0000E474   o  ; was: sub_E760
@@ -265,7 +265,7 @@ Stage_WaitFlagUpdateCamera4:                            ; DATA XREF: ROM:0000E47
                 beq.s   loc_E7B2
                 addq.w  #2,(word_FFA950).w
 loc_E7B2:                                               ; CODE XREF: Stage_WaitFlagUpdateCamera4+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_WaitFlagUpdateCamera4
 ; Check for enemies then init transition alt sound
 Stage_CheckEnemiesTransit4:                             ; DATA XREF: ROM:0000E47C   o  ; was: sub_E7B6

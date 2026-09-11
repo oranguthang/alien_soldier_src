@@ -4157,3 +4157,34 @@ name-audit registry from 10,324 to 10,332, and the enforced address-derived
 ceiling falls from 2,707 to 2,703. The layout remains 362 modules with a
 328.3-line mean, zero files above 1,000 lines, and zero generic container
 filenames.
+
+The camera and scroll audit replaces another formal source split with three
+behavioral ROM-ordered modules. The `0x010026-0x01038F` range is now the
+404-line `rendering/camera_tracking_and_stage_scroll.s` module. It contains
+the horizontal and vertical camera-follow algorithms together with the stage
+wrappers that select them. The independent six-state phase-transition table at
+`0x010390-0x0103F9` is the naturally short 44-line
+`stages/stage_phase_transition_control.s` module. The following scroll-plane
+setup was joined to its consumers in the 252-line
+`rendering/scroll_plane_buffers.s` module instead of remaining separated from
+the buffer-writing commands it initializes.
+
+The audit corrects several inherited semantic claims. The former
+`Gfx_LoadStage18Tiles`, `Gfx_LoadDestroyerMK2Tiles`, and `Gfx_LoadBossTiles`
+routines load no graphics; they update camera positions and enter existing
+tilemap renderers. `Camera_BoundedVerticalFollow` reads player X and changes
+the horizontal stage coordinate, so it is retained only as an explicitly
+unreferenced horizontal-bounds helper. The two alleged `Scroll_NoOp` entries
+execute one `nop` and fall through into active scroll code rather than
+returning. Camera names now distinguish horizontal anchors, bounds, and the
+actual vertical-threshold path without assigning unsupported stage ownership.
+
+All 55 definitions in the camera-tracking range now have exact-address static
+audit records. Thirty-four address-derived branches and returns receive
+provenance-preserving behavioral names; twenty-one inherited semantic names
+are confirmed, narrowed, or corrected. Provenance rises from 13,345 to 13,379,
+the name-audit registry from 10,332 to 10,387, and the enforced
+address-derived ceiling falls from 2,703 to 2,669. The natural split changes
+the layout from 362 to 363 modules and the mean to 327.4 lines; the largest
+module remains 986 lines, with zero files above 1,000 lines and zero generic
+container filenames.

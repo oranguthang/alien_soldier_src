@@ -62,7 +62,7 @@ Stage_InitStage8Train_ScrollCheck:                      ; DATA XREF: ROM:0000C89
                 move.w  #$16,(word_FFA02A).w
                 bsr.w   Stage_TransitionToNextPhase
 loc_CEB8:                                               ; CODE XREF: Stage_InitStage8Train+54   j
-                bsr.w   Scroll_ApplyAcceleration
+                bsr.w   Stage8_UpdateTrainScrollAndTilemap
 ; End of function Stage_InitStage8Train
 ; Train scroll physics with velocity updates
 Stage_TrainScrollPhysics:                               ; CODE XREF: Stage_TrainToFlyingNeoTransition+4   p  ; was: sub_CEBC
@@ -128,7 +128,7 @@ Gfx_FillParallaxBuffer:                                 ; CODE XREF: Stage_Train
 ; End of function Stage_TrainParallaxCalc
 ; Transitions from train to Flying-Neo boss battle
 Stage_TrainToFlyingNeoTransition:                       ; DATA XREF: ROM:0000C89E   o  ; was: sub_CF6A
-                bsr.w   Scroll_IncrementHorizontalFast
+                bsr.w   Scroll_AdvanceTrainHorizontalAndRenderTilemap
                 bsr.w   Stage_TrainScrollPhysics
                 cmpi.w  #$F00,(dword_FFA900).w
                 bmi.s   locret_CF98
@@ -182,7 +182,7 @@ Stage_UpdateVerticalScroll:                             ; CODE XREF: Stage_Flyin
                                         ; Stage_FlyingNeoScrollDecel+1A   j
                 move.l  (dword_FFA964).w,d0
                 add.l   d0,(dword_FFA904).w
-                bsr.w   Scroll_UpdateCameraPositions
+                bsr.w   Stage8_UpdateFlyingNeoScrollAndTilemap
                 bsr.w   Stage_TrainParallaxCalc
                 move.l  #word_D864,(PaletteEntryLists).w
                 bsr.w   Effect_SpawnRandomLightning
@@ -237,7 +237,7 @@ Stage_PostFlyingNeoTransition:                          ; DATA XREF: ROM:0000C8A
 Stage_FlyingNeoBattleUpdate:                            ; CODE XREF: Stage_PostFlyingNeoTransition+4   j  ; was: sub_D0AC
                                         ; Stage_PostFlyingNeoTransition+C   j
                                         ; DATA XREF:
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   loc_D040
 ; End of function Stage_FlyingNeoBattleUpdate
 ; Initializes Stage 9 with scroll and parameters

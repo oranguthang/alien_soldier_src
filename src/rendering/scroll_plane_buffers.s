@@ -1,3 +1,49 @@
+; Sets up VDP scroll plane registers
+Gfx_SetupScrollPlanes:                                  ; CODE XREF: StoryScreen_Initialize+8A   p  ; was: sub_103FA
+                                        ; StoryScreen_MainLoop+56   p
+                move.w  #$8230,(VDPReg2Shadow).w
+                move.w  #$8407,(VDPReg4Shadow).w
+                tst.w   (word_FF8640).w
+                beq.s   loc_10418
+                move.w  #$8238,(VDPReg2Shadow).w
+                move.w  #$8406,(VDPReg4Shadow).w
+loc_10418:                                              ; CODE XREF: Gfx_SetupScrollPlanes+10   j
+                move.b  (VDPReg11Shadow+1).w,d3
+                move.b  d3,d4
+                andi.w  #3,d3
+                andi.w  #4,d4
+                move.b  (byte_FFA95A).w,d5
+                movea.w #(HScrollBuffer-M68K_RAM),a0
+                movea.w #(word_FFE480-M68K_RAM),a1
+                adda.w  (word_FF8640).w,a0
+                adda.w  (word_FF8640).w,a1
+                move.w  (dword_FFA900).w,d0
+                neg.w   d0
+                move.w  (word_FFA012).w,d1
+                bsr.w   Gfx_WriteScrollValue
+                movea.w #(VScrollBuffer-M68K_RAM),a0
+                adda.w  (word_FF8640).w,a0
+                move.w  (dword_FFA904).w,d0
+                neg.w   d0
+                add.w   (word_FFA012).w,d0
+                bsr.w   Gfx_WriteScrollValues
+                move.b  (byte_FFA95B).w,d5
+                movea.w #(word_FFE402-M68K_RAM),a0
+                movea.w #(byte_FFE482-M68K_RAM),a1
+                suba.w  (word_FF8640).w,a0
+                suba.w  (word_FF8640).w,a1
+                move.w  (dword_FFA908).w,d0
+                neg.w   d0
+                move.w  (word_FFA016).w,d1
+                bsr.w   Gfx_WriteScrollValue
+                movea.w #(word_FFEC02-M68K_RAM),a0
+                suba.w  (word_FF8640).w,a0
+                move.w  (dword_FFA90C).w,d0
+                neg.w   d0
+                add.w   (word_FFA016).w,d0
+                bra.w   Gfx_WriteScrollValues
+; End of function Gfx_SetupScrollPlanes
+; Writes scroll value with flag checks
 Gfx_WriteScrollValue:                                   ; CODE XREF: Gfx_SetupScrollPlanes+4A   p  ; was: sub_10496
                                         ; Gfx_SetupScrollPlanes+82   p
                 btst    #2,d5
@@ -203,4 +249,3 @@ loc_106BC:                                              ; CODE XREF: Gfx_WriteSc
                 dbf     d7,loc_106BC
                 rts
 ; End of function Gfx_WriteScrollValues
-; Initializes scroll buffer with value 8

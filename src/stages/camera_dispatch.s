@@ -72,8 +72,8 @@ Stage_UpdateLogic:                                      ; DATA XREF: Stage_Dispa
                 addq.w  #2,(word_FFA950).w
 ; Updates stage scroll position and checks for phase transition at specific coordinate
 Stage_UpdateScrollAndCheck:                             ; DATA XREF: ROM:0000C84C   o  ; was: loc_C8C6
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$668,(dword_FFA900).w
                 bmi.s   locret_C8DA
                 bra.w   Stage_TransitionToNextPhase
@@ -84,8 +84,8 @@ locret_C8DA:                                            ; CODE XREF: Stage_Updat
 ; End of function Stage_UpdateLogic
 ; Initializes boss introduction sequence
 Stage_InitBossIntro:                                    ; DATA XREF: ROM:0000C84E   o  ; was: sub_C8DC
-                bsr.w   Gfx_LoadBossTiles
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$6E8,(dword_FFA900).w
                 bmi.s   locret_C8DA
                 addq.w  #2,(word_FFA950).w
@@ -104,19 +104,19 @@ Camera_BossPhaseHandler:                                ; DATA XREF: ROM:0000C85
                 bsr.w   Stage_TriggerPhaseTransition
 ; Updates camera position during boss battle phase
 Camera_UpdateBossPhase:                                 ; CODE XREF: Camera_BossPhaseHandler+4   j  ; was: loc_C91A
-                bsr.w   Camera_UpdateTowardsPlayer
-                bra.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bra.w   Scroll_UpdateQuarterHorizontalPosition
 ; End of function Camera_BossPhaseHandler
 ; Stage 2 camera with transition check
 Camera_Stage2PhaseHandler:                              ; DATA XREF: ROM:0000C852   o  ; was: sub_C922
                 bsr.w   Stage_InitSectionChange
-                bsr.w   Camera_UpdateTowardsPlayer
-                bra.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bra.w   Scroll_UpdateQuarterHorizontalPosition
 ; End of function Camera_Stage2PhaseHandler
 ; Camera with auto-scroll and phase transition
 Camera_AutoScrollCheck:                                 ; DATA XREF: ROM:0000C854   o  ; was: sub_C92E
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$B40,(dword_FFA900).w
                 bmi.s   locret_C942
                 bra.w   Stage_TransitionToNextPhase
@@ -127,8 +127,8 @@ locret_C942:                                            ; CODE XREF: Camera_Auto
 ; End of function Camera_AutoScrollCheck
 ; Transitions camera to boss arena with position lock
 Camera_TransitionToBossArena:                           ; DATA XREF: ROM:0000C856   o  ; was: sub_C944
-                bsr.w   Gfx_LoadBossTiles
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$BC0,(dword_FFA900).w
                 bmi.s   locret_C942
                 addq.w  #2,(word_FFA950).w
@@ -148,14 +148,14 @@ Camera_AntroidBossInit:                                 ; DATA XREF: ROM:0000C85
                 bsr.w   UI_InitScoreTimer
 ; Updates camera for Antroid boss with score timer initialization
 Camera_UpdateAntroidBoss:                               ; CODE XREF: Camera_AntroidBossInit+4   j  ; was: loc_C986
-                bsr.w   Camera_UpdateTowardsPlayer
-                bra.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bra.w   Scroll_UpdateQuarterHorizontalPosition
 ; End of function Camera_AntroidBossInit
 ; Stage 3 camera with section transition
 Camera_Stage3Transition:                                ; DATA XREF: ROM:0000C85A   o  ; was: sub_C98E
                 bsr.w   Stage_InitSectionChange
-                bsr.w   Camera_UpdateTowardsPlayer
-                bra.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bra.w   Scroll_UpdateQuarterHorizontalPosition
 ; End of function Camera_Stage3Transition
 ; Stage 3 camera with scroll update and position limit
 Camera_Stage3ScrollLimit:                               ; DATA XREF: ROM:0000C85C   o  ; was: sub_C99A
@@ -168,8 +168,8 @@ loc_C9A4:                                               ; CODE XREF: Camera_Stag
                 dbf     d7,loc_C9A4
 ; Updates scroll and camera transitions at position $FC0
 Camera_Stage3_ScrollLimitCheck:                         ; DATA XREF: ROM:0000C85E   o  ; was: loc_C9B0
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$FC0,(dword_FFA900).w
                 bmi.w   locret_C9D2
                 addq.w  #2,(word_FFA950).w
@@ -188,8 +188,8 @@ locret_C9DE:                                            ; CODE XREF: Camera_Stag
 ; End of function Camera_Stage3BossSetup
 ; Updates camera position during boss fight
 Camera_UpdateBossPosition:                              ; DATA XREF: ROM:0000C862   o  ; was: sub_C9E0
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$1168,(dword_FFA900).w
                 bmi.w   locret_C9F6
                 bra.w   Stage_TransitionToNextPhase
@@ -200,8 +200,8 @@ locret_C9F6:                                            ; CODE XREF: Camera_Upda
 ; End of function Camera_UpdateBossPosition
 ; Locks camera to boss arena boundaries
 Camera_LockToBossArena:                                 ; DATA XREF: ROM:0000C864   o  ; was: sub_C9F8
-                bsr.w   Gfx_LoadBossTiles
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$11E8,(dword_FFA900).w
                 bmi.s   locret_C9F6
                 addq.w  #2,(word_FFA950).w
@@ -234,7 +234,7 @@ Camera_ShellshogunBossInit:                             ; DATA XREF: ROM:0000C86
                 clr.w   (word_FFA948).w
                 move.w  #$1F,(word_FFA944).w
 loc_CA86:                                               ; CODE XREF: Camera_ShellshogunBossInit+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Camera_ShellshogunBossInit
 ; ---------------------------------------------------------------------------
 dword_CA8A:     dc.l    $FFFF7000, $FFFF6800, $FFFF2000, $6000
@@ -253,7 +253,7 @@ loc_CAAC:                                               ; CODE XREF: Camera_Lock
                 bsr.w   Stage_InitSectionChange
 loc_CAB0:                                               ; CODE XREF: Camera_LockPosition+4   j
                                         ; Camera_LockPosition+10   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Camera_LockPosition
 ; Updates camera with smooth interpolation
 Camera_UpdateSmooth:                                    ; DATA XREF: ROM:0000C86A   o  ; was: sub_CAB4
@@ -266,8 +266,8 @@ Camera_UpdateSmooth:                                    ; DATA XREF: ROM:0000C86
 ; Updates smooth scrolling camera transitions at $1A78
 Camera_Smooth_ScrollLimitCheck:                         ; CODE XREF: Camera_UpdateSmooth+14   j  ; was: loc_CACC
                                         ; DATA XREF: ROM:0000C86C   o
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$1A78,(dword_FFA900).w
                 bmi.s   locret_CAE0
                 bra.w   Stage_TransitionToNextPhase
@@ -277,8 +277,8 @@ locret_CAE0:                                            ; CODE XREF: Camera_Upda
 ; End of function Camera_UpdateSmooth
 ; Camera following target with offset
 Camera_FollowTarget:                                    ; DATA XREF: ROM:0000C86E   o  ; was: sub_CAE2
-                bsr.w   Gfx_LoadBossTiles
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$1AF8,(dword_FFA900).w
                 bmi.s   locret_CB24
                 addq.w  #2,(word_FFA950).w
@@ -298,7 +298,7 @@ locret_CB24:                                            ; CODE XREF: Camera_Foll
 ; Sets camera boundary limits
 Camera_SetBounds:                                       ; DATA XREF: ROM:0000C870   o  ; was: sub_CB26
                 move.b  #3,(VDPReg11Shadow+1).w
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 bra.s   Camera_ClampToBounds
 ; End of function Camera_SetBounds
 ; Handles camera logic during stage transition checking boss state
@@ -310,8 +310,8 @@ Stage_CameraTransitionCheck:                            ; DATA XREF: ROM:0000C87
                 bra.s   Stage_ScrollWaitTransition
 ; ---------------------------------------------------------------------------
 loc_CB44:                                               ; CODE XREF: Stage_CameraTransitionCheck+4   j
-                bsr.w   Camera_UpdateTowardsPlayer
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 bsr.s   Camera_ClampToBounds
                 move.w  #$C0,(dword_FFA908).w
                 rts
@@ -348,8 +348,8 @@ locret_CB8A:                                            ; CODE XREF: Stage_Scrol
 ; Updates camera position and calculates scroll registers
 Camera_UpdateWithScroll:                                ; CODE XREF: Stage_ScrollWaitTransition   p  ; was: sub_CB8C
                                         ; sub_CB9E   p
-                bsr.w   Camera_UpdateTowardsPlayer
-                bsr.w   Gfx_CalculateScrollPosition
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 bsr.s   Camera_ClampToBounds
                 move.w  #$C0,(dword_FFA908).w
                 rts
@@ -373,7 +373,7 @@ Stage_AutoScrollUpdate:                                 ; DATA XREF: ROM:0000C87
                 addq.w  #2,(word_FFA950).w
 ; Updates automatic scrolling and checks for transition
 Stage_AutoScroll_UpdateLoop:                            ; DATA XREF: ROM:0000C87A   o  ; was: loc_CBBE
-                bsr.w   Gfx_UpdateScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$400,(dword_FFA900).w
                 bmi.s   locret_CBCE
                 bra.w   Stage_TransitionToNextPhase
@@ -384,7 +384,7 @@ locret_CBCE:                                            ; CODE XREF: Stage_AutoS
 ; End of function Stage_AutoScrollUpdate
 ; Initializes Madam Barbar boss scroll position and palette
 Boss_MadamBarbarScrollInit:                             ; DATA XREF: ROM:0000C87C   o  ; was: sub_CBD0
-                bsr.w   Gfx_LoadBossTiles
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 cmpi.w  #$480,(dword_FFA900).w
                 bmi.s   locret_CBCE
                 addq.w  #2,(word_FFA950).w
@@ -405,7 +405,7 @@ Stage_InitPostBoss:                                     ; DATA XREF: ROM:0000C87
                 move.l  #Stage2_FifthRuntimeSpawnList,(dword_FFA20E).w
                 bsr.w   UI_InitScoreTimer
 loc_CC1C:                                               ; CODE XREF: Stage_InitPostBoss+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_InitPostBoss
 ; Start a section change and request the default BGM when no delay is active
 Stage_InitSectionChangeWithDefaultBGM:                  ; DATA XREF: ROM:0000C880   o  ; was: sub_CC20
@@ -416,11 +416,11 @@ Stage_InitSectionChangeWithDefaultBGM:                  ; DATA XREF: ROM:0000C88
 Stage_InitSectionChangeWithDefaultBGM_Continue:         ; CODE XREF: Stage_InitSectionChangeWithDefaultBGM+4   j  ; was: loc_CC30
                 clr.w   (word_FF808A).w
                 bsr.w   Stage_InitSectionChange
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_InitSectionChangeWithDefaultBGM
 ; Checks scroll position for stage phase transition trigger
 Stage_CheckScrollTransition:                            ; DATA XREF: ROM:0000C882   o  ; was: sub_CC3C
-                bsr.w   Gfx_UpdateScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$9E0,(dword_FFA900).w
                 bmi.s   locret_CC4C
                 bra.w   Stage_TransitionToNextPhase
@@ -431,7 +431,7 @@ locret_CC4C:                                            ; CODE XREF: Stage_Check
 ; End of function Stage_CheckScrollTransition
 ; Initializes Joker boss fight with scroll check and palette update
 Stage_InitJokerBoss:                                    ; DATA XREF: ROM:0000C884   o  ; was: sub_CC4E
-                bsr.w   Gfx_LoadBossTiles
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 cmpi.w  #$A60,(dword_FFA900).w
                 bmi.s   locret_CC4C
                 addq.w  #2,(word_FFA950).w
@@ -451,13 +451,13 @@ Stage_PostJokerBoss:                                    ; DATA XREF: ROM:0000C88
                 clr.w   (dword_FFA90C).w
                 bsr.w   Stage_TriggerPhaseTransition
 loc_CC92:                                               ; CODE XREF: Stage_PostJokerBoss+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostJokerBoss
 ; Post-Joker transition clearing flags and updating camera
 Stage_PostJokerTransition:                              ; DATA XREF: ROM:0000C888   o  ; was: sub_CC96
                 clr.w   (word_FF808A).w
                 bsr.w   Stage_InitSectionChange
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostJokerTransition
 ; Initializes Stage 7 with scroll setup and palette loading
 Stage_InitStage7:                                       ; DATA XREF: ROM:0000C88A   o  ; was: sub_CCA2
@@ -481,7 +481,7 @@ stru_CCBE:      dc.w    7                               ; field_0
 Stage_Stage7ScrollUpdate:                               ; CODE XREF: Stage_InitStage7+4   j  ; was: sub_CCC8
                                         ; Stage_InitStage7+1A   j
                                         ; DATA XREF:
-                bsr.w   Gfx_UpdateScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
                 move.w  (dword_FFA900).w,d0
                 add.w   (dword_FFA410).w,d0
                 cmpi.w  #$1098,(dword_FFA900).w
@@ -561,7 +561,7 @@ Stage_PostTerobusterIntro:                              ; DATA XREF: ROM:0000C89
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 clr.w   (dword_FFA90C).w
 loc_CDB8:                                               ; CODE XREF: Stage_PostTerobusterIntro+C   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostTerobusterIntro
 ; Post-Terobuster transition clearing flags and advancing
 Stage_PostTerobusterTransition:                         ; DATA XREF: ROM:0000C892   o  ; was: sub_CDBC
@@ -574,11 +574,11 @@ Stage_PostTerobusterTransition:                         ; DATA XREF: ROM:0000C89
                 nop
                 jsr     (Gfx_LoadCompressedTiles).l
 loc_CDDE:                                               ; CODE XREF: Stage_PostTerobusterTransition+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostTerobusterTransition
 ; Stage 7 to 8 transition with scroll boundary check
 Stage_Stage7To8Transition:                              ; DATA XREF: ROM:0000C894   o  ; was: sub_CDE2
-                bsr.w   Gfx_UpdateScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$1200,(dword_FFA900).w
                 bmi.s   locret_CDF8
                 addq.w  #2,(word_FFA950).w

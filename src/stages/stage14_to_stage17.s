@@ -3,14 +3,14 @@ Stage_Stage14Scroll:                                    ; DATA XREF: ROM:0000D99
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
 ; Updates scroll for stage 14 progression
 Stage_Stage14Scroll_Update:                             ; DATA XREF: ROM:0000D99E   o  ; was: loc_DE4E
-                bsr.w   Gfx_UpdateScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$400,(dword_FFA900).w
                 bmi.w   Stage_Stage10CheckTransition_Return
                 bra.w   Stage_TransitionToNextPhase
 ; End of function Stage_Stage14Scroll
 ; Initialize boss tiles and palette with scroll check
 Stage_InitBossPaletteScroll:                            ; DATA XREF: ROM:0000D9A0   o  ; was: sub_DE60
-                bsr.w   Gfx_LoadBossTiles
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 move.w  #$480,d0
                 cmp.w   (dword_FFA900).w,d0
                 bpl.w   Stage_Stage10CheckTransition_Return
@@ -35,11 +35,11 @@ locret_DEA0:                                            ; CODE XREF: Stage_InitS
 ; Transitions to Stage 15
 Stage_Stage15Transition:                                ; DATA XREF: ROM:0000D9A4   o  ; was: sub_DEA2
                 bsr.w   Stage_InitSectionChange
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_Stage15Transition
 ; Stage 15 scroll handler
 Stage_Stage15Scroll:                                    ; DATA XREF: ROM:0000D9A6   o  ; was: sub_DEAA
-                bsr.w   Gfx_UpdateScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$660,(dword_FFA900).w
                 bmi.w   Stage_Stage10CheckTransition_Return
                 addq.w  #2,(word_FFA950).w
@@ -49,7 +49,7 @@ Stage_Stage15Scroll:                                    ; DATA XREF: ROM:0000D9A
 ; End of function Stage_Stage15Scroll
 ; Check scroll threshold and transition to next phase
 Stage_ScrollCheckTransition:                            ; DATA XREF: ROM:0000D9A8   o  ; was: sub_DECA
-                bsr.w   Scroll_RenderSylpheedWithUpdate
+                bsr.w   Scroll_UpdateAndRenderSylpheedBackdrop
                 cmpi.w  #$E3E8,(dword_FFA904).w
                 bmi.w   Stage_Stage10CheckTransition_Return
                 bclr    #0,(byte_FF80F8).w
@@ -59,7 +59,7 @@ Stage_ScrollCheckTransition:                            ; DATA XREF: ROM:0000D9A
 ; End of function Stage_ScrollCheckTransition
 ; Transitions to Sunset Sting boss
 Stage_SunsetStingTransition:                            ; DATA XREF: ROM:0000D9AA   o  ; was: sub_DEEE
-                bsr.w   Scroll_UpdateVerticalScroll
+                bsr.w   Scroll_AdvanceVerticalAndRenderSylpheedBackdrop
                 move.w  #$E420,d0
                 cmp.w   (dword_FFA904).w,d0
                 bpl.w   Stage_Stage10CheckTransition_Return
@@ -79,12 +79,12 @@ Stage_SunsetStingWaitBattle:                            ; DATA XREF: ROM:0000D9A
                 bne.s   loc_DF30
                 bsr.w   Stage_TriggerPhaseTransition
 loc_DF30:                                               ; CODE XREF: Stage_SunsetStingWaitBattle+4   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_SunsetStingWaitBattle
 ; Transition after Sunset Sting
 Stage_PostSunsetStingTransition:                        ; DATA XREF: ROM:0000D9AE   o  ; was: sub_DF34
                 bsr.w   Stage_InitSectionChange
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostSunsetStingTransition
 ; Viblack stage scroll handler
 Stage_ViblackScroll:                                    ; DATA XREF: ROM:0000D9B0   o  ; was: sub_DF3C
@@ -92,9 +92,9 @@ Stage_ViblackScroll:                                    ; DATA XREF: ROM:0000D9B
                 bpl.s   Stage_ViblackStartBattle
                 move.l  (dword_FFA900).w,(dword_FF806A+2).w
                 move.w  #$660,(dword_FFA900).w
-                bsr.w   Scroll_UpdateVerticalScroll
+                bsr.w   Scroll_AdvanceVerticalAndRenderSylpheedBackdrop
                 move.l  (dword_FF806A+2).w,(dword_FFA900).w
-                bra.w   Camera_ConstrainToScreenBounds
+                bra.w   Camera_FollowPlayerFromFixedHorizontalAnchor
 ; End of function Stage_ViblackScroll
 ; Starts Viblack battle
 Stage_ViblackStartBattle:                               ; CODE XREF: Stage_ViblackScroll+6   j  ; was: sub_DF5E
@@ -115,7 +115,7 @@ Stage_ViblackInit:                                      ; DATA XREF: ROM:0000D9B
 ; Attributes: thunk
 ; Constrain camera to screen bounds wrapper
 Stage_ConstrainCameraBounds:                            ; DATA XREF: ROM:0000D9B4   o  ; was: sub_DF8E
-                bra.w   Camera_ConstrainToScreenBounds
+                bra.w   Camera_FollowPlayerFromFixedHorizontalAnchor
 ; End of function Stage_ConstrainCameraBounds
 ; Transitions to Stage 17
 Stage_Stage17Transition:                                ; DATA XREF: ROM:0000D9B6   o  ; was: sub_DF92
@@ -130,7 +130,7 @@ Stage_AccelerateVerticalScroll:                         ; CODE XREF: Stage_Stage
                 move.w  #$660,(dword_FFA900).w
                 bsr.w   Gfx_RenderSylpheedBackground
                 move.l  (dword_FF806A+2).w,(dword_FFA900).w
-                bsr.w   Camera_ConstrainToScreenBounds
+                bsr.w   Camera_FollowPlayerFromFixedHorizontalAnchor
                 cmpi.w  #$E620,(dword_FFA904).w
                 bmi.s   locret_DFD0
                 addq.w  #2,(word_FFA950).w
@@ -141,7 +141,7 @@ locret_DFD0:                                            ; CODE XREF: Stage_Stage
 Stage_ViblackPostBattleScroll1:                         ; DATA XREF: ROM:0000D9B8   o  ; was: sub_DFD2
                 move.l  (dword_FF8062+2).w,d0
                 add.l   d0,(dword_FFA904).w
-                bra.w   Camera_ConstrainToScreenBounds
+                bra.w   Camera_FollowPlayerFromFixedHorizontalAnchor
 ; End of function Stage_ViblackPostBattleScroll1
 ; Scroll with screen transition and palette fade
 Stage_ViblackPostBattleScroll2:                         ; DATA XREF: ROM:0000D9BA   o  ; was: sub_DFDE

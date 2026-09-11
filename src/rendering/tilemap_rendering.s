@@ -1,3 +1,4 @@
+; Initializes scroll buffer with value 8
 Gfx_InitScrollBuffer:
                 lea     (word_FFA400).w,a5              ; was: sub_106C6
                 move.w  #8,(a5)
@@ -21,7 +22,7 @@ Scroll_RenderTilemapAdjusted:
 ; End of function Scroll_RenderTilemapAdjusted
 ; Gets camera position for rendering
 Gfx_GetCameraPosition:                                  ; CODE XREF: Stage_InitTerobusterBoss+1E   p  ; was: sub_106F2
-                                        ; Gfx_UpdateScroll+4   j
+                                        ; Camera_UpdateAndRenderStageTilemap+4   j
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$158,d0
                 move.w  (dword_FFA904).w,d1
@@ -32,7 +33,7 @@ Gfx_RenderTilemap:                                      ; CODE XREF: Stage_Telep
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
 loc_10704:                                              ; CODE XREF: Stage_CaterpillarShipMovement+52   p
-                                        ; Gfx_LoadStage18Tiles+1A   j
+                                        ; Stage18_UpdateScrollAndRenderTilemap+1A   j
                 neg.w   d1
                 moveq   #8,d7
                 move.w  d0,d2
@@ -178,7 +179,7 @@ Scroll_RenderTilemapVertOffset:
                 bra.s   loc_108A4
 ; End of function Scroll_RenderTilemapVertOffset
 ; Camera lock for boss battle
-Camera_Stage18Lock:                                     ; CODE XREF: Gfx_LoadStage18Tiles:loc_1002A   p  ; was: sub_10894
+Camera_Stage18Lock:                                     ; CODE XREF: Stage18_UpdateScrollAndRenderTilemap:loc_1002A   p  ; was: sub_10894
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$158,d0
                 move.w  (dword_FFA904).w,d1

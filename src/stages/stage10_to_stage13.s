@@ -92,8 +92,8 @@ Stage_Stage10ScrollUpdate:                              ; DATA XREF: Stage_InitS
 ; End of function Stage_Stage10ScrollUpdate
 ; Checks transition to next segment
 Stage_Stage10CheckTransition:                           ; DATA XREF: ROM:0000D95E   o  ; was: sub_D9DC
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$730,(dword_FFA900).w
                 bmi.s   Stage_Stage10CheckTransition_Return
                 bra.w   Stage_TransitionToNextPhase
@@ -105,8 +105,8 @@ Stage_Stage10CheckTransition_Return:                    ; CODE XREF: Stage_Stage
 ; End of function Stage_Stage10CheckTransition
 ; Transitions to Deep Strider boss
 Stage_DeepStriderTransition:                            ; DATA XREF: ROM:0000D960   o  ; was: sub_D9F2
-                bsr.w   Gfx_LoadBossTiles
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 move.w  #$7B0,d0
                 cmp.w   (dword_FFA900).w,d0
                 bpl.s   Stage_Stage10CheckTransition_Return
@@ -125,14 +125,14 @@ Stage_DeepStriderBattle:                                ; DATA XREF: ROM:0000D96
                 bsr.w   Stage_TriggerPhaseTransition
 ; Updates camera for Deep Strider boss battle with phase transition check
 Camera_UpdateDeepStrider:                               ; CODE XREF: Stage_DeepStriderBattle+4   j  ; was: loc_DA2C
-                bsr.w   Camera_UpdateTowardsPlayer
-                bra.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bra.w   Scroll_AccumulateQuarterHorizontalDelta
 ; End of function Stage_DeepStriderBattle
 ; Initializes Deep Strider battle
 Stage_DeepStriderBattleInit:                            ; DATA XREF: ROM:0000D964   o  ; was: sub_DA34
                 bsr.w   Stage_InitSectionChange
-                bsr.w   Camera_UpdateTowardsPlayer
-                bra.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bra.w   Scroll_AccumulateQuarterHorizontalDelta
 ; End of function Stage_DeepStriderBattleInit
 ; Transitions to Stage 11
 Stage_Stage11Transition:                                ; DATA XREF: ROM:0000D966   o  ; was: sub_DA40
@@ -140,8 +140,8 @@ Stage_Stage11Transition:                                ; DATA XREF: ROM:0000D96
 ; End of function Stage_Stage11Transition
 ; Updates Stage 11 scroll and check
 Stage_Stage11ScrollUpdate:                              ; DATA XREF: ROM:0000D968   o  ; was: sub_DA44
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$1040,(dword_FFA900).w
                 bmi.s   locret_DA58
                 bra.w   Stage_TransitionToNextPhase
@@ -151,8 +151,8 @@ locret_DA58:                                            ; CODE XREF: Stage_Stage
 ; End of function Stage_Stage11ScrollUpdate
 ; Transitions to Gusthead boss
 Stage_GustheadTransition:                               ; DATA XREF: ROM:0000D96A   o  ; was: sub_DA5A
-                bsr.w   Gfx_LoadBossTiles
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 move.w  #$10C0,d0
                 cmp.w   (dword_FFA900).w,d0
                 bpl.s   locret_DA92
@@ -183,7 +183,7 @@ loc_DAA8:                                               ; CODE XREF: Stage_Gusth
                 tst.w   (word_FFA968).w
                 beq.s   loc_DAE2
                 bsr.w   Scroll_ApplyVelocity
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$14,(StageTableIndex).w
                 beq.s   locret_DAE0
                 tst.w   (word_FFA968).w
@@ -201,8 +201,8 @@ locret_DAE0:                                            ; CODE XREF: Stage_Stage
                 rts
 ; ---------------------------------------------------------------------------
 loc_DAE2:                                               ; CODE XREF: Stage_Stage12Init+8   j
-                bsr.w   Camera_UpdateTowardsPlayer
-                bra.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
+                bra.w   Scroll_AccumulateQuarterHorizontalDelta
 ; End of function Stage_Stage12Init
 ; Applies velocity value to horizontal scroll position
 Scroll_ApplyVelocity:                                   ; CODE XREF: Stage_Stage12Init+A   p  ; was: sub_DAEA
@@ -217,8 +217,8 @@ Stage_Stage12ScrollUpdate:                              ; DATA XREF: ROM:0000D97
                 clr.w   (RasterEffectInitState).w
 ; Updates stage 12 scrolling with delta at position $1580
 Stage_Stage12_ScrollLoop:                               ; DATA XREF: ROM:0000D972   o  ; was: loc_DB04
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$1580,(dword_FFA900).w
                 bmi.w   Stage_Stage10CheckTransition_Return
                 addq.w  #2,(word_FFA950).w
@@ -229,8 +229,8 @@ Stage_Stage12_ScrollLoop:                               ; DATA XREF: ROM:0000D97
 ; End of function Stage_Stage12ScrollUpdate
 ; Initializes Stage 13
 Stage_Stage13Init:                                      ; DATA XREF: ROM:0000D974   o  ; was: sub_DB2E
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 bsr.w   Stage_WaitForTimerDecrement
                 cmpi.w  #$15E0,(dword_FFA900).w
                 bmi.w   Stage_Stage10CheckTransition_Return
@@ -249,8 +249,8 @@ stru_DB5A:      dc.w    7                               ; field_0
 
 ; Updates Stage 13 scroll
 Stage_Stage13ScrollUpdate:                              ; DATA XREF: ROM:0000D976   o  ; was: sub_DB64
-                bsr.w   Gfx_UpdateScroll
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateAndRenderStageTilemap
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 bsr.w   Stage_WaitForTimerDecrement
                 cmpi.w  #$1760,(dword_FFA900).w
                 bmi.s   locret_DB7C
@@ -260,8 +260,8 @@ locret_DB7C:                                            ; CODE XREF: Stage_Stage
 ; End of function Stage_Stage13ScrollUpdate
 ; Checks transition to next segment
 Stage_Stage13CheckTransition:                           ; DATA XREF: ROM:0000D978   o  ; was: sub_DB7E
-                bsr.w   Gfx_LoadBossTiles
-                bsr.w   Scroll_AddDeltaToScroll
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
+                bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 move.w  #$17A0,d0
                 cmp.w   (dword_FFA900).w,d0
                 bpl.s   locret_DB9C
@@ -412,7 +412,7 @@ Stage_InitStage13:                                      ; CODE XREF: Stage_Snake
 ; Waits for scroll position before boss
 Stage_SnakeWaitScroll:                                  ; DATA XREF: ROM:0000D992   o  ; was: sub_DD2E
                 bsr.w   Scroll_UpdateSnakeBackground
-                bsr.w   Gfx_LoadBossTiles
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 cmpi.w  #$3E0,(dword_FFA900).w
                 bmi.w   Stage_Stage10CheckTransition_Return
                 move.w  (word_FF8200).w,(dword_FF8040).w
@@ -425,7 +425,7 @@ Stage_SnakeWaitScroll:                                  ; DATA XREF: ROM:0000D99
 ; Transitions to Bugmax boss
 Stage_BugmaxTransition:                                 ; DATA XREF: ROM:0000D994   o  ; was: sub_DD5E
                 bsr.w   Scroll_UpdateSnakeBackground
-                bsr.w   Gfx_LoadBossTiles
+                bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 move.w  #$460,d0
                 cmp.w   (dword_FFA900).w,d0
                 bpl.w   Stage_Stage10CheckTransition_Return
@@ -469,12 +469,12 @@ Stage_BugmaxStartBattle:                                ; DATA XREF: ROM:0000D99
                 addq.w  #2,(word_FFA950).w
                 move.w  #$22,(word_FFA02A).w            ; '"'
 loc_DDFC:                                               ; CODE XREF: Stage_BugmaxStartBattle+8   j
-                bra.w   Camera_UpdateTowardsPlayer
+                bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_BugmaxStartBattle
 ; Checks conditions and initiates Bugmax boss transition
 Stage_BugmaxTransitionCheck:                            ; DATA XREF: ROM:0000D99A   o  ; was: sub_DE00
                 bsr.w   Scroll_UpdateSnakeBackground
-                bsr.w   Camera_UpdateTowardsPlayer
+                bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 tst.w   (word_FF8230).w
                 bne.w   Stage_Stage10CheckTransition_Return
                 tst.w   (word_FF8138).w
