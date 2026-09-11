@@ -20,7 +20,7 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
                 clr.w   (word_FFFF44).w
                 clr.w   (word_FFFF3E).w
                 clr.w   (word_FF8090).w
-                clr.b   (byte_FFFF31).w
+                clr.b   (MessageDisplayFlags).w
                 bsr.w   Results_InitializeStageHistory
                 bra.s   UI_ResetPaletteAndMessageMode_Clear
 ; End of function UI_InitializeGameVariables
@@ -47,7 +47,7 @@ UI_InitGameStateFromContinue_CopyAmmo:                  ; CODE XREF: UI_InitGame
                 clr.w   (word_FFFF3E).w
                 clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
-                clr.b   (byte_FFFF31).w
+                clr.b   (MessageDisplayFlags).w
                 bsr.s   UI_ResetPaletteAndMessageMode
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  (StageTableIndex).w,d0

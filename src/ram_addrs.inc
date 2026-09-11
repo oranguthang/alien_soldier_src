@@ -268,7 +268,7 @@ byte_FF8308             equ     $FFFF8308
 dword_FF830A            equ     $FFFF830A
 byte_FF830E             equ     $FFFF830E
 byte_FF830F             equ     $FFFF830F
-byte_FF8310             equ     $FFFF8310
+MessageAdvanceButtons   equ     $FFFF8310               ; was: byte_FF8310
 byte_FF8311             equ     $FFFF8311
 byte_FF8478             equ     $FFFF8478
 byte_FF8488             equ     $FFFF8488
@@ -953,7 +953,7 @@ PaletteFillColor        equ     $FFFFFF28               ; was: word_FFFF28
 MessageMode             equ     $FFFFFF2A               ; was: word_FFFF2A
 dword_FFFF2C            equ     $FFFFFF2C
 ControlLayoutFlags      equ     $FFFFFF30               ; was: byte_FFFF30
-byte_FFFF31             equ     $FFFFFF31
+MessageDisplayFlags     equ     $FFFFFF31               ; was: byte_FFFF31
 word_FFFF36             equ     $FFFFFF36
 SoundDisableFlags       equ     $FFFFFF38               ; was: word_FFFF38
 PasswordDigits          equ     $FFFFFF3A               ; was: dword_FFFF3A

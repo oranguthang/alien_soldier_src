@@ -118,7 +118,7 @@ loc_12C44:                                              ; CODE XREF: UI_RenderHU
 loc_12C56:                                              ; CODE XREF: UI_RenderHUDElement1+D0   j
                                         ; UI_RenderHUDElement1+D8   j
                 bsr.w   UI_SetupScoreDMA
-                tst.b   (byte_FFFF31).w
+                tst.b   (MessageDisplayFlags).w
                 bpl.s   loc_12C62
                 rts
 ; ---------------------------------------------------------------------------

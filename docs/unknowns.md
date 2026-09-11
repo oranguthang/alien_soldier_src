@@ -2668,7 +2668,7 @@ Four especially broad data labels are explicitly registered:
 | Symbol | ROM address | Evidence | Current statement |
 |---|---:|---|---|
 | `UnidentifiedSegaTilemap` | `0x0E8020` | hypothesis | 48 sequential tile words adjacent to the SEGA art; no live pointer has been found. |
-| `UnidentifiedTilemapData` | `0x180000` | unknown | Tile-like words at the frontend asset boundary; no live pointer has been found. |
+| `MessageDisplay_FontPatternFillSource` | `0x180000` | static | The message engine directly uses the 48 repeated `$C7F8` words as the source of fixed 32-word and 40-word pattern-fill DMAs. |
 | `Credits_UnidentifiedTrailingData` | `0x0225CC` | unknown | Opaque block ending at the demo subsystem boundary; no live reference has been found, so neither purpose nor unused status is asserted. |
 | `Stage11_UnidentifiedAsset` | `0x01AE96` | unknown | 314-byte asset selected by the Stage 11 configuration; its format and intended use are not established by a live consumer. |
 
@@ -2921,8 +2921,9 @@ of its state transitions now use the `MessageSequence_*`, `MessageScript_*`,
 and `BattleBanner_*` namespaces.
 
 Static ROM/VRAM operands also reject the former HScroll and compressed-tilemap
-claims. The two DMA helper families copy fixed font/tilemap data from
-`$180000` and `$180060` to the message VRAM destinations. Script command
+claims. The fixed DMA helpers copy message-display pattern data from
+`MessageDisplay_FontPatternFillSource` and three six-word base-pattern blocks
+to their encoded VDP destinations. Script command
 `$FFFE` masks an embedded ROM source address and queues a direct DMA; it does
 not invoke a decompressor. The glyph renderer treats each source nibble as a
 transparency decision, constructs a 64-byte tile, queues its transfer, and
@@ -3474,3 +3475,25 @@ name-audit registry from 9,247 to 9,297. Module count remains 347.
 The package gate re-extracts all 579 assets, reproduces canonical SHA-1
 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`, passes all 37 tests, exports
 16,057 canonical addresses, and leaves formatter and lint clean.
+
+The message-display pattern follow-up resolves a false unknown-data claim and
+tightens the earlier engine audit. The block at `0x180000` retains its original
+`unknown_2` provenance but is no longer unreferenced: two fixed DMA builders
+use its 48 repeated `$C7F8` words as 32-word and 40-word pattern-fill sources.
+The adjacent addresses `0x180060`, `0x18006C`, and `0x180078` are the three
+six-word base-pattern sources restored by the script-finalization path. Their
+names deliberately retain numeric order and do not invent a visual identity.
+
+The pass also corrects six tile/tilemap-oriented generated helper names to
+their exact pattern-fill operations and promotes two message-owned RAM bytes.
+`MessageAdvanceButtons` stores the controller value masked by `$70` and
+short-circuits the glyph delay when nonzero. `MessageDisplayFlags` bit 7 spans
+script entry through finalization and suppresses the signed HUD update while
+set. Finally, the `MessageSequence_Idle` audit address is corrected from the
+misread IDA ordinal `nullsub_22` to its actual listing address `0x00ABD0`.
+
+Six restored or newly exposed provenance mappings raise the total from 12,590
+to 12,596. Six new static audit records raise the registry from 9,297 to 9,303,
+and the two RAM promotions lower the enforced address-derived ceiling from
+3,453 to 3,451. The three newly labelled ROM boundaries raise the canonical
+symbol export from 16,057 to 16,060 addresses; module count remains 347.

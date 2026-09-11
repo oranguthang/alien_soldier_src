@@ -69,7 +69,7 @@ UI_InitializeStageStart:                                ; DATA XREF: Sys_Dispatc
                 tst.w   (GameSubstateIndex).w
                 bne.s   UI_LoadStageGraphics
                 clr.w   (word_FFA29C).w
-                clr.b   (byte_FFFF31).w
+                clr.b   (MessageDisplayFlags).w
                 move.w  #2,(ShootingMode).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l

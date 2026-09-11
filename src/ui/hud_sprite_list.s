@@ -73,7 +73,7 @@ UI_AppendHUDSpriteList_AppendBaseIndicator:             ; CODE XREF: UI_BuildHUD
                 move.w  #$C6F0,(a1)+
                 btst    #0,(VBlankFrameCounter+1).w
                 bne.s   UI_AppendHUDSpriteList_UseFixedIndicatorValue
-                tst.b   (byte_FFFF31).w
+                tst.b   (MessageDisplayFlags).w
                 beq.s   UI_AppendHUDSpriteList_UseSelectedIndicatorValue
 UI_AppendHUDSpriteList_UseFixedIndicatorValue:          ; CODE XREF: UI_BuildHUDSpriteList+EA   j  ; was: loc_1336A
                 move.w  #1,(a1)+

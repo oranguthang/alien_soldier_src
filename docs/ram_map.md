@@ -7,7 +7,8 @@ still have neutral size/address names. The first reviewed semantic fields are
 `DifficultyMode`, `MessageMode`, `SoundDisableFlags`, `StageTimeRemaining`,
 `ScoreValueBCD`, `ScoreAddendBCD`, `ScoreAddendPrefixByte`,
 `StagePhaseSplitTimes`, `StageCompletionTimes`, `StageResultVisits`,
-`MessageSequenceState`, `MessageSequenceFlags`, `WeaponStateIndex`,
+`MessageSequenceState`, `MessageSequenceFlags`, `MessageAdvanceButtons`,
+`MessageDisplayFlags`, `WeaponStateIndex`,
 `WeaponSlotOffset`, `WeaponSavedSlotOffset`, `WeaponMenuRadius`,
 `WeaponMenuAngle`, `WeaponStateCooldown`, `WeaponMenuAngularStep`, and
 `WeaponMenuSlotOffset`, `ShootingMode`, `ControlLayoutFlags`, and
@@ -88,6 +89,8 @@ alone does not yet prove the exact player-facing counting convention.
 |---|---:|---|
 | `MessageSequenceFlags` | `$FFFF80A8` | Bit zero prevents the dispatcher from mirroring controller direction state during the ship-name path. `ShipName_StartScript` sets it; `BossMessage_Start` clears it. |
 | `MessageSequenceState` | `$FFFF80C2` | The central dispatcher uses this even word directly as an offset into its handler table. Stage, result, boss, and ship-cutscene callers publish a starting state here and wait for it to return to zero. |
+| `MessageAdvanceButtons` | `$FFFF8310` | The dispatcher stores the controller byte masked with `$70`; the glyph-delay state advances immediately when the result is nonzero. |
+| `MessageDisplayFlags` | `$FFFFFF31` | Message-script entry sets bit 7 and finalization clears it. The signed HUD path suppresses its update while that bit is set; initialization clears the whole byte. |
 
 ## Reviewed weapon-state and selection fields
 

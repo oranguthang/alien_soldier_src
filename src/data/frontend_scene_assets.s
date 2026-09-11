@@ -1,4 +1,5 @@
-UnidentifiedTilemapData:    dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8
+; Repeated source pattern used by the message-display fill DMAs
+MessageDisplay_FontPatternFillSource:   dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8  ; was: unknown_2
                 dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8
                 dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8
                 dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8
@@ -6,14 +7,15 @@ UnidentifiedTilemapData:    dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8
                 dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8
                 dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8
                 dc.w    $C7F8, $C7F8, $C7F8, $C7F8, $C7F8, $C7F8
-                dc.w    $C7CC, $C7CD, $C7CE, $C7CF, $C7D0, $C7BF
-                dc.w    $C7F8, $C7DC, $C7DD, $C7DE, $C7DF, $C7BF
-                dc.w    $C7F8, $C7EC, $C7ED, $C7EE, $C7EF, $C7BF
-unused_tile_mappings:   binclude "data/mappings/unused.bin"
+; Six-word font-base patterns restored to the three message-display destinations
+MessageDisplay_FontBasePattern0:    dc.w    $C7CC, $C7CD, $C7CE, $C7CF, $C7D0, $C7BF  ; was: unlabeled_180060
+MessageDisplay_FontBasePattern1:    dc.w    $C7F8, $C7DC, $C7DD, $C7DE, $C7DF, $C7BF  ; was: unlabeled_18006C
+MessageDisplay_FontBasePattern2:    dc.w    $C7F8, $C7EC, $C7ED, $C7EE, $C7EF, $C7BF  ; was: unlabeled_180078
+unused_tile_mappings:               binclude "data/mappings/unused.bin"
 unused_tile_mappings_End:
-tiles_180F84:           binclude "data/artcomp/tiles_180F84.bin"
+tiles_180F84:                       binclude "data/artcomp/tiles_180F84.bin"
 tiles_180F84_End:
-byte_18140E:            dc.b    0, $C4, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0
+byte_18140E:                        dc.b    0, $C4, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0
                                         ; DATA XREF: ROM:stru_1CEFC   o
                                         ; ROM:0001CF04   o
                 dc.b    $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $FF, $DD, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F

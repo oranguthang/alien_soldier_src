@@ -58,7 +58,7 @@ listing by `make verify-layout`.
 | `0x0ED4B4-0x1412B5` | gameplay tile art, player sprite art, and stage mappings | 5 | static |
 | `0x1412B6-0x14AE07` | Japanese font assets | 1 | static |
 | `0x14AE08-0x17FFFF` | credits scene assets and third padding gap | 1 | static |
-| `0x180000-0x189D37` | frontend scene assets and unidentified tilemap data | 1 | hypothesis |
+| `0x180000-0x189D37` | message-display pattern templates and frontend scene assets | 1 | static/hypothesis |
 | `0x189D38-0x18E5D1` | planet, credits, and menu assets | 2 | static |
 | `0x18E5D2-0x1A1025` | stage object art and sprite mappings | 4 | hypothesis |
 | `0x1A1026-0x1CE4F7` | stage phase and Seven Force cutscene assets | 7 | static |
