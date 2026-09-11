@@ -3835,3 +3835,35 @@ records. Provenance rises from 13,066 to 13,115, the name-audit registry from
 the mean to 330.2 lines; the largest module remains 986 lines, with zero files
 above 1,000 lines and zero generic container filenames. A fresh build remains
 byte-identical to the canonical Japanese ROM.
+
+The Victor, Sunset Sting, and Viblack mapping pass rejects the inherited
+`data/victor_sunset_sting_and_viblack_mappings.s` container. The first two
+records are demonstrably shared: Victor assigns them to its ring segments,
+while Sunset Sting assigns them to active and inactive chain roots and embeds
+the first mapping in its second-form tracking descriptors. They now form the
+five-line `data/victor_and_sunset_sting_shared_sprite_mappings.s` module at
+`0x0EBE94-0x0EBEA5`.
+
+Sunset Sting's two eight-entry tables prove the exact angle indices of its
+active and destroyed segment mappings. Its defeat-core table separately proves
+three visible-core frames, with the third also assigned directly by the core
+initializer. These records form the cohesive 43-line
+`data/sunset_sting_segment_sprite_mappings.s` module at
+`0x0EBEA6-0x0EBF8F`. Index numbers and neutral letters describe only the
+observed table roles; they do not invent visual pose names.
+
+The remaining range is a private Viblack missile set. The type-$210 missile
+spawner directly assigns the second relative animation stream, and the two
+streams select four adjacent sprite mappings with explicit durations. They are
+isolated as the 26-line `data/viblack_missile_sprite_animations.s` module at
+`0x0EBF90-0x0EBFDF`; the first stream's evidence is limited to its structure
+and its position in the two-pointer pair immediately after the missile handler.
+
+All 27 formerly address-derived definitions have exact-address static audit
+records. Provenance rises from 13,115 to 13,142, the name-audit registry from
+9,970 to 9,997, and the enforced address-derived ceiling falls from 2,933 to
+2,906. The natural split raises the layout from 360 to 362 modules and changes
+the mean to 328.4 lines; the largest module remains 986 lines, with zero files
+above 1,000 lines and zero generic container filenames. A fresh pinned-toolchain
+build and direct verification reproduce the canonical Japanese ROM byte for
+byte at SHA-1 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.

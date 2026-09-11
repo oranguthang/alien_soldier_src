@@ -255,7 +255,7 @@ Boss_VictorInitNextRingSegment:                         ; CODE XREF: Boss_Victor
                 movea.w a4,a0
                 dbf     d6,Boss_VictorInitNextRingSegment
                 move.w  #$CC00,2(a4)
-                move.l  #word_EBE94,8(a4)
+                move.l  #SharedVictorSunsetStingSegmentMappingA,8(a4)
                 move.w  #$2300,$E(a4)
                 tst.w   (dword_FF9408).w
                 bpl.s   Boss_VictorFinishRingDeployment
@@ -333,7 +333,7 @@ Boss_VictorLinkNextRingSegment:                         ; CODE XREF: Boss_Victor
                 addq.w  #2,4(a4)
                 adda.w  #$60,a4                         ; '`'
                 dbf     d6,Boss_VictorLinkNextRingSegment
-                move.l  #word_EBEA0,(dword_FFD1C8).w
+                move.l  #SharedVictorSunsetStingSegmentMappingB,(dword_FFD1C8).w
                 move.w  (dword_FF9404+2).w,d0
                 eori.w  #$100,d0
                 move.w  d0,$40(a5)
@@ -385,7 +385,7 @@ Boss_VictorLinkPreviousRingSegment:                     ; CODE XREF: Boss_Victor
                 move.w  $42(a3),$42(a4)
                 move.w  #$10,$4A(a4)
                 addq.w  #2,4(a4)
-                move.l  #word_EBE94,(dword_FFD1C8).w
+                move.l  #SharedVictorSunsetStingSegmentMappingA,(dword_FFD1C8).w
                 move.w  #$20,$4A(a5)                    ; ' '
                 addq.w  #2,4(a5)
                 rts

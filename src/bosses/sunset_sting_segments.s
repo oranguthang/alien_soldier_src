@@ -479,9 +479,9 @@ Boss_SunsetStingDefeatCoreReturn:                       ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingDefeatCoreMain
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingDefeatCoreMappings:
-                dc.l    word_EBF6C                      ; DATA XREF: Boss_SunsetStingDefeatCoreMain+32   r  ; was: off_43892
-                dc.l    word_EBF78
-                dc.l    word_EBF84
+                dc.l    Boss_SunsetStingDefeatCoreMappingA  ; DATA XREF: Boss_SunsetStingDefeatCoreMain+32   r  ; was: off_43892
+                dc.l    Boss_SunsetStingDefeatCoreMappingB
+                dc.l    Boss_SunsetStingDefeatCoreMappingC
 
 ; Dispatches the visible core's defeat states
 Boss_SunsetStingDefeatCoreDispatch:                     ; CODE XREF: Boss_SunsetStingDefeatCoreMain+8   p  ; was: sub_4389E
@@ -498,7 +498,7 @@ Boss_SunsetStingDefeatCoreStates:
 ; Initializes the visible core for its final defeat animation
 Boss_SunsetStingDefeatCoreInitializeState:              ; DATA XREF: ROM:Boss_SunsetStingDefeatCoreStates   o  ; was: sub_438AE
                 move.w  #$CD00,2(a5)
-                move.l  #word_EBF84,8(a5)
+                move.l  #Boss_SunsetStingDefeatCoreMappingC,8(a5)
                 move.b  #$40,$20(a5)                    ; '@'
                 move.l  #$E008F010,$2C(a5)
                 bra.w   Boss_SunsetStingIncrementState

@@ -246,12 +246,12 @@ Boss_SunsetStingMovementUpdateActiveChain:              ; CODE XREF: Boss_Sunset
                 lea     Boss_SunsetStingChainRootOffsets(pc),a2
                 movea.w (a2,d6.w),a4
                 adda.w  a5,a4
-                move.l  #word_EBEA0,$1E8(a4)
+                move.l  #SharedVictorSunsetStingSegmentMappingB,$1E8(a4)
                 move.w  (word_FFC678).w,d0
                 move.w  d6,(word_FFC678).w
                 movea.w (a2,d0.w),a4
                 adda.w  a5,a4
-                move.l  #word_EBE94,$1E8(a4)
+                move.l  #SharedVictorSunsetStingSegmentMappingA,$1E8(a4)
 Boss_SunsetStingMovementUpdateSelectedChain:            ; CODE XREF: Boss_SunsetStingSetIdleState+20   j  ; was: loc_41C28
                                         ; Boss_SunsetStingUpdateMovement+F6   j
                 move.w  (word_FFC678).w,d6

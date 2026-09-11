@@ -733,22 +733,22 @@ Boss_SunsetStingSelectSegmentMappingApply:              ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingSelectSegmentMapping
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingSegmentMappings:
-                dc.l    word_EBED0                      ; DATA XREF: Boss_SunsetStingSegmentOrbitState+3E   o  ; was: off_432FA
+                dc.l    Boss_SunsetStingSegmentMapping0  ; DATA XREF: Boss_SunsetStingSegmentOrbitState+3E   o  ; was: off_432FA
                                         ; Boss_SunsetStingSegmentFlightState+52   o
-                dc.l    word_EBEE2
-                dc.l    word_EBEEE
-                dc.l    word_EBEF4
-                dc.l    word_EBEA6
-                dc.l    word_EBEB2
-                dc.l    word_EBEBE
-                dc.l    word_EBEC4
+                dc.l    Boss_SunsetStingSegmentMapping1
+                dc.l    Boss_SunsetStingSegmentMapping2
+                dc.l    Boss_SunsetStingSegmentMapping3
+                dc.l    Boss_SunsetStingSegmentMapping4
+                dc.l    Boss_SunsetStingSegmentMapping5
+                dc.l    Boss_SunsetStingSegmentMapping6
+                dc.l    Boss_SunsetStingSegmentMapping7
 Boss_SunsetStingDestroyedSegmentMappings:
-                dc.l    word_EBF00                      ; DATA XREF: Boss_SunsetStingSecondarySegmentOrbitState+3E   o  ; was: off_4331A
+                dc.l    Boss_SunsetStingDestroyedSegmentMapping0  ; DATA XREF: Boss_SunsetStingSecondarySegmentOrbitState+3E   o  ; was: off_4331A
                                         ; Boss_SunsetStingSecondarySegmentFallState+14   o
-                dc.l    word_EBF06
-                dc.l    word_EBF0C
-                dc.l    word_EBF18
-                dc.l    word_EBF1E
-                dc.l    word_EBF24
-                dc.l    word_EBF2A
-                dc.l    word_EBF36
+                dc.l    Boss_SunsetStingDestroyedSegmentMapping1
+                dc.l    Boss_SunsetStingDestroyedSegmentMapping2
+                dc.l    Boss_SunsetStingDestroyedSegmentMapping3
+                dc.l    Boss_SunsetStingDestroyedSegmentMapping4
+                dc.l    Boss_SunsetStingDestroyedSegmentMapping5
+                dc.l    Boss_SunsetStingDestroyedSegmentMapping6
+                dc.l    Boss_SunsetStingDestroyedSegmentMapping7

@@ -521,7 +521,7 @@ Boss_SunsetStingSecondFormBodyPartInitTable:
                 dc.l    $210000
                 dc.l    Boss_SunsetStingBodyPartSpriteDescriptorB
                 dc.l    $210000
-                dc.l    word_EBE94
+                dc.l    SharedVictorSunsetStingSegmentMappingA
                 dc.l    $210000
                 dc.l    $80000000
                 dc.l    $80000001
@@ -535,7 +535,7 @@ Boss_SunsetStingSecondFormBodyPartInitTable:
                 dc.l    $210000
                 dc.l    Boss_SunsetStingBodyPartSpriteDescriptorB
                 dc.l    $210000
-                dc.l    word_EBE94
+                dc.l    SharedVictorSunsetStingSegmentMappingA
                 dc.l    $210000
                 dc.l    $80000000
                 dc.l    $80000001
@@ -549,7 +549,7 @@ Boss_SunsetStingSecondFormBodyPartInitTable:
                 dc.l    $210000
                 dc.l    Boss_SunsetStingBodyPartSpriteDescriptorB
                 dc.l    $210000
-                dc.l    word_EBE94
+                dc.l    SharedVictorSunsetStingSegmentMappingA
                 dc.l    $210000
                 dc.l    $80000000
                 dc.l    $80000001
@@ -563,7 +563,7 @@ Boss_SunsetStingSecondFormBodyPartInitTable:
                 dc.l    $210000
                 dc.l    Boss_SunsetStingBodyPartSpriteDescriptorB
                 dc.l    $210000
-                dc.l    word_EBE94
+                dc.l    SharedVictorSunsetStingSegmentMappingA
                 dc.l    $210000
                 dc.l    $80000000
                 dc.l    $80000000

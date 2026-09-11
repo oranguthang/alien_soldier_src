@@ -6,8 +6,8 @@ Projectile_ViblackMissileMain:                          ; DATA XREF: ROM:Entity_
                 rts
 ; End of function Projectile_ViblackMissileMain
 ; ---------------------------------------------------------------------------
-                dc.l    off_EBFC0
-                dc.l    off_EBFCC
+                dc.l    Projectile_ViblackMissileAnimationA
+                dc.l    Projectile_ViblackMissileAnimationB
 
 Projectile_ViblackMissileNoOp:                          ; CODE XREF: Projectile_ViblackMissileMain+8   p  ; was: nullsub_7
                 rts
@@ -32,7 +32,7 @@ Projectile_SpawnViblackMissile:                         ; DATA XREF: ROM:Project
                 move.w  #$210,(a0)
                 move.w  #$ED00,2(a0)
                 move.w  #$6300,$E(a0)
-                move.l  #off_EBFCC,8(a0)
+                move.l  #Projectile_ViblackMissileAnimationB,8(a0)
                 move.b  #$3C,$20(a0)                    ; '<'
                 move.w  $10(a3),$10(a0)
                 move.w  $14(a3),$14(a0)
