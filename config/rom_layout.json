@@ -124,7 +124,7 @@
     { "file": "src/cutscenes/planet_ship_and_star_sequences.s", "subsystem": "cutscenes", "start": "0x005150", "end": "0x00588B" },
     { "file": "src/cutscenes/story_text.s", "subsystem": "cutscenes", "start": "0x00588C", "end": "0x007643" },
     { "file": "src/cutscenes/sprite_grid_and_pattern_effects.s", "subsystem": "cutscenes", "start": "0x007644", "end": "0x007B2F" },
-    { "file": "src/cutscenes/credits.s", "subsystem": "cutscenes", "start": "0x007B30", "end": "0x007D67" },
+    { "file": "src/cutscenes/ending_sequence_credits.s", "subsystem": "cutscenes", "start": "0x007B30", "end": "0x007D67" },
     { "file": "src/cutscenes/planet_effects.s", "subsystem": "cutscenes", "start": "0x007D68", "end": "0x008617" },
     { "file": "src/math/sine.s", "subsystem": "math", "start": "0x008618", "end": "0x0086EF" },
     { "file": "src/cutscenes/ship_sequence.s", "subsystem": "cutscenes", "start": "0x0086F0", "end": "0x009321" },

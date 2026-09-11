@@ -23,7 +23,7 @@ StoryScreen_ClearPlaneB:                                ; CODE XREF: StoryScreen
                 dbf     d0,StoryScreen_ClearPlaneB
                 move    (sp)+,sr
                 clr.w   (word_FF00EC).l
-                clr.w   (word_FF0178).l
+                clr.w   (StoryTextState).l
                 move.b  #4,(VDPReg18Shadow+1).w
                 move.w  #$44,(RasterEffectIndex).w      ; 'D'
                 clr.w   (RasterEffectInitState).w
@@ -69,8 +69,8 @@ StoryScreen_RunFrame:                                   ; CODE XREF: StoryScreen
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   StoryScreen_DispatchState
-                bsr.w   UI_StoryTextDispatcher
-                bsr.w   UI_JapaneseTextDispatcher
+                bsr.w   StoryText_Dispatch
+                bsr.w   StoryFont_UpdateAndDispatch
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l

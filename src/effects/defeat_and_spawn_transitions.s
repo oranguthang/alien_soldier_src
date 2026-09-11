@@ -1,4 +1,4 @@
-Object_ClearForTransition:                              ; CODE XREF: Cutscene_FadeOutCredits+52   p  ; was: sub_268FA
+Object_ClearForTransition:                              ; CODE XREF: EndingSequence_FadeOutCredits+52   p  ; was: sub_268FA
                 move.w  #$150,(a5)
                 clr.w   4(a5)
                 move.w  #$150,d0
@@ -234,7 +234,7 @@ Effect_InitTransitionModeKeepProgress:                  ; DATA XREF: ROM:00026B0
                 rts
 ; End of function Effect_InitTransitionModeKeepProgress
 ; Palette effect dispatcher
-Effect_PaletteDispatcher:                               ; CODE XREF: Cutscene_CreditsDispatcher   p  ; was: sub_26B8C
+Effect_PaletteDispatcher:                               ; CODE XREF: EndingSequence_Dispatch   p  ; was: sub_26B8C
                                         ; Sys_GameplayMainLoop+118   p
                 move.w  (word_FF807A).w,d0
                 movea.w Effect_PaletteStateOffsets(pc,d0.w),a0

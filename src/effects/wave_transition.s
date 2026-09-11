@@ -346,7 +346,7 @@ Effect_WavePostUpdateNoOp:                              ; CODE XREF: Effect_Wave
 Gfx_UnusedWaveTileData: binclude "data/other/unused_6.bin"  ; was: unused_6
 
 ; Main loop for loading tiles to VRAM
-Gfx_LoadTilesLoop:                                      ; CODE XREF: Cutscene_InitCreditsScreen+3E   p  ; was: sub_2667C
+Gfx_LoadTilesLoop:                                      ; CODE XREF: EndingSequence_Initialize+3E   p  ; was: sub_2667C
                                         ; Stage_LoadTeleportGraphics+2C   j
                 move.w  #1,(a0)
                 move.w  #$20,(dword_FF8040).w           ; ' '

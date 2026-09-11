@@ -278,7 +278,7 @@ HBlank_UpdateStoryDisplay:                              ; was: sub_16F2
                 move.l  #$40000010,(a6)
                 move.w  #0,(VDP_DATA).l
                 move.l  #$70000003,(a6)
-                move.w  (word_FF0180).l,(VDP_DATA).l
+                move.w  (StoryFontScrollY).l,(VDP_DATA).l
                 move.w  #$10,(word_FF0186).l
 HBlank_UpdateStoryDisplay_DelayLoop:                    ; CODE XREF: HBlank_UpdateStoryDisplay+30   j  ; was: loc_171C
                 subq.w  #1,(word_FF0186).l

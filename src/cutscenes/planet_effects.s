@@ -1,3 +1,4 @@
+; Initializes the ending starfield with 59 objects at randomized positions
 Effect_InitializeStarfield:                             ; DATA XREF: ROM:00007C3E   o  ; was: sub_7D68
                 move.w  (word_FFA280).w,d0
                 andi.w  #7,d0
@@ -59,7 +60,7 @@ loc_7DEA:                                               ; CODE XREF: Effect_Init
                 addq.w  #2,(dword_FF8128+2).w
 ; Animates credits colors and updates starfield
 Effect_InitializeStarfield_WaitLoop:                    ; DATA XREF: ROM:00007C40   o  ; was: loc_7E48
-                bsr.w   Gfx_AnimateCreditsColors
+                bsr.w   EndingSequence_AnimateAccentColors
                 bsr.w   Effect_UpdateStarfield
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
@@ -228,7 +229,7 @@ loc_7FEE:                                               ; CODE XREF: Cutscene_In
 Cutscene_PlanetSequenceCtrl:                            ; DATA XREF: ROM:00007C46   o  ; was: sub_80F8
                 bsr.w   Cutscene_PlanetFadeInStep
                 bsr.w   Cutscene_PlanetPaletteUpdate
-                bsr.w   Gfx_AnimateCreditsColors
+                bsr.w   EndingSequence_AnimateAccentColors
                 bsr.w   Cutscene_RenderPlanetSpriteGrid
                 tst.w   (CutscenePaletteStep).l
                 bne.w   Cutscene_Return
@@ -270,7 +271,7 @@ Cutscene_PlanetFadeOut:                                 ; DATA XREF: ROM:00007C4
 ; Transition to next stage
 Cutscene_PlanetTransition:                              ; DATA XREF: ROM:00007C4A   o  ; was: sub_8182
                 bsr.w   Cutscene_PlanetPaletteUpdate
-                bsr.w   Gfx_AnimateCreditsColors
+                bsr.w   EndingSequence_AnimateAccentColors
                 bsr.w   Cutscene_RenderPlanetSpriteGrid
                 bsr.w   Cutscene_RevealPlanetPatternStep
                 tst.w   (PatternDissolveStep).l
@@ -534,7 +535,7 @@ loc_84B2:                                               ; CODE XREF: Cutscene_Pl
 ; End of function Cutscene_PlanetZoomProgress
 ; Main loop for planet zoom cutscene with subsystem coordination
 Cutscene_PlanetZoomMainLoop:                            ; DATA XREF: ROM:00007C4C   o  ; was: sub_84C8
-                bsr.w   Gfx_AnimateCreditsColors
+                bsr.w   EndingSequence_AnimateAccentColors
                 bsr.w   Cutscene_PlanetPaletteUpdate
                 bsr.w   Cutscene_PlanetSpriteHandler
                 bsr.w   Effect_ClearOffscreenSprites

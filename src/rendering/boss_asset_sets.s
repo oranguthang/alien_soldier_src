@@ -2,7 +2,7 @@ Gfx_TitleAndZLeoVRAMTransferParameters: dc.l    $FFFF7000, $FFFF6000, $FFFF4000,
                                         ; DATA XREF: UI_InitTitleScreen+7E   o
                                         ; sub_106FE   o
 Gfx_DefaultVRAMTransferParameters:  dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $4000  ; was: dword_11326
-                                        ; DATA XREF: Cutscene_InitCreditsScreen+4A   o
+                                        ; DATA XREF: EndingSequence_Initialize+4A   o
                                         ; Cutscene_SegaScreenFadeOut+4A   o
 Gfx_FrontendAlternateVRAMTransferParameters:    dc.l    $FFFF7000, $FFFF6800, $FFFF2000, $6000  ; was: dword_11336
                                         ; DATA XREF: UI_InitTitleScreen+96   o

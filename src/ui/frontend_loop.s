@@ -9,7 +9,7 @@ UI_InitializeResultsScreen:                             ; DATA XREF: Sys_Dispatc
                 addq.w  #2,(GameSubstateIndex).w
                 clr.b   (VDPReg18Shadow+1).w
                 clr.w   (word_FF00EC).l
-                clr.w   (word_FF0178).l
+                clr.w   (StoryTextState).l
                 rts
 ; ---------------------------------------------------------------------------
 ; Loads palette and data tables for results screen
@@ -128,7 +128,7 @@ loc_1D006:                                              ; CODE XREF: UI_Initiali
                 jsr     (Cutscene_FillPlanetPattern).l
                 jsr     (Cutscene_RenderPlanetSpriteGrid).l
                 clr.w   (word_FF00EC).l
-                clr.w   (word_FF0178).l
+                clr.w   (StoryTextState).l
                 move.b  #$87,d0
                 jsr     (Sound_QueueRequest).l
                 addq.w  #2,(GameSubstateIndex).w

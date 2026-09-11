@@ -3293,7 +3293,7 @@ therefore validate the same checked-out evidence runner.
 
 The planet-grid package audits the complete 473-line
 `cutscenes/planet_ship_and_star_sequences.s` controller and the nonadjacent
-382-line `cutscenes/sprite_grid_and_pattern_effects.s` implementation. They
+383-line `cutscenes/sprite_grid_and_pattern_effects.s` implementation. They
 remain separate because story-text bytes lie between their ROM ranges, while
 their names now make the cross-range relationship explicit. The first module
 contains three independent state machines: two planet grids, two ship grids,
@@ -3315,3 +3315,29 @@ from 12,351 to 12,406; 100 static audit records raise the total from 8,889 to
 8,989. The enforced address-derived ceiling falls from 3,690 to 3,635. Module
 count remains 347, both files stay in the normal size band, and the rebuilt
 Japanese ROM remains byte-identical.
+
+The story-text and ending-credits package audits all 31 definitions in the
+261-line `cutscenes/story_text.s` range and all 13 definitions in the renamed
+171-line `cutscenes/ending_sequence_credits.s` range. The story module contains
+two related systems: a two-state English story roll and a three-state Japanese
+font-glyph streamer. The ending module initializes the credits and owns the
+thirteen-state dispatch table that continues through the adjacent starfield,
+planet, and zoom code; its filename no longer implies that the table stops at
+the credits screen.
+
+The two former address-named story blobs are now preservation assets
+`story_text_primary_rows.bin` and `story_text_accent_rows.bin`. Each is exactly
+99 fixed `$22`-byte records plus a final `$FE`. Static control flow shows that
+the primary stream carries the complete English rows, while the sparse parallel
+stream is rendered with separate tile attributes and four palette words that
+alternate by frame parity. The Japanese path decrements the VDP vertical-scroll
+value and queues the next 128-byte glyph whenever it crosses another
+sixteen-pixel threshold.
+
+This package renames 52 source definitions, including eight private RAM fields
+and two co-addressed end aliases represented by their owning data records in
+the unique-address audit. Thirty-two new provenance mappings raise the total
+from 12,406 to 12,438; 50 static audit records raise the total from 8,989 to
+9,039. The enforced address-derived ceiling falls from 3,635 to 3,603. Both
+modules remain in the normal size band and the extracted-asset manifest retains
+the original ranges, sizes, and hashes under their semantic paths.

@@ -4883,8 +4883,8 @@
       "sha1": "24ec08716e1ff4ebd607b6e9828bcfc0e16a9bcd"
     },
     {
-      "name": "byte_5A36",
-      "path": "other/byte_5A36.bin",
+      "name": "story_text_primary_rows",
+      "path": "other/story_text_primary_rows.bin",
       "region": "other",
       "address": "0x5A36",
       "end": "0x675D",
@@ -4892,8 +4892,8 @@
       "sha1": "bb555c9821be990e515c981089a264fc35610137"
     },
     {
-      "name": "byte_675D",
-      "path": "other/byte_675D.bin",
+      "name": "story_text_accent_rows",
+      "path": "other/story_text_accent_rows.bin",
       "region": "other",
       "address": "0x675D",
       "end": "0x7484",

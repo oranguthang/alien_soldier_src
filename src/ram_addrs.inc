@@ -32,7 +32,7 @@ PlanetGridState         equ     $FFFF00EE               ; was: word_FF00EE
 ShipGridState           equ     $FFFF00F0               ; was: word_FF00F0
 PlanetGridTimer         equ     $FFFF00F2               ; was: word_FF00F2
 ShipGridTimer           equ     $FFFF00F4               ; was: word_FF00F4
-word_FF00F6             equ     $FFFF00F6
+StoryTextVRAMAddress    equ     $FFFF00F6               ; was: word_FF00F6
 dword_FF00F8            equ     $FFFF00F8
 word_FF00FC             equ     $FFFF00FC
 StarRowTimer            equ     $FFFF00FE               ; was: word_FF00FE
@@ -47,8 +47,8 @@ dword_FF0114            equ     $FFFF0114
 word_FF0118             equ     $FFFF0118
 word_FF011A             equ     $FFFF011A
 dword_FF011C            equ     $FFFF011C
-dword_FF0120            equ     $FFFF0120
-word_FF0126             equ     $FFFF0126
+StoryFontGlyphCursor    equ     $FFFF0120               ; was: dword_FF0120
+StoryFontState          equ     $FFFF0126               ; was: word_FF0126
 dword_FF0128            equ     $FFFF0128
 dword_FF012C            equ     $FFFF012C
 word_FF0130             equ     $FFFF0130
@@ -64,14 +64,14 @@ word_FF016A             equ     $FFFF016A
 word_FF016C             equ     $FFFF016C
 word_FF016E             equ     $FFFF016E
 word_FF0170             equ     $FFFF0170
-dword_FF0172            equ     $FFFF0172
+StoryTextAccentCursor   equ     $FFFF0172               ; was: dword_FF0172
 word_FF0176             equ     $FFFF0176
-word_FF0178             equ     $FFFF0178
+StoryTextState          equ     $FFFF0178               ; was: word_FF0178
 word_FF017C             equ     $FFFF017C
 word_FF017E             equ     $FFFF017E
-word_FF0180             equ     $FFFF0180
-word_FF0182             equ     $FFFF0182
-word_FF0184             equ     $FFFF0184
+StoryFontScrollY        equ     $FFFF0180               ; was: word_FF0180
+StoryFontNextGlyphY     equ     $FFFF0182               ; was: word_FF0182
+StoryFontVRAMAddress    equ     $FFFF0184               ; was: word_FF0184
 word_FF0186             equ     $FFFF0186
 word_FF0188             equ     $FFFF0188
 dword_FF018A            equ     $FFFF018A

@@ -133,7 +133,7 @@ Data_LoadPointerTable2:                                 ; CODE XREF: UI_InitSeco
                 nop
 ; End of function Data_LoadPointerTable2
 ; Performs direct VRAM transfer with Z80 bus control and DMA setup
-Gfx_DirectVRAMTransfer:                                 ; CODE XREF: Cutscene_InitCreditsScreen+58   p  ; was: sub_10AFA
+Gfx_DirectVRAMTransfer:                                 ; CODE XREF: EndingSequence_Initialize+58   p  ; was: sub_10AFA
                                         ; UI_InitTitleScreen+90   p
                 move    sr,-(sp)
                 move    #$2700,sr

@@ -1,10 +1,10 @@
-; Initializes the credits screen graphics and palette-fade state
-Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_TransitionToCredits+6   j  ; was: sub_7B30
+; Initializes the ending sequence's credits assets, palette, music, and scroll state
+EndingSequence_Initialize:                              ; CODE XREF: Stage_TransitionToCredits+6   j  ; was: sub_7B30
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_InitGameMode).l
                 move.w  #1,(word_FF010E).l
-                movea.l #stru_7BF2,a0
+                movea.l #EndingSequence_AssetLoads,a0
                 jsr     (LoadObjData).l
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 movea.w #(word_FF9600-M68K_RAM),a1
@@ -37,10 +37,10 @@ Cutscene_InitCreditsScreen:                             ; CODE XREF: Stage_Trans
                 jsr     (Gfx_SetupScrollPlanes).l
                 clr.w   (dword_FF8128+2).w
                 rts
-; End of function Cutscene_InitCreditsScreen
+; End of function EndingSequence_Initialize
 ; ---------------------------------------------------------------------------
-stru_7BF2:      dc.w    7                               ; field_0
-                                        ; DATA XREF: Cutscene_InitCreditsScreen+18   o
+EndingSequence_AssetLoads:  dc.w    7                   ; field_0  ; was: stru_7BF2
+                                        ; DATA XREF: EndingSequence_Initialize+18   o
                 dc.l    tiles_189E4C                    ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    7                               ; field_0
@@ -60,19 +60,19 @@ stru_7BF2:      dc.w    7                               ; field_0
                 dc.w    $9600                           ; field_6
                 dc.w    $FFFF
 
-; Dispatches credits screen state machine based on current state offset
-Cutscene_CreditsDispatcher:                             ; CODE XREF: Stage_HandleCreditsOrAdvance+8   j  ; was: sub_7C24
+; Runs the palette effect and dispatches the complete credits-to-planet sequence
+EndingSequence_Dispatch:                                ; CODE XREF: Stage_HandleCreditsOrAdvance+8   j  ; was: sub_7C24
                 jsr     (Effect_PaletteDispatcher).l
                 move.w  (dword_FF8128+2).w,d0
-                lea     off_7C36(pc,d0.w),a0
+                lea     EndingSequence_States(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
-; End of function Cutscene_CreditsDispatcher
+; End of function EndingSequence_Dispatch
 ; ---------------------------------------------------------------------------
-off_7C36:       dc.w    Cutscene_FadeInCredits-*        ; DATA XREF: Cutscene_CreditsDispatcher+A   o
-                dc.w    Cutscene_WaitCreditsTimer-*
-                dc.w    Cutscene_FadeOutCredits-*
-                dc.w    Cutscene_WaitForTimer-*
+EndingSequence_States:  dc.w    EndingSequence_FadeInCredits-*  ; DATA XREF: EndingSequence_Dispatch+A   o  ; was: off_7C36
+                dc.w    EndingSequence_HoldCredits-*
+                dc.w    EndingSequence_FadeOutCredits-*
+                dc.w    EndingSequence_WaitStarfieldDelay-*
                 dc.w    Effect_InitializeStarfield-*
                 dc.w    Effect_InitializeStarfield_WaitLoop-*
                 dc.w    Cutscene_SegaScreenFadeOut-*
@@ -83,8 +83,8 @@ off_7C36:       dc.w    Cutscene_FadeInCredits-*        ; DATA XREF: Cutscene_Cr
                 dc.w    Cutscene_PlanetZoomMainLoop-*
                 dc.w    Cutscene_PlanetZoomFadeOut-*
 
-; Fades in credits screen palette incrementally until fully visible
-Cutscene_FadeInCredits:                                 ; DATA XREF: ROM:off_7C36   o  ; was: sub_7C50
+; Advances the credits palette fade every eighth frame until step zero
+EndingSequence_FadeInCredits:                           ; DATA XREF: ROM:EndingSequence_States   o  ; was: sub_7C50
                 move.w  (FrameCounter).w,d0
                 andi.w  #7,d0
                 bne.w   Cutscene_Return
@@ -99,42 +99,42 @@ Cutscene_FadeInCredits:                                 ; DATA XREF: ROM:off_7C3
                 move.w  #$80,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_FadeInCredits
-; Waits for credits display timer while animating palette colors
-Cutscene_WaitCreditsTimer:                              ; DATA XREF: ROM:00007C38   o  ; was: sub_7C92
-                bsr.w   Gfx_AnimateCreditsColors
+; End of function EndingSequence_FadeInCredits
+; Holds the credits screen for $80 frames while animating its accent colors
+EndingSequence_HoldCredits:                             ; DATA XREF: ROM:00007C38   o  ; was: sub_7C92
+                bsr.w   EndingSequence_AnimateAccentColors
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
                 clr.w   (CutscenePaletteStep).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_WaitCreditsTimer
-; Animates credits palette colors with alternating color schemes per frame
-Gfx_AnimateCreditsColors:                               ; CODE XREF: Cutscene_WaitCreditsTimer   p  ; was: sub_7CAC
+; End of function EndingSequence_HoldCredits
+; Alternates three accent palette words used throughout the ending sequence
+EndingSequence_AnimateAccentColors:                     ; CODE XREF: EndingSequence_HoldCredits   p  ; was: sub_7CAC
                                         ; sub_7D68:loc_7E48   p
                 lea     (word_FFE366).w,a1
                 move.w  (word_FFA280).w,d0
                 andi.w  #1,d0
-                bne.s   loc_7CC6
-                lea     word_7CD2(pc),a0
+                bne.s   EndingSequence_UseOddAccentColors
+                lea     EndingSequence_EvenAccentColors(pc),a0
                 nop
                 move.w  (a0)+,(a1)+
                 move.l  (a0),(a1)
                 rts
 ; ---------------------------------------------------------------------------
-loc_7CC6:                                               ; CODE XREF: Gfx_AnimateCreditsColors+C   j
-                lea     word_7CD8(pc),a0
+EndingSequence_UseOddAccentColors:                      ; CODE XREF: EndingSequence_AnimateAccentColors+C   j  ; was: loc_7CC6
+                lea     EndingSequence_OddAccentColors(pc),a0
                 nop
                 move.w  (a0)+,(a1)+
                 move.l  (a0),(a1)
                 rts
-; End of function Gfx_AnimateCreditsColors
+; End of function EndingSequence_AnimateAccentColors
 ; ---------------------------------------------------------------------------
-word_7CD2:      dc.w    $EA8, $E86, $E64                ; DATA XREF: Gfx_AnimateCreditsColors+E   o
-word_7CD8:      dc.w    $A2A, $828, $626                ; DATA XREF: Gfx_AnimateCreditsColors:loc_7CC6   o
+EndingSequence_EvenAccentColors:    dc.w    $EA8, $E86, $E64  ; DATA XREF: EndingSequence_AnimateAccentColors+E   o  ; was: word_7CD2
+EndingSequence_OddAccentColors:     dc.w    $A2A, $828, $626  ; DATA XREF: EndingSequence_AnimateAccentColors:EndingSequence_UseOddAccentColors   o  ; was: word_7CD8
 
-; Fades out credits screen palette incrementally before transition
-Cutscene_FadeOutCredits:                                ; DATA XREF: ROM:00007C3A   o  ; was: sub_7CDE
+; Fades out the credits, loads starfield tiles, and seeds its first object
+EndingSequence_FadeOutCredits:                          ; DATA XREF: ROM:00007C3A   o  ; was: sub_7CDE
                 move.w  (word_FFA280).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
@@ -146,7 +146,7 @@ Cutscene_FadeOutCredits:                                ; DATA XREF: ROM:00007C3
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$E,(CutscenePaletteStep).l
                 bne.w   Cutscene_Return
-                movea.l #byte_7D48,a0
+                movea.l #EndingSequence_StarfieldTileLoad,a0
                 jsr     (Gfx_LoadCompressedTiles).l
                 lea     (Entity_ObjectPool).w,a5
                 move.w  #$128,dword_FFC630-Entity_ObjectPool(a5)
@@ -156,16 +156,15 @@ Cutscene_FadeOutCredits:                                ; DATA XREF: ROM:00007C3
                 move.w  #$10,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_FadeOutCredits
+; End of function EndingSequence_FadeOutCredits
 ; ---------------------------------------------------------------------------
-byte_7D48:      dc.b    $44, $20, $40, 0, 2, 2, $80, $84, $88, $84, $88, $80, $84, $80, $88, $FF
-                                        ; DATA XREF: Cutscene_FadeOutCredits+36   o
+EndingSequence_StarfieldTileLoad:   dc.b    $44, $20, $40, 0, 2, 2, $80, $84, $88, $84, $88, $80, $84, $80, $88, $FF  ; was: byte_7D48
+                                        ; DATA XREF: EndingSequence_FadeOutCredits+36   o
 
-; Waits for timer countdown and advances to next state
-Cutscene_WaitForTimer:                                  ; DATA XREF: ROM:00007C3C   o  ; was: sub_7D58
+; Waits sixteen frames before advancing into starfield initialization
+EndingSequence_WaitStarfieldDelay:                      ; DATA XREF: ROM:00007C3C   o  ; was: sub_7D58
                 subq.w  #1,(CutsceneTimer).l
                 bne.w   Cutscene_Return
                 addq.w  #2,(dword_FF8128+2).w
                 rts
-; End of function Cutscene_WaitForTimer
-; Initializes starfield effect with 59 sprites and random positions
+; End of function EndingSequence_WaitStarfieldDelay

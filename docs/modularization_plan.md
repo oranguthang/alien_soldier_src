@@ -94,9 +94,9 @@ data are checked.
 | `0x004386` | `Text_QueueTrimmedPackedBCDDigits` | packed-BCD and text tile command construction |
 | `0x004840` | `StoryScreen_Initialize` | story screen and title-logo transition state machine |
 | `0x005150` | `Cutscene_DispatchPlanetGrid` | planet, ship-grid, and star-row sequences |
-| `0x00588C` | `UI_StoryTextDispatcher` | story text |
+| `0x00588C` | `StoryText_Dispatch` | scrolling story rows and Japanese-font streaming |
 | `0x007644` | `Cutscene_UpdateStarRowPositions` | sprite-grid rendering and pattern-dissolve effects |
-| `0x007B30` | `Cutscene_InitCreditsScreen` | credits screen |
+| `0x007B30` | `EndingSequence_Initialize` | ending credits and credits-to-planet dispatch |
 | `0x007D68` | `Effect_InitializeStarfield` | starfield/planet effects |
 | `0x008618` | `Math_LookupSineCosinePair` | sine/cosine lookup helpers and table |
 | `0x0086F0` | `Cutscene_ShipObjectDispatcher` | ship object family; continues past old file boundary |

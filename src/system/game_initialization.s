@@ -12,7 +12,7 @@ Sys_InitFullGame:                                       ; CODE XREF: RegionRestr
                 bra.w   Sys_ClearObjectBuffer
 ; End of function Sys_InitFullGame
 ; Full game mode initialization sequence
-Sys_InitGameMode:                                       ; CODE XREF: Cutscene_InitCreditsScreen+A   p  ; was: sub_2D6C
+Sys_InitGameMode:                                       ; CODE XREF: EndingSequence_Initialize+A   p  ; was: sub_2D6C
                                         ; UI_InitTitleScreen+6   p
                 clr.w   (word_FFFF3E).w
                 bsr.w   Gfx_LoadVDPRegisters

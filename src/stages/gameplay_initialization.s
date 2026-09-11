@@ -45,13 +45,13 @@ Stage_UpdateGameplay:                                   ; DATA XREF: ROM:0001E86
 ; Transitions to credits screen
 Stage_TransitionToCredits:                              ; DATA XREF: ROM:0001E852   o  ; was: sub_1EE5A
                 move.b  #0,(VDPReg18Shadow+1).w
-                jmp     (Cutscene_InitCreditsScreen).l
+                jmp     (EndingSequence_Initialize).l
 ; End of function Stage_TransitionToCredits
 ; Handles credits or advances stage
 Stage_HandleCreditsOrAdvance:                           ; DATA XREF: ROM:0001E868   o  ; was: sub_1EE66
                 tst.w   (dword_FF8128).w
                 bne.w   loc_1EE74
-                jmp     (Cutscene_CreditsDispatcher).l
+                jmp     (EndingSequence_Dispatch).l
 ; ---------------------------------------------------------------------------
 loc_1EE74:                                              ; CODE XREF: Stage_HandleCreditsOrAdvance+4   j
                 clr.w   (word_FF820C).w

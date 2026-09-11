@@ -1,6 +1,6 @@
 ; Loads multiple palettes from a pointer table sequentially
 Gfx_LoadMultiplePalettes:                               ; CODE XREF: StoryScreen_WaitForScrollAndLoadPalette+3C   p  ; was: sub_B900
-                                        ; Cutscene_InitCreditsScreen+64   p
+                                        ; EndingSequence_Initialize+64   p
                 moveq   #0,d0
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 move.w  d0,(a0)
@@ -38,7 +38,7 @@ ResultsScreenPaletteOffsetList: dc.w    $EE, $F4, $FA, $100, 0  ; was: word_B96E
                                         ; DATA XREF: Results_InitializeScreen+6C   o
 StageTransitionPaletteOffsetLists:  dc.w    $26A, 0, $2F6, $336, 0  ; was: word_B978
                                         ; DATA XREF: Stage_InitializeTransition+16   o
-CreditsAndPlanetPaletteOffsetList:  dc.w    $B14, $B54, 0  ; DATA XREF: Cutscene_InitCreditsScreen+5E   o  ; was: word_B982
+CreditsAndPlanetPaletteOffsetList:  dc.w    $B14, $B54, 0  ; DATA XREF: EndingSequence_Initialize+5E   o  ; was: word_B982
                                         ; Cutscene_InitPlanetScene+20   o
 EarlyStagePaletteOffsetList:    dc.w    $34C, 0         ; DATA XREF: ROM:stru_127A8   o  ; was: word_B988
                                         ; ROM:stru_127C6   o

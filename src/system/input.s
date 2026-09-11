@@ -127,7 +127,7 @@ Input_ReadControllerPort:                               ; CODE XREF: Input_ReadC
                 rts
 ; End of function Input_ReadControllerPort
 ; Queue a BGM request unless music playback is disabled in the options flags
-Sound_QueueBGMRequest:                                  ; CODE XREF: Cutscene_InitCreditsScreen+A0   p  ; was: sub_34DA
+Sound_QueueBGMRequest:                                  ; CODE XREF: EndingSequence_Initialize+A0   p  ; was: sub_34DA
                                         ; Results_FinishTimeBonusSpin+14   p
                 btst    #1,(SoundDisableFlags+1).w
                 beq.s   Sound_QueueRequest

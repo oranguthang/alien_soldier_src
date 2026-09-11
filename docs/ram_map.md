@@ -169,6 +169,19 @@ alone does not yet prove the exact player-facing counting convention.
 | `ShipGridTimer` | `$FFFF00F4` | Ship-grid delay and hold states load and decrement this word as their frame timer. |
 | `StarRowTimer` | `$FFFF00FE` | Star-row delay and hold states load and decrement this word as their frame timer. |
 
+## Reviewed story-text streaming fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `StoryTextVRAMAddress` | `$FFFF00F6` | The story row streamer advances this circular plane-A destination by `$180` and wraps it at `$5000`. |
+| `StoryFontGlyphCursor` | `$FFFF0120` | The Japanese-font states initialize this pointer to `font_japanese_mappings` and advance it by one word after every glyph. |
+| `StoryFontState` | `$FFFF0126` | The Japanese-font dispatcher uses this even word directly as its three-entry state-table index. |
+| `StoryTextAccentCursor` | `$FFFF0172` | Story initialization and streaming advance this longword through the 99 fixed-size accent rows. |
+| `StoryTextState` | `$FFFF0178` | Frontend and story initialization clear this word; `StoryText_Dispatch` uses it as its two-state table index. |
+| `StoryFontScrollY` | `$FFFF0180` | The font update decrements this word once or twice per frame, and VBlank writes it to the VDP vertical-scroll data port. |
+| `StoryFontNextGlyphY` | `$FFFF0182` | The glyph streamer compares this threshold with `StoryFontScrollY` and subtracts `$10` after each queued glyph. |
+| `StoryFontVRAMAddress` | `$FFFF0184` | The glyph streamer advances this circular destination by `$80` and wraps from `$8000` to `$7000`. |
+
 ## Reviewed VBlank transfer and VDP-shadow fields
 
 | Symbol | Address | Static evidence |
