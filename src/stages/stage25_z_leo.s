@@ -68,8 +68,8 @@ Gfx_UpdateScrollWrapper:                                ; DATA XREF: ROM:0000F18
                 rts
 ; End of function Gfx_UpdateScrollWrapper
 ; Graphics update handler
-Stage_AsteroidsGraphicsUpdate:                          ; CODE XREF: Stage_AsteroidsTransition+26   j  ; was: sub_FB24
-                                        ; Stage_AsteroidsScrollHandler+E   j
+Stage_AsteroidsGraphicsUpdate:                          ; CODE XREF: StageTransition_StartAsteroidFieldScroll+26   j  ; was: sub_FB24
+                                        ; StageTransition_FinishAsteroidFieldScroll+E   j
                 bsr.s   Stage_ScrollUpdate1
                 moveq   #0,d0
                 move.w  (dword_FFA904).w,d1
@@ -78,8 +78,8 @@ Stage_AsteroidsGraphicsUpdate:                          ; CODE XREF: Stage_Aster
                 bra.w   loc_109E0
 ; End of function Stage_AsteroidsGraphicsUpdate
 ; Scroll update handler 1
-Stage_ScrollUpdate1:                                    ; CODE XREF: Stage_TransitionGraphics+70   j  ; was: sub_FB3A
-                                        ; Stage_AsteroidsTransition+C   j
+Stage_ScrollUpdate1:                                    ; CODE XREF: StageTransition_InitializeAsteroidField+70   j  ; was: sub_FB3A
+                                        ; StageTransition_StartAsteroidFieldScroll+C   j
                 move.l  (dword_FFA960).w,d0
                 add.l   d0,(dword_FFA904).w
                 add.l   d0,(dword_FFA964).w
@@ -91,8 +91,8 @@ Stage_ScrollUpdate1:                                    ; CODE XREF: Stage_Trans
                 addq.b  #1,(byte_FFA96A).w
                 move.w  d0,(word_FFA968).w
 ; Return from Destroyer Proto transition
-Boss_DestroyerProtoTransition_Return:                   ; CODE XREF: Boss_DestroyerProtoTransition+8   j  ; was: locret_FB60
-                                        ; Boss_DestroyerProtoInit+8   j
+Boss_DestroyerProtoTransition_Return:                   ; CODE XREF: StageTransition_LoadDestroyerProtoAssets+8   j  ; was: locret_FB60
+                                        ; StageTransition_InitializeDestroyerProtoBackdrop+8   j
                 rts
 ; End of function Stage_ScrollUpdate1
 ; Checks button 6 input and sets trigger flag
@@ -104,8 +104,8 @@ locret_FB70:                                            ; CODE XREF: Input_Check
                 rts
 ; End of function Input_CheckButtonTrigger
 ; Scroll update handler 2
-Stage_ScrollUpdate2:                                    ; CODE XREF: Stage_TransitionGraphics:loc_F1EC   p  ; was: sub_FB72
-                                        ; sub_F218   p
+Stage_ScrollUpdate2:                                    ; CODE XREF: StageTransition_InitializeAsteroidField:StageTransition_UpdateAsteroidFieldEntry   p  ; was: sub_FB72
+                                        ; StageTransition_StartAsteroidFieldScroll   p
                 move.l  (dword_FF8066).w,d0
                 add.l   (dword_FF8062).w,d0
                 move.l  d0,(dword_FF8066).w
@@ -130,8 +130,8 @@ loc_FB9C:                                               ; CODE XREF: Stage_Scrol
                 rts
 ; End of function Stage_ScrollUpdate4
 ; Scroll update handler 3
-Stage_ScrollUpdate3:                                    ; CODE XREF: Stage_TransitionGraphics+56   p  ; was: sub_FBA8
-                                        ; Stage_AsteroidsTransition+4   p
+Stage_ScrollUpdate3:                                    ; CODE XREF: StageTransition_InitializeAsteroidField+56   p  ; was: sub_FBA8
+                                        ; StageTransition_StartAsteroidFieldScroll+4   p
                 tst.w   (dword_FF9DA2).w
                 bpl.s   loc_FBB8
                 cmpi.l  #$FFFF8080,(dword_FF9DA2).w
@@ -145,8 +145,8 @@ loc_FBC0:                                               ; CODE XREF: Stage_Scrol
                 bmi.s   loc_FBD8
 loc_FBD0:                                               ; CODE XREF: Stage_ScrollUpdate3+1C   j
                 subi.l  #$40,(dword_FF9D9E).w           ; '@'
-loc_FBD8:                                               ; CODE XREF: Boss_DestroyerProtoAnimationScript+C   p
-                                        ; Boss_DestroyerProtoGraphicsCleanup+4   p
+loc_FBD8:                                               ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+C   p
+                                        ; StageTransition_UpdatePostDestroyerProtoScroll+4   p
                 move.l  (dword_FF9DA2).w,d0
                 add.l   d0,(dword_FF9DAA).w
                 add.l   d0,(dword_FF9DB2).w

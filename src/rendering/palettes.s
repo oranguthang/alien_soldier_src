@@ -174,7 +174,7 @@ Stage5PaletteCommands:  dc.b    $62, $E, $E, $EE, $F, $FF, $A, $26, $A, $AA, 8, 
                 dc.b    4, $44, 2, $22, $C, $AA, $A, $88, 8, $66, 6, $44, 4, $22, 0, 0
                 dc.b    $62, 6, 0, 0, 2, $22, 2, $44, 4, $68, 8, $AC, 0, 0, $A, $CC
 DestroyerProtoIntroPaletteCommands: dc.b    $62, $E, $E, $EE, $E, $AA, $A, $66, 6, $22, 4, 0, 0, 0, 0, $AE  ; was: byte_C212
-                                        ; DATA XREF: Boss_DestroyerProtoInit+1C   o
+                                        ; DATA XREF: StageTransition_InitializeDestroyerProtoBackdrop+1C   o
                 dc.b    0, $6C, 0, $28, 0, 0, 0, 4, 8, $CC, 6, $88, 4, $46, 2, $22
                 dc.b    $22, $E, $E, $EE, $E, $AA, $A, $66, 6, $22, 4, 0, 0, 0, 0, $AE
                 dc.b    0, $6C, 0, $28, 0, 0, 0, 4, 8, $CC, 6, $88, 4, $46, 2, $22

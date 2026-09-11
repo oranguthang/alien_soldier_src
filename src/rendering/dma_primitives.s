@@ -301,7 +301,7 @@ loc_1104A:                                              ; CODE XREF: Gfx_SetSpri
 ; End of function Gfx_SetSpritePattern
 ; DMA transfers tile data to VRAM with VDP commands
 Gfx_DMATransferTiles:                                   ; CODE XREF: Stage_FlyingNeoSpawn+24   j  ; was: sub_11058
-                                        ; Gfx_LoadWolfGaropaTiles+6   p
+                                        ; Gfx_LoadWolfGaropaTransitionTiles+6   p
                 move.w  (VDPStagingDataCursor).w,(word_FF805C).w
                 move.l  #$94009300,(dword_FF8058).w
                 moveq   #0,d0

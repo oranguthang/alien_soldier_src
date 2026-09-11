@@ -233,7 +233,7 @@ EntityType1C0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_ShieldViperAssetSet:   dc.w    $34C                ; field_0  ; was: stru_11554
-                                        ; DATA XREF: Boss_ShieldViperInit+14   o
+                                        ; DATA XREF: StageTransition_LoadShieldViperAssets+14   o
                 dc.l    Boss_ShieldViperGraphicsLoadList  ; field_2
                 dc.l    Boss_ShieldViperPaletteCommand  ; field_6
 Boss_ShieldViperGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1155E
@@ -242,7 +242,7 @@ Boss_ShieldViperGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_DestroyerProtoAssetSet:    dc.w    $3B8            ; field_0  ; was: stru_11568
-                                        ; DATA XREF: Boss_DestroyerProtoTransition+10   o
+                                        ; DATA XREF: StageTransition_LoadDestroyerProtoAssets+10   o
                 dc.l    Boss_DestroyerProtoGraphicsLoadList  ; field_2
                 dc.l    Boss_DestroyerProtoPaletteCommand  ; field_6
 Boss_DestroyerProtoGraphicsLoadList:    dc.w    7       ; field_0  ; was: stru_11572
@@ -254,7 +254,7 @@ Boss_DestroyerProtoGraphicsLoadList:    dc.w    7       ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_WolfGaropaAssetSet:    dc.w    $3E8                ; field_0  ; was: stru_11584
-                                        ; DATA XREF: Boss_WolfGaropaIntroMove+14   o
+                                        ; DATA XREF: StageTransition_LoadWolfGaropaAssets+14   o
                 dc.l    Boss_WolfGaropaGraphicsLoadList  ; field_2
                 dc.l    Boss_WolfGaropaPaletteCommand   ; field_6
 Boss_WolfGaropaGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1158E

@@ -40,7 +40,7 @@ Effect_WolfGaropaBoundaryMain:                          ; DATA XREF: ROM:Entity_
                 move.w  #6,(word_FFA010).w
                 cmpi.w  #$1F0,(dword_FFA900).w
                 bpl.w   Effect_RemoveWolfGaropaBoundary
-                jsr     (Gfx_LoadWolfGaropaTiles).l
+                jsr     (Gfx_LoadWolfGaropaTransitionTiles).l
 Effect_RemoveWolfGaropaBoundary:                        ; CODE XREF: Effect_WolfGaropaBoundaryMain+4   j  ; was: loc_50D7E
                                         ; Effect_WolfGaropaBoundaryMain+24   j
                 bset    #4,2(a5)

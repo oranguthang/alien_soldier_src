@@ -526,3 +526,62 @@ Gfx_ClearSevenForcesTilemapMode:                        ; CODE XREF: Stage_Seven
                 clr.b   (byte_FF7B00).l
                 rts
 ; End of function Gfx_ClearSevenForcesTilemapMode
+; Unreferenced helper that clamps and applies a palette fade
+UnreferencedClampAndApplyPaletteFade:
+                move.w  (word_FF9620).w,d0              ; was: sub_F064
+                bpl.s   UnreferencedClampPaletteFadePositive
+                cmpi.w  #$FFE4,d0
+                bpl.s   UnreferencedApplyClampedPaletteFade
+                moveq   #$FFFFFFE4,d0
+                bra.s   UnreferencedApplyClampedPaletteFade
+; ---------------------------------------------------------------------------
+UnreferencedClampPaletteFadePositive:                   ; CODE XREF: UnreferencedClampAndApplyPaletteFade+4   j  ; was: loc_F074
+                beq.s   UnreferencedApplyClampedPaletteFade
+                moveq   #0,d0
+UnreferencedApplyClampedPaletteFade:                    ; CODE XREF: UnreferencedClampAndApplyPaletteFade+A   j  ; was: loc_F078
+                                        ; UnreferencedClampAndApplyPaletteFade+E   j
+                move.w  d0,(word_FF9620).w
+                movea.w #(PaletteActiveBuffer-M68K_RAM),a0
+                moveq   #$1F,d5
+                move.w  #$E000,d7
+                jmp     (Gfx_ApplyPaletteFade).l
+; End of function UnreferencedClampAndApplyPaletteFade
+; Dampens the shared horizontal velocity toward zero
+Stage_SevenForcesDampenHorizontalVelocity:              ; CODE XREF: Stage_SevenForcesBeginArtemisTransition+4   p  ; was: sub_F08C
+                tst.l   (dword_FF8240).w
+                beq.s   Stage_SevenForcesHorizontalVelocityDampingReturn
+                bpl.s   Stage_SevenForcesDampenPositiveHorizontalVelocity
+                addi.l  #$800,(dword_FF8240).w
+                bmi.s   Stage_SevenForcesHorizontalVelocityDampingReturn
+                clr.l   (dword_FF8240).w
+                rts
+; ---------------------------------------------------------------------------
+Stage_SevenForcesDampenPositiveHorizontalVelocity:      ; CODE XREF: Stage_SevenForcesDampenHorizontalVelocity+6   j  ; was: loc_F0A4
+                subi.l  #$800,(dword_FF8240).w
+                bpl.s   Stage_SevenForcesHorizontalVelocityDampingReturn
+                clr.l   (dword_FF8240).w
+Stage_SevenForcesHorizontalVelocityDampingReturn:       ; CODE XREF: Stage_SevenForcesDampenHorizontalVelocity+4   j  ; was: locret_F0B2
+                                        ; Stage_SevenForcesDampenHorizontalVelocity+10   j
+                rts
+; End of function Stage_SevenForcesDampenHorizontalVelocity
+; Updates the Sylpheed foreground scroll velocity and position
+Stage_SevenForcesUpdateSylpheedForegroundScroll:        ; CODE XREF: Stage_SevenForcesAdvanceSylpheedForeground:Stage_SevenForcesUpdateSylpheedForeground   j  ; was: sub_F0B4
+                btst    #3,(word_FFA40E).w
+                bne.s   Stage_SevenForcesIncreaseSylpheedForegroundVelocity
+                subi.l  #$1000,(dword_FF8240).w
+                bpl.s   Stage_SevenForcesApplySylpheedForegroundVelocity
+                clr.l   (dword_FF8240).w
+                bra.s   Stage_SevenForcesApplySylpheedForegroundVelocity
+; ---------------------------------------------------------------------------
+Stage_SevenForcesIncreaseSylpheedForegroundVelocity:    ; CODE XREF: Stage_SevenForcesUpdateSylpheedForegroundScroll+6   j  ; was: loc_F0CC
+                addi.l  #$2000,(dword_FF8240).w
+                cmpi.w  #4,(dword_FF8240).w
+                bmi.s   Stage_SevenForcesApplySylpheedForegroundVelocity
+                move.l  #$40000,(dword_FF8240).w
+Stage_SevenForcesApplySylpheedForegroundVelocity:       ; CODE XREF: Stage_SevenForcesUpdateSylpheedForegroundScroll+10   j  ; was: loc_F0E4
+                                        ; Stage_SevenForcesUpdateSylpheedForegroundScroll+16   j
+                move.l  (dword_FF8240).w,d0
+                asl.l   #1,d0
+                add.l   d0,(dword_FFA908).w
+                rts
+; End of function Stage_SevenForcesUpdateSylpheedForegroundScroll

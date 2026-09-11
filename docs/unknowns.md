@@ -428,7 +428,8 @@ The formation-wave/Stage 21 pass reduced the count to 9,439. The former
 unrelated asteroid-field subsystem. The generated `Tracker` ownership has no
 static support: the family is created by `Stage2_FifthObjectSpawnList` and is
 named only for its visible cloning and motion behavior. Type `$3AC` is
-installed directly by `Stage_TransitionGraphics`, creates type-`$3B0` large,
+installed directly by `StageTransition_InitializeAsteroidField`, creates
+type-`$3B0` large,
 small, and ambient rocks, and emits type-`$458` debris. The two families now
 live in the ROM-contiguous `formation_wave.s` and `stage_21_asteroids.s`. The
 accompanying data was also separated into its asteroid/Destroyer Proto
@@ -3983,3 +3984,65 @@ registry from 10,097 to 10,174. The enforced address-derived ceiling falls from
 1,000 lines, and zero generic container filenames. A fresh pinned-toolchain
 build reproduces the canonical Japanese ROM byte for byte at SHA-1
 `8f6eb584ed9487b8504fbc21d86783f58e6c9cd6`.
+
+The adjacent transition-boundary pass removes the artificial 147-line
+`stages/transition_effects.s` container. Its first two called helpers are part
+of the immediately preceding Seven Forces flow: the Artemis transition damps
+the shared horizontal velocity toward zero, while the Sylpheed state updates
+its foreground scroll velocity and position. They now extend the cohesive
+`stages/seven_forces_transition_graphics.s` range through `0x00F0EF`. The
+20-line palette-fade helper at `0x00F064` has no reconstructed static caller;
+it remains explicitly unreferenced instead of receiving a speculative Seven
+Forces or boss owner.
+
+The remaining range begins with the process-table-selected transition
+dispatcher and its complete relative-offset table. Those definitions belong
+with the handlers they select, so they now precede
+`StageTransition_InitializeAsteroidField` in the 584-line
+`stages/stage_and_boss_transition_states.s` module at
+`0x00F0F0-0x00F7F9`. This also corrects four inherited Sonnet claims: the
+former Artemis projectile helper only damps velocity, the former Sylpheed
+graphics helper only changes scroll motion, the former transition initializer
+is a dispatcher, and the palette helper has no proven caller or owner.
+
+All 11 definitions in the reviewed boundary have exact-address static audit
+records. The seven formerly address-derived definitions receive
+provenance-preserving behavioral names, raising provenance from 13,267 to
+13,274 and the name-audit registry from 10,174 to 10,185. The enforced
+address-derived ceiling falls from 2,781 to 2,774. The corrected boundary
+reduces the layout from 363 to 362 modules and changes the mean to 328.3 lines;
+the largest module remains 986 lines, with zero files above 1,000 lines and
+zero generic container filenames.
+
+The complete stage-and-boss transition-state audit reviews all 59 definitions
+in `stages/stage_and_boss_transition_states.s`. Its state-table order proves
+the progression from the Stage 21 asteroid field through Destroyer Proto,
+Shield Viper, and Wolf Garopa transition backdrops. The former boss-centric
+names overstated what these handlers do: they update global scroll, raster,
+palette-fade, asset-transfer, message, and phase state rather than dispatching
+the bosses' gameplay state machines.
+
+The most misleading inherited claims are now explicit corrections.
+`Boss_DestroyerProtoAnimationScript` interprets no script; it updates the
+Destroyer Proto backdrop fade. `Boss_WolfGaropaSpawnProjectile2` allocates no
+projectile; it waits for the object pool to clear. The former Wolf Garopa main
+and dispatcher names only render and finalize the transition backdrop. The
+former Shield Viper palette-restore state instead waits for a VRAM transfer.
+Two unreferenced helpers and the empty handler at the end of the range retain
+honest unreferenced names because neither the transition table nor another
+static call site selects them.
+
+The audit also follows the type-$41C records initialized by two transition
+states into `stages/boss_stage_rendering.s`. They are paired Stage 23 arena
+boundary records, not Wolf Garopa attack states, and their update handler
+changes screen-relative position and a shared bound without touching palette
+memory. Four definitions there are corrected and audited with the owning
+transition package.
+
+The 24 formerly address-derived definitions receive provenance-preserving
+names, while 37 inherited semantic names are corrected or narrowed, for 61 new
+exact-address audit records. Provenance rises from 13,274 to 13,298 and the
+name-audit registry from 10,185 to 10,246. The enforced address-derived ceiling
+falls from 2,774 to 2,750. The layout remains 362 modules with a 328.3-line
+mean; the largest module remains 986 lines, with zero files above 1,000 lines
+and zero generic container filenames.

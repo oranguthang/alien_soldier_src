@@ -79,7 +79,7 @@ Stage_SevenForcesAdvanceSylpheedForeground:             ; DATA XREF: ROM:0000E4B
                 clr.b   (byte_FFA958).w
 Stage_SevenForcesUpdateSylpheedForeground:              ; CODE XREF: Stage_SevenForcesAdvanceSylpheedForeground+8   j ; was: loc_E8BC
                                         ; Stage_SevenForcesFinishSylpheedForeground+18   j
-                bra.w   Gfx_SylpheedForeground
+                bra.w   Stage_SevenForcesUpdateSylpheedForegroundScroll
 ; End of function Stage_SevenForcesAdvanceSylpheedForeground
 ; Finish the Sylpheed foreground transition or continue scrolling it
 Stage_SevenForcesFinishSylpheedForeground:              ; DATA XREF: ROM:0000E4B6   o  ; was: sub_E8C0
@@ -96,7 +96,7 @@ Stage_SevenForcesContinueSylpheedForeground:            ; CODE XREF: Stage_Seven
 ; Transition to Artemis form
 Stage_SevenForcesBeginArtemisTransition:                ; DATA XREF: ROM:0000E4B8   o  ; was: sub_E8DC
                 bsr.w   Gfx_ArtemisInitializeTilemap
-                bsr.w   Boss_ArtemisSpawnProjectile1
+                bsr.w   Stage_SevenForcesDampenHorizontalVelocity
                 subq.w  #1,(dword_FFA960).w
                 bpl.s   Stage_SevenForcesBeginArtemisTransitionReturn
                 tst.w   (word_FFF720).w

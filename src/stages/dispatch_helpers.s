@@ -22,7 +22,7 @@ loc_FF1E:                                               ; CODE XREF: Stage_Proce
 off_FF36:       dc.l    Stage_Dispatcher
                 dc.l    Stage_InitStage10
                 dc.l    Stage_Stage18Scroll
-                dc.l    Stage_TransitionInit
+                dc.l    Stage_DispatchTransitionState
                 dc.l    Stage_Dispatcher
 
 ; Transitions stage to next phase or section

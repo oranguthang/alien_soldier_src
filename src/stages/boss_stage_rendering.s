@@ -1,5 +1,5 @@
-Boss_ShieldViperScrollSetup:                            ; CODE XREF: Boss_ShieldViperInit+4   p  ; was: sub_FC74
-                                        ; Boss_ShieldViperGraphicsInit+4   p
+Boss_ShieldViperScrollSetup:                            ; CODE XREF: StageTransition_LoadShieldViperAssets+4   p  ; was: sub_FC74
+                                        ; StageTransition_UpdateShieldViperBackdrop+4   p
                 bsr.w   Stage22_GraphicsUpdate1
                 movea.w #(byte_FFE580-M68K_RAM),a1
                 movea.w #(word_FF9E00-M68K_RAM),a0
@@ -55,8 +55,8 @@ loc_FCE6:                                               ; CODE XREF: Stage22_Gra
                 rts
 ; End of function Stage22_GraphicsUpdate1
 ; Palette initialization
-Boss_DestroyerProtoPaletteInit:                         ; CODE XREF: Boss_DestroyerProtoInit+12   p  ; was: sub_FCF4
-                                        ; Boss_DestroyerProtoAnimationScript+8   p
+Boss_DestroyerProtoPaletteInit:                         ; CODE XREF: StageTransition_InitializeDestroyerProtoBackdrop+12   p  ; was: sub_FCF4
+                                        ; StageTransition_UpdateDestroyerProtoBackdropFade+8   p
                 tst.w   (word_FF9DAE).w
                 bne.s   loc_FCFC
                 rts
@@ -65,8 +65,8 @@ loc_FCFC:                                               ; CODE XREF: Boss_Destro
                 btst    #0,(FrameCounter+1).w
                 bne.s   loc_FD08
                 subq.w  #1,(word_FF9DAE).w
-loc_FD08:                                               ; CODE XREF: Boss_ShieldViperPaletteSetup+38   j
-                                        ; sub_F484   p
+loc_FD08:                                               ; CODE XREF: StageTransition_BeginShieldViperFade+38   j
+                                        ; StageTransition_CompleteShieldViperFade   p
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 move.w  #$E000,d7
                 move.w  (word_FF9DAE).w,d0
@@ -80,8 +80,8 @@ loc_FD08:                                               ; CODE XREF: Boss_Shield
                 jmp     (Gfx_ApplyPaletteFade).l
 ; End of function Boss_DestroyerProtoPaletteInit
 ; Renders boss segments
-Boss_DestroyerProtoRenderSegments:                      ; CODE XREF: Boss_DestroyerProtoAnimationScript+10   p  ; was: sub_FD32
-                                        ; Boss_DestroyerProtoGraphicsCleanup+8   p
+Boss_DestroyerProtoRenderSegments:                      ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+10   p  ; was: sub_FD32
+                                        ; StageTransition_UpdatePostDestroyerProtoScroll+8   p
                 bsr.w   Stage22_GraphicsUpdate1
                 movea.w #(dword_FF9A00-M68K_RAM),a0
                 movea.w #(byte_FF9B00-M68K_RAM),a1
@@ -210,7 +210,7 @@ locret_FE66:                                            ; CODE XREF: Boss_Destro
                 rts
 ; End of function Boss_DestroyerProtoRenderSegments
 ; Renders background
-Boss_ShieldViperRenderBackground:                       ; CODE XREF: Boss_ShieldViperGraphicsInit+8   p  ; was: sub_FE68
+Boss_ShieldViperRenderBackground:                       ; CODE XREF: StageTransition_UpdateShieldViperBackdrop+8   p  ; was: sub_FE68
                 movea.w #(byte_FF9B80-M68K_RAM),a0
                 movea.w a0,a1
                 moveq   #$3F,d7                         ; '?'
@@ -227,28 +227,28 @@ loc_FE78:                                               ; CODE XREF: Boss_Shield
                 move.l  #$94009340,d4
                 jmp     VDP_QueueCommand_Build
 ; End of function Boss_ShieldViperRenderBackground
-; Attack state 3 handler
-Boss_WolfGaropaAttackState3:                            ; CODE XREF: Boss_WolfGaropaTransition+28   p  ; was: sub_FEA0
-                                        ; Boss_WolfGaropaPhaseInit+E   p
+; Initializes the two Wolf Garopa arena-boundary records
+StageTransition_InitializeWolfGaropaArenaBoundaries:    ; CODE XREF: StageTransition_UpdateWolfGaropaApproach+28   p  ; was: sub_FEA0
+                                        ; StageTransition_RestartWolfGaropaBackdropFinalize+E   p
                 movea.w #(byte_FFDB80-M68K_RAM),a0
                 clr.w   $48(a0)
                 move.w  #$D0,$10(a0)
-                bsr.s   Boss_WolfGaropaAttackState4
+                bsr.s   StageTransition_InitializeWolfGaropaArenaBoundary
                 movea.w #(word_FFDBE0-M68K_RAM),a0
                 move.w  #1,$48(a0)
                 move.w  #$170,$10(a0)
-; End of function Boss_WolfGaropaAttackState3
-; Attack state 4 handler
-Boss_WolfGaropaAttackState4:                            ; CODE XREF: Boss_WolfGaropaAttackState3+E   p  ; was: sub_FEC0
+; End of function StageTransition_InitializeWolfGaropaArenaBoundaries
+; Initializes one Wolf Garopa arena-boundary record
+StageTransition_InitializeWolfGaropaArenaBoundary:      ; CODE XREF: StageTransition_InitializeWolfGaropaArenaBoundaries+E   p  ; was: sub_FEC0
                 move.w  #$41C,(a0)
                 clr.w   2(a0)
                 move.b  #$80,$21(a0)
                 move.b  #$10,$23(a0)
                 move.l  #$40827E,$28(a0)
                 rts
-; End of function Boss_WolfGaropaAttackState4
-; Palette update handler
-Boss_WolfGaropaPaletteUpdate:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_FEDE
+; End of function StageTransition_InitializeWolfGaropaArenaBoundary
+; Updates one Wolf Garopa arena-boundary record
+Stage23_UpdateWolfGaropaArenaBoundary:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_FEDE
                 move.b  #$80,$21(a5)
                 move.w  #$F3E0,d0
                 sub.w   (dword_FFA904).w,d0
@@ -256,14 +256,14 @@ Boss_WolfGaropaPaletteUpdate:                           ; DATA XREF: ROM:Entity_
                 sub.w   d0,d1
                 move.w  d1,$14(a5)
                 tst.w   $48(a5)
-                bne.s   locret_FF0E
+                bne.s   Stage23_WolfGaropaArenaBoundaryReturn
                 subi.w  #$20,d1                         ; ' '
                 cmp.w   (dword_FFA414).w,d1
-                bpl.s   locret_FF0E
+                bpl.s   Stage23_WolfGaropaArenaBoundaryReturn
                 move.w  d1,(dword_FFA414).w
                 subq.w  #1,(dword_FFA414).w
-locret_FF0E:                                            ; CODE XREF: Boss_WolfGaropaPaletteUpdate+1C   j
-                                        ; Boss_WolfGaropaPaletteUpdate+26   j
+Stage23_WolfGaropaArenaBoundaryReturn:                  ; CODE XREF: Stage23_UpdateWolfGaropaArenaBoundary+1C   j  ; was: locret_FF0E
+                                        ; Stage23_UpdateWolfGaropaArenaBoundary+26   j
                 rts
-; End of function Boss_WolfGaropaPaletteUpdate
+; End of function Stage23_UpdateWolfGaropaArenaBoundary
 ; Clears scroll animation timer at FFA960

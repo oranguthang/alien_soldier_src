@@ -25,7 +25,7 @@ Gfx_AdjustSelectedTileBlocks_ReadBlockIndex:            ; CODE XREF: Gfx_AdjustS
 ; End of function Gfx_AdjustSelectedTileBlocks
 ; Adjusts tile pattern indices
 Gfx_AdjustTileIndexRows:                                ; CODE XREF: TitleScreen_Initialize+60   p  ; was: sub_1119E
-                                        ; Boss_WolfGaropaGraphicsInit+8   j
+                                        ; Gfx_AdjustTransitionTileIndexRows+8   j
                 moveq   #$F,d6
 Gfx_AdjustTileIndexRows_WordLoop:                       ; CODE XREF: Gfx_AdjustTileIndexRows+C   j  ; was: loc_111A0
                 move.w  (a0),d2

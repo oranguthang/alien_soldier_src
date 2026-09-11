@@ -262,7 +262,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Entity_ValkirieProjectileDispatcher
                 dc.l    Projectile_SharpssteelBladeShotMain
                 dc.l    Effect_WolfGaropaBoundaryMain
-                dc.l    Boss_WolfGaropaPaletteUpdate
+                dc.l    Stage23_UpdateWolfGaropaArenaBoundary
                 dc.l    Effect_WolfGaropaBoundaryFollowerMain
                 dc.l    Projectile_UpdateType424Visibility
                 dc.l    Entity_UpdateSevenForcesIntro
