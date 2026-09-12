@@ -64,7 +64,7 @@ Projectile_FindFreePrimarySlot_CheckExtendedRange:      ; CODE XREF: Boss_Caterp
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreePrimarySlot_Return
                 lea     $60(a0),a0
-Projectile_FindFreePrimarySlot_CheckEnemyRange:         ; CODE XREF: Stage_SpawnIntroProjectile+C   p  ; was: loc_1C11C
+Projectile_FindFreePrimarySlot_CheckEnemyRange:         ; CODE XREF: Stage7_SpawnTerobusterIntroProjectile+C   p  ; was: loc_1C11C
                                         ; Projectile_FindFreeEnemyPoolSlot+4   j
                 move.w  (a0),d0
                 beq.w   Projectile_FindFreePrimarySlot_Return

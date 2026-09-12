@@ -10,8 +10,8 @@ listing by `make verify-layout`.
 | `0x00354A-0x00483F` | math, score, palette, results, and text engines | 6 | mixed: static/hypothesis |
 | `0x004840-0x009321` | story, planet, credits, and ship sequences | 9 | mixed: static/hypothesis |
 | `0x009322-0x00C83D` | title/options/password UI, results, and palette assets | 6 | hypothesis |
-| `0x00C83E-0x00D713` | camera dispatch and early-stage transitions | 4 | hypothesis |
-| `0x00D714-0x010025` | stage groups, boss transitions, and dispatch helpers | 13 | hypothesis |
+| `0x00C83E-0x00D6D5` | early-stage process states, Flying Neo train flow, Stage 9 transitions, and Terobuster intro effects | 4 | static/hypothesis |
+| `0x00D6D6-0x010025` | Flying Neo effects, later stage groups, boss transitions, and dispatch helpers | 13 | static/hypothesis |
 | `0x010026-0x010D15` | camera, scroll planes, and tilemap rendering | 4 | static/hypothesis |
 | `0x010D16-0x012B69` | DMA, asset transfer, Stage 3 tile resampling, and stage loading/configuration | 9 | static/hypothesis |
 | `0x012B6A-0x013ADD` | debug UI, HUD, and status display | 5 | static/hypothesis |

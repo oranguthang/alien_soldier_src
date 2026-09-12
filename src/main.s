@@ -51,7 +51,7 @@
                 include "src/stages/early_stage_process_states.s"
                 include "src/stages/train_and_flying_neo.s"
                 include "src/stages/stage_9_flies_caterpillar_and_xi_tiger.s"
-                include "src/stages/intro_projectiles.s"
+                include "src/stages/terobuster_intro_projectiles.s"
                 include "src/stages/flying_neo_effects.s"
                 include "src/stages/stage10_to_stage13.s"
                 include "src/stages/stage14_to_stage17.s"

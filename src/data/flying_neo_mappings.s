@@ -151,7 +151,7 @@ byte_19C68E:    dc.b    0, $5A, 7                       ; DATA XREF: ROM:0019C70
                 dc.b    $88, $62, $B
                 dc.b    0, 8, $F0
 word_19C69A:    dc.w    $8842, $700, $28F8              ; DATA XREF: ROM:0019C704   o
-off_19C6A0:     dc.w    word_19C59E-*                   ; DATA XREF: ROM:off_D83A   o
+off_19C6A0:     dc.w    word_19C59E-*                   ; DATA XREF: ROM:Midgame_RandomLightningMappingPointers   o
                 dc.w    3
                 dc.w    word_19C5B6-*
                 dc.w    3
@@ -215,7 +215,7 @@ off_19C708:     dc.w    word_19C59E-*                   ; DATA XREF: ROM:0000D84
                 dc.w    2
                 dc.w    word_19C61C-*
                 dc.w    $FF
-off_19C720:     dc.w    word_19C57A-*                   ; DATA XREF: Stage_InitFlyingNeoEntity+12   o
+off_19C720:     dc.w    word_19C57A-*                   ; DATA XREF: Stage8_InitializeFlyingNeoComposite+12   o
                 dc.w    $FF
 byte_19C724:    dc.b    0, $2E, 0, 0, $5B, $82, $82, $25, 2, $5F, 0, 0, $5A, 0, 0, $40, $82, 0, $5F, 0, 0, $A0, $BF, $FC, $CC, $5F, 0, 0, $5F, 0, 0, $5F
                                         ; DATA XREF: ROM:000117D0   o

@@ -463,7 +463,7 @@ Stage6_StartPostJokerTransition:                        ; DATA XREF: ROM:0000C88
 Stage7_InitializeScrollState:                           ; DATA XREF: ROM:0000C88A   o  ; was: sub_CCA2
                 tst.w   (word_FFF720).w
                 bmi.s   Stage7_UpdateScrollToTerobuster
-                bsr.w   Stage_InitProjectileSpawn
+                bsr.w   Stage7_InitializeTerobusterIntroProjectiles
                 addq.w  #2,(word_FFA950).w
                 lea     Stage7_InitialTileAssetLoadList(pc),a0
                 nop
@@ -502,14 +502,14 @@ Stage7_UpdateScrollToTerobuster_Return:                 ; CODE XREF: Stage7_Upda
 Stage7_CheckIntroProjectileTrigger:                     ; CODE XREF: Stage7_UpdateScrollToTerobuster+18   j  ; was: loc_CD00
                 cmpi.w  #$10B6,d0
                 bmi.s   Stage7_UpdateScrollToTerobuster_Return
-                bra.w   Stage_SpawnIntroProjectile
+                bra.w   Stage7_SpawnTerobusterIntroProjectile
 ; End of function Stage7_UpdateScrollToTerobuster
 ; Initializes Terobuster boss with scroll and graphics loading
 Stage7_InitializeTerobusterEncounter:                   ; DATA XREF: ROM:0000C88E   o  ; was: sub_CD0A
-                bsr.w   Stage_SpawnIntroProjectile
+                bsr.w   Stage7_SpawnTerobusterIntroProjectile
                 subq.w  #1,(dword_FF8062).w
                 bsr.w   Stage7_UpdateTerobusterIntroFade
-                bsr.w   Stage_LoadTerobusterTiles
+                bsr.w   Stage7_UpdateTerobusterIntroTileRows
                 jsr     (Tilemap_QueueNextConstantRow).l
                 addi.l  #$C000,(dword_FFA900).w
                 jsr     (Tilemap_QueuePrimaryCameraColumnOffset158).l
@@ -550,8 +550,8 @@ Stage7_ApplyTerobusterFadeParameters:                   ; CODE XREF: Stage7_Upda
 ; End of function Stage7_UpdateTerobusterIntroFade
 ; Post-intro transition clearing flags and advancing phase
 Stage7_UpdatePostTerobusterIntro:                       ; DATA XREF: ROM:0000C890   o  ; was: sub_CD90
-                bsr.w   Stage_SpawnIntroProjectile
-                bsr.w   Stage_LoadTerobusterTiles
+                bsr.w   Stage7_SpawnTerobusterIntroProjectile
+                bsr.w   Stage7_UpdateTerobusterIntroTileRows
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage7_UpdatePostTerobusterIntroCamera
                 clr.b   (VDPReg11Shadow+1).w
@@ -570,7 +570,7 @@ Stage7_UpdatePostTerobusterTransition:                  ; DATA XREF: ROM:0000C89
                 move.b  #1,(byte_FF830E).w
                 move.w  #4,(word_FFA02A).w
                 addq.w  #2,(word_FFA950).w
-                lea     byte_D6A6(pc),a0
+                lea     Stage7_TerobusterIndexedRowCommandF0F1(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedRows).l
 Stage7_UpdatePostTerobusterTransitionCamera:            ; CODE XREF: Stage7_UpdatePostTerobusterTransition+4   j  ; was: loc_CDDE

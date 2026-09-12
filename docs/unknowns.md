@@ -4980,3 +4980,29 @@ The 31 formerly raw definitions gain provenance, raising provenance from
 13,887 to 13,918 and the audit registry from 11,283 to 11,357. The enforced
 live address-derived ceiling falls from 2,164 to 2,133. Module count remains
 370 and the reconstructed owner remains within the 200-700-line target.
+
+The Terobuster-intro and Flying Neo effects pass corrects the ownership split
+at `$00D6D6`. The type-`$178` Stage 7 boundary projectiles and their six
+indexed-row descriptors now form the complete
+`stages/terobuster_intro_projectiles.s` range through `$00D6D5`; the following
+Flying Neo high-RAM composite initializer moves to the front of
+`stages/flying_neo_effects.s`. This preserves ROM order while preventing a
+Flying Neo routine from remaining attached to a Terobuster projectile file.
+Both short modules are complete private procedure/data families rather than
+arbitrary line-count fragments.
+
+Static flow also rejects two generated lifecycle claims. The former
+`Stage_FlyingNeoSpawn` allocates nothing: it updates the already initialized
+high-RAM composite, assigns velocities, and queues indexed tile columns. The
+former `Stage_FlyingNeoInitBoss` only submits the shared midgame palette-command
+bank and is used by both Stage 8 and Stage 9. The lightning updater now states
+its actual combination of randomized paired-palette control and optional
+high-RAM composite creation. Its four mapping pointers and the three pairs of
+counted palette-entry lists are named from their direct consumers without
+inventing visual identities for individual palette addresses.
+
+All 31 definitions across the reconstructed range have exact-address static
+audit records. The 21 formerly address-derived definitions gain provenance,
+raising provenance from 13,918 to 13,939 and the audit registry from 11,357 to
+11,388. The enforced live address-derived ceiling falls from 2,133 to 2,112;
+the module count remains 370.

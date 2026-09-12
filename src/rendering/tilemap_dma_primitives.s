@@ -301,7 +301,7 @@ VDPQueue_SetCommandHighWordLoop:                        ; CODE XREF: VDPQueue_Se
                 rts
 ; End of function VDPQueue_SetCommandHighWord
 ; Stages indexed tile blocks by columns and queues their vertical DMA transfers
-Tilemap_QueueIndexedColumns:                            ; CODE XREF: Stage_FlyingNeoSpawn+24   j  ; was: sub_11058
+Tilemap_QueueIndexedColumns:                            ; CODE XREF: Stage8_StartFlyingNeoCompositeAndQueueTiles+24   j  ; was: sub_11058
                                         ; Gfx_LoadWolfGaropaTransitionTiles+6   p
                 move.w  (VDPStagingDataCursor).w,(word_FF805C).w
                 move.l  #$94009300,(dword_FF8058).w

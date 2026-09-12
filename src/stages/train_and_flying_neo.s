@@ -51,7 +51,7 @@ Stage_InitStage8Train:                                  ; DATA XREF: ROM:0000C89
                 move.b  #4,(byte_FFA95B).w
                 lea     byte_CE4C(pc),a1
                 bsr.s   Stage_WriteBossParams
-                bsr.w   Stage_InitFlyingNeoEntity
+                bsr.w   Stage8_InitializeFlyingNeoComposite
                 move.w  #$34,(word_FFA02A).w            ; '4'
                 move.w  #$45C,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
@@ -67,8 +67,8 @@ loc_CEB8:                                               ; CODE XREF: Stage_InitS
 ; Train scroll physics with velocity updates
 Stage_TrainScrollPhysics:                               ; CODE XREF: Stage_TrainToFlyingNeoTransition+4   p  ; was: sub_CEBC
                                         ; Stage_FlyingNeoScrollUpdate+24   j
-                move.l  #word_D84A,(PaletteEntryLists).w
-                bsr.w   Effect_SpawnRandomLightning
+                move.l  #Stage8_TrainLightningPaletteEntryLists,(PaletteEntryLists).w
+                bsr.w   Midgame_UpdateRandomLightningEffect
                 bsr.w   Stage_TrainParallaxCalc
                 tst.w   (dword_FFA960).w
                 bmi.s   locret_CEF8
@@ -150,7 +150,7 @@ Stage_FlyingNeoScrollUpdate:                            ; DATA XREF: ROM:0000C8A
                 bne.s   Stage_SyncScrollPositions
                 addq.w  #2,(word_FFA950).w
                 clr.l   (dword_FFA964).w
-                bsr.w   Stage_FlyingNeoSpawn
+                bsr.w   Stage8_StartFlyingNeoCompositeAndQueueTiles
 ; Synchronizes scroll positions between camera and stage buffers
 Stage_SyncScrollPositions:                              ; CODE XREF: Stage_FlyingNeoScrollUpdate+4   j  ; was: loc_CFB2
                                         ; Stage_FlyingNeoScrollUpdate+A   j
@@ -184,8 +184,8 @@ Stage_UpdateVerticalScroll:                             ; CODE XREF: Stage_Flyin
                 add.l   d0,(dword_FFA904).w
                 bsr.w   Stage8_UpdateFlyingNeoScrollAndTilemap
                 bsr.w   Stage_TrainParallaxCalc
-                move.l  #word_D864,(PaletteEntryLists).w
-                bsr.w   Effect_SpawnRandomLightning
+                move.l  #Stage8_FlyingNeoLightningPaletteEntryLists,(PaletteEntryLists).w
+                bsr.w   Midgame_UpdateRandomLightningEffect
                 rts
 ; End of function Stage_FlyingNeoVerticalScroll
 ; Starts Flying-Neo battle with palette and params
@@ -197,11 +197,11 @@ Stage_FlyingNeoBattleStart:                             ; DATA XREF: ROM:0000C8A
                 jsr     (Boss_LoadAssetSet).l
                 lea     byte_CE52(pc),a1
                 bsr.w   Stage_WriteBossParams
-                bsr.w   Stage_FlyingNeoInitBoss
+                bsr.w   Midgame_LoadFlyingNeoPaletteCommands
 loc_D040:                                               ; CODE XREF: Stage_FlyingNeoBattleStart+4   j
                                         ; Stage_FlyingNeoBattleUpdate+4   j
-                move.l  #word_D864,(PaletteEntryLists).w
-                bsr.w   Effect_SpawnRandomLightning
+                move.l  #Stage8_FlyingNeoLightningPaletteEntryLists,(PaletteEntryLists).w
+                bsr.w   Midgame_UpdateRandomLightningEffect
                 move.w  (dword_FFA900).w,(dword_FFA908).w
                 move.w  (dword_FFA904).w,(dword_FFA90C).w
                 bsr.w   Stage_TrainParallaxCalc

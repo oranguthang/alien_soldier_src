@@ -6,7 +6,7 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
                 move.w  #0,(dword_FFA90C).w
                 move.w  (dword_FFA900).w,(word_FFA928).w
                 move.w  (dword_FFA904).w,(word_FFA92C).w
-                bsr.w   Stage_FlyingNeoInitBoss
+                bsr.w   Midgame_LoadFlyingNeoPaletteCommands
                 move.w  #$2AC,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
                 move.l  #$FFFEE000,(dword_FF8240).w
@@ -41,8 +41,8 @@ Stage9_UpdateFlyCorridor:                               ; DATA XREF: ROM:0000C8A
 ; End of function Stage9_UpdateFlyCorridor
 ; Build the corridor raster offsets while advancing the camera and reveal columns
 Stage9_UpdateFlyCorridorScroll:                         ; CODE XREF: Stage9_UpdateFlyCorridor+6   j  ; was: sub_D166
-                move.l  #word_D8B2,(PaletteEntryLists).w
-                bsr.w   Effect_SpawnRandomLightning
+                move.l  #Stage9_FlyCorridorLightningPaletteEntryLists,(PaletteEntryLists).w
+                bsr.w   Midgame_UpdateRandomLightningEffect
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 bsr.w   Stage9_WriteVerticalRasterOffsets
@@ -96,8 +96,8 @@ Stage9_InitializeCaterpillarCamera:                     ; CODE XREF: Stage9_Upda
 ; End of function Stage9_InitializeCaterpillarCamera
 ; Unreferenced alternate entry into the Caterpillar scrolling path
 UnreferencedStage9_UpdateCaterpillarScroll:
-                move.l  #word_D8B2,(PaletteEntryLists).w  ; was: sub_D1EA
-                bsr.w   Effect_SpawnRandomLightning
+                move.l  #Stage9_FlyCorridorLightningPaletteEntryLists,(PaletteEntryLists).w  ; was: sub_D1EA
+                bsr.w   Midgame_UpdateRandomLightningEffect
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Stage9_UpdateCaterpillarCameraAndScroll
 ; End of function UnreferencedStage9_UpdateCaterpillarScroll
@@ -306,8 +306,8 @@ Stage9_UpdateCaterpillarCameraAndScroll:                ; CODE XREF: Unreference
 Stage9_UpdateCaterpillarOscillationAndRasterRows:       ; CODE XREF: Stage9_UpdateCaterpillarShipTraversal+5E   p  ; was: sub_D4BE
                                         ; Stage9_UpdateCaterpillarShipExit+12   p
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
-                move.l  #word_D8B2,(PaletteEntryLists).w
-                bsr.w   Effect_SpawnRandomLightning
+                move.l  #Stage9_FlyCorridorLightningPaletteEntryLists,(PaletteEntryLists).w
+                bsr.w   Midgame_UpdateRandomLightningEffect
                 tst.w   (dword_FFA960).w
                 bmi.s   Stage9_CheckCaterpillarVerticalBounce
                 bne.s   Stage9_RaiseCaterpillarVerticalOffset

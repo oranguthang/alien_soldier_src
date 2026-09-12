@@ -91,9 +91,9 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Entity_EmptyState6
                 dc.l    UI_DebugSpritePositionEditor
                 dc.l    Object_ClearInactiveTypes12CAnd134
-                dc.l    Entity_FlyingNeoGravityAccel
+                dc.l    Entity_UpdateFlyingNeoGravity
                 dc.l    Projectile_FallingDebris
-                dc.l    Projectile_IntroFalling
+                dc.l    Projectile_TerobusterIntroBoundary
                 dc.l    Projectile_UpdateDelayedCollisionShot
                 dc.l    Projectile_FallingSpawner
                 dc.l    Sprite_InitCurrentFromTable
