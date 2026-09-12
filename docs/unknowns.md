@@ -4867,11 +4867,29 @@ alternate dither initializer has no source caller and is explicitly marked
 All 43 definitions across the three resulting owners have provenance. There
 are 42 distinct auditable owner addresses before the following VDP module;
 `GameOver_PerspectiveLookupTable_End` shares `$029E2E` with that module's
-first routine and therefore retains provenance without taking its future
-address-keyed audit record. One Game Over entry was audited in the preceding
+first routine and therefore retains provenance while the shared address-keyed
+record belongs to `RasterBuffer_CopySelectedLayout`. One Game Over entry was
+audited in the preceding
 pass, so this pass adds 41 records. The 25 address-derived definitions include
 the two descriptor structures that the narrower initial count omitted.
 Provenance rises from 13,796 to 13,821,
 the JSON audit registry from 11,137 to 11,178, and the enforced live
 address-derived ceiling falls from 2,254 to 2,229. The source-module count
 rises from 368 to 370 because code and data now have honest owners.
+
+The former `rendering/vdp_layouts.s` audit proves that the module neither
+initializes VDP registers nor writes VRAM. VBlank selects one of thirteen
+layouts with `word_FF8090`; each live handler copies or expands work-RAM
+raster buffers. The alleged initial-palette loader moves 256 bytes and then
+expands fourteen raster rows, while the supposed VRAM clearer copies nonzero
+source words into paired destinations.
+
+The module is now `rendering/raster_buffer_layouts.s`. Its handlers are named
+for statically corroborated owners such as Xi-Tiger, weapon setup, Game Over,
+Flying Neo, story transition, and Z-Leo; shared cases retain transition-level
+names. The four copy primitives state their exact 64-byte, interleaved,
+repeated, or paired behavior. All 20 definitions have exact-address audit
+records, including `$029E2E`, which shares the preceding data-end alias.
+Three address-derived labels gain provenance, raising provenance from 13,821
+to 13,824 and the audit registry from 11,178 to 11,198. The enforced live
+address-derived ceiling falls from 2,229 to 2,226.

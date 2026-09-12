@@ -63,7 +63,7 @@ Sys_VBlankHandler_RunUpdate:                            ; CODE XREF: Sys_VBlankH
                 bsr.w   Sound_AcquireZ80Bus
                 bsr.w   Gfx_RunVBlankTransfers
                 bsr.w   Gfx_ApplyVDPRegisterShadows
-                jsr     (Sys_InitVDPRegisters).l
+                jsr     (RasterBuffer_CopySelectedLayout).l
 Sys_VBlankHandler_AcquireZ80BusForExit:                 ; CODE XREF: Sys_VBlankHandler+32   j  ; was: loc_B44
                 bset    #0,(IO_Z80BUS).l
                 bne.s   Sys_VBlankHandler_AcquireZ80BusForExit

@@ -142,7 +142,7 @@
                 include "src/cutscenes/game_over_landscape.s"
                 include "src/effects/tunnel_transition.s"
                 include "src/data/game_over_perspective_lookup.s"
-                include "src/rendering/vdp_layouts.s"
+                include "src/rendering/raster_buffer_layouts.s"
                 include "src/projectiles/shared_boss_projectiles.s"
                 include "src/actors/shared_object_helpers.s"
                 include "src/debug/sprite_editor.s"

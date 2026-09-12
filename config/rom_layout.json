@@ -229,7 +229,7 @@
     { "file": "src/cutscenes/game_over_landscape.s", "subsystem": "cutscenes", "start": "0x0275C6", "end": "0x027933" },
     { "file": "src/effects/tunnel_transition.s", "subsystem": "effects", "start": "0x027934", "end": "0x027A2D" },
     { "file": "src/data/game_over_perspective_lookup.s", "subsystem": "data", "start": "0x027A2E", "end": "0x029E2D" },
-    { "file": "src/rendering/vdp_layouts.s", "subsystem": "rendering", "start": "0x029E2E", "end": "0x02A03B" },
+    { "file": "src/rendering/raster_buffer_layouts.s", "subsystem": "rendering", "start": "0x029E2E", "end": "0x02A03B" },
     { "file": "src/projectiles/shared_boss_projectiles.s", "subsystem": "projectiles", "start": "0x02A03C", "end": "0x02A30D" },
     { "file": "src/actors/shared_object_helpers.s", "subsystem": "actors", "start": "0x02A30E", "end": "0x02AA07" },
     { "file": "src/debug/sprite_editor.s", "subsystem": "debug", "start": "0x02AA08", "end": "0x02ABEF" },
