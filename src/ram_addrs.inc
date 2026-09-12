@@ -27,14 +27,14 @@ ShipGridColumnLimit     equ     $FFFF00E4               ; was: word_FF00E4
 ShipGridFirstTile       equ     $FFFF00E6               ; was: word_FF00E6
 StarRowSeparation       equ     $FFFF00E8               ; was: word_FF00E8
 StarRowState            equ     $FFFF00EA               ; was: word_FF00EA
-word_FF00EC             equ     $FFFF00EC
+SharedSequenceState     equ     $FFFF00EC               ; was: word_FF00EC
 PlanetGridState         equ     $FFFF00EE               ; was: word_FF00EE
 ShipGridState           equ     $FFFF00F0               ; was: word_FF00F0
 PlanetGridTimer         equ     $FFFF00F2               ; was: word_FF00F2
 ShipGridTimer           equ     $FFFF00F4               ; was: word_FF00F4
 StoryTextVRAMAddress    equ     $FFFF00F6               ; was: word_FF00F6
-dword_FF00F8            equ     $FFFF00F8
-word_FF00FC             equ     $FFFF00FC
+SharedSequenceCursor    equ     $FFFF00F8               ; was: dword_FF00F8
+SharedSequenceTimer     equ     $FFFF00FC               ; was: word_FF00FC
 StarRowTimer            equ     $FFFF00FE               ; was: word_FF00FE
 StoryTitleGlyphCursor   equ     $FFFF0100               ; was: dword_FF0100
 CutsceneTimer           equ     $FFFF0106               ; was: word_FF0106

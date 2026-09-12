@@ -280,7 +280,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_Stage21AsteroidDebrisMain
                 dc.l    Cutscene_XiTigerTrainEntranceController
                 dc.l    Cutscene_XiTigerBossEntranceController
-                dc.l    Effect_FloatingIconDispatcher
+                dc.l    CreditsGlyph_Dispatch
                 dc.l    Projectile_ZLeoOrbMain
                 dc.l    Projectile_ZLeoLaserMain
                 dc.l    Projectile_ZLeoLaserFall

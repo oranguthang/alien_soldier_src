@@ -4773,3 +4773,33 @@ Twelve already-correct audit records are retained rather than duplicated.
 Provenance rises from 13,758 to 13,764 mappings, the JSON name-audit registry
 from 11,005 to 11,020 records, and the enforced live address-derived ceiling
 falls from 2,292 to 2,286.
+
+The former `ui/selection_menu.s` and `effects/floating_icon.s` are one credits
+subsystem, not a menu followed by a generic effect. Their contiguous ROM range
+is now the 288-line `credits/animated_glyph_sequence.s`. The only dispatcher
+callers are credits states; no routine reads controller input. The embedded
+874-byte stream parses as 37 variable-length records containing two row
+delays, glyph counts, and glyph IDs. Its first records decode to `ALIEN
+SOLDIER`, `STAFF`, and developer names, proving the credits-text role.
+
+Each nonzero glyph ID creates entity type `$464`, selects its glyph tile, and
+runs a six-state orbit, hold, fall, and acceleration sequence. The palette-ramp
+helper has no source caller and is therefore explicitly `Unreferenced` rather
+than treated as part of the live animation. The extracted stream and manifest
+entry are now `animated_glyph_sequence` under `data/credits`.
+
+Three low-RAM words are promoted with deliberately shared names. Frontend
+transitions and the credits glyph sequence both use `SharedSequenceState`;
+story text and credits independently reuse `SharedSequenceCursor` and
+`SharedSequenceTimer`. Narrow subsystem names would be false across these
+lifetimes.
+
+The merged module has 36 definitions at 35 unique ROM addresses:
+`CreditsGlyphSequenceData_End` shares `$021F2A` with the following object
+initializer and retains its own provenance marker without duplicating the
+address-keyed audit record. Together with the three RAM fields, the pass adds
+38 unique-address audit records. Thirty-nine symbols are corrected or
+promoted, provenance rises from 13,764 to 13,780 mappings, and the JSON audit
+registry rises from 11,020 to 11,058 records. The enforced live
+address-derived ceiling falls from 2,286 to 2,270, and the module count drops
+by one without changing ROM order.

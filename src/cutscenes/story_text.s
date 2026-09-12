@@ -21,10 +21,10 @@ StoryText_Initialize:                                   ; DATA XREF: ROM:StoryTe
                 move.w  #2,(word_FFE3E2).w
                 move.w  #$EEE,(dword_FFE3C2+2).w
                 move.w  #$EE,(word_FFE3E4).w
-                move.l  #StoryText_PrimaryRows,(dword_FF00F8).l
+                move.l  #StoryText_PrimaryRows,(SharedSequenceCursor).l
                 move.l  #StoryText_AccentRows,(StoryTextAccentCursor).l
                 move.w  #$4C88,(StoryTextVRAMAddress).l
-                move.w  #1,(word_FF00FC).l
+                move.w  #1,(SharedSequenceTimer).l
                 addq.w  #2,(StoryTextState).l
                 rts
 ; End of function StoryText_Initialize
@@ -51,12 +51,12 @@ StoryText_UpdateScroll:                                 ; DATA XREF: ROM:000058A
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
                 subq.w  #1,(dword_FFA904).w
-                subq.w  #1,(word_FF00FC).l
+                subq.w  #1,(SharedSequenceTimer).l
                 bne.w   Cutscene_Return
-                move.w  #$18,(word_FF00FC).l
+                move.w  #$18,(SharedSequenceTimer).l
                 move.w  #$C300,d0
                 move.w  (StoryTextVRAMAddress).l,d4
-                movea.l (dword_FF00F8).l,a0
+                movea.l (SharedSequenceCursor).l,a0
                 cmpi.b  #$FE,(a0)
                 bne.s   StoryText_RenderAccentRow
                 movea.l #StoryText_BlankRow,a0
@@ -82,9 +82,9 @@ StoryText_AdvanceRowPointers:                           ; CODE XREF: StoryText_U
                 addi.l  #$22,(StoryTextAccentCursor).l  ; '"'
                 move.w  #$C300,d0
                 move.w  (StoryTextVRAMAddress).l,d4
-                movea.l (dword_FF00F8).l,a0
+                movea.l (SharedSequenceCursor).l,a0
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
-                addi.l  #$22,(dword_FF00F8).l           ; '"'
+                addi.l  #$22,(SharedSequenceCursor).l   ; '"'
 StoryText_PrepareTrailingBlankRow:                      ; CODE XREF: StoryText_UpdateScroll+48   j  ; was: loc_59D2
                 move.w  #$C300,d0
                 move.w  (StoryTextVRAMAddress).l,d4

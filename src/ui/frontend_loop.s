@@ -8,7 +8,7 @@ Frontend_InitializeSegaSequence:                        ; DATA XREF: Sys_Dispatc
                 clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
                 clr.b   (VDPReg18Shadow+1).w
-                clr.w   (word_FF00EC).l
+                clr.w   (SharedSequenceState).l
                 clr.w   (StoryTextState).l
                 rts
 ; ---------------------------------------------------------------------------
@@ -122,7 +122,7 @@ Frontend_InitializeSegaScreen_ClearSpriteGridScratch:   ; was: loc_1D006
                 clr.w   (PatternDissolveStep).l
                 jsr     (Cutscene_FillPlanetPattern).l
                 jsr     (Cutscene_RenderPlanetSpriteGrid).l
-                clr.w   (word_FF00EC).l
+                clr.w   (SharedSequenceState).l
                 clr.w   (StoryTextState).l
                 move.b  #$87,d0
                 jsr     (Sound_QueueRequest).l

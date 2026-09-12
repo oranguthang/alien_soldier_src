@@ -170,7 +170,7 @@ Credits_FadeInState:                                    ; DATA XREF: ROM:Credits
                 tst.w   (word_FF0176).l
                 bne.w   Credits_StateReturn
                 move.w  #$FFF0,(word_FF0176).l
-                clr.w   (word_FF00EC).l
+                clr.w   (SharedSequenceState).l
                 clr.w   (word_FF017C).l
                 move.w  #$4D80,(word_FF0188).l
                 addq.w  #2,(GameSubstateIndex).w
@@ -180,7 +180,7 @@ Credits_StateReturn:                                    ; CODE XREF: Credits_Fad
 ; End of function Credits_FadeInState
 ; Scrolls credits text with color cycling palette effect
 Credits_ScrollWithColorCycle:                           ; DATA XREF: ROM:00020BC2   o  ; was: sub_20C32
-                jsr     (UI_SelectionMenuDispatcher).l
+                jsr     (CreditsGlyphSequence_Dispatch).l
                 bsr.w   Credits_HandleXiTigerMusicCues
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 nop
@@ -203,7 +203,7 @@ Credits_ScrollWithColorCycle:                           ; DATA XREF: ROM:00020BC
 ; End of function Credits_ScrollWithColorCycle
 ; Waits for timer to reach specific value before advancing state
 Credits_WaitForTimerEnd:                                ; DATA XREF: ROM:00020BC4   o  ; was: sub_20C88
-                jsr     (UI_SelectionMenuDispatcher).l
+                jsr     (CreditsGlyphSequence_Dispatch).l
                 bsr.w   Credits_HandleXiTigerMusicCues
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 nop
@@ -289,7 +289,7 @@ Credits_UpdateScrollTables_LowerReverseLoop:            ; CODE XREF: Credits_Upd
 ; End of function Credits_UpdateScrollTables
 ; Fades out palette and clears VRAM plane data
 Credits_FadeOutAndClearVRAM:                            ; DATA XREF: ROM:00020BC6   o  ; was: sub_20D74
-                jsr     (UI_SelectionMenuDispatcher).l
+                jsr     (CreditsGlyphSequence_Dispatch).l
                 bsr.w   Credits_HandleXiTigerMusicCues
                 jsr     Credits_UpdateScrollTables(pc)  ; (pc)
                 move.w  (FrameCounter).w,d0
@@ -330,7 +330,7 @@ Credits_FadeOutAndClearVRAM_PlaneBLoop:                 ; CODE XREF: Credits_Fad
 ; End of function Credits_FadeOutAndClearVRAM
 ; Fades palette from black to normal colors
 Credits_FadeInFromBlack:                                ; DATA XREF: ROM:00020BC8   o  ; was: sub_20E1A
-                jsr     (UI_SelectionMenuDispatcher).l
+                jsr     (CreditsGlyphSequence_Dispatch).l
                 bsr.w   Credits_HandleXiTigerMusicCues
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
@@ -348,7 +348,7 @@ Credits_FadeInFromBlack:                                ; DATA XREF: ROM:00020BC
 ; End of function Credits_FadeInFromBlack
 ; Waits for scroll sequence to complete before advancing
 Credits_WaitForScrollEnd:                               ; DATA XREF: ROM:00020BCA   o  ; was: sub_20E5E
-                jsr     (UI_SelectionMenuDispatcher).l
+                jsr     (CreditsGlyphSequence_Dispatch).l
                 bsr.w   Credits_HandleXiTigerMusicCues
                 bsr.w   Credits_ScrollStateDispatcher
                 tst.w   (word_FF0188).l

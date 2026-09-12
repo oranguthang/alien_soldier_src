@@ -5027,9 +5027,9 @@
       "sha1": "94fa3716593d884dc68e80409d7697993d0eb5e9"
     },
     {
-      "name": "word_21BC0",
-      "path": "other/word_21BC0.bin",
-      "region": "other",
+      "name": "animated_glyph_sequence",
+      "path": "credits/animated_glyph_sequence.bin",
+      "region": "credits",
       "address": "0x21BC0",
       "end": "0x21F2A",
       "size": 874,

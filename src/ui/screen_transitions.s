@@ -1,6 +1,6 @@
 ; Dispatches the three-state Sega-screen pattern transition
 Frontend_DispatchSegaScreenTransition:                  ; was: sub_1D13E
-                move.w  (word_FF00EC).l,d0
+                move.w  (SharedSequenceState).l,d0
                 lea     SegaScreenTransitionStateOffsets(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -17,14 +17,14 @@ Frontend_EraseSegaScreenPattern:                        ; was: sub_1D152
                 cmpi.w  #$40,(PatternDissolveStep).l    ; '@'
                 bne.w   FrontendTransition_Return
                 move.w  #$40,(word_FF8100).w            ; '@'
-                addq.w  #2,(word_FF00EC).l
+                addq.w  #2,(SharedSequenceState).l
                 rts
 ; End of function Frontend_EraseSegaScreenPattern
 ; Waits for the Sega-screen erase hold timer
 Frontend_WaitAfterSegaPatternErase:                     ; was: sub_1D178
                 subq.w  #1,(word_FF8100).w
                 bne.w   FrontendTransition_Return
-                addq.w  #2,(word_FF00EC).l
+                addq.w  #2,(SharedSequenceState).l
                 rts
 ; End of function Frontend_WaitAfterSegaPatternErase
 ; Reveals the Sega-screen sprite-grid pattern and advances to the title transition
@@ -67,7 +67,7 @@ Frontend_InitializeTitleTransition_CopyPalette:         ; was: loc_1D1BA
                 clr.w   (PatternDissolveStep).l
                 jsr     (Cutscene_FillPlanetPattern).l
                 jsr     (Cutscene_RenderPlanetSpriteGrid).l
-                clr.w   (word_FF00EC).l
+                clr.w   (SharedSequenceState).l
                 rts
 ; End of function Frontend_InitializeTitleTransition
 ; ---------------------------------------------------------------------------
@@ -82,7 +82,7 @@ FrontendTitleTransitionPalette: dc.l    0, $EEE0F00     ; was: dword_1D25E
 
 ; Dispatches the seven-state transition from the title patterns into the story screen
 Frontend_DispatchTitleTransition:                       ; was: sub_1D27E
-                move.w  (word_FF00EC).l,d0
+                move.w  (SharedSequenceState).l,d0
                 lea     FrontendTitleTransitionStateOffsets(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -103,14 +103,14 @@ Frontend_EraseTitleTransitionPattern:                   ; was: sub_1D29A
                 cmpi.w  #$40,(PatternDissolveStep).l    ; '@'
                 bne.w   FrontendTransition_Return
                 move.w  #$40,(word_FF8100).w            ; '@'
-                addq.w  #2,(word_FF00EC).l
+                addq.w  #2,(SharedSequenceState).l
                 rts
 ; End of function Frontend_EraseTitleTransitionPattern
 ; Waits after erasing the first title-transition pattern
 Frontend_WaitAfterFirstTitlePatternErase:               ; was: sub_1D2C0
                 subq.w  #1,(word_FF8100).w
                 bne.w   FrontendTransition_Return
-                addq.w  #2,(word_FF00EC).l
+                addq.w  #2,(SharedSequenceState).l
                 rts
 ; End of function Frontend_WaitAfterFirstTitlePatternErase
 ; Reveals the current title pattern, then configures the next sprite grid
@@ -138,14 +138,14 @@ Frontend_RevealTitlePatternAndSetupNextGrid:            ; was: sub_1D2D0
                 clr.w   (PatternDissolveStep).l
                 jsr     (Cutscene_FillPlanetPattern).l
                 jsr     (Cutscene_RenderPlanetSpriteGrid).l
-                addq.w  #2,(word_FF00EC).l
+                addq.w  #2,(SharedSequenceState).l
                 rts
 ; End of function Frontend_RevealTitlePatternAndSetupNextGrid
 ; Waits after erasing the second title-transition pattern
 Frontend_WaitAfterSecondTitlePatternErase:              ; was: sub_1D36E
                 subq.w  #1,(word_FF8100).w
                 bne.w   FrontendTransition_Return
-                addq.w  #2,(word_FF00EC).l
+                addq.w  #2,(SharedSequenceState).l
                 rts
 ; End of function Frontend_WaitAfterSecondTitlePatternErase
 ; Reveals the final opening pattern and selects the terminal story-transition state
@@ -156,7 +156,7 @@ Frontend_RevealFinalOpeningPattern:                     ; was: sub_1D37E
                 bpl.w   FrontendTransition_Return
                 clr.w   (word_FFC622).w
                 move.w  #6,(GameSubstateIndex).w
-                move.w  #$C,(word_FF00EC).l
+                move.w  #$C,(SharedSequenceState).l
                 rts
 ; End of function Frontend_RevealFinalOpeningPattern
 ; ---------------------------------------------------------------------------
@@ -164,7 +164,7 @@ Frontend_RevealFinalOpeningPattern:                     ; was: sub_1D37E
 Frontend_HandleOpeningSkip:                             ; was: loc_1D3A8
                 cmpi.w  #6,(GameSubstateIndex).w
                 bne.s   Frontend_StartStoryExitForOpeningSkip
-                cmpi.w  #$C,(word_FF00EC).l
+                cmpi.w  #$C,(SharedSequenceState).l
                 beq.w   FrontendTransition_Return
 Frontend_StartStoryExitForOpeningSkip:                  ; was: loc_1D3BC
                 move.w  #$28,(GameModeIndex).w          ; '('

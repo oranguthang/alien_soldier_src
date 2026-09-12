@@ -7,6 +7,7 @@ still have neutral size/address names. The first reviewed semantic fields are
 `DifficultyMode`, `MessageMode`, `SoundDisableFlags`, `StageTimeRemaining`,
 `ScoreValueBCD`, `ScoreAddendBCD`, `ScoreAddendPrefixByte`,
 `StagePhaseSplitTimes`, `StageCompletionTimes`, `StageResultVisits`,
+`SharedSequenceState`, `SharedSequenceCursor`, `SharedSequenceTimer`,
 `ContinueCreditsBCD`, `HighScoreBCD`, `PostStageEntryCountBCD`,
 `DestroyedEnemyCountBCD`, `PlayerDamageBCD`,
 `MessageSequenceState`, `MessageSequenceFlags`, `MessageAdvanceButtons`,
@@ -39,6 +40,18 @@ subject to the evidence policy in `docs/naming.md`.
 header fields, which store 24-bit physical addresses. Most instructions use
 the sign-extended `0xFFFFxxxx` form because that is how their absolute-short or
 absolute-long operands were reconstructed.
+
+## Reviewed shared sequence scratch fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `SharedSequenceState` | `$FFFF00EC` | The Sega and title transition dispatchers use this even word as their state-table offset. Credits reuses it for the five-state animated-glyph sequence; each owner clears it before dispatch. |
+| `SharedSequenceCursor` | `$FFFF00F8` | Story text advances this longword through fixed-size row records, while the credits-glyph sequence advances it through its variable-size two-row records. |
+| `SharedSequenceTimer` | `$FFFF00FC` | Story text uses the word as its row cadence; the credits-glyph parser stores record delays here and the sequence delay state counts it down. |
+
+The names deliberately preserve their scratch/shared lifetime. Naming these
+fields after only story text or credits would misdescribe the other proven
+owner.
 
 ## Reviewed options fields
 

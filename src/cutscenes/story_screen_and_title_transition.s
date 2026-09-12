@@ -22,7 +22,7 @@ StoryScreen_ClearPlaneB:                                ; CODE XREF: StoryScreen
                 move.w  d1,(a0)
                 dbf     d0,StoryScreen_ClearPlaneB
                 move    (sp)+,sr
-                clr.w   (word_FF00EC).l
+                clr.w   (SharedSequenceState).l
                 clr.w   (StoryTextState).l
                 move.b  #4,(VDPReg18Shadow+1).w
                 move.w  #$44,(RasterEffectIndex).w      ; 'D'
