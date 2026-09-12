@@ -5634,3 +5634,22 @@ rises from 3,145 to 3,151 solely because those six reviewed aliases do not need
 duplicate address records. The enforced address-derived ceiling falls from
 910 to 895; the remaining backlog comprises 831 RAM equates and 64 preserved-
 data labels.
+
+The frontend-scene asset pass removes all twenty-five address-derived
+definitions from `data/frontend_scene_assets.s`. Active load descriptors prove
+the title, options, post-stage results, story-screen, credits, cutscene,
+stage-transition, and weapon-setup consumers. The 71-line ROM bank remains one
+cohesive module instead of being split into tiny formal fragments. The sole
+source with no assembly consumer is conservatively named
+`FrontendUnreferencedTileArt`; its compressed-art class is pinned by the asset
+manifest, while its visual content is not inferred.
+
+Fifteen unique source addresses receive exact static audit records. Shared
+sources keep shared names, and the two type-three streams do not claim a data
+format beyond the demonstrated loader record. Ten binary-backed exclusive-end
+aliases retain provenance and fold into following payload boundaries.
+Provenance rises from 15,156 to 15,181 mappings, the audit registry from 12,305
+to 12,320, and the semantic review upper bound rises from 3,151 to 3,161 solely
+because those ten reviewed aliases do not need duplicate address records. The
+enforced address-derived ceiling falls from 895 to 870; the remaining backlog
+comprises 831 RAM equates and 39 preserved-data labels.

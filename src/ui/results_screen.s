@@ -31,10 +31,10 @@ Results_ActivatePostStageSummary_Return:                ; was: locret_1DCB0
 ; End of function Results_ActivatePostStageSummary
 ; ---------------------------------------------------------------------------
 ResultsPostStageCompletionAssetLoadList:    dc.w    7   ; was: stru_1DCB2
-                dc.l    tiles_1850C6                    ; field_2
+                dc.l    ResultsPostStageCompletionTileArt2000  ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_185268                     ; field_2
+                dc.l    ResultsPostStageCompletionMappingData2020  ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 ResultsPostStageCompletionTilemapRows:  dc.b    $69, 0, $20, 0, $F, 0, 1, 2, 3, 4  ; was: byte_1DCC4
@@ -110,7 +110,7 @@ Results_InitializeFinalSummary_Activate:                ; was: loc_1DD8A
 ; End of function Results_InitializeFinalSummary
 ; ---------------------------------------------------------------------------
 ResultsFinalSummaryDataLoadRequest: dc.w    7           ; was: stru_1DDC2
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    $FFFF
 

@@ -52,7 +52,7 @@ Credits_IntroAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    SharedCreditsResultsMappingData4020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18454C                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingData7000  ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    $FFFF
 Credits_IntroVRAMTransferParameters:    dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $4000  ; was: dword_1E236

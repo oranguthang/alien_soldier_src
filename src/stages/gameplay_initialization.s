@@ -132,7 +132,7 @@ WeaponSetup_AssetLoadDescriptors:   dc.w    3           ; field_0  ; was: stru_1
                 dc.l    WeaponSetupType3Data5800        ; field_2
                 dc.w    $5800                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    WeaponSetupTileArtE300          ; field_2

@@ -31,13 +31,13 @@ Frontend_ActivateSegaSequence:                          ; was: loc_1CEB6
 ; End of function Frontend_InitializeSegaSequence
 ; ---------------------------------------------------------------------------
 FrontendSegaSequenceAssetLoadList:  dc.w    7           ; field_0  ; was: stru_1CEFC
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $C000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    $FFFF
 

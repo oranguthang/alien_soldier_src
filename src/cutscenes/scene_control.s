@@ -25,19 +25,19 @@ Stage_InitializeTransition:                             ; DATA XREF: ROM:0001CF7
 ; End of function Stage_InitializeTransition
 ; ---------------------------------------------------------------------------
 StageTransitionAssetLoadList:   dc.w    7               ; field_0  ; was: stru_1D420
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_184590                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingDataA  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_184688                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingDataB  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18454C                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingData7000  ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    $FFFF
 
@@ -67,13 +67,13 @@ CutsceneSceneAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $C000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18140E                     ; field_2
+                dc.l    SharedFrontendAndTransitionTileArt  ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    $FFFF
 

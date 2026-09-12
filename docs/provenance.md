@@ -20,7 +20,7 @@ default evidence level is `hypothesis`. Correcting a semantic name must retain
 the same historical mapping unless a documented source correction proves that
 the mapping itself was wrong.
 
-The current reconstruction carries 15,156 checked mappings. The total grows
+The current reconstruction carries 15,181 checked mappings. The total grows
 when a live address-derived ROM or RAM definition receives an evidence-backed
 name; corrections to an already renamed symbol retain its existing imported
 IDA mapping and therefore do not inflate this count.

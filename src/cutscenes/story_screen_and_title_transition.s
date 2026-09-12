@@ -39,13 +39,13 @@ StoryScreen_ClearPlaneB:                                ; CODE XREF: StoryScreen
 ; ---------------------------------------------------------------------------
 StoryScreenAssetCommands:   dc.w    7                   ; field_0  ; was: stru_48DA
                                         ; DATA XREF: StoryScreen_FadeOutAndLoadTitleAssets+36   o
-                dc.l    tiles_18530A                    ; field_2
+                dc.l    StoryScreenTileArt0000          ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1885A4                     ; field_2
+                dc.l    StoryScreenMappingData4000      ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1889B0                     ; field_2
+                dc.l    StoryScreenMappingData6000      ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedMappingData7000           ; field_2

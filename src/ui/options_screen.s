@@ -794,46 +794,46 @@ Frontend_MenuPaletteCycleColors:    dc.w    $E00, $E44, $4C4, $40  ; was: word_A
 Frontend_TitleAssetLoadDescriptors: dc.w    3           ; field_0  ; was: stru_A1B6
                                         ; DATA XREF: TitleScreen_Initialize+12   o
                                         ; Frontend_InitializeSegaScreen+1C   o
-                dc.l    byte_182F24                     ; field_2
+                dc.l    SharedTitleAndOptionsType3DataA  ; field_2
                 dc.w    0                               ; field_6
                 dc.w    3                               ; field_0
-                dc.l    byte_184378                     ; field_2
+                dc.l    SharedTitleAndOptionsType3DataB  ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1814D4                    ; field_2
+                dc.l    FrontendTitleTileArt3000        ; field_2
                 dc.w    $3000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_182C9C                     ; field_2
+                dc.l    FrontendTitleMappingData6000    ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_182CE2                     ; field_2
+                dc.l    FrontendTitleMappingData4000    ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_184590                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingDataA  ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_184688                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingDataB  ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18454C                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingData7000  ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    $FFFF
 Options_AssetLoadDescriptors:   dc.w    3               ; field_0  ; was: stru_A1F8
                                         ; DATA XREF: UI_InitOptionsScreen+C   o
                                         ; UI_InitSecondaryOptionsMenu+C   o
-                dc.l    byte_182F24                     ; field_2
+                dc.l    SharedTitleAndOptionsType3DataA  ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    3                               ; field_0
-                dc.l    byte_184378                     ; field_2
+                dc.l    SharedTitleAndOptionsType3DataB  ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_184590                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingDataA  ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_184688                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingDataB  ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18454C                     ; field_2
+                dc.l    SharedFrontendAndTransitionMappingData7000  ; field_2
                 dc.w    $7000                           ; field_6
 Options_OnLabelTiles:   dc.w    $8332, $8330, $8300, $8300, $FFFF  ; was: word_A220
                                         ; DATA XREF: UI_UpdateMessageOption   o
