@@ -270,10 +270,10 @@ Stage10EnemyAssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    tiles_1A1026                    ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_104310                    ; field_2
+                dc.l    Stage10EnemyTileArt0            ; field_2
                 dc.w    $3720                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_104784                    ; field_2
+                dc.l    Stage10EnemyTileArt1            ; field_2
                 dc.w    $1840                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_19FACA                     ; field_2

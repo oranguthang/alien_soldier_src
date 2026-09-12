@@ -83,7 +83,7 @@ Stage9_FlyCorridor_WriteVisibleRowOffset:               ; CODE XREF: Stage9_Upda
 ; ---------------------------------------------------------------------------
 Stage9_CaterpillarTileAssetLoadList:    dc.w    7       ; field_0  ; was: stru_D1D0
                                         ; DATA XREF: Stage9_UpdateFlyCorridor+8   o
-                dc.l    tiles_10F840                    ; field_2
+                dc.l    Stage9CaterpillarTileArt        ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 
@@ -217,7 +217,7 @@ Stage9_CaterpillarShipColumnTransferDescriptor: dc.w    $FFFF, $7000, $FFFF, $68
                                         ; DATA XREF: Stage9_UpdateCaterpillarShipTraversal+4C   o
 Stage9_XiTigerEntranceTileAssetLoadList:    dc.w    7   ; field_0  ; was: stru_D39C
                                         ; DATA XREF: Stage9_UpdateCaterpillarShipTraversal+B8   o
-                dc.l    tiles_1163AE                    ; field_2
+                dc.l    Stage9XiTigerEntranceTileArt    ; field_2
                 dc.w    $8000                           ; field_6
                 dc.w    $FFFF
 

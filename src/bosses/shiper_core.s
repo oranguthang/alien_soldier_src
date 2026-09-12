@@ -98,7 +98,7 @@ Boss_ShiperInitReturn:                                  ; CODE XREF: Boss_Shiper
 ; ---------------------------------------------------------------------------
 Boss_ShiperInitialAssetDescriptors: dc.w    7           ; field_0  ; was: stru_36532
                                         ; DATA XREF: Boss_ShiperInit+10   o
-                dc.l    tiles_10DA6C                    ; field_2
+                dc.l    Boss_ShiperTileArt              ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_13F4B0                     ; field_2

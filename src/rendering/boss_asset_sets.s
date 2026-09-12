@@ -20,7 +20,7 @@ Boss_JetsripperAssetSet:    dc.w    $E4                 ; field_0  ; was: stru_1
                 dc.l    Boss_JetsripperPaletteCommand   ; field_6
 Boss_JetsripperGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_11370
                                         ; DATA XREF: ROM:Boss_JetsripperAssetSet   o
-                dc.l    tiles_1067C2                    ; field_2
+                dc.l    Boss_JetsripperTileArt          ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_AntroidAssetSet:   dc.w    $30                     ; field_0  ; was: stru_1137A
@@ -29,7 +29,7 @@ Boss_AntroidAssetSet:   dc.w    $30                     ; field_0  ; was: stru_1
                 dc.l    Boss_AntroidPaletteCommand      ; field_6
 Boss_AntroidGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_11384
                                         ; DATA XREF: ROM:Boss_AntroidAssetSet   o
-                dc.l    tiles_1081AA                    ; field_2
+                dc.l    Boss_AntroidTileArt             ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_ShellshogunAssetSet:   dc.w    $F4                 ; field_0  ; was: stru_1138E
@@ -38,7 +38,7 @@ Boss_ShellshogunAssetSet:   dc.w    $F4                 ; field_0  ; was: stru_1
                 dc.l    Boss_ShellshogunPaletteCommand  ; field_6
 Boss_ShellshogunGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_11398
                                         ; DATA XREF: ROM:Boss_ShellshogunAssetSet   o
-                dc.l    tiles_10B9FE                    ; field_2
+                dc.l    Boss_ShellshogunTileArt         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_13F4B0                     ; field_2
@@ -54,7 +54,7 @@ Boss_MadamBarbarAssetSet:   dc.w    $118                ; field_0  ; was: stru_1
                 dc.l    Boss_MadamBarbarPaletteCommand  ; field_6
 Boss_MadamBarbarGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_113BE
                                         ; DATA XREF: ROM:Boss_MadamBarbarAssetSet   o
-                dc.l    tiles_112288                    ; field_2
+                dc.l    Boss_MadamBarbarTileArt         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_13F4B0                     ; field_2
@@ -66,7 +66,7 @@ Boss_JokerAssetSet: dc.w    $15C                        ; field_0  ; was: stru_1
                 dc.l    Boss_JokerPaletteCommand        ; field_6
 Boss_JokerGraphicsLoadList: dc.w    7                   ; field_0  ; was: stru_113DA
                                         ; DATA XREF: ROM:Boss_JokerAssetSet   o
-                dc.l    tiles_113934                    ; field_2
+                dc.l    Boss_JokerTileArt               ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_13F4B0                     ; field_2
@@ -78,7 +78,7 @@ Boss_TerobusterAssetSet:    dc.w    $B4                 ; field_0  ; was: stru_1
                 dc.l    Boss_TerobusterPaletteCommand   ; field_6
 Boss_TerobusterGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_113F6
                                         ; DATA XREF: ROM:Boss_TerobusterAssetSet   o
-                dc.l    tiles_109546                    ; field_2
+                dc.l    Boss_TerobusterTileArt          ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_13F4B0                     ; field_2
@@ -90,7 +90,7 @@ Boss_FlyingNeoAssetSet: dc.w    $154                    ; field_0  ; was: stru_1
                 dc.l    0                               ; field_6
 Boss_FlyingNeoGraphicsLoadList: dc.w    7               ; field_0  ; was: stru_11412
                                         ; DATA XREF: ROM:Boss_FlyingNeoAssetSet   o
-                dc.l    tiles_114DF8                    ; field_2
+                dc.l    Boss_FlyingNeoTileArt           ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_13F4B0                     ; field_2
@@ -102,7 +102,7 @@ Boss_XiTigerAssetSet:   dc.w    $114                    ; field_0  ; was: stru_1
                 dc.l    Boss_XiTigerPaletteCommand      ; field_6
 Boss_XiTigerGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_1142E
                                         ; DATA XREF: ROM:Boss_XiTigerAssetSet   o
-                dc.l    tiles_116C9C                    ; field_2
+                dc.l    Boss_XiTigerTileArt             ; field_2
                 dc.w    $5000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_13F4B0                     ; field_2

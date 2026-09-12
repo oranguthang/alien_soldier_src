@@ -72,13 +72,13 @@ Stage_TerminateAndSubmitExpandedAssetList:              ; CODE XREF: Stage_Expan
                 jmp     (Data_ProcessPointer).l
 ; End of function Stage_ExpandAndSubmitTileAssetCommands
 ; ---------------------------------------------------------------------------
-Stage_SharedTileSourceTable:    dc.l    tiles_1001D6    ; DATA XREF: Stage_ExpandAndSubmitTileAssetCommands+8   o  ; was: off_11E6A
-                dc.l    tiles_100DA2
-                dc.l    tiles_1018F0
-                dc.l    tiles_10213C
-                dc.l    tiles_102AE0
-                dc.l    tiles_103124
-                dc.l    tiles_103A26
+Stage_SharedTileSourceTable:    dc.l    StageSharedTileArtSource00  ; DATA XREF: Stage_ExpandAndSubmitTileAssetCommands+8   o  ; was: off_11E6A
+                dc.l    StageSharedTileArtSource02
+                dc.l    StageSharedTileArtSource04
+                dc.l    StageSharedTileArtSource06
+                dc.l    StageSharedTileArtSource08
+                dc.l    StageSharedTileArtSource0A
+                dc.l    StageSharedTileArtSource0C
 
 ; Loads the shared palette and compact tile commands for Stage 1
 Stage_LoadStage1VisualAssets:                           ; DATA XREF: ROM:Stage_VisualAssetLoaderOffsets   o  ; was: sub_11E86
@@ -261,7 +261,7 @@ Stage_LoadStage15VisualAssets:                          ; DATA XREF: ROM:00011E0
 ; ---------------------------------------------------------------------------
 Stage15VisualAssetLoadList: dc.w    7                   ; field_0  ; was: stru_12086
                                         ; DATA XREF: Stage_LoadStage15VisualAssets+12   o
-                dc.l    tiles_104B22                    ; field_2
+                dc.l    Stage15TileArt                  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 
@@ -347,7 +347,7 @@ Stage_LoadStage22VisualAssets:                          ; DATA XREF: ROM:00011E1
 ; ---------------------------------------------------------------------------
 Stage22VisualAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1214A
                                         ; DATA XREF: Stage_LoadStage22VisualAssets   o
-                dc.l    tiles_105196                    ; field_2
+                dc.l    Stage22And24TileArt             ; field_2
                 dc.w    $8000                           ; field_6
                 dc.w    $FFFF
 
@@ -364,7 +364,7 @@ Stage_LoadStage24VisualAssets:                          ; DATA XREF: ROM:00011E1
 ; ---------------------------------------------------------------------------
 Stage24VisualAssetLoadList: dc.w    7                   ; field_0  ; was: stru_12162
                                         ; DATA XREF: Stage_LoadStage24VisualAssets   o
-                dc.l    tiles_105196                    ; field_2
+                dc.l    Stage22And24TileArt             ; field_2
                 dc.w    $8000                           ; field_6
                 dc.w    $FFFF
 
@@ -402,7 +402,7 @@ UnreferencedLoadSharedGameplayTileAsset:
 ; ---------------------------------------------------------------------------
 UnreferencedSharedGameplayTileAssetLoadList:    dc.w    7  ; field_0  ; was: stru_12194
                                         ; DATA XREF: UnreferencedLoadSharedGameplayTileAsset   o
-                dc.l    tiles_FEB6E                     ; field_2
+                dc.l    UnreferencedSharedGameplayTileArt  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 

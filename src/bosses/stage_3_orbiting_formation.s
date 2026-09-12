@@ -251,7 +251,7 @@ Boss_Stage3OrbitingFormationInitNextPart:               ; CODE XREF: Boss_Stage3
 ; ---------------------------------------------------------------------------
 Boss_Stage3OrbitingFormationTileLoadRequest:    dc.w    7  ; field_0  ; was: stru_34266
                                         ; DATA XREF: Boss_Stage3OrbitingFormationInit+BC   o
-                dc.l    tiles_10F51C                    ; field_2
+                dc.l    Boss_Stage3OrbitingFormationTileArt  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 

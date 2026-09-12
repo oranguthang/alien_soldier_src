@@ -5303,3 +5303,19 @@ retain provenance without duplicate address entries. Provenance rises from
 14,736 to 14,792, the audit registry from 12,015 to 12,044, and the enforced
 address-derived ceiling falls from 1,315 to 1,259. The remaining backlog is 831
 RAM equates and 428 preserved-data labels.
+
+The gameplay tile-art pass removes all 50 address-derived definitions from
+`data/gameplay_tile_art.s`. The seven sources selected by
+`Stage_SharedTileSourceTable` retain their mechanically visible compact-command
+indices `$00` through `$0C`; their visual subjects are not guessed. Direct
+asset lists prove the Stage 10 enemy pair, the shared Stage 22/24 source,
+Stage 15, Shiper, the Stage 3 orbiting formation, Caterpillar, the Xi-Tiger
+entrance and cutscene source, and the eight named boss sources. The otherwise
+unreached source at `$0FEB6E` remains explicitly `Unreferenced`.
+
+All 25 source addresses receive exact static audit records. Their 25
+exclusive-end aliases retain provenance but fold into the following asset
+boundary rather than creating duplicate address records. Provenance rises from
+14,792 to 14,842 mappings, the audit registry from 12,044 to 12,069, and the
+enforced address-derived ceiling falls from 1,259 to 1,209. The remaining
+backlog comprises 831 RAM equates and 378 preserved-data labels.
