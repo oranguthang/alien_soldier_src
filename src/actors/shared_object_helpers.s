@@ -455,8 +455,8 @@ Projectile_InitType1A8FromCurrent:
                 movea.w a5,a0                           ; was: sub_2A7AC
 ; End of function Projectile_InitType1A8FromCurrent
 ; Initializes projectile type 1A8 in a0
-Projectile_InitType1A8:                                 ; CODE XREF: Projectile_SpawnQuadPattern+14   p  ; was: sub_2A7AE
-                                        ; Enemy_SpawnProjectileAtAngle+8   p
+Projectile_InitType1A8:                                 ; CODE XREF: Projectile_SpawnFourDirectionalShots_Loop+6   p  ; was: sub_2A7AE
+                                        ; Projectile_SpawnType1A8AtAngle+8   p
                 move.w  #$1A8,(a0)
                 bra.s   Sprite_InitializeEffectGraphics
 ; End of function Projectile_InitType1A8

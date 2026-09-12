@@ -423,7 +423,7 @@ Boss_SharpssteelSpawnRandomAngleShotsLoop:              ; CODE XREF: Boss_Sharps
                 move.b  (a4)+,d4
                 andi.w  #$3E,d4                         ; '>'
                 addi.w  #$120,d4
-                jsr     (Enemy_SpawnProjectileAtAngle).l
+                jsr     (Projectile_SpawnType1A8AtAngle).l
                 bne.s   Boss_SharpssteelFinishRandomAngleShotEmission
                 dbf     d7,Boss_SharpssteelSpawnRandomAngleShotsLoop
 Boss_SharpssteelFinishRandomAngleShotEmission:          ; CODE XREF: Boss_SharpssteelSpawnRandomAngleShots+18   j
@@ -567,7 +567,7 @@ Boss_SharpssteelDiveAttackState:                        ; DATA XREF: ROM:00047C7
                 move.w  #$150,d6
                 moveq   #$60,d3                         ; '`'
                 clr.w   (word_FF808A).w
-                jsr     (loc_E28A).l
+                jsr     (Projectile_SpawnFourDirectionalShotsWithSubtypeInD3).l
                 move.w  #$8000,(word_FF808A).w
                 move.b  #$4D,d0                         ; 'M'
                 jsr     (Sound_PlaySFX).l
@@ -680,7 +680,7 @@ Boss_SharpssteelBladeAssemblySweepState:                ; DATA XREF: ROM:00047C6
                 addq.w  #1,$11E(a5)
                 move.w  $10(a5),d5
                 move.w  #$150,d6
-                jsr     (Projectile_SpawnQuadPattern).l
+                jsr     (Projectile_SpawnFourDirectionalShots).l
                 move.b  #$4C,d0                         ; 'L'
                 jsr     (Sound_PlaySFX).l
 Boss_SharpssteelUpdateBladeAssemblySweepPose:           ; CODE XREF: Boss_SharpssteelOpeningVerticalTurnState+B0   j

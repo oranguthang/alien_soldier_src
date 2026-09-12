@@ -194,7 +194,7 @@ Boss_JampanGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_Epsilon1AssetSet:  dc.w    $264                    ; field_0  ; was: stru_11500
-                                        ; DATA XREF: Stage_Epsilon1BattleStart+8   o
+                                        ; DATA XREF: Stage17_InitializeEpsilon1Encounter+8   o
                 dc.l    Boss_Epsilon1GraphicsLoadList   ; field_2
                 dc.l    Boss_Epsilon1PaletteCommands    ; field_6
 Boss_Epsilon1GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1150A

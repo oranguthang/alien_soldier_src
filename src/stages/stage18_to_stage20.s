@@ -3,7 +3,7 @@ Stage_Stage18EmptyHandler:                              ; CODE XREF: Stage_Stage
                 rts
 ; End of function Stage_Stage18EmptyHandler
 ; Starts boss battle
-Stage_Stage18StartBattle:                               ; DATA XREF: ROM:off_E438   o  ; was: sub_E4DE
+Stage_Stage18StartBattle:                               ; DATA XREF: ROM:Stage_LateGameStateHandlerOffsets   o  ; was: sub_E4DE
                 bset    #6,(byte_FF8245).w
                 jsr     (Stage18_UpdateScrollAndRenderTilemap).l
                 bsr.w   Stage_Stage18Transition

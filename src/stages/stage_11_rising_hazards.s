@@ -254,7 +254,7 @@ Stage11_RisingHazardEmitHitShot:
                 move.w  d0,d4
                 move.w  $10(a5),d5
                 move.w  $14(a5),d6
-                jsr     (Enemy_SpawnProjectileAtAngle).l
+                jsr     (Projectile_SpawnType1A8AtAngle).l
                 jsr     (RandomNumber).l
                 andi.w  #$F,d0
                 bne.s   Stage11_RisingHazardRemove

@@ -5086,3 +5086,38 @@ static audit records. The 15 formerly address-derived definitions gain
 provenance, raising provenance from 13,974 to 13,989 and the audit registry
 from 11,464 to 11,502. The enforced live address-derived ceiling falls from
 2,077 to 2,062; the byte-emitting module count remains 365.
+
+The Stage 17 and shared-helper pass removes the mixed
+`stages/epsilon1_and_stage18.s` container. Exact procedure boundaries divide
+its ROM interval into `stages/stage17_epsilon1_states.s` (`$00E11C-$00E287`),
+`projectiles/shared_directional_volley_helpers.s` (`$00E288-$00E34D`),
+`rendering/snake_background_scroll.s` (`$00E34E-$00E42B`), and
+`stages/late_game_state_dispatch.s` (`$00E42C-$00E4DB`). These intentionally
+short modules each own a complete private procedure/data family; combining
+them merely to approach a line-count target would restore the mixed address
+bucket that Source Reconstruction 1.0 rejects.
+
+`Stage17BossConfigRecord` proves that offsets `$6C-$76` are the Epsilon 1
+transition, approach, encounter, and planet-transition states. This corrects
+the generic `Cutscene_PlanetInit` name at `$00E256` to the final Stage 17 state.
+Two routines in the same range have no static caller and are now explicitly
+`Unreferenced`: one applies controller-selected words to palette RAM, while
+the other creates type `$308` and updates the Stage 17 parallax fields. Their
+observable behavior is recorded without inventing a live gameplay path.
+
+The shared projectile range exposes two valid entries into one four-shot
+emitter: Deep Strider and Sharpssteel use subtype eight through `$00E288`,
+while Sharpssteel also calls `$00E28A` after loading subtype `$60` in `D3`.
+The velocity data is proven as four X longwords followed by four Y longwords.
+The adjacent angular helper creates the same type-`$1A8` projectile and derives
+its two velocity components from the sine table. The Snake renderer consumes
+eight fixed-point deltas and four pairs of eight-byte nibble rows. Finally,
+the table at `$00E438` spans Stage 18 through Seven Forces victory, so its
+dispatcher now carries `LateGame` rather than false Stage-18-only ownership.
+
+All 33 imported definitions across the four ranges now have exact-address
+static audit records. The 19 formerly address-derived definitions gain
+provenance, raising provenance from 13,989 to 14,008 and the audit registry
+from 11,502 to 11,535. The enforced live address-derived ceiling falls from
+2,062 to 2,043; the byte-emitting module count rises from 365 to 368 solely
+because the four coherent owners replace one mixed module.

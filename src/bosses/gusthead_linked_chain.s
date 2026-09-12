@@ -110,7 +110,7 @@ Boss_GustheadLinkedChainFireRandomShot:                 ; CODE XREF: Boss_Gusthe
                 move.w  d0,d4
                 move.w  $10(a5),d5
                 move.w  #$148,d6
-                jmp     Enemy_SpawnProjectileAtAngle
+                jmp     Projectile_SpawnType1A8AtAngle
 ; End of function Boss_GustheadLinkedChainBeginAttackCycle
 ; Starts the terminal segment's attack cycle and plays its cue
 Boss_GustheadLinkedChainTerminalBeginAttackCycle:       ; DATA XREF: ROM:000313B6   o  ; was: sub_31208

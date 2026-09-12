@@ -96,7 +96,7 @@ Projectile_FindFreePrimarySlot_Return:                  ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_FindFreePrimarySlot
 ; Finds free slot in projectile buffer unrolled search
-Projectile_FindFreeSlot:                                ; CODE XREF: Enemy_SpawnProjectileAtAngle   p  ; was: sub_1C16A
+Projectile_FindFreeSlot:                                ; CODE XREF: Projectile_SpawnType1A8AtAngle   p  ; was: sub_1C16A
                                         ; sub_2A0D6   p
                 movea.w #(byte_FFD9A0-M68K_RAM),a0
                 move.w  (a0),d0
@@ -236,7 +236,7 @@ Object_ClearAllExceptTypes_Next:                        ; CODE XREF: Object_Clea
                 rts
 ; End of function Object_ClearAllExceptTypes
 ; Finds free projectile slot and clears
-Projectile_FindFreeOrRecycleSlot:                       ; CODE XREF: Projectile_SpawnQuadPattern:loc_E294   p  ; was: sub_1C304
+Projectile_FindFreeOrRecycleSlot:                       ; CODE XREF: Projectile_SpawnFourDirectionalShots_Loop   p  ; was: sub_1C304
                                         ; sub_2FF1C:loc_2FF62   p
                 movem.l d7,-(sp)
                 jsr     Projectile_FindFreePrimarySlot(pc)  ; (pc)

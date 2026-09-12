@@ -121,8 +121,8 @@ SharedProjectileDuration2Animation: dc.w    SharedProjectileSpriteMappingA-*  ; 
                 dc.w    2
                 dc.w    SharedProjectileSpriteMappingD-*
                 dc.w    $FF
-SharedProjectileDuration4Animation: dc.w    SharedProjectileSpriteMappingA-*  ; DATA XREF: Projectile_SpawnQuadPattern+1A   o  ; was: off_1A0E96
-                                        ; Enemy_SpawnProjectileAtAngle+12   o
+SharedProjectileDuration4Animation: dc.w    SharedProjectileSpriteMappingA-*  ; DATA XREF: Projectile_SpawnFourDirectionalShots_Loop+10   o  ; was: off_1A0E96
+                                        ; Projectile_SpawnType1A8AtAngle+12   o
                 dc.w    4
                 dc.w    SharedProjectileSpriteMappingB-*
                 dc.w    4

@@ -79,12 +79,12 @@ Stage_MidgameStateHandlerOffsets:
                 dc.w    Stage16_HoldPostViblackVerticalOffset-Stage10_Initialize
                 dc.w    Stage16_UpdatePostViblackPaletteTransition-Stage10_Initialize
                 dc.w    Stage16_DeceleratePostViblackVerticalScroll-Stage10_Initialize
-                dc.w    Stage_Epsilon1Init-Stage10_Initialize
-                dc.w    Stage_Epsilon1Scroll-Stage10_Initialize
-                dc.w    Stage_Epsilon1Scroll-Stage10_Initialize
-                dc.w    Stage_Epsilon1BattleStart-Stage10_Initialize
-                dc.w    Stage_Epsilon1WaitIntroComplete-Stage10_Initialize
-                dc.w    Cutscene_PlanetInit-Stage10_Initialize
+                dc.w    Stage17_InitializeEpsilon1Transition-Stage10_Initialize
+                dc.w    Stage17_UpdatePreEpsilon1Transition-Stage10_Initialize
+                dc.w    Stage17_UpdatePreEpsilon1Transition-Stage10_Initialize
+                dc.w    Stage17_InitializeEpsilon1Encounter-Stage10_Initialize
+                dc.w    Stage17_UpdateEpsilon1Encounter-Stage10_Initialize
+                dc.w    Stage17_StartPlanetTransition-Stage10_Initialize
 
 ; Initialize Stage 10's message, raster effect, and ambient particles
 Stage10_Initialize:                                     ; DATA XREF: Stage_DispatchMidgameState+46   o  ; was: sub_D9D2

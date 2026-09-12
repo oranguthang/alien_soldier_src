@@ -606,7 +606,7 @@ Boss_DeepStriderSpawnQuadVolley:                        ; CODE XREF: Boss_DeepSt
                                         ; Boss_DeepStriderIntroDiveState+72   p
                 move.w  $D0(a5),d5
                 move.w  #$150,d6
-                jmp     Projectile_SpawnQuadPattern
+                jmp     Projectile_SpawnFourDirectionalShots
 ; End of function Boss_DeepStriderSpawnQuadVolley
 ; Selects the phase-dependent dive start position and velocity
 Boss_DeepStriderSetupDivePositionAndVelocity:           ; CODE XREF: Boss_DeepStriderIntroRise+F2   p  ; was: sub_3EDAA
