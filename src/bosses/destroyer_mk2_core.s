@@ -210,7 +210,7 @@ Boss_DestroyerMK2LoadEncounterTilesState:               ; DATA XREF: ROM:0004A90
                 addq.w  #2,4(a5)
                 lea     Boss_DestroyerMK2EncounterTileLoadDescriptor(pc),a0
                 nop
-                jsr     (Gfx_DMATransferTiles).l
+                jsr     (Tilemap_QueueIndexedColumns).l
                 rts
 ; End of function Boss_DestroyerMK2LoadEncounterTilesState
 ; ---------------------------------------------------------------------------

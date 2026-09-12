@@ -71,7 +71,7 @@ OrphanedTerrainTileAnimationTransfer:
                 move.w  OrphanedTerrainTilePatterns(pc,d0.w),$56(a5)
                 movea.w a5,a0
                 adda.w  #$50,a0                         ; 'P'
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function OrphanedTerrainTileAnimationTransfer
 ; ---------------------------------------------------------------------------
 OrphanedTerrainTilePatterns:    dc.w    $878C, $888D, $898E, $8A8F, $8B90

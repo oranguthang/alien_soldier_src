@@ -23,7 +23,7 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 move.w  #0,d1
                 move.w  d0,(dword_FFA908).w
                 move.w  d1,(dword_FFA90C).w
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (OptionsScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 jsr     (Gfx_FadePaletteTransition).l
@@ -460,7 +460,7 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
                 clr.w   (GameSubstateIndex).w
                 move.w  #$800,d0
                 moveq   #0,d1
-                jsr     (Data_LoadPointerTable2).l
+                jsr     (Tilemap_DirectTransferWithPrimaryDescriptor).l
                 lea     (FrontendFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l

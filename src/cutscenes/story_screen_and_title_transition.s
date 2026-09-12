@@ -167,10 +167,10 @@ StoryScreen_WaitForScrollAndLoadPalette:                ; DATA XREF: ROM:0000497
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 tst.w   (word_FFA944).w
                 bpl.w   Cutscene_Return
                 lea     (StoryScreenPaletteOffsetList).l,a4
@@ -225,10 +225,10 @@ StoryTitle_SetupLogoReveal:                             ; DATA XREF: ROM:0000498
                 move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 move.w  #$6000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 lea     (VDP_CTRL).l,a0
                 lea     (VDP_DATA).l,a1
                 move.w  #$8F02,(a0)

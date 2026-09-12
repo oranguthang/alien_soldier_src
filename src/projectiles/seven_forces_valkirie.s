@@ -192,7 +192,7 @@ Entity_ValkirieProjectileTransferAnimationTiles:        ; CODE XREF: Entity_Valk
                                         ; Entity_ValkirieProjectileShrinkAndLaunch:Entity_ValkirieProjectileTransferShrinkFrame   j
                 move.w  $48(a5),d0
                 movea.l Entity_ValkirieProjectileTileTransferDescriptors(pc,d0.w),a0
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Entity_ValkirieProjectileTransferAnimationTiles
 ; ---------------------------------------------------------------------------
 Entity_ValkirieProjectileTileTransferDescriptors:   dc.l    Entity_ValkirieProjectileTileTransferFrame0  ; DATA XREF: Entity_ValkirieProjectileTransferAnimationTiles+4   r  ; was: off_54B3E

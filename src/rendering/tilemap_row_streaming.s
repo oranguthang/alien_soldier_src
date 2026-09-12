@@ -1,29 +1,30 @@
-Scroll_CalculateOffsets2:
+; Unreferenced wrapper that queues a row from the secondary camera, offset left by $60
+UnreferencedTilemapQueueSecondaryCameraRowOffset60:
                 move.w  (dword_FFA908).w,d0             ; was: sub_109A8
                 subi.w  #$60,d0                         ; '`'
                 move.w  (dword_FFA90C).w,d1
                 lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0
                 nop
-                bra.s   loc_109E0
-; End of function Scroll_CalculateOffsets2
-; Adjusts camera position for Stage 21
-Scroll_Stage21CameraOffset:
+                bra.s   Tilemap_QueueRowFromDescriptor
+; End of function UnreferencedTilemapQueueSecondaryCameraRowOffset60
+; Unreferenced wrapper that queues a primary-camera row with $60/$F8 offsets
+UnreferencedTilemapQueuePrimaryCameraRowOffset60F8:
                 move.w  (dword_FFA900).w,d0             ; was: sub_109BC
                 subi.w  #$60,d0                         ; '`'
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$F8,d1
-                bra.s   loc_109DA
-; End of function Scroll_Stage21CameraOffset
-; Renders multi-layer Sylpheed stage background using tile lookups
-Gfx_RenderSylpheedBackground:                           ; CODE XREF: Stage_Stage17Transition+24   p  ; was: sub_109CE
+                bra.s   Tilemap_SelectPrimaryRowDescriptor
+; End of function UnreferencedTilemapQueuePrimaryCameraRowOffset60F8
+; Queues one tilemap row from the primary camera, offset left by $60
+Tilemap_QueuePrimaryCameraRowOffset60:                  ; CODE XREF: Stage_Stage17Transition+24   p  ; was: sub_109CE
                                         ; Scroll_UpdateAndRenderSylpheedBackdrop+4   j
                 move.w  (dword_FFA900).w,d0
                 subi.w  #$60,d0                         ; '`'
                 move.w  (dword_FFA904).w,d1
-loc_109DA:                                              ; CODE XREF: Scroll_Stage21CameraOffset+10   j
+Tilemap_SelectPrimaryRowDescriptor:                     ; CODE XREF: UnreferencedTilemapQueuePrimaryCameraRowOffset60F8+10   j  ; was: loc_109DA
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
-loc_109E0:                                              ; CODE XREF: Stage_SevenForcesUpdateSylpheedPrimaryPlane+4A   j
+Tilemap_QueueRowFromDescriptor:                         ; CODE XREF: Stage_SevenForcesUpdateSylpheedPrimaryPlane+4A   j  ; was: loc_109E0
                                         ; Stage_SevenForcesUpdateSylpheedSecondaryPlane+20   j
                 neg.w   d1
                 moveq   #$F,d7
@@ -43,7 +44,7 @@ loc_109E0:                                              ; CODE XREF: Stage_Seven
                 lsl.w   #4,d2
                 andi.w  #$1F80,d2
                 move.l  d2,(dword_FF805E).w
-loc_10A14:                                              ; CODE XREF: Gfx_RenderSylpheedBackground+C4   j
+Tilemap_BuildQueuedRowLoop:                             ; CODE XREF: Tilemap_QueuePrimaryCameraRowOffset60+C4   j  ; was: loc_10A14
                 movea.l (a0)+,a1
                 move.w  d0,d2
                 move.w  (dword_FF8058).w,d3
@@ -76,7 +77,7 @@ loc_10A14:                                              ; CODE XREF: Gfx_RenderS
                 move.w  4(a1,d3.w),(a2)+
                 move.w  6(a1,d3.w),(a2)+
                 tst.w   (a0)+
-                beq.w   loc_10A88
+                beq.w   Tilemap_AdvanceQueuedRowSegment
                 move.l  (dword_FF805E).w,d4
                 add.w   d4,d2
                 movea.l d2,a2
@@ -84,10 +85,10 @@ loc_10A14:                                              ; CODE XREF: Gfx_RenderS
                 move.w  2(a1,d3.w),(a2)+
                 move.w  4(a1,d3.w),(a2)+
                 move.w  6(a1,d3.w),(a2)+
-loc_10A88:                                              ; CODE XREF: Gfx_RenderSylpheedBackground+9E   j
+Tilemap_AdvanceQueuedRowSegment:                        ; CODE XREF: Tilemap_QueuePrimaryCameraRowOffset60+9E   j  ; was: loc_10A88
                 suba.l  #$E,a0
                 addi.w  #$20,d0                         ; ' '
-                dbf     d7,loc_10A14
+                dbf     d7,Tilemap_BuildQueuedRowLoop
                 move.w  d1,d2
                 lsl.w   #4,d2
                 andi.w  #$F80,d2
@@ -108,47 +109,47 @@ loc_10A88:                                              ; CODE XREF: Gfx_RenderS
                 move.w  a1,(VDPCommandQueueHead).w
                 addi.w  #$80,(VDPStagingDataCursor).w
                 rts
-; End of function Gfx_RenderSylpheedBackground
-; Gets background scroll position
-Scroll_GetBackgroundPosition:                           ; CODE XREF: XiTigerCutscene_InitializeReveal+72   j  ; was: sub_10ADC
+; End of function Tilemap_QueuePrimaryCameraRowOffset60
+; Starts a full direct tilemap transfer at the secondary-camera coordinates
+Tilemap_DirectTransferFromSecondaryCamera:              ; CODE XREF: XiTigerCutscene_InitializeReveal+72   j  ; was: sub_10ADC
                 move.w  (dword_FFA908).w,d0
                 move.w  (dword_FFA90C).w,d1
-; End of function Scroll_GetBackgroundPosition
-; Loads pointer to data table 1
-Data_LoadPointerTable1:                                 ; CODE XREF: UI_InitializeResultsScreen+50   p  ; was: sub_10AE4
+; End of function Tilemap_DirectTransferFromSecondaryCamera
+; Starts a full direct tilemap transfer with the alternate frontend descriptor
+Tilemap_DirectTransferWithAlternateDescriptor:          ; CODE XREF: UI_InitializeResultsScreen+50   p  ; was: sub_10AE4
                 lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0
                 nop
-                bra.s   Gfx_DirectVRAMTransfer
-; End of function Data_LoadPointerTable1
-; Gets foreground scroll position
-Scroll_GetForegroundPosition:                           ; CODE XREF: XiTigerCutscene_InitializeReveal+66   p  ; was: sub_10AEC
+                bra.s   Tilemap_TransferFullMapDirectToVRAM
+; End of function Tilemap_DirectTransferWithAlternateDescriptor
+; Starts a full direct tilemap transfer at the primary-camera coordinates
+Tilemap_DirectTransferFromPrimaryCamera:                ; CODE XREF: XiTigerCutscene_InitializeReveal+66   p  ; was: sub_10AEC
                                         ; Stage_InitPlayerAndScroll+3C   p
                 move.w  (dword_FFA900).w,d0
                 move.w  (dword_FFA904).w,d1
-; End of function Scroll_GetForegroundPosition
-; Loads pointer to data table 2
-Data_LoadPointerTable2:                                 ; CODE XREF: UI_InitSecondaryOptionsMenu+50   p  ; was: sub_10AF4
+; End of function Tilemap_DirectTransferFromPrimaryCamera
+; Starts a full direct tilemap transfer with the primary descriptor
+Tilemap_DirectTransferWithPrimaryDescriptor:            ; CODE XREF: UI_InitSecondaryOptionsMenu+50   p  ; was: sub_10AF4
                                         ; PasswordMenu_Initialize+5A   p
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
-; End of function Data_LoadPointerTable2
-; Performs direct VRAM transfer with Z80 bus control and DMA setup
-Gfx_DirectVRAMTransfer:                                 ; CODE XREF: EndingSequence_Initialize+58   p  ; was: sub_10AFA
+; End of function Tilemap_DirectTransferWithPrimaryDescriptor
+; Transfers all 32 tilemap rows directly to VRAM while holding the Z80 bus
+Tilemap_TransferFullMapDirectToVRAM:                    ; CODE XREF: EndingSequence_Initialize+58   p  ; was: sub_10AFA
                                         ; TitleScreen_Initialize+90   p
                 move    sr,-(sp)
                 move    #$2700,sr
-loc_10B00:                                              ; CODE XREF: Gfx_DirectVRAMTransfer+E   j
+Tilemap_WaitForZ80BusRequest:                           ; CODE XREF: Tilemap_TransferFullMapDirectToVRAM+E   j  ; was: loc_10B00
                 bset    #0,(IO_Z80BUS).l
-                bne.s   loc_10B00
+                bne.s   Tilemap_WaitForZ80BusRequest
                 lea     (VDP_CTRL).l,a4
                 move.w  (VDPReg1Shadow).w,d2
                 bset    #4,d2
                 move.w  d2,(a4)
                 neg.w   d1
                 moveq   #$1F,d6
-loc_10B1E:                                              ; CODE XREF: Gfx_DirectVRAMTransfer+102   j
+Tilemap_DirectTransferRowLoop:                          ; CODE XREF: Tilemap_TransferFullMapDirectToVRAM+102   j  ; was: loc_10B1E
                 moveq   #$F,d7
-loc_10B20:                                              ; CODE XREF: Gfx_DirectVRAMTransfer+C4   j
+Tilemap_BuildDirectTransferRowLoop:                     ; CODE XREF: Tilemap_TransferFullMapDirectToVRAM+C4   j  ; was: loc_10B20
                 movea.l (a0)+,a1
                 move.w  d0,d2
                 move.w  d1,d3
@@ -183,15 +184,15 @@ loc_10B20:                                              ; CODE XREF: Gfx_DirectV
                 andi.w  #$18,d3
                 add.w   d4,d3
                 cmpi.w  #$FF,d5
-                bne.s   loc_10B7C
+                bne.s   Tilemap_WriteDirectTransferRowSegment
                 moveq   #0,d3
-loc_10B7C:                                              ; CODE XREF: Gfx_DirectVRAMTransfer+7E   j
+Tilemap_WriteDirectTransferRowSegment:                  ; CODE XREF: Tilemap_TransferFullMapDirectToVRAM+7E   j  ; was: loc_10B7C
                 move.w  (a1,d3.w),(a2)+
                 move.w  2(a1,d3.w),(a2)+
                 move.w  4(a1,d3.w),(a2)+
                 move.w  6(a1,d3.w),(a2)+
                 tst.w   (a0)+
-                beq.w   loc_10BB4
+                beq.w   Tilemap_AdvanceDirectTransferRowSegment
                 movea.l #$FFFF0000,a2
                 move.w  d1,d4
                 lsl.w   #4,d4
@@ -202,10 +203,10 @@ loc_10B7C:                                              ; CODE XREF: Gfx_DirectV
                 move.w  2(a1,d3.w),(a2)+
                 move.w  4(a1,d3.w),(a2)+
                 move.w  6(a1,d3.w),(a2)+
-loc_10BB4:                                              ; CODE XREF: Gfx_DirectVRAMTransfer+94   j
+Tilemap_AdvanceDirectTransferRowSegment:                ; CODE XREF: Tilemap_TransferFullMapDirectToVRAM+94   j  ; was: loc_10BB4
                 suba.l  #$E,a0
                 addi.w  #$20,d0                         ; ' '
-                dbf     d7,loc_10B20
+                dbf     d7,Tilemap_BuildDirectTransferRowLoop
                 move.w  d1,d2
                 lsl.w   #4,d2
                 andi.w  #$F80,d2
@@ -221,25 +222,25 @@ loc_10BB4:                                              ; CODE XREF: Gfx_DirectV
                 move.w  (VDPCommand).w,(a4)
                 subi.w  #$200,d0
                 addq.w  #8,d1
-                dbf     d6,loc_10B1E
+                dbf     d6,Tilemap_DirectTransferRowLoop
                 move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0
                 move.w  d0,(a4)
-loc_10C0A:                                              ; CODE XREF: Gfx_DirectVRAMTransfer+118   j
+Tilemap_WaitForZ80BusRelease:                           ; CODE XREF: Tilemap_TransferFullMapDirectToVRAM+118   j  ; was: loc_10C0A
                 bclr    #0,(IO_Z80BUS).l
-                beq.s   loc_10C0A
+                beq.s   Tilemap_WaitForZ80BusRelease
                 move    (sp)+,sr
                 rts
-; End of function Gfx_DirectVRAMTransfer
-; Renders scrolling background tiles with double buffering
-Gfx_RenderScrollingBackground:                          ; CODE XREF: StoryScreen_WaitForScrollAndLoadPalette+16   p  ; was: sub_10C18
+; End of function Tilemap_TransferFullMapDirectToVRAM
+; Builds and queues the next row of a staged scrolling tilemap transfer
+Tilemap_QueueNextScrollingRow:                          ; CODE XREF: StoryScreen_WaitForScrollAndLoadPalette+16   p  ; was: sub_10C18
                                         ; StoryScreen_WaitForScrollAndLoadPalette+1C   p
                 movea.l (dword_FFA940).w,a0
                 move.w  (word_FFA946).w,d0
                 move.w  (word_FFA948).w,d1
                 neg.w   d1
                 moveq   #$F,d7
-loc_10C28:                                              ; CODE XREF: Gfx_RenderScrollingBackground+AC   j
+Tilemap_BuildScrollingRowLoop:                          ; CODE XREF: Tilemap_QueueNextScrollingRow+AC   j  ; was: loc_10C28
                 movea.l (a0)+,a1
                 move.w  d0,d2
                 move.w  d1,d3
@@ -274,15 +275,15 @@ loc_10C28:                                              ; CODE XREF: Gfx_RenderS
                 andi.w  #$18,d3
                 add.w   d4,d3
                 cmpi.w  #$FF,d5
-                bne.s   loc_10C82
+                bne.s   Tilemap_WriteScrollingRowSegment
                 moveq   #0,d3
-loc_10C82:                                              ; CODE XREF: Gfx_RenderScrollingBackground+66   j
+Tilemap_WriteScrollingRowSegment:                       ; CODE XREF: Tilemap_QueueNextScrollingRow+66   j  ; was: loc_10C82
                 move.w  (a1,d3.w),(a2)+
                 move.w  2(a1,d3.w),(a2)+
                 move.w  4(a1,d3.w),(a2)+
                 move.w  6(a1,d3.w),(a2)+
                 tst.w   (a0)+
-                beq.w   loc_10CBA
+                beq.w   Tilemap_AdvanceScrollingRowSegment
                 movea.l #$FFFF0000,a2
                 move.w  d1,d4
                 lsl.w   #4,d4
@@ -293,10 +294,10 @@ loc_10C82:                                              ; CODE XREF: Gfx_RenderS
                 move.w  2(a1,d3.w),(a2)+
                 move.w  4(a1,d3.w),(a2)+
                 move.w  6(a1,d3.w),(a2)+
-loc_10CBA:                                              ; CODE XREF: Gfx_RenderScrollingBackground+7C   j
+Tilemap_AdvanceScrollingRowSegment:                     ; CODE XREF: Tilemap_QueueNextScrollingRow+7C   j  ; was: loc_10CBA
                 suba.l  #$E,a0
                 addi.w  #$20,d0                         ; ' '
-                dbf     d7,loc_10C28
+                dbf     d7,Tilemap_BuildScrollingRowLoop
                 move.w  d1,d2
                 lsl.w   #4,d2
                 andi.w  #$F80,d2
@@ -319,5 +320,4 @@ loc_10CBA:                                              ; CODE XREF: Gfx_RenderS
                 subq.w  #8,(word_FFA948).w
                 subq.w  #1,(word_FFA944).w
                 rts
-; End of function Gfx_RenderScrollingBackground
-; Renders multi-layer background using tilemaps
+; End of function Tilemap_QueueNextScrollingRow

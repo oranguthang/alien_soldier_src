@@ -161,10 +161,10 @@ WeaponSetup_ReturnFromExit:                             ; CODE XREF: WeaponSetup
 ; End of function WeaponSetup_HandleExitInput
 ; Updates the four loadout-slot sprites until their fade completes
 WeaponSetup_UpdateSlotFade:                             ; DATA XREF: ROM:0001F146   o  ; was: sub_1F3B8
-                jsr     (Sprite_SetupDMA).l
-                jsr     (Sprite_SetupDMA).l
-                jsr     (Sprite_SetupDMA).l
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
+                jsr     (Tilemap_QueueNextConstantRow).l
+                jsr     (Tilemap_QueueNextConstantRow).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 tst.w   (word_FFA944).w
                 bpl.w   WeaponSetup_StateWaitReturn
                 addq.w  #2,(word_FFA29C).w

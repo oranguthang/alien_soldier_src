@@ -218,7 +218,7 @@ Boss_VictorWaitForDefeatExplosion:                      ; CODE XREF: Boss_Victor
                 move.b  #$20,(byte_FF8142).w            ; ' '
                 move.b  #8,(byte_FF8143).w
                 movea.l #Boss_VictorDefeatGraphicsLoadDescriptor,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$1000,2(a5)
                 rts
 ; End of function Boss_VictorUpdateDefeatExplosion

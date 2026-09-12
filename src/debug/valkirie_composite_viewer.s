@@ -257,14 +257,14 @@ Debug_ValkirieViewerFaceRight:                          ; CODE XREF: Debug_Valki
                 bset    d0,$96E(a5)
                 lea     Debug_ValkirieViewerRightTileTransfer(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Debug_ValkirieViewerFaceRight
 ; Load the viewer's left-facing tile set
 Debug_ValkirieViewerLoadLeftTiles:                      ; CODE XREF: Debug_ValkirieViewerInitialize+102   p  ; was: sub_5134E
                                         ; Debug_ValkirieViewerFaceLeft+3A   j
                 lea     Debug_ValkirieViewerLeftTileTransfer(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Debug_ValkirieViewerLoadLeftTiles
 ; ---------------------------------------------------------------------------
 Debug_ValkirieViewerRightTileTransfer:  dc.w    $6100, $2000, $102, $2829, $2A2B, $2C2D  ; was: word_5135A

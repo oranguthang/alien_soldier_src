@@ -246,10 +246,10 @@ loc_12452:                                              ; CODE XREF: Stage_InitS
                 clr.w   (word_FFC624).w
                 lea     word_1249A(pc),a0
                 nop
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$81,d0
                 moveq   #3,d7
-                jsr     (Gfx_SetSpritePattern).l
+                jsr     (VDPQueue_SetCommandHighWord).l
                 lea     stru_12488(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l

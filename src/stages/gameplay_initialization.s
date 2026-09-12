@@ -11,7 +11,7 @@ Stage_InitPlayerAndScroll:                              ; DATA XREF: ROM:0001E85
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$1000,(dword_FFA900).w
                 move.w  #$EC00,(dword_FFA904).w
-                jsr     (Scroll_GetForegroundPosition).l
+                jsr     (Tilemap_DirectTransferFromPrimaryCamera).l
                 move.w  #$EC10,(dword_FFA904).w
                 move.w  #$8000,(word_FF808A).w
                 rts
@@ -41,7 +41,7 @@ Stage_UpdateGameplay:                                   ; DATA XREF: ROM:0001E86
                 jsr     (Boss_ZLeoMainController).l
                 jsr     (Sys_UpdateObjectSpawner).l
                 jsr     (Sys_ProcessProjectiles).l
-                jmp     Gfx_GetCameraPosition
+                jmp     Tilemap_QueuePrimaryCameraColumnOffset158
 ; End of function Stage_UpdateGameplay
 ; Transitions to credits screen
 Stage_TransitionToCredits:                              ; DATA XREF: ROM:0001E852   o  ; was: sub_1EE5A
@@ -94,7 +94,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 clr.w   d0
                 clr.w   d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   WeaponSetup_ClearLoadoutAndRefillAmmo
                 jsr     (Player_InitializeStats).l

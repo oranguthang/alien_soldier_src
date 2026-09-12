@@ -124,7 +124,7 @@ ShipSequence_ShowName:                                  ; CODE XREF: ShipSequenc
 ; Loads the first arrival tile batch and starts upward scrolling at -1 pixel/frame
 ShipSequence_LoadTileBatch1:                            ; DATA XREF: ROM:00008808   o  ; was: sub_8870
                 movea.l #ShipSequence_TileBatch1,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$20,(ShipTileLoadTimer).l      ; ' '
                 move.w  #$FFFF,(ShipVerticalVelocity).l
                 addq.w  #2,(ShipSequenceState).l
@@ -135,7 +135,7 @@ ShipSequence_LoadTileBatch2:                            ; DATA XREF: ROM:0000880
                 subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
                 movea.l #ShipSequence_TileBatch2,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$20,(ShipTileLoadTimer).l      ; ' '
                 addq.w  #2,(ShipSequenceState).l
                 rts
@@ -145,7 +145,7 @@ ShipSequence_LoadTileBatch3:                            ; DATA XREF: ROM:0000880
                 subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
                 movea.l #ShipSequence_TileBatch3,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$20,(ShipTileLoadTimer).l      ; ' '
                 addq.w  #2,(ShipSequenceState).l
                 rts
@@ -155,7 +155,7 @@ ShipSequence_LoadTileBatch4:                            ; DATA XREF: ROM:0000880
                 subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
                 movea.l #ShipSequence_TileBatch4,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$20,(ShipTileLoadTimer).l      ; ' '
                 addq.w  #2,(ShipSequenceState).l
                 rts
@@ -165,7 +165,7 @@ ShipSequence_LoadTileBatch5:                            ; DATA XREF: ROM:0000881
                 subq.w  #1,(ShipTileLoadTimer).l
                 bne.w   Cutscene_Return
                 movea.l #ShipSequence_TileBatch5,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$20,(ShipTileLoadTimer).l      ; ' '
                 addq.w  #2,(ShipSequenceState).l
                 rts
@@ -344,7 +344,7 @@ ShipSequence_RevealPattern:                             ; DATA XREF: ROM:0000881
                 cmpi.w  #$668,(ShipSequenceFrame).l
                 bcs.w   Cutscene_Return
                 movea.l #ShipSequence_ClearedArrivalTiles,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 clr.w   (word_FF808A).w
                 move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
@@ -360,10 +360,10 @@ ShipSequence_RevealPattern:                             ; DATA XREF: ROM:0000881
 ; Advances background loading four steps per frame before starting the final fade
 ShipSequence_WaitForBackgroundLoad:                     ; DATA XREF: ROM:00008820   o  ; was: sub_8BA2
                 bsr.w   ShipSequence_ApplyPatternPalette
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 tst.w   (word_FFA944).w
                 bpl.w   Cutscene_Return
                 move.w  #$FFF2,(ShipMainFadeStep).l
@@ -492,7 +492,7 @@ ShipSequence_SetNextPriorityBit:                        ; CODE XREF: ShipSequenc
                 move.w  d0,(a0)+
                 dbf     d1,ShipSequence_SetNextPriorityBit
                 movea.l #ShipSequence_ArrivalPriorityTiles,a0
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function ShipSequence_EnableArrivalPlanePriority
 ; Clears priority on `$160` staged arrival tiles and reloads their descriptor
 ShipSequence_DisableArrivalPlanePriority:               ; CODE XREF: ShipSequence_FlashAndClearObjects+16   p  ; was: sub_8D82
@@ -504,7 +504,7 @@ ShipSequence_ClearNextPriorityBit:                      ; CODE XREF: ShipSequenc
                 move.w  d0,(a0)+
                 dbf     d1,ShipSequence_ClearNextPriorityBit
                 movea.l #ShipSequence_ArrivalPriorityTiles,a0
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function ShipSequence_DisableArrivalPlanePriority
 ; ---------------------------------------------------------------------------
 ShipSequence_TileBatch1:    dc.w    $4020, $2000, $100, $102  ; was: word_8DA4

@@ -59,7 +59,7 @@ Stage_LoadTerobusterTiles:                              ; CODE XREF: Stage_InitT
                 lea     byte_D6CE(pc),a0
                 nop
 loc_D672:                                               ; CODE XREF: Stage_LoadTerobusterTiles+16   j
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; ---------------------------------------------------------------------------
 locret_D678:                                            ; CODE XREF: Stage_LoadTerobusterTiles+2E   j
                 rts
@@ -70,7 +70,7 @@ loc_D67A:                                               ; CODE XREF: Stage_LoadT
                 bne.s   locret_D678
                 movea.l off_D692(pc,d0.w),a0
                 addq.w  #4,(dword_FF8066).w
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Stage_LoadTerobusterTiles
 ; ---------------------------------------------------------------------------
 off_D692:       dc.l    byte_D6A6

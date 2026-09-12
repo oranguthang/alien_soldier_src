@@ -134,7 +134,7 @@ TerrainTileAnimation_TransferFrame:                     ; CODE XREF: TerrainTile
                 move.w  TerrainTileAnimation_FramePatterns(pc,d0.w),$56(a5)
                 movea.w a5,a0
                 adda.w  #$50,a0                         ; 'P'
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function TerrainTileAnimation_Finish
 ; ---------------------------------------------------------------------------
 TerrainTileAnimation_FramePatterns: dc.w    $878C, $888D, $898E, $8A8F, $8B90  ; was: word_2F4FA

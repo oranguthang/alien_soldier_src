@@ -345,7 +345,7 @@ Boss_Epsilon1SelectAnimatedTileFrame:                   ; CODE XREF: Boss_Epsilo
                 andi.w  #$1E0,d1
                 lsr.w   #4,d1
                 move.w  Boss_Epsilon1AnimatedTileFrames(pc,d1.w),6(a0)
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Boss_Epsilon1QueueAnimatedTileTransfer
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1AnimatedTileDestinations:  dc.w    $1A8, $1A0, $198, $190, $188, $180, $1D0, $1D8, $1E0, $1E8, $1F0, $1F8  ; was: word_47B56

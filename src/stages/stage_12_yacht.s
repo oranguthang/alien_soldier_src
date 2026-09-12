@@ -45,7 +45,7 @@ Stage12_YachtRevealPan:                                 ; DATA XREF: ROM:0002F5D
                 move.l  (dword_FFA900).w,-(sp)
                 move.w  $50(a5),d0
                 add.w   d0,(dword_FFA900).w
-                jsr     (Gfx_GetCameraPosition).l
+                jsr     (Tilemap_QueuePrimaryCameraColumnOffset158).l
                 move.l  (sp)+,(dword_FFA900).w
                 addq.w  #8,$50(a5)
                 cmpi.w  #$90,$50(a5)
@@ -250,13 +250,13 @@ Stage12_YachtUpdateScrollPreset:                        ; CODE XREF: Stage12_Yac
                 btst    #1,(FrameCounter+1).w
                 beq.s   Stage12_YachtUseAlternateScrollPreset
                 move.l  #$4C705B01,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
 Stage12_YachtScrollPresetReturn:                        ; CODE XREF: Stage12_YachtUpdateScrollPreset+6   j
                 rts
 ; ---------------------------------------------------------------------------
 Stage12_YachtUseAlternateScrollPreset:                  ; CODE XREF: Stage12_YachtUpdateScrollPreset+E   j
                 move.l  #$4C705CA1,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Stage12_YachtUpdateScrollPreset
 ; Projects yacht position into the two scrolling-plane offsets

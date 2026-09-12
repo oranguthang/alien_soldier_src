@@ -188,7 +188,7 @@ StageTransition_UpdateDestroyerProtoBackdropFade:       ; DATA XREF: ROM:0000F10
                 bsr.w   StageTransition_BuildBossBackdropRasterBuffers
                 tst.w   (word_FFA944).w
                 bmi.s   StageTransition_CompleteDestroyerProtoBackdropFade
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 bra.s   StageTransition_DestroyerProtoBackdropFadeReturn
 ; ---------------------------------------------------------------------------
 StageTransition_CompleteDestroyerProtoBackdropFade:     ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+18   j  ; was: loc_F33E
@@ -292,7 +292,7 @@ StageTransition_BeginShieldViperFade:                   ; DATA XREF: ROM:0000F11
 ; Completes the Shield Viper transition fade
 StageTransition_CompleteShieldViperFade:                ; DATA XREF: ROM:0000F114   o  ; was: sub_F484
                 bsr.w   StageTransition_ApplyBossBackdropPaletteFade
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 tst.w   (word_FFA944).w
                 bpl.w   StageTransition_SharedReturn
                 addq.w  #2,(word_FFA950).w
@@ -315,13 +315,13 @@ StageTransition_WaitForShieldViperVramTransfer:         ; DATA XREF: ROM:0000F11
 StageTransition_UpdateShieldViperVramTransfer:          ; CODE XREF: StageTransition_WaitForShieldViperVramTransfer+8   j  ; was: loc_F4D2
                 cmpi.w  #$1B,(word_FFA944).w
                 bmi.s   StageTransition_CompleteShieldViperVramTransfer
-                jmp     Gfx_RenderScrollingBackground
+                jmp     Tilemap_QueueNextScrollingRow
 ; End of function StageTransition_WaitForShieldViperVramTransfer
 ; Completes the Shield Viper transition VRAM transfer
 StageTransition_CompleteShieldViperVramTransfer:        ; CODE XREF: StageTransition_WaitForShieldViperVramTransfer+12   j  ; was: sub_F4E0
                 move.w  #$6000,(dword_FFA940).w
                 clr.w   (word_FFA946).w
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 tst.w   (word_FFA944).w
                 bpl.w   StageTransition_SharedReturn
                 move.w  #$50,(RasterEffectIndex).w      ; 'P'
@@ -400,7 +400,7 @@ StageTransition_RenderWolfGaropaBackdrop:               ; DATA XREF: ROM:0000F11
                 sub.l   d0,(dword_FFA908).w
                 move.w  (dword_FFA908).w,(dword_FFA900).w
                 move.w  (dword_FFA90C).w,(dword_FFA904).w
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 tst.w   (word_FFA944).w
                 bpl.s   StageTransition_WolfGaropaBackdropRenderReturn
                 addq.w  #2,(word_FFA950).w
@@ -415,7 +415,7 @@ StageTransition_FinalizeWolfGaropaBackdrop:             ; DATA XREF: ROM:0000F12
                 bsr.w   StageTransition_UpdateWolfGaropaHorizontalScroll
                 move.w  (dword_FFA900).w,(dword_FFA908).w
                 move.w  (dword_FFA904).w,(dword_FFA90C).w
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 tst.w   (word_FFA944).w
                 bpl.s   StageTransition_WolfGaropaBackdropFinalizeReturn
                 addq.w  #2,(word_FFA950).w
@@ -524,10 +524,10 @@ Gfx_LoadWolfGaropaTransitionTiles:                      ; CODE XREF: StageTransi
                                         ; Effect_WolfGaropaBoundaryMain+28   p
                 lea     Gfx_WolfGaropaTransitionTileDmaDescriptor(pc),a0
                 nop
-                jsr     (Gfx_DMATransferTiles).l
+                jsr     (Tilemap_QueueIndexedColumns).l
                 lea     Gfx_WolfGaropaTransitionCompressedTileCommands(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadWolfGaropaTransitionTiles
 ; ---------------------------------------------------------------------------
 Gfx_WolfGaropaTransitionTileDmaDescriptor:  dc.b    $44, $58, $40, 0, 1, 3, $1F  ; was: byte_F76A
@@ -548,7 +548,7 @@ StageTransition_UpdateWolfGaropaBackdropCoordinates:    ; CODE XREF: StageTransi
                 move.w  (dword_FFA90C).w,d1
                 subi.w  #$F8,d1
                 lea     (Gfx_ScrollVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function StageTransition_UpdateWolfGaropaBackdropCoordinates
 ; Adjusts tile indices in the stage-transition rows
 Gfx_AdjustTransitionTileIndexRows:                      ; CODE XREF: StageTransition_CompleteShieldViperFade+3E   j  ; was: sub_F7AC

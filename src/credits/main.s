@@ -30,11 +30,11 @@ Credits_InitXiTiger_ClearTilemapBufferLoop:             ; CODE XREF: Credits_Ini
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (Gfx_ScrollVRAMTransferParameters).l,a0
                 move.w  #$800,d0
                 move.w  #0,d1
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$EA8,(word_FFE3A8).w

@@ -57,13 +57,13 @@ SevenForces_SetupIntroDma:                              ; was: sub_54BDC
                 clr.w   (RasterEffectInitState).w
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #1,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 move.w  #$6000,(dword_FFA940).w
                 move.w  #2,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 move.w  #$5000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 rts
 ; End of function SevenForces_SetupIntroDma
 ; Initialize the Seven Forces entrance sprite and palette

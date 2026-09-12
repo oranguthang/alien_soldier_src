@@ -143,7 +143,7 @@ Boss_TerobusterLoadIntroTilesByIndex:                   ; CODE XREF: Boss_Terobu
                 cmpi.w  #$4C,d0                         ; 'L'
                 bpl.s   Boss_TerobusterLoadIntroTilesReturn
                 movea.l Boss_TerobusterIntroTileLoadTable(pc,d0.w),a0
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; ---------------------------------------------------------------------------
 Boss_TerobusterLoadIntroTilesReturn:                    ; CODE XREF: Boss_TerobusterLoadIntroTilesByIndex+2   j  ; was: locret_393D2
                                         ; Boss_TerobusterLoadIntroTilesByIndex+8   j

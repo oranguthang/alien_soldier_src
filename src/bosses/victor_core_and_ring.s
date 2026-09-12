@@ -73,7 +73,7 @@ Boss_VictorInit:                                        ; DATA XREF: ROM:Boss_Vi
                 move.b  #$54,$20(a5)                    ; 'T'
                 move.w  #$64,$26(a5)                    ; 'd'
                 movea.l #Boss_VictorInitialGraphicsLoadDescriptor,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$FFFE,$18(a5)
                 move.l  #$80000,(dword_FF940C+2).w
                 addq.w  #2,4(a5)
@@ -153,7 +153,7 @@ Boss_VictorRestartAnimationScript:                      ; CODE XREF: Boss_Victor
                 move.w  (a0)+,d0
                 move.l  a0,(dword_FF9400).w
                 movea.l Boss_VictorAnimationGraphicsTable(pc,d0.w),a0
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_VictorUpdateAnimation
 ; ---------------------------------------------------------------------------
 Boss_VictorAnimationTimingScript:   dc.w    8, 8, 8, $C, 8, 8, $40, 4  ; was: word_32604

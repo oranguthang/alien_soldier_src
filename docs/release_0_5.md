@@ -17,7 +17,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   1,000-line ceiling; the current mean is 327.4 lines and no waiver is active.
 - `config/rom_layout.json` is checked against listing addresses, landmarks,
   padding ranges, and the built image.
-- Naming/evidence rules, 13,396 provenance mappings, and the remaining 2,652
+- Naming/evidence rules, 13,443 provenance mappings, and the remaining 2,606
   address-derived definitions are policy checked.
 - Source/subsystem and RAM orientation maps exist without overstating the
   automatically generated semantic names.
@@ -40,7 +40,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 ## Reconstruction backlog after 0.5
 
 The contract does not require invented semantics. Most of the RAM inventory and
-2,652 address-derived definitions intentionally remain in the unknowns backlog.
+2,606 address-derived definitions intentionally remain in the unknowns backlog.
 Promote or correct them only with recorded static/runtime evidence.
 The older source-mutating analysis workflows are also outside the release
 interface until made module-aware; see `docs/tooling_status.md`.

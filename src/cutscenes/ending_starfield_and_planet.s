@@ -153,10 +153,10 @@ EndingPlanet_SetNextBufferHighBits:                     ; CODE XREF: EndingStarf
 ; End of function EndingStarfield_FadeOutAndPreparePlanet
 ; Finishes background loading and configures the ending planet scene
 EndingPlanet_Initialize:                                ; DATA XREF: ROM:00007C44   o  ; was: sub_7F86
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 tst.w   (word_FFA944).w
                 bpl.w   Cutscene_Return
                 lea     (CreditsAndPlanetPaletteOffsetList).l,a4

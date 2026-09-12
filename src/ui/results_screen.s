@@ -22,7 +22,7 @@ Results_UpdateAndDisplay:                               ; DATA XREF: ROM:0001D7D
                 moveq   #$F,d7
                 jsr     (Gfx_AdjustTileIndexRows).l
                 movea.l #byte_1DCC4,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 clr.w   (dword_FFA908).w
 locret_1DCB0:                                           ; CODE XREF: Results_UpdateAndDisplay+24   j
                 rts

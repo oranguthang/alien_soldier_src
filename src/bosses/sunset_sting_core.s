@@ -68,7 +68,7 @@ Boss_SunsetStingLoadGraphics:                           ; DATA XREF: ROM:00040D0
                 move.b  #0,$4A(a5)
                 ori.w   #$800,$E(a5)
                 movea.l #Boss_SunsetStingEarlyFormTileLoadCommands,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
 Boss_SunsetStingLoadGraphicsReturn:                     ; CODE XREF: Boss_SunsetStingLoadGraphics+4   j  ; was: locret_40DC2
                 rts
 ; End of function Boss_SunsetStingLoadGraphics
@@ -538,7 +538,7 @@ Boss_SunsetStingLoadTileTableEntry:                     ; CODE XREF: Boss_Sunset
                 and.w   (a0)+,d0
                 adda.w  d0,a0
                 adda.w  (a0),a0
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_SunsetStingLoadTileTableEntry
 ; Starts the early form's defeat transition when shared health reaches zero
 Boss_SunsetStingBeginEarlyFormDefeatState:              ; CODE XREF: Boss_SunsetStingUpdateGraphics+18   j  ; was: sub_4133E

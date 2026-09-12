@@ -435,7 +435,7 @@ Gfx_LoadEpsilon1TileBand1:                              ; CODE XREF: Gfx_LoadEps
                                         ; Boss_Epsilon1UpdateVisibleTileBands+58   p
                 lea     Gfx_Epsilon1TileBand1LoadCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadEpsilon1TileBand1
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1TileBand1LoadCommand:   dc.w    $4130, $2000, $300, $A1A2, $A3A8  ; was: word_4608A
@@ -446,7 +446,7 @@ Gfx_ClearEpsilon1TileBand1:                             ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1UpdateVisibleTileBands:Boss_Epsilon1ClearAllTileBands   p
                 lea     Gfx_Epsilon1TileBand1ClearCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_ClearEpsilon1TileBand1
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1TileBand1ClearCommand:  dc.w    $4130, $2000, $300, 0, 0  ; was: word_460A0
@@ -457,7 +457,7 @@ Gfx_LoadEpsilon1TileBand2:                              ; CODE XREF: Gfx_LoadEps
                                         ; Boss_Epsilon1UpdateVisibleTileBands+72   p
                 lea     Gfx_Epsilon1TileBand2LoadCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadEpsilon1TileBand2
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1TileBand2LoadCommand:   dc.w    $4330, $2000, $300, $A5A6, $A7AC  ; was: word_460B6
@@ -468,7 +468,7 @@ Gfx_ClearEpsilon1TileBand2:                             ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1UpdateVisibleTileBands+B6   p
                 lea     Gfx_Epsilon1TileBand2ClearCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_ClearEpsilon1TileBand2
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1TileBand2ClearCommand:  dc.w    $4330, $2000, $300, 0, 0  ; was: word_460CC
@@ -479,7 +479,7 @@ Gfx_LoadEpsilon1TileBand3:                              ; CODE XREF: Gfx_LoadEps
                                         ; Boss_Epsilon1UpdateVisibleTileBands+8C   p
                 lea     Gfx_Epsilon1TileBand3LoadCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadEpsilon1TileBand3
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1TileBand3LoadCommand:   dc.w    $4530, $2000, $300, $A9AA, $ABAD  ; was: word_460E2
@@ -490,7 +490,7 @@ Gfx_ClearEpsilon1TileBand3:                             ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1UpdateVisibleTileBands+BA   p
                 lea     Gfx_Epsilon1TileBand3ClearCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_ClearEpsilon1TileBand3
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1TileBand3ClearCommand:  dc.w    $4530, $2000, $300, 0, 0  ; was: word_460F8
@@ -501,7 +501,7 @@ Gfx_LoadEpsilon1TileBand4:                              ; CODE XREF: Gfx_LoadEps
                                         ; Boss_Epsilon1UpdateVisibleTileBands+A6   p
                 lea     Gfx_Epsilon1TileBand4LoadCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadEpsilon1TileBand4
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1TileBand4LoadCommand:   dc.w    $4730, $2000, $300, $AE, $AF00  ; was: word_4610E
@@ -512,7 +512,7 @@ Gfx_ClearEpsilon1TileBand4:                             ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1UpdateVisibleTileBands+BE   p
                 lea     Gfx_Epsilon1TileBand4ClearCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_ClearEpsilon1TileBand4
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1TileBand4ClearCommand:  dc.w    $4730, $2000, $300, 0, 0  ; was: word_46124
@@ -522,7 +522,7 @@ Gfx_Epsilon1TileBand4ClearCommand:  dc.w    $4730, $2000, $300, 0, 0  ; was: wor
 Gfx_LoadEpsilon1WideTileBand1:                          ; CODE XREF: Gfx_LoadEpsilon1WideTileBands+4   p  ; was: sub_4612E
                 lea     Gfx_Epsilon1WideTileBand1LoadCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadEpsilon1WideTileBand1
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1WideTileBand1LoadCommand:   dc.w    $4180, $2000, $501, $9A9A, $9A9A, $9A9A, $9E9E, $9E9E, $9E9E  ; was: word_4613A
@@ -532,7 +532,7 @@ Gfx_Epsilon1WideTileBand1LoadCommand:   dc.w    $4180, $2000, $501, $9A9A, $9A9A
 Gfx_ClearEpsilon1WideTileBand1:
                 lea     Gfx_Epsilon1WideTileBand1ClearCommand(pc),a0  ; was: sub_4614C
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_ClearEpsilon1WideTileBand1
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1WideTileBand1ClearCommand:  dc.w    $4180, $2000, $501, 0, 0, 0, 0, 0, 0  ; was: word_46158
@@ -542,7 +542,7 @@ Gfx_Epsilon1WideTileBand1ClearCommand:  dc.w    $4180, $2000, $501, 0, 0, 0, 0, 
 Gfx_LoadEpsilon1WideTileBand2:                          ; CODE XREF: Gfx_LoadEpsilon1WideTileBands   p  ; was: sub_4616A
                 lea     Gfx_Epsilon1WideTileBand2LoadCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadEpsilon1WideTileBand2
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1WideTileBand2LoadCommand:   dc.w    $41D0, $2000, $501, $9A9A, $9A9A, $9A9A, $9E9E, $9E9E, $9E9E  ; was: word_46176
@@ -552,7 +552,7 @@ Gfx_Epsilon1WideTileBand2LoadCommand:   dc.w    $41D0, $2000, $501, $9A9A, $9A9A
 Gfx_ClearEpsilon1WideTileBand2:
                 lea     Gfx_Epsilon1WideTileBand2ClearCommand(pc),a0  ; was: sub_46188
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_ClearEpsilon1WideTileBand2
 ; ---------------------------------------------------------------------------
 Gfx_Epsilon1WideTileBand2ClearCommand:  dc.w    $41D0, $2000, $501, 0, 0, 0, 0, 0, 0  ; was: word_46194

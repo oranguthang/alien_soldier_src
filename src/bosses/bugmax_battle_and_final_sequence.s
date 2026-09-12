@@ -2,7 +2,7 @@
 Gfx_BugmaxTransferBattleTileBlock:                      ; CODE XREF: Boss_BugmaxRotateLinkedAssemblyToward180AndStartBattle+26   p  ; was: sub_4C938
                 lea     Gfx_BugmaxBattleTileTransferDescriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Gfx_BugmaxTransferBattleTileBlock
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxBattleTileTransferDescriptor: dc.w    $6330, $2000, $104, 0, 0, 0, 0, 0  ; was: word_4C944
@@ -179,7 +179,7 @@ Gfx_BugmaxLoadTimedBattleTileSet:                       ; DATA XREF: ROM:0004C3F
                 addq.w  #2,4(a5)
                 lea     Gfx_BugmaxTimedBattleTileSetDescriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxTimedBattleTileSetDescriptor: dc.w    $6330, $2000, $302, $B3B2, $B1B0, $B7B6, $B5B4, $BBBA, $B900  ; was: word_4CC16
                                         ; DATA XREF: Gfx_BugmaxLoadTimedBattleTileSet+C   o
@@ -194,7 +194,7 @@ Gfx_BugmaxLoadQueuedBattleTileSet:                      ; DATA XREF: ROM:0004C3F
                 addq.w  #2,4(a5)
                 lea     Gfx_BugmaxQueuedBattleTileSetDescriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxQueuedBattleTileSetDescriptor:    dc.w    $6930, $2000, $302, $DBDA, $D900, $D7D6, $D5D4, $D3D2, $D1D0  ; was: word_4CC40
                                         ; DATA XREF: Gfx_BugmaxLoadQueuedBattleTileSet+A   o

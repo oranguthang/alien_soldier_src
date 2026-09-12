@@ -156,10 +156,10 @@ UI_HandleStageFadeOut:                                  ; DATA XREF: ROM:0001D7D
                 move.w  #$E000,(word_FF80F4).w
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 move.w  #$6000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
-                jmp     VDP_SetupDMA
+                jmp     Tilemap_FillPlaneDirectToVRAM
 ; ---------------------------------------------------------------------------
 loc_1D86A:                                              ; CODE XREF: UI_UpdateStageScroll+24   j
                                         ; UI_UpdateStageScroll+3A   j
@@ -171,12 +171,12 @@ loc_1D86A:                                              ; CODE XREF: UI_UpdateSt
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$1C0,d0
                 move.w  (dword_FFA904).w,d1
-                jsr     (Gfx_RenderTilemap).l
+                jsr     (Tilemap_QueuePrimaryPlaneColumn).l
                 addq.w  #4,(dword_FFA900).w
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$1C0,d0
                 move.w  (dword_FFA904).w,d1
-                jmp     Gfx_RenderTilemap
+                jmp     Tilemap_QueuePrimaryPlaneColumn
 ; End of function UI_HandleStageFadeOut
 ; Calculates parallax scrolling for background
 Gfx_CalculateParallaxScroll:                            ; CODE XREF: UI_HandleStageFadeOut+5E   p  ; was: sub_1D8AC

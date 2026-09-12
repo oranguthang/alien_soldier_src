@@ -97,7 +97,7 @@ Boss_DestroyerProtoIntroInit:                           ; DATA XREF: ROM:Boss_De
                 move.l  #$D030D030,$28(a5)
                 move.w  #$8C,$26(a5)
                 movea.l #Boss_DestroyerProtoGraphicsLoadDescriptor,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 addq.w  #2,4(a5)
                 movea.w a5,a4
                 move.w  #5,d6

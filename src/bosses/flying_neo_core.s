@@ -129,7 +129,7 @@ Boss_FlyingNeoClearPaletteHighBitsFourthRange:          ; CODE XREF: Boss_Flying
                 rts
 ; Waits for the scrolling-background helper to report completion
 Boss_FlyingNeoWaitForScrollingBackground:               ; DATA XREF: ROM:0003C0AA   o  ; was: sub_3C156
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.s   Boss_FlyingNeoInitOrWaitReturn
                 addq.w  #2,4(a5)
                 clr.w   (word_FF808A).w
@@ -389,7 +389,7 @@ Boss_FlyingNeoUpdateDefeatParticleRainTimer:            ; CODE XREF: Boss_Flying
                 move.w  #$1000,$62(a5)
                 lea     Boss_FlyingNeoDefeatTileCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoDefeatParticleRainReturn:                 ; CODE XREF: Boss_FlyingNeoDefeatParticleRainState+82   j  ; was: locret_3C4C8
                 rts

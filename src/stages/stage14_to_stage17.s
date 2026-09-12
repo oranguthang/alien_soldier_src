@@ -128,7 +128,7 @@ Stage_AccelerateVerticalScroll:                         ; CODE XREF: Stage_Stage
                 add.l   d0,(dword_FFA904).w
                 move.l  (dword_FFA900).w,(dword_FF806A+2).w
                 move.w  #$660,(dword_FFA900).w
-                bsr.w   Gfx_RenderSylpheedBackground
+                bsr.w   Tilemap_QueuePrimaryCameraRowOffset60
                 move.l  (dword_FF806A+2).w,(dword_FFA900).w
                 bsr.w   Camera_FollowPlayerFromFixedHorizontalAnchor
                 cmpi.w  #$E620,(dword_FFA904).w
@@ -192,7 +192,7 @@ Stage_PostViblackTransition:                            ; DATA XREF: ROM:0000D9B
                 move.w  #$1F,(word_FFA944).w
 ; Renders scrolling background after Viblack transition
 Stage_PostViblackTransition_Render:                     ; DATA XREF: ROM:0000D9BE   o  ; was: loc_E084
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 tst.w   (word_FFA944).w
                 bpl.s   locret_E098
                 addq.w  #2,(word_FFA950).w

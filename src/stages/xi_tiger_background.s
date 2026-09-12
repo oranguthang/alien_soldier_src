@@ -24,8 +24,8 @@ loc_1C44A:                                              ; CODE XREF: Stage_LoadB
                 bne.s   loc_1C46A
                 clr.w   (word_FFA946).w
                 move.w  #$4000,(dword_FFA940).w
-                jsr     (Sprite_SetupDMA).l
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 bmi.s   loc_1C4AA
                 rts
 ; ---------------------------------------------------------------------------
@@ -35,8 +35,8 @@ loc_1C46A:                                              ; CODE XREF: Stage_LoadB
                 lea     off_1C536(pc),a0
                 nop
                 move.l  -4(a0,d0.w),(dword_FFA940).w
-                jsr     (Gfx_RenderLayeredBackground).l
-                jsr     (Gfx_RenderLayeredBackground).l
+                jsr     (Tilemap_MirrorOffsetRowAndQueueScrollingRow).l
+                jsr     (Tilemap_MirrorOffsetRowAndQueueScrollingRow).l
                 bpl.w   locret_1C448
                 bra.s   loc_1C4AA
 ; ---------------------------------------------------------------------------
@@ -44,8 +44,8 @@ loc_1C48E:                                              ; CODE XREF: Stage_LoadB
                 lea     off_1C536(pc),a0
                 nop
                 move.l  -4(a0,d0.w),(dword_FFA940).w
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   locret_1C448
 loc_1C4AA:                                              ; CODE XREF: Stage_LoadBackgroundGraphics+6C   j
                                         ; Stage_LoadBackgroundGraphics+92   j
@@ -60,8 +60,8 @@ loc_1C4C2:                                              ; CODE XREF: Stage_LoadB
                 bne.s   loc_1C4E2
                 clr.w   (word_FFA946).w
                 move.w  #$6000,(dword_FFA940).w
-                jsr     (Sprite_SetupDMA).l
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 bmi.s   loc_1C4FE
                 rts
 ; ---------------------------------------------------------------------------
@@ -69,8 +69,8 @@ loc_1C4E2:                                              ; CODE XREF: Stage_LoadB
                 lea     off_1C53E(pc),a0
                 nop
                 move.l  -4(a0,d0.w),(dword_FFA940).w
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   locret_1C448
 loc_1C4FE:                                              ; CODE XREF: Stage_LoadBackgroundGraphics+E4   j
                 move.w  #4,(word_FF80F2).w
@@ -124,16 +124,16 @@ loc_1C5AA:                                              ; CODE XREF: Stage_XiTig
                 bne.s   loc_1C5CA
                 clr.w   (word_FFA946).w
                 move.w  #$4000,(dword_FFA940).w
-                jsr     (Sprite_SetupDMA).l
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 bmi.s   loc_1C5E4
                 rts
 ; ---------------------------------------------------------------------------
 loc_1C5CA:                                              ; CODE XREF: Stage_XiTigerHandler+68   j
                 lea     off_1C536(pc),a0
                 move.l  off_1C536-4-off_1C536(a0,d0.w),(dword_FFA940).w
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   locret_1C5A8
 loc_1C5E4:                                              ; CODE XREF: Stage_XiTigerHandler+80   j
                 addq.w  #2,(GameSubstateIndex).w
@@ -147,16 +147,16 @@ loc_1C5FC:                                              ; CODE XREF: Stage_XiTig
                 bne.s   loc_1C61C
                 clr.w   (word_FFA946).w
                 move.w  #$6000,(dword_FFA940).w
-                jsr     (Sprite_SetupDMA).l
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 bmi.s   loc_1C636
                 rts
 ; ---------------------------------------------------------------------------
 loc_1C61C:                                              ; CODE XREF: Stage_XiTigerHandler+BA   j
                 lea     off_1C53E(pc),a0
                 move.l  off_1C53A-off_1C53E(a0,d0.w),(dword_FFA940).w
-                jsr     (Gfx_RenderScrollingBackground).l
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   locret_1C5A8
 loc_1C636:                                              ; CODE XREF: Stage_XiTigerHandler+D2   j
                 move.w  #$10,(GameModeIndex).w

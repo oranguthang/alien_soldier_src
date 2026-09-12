@@ -189,7 +189,7 @@ Boss_MissirayInitialSegmentYOffsets:    dc.w    $40, $30, $20, $10, $10, $20, $3
 Boss_MissirayLoadTileTransferSet00:                     ; CODE XREF: Boss_MissirayWaitThenLoadPrimaryTransferSet+E   j  ; was: sub_53A3A
                 lea     Boss_MissirayTileTransferSet00Descriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Boss_MissirayLoadTileTransferSet00
 ; ---------------------------------------------------------------------------
 Boss_MissirayTileTransferSet00Descriptor:   dc.w    $6020, $2000, $102, $6162, $6566, $696A  ; was: word_53A46
@@ -199,7 +199,7 @@ Boss_MissirayTileTransferSet00Descriptor:   dc.w    $6020, $2000, $102, $6162, $
 Boss_MissirayLoadTileTransferSet01:                     ; CODE XREF: Boss_MissirayWaitThenLoadAlternateTransferSet+E   j  ; was: sub_53A52
                 lea     Boss_MissirayTileTransferSet01Descriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Boss_MissirayLoadTileTransferSet01
 ; ---------------------------------------------------------------------------
 Boss_MissirayTileTransferSet01Descriptor:   dc.w    $6020, $2000, $102, $6D6E, $7172, $7576  ; was: word_53A5E
@@ -209,7 +209,7 @@ Boss_MissirayTileTransferSet01Descriptor:   dc.w    $6020, $2000, $102, $6D6E, $
 Boss_MissirayLoadTileTransferSet02:                     ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet00+A   p  ; was: sub_53A6A
                 lea     Boss_MissirayTileTransferSet02Descriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Boss_MissirayLoadTileTransferSet02
 ; ---------------------------------------------------------------------------
 Boss_MissirayTileTransferSet02Descriptor:   dc.w    $6020, $2000, $102, 0, 0, 0  ; was: word_53A76
@@ -229,7 +229,7 @@ Boss_MissirayLoadCompressedTileSet00:                   ; CODE XREF: Boss_Missir
                                         ; Boss_MissirayWaitThenLoadPrimaryCompressedSet+E   j
                 lea     Boss_MissirayCompressedTileSet00Descriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_MissirayLoadCompressedTileSet00
 ; ---------------------------------------------------------------------------
 Boss_MissirayCompressedTileSet00Descriptor: dc.w    $6200, $2000, $301, $6060, $6060, $6464, $6464  ; was: word_53A9C
@@ -242,7 +242,7 @@ Boss_MissirayLoadCompressedTileSet01:                   ; CODE XREF: Boss_Missir
 ; End of function Boss_MissirayLoadCompressedTileSet01
 ; Shared fall-through tail for compressed tile set 01
 Boss_MissirayJumpToCompressedTileLoader:
-                jmp     Gfx_LoadCompressedTiles         ; was: sub_53AB0
+                jmp     Tilemap_QueueIndexedRows        ; was: sub_53AB0
 ; End of function Boss_MissirayJumpToCompressedTileLoader
 ; ---------------------------------------------------------------------------
 Boss_MissirayCompressedTileSet01Descriptor: dc.w    $6200, $2000, $301, $6868, $6868, $6C6C, $6C6C  ; was: word_53AB6
@@ -252,7 +252,7 @@ Boss_MissirayCompressedTileSet01Descriptor: dc.w    $6200, $2000, $301, $6868, $
 Boss_MissirayLoadCompressedTileSet02:                   ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet01+A   p  ; was: sub_53AC4
                 lea     Boss_MissirayCompressedTileSet02Descriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_MissirayLoadCompressedTileSet02
 ; ---------------------------------------------------------------------------
 Boss_MissirayCompressedTileSet02Descriptor: dc.w    $6200, $2000, $301, 0, 0, 0, 0  ; was: word_53AD0
@@ -272,7 +272,7 @@ Boss_MissirayLoadCompressedTileSet03:                   ; CODE XREF: Boss_Missir
                                         ; Boss_MissirayWaitThenLoadPrimaryFinalSet+E   p
                 lea     Boss_MissirayCompressedTileSet03Descriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_MissirayLoadCompressedTileSet03
 ; ---------------------------------------------------------------------------
 Boss_MissirayCompressedTileSet03Descriptor: dc.w    $6230, $2000, $301, $6363, $6363, $6767, $6767  ; was: word_53AF8
@@ -282,7 +282,7 @@ Boss_MissirayCompressedTileSet03Descriptor: dc.w    $6230, $2000, $301, $6363, $
 Boss_MissirayLoadCompressedTileSet04:                   ; CODE XREF: Boss_MissirayWaitThenLoadAlternateFinalSet+E   p  ; was: sub_53B06
                 lea     Boss_MissirayCompressedTileSet04Descriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_MissirayLoadCompressedTileSet04
 ; ---------------------------------------------------------------------------
 Boss_MissirayCompressedTileSet04Descriptor: dc.w    $6230, $2000, $301, $6B6B, $6B6B, $6F6F, $6F6F  ; was: word_53B12
@@ -292,7 +292,7 @@ Boss_MissirayCompressedTileSet04Descriptor: dc.w    $6230, $2000, $301, $6B6B, $
 Boss_MissirayLoadCompressedTileSet05:                   ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet02+A   p  ; was: sub_53B20
                 lea     Boss_MissirayCompressedTileSet05Descriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_MissirayLoadCompressedTileSet05
 ; ---------------------------------------------------------------------------
 Boss_MissirayCompressedTileSet05Descriptor: dc.w    $6230, $2000, $301, 0, 0, 0, 0  ; was: word_53B2C
@@ -305,7 +305,7 @@ Boss_MissirayWaitForTransferAndLoadTileSet03:           ; DATA XREF: ROM:000538C
                 addq.w  #2,4(a5)
                 lea     Boss_MissirayTileTransferSet03Descriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; ---------------------------------------------------------------------------
 Boss_MissirayTileTransferSet03Descriptor:   dc.w    $6020, $2000, $101, $6162, $6566  ; was: word_53B50
                                         ; DATA XREF: Boss_MissirayWaitForTransferAndLoadTileSet03+A   o
@@ -322,7 +322,7 @@ Boss_MissirayRaiseAndLoadCompressedTileSet06:           ; DATA XREF: ROM:000538C
                 addq.w  #2,4(a5)
                 lea     Boss_MissirayCompressedTileSet06Descriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; ---------------------------------------------------------------------------
 Boss_MissirayCompressedTileSet06Descriptor: dc.w    $6420, $2000, $100, $696A  ; was: word_53B7E
                                         ; DATA XREF: Boss_MissirayRaiseAndLoadCompressedTileSet06+16   o

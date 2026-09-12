@@ -21,13 +21,13 @@ PasswordMenu_Activate:                                  ; CODE XREF: PasswordMen
                 clr.w   (GameSubstateIndex).w
                 move.w  #$400,d0
                 moveq   #0,d1
-                jsr     (Data_LoadPointerTable2).l
+                jsr     (Tilemap_DirectTransferWithPrimaryDescriptor).l
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
                 move.w  d0,(dword_FFA908).w
                 move.w  d1,(dword_FFA90C).w
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (FrontendFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     PasswordMenu_PaletteOverrides(pc),a0

@@ -80,7 +80,7 @@ Boss_DestroyerProtoUpdateDefeatExplosion:               ; DATA XREF: ROM:0003153
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
                 movea.l #Boss_DestroyerProtoDefeatGraphicsLoadDescriptor,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$1000,2(a5)
                 rts
 ; End of function Boss_DestroyerProtoUpdateDefeatExplosion

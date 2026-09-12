@@ -336,7 +336,7 @@ Gfx_LoadIndexedAnimationTiles:                          ; CODE XREF: Boss_Sunset
                 and.w   (a0)+,d0
                 adda.w  d0,a0
                 adda.w  (a0),a0
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadIndexedAnimationTiles
 ; Resets the form controller after primary boss health reaches zero
 Boss_SunsetStingResetAfterPrimaryHealthDepletion:       ; CODE XREF: Boss_SunsetStingSecondFormUpdate+4A   j  ; was: sub_423DA

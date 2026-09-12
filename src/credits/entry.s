@@ -23,7 +23,7 @@ Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_Ini
                 movea.l #Credits_IntroVRAMTransferParameters,a0
                 move.w  #$800,d0
                 move.w  #$FF00,d1
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA904).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l

@@ -81,7 +81,7 @@ Boss_ShiperBackgroundConfig:    dc.w    $FFFF, $7000, $FFFF, $6800, $FFFF, $2000
 
 ; Initializes Shiper Honeyviper boss by processing pointer data and setting up trigonometric tables
 Boss_ShiperInit:                                        ; DATA XREF: ROM:0003649C   o  ; was: sub_36504
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.s   Boss_ShiperInitReturn
                 addq.w  #2,4(a5)
                 movem.l a5,-(sp)
@@ -111,7 +111,7 @@ Boss_ShiperLoadGraphics:                                ; DATA XREF: ROM:0003649
                 bmi.s   Boss_ShiperLoadGraphicsReturn
                 addq.w  #2,4(a5)
                 movea.l #Boss_ShiperTileDmaDescriptor,a0
-                jsr     (Gfx_DMATransferTiles).l
+                jsr     (Tilemap_QueueIndexedColumns).l
                 move.w  #$80,(dword_FFA908).w
 Boss_ShiperLoadGraphicsReturn:                          ; CODE XREF: Boss_ShiperLoadGraphics+4   j  ; was: locret_36560
                 rts

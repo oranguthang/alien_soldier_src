@@ -99,7 +99,7 @@ Boss_MadamBarbarSetupState:                             ; DATA XREF: ROM:0003A4E
                 movea.l #Boss_MadamBarbarObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 movea.l #Boss_MadamBarbarTileLoadCommands,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 bsr.w   Boss_MadamBarbarApplyPartFlagArrangement
                 bsr.w   Boss_MadamBarbarUpdateWobble
                 lea     Boss_MadamBarbarPoseTargets(pc),a0

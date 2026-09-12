@@ -5,7 +5,7 @@ StageTransition_RenderAsteroidField:                    ; CODE XREF: StageTransi
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$F8,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function StageTransition_RenderAsteroidField
 ; Advances both asteroid-field positions and detects a $100 boundary crossing
 StageTransition_UpdateAsteroidFieldScroll:              ; CODE XREF: StageTransition_InitializeAsteroidField+70   j  ; was: sub_FB3A

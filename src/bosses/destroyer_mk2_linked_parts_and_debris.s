@@ -49,25 +49,25 @@ Object_DestroyerMK2DeactivationScrollHandlers:  dc.w    Object_DestroyerMK2Apply
 ; Apply deactivation scroll preset A
 Object_DestroyerMK2ApplyDeactivationScrollPresetA:      ; DATA XREF: ROM:Object_DestroyerMK2DeactivationScrollHandlers   o  ; was: sub_4B6F8
                 move.l  #$448032C1,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetA
 ; Apply deactivation scroll preset B
 Object_DestroyerMK2ApplyDeactivationScrollPresetB:      ; DATA XREF: ROM:0004B6F2   o  ; was: sub_4B706
                 move.l  #$449832A1,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetB
 ; Apply deactivation scroll preset C
 Object_DestroyerMK2ApplyDeactivationScrollPresetC:      ; DATA XREF: ROM:0004B6F4   o  ; was: sub_4B714
                 move.l  #$4C8031C1,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetC
 ; Apply deactivation scroll preset D
 Object_DestroyerMK2ApplyDeactivationScrollPresetD:      ; DATA XREF: ROM:0004B6F6   o  ; was: sub_4B722
                 move.l  #$4C9831A1,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Object_DestroyerMK2ApplyDeactivationScrollPresetD
 ; Reset the component for reuse after the stage gate

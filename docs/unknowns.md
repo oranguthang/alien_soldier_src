@@ -303,7 +303,7 @@ address-derived definitions in the former
 `src/bosses/antroid_and_debris.s`. The first state machine is shared by
 sixteen entity types across multiple stages: spawn parameter `$5E` selects
 one of eight terrain-layout bases, and its five forward/rewind frames are
-written through `Gfx_DMATransferTiles`. It neither belongs to Antroid nor
+written through `Tilemap_QueueIndexedColumns`. It neither belongs to Antroid nor
 implements a multi-shot enemy. The adjacent type-`$208` system is initialized
 only by the Stage 10 graphics setup and continuously recycles six
 non-colliding objects within screen bounds, so the unsupported debris claim
@@ -1847,7 +1847,7 @@ ordered threshold table and moves a stream index in either direction. Moving
 forward selects one of six VRAM destinations and copies a corresponding
 six-byte tile-source-index row into a generated one-row descriptor. Moving
 back builds the same descriptor with six zero indices. Both paths tail-call
-`Gfx_LoadCompressedTiles`. The new names describe descriptor structure and
+`Tilemap_QueueIndexedRows`. The new names describe descriptor structure and
 directional behavior without guessing what the artwork depicts.
 
 The Z-Leo tile-loader/HBlank pass reduced the address-derived unknown count
@@ -1856,7 +1856,7 @@ in `$0527EA-$052879` now have exact static audit records, increasing the
 registry to 5,466 entries and reducing the rendering backlog from 29 to 24.
 
 The old `Boss_ZLeoAnimationUpdate1` contains no animation logic: both callers
-feed its two-index descriptor directly to `Gfx_LoadCompressedTiles`, so it is
+feed its two-index descriptor directly to `Tilemap_QueueIndexedRows`, so it is
 now `Boss_ZLeoLoadPrimaryTiles`. The neighboring phase loader has its own
 descriptor. `Boss_ZLeoGraphicsInit2` was likewise too vague: it writes four
 groups of VDP register values (`8Axx`, vertical value, `8Bxx`, `82xx`) into
@@ -4221,5 +4221,111 @@ provenance-preserving behavioral names, while seven inherited semantic names
 are corrected or narrowed. Provenance rises from 13,379 to 13,396, the
 name-audit registry from 10,387 to 10,411, and the enforced address-derived
 ceiling falls from 2,669 to 2,652. The layout remains 363 modules with a
+327.4-line mean, zero files above 1,000 lines, and zero generic container
+filenames.
+
+The tilemap-column pass reconstructs the complete 284-line
+`0x0106C6-0x0109A7` streaming unit and renames
+`rendering/tilemap_rendering.s` to the narrower
+`rendering/tilemap_column_streaming.s`. The main path resolves coarse and fine
+tile lookup tables for nine successive rows, writes a column into staging RAM
+and an optional mirror, then appends a 32-word DMA command with VDP
+autoincrement `$80`. Its companion path populates an offset column through the
+same lookup structure but adds no independent DMA command. The naturally
+adjacent six-byte player helper remains at the module head instead of becoming
+an artificial five-line file.
+
+Three inherited names are directly disproved. `Gfx_InitScrollBuffer` only
+writes object type `$08` to the player record at `$FFFFA400` and has no static
+caller. `Gfx_GetCameraPosition` does not return after loading coordinates; it
+falls through into the column queue path. `Camera_Stage18Lock` neither tests
+nor changes camera bounds; it applies fixed coordinate offsets and populates
+the unqueued Stage 18 column rows. The old generic tilemap renderer name is
+also narrowed to the primary-plane column operation actually performed.
+
+All 17 definitions receive exact-address static audit records. Ten
+address-derived branches and returns receive provenance-preserving behavioral
+names, while seven inherited semantic entries are corrected or narrowed.
+Provenance rises from 13,396 to 13,406, the name-audit registry from 10,411 to
+10,428, and the enforced address-derived ceiling falls from 2,652 to 2,642.
+The layout remains 363 modules, with zero files above 1,000 lines and zero
+generic container filenames.
+
+The tilemap-row pass reconstructs the complete 324-line
+`0x0109A8-0x010D15` unit and renames the generic
+`rendering/scrolling_background.s` module to
+`rendering/tilemap_row_streaming.s`. Its three related entry families now
+state their actual transfer modes: queued one-row streaming from caller-supplied
+coordinates and descriptors, synchronous direct transfer of all 32 rows while
+holding the Z80 bus, and incremental one-row loading driven by the global
+scrolling-transfer state.
+
+Several inherited semantic names were materially misleading. The two
+`Scroll_Get*Position` entries do not return coordinates; they fall through to
+full-map transfers. The two `Data_LoadPointerTable*` entries select fixed
+descriptors and immediately start those transfers. `Gfx_RenderSylpheedBackground`
+is shared by multiple stage-transition paths and queues only one 64-word row,
+while `Gfx_RenderScrollingBackground` likewise advances an incremental transfer
+by exactly one row per call. The two wrappers at `$0109A8` and `$0109BC` retain
+explicit unreferenced status because no reconstructed static caller establishes
+the older generic or Stage 21 claims.
+
+All 22 definitions receive exact-address static audit records. Thirteen
+address-derived branches and loops receive provenance-preserving behavioral
+names, while nine inherited semantic entries are corrected or narrowed.
+Provenance rises from 13,406 to 13,419, the name-audit registry from 10,428 to
+10,450, and the enforced address-derived ceiling falls from 2,642 to 2,629.
+The layout remains 363 modules with a 327.4-line mean, zero files above 1,000
+lines, and zero generic container filenames.
+
+The first tilemap-DMA-primitives pass reconstructs the complete control flow
+from `$010D16` through `$010F4D` and renames the containing 399-line module from
+`rendering/dma_primitives.s` to the subsystem-specific
+`rendering/tilemap_dma_primitives.s`. The code now distinguishes an offset row
+written only to the RAM mirror, a separately queued scrolling row, incremental
+64-word constant-row fills, a synchronous 2,048-word plane fill, and two
+four-row DMA command encodings.
+
+Four inherited semantic names were disproved. `Sprite_SetupDMA` never touches
+sprite records; it fills one tilemap row with a constant word. `VDP_SetupDMA`
+is specifically a complete tilemap-plane fill. `Gfx_CopyTileBlock8x8` copies a
+4x4 block of tilemap words in RAM before queuing its rows, and it has no static
+caller. `Scroll_UpdateStage14Scroll` changes no scroll coordinate and is shared
+by Stage 12, Viblack, and Destroyer MK2 callers that supply packed DMA source
+and destination addresses. The other long-source four-row entry is likewise
+kept explicitly unreferenced.
+
+All 16 definitions in this first half receive exact-address static audit
+records. Ten address-derived loops and returns receive provenance-preserving
+behavioral names, while six inherited semantic entries are corrected or
+narrowed. Provenance rises from 13,419 to 13,429, the name-audit registry from
+10,450 to 10,466, and the enforced address-derived ceiling falls from 2,629 to
+2,619. The layout remains 363 modules with a 327.4-line mean, zero files above
+1,000 lines, and zero generic container filenames.
+
+The second tilemap-DMA-primitives pass reconstructs `$010F4E-$01116F`. The two
+large routines do not decompress graphics or perform an undifferentiated tile
+DMA. Both consume compact descriptors that select 32-byte source tiles by byte
+index. One gathers eight-byte slices into horizontal rows and queues transfers
+with VDP autoincrement two; the other gathers four vertically separated words
+into columns and queues transfers with autoincrement `$80`. Optional descriptor
+flags mirror the staged rectangle back into tilemap RAM.
+
+`Gfx_LoadCompressedTiles` is therefore corrected to
+`Tilemap_QueueIndexedRows`, and `Gfx_DMATransferTiles` becomes
+`Tilemap_QueueIndexedColumns`. `Gfx_SetSpritePattern` is also disproved: it
+rewrites offset `$0E` in consecutive 16-byte queue records, the high word of
+their VDP destination commands, without accessing any sprite object or tile
+pattern data. Finally, the 22-byte `unused_3` asset is identified structurally
+as a complete 4x4 indexed-column descriptor and renamed in both the extraction
+manifest and source; it remains explicitly unreferenced because no static
+owner is known.
+
+All 17 definitions in the second half receive exact-address static audit
+records. Thirteen address-derived loops and returns receive
+provenance-preserving behavioral names, while four inherited semantic/data
+entries are corrected or narrowed. Provenance rises from 13,429 to 13,443, the
+name-audit registry from 10,466 to 10,483, and the enforced address-derived
+ceiling falls from 2,619 to 2,606. The layout remains 363 modules with a
 327.4-line mean, zero files above 1,000 lines, and zero generic container
 filenames.

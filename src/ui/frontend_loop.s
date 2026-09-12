@@ -19,10 +19,10 @@ UI_LoadResultsPalette:                                  ; CODE XREF: UI_Initiali
                 move.w  #$F0,(word_FF8100).w
                 move.w  #0,d0
                 move.w  #0,d1
-                jsr     (Data_LoadPointerTable1).l
+                jsr     (Tilemap_DirectTransferWithAlternateDescriptor).l
                 move.w  #0,d0
                 move.w  #0,d1
-                jsr     (Data_LoadPointerTable2).l
+                jsr     (Tilemap_DirectTransferWithPrimaryDescriptor).l
                 movea.l #EarlyStagePaletteOffsetList,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bset    #6,(VDPReg1Shadow+1).w
@@ -109,7 +109,7 @@ loc_1CFD0:                                              ; CODE XREF: UI_Initiali
                 move.w  #0,d1
                 move.w  d0,(dword_FFA908).w
                 move.w  d1,(dword_FFA90C).w
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (M68K_RAM).l,a0
                 moveq   #$FFFFFFFF,d0
                 move.w  #$F,d1

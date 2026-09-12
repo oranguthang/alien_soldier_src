@@ -16,7 +16,7 @@ Stage_InitializeTransition:                             ; DATA XREF: ROM:0001CF7
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$400,d0
                 move.w  #0,d1
-                jsr     (Data_LoadPointerTable2).l
+                jsr     (Tilemap_DirectTransferWithPrimaryDescriptor).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
@@ -122,7 +122,7 @@ loc_1D520:                                              ; CODE XREF: Cutscene_An
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$180,d0
                 move.w  (dword_FFA904).w,d1
-                jmp     Gfx_RenderTilemap
+                jmp     Tilemap_QueuePrimaryPlaneColumn
 ; End of function Cutscene_AnimateScroll
 ; ---------------------------------------------------------------------------
 unused_4:       binclude "data/other/unused_4.bin"

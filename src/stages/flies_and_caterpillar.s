@@ -178,7 +178,7 @@ loc_D2FE:                                               ; CODE XREF: Stage_Cater
                 move.w  (dword_FFA90C).w,d1
                 lea     word_D38C(pc),a0
                 nop
-                jsr     (loc_10704).l
+                jsr     (Tilemap_QueueColumnFromDescriptor).l
                 move.w  (dword_FFA908).w,(word_FF8048).w
                 bsr.w   Stage_CaterpillarScrollUpdate
                 move.w  (word_FF8048).w,(dword_FFA908).w
@@ -222,7 +222,7 @@ stru_D39C:      dc.w    7                               ; field_0
 ; Caterpillar scroll handler
 Stage_CaterpillarScrollHandler:                         ; DATA XREF: ROM:0000C8B6   o  ; was: sub_D3A6
                 subq.w  #1,(word_FF8112).w
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 addi.l  #-$10000,(dword_FFA900).w
                 bsr.w   Stage_CaterpillarScrollUpdate
                 tst.w   (dword_FFA900).w

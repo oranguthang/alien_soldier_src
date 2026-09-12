@@ -134,7 +134,7 @@ Stage_SevenForcesPrepareMedusaPrimaryPlaneOrigin:       ; CODE XREF: Stage_Seven
                 addi.w  #$800,d0
 Stage_SevenForcesRenderMedusaPrimaryPlane:              ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+3C   j  ; was: loc_EBE0
                 move.w  (dword_FFA904).w,d1
-                jsr     (Gfx_RenderTilemap).l
+                jsr     (Tilemap_QueuePrimaryPlaneColumn).l
                 move.w  (dword_FFA900).w,d0
                 subi.w  #$10,d0
                 bpl.s   Stage_SevenForcesRenderMedusaSecondaryPlane
@@ -142,7 +142,7 @@ Stage_SevenForcesRenderMedusaPrimaryPlane:              ; CODE XREF: Stage_Seven
 Stage_SevenForcesRenderMedusaSecondaryPlane:            ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+54   j  ; was: loc_EBF8
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$C00,d1
-                jsr     (loc_108A4).l
+                jsr     (Tilemap_PopulateUnqueuedColumnFromDescriptor).l
 Gfx_UpdateSevenForcesParallaxRows:                      ; CODE XREF: Stage_SevenForcesUpdateStage20Scroll+12   j  ; was: loc_EC06
                 move.w  (dword_FFA900).w,d0
                 neg.w   d0
@@ -190,7 +190,7 @@ Stage_SevenForcesRenderSylpheedPrimaryPlane:            ; CODE XREF: Stage_Seven
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$F8,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Stage_SevenForcesUpdateSylpheedPrimaryPlane
 ; Loads Sylpheed tiles
 Stage_SevenForcesUpdateSylpheedSecondaryPlane:          ; CODE XREF: Stage_SevenForcesUpdateSylpheedScroll+4   p  ; was: sub_EC86
@@ -204,7 +204,7 @@ Stage_SevenForcesRenderSylpheedSecondaryPlane:          ; CODE XREF: Stage_Seven
                 move.w  (dword_FFA90C).w,d1
                 subi.w  #$F8,d1
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Stage_SevenForcesUpdateSylpheedSecondaryPlane
 ; Loads Sylpheed palette
 Stage_SevenForcesAdvanceSylpheedSecondaryScroll:        ; CODE XREF: Stage_SevenForcesFinishSylpheedForeground:Stage_SevenForcesContinueSylpheedForeground   p  ; was: sub_ECAA
@@ -230,7 +230,7 @@ Stage_SevenForcesRenderArtemisBackgroundPlane:          ; CODE XREF: Stage_Seven
                 move.w  (dword_FFA904).w,d1
                 addi.w  #$100,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Stage_SevenForcesUpdateArtemisBackgroundPlane
 ; Advances the Artemis foreground motion
 Stage_SevenForcesUpdateArtemisForegroundMotion:         ; CODE XREF: Stage_SevenForcesScrollArtemisForeground   p  ; was: sub_ECF4
@@ -274,7 +274,7 @@ Stage_SevenForcesRenderSirenePrimaryPlane:              ; CODE XREF: Stage_Seven
                 move.w  (dword_FFA904).w,d1
                 addi.w  #$100,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Stage_SevenForcesUpdateSirenePrimaryPlane
 ; Advances and renders the Sirene secondary plane
 Stage_SevenForcesRenderSireneSecondaryPlane:            ; CODE XREF: Stage_SevenForcesFinishSireneTransition+6   p  ; was: sub_ED7E
@@ -284,7 +284,7 @@ Stage_SevenForcesRenderSireneSecondaryPlane:            ; CODE XREF: Stage_Seven
                 move.w  (dword_FFA904).w,d1
                 subi.w  #$100,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Stage_SevenForcesRenderSireneSecondaryPlane
 ; Advances the Sirene secondary scroll
 Stage_SevenForcesUpdateSireneSecondaryScroll:           ; CODE XREF: Stage_SevenForcesAdvanceSireneTransition+2   p  ; was: sub_ED9A
@@ -305,7 +305,7 @@ Stage_SevenForcesRenderSireneSecondaryScroll:           ; CODE XREF: Stage_Seven
                 move.w  (dword_FFA90C).w,d1
                 subi.w  #$100,d1
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Stage_SevenForcesUpdateSireneSecondaryScroll
 UnreferencedSevenForcesEmptyHandler:                    ; was: nullsub_28
                 rts
@@ -322,7 +322,7 @@ Cutscene_SevenForcesCamera1Render:                      ; CODE XREF: Cutscene_Se
                 move.w  (dword_FFA904).w,d1
                 addi.w  #$F8,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Cutscene_SevenForcesCamera1
 ; Camera scroll handler 2
 Cutscene_SevenForcesCamera2:                            ; CODE XREF: Cutscene_SevenForcesVictoryState0   p  ; was: sub_EE0A
@@ -336,7 +336,7 @@ Cutscene_SevenForcesCamera2Render:                      ; CODE XREF: Cutscene_Se
                 move.w  (dword_FFA90C).w,d1
                 addi.w  #$F8,d1
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Cutscene_SevenForcesCamera2
 ; Camera scroll handler 3
 Cutscene_SevenForcesCamera3:                            ; CODE XREF: Cutscene_SevenForcesVictoryState6+4   p  ; was: sub_EE36
@@ -349,7 +349,7 @@ Cutscene_SevenForcesCamera3Render:                      ; CODE XREF: Cutscene_Se
                 move.w  (dword_FFA90C).w,d1
                 addi.w  #$F8,d1
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
-                bra.w   loc_109E0
+                bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Cutscene_SevenForcesCamera3
 ; Initializes the Artemis camera, tilemap, and graphics transfers
 Stage_SevenForcesInitializeArtemisCameraAndAssets:      ; CODE XREF: Stage_SevenForcesFinishSylpheedForeground+10   j  ; was: sub_EE62
@@ -413,7 +413,7 @@ Gfx_ArtemisTilemapInitReturn:                           ; CODE XREF: Gfx_Artemis
 ; End of function Gfx_ArtemisInitializeTilemap
 ; Advances the Artemis scrolling-background renderer
 Gfx_ArtemisUpdateBackground:                            ; CODE XREF: Stage_SevenForcesWaitForArtemisBackground   p  ; was: sub_EF28
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.s   Gfx_ArtemisBackgroundUpdateReturn
                 move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
                 clr.w   (word_FFA946).w
@@ -427,7 +427,7 @@ Gfx_ArtemisBackgroundUpdateReturn:                      ; CODE XREF: Gfx_Artemis
 Gfx_LoadArtemisCompressedTiles:                         ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+20   p  ; was: sub_EF4C
                 lea     Gfx_ArtemisCompressedTileStream(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadArtemisCompressedTiles
 ; ---------------------------------------------------------------------------
 Gfx_ArtemisCompressedTileStream:    dc.w    $6C00, $4000, $F00, $494A, $494A, $494A, $494A, $494A, $494A, $494A, $494A  ; was: word_EF58
@@ -435,7 +435,7 @@ Gfx_ArtemisCompressedTileStream:    dc.w    $6C00, $4000, $F00, $494A, $494A, $4
 
 ; Checks whether the Seven Forces background render completed
 Gfx_CheckSevenForcesBackgroundRender:
-                jsr     (Gfx_RenderScrollingBackground).l  ; was: sub_EF6E
+                jsr     (Tilemap_QueueNextScrollingRow).l  ; was: sub_EF6E
                 bpl.s   Gfx_SevenForcesBackgroundCheckReturn
                 moveq   #$FFFFFFFF,d0
 Gfx_SevenForcesBackgroundCheckReturn:                   ; CODE XREF: Gfx_CheckSevenForcesBackgroundRender+6   j  ; was: locret_EF78
@@ -482,7 +482,7 @@ Gfx_SevenForcesCutsceneTilemapInitReturn:               ; CODE XREF: Gfx_Initial
 ; Attributes: thunk
 ; Checks cutscene completion
 Gfx_CheckSevenForcesCutsceneBackgroundComplete:         ; CODE XREF: Cutscene_SevenForcesVictoryState4+C   p  ; was: sub_EFE2
-                jmp     Gfx_RenderScrollingBackground
+                jmp     Tilemap_QueueNextScrollingRow
 ; End of function Gfx_CheckSevenForcesCutsceneBackgroundComplete
 ; Fills the four Stage 20 plane buffers
 Gfx_FillStage20PlaneBuffers:                            ; CODE XREF: Stage_SevenForcesInitializeStage20+1A   p  ; was: sub_EFE8

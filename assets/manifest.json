@@ -4730,8 +4730,8 @@
       "sha1": "38813a8b2bbfd390f2b846ae2fd6a40478ef2fb6"
     },
     {
-      "name": "unused_3",
-      "path": "other/unused_3.bin",
+      "name": "unreferenced_indexed_column_transfer_descriptor",
+      "path": "other/unreferenced_indexed_column_transfer_descriptor.bin",
       "region": "other",
       "address": "0x1115A",
       "end": "0x11170",

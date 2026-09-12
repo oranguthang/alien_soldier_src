@@ -113,7 +113,7 @@ Boss_XiTigerAdvancePaletteAdjustment:                   ; CODE XREF: Boss_XiTige
                 dbf     d6,Boss_XiTigerAdjustNextPaletteWord
                 dbf     d7,Boss_XiTigerAdjustNextPaletteBlock
                 movea.l #Boss_XiTigerTileLoadCommand,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 bsr.w   Boss_XiTigerApplyFacingGraphics
                 move.w  #$CAA0,$48(a5)
                 move.w  #$CF20,$4A(a5)

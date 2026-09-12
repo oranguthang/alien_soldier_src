@@ -158,7 +158,7 @@ Boss_ZLeoQueueTileChunkClear:                           ; CODE XREF: Boss_ZLeoTi
                 move.w  d0,(a3)+
 Boss_ZLeoExecuteTileChunkTransfer:                      ; CODE XREF: Boss_ZLeoTileUpdate+5C   j  ; was: loc_52704
                 movea.w #(byte_FF9604-M68K_RAM),a0
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_ZLeoTileUpdate
 ; ---------------------------------------------------------------------------
 Boss_ZLeoTileScrollThresholds:  dc.w    $7FFF, $C0, $A0, $80, $60, $40, $20, 0  ; was: word_5270E
@@ -226,7 +226,7 @@ Boss_ZLeoLoadPhaseTiles:                                ; CODE XREF: Boss_ZLeoRu
                                         ; Boss_ZLeoBeginAttackSelection+70   p
                 lea     Boss_ZLeoPhaseTileLoadDescriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_ZLeoLoadPhaseTiles
 ; ---------------------------------------------------------------------------
 Boss_ZLeoPhaseTileLoadDescriptor:   dc.w    $4820, $2000, $100, $B0C  ; was: word_527EA
@@ -237,7 +237,7 @@ Boss_ZLeoLoadPrimaryTiles:                              ; CODE XREF: Boss_ZLeoRu
                                         ; Boss_ZLeoBeginDefeatSequence+46   p
                 lea     Boss_ZLeoPrimaryTileLoadDescriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_ZLeoLoadPrimaryTiles
 ; ---------------------------------------------------------------------------
 Boss_ZLeoPrimaryTileLoadDescriptor: dc.w    $4820, $2000, $100, $1F20  ; was: word_527FE
@@ -289,10 +289,10 @@ Boss_ZLeoWriteRemainingHBlankSegments:                  ; CODE XREF: Boss_ZLeoBu
 ; Load the initial composite tiles and set four queued sprite patterns
 Boss_ZLeoLoadInitialTilesAndPatterns:                   ; CODE XREF: Boss_ZLeoInit+54   p  ; was: sub_5287A
                 movea.l #Boss_ZLeoInitialTileLoadData,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$81,d0
                 moveq   #3,d7
-                jmp     Gfx_SetSpritePattern
+                jmp     VDPQueue_SetCommandHighWord
 ; End of function Boss_ZLeoLoadInitialTilesAndPatterns
 ; ---------------------------------------------------------------------------
 Boss_ZLeoInitialTileLoadData:   dc.w    $4E00, $4000, $900, $2A2B, $2A2B, $2A2B, $2A2B, $2A2B, $4E00, $4000, $900, $2D2E, $2D2E, $2D2E, $2D2E, $2D2E  ; was: word_52892

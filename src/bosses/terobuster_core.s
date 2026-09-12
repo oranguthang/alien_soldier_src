@@ -105,7 +105,7 @@ Boss_TerobusterSetup:                                   ; DATA XREF: ROM:0003857
                 jsr     (Object_InitGroupFromTable).l
                 lea     Boss_TerobusterTileLoadDescriptor(pc),a0
                 nop
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 bra.w   Boss_TerobusterIntro
 ; ---------------------------------------------------------------------------
 Boss_TerobusterTileLoadDescriptor:  dc.w    $6100, $2000, $201, $2A2B, $2C2D, $2E2F  ; was: word_3868A

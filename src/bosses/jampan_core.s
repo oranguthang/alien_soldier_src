@@ -237,7 +237,7 @@ Boss_JampanInitializeShieldSlotLoop:                    ; CODE XREF: Boss_Jampan
 Boss_JampanLoadEncounterTiles:                          ; CODE XREF: Boss_JampanInitializeEncounterState+4C   p  ; was: sub_49440
                 lea     Boss_JampanEncounterTileLoadDescriptor(pc),a0
                 nop
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 rts
 ; End of function Boss_JampanLoadEncounterTiles
 ; ---------------------------------------------------------------------------

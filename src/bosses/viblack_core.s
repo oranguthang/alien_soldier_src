@@ -131,7 +131,7 @@ Boss_ViblackIntroSetup:                                 ; DATA XREF: ROM:000439D
                 jsr     (Gfx_AdjustTileIndexRows).l
                 lea     Boss_ViblackCompressedTileLoadCommand(pc),a0
                 nop
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 bra.w   Boss_ViblackBuildScrollProfile
 ; End of function Boss_ViblackInit
 ; ---------------------------------------------------------------------------

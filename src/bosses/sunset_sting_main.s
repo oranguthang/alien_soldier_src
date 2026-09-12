@@ -32,7 +32,7 @@ Boss_SunsetStingMainCycleTiles:                         ; CODE XREF: Boss_Sunset
                 move.b  $48(a5),d0
                 andi.w  #$F,d0
                 movea.l Boss_SunsetStingTileLoadCommands(pc,d0.w),a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 addq.b  #4,$48(a5)
 Boss_SunsetStingMainReturn:                             ; CODE XREF: Boss_SunsetStingMain+1A   j  ; was: locret_42A8A
                                         ; Boss_SunsetStingMain+62   j
@@ -127,7 +127,7 @@ Boss_SunsetStingInitSegmentLoop:                        ; CODE XREF: Boss_Sunset
                 move.w  #8,4(a4)
                 move.w  #2,(word_FF8640).w
                 lea     Boss_SunsetStingInitialTileLoadCommand(pc),a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 bra.w   Boss_SunsetStingNextState
 ; End of function Boss_SunsetStingInit
 ; ---------------------------------------------------------------------------

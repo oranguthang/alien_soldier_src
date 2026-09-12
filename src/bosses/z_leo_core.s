@@ -139,7 +139,7 @@ Boss_ZLeoInitReturn:                                    ; CODE XREF: Boss_ZLeoIn
 ; Initialize the composite parts, mappings, and intro display state
 Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B84   o  ; was: sub_51C32
                 bsr.w   Boss_ZLeoBuildHBlankRegisterBuffer
-                jsr     (Gfx_RenderScrollingBackground).l
+                jsr     (Tilemap_QueueNextScrollingRow).l
                 tst.w   (word_FFA944).w
                 bpl.w   Boss_ZLeoNoOp
                 move.w  #1,8(a5)
@@ -499,7 +499,7 @@ Boss_ZLeoBeginDefeatWhiteout:                           ; CODE XREF: Boss_ZLeoBe
                 jsr     (Gfx_AdjustTileIndexRows).l
                 lea     Boss_ZLeoDefeatTileLoadDescriptor(pc),a0
                 nop
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.b  #$14,d0
                 jsr     (Sound_PlaySFX).l
 ; End of function Boss_ZLeoBeginDefeatSequence

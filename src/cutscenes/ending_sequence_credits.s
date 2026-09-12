@@ -16,7 +16,7 @@ EndingSequence_Initialize:                              ; CODE XREF: Stage_Trans
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$FFF2,(CutscenePaletteStep).l
@@ -147,7 +147,7 @@ EndingSequence_FadeOutCredits:                          ; DATA XREF: ROM:00007C3
                 cmpi.w  #$E,(CutscenePaletteStep).l
                 bne.w   Cutscene_Return
                 movea.l #EndingSequence_StarfieldTileLoad,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 lea     (Entity_ObjectPool).w,a5
                 move.w  #$128,dword_FFC630-Entity_ObjectPool(a5)
                 move.w  #$E8,$14(a5)

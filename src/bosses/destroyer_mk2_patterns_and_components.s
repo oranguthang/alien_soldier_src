@@ -305,7 +305,7 @@ Gfx_DestroyerMK2FadeAndLoadFirstTransitionTiles:        ; DATA XREF: ROM:0004A92
                 addq.w  #2,4(a5)
                 lea     Gfx_DestroyerMK2FirstTransitionTileLoadDescriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; ---------------------------------------------------------------------------
 Gfx_DestroyerMK2FirstTransitionTileLoadDescriptor:  dc.w    $4480, $4000, $104, 0, 0, 0, 0, 0  ; was: word_4B366
                                         ; DATA XREF: Gfx_DestroyerMK2FadeAndLoadFirstTransitionTiles+12   o
@@ -330,7 +330,7 @@ Gfx_DestroyerMK2FadeAndLoadSecondTransitionTiles:       ; DATA XREF: ROM:0004A93
                 addq.w  #2,4(a5)
                 lea     Gfx_DestroyerMK2SecondTransitionTileLoadDescriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Gfx_DestroyerMK2FadeAndLoadSecondTransitionTiles
 ; ---------------------------------------------------------------------------
 Gfx_DestroyerMK2SecondTransitionTileLoadDescriptor: dc.w    $4490, $4000, $104, 0, 0, 0, 0, 0  ; was: word_4B3A6
@@ -471,25 +471,25 @@ Object_DestroyerMK2ActivationScrollHandlers:    dc.w    Object_DestroyerMK2Apply
 ; Apply stage-14 component scroll preset A
 Object_DestroyerMK2ApplyScrollPresetA:                  ; DATA XREF: ROM:Object_DestroyerMK2ActivationScrollHandlers   o  ; was: sub_4B4E4
                 move.l  #$44804001,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Object_DestroyerMK2ApplyScrollPresetA
 ; Apply stage-14 component scroll preset B
 Object_DestroyerMK2ApplyScrollPresetB:                  ; DATA XREF: ROM:0004B4DE   o  ; was: sub_4B4F2
                 move.l  #$44984001,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Object_DestroyerMK2ApplyScrollPresetB
 ; Apply stage-14 component scroll preset C
 Object_DestroyerMK2ApplyScrollPresetC:                  ; DATA XREF: ROM:0004B4E0   o  ; was: sub_4B500
                 move.l  #$4C804001,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Object_DestroyerMK2ApplyScrollPresetC
 ; Apply stage-14 component scroll preset D
 Object_DestroyerMK2ApplyScrollPresetD:                  ; DATA XREF: ROM:0004B4E2   o  ; was: sub_4B50E
                 move.l  #$4C984001,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 rts
 ; End of function Object_DestroyerMK2ApplyScrollPresetD
 ; ---------------------------------------------------------------------------

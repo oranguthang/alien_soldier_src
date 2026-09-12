@@ -68,7 +68,7 @@ Boss_FlyingNeoClearLinkedPartFlipBits:                  ; CODE XREF: Boss_Flying
                 dbf     d7,Boss_FlyingNeoClearLinkedPartFlipBits
                 lea     Boss_FlyingNeoZeroFacingTileCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoApplyNonzeroFacingGraphics:               ; CODE XREF: Boss_FlyingNeoApplyFacingGraphics+C   j  ; was: loc_3CE62
                 move.l  #$E01CF040,$28(a5)
@@ -86,7 +86,7 @@ Boss_FlyingNeoSetLinkedPartFlipBits:                    ; CODE XREF: Boss_Flying
                 dbf     d7,Boss_FlyingNeoSetLinkedPartFlipBits
                 lea     Boss_FlyingNeoNonzeroFacingTileCommand(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_FlyingNeoApplyFacingGraphics
 ; ---------------------------------------------------------------------------
 Boss_FlyingNeoDefeatTileCommand:    dc.w    $6C0C, $4000, $301, $5656, $5656, $5656, $5656  ; was: word_3CEA0

@@ -246,7 +246,7 @@ Camera_LockPosition:                                    ; DATA XREF: ROM:0000C86
                 bmi.s   loc_CAB0
                 tst.w   (word_FFA944).w
                 bmi.s   loc_CAAC
-                bsr.w   Gfx_RenderScrollingBackground
+                bsr.w   Tilemap_QueueNextScrollingRow
                 bra.s   loc_CAB0
 ; ---------------------------------------------------------------------------
 loc_CAAC:                                               ; CODE XREF: Camera_LockPosition+A   j
@@ -510,9 +510,9 @@ Stage_InitTerobusterBoss:                               ; DATA XREF: ROM:0000C88
                 subq.w  #1,(dword_FF8062).w
                 bsr.w   Stage_UpdateScrollOffset
                 bsr.w   Stage_LoadTerobusterTiles
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 addi.l  #$C000,(dword_FFA900).w
-                jsr     (Gfx_GetCameraPosition).l
+                jsr     (Tilemap_QueuePrimaryCameraColumnOffset158).l
                 cmpi.w  #$10A0,(dword_FFA900).w
                 bmi.s   locret_CCFE
                 clr.l   (dword_FFA910).w
@@ -572,7 +572,7 @@ Stage_PostTerobusterTransition:                         ; DATA XREF: ROM:0000C89
                 addq.w  #2,(word_FFA950).w
                 lea     byte_D6A6(pc),a0
                 nop
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
 loc_CDDE:                                               ; CODE XREF: Stage_PostTerobusterTransition+4   j
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage_PostTerobusterTransition

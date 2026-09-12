@@ -68,7 +68,7 @@ Boss_JokerSetup:                                        ; DATA XREF: ROM:0003B2E
                 move.w  $48(a5),d0
                 addi.w  #$158,d0
                 move.w  (dword_FFA904).w,d1
-                jmp     Gfx_RenderTilemap
+                jmp     Tilemap_QueuePrimaryPlaneColumn
 ; ---------------------------------------------------------------------------
 Boss_JokerInitializeMetasprite:                         ; CODE XREF: Boss_JokerSetup+A   j  ; was: loc_3B354
                 addq.w  #1,8(a5)
@@ -95,7 +95,7 @@ Boss_JokerInitializeAuxiliaryObjectTypes:               ; CODE XREF: Boss_JokerS
                 jsr     (Object_InitGroupFromTable).l
                 lea     Boss_JokerCompressedTileCommands(pc),a0
                 nop
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 movea.w #(word_FFC680-M68K_RAM),a0
                 moveq   #7,d0
                 moveq   #$11,d7

@@ -188,7 +188,7 @@ Boss_EnterSireneStateE:                                 ; CODE XREF: Boss_Update
                 move.w  #$A2FF,(word_FFA946).w
 ; State E waits for the queued DMA phase to complete
 Boss_UpdateSireneStateE:                                ; DATA XREF: ROM:00057506   o  ; was: loc_5770A
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 tst.w   (word_FFA944).w
                 bmi.s   Boss_EnterSireneState10
                 lea     Sirene_ActivePoseScript(pc),a1

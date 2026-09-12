@@ -125,10 +125,10 @@ loc_1DABC:                                              ; CODE XREF: UI_Initiali
                 bsr.w   Results_RenderScoreValues
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 move.w  #$6000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 move.w  #4,(word_FF80F2).w
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w

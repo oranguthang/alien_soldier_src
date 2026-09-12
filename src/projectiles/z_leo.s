@@ -25,7 +25,7 @@ Boss_ZLeoApplyScrollLookup:                             ; CODE XREF: Boss_ZLeoSc
                 lea     Boss_ZLeoScrollLookupTable(pc),a0
                 nop
                 moveq   #0,d0
-                jmp     loc_109E0
+                jmp     Tilemap_QueueRowFromDescriptor
 ; End of function Boss_ZLeoScrollUpdate
 ; ---------------------------------------------------------------------------
 Boss_ZLeoScrollLookupTable: dc.w    $FFFF, $7000, $FFFF, $6800, $FFFF, $4000, 0, $6000  ; was: word_52F22

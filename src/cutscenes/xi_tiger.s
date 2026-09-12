@@ -86,10 +86,10 @@ XiTigerCutscene_Setup:                                  ; DATA XREF: XiTigerCuts
                 move.w  #$28,(dword_FFA908).w           ; '('
                 lea     XiTigerCutscene_TileTransferDescriptor(pc),a0
                 nop
-                jsr     (Gfx_DMATransferTiles).l
+                jsr     (Tilemap_QueueIndexedColumns).l
                 lea     XiTigerCutscene_CompressedTileTransferDescriptor(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function XiTigerCutscene_Setup
 ; ---------------------------------------------------------------------------
 XiTigerCutscene_TileTransferDescriptor: dc.l    $44214000, $1020203, $B0C090A  ; was: dword_1E97A
@@ -170,9 +170,9 @@ XiTigerCutscene_InitializeReveal:                       ; DATA XREF: ROM:0001E91
                 move.w  #0,(dword_FFA904).w
                 move.w  #0,(dword_FFA908).w
                 move.w  #0,(dword_FFA90C).w
-                jsr     (Scroll_GetForegroundPosition).l
+                jsr     (Tilemap_DirectTransferFromPrimaryCamera).l
                 move.w  #$1E0,(dword_FFA900).w
-                jmp     Scroll_GetBackgroundPosition
+                jmp     Tilemap_DirectTransferFromSecondaryCamera
 ; End of function XiTigerCutscene_InitializeReveal
 ; Animates the reveal's palette phase, offsets, and composition
 XiTigerCutscene_AnimateReveal:                          ; DATA XREF: ROM:0001E91A   o  ; was: sub_1EA9A

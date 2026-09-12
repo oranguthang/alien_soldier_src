@@ -163,10 +163,10 @@ Boss_WolfGaropaLoadAttackEffectA:                       ; CODE XREF: Boss_WolfGa
                 jsr     (Sound_PlaySFX).l
                 lea     Boss_WolfGaropaAttackEffectATileTransfer(pc),a0
                 nop
-                jsr     (Gfx_DMATransferTiles).l
+                jsr     (Tilemap_QueueIndexedColumns).l
                 lea     Boss_WolfGaropaAttackEffectACompressedTiles(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_WolfGaropaTryLoadAttackEffectA
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaAttackEffectATileTransfer:   dc.w    $4658, $4000, $102, $2A2B, $2C2D, $2E2F  ; was: word_50414
@@ -193,7 +193,7 @@ Boss_WolfGaropaLoadAttackEffectB:                       ; CODE XREF: Boss_WolfGa
                 jsr     (Sound_PlaySFX).l
                 lea     Boss_WolfGaropaAttackEffectBCompressedTiles(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_WolfGaropaLoadAttackEffectB
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaAttackEffectBCompressedTiles:    dc.w    $4458, $4000, $101, $3C3B, $3D3F  ; was: word_50466
@@ -212,7 +212,7 @@ Boss_WolfGaropaLoadAttackEffectC:                       ; CODE XREF: Boss_WolfGa
                 move.b  #1,(byte_FF9DBA).w
                 lea     Boss_WolfGaropaAttackEffectCCompressedTiles(pc),a0
                 nop
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_WolfGaropaTryLoadAttackEffectC
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaAttackEffectCCompressedTiles:    dc.w    $4C50, $4000, $301, $4243, $4445, $4647, $4849  ; was: word_50492
@@ -307,7 +307,7 @@ Gfx_UpdateWolfGaropaOrbTiles:                           ; CODE XREF: Boss_WolfGa
                 asl.w   #1,d0
                 andi.w  #$C,d0
                 movea.l Boss_WolfGaropaOrbTileTransferTable(pc,d0.w),a0
-                jmp     Gfx_LoadCompressedTiles
+                jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_UpdateWolfGaropaOrbTiles
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaOrbTileTransferTable:    dc.l    Boss_WolfGaropaOrbTileTransferFrame0  ; DATA XREF: Gfx_UpdateWolfGaropaOrbTiles+A   r  ; was: off_505AA

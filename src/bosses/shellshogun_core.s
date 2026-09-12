@@ -130,7 +130,7 @@ Boss_ShellshogunInitializeSecondaryObjects:             ; CODE XREF: Boss_Shells
                 movea.l #Boss_ShellshogunObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 movea.l #Boss_ShellshogunIntroTileLoadCommand,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 bsr.w   Boss_ShellshogunInitializePartFlags
                 move.w  #$2E0,$490(a5)
                 move.w  #$2E0,$8B0(a5)

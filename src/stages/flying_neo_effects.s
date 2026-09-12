@@ -6,7 +6,7 @@ Stage_FlyingNeoSpawn:                                   ; CODE XREF: Stage_Flyin
                 move.l  #$FFFE8000,$1C(a0)
                 lea     byte_D74E(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Stage_FlyingNeoSpawn
 ; Applies gravity acceleration to Flying-Neo entity
 Entity_FlyingNeoGravityAccel:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_D73E

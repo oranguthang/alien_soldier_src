@@ -327,7 +327,7 @@ loc_DBFC:                                               ; CODE XREF: Stage_Telep
                 clr.l   (dword_FF830A).w
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
-                jsr     (VDP_SetupDMA).l
+                jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 jsr     (Stage_LoadTeleportGraphics).l
 loc_DC5E:                                               ; CODE XREF: Stage_TeleportFadeIn+6   j
                                         ; Stage_TeleportFadeIn+12   j
@@ -365,7 +365,7 @@ loc_DCA8:                                               ; CODE XREF: Stage_Telep
 ; ---------------------------------------------------------------------------
 loc_DCB8:                                               ; CODE XREF: Stage_TeleportFadeSequence+44   j
                 moveq   #0,d1
-                jmp     Gfx_RenderTilemap
+                jmp     Tilemap_QueuePrimaryPlaneColumn
 ; End of function Stage_TeleportFadeSequence
 ; Transitions to Snake boss stage
 Stage_SnakeTransition:                                  ; DATA XREF: ROM:0000D988   o  ; was: sub_DCC0
@@ -445,7 +445,7 @@ Stage_BugmaxTransition:                                 ; DATA XREF: ROM:0000D99
 ; Waits for DMA before boss intro
 Stage_BugmaxWaitDMA:                                    ; DATA XREF: ROM:0000D996   o  ; was: sub_DDA6
                 bsr.w   Scroll_UpdateSnakeBackground
-                jsr     (Sprite_SetupDMA).l
+                jsr     (Tilemap_QueueNextConstantRow).l
                 bpl.w   Stage_Stage10CheckTransition_Return
                 subq.w  #1,(word_FF806E).w
                 bmi.s   Stage_InitBugmaxBattle

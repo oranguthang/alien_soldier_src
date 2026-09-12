@@ -1,6 +1,6 @@
 Gfx_TitleAndZLeoVRAMTransferParameters: dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $14000  ; was: dword_11316
                                         ; DATA XREF: TitleScreen_Initialize+7E   o
-                                        ; sub_106FE   o
+                                        ; Tilemap_QueuePrimaryPlaneColumn   o
 Gfx_DefaultVRAMTransferParameters:  dc.l    $FFFF7000, $FFFF6000, $FFFF4000, $4000  ; was: dword_11326
                                         ; DATA XREF: EndingSequence_Initialize+4A   o
                                         ; EndingStarfield_FadeOutAndPreparePlanet+4A   o

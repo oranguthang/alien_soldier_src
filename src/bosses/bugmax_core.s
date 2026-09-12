@@ -582,7 +582,7 @@ Boss_BugmaxLinkedPartDescriptors:   dc.w    $5C         ; field_0  ; was: stru_4
 Gfx_BugmaxLoadInitialTiles:                             ; CODE XREF: Boss_BugmaxInitializeEncounterState+148   p  ; was: sub_4C5E6
                 lea     Gfx_BugmaxInitialTileLoadDescriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Gfx_BugmaxLoadInitialTiles
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxInitialTileLoadDescriptor:    dc.w    $6330, $2000, $104, $BEBF, $C2C3, $C6C7, $CACB, $CF  ; was: word_4C5F2
@@ -657,7 +657,7 @@ Boss_BugmaxFirstOpeningThresholdReturn:                 ; CODE XREF: Boss_Bugmax
 Gfx_BugmaxLoadFirstOpeningTiles:                        ; CODE XREF: Boss_BugmaxWaitForFirstOpeningScrollThreshold+1C   j  ; was: loc_4C6A2
                 lea     Gfx_BugmaxFirstOpeningTileLoadDescriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Boss_BugmaxWaitForFirstOpeningScrollThreshold
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxFirstOpeningTileLoadDescriptor:   dc.w    $6330, $2000, $104, $BEBF, $C0C3, $C4C7, $C8CB, $CF  ; was: word_4C6AE
@@ -715,7 +715,7 @@ Boss_BugmaxSecondOpeningThresholdReturn:                ; CODE XREF: Boss_Bugmax
 Gfx_BugmaxLoadSecondOpeningTiles:                       ; CODE XREF: Boss_BugmaxWaitForSecondOpeningScrollThreshold+24   j  ; was: loc_4C75C
                 lea     Gfx_BugmaxSecondOpeningTileLoadDescriptor(pc),a0
                 nop
-                jmp     Gfx_DMATransferTiles
+                jmp     Tilemap_QueueIndexedColumns
 ; End of function Boss_BugmaxWaitForSecondOpeningScrollThreshold
 ; ---------------------------------------------------------------------------
 Gfx_BugmaxSecondOpeningTileLoadDescriptor:  dc.w    $6330, $2000, $104, $BCBD, $C1, $C5, $C9, $CD  ; was: word_4C768

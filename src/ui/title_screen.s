@@ -34,13 +34,13 @@ TitleScreen_FinalizeInitialization:                     ; CODE XREF: TitleScreen
                 moveq   #0,d1
                 move.w  d0,(dword_FFA900).w
                 move.w  d1,(dword_FFA904).w
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
                 move.w  d0,(dword_FFA908).w
                 move.w  d1,(dword_FFA90C).w
-                jsr     (Gfx_DirectVRAMTransfer).l
+                jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 move.b  #0,(VDPReg18Shadow+1).w
                 move.w  #2,(dword_FF8066+2).w
                 move.b  #$91,d0

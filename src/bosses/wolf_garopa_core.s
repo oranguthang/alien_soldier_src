@@ -109,7 +109,7 @@ Boss_WolfGaropaInitialize:                              ; DATA XREF: Boss_WolfGa
                 jsr     (Gfx_UpdateTilemapIndices).l
                 lea     Boss_WolfGaropaInitialTileLoad(pc),a0
                 nop
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #2,$1DE(a5)
                 bra.w   Boss_WolfGaropaBeginLeftEntry
 ; ---------------------------------------------------------------------------

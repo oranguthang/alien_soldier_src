@@ -109,7 +109,7 @@ Boss_SunsetStingInitializeSecondFormPartPositions:      ; CODE XREF: Boss_Sunset
                 move.b  #$FF,(byte_FFC7FC).w
                 move.w  #$180,$56(a5)
                 movea.l #Boss_SunsetStingSecondFormTileLoadCommands,a0
-                jsr     (Gfx_LoadCompressedTiles).l
+                jsr     (Tilemap_QueueIndexedRows).l
 Boss_SunsetStingSecondFormLoadGraphicsReturn:           ; CODE XREF: Boss_SunsetStingSecondFormLoadGraphicsState+4   j  ; was: locret_41A5E
                 rts
 ; End of function Boss_SunsetStingSecondFormLoadGraphicsState

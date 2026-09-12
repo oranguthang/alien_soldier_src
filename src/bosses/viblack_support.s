@@ -63,7 +63,7 @@ Boss_ViblackCompleteStageTransition:                    ; CODE XREF: Boss_Viblac
                 bsr.w   Boss_ViblackWriteTransitionOffsetPairs
                 move.w  #$1000,2(a5)
                 move.l  #$60A45441,d0
-                jsr     (Scroll_UpdateStage14Scroll).l
+                jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w

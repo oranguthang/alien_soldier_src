@@ -3,13 +3,13 @@ Stage18_UpdateScrollAndRenderTilemap:                   ; CODE XREF: Stage_Stage
                                         ; sub_E4FC   p
                 bsr.w   Camera_FollowPlayerBeyondHorizontalThreshold
 Stage18_RenderLockedTilemap:                            ; CODE XREF: Stage18_UpdateDestroyerMk2Scroll+1A   j  ; was: loc_1002A
-                bsr.w   Camera_Stage18Lock
+                bsr.w   Tilemap_PopulateStage18UnqueuedColumn
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$158,d0
                 move.w  (dword_FFA904).w,d1
                 lea     Gfx_DefaultVRAMTransferParameters(pc),a0
                 nop
-                bra.w   loc_10704
+                bra.w   Tilemap_QueueColumnFromDescriptor
 ; End of function Stage18_UpdateScrollAndRenderTilemap
 ; Advances the Destroyer MK2 approach scroll and renders the Stage 18 tilemap
 Stage18_UpdateDestroyerMk2Scroll:                       ; CODE XREF: Stage_DestroyerMK2Init   p  ; was: sub_10044
@@ -28,7 +28,7 @@ Stage18_AdvanceDestroyerMk2Scroll:                      ; CODE XREF: Stage18_Upd
 Camera_UpdateAndRenderStageTilemap:                     ; CODE XREF: Stage_UpdateLogic:loc_C8C6   p  ; was: sub_10060
                                         ; sub_C92E   p
                 bsr.w   Camera_FollowPlayerBeyondHorizontalThreshold
-                bra.w   Gfx_GetCameraPosition
+                bra.w   Tilemap_QueuePrimaryCameraColumnOffset158
 ; End of function Camera_UpdateAndRenderStageTilemap
 ; Advances boss-approach scroll when allowed and renders the stage tilemap
 Camera_UpdateBossApproachAndRenderTilemap:              ; CODE XREF: Stage_InitBossIntro   p  ; was: sub_10068
@@ -42,7 +42,7 @@ Camera_UpdateBossApproachAndRenderTilemap:              ; CODE XREF: Stage_InitB
 Camera_AdvanceBossApproachScroll:                       ; CODE XREF: Camera_UpdateBossApproachAndRenderTilemap+6   j  ; was: loc_1007A
                                         ; Camera_UpdateBossApproachAndRenderTilemap+E   j
                 addi.l  #$10000,(dword_FFA900).w
-                bra.w   Gfx_GetCameraPosition
+                bra.w   Tilemap_QueuePrimaryCameraColumnOffset158
 ; End of function Camera_UpdateBossApproachAndRenderTilemap
 ; Updates the horizontal camera position towards the player
 Camera_UpdateHorizontalTowardsPlayer:                   ; CODE XREF: Camera_BossPhaseHandler:loc_C91A   p  ; was: sub_10086
@@ -288,7 +288,7 @@ Scroll_SynchronizePlanesAndRenderTrainTilemap:          ; CODE XREF: Scroll_Adva
                 move.w  #$F700,d1
                 lea     Gfx_ScrollVRAMTransferParameters(pc),a0
                 nop
-                jmp     loc_10704(pc)                   ; (pc)
+                jmp     Tilemap_QueueColumnFromDescriptor(pc)  ; (pc)
 ; End of function Stage8_UpdateTrainScrollAndTilemap
 ; Unreferenced alternate entry that executes a NOP before the following operation
 UnreferencedAdvanceTrainScrollWithNop:
@@ -309,7 +309,7 @@ Stage8_UpdateFlyingNeoScrollAndTilemap:                 ; CODE XREF: Stage_Flyin
                 addi.w  #-$910,d1
                 lea     Gfx_ScrollVRAMTransferParameters(pc),a0
                 nop
-                jmp     loc_109E0(pc)                   ; (pc)
+                jmp     Tilemap_QueueRowFromDescriptor(pc)  ; (pc)
 ; End of function Stage8_UpdateFlyingNeoScrollAndTilemap
 ; Unreferenced alternate entry that executes a NOP before the following operation
 UnreferencedUpdateQuarterScrollWithNop:
@@ -373,13 +373,13 @@ UnreferencedCameraApplyRightEdgeDelta:                  ; CODE XREF: Unreference
 ; Updates the vertical camera and renders the shared Sylpheed backdrop
 Scroll_UpdateAndRenderSylpheedBackdrop:                 ; CODE XREF: Stage_ScrollCheckTransition   p  ; was: sub_10352
                 bsr.w   Camera_FollowPlayerAboveVerticalThreshold
-                bra.w   Gfx_RenderSylpheedBackground
+                bra.w   Tilemap_QueuePrimaryCameraRowOffset60
 ; End of function Scroll_UpdateAndRenderSylpheedBackdrop
 ; Advances vertical scroll by half a pixel and renders the shared Sylpheed backdrop
 Scroll_AdvanceVerticalAndRenderSylpheedBackdrop:        ; CODE XREF: Stage_SunsetStingTransition   p  ; was: sub_1035A
                                         ; Stage_ViblackScroll+14   p
                 addi.l  #$8000,(dword_FFA904).w
-                bra.w   Gfx_RenderSylpheedBackground
+                bra.w   Tilemap_QueuePrimaryCameraRowOffset60
 ; End of function Scroll_AdvanceVerticalAndRenderSylpheedBackdrop
 ; Follows the player when above vertical threshold $108
 Camera_FollowPlayerAboveVerticalThreshold:              ; CODE XREF: Scroll_UpdateAndRenderSylpheedBackdrop   p  ; was: sub_10366
