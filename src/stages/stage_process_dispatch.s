@@ -6,7 +6,7 @@ UnreferencedClearStageScratchWord:
 ; Dispatches the selected stage process while gameplay updates are active
 Stage_DispatchSelectedProcess:                          ; CODE XREF: Stage_UpdateGameplayEntry:Stage_EnterSelectedGameplayProcess   j  ; was: sub_FF16
                                         ; XiTigerStage_UpdateGameplayEntry+110   j
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bpl.s   Stage_RunSelectedProcess
                 rts
 ; ---------------------------------------------------------------------------

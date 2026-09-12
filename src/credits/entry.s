@@ -9,9 +9,9 @@ Credits_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 jsr     (LoadObjData).l
                 lea     (CreditsAndEarlyStagePaletteCommandBank).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w

@@ -62,7 +62,7 @@ Frontend_InitializeTitleTransition_CopyPalette:         ; was: loc_1D1BA
                 move.w  #2,(SpriteGridRowLimit).l
                 move.w  #1,(SpriteGridColumnLimit).l
                 move.l  #$40000002,(PatternVDPCommand).l
-                move.w  #$F,(word_FF00C4).l
+                move.w  #$F,(PlanetPatternWriteOnly).l
                 move.w  #0,(PatternFrameMask).l
                 clr.w   (PatternDissolveStep).l
                 jsr     (Cutscene_FillPlanetPattern).l
@@ -133,7 +133,7 @@ Frontend_RevealTitlePatternAndSetupNextGrid:            ; was: sub_1D2D0
                 move.w  #1,(SpriteGridRowLimit).l
                 move.w  #5,(SpriteGridColumnLimit).l
                 move.l  #$40000002,(PatternVDPCommand).l
-                move.w  #$F,(word_FF00C4).l
+                move.w  #$F,(PlanetPatternWriteOnly).l
                 move.w  #0,(PatternFrameMask).l
                 clr.w   (PatternDissolveStep).l
                 jsr     (Cutscene_FillPlanetPattern).l

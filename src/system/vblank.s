@@ -53,7 +53,7 @@ Int_VBlank_ReleaseZ80BusForExit:                        ; CODE XREF: VBLANK+90  
 Sys_VBlankHandler:                                      ; CODE XREF: VBLANK+74   j  ; was: sub_B1A
                 tst.w   (word_FFFF3E).w
                 beq.s   Sys_VBlankHandler_RunUpdate
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.s   Sys_VBlankHandler_RunUpdate
                 cmpi.w  #1,(word_FF8096).w
                 beq.s   Int_VBlank_AcquireZ80BusForExit

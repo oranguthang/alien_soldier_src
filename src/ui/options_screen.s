@@ -5,9 +5,9 @@ UI_InitOptionsScreen:                                   ; DATA XREF: Sys_Dispatc
                 movea.l #Options_AssetLoadDescriptors,a0
                 jsr     (LoadObjData).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                clr.b   (word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                clr.b   (PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -97,22 +97,22 @@ UI_ActivateOptionsScreen:                               ; CODE XREF: UI_InitOpti
 ; End of function UI_InitOptionsScreen
 ; Updates options screen with input handling and object processing
 UI_UpdateOptionsScreen:                                 ; DATA XREF: Sys_DispatchGameState+76   o  ; was: sub_9774
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   UI_UpdateOptionsScreenActive
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 jmp     UI_ResetPaletteAndMessageMode_Clear
 ; ---------------------------------------------------------------------------
 UI_UpdateOptionsScreenActive:                           ; CODE XREF: UI_UpdateOptionsScreen+6   j  ; was: loc_978C
-                tst.w   (word_FF80F2).w
+                tst.w   (PaletteFadeMode).w
                 bne.s   UI_UpdateOptionsScreenFrame
                 btst    #7,(word_FFF708).w
                 beq.s   UI_UpdateOptionsScreenFrame
                 move.b  #2,(byte_FF830E).w
                 move.b  #$C4,d0
                 jsr     (Sound_QueueRequest).l
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
 UI_UpdateOptionsScreenFrame:                            ; CODE XREF: UI_UpdateOptionsScreen+1C   j  ; was: loc_97B4
                                         ; UI_UpdateOptionsScreen+24   j
                 jsr     Frontend_AnimateMenuPalette(pc)  ; (pc)
@@ -446,9 +446,9 @@ UI_InitSecondaryOptionsMenu:                            ; DATA XREF: Sys_Dispatc
                 jsr     (Sys_InitGameMode).l
                 movea.l #Options_AssetLoadDescriptors,a0
                 jsr     (LoadObjData).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                clr.b   (word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                clr.b   (PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -483,21 +483,21 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
 ; End of function UI_InitSecondaryOptionsMenu
 ; Update the secondary options path and its shared sound-test handlers
 UI_UpdateSecondaryOptionsMenu:                          ; DATA XREF: Sys_DispatchGameState+A6   o  ; was: sub_9E88
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   UI_UpdateSecondaryOptionsMenuActive
                 move.w  #$54,(GameModeIndex).w          ; 'T'
                 clr.w   (GameSubstateIndex).w
                 jmp     UI_ResetPaletteAndMessageMode_Clear
 ; ---------------------------------------------------------------------------
 UI_UpdateSecondaryOptionsMenuActive:                    ; CODE XREF: UI_UpdateSecondaryOptionsMenu+6   j  ; was: loc_9EA0
-                tst.w   (word_FF80F2).w
+                tst.w   (PaletteFadeMode).w
                 bne.s   UI_UpdateSecondaryOptionsMenuFrame
                 btst    #7,(word_FFF708).w
                 beq.s   UI_UpdateSecondaryOptionsMenuFrame
                 move.b  #$C4,d0
                 jsr     (Sound_QueueRequest).l
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
 UI_UpdateSecondaryOptionsMenuFrame:                     ; CODE XREF: UI_UpdateSecondaryOptionsMenu+1C   j  ; was: loc_9EC2
                                         ; UI_UpdateSecondaryOptionsMenu+24   j
                 jsr     (Object_ApplyCameraMotion).l

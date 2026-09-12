@@ -11,9 +11,9 @@ Weapon_CircleAttack_CheckSlots:                         ; CODE XREF: Player_Spaw
                 bne.w   Weapon_CircleAttack_Return
                 lea     $60(a0),a0
                 dbf     d7,Weapon_CircleAttack_CheckSlots
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$C0,(byte_FF8142).w
-                move.b  #4,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$C0,(PaletteRGBChannelMask).w
+                move.b  #4,(PaletteRGBAdjustStep).w
                 tst.w   (ShootingMode).w
                 bne.s   Weapon_CircleAttack_SelectAmmoCost
                 subi.w  #$A,$10(a4)
@@ -117,9 +117,9 @@ Weapon_EmptyCircleCompanionHandler:                     ; was: nullsub_49
 Weapon_FireHomingShot:                                  ; DATA XREF: ROM:00017F2E   o  ; was: sub_186E2
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$80,(byte_FF8142).w
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$80,(PaletteRGBChannelMask).w
+                move.b  #8,(PaletteRGBAdjustStep).w
                 btst    #0,(FrameCounter+1).w
                 bne.s   Weapon_FireHomingShot_Return
                 movea.w #(dword_FFBFC0-M68K_RAM),a0

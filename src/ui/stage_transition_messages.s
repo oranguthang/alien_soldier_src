@@ -47,9 +47,9 @@ StageTransition_ResumeSetup_LoadPaletteAndText:         ; CODE XREF: StageTransi
                 lea     StageTransitionPaletteBlockPointers(pc),a0
                 nop
                 jsr     (Palette_LoadFourOptionalBlocks).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
@@ -82,9 +82,9 @@ StageTransition_UpdateMessageScreen:                    ; DATA XREF: Sys_Dispatc
                 btst    #7,(word_FFF708).w
                 beq.s   StageTransition_UpdateMessageScreen_RenderText
                 clr.w   (GameSubstateIndex).w
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
 StageTransition_UpdateMessageScreen_RenderText:         ; CODE XREF: StageTransition_UpdateMessageScreen+C   j  ; was: loc_1E38E
                                         ; StageTransition_UpdateMessageScreen+14   j
                 move.l  (StageMessageCursor).w,d0
@@ -107,7 +107,7 @@ StageTransition_UpdateMessageScreen_RenderText:         ; CODE XREF: StageTransi
 StageTransition_UpdateMessageScreen_UpdateFade:         ; CODE XREF: StageTransition_UpdateMessageScreen+2E   j  ; was: loc_1E3C2
                                         ; StageTransition_UpdateMessageScreen+58   j
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #0,(word_FF80F4).w
+                bclr    #0,(PaletteFadeMaskStatus).w
                 beq.s   StageTransition_UpdateMessageScreen_FinishFadeOut
                 addq.w  #2,(GameSubstateIndex).w
 StageTransition_UpdateMessageScreen_Return:             ; CODE XREF: StageTransition_UpdateMessageScreen+4   j  ; was: locret_1E3D4
@@ -115,7 +115,7 @@ StageTransition_UpdateMessageScreen_Return:             ; CODE XREF: StageTransi
                 rts
 ; ---------------------------------------------------------------------------
 StageTransition_UpdateMessageScreen_FinishFadeOut:      ; CODE XREF: StageTransition_UpdateMessageScreen+6A   j  ; was: loc_1E3D6
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   StageTransition_UpdateMessageScreen_Return
 ; Commits the interstage transition and starts loading the selected stage
 StageTransition_LoadStage:                              ; CODE XREF: StageTransition_QueuePendingBGMAndLoadStage:StageTransition_LoadStageAfterOptionalBGM   j  ; was: loc_1E3DE

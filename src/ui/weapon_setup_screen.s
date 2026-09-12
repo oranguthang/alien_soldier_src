@@ -228,9 +228,9 @@ WeaponSetup_WaitForConfirmInput:                        ; DATA XREF: ROM:0001F14
 ; Confirms the setup and starts the screen fade
 WeaponSetup_ConfirmAndBeginFade:                        ; CODE XREF: WeaponSetup_WaitForConfirmInput+A   j  ; was: loc_1F472
                 addq.w  #2,(SetupTransitionIndex).w
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #1,d0
                 jsr     (Sound_QueueRequest).l
                 bra.w   WeaponSetup_RefillAmmo

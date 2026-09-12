@@ -74,9 +74,9 @@ Stage_StreamGameplayEntrySecondaryPlane_Rows:           ; CODE XREF: Stage_Strea
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   Stage_UpdateGameplayEntry_Return
 Stage_FinishGameplayEntry:                              ; CODE XREF: Stage_StreamGameplayEntrySecondaryPlane+E4   j  ; was: loc_1C4FE
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 move.w  #$10,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
@@ -109,9 +109,9 @@ XiTigerStage_UpdateGameplayEntry:                       ; DATA XREF: Sys_Dispatc
                 jsr     (Sys_InitGraphicsChain).l
                 jsr     (Gfx_LoadVDPRegisters).l
                 jsr     (Stage_InitializeXiTigerState).l
-                move.w  #$8004,(word_FF80F2).w
-                move.w  #$10,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #$8004,(PaletteFadeMode).w
+                move.w  #$10,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
@@ -166,8 +166,8 @@ XiTigerStage_FinishGameplayEntry:                       ; CODE XREF: XiTigerStag
                 move.w  #$10,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 clr.b   (byte_FFF705).w
-                move.w  #$8004,(word_FF80F2).w
-                move.w  #$10,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #$8004,(PaletteFadeMode).w
+                move.w  #$10,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jmp     Stage_DispatchSelectedProcess
 ; End of function XiTigerStage_UpdateGameplayEntry

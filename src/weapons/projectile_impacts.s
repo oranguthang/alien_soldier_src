@@ -17,7 +17,7 @@ Weapon_UpdateRotatingProjectile:                        ; DATA XREF: ROM:Entity_
                 bmi.w   Object_MarkInactive
                 cmpi.w  #$160,$14(a5)
                 bpl.w   Object_MarkInactive
-                btst    #0,(byte_FF8144).w
+                btst    #0,(PlayerModeFlags).w
                 bne.s   Weapon_UpdateRotatingProjectile_Return
                 addi.l  #$4000,$1C(a5)
 Weapon_UpdateRotatingProjectile_Return:                 ; CODE XREF: Weapon_UpdateRotatingProjectile+58   j  ; was: locret_18AC8
@@ -142,9 +142,9 @@ Object_MarkInactiveDirect:                              ; DATA XREF: ROM:Entity_
 ; End of function Object_MarkInactiveDirect
 ; Processes projectile hit effects including screen shake and palette change
 Weapon_ProcessProjectileHit:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18C26
-                move.w  #$A0,(word_FF8140).w
-                move.b  #$60,(byte_FF8142).w            ; '`'
-                move.b  #4,(byte_FF8143).w
+                move.w  #$A0,(PaletteRGBAdjustLevel).w
+                move.b  #$60,(PaletteRGBChannelMask).w  ; '`'
+                move.b  #4,(PaletteRGBAdjustStep).w
                 tst.w   $26(a5)
                 bpl.s   Weapon_HideHitEffectWhenFinished
                 clr.b   $21(a5)
@@ -600,7 +600,7 @@ Effect_InitPlayerMotionProjectile_CopyPosition:         ; CODE XREF: Effect_Init
                 move.w  (dword_FFA414).w,$14(a5)
                 bclr    #7,$22(a5)
                 beq.s   Effect_InitPlayerMotionProjectile_SpawnChild
-                move.w  #4,(word_FF813C).w
+                move.w  #4,(FrameFreezeTimer).w
 Effect_InitPlayerMotionProjectile_SpawnChild:           ; CODE XREF: Effect_InitPlayerMotionProjectile+28   j  ; was: loc_191B8
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #$B,d7

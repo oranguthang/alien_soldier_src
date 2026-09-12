@@ -12,7 +12,7 @@ Results_ActivatePostStageSummary:                       ; was: sub_1DC52
                 bsr.w   Results_RenderScore
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #0,(word_FF80F4).w
+                bclr    #0,(PaletteFadeMaskStatus).w
                 beq.s   Results_ActivatePostStageSummary_Return
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Results_IncrementStageVisitCount).l
@@ -52,9 +52,9 @@ Results_WaitForPostStageConfirmation:                   ; was: sub_1DCDA
                 btst    #7,(word_FFF708).w
                 beq.s   Results_WaitForPostStageConfirmation_Return
                 addq.w  #2,(GameSubstateIndex).w
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
 Results_WaitForPostStageConfirmation_Return:            ; was: locret_1DD14
                 rts
 ; End of function Results_WaitForPostStageConfirmation
@@ -62,7 +62,7 @@ Results_WaitForPostStageConfirmation_Return:            ; was: locret_1DD14
 ; Fades the post-stage summary out before the continue decision
 Results_FadeOutToContinue:                              ; was: sub_1DD16
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   Results_FadeOutToContinue_Return
                 addq.w  #2,(GameSubstateIndex).w
                 clr.b   (VDPReg18Shadow+1).w
@@ -77,9 +77,9 @@ Results_InitializeFinalSummary:                         ; was: sub_1DD2E
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 lea     ResultsFinalSummaryDataLoadRequest(pc),a0
                 nop
@@ -238,7 +238,7 @@ Results_UpdateFinalSummary_Frame:                       ; was: loc_1DF52
                 jsr     (Gfx_FadePaletteTransition).l
                 cmpi.w  #2,(GameSubstateIndex).w
                 bne.s   Results_UpdateFinalSummary_CheckInput
-                bclr    #0,(word_FF80F4).w
+                bclr    #0,(PaletteFadeMaskStatus).w
                 beq.s   Results_UpdateFinalSummary_Return
                 clr.w   (GameSubstateIndex).w
                 rts
@@ -252,13 +252,13 @@ Results_UpdateFinalSummary_CheckInput:                  ; was: loc_1DF74
                 beq.s   Results_UpdateFinalSummary_StartFadeOut
                 move.w  #4,(GameSubstateIndex).w
 Results_UpdateFinalSummary_StartFadeOut:                ; was: loc_1DF90
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 rts
 ; ---------------------------------------------------------------------------
 Results_UpdateFinalSummary_FinishFadeOut:               ; was: loc_1DFA2
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   Results_UpdateFinalSummary_Return
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w

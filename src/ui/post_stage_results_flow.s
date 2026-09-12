@@ -10,9 +10,9 @@ Results_InitializePostStageFlow_LoadAssets:             ; was: loc_1D636
                 movea.l #ResultsPostStageAssetLoadList,a0
                 jsr     (LoadObjData).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bset    #1,(byte_FFA209).w
                 movea.w #(PostStageEntryCountBCD+2-M68K_RAM),a0
@@ -35,8 +35,8 @@ Results_InitializePostStageFlow_Activate:               ; was: loc_1D69C
                 lea     (PostStageFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 jsr     (Gfx_FadePaletteTransition).l
-                clr.w   (word_FF8014).w
-                move.w  #$FFF2,(word_FF8016).w
+                clr.w   (ResultsFirstColorOffset).w
+                move.w  #$FFF2,(ResultsOtherColorOffset).w
                 bsr.w   Results_FadeSelectedPaletteRanges
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
@@ -79,9 +79,9 @@ Results_InitializeSecondaryOptionsReturn:               ; was: sub_1D734
                 jsr     (Sys_InitGameMode).l
                 movea.l #ResultsPostStageAssetLoadList,a0
                 jsr     (LoadObjData).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -136,22 +136,22 @@ Results_UpdateEntranceScroll_CheckComplete:             ; was: loc_1D800
                 cmpi.w  #$3C0,(dword_FFA900).w
                 bmi.s   Results_UpdateEntranceFrame
                 addq.w  #2,(GameSubstateIndex).w
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 bra.s   Results_UpdateEntranceFrame
 ; End of function Results_UpdateEntranceScroll
 
 ; Advances from the completed entrance fade into results rendering
 Results_UpdateEntranceFade:                             ; was: sub_1D81E
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   Results_UpdateEntranceFrame
                 addq.w  #2,(GameSubstateIndex).w
                 clr.b   (VDPReg11Shadow+1).w
                 move.b  #$12,(VDPReg18Shadow+1).w
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
@@ -212,7 +212,7 @@ Results_FadeSelectedPaletteRanges:                      ; was: sub_1D8EA
                 moveq   #3,d5
 Results_FadeSelectedPaletteRanges_NextFirstColor:       ; was: loc_1D8F4
                 move.w  (a1)+,d6
-                move.w  (word_FF8014).w,d0
+                move.w  (ResultsFirstColorOffset).w,d0
                 jsr     (Gfx_PrepareRGBComponents).l
                 moveq   #$FFFFFFFF,d0
                 jsr     (Gfx_AdjustSelectedColorChannels).l
@@ -234,7 +234,7 @@ Results_FadeSelectedPaletteRanges_NextFirstColor:       ; was: loc_1D8F4
 ; Fades one selected post-stage palette range
 Results_FadePaletteRange:                               ; was: sub_1D930
                 move.w  (a1)+,d6
-                move.w  (word_FF8016).w,d0
+                move.w  (ResultsOtherColorOffset).w,d0
                 jsr     (Gfx_PrepareRGBComponents).l
                 moveq   #$FFFFFFFF,d0
                 jsr     (Gfx_AdjustSelectedColorChannels).l

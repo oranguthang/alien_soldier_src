@@ -86,14 +86,14 @@ Sys_GameplayMainLoop_ProcessObjects:                    ; CODE XREF: Sys_Gamepla
                 move.w  #0,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateFade:                        ; CODE XREF: Sys_GameplayMainLoop+190   j  ; was: loc_1C800
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #0,(word_FF80F4).w
+                bclr    #0,(PaletteFadeMaskStatus).w
                 beq.s   Sys_GameplayMainLoop_HandleTransition
 Sys_GameplayMainLoop_RequestExit:                       ; CODE XREF: Sys_GameplayMainLoop+1C6   j  ; was: loc_1C80E
                 move.b  #$41,(byte_FFF705).w            ; 'A'
                 bra.s   Sys_GameplayMainLoop_UpdateFrameTiming
 ; ---------------------------------------------------------------------------
 Sys_GameplayMainLoop_HandleTransition:                  ; CODE XREF: Sys_GameplayMainLoop+1B0   j  ; was: loc_1C816
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   Sys_GameplayMainLoop_UpdateFrameTiming
                 move.w  (word_FF8230).w,d0
                 beq.s   Sys_GameplayMainLoop_RequestExit
@@ -121,19 +121,19 @@ Sys_GameplayMainLoop_UpdateFrameTiming:                 ; CODE XREF: Sys_Gamepla
                 tst.b   (byte_FFF705).w
                 bmi.s   Sys_GameplayMainLoop_FinishFrame
                 addq.w  #1,(FrameCounter).w
-                subq.w  #1,(word_FF813C).w
+                subq.w  #1,(FrameFreezeTimer).w
                 bpl.s   Sys_GameplayMainLoop_SetActiveFrame
-                move.w  #$FFFF,(word_FF813C).w
+                move.w  #$FFFF,(FrameFreezeTimer).w
                 move.b  #0,d0
                 bra.s   Sys_GameplayMainLoop_StoreFrameFlag
 ; ---------------------------------------------------------------------------
 Sys_GameplayMainLoop_SetActiveFrame:                    ; CODE XREF: Sys_GameplayMainLoop+212   j  ; was: loc_1C87C
                 move.b  #$80,d0
 Sys_GameplayMainLoop_StoreFrameFlag:                    ; CODE XREF: Sys_GameplayMainLoop+21E   j  ; was: loc_1C880
-                move.b  d0,(byte_FF813E).w
+                move.b  d0,(FrameControlFlags).w
 Sys_GameplayMainLoop_FinishFrame:                       ; CODE XREF: Sys_GameplayMainLoop+208   j  ; was: loc_1C884
                 move.b  (byte_FFF705).w,d0
-                or.b    d0,(byte_FF813E).w
+                or.b    d0,(FrameControlFlags).w
                 jmp     (Gfx_CycleBackdropColorIndices).l
 ; End of function Sys_GameplayMainLoop
 ; Set game state to $40
@@ -167,7 +167,7 @@ UI_StageNumberBcdTable: dc.b    1, 2, 3, 4, 5, 6, 7, 8, 9, $10  ; was: byte_1C8C
 ; Initializes the visible-object list cursor when frame processing is active
 Sys_BeginVisibleObjectList:                             ; CODE XREF: StoryScreen_MainLoop+2C   p  ; was: sub_1C8F2
                                         ; UI_UpdateOptionsScreen+52   p
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.w   Sys_BeginVisibleObjectList_Return
                 move.w  #$ED00,(word_FFF758).w
 Sys_BeginVisibleObjectList_Return:                      ; CODE XREF: Sys_BeginVisibleObjectList+4   j  ; was: locret_1C900
@@ -176,7 +176,7 @@ Sys_BeginVisibleObjectList_Return:                      ; CODE XREF: Sys_BeginVi
 ; Calculates number of active visible objects from list pointer
 Sys_UpdateObjectCount:                                  ; CODE XREF: StoryScreen_MainLoop+44   p  ; was: sub_1C902
                                         ; UI_UpdateOptionsScreen+62   p
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.w   Sys_UpdateObjectCount_Return
                 move.w  (word_FFF758).w,d0
                 subi.w  #$ED00,d0
@@ -221,7 +221,7 @@ Object_CameraPriorityTable: dc.w    0, $800, $1800, $1000  ; was: word_1C972
 ; Applies camera deltas and shared motion biases to active objects
 Object_ApplyCameraMotion:                               ; CODE XREF: StoryScreen_MainLoop:StoryScreen_RunFrame   p  ; was: sub_1C97A
                                         ; UI_UpdateOptionsScreen+46   p
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bpl.s   Object_ApplyCameraMotion_Begin
                 rts
 ; ---------------------------------------------------------------------------

@@ -31,7 +31,7 @@ Player_ClearObjectHeader:                               ; CODE XREF: Player_Upda
 ; End of function Player_ClearObjectHeader
 ; Sets the player's display-enable bit when gameplay permits rendering
 Player_SetDisplayFlag:                                  ; CODE XREF: Player_Update+12   j  ; was: sub_14F8A
-                tst.w   (word_FF813C).w
+                tst.w   (FrameFreezeTimer).w
                 bmi.s   Player_Update_Return
                 bset    #7,2(a5)
 ; Shared no-op player state and update return
@@ -43,9 +43,9 @@ Player_Update_Return:                                   ; CODE XREF: Player_SetD
 Player_Update:                                          ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdatePlayer   p  ; was: sub_14F98
                                         ; sub_1EE3C   p
                 movea.w #(word_FFA400-M68K_RAM),a5
-                btst    #1,(byte_FF8144).w
+                btst    #1,(PlayerModeFlags).w
                 bne.w   Player_ClearObjectHeader
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.s   Player_SetDisplayFlag
                 jsr     (Player_UpdateScriptedInput).l
                 bsr.w   Input_ReadPlayerInput
@@ -59,9 +59,9 @@ Player_Update_CheckGameplayReady:                       ; CODE XREF: Player_Upda
                 beq.w   Player_InitInvulnerabilityState
                 tst.w   (PlayerHealth).w
                 beq.w   Player_InitInvulnerabilityState
-                btst    #0,(byte_FF8144).w
+                btst    #0,(PlayerModeFlags).w
                 bne.w   Player_UpdateSevenForcesBattle
-                btst    #2,(byte_FF8144).w
+                btst    #2,(PlayerModeFlags).w
                 bne.w   Player_UpdateSevenForcesBattleVisible
                 bsr.w   Gfx_LoadPlayerPaletteData
                 bsr.w   Input_ProcessDirectionInput

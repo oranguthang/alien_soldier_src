@@ -61,9 +61,9 @@ RetryPrompt_Initialize:                                 ; was: sub_1E06E
                 jsr     (Sys_ClearEntityObjectPool).l
                 lea     (PostStageFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -94,7 +94,7 @@ RetryPrompt_Initialize_Activate:                        ; was: loc_1E0C4
 
 ; Handles retry-prompt confirmation and restores stage-entry assets
 RetryPrompt_Update:                                     ; was: sub_1E124
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   RetryPrompt_Update_CheckConfirm
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
@@ -104,12 +104,12 @@ RetryPrompt_Update:                                     ; was: sub_1E124
                 jmp     Sound_QueueStageBGMOrStop
 ; ---------------------------------------------------------------------------
 RetryPrompt_Update_CheckConfirm:                        ; was: loc_1E14C
-                tst.w   (word_FF80F2).w
+                tst.w   (PaletteFadeMode).w
                 bne.s   RetryPrompt_UpdateFrame
                 btst    #7,(word_FFF708).w
                 beq.s   RetryPrompt_UpdateFrame
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
 RetryPrompt_UpdateFrame:                                ; was: loc_1E164
                 jsr     (Gfx_FadePaletteTransition).l
                 rts

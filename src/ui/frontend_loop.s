@@ -117,7 +117,7 @@ Frontend_InitializeSegaScreen_ClearSpriteGridScratch:   ; was: loc_1D006
                 move.w  #0,(SpriteGridRowLimit).l
                 move.w  #2,(SpriteGridColumnLimit).l
                 move.l  #$40000002,(PatternVDPCommand).l
-                move.w  #$F,(word_FF00C4).l
+                move.w  #$F,(PlanetPatternWriteOnly).l
                 move.w  #0,(PatternFrameMask).l
                 clr.w   (PatternDissolveStep).l
                 jsr     (Cutscene_FillPlanetPattern).l
@@ -127,9 +127,9 @@ Frontend_InitializeSegaScreen_ClearSpriteGridScratch:   ; was: loc_1D006
                 move.b  #$87,d0
                 jsr     (Sound_QueueRequest).l
                 addq.w  #2,(GameSubstateIndex).w
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 movea.l #SegaScreenPalette,a0
                 movea.w #(byte_FFE3C0-M68K_RAM),a1

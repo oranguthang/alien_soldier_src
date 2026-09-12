@@ -215,7 +215,7 @@ EndingPlanet_ClearNextVScrollPair:                      ; CODE XREF: EndingPlane
                 move.w  #4,(SpriteGridRowLimit).l
                 move.w  #4,(SpriteGridColumnLimit).l
                 move.l  #$5C000002,(PatternVDPCommand).l
-                move.w  #$F,(word_FF00C4).l
+                move.w  #$F,(PlanetPatternWriteOnly).l
                 move.w  #1,(PatternFrameMask).l
                 clr.w   (PatternDissolveStep).l
                 jsr     Cutscene_FillPlanetPattern(pc)  ; (pc)

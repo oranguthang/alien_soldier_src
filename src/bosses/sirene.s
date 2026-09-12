@@ -154,7 +154,7 @@ Boss_EnterSireneState8:                                 ; CODE XREF: Boss_Update
                 jsr     (Object_ClearAllExceptTypes_Loop).l
                 clr.w   2(a5)
                 clr.w   8(a5)
-                bset    #2,(byte_FF8144).w
+                bset    #2,(PlayerModeFlags).w
                 clr.w   (word_FFA404).w
                 move.w  #$200,(dword_FFA414).w
 ; State eight intentionally performs no update

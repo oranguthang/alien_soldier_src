@@ -2,7 +2,7 @@
 
 ; Runs the primary palette-effect slot while normal frame processing is active
 Palette_UpdatePrimaryEffect:                            ; CODE XREF: Sys_GameplayMainLoop+76   p  ; was: sub_4094
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bpl.s   Palette_UpdatePrimaryEffect_Dispatch
                 rts
 ; ---------------------------------------------------------------------------
@@ -217,7 +217,7 @@ Palette_ToggleThreeHighlightColors_RestoreShadow:       ; CODE XREF: Palette_Tog
 ; End of function Palette_ToggleThreeHighlightColors
 ; Runs the secondary palette-effect slot while normal frame processing is active
 Palette_UpdateSecondaryEffect:                          ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateSecondaryEffects   p  ; was: sub_4316
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bpl.s   Palette_UpdateSecondaryEffect_Dispatch
                 rts
 ; ---------------------------------------------------------------------------

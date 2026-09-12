@@ -454,7 +454,7 @@ Entity_SevenForcesSylpheedFadeOutState20:               ; DATA XREF: ROM:00054BB
 ; State $22: configure and launch the Artemis entrance trajectory
 Entity_SevenForcesStartArtemisEntranceState22:          ; DATA XREF: ROM:00054BBA   o  ; was: sub_55136
                 addq.w  #2,4(a5)
-                bclr    #0,(byte_FF8144).w
+                bclr    #0,(PlayerModeFlags).w
                 bclr    #4,(word_FFA40E).w
                 move.w  #$58,(word_FFA404).w            ; 'X'
                 clr.l   (dword_FFA418).w
@@ -664,7 +664,7 @@ Entity_SevenForcesArmFinalFadeState3A:                  ; DATA XREF: ROM:00054BD
                 addq.w  #2,4(a5)
                 clr.w   $5E(a5)
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
-                move.b  #1,(byte_FF80FA).w
+                move.b  #1,(AlternateTimeBonusSound).w
 Entity_SevenForcesArmFinalFadeReturn:                   ; CODE XREF: Entity_SevenForcesArmFinalFadeState3A+6   j  ; was: locret_5540A
                 rts
 ; End of function Entity_SevenForcesArmFinalFadeState3A
@@ -919,8 +919,8 @@ Entity_ResumeSevenForcesIntroState26:                   ; DATA XREF: ROM:000555F
 Entity_StartSevenForcesFinalTransition:                 ; DATA XREF: ROM:000555F4   o  ; was: sub_55716
                 move.w  #$36,4(a5)                      ; '6'
                 bclr    #0,(word_FFA402).w
-                bset    #0,(byte_FF8144).w
-                bclr    #2,(byte_FF8144).w
+                bset    #0,(PlayerModeFlags).w
+                bclr    #2,(PlayerModeFlags).w
                 clr.w   $48(a5)
                 clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w

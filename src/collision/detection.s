@@ -1,6 +1,6 @@
 Collision_UpdateSystem:                                 ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateCollision   p  ; was: sub_13ADE
                                         ; WeaponSetup_UpdateScreen+6   p
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.s   Collision_UpdateSystem_Return
                 bsr.w   Collision_BuildEntityLists
                 movea.w #(dword_FFBFC0-M68K_RAM),a5
@@ -419,7 +419,7 @@ Collision_CheckPlayerAgainstHostiles_StoreDamageFeedback:  ; CODE XREF: Collisio
                 move.w  #$30,(word_FF8268).w            ; '0'
                 btst    #1,$21(a2)
                 bne.s   Collision_CheckPlayerAgainstHostiles_DamageReturn
-                move.w  #4,(word_FF813C).w
+                move.w  #4,(FrameFreezeTimer).w
                 move.w  #$10,d0
                 move.w  #$3C,d1                         ; '<'
                 tst.w   (DifficultyMode).w

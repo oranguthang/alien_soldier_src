@@ -12,9 +12,9 @@ StageIntro_LoadStageNumberGlyph:                        ; DATA XREF: ROM:0000A9F
                 beq.s   StageIntro_LoadStageNumberGlyphReturn
                 move.w  #$EC,(word_FF80C6).w
                 move.w  #$80,(word_FF80D4).w
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$E0,(byte_FF8142).w
-                move.b  #2,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$E0,(PaletteRGBChannelMask).w
+                move.b  #2,(PaletteRGBAdjustStep).w
 StageIntro_LoadStageNumberGlyphReturn:                  ; CODE XREF: StageIntro_InitializeBanner+28   j  ; was: locret_AEE2
                 rts
 ; End of function StageIntro_InitializeBanner
@@ -144,9 +144,9 @@ Results_LoadTimeBonusGlyphs:                            ; DATA XREF: ROM:0000A9D
                 bsr.w   Message_LoadNextGlyphTile
                 cmpi.w  #$30,(MessageSequenceState).w   ; '0'
                 beq.s   Results_LoadTimeBonusGlyphsReturn
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$E0,(byte_FF8142).w
-                move.b  #2,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$E0,(PaletteRGBChannelMask).w
+                move.b  #2,(PaletteRGBAdjustStep).w
                 move.w  #$80,(word_FF80C6).w
                 move.w  #$40,(dword_FF80CE).w           ; '@'
                 move.w  #$E8,(word_FF80CC).w
@@ -193,7 +193,7 @@ Results_FinishTimeBonusSpin:                            ; DATA XREF: ROM:0000A9D
                 bsr.w   Results_RenderSpinningTimeBonus
                 subq.w  #1,(dword_FF80C8).w
                 bpl.s   Results_FinishTimeBonusSpinReturn
-                tst.b   (byte_FF80FA).w
+                tst.b   (AlternateTimeBonusSound).w
                 beq.s   Results_RequestTimeBonusSound
                 move.b  #$83,d0
                 jsr     (Sound_QueueBGMRequest).l

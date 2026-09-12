@@ -7,9 +7,9 @@ TitleScreen_Initialize:                                 ; DATA XREF: Sys_Dispatc
                 lea     Frontend_TitleAssetLoadDescriptors(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -74,7 +74,7 @@ TitleScreen_UnreferencedData:   binclude "data/other/title_screen_unreferenced.b
 
 ; Handles title navigation, the attract-demo trigger, confirmation, and rendering
 TitleScreen_Update:                                     ; DATA XREF: Sys_DispatchGameState+6E   o  ; was: sub_9478
-                tst.w   (word_FF80F0).w
+                tst.w   (PaletteFadeColorOffset).w
                 bne.w   TitleScreen_UpdateAndRender
                 move.b  (word_FFF708).w,d0
                 andi.b  #$C,d0

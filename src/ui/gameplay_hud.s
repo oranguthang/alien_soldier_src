@@ -46,7 +46,7 @@ UI_UpdateGameplayHUD_UpdateStageTimer:                  ; CODE XREF: UI_UpdateGa
                 bne.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
                 tst.w   (StageTimeRemaining).w
                 beq.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
-                tst.w   (word_FF813C).w
+                tst.w   (FrameFreezeTimer).w
                 bpl.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
                 subq.b  #1,(byte_FF8204).w
                 bpl.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp

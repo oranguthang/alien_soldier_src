@@ -2,17 +2,17 @@
 M68K_RAM                equ     $FFFF0000
 M68K_RAM_PHYSICAL       equ     $00FF0000
 M68K_RAM_END_PHYSICAL   equ     $00FFFFFF
-dword_FF0020            equ     $FFFF0020
-word_FF0040             equ     $FFFF0040
-word_FF0060             equ     $FFFF0060
-word_FF0080             equ     $FFFF0080
-word_FF00A0             equ     $FFFF00A0
+ShipPatternMaskBuffer   equ     $FFFF0020               ; was: dword_FF0020
+PlanetPatternFillBuffer equ     $FFFF0040               ; was: word_FF0040
+ShipPatternFillBuffer   equ     $FFFF0060               ; was: word_FF0060
+PlanetPatternRowBuffer  equ     $FFFF0080               ; was: word_FF0080
+ShipPatternRowBuffer    equ     $FFFF00A0               ; was: word_FF00A0
 PatternVDPCommand       equ     $FFFF00C0               ; was: dword_FF00C0
-word_FF00C4             equ     $FFFF00C4
+PlanetPatternWriteOnly  equ     $FFFF00C4               ; was: word_FF00C4
 PatternDissolveStep     equ     $FFFF00C6               ; was: word_FF00C6
 PatternFrameMask        equ     $FFFF00C8               ; was: word_FF00C8
 ShipPatternVDPCommand   equ     $FFFF00CA               ; was: dword_FF00CA
-word_FF00CE             equ     $FFFF00CE
+ShipPatternWriteOnly    equ     $FFFF00CE               ; was: word_FF00CE
 ShipPatternStep         equ     $FFFF00D0               ; was: word_FF00D0
 ShipPatternFrameMask    equ     $FFFF00D2               ; was: word_FF00D2
 SpriteGridCenterY       equ     $FFFF00D4               ; was: word_FF00D4
@@ -41,7 +41,7 @@ CutsceneTimer           equ     $FFFF0106               ; was: word_FF0106
 StoryTitleExpandSpan    equ     $FFFF0108               ; was: word_FF0108
 StoryTitleGlyphsLeft    equ     $FFFF010A               ; was: word_FF010A
 CutscenePaletteStep     equ     $FFFF010C               ; was: word_FF010C
-word_FF010E             equ     $FFFF010E
+EndingInitWriteOnlyFlag equ     $FFFF010E               ; was: word_FF010E
 EndingScrollPhase       equ     $FFFF0110               ; was: dword_FF0110
 EndingScrollRate        equ     $FFFF0114               ; was: dword_FF0114
 PlanetZoomFrameIndex    equ     $FFFF0118               ; was: word_FF0118
@@ -65,19 +65,19 @@ ShipFlashTimer          equ     $FFFF016C               ; was: word_FF016C
 ShipJitterState         equ     $FFFF016E               ; was: word_FF016E
 ShipJitterTimer         equ     $FFFF0170               ; was: word_FF0170
 StoryTextAccentCursor   equ     $FFFF0172               ; was: dword_FF0172
-word_FF0176             equ     $FFFF0176
+ScenePaletteFadeOffset  equ     $FFFF0176               ; was: word_FF0176
 StoryTextState          equ     $FFFF0178               ; was: word_FF0178
-word_FF017C             equ     $FFFF017C
-word_FF017E             equ     $FFFF017E
+CreditsSceneState       equ     $FFFF017C               ; was: word_FF017C
+CreditsClearedSceneWord equ     $FFFF017E               ; was: word_FF017E
 StoryFontScrollY        equ     $FFFF0180               ; was: word_FF0180
 StoryFontNextGlyphY     equ     $FFFF0182               ; was: word_FF0182
 StoryFontVRAMAddress    equ     $FFFF0184               ; was: word_FF0184
-word_FF0186             equ     $FFFF0186
-word_FF0188             equ     $FFFF0188
-dword_FF018A            equ     $FFFF018A
-word_FF018E             equ     $FFFF018E
-dword_FF0190            equ     $FFFF0190
-word_FF0194             equ     $FFFF0194
+StoryHBlankDelayCounter equ     $FFFF0186               ; was: word_FF0186
+CreditsMasterCountdown  equ     $FFFF0188               ; was: word_FF0188
+CreditsSceneDataCursor  equ     $FFFF018A               ; was: dword_FF018A
+CreditsSceneTimer       equ     $FFFF018E               ; was: word_FF018E
+CreditsPaletteTarget    equ     $FFFF0190               ; was: dword_FF0190
+CreditsPaletteFadeIndex equ     $FFFF0194               ; was: word_FF0194
 word_FF0480             equ     $FFFF0480
 word_FF0500             equ     $FFFF0500
 word_FF0B00             equ     $FFFF0B00
@@ -124,8 +124,8 @@ byte_FF7983             equ     $FFFF7983
 byte_FF7AFF             equ     $FFFF7AFF
 byte_FF7B00             equ     $FFFF7B00
 dword_FF8000            equ     $FFFF8000
-word_FF8014             equ     $FFFF8014
-word_FF8016             equ     $FFFF8016
+ResultsFirstColorOffset equ     $FFFF8014               ; was: word_FF8014
+ResultsOtherColorOffset equ     $FFFF8016               ; was: word_FF8016
 word_FF801C             equ     $FFFF801C
 word_FF801E             equ     $FFFF801E
 dword_FF8020            equ     $FFFF8020
@@ -180,11 +180,11 @@ word_FF80D6             equ     $FFFF80D6
 word_FF80E6             equ     $FFFF80E6
 byte_FF80EC             equ     $FFFF80EC
 word_FF80EE             equ     $FFFF80EE
-word_FF80F0             equ     $FFFF80F0
-word_FF80F2             equ     $FFFF80F2
-word_FF80F4             equ     $FFFF80F4
-byte_FF80F8             equ     $FFFF80F8
-byte_FF80FA             equ     $FFFF80FA
+PaletteFadeColorOffset  equ     $FFFF80F0               ; was: word_FF80F0
+PaletteFadeMode         equ     $FFFF80F2               ; was: word_FF80F2
+PaletteFadeMaskStatus   equ     $FFFF80F4               ; was: word_FF80F4
+PaletteFadeControlFlags equ     $FFFF80F8               ; was: byte_FF80F8
+AlternateTimeBonusSound equ     $FFFF80FA               ; was: byte_FF80FA
 word_FF8100             equ     $FFFF8100
 word_FF8102             equ     $FFFF8102
 word_FF8104             equ     $FFFF8104
@@ -202,12 +202,12 @@ dword_FF8130            equ     $FFFF8130
 dword_FF8134            equ     $FFFF8134
 word_FF8138             equ     $FFFF8138
 word_FF813A             equ     $FFFF813A
-word_FF813C             equ     $FFFF813C
-byte_FF813E             equ     $FFFF813E
-word_FF8140             equ     $FFFF8140
-byte_FF8142             equ     $FFFF8142
-byte_FF8143             equ     $FFFF8143
-byte_FF8144             equ     $FFFF8144
+FrameFreezeTimer        equ     $FFFF813C               ; was: word_FF813C
+FrameControlFlags       equ     $FFFF813E               ; was: byte_FF813E
+PaletteRGBAdjustLevel   equ     $FFFF8140               ; was: word_FF8140
+PaletteRGBChannelMask   equ     $FFFF8142               ; was: byte_FF8142
+PaletteRGBAdjustStep    equ     $FFFF8143               ; was: byte_FF8143
+PlayerModeFlags         equ     $FFFF8144               ; was: byte_FF8144
 FontTileDMAVRAMAddress  equ     $FFFF8146               ; was: word_FF8146
 FontTileDMACounter      equ     $FFFF8148               ; was: word_FF8148
 FontTileDMASourceOffset equ     $FFFF814A               ; was: word_FF814A

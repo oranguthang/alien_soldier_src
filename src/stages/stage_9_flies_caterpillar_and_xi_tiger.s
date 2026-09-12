@@ -240,9 +240,9 @@ Stage9_UpdateCaterpillarShipExit:                       ; DATA XREF: ROM:0000C8B
                 addq.w  #2,(word_FFA950).w
                 clr.w   (word_FFA970).w
                 clr.w   (word_FFA974).w
-                move.w  #$8002,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #$8002,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(byte_FFF705).w
                 tst.b   (byte_FFA209).w
                 beq.s   Stage9_SelectXiTigerTransitionRoute
@@ -280,9 +280,9 @@ Stage9_LoadXiTigerEncounterAssets:                      ; CODE XREF: Stage9_Upda
 ; End of function Stage9_InitializeXiTigerEncounter
 ; Count down before entering the Xi-Tiger entrance-object wait
 Stage9_UpdateXiTigerEntranceDelay:                      ; DATA XREF: ROM:0000C8BA   o  ; was: sub_D468
-                move.w  #$8004,(word_FF80F2).w
-                move.w  #$10,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #$8004,(PaletteFadeMode).w
+                move.w  #$10,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 subq.w  #1,(dword_FF8062).w
                 bpl.w   Stage9_XiTigerEntranceDelay_Return
                 move.b  #$41,(byte_FFF705).w            ; 'A'
@@ -296,7 +296,7 @@ Stage9_WaitForXiTigerEntranceObject:                    ; DATA XREF: ROM:0000C8B
                 bne.s   Stage9_UpdateCaterpillarCameraAndScroll
                 addq.w  #2,(word_FFA950).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
-                move.b  #1,(byte_FF80FA).w
+                move.b  #1,(AlternateTimeBonusSound).w
                 move.w  #$1C0,(word_FF806E).w
 Stage9_UpdateCaterpillarCameraAndScroll:                ; CODE XREF: UnreferencedStage9_UpdateCaterpillarScroll+10   j  ; was: loc_D4BA
                                         ; Stage9_UpdateXiTigerEntranceDelay+3A   j

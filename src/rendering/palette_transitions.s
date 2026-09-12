@@ -3,30 +3,30 @@
 
 Gfx_FadePaletteTransition:                              ; CODE XREF: StoryScreen_MainLoop+50   p  ; was: sub_39AA
                                         ; StoryScreen_WaitThenStartExitFade+20   p
-                move.w  (word_FF80F2).w,d0
+                move.w  (PaletteFadeMode).w,d0
                 beq.w   Gfx_FadePaletteTransition_Return
                 moveq   #0,d5
                 move.w  (VBlankFrameCounter).w,d1
                 andi.w  #3,d1
                 btst    #1,d0
                 bne.s   Gfx_FadePaletteTransition_HandleSecondMode
-                btst    #0,(byte_FF80F8).w
+                btst    #0,(PaletteFadeControlFlags).w
                 bne.s   Gfx_FadePaletteTransition_FinishFirstMode
                 tst.w   d0
                 bpl.s   Gfx_FadePaletteTransition_CheckForwardCompletion
-                tst.w   (word_FF80F0).w
+                tst.w   (PaletteFadeColorOffset).w
                 beq.s   Gfx_FadePaletteTransition_FinishFirstMode
                 moveq   #$FFFFFFFE,d5
                 bra.s   Gfx_FadePaletteTransition_ApplyStep
 ; ---------------------------------------------------------------------------
 Gfx_FadePaletteTransition_CheckForwardCompletion:       ; CODE XREF: Gfx_FadePaletteTransition+22   j  ; was: loc_39D8
-                tst.w   (word_FF80F0).w
+                tst.w   (PaletteFadeColorOffset).w
                 bmi.s   Gfx_FadePaletteTransition_IncreaseFirstModeStep
 Gfx_FadePaletteTransition_FinishFirstMode:              ; CODE XREF: Gfx_FadePaletteTransition+1E   j  ; was: loc_39DE
                                         ; Gfx_FadePaletteTransition+28   j
-                clr.w   (word_FF80F0).w
-                clr.w   (word_FF80F2).w
-                bset    #0,(word_FF80F4).w
+                clr.w   (PaletteFadeColorOffset).w
+                clr.w   (PaletteFadeMode).w
+                bset    #0,(PaletteFadeMaskStatus).w
                 rts
 ; ---------------------------------------------------------------------------
 Gfx_FadePaletteTransition_IncreaseFirstModeStep:        ; CODE XREF: Gfx_FadePaletteTransition+32   j  ; was: loc_39EE
@@ -34,13 +34,13 @@ Gfx_FadePaletteTransition_IncreaseFirstModeStep:        ; CODE XREF: Gfx_FadePal
                 bra.s   Gfx_FadePaletteTransition_ApplyStep
 ; ---------------------------------------------------------------------------
 Gfx_FadePaletteTransition_HandleSecondMode:             ; CODE XREF: Gfx_FadePaletteTransition+16   j  ; was: loc_39F2
-                btst    #1,(byte_FF80F8).w
+                btst    #1,(PaletteFadeControlFlags).w
                 bne.s   Gfx_FadePaletteTransition_FinishSecondMode
                 tst.w   d0
                 bpl.s   Gfx_FadePaletteTransition_CheckReverseLimit
-                cmpi.w  #$10,(word_FF80F0).w
+                cmpi.w  #$10,(PaletteFadeColorOffset).w
                 bpl.s   Gfx_FadePaletteTransition_FinishSecondMode
-                btst    #2,(byte_FF80F8).w
+                btst    #2,(PaletteFadeControlFlags).w
                 beq.s   Gfx_FadePaletteTransition_IncreaseSecondModeStep
                 tst.w   d1
                 bne.s   Gfx_FadePaletteTransition_ApplyStep
@@ -49,17 +49,17 @@ Gfx_FadePaletteTransition_IncreaseSecondModeStep:       ; CODE XREF: Gfx_FadePal
                 bra.s   Gfx_FadePaletteTransition_ApplyStep
 ; ---------------------------------------------------------------------------
 Gfx_FadePaletteTransition_CheckReverseLimit:            ; CODE XREF: Gfx_FadePaletteTransition+52   j  ; was: loc_3A16
-                cmpi.w  #$FFF0,(word_FF80F0).w
+                cmpi.w  #$FFF0,(PaletteFadeColorOffset).w
                 bpl.s   Gfx_FadePaletteTransition_ChooseReverseStep
 Gfx_FadePaletteTransition_FinishSecondMode:             ; CODE XREF: Gfx_FadePaletteTransition+4E   j  ; was: loc_3A1E
                                         ; Gfx_FadePaletteTransition+5A   j
-                move.w  #$FFF4,(word_FF80F0).w
-                clr.w   (word_FF80F2).w
-                bset    #1,(word_FF80F4).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                clr.w   (PaletteFadeMode).w
+                bset    #1,(PaletteFadeMaskStatus).w
                 rts
 ; ---------------------------------------------------------------------------
 Gfx_FadePaletteTransition_ChooseReverseStep:            ; CODE XREF: Gfx_FadePaletteTransition+72   j  ; was: loc_3A30
-                btst    #2,(byte_FF80F8).w
+                btst    #2,(PaletteFadeControlFlags).w
                 beq.s   Gfx_FadePaletteTransition_DecreaseSecondModeStep
                 tst.w   d1
                 bne.s   Gfx_FadePaletteTransition_ApplyStep
@@ -69,11 +69,11 @@ Gfx_FadePaletteTransition_ApplyStep:                    ; CODE XREF: Gfx_FadePal
                                         ; Gfx_FadePaletteTransition+46   j
                 movea.w #(PaletteShadowBuffer-M68K_RAM),a0
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a1
-                move.w  (word_FF80F0).w,d0
+                move.w  (PaletteFadeColorOffset).w,d0
                 move.w  d0,d1
                 move.w  d0,d2
                 move.w  d0,d3
-                move.w  (word_FF80F4).w,d0
+                move.w  (PaletteFadeMaskStatus).w,d0
                 cmpi.w  #$E000,d0
                 bne.s   Gfx_FadePaletteTransition_SelectGreenAndBlueChannels
                 move.w  #$8000,d0
@@ -93,10 +93,10 @@ Gfx_FadePaletteTransition_SelectAllColorChannels:       ; CODE XREF: Gfx_FadePal
                 add.w   d5,d3
                 add.w   d5,d2
                 add.w   d5,d1
-                add.w   d5,(word_FF80F0).w
+                add.w   d5,(PaletteFadeColorOffset).w
 Gfx_FadePaletteTransition_ApplyPalette:                 ; CODE XREF: Gfx_FadePaletteTransition+B6   j  ; was: loc_3A80
                                         ; Gfx_FadePaletteTransition+C6   j
-                move.w  d0,(word_FF80F4).w
+                move.w  d0,(PaletteFadeMaskStatus).w
                 asl.w   #4,d2
                 asl.w   #8,d3
                 move.w  #$E000,d0

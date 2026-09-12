@@ -2,9 +2,9 @@ Player_SpawnProjectile:                                 ; CODE XREF: Player_Phoe
                                         ; Player_InitiateDashAttack+80   p
                 move.b  #$41,d0                         ; 'A'
                 jsr     (Sound_PlaySFX).l
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$20,(byte_FF8142).w            ; ' '
-                move.b  #2,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
+                move.b  #2,(PaletteRGBAdjustStep).w
                 movea.w #(word_FFC5C0-M68K_RAM),a0
                 move.w  #$230,(a0)
                 move.b  #$54,$21(a0)                    ; 'T'
@@ -260,7 +260,7 @@ Player_UpperTerrainAnimationIndices:    dc.w    0, $C, $10, $C, 0, 8, 4, 8  ; wa
 UI_RenderTransientValue:
                 tst.w   (word_FF8262).w                 ; was: sub_17702
                 beq.w   UI_RenderTransientValue_Return
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.s   UI_RenderTransientValue_BuildSprites
                 subq.w  #1,(word_FF8268).w
                 bpl.s   UI_RenderTransientValue_UpdatePosition

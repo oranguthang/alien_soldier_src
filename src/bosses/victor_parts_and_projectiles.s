@@ -204,9 +204,9 @@ Boss_VictorBeginDefeatDelay:                            ; DATA XREF: ROM:0003244
 ; End of function Boss_VictorBeginDefeatDelay
 ; Spawns explosion debris during boss death sequence and loads new graphics
 Boss_VictorUpdateDefeatExplosion:                       ; DATA XREF: ROM:0003244C   o  ; was: sub_32C0A
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$20,(byte_FF8142).w            ; ' '
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
+                move.b  #8,(PaletteRGBAdjustStep).w
                 jsr     (Boss_SpawnExplosionDebris).l
                 cmpi.w  #$88,(a0)
                 bne.s   Boss_VictorWaitForDefeatExplosion
@@ -214,9 +214,9 @@ Boss_VictorUpdateDefeatExplosion:                       ; DATA XREF: ROM:0003244
 Boss_VictorWaitForDefeatExplosion:                      ; CODE XREF: Boss_VictorUpdateDefeatExplosion+1C   j  ; was: loc_32C2E
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$20,(byte_FF8142).w            ; ' '
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
+                move.b  #8,(PaletteRGBAdjustStep).w
                 movea.l #Boss_VictorDefeatGraphicsLoadDescriptor,a0
                 jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$1000,2(a5)

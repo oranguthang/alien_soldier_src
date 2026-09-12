@@ -3,9 +3,9 @@ Stage17_InitializeEpsilon1Transition:                   ; DATA XREF: ROM:0000D9C
                 bne.s   Stage17_InitializeEpsilon1Transition_Return
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
                 jsr     (Stage_StartInterstageTransition).l
-                move.w  #$8002,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #$8002,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(byte_FFF705).w
                 move.b  #$8B,(PendingStageBGMRequest).w
 Stage17_InitializeEpsilon1Transition_Return:            ; CODE XREF: Stage17_InitializeEpsilon1Transition+4   j  ; was: locret_E14C
@@ -121,11 +121,11 @@ Stage17_UpdateEpsilon1Parallax_Active:                  ; CODE XREF: Stage17_Upd
 Stage17_StartPlanetTransition:                          ; DATA XREF: ROM:0000D9D0   o  ; was: sub_E256
                 tst.w   (word_FF8230).w
                 bne.w   Stage17_UpdateEpsilon1Parallax
-                move.w  #$8002,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #$8002,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(byte_FFF705).w
-                bset    #2,(byte_FF80F8).w
+                bset    #2,(PaletteFadeControlFlags).w
                 move.w  #4,(SetupTransitionIndex).w
                 move.w  #4,(word_FF8230).w
                 rts

@@ -134,9 +134,9 @@ Continue_InitializeScreen_BuildScreen:                  ; was: loc_1DABC
                 move.w  #$6000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 tst.w   (DifficultyMode).w
                 beq.s   Continue_InitializeScreen_RenderPassword
                 bra.w   Continue_RenderCreditHeader
@@ -152,7 +152,7 @@ Continue_ActivateScreen:                                ; was: sub_1DB28
                 bsr.w   Continue_RenderCreditCount
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
-                bclr    #0,(word_FF80F4).w
+                bclr    #0,(PaletteFadeMaskStatus).w
                 beq.s   Continue_ActivateScreen_Return
                 addq.w  #2,(GameSubstateIndex).w
                 move.b  #$94,d0
@@ -182,9 +182,9 @@ Continue_UpdateCountdownAndInput_StartTimeoutFade:      ; was: loc_1DB8E
                 addq.w  #4,(GameSubstateIndex).w
                 move.b  #1,d0
                 jsr     (Sound_QueueRequest).l
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 bra.w   Continue_UpdateFrame
 ; ---------------------------------------------------------------------------
 Continue_UpdateCountdownAndInput_CheckCountdownTick:    ; was: loc_1DBB0
@@ -198,9 +198,9 @@ Continue_UpdateCountdownAndInput_CheckConfirm:          ; was: loc_1DBC0
                 addq.w  #2,(GameSubstateIndex).w
                 move.b  #1,d0
                 jsr     (Sound_QueueRequest).l
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 tst.w   (DifficultyMode).w
                 beq.s   Continue_UpdateFrame
                 sub.w   d0,d0
@@ -216,7 +216,7 @@ Continue_UpdateFrame:                                   ; was: loc_1DBFA
 ; Routes a confirmed continue after its fade according to difficulty
 Continue_ApplyChoiceAfterFade:                          ; was: sub_1DC06
                 bsr.w   Continue_UpdateCreditDisplayFlash
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   Continue_UpdateFrame
                 tst.w   (DifficultyMode).w
                 beq.s   Continue_ApplyChoiceAfterFade_ResumeGameplay
@@ -232,7 +232,7 @@ Continue_ApplyChoiceAfterFade_ResumeGameplay:           ; was: loc_1DC24
 
 ; Returns to the title screen after a timed-out continue fade
 Continue_ReturnToTitleAfterFade:                        ; was: sub_1DC34
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   Continue_UpdateFrame
                 addq.w  #2,(GameSubstateIndex).w
                 move.w  #$14,(GameModeIndex).w

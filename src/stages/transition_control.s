@@ -4,9 +4,9 @@ Sys_TransitionToStageInit:                              ; DATA XREF: Sys_Dispatc
                 bne.s   StageTransition_BeginSelectedRoute
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                clr.b   (word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                clr.b   (PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -39,13 +39,13 @@ Sys_StageTransitionUpdate:                              ; DATA XREF: Sys_Dispatc
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 addq.w  #1,(FrameCounter).w
-                bclr    #0,(word_FF80F4).w
+                bclr    #0,(PaletteFadeMaskStatus).w
                 beq.s   StageTransition_CheckCompletionFlags
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 StageTransition_CheckCompletionFlags:                   ; CODE XREF: Sys_StageTransitionUpdate+3E   j  ; was: loc_1E824
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   StageTransition_Return
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w

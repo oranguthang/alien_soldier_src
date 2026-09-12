@@ -60,9 +60,9 @@ Weapon_FireProjectile_Return:                           ; CODE XREF: Weapon_Fire
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_FireProjectile_Initialize:                       ; CODE XREF: Weapon_FireProjectile+1C   j  ; was: loc_17F6A
-                move.w  #$80,(word_FF8140).w
-                move.b  #$E0,(byte_FF8142).w
-                move.b  #4,(byte_FF8143).w
+                move.w  #$80,(PaletteRGBAdjustLevel).w
+                move.b  #$E0,(PaletteRGBChannelMask).w
+                move.b  #4,(PaletteRGBAdjustStep).w
                 tst.w   (ShootingMode).w
                 bne.s   Weapon_FireProjectile_SelectAmmoCost
                 subq.w  #2,$10(a4)
@@ -256,9 +256,9 @@ Weapon_FireMultipleShots_NextSlot:                      ; CODE XREF: Weapon_Fire
 ; End of function Weapon_FireMultipleShots
 ; Consumes ammo for spread shot
 Weapon_ConsumeAmmoForSpread:
-                move.w  #$80,(word_FF8140).w            ; was: sub_18218
-                move.b  #$E0,(byte_FF8142).w
-                move.b  #4,(byte_FF8143).w
+                move.w  #$80,(PaletteRGBAdjustLevel).w  ; was: sub_18218
+                move.b  #$E0,(PaletteRGBChannelMask).w
+                move.b  #4,(PaletteRGBAdjustStep).w
                 move.w  #2,(word_FF8238).w
                 subi.w  #$12,$10(a4)
                 bpl.s   Weapon_InitSpreadShot
@@ -306,9 +306,9 @@ Weapon_InitSpreadShot_Return:                           ; CODE XREF: Weapon_Fire
 ; End of function Weapon_InitSpreadShot
 ; Fires four projectiles in spread pattern with ammo depletion
 Weapon_FireFourShotSpread:                              ; CODE XREF: Weapon_FireMultipleShots+54   j  ; was: sub_182BC
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$E0,(byte_FF8142).w
-                move.b  #4,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$E0,(PaletteRGBChannelMask).w
+                move.b  #4,(PaletteRGBAdjustStep).w
                 tst.w   (ShootingMode).w
                 bne.s   Weapon_FireFourShotSpread_SelectAmmoCost
                 subq.w  #8,$10(a4)
@@ -350,9 +350,9 @@ Weapon_FireBulletHandler:                               ; DATA XREF: ROM:00017F2
                 bne.w   Effect_SpawnRandomDebris
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$20,(byte_FF8142).w            ; ' '
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
+                move.b  #8,(PaletteRGBAdjustStep).w
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_FireBulletHandler_FindSlot:                      ; CODE XREF: Weapon_FireBulletHandler+32   j  ; was: loc_18352
@@ -418,9 +418,9 @@ Weapon_FireBeamWeapon:                                  ; DATA XREF: ROM:00017F2
                 bne.w   Effect_SpawnRandomDebris
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$20,(byte_FF8142).w            ; ' '
-                move.b  #$C,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
+                move.b  #$C,(PaletteRGBAdjustStep).w
                 tst.w   (word_FF8238).w
                 bpl.w   Weapon_FireBeamWeapon_Return
                 move.w  #1,(word_FF8238).w

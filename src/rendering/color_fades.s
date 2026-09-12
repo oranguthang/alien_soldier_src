@@ -433,22 +433,22 @@ Palette_ProcessFadeEffect_StoreColor:                   ; CODE XREF: Palette_Pro
 ; End of function Palette_ProcessFadeEffect
 ; Applies RGB color adjustment
 Gfx_ApplyRGBColorAdjust:                                ; CODE XREF: Palette_UpdateMidgameAdjustedColors   p  ; was: sub_4030
-                move.w  (word_FF8140).w,d0
+                move.w  (PaletteRGBAdjustLevel).w,d0
                 asr.w   #4,d0
                 addi.w  #-$E,d0
                 moveq   #$FFFFFFF2,d1
                 move.w  #$FF20,d2
                 move.w  #$F200,d3
-                btst    #5,(byte_FF8142).w
+                btst    #5,(PaletteRGBChannelMask).w
                 beq.s   Gfx_ApplyRGBColorAdjust_SelectGreenDelta
                 move.w  d0,d1
 Gfx_ApplyRGBColorAdjust_SelectGreenDelta:               ; CODE XREF: Gfx_ApplyRGBColorAdjust+1A   j  ; was: loc_404E
-                btst    #6,(byte_FF8142).w
+                btst    #6,(PaletteRGBChannelMask).w
                 beq.s   Gfx_ApplyRGBColorAdjust_SelectBlueDelta
                 move.w  d0,d2
                 asl.w   #4,d2
 Gfx_ApplyRGBColorAdjust_SelectBlueDelta:                ; CODE XREF: Gfx_ApplyRGBColorAdjust+24   j  ; was: loc_405A
-                btst    #7,(byte_FF8142).w
+                btst    #7,(PaletteRGBChannelMask).w
                 beq.s   Gfx_ApplyRGBColorAdjust_ApplyPalette
                 move.w  d0,d3
                 asl.w   #8,d3
@@ -463,10 +463,10 @@ Gfx_ApplyRGBColorAdjust_ColorLoop:                      ; CODE XREF: Gfx_ApplyRG
                 move.w  d6,(a0)+
                 dbf     d5,Gfx_ApplyRGBColorAdjust_ColorLoop
                 moveq   #0,d0
-                move.b  (byte_FF8143).w,d0
-                sub.w   d0,(word_FF8140).w
+                move.b  (PaletteRGBAdjustStep).w,d0
+                sub.w   d0,(PaletteRGBAdjustLevel).w
                 bpl.s   Gfx_ApplyRGBColorAdjust_Return
-                clr.w   (word_FF8140).w
+                clr.w   (PaletteRGBAdjustLevel).w
 Gfx_ApplyRGBColorAdjust_Return:                         ; CODE XREF: Gfx_ApplyRGBColorAdjust+5C   j  ; was: locret_4092
                 rts
 ; End of function Gfx_ApplyRGBColorAdjust

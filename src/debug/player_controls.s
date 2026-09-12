@@ -14,7 +14,7 @@ Input_ToggleDebugFlag_Return:                           ; CODE XREF: Input_Toggl
 ; End of function Input_ToggleDebugFlag
 ; Updates screen shake effect by modifying scroll registers with decay timer
 Effect_ScreenShakeUpdate:                               ; CODE XREF: Sys_GameplayMainLoop+16A   p  ; was: sub_1CB5A
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.s   Effect_ScreenShakeUpdate_Return
                 move.w  (word_FFA012).w,(word_FF8086).w
                 move.w  (word_FFA016).w,(word_FF8088).w

@@ -541,9 +541,9 @@ Boss_ZLeoRunPostDefeatDelay:                            ; DATA XREF: ROM:00051B8
 ; ---------------------------------------------------------------------------
 Boss_ZLeoRestorePostDefeatUi:                           ; CODE XREF: Boss_ZLeoRunPostDefeatDelay+4   j  ; was: loc_52194
                 addq.w  #2,4(a5)
-                move.w  #$8002,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #$8002,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(byte_FFF705).w
                 move.w  #2,(SetupTransitionIndex).w
                 move.w  #4,(word_FF8230).w

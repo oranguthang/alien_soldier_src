@@ -225,7 +225,7 @@ Weapon_CircleAttackDirectionalFrames2:  dc.l    Weapon_CircleAttackSpriteArtSet2
 ; Processes all active projectile objects
 Projectile_ProcessVisiblePool:                          ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateProjectiles   p  ; was: sub_19992
                                         ; ZLeoEnding_UpdateScene+12   p
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.w   Projectile_ProcessVisiblePool_Return
                 lea     (dword_FFBFC0).w,a5
 Projectile_ProcessVisiblePool_Loop:                     ; CODE XREF: Projectile_ProcessVisiblePool+5E   j  ; was: loc_1999E

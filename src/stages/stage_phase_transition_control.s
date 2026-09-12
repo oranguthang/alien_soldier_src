@@ -2,9 +2,9 @@
 Stage_StartInterstageTransition:                        ; CODE XREF: Stage_CheckTransitionReady+16   j  ; was: sub_10390
                                         ; Stage7_StartTransitionToStage8+1C   j
                 move.w  #3,(word_FF8230).w
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(byte_FFF705).w
                 bra.w   Stage_AdvancePhaseForInterstageTransition
 ; End of function Stage_StartInterstageTransition

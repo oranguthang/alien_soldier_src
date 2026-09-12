@@ -74,9 +74,9 @@ WeaponSetup_InitializeScreen:                           ; DATA XREF: Sys_Dispatc
                 move.w  #2,(ShootingMode).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -230,13 +230,13 @@ WeaponSetup_UpdateScreen:                               ; DATA XREF: Sys_Dispatc
                 jsr     (Gfx_FadePaletteTransition).l
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 addq.w  #1,(FrameCounter).w
-                bclr    #0,(word_FF80F4).w
+                bclr    #0,(PaletteFadeMaskStatus).w
                 beq.s   WeaponSetup_UpdateScreen_CheckExit
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
 WeaponSetup_UpdateScreen_CheckExit:                     ; CODE XREF: WeaponSetup_UpdateScreen+62   j  ; was: loc_1F0EE
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 bne.s   WeaponSetup_UpdateScreen_HandleExit
                 rts
 ; ---------------------------------------------------------------------------

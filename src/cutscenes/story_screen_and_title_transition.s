@@ -27,7 +27,7 @@ StoryScreen_ClearPlaneB:                                ; CODE XREF: StoryScreen
                 move.b  #4,(VDPReg18Shadow+1).w
                 move.w  #$44,(RasterEffectIndex).w      ; 'D'
                 clr.w   (RasterEffectInitState).w
-                clr.w   (word_FF0176).l
+                clr.w   (ScenePaletteFadeOffset).l
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w
@@ -54,9 +54,9 @@ StoryScreenAssetCommands:   dc.w    7                   ; field_0  ; was: stru_4
 
 ; Runs one story-screen frame and dispatches the current sequence state
 StoryScreen_MainLoop:                                   ; DATA XREF: Sys_DispatchGameState+7E   o  ; was: sub_48FC
-                btst    #0,(word_FF80F4).w
+                btst    #0,(PaletteFadeMaskStatus).w
                 beq.s   StoryScreen_RunFrame
-                tst.w   (word_FF0176).l
+                tst.w   (ScenePaletteFadeOffset).l
                 bne.s   StoryScreen_RunFrame
                 tst.w   (word_FFF720).w
                 bmi.s   StoryScreen_RunFrame
@@ -120,7 +120,7 @@ StoryScreen_WaitForCueTime:                             ; DATA XREF: ROM:0000497
 StoryScreen_WaitToBeginFade:                            ; DATA XREF: ROM:00004974   o  ; was: sub_49B4
                 cmpi.w  #$1880,(CutsceneTimer).l
                 bne.w   Cutscene_Return
-                move.w  #0,(word_FF0176).l
+                move.w  #0,(ScenePaletteFadeOffset).l
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function StoryScreen_WaitToBeginFade
@@ -129,13 +129,13 @@ StoryScreen_FadeOutAndLoadTitleAssets:                  ; DATA XREF: ROM:0000497
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
-                subq.w  #2,(word_FF0176).l
-                move.w  (word_FF0176).l,d0
+                subq.w  #2,(ScenePaletteFadeOffset).l
+                move.w  (ScenePaletteFadeOffset).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                cmpi.w  #$FFF2,(word_FF0176).l
+                cmpi.w  #$FFF2,(ScenePaletteFadeOffset).l
                 bne.w   Cutscene_Return
                 movea.l #StoryScreenAssetCommands,a0
                 jsr     (Data_ProcessPointer).l
@@ -175,8 +175,8 @@ StoryScreen_WaitForScrollAndLoadPalette:                ; DATA XREF: ROM:0000497
                 bpl.w   Cutscene_Return
                 lea     (StoryScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                move.w  #$FFF2,(word_FF0176).l
-                move.w  (word_FF0176).l,d0
+                move.w  #$FFF2,(ScenePaletteFadeOffset).l
+                move.w  (ScenePaletteFadeOffset).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
@@ -191,13 +191,13 @@ StoryScreen_FadeInTitleScene:                           ; DATA XREF: ROM:0000497
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
-                addq.w  #2,(word_FF0176).l
-                move.w  (word_FF0176).l,d0
+                addq.w  #2,(ScenePaletteFadeOffset).l
+                move.w  (ScenePaletteFadeOffset).l,d0
                 lea     (word_FFE302).w,a0
                 move.w  #$3E,d5                         ; '>'
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
-                tst.w   (word_FF0176).l
+                tst.w   (ScenePaletteFadeOffset).l
                 bne.w   Cutscene_Return
                 addq.w  #2,(GameSubstateIndex).w
                 rts
@@ -664,10 +664,10 @@ StoryScreen_WaitThenStartExitFade:                      ; DATA XREF: ROM:0000498
                 bne.w   Cutscene_Return
 StoryScreen_StartExitFade:                              ; was: loc_5102
                                         ; Frontend_RevealFinalOpeningPattern+44   j
-                bclr    #0,(word_FF80F4).w
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                bclr    #0,(PaletteFadeMaskStatus).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 move.b  #1,d0
                 jsr     (Sound_QueueRequest).l
@@ -676,7 +676,7 @@ StoryScreen_StartExitFade:                              ; was: loc_5102
 ; End of function StoryScreen_WaitThenStartExitFade
 ; Switches to the title initializer after the exit fade signals completion
 StoryScreen_ExitToTitleScreen:                          ; DATA XREF: ROM:00004988   o  ; was: sub_5130
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.w   Cutscene_Return
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w

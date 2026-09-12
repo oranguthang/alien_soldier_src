@@ -239,7 +239,7 @@ UnreferencedSharedTileSource0To6000Command: dc.w    0, $6000, $FFFF  ; DATA XREF
 
 ; Loads the shared palette and compact tile commands for Stage 14
 Stage_LoadStage14VisualAssets:                          ; DATA XREF: ROM:00011E00   o  ; was: sub_12046
-                bset    #0,(byte_FF80F8).w
+                bset    #0,(PaletteFadeControlFlags).w
                 lea     (SharedStagePaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     Stage14TileAssetCommands(pc),a0
@@ -251,7 +251,7 @@ Stage14TileAssetCommands:   dc.w    0, $6000, $FFFF     ; DATA XREF: Stage_LoadS
 
 ; Loads the Stage 15 palette and direct tile-asset list
 Stage_LoadStage15VisualAssets:                          ; DATA XREF: ROM:00011E02   o  ; was: sub_12068
-                bset    #0,(byte_FF80F8).w
+                bset    #0,(PaletteFadeControlFlags).w
                 lea     (Stage15PaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     Stage15VisualAssetLoadList(pc),a0

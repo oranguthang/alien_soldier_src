@@ -3,7 +3,7 @@ EndingSequence_Initialize:                              ; CODE XREF: EndingSeque
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_InitGameMode).l
-                move.w  #1,(word_FF010E).l
+                move.w  #1,(EndingInitWriteOnlyFlag).l
                 movea.l #EndingSequence_AssetLoads,a0
                 jsr     (LoadObjData).l
                 movea.w #(dword_FF9400-M68K_RAM),a0

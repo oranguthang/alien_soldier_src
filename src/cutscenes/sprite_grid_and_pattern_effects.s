@@ -108,7 +108,7 @@ Cutscene_WriteShipGridCell:                             ; CODE XREF: Cutscene_Re
 ; Fills the ship pattern mask and its 512-byte VRAM target with one bits
 Cutscene_FillShipPattern:                               ; CODE XREF: Cutscene_SetupFirstShipGrid+82   p  ; was: sub_778E
                                         ; Cutscene_SetupSecondShipGrid+90   p
-                lea     (dword_FF0020).l,a0
+                lea     (ShipPatternMaskBuffer).l,a0
                 moveq   #$FFFFFFFF,d0
                 move.w  #7,d1
 Cutscene_FillShipPatternRAM:                            ; CODE XREF: Cutscene_FillShipPattern+E   j  ; was: loc_779A
@@ -156,7 +156,7 @@ Cutscene_RevealShipPatternStep:                         ; CODE XREF: Cutscene_Re
                 move.w  (a2),d4
                 or.w    d2,d4
                 move.w  d4,(a2)
-                lea     (word_FF0060).l,a2
+                lea     (ShipPatternFillBuffer).l,a2
                 move.w  #$F,d7
 Cutscene_FillShipRevealRow:                             ; CODE XREF: Cutscene_RevealShipPatternStep+38   j  ; was: loc_782E
                 move.w  d4,(a2)+
@@ -185,7 +185,7 @@ Cutscene_EraseShipPatternStep:                          ; CODE XREF: Cutscene_Er
                 move.w  (a2),d4
                 and.w   d2,d4
                 move.w  d4,(a2)
-                lea     (word_FF0060).l,a2
+                lea     (ShipPatternFillBuffer).l,a2
                 move.w  #$F,d7
 Cutscene_FillShipEraseRow:                              ; CODE XREF: Cutscene_EraseShipPatternStep+38   j  ; was: loc_7892
                 move.w  d4,(a2)+
@@ -214,7 +214,7 @@ Cutscene_RevealPlanetPatternStep:                       ; CODE XREF: Cutscene_Re
                 move.w  (a2),d4
                 or.w    d2,d4
                 move.w  d4,(a2)
-                lea     (word_FF0040).l,a2
+                lea     (PlanetPatternFillBuffer).l,a2
                 move.w  #$F,d7
 Cutscene_FillPlanetRevealRow:                           ; CODE XREF: Cutscene_RevealPlanetPatternStep+38   j  ; was: loc_78F6
                 move.w  d4,(a2)+
@@ -243,7 +243,7 @@ Cutscene_ErasePlanetPatternStep:                        ; CODE XREF: Cutscene_Er
                 move.w  (a2),d4
                 and.w   d2,d4
                 move.w  d4,(a2)
-                lea     (word_FF0040).l,a2
+                lea     (PlanetPatternFillBuffer).l,a2
                 move.w  #$F,d7
 Cutscene_FillPlanetEraseRow:                            ; CODE XREF: Cutscene_ErasePlanetPatternStep+38   j  ; was: loc_795A
                 move.w  d4,(a2)+
@@ -291,7 +291,7 @@ PatternDissolveNibbleMasks: dc.w    $FFF, $F0FF, $FF0F, $FFF0  ; was: word_79FA
 ; Selects a ship pattern word, nibble mask, and matching VRAM command
 Cutscene_SelectShipDissolveWord:                        ; CODE XREF: Cutscene_RevealShipPatternStep+1E   p  ; was: sub_7A02
                                         ; Cutscene_EraseShipPatternStep+22   p
-                lea     (dword_FF0020).l,a2
+                lea     (ShipPatternMaskBuffer).l,a2
                 lea     PatternDissolveWordOrder(pc,d0.w),a3
                 moveq   #0,d2
                 move.b  (a3),d2
@@ -312,7 +312,7 @@ Cutscene_SelectShipDissolveWord:                        ; CODE XREF: Cutscene_Re
 ; Composes sixteen planet pattern rows and queues sixteen DMA records
 Cutscene_QueuePlanetPatternRows:                        ; CODE XREF: Cutscene_EraseFirstPlanetGrid+10   p  ; was: sub_7A34
                                         ; Cutscene_HoldFirstPlanetGrid+4   p
-                lea     (word_FF0080).l,a1
+                lea     (PlanetPatternRowBuffer).l,a1
                 lea     (M68K_RAM).l,a2
                 lea     Cutscene_AlternatingRowMasks(pc),a3
                 nop
@@ -345,8 +345,8 @@ Cutscene_QueueNextPlanetPatternRow:                     ; CODE XREF: Cutscene_Qu
 ; Composes sixteen ship pattern rows and queues sixteen DMA records
 Cutscene_QueueShipPatternRows:                          ; CODE XREF: Cutscene_EraseFirstShipGrid+10   p  ; was: sub_7AA0
                                         ; Cutscene_HoldFirstShipGrid+4   p
-                lea     (word_FF00A0).l,a1
-                lea     (dword_FF0020).l,a2
+                lea     (ShipPatternRowBuffer).l,a1
+                lea     (ShipPatternMaskBuffer).l,a2
                 lea     Cutscene_AlternatingRowMasks(pc),a3
                 nop
                 move.w  (VBlankFrameCounter).w,d0

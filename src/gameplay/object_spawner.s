@@ -1,7 +1,7 @@
 ; Updates the stage object-spawn cursor and delay
 Sys_UpdateObjectSpawner:                                ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateSpawner   p  ; was: sub_1A280
                                         ; ZLeoEnding_UpdateScene+C   p
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bpl.w   Sys_UpdateObjectSpawner_TickDelay
                 rts
 ; ---------------------------------------------------------------------------

@@ -5689,3 +5689,59 @@ registry from 12,336 to 12,350, and the semantic review upper bound rises from
 duplicate address records. The enforced address-derived ceiling falls from
 853 to 831. Every remaining address-derived definition is now a RAM equate;
 none remain in executable or preserved ROM source.
+
+The first post-ROM RAM pass replaces seven address-derived equates in the
+results and palette-transition cluster. Two words provide distinct RGB offsets
+for the first and remaining post-stage palette ranges. Four adjacent fields
+form the shared transition controller: signed color offset, mode and direction,
+channel mask plus completion status, and control flags. The final byte is set
+by selected encounter-completion paths and makes the results sequence request
+the alternate time-bonus sound.
+
+All seven names are supported by complete static read/write sets and receive
+exact-address audit records plus RAM-map entries. Provenance rises from 15,220
+to 15,227 mappings and the audit registry from 12,350 to 12,357. The semantic
+review upper bound remains 3,170 because each new provenance mapping has a
+matching audit record. The enforced address-derived ceiling falls from 831 to
+824, all still confined to RAM equates.
+
+The story/credits RAM pass replaces ten address-derived equates. Eight have
+complete behavioral roles: the shared scene fade offset, credits scene state,
+HBlank delay counter, master countdown, scene-data cursor, scene timer,
+palette target, and ordered fade index. Two words have only one static write
+and no reader; they receive the deliberately neutral names
+`EndingInitWriteOnlyFlag` and `CreditsClearedSceneWord` instead of invented
+state semantics.
+
+All ten fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,227 to 15,237 mappings and the audit registry from
+12,357 to 12,367. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 824 to 814, all still confined to RAM equates.
+
+The cutscene-pattern RAM pass replaces seven address-derived equates. Five
+addresses delimit the ship mask and the four sixteen-word fill/composition
+buffers used by the planet and ship dissolve DMA paths. Two adjacent setup
+words are written with `$000F` but never read by reconstructed code; the
+neutral `PlanetPatternWriteOnly` and `ShipPatternWriteOnly` names preserve
+that uncertainty rather than inventing counters or sizes.
+
+All seven fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,237 to 15,244 mappings and the audit registry from
+12,367 to 12,374. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 814 to 807, all still confined to RAM equates.
+
+The frame/color-control RAM pass replaces six address-derived equates. The
+gameplay loop turns `FrameFreezeTimer` and pause state into
+`FrameControlFlags`, whose high bit consistently gates object, player,
+collision, palette, and message updates. The RGB adjustment has a separate
+level, three-channel mask, and decrement step. `PlayerModeFlags` retains the
+three independently demonstrated player-processing mode bits without naming
+unused bits.
+
+All six fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,244 to 15,250 mappings and the audit registry from
+12,374 to 12,380. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 807 to 801, all still confined to RAM equates.

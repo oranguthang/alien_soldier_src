@@ -5,7 +5,7 @@ Sprite_RenderObjectList:                                ; CODE XREF: StoryScreen
                 bne.w   Sprite_RenderObjectList_Begin
                 bsr.w   Sprite_InitializePriorityBuckets
 Sprite_RenderObjectList_Begin:                          ; CODE XREF: Sprite_RenderObjectList+4   j  ; was: loc_2022
-                move.b  (byte_FF813E).w,d3
+                move.b  (FrameControlFlags).w,d3
                 ror.l   #8,d3
                 move.b  (SpriteOAMEntryCount).w,d4
                 movea.w (SpriteOAMWritePointer).w,a3
@@ -170,7 +170,7 @@ Anim_ResolveOffsetSequenceFrame_LoadCurrentEntry:       ; CODE XREF: Anim_Resolv
                 move.b  $C(a5),d1
                 ext.w   d1
                 adda.w  d1,a4
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bmi.s   Anim_ResolveOffsetSequenceFrame_ResolveMappingPointer
 Anim_ResolveOffsetSequenceFrame_TickTimer:              ; CODE XREF: Anim_ResolveOffsetSequenceFrame+14   j  ; was: loc_21B8
                 subq.b  #1,d0

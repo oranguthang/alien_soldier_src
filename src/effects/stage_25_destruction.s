@@ -54,14 +54,14 @@ Effect_RunStage25DestructionParticle_Update:            ; CODE XREF: Effect_RunS
 ; End of function Effect_RunStage25DestructionParticle
 ; Screen shake effect
 Effect_TriggerStage25Shake:                             ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BB5A
-                move.w  #$30,(word_FF813C).w            ; '0'
+                move.w  #$30,(FrameFreezeTimer).w       ; '0'
                 bset    #4,2(a5)
                 move.b  #$1B,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Effect_TriggerStage25Shake
 ; Triggers the Stage 25 death shake and sound, then retires the object
 Effect_TriggerStage25DeathSound:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2BB70
-                move.w  #$30,(word_FF813C).w            ; '0'
+                move.w  #$30,(FrameFreezeTimer).w       ; '0'
                 bset    #4,2(a5)
                 move.b  #$1C,d0
                 jmp     (Sound_PlaySFX).l

@@ -320,7 +320,7 @@ Boss_Epsilon1PublishBattleCompletionState:              ; DATA XREF: ROM:00045D6
                 subq.w  #1,$48(a5)
                 bne.s   Boss_Epsilon1PublishBattleCompletionReturn
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
-                move.b  #1,(byte_FF80FA).w
+                move.b  #1,(AlternateTimeBonusSound).w
                 move.w  #$1E0,$48(a5)
                 addq.w  #2,4(a5)
 Boss_Epsilon1PublishBattleCompletionReturn:             ; CODE XREF: Boss_Epsilon1PublishBattleCompletionState+4   j  ; was: locret_46B58

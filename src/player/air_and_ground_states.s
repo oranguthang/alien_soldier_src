@@ -472,9 +472,9 @@ Player_HandleInvulnerabilityTimer:                      ; CODE XREF: Player_Upda
                 subq.w  #1,$48(a5)
                 bne.s   Player_HandleInvulnerabilityTimer_SpawnSpark
                 move.w  #1,(word_FF8230).w
-                move.w  #$8002,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #$8002,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(byte_FFF705).w
 Player_HandleInvulnerabilityTimer_SpawnSpark:           ; CODE XREF: Player_HandleInvulnerabilityTimer+10   j  ; was: loc_16AFC
                 jmp     Effect_SpawnPlayerDeathSpark

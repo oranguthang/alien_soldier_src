@@ -231,7 +231,7 @@ Boss_EnterSylpheedAttackLaunchState1A:                  ; CODE XREF: Boss_Update
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 clr.w   (word_FFA02A).w
-                bset    #0,(byte_FF8144).w
+                bset    #0,(PlayerModeFlags).w
                 clr.w   (word_FFA404).w
                 move.b  #$20,(byte_FFA420).w            ; ' '
                 move.l  #$FFFF0000,$18(a5)

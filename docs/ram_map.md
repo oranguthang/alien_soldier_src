@@ -350,6 +350,56 @@ their runtime reachability remain unproven.
 | `TileDecodeBufferEnd` | `$FFFFB480` | The tile decoder stops at this address, exactly 64 word-sized pixels after `GraphicsStagingBuffer`. |
 | `TileDMABatchBuffer` | `$FFFFB600` | The batched tile path packs at most 16 32-byte tiles into this 512-byte half-buffer before queuing its DMA transfer. |
 
+## Reviewed palette-transition and results fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `ResultsFirstColorOffset` | `$FFFF8014` | Post-stage setup clears this word; the selected-range fade passes it through RGB-component preparation only for the first four colors. |
+| `ResultsOtherColorOffset` | `$FFFF8016` | Post-stage setup initializes this word to `$FFF2`; the range helper applies it to each of the remaining three palette ranges. |
+| `PaletteFadeColorOffset` | `$FFFF80F0` | The shared transition advances this signed value toward a mode-specific limit and expands it into RGB component offsets. |
+| `PaletteFadeMode` | `$FFFF80F2` | Zero disables processing; the low bits select the first or second mode and the sign selects transition direction. |
+| `PaletteFadeMaskStatus` | `$FFFF80F4` | The upper bits select adjusted color channels, while completion paths publish status bits zero and one in the same word. |
+| `PaletteFadeControlFlags` | `$FFFF80F8` | Bits zero and one force completion of the respective modes; bit two controls second-mode frame pacing. |
+| `AlternateTimeBonusSound` | `$FFFF80FA` | Selected encounter-completion paths set this byte; results uses it to request BGM `$83` instead of the normal time-bonus SFX. |
+
+## Reviewed story and credits control fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `EndingInitWriteOnlyFlag` | `$FFFF010E` | Ending initialization writes one; no reconstructed source reads the word, so its unknown downstream purpose is not invented. |
+| `ScenePaletteFadeOffset` | `$FFFF0176` | Story and credits states step this signed value between zero and `$FFF2` and pass it to the shared palette-fade helper. |
+| `CreditsSceneState` | `$FFFF017C` | The credits scene dispatcher uses this even word directly as its handler-table index. |
+| `CreditsClearedSceneWord` | `$FFFF017E` | Initial scene setup clears this word, and no reconstructed source reads or otherwise writes it. |
+| `StoryHBlankDelayCounter` | `$FFFF0186` | The story HBlank handler initializes it to `$10` and decrements it in a private busy-wait before changing the plane base. |
+| `CreditsMasterCountdown` | `$FFFF0188` | The top-level credits dispatcher decrements it every frame; state changes and music cues compare fixed milestones. |
+| `CreditsSceneDataCursor` | `$FFFF018A` | It starts at `Credits_SceneDataPointers`, supplies two pointers per normal scene, and advances by eight bytes. |
+| `CreditsSceneTimer` | `$FFFF018E` | Scene states reload and count it down to pace loading, display, fades, and special scenes. |
+| `CreditsPaletteTarget` | `$FFFF0190` | Normal scene loads copy palette data to this RAM pointer and alternate its destination by XORing `$40`. |
+| `CreditsPaletteFadeIndex` | `$FFFF0194` | The ordered palette fade clears and advances this word as a byte offset into `Credits_PaletteFadeOrder`. |
+
+## Reviewed cutscene pattern scratch fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `ShipPatternMaskBuffer` | `$FFFF0020` | Ship setup fills eight longwords here; dissolve selection updates one of the resulting sixteen mask words. |
+| `PlanetPatternFillBuffer` | `$FFFF0040` | Planet reveal and erase paths repeat the selected mask word across this sixteen-word DMA source. |
+| `ShipPatternFillBuffer` | `$FFFF0060` | Ship reveal and erase paths repeat the selected mask word across this sixteen-word DMA source. |
+| `PlanetPatternRowBuffer` | `$FFFF0080` | The planet row composer writes sixteen words here and queues sixteen matching DMA records. |
+| `ShipPatternRowBuffer` | `$FFFF00A0` | The ship row composer writes sixteen words here and queues sixteen matching DMA records. |
+| `PlanetPatternWriteOnly` | `$FFFF00C4` | Several planet/frontend setup paths write `$000F`; no reconstructed source reads the word. |
+| `ShipPatternWriteOnly` | `$FFFF00CE` | Both ship-grid setup paths write `$000F`; no reconstructed source reads the word. |
+
+## Reviewed frame and RGB-adjust control fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `FrameFreezeTimer` | `$FFFF813C` | Impact/destruction paths load the timer; the gameplay loop decrements it and asserts the frame-control high bit while it remains nonnegative. |
+| `FrameControlFlags` | `$FFFF813E` | The gameplay loop combines freeze and pause state here; a negative byte gates object, player, collision, palette, and message processing. |
+| `PaletteRGBAdjustLevel` | `$FFFF8140` | The RGB-adjust routine converts this level to a component delta and reduces it by the configured step until zero. |
+| `PaletteRGBChannelMask` | `$FFFF8142` | Bits five through seven independently enable the red, green, and blue computed deltas. |
+| `PaletteRGBAdjustStep` | `$FFFF8143` | The RGB-adjust routine zero-extends this byte and subtracts it from the active level each update. |
+| `PlayerModeFlags` | `$FFFF8144` | Player update uses bit one to clear the object and bits zero/two to select the two Seven Forces processing modes. |
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

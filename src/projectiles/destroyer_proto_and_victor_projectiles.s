@@ -256,9 +256,9 @@ Projectile_HitReactiveShotMain:                         ; DATA XREF: ROM:000314D
 Projectile_HitReactiveShotSpawnImpact:                  ; CODE XREF: Boss_VictorOrbitingPartCollisionMain+E   j  ; was: loc_3239E
                 cmpi.w  #$1A,(StageTableIndex).w
                 bne.s   Projectile_HitReactiveShotAllocateImpact
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$20,(byte_FF8142).w            ; ' '
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
+                move.b  #8,(PaletteRGBAdjustStep).w
 Projectile_HitReactiveShotAllocateImpact:               ; CODE XREF: Projectile_HitReactiveShotMain+22   j  ; was: loc_323B8
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Projectile_HitReactiveShotRemove

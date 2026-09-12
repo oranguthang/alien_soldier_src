@@ -1,5 +1,5 @@
 MessageSequence_Dispatch:                               ; CODE XREF: Sys_GameplayMainLoop+15E   p  ; was: sub_A970
-                tst.b   (byte_FF813E).w
+                tst.b   (FrameControlFlags).w
                 bpl.s   MessageSequence_CheckActiveState
 MessageSequence_DispatchReturn:                         ; CODE XREF: MessageSequence_Dispatch+C   j  ; was: locret_A976
                 rts

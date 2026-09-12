@@ -373,14 +373,14 @@ Stage_ApplyStage24Configuration:                        ; DATA XREF: ROM:0001229
 ; End of function Stage_ApplyStage24Configuration
 ; Unreferenced flagged configuration wrapper A
 UnreferencedApplyFlaggedConfigurationA:
-                bset    #1,(byte_FF8144).w              ; was: sub_125BA
+                bset    #1,(PlayerModeFlags).w          ; was: sub_125BA
                 lea     UnreferencedFlaggedConfigRecordA(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
 ; End of function UnreferencedApplyFlaggedConfigurationA
 ; Unreferenced flagged configuration wrapper B
 UnreferencedApplyFlaggedConfigurationB:
-                bset    #1,(byte_FF8144).w              ; was: sub_125CA
+                bset    #1,(PlayerModeFlags).w          ; was: sub_125CA
                 lea     UnreferencedFlaggedConfigRecordB(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord

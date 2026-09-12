@@ -52,7 +52,7 @@ Stage15_UpdateSunsetStingApproach:                      ; DATA XREF: ROM:0000D9A
                 bsr.w   Scroll_UpdateAndRenderSylpheedBackdrop
                 cmpi.w  #$E3E8,(dword_FFA904).w
                 bmi.w   Stage_MidgameStateReturn
-                bclr    #0,(byte_FF80F8).w
+                bclr    #0,(PaletteFadeControlFlags).w
                 move.w  #$FFE4,(dword_FF8066+2).w
                 move.w  #6,(PaletteSecondaryIndex).w
                 bra.w   Stage_TransitionToNextPhase
@@ -143,7 +143,7 @@ Stage16_ContinuePostViblackVerticalScroll:              ; DATA XREF: ROM:0000D9B
 ; End of function Stage16_ContinuePostViblackVerticalScroll
 ; Center the Stage 16 camera while advancing the post-Viblack palette effect
 Stage16_UpdatePostViblackCameraAndPalette:              ; DATA XREF: ROM:0000D9BA   o  ; was: sub_DFDE
-                bset    #1,(byte_FF80F8).w
+                bset    #1,(PaletteFadeControlFlags).w
                 move.l  (dword_FF8062+2).w,d0
                 add.l   d0,(dword_FFA904).w
                 move.w  #5,(PaletteEffectControl).w

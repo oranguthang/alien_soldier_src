@@ -396,9 +396,9 @@ Player_DefeatFrameOffsets:  dc.b    0, 0, 0, 5, 0, 5, 4, 5  ; was: byte_1737E
 
 ; Creates the fixed-slot impact object used when the player takes damage
 Player_CreateDamageImpactObject:                        ; CODE XREF: Player_SpawnDamageImpactEffect:Player_SpawnDamageImpactEffect_Create   j  ; was: sub_17386
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$E0,(byte_FF8142).w
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$E0,(PaletteRGBChannelMask).w
+                move.b  #8,(PaletteRGBAdjustStep).w
                 movea.w #(word_FFC5C0-M68K_RAM),a0
                 move.w  #$1CC,(a0)
                 move.w  #$E900,2(a0)

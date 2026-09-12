@@ -2,7 +2,7 @@ Stage_SevenForcesInitializeStage20:                     ; DATA XREF: ROM:0000E4A
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA958).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
-                bset    #1,(byte_FF80F8).w
+                bset    #1,(PaletteFadeControlFlags).w
                 move.w  #$36,(word_FFA02A).w            ; '6'
                 bsr.w   Gfx_FillStage20PlaneBuffers
                 move.w  #$6A0,(dword_FFA900).w

@@ -42,7 +42,7 @@ Cutscene_SetupFirstPlanetGrid:                          ; DATA XREF: ROM:0000516
                 move.w  #1,(SpriteGridRowLimit).l
                 move.w  #3,(SpriteGridColumnLimit).l
                 move.l  #$5C000002,(PatternVDPCommand).l
-                move.w  #$F,(word_FF00C4).l
+                move.w  #$F,(PlanetPatternWriteOnly).l
                 move.w  #3,(PatternFrameMask).l
                 clr.w   (PatternDissolveStep).l
                 jsr     Cutscene_FillPlanetPattern(pc)  ; (pc)
@@ -110,7 +110,7 @@ Cutscene_SetupSecondPlanetGrid:                         ; DATA XREF: ROM:0000516
                 move.w  #3,(SpriteGridRowLimit).l
                 move.w  #1,(SpriteGridColumnLimit).l
                 move.l  #$5C000002,(PatternVDPCommand).l
-                move.w  #$F,(word_FF00C4).l
+                move.w  #$F,(PlanetPatternWriteOnly).l
                 move.w  #3,(PatternFrameMask).l
                 clr.w   (PatternDissolveStep).l
                 jsr     Cutscene_FillPlanetPattern(pc)  ; (pc)
@@ -206,7 +206,7 @@ Cutscene_SetupFirstShipGrid:                            ; DATA XREF: ROM:000053B
                 move.w  #1,(ShipGridRowLimit).l
                 move.w  #3,(ShipGridColumnLimit).l
                 move.l  #$5E000002,(ShipPatternVDPCommand).l
-                move.w  #$F,(word_FF00CE).l
+                move.w  #$F,(ShipPatternWriteOnly).l
                 move.w  #3,(ShipPatternFrameMask).l
                 clr.w   (ShipPatternStep).l
                 jsr     Cutscene_FillShipPattern(pc)    ; (pc)
@@ -270,7 +270,7 @@ Cutscene_SetupSecondShipGrid:                           ; DATA XREF: ROM:000053C
                 move.w  #3,(ShipGridRowLimit).l
                 move.w  #1,(ShipGridColumnLimit).l
                 move.l  #$5E000002,(ShipPatternVDPCommand).l
-                move.w  #$F,(word_FF00CE).l
+                move.w  #$F,(ShipPatternWriteOnly).l
                 move.w  #3,(ShipPatternFrameMask).l
                 clr.w   (ShipPatternStep).l
                 jsr     Cutscene_FillShipPattern(pc)    ; (pc)

@@ -205,9 +205,9 @@ Boss_VictorWaitForArenaReady:                           ; DATA XREF: ROM:0003243
 ; Sets screen shake parameters with specific intensity and duration values
 Boss_VictorSetScreenShake:                              ; CODE XREF: Boss_VictorFlyIn   p  ; was: sub_326C4
                                         ; sub_326A0   p
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$20,(byte_FF8142).w            ; ' '
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
+                move.b  #8,(PaletteRGBAdjustStep).w
                 rts
 ; End of function Boss_VictorSetScreenShake
 ; Randomly selects the next ring, launched-part, or split-shot sequence
@@ -310,9 +310,9 @@ Boss_VictorConfigureRightCounterclockwiseRing:          ; CODE XREF: Boss_Victor
 ; End of function Boss_VictorConfigureRingPattern
 ; Reverses and relinks the twelve-part ring
 Boss_VictorReverseRing:                                 ; DATA XREF: ROM:00032436   o  ; was: sub_32836
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$80,(byte_FF8142).w
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$80,(PaletteRGBChannelMask).w
+                move.b  #8,(PaletteRGBAdjustStep).w
                 bsr.w   Boss_VictorUpdateViewportOffset
                 bsr.w   Boss_VictorUpdateAnimation
                 subq.w  #1,$4A(a5)
@@ -345,9 +345,9 @@ Boss_VictorLinkNextRingSegment:                         ; CODE XREF: Boss_Victor
 ; End of function Boss_VictorReverseRing
 ; Pulls the ring inward and relinks it in reverse slot order
 Boss_VictorRetractRing:                                 ; DATA XREF: ROM:00032438   o  ; was: sub_328C0
-                move.w  #$E0,(word_FF8140).w
-                move.b  #$80,(byte_FF8142).w
-                move.b  #8,(byte_FF8143).w
+                move.w  #$E0,(PaletteRGBAdjustLevel).w
+                move.b  #$80,(PaletteRGBChannelMask).w
+                move.b  #8,(PaletteRGBAdjustStep).w
                 bsr.w   Entity_UpdatePolarPositionFromParent
                 move.w  #$100,$14(a5)
                 bsr.w   Boss_VictorUpdateViewportOffset

@@ -6,9 +6,9 @@ PasswordMenu_Initialize:                                ; DATA XREF: Sys_Dispatc
                 movea.l #Options_AssetLoadDescriptors,a0
                 jsr     (LoadObjData).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                move.w  #4,(word_FF80F2).w
-                move.w  #$FFF4,(word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #4,(PaletteFadeMode).w
+                move.w  #$FFF4,(PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -71,20 +71,20 @@ PasswordMenu_PaletteOverrides:  dc.w    $20, $AEC, $8CA, $6A8, $486  ; was: word
 
 ; Updates the title-menu password editor
 PasswordMenu_Update:                                    ; DATA XREF: Sys_DispatchGameState+9E   o  ; was: sub_A4B6
-                bclr    #1,(word_FF80F4).w
+                bclr    #1,(PaletteFadeMaskStatus).w
                 beq.s   PasswordMenu_CheckExitRequest
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 jmp     UI_ResetPaletteAndMessageMode_Clear
 ; ---------------------------------------------------------------------------
 PasswordMenu_CheckExitRequest:                          ; CODE XREF: PasswordMenu_Update+6   j  ; was: loc_A4CE
-                tst.w   (word_FF80F2).w
+                tst.w   (PaletteFadeMode).w
                 bne.s   PasswordMenu_UpdateFrame
                 btst    #7,(word_FFF708).w
                 beq.s   PasswordMenu_UpdateFrame
-                move.w  #2,(word_FF80F2).w
-                clr.w   (word_FF80F0).w
-                move.w  #$E000,(word_FF80F4).w
+                move.w  #2,(PaletteFadeMode).w
+                clr.w   (PaletteFadeColorOffset).w
+                move.w  #$E000,(PaletteFadeMaskStatus).w
 PasswordMenu_UpdateFrame:                               ; CODE XREF: PasswordMenu_Update+1C   j  ; was: loc_A4EC
                                         ; PasswordMenu_Update+24   j
                 jsr     (FrontendCursor_UpdateFlash).l
