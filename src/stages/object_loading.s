@@ -1,5 +1,5 @@
-Stage_LoadAssetsForCurrentTableIndex:                   ; CODE XREF: UI_InitializePasswordScreen+16   p  ; was: sub_11722
-                                        ; Password_InitializeScreen+10   p
+Stage_LoadAssetsForCurrentTableIndex:                   ; CODE XREF: StageReady_Initialize+16   p  ; was: sub_11722
+                                        ; RetryPrompt_Initialize+10   p
                 bsr.w   Stage_LoadSharedMappings
                 move.w  (StageTableIndex).w,d0
                 movea.w Stage_AssetLoaderOffsets(pc,d0.w),a0

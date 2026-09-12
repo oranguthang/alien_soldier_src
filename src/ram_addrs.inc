@@ -470,7 +470,7 @@ word_FFA218             equ     $FFFFA218
 WeaponStateIndex        equ     $FFFFA21C               ; was: word_FFA21C
 WeaponIconTransferState equ     $FFFFA21E               ; was: word_FFA21E
 WeaponSavedSlotOffset   equ     $FFFFA220               ; was: word_FFA220
-word_FFA228             equ     $FFFFA228
+ContinueCreditsBCD      equ     $FFFFA228               ; was: word_FFA228
 ShootingMode            equ     $FFFFA22A               ; was: word_FFA22A
 dword_FFA22C            equ     $FFFFA22C
 byte_FFA230             equ     $FFFFA230
@@ -951,16 +951,16 @@ byte_FFFF25             equ     $FFFFFF25
 byte_FFFF26             equ     $FFFFFF26
 PaletteFillColor        equ     $FFFFFF28               ; was: word_FFFF28
 MessageMode             equ     $FFFFFF2A               ; was: word_FFFF2A
-dword_FFFF2C            equ     $FFFFFF2C
+HighScoreBCD            equ     $FFFFFF2C               ; was: dword_FFFF2C
 ControlLayoutFlags      equ     $FFFFFF30               ; was: byte_FFFF30
 MessageDisplayFlags     equ     $FFFFFF31               ; was: byte_FFFF31
 word_FFFF36             equ     $FFFFFF36
 SoundDisableFlags       equ     $FFFFFF38               ; was: word_FFFF38
 PasswordDigits          equ     $FFFFFF3A               ; was: dword_FFFF3A
 word_FFFF3E             equ     $FFFFFF3E
-word_FFFF40             equ     $FFFFFF40
-word_FFFF42             equ     $FFFFFF42
-word_FFFF44             equ     $FFFFFF44
+PostStageEntryCountBCD  equ     $FFFFFF40               ; was: word_FFFF40
+DestroyedEnemyCountBCD  equ     $FFFFFF42               ; was: word_FFFF42
+PlayerDamageBCD         equ     $FFFFFF44               ; was: word_FFFF44
 word_FFFF46             equ     $FFFFFF46
 word_FFFF48             equ     $FFFFFF48
 word_FFFF4A             equ     $FFFFFF4A

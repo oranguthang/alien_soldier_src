@@ -1,77 +1,79 @@
-Results_InitializeDisplay:                              ; CODE XREF: UI_InitializeStageSelect+D8   p  ; was: sub_1DC4C
-                bsr.w   Results_RenderAllStats
+; Renders the shared score-summary panel
+Results_RenderSummaryPanel:                             ; was: sub_1DC4C
+                bsr.w   Results_RenderScoreSummary
                 rts
-; End of function Results_InitializeDisplay
-; Updates results screen with score and time display
-Results_UpdateAndDisplay:                               ; DATA XREF: ROM:0001D7D2   o  ; was: sub_1DC52
+; End of function Results_RenderSummaryPanel
+
+; Activates the post-stage summary and installs its completion graphics
+Results_ActivatePostStageSummary:                       ; was: sub_1DC52
                 move.w  #$50,(dword_FFA90C).w           ; 'P'
                 addq.w  #1,(FrameCounter).w
-                bsr.w   Results_DisplayTime
-                bsr.w   Results_DisplayScore
+                bsr.w   Results_RenderHighScore
+                bsr.w   Results_RenderScore
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #0,(word_FF80F4).w
-                beq.s   locret_1DCB0
+                beq.s   Results_ActivatePostStageSummary_Return
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Results_IncrementStageVisitCount).l
-                lea     stru_1DCB2(pc),a0
+                lea     ResultsPostStageCompletionAssetLoadList(pc),a0
                 nop
                 jsr     (LoadObjData).l
                 movea.l #$FFFF2020,a0
                 move.w  #$4000,d0
                 moveq   #$F,d7
                 jsr     (Gfx_AdjustTileIndexRows).l
-                movea.l #byte_1DCC4,a0
+                movea.l #ResultsPostStageCompletionTilemapRows,a0
                 jsr     (Tilemap_QueueIndexedRows).l
                 clr.w   (dword_FFA908).w
-locret_1DCB0:                                           ; CODE XREF: Results_UpdateAndDisplay+24   j
+Results_ActivatePostStageSummary_Return:                ; was: locret_1DCB0
                 rts
-; End of function Results_UpdateAndDisplay
+; End of function Results_ActivatePostStageSummary
 ; ---------------------------------------------------------------------------
-stru_1DCB2:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Results_UpdateAndDisplay+30   o
+ResultsPostStageCompletionAssetLoadList:    dc.w    7   ; was: stru_1DCB2
                 dc.l    tiles_1850C6                    ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_185268                     ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
-byte_1DCC4:     dc.b    $69, 0, $20, 0, $F, 0, 1, 2, 3, 4
-                                        ; DATA XREF: Results_UpdateAndDisplay+4E   o
+ResultsPostStageCompletionTilemapRows:  dc.b    $69, 0, $20, 0, $F, 0, 1, 2, 3, 4  ; was: byte_1DCC4
                 dc.b    5, 6, 7, 8, 9, $A, $B, $C, $D, $E
                 dc.b    $F, $10
 
-; Handles results screen completion and button input
-Results_HandleCompletion:                               ; DATA XREF: ROM:0001D7D4   o  ; was: sub_1DCDA
+; Waits for post-stage confirmation and starts the exit fade
+Results_WaitForPostStageConfirmation:                   ; was: sub_1DCDA
                 addq.w  #1,(FrameCounter).w
                 jsr     (Results_CheckSkipButton).l
-                bsr.w   Results_DisplayTime
-                bsr.w   Results_DisplayScore
+                bsr.w   Results_RenderHighScore
+                bsr.w   Results_RenderScore
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
                 btst    #7,(word_FFF708).w
-                beq.s   locret_1DD14
+                beq.s   Results_WaitForPostStageConfirmation_Return
                 addq.w  #2,(GameSubstateIndex).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
-locret_1DD14:                                           ; CODE XREF: Results_HandleCompletion+24   j
+Results_WaitForPostStageConfirmation_Return:            ; was: locret_1DD14
                 rts
-; End of function Results_HandleCompletion
-; Fades out results screen graphics
-Gfx_FadeOutResults:                                     ; DATA XREF: ROM:0001D7D6   o  ; was: sub_1DD16
+; End of function Results_WaitForPostStageConfirmation
+
+; Fades the post-stage summary out before the continue decision
+Results_FadeOutToContinue:                              ; was: sub_1DD16
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #1,(word_FF80F4).w
-                beq.s   locret_1DD2C
+                beq.s   Results_FadeOutToContinue_Return
                 addq.w  #2,(GameSubstateIndex).w
                 clr.b   (VDPReg18Shadow+1).w
-locret_1DD2C:                                           ; CODE XREF: Gfx_FadeOutResults+C   j
+Results_FadeOutToContinue_Return:                       ; was: locret_1DD2C
                 rts
-; End of function Gfx_FadeOutResults
-; Initializes results screen
-Results_InitializeScreen:                               ; DATA XREF: Sys_DispatchGameState+DA   o  ; was: sub_1DD2E
+; End of function Results_FadeOutToContinue
+
+; Initializes the final score summary shown after the credits
+Results_InitializeFinalSummary:                         ; was: sub_1DD2E
                 tst.w   (GameSubstateIndex).w
-                bne.s   loc_1DD8A
+                bne.s   Results_InitializeFinalSummary_Activate
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
@@ -79,7 +81,7 @@ Results_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 move.w  #$FFF4,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 jsr     (Gfx_FadePaletteTransition).l
-                lea     stru_1DDC2(pc),a0
+                lea     ResultsFinalSummaryDataLoadRequest(pc),a0
                 nop
                 jsr     (Data_ProcessPointer).l
                 clr.w   (dword_FF84A0).w
@@ -90,42 +92,40 @@ Results_InitializeScreen:                               ; DATA XREF: Sys_Dispatc
                 addq.w  #2,(GameSubstateIndex).w
                 jmp     Gfx_QueueLargeFontDMACommand81
 ; ---------------------------------------------------------------------------
-locret_1DD88:                                           ; CODE XREF: Results_InitializeScreen+60   j
+Results_InitializeFinalSummary_Return:                  ; was: locret_1DD88
                 rts
 ; ---------------------------------------------------------------------------
-loc_1DD8A:                                              ; CODE XREF: Results_InitializeScreen+4   j
+Results_InitializeFinalSummary_Activate:                ; was: loc_1DD8A
                 tst.w   (word_FFF720).w
-                bmi.s   locret_1DD88
+                bmi.s   Results_InitializeFinalSummary_Return
                 addq.w  #4,(GameModeIndex).w
                 move.w  #2,(GameSubstateIndex).w
                 lea     (ResultsScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                bsr.w   Results_RenderAllStats
+                bsr.w   Results_RenderScoreSummary
                 move.b  #$12,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 jmp     (Gfx_FadePaletteTransition).l
-; End of function Results_InitializeScreen
+; End of function Results_InitializeFinalSummary
 ; ---------------------------------------------------------------------------
-stru_1DDC2:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Results_InitializeScreen+2E   o
+ResultsFinalSummaryDataLoadRequest: dc.w    7           ; was: stru_1DDC2
                 dc.l    byte_18140E                     ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    $FFFF
 
-; Renders all statistics on results screen
-Results_RenderAllStats:                                 ; CODE XREF: Results_InitializeDisplay   p  ; was: sub_1DDCC
-                                        ; Results_InitializeScreen+78   p
+; Updates the high score and renders every score-summary field and label
+Results_RenderScoreSummary:                             ; was: sub_1DDCC
                 move.l  (ScoreValueBCD).w,d0
-                cmp.l   (dword_FFFF2C).w,d0
-                bmi.s   loc_1DDE0
-                move.l  d0,(dword_FFFF2C).w
+                cmp.l   (HighScoreBCD).w,d0
+                bmi.s   Results_RenderScoreSummary_Fields
+                move.l  d0,(HighScoreBCD).w
                 move.w  #$FFFF,(StageTimeRemaining).w
-loc_1DDE0:                                              ; CODE XREF: Results_RenderAllStats+8   j
-                bsr.w   Results_DisplayTime
-                bsr.w   Results_DisplayScore
-                bsr.w   Results_DisplayContinues
-                bsr.w   Results_DisplayBonus
+Results_RenderScoreSummary_Fields:                      ; was: loc_1DDE0
+                bsr.w   Results_RenderHighScore
+                bsr.w   Results_RenderScore
+                bsr.w   Results_RenderDestroyedEnemyCount
+                bsr.w   Results_RenderPlayerDamage
                 lea     (Text_Results).l,a0
                 move.w  #$E300,d0
                 move.w  #$5120,d4
@@ -162,106 +162,106 @@ loc_1DDE0:                                              ; CODE XREF: Results_Ren
                 move.w  #$A300,d0
                 move.w  #$56B8,d4
                 jmp     (Text_QueueDoubleHeightString).l
-; End of function Results_RenderAllStats
-; Display completion time
-Results_DisplayTime:                                    ; CODE XREF: Results_UpdateAndDisplay+A   p  ; was: sub_1DEA4
-                                        ; Results_HandleCompletion+A   p
-                move.l  (dword_FFFF2C).w,d0
+; End of function Results_RenderScoreSummary
+
+; Renders the eight-digit packed-BCD high score
+Results_RenderHighScore:                                ; was: sub_1DEA4
+                move.l  (HighScoreBCD).w,d0
                 move.w  #$C302,d1
                 move.w  #$52AA,d4
                 moveq   #8,d7
                 cmpi.w  #$FFFF,(StageTimeRemaining).w
-                bne.s   loc_1DEC6
+                bne.s   Results_RenderHighScore_QueueDigits
                 btst    #1,(FrameCounter+1).w
-                bne.s   loc_1DEC6
+                bne.s   Results_RenderHighScore_QueueDigits
                 move.w  #$8302,d1
-loc_1DEC6:                                              ; CODE XREF: Results_DisplayTime+14   j
-                                        ; Results_DisplayTime+1C   j
+Results_RenderHighScore_QueueDigits:                    ; was: loc_1DEC6
                 jmp     (Text_QueueTrimmedPackedBCDDigits).l
-; End of function Results_DisplayTime
-; Display score value
-Results_DisplayScore:                                   ; CODE XREF: Results_UpdateAndDisplay+E   p  ; was: sub_1DECC
-                                        ; Results_HandleCompletion+E   p
+; End of function Results_RenderHighScore
+
+; Renders the eight-digit packed-BCD current score
+Results_RenderScore:                                    ; was: sub_1DECC
                 move.l  (ScoreValueBCD).w,d0
                 move.w  #$C302,d1
                 move.w  #$53AA,d4
                 moveq   #8,d7
                 cmpi.w  #$FFFF,(StageTimeRemaining).w
-                bne.s   loc_1DEF2
+                bne.s   Results_RenderScore_QueueDigits
                 btst    #1,(FrameCounter+1).w
-                bne.s   loc_1DEF2
+                bne.s   Results_RenderScore_QueueDigits
                 move.w  #$8302,d1
-                move.l  (dword_FFFF2C).w,d0
-loc_1DEF2:                                              ; CODE XREF: Results_DisplayScore+14   j
-                                        ; Results_DisplayScore+1C   j
+                move.l  (HighScoreBCD).w,d0
+Results_RenderScore_QueueDigits:                        ; was: loc_1DEF2
                 jmp     (Text_QueueTrimmedPackedBCDDigits).l
-; End of function Results_DisplayScore
-; Displays stage bonus value
-Results_DisplayStageBonus:
-                moveq   #0,d0                           ; was: sub_1DEF8
-                move.w  (word_FFFF40).w,d0
+; End of function Results_RenderScore
+
+; Renders the otherwise unreferenced post-stage-entry count field
+Results_RenderUnreferencedPostStageEntryCount:          ; was: sub_1DEF8
+                moveq   #0,d0
+                move.w  (PostStageEntryCountBCD).w,d0
                 move.w  #$C302,d1
                 move.w  #$5538,d4
                 moveq   #4,d7
                 jmp     (Text_QueueTrimmedPackedBCDDigits).l
-; End of function Results_DisplayStageBonus
-; Display continues used
-Results_DisplayContinues:                               ; CODE XREF: Results_RenderAllStats+1C   p  ; was: sub_1DF0E
+; End of function Results_RenderUnreferencedPostStageEntryCount
+
+; Renders the four-digit packed-BCD destroyed-enemy count
+Results_RenderDestroyedEnemyCount:                      ; was: sub_1DF0E
                 moveq   #0,d0
-                move.w  (word_FFFF42).w,d0
+                move.w  (DestroyedEnemyCountBCD).w,d0
                 move.w  #$C302,d1
                 move.w  #$55B8,d4
                 moveq   #4,d7
                 jmp     (Text_QueueTrimmedPackedBCDDigits).l
-; End of function Results_DisplayContinues
-; Display bonus points
-Results_DisplayBonus:                                   ; CODE XREF: Results_RenderAllStats+20   p  ; was: sub_1DF24
+; End of function Results_RenderDestroyedEnemyCount
+
+; Renders the four-digit packed-BCD player-damage count
+Results_RenderPlayerDamage:                             ; was: sub_1DF24
                 moveq   #0,d0
-                move.w  (word_FFFF44).w,d0
+                move.w  (PlayerDamageBCD).w,d0
                 move.w  #$C302,d1
                 move.w  #$56B8,d4
                 moveq   #4,d7
                 jmp     (Text_QueueTrimmedPackedBCDDigits).l
-; End of function Results_DisplayBonus
-; Main loop for results screen
-Results_MainLoop:                                       ; DATA XREF: Sys_DispatchGameState+DE   o  ; was: sub_1DF3A
+; End of function Results_RenderPlayerDamage
+
+; Updates the final score summary and returns to the title after its exit fade
+Results_UpdateFinalSummary:                             ; was: sub_1DF3A
                 addq.w  #1,(FrameCounter).w
                 tst.w   (GameSubstateIndex).w
-                bne.s   loc_1DF52
+                bne.s   Results_UpdateFinalSummary_Frame
                 jsr     (Results_CheckSkipButton).l
-                bsr.w   Results_DisplayTime
-                bsr.w   Results_DisplayScore
-loc_1DF52:                                              ; CODE XREF: Results_MainLoop+8   j
+                bsr.w   Results_RenderHighScore
+                bsr.w   Results_RenderScore
+Results_UpdateFinalSummary_Frame:                       ; was: loc_1DF52
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
                 cmpi.w  #2,(GameSubstateIndex).w
-                bne.s   loc_1DF74
+                bne.s   Results_UpdateFinalSummary_CheckInput
                 bclr    #0,(word_FF80F4).w
-                beq.s   locret_1DFB4
+                beq.s   Results_UpdateFinalSummary_Return
                 clr.w   (GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_1DF74:                                              ; CODE XREF: Results_MainLoop+2A   j
+Results_UpdateFinalSummary_CheckInput:                  ; was: loc_1DF74
                 cmpi.w  #4,(GameSubstateIndex).w
-                beq.s   loc_1DFA2
+                beq.s   Results_UpdateFinalSummary_FinishFadeOut
                 btst    #7,(word_FFF708).w
-                beq.s   locret_1DFB4
+                beq.s   Results_UpdateFinalSummary_Return
                 tst.w   (GameSubstateIndex).w
-                beq.s   loc_1DF90
+                beq.s   Results_UpdateFinalSummary_StartFadeOut
                 move.w  #4,(GameSubstateIndex).w
-loc_1DF90:                                              ; CODE XREF: Results_MainLoop+4E   j
+Results_UpdateFinalSummary_StartFadeOut:                ; was: loc_1DF90
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_1DFA2:                                              ; CODE XREF: Results_MainLoop+40   j
+Results_UpdateFinalSummary_FinishFadeOut:               ; was: loc_1DFA2
                 bclr    #1,(word_FF80F4).w
-                beq.s   locret_1DFB4
+                beq.s   Results_UpdateFinalSummary_Return
                 move.w  #$14,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-locret_1DFB4:                                           ; CODE XREF: Results_MainLoop+32   j
-                                        ; Results_MainLoop+48   j
+Results_UpdateFinalSummary_Return:                      ; was: locret_1DFB4
                 rts
-; End of function Results_MainLoop
-; Initializes password entry screen with graphics
+; End of function Results_UpdateFinalSummary

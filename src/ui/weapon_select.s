@@ -13,7 +13,7 @@ UI_PrepareWeaponSelectGfx:
                 move.w  #$6000,(word_FF8146).w
                 move.w  #$F,(word_FF8148).w
                 move.w  #0,(word_FF814A).w
-                lea     (stru_1E012).l,a0
+                lea     (StageEntryAssetLoadList).l,a0
                 jmp     (Data_ProcessPointer).l
 ; End of function UI_PrepareWeaponSelectGfx
 ; Handles weapon select transition

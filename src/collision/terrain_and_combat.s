@@ -68,7 +68,7 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 clr.w   (word_FF8234).w
                 clr.w   (word_FF8236).w
                 clr.b   (byte_FF8260).w
-                bsr.w   UI_DecrementCounterBCD
+                bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_PlayerWeaponVsEnemy_NextTarget
 ; ---------------------------------------------------------------------------
 Collision_PlayerWeaponVsEnemy_ApplyStandardDamage:      ; CODE XREF: Collision_PlayerWeaponVsEnemy+54   j  ; was: loc_14278
@@ -94,7 +94,7 @@ Collision_PlayerWeaponVsEnemy_FinishStandardDefeat:     ; CODE XREF: Collision_P
                                         ; Collision_PlayerWeaponVsEnemy+130   j
                 btst    #7,$23(a2)
                 bne.w   Collision_PlayerWeaponVsEnemy_NextTarget
-                bsr.w   UI_DecrementCounterBCD
+                bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_PlayerWeaponVsEnemy_NextTarget
 ; End of function Collision_PlayerWeaponVsEnemy
 ; Checks the player against objects registered as moving platforms
@@ -269,22 +269,22 @@ Collision_PlayerHitPlatformUnderside_Return:            ; CODE XREF: Collision_P
                                         ; Collision_PlayerHitPlatformUnderside+1E   j
                 rts
 ; End of function Collision_PlayerHitPlatformUnderside
-; Decrements the shared two-byte BCD counter, saturating at 9999
-UI_DecrementCounterBCD:                                 ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+122   p  ; was: sub_144A6
+; Increments the destroyed-enemy BCD counter, saturating at 9999
+Results_IncrementDestroyedEnemyCountBCD:                ; was: sub_144A6
                                         ; Collision_CheckWeaponProjectilesAgainstEnemies+196   p
                 movem.l d1/a3-a4,-(sp)
-                movea.w #(word_FFFF44-M68K_RAM),a3
+                movea.w #(DestroyedEnemyCountBCD+2-M68K_RAM),a3
                 movea.w #(word_FF804A-M68K_RAM),a4
                 move.w  #1,(word_FF8048).w
                 sub.w   d1,d1
                 abcd    -(a4),-(a3)
                 abcd    -(a4),-(a3)
-                bcc.s   UI_DecrementCounterBCD_Return
-                move.w  #$9999,(word_FFFF42).w
-UI_DecrementCounterBCD_Return:                          ; CODE XREF: UI_DecrementCounterBCD+18   j  ; was: loc_144C6
+                bcc.s   Results_IncrementDestroyedEnemyCountBCD_Return
+                move.w  #$9999,(DestroyedEnemyCountBCD).w
+Results_IncrementDestroyedEnemyCountBCD_Return:         ; was: loc_144C6
                 movem.l (sp)+,d1/a3-a4
                 rts
-; End of function UI_DecrementCounterBCD
+; End of function Results_IncrementDestroyedEnemyCountBCD
 ; Gets entity position coordinates for collision detection
 Collision_GetEntityPosition:                            ; CODE XREF: Projectile_UpdateDelayedCollisionShot:Projectile_CheckDelayedCollisionShotTerrainDepth   p  ; was: sub_144CC
                                         ; sub_2B88A:loc_2B8AA   p

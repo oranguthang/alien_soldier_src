@@ -393,7 +393,7 @@ PasswordText_CopyComplete:                              ; CODE XREF: PasswordTex
 ; ---------------------------------------------------------------------------
 Password_StageCodeTable:    dc.w    $20A, $906, $20A, $906, $407, $A09, $407, $A09, $103, $608  ; was: word_A82A
                                         ; DATA XREF: PasswordMenu_HandleInput+1E8   o
-                                        ; UI_RenderContinueText+1A   o
+                                        ; Continue_RenderPassword+1A   o
                 dc.w    $103, $608, $408, $506, $408, $506, $806, $602, $806, $602
                 dc.w    $908, $A01, $908, $A01, $602, $A07, $602, $A07, $506, $70A
                 dc.w    $506, $70A, $901, $A02, $901, $A02, $904, $207, $904, $207

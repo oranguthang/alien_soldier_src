@@ -1,4 +1,4 @@
-Math_LookupPackedBCDWord:                               ; CODE XREF: Results_RenderScoreValues+1C   p  ; was: sub_1B404
+Math_LookupPackedBCDWord:                               ; CODE XREF: Continue_RenderStageAndDifficulty+1C   p  ; was: sub_1B404
                 lea     (Math_PackedBCDLookup).l,a0
                 move.w  (a0,d0.w),d0
                 rts
@@ -265,8 +265,8 @@ Sound_QueueBGMOrStopSubmit:                             ; CODE XREF: Sound_Queue
                 jmp     (Sound_QueueRequest).l
 ; End of function Sound_QueueBGMOrStop
 ; Queue the BGM selected for the current stage, or stop disabled playback
-Sound_QueueStageBGMOrStop:                              ; CODE XREF: UI_InitializePasswordScreen+56   j  ; was: sub_1B8CA
-                                        ; Password_HandleInput+22   j
+Sound_QueueStageBGMOrStop:                              ; CODE XREF: StageReady_Initialize+56   j  ; was: sub_1B8CA
+                                        ; RetryPrompt_Update+22   j
                 btst    #1,(SoundDisableFlags+1).w
                 beq.s   Sound_SelectAndQueueStageBGM
                 move.b  #4,d0

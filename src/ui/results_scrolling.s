@@ -1,5 +1,5 @@
-Results_CheckSkipButton:                                ; CODE XREF: Results_HandleCompletion+4   p  ; was: sub_1FBEC
-                                        ; Results_MainLoop+A   p
+Results_CheckSkipButton:                                ; CODE XREF: Results_WaitForPostStageConfirmation+4   p  ; was: sub_1FBEC
+                                        ; Results_UpdateFinalSummary+A   p
                 bsr.s   Results_DispatchHandler
                 move.w  (dword_FFA900).w,(dword_FFA908).w
                 tst.w   (word_FF9442).w

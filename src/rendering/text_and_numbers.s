@@ -1,8 +1,8 @@
 ; Packed-BCD digit and double-height frontend text rendering
 
 ; Suppresses leading zeroes, stages both glyph rows, and queues their VRAM copies
-Text_QueueTrimmedPackedBCDDigits:                       ; CODE XREF: Results_UpdateTimeDisplay+18   j  ; was: sub_4386
-                                        ; Results_DisplayStageNumber+10   p
+Text_QueueTrimmedPackedBCDDigits:                       ; CODE XREF: Continue_RenderCreditCount+18   j  ; was: sub_4386
+                                        ; Continue_RenderCountdownDigit+10   p
                 movea.w (VDPStagingDataCursor).w,a0
                 moveq   #0,d5
                 move.l  d0,(dword_FF8040).w
@@ -282,8 +282,8 @@ VDPQueue_StagedTileWords:                               ; CODE XREF: Text_QueueT
                 rts
 ; End of function VDPQueue_StagedTileWords
 ; Expands a terminated character string into two tile rows and queues both rows
-Text_QueueDoubleHeightString:                           ; CODE XREF: Results_RenderAllStats+32   p  ; was: sub_45D2
-                                        ; Results_RenderAllStats+46   p
+Text_QueueDoubleHeightString:                           ; CODE XREF: Results_RenderScoreSummary+32   p  ; was: sub_45D2
+                                        ; Results_RenderScoreSummary+46   p
                 movea.w (VDPStagingDataCursor).w,a1
                 moveq   #0,d7
 Text_DoubleHeight_ReadCharacter:                        ; CODE XREF: Text_QueueDoubleHeightString+18   j  ; was: loc_45D8
@@ -353,21 +353,21 @@ Text_DoubleHeightWrapped_QueueLowerRow:                 ; CODE XREF: Text_QueueD
 ; End of function Text_QueueDoubleHeightStringWrapped
 ; ---------------------------------------------------------------------------
 ; Terminated frontend strings; character codes index pairs of font tiles
-Text_BlankPasswordStatus:   dc.b    0, 0, 0, 0, 0, 0, 0, 0  ; was: byte_4660
-                                        ; DATA XREF: UI_UpdatePasswordDisplay+22   o
+Text_BlankStageReadyStatus: dc.b    0, 0, 0, 0, 0, 0, 0, 0  ; was: byte_4660
+                                        ; DATA XREF: StageReady_Update+22   o
                 dc.b    0, 0, 0, 0, 0, 0, 0, 0
                 dc.b    $FF
 Text_SpacedReady:   dc.b    $1C, 0, $F, 0, $B, 0, $E, 0, $23, $FF  ; was: byte_4671
-                                        ; DATA XREF: UI_UpdatePasswordDisplay:loc_1E05A   o
+                                        ; DATA XREF: StageReady_Update:StageReady_Update_RenderReady   o
 Text_SixteenDigitPlaceholder:
                 dc.b    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-Text_FourDigitPlaceholder:  dc.b    1, 1                ; DATA XREF: Results_RenderAllStats+9C   o  ; was: byte_4687
-                                        ; Results_RenderAllStats+C4   o
-Text_TwoDigitPlaceholder:   dc.b    1, 1, $FF           ; DATA XREF: UI_RenderResultsHeaders+14   o  ; was: byte_4689
-                                        ; Results_RenderScoreValues+32   o
+Text_FourDigitPlaceholder:  dc.b    1, 1                ; DATA XREF: Results_RenderScoreSummary+9C   o  ; was: byte_4687
+                                        ; Results_RenderScoreSummary+C4   o
+Text_TwoDigitPlaceholder:   dc.b    1, 1, $FF           ; DATA XREF: Continue_RenderCreditHeader+14   o  ; was: byte_4689
+                                        ; Continue_RenderStageAndDifficulty+32   o
 Text_EightDigitPointsPlaceholder:   dc.b    1, 1, 1, 1, 1, 1, 1, 1, $1A, $1E, $1D, $FF  ; was: byte_468C
-                                        ; DATA XREF: Results_RenderAllStats+4C   o
-                                        ; Results_RenderAllStats+74   o
+                                        ; DATA XREF: Results_RenderScoreSummary+4C   o
+                                        ; Results_RenderScoreSummary+74   o
 Text_GameStart: dc.b    $11, $B, $17, $F, 0, $1D, $1E, $B  ; was: byte_4698
                                         ; DATA XREF: TitleScreen_QueueGameStart   o
                 dc.b    $1C, $1E, $FF
@@ -422,47 +422,47 @@ Text_PressStartToExit:  dc.b    $1A, $1C, $F, $1D, $1D, 0, $1D, $1E, $B, $1C  ; 
                                         ; PasswordMenu_Initialize+F6   o
                 dc.b    $1E, 0, $1E, $19, 0, $F, $22, $13, $1E, $FF
 Text_Continue:  dc.b    $D, $19, $18, $1E, $13, $18, $1F, $F, $FF  ; was: byte_4790
-                                        ; DATA XREF: UI_RenderContinuePrompt+4   o
+                                        ; DATA XREF: Continue_RenderPrompt+4   o
 Text_GameEnd:       dc.b    $11, $B, $17, $F, $F, $18, $E, $FF
 Text_StagePeriod:   dc.b    $1D, $1E, $B, $11, $F, $2E, $FF  ; was: byte_47A1
-                                        ; DATA XREF: Results_RenderScoreValues   o
+                                        ; DATA XREF: Continue_RenderStageAndDifficulty   o
 Text_PasswordPeriod:    dc.b    $1A, $B, $1D, $1D, $21, $19, $1C, $E  ; was: byte_47A8
-                                        ; DATA XREF: UI_RenderContinueText   o
+                                        ; DATA XREF: Continue_RenderPassword   o
                 dc.b    $2E, $FF
 Text_CreditPeriod:  dc.b    $D, $1C, $F, $E, $13, $1E, $2E, $FF  ; was: byte_47B2
-                                        ; DATA XREF: UI_RenderResultsHeaders   o
+                                        ; DATA XREF: Continue_RenderCreditHeader   o
 Text_LevelPeriod:   dc.b    $16, $F, $20, $F, $16, $2E, $FF  ; was: byte_47BA
-                                        ; DATA XREF: Results_RenderScoreValues+46   o
+                                        ; DATA XREF: Continue_RenderStageAndDifficulty+46   o
 Text_Easy:      dc.b    $F, $B, $1D, $23, $FF           ; was: byte_47C1
-                                        ; DATA XREF: Results_RenderScoreValues+5A   o
+                                        ; DATA XREF: Continue_RenderStageAndDifficulty+5A   o
 Text_Hard:      dc.b    $12, $B, $1C, $E, $FF           ; was: byte_47C6
-                                        ; DATA XREF: Results_RenderScoreValues+66   o
+                                        ; DATA XREF: Continue_RenderStageAndDifficulty+66   o
 Text_FiveSpecialGlyphs:     dc.b    $C9, $CA, $CB, $CC, $CD, $FF
 Text_YouLostThreeChances:   dc.b    $23, $19, $1F, 0, $16, $19, $1D, $1E  ; was: byte_47D1
-                                        ; DATA XREF: Password_InitializeScreen+7A   o
+                                        ; DATA XREF: RetryPrompt_Initialize+7A   o
                 dc.b    0, 4, $D, $12, $B, $18, $D, $F
                 dc.b    $1D, $25, $25, $25, $FF
 Text_TryAgain:  dc.b    $1E, $1C, $23, 0, $B, $11, $B, $13  ; was: byte_47E6
-                                        ; DATA XREF: Password_InitializeScreen+8E   o
+                                        ; DATA XREF: RetryPrompt_Initialize+8E   o
                 dc.b    $18, $29, $29, $FF
 Text_PressStart:    dc.b    $1A, $1C, $F, $1D, $1D, 0, $1D, $1E  ; was: byte_47F2
-                                        ; DATA XREF: Password_InitializeScreen+A2   o
+                                        ; DATA XREF: RetryPrompt_Initialize+A2   o
                                         ; sub_1E430   o
                 dc.b    $B, $1C, $1E, $FF
 Text_Results:   dc.b    $1C, $F, $1D, $1F, $16, $1E, $1D, $FF  ; was: byte_47FE
-                                        ; DATA XREF: Results_RenderAllStats+24   o
+                                        ; DATA XREF: Results_RenderScoreSummary+24   o
 Text_HighScore: dc.b    $12, $13, $11, $12, 0, $1D, $D, $19  ; was: byte_4806
-                                        ; DATA XREF: Results_RenderAllStats+38   o
+                                        ; DATA XREF: Results_RenderScoreSummary+38   o
                 dc.b    $1C, $F, $FF
 Text_Score:     dc.b    $1D, $D, $19, $1C, $F, $FF      ; was: byte_4811
-                                        ; DATA XREF: Results_RenderAllStats+60   o
+                                        ; DATA XREF: Results_RenderScoreSummary+60   o
 Text_ContinueLabel:     dc.b    $D, $19, $18, $1E, $13, $18, $1F, $F, $FF
 Text_DestroyedEnemies:  dc.b    $E, $F, $1D, $1E, $1C, $19, $23, $F  ; was: byte_4820
-                                        ; DATA XREF: Results_RenderAllStats+88   o
+                                        ; DATA XREF: Results_RenderScoreSummary+88   o
                 dc.b    $E, 0, $F, $18, $F, $17, $13, $F
                 dc.b    $1D, $FF
 Text_PlayerDamage:  dc.b    $1A, $16, $B, $23, $F, $1C, 0, $E  ; was: byte_4832
-                                        ; DATA XREF: Results_RenderAllStats+B0   o
+                                        ; DATA XREF: Results_RenderScoreSummary+B0   o
                 dc.b    $B, $17, $B, $11, $F, $FF
 
 ; Clears scroll planes A/B and initializes display state

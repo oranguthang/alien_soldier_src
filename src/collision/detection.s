@@ -266,7 +266,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XR
                 clr.w   (word_FF8234).w
                 clr.w   (word_FF8236).w
                 clr.b   (byte_FF8260).w
-                bsr.w   UI_DecrementCounterBCD
+                bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
 ; ---------------------------------------------------------------------------
 Collision_CheckWeaponProjectilesAgainstEnemies_ResolveStandardTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+5A   j  ; was: loc_13DF4
@@ -299,7 +299,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_FinishStandardDefeat:  ; CODE XRE
                                         ; Collision_CheckWeaponProjectilesAgainstEnemies+186   j
                 btst    #7,$23(a2)
                 bne.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
-                bsr.w   UI_DecrementCounterBCD
+                bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
 ; ---------------------------------------------------------------------------
 Collision_CheckWeaponProjectilesAgainstEnemies_AwardStandardHit:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+16E   j  ; was: loc_13E68
@@ -404,14 +404,14 @@ Collision_CheckPlayerAgainstHostiles_Return:            ; CODE XREF: Collision_C
 ; ---------------------------------------------------------------------------
 Collision_CheckPlayerAgainstHostiles_ApplyDamage:       ; CODE XREF: Collision_CheckPlayerAgainstHostiles+C0   j  ; was: loc_13F9C
                                         ; Collision_CheckPlayerAgainstHostiles+C6   j
-                movea.w #(word_FFFF46-M68K_RAM),a3
+                movea.w #(PlayerDamageBCD+2-M68K_RAM),a3
                 movea.w #(word_FF804A-M68K_RAM),a4
                 move.w  #1,(word_FF8048).w
                 sub.w   d1,d1
                 abcd    -(a4),-(a3)
                 abcd    -(a4),-(a3)
                 bcc.s   Collision_CheckPlayerAgainstHostiles_StoreDamageFeedback
-                move.w  #$9999,(word_FFFF44).w
+                move.w  #$9999,(PlayerDamageBCD).w
 Collision_CheckPlayerAgainstHostiles_StoreDamageFeedback:  ; CODE XREF: Collision_CheckPlayerAgainstHostiles+116   j  ; was: loc_13FB8
                 move.l  $18(a2),(dword_FF8300).w
                 move.w  d4,(word_FF8262).w
@@ -533,7 +533,7 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 clr.w   (word_FF8234).w
                 clr.w   (word_FF8236).w
                 clr.b   (byte_FF8260).w
-                bsr.w   UI_DecrementCounterBCD
+                bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_CheckSpecialAttackTargets_NextTarget
 ; ---------------------------------------------------------------------------
 Collision_CheckSpecialAttackTargets_ApplyStandardDamage:  ; CODE XREF: Collision_CheckSpecialAttackTargets+8C   j  ; was: loc_1412A
@@ -560,6 +560,6 @@ Collision_CheckSpecialAttackTargets_FinishStandardDefeat:  ; CODE XREF: Collisio
                                         ; Collision_CheckSpecialAttackTargets+16C   j
                 btst    #7,$23(a2)
                 bne.w   Collision_CheckSpecialAttackTargets_NextTarget
-                bsr.w   UI_DecrementCounterBCD
+                bsr.w   Results_IncrementDestroyedEnemyCountBCD
                 bra.w   Collision_CheckSpecialAttackTargets_NextTarget
 ; End of function Collision_CheckSpecialAttackTargets

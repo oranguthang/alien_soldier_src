@@ -1,3 +1,4 @@
+; Initializes credits screen
 Credits_InitializeScreen:                               ; DATA XREF: Sys_DispatchGameState+B6   o  ; was: sub_1E16C
                 tst.w   (GameSubstateIndex).w
                 bne.s   Credits_InitializeScreen_Activate

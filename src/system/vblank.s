@@ -183,19 +183,19 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    UI_UpdateOptionsScreen
                 dc.l    StoryScreen_Initialize
                 dc.l    StoryScreen_MainLoop
-                dc.l    UI_InitializeStageSelect
-                dc.l    UI_DispatchStageState
+                dc.l    Results_InitializePostStageFlow
+                dc.l    Results_DispatchPostStageState
                 dc.l    UI_InitializeWeaponSelect
                 dc.l    UI_HandleMenuTextTransition
-                dc.l    UI_InitializePasswordScreen
-                dc.l    UI_UpdatePasswordDisplay
+                dc.l    StageReady_Initialize
+                dc.l    StageReady_Update
                 dc.l    PasswordMenu_Initialize
                 dc.l    PasswordMenu_Update
                 dc.l    UI_InitSecondaryOptionsMenu
                 dc.l    UI_UpdateSecondaryOptionsMenu
-                dc.l    Stage_InitializeStageSelect
-                dc.l    Password_InitializeScreen
-                dc.l    Password_HandleInput
+                dc.l    Results_InitializeSecondaryOptionsReturn
+                dc.l    RetryPrompt_Initialize
+                dc.l    RetryPrompt_Update
                 dc.l    Credits_InitializeScreen
                 dc.l    Credits_UpdateEffects
                 dc.l    Sys_TransitionToStageInit
@@ -205,8 +205,8 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    Stage_InitGameOver
                 dc.l    Effect_CopyGameOverPalette
                 dc.l    Stage_XiTigerHandler
-                dc.l    Results_InitializeScreen
-                dc.l    Results_MainLoop
+                dc.l    Results_InitializeFinalSummary
+                dc.l    Results_UpdateFinalSummary
                 dc.l    Credits_InitXiTiger
                 dc.l    Credits_MainLoop
 ; ---------------------------------------------------------------------------

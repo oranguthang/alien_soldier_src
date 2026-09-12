@@ -14,36 +14,35 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
                 move.w  #$200,(word_FFA218).w
                 clr.l   (ScoreValueBCD).w
                 clr.w   (word_FF822A).w
-                move.w  #3,(word_FFA228).w
-                clr.w   (word_FFFF40).w
-                clr.w   (word_FFFF42).w
-                clr.w   (word_FFFF44).w
+                move.w  #3,(ContinueCreditsBCD).w
+                clr.w   (PostStageEntryCountBCD).w
+                clr.w   (DestroyedEnemyCountBCD).w
+                clr.w   (PlayerDamageBCD).w
                 clr.w   (word_FFFF3E).w
                 clr.w   (word_FF8090).w
                 clr.b   (MessageDisplayFlags).w
                 bsr.w   Results_InitializeStageHistory
                 bra.s   UI_ResetPaletteAndMessageMode_Clear
 ; End of function UI_InitializeGameVariables
-; Initializes game state after continue, sets weapon ammo and clears menu flags
-UI_InitGameStateFromContinue:                           ; CODE XREF: UI_TransitionFromContinue+28   j  ; was: sub_1CD3A
-                                        ; UI_UpdatePasswordDisplay+12   j
+; Initializes gameplay state for a selected stage and restores weapon ammo
+StageEntry_InitializeGameplayState:                     ; was: sub_1CD3A
                 move.w  (word_FFA218).w,(word_FFA216).w
                 tst.w   (DifficultyMode).w
-                beq.s   UI_InitGameStateFromContinue_CopyAmmo
+                beq.s   StageEntry_InitializeGameplayState_CopyAmmo
                 move.w  #$3E8,d0
                 move.w  d0,(word_FFA268).w
                 move.w  d0,(word_FFA26A).w
                 move.w  d0,(word_FFA26C).w
                 move.w  d0,(word_FFA26E).w
-UI_InitGameStateFromContinue_CopyAmmo:                  ; CODE XREF: UI_InitGameStateFromContinue+A   j  ; was: loc_1CD5A
+StageEntry_InitializeGameplayState_CopyAmmo:            ; was: loc_1CD5A
                 move.w  (word_FFA268).w,(word_FFA260).w
                 move.w  (word_FFA26A).w,(word_FFA262).w
                 move.w  (word_FFA26C).w,(word_FFA264).w
                 move.w  (word_FFA26E).w,(word_FFA266).w
                 clr.l   (ScoreValueBCD).w
                 clr.w   (word_FF822A).w
-                clr.w   (word_FFFF42).w
-                clr.w   (word_FFFF44).w
+                clr.w   (DestroyedEnemyCountBCD).w
+                clr.w   (PlayerDamageBCD).w
                 clr.w   (word_FFFF3E).w
                 clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
@@ -54,15 +53,16 @@ UI_InitGameStateFromContinue_CopyAmmo:                  ; CODE XREF: UI_InitGame
                 asr.b   #1,d0
                 move.b  UI_ContinueDisplayValueTable(pc,d0.w),(dword_FF80C8).w
                 rts
-; End of function UI_InitGameStateFromContinue
-; Clears password input flags and menu state variables
-UI_ClearPasswordFlags:                                  ; CODE XREF: Password_HandleInput+12   p  ; was: sub_1CDA8
+; End of function StageEntry_InitializeGameplayState
+
+; Clears transient weapon and stage-entry state before reloading gameplay
+StageEntry_ClearTransientState:                         ; was: sub_1CDA8
                 clr.w   (word_FF822A).w
                 clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
-; End of function UI_ClearPasswordFlags
+; End of function StageEntry_ClearTransientState
 ; Clears both 128-byte palette buffers and resets the message option to 4
-UI_ResetPaletteAndMessageMode:                          ; CODE XREF: UI_InitGameStateFromContinue+58   p  ; was: sub_1CDB4
+UI_ResetPaletteAndMessageMode:                          ; CODE XREF: StageEntry_InitializeGameplayState+58   p  ; was: sub_1CDB4
                 bsr.w   Stage_LoadTimeLimit
 UI_ResetPaletteAndMessageMode_Clear:                    ; CODE XREF: UI_UpdateOptionsScreen+12   j  ; was: loc_1CDB8
                                         ; UI_UpdateSecondaryOptionsMenu+12   j
@@ -78,7 +78,7 @@ UI_ClearPaletteBuffers:                                 ; CODE XREF: UI_ResetPal
 ; End of function UI_ResetPaletteAndMessageMode
 ; ---------------------------------------------------------------------------
 UI_ContinueDisplayValueTable:   dc.b    $18, $18, $18, $18, $18, $18, $18, $18, $18, $18  ; was: byte_1CDCE
-                                        ; DATA XREF: UI_InitGameStateFromContinue+66   r
+                                        ; DATA XREF: StageEntry_InitializeGameplayState+66   r
                 dc.b    $18, $18, $18, $18, $18, $18, $18, $18, $18, 0
                 dc.b    $18, $18, $18, $18, $18, $18, $18, $18, $18, $18
                 dc.b    $18, $18, $18, $18, $18, $18, $18, $18
@@ -99,7 +99,7 @@ Results_StoreStageCompletionTime:                       ; CODE XREF: Results_Fin
                 rts
 ; End of function Results_StoreStageCompletionTime
 ; Increments the current stage's result-visit count, saturating at 999
-Results_IncrementStageVisitCount:                       ; CODE XREF: Results_UpdateAndDisplay+2A   p  ; was: sub_1CE14
+Results_IncrementStageVisitCount:                       ; CODE XREF: Results_ActivatePostStageSummary+2A   p  ; was: sub_1CE14
                 movea.w #(StageResultVisits-M68K_RAM),a0
                 adda.w  (StageTableIndex).w,a0
                 cmpi.w  #$3E7,(a0)

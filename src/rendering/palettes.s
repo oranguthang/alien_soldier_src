@@ -33,9 +33,9 @@ OptionsScreenPaletteOffsetList:             dc.w    $60, $E2, 0  ; DATA XREF: UI
 StageStartPaletteOffsetList:                dc.w    $28A, $2B0, 0  ; DATA XREF: UI_InitializeStageStart+DC   o  ; was: word_B94E
 WeaponSetupControlTestPaletteOffsetList:    dc.w    $2D0, $2D6, 0  ; DATA XREF: WeaponSetup_LoadControlTestText+32   o  ; was: word_B954
 ContinueScreenPaletteOffsetLists:           dc.w    $EE, $F4, $FA, $100, 0, $EE, $F4, $FA, $100, 0  ; was: word_B95A
-                                        ; DATA XREF: UI_InitializeContinueScreen+40   o
+                                        ; DATA XREF: Continue_InitializeScreen+40   o
 ResultsScreenPaletteOffsetList: dc.w    $EE, $F4, $FA, $100, 0  ; was: word_B96E
-                                        ; DATA XREF: Results_InitializeScreen+6C   o
+                                        ; DATA XREF: Results_InitializeFinalSummary+6C   o
 StageTransitionPaletteOffsetLists:  dc.w    $26A, 0, $2F6, $336, 0  ; was: word_B978
                                         ; DATA XREF: Stage_InitializeTransition+16   o
 CreditsAndPlanetPaletteOffsetList:  dc.w    $B14, $B54, 0  ; DATA XREF: EndingSequence_Initialize+5E   o  ; was: word_B982
@@ -126,12 +126,12 @@ FrontendFullPaletteCommand: dc.b    0, $3F, 0, 0, 0, $60, $C, $EA, 0, 0, 0, 0, 0
                 dc.b    0, $CE, 0, 0, 0, 0, 2, 0, 0, 2, 0, 4, 0, 6, 0, 8
                 dc.b    0, $A, 0, $C, 0, $2E, 0, $4E, 0, 0, 8, 0, $E, $62, $E, $CA
                 dc.b    0, 0, 2, 1, 0, 4, 0, $8E
-PasswordEntryPaletteCommand:    dc.b    $42, 1, 0, 2, 0, $6E, 2, 1, 6, 0, $E, $80, $22, 1, 4, 0  ; was: byte_BAD2
-                                        ; DATA XREF: UI_InitializePasswordScreen+38   o
+StageReadyPaletteCommand:   dc.b    $42, 1, 0, 2, 0, $6E, 2, 1, 6, 0, $E, $80, $22, 1, 4, 0  ; was: byte_BAD2
+                                        ; DATA XREF: StageReady_Initialize+38   o
                 dc.b    8, $40, $42, 1, 6, 0, $E, $EC, $62, 1, 0, 6, 0, $AE
-StageSelectFullPaletteCommand:  dc.b    0, $3F, 0, 0, 0, $20, 2, $E6, 0, $2E, 0, $E, 0, 8, 0, 4  ; was: byte_BAF0
-                                        ; DATA XREF: UI_InitializeStageSelect+7E   o
-                                        ; Stage_InitializeStageSelect+50   o
+PostStageFullPaletteCommand:    dc.b    0, $3F, 0, 0, 0, $20, 2, $E6, 0, $2E, 0, $E, 0, 8, 0, 4  ; was: byte_BAF0
+                                        ; DATA XREF: Results_InitializePostStageFlow+7E   o
+                                        ; Results_InitializeSecondaryOptionsReturn+50   o
                 dc.b    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
                 dc.b    0, 0, 0, 0, 0, 0, 4, $22, 0, $4C, 0, $2A, 0, 8, 0, 0
                 dc.b    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

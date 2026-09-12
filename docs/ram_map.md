@@ -7,6 +7,8 @@ still have neutral size/address names. The first reviewed semantic fields are
 `DifficultyMode`, `MessageMode`, `SoundDisableFlags`, `StageTimeRemaining`,
 `ScoreValueBCD`, `ScoreAddendBCD`, `ScoreAddendPrefixByte`,
 `StagePhaseSplitTimes`, `StageCompletionTimes`, `StageResultVisits`,
+`ContinueCreditsBCD`, `HighScoreBCD`, `PostStageEntryCountBCD`,
+`DestroyedEnemyCountBCD`, `PlayerDamageBCD`,
 `MessageSequenceState`, `MessageSequenceFlags`, `MessageAdvanceButtons`,
 `MessageDisplayFlags`, `WeaponStateIndex`,
 `WeaponSlotOffset`, `WeaponSavedSlotOffset`, `WeaponMenuRadius`,
@@ -53,6 +55,11 @@ behavioral claim.
 | `ScoreAddendPrefixByte` | `$FFFFA005` | The packed-BCD score adder clears this byte immediately before staging its four-byte operand at the following address. No other source reference accesses it independently. |
 | `ScoreAddendBCD` | `$FFFFA006` | The score adder writes `d0` here and consumes all four bytes with predecrement `ABCD` instructions. |
 | `ScoreValueBCD` | `$FFFFA212` | Gameplay rewards and the result time bonus add packed-BCD values here; initialization clears it, while the HUD and results screen render all eight digits. |
+| `ContinueCreditsBCD` | `$FFFFA228` | New-game setup initializes this packed-BCD word to three. Continue setup requires it to be nonzero, the hard-mode accepted path decrements its low byte with `SBCD`, and the continue screen renders it beside `CREDIT`. |
+| `HighScoreBCD` | `$FFFFFF2C` | Boot initializes this packed-BCD longword to 100000. The results summary replaces it when `ScoreValueBCD` is greater and renders it under `HIGH SCORE`. |
+| `PostStageEntryCountBCD` | `$FFFFFF40` | New-game setup clears this packed-BCD word and post-stage initialization increments it once, saturating at 9999. Its only renderer is present but unreferenced. |
+| `DestroyedEnemyCountBCD` | `$FFFFFF42` | Enemy-destruction collision paths increment this packed-BCD word; the results summary renders it beside `DESTROYED ENEMIES`. |
+| `PlayerDamageBCD` | `$FFFFFF44` | Hostile-contact damage adds packed-BCD units to this word, saturating at 9999; the results summary renders it beside `PLAYER DAMAGE`. |
 | `StageTimeRemaining` | `$FFFFA270` | Loaded from the 25-entry packed-BCD stage time-limit table, decremented once per second, rendered by the HUD, and saved at phase/result boundaries. |
 | `StagePhaseSplitTimes` | `$FFFFAA00` | `Results_StorePhaseSplitTime` stores one word selected by `StageTableIndex`; the results builder traverses 25 entries. |
 | `StageCompletionTimes` | `$FFFFAA80` | `Results_StoreStageCompletionTime` stores the final per-stage timer snapshot; the results builder traverses 25 entries and derives elapsed intervals. |

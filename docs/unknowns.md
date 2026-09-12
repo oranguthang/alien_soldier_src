@@ -4610,3 +4610,86 @@ receive exact-address corrections. Provenance rises from 13,671 to 13,680
 mappings, the name-audit registry from 10,879 to 10,891, and the enforced live
 address-derived ceiling falls from 2,378 to 2,370. The 136-line module has no
 live address-derived definitions.
+
+The former `ui/stage_select.s` is now the behaviorally accurate
+`ui/post_stage_results_flow.s`. The game-state chain loads and scrolls into the
+results screen, renders results, offers the continue path, and finally reaches
+game-over handling; no stage-selection input exists in this module. Its second
+initializer has one proven predecessor, `UI_UpdateSecondaryOptionsMenu`, and
+re-enters the same dispatcher directly at
+`Results_WaitForPostStageConfirmation`.
+
+The ten-entry state table, two initialization paths, entrance scroll and fade,
+alternating HScroll builder, selected palette fades, and shared asset list now
+use post-stage results terminology. `StageSelectFullPaletteCommand` is likewise
+corrected to `PostStageFullPaletteCommand` because both results initialization
+and `RetryPrompt_Initialize` consume it. All twelve raw definitions gain
+provenance-preserving names, while nine generated semantic names receive
+exact-address corrections. Provenance rises from 13,680 to 13,692 mappings,
+the name-audit registry from 10,891 to 10,912, and the enforced live
+address-derived ceiling falls from 2,370 to 2,358. The renamed 244-line module
+has no live address-derived definitions.
+
+The continue-screen pass corrects the remaining generated results, time, stage,
+and game-over claims in `ui/continue_screen.s`. `$FFFFA228` is now
+`ContinueCreditsBCD`: new-game setup initializes its packed-BCD value to three,
+continue setup requires it to be nonzero, the accepted hard-mode path decrements
+it with `SBCD`, and the screen renders it beside `CREDIT`. The value at
+`dword_FF8066+2` is the integer part of a fixed-point continue countdown here,
+not a stage number.
+
+All twelve raw address definitions and the RAM field gain
+provenance-preserving names, while twelve generated semantic names receive
+exact-address corrections. Provenance rises from 13,692 to 13,705 mappings,
+and the JSON name-audit registry gains 25 records, from 10,901 to 10,926. This
+corrects the previously reported running audit total, which was 11 too high.
+The enforced live address-derived ceiling falls from 2,358 to 2,345. The
+242-line module has no live address-derived definitions.
+
+The adjacent `ui/results_screen.s` pass separates the post-stage summary
+states from the final score summary reached after the credits. Static callers
+and screen destinations disprove four generated identities: the alleged time
+renderer displays `HighScoreBCD`, the alleged continue renderer displays
+`DestroyedEnemyCountBCD` beside `DESTROYED ENEMIES`, and the alleged bonus
+renderer displays `PlayerDamageBCD` beside `PLAYER DAMAGE`. The former
+`UI_DecrementCounterBCD` also stages packed-BCD one and uses `ABCD`; it is now
+correctly named `Results_IncrementDestroyedEnemyCountBCD`.
+
+Four result RAM fields now have evidence-backed names. `HighScoreBCD` is
+initialized to 100000, compared with the current score, replaced by larger
+scores, and rendered under `HIGH SCORE`. `PostStageEntryCountBCD` is incremented
+once per post-stage initialization but has only an unreferenced renderer;
+`DestroyedEnemyCountBCD` and `PlayerDamageBCD` are tied directly to their
+collision writers and visible result rows.
+
+All sixteen raw definitions in the 267-line module and the four RAM fields gain
+provenance-preserving names. Fourteen generated semantic names are corrected;
+one existing audit record is updated and 33 records are added. Provenance rises
+from 13,705 to 13,725 mappings, the JSON name-audit registry from 10,926 to
+10,959 records, and the enforced live address-derived ceiling falls from 2,345
+to 2,325. The module has no live address-derived definitions.
+
+The former `ui/password_entry.s` is now the behaviorally accurate
+`ui/stage_ready_and_retry_prompt.s`. Its first state pair loads the selected
+stage and shared entry assets, starts a 64-frame delay, and alternates blank
+text with `READY` before stage loading. It reads and edits no password. The
+shared initializer previously called `UI_InitGameStateFromContinue` is likewise
+broader: both the direct continue route and the READY route use it, so it is now
+`StageEntry_InitializeGameplayState`.
+
+The second state pair renders `YOU LOST 3 CHANCES`, `TRY AGAIN`, and
+`PRESS START`, then returns to stage loading after confirmation. It is therefore
+a retry prompt rather than a password screen. Its handlers remain statically
+identified but operationally unselected: the dispatcher assigns them game-mode
+indices `$58` and `$5C`, while no source assignment to `$58` is currently known.
+That reachability question remains open rather than being hidden by a confident
+name.
+
+All six raw definitions in the cohesive 116-line stage-entry module gain
+provenance-preserving names. Nine generated semantic names are corrected,
+including `StageReadyPaletteCommand`, `Text_BlankStageReadyStatus`, and three
+shared stage-entry helpers; two existing audit records are updated and 13 are
+added. Provenance rises from 13,725 to 13,731 mappings, the JSON name-audit
+registry from 10,959 to 10,972 records, and the enforced live address-derived
+ceiling falls from 2,325 to 2,319. The module is intentionally below the normal
+size target because the next ROM range belongs to the credits subsystem.

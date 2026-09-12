@@ -105,7 +105,7 @@ Gfx_QueueLargeFontDMA:                                  ; CODE XREF: Sys_Transit
                 bra.s   Gfx_BuildQueuedFontDMA
 ; End of function Gfx_QueueLargeFontDMA
 ; Sets up VDP command to transfer to palette RAM
-Gfx_QueueSmallFontDMA:                                  ; CODE XREF: Stage_InitializeStageSelect+3E   j  ; was: sub_1126A
+Gfx_QueueSmallFontDMA:                                  ; CODE XREF: Results_InitializeSecondaryOptionsReturn+3E   j  ; was: sub_1126A
                 movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$80,-(a1)
                 move.w  #$6000,-(a1)
@@ -122,8 +122,8 @@ Gfx_QueueLargeFontDMACommand81:                         ; CODE XREF: RegionRestr
                 bra.s   Gfx_BuildQueuedFontDMA
 ; End of function Gfx_QueueLargeFontDMACommand81
 ; Queues DMA transfer for font tiles to VRAM with Z80 sync
-Gfx_QueueSmallFontDMACommand83:                         ; CODE XREF: UI_InitializePasswordScreen+10   p  ; was: sub_11292
-                                        ; UI_InitializePasswordScreen+32   p
+Gfx_QueueSmallFontDMACommand83:                         ; CODE XREF: StageReady_Initialize+10   p  ; was: sub_11292
+                                        ; StageReady_Initialize+32   p
                 movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 move.w  #$5400,-(a1)
