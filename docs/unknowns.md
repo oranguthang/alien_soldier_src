@@ -3643,7 +3643,7 @@ ROM order is unchanged.
 
 Static data flow disproves the inherited `Stage_LoadPalette` name. Its only
 caller is the Stage 3 phase-2 path. The code gathers packed bytes from
-`byte_1C09B2`, reverses their nibble order in scratch RAM, and resamples them
+`Stage3Phase2PackedTileSource`, reverses their nibble order in scratch RAM, and resamples them
 through a 96-entry fixed-point step table into `$FFFF0000` before the caller
 uploads the result. No CRAM address or palette command is involved. The new
 module and labels describe the observable packed-tile transformation without
@@ -5319,3 +5319,23 @@ boundary rather than creating duplicate address records. Provenance rises from
 14,792 to 14,842 mappings, the audit registry from 12,044 to 12,069, and the
 enforced address-derived ceiling falls from 1,259 to 1,209. The remaining
 backlog comprises 831 RAM equates and 378 preserved-data labels.
+
+The Stage 3 asset pass removes all 43 address-derived definitions from
+`data/stage3_assets.s`. Its owner lists establish phase 1/2, phase 3, phase 6,
+and phase 7 sources, while the unreachable phase 4/5 loaders remain explicitly
+`Unreferenced`. Type-seven records prove compressed tile-art sources and
+type-six records prove compressed mapping-data sources; destination suffixes
+distinguish multiple streams without guessing their visual subjects.
+
+The phase-2 packed source is named separately from the asset lists because the
+audited resampler reads it directly, reverses packed nibbles, and produces
+scratch-RAM tiles. The phase-6 mapping source at destination `$2020` is reused
+by Z-Leo's battle-entry descriptor. The phase-7 tile and mapping sources are
+also reused by the Z-Leo ending scene, and their names state both proven owners.
+
+All 25 unique source addresses receive exact static audit records. The 18
+exclusive-end aliases retain provenance and fold into the following asset
+boundary. Provenance rises from 14,842 to 14,885 mappings, the audit registry
+from 12,069 to 12,094, and the enforced address-derived ceiling falls from
+1,209 to 1,166. The remaining backlog comprises 831 RAM equates and 335
+preserved-data labels.

@@ -412,7 +412,7 @@ Gfx_BuildStage3Phase2ScaleStepTable:                    ; CODE XREF: Gfx_Prepare
                 move.l  d2,(a0)+
                 add.w   d3,d1
                 dbf     d7,Gfx_BuildStage3Phase2ScaleStepTable
-                move.l  #byte_1C09B2,(dword_FF8040).w
+                move.l  #Stage3Phase2PackedTileSource,(dword_FF8040).w
                 move.l  #$FFFF9800,(dword_FF8058).w
                 move.w  #$5F,(word_FF8048).w            ; '_'
                 move.w  #3,(word_FF804A).w

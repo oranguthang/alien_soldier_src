@@ -19,16 +19,16 @@ ZLeoEnding_InitializeScene:                             ; DATA XREF: ROM:0001E85
 ; ---------------------------------------------------------------------------
 ZLeoEnding_AssetLoadDescriptors:    dc.w    7           ; field_0  ; was: stru_1EE12
                                         ; DATA XREF: ZLeoEnding_InitializeScene+18   o
-                dc.l    tiles_1CA32E                    ; field_2
+                dc.l    Stage3Phase7AndZLeoEndingTileArt0000  ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1CD746                     ; field_2
+                dc.l    Stage3Phase7AndZLeoEndingMappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1CD7EC                     ; field_2
+                dc.l    Stage3Phase7AndZLeoEndingMappingData4020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1C1A36                     ; field_2
+                dc.l    Stage3SharedMappingData7000     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2

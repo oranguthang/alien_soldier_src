@@ -351,7 +351,7 @@ Boss_ZLeoRenderBattleEntry:                             ; CODE XREF: Boss_ZLeoRu
 ; ---------------------------------------------------------------------------
 Boss_ZLeoBattleEntryEffectDescriptor:   dc.w    6       ; field_0  ; was: stru_51F50
                                         ; DATA XREF: Boss_ZLeoRunIntroCountdown+3C   o
-                dc.l    byte_1C8CB4                     ; field_2
+                dc.l    Stage3Phase6AndZLeoEntryMappingData2020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    $FFFF
 ; ---------------------------------------------------------------------------
