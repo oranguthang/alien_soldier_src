@@ -5600,3 +5600,19 @@ because those five reviewed aliases do not need duplicate address records. The
 enforced address-derived ceiling falls from 936 to 924; the remaining backlog
 comprises 831 RAM equates and 93 preserved-data labels. The source layout now
 contains 375 modules with a 316.8-line mean and no module-size waiver.
+
+The Stage 20 asset pass removes all fourteen address-derived definitions from
+`data/stage20_assets.s`. Its eight source starts are all selected by the single
+active `Stage20AssetLoadList`: two type-seven tile-art sources target zero and
+`$3000`, while six type-six mapping-data sources target `$6000`, `$6200`,
+`$6400`, `$4020`, `$6800`, and `$2020`. The existing module boundary and
+filename are therefore already accurate and remain unchanged.
+
+Every start receives an exact static audit record without inferring visual
+content from the compressed streams. Six binary-backed exclusive-end aliases
+retain provenance and fold into following payload boundaries. Provenance rises
+from 15,127 to 15,141 mappings, the audit registry from 12,288 to 12,296, and
+the semantic review upper bound rises from 3,139 to 3,145 solely because those
+six reviewed aliases do not need duplicate address records. The enforced
+address-derived ceiling falls from 924 to 910; the remaining backlog comprises
+831 RAM equates and 79 preserved-data labels.

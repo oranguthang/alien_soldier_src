@@ -153,28 +153,28 @@ Stage_LoadStage20Assets:                                ; DATA XREF: ROM:0001175
 ; ---------------------------------------------------------------------------
 Stage20AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_11BAE
                                         ; DATA XREF: Stage_LoadStage20Assets+6   o
-                dc.l    tiles_1B5466                    ; field_2
+                dc.l    Stage20TileArt0000              ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1B3A9E                    ; field_2
+                dc.l    Stage20TileArt3000              ; field_2
                 dc.w    $3000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B6C40                     ; field_2
+                dc.l    Stage20MappingData6800          ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B6C82                     ; field_2
+                dc.l    Stage20MappingData2020          ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B3EDE                     ; field_2
+                dc.l    Stage20MappingData6000          ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B401E                     ; field_2
+                dc.l    Stage20MappingData6200          ; field_2
                 dc.w    $6200                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B412A                     ; field_2
+                dc.l    Stage20MappingData6400          ; field_2
                 dc.w    $6400                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B41DA                     ; field_2
+                dc.l    Stage20MappingData4020          ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedStage18AndStage20MappingData7000  ; field_2

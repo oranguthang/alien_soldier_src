@@ -17,7 +17,7 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
   1,000-line ceiling; the current mean is 316.8 lines and no waiver is active.
 - `config/rom_layout.json` is checked against listing addresses, landmarks,
   padding ranges, and the built image.
-- Naming/evidence rules, 15,127 provenance mappings, and the remaining 924
+- Naming/evidence rules, 15,141 provenance mappings, and the remaining 910
   address-derived definitions are policy checked.
 - Source/subsystem and RAM orientation maps exist without overstating the
   automatically generated semantic names.
@@ -39,13 +39,13 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 
 ## Reconstruction backlog after 0.5
 
-The contract does not require invented semantics. The 924 address-derived
-definitions in the current backlog comprise 831 RAM equates, 93 preserved-
+The contract does not require invented semantics. The 910 address-derived
+definitions in the current backlog comprise 831 RAM equates, 79 preserved-
 data definitions, and no executable-source definitions. The exact-address
-audit registry contains 12,288 records. A further 3,139 provenance-mapped
+audit registry contains 12,296 records. A further 3,145 provenance-mapped
 current names do not yet appear as dedicated current-name records; this is an
 upper-bound semantic review queue because aliases that share an address must
-be folded into one record. It includes 455 reviewed asset `_End` aliases that
+be folded into one record. It includes 461 reviewed asset `_End` aliases that
 share the following segment's address and do not represent separate semantic
 review work. Promote or correct other names only with recorded static or
 runtime evidence.
