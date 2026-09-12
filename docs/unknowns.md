@@ -5504,3 +5504,32 @@ registry from 12,253 to 12,260, and the semantic review upper bound rises from
 3,118 to 3,122 solely because the four reviewed aliases do not need duplicate
 address records. The enforced address-derived ceiling falls from 980 to 969;
 the remaining backlog comprises 831 RAM equates and 138 preserved-data labels.
+
+The late-stage asset-boundary pass removes eight address-derived definitions
+and replaces two misleading mixed containers with five natural ROM-order data
+modules. The former `stage24_cutscene_assets.s` combined a Stage 24 scene-object
+mapping with Stage 21 tile art; these now live in
+`stage24_scene_sprite_mapping.s` and `stage21_tile_art.s`. The former
+`stage24_assets_and_rom_padding.s` combined Missiray entry mappings, two Stage 3
+mapping streams, and the terminal ROM gap; these now live in
+`missiray_entry_sprite_mappings.s`, `stage3_phase_mapping_data.s`, and
+`rom_final_padding.s`.
+
+These deliberately small modules reflect real ownership boundaries rather than
+fixed-size slicing. Direct object-field assignments prove the three composite
+sprite mappings, type-six and type-seven descriptors prove the compressed
+mapping and tile-art sources, and the cartridge header's `RomEnd` field proves
+the final padding byte. The Stage 21 tile-art and earlier Stage 3 phase-3 tile-
+art exclusive-end aliases retain provenance and fold into their following ROM
+addresses.
+
+Seven current source addresses receive exact static audit records. The former
+dedicated `Stage3Phase3Tiles_End` record at shared address `0x1CF762` is folded
+into the new Missiray mapping record instead of creating a duplicate address.
+Provenance rises from 15,082 to 15,090 mappings, the audit registry from 12,260
+to 12,266, and the semantic review upper bound rises from 3,122 to 3,124 solely
+because the two reviewed exclusive-end aliases do not need duplicate address
+records. The enforced address-derived ceiling falls from 969 to 961; the
+remaining backlog comprises 831 RAM equates and 130 preserved-data labels. The
+source layout now contains 371 modules with a 320.2-line mean and no module-size
+waiver.

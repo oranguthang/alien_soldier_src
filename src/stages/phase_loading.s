@@ -223,7 +223,7 @@ Stage3Phase12SharedAssetLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.l    Stage3SharedMappingData7000     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1CF798                     ; field_2
+                dc.l    Stage3Phase12MappingData7800    ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    SharedSceneAndStageTileArt9000  ; field_2
@@ -353,7 +353,7 @@ Stage3Phase6AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage3SharedMappingData7000     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1CF7BE                     ; field_2
+                dc.l    Stage3Phase6MappingData7800     ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    SharedSceneAndStageTileArt9000  ; field_2

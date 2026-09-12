@@ -594,7 +594,7 @@ StageTransition_InitializeMissirayEntryScene:           ; DATA XREF: ROM:0000F13
                 movea.w #(byte_FFDB80-M68K_RAM),a1
                 move.w  #$3E0,(a0)
                 move.w  #$C400,2(a0)
-                move.l  #word_1CF762,8(a0)
+                move.l  #MissirayEntryPrimarySpriteMapping,8(a0)
                 move.w  #$8200,$E(a0)
                 move.b  #$20,$21(a0)                    ; ' '
                 move.w  #2,$46(a0)
@@ -609,7 +609,7 @@ StageTransition_InitializeMissirayEntryScene:           ; DATA XREF: ROM:0000F13
                 move.w  #$3E0,(a1)
                 move.w  #1,$56(a1)
                 move.w  #$C400,2(a1)
-                move.l  #word_1CF780,8(a1)
+                move.l  #MissirayEntrySecondarySpriteMapping,8(a1)
                 move.w  #$8200,$E(a1)
                 move.w  #$D0,$10(a1)
                 move.w  d7,$14(a1)
@@ -728,7 +728,7 @@ StageTransition_InitializeStage24SceneObjects:          ; DATA XREF: ROM:0000F14
                 move.w  #$C500,2(a0)
                 move.w  #$AC0,$E(a0)
                 move.b  #$10,$20(a0)
-                move.l  #word_1CE4F8,8(a0)
+                move.l  #Stage24SceneObjectSpriteMapping,8(a0)
                 move.w  #0,(word_FFA970).w
                 move.w  #$C0,(word_FFA974).w
                 clr.l   (dword_FF8066+2).w

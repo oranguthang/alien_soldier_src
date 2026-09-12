@@ -87,7 +87,7 @@ CopyRights:     dc.b    'SEGA MEGA DRIVE (C)SEGA 1995.FEBALIEN SOLDIER          
 Checksum:       dc.w    $834F                           ; DATA XREF: Reset+164   o
 Peripherials:   dc.b    'J               '
 RomStart:       dc.l    0
-RomEnd:         dc.l    byte_1FFFFF
+RomEnd:         dc.l    RomFinalPaddingByte
 RamStart:       dc.l    M68K_RAM_PHYSICAL
 RamEnd:         dc.l    M68K_RAM_END_PHYSICAL
 SramCode:       dc.b    '            '

@@ -86,7 +86,7 @@
       { "symbol": "Sound_UpdateThunk", "address": "0x082324", "role": "Main sound update entry" },
       { "symbol": "SegaScreenPalette", "address": "0x0E8000", "role": "SEGA screen palette and data boundary" },
       { "symbol": "MessageDisplay_FontPatternFillSource", "address": "0x180000", "role": "Message-display font-pattern source at asset-bank boundary" },
-      { "symbol": "byte_1FFFFF", "address": "0x1FFFFF", "role": "Last emitted ROM byte" }
+      { "symbol": "RomFinalPaddingByte", "address": "0x1FFFFF", "role": "Last emitted ROM byte" }
     ]
   },
   "shared_definitions": [
@@ -460,9 +460,12 @@
     { "file": "src/data/stage20_assets.s", "subsystem": "data", "start": "0x1B3A9E", "end": "0x1B6F85" },
     { "file": "src/data/seven_force_cutscene_assets.s", "subsystem": "data", "start": "0x1B6F86", "end": "0x1BE761" },
     { "file": "src/data/stage3_assets.s", "subsystem": "data", "start": "0x1BE762", "end": "0x1CE4F7" },
-    { "file": "src/data/stage24_cutscene_assets.s", "subsystem": "data", "start": "0x1CE4F8", "end": "0x1CEC6B" },
+    { "file": "src/data/stage24_scene_sprite_mapping.s", "subsystem": "data", "start": "0x1CE4F8", "end": "0x1CE515" },
+    { "file": "src/data/stage21_tile_art.s", "subsystem": "data", "start": "0x1CE516", "end": "0x1CEC6B" },
     { "file": "src/data/stage_21_asteroid_and_destroyer_proto_mappings.s", "subsystem": "data", "start": "0x1CEC6C", "end": "0x1CECB3" },
     { "file": "src/data/stage_3_phase_3_tiles.s", "subsystem": "data", "start": "0x1CECB4", "end": "0x1CF761" },
-    { "file": "src/data/stage24_assets_and_rom_padding.s", "subsystem": "data", "start": "0x1CF762", "end": "0x1FFFFF" }
+    { "file": "src/data/missiray_entry_sprite_mappings.s", "subsystem": "data", "start": "0x1CF762", "end": "0x1CF797" },
+    { "file": "src/data/stage3_phase_mapping_data.s", "subsystem": "data", "start": "0x1CF798", "end": "0x1CF804" },
+    { "file": "src/data/rom_final_padding.s", "subsystem": "data", "start": "0x1CF805", "end": "0x1FFFFF" }
   ]
 }

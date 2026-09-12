@@ -334,7 +334,7 @@ Stage_LoadStage21VisualAssets:                          ; DATA XREF: ROM:00011E0
 ; ---------------------------------------------------------------------------
 Stage21VisualAssetLoadList: dc.w    7                   ; field_0  ; was: stru_12134
                                         ; DATA XREF: Stage_LoadStage21VisualAssets   o
-                dc.l    tiles_1CE516                    ; field_2
+                dc.l    Stage21TileArt8000              ; field_2
                 dc.w    $8000                           ; field_6
                 dc.w    $FFFF
 
