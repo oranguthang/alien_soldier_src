@@ -430,12 +430,12 @@ byte_FF9E0E             equ     $FFFF9E0E
 byte_FF9E1E             equ     $FFFF9E1E
 word_FF9E40             equ     $FFFF9E40
 byte_FF9F00             equ     $FFFF9F00
-dword_FF9F08            equ     $FFFF9F08
-dword_FF9F0C            equ     $FFFF9F0C
-word_FF9F10             equ     $FFFF9F10
-word_FF9F12             equ     $FFFF9F12
-word_FF9F14             equ     $FFFF9F14
-byte_FF9F80             equ     $FFFF9F80
+CutsceneScaleStep       equ     $FFFF9F08               ; was: dword_FF9F08
+CutsceneScaleSnapshot   equ     $FFFF9F0C               ; was: dword_FF9F0C
+CutsceneOffsetCenter    equ     $FFFF9F10               ; was: word_FF9F10
+CutsceneRowLoopLimit    equ     $FFFF9F12               ; was: word_FF9F12
+CutsceneVerticalOffset  equ     $FFFF9F14               ; was: word_FF9F14
+CutsceneLineOffsetTable equ     $FFFF9F80               ; was: byte_FF9F80
 word_FF9FC0             equ     $FFFF9FC0
 byte_FF9FF8             equ     $FFFF9FF8
 FrameCounter            equ     $FFFFA000               ; was: word_FFA000

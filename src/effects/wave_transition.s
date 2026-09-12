@@ -1,3 +1,49 @@
+; Builds and uploads one wave-distorted tilemap frame; no source caller is known
+UnreferencedWave_RenderTilemapToVRAM:                   ; was: sub_261D8
+                tst.w   (word_FFF720).w
+                bne.w   UnreferencedWave_RenderTilemapToVRAM_Return
+                bsr.w   Gfx_InitializeWaveParameters
+UnreferencedWave_RenderTilemapToVRAM_BuildTileLoop:     ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+3A   j  ; was: loc_261E4
+                bsr.w   Gfx_CalculateTileCoordinates
+                bsr.w   Gfx_PrepareTilePointers
+                bsr.w   Gfx_PixelBlendDispatcher
+                lea     1(a4),a4
+                move.w  a4,d0
+                move.w  d0,d1
+                andi.w  #3,d0
+                asl.w   #3,d1
+                andi.w  #$FFE0,d1
+                or.w    d1,d0
+                andi.l  #$FFFF,d0
+                addi.l  #-$10000,d0
+                movea.l d0,a2
+                dbf     d7,UnreferencedWave_RenderTilemapToVRAM_BuildTileLoop
+                movea.l #Gfx_WaveParameterTableD,a0
+                move.w  (word_FF8102).w,d0
+                move.w  (a0,d0.w),d0
+                move.w  #$1400,d1
+                move.w  d0,d2
+                rol.w   #2,d2
+                andi.w  #3,d2
+                swap    d0
+                andi.l  #$3FFF0000,d0
+                ori.l   #$40000000,d0
+                move.w  d2,d0
+                move    #$2700,sr
+                lea     (VDP_DATA).l,a1
+                lea     (VDP_CTRL).l,a2
+                move.w  #$8F02,(a2)
+                movea.l #$FFFF0000,a0
+                move.l  d0,(a2)
+UnreferencedWave_RenderTilemapToVRAM_TransferLongwordLoop:  ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+86   j  ; was: loc_2625C
+                move.l  (a0)+,(a1)
+                dbf     d1,UnreferencedWave_RenderTilemapToVRAM_TransferLongwordLoop
+                move    #$2300,sr
+                addq.w  #2,(word_FF8102).w
+UnreferencedWave_RenderTilemapToVRAM_Return:            ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+4   j  ; was: locret_2626A
+                rts
+; End of function UnreferencedWave_RenderTilemapToVRAM
+
 ; Initializes the wave-scroll state and horizontal range
 Effect_InitWaveScroll:
                 move.w  #2,(word_FF8100).w              ; was: sub_2626C
@@ -164,7 +210,7 @@ Effect_WaveStepTable:   dc.w    $E0, $D0, $C0, $B0, $A0, $90, $80, $70, $60, $50
                                         ; DATA XREF: Gfx_GenerateWaveDeformation+16   o
 
 ; Calculates two tile coordinate pairs from wave deformation data
-Gfx_CalculateTileCoordinates:                           ; CODE XREF: Gfx_RenderTilemapToVRAM:loc_261E4   p  ; was: sub_26452
+Gfx_CalculateTileCoordinates:                           ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM:UnreferencedWave_RenderTilemapToVRAM_BuildTileLoop   p  ; was: sub_26452
                 bsr.w   Math_WaveToTileIndex
                 move.w  d0,d2
                 bsr.w   Math_WaveToTileIndex
@@ -185,7 +231,7 @@ Math_WaveToTileIndex:                                   ; CODE XREF: Gfx_Calcula
                 rts
 ; End of function Math_WaveToTileIndex
 ; Calculates tile buffer addresses and pixel offset from coordinates
-Gfx_PrepareTilePointers:                                ; CODE XREF: Gfx_RenderTilemapToVRAM+10   p  ; was: sub_26476
+Gfx_PrepareTilePointers:                                ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+10   p  ; was: sub_26476
                 asr.w   #1,d2
                 bcs.w   Gfx_PrepareTilePointers_SelectFirstNibble
                 moveq   #0,d0
@@ -215,7 +261,7 @@ Gfx_PrepareTilePointers_ComputeSecondPointer:           ; CODE XREF: Gfx_Prepare
                 rts
 ; End of function Gfx_PrepareTilePointers
 ; Dispatches to pixel blending routine based on alignment offset
-Gfx_PixelBlendDispatcher:                               ; CODE XREF: Gfx_RenderTilemapToVRAM+14   p  ; was: sub_264BE
+Gfx_PixelBlendDispatcher:                               ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+14   p  ; was: sub_264BE
                 move.w  #3,d2
                 movea.w d0,a3
                 movea.l Gfx_PixelBlendHandlers(pc,a3.w),a3
@@ -314,7 +360,7 @@ Gfx_BlendPixelsFullyShifted_Loop:                       ; CODE XREF: Gfx_BlendPi
                 rts
 ; End of function Gfx_BlendPixelsFullyShifted
 ; Initializes wave deformation parameters from lookup tables
-Gfx_InitializeWaveParameters:                           ; CODE XREF: Gfx_RenderTilemapToVRAM+8   p  ; was: sub_265BA
+Gfx_InitializeWaveParameters:                           ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+8   p  ; was: sub_265BA
                 move.w  (word_FF8102).w,d0
                 moveq   #0,d5
                 movea.l #$FFFF0000,a2
@@ -336,7 +382,7 @@ Gfx_WaveParameterTableB:    dc.w    $1A0, $1E0, $220, $260, $2A0, $2E0, $320, $3
 Gfx_WaveParameterTableC:    dc.w    $37, $3F, $47, $4F, $57, $5F, $67, $6F, $77, $7F, $87, $8F, $97, $9F  ; was: word_26624
                                         ; DATA XREF: Gfx_InitializeWaveParameters+26   o
 Gfx_WaveParameterTableD:    dc.w    $E00, $1500, $1D00, $2600, $3000, $3B00, $4700, $5400, $6200, $7100, $8100, $9200, $A400, $B700  ; was: word_26640
-                                        ; DATA XREF: Gfx_RenderTilemapToVRAM+3E   o
+                                        ; DATA XREF: UnreferencedWave_RenderTilemapToVRAM+3E   o
 
 Effect_WavePostUpdateNoOp:                              ; CODE XREF: Effect_WaveInitialize+A   p  ; was: nullsub_57
                                         ; Camera_UpdateAndRenderStageTilemapEffect+A   p

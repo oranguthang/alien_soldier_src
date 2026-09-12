@@ -23,7 +23,7 @@ off_29E3E:      dc.w    locret_29F5A-Sys_InitXiTigerVRAM
 ; Initializes VRAM layout for Xi-Tiger cutscene
 Sys_InitXiTigerVRAM:                                    ; DATA XREF: Sys_InitVDPRegisters+8   o  ; was: sub_29E58
                                         ; ROM:off_29E3E   o
-                movea.w #(byte_FF9F80-M68K_RAM),a2
+                movea.w #(CutsceneLineOffsetTable-M68K_RAM),a2
                 movea.w #(word_FF9FC0-M68K_RAM),a3
                 moveq   #0,d7
                 bra.w   Sys_SetupVRAMLayout

@@ -59,7 +59,7 @@ Cutscene_InitializeScene:                               ; DATA XREF: ROM:0001CF7
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
-                jsr     (Gfx_DecompressCutsceneData).l
+                jsr     (CutsceneProjection_Initialize).l
                 jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function Cutscene_InitializeScene
 ; ---------------------------------------------------------------------------
@@ -101,7 +101,7 @@ Cutscene_UpdateFrameSelectionFromInput_SelectCodeWord:  ; was: loc_1D4F0
                 asr.w   #4,d0
                 andi.w  #$C,d0
                 move.l  Cutscene_ScrollAndPlaneUpdateCode(pc,d0.w),(dword_FF9400).w
-                jmp     Gfx_LoadCutsceneFrame
+                jmp     CutsceneProjection_BuildFrame
 ; End of function Cutscene_UpdateFrameSelectionFromInput
 
 ; The frame selector above also reads four longwords from this routine's code

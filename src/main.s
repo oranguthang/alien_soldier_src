@@ -135,7 +135,7 @@
                 include "src/credits/animated_glyph_sequence.s"
                 include "src/credits/z_leo_sequence.s"
                 include "src/demo/playback.s"
-                include "src/cutscenes/frame_decompression.s"
+                include "src/cutscenes/frame_projection.s"
                 include "src/effects/wave_transition.s"
                 include "src/effects/defeat_and_spawn_transitions.s"
                 include "src/effects/transition_scroll.s"

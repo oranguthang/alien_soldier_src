@@ -14,6 +14,8 @@ still have neutral size/address names. The first reviewed semantic fields are
 `MessageDisplayFlags`, `StageMessageCursor`,
 `PendingStageBGMRequest`, `FontTileDMAVRAMAddress`,
 `FontTileDMACounter`, `FontTileDMASourceOffset`, `XiTigerConfigIndex`,
+`CutsceneScaleStep`, `CutsceneScaleSnapshot`, `CutsceneOffsetCenter`,
+`CutsceneRowLoopLimit`, `CutsceneVerticalOffset`, `CutsceneLineOffsetTable`,
 `SetupTransitionIndex`, `PlayerHealth`, `PlayerMaxHealth`,
 `DisplayedPlayerHealth`, `BossHealth`, `BossMaxHealth`,
 `DisplayedBossHealth`, `WeaponStateIndex`,
@@ -52,6 +54,21 @@ absolute-long operands were reconstructed.
 The names deliberately preserve their scratch/shared lifetime. Naming these
 fields after only story text or credits would misdescribe the other proven
 owner.
+
+## Reviewed cutscene-projection fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `CutsceneScaleStep` | `$FFFF9F08` | Initialized to fixed-point `$1.FFFE`, accumulated while selecting symmetric source columns, and reduced by `$0.1800` during the Xi-Tiger reveal. |
+| `CutsceneScaleSnapshot` | `$FFFF9F0C` | Captures the current scale step once per frame before the line-offset increment is derived. |
+| `CutsceneOffsetCenter` | `$FFFF9F10` | Holds byte offset `$1E` from the line-table base; the offset builder expands left and right from that point. |
+| `CutsceneRowLoopLimit` | `$FFFF9F12` | Supplies the `$B` `DBF` limit to both the row-copy and transfer-queue loops, yielding twelve projected rows. |
+| `CutsceneVerticalOffset` | `$FFFF9F14` | Derived from the Xi-Tiger layer phase, added to projected line offsets, and subtracted from the marker object's Y anchor. |
+| `CutsceneLineOffsetTable` | `$FFFF9F80` | The frame builder fills bounded word offsets through `$FFFF9FBF`; the Xi-Tiger VRAM-layout initializer consumes the same base. |
+
+These names describe the observed representation rather than an assumed visual
+intent. In particular, the original initializer did not decompress data: it
+only established projection, raster-effect, and layout state.
 
 ## Reviewed options fields
 

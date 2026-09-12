@@ -12,7 +12,7 @@ XiTigerCutscene_LoadAssets:                             ; DATA XREF: ROM:StageTr
                 move.w  d0,(BossHealth).w
                 move.w  d0,(BossMaxHealth).w
                 bset    #0,(byte_FFA272).w
-                jmp     Gfx_DecompressCutsceneData
+                jmp     CutsceneProjection_Initialize
 ; End of function XiTigerCutscene_LoadAssets
 ; ---------------------------------------------------------------------------
 XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; field_0  ; was: stru_1E8A4
@@ -110,7 +110,7 @@ XiTigerCutscene_Return:                                 ; CODE XREF: XiTigerCuts
 ; End of function XiTigerCutscene_InitializeDisplayObject
 ; Advances the initial reveal source and palette phase
 XiTigerCutscene_AdvanceReveal:                          ; DATA XREF: ROM:0001E916   o  ; was: sub_1E9B0
-                subi.l  #$1800,(dword_FF9F08).w
+                subi.l  #$1800,(CutsceneScaleStep).w
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.s   XiTigerCutscene_UpdateRevealFrame
@@ -146,7 +146,7 @@ XiTigerCutscene_RenderWaitingFrame:                     ; CODE XREF: XiTigerCuts
                                         ; XiTigerCutscene_WaitBeforeReveal+2E   j
                 bsr.w   XiTigerCutscene_UpdateActorAndLayerPositions
                 bsr.w   XiTigerCutscene_BuildCompositeSprite
-                jmp     Gfx_LoadCutsceneFrame
+                jmp     CutsceneProjection_BuildFrame
 ; End of function XiTigerCutscene_WaitBeforeReveal
 ; Initializes the scrolling reveal and its raster-effect state
 XiTigerCutscene_InitializeReveal:                       ; DATA XREF: ROM:0001E918   o  ; was: sub_1EA22
@@ -318,7 +318,7 @@ XiTigerCutscene_ApplyActorPositions:                    ; CODE XREF: XiTigerCuts
                 move.w  d1,(dword_FFA90C).w
                 asr.w   #1,d1
                 subi.w  #$18,d1
-                move.w  d1,(word_FF9F14).w
+                move.w  d1,(CutsceneVerticalOffset).w
                 rts
 ; End of function XiTigerCutscene_UpdateActorAndLayerPositions
 ; Applies the main palette fade to all 64 cutscene colors
@@ -434,7 +434,7 @@ XiTigerCutscene_SpawnMarker:                            ; CODE XREF: XiTigerCuts
 ; Anchors a marker to the scrolling vertical offset and advances its animation
 XiTigerCutscene_UpdateMarker:                           ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_1ED62
                 move.w  #$E1,d0
-                sub.w   (word_FF9F14).w,d0
+                sub.w   (CutsceneVerticalOffset).w,d0
                 move.w  d0,$14(a5)
                 jsr     (Anim_UpdateSpriteFrame).l
                 bset    #7,$E(a5)

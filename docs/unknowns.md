@@ -4803,3 +4803,23 @@ promoted, provenance rises from 13,764 to 13,780 mappings, and the JSON audit
 registry rises from 11,020 to 11,058 records. The enforced live
 address-derived ceiling falls from 2,286 to 2,270, and the module count drops
 by one without changing ROM order.
+
+The cutscene-projection pass corrects another false imported boundary. The
+former `cutscenes/frame_decompression.s` did not decompress data: its live
+path resamples symmetric source columns into twelve rows, queues their VDP
+transfers, and builds a 32-word raster line-offset table. It is now the
+cohesive `cutscenes/frame_projection.s`, with six supporting RAM fields named
+from their fixed-point arithmetic, loop use, and Xi-Tiger consumers.
+
+The trailing routine at `$0261D8` belongs to the adjacent wave renderer rather
+than the cutscene projector. It calls only that subsystem's coordinate,
+pointer, pixel-blending, and parameter-table helpers, so it now starts
+`effects/wave_transition.s`. Because no source call or dispatch entry reaches
+it, the name explicitly retains `Unreferenced` instead of claiming a live
+runtime role.
+
+All thirteen definitions across the corrected boundary now have exact-address
+static audit records. Sixteen address-derived ROM/RAM names gain provenance;
+provenance rises from 13,780 to 13,796 mappings, the JSON audit registry from
+11,058 to 11,077 records, and the enforced live address-derived ceiling falls
+from 2,270 to 2,254 without changing the module count or ROM order.
