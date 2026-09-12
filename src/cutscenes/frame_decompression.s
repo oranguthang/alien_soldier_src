@@ -10,7 +10,7 @@ Gfx_DecompressCutsceneData:                             ; CODE XREF: Cutscene_In
                 rts
 ; End of function Gfx_DecompressCutsceneData
 ; Loads cutscene frame to video memory
-Gfx_LoadCutsceneFrame:                                  ; CODE XREF: Cutscene_HandleScrollInput+4E   j  ; was: sub_260CE
+Gfx_LoadCutsceneFrame:                                  ; CODE XREF: Cutscene_UpdateFrameSelectionFromInput+4E   j  ; was: sub_260CE
                                         ; XiTigerCutscene_WaitBeforeReveal+44   j
                 movea.l #$FFFF0400,a0
                 move.w  #$9400,(dword_FF8040).w

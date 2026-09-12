@@ -536,7 +536,7 @@ PCMPart9,0xD8000,0xD9A5E,sound
 title_screen_unreferenced,0x945E,0x9478,other
 unused_2,0xD266,0xD286,other
 unreferenced_indexed_column_transfer_descriptor,0x1115A,0x11170,other
-unused_4,0x1D544,0x1D5E0,other
+unreferenced_opening_transition_data,0x1D544,0x1D5E0,other
 unused_5,0x225CC,0x23CBA,other
 unused_6,0x2665E,0x2667C,other
 unused_7,0x2A49E,0x2A4BE,other

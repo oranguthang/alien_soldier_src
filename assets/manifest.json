@@ -4739,8 +4739,8 @@
       "sha1": "dc71236c219d105b4edc94cda583abb2ba715ed6"
     },
     {
-      "name": "unused_4",
-      "path": "other/unused_4.bin",
+      "name": "unreferenced_opening_transition_data",
+      "path": "other/unreferenced_opening_transition_data.bin",
       "region": "other",
       "address": "0x1D544",
       "end": "0x1D5E0",

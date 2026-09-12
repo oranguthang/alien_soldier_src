@@ -16,7 +16,7 @@ unused_tile_mappings_End:
 tiles_180F84:                       binclude "data/artcomp/tiles_180F84.bin"
 tiles_180F84_End:
 byte_18140E:                        dc.b    0, $C4, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0
-                                        ; DATA XREF: ROM:stru_1CEFC   o
+                                        ; DATA XREF: ROM:FrontendSegaSequenceAssetLoadList   o
                                         ; ROM:0001CF04   o
                 dc.b    $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $FF, $DD, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F
                 dc.b    0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0

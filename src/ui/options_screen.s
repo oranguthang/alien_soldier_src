@@ -793,7 +793,7 @@ Frontend_AnimateMenuPalette:                            ; CODE XREF: TitleScreen
 Frontend_MenuPaletteCycleColors:    dc.w    $E00, $E44, $4C4, $40  ; was: word_A1AE
 Frontend_TitleAssetLoadDescriptors: dc.w    3           ; field_0  ; was: stru_A1B6
                                         ; DATA XREF: TitleScreen_Initialize+12   o
-                                        ; UI_InitializeSEGAScreen+1C   o
+                                        ; Frontend_InitializeSegaScreen+1C   o
                 dc.l    byte_182F24                     ; field_2
                 dc.w    0                               ; field_6
                 dc.w    3                               ; field_0

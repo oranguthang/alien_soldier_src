@@ -116,7 +116,7 @@ Tilemap_DirectTransferFromSecondaryCamera:              ; CODE XREF: XiTigerCuts
                 move.w  (dword_FFA90C).w,d1
 ; End of function Tilemap_DirectTransferFromSecondaryCamera
 ; Starts a full direct tilemap transfer with the alternate frontend descriptor
-Tilemap_DirectTransferWithAlternateDescriptor:          ; CODE XREF: UI_InitializeResultsScreen+50   p  ; was: sub_10AE4
+Tilemap_DirectTransferWithAlternateDescriptor:          ; CODE XREF: Frontend_ActivateSegaSequence+18   p  ; was: sub_10AE4
                 lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0
                 nop
                 bra.s   Tilemap_TransferFullMapDirectToVRAM

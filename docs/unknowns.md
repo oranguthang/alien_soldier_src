@@ -4563,3 +4563,50 @@ Provenance rises from 13,610 to 13,657 mappings, the name-audit registry from
 10,788 to 10,849, and the enforced live address-derived ceiling falls from
 2,439 to 2,392. The 341-line module has no live address-derived definitions and
 remains within the project size target.
+
+The frontend-loop pass removes a generated results-screen identity from the
+boot path at `0x01CE7E`. This state actually resets shared video state and
+activates mode eight, whose ordered handlers run the Sega screen, title/story
+transitions, stage-transition setup, and cutscene setup. The following update
+routine is therefore the opening-sequence loop rather than the gameplay loop;
+the real gameplay loop remains separately identified at `0x01C65C`.
+
+All seven raw labels in `ui/frontend_loop.s` now describe their exact dispatch,
+tile-attribute, scratch-clear, palette-copy, or asset-list roles. Six generated
+semantic names are corrected with exact-address evidence. Provenance rises from
+13,657 to 13,664 mappings, the name-audit registry from 10,849 to 10,862, and
+the enforced live address-derived ceiling falls from 2,392 to 2,385. The
+180-line module has no live address-derived definitions.
+
+The opening-transition follow-up reconstructs the two state machines selected
+by the frontend loop. The first erases, holds, and reveals the sprite-grid
+pattern initialized with `sega_tiles` and `SegaScreenPalette`. The second runs
+two title-pattern erase/reveal cycles and terminates at the table entry that
+selects the story-screen mode. This disproves the generated planet, generic
+delay, game-screen, and gameplay-setup claims while retaining neutral pattern
+names where the exact pictured artwork is not statically established.
+
+The six raw definitions in `ui/screen_transitions.s` and its shared return at
+`0x01D3D8` gain provenance-preserving names; twelve generated semantic names
+receive exact-address corrections. Provenance rises from 13,664 to 13,671
+mappings, the name-audit registry from 10,862 to 10,879, and the enforced live
+address-derived ceiling falls from 2,385 to 2,378. The 172-line transition
+module now has no live address-derived definitions.
+
+The adjacent scene-control pass completes the opening-sequence control block.
+Its stage-transition and cutscene asset lists, frame-selection clamp/wrap
+branches, wrapped scroll-column update, and final sprite-grid mapping now have
+behavioral names. The frame-selection handler exposes an unusual ROM fact
+instead of hiding it: selector offsets zero, four, eight, and twelve read four
+longwords directly from the machine code of
+`Cutscene_ScrollAndPlaneUpdateCode` before the frame loader runs.
+
+The anonymous 156-byte block at `0x01D544` has no reconstructed static
+reference and is retained neutrally as `UnreferencedOpeningTransitionData`;
+its extracted asset, range-map row, and manifest entry use the matching
+`unreferenced_opening_transition_data` name. Eight raw address labels and that
+generic `unused_4` label gain provenance, while three generated semantic names
+receive exact-address corrections. Provenance rises from 13,671 to 13,680
+mappings, the name-audit registry from 10,879 to 10,891, and the enforced live
+address-derived ceiling falls from 2,378 to 2,370. The 136-line module has no
+live address-derived definitions.

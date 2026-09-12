@@ -173,8 +173,8 @@ Sys_DispatchGameState_Run:                              ; CODE XREF: Sys_UpdateT
                 jmp     (a0)
 ; ---------------------------------------------------------------------------
 Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
-                dc.l    UI_InitializeResultsScreen
-                dc.l    Sys_UpdateGameLoop
+                dc.l    Frontend_InitializeSegaSequence
+                dc.l    Frontend_UpdateOpeningSequence
                 dc.l    Stage_LoadBackgroundGraphics
                 dc.l    Sys_GameplayMainLoop
                 dc.l    TitleScreen_Initialize

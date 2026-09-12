@@ -1,8 +1,8 @@
-UI_InitializeResultsScreen:                             ; DATA XREF: Sys_DispatchGameState+5A   o  ; was: sub_1CE7E
+Frontend_InitializeSegaSequence:                        ; DATA XREF: Sys_DispatchGameState+5A   o  ; was: sub_1CE7E
                 tst.w   (GameSubstateIndex).w
-                bne.s   UI_LoadResultsPalette
+                bne.s   Frontend_ActivateSegaSequence
                 jsr     (Sys_InitGameMode).l
-                movea.l #stru_1CEFC,a0
+                movea.l #FrontendSegaSequenceAssetLoadList,a0
                 jsr     (LoadObjData).l
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
@@ -13,7 +13,7 @@ UI_InitializeResultsScreen:                             ; DATA XREF: Sys_Dispatc
                 rts
 ; ---------------------------------------------------------------------------
 ; Loads palette and data tables for results screen
-UI_LoadResultsPalette:                                  ; CODE XREF: UI_InitializeResultsScreen+4   j  ; was: loc_1CEB6
+Frontend_ActivateSegaSequence:                          ; was: loc_1CEB6
                 move.w  #8,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 move.w  #$F0,(word_FF8100).w
@@ -28,10 +28,9 @@ UI_LoadResultsPalette:                                  ; CODE XREF: UI_Initiali
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 rts
-; End of function UI_InitializeResultsScreen
+; End of function Frontend_InitializeSegaSequence
 ; ---------------------------------------------------------------------------
-stru_1CEFC:     dc.w    7                               ; field_0
-                                        ; DATA XREF: UI_InitializeResultsScreen+C   o
+FrontendSegaSequenceAssetLoadList:  dc.w    7           ; field_0  ; was: stru_1CEFC
                 dc.l    byte_18140E                     ; field_2
                 dc.w    $C000                           ; field_6
                 dc.w    7                               ; field_0
@@ -43,47 +42,43 @@ stru_1CEFC:     dc.w    7                               ; field_0
                 dc.w    $FFFF
 
 ; Main game loop update with object processing
-Sys_UpdateGameLoop:                                     ; DATA XREF: Sys_DispatchGameState+5E   o  ; was: sub_1CF16
+Frontend_UpdateOpeningSequence:                         ; DATA XREF: Sys_DispatchGameState+5E   o  ; was: sub_1CF16
                 tst.w   (word_FFF720).w
-                bmi.s   loc_1CF2E
+                bmi.s   Frontend_UpdateOpeningSequence_RunFrame
                 cmpi.w  #4,(GameSubstateIndex).w
-                bcs.s   loc_1CF2E
+                bcs.s   Frontend_UpdateOpeningSequence_RunFrame
                 btst    #7,(word_FFF708).w
-                bne.w   loc_1D3A8
-loc_1CF2E:                                              ; CODE XREF: Sys_UpdateGameLoop+4   j
-                                        ; Sys_UpdateGameLoop+C   j
+                bne.w   Frontend_HandleOpeningSkip
+Frontend_UpdateOpeningSequence_RunFrame:                ; was: loc_1CF2E
                 jsr     (Object_ApplyCameraMotion).l
                 jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (Sys_ProcessVisibleObjects).l
-                bsr.w   UI_DispatchMenuState
+                bsr.w   Frontend_DispatchOpeningState
                 jsr     (Sys_UpdateObjectCount).l
                 jsr     (Sprite_RenderObjectList).l
                 jsr     (Gfx_FadePaletteTransition).l
                 addq.w  #1,(FrameCounter).w
                 rts
-; End of function Sys_UpdateGameLoop
-; Dispatches to menu state handler based on index
-UI_DispatchMenuState:                                   ; CODE XREF: Sys_UpdateGameLoop+30   p  ; was: sub_1CF62
+; End of function Frontend_UpdateOpeningSequence
+Frontend_DispatchOpeningState:                          ; was: sub_1CF62
                 move.w  (GameSubstateIndex).w,d0
-                movea.w off_1CF72(pc,d0.w),a0
-                adda.l  #UI_InitializeSEGAScreen,a0
+                movea.w FrontendOpeningStateOffsets(pc,d0.w),a0
+                adda.l  #Frontend_InitializeSegaScreen,a0
                 jmp     (a0)
-; End of function UI_DispatchMenuState
+; End of function Frontend_DispatchOpeningState
 ; ---------------------------------------------------------------------------
-off_1CF72:      dc.w    UI_InitializeSEGAScreen-UI_InitializeSEGAScreen
-                                        ; DATA XREF: UI_DispatchMenuState+4   r
-                dc.w    UI_DispatchCutsceneState-UI_InitializeSEGAScreen
-                dc.w    UI_InitializeTitleScreen-UI_InitializeSEGAScreen
-                dc.w    UI_DispatchStoryState-UI_InitializeSEGAScreen
-                dc.w    Stage_InitializeTransition-UI_InitializeSEGAScreen
-                dc.w    Stage_SetupScrollPlanesThunk-UI_InitializeSEGAScreen
-                dc.w    Cutscene_InitializeScene-UI_InitializeSEGAScreen
-                dc.w    Cutscene_HandleScrollInput-UI_InitializeSEGAScreen
+FrontendOpeningStateOffsets:    dc.w    Frontend_InitializeSegaScreen-Frontend_InitializeSegaScreen  ; was: off_1CF72
+                dc.w    Frontend_DispatchSegaScreenTransition-Frontend_InitializeSegaScreen
+                dc.w    Frontend_InitializeTitleTransition-Frontend_InitializeSegaScreen
+                dc.w    Frontend_DispatchTitleTransition-Frontend_InitializeSegaScreen
+                dc.w    Stage_InitializeTransition-Frontend_InitializeSegaScreen
+                dc.w    Stage_SetupScrollPlanesThunk-Frontend_InitializeSegaScreen
+                dc.w    Cutscene_InitializeScene-Frontend_InitializeSegaScreen
+                dc.w    Cutscene_UpdateFrameSelectionFromInput-Frontend_InitializeSegaScreen
 
 ; Initializes SEGA logo screen with graphics and palettes
-UI_InitializeSEGAScreen:                                ; DATA XREF: UI_DispatchMenuState+8   o  ; was: sub_1CF82
-                                        ; ROM:off_1CF72   o
+Frontend_InitializeSegaScreen:                          ; was: sub_1CF82
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Gfx_QueueLargeFontDMACommand81).l
@@ -96,14 +91,14 @@ UI_InitializeSEGAScreen:                                ; DATA XREF: UI_Dispatch
                 move.w  #$FF00,d1
                 move.w  #$BF,d7
                 jsr     (Gfx_UpdateTilemapIndices).l
-                bsr.w   Gfx_CopyPaletteLines
+                bsr.w   Frontend_CopyPaletteLines
                 lea     (dword_FF4000).l,a0
                 move.w  #$7FF,d0
-loc_1CFD0:                                              ; CODE XREF: UI_InitializeSEGAScreen+58   j
+Frontend_InitializeSegaScreen_SetHighPriorityTiles:     ; was: loc_1CFD0
                 move.l  (a0),d1
                 ori.l   #$E000E000,d1
                 move.l  d1,(a0)+
-                dbf     d0,loc_1CFD0
+                dbf     d0,Frontend_InitializeSegaScreen_SetHighPriorityTiles
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
@@ -113,9 +108,9 @@ loc_1CFD0:                                              ; CODE XREF: UI_Initiali
                 lea     (M68K_RAM).l,a0
                 moveq   #$FFFFFFFF,d0
                 move.w  #$F,d1
-loc_1D006:                                              ; CODE XREF: UI_InitializeSEGAScreen+86   j
+Frontend_InitializeSegaScreen_ClearSpriteGridScratch:   ; was: loc_1D006
                 move.l  d0,(a0)+
-                dbf     d1,loc_1D006
+                dbf     d1,Frontend_InitializeSegaScreen_ClearSpriteGridScratch
                 move.w  #$400,(SpriteGridFirstTile).l
                 move.w  #$E8,(SpriteGridCenterY).l
                 move.w  #$120,(SpriteGridCenterX).l
@@ -139,9 +134,9 @@ loc_1D006:                                              ; CODE XREF: UI_Initiali
                 movea.l #SegaScreenPalette,a0
                 movea.w #(byte_FFE3C0-M68K_RAM),a1
                 moveq   #7,d7
-loc_1D09E:                                              ; CODE XREF: UI_InitializeSEGAScreen+11E   j
+Frontend_InitializeSegaScreen_CopyPalette:              ; was: loc_1D09E
                 move.l  (a0)+,(a1)+
-                dbf     d7,loc_1D09E
+                dbf     d7,Frontend_InitializeSegaScreen_CopyPalette
                 movea.w (VDPCommandQueueHead).w,a0
                 move.w  #$82,-(a0)
                 move.w  #$6000,-(a0)
@@ -169,18 +164,17 @@ loc_1D09E:                                              ; CODE XREF: UI_Initiali
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 rts
-; End of function UI_InitializeSEGAScreen
-; Copies two palette lines between RAM buffers
-Gfx_CopyPaletteLines:                                   ; CODE XREF: UI_InitializeSEGAScreen+40   p  ; was: sub_1D120
+; End of function Frontend_InitializeSegaScreen
+Frontend_CopyPaletteLines:                              ; was: sub_1D120
                 lea     (word_FFE362).w,a0
                 lea     (word_FFE302).w,a1
                 lea     (word_FFE3E2).w,a2
                 lea     (word_FFE382).w,a3
                 move.w  #$E,d0
-loc_1D134:                                              ; CODE XREF: Gfx_CopyPaletteLines+18   j
+Frontend_CopyPaletteLines_NextColor:                    ; was: loc_1D134
                 move.w  (a0)+,(a1)+
                 move.w  (a2)+,(a3)+
-                dbf     d0,loc_1D134
+                dbf     d0,Frontend_CopyPaletteLines_NextColor
                 rts
-; End of function Gfx_CopyPaletteLines
+; End of function Frontend_CopyPaletteLines
 ; Dispatches cutscene state based on frame counter
