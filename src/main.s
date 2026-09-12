@@ -48,7 +48,7 @@
                 include "src/ui/message_sequence_engine.s"
                 include "src/ui/stage_message_sequences.s"
                 include "src/rendering/palettes.s"
-                include "src/stages/camera_dispatch.s"
+                include "src/stages/early_stage_process_states.s"
                 include "src/stages/train_and_flying_neo.s"
                 include "src/stages/stage_9_flies_caterpillar_and_xi_tiger.s"
                 include "src/stages/intro_projectiles.s"

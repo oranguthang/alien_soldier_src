@@ -4952,3 +4952,31 @@ new structural anchor with no imported identity to preserve. Thirty raw labels
 gain provenance, raising provenance from 13,857 to 13,887 and the audit
 registry from 11,247 to 11,283. The enforced live address-derived ceiling
 falls from 2,194 to 2,164, while the source-module count remains 370.
+
+The early-stage process-state pass replaces the generic
+`stages/camera_dispatch.s` owner with the 590-line
+`stages/early_stage_process_states.s`. The stage configuration records provide
+authoritative boundaries inside its shared relative-offset table: Stages 1-7
+begin at offsets `$00`, `$0A`, `$12`, `$22`, `$2E`, `$38`, and `$40`.
+Combining those boundaries with the boss asset sets proves consecutive
+Jetsripper, Antroid, Shellshogun, Shiper, Madam Barbar, Joker, and Terobuster
+state families. The dispatcher retains the later Stage 8 and Stage 9 table
+entries because the ROM stores one contiguous early-stage table, while this
+module's implementations end in the Stage 7 transition range.
+
+This evidence corrects generated camera-centric descriptions rather than only
+prefixing them with stage numbers. The former `Camera_ClampToBounds` never
+changes a camera bound: it fills 128 raster words from the negated secondary
+horizontal offset and 72 from the negated primary camera. It is now
+`Stage4_FillShiperHorizontalRasterOffsets`. The former
+`Stage_UpdateScrollOffset` derives two countdown-scaled arguments and
+tail-calls `Gfx_FadeRGBColor_LoadEntryCount`; it is now the Terobuster intro
+fade helper. The post-Shellshogun four-longword payload is named only as the
+staged-row source selected by its producer and consumer; its internal format
+is intentionally not claimed.
+
+All 76 definitions in the module now have exact-address static audit records.
+The 31 formerly raw definitions gain provenance, raising provenance from
+13,887 to 13,918 and the audit registry from 11,283 to 11,357. The enforced
+live address-derived ceiling falls from 2,164 to 2,133. Module count remains
+370 and the reconstructed owner remains within the 200-700-line target.

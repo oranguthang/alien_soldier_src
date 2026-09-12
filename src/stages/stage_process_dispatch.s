@@ -20,11 +20,11 @@ Stage_RunSelectedProcess:                               ; CODE XREF: Stage_Dispa
                 jmp     (a0)
 ; End of function Stage_DispatchSelectedProcess
 ; ---------------------------------------------------------------------------
-Stage_ProcessHandlerTable:  dc.l    Stage_Dispatcher    ; was: off_FF36
+Stage_ProcessHandlerTable:  dc.l    Stage_DispatchEarlyStageState  ; was: off_FF36
                 dc.l    Stage_InitStage10
                 dc.l    Stage_Stage18Scroll
                 dc.l    Stage_DispatchTransitionState
-                dc.l    Stage_Dispatcher
+                dc.l    Stage_DispatchEarlyStageState
 
 ; Transitions stage to next phase or section
 Stage_TransitionToNextPhase:                            ; CODE XREF: Stage_UpdateLogic+14   j  ; was: sub_FF4A
