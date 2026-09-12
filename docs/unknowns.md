@@ -4395,3 +4395,31 @@ records. Four address-derived control-flow and table names gain provenance,
 raising the totals to 13,470 mappings and 10,534 audit records. The enforced
 live address-derived ceiling falls from 2,583 to 2,579. Individual visual-list
 owners remain deliberately outside this endorsement pending their own audit.
+
+The Stage 1–13 visual-loader pass resolves the first thirteen dispatch slots
+using their ordered `StageTableIndex` positions, corroborated by existing
+runtime mappings such as `$14` for Stage 11 and by the independently identified
+Stage 8 train and Stage 9 flies code. Each palette/tile helper now names its
+specific stage and each compact stream states that it contains tile-asset
+commands. The old anonymous A/B pair becomes the ordered Stage 4/5 loaders.
+The standalone source-zero-to-`$6000` helper has no reconstructed caller, so
+its former Stage 4 claim is removed and its `Unreferenced` status is explicit.
+
+All 27 definitions from `$011E86` through `$012045` receive exact-address
+static audit records. Thirteen anonymous command streams gain provenance,
+raising the totals to 13,483 mappings and 10,561 audit records. The enforced
+live address-derived ceiling falls from 2,579 to 2,566.
+
+The Stage 14–26 visual-loader pass completes the dispatch table and corrects
+three material generated errors. The slot at `StageTableIndex=$1C`, confirmed
+by pinned runtime evidence as Stage 15, was missing its leading digit and had
+also caused its palette stream to be misowned by Stage 5. The following slot
+is the Stage 16 visual loader, not Stage 17, while the next remains the actual
+Stage 17 palette-only entry. Three immediate returns belong to Stage 23, 25,
+and 26 visual dispatch slots, not the weapon system. Two standalone duplicate
+loaders and two no-op hooks lack static callers and now say `Unreferenced`.
+
+All 28 definitions from `$012046` through `$01219D` receive exact-address
+static audit records. Thirteen anonymous lists and no-op labels gain
+provenance, raising the totals to 13,496 mappings and 10,589 audit records.
+The enforced live address-derived ceiling falls from 2,566 to 2,553.

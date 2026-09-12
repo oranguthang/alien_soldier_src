@@ -73,7 +73,7 @@ Stage33PaletteOffsetList:   dc.w    $798, 0             ; DATA XREF: ROM:Stage33
 
 ; Loads a palette command while preserving the shared color at palette slot $36
 Gfx_LoadPalettePreservingSharedColor:                   ; CODE XREF: Boss_LoadAssetSet+6C   p  ; was: sub_B9EA
-                                        ; Gfx_LoadStage17Palettes+12   j
+                                        ; Stage_LoadStage17Palettes+12   j
                 move.w  (word_FFE3EC).w,(dword_FF8040).w
                 bsr.s   Gfx_LoadPaletteCommand
                 move.w  (dword_FF8040).w,(word_FFE36C).w
@@ -139,7 +139,7 @@ CreditsAndEarlyStagePaletteCommandBank_End:
 FlyingNeoAndMidgamePaletteCommandBank:  binclude "data/other/byte_BE1E.bin"  ; was: byte_BE1E
 FlyingNeoAndMidgamePaletteCommandBank_End:
 Stage17PaletteCommandBank:              dc.b    $62, $E, 2, 0, $E, $EE, 0, $6E, 6, $EE, 2, $84, 8, $EA, $C, $EE  ; was: byte_BF2C
-                                        ; DATA XREF: Gfx_LoadStage17Palettes   o
+                                        ; DATA XREF: Stage_LoadStage17Palettes   o
                 dc.b    4, 0, 6, $20, 8, $42, $A, $64, $C, $86, $E, $A8, $E, $CA, $E, $EE
                 dc.b    2, $1E, $E, $EE, $E, $AA, $A, $68, $A, $44, 8, $22, 4, $22, $E, $86
                 dc.b    $E, $64, $E, $42, $A, $86, 6, $42, 2, $20, 2, 0, 0, 0, 0, $24
@@ -163,14 +163,14 @@ SevenForcesArtemisTransitionPaletteCommands:    dc.b    2, $1E, 0, 0, 0, $22, 2,
 SireneAndLateStagePaletteCommandBank:   binclude "data/other/byte_C05C.bin"  ; was: byte_C05C
 SireneAndLateStagePaletteCommandBank_End:
 SharedStagePaletteCommand:              dc.b    $62, $E, 0, 0, $E, $EE, $E, $A8, 0, 6, 0, $2A, 0, 0, 4, $6E  ; was: byte_C1A2
-                                        ; DATA XREF: Gfx_LoadStagePalette   o
+                                        ; DATA XREF: Stage_LoadStage1VisualAssets   o
                                         ; sub_11EAA   o
                 dc.b    0, $46, 2, $8A, 6, $CC, 2, $24, 4, $6A, 8, $AE, 6, $22, $A, $62
 XiTigerCutscenePaletteCommand:  dc.b    $62, $E, 0, 0, $E, $EE, 0, $EE, 0, $AE, 0, $6E, 0, $E, 0, 4  ; was: byte_C1C2
                                         ; DATA XREF: Cutscene_XiTigerActorSetup   o
                 dc.b    0, $48, 2, $20, 4, $42, 8, $86, $C, $CA, 6, 0, 8, $40, $C, $84
-Stage5PaletteCommands:  dc.b    $62, $E, $E, $EE, $F, $FF, $A, $26, $A, $AA, 8, $88, $F, $FF, 6, $66  ; was: byte_C1E2
-                                        ; DATA XREF: Stage_LoadStage5Graphics+6   o
+Stage15PaletteCommands: dc.b    $62, $E, $E, $EE, $F, $FF, $A, $26, $A, $AA, 8, $88, $F, $FF, 6, $66  ; was: byte_C1E2
+                                        ; DATA XREF: Stage_LoadStage15VisualAssets+6   o
                 dc.b    4, $44, 2, $22, $C, $AA, $A, $88, 8, $66, 6, $44, 4, $22, 0, 0
                 dc.b    $62, 6, 0, 0, 2, $22, 2, $44, 4, $68, 8, $AC, 0, 0, $A, $CC
 DestroyerProtoIntroPaletteCommands: dc.b    $62, $E, $E, $EE, $E, $AA, $A, $66, 6, $22, 4, 0, 0, 0, 0, $AE  ; was: byte_C212
@@ -217,7 +217,7 @@ Boss_SharpssteelPaletteCommand: dc.b    $62, $E, 0, 0, $C, $EC, 8, $C8, 6, $64, 
                                         ; DATA XREF: ROM:Boss_SharpssteelAssetSet   o
                 dc.b    4, $AA, 0, $66, 0, $22, 0, 4, 0, $28, 0, $4C, 4, $8E, 8, $CE
 Boss_SnakePaletteCommand:   dc.b    $62, 8, 0, 0, $E, $EE, 8, $CE, 6, $8C, 6, $6C, $F, $FF, 4, $26  ; was: byte_C3F0
-                                        ; DATA XREF: Gfx_LoadSnakePalette   o
+                                        ; DATA XREF: Stage_LoadStage13Palette   o
                 dc.b    2, 2, 4, $4A
 EntityType1C0PaletteCommand:    dc.b    $62, $E, 0, 2, $E, $EE, $A, $AA, 6, $66, 2, $22, $F, $FF, $A, $EE  ; was: byte_C404
                                         ; DATA XREF: ROM:00011538   o
@@ -243,7 +243,7 @@ Boss_BackStringerPaletteCommand:    dc.b    $62, $E, 2, 0, $C, $EE, 2, $26, 8, $
                 dc.b    2, $8A, 6, $CE, 0, $6E, 0, $2C, 0, 6, $F, $FF, 6, $68, $A, $AC
 Boss_Epsilon1PaletteCommands:   dc.b    $62, $E, 2, 0, 4, 4, 6, $26, 8, $4A, $A, $6C, $F, $FF, $C, $AE  ; was: byte_C4DE
                                         ; DATA XREF: ROM:Boss_Epsilon1AssetSet   o
-                                        ; Gfx_LoadStage17Palettes+C   o
+                                        ; Stage_LoadStage17Palettes+C   o
                 dc.b    $C, $CE, 0, $22, $E, $EE, 0, $46, 4, $8A, 6, $EE, 0, 0, 0, 0
                 dc.b    2, $1E, 0, 0, 0, $22, 2, $44, $E, $EE, $A, $EA, 6, $E6, 2, $C2
                 dc.b    0, $80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
