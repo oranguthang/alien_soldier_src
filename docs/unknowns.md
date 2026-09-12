@@ -4893,3 +4893,29 @@ records, including `$029E2E`, which shares the preceding data-end alias.
 Three address-derived labels gain provenance, raising provenance from 13,821
 to 13,824 and the audit registry from 11,178 to 11,198. The enforced live
 address-derived ceiling falls from 2,229 to 2,226.
+
+The Stage 9 fly-corridor, Caterpillar-ship, and Xi-Tiger-transition audit
+replaces the partial `stages/flies_and_caterpillar.s` identity with the
+ROM-ordered 402-line
+`stages/stage_9_flies_caterpillar_and_xi_tiger.s`. Its eleven consecutive
+stage-dispatch entries cover the fly corridor, Caterpillar encounter and ship
+exit, Xi-Tiger entrance wait, and the post-encounter transition; keeping them
+together preserves their shared camera, lightning, oscillation, and raster-row
+implementation without creating artificial fragments.
+
+Static data flow disproves two especially misleading generated claims.
+`Stage_FliesSpawnEnemies` creates no object: it clears one selected byte across
+23 tilemap rows, queues the corresponding VDP transfer, and advances through
+32 reveal columns at eight-frame intervals. `Stage_CaterpillarShipUpdate` is a
+one-shot encounter initializer that creates Caterpillar entity type `$128`
+before entering the recurring ship-traversal state. The otherwise unreachable
+entry at `$00D1EA` and the unreferenced 32-byte permutation at `$00D266` are
+explicitly marked `Unreferenced`; the latter contains every index from zero
+through 31 exactly once, but no unsupported purpose is assigned to it.
+
+All 49 definitions in the module now have exact-address static audit records.
+The 32 formerly address-derived definitions gain evidence-backed names and 33
+new provenance mappings, raising provenance from 13,824 to 13,857 and the audit
+registry from 11,198 to 11,247. The enforced live address-derived ceiling falls
+from 2,226 to 2,194, while the module count remains 370 and the file stays well
+inside the 1,000-line ceiling.

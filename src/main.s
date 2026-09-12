@@ -50,7 +50,7 @@
                 include "src/rendering/palettes.s"
                 include "src/stages/camera_dispatch.s"
                 include "src/stages/train_and_flying_neo.s"
-                include "src/stages/flies_and_caterpillar.s"
+                include "src/stages/stage_9_flies_caterpillar_and_xi_tiger.s"
                 include "src/stages/intro_projectiles.s"
                 include "src/stages/flying_neo_effects.s"
                 include "src/stages/stage10_to_stage13.s"

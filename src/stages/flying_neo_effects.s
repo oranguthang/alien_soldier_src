@@ -22,7 +22,7 @@ byte_D74E:      dc.b    $66, $68, $40, 0, 1, 2, $1C, $1D, $21, $22, $26, $27
 
 ; Initializes Flying-Neo boss entity for battle
 Stage_FlyingNeoInitBoss:                                ; CODE XREF: Stage_FlyingNeoBattleStart+1E   p  ; was: sub_D75A
-                                        ; Stage_InitStage9Flies+24   p
+                                        ; Stage9_InitializeFlyCorridor+24   p
                 lea     (FlyingNeoAndMidgamePaletteCommandBank).l,a0
                 jmp     Gfx_LoadPaletteCommand
 ; End of function Stage_FlyingNeoInitBoss
@@ -105,8 +105,8 @@ word_D864:      dc.w    1, $E308, $E36E, $22, $E324, $E326, $E328, $E32A
                 dc.w    $E35C, $E35E, $E362, $E364, $E366, $E368, $E36A, $E370
                 dc.w    $E372, $E374, $E376, $E378, $E37A, $E37C, $E37E
 word_D8B2:      dc.w    7, $E308, $E30A, $E30C, $E30E, $E310, $E312, $E314
-                                        ; DATA XREF: Stage_FliesScrollUpdate   o
-                                        ; sub_D1EA   o
+                                        ; DATA XREF: Stage9_UpdateFlyCorridorScroll   o
+                                        ; UnreferencedStage9_UpdateCaterpillarScroll   o
                 dc.w    $E316, $23, $E324, $E326, $E328, $E32A, $E32C, $E32E
                 dc.w    $E330, $E332, $E344, $E346, $E348, $E34A, $E34C, $E34E
                 dc.w    $E350, $E352, $E354, $E356, $E358, $E35A, $E35C, $E35E

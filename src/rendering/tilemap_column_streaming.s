@@ -32,7 +32,7 @@ Tilemap_QueuePrimaryPlaneColumn:                        ; CODE XREF: Stage_Telep
                                         ; Stage_SevenForcesUpdateMedusaCameraAndParallax+46   p
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
-Tilemap_QueueColumnFromDescriptor:                      ; CODE XREF: Stage_CaterpillarShipMovement+52   p  ; was: loc_10704
+Tilemap_QueueColumnFromDescriptor:                      ; CODE XREF: Stage9_UpdateCaterpillarShipTraversal+52   p  ; was: loc_10704
                                         ; Stage18_UpdateScrollAndRenderTilemap+1A   j
                 neg.w   d1
                 moveq   #8,d7

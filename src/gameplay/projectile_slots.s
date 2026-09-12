@@ -193,7 +193,7 @@ Math_ClearD0D1:
 ; End of function Math_ClearD0D1
 ; Clears all objects except specified types
 Object_ClearAllExceptTypes:                             ; CODE XREF: ShipSequence_Update+26   j  ; was: sub_1C288
-                                        ; Stage_CaterpillarShipMovement+A0   p
+                                        ; Stage9_UpdateCaterpillarShipTraversal+A0   p
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
                 moveq   #0,d3
                 moveq   #$3C,d7                         ; '<'

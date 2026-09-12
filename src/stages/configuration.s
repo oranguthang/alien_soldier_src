@@ -135,7 +135,7 @@ Stage_InitializeStage9:                                 ; DATA XREF: ROM:0001227
                 bsr.w   Stage_ApplyConfigurationRecord
 Stage_ClearPaletteHighBitsBeforeFourRangeFill:          ; CODE XREF: Stage_ApplyXiTigerConfiguration+A   j  ; was: loc_1233A
                 jsr     (Boss_FlyingNeoClearPaletteHighBits).l
-Stage_PrepareFourWordRangesWithD:                       ; CODE XREF: Stage_InitStage9Flies+86   j  ; was: loc_12340
+Stage_PrepareFourWordRangesWithD:                       ; CODE XREF: Stage9_InitializeFlyCorridor+86   j  ; was: loc_12340
                 lea     (word_FF0C80).l,a0
                 lea     (word_FF0D00).l,a1
                 lea     (word_FF0D80).l,a2

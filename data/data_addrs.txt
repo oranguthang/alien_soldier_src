@@ -534,7 +534,7 @@ PCMPart9,0xD8000,0xD9A5E,sound
 
 # === Other data (other/) ===
 title_screen_unreferenced,0x945E,0x9478,other
-unused_2,0xD266,0xD286,other
+unreferenced_stage_9_index_permutation,0xD266,0xD286,other
 unreferenced_indexed_column_transfer_descriptor,0x1115A,0x11170,other
 unreferenced_opening_transition_data,0x1D544,0x1D5E0,other
 unused_5,0x225CC,0x23CBA,other

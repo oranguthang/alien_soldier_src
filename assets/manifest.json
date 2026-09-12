@@ -4721,8 +4721,8 @@
       "sha1": "d411747cb1c2ca980bf03ca53896890167b2cb27"
     },
     {
-      "name": "unused_2",
-      "path": "other/unused_2.bin",
+      "name": "unreferenced_stage_9_index_permutation",
+      "path": "other/unreferenced_stage_9_index_permutation.bin",
       "region": "other",
       "address": "0xD266",
       "end": "0xD286",

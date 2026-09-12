@@ -32,7 +32,7 @@ Stage_TransitionToNextPhase:                            ; CODE XREF: Stage_Updat
                 addq.w  #2,(word_FFA950).w
                 move.w  #$56,(MessageSequenceState).w   ; 'V'
 ; Initializes shared boss health and combat-counter values for the next phase
-Stage_InitializeBossHealthAndCounter:                   ; CODE XREF: Stage_InitXiTigerBoss   p  ; was: loc_FF54
+Stage_InitializeBossHealthAndCounter:                   ; CODE XREF: Stage9_InitializeXiTigerEncounter   p  ; was: loc_FF54
                 move.w  (StageTableIndex).w,d0
                 lea     Stage_BossHealthDefaults(pc),a0
                 nop

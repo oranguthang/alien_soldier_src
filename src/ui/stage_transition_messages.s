@@ -169,7 +169,7 @@ StageTransitionMessageSequence_StageZero:   dc.b    3, $DA, 0, $58, $79, $42, $3
                 dc.b    $FD
 StageTransitionMessageSequence_Shared:  dc.b    3, $DA, 0, $3B, $48, $6D, $5A, $55, $6D, $78, $32, $4E, 0, $58, $5D, $42  ; was: byte_1E4E5
                                         ; DATA XREF: Stage_CheckTransitionReady+E   o
-                                        ; Stage_PostXiTigerTransition+16   o
+                                        ; Stage9_UpdatePostXiTigerTransition+16   o
                 dc.b    $D8, $D8, $D8, 0, $DA, $FF, 6, $3F, $3F, $35, $31, $49, $D8, $9E, $84, $AB
                 dc.b    $39, $37, $3A, $31, $37, $32, $39, $32, $4C, $43, $FF, 8, $3E, $48, $BD, $8E
                 dc.b    $80, $E2, 0, $32, $41, $3C, $D9, $FF, $A, $82, $80, $A3, $7F, $AB, $8D, $A4

@@ -60,7 +60,7 @@ Tilemap_WriteOffsetMirrorRowSegment:                    ; CODE XREF: Tilemap_Mir
 ; End of function Tilemap_MirrorOffsetRowAndQueueScrollingRow
 ; Queues the next 64-word tilemap row filled with one constant value
 Tilemap_QueueNextConstantRow:                           ; CODE XREF: Stage_InitTerobusterBoss+10   p  ; was: sub_10DB2
-                                        ; Stage_CaterpillarScrollHandler+4   p
+                                        ; Stage9_UpdateCaterpillarShipExit+4   p
                 tst.w   (word_FFA944).w
                 bmi.w   Tilemap_ConstantRowQueueReturn
                 movea.w (VDPStagingDataCursor).w,a0

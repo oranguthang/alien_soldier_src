@@ -97,7 +97,7 @@ Boss_FlyingNeoGraphicsLoadList: dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_XiTigerAssetSet:   dc.w    $114                    ; field_0  ; was: stru_11424
-                                        ; DATA XREF: Stage_InitXiTigerBoss+3A   o
+                                        ; DATA XREF: Stage9_InitializeXiTigerEncounter+3A   o
                 dc.l    Boss_XiTigerGraphicsLoadList    ; field_2
                 dc.l    Boss_XiTigerPaletteCommand      ; field_6
 Boss_XiTigerGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_1142E

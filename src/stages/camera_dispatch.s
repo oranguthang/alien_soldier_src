@@ -54,17 +54,17 @@ off_C84A:       dc.w    Stage_UpdateLogic-Stage_UpdateLogic
                 dc.w    Stage_FlyingNeoBattleStart-Stage_UpdateLogic
                 dc.w    Stage_FlyingNeoBattleUpdate-Stage_UpdateLogic
                 dc.w    Stage_PostFlyingNeoTransition-Stage_UpdateLogic
-                dc.w    Stage_InitStage9Flies-Stage_UpdateLogic
-                dc.w    Stage_FliesCheckTransition-Stage_UpdateLogic
-                dc.w    Stage_InitCaterpillarShip-Stage_UpdateLogic
-                dc.w    Stage_CaterpillarShipUpdate-Stage_UpdateLogic
-                dc.w    Stage_CaterpillarShipMovement-Stage_UpdateLogic
-                dc.w    Stage_CaterpillarScrollHandler-Stage_UpdateLogic
-                dc.w    Stage_XiTigerEmptyHandler-Stage_UpdateLogic
-                dc.w    Stage_XiTigerBossWait-Stage_UpdateLogic
-                dc.w    Stage_XiTigerBossWait_CheckEntity-Stage_UpdateLogic
-                dc.w    Stage_PostXiTigerTransition-Stage_UpdateLogic
-                dc.w    Stage_InitXiTigerBoss-Stage_UpdateLogic
+                dc.w    Stage9_InitializeFlyCorridor-Stage_UpdateLogic
+                dc.w    Stage9_UpdateFlyCorridor-Stage_UpdateLogic
+                dc.w    Stage9_InitializeCaterpillarCamera-Stage_UpdateLogic
+                dc.w    Stage9_InitializeCaterpillarEncounter-Stage_UpdateLogic
+                dc.w    Stage9_UpdateCaterpillarShipTraversal-Stage_UpdateLogic
+                dc.w    Stage9_UpdateCaterpillarShipExit-Stage_UpdateLogic
+                dc.w    Stage9_XiTigerEntranceDelay_Return-Stage_UpdateLogic
+                dc.w    Stage9_UpdateXiTigerEntranceDelay-Stage_UpdateLogic
+                dc.w    Stage9_WaitForXiTigerEntranceObject-Stage_UpdateLogic
+                dc.w    Stage9_UpdatePostXiTigerTransition-Stage_UpdateLogic
+                dc.w    Stage9_InitializeXiTigerEncounter-Stage_UpdateLogic
 
 ; Updates stage logic and scroll
 Stage_UpdateLogic:                                      ; DATA XREF: Stage_Dispatcher+4   o  ; was: sub_C8C2

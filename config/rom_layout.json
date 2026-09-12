@@ -137,7 +137,7 @@
     { "file": "src/rendering/palettes.s", "subsystem": "rendering", "start": "0x00B900", "end": "0x00C83D" },
     { "file": "src/stages/camera_dispatch.s", "subsystem": "stages", "start": "0x00C83E", "end": "0x00CDF9" },
     { "file": "src/stages/train_and_flying_neo.s", "subsystem": "stages", "start": "0x00CDFA", "end": "0x00D0B3" },
-    { "file": "src/stages/flies_and_caterpillar.s", "subsystem": "stages", "start": "0x00D0B4", "end": "0x00D5BB" },
+    { "file": "src/stages/stage_9_flies_caterpillar_and_xi_tiger.s", "subsystem": "stages", "start": "0x00D0B4", "end": "0x00D5BB" },
     { "file": "src/stages/intro_projectiles.s", "subsystem": "stages", "start": "0x00D5BC", "end": "0x00D713" },
     { "file": "src/stages/flying_neo_effects.s", "subsystem": "stages", "start": "0x00D714", "end": "0x00D90D" },
     { "file": "src/stages/stage10_to_stage13.s", "subsystem": "stages", "start": "0x00D90E", "end": "0x00DE43" },
