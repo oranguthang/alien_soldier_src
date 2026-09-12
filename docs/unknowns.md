@@ -5270,3 +5270,19 @@ in the address-keyed registry. Provenance rises from 14,154 to 14,646 mappings,
 the audit registry from 11,723 to 11,969, and the enforced address-derived
 ceiling falls from 1,897 to 1,405. The remaining backlog comprises 831 RAM
 equates and 574 preserved-data labels.
+
+The credits-scene asset pass removes all 90 address-derived definitions from
+`data/credits_scene_assets.s`. The twenty numbered scene asset-load lists prove
+the nonsequential ROM ownership of twenty compressed tile-art sources and
+twenty mapping-data sources. Their source names now follow the scene number
+rather than their address, so the relationship visible in
+`credits/palette_data.s` is also visible at each asset boundary.
+
+The two special lists prove four Treasure-scene sources and two Sega-scene
+sources. No character, background, or visual-subject identity is inferred from
+the bytes. All 46 source addresses receive static audit records; the 44
+exclusive-end aliases share the next asset boundary and retain provenance
+without duplicate address records. Provenance rises from 14,646 to 14,736,
+the audit registry from 11,969 to 12,015, and the enforced address-derived
+ceiling falls from 1,405 to 1,315. The remaining backlog comprises 831 RAM
+equates and 484 preserved-data labels.

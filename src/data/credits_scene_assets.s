@@ -1,90 +1,90 @@
-tiles_14AE08:   binclude "data/artcomp/tiles_14AE08.bin"
-tiles_14AE08_End:
-byte_14B91C:    binclude "data/mappings/byte_14B91C.bin"
-byte_14B91C_End:
-tiles_14BB82:   binclude "data/artcomp/tiles_14BB82.bin"
-tiles_14BB82_End:
-byte_14D064:    binclude "data/mappings/byte_14D064.bin"
-byte_14D064_End:
-tiles_14D272:   binclude "data/artcomp/tiles_14D272.bin"
-tiles_14D272_End:
-byte_14F2B6:    binclude "data/mappings/byte_14F2B6.bin"
-byte_14F2B6_End:
-tiles_14F542:   binclude "data/artcomp/tiles_14F542.bin"
-tiles_14F542_End:
-byte_14FD6A:    binclude "data/mappings/byte_14FD6A.bin"
-byte_14FD6A_End:
-tiles_14FF06:   binclude "data/artcomp/tiles_14FF06.bin"
-tiles_14FF06_End:
-byte_150D1C:    binclude "data/mappings/byte_150D1C.bin"
-byte_150D1C_End:
-tiles_150EC8:   binclude "data/artcomp/tiles_150EC8.bin"
-tiles_150EC8_End:
-byte_151CDE:    binclude "data/mappings/byte_151CDE.bin"
-byte_151CDE_End:
-tiles_151F30:   binclude "data/artcomp/tiles_151F30.bin"
-tiles_151F30_End:
-byte_152D60:    binclude "data/mappings/byte_152D60.bin"
-byte_152D60_End:
-tiles_152FC4:   binclude "data/artcomp/tiles_152FC4.bin"
-tiles_152FC4_End:
-byte_15389A:    binclude "data/mappings/byte_15389A.bin"
-byte_15389A_End:
-tiles_153B34:   binclude "data/artcomp/tiles_153B34.bin"
-tiles_153B34_End:
-byte_1543E0:    binclude "data/mappings/byte_1543E0.bin"
-byte_1543E0_End:
-tiles_1545E4:   binclude "data/artcomp/tiles_1545E4.bin"
-tiles_1545E4_End:
-byte_1557D6:    binclude "data/mappings/byte_1557D6.bin"
-byte_1557D6_End:
-tiles_1559BE:   binclude "data/artcomp/tiles_1559BE.bin"
-tiles_1559BE_End:
-byte_157036:    binclude "data/mappings/byte_157036.bin"
-byte_157036_End:
-tiles_1571FE:   binclude "data/artcomp/tiles_1571FE.bin"
-tiles_1571FE_End:
-byte_158674:    binclude "data/mappings/byte_158674.bin"
-byte_158674_End:
-tiles_158854:   binclude "data/artcomp/tiles_158854.bin"
-tiles_158854_End:
-byte_159440:    binclude "data/mappings/byte_159440.bin"
-byte_159440_End:
-tiles_15960E:   binclude "data/artcomp/tiles_15960E.bin"
-tiles_15960E_End:
-byte_15B086:    binclude "data/mappings/byte_15B086.bin"
-byte_15B086_End:
-tiles_15B2B6:   binclude "data/artcomp/tiles_15B2B6.bin"
-tiles_15B2B6_End:
-byte_15C020:    binclude "data/mappings/byte_15C020.bin"
-byte_15C020_End:
-tiles_15C24E:   binclude "data/artcomp/tiles_15C24E.bin"
-tiles_15C24E_End:
-byte_15D00A:    binclude "data/mappings/byte_15D00A.bin"
-byte_15D00A_End:
-tiles_15D13E:   binclude "data/artcomp/tiles_15D13E.bin"
-tiles_15D13E_End:
-byte_15E960:    binclude "data/mappings/byte_15E960.bin"
-byte_15E960_End:
-tiles_15EB98:   binclude "data/artcomp/tiles_15EB98.bin"
-tiles_15EB98_End:
-byte_15FF52:    binclude "data/mappings/byte_15FF52.bin"
-byte_15FF52_End:
-tiles_160124:   binclude "data/artcomp/tiles_160124.bin"
-tiles_160124_End:
-byte_16114A:    binclude "data/mappings/byte_16114A.bin"
-byte_16114A_End:
-tiles_161336:   binclude "data/artcomp/tiles_161336.bin"
-tiles_161336_End:
-byte_163A32:    binclude "data/mappings/byte_163A32.bin"
-byte_163A32_End:
-tiles_163E1E:   binclude "data/artcomp/tiles_163E1E.bin"
-tiles_163E1E_End:
-byte_16494A:    binclude "data/mappings/byte_16494A.bin"
-byte_16494A_End:
-tiles_164ADA:   binclude "data/artcomp/tiles_164ADA.bin"
-tiles_164ADA_End:
-byte_164E24:    dc.b    0, $DC, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0
+Credits_Scene06TileArt:         binclude "data/artcomp/tiles_14AE08.bin"  ; was: tiles_14AE08
+Credits_Scene06TileArt_End:                             ; was: tiles_14AE08_End
+Credits_Scene06MappingData:     binclude "data/mappings/byte_14B91C.bin"  ; was: byte_14B91C
+Credits_Scene06MappingData_End:                         ; was: byte_14B91C_End
+Credits_Scene07TileArt:         binclude "data/artcomp/tiles_14BB82.bin"  ; was: tiles_14BB82
+Credits_Scene07TileArt_End:                             ; was: tiles_14BB82_End
+Credits_Scene07MappingData:     binclude "data/mappings/byte_14D064.bin"  ; was: byte_14D064
+Credits_Scene07MappingData_End:                         ; was: byte_14D064_End
+Credits_Scene14TileArt:         binclude "data/artcomp/tiles_14D272.bin"  ; was: tiles_14D272
+Credits_Scene14TileArt_End:                             ; was: tiles_14D272_End
+Credits_Scene14MappingData:     binclude "data/mappings/byte_14F2B6.bin"  ; was: byte_14F2B6
+Credits_Scene14MappingData_End:                         ; was: byte_14F2B6_End
+Credits_Scene05TileArt:         binclude "data/artcomp/tiles_14F542.bin"  ; was: tiles_14F542
+Credits_Scene05TileArt_End:                             ; was: tiles_14F542_End
+Credits_Scene05MappingData:     binclude "data/mappings/byte_14FD6A.bin"  ; was: byte_14FD6A
+Credits_Scene05MappingData_End:                         ; was: byte_14FD6A_End
+Credits_Scene01TileArt:         binclude "data/artcomp/tiles_14FF06.bin"  ; was: tiles_14FF06
+Credits_Scene01TileArt_End:                             ; was: tiles_14FF06_End
+Credits_Scene01MappingData:     binclude "data/mappings/byte_150D1C.bin"  ; was: byte_150D1C
+Credits_Scene01MappingData_End:                         ; was: byte_150D1C_End
+Credits_Scene09TileArt:         binclude "data/artcomp/tiles_150EC8.bin"  ; was: tiles_150EC8
+Credits_Scene09TileArt_End:                             ; was: tiles_150EC8_End
+Credits_Scene09MappingData:     binclude "data/mappings/byte_151CDE.bin"  ; was: byte_151CDE
+Credits_Scene09MappingData_End:                         ; was: byte_151CDE_End
+Credits_Scene02TileArt:         binclude "data/artcomp/tiles_151F30.bin"  ; was: tiles_151F30
+Credits_Scene02TileArt_End:                             ; was: tiles_151F30_End
+Credits_Scene02MappingData:     binclude "data/mappings/byte_152D60.bin"  ; was: byte_152D60
+Credits_Scene02MappingData_End:                         ; was: byte_152D60_End
+Credits_Scene03TileArt:         binclude "data/artcomp/tiles_152FC4.bin"  ; was: tiles_152FC4
+Credits_Scene03TileArt_End:                             ; was: tiles_152FC4_End
+Credits_Scene03MappingData:     binclude "data/mappings/byte_15389A.bin"  ; was: byte_15389A
+Credits_Scene03MappingData_End:                         ; was: byte_15389A_End
+Credits_Scene10TileArt:         binclude "data/artcomp/tiles_153B34.bin"  ; was: tiles_153B34
+Credits_Scene10TileArt_End:                             ; was: tiles_153B34_End
+Credits_Scene10MappingData:     binclude "data/mappings/byte_1543E0.bin"  ; was: byte_1543E0
+Credits_Scene10MappingData_End:                         ; was: byte_1543E0_End
+Credits_Scene04TileArt:         binclude "data/artcomp/tiles_1545E4.bin"  ; was: tiles_1545E4
+Credits_Scene04TileArt_End:                             ; was: tiles_1545E4_End
+Credits_Scene04MappingData:     binclude "data/mappings/byte_1557D6.bin"  ; was: byte_1557D6
+Credits_Scene04MappingData_End:                         ; was: byte_1557D6_End
+Credits_Scene08TileArt:         binclude "data/artcomp/tiles_1559BE.bin"  ; was: tiles_1559BE
+Credits_Scene08TileArt_End:                             ; was: tiles_1559BE_End
+Credits_Scene08MappingData:     binclude "data/mappings/byte_157036.bin"  ; was: byte_157036
+Credits_Scene08MappingData_End:                         ; was: byte_157036_End
+Credits_Scene11TileArt:         binclude "data/artcomp/tiles_1571FE.bin"  ; was: tiles_1571FE
+Credits_Scene11TileArt_End:                             ; was: tiles_1571FE_End
+Credits_Scene11MappingData:     binclude "data/mappings/byte_158674.bin"  ; was: byte_158674
+Credits_Scene11MappingData_End:                         ; was: byte_158674_End
+Credits_Scene12TileArt:         binclude "data/artcomp/tiles_158854.bin"  ; was: tiles_158854
+Credits_Scene12TileArt_End:                             ; was: tiles_158854_End
+Credits_Scene12MappingData:     binclude "data/mappings/byte_159440.bin"  ; was: byte_159440
+Credits_Scene12MappingData_End:                         ; was: byte_159440_End
+Credits_Scene13TileArt:         binclude "data/artcomp/tiles_15960E.bin"  ; was: tiles_15960E
+Credits_Scene13TileArt_End:                             ; was: tiles_15960E_End
+Credits_Scene13MappingData:     binclude "data/mappings/byte_15B086.bin"  ; was: byte_15B086
+Credits_Scene13MappingData_End:                         ; was: byte_15B086_End
+Credits_Scene15TileArt:         binclude "data/artcomp/tiles_15B2B6.bin"  ; was: tiles_15B2B6
+Credits_Scene15TileArt_End:                             ; was: tiles_15B2B6_End
+Credits_Scene15MappingData:     binclude "data/mappings/byte_15C020.bin"  ; was: byte_15C020
+Credits_Scene15MappingData_End:                         ; was: byte_15C020_End
+Credits_Scene16TileArt:         binclude "data/artcomp/tiles_15C24E.bin"  ; was: tiles_15C24E
+Credits_Scene16TileArt_End:                             ; was: tiles_15C24E_End
+Credits_Scene16MappingData:     binclude "data/mappings/byte_15D00A.bin"  ; was: byte_15D00A
+Credits_Scene16MappingData_End:                         ; was: byte_15D00A_End
+Credits_Scene17TileArt:         binclude "data/artcomp/tiles_15D13E.bin"  ; was: tiles_15D13E
+Credits_Scene17TileArt_End:                             ; was: tiles_15D13E_End
+Credits_Scene17MappingData:     binclude "data/mappings/byte_15E960.bin"  ; was: byte_15E960
+Credits_Scene17MappingData_End:                         ; was: byte_15E960_End
+Credits_Scene18TileArt:         binclude "data/artcomp/tiles_15EB98.bin"  ; was: tiles_15EB98
+Credits_Scene18TileArt_End:                             ; was: tiles_15EB98_End
+Credits_Scene18MappingData:     binclude "data/mappings/byte_15FF52.bin"  ; was: byte_15FF52
+Credits_Scene18MappingData_End:                         ; was: byte_15FF52_End
+Credits_Scene19TileArt:         binclude "data/artcomp/tiles_160124.bin"  ; was: tiles_160124
+Credits_Scene19TileArt_End:                             ; was: tiles_160124_End
+Credits_Scene19MappingData:     binclude "data/mappings/byte_16114A.bin"  ; was: byte_16114A
+Credits_Scene19MappingData_End:                         ; was: byte_16114A_End
+Credits_Scene20TileArt:         binclude "data/artcomp/tiles_161336.bin"  ; was: tiles_161336
+Credits_Scene20TileArt_End:                             ; was: tiles_161336_End
+Credits_Scene20MappingData:     binclude "data/mappings/byte_163A32.bin"  ; was: byte_163A32
+Credits_Scene20MappingData_End:                         ; was: byte_163A32_End
+Credits_TreasureTileArt0:       binclude "data/artcomp/tiles_163E1E.bin"  ; was: tiles_163E1E
+Credits_TreasureTileArt0_End:                           ; was: tiles_163E1E_End
+Credits_TreasureMappingData0:   binclude "data/mappings/byte_16494A.bin"  ; was: byte_16494A
+Credits_TreasureMappingData0_End:                       ; was: byte_16494A_End
+Credits_TreasureTileArt1:       binclude "data/artcomp/tiles_164ADA.bin"  ; was: tiles_164ADA
+Credits_TreasureTileArt1_End:                           ; was: tiles_164ADA_End
+Credits_TreasureMappingData1:   dc.b    0, $DC, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0  ; was: byte_164E24
                                         ; DATA XREF: ROM:000219F6   o
                 dc.b    $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $FF, $DD, 0, 0, $50, 0, 0, $62, $64, 1, 2, 3, 4, $5F, 0, 0, $57
                 dc.b    0, 0, $66, $64, 5, 6, 7, 8, 9, $A, $B, $C, $5F, 0, 0, $54, 0, 0, $68, $64, $D, $E, $F, $10, $11, $12, $13, $14, $15, $16, $5F, 0
@@ -92,9 +92,10 @@ byte_164E24:    dc.b    0, $DC, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F,
                 dc.b    0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $8B, $FB, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0
                 dc.b    0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F
                 dc.b    0, 0, $FF, $DD, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $5F, 0, 0, $57, 0, 0
-tiles_164F02:   binclude "data/artcomp/tiles_164F02.bin"
-tiles_164F02_End:
-byte_16537C:    dc.b    0, $4A, $6A, $60, $40, $44, $48, $4C, $50, $54, $58, $5C, $60, $64, $68, $6C, $5F, 0, 0, $51, 0, 0, $6A, $60, $41, $45, $49, $4D, $51, $55, $59, $5D
+Credits_SegaTileArt:        binclude "data/artcomp/tiles_164F02.bin"  ; was: tiles_164F02
+Credits_SegaTileArt_End:                                ; was: tiles_164F02_End
+Credits_SegaMappingData:    dc.b    0, $4A, $6A, $60, $40, $44, $48, $4C, $50, $54, $58, $5C, $60, $64, $68, $6C, $5F, 0, 0, $51, 0, 0, $6A, $60, $41, $45, $49, $4D, $51, $55, $59, $5D
+                                        ; was: byte_16537C
                                         ; DATA XREF: ROM:00021A28   o
                 dc.b    $61, $65, $69, $6D, $5F, 0, 0, $51, 0, 0, $6A, $60, $42, $46, $4A, $4E, $52, $56, $5A, $5E, $62, $66, $6A, $6E, $5F, 0, 0, $51, 0, 0, $6A, $60
                 dc.b    $43, $47, $4B, $4F, $53, $57, $5B, $5F, $63, $67, $6B, $6F
