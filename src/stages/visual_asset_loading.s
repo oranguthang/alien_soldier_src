@@ -464,6 +464,6 @@ XiTigerStageConfigRecord:   dc.w    $76                 ; word_FFA950  ; was: st
                 dc.w    0                               ; word_FF80AC
                 dc.b    $F0                             ; byte biased by $80 -> word at dword_FFA410
                 dc.b    $A8                             ; byte biased by $80 -> word at dword_FFA414
-                dc.l    Stage8AlternatePaletteOffsetList  ; palette offset list pointer
+                dc.l    XiTigerAndStage9PaletteOffsetList  ; palette offset list pointer
 
 ; Initializes stage state including RAM clear and player stats

@@ -43,32 +43,38 @@ CreditsAndPlanetPaletteOffsetList:  dc.w    $B14, $B54, 0  ; DATA XREF: EndingSe
 EarlyStagePaletteOffsetList:    dc.w    $34C, 0         ; DATA XREF: ROM:Stage1ConfigRecord   o  ; was: word_B988
                                         ; ROM:Stage2ConfigRecord   o
 ShellshogunStagePaletteOffsetList:  dc.w    $34C, $38E, 0  ; DATA XREF: Camera_ShellshogunBossInit+38   o  ; was: word_B98C
-                                        ; ROM:Stage2SecondConfigRecord   o
-Stage2LatePaletteOffsetList:    dc.w    $3B0, 0         ; DATA XREF: ROM:Stage2ThirdConfigRecord   o  ; was: word_B992
-                                        ; ROM:Stage2FourthConfigRecord   o
+                                        ; ROM:Stage4ConfigRecord   o
+Stage5To7PaletteOffsetList: dc.w    $3B0, 0             ; DATA XREF: ROM:Stage5ConfigRecord   o  ; was: word_B992
+                                        ; ROM:Stage6ConfigRecord   o
+                                        ; ROM:Stage7ConfigRecord   o
 Stage8InitialPaletteOffsetList:     dc.w    $3F2, 0     ; DATA XREF: ROM:Stage8ConfigRecord   o  ; was: word_B996
-Stage8AlternatePaletteOffsetList:   dc.w    $3F2, $966, 0  ; DATA XREF: ROM:XiTigerStageConfigRecord   o  ; was: word_B99A
-                                        ; ROM:Stage8AlternatePaletteConfigRecord   o
+XiTigerAndStage9PaletteOffsetList:  dc.w    $3F2, $966, 0  ; DATA XREF: ROM:XiTigerStageConfigRecord   o  ; was: word_B99A
+                                        ; ROM:Stage9ConfigRecord   o
 XiTigerCutscenePaletteOffsetList:   dc.w    $442, 0     ; DATA XREF: XiTigerCutscene_LoadAssets+C   o  ; was: word_B9A0
-Stage10PaletteOffsetList:           dc.w    $482, 0     ; DATA XREF: ROM:Stage10ConfigRecord   o  ; was: word_B9A4
-                                        ; ROM:Stage10AlternateConfigRecord   o
-Stage13To16PaletteOffsetList:   dc.w    $4C2, 0         ; DATA XREF: ROM:Stage13AlternateConfigRecord   o  ; was: word_B9A8
-                                        ; ROM:Stage14ConfigRecord   o
-Stage17PaletteOffsetList:   dc.w    $502, 0             ; DATA XREF: ROM:Stage17BossConfigRecord   o  ; was: word_B9AC
-Stage18PaletteOffsetList:   dc.w    $562, 0             ; DATA XREF: ROM:Stage18ForegroundConfigRecord   o  ; was: word_B9B0
-                                        ; ROM:Stage18AlternateConfigRecord   o
-Stage20PaletteOffsetList:   dc.w    $5A2, 0             ; DATA XREF: ROM:Stage20FirstConfigRecord   o  ; was: word_B9B4
-                                        ; ROM:Stage20SecondConfigRecord   o
-Stage25PaletteOffsetLists:              dc.w    $5E2, 0, $632, 0  ; DATA XREF: ROM:Stage25ConfigRecord   o  ; was: word_B9B8
+Stage10To13PaletteOffsetList:       dc.w    $482, 0     ; DATA XREF: ROM:Stage10ConfigRecord   o  ; was: word_B9A4
+                                        ; ROM:Stage11ConfigRecord   o
+                                        ; ROM:Stage12ConfigRecord   o
+                                        ; ROM:Stage13ConfigRecord   o
+Stage14To16PaletteOffsetList:   dc.w    $4C2, 0         ; DATA XREF: ROM:Stage14ConfigRecord   o  ; was: word_B9A8
+                                        ; ROM:Stage15ConfigRecord   o
+                                        ; ROM:Stage16ConfigRecord   o
+Stage17PaletteOffsetList:       dc.w    $502, 0         ; DATA XREF: ROM:Stage17BossConfigRecord   o  ; was: word_B9AC
+Stage18And19PaletteOffsetList:  dc.w    $562, 0         ; DATA XREF: ROM:Stage18ConfigRecord   o  ; was: word_B9B0
+                                        ; ROM:Stage19ConfigRecord   o
+UnreferencedStage20VariantPaletteOffsetList:    dc.w    $5A2, 0  ; DATA XREF: ROM:UnreferencedStage20Variant1ConfigRecord   o  ; was: word_B9B4
+                                        ; ROM:UnreferencedStage20Variant2ConfigRecord   o
+                                        ; ROM:UnreferencedStage20Variant3ConfigRecord   o
+                                        ; ROM:UnreferencedStage20Variant4ConfigRecord   o
+Stage20PaletteOffsetLists:              dc.w    $5E2, 0, $632, 0  ; DATA XREF: ROM:Stage20ConfigRecord   o  ; was: word_B9B8
 SevenForcesCutscenePaletteOffsetList:   dc.w    $690, $6B0, 0  ; DATA XREF: Cutscene_SevenForcesLoadGraphics   o  ; was: word_B9C0
-Stage26PaletteOffsetList:               dc.w    $6B8, $818, 0  ; DATA XREF: ROM:Stage26ConfigRecord   o  ; was: word_B9C6
-                                        ; ROM:Stage28ConfigRecord   o
-Stage27PaletteOffsetList:   dc.w    $6B8, $828, 0       ; DATA XREF: ROM:Stage27ConfigRecord   o  ; was: word_B9CC
-Stage29PaletteOffsetList:   dc.w    $6F8, $848, 0       ; DATA XREF: ROM:Stage29ConfigRecord   o  ; was: word_B9D2
-Stage30PaletteOffsetList:   dc.w    $718, $E34, 0       ; DATA XREF: ROM:Stage30ConfigRecord   o  ; was: word_B9D8
-Stage31PaletteOffsetList:   dc.w    $738, 0             ; DATA XREF: ROM:Stage31ConfigRecord   o  ; was: word_B9DE
-Stage32PaletteOffsetList:   dc.w    $758, 0             ; DATA XREF: ROM:Stage32ConfigRecord   o  ; was: word_B9E2
-Stage33PaletteOffsetList:   dc.w    $798, 0             ; DATA XREF: ROM:Stage33ConfigRecord   o  ; was: word_B9E6
+Stage21And23PaletteOffsetList:          dc.w    $6B8, $818, 0  ; DATA XREF: ROM:Stage21ConfigRecord   o  ; was: word_B9C6
+                                        ; ROM:Stage23ConfigRecord   o
+Stage22PaletteOffsetList:               dc.w    $6B8, $828, 0  ; DATA XREF: ROM:Stage22ConfigRecord   o  ; was: word_B9CC
+Stage24PaletteOffsetList:               dc.w    $6F8, $848, 0  ; DATA XREF: ROM:Stage24ConfigRecord   o  ; was: word_B9D2
+UnreferencedFlaggedPaletteOffsetListA:  dc.w    $718, $E34, 0  ; DATA XREF: ROM:UnreferencedFlaggedConfigRecordA   o  ; was: word_B9D8
+UnreferencedFlaggedPaletteOffsetListB:  dc.w    $738, 0  ; DATA XREF: ROM:UnreferencedFlaggedConfigRecordB   o  ; was: word_B9DE
+Stage25PaletteOffsetList:               dc.w    $758, 0  ; DATA XREF: ROM:Stage25ConfigRecord   o  ; was: word_B9E2
+Stage26PaletteOffsetList:               dc.w    $798, 0  ; DATA XREF: ROM:Stage26ConfigRecord   o  ; was: word_B9E6
                                         ; Stage_InitPlayerAndScroll+24   o
 
 ; Loads a palette command while preserving the shared color at palette slot $36

@@ -178,7 +178,7 @@ Sys_Clear96ByteBlock:                                   ; CODE XREF: Object_Clea
                 rts
 ; End of function Sys_ClearObjectSlot
 ; ---------------------------------------------------------------------------
-Stage_EmptyObjectSpawnList: dc.w    $7FFF               ; DATA XREF: ROM:Stage12ConfigRecord   o  ; was: word_1A3E6
+Stage_EmptyObjectSpawnList: dc.w    $7FFF               ; DATA XREF: ROM:Stage13ConfigRecord   o  ; was: word_1A3E6
                                         ; ROM:Stage16ConfigRecord   o
 Stage1_ObjectSpawnList: dc.w    $1A0, $130, $1C, $10, $C680, $CF80  ; was: word_1A3E8
                                         ; DATA XREF: ROM:Stage1ConfigRecord   o
@@ -201,10 +201,10 @@ Stage1_ObjectSpawnList: dc.w    $1A0, $130, $1C, $10, $C680, $CF80  ; was: word_
                 dc.w    $750, $14C, $49, 0, $C680, $CF80
                 dc.w    $780, $130, $1D, 0, $C680, $CF80
                 dc.w    $7C0, $110, $1E0, 0, $C680, $CF80
-Stage2_ObjectSpawnList:             binclude "data/other/word_1A4D8.bin"  ; was: word_1A4D8
+Stage2_ObjectSpawnList: binclude "data/other/word_1A4D8.bin"  ; was: word_1A4D8
 Stage2_ObjectSpawnList_End:                             ; was: word_1A4D8_End
-Stage2_AlternateObjectSpawnList:    dc.w    $D10, $130, $1C, 0, $C680, $CF80  ; was: word_1A6B8
-                                        ; DATA XREF: ROM:Stage2AlternateConfigRecord   o
+Stage3_ObjectSpawnList: dc.w    $D10, $130, $1C, 0, $C680, $CF80  ; was: word_1A6B8
+                                        ; DATA XREF: ROM:Stage3ConfigRecord   o
                 dc.w    $D30, $130, $1C, 0, $C680, $CF80
                 dc.w    $D40, $130, $28C, 0, $C680, $CF80
                 dc.w    $D80, $130, $1D, $11, $C680, $CF80
@@ -217,18 +217,18 @@ Stage2_AlternateObjectSpawnList:    dc.w    $D10, $130, $1C, 0, $C680, $CF80  ; 
                 dc.w    $110A, $AC, $22, 0, $C680, $CF80
                 dc.w    $11E0, $130, $1C, 0, $C680, $CF80
                 dc.w    $1240, $130, $1C, 0, $C680, $CF80
-Stage2_SecondObjectSpawnList:   binclude "data/other/word_1A754.bin"  ; was: word_1A754
-Stage2_SecondObjectSpawnList_End:                       ; was: word_1A754_End
-Stage2_ThirdObjectSpawnList:    binclude "data/other/word_1A882.bin"  ; was: word_1A882
-Stage2_ThirdObjectSpawnList_End:                        ; was: word_1A882_End
-Stage2_FourthObjectSpawnList:   dc.w    $4D4, $108, $12C, 8, $DB20, $DCA0  ; was: word_1A9B0
-                                        ; DATA XREF: ROM:Stage2FourthConfigRecord   o
+Stage4_ObjectSpawnList: binclude "data/other/word_1A754.bin"  ; was: word_1A754
+Stage4_ObjectSpawnList_End:                             ; was: word_1A754_End
+Stage5_ObjectSpawnList: binclude "data/other/word_1A882.bin"  ; was: word_1A882
+Stage5_ObjectSpawnList_End:                             ; was: word_1A882_End
+Stage6_ObjectSpawnList: dc.w    $4D4, $108, $12C, 8, $DB20, $DCA0  ; was: word_1A9B0
+                                        ; DATA XREF: ROM:Stage6ConfigRecord   o
                 dc.w    $550, $108, $12C, $18, $DB20, $DCA0
                 dc.w    $5B8, $108, $12C, $10, $DB20, $DCA0
-Stage2_FifthRuntimeSpawnList:   binclude "data/other/word_1A9D4.bin"  ; was: word_1A9D4
-Stage2_FifthRuntimeSpawnList_End:                       ; was: word_1A9D4_End
-Stage2_FifthObjectSpawnList:    dc.w    $C10, $130, $1C, 0, $C680, $CF80  ; was: word_1AB24
-                                        ; DATA XREF: ROM:Stage2FifthConfigRecord   o
+PostBossRuntimeSpawnList:   binclude "data/other/word_1A9D4.bin"  ; was: word_1A9D4
+PostBossRuntimeSpawnList_End:                           ; was: word_1A9D4_End
+Stage7_ObjectSpawnList:     dc.w    $C10, $130, $1C, 0, $C680, $CF80  ; was: word_1AB24
+                                        ; DATA XREF: ROM:Stage7ConfigRecord   o
                 dc.w    $C30, $130, $1D, $11, $C680, $CF80
                 dc.w    $C50, $130, $1C, 0, $C680, $CF80
                 dc.w    $C80, $110, $8C, 0, $C680, $CF80
@@ -257,30 +257,30 @@ Stage8_ObjectSpawnList: dc.w    $980, $120, $1C, 0, $C680, $CF80  ; was: word_1A
                 dc.w    $EC0, $120, $1C, 0, $C680, $CF80
                 dc.w    $F40, $120, $1C, 0, $C680, $CF80
                 dc.w    $7FFF
-Stage8_EmptyObjectSpawnList:        dc.w    $7FFF       ; DATA XREF: ROM:Stage8AlternatePaletteConfigRecord   o  ; was: word_1AC60
-Stage10_ObjectSpawnList:            binclude "data/other/word_1AC62.bin"  ; was: word_1AC62
+Stage9_EmptyObjectSpawnList:    dc.w    $7FFF           ; DATA XREF: ROM:Stage9ConfigRecord   o  ; was: word_1AC60
+Stage10_ObjectSpawnList:        binclude "data/other/word_1AC62.bin"  ; was: word_1AC62
 Stage10_ObjectSpawnList_End:                            ; was: word_1AC62_End
-Stage10_AlternateObjectSpawnList:   binclude "data/other/word_1AD8E.bin"  ; was: word_1AD8E
-Stage10_AlternateObjectSpawnList_End:                   ; was: word_1AD8E_End
-Stage11_ObjectSpawnList:            binclude "data/other/word_1AE96.bin"  ; 26 entries plus $7FFF terminator  ; was: word_1AE96
-Stage11_ObjectSpawnList_End:                            ; was: word_1AE96_End
-Stage13_AlternateObjectSpawnList:   dc.w    $160, $1FD8, $20, 0, $C680, $CF80  ; was: word_1AFD0
-                                        ; DATA XREF: ROM:Stage13AlternateConfigRecord   o
+Stage11_ObjectSpawnList:        binclude "data/other/word_1AD8E.bin"  ; was: word_1AD8E
+Stage11_ObjectSpawnList_End:                            ; was: word_1AD8E_End
+Stage12_ObjectSpawnList:        binclude "data/other/word_1AE96.bin"  ; 26 entries plus $7FFF terminator  ; was: word_1AE96
+Stage12_ObjectSpawnList_End:                            ; was: word_1AE96_End
+Stage14_ObjectSpawnList:        dc.w    $160, $1FD8, $20, 0, $C680, $CF80  ; was: word_1AFD0
+                                        ; DATA XREF: ROM:Stage14ConfigRecord   o
                 dc.w    $1E0, $2028, $24C, 0, $C680, $CF80
                 dc.w    $200, $2010, $1C, 0, $C680, $CF80
                 dc.w    $2C0, $2010, $1C, 0, $C680, $CF80
                 dc.w    $380, $2010, $1C, 0, $C680, $CF80
-Stage14_ObjectSpawnList:    dc.w    $720, $2000, $380, 0, $C680, $CF80  ; was: word_1B00C
-                                        ; DATA XREF: ROM:Stage14ConfigRecord   o
+Stage15_ObjectSpawnList:    dc.w    $720, $2000, $380, 0, $C680, $CF80  ; was: word_1B00C
+                                        ; DATA XREF: ROM:Stage15ConfigRecord   o
                 dc.w    $720, $2000, $39C, 0, $C680, $CF80
                 dc.w    $740, $2028, $24C, 0, $C680, $CF80
                 dc.w    $764, $2028, $20, 0, $C680, $CF80
                 dc.w    $7FFF
-Stage18_ObjectSpawnList:            binclude "data/other/word_1B03E.bin"  ; was: word_1B03E
+Stage18_ObjectSpawnList:        binclude "data/other/word_1B03E.bin"  ; was: word_1B03E
 Stage18_ObjectSpawnList_End:                            ; was: word_1B03E_End
-Stage18_AlternateObjectSpawnList:   binclude "data/other/word_1B2BA.bin"  ; was: word_1B2BA
-Stage18_AlternateObjectSpawnList_End:                   ; was: word_1B2BA_End
-Stage28_EmptyObjectSpawnList:       dc.w    $7FFF       ; DATA XREF: ROM:Stage28ConfigRecord   o  ; was: word_1B3F4
-Stage32_ObjectSpawnList:            dc.w    $270, $2D0, $20, 0, $C680, $CF80  ; was: word_1B3F6
-                                        ; DATA XREF: ROM:Stage32ConfigRecord   o
+Stage19_ObjectSpawnList:        binclude "data/other/word_1B2BA.bin"  ; was: word_1B2BA
+Stage19_ObjectSpawnList_End:                            ; was: word_1B2BA_End
+Stage23_EmptyObjectSpawnList:   dc.w    $7FFF           ; DATA XREF: ROM:Stage23ConfigRecord   o  ; was: word_1B3F4
+Stage25_ObjectSpawnList:        dc.w    $270, $2D0, $20, 0, $C680, $CF80  ; was: word_1B3F6
+                                        ; DATA XREF: ROM:Stage25ConfigRecord   o
                 dc.w    $7FFF

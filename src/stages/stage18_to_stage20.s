@@ -10,7 +10,7 @@ Stage_Stage18StartBattle:                               ; DATA XREF: ROM:off_E43
                 cmpi.w  #$820,(dword_FFA900).w
                 bmi.s   Stage_Stage18EmptyHandler
                 addq.w  #2,(word_FFA950).w
-locret_E4FA:                                            ; CODE XREF: Stage_LoadStage18ConfigAlt+A   p
+locret_E4FA:                                            ; CODE XREF: Stage_InitializeStage19+A   p
                 rts
 ; End of function Stage_Stage18StartBattle
 ; Pre-boss battle setup

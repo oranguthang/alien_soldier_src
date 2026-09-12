@@ -7,7 +7,7 @@ Stage_InitPlayerAndScroll:                              ; DATA XREF: ROM:0001E85
                 lea     stru_1EE12(pc),a0
                 nop
                 jsr     (LoadObjData).l
-                lea     (Stage33PaletteOffsetList).l,a4
+                lea     (Stage26PaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$1000,(dword_FFA900).w
                 move.w  #$EC00,(dword_FFA904).w

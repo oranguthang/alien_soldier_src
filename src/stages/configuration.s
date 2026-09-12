@@ -28,33 +28,33 @@ Stage_DispatchInitializer:                              ; CODE XREF: Sys_InitSta
                 jmp     (a0)
 ; End of function Stage_DispatchInitializer
 ; ---------------------------------------------------------------------------
-Stage_InitializerOffsets:   dc.w    Stage_InitStage1Data-Sys_ClearRAMBuffer  ; was: off_1226C
+Stage_InitializerOffsets:   dc.w    Stage_ApplyStage1Configuration-Sys_ClearRAMBuffer  ; was: off_1226C
                                         ; DATA XREF: Stage_DispatchInitializer+4   r
-                dc.w    Stage_InitStage2Data-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage2ConfigAlt-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage2Config2-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage2Config3-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage2Config4-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage2Config5-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage8Data-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage8Palettes-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage10Data-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage10ConfigAlt-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage11Config-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage12Data-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage13ConfigAlt-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage14Config-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage16Data-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage17Boss-Sys_ClearRAMBuffer
-                dc.w    Gfx_Stage18Foreground-Sys_ClearRAMBuffer
-                dc.w    Stage_LoadStage18ConfigAlt-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage25Tilemap-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage26Config-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage27Config-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage28Config-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage29Config-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage32Config-Sys_ClearRAMBuffer
-                dc.w    Stage_InitStage33Config-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage2Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage3Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage4Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage5Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage6Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage7Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage8-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage9-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage10Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage11Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage12Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage13Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage14Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage15Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage16-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage17Boss-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage18-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage19-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage20-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage21-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage22-Sys_ClearRAMBuffer
+                dc.w    Stage_InitializeStage23-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage24Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage25Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage26Configuration-Sys_ClearRAMBuffer
 
 ; Clears 4-word RAM buffer used for temporary data storage
 Sys_ClearRAMBuffer:                                     ; CODE XREF: Stage_InitializeXiTigerState+A   p  ; was: sub_122A0
@@ -68,49 +68,49 @@ Sys_ClearNextScratchWord:                               ; CODE XREF: Sys_ClearRA
                 rts
 ; End of function Sys_ClearRAMBuffer
 ; Initializes stage 1 data structure and palette
-Stage_InitStage1Data:                                   ; DATA XREF: ROM:Stage_InitializerOffsets   o  ; was: sub_122AE
+Stage_ApplyStage1Configuration:                         ; DATA XREF: ROM:Stage_InitializerOffsets   o  ; was: sub_122AE
                 lea     Stage1ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage1Data
+; End of function Stage_ApplyStage1Configuration
 ; Initializes stage 2 data structure and palette
-Stage_InitStage2Data:                                   ; DATA XREF: ROM:0001226E   o  ; was: sub_122B8
+Stage_ApplyStage2Configuration:                         ; DATA XREF: ROM:0001226E   o  ; was: sub_122B8
                 lea     Stage2ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage2Data
-; Loads alternate configuration for stage 2
-Stage_LoadStage2ConfigAlt:                              ; DATA XREF: ROM:00012270   o  ; was: sub_122C2
-                lea     Stage2AlternateConfigRecord(pc),a0
+; End of function Stage_ApplyStage2Configuration
+; Applies the configuration selected by the Stage 3 table entry
+Stage_ApplyStage3Configuration:                         ; DATA XREF: ROM:00012270   o  ; was: sub_122C2
+                lea     Stage3ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage2ConfigAlt
-; Loads second configuration for stage 2
-Stage_LoadStage2Config2:                                ; DATA XREF: ROM:00012272   o  ; was: sub_122CC
-                lea     Stage2SecondConfigRecord(pc),a0
+; End of function Stage_ApplyStage3Configuration
+; Applies the configuration selected by the Stage 4 table entry
+Stage_ApplyStage4Configuration:                         ; DATA XREF: ROM:00012272   o  ; was: sub_122CC
+                lea     Stage4ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage2Config2
-; Loads third configuration for stage 2
-Stage_LoadStage2Config3:                                ; DATA XREF: ROM:00012274   o  ; was: sub_122D6
-                lea     Stage2ThirdConfigRecord(pc),a0
+; End of function Stage_ApplyStage4Configuration
+; Applies the configuration selected by the Stage 5 table entry
+Stage_ApplyStage5Configuration:                         ; DATA XREF: ROM:00012274   o  ; was: sub_122D6
+                lea     Stage5ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage2Config3
-; Loads fourth configuration for stage 2
-Stage_LoadStage2Config4:                                ; DATA XREF: ROM:00012276   o  ; was: sub_122E0
-                lea     Stage2FourthConfigRecord(pc),a0
+; End of function Stage_ApplyStage5Configuration
+; Applies the configuration selected by the Stage 6 table entry
+Stage_ApplyStage6Configuration:                         ; DATA XREF: ROM:00012276   o  ; was: sub_122E0
+                lea     Stage6ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage2Config4
-; Loads fifth configuration for stage 2
-Stage_LoadStage2Config5:                                ; DATA XREF: ROM:00012278   o  ; was: sub_122EA
-                lea     Stage2FifthConfigRecord(pc),a0
+; End of function Stage_ApplyStage6Configuration
+; Applies the configuration selected by the Stage 7 table entry
+Stage_ApplyStage7Configuration:                         ; DATA XREF: ROM:00012278   o  ; was: sub_122EA
+                lea     Stage7ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage2Config5
+; End of function Stage_ApplyStage7Configuration
 ; Initializes stage 8 data with special scroll buffer setup
-Stage_InitStage8Data:                                   ; DATA XREF: ROM:0001227A   o  ; was: sub_122F4
+Stage_InitializeStage8:                                 ; DATA XREF: ROM:0001227A   o  ; was: sub_122F4
                 lea     Stage8ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
@@ -120,17 +120,17 @@ Stage_InitStage8Data:                                   ; DATA XREF: ROM:0001227
                 lea     (word_FF0C00).l,a2
                 moveq   #$C,d1
                 moveq   #$3F,d7                         ; '?'
-Stage8_FillThreeWordRanges:                             ; CODE XREF: Stage_InitStage8Data+2E   j  ; was: loc_1231C
+Stage8_FillThreeWordRanges:                             ; CODE XREF: Stage_InitializeStage8+2E   j  ; was: loc_1231C
                 move.w  d1,(a0)+
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
                 dbf     d7,Stage8_FillThreeWordRanges
                 move.b  #$82,(byte_FF780C).l
                 rts
-; End of function Stage_InitStage8Data
-; Initializes stage 8 with palette clearing
-Stage_InitStage8Palettes:                               ; DATA XREF: ROM:0001227C   o  ; was: sub_12330
-                lea     Stage8AlternatePaletteConfigRecord(pc),a0
+; End of function Stage_InitializeStage8
+; Initializes the Stage 9 configuration and shared word ranges
+Stage_InitializeStage9:                                 ; DATA XREF: ROM:0001227C   o  ; was: sub_12330
+                lea     Stage9ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
 Stage_ClearPaletteHighBitsBeforeFourRangeFill:          ; CODE XREF: Stage_ApplyXiTigerConfiguration+A   j  ; was: loc_1233A
@@ -142,7 +142,7 @@ Stage_PrepareFourWordRangesWithD:                       ; CODE XREF: Stage_InitS
                 lea     (word_FF0E00).l,a3
                 moveq   #$D,d1
                 moveq   #$3F,d7                         ; '?'
-Stage_WriteDToFourWordRanges:                           ; CODE XREF: Stage_InitStage8Palettes+34   j  ; was: loc_1235C
+Stage_WriteDToFourWordRanges:                           ; CODE XREF: Stage_InitializeStage9+34   j  ; was: loc_1235C
                 move.w  d1,(a0)+
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
@@ -150,56 +150,56 @@ Stage_WriteDToFourWordRanges:                           ; CODE XREF: Stage_InitS
                 dbf     d7,Stage_WriteDToFourWordRanges
                 move.b  #$82,(byte_FF780D).l
                 rts
-; End of function Stage_InitStage8Palettes
+; End of function Stage_InitializeStage9
 ; Initializes stage 10 data structure and palette
-Stage_InitStage10Data:                                  ; DATA XREF: ROM:0001227E   o  ; was: sub_12372
+Stage_ApplyStage10Configuration:                        ; DATA XREF: ROM:0001227E   o  ; was: sub_12372
                 lea     Stage10ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage10Data
-; Loads alternate configuration for stage 10
-Stage_LoadStage10ConfigAlt:                             ; DATA XREF: ROM:00012280   o  ; was: sub_1237C
-                lea     Stage10AlternateConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage10ConfigAlt
-; Loads configuration data for stage 11
-Stage_LoadStage11Config:                                ; DATA XREF: ROM:00012282   o  ; was: sub_12386
+; End of function Stage_ApplyStage10Configuration
+; Applies the configuration selected by the Stage 11 table entry
+Stage_ApplyStage11Configuration:                        ; DATA XREF: ROM:00012280   o  ; was: sub_1237C
                 lea     Stage11ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage11Config
-; Applies the Stage 12 configuration selected by StageTableIndex $18
-Stage_InitStage12Data:                                  ; DATA XREF: ROM:00012284   o  ; was: sub_12390
+; End of function Stage_ApplyStage11Configuration
+; Applies the configuration selected by the Stage 12 table entry
+Stage_ApplyStage12Configuration:                        ; DATA XREF: ROM:00012282   o  ; was: sub_12386
                 lea     Stage12ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage12Data
-; Loads Stage 13 tile graphics
-Stage_LoadStage13Graphics:                              ; CODE XREF: Stage_Stage13Init+1A   p  ; was: sub_1239A
+; End of function Stage_ApplyStage12Configuration
+; Applies the configuration selected by StageTableIndex $18 for Stage 13
+Stage_ApplyStage13Configuration:                        ; DATA XREF: ROM:00012284   o  ; was: sub_12390
+                lea     Stage13ConfigRecord(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function Stage_ApplyStage13Configuration
+; Clears 224 bytes of shared state beginning at FF7800
+Stage_ClearSharedStateBuffer:                           ; CODE XREF: Stage_Stage13Init+1A   p  ; was: sub_1239A
                                         ; Stage_InitStage13+1A   p
                 lea     (dword_FF7800).l,a0
                 moveq   #0,d0
                 moveq   #$37,d7                         ; '7'
-Stage13_ClearStateBufferLong:                           ; CODE XREF: Stage_LoadStage13Graphics+C   j  ; was: loc_123A4
+Stage_ClearNextSharedStateBufferLong:                   ; CODE XREF: Stage_ClearSharedStateBuffer+C   j  ; was: loc_123A4
                 move.l  d0,(a0)+
-                dbf     d7,Stage13_ClearStateBufferLong
+                dbf     d7,Stage_ClearNextSharedStateBufferLong
                 rts
-; End of function Stage_LoadStage13Graphics
-; Loads alternate configuration for stage 13
-Stage_LoadStage13ConfigAlt:                             ; DATA XREF: ROM:00012286   o  ; was: sub_123AC
-                lea     Stage13AlternateConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage13ConfigAlt
-; Loads configuration data for stage 14
-Stage_LoadStage14Config:                                ; DATA XREF: ROM:00012288   o  ; was: sub_123B6
+; End of function Stage_ClearSharedStateBuffer
+; Applies the configuration selected by the Stage 14 table entry
+Stage_ApplyStage14Configuration:                        ; DATA XREF: ROM:00012286   o  ; was: sub_123AC
                 lea     Stage14ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_LoadStage14Config
+; End of function Stage_ApplyStage14Configuration
+; Applies the configuration selected by the Stage 15 table entry
+Stage_ApplyStage15Configuration:                        ; DATA XREF: ROM:00012288   o  ; was: sub_123B6
+                lea     Stage15ConfigRecord(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function Stage_ApplyStage15Configuration
 ; Initializes stage 16 data with camera bounds setup
-Stage_InitStage16Data:                                  ; DATA XREF: ROM:0001228A   o  ; was: sub_123C0
+Stage_InitializeStage16:                                ; DATA XREF: ROM:0001228A   o  ; was: sub_123C0
                 lea     Stage16ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
@@ -207,9 +207,9 @@ Stage_InitStage16Data:                                  ; DATA XREF: ROM:0001228
                 move.w  #$6A0,(word_FFA974).w
                 bset    #6,(byte_FF8245).w
                 rts
-; End of function Stage_InitStage16Data
+; End of function Stage_InitializeStage16
 ; Initializes stage 17 boss with sprites
-Stage_InitStage17Boss:                                  ; DATA XREF: ROM:0001228C   o  ; was: sub_123DE
+Stage_InitializeStage17Boss:                            ; DATA XREF: ROM:0001228C   o  ; was: sub_123DE
                 move.w  #4,(word_FFA206).w
                 lea     Stage17BossConfigRecord(pc),a0
                 nop
@@ -220,7 +220,7 @@ Stage_InitStage17Boss:                                  ; DATA XREF: ROM:0001228
                 lea     (word_FF0D80).l,a3
                 move.w  #$2FF,d1
                 moveq   #$3F,d7                         ; '?'
-Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_InitStage17Boss+36   j  ; was: loc_1240C
+Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_InitializeStage17Boss+36   j  ; was: loc_1240C
                 move.w  d1,(a0)+
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
@@ -238,7 +238,7 @@ Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_InitS
                 movea.w #(byte_FFEC12-M68K_RAM),a0
                 moveq   #$FFFFFFF0,d0
                 moveq   #$B,d7
-Stage17_WriteMinus16ToStridedEntityWords:               ; CODE XREF: Stage_InitStage17Boss+78   j  ; was: loc_12452
+Stage17_WriteMinus16ToStridedEntityWords:               ; CODE XREF: Stage_InitializeStage17Boss+78   j  ; was: loc_12452
                 move.w  d0,(a0)
                 addq.w  #4,a0
                 dbf     d7,Stage17_WriteMinus16ToStridedEntityWords
@@ -253,10 +253,10 @@ Stage17_WriteMinus16ToStridedEntityWords:               ; CODE XREF: Stage_InitS
                 lea     Stage17TileAssetCommands(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l
-; End of function Stage_InitStage17Boss
+; End of function Stage_InitializeStage17Boss
 ; ---------------------------------------------------------------------------
 Stage17TileAssetCommands:   dc.w    7                   ; field_0  ; was: stru_12488
-                                        ; DATA XREF: Stage_InitStage17Boss+9E   o
+                                        ; DATA XREF: Stage_InitializeStage17Boss+9E   o
                 dc.l    tiles_1233B4                    ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
@@ -264,40 +264,40 @@ Stage17TileAssetCommands:   dc.w    7                   ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Stage17IndexedTilemapRowData:   dc.w    $4E00, $4000, $900, $292A, $2B2C, $2D2E, $2F30, $3132  ; was: word_1249A
-                                        ; DATA XREF: Stage_InitStage17Boss+86   o
+                                        ; DATA XREF: Stage_InitializeStage17Boss+86   o
 
 ; Foreground graphics setup
-Gfx_Stage18Foreground:                                  ; DATA XREF: ROM:0001228E   o  ; was: sub_124AA
-                lea     Stage18ForegroundConfigRecord(pc),a0
+Stage_InitializeStage18:                                ; DATA XREF: ROM:0001228E   o  ; was: sub_124AA
+                lea     Stage18ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-Stage18_InitializeTilemapIndices:                       ; CODE XREF: Stage_LoadStage18ConfigAlt+10   j  ; was: loc_124B4
+Stage18And19_InitializeTilemapIndices:                  ; CODE XREF: Stage_InitializeStage19+10   j  ; was: loc_124B4
                 movea.l #$FFFF2000,a0
                 move.w  #0,d0
                 move.w  #$150,d1
                 move.w  #$7F,d7
                 jmp     Gfx_UpdateTilemapIndices
-; End of function Gfx_Stage18Foreground
-; Loads alternate configuration for stage 18
-Stage_LoadStage18ConfigAlt:                             ; DATA XREF: ROM:00012290   o  ; was: sub_124CC
-                lea     Stage18AlternateConfigRecord(pc),a0
+; End of function Stage_InitializeStage18
+; Initializes the Stage 19 configuration and shared tilemap indices
+Stage_InitializeStage19:                                ; DATA XREF: ROM:00012290   o  ; was: sub_124CC
+                lea     Stage19ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
                 jsr     (locret_E4FA).l
-                bra.s   Stage18_InitializeTilemapIndices
-; End of function Stage_LoadStage18ConfigAlt
-; Loads first configuration for stage 20
-Stage_LoadStage20Config1:
-                lea     Stage20FirstConfigRecord(pc),a0  ; was: sub_124DE
+                bra.s   Stage18And19_InitializeTilemapIndices
+; End of function Stage_InitializeStage19
+; Unreferenced wrapper for the first Stage 20 configuration variant
+UnreferencedApplyStage20Variant1Configuration:
+                lea     UnreferencedStage20Variant1ConfigRecord(pc),a0  ; was: sub_124DE
                 nop
-                bra.s   Stage20_ApplyConfigurationAndFillWordRanges
-; End of function Stage_LoadStage20Config1
-; Loads second configuration for stage 20
-Stage_LoadStage20Config2:
-                lea     Stage20SecondConfigRecord(pc),a0  ; was: sub_124E6
+                bra.s   UnreferencedApplyStage20VariantAndFillWordRanges
+; End of function UnreferencedApplyStage20Variant1Configuration
+; Unreferenced wrapper for the second Stage 20 configuration variant
+UnreferencedApplyStage20Variant2Configuration:
+                lea     UnreferencedStage20Variant2ConfigRecord(pc),a0  ; was: sub_124E6
                 nop
-Stage20_ApplyConfigurationAndFillWordRanges:            ; CODE XREF: Stage_LoadStage20Config1+6   j  ; was: loc_124EC
-                                        ; Stage_LoadStage20Config3+6   j
+UnreferencedApplyStage20VariantAndFillWordRanges:       ; CODE XREF: UnreferencedApplyStage20Variant1Configuration+6   j  ; was: loc_124EC
+                                        ; UnreferencedApplyStage20Variant3Configuration+6   j
                 bsr.w   Stage_ApplyConfigurationRecord
                 lea     (word_FF0D00).l,a0
                 lea     (word_FF0D80).l,a1
@@ -305,98 +305,98 @@ Stage20_ApplyConfigurationAndFillWordRanges:            ; CODE XREF: Stage_LoadS
                 lea     (word_FF0E80).l,a3
                 move.w  #$300,d1
                 moveq   #$3F,d7                         ; '?'
-Stage20_Write0300ToFourWordRanges:                      ; CODE XREF: Stage_LoadStage20Config2+30   j  ; was: loc_1250E
+UnreferencedStage20Write0300ToFourWordRanges:           ; CODE XREF: UnreferencedApplyStage20Variant2Configuration+30   j  ; was: loc_1250E
                 move.w  d1,(a0)+
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
                 move.w  d1,(a3)+
-                dbf     d7,Stage20_Write0300ToFourWordRanges
+                dbf     d7,UnreferencedStage20Write0300ToFourWordRanges
                 move.b  #$82,(byte_FF7B00).l
                 rts
-; End of function Stage_LoadStage20Config2
-; Loads third configuration for stage 20
-Stage_LoadStage20Config3:
-                lea     Stage20ThirdConfigRecord(pc),a0  ; was: sub_12524
+; End of function UnreferencedApplyStage20Variant2Configuration
+; Unreferenced wrapper for the third Stage 20 configuration variant
+UnreferencedApplyStage20Variant3Configuration:
+                lea     UnreferencedStage20Variant3ConfigRecord(pc),a0  ; was: sub_12524
                 nop
-                bra.w   Stage20_ApplyConfigurationAndFillWordRanges
-; End of function Stage_LoadStage20Config3
-; Loads fourth configuration for stage 20
-Stage_LoadStage20Config4:
-                lea     Stage20FourthConfigRecord(pc),a0  ; was: sub_1252E
+                bra.w   UnreferencedApplyStage20VariantAndFillWordRanges
+; End of function UnreferencedApplyStage20Variant3Configuration
+; Unreferenced wrapper for the fourth Stage 20 configuration variant
+UnreferencedApplyStage20Variant4Configuration:
+                lea     UnreferencedStage20Variant4ConfigRecord(pc),a0  ; was: sub_1252E
                 nop
-                bra.w   Stage20_ApplyConfigurationAndFillWordRanges
-; End of function Stage_LoadStage20Config4
-; Initializes stage 25 tilemap and camera
-Stage_InitStage25Tilemap:                               ; DATA XREF: ROM:00012292   o  ; was: sub_12538
+                bra.w   UnreferencedApplyStage20VariantAndFillWordRanges
+; End of function UnreferencedApplyStage20Variant4Configuration
+; Initializes the Stage 20 tilemap, configuration, and camera values
+Stage_InitializeStage20:                                ; DATA XREF: ROM:00012292   o  ; was: sub_12538
                 lea     (dword_FF4000).l,a0
                 move.w  #$8000,d0
                 move.w  #$180,d1
                 move.w  #$BF,d7
                 jsr     (Gfx_UpdateTilemapIndices).l
-                lea     Stage25ConfigRecord(pc),a0
+                lea     Stage20ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
                 move.w  #$180,(dword_FFA410).w
                 addi.w  #$20,(dword_FFA900).w           ; ' '
                 move.w  (dword_FFA900).w,(word_FFA928).w
                 rts
-; End of function Stage_InitStage25Tilemap
-; Initializes stage 26 configuration with flags
-Stage_InitStage26Config:                                ; DATA XREF: ROM:00012294   o  ; was: sub_1256E
+; End of function Stage_InitializeStage20
+; Initializes the Stage 21 configuration and flags
+Stage_InitializeStage21:                                ; DATA XREF: ROM:00012294   o  ; was: sub_1256E
                 bset    #7,(byte_FFA959).w
                 bset    #6,(byte_FFA959).w
+                lea     Stage21ConfigRecord(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function Stage_InitializeStage21
+; Initializes the Stage 22 configuration and flags
+Stage_InitializeStage22:                                ; DATA XREF: ROM:00012296   o  ; was: sub_12584
+                bset    #7,(byte_FFA959).w
+                bset    #6,(byte_FFA959).w
+                lea     Stage22ConfigRecord(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function Stage_InitializeStage22
+; Initializes the Stage 23 configuration and flags
+Stage_InitializeStage23:                                ; DATA XREF: ROM:00012298   o  ; was: sub_1259A
+                bset    #7,(byte_FFA959).w
+                bset    #6,(byte_FFA959).w
+                lea     Stage23ConfigRecord(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function Stage_InitializeStage23
+; Applies the configuration selected by the Stage 24 table entry
+Stage_ApplyStage24Configuration:                        ; DATA XREF: ROM:0001229A   o  ; was: sub_125B0
+                lea     Stage24ConfigRecord(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function Stage_ApplyStage24Configuration
+; Unreferenced flagged configuration wrapper A
+UnreferencedApplyFlaggedConfigurationA:
+                bset    #1,(byte_FF8144).w              ; was: sub_125BA
+                lea     UnreferencedFlaggedConfigRecordA(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function UnreferencedApplyFlaggedConfigurationA
+; Unreferenced flagged configuration wrapper B
+UnreferencedApplyFlaggedConfigurationB:
+                bset    #1,(byte_FF8144).w              ; was: sub_125CA
+                lea     UnreferencedFlaggedConfigRecordB(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function UnreferencedApplyFlaggedConfigurationB
+; Applies the configuration selected by the Stage 25 table entry
+Stage_ApplyStage25Configuration:                        ; DATA XREF: ROM:0001229C   o  ; was: sub_125DA
+                lea     Stage25ConfigRecord(pc),a0
+                nop
+                bra.w   Stage_ApplyConfigurationRecord
+; End of function Stage_ApplyStage25Configuration
+; Applies the configuration selected by the Stage 26 table entry
+Stage_ApplyStage26Configuration:                        ; DATA XREF: ROM:0001229E   o  ; was: sub_125E4
                 lea     Stage26ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage26Config
-; Initializes stage 27 configuration with flags
-Stage_InitStage27Config:                                ; DATA XREF: ROM:00012296   o  ; was: sub_12584
-                bset    #7,(byte_FFA959).w
-                bset    #6,(byte_FFA959).w
-                lea     Stage27ConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage27Config
-; Initializes stage 28 configuration with flags
-Stage_InitStage28Config:                                ; DATA XREF: ROM:00012298   o  ; was: sub_1259A
-                bset    #7,(byte_FFA959).w
-                bset    #6,(byte_FFA959).w
-                lea     Stage28ConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage28Config
-; Initializes stage 29 configuration
-Stage_InitStage29Config:                                ; DATA XREF: ROM:0001229A   o  ; was: sub_125B0
-                lea     Stage29ConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage29Config
-; Sets system flag and initializes stage 30
-Stage_InitStage30Config:
-                bset    #1,(byte_FF8144).w              ; was: sub_125BA
-                lea     Stage30ConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage30Config
-; Sets system flag and initializes stage 31
-Stage_InitStage31Config:
-                bset    #1,(byte_FF8144).w              ; was: sub_125CA
-                lea     Stage31ConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage31Config
-; Initializes stage 32 configuration
-Stage_InitStage32Config:                                ; DATA XREF: ROM:0001229C   o  ; was: sub_125DA
-                lea     Stage32ConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage32Config
-; Initializes stage 33 configuration
-Stage_InitStage33Config:                                ; DATA XREF: ROM:0001229E   o  ; was: sub_125E4
-                lea     Stage33ConfigRecord(pc),a0
-                nop
-                bra.w   Stage_ApplyConfigurationRecord
-; End of function Stage_InitStage33Config
+; End of function Stage_ApplyStage26Configuration
 ; Builds the Stage 3 phase-2 resampling steps, transforms its tiles, and uploads them
 Gfx_PrepareStage3Phase2ResampledTiles:                  ; CODE XREF: Stage_LoadStage3Phase2Assets+12   p  ; was: sub_125EE
                 movea.w #(word_FF9800-M68K_RAM),a0

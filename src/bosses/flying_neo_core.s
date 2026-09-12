@@ -103,7 +103,7 @@ Boss_FlyingNeoInitOrWaitReturn:                         ; CODE XREF: Boss_Flying
                 rts
 ; End of function Boss_FlyingNeoInit
 ; Clears bit 15 in four palette-buffer ranges
-Boss_FlyingNeoClearPaletteHighBits:                     ; CODE XREF: Stage_InitStage8Palettes:Stage_ClearPaletteHighBitsBeforeFourRangeFill   p  ; was: sub_3C110
+Boss_FlyingNeoClearPaletteHighBits:                     ; CODE XREF: Stage_InitializeStage9:Stage_ClearPaletteHighBitsBeforeFourRangeFill   p  ; was: sub_3C110
                                         ; Boss_FlyingNeoInit+22   p
                 lea     (word_FF4020).l,a0
                 move.w  #$7FFF,d0

@@ -426,7 +426,7 @@ module as `src/bosses/wolf_garopa_reward_shower.s`.
 The formation-wave/Stage 21 pass reduced the count to 9,439. The former
 `tracker.s` mixed a compact type-`$3B4` oscillating formation family with the
 unrelated asteroid-field subsystem. The generated `Tracker` ownership has no
-static support: the family is created by `Stage2_FifthObjectSpawnList` and is
+static support: the family is created by `Stage7_ObjectSpawnList` and is
 named only for its visible cloning and motion behavior. Type `$3AC` is
 installed directly by `StageTransition_InitializeAsteroidField`, creates
 type-`$3B0` large,
@@ -2671,7 +2671,7 @@ Four especially broad data labels are explicitly registered:
 | `UnidentifiedSegaTilemap` | `0x0E8020` | hypothesis | 48 sequential tile words adjacent to the SEGA art; no live pointer has been found. |
 | `MessageDisplay_FontPatternFillSource` | `0x180000` | static | The message engine directly uses the 48 repeated `$C7F8` words as the source of fixed 32-word and 40-word pattern-fill DMAs. |
 | `Credits_UnidentifiedTrailingData` | `0x0225CC` | unknown | Opaque block ending at the demo subsystem boundary; no live reference has been found, so neither purpose nor unused status is asserted. |
-| `Stage11_ObjectSpawnList` | `0x01AE96` | static | 314 bytes form 26 twelve-byte records plus a `$7FFF` terminator; `Sys_ProcessSpawnList` consumes this exact format through the Stage 11 configuration pointer. |
+| `Stage12_ObjectSpawnList` | `0x01AE96` | static | 314 bytes form 26 twelve-byte records plus a `$7FFF` terminator; `Sys_ProcessSpawnList` consumes this exact format through the Stage 12 configuration pointer. |
 
 Semantic names with `; was:` history are a second review queue. Their default
 level is `hypothesis`, not `confirmed`; see `docs/provenance.md`.
@@ -3660,16 +3660,16 @@ records rather than assigning unsupported gameplay meanings to the unknown
 stage globals.
 
 That field review also rejects two older commentary blocks. The 314-byte
-`Stage11_ObjectSpawnList` is not unidentified graphics: it contains exactly 26
+`Stage12_ObjectSpawnList` is not unidentified graphics: it contains exactly 26
 twelve-byte records followed by the `$7FFF` terminator consumed by
-`Sys_ProcessSpawnList`. The alleged cut-intro configuration is the Stage 12
+`Sys_ProcessSpawnList`. The alleged cut-intro configuration is the Stage 13
 entry at byte index `$18` in the ordered stage-initializer table. Neither its
 initializer nor its 30-byte record performs a cutscene-specific operation, so
 the unsupported Kaede, sprite-size, unused-content, and TCRF attribution
 comments are removed.
 
-All 51 primary-pass definitions plus the corrected Stage 12 initializer and
-Stage 11 spawn list have exact-address static audit records. The pass
+All 51 primary-pass definitions plus the corrected Stage 13 initializer and
+Stage 12 spawn list have exact-address static audit records. The pass
 removes 47 live address-derived identifiers, raises provenance from 12,812 to
 12,860 and the name-audit registry from 9,662 to 9,715, and lowers the enforced
 address-derived ceiling from 3,235 to 3,188. The natural split raises the
@@ -4392,7 +4392,7 @@ it through `Data_ProcessPointer`.
 
 All seven definitions in this core range receive exact-address static audit
 records. Four address-derived control-flow and table names gain provenance,
-raising the totals to 13,470 mappings and 10,534 audit records. The enforced
+raising the totals to 13,470 mappings and 10,545 audit records. The enforced
 live address-derived ceiling falls from 2,583 to 2,579. Individual visual-list
 owners remain deliberately outside this endorsement pending their own audit.
 
@@ -4407,7 +4407,7 @@ its former Stage 4 claim is removed and its `Unreferenced` status is explicit.
 
 All 27 definitions from `$011E86` through `$012045` receive exact-address
 static audit records. Thirteen anonymous command streams gain provenance,
-raising the totals to 13,483 mappings and 10,561 audit records. The enforced
+raising the totals to 13,483 mappings and 10,572 audit records. The enforced
 live address-derived ceiling falls from 2,579 to 2,566.
 
 The Stage 14–26 visual-loader pass completes the dispatch table and corrects
@@ -4421,7 +4421,7 @@ loaders and two no-op hooks lack static callers and now say `Unreferenced`.
 
 All 28 definitions from `$012046` through `$01219D` receive exact-address
 static audit records. Thirteen anonymous lists and no-op labels gain
-provenance, raising the totals to 13,496 mappings and 10,589 audit records.
+provenance, raising the totals to 13,496 mappings and 10,600 audit records.
 The enforced live address-derived ceiling falls from 2,566 to 2,553.
 
 The Xi-Tiger tail completes `visual_asset_loading.s`. Its entrypoint is now an
@@ -4435,7 +4435,7 @@ consumed by `Stage_ApplyConfigurationRecord`.
 
 All seven definitions in the Xi-Tiger tail receive exact-address static audit
 records. Four control-flow, offset-table, and record labels gain provenance,
-raising the totals to 13,500 mappings and 10,596 audit records. The enforced
+raising the totals to 13,500 mappings and 10,607 audit records. The enforced
 live address-derived ceiling falls from 2,553 to 2,549, leaving
 `visual_asset_loading.s` with zero live address-derived definitions.
 
@@ -4449,6 +4449,48 @@ alternate Stage 2 configurations remain deliberately outside this package
 until their dispatch slots and referenced records are cross-checked together.
 
 Sixteen control-flow and data labels gain provenance, raising the totals to
-13,516 mappings and 10,612 audit records. The enforced live address-derived
+13,516 mappings and 10,623 audit records. The enforced live address-derived
 ceiling falls from 2,549 to 2,533, leaving `configuration.s` with zero live
 address-derived definitions.
+
+The Stage 1–9 configuration-table reconciliation corrects a systematic Sonnet
+numbering error rather than preserving plausible-looking aliases. The table is
+indexed directly by the even `StageTableIndex`: its `$04` through `$10`
+entries are Stage 3 through Stage 9, consistent with the ordered visual table
+and the pinned `$14`/Stage 11 and `$1C`/Stage 15 runtime anchors. Five supposed
+Stage 2 alternatives are therefore the Stage 3–7 configuration wrappers and
+records, while the supposed alternate Stage 8 initializer is Stage 9.
+
+The corresponding spawn lists and shared palette lists now follow those proven
+owners. The separate list installed only by `Stage_InitPostBoss` is named
+`PostBossRuntimeSpawnList` without asserting an unproven stage owner. Sixteen
+new exact-address audit records cover the nine initializer functions and seven
+spawn lists; strengthened records cover the six renamed configuration records
+and two palette lists. Provenance and the unknown ceiling remain 13,516 and
+2,533, while the audit total rises from 10,623 to 10,639.
+
+The Stage 10–19 configuration reconciliation removes the next run of shifted
+Sonnet ownership. Ordered initializer entries `$12` through `$24` now match
+Stage 10 through Stage 19, including the pinned `$14`/Stage 11 and
+`$1C`/Stage 15 anchors. Configuration records, spawn lists, and shared palette
+lists use the same ownership. The former Stage 18 alternate path is Stage 19,
+and the supposed Stage 13 graphics loader is now the behaviorally exact
+`Stage_ClearSharedStateBuffer`, which only clears 224 bytes at FF7800.
+
+Ten initializer/helper functions and four newly reconciled spawn lists gain
+exact-address audit records; existing record and palette evidence is updated
+in place. Provenance and the unknown ceiling remain 13,516 and 2,533, while
+the audit total rises from 10,639 to 10,653.
+
+The Stage 20–26 configuration reconciliation completes all 26 entries in
+`Stage_InitializerOffsets`. The seven live entries at `$26` through `$32` now
+map to Stage 20 through Stage 26 instead of the generated Stage 25 through
+Stage 33 sequence. Their configuration records, spawn-list owners, palette
+lists, and the final post-stage palette reuse are updated consistently.
+
+Four adjacent Stage 20 variant wrappers and two flag-setting configuration
+wrappers have no static caller or dispatch-table entry. They and their records
+now say `Unreferenced` instead of masquerading as additional numbered stages.
+Thirteen wrapper/initializer functions and two spawn lists gain exact-address
+audit records. Provenance and the unknown ceiling remain 13,516 and 2,533,
+while the audit total rises from 10,653 to 10,668.

@@ -235,7 +235,7 @@ Stage_Stage13Init:                                      ; DATA XREF: ROM:0000D97
                 cmpi.w  #$15E0,(dword_FFA900).w
                 bmi.w   Stage_Stage10CheckTransition_Return
                 addq.w  #2,(word_FFA950).w
-                jsr     (Stage_LoadStage13Graphics).l
+                jsr     (Stage_ClearSharedStateBuffer).l
                 lea     stru_DB5A(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l
@@ -407,7 +407,7 @@ Stage_InitStage13:                                      ; CODE XREF: Stage_Snake
                 clr.w   (word_FFC624).w
                 move.w  #$30,(RasterEffectIndex).w      ; '0'
                 clr.w   (RasterEffectInitState).w
-                jsr     (Stage_LoadStage13Graphics).l
+                jsr     (Stage_ClearSharedStateBuffer).l
 ; End of function Stage_InitStage13
 ; Waits for scroll position before boss
 Stage_SnakeWaitScroll:                                  ; DATA XREF: ROM:0000D992   o  ; was: sub_DD2E
