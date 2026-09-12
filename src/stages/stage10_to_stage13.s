@@ -328,7 +328,7 @@ loc_DBFC:                                               ; CODE XREF: Stage_Telep
                 move.w  #$4000,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
-                jsr     (Stage_LoadTeleportGraphics).l
+                jsr     (Stage_LoadTeleportAssets).l
 loc_DC5E:                                               ; CODE XREF: Stage_TeleportFadeIn+6   j
                                         ; Stage_TeleportFadeIn+12   j
                 move.w  (dword_FF806A+2).w,d0

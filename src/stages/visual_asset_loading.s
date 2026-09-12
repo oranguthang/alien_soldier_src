@@ -1,59 +1,59 @@
-Stage_StateDispatcher:                                  ; CODE XREF: Camera_UpdateSmooth+E   p  ; was: sub_11DD2
+Stage_DispatchVisualAssetLoader:                        ; CODE XREF: Camera_UpdateSmooth+E   p  ; was: sub_11DD2
                                         ; Stage_StartTimeBonusAndPreloadNextPhase+12   p
                 clr.b   (byte_FFA230).w
                 move.w  (StageTableIndex).w,d0
-                movea.w off_11DE6(pc,d0.w),a0
-                adda.l  #Gfx_LoadTileData,a0
+                movea.w Stage_VisualAssetLoaderOffsets(pc,d0.w),a0
+                adda.l  #Stage_ExpandAndSubmitTileAssetCommands,a0
                 jmp     (a0)
-; End of function Stage_StateDispatcher
+; End of function Stage_DispatchVisualAssetLoader
 ; ---------------------------------------------------------------------------
-off_11DE6:      dc.w    Gfx_LoadStagePalette-Gfx_LoadTileData
-                                        ; DATA XREF: Stage_StateDispatcher+8   r
-                dc.w    Stage_LoadVisualAssets-Gfx_LoadTileData
-                dc.w    Stage_LoadStage3Assets-Gfx_LoadTileData
-                dc.w    Stage_LoadPaletteAndTilesA-Gfx_LoadTileData
-                dc.w    Stage_LoadPaletteAndTilesB-Gfx_LoadTileData
-                dc.w    Stage_LoadStage6Graphics-Gfx_LoadTileData
-                dc.w    Stage_LoadStage7Graphics-Gfx_LoadTileData
-                dc.w    Stage_LoadTrainGraphics-Gfx_LoadTileData
-                dc.w    Stage_LoadFliesGraphics-Gfx_LoadTileData
-                dc.w    Stage_LoadStage10Assets-Gfx_LoadTileData
-                dc.w    Stage_LoadStage11Assets-Gfx_LoadTileData
-                dc.w    Stage_LoadStage12Assets-Gfx_LoadTileData
-                dc.w    Gfx_LoadSnakePalette-Gfx_LoadTileData
-                dc.w    Stage_LoadStage14Graphics-Gfx_LoadTileData
-                dc.w    Stage_LoadStage5Graphics-Gfx_LoadTileData
-                dc.w    Stage_LoadStage17Graphics-Gfx_LoadTileData
-                dc.w    Gfx_LoadStage17Palettes-Gfx_LoadTileData
-                dc.w    Gfx_Stage18Background-Gfx_LoadTileData
-                dc.w    Gfx_LoadStage19Graphics-Gfx_LoadTileData
-                dc.w    Gfx_LoadStage20Graphics-Gfx_LoadTileData
-                dc.w    Stage_LoadTiles1-Gfx_LoadTileData
-                dc.w    Stage22_LoadGraphics-Gfx_LoadTileData
-                dc.w    Weapon_EmptyState0-Gfx_LoadTileData
-                dc.w    Stage24_LoadGraphics-Gfx_LoadTileData
-                dc.w    Weapon_EmptyState1-Gfx_LoadTileData
-                dc.w    Weapon_EmptyState2-Gfx_LoadTileData
+Stage_VisualAssetLoaderOffsets: dc.w    Gfx_LoadStagePalette-Stage_ExpandAndSubmitTileAssetCommands  ; was: off_11DE6
+                                        ; DATA XREF: Stage_DispatchVisualAssetLoader+8   r
+                dc.w    Stage_LoadVisualAssets-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage3Assets-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadPaletteAndTilesA-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadPaletteAndTilesB-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage6Graphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage7Graphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadTrainGraphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadFliesGraphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage10Assets-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage11Assets-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage12Assets-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Gfx_LoadSnakePalette-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage14Graphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage5Graphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadStage17Graphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Gfx_LoadStage17Palettes-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Gfx_Stage18Background-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Gfx_LoadStage19Graphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Gfx_LoadStage20Graphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage_LoadTiles1-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage22_LoadGraphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Weapon_EmptyState0-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Stage24_LoadGraphics-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Weapon_EmptyState1-Stage_ExpandAndSubmitTileAssetCommands
+                dc.w    Weapon_EmptyState2-Stage_ExpandAndSubmitTileAssetCommands
 
-; Loads tile data into tables
-Gfx_LoadTileData:                                       ; CODE XREF: Gfx_LoadStagePalette+12   j  ; was: sub_11E1A
+; Expands compact tile commands into load records and submits the resulting list
+Stage_ExpandAndSubmitTileAssetCommands:                 ; CODE XREF: Gfx_LoadStagePalette+12   j  ; was: sub_11E1A
                                         ; Stage_LoadVisualAssets+12   j
                 movea.w #(byte_FF82A0-M68K_RAM),a1
                 movea.w #(word_FF826E-M68K_RAM),a2
-                lea     off_11E6A(pc),a3
+                lea     Stage_SharedTileSourceTable(pc),a3
                 nop
-loc_11E28:                                              ; CODE XREF: Gfx_LoadTileData+1E   j
-                                        ; Gfx_LoadTileData+3E   j
+Stage_ReadNextTileAssetCommand:                         ; CODE XREF: Stage_ExpandAndSubmitTileAssetCommands+1E   j  ; was: loc_11E28
+                                        ; Stage_ExpandAndSubmitTileAssetCommands+3E   j
                 move.w  (a0)+,d0
-                bmi.s   Gfx_ProcessTileDataEnd
+                bmi.s   Stage_TerminateAndSubmitExpandedAssetList
                 btst    #0,d0
-                beq.s   loc_11E3C
+                beq.s   Stage_ExpandIndexedTileAssetCommand
                 move.w  d0,(a1)+
                 move.l  (a0)+,(a1)+
                 move.w  (a0)+,(a1)+
-                bra.w   loc_11E28
+                bra.w   Stage_ReadNextTileAssetCommand
 ; ---------------------------------------------------------------------------
-loc_11E3C:                                              ; CODE XREF: Gfx_LoadTileData+16   j
+Stage_ExpandIndexedTileAssetCommand:                    ; CODE XREF: Stage_ExpandAndSubmitTileAssetCommands+16   j  ; was: loc_11E3C
                 move.w  d0,d1
                 asl.w   #1,d1
                 move.w  (a0)+,d2
@@ -63,16 +63,16 @@ loc_11E3C:                                              ; CODE XREF: Gfx_LoadTil
                 lsr.w   #5,d2
                 move.w  d2,(a2,d0.w)
                 ori.w   #$800,(a2,d0.w)
-                bra.w   loc_11E28
+                bra.w   Stage_ReadNextTileAssetCommand
 ; ---------------------------------------------------------------------------
-; Finalizes tile data loading and processes pointer queue
-Gfx_ProcessTileDataEnd:                                 ; CODE XREF: Gfx_LoadTileData+10   j  ; was: loc_11E5C
+; Terminates the expanded record list and submits it to the pointer processor
+Stage_TerminateAndSubmitExpandedAssetList:              ; CODE XREF: Stage_ExpandAndSubmitTileAssetCommands+10   j  ; was: loc_11E5C
                 move.w  #$FFFF,(a1)
                 movea.w #(byte_FF82A0-M68K_RAM),a0
                 jmp     (Data_ProcessPointer).l
-; End of function Gfx_LoadTileData
+; End of function Stage_ExpandAndSubmitTileAssetCommands
 ; ---------------------------------------------------------------------------
-off_11E6A:      dc.l    tiles_1001D6                    ; DATA XREF: Gfx_LoadTileData+8   o
+Stage_SharedTileSourceTable:    dc.l    tiles_1001D6    ; DATA XREF: Stage_ExpandAndSubmitTileAssetCommands+8   o  ; was: off_11E6A
                 dc.l    tiles_100DA2
                 dc.l    tiles_1018F0
                 dc.l    tiles_10213C
@@ -81,12 +81,12 @@ off_11E6A:      dc.l    tiles_1001D6                    ; DATA XREF: Gfx_LoadTil
                 dc.l    tiles_103A26
 
 ; Loads stage palette data
-Gfx_LoadStagePalette:                                   ; DATA XREF: ROM:off_11DE6   o  ; was: sub_11E86
+Gfx_LoadStagePalette:                                   ; DATA XREF: ROM:Stage_VisualAssetLoaderOffsets   o  ; was: sub_11E86
                 lea     (SharedStagePaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11E9C(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Gfx_LoadStagePalette
 ; ---------------------------------------------------------------------------
 word_11E9C:     dc.w    0, $6000, 2, $7000, 4, $8000, $FFFF
@@ -98,7 +98,7 @@ Stage_LoadVisualAssets:                                 ; DATA XREF: ROM:00011DE
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11EC0(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadVisualAssets
 ; ---------------------------------------------------------------------------
 word_11EC0:     dc.w    0, $6000, 2, $7000, $C, $8000, $FFFF
@@ -110,7 +110,7 @@ Stage_LoadStage3Assets:                                 ; DATA XREF: ROM:00011DE
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11EE4(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage3Assets
 ; ---------------------------------------------------------------------------
 word_11EE4:     dc.w    0, $7000, 8, $8000, $FFFF
@@ -122,7 +122,7 @@ Stage_LoadPaletteAndTilesA:                             ; DATA XREF: ROM:00011DE
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F04(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadPaletteAndTilesA
 ; ---------------------------------------------------------------------------
 word_11F04:     dc.w    0, $7000, 8, $8000, $FFFF
@@ -134,7 +134,7 @@ Stage_LoadPaletteAndTilesB:                             ; DATA XREF: ROM:00011DE
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F24(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadPaletteAndTilesB
 ; ---------------------------------------------------------------------------
 word_11F24:     dc.w    0, $6000, 2, $7000, 6, $8000, $FFFF
@@ -146,7 +146,7 @@ Stage_LoadStage6Graphics:                               ; DATA XREF: ROM:00011DF
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F48(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage6Graphics
 ; ---------------------------------------------------------------------------
 word_11F48:     dc.w    0, $6000, 2, $7000, 4, $8000, $FFFF
@@ -158,7 +158,7 @@ Stage_LoadStage7Graphics:                               ; DATA XREF: ROM:00011DF
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F6C(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage7Graphics
 ; ---------------------------------------------------------------------------
 word_11F6C:     dc.w    0, $6000, 4, $7000, 7, $10, $4F32, $8000, $FFFF
@@ -170,7 +170,7 @@ Stage_LoadTrainGraphics:                                ; DATA XREF: ROM:00011DF
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11F94(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadTrainGraphics
 ; ---------------------------------------------------------------------------
 word_11F94:     dc.w    0, $6000, 7, $11, $63AE, $8000, $FFFF
@@ -182,7 +182,7 @@ Stage_LoadFliesGraphics:                                ; DATA XREF: ROM:00011DF
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11FB8(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadFliesGraphics
 ; ---------------------------------------------------------------------------
 word_11FB8:     dc.w    $C, $8000, $FFFF                ; DATA XREF: Stage_LoadFliesGraphics+C   o
@@ -193,7 +193,7 @@ Stage_LoadStage10Assets:                                ; DATA XREF: ROM:00011DF
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11FD4(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage10Assets
 ; ---------------------------------------------------------------------------
 word_11FD4:     dc.w    0, $6000, 6, $7000, $A, $8000, $FFFF
@@ -205,7 +205,7 @@ Stage_LoadStage11Assets:                                ; DATA XREF: ROM:00011DF
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_11FF8(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage11Assets
 ; ---------------------------------------------------------------------------
 word_11FF8:     dc.w    0, $6000, 6, $7000, 4, $8000, $FFFF
@@ -217,7 +217,7 @@ Stage_LoadStage12Assets:                                ; DATA XREF: ROM:00011DF
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_1201C(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage12Assets
 ; ---------------------------------------------------------------------------
 word_1201C:     dc.w    0, $6000, 6, $7000, $A, $8000, $FFFF
@@ -232,7 +232,7 @@ Gfx_LoadSnakePalette:                                   ; DATA XREF: ROM:00011DF
 Gfx_LoadStage4Tiles:
                 lea     word_12040(pc),a0               ; was: sub_12036
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Gfx_LoadStage4Tiles
 ; ---------------------------------------------------------------------------
 word_12040:     dc.w    0, $6000, $FFFF                 ; DATA XREF: Gfx_LoadStage4Tiles   o
@@ -244,7 +244,7 @@ Stage_LoadStage14Graphics:                              ; DATA XREF: ROM:00011E0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_12062(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage14Graphics
 ; ---------------------------------------------------------------------------
 word_12062:     dc.w    0, $6000, $FFFF                 ; DATA XREF: Stage_LoadStage14Graphics+12   o
@@ -271,7 +271,7 @@ Stage_LoadStage17Graphics:                              ; DATA XREF: ROM:00011E0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_120A6(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Stage_LoadStage17Graphics
 ; ---------------------------------------------------------------------------
 word_120A6:     dc.w    $C, $6000, 7, $12, $3172, $7000, $FFFF
@@ -290,7 +290,7 @@ Gfx_Stage18Background:                                  ; DATA XREF: ROM:00011E0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_120E2(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Gfx_Stage18Background
 ; ---------------------------------------------------------------------------
 word_120E2:     dc.w    $C, $6000, 7, $10, $5B9E, $7000, $FFFF
@@ -302,7 +302,7 @@ Gfx_LoadStage19Graphics:                                ; DATA XREF: ROM:00011E0
                 jsr     (Gfx_LoadPaletteCommand).l
                 lea     word_12106(pc),a0
                 nop
-                bra.w   Gfx_LoadTileData
+                bra.w   Stage_ExpandAndSubmitTileAssetCommands
 ; End of function Gfx_LoadStage19Graphics
 ; ---------------------------------------------------------------------------
 word_12106:     dc.w    6, $6000, $C, $7000, $FFFF

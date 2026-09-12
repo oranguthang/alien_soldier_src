@@ -9,7 +9,7 @@ Stage_LoadBackgroundGraphics:                           ; DATA XREF: Sys_Dispatc
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_InitGraphicsChain).l
                 jsr     (Gfx_LoadVDPRegisters).l
-                jsr     (Stage_StateDispatcher).l
+                jsr     (Stage_DispatchVisualAssetLoader).l
                 jsr     (Sys_InitStageState).l
                 addq.w  #2,(GameSubstateIndex).w
                 move.w  #$1F,(word_FFA944).w

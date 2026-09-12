@@ -36,7 +36,7 @@ Stage_AdvanceControllerAndPreloadNextPhase:             ; CODE XREF: Stage_Start
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA209).w
                 addq.w  #2,(StageTableIndex).w
-                jsr     (Stage_StateDispatcher).l
+                jsr     (Stage_DispatchVisualAssetLoader).l
                 subq.w  #2,(StageTableIndex).w
                 rts
 ; End of function Stage_StartTimeBonusAndPreloadNextPhase

@@ -4351,3 +4351,47 @@ compressed or decoded. Historical Sonnet-era names remain only in the
 `previous_name` fields needed for provenance. This semantic correction does
 not change the totals: 13,443 mappings, 10,483 audit records, and 2,606 live
 address-derived unknowns.
+
+The `object_loading.s` audit establishes that its entrypoint is an asset
+dispatcher, not an object-spawn loader. It always loads one shared type-7
+mappings record, indexes a 26-entry loader-offset table with `StageTableIndex`,
+and then submits the selected stage graphics and mappings list. Stage 1 base
+and phase lists, the Shellshogun arena list, Stage 8, Stage 10 enemy, and
+teleport lists now have structural names. The Stage 10 trailing record is also
+identified as the RAM base plus terminated block-index descriptor consumed by
+`Gfx_AdjustSelectedTileBlocks`.
+
+All 20 definitions in the module now have exact-address static audit records.
+Eleven address-derived table and descriptor names gain provenance-preserving
+semantic names, raising provenance from 13,443 to 13,454 and the audit registry
+from 10,483 to 10,503. The enforced live address-derived ceiling falls from
+2,606 to 2,595.
+
+The adjacent `phase_loading.s` audit applies the same asset-list model through
+Stage 16, Stage 2, Stage 18, Stage 20, and seven Stage 3 phase paths. Labels
+that claimed to load only objects, a palette, or tiles now describe the mixed
+graphics-and-mappings lists they actually submit. The common Stage 3 phase
+1/2 tail is named from its shared control flow, and the otherwise unreachable
+Stage 2 phase 2 and Stage 3 phase 4/5 loaders explicitly retain
+`Unreferenced` status rather than implying live dispatch entries.
+
+All 24 module definitions receive exact-address static audit records. Twelve
+address-derived list or shared-tail names gain provenance-preserving semantic
+names, raising provenance from 13,454 to 13,466 and the audit registry from
+10,503 to 10,527. The enforced live address-derived ceiling falls from 2,595
+to 2,583.
+
+The first `visual_asset_loading.s` pass isolates and audits the module's
+structural core without endorsing its still-questionable stage-owner labels.
+`Stage_DispatchVisualAssetLoader` selects one of 26 relative entries using
+`StageTableIndex`. The selected loaders feed compact streams into
+`Stage_ExpandAndSubmitTileAssetCommands`, which copies already-complete odd
+records verbatim, expands even source indices through a seven-entry shared
+tile-source table, builds a terminated `LoadObjData` list in RAM, and submits
+it through `Data_ProcessPointer`.
+
+All seven definitions in this core range receive exact-address static audit
+records. Four address-derived control-flow and table names gain provenance,
+raising the totals to 13,470 mappings and 10,534 audit records. The enforced
+live address-derived ceiling falls from 2,583 to 2,579. Individual visual-list
+owners remain deliberately outside this endorsement pending their own audit.

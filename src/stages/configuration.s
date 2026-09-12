@@ -398,7 +398,7 @@ Stage_InitStage33Config:                                ; DATA XREF: ROM:0001229
                 bra.w   Stage_ApplyConfigurationRecord
 ; End of function Stage_InitStage33Config
 ; Builds the Stage 3 phase-2 resampling steps, transforms its tiles, and uploads them
-Gfx_PrepareStage3Phase2ResampledTiles:                  ; CODE XREF: Stage_LoadStage3Phase2+12   p  ; was: sub_125EE
+Gfx_PrepareStage3Phase2ResampledTiles:                  ; CODE XREF: Stage_LoadStage3Phase2Assets+12   p  ; was: sub_125EE
                 movea.w #(word_FF9800-M68K_RAM),a0
                 move.l  #$600000,d0
                 move.w  #$2000,d1

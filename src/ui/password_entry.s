@@ -3,7 +3,7 @@ UI_InitializePasswordScreen:                            ; DATA XREF: Sys_Dispatc
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_InitGameMode).l
                 jsr     (Gfx_QueueSmallFontDMACommand83).l
-                jsr     (Stage_DispatchObjectLoader).l
+                jsr     (Stage_LoadAssetsForCurrentTableIndex).l
                 movea.l #stru_1E012,a0
                 jsr     (LoadObjData).l
                 addq.w  #4,(GameModeIndex).w
@@ -57,7 +57,7 @@ Password_InitializeScreen:                              ; DATA XREF: Sys_Dispatc
                 bne.s   loc_1E0C4
                 addq.w  #2,(GameSubstateIndex).w
                 jsr     (Sys_InitGameMode).l
-                jsr     (Stage_DispatchObjectLoader).l
+                jsr     (Stage_LoadAssetsForCurrentTableIndex).l
                 jsr     (Sys_ClearEntityObjectPool).l
                 lea     (StageSelectFullPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l

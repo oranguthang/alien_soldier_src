@@ -38,7 +38,7 @@ tiles_18D650_End:
 byte_18DA38:    binclude "data/other/byte_18DA38.bin"
 byte_18DA38_End:
 byte_18DF92:    dc.b    0, $65, $5F, $C7, $F8, $B0, $41, $56, 0, 0, $64, $C7, $CC, $CD, $CE, $CF, $D0, $BF, $5F, $C7, $F8, $FC, $7F, $C0, $7F, $80, $FF, 0, $DC, $62, $C7, $DD
-                                        ; DATA XREF: ROM:stru_11776   o
+                                        ; DATA XREF: ROM:Stage_SharedMappingsLoadList   o
                                         ; ROM:00013580   o
                 dc.b    $DE, $DF, $BF, $5F, $C7, $F8, $FC, $FF, $C8, $7F, 0, $EC, $62, $C7, $ED, $EE, $EF, $BF, $5F, $C7, $F8, $FD, $7F, $C8, $FF, $5F, $F8, $C7, $FD, $FF, $86, $15
                 dc.b    1, 2, $20, $82, $1A, 1, $20, 2, $88, 3, $90, $B, $FC, $7F, $59, $C7, $F8, $BA, $7F, $3E, $EE, $5F, $C7, $F8, $FE, $FF, $94, $87, $88, $8B, $C0, $8F

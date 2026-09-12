@@ -1,15 +1,15 @@
-Stage_LoadStage16Objects:                               ; DATA XREF: ROM:00011750   o  ; was: sub_11A5C
+Stage_LoadStage16Assets:                                ; DATA XREF: ROM:00011750   o  ; was: sub_11A5C
                                         ; ROM:00011752   o
                 move.w  #4,(word_FFA206).w
-                lea     stru_11A6E(pc),a0
+                lea     Stage16AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage16Objects
+; End of function Stage_LoadStage16Assets
 ; ---------------------------------------------------------------------------
-stru_11A6E:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage16Objects+6   o
+Stage16AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_11A6E
+                                        ; DATA XREF: Stage_LoadStage16Assets+6   o
                 dc.l    tiles_1A2C46                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
@@ -35,18 +35,18 @@ stru_11A6E:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads initial object set for Stage 2 phase 1
-Stage_LoadStage2Phase1:                                 ; DATA XREF: ROM:00011756   o  ; was: sub_11AB0
+; Loads the Stage 2 phase 1 asset list
+Stage_LoadStage2Phase1Assets:                           ; DATA XREF: ROM:00011756   o  ; was: sub_11AB0
                 move.w  #4,(word_FFA206).w
-                lea     stru_11AC2(pc),a0
+                lea     Stage2Phase1AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage2Phase1
+; End of function Stage_LoadStage2Phase1Assets
 ; ---------------------------------------------------------------------------
-stru_11AC2:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage2Phase1+6   o
+Stage2Phase1AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_11AC2
+                                        ; DATA XREF: Stage_LoadStage2Phase1Assets+6   o
                 dc.l    tiles_1A752A                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
@@ -66,19 +66,19 @@ stru_11AC2:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads Stage 18 palette
-Gfx_LoadStage18Palette:                                 ; DATA XREF: ROM:00011758   o  ; was: sub_11AF4
+; Loads the Stage 18 asset list
+Stage_LoadStage18Assets:                                ; DATA XREF: ROM:00011758   o  ; was: sub_11AF4
                                         ; ROM:0001175A   o
                 move.w  #8,(word_FFA206).w
-                lea     stru_11B06(pc),a0
+                lea     Stage18AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Gfx_LoadStage18Palette
+; End of function Stage_LoadStage18Assets
 ; ---------------------------------------------------------------------------
-stru_11B06:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Gfx_LoadStage18Palette+6   o
+Stage18AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_11B06
+                                        ; DATA XREF: Stage_LoadStage18Assets+6   o
                 dc.l    tiles_1A9CC4                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
@@ -113,18 +113,18 @@ stru_11B06:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads object set for Stage 2 phase 2
-Stage_LoadStage2Phase2:
+; Unreferenced loader for the Stage 2 phase 2 asset list
+UnreferencedStage2Phase2AssetLoader:
                 move.w  #8,(word_FFA206).w              ; was: sub_11B60
-                lea     stru_11B72(pc),a0
+                lea     UnreferencedStage2Phase2AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage2Phase2
+; End of function UnreferencedStage2Phase2AssetLoader
 ; ---------------------------------------------------------------------------
-stru_11B72:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage2Phase2+6   o
+UnreferencedStage2Phase2AssetLoadList:  dc.w    7       ; field_0  ; was: stru_11B72
+                                        ; DATA XREF: UnreferencedStage2Phase2AssetLoader+6   o
                 dc.l    tiles_1B10FA                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
@@ -141,18 +141,18 @@ stru_11B72:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads Stage 20 tiles
-Gfx_LoadStage20Tiles:                                   ; DATA XREF: ROM:0001175C   o  ; was: sub_11B9C
+; Loads the Stage 20 asset list
+Stage_LoadStage20Assets:                                ; DATA XREF: ROM:0001175C   o  ; was: sub_11B9C
                 move.w  #8,(word_FFA206).w
-                lea     stru_11BAE(pc),a0
+                lea     Stage20AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Gfx_LoadStage20Tiles
+; End of function Stage_LoadStage20Assets
 ; ---------------------------------------------------------------------------
-stru_11BAE:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Gfx_LoadStage20Tiles+6   o
+Stage20AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_11BAE
+                                        ; DATA XREF: Stage_LoadStage20Assets+6   o
                 dc.l    tiles_1B5466                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
@@ -184,30 +184,30 @@ stru_11BAE:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads object set for Stage 3 phase 1
-Stage_LoadStage3Phase1:                                 ; DATA XREF: ROM:00011762   o  ; was: sub_11C00
+; Loads the Stage 3 phase 1 asset list
+Stage_LoadStage3Phase1Assets:                           ; DATA XREF: ROM:00011762   o  ; was: sub_11C00
                 move.w  #$C,(word_FFA206).w
                 bset    #0,(byte_FF8144).w
                 bset    #7,(byte_FFA959).w
-                bra.s   loc_11C2A
-; End of function Stage_LoadStage3Phase1
-; Loads object set for Stage 3 phase 2
-Stage_LoadStage3Phase2:                                 ; DATA XREF: ROM:0001175E   o  ; was: sub_11C14
+                bra.s   Stage_SubmitStage3Phase12SharedAssetList
+; End of function Stage_LoadStage3Phase1Assets
+; Prepares resampled tiles and loads the shared Stage 3 phase 1/2 asset list
+Stage_LoadStage3Phase2Assets:                           ; DATA XREF: ROM:0001175E   o  ; was: sub_11C14
                                         ; ROM:00011760   o
                 move.w  #$C,(word_FFA206).w
                 bset    #0,(byte_FF8144).w
                 bset    #7,(byte_FFA959).w
                 bsr.w   Gfx_PrepareStage3Phase2ResampledTiles
-loc_11C2A:                                              ; CODE XREF: Stage_LoadStage3Phase1+12   j
-                lea     stru_11C36(pc),a0
+Stage_SubmitStage3Phase12SharedAssetList:               ; CODE XREF: Stage_LoadStage3Phase1Assets+12   j  ; was: loc_11C2A
+                lea     Stage3Phase12SharedAssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage3Phase2
+; End of function Stage_LoadStage3Phase2Assets
 ; ---------------------------------------------------------------------------
-stru_11C36:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage3Phase2:loc_11C2A   o
+Stage3Phase12SharedAssetLoadList:   dc.w    7           ; field_0  ; was: stru_11C36
+                                        ; DATA XREF: Stage_LoadStage3Phase2Assets:Stage_SubmitStage3Phase12SharedAssetList   o
                 dc.l    tiles_1BE762                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
@@ -230,18 +230,18 @@ stru_11C36:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads object set for Stage 3 phase 3
-Stage_LoadStage3Phase3:                                 ; DATA XREF: ROM:00011764   o  ; was: sub_11C70
+; Loads the Stage 3 phase 3 asset list
+Stage_LoadStage3Phase3Assets:                           ; DATA XREF: ROM:00011764   o  ; was: sub_11C70
                 move.w  #$C,(word_FFA206).w
-                lea     stru_11C82(pc),a0
+                lea     Stage3Phase3AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage3Phase3
+; End of function Stage_LoadStage3Phase3Assets
 ; ---------------------------------------------------------------------------
-stru_11C82:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage3Phase3+6   o
+Stage3Phase3AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_11C82
+                                        ; DATA XREF: Stage_LoadStage3Phase3Assets+6   o
                 dc.l    tiles_1C1A94                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
@@ -261,18 +261,18 @@ stru_11C82:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads object set for Stage 3 phase 4
-Stage_LoadStage3Phase4:
+; Unreferenced loader for the Stage 3 phase 4 asset list
+UnreferencedStage3Phase4AssetLoader:
                 move.w  #$C,(word_FFA206).w             ; was: sub_11CB4
-                lea     stru_11CC6(pc),a0
+                lea     UnreferencedStage3Phase4AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage3Phase4
+; End of function UnreferencedStage3Phase4AssetLoader
 ; ---------------------------------------------------------------------------
-stru_11CC6:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage3Phase4+6   o
+UnreferencedStage3Phase4AssetLoadList:  dc.w    7       ; field_0  ; was: stru_11CC6
+                                        ; DATA XREF: UnreferencedStage3Phase4AssetLoader+6   o
                 dc.l    tiles_1C2B90                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
@@ -292,18 +292,18 @@ stru_11CC6:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads object set for Stage 3 phase 5
-Stage_LoadStage3Phase5:
+; Unreferenced loader for the Stage 3 phase 5 asset list
+UnreferencedStage3Phase5AssetLoader:
                 move.w  #$C,(word_FFA206).w             ; was: sub_11CF8
-                lea     stru_11D0A(pc),a0
+                lea     UnreferencedStage3Phase5AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage3Phase5
+; End of function UnreferencedStage3Phase5AssetLoader
 ; ---------------------------------------------------------------------------
-stru_11D0A:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage3Phase5+6   o
+UnreferencedStage3Phase5AssetLoadList:  dc.w    7       ; field_0  ; was: stru_11D0A
+                                        ; DATA XREF: UnreferencedStage3Phase5AssetLoader+6   o
                 dc.l    tiles_1C5DE4                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
@@ -320,18 +320,18 @@ stru_11D0A:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads object set for Stage 3 phase 6
-Stage_LoadStage3Phase6:                                 ; DATA XREF: ROM:00011766   o  ; was: sub_11D34
+; Loads the Stage 3 phase 6 asset list
+Stage_LoadStage3Phase6Assets:                           ; DATA XREF: ROM:00011766   o  ; was: sub_11D34
                 move.w  #$C,(word_FFA206).w
-                lea     stru_11D46(pc),a0
+                lea     Stage3Phase6AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage3Phase6
+; End of function Stage_LoadStage3Phase6Assets
 ; ---------------------------------------------------------------------------
-stru_11D46:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage3Phase6+6   o
+Stage3Phase6AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_11D46
+                                        ; DATA XREF: Stage_LoadStage3Phase6Assets+6   o
                 dc.l    tiles_1C92B0                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
@@ -360,19 +360,19 @@ stru_11D46:     dc.w    7                               ; field_0
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
-; Loads object set for Stage 3 phase 7
-Stage_LoadStage3Phase7:                                 ; DATA XREF: ROM:00011768   o  ; was: sub_11D90
+; Loads the Stage 3 phase 7 asset list
+Stage_LoadStage3Phase7Assets:                           ; DATA XREF: ROM:00011768   o  ; was: sub_11D90
                 move.w  #$C,(word_FFA206).w
                 bset    #0,(byte_FF8144).w
-                lea     stru_11DA8(pc),a0
+                lea     Stage3Phase7AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
                 nop
-; End of function Stage_LoadStage3Phase7
+; End of function Stage_LoadStage3Phase7Assets
 ; ---------------------------------------------------------------------------
-stru_11DA8:     dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_LoadStage3Phase7+C   o
+Stage3Phase7AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_11DA8
+                                        ; DATA XREF: Stage_LoadStage3Phase7Assets+C   o
                 dc.l    tiles_1CA32E                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0

@@ -247,7 +247,7 @@ XiTigerCutscene_UpdateFadeOut:                          ; CODE XREF: XiTigerCuts
 ; End of function XiTigerCutscene_AnimateFadeOut
 ; Leaves the transition cutscene for the Xi Tiger stage handler
 XiTigerCutscene_EnterStageHandler:                      ; DATA XREF: ROM:0001E922   o  ; was: sub_1EB4E
-                jsr     (Stage_DispatchObjectLoader).l
+                jsr     (Stage_LoadAssetsForCurrentTableIndex).l
                 move.w  #$80,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 move.w  #0,(word_FF814C).w

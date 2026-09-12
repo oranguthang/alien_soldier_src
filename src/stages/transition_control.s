@@ -48,7 +48,7 @@ StageTransition_CheckCompletionFlags:                   ; CODE XREF: Sys_StageTr
                 beq.s   StageTransition_Return
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                jmp     Stage_DispatchObjectLoader
+                jmp     Stage_LoadAssetsForCurrentTableIndex
 ; ---------------------------------------------------------------------------
 StageTransition_Return:                                 ; CODE XREF: Sys_StageTransitionUpdate+4C   j  ; was: locret_1E83C
                 rts

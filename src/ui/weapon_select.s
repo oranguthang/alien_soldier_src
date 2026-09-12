@@ -118,7 +118,7 @@ UI_TransitionToStageLoad:                               ; CODE XREF: UI_QueuePen
                 asr.b   #1,d0
                 move.b  byte_1E40C(pc,d0.w),(dword_FF80C8).w
                 clr.b   (byte_FFA272).w
-                jsr     (Stage_DispatchObjectLoader).l
+                jsr     (Stage_LoadAssetsForCurrentTableIndex).l
 locret_1E40A:                                           ; CODE XREF: UI_WeaponSelectTransition+C   j
                                         ; UI_WeaponSelectTransition+16   j
                 rts

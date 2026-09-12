@@ -224,7 +224,7 @@ Camera_ShellshogunBossInit:                             ; DATA XREF: ROM:0000C86
                 addq.w  #2,(word_FFA950).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 clr.w   (dword_FFA90C).w
-                lea     (stru_11820).l,a0
+                lea     (Boss_ShellshogunAssetLoadList).l,a0
                 jsr     (Data_ProcessPointer).l
                 move.w  #4,(PalettePrimaryIndex).w
                 lea     (ShellshogunStagePaletteOffsetList).l,a4
@@ -260,7 +260,7 @@ Camera_UpdateSmooth:                                    ; DATA XREF: ROM:0000C86
                 move.b  #$81,d0
                 jsr     (Sound_QueueBGMRequest).l
                 addq.w  #2,(word_FFA950).w
-                jsr     (Stage_StateDispatcher).l
+                jsr     (Stage_DispatchVisualAssetLoader).l
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
 ; Updates smooth scrolling camera transitions at $1A78
