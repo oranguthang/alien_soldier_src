@@ -37,7 +37,7 @@ Encounter at Stage 13.
 
 - Asset set: `EntityType1C0AssetSet`
 - Graphics list: `EntityType1C0GraphicsLoadList`
-- Graphics data: `tiles_11A8FC`
+- Graphics data: `EntityType1C0TileArt`
 - Palette command: `EntityType1C0PaletteCommand`
 
 ---
@@ -58,7 +58,7 @@ Encounter at Stage 5 (convenient spawn area).
 
 - Asset set: `EntityType3ECAssetSet`
 - Graphics list: `EntityType3ECGraphicsLoadList`
-- Graphics data: `tiles_125902`
+- Graphics data: `EntityType3ECTileArt`
 - Palette command: `EntityType3ECPaletteCommand`
 - Stage entry: `Stage_InitBossPhase2`
 
@@ -73,7 +73,7 @@ uses the neutral entity identity.
 
 - Asset set: `EntityType3FCAssetSet`
 - Graphics list: `EntityType3FCGraphicsLoadList`
-- Graphics data: `tiles_12D012`
+- Graphics data: `EntityType3FCTileArt`
 - Palette commands: `EntityType3FCPaletteCommands`
 
 ---
@@ -84,7 +84,7 @@ uses the neutral entity identity.
 
 - Asset set: `EntityType3F0AssetSet`
 - Graphics list: `EntityType3F0GraphicsLoadList`
-- Graphics data: `tiles_12772E`
+- Graphics data: `EntityType3F0TileArt`
 - Palette command: `EntityType3F0PaletteCommand`
 - Stage entry: `Stage_InitBossPhase3`
 
@@ -99,7 +99,7 @@ not distinguish either identity.
 
 - Asset set: `EntityType3F4AssetSet`
 - Graphics list: `EntityType3F4GraphicsLoadList`
-- Graphics data: `tiles_12E96C`
+- Graphics data: `EntityType3F4TileArt`
 - Palette commands: `EntityType3F4PaletteCommands`
 - Stage entry: `Stage_InitBossPhase4`
 

@@ -17,13 +17,13 @@ XiTigerCutscene_LoadAssets:                             ; DATA XREF: ROM:StageTr
 ; ---------------------------------------------------------------------------
 XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; field_0  ; was: stru_1E8A4
                                         ; DATA XREF: XiTigerCutscene_LoadAssets   o
-                dc.l    tiles_1198E4                    ; field_2
+                dc.l    XiTigerCutsceneTileArt          ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_11A644                     ; field_2
+                dc.l    XiTigerCutsceneMappingDataA     ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_11A61A                     ; field_2
+                dc.l    XiTigerCutsceneMappingDataB     ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    3                               ; field_0
                 dc.l    byte_18BE42                     ; field_2
@@ -103,7 +103,7 @@ XiTigerCutscene_InitializeDisplayObject:                ; CODE XREF: XiTigerCuts
                 move.w  #$10,(a0)
                 move.w  #$CC00,2(a0)
                 move.w  #$E3C0,$E(a0)
-                move.l  #word_1198D2,8(a0)
+                move.l  #XiTigerCutscene_DisplayObjectSpriteMapping,8(a0)
 XiTigerCutscene_Return:                                 ; CODE XREF: XiTigerCutscene_InitializeReveal+4   j  ; was: locret_1E9AE
                                         ; XiTigerCutscene_SpawnMarker+6   j
                 rts

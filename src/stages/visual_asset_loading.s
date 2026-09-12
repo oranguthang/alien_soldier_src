@@ -321,7 +321,7 @@ Stage_LoadStage20VisualAssets:                          ; DATA XREF: ROM:00011E0
 ; ---------------------------------------------------------------------------
 Stage20VisualAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1211E
                                         ; DATA XREF: Stage_LoadStage20VisualAssets   o
-                dc.l    tiles_132E9A                    ; field_2
+                dc.l    Stage20TileArt                  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 
@@ -377,7 +377,7 @@ UnreferencedReloadStage20TileAsset:
 ; ---------------------------------------------------------------------------
 UnreferencedStage20TileReloadList:  dc.w    7           ; field_0  ; was: stru_12178
                                         ; DATA XREF: UnreferencedReloadStage20TileAsset   o
-                dc.l    tiles_132E9A                    ; field_2
+                dc.l    Stage20TileArt                  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 

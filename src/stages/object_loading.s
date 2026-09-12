@@ -351,7 +351,7 @@ TeleportAssetLoadList:  dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    Stage10TeleportSharedAssetData  ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    tiles_120E1C                    ; field_2
+                dc.l    TeleportTileArt                 ; field_2
                 dc.w    $9600                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2

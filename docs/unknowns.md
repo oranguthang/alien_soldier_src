@@ -5286,3 +5286,20 @@ without duplicate address records. Provenance rises from 14,646 to 14,736,
 the audit registry from 11,969 to 12,015, and the enforced address-derived
 ceiling falls from 1,405 to 1,315. The remaining backlog comprises 831 RAM
 equates and 484 preserved-data labels.
+
+The Xi-Tiger and boss-art pass removes all 56 address-derived definitions from
+`data/xi_tiger_and_boss_art.s`. The Xi-Tiger transition's audited descriptor
+list and display-object initializer prove its tile-art source, two mapping-data
+sources, and three-piece sprite mapping. The remaining compressed sources are
+named from their direct audited graphics-load lists: named bosses, neutral
+entity types `$1C0/$3EC/$3F0/$3F4/$3FC`, the shared teleport load, and Stage 20.
+
+Wolf Garopa and Z-Leo each retain numbered tile-art sources because their load
+lists contain two independent compressed streams; no unsupported visual split
+is asserted. Epsilon-1's source is also reused by the Stage 17 tile commands,
+and the Stage 20 source is reused by its preserved reload list. The 29 unique
+source addresses receive static audit records, while 27 exclusive-end aliases
+retain provenance without duplicate address entries. Provenance rises from
+14,736 to 14,792, the audit registry from 12,015 to 12,044, and the enforced
+address-derived ceiling falls from 1,315 to 1,259. The remaining backlog is 831
+RAM equates and 428 preserved-data labels.

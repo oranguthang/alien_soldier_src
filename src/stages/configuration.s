@@ -257,7 +257,7 @@ Stage17_WriteMinus16ToStridedEntityWords:               ; CODE XREF: Stage_Initi
 ; ---------------------------------------------------------------------------
 Stage17TileAssetCommands:   dc.w    7                   ; field_0  ; was: stru_12488
                                         ; DATA XREF: Stage_InitializeStage17Boss+9E   o
-                dc.l    tiles_1233B4                    ; field_2
+                dc.l    Boss_Epsilon1TileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_1A9AD8                     ; field_2

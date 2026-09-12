@@ -1,65 +1,66 @@
-word_1198D2:    dc.w    $4818, $300, $F3EB              ; DATA XREF: XiTigerCutscene_InitializeDisplayObject+10   o
+XiTigerCutscene_DisplayObjectSpriteMapping: dc.w    $4818, $300, $F3EB  ; DATA XREF: XiTigerCutscene_InitializeDisplayObject+10   o  ; was: word_1198D2
                 dc.w    $4810, $D00, $3F3
                 dc.w    $C800, $F00, $E3F3
-tiles_1198E4:   binclude "data/artcomp/tiles_1198E4.bin"
-tiles_1198E4_End:
-byte_11A61A:    dc.b    0, $27, $31, 0, 1, $12, $13, $84, $14, $12, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $22, $23, $24, $25, $26, $20, 1, 2
+XiTigerCutsceneTileArt:         binclude "data/artcomp/tiles_1198E4.bin"  ; was: tiles_1198E4
+XiTigerCutsceneTileArt_End:                             ; was: tiles_1198E4_End
+XiTigerCutsceneMappingDataB:    dc.b    0, $27, $31, 0, 1, $12, $13, $84, $14, $12, $14, $15, $16, $17, $18, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $21, $22, $23, $24, $25, $26, $20, 1, 2
+                                        ; was: byte_11A61A
                                         ; DATA XREF: ROM:0001E8B4   o
                 dc.b    $27, $28, $29, $84, $2F, $80, 7, $A4, $34, $FF
-byte_11A644:    binclude "data/mappings/byte_11A644.bin"
-byte_11A644_End:
-tiles_11A8FC:   binclude "data/artcomp/tiles_11A8FC.bin"  ; entity type $1C0 art
+XiTigerCutsceneMappingDataA:    binclude "data/mappings/byte_11A644.bin"  ; was: byte_11A644
+XiTigerCutsceneMappingDataA_End:                        ; was: byte_11A644_End
+EntityType1C0TileArt:           binclude "data/artcomp/tiles_11A8FC.bin"  ; entity type $1C0 art  ; was: tiles_11A8FC
                                         ; Referenced by EntityType1C0GraphicsLoadList
-tiles_11A8FC_End:
-tiles_11B542:   binclude "data/artcomp/tiles_11B542.bin"
-tiles_11B542_End:
-tiles_11D002:   binclude "data/artcomp/tiles_11D002.bin"
-tiles_11D002_End:
-tiles_11E5E0:   binclude "data/artcomp/tiles_11E5E0.bin"
-tiles_11E5E0_End:
-tiles_11F310:   binclude "data/artcomp/tiles_11F310.bin"
-tiles_11F310_End:
-tiles_120E1C:   binclude "data/artcomp/tiles_120E1C.bin"
-tiles_120E1C_End:
-tiles_120FF8:   binclude "data/artcomp/tiles_120FF8.bin"
-tiles_120FF8_End:
-tiles_121932:   binclude "data/artcomp/tiles_121932.bin"
-tiles_121932_End:
-tiles_1233B4:   binclude "data/artcomp/tiles_1233B4.bin"
-tiles_1233B4_End:
-tiles_12453E:   binclude "data/artcomp/tiles_12453E.bin"
-tiles_12453E_End:
-tiles_124CCE:   binclude "data/artcomp/tiles_124CCE.bin"
-tiles_124CCE_End:
-tiles_125902:   binclude "data/artcomp/tiles_125902.bin"  ; entity type $3EC art
+EntityType1C0TileArt_End:                               ; was: tiles_11A8FC_End
+Boss_DeepStriderTileArt:    binclude "data/artcomp/tiles_11B542.bin"  ; was: tiles_11B542
+Boss_DeepStriderTileArt_End:                            ; was: tiles_11B542_End
+Boss_SunsetStingTileArt:    binclude "data/artcomp/tiles_11D002.bin"  ; was: tiles_11D002
+Boss_SunsetStingTileArt_End:                            ; was: tiles_11D002_End
+Boss_GustheadTileArt:       binclude "data/artcomp/tiles_11E5E0.bin"  ; was: tiles_11E5E0
+Boss_GustheadTileArt_End:                               ; was: tiles_11E5E0_End
+Boss_SharpssteelTileArt:    binclude "data/artcomp/tiles_11F310.bin"  ; was: tiles_11F310
+Boss_SharpssteelTileArt_End:                            ; was: tiles_11F310_End
+TeleportTileArt:            binclude "data/artcomp/tiles_120E1C.bin"  ; was: tiles_120E1C
+TeleportTileArt_End:                                    ; was: tiles_120E1C_End
+Boss_VictorTileArt:         binclude "data/artcomp/tiles_120FF8.bin"  ; was: tiles_120FF8
+Boss_VictorTileArt_End:                                 ; was: tiles_120FF8_End
+Boss_BackStringerTileArt:   binclude "data/artcomp/tiles_121932.bin"  ; was: tiles_121932
+Boss_BackStringerTileArt_End:                           ; was: tiles_121932_End
+Boss_Epsilon1TileArt:       binclude "data/artcomp/tiles_1233B4.bin"  ; was: tiles_1233B4
+Boss_Epsilon1TileArt_End:                               ; was: tiles_1233B4_End
+Boss_JampanTileArt:         binclude "data/artcomp/tiles_12453E.bin"  ; was: tiles_12453E
+Boss_JampanTileArt_End:                                 ; was: tiles_12453E_End
+Boss_DestroyerMK2TileArt:   binclude "data/artcomp/tiles_124CCE.bin"  ; was: tiles_124CCE
+Boss_DestroyerMK2TileArt_End:                           ; was: tiles_124CCE_End
+EntityType3ECTileArt:       binclude "data/artcomp/tiles_125902.bin"  ; entity type $3EC art  ; was: tiles_125902
                                         ; Referenced by EntityType3ECGraphicsLoadList
-tiles_125902_End:
-tiles_12772E:   binclude "data/artcomp/tiles_12772E.bin"  ; entity type $3F0 art
+EntityType3ECTileArt_End:                               ; was: tiles_125902_End
+EntityType3F0TileArt:   binclude "data/artcomp/tiles_12772E.bin"  ; entity type $3F0 art  ; was: tiles_12772E
                                         ; Referenced by EntityType3F0GraphicsLoadList
-tiles_12772E_End:
-tiles_12AB8C:   binclude "data/artcomp/tiles_12AB8C.bin"
-tiles_12AB8C_End:
-tiles_12D012:   binclude "data/artcomp/tiles_12D012.bin"  ; entity type $3FC art
+EntityType3F0TileArt_End:                               ; was: tiles_12772E_End
+Boss_BugmaxTileArt:     binclude "data/artcomp/tiles_12AB8C.bin"  ; was: tiles_12AB8C
+Boss_BugmaxTileArt_End:                                 ; was: tiles_12AB8C_End
+EntityType3FCTileArt:   binclude "data/artcomp/tiles_12D012.bin"  ; entity type $3FC art  ; was: tiles_12D012
                                         ; Referenced by EntityType3FCGraphicsLoadList
-tiles_12D012_End:
-tiles_12E96C:   binclude "data/artcomp/tiles_12E96C.bin"  ; entity type $3F4 art
+EntityType3FCTileArt_End:                               ; was: tiles_12D012_End
+EntityType3F4TileArt:   binclude "data/artcomp/tiles_12E96C.bin"  ; entity type $3F4 art  ; was: tiles_12E96C
                                         ; Referenced by EntityType3F4GraphicsLoadList
-tiles_12E96C_End:
-tiles_130B4E:   binclude "data/artcomp/tiles_130B4E.bin"
-tiles_130B4E_End:
-tiles_132E9A:   binclude "data/artcomp/tiles_132E9A.bin"
-tiles_132E9A_End:
-tiles_1338F2:   binclude "data/artcomp/tiles_1338F2.bin"
-tiles_1338F2_End:
-tiles_134F02:   binclude "data/artcomp/tiles_134F02.bin"
-tiles_134F02_End:
-tiles_1355D6:   binclude "data/artcomp/tiles_1355D6.bin"
-tiles_1355D6_End:
-tiles_136512:   binclude "data/artcomp/tiles_136512.bin"
-tiles_136512_End:
-tiles_13963E:   binclude "data/artcomp/tiles_13963E.bin"
-tiles_13963E_End:
-tiles_13A92A:   binclude "data/artcomp/tiles_13A92A.bin"
-tiles_13A92A_End:
-tiles_13C166:   binclude "data/artcomp/tiles_13C166.bin"
-tiles_13C166_End:
+EntityType3F4TileArt_End:                               ; was: tiles_12E96C_End
+SevenForcesValkirieTileArt: binclude "data/artcomp/tiles_130B4E.bin"  ; was: tiles_130B4E
+SevenForcesValkirieTileArt_End:                         ; was: tiles_130B4E_End
+Stage20TileArt:             binclude "data/artcomp/tiles_132E9A.bin"  ; was: tiles_132E9A
+Stage20TileArt_End:                                     ; was: tiles_132E9A_End
+Boss_ShieldViperTileArt:    binclude "data/artcomp/tiles_1338F2.bin"  ; was: tiles_1338F2
+Boss_ShieldViperTileArt_End:                            ; was: tiles_1338F2_End
+Boss_MissirayTileArt:       binclude "data/artcomp/tiles_134F02.bin"  ; was: tiles_134F02
+Boss_MissirayTileArt_End:                               ; was: tiles_134F02_End
+Boss_WolfGaropaTileArt0:    binclude "data/artcomp/tiles_1355D6.bin"  ; was: tiles_1355D6
+Boss_WolfGaropaTileArt0_End:                            ; was: tiles_1355D6_End
+Boss_WolfGaropaTileArt1:    binclude "data/artcomp/tiles_136512.bin"  ; was: tiles_136512
+Boss_WolfGaropaTileArt1_End:                            ; was: tiles_136512_End
+Boss_DestroyerProtoTileArt: binclude "data/artcomp/tiles_13963E.bin"  ; was: tiles_13963E
+Boss_DestroyerProtoTileArt_End:                         ; was: tiles_13963E_End
+Boss_ZLeoTileArt0:          binclude "data/artcomp/tiles_13A92A.bin"  ; was: tiles_13A92A
+Boss_ZLeoTileArt0_End:                                  ; was: tiles_13A92A_End
+Boss_ZLeoTileArt1:          binclude "data/artcomp/tiles_13C166.bin"  ; was: tiles_13C166
+Boss_ZLeoTileArt1_End:                                  ; was: tiles_13C166_End
