@@ -119,7 +119,7 @@ StageTransition_UpdateMessageScreen_FinishFadeOut:      ; CODE XREF: StageTransi
                 beq.s   StageTransition_UpdateMessageScreen_Return
 ; Commits the interstage transition and starts loading the selected stage
 StageTransition_LoadStage:                              ; CODE XREF: StageTransition_QueuePendingBGMAndLoadStage:StageTransition_LoadStageAfterOptionalBGM   j  ; was: loc_1E3DE
-                                        ; Stage_HandleCreditsOrAdvance+32   j
+                                        ; EndingSequence_UpdateFromTransition+32   j
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
                 jsr     (Weapon_CommitStateTransition).l
@@ -156,7 +156,7 @@ StageTransition_RenderPressStart:                       ; CODE XREF: StageTransi
 ; End of function StageTransition_RenderPressStart
 ; ---------------------------------------------------------------------------
 StageTransitionMessageSequence_StageZero:   dc.b    3, $DA, 0, $58, $79, $42, $36, $3F, $34, $43, $39, 0, $3E, $3B, $42, $D8  ; was: byte_1E444
-                                        ; DATA XREF: Sys_UpdateGameplayLoop+7A   o
+                                        ; DATA XREF: WeaponSetup_UpdateScreen+7A   o
                 dc.b    $D8, $D8, 0, $DA, $FF, 6, $31, $4E, $D8, $30, $31, $3C, $6F, $36, 0, $9E  ; text?
                 dc.b    $84, $AB, $3D, $31, $63, $5C, $3F, $40, $5D, $30, $6E, $44, $31, $DB, $DB, $FF
                 dc.b    8, $61, $37, $30, $37, $4A, $6B, $32, $48, $91, $A6, $A3, $8B, $92, $AE, $A4

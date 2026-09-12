@@ -1,4 +1,4 @@
-Boss_ZLeoMainController:                                ; CODE XREF: Stage_UpdateGameplay+6   p  ; was: sub_220D0
+Boss_ZLeoMainController:                                ; CODE XREF: ZLeoEnding_UpdateScene+6   p  ; was: sub_220D0
                 tst.w   (dword_FF9400).w
                 beq.w   Boss_ZLeoMainController_DispatchState
                 bsr.w   Boss_ZLeoUpdateScroll

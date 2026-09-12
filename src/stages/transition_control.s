@@ -65,8 +65,8 @@ StageTransition_DispatchInitialize:                     ; CODE XREF: Sys_Transit
 ; ---------------------------------------------------------------------------
 StageTransition_InitializeHandlerTable: dc.w    XiTigerCutscene_LoadAssets-StageTransition_DispatchUpdate  ; was: off_1E84E
                                         ; DATA XREF: StageTransition_DispatchInitialize+4   r
-                dc.w    Stage_InitPlayerAndScroll-StageTransition_DispatchUpdate
-                dc.w    Stage_TransitionToCredits-StageTransition_DispatchUpdate
+                dc.w    ZLeoEnding_InitializeScene-StageTransition_DispatchUpdate
+                dc.w    EndingSequence_InitializeFromTransition-StageTransition_DispatchUpdate
 
 ; Dispatches the per-frame handler for the selected transition route
 StageTransition_DispatchUpdate:                         ; CODE XREF: Sys_StageTransitionUpdate+18   p  ; was: sub_1E854
@@ -79,5 +79,5 @@ StageTransition_DispatchUpdate:                         ; CODE XREF: Sys_StageTr
 ; ---------------------------------------------------------------------------
 StageTransition_UpdateHandlerTable: dc.w    XiTigerCutscene_Update-XiTigerCutscene_LoadAssets  ; was: off_1E864
                                         ; DATA XREF: StageTransition_DispatchUpdate+4   r
-                dc.w    Stage_UpdateGameplay-XiTigerCutscene_LoadAssets
-                dc.w    Stage_HandleCreditsOrAdvance-XiTigerCutscene_LoadAssets
+                dc.w    ZLeoEnding_UpdateScene-XiTigerCutscene_LoadAssets
+                dc.w    EndingSequence_UpdateFromTransition-XiTigerCutscene_LoadAssets

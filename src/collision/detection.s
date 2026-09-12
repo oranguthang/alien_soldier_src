@@ -1,5 +1,5 @@
 Collision_UpdateSystem:                                 ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateCollision   p  ; was: sub_13ADE
-                                        ; Sys_UpdateGameplayLoop+6   p
+                                        ; WeaponSetup_UpdateScreen+6   p
                 tst.b   (byte_FF813E).w
                 bmi.s   Collision_UpdateSystem_Return
                 bsr.w   Collision_BuildEntityLists

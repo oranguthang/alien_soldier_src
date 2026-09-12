@@ -1,5 +1,5 @@
 Weapon_UpdateStateAndSlotAnimations:                    ; CODE XREF: Sys_GameplayMainLoop+B8   p  ; was: sub_178FE
-                                        ; Sys_UpdateGameplayLoop+2A   p
+                                        ; WeaponSetup_UpdateScreen+2A   p
                 tst.b   (byte_FF813E).w
                 bmi.w   Weapon_UpdateStateAndSlotAnimationsReturn
                 bsr.w   Weapon_UpdateCurrentState

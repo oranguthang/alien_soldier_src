@@ -1,5 +1,5 @@
 ; Initializes the ending sequence's credits assets, palette, music, and scroll state
-EndingSequence_Initialize:                              ; CODE XREF: Stage_TransitionToCredits+6   j  ; was: sub_7B30
+EndingSequence_Initialize:                              ; CODE XREF: EndingSequence_InitializeFromTransition+6   j  ; was: sub_7B30
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_InitGameMode).l
@@ -61,7 +61,7 @@ EndingSequence_AssetLoads:  dc.w    7                   ; field_0  ; was: stru_7
                 dc.w    $FFFF
 
 ; Runs the palette effect and dispatches the complete credits-to-planet sequence
-EndingSequence_Dispatch:                                ; CODE XREF: Stage_HandleCreditsOrAdvance+8   j  ; was: sub_7C24
+EndingSequence_Dispatch:                                ; CODE XREF: EndingSequence_UpdateFromTransition+8   j  ; was: sub_7C24
                 jsr     (Effect_PaletteDispatcher).l
                 move.w  (dword_FF8128+2).w,d0
                 lea     EndingSequence_States(pc,d0.w),a0

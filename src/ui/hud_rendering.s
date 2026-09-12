@@ -302,7 +302,7 @@ WeaponIconVRAMDestinationTable: dc.w    $50B8, $50BE, $50C4, $50CA  ; was: word_
                                         ; DATA XREF: UI_QueueSelectedWeaponIconTransfer+4   r
 
 UI_QueueSelectedWeaponIconTransfer:                     ; CODE XREF: UI_QueueAllWeaponIconTransfers:NextSlot   p  ; was: sub_1319E
-                                        ; UI_InitializeStageStart+EC   p
+                                        ; WeaponSetup_InitializeScreen+EC   p
                 move.w  (WeaponSlotOffset).w,d0
                 move.w  WeaponIconVRAMDestinationTable(pc,d0.w),d3
                 movea.w d0,a0

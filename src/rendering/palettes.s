@@ -30,7 +30,7 @@ Gfx_LoadPaletteFromRelativeOffset:                      ; CODE XREF: Gfx_LoadMul
 ; ---------------------------------------------------------------------------
 StoryScreenPaletteOffsetList:               dc.w    $20A, 0  ; DATA XREF: StoryScreen_WaitForScrollAndLoadPalette+36   o  ; was: word_B944
 OptionsScreenPaletteOffsetList:             dc.w    $60, $E2, 0  ; DATA XREF: UI_InitOptionsScreen+72   o  ; was: word_B948
-StageStartPaletteOffsetList:                dc.w    $28A, $2B0, 0  ; DATA XREF: UI_InitializeStageStart+DC   o  ; was: word_B94E
+StageStartPaletteOffsetList:                dc.w    $28A, $2B0, 0  ; DATA XREF: WeaponSetup_InitializeScreen+DC   o  ; was: word_B94E
 WeaponSetupControlTestPaletteOffsetList:    dc.w    $2D0, $2D6, 0  ; DATA XREF: WeaponSetup_LoadControlTestText+32   o  ; was: word_B954
 ContinueScreenPaletteOffsetLists:           dc.w    $EE, $F4, $FA, $100, 0, $EE, $F4, $FA, $100, 0  ; was: word_B95A
                                         ; DATA XREF: Continue_InitializeScreen+40   o
@@ -75,7 +75,7 @@ UnreferencedFlaggedPaletteOffsetListA:  dc.w    $718, $E34, 0  ; DATA XREF: ROM:
 UnreferencedFlaggedPaletteOffsetListB:  dc.w    $738, 0  ; DATA XREF: ROM:UnreferencedFlaggedConfigRecordB   o  ; was: word_B9DE
 Stage25PaletteOffsetList:               dc.w    $758, 0  ; DATA XREF: ROM:Stage25ConfigRecord   o  ; was: word_B9E2
 Stage26PaletteOffsetList:               dc.w    $798, 0  ; DATA XREF: ROM:Stage26ConfigRecord   o  ; was: word_B9E6
-                                        ; Stage_InitPlayerAndScroll+24   o
+                                        ; ZLeoEnding_InitializeScene+24   o
 
 ; Loads a palette command while preserving the shared color at palette slot $36
 Gfx_LoadPalettePreservingSharedColor:                   ; CODE XREF: Boss_LoadAssetSet+6C   p  ; was: sub_B9EA

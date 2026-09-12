@@ -97,7 +97,7 @@ Gfx_QueueNextFontTileDMA_Return:                        ; CODE XREF: Gfx_QueueNe
 ; End of function Gfx_QueueNextFontTileDMA
 ; Writes VDP command registers
 Gfx_QueueLargeFontDMA:                                  ; CODE XREF: Sys_TransitionToStageInit+36   j  ; was: sub_11256
-                                        ; UI_InitializeStageStart+46   j
+                                        ; WeaponSetup_InitializeScreen+46   j
                 movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$80,-(a1)
                 move.w  #$6000,-(a1)

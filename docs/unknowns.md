@@ -3502,7 +3502,7 @@ symbol export from 16,057 to 16,060 addresses; module count remains 347.
 The stage-transition and Xi Tiger cutscene audit moves the shared route
 dispatchers at `0x01E83E-0x01E869` out of the Xi Tiger module and into
 `stages/transition_control.s`. Their three-entry initialization and update
-tables select Xi Tiger, gameplay, or credits handlers through the shared
+tables select Xi Tiger, the Z-Leo ending scene, or shared ending-sequence handlers through the
 transition route index. `cutscenes/xi_tiger.s` now begins at its natural
 `0x01E86A` asset-loading entry and remains a cohesive 464-line module.
 
@@ -4737,7 +4737,8 @@ damage, defeat clearing, threshold checks, and the boss HUD.
 
 `SetupTransitionIndex` retains a deliberately shared name: the weapon-setup
 screen uses it as an even state-table offset, then transition control reuses
-values `0`, `2`, and `4` for Xi-Tiger, gameplay, and credits routes.
+values `0`, `2`, and `4` for Xi-Tiger, the Z-Leo ending scene, and the shared
+ending-sequence route.
 `XiTigerConfigIndex` is narrower but still incomplete evidence: source proves
 the zero writer and a one-entry configuration dispatcher, not any nonzero
 variant. The frame-decompression accumulator and tilemap bias remain raw
@@ -4746,3 +4747,29 @@ instead of receiving speculative cutscene names.
 The pass raises provenance from 13,750 to 13,758 mappings, takes the JSON
 name-audit registry from 10,997 to 11,005 records, and lowers the enforced live
 address-derived ceiling from 2,300 to 2,292.
+
+The `stages/gameplay_initialization.s` audit corrects another imported
+subsystem boundary rather than merely replacing six raw labels. Game modes
+`$70` and `$74` are now `WeaponSetup_InitializeScreen` and
+`WeaponSetup_UpdateScreen`: title, password confirmation, demo setup, and
+continue acceptance enter `$70`, whose second phase loads the setup assets,
+renders its labels, initializes loadout/ammunition state, and enters the
+interactive setup updater. The former `UI_InitializeStageStart`,
+`UI_LoadStageGraphics`, and `Sys_UpdateGameplayLoop` names were therefore too
+broad or false.
+
+Transition route two is separately identified as the Z-Leo ending scene. The
+Z-Leo defeat path writes `SetupTransitionIndex = 2`; its initialization loads
+the Stage 26 palette and dedicated asset stream, and its updater calls the
+nineteen-state Z-Leo ending controller that ultimately selects game mode
+`$8C`. Route four enters and updates the shared ending sequence, then advances
+the stage only after that sequence raises its completion word. These paths are
+kept distinct from the weapon-setup screen despite their ROM adjacency.
+
+All 27 definitions in the 307-line module now have exact-address static audit
+records and no live address-derived names. Fifteen symbols are corrected or
+promoted, including the two descriptor streams and the setup exit branches.
+Twelve already-correct audit records are retained rather than duplicated.
+Provenance rises from 13,758 to 13,764 mappings, the JSON name-audit registry
+from 11,005 to 11,020 records, and the enforced live address-derived ceiling
+falls from 2,292 to 2,286.

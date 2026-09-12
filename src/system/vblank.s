@@ -200,8 +200,8 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    Credits_UpdateEffects
                 dc.l    Sys_TransitionToStageInit
                 dc.l    Sys_StageTransitionUpdate
-                dc.l    UI_InitializeStageStart
-                dc.l    Sys_UpdateGameplayLoop
+                dc.l    WeaponSetup_InitializeScreen
+                dc.l    WeaponSetup_UpdateScreen
                 dc.l    Stage_InitGameOver
                 dc.l    Effect_CopyGameOverPalette
                 dc.l    Stage_XiTigerHandler

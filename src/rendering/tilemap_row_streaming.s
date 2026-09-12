@@ -123,7 +123,7 @@ Tilemap_DirectTransferWithAlternateDescriptor:          ; CODE XREF: Frontend_Ac
 ; End of function Tilemap_DirectTransferWithAlternateDescriptor
 ; Starts a full direct tilemap transfer at the primary-camera coordinates
 Tilemap_DirectTransferFromPrimaryCamera:                ; CODE XREF: XiTigerCutscene_InitializeReveal+66   p  ; was: sub_10AEC
-                                        ; Stage_InitPlayerAndScroll+3C   p
+                                        ; ZLeoEnding_InitializeScene+3C   p
                 move.w  (dword_FFA900).w,d0
                 move.w  (dword_FFA904).w,d1
 ; End of function Tilemap_DirectTransferFromPrimaryCamera

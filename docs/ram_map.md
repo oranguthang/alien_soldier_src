@@ -133,7 +133,7 @@ fields to seed its displayed state.
 
 | Symbol | Address | Static evidence |
 |---|---:|---|
-| `SetupTransitionIndex` | `$FFFFA29C` | The weapon-setup updater uses even values as offsets into its seven-entry page/state table. The later transition dispatcher reuses values `0`, `2`, and `4` to select Xi-Tiger, gameplay, or credits initialization and update pairs. |
+| `SetupTransitionIndex` | `$FFFFA29C` | The weapon-setup updater uses even values as offsets into its seven-entry page/state table. The later transition dispatcher reuses values `0`, `2`, and `4` to select Xi-Tiger, the Z-Leo ending scene, or the shared ending sequence. |
 | `XiTigerConfigIndex` | `$FFFF814C` | The Xi-Tiger cutscene initializer writes zero, and stage initialization uses the word as an offset into the adjacent Xi-Tiger configuration table. Only the zero entry and zero writer are currently present in source. |
 
 `SetupTransitionIndex` is deliberately named for both observed lifetimes. A
