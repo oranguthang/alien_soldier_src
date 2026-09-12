@@ -59,7 +59,7 @@ Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilo
                 bne.s   Boss_Epsilon1UpdateBodyAndAngleHistory
                 btst    #1,(byte_FF80EC).w
                 bne.w   Boss_Epsilon1UpdateLinkedParts
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_Epsilon1UpdateBodyAndAngleHistory
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,$4C(a5)

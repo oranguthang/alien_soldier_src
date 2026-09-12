@@ -7,7 +7,7 @@ Boss_ValkirieAlternateMain:                             ; DATA XREF: ROM:Entity_
                 bne.s   Boss_ValkirieAlternateUpdatePalette
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_ValkirieAlternateUpdatePalette
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_ValkirieAlternateUpdatePalette
                 moveq   #$C,d0
                 jmp     Boss_QueueSevenForcesPostBattleTransition

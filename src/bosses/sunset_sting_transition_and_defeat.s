@@ -260,7 +260,7 @@ Boss_SunsetStingSecondFormUpdateBody:                   ; CODE XREF: Boss_Sunset
                 bne.s   Boss_SunsetStingSecondFormRender
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_SunsetStingSecondFormRender
-                move.w  (word_FF8200).w,d0
+                move.w  (BossHealth).w,d0
                 beq.w   Boss_SunsetStingResetAfterPrimaryHealthDepletion
                 tst.b   (dword_FFC6DC).w
                 bne.s   Boss_SunsetStingSecondFormRender
@@ -343,7 +343,7 @@ Boss_SunsetStingResetAfterPrimaryHealthDepletion:       ; CODE XREF: Boss_Sunset
                 bset    #0,(byte_FFA272).w
                 move.w  #4,(word_FFA010).w
                 move.w  #4,(word_FFA014).w
-                move.w  #$7FFF,(word_FF8200).w
+                move.w  #$7FFF,(BossHealth).w
                 clr.b   (dword_FFC6DC).w
                 clr.w   4(a5)
                 clr.l   $18(a5)

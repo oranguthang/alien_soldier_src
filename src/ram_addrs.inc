@@ -208,15 +208,15 @@ word_FF8140             equ     $FFFF8140
 byte_FF8142             equ     $FFFF8142
 byte_FF8143             equ     $FFFF8143
 byte_FF8144             equ     $FFFF8144
-word_FF8146             equ     $FFFF8146
-word_FF8148             equ     $FFFF8148
-word_FF814A             equ     $FFFF814A
-word_FF814C             equ     $FFFF814C
-word_FF8200             equ     $FFFF8200
-word_FF8202             equ     $FFFF8202
+FontTileDMAVRAMAddress  equ     $FFFF8146               ; was: word_FF8146
+FontTileDMACounter      equ     $FFFF8148               ; was: word_FF8148
+FontTileDMASourceOffset equ     $FFFF814A               ; was: word_FF814A
+XiTigerConfigIndex      equ     $FFFF814C               ; was: word_FF814C
+BossHealth              equ     $FFFF8200               ; was: word_FF8200
+BossMaxHealth           equ     $FFFF8202               ; was: word_FF8202
 byte_FF8204             equ     $FFFF8204
-word_FF8206             equ     $FFFF8206
-word_FF820A             equ     $FFFF820A
+DisplayedBossHealth     equ     $FFFF8206               ; was: word_FF8206
+DisplayedPlayerHealth   equ     $FFFF820A               ; was: word_FF820A
 word_FF820C             equ     $FFFF820C
 word_FF8210             equ     $FFFF8210
 PaletteEffectControl    equ     $FFFF8218               ; was: word_FF8218
@@ -465,15 +465,15 @@ word_FFA206             equ     $FFFFA206
 byte_FFA209             equ     $FFFFA209
 dword_FFA20E            equ     $FFFFA20E
 ScoreValueBCD           equ     $FFFFA212               ; was: dword_FFA212
-word_FFA216             equ     $FFFFA216
-word_FFA218             equ     $FFFFA218
+PlayerHealth            equ     $FFFFA216               ; was: word_FFA216
+PlayerMaxHealth         equ     $FFFFA218               ; was: word_FFA218
 WeaponStateIndex        equ     $FFFFA21C               ; was: word_FFA21C
 WeaponIconTransferState equ     $FFFFA21E               ; was: word_FFA21E
 WeaponSavedSlotOffset   equ     $FFFFA220               ; was: word_FFA220
 ContinueCreditsBCD      equ     $FFFFA228               ; was: word_FFA228
 ShootingMode            equ     $FFFFA22A               ; was: word_FFA22A
-dword_FFA22C            equ     $FFFFA22C
-byte_FFA230             equ     $FFFFA230
+StageMessageCursor      equ     $FFFFA22C               ; was: dword_FFA22C
+PendingStageBGMRequest  equ     $FFFFA230               ; was: byte_FFA230
 WeaponSlotOffset        equ     $FFFFA24E               ; was: word_FFA24E
 word_FFA250             equ     $FFFFA250
 word_FFA252             equ     $FFFFA252
@@ -494,7 +494,7 @@ VBlankFrameCounter      equ     $FFFFA280               ; was: word_FFA280
 word_FFA282             equ     $FFFFA282
 GameModeIndex           equ     $FFFFA284               ; was: word_FFA284
 GameSubstateIndex       equ     $FFFFA286               ; was: word_FFA286
-word_FFA29C             equ     $FFFFA29C
+SetupTransitionIndex    equ     $FFFFA29C               ; was: word_FFA29C
 byte_FFA300             equ     $FFFFA300
 byte_FFA3E0             equ     $FFFFA3E0
 word_FFA400             equ     $FFFFA400

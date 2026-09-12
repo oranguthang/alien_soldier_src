@@ -63,13 +63,13 @@ loc_1EE74:                                              ; CODE XREF: Stage_Handl
                 clr.b   (byte_FFA95B).w
                 move.b  #$97,d0
                 jsr     (Sound_QueueBGMRequest).l
-                jmp     UI_TransitionToStageLoad
+                jmp     StageTransition_LoadStage
 ; End of function Stage_HandleCreditsOrAdvance
 ; Initializes stage start with full game setup
 UI_InitializeStageStart:                                ; DATA XREF: Sys_DispatchGameState+C6   o  ; was: sub_1EE9E
                 tst.w   (GameSubstateIndex).w
                 bne.s   UI_LoadStageGraphics
-                clr.w   (word_FFA29C).w
+                clr.w   (SetupTransitionIndex).w
                 clr.b   (MessageDisplayFlags).w
                 move.w  #2,(ShootingMode).w
                 jsr     (Sys_InitGameMode).l
@@ -104,10 +104,10 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 move.w  #6,(word_FF8090).w
                 move.b  #2,(byte_FFA95A).w
                 move.w  #$7000,d0
-                move.w  d0,(word_FF8200).w
-                move.w  d0,(word_FF8202).w
-                move.w  d0,(word_FF8206).w
-                move.w  (word_FFA216).w,(word_FF820A).w
+                move.w  d0,(BossHealth).w
+                move.w  d0,(BossMaxHealth).w
+                move.w  d0,(DisplayedBossHealth).w
+                move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
                 move.w  #$12,(word_FFA02A).w
                 move.w  #$DA,(dword_FFA410).w
                 move.w  #$130,(dword_FFA414).w
@@ -243,7 +243,7 @@ loc_1F0EE:                                              ; CODE XREF: Sys_UpdateG
 loc_1F0F8:                                              ; CODE XREF: Sys_UpdateGameplayLoop+70   j
                 tst.w   (StageTableIndex).w
                 bne.s   UI_TransitionToContinueScreen
-                move.l  #byte_1E444,(dword_FFA22C).w    ; text?
+                move.l  #StageTransitionMessageSequence_StageZero,(StageMessageCursor).w  ; text?
                 move.w  #$34,(GameModeIndex).w          ; '4'
                 clr.w   (GameSubstateIndex).w
                 jsr     (Sound_QueueStageBGMOrStop).l
@@ -258,7 +258,7 @@ UI_TransitionToContinueScreen:                          ; CODE XREF: Sys_UpdateG
 ; Updates the setup background and dispatches the current setup-screen state
 WeaponSetup_UpdateAndDispatchState:                     ; CODE XREF: Sys_UpdateGameplayLoop+3C   p  ; was: sub_1F12C
                 bsr.w   WeaponSetup_UpdateBackgroundEffect
-                move.w  (word_FFA29C).w,d0
+                move.w  (SetupTransitionIndex).w,d0
                 movea.w WeaponSetup_StateHandlerOffsets(pc,d0.w),a0
                 adda.l  #WeaponSetup_HandleLoadoutState,a0
                 jmp     (a0)

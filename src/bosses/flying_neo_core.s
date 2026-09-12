@@ -34,9 +34,9 @@ Boss_FlyingNeoSelectHealthFadeThreshold:                ; CODE XREF: Boss_Flying
                 beq.s   Boss_FlyingNeoCheckHealthFadeThreshold
                 move.w  #$3880,d0
 Boss_FlyingNeoCheckHealthFadeThreshold:                 ; CODE XREF: Boss_FlyingNeoMain+6C   j  ; was: loc_3C068
-                cmp.w   (word_FF8200).w,d0
+                cmp.w   (BossHealth).w,d0
                 bmi.s   Boss_FlyingNeoCheckDefeat
-                cmpi.w  #$2380,(word_FF8200).w
+                cmpi.w  #$2380,(BossHealth).w
                 bpl.s   Boss_FlyingNeoSetSharedPhaseTwo
                 move.w  #1,$23C(a5)
                 bra.s   Boss_FlyingNeoCheckDefeat
@@ -45,7 +45,7 @@ Boss_FlyingNeoSetSharedPhaseTwo:                        ; CODE XREF: Boss_Flying
                 move.w  #2,(word_FF8246).w
 Boss_FlyingNeoCheckDefeat:                              ; CODE XREF: Boss_FlyingNeoMain+3C   j  ; was: loc_3C084
                                         ; Boss_FlyingNeoMain+48   j
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_FlyingNeoDefeatInit
 Boss_FlyingNeoPublishScreenX:                           ; CODE XREF: Boss_FlyingNeoMain+2E   j  ; was: loc_3C08C
                                         ; Boss_FlyingNeoMain+36   j

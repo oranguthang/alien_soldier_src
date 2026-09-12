@@ -8,7 +8,7 @@ Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
                 move.b  #1,(byte_FF830E).w
                 bset    #0,(byte_FFA272).w

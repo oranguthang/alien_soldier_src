@@ -551,7 +551,7 @@ byte_18DA38,0x18DA38,0x18DF92,other
 byte_18DFFA,0x18DFFA,0x18E24C,other
 byte_18E36C,0x18E36C,0x18E5D2,other
 byte_1C09B2,0x1C09B2,0x1C0FB2,other
-byte_1E587,0x1E587,0x1E6C6,other
+stage_transition_message_sequence_train_and_bugmax,0x1E587,0x1E6C6,other
 story_text_primary_rows,0x5A36,0x675D,other
 story_text_accent_rows,0x675D,0x7484,other
 byte_BE1E,0xBE1E,0xBF2C,other

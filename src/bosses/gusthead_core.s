@@ -41,7 +41,7 @@ Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_Gusthe
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_GustheadUpdatePaletteAndScreenX
                 move.b  #2,(byte_FF80EC).w
                 bset    #7,$4A(a5)
@@ -283,7 +283,7 @@ Boss_GustheadWaitForBattleBannerReturn:                 ; CODE XREF: Boss_Gusthe
 ; End of function Boss_GustheadWaitForBattleBannerState
 ; Chooses one of the three regular Gusthead movement patterns
 Boss_GustheadChoosePatternState:                        ; DATA XREF: ROM:0003F25C   o  ; was: sub_3F4EA
-                cmpi.w  #$3200,(word_FF8200).w
+                cmpi.w  #$3200,(BossHealth).w
                 bcs.s   Boss_GustheadTriggerFinalPhaseTransition
                 move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0

@@ -55,7 +55,7 @@ Boss_ViblackMain:                                       ; DATA XREF: ROM:Entity_
                 bne.s   Boss_ViblackStateDispatch
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_ViblackStateDispatch
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_ViblackDefeatInit
 ; State machine dispatcher for Viblack boss
 Boss_ViblackStateDispatch:                              ; CODE XREF: Boss_ViblackMain+4   j  ; was: loc_439CC
@@ -102,8 +102,8 @@ Boss_ViblackIntroSetup:                                 ; DATA XREF: ROM:000439D
                 bpl.w   Boss_ViblackStateReturn
                 addq.w  #2,4(a5)
                 move.w  #$D00,2(a5)
-                move.w  #$5000,(word_FF8200).w
-                move.w  #$5000,(word_FF8202).w
+                move.w  #$5000,(BossHealth).w
+                move.w  #$5000,(BossMaxHealth).w
                 move.w  #$1C,$24(a5)
                 move.b  #$10,$21(a5)
                 move.b  #$80,$23(a5)

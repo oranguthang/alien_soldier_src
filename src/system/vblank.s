@@ -185,8 +185,8 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    StoryScreen_MainLoop
                 dc.l    Results_InitializePostStageFlow
                 dc.l    Results_DispatchPostStageState
-                dc.l    UI_InitializeWeaponSelect
-                dc.l    UI_HandleMenuTextTransition
+                dc.l    StageTransition_Initialize
+                dc.l    StageTransition_UpdateMessageScreen
                 dc.l    StageReady_Initialize
                 dc.l    StageReady_Update
                 dc.l    PasswordMenu_Initialize

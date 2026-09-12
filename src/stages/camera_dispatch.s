@@ -361,8 +361,8 @@ Stage_CheckTransitionReady:                             ; DATA XREF: ROM:0000C87
                 bne.s   locret_CBB8
                 tst.w   (word_FF8138).w
                 bne.s   locret_CBB8
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; ---------------------------------------------------------------------------
 locret_CBB8:                                            ; CODE XREF: Stage_CheckTransitionReady+6   j
                                         ; Stage_CheckTransitionReady+C   j

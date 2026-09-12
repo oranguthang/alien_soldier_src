@@ -19,15 +19,15 @@ Effect_UpdateStage25DestructionParticle:                ; CODE XREF: Effect_RunS
                 bne.s   Effect_ApplyStage25ParticleOrientation
                 move.b  #$A7,d0
                 jsr     (Sound_PlaySFX).l
-                tst.w   (word_FFA216).w
+                tst.w   (PlayerHealth).w
                 beq.w   Effect_UpdateStage25DestructionParticle_ConvertObject
                 bmi.w   Effect_UpdateStage25DestructionParticle_ConvertObject
-                addi.w  #$20,(word_FFA218).w            ; ' '
-                cmpi.w  #$400,(word_FFA218).w
+                addi.w  #$20,(PlayerMaxHealth).w        ; ' '
+                cmpi.w  #$400,(PlayerMaxHealth).w
                 bmi.s   Effect_UpdateStage25DestructionParticle_ApplyShake
-                move.w  #$400,(word_FFA218).w
+                move.w  #$400,(PlayerMaxHealth).w
 Effect_UpdateStage25DestructionParticle_ApplyShake:     ; CODE XREF: Effect_UpdateStage25DestructionParticle+32   j  ; was: loc_2BB2C
-                move.w  (word_FFA218).w,(word_FFA216).w
+                move.w  (PlayerMaxHealth).w,(PlayerHealth).w
 Effect_UpdateStage25DestructionParticle_ConvertObject:  ; CODE XREF: Effect_UpdateStage25DestructionParticle+1E   j  ; was: loc_2BB32
                                         ; Effect_UpdateStage25DestructionParticle+22   j
                 move.w  #$32C,(a5)

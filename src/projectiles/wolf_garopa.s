@@ -112,7 +112,7 @@ Boss_WolfGaropaStoreOrbMappingAndPosition:              ; CODE XREF: Boss_WolfGa
                 move.w  d2,$AF0(a5)
                 add.w   d6,d3
                 move.w  d3,$AF4(a5)
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_WolfGaropaAdvanceOrbPalettePhase
                 bra.s   Boss_WolfGaropaUpdateOrbFrameAndTiles
 ; ---------------------------------------------------------------------------

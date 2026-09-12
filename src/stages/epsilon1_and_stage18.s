@@ -1,13 +1,13 @@
 Stage_Epsilon1Init:                                     ; DATA XREF: ROM:0000D9C6   o  ; was: sub_E11C
                 tst.w   (word_FF8230).w
                 bne.s   locret_E14C
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                jsr     (Stage_StartWeaponSelectTransition).l
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                jsr     (Stage_StartInterstageTransition).l
                 move.w  #$8002,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 move.b  #$80,(byte_FFF705).w
-                move.b  #$8B,(byte_FFA230).w
+                move.b  #$8B,(PendingStageBGMRequest).w
 locret_E14C:                                            ; CODE XREF: Stage_Epsilon1Init+4   j
                 rts
 ; End of function Stage_Epsilon1Init
@@ -120,7 +120,7 @@ Cutscene_PlanetInit:                                    ; DATA XREF: ROM:0000D9D
                 move.w  #$E000,(word_FF80F4).w
                 move.b  #$80,(byte_FFF705).w
                 bset    #2,(byte_FF80F8).w
-                move.w  #4,(word_FFA29C).w
+                move.w  #4,(SetupTransitionIndex).w
                 move.w  #4,(word_FF8230).w
                 rts
 ; End of function Cutscene_PlanetInit

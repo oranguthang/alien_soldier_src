@@ -56,7 +56,7 @@ Boss_JetsripperUpdateState:                             ; CODE XREF: Boss_Jetsri
                 bne.s   Boss_JetsripperUpdateActiveState
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_JetsripperUpdateActiveState
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_JetsripperUpdateActiveState
                 move.b  #2,(byte_FF80EC).w
                 move.w  #$1E,4(a5)

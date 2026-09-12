@@ -9,7 +9,7 @@ Boss_MissirayMain:                                      ; DATA XREF: ROM:Entity_
                 bne.s   Boss_MissirayUpdateLinkedSegmentPositions
                 btst    #1,(byte_FF80EC).w
                 bne.w   Boss_MissirayUpdateVScrollBuffer
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_MissirayUpdateLinkedSegmentPositions
                 move.b  #2,(byte_FF80EC).w
                 move.w  #$1A,4(a5)

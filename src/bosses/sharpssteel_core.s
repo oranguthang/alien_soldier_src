@@ -8,7 +8,7 @@ Boss_SharpssteelMain:                                   ; DATA XREF: ROM:Entity_
                 bne.s   Boss_SharpssteelUpdatePaletteAndCore
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_SharpssteelUpdatePaletteAndCore
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_SharpssteelBeginDefeatFragmentBurst
 Boss_SharpssteelUpdatePaletteAndCore:                   ; CODE XREF: Boss_SharpssteelMain+14   j
                                         ; Boss_SharpssteelMain+1C   j

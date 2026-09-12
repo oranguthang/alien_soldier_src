@@ -9,7 +9,7 @@ Boss_ShieldViperUpdate:                                 ; DATA XREF: ROM:Entity_
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_ShieldViperUpdateGeometryUnlessTransitioning
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_ShieldViperUpdateGeometryUnlessTransitioning
                 move.b  #2,(byte_FF80EC).w
                 move.w  #$70,4(a5)                      ; 'p'

@@ -473,9 +473,9 @@ StageTransition_WaitForWolfGaropaTransitionTrigger:     ; DATA XREF: ROM:0000F12
                 bne.s   StageTransition_WolfGaropaTriggerWaitReturn
                 tst.w   (word_FF8138).w
                 bne.s   StageTransition_WolfGaropaTriggerWaitReturn
-                move.b  #$8F,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #$8F,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; ---------------------------------------------------------------------------
 StageTransition_WolfGaropaTriggerWaitReturn:            ; CODE XREF: StageTransition_WaitForWolfGaropaTransitionTrigger+8   j  ; was: locret_F6F2
                                         ; StageTransition_WaitForWolfGaropaTransitionTrigger+E   j
@@ -650,9 +650,9 @@ StageTransition_WaitForMissirayExitSignals:             ; DATA XREF: ROM:0000F14
                 bne.s   StageTransition_MissirayExitWaitReturn
                 tst.w   (word_FF8138).w
                 bne.s   StageTransition_MissirayExitWaitReturn
-                move.b  #$9F,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #$9F,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; ---------------------------------------------------------------------------
 StageTransition_MissirayExitWaitReturn:                 ; CODE XREF: StageTransition_WaitForMissirayExitSignals+8   j  ; was: locret_F912
                                         ; StageTransition_WaitForMissirayExitSignals+E   j
@@ -774,9 +774,9 @@ StageTransition_WaitForStage24CompletionSignals:        ; DATA XREF: ROM:0000F15
                 tst.w   (word_FF8138).w
                 bne.s   StageTransition_Stage24CompletionWaitReturn
                 addq.w  #2,(StageTableIndex).w
-                move.b  #$8F,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #$8F,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; ---------------------------------------------------------------------------
 StageTransition_Stage24CompletionWaitReturn:            ; CODE XREF: StageTransition_WaitForStage24CompletionSignals+4   j  ; was: locret_FA82
                                         ; StageTransition_WaitForStage24CompletionSignals+A   j

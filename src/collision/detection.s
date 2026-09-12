@@ -13,13 +13,13 @@ Collision_UpdateSystem_RunDynamicChecks:                ; CODE XREF: Collision_U
                 bsr.w   Collision_CheckPlayerAgainstHostiles
                 bsr.w   Collision_CheckSpecialAttackTargets
                 bsr.w   Collision_PlayerWeaponVsEnemy
-                tst.w   (word_FFA216).w
+                tst.w   (PlayerHealth).w
                 bpl.s   Collision_UpdateSystem_CheckResourceRefill
-                clr.w   (word_FFA216).w
+                clr.w   (PlayerHealth).w
 Collision_UpdateSystem_CheckResourceRefill:             ; CODE XREF: Collision_UpdateSystem+32   j  ; was: loc_13B16
                 tst.w   (word_FF822A).w
                 beq.s   Collision_UpdateSystem_Return
-                move.w  (word_FFA218).w,(word_FFA216).w
+                move.w  (PlayerMaxHealth).w,(PlayerHealth).w
                 move.w  #$5000,(StageTimeRemaining).w
 Collision_UpdateSystem_Return:                          ; CODE XREF: Collision_UpdateSystem+4   j  ; was: locret_13B28
                                         ; Collision_UpdateSystem+3C   j
@@ -222,7 +222,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot:  ; CODE XREF: Col
 Collision_CheckWeaponProjectilesAgainstEnemies_ResolveFlaggedTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+58   j  ; was: loc_13D36
                 btst    #2,(byte_FF80EC).w
                 bne.s   Collision_CheckWeaponProjectilesAgainstEnemies_CheckLinkedTarget
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.s   Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget
 Collision_CheckWeaponProjectilesAgainstEnemies_CheckLinkedTarget:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+72   j  ; was: loc_13D44
                 btst    #1,$23(a3)
@@ -258,10 +258,10 @@ Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XR
                 move.w  $24(a2),(word_FF8210).w
                 move.w  #$20,(word_FF809A).w            ; ' '
                 mulu.w  $24(a2),d4
-                sub.w   d4,(word_FF8200).w
+                sub.w   d4,(BossHealth).w
                 bpl.w   Collision_CheckWeaponProjectilesAgainstEnemies_NextWeaponSlot
-                clr.w   (word_FF8200).w
-                clr.w   (word_FF8202).w
+                clr.w   (BossHealth).w
+                clr.w   (BossMaxHealth).w
                 clr.b   (byte_FF80EC).w
                 clr.w   (word_FF8234).w
                 clr.w   (word_FF8236).w
@@ -370,15 +370,15 @@ Collision_CheckPlayerAgainstHostiles_ResolveHit:        ; CODE XREF: Collision_C
                 andi.b  #$48,d0                         ; 'H'
                 or.b    d0,$22(a0)
                 move.w  $26(a2),d4
-                cmpi.w  #1,(word_FFA216).w
+                cmpi.w  #1,(PlayerHealth).w
                 bne.s   Collision_CheckPlayerAgainstHostiles_SubtractResource
-                clr.w   (word_FFA216).w
+                clr.w   (PlayerHealth).w
                 bra.s   Collision_CheckPlayerAgainstHostiles_ApplyDamage
 ; ---------------------------------------------------------------------------
 Collision_CheckPlayerAgainstHostiles_SubtractResource:  ; CODE XREF: Collision_CheckPlayerAgainstHostiles+BA   j  ; was: loc_13F5C
-                sub.w   d4,(word_FFA216).w
+                sub.w   d4,(PlayerHealth).w
                 bpl.s   Collision_CheckPlayerAgainstHostiles_ApplyDamage
-                move.w  #1,(word_FFA216).w
+                move.w  #1,(PlayerHealth).w
                 bra.s   Collision_CheckPlayerAgainstHostiles_ApplyDamage
 ; ---------------------------------------------------------------------------
 Collision_CheckPlayerAgainstHostiles_CheckContactDamage:  ; CODE XREF: Collision_CheckPlayerAgainstHostiles+A2   j  ; was: loc_13F6A
@@ -504,7 +504,7 @@ Collision_CheckSpecialAttackTargets_Return:             ; CODE XREF: Collision_C
 Collision_CheckSpecialAttackTargets_ResolveFlaggedTarget:  ; CODE XREF: Collision_CheckSpecialAttackTargets+8A   j  ; was: loc_140A2
                 btst    #2,(byte_FF80EC).w
                 bne.s   Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.s   Collision_CheckSpecialAttackTargets_NextTarget
 Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_CheckSpecialAttackTargets+9C   j  ; was: loc_140B0
                 bset    #7,$22(a3)
@@ -525,10 +525,10 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 move.w  $24(a2),(word_FF8210).w
                 move.w  #$20,(word_FF809A).w            ; ' '
                 mulu.w  $24(a2),d4
-                sub.w   d4,(word_FF8200).w
+                sub.w   d4,(BossHealth).w
                 bpl.s   Collision_CheckSpecialAttackTargets_NextTarget
-                clr.w   (word_FF8200).w
-                clr.w   (word_FF8202).w
+                clr.w   (BossHealth).w
+                clr.w   (BossMaxHealth).w
                 clr.b   (byte_FF80EC).w
                 clr.w   (word_FF8234).w
                 clr.w   (word_FF8236).w

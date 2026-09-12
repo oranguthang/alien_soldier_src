@@ -3,8 +3,8 @@ Player_UpdateWeaponCharge:
                 beq.s   Player_UpdateWeaponCharge_Return
                 btst    #0,$69(a5)
                 beq.s   Player_UpdateWeaponCharge_Return
-                move.w  (word_FFA216).w,d0
-                sub.w   (word_FFA218).w,d0
+                move.w  (PlayerHealth).w,d0
+                sub.w   (PlayerMaxHealth).w,d0
                 move.w  d0,(word_FF8304).w
                 moveq   #1,d0
 Player_UpdateWeaponCharge_Return:                       ; CODE XREF: Player_UpdateWeaponCharge+6   j  ; was: locret_164FA

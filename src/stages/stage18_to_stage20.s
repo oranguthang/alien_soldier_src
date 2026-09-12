@@ -143,9 +143,9 @@ Stage_JampanPostDefeatCheck:                            ; DATA XREF: ROM:0000E45
                 bne.s   locret_E678
                 tst.w   (word_FF8138).w
                 bne.s   locret_E678
-                move.b  #0,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #0,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; ---------------------------------------------------------------------------
 locret_E678:                                            ; CODE XREF: Stage_JampanPostDefeatCheck+8   j
                                         ; Stage_JampanPostDefeatCheck+E   j
@@ -183,8 +183,8 @@ Stage_CheckEnemiesTransit1:                             ; DATA XREF: ROM:0000E46
                 bne.w   Stage_Stage18EmptyHandler
                 tst.w   (word_FF8138).w
                 bne.w   Stage_Stage18EmptyHandler
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; End of function Stage_CheckEnemiesTransit1
 ; Load the entity-type $3EC resources for a late Stage 18 phase. This entry is
 ; present in the stage state table; static evidence does not establish the
@@ -213,9 +213,9 @@ Stage_CheckEnemiesTransit2:                             ; DATA XREF: ROM:0000E46
                 bne.w   Stage_Stage18EmptyHandler
                 tst.w   (word_FF8138).w
                 bne.w   Stage_Stage18EmptyHandler
-                move.b  #$8F,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #$8F,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; End of function Stage_CheckEnemiesTransit2
 ; Load the entity-type $3F0 resources for the next late Stage 18 phase. The
 ; record is statically proven; its intended character identity is not
@@ -243,9 +243,9 @@ Stage_CheckEnemiesTransit3:                             ; DATA XREF: ROM:0000E47
                 bne.w   Stage_Stage18EmptyHandler
                 tst.w   (word_FF8138).w
                 bne.w   Stage_Stage18EmptyHandler
-                move.b  #$8F,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #$8F,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; End of function Stage_CheckEnemiesTransit3
 ; Load the entity-type $3F4 resources for the following late Stage 18 phase
 ; External identity guesses remain research notes rather than source names
@@ -273,8 +273,8 @@ Stage_CheckEnemiesTransit4:                             ; DATA XREF: ROM:0000E47
                 bne.w   Stage_Stage18EmptyHandler
                 tst.w   (word_FF8138).w
                 bne.w   Stage_Stage18EmptyHandler
-                move.b  #$96,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #$96,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; End of function Stage_CheckEnemiesTransit4
 ; Stage 20 initialization

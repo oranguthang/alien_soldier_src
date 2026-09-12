@@ -93,7 +93,7 @@ DebugMenu_UpdateSoundRequestSelection_Return:           ; was: locret_137FA
 DebugMenu_UpdateBossHealthClear:                        ; was: sub_137FC
                 btst    #4,(word_FFF708).w
                 beq.s   DebugMenu_UpdateBossHealthClear_UpdateCursor
-                clr.w   (word_FF8200).w
+                clr.w   (BossHealth).w
 DebugMenu_UpdateBossHealthClear_UpdateCursor:           ; was: loc_13808
                 btst    #3,(VBlankFrameCounter+1).w
                 bne.s   DebugMenu_UpdateBossHealthClear_Return

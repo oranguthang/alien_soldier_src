@@ -8,7 +8,7 @@ Boss_DeepStriderMain:                                   ; DATA XREF: ROM:Entity_
                 bne.s   Boss_DeepStriderUpdateStageRelativeX
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_DeepStriderUpdateStageRelativeX
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_DeepStriderBeginDefeat
 Boss_DeepStriderUpdateStageRelativeX:                   ; CODE XREF: Boss_DeepStriderMain+14   j  ; was: loc_3E5A8
                                         ; Boss_DeepStriderMain+1C   j

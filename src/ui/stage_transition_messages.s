@@ -1,40 +1,50 @@
-UI_InitializeWeaponSelect:                              ; DATA XREF: Sys_DispatchGameState+8A   o  ; was: sub_1E264
+; Queues a pending stage BGM request, then continues to stage loading
+StageTransition_QueuePendingBGMAndLoadStage:            ; was: sub_1E254
+                move.b  (PendingStageBGMRequest).w,d0
+                beq.s   StageTransition_LoadStageAfterOptionalBGM
+                jsr     (Sound_QueueBGMOrStop).l
+StageTransition_LoadStageAfterOptionalBGM:              ; was: loc_1E260
+                bra.w   StageTransition_LoadStage
+; End of function StageTransition_QueuePendingBGMAndLoadStage
+
+; Initializes the interstage route or resumes its message-screen setup
+StageTransition_Initialize:                             ; DATA XREF: Sys_DispatchGameState+8A   o  ; was: sub_1E264
                 tst.w   (GameSubstateIndex).w
-                bne.s   UI_WeaponSelectTransition
+                bne.s   StageTransition_ResumeSetup
                 jsr     (Sys_InitGameMode).l
                 jsr     (Sys_ClearEntityObjectPool).l
-                bra.w   UI_QueuePendingBGMAndTransitionToStageLoad
-; End of function UI_InitializeWeaponSelect
-; Prepares weapon select graphics
-UI_PrepareWeaponSelectGfx:
-                bclr    #6,(VDPReg1Shadow+1).w          ; was: sub_1E27A
+                bra.w   StageTransition_QueuePendingBGMAndLoadStage
+; End of function StageTransition_Initialize
+; Prepares the otherwise unreferenced interstage message graphics
+UnreferencedStageTransition_PrepareGraphics:            ; was: sub_1E27A
+                bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
-                move.w  #$6000,(word_FF8146).w
-                move.w  #$F,(word_FF8148).w
-                move.w  #0,(word_FF814A).w
+                move.w  #$6000,(FontTileDMAVRAMAddress).w
+                move.w  #$F,(FontTileDMACounter).w
+                move.w  #0,(FontTileDMASourceOffset).w
                 lea     (StageEntryAssetLoadList).l,a0
                 jmp     (Data_ProcessPointer).l
-; End of function UI_PrepareWeaponSelectGfx
-; Handles weapon select transition
-UI_WeaponSelectTransition:                              ; CODE XREF: UI_InitializeWeaponSelect+4   j  ; was: sub_1E2A6
+; End of function UnreferencedStageTransition_PrepareGraphics
+; Resumes pending font transfer and activates the interstage message screen
+StageTransition_ResumeSetup:                            ; CODE XREF: StageTransition_Initialize+4   j  ; was: sub_1E2A6
                 cmpi.w  #4,(GameSubstateIndex).w
-                beq.s   loc_1E2C6
+                beq.s   StageTransition_ResumeSetup_ActivateMessageScreen
                 tst.b   (word_FFF720).w
-                bmi.w   locret_1E40A
+                bmi.w   StageTransition_LoadOrSetupReturn
                 jsr     (Gfx_QueueNextFontTileDMA).l
-                bpl.w   locret_1E40A
+                bpl.w   StageTransition_LoadOrSetupReturn
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_1E2C6:                                              ; CODE XREF: UI_WeaponSelectTransition+6   j
+StageTransition_ResumeSetup_ActivateMessageScreen:      ; CODE XREF: StageTransition_ResumeSetup+6   j  ; was: loc_1E2C6
                 move.w  #$38,(GameModeIndex).w          ; '8'
                 clr.w   (GameSubstateIndex).w
-                move.b  (byte_FFA230).w,d0
-                beq.s   loc_1E2DC
+                move.b  (PendingStageBGMRequest).w,d0
+                beq.s   StageTransition_ResumeSetup_LoadPaletteAndText
                 jsr     (Sound_QueueBGMOrStop).l
-loc_1E2DC:                                              ; CODE XREF: UI_WeaponSelectTransition+2E   j
-                lea     off_1E334(pc),a0
+StageTransition_ResumeSetup_LoadPaletteAndText:         ; CODE XREF: StageTransition_ResumeSetup+2E   j  ; was: loc_1E2DC
+                lea     StageTransitionPaletteBlockPointers(pc),a0
                 nop
                 jsr     (Palette_LoadFourOptionalBlocks).l
                 move.w  #4,(word_FF80F2).w
@@ -46,39 +56,39 @@ loc_1E2DC:                                              ; CODE XREF: UI_WeaponSe
                 move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                bsr.w   UI_RenderMenuText
+                bsr.w   StageTransition_RenderPressStart
                 clr.w   (dword_FFA904).w
                 clr.w   (dword_FFA900).w
                 clr.w   (dword_FFA90C).w
                 clr.w   (dword_FFA908).w
                 jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
-; End of function UI_WeaponSelectTransition
+; End of function StageTransition_ResumeSetup
 ; ---------------------------------------------------------------------------
-off_1E334:      dc.l    dword_1E344                     ; DATA XREF: UI_WeaponSelectTransition:loc_1E2DC   o
-                dc.l    dword_1E344
-                dc.l    dword_1E344
-                dc.l    dword_1E344
-dword_1E344:    dc.l    0, $CAA0A88, $8660644, 0
-                                        ; DATA XREF: ROM:off_1E334   o
+StageTransitionPaletteBlockPointers:    dc.l    StageTransitionPaletteBlock  ; DATA XREF: StageTransition_ResumeSetup:StageTransition_ResumeSetup_LoadPaletteAndText   o  ; was: off_1E334
+                dc.l    StageTransitionPaletteBlock
+                dc.l    StageTransitionPaletteBlock
+                dc.l    StageTransitionPaletteBlock
+StageTransitionPaletteBlock:    dc.l    0, $CAA0A88, $8660644, 0  ; was: dword_1E344
+                                        ; DATA XREF: ROM:StageTransitionPaletteBlockPointers   o
                                         ; ROM:0001E338   o
                 dc.l    0, $8660644, $4220000, 0
 
-; Manages menu text and transition
-UI_HandleMenuTextTransition:                            ; DATA XREF: Sys_DispatchGameState+8E   o  ; was: sub_1E364
+; Advances interstage message text, confirmation, and palette fades
+StageTransition_UpdateMessageScreen:                    ; DATA XREF: Sys_DispatchGameState+8E   o  ; was: sub_1E364
                 tst.b   (word_FFF720).w
-                bmi.w   locret_1E3D4
+                bmi.w   StageTransition_UpdateMessageScreen_Return
                 tst.w   (GameSubstateIndex).w
-                beq.s   loc_1E38E
+                beq.s   StageTransition_UpdateMessageScreen_RenderText
                 btst    #7,(word_FFF708).w
-                beq.s   loc_1E38E
+                beq.s   StageTransition_UpdateMessageScreen_RenderText
                 clr.w   (GameSubstateIndex).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
-loc_1E38E:                                              ; CODE XREF: UI_HandleMenuTextTransition+C   j
-                                        ; UI_HandleMenuTextTransition+14   j
-                move.l  (dword_FFA22C).w,d0
-                beq.s   loc_1E3C2
+StageTransition_UpdateMessageScreen_RenderText:         ; CODE XREF: StageTransition_UpdateMessageScreen+C   j  ; was: loc_1E38E
+                                        ; StageTransition_UpdateMessageScreen+14   j
+                move.l  (StageMessageCursor).w,d0
+                beq.s   StageTransition_UpdateMessageScreen_UpdateFade
                 movea.l d0,a0
                 moveq   #0,d4
                 move.b  (a0)+,d4
@@ -89,26 +99,26 @@ loc_1E38E:                                              ; CODE XREF: UI_HandleMe
                 asr.w   #1,d3
                 addq.w  #2,d3
                 ext.l   d3
-                add.l   d3,(dword_FFA22C).w
-                movea.l (dword_FFA22C).w,a0
+                add.l   d3,(StageMessageCursor).w
+                movea.l (StageMessageCursor).w,a0
                 cmpi.b  #$FD,(a0)
-                bne.s   loc_1E3C2
-                clr.l   (dword_FFA22C).w
-loc_1E3C2:                                              ; CODE XREF: UI_HandleMenuTextTransition+2E   j
-                                        ; UI_HandleMenuTextTransition+58   j
+                bne.s   StageTransition_UpdateMessageScreen_UpdateFade
+                clr.l   (StageMessageCursor).w
+StageTransition_UpdateMessageScreen_UpdateFade:         ; CODE XREF: StageTransition_UpdateMessageScreen+2E   j  ; was: loc_1E3C2
+                                        ; StageTransition_UpdateMessageScreen+58   j
                 jsr     (Gfx_FadePaletteTransition).l
                 bclr    #0,(word_FF80F4).w
-                beq.s   loc_1E3D6
+                beq.s   StageTransition_UpdateMessageScreen_FinishFadeOut
                 addq.w  #2,(GameSubstateIndex).w
-locret_1E3D4:                                           ; CODE XREF: UI_HandleMenuTextTransition+4   j
-                                        ; UI_HandleMenuTextTransition+78   j
+StageTransition_UpdateMessageScreen_Return:             ; CODE XREF: StageTransition_UpdateMessageScreen+4   j  ; was: locret_1E3D4
+                                        ; StageTransition_UpdateMessageScreen+78   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_1E3D6:                                              ; CODE XREF: UI_HandleMenuTextTransition+6A   j
+StageTransition_UpdateMessageScreen_FinishFadeOut:      ; CODE XREF: StageTransition_UpdateMessageScreen+6A   j  ; was: loc_1E3D6
                 bclr    #1,(word_FF80F4).w
-                beq.s   locret_1E3D4
-; Transitions from menu to stage loading
-UI_TransitionToStageLoad:                               ; CODE XREF: UI_QueuePendingBGMAndTransitionToStageLoad:UI_TransitionAfterOptionalStageBGM   j  ; was: loc_1E3DE
+                beq.s   StageTransition_UpdateMessageScreen_Return
+; Commits the interstage transition and starts loading the selected stage
+StageTransition_LoadStage:                              ; CODE XREF: StageTransition_QueuePendingBGMAndLoadStage:StageTransition_LoadStageAfterOptionalBGM   j  ; was: loc_1E3DE
                                         ; Stage_HandleCreditsOrAdvance+32   j
                 move.w  #$C,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
@@ -116,15 +126,15 @@ UI_TransitionToStageLoad:                               ; CODE XREF: UI_QueuePen
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0
-                move.b  byte_1E40C(pc,d0.w),(dword_FF80C8).w
+                move.b  StageTransitionMessageStartStateByStage(pc,d0.w),(dword_FF80C8).w
                 clr.b   (byte_FFA272).w
                 jsr     (Stage_LoadAssetsForCurrentTableIndex).l
-locret_1E40A:                                           ; CODE XREF: UI_WeaponSelectTransition+C   j
-                                        ; UI_WeaponSelectTransition+16   j
+StageTransition_LoadOrSetupReturn:                      ; CODE XREF: StageTransition_ResumeSetup+C   j  ; was: locret_1E40A
+                                        ; StageTransition_ResumeSetup+16   j
                 rts
-; End of function UI_HandleMenuTextTransition
+; End of function StageTransition_UpdateMessageScreen
 ; ---------------------------------------------------------------------------
-byte_1E40C:     dc.b    $18, 0, 0                       ; DATA XREF: UI_HandleMenuTextTransition+96   r
+StageTransitionMessageStartStateByStage:    dc.b    $18, 0, 0  ; DATA XREF: StageTransition_LoadStage+28   r  ; was: byte_1E40C
                 dc.b    0, $18, 0
                 dc.b    0, $18, 0
                 dc.b    $18, 0, 0
@@ -137,15 +147,15 @@ byte_1E40C:     dc.b    $18, 0, 0                       ; DATA XREF: UI_HandleMe
                 dc.b    0, 0, 0
                 dc.b    0, 0, 0
 
-; Renders static menu text
-UI_RenderMenuText:                                      ; CODE XREF: UI_WeaponSelectTransition+74   p  ; was: sub_1E430
+; Renders the static PRESS START prompt
+StageTransition_RenderPressStart:                       ; CODE XREF: StageTransition_ResumeSetup+74   p  ; was: sub_1E430
                 lea     (Text_PressStart).l,a0
                 move.w  #$C100,d0
                 move.w  #$4B9E,d4
                 jmp     (Text_QueueDoubleHeightStringWrapped).l
-; End of function UI_RenderMenuText
+; End of function StageTransition_RenderPressStart
 ; ---------------------------------------------------------------------------
-byte_1E444:     dc.b    3, $DA, 0, $58, $79, $42, $36, $3F, $34, $43, $39, 0, $3E, $3B, $42, $D8
+StageTransitionMessageSequence_StageZero:   dc.b    3, $DA, 0, $58, $79, $42, $36, $3F, $34, $43, $39, 0, $3E, $3B, $42, $D8  ; was: byte_1E444
                                         ; DATA XREF: Sys_UpdateGameplayLoop+7A   o
                 dc.b    $D8, $D8, 0, $DA, $FF, 6, $31, $4E, $D8, $30, $31, $3C, $6F, $36, 0, $9E  ; text?
                 dc.b    $84, $AB, $3D, $31, $63, $5C, $3F, $40, $5D, $30, $6E, $44, $31, $DB, $DB, $FF
@@ -157,7 +167,7 @@ byte_1E444:     dc.b    3, $DA, 0, $58, $79, $42, $36, $3F, $34, $43, $39, 0, $3
                 dc.b    $34, $38, $44, $31, $DB, $DB, $FF, $11, $3A, $30, $82, $80, $A3, $7F, $AB, $8D
                 dc.b    $A4, $B2, $C5, $DA, $DB, $DB, 0, $30, $6C, $56, $42, $39, $31, $DB, $DB, $FF
                 dc.b    $FD
-byte_1E4E5:     dc.b    3, $DA, 0, $3B, $48, $6D, $5A, $55, $6D, $78, $32, $4E, 0, $58, $5D, $42
+StageTransitionMessageSequence_Shared:  dc.b    3, $DA, 0, $3B, $48, $6D, $5A, $55, $6D, $78, $32, $4E, 0, $58, $5D, $42  ; was: byte_1E4E5
                                         ; DATA XREF: Stage_CheckTransitionReady+E   o
                                         ; Stage_PostXiTigerTransition+16   o
                 dc.b    $D8, $D8, $D8, 0, $DA, $FF, 6, $3F, $3F, $35, $31, $49, $D8, $9E, $84, $AB
@@ -170,9 +180,9 @@ byte_1E4E5:     dc.b    3, $DA, 0, $3B, $48, $6D, $5A, $55, $6D, $78, $32, $4E, 
                 dc.b    $31, $35, $47, $33, $DB, $DB, $DF, $FF, $13, $3E, $48, $43, $36, $D8, $84, $A5
                 dc.b    $48, $3D, $44, $35, $45, 0, $94, $BD, $31, $80, $8E, $9E, $5D, $D8, $D8, $D8
                 dc.b    $FF, $FD
-byte_1E587:     binclude "data/other/byte_1E587.bin"
+StageTransitionMessageSequence_TrainAndBugmax:  binclude "data/other/stage_transition_message_sequence_train_and_bugmax.bin"  ; was: byte_1E587
 byte_1E587_End:
-byte_1E6C6:     dc.b    3, $DA, 0, $39, $32, $6B, $31, $40, $4E, $5C, $A0, $DA, $92, $A4, $48, 0
+StageTransitionMessageSequence_PostFlyingNeo:   dc.b    3, $DA, 0, $39, $32, $6B, $31, $40, $4E, $5C, $A0, $DA, $92, $A4, $48, 0  ; was: byte_1E6C6
                                         ; DATA XREF: Stage_PostFlyingNeoTransition+E   o
                 dc.b    $A7, $BF, $81, 0, $DA, $FF, 6, $3A, $7A, $D8, $48, $39, $55, $49, 0, $7F
                 dc.b    $94, $9D, $A4, $AD, $C5, $AB, $AE, $48, $BA, $AB, $D8, $FF, 8, $AA, $AB, $B6
@@ -184,5 +194,3 @@ byte_1E6C6:     dc.b    3, $DA, 0, $39, $32, $6B, $31, $40, $4E, $5C, $A0, $DA, 
                 dc.b    $48, $32, $3B, $57, $35, $53, 0, $63, $76, $30, $37, $6A, $36, $78, $67, $31
                 dc.b    $44, $FF, $14, $84, $AF, $5D, $D8, $40, $35, $64, $36, $41, $41, $30, $79, $3F
                 dc.b    $D8, $D8, $D8, $FF, $FD, $FF
-
-; Initializes stage transition fade

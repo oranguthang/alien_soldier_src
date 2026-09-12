@@ -16,9 +16,9 @@ locret_CE14:                                            ; CODE XREF: Stage_WaitA
 loc_CE16:                                               ; CODE XREF: Stage_WaitAndTransition+4   j
                 tst.w   (word_FF8230).w
                 bne.s   locret_CE14
-                move.b  #$89,(byte_FFA230).w
-                move.l  #byte_1E587,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #$89,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_TrainAndBugmax,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; End of function Stage_WaitAndTransition
 ; Writes boss parameter bytes to RAM structure
 Stage_WriteBossParams:                                  ; CODE XREF: Stage_InitStage8Train+38   p  ; was: sub_CE2E
@@ -229,9 +229,9 @@ Stage_PostFlyingNeoTransition:                          ; DATA XREF: ROM:0000C8A
                 bne.w   Stage_FlyingNeoBattleUpdate
                 tst.w   (word_FF8230).w
                 bne.s   Stage_FlyingNeoBattleUpdate
-                move.l  #byte_1E6C6,(dword_FFA22C).w
+                move.l  #StageTransitionMessageSequence_PostFlyingNeo,(StageMessageCursor).w
                 tst.w   (MessageSequenceState).w
-                beq.w   Stage_StartWeaponSelectTransition
+                beq.w   Stage_StartInterstageTransition
 ; End of function Stage_PostFlyingNeoTransition
 ; Updates Flying-Neo battle with vertical oscillation
 Stage_FlyingNeoBattleUpdate:                            ; CODE XREF: Stage_PostFlyingNeoTransition+4   j  ; was: sub_D0AC

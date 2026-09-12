@@ -122,28 +122,28 @@ UI_UpdateGameplayHUD_UpdateDisplayedPlayerHealth:       ; CODE XREF: UI_UpdateGa
                 bpl.s   UI_UpdateGameplayHUD_ApproachCurrentPlayerHealth
                 move.w  #$FFFF,(word_FF8268).w
 UI_UpdateGameplayHUD_ApproachCurrentPlayerHealth:       ; CODE XREF: UI_UpdateGameplayHUD+148   j  ; was: loc_12CBA
-                move.w  (word_FF820A).w,d0
+                move.w  (DisplayedPlayerHealth).w,d0
                 move.w  d0,d1
-                sub.w   (word_FFA216).w,d0
+                sub.w   (PlayerHealth).w,d0
                 bpl.s   UI_UpdateGameplayHUD_ApproachLowerPlayerHealth
                 cmpi.w  #$FFF0,d0
                 bpl.s   UI_UpdateGameplayHUD_SnapDisplayedPlayerHealth
-                addi.w  #$10,(word_FF820A).w
+                addi.w  #$10,(DisplayedPlayerHealth).w
                 bra.s   UI_UpdateGameplayHUD_SelectPlayerHealthPresentation
 ; ---------------------------------------------------------------------------
 UI_UpdateGameplayHUD_ApproachLowerPlayerHealth:         ; CODE XREF: UI_UpdateGameplayHUD+15A   j  ; was: loc_12CD4
                 cmpi.w  #8,d0
                 bpl.s   UI_UpdateGameplayHUD_DecreaseDisplayedPlayerHealth
 UI_UpdateGameplayHUD_SnapDisplayedPlayerHealth:         ; CODE XREF: UI_UpdateGameplayHUD+160   j  ; was: loc_12CDA
-                move.w  (word_FFA216).w,(word_FF820A).w
+                move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
                 bra.s   UI_UpdateGameplayHUD_SelectPlayerHealthPresentation
 ; ---------------------------------------------------------------------------
 UI_UpdateGameplayHUD_DecreaseDisplayedPlayerHealth:     ; CODE XREF: UI_UpdateGameplayHUD+16E   j  ; was: loc_12CE2
-                subi.w  #8,(word_FF820A).w
+                subi.w  #8,(DisplayedPlayerHealth).w
 UI_UpdateGameplayHUD_SelectPlayerHealthPresentation:    ; CODE XREF: UI_UpdateGameplayHUD+168   j  ; was: loc_12CE8
                                         ; UI_UpdateGameplayHUD+176   j
                 moveq   #$13,d7
-                cmpi.w  #2,(word_FFA216).w
+                cmpi.w  #2,(PlayerHealth).w
                 bpl.s   UI_UpdateGameplayHUD_CheckPlayerHealthFlash
                 move.w  (VBlankFrameCounter).w,d1
                 btst    #4,d1
@@ -173,7 +173,7 @@ UI_UpdateGameplayHUD_RenderPlayerHealthBar:             ; CODE XREF: UI_UpdateGa
                 btst    #0,(ControlLayoutFlags).w
                 beq.s   UI_UpdateGameplayHUD_RenderSegmentedPlayerHealthBar
                 move.w  #$C7B4,d5
-                move.w  (word_FF820A).w,d0
+                move.w  (DisplayedPlayerHealth).w,d0
                 asl.w   #1,d0
                 andi.w  #$FFFE,d0
                 move.w  (a4,d0.w),(dword_FF8040).w
@@ -181,7 +181,7 @@ UI_UpdateGameplayHUD_RenderPlayerHealthBar:             ; CODE XREF: UI_UpdateGa
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7E0,(a0)+
-                move.w  (word_FFA218).w,d0
+                move.w  (PlayerMaxHealth).w,d0
                 asl.w   #1,d0
                 andi.w  #$FFFE,d0
                 move.w  (a4,d0.w),(dword_FF8040).w
@@ -192,9 +192,9 @@ UI_UpdateGameplayHUD_RenderPlayerHealthBar:             ; CODE XREF: UI_UpdateGa
                 bra.s   UI_UpdateGameplayHUD_RenderHealthChange
 ; ---------------------------------------------------------------------------
 UI_UpdateGameplayHUD_RenderSegmentedPlayerHealthBar:    ; CODE XREF: UI_UpdateGameplayHUD+1C8   j  ; was: loc_12D76
-                move.w  (word_FFA218).w,d7
+                move.w  (PlayerMaxHealth).w,d7
                 asr.w   #6,d7
-                move.w  (word_FF820A).w,d0
+                move.w  (DisplayedPlayerHealth).w,d0
                 subq.w  #1,d0
                 bmi.s   UI_UpdateGameplayHUD_FillRemainingHealthSegments
                 move.w  d0,d1

@@ -7,7 +7,7 @@ Boss_UpdateMedusa:                                      ; DATA XREF: ROM:Entity_
                 bne.s   Boss_UpdateMedusaBattleEffects
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_UpdateMedusaBattleEffects
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_UpdateMedusaBattleEffects
                 moveq   #4,d0
                 jmp     Boss_QueueSevenForcesPostBattleTransition
@@ -44,8 +44,8 @@ Boss_MedusaStateOffsets:    dc.w    Boss_InitMedusaState0-Boss_InitMedusaState0 
 Boss_InitMedusaState0:                                  ; DATA XREF: Boss_UpdateMedusa+4C   o  ; was: sub_56A06
                                         ; ROM:Boss_MedusaStateOffsets   o
                 move.w  #1,8(a5)
-                move.w  #$7000,(word_FF8200).w
-                move.w  #$7000,(word_FF8202).w
+                move.w  #$7000,(BossHealth).w
+                move.w  #$7000,(BossMaxHealth).w
                 movea.w a5,a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #$14,d7

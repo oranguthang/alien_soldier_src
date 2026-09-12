@@ -10,8 +10,8 @@ UI_InitializeGameVariables:                             ; CODE XREF: TitleScreen
                 move.w  #2,(ShootingMode).w
                 clr.b   (byte_FFA209).w
 UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPasswordConfirmFlag+6   j  ; was: loc_1CD02
-                move.w  #$200,(word_FFA216).w
-                move.w  #$200,(word_FFA218).w
+                move.w  #$200,(PlayerHealth).w
+                move.w  #$200,(PlayerMaxHealth).w
                 clr.l   (ScoreValueBCD).w
                 clr.w   (word_FF822A).w
                 move.w  #3,(ContinueCreditsBCD).w
@@ -26,7 +26,7 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
 ; End of function UI_InitializeGameVariables
 ; Initializes gameplay state for a selected stage and restores weapon ammo
 StageEntry_InitializeGameplayState:                     ; was: sub_1CD3A
-                move.w  (word_FFA218).w,(word_FFA216).w
+                move.w  (PlayerMaxHealth).w,(PlayerHealth).w
                 tst.w   (DifficultyMode).w
                 beq.s   StageEntry_InitializeGameplayState_CopyAmmo
                 move.w  #$3E8,d0

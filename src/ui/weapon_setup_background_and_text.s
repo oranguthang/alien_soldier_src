@@ -1,6 +1,6 @@
 ; Updates the animated dithered background of the weapon-setup screen
 WeaponSetup_UpdateBackgroundEffect:                     ; CODE XREF: WeaponSetup_UpdateAndDispatchState   p  ; was: sub_1F82E
-                cmpi.w  #$A,(word_FFA29C).w
+                cmpi.w  #$A,(SetupTransitionIndex).w
                 bpl.s   WeaponSetup_IncreaseBackgroundPhase
                 subi.l  #$18000,(dword_FF8130).w
                 cmpi.l  #$B00000,(dword_FF8130).w

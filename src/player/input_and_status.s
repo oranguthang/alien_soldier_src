@@ -26,8 +26,8 @@ Player_UpdateWeaponSwitchTimer_CheckRestart:            ; CODE XREF: Player_Upda
                 move.w  #$10,(word_FF826A).w
 Player_UpdateWeaponSwitchTimer_UpdatePositionDelta:     ; CODE XREF: Player_UpdateWeaponSwitchTimer+C   j  ; was: loc_16B4E
                                         ; Player_UpdateWeaponSwitchTimer+14   j
-                move.w  (word_FFA216).w,d0
-                sub.w   (word_FFA218).w,d0
+                move.w  (PlayerHealth).w,d0
+                sub.w   (PlayerMaxHealth).w,d0
                 move.w  d0,(word_FF8304).w
                 rts
 ; End of function Player_UpdateWeaponSwitchTimer

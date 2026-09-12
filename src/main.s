@@ -122,7 +122,7 @@
                 include "src/ui/results_screen.s"
                 include "src/ui/stage_ready_and_retry_prompt.s"
                 include "src/credits/entry.s"
-                include "src/ui/weapon_select.s"
+                include "src/ui/stage_transition_messages.s"
                 include "src/stages/transition_control.s"
                 include "src/cutscenes/xi_tiger.s"
                 include "src/stages/gameplay_initialization.s"

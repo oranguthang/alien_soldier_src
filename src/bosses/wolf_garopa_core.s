@@ -8,7 +8,7 @@ Boss_WolfGaropaUpdate:                                  ; DATA XREF: ROM:Entity_
                 bne.s   Boss_WolfGaropaRunDefeatEffects
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_WolfGaropaRunDefeatEffects
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_WolfGaropaBeginDefeatTransition
 Boss_WolfGaropaRunDefeatEffects:                        ; CODE XREF: Boss_WolfGaropaUpdate+14   j  ; was: loc_4F916
                                         ; Boss_WolfGaropaUpdate+1C   j
@@ -205,7 +205,7 @@ Boss_WolfGaropaBeginOrbAttackCycle:                     ; CODE XREF: Boss_WolfGa
                 clr.w   $11E(a5)
 ; Maintain the timed orb attack cycle and its emitted projectile pair
 Boss_WolfGaropaUpdateOrbAttackCycle:                    ; DATA XREF: Boss_WolfGaropaUpdate+48   o  ; was: loc_4FBA2
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.s   Boss_WolfGaropaUpdateOrbCycleMotion
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_WolfGaropaUpdateOrbCycleMotion
@@ -231,7 +231,7 @@ Boss_WolfGaropaUpdateOrbCycleMotion:                    ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaUpdateOrbCycleEffects:                   ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+90   j  ; was: loc_4FBE8
                 bsr.w   Boss_WolfGaropaDispatchMovementSequence
                 bsr.w   Boss_WolfGaropaUpdateOrbFacingFlag
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_WolfGaropaUpdateOrbTarget
                 bsr.w   Boss_WolfGaropaSteerOrbAngleTowardPlayer
                 move.w  $A76(a5),d0
@@ -413,7 +413,7 @@ Boss_WolfGaropaUpdateUpperType424Sequence:              ; DATA XREF: Boss_WolfGa
                 bmi.w   Boss_WolfGaropaFinishUpperType424Sequence
                 subq.w  #1,$11E(a5)
                 bpl.s   Boss_WolfGaropaUpdateUpperSequenceMotion
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_WolfGaropaFinishUpperType424Sequence
                 bsr.w   Boss_WolfGaropaTryLoadAttackEffectB
                 tst.b   (byte_FF9DBA).w
@@ -742,7 +742,7 @@ Boss_WolfGaropaAdvanceLaunchPose:                       ; CODE XREF: Boss_WolfGa
                 bpl.w   Boss_WolfGaropaUpdateMetaspriteAndOrb
                 move.w  #4,(word_FFA010).w
                 move.w  #4,(word_FFA014).w
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.s   Boss_WolfGaropaClearLowerSequenceFlag
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_WolfGaropaResetMovementSequence

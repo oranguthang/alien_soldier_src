@@ -10,7 +10,7 @@ Boss_TerobusterMain:                                    ; DATA XREF: ROM:Entity_
                 bne.s   Boss_TerobusterUpdatePartOscillation
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_TerobusterUpdatePartOscillation
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_TerobusterBeginDefeat
 Boss_TerobusterUpdatePartOscillation:                   ; CODE XREF: Boss_TerobusterMain+1A   j  ; was: loc_38544
                                         ; Boss_TerobusterMain+22   j

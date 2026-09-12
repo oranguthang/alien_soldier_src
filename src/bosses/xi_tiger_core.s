@@ -9,7 +9,7 @@ Boss_XiTigerMain:                                       ; DATA XREF: ROM:Entity_
                 bne.s   Boss_XiTigerUpdateStageRelativeCoordinates
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_XiTigerUpdateStageRelativeCoordinates
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_XiTigerUpdateStageRelativeCoordinates
                 bset    #0,(byte_FFA272).w
                 move.b  #2,(byte_FF80EC).w

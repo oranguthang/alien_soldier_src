@@ -36,7 +36,7 @@ Boss_Stage3OrbitingFormationCheckDefeat:                ; CODE XREF: Boss_Stage3
                 bls.w   Boss_Stage3OrbitingFormationReturn
                 btst    #1,(byte_FF80EC).w
                 bne.w   Boss_Stage3OrbitingFormationReturn
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.w   Boss_Stage3OrbitingFormationReturn
                 move.w  #2,4(a5)
                 clr.l   $18(a5)
@@ -217,7 +217,7 @@ Boss_Stage3OrbitingFormationInit:                       ; DATA XREF: ROM:Boss_St
                 move.l  #$F010F010,$28(a5)
                 move.b  #$50,$21(a5)                    ; 'P'
                 move.w  #2,$26(a5)
-                clr.w   (word_FF8200).w
+                clr.w   (BossHealth).w
                 move.w  #$28,$24(a5)                    ; '('
                 move.b  #6,(byte_FF80EC).w
                 move.b  #$80,$23(a5)
@@ -275,8 +275,8 @@ Boss_Stage3OrbitingFormationWaitForActivationSignal:    ; DATA XREF: ROM:0003418
 Boss_Stage3OrbitingFormationEnterBattle:                ; DATA XREF: ROM:0003418A   o  ; was: sub_3429E
                 cmpi.w  #$1C0,$10(a5)
                 bcc.w   Boss_Stage3OrbitingFormationReturn
-                move.w  #$1E00,(word_FF8202).w
-                move.w  #$1E00,(word_FF8200).w
+                move.w  #$1E00,(BossMaxHealth).w
+                move.w  #$1E00,(BossHealth).w
                 clr.b   (byte_FF80EC).w
                 addq.w  #2,4(a5)
                 rts

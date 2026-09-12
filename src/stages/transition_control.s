@@ -1,3 +1,4 @@
+; Initializes stage transition fade
 Sys_TransitionToStageInit:                              ; DATA XREF: Sys_DispatchGameState+BE   o  ; was: sub_1E76C
                 tst.w   (GameSubstateIndex).w
                 bne.s   StageTransition_BeginSelectedRoute
@@ -56,7 +57,7 @@ StageTransition_Return:                                 ; CODE XREF: Sys_StageTr
 
 ; Dispatches initialization for the selected transition route
 StageTransition_DispatchInitialize:                     ; CODE XREF: Sys_TransitionToStageInit+5C   p  ; was: sub_1E83E
-                move.w  (word_FFA29C).w,d0
+                move.w  (SetupTransitionIndex).w,d0
                 movea.w StageTransition_InitializeHandlerTable(pc,d0.w),a0
                 adda.l  #StageTransition_DispatchUpdate,a0
                 jmp     (a0)
@@ -70,7 +71,7 @@ StageTransition_InitializeHandlerTable: dc.w    XiTigerCutscene_LoadAssets-Stage
 ; Dispatches the per-frame handler for the selected transition route
 StageTransition_DispatchUpdate:                         ; CODE XREF: Sys_StageTransitionUpdate+18   p  ; was: sub_1E854
                                         ; DATA XREF: StageTransition_DispatchInitialize+8   o
-                move.w  (word_FFA29C).w,d0
+                move.w  (SetupTransitionIndex).w,d0
                 movea.w StageTransition_UpdateHandlerTable(pc,d0.w),a0
                 adda.l  #XiTigerCutscene_LoadAssets,a0
                 jmp     (a0)

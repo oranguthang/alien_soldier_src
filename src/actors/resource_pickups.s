@@ -53,8 +53,8 @@ Pickup_SpawnSelectedSize:                               ; CODE XREF: Pickup_Spaw
 ; End of function Pickup_SpawnSelectedSize
 ; Suppresses a pickup when the player's resource is already full
 Pickup_SpawnSelectedSizeIfResourceNeeded:
-                move.w  (word_FFA216).w,d0              ; was: sub_2BD30
-                cmp.w   (word_FFA218).w,d0
+                move.w  (PlayerHealth).w,d0             ; was: sub_2BD30
+                cmp.w   (PlayerMaxHealth).w,d0
                 bne.s   Pickup_InitializeSelectedSize
 Pickup_DeactivateTargetObject:                          ; CODE XREF: Pickup_SpawnSelectedSizeIfResourceNeeded+1C   j  ; was: loc_2BD3A
                 move.w  #$10,(a0)
@@ -112,16 +112,16 @@ Pickup_CheckCollection:                                 ; CODE XREF: Pickup_Upda
                 jsr     (Sound_PlaySFX).l
                 move.l  #$500,d0
                 jsr     (Score_AddPackedBCD).l
-                move.w  (word_FFA216).w,d0
+                move.w  (PlayerHealth).w,d0
                 beq.s   Pickup_StoreResourceValue
                 bmi.s   Pickup_StoreResourceValue
                 add.w   $48(a5),d0
-                cmp.w   (word_FFA218).w,d0
+                cmp.w   (PlayerMaxHealth).w,d0
                 bmi.s   Pickup_StoreResourceValue
-                move.w  (word_FFA218).w,d0
+                move.w  (PlayerMaxHealth).w,d0
 Pickup_StoreResourceValue:                              ; CODE XREF: Pickup_Update+4C   j  ; was: loc_2BE0E
                                         ; Pickup_Update+4E   j
-                move.w  d0,(word_FFA216).w
+                move.w  d0,(PlayerHealth).w
                 move.w  $48(a5),(word_FF8262).w
                 move.w  #$30,(word_FF8268).w            ; '0'
 Pickup_Remove:                                          ; CODE XREF: Pickup_Update+4   j  ; was: loc_2BE1E

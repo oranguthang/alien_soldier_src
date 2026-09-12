@@ -7,7 +7,7 @@ Entity_UpdateValkirieBattle:                            ; DATA XREF: ROM:Entity_
                 bne.s   Entity_UpdateValkirieBattleActive
                 btst    #1,(byte_FF80EC).w
                 bne.s   Entity_UpdateValkirieBattleActive
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Entity_UpdateValkirieBattleActive
                 moveq   #2,d0
                 jmp     Boss_QueueSevenForcesPostBattleTransition

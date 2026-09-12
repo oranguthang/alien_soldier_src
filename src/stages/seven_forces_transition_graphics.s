@@ -109,9 +109,9 @@ UnreferencedSevenForcesBossTransitionCheck:
                 bne.w   Stage_Stage18EmptyHandler
                 tst.w   (word_FF8138).w
                 bne.w   Stage_Stage18EmptyHandler
-                move.b  #$93,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.b  #$93,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; End of function UnreferencedSevenForcesBossTransitionCheck
 ; Camera control for Medusa
 Stage_SevenForcesUpdateMedusaCameraAndParallax:         ; CODE XREF: Stage_SevenForcesAdvanceToMedusa:Stage_SevenForcesUpdateMedusaCamera   j  ; was: sub_EB9E

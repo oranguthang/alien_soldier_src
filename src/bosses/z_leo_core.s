@@ -8,7 +8,7 @@ Boss_ZLeoMain:                                          ; DATA XREF: ROM:Entity_
                 bne.s   Boss_ZLeoUpdateFirstPaletteFade
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_ZLeoUpdateFirstPaletteFade
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_ZLeoBeginDefeatSequence
 Boss_ZLeoUpdateFirstPaletteFade:                        ; CODE XREF: Boss_ZLeoMain+16   j  ; was: loc_51AFE
                                         ; Boss_ZLeoMain+1E   j
@@ -545,7 +545,7 @@ Boss_ZLeoRestorePostDefeatUi:                           ; CODE XREF: Boss_ZLeoRu
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 move.b  #$80,(byte_FFF705).w
-                move.w  #2,(word_FFA29C).w
+                move.w  #2,(SetupTransitionIndex).w
                 move.w  #4,(word_FF8230).w
                 jmp     Results_StoreStageCompletionTime
 ; End of function Boss_ZLeoRunPostDefeatDelay
@@ -565,10 +565,10 @@ Boss_ZLeoSelectAttackState:                             ; CODE XREF: Boss_ZLeoWa
                                         ; DATA XREF: ROM:00051BA0   o
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_ZLeoRenderAttackSelectionWait
-                cmpi.w  #$4200,(word_FF8200).w
+                cmpi.w  #$4200,(BossHealth).w
                 bpl.s   Boss_ZLeoSelectLaserOpening
                 moveq   #3,d1
-                cmpi.w  #$2500,(word_FF8200).w
+                cmpi.w  #$2500,(BossHealth).w
                 bpl.s   Boss_ZLeoApplyLowHealthRandomMask
                 moveq   #1,d1
 Boss_ZLeoApplyLowHealthRandomMask:                      ; CODE XREF: Boss_ZLeoBeginAttackSelection+2A   j  ; was: loc_521F0

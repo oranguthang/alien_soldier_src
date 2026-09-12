@@ -381,7 +381,7 @@ Boss_SunsetStingAttachedSegmentUpdate:                  ; CODE XREF: Boss_Sunset
                 andi.w  #7,d0
                 bne.s   Boss_SunsetStingAttachedSegmentReadPlayer
                 clr.b   $21(a5)
-                subq.w  #1,(word_FFA216).w
+                subq.w  #1,(PlayerHealth).w
 Boss_SunsetStingAttachedSegmentReadPlayer:              ; CODE XREF: Boss_SunsetStingSegmentAttachedToPlayer+18   j  ; was: loc_43786
                 lea     (word_FFA400).w,a0
                 move.b  $48(a5),d0

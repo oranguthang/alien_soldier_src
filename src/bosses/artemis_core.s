@@ -8,7 +8,7 @@ Boss_UpdateArtemis:                                     ; DATA XREF: ROM:Entity_
                 bne.s   Boss_UpdateArtemisBattleEffects
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_UpdateArtemisBattleEffects
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_UpdateArtemisBattleEffects
                 moveq   #8,d0
                 jmp     Boss_QueueSevenForcesPostBattleTransition
@@ -148,8 +148,8 @@ Boss_EnterArtemisState8:                                ; CODE XREF: Boss_Update
                 move.w  #$CDA0,$4A(a5)
                 move.w  #$170,$10(a5)
                 move.w  #$FDC0,$794(a5)
-                move.w  #$7000,(word_FF8200).w
-                move.w  #$7000,(word_FF8202).w
+                move.w  #$7000,(BossHealth).w
+                move.w  #$7000,(BossMaxHealth).w
 ; State eight accelerates the linked vertical coordinate toward its stage target
 Boss_UpdateArtemisState8:                               ; DATA XREF: ROM:00057F26   o  ; was: loc_580B6
                 addi.l  #$78000,$794(a5)

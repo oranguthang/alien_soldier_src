@@ -7,7 +7,7 @@ Boss_UpdateSylpheed:                                    ; DATA XREF: ROM:Entity_
                 bne.s   Boss_UpdateSylpheedPaletteAndBounds
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_UpdateSylpheedPaletteAndBounds
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_UpdateSylpheedPaletteAndBounds
                 moveq   #6,d0
                 jmp     Boss_QueueSevenForcesPostBattleTransition
@@ -87,8 +87,8 @@ Boss_InitSylpheedInteractiveState2:                     ; was: sub_594D0
                 move.w  #$FFFF,$C(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                move.w  #$1B58,(word_FF8200).w
-                move.w  #$1B58,(word_FF8202).w
+                move.w  #$1B58,(BossHealth).w
+                move.w  #$1B58,(BossMaxHealth).w
                 clr.w   (word_FFA02A).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
@@ -130,8 +130,8 @@ Boss_EnterSylpheedEntrancePauseState14:                 ; CODE XREF: Boss_EnterS
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #0,$14(a5)
-                move.w  #$7000,(word_FF8200).w
-                move.w  #$7000,(word_FF8202).w
+                move.w  #$7000,(BossHealth).w
+                move.w  #$7000,(BossMaxHealth).w
                 clr.w   $50(a5)
                 move.w  #$180,$56(a5)
                 move.w  #$40,$11C(a5)                   ; '@'
@@ -295,7 +295,7 @@ Boss_UpdateSylpheedDecisionState4:                      ; DATA XREF: ROM:0005944
                 move.w  #$FFFF,$11E(a5)
                 tst.w   (DifficultyMode).w
                 beq.s   Boss_CheckSylpheedForcedCharge
-                cmpi.w  #$2858,(word_FF8200).w
+                cmpi.w  #$2858,(BossHealth).w
                 bmi.s   Boss_CountDownSylpheedDecisionTimer
 Boss_CheckSylpheedForcedCharge:                         ; CODE XREF: Boss_EnterSylpheedDecisionState4+52   j  ; was: loc_59794
                 btst    #2,(byte_FF8244).w

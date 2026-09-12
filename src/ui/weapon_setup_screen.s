@@ -30,7 +30,7 @@ WeaponSetup_CheckShootingModeAdvance:                   ; CODE XREF: WeaponSetup
                 andi.b  #$E0,d0
                 beq.s   WeaponSetup_CheckShootingModeReturn
 WeaponSetup_AdvanceFromShootingMode:                    ; CODE XREF: WeaponSetup_HandleShootingModeInput+4A   j  ; was: loc_1F204
-                addq.w  #2,(word_FFA29C).w
+                addq.w  #2,(SetupTransitionIndex).w
                 subi.w  #$10,(dword_FF8128+2).w
                 move.b  #$AD,d0
                 jsr     (Sound_PlaySFX).l
@@ -39,7 +39,7 @@ WeaponSetup_AdvanceFromShootingMode:                    ; CODE XREF: WeaponSetup
 WeaponSetup_CheckShootingModeReturn:                    ; CODE XREF: WeaponSetup_HandleShootingModeInput+50   j  ; was: loc_1F21C
                 btst    #4,(word_FFF708).w
                 beq.w   WeaponSetup_RenderShootingModeOptions
-                subq.w  #2,(word_FFA29C).w
+                subq.w  #2,(SetupTransitionIndex).w
                 clr.w   (dword_FF8128+2).w
                 move.w  #$12,(word_FFA02A).w
                 bra.w   WeaponSetup_RenderShootingModeOptions
@@ -78,7 +78,7 @@ WeaponSetup_CheckControlTypeAdvance:                    ; CODE XREF: WeaponSetup
                 beq.s   WeaponSetup_CheckControlTypeReturn
 WeaponSetup_AdvanceFromControlType:                     ; CODE XREF: WeaponSetup_HandleControlTypeInput+50   j  ; was: loc_1F290
                 move.w  #$E,(dword_FF8134).w
-                addq.w  #2,(word_FFA29C).w
+                addq.w  #2,(SetupTransitionIndex).w
                 subi.w  #$10,(dword_FF8128+2).w
                 move.b  #$AD,d0
                 jsr     (Sound_PlaySFX).l
@@ -92,7 +92,7 @@ WeaponSetup_CheckControlTypeReturn:                     ; CODE XREF: WeaponSetup
 ; Returns from the controller-layout page to the previous setup page
 WeaponSetup_ReturnFromControlType:                      ; CODE XREF: WeaponSetup_HandleControlTypeInput+7C   j  ; was: loc_1F2C0
                 move.w  #$E,(dword_FF8134).w
-                subq.w  #2,(word_FFA29C).w
+                subq.w  #2,(SetupTransitionIndex).w
                 clr.w   (dword_FF8128+2).w
                 bra.w   WeaponSetup_RenderControlTypePage
 ; End of function WeaponSetup_HandleControlTypeInput
@@ -141,7 +141,7 @@ WeaponSetup_HandleExitInput:                            ; DATA XREF: ROM:0001F14
                 andi.b  #$E0,d0
                 beq.s   WeaponSetup_CheckExitReturn
                 move.w  #$E,(dword_FF8134).w
-                addq.w  #2,(word_FFA29C).w
+                addq.w  #2,(SetupTransitionIndex).w
                 move.w  #$6000,(dword_FFA940).w
                 move.w  #$1F,(word_FFA944).w
                 clr.w   (word_FFA946).w
@@ -155,7 +155,7 @@ WeaponSetup_CheckExitReturn:                            ; CODE XREF: WeaponSetup
 ; Returns from the exit page to the controller-layout page
 WeaponSetup_ReturnFromExit:                             ; CODE XREF: WeaponSetup_HandleExitInput+42   j  ; was: loc_1F3A4
                 move.w  #$E,(dword_FF8134).w
-                subq.w  #2,(word_FFA29C).w
+                subq.w  #2,(SetupTransitionIndex).w
                 addi.w  #$10,(dword_FF8128+2).w
                 bra.w   WeaponSetup_RenderExitOption
 ; End of function WeaponSetup_HandleExitInput
@@ -167,14 +167,14 @@ WeaponSetup_UpdateSlotFade:                             ; DATA XREF: ROM:0001F14
                 jsr     (Tilemap_QueueNextConstantRow).l
                 tst.w   (word_FFA944).w
                 bpl.w   WeaponSetup_StateWaitReturn
-                addq.w  #2,(word_FFA29C).w
+                addq.w  #2,(SetupTransitionIndex).w
                 clr.w   (word_FFA02A).w
                 clr.w   (dword_FFA90C).w
                 rts
 ; End of function WeaponSetup_UpdateSlotFade
 ; Renders the control-test instructions and loads their palette
 WeaponSetup_LoadControlTestText:                        ; DATA XREF: ROM:0001F148   o  ; was: sub_1F3E6
-                addq.w  #2,(word_FFA29C).w
+                addq.w  #2,(SetupTransitionIndex).w
                 clr.w   (dword_FF8040).w
 ; Renders the eight control-test instruction rows
 WeaponSetup_RenderControlTestTextLoop:                  ; CODE XREF: WeaponSetup_LoadControlTestText+30   j  ; was: loc_1F3EE
@@ -227,7 +227,7 @@ WeaponSetup_WaitForConfirmInput:                        ; DATA XREF: ROM:0001F14
 ; ---------------------------------------------------------------------------
 ; Confirms the setup and starts the screen fade
 WeaponSetup_ConfirmAndBeginFade:                        ; CODE XREF: WeaponSetup_WaitForConfirmInput+A   j  ; was: loc_1F472
-                addq.w  #2,(word_FFA29C).w
+                addq.w  #2,(SetupTransitionIndex).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
@@ -251,7 +251,7 @@ WeaponSetup_HandleLoadoutInput:                         ; CODE XREF: WeaponSetup
                 cmpi.w  #8,(WeaponSlotOffset).w
                 bmi.s   WeaponSetup_CheckPreviousSlotInput
                 move.w  #6,(WeaponSlotOffset).w
-                addq.w  #2,(word_FFA29C).w
+                addq.w  #2,(SetupTransitionIndex).w
                 move.w  #$FFE0,(dword_FF8128+2).w
                 move.w  #$14,(word_FFA02A).w
 WeaponSetup_CheckPreviousSlotInput:                     ; CODE XREF: WeaponSetup_HandleLoadoutInput+8   j  ; was: loc_1F4D2
@@ -336,7 +336,7 @@ WeaponSetup_RenderLoadout:                              ; CODE XREF: WeaponSetup
 WeaponSetup_RenderForceNameLoop:                        ; CODE XREF: WeaponSetup_HandleLoadoutInput+154   j  ; was: loc_1F5B2
                 move.w  (dword_FF8040).w,d1
                 move.w  #$8100,d0
-                tst.w   (word_FFA29C).w
+                tst.w   (SetupTransitionIndex).w
                 bne.s   WeaponSetup_RenderForceName
                 cmp.w   (dword_FF8128).w,d1
                 bne.s   WeaponSetup_RenderForceName
@@ -378,7 +378,7 @@ WeaponSetup_RenderHeading:                              ; CODE XREF: WeaponSetup
 WeaponSetup_RenderShootingModeOptions:                  ; CODE XREF: WeaponSetup_HandleShootingModeInput+66   j  ; was: sub_1F626
                                         ; WeaponSetup_HandleShootingModeInput+70   j
                 move.w  #$8100,d0
-                cmpi.w  #2,(word_FFA29C).w
+                cmpi.w  #2,(SetupTransitionIndex).w
                 bne.s   WeaponSetup_SelectShootingModeLabelColor
                 btst    #1,(FrameCounter+1).w
                 bne.s   WeaponSetup_RenderShootingModeLabel
@@ -412,7 +412,7 @@ WeaponSetup_RenderFixedModeOption:                      ; CODE XREF: WeaponSetup
 WeaponSetup_RenderControlTypePage:                      ; CODE XREF: WeaponSetup_HandleControlTypeInput+72   j  ; was: sub_1F68A
                                         ; WeaponSetup_HandleControlTypeInput+84   j
                 move.w  #$E100,d0
-                cmpi.w  #2,(word_FFA29C).w
+                cmpi.w  #2,(SetupTransitionIndex).w
                 beq.s   WeaponSetup_RenderStatusWindowLabelWithColor
 ; End of function WeaponSetup_RenderControlTypePage
 ; Renders the STATUS WINDOW label and selected controller type
@@ -450,7 +450,7 @@ WeaponSetup_RenderSelectedControlType:                  ; CODE XREF: WeaponSetup
                 lea     WeaponSetup_ControlTypeTextPointers(pc),a0
                 movea.l (a0,d1.w),a0
                 move.w  #$E100,d0
-                cmpi.w  #2,(word_FFA29C).w
+                cmpi.w  #2,(SetupTransitionIndex).w
                 beq.s   WeaponSetup_RenderSelectedControlTypeWithColor
                 move.w  #$8100,d0
 WeaponSetup_RenderSelectedControlTypeWithColor:         ; CODE XREF: WeaponSetup_RenderSelectedControlType+22   j  ; was: loc_1F6F6
@@ -461,7 +461,7 @@ WeaponSetup_RenderSelectedControlTypeWithColor:         ; CODE XREF: WeaponSetup
 WeaponSetup_RenderExitOption:                           ; CODE XREF: WeaponSetup_HandleExitInput+38   j  ; was: sub_1F700
                                         ; WeaponSetup_HandleExitInput+4A   j
                 move.w  #$E100,d0
-                cmpi.w  #4,(word_FFA29C).w
+                cmpi.w  #4,(SetupTransitionIndex).w
                 beq.s   WeaponSetup_RenderExitTextWithColor
 ; End of function WeaponSetup_RenderExitOption
 ; Renders the EXIT option

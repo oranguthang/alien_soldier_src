@@ -24,7 +24,7 @@ Boss_JampanCheckDefeatTrigger:                          ; CODE XREF: Boss_Jampan
                 bne.s   Boss_JampanUpdateScreenPositionAndMotion
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_JampanUpdateScreenPositionAndMotion
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_JampanUpdateScreenPositionAndMotion
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,$4C(a5)

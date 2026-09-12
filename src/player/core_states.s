@@ -57,7 +57,7 @@ Player_Update:                                          ; CODE XREF: Sys_Gamepla
 Player_Update_CheckGameplayReady:                       ; CODE XREF: Player_Update+2A   j  ; was: loc_14FC8
                 tst.w   (StageTimeRemaining).w
                 beq.w   Player_InitInvulnerabilityState
-                tst.w   (word_FFA216).w
+                tst.w   (PlayerHealth).w
                 beq.w   Player_InitInvulnerabilityState
                 btst    #0,(byte_FF8144).w
                 bne.w   Player_UpdateSevenForcesBattle
@@ -187,11 +187,11 @@ Player_HandleDeathSequence_SetFlags:                    ; DATA XREF: ROM:0001509
                 move.b  #8,$20(a5)
                 btst    #0,(FrameCounter+1).w
                 bne.s   Player_HandleDeathSequence_ClampEnergy
-                subq.w  #1,(word_FFA216).w
+                subq.w  #1,(PlayerHealth).w
 Player_HandleDeathSequence_ClampEnergy:                 ; CODE XREF: Player_HandleDeathSequence+8A   j  ; was: loc_15152
-                subq.w  #1,(word_FFA216).w
+                subq.w  #1,(PlayerHealth).w
                 bpl.s   Player_HandleDeathSequence_UpdateTimer
-                clr.w   (word_FFA216).w
+                clr.w   (PlayerHealth).w
 Player_HandleDeathSequence_UpdateTimer:                 ; CODE XREF: Player_HandleDeathSequence+94   j  ; was: loc_1515C
                 move.w  #$10,$5E(a5)
                 subq.w  #1,$4A(a5)
@@ -370,8 +370,8 @@ Player_CheckDamageRecoveryInput:                        ; CODE XREF: Player_Grou
                 beq.s   Player_CheckDamageRecoveryInput_Return
                 btst    #1,$69(a5)
                 beq.s   Player_CheckDamageRecoveryInput_Return
-                move.w  (word_FFA216).w,d0
-                sub.w   (word_FFA218).w,d0
+                move.w  (PlayerHealth).w,d0
+                sub.w   (PlayerMaxHealth).w,d0
                 move.w  d0,(word_FF8304).w
                 moveq   #1,d0
 Player_CheckDamageRecoveryInput_Return:                 ; CODE XREF: Player_CheckDamageRecoveryInput+6   j  ; was: locret_153BA

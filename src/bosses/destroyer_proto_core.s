@@ -19,7 +19,7 @@ Boss_DestroyerProtoMain:                                ; DATA XREF: ROM:Entity_
                 bsr.w   Boss_DestroyerProtoCycleArenaEffect
                 cmpi.w  #$2E,4(a5)                      ; '.'
                 bcc.s   Boss_DestroyerProtoDispatchState
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_DestroyerProtoDispatchState
                 bset    #0,(byte_FFA272).w
                 move.w  #1,(dword_FF9414+2).w

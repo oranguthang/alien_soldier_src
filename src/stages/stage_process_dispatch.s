@@ -38,8 +38,8 @@ Stage_InitializeBossHealthAndCounter:                   ; CODE XREF: Stage_InitX
                 nop
                 lea     Stage_BossCombatCounterDefaults(pc),a1
                 nop
-                move.w  (a0,d0.w),(word_FF8202).w
-                move.w  (a0,d0.w),(word_FF8200).w
+                move.w  (a0,d0.w),(BossMaxHealth).w
+                move.w  (a0,d0.w),(BossHealth).w
                 move.w  (a1,d0.w),(word_FF8236).w
                 move.w  (a1,d0.w),(word_FF8234).w
                 rts

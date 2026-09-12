@@ -7,7 +7,7 @@ Boss_ShellshogunMainHandler:                            ; DATA XREF: ROM:Entity_
                 bne.s   Boss_ShellshogunUpdatePaletteAndScreenPosition
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_ShellshogunUpdatePaletteAndScreenPosition
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_ShellshogunBeginDefeat
 Boss_ShellshogunUpdatePaletteAndScreenPosition:         ; CODE XREF: Boss_ShellshogunMainHandler+16   j  ; was: loc_39500
                                         ; Boss_ShellshogunMainHandler+1E   j
@@ -327,7 +327,7 @@ Boss_ShellshogunCheckDecisionTimer:                     ; CODE XREF: Boss_Shells
                 bpl.s   Boss_ShellshogunUpdateDecisionPose
                 move.w  (word_FF8234).w,d0
                 beq.w   Boss_ShellshogunBeginTimedStageAdvance
-                cmpi.w  #$6000,(word_FF8200).w
+                cmpi.w  #$6000,(BossHealth).w
                 bpl.s   Boss_ShellshogunSelectAttackByDistance
                 cmpi.w  #$1D8,d0
                 bpl.w   Boss_ShellshogunInitJumpAttack

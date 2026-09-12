@@ -1,21 +1,21 @@
-; Start the fade into the between-stage weapon-selection screen
-Stage_StartWeaponSelectTransition:                      ; CODE XREF: Stage_CheckTransitionReady+16   j  ; was: sub_10390
+; Starts the fade into the interstage transition
+Stage_StartInterstageTransition:                        ; CODE XREF: Stage_CheckTransitionReady+16   j  ; was: sub_10390
                                         ; Stage_WaitAndTransition+1C   j
                 move.w  #3,(word_FF8230).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w
                 move.b  #$80,(byte_FFF705).w
-                bra.w   Stage_AdvancePhaseForWeaponSelect
-; End of function Stage_StartWeaponSelectTransition
-; Start the next stage-number banner after the current banner has finished
+                bra.w   Stage_AdvancePhaseForInterstageTransition
+; End of function Stage_StartInterstageTransition
+; Starts the next stage-number banner after the current banner has finished
 Stage_StartNextPhaseBanner:                             ; CODE XREF: Camera_Stage2PhaseHandler   p  ; was: sub_103B0
                                         ; sub_C98E   p
                 tst.w   (MessageSequenceState).w
                 bne.s   Stage_NextPhaseBannerReturn
                 addq.w  #2,(word_FFA950).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
-Stage_AdvancePhaseForWeaponSelect:                      ; CODE XREF: Stage_StartWeaponSelectTransition+1C   j  ; was: loc_103C0
+Stage_AdvancePhaseForInterstageTransition:              ; CODE XREF: Stage_StartInterstageTransition+1C   j  ; was: loc_103C0
                 clr.w   (word_FF820C).w
                 addq.w  #2,(StageTableIndex).w
                 bclr    #7,(dword_FFA20E).w

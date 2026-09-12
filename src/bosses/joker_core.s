@@ -7,7 +7,7 @@ Boss_JokerMain:                                         ; DATA XREF: ROM:Entity_
                 bne.s   Boss_JokerUpdatePaletteAndScreenX
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_JokerUpdatePaletteAndScreenX
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_JokerBeginDefeatFall
 Boss_JokerUpdatePaletteAndScreenX:                      ; CODE XREF: Boss_JokerMain+14   j  ; was: loc_3B2C4
                                         ; Boss_JokerMain+1C   j

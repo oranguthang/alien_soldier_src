@@ -1,6 +1,6 @@
 Stage_DispatchVisualAssetLoader:                        ; CODE XREF: Camera_UpdateSmooth+E   p  ; was: sub_11DD2
                                         ; Stage_StartTimeBonusAndPreloadNextPhase+12   p
-                clr.b   (byte_FFA230).w
+                clr.b   (PendingStageBGMRequest).w
                 move.w  (StageTableIndex).w,d0
                 movea.w Stage_VisualAssetLoaderOffsets(pc,d0.w),a0
                 adda.l  #Stage_ExpandAndSubmitTileAssetCommands,a0
@@ -429,9 +429,9 @@ Stage_ApplyXiTigerConfigurationAndInitializePlayer:     ; CODE XREF: Stage_Initi
                 jsr     (UI_QueueAllWeaponIconTransfers).l
                 jmp     Player_InitializeStats
 ; End of function Stage_InitializeXiTigerState
-; Dispatches the Xi-Tiger configuration selected by word_FF814C
+; Dispatches the Xi-Tiger configuration selected by XiTigerConfigIndex
 Stage_DispatchXiTigerConfiguration:                     ; CODE XREF: Stage_InitializeXiTigerState:Stage_ApplyXiTigerConfigurationAndInitializePlayer   p  ; was: sub_121DE
-                move.w  (word_FF814C).w,d0
+                move.w  (XiTigerConfigIndex).w,d0
                 movea.w Stage_XiTigerConfigurationOffsets(pc,d0.w),a0
                 adda.l  #Stage_ApplyXiTigerConfiguration,a0
                 jmp     (a0)

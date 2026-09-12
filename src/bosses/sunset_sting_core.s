@@ -513,7 +513,7 @@ Boss_SunsetStingUpdateGraphics:                         ; CODE XREF: Boss_Sunset
                 bne.s   Boss_SunsetStingUpdateBodyGraphics
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_SunsetStingUpdateBodyGraphics
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_SunsetStingBeginEarlyFormDefeatState
 Boss_SunsetStingUpdateBodyGraphics:                     ; CODE XREF: Boss_SunsetStingUpdateGraphics+A   j  ; was: loc_41302
                                         ; Boss_SunsetStingUpdateGraphics+12   j

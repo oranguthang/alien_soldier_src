@@ -7,7 +7,7 @@ Boss_BackStringerMain:                                  ; DATA XREF: ROM:Entity_
                 bne.s   Boss_BackStringerUpdateActiveFrame
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_BackStringerUpdateActiveFrame
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_BackStringerDefeatInit
 Boss_BackStringerUpdateActiveFrame:                     ; CODE XREF: Boss_BackStringerMain+14   j  ; was: loc_446D4
                                         ; Boss_BackStringerMain+1C   j
@@ -265,7 +265,7 @@ Boss_BackStringerAttackDelayState:                      ; DATA XREF: ROM:0004472
                 bpl.s   Boss_BackStringerUseIdlePoseAndRender
                 cmpi.w  #$140,(dword_FFC694).w
                 bpl.w   Boss_BackStringerStartTrackingAttack
-                cmpi.w  #$1600,(word_FF8200).w
+                cmpi.w  #$1600,(BossHealth).w
                 bmi.w   Boss_BackStringerStartTrackingAttack
                 bra.s   Boss_BackStringerStartSweepingAttack
 ; ---------------------------------------------------------------------------

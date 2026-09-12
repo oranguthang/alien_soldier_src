@@ -295,7 +295,7 @@ Gfx_PrependDMATransferCommand:                          ; CODE XREF: Sprite_Rend
                 rts
 ; End of function Gfx_PrependDMATransferCommand
 ; Loads four optional palette blocks into matching active and shadow slots
-Palette_LoadFourOptionalBlocks:                         ; CODE XREF: UI_WeaponSelectTransition+3C   p  ; was: sub_1FC8
+Palette_LoadFourOptionalBlocks:                         ; CODE XREF: StageTransition_ResumeSetup+3C   p  ; was: sub_1FC8
                 lea     (PaletteActiveBuffer).w,a2
                 lea     (PaletteShadowBuffer).w,a3
                 bsr.w   Palette_CopyOptionalBlock

@@ -8,7 +8,7 @@ Boss_SnakeMain:                                         ; DATA XREF: ROM:Entity_
                 bne.s   Boss_SnakeUpdateBody
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_SnakeUpdateBody
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_SnakeUpdateBody
                 move.b  #2,(byte_FF80EC).w
                 move.w  #$A,4(a5)
@@ -71,8 +71,8 @@ Boss_SnakeInit:                                         ; DATA XREF: ROM:Boss_Sn
                 move.w  #4,(dword_FF940C+2).w
                 move.w  #$10,(dword_FF9408+2).w
                 move.w  #$10,(dword_FF940C).w
-                move.w  #$4000,(word_FF8202).w
-                move.w  #$4000,(word_FF8200).w
+                move.w  #$4000,(BossMaxHealth).w
+                move.w  #$4000,(BossHealth).w
                 move.w  #$E300,$E(a5)
                 move.w  #$CD00,2(a5)
                 move.l  #Sprite_SharedGraphicsFrameTable,8(a5)
@@ -259,7 +259,7 @@ Boss_SnakeSegmentMain:                                  ; DATA XREF: ROM:Entity_
                 bsr.w   Boss_SnakeAdvanceAnimation
                 tst.b   $21(a5)
                 beq.s   Boss_SnakeCheckSegmentDestruction
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_SnakeCheckSegmentDestruction
                 clr.b   $21(a5)
 Boss_SnakeCheckSegmentDestruction:                      ; CODE XREF: Boss_SnakeSegmentMain+8   j  ; was: loc_40B0A

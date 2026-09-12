@@ -348,7 +348,7 @@ Boss_CaterpillarShipController:                         ; DATA XREF: ROM:Entity_
                 bne.s   Boss_CaterpillarUpdateShipTrailHistory
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_CaterpillarUpdateShipTrailHistory
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_CaterpillarUpdateShipTrailHistory
                 move.b  #2,(byte_FF80EC).w
                 move.w  #$A,4(a5)
@@ -408,8 +408,8 @@ Boss_CaterpillarShipInit:                               ; DATA XREF: ROM:Boss_Ca
                 move.w  #$C,(dword_FF940C).w
                 move.w  #$170,(dword_FF9408).w
                 move.w  #$100,(dword_FF9408+2).w
-                move.w  #$4000,(word_FF8202).w
-                move.w  #$4000,(word_FF8200).w
+                move.w  #$4000,(BossMaxHealth).w
+                move.w  #$4000,(BossHealth).w
                 move.w  #$CD00,2(a5)
                 move.b  #$10,$20(a5)
                 move.b  #$50,$21(a5)                    ; 'P'
@@ -472,8 +472,8 @@ Boss_CaterpillarSelectRightOscillationTarget:           ; CODE XREF: Boss_Caterp
                 rts
 ; ---------------------------------------------------------------------------
 Boss_CaterpillarBeginShipCenteringDelay:                ; CODE XREF: Boss_CaterpillarShipOscillationState+A   j  ; was: loc_3D68A
-                clr.w   (word_FF8200).w
-                clr.w   (word_FF8202).w
+                clr.w   (BossHealth).w
+                clr.w   (BossMaxHealth).w
                 clr.b   $21(a5)
                 move.w  #$120,(dword_FF9408).w
                 move.w  #$F0,(dword_FF9408+2).w

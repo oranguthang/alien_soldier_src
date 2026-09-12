@@ -178,23 +178,23 @@ UI_RenderStageTimerAndBossHealth_RenderBossHealth:      ; CODE XREF: UI_RenderSt
 UI_RenderStageTimerAndBossHealth_UpdateDisplayedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+80   j  ; was: loc_13056
                 tst.b   (byte_FFF705).w
                 bmi.s   UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation
-                move.w  (word_FF8206).w,d0
-                sub.w   (word_FF8200).w,d0
+                move.w  (DisplayedBossHealth).w,d0
+                sub.w   (BossHealth).w,d0
                 bpl.s   UI_RenderStageTimerAndBossHealth_ApproachLowerBossHealth
                 cmpi.w  #$FF00,d0
                 bpl.s   UI_RenderStageTimerAndBossHealth_SnapDisplayedBossHealth
-                addi.w  #$100,(word_FF8206).w
+                addi.w  #$100,(DisplayedBossHealth).w
                 bra.s   UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation
 ; ---------------------------------------------------------------------------
 UI_RenderStageTimerAndBossHealth_ApproachLowerBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+A8   j  ; was: loc_13074
                 cmpi.w  #$100,d0
                 bpl.s   UI_RenderStageTimerAndBossHealth_DecreaseDisplayedBossHealth
 UI_RenderStageTimerAndBossHealth_SnapDisplayedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+AE   j  ; was: loc_1307A
-                move.w  (word_FF8200).w,(word_FF8206).w
+                move.w  (BossHealth).w,(DisplayedBossHealth).w
                 bra.s   UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation
 ; ---------------------------------------------------------------------------
 UI_RenderStageTimerAndBossHealth_DecreaseDisplayedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+BC   j  ; was: loc_13082
-                subi.w  #$100,(word_FF8206).w
+                subi.w  #$100,(DisplayedBossHealth).w
 UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+9E   j  ; was: loc_13088
                                         ; UI_RenderStageTimerAndBossHealth+B6   j
                 tst.w   (word_FF829E).w
@@ -202,7 +202,7 @@ UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation:  ; CODE XREF: UI_
                 btst    #2,(ControlLayoutFlags).w
                 beq.s   UI_RenderStageTimerAndBossHealth_RenderSegmentedBossHealth
                 move.w  #$C7B4,d5
-                move.w  (word_FF8206).w,d0
+                move.w  (DisplayedBossHealth).w,d0
                 asr.w   #2,d0
                 andi.w  #$FFFE,d0
                 move.w  (a4,d0.w),(dword_FF8040).w
@@ -210,7 +210,7 @@ UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation:  ; CODE XREF: UI_
                 moveq   #1,d7
                 bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7E0,(a0)+
-                move.w  (word_FF8202).w,d0
+                move.w  (BossMaxHealth).w,d0
                 asr.w   #2,d0
                 andi.w  #$FFFE,d0
                 move.w  (a4,d0.w),(dword_FF8040).w
@@ -226,7 +226,7 @@ UI_RenderStageTimerAndBossHealth_FillAlternatePadding:  ; CODE XREF: UI_RenderSt
 ; ---------------------------------------------------------------------------
 UI_RenderStageTimerAndBossHealth_RenderSegmentedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+DA   j  ; was: loc_130E2
                 moveq   #$1C,d7
-                move.w  (word_FF8206).w,d0
+                move.w  (DisplayedBossHealth).w,d0
                 subq.w  #1,d0
                 bmi.s   UI_RenderStageTimerAndBossHealth_FillRemainingBossHealthSegments
                 move.w  d0,d1

@@ -9,7 +9,7 @@ Boss_ShiperMainHandler:                                 ; DATA XREF: ROM:Entity_
                 bne.s   Boss_ShiperUpdateActiveState
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_ShiperUpdateActiveState
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_ShiperUpdateActiveState
                 bset    #0,(byte_FFA272).w
                 bra.w   Boss_ShiperInitDefeat

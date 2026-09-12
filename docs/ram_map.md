@@ -10,7 +10,12 @@ still have neutral size/address names. The first reviewed semantic fields are
 `ContinueCreditsBCD`, `HighScoreBCD`, `PostStageEntryCountBCD`,
 `DestroyedEnemyCountBCD`, `PlayerDamageBCD`,
 `MessageSequenceState`, `MessageSequenceFlags`, `MessageAdvanceButtons`,
-`MessageDisplayFlags`, `WeaponStateIndex`,
+`MessageDisplayFlags`, `StageMessageCursor`,
+`PendingStageBGMRequest`, `FontTileDMAVRAMAddress`,
+`FontTileDMACounter`, `FontTileDMASourceOffset`, `XiTigerConfigIndex`,
+`SetupTransitionIndex`, `PlayerHealth`, `PlayerMaxHealth`,
+`DisplayedPlayerHealth`, `BossHealth`, `BossMaxHealth`,
+`DisplayedBossHealth`, `WeaponStateIndex`,
 `WeaponSlotOffset`, `WeaponSavedSlotOffset`, `WeaponMenuRadius`,
 `WeaponMenuAngle`, `WeaponStateCooldown`, `WeaponMenuAngularStep`, and
 `WeaponMenuSlotOffset`, `ShootingMode`, `ControlLayoutFlags`, and
@@ -98,6 +103,43 @@ alone does not yet prove the exact player-facing counting convention.
 | `MessageSequenceState` | `$FFFF80C2` | The central dispatcher uses this even word directly as an offset into its handler table. Stage, result, boss, and ship-cutscene callers publish a starting state here and wait for it to return to zero. |
 | `MessageAdvanceButtons` | `$FFFF8310` | The dispatcher stores the controller byte masked with `$70`; the glyph-delay state advances immediately when the result is nonzero. |
 | `MessageDisplayFlags` | `$FFFFFF31` | Message-script entry sets bit 7 and finalization clears it. The signed HUD path suppresses its update while that bit is set; initialization clears the whole byte. |
+
+## Reviewed interstage-transition fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `StageMessageCursor` | `$FFFFA22C` | Stage and boss transition handlers assign one of four message-sequence addresses. The interstage message updater queues the current record, advances this cursor, and clears it at the `$FD` terminator. |
+| `PendingStageBGMRequest` | `$FFFFA230` | Visual-asset dispatch clears this byte, selected transitions store sound request IDs, and both interstage setup paths submit it through `Sound_QueueBGMOrStop` when nonzero. |
+| `FontTileDMAVRAMAddress` | `$FFFF8146` | The dormant interstage graphics setup initializes this destination to `$6000`; `Gfx_QueueNextFontTileDMA` encodes it into the VDP command and advances it by `$400`. |
+| `FontTileDMACounter` | `$FFFF8148` | Initialized to 15 by the dormant setup, tested for negative completion, and decremented after each queued font tile. |
+| `FontTileDMASourceOffset` | `$FFFF814A` | Added to `tiles_font` to form the DMA source and advanced by `$400` after each queued tile. |
+
+## Reviewed health fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PlayerHealth` | `$FFFFA216` | Player-damage paths subtract from this word and clamp it at zero or one according to their invulnerability rules. Pickups restore it up to `PlayerMaxHealth`, while gameplay initialization and the HUD copy or render it. |
+| `PlayerMaxHealth` | `$FFFFA218` | New-game initialization sets this and `PlayerHealth` to `$200`; pickups cap health against it, stage 25 can increase it to `$400`, and both HUD presentations use it as the maximum. |
+| `DisplayedPlayerHealth` | `$FFFF820A` | Gameplay and Xi-Tiger initialization copy `PlayerHealth` here. The HUD approaches the current value in small steps before rendering the visible health bar. |
+| `BossHealth` | `$FFFF8200` | Boss setup routines initialize it, combat collision paths subtract damage and clear it at defeat, and boss state machines use it for health thresholds. |
+| `BossMaxHealth` | `$FFFF8202` | Boss setup initializes this alongside `BossHealth`; collision defeat paths clear both, and the alternate HUD presentation renders it as the reference maximum. |
+| `DisplayedBossHealth` | `$FFFF8206` | Stage and Xi-Tiger setup copy or initialize boss health here. The boss HUD approaches `BossHealth` in `$100` steps before rendering it. |
+
+These names describe the stable cross-subsystem role of the words, not a
+particular boss or cutscene. The Xi-Tiger transition reuses the same health
+fields to seed its displayed state.
+
+## Reviewed setup and transition selector fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `SetupTransitionIndex` | `$FFFFA29C` | The weapon-setup updater uses even values as offsets into its seven-entry page/state table. The later transition dispatcher reuses values `0`, `2`, and `4` to select Xi-Tiger, gameplay, or credits initialization and update pairs. |
+| `XiTigerConfigIndex` | `$FFFF814C` | The Xi-Tiger cutscene initializer writes zero, and stage initialization uses the word as an offset into the adjacent Xi-Tiger configuration table. Only the zero entry and zero writer are currently present in source. |
+
+`SetupTransitionIndex` is deliberately named for both observed lifetimes. A
+narrow weapon-page or cutscene-route name would be false because the same RAM
+word is reused after the setup screen. Nonzero `XiTigerConfigIndex` values and
+their runtime reachability remain unproven.
 
 ## Reviewed weapon-state and selection fields
 

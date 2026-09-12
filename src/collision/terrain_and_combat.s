@@ -40,7 +40,7 @@ Collision_PlayerWeaponVsEnemy_Return:                   ; CODE XREF: Collision_P
 Collision_PlayerWeaponVsEnemy_ResolveFlaggedTarget:     ; CODE XREF: Collision_PlayerWeaponVsEnemy+52   j  ; was: loc_141F2
                 btst    #2,(byte_FF80EC).w
                 bne.s   Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Collision_PlayerWeaponVsEnemy_NextTarget
 Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_PlayerWeaponVsEnemy+68   j  ; was: loc_14202
                 bset    #7,$22(a3)
@@ -60,10 +60,10 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 move.w  $24(a2),(word_FF8210).w
                 move.w  #$20,(word_FF809A).w            ; ' '
                 mulu.w  $24(a2),d4
-                sub.w   d4,(word_FF8200).w
+                sub.w   d4,(BossHealth).w
                 bpl.s   Collision_PlayerWeaponVsEnemy_NextTarget
-                clr.w   (word_FF8200).w
-                clr.w   (word_FF8202).w
+                clr.w   (BossHealth).w
+                clr.w   (BossMaxHealth).w
                 clr.b   (byte_FF80EC).w
                 clr.w   (word_FF8234).w
                 clr.w   (word_FF8236).w

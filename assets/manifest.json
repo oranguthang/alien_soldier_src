@@ -4874,8 +4874,8 @@
       "sha1": "6537d485ab31c11eb47a97c03e0eefa88c6cfd61"
     },
     {
-      "name": "byte_1E587",
-      "path": "other/byte_1E587.bin",
+      "name": "stage_transition_message_sequence_train_and_bugmax",
+      "path": "other/stage_transition_message_sequence_train_and_bugmax.bin",
       "region": "other",
       "address": "0x1E587",
       "end": "0x1E6C6",

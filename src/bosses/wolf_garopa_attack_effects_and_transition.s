@@ -127,7 +127,7 @@ Boss_WolfGaropaBeginDefeatTransition:                   ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaBeginDefeatTransition
 ; Update Wolf Garopa's defeat fade and periodically emit debris effects
 Boss_WolfGaropaUpdateDefeatTransition:                  ; CODE XREF: Boss_WolfGaropaUpdate:Boss_WolfGaropaRunDefeatEffects   p  ; was: sub_50E5E
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.s   Boss_WolfGaropaAdvanceDefeatTimer
                 rts
 ; ---------------------------------------------------------------------------

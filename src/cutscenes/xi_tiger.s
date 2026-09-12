@@ -6,11 +6,11 @@ XiTigerCutscene_LoadAssets:                             ; DATA XREF: ROM:StageTr
                 jsr     (LoadObjData).l
                 lea     (XiTigerCutscenePaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                move.w  (word_FFA216).w,(word_FF820A).w
+                move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
                 move.w  #$7000,d0
-                move.w  d0,(word_FF8206).w
-                move.w  d0,(word_FF8200).w
-                move.w  d0,(word_FF8202).w
+                move.w  d0,(DisplayedBossHealth).w
+                move.w  d0,(BossHealth).w
+                move.w  d0,(BossMaxHealth).w
                 bset    #0,(byte_FFA272).w
                 jmp     Gfx_DecompressCutsceneData
 ; End of function XiTigerCutscene_LoadAssets
@@ -250,7 +250,7 @@ XiTigerCutscene_EnterStageHandler:                      ; DATA XREF: ROM:0001E92
                 jsr     (Stage_LoadAssetsForCurrentTableIndex).l
                 move.w  #$80,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                move.w  #0,(word_FF814C).w
+                move.w  #0,(XiTigerConfigIndex).w
                 rts
 ; End of function XiTigerCutscene_EnterStageHandler
 ; Builds three ten-entry strips for the cutscene's composite sprite

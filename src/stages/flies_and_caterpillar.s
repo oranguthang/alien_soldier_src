@@ -249,7 +249,7 @@ Stage_CaterpillarScrollHandler:                         ; DATA XREF: ROM:0000C8B
                 bra.w   loc_D450
 ; ---------------------------------------------------------------------------
 loc_D412:                                               ; CODE XREF: Stage_CaterpillarScrollHandler+5C   j
-                move.w  #0,(word_FFA29C).w
+                move.w  #0,(SetupTransitionIndex).w
                 move.w  #4,(word_FF8230).w
 locret_D41E:                                            ; CODE XREF: Stage_CaterpillarScrollHandler+1A   j
                                         ; Stage_CaterpillarScrollHandler+28   j
@@ -263,8 +263,8 @@ Stage_XiTigerEmptyHandler:                              ; CODE XREF: Stage_XiTig
 ; Initializes Xi-Tiger boss stage parameters
 Stage_InitXiTigerBoss:                                  ; DATA XREF: ROM:0000C8C0   o  ; was: sub_D422
                 bsr.w   Stage_InitializeBossHealthAndCounter
-                move.w  (word_FF8200).w,(word_FF8206).w
-                move.w  (word_FFA216).w,(word_FF820A).w
+                move.w  (BossHealth).w,(DisplayedBossHealth).w
+                move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
                 move.b  #$10,(byte_FFA95A).w
                 move.b  #$40,(byte_FFF705).w            ; '@'
                 move.w  #$8000,(word_FF808A).w
@@ -389,10 +389,10 @@ Stage_PostXiTigerTransition:                            ; DATA XREF: ROM:0000C8B
                 bpl.s   locret_D5BA
                 tst.w   (word_FF8230).w
                 bne.s   locret_D5BA
-                move.b  #$86,(byte_FFA230).w
-                move.l  #byte_1E4E5,(dword_FFA22C).w
+                move.b  #$86,(PendingStageBGMRequest).w
+                move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
                 tst.w   (MessageSequenceState).w
-                beq.w   Stage_StartWeaponSelectTransition
+                beq.w   Stage_StartInterstageTransition
 locret_D5BA:                                            ; CODE XREF: Stage_PostXiTigerTransition+8   j
                                         ; Stage_PostXiTigerTransition+E   j
                 rts

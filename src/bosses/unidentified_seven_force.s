@@ -82,8 +82,8 @@ Boss_UnidentifiedSevenForceInitTimedState4:
                 clr.l   $1C(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
-                move.w  #$1B58,(word_FF8200).w
-                move.w  #$1B58,(word_FF8202).w
+                move.w  #$1B58,(BossHealth).w
+                move.w  #$1B58,(BossMaxHealth).w
                 move.w  #$80,$11C(a5)
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_UnidentifiedSevenForceRenderTimedState4Frame

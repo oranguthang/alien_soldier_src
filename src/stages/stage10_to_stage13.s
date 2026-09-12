@@ -415,11 +415,11 @@ Stage_SnakeWaitScroll:                                  ; DATA XREF: ROM:0000D99
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 cmpi.w  #$3E0,(dword_FFA900).w
                 bmi.w   Stage_Stage10CheckTransition_Return
-                move.w  (word_FF8200).w,(dword_FF8040).w
-                move.w  (word_FF8202).w,(dword_FF8040+2).w
+                move.w  (BossHealth).w,(dword_FF8040).w
+                move.w  (BossMaxHealth).w,(dword_FF8040+2).w
                 bsr.w   Stage_TransitionToNextPhase
-                move.w  (dword_FF8040).w,(word_FF8200).w
-                move.w  (dword_FF8040+2).w,(word_FF8202).w
+                move.w  (dword_FF8040).w,(BossHealth).w
+                move.w  (dword_FF8040+2).w,(BossMaxHealth).w
                 rts
 ; End of function Stage_SnakeWaitScroll
 ; Transitions to Bugmax boss
@@ -454,8 +454,8 @@ Stage_BugmaxWaitDMA:                                    ; DATA XREF: ROM:0000D99
 ; Initializes Bugmax boss battle with palette and DMA setup
 Stage_InitBugmaxBattle:                                 ; CODE XREF: Stage_BugmaxWaitDMA+12   j  ; was: loc_DDC2
                 addq.w  #2,(word_FFA950).w
-                move.w  #$7000,(word_FF8200).w
-                move.w  #$7000,(word_FF8202).w
+                move.w  #$7000,(BossHealth).w
+                move.w  #$7000,(BossMaxHealth).w
                 move.w  #$1E0,(word_FF8234).w
                 move.w  #$1E0,(word_FF8236).w
                 lea     (Boss_BugmaxAssetSet).l,a1
@@ -481,8 +481,8 @@ Stage_BugmaxTransitionCheck:                            ; DATA XREF: ROM:0000D99
                 bne.w   Stage_Stage10CheckTransition_Return
                 move.b  #$92,d0
                 jsr     (Sound_QueueBGMOrStop).l
-                move.l  #byte_1E587,(dword_FFA22C).w
-                bra.w   Stage_StartWeaponSelectTransition
+                move.l  #StageTransitionMessageSequence_TrainAndBugmax,(StageMessageCursor).w
+                bra.w   Stage_StartInterstageTransition
 ; End of function Stage_BugmaxTransitionCheck
 ; Loads Stage 10 tile graphics and palette
 Stage_LoadStage10Graphics:                              ; CODE XREF: Stage_Stage10ScrollUpdate+6   p  ; was: sub_DE2E

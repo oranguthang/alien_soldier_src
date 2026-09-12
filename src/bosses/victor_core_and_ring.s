@@ -19,7 +19,7 @@ Boss_VictorMain:                                        ; DATA XREF: ROM:Entity_
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 cmpi.w  #$1E,4(a5)
                 bcc.s   Boss_VictorDispatchState
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_VictorDispatchState
                 move.w  #1,(dword_FF9414+2).w
                 bset    #0,(byte_FFA272).w

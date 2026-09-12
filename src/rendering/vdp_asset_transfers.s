@@ -57,11 +57,11 @@ Gfx_UpdateTilemapIndices_StoreWord:                     ; CODE XREF: Gfx_UpdateT
                 rts
 ; End of function Gfx_UpdateTilemapIndices
 ; Transfers a single font tile to VRAM
-Gfx_QueueNextFontTileDMA:                               ; CODE XREF: UI_WeaponSelectTransition+10   p  ; was: sub_111DA
-                tst.w   (word_FF8148).w
+Gfx_QueueNextFontTileDMA:                               ; CODE XREF: StageTransition_ResumeSetup+10   p  ; was: sub_111DA
+                tst.w   (FontTileDMACounter).w
                 bmi.w   Gfx_QueueNextFontTileDMA_Return
                 movea.w (VDPCommandQueueHead).w,a1
-                move.w  (word_FF8146).w,d0
+                move.w  (FontTileDMAVRAMAddress).w,d0
                 move.w  d0,d1
                 andi.w  #$3FFE,d0
                 addi.w  #$4000,d0
@@ -73,7 +73,7 @@ Gfx_QueueNextFontTileDMA:                               ; CODE XREF: UI_WeaponSe
                 move.w  d0,-(a1)
                 move.l  #$94029300,d4
                 moveq   #0,d0
-                move.w  (word_FF814A).w,d0
+                move.w  (FontTileDMASourceOffset).w,d0
                 addi.l  #tiles_font,d0
                 lsr.l   #1,d0
                 move.l  d0,(dword_FF8040).w
@@ -89,9 +89,9 @@ Gfx_QueueNextFontTileDMA:                               ; CODE XREF: UI_WeaponSe
                 move.w  #$8F02,-(a1)
                 move.l  d4,-(a1)
                 move.w  a1,(VDPCommandQueueHead).w
-                addi.w  #$400,(word_FF8146).w
-                addi.w  #$400,(word_FF814A).w
-                subq.w  #1,(word_FF8148).w
+                addi.w  #$400,(FontTileDMAVRAMAddress).w
+                addi.w  #$400,(FontTileDMASourceOffset).w
+                subq.w  #1,(FontTileDMACounter).w
 Gfx_QueueNextFontTileDMA_Return:                        ; CODE XREF: Gfx_QueueNextFontTileDMA+4   j  ; was: locret_11254
                 rts
 ; End of function Gfx_QueueNextFontTileDMA

@@ -72,7 +72,7 @@ DebugMenu_Initialize:                                   ; was: sub_1352A
                 clr.w   (DebugColorEditActive).w
                 clr.w   (DebugColorChannelOffset).w
                 move.w  #4,(DebugPaletteLineOffset).w
-                move.w  (word_FFA216).w,d0
+                move.w  (PlayerHealth).w,d0
                 asr.w   #4,d0
                 move.b  d0,(DebugHealthSelection).w
                 tst.w   (word_FF822A).w
@@ -106,14 +106,14 @@ DebugMenu_UpdateActive:                                 ; was: sub_1358A
                 move.b  (DebugHealthSelection).w,d0
                 cmpi.b  #$FF,d0
                 bne.s   DebugMenu_ApplySelectedPlayerHealth
-                move.w  #$400,(word_FFA218).w
-                move.w  #$400,(word_FFA216).w
+                move.w  #$400,(PlayerMaxHealth).w
+                move.w  #$400,(PlayerHealth).w
                 bra.s   DebugMenu_ReloadActiveAssetsAndWeaponIcons
 ; ---------------------------------------------------------------------------
 DebugMenu_ApplySelectedPlayerHealth:                    ; was: loc_135AC
                 asl.w   #4,d0
-                move.w  d0,(word_FFA216).w
-                move.w  d0,(word_FFA218).w
+                move.w  d0,(PlayerHealth).w
+                move.w  d0,(PlayerMaxHealth).w
 DebugMenu_ReloadActiveAssetsAndWeaponIcons:             ; was: loc_135B6
                 movea.l #DebugMenuActiveAssetLoadList,a0
                 jsr     (LoadObjData).l

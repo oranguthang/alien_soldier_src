@@ -406,7 +406,7 @@ Boss_BugmaxCheckForcedFinalState:                       ; CODE XREF: Boss_Bugmax
                 bne.s   Boss_BugmaxDispatchMainState
                 btst    #1,(byte_FF80EC).w
                 bne.w   Boss_BugmaxDispatchMainState
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_BugmaxDispatchMainState
                 move.b  #2,(byte_FF80EC).w
 Boss_BugmaxEnterForcedFinalState:                       ; was: loc_4C3B0
@@ -643,7 +643,7 @@ Boss_BugmaxOpeningTransitionWaitReturn:                 ; CODE XREF: Boss_Bugmax
 Boss_BugmaxWaitForFirstOpeningScrollThreshold:          ; DATA XREF: ROM:0004C3E2   o  ; was: sub_4C682
                 bsr.w   Boss_BugmaxEmitOpeningHitFragmentsAndSteer
                 bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
-                cmpi.w  #$6800,(word_FF8200).w
+                cmpi.w  #$6800,(BossHealth).w
                 bhi.s   Boss_BugmaxFirstOpeningThresholdReturn
                 addq.w  #2,4(a5)
                 move.w  #3,d0
@@ -699,7 +699,7 @@ Boss_BugmaxDebrisParameterTable:    dc.w    $40, $40, $40, $40, $28, $28, $18  ;
 Boss_BugmaxWaitForSecondOpeningScrollThreshold:         ; DATA XREF: ROM:0004C3E4   o  ; was: sub_4C734
                 bsr.w   Boss_BugmaxEmitOpeningHitFragmentsAndSteer
                 bsr.w   Boss_BugmaxClampOpeningObjectHorizontalPositions
-                cmpi.w  #$6000,(word_FF8200).w
+                cmpi.w  #$6000,(BossHealth).w
                 bhi.s   Boss_BugmaxSecondOpeningThresholdReturn
                 clr.l   $18(a5)
                 addq.w  #2,$5E(a5)

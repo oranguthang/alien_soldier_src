@@ -18,7 +18,7 @@ Boss_DestroyerMK2CheckFinalTransitionTrigger:           ; CODE XREF: Boss_Destro
                 bne.s   Boss_DestroyerMK2UpdateEncounterEffects
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_DestroyerMK2UpdateEncounterEffects
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_DestroyerMK2UpdateEncounterEffects
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,$4C(a5)

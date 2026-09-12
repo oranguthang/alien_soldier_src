@@ -8,7 +8,7 @@ Boss_UpdateSirene:                                      ; DATA XREF: ROM:Entity_
                 bne.s   Boss_UpdateSireneBattleEffects
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_UpdateSireneBattleEffects
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_UpdateSireneBattleEffects
                 move.b  #$C1,d0
                 jsr     (Sound_PlaySFX).l
@@ -143,8 +143,8 @@ Boss_UpdateSireneState6:                                ; DATA XREF: ROM:000574F
 ; ---------------------------------------------------------------------------
 Boss_EnterSireneState8:                                 ; CODE XREF: Boss_UpdateSireneState4+46   j  ; was: loc_5766E
                 addq.w  #2,4(a5)
-                move.w  #$7000,(word_FF8200).w
-                move.w  #$7000,(word_FF8202).w
+                move.w  #$7000,(BossHealth).w
+                move.w  #$7000,(BossMaxHealth).w
                 move.b  #1,(byte_FFA958).w
                 moveq   #0,d0
                 moveq   #0,d1

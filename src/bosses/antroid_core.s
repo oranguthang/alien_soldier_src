@@ -8,7 +8,7 @@ Boss_AntroidMainHandler:                                ; DATA XREF: ROM:Entity_
                 bne.s   Boss_AntroidMainUpdateActive
                 btst    #1,(byte_FF80EC).w
                 bne.s   Boss_AntroidMainUpdateActive
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 beq.w   Boss_AntroidBeginRamAttack
 Boss_AntroidMainUpdateActive:                           ; CODE XREF: Boss_AntroidMainHandler+14   j  ; was: loc_374EC
                                         ; Boss_AntroidMainHandler+1C   j
@@ -194,7 +194,7 @@ Boss_AntroidBattleDecision:                             ; CODE XREF: Boss_Antroi
                 jsr     (Physics_GetPlayerDelta).l
                 cmpi.w  #$A8,d0
                 bpl.s   Boss_AntroidChooseDistantAttack
-                cmpi.w  #$3600,(word_FF8200).w
+                cmpi.w  #$3600,(BossHealth).w
                 bmi.w   Boss_AntroidEnterJumpSlamPreparation
                 btst    #0,d7
                 bne.w   Boss_AntroidEnterJumpSlamPreparation

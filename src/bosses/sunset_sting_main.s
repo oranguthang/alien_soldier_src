@@ -20,7 +20,7 @@ Boss_SunsetStingMain:                                   ; DATA XREF: ROM:Entity_
                 move.w  #$E,4(a5)
 Boss_SunsetStingMainCheckDefeatTrigger:                 ; CODE XREF: Boss_SunsetStingMain+26   j  ; was: loc_42A54
                                         ; Boss_SunsetStingMain+34   j
-                tst.w   (word_FF8200).w
+                tst.w   (BossHealth).w
                 bne.s   Boss_SunsetStingMainCycleTiles
                 bset    #0,(byte_FFA272).w
                 bset    #7,(a4)

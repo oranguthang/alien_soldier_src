@@ -20,14 +20,14 @@ Player_SpawnProjectile:                                 ; CODE XREF: Player_Phoe
                 tst.w   (DifficultyMode).w
                 bne.s   Player_SpawnProjectile_UseAlternateParameters
                 move.w  #$26,$26(a0)                    ; '&'
-                subi.w  #$1E,(word_FFA216).w
+                subi.w  #$1E,(PlayerHealth).w
                 move.w  #$801E,(word_FF8262).w
                 move.w  #$30,(word_FF8268).w            ; '0'
                 rts
 ; ---------------------------------------------------------------------------
 Player_SpawnProjectile_UseAlternateParameters:          ; CODE XREF: Player_SpawnProjectile+60   j  ; was: loc_17476
                 move.w  #$23,$26(a0)                    ; '#'
-                subi.w  #$32,(word_FFA216).w            ; '2'
+                subi.w  #$32,(PlayerHealth).w           ; '2'
                 move.w  #$8032,(word_FF8262).w
                 move.w  #$30,(word_FF8268).w            ; '0'
                 rts

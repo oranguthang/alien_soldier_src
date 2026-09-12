@@ -1296,7 +1296,7 @@ The pass corrects the most consequential generated Bugmax claim. Main states
 states, wait for two stage-scroll thresholds, load two replacement tile sets,
 and emit transition debris from linked-record coordinates. The actual forced
 final boundary is state `$56`, selected only after the encounter flags and
-`word_FF8200` clear. The former `UpdateLegs`, `RotateParts`, and generic
+`BossHealth` clear. The former `UpdateLegs`, `RotateParts`, and generic
 `CalculatePerspective` labels are also narrowed to the implemented linked
 chain direction, history buffer, joint-angle clamp, or perspective-row
 operation. The opening transition's exact narrative presentation and the
@@ -4200,11 +4200,13 @@ dispatch that phase's visual-asset loader.
 
 The generic stage-transition initializer is narrowed as well. Its post-fade
 selector is 3; the gameplay loop maps that value to game mode `$34`, and the
-game-state table maps `$34` to `UI_InitializeWeaponSelect`. The section-change
-path instead selects message state `$50`, the stage-number banner initializer.
-These table relationships support exact names without guessing about the
-unrenamed shared RAM fields. The already-audited adjacent wrapper is therefore
-refined from generic section initialization to
+game-state table maps `$34` to what is now `StageTransition_Initialize`.
+Subsequent review disproved the earlier weapon-selection interpretation: the
+route submits an optional stage BGM request and enters stage loading, while its
+alternate code renders an interstage message and `PRESS START`; no weapon input
+exists there. The section-change path instead selects message state `$50`, the
+stage-number banner initializer. The already-audited adjacent wrapper is
+therefore refined from generic section initialization to
 `Stage_StartNextPhaseBannerWithDefaultBGM` as well, without adding a duplicate
 audit record.
 
@@ -4428,7 +4430,7 @@ The Xi-Tiger tail completes `visual_asset_loading.s`. Its entrypoint is now an
 encounter-state initializer rather than a tile-graphics loader: it clears RAM,
 normalizes weapon selection, applies a 30-byte stage configuration record,
 processes palette slots, and initializes player stats. The former palette
-loader is a one-entry configuration dispatcher selected by `word_FF814C`, and
+loader is a one-entry configuration dispatcher selected by `XiTigerConfigIndex`, and
 the alleged sprite loader applies that record before entering shared
 color-table initialization. The record's fields now document the exact layout
 consumed by `Stage_ApplyConfigurationRecord`.
@@ -4693,3 +4695,54 @@ added. Provenance rises from 13,725 to 13,731 mappings, the JSON name-audit
 registry from 10,959 to 10,972 records, and the enforced live address-derived
 ceiling falls from 2,325 to 2,319. The module is intentionally below the normal
 size target because the next ROM range belongs to the credits subsystem.
+
+The former `ui/weapon_select.s` is now `ui/stage_transition_messages.s`.
+Its known zero-substate route submits `PendingStageBGMRequest` when present and
+enters `StageTransition_LoadStage`; its alternate setup loads font tiles,
+renders an interstage message plus `PRESS START`, and then reaches the same
+loader. Neither route reads weapon-selection input or loadout choices. The
+actual weapon-selection object and setup screen remain separately identified
+elsewhere in the source.
+
+The alternate setup is still an explicit reachability unknown. The gameplay
+loop selects game mode `$34` with `GameSubstateIndex` cleared, so the known
+entrance takes the direct stage-load branch. Reaching the message-screen setup
+requires a nonzero substate, and no source assignment establishing that entry
+has yet been found. `UnreferencedStageTransition_PrepareGraphics` likewise has
+no source reference. These limits are recorded instead of converting a
+behavioral reconstruction into an unsupported runtime claim.
+
+The transition-message cursor, pending BGM byte, and three font-tile DMA words
+now have evidence-backed RAM names. Four message streams are named only by
+their proven caller scopes; the extracted Train/Bugmax stream and its manifest
+entry are now `stage_transition_message_sequence_train_and_bugmax`. The helper
+at `$01E254-$01E263` moves from `credits/entry.s` to the transition module,
+correcting its owner and moving the documented module boundary without moving
+ROM bytes.
+
+All fourteen raw definitions in the resulting 196-line transition module and
+five RAM fields gain provenance-preserving names. Ten generated semantic names
+are corrected; four existing audit records are updated and 25 are added.
+Provenance rises from 13,731 to 13,750 mappings, the JSON name-audit registry
+from 10,972 to 10,997 records, and the enforced live address-derived ceiling
+falls from 2,319 to 2,300. The preceding credits module now ends at its actual
+owner boundary `$01E253`.
+
+The shared health and transition-state RAM pass promotes eight stable fields
+without inventing new behavioral labels. `PlayerHealth`, `PlayerMaxHealth`,
+and `DisplayedPlayerHealth` are independently corroborated by initialization,
+damage, pickups, and both HUD presentations. `BossHealth`, `BossMaxHealth`,
+and `DisplayedBossHealth` are likewise corroborated by boss setup, collision
+damage, defeat clearing, threshold checks, and the boss HUD.
+
+`SetupTransitionIndex` retains a deliberately shared name: the weapon-setup
+screen uses it as an even state-table offset, then transition control reuses
+values `0`, `2`, and `4` for Xi-Tiger, gameplay, and credits routes.
+`XiTigerConfigIndex` is narrower but still incomplete evidence: source proves
+the zero writer and a one-entry configuration dispatcher, not any nonzero
+variant. The frame-decompression accumulator and tilemap bias remain raw
+instead of receiving speculative cutscene names.
+
+The pass raises provenance from 13,750 to 13,758 mappings, takes the JSON
+name-audit registry from 10,997 to 11,005 records, and lowers the enforced live
+address-derived ceiling from 2,300 to 2,292.
