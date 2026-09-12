@@ -41,7 +41,7 @@ EndingSequence_Initialize:                              ; CODE XREF: EndingSeque
 ; ---------------------------------------------------------------------------
 EndingSequence_AssetLoads:  dc.w    7                   ; field_0  ; was: stru_7BF2
                                         ; DATA XREF: EndingSequence_Initialize+18   o
-                dc.l    tiles_189E4C                    ; field_2
+                dc.l    EndingSequenceTileArt2000       ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    CreditsAndEndingTileArt         ; field_2

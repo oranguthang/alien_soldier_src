@@ -192,7 +192,7 @@ EndingPlanet_ClearNextVScrollPair:                      ; CODE XREF: EndingPlane
                 lea     (word_FFC680).w,a5
                 move.w  #$CC00,word_FFC682-word_FFC680(a5)
                 move.w  #$10,(a5)
-                move.l  #word_18B0CE,8(a5)
+                move.l  #EndingPlanetSpriteMappingsB,8(a5)
                 move.w  #$8900,$E(a5)
                 move.w  #$190,$10(a5)
                 move.w  #$120,$14(a5)
@@ -202,7 +202,7 @@ EndingPlanet_ClearNextVScrollPair:                      ; CODE XREF: EndingPlane
                 lea     (word_FFC6E0).w,a5
                 move.w  #$CC00,word_FFC6E2-word_FFC6E0(a5)
                 move.w  #$10,(a5)
-                move.l  #word_18B04A,8(a5)
+                move.l  #EndingPlanetSpriteMappingsA,8(a5)
                 move.w  #$8900,$E(a5)
                 move.w  #$110,$10(a5)
                 move.w  #$D0,$14(a5)
@@ -418,7 +418,7 @@ EndingPlanet_CreateDebris:                              ; CODE XREF: EndingPlane
                 lea     (word_FFD820).w,a4
                 move.w  #$EC00,word_FFD822-word_FFD820(a4)
                 move.w  #$10,(a4)
-                move.l  #off_18B13C,8(a4)
+                move.l  #EndingPlanetDebrisAnimationSequence,8(a4)
                 move.w  #$8100,$E(a4)
                 clr.w   $C(a4)
                 clr.w   4(a4)
@@ -445,7 +445,7 @@ EndingPlanet_InitializeBurst:                           ; CODE XREF: EndingPlane
 EndingPlanet_InitializeNextBurstObject:                 ; CODE XREF: EndingPlanet_InitializeBurst+68   j  ; was: loc_83AC
                 move.w  #$EC00,2(a4)
                 move.w  #$10,(a4)
-                move.l  #off_18B11C,8(a4)
+                move.l  #EndingPlanetBurstAnimationSequence,8(a4)
                 move.w  #$8100,$E(a4)
                 clr.w   $C(a4)
                 clr.w   4(a4)

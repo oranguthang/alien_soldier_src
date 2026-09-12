@@ -30,7 +30,7 @@ Cutscene_SetupFirstPlanetGrid:                          ; DATA XREF: ROM:0000516
                 lea     (word_FFC9E0).w,a5
                 move.w  #$CC00,word_FFC9E2-word_FFC9E0(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D38,8(a5)
+                move.l  #CutsceneFirstPlanetGridSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$C0,$10(a5)
                 move.w  #$120,$14(a5)
@@ -97,7 +97,7 @@ Cutscene_SetupSecondPlanetGrid:                         ; DATA XREF: ROM:0000516
                 lea     (word_FFC9E0).w,a5
                 move.w  #$CC00,word_FFC9E2-word_FFC9E0(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189DBC,8(a5)
+                move.l  #CutsceneSecondPlanetGridSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$180,$10(a5)
                 move.w  #$120,$14(a5)
@@ -194,7 +194,7 @@ Cutscene_SetupFirstShipGrid:                            ; DATA XREF: ROM:000053B
                 lea     (word_FFCA40).w,a5
                 move.w  #$CC00,word_FFCA42-word_FFCA40(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D8C,8(a5)
+                move.l  #CutsceneFirstShipGridSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$180,$10(a5)
                 move.w  #$C0,$14(a5)
@@ -257,7 +257,7 @@ Cutscene_SetupSecondShipGrid:                           ; DATA XREF: ROM:000053C
                 lea     (word_FFCA40).w,a5
                 move.w  #$CC00,word_FFCA42-word_FFCA40(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189DEC,8(a5)
+                move.l  #CutsceneSecondShipGridSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$C0,$10(a5)
                 move.w  #$C0,$14(a5)
@@ -344,7 +344,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (Entity_ObjectPool).w,a5
                 move.w  #$CC00,word_FFC622-Entity_ObjectPool(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$20,$10(a5)                    ; ' '
                 move.w  #$9C,$14(a5)
@@ -353,7 +353,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC680).w,a5
                 move.w  #$CC00,word_FFC682-word_FFC680(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$20,$10(a5)                    ; ' '
                 move.w  #$9C,$14(a5)
@@ -362,7 +362,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC6E0).w,a5
                 move.w  #$CC00,word_FFC6E2-word_FFC6E0(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$20,$10(a5)                    ; ' '
                 move.w  #$9C,$14(a5)
@@ -371,7 +371,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC740).w,a5
                 move.w  #$CC00,word_FFC742-word_FFC740(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$20,$10(a5)                    ; ' '
                 move.w  #$9C,$14(a5)
@@ -380,7 +380,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC7A0).w,a5
                 move.w  #$CC00,word_FFC7A2-word_FFC7A0(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$20,$10(a5)                    ; ' '
                 move.w  #$C4,$14(a5)
@@ -389,7 +389,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC800).w,a5
                 move.w  #$CC00,word_FFC802-word_FFC800(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$20,$10(a5)                    ; ' '
                 move.w  #$C4,$14(a5)
@@ -398,7 +398,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC860).w,a5
                 move.w  #$CC00,word_FFC862-word_FFC860(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$20,$10(a5)                    ; ' '
                 move.w  #$C4,$14(a5)
@@ -407,7 +407,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC8C0).w,a5
                 move.w  #$CC00,word_FFC8C2-word_FFC8C0(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$20,$10(a5)                    ; ' '
                 move.w  #$C4,$14(a5)
@@ -416,7 +416,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC920).w,a5
                 move.w  #$CC00,word_FFC922-word_FFC920(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$ED00,$E(a5)
                 move.w  #$110,$10(a5)
                 move.w  #$B0,$14(a5)
@@ -425,7 +425,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 lea     (word_FFC980).w,a5
                 move.w  #$CC00,word_FFC982-word_FFC980(a5)
                 move.w  #$10,(a5)
-                move.l  #word_189D68,8(a5)
+                move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
                 move.w  #$130,$10(a5)
                 move.w  #$B0,$14(a5)

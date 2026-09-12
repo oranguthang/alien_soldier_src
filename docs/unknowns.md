@@ -5653,3 +5653,21 @@ to 12,320, and the semantic review upper bound rises from 3,151 to 3,161 solely
 because those ten reviewed aliases do not need duplicate address records. The
 enforced address-derived ceiling falls from 895 to 870; the remaining backlog
 comprises 831 RAM equates and 39 preserved-data labels.
+
+The planet-cutscene asset pass removes all seventeen address-derived
+definitions from `data/planet_cutscene_assets.s`. Five tables are assigned
+directly to the first and second planet grids, first and second ship grids, and
+all star-row objects. The ending load list proves the compressed tile-art
+source and its `$2000` destination. The remaining ending-planet tables are
+assigned directly to the two scene objects, randomized burst objects, and the
+single debris object.
+
+All sixteen unique source addresses receive exact static audit records. The
+two timed relative-pointer lists identify their burst and debris frame tables
+without requiring visual inference. The one binary-backed exclusive-end alias
+retains provenance and folds into its following payload boundary. Provenance
+rises from 15,181 to 15,198 mappings, the audit registry from 12,320 to 12,336,
+and the semantic review upper bound rises from 3,161 to 3,162 solely because
+that reviewed alias does not need a duplicate address record. The enforced
+address-derived ceiling falls from 870 to 853; the remaining backlog comprises
+831 RAM equates and 22 preserved-data labels.
