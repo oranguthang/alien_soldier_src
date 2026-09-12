@@ -5061,3 +5061,28 @@ static audit records; the additional Stage 13 fall-through anchor at
 definitions gain provenance, raising provenance from 13,957 to 13,974 and the
 audit registry from 11,409 to 11,464. The enforced live address-derived
 ceiling falls from 2,094 to 2,077; module count remains 370.
+
+The Stage 14-16 state-table pass uses the next four configuration boundaries
+to correct both generated names and module ownership. `Stage14ConfigRecord`,
+`Stage15ConfigRecord`, `Stage16ConfigRecord`, and `Stage17BossConfigRecord`
+seed offsets `$40`, `$4A`, `$56`, and `$6C`. The ROM range ending at `$00E11B`
+therefore contains Stage 14 through Stage 16 only; the old
+`stages/stage14_to_stage17.s` container is now the accurately bounded
+`stages/stage14_to_stage16.s`, while Stage 17 begins with Epsilon 1 in the
+following module.
+
+The boundaries disprove several generated lifecycle claims. Offset `$48` is
+the final post-Victor state of Stage 14 rather than a Stage 15 transition, and
+offset `$54` is the final post-Sunset-Sting state of Stage 15. The former
+`Stage_Stage17Transition` at offset `$5C` remains inside Stage 16 and starts
+the post-Viblack vertical-scroll sequence. The supposed generic camera-bounds
+wrapper at `$00DF8E` is specifically the Viblack encounter's fixed-anchor
+camera state. Victor, Sunset Sting, and Viblack ownership is independently
+corroborated by the asset-set and object-type writes in their respective state
+families.
+
+All 38 imported definitions in the 264-line controller now have exact-address
+static audit records. The 15 formerly address-derived definitions gain
+provenance, raising provenance from 13,974 to 13,989 and the audit registry
+from 11,464 to 11,502. The enforced live address-derived ceiling falls from
+2,077 to 2,062; the byte-emitting module count remains 365.

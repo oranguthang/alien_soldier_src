@@ -58,27 +58,27 @@ Stage_MidgameStateHandlerOffsets:
                 dc.w    Stage13_UpdateBugmaxApproach-Stage10_Initialize
                 dc.w    Stage13_UpdateBugmaxEncounter-Stage10_Initialize
                 dc.w    Stage13_StartPostBugmaxTransition-Stage10_Initialize
-                dc.w    Stage_Stage14Scroll-Stage10_Initialize
-                dc.w    Stage_Stage14Scroll_Update-Stage10_Initialize
-                dc.w    Stage_InitBossPaletteScroll-Stage10_Initialize
-                dc.w    Stage_InitScoreTimerClear-Stage10_Initialize
-                dc.w    Stage_Stage15Transition-Stage10_Initialize
-                dc.w    Stage_Stage15Scroll-Stage10_Initialize
-                dc.w    Stage_ScrollCheckTransition-Stage10_Initialize
-                dc.w    Stage_SunsetStingTransition-Stage10_Initialize
-                dc.w    Stage_SunsetStingWaitBattle-Stage10_Initialize
-                dc.w    Stage_PostSunsetStingTransition-Stage10_Initialize
-                dc.w    Stage_ViblackScroll-Stage10_Initialize
-                dc.w    Stage_ViblackInit-Stage10_Initialize
-                dc.w    Stage_ConstrainCameraBounds-Stage10_Initialize
-                dc.w    Stage_Stage17Transition-Stage10_Initialize
-                dc.w    Stage_ViblackPostBattleScroll1-Stage10_Initialize
-                dc.w    Stage_ViblackPostBattleScroll2-Stage10_Initialize
-                dc.w    Stage_PostViblackTransition-Stage10_Initialize
-                dc.w    Stage_PostViblackTransition_Render-Stage10_Initialize
-                dc.w    Stage_SetVerticalScrollOfs-Stage10_Initialize
-                dc.w    Stage_PostViblackFade-Stage10_Initialize
-                dc.w    Stage_PostViblackScrollDecel-Stage10_Initialize
+                dc.w    Stage14_InitializeVictorApproach-Stage10_Initialize
+                dc.w    Stage14_UpdateScrollToVictor-Stage10_Initialize
+                dc.w    Stage14_InitializeVictorEncounter-Stage10_Initialize
+                dc.w    Stage14_UpdateVictorEncounter-Stage10_Initialize
+                dc.w    Stage14_StartPostVictorTransition-Stage10_Initialize
+                dc.w    Stage15_UpdateScrollToSunsetSting-Stage10_Initialize
+                dc.w    Stage15_UpdateSunsetStingApproach-Stage10_Initialize
+                dc.w    Stage15_InitializeSunsetStingEncounter-Stage10_Initialize
+                dc.w    Stage15_UpdateSunsetStingEncounter-Stage10_Initialize
+                dc.w    Stage15_StartPostSunsetStingTransition-Stage10_Initialize
+                dc.w    Stage16_UpdateScrollToViblack-Stage10_Initialize
+                dc.w    Stage16_CreateViblackEncounter-Stage10_Initialize
+                dc.w    Stage16_UpdateViblackEncounterCamera-Stage10_Initialize
+                dc.w    Stage16_StartPostViblackTransition-Stage10_Initialize
+                dc.w    Stage16_ContinuePostViblackVerticalScroll-Stage10_Initialize
+                dc.w    Stage16_UpdatePostViblackCameraAndPalette-Stage10_Initialize
+                dc.w    Stage16_InitializePostViblackTilemapStreaming-Stage10_Initialize
+                dc.w    Stage16_UpdatePostViblackTilemapStreaming-Stage10_Initialize
+                dc.w    Stage16_HoldPostViblackVerticalOffset-Stage10_Initialize
+                dc.w    Stage16_UpdatePostViblackPaletteTransition-Stage10_Initialize
+                dc.w    Stage16_DeceleratePostViblackVerticalScroll-Stage10_Initialize
                 dc.w    Stage_Epsilon1Init-Stage10_Initialize
                 dc.w    Stage_Epsilon1Scroll-Stage10_Initialize
                 dc.w    Stage_Epsilon1Scroll-Stage10_Initialize

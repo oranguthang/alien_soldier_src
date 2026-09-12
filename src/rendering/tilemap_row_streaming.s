@@ -16,7 +16,7 @@ UnreferencedTilemapQueuePrimaryCameraRowOffset60F8:
                 bra.s   Tilemap_SelectPrimaryRowDescriptor
 ; End of function UnreferencedTilemapQueuePrimaryCameraRowOffset60F8
 ; Queues one tilemap row from the primary camera, offset left by $60
-Tilemap_QueuePrimaryCameraRowOffset60:                  ; CODE XREF: Stage_Stage17Transition+24   p  ; was: sub_109CE
+Tilemap_QueuePrimaryCameraRowOffset60:                  ; CODE XREF: Stage16_StartPostViblackTransition+24   p  ; was: sub_109CE
                                         ; Scroll_UpdateAndRenderSylpheedBackdrop+4   j
                 move.w  (dword_FFA900).w,d0
                 subi.w  #$60,d0                         ; '`'

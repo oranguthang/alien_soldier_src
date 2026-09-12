@@ -148,7 +148,7 @@ Boss_BugmaxGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_VictorAssetSet:    dc.w    $3C0                    ; field_0  ; was: stru_11498
-                                        ; DATA XREF: Stage_InitBossPaletteScroll+24   o
+                                        ; DATA XREF: Stage14_InitializeVictorEncounter+24   o
                 dc.l    Boss_VictorGraphicsLoadList     ; field_2
                 dc.l    Boss_VictorPaletteCommand       ; field_6
 Boss_VictorGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_114A2
@@ -160,7 +160,7 @@ Boss_VictorGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_SunsetStingAssetSet:   dc.w    $1EC                ; field_0  ; was: stru_114B4
-                                        ; DATA XREF: Stage_SunsetStingTransition+2E   o
+                                        ; DATA XREF: Stage15_InitializeSunsetStingEncounter+2E   o
                 dc.l    Boss_SunsetStingGraphicsLoadList  ; field_2
                 dc.l    Boss_SunsetStingPaletteCommand  ; field_6
 Boss_SunsetStingGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_114BE

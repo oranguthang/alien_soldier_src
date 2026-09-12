@@ -242,7 +242,7 @@ Boss_ViblackPostBattlePaletteCommand:   dc.b    2, $E, 0, 2, 4, 6, 6, $28, 0, 0,
                                         ; DATA XREF: Boss_ViblackFinishTransitionState+3C   o
                 dc.b    2, $20, 4, $42, 6, $66, 8, $88, $A, $AA, $A, $CC, 0, 0, $A, $AA
 ViblackPostBattleScrollPaletteCommand:  dc.b    $22, $B, $E, $CA, $E, $C8, $E, $A6, $E, $84, $C, $62, $A, $40, 8, $20  ; was: byte_C4A4
-                                        ; DATA XREF: Stage_ViblackPostBattleScroll2+3E   o
+                                        ; DATA XREF: Stage16_UpdatePostViblackCameraAndPalette+3E   o
                 dc.b    6, 0, 4, 0, 2, 0, 2, 0, 2, 0
 Boss_BackStringerPaletteCommand:    dc.b    $62, $E, 2, 0, $C, $EE, 2, $26, 8, $8A, 0, $24, $F, $FF, 0, $46  ; was: byte_C4BE
                                         ; DATA XREF: ROM:Boss_BackStringerAssetSet   o

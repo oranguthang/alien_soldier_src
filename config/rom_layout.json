@@ -141,7 +141,7 @@
     { "file": "src/stages/terobuster_intro_projectiles.s", "subsystem": "stages", "start": "0x00D5BC", "end": "0x00D6D5" },
     { "file": "src/stages/flying_neo_effects.s", "subsystem": "stages", "start": "0x00D6D6", "end": "0x00D90D" },
     { "file": "src/stages/stage10_to_stage13.s", "subsystem": "stages", "start": "0x00D90E", "end": "0x00DE43" },
-    { "file": "src/stages/stage14_to_stage17.s", "subsystem": "stages", "start": "0x00DE44", "end": "0x00E11B" },
+    { "file": "src/stages/stage14_to_stage16.s", "subsystem": "stages", "start": "0x00DE44", "end": "0x00E11B" },
     { "file": "src/stages/epsilon1_and_stage18.s", "subsystem": "stages", "start": "0x00E11C", "end": "0x00E4DB" },
     { "file": "src/stages/stage18_to_stage20.s", "subsystem": "stages", "start": "0x00E4DC", "end": "0x00E7D7" },
     { "file": "src/stages/seven_forces_stage_states.s", "subsystem": "stages", "start": "0x00E7D8", "end": "0x00EA75" },

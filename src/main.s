@@ -54,7 +54,7 @@
                 include "src/stages/terobuster_intro_projectiles.s"
                 include "src/stages/flying_neo_effects.s"
                 include "src/stages/stage10_to_stage13.s"
-                include "src/stages/stage14_to_stage17.s"
+                include "src/stages/stage14_to_stage16.s"
                 include "src/stages/epsilon1_and_stage18.s"
                 include "src/stages/stage18_to_stage20.s"
                 include "src/stages/seven_forces_stage_states.s"

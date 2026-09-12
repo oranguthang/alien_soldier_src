@@ -172,7 +172,7 @@ Camera_ClampFollowToLowerHorizontalBound:               ; CODE XREF: Camera_Smoo
                 rts
 ; End of function Camera_SmoothHorizontalFollowPlayer
 ; Follows the player from a fixed horizontal anchor within camera bounds
-Camera_FollowPlayerFromFixedHorizontalAnchor:           ; CODE XREF: Stage_ViblackScroll+1E   j  ; was: sub_1019A
+Camera_FollowPlayerFromFixedHorizontalAnchor:           ; CODE XREF: Stage16_UpdateScrollToViblack+1E   j  ; was: sub_1019A
                                         ; sub_DF8E   j
                 btst    #5,(byte_FF8244).w
                 bne.w   Camera_HorizontalUpdateReturn
@@ -371,13 +371,13 @@ UnreferencedCameraApplyRightEdgeDelta:                  ; CODE XREF: Unreference
                 rts
 ; End of function UnreferencedCameraFollowRightEdge
 ; Updates the vertical camera and renders the shared Sylpheed backdrop
-Scroll_UpdateAndRenderSylpheedBackdrop:                 ; CODE XREF: Stage_ScrollCheckTransition   p  ; was: sub_10352
+Scroll_UpdateAndRenderSylpheedBackdrop:                 ; CODE XREF: Stage15_UpdateSunsetStingApproach   p  ; was: sub_10352
                 bsr.w   Camera_FollowPlayerAboveVerticalThreshold
                 bra.w   Tilemap_QueuePrimaryCameraRowOffset60
 ; End of function Scroll_UpdateAndRenderSylpheedBackdrop
 ; Advances vertical scroll by half a pixel and renders the shared Sylpheed backdrop
-Scroll_AdvanceVerticalAndRenderSylpheedBackdrop:        ; CODE XREF: Stage_SunsetStingTransition   p  ; was: sub_1035A
-                                        ; Stage_ViblackScroll+14   p
+Scroll_AdvanceVerticalAndRenderSylpheedBackdrop:        ; CODE XREF: Stage15_InitializeSunsetStingEncounter   p  ; was: sub_1035A
+                                        ; Stage16_UpdateScrollToViblack+14   p
                 addi.l  #$8000,(dword_FFA904).w
                 bra.w   Tilemap_QueuePrimaryCameraRowOffset60
 ; End of function Scroll_AdvanceVerticalAndRenderSylpheedBackdrop
