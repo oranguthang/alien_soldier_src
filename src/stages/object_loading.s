@@ -52,7 +52,7 @@ Stage_SharedMappingsLoadList:   dc.w    7               ; field_0  ; was: stru_1
 ; Loads the base Stage 1 (Xi-Tiger) asset list
 Stage_LoadStage1BaseAssets:                             ; CODE XREF: Stage_LoadStage1Phase1Assets+4   p  ; was: sub_11780
                                         ; DATA XREF: ROM:Stage_AssetLoaderOffsets   o
-                clr.w   (word_FFA206).w
+                clr.w   (StageProcessTableOffset).w
                 lea     Stage1BaseAssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
@@ -95,7 +95,7 @@ Stage1BaseAssetLoadList:    dc.w    7                   ; field_0  ; was: stru_1
 
 ; Loads initial object set for Stage 1 phase 1
 Stage_LoadStage1Phase1Assets:                           ; DATA XREF: ROM:0001173C   o  ; was: sub_117E2
-                clr.w   (word_FFA206).w
+                clr.w   (StageProcessTableOffset).w
                 bsr.w   Stage_LoadStage1BaseAssets
                 lea     Stage1Phase1AssetLoadList(pc),a0
                 nop
@@ -139,7 +139,7 @@ Boss_ShellshogunAssetLoadList:  dc.w    7               ; field_0  ; was: stru_1
 ; Loads object set for Stage 1 phase 2
 Stage_LoadStage1Phase2Assets:                           ; DATA XREF: ROM:0001173E   o  ; was: sub_11842
                                         ; ROM:00011740   o
-                clr.w   (word_FFA206).w
+                clr.w   (StageProcessTableOffset).w
                 lea     Stage1Phase2AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
@@ -173,7 +173,7 @@ Stage1Phase2AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
 
 ; Loads assets for Stage 8 (train/Flying-Neo)
 Stage_LoadStage8Assets:                                 ; DATA XREF: ROM:00011744   o  ; was: sub_1188C
-                clr.w   (word_FFA206).w
+                clr.w   (StageProcessTableOffset).w
                 lea     Stage8AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
@@ -207,7 +207,7 @@ Stage8AssetLoadList:    dc.w    7                       ; field_0  ; was: stru_1
 
 ; Loads object set for Stage 1 phase 3
 Stage_LoadStage1Phase3Assets:                           ; DATA XREF: ROM:00011746   o  ; was: sub_118D6
-                clr.w   (word_FFA206).w
+                clr.w   (StageProcessTableOffset).w
                 lea     Stage1Phase3AssetLoadList(pc),a0
                 nop
                 jmp     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
@@ -251,7 +251,7 @@ Stage1Phase3AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
 ; Loads Stage 10 enemy configuration
 Stage_LoadStage10EnemyAssets:                           ; DATA XREF: ROM:00011748   o  ; was: sub_11938
                                         ; ROM:0001174A   o
-                move.w  #4,(word_FFA206).w
+                move.w  #4,(StageProcessTableOffset).w
                 lea     Stage10EnemyAssetLoadList(pc),a0
                 nop
                 jsr     Stage_DispatchAssetListLoaderByGameMode(pc)  ; (pc)
@@ -307,7 +307,7 @@ Stage10EnemyTileBlockAdjustmentDescriptor:  dc.b    $40, 0, $D1, $D2, $D3, $D5, 
 ; Loads the teleport-scene asset list and initializes its tile-loop parameters
 Stage_LoadTeleportAssets:                               ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+64   p  ; was: sub_119C8
                                         ; DATA XREF: ROM:0001174E   o
-                move.w  #4,(word_FFA206).w
+                move.w  #4,(StageProcessTableOffset).w
                 lea     TeleportAssetLoadList(pc),a0
                 nop
                 jsr     (LoadObjData).l

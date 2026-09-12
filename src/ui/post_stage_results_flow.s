@@ -14,7 +14,7 @@ Results_InitializePostStageFlow_LoadAssets:             ; was: loc_1D636
                 move.w  #$FFF4,(PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
-                bset    #1,(byte_FFA209).w
+                bset    #1,(StageRouteFlags).w
                 movea.w #(PostStageEntryCountBCD+2-M68K_RAM),a0
                 movea.w #(word_FF804A-M68K_RAM),a1
                 move.w  #1,(word_FF8048).w

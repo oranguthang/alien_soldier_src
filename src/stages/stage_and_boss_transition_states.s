@@ -195,7 +195,7 @@ StageTransition_CompleteDestroyerProtoBackdropFade:     ; CODE XREF: StageTransi
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA958).w
                 clr.w   (StatusDisplayModeOffset).w
-                clr.b   (byte_FFA209).w
+                clr.b   (StageRouteFlags).w
 StageTransition_DestroyerProtoBackdropFadeReturn:       ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+20   j  ; was: locret_F34E
                 rts
 ; End of function StageTransition_UpdateDestroyerProtoBackdropFade
@@ -420,7 +420,7 @@ StageTransition_FinalizeWolfGaropaBackdrop:             ; DATA XREF: ROM:0000F12
                 bpl.s   StageTransition_WolfGaropaBackdropFinalizeReturn
                 addq.w  #2,(word_FFA950).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
-                clr.b   (byte_FFA209).w
+                clr.b   (StageRouteFlags).w
                 move.w  #$494,(word_FFDB20).w
                 clr.w   (word_FFDB24).w
                 clr.w   (word_FFDB22).w
@@ -433,7 +433,7 @@ StageTransition_RestartWolfGaropaBackdropFinalize:      ; DATA XREF: ROM:0000F12
                 move.w  #$24,(word_FFA950).w            ; '$'
                 move.l  #$FFF88000,(dword_FF8062).w
                 bsr.w   StageTransition_InitializeWolfGaropaArenaBoundaries
-                bset    #0,(byte_FFA209).w
+                bset    #0,(StageRouteFlags).w
                 rts
 ; End of function StageTransition_RestartWolfGaropaBackdropFinalize
 ; Advances after the Wolf Garopa backdrop

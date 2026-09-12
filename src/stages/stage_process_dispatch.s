@@ -15,7 +15,7 @@ Stage_RunSelectedProcess:                               ; CODE XREF: Stage_Dispa
                 nop
                 movea.w #(word_FFA400-M68K_RAM),a5
                 move.w  (word_FFA950).w,d0
-                move.w  (word_FFA206).w,d1
+                move.w  (StageProcessTableOffset).w,d1
                 movea.l Stage_ProcessHandlerTable(pc,d1.w),a0
                 jmp     (a0)
 ; End of function Stage_DispatchSelectedProcess

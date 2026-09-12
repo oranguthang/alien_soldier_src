@@ -5906,3 +5906,18 @@ audit records. Provenance rises from 15,341 to 15,348 mappings and the audit
 registry from 12,471 to 12,485. Auditing the seven existing code labels reduces
 the semantic review upper bound from 3,170 to 3,163. The enforced address-
 derived ceiling falls from 710 to 703, all still confined to RAM equates.
+
+The global gameplay-state and stage-route pass replaces four raw RAM equates
+and corrects two address-dependent procedure names. Full-game initialization
+clears a proven 128-byte block beginning at `GameplayStateBlock`.
+`StageProcessTableOffset` selects one of the longword stage-process handlers;
+`StageObjectSpawnCursor` advances through 12-byte spawn records and uses its
+sign bit as the processing gate. `StageRouteFlags` remains deliberately broad:
+static references prove distinct bit-0 password/transition route uses and a
+bit-1 post-stage-to-boss-message handoff, but not a narrower shared concept.
+
+All four RAM fields and both corrected code labels receive exact-address audit
+records. Provenance rises from 15,348 to 15,352 mappings and the audit registry
+from 12,485 to 12,491. Auditing the two existing code labels reduces the
+semantic review upper bound from 3,163 to 3,161. The enforced address-derived
+ceiling falls from 703 to 699, all still confined to RAM equates.

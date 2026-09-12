@@ -459,11 +459,11 @@ byte_FFA12E             equ     $FFFFA12E
 byte_FFA150             equ     $FFFFA150
 byte_FFA156             equ     $FFFFA156
 byte_FFA17C             equ     $FFFFA17C
-dword_FFA200            equ     $FFFFA200
+GameplayStateBlock      equ     $FFFFA200               ; was: dword_FFA200
 StageTableIndex         equ     $FFFFA204               ; was: word_FFA204
-word_FFA206             equ     $FFFFA206
-byte_FFA209             equ     $FFFFA209
-dword_FFA20E            equ     $FFFFA20E
+StageProcessTableOffset equ     $FFFFA206               ; was: word_FFA206
+StageRouteFlags         equ     $FFFFA209               ; was: byte_FFA209
+StageObjectSpawnCursor  equ     $FFFFA20E               ; was: dword_FFA20E
 ScoreValueBCD           equ     $FFFFA212               ; was: dword_FFA212
 PlayerHealth            equ     $FFFFA216               ; was: word_FFA216
 PlayerMaxHealth         equ     $FFFFA218               ; was: word_FFA218

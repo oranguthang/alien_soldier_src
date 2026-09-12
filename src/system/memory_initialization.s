@@ -72,19 +72,19 @@ Sys_ClearSpriteBuffers_SecondLoop:                      ; CODE XREF: Sys_ClearSp
                 dbf     d1,Sys_ClearSpriteBuffers_SecondLoop
                 rts
 ; End of function Sys_ClearSpriteBuffers
-; Clears FFA200 buffer area (128 bytes)
-Sys_ClearBufferFFA200:                                  ; CODE XREF: Sys_InitFullGame+1C   p  ; was: sub_2F36
-                lea     (dword_FFA200).w,a0
+; Clears the 128-byte global gameplay-state block
+Sys_ClearGameplayStateBlock:                            ; CODE XREF: Sys_InitFullGame+1C   p  ; was: sub_2F36
+                lea     (GameplayStateBlock).w,a0
                 moveq   #0,d0
                 move.w  #7,d1
-Sys_ClearBufferFFA200_Loop:                             ; CODE XREF: Sys_ClearBufferFFA200+12   j  ; was: loc_2F40
+Sys_ClearGameplayStateBlock_Loop:                       ; CODE XREF: Sys_ClearGameplayStateBlock+12   j  ; was: loc_2F40
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearBufferFFA200_Loop
+                dbf     d1,Sys_ClearGameplayStateBlock_Loop
                 rts
-; End of function Sys_ClearBufferFFA200
+; End of function Sys_ClearGameplayStateBlock
 ; Clears the VBlank counter and the following timer/state buffer
 Sys_ClearTimerBuffer:
                 lea     (VBlankFrameCounter).w,a0       ; was: sub_2F4E

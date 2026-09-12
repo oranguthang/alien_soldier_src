@@ -420,7 +420,7 @@ Boss_LoadAssetSetAtObject:                              ; CODE XREF: Boss_Viblac
                 movea.l (a1)+,a0
                 move.l  (a1)+,(dword_FF8040).w
                 move.b  #6,(byte_FF80EC).w
-                bset    #7,(dword_FFA20E).w
+                bset    #7,(StageObjectSpawnCursor).w
                 clr.w   (EnemySpawnDirectorState).w
                 bset    #0,(byte_FFA272).w
                 move.l  a0,d0

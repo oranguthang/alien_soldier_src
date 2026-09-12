@@ -575,6 +575,19 @@ aligned with the shaken plane.
 | `PlaneBShakeOffset` | `$FFFFA016` | The updater derives this offset from the Plane B level; Plane B horizontal and vertical scroll consumers apply it. |
 | `PlayerScriptStateOffset` | `$FFFFA02A` | The player scripted-input dispatcher uses this even word as its handler-table offset; cutscene states select offsets and completion paths clear it. |
 
+## Reviewed global gameplay and stage-route fields
+
+`GameplayStateBlock` is a structural start alias rather than a standalone
+longword value. Full-game initialization clears 128 bytes from this address,
+covering the adjacent stage, score, health, weapon, and route state.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `GameplayStateBlock` | `$FFFFA200` | `Sys_ClearGameplayStateBlock` clears eight groups of four longwords from this base, establishing the 128-byte block extent. |
+| `StageProcessTableOffset` | `$FFFFA206` | Stage loaders select offsets `$00`, `$04`, `$08`, or `$0C`; the gameplay dispatcher uses the value to index the longword `Stage_ProcessHandlerTable`. |
+| `StageRouteFlags` | `$FFFFA209` | Bit 0 is set by password/transition entry and tested by Stage 9 and Stage 12 route logic; bit 1 is set by post-stage entry and consumed by the boss-message initializer. |
+| `StageObjectSpawnCursor` | `$FFFFA20E` | Configuration records load a spawn-list pointer; the spawner advances it over 12-byte records, while the sign bit suspends list processing. |
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

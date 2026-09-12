@@ -52,7 +52,7 @@ Stage12_YachtRevealPan:                                 ; DATA XREF: ROM:0002F5D
                 bmi.w   Stage12_YachtControllerReturn
                 move.w  #$38,(RasterEffectIndex).w      ; '8'
                 move.b  #3,(byte_FFA95A).w
-                bset    #7,(dword_FFA20E).w
+                bset    #7,(StageObjectSpawnCursor).w
                 addq.w  #2,4(a5)
                 move.b  #$8B,d0
                 jmp     Sound_QueueBGMOrStop
@@ -397,7 +397,7 @@ Stage12_TeddyBearLand:                                  ; DATA XREF: ROM:0002F92
                 clr.l   $1C(a5)
                 move.l  #Stage12_TeddyBearLandedAnimation,8(a5)
                 clr.w   $C(a5)
-                btst    #0,(byte_FFA209).w
+                btst    #0,(StageRouteFlags).w
                 bne.w   Stage12_TeddyBearBeginBoardingJump
                 rts
 ; End of function Stage12_TeddyBearBeginDrop

@@ -57,8 +57,8 @@ EndingSequence_UpdateFromTransition:                    ; DATA XREF: ROM:0001E86
 EndingSequence_AdvanceStage:                            ; CODE XREF: EndingSequence_UpdateFromTransition+4   j  ; was: loc_1EE74
                 clr.w   (StatusDisplayModeOffset).w
                 addq.w  #2,(StageTableIndex).w
-                bclr    #7,(dword_FFA20E).w
-                clr.b   (byte_FFA209).w
+                bclr    #7,(StageObjectSpawnCursor).w
+                clr.b   (StageRouteFlags).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 move.b  #$97,d0

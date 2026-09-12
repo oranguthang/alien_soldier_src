@@ -210,7 +210,7 @@ Stage_InitializeStage16:                                ; DATA XREF: ROM:0001228
 ; End of function Stage_InitializeStage16
 ; Initializes stage 17 boss with sprites
 Stage_InitializeStage17Boss:                            ; DATA XREF: ROM:0001228C   o  ; was: sub_123DE
-                move.w  #4,(word_FFA206).w
+                move.w  #4,(StageProcessTableOffset).w
                 lea     Stage17BossConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord

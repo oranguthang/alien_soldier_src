@@ -1,6 +1,6 @@
 ; Sets the password confirmation flag and continues shared initialization
 UI_SetPasswordConfirmFlag:                              ; CODE XREF: PasswordMenu_HandleInput+284   j  ; was: sub_1CCEC
-                bset    #0,(byte_FFA209).w
+                bset    #0,(StageRouteFlags).w
                 bra.s   UI_InitializeGameVariables_Common
 ; End of function UI_SetPasswordConfirmFlag
 ; Initializes game state variables for menu/title screen
@@ -8,7 +8,7 @@ UI_InitializeGameVariables:                             ; CODE XREF: TitleScreen
                                         ; TitleScreen_Update+BA   j
                 clr.w   (StageTableIndex).w
                 move.w  #2,(ShootingMode).w
-                clr.b   (byte_FFA209).w
+                clr.b   (StageRouteFlags).w
 UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPasswordConfirmFlag+6   j  ; was: loc_1CD02
                 move.w  #$200,(PlayerHealth).w
                 move.w  #$200,(PlayerMaxHealth).w

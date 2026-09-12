@@ -402,7 +402,7 @@ Stage5_UpdatePostMadamBarbar:                           ; DATA XREF: ROM:0000C87
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage5_UpdatePostMadamBarbarCamera
                 clr.w   (dword_FFA90C).w
-                move.l  #PostBossRuntimeSpawnList,(dword_FFA20E).w
+                move.l  #PostBossRuntimeSpawnList,(StageObjectSpawnCursor).w
                 bsr.w   Stage_StartPostBannerDelayAndPreloadNextPhase
 Stage5_UpdatePostMadamBarbarCamera:                     ; CODE XREF: Stage5_UpdatePostMadamBarbar+4   j  ; was: loc_CC1C
                 bra.w   Camera_UpdateHorizontalTowardsPlayer

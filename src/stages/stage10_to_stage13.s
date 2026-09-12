@@ -298,7 +298,7 @@ Stage12_StartTeleportTransitionToStage13:               ; DATA XREF: ROM:0000D98
                 addq.w  #2,(word_FFA950).w
                 clr.w   (StatusDisplayModeOffset).w
                 addq.w  #2,(StageTableIndex).w
-                clr.b   (byte_FFA209).w
+                clr.b   (StageRouteFlags).w
                 clr.w   (dword_FF806A+2).w
                 move.b  #$CA,d0
                 jmp     (Sound_PlaySFX).l

@@ -244,7 +244,7 @@ Stage9_UpdateCaterpillarShipExit:                       ; DATA XREF: ROM:0000C8B
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
                 move.b  #$80,(byte_FFF705).w
-                tst.b   (byte_FFA209).w
+                tst.b   (StageRouteFlags).w
                 beq.s   Stage9_SelectXiTigerTransitionRoute
                 move.b  #$82,d0
                 jsr     (Sound_QueueBGMRequest).l

@@ -59,7 +59,7 @@ Sys_AdvanceObjectPointer:                               ; CODE XREF: Sys_Process
 ; Processes object spawn list based on scroll
 Sys_ProcessSpawnList:                                   ; CODE XREF: Sys_UpdateObjectSpawner:Sys_UpdateObjectSpawner_ProcessList   p  ; was: sub_1A2FA
                                         ; DATA XREF: Sys_UpdateObjectSpawner:Sys_UpdateObjectSpawner_ProcessList   o
-                move.l  (dword_FFA20E).w,d0
+                move.l  (StageObjectSpawnCursor).w,d0
                 bmi.s   Sys_ProcessSpawnList_Return
                 tst.w   (dword_FFA910).w
                 bmi.s   Sys_ProcessSpawnList_Return
@@ -74,7 +74,7 @@ Sys_ProcessSpawnList_Loop:                              ; CODE XREF: Sys_Process
                 bra.s   Sys_ProcessSpawnList_Loop
 ; ---------------------------------------------------------------------------
 Sys_ProcessSpawnList_SaveCursor:                        ; CODE XREF: Sys_ProcessSpawnList+18   j  ; was: loc_1A31E
-                move.l  a4,(dword_FFA20E).w
+                move.l  a4,(StageObjectSpawnCursor).w
 Sys_ProcessSpawnList_Return:                            ; CODE XREF: Sys_ProcessSpawnList+4   j  ; was: locret_1A322
                                         ; Sys_ProcessSpawnList+A   j
                 rts

@@ -18,8 +18,8 @@ Stage_StartNextPhaseBanner:                             ; CODE XREF: Camera_Stag
 Stage_AdvancePhaseForInterstageTransition:              ; CODE XREF: Stage_StartInterstageTransition+1C   j  ; was: loc_103C0
                 clr.w   (StatusDisplayModeOffset).w
                 addq.w  #2,(StageTableIndex).w
-                bclr    #7,(dword_FFA20E).w
-                clr.b   (byte_FFA209).w
+                bclr    #7,(StageObjectSpawnCursor).w
+                clr.b   (StageRouteFlags).w
 Stage_NextPhaseBannerReturn:                            ; CODE XREF: Stage_StartNextPhaseBanner+4   j  ; was: locret_103D2
                 rts
 ; Start the post-banner delay and preload the following phase's visual assets
@@ -34,7 +34,7 @@ Stage_StartTimeBonusAndPreloadNextPhase:                ; CODE XREF: Camera_Boss
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
 Stage_AdvanceControllerAndPreloadNextPhase:             ; CODE XREF: Stage_StartPostBannerDelayAndPreloadNextPhase+6   j  ; was: loc_103E2
                 addq.w  #2,(word_FFA950).w
-                clr.b   (byte_FFA209).w
+                clr.b   (StageRouteFlags).w
                 addq.w  #2,(StageTableIndex).w
                 jsr     (Stage_DispatchVisualAssetLoader).l
                 subq.w  #2,(StageTableIndex).w

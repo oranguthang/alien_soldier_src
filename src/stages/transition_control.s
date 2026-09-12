@@ -16,7 +16,7 @@ Sys_TransitionToStageInit:                              ; DATA XREF: Sys_Dispatc
 StageTransition_BeginSelectedRoute:                     ; CODE XREF: Sys_TransitionToStageInit+4   j  ; was: loc_1E7A8
                 addq.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                bset    #0,(byte_FFA209).w
+                bset    #0,(StageRouteFlags).w
                 moveq   #0,d0
                 move.l  d0,(dword_FF8128).w
                 move.l  d0,(dword_FF812C).w

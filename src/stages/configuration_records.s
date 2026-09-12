@@ -18,7 +18,7 @@ Stage_ProcessAssetListImmediately:                      ; CODE XREF: Stage_Dispa
 Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_ApplyXiTigerConfiguration+6   p  ; was: sub_12758
                                         ; Stage_ApplyStage1Configuration+6   j
                 move.w  (a0)+,(word_FFA950).w
-                move.l  (a0)+,(dword_FFA20E).w
+                move.l  (a0)+,(StageObjectSpawnCursor).w
                 move.w  (a0)+,(EnemySpawnDirectorState).w
                 move.b  (a0)+,(PalettePrimaryIndex+1).w
                 move.b  (a0)+,(PaletteSecondaryIndex+1).w
@@ -43,7 +43,7 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
 ; ---------------------------------------------------------------------------
 ; Stage configuration record layout:
 ; +$00 word -> word_FFA950
-; +$02 long -> dword_FFA20E
+; +$02 long -> StageObjectSpawnCursor
 ; +$06 word -> EnemySpawnDirectorState
 ; +$08 byte -> PalettePrimaryIndex+1
 ; +$09 byte -> PaletteSecondaryIndex+1
@@ -54,7 +54,7 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
 ; +$1A long -> palette offset list passed to Gfx_LoadMultiplePalettes
 Stage1ConfigRecord: dc.w    0                           ; word_FFA950  ; was: stru_127A8
                                         ; DATA XREF: Stage_ApplyStage1Configuration   o
-                dc.l    Stage1_ObjectSpawnList          ; dword_FFA20E
+                dc.l    Stage1_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    2                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -70,7 +70,7 @@ Stage1ConfigRecord: dc.w    0                           ; word_FFA950  ; was: st
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
 Stage2ConfigRecord: dc.w    $A                          ; word_FFA950  ; was: stru_127C6
                                         ; DATA XREF: Stage_ApplyStage2Configuration   o
-                dc.l    Stage2_ObjectSpawnList          ; dword_FFA20E
+                dc.l    Stage2_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -86,7 +86,7 @@ Stage2ConfigRecord: dc.w    $A                          ; word_FFA950  ; was: st
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
 Stage3ConfigRecord: dc.w    $12                         ; word_FFA950  ; was: stru_127E4
                                         ; DATA XREF: Stage_ApplyStage3Configuration   o
-                dc.l    Stage3_ObjectSpawnList          ; dword_FFA20E
+                dc.l    Stage3_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -102,7 +102,7 @@ Stage3ConfigRecord: dc.w    $12                         ; word_FFA950  ; was: st
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
 Stage4ConfigRecord: dc.w    $22                         ; word_FFA950  ; was: stru_12802
                                         ; DATA XREF: Stage_ApplyStage4Configuration   o
-                dc.l    Stage4_ObjectSpawnList          ; dword_FFA20E
+                dc.l    Stage4_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    4                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -118,7 +118,7 @@ Stage4ConfigRecord: dc.w    $22                         ; word_FFA950  ; was: st
                 dc.l    ShellshogunStagePaletteOffsetList  ; palette offset list pointer
 Stage5ConfigRecord: dc.w    $2E                         ; word_FFA950  ; was: stru_12820
                                         ; DATA XREF: Stage_ApplyStage5Configuration   o
-                dc.l    Stage5_ObjectSpawnList          ; dword_FFA20E
+                dc.l    Stage5_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -134,7 +134,7 @@ Stage5ConfigRecord: dc.w    $2E                         ; word_FFA950  ; was: st
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
 Stage6ConfigRecord: dc.w    $38                         ; word_FFA950  ; was: stru_1283E
                                         ; DATA XREF: Stage_ApplyStage6Configuration   o
-                dc.l    Stage6_ObjectSpawnList          ; dword_FFA20E
+                dc.l    Stage6_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -150,7 +150,7 @@ Stage6ConfigRecord: dc.w    $38                         ; word_FFA950  ; was: st
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
 Stage7ConfigRecord: dc.w    $40                         ; word_FFA950  ; was: stru_1285C
                                         ; DATA XREF: Stage_ApplyStage7Configuration   o
-                dc.l    Stage7_ObjectSpawnList          ; dword_FFA20E
+                dc.l    Stage7_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -166,7 +166,7 @@ Stage7ConfigRecord: dc.w    $40                         ; word_FFA950  ; was: st
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
 Stage8ConfigRecord: dc.w    $50                         ; word_FFA950  ; was: stru_1287A
                                         ; DATA XREF: Stage_InitializeStage8   o
-                dc.l    Stage8_ObjectSpawnList          ; dword_FFA20E
+                dc.l    Stage8_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -182,7 +182,7 @@ Stage8ConfigRecord: dc.w    $50                         ; word_FFA950  ; was: st
                 dc.l    Stage8InitialPaletteOffsetList  ; palette offset list pointer
 Stage9ConfigRecord: dc.w    $62                         ; word_FFA950  ; was: stru_12898
                                         ; DATA XREF: Stage_InitializeStage9   o
-                dc.l    Stage9_EmptyObjectSpawnList     ; dword_FFA20E
+                dc.l    Stage9_EmptyObjectSpawnList     ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -198,7 +198,7 @@ Stage9ConfigRecord: dc.w    $62                         ; word_FFA950  ; was: st
                 dc.l    XiTigerAndStage9PaletteOffsetList  ; palette offset list pointer
 Stage10ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_128B6
                                         ; DATA XREF: Stage_ApplyStage10Configuration   o
-                dc.l    Stage10_ObjectSpawnList         ; dword_FFA20E
+                dc.l    Stage10_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -214,7 +214,7 @@ Stage10ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
 Stage11ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: stru_128D4
                                         ; DATA XREF: Stage_ApplyStage11Configuration   o
-                dc.l    Stage11_ObjectSpawnList         ; dword_FFA20E
+                dc.l    Stage11_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -230,7 +230,7 @@ Stage11ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: st
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
 Stage12ConfigRecord:    dc.w    $14                     ; word_FFA950  ; was: stru_128F2
                                         ; DATA XREF: Stage_ApplyStage12Configuration   o
-                dc.l    Stage12_ObjectSpawnList         ; dword_FFA20E
+                dc.l    Stage12_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -246,7 +246,7 @@ Stage12ConfigRecord:    dc.w    $14                     ; word_FFA950  ; was: st
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
 Stage13ConfigRecord:    dc.w    $34                     ; word_FFA950  ; was: stru_12910
                                         ; DATA XREF: Stage_ApplyStage13Configuration   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -262,7 +262,7 @@ Stage13ConfigRecord:    dc.w    $34                     ; word_FFA950  ; was: st
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
 Stage14ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: stru_1292E
                                         ; DATA XREF: Stage_ApplyStage14Configuration   o
-                dc.l    Stage14_ObjectSpawnList         ; dword_FFA20E
+                dc.l    Stage14_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    4                               ; PaletteSecondaryIndex+1
@@ -278,7 +278,7 @@ Stage14ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: st
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
 Stage15ConfigRecord:    dc.w    $4A                     ; word_FFA950  ; was: stru_1294C
                                         ; DATA XREF: Stage_ApplyStage15Configuration   o
-                dc.l    Stage15_ObjectSpawnList         ; dword_FFA20E
+                dc.l    Stage15_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    4                               ; PaletteSecondaryIndex+1
@@ -294,7 +294,7 @@ Stage15ConfigRecord:    dc.w    $4A                     ; word_FFA950  ; was: st
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
 Stage16ConfigRecord:    dc.w    $56                     ; word_FFA950  ; was: stru_1296A
                                         ; DATA XREF: Stage_InitializeStage16   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -310,7 +310,7 @@ Stage16ConfigRecord:    dc.w    $56                     ; word_FFA950  ; was: st
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
 Stage17BossConfigRecord:    dc.w    $6C                 ; word_FFA950  ; was: stru_12988
                                         ; DATA XREF: Stage_InitializeStage17Boss+6   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -326,7 +326,7 @@ Stage17BossConfigRecord:    dc.w    $6C                 ; word_FFA950  ; was: st
                 dc.l    Stage17PaletteOffsetList        ; palette offset list pointer
 Stage18ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_129A6
                                         ; DATA XREF: Stage_InitializeStage18   o
-                dc.l    Stage18_ObjectSpawnList         ; dword_FFA20E
+                dc.l    Stage18_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -342,7 +342,7 @@ Stage18ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.l    Stage18And19PaletteOffsetList   ; palette offset list pointer
 Stage19ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: stru_129C4
                                         ; DATA XREF: Stage_InitializeStage19   o
-                dc.l    Stage19_ObjectSpawnList         ; dword_FFA20E
+                dc.l    Stage19_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -358,7 +358,7 @@ Stage19ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: st
                 dc.l    Stage18And19PaletteOffsetList   ; palette offset list pointer
 UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; word_FFA950  ; was: stru_129E2
                                         ; DATA XREF: UnreferencedApplyStage20Variant1Configuration   o
-                dc.l    $80000000                       ; dword_FFA20E
+                dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -374,7 +374,7 @@ UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; word_FFA950  ; was: s
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
 UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; word_FFA950  ; was: stru_12A00
                                         ; DATA XREF: UnreferencedApplyStage20Variant2Configuration   o
-                dc.l    $80000000                       ; dword_FFA20E
+                dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -390,7 +390,7 @@ UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; word_FFA950  ; was: s
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
 UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; word_FFA950  ; was: stru_12A1E
                                         ; DATA XREF: UnreferencedApplyStage20Variant3Configuration   o
-                dc.l    $80000000                       ; dword_FFA20E
+                dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -406,7 +406,7 @@ UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; word_FFA950  ; was: s
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
 UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; word_FFA950  ; was: stru_12A3C
                                         ; DATA XREF: UnreferencedApplyStage20Variant4Configuration   o
-                dc.l    $80000000                       ; dword_FFA20E
+                dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -422,7 +422,7 @@ UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; word_FFA950  ; was: s
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
 Stage20ConfigRecord:    dc.w    $70                     ; word_FFA950  ; was: stru_12A5A
                                         ; DATA XREF: Stage_InitializeStage20+18   o
-                dc.l    $80000000                       ; dword_FFA20E
+                dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -438,7 +438,7 @@ Stage20ConfigRecord:    dc.w    $70                     ; word_FFA950  ; was: st
                 dc.l    Stage20PaletteOffsetLists       ; palette offset list pointer
 Stage21ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_12A78
                                         ; DATA XREF: Stage_InitializeStage21+C   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $E                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -454,7 +454,7 @@ Stage21ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.l    Stage21And23PaletteOffsetList   ; palette offset list pointer
 Stage22ConfigRecord:    dc.w    $2C                     ; word_FFA950  ; was: stru_12A96
                                         ; DATA XREF: Stage_InitializeStage22+C   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $E                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -470,7 +470,7 @@ Stage22ConfigRecord:    dc.w    $2C                     ; word_FFA950  ; was: st
                 dc.l    Stage22PaletteOffsetList        ; palette offset list pointer
 Stage23ConfigRecord:    dc.w    $2E                     ; word_FFA950  ; was: stru_12AB4
                                         ; DATA XREF: Stage_InitializeStage23+C   o
-                dc.l    Stage23_EmptyObjectSpawnList    ; dword_FFA20E
+                dc.l    Stage23_EmptyObjectSpawnList    ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $12                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -486,7 +486,7 @@ Stage23ConfigRecord:    dc.w    $2E                     ; word_FFA950  ; was: st
                 dc.l    Stage21And23PaletteOffsetList   ; palette offset list pointer
 Stage24ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: stru_12AD2
                                         ; DATA XREF: Stage_ApplyStage24Configuration   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -502,7 +502,7 @@ Stage24ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: st
                 dc.l    Stage24PaletteOffsetList        ; palette offset list pointer
 UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; word_FFA950  ; was: stru_12AF0
                                         ; DATA XREF: UnreferencedApplyFlaggedConfigurationA+6   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -518,7 +518,7 @@ UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; word_FFA950  ; was: st
                 dc.l    UnreferencedFlaggedPaletteOffsetListA  ; palette offset list pointer
 UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; word_FFA950  ; was: stru_12B0E
                                         ; DATA XREF: UnreferencedApplyFlaggedConfigurationB+6   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -534,7 +534,7 @@ UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; word_FFA950  ; was: st
                 dc.l    UnreferencedFlaggedPaletteOffsetListB  ; palette offset list pointer
 Stage25ConfigRecord:    dc.w    $76                     ; word_FFA950  ; was: stru_12B2C
                                         ; DATA XREF: Stage_ApplyStage25Configuration   o
-                dc.l    Stage25_ObjectSpawnList         ; dword_FFA20E
+                dc.l    Stage25_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
@@ -550,7 +550,7 @@ Stage25ConfigRecord:    dc.w    $76                     ; word_FFA950  ; was: st
                 dc.l    Stage25PaletteOffsetList        ; palette offset list pointer
 Stage26ConfigRecord:    dc.w    $8A                     ; word_FFA950  ; was: stru_12B4A
                                         ; DATA XREF: Stage_ApplyStage26Configuration   o
-                dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
+                dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1

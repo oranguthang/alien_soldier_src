@@ -451,7 +451,7 @@ Stage_ApplyXiTigerConfiguration:                        ; DATA XREF: Stage_Dispa
 ; ---------------------------------------------------------------------------
 XiTigerStageConfigRecord:   dc.w    $76                 ; word_FFA950  ; was: stru_121FE
                                         ; DATA XREF: Stage_ApplyXiTigerConfiguration   o
-                dc.l    $80000000                       ; dword_FFA20E
+                dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
