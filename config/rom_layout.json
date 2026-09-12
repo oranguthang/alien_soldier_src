@@ -406,7 +406,7 @@
     { "file": "src/data/phase_pattern_sprite_mappings.s", "subsystem": "data", "start": "0x0EA86C", "end": "0x0EAE75" },
     { "file": "src/data/stage10_wasp_sprite_mappings.s", "subsystem": "data", "start": "0x0EAE76", "end": "0x0EB2E3" },
     { "file": "src/data/circling_enemy_sprite_mappings.s", "subsystem": "data", "start": "0x0EB2E4", "end": "0x0EB337" },
-    { "file": "src/data/gusthead_jetsripper_and_enemy_mappings.s", "subsystem": "data", "start": "0x0EB338", "end": "0x0EB5E5" },
+    { "file": "src/data/stage_combat_object_sprite_mappings.s", "subsystem": "data", "start": "0x0EB338", "end": "0x0EB5E5" },
     { "file": "src/data/caterpillar_sprite_mappings.s", "subsystem": "data", "start": "0x0EB5E6", "end": "0x0EB653" },
     { "file": "src/data/jetsripper_sprite_mappings.s", "subsystem": "data", "start": "0x0EB654", "end": "0x0EB71F" },
     { "file": "src/data/antroid_sprite_mappings.s", "subsystem": "data", "start": "0x0EB720", "end": "0x0EB7CD" },

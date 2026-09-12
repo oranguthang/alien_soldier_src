@@ -319,7 +319,7 @@
                 include "src/data/phase_pattern_sprite_mappings.s"
                 include "src/data/stage10_wasp_sprite_mappings.s"
                 include "src/data/circling_enemy_sprite_mappings.s"
-                include "src/data/gusthead_jetsripper_and_enemy_mappings.s"
+                include "src/data/stage_combat_object_sprite_mappings.s"
                 include "src/data/caterpillar_sprite_mappings.s"
                 include "src/data/jetsripper_sprite_mappings.s"
                 include "src/data/antroid_sprite_mappings.s"

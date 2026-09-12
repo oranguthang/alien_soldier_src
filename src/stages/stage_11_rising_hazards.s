@@ -30,7 +30,7 @@ Stage11_RisingHazardLauncherStates:
 Stage11_RisingHazardLauncherInit:                       ; was: sub_30DCA
                 move.w  #$CF00,2(a5)
                 move.w  #$8C2,$E(a5)
-                move.l  #word_EB356,8(a5)
+                move.l  #Stage11_RisingHazardLauncherSpriteMapping,8(a5)
                 move.b  #$3C,$20(a5)                    ; '<'
                 move.w  #$64,$24(a5)                    ; 'd'
                 move.b  #$C0,$21(a5)

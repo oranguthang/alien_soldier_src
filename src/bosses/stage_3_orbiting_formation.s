@@ -208,7 +208,7 @@ Boss_Stage3OrbitingFormationStates: dc.w    Boss_Stage3OrbitingFormationInit-*  
 
 ; Initializes the boss controller, its eight parts, and graphics request
 Boss_Stage3OrbitingFormationInit:                       ; DATA XREF: ROM:Boss_Stage3OrbitingFormationStates   o  ; was: sub_34198
-                move.l  #word_EB592,8(a5)
+                move.l  #Boss_Stage3OrbitingFormationSpriteMapping00,8(a5)
                 move.w  #$B00,$E(a5)
                 move.w  #$CC00,2(a5)
                 move.b  #$40,$20(a5)                    ; '@'
@@ -226,7 +226,7 @@ Boss_Stage3OrbitingFormationInit:                       ; DATA XREF: ROM:Boss_St
                 lea     (word_FFC680).w,a0
 Boss_Stage3OrbitingFormationInitNextPart:               ; CODE XREF: Boss_Stage3OrbitingFormationInit+9E   j  ; was: loc_341F2
                 move.w  #$10,(a0)
-                move.l  #word_EB5B0,8(a0)
+                move.l  #Boss_Stage3OrbitingFormationSpriteMapping01,8(a0)
                 move.w  #$B00,$E(a0)
                 move.w  #$CC00,2(a0)
                 move.b  #$50,$21(a0)                    ; 'P'

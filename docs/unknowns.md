@@ -5414,3 +5414,23 @@ registry from 12,158 to 12,197, and the semantic review upper bound falls from
 3,104 to 3,103 after accounting for the new reviewed alias. The enforced
 address-derived ceiling falls from 1,089 to 1,051; the remaining backlog is
 831 RAM equates and 220 preserved-data labels.
+
+The stage-combat object mapping pass removes all 33 address-derived
+definitions from the former `data/gusthead_jetsripper_and_enemy_mappings.s`.
+The file contained no Jetsripper-owned definition: its two already named
+Gusthead mappings are followed by Stage 11 and 15 hazards, a formation-wave
+enemy, vertical Missiray/rising shots, Stage 11 fish, the Stage 18 segmented
+worm, and two Stage 3 orbiting-formation mappings. The cohesive 159-line
+ROM-order block is therefore now `data/stage_combat_object_sprite_mappings.s`.
+
+Direct initializer assignments prove the hazard, fish, worm-particle, and
+Stage 3 formation owners. Relative-offset animation streams prove the three
+formation-wave frames and four Missiray falling-shot frames; the last vertical-
+shot mapping is also directly reused by a rising-shot wave member. The twelve
+worm body mappings are kept address-ordered because the three direction-frame
+tables prove their owner and directional selection but not narrower pose names.
+
+All 33 unique addresses receive exact static audit records. Provenance rises
+from 15,000 to 15,033 mappings, the audit registry from 12,197 to 12,230, and
+the enforced address-derived ceiling falls from 1,051 to 1,018. The remaining
+backlog comprises 831 RAM equates and 187 preserved-data labels.

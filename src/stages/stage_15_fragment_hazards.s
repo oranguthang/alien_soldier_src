@@ -71,7 +71,7 @@ Stage15_FragmentEmitterStates:
 Stage15_FragmentEmitterInit:                            ; was: sub_3058E
                 move.w  #$CD00,2(a5)
                 move.w  #$A300,$E(a5)
-                move.l  #word_EB386,8(a5)
+                move.l  #Stage15_FragmentEmitterSpriteMapping,8(a5)
                 move.b  #$3C,$20(a5)                    ; '<'
                 move.w  #$64,$24(a5)                    ; 'd'
                 move.b  #$40,$21(a5)                    ; '@'
@@ -610,7 +610,7 @@ Stage15_FallingRockStates:
 Stage15_FallingRockInit:                                ; was: sub_30CCE
                 move.w  #$CD00,2(a5)
                 move.w  #$A300,$E(a5)
-                move.l  #word_EB36E,8(a5)
+                move.l  #Stage15_FallingRockSpriteMapping,8(a5)
                 move.b  #0,$20(a5)
                 move.w  #$800,$24(a5)
                 move.b  #$C0,$21(a5)

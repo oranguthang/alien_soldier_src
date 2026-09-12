@@ -72,7 +72,7 @@ Enemy_FormationWaveInitMember:                          ; CODE XREF: Enemy_Forma
                 move.w  #$3B4,(a0)
                 move.w  #$ED00,2(a0)
                 move.w  #$400,$E(a0)
-                move.l  #off_EB3C8,8(a0)
+                move.l  #Enemy_FormationWaveSpriteAnimation,8(a0)
                 move.b  #$C0,$21(a0)
                 move.w  #1,$24(a0)
                 move.w  #$32,$26(a0)                    ; '2'

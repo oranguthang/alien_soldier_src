@@ -84,7 +84,7 @@ Stage11_FishWaveMaintainPopulationState_Spawn:          ; CODE XREF: Stage11_Fis
 Enemy_InitStage11Fish:                                  ; CODE XREF: Stage11_SpawnFish   p  ; was: sub_2EABE
                 move.w  #$44C,(a0)
                 move.w  #$400,$E(a0)
-                move.l  #word_EB408,8(a0)
+                move.l  #Enemy_Stage11FishSpriteMapping00,8(a0)
                 move.w  #$CC00,2(a0)
                 move.b  #$C0,$21(a0)
                 move.l  #$FC04FC04,$2C(a0)
@@ -157,7 +157,7 @@ Enemy_Stage11FishInitEmitterState:                      ; DATA XREF: ROM:Enemy_S
                 move.w  #$CC00,2(a0)
                 move.b  $20(a5),$20(a0)
                 addq.b  #4,$20(a0)
-                move.l  #word_EB486,8(a0)
+                move.l  #Enemy_Stage11FishSpriteMapping03,8(a0)
                 move.w  $E(a5),$E(a0)
                 clr.w   $C(a0)
                 move.w  a0,$5C(a5)
@@ -218,7 +218,7 @@ Enemy_Stage11FishChoosePassState:                       ; DATA XREF: ROM:0002EB7
                 btst    #1,(RandomNumberState+1).w
                 bne.s   Enemy_Stage11FishChoosePassState_PrepareVolley
                 move.w  #$10,4(a5)
-                move.l  #word_EB432,8(a5)
+                move.l  #Enemy_Stage11FishSpriteMapping01,8(a5)
                 clr.w   $C(a5)
                 btst    #3,$E(a5)
                 beq.s   Enemy_Stage11FishChoosePassState_SetNegativeSpeed
@@ -327,7 +327,7 @@ Enemy_Stage11FishBrakeOutwardMotionState_AddPositive:   ; CODE XREF: Enemy_Stage
 Enemy_Stage11FishBrakeOutwardMotionState_CheckStopped:  ; CODE XREF: Enemy_Stage11FishBrakeOutwardMotionState+18   j  ; was: loc_2ED84
                 tst.l   $18(a5)
                 bne.s   Enemy_Stage11FishBrakeOutwardMotionState_Return
-                move.l  #word_EB45C,8(a5)
+                move.l  #Enemy_Stage11FishSpriteMapping02,8(a5)
                 clr.w   $C(a5)
                 addq.w  #2,4(a5)
 Enemy_Stage11FishBrakeOutwardMotionState_Return:        ; CODE XREF: Enemy_Stage11FishBrakeOutwardMotionState+26   j  ; was: locret_2ED9A
@@ -368,7 +368,7 @@ Enemy_Stage11FishWaitForInnerEdgeState_CheckRightEdge:  ; CODE XREF: Enemy_Stage
                 cmpi.w  #$160,$10(a5)
                 blt.s   Enemy_Stage11FishWaitForInnerEdgeState_Return
 Enemy_Stage11FishWaitForInnerEdgeState_Finish:          ; CODE XREF: Enemy_Stage11FishWaitForInnerEdgeState+18   j  ; was: loc_2EDFA
-                move.l  #word_EB408,8(a5)
+                move.l  #Enemy_Stage11FishSpriteMapping00,8(a5)
                 clr.w   $C(a5)
                 addq.w  #2,4(a5)
 Enemy_Stage11FishWaitForInnerEdgeState_Return:          ; CODE XREF: Enemy_Stage11FishWaitForInnerEdgeState+16   j  ; was: locret_2EE0A
@@ -389,7 +389,7 @@ Enemy_Stage11FishBrakeInwardMotionState_AddNegative:    ; CODE XREF: Enemy_Stage
                 addi.l  #-$4000,$18(a5)
                 bne.s   Enemy_Stage11FishBrakeInwardMotionState_Return
 Enemy_Stage11FishBrakeInwardMotionState_Finish:         ; CODE XREF: Enemy_Stage11FishBrakeInwardMotionState+1A   j  ; was: loc_2EE32
-                move.l  #word_EB432,8(a5)
+                move.l  #Enemy_Stage11FishSpriteMapping01,8(a5)
                 clr.w   $C(a5)
                 addq.w  #2,4(a5)
 Enemy_Stage11FishBrakeInwardMotionState_Return:         ; CODE XREF: Enemy_Stage11FishBrakeInwardMotionState+18   j  ; was: locret_2EE42
@@ -432,7 +432,7 @@ Enemy_Stage11FishWaitForOuterEdgeState_CheckLeftEdge:   ; CODE XREF: Enemy_Stage
                 bgt.s   Enemy_Stage11FishWaitForOuterEdgeState_Return
 Enemy_Stage11FishWaitForOuterEdgeState_Finish:          ; CODE XREF: Enemy_Stage11FishWaitForOuterEdgeState+18   j  ; was: loc_2EEA2
                 clr.l   $18(a5)
-                move.l  #word_EB408,8(a5)
+                move.l  #Enemy_Stage11FishSpriteMapping00,8(a5)
                 clr.w   $C(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #8,4(a5)

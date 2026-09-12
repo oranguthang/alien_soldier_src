@@ -225,7 +225,7 @@ Stage18_SegmentedWormEnableSegmentCollision:            ; CODE XREF: Stage18_Seg
                 clr.w   $44(a1)
                 clr.w   $54(a5)
                 bsr.w   Stage18_SegmentedWormInitSegment
-                move.l  #word_EB4A6,8(a5)
+                move.l  #Stage18_SegmentedWormSpriteMapping00,8(a5)
                 bra.w   Stage18_SegmentedWormSetLaunchVelocity
 ; End of function Stage18_SegmentedWormSpawnSegments
 ; Advances a newly created worm segment to its active state
@@ -249,73 +249,73 @@ Stage18_SegmentedWormInitCollision:                     ; CODE XREF: Stage18_Seg
                 rts
 ; End of function Stage18_SegmentedWormInitCollision
 ; ---------------------------------------------------------------------------
-Stage18_SegmentedWormInitialFrameTable: dc.l    word_EB51E  ; DATA XREF: Stage18_SegmentedWormSpawnSegments:Stage18_SegmentedWormCreateChain   o
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
-                dc.l    word_EB4EE
+Stage18_SegmentedWormInitialFrameTable: dc.l    Stage18_SegmentedWormSpriteMapping08  ; DATA XREF: Stage18_SegmentedWormSpawnSegments:Stage18_SegmentedWormCreateChain   o
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping04
 Stage18_SegmentedWormDelayTable:    dc.l    $80004, $40004, $40004, $40004, $40004, $40004
                                         ; DATA XREF: Stage18_SegmentedWormSpawnSegments+34   o
 Stage18_SegmentedWormDirectionFrameTables:  dc.l    Stage18_SegmentedWormDirectionFramesA  ; DATA XREF: Stage18_SegmentedWormAdvanceSpinFrame+4   o
                                         ; Stage18_SegmentedWormUpdateFollower+10   o
                 dc.l    Stage18_SegmentedWormDirectionFramesB
                 dc.l    Stage18_SegmentedWormDirectionFramesC
-Stage18_SegmentedWormDirectionFramesA:  dc.l    word_EB4A6  ; DATA XREF: ROM:Stage18_SegmentedWormDirectionFrameTables   o
+Stage18_SegmentedWormDirectionFramesA:  dc.l    Stage18_SegmentedWormSpriteMapping00  ; DATA XREF: ROM:Stage18_SegmentedWormDirectionFrameTables   o
                                         ; Stage18_SegmentedWormUpdateHead+18   o
-                dc.l    word_EB4D6
-                dc.l    word_EB4CA
-                dc.l    word_EB4B2
-                dc.l    word_EB4A6
-                dc.l    word_EB4D6
-                dc.l    word_EB4CA
-                dc.l    word_EB4B2
-                dc.l    word_EB4A6
-                dc.l    word_EB4B2
-                dc.l    word_EB4CA
-                dc.l    word_EB4D6
-                dc.l    word_EB4A6
-                dc.l    word_EB4B2
-                dc.l    word_EB4CA
-                dc.l    word_EB4D6
-Stage18_SegmentedWormDirectionFramesB:  dc.l    word_EB4EE  ; DATA XREF: ROM:00030074   o
-                dc.l    word_EB512
-                dc.l    word_EB506
-                dc.l    word_EB4FA
-                dc.l    word_EB4EE
-                dc.l    word_EB512
-                dc.l    word_EB506
-                dc.l    word_EB4FA
-                dc.l    word_EB4EE
-                dc.l    word_EB4FA
-                dc.l    word_EB506
-                dc.l    word_EB512
-                dc.l    word_EB4EE
-                dc.l    word_EB4FA
-                dc.l    word_EB506
-                dc.l    word_EB512
-Stage18_SegmentedWormDirectionFramesC:  dc.l    word_EB51E  ; DATA XREF: ROM:00030078   o
-                dc.l    word_EB54E
-                dc.l    word_EB542
-                dc.l    word_EB52A
-                dc.l    word_EB51E
-                dc.l    word_EB54E
-                dc.l    word_EB542
-                dc.l    word_EB52A
-                dc.l    word_EB51E
-                dc.l    word_EB52A
-                dc.l    word_EB542
-                dc.l    word_EB54E
-                dc.l    word_EB51E
-                dc.l    word_EB52A
-                dc.l    word_EB542
-                dc.l    word_EB54E
+                dc.l    Stage18_SegmentedWormSpriteMapping03
+                dc.l    Stage18_SegmentedWormSpriteMapping02
+                dc.l    Stage18_SegmentedWormSpriteMapping01
+                dc.l    Stage18_SegmentedWormSpriteMapping00
+                dc.l    Stage18_SegmentedWormSpriteMapping03
+                dc.l    Stage18_SegmentedWormSpriteMapping02
+                dc.l    Stage18_SegmentedWormSpriteMapping01
+                dc.l    Stage18_SegmentedWormSpriteMapping00
+                dc.l    Stage18_SegmentedWormSpriteMapping01
+                dc.l    Stage18_SegmentedWormSpriteMapping02
+                dc.l    Stage18_SegmentedWormSpriteMapping03
+                dc.l    Stage18_SegmentedWormSpriteMapping00
+                dc.l    Stage18_SegmentedWormSpriteMapping01
+                dc.l    Stage18_SegmentedWormSpriteMapping02
+                dc.l    Stage18_SegmentedWormSpriteMapping03
+Stage18_SegmentedWormDirectionFramesB:  dc.l    Stage18_SegmentedWormSpriteMapping04  ; DATA XREF: ROM:00030074   o
+                dc.l    Stage18_SegmentedWormSpriteMapping07
+                dc.l    Stage18_SegmentedWormSpriteMapping06
+                dc.l    Stage18_SegmentedWormSpriteMapping05
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping07
+                dc.l    Stage18_SegmentedWormSpriteMapping06
+                dc.l    Stage18_SegmentedWormSpriteMapping05
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping05
+                dc.l    Stage18_SegmentedWormSpriteMapping06
+                dc.l    Stage18_SegmentedWormSpriteMapping07
+                dc.l    Stage18_SegmentedWormSpriteMapping04
+                dc.l    Stage18_SegmentedWormSpriteMapping05
+                dc.l    Stage18_SegmentedWormSpriteMapping06
+                dc.l    Stage18_SegmentedWormSpriteMapping07
+Stage18_SegmentedWormDirectionFramesC:  dc.l    Stage18_SegmentedWormSpriteMapping08  ; DATA XREF: ROM:00030078   o
+                dc.l    Stage18_SegmentedWormSpriteMapping11
+                dc.l    Stage18_SegmentedWormSpriteMapping10
+                dc.l    Stage18_SegmentedWormSpriteMapping09
+                dc.l    Stage18_SegmentedWormSpriteMapping08
+                dc.l    Stage18_SegmentedWormSpriteMapping11
+                dc.l    Stage18_SegmentedWormSpriteMapping10
+                dc.l    Stage18_SegmentedWormSpriteMapping09
+                dc.l    Stage18_SegmentedWormSpriteMapping08
+                dc.l    Stage18_SegmentedWormSpriteMapping09
+                dc.l    Stage18_SegmentedWormSpriteMapping10
+                dc.l    Stage18_SegmentedWormSpriteMapping11
+                dc.l    Stage18_SegmentedWormSpriteMapping08
+                dc.l    Stage18_SegmentedWormSpriteMapping09
+                dc.l    Stage18_SegmentedWormSpriteMapping10
+                dc.l    Stage18_SegmentedWormSpriteMapping11
 Stage18_SegmentedWormTileAttributes:    dc.w    $380, $380, $1B80, $1B80, $1B80, $1B80, $380, $380, $1380, $1380, $1380, $B80, $B80, $B80, $B80, $1380
                                         ; DATA XREF: Stage18_SegmentedWormUpdateHead+1C   o
                                         ; Stage18_SegmentedWormAdvanceSpinFrame+24   o
@@ -384,7 +384,7 @@ Stage18_SegmentedWormEmitParticle:                      ; CODE XREF: Stage18_Seg
                 beq.w   Entity_UpdateReturn
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Entity_UpdateReturn
-                move.l  #off_EB566,8(a0)
+                move.l  #Stage18_SegmentedWormParticleSpriteAnimation,8(a0)
                 movea.w a0,a4
                 jsr     (Projectile_InitType88).l
                 move.w  #$380,$E(a4)

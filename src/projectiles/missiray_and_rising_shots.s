@@ -2,7 +2,7 @@
 Projectile_InitMissirayFallingShot:                     ; CODE XREF: Orphaned_RisingShotPairFireFallingShot+32   p  ; was: sub_33956
                                         ; Segment_MissirayLaunchConfiguredProjectile+34   p
                 move.b  #0,$47(a0)
-                move.l  #word_EB3D8,8(a0)
+                move.l  #Projectile_MissirayVerticalShotSpriteMapping00,8(a0)
                 move.l  #$F010FE02,$2C(a0)
                 move.l  #$F010F808,$28(a0)
                 bra.s   Projectile_InitMissirayAndRisingShotCommon
@@ -11,7 +11,7 @@ Projectile_InitMissirayFallingShot:                     ; CODE XREF: Orphaned_Ri
 Projectile_InitRisingShotWaveMember:                    ; CODE XREF: Effect_RisingShotWaveLaunchPattern+46   p  ; was: sub_33976
                                         ; Orphaned_RisingShotPairLaunch+22   p
                 move.b  #1,$47(a0)
-                move.l  #word_EB3FC,8(a0)
+                move.l  #Projectile_MissirayVerticalShotSpriteMapping03,8(a0)
                 move.l  #$E020FE02,$2C(a0)
                 move.l  #$E020F808,$28(a0)
                 move.w  d4,$48(a0)
@@ -113,7 +113,7 @@ Projectile_MissirayFallingShotApplyGravity:             ; DATA XREF: ROM:00033A5
                 cmpi.w  #2,$1C(a5)
                 bcs.s   Projectile_MissirayFallingShotGravityReturn
                 clr.l   $1C(a5)
-                move.l  #off_EB492,8(a5)
+                move.l  #Projectile_MissirayFallingShotSpriteAnimation,8(a5)
                 clr.w   $C(a5)
                 ori.w   #$2000,2(a5)
                 move.l  #$E020FE02,$2C(a5)
@@ -172,7 +172,7 @@ Projectile_MissirayFallingShotDescend:                  ; DATA XREF: ROM:00033A5
                 addi.l  #$3000,$1C(a5)
                 cmpi.w  #$80,$C(a5)
                 bcs.s   Projectile_MissirayFallingShotDescendReturn
-                move.l  #word_EB3FC,8(a5)
+                move.l  #Projectile_MissirayVerticalShotSpriteMapping03,8(a5)
                 clr.w   $C(a5)
                 andi.w  #$DFFF,2(a5)
                 move.w  #$10,$48(a5)
