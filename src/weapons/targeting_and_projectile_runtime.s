@@ -196,31 +196,31 @@ Player_PrimaryLayoutMuzzleOffsets2: dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $1226, $
                                         ; Player_RenderWithWeapon+82   o
 Player_PrimaryLayoutMuzzleOffsets3: dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $115, $1D15, $1F3, $EFF3  ; was: word_19922
                                         ; DATA XREF: Player_RenderWithWeapon:Player_RenderWithWeapon_UseDefaultVariant   o
-Weapon_CircleAttackDirectionalFrames0:  dc.l    sprite_FDF0E  ; DATA XREF: ROM:Weapon_CircleAttackAnimationPointers   o  ; was: off_19932
-                dc.l    sprite_FDE8E
-                dc.l    sprite_FDE0E
-                dc.l    sprite_FDD8E
-                dc.l    sprite_FDD0E
-                dc.l    sprite_FDC8E
-                dc.l    sprite_FDC0E
-                dc.l    sprite_FDB8E
-Weapon_CircleAttackDirectionalFrames1:  dc.l    sprite_FE30E  ; DATA XREF: ROM:000186A8   o  ; was: off_19952
-                dc.l    sprite_FE28E
-                dc.l    sprite_FE20E
-                dc.l    sprite_FE18E
-                dc.l    sprite_FE10E
-                dc.l    sprite_FE08E
-                dc.l    sprite_FE00E
-                dc.l    sprite_FDF8E
-Weapon_CircleAttackDirectionalFrames2:  dc.l    sprite_FE70E  ; DATA XREF: ROM:000186A4   o  ; was: off_19972
+Weapon_CircleAttackDirectionalFrames0:  dc.l    Weapon_CircleAttackSpriteArtSet0Direction0  ; DATA XREF: ROM:Weapon_CircleAttackAnimationPointers   o  ; was: off_19932
+                dc.l    Weapon_CircleAttackSpriteArtSet0Direction1
+                dc.l    Weapon_CircleAttackSpriteArtSet0Direction2
+                dc.l    Weapon_CircleAttackSpriteArtSet0Direction3
+                dc.l    Weapon_CircleAttackSpriteArtSet0Direction4
+                dc.l    Weapon_CircleAttackSpriteArtSet0Direction5
+                dc.l    Weapon_CircleAttackSpriteArtSet0Direction6
+                dc.l    Weapon_CircleAttackSpriteArtSet0Direction7
+Weapon_CircleAttackDirectionalFrames1:  dc.l    Weapon_CircleAttackSpriteArtSet1Direction0  ; DATA XREF: ROM:000186A8   o  ; was: off_19952
+                dc.l    Weapon_CircleAttackSpriteArtSet1Direction1
+                dc.l    Weapon_CircleAttackSpriteArtSet1Direction2
+                dc.l    Weapon_CircleAttackSpriteArtSet1Direction3
+                dc.l    Weapon_CircleAttackSpriteArtSet1Direction4
+                dc.l    Weapon_CircleAttackSpriteArtSet1Direction5
+                dc.l    Weapon_CircleAttackSpriteArtSet1Direction6
+                dc.l    Weapon_CircleAttackSpriteArtSet1Direction7
+Weapon_CircleAttackDirectionalFrames2:  dc.l    Weapon_CircleAttackSpriteArtSet2Direction0  ; DATA XREF: ROM:000186A4   o  ; was: off_19972
                                         ; ROM:000186AC   o
-                dc.l    sprite_FE68E
-                dc.l    sprite_FE60E
-                dc.l    sprite_FE58E
-                dc.l    sprite_FE50E
-                dc.l    sprite_FE48E
-                dc.l    sprite_FE40E
-                dc.l    sprite_FE38E
+                dc.l    Weapon_CircleAttackSpriteArtSet2Direction1
+                dc.l    Weapon_CircleAttackSpriteArtSet2Direction2
+                dc.l    Weapon_CircleAttackSpriteArtSet2Direction3
+                dc.l    Weapon_CircleAttackSpriteArtSet2Direction4
+                dc.l    Weapon_CircleAttackSpriteArtSet2Direction5
+                dc.l    Weapon_CircleAttackSpriteArtSet2Direction6
+                dc.l    Weapon_CircleAttackSpriteArtSet2Direction7
 
 ; Processes all active projectile objects
 Projectile_ProcessVisiblePool:                          ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateProjectiles   p  ; was: sub_19992

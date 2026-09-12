@@ -5230,3 +5230,43 @@ audit records, taking the registry from 11,647 to 11,683. The enforced
 address-derived ceiling falls from 2,002 to 1,977: the remaining definitions
 are confined to 831 RAM equates and 1,146 preserved-data labels, with none left
 in executable source.
+
+The first player-art pass replaces the first 80 address-derived definitions in
+`data/player_sprite_art.s`: 40 uncompressed art-segment starts and their 40
+exclusive-end aliases. This is not a visual guess. The already audited
+`Player_PhoenixDashAttackSpriteMapping` and directional-primary mapping family
+reference every segment directly, so each start is named by its exact mapping
+and piece index. The original address-based segment names remain on both starts
+and ends as provenance markers; the binary paths remain unchanged because they
+are pinned extraction artifacts.
+
+The 40 segment-start addresses receive static audit records. Their end aliases
+share the following segment boundaries and are folded into the address-keyed
+audit rather than creating duplicate-address records. Provenance rises from
+14,074 to 14,154 mappings, the audit registry from 11,683 to 11,723, and the
+enforced address-derived ceiling falls from 1,977 to 1,897. The remaining
+backlog comprises 831 RAM equates and 1,066 preserved-data labels.
+
+The completed player-art pass names the other 246 segment starts and their 246
+exclusive-end aliases, leaving `data/player_sprite_art.s` with zero live
+address-derived definitions. Of those segments, 218 are referenced directly
+by one or more of the 68 audited player sprite mappings. Their names preserve
+the first exact mapping and piece index; reuse by later mappings remains visible
+in the mapping source rather than being hidden behind an invented visual pose.
+
+The final 28 segments form the contiguous tail after the last piece referenced
+by `player_sprite_mappings.s`, but they are not unreferenced. A full-source
+assembly check caught that incomplete local classification before commit.
+Twenty-four are the three eight-direction art sets selected by the audited
+circle-attack frame tables; the other four are distinct DMA sources in the
+audited weapon-state icon table. Their corrected names state those exact table
+and index relationships without guessing the rendered image. All original
+extraction filenames and all start/end names remain available through the
+pinned binary paths and provenance markers.
+
+The second pass adds 492 provenance mappings and 246 unique-address audit
+records; end aliases share their following boundaries and are not duplicated
+in the address-keyed registry. Provenance rises from 14,154 to 14,646 mappings,
+the audit registry from 11,723 to 11,969, and the enforced address-derived
+ceiling falls from 1,897 to 1,405. The remaining backlog comprises 831 RAM
+equates and 574 preserved-data labels.

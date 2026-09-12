@@ -27,14 +27,14 @@ UI_QueuePendingWeaponStateIconTransfer_Return:          ; was: locret_13428
                 rts
 ; End of function UI_QueuePendingWeaponStateIconTransfer
 ; ---------------------------------------------------------------------------
-WeaponStateIconSourceTable: dc.l    sprite_FD30E        ; was: off_1342A
-                dc.l    sprite_FD62E
-                dc.l    sprite_FE78E
-                dc.l    sprite_FE78E
-                dc.l    sprite_FD86E
-                dc.l    sprite_FD86E
-                dc.l    sprite_FD86E
-                dc.l    sprite_FD86E
+WeaponStateIconSourceTable: dc.l    WeaponStateIconSpriteArtA  ; was: off_1342A
+                dc.l    WeaponStateIconSpriteArtB
+                dc.l    WeaponStateIconSpriteArtC
+                dc.l    WeaponStateIconSpriteArtC
+                dc.l    WeaponStateIconSpriteArtD
+                dc.l    WeaponStateIconSpriteArtD
+                dc.l    WeaponStateIconSpriteArtD
+                dc.l    WeaponStateIconSpriteArtD
 
 UI_QueueWeaponStateIconTransferFromSource:              ; was: sub_1344A
                 move.w  #1,(WeaponIconTransferState).w
