@@ -5203,3 +5203,30 @@ return labels gain provenance, raising the mapping count from 14,031 to 14,049
 and the audit registry from 11,602 to 11,647. The enforced address-derived
 ceiling falls from 2,020 to 2,002; only 25 such definitions remain outside data
 modules and `ram_addrs.inc`.
+
+The shared proximity/hazard pass removes the last address-derived definitions
+from executable source and corrects a false module boundary. The former
+`bosses/jetsripper_combat.s` range is not the Jetsripper boss core: the actual
+core begins later at `Boss_JetsripperMainHandler` in
+`bosses/jetsripper_core.s`. Its first fourteen lines are instead the mapping
+selector used by Wolf Garopa's orb-projectile pair and now finish the adjacent
+`projectiles/directional_and_gravity_shots.s` module. The remaining cohesive
+286-line range becomes `projectiles/proximity_and_falling_hazards.s`.
+
+The dispatch table proves handlers for object types `$48`, `$84`, `$104`,
+`$108`, `$1D0`, and `$2B4`. Static flow identifies the type-`$48` proximity
+object's optional large-pickup spawn and short-lived type-`$C4` conversion;
+type-`$84` gravity bounce; the type-`$104` difficulty-timed falling-hazard
+spawner and type-`$108` collision handler; the type-`$1D0` arcing hazard and
+its repeated type-`$188` trail; and the type-`$2B4` oscillating contact
+hazard. The runtime scenario still observes type `$48` at its pinned Stage 1
+checkpoint, but that observation no longer misidentifies this generic handler
+as Jetsripper's later boss core.
+
+The 25 formerly address-derived definitions gain provenance, raising the
+mapping count from 14,049 to 14,074. Thirty-five definitions in the corrected
+ROM range plus the shared type-`$C4` conversion helper receive new exact-address
+audit records, taking the registry from 11,647 to 11,683. The enforced
+address-derived ceiling falls from 2,002 to 1,977: the remaining definitions
+are confined to 831 RAM equates and 1,146 preserved-data labels, with none left
+in executable source.

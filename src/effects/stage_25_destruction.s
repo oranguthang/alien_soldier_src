@@ -1,3 +1,4 @@
+; Initialize Stage 25 destruction-particle sprite properties
 Effect_InitStage25DestructionParticle:                  ; CODE XREF: Effect_RunStage25DestructionParticle+6   p  ; was: sub_2BAB4
                 addq.w  #2,4(a5)
                 move.w  #$E700,2(a5)

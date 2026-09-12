@@ -552,3 +552,18 @@ Projectile_AnimateAndAccelerateTerobusterGravityShot:   ; CODE XREF: Projectile_
                 addi.l  #$8000,$1C(a5)
                 rts
 ; End of function Projectile_UpdateTerobusterGravityShot
+
+; Select one of four projectile mappings from the quantized launch angle
+Projectile_SelectWolfGaropaDirectionMapping:            ; CODE XREF: Boss_WolfGaropaSpawnOrbProjectilePair+D4   j  ; was: sub_2B6B2
+                addi.w  #$20,d2                         ; ' '
+                andi.w  #$C0,d2
+                asr.w   #4,d2
+                move.l  Projectile_WolfGaropaDirectionMappings(pc,d2.w),8(a0)
+                rts
+; End of function Projectile_SelectWolfGaropaDirectionMapping
+; ---------------------------------------------------------------------------
+Projectile_WolfGaropaDirectionMappings: dc.l    SharedCombatSpriteFrame10  ; was: off_2B6C4
+                                        ; DATA XREF: Projectile_SelectWolfGaropaDirectionMapping+A   r
+                dc.l    SharedCombatSpriteFrame11
+                dc.l    SharedCombatSpriteFrame09
+                dc.l    SharedCombatSpriteFrame12

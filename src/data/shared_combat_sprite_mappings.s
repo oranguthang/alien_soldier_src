@@ -28,7 +28,7 @@ SharedCombatSpriteFrame08:  dc.w    $C8EC, $F00, $F0F0  ; DATA XREF: ROM:000E95E
                                         ; ROM:000E960C   o
 SharedCombatSpriteFrame09:  dc.w    $C8FC, $100, $F8FC  ; DATA XREF: ROM:0002B6CC   o  ; was: word_E90D4
                                         ; ROM:SharedCombatSpriteAnimation23   o
-SharedCombatSpriteFrame10:  dc.w    $C8FE, $400, $FCF8  ; DATA XREF: ROM:off_2B6C4   o  ; was: word_E90DA
+SharedCombatSpriteFrame10:  dc.w    $C8FE, $400, $FCF8  ; DATA XREF: ROM:Projectile_WolfGaropaDirectionMappings   o  ; was: word_E90DA
                                         ; ROM:000E977C   o
 SharedCombatSpriteFrame11:  dc.w    $C900, $500, $F8F8  ; DATA XREF: ROM:0002B6C8   o  ; was: word_E90E0
                                         ; ROM:000E9778   o
@@ -399,7 +399,7 @@ SharedCombatSpriteAnimation07:  dc.w    SharedCombatSpriteFrame31-*  ; DATA XREF
                 dc.w    1
                 dc.w    SharedCombatSpriteAnimation07-*
                 dc.w    0
-SharedCombatSpriteAnimation08:  dc.w    SharedCombatSpriteFrame33-*  ; DATA XREF: Enemy_TrailingExplosionSpawner+16   o  ; was: off_E9638
+SharedCombatSpriteAnimation08:  dc.w    SharedCombatSpriteFrame33-*  ; DATA XREF: Projectile_UpdateTrailingArcHazardType1D0+16   o  ; was: off_E9638
                                         ; ROM:000E9648   o
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame35-*
@@ -551,8 +551,8 @@ SharedCombatSpriteAnimation21:  dc.w    SharedCombatSpriteFrame06-*  ; DATA XREF
                 dc.w    $FF
                 dc.w    SharedCombatSpriteFrame41-*
                 dc.w    $FF
-SharedCombatSpriteAnimation22:  dc.w    SharedCombatSpriteFrame67-*  ; DATA XREF: Boss_JetsripperMain+18   o  ; was: off_E975C
-                                        ; Projectile_SpawnFallingDebris+28   o
+SharedCombatSpriteAnimation22:  dc.w    SharedCombatSpriteFrame67-*  ; DATA XREF: Object_UpdateProximityPickupEmitterType48+18   o  ; was: off_E975C
+                                        ; Projectile_SpawnTrailingArcHazardType1D0+28   o
                 dc.w    $20
                 dc.w    SharedCombatSpriteFrame40-*
                 dc.w    1
@@ -695,7 +695,7 @@ SharedCombatSpriteAnimation32:  dc.w    SharedCombatSpriteFrame01-*  ; DATA XREF
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame59-*
                 dc.w    $FF
-SharedCombatSpriteAnimation33:  dc.w    SharedCombatSpriteFrame00-*  ; DATA XREF: Boss_JetsripperInitC4Projectile+2A   o  ; was: off_E9870
+SharedCombatSpriteAnimation33:  dc.w    SharedCombatSpriteFrame00-*  ; DATA XREF: Effect_ConvertCurrentToTypeC4Burst+2A   o  ; was: off_E9870
                 dc.w    1
                 dc.w    SharedCombatSpriteFrame01-*
                 dc.w    1

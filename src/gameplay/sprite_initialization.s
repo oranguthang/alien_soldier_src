@@ -250,7 +250,7 @@ Sprite_FindFreeEnemySlot_Return:                        ; CODE XREF: Sprite_Find
                 rts
 ; End of function Sprite_FindFreeEnemySlot
 ; Searches for free sprite slot in effect pool for explosions
-Sprite_FindFreeEffectSlot:                              ; CODE XREF: Enemy_SpawnFallingHazard+2E   p  ; was: sub_1C028
+Sprite_FindFreeEffectSlot:                              ; CODE XREF: Hazard_UpdateTopFallingSpawnerType104+2E   p  ; was: sub_1C028
                 movea.w #(word_FFDB20-M68K_RAM),a0
                 moveq   #3,d7
 Sprite_FindFreeEffectSlot_Loop:                         ; CODE XREF: Sprite_FindFreeEffectSlot+E   j  ; was: loc_1C02E

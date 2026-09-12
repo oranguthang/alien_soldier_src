@@ -151,7 +151,7 @@
                 include "src/debug/sprite_editor.s"
                 include "src/data/shared_effect_sprite_frames.s"
                 include "src/projectiles/directional_and_gravity_shots.s"
-                include "src/bosses/jetsripper_combat.s"
+                include "src/projectiles/proximity_and_falling_hazards.s"
                 include "src/effects/stage_25_destruction.s"
                 include "src/ui/weapon_selection_object.s"
                 include "src/actors/resource_pickups.s"

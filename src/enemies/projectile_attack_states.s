@@ -172,7 +172,7 @@ Enemy_ProjectileAttackGroundState:                      ; DATA XREF: ROM:0002CC3
                 neg.w   d5
                 neg.l   d7
 Enemy_ProjectileAttackGroundState_SpawnProjectile:      ; CODE XREF: Enemy_ProjectileAttackGroundState+36   j  ; was: loc_2CD90
-                jsr     (Projectile_SpawnFallingDebris).l
+                jsr     (Projectile_SpawnTrailingArcHazardType1D0).l
 Enemy_ProjectileAttackGroundState_UpdateMovement:       ; CODE XREF: Enemy_ProjectileAttackGroundState+24   j  ; was: loc_2CD96
                 bsr.w   Physics_ApplyHorizontalFriction
                 cmpi.w  #$10,$48(a5)

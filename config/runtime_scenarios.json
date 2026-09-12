@@ -37,10 +37,10 @@
     {
       "id": "boss_transition",
       "frame": 900,
-      "description": "Jetsripper has entered the Stage 1 object pool.",
+      "description": "The Stage 1 boss transition has loaded its type-$48 proximity object.",
       "expectations": [
         { "symbol": "GameModeIndex", "address": "0xFFA284", "type": "u16", "equals": "0x0010", "evidence": "static+runtime" },
-        { "symbol": "Entity_ObjectPool", "offset": "0x01E0", "address": "0xFFC800", "field": "handler_table_offset", "type": "u16", "equals": "0x0048", "evidence": "static+runtime", "note": "0x48 indexes Boss_JetsripperMain in off_5DC." }
+        { "symbol": "Entity_ObjectPool", "offset": "0x01E0", "address": "0xFFC800", "field": "handler_table_offset", "type": "u16", "equals": "0x0048", "evidence": "static+runtime", "note": "0x48 indexes Object_UpdateProximityPickupEmitterType48 in Entity_UpdateHandlerTable; this does not identify the later Jetsripper boss core." }
       ]
     },
     {

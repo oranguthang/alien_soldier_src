@@ -17,7 +17,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Player_UpdateTargetSight
                 dc.l    UI_DebugSpriteEditor
                 dc.l    Enemy_ProcessObject
-                dc.l    Boss_JetsripperMain
+                dc.l    Object_UpdateProximityPickupEmitterType48
                 dc.l    Projectile_UpdateEightDirectionShotCollision
                 dc.l    Projectile_ActivateEightDirectionShot
                 dc.l    Projectile_UpdateTerobusterGravityShot
@@ -32,7 +32,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Effect_UpdateDeathSparkMotion
                 dc.l    Projectile_UpdateGravityAndHorizontalDrag
-                dc.l    Projectile_GravityBounce
+                dc.l    Projectile_UpdateGravityBounceType84
                 dc.l    Physics_ApplyGravity
                 dc.l    Enemy_ProjectileAttackController
                 dc.l    Enemy_BirdController
@@ -64,8 +64,8 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    FrontendCursor_NoOpUpdate
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    TerrainTileAnimation_OddFrameHandler
-                dc.l    Enemy_SpawnFallingHazard
-                dc.l    Projectile_TerrainCollision
+                dc.l    Hazard_UpdateTopFallingSpawnerType104
+                dc.l    Projectile_UpdateTopFallingHazardType108
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Boss_XiTigerMain
@@ -115,7 +115,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Boss_SunsetStingDebrisPartMain
                 dc.l    Boss_SunsetStingMainDispatcher
                 dc.l    Object_UpdateRemovalTimer
-                dc.l    Enemy_TrailingExplosionSpawner
+                dc.l    Projectile_UpdateTrailingArcHazardType1D0
                 dc.l    Enemy_UpdateDefeatProjectile
                 dc.l    Enemy_UpdateAlternateDefeatProjectile
                 dc.l    Enemy_UpdateBirdDefeatDebris
@@ -172,7 +172,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Enemy_Stage9FlyController
                 dc.l    Stage9_FlyFormationController
                 dc.l    Enemy_AnimationWrapper
-                dc.l    Enemy_InitProjectileType
+                dc.l    Projectile_UpdateOscillatingContactHazardType2B4
                 dc.l    Boss_ViblackMain
                 dc.l    Projectile_FallingShotController
                 dc.l    Enemy_Stage10WaspController

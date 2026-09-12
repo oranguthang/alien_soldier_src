@@ -4,8 +4,8 @@ Math_LookupPackedBCDWord:                               ; CODE XREF: Continue_Re
                 rts
 ; End of function Math_LookupPackedBCDWord
 ; Returns the player's absolute horizontal and signed vertical deltas
-Physics_GetPlayerDelta:                                 ; CODE XREF: Boss_JetsripperMain:loc_2B72E   p  ; was: sub_1B410
-                                        ; sub_2B77C:loc_2B7EA   p
+Physics_GetPlayerDelta:                                 ; CODE XREF: Object_UpdateProximityPickupEmitterType48:Object_UpdateProximityPickupEmitterType48_CheckPlayerProximity   p  ; was: sub_1B410
+                                        ; Projectile_UpdateOscillatingContactHazardType2B4:Projectile_UpdateOscillatingContactHazardType2B4_CheckPlayerProximity   p
                 movea.w #(word_FFA400-M68K_RAM),a0
                 move.w  $10(a0),d1
                 sub.w   $10(a5),d1

@@ -9,14 +9,17 @@ diagnostic evidence; pass/fail is determined by named RAM assertions.
 | boot | 20 | top-level mode and substate are reset |
 | title | 320 | `GameModeIndex == 0x14` |
 | gameplay start | 700 | gameplay mode, Stage 1 table index |
-| boss transition | 900 | object-pool slot `+0x1E0` dispatches through `Boss_JetsripperMain` (`0x48`) |
+| boss transition | 900 | object-pool slot `+0x1E0` dispatches through `Object_UpdateProximityPickupEmitterType48` (`0x48`) |
 | stage change | 1920 | gameplay mode, Stage 2 table index (`0x02`) |
 | credits | 70000 | credits main-loop mode (`0x90`) and substate |
 
 `GameModeIndex` is confirmed statically by `Sys_DispatchGameState`, which uses
 it directly as the byte offset into `off_C7C`. `StageTableIndex` similarly
-indexes `off_1226C`. The Jetsripper expectation is supported by the handler
-table `off_5DC` and by the object appearing only at the boss checkpoint.
+indexes `off_1226C`. The Stage 1 transition expectation is supported by
+`Entity_UpdateHandlerTable` and the type-$48 object observed at the checkpoint.
+Static behavior proves that this object oscillates, may create a large pickup
+near the player, and then becomes a short-lived type-$C4 burst; it is not the
+later Jetsripper boss-core handler.
 
 Run `make runtime`. Captures are reproducible outputs under `runtime/captures/`
 and are ignored by Git. The current Gens helper writes zero in the header frame

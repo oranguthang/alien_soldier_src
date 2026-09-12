@@ -12,8 +12,8 @@ Object_UpdateVisibilityLifetime_Countdown:              ; CODE XREF: Object_Upda
 Object_UpdateVisibilityLifetime_Return:                 ; CODE XREF: Object_UpdateVisibilityLifetime+14   j  ; was: locret_2A328
                 rts
 ; End of function Object_UpdateVisibilityLifetime
-; Converts the current object into Jetsripper projectile type C4
-Boss_JetsripperInitC4Projectile:                        ; CODE XREF: Boss_JetsripperMain+90   p  ; was: sub_2A32A
+; Convert the current object to a short-lived type-$C4 burst effect
+Effect_ConvertCurrentToTypeC4Burst:                     ; CODE XREF: Object_UpdateProximityPickupEmitterType48+90   p  ; was: sub_2A32A
                 movea.w a5,a0
                 move.w  #$C4,(a0)
                 clr.l   $18(a0)
@@ -35,7 +35,7 @@ Boss_JetsripperInitC4Projectile:                        ; CODE XREF: Boss_Jetsri
                 move.w  #2,(word_FFA014).w
                 move.b  #$BC,d0
                 jmp     (Sound_PlaySFX).l
-; End of function Boss_JetsripperInitC4Projectile
+; End of function Effect_ConvertCurrentToTypeC4Burst
 ; Waits on the shared delay counter, then enters the common projectile update
 Projectile_UpdateAfterGlobalDelay:                      ; CODE XREF: Enemy_ShipSpawnDebrisProjectile   p  ; was: sub_2A390
                                         ; sub_3A122   p
@@ -431,7 +431,7 @@ Anim_UpdateLoopingScript_Restart:                       ; CODE XREF: Anim_Update
 ; End of function Anim_UpdateLoopingScript
 ; Initializes the current object as projectile type 88
 Projectile_InitType88FromCurrent:                       ; CODE XREF: ShipPiece_UpdateCountdown+28   p  ; was: sub_2A79C
-                                        ; Projectile_GravityBounce+50   j
+                                        ; Projectile_UpdateGravityBounceType84+50   j
                 movea.w a5,a0
 ; End of function Projectile_InitType88FromCurrent
 ; Initializes projectile with type 0x88
@@ -446,7 +446,7 @@ Effect_InitType188FromCurrent:                          ; CODE XREF: Weapon_Upda
 ; End of function Effect_InitType188FromCurrent
 ; Spawns explosion effect type 0x188 at current location
 Effect_SpawnExplosionType188:                           ; CODE XREF: Weapon_SpawnHomingEffect+EE   p  ; was: sub_2A7A6
-                                        ; Enemy_TrailingExplosionSpawner+4C   p
+                                        ; Projectile_UpdateTrailingArcHazardType1D0+4C   p
                 move.w  #$188,(a0)
                 bra.s   Sprite_InitializeEffectGraphics
 ; End of function Effect_SpawnExplosionType188

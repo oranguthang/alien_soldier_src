@@ -206,8 +206,8 @@ Projectile_DragNegativeHorizontalVelocity:              ; CODE XREF: Projectile_
                 rts
 ; End of function Projectile_UpdateGravityAndHorizontalDrag
 ; Initialize the shared explosion effect from the current object
-Effect_InitSharedExplosionFromCurrent:                  ; CODE XREF: Enemy_InitProjectileType+80   p  ; was: sub_2A2A2
-                                        ; Projectile_TerrainCollision+36   j
+Effect_InitSharedExplosionFromCurrent:                  ; CODE XREF: Projectile_UpdateOscillatingContactHazardType2B4+80   p  ; was: sub_2A2A2
+                                        ; Projectile_UpdateTopFallingHazardType108+36   j
                 movea.w a5,a0
 Effect_InitSharedExplosion:                             ; CODE XREF: Boss_SunsetStingDebrisPartMain+30   p  ; was: loc_2A2A4
                                         ; Boss_SunsetStingUpdateScatteredBodyPart+30   p

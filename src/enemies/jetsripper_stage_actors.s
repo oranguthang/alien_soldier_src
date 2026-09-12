@@ -337,7 +337,7 @@ Enemy_TryPeriodicShot:                                  ; CODE XREF: Enemy_Updat
                 bne.s   Enemy_TryPeriodicShot_Return
                 moveq   #0,d5
                 moveq   #$FFFFFFF0,d6
-                jsr     (Boss_SpawnTargetedProjectile).l
+                jsr     (Projectile_SpawnAimedArcFromEnemy).l
 Enemy_TryPeriodicShot_Return:                           ; CODE XREF: Enemy_UpdatePeriodicShots+18   j  ; was: locret_2CA3E
                 rts
 ; End of function Enemy_UpdatePeriodicShots

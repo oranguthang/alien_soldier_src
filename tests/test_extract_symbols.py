@@ -42,11 +42,11 @@ class ExtractSymbolsTests(unittest.TestCase):
             "\n".join(
                 [
                     "(1)    1/   2B6D4 :                     sub_2B6D4:",
-                    "(1)    2/   2B6D4 :                     Boss_JetsripperMain:",
+                    "(1)    2/   2B6D4 :                     Object_UpdateProximityPickupEmitterType48:",
                 ]
             )
         )
-        self.assertEqual("Boss_JetsripperMain", symbols[0x2B6D4])
+        self.assertEqual("Object_UpdateProximityPickupEmitterType48", symbols[0x2B6D4])
 
     def test_default_filter_excludes_address_derived_names(self) -> None:
         symbols = {

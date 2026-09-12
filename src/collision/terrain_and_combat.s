@@ -287,7 +287,7 @@ Results_IncrementDestroyedEnemyCountBCD_Return:         ; was: loc_144C6
 ; End of function Results_IncrementDestroyedEnemyCountBCD
 ; Gets entity position coordinates for collision detection
 Collision_GetEntityPosition:                            ; CODE XREF: Projectile_UpdateDelayedCollisionShot:Projectile_CheckDelayedCollisionShotTerrainDepth   p  ; was: sub_144CC
-                                        ; sub_2B88A:loc_2B8AA   p
+                                        ; Projectile_UpdateGravityBounceType84:Projectile_UpdateGravityBounceType84_CheckTerrain   p
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
                 bra.s   Collision_CheckTerrainTile
