@@ -324,8 +324,8 @@ Scroll_UpdateQuarterHorizontalPosition:                 ; CODE XREF: Stage_Updat
                 rts
 ; End of function Scroll_UpdateQuarterHorizontalPosition
 ; Accumulates one quarter of the signed horizontal scroll delta
-Scroll_AccumulateQuarterHorizontalDelta:                ; CODE XREF: Stage_Stage10CheckTransition+4   p  ; was: sub_102EC
-                                        ; Stage_DeepStriderTransition+4   p
+Scroll_AccumulateQuarterHorizontalDelta:                ; CODE XREF: Stage10_UpdateScrollToDeepStrider+4   p  ; was: sub_102EC
+                                        ; Stage10_InitializeDeepStriderEncounter+4   p
                 moveq   #0,d0
                 move.w  (dword_FFA910).w,d0
                 swap    d0

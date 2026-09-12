@@ -21,7 +21,7 @@ Stage_RunSelectedProcess:                               ; CODE XREF: Stage_Dispa
 ; End of function Stage_DispatchSelectedProcess
 ; ---------------------------------------------------------------------------
 Stage_ProcessHandlerTable:  dc.l    Stage_DispatchEarlyStageState  ; was: off_FF36
-                dc.l    Stage_InitStage10
+                dc.l    Stage_DispatchMidgameState
                 dc.l    Stage_Stage18Scroll
                 dc.l    Stage_DispatchTransitionState
                 dc.l    Stage_DispatchEarlyStageState

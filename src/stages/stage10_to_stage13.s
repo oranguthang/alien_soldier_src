@@ -1,8 +1,9 @@
-Stage_InitStage10:                                      ; DATA XREF: ROM:0000FF3A   o  ; was: sub_D90E
+; Dispatch the shared midgame state selected by the configuration-seeded offset
+Stage_DispatchMidgameState:                             ; DATA XREF: ROM:0000FF3A   o  ; was: sub_D90E
                 cmpi.w  #$40,(word_FFA950).w            ; '@'
-                bpl.s   Stage_DispatchStage10Handler
+                bpl.s   Stage_DispatchMidgameState_Handler
                 btst    #0,(FrameCounter+1).w
-                bne.s   Stage_DispatchStage10Handler
+                bne.s   Stage_DispatchMidgameState_Handler
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 movea.w a0,a1
                 move.w  #$148,(a1)+
@@ -15,101 +16,101 @@ Stage_InitStage10:                                      ; DATA XREF: ROM:0000FF3
                 clr.w   (a1)+
                 move.w  #$FFFF,(a1)
                 jsr     (Sprite_AppendOAMEntries).l
-; Dispatches to appropriate stage 10 scroll handler based on phase
-Stage_DispatchStage10Handler:                           ; CODE XREF: Stage_InitStage10+6   j  ; was: loc_D94C
-                                        ; Stage_InitStage10+E   j
+; Dispatch the selected state after the early-state diagnostic OAM marker
+Stage_DispatchMidgameState_Handler:                     ; CODE XREF: Stage_DispatchMidgameState+6   j  ; was: loc_D94C
+                                        ; Stage_DispatchMidgameState+E   j
                 move.w  (word_FFA950).w,d0
-                movea.w off_D95C(pc,d0.w),a0
-                adda.l  #Stage_Stage10ScrollUpdate,a0
+                movea.w Stage_MidgameStateHandlerOffsets(pc,d0.w),a0
+                adda.l  #Stage10_Initialize,a0
                 jmp     (a0)
-; End of function Stage_InitStage10
+; End of function Stage_DispatchMidgameState
 ; ---------------------------------------------------------------------------
-off_D95C:       dc.w    Stage_Stage10ScrollUpdate-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage10CheckTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_DeepStriderTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_DeepStriderBattle-Stage_Stage10ScrollUpdate
-                dc.w    Stage_DeepStriderBattleInit-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage11Transition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage11ScrollUpdate-Stage_Stage10ScrollUpdate
-                dc.w    Stage_GustheadTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_GustheadDefeatTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage12Init-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage12ScrollUpdate-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage12_ScrollLoop-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage13Init-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage13ScrollUpdate-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage13CheckTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage13EmptyHandler-Stage_Stage10ScrollUpdate
-                dc.w    Stage_SharpssteelTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage14Init-Stage_Stage10ScrollUpdate
-                dc.w    Stage_TeleportTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_TeleportFadeIn-Stage_Stage10ScrollUpdate
-                dc.w    Stage_TeleportFadeSequence-Stage_Stage10ScrollUpdate
-                dc.w    Stage_TeleportFadeSequence_Advance-Stage_Stage10ScrollUpdate
-                dc.w    Stage_SnakeTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage10CheckTransition_Return-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage10CheckTransition_Return-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage10CheckTransition_Return-Stage_Stage10ScrollUpdate
-                dc.w    Stage_InitStage13-Stage_Stage10ScrollUpdate
-                dc.w    Stage_SnakeWaitScroll-Stage_Stage10ScrollUpdate
-                dc.w    Stage_BugmaxTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_BugmaxWaitDMA-Stage_Stage10ScrollUpdate
-                dc.w    Stage_BugmaxStartBattle-Stage_Stage10ScrollUpdate
-                dc.w    Stage_BugmaxTransitionCheck-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage14Scroll-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage14Scroll_Update-Stage_Stage10ScrollUpdate
-                dc.w    Stage_InitBossPaletteScroll-Stage_Stage10ScrollUpdate
-                dc.w    Stage_InitScoreTimerClear-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage15Transition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage15Scroll-Stage_Stage10ScrollUpdate
-                dc.w    Stage_ScrollCheckTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_SunsetStingTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_SunsetStingWaitBattle-Stage_Stage10ScrollUpdate
-                dc.w    Stage_PostSunsetStingTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_ViblackScroll-Stage_Stage10ScrollUpdate
-                dc.w    Stage_ViblackInit-Stage_Stage10ScrollUpdate
-                dc.w    Stage_ConstrainCameraBounds-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Stage17Transition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_ViblackPostBattleScroll1-Stage_Stage10ScrollUpdate
-                dc.w    Stage_ViblackPostBattleScroll2-Stage_Stage10ScrollUpdate
-                dc.w    Stage_PostViblackTransition-Stage_Stage10ScrollUpdate
-                dc.w    Stage_PostViblackTransition_Render-Stage_Stage10ScrollUpdate
-                dc.w    Stage_SetVerticalScrollOfs-Stage_Stage10ScrollUpdate
-                dc.w    Stage_PostViblackFade-Stage_Stage10ScrollUpdate
-                dc.w    Stage_PostViblackScrollDecel-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Epsilon1Init-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Epsilon1Scroll-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Epsilon1Scroll-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Epsilon1BattleStart-Stage_Stage10ScrollUpdate
-                dc.w    Stage_Epsilon1WaitIntroComplete-Stage_Stage10ScrollUpdate
-                dc.w    Cutscene_PlanetInit-Stage_Stage10ScrollUpdate
+Stage_MidgameStateHandlerOffsets:
+                dc.w    Stage10_Initialize-Stage10_Initialize  ; was: off_D95C
+                dc.w    Stage10_UpdateScrollToDeepStrider-Stage10_Initialize
+                dc.w    Stage10_InitializeDeepStriderEncounter-Stage10_Initialize
+                dc.w    Stage10_UpdateDeepStriderEncounter-Stage10_Initialize
+                dc.w    Stage10_StartPostDeepStriderTransition-Stage10_Initialize
+                dc.w    Stage11_Initialize-Stage10_Initialize
+                dc.w    Stage11_UpdateScrollToGusthead-Stage10_Initialize
+                dc.w    Stage11_InitializeGustheadEncounter-Stage10_Initialize
+                dc.w    Stage11_UpdatePostGusthead-Stage10_Initialize
+                dc.w    Stage11_StartPostGustheadTransition-Stage10_Initialize
+                dc.w    Stage12_InitializeScroll-Stage10_Initialize
+                dc.w    Stage12_UpdateScrollToExit-Stage10_Initialize
+                dc.w    Stage12_UpdateScrollToExitTiles-Stage10_Initialize
+                dc.w    Stage12_UpdateScrollToSharpssteel-Stage10_Initialize
+                dc.w    Stage12_InitializeSharpssteelArena-Stage10_Initialize
+                dc.w    Stage12_EmptyState1E-Stage10_Initialize
+                dc.w    Stage12_InitializeSharpssteelEncounter-Stage10_Initialize
+                dc.w    Stage12_UpdatePostSharpssteel-Stage10_Initialize
+                dc.w    Stage12_StartTeleportTransitionToStage13-Stage10_Initialize
+                dc.w    Stage12To13_UpdateTeleportFadeIn-Stage10_Initialize
+                dc.w    Stage12To13_UpdateTeleportFadeOut-Stage10_Initialize
+                dc.w    Stage12To13_AdvanceTeleportScroll-Stage10_Initialize
+                dc.w    Stage13_UpdateSnakeIntroTransition-Stage10_Initialize
+                dc.w    Stage_MidgameStateReturn-Stage10_Initialize
+                dc.w    Stage_MidgameStateReturn-Stage10_Initialize
+                dc.w    Stage_MidgameStateReturn-Stage10_Initialize
+                dc.w    Stage13_InitializeSnakeEncounter-Stage10_Initialize
+                dc.w    Stage13_UpdateSnakeEncounterTransition-Stage10_Initialize
+                dc.w    Stage13_InitializeBugmaxApproach-Stage10_Initialize
+                dc.w    Stage13_UpdateBugmaxApproach-Stage10_Initialize
+                dc.w    Stage13_UpdateBugmaxEncounter-Stage10_Initialize
+                dc.w    Stage13_StartPostBugmaxTransition-Stage10_Initialize
+                dc.w    Stage_Stage14Scroll-Stage10_Initialize
+                dc.w    Stage_Stage14Scroll_Update-Stage10_Initialize
+                dc.w    Stage_InitBossPaletteScroll-Stage10_Initialize
+                dc.w    Stage_InitScoreTimerClear-Stage10_Initialize
+                dc.w    Stage_Stage15Transition-Stage10_Initialize
+                dc.w    Stage_Stage15Scroll-Stage10_Initialize
+                dc.w    Stage_ScrollCheckTransition-Stage10_Initialize
+                dc.w    Stage_SunsetStingTransition-Stage10_Initialize
+                dc.w    Stage_SunsetStingWaitBattle-Stage10_Initialize
+                dc.w    Stage_PostSunsetStingTransition-Stage10_Initialize
+                dc.w    Stage_ViblackScroll-Stage10_Initialize
+                dc.w    Stage_ViblackInit-Stage10_Initialize
+                dc.w    Stage_ConstrainCameraBounds-Stage10_Initialize
+                dc.w    Stage_Stage17Transition-Stage10_Initialize
+                dc.w    Stage_ViblackPostBattleScroll1-Stage10_Initialize
+                dc.w    Stage_ViblackPostBattleScroll2-Stage10_Initialize
+                dc.w    Stage_PostViblackTransition-Stage10_Initialize
+                dc.w    Stage_PostViblackTransition_Render-Stage10_Initialize
+                dc.w    Stage_SetVerticalScrollOfs-Stage10_Initialize
+                dc.w    Stage_PostViblackFade-Stage10_Initialize
+                dc.w    Stage_PostViblackScrollDecel-Stage10_Initialize
+                dc.w    Stage_Epsilon1Init-Stage10_Initialize
+                dc.w    Stage_Epsilon1Scroll-Stage10_Initialize
+                dc.w    Stage_Epsilon1Scroll-Stage10_Initialize
+                dc.w    Stage_Epsilon1BattleStart-Stage10_Initialize
+                dc.w    Stage_Epsilon1WaitIntroComplete-Stage10_Initialize
+                dc.w    Cutscene_PlanetInit-Stage10_Initialize
 
-; Updates Stage 10 scroll positions
-Stage_Stage10ScrollUpdate:                              ; DATA XREF: Stage_InitStage10+46   o  ; was: sub_D9D2
-                                        ; ROM:off_D95C   o
+; Initialize Stage 10's message, raster effect, and ambient particles
+Stage10_Initialize:                                     ; DATA XREF: Stage_DispatchMidgameState+46   o  ; was: sub_D9D2
+                                        ; ROM:Stage_MidgameStateHandlerOffsets   o
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
-                bsr.w   Stage_LoadStage10Graphics
-; End of function Stage_Stage10ScrollUpdate
-; Checks transition to next segment
-Stage_Stage10CheckTransition:                           ; DATA XREF: ROM:0000D95E   o  ; was: sub_D9DC
+                bsr.w   Midgame_InitializeRasterAndAmbientEffects
+; End of function Stage10_Initialize
+; Scroll Stage 10 to the Deep Strider approach boundary
+Stage10_UpdateScrollToDeepStrider:                      ; DATA XREF: ROM:0000D95E   o  ; was: sub_D9DC
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$730,(dword_FFA900).w
-                bmi.s   Stage_Stage10CheckTransition_Return
+                bmi.s   Stage_MidgameStateReturn
                 bra.w   Stage_TransitionToNextPhase
 ; ---------------------------------------------------------------------------
-; Early return from stage 10 transition check
-Stage_Stage10CheckTransition_Return:                    ; CODE XREF: Stage_Stage10CheckTransition+E   j  ; was: locret_D9F0
-                                        ; Stage_DeepStriderTransition+10   j
+Stage_MidgameStateReturn:                               ; CODE XREF: Stage10_UpdateScrollToDeepStrider+E   j  ; was: locret_D9F0
+                                        ; Stage10_InitializeDeepStriderEncounter+10   j
                 rts
-; End of function Stage_Stage10CheckTransition
-; Transitions to Deep Strider boss
-Stage_DeepStriderTransition:                            ; DATA XREF: ROM:0000D960   o  ; was: sub_D9F2
+; End of function Stage10_UpdateScrollToDeepStrider
+; Clamp the arena and submit the Deep Strider asset set
+Stage10_InitializeDeepStriderEncounter:                 ; DATA XREF: ROM:0000D960   o  ; was: sub_D9F2
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 move.w  #$7B0,d0
                 cmp.w   (dword_FFA900).w,d0
-                bpl.s   Stage_Stage10CheckTransition_Return
+                bpl.s   Stage_MidgameStateReturn
                 addq.w  #2,(word_FFA950).w
                 clr.l   (dword_FFA910).w
                 move.w  d0,(dword_FFA900).w
@@ -117,45 +118,44 @@ Stage_DeepStriderTransition:                            ; DATA XREF: ROM:0000D96
                 move.w  d0,(word_FFA974).w
                 lea     (Boss_DeepStriderAssetSet).l,a1
                 bra.w   Boss_LoadAssetSet
-; End of function Stage_DeepStriderTransition
-; Deep Strider battle stage handler
-Stage_DeepStriderBattle:                                ; DATA XREF: ROM:0000D962   o  ; was: sub_DA22
+; End of function Stage10_InitializeDeepStriderEncounter
+; Track the Deep Strider encounter and start its post-boss bonus when cleared
+Stage10_UpdateDeepStriderEncounter:                     ; DATA XREF: ROM:0000D962   o  ; was: sub_DA22
                 tst.w   (Entity_ObjectPool).w
-                bne.s   Camera_UpdateDeepStrider
+                bne.s   Stage10_UpdateDeepStriderCameraAndScroll
                 bsr.w   Stage_StartTimeBonusAndPreloadNextPhase
-; Updates camera for Deep Strider boss battle with phase transition check
-Camera_UpdateDeepStrider:                               ; CODE XREF: Stage_DeepStriderBattle+4   j  ; was: loc_DA2C
+Stage10_UpdateDeepStriderCameraAndScroll:               ; CODE XREF: Stage10_UpdateDeepStriderEncounter+4   j  ; was: loc_DA2C
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Scroll_AccumulateQuarterHorizontalDelta
-; End of function Stage_DeepStriderBattle
-; Initializes Deep Strider battle
-Stage_DeepStriderBattleInit:                            ; DATA XREF: ROM:0000D964   o  ; was: sub_DA34
+; End of function Stage10_UpdateDeepStriderEncounter
+; Start the post-Deep-Strider banner while keeping camera and scroll current
+Stage10_StartPostDeepStriderTransition:                 ; DATA XREF: ROM:0000D964   o  ; was: sub_DA34
                 bsr.w   Stage_StartNextPhaseBanner
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Scroll_AccumulateQuarterHorizontalDelta
-; End of function Stage_DeepStriderBattleInit
-; Transitions to Stage 11
-Stage_Stage11Transition:                                ; DATA XREF: ROM:0000D966   o  ; was: sub_DA40
-                bsr.w   Stage_LoadStage10Graphics
-; End of function Stage_Stage11Transition
-; Updates Stage 11 scroll and check
-Stage_Stage11ScrollUpdate:                              ; DATA XREF: ROM:0000D968   o  ; was: sub_DA44
+; End of function Stage10_StartPostDeepStriderTransition
+; Initialize Stage 11's raster effect and shared ambient particles
+Stage11_Initialize:                                     ; DATA XREF: ROM:0000D966   o  ; was: sub_DA40
+                bsr.w   Midgame_InitializeRasterAndAmbientEffects
+; End of function Stage11_Initialize
+; Scroll Stage 11 to the Gusthead approach boundary
+Stage11_UpdateScrollToGusthead:                         ; DATA XREF: ROM:0000D968   o  ; was: sub_DA44
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$1040,(dword_FFA900).w
-                bmi.s   locret_DA58
+                bmi.s   Stage11_UpdateScrollToGusthead_Return
                 bra.w   Stage_TransitionToNextPhase
 ; ---------------------------------------------------------------------------
-locret_DA58:                                            ; CODE XREF: Stage_Stage11ScrollUpdate+E   j
+Stage11_UpdateScrollToGusthead_Return:                  ; CODE XREF: Stage11_UpdateScrollToGusthead+E   j  ; was: locret_DA58
                 rts
-; End of function Stage_Stage11ScrollUpdate
-; Transitions to Gusthead boss
-Stage_GustheadTransition:                               ; DATA XREF: ROM:0000D96A   o  ; was: sub_DA5A
+; End of function Stage11_UpdateScrollToGusthead
+; Clamp the arena and submit the Gusthead asset set
+Stage11_InitializeGustheadEncounter:                    ; DATA XREF: ROM:0000D96A   o  ; was: sub_DA5A
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 move.w  #$10C0,d0
                 cmp.w   (dword_FFA900).w,d0
-                bpl.s   locret_DA92
+                bpl.s   Stage11_InitializeGustheadEncounter_Return
                 addq.w  #2,(word_FFA950).w
                 clr.l   (dword_FFA910).w
                 move.w  d0,(dword_FFA900).w
@@ -165,29 +165,29 @@ Stage_GustheadTransition:                               ; DATA XREF: ROM:0000D96
                 bsr.w   Boss_LoadAssetSet
                 clr.l   (dword_FFA960).w
                 clr.w   (word_FFA968).w
-locret_DA92:                                            ; CODE XREF: Stage_GustheadTransition+10   j
+Stage11_InitializeGustheadEncounter_Return:             ; CODE XREF: Stage11_InitializeGustheadEncounter+10   j  ; was: locret_DA92
                 rts
-; End of function Stage_GustheadTransition
-; Transitions after Gusthead defeat
-Stage_GustheadDefeatTransition:                         ; DATA XREF: ROM:0000D96C   o  ; was: sub_DA94
+; End of function Stage11_InitializeGustheadEncounter
+; Track Gusthead's removal and begin the post-boss bonus
+Stage11_UpdatePostGusthead:                             ; DATA XREF: ROM:0000D96C   o  ; was: sub_DA94
                 tst.w   (Entity_ObjectPool).w
-                bne.s   loc_DAA0
+                bne.s   Stage11_UpdatePostGustheadScroll
                 jsr     (Stage_StartTimeBonusAndPreloadNextPhase).l
-loc_DAA0:                                               ; CODE XREF: Stage_GustheadDefeatTransition+4   j
-                bra.w   loc_DAA8
-; End of function Stage_GustheadDefeatTransition
-; Initializes Stage 12
-Stage_Stage12Init:                                      ; DATA XREF: ROM:0000D96E   o  ; was: sub_DAA4
+Stage11_UpdatePostGustheadScroll:                       ; CODE XREF: Stage11_UpdatePostGusthead+4   j  ; was: loc_DAA0
+                bra.w   Stage11_UpdateGustheadExitScroll
+; End of function Stage11_UpdatePostGusthead
+; Start the final Stage 11 banner while preserving its exit scrolling
+Stage11_StartPostGustheadTransition:                    ; DATA XREF: ROM:0000D96E   o  ; was: sub_DAA4
                 bsr.w   Stage_StartNextPhaseBanner
-loc_DAA8:                                               ; CODE XREF: Stage_GustheadDefeatTransition:loc_DAA0   j
+Stage11_UpdateGustheadExitScroll:                       ; CODE XREF: Stage11_UpdatePostGusthead:Stage11_UpdatePostGustheadScroll   j  ; was: loc_DAA8
                 tst.w   (word_FFA968).w
-                beq.s   loc_DAE2
-                bsr.w   Scroll_ApplyVelocity
+                beq.s   Stage11_UpdateGustheadExitCamera
+                bsr.w   Stage11_ApplyExitScrollVelocity
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$14,(StageTableIndex).w
-                beq.s   locret_DAE0
+                beq.s   Stage11_UpdateGustheadExitScroll_Return
                 tst.w   (word_FFA968).w
-                beq.s   locret_DAE0
+                beq.s   Stage11_UpdateGustheadExitScroll_Return
                 move.w  (dword_FFA900).w,d0
                 move.w  d0,d1
                 andi.w  #$FF,d0
@@ -196,105 +196,105 @@ loc_DAA8:                                               ; CODE XREF: Stage_Gusth
                 sub.w   d1,d0
                 move.w  d0,(dword_FFA900).w
                 move.w  d0,(word_FFA928).w
-locret_DAE0:                                            ; CODE XREF: Stage_Stage12Init+18   j
-                                        ; Stage_Stage12Init+1E   j
+Stage11_UpdateGustheadExitScroll_Return:                ; CODE XREF: Stage11_UpdateGustheadExitScroll+18   j  ; was: locret_DAE0
+                                        ; Stage11_UpdateGustheadExitScroll+1E   j
                 rts
 ; ---------------------------------------------------------------------------
-loc_DAE2:                                               ; CODE XREF: Stage_Stage12Init+8   j
+Stage11_UpdateGustheadExitCamera:                       ; CODE XREF: Stage11_UpdateGustheadExitScroll+8   j  ; was: loc_DAE2
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Scroll_AccumulateQuarterHorizontalDelta
-; End of function Stage_Stage12Init
-; Applies velocity value to horizontal scroll position
-Scroll_ApplyVelocity:                                   ; CODE XREF: Stage_Stage12Init+A   p  ; was: sub_DAEA
+; End of function Stage11_StartPostGustheadTransition
+; Apply the signed Stage 11 exit velocity to horizontal camera position
+Stage11_ApplyExitScrollVelocity:                        ; CODE XREF: Stage11_UpdateGustheadExitScroll+A   p  ; was: sub_DAEA
                 move.l  (dword_FFA960).w,d0
                 add.l   d0,(dword_FFA900).w
                 rts
-; End of function Scroll_ApplyVelocity
-; Updates Stage 12 scroll
-Stage_Stage12ScrollUpdate:                              ; DATA XREF: ROM:0000D970   o  ; was: sub_DAF4
+; End of function Stage11_ApplyExitScrollVelocity
+; Initialize Stage 12 raster state and continue into its first scroll state
+Stage12_InitializeScroll:                               ; DATA XREF: ROM:0000D970   o  ; was: sub_DAF4
                 move.b  #$40,(byte_FFA420).w            ; '@'
                 move.w  #$30,(RasterEffectIndex).w      ; '0'
                 clr.w   (RasterEffectInitState).w
-; Updates stage 12 scrolling with delta at position $1580
-Stage_Stage12_ScrollLoop:                               ; DATA XREF: ROM:0000D972   o  ; was: loc_DB04
+; Scroll Stage 12 to the first exit threshold at camera X $1580
+Stage12_UpdateScrollToExit:                             ; DATA XREF: ROM:0000D972   o  ; was: loc_DB04
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$1580,(dword_FFA900).w
-                bmi.w   Stage_Stage10CheckTransition_Return
+                bmi.w   Stage_MidgameStateReturn
                 addq.w  #2,(word_FFA950).w
                 move.w  #$80,(word_FF806E).w
                 move.w  #$8000,(word_FF808A).w
                 move.b  #1,(byte_FF830E).w
                 rts
-; End of function Stage_Stage12ScrollUpdate
-; Initializes Stage 13
-Stage_Stage13Init:                                      ; DATA XREF: ROM:0000D974   o  ; was: sub_DB2E
+; End of function Stage12_InitializeScroll
+; Continue Stage 12 to the tile-asset handoff at camera X $15E0
+Stage12_UpdateScrollToExitTiles:                        ; DATA XREF: ROM:0000D974   o  ; was: sub_DB2E
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
-                bsr.w   Stage_WaitForTimerDecrement
+                bsr.w   Stage12_DecrementExitTimer
                 cmpi.w  #$15E0,(dword_FFA900).w
-                bmi.w   Stage_Stage10CheckTransition_Return
+                bmi.w   Stage_MidgameStateReturn
                 addq.w  #2,(word_FFA950).w
                 jsr     (Stage_ClearSharedStateBuffer).l
-                lea     stru_DB5A(pc),a0
+                lea     Stage12_ExitTileAssetLoadList(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l
-; End of function Stage_Stage13Init
+; End of function Stage12_UpdateScrollToExitTiles
 ; ---------------------------------------------------------------------------
-stru_DB5A:      dc.w    7                               ; field_0
-                                        ; DATA XREF: Stage_Stage13Init+20   o
+Stage12_ExitTileAssetLoadList:  dc.w    7               ; field_0  ; was: stru_DB5A
+                                        ; DATA XREF: Stage12_UpdateScrollToExitTiles+20   o
                 dc.l    tiles_19E8A8                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    $FFFF
 
-; Updates Stage 13 scroll
-Stage_Stage13ScrollUpdate:                              ; DATA XREF: ROM:0000D976   o  ; was: sub_DB64
+; Continue Stage 12 from the tile handoff to the Sharpssteel approach
+Stage12_UpdateScrollToSharpssteel:                      ; DATA XREF: ROM:0000D976   o  ; was: sub_DB64
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
-                bsr.w   Stage_WaitForTimerDecrement
+                bsr.w   Stage12_DecrementExitTimer
                 cmpi.w  #$1760,(dword_FFA900).w
-                bmi.s   locret_DB7C
+                bmi.s   Stage12_UpdateScrollToSharpssteel_Return
                 addq.w  #2,(word_FFA950).w
-locret_DB7C:                                            ; CODE XREF: Stage_Stage13ScrollUpdate+12   j
+Stage12_UpdateScrollToSharpssteel_Return:               ; CODE XREF: Stage12_UpdateScrollToSharpssteel+12   j  ; was: locret_DB7C
                 rts
-; End of function Stage_Stage13ScrollUpdate
-; Checks transition to next segment
-Stage_Stage13CheckTransition:                           ; DATA XREF: ROM:0000D978   o  ; was: sub_DB7E
+; End of function Stage12_UpdateScrollToSharpssteel
+; Clamp the Stage 12 camera at the Sharpssteel arena boundary
+Stage12_InitializeSharpssteelArena:                     ; DATA XREF: ROM:0000D978   o  ; was: sub_DB7E
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 move.w  #$17A0,d0
                 cmp.w   (dword_FFA900).w,d0
-                bpl.s   locret_DB9C
+                bpl.s   Stage12_InitializeSharpssteelArena_Return
                 addq.w  #2,(word_FFA950).w
                 clr.l   (dword_FFA910).w
                 move.w  d0,(dword_FFA900).w
-locret_DB9C:                                            ; CODE XREF: Stage_Stage13CheckTransition+10   j
+Stage12_InitializeSharpssteelArena_Return:              ; CODE XREF: Stage12_InitializeSharpssteelArena+10   j  ; was: locret_DB9C
                 rts
-; End of function Stage_Stage13CheckTransition
-; Empty handler for stage 13 transition
-Stage_Stage13EmptyHandler:                              ; DATA XREF: ROM:0000D97A   o  ; was: nullsub_24
+; End of function Stage12_InitializeSharpssteelArena
+; Empty Stage 12 state at table offset $1E
+Stage12_EmptyState1E:                                   ; DATA XREF: ROM:0000D97A   o  ; was: nullsub_24
                 rts
-; End of function Stage_Stage13EmptyHandler
-; Transitions to Sharpsteel boss
-Stage_SharpssteelTransition:                            ; DATA XREF: ROM:0000D97C   o  ; was: sub_DBA0
+; End of function Stage12_EmptyState1E
+; Submit the Sharpssteel asset set when its external trigger clears
+Stage12_InitializeSharpssteelEncounter:                 ; DATA XREF: ROM:0000D97C   o  ; was: sub_DBA0
                 tst.w   (word_FF829E).w
-                bne.w   Stage_Stage10CheckTransition_Return
+                bne.w   Stage_MidgameStateReturn
                 move.w  #9,(word_FF808C).w
                 bsr.w   Stage_TransitionToNextPhase
                 lea     (Boss_SharpssteelAssetSet).l,a1
                 bra.w   Boss_LoadAssetSet
-; End of function Stage_SharpssteelTransition
-; Initializes Stage 14
-Stage_Stage14Init:                                      ; DATA XREF: ROM:0000D97E   o  ; was: sub_DBBC
+; End of function Stage12_InitializeSharpssteelEncounter
+; Track Sharpssteel's removal and begin the post-boss bonus
+Stage12_UpdatePostSharpssteel:                          ; DATA XREF: ROM:0000D97E   o  ; was: sub_DBBC
                 tst.w   (Entity_ObjectPool).w
-                bne.w   Stage_Stage10CheckTransition_Return
+                bne.w   Stage_MidgameStateReturn
                 move.w  #$FFFF,(word_FFDB44).w
                 bra.w   Stage_StartTimeBonusAndPreloadNextPhase
-; End of function Stage_Stage14Init
-; Transitions to teleport after ship destruction
-Stage_TeleportTransition:                               ; DATA XREF: ROM:0000D980   o  ; was: sub_DBCE
+; End of function Stage12_UpdatePostSharpssteel
+; Leave Stage 12 and start the teleport transition into Stage 13
+Stage12_StartTeleportTransitionToStage13:               ; DATA XREF: ROM:0000D980   o  ; was: sub_DBCE
                 tst.w   (MessageSequenceState).w
-                bne.w   Stage_Stage10CheckTransition_Return
+                bne.w   Stage_MidgameStateReturn
                 addq.w  #2,(word_FFA950).w
                 clr.w   (word_FF820C).w
                 addq.w  #2,(StageTableIndex).w
@@ -302,16 +302,16 @@ Stage_TeleportTransition:                               ; DATA XREF: ROM:0000D98
                 clr.w   (dword_FF806A+2).w
                 move.b  #$CA,d0
                 jmp     (Sound_PlaySFX).l
-; End of function Stage_TeleportTransition
-; Fade in and setup for teleport scene
-Stage_TeleportFadeIn:                                   ; DATA XREF: ROM:0000D982   o  ; was: sub_DBF4
+; End of function Stage12_StartTeleportTransitionToStage13
+; Delay, initialize, and apply the first Stage 12-to-13 teleport fade
+Stage12To13_UpdateTeleportFadeIn:                       ; DATA XREF: ROM:0000D982   o  ; was: sub_DBF4
                 tst.w   (word_FF80E6).w
-                beq.s   loc_DBFC
-                bpl.s   loc_DC5E
-loc_DBFC:                                               ; CODE XREF: Stage_TeleportFadeIn+4   j
+                beq.s   Stage12To13_AdvanceTeleportFadeDelay
+                bpl.s   Stage12To13_ApplyTeleportFadeLevel
+Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+4   j  ; was: loc_DBFC
                 addq.w  #1,(dword_FF806A+2).w
                 cmpi.w  #$3C,(dword_FF806A+2).w         ; '<'
-                bne.s   loc_DC5E
+                bne.s   Stage12To13_ApplyTeleportFadeLevel
                 addq.w  #2,(word_FFA950).w
                 move.w  #$FCE0,(dword_FFA900).w
                 clr.w   (dword_FFA904).w
@@ -329,78 +329,78 @@ loc_DBFC:                                               ; CODE XREF: Stage_Telep
                 move.w  #0,(word_FFA946).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 jsr     (Stage_LoadTeleportAssets).l
-loc_DC5E:                                               ; CODE XREF: Stage_TeleportFadeIn+6   j
-                                        ; Stage_TeleportFadeIn+12   j
+Stage12To13_ApplyTeleportFadeLevel:                     ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+6   j  ; was: loc_DC5E
+                                        ; Stage12To13_UpdateTeleportFadeIn+12   j
                 move.w  (dword_FF806A+2).w,d0
                 cmpi.w  #$1C,d0
-                bmi.s   loc_DC6A
+                bmi.s   Stage12To13_ClampAndApplyTeleportFadeLevel
                 moveq   #$1C,d0
-loc_DC6A:                                               ; CODE XREF: Stage_TeleportFadeIn+72   j
+Stage12To13_ClampAndApplyTeleportFadeLevel:             ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+72   j  ; was: loc_DC6A
                 jmp     (Gfx_SetFadeParams).l
-; End of function Stage_TeleportFadeIn
-; Handles teleport fade sequence with scroll
-Stage_TeleportFadeSequence:                             ; DATA XREF: ROM:0000D984   o  ; was: sub_DC70
+; End of function Stage12To13_UpdateTeleportFadeIn
+; Decrease the teleport fade level while advancing the transition scroll
+Stage12To13_UpdateTeleportFadeOut:                      ; DATA XREF: ROM:0000D984   o  ; was: sub_DC70
                 move.w  (dword_FF806A+2).w,d0
                 jsr     (Gfx_SetFadeParams).l
                 addq.w  #6,(dword_FFA900).w
                 subq.w  #1,(dword_FF806A+2).w
-                bpl.s   loc_DCA8
+                bpl.s   Stage12To13_UpdateTeleportScroll
                 addq.w  #2,(word_FFA950).w
-; Advances scroll during teleport fade sequence
-Stage_TeleportFadeSequence_Advance:                     ; DATA XREF: ROM:0000D986   o  ; was: loc_DC88
+; Continue the teleport scroll until its signed position crosses zero
+Stage12To13_AdvanceTeleportScroll:                      ; DATA XREF: ROM:0000D986   o  ; was: loc_DC88
                 addq.w  #6,(dword_FFA900).w
-                bmi.s   loc_DCA8
+                bmi.s   Stage12To13_UpdateTeleportScroll
                 addq.w  #2,(word_FFA950).w
                 move.w  #$60,(dword_FF806A+2).w         ; '`'
                 clr.w   (dword_FFA900).w
                 bclr    #6,(byte_FFA959).w
                 move.w  #1,(word_FFA448).w
-loc_DCA8:                                               ; CODE XREF: Stage_TeleportFadeSequence+12   j
-                                        ; Stage_TeleportFadeSequence+1C   j
-                bsr.w   Stage_TeleportUpdateScroll
+Stage12To13_UpdateTeleportScroll:                       ; CODE XREF: Stage12To13_UpdateTeleportFadeOut+12   j  ; was: loc_DCA8
+                                        ; Stage12To13_UpdateTeleportFadeOut+1C   j
+                bsr.w   Stage12To13_UpdateTeleportAndSnakeScroll
                 move.w  (dword_FFA900).w,d0
                 addi.w  #$158,d0
-                bpl.s   loc_DCB8
+                bpl.s   Stage12To13_QueueTeleportColumn
                 rts
 ; ---------------------------------------------------------------------------
-loc_DCB8:                                               ; CODE XREF: Stage_TeleportFadeSequence+44   j
+Stage12To13_QueueTeleportColumn:                        ; CODE XREF: Stage12To13_UpdateTeleportFadeOut+44   j  ; was: loc_DCB8
                 moveq   #0,d1
                 jmp     Tilemap_QueuePrimaryPlaneColumn
-; End of function Stage_TeleportFadeSequence
-; Transitions to Snake boss stage
-Stage_SnakeTransition:                                  ; DATA XREF: ROM:0000D988   o  ; was: sub_DCC0
+; End of function Stage12To13_UpdateTeleportFadeOut
+; Finish the Stage 13 Snake-intro scroll and enter its configured state offset
+Stage13_UpdateSnakeIntroTransition:                     ; DATA XREF: ROM:0000D988   o  ; was: sub_DCC0
                 subi.l  #$4000,(dword_FF8066+2).w
-                bpl.s   loc_DCCE
+                bpl.s   Stage13_UpdateSnakeIntroTransition_Scroll
                 clr.l   (dword_FF8066+2).w
-loc_DCCE:                                               ; CODE XREF: Stage_SnakeTransition+8   j
-                bsr.w   Stage_TeleportUpdateScroll
+Stage13_UpdateSnakeIntroTransition_Scroll:              ; CODE XREF: Stage13_UpdateSnakeIntroTransition+8   j  ; was: loc_DCCE
+                bsr.w   Stage12To13_UpdateTeleportAndSnakeScroll
                 subq.w  #1,(dword_FF806A+2).w
-                bpl.w   Stage_Stage10CheckTransition_Return
-Stage_SnakeTransitionBeginStage13:
+                bpl.w   Stage_MidgameStateReturn
+Stage13_BeginSnakeSequence:
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.b  #$89,d0
                 jsr     (Sound_QueueBGMOrStop).l
-                bra.w   Stage_InitStage13
-; End of function Stage_SnakeTransition
-; Updates scroll position during teleport
-Stage_TeleportUpdateScroll:                             ; CODE XREF: Stage_TeleportFadeSequence:loc_DCA8   p  ; was: sub_DCEE
-                                        ; sub_DCC0:loc_DCCE   p
+                bra.w   Stage13_InitializeSnakeEncounter
+; End of function Stage13_UpdateSnakeIntroTransition
+; Update the shared teleport/Snake background and secondary scroll velocity
+Stage12To13_UpdateTeleportAndSnakeScroll:               ; CODE XREF: Stage12To13_UpdateTeleportFadeOut:Stage12To13_UpdateTeleportScroll   p  ; was: sub_DCEE
+                                        ; Stage13_UpdateSnakeIntroTransition:Stage13_UpdateSnakeIntroTransition_Scroll   p
                 bsr.w   Scroll_UpdateSnakeBackground
                 move.l  (dword_FF8066+2).w,d0
                 add.l   d0,(dword_FFA908).w
                 rts
-; End of function Stage_TeleportUpdateScroll
-; Waits for timer to decrement before continuing
-Stage_WaitForTimerDecrement:                            ; CODE XREF: Stage_Stage13Init+8   p  ; was: sub_DCFC
-                                        ; Stage_Stage13ScrollUpdate+8   p
+; End of function Stage12To13_UpdateTeleportAndSnakeScroll
+; Decrement the Stage 12 exit timer when it is active
+Stage12_DecrementExitTimer:                             ; CODE XREF: Stage12_UpdateScrollToExitTiles+8   p  ; was: sub_DCFC
+                                        ; Stage12_UpdateScrollToSharpssteel+8   p
                 tst.w   (word_FF806E).w
-                bmi.w   Stage_Stage10CheckTransition_Return
+                bmi.w   Stage_MidgameStateReturn
                 subq.w  #1,(word_FF806E).w
-                bne.w   Stage_Stage10CheckTransition_Return
+                bne.w   Stage_MidgameStateReturn
                 rts
-; End of function Stage_WaitForTimerDecrement
-; Initializes Stage 13 (Snake boss)
-Stage_InitStage13:                                      ; CODE XREF: Stage_SnakeTransition+2A   j  ; was: sub_DD0E
+; End of function Stage12_DecrementExitTimer
+; Initialize Stage 13's Snake object, raster effect, and state offset $36
+Stage13_InitializeSnakeEncounter:                       ; CODE XREF: Stage13_UpdateSnakeIntroTransition+2A   j  ; was: sub_DD0E
                                         ; DATA XREF: ROM:0000D990   o
                 move.w  #$36,(word_FFA950).w            ; '6'
                 move.w  #$298,(Entity_ObjectPool).w
@@ -408,27 +408,27 @@ Stage_InitStage13:                                      ; CODE XREF: Stage_Snake
                 move.w  #$30,(RasterEffectIndex).w      ; '0'
                 clr.w   (RasterEffectInitState).w
                 jsr     (Stage_ClearSharedStateBuffer).l
-; End of function Stage_InitStage13
-; Waits for scroll position before boss
-Stage_SnakeWaitScroll:                                  ; DATA XREF: ROM:0000D992   o  ; was: sub_DD2E
+; End of function Stage13_InitializeSnakeEncounter
+; Advance the Snake encounter to the next state while preserving its health
+Stage13_UpdateSnakeEncounterTransition:                 ; DATA XREF: ROM:0000D992   o  ; was: sub_DD2E
                 bsr.w   Scroll_UpdateSnakeBackground
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 cmpi.w  #$3E0,(dword_FFA900).w
-                bmi.w   Stage_Stage10CheckTransition_Return
+                bmi.w   Stage_MidgameStateReturn
                 move.w  (BossHealth).w,(dword_FF8040).w
                 move.w  (BossMaxHealth).w,(dword_FF8040+2).w
                 bsr.w   Stage_TransitionToNextPhase
                 move.w  (dword_FF8040).w,(BossHealth).w
                 move.w  (dword_FF8040+2).w,(BossMaxHealth).w
                 rts
-; End of function Stage_SnakeWaitScroll
-; Transitions to Bugmax boss
-Stage_BugmaxTransition:                                 ; DATA XREF: ROM:0000D994   o  ; was: sub_DD5E
+; End of function Stage13_UpdateSnakeEncounterTransition
+; Clamp the Stage 13 camera and prepare the Bugmax approach rows and timer
+Stage13_InitializeBugmaxApproach:                       ; DATA XREF: ROM:0000D994   o  ; was: sub_DD5E
                 bsr.w   Scroll_UpdateSnakeBackground
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 move.w  #$460,d0
                 cmp.w   (dword_FFA900).w,d0
-                bpl.w   Stage_Stage10CheckTransition_Return
+                bpl.w   Stage_MidgameStateReturn
                 move.w  #$100,(word_FF806E).w
                 addq.w  #2,(word_FFA950).w
                 clr.l   (dword_FFA910).w
@@ -441,18 +441,17 @@ Stage_BugmaxTransition:                                 ; DATA XREF: ROM:0000D99
                 clr.w   (word_FFA946).w
                 move.w  #$6000,(dword_FFA940).w
                 rts
-; End of function Stage_BugmaxTransition
-; Waits for DMA before boss intro
-Stage_BugmaxWaitDMA:                                    ; DATA XREF: ROM:0000D996   o  ; was: sub_DDA6
+; End of function Stage13_InitializeBugmaxApproach
+; Fill the approach rows, wait for the timer/object gate, and initialize Bugmax
+Stage13_UpdateBugmaxApproach:                           ; DATA XREF: ROM:0000D996   o  ; was: sub_DDA6
                 bsr.w   Scroll_UpdateSnakeBackground
                 jsr     (Tilemap_QueueNextConstantRow).l
-                bpl.w   Stage_Stage10CheckTransition_Return
+                bpl.w   Stage_MidgameStateReturn
                 subq.w  #1,(word_FF806E).w
-                bmi.s   Stage_InitBugmaxBattle
+                bmi.s   Stage13_InitializeBugmaxEncounter
                 tst.w   (Entity_ObjectPool).w
-                bne.w   Stage_Stage10CheckTransition_Return
-; Initializes Bugmax boss battle with palette and DMA setup
-Stage_InitBugmaxBattle:                                 ; CODE XREF: Stage_BugmaxWaitDMA+12   j  ; was: loc_DDC2
+                bne.w   Stage_MidgameStateReturn
+Stage13_InitializeBugmaxEncounter:                      ; CODE XREF: Stage13_UpdateBugmaxApproach+12   j  ; was: loc_DDC2
                 addq.w  #2,(word_FFA950).w
                 move.w  #$7000,(BossHealth).w
                 move.w  #$7000,(BossMaxHealth).w
@@ -460,37 +459,37 @@ Stage_InitBugmaxBattle:                                 ; CODE XREF: Stage_Bugma
                 move.w  #$1E0,(word_FF8236).w
                 lea     (Boss_BugmaxAssetSet).l,a1
                 bra.w   Boss_LoadAssetSet
-; End of function Stage_BugmaxWaitDMA
-; Starts Bugmax battle phase
-Stage_BugmaxStartBattle:                                ; DATA XREF: ROM:0000D998   o  ; was: sub_DDE8
+; End of function Stage13_UpdateBugmaxApproach
+; Track the Bugmax encounter and advance after the boss object clears
+Stage13_UpdateBugmaxEncounter:                          ; DATA XREF: ROM:0000D998   o  ; was: sub_DDE8
                 bsr.w   Scroll_UpdateSnakeBackground
                 tst.w   (Entity_ObjectPool).w
-                bne.s   loc_DDFC
+                bne.s   Stage13_UpdateBugmaxEncounterCamera
                 addq.w  #2,(word_FFA950).w
                 move.w  #$22,(word_FFA02A).w            ; '"'
-loc_DDFC:                                               ; CODE XREF: Stage_BugmaxStartBattle+8   j
+Stage13_UpdateBugmaxEncounterCamera:                    ; CODE XREF: Stage13_UpdateBugmaxEncounter+8   j  ; was: loc_DDFC
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
-; End of function Stage_BugmaxStartBattle
-; Checks conditions and initiates Bugmax boss transition
-Stage_BugmaxTransitionCheck:                            ; DATA XREF: ROM:0000D99A   o  ; was: sub_DE00
+; End of function Stage13_UpdateBugmaxEncounter
+; Wait for post-Bugmax gates, then start the interstage transition
+Stage13_StartPostBugmaxTransition:                      ; DATA XREF: ROM:0000D99A   o  ; was: sub_DE00
                 bsr.w   Scroll_UpdateSnakeBackground
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 tst.w   (word_FF8230).w
-                bne.w   Stage_Stage10CheckTransition_Return
+                bne.w   Stage_MidgameStateReturn
                 tst.w   (word_FF8138).w
-                bne.w   Stage_Stage10CheckTransition_Return
+                bne.w   Stage_MidgameStateReturn
                 move.b  #$92,d0
                 jsr     (Sound_QueueBGMOrStop).l
                 move.l  #StageTransitionMessageSequence_TrainAndBugmax,(StageMessageCursor).w
                 bra.w   Stage_StartInterstageTransition
-; End of function Stage_BugmaxTransitionCheck
-; Loads Stage 10 tile graphics and palette
-Stage_LoadStage10Graphics:                              ; CODE XREF: Stage_Stage10ScrollUpdate+6   p  ; was: sub_DE2E
-                                        ; sub_DA40   p
+; End of function Stage13_StartPostBugmaxTransition
+; Initialize the shared Stage 10/11 raster and ambient-particle effects
+Midgame_InitializeRasterAndAmbientEffects:              ; CODE XREF: Stage10_Initialize+6   p  ; was: sub_DE2E
+                                        ; Stage11_Initialize   p
                 move.w  #$30,(RasterEffectIndex).w      ; '0'
                 clr.w   (RasterEffectInitState).w
-                jsr     (Stage10_InitAmbientParticles).l
+                jsr     (Midgame_InitializeAmbientParticles).l
                 addq.w  #2,(word_FFA950).w
                 rts
-; End of function Stage_LoadStage10Graphics
+; End of function Midgame_InitializeRasterAndAmbientEffects
 ; Stage 14 scroll handler

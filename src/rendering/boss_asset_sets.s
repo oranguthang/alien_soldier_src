@@ -109,7 +109,7 @@ Boss_XiTigerGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_DeepStriderAssetSet:   dc.w    $19C                ; field_0  ; was: stru_11440
-                                        ; DATA XREF: Stage_DeepStriderTransition+26   o
+                                        ; DATA XREF: Stage10_InitializeDeepStriderEncounter+26   o
                 dc.l    Boss_DeepStriderGraphicsLoadList  ; field_2
                 dc.l    Boss_DeepStriderPaletteCommand  ; field_6
 Boss_DeepStriderGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1144A
@@ -118,7 +118,7 @@ Boss_DeepStriderGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_GustheadAssetSet:  dc.w    $1B0                    ; field_0  ; was: stru_11454
-                                        ; DATA XREF: Stage_GustheadTransition+26   o
+                                        ; DATA XREF: Stage11_InitializeGustheadEncounter+26   o
                 dc.l    Boss_GustheadGraphicsLoadList   ; field_2
                 dc.l    Boss_GustheadPaletteCommand     ; field_6
 Boss_GustheadGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1145E
@@ -127,7 +127,7 @@ Boss_GustheadGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_SharpssteelAssetSet:   dc.w    $21C                ; field_0  ; was: stru_11468
-                                        ; DATA XREF: Stage_SharpssteelTransition+12   o
+                                        ; DATA XREF: Stage12_InitializeSharpssteelEncounter+12   o
                 dc.l    Boss_SharpssteelGraphicsLoadList  ; field_2
                 dc.l    Boss_SharpssteelPaletteCommand  ; field_6
 Boss_SharpssteelGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_11472
@@ -136,7 +136,7 @@ Boss_SharpssteelGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_BugmaxAssetSet:    dc.w    $300                    ; field_0  ; was: stru_1147C
-                                        ; DATA XREF: Stage_BugmaxWaitDMA+38   o
+                                        ; DATA XREF: Stage13_UpdateBugmaxApproach+38   o
                 dc.l    Boss_BugmaxGraphicsLoadList     ; field_2
                 dc.l    Boss_BugmaxPaletteCommand       ; field_6
 Boss_BugmaxGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_11486

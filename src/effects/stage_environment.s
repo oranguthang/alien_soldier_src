@@ -140,18 +140,18 @@ TerrainTileAnimation_TransferFrame:                     ; CODE XREF: TerrainTile
 TerrainTileAnimation_FramePatterns: dc.w    $878C, $888D, $898E, $8A8F, $8B90  ; was: word_2F4FA
                                         ; DATA XREF: TerrainTileAnimation_Finish+20   r
 
-; Initializes the six ambient screen particles used by Stage 10
-Stage10_InitAmbientParticles:                           ; CODE XREF: Stage_LoadStage10Graphics+A   p  ; was: sub_2F504
+; Initialize the six ambient screen particles shared by Stages 10 and 11
+Midgame_InitializeAmbientParticles:                     ; CODE XREF: Midgame_InitializeRasterAndAmbientEffects+A   p  ; was: sub_2F504
                 movea.w #(byte_FFD8E0-M68K_RAM),a0
                 moveq   #5,d7
-Stage10_InitAmbientParticles_Loop:                      ; CODE XREF: Stage10_InitAmbientParticles+C   j  ; was: loc_2F50A
-                bsr.s   Stage10_InitAmbientParticle
+Midgame_InitializeAmbientParticles_Loop:                ; CODE XREF: Midgame_InitializeAmbientParticles+C   j  ; was: loc_2F50A
+                bsr.s   Midgame_InitializeAmbientParticle
                 lea     $60(a0),a0
-                dbf     d7,Stage10_InitAmbientParticles_Loop
+                dbf     d7,Midgame_InitializeAmbientParticles_Loop
                 rts
-; End of function Stage10_InitAmbientParticles
+; End of function Midgame_InitializeAmbientParticles
 ; Initializes one non-colliding ambient particle
-Stage10_InitAmbientParticle:                            ; CODE XREF: Stage10_InitAmbientParticles:Stage10_InitAmbientParticles_Loop   p  ; was: sub_2F516
+Midgame_InitializeAmbientParticle:                      ; CODE XREF: Midgame_InitializeAmbientParticles:Midgame_InitializeAmbientParticles_Loop   p  ; was: sub_2F516
                 move.w  #$208,(a0)
                 move.w  #$8C80,2(a0)
                 move.w  #0,8(a0)
@@ -160,8 +160,8 @@ Stage10_InitAmbientParticle:                            ; CODE XREF: Stage10_Ini
                 move.w  (dword_FFA900).w,$48(a0)
                 move.w  #$44F5,$E(a0)
 ; Gives the particle a new randomized screen position and vertical motion
-Stage10_ResetAmbientParticle:                           ; CODE XREF: Stage10_UpdateAmbientParticle+8   j  ; was: loc_2F53E
-                                        ; Stage10_UpdateAmbientParticle+12   j
+Midgame_ResetAmbientParticle:                           ; CODE XREF: Midgame_UpdateAmbientParticle+8   j  ; was: loc_2F53E
+                                        ; Midgame_UpdateAmbientParticle+12   j
                 moveq   #0,d0
                 move.w  (RandomNumberState+2).w,d0
                 andi.w  #$7FFF,d0
@@ -179,16 +179,16 @@ Stage10_ResetAmbientParticle:                           ; CODE XREF: Stage10_Upd
                 addi.w  #$80,d0
                 move.w  d0,$14(a0)
                 jmp     (RandomNumber).l
-; End of function Stage10_InitAmbientParticle
-; Keeps an ambient particle inside the Stage 10 screen region
-Stage10_UpdateAmbientParticle:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F580
+; End of function Midgame_InitializeAmbientParticle
+; Keep a shared Stage 10/11 ambient particle inside the screen region
+Midgame_UpdateAmbientParticle:                          ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F580
                 movea.w a5,a0
                 cmpi.w  #$80,$10(a5)
-                bmi.w   Stage10_ResetAmbientParticle
+                bmi.w   Midgame_ResetAmbientParticle
                 cmpi.w  #$1C0,$10(a5)
-                bpl.w   Stage10_ResetAmbientParticle
+                bpl.w   Midgame_ResetAmbientParticle
                 cmpi.w  #$138,$14(a5)
-                bpl.w   Stage10_ResetAmbientParticle
+                bpl.w   Midgame_ResetAmbientParticle
                 move.w  (dword_FFA900).w,d0
                 sub.w   $48(a5),d0
                 asr.w   #1,d0
@@ -198,4 +198,4 @@ Stage10_UpdateAmbientParticle:                          ; DATA XREF: ROM:Entity_
                 asl.l   #1,d0
                 move.l  d0,$18(a5)
                 rts
-; End of function Stage10_UpdateAmbientParticle
+; End of function Midgame_UpdateAmbientParticle

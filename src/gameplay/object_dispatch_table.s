@@ -129,7 +129,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Boss_JetsripperProjectileUpdate
                 dc.l    Weapon_UpdateSeekingMissile
                 dc.l    Effect_SpawnPlayerDeathSpark
-                dc.l    Stage10_UpdateAmbientParticle
+                dc.l    Midgame_UpdateAmbientParticle
                 dc.l    Boss_SunsetStingDefeatCoreMain
                 dc.l    Projectile_ViblackMissileMain
                 dc.l    Boss_GustheadDebrisUpdate

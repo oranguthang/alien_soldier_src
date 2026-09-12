@@ -176,8 +176,8 @@ Stage_ApplyStage13Configuration:                        ; DATA XREF: ROM:0001228
                 bra.w   Stage_ApplyConfigurationRecord
 ; End of function Stage_ApplyStage13Configuration
 ; Clears 224 bytes of shared state beginning at FF7800
-Stage_ClearSharedStateBuffer:                           ; CODE XREF: Stage_Stage13Init+1A   p  ; was: sub_1239A
-                                        ; Stage_InitStage13+1A   p
+Stage_ClearSharedStateBuffer:                           ; CODE XREF: Stage12_UpdateScrollToExitTiles+1A   p  ; was: sub_1239A
+                                        ; Stage13_InitializeSnakeEncounter+1A   p
                 lea     (dword_FF7800).l,a0
                 moveq   #0,d0
                 moveq   #$37,d7                         ; '7'

@@ -256,8 +256,8 @@ Sys_ClearRAMBuffer8K_Loop:                              ; CODE XREF: Sys_ClearRA
                 rts
 ; End of function Sys_ClearRAMBuffer8K
 ; Queue the requested BGM ID, or stop playback when BGM is disabled
-Sound_QueueBGMOrStop:                                   ; CODE XREF: Stage_SnakeTransition+24   p  ; was: sub_1B8B8
-                                        ; Stage_BugmaxTransitionCheck+1C   p
+Sound_QueueBGMOrStop:                                   ; CODE XREF: Stage13_UpdateSnakeIntroTransition+24   p  ; was: sub_1B8B8
+                                        ; Stage13_StartPostBugmaxTransition+1C   p
                 btst    #1,(SoundDisableFlags+1).w
                 beq.s   Sound_QueueBGMOrStopSubmit
                 move.b  #4,d0

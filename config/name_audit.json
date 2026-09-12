@@ -2379,29 +2379,29 @@
     {
       "address": "0x02F504",
       "previous_name": "Enemy_InitStage10Debris",
-      "current_name": "Stage10_InitAmbientParticles",
+      "current_name": "Midgame_InitializeAmbientParticles",
       "legacy_name": "sub_2F504",
       "evidence": "static",
       "basis": [
-        "Stage_LoadStage10Graphics calls this routine once to initialize exactly six reserved object slots as type 0x208.",
+        "The Stage 10 and Stage 11 initialization states call Midgame_InitializeRasterAndAmbientEffects, which reaches this routine to initialize exactly six reserved object slots as type 0x208.",
         "The objects have no collision setup or finite debris lifetime; their update loop continually recycles them inside the viewport."
       ]
     },
     {
       "address": "0x02F516",
       "previous_name": "Enemy_InitDebrisEntity",
-      "current_name": "Stage10_InitAmbientParticle",
+      "current_name": "Midgame_InitializeAmbientParticle",
       "legacy_name": "sub_2F516",
       "evidence": "static",
       "basis": [
         "This helper initializes each of the six reserved type-0x208 objects with display attributes, camera history and a fixed tile index.",
-        "It immediately falls through to randomized placement used by the persistent Stage 10 ambient system, not a one-shot enemy debris effect."
+        "It immediately falls through to randomized placement used by the persistent Stage 10/11 ambient system, not a one-shot enemy debris effect."
       ]
     },
     {
       "address": "0x02F53E",
       "previous_name": "Enemy_DebrisSetRandomVelocity",
-      "current_name": "Stage10_ResetAmbientParticle",
+      "current_name": "Midgame_ResetAmbientParticle",
       "legacy_name": "loc_2F53E",
       "evidence": "static",
       "basis": [
@@ -2412,11 +2412,11 @@
     {
       "address": "0x02F580",
       "previous_name": "Enemy_DebrisUpdate",
-      "current_name": "Stage10_UpdateAmbientParticle",
+      "current_name": "Midgame_UpdateAmbientParticle",
       "legacy_name": "sub_2F580",
       "evidence": "static",
       "basis": [
-        "Entity type 0x208 maps here and is constructed only by Stage10_InitAmbientParticles in the Stage 10 graphics setup.",
+        "Entity type 0x208 maps here and is constructed only by Midgame_InitializeAmbientParticles from the Stage 10 and Stage 11 initialization states.",
         "The handler compensates for horizontal camera motion, derives horizontal motion from the stage scroll rate and recycles the object at viewport bounds; it has no enemy or debris interaction."
       ]
     },
@@ -15528,6 +15528,61 @@
     {"address":"0x01C5E4","previous_name":"loc_1C5E4","current_name":"XiTigerStage_AdvanceToSecondaryPlane","legacy_name":"loc_1C5E4","evidence":"static","basis":["Completed Xi-Tiger first-plane paths advance the substate, reset the 32-row counter, and seed the secondary camera coordinates."]},
     {"address":"0x01C5FC","previous_name":"loc_1C5FC","current_name":"XiTigerStage_StreamSecondaryPlane","legacy_name":"loc_1C5FC","evidence":"static","basis":["Xi-Tiger substate four reads the second row-selector word, queues two constant or scrolling rows, and proceeds only after completion."]},
     {"address":"0x01C61C","previous_name":"loc_1C61C","current_name":"XiTigerStage_StreamSecondaryPlane_Rows","legacy_name":"loc_1C61C","evidence":"static","basis":["A nonzero Xi-Tiger second-plane selector indexes the shared secondary transfer-parameter pointers and queues two scrolling rows."]},
-    {"address":"0x01C636","previous_name":"loc_1C636","current_name":"XiTigerStage_FinishGameplayEntry","legacy_name":"loc_1C636","evidence":"static","basis":["Completed Xi-Tiger second-plane streaming selects gameplay mode $10, clears the substate and frame-exit flag, restores fade parameters, and tail-calls Stage_DispatchSelectedProcess."]}
+    {"address":"0x01C636","previous_name":"loc_1C636","current_name":"XiTigerStage_FinishGameplayEntry","legacy_name":"loc_1C636","evidence":"static","basis":["Completed Xi-Tiger second-plane streaming selects gameplay mode $10, clears the substate and frame-exit flag, restores fade parameters, and tail-calls Stage_DispatchSelectedProcess."]},
+    {"address":"0x00D90E","previous_name":"Stage_InitStage10","current_name":"Stage_DispatchMidgameState","legacy_name":"sub_D90E","evidence":"static","basis":["Stage_ProcessHandlerTable selects this dispatcher for the midgame process family; after an optional early-state OAM marker it dispatches the shared state offset seeded by Stage 10-17 configuration records."]},
+    {"address":"0x00D94C","previous_name":"Stage_DispatchStage10Handler","current_name":"Stage_DispatchMidgameState_Handler","legacy_name":"loc_D94C","evidence":"static","basis":["This common path reads the shared state offset, indexes Stage_MidgameStateHandlerOffsets, and jumps relative to Stage10_Initialize."]},
+    {"address":"0x00D95C","previous_name":"off_D95C","current_name":"Stage_MidgameStateHandlerOffsets","legacy_name":"off_D95C","evidence":"static","basis":["The dispatcher indexes this relative-offset table; Stage10ConfigRecord, Stage11ConfigRecord, Stage12ConfigRecord, and Stage13ConfigRecord seed offsets $00, $0A, $14, and $34, proving the internal stage boundaries."]},
+    {"address":"0x00D9D2","previous_name":"Stage_Stage10ScrollUpdate","current_name":"Stage10_Initialize","legacy_name":"sub_D9D2","evidence":"static","basis":["Stage10ConfigRecord starts at offset $00; this first state sets the stage message and enters the shared raster/ambient initializer, which advances the state."]},
+    {"address":"0x00D9DC","previous_name":"Stage_Stage10CheckTransition","current_name":"Stage10_UpdateScrollToDeepStrider","legacy_name":"sub_D9DC","evidence":"static","basis":["The Stage 10 state renders and accumulates scroll until camera X reaches $730, then advances toward Deep Strider."]},
+    {"address":"0x00D9F0","previous_name":"Stage_Stage10CheckTransition_Return","current_name":"Stage_MidgameStateReturn","legacy_name":"locret_D9F0","evidence":"static","basis":["Incomplete states across the Stage 10-17 portion of the shared table and three explicit empty table slots converge on this RTS."]},
+    {"address":"0x00D9F2","previous_name":"Stage_DeepStriderTransition","current_name":"Stage10_InitializeDeepStriderEncounter","legacy_name":"sub_D9F2","evidence":"static","basis":["At camera X $7B0 this Stage 10 state clamps camera fields, advances state, and submits Boss_DeepStriderAssetSet."]},
+    {"address":"0x00DA22","previous_name":"Stage_DeepStriderBattle","current_name":"Stage10_UpdateDeepStriderEncounter","legacy_name":"sub_DA22","evidence":"static","basis":["While the Deep Strider object is active this state updates camera and scroll; after it clears, the state starts the time bonus and next-phase preload."]},
+    {"address":"0x00DA2C","previous_name":"Camera_UpdateDeepStrider","current_name":"Stage10_UpdateDeepStriderCameraAndScroll","legacy_name":"loc_DA2C","evidence":"static","basis":["The active and completed Deep Strider paths converge here on horizontal camera tracking followed by quarter-scroll accumulation."]},
+    {"address":"0x00DA34","previous_name":"Stage_DeepStriderBattleInit","current_name":"Stage10_StartPostDeepStriderTransition","legacy_name":"sub_DA34","evidence":"static","basis":["This final Stage 10 state starts the next-phase banner and keeps camera/scroll current; it performs no boss initialization."]},
+    {"address":"0x00DA40","previous_name":"Stage_Stage11Transition","current_name":"Stage11_Initialize","legacy_name":"sub_DA40","evidence":"static","basis":["Stage11ConfigRecord starts at offset $0A; this first state enters the shared raster/ambient initializer and advances to the Stage 11 scroll."]},
+    {"address":"0x00DA44","previous_name":"Stage_Stage11ScrollUpdate","current_name":"Stage11_UpdateScrollToGusthead","legacy_name":"sub_DA44","evidence":"static","basis":["The Stage 11 state renders and accumulates scroll until camera X reaches $1040, then advances toward Gusthead."]},
+    {"address":"0x00DA58","previous_name":"locret_DA58","current_name":"Stage11_UpdateScrollToGusthead_Return","legacy_name":"locret_DA58","evidence":"static","basis":["Stage 11 frames before the $1040 Gusthead approach threshold return through this endpoint."]},
+    {"address":"0x00DA5A","previous_name":"Stage_GustheadTransition","current_name":"Stage11_InitializeGustheadEncounter","legacy_name":"sub_DA5A","evidence":"static","basis":["At camera X $10C0 this Stage 11 state clamps camera fields, submits Boss_GustheadAssetSet, and clears the encounter scroll accumulators."]},
+    {"address":"0x00DA92","previous_name":"locret_DA92","current_name":"Stage11_InitializeGustheadEncounter_Return","legacy_name":"locret_DA92","evidence":"static","basis":["Incomplete Gusthead approach frames and the initialized encounter both return here."]},
+    {"address":"0x00DA94","previous_name":"Stage_GustheadDefeatTransition","current_name":"Stage11_UpdatePostGusthead","legacy_name":"sub_DA94","evidence":"static","basis":["This Stage 11 state waits for the Gusthead object to clear, starts the time bonus and next-phase preload, then preserves the shared exit scroll."]},
+    {"address":"0x00DAA0","previous_name":"loc_DAA0","current_name":"Stage11_UpdatePostGustheadScroll","legacy_name":"loc_DAA0","evidence":"static","basis":["Active and cleared Gusthead paths converge here and branch to the shared Stage 11 exit-scroll implementation."]},
+    {"address":"0x00DAA4","previous_name":"Stage_Stage12Init","current_name":"Stage11_StartPostGustheadTransition","legacy_name":"sub_DAA4","evidence":"static","basis":["Stage12ConfigRecord does not begin until offset $14; this offset-$12 Stage 11 state starts the next-phase banner and falls into the Gusthead exit scroll."]},
+    {"address":"0x00DAA8","previous_name":"loc_DAA8","current_name":"Stage11_UpdateGustheadExitScroll","legacy_name":"loc_DAA8","evidence":"static","basis":["Both final Gusthead states enter this scroll tail, which applies the configured velocity or camera tracking and updates quarter-scroll state."]},
+    {"address":"0x00DAE0","previous_name":"locret_DAE0","current_name":"Stage11_UpdateGustheadExitScroll_Return","legacy_name":"locret_DAE0","evidence":"static","basis":["Stage-table and velocity exit conditions return through this Stage 11 endpoint."]},
+    {"address":"0x00DAE2","previous_name":"loc_DAE2","current_name":"Stage11_UpdateGustheadExitCamera","legacy_name":"loc_DAE2","evidence":"static","basis":["When the dedicated exit velocity is zero, this path updates horizontal camera tracking before accumulating quarter scroll."]},
+    {"address":"0x00DAEA","previous_name":"Scroll_ApplyVelocity","current_name":"Stage11_ApplyExitScrollVelocity","legacy_name":"sub_DAEA","evidence":"static","basis":["The helper is called only by the Stage 11 Gusthead-exit tail and adds the signed longword at $FFFFA960 to horizontal camera position."]},
+    {"address":"0x00DAF4","previous_name":"Stage_Stage12ScrollUpdate","current_name":"Stage12_InitializeScroll","legacy_name":"sub_DAF4","evidence":"static","basis":["Stage12ConfigRecord starts at offset $14; this first state selects raster effect $30, clears its init state, and falls directly into the Stage 12 scroll."]},
+    {"address":"0x00DB04","previous_name":"Stage_Stage12_ScrollLoop","current_name":"Stage12_UpdateScrollToExit","legacy_name":"loc_DB04","evidence":"static","basis":["This Stage 12 state renders and accumulates scroll until camera X $1580, then advances state and initializes exit-transfer flags and a timer."]},
+    {"address":"0x00DB2E","previous_name":"Stage_Stage13Init","current_name":"Stage12_UpdateScrollToExitTiles","legacy_name":"sub_DB2E","evidence":"static","basis":["Stage13ConfigRecord starts at offset $34, not this offset $18; the state continues Stage 12 to camera X $15E0, clears shared state, and submits one tile-asset record."]},
+    {"address":"0x00DB5A","previous_name":"stru_DB5A","current_name":"Stage12_ExitTileAssetLoadList","legacy_name":"stru_DB5A","evidence":"static","basis":["Stage12_UpdateScrollToExitTiles passes this single type-seven tiles_19E8A8-to-zero record to Data_ProcessPointer."]},
+    {"address":"0x00DB64","previous_name":"Stage_Stage13ScrollUpdate","current_name":"Stage12_UpdateScrollToSharpssteel","legacy_name":"sub_DB64","evidence":"static","basis":["The offset-$1A state remains inside Stage 12 and scrolls to camera X $1760 while updating the exit timer."]},
+    {"address":"0x00DB7C","previous_name":"locret_DB7C","current_name":"Stage12_UpdateScrollToSharpssteel_Return","legacy_name":"locret_DB7C","evidence":"static","basis":["Incomplete and completed Stage 12 scroll-to-Sharpssteel frames return through this endpoint."]},
+    {"address":"0x00DB7E","previous_name":"Stage_Stage13CheckTransition","current_name":"Stage12_InitializeSharpssteelArena","legacy_name":"sub_DB7E","evidence":"static","basis":["This offset-$1C Stage 12 state advances and clamps camera X at $17A0 before the Sharpssteel trigger state."]},
+    {"address":"0x00DB9C","previous_name":"locret_DB9C","current_name":"Stage12_InitializeSharpssteelArena_Return","legacy_name":"locret_DB9C","evidence":"static","basis":["Incomplete Sharpssteel arena approach and the completed clamp both return here."]},
+    {"address":"0x00DB9E","previous_name":"Stage_Stage13EmptyHandler","current_name":"Stage12_EmptyState1E","legacy_name":"nullsub_24","evidence":"static","basis":["The state-table entry at offset $1E is a bare RTS between the Stage 12 arena clamp and Sharpssteel asset submission; no behavior is invented."]},
+    {"address":"0x00DBA0","previous_name":"Stage_SharpssteelTransition","current_name":"Stage12_InitializeSharpssteelEncounter","legacy_name":"sub_DBA0","evidence":"static","basis":["After the external word-$FF829E gate clears, this Stage 12 state advances, assigns encounter value nine, and submits Boss_SharpssteelAssetSet."]},
+    {"address":"0x00DBBC","previous_name":"Stage_Stage14Init","current_name":"Stage12_UpdatePostSharpssteel","legacy_name":"sub_DBBC","evidence":"static","basis":["Stage14ConfigRecord begins at offset $40, not this offset $22; the state waits for Sharpssteel to clear and starts the post-boss bonus/preload."]},
+    {"address":"0x00DBCE","previous_name":"Stage_TeleportTransition","current_name":"Stage12_StartTeleportTransitionToStage13","legacy_name":"sub_DBCE","evidence":"static","basis":["After the post-Sharpssteel message clears, this state advances the midgame offset and StageTableIndex, resets transition fields, and plays SFX $CA."]},
+    {"address":"0x00DBF4","previous_name":"Stage_TeleportFadeIn","current_name":"Stage12To13_UpdateTeleportFadeIn","legacy_name":"sub_DBF4","evidence":"static","basis":["This transition state delays to count $3C, initializes camera/object/plane state and teleport assets, then clamps and applies the current fade level."]},
+    {"address":"0x00DBFC","previous_name":"loc_DBFC","current_name":"Stage12To13_AdvanceTeleportFadeDelay","legacy_name":"loc_DBFC","evidence":"static","basis":["Zero or negative fade-control states enter this branch to increment the transition delay toward $3C before one-time setup."]},
+    {"address":"0x00DC5E","previous_name":"loc_DC5E","current_name":"Stage12To13_ApplyTeleportFadeLevel","legacy_name":"loc_DC5E","evidence":"static","basis":["Setup and waiting paths converge here to load the transition fade level and cap it before Gfx_SetFadeParams."]},
+    {"address":"0x00DC6A","previous_name":"loc_DC6A","current_name":"Stage12To13_ClampAndApplyTeleportFadeLevel","legacy_name":"loc_DC6A","evidence":"static","basis":["Fade levels below $1C and the explicit $1C clamp converge here on the Gfx_SetFadeParams tail call."]},
+    {"address":"0x00DC70","previous_name":"Stage_TeleportFadeSequence","current_name":"Stage12To13_UpdateTeleportFadeOut","legacy_name":"sub_DC70","evidence":"static","basis":["This transition state applies and decrements the fade level while advancing horizontal position, then enters the shared teleport scroll and column queue."]},
+    {"address":"0x00DC88","previous_name":"Stage_TeleportFadeSequence_Advance","current_name":"Stage12To13_AdvanceTeleportScroll","legacy_name":"loc_DC88","evidence":"static","basis":["The following table state continues adding six to horizontal position until it crosses zero, then initializes the Snake-intro countdown and flags."]},
+    {"address":"0x00DCA8","previous_name":"loc_DCA8","current_name":"Stage12To13_UpdateTeleportScroll","legacy_name":"loc_DCA8","evidence":"static","basis":["Both teleport states update the shared background/secondary scroll here and conditionally queue the next primary-plane column from camera position."]},
+    {"address":"0x00DCB8","previous_name":"loc_DCB8","current_name":"Stage12To13_QueueTeleportColumn","legacy_name":"loc_DCB8","evidence":"static","basis":["When camera X plus $158 is nonnegative, this path clears D1 and tail-calls Tilemap_QueuePrimaryPlaneColumn."]},
+    {"address":"0x00DCC0","previous_name":"Stage_SnakeTransition","current_name":"Stage13_UpdateSnakeIntroTransition","legacy_name":"sub_DCC0","evidence":"static","basis":["After StageTableIndex advances to Stage 13, this state decelerates secondary scroll, updates the Snake background, counts down, then queues BGM $89 and enters the Snake sequence."]},
+    {"address":"0x00DCCE","previous_name":"loc_DCCE","current_name":"Stage13_UpdateSnakeIntroTransition_Scroll","legacy_name":"loc_DCCE","evidence":"static","basis":["Positive and clamped-zero secondary velocities converge here on the shared background scroll and Snake-intro countdown."]},
+    {"address":"0x00DCEE","previous_name":"Stage_TeleportUpdateScroll","current_name":"Stage12To13_UpdateTeleportAndSnakeScroll","legacy_name":"sub_DCEE","evidence":"static","basis":["Teleport and Snake-intro states call this helper; it updates the Snake background and adds the transition velocity to secondary camera X."]},
+    {"address":"0x00DCFC","previous_name":"Stage_WaitForTimerDecrement","current_name":"Stage12_DecrementExitTimer","legacy_name":"sub_DCFC","evidence":"static","basis":["Only the Stage 12 exit-tile and Sharpssteel-approach states call this helper; it decrements the active exit timer and returns through the shared midgame endpoint while incomplete."]},
+    {"address":"0x00DD0E","previous_name":"Stage_InitStage13","current_name":"Stage13_InitializeSnakeEncounter","legacy_name":"sub_DD0E","evidence":"static","basis":["Stage13ConfigRecord seeds offset $34; this entry selects state $36, creates the type-$298 Snake object in the primary pool, configures raster effect $30, and clears shared stage state."]},
+    {"address":"0x00DD2E","previous_name":"Stage_SnakeWaitScroll","current_name":"Stage13_UpdateSnakeEncounterTransition","legacy_name":"sub_DD2E","evidence":"static","basis":["The Stage 13 state updates Snake/background scroll to camera X $3E0, preserves current boss health across Stage_TransitionToNextPhase, and advances toward Bugmax."]},
+    {"address":"0x00DD5E","previous_name":"Stage_BugmaxTransition","current_name":"Stage13_InitializeBugmaxApproach","legacy_name":"sub_DD5E","evidence":"static","basis":["At camera X $460 this Stage 13 state clamps camera fields, clears raster state, and initializes the constant-row counter and Bugmax approach timer."]},
+    {"address":"0x00DDA6","previous_name":"Stage_BugmaxWaitDMA","current_name":"Stage13_UpdateBugmaxApproach","legacy_name":"sub_DDA6","evidence":"static","basis":["The state continues Snake-background scrolling and constant-row queuing, waits for the timer/object gate, then enters Bugmax asset initialization."]},
+    {"address":"0x00DDC2","previous_name":"Stage_InitBugmaxBattle","current_name":"Stage13_InitializeBugmaxEncounter","legacy_name":"loc_DDC2","evidence":"static","basis":["This branch advances state, initializes Bugmax health and combat counters, and submits Boss_BugmaxAssetSet."]},
+    {"address":"0x00DDE8","previous_name":"Stage_BugmaxStartBattle","current_name":"Stage13_UpdateBugmaxEncounter","legacy_name":"sub_DDE8","evidence":"static","basis":["While the Bugmax object remains active this Stage 13 state updates background and camera; after it clears, the state advances and selects stage value $22."]},
+    {"address":"0x00DDFC","previous_name":"loc_DDFC","current_name":"Stage13_UpdateBugmaxEncounterCamera","legacy_name":"loc_DDFC","evidence":"static","basis":["Active and cleared Bugmax paths converge here on horizontal camera tracking."]},
+    {"address":"0x00DE00","previous_name":"Stage_BugmaxTransitionCheck","current_name":"Stage13_StartPostBugmaxTransition","legacy_name":"sub_DE00","evidence":"static","basis":["After updating background/camera, this state waits for two shared gates, queues BGM $92 and the Train/Bugmax message sequence, then starts the interstage transition."]},
+    {"address":"0x00DE2E","previous_name":"Stage_LoadStage10Graphics","current_name":"Midgame_InitializeRasterAndAmbientEffects","legacy_name":"sub_DE2E","evidence":"static","basis":["Stage10_Initialize and Stage11_Initialize call this shared helper; it selects raster effect $30, clears its init state, creates six ambient particles, and advances the state without loading graphics directly."]}
   ]
 }

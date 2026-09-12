@@ -2789,7 +2789,7 @@ One secondary-options behavior remains unresolved. Its handler-index words are
 four. Values `6`, `8`, and `$A` dispatch the three sound-test handlers. Value
 `$C` makes the relative dispatch read opcode word `$43FA` immediately after
 the six-entry primary handler table; adding it to base `0x0098E0` lands exactly
-at `Stage_SnakeTransitionBeginStage13` (`0x00DCDA`). This is verified as a
+at `Stage13_BeginSnakeSequence` (`0x00DCDA`). This is verified as a
 code/data overlay, but its purpose and whether a shipped path intentionally
 selects it remain unknown. The `$E` entry is unreachable through this local
 navigation clamp.
@@ -5030,3 +5030,34 @@ All 21 definitions in the module have exact-address static audit records. The
 from 13,939 to 13,957 and the audit registry from 11,388 to 11,409. The
 enforced live address-derived ceiling falls from 2,112 to 2,094; module count
 remains 370.
+
+The Stage 10-13 state-table pass uses configuration-record offsets rather than
+the generated function names to recover the real boundaries in
+`stages/stage10_to_stage13.s`: Stage 10 starts at `$00`, Stage 11 at `$0A`,
+Stage 12 at `$14`, and Stage 13 at `$34`. The table itself continues through
+later midgame modules, so its dispatcher and relative offsets now carry
+midgame ownership instead of the false `Stage_InitStage10` identity.
+
+Those boundaries expose several numbering errors from the automated pass.
+The former `Stage_Stage12Init` is still the final post-Gusthead state of Stage
+11; the former `Stage_Stage13Init`, `Stage_Stage13ScrollUpdate`, and
+`Stage_Stage13CheckTransition` are Stage 12 exit and Sharpssteel-approach
+states. The alleged `Stage_Stage14Init` is the post-Sharpssteel wait inside
+Stage 12. Conversely, Stage 13 begins at the type-`$298` Snake initializer at
+`$00DD0E` and proceeds to the Bugmax encounter and post-boss transition.
+Teleport states crossing the Stage 12/13 boundary use an explicit
+`Stage12To13` prefix.
+
+The former `Stage_LoadStage10Graphics` also loads no graphics. It selects a
+raster effect, creates six persistent type-`$208` ambient particles, and
+advances the state; both Stage 10 and Stage 11 call it. The helper and the
+already-audited particle initializer/update family therefore move from false
+Stage-10-only ownership to `Midgame` ownership, with their existing audit
+evidence corrected accordingly.
+
+All 55 imported definitions in the 497-line controller have exact-address
+static audit records; the additional Stage 13 fall-through anchor at
+`$00DCDA` has no imported identity. The 17 formerly address-derived
+definitions gain provenance, raising provenance from 13,957 to 13,974 and the
+audit registry from 11,409 to 11,464. The enforced live address-derived
+ceiling falls from 2,094 to 2,077; module count remains 370.

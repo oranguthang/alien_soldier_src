@@ -305,7 +305,7 @@ Stage10EnemyTileBlockAdjustmentDescriptor:  dc.b    $40, 0, $D1, $D2, $D3, $D5, 
                 dc.b    $FF, 0
 
 ; Loads the teleport-scene asset list and initializes its tile-loop parameters
-Stage_LoadTeleportAssets:                               ; CODE XREF: Stage_TeleportFadeIn+64   p  ; was: sub_119C8
+Stage_LoadTeleportAssets:                               ; CODE XREF: Stage12To13_UpdateTeleportFadeIn+64   p  ; was: sub_119C8
                                         ; DATA XREF: ROM:0001174E   o
                 move.w  #4,(word_FFA206).w
                 lea     TeleportAssetLoadList(pc),a0

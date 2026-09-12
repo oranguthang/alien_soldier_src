@@ -191,7 +191,7 @@ nullsub_25:
 ; End of function nullsub_25
 
 ; Updates background scroll for Snake stage
-Scroll_UpdateSnakeBackground:                           ; CODE XREF: Stage_TeleportUpdateScroll   p  ; was: sub_E34E
+Scroll_UpdateSnakeBackground:                           ; CODE XREF: Stage12To13_UpdateTeleportAndSnakeScroll   p  ; was: sub_E34E
                                         ; sub_DD2E   p
                 movea.w #(byte_FFA3E0-M68K_RAM),a0
                 lea     dword_E3CC(pc),a1

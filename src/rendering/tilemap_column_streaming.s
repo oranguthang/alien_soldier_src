@@ -28,7 +28,7 @@ Tilemap_QueuePrimaryCameraColumnOffset158:              ; CODE XREF: Stage_InitT
                 move.w  (dword_FFA904).w,d1
 ; End of function Tilemap_QueuePrimaryCameraColumnOffset158
 ; Select the primary-plane descriptor and queue one streamed tilemap column
-Tilemap_QueuePrimaryPlaneColumn:                        ; CODE XREF: Stage_TeleportFadeSequence+4A   j  ; was: sub_106FE
+Tilemap_QueuePrimaryPlaneColumn:                        ; CODE XREF: Stage12To13_UpdateTeleportFadeOut+4A   j  ; was: sub_106FE
                                         ; Stage_SevenForcesUpdateMedusaCameraAndParallax+46   p
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop

@@ -5,7 +5,7 @@ Stage_Stage14Scroll:                                    ; DATA XREF: ROM:0000D99
 Stage_Stage14Scroll_Update:                             ; DATA XREF: ROM:0000D99E   o  ; was: loc_DE4E
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$400,(dword_FFA900).w
-                bmi.w   Stage_Stage10CheckTransition_Return
+                bmi.w   Stage_MidgameStateReturn
                 bra.w   Stage_TransitionToNextPhase
 ; End of function Stage_Stage14Scroll
 ; Initialize boss tiles and palette with scroll check
@@ -13,7 +13,7 @@ Stage_InitBossPaletteScroll:                            ; DATA XREF: ROM:0000D9A
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 move.w  #$480,d0
                 cmp.w   (dword_FFA900).w,d0
-                bpl.w   Stage_Stage10CheckTransition_Return
+                bpl.w   Stage_MidgameStateReturn
                 addq.w  #2,(word_FFA950).w
                 clr.l   (dword_FFA910).w
                 move.w  d0,(dword_FFA900).w
@@ -41,7 +41,7 @@ Stage_Stage15Transition:                                ; DATA XREF: ROM:0000D9A
 Stage_Stage15Scroll:                                    ; DATA XREF: ROM:0000D9A6   o  ; was: sub_DEAA
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$660,(dword_FFA900).w
-                bmi.w   Stage_Stage10CheckTransition_Return
+                bmi.w   Stage_MidgameStateReturn
                 addq.w  #2,(word_FFA950).w
                 move.w  #$660,(dword_FFA900).w
                 bset    #6,(byte_FF8245).w
@@ -51,7 +51,7 @@ Stage_Stage15Scroll:                                    ; DATA XREF: ROM:0000D9A
 Stage_ScrollCheckTransition:                            ; DATA XREF: ROM:0000D9A8   o  ; was: sub_DECA
                 bsr.w   Scroll_UpdateAndRenderSylpheedBackdrop
                 cmpi.w  #$E3E8,(dword_FFA904).w
-                bmi.w   Stage_Stage10CheckTransition_Return
+                bmi.w   Stage_MidgameStateReturn
                 bclr    #0,(byte_FF80F8).w
                 move.w  #$FFE4,(dword_FF8066+2).w
                 move.w  #6,(PaletteSecondaryIndex).w
@@ -62,7 +62,7 @@ Stage_SunsetStingTransition:                            ; DATA XREF: ROM:0000D9A
                 bsr.w   Scroll_AdvanceVerticalAndRenderSylpheedBackdrop
                 move.w  #$E420,d0
                 cmp.w   (dword_FFA904).w,d0
-                bpl.w   Stage_Stage10CheckTransition_Return
+                bpl.w   Stage_MidgameStateReturn
                 addq.w  #2,(word_FFA950).w
                 move.w  d0,(dword_FFA904).w
                 move.w  #$660,(word_FFA970).w

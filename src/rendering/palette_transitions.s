@@ -173,7 +173,7 @@ Gfx_CalculateFadeParams_Return:                         ; CODE XREF: Gfx_Calcula
 ; End of function Gfx_CalculateFadeParams
 ; Sets palette fade operation parameters for screen transitions
 Gfx_SetFadeParams:                                      ; CODE XREF: Palette_UpdateMidgameFadeAndColors+16   p  ; was: sub_3B28
-                                        ; sub_DBF4:loc_DC6A   j
+                                        ; Stage12To13_UpdateTeleportFadeIn:Stage12To13_ClampAndApplyTeleportFadeLevel   j
                 movea.w #(PaletteActiveBuffer-M68K_RAM),a0
                 moveq   #$3F,d5                         ; '?'
                 move.w  #$E000,d7
