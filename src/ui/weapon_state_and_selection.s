@@ -39,7 +39,7 @@ Weapon_UpdateStateAndSlotAnimationsReturn:              ; CODE XREF: Weapon_Upda
 Weapon_UpdateCurrentState:                              ; CODE XREF: Weapon_UpdateStateAndSlotAnimations+8   p  ; was: sub_17952
                 movea.w (WeaponSlotOffset).w,a1
                 adda.w  #$A250,a1
-                lea     Weapon_MotionTablePointers(pc),a2
+                lea     Weapon_DirectionVectorPointerBias(pc),a2
                 nop
                 tst.w   (word_FF8238).w
                 bmi.s   Weapon_UpdateStateCooldown
@@ -321,7 +321,7 @@ Weapon_ConfigureState2Damage:                           ; DATA XREF: ROM:0001798
 Weapon_StoreState2Damage:                               ; CODE XREF: Weapon_ConfigureState2Damage+A   j  ; was: loc_17C74
                                         ; Weapon_ConfigureState2Damage+12   j
                 move.w  d0,(dword_FF802C).w
-                bra.w   UI_RenderTargetingReticle
+                bra.w   Weapon_UpdateTargetingReticle
 ; End of function Weapon_ConfigureState2Damage
 ; Initializes four state-four indicator objects and their threshold flag
 Weapon_ConfigureState4Indicators:                       ; DATA XREF: ROM:00017988   o  ; was: sub_17C7C
@@ -343,7 +343,7 @@ Weapon_State4NextIndicator:                             ; CODE XREF: Weapon_Conf
                 addq.w  #1,(dword_FF802C).w
 ; Continues state-four processing through the targeting reticle update
 Weapon_FinishState4Indicators:                          ; CODE XREF: Weapon_ConfigureState4Indicators+2E   j  ; was: loc_17CB0
-                bra.w   UI_RenderTargetingReticle
+                bra.w   Weapon_UpdateTargetingReticle
 ; End of function Weapon_ConfigureState4Indicators
 ; Configures state-six velocity and its ammo-indexed motion table
 Weapon_ConfigureState6Motion:                           ; DATA XREF: ROM:0001798A   o  ; was: sub_17CB4
@@ -388,7 +388,7 @@ Weapon_State6CalculateVelocity:                         ; CODE XREF: Weapon_Conf
                 move.w  $10(a1),d0
                 cmpi.w  #$7D0,d0
                 bmi.s   Weapon_State6SelectMotionTable
-                move.l  #dword_19812,(dword_FF802C).w
+                move.l  #Weapon_DirectionVectorsSpeed13,(dword_FF802C).w
                 rts
 ; ---------------------------------------------------------------------------
 Weapon_State6SelectMotionTable:                         ; CODE XREF: Weapon_ConfigureState6Motion+6E   j  ; was: loc_17D2E
@@ -450,9 +450,9 @@ Weapon_State8FindFlaggedTarget:                         ; CODE XREF: Weapon_Conf
 Weapon_State8UseFlaggedTarget:                          ; CODE XREF: Weapon_ConfigureState8Targeting+6C   j  ; was: loc_17DBA
                 move.w  a0,(word_FF801C).w
                 btst    #4,(word_FFF706).w
-                beq.w   loc_19298
+                beq.w   Weapon_UpdateTargetingReticle_Scan
                 moveq   #1,d6
-                bra.w   UI_CalculateReticlePosition
+                bra.w   Weapon_AppendTargetingReticleForObject
 ; ---------------------------------------------------------------------------
 Weapon_State8SelectLowestValueTarget:                   ; CODE XREF: Weapon_ConfigureState8Targeting+5E   j  ; was: loc_17DCE
                 move.w  (word_FF8D78).w,d7
@@ -482,7 +482,7 @@ Weapon_ConfigureState10Gauge:                           ; DATA XREF: ROM:0001798
                 move.w  $10(a1),d0
                 cmpi.w  #$3E8,d0
                 bmi.s   Weapon_State10CalculateGaugeLevel
-                move.l  #dword_19772,(dword_FF802C).w
+                move.l  #Weapon_DirectionVectorsSpeed12,(dword_FF802C).w
                 bra.s   Weapon_UpdateState10GaugePalette
 ; ---------------------------------------------------------------------------
 Weapon_State10CalculateGaugeLevel:                      ; CODE XREF: Weapon_ConfigureState10Gauge+A   j  ; was: loc_17E10

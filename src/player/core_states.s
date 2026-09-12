@@ -47,7 +47,7 @@ Player_Update:                                          ; CODE XREF: Sys_Gamepla
                 bne.w   Player_ClearObjectHeader
                 tst.b   (byte_FF813E).w
                 bmi.s   Player_SetDisplayFlag
-                jsr     (Input_MergeButtonState).l
+                jsr     (Player_UpdateScriptedInput).l
                 bsr.w   Input_ReadPlayerInput
                 clr.b   (byte_FF8244).w
                 clr.w   6(a5)

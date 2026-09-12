@@ -410,7 +410,7 @@ Player_RenderSevenForcesBattleSelectOverlay:            ; CODE XREF: Player_Rend
                 jmp     Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 Player_RenderSevenForcesBattleWithWeapon:               ; CODE XREF: Player_RenderSevenForcesBattleFrame+1A   j  ; was: loc_1A23A
-                lea     (word_198B2).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets0).l,a4
                 moveq   #0,d5
                 moveq   #$FFFFFFFF,d6
                 lea     (Player_AlternateAnimationLayoutTable).l,a0

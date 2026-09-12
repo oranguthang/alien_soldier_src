@@ -93,7 +93,7 @@ Weapon_FireProjectile_SetDamageAndVelocity:             ; CODE XREF: Weapon_Fire
                 movea.l #Weapon_DirectionTableOffsets,a1
                 move.b  (a1,d6.w),d6
                 andi.w  #$7C,d6                         ; '|'
-                movea.l #dword_19812,a1
+                movea.l #Weapon_DirectionVectorsSpeed13,a1
                 move.l  (a1,d6.w),d0
                 move.l  $20(a1,d6.w),d1
                 move.l  d0,$4C(a0)
@@ -174,7 +174,7 @@ Weapon_SpawnHomingEffect_Initialize:                    ; CODE XREF: Weapon_Spaw
                 movea.l #Weapon_DirectionTableOffsets,a1
                 move.b  (a1,d6.w),d6
                 andi.w  #$7C,d6                         ; '|'
-                lea     dword_19772(pc),a1
+                lea     Weapon_DirectionVectorsSpeed12(pc),a1
                 nop
                 move.l  (a1,d6.w),d0
                 move.l  $20(a1,d6.w),d1
@@ -247,7 +247,7 @@ Weapon_FireMultipleShots_NextSlot:                      ; CODE XREF: Weapon_Fire
                 movea.w #(dword_FFA100-M68K_RAM),a3
                 lea     Weapon_DirectionTableOffsets(pc),a1
                 nop
-                lea     dword_19632(pc),a2
+                lea     Weapon_DirectionVectorsSpeed10(pc),a2
                 nop
                 move.b  (a1,d6.w),d6
                 cmpi.w  #4,d3

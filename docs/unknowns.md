@@ -4919,3 +4919,36 @@ new provenance mappings, raising provenance from 13,824 to 13,857 and the audit
 registry from 11,198 to 11,247. The enforced live address-derived ceiling falls
 from 2,226 to 2,194, while the module count remains 370 and the file stays well
 inside the 1,000-line ceiling.
+
+The targeting and projectile-runtime pass removes the misleading UI-only
+ownership of `ui/targeting_reticle.s`. The ROM range through `$0199F3` is now
+the 267-line `weapons/targeting_and_projectile_runtime.s`: it owns the
+rate-limited lock-on reticle scan and OAM builder, the shared direction-vector
+windows, player muzzle offsets, circle-attack directional frame pointers, and
+the dedicated eight-slot projectile processing loop. The following player
+script dispatcher is moved to the front of `cutscenes/stage_intros.s`, making
+that coherent owner 357 lines and moving its layout boundary to `$0199F4`.
+
+Static consumers prove that the eight 40-longword tables are circular X/Y
+direction-vector windows: callers read one component at the indexed address
+and the other `$20` bytes later. Their fixed-point magnitudes run from `$60000`
+through `$D0000`, so the former anonymous tables now state speeds six through
+thirteen. `Weapon_UpdatePlayerFiring` proves the eight muzzle records as eight
+signed X bytes followed by eight signed Y bytes; numbered variants retain only
+the primary-versus-alternate layout distinction that their call sites support.
+No unsupported pose identity is invented.
+
+The former `UI_RenderTargetingReticle` name was also incomplete: the routine
+first waits on a delay, rejects any active projectile slot, scans the
+collision-built lock-on list, and only then appends four animated corner OAM
+records. The former generic input helpers actually dispatch the even player
+script state, merge generated button bytes, and expire the scripted-input
+interval. The projectile routine is aligned with the existing visible-object
+loop terminology and explicitly names its dedicated pool.
+
+All 37 inherited definitions in the reconstructed range have exact-address
+static audit records; the additional pointer-window label at `$01937E` is a
+new structural anchor with no imported identity to preserve. Thirty raw labels
+gain provenance, raising provenance from 13,857 to 13,887 and the audit
+registry from 11,247 to 11,283. The enforced live address-derived ceiling
+falls from 2,194 to 2,164, while the source-module count remains 370.

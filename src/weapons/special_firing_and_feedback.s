@@ -45,7 +45,7 @@ Weapon_CircleAttack_SetupProjectiles:                   ; CODE XREF: Player_Spaw
                 sub.w   $14(a5),d4
                 move.w  d3,(word_FF8048).w
                 move.w  d4,(word_FF804A).w
-                movea.l #dword_19632,a0
+                movea.l #Weapon_DirectionVectorsSpeed10,a0
                 move.l  (a0,d7.w),d3
                 move.l  $20(a0,d7.w),d4
                 move.w  d7,d6
@@ -100,10 +100,10 @@ Weapon_CircleAttack_Return:                             ; CODE XREF: Player_Spaw
                 rts
 ; End of function Player_SpawnCircleAttack
 ; ---------------------------------------------------------------------------
-Weapon_CircleAttackAnimationPointers:   dc.l    off_19932  ; DATA XREF: Player_SpawnCircleAttack+15A   r  ; was: off_186A0
-                dc.l    off_19972
-                dc.l    off_19952
-                dc.l    off_19972
+Weapon_CircleAttackAnimationPointers:   dc.l    Weapon_CircleAttackDirectionalFrames0  ; DATA XREF: Player_SpawnCircleAttack+15A   r  ; was: off_186A0
+                dc.l    Weapon_CircleAttackDirectionalFrames2
+                dc.l    Weapon_CircleAttackDirectionalFrames1
+                dc.l    Weapon_CircleAttackDirectionalFrames2
 Weapon_CircleAttackSpriteData:  dc.w    $65A0, $75A0, $75A0, $7DA0, $6DA0, $6DA0, $65A0, $65A0  ; was: word_186B0
                                         ; DATA XREF: Player_SpawnCircleAttack+C0   o
                 dc.w    $C00, $500, $300, $500, $C00, $500, $300, $500
@@ -256,7 +256,7 @@ Effect_CreateDebrisParticle:                            ; CODE XREF: Effect_Spaw
                 movea.l #Weapon_DirectionTableOffsets,a1
                 move.b  (a1,d6.w),d6
                 andi.w  #$7C,d6                         ; '|'
-                movea.l #dword_193B2,a1
+                movea.l #Weapon_DirectionVectorsSpeed6,a1
                 move.l  (a1,d6.w),d0
                 move.l  $20(a1,d6.w),d1
                 asr.l   #1,d0
@@ -382,7 +382,7 @@ Effect_InitSharedImpactMotion:                          ; CODE XREF: Weapon_Hand
                 move.w  #$18C,(a5)
                 move.w  #$8C80,2(a5)
                 clr.b   $21(a5)
-                lea     dword_19632(pc),a1
+                lea     Weapon_DirectionVectorsSpeed10(pc),a1
                 nop
                 move.w  (RandomNumberState).w,d6
                 andi.w  #$7C,d6                         ; '|'

@@ -1,5 +1,64 @@
-Stage_InitCutscene:                                     ; DATA XREF: Input_ClearAndDispatch+1C   o  ; was: sub_19A6C
-                                        ; ROM:off_19A34   o
+; Clears player input, runs the selected scripted-state handler, merges its
+; generated held/pressed buttons, and expires the scripted-input interval
+Player_UpdateScriptedInput:                             ; CODE XREF: Player_Update+14   p  ; was: sub_199F4
+                bsr.s   Player_ClearInputAndDispatchScript
+                move.b  $6A(a5),d0
+                or.b    d0,$69(a5)
+                subq.w  #1,(word_FF813A).w
+                bpl.s   Player_UpdateScriptedInput_Return
+                move.w  #$FFFF,(word_FF813A).w
+                clr.w   (word_FF8138).w
+Player_UpdateScriptedInput_Return:                      ; CODE XREF: Player_UpdateScriptedInput+E   j  ; was: locret_19A0E
+                rts
+; End of function Player_UpdateScriptedInput
+
+; Dispatches the even byte offset in word_FFA02A through the shared player
+; script table after rebuilding the player's world-space X coordinate
+Player_ClearInputAndDispatchScript:                     ; CODE XREF: Player_UpdateScriptedInput   p  ; was: sub_19A10
+                clr.b   $69(a5)
+                clr.b   $6A(a5)
+                move.w  (dword_FFA900).w,d0
+                add.w   $10(a5),d0
+                move.w  d0,(word_FF8652).w
+                move.w  (word_FFA02A).w,d0
+                movea.w Player_ScriptHandlerOffsets(pc,d0.w),a0
+                adda.l  #Stage_InitCutscene,a0
+                jmp     (a0)
+; End of function Player_ClearInputAndDispatchScript
+; ---------------------------------------------------------------------------
+Player_ScriptHandlerOffsets:    dc.w    Stage_CutsceneWaitStart_Return-Stage_InitCutscene  ; was: off_19A34
+                                        ; DATA XREF: Player_ClearInputAndDispatchScript+18   r
+                dc.w    Stage_InitCutscene-Stage_InitCutscene
+                dc.w    Cutscene_InitializeParams-Stage_InitCutscene
+                dc.w    Stage_CutsceneWaitStart-Stage_InitCutscene
+                dc.w    Stage_CutsceneTimerWait-Stage_InitCutscene
+                dc.w    Stage_CutsceneCheckPosition-Stage_InitCutscene
+                dc.w    Stage_CutscenePlayAnim-Stage_InitCutscene
+                dc.w    Stage_CutsceneReachPosition-Stage_InitCutscene
+                dc.w    Cutscene_InitStagePause-Stage_InitCutscene
+                dc.w    Input_SetButtonFlag-Stage_InitCutscene
+                dc.w    Stage_CutsceneWaitStart_Return-Stage_InitCutscene
+                dc.w    Player_FlyingNeoIntro-Stage_InitCutscene
+                dc.w    Player_CheckBossIntroCondition-Stage_InitCutscene
+                dc.w    Cutscene_FlyingNeoIntro-Stage_InitCutscene
+                dc.w    Cutscene_FlyingNeoIntro_ScrollDown-Stage_InitCutscene
+                dc.w    Cutscene_ScrollCameraLeft-Stage_InitCutscene
+                dc.w    Player_XiTigerBossIntro-Stage_InitCutscene
+                dc.w    Enemy_Stage14DebrisMain-Stage_InitCutscene
+                dc.w    Stage_CutsceneWaitStart-Stage_InitCutscene
+                dc.w    Stage_CutsceneTimerWait-Stage_InitCutscene
+                dc.w    Enemy_Stage14DebrisInit-Stage_InitCutscene
+                dc.w    Enemy_Stage14DebrisAnimate-Stage_InitCutscene
+                dc.w    Cutscene_InitFastPause-Stage_InitCutscene
+                dc.w    Cutscene_CheckBossFlag-Stage_InitCutscene
+                dc.w    Player_ViblackIntro-Stage_InitCutscene
+                dc.w    Cutscene_JampanInitParams-Stage_InitCutscene
+                dc.w    Boss_SireneShootPattern2-Stage_InitCutscene
+                dc.w    Cutscene_Stage20ClearFlag-Stage_InitCutscene
+
+; Initializes stage cutscene setting player position and state
+Stage_InitCutscene:                                     ; DATA XREF: Player_ClearInputAndDispatchScript+1C   o  ; was: sub_19A6C
+                                        ; ROM:Player_ScriptHandlerOffsets   o
                 move.w  #$1BF8,(word_FF8646).w
                 move.w  #$16,(word_FF8648).w
                 move.w  #6,(word_FFA02A).w

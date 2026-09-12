@@ -50,7 +50,7 @@ Sys_GameplayMainLoop_UpdateSpawner:                     ; CODE XREF: Sys_Gamepla
                 move.l  #$C0420000,(VDP_CTRL).l
                 move.w  #$E00,(VDP_DATA).l
 Sys_GameplayMainLoop_UpdateProjectiles:                 ; CODE XREF: Sys_GameplayMainLoop+E0   j  ; was: loc_1C750
-                jsr     (Sys_ProcessProjectiles).l
+                jsr     (Projectile_ProcessVisiblePool).l
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateStageEffects
                 move.l  #$C0420000,(VDP_CTRL).l

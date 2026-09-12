@@ -40,7 +40,7 @@ ZLeoEnding_UpdateScene:                                 ; DATA XREF: ROM:0001E86
                 jsr     (Player_Update).l
                 jsr     (Boss_ZLeoMainController).l
                 jsr     (Sys_UpdateObjectSpawner).l
-                jsr     (Sys_ProcessProjectiles).l
+                jsr     (Projectile_ProcessVisiblePool).l
                 jmp     Tilemap_QueuePrimaryCameraColumnOffset158
 ; End of function ZLeoEnding_UpdateScene
 ; Enters the shared ending sequence from transition route four
@@ -222,7 +222,7 @@ WeaponSetup_UpdateScreen:                               ; DATA XREF: Sys_Dispatc
                 jsr     (UI_UpdateGameplayHUD).l
                 jsr     (Player_Update).l
                 jsr     (Weapon_UpdateStateAndSlotAnimations).l
-                jsr     (Sys_ProcessProjectiles).l
+                jsr     (Projectile_ProcessVisiblePool).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   WeaponSetup_UpdateAndDispatchState
                 jsr     (Sys_UpdateObjectCount).l

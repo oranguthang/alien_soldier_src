@@ -163,7 +163,7 @@ Player_HandleFallingState_StoreVelocityAndRender:       ; CODE XREF: Player_Hand
                                         ; Player_HandleFallingState+10A   j
                 move.l  d0,$18(a5)
                 bsr.w   Player_SelectFallAnimation
-                lea     (word_198D2).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets0).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #3,d6
                 bra.w   Player_PrepareSpriteRendering
@@ -364,7 +364,7 @@ Player_HandleSpecialAttack_Render:                      ; CODE XREF: Player_Hand
 ; ---------------------------------------------------------------------------
 ; Renders the armed special-attack animation branch
 Player_RenderSpecialAttackWithWeapon:                   ; CODE XREF: Player_HandleSpecialAttack+AC   j  ; was: loc_16086
-                lea     (word_198B2).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets0).l,a4
                 moveq   #0,d5
                 moveq   #$FFFFFFFF,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0

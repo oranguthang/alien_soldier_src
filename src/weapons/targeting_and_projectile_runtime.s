@@ -1,42 +1,42 @@
-UI_RenderTargetingReticle:                              ; CODE XREF: Weapon_ConfigureState2Damage+22   j  ; was: sub_19292
+Weapon_UpdateTargetingReticle:                          ; CODE XREF: Weapon_ConfigureState2Damage+22   j  ; was: sub_19292
                                         ; sub_17C7C:loc_17CB0   j
                 subq.w  #1,(word_FF8642).w
-                bpl.s   locret_192CE
-loc_19298:                                              ; CODE XREF: Weapon_ConfigureState8Targeting+7E   j
+                bpl.s   Weapon_UpdateTargetingReticle_Return
+Weapon_UpdateTargetingReticle_Scan:                     ; CODE XREF: Weapon_ConfigureState8Targeting+7E   j  ; was: loc_19298
                 clr.w   (word_FF8642).w
                 moveq   #0,d6
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
-loc_192A4:                                              ; CODE XREF: UI_RenderTargetingReticle+1A   j
+Weapon_UpdateTargetingReticle_CheckProjectileSlot:      ; CODE XREF: Weapon_UpdateTargetingReticle+1A   j  ; was: loc_192A4
                 tst.w   (a0)
-                bne.s   loc_192C8
+                bne.s   Weapon_UpdateTargetingReticle_ResetDelay
                 lea     $60(a0),a0
-                dbf     d7,loc_192A4
+                dbf     d7,Weapon_UpdateTargetingReticle_CheckProjectileSlot
                 move.w  (word_FF8D7A).w,d7
-                bmi.s   locret_192CE
+                bmi.s   Weapon_UpdateTargetingReticle_Return
                 movea.w #(byte_FF8E80-M68K_RAM),a1
-loc_192BA:                                              ; CODE XREF: UI_RenderTargetingReticle+32   j
+Weapon_UpdateTargetingReticle_CheckLockOnTarget:        ; CODE XREF: Weapon_UpdateTargetingReticle+32   j  ; was: loc_192BA
                 movea.w (a1)+,a0
                 btst    #7,$23(a0)
-                bne.s   UI_CalculateReticlePosition
-                dbf     d7,loc_192BA
-loc_192C8:                                              ; CODE XREF: UI_RenderTargetingReticle+14   j
+                bne.s   Weapon_AppendTargetingReticleForObject
+                dbf     d7,Weapon_UpdateTargetingReticle_CheckLockOnTarget
+Weapon_UpdateTargetingReticle_ResetDelay:               ; CODE XREF: Weapon_UpdateTargetingReticle+14   j  ; was: loc_192C8
                 move.w  #$80,(word_FF8642).w
-locret_192CE:                                           ; CODE XREF: UI_RenderTargetingReticle+4   j
-                                        ; UI_RenderTargetingReticle+22   j
+Weapon_UpdateTargetingReticle_Return:                   ; CODE XREF: Weapon_UpdateTargetingReticle+4   j  ; was: locret_192CE
+                                        ; Weapon_UpdateTargetingReticle+22   j
                 rts
 ; ---------------------------------------------------------------------------
 ; Calculates targeting reticle sprite position from enemy hitbox
-UI_CalculateReticlePosition:                            ; CODE XREF: Weapon_ConfigureState8Targeting+84   j  ; was: loc_192D0
-                                        ; UI_RenderTargetingReticle+30   j
+Weapon_AppendTargetingReticleForObject:                 ; CODE XREF: Weapon_ConfigureState8Targeting+84   j  ; was: loc_192D0
+                                        ; Weapon_UpdateTargetingReticle+30   j
                 cmpi.w  #$160,$14(a0)
-                bpl.w   locret_192CE
+                bpl.w   Weapon_UpdateTargetingReticle_Return
                 cmpi.w  #$A0,$14(a0)
-                bmi.w   locret_192CE
+                bmi.w   Weapon_UpdateTargetingReticle_Return
                 cmpi.w  #$1C0,$10(a0)
-                bpl.w   locret_192CE
+                bpl.w   Weapon_UpdateTargetingReticle_Return
                 cmpi.w  #$80,$10(a0)
-                bmi.w   locret_192CE
+                bmi.w   Weapon_UpdateTargetingReticle_Return
                 move.b  $28(a0),d0
                 ext.w   d0
                 move.b  $29(a0),d1
@@ -85,22 +85,22 @@ UI_CalculateReticlePosition:                            ; CODE XREF: Weapon_Conf
                 move.w  #$FFFF,(a1)+
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 jmp     (Sprite_AppendOAMEntries).l
-; End of function UI_RenderTargetingReticle
+; End of function Weapon_UpdateTargetingReticle
 ; ---------------------------------------------------------------------------
-                dc.l    dword_193B2
-                dc.l    dword_193B2
-                dc.l    dword_193B2
-                dc.l    dword_193B2
-Weapon_MotionTablePointers: dc.l    dword_193B2         ; DATA XREF: Weapon_UpdateCurrentState+8   o  ; was: off_1938E
-                dc.l    dword_19452
-                dc.l    dword_194F2
-                dc.l    dword_19592
-                dc.l    dword_19632
-                dc.l    dword_196D2
-                dc.l    dword_19772
-                dc.l    dword_19812
-                dc.l    dword_19812
-dword_193B2:    dc.l    0, $12BA0, $24BB8, $35550, $43E18
+Weapon_DirectionVectorTablePointers:    dc.l    Weapon_DirectionVectorsSpeed6
+                dc.l    Weapon_DirectionVectorsSpeed6
+                dc.l    Weapon_DirectionVectorsSpeed6
+                dc.l    Weapon_DirectionVectorsSpeed6
+Weapon_DirectionVectorPointerBias:  dc.l    Weapon_DirectionVectorsSpeed6  ; DATA XREF: Weapon_UpdateCurrentState+8   o  ; was: off_1938E
+                dc.l    Weapon_DirectionVectorsSpeed7
+                dc.l    Weapon_DirectionVectorsSpeed8
+                dc.l    Weapon_DirectionVectorsSpeed9
+                dc.l    Weapon_DirectionVectorsSpeed10
+                dc.l    Weapon_DirectionVectorsSpeed11
+                dc.l    Weapon_DirectionVectorsSpeed12
+                dc.l    Weapon_DirectionVectorsSpeed13
+                dc.l    Weapon_DirectionVectorsSpeed13
+Weapon_DirectionVectorsSpeed6:  dc.l    0, $12BA0, $24BB8, $35550, $43E18  ; was: dword_193B2
                                         ; DATA XREF: Effect_SpawnRandomDebris+76   o
                                         ; ROM:0001937E   o
                 dc.l    $4FD10, $58B00, $5E278, $60000, $5E278
@@ -110,7 +110,7 @@ dword_193B2:    dc.l    0, $12BA0, $24BB8, $35550, $43E18
                 dc.l    $FFFA1D88, $FFFA7500, $FFFB02F0, $FFFBC1E8, $FFFCAAB0
                 dc.l    $FFFDB448, $FFFED460, 0, $12BA0, $24BB8
                 dc.l    $35550, $43E18, $4FD10, $58B00, $5E278
-dword_19452:    dc.l    0, $15D90, $2ADAC, $3E388, $4F31C
+Weapon_DirectionVectorsSpeed7:  dc.l    0, $15D90, $2ADAC, $3E388, $4F31C  ; was: dword_19452
                                         ; DATA XREF: ROM:00019392   o
                 dc.l    $5D1E8, $67780, $6DD8C, $70000, $6DD8C
                 dc.l    $67780, $5D1E8, $4F31C, $3E388, $2ADAC
@@ -119,7 +119,7 @@ dword_19452:    dc.l    0, $15D90, $2ADAC, $3E388, $4F31C
                 dc.l    $FFF92274, $FFF98880, $FFFA2E18, $FFFB0CE4, $FFFC1C78
                 dc.l    $FFFD5254, $FFFEA270, 0, $15D90, $2ADAC
                 dc.l    $3E388, $4F31C, $5D1E8, $67780, $6DD8C
-dword_194F2:    dc.l    0, $18F80, $30FA0, $471C0, $5A820
+Weapon_DirectionVectorsSpeed8:  dc.l    0, $18F80, $30FA0, $471C0, $5A820  ; was: dword_194F2
                                         ; DATA XREF: ROM:00019396   o
                 dc.l    $6A6C0, $76400, $7D8A0, $80000, $7D8A0
                 dc.l    $76400, $6A6C0, $5A820, $471C0, $30FA0
@@ -128,7 +128,7 @@ dword_194F2:    dc.l    0, $18F80, $30FA0, $471C0, $5A820
                 dc.l    $FFF82760, $FFF89C00, $FFF95940, $FFFA57E0, $FFFB8E40
                 dc.l    $FFFCF060, $FFFE7080, 0, $18F80, $30FA0
                 dc.l    $471C0, $5A820, $6A6C0, $76400, $7D8A0
-dword_19592:    dc.l    0, $1C170, $37194, $4FFF8, $65D24
+Weapon_DirectionVectorsSpeed9:  dc.l    0, $1C170, $37194, $4FFF8, $65D24  ; was: dword_19592
                                         ; DATA XREF: ROM:0001939A   o
                 dc.l    $77B98, $85080, $8D3B4, $90000, $8D3B4
                 dc.l    $85080, $77B98, $65D24, $4FFF8, $37194
@@ -137,7 +137,7 @@ dword_19592:    dc.l    0, $1C170, $37194, $4FFF8, $65D24
                 dc.l    $FFF72C4C, $FFF7AF80, $FFF88468, $FFF9A2DC, $FFFB0008
                 dc.l    $FFFC8E6C, $FFFE3E90, 0, $1C170, $37194
                 dc.l    $4FFF8, $65D24, $77B98, $85080, $8D3B4
-dword_19632:    dc.l    0, $1F360, $3D388, $58E30, $71228
+Weapon_DirectionVectorsSpeed10: dc.l    0, $1F360, $3D388, $58E30, $71228  ; was: dword_19632
                                         ; DATA XREF: Weapon_FireMultipleShots+46   o
                                         ; Player_SpawnCircleAttack+A2   o
                 dc.l    $85070, $93D00, $9CEC8, $A0000, $9CEC8
@@ -147,7 +147,7 @@ dword_19632:    dc.l    0, $1F360, $3D388, $58E30, $71228
                 dc.l    $FFF63138, $FFF6C300, $FFF7AF90, $FFF8EDD8, $FFFA71D0
                 dc.l    $FFFC2C78, $FFFE0CA0, 0, $1F360, $3D388
                 dc.l    $58E30, $71228, $85070, $93D00, $9CEC8
-dword_196D2:    dc.l    0, $22550, $4357C, $61C68, $7C72C
+Weapon_DirectionVectorsSpeed11: dc.l    0, $22550, $4357C, $61C68, $7C72C  ; was: dword_196D2
                                         ; DATA XREF: ROM:000193A2   o
                 dc.l    $92548, $A2980, $AC9DC, $B0000, $AC9DC
                 dc.l    $A2980, $92548, $7C72C, $61C68, $4357C
@@ -156,7 +156,7 @@ dword_196D2:    dc.l    0, $22550, $4357C, $61C68, $7C72C
                 dc.l    $FFF53624, $FFF5D680, $FFF6DAB8, $FFF838D4, $FFF9E398
                 dc.l    $FFFBCA84, $FFFDDAB0, 0, $22550, $4357C
                 dc.l    $61C68, $7C72C, $92548, $A2980, $AC9DC
-dword_19772:    dc.l    0, $25740, $49770, $6AAA0, $87C30
+Weapon_DirectionVectorsSpeed12: dc.l    0, $25740, $49770, $6AAA0, $87C30  ; was: dword_19772
                                         ; DATA XREF: Weapon_ConfigureState10Gauge+C   o
                                         ; Weapon_SpawnHomingEffect+74   o
                 dc.l    $9FA20, $B1600, $BC4F0, $C0000, $BC4F0
@@ -166,7 +166,7 @@ dword_19772:    dc.l    0, $25740, $49770, $6AAA0, $87C30
                 dc.l    $FFF43B10, $FFF4EA00, $FFF605E0, $FFF783D0, $FFF95560
                 dc.l    $FFFB6890, $FFFDA8C0, 0, $25740, $49770
                 dc.l    $6AAA0, $87C30, $9FA20, $B1600, $BC4F0
-dword_19812:    dc.l    0, $28930, $4F964, $738D8, $93134
+Weapon_DirectionVectorsSpeed13: dc.l    0, $28930, $4F964, $738D8, $93134  ; was: dword_19812
                                         ; DATA XREF: Weapon_ConfigureState6Motion+70   o
                                         ; Weapon_FireProjectile+AE   o
                 dc.l    $ACEF8, $C0280, $CC004, $D0000, $CC004
@@ -176,27 +176,27 @@ dword_19812:    dc.l    0, $28930, $4F964, $738D8, $93134
                 dc.l    $FFF33FFC, $FFF3FD80, $FFF53108, $FFF6CECC, $FFF8C728
                 dc.l    $FFFB069C, $FFFD76D0, 0, $28930, $4F964
                 dc.l    $738D8, $93134, $ACEF8, $C0280, $CC004
-word_198B2:     dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $ECFC, $1FC, $ECDA, $D2DA
+Player_AlternateLayoutMuzzleOffsets0:   dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $ECFC, $1FC, $ECDA, $D2DA  ; was: word_198B2
                                         ; DATA XREF: Player_HandleSpecialAttack:loc_16086   o
                                         ; sub_16116:Player_RenderSpecialMoveRecovery_WithWeapon   o
-word_198C2:     dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $FD0D, $120D, $FDEB, $E3EB
+Player_AlternateLayoutMuzzleOffsets1:   dc.w    $E2E8, $F4E8, $E2E6, $FCE6, $FD0D, $120D, $FDEB, $E3EB  ; was: word_198C2
                                         ; DATA XREF: Player_RenderWithWeapon+4A   o
-word_198D2:     dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $ECFC, $1FC, $ECDA, $D2DA
+Player_PrimaryLayoutMuzzleOffsets0: dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $ECFC, $1FC, $ECDA, $D2DA  ; was: word_198D2
                                         ; DATA XREF: Player_HandleFallingState+14E   o
                                         ; sub_17086:Player_RenderSpecialWeapon_UseDefaultVariant   o
-word_198E2:     dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $FD0D, $120D, $FDEB, $E3EB
+Player_PrimaryLayoutMuzzleOffsets1: dc.w    $E6F2, $FAF2, $E6EC, $FCEC, $FD0D, $120D, $FDEB, $E3EB  ; was: word_198E2
                                         ; DATA XREF: Player_RenderWithWeapon:Player_RenderAirborneWithWeapon_UseDefaultVariant   o
-word_198F2:     dc.w    $E2E6, $FCE6, $E2E8, $F4E8, $1226, $2E26, $1204, 4
+Player_AlternateLayoutMuzzleOffsets2:   dc.w    $E2E6, $FCE6, $E2E8, $F4E8, $1226, $2E26, $1204, 4  ; was: word_198F2
                                         ; DATA XREF: Player_RenderWeaponSprite+6   o
                                         ; Player_UpdateDashSprite+6   o
-word_19902:     dc.w    $E2E6, $FCE6, $E2E8, $F4E8, $115, $1D15, $1F3, $EFF3
+Player_AlternateLayoutMuzzleOffsets3:   dc.w    $E2E6, $FCE6, $E2E8, $F4E8, $115, $1D15, $1F3, $EFF3  ; was: word_19902
                                         ; DATA XREF: Player_RenderWithWeapon+E   o
-word_19912:     dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $1226, $2E26, $1204, 4
+Player_PrimaryLayoutMuzzleOffsets2: dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $1226, $2E26, $1204, 4  ; was: word_19912
                                         ; DATA XREF: Player_UpdateDashSprite:Player_UpdateDashSprite_UseDefaultVariant   o
                                         ; Player_RenderWithWeapon+82   o
-word_19922:     dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $115, $1D15, $1F3, $EFF3
+Player_PrimaryLayoutMuzzleOffsets3: dc.w    $E6EC, $FCEC, $E6F2, $FAF2, $115, $1D15, $1F3, $EFF3  ; was: word_19922
                                         ; DATA XREF: Player_RenderWithWeapon:Player_RenderWithWeapon_UseDefaultVariant   o
-off_19932:      dc.l    sprite_FDF0E                    ; DATA XREF: ROM:Weapon_CircleAttackAnimationPointers   o
+Weapon_CircleAttackDirectionalFrames0:  dc.l    sprite_FDF0E  ; DATA XREF: ROM:Weapon_CircleAttackAnimationPointers   o  ; was: off_19932
                 dc.l    sprite_FDE8E
                 dc.l    sprite_FDE0E
                 dc.l    sprite_FDD8E
@@ -204,7 +204,7 @@ off_19932:      dc.l    sprite_FDF0E                    ; DATA XREF: ROM:Weapon_
                 dc.l    sprite_FDC8E
                 dc.l    sprite_FDC0E
                 dc.l    sprite_FDB8E
-off_19952:      dc.l    sprite_FE30E                    ; DATA XREF: ROM:000186A8   o
+Weapon_CircleAttackDirectionalFrames1:  dc.l    sprite_FE30E  ; DATA XREF: ROM:000186A8   o  ; was: off_19952
                 dc.l    sprite_FE28E
                 dc.l    sprite_FE20E
                 dc.l    sprite_FE18E
@@ -212,7 +212,7 @@ off_19952:      dc.l    sprite_FE30E                    ; DATA XREF: ROM:000186A
                 dc.l    sprite_FE08E
                 dc.l    sprite_FE00E
                 dc.l    sprite_FDF8E
-off_19972:      dc.l    sprite_FE70E                    ; DATA XREF: ROM:000186A4   o
+Weapon_CircleAttackDirectionalFrames2:  dc.l    sprite_FE70E  ; DATA XREF: ROM:000186A4   o  ; was: off_19972
                                         ; ROM:000186AC   o
                 dc.l    sprite_FE68E
                 dc.l    sprite_FE60E
@@ -223,101 +223,45 @@ off_19972:      dc.l    sprite_FE70E                    ; DATA XREF: ROM:000186A
                 dc.l    sprite_FE38E
 
 ; Processes all active projectile objects
-Sys_ProcessProjectiles:                                 ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateProjectiles   p  ; was: sub_19992
+Projectile_ProcessVisiblePool:                          ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateProjectiles   p  ; was: sub_19992
                                         ; ZLeoEnding_UpdateScene+12   p
                 tst.b   (byte_FF813E).w
-                bmi.w   locret_199F2
+                bmi.w   Projectile_ProcessVisiblePool_Return
                 lea     (dword_FFBFC0).w,a5
-loc_1999E:                                              ; CODE XREF: Sys_ProcessProjectiles+5E   j
+Projectile_ProcessVisiblePool_Loop:                     ; CODE XREF: Projectile_ProcessVisiblePool+5E   j  ; was: loc_1999E
                 move.w  (a5),d0
-                beq.s   Sys_AdvanceProjectilePointer
+                beq.s   Projectile_AdvancePoolPointer
                 movea.w d0,a0
                 movea.l Entity_UpdateHandlerTable(a0),a0
                 jsr     (a0)
                 btst    #4,2(a5)
-                bne.s   loc_199D6
+                bne.s   Projectile_ProcessVisiblePool_Clear
                 btst    #1,2(a5)
-                beq.s   loc_199DE
+                beq.s   Projectile_ProcessVisiblePool_Queue
                 move.w  $10(a5),d0
                 subi.w  #$70,d0                         ; 'p'
                 cmpi.w  #$160,d0
-                bhi.s   loc_199D6
+                bhi.s   Projectile_ProcessVisiblePool_Clear
                 move.w  $14(a5),d0
                 subi.w  #$40,d0                         ; '@'
                 cmpi.w  #$130,d0
-                bls.s   loc_199DE
-loc_199D6:                                              ; CODE XREF: Sys_ProcessProjectiles+1E   j
-                                        ; Sys_ProcessProjectiles+34   j
+                bls.s   Projectile_ProcessVisiblePool_Queue
+Projectile_ProcessVisiblePool_Clear:                    ; CODE XREF: Projectile_ProcessVisiblePool+1E   j  ; was: loc_199D6
+                                        ; Projectile_ProcessVisiblePool+34   j
                 jsr     (Sys_ClearObjectSlot).l
-                bra.s   Sys_AdvanceProjectilePointer
+                bra.s   Projectile_AdvancePoolPointer
 ; ---------------------------------------------------------------------------
-loc_199DE:                                              ; CODE XREF: Sys_ProcessProjectiles+26   j
-                                        ; Sys_ProcessProjectiles+42   j
+Projectile_ProcessVisiblePool_Queue:                    ; CODE XREF: Projectile_ProcessVisiblePool+26   j  ; was: loc_199DE
+                                        ; Projectile_ProcessVisiblePool+42   j
                 movea.w (word_FFF758).w,a0
                 move.w  a5,(a0)+
                 move.w  a0,(word_FFF758).w
 ; Advances projectile array pointer to next slot in loop
-Sys_AdvanceProjectilePointer:                           ; CODE XREF: Sys_ProcessProjectiles+E   j  ; was: loc_199E8
-                                        ; Sys_ProcessProjectiles+4A   j
+Projectile_AdvancePoolPointer:                          ; CODE XREF: Projectile_ProcessVisiblePool+E   j  ; was: loc_199E8
+                                        ; Projectile_ProcessVisiblePool+4A   j
                 lea     $60(a5),a5
                 cmpa.w  #$C620,a5
-                bcs.s   loc_1999E
-locret_199F2:                                           ; CODE XREF: Sys_ProcessProjectiles+4   j
+                bcs.s   Projectile_ProcessVisiblePool_Loop
+Projectile_ProcessVisiblePool_Return:                   ; CODE XREF: Projectile_ProcessVisiblePool+4   j  ; was: locret_199F2
                 rts
-; End of function Sys_ProcessProjectiles
-; Merges button state from buffer into main register
-Input_MergeButtonState:                                 ; CODE XREF: Player_Update+14   p  ; was: sub_199F4
-                bsr.s   Input_ClearAndDispatch
-                move.b  $6A(a5),d0
-                or.b    d0,$69(a5)
-                subq.w  #1,(word_FF813A).w
-                bpl.s   locret_19A0E
-                move.w  #$FFFF,(word_FF813A).w
-                clr.w   (word_FF8138).w
-locret_19A0E:                                           ; CODE XREF: Input_MergeButtonState+E   j
-                rts
-; End of function Input_MergeButtonState
-; Clears button state and dispatches input handler
-Input_ClearAndDispatch:                                 ; CODE XREF: Input_MergeButtonState   p  ; was: sub_19A10
-                clr.b   $69(a5)
-                clr.b   $6A(a5)
-                move.w  (dword_FFA900).w,d0
-                add.w   $10(a5),d0
-                move.w  d0,(word_FF8652).w
-                move.w  (word_FFA02A).w,d0
-                movea.w off_19A34(pc,d0.w),a0
-                adda.l  #Stage_InitCutscene,a0
-                jmp     (a0)
-; End of function Input_ClearAndDispatch
-; ---------------------------------------------------------------------------
-off_19A34:      dc.w    Stage_CutsceneWaitStart_Return-Stage_InitCutscene
-                                        ; DATA XREF: Input_ClearAndDispatch+18   r
-                dc.w    Stage_InitCutscene-Stage_InitCutscene
-                dc.w    Cutscene_InitializeParams-Stage_InitCutscene
-                dc.w    Stage_CutsceneWaitStart-Stage_InitCutscene
-                dc.w    Stage_CutsceneTimerWait-Stage_InitCutscene
-                dc.w    Stage_CutsceneCheckPosition-Stage_InitCutscene
-                dc.w    Stage_CutscenePlayAnim-Stage_InitCutscene
-                dc.w    Stage_CutsceneReachPosition-Stage_InitCutscene
-                dc.w    Cutscene_InitStagePause-Stage_InitCutscene
-                dc.w    Input_SetButtonFlag-Stage_InitCutscene
-                dc.w    Stage_CutsceneWaitStart_Return-Stage_InitCutscene
-                dc.w    Player_FlyingNeoIntro-Stage_InitCutscene
-                dc.w    Player_CheckBossIntroCondition-Stage_InitCutscene
-                dc.w    Cutscene_FlyingNeoIntro-Stage_InitCutscene
-                dc.w    Cutscene_FlyingNeoIntro_ScrollDown-Stage_InitCutscene
-                dc.w    Cutscene_ScrollCameraLeft-Stage_InitCutscene
-                dc.w    Player_XiTigerBossIntro-Stage_InitCutscene
-                dc.w    Enemy_Stage14DebrisMain-Stage_InitCutscene
-                dc.w    Stage_CutsceneWaitStart-Stage_InitCutscene
-                dc.w    Stage_CutsceneTimerWait-Stage_InitCutscene
-                dc.w    Enemy_Stage14DebrisInit-Stage_InitCutscene
-                dc.w    Enemy_Stage14DebrisAnimate-Stage_InitCutscene
-                dc.w    Cutscene_InitFastPause-Stage_InitCutscene
-                dc.w    Cutscene_CheckBossFlag-Stage_InitCutscene
-                dc.w    Player_ViblackIntro-Stage_InitCutscene
-                dc.w    Cutscene_JampanInitParams-Stage_InitCutscene
-                dc.w    Boss_SireneShootPattern2-Stage_InitCutscene
-                dc.w    Cutscene_Stage20ClearFlag-Stage_InitCutscene
-
-; Initializes stage cutscene setting player position and state
+; End of function Projectile_ProcessVisiblePool

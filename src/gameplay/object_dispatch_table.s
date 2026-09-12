@@ -1,4 +1,4 @@
-Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_ProcessProjectiles+12   r  ; was: off_5DC
+Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_ProcessVisiblePool+12   r  ; was: off_5DC
                                         ; Sys_ProcessVisibleObjects+10   r
                 dc.l    Entity_EmptyState4
                 dc.l    Player_Update

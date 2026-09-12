@@ -185,7 +185,7 @@ Effect_UpdateImpactParticleSpawner_SetVelocity:         ; CODE XREF: Effect_Upda
                 move.w  $56(a5),d5
                 addi.w  #$20,d5                         ; ' '
                 andi.w  #$7C,d5                         ; '|'
-                lea     dword_19772(pc),a1
+                lea     Weapon_DirectionVectorsSpeed12(pc),a1
                 nop
                 move.l  (a1,d5.w),d0
                 move.l  $20(a1,d5.w),d1

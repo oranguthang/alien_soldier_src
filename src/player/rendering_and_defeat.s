@@ -56,7 +56,7 @@ Player_RenderWeaponSprite:                              ; CODE XREF: Player_Ceil
                 bsr.s   Player_UpdateWeaponAnim
                 moveq   #1,d5
                 addq.w  #3,d6
-                lea     (word_198F2).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets2).l,a4
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderWeaponSprite
 ; Prepares player weapon sprite for rendering with animation data
@@ -64,7 +64,7 @@ Player_PrepareWeaponSprite:                             ; CODE XREF: Player_Grou
                 bsr.s   Player_UpdateWeaponAnim
                 moveq   #1,d5
                 addq.w  #3,d6
-                lea     (word_198B2).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets0).l,a4
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_PrepareWeaponSprite
 ; Updates player weapon animation cycle with sound effects on key frames
@@ -108,7 +108,7 @@ Player_WeaponAnimationFrames:   dc.l    Player_WeaponAnimationSpriteMapping00  ;
 Player_UpdateDashSprite:                                ; CODE XREF: Player_CeilingIdleState+66   j  ; was: sub_17052
                 tst.w   (ShootingMode).w
                 beq.s   Player_UpdateDashSprite_UseDefaultVariant
-                lea     (word_198F2).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets2).l,a4
                 moveq   #0,d5
                 moveq   #0,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
@@ -117,7 +117,7 @@ Player_UpdateDashSprite:                                ; CODE XREF: Player_Ceil
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_UpdateDashSprite_UseDefaultVariant:              ; CODE XREF: Player_UpdateDashSprite+4   j  ; was: loc_17072
-                lea     (word_19912).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets2).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #4,d6
                 movea.l #Player_DashSecondarySpriteMapping,a2
@@ -127,7 +127,7 @@ Player_UpdateDashSprite_UseDefaultVariant:              ; CODE XREF: Player_Upda
 Player_RenderSpecialWeapon:                             ; CODE XREF: Player_HandleJump+64   j  ; was: sub_17086
                 tst.w   (ShootingMode).w
                 beq.s   Player_RenderSpecialWeapon_UseDefaultVariant
-                lea     (word_198B2).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets0).l,a4
                 moveq   #0,d5
                 moveq   #0,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
@@ -136,7 +136,7 @@ Player_RenderSpecialWeapon:                             ; CODE XREF: Player_Hand
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_RenderSpecialWeapon_UseDefaultVariant:           ; CODE XREF: Player_RenderSpecialWeapon+4   j  ; was: loc_170A6
-                lea     (word_198D2).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets0).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #4,d6
                 movea.l #Player_DashSecondarySpriteMapping,a2
@@ -149,7 +149,7 @@ Player_RenderWithWeapon:                                ; CODE XREF: Player_Ceil
                 bpl.w   Player_RenderGroundedFrame
                 tst.w   (ShootingMode).w
                 beq.s   Player_RenderWithWeapon_UseDefaultVariant
-                lea     (word_19902).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets3).l,a4
                 moveq   #0,d5
                 moveq   #$11,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
@@ -158,7 +158,7 @@ Player_RenderWithWeapon:                                ; CODE XREF: Player_Ceil
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_RenderWithWeapon_UseDefaultVariant:              ; CODE XREF: Player_RenderWithWeapon+C   j  ; was: loc_170E2
-                lea     (word_19922).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets3).l,a4
                 moveq   #$FFFFFFFF,d5
                 moveq   #$13,d6
                 movea.l #Player_WeaponSecondarySpriteMapping,a2
@@ -170,7 +170,7 @@ Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_Hand
                 bpl.w   Player_RenderFallingSprite
                 tst.w   (ShootingMode).w
                 beq.s   Player_RenderAirborneWithWeapon_UseDefaultVariant
-                lea     (word_198C2).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets1).l,a4
                 moveq   #0,d5
                 moveq   #$11,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
@@ -179,7 +179,7 @@ Player_RenderAirborneWithWeapon:                        ; CODE XREF: Player_Hand
                 bra.w   Player_PrepareSpriteRendering_WithTables
 ; ---------------------------------------------------------------------------
 Player_RenderAirborneWithWeapon_UseDefaultVariant:      ; CODE XREF: Player_RenderWithWeapon+48   j  ; was: loc_1711E
-                lea     (word_198E2).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets1).l,a4
                 moveq   #0,d5
                 moveq   #$13,d6
                 movea.l #Player_WeaponSecondarySpriteMapping,a2
@@ -190,7 +190,7 @@ Player_RenderGroundedFrame:                             ; CODE XREF: Player_Hand
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
                 moveq   #$C,d6
-                lea     (word_19912).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets2).l,a4
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderWithWeapon
 ; Prepares player falling/airborne sprite for rendering
@@ -199,7 +199,7 @@ Player_RenderFallingSprite:                             ; CODE XREF: Player_Hand
                 movea.l #Player_CommonMovementSecondarySpriteMapping,a2
                 moveq   #0,d5
                 moveq   #$C,d6
-                lea     (word_198D2).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets0).l,a4
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderFallingSprite
 ; Renders player dash animation sprite with cycling animation
@@ -208,7 +208,7 @@ Player_RenderDashSprite:                                ; CODE XREF: Player_Ceil
                 bsr.s   Player_CycleDashAnimation
                 moveq   #$FFFFFFFF,d5
                 addq.w  #3,d6
-                lea     (word_19912).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets2).l,a4
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderDashSprite
 ; Renders player dash sprite with offset and table
@@ -217,7 +217,7 @@ Player_RenderDashEffect:                                ; CODE XREF: Player_Grou
                 bsr.s   Player_CycleDashAnimation
                 moveq   #$FFFFFFFF,d5
                 addq.w  #3,d6
-                lea     (word_198D2).l,a4
+                lea     (Player_PrimaryLayoutMuzzleOffsets0).l,a4
                 bra.w   Player_PrepareSpriteRendering
 ; End of function Player_RenderDashEffect
 ; Cycles dash animation frames with sound effects

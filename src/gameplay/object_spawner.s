@@ -144,7 +144,7 @@ Sys_FindReusableSlotInRange_Return:                     ; CODE XREF: Sys_FindReu
                 rts
 ; End of function Sys_FindReusableSlotInRange
 ; Clears 96 bytes of object RAM
-Sys_ClearObjectSlot:                                    ; CODE XREF: Sys_ProcessProjectiles:loc_199D6   p  ; was: sub_1A3B0
+Sys_ClearObjectSlot:                                    ; CODE XREF: Projectile_ProcessVisiblePool:Projectile_ProcessVisiblePool_Clear   p  ; was: sub_1A3B0
                                         ; sub_1A29C:Sys_ProcessVisibleObjects_Clear   p
                 movea.l a5,a0
 ; Clears 96-byte object memory block (24 long-words) to zero

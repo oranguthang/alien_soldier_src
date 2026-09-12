@@ -50,7 +50,7 @@ Player_RenderSpecialMoveRecovery_SelectVariant:         ; CODE XREF: Player_Rend
                 bra.w   Player_BuildSpritePieces
 ; ---------------------------------------------------------------------------
 Player_RenderSpecialMoveRecovery_WithWeapon:            ; CODE XREF: Player_RenderSpecialMoveRecovery+1A   j  ; was: loc_16146
-                lea     (word_198B2).l,a4
+                lea     (Player_AlternateLayoutMuzzleOffsets0).l,a4
                 moveq   #0,d5
                 moveq   #$FFFFFFFF,d6
                 lea     Player_AlternateAnimationLayoutTable(pc),a0
