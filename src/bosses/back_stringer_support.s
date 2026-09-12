@@ -473,7 +473,7 @@ Projectile_BackStringerRopeSegmentReturn:               ; CODE XREF: Projectile_
 ; Spawns the falling-drop objects used throughout the regular attack loop
 Projectile_BackStringerSpawnFallingDrops:               ; CODE XREF: Boss_BackStringerAttackDelayState   p  ; was: sub_456EC
                                         ; Boss_BackStringerSweepingAttackState   p
-                tst.w   (word_FFC680).w
+                tst.w   (SecondaryEntityType).w
                 beq.w   Projectile_BackStringerSpawnFallingDropsReturn
                 move.w  (FrameCounter).w,d0
                 andi.w  #$1F,d0

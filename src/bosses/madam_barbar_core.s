@@ -446,7 +446,7 @@ Boss_MadamBarbarUpdateParts:                            ; CODE XREF: Boss_MadamB
 Boss_MadamBarbarApplyPartLayout:                        ; CODE XREF: Boss_MadamBarbarSelectAttackState+200   j  ; was: loc_3A9F6
                 moveq   #$1B,d7
                 jsr     (Sprite_SetMetaspriteTraversalPointers).l
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 moveq   #$24,d0                         ; '$'
                 moveq   #$A,d1
                 moveq   #5,d7

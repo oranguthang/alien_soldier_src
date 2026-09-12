@@ -159,7 +159,7 @@ Boss_BackStringerStartOpeningPose:                      ; CODE XREF: Boss_BackSt
                 move.w  #$140,$11C(a5)
                 move.b  #$E5,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #$1E,(word_FFC624).w
+                move.w  #$1E,(PrimaryEntityState).w
 ; Plays the timed opening pose while changing the first part radius
 Boss_BackStringerOpeningPoseState:                      ; DATA XREF: ROM:0004471A   o  ; was: loc_448A2
                 move.w  #2,(PlaneAShakeLevel).w
@@ -263,7 +263,7 @@ Boss_BackStringerAttackDelayState:                      ; DATA XREF: ROM:0004472
                 bsr.w   Projectile_BackStringerSpawnFallingDrops
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_BackStringerUseIdlePoseAndRender
-                cmpi.w  #$140,(dword_FFC694).w
+                cmpi.w  #$140,(SecondaryEntityYPos).w
                 bpl.w   Boss_BackStringerStartTrackingAttack
                 cmpi.w  #$1600,(BossHealth).w
                 bmi.w   Boss_BackStringerStartTrackingAttack
@@ -696,7 +696,7 @@ Boss_BackStringerDefeatInit:                            ; CODE XREF: Boss_BackSt
                 move.w  #$280,$48(a5)
                 move.w  #0,$AA(a5)
                 move.w  #$10,$10A(a5)
-                movea.w #(word_FFC740-M68K_RAM),a0
+                movea.w #(QuaternaryEntityType-M68K_RAM),a0
                 lea     (Math_SineTable).l,a1
                 moveq   #$20,d4                         ; ' '
                 moveq   #0,d0

@@ -630,7 +630,7 @@ Boss_JetsripperDeathInit:                               ; DATA XREF: ROM:000356F
                 move.w  $14(a5),$14(a0)
                 clr.w   $48(a0)
 Boss_JetsripperDeathInitSegmentEffects:                 ; CODE XREF: Boss_JetsripperDeathInit+20   j  ; was: loc_35DAA
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 moveq   #$10,d7
 Boss_JetsripperDeathInitNextSegment:                    ; CODE XREF: Boss_JetsripperDeathInit+76   j  ; was: loc_35DB0
                 move.w  #$EC,(a0)

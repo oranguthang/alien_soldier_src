@@ -255,7 +255,7 @@ Boss_ShiperSpinAttackReverseRotation:                   ; CODE XREF: Boss_Shiper
 ; Updates boss position handling collision detection and sprite positioning
 Boss_ShiperPositionUpdate:                              ; CODE XREF: Boss_ShiperUpdateMain+4   p  ; was: sub_36CB0
                 movea.w #(byte_FFCBC0-M68K_RAM),a0
-                movea.w #(word_FFC680-M68K_RAM),a1
+                movea.w #(SecondaryEntityType-M68K_RAM),a1
                 move.w  $10(a1),d0
                 addi.w  #$28,d0                         ; '('
                 move.w  d0,$10(a0)

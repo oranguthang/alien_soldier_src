@@ -8,7 +8,7 @@ TransitionEffect_ReplaceOwnerAndClearObjects:           ; CODE XREF: EndingSeque
 ; Spawns the alternate transition object at the current object's position
 AlternateTransition_SpawnAtOwner:                       ; CODE XREF: Boss_ShiperDefeatSequence+58   p  ; was: sub_2690E
                                         ; Boss_TerobusterDefeatFadeState+38   p
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.w  #$354,(a0)
                 clr.w   4(a0)
                 move.w  $10(a5),$10(a0)
@@ -88,7 +88,7 @@ AlternateTransition_Update:                             ; DATA XREF: ROM:0002694
 ; Spawns the standard transition object at the current object's position
 TransitionEffect_SpawnAtOwner:                          ; CODE XREF: Boss_ShellshogunDefeatPaletteState+10   p  ; was: sub_269E6
                                         ; Boss_JokerFadeOutState+2E   p
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.w  #$150,(a0)
                 clr.w   4(a0)
                 move.w  $10(a5),$10(a0)

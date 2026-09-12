@@ -209,7 +209,7 @@ Stage_SevenForcesAdvanceSireneTransition:               ; DATA XREF: ROM:0000E4C
                 jsr     (Sound_PlaySFX).l
                 move.w  #$D0,(PlayerXPosition).w
                 move.w  #$188,(PlayerYPosition).w
-                addq.w  #2,(word_FFC624).w
+                addq.w  #2,(PrimaryEntityState).w
 Stage_SevenForcesAdvanceSireneShake:                    ; CODE XREF: Stage_SevenForcesAdvanceSireneTransition+E   j ; was: loc_EA02
                 bra.w   Stage_SevenForcesUpdateSireneShake
 ; End of function Stage_SevenForcesAdvanceSireneTransition

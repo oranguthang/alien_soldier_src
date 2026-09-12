@@ -2,10 +2,10 @@
 Boss_ViblackSpawnChain:                                 ; CODE XREF: Boss_ViblackMoveToAttackTargetState+42   p  ; was: sub_443A4
                 cmpi.w  #$CE,$14(a5)
                 bmi.w   Boss_ViblackSpawnChainReturn
-                movea.w #(word_FFC6E0-M68K_RAM),a0
+                movea.w #(TertiaryEntityType-M68K_RAM),a0
                 tst.w   (a0)
                 beq.s   Boss_ViblackAllocateChainObjects
-                movea.w #(word_FFC740-M68K_RAM),a0
+                movea.w #(QuaternaryEntityType-M68K_RAM),a0
                 tst.w   (a0)
                 bne.w   Boss_ViblackSpawnChainReturn
 Boss_ViblackAllocateChainObjects:                       ; CODE XREF: Boss_ViblackSpawnChain+10   j  ; was: loc_443C0

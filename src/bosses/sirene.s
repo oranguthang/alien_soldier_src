@@ -150,7 +150,7 @@ Boss_EnterSireneState8:                                 ; CODE XREF: Boss_Update
                 moveq   #0,d1
                 moveq   #0,d3
                 moveq   #$1A,d7
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 jsr     (Object_ClearAllExceptTypes_Loop).l
                 clr.w   2(a5)
                 clr.w   8(a5)

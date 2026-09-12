@@ -119,7 +119,7 @@ Gfx_ShieldViperPatternEffectMain:                       ; DATA XREF: ROM:Entity_
                 bne.w   Gfx_ShieldViperPatternEffectReturn
                 bsr.w   Boss_ShieldViperClearPatternBuffer
                 bsr.w   Boss_ShieldViperUpdatePatternPhaseA
-                btst    #6,(byte_FFC641).w
+                btst    #6,(PrimaryEntityStatus).w
                 beq.s   Gfx_ShieldViperSelectRandomPatternColor
                 move.w  (word_FF945C).w,d0
                 add.w   d0,d0
@@ -207,9 +207,9 @@ Boss_ShieldViperUpdatePatternPhaseB:                    ; CODE XREF: Gfx_ShieldV
                 move.l  d0,(dword_FF9452+2).w
                 move.w  d0,(word_FF945E).w
 Boss_ShieldViperCheckSecondaryPatternEnabled:           ; CODE XREF: Boss_ShieldViperUpdatePatternPhaseB+18   j  ; was: loc_4F7E4
-                btst    #6,(byte_FFC641).w
+                btst    #6,(PrimaryEntityStatus).w
                 bne.s   Boss_ShieldViperSecondaryPatternReturn
-                btst    #7,(word_FFC622).w
+                btst    #7,(PrimaryEntityFlags).w
                 bne.s   Boss_ShieldViperSecondaryPatternReturn
                 move.w  d0,d1
                 add.w   d0,d0
@@ -231,9 +231,9 @@ Boss_ShieldViperUpdatePatternPhaseC:                    ; CODE XREF: Gfx_ShieldV
                 move.l  d0,(dword_FF9456+2).w
                 move.w  d0,(word_FF9460).w
 Boss_ShieldViperCheckTertiaryPatternEnabled:            ; CODE XREF: Boss_ShieldViperUpdatePatternPhaseC+18   j  ; was: loc_4F822
-                btst    #6,(byte_FFC641).w
+                btst    #6,(PrimaryEntityStatus).w
                 bne.s   Boss_ShieldViperTertiaryPatternReturn
-                btst    #7,(word_FFC622).w
+                btst    #7,(PrimaryEntityFlags).w
                 bne.s   Boss_ShieldViperTertiaryPatternReturn
                 move.w  d0,d1
                 add.w   d0,d0

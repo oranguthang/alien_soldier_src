@@ -53,7 +53,7 @@ Boss_ZLeoIntroSequence_PaletteWait:                     ; DATA XREF: ROM:000220E
                 bsr.w   Boss_ZLeoSpawnParticles
                 subq.w  #1,(dword_FF9400+2).w
                 bne.s   Boss_ZLeoIntroSequence_Return
-                move.w  #4,(dword_FFC638).w
+                move.w  #4,(PrimaryEntityXVelocity).w
                 addq.w  #2,(dword_FF9400).w
                 bsr.w   Boss_ZLeoSpawnImpactObject
 Boss_ZLeoIntroSequence_Return:                          ; CODE XREF: Boss_ZLeoIntroSequence+5C   j  ; was: locret_2217E
@@ -62,9 +62,9 @@ Boss_ZLeoIntroSequence_Return:                          ; CODE XREF: Boss_ZLeoIn
 ; Waits for camera Y position to reach 0x1E0 before advancing state
 Boss_ZLeoWaitCameraPosition:                            ; DATA XREF: ROM:000220F0   o  ; was: sub_22180
                 bsr.w   Boss_ZLeoSpawnParticles
-                cmpi.w  #$1E0,(dword_FFC630).w
+                cmpi.w  #$1E0,(PrimaryEntityXPos).w
                 bcs.s   Boss_ZLeoWaitCameraPosition_Return
-                clr.w   (dword_FFC638).w
+                clr.w   (PrimaryEntityXVelocity).w
                 move.w  #$40,(dword_FF9400+2).w         ; '@'
                 addq.w  #2,(dword_FF9400).w
 Boss_ZLeoWaitCameraPosition_Return:                     ; CODE XREF: Boss_ZLeoWaitCameraPosition+A   j  ; was: locret_2219A
@@ -100,8 +100,8 @@ Boss_ZLeoCameraScroll_Accelerate:                       ; CODE XREF: Boss_ZLeoCa
                 addi.l  #$800,(dword_FF9408+2).w
                 cmpi.l  #$80000,(dword_FF9408+2).w
                 bne.s   Boss_ZLeoCameraScroll_Return
-                bset    #0,(word_FFC622).w
-                move.l  #$78000,(dword_FFC638).w
+                bset    #0,(PrimaryEntityFlags).w
+                move.l  #$78000,(PrimaryEntityXVelocity).w
                 addq.w  #2,(dword_FF9400).w
                 move.w  #$160,(dword_FF9410+2).w
 Boss_ZLeoCameraScroll_Return:                           ; CODE XREF: Boss_ZLeoCameraScroll+4E   j  ; was: locret_22214
@@ -110,9 +110,9 @@ Boss_ZLeoCameraScroll_Return:                           ; CODE XREF: Boss_ZLeoCa
 ; Waits for the camera scroll to cross the next threshold
 Boss_ZLeoWaitForScrollThreshold:                        ; DATA XREF: ROM:000220F6   o  ; was: sub_22216
                 bsr.w   Boss_ZLeoSpawnParticles
-                cmpi.w  #$120,(dword_FFC630).w
+                cmpi.w  #$120,(PrimaryEntityXPos).w
                 bgt.s   Boss_ZLeoWaitForScrollThreshold_Return
-                move.l  (dword_FF9408+2).w,(dword_FFC638).w
+                move.l  (dword_FF9408+2).w,(PrimaryEntityXVelocity).w
                 addq.w  #2,(dword_FF9400).w
 Boss_ZLeoWaitForScrollThreshold_Return:                 ; CODE XREF: Boss_ZLeoWaitForScrollThreshold+A   j  ; was: locret_2222C
                 rts
@@ -145,8 +145,8 @@ Boss_ZLeoStartReverseScroll:                            ; DATA XREF: ROM:000220F
                 bsr.w   Boss_ZLeoSpawnParticles
                 subq.w  #1,(dword_FF9400+2).w
                 bne.s   Boss_ZLeoStartReverseScroll_Return
-                bclr    #0,(word_FFC622).w
-                move.l  #$FFFE0000,(dword_FFC638).w
+                bclr    #0,(PrimaryEntityFlags).w
+                move.l  #$FFFE0000,(PrimaryEntityXVelocity).w
                 addq.w  #2,(dword_FF9400).w
 Boss_ZLeoStartReverseScroll_Return:                     ; CODE XREF: Boss_ZLeoStartReverseScroll+8   j  ; was: locret_22294
                 rts
@@ -154,8 +154,8 @@ Boss_ZLeoStartReverseScroll_Return:                     ; CODE XREF: Boss_ZLeoSt
 ; Waits for the reverse scroll velocity to change sign
 Boss_ZLeoWaitForScrollSignChange:                       ; DATA XREF: ROM:000220FE   o  ; was: sub_22296
                 bsr.w   Boss_ZLeoSpawnParticles
-                addi.l  #$1000,(dword_FFC638).w
-                btst    #7,(dword_FFC638).w
+                addi.l  #$1000,(PrimaryEntityXVelocity).w
+                btst    #7,(PrimaryEntityXVelocity).w
                 bne.s   Boss_ZLeoWaitForScrollSignChange_Return
                 move.b  #$D5,d0
                 jsr     (Sound_PlaySFX).l
@@ -166,8 +166,8 @@ Boss_ZLeoWaitForScrollSignChange_Return:                ; CODE XREF: Boss_ZLeoWa
 ; Waits for the camera to reach the ending position
 Boss_ZLeoWaitForCameraEnd:                              ; DATA XREF: ROM:00022100   o  ; was: sub_222BA
                 bsr.w   Boss_ZLeoSpawnParticles
-                addi.l  #$1000,(dword_FFC638).w
-                cmpi.w  #$1E0,(dword_FFC630).w
+                addi.l  #$1000,(PrimaryEntityXVelocity).w
+                cmpi.w  #$1E0,(PrimaryEntityXPos).w
                 blt.s   Boss_ZLeoWaitForCameraEnd_Return
                 addq.w  #1,(dword_FF9410).w
                 addq.w  #2,(dword_FF9400).w
@@ -330,13 +330,13 @@ Boss_ZLeoUpdateCameraOrbit:
 ; End of function Boss_ZLeoUpdateCameraOrbit
 ; Uses the Z-Leo camera position while it remains inside the active bounds
 Boss_ZLeoUpdateCameraBounds:                            ; CODE XREF: Boss_ZLeoMainController+C   p  ; was: sub_22466
-                cmpi.w  #$80,(dword_FFC630).w
+                cmpi.w  #$80,(PrimaryEntityXPos).w
                 blt.s   Boss_ZLeoUpdateCameraBounds_Reset
-                cmpi.w  #$1C0,(dword_FFC630).w
+                cmpi.w  #$1C0,(PrimaryEntityXPos).w
                 bgt.s   Boss_ZLeoUpdateCameraBounds_Reset
                 bset    #7,(PlayerObjectFlags).w
-                move.l  (dword_FFC630).w,(PlayerXPosition).w
-                move.l  (dword_FFC634).w,(PlayerYPosition).w
+                move.l  (PrimaryEntityXPos).w,(PlayerXPosition).w
+                move.l  (PrimaryEntityYPos).w,(PlayerYPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ZLeoUpdateCameraBounds_Reset:                      ; CODE XREF: Boss_ZLeoUpdateCameraBounds+6   j  ; was: loc_2248A

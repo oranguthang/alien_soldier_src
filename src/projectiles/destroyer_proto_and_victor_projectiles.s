@@ -75,7 +75,7 @@ Boss_DestroyerProtoPartMappingFrameTable:   dc.l    Boss_DestroyerProtoSpriteFra
 
 ; Initializes two fixed-slot Destroyer Proto projectiles from the inner parts
 Boss_DestroyerProtoLaunchTwinProjectiles:               ; CODE XREF: Boss_DestroyerProtoLaunchTwinShots+1A   p  ; was: sub_32158
-                lea     (word_FFC740).w,a4
+                lea     (QuaternaryEntityType).w,a4
                 lea     (word_FFC8C0).w,a0
                 bsr.w   Projectile_DestroyerProtoInitFromPart
                 lea     (word_FFC860).w,a4

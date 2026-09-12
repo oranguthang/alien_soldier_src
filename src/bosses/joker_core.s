@@ -96,7 +96,7 @@ Boss_JokerInitializeAuxiliaryObjectTypes:               ; CODE XREF: Boss_JokerS
                 lea     Boss_JokerIndexedRowTransferDescriptor(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedRows).l
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 moveq   #7,d0
                 moveq   #$11,d7
 Boss_JokerEnableLinkedPartFlag7:                        ; CODE XREF: Boss_JokerSetup+98   j  ; was: loc_3B3C0

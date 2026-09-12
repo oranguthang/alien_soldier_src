@@ -188,7 +188,7 @@ Boss_FlyingNeoUpdateSprites:                            ; CODE XREF: Boss_Flying
 Boss_FlyingNeoUpdateMetasprite:                         ; CODE XREF: Boss_FlyingNeoUpdateSprites+10   j  ; was: loc_3CA08
                 clr.w   $40(a5)
                 clr.w   $44(a5)
-                movea.w #(word_FFC6E0-M68K_RAM),a4
+                movea.w #(TertiaryEntityType-M68K_RAM),a4
                 movea.w a5,a3
                 moveq   #7,d7
                 move.w  #8,(dword_FF8040).w

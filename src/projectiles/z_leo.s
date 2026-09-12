@@ -231,8 +231,8 @@ Projectile_ZLeoLaserUpdateExpandingOrbit:               ; CODE XREF: Projectile_
                 move.w  $50(a5),d0
                 muls.w  d0,d1
                 muls.w  d0,d2
-                add.l   (dword_FFC634).w,d1
-                add.l   (dword_FFC630).w,d2
+                add.l   (PrimaryEntityYPos).w,d1
+                add.l   (PrimaryEntityXPos).w,d2
                 move.l  d1,$14(a5)
                 move.l  d2,$10(a5)
                 move.w  (FrameCounter).w,d0

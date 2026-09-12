@@ -26,7 +26,7 @@ Boss_UpdateOscillatingAngleStore:                       ; CODE XREF: Boss_Update
 ; End of function Boss_UpdateOscillatingAngle
 ; Finds sprite segment with lowest Y position in chain
 Boss_FindLowestSegment:
-                movea.w #(word_FFC680-M68K_RAM),a0      ; was: sub_35E5C
+                movea.w #(SecondaryEntityType-M68K_RAM),a0  ; was: sub_35E5C
                 movea.w a5,a1
                 move.l  $44(a5),d1
                 moveq   #$10,d7
@@ -193,13 +193,13 @@ Boss_JetsripperAssignSegmentRadiiDeriveCount:           ; CODE XREF: Boss_Jetsri
                 subi.w  #$11,d0
                 bpl.s   Boss_JetsripperAssignSegmentRadiiDeriveCount
                 addi.w  #$11,d0
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 moveq   #$10,d7
 Boss_JetsripperAssignSegmentRadiiNextSegment:           ; CODE XREF: Boss_JetsripperAssignSegmentRadii+28   j  ; was: loc_36016
                 move.w  d1,$54(a0)
                 lea     $60(a0),a0
                 dbf     d7,Boss_JetsripperAssignSegmentRadiiNextSegment
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
 Boss_JetsripperAssignSegmentRadiiReduceLeadingSegment:  ; CODE XREF: Boss_JetsripperAssignSegmentRadii+38   j  ; was: loc_36026
                 subq.w  #1,$54(a0)
                 lea     $60(a0),a0
@@ -257,7 +257,7 @@ Boss_UpdateSegmentChainPositionsNextAnglePair:          ; CODE XREF: Boss_Update
                 dbf     d7,Boss_UpdateSegmentChainPositionsNextAnglePair
                 movea.w a5,a0
                 bclr    #0,2(a5)
-                movea.w #(word_FFC680-M68K_RAM),a1
+                movea.w #(SecondaryEntityType-M68K_RAM),a1
                 movea.l #Math_SineTable,a2
                 move.w  $5A(a5),d1
                 move.w  #$1FE,d2
@@ -298,7 +298,7 @@ Boss_JetsripperShiftAngleBufferNextWord:                ; CODE XREF: Boss_Jetsri
                 movea.w a5,a0
                 bclr    #0,2(a0)
                 clr.w   $58(a0)
-                movea.w #(word_FFC680-M68K_RAM),a1
+                movea.w #(SecondaryEntityType-M68K_RAM),a1
                 movea.w #(byte_FF9808-M68K_RAM),a2
                 movea.l #Math_SineTable,a3
                 move.w  $5A(a5),d1

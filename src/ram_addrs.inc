@@ -574,15 +574,15 @@ PlayerEffectObjectPool  equ     $FFFFC2C0               ; was: byte_FFC2C0
 PlayerEffectAllocStart  equ     $FFFFC320               ; was: byte_FFC320
 PlayerSpecialObjectSlot equ     $FFFFC5C0               ; was: word_FFC5C0
 Entity_ObjectPool       equ     $FFFFC620               ; was: word_FFC620
-word_FFC622             equ     $FFFFC622
-word_FFC624             equ     $FFFFC624
-dword_FFC628            equ     $FFFFC628
-word_FFC62E             equ     $FFFFC62E
-dword_FFC630            equ     $FFFFC630
-dword_FFC634            equ     $FFFFC634
-dword_FFC638            equ     $FFFFC638
-byte_FFC640             equ     $FFFFC640
-byte_FFC641             equ     $FFFFC641
+PrimaryEntityFlags      equ     $FFFFC622               ; was: word_FFC622
+PrimaryEntityState      equ     $FFFFC624               ; was: word_FFC624
+PrimaryEntityMapping    equ     $FFFFC628               ; was: dword_FFC628
+PrimaryEntitySpriteAttr equ     $FFFFC62E               ; was: word_FFC62E
+PrimaryEntityXPos       equ     $FFFFC630               ; was: dword_FFC630
+PrimaryEntityYPos       equ     $FFFFC634               ; was: dword_FFC634
+PrimaryEntityXVelocity  equ     $FFFFC638               ; was: dword_FFC638
+PrimaryEntityAngle      equ     $FFFFC640               ; was: byte_FFC640
+PrimaryEntityStatus     equ     $FFFFC641               ; was: byte_FFC641
 byte_FFC66A             equ     $FFFFC66A
 byte_FFC66B             equ     $FFFFC66B
 word_FFC66C             equ     $FFFFC66C
@@ -590,37 +590,37 @@ word_FFC678             equ     $FFFFC678
 word_FFC67A             equ     $FFFFC67A
 word_FFC67C             equ     $FFFFC67C
 word_FFC67E             equ     $FFFFC67E
-word_FFC680             equ     $FFFFC680
-word_FFC682             equ     $FFFFC682
-word_FFC684             equ     $FFFFC684
-dword_FFC690            equ     $FFFFC690
-dword_FFC694            equ     $FFFFC694
-dword_FFC698            equ     $FFFFC698
-dword_FFC69C            equ     $FFFFC69C
-byte_FFC6A1             equ     $FFFFC6A1
-word_FFC6C0             equ     $FFFFC6C0
-word_FFC6C6             equ     $FFFFC6C6
-word_FFC6CC             equ     $FFFFC6CC
-word_FFC6D2             equ     $FFFFC6D2
-dword_FFC6D8            equ     $FFFFC6D8
-dword_FFC6DC            equ     $FFFFC6DC
-word_FFC6E0             equ     $FFFFC6E0
-word_FFC6E2             equ     $FFFFC6E2
-word_FFC6EE             equ     $FFFFC6EE
-dword_FFC6F0            equ     $FFFFC6F0
-dword_FFC6F4            equ     $FFFFC6F4
-byte_FFC701             equ     $FFFFC701
-word_FFC720             equ     $FFFFC720
-word_FFC72C             equ     $FFFFC72C
-word_FFC730             equ     $FFFFC730
-word_FFC732             equ     $FFFFC732
-word_FFC738             equ     $FFFFC738
-word_FFC73C             equ     $FFFFC73C
-byte_FFC73E             equ     $FFFFC73E
-word_FFC740             equ     $FFFFC740
-word_FFC742             equ     $FFFFC742
-word_FFC744             equ     $FFFFC744
-byte_FFC761             equ     $FFFFC761
+SecondaryEntityType     equ     $FFFFC680               ; was: word_FFC680
+SecondaryEntityFlags    equ     $FFFFC682               ; was: word_FFC682
+SecondaryEntityState    equ     $FFFFC684               ; was: word_FFC684
+SecondaryEntityXPos     equ     $FFFFC690               ; was: dword_FFC690
+SecondaryEntityYPos     equ     $FFFFC694               ; was: dword_FFC694
+SecondaryEntityXVel     equ     $FFFFC698               ; was: dword_FFC698
+SecondaryEntityYVel     equ     $FFFFC69C               ; was: dword_FFC69C
+SecondaryEntityStatus   equ     $FFFFC6A1               ; was: byte_FFC6A1
+SecondaryEntityWork40   equ     $FFFFC6C0               ; was: word_FFC6C0
+SecondaryEntityWork46   equ     $FFFFC6C6               ; was: word_FFC6C6
+SecondaryEntityWork4C   equ     $FFFFC6CC               ; was: word_FFC6CC
+SecondaryEntityWork52   equ     $FFFFC6D2               ; was: word_FFC6D2
+SecondaryEntityWork58   equ     $FFFFC6D8               ; was: dword_FFC6D8
+SecondaryEntityWork5C   equ     $FFFFC6DC               ; was: dword_FFC6DC
+TertiaryEntityType      equ     $FFFFC6E0               ; was: word_FFC6E0
+TertiaryEntityFlags     equ     $FFFFC6E2               ; was: word_FFC6E2
+TertiaryEntityAttr      equ     $FFFFC6EE               ; was: word_FFC6EE
+TertiaryEntityXPos      equ     $FFFFC6F0               ; was: dword_FFC6F0
+TertiaryEntityYPos      equ     $FFFFC6F4               ; was: dword_FFC6F4
+TertiaryEntityStatus    equ     $FFFFC701               ; was: byte_FFC701
+TertiaryEntityWork40    equ     $FFFFC720               ; was: word_FFC720
+TertiaryEntityWork4C    equ     $FFFFC72C               ; was: word_FFC72C
+TertiaryEntityWork50    equ     $FFFFC730               ; was: word_FFC730
+TertiaryEntityWork52    equ     $FFFFC732               ; was: word_FFC732
+SunsetStingTrailSpan    equ     $FFFFC738               ; was: word_FFC738
+SunsetStingTrailStep    equ     $FFFFC73C               ; was: word_FFC73C
+SunsetStingAimAngle     equ     $FFFFC73E               ; was: byte_FFC73E
+QuaternaryEntityType    equ     $FFFFC740               ; was: word_FFC740
+QuaternaryEntityFlags   equ     $FFFFC742               ; was: word_FFC742
+QuaternaryEntityState   equ     $FFFFC744               ; was: word_FFC744
+QuaternaryEntityStatus  equ     $FFFFC761               ; was: byte_FFC761
 word_FFC780             equ     $FFFFC780
 word_FFC786             equ     $FFFFC786
 word_FFC792             equ     $FFFFC792

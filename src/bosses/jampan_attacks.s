@@ -16,7 +16,7 @@ Boss_JampanMoveOffsetAttackAcrossScreenState:           ; DATA XREF: ROM:000491F
                 bne.s   Boss_JampanMoveOffsetAttackAcrossScreenReturn
                 ori.w   #$8000,(word_FFC862).w
                 move.w  #1,(word_FFC8B2).w
-                move.w  #1,(word_FFC732).w
+                move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(word_FFC7F2).w
                 tst.w   (word_FF8234).w
                 ble.s   Boss_JampanFinishOffsetAttack
@@ -144,7 +144,7 @@ Boss_JampanUseAbsolutePlayerHorizontalDelta:            ; CODE XREF: Boss_Jampan
 ; ---------------------------------------------------------------------------
 Boss_JampanFinishShieldRotationCycle:                   ; CODE XREF: Boss_JampanRotateShieldPatternBackwardState+22   j
                                         ; Boss_JampanRotateShieldPatternBackwardState+34   j
-                move.w  #2,(word_FFC6D2).w
+                move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,(word_FFC792).w
                 clr.b   (byte_FFCE81).w
                 addq.w  #2,4(a5)
@@ -158,7 +158,7 @@ Boss_JampanCollapseShieldRadiusState:                   ; DATA XREF: ROM:0004921
                 bsr.w   Boss_JampanUpdateShieldFormationGeometry
                 subq.w  #1,(dword_FF942C).w
                 bne.s   Boss_JampanCollapseShieldRadiusReturn
-                clr.w   (word_FFC732).w
+                clr.w   (TertiaryEntityWork52).w
                 clr.w   (word_FFC7F2).w
                 bsr.w   Boss_JampanDisableShields
                 move.w  #$10,$48(a5)
@@ -171,7 +171,7 @@ Boss_JampanShieldCycleRecoveryDelayState:               ; DATA XREF: ROM:0004921
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanShieldCycleRecoveryDelayReturn
-                move.w  #1,(word_FFC732).w
+                move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(word_FFC7F2).w
                 move.w  #$12,4(a5)
 Boss_JampanShieldCycleRecoveryDelayReturn:              ; CODE XREF: Boss_JampanShieldCycleRecoveryDelayState+8   j
@@ -209,7 +209,7 @@ Boss_JampanFinishAlternatePatternInitialization:        ; CODE XREF: Boss_Jampan
                 clr.l   $1C(a5)
                 clr.l   $54(a5)
                 clr.w   (word_FFC8B2).w
-                move.w  #3,(word_FFC6D2).w
+                move.w  #3,(SecondaryEntityWork52).w
                 move.w  #3,(word_FFC792).w
                 andi.w  #$1FC,(dword_FF9408).w
                 move.w  #4,(dword_FF9414).w
@@ -492,7 +492,7 @@ Boss_JampanReinitializePostDefeatObjectsState:          ; DATA XREF: ROM:0004923
                 move.w  #$FFF8,(dword_FF9424).w
                 move.w  #$100,(dword_FF9404).w
                 move.w  #$100,(dword_FF9408).w
-                move.w  #1,(word_FFC732).w
+                move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(word_FFC7F2).w
                 move.w  #1,(word_FFC852).w
                 addq.w  #2,4(a5)
@@ -503,7 +503,7 @@ Boss_JampanReinitializePostDefeatObjectsReturn:         ; CODE XREF: Boss_Jampan
 ; Initializes one directed post-defeat movement interval
 Boss_JampanInitializePostDefeatMovementState:           ; DATA XREF: ROM:0004923A   o  ; was: sub_49F88
                 bsr.w   Boss_JampanUpdatePostDefeatSequenceTimer
-                move.w  #1,(word_FFC6D2).w
+                move.w  #1,(SecondaryEntityWork52).w
                 move.w  #1,(word_FFC792).w
                 bsr.w   Boss_JampanAdjustOrbitParametersFromInput
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
@@ -580,9 +580,9 @@ Boss_JampanPostDefeatObjectStateHandlers:   dc.w    Boss_JampanInitializePostDef
 ; Initializes the type-$240 post-defeat object and linked-part state
 Boss_JampanInitializePostDefeatObjectState:             ; DATA XREF: ROM:Boss_JampanPostDefeatObjectStateHandlers   o  ; was: sub_4A044
                 move.b  #$40,$20(a5)                    ; '@'
-                move.w  #1,(word_FFC6D2).w
+                move.w  #1,(SecondaryEntityWork52).w
                 move.w  #1,(word_FFC792).w
-                clr.w   (word_FFC732).w
+                clr.w   (TertiaryEntityWork52).w
                 clr.w   (word_FFC7F2).w
                 clr.w   (word_FFC8B2).w
                 clr.w   (word_FFC852).w

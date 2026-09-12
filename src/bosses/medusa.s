@@ -502,7 +502,7 @@ Boss_ApplyMedusaPoseToParts:                            ; CODE XREF: Boss_Render
                 move.w  $652(a5),d0
                 add.w   d2,d0
                 move.w  d0,$654(a5)
-                movea.w #(word_FFC680-M68K_RAM),a1
+                movea.w #(SecondaryEntityType-M68K_RAM),a1
                 bsr.w   Boss_OffsetMedusaPosePartGroup
                 movea.w #(word_FFC860-M68K_RAM),a1
                 bsr.w   Boss_OffsetMedusaPosePartGroup
@@ -661,7 +661,7 @@ Medusa_InitialPoseFrameDelays:  dc.w    0, 0, $7090, 0  ; DATA XREF: Boss_EnterM
 
 ; Synchronize the falling part X coordinate and dispatch its three states
 Entity_UpdateMedusaFallingPart:                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_5717A
-                move.w  (dword_FFC630).w,$10(a5)
+                move.w  (PrimaryEntityXPos).w,$10(a5)
                 clr.w   6(a5)
                 move.w  4(a5),d0
                 movea.w Entity_MedusaFallingPartStateOffsets(pc,d0.w),a0

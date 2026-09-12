@@ -81,8 +81,8 @@ Boss_DestroyerProtoChooseAttack:                        ; DATA XREF: ROM:0003151
                 addi.w  #$20,d0                         ; ' '
                 sub.w   d0,d2
                 andi.w  #$1FE,d2
-                move.w  d2,(word_FFC6C0).w
-                move.w  d2,(word_FFC720).w
+                move.w  d2,(SecondaryEntityWork40).w
+                move.w  d2,(TertiaryEntityWork40).w
                 add.w   d0,d2
                 add.w   d0,d2
                 andi.w  #$1FE,d2
@@ -271,8 +271,8 @@ Boss_DestroyerProtoAimAllPartsAtPlayer:                 ; CODE XREF: Boss_Destro
                 jsr     (Math_CalculateAngleToPlayer).l
                 addi.w  #$10,d2
                 andi.w  #$1E0,d2
-                move.w  d2,(word_FFC6C0).w
-                move.w  d2,(word_FFC720).w
+                move.w  d2,(SecondaryEntityWork40).w
+                move.w  d2,(TertiaryEntityWork40).w
                 move.w  d2,(word_FFC780).w
                 move.w  d2,(word_FFC786).w
                 move.w  d2,(word_FFC7E0).w
@@ -331,7 +331,7 @@ Boss_DestroyerProtoFireNextStreamPair:                  ; CODE XREF: Boss_Destro
                 bcs.w   Entity_UpdateReturn
                 andi.w  #3,d0
                 bne.w   Entity_UpdateReturn
-                lea     (word_FFC740).w,a4
+                lea     (QuaternaryEntityType).w,a4
                 movea.l $58(a5),a0
                 addi.l  #$60,$58(a5)                    ; '`'
                 bsr.w   Projectile_DestroyerProtoActivateStreamShot
@@ -361,13 +361,13 @@ Projectile_DestroyerProtoActivateStreamShot:            ; CODE XREF: Boss_Destro
 ; Rotates all six parts during the aimed stream
 Boss_DestroyerProtoRotatePartsForStream:                ; CODE XREF: Boss_DestroyerProtoFireStream   p  ; was: sub_31CF8
                 move.w  #2,d0
-                lea     (word_FFC680).w,a4
+                lea     (SecondaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
                 move.w  #4,d0
-                lea     (word_FFC6E0).w,a4
+                lea     (TertiaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
                 move.w  #8,d1
-                lea     (word_FFC740).w,a4
+                lea     (QuaternaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddInnerPartAngles
                 move.w  #$FFFE,d0
                 lea     (word_FFC7A0).w,a4

@@ -154,7 +154,7 @@ Frontend_RevealFinalOpeningPattern:                     ; was: sub_1D37E
                 jsr     (Cutscene_RevealPlanetPatternStep).l
                 tst.w   (PatternDissolveStep).l
                 bpl.w   FrontendTransition_Return
-                clr.w   (word_FFC622).w
+                clr.w   (PrimaryEntityFlags).w
                 move.w  #6,(GameSubstateIndex).w
                 move.w  #$C,(SharedSequenceState).l
                 rts

@@ -368,7 +368,7 @@ Projectile_JokerDescendingShotEmitterTrackPlayer:       ; CODE XREF: Projectile_
                 cmpi.w  #$148,$14(a5)
                 bpl.s   Projectile_JokerDescendingShotEmitterUpdateTimer
                 addq.w  #2,$14(a5)
-                move.w  (dword_FFC630).w,$10(a5)
+                move.w  (PrimaryEntityXPos).w,$10(a5)
 Projectile_JokerDescendingShotEmitterUpdateTimer:       ; CODE XREF: Projectile_JokerDescendingShotEmitter+20   j  ; was: loc_3BEB0
                 subq.w  #1,$48(a5)
                 bpl.s   Projectile_JokerDescendingShotEmitterUpdatePreShotJitter

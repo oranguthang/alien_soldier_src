@@ -41,10 +41,10 @@ UnreferencedIndexedPaletteWords:    dc.w    $200, $400, $622, $844, $5478, $A950
 UnreferencedCreateType308AndUpdateStage17Parallax:
                 move.w  #$2E,(PlayerScriptStateOffset).w  ; '.'  ; was: sub_E190
                 move.w  #$20,(dword_FF8128).w           ; ' '
-                move.w  #$308,(word_FFC680).w
-                clr.w   (word_FFC684).w
+                move.w  #$308,(SecondaryEntityType).w
+                clr.w   (SecondaryEntityState).w
                 bsr.w   Stage17_UpdateEpsilon1Parallax
-                tst.w   (word_FFC680).w
+                tst.w   (SecondaryEntityType).w
                 bne.s   UnreferencedCreateType308AndUpdateStage17Parallax_Return
                 addq.w  #2,(StageStateOffset).w
                 clr.w   (PlayerScriptStateOffset).w

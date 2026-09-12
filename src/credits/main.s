@@ -57,8 +57,8 @@ Credits_InitXiTiger_InitHorizontalScrollLoop:           ; CODE XREF: Credits_Ini
 Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_InitXiTiger+110   j  ; was: loc_20A64
                 move.l  d0,(a0)+
                 dbf     d7,Credits_InitXiTiger_InitVerticalScrollLoop
-                lea     (word_FFC680).w,a5
-                move.w  #$CC00,word_FFC682-word_FFC680(a5)
+                lea     (SecondaryEntityType).w,a5
+                move.w  #$CC00,SecondaryEntityFlags-SecondaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #Credits_XiTigerSpriteFrames,8(a5)
                 move.w  #$8000,$E(a5)
@@ -67,8 +67,8 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.b  #$60,$20(a5)                    ; '`'
-                lea     (word_FFC6E0).w,a5
-                move.w  #$CC00,word_FFC6E2-word_FFC6E0(a5)
+                lea     (TertiaryEntityType).w,a5
+                move.w  #$CC00,TertiaryEntityFlags-TertiaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #Credits_XiTigerSpriteFrames,8(a5)
                 move.w  #$8000,$E(a5)
@@ -426,8 +426,8 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 nop
                 lea     (word_FFE340).w,a1
                 bsr.w   Data_Copy32Bytes
-                lea     (word_FFC680).w,a5
-                move.w  #$CC00,word_FFC682-word_FFC680(a5)
+                lea     (SecondaryEntityType).w,a5
+                move.w  #$CC00,SecondaryEntityFlags-SecondaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #Credits_XiTigerSpriteFrames,8(a5)
                 move.w  #$8000,$E(a5)
@@ -436,8 +436,8 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.b  #$60,$20(a5)                    ; '`'
-                lea     (word_FFC6E0).w,a5
-                move.w  #$CC00,word_FFC6E2-word_FFC6E0(a5)
+                lea     (TertiaryEntityType).w,a5
+                move.w  #$CC00,TertiaryEntityFlags-TertiaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #Credits_XiTigerSpriteFrames,8(a5)
                 move.w  #$8000,$E(a5)
@@ -565,8 +565,8 @@ Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F1
                 jsr     (Gfx_ApplyPaletteFade).l
                 cmpi.w  #$FFF2,(ScenePaletteFadeOffset).l
                 bne.w   Credits_StateReturn
-                clr.w   (word_FFC680).w
-                clr.w   (word_FFC6E0).w
+                clr.w   (SecondaryEntityType).w
+                clr.w   (TertiaryEntityType).w
                 move.b  #0,(VDPReg11Shadow+1).w
                 clr.w   (PrimaryCameraXPosition).w
                 clr.w   (SecondaryCameraXPos).w

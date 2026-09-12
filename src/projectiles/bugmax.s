@@ -446,7 +446,7 @@ Boss_BugmaxEmitOpeningHitFragmentsAndSteer:             ; CODE XREF: Boss_Bugmax
                 movem.w a5,-(sp)
                 bsr.w   Boss_BugmaxEmitHitFragmentFromCurrentPart
                 move.w  #6,d7
-                movea.w #(word_FFC680-M68K_RAM),a5
+                movea.w #(SecondaryEntityType-M68K_RAM),a5
 Boss_BugmaxEmitOpeningPartHitFragmentLoop:              ; CODE XREF: Boss_BugmaxEmitOpeningHitFragmentsAndSteer+18   j  ; was: loc_4D8E4
                 bsr.w   Boss_BugmaxEmitHitFragmentFromCurrentPart
                 lea     $60(a5),a5
@@ -464,26 +464,26 @@ Boss_BugmaxEmitHitFragmentFromCurrentPart:              ; CODE XREF: Boss_Bugmax
                 bclr    #6,$22(a5)
                 beq.w   Boss_BugmaxHitFragmentEmissionReturn
                 move.w  #4,(PlaneBShakeLevel).w
-                btst    #7,(dword_FFC638).w
+                btst    #7,(PrimaryEntityXVelocity).w
                 beq.s   Boss_BugmaxAcceleratePositiveHitFragmentSpawnOffset
-                addi.l  #-$4000,(dword_FFC638).w
-                cmpi.l  #$FFFE0000,(dword_FFC638).w
+                addi.l  #-$4000,(PrimaryEntityXVelocity).w
+                cmpi.l  #$FFFE0000,(PrimaryEntityXVelocity).w
                 blt.s   Boss_BugmaxAllocateHitFragment
-                move.l  #$FFFE0000,(dword_FFC638).w
+                move.l  #$FFFE0000,(PrimaryEntityXVelocity).w
                 bra.s   Boss_BugmaxAllocateHitFragment
 ; ---------------------------------------------------------------------------
 Boss_BugmaxAcceleratePositiveHitFragmentSpawnOffset:    ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+16   j  ; was: loc_4D92E
-                addi.l  #$4000,(dword_FFC638).w
-                cmpi.l  #$20000,(dword_FFC638).w
+                addi.l  #$4000,(PrimaryEntityXVelocity).w
+                cmpi.l  #$20000,(PrimaryEntityXVelocity).w
                 blt.s   Boss_BugmaxAllocateHitFragment
-                move.l  #$20000,(dword_FFC638).w
+                move.l  #$20000,(PrimaryEntityXVelocity).w
 Boss_BugmaxAllocateHitFragment:                         ; CODE XREF: Boss_BugmaxEmitHitFragmentFromCurrentPart+28   j  ; was: loc_4D948
                                         ; Boss_BugmaxEmitHitFragmentFromCurrentPart+32   j
                 lea     (word_FFCF80).w,a0
                 jsr     (Projectile_FindFreePrimarySlot_CheckExtendedRange).l
                 bne.w   Boss_BugmaxHitFragmentEmissionReturn
                 move.w  #$338,(a0)
-                move.w  (dword_FFC630).w,$10(a0)
+                move.w  (PrimaryEntityXPos).w,$10(a0)
                 move.w  $14(a5),$14(a0)
                 move.b  $20(a5),$20(a0)
                 subq.b  #8,$20(a0)

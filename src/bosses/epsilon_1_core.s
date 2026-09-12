@@ -34,7 +34,7 @@ Boss_Epsilon1UpdatePeriodicSharedOffset:                ; CODE XREF: Boss_Epsilo
 Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilon1Main+4A   j  ; was: loc_45B30
                                         ; Boss_Epsilon1Main+54   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                move.w  (dword_FFC690).w,d0
+                move.w  (SecondaryEntityXPos).w,d0
                 add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$4E(a5)
                 move.w  (dword_FF9414).w,d0
@@ -44,9 +44,9 @@ Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilo
                 ext.l   d0
                 asl.l   #5,d0
                 swap    d0
-                add.w   (dword_FFC694).w,d0
+                add.w   (SecondaryEntityYPos).w,d0
                 move.w  d0,(dword_FF940C+2).w
-                move.w  (dword_FFC690).w,(dword_FF940C).w
+                move.w  (SecondaryEntityXPos).w,(dword_FF940C).w
                 move.w  #$180,d0
                 sub.w   (dword_FF940C).w,d0
                 move.w  d0,(SecondaryCameraXPos).w
@@ -64,8 +64,8 @@ Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilo
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,$4C(a5)
                 move.w  #$5C,4(a5)                      ; '\'
-                clr.l   (dword_FFC698).w
-                clr.l   (dword_FFC69C).w
+                clr.l   (SecondaryEntityXVel).w
+                clr.l   (SecondaryEntityYVel).w
                 bset    #0,(StageTimerPauseFlag).w
                 bra.w   Boss_Epsilon1UpdateLinkedParts
 ; ---------------------------------------------------------------------------
@@ -80,7 +80,7 @@ Boss_Epsilon1UpdateBodyAndAngleHistory:                 ; CODE XREF: Boss_Epsilo
                 move.w  Math_QuarterSineTable-Math_SineTable(a2,d0.w),d1
                 muls.w  $54(a5),d1
                 swap    d1
-                move.w  (word_FFC6CC).w,d0
+                move.w  (SecondaryEntityWork4C).w,d0
                 add.w   d0,$10(a5)
                 add.w   d1,$14(a5)
                 bsr.w   Boss_Epsilon1UpdateBodyPose
@@ -120,7 +120,7 @@ Boss_Epsilon1UpdateLinkedParts:                         ; CODE XREF: Boss_Epsilo
                 lea     (Math_SineTable).l,a2
                 move.w  (dword_FF940C).w,d2
                 move.w  (dword_FF940C+2).w,d3
-                movea.w #(word_FFC6E0-M68K_RAM),a1
+                movea.w #(TertiaryEntityType-M68K_RAM),a1
                 move.w  $52(a1),d0
                 move.w  -$80(a2,d0.w),d1
                 move.w  (a2,d0.w),d0
@@ -135,7 +135,7 @@ Boss_Epsilon1UpdateLinkedParts:                         ; CODE XREF: Boss_Epsilo
                 move.w  d0,$10(a1)
                 move.w  d1,$14(a1)
                 bsr.w   Boss_Epsilon1UpdateLinkedPart
-                movea.w #(word_FFC740-M68K_RAM),a1
+                movea.w #(QuaternaryEntityType-M68K_RAM),a1
                 move.w  $52(a1),d0
                 move.w  -$80(a2,d0.w),d1
                 move.w  (a2,d0.w),d0
@@ -302,13 +302,13 @@ Boss_Epsilon1ClearAngleHistoryRowLoop:                  ; CODE XREF: Boss_Epsilo
                 move.l  #$F808F808,$28(a5)
                 move.w  #$16,$24(a5)
                 move.w  #$18,$54(a5)
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.b  $20(a5),$20(a0)
                 move.w  #$C80,2(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                movea.w #(word_FFC6E0-M68K_RAM),a0
+                movea.w #(TertiaryEntityType-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.b  $20(a5),$20(a0)
                 move.l  #Boss_Epsilon1LinkedSidePartMapping,8(a0)
@@ -321,7 +321,7 @@ Boss_Epsilon1ClearAngleHistoryRowLoop:                  ; CODE XREF: Boss_Epsilo
                 move.w  #$36,$4E(a0)                    ; '6'
                 move.w  #$1C0,$52(a0)
                 move.w  #0,$50(a0)
-                movea.w #(word_FFC740-M68K_RAM),a0
+                movea.w #(QuaternaryEntityType-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.b  $20(a5),$20(a0)
                 move.l  #Boss_Epsilon1LinkedSidePartMapping,8(a0)

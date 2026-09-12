@@ -2,14 +2,14 @@ Boss_Epsilon1BeginForcedTransitionState:                ; DATA XREF: ROM:00045D3
                 clr.w   (dword_FF9410).w
                 move.w  #0,(dword_FF9414+2).w
                 addq.w  #2,4(a5)
-                move.l  #$FFFF0000,(dword_FFC69C).w
+                move.l  #$FFFF0000,(SecondaryEntityYVel).w
                 bclr    #0,(byte_FF8308).w
                 bne.s   Boss_Epsilon1SetLeftwardTransitionVelocity
-                move.w  #6,(dword_FFC698).w
+                move.w  #6,(SecondaryEntityXVel).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1SetLeftwardTransitionVelocity:             ; CODE XREF: Boss_Epsilon1BeginForcedTransitionState+1C   j  ; was: loc_467FE
-                move.w  #$FFFA,(dword_FFC698).w
+                move.w  #$FFFA,(SecondaryEntityXVel).w
                 rts
 ; End of function Boss_Epsilon1BeginForcedTransitionState
 ; Waits for all six delayed angles to align before resuming rotation
@@ -32,20 +32,20 @@ Boss_Epsilon1WaitForHorizontalExitState:                ; DATA XREF: ROM:00045D4
 Boss_Epsilon1ReverseHorizontalTransition:               ; CODE XREF: Boss_Epsilon1WaitForHorizontalExitState+6   j  ; was: loc_4682A
                                         ; Boss_Epsilon1WaitForHorizontalExitState+E   j
                 move.w  #8,(PlaneAShakeLevel).w
-                move.l  (dword_FFC698).w,d0
+                move.l  (SecondaryEntityXVel).w,d0
                 asr.l   #1,d0
                 neg.l   d0
-                move.l  d0,(dword_FFC698).w
+                move.l  d0,(SecondaryEntityXVel).w
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_Epsilon1WaitForHorizontalExitState
 ; Accelerates the battle center downward to Y $100
 Boss_Epsilon1DescendToLowerBoundaryState:               ; DATA XREF: ROM:00045D44   o  ; was: sub_46842
-                addi.l  #$2000,(dword_FFC69C).w
-                cmpi.w  #$100,(dword_FFC694).w
+                addi.l  #$2000,(SecondaryEntityYVel).w
+                cmpi.w  #$100,(SecondaryEntityYPos).w
                 bcs.s   Boss_Epsilon1DescendToLowerBoundaryReturn
-                clr.l   (dword_FFC69C).w
-                clr.l   (dword_FFC698).w
+                clr.l   (SecondaryEntityYVel).w
+                clr.l   (SecondaryEntityXVel).w
                 move.w  #$60,$48(a5)                    ; '`'
                 addq.w  #2,4(a5)
 Boss_Epsilon1DescendToLowerBoundaryReturn:              ; CODE XREF: Boss_Epsilon1DescendToLowerBoundaryState+E   j  ; was: locret_46864
@@ -63,7 +63,7 @@ Boss_Epsilon1LowerBoundaryDelayReturn:                  ; CODE XREF: Boss_Epsilo
 ; Applies the directional step until battle-center Y crosses above $40
 Boss_Epsilon1ReturnToUpperBoundaryState:                ; DATA XREF: ROM:00045D48   o  ; was: sub_46878
                 bsr.w   Boss_Epsilon1ApplyDirectionalVerticalStep
-                cmpi.w  #$40,(dword_FFC694).w           ; '@'
+                cmpi.w  #$40,(SecondaryEntityYPos).w    ; '@'
                 bcc.w   Boss_Epsilon1ReturnToUpperBoundaryReturn
                 addq.w  #2,4(a5)
 Boss_Epsilon1ReturnToUpperBoundaryReturn:               ; CODE XREF: Boss_Epsilon1ReturnToUpperBoundaryState+A   j  ; was: locret_4688A
@@ -79,8 +79,8 @@ Boss_Epsilon1FinishForcedTransitionState:               ; DATA XREF: ROM:00045D4
 ; Hides the controller and linked parts and starts the defeat delay
 Boss_Epsilon1BeginDefeatState:                          ; DATA XREF: ROM:00045D4C   o  ; was: sub_468A0
                 clr.b   $21(a5)
-                clr.b   (byte_FFC701).w
-                clr.b   (byte_FFC761).w
+                clr.b   (TertiaryEntityStatus).w
+                clr.b   (QuaternaryEntityStatus).w
                 addq.w  #2,4(a5)
                 move.w  #$80,$48(a5)
                 move.b  #1,(byte_FF830E).w
@@ -90,8 +90,8 @@ Boss_Epsilon1BeginDefeatState:                          ; DATA XREF: ROM:00045D4
 Boss_Epsilon1StartLinkedPartDestructionState:           ; DATA XREF: ROM:00045D4E   o  ; was: sub_468BE
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_Epsilon1StartLinkedPartDestructionReturn
-                movea.w #(word_FFC6E0-M68K_RAM),a0
-                movea.w #(word_FFC740-M68K_RAM),a1
+                movea.w #(TertiaryEntityType-M68K_RAM),a0
+                movea.w #(QuaternaryEntityType-M68K_RAM),a1
                 cmpi.w  #6,4(a0)
                 bne.s   Boss_Epsilon1StartLinkedPartDestructionReturn
                 cmpi.w  #6,4(a1)
@@ -161,10 +161,10 @@ Boss_Epsilon1RestorePostExplosionSpriteState:           ; DATA XREF: ROM:00045D5
                 cmpi.w  #$80,$C(a5)
                 bmi.s   Boss_Epsilon1RestorePostExplosionSpriteReturn
                 move.w  #$C80,2(a5)
-                move.w  (dword_FFC694).w,d0
+                move.w  (SecondaryEntityYPos).w,d0
                 addi.w  #$10,d0
                 move.w  d0,$14(a5)
-                move.w  (dword_FFC690).w,$10(a5)
+                move.w  (SecondaryEntityXPos).w,$10(a5)
                 addq.w  #2,4(a5)
 Boss_Epsilon1RestorePostExplosionSpriteReturn:          ; CODE XREF: Boss_Epsilon1RestorePostExplosionSpriteState+6   j  ; was: locret_469D4
                 rts
@@ -397,8 +397,8 @@ Boss_Epsilon1HoldAlternateBodyPoseReturn:               ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1HoldAlternateBodyPoseState
 ; Increments the horizontal body offset to eight pixels
 Boss_Epsilon1IncrementBodyOffsetState:                  ; DATA XREF: ROM:00046B84   o  ; was: sub_46C08
-                addq.w  #2,(word_FFC6CC).w
-                cmpi.w  #8,(word_FFC6CC).w
+                addq.w  #2,(SecondaryEntityWork4C).w
+                cmpi.w  #8,(SecondaryEntityWork4C).w
                 bne.s   Boss_Epsilon1IncrementBodyOffsetReturn
                 addq.w  #2,(dword_FF9418+2).w
 Boss_Epsilon1IncrementBodyOffsetReturn:                 ; CODE XREF: Boss_Epsilon1IncrementBodyOffsetState+A   j  ; was: locret_46C18
@@ -406,8 +406,8 @@ Boss_Epsilon1IncrementBodyOffsetReturn:                 ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1IncrementBodyOffsetState
 ; Decrements the horizontal body offset to minus eight pixels
 Boss_Epsilon1DecrementBodyOffsetState:                  ; DATA XREF: ROM:00046B86   o  ; was: sub_46C1A
-                subq.w  #2,(word_FFC6CC).w
-                cmpi.w  #$FFF8,(word_FFC6CC).w
+                subq.w  #2,(SecondaryEntityWork4C).w
+                cmpi.w  #$FFF8,(SecondaryEntityWork4C).w
                 bne.s   Boss_Epsilon1DecrementBodyOffsetReturn
                 addq.w  #2,(dword_FF9418+2).w
 Boss_Epsilon1DecrementBodyOffsetReturn:                 ; CODE XREF: Boss_Epsilon1DecrementBodyOffsetState+A   j  ; was: locret_46C2A
@@ -415,8 +415,8 @@ Boss_Epsilon1DecrementBodyOffsetReturn:                 ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1DecrementBodyOffsetState
 ; Returns the horizontal offset to zero and repeats or finishes the sway
 Boss_Epsilon1ReturnBodyOffsetToCenterState:             ; DATA XREF: ROM:00046B88   o  ; was: sub_46C2C
-                addq.w  #2,(word_FFC6CC).w
-                cmpi.w  #0,(word_FFC6CC).w
+                addq.w  #2,(SecondaryEntityWork4C).w
+                cmpi.w  #0,(SecondaryEntityWork4C).w
                 bne.s   Boss_Epsilon1ReturnBodyOffsetToCenterReturn
                 subq.w  #1,(dword_FF9420+2).w
                 beq.s   Boss_Epsilon1FinishHorizontalBodySway
@@ -532,8 +532,8 @@ Boss_Epsilon1SpawnLinkedPartDebrisState:                ; DATA XREF: ROM:00046C8
                 rts
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1UseBattleCenterForDebris:                  ; CODE XREF: Boss_Epsilon1SpawnLinkedPartDebrisState+3A   j  ; was: loc_46D4E
-                move.w  (dword_FFC690).w,$10(a0)
-                move.w  (dword_FFC694).w,$14(a0)
+                move.w  (SecondaryEntityXPos).w,$10(a0)
+                move.w  (SecondaryEntityYPos).w,$14(a0)
 Boss_Epsilon1SpawnLinkedPartDebrisReturn:               ; CODE XREF: Boss_Epsilon1SpawnLinkedPartDebrisState+6   j  ; was: locret_46D5A
                 rts
 ; End of function Boss_Epsilon1SpawnLinkedPartDebrisState

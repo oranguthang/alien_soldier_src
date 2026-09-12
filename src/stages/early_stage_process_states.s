@@ -160,7 +160,7 @@ Stage2_StartPostAntroidTransition:                      ; DATA XREF: ROM:0000C85
 ; Stage 3 camera with scroll update and position limit
 Stage3_InitializeIntroProjectileSlots:                  ; DATA XREF: ROM:0000C85C   o  ; was: sub_C99A
                 addq.w  #2,(StageStateOffset).w
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 moveq   #7,d7
 Stage3_InitializeIntroProjectileSlots_Loop:             ; CODE XREF: Stage3_InitializeIntroProjectileSlots+12   j  ; was: loc_C9A4
                 move.w  #$10,(a0)

@@ -243,7 +243,7 @@ Stage17_WriteMinus16ToStridedEntityWords:               ; CODE XREF: Stage_Initi
                 addq.w  #4,a0
                 dbf     d7,Stage17_WriteMinus16ToStridedEntityWords
                 move.w  #$484,(Entity_ObjectPool).w
-                clr.w   (word_FFC624).w
+                clr.w   (PrimaryEntityState).w
                 lea     Stage17IndexedTilemapRowData(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedRows).l

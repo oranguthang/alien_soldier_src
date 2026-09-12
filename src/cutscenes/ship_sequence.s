@@ -207,11 +207,11 @@ ShipSequence_WaitForVerticalPosition:                   ; DATA XREF: ROM:0000881
 ; Runs the ship flash until frame `$588`, then clears 46 arrival objects
 ShipSequence_FlashAndClearObjects:                      ; DATA XREF: ROM:0000881A   o  ; was: sub_89A2
                 bsr.w   ShipSequence_DispatchFlashState
-                eori.w  #$8000,(word_FFC6EE).w
+                eori.w  #$8000,(TertiaryEntityAttr).w
                 cmpi.w  #$588,(ShipSequenceFrame).l
                 bcs.w   Cutscene_Return
                 bsr.w   ShipSequence_DisableArrivalPlanePriority
-                lea     (word_FFC6E2).w,a0
+                lea     (TertiaryEntityFlags).w,a0
                 move.w  #$2D,d0                         ; '-'
 ShipSequence_ClearNextObject:                           ; CODE XREF: ShipSequence_FlashAndClearObjects+2A   j  ; was: loc_89C4
                 move.w  #$1000,(a0)

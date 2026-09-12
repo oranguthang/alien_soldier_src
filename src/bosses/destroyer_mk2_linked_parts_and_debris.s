@@ -104,7 +104,7 @@ Object_DestroyerMK2CentralPartStateHandlers:    dc.w    Object_DestroyerMK2Relea
 
 ; Release the central part after the controller transition or health trigger
 Object_DestroyerMK2ReleaseCentralPart:                  ; DATA XREF: ROM:Object_DestroyerMK2CentralPartStateHandlers   o  ; was: sub_4B760
-                cmpi.w  #$2A,(word_FFC624).w            ; '*'
+                cmpi.w  #$2A,(PrimaryEntityState).w     ; '*'
                 bcc.s   Object_DestroyerMK2ReleaseCentralPartNow
                 tst.w   $24(a5)
                 bpl.s   Object_DestroyerMK2ReleaseCentralPartReturn
@@ -570,17 +570,17 @@ Gfx_DestroyerMK2SecondaryPaletteCycleTable: dc.w    $64, $44, $42, $22, $20, 0, 
 ; Updates the fixed and orbiting linked-object geometry
 Boss_DestroyerMK2UpdateLinkedObjectGeometry:            ; CODE XREF: Boss_DestroyerMK2InitializeScrollDeformationState+C   p  ; was: sub_4BC44
                                         ; sub_4ABC6   p
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.l  $10(a5),$10(a0)
                 move.l  $14(a5),$14(a0)
                 move.w  $4C(a0),d0
                 add.w   d0,$14(a0)
-                movea.w #(word_FFC6E0-M68K_RAM),a0
+                movea.w #(TertiaryEntityType-M68K_RAM),a0
                 move.l  $10(a5),$10(a0)
                 move.l  $14(a5),$14(a0)
                 move.w  $4C(a0),d0
                 add.w   d0,$14(a0)
-                movea.w #(word_FFC740-M68K_RAM),a0
+                movea.w #(QuaternaryEntityType-M68K_RAM),a0
                 move.l  $10(a5),$10(a0)
                 move.l  $14(a5),$14(a0)
                 move.w  #3,d7

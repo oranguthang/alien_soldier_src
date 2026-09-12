@@ -438,7 +438,7 @@ Boss_Epsilon1PositionRingObjectFromSamples:             ; CODE XREF: Boss_Epsilo
                 add.w   d0,d0
                 lea     (dword_FF942C).w,a1
                 move.w  (a1,d0.w),d0
-                move.w  (dword_FFC690).w,d0
+                move.w  (SecondaryEntityXPos).w,d0
                 add.w   $4C(a5),d0
                 move.w  d0,$10(a5)
                 move.w  $4A(a5),d0
@@ -569,7 +569,7 @@ Boss_Epsilon1AdvanceRingObjectDefeatPosition:           ; CODE XREF: Boss_Epsilo
                 addi.w  #$20,$50(a5)                    ; ' '
                 move.w  $50(a5),d0
                 bsr.w   Boss_Epsilon1StoreRingObjectPhaseValue
-                move.w  (dword_FFC690).w,d0
+                move.w  (SecondaryEntityXPos).w,d0
                 add.w   $4C(a5),d0
                 move.w  d0,$10(a5)
                 move.w  $4A(a5),d0

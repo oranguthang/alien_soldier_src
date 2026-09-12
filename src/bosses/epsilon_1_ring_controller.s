@@ -40,8 +40,8 @@ Boss_Epsilon1TrackingRingInactiveState:                 ; DATA XREF: ROM:Boss_Ep
 Boss_Epsilon1InitializeTrackingRingState:               ; DATA XREF: ROM:00046DAE   o  ; was: sub_46DBC
                 addq.w  #2,4(a5)
                 ori.w   #$8000,2(a5)
-                move.w  (dword_FFC630).w,$10(a5)
-                move.w  (dword_FFC634).w,$14(a5)
+                move.w  (PrimaryEntityXPos).w,$10(a5)
+                move.w  (PrimaryEntityYPos).w,$14(a5)
                 move.w  #4,$4A(a5)
                 move.w  #$FFFF,$4E(a5)
                 move.w  #$40,$48(a5)                    ; '@'

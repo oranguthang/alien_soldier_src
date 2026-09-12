@@ -129,11 +129,11 @@ Boss_DestroyerMK2InitializeScrollRowsLoop:              ; CODE XREF: Boss_Destro
                 move.l  #$F40CE020,$28(a5)
                 move.w  #$1C,$24(a5)
                 move.w  #8,(dword_FF9410).w
-                movea.w #(word_FFC740-M68K_RAM),a0
+                movea.w #(QuaternaryEntityType-M68K_RAM),a0
                 move.w  #$25C,(a0)
                 move.b  #$10,$23(a0)
                 move.w  #$D00,2(a0)
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.w  #$D00,2(a0)
                 move.b  #$10,$23(a0)
@@ -142,7 +142,7 @@ Boss_DestroyerMK2InitializeScrollRowsLoop:              ; CODE XREF: Boss_Destro
                 move.l  #$28E020,$2C(a0)
                 move.l  #$34D030,$28(a0)
                 move.w  #$FFC0,$4C(a0)
-                movea.w #(word_FFC6E0-M68K_RAM),a0
+                movea.w #(TertiaryEntityType-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.w  #$D00,2(a0)
                 move.b  #$10,$23(a0)
@@ -291,8 +291,8 @@ Boss_DestroyerMK2EnableLinkedCollisionReturn:           ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2SetLinkedCollisionFields:              ; CODE XREF: Boss_DestroyerMK2EnableLinkedCollisionState+A   p  ; was: sub_4AC30
                                         ; Boss_DestroyerMK2ExpandOrbitingPartsState+2A   p
                 move.b  #$D0,$21(a5)
-                move.b  #$C0,(byte_FFC6A1).w
-                move.b  #$C0,(byte_FFC701).w
+                move.b  #$C0,(SecondaryEntityStatus).w
+                move.b  #$C0,(TertiaryEntityStatus).w
                 movea.w #(word_FFC7A0-M68K_RAM),a0
                 move.w  #$B,d7
 Boss_DestroyerMK2SetLinkedCollisionLoop:                ; CODE XREF: Boss_DestroyerMK2SetLinkedCollisionFields+24   j  ; was: loc_4AC4A
@@ -305,8 +305,8 @@ Boss_DestroyerMK2SetLinkedCollisionLoop:                ; CODE XREF: Boss_Destro
 Boss_DestroyerMK2ClearLinkedCollisionFields:            ; CODE XREF: Boss_DestroyerMK2ToggleOrbitingPartsState+2E   p  ; was: sub_4AC5A
                                         ; Boss_DestroyerMK2WaitForLinkedPartsToDeactivate+22   p
                 clr.b   $21(a5)
-                clr.b   (byte_FFC6A1).w
-                clr.b   (byte_FFC701).w
+                clr.b   (SecondaryEntityStatus).w
+                clr.b   (TertiaryEntityStatus).w
                 movea.w #(word_FFC7A0-M68K_RAM),a0
                 move.w  #$B,d7
 Boss_DestroyerMK2ClearLinkedCollisionLoop:              ; CODE XREF: Boss_DestroyerMK2ClearLinkedCollisionFields+1C   j  ; was: loc_4AC6E

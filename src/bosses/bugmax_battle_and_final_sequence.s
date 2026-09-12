@@ -27,7 +27,7 @@ Boss_BugmaxInitializeBattleObjectChains:                ; DATA XREF: ROM:0004C3F
                 move.w  #$14,$24(a5)
                 move.w  #0,$4C(a5)
                 move.w  #0,$4E(a5)
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.l  #Boss_BugmaxSpriteFrame02,8(a0)
                 move.w  $E(a5),$E(a0)
                 move.w  2(a5),2(a0)
@@ -43,7 +43,7 @@ Boss_BugmaxInitializeBattleObjectChains:                ; DATA XREF: ROM:0004C3F
                 move.w  #$40,$50(a0)                    ; '@'
                 moveq   #0,d6
                 move.w  #4,d7
-                movea.w #(word_FFC6E0-M68K_RAM),a0
+                movea.w #(TertiaryEntityType-M68K_RAM),a0
 Boss_BugmaxInitializePrimaryLinkedChainLoop:            ; CODE XREF: Boss_BugmaxInitializeBattleObjectChains+110   j  ; was: loc_4CA12
                 move.w  $E(a5),$E(a0)
                 move.w  2(a5),2(a0)
@@ -81,8 +81,8 @@ Boss_BugmaxInitializeSecondaryLinkedChainLoop:          ; CODE XREF: Boss_Bugmax
                 move.w  #$20,(dword_FF9410).w           ; ' '
                 addq.w  #2,$5E(a5)
                 move.w  $5C(a5),$4A(a5)
-                move.w  #$180,(word_FFC6CC).w
-                move.w  #$80,(word_FFC72C).w
+                move.w  #$180,(SecondaryEntityWork4C).w
+                move.w  #$80,(TertiaryEntityWork4C).w
                 move.w  #$A0,d0
                 lea     (word_FF9600).w,a0
                 move.w  #7,d7
@@ -151,10 +151,10 @@ Boss_BugmaxRotateLinkedAssemblyToward180AndStartBattle:  ; DATA XREF: ROM:0004C3
                 addq.w  #2,4(a5)
                 bsr.w   Gfx_BugmaxTransferBattleTileBlock
                 move.b  #$D0,$21(a5)
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.b  #$D0,$21(a0)
                 move.w  #$60,$50(a0)                    ; '`'
-                movea.w #(word_FFC6E0-M68K_RAM),a0
+                movea.w #(TertiaryEntityType-M68K_RAM),a0
                 move.w  #2,d7
 Boss_BugmaxEnablePrimaryLinkedPartCollisionLoop:        ; CODE XREF: Boss_BugmaxRotateLinkedAssemblyToward180AndStartBattle+52   j  ; was: loc_4CBBA
                 move.b  #$D0,$21(a0)
@@ -754,7 +754,7 @@ Boss_BugmaxScatterLinkedParts:                          ; DATA XREF: ROM:0004C43
                 subq.w  #1,$48(a5)
                 bne.w   Boss_BugmaxLinkedPartScatterReturn
                 move.w  #$CF80,d6
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.w  #$D,d7
 Boss_BugmaxScatterPrimaryObjectPoolLoop:                ; CODE XREF: Boss_BugmaxScatterLinkedParts+3E   j  ; was: loc_4D292
                 move.w  #$344,(a0)

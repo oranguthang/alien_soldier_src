@@ -6120,3 +6120,91 @@ Provenance rises from 15,409 to 15,411 mappings and the audit registry from
 12,558 to 12,561. Auditing the existing procedure reduces the semantic review
 upper bound from 3,151 to 3,150. The enforced address-derived ceiling falls
 from 642 to 640, all still confined to RAM equates.
+
+The primary-entity-record pass replaces nine raw RAM equates. The absolute
+aliases at `$FFFFC622` through `$FFFFC641` are offsets within the first
+96-byte `Entity_ObjectPool` record. Its concrete owner changes across stages,
+bosses, cutscenes, and credits, so the new `PrimaryEntity` names describe the
+record structure rather than inventing a persistent character identity. The
+fields cover flags, even state offset, mapping pointer, sprite attributes,
+signed 16.16 X/Y position, X velocity, angle, and a deliberately broad status
+byte. Bugmax's use of the X-velocity field as fragment motion scratch is
+documented rather than hidden behind a narrower boss-specific alias.
+
+All nine fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,411 to 15,420 mappings and the audit registry from
+12,561 to 12,570. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 640 to 631, all still confined to RAM equates.
+
+The secondary-entity-record pass replaces five raw RAM equates at offsets
+`$10`, `$14`, `$18`, `$1C`, and `$21` of the second 96-byte pool record.
+Epsilon 1 uses `SecondaryEntityXPos` and `SecondaryEntityYPos` as its shared
+battle center, with signed 16.16 `SecondaryEntityXVel` and
+`SecondaryEntityYVel` motion fields. Other boss and projectile paths confirm
+the same structural coordinate roles. `SecondaryEntityStatus` remains broad:
+Destroyer MK2 proves that it is the second record's status byte, but not a
+single game-wide interpretation for each bit.
+
+All five fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,420 to 15,425 mappings and the audit registry from
+12,570 to 12,575. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 631 to 626, all still confined to RAM equates.
+
+The tertiary-entity-record pass replaces six raw RAM equates. The record at
+`$FFFFC6E0` is exactly two `$60`-byte slots after `Entity_ObjectPool`; boss,
+cutscene, and credits paths use its type, flags, sprite attributes, signed
+16.16 X/Y position, and status fields with the same offsets as other entity
+records. Concrete owners include Bugmax linked parts, Destroyer MK2 links,
+Epsilon 1 side parts, Viblack chains, and cutscene objects, so the global names
+remain structural rather than choosing one owner.
+
+All six fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,425 to 15,431 mappings and the audit registry from
+12,575 to 12,581. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 626 to 620, all still confined to RAM equates.
+
+The entity-record-header pass replaces the raw type, flags, and state equates
+at the start of the second `$60`-byte pool record and the corresponding four
+reviewed fields of the fourth record. Scene setup writes the same flag values
+at offset `$02`; the ending-planet dispatcher uses the second record's offset
+`$04` as an even state-table index. Boss and projectile code independently use
+`$FFFFC740` as a record base, Destroyer MK2 and Epsilon 1 treat its offset `$04`
+as state, and Epsilon 1 clears its offset-`$21` status byte during defeat.
+Concrete owners vary, so the names remain structural.
+
+All seven fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,431 to 15,438 mappings and the audit registry from
+12,581 to 12,588. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 620 to 613, all still confined to RAM equates.
+
+The secondary-entity union-field pass replaces six raw equates at offsets
+`$40`, `$46`, `$4C`, `$52`, `$58`, and `$5C`. Cross-owner evidence rules out
+one global behavioral name: for example, offset `$4C` is an angle for Bugmax
+and the Stage 3 formation but a body offset for Epsilon 1, while offsets `$58`
+and `$5C` alternate between motion, oscillation, aim, and control state. The
+new `SecondaryEntityWork*` names therefore document proven record membership
+and field width without falsely promoting one owner's interpretation.
+
+All six fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,438 to 15,444 mappings and the audit registry from
+12,588 to 12,594. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 613 to 607, all still confined to RAM equates.
+
+The tertiary-entity work-field pass replaces seven raw equates. Offsets `$40`,
+`$4C`, `$50`, and `$52` remain structural because the pool record changes
+owner: static callers show Destroyer Proto angle, Bugmax joint-angle/radius,
+and Jampan linked-control uses without proving one global meaning. The final
+three fields have a single coherent Sunset Sting consumer chain and therefore
+receive semantic names: `SunsetStingTrailSpan`,
+`SunsetStingTrailStep`, and `SunsetStingAimAngle`.
+
+All seven fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,444 to 15,451 mappings and the audit registry from
+12,594 to 12,601. The semantic review upper bound remains 3,150 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 607 to 600, all still confined to RAM equates.

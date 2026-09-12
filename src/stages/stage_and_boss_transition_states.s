@@ -101,7 +101,7 @@ StageTransition_InitializeAsteroidField:                ; DATA XREF: Stage_Dispa
                 move.b  #1,(byte_FFA95A).w
                 move.b  #1,(byte_FFA95B).w
                 move.w  #$3AC,(Entity_ObjectPool).w
-                clr.w   (word_FFC624).w
+                clr.w   (PrimaryEntityState).w
 ; Handles graphics transition with scroll updates
 StageTransition_UpdateAsteroidFieldEntry:               ; DATA XREF: ROM:0000F0FE   o  ; was: loc_F1EC
                 bsr.w   StageTransition_FillAsteroidFieldVScroll

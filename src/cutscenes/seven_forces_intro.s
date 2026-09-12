@@ -764,8 +764,8 @@ Entity_InitSevenForcesTransitionSprite:                 ; CODE XREF: Entity_Star
                 move.w  #$CD00,2(a5)
                 move.l  #Boss_ValkirieMetaspriteFrame,8(a5)
                 move.w  #$6300,$E(a5)
-                move.w  (dword_FFC630).w,$10(a5)
-                move.w  (dword_FFC634).w,$14(a5)
+                move.w  (PrimaryEntityXPos).w,$10(a5)
+                move.w  (PrimaryEntityYPos).w,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 rts

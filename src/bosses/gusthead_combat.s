@@ -522,7 +522,7 @@ Boss_GustheadSegmentMain:                               ; DATA XREF: ROM:Entity_
                 clr.w   d1
                 clr.w   d2
                 clr.w   d3
-                move.w  (word_FFC622).w,d0
+                move.w  (PrimaryEntityFlags).w,d0
                 andi.w  #$8000,d0
                 andi.w  #$7FFF,2(a5)
                 or.w    d0,2(a5)

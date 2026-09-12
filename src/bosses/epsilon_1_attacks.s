@@ -23,19 +23,19 @@ Debug_Epsilon1AdjustBattleCenter:
                 beq.s   Debug_Epsilon1AdjustBattleCenterReturn
                 btst    #2,(ControllerHeldState).w
                 beq.s   Debug_Epsilon1CheckMoveRight
-                subq.w  #2,(dword_FFC690).w
+                subq.w  #2,(SecondaryEntityXPos).w
 Debug_Epsilon1CheckMoveRight:                           ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+E   j  ; was: loc_461F2
                 btst    #3,(ControllerHeldState).w
                 beq.s   Debug_Epsilon1CheckMoveUp
-                addq.w  #2,(dword_FFC690).w
+                addq.w  #2,(SecondaryEntityXPos).w
 Debug_Epsilon1CheckMoveUp:                              ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+1A   j  ; was: loc_461FE
                 btst    #0,(ControllerHeldState).w
                 beq.s   Debug_Epsilon1CheckMoveDown
-                subq.w  #2,(dword_FFC694).w
+                subq.w  #2,(SecondaryEntityYPos).w
 Debug_Epsilon1CheckMoveDown:                            ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+26   j  ; was: loc_4620A
                 btst    #1,(ControllerHeldState).w
                 beq.s   Debug_Epsilon1AdjustBattleCenterReturn
-                addq.w  #2,(dword_FFC694).w
+                addq.w  #2,(SecondaryEntityYPos).w
 Debug_Epsilon1AdjustBattleCenterReturn:                 ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+6   j  ; was: locret_46216
                                         ; Debug_Epsilon1AdjustBattleCenter+32   j
                 rts
@@ -79,7 +79,7 @@ Boss_Epsilon1WaitForBattleMessageReturn:                ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1WaitForBattleMessageState
 ; Selects one of three attack branches when the ring controller is idle
 Boss_Epsilon1SelectAttackState:                         ; DATA XREF: ROM:00045D02   o  ; was: sub_4627A
-                clr.l   (dword_FFC698).w
+                clr.l   (SecondaryEntityXVel).w
                 tst.w   (word_FFC7A4).w
                 bne.s   Boss_Epsilon1SelectAttackReturn
                 tst.w   (Epsilon1ProximityFlag).w
@@ -126,17 +126,17 @@ Boss_Epsilon1PrepareSpreadRingCollapseState:            ; DATA XREF: ROM:00045D0
                 bcs.s   Boss_Epsilon1PrepareSpreadRingCollapseReturn
                 clr.w   (dword_FF9410).w
                 move.w  #4,(dword_FF9414+2).w
-                move.w  #1,(dword_FFC69C).w
+                move.w  #1,(SecondaryEntityYVel).w
                 addq.w  #2,4(a5)
 Boss_Epsilon1PrepareSpreadRingCollapseReturn:           ; CODE XREF: Boss_Epsilon1PrepareSpreadRingCollapseState+10   j  ; was: locret_462FA
                 rts
 ; End of function Boss_Epsilon1PrepareSpreadRingCollapseState
 ; Collapses the spread ring until every delayed angle matches
 Boss_Epsilon1CollapseSpreadRingState:                   ; DATA XREF: ROM:00045D0A   o  ; was: sub_462FC
-                addi.l  #-$400,(dword_FFC69C).w
+                addi.l  #-$400,(SecondaryEntityYVel).w
                 bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
                 bne.s   Boss_Epsilon1CollapseSpreadRingReturn
-                clr.l   (dword_FFC69C).w
+                clr.l   (SecondaryEntityYVel).w
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #4,(dword_FF9410).w
                 addq.w  #2,4(a5)
@@ -224,7 +224,7 @@ Projectile_PrepareEpsilon1ElevenStepSpread:             ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1LaunchSpreadPairState+38   p
                 move.l  #Projectile_Epsilon1InitializeElevenPartSpread,$48(a0)
 Projectile_InitializeEpsilon1SpreadSlot:                ; CODE XREF: Projectile_PrepareEpsilon1FiveStepSpread+8   j  ; was: loc_463E4
-                move.l  (dword_FFC69C).w,$1C(a0)
+                move.l  (SecondaryEntityYVel).w,$1C(a0)
                 move.w  d2,$58(a0)
                 move.w  #$268,(a0)
                 move.l  #Weapon_SpreadShotInitialSpriteFrame,$54(a0)
@@ -260,17 +260,17 @@ Boss_Epsilon1PrepareRingCycleCollapseState:             ; DATA XREF: ROM:00045D1
                 bcs.s   Boss_Epsilon1PrepareRingCycleCollapseReturn
                 clr.w   (dword_FF9410).w
                 move.w  #4,(dword_FF9414+2).w
-                move.w  #1,(dword_FFC69C).w
+                move.w  #1,(SecondaryEntityYVel).w
                 addq.w  #2,4(a5)
 Boss_Epsilon1PrepareRingCycleCollapseReturn:            ; CODE XREF: Boss_Epsilon1PrepareRingCycleCollapseState+10   j  ; was: locret_46458
                 rts
 ; End of function Boss_Epsilon1PrepareRingCycleCollapseState
 ; Collapses the ring-only branch until every delayed angle matches
 Boss_Epsilon1CollapseRingCycleState:                    ; DATA XREF: ROM:00045D1C   o  ; was: sub_4645A
-                addi.l  #-$400,(dword_FFC69C).w
+                addi.l  #-$400,(SecondaryEntityYVel).w
                 bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
                 bne.s   Boss_Epsilon1CollapseRingCycleReturn
-                clr.l   (dword_FFC69C).w
+                clr.l   (SecondaryEntityYVel).w
                 move.w  #1,(dword_FF9414+2).w
                 move.w  #8,(dword_FF9410).w
                 addq.w  #2,4(a5)
@@ -325,17 +325,17 @@ Boss_Epsilon1PrepareVerticalSweepCollapseState:         ; DATA XREF: ROM:00045D2
                 bcs.s   Boss_Epsilon1PrepareVerticalSweepCollapseReturn
                 clr.w   (dword_FF9410).w
                 move.w  #4,(dword_FF9414+2).w
-                move.w  #1,(dword_FFC69C).w
+                move.w  #1,(SecondaryEntityYVel).w
                 addq.w  #2,4(a5)
 Boss_Epsilon1PrepareVerticalSweepCollapseReturn:        ; CODE XREF: Boss_Epsilon1PrepareVerticalSweepCollapseState+10   j  ; was: locret_464FC
                 rts
 ; End of function Boss_Epsilon1PrepareVerticalSweepCollapseState
 ; Collapses the vertical-sweep ring until every delayed angle matches
 Boss_Epsilon1CollapseVerticalSweepRingState:            ; DATA XREF: ROM:00045D28   o  ; was: sub_464FE
-                addi.l  #-$400,(dword_FFC69C).w
+                addi.l  #-$400,(SecondaryEntityYVel).w
                 bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
                 bne.s   Boss_Epsilon1CollapseVerticalSweepRingReturn
-                clr.l   (dword_FFC69C).w
+                clr.l   (SecondaryEntityYVel).w
                 move.w  #1,(dword_FF9414+2).w
                 move.w  #$10,(dword_FF9410).w
                 move.w  #0,$58(a5)
@@ -347,10 +347,10 @@ Boss_Epsilon1CollapseVerticalSweepRingReturn:           ; CODE XREF: Boss_Epsilo
 ; Moves the shared battle center to the upper sweep height
 Boss_Epsilon1MoveToUpperSweepHeightState:               ; DATA XREF: ROM:00045D2A   o  ; was: sub_4652E
                 bsr.w   Boss_Epsilon1ApplyDirectionalVerticalStep
-                cmpi.w  #$40,(dword_FFC694).w           ; '@'
+                cmpi.w  #$40,(SecondaryEntityYPos).w    ; '@'
                 bgt.s   Boss_Epsilon1MoveToUpperSweepHeightReturn
-                clr.l   (dword_FFC69C).w
-                move.l  #$400000,(dword_FFC694).w
+                clr.l   (SecondaryEntityYVel).w
+                move.l  #$400000,(SecondaryEntityYPos).w
                 move.w  #$60,(dword_FF9414).w           ; '`'
                 move.w  #7,(dword_FF9414+2).w
                 clr.w   (dword_FF9410).w
@@ -432,9 +432,9 @@ Boss_Epsilon1StartAlignedVerticalSweepState:            ; DATA XREF: ROM:00045D3
                 bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
                 bne.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
                 addq.w  #2,4(a5)
-                move.l  #$20000,(dword_FFC69C).w
+                move.l  #$20000,(SecondaryEntityYVel).w
                 move.l  #$4000,(Epsilon1VerticalAccel).w
-                move.w  #$120,(dword_FFC690).w
+                move.w  #$120,(SecondaryEntityXPos).w
                 move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 beq.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
@@ -442,11 +442,11 @@ Boss_Epsilon1StartAlignedVerticalSweepState:            ; DATA XREF: ROM:00045D3
                 beq.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
                 cmpi.w  #2,d0
                 beq.s   Boss_Epsilon1OffsetSweepStartRight
-                addi.w  #-$40,(dword_FFC690).w
+                addi.w  #-$40,(SecondaryEntityXPos).w
                 bra.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1OffsetSweepStartRight:                     ; CODE XREF: Boss_Epsilon1StartAlignedVerticalSweepState+34   j  ; was: loc_4666C
-                addi.w  #$40,(dword_FFC690).w           ; '@'
+                addi.w  #$40,(SecondaryEntityXPos).w    ; '@'
 Boss_Epsilon1StartAlignedVerticalSweepReturn:           ; CODE XREF: Boss_Epsilon1StartAlignedVerticalSweepState+4   j  ; was: locret_46672
                                         ; Boss_Epsilon1StartAlignedVerticalSweepState+28   j
                 rts
@@ -477,13 +477,13 @@ Boss_Epsilon1ApplyVerticalAcceleration:                 ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1WaitForReleasedRingObjectsState   p
                                         ; Boss_Epsilon1RecoverBattleCenterState+6   p
                 move.l  (Epsilon1VerticalAccel).w,d0
-                add.l   d0,(dword_FFC69C).w
+                add.l   d0,(SecondaryEntityYVel).w
                 rts
 ; End of function Boss_Epsilon1ApplyVerticalAcceleration
 ; Descends to Y $90, reverses acceleration, and releases the ring objects
 Boss_Epsilon1DescendAndReleaseRingState:                ; DATA XREF: ROM:00045D34   o  ; was: sub_4669C
                 bsr.s   Boss_Epsilon1ApplyVerticalAcceleration
-                cmpi.w  #$90,(dword_FFC694).w
+                cmpi.w  #$90,(SecondaryEntityYPos).w
                 bcs.s   Boss_Epsilon1DescendAndReleaseRingReturn
                 bclr    #4,$23(a5)
                 move.l  #$FFFFC000,(Epsilon1VerticalAccel).w
@@ -517,7 +517,7 @@ Boss_Epsilon1DescendAndReleaseRingReturn:               ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1DescendAndReleaseRingState
 ; Applies reverse acceleration until the turn angle reaches $180
 Boss_Epsilon1RiseAfterRingReleaseState:                 ; DATA XREF: ROM:00045D36   o  ; was: sub_46710
-                cmpi.l  #$FFFE0000,(dword_FFC69C).w
+                cmpi.l  #$FFFE0000,(SecondaryEntityYVel).w
                 blt.s   Boss_Epsilon1CheckRingReleaseTurnAngle
                 bsr.w   Boss_Epsilon1ApplyVerticalAcceleration
 Boss_Epsilon1CheckRingReleaseTurnAngle:                 ; CODE XREF: Boss_Epsilon1RiseAfterRingReleaseState+8   j  ; was: loc_4671E
@@ -554,7 +554,7 @@ Boss_Epsilon1WaitForReleasedRingObjectsReturn:          ; CODE XREF: Boss_Epsilo
 Boss_Epsilon1PrepareSweepRecoveryState:                 ; DATA XREF: ROM:00045D3A   o  ; was: sub_4676C
                 bsr.w   Boss_Epsilon1CheckAngleHistoryAligned
                 bne.s   Boss_Epsilon1PrepareSweepRecoveryReturn
-                clr.l   (dword_FFC69C).w
+                clr.l   (SecondaryEntityYVel).w
                 move.w  #1,(dword_FF9414+2).w
                 move.w  #$10,(dword_FF9410).w
                 move.w  #0,$58(a5)
@@ -571,11 +571,11 @@ Boss_Epsilon1RecoverBattleCenterState:                  ; DATA XREF: ROM:00045D3
                 bsr.w   Boss_Epsilon1ApplyVerticalAcceleration
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_Epsilon1MoveToRecoveryHeight
-                clr.l   (dword_FFC69C).w
+                clr.l   (SecondaryEntityYVel).w
 Boss_Epsilon1MoveToRecoveryHeight:                      ; CODE XREF: Boss_Epsilon1RecoverBattleCenterState+4   j  ; was: loc_467B0
                                         ; Boss_Epsilon1RecoverBattleCenterState+E   j
                 bsr.w   Boss_Epsilon1ApplyDirectionalVerticalStep
-                cmpi.w  #$40,(dword_FFC694).w           ; '@'
+                cmpi.w  #$40,(SecondaryEntityYPos).w    ; '@'
                 bgt.s   Boss_Epsilon1RecoverBattleCenterReturn
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #4,(dword_FF9410).w

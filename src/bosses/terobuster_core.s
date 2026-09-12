@@ -507,7 +507,7 @@ Boss_TerobusterBeginDefeat:                             ; CODE XREF: Boss_Terobu
 Boss_TerobusterPrepareDefeatParts:                      ; CODE XREF: Boss_TerobusterBeginDefeat   j  ; was: loc_38B1C
                 move.l  #$FFFF0000,$1C(a5)
                 move.w  #$FFFF,$48(a5)
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 moveq   #9,d7
 Boss_TerobusterPrepareNextDefeatPart:                   ; CODE XREF: Boss_TerobusterAdvanceDefeatPart   j  ; was: loc_38B30
                 btst    #7,2(a0)

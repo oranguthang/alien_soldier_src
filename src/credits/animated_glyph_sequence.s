@@ -20,7 +20,7 @@ CreditsGlyphSequence_Initialize:                        ; DATA XREF: ROM:Credits
                 addq.w  #2,(SharedSequenceState).l
 ; Parses and spawns the next two-row credits-glyph record
 CreditsGlyphSequence_SpawnNextRecord:                   ; DATA XREF: ROM:00021A6C   o  ; was: loc_21A90
-                lea     (word_FFC740).w,a0
+                lea     (QuaternaryEntityType).w,a0
                 movea.l (SharedSequenceCursor).l,a1
                 moveq   #0,d0
                 move.b  (a1)+,d0
@@ -109,7 +109,7 @@ CreditsGlyphSequence_Finish:                            ; CODE XREF: CreditsGlyp
 ; End of function CreditsGlyphSequence_Initialize
 ; Wait for menu animation to complete
 CreditsGlyphSequence_WaitForGlyphs:                     ; DATA XREF: ROM:00021A6E   o  ; was: sub_21B92
-                lea     (word_FFC740).w,a0
+                lea     (QuaternaryEntityType).w,a0
                 cmpi.w  #$464,(a0)
                 beq.s   CreditsGlyphSequence_WaitReturn
                 move.w  #$10,(SharedSequenceTimer).l

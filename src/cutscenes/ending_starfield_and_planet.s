@@ -11,7 +11,7 @@ EndingStarfield_Initialize:                             ; DATA XREF: ROM:00007C3
                 jsr     (Gfx_ApplyPaletteFade).l
                 tst.w   (CutscenePaletteStep).l
                 bne.w   Cutscene_Return
-                lea     (word_FFC680).w,a5
+                lea     (SecondaryEntityType).w,a5
                 move.w  #$3A,d7                         ; ':'
 EndingStarfield_InitializeNextSprite:                   ; CODE XREF: EndingStarfield_Initialize+5C   j  ; was: loc_7DA4
                 move.w  #$8C00,2(a5)
@@ -102,7 +102,7 @@ EndingStarfield_IntegrateNextParticle:                  ; CODE XREF: EndingStarf
                 adda.w  d0,a2
                 adda.w  d0,a3
                 adda.w  d0,a1
-                lea     (word_FFC680).w,a5
+                lea     (SecondaryEntityType).w,a5
                 move.w  #$3A,d7                         ; ':'
 EndingStarfield_UpdateNextSprite:                       ; CODE XREF: EndingStarfield_Update+9A   j  ; was: loc_7ED8
                 move.l  (a2)+,$10(a5)
@@ -179,7 +179,7 @@ EndingPlanet_ClearNextVScrollPair:                      ; CODE XREF: EndingPlane
                 move.l  d0,(a0)+
                 dbf     d7,EndingPlanet_ClearNextVScrollPair
                 lea     (Entity_ObjectPool).w,a5
-                move.w  #$CC00,word_FFC622-Entity_ObjectPool(a5)
+                move.w  #$CC00,PrimaryEntityFlags-Entity_ObjectPool(a5)
                 move.w  #$10,(a5)
                 move.l  #Sprite_SharedGraphicsFrameTable,8(a5)
                 move.w  #$8001,$E(a5)
@@ -189,8 +189,8 @@ EndingPlanet_ClearNextVScrollPair:                      ; CODE XREF: EndingPlane
                 clr.l   $1C(a5)
                 andi.w  #$7FFF,2(a5)
                 clr.w   4(a5)
-                lea     (word_FFC680).w,a5
-                move.w  #$CC00,word_FFC682-word_FFC680(a5)
+                lea     (SecondaryEntityType).w,a5
+                move.w  #$CC00,SecondaryEntityFlags-SecondaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #EndingPlanetSpriteMappingsB,8(a5)
                 move.w  #$8900,$E(a5)
@@ -199,8 +199,8 @@ EndingPlanet_ClearNextVScrollPair:                      ; CODE XREF: EndingPlane
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 clr.w   4(a5)
-                lea     (word_FFC6E0).w,a5
-                move.w  #$CC00,word_FFC6E2-word_FFC6E0(a5)
+                lea     (TertiaryEntityType).w,a5
+                move.w  #$CC00,TertiaryEntityFlags-TertiaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #EndingPlanetSpriteMappingsA,8(a5)
                 move.w  #$8900,$E(a5)
@@ -276,7 +276,7 @@ EndingPlanet_RevealPattern:                             ; DATA XREF: ROM:00007C4
                 bsr.w   Cutscene_RevealPlanetPatternStep
                 tst.w   (PatternDissolveStep).l
                 bne.w   Cutscene_Return
-                clr.w   (word_FFC6E2).w
+                clr.w   (TertiaryEntityFlags).w
                 clr.w   (PlanetZoomFrameIndex).l
                 move.w  #$140,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w
@@ -296,8 +296,8 @@ Sprite_SelectSharedGraphicsFrame:                       ; CODE XREF: EndingPlane
 ; Dispatches the secondary planet object's vertical-velocity state
 EndingPlanet_DispatchVerticalMotion:                    ; CODE XREF: EndingPlanet_ShowAndDissolve+4   p  ; was: sub_81C8
                                         ; EndingPlanet_HoldDissolved   p
-                lea     (word_FFC680).w,a5
-                move.w  word_FFC684-word_FFC680(a5),d0
+                lea     (SecondaryEntityType).w,a5
+                move.w  SecondaryEntityState-SecondaryEntityType(a5),d0
                 lea     EndingPlanet_VerticalMotionStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -332,7 +332,7 @@ EndingPlanet_AccelerateUpward:                          ; DATA XREF: ROM:000081D
 ; Dispatches the primary planet object's five zoom states
 EndingPlanet_DispatchZoomObject:                        ; CODE XREF: EndingPlanet_RunZoom+8   p  ; was: sub_8220
                 lea     (Entity_ObjectPool).w,a5
-                move.w  word_FFC624-Entity_ObjectPool(a5),d0
+                move.w  PrimaryEntityState-Entity_ObjectPool(a5),d0
                 lea     EndingPlanet_ZoomObjectStates(pc,d0.w),a0
                 adda.w  (a0),a0
                 jmp     (a0)
@@ -346,7 +346,7 @@ EndingPlanet_ZoomObjectStates:  dc.w    EndingPlanet_StartZoom-*  ; DATA XREF: E
 
 ; Initializes the zoom orbit, palette step, sound, and 32-object burst
 EndingPlanet_StartZoom:                                 ; DATA XREF: ROM:EndingPlanet_ZoomObjectStates   o  ; was: sub_823A
-                andi.w  #$7FFF,(word_FFC682).w
+                andi.w  #$7FFF,(SecondaryEntityFlags).w
                 ori.w   #$8000,2(a5)
                 move.w  #$1A0,(PlanetZoomAngle).l
                 move.l  #$200000,(PlanetZoomRadius).l
@@ -440,7 +440,7 @@ EndingPlanet_UpdateDebris:                              ; CODE XREF: EndingPlane
 ; End of function EndingPlanet_UpdateDebris
 ; Initializes 32 randomized burst objects around the planet center
 EndingPlanet_InitializeBurst:                           ; CODE XREF: EndingPlanet_StartZoom+34   j  ; was: sub_83A4
-                lea     (word_FFC740).w,a4
+                lea     (QuaternaryEntityType).w,a4
                 move.w  #$1F,d7
 EndingPlanet_InitializeNextBurstObject:                 ; CODE XREF: EndingPlanet_InitializeBurst+68   j  ; was: loc_83AC
                 move.w  #$EC00,2(a4)
@@ -471,7 +471,7 @@ EndingPlanet_InitializeNextBurstObject:                 ; CODE XREF: EndingPlane
 ; End of function EndingPlanet_InitializeBurst
 ; Scans all 32 burst objects and clears those whose lifetime reached `$80`
 EndingPlanet_ClearExpiredBurstObjects:                  ; CODE XREF: EndingPlanet_RunZoom+C   p  ; was: sub_8412
-                lea     (word_FFC740).w,a5
+                lea     (QuaternaryEntityType).w,a5
                 move.w  #$1F,d7
 EndingPlanet_CheckNextBurstObject:                      ; CODE XREF: EndingPlanet_ClearExpiredBurstObjects+10   j  ; was: loc_841A
                 bsr.w   EndingPlanet_ClearExpiredBurstObject
@@ -507,7 +507,7 @@ EndingPlanet_AnimateTileAttributes:                     ; CODE XREF: EndingPlane
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 lsl.w   #1,d0
-                move.w  EndingPlanet_TileAttributeCycle(pc,d0.w),(word_FFC62E).w
+                move.w  EndingPlanet_TileAttributeCycle(pc,d0.w),(PrimaryEntitySpriteAttr).w
                 rts
 ; End of function EndingPlanet_AnimateTileAttributes
 ; ---------------------------------------------------------------------------

@@ -105,7 +105,7 @@ Stage16_BeginViblackEncounter:                          ; CODE XREF: Stage16_Upd
 Stage16_CreateViblackEncounter:                         ; DATA XREF: ROM:0000D9B2   o  ; was: sub_DF6C
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$2B8,(Entity_ObjectPool).w
-                clr.w   (word_FFC624).w
+                clr.w   (PrimaryEntityState).w
                 clr.l   (dword_FF8062+2).w
                 clr.w   (dword_FF806A).w
                 move.b  #$80,(CameraMotionLockFlags).w

@@ -143,7 +143,7 @@ PasswordInput_StoreSelection:                           ; CODE XREF: PasswordMen
                                         ; PasswordMenu_HandleInput+2C   j
                 move.w  d0,(dword_FF8066+2).w
                 move.w  d1,(word_FF806E).w
-                move.l  #Password_CharacterCursorSpriteMapping,(dword_FFC628).w
+                move.l  #Password_CharacterCursorSpriteMapping,(PrimaryEntityMapping).w
                 cmpi.w  #8,d0
                 beq.w   PasswordInput_HandleConfirmField
                 lea     PasswordText_InputPrompt(pc),a0
@@ -283,7 +283,7 @@ PasswordCursor_TargetXPositions:    dc.w    $F4, $104, $114, $124, $14C  ; was: 
                                         ; DATA XREF: PasswordMenu_HandleInput:PasswordCursor_AnimateToSelection   o
 ; ---------------------------------------------------------------------------
 PasswordInput_HandleConfirmField:                       ; CODE XREF: PasswordMenu_HandleInput+68   j  ; was: loc_A716
-                move.l  #Password_ConfirmCursorSpriteMapping,(dword_FFC628).w
+                move.l  #Password_ConfirmCursorSpriteMapping,(PrimaryEntityMapping).w
                 move.b  #$F,(dword_FF806A).w
                 move.w  #$18,(dword_FF806A+2).w
                 tst.w   (word_FF806E).w

@@ -32,7 +32,7 @@ Segment_MissirayInitializeOffsetTransition:             ; DATA XREF: ROM:Segment
 ; Advances the sine-derived offset arc and enters target movement at its end
 Segment_MissirayAdvanceOffsetArc:                       ; DATA XREF: ROM:00054480   o  ; was: sub_5448A
                 move.b  #1,$52(a5)
-                cmpi.w  #$10,(word_FFC624).w
+                cmpi.w  #$10,(PrimaryEntityState).w
                 bcs.s   Segment_MissirayFinishOffsetArc
                 addi.w  #$10,$48(a5)
                 move.w  #$40,d0                         ; '@'
@@ -51,7 +51,7 @@ Segment_MissirayOffsetArcReturn:                        ; CODE XREF: Segment_Mis
 ; Steps the current segment offset toward its mode-selected target
 Segment_MissirayMoveOffsetToTarget:                     ; DATA XREF: ROM:00054482   o  ; was: sub_544CA
                 bsr.s   Segment_MissirayStepOffsetTowardTarget
-                cmpi.w  #$10,(word_FFC624).w
+                cmpi.w  #$10,(PrimaryEntityState).w
                 bcs.s   Segment_MissirayCheckOffsetTargetReached
                 bsr.s   Segment_MissirayStepOffsetTowardTarget
                 bsr.s   Segment_MissirayStepOffsetTowardTarget

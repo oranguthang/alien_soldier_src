@@ -276,7 +276,7 @@ Boss_JampanWaitForOpeningDelayState:                    ; DATA XREF: ROM:000491D
                 subq.w  #1,$48(a5)
                 bne.s   Boss_JampanWaitForOpeningDelayReturn
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                move.w  #1,(word_FFC732).w
+                move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(word_FFC7F2).w
                 move.w  #4,(dword_FF9410).w
                 move.w  #4,(dword_FF9414).w
@@ -345,7 +345,7 @@ Boss_JampanIncreaseOpeningAngles:                       ; CODE XREF: Boss_Jampan
                 rts
 ; ---------------------------------------------------------------------------
 Boss_JampanFinishOpeningAngleNormalization:             ; CODE XREF: Boss_JampanNormalizeOpeningAnglesState+A   j
-                move.w  #2,(word_FFC6D2).w
+                move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,(word_FFC792).w
                 addq.w  #2,4(a5)
                 rts
@@ -354,9 +354,9 @@ Boss_JampanFinishOpeningAngleNormalization:             ; CODE XREF: Boss_Jampan
 Boss_JampanWaitForOpeningSidePartState:                 ; DATA XREF: ROM:000491E2   o  ; was: sub_4964A
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                tst.w   (word_FFC6D2).w
+                tst.w   (SecondaryEntityWork52).w
                 bne.s   Boss_JampanWaitForOpeningSidePartReturn
-                clr.w   (word_FFC732).w
+                clr.w   (TertiaryEntityWork52).w
                 clr.w   (word_FFC7F2).w
                 addq.w  #2,4(a5)
 Boss_JampanWaitForOpeningSidePartReturn:                ; CODE XREF: Boss_JampanWaitForOpeningSidePartState+C   j
@@ -378,7 +378,7 @@ Boss_JampanIncreaseOpeningOffset:                       ; CODE XREF: Boss_Jampan
                 rts
 ; ---------------------------------------------------------------------------
 Boss_JampanFinishOpeningOffsetNormalization:            ; CODE XREF: Boss_JampanNormalizeOpeningOffsetState+C   j
-                move.w  #2,(word_FFC6D2).w
+                move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,(word_FFC792).w
                 addq.w  #2,4(a5)
                 move.w  #3,d0
@@ -394,7 +394,7 @@ Boss_JampanWaitForOpeningObjectClearState:              ; DATA XREF: ROM:000491E
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_JampanWaitForOpeningObjectClearReturn
                 clr.b   (byte_FF80EC).w
-                move.w  #1,(word_FFC732).w
+                move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(word_FFC7F2).w
                 addq.w  #2,4(a5)
 Boss_JampanWaitForOpeningObjectClearReturn:             ; CODE XREF: Boss_JampanWaitForOpeningObjectClearState+C   j
@@ -404,7 +404,7 @@ Boss_JampanWaitForOpeningObjectClearReturn:             ; CODE XREF: Boss_Jampan
 Boss_JampanWaitForOpeningSidePartsState:                ; DATA XREF: ROM:000491E8   o  ; was: sub_496CE
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                tst.w   (word_FFC6D2).w
+                tst.w   (SecondaryEntityWork52).w
                 bne.s   Boss_JampanWaitForOpeningSidePartsReturn
                 move.w  #1,(word_FFC852).w
                 move.w  #1,(word_FFC8B2).w
@@ -440,7 +440,7 @@ Boss_JampanChooseRandomAttack:                          ; CODE XREF: Boss_Jampan
                 cmpi.w  #2,d0
                 beq.s   Boss_JampanSelectAlternateAttack
                 bset    #1,$4C(a5)
-                move.w  #2,(word_FFC6D2).w
+                move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,(word_FFC792).w
                 rts
 ; ---------------------------------------------------------------------------
@@ -451,7 +451,7 @@ Boss_JampanSelectOffsetAttack:                          ; CODE XREF: Boss_Jampan
 ; ---------------------------------------------------------------------------
 Boss_JampanSelectShieldCycle:                           ; CODE XREF: Boss_JampanSelectAttackState+40   j
                 clr.w   (word_FFC8B2).w
-                move.w  #$FFFF,(word_FFC6D2).w
+                move.w  #$FFFF,(SecondaryEntityWork52).w
                 move.w  #$FFFF,(word_FFC792).w
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #8,$4E(a5)
@@ -464,7 +464,7 @@ Boss_JampanSelectAlternateAttack:                       ; CODE XREF: Boss_Jampan
                 rts
 ; ---------------------------------------------------------------------------
 Boss_JampanSelectNoTargetsRecovery:                     ; CODE XREF: Boss_JampanSelectAttackState+18   j
-                move.w  #2,(word_FFC6D2).w
+                move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,(word_FFC792).w
                 bset    #1,$4C(a5)
                 move.w  #$16,4(a5)
@@ -530,7 +530,7 @@ Boss_JampanBounceUntilSettledState:                     ; DATA XREF: ROM:000491E
 Boss_JampanFinishRecoveryBounce:                        ; CODE XREF: Boss_JampanBounceUntilSettledState+40   j
                 clr.l   $1C(a5)
                 move.w  #$40,$48(a5)                    ; '@'
-                move.w  #$FFFE,(word_FFC6D2).w
+                move.w  #$FFFE,(SecondaryEntityWork52).w
                 move.w  #$FFFE,(word_FFC792).w
                 addq.w  #2,4(a5)
 Boss_JampanBounceUntilSettledReturn:                    ; CODE XREF: Boss_JampanBounceUntilSettledState+12   j
@@ -564,7 +564,7 @@ Boss_JampanWaitForStageMotionFlagState:                 ; DATA XREF: ROM:000491F
                 btst    #0,(byte_FF8260).w
                 beq.s   Boss_JampanWaitForStageMotionFlagReturn
                 move.w  #$40,$48(a5)                    ; '@'
-                move.w  #2,(word_FFC6D2).w
+                move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,(word_FFC792).w
                 addq.w  #2,4(a5)
 Boss_JampanWaitForStageMotionFlagReturn:                ; CODE XREF: Boss_JampanWaitForStageMotionFlagState+E   j
@@ -609,7 +609,7 @@ Boss_JampanRiseToAttackHeightReturn:                    ; CODE XREF: Boss_Jampan
 Boss_JampanInitializeOffsetAttackState:                 ; DATA XREF: ROM:000491F8   o  ; was: sub_49930
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                clr.w   (word_FFC732).w
+                clr.w   (TertiaryEntityWork52).w
                 clr.w   (word_FFC7F2).w
                 clr.w   (word_FFC852).w
                 move.w  #8,$48(a5)
@@ -633,7 +633,7 @@ Boss_JampanChooseOffsetAttackDirectionState:            ; DATA XREF: ROM:000491F
                 rts
 ; ---------------------------------------------------------------------------
 Boss_JampanChooseRightOffsetAttack:                     ; CODE XREF: Boss_JampanChooseOffsetAttackDirectionState+24   j
-                move.w  #2,(word_FFC6D2).w
+                move.w  #2,(SecondaryEntityWork52).w
                 move.w  #2,$5A(a5)
 Boss_JampanChooseOffsetAttackDirectionReturn:           ; CODE XREF: Boss_JampanChooseOffsetAttackDirectionState+C   j
                 rts
@@ -643,11 +643,11 @@ Boss_JampanSpawnOffsetAttackObjectState:                ; DATA XREF: ROM:000491F
                 bsr.w   Boss_JampanTrackPlayerAimOffset
                 bsr.w   Boss_JampanTrackVerticalOrbitOffset
                 bsr.w   Boss_JampanUpdateOrbitingPartGeometry
-                tst.w   (word_FFC6D2).w
+                tst.w   (SecondaryEntityWork52).w
                 bne.s   Boss_JampanSpawnOffsetAttackObjectReturn
                 tst.w   (word_FFC792).w
                 bne.s   Boss_JampanSpawnOffsetAttackObjectReturn
-                move.w  #1,(word_FFC732).w
+                move.w  #1,(TertiaryEntityWork52).w
                 move.w  #1,(word_FFC7F2).w
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_JampanSpawnOffsetAttackObjectReturn

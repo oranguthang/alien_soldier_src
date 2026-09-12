@@ -54,7 +54,7 @@ Stage8_InitializeTrainSequence:                         ; DATA XREF: ROM:0000C89
                 bsr.w   Stage8_InitializeFlyingNeoComposite
                 move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 move.w  #$45C,(Entity_ObjectPool).w
-                clr.w   (word_FFC624).w
+                clr.w   (PrimaryEntityState).w
 ; Update the Stage 8 train until camera X reaches $EC0
 Stage8_UpdateTrainSequence:                             ; DATA XREF: ROM:0000C89C   o  ; was: loc_CEA6
                 cmpi.w  #$EC0,(PrimaryCameraXPosition).w

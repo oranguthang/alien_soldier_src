@@ -186,15 +186,15 @@ Boss_DestroyerProtoUpdateViewportOffset:                ; CODE XREF: Boss_Destro
 ; Advances the polar angles of all six linked parts
 Boss_DestroyerProtoUpdatePartAngles:                    ; CODE XREF: Boss_DestroyerProtoIntroMove+C   p  ; was: sub_31736
                                         ; Boss_DestroyerProtoWaitForBattleStart+C   p
-                lea     (word_FFC680).w,a4
+                lea     (SecondaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
-                lea     (word_FFC6E0).w,a4
+                lea     (TertiaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
                 lea     (word_FFC7A0).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
                 lea     (word_FFC800).w,a4
                 bsr.w   Boss_DestroyerProtoAddOuterPartAngle
-                lea     (word_FFC740).w,a4
+                lea     (QuaternaryEntityType).w,a4
                 bsr.w   Boss_DestroyerProtoAddInnerPartAngles
                 lea     (word_FFC860).w,a4
                 bsr.w   Boss_DestroyerProtoAddInnerPartAngles
@@ -219,7 +219,7 @@ Boss_DestroyerProtoAddInnerPartAngles:                  ; CODE XREF: Boss_Destro
 ; Contracts the radii of all six parts toward zero
 Boss_DestroyerProtoCloseParts:                          ; CODE XREF: Boss_DestroyerProtoChooseAttack+4   p  ; was: sub_3178A
                                         ; Boss_DestroyerProtoRetreatAfterTwinShots+4   p
-                lea     (word_FFC680).w,a4
+                lea     (SecondaryEntityType).w,a4
                 move.w  #5,d0
 Boss_DestroyerProtoCloseNextPart:                       ; CODE XREF: Boss_DestroyerProtoCloseParts+18   j  ; was: loc_31792
                 tst.w   $42(a4)
@@ -233,7 +233,7 @@ Boss_DestroyerProtoContinueCloseParts:                  ; CODE XREF: Boss_Destro
 ; Expands all six part radii to their configured values
 Boss_DestroyerProtoOpenParts:                           ; CODE XREF: Boss_DestroyerProtoMoveToTarget   p  ; was: sub_317A8
                                         ; sub_3198C   p
-                lea     (word_FFC680).w,a4
+                lea     (SecondaryEntityType).w,a4
                 lea     Boss_DestroyerProtoPartRadiusTable(pc),a0
                 move.w  #5,d0
 Boss_DestroyerProtoOpenNextPart:                        ; CODE XREF: Boss_DestroyerProtoOpenParts+24   j  ; was: loc_317B4
@@ -251,11 +251,11 @@ Boss_DestroyerProtoContinueOpenParts:                   ; CODE XREF: Boss_Destro
 ; Synchronizes rotation angles across multiple Destroyer Proto boss parts using base angle and offset
 Boss_DestroyerSyncPartAngles:                           ; CODE XREF: Boss_DestroyerProtoRetreatAfterTwinShots+20   p  ; was: sub_317D2
                                         ; Boss_DestroyerProtoRetreatAfterSpread+20   p
-                move.w  (word_FFC6C0).w,d2
+                move.w  (SecondaryEntityWork40).w,d2
                 move.w  d2,d3
                 addi.w  #$100,d3
                 andi.w  #$1FE,d3
-                move.w  d2,(word_FFC720).w
+                move.w  d2,(TertiaryEntityWork40).w
                 move.w  d2,(word_FFC780).w
                 move.w  d2,(word_FFC786).w
                 move.w  d3,(word_FFC7E0).w

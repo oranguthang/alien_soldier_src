@@ -3,7 +3,7 @@ Boss_ViblackTransitionTimerState:                       ; DATA XREF: ROM:000439F
                 bpl.s   Boss_ViblackUpdateTransitionTimerMotion
                 addq.w  #2,4(a5)
                 bclr    #1,(PaletteFadeControlFlags).w
-                movea.w #(word_FFC6E0-M68K_RAM),a0
+                movea.w #(TertiaryEntityType-M68K_RAM),a0
                 lea     (Boss_BackStringerAssetSet).l,a1
                 jsr     (Boss_LoadAssetSetAtObject).l
 Boss_ViblackUpdateTransitionTimerMotion:                ; CODE XREF: Boss_ViblackTransitionTimerState+4   j  ; was: loc_43F10

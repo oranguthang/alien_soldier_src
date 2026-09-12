@@ -132,7 +132,7 @@ XiTigerCutscene_WaitBeforeReveal:                       ; DATA XREF: ROM:0001E91
                 addq.w  #2,(dword_FF8128).w
                 move.w  #$50,(dword_FF8130).w           ; 'P'
                 clr.w   (Entity_ObjectPool).w
-                clr.w   (word_FFC680).w
+                clr.w   (SecondaryEntityType).w
 XiTigerCutscene_UpdateWaitingFrame:                     ; CODE XREF: XiTigerCutscene_WaitBeforeReveal+4   j  ; was: loc_1E9FA
                 bsr.w   XiTigerCutscene_SpawnRandomParticle
                 move.w  (dword_FF8128+2).w,d0
@@ -292,7 +292,7 @@ XiTigerCutscene_UpdateActorAndLayerPositions:           ; CODE XREF: XiTigerCuts
                 move.w  (dword_FF812C).w,d0
                 add.w   d0,(dword_FF8128+2).w
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
-                movea.w #(word_FFC680-M68K_RAM),a1
+                movea.w #(SecondaryEntityType-M68K_RAM),a1
                 move.w  (dword_FF8128+2).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 cmpi.w  #$20,d0                         ; ' '

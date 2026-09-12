@@ -42,9 +42,9 @@ Boss_Stage3OrbitingFormationCheckDefeat:                ; CODE XREF: Boss_Stage3
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  #7,d7
-                lea     (word_FFC680).w,a0
+                lea     (SecondaryEntityType).w,a0
 Boss_Stage3OrbitingFormationReleaseNextPart:            ; CODE XREF: Boss_Stage3OrbitingFormationCheckDefeat+6C   j  ; was: loc_33FB6
-                move.w  word_FFC6CC-word_FFC680(a0),d2
+                move.w  SecondaryEntityWork4C-SecondaryEntityType(a0),d2
                 add.w   $4C(a5),d2
                 add.w   d2,d2
                 lea     (Math_SineTable).l,a1
@@ -118,9 +118,9 @@ Boss_Stage3OrbitingFormationReverseHorizontalMotion:    ; CODE XREF: Boss_Stage3
 ; End of function Boss_Stage3OrbitingFormationUpdateMotion
 ; Applies vertical acceleration and reverses it at the velocity limits
 Boss_Stage3OrbitingFormationUpdateVerticalVelocity:     ; CODE XREF: Boss_Stage3OrbitingFormationMain+1C   p  ; was: sub_340B0
-                tst.l   (dword_FFC6DC).w
+                tst.l   (SecondaryEntityWork5C).w
                 beq.w   Boss_Stage3OrbitingFormationReturn
-                move.l  (dword_FFC6DC).w,d0
+                move.l  (SecondaryEntityWork5C).w,d0
                 add.l   d0,$1C(a5)
                 move.l  $1C(a5),d0
                 tst.l   d0
@@ -129,15 +129,15 @@ Boss_Stage3OrbitingFormationUpdateVerticalVelocity:     ; CODE XREF: Boss_Stage3
 Boss_Stage3OrbitingFormationCheckVerticalVelocityLimit:  ; CODE XREF: Boss_Stage3OrbitingFormationUpdateVerticalVelocity+16   j  ; was: loc_340CA
                 cmpi.l  #$FFFF8000,d0
                 bne.w   Boss_Stage3OrbitingFormationReturn
-                neg.l   (dword_FFC6DC).w
+                neg.l   (SecondaryEntityWork5C).w
                 rts
 ; End of function Boss_Stage3OrbitingFormationUpdateVerticalVelocity
 ; Recomputes all eight part positions from the formation rotations
 Boss_Stage3OrbitingFormationUpdateParts:                ; CODE XREF: Boss_Stage3OrbitingFormationMain+18   p  ; was: sub_340DA
                 move.w  #7,d7
-                lea     (word_FFC680).w,a0
+                lea     (SecondaryEntityType).w,a0
 Boss_Stage3OrbitingFormationUpdateNextPart:             ; CODE XREF: Boss_Stage3OrbitingFormationUpdateParts+98   j  ; was: loc_340E2
-                move.w  word_FFC6CC-word_FFC680(a0),d0
+                move.w  SecondaryEntityWork4C-SecondaryEntityType(a0),d0
                 add.w   $4C(a5),d0
                 andi.w  #$FF,d0
                 add.w   d0,d0
@@ -223,7 +223,7 @@ Boss_Stage3OrbitingFormationInit:                       ; DATA XREF: ROM:Boss_St
                 move.b  #$80,$23(a5)
                 move.w  #7,d7
                 clr.w   d6
-                lea     (word_FFC680).w,a0
+                lea     (SecondaryEntityType).w,a0
 Boss_Stage3OrbitingFormationInitNextPart:               ; CODE XREF: Boss_Stage3OrbitingFormationInit+9E   j  ; was: loc_341F2
                 move.w  #$10,(a0)
                 move.l  #Boss_Stage3OrbitingFormationSpriteMapping01,8(a0)
@@ -239,7 +239,7 @@ Boss_Stage3OrbitingFormationInitNextPart:               ; CODE XREF: Boss_Stage3
                 adda.w  #$60,a0                         ; '`'
                 dbf     d7,Boss_Stage3OrbitingFormationInitNextPart
                 move.l  #$FFFF8000,$1C(a5)
-                move.l  #$800,(dword_FFC6DC).w
+                move.l  #$800,(SecondaryEntityWork5C).w
                 move.w  #4,4(a5)
                 movem.l a5,-(sp)
                 lea     Boss_Stage3OrbitingFormationTileLoadRequest(pc),a0
@@ -330,7 +330,7 @@ Boss_Stage3OrbitingFormationFirePartRadialShots:        ; DATA XREF: ROM:0003419
                 beq.w   Boss_Stage3OrbitingFormationReturn
                 move.w  #$20,$48(a5)                    ; ' '
                 movem.w a5,-(sp)
-                lea     (word_FFC680).w,a5
+                lea     (SecondaryEntityType).w,a5
                 move.w  #7,d4
 Boss_Stage3OrbitingFormationFireFromNextPart:           ; CODE XREF: Boss_Stage3OrbitingFormationFirePartRadialShots+52   j  ; was: loc_3436A
                 jsr     (Projectile_FindFreePrimarySlot).l

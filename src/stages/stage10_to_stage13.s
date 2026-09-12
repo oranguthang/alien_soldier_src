@@ -404,7 +404,7 @@ Stage13_InitializeSnakeEncounter:                       ; CODE XREF: Stage13_Upd
                                         ; DATA XREF: ROM:0000D990   o
                 move.w  #$36,(StageStateOffset).w       ; '6'
                 move.w  #$298,(Entity_ObjectPool).w
-                clr.w   (word_FFC624).w
+                clr.w   (PrimaryEntityState).w
                 move.w  #$30,(RasterEffectIndex).w      ; '0'
                 clr.w   (RasterEffectInitState).w
                 jsr     (Stage_ClearSharedStateBuffer).l

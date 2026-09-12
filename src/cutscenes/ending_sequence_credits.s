@@ -149,7 +149,7 @@ EndingSequence_FadeOutCredits:                          ; DATA XREF: ROM:00007C3
                 movea.l #EndingSequence_StarfieldTileLoad,a0
                 jsr     (Tilemap_QueueIndexedRows).l
                 lea     (Entity_ObjectPool).w,a5
-                move.w  #$128,dword_FFC630-Entity_ObjectPool(a5)
+                move.w  #$128,PrimaryEntityXPos-Entity_ObjectPool(a5)
                 move.w  #$E8,$14(a5)
                 jsr     (TransitionEffect_ReplaceOwnerAndClearObjects).l
                 move.w  #$2C8,(a5)

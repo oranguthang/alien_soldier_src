@@ -277,7 +277,7 @@ Boss_DestroyerMK2WaitForLinkedPartsToDeactivate:        ; DATA XREF: ROM:0004A92
                 bne.s   Boss_DestroyerMK2LinkedPartWaitReturn
                 tst.w   (word_FFC8C4).w
                 bne.s   Boss_DestroyerMK2LinkedPartWaitReturn
-                tst.w   (word_FFC744).w
+                tst.w   (QuaternaryEntityState).w
                 bne.s   Boss_DestroyerMK2LinkedPartWaitReturn
                 bsr.w   Boss_DestroyerMK2ClearLinkedCollisionFields
                 move.w  #$100,$48(a5)
@@ -368,7 +368,7 @@ Boss_DestroyerMK2TransitionPaletteFadeReturn:           ; CODE XREF: Boss_Destro
 ; End of function Boss_DestroyerMK2FinishTransitionPaletteFade
 ; Select the central linked part for the shared activation helper
 Boss_DestroyerMK2SelectCentralLinkedPart:               ; CODE XREF: Boss_DestroyerMK2ActivateCentralLinkedPart   p  ; was: sub_4B3FC
-                movea.w #(word_FFC740-M68K_RAM),a0
+                movea.w #(QuaternaryEntityType-M68K_RAM),a0
 ; End of function Boss_DestroyerMK2SelectCentralLinkedPart
 ; Advance a selected linked part only when it is idle
 Boss_DestroyerMK2ActivateLinkedPartIfIdle:              ; CODE XREF: Boss_DestroyerMK2ActivateNearLinkedPart:Boss_DestroyerMK2ActivateSelectedNearLinkedPart   p  ; was: sub_4B400

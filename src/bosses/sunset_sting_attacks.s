@@ -8,14 +8,14 @@ Boss_SunsetStingMainDispatcher:                         ; DATA XREF: ROM:Entity_
                 beq.s   Boss_SunsetStingRefreshAimSample
                 lea     (PlayerObjectType).w,a4
                 jsr     (Physics_CalculateAngleToTarget).l
-                move.b  d0,(byte_FFC73E).w
-                move.b  d0,(dword_FFC6DC+1).w
+                move.b  d0,(SunsetStingAimAngle).w
+                move.b  d0,(SecondaryEntityWork5C+1).w
                 bra.s   Boss_SunsetStingDispatchSecondFormState
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingRefreshAimSample:                       ; CODE XREF: Boss_SunsetStingMainDispatcher+12   j  ; was: loc_41924
                 lea     (PlayerObjectType).w,a4
                 jsr     (Physics_CalculateAngleToTarget).l
-                move.b  d0,(dword_FFC6DC+1).w
+                move.b  d0,(SecondaryEntityWork5C+1).w
 Boss_SunsetStingDispatchSecondFormState:                ; CODE XREF: Boss_SunsetStingMainDispatcher+8   j  ; was: loc_41932
                                         ; Boss_SunsetStingMainDispatcher+26   j
                 moveq   #4,d7
@@ -61,7 +61,7 @@ Boss_SunsetStingBodyPartSpriteDescriptorD:
 
 ; Initializes boss state, clears sprites, sets starting position
 Boss_SunsetStingSecondFormInitializeState:              ; DATA XREF: ROM:Boss_SunsetStingSecondFormStates   o  ; was: sub_41984
-                clr.b   (dword_FFC6DC).w
+                clr.b   (SecondaryEntityWork5C).w
                 move.w  #$1C8,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
@@ -524,7 +524,7 @@ Boss_SunsetStingCheckHealthThreshold:                   ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingCheckHealthThreshold
 ; Checks if boss should transition to next phase
 Boss_SunsetStingCheckPhaseTransition:                   ; CODE XREF: Boss_SunsetStingCheckHealthThreshold+1E   j  ; was: sub_41F52
-                tst.b   (dword_FFC6DC).w
+                tst.b   (SecondaryEntityWork5C).w
                 bne.w   Boss_SunsetStingBeginChainOscillationState
                 bra.w   Boss_SunsetStingSetIdleState
 ; End of function Boss_SunsetStingCheckPhaseTransition

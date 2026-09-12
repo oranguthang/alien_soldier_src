@@ -8,7 +8,7 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
                 move.w  (PrimaryCameraYPosition).w,(PreviousCameraYPosition).w
                 bsr.w   Midgame_LoadFlyingNeoPaletteCommands
                 move.w  #$2AC,(Entity_ObjectPool).w
-                clr.w   (word_FFC624).w
+                clr.w   (PrimaryEntityState).w
                 move.l  #$FFFEE000,(dword_FF8240).w
                 addq.w  #2,(StageStateOffset).w
                 move.w  #1,(word_FF821E).w
@@ -207,7 +207,7 @@ Stage9_CheckCaterpillarShipTransition:                  ; CODE XREF: Stage9_Upda
                 nop
                 jsr     (Data_ProcessPointer).l
                 move.w  #$460,(Entity_ObjectPool).w
-                clr.w   (word_FFC624).w
+                clr.w   (PrimaryEntityState).w
                 move.w  #$60,(dword_FF8128).w           ; '`'
 Stage9_UpdateCaterpillarShipTraversal_Return:           ; CODE XREF: Stage9_UpdateCaterpillarShipTraversal+80   j  ; was: locret_D38A
                 rts

@@ -163,7 +163,7 @@ Boss_JampanSetShieldCollisionField:                     ; CODE XREF: Boss_Jampan
 ; End of function Boss_JampanUpdateShieldFormationGeometry
 ; Type-$23C shield handler: falling motion, bounces, shot burst, and conversion
 Boss_JampanShieldMain:                                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4A1E4
-                cmpi.w  #$52,(word_FFC624).w            ; 'R'
+                cmpi.w  #$52,(PrimaryEntityState).w     ; 'R'
                 bcc.w   Boss_JampanConvertShieldToProjectile
                 cmpi.w  #$180,$14(a5)
                 bcs.s   Boss_JampanUpdateShieldMotion
@@ -332,7 +332,7 @@ Boss_JampanRadialLinkedObjectMain:                      ; DATA XREF: ROM:Entity_
                 move.l  d0,$10(a5)
                 move.l  d1,$14(a5)
                 move.b  $20(a5),d0
-                cmp.b   (byte_FFC640).w,d0
+                cmp.b   (PrimaryEntityAngle).w,d0
                 bhi.s   Boss_JampanClearRadialObjectPriorityFlag
                 ori.w   #$8000,$E(a5)
                 bra.s   Boss_JampanRadialLinkedObjectMainReturn
@@ -410,7 +410,7 @@ Boss_JampanLinkedAnimationObjectMain:                   ; DATA XREF: ROM:Entity_
                 move.l  $10(a1),$10(a5)
                 move.l  $14(a1),$14(a5)
                 move.b  $20(a5),d0
-                cmp.b   (byte_FFC640).w,d0
+                cmp.b   (PrimaryEntityAngle).w,d0
                 bhi.s   Boss_JampanClearAnimationObjectPriorityFlag
                 ori.w   #$8000,$E(a5)
                 bra.s   Boss_JampanLinkedAnimationObjectMainReturn

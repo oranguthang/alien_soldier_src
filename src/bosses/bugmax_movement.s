@@ -105,7 +105,7 @@ Boss_BugmaxToggleCentralPartMapping:                    ; CODE XREF: Boss_Bugmax
                 move.w  (FrameCounter).w,d7
                 andi.w  #3,d7
                 bne.s   Boss_BugmaxCentralPartMappingToggleReturn
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 cmpi.l  #Boss_BugmaxSpriteFrame02,8(a0)
                 beq.s   Boss_BugmaxSelectAlternateCentralPartMapping
                 move.l  #Boss_BugmaxSpriteFrame02,8(a0)

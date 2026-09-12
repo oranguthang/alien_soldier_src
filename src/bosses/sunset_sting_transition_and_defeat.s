@@ -2,7 +2,7 @@
 Boss_SunsetStingBeginChainOscillationState:             ; CODE XREF: Boss_SunsetStingCheckPhaseTransition+4   j  ; was: sub_4200A
                 move.w  #$1A,4(a5)
                 move.b  #0,$4B(a5)
-                move.w  #4,(dword_FFC6D8).w
+                move.w  #4,(SecondaryEntityWork58).w
                 bra.w   Boss_SunsetStingSecondFormUpdate
 ; End of function Boss_SunsetStingBeginChainOscillationState
 ; Moves five link radii one unit toward the requested radius
@@ -42,20 +42,20 @@ Boss_SunsetStingOscillateChainsState:                   ; DATA XREF: ROM:0004196
                 bne.s   Boss_SunsetStingAdvanceChainOscillationPhase
                 neg.w   d1
 Boss_SunsetStingAdvanceChainOscillationPhase:           ; CODE XREF: Boss_SunsetStingOscillateChainsState+A   j  ; was: loc_4206C
-                add.w   d1,(dword_FFC6D8).w
+                add.w   d1,(SecondaryEntityWork58).w
                 move.w  #$70,d1                         ; 'p'
                 move.w  d1,d2
-                move.w  (dword_FFC6D8).w,d0
+                move.w  (SecondaryEntityWork58).w,d0
                 bpl.s   Boss_SunsetStingClampChainOscillationPhase
                 neg.w   d0
                 neg.w   d1
 Boss_SunsetStingClampChainOscillationPhase:             ; CODE XREF: Boss_SunsetStingOscillateChainsState+1C   j  ; was: loc_42080
                 cmp.w   d2,d0
                 bcs.s   Boss_SunsetStingUpdateOscillationVelocity
-                move.w  d1,(dword_FFC6D8).w
+                move.w  d1,(SecondaryEntityWork58).w
 Boss_SunsetStingUpdateOscillationVelocity:              ; CODE XREF: Boss_SunsetStingOscillateChainsState+24   j  ; was: loc_42088
                 movea.l #Math_SineTable,a2
-                move.b  (dword_FFC6DC+1).w,d1
+                move.b  (SecondaryEntityWork5C+1).w,d1
                 add.w   d1,d1
                 andi.w  #$1FE,d1
                 move.w  (a2,d1.w),d0
@@ -83,16 +83,16 @@ Boss_SunsetStingSetUpwardVelocity:                      ; CODE XREF: Boss_Sunset
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingUpdateOscillatingChains:                ; CODE XREF: Boss_SunsetStingOscillateChainsState+60   j  ; was: loc_420DE
                                         ; Boss_SunsetStingOscillateChainsState+6A   j
-                move.w  (dword_FFC6D8).w,d0
+                move.w  (SecondaryEntityWork58).w,d0
                 bsr.w   Boss_SunsetStingUpdateChainRootAngles
-                move.w  (dword_FFC6D8).w,d2
+                move.w  (SecondaryEntityWork58).w,d2
                 bpl.s   Boss_SunsetStingUseOscillationMagnitude
                 neg.w   d2
 Boss_SunsetStingUseOscillationMagnitude:                ; CODE XREF: Boss_SunsetStingOscillateChainsState+8C   j  ; was: loc_420EE
                 lsr.w   #2,d2
                 addi.w  #$20,d2                         ; ' '
                 bsr.w   Boss_SunsetStingUpdateAllChainRadii
-                move.w  (dword_FFC6D8).w,d1
+                move.w  (SecondaryEntityWork58).w,d1
                 asr.w   #3,d1
                 add.w   d1,$56(a5)
                 bra.w   Boss_SunsetStingSecondFormUpdate
@@ -161,8 +161,8 @@ Boss_SunsetStingWaitThenActivateTrailState:             ; DATA XREF: ROM:0004196
                 subq.b  #1,$4B(a5)
                 bne.w   Boss_SunsetStingSecondFormUpdateBody
                 addq.w  #2,4(a5)
-                move.w  $14(a5),(word_FFC738).w
-                clr.w   (word_FFC73C).w
+                move.w  $14(a5),(SunsetStingTrailSpan).w
+                clr.w   (SunsetStingTrailStep).w
                 lea     $BA0(a5),a4
                 move.w  #7,d4
 Boss_SunsetStingActivateTrailObjectsLoop:               ; CODE XREF: Boss_SunsetStingWaitThenActivateTrailState+3A   j  ; was: loc_421DA
@@ -176,11 +176,11 @@ Boss_SunsetStingActivateTrailObjectsLoop:               ; CODE XREF: Boss_Sunset
 Boss_SunsetStingContractTrailState:                     ; DATA XREF: ROM:00041968   o  ; was: sub_421F2
                 move.l  #$400040,d1
                 jsr     (Boss_SunsetStingSpawnRandomOffsetProjectile).l
-                addq.w  #1,(word_FFC73C).w
-                move.w  (word_FFC73C).w,d0
+                addq.w  #1,(SunsetStingTrailStep).w
+                move.w  (SunsetStingTrailStep).w,d0
                 lsr.w   #2,d0
-                sub.w   d0,(word_FFC738).w
-                cmpi.w  #$80,(word_FFC738).w
+                sub.w   d0,(SunsetStingTrailSpan).w
+                cmpi.w  #$80,(SunsetStingTrailSpan).w
                 bhi.w   Boss_SunsetStingSecondFormUpdateBody
                 addq.w  #2,4(a5)
                 move.b  #$20,$4B(a5)                    ; ' '
@@ -252,7 +252,7 @@ Boss_SunsetStingSecondFormUpdate:                       ; CODE XREF: Boss_Sunset
                 nop
 Boss_SunsetStingSecondFormUpdateBody:                   ; CODE XREF: Boss_SunsetStingUpdateMovement+138   j  ; was: loc_422C0
                                         ; Boss_SunsetStingDescendAndActivateChainsState+1A   j
-                move.b  (byte_FFC73E).w,d0
+                move.b  (SunsetStingAimAngle).w,d0
                 add.w   d0,d0
                 sub.w   $56(a5),d0
                 move.w  d0,$B6(a5)
@@ -262,11 +262,11 @@ Boss_SunsetStingSecondFormUpdateBody:                   ; CODE XREF: Boss_Sunset
                 bne.s   Boss_SunsetStingSecondFormRender
                 move.w  (BossHealth).w,d0
                 beq.w   Boss_SunsetStingResetAfterPrimaryHealthDepletion
-                tst.b   (dword_FFC6DC).w
+                tst.b   (SecondaryEntityWork5C).w
                 bne.s   Boss_SunsetStingSecondFormRender
                 cmpi.w  #$3000,d0
                 bhi.s   Boss_SunsetStingSecondFormRender
-                move.b  #1,(dword_FFC6DC).w
+                move.b  #1,(SecondaryEntityWork5C).w
                 move.w  #$1E,4(a5)
                 move.b  #6,(byte_FF80EC).w
                 clr.l   $18(a5)
@@ -344,7 +344,7 @@ Boss_SunsetStingResetAfterPrimaryHealthDepletion:       ; CODE XREF: Boss_Sunset
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$7FFF,(BossHealth).w
-                clr.b   (dword_FFC6DC).w
+                clr.b   (SecondaryEntityWork5C).w
                 clr.w   4(a5)
                 clr.l   $18(a5)
                 move.l  #$FFFF0000,$1C(a5)
@@ -598,7 +598,7 @@ Boss_SunsetStingUpdateTrail:                            ; CODE XREF: Boss_Sunset
                 subi.l  #$200000,d2
                 move.l  d2,d3
                 moveq   #0,d0
-                move.w  (word_FFC738).w,d0
+                move.w  (SunsetStingTrailSpan).w,d0
                 swap    d0
                 sub.l   d0,d3
                 asr.l   #3,d3

@@ -86,7 +86,7 @@ Projectile_ShiperOscillatingShotChooseVelocity:         ; CODE XREF: Projectile_
                 move.w  (RandomNumberState).w,d2
                 andi.w  #$3F,d2                         ; '?'
                 add.w   d3,d2
-                add.w   (dword_FFC634).w,d2
+                add.w   (PrimaryEntityYPos).w,d2
                 subi.w  #$90,d2
                 move.l  #$20000,$1C(a5)
                 cmp.w   $14(a5),d2
@@ -96,7 +96,7 @@ Projectile_ShiperOscillatingShotSteerHorizontal:        ; CODE XREF: Projectile_
                 tst.w   $48(a5)
                 bmi.s   Projectile_ShiperOscillatingShotAccelerateLeft
                 subq.w  #1,$48(a5)
-                move.w  (dword_FFC630).w,d0
+                move.w  (PrimaryEntityXPos).w,d0
                 cmp.w   $10(a5),d0
                 bpl.s   Projectile_ShiperOscillatingShotAccelerateRight
 Projectile_ShiperOscillatingShotAccelerateLeft:         ; CODE XREF: Projectile_ShiperOscillatingShot+C2   j  ; was: loc_37348

@@ -36,7 +36,7 @@ Boss_Epsilon1VerticalStepReturn:                        ; CODE XREF: Boss_Epsilo
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1AddVerticalStep:                           ; CODE XREF: Boss_Epsilon1ApplyDirectionalVerticalStep+24   j  ; was: loc_47824
                                         ; Boss_Epsilon1ApplyDirectionalVerticalStep+28   j
-                add.l   d1,(dword_FFC694).w
+                add.l   d1,(SecondaryEntityYPos).w
                 rts
 ; End of function Boss_Epsilon1ApplyDirectionalVerticalStep
 ; ---------------------------------------------------------------------------
@@ -51,9 +51,9 @@ Boss_Epsilon1UpdateBattleCenterMotion:                  ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1WaitForRingCycleCompleteState   p
                                         ; Boss_Epsilon1BeginVerticalSweepAttackState   p
                                         ; Boss_Epsilon1WaitForVerticalSweepAngleWrapState   p
-                cmpi.w  #$80,(dword_FFC694).w
+                cmpi.w  #$80,(SecondaryEntityYPos).w
                 bcs.s   Boss_Epsilon1SelectPositiveVerticalStep
-                cmpi.w  #$E0,(dword_FFC694).w
+                cmpi.w  #$E0,(SecondaryEntityYPos).w
                 bhi.s   Boss_Epsilon1SelectNegativeVerticalStep
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$3F,d0                         ; '?'
@@ -83,23 +83,23 @@ Boss_Epsilon1RetargetHorizontalAcceleration:            ; CODE XREF: Boss_Epsilo
                 tst.w   d1
                 bpl.s   Boss_Epsilon1AccelerateBattleCenterRight
 Boss_Epsilon1AccelerateBattleCenterLeft:                ; CODE XREF: Boss_Epsilon1UpdateBattleCenterMotion+78   j  ; was: loc_4788A
-                move.l  #$FFFFC000,(dword_FFC6DC).w
+                move.l  #$FFFFC000,(SecondaryEntityWork5C).w
                 bra.s   Boss_Epsilon1IntegrateBattleCenterHorizontalMotion
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1AccelerateBattleCenterRight:               ; CODE XREF: Boss_Epsilon1UpdateBattleCenterMotion+56   j  ; was: loc_47894
                                         ; Boss_Epsilon1UpdateBattleCenterMotion+80   j
-                move.l  #$4000,(dword_FFC6DC).w
+                move.l  #$4000,(SecondaryEntityWork5C).w
 Boss_Epsilon1IntegrateBattleCenterHorizontalMotion:     ; CODE XREF: Boss_Epsilon1UpdateBattleCenterMotion+48   j  ; was: loc_4789C
                                         ; Boss_Epsilon1UpdateBattleCenterMotion+52   j
-                move.l  (dword_FFC6DC).w,d0
-                add.l   (dword_FFC6D8).w,d0
+                move.l  (SecondaryEntityWork5C).w,d0
+                add.l   (SecondaryEntityWork58).w,d0
                 cmpi.l  #$20000,d0
                 bge.s   Boss_Epsilon1AccelerateBattleCenterLeft
                 cmpi.l  #$FFFE0000,d0
                 ble.s   Boss_Epsilon1AccelerateBattleCenterRight
-                move.l  d0,(dword_FFC6D8).w
-                move.l  (dword_FFC6D8).w,d0
-                add.l   d0,(dword_FFC690).w
+                move.l  d0,(SecondaryEntityWork58).w
+                move.l  (SecondaryEntityWork58).w,d0
+                add.l   d0,(SecondaryEntityXPos).w
                 rts
 ; End of function Boss_Epsilon1UpdateBattleCenterMotion
 ; Advances the Epsilon 1 palette-color cycle once every four frames
@@ -135,7 +135,7 @@ Boss_Epsilon1InitializeScrollProfileLoop:               ; CODE XREF: Boss_Epsilo
                 lea     (Math_SineTable).l,a2
                 lea     (dword_FF942C).w,a3
                 lea     (dword_FF9466).w,a4
-                move.w  (dword_FFC690).w,d6
+                move.w  (SecondaryEntityXPos).w,d6
                 subi.w  #$40,d6                         ; '@'
                 move.w  #7,d7
 Boss_Epsilon1WriteCenterYToScrollProfileLoop:           ; CODE XREF: Boss_Epsilon1BuildScrollProfile+50   j  ; was: loc_4793A
@@ -155,7 +155,7 @@ Boss_Epsilon1AdvanceCenterScrollSpan:                   ; CODE XREF: Boss_Epsilo
                 subq.w  #8,d3
                 move.w  #5,d7
                 lea     (dword_FF9400).w,a0
-                move.w  (dword_FFC690).w,d5
+                move.w  (SecondaryEntityXPos).w,d5
                 move.w  d5,d6
                 subi.w  #$60,d5                         ; '`'
                 addi.w  #$40,d6                         ; '@'

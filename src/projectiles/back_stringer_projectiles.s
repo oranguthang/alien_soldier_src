@@ -1,5 +1,5 @@
 Projectile_BackStringerFallingDropMain:                 ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4577C
-                tst.w   (word_FFC680).w
+                tst.w   (SecondaryEntityType).w
                 beq.s   Projectile_BackStringerRetireFallingDrop
                 cmpi.w  #$17C,$14(a5)
                 bmi.s   Projectile_BackStringerUpdateFallingDrop
@@ -29,7 +29,7 @@ Projectile_BackStringerUpdateFallingDropMotion:         ; CODE XREF: Projectile_
 Projectile_BackStringerUpdateActiveFallingDrop:         ; CODE XREF: Projectile_BackStringerFallingDropMain+56   j  ; was: loc_457DA
                 tst.b   $21(a5)
                 beq.w   Projectile_BackStringerUpdateReleasedFallingDrop
-                movea.w #(word_FFC680-M68K_RAM),a4
+                movea.w #(SecondaryEntityType-M68K_RAM),a4
                 move.w  4(a5),d0
                 bne.w   Projectile_BackStringerAttachDropToCompanion
                 move.w  $48(a5),d0

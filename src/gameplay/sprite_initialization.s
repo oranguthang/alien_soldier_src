@@ -239,7 +239,7 @@ Boss_SylpheedObjectInitTable:   dc.w    $C620, $5040, $EC14, $EC14, $EC14, $EC14
 
 ; Finds free enemy object slot with wraparound search
 Sprite_FindFreeEnemySlot:                               ; CODE XREF: TerrainTileAnimation_WaitForActivation+14   p  ; was: sub_1C014
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 moveq   #$F,d7
 Sprite_FindFreeEnemySlot_Loop:                          ; CODE XREF: Sprite_FindFreeEnemySlot+E   j  ; was: loc_1C01A
                 move.w  (a0),d0

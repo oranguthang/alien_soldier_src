@@ -715,6 +715,70 @@ values, but not yet a stable shared meaning.
 | `PlayerEffectAllocStart` | `$FFFFC320` | One record after the player-effect base; free-slot allocation scans seven records from here, and weapon selection uses the first four as indicators. |
 | `PlayerSpecialObjectSlot` | `$FFFFC5C0` | Dedicated record initialized or cleared by player dash, teleport, projectile, impact, and Seven Forces paths and checked separately for special-attack collisions. |
 
+## Reviewed primary entity record
+
+`Entity_ObjectPool` begins with a 96-byte record whose concrete owner changes
+between stages, bosses, cutscenes, and credits. Absolute references to that
+record therefore use structural `PrimaryEntity` names rather than a boss name.
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `PrimaryEntityFlags` | `$FFFFC622` | `$02` | Display/control flags matching offset two of all ordinary entity records. |
+| `PrimaryEntityState` | `$FFFFC624` | `$04` | Even state-table offset cleared by setup, advanced by transitions, and compared by entity handlers. |
+| `PrimaryEntityMapping` | `$FFFFC628` | `$08` | Sprite-mapping pointer; password-screen paths replace it with the selected cursor mapping. |
+| `PrimaryEntitySpriteAttr` | `$FFFFC62E` | `$0E` | Sprite/tile attribute word; the ending-planet animation writes its attribute cycle here. |
+| `PrimaryEntityXPos` | `$FFFFC630` | `$10` | Signed 16.16 world-X coordinate used by bosses, projectiles, cutscenes, and credits. |
+| `PrimaryEntityYPos` | `$FFFFC634` | `$14` | Signed 16.16 world-Y coordinate used by linked parts, projectiles, cutscenes, and credits. |
+| `PrimaryEntityXVelocity` | `$FFFFC638` | `$18` | Signed 16.16 horizontal velocity; some boss code deliberately reuses the primary record field as scratch motion state. |
+| `PrimaryEntityAngle` | `$FFFFC640` | `$20` | Primary entity angle compared with linked Jampan objects' offset-`$20` angles. |
+| `PrimaryEntityStatus` | `$FFFFC641` | `$21` | Broad entity status/control byte; only Shield Viper bit-six tests are proven for the absolute alias. |
+
+## Reviewed secondary entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `SecondaryEntityType` | `$FFFFC680` | `$00` | Object type and base of the second 96-byte pool record; clearing it deactivates the record. |
+| `SecondaryEntityFlags` | `$FFFFC682` | `$02` | Display/control flags written by scene setup and manipulated across linked records. |
+| `SecondaryEntityState` | `$FFFFC684` | `$04` | Even state-table offset used by the ending planet's vertical-motion dispatcher. |
+| `SecondaryEntityXPos` | `$FFFFC690` | `$10` | Signed 16.16 X coordinate of the second entity; Epsilon 1 uses it as its battle center. |
+| `SecondaryEntityYPos` | `$FFFFC694` | `$14` | Signed 16.16 Y coordinate of the second entity; Epsilon 1 movement and other boss paths consume it. |
+| `SecondaryEntityXVel` | `$FFFFC698` | `$18` | Signed 16.16 X velocity installed, reversed, and cleared during Epsilon 1 transitions. |
+| `SecondaryEntityYVel` | `$FFFFC69C` | `$1C` | Signed 16.16 Y velocity accelerated for the battle center and copied to spawned ring projectiles. |
+| `SecondaryEntityStatus` | `$FFFFC6A1` | `$21` | Second-record status byte set and cleared with linked Destroyer MK2 objects. |
+| `SecondaryEntityWork40` | `$FFFFC6C0` | `$40` | Owner-specific work word; Destroyer Proto uses it as a linked-part angle. |
+| `SecondaryEntityWork46` | `$FFFFC6C6` | `$46` | Owner-specific work word written by the Viblack transition setup. |
+| `SecondaryEntityWork4C` | `$FFFFC6CC` | `$4C` | Union work word used as an angle by Bugmax/Stage 3 and as a body offset by Epsilon 1. |
+| `SecondaryEntityWork52` | `$FFFFC6D2` | `$52` | Owner-specific linked-object control word used by Jampan. |
+| `SecondaryEntityWork58` | `$FFFFC6D8` | `$58` | Union work longword used for Epsilon 1 motion and Sunset Sting oscillation phase. |
+| `SecondaryEntityWork5C` | `$FFFFC6DC` | `$5C` | Union work longword used as motion or byte-granular control state by different owners. |
+
+## Reviewed tertiary entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `TertiaryEntityType` | `$FFFFC6E0` | `$00` | Object type and base of the third 96-byte pool record; clearing it deactivates the record. |
+| `TertiaryEntityFlags` | `$FFFFC6E2` | `$02` | Display/control flags written by cutscene setup and cleared during transition cleanup. |
+| `TertiaryEntityAttr` | `$FFFFC6EE` | `$0E` | Sprite-attribute word whose priority bit is toggled by the ship-arrival flash. |
+| `TertiaryEntityXPos` | `$FFFFC6F0` | `$10` | Signed 16.16 X coordinate consumed by Bugmax linked-chain geometry. |
+| `TertiaryEntityYPos` | `$FFFFC6F4` | `$14` | Signed 16.16 Y coordinate consumed by Bugmax geometry and direction calculations. |
+| `TertiaryEntityStatus` | `$FFFFC701` | `$21` | Status byte set and cleared with linked Destroyer MK2 records and cleared during Epsilon 1 defeat. |
+| `TertiaryEntityWork40` | `$FFFFC720` | `$40` | Owner-specific work word used as a linked-part angle by Destroyer Proto. |
+| `TertiaryEntityWork4C` | `$FFFFC72C` | `$4C` | Owner-specific work word used as Bugmax's second joint angle. |
+| `TertiaryEntityWork50` | `$FFFFC730` | `$50` | Owner-specific work word used as a Bugmax linked-part projection radius. |
+| `TertiaryEntityWork52` | `$FFFFC732` | `$52` | Owner-specific linked-object control word used by Jampan. |
+| `SunsetStingTrailSpan` | `$FFFFC738` | `$58` | Vertical span used to distribute Sunset Sting's eight trail objects. |
+| `SunsetStingTrailStep` | `$FFFFC73C` | `$5C` | Accumulating contraction step subtracted from the trail span. |
+| `SunsetStingAimAngle` | `$FFFFC73E` | `$5E` | Cached angle-to-player sample used by the second-form body layout. |
+
+## Reviewed quaternary entity record
+
+| Symbol | Address | Offset | Static evidence |
+|---|---:|---:|---|
+| `QuaternaryEntityType` | `$FFFFC740` | `$00` | Object type and base of the fourth 96-byte pool record; boss, projectile, cutscene, and credits code use it as a record base. |
+| `QuaternaryEntityFlags` | `$FFFFC742` | `$02` | Display/control flags initialized with the preceding star-row entity records. |
+| `QuaternaryEntityState` | `$FFFFC744` | `$04` | Even state-table offset tested by Destroyer MK2 cleanup and Epsilon 1 defeat handling. |
+| `QuaternaryEntityStatus` | `$FFFFC761` | `$21` | Status byte cleared with the controller and third record when Epsilon 1 begins defeat. |
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

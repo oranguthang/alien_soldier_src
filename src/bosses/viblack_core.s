@@ -50,7 +50,7 @@ Boss_ViblackMain:                                       ; DATA XREF: ROM:Entity_
                 move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$5E(a5)
-                movea.w #(word_FFC680-M68K_RAM),a4
+                movea.w #(SecondaryEntityType-M68K_RAM),a4
                 btst    #2,(byte_FF80EC).w
                 bne.s   Boss_ViblackStateDispatch
                 btst    #1,(byte_FF80EC).w
@@ -187,7 +187,7 @@ Boss_ViblackFinishEntranceMotionState:                  ; DATA XREF: ROM:000439E
                 addq.w  #2,(PlayerStateOffset).w
 Boss_ViblackUpdateStageSurfaceReference:                ; CODE XREF: Boss_ViblackEntranceDescentState+58   j  ; was: loc_43BD0
                                         ; Boss_ViblackFinishEntranceMotionState+10   j
-                movea.w #(word_FFC680-M68K_RAM),a4
+                movea.w #(SecondaryEntityType-M68K_RAM),a4
                 move.w  $14(a4),d0
                 addi.w  #$20,d0                         ; ' '
                 move.w  d0,(PlayerYPosition).w
@@ -214,7 +214,7 @@ Boss_ViblackMoveToAttackTargetState:                    ; DATA XREF: ROM:000439E
 Boss_ViblackStartChainAttack:                           ; CODE XREF: Boss_ViblackMoveToAttackTargetState+16   j  ; was: loc_43C20
                 addq.w  #2,4(a5)
                 bsr.w   Boss_ViblackSpawnChain
-                tst.w   (word_FFC740).w
+                tst.w   (QuaternaryEntityType).w
                 bne.s   Boss_ViblackSetRandomDelay
                 move.w  #$60,$48(a5)                    ; '`'
                 rts
@@ -389,10 +389,10 @@ Boss_ViblackDefeatRiseState:                            ; DATA XREF: ROM:000439F
                 move.w  #$FFF8,(PlayerYVelocity).w
                 jsr     (Sys_ClearObjectBlocks16).l
 Boss_ViblackInitializeTransitionCompanion:              ; CODE XREF: Boss_ViblackDefeatRiseState+2E   j  ; was: loc_43E20
-                move.w  #$320,(word_FFC680).w
-                clr.w   (word_FFC682).w
-                move.w  #2,(word_FFC6C6).w
-                clr.l   (dword_FFC6DC).w
+                move.w  #$320,(SecondaryEntityType).w
+                clr.w   (SecondaryEntityFlags).w
+                move.w  #2,(SecondaryEntityWork46).w
+                clr.l   (SecondaryEntityWork5C).w
                 move.b  #2,(byte_FFA95A).w
                 move.b  #$4D,d0                         ; 'M'
                 jmp     (Sound_PlaySFX).l

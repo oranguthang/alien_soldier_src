@@ -137,7 +137,7 @@ Boss_FlyingNeoWaitForScrollingBackground:               ; DATA XREF: ROM:0003C0A
 ; End of function Boss_FlyingNeoWaitForScrollingBackground
 ; Complex setup with metasprite and palette initialization
 Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0AC   o  ; was: sub_3C168
-                movea.w #(word_FFC680-M68K_RAM),a4
+                movea.w #(SecondaryEntityType-M68K_RAM),a4
                 move.w  #$300,(dword_FF8040).w
                 moveq   #8,d7
                 movea.l #Boss_FlyingNeoMetaspriteDescriptors,a0
@@ -160,7 +160,7 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 move.w  #$4300,$E(a0)
                 move.l  #Boss_FlyingNeoAuxiliaryPartMappingA,8(a0)
                 move.b  #$18,$20(a0)
-                movea.w #(word_FFC680-M68K_RAM),a0
+                movea.w #(SecondaryEntityType-M68K_RAM),a0
                 move.w  d0,(a0)
                 move.w  #$8080,2(a0)
                 move.w  #$6398,$E(a0)
@@ -272,7 +272,7 @@ Boss_FlyingNeoDefeatConvertForwardSlotRangeReturn:      ; CODE XREF: Boss_Flying
 ; Sets flag bit zero on 19 linked-object records
 Boss_FlyingNeoSetLinkedPartFlag0:                       ; CODE XREF: Boss_FlyingNeoDefeatInit+14   p  ; was: sub_3C356
                 moveq   #0,d0
-                movea.w #(word_FFC682-M68K_RAM),a0
+                movea.w #(SecondaryEntityFlags-M68K_RAM),a0
                 moveq   #$12,d7
 Boss_FlyingNeoSetNextLinkedPartFlag0:                   ; CODE XREF: Boss_FlyingNeoSetLinkedPartFlag0+E   j  ; was: loc_3C35E
                 bset    d0,(a0)

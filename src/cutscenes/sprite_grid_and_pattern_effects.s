@@ -1,7 +1,7 @@
 ; Updates the vertical positions of both star-object rows
 Cutscene_UpdateStarRowPositions:                        ; CODE XREF: Cutscene_ExpandStarRows+6   p  ; was: sub_7644
                                         ; Cutscene_CollapseStarRows+6   p
-                lea     (dword_FFC634).w,a5
+                lea     (PrimaryEntityYPos).w,a5
                 move.w  #$9C,d0
                 sub.w   (StarRowSeparation).l,d0
                 move.w  d0,(a5)

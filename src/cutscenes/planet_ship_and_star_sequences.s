@@ -342,7 +342,7 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 subq.w  #1,(StarRowTimer).l
                 bne.w   Cutscene_Return
                 lea     (Entity_ObjectPool).w,a5
-                move.w  #$CC00,word_FFC622-Entity_ObjectPool(a5)
+                move.w  #$CC00,PrimaryEntityFlags-Entity_ObjectPool(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -350,8 +350,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$9C,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC680).w,a5
-                move.w  #$CC00,word_FFC682-word_FFC680(a5)
+                lea     (SecondaryEntityType).w,a5
+                move.w  #$CC00,SecondaryEntityFlags-SecondaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -359,8 +359,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$9C,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC6E0).w,a5
-                move.w  #$CC00,word_FFC6E2-word_FFC6E0(a5)
+                lea     (TertiaryEntityType).w,a5
+                move.w  #$CC00,TertiaryEntityFlags-TertiaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -368,8 +368,8 @@ Cutscene_SetupStarRows:                                 ; DATA XREF: ROM:0000561
                 move.w  #$9C,$14(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                lea     (word_FFC740).w,a5
-                move.w  #$CC00,word_FFC742-word_FFC740(a5)
+                lea     (QuaternaryEntityType).w,a5
+                move.w  #$CC00,QuaternaryEntityFlags-QuaternaryEntityType(a5)
                 move.w  #$10,(a5)
                 move.l  #CutsceneStarRowSpriteMappings,8(a5)
                 move.w  #$E500,$E(a5)
@@ -458,7 +458,7 @@ Cutscene_CollapseStarRows:                              ; DATA XREF: ROM:0000561
                 bsr.w   Cutscene_UpdateStarRowPositions
                 tst.w   (StarRowSeparation).l
                 bpl.w   Cutscene_Return
-                lea     (word_FFC622).w,a0
+                lea     (PrimaryEntityFlags).w,a0
                 move.w  #9,d0
 Cutscene_ClearNextStarObject:                           ; CODE XREF: Cutscene_CollapseStarRows+22   j  ; was: loc_5878
                 clr.w   (a0)
