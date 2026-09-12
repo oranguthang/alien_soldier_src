@@ -53,7 +53,7 @@ Frontend_InitializeTitleTransition_CopyPalette:         ; was: loc_1D1BA
                 move.w  #$C000,2(a0)
                 move.w  #$C200,$E(a0)
                 clr.b   $20(a0)
-                move.l  #word_E98C2,8(a0)
+                move.l  #FrontendTitleTransitionSpriteMapping,8(a0)
                 move.w  #$120,$10(a0)
                 move.w  #$E4,$14(a0)
                 move.w  #$400,(SpriteGridFirstTile).l
@@ -72,7 +72,7 @@ Frontend_InitializeTitleTransition_CopyPalette:         ; was: loc_1D1BA
 ; End of function Frontend_InitializeTitleTransition
 ; ---------------------------------------------------------------------------
 FrontendTitleTransitionAssetLoadList:   dc.w    7       ; field_0  ; was: stru_1D254
-                dc.l    tiles_ED4B4                     ; field_2
+                dc.l    FrontendTitleTransitionTileArtA000  ; field_2
                 dc.w    $A000                           ; field_6
                 dc.w    $FFFF
 FrontendTitleTransitionPalette: dc.l    0, $EEE0F00     ; was: dword_1D25E

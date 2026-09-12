@@ -64,7 +64,7 @@ Cutscene_InitializeScene:                               ; DATA XREF: ROM:0001CF7
 ; End of function Cutscene_InitializeScene
 ; ---------------------------------------------------------------------------
 CutsceneSceneAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1D492
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    byte_18140E                     ; field_2

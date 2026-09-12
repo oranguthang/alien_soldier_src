@@ -40,7 +40,7 @@ Credits_IntroAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    CreditsAndEndingTileArt         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    CreditsAndTransitionTileArtE000  ; field_2

@@ -22,7 +22,7 @@ StageEntryAssetLoadList:    dc.w    3                   ; field_0  ; was: stru_1
                 dc.l    SharedMenuType3DataF680         ; field_2
                 dc.w    $F680                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F276E                     ; field_2
+                dc.l    StageEntryAndWeaponSetupTileArtDE00  ; field_2
                 dc.w    $DE00                           ; field_6
                 dc.w    $FFFF
 

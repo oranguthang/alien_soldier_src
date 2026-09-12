@@ -13,7 +13,7 @@ Stage16AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    tiles_1A2C46                    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F2816                     ; field_2
+                dc.l    Stage16TileArt5F00              ; field_2
                 dc.w    $5F00                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_1A6276                     ; field_2
@@ -31,7 +31,7 @@ Stage16AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    byte_1A74F6                     ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -62,7 +62,7 @@ Stage2Phase1AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -109,7 +109,7 @@ Stage18AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    tiles_1B0F08                    ; field_2
                 dc.w    $8E00                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -137,7 +137,7 @@ UnreferencedStage2Phase2AssetLoadList:  dc.w    7       ; field_0  ; was: stru_1
                 dc.l    byte_1B3A26                     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -180,7 +180,7 @@ Stage20AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    byte_1B3A26                     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -226,7 +226,7 @@ Stage3Phase12SharedAssetLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.l    byte_1CF798                     ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -257,7 +257,7 @@ Stage3Phase3AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage3SharedMappingData7000     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -288,7 +288,7 @@ UnreferencedStage3Phase4AssetLoadList:  dc.w    7       ; field_0  ; was: stru_1
                 dc.l    Stage3SharedMappingData7000     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -316,7 +316,7 @@ UnreferencedStage3Phase5AssetLoadList:  dc.w    7       ; field_0  ; was: stru_1
                 dc.l    Stage3SharedMappingData7000     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -356,7 +356,7 @@ Stage3Phase6AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    byte_1CF7BE                     ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -385,7 +385,7 @@ Stage3Phase7AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage3SharedMappingData7000     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 

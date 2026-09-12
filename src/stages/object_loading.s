@@ -89,7 +89,7 @@ Stage1BaseAssetLoadList:    dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage1BaseMappingData7800       ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -118,7 +118,7 @@ Stage1Phase1AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage1Phase1AndShellshogunMappingData2000  ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 Boss_ShellshogunAssetLoadList:  dc.w    7               ; field_0  ; was: stru_11820
@@ -167,7 +167,7 @@ Stage1Phase2AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage1Phase2MappingData7800     ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -201,7 +201,7 @@ Stage8AssetLoadList:    dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -244,7 +244,7 @@ Stage1Phase3AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage1Phase3AndStage8TileArt1   ; field_2
                 dc.w    $9600                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -297,7 +297,7 @@ Stage10EnemyAssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage10TeleportSharedAssetData  ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 Stage10EnemyTileBlockAdjustmentDescriptor:  dc.b    $40, 0, $D1, $D2, $D3, $D5, $D6, $D7, $DC, $E4  ; was: byte_119BC
@@ -354,7 +354,7 @@ TeleportAssetLoadList:  dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    TeleportTileArt                 ; field_2
                 dc.w    $9600                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 

@@ -31,7 +31,7 @@ ZLeoEnding_AssetLoadDescriptors:    dc.w    7           ; field_0  ; was: stru_1
                 dc.l    Stage3SharedMappingData7000     ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    $FFFF
 
@@ -138,10 +138,10 @@ WeaponSetup_AssetLoadDescriptors:   dc.w    3           ; field_0  ; was: stru_1
                 dc.l    WeaponSetupTileArtE300          ; field_2
                 dc.w    $E300                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F10A4                     ; field_2
+                dc.l    SharedSceneAndStageTileArt9000  ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_F276E                     ; field_2
+                dc.l    StageEntryAndWeaponSetupTileArtDE00  ; field_2
                 dc.w    $DE00                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    WeaponSetupMappingData6000      ; field_2

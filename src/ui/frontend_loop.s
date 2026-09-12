@@ -158,7 +158,7 @@ Frontend_InitializeSegaScreen_CopyPalette:              ; was: loc_1D09E
                 move.w  #$C000,2(a0)
                 move.w  #$C200,$E(a0)
                 clr.b   $20(a0)
-                move.l  #word_E98B0,8(a0)
+                move.l  #FrontendSegaScreenSpriteMapping,8(a0)
                 move.w  #$120,$10(a0)
                 move.w  #$E8,$14(a0)
                 bset    #6,(VDPReg1Shadow+1).w

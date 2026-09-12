@@ -5480,3 +5480,27 @@ to 12,253, and the semantic review upper bound rises from 3,113 to 3,118 solely
 because those five reviewed aliases do not need duplicate address records. The
 enforced address-derived ceiling falls from 991 to 980; the remaining backlog
 comprises 831 RAM equates and 149 preserved-data labels.
+
+The shared frontend/gameplay graphics pass removes eleven address-derived
+definitions across three adjacent-purpose data modules. The former
+`base_gameplay_tile_art.s` is now
+`shared_frontend_and_gameplay_tile_art.s`: its sources are used by the title
+transition, common font rendering, credits and cutscenes, stage asset lists,
+stage-entry UI, and weapon setup rather than gameplay alone. The former
+`japanese_font_assets.s` is now `japanese_font_and_credits_tile_art.s` because
+its trailing type-seven source belongs to two credits lists, not the Japanese
+font. The already accurate `frontend_sprite_mappings.s` keeps its name.
+
+Type-seven descriptors prove the four compressed tile-art roles and their
+destinations. Direct object-field assignments prove the Sega-screen and title-
+transition composite sprite mappings. The imported `tiles_font` identifier is
+left unchanged in this pass because its uncompressed font role is already
+supported and it is not part of the address-derived backlog.
+
+Seven unique source addresses receive exact static audit records. Four
+binary-backed exclusive-end aliases retain provenance and fold into following
+asset boundaries. Provenance rises from 15,071 to 15,082 mappings, the audit
+registry from 12,253 to 12,260, and the semantic review upper bound rises from
+3,118 to 3,122 solely because the four reviewed aliases do not need duplicate
+address records. The enforced address-derived ceiling falls from 980 to 969;
+the remaining backlog comprises 831 RAM equates and 138 preserved-data labels.

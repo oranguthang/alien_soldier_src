@@ -108,7 +108,7 @@ Credits_XiTigerAssetLoadList:   dc.w    7               ; field_0  ; was: stru_2
                 dc.l    CreditsAndEndingTileArt         ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_14ADEE                     ; field_2
+                dc.l    SharedCreditsTileArtB000        ; field_2
                 dc.w    $B000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedCreditsResultsMappingData4020  ; field_2

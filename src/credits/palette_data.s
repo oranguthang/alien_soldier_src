@@ -56,7 +56,7 @@ Credits_InitialPalette: dc.w    0, 0, $EEE, $EE, $AE, $6E, $E, 4, $48, $C88, $EA
                                         ; DATA XREF: Credits_InitializeSceneSequence+12   o
 Credits_InitialAssetLoadList:   dc.w    7               ; field_0  ; was: stru_2158C
                                         ; DATA XREF: Credits_InitializeSceneSequence+6   o
-                dc.l    byte_14ADEE                     ; field_2
+                dc.l    SharedCreditsTileArtB000        ; field_2
                 dc.w    $B000                           ; field_6
                 dc.w    $FFFF
 Credits_Scene06Palette: dc.w    0, $202, $404, $626, $848, $A6A, $EEE, $C8C, $EAE, $22, $EEE, $46, $28A, $6CE, $E, 0  ; was: word_21596
