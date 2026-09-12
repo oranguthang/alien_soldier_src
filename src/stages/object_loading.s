@@ -45,7 +45,7 @@ Stage_LoadSharedMappings:                               ; CODE XREF: Stage_LoadA
 ; ---------------------------------------------------------------------------
 Stage_SharedMappingsLoadList:   dc.w    7               ; field_0  ; was: stru_11776
                                         ; DATA XREF: Stage_LoadSharedMappings   o
-                dc.l    byte_18DF92                     ; field_2
+                dc.l    SharedGameplayTileArtD000       ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    $FFFF
 

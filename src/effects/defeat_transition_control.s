@@ -52,7 +52,7 @@ AlternateTransition_LoadGraphics:                       ; DATA XREF: ROM:0002693
 ; ---------------------------------------------------------------------------
 AlternateTransition_GraphicsLoadDescriptor: dc.w    7   ; field_0  ; was: stru_26976
                                         ; DATA XREF: AlternateTransition_LoadGraphics+8   o
-                dc.l    byte_18D562                     ; field_2
+                dc.l    CreditsAndTransitionTileArtE000  ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    $FFFF
 
@@ -132,7 +132,7 @@ TransitionEffect_LoadGraphics:                          ; DATA XREF: ROM:00026A1
 ; ---------------------------------------------------------------------------
 TransitionEffect_GraphicsLoadDescriptor:    dc.w    7   ; field_0  ; was: stru_26A4E
                                         ; DATA XREF: TransitionEffect_LoadGraphics+8   o
-                dc.l    byte_18D562                     ; field_2
+                dc.l    CreditsAndTransitionTileArtE000  ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    $FFFF
 

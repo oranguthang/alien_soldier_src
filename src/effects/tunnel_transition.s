@@ -34,7 +34,7 @@ TunnelTransition_LoadGraphics:                          ; DATA XREF: TunnelTrans
 ; ---------------------------------------------------------------------------
 TunnelTransition_GraphicsLoadDescriptor:    dc.w    7   ; field_0  ; was: stru_27982
                                         ; DATA XREF: TunnelTransition_LoadGraphics+8   o
-                dc.l    byte_18D562                     ; field_2
+                dc.l    CreditsAndTransitionTileArtE000  ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    $FFFF
 

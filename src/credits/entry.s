@@ -37,19 +37,19 @@ Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_Ini
 ; ---------------------------------------------------------------------------
 Credits_IntroAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1E204
                                         ; DATA XREF: Credits_InitializeScreen+10   o
-                dc.l    tiles_18B2FA                    ; field_2
+                dc.l    CreditsAndEndingTileArt         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18D562                     ; field_2
+                dc.l    CreditsAndTransitionTileArtE000  ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18CC50                     ; field_2
+                dc.l    SharedCreditsResultsMappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18CD7C                     ; field_2
+                dc.l    SharedCreditsResultsMappingData4020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_18454C                     ; field_2

@@ -88,14 +88,14 @@ DebugMenu_Return:                                       ; was: locret_1356C
 ; End of function DebugMenu_Initialize
 ; ---------------------------------------------------------------------------
 DebugMenuInitialAssetLoadList:  dc.w    3               ; was: stru_1356E
-                dc.l    byte_18E36C                     ; field_2
+                dc.l    DebugMenuInitialType3DataF680   ; field_2
                 dc.w    $F680                           ; field_6
                 dc.w    $FFFF
 DebugMenuActiveAssetLoadList:   dc.w    3               ; was: stru_13578
-                dc.l    byte_18DA38                     ; field_2
+                dc.l    SharedMenuType3DataF680         ; field_2
                 dc.w    $F680                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18DF92                     ; field_2
+                dc.l    SharedGameplayTileArtD000       ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    $FFFF
 

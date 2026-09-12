@@ -129,13 +129,13 @@ WeaponSetup_ActivateScreen:                             ; CODE XREF: WeaponSetup
 ; ---------------------------------------------------------------------------
 WeaponSetup_AssetLoadDescriptors:   dc.w    3           ; field_0  ; was: stru_1EFB8
                                         ; DATA XREF: WeaponSetup_InitializeScreen+54   o
-                dc.l    byte_18DFFA                     ; field_2
+                dc.l    WeaponSetupType3Data5800        ; field_2
                 dc.w    $5800                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    byte_18140E                     ; field_2
                 dc.w    $E000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18E24C                     ; field_2
+                dc.l    WeaponSetupTileArtE300          ; field_2
                 dc.w    $E300                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
@@ -144,16 +144,16 @@ WeaponSetup_AssetLoadDescriptors:   dc.w    3           ; field_0  ; was: stru_1
                 dc.l    tiles_F276E                     ; field_2
                 dc.w    $DE00                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18E350                     ; field_2
+                dc.l    WeaponSetupMappingData6000      ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18E2A2                     ; field_2
+                dc.l    WeaponSetupMappingData4020      ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18DF92                     ; field_2
+                dc.l    SharedGameplayTileArtD000       ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    3                               ; field_0 ; another compression type?
-                dc.l    byte_18DA38                     ; field_2
+                dc.l    SharedMenuType3DataF680         ; field_2
                 dc.w    $F680                           ; field_6
                 dc.w    $FFFF
 

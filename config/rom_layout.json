@@ -447,7 +447,7 @@
     { "file": "src/data/credits_scene_assets.s", "subsystem": "data", "start": "0x14AE08", "end": "0x17FFFF" },
     { "file": "src/data/frontend_scene_assets.s", "subsystem": "data", "start": "0x180000", "end": "0x189D37" },
     { "file": "src/data/planet_cutscene_assets.s", "subsystem": "data", "start": "0x189D38", "end": "0x18B14B" },
-    { "file": "src/data/credits_and_menu_assets.s", "subsystem": "data", "start": "0x18B14C", "end": "0x18E5D1" },
+    { "file": "src/data/shared_frontend_and_transition_assets.s", "subsystem": "data", "start": "0x18B14C", "end": "0x18E5D1" },
     { "file": "src/data/stage_object_assets.s", "subsystem": "data", "start": "0x18E5D2", "end": "0x19C4A3" },
     { "file": "src/data/indexed_object_and_stage_effect_mappings.s", "subsystem": "data", "start": "0x19C4A4", "end": "0x19C77D" },
     { "file": "src/data/stage10_enemy_assets.s", "subsystem": "data", "start": "0x19C77E", "end": "0x1A0CA5" },

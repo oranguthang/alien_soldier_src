@@ -26,13 +26,13 @@ XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; field_0  ; was: stru_1
                 dc.l    XiTigerCutsceneMappingDataB     ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    3                               ; field_0
-                dc.l    byte_18BE42                     ; field_2
+                dc.l    XiTigerCutsceneType3Data0000    ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18C634                     ; field_2
+                dc.l    XiTigerCutsceneMappingData2020  ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18C5E6                     ; field_2
+                dc.l    XiTigerCutsceneMappingData6800  ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
@@ -41,7 +41,7 @@ XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; field_0  ; was: stru_1
                 dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    byte_18DF92                     ; field_2
+                dc.l    SharedGameplayTileArtD000       ; field_2
                 dc.w    $D000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    XiTigerCutsceneTileArt7800      ; field_2

@@ -5434,3 +5434,27 @@ All 33 unique addresses receive exact static audit records. Provenance rises
 from 15,000 to 15,033 mappings, the audit registry from 12,197 to 12,230, and
 the enforced address-derived ceiling falls from 1,051 to 1,018. The remaining
 backlog comprises 831 RAM equates and 187 preserved-data labels.
+
+The shared frontend-and-transition asset pass removes all 27 address-derived
+definitions from the former `data/credits_and_menu_assets.s`. The old filename
+covered only part of a 62-line ROM-order block that is shared by the ending,
+credits, Xi-Tiger cutscene, post-stage results, transition effects, Game Over,
+debug menu, weapon setup, and ordinary gameplay asset lists. The module is now
+`data/shared_frontend_and_transition_assets.s`; retaining one small cohesive
+ROM block avoids manufacturing several tiny address fragments while the name
+honestly reflects its proven consumers.
+
+Type-six and type-seven load records establish compressed mapping-data and
+tile-art roles together with their destinations. Type-three decoding semantics
+are not established by the reconstructed static path, so those four sources
+remain deliberately named `Type3Data` rather than receiving invented graphics
+or mapping identities. Shared names enumerate only the statically demonstrated
+consumer families.
+
+Seventeen unique source addresses receive exact static audit records. Ten
+binary-backed exclusive-end aliases retain provenance and fold into following
+asset boundaries. Provenance rises from 15,033 to 15,060 mappings, the audit
+registry from 12,230 to 12,247, and the semantic review upper bound rises from
+3,103 to 3,113 solely because the ten reviewed aliases do not require duplicate
+address records. The enforced address-derived ceiling falls from 1,018 to 991;
+the remaining backlog comprises 831 RAM equates and 160 preserved-data labels.

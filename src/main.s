@@ -360,7 +360,7 @@
                 include "src/data/credits_scene_assets.s"
                 include "src/data/frontend_scene_assets.s"
                 include "src/data/planet_cutscene_assets.s"
-                include "src/data/credits_and_menu_assets.s"
+                include "src/data/shared_frontend_and_transition_assets.s"
                 include "src/data/stage_object_assets.s"
                 include "src/data/indexed_object_and_stage_effect_mappings.s"
                 include "src/data/stage10_enemy_assets.s"

@@ -44,19 +44,19 @@ EndingSequence_AssetLoads:  dc.w    7                   ; field_0  ; was: stru_7
                 dc.l    tiles_189E4C                    ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_18B2FA                    ; field_2
+                dc.l    CreditsAndEndingTileArt         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18CD7C                     ; field_2
+                dc.l    SharedCreditsResultsMappingData4020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18CC50                     ; field_2
+                dc.l    SharedCreditsResultsMappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    tiles_18B14C                    ; field_2
+                dc.l    EndingSequenceMappingData9600   ; field_2
                 dc.w    $9600                           ; field_6
                 dc.w    $FFFF
 

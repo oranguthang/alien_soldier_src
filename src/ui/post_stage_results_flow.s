@@ -56,13 +56,13 @@ Results_FinalizePostStageSetup:                         ; was: loc_1D6F4
 ; End of function Results_InitializePostStageFlow
 ; ---------------------------------------------------------------------------
 ResultsPostStageAssetLoadList:  dc.w    3               ; field_0  ; was: stru_1D70A
-                dc.l    byte_18C72C                     ; field_2
+                dc.l    ResultsPostStageType3Data0000   ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18CC50                     ; field_2
+                dc.l    SharedCreditsResultsMappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_18CD7C                     ; field_2
+                dc.l    SharedCreditsResultsMappingData4020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_18454C                     ; field_2

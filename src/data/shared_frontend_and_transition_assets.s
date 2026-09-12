@@ -1,14 +1,14 @@
-tiles_18B14C:   binclude "data/artcomp/tiles_18B14C.bin"
-tiles_18B14C_End:
-tiles_18B2FA:   binclude "data/artcomp/tiles_18B2FA.bin"
-tiles_18B2FA_End:
-byte_18BE42:    binclude "data/other/byte_18BE42.bin"
-byte_18BE42_End:
-byte_18C5E6:    dc.b    0, $4C, $40, 7, 8, $42, 1, 2, $80, $B, $40, 3, 4, $88, $F, $40, 5, 6, $80, $15, $80, $D, $40, $B, $C, $80, $13, $80, $D, $40, 9, $A
+EndingSequenceMappingData9600:  binclude "data/artcomp/tiles_18B14C.bin"  ; was: tiles_18B14C
+EndingSequenceMappingData9600_End:                      ; was: tiles_18B14C_End
+CreditsAndEndingTileArt:        binclude "data/artcomp/tiles_18B2FA.bin"  ; was: tiles_18B2FA
+CreditsAndEndingTileArt_End:                            ; was: tiles_18B2FA_End
+XiTigerCutsceneType3Data0000:   binclude "data/other/byte_18BE42.bin"  ; was: byte_18BE42
+XiTigerCutsceneType3Data0000_End:                       ; was: byte_18BE42_End
+XiTigerCutsceneMappingData6800: dc.b    0, $4C, $40, 7, 8, $42, 1, 2, $80, $B, $40, 3, 4, $88, $F, $40, 5, 6, $80, $15, $80, $D, $40, $B, $C, $80, $13, $80, $D, $40, 9, $A  ; was: byte_18C5E6
                                         ; DATA XREF: ROM:0001E8CC   o
                 dc.b    $80, $13, $80, $D, $88, $2D, $80, $13, $80, $D, $88, $31, $80, $13, $90, $D, $88, $37, $88, $21, $88, $47, $88, $21, $88, $37, $88, $21, $88, $37, $88, $5D
                 dc.b    $88, $37, $88, $61, $88, $37, $88, $61, $90, $29, $88, $1B, $88, $61
-byte_18C634:    dc.b    0, $F6, $62, 0, $3B, $3C, 2, 3, 1, $68, $4B, $7F, 0, $44, 8, 9, 1, $E, $F, $10, $15, $16, $17, $18, 1, 4, 5, 6, $A, $B, $C, $D
+XiTigerCutsceneMappingData2020: dc.b    0, $F6, $62, 0, $3B, $3C, 2, 3, 1, $68, $4B, $7F, 0, $44, 8, 9, 1, $E, $F, $10, $15, $16, $17, $18, 1, 4, 5, 6, $A, $B, $C, $D  ; was: byte_18C634
                                         ; DATA XREF: ROM:0001E8C4   o
                 dc.b    $11, $12, $13, $14, $19, $1A, $1B, $1C, $1D, $1E, $1F, $20, $25, $26, $7F, 0, $27, $28, $2D, $2E, $2F, $30, $35, $36, $37, $38, $21, $22, $23, $24, $29, $2A
                 dc.b    $2B, $2C, $31, $32, $33, $34, $39, $3A, $3B, $3C, $3D, $3E, $3F, $40, $45, $46, $47, $77, 0, $48, $4C, $4D, $4E, $4F, $52, $53, $54, $55, $41, $42, $43, $44
@@ -17,13 +17,14 @@ byte_18C634:    dc.b    0, $F6, $62, 0, $3B, $3C, 2, 3, 1, $68, $4B, $7F, 0, $44
                 dc.b    $1D, $1E, $1F, $20, $39, $3A, $3B, $3C, $31, $32, $33, $34, $29, $2A, $2B, $2C, $21, $22, $23, $24, $52, $53, $54, $55, $4C, $4D, $4E, $4F, $45, $46, $47, $75
                 dc.b    $10, $48, $3D, $3E, $3F, $40, $56, $57, 1, 1, $50, $51, 1, 1, $49, $4A, $4B, 1, $41, $42, $43, $44, $33, $34, $89, $7F, $88, $53, $8D, $7F, $85, $23
                 dc.b    $88, $BF, $89, $23, $88, $BF, $6E, 0, 1, 4, 5, 6, 1, $B, $C, $D, 1, $12, $13, $14, 1, $1A, $1B, $1C
-byte_18C72C:    binclude "data/other/byte_18C72C.bin"
-byte_18C72C_End:
-byte_18CC50:    binclude "data/mappings/byte_18CC50.bin"
-byte_18CC50_End:
-byte_18CD7C:    binclude "data/mappings/byte_18CD7C.bin"
-byte_18CD7C_End:
-byte_18D562:    dc.b    0, $EB, $60, $E5, $9E, $9F, $5F, 0, 0, $5B, 0, 0, $62, $E5, $9D, $9D, $9E, $9F, $5F, 0, 0, $59, 0, 0, $42, $E5, $9D, $FD, 7, $5F, 0, 0
+ResultsPostStageType3Data0000:          binclude "data/other/byte_18C72C.bin"  ; was: byte_18C72C
+ResultsPostStageType3Data0000_End:                      ; was: byte_18C72C_End
+SharedCreditsResultsMappingData6000:    binclude "data/mappings/byte_18CC50.bin"  ; was: byte_18CC50
+SharedCreditsResultsMappingData6000_End:                ; was: byte_18CC50_End
+SharedCreditsResultsMappingData4020:    binclude "data/mappings/byte_18CD7C.bin"  ; was: byte_18CD7C
+SharedCreditsResultsMappingData4020_End:                ; was: byte_18CD7C_End
+CreditsAndTransitionTileArtE000:                        ; was: byte_18D562
+                dc.b    0, $EB, $60, $E5, $9E, $9F, $5F, 0, 0, $5B, 0, 0, $62, $E5, $9D, $9D, $9E, $9F, $5F, 0, 0, $59, 0, 0, $42, $E5, $9D, $FD, 7, $5F, 0, 0
                                         ; DATA XREF: ROM:0001E214   o
                                         ; ROM:AlternateTransition_GraphicsLoadDescriptor   o
                 dc.b    $F0, $7F, $FD, 7, $5F, 0, 0, $FC, $7F, $FD, $8B, $5F, 0, 0, $FC, $7F, $FE, $F, $5F, 0, 0, $FC, $7F, $FE, $93, $5F, 0, 0, $FC, $7F, $FF, $17
@@ -33,30 +34,32 @@ byte_18D562:    dc.b    0, $EB, $60, $E5, $9E, $9F, $5F, 0, 0, $5B, 0, 0, $62, $
                 dc.b    $FD, $8B, $FD, $7F, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $51, $E5, $9D, $5F, $E5, $9D, $5F
                 dc.b    $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D
                 dc.b    $5F, $E5, $9D, $5F, $E5, $9D, $5F, $E5, $9D, $FF, $DD, 0, $9D, $FF
-tiles_18D650:   binclude "data/artcomp/tiles_18D650.bin"
-tiles_18D650_End:
-byte_18DA38:    binclude "data/other/byte_18DA38.bin"
-byte_18DA38_End:
-byte_18DF92:    dc.b    0, $65, $5F, $C7, $F8, $B0, $41, $56, 0, 0, $64, $C7, $CC, $CD, $CE, $CF, $D0, $BF, $5F, $C7, $F8, $FC, $7F, $C0, $7F, $80, $FF, 0, $DC, $62, $C7, $DD
+GameOverTileArtA000:        binclude "data/artcomp/tiles_18D650.bin"  ; was: tiles_18D650
+GameOverTileArtA000_End:                                ; was: tiles_18D650_End
+SharedMenuType3DataF680:    binclude "data/other/byte_18DA38.bin"  ; was: byte_18DA38
+SharedMenuType3DataF680_End:                            ; was: byte_18DA38_End
+SharedGameplayTileArtD000:                              ; was: byte_18DF92
+                dc.b    0, $65, $5F, $C7, $F8, $B0, $41, $56, 0, 0, $64, $C7, $CC, $CD, $CE, $CF, $D0, $BF, $5F, $C7, $F8, $FC, $7F, $C0, $7F, $80, $FF, 0, $DC, $62, $C7, $DD
                                         ; DATA XREF: ROM:Stage_SharedMappingsLoadList   o
                                         ; ROM:00013580   o
                 dc.b    $DE, $DF, $BF, $5F, $C7, $F8, $FC, $FF, $C8, $7F, 0, $EC, $62, $C7, $ED, $EE, $EF, $BF, $5F, $C7, $F8, $FD, $7F, $C8, $FF, $5F, $F8, $C7, $FD, $FF, $86, $15
                 dc.b    1, 2, $20, $82, $1A, 1, $20, 2, $88, 3, $90, $B, $FC, $7F, $59, $C7, $F8, $BA, $7F, $3E, $EE, $5F, $C7, $F8, $FE, $FF, $94, $87, $88, $8B, $C0, $8F
                 dc.b    $5F, $C7, $F8, $FF, $7F, $EC, $8F, $FF
-byte_18DFFA:    binclude "data/other/byte_18DFFA.bin"
-byte_18DFFA_End:
-byte_18E24C:    dc.b    0, $54, $20, 0, 1, $CA, $D3, $5F, $C2, $D2, $94, $41, 0, $D3, $58, 0, 0, $80, $7F, $5F, 0, 0, $90, $77, $FC, $7F, $FC, $7F, $5D, 0, 0, $FC
+WeaponSetupType3Data5800:   binclude "data/other/byte_18DFFA.bin"  ; was: byte_18DFFA
+WeaponSetupType3Data5800_End:                           ; was: byte_18DFFA_End
+WeaponSetupTileArtE300:     dc.b    0, $54, $20, 0, 1, $CA, $D3, $5F, $C2, $D2, $94, $41, 0, $D3, $58, 0, 0, $80, $7F, $5F, 0, 0, $90, $77, $FC, $7F, $FC, $7F, $5D, 0, 0, $FC  ; was: byte_18E24C
                                         ; DATA XREF: ROM:0001EFC8   o
                 dc.b    $FF, $FC, $FF, $5D, 0, 0, $FD, $7F, $FD, $7F, $5D, 0, 0, $FD, $FF, $FD, $FF, $5D, 0, 0, $FE, $7F, $FE, $7F, $5D, 0, 0, $FE, $FF, $FE, $FF, $5D
                 dc.b    0, 0, $FF, $7F, $C7, $9E, $20, 0, 1, $CA, $D3, $5F, $D2, $D2, $90, $41, 1, $C2, $D3, $57, 0, 0
-byte_18E2A2:    dc.b    0, $AC, $7F, $6B, $93, $92, $91, $90, $93, $92, $91, $90, $93, $92, $91, $90, $93, $92, $91, $90, $8F, $8E, $8D, $8C, $8F, $8E, $8D, $8C, $8F, $8E, $8D, $8C
+WeaponSetupMappingData4020:                             ; was: byte_18E2A2
+                dc.b    0, $AC, $7F, $6B, $93, $92, $91, $90, $93, $92, $91, $90, $93, $92, $91, $90, $93, $92, $91, $90, $8F, $8E, $8D, $8C, $8F, $8E, $8D, $8C, $8F, $8E, $8D, $8C
                                         ; DATA XREF: ROM:0001EFE8   o
                 dc.b    $8F, $8E, $8D, $8C, $8B, $7F, $6B, $8A, $89, $88, $8B, $8A, $89, $88, $8B, $8A, $89, $88, $8B, $8A, $89, $88, $87, $86, $85, $84, $87, $86, $85, $84, $87, $86
                 dc.b    $85, $84, $87, $86, $85, $84, $83, $82, $6C, $6B, $81, $80, $83, $82, $81, $80, $83, $82, $81, $80, $83, $82, $81, $80, $7F, $63, $80, $81, $82, $83, $80, $81
                 dc.b    $82, $83, $80, $81, $82, $83, $80, $81, $82, $83, $84, $85, $86, $87, $84, $85, $86, $87, $84, $85, $86, $87, $84, $85, $86, $87, $88, $7F, $63, $89, $8A, $8B
                 dc.b    $88, $89, $8A, $8B, $88, $89, $8A, $8B, $88, $89, $8A, $8B, $8C, $8D, $8E, $8F, $8C, $8D, $8E, $8F, $8C, $8D, $8E, $8F, $8C, $8D, $8E, $8F, $90, $91, $6C, $63
                 dc.b    $92, $93, $90, $91, $92, $93, $90, $91, $92, $93, $90, $91, $92, $93
-byte_18E350:    dc.b    0, $1A, 7, 1, 2, 3, 4, 5, 6, 7, 8, $98, 7, $B8, $F, $F8, $1F, 1, 9, $A, $24, 0, $98, 7, $B8, $F, $F8, $1F
+WeaponSetupMappingData6000: dc.b    0, $1A, 7, 1, 2, 3, 4, 5, 6, 7, 8, $98, 7, $B8, $F, $F8, $1F, 1, 9, $A, $24, 0, $98, 7, $B8, $F, $F8, $1F  ; was: byte_18E350
                                         ; DATA XREF: ROM:0001EFE0   o
-byte_18E36C:    binclude "data/other/byte_18E36C.bin"
-byte_18E36C_End:
+DebugMenuInitialType3DataF680:  binclude "data/other/byte_18E36C.bin"  ; was: byte_18E36C
+DebugMenuInitialType3DataF680_End:                      ; was: byte_18E36C_End

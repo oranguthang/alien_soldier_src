@@ -42,7 +42,7 @@ GameOver_InitializeScreen_Activate:                     ; CODE XREF: GameOver_In
 ; ---------------------------------------------------------------------------
 GameOver_GraphicsLoadDescriptor:    dc.w    7           ; field_0  ; was: stru_27676
                                         ; DATA XREF: GameOver_InitializeScreen+52   o
-                dc.l    tiles_18D650                    ; field_2
+                dc.l    GameOverTileArtA000             ; field_2
                 dc.w    $A000                           ; field_6
                 dc.w    $FFFF
 
