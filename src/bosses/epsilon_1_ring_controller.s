@@ -139,7 +139,7 @@ Boss_Epsilon1CreateSpreadAimMarkerState:                ; DATA XREF: ROM:00046DB
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
                 addq.w  #2,4(a5)
-                tst.w   (word_FF9474).w
+                tst.w   (Epsilon1ProximityFlag).w
                 bne.s   Boss_Epsilon1ClearTrackingRingAttributeBit
                 subq.w  #1,$4A(a5)
                 beq.w   Boss_Epsilon1ClearTrackingRingAttributeBit
@@ -179,7 +179,7 @@ Boss_Epsilon1TrackingRingPauseState:                    ; DATA XREF: ROM:00046DB
 
 ; Repeats the tracking pass or deactivates the controller
 Boss_Epsilon1RepeatOrDeactivateTrackingRingState:       ; DATA XREF: ROM:00046DB8   o  ; was: sub_46F3A
-                tst.w   (word_FF9474).w
+                tst.w   (Epsilon1ProximityFlag).w
                 bne.s   Boss_Epsilon1DeactivateTrackingRingCycle
                 tst.w   $4A(a5)
                 beq.w   Boss_Epsilon1DeactivateTrackingRingCycle
@@ -306,7 +306,7 @@ Boss_Epsilon1ActivateReservedBarrageEmitterState:       ; DATA XREF: ROM:00046F7
                 move.w  #$8080,2(a0)
                 move.w  $10(a5),$10(a0)
                 move.w  $14(a5),$14(a0)
-                tst.w   (word_FF9474).w
+                tst.w   (Epsilon1ProximityFlag).w
                 bne.s   Boss_Epsilon1FinishBarrageRingSequence
                 subq.w  #1,$4A(a5)
                 beq.s   Boss_Epsilon1FinishBarrageRingSequence

@@ -142,7 +142,7 @@ Scroll_FillHorizontalCellEntries:                       ; CODE XREF: Scroll_Fill
                 rts
 ; ---------------------------------------------------------------------------
 Scroll_CopyHorizontalProfile:                           ; CODE XREF: Scroll_WriteHorizontalPlaneBuffer+C   j  ; was: loc_105CE
-                movea.w #(byte_FF8800-M68K_RAM),a2
+                movea.w #(HorizontalScrollProfile-M68K_RAM),a2
                 moveq   #0,d0
                 cmpi.b  #2,d3
                 beq.s   Scroll_CopyHorizontalCellProfile
@@ -241,7 +241,7 @@ Scroll_FillVerticalColumnEntries:                       ; CODE XREF: Scroll_Writ
                 rts
 ; ---------------------------------------------------------------------------
 Scroll_CopyVerticalColumnProfile:                       ; CODE XREF: Scroll_WriteVerticalPlaneBuffer+C   j  ; was: loc_106B4
-                movea.w #(dword_FF8A00-M68K_RAM),a2
+                movea.w #(VerticalScrollProfile-M68K_RAM),a2
                 move.w  #$13,d7
 Scroll_CopyVerticalColumnProfileLoop:                   ; CODE XREF: Scroll_CopyVerticalColumnProfileLoop+4   j  ; was: loc_106BC
                 move.w  (a2)+,(a0)

@@ -512,6 +512,52 @@ The weapon and boss tile regions are reused by the two debug pages.
 | `ScriptedInputDelay` | `$FFFF8648` | Post-boss runs load `$16` and copy it into the step timer; Flying Neo entry reuses the word as a direct `$0E`-tick vertical-motion delay. |
 | `ScriptedPlayerWorldX` | `$FFFF8652` | The scripted-input dispatcher adds the camera X coordinate to the player's screen X every update; movement states compare this world position with their target. |
 
+## Reviewed collision pointer lists
+
+`Collision_BuildEntityLists` initializes every count to minus one and appends
+16-bit object pointers to five adjacent `$80`-byte lists. Consumers load the
+corresponding count into a `DBF` loop, so the stored values are explicitly
+`count - 1` rather than ordinary counts.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PrimaryListCountMinus1` | `$FFFF8D76` | Incremented for each alternating-frame primary collision entry and consumed with `PrimaryCollisionList`. |
+| `TargetListCountMinus1` | `$FFFF8D78` | Incremented for entities carrying either target flag and consumed with `CollisionTargetList`. |
+| `LockOnListCountMinus1` | `$FFFF8D7A` | Incremented for the lock-on subset and consumed by weapon targeting with `LockOnTargetList`. |
+| `PlatformListCountMinus1` | `$FFFF8D7C` | Incremented for objects carrying the moving-platform flag and consumed with `MovingPlatformList`. |
+| `WeaponListCountMinus1` | `$FFFF8D7E` | Incremented for objects carrying the player-weapon collision flag and consumed with `PlayerWeaponList`. |
+| `PrimaryCollisionList` | `$FFFF8D80` | Pointer list used by player-hostile and special-attack collision scans. |
+| `CollisionTargetList` | `$FFFF8E00` | Pointer list used by player-weapon, special-attack, and target-selection scans. |
+| `LockOnTargetList` | `$FFFF8E80` | Subset of collision targets carrying flag bit four; targeting code scans it for lock-on objects. |
+| `MovingPlatformList` | `$FFFF8F00` | Pointer list whose entries have cached previous/current positions for player-platform collision. |
+| `PlayerWeaponList` | `$FFFF8F80` | Pointer list used as the weapon side of player-weapon-versus-enemy collision. |
+
+## Reviewed sprite and scroll scratch fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PlayerSpritePieceBuffer` | `$FFFF8780` | Player composite rendering expands primary and secondary frame streams into this buffer and publishes its address through the player object's sprite-piece pointer. |
+| `HorizontalScrollProfile` | `$FFFF8800` | Stage-specific producers fill horizontal line/cell values here; the scroll writer copies this profile into alternating horizontal-scroll output words. |
+| `VerticalScrollProfile` | `$FFFF8A00` | Caterpillar, Viblack, and Epsilon 1 build twenty-word profiles from this base; the vertical scroll writer copies exactly twenty consecutive words into its output column. |
+| `MidgameParallaxValue0` | `$FFFF8A04` | Stage 8 subtracts `$41` from the first of four cyclic parallax values. |
+| `MidgameParallaxValue1` | `$FFFF8A08` | Stage 8 subtracts a randomized value from `$08` through `$0F` from the second cyclic parallax value. |
+| `MidgameParallaxValue2` | `$FFFF8A0C` | Stage 8 subtracts `$10` from the third cyclic parallax value. |
+| `MidgameParallaxValue3` | `$FFFF8A10` | Stage 8 subtracts `$13` from the fourth cyclic parallax value. |
+
+The four midgame words are stage-specific overlays inside the shared vertical
+profile scratch region. The frame counter rotates their order and the producer
+repeats the resulting four-word group into `HorizontalScrollProfile`.
+
+## Reviewed encounter raster, timing, and trail fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `GameOverRasterBuffer` | `$FFFF9000` | The Game Over perspective projector writes four interleaved words per row from this base; the raster-layout copier expands fourteen 64-byte blocks into `HScrollBuffer`. |
+| `Epsilon1ProximityTimer` | `$FFFF9472` | Epsilon 1 increments this word while the player remains within twelve pixels and the proximity flag is clear; difficulty selects a `$40` or `$80` threshold. |
+| `Epsilon1ProximityFlag` | `$FFFF9474` | The proximity threshold sets this word; it changes attack selection and terminates ring repetitions until battle-center recovery clears it. |
+| `Epsilon1VerticalAccel` | `$FFFF9478` | Epsilon 1 attack states load signed acceleration values here, and the shared motion helper adds the longword to the boss vertical velocity. |
+| `ShieldViperTrailAngles` | `$FFFF94A0` | Shield Viper initializes and shifts angle-history words from this base, then applies or interpolates them across linked body records. |
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

@@ -46,7 +46,7 @@ Player_GetWeaponTableOffset_SelectFrame:                ; CODE XREF: Player_GetW
 ; Expands two frame streams into the player's composite sprite-piece buffer
 Player_BuildSpritePieces:                               ; CODE XREF: Player_HandleAirMovement+70   j  ; was: sub_174A8
                                         ; Player_HandleFallingState+D6   j
-                movea.w #(byte_FF8780-M68K_RAM),a3
+                movea.w #(PlayerSpritePieceBuffer-M68K_RAM),a3
                 move.l  a3,8(a5)
                 clr.l   $DC(a5)
                 moveq   #$F,d4

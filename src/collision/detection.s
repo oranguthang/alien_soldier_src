@@ -27,17 +27,17 @@ Collision_UpdateSystem_Return:                          ; CODE XREF: Collision_U
 ; End of function Collision_UpdateSystem
 ; Builds typed collision lists and cached bounds for active objects
 Collision_BuildEntityLists:                             ; CODE XREF: Collision_UpdateSystem+6   p  ; was: sub_13B2A
-                movea.w #(byte_FF8D80-M68K_RAM),a0
-                movea.w #(byte_FF8E00-M68K_RAM),a1
-                movea.w #(byte_FF8E80-M68K_RAM),a2
-                movea.w #(byte_FF8F00-M68K_RAM),a3
-                movea.w #(byte_FF8F80-M68K_RAM),a5
+                movea.w #(PrimaryCollisionList-M68K_RAM),a0
+                movea.w #(CollisionTargetList-M68K_RAM),a1
+                movea.w #(LockOnTargetList-M68K_RAM),a2
+                movea.w #(MovingPlatformList-M68K_RAM),a3
+                movea.w #(PlayerWeaponList-M68K_RAM),a5
                 moveq   #$FFFFFFFF,d0
-                move.w  d0,(word_FF8D76).w
-                move.w  d0,(word_FF8D78).w
-                move.w  d0,(word_FF8D7A).w
-                move.w  d0,(word_FF8D7C).w
-                move.w  d0,(word_FF8D7E).w
+                move.w  d0,(PrimaryListCountMinus1).w
+                move.w  d0,(TargetListCountMinus1).w
+                move.w  d0,(LockOnListCountMinus1).w
+                move.w  d0,(PlatformListCountMinus1).w
+                move.w  d0,(WeaponListCountMinus1).w
                 move.w  d0,(ActivePickupCountMinus1).w
                 movea.w #(Entity_ObjectPool-M68K_RAM),a4
                 moveq   #$3B,d7                         ; ';'
@@ -61,7 +61,7 @@ Collision_BuildEntityLists_CheckEvenSlot:               ; CODE XREF: Collision_B
                 bne.s   Collision_BuildEntityLists_CheckTargetFlags
 Collision_BuildEntityLists_AddPrimaryEntry:             ; CODE XREF: Collision_BuildEntityLists+5C   j  ; was: loc_13B8E
                 move.w  a4,(a0)+
-                addq.w  #1,(word_FF8D76).w
+                addq.w  #1,(PrimaryListCountMinus1).w
                 btst    #5,$23(a4)
                 beq.s   Collision_BuildEntityLists_StorePrimaryBounds
                 addq.w  #1,(ActivePickupCountMinus1).w
@@ -88,11 +88,11 @@ Collision_BuildEntityLists_CheckTargetFlags:            ; CODE XREF: Collision_B
                 andi.b  #$90,d4
                 beq.s   Collision_BuildEntityLists_CheckPlatformFlag
                 move.w  a4,(a1)+
-                addq.w  #1,(word_FF8D78).w
+                addq.w  #1,(TargetListCountMinus1).w
                 btst    #4,d6
                 beq.s   Collision_BuildEntityLists_StoreTargetBounds
                 move.w  a4,(a2)+
-                addq.w  #1,(word_FF8D7A).w
+                addq.w  #1,(LockOnListCountMinus1).w
 Collision_BuildEntityLists_StoreTargetBounds:           ; CODE XREF: Collision_BuildEntityLists+B8   j  ; was: loc_13BEA
                 move.b  $2A(a4),d4
                 ext.w   d4
@@ -118,12 +118,12 @@ Collision_BuildEntityLists_CheckPlatformFlag:           ; CODE XREF: Collision_B
                 move.w  d0,$48(a4)
                 move.w  d1,$4A(a4)
                 move.w  a4,(a3)+
-                addq.w  #1,(word_FF8D7C).w
+                addq.w  #1,(PlatformListCountMinus1).w
 Collision_BuildEntityLists_CheckWeaponFlag:             ; CODE XREF: Collision_BuildEntityLists+F4   j  ; was: loc_13C3A
                 btst    #0,d6
                 beq.s   Collision_BuildEntityLists_NextEntity
                 move.w  a4,(a5)+
-                addq.w  #1,(word_FF8D7E).w
+                addq.w  #1,(WeaponListCountMinus1).w
 Collision_BuildEntityLists_NextEntity:                  ; CODE XREF: Collision_BuildEntityLists+36   j  ; was: loc_13C46
                                         ; Collision_BuildEntityLists+114   j
                 lea     $60(a4),a4
@@ -173,7 +173,7 @@ Collision_CheckTerrainTiles_NextEntity:                 ; CODE XREF: Collision_C
 ; End of function Collision_CheckTerrainTiles
 ; Checks alternating weapon-effect slots against collision targets
 Collision_CheckWeaponProjectilesAgainstEnemies:         ; CODE XREF: Collision_UpdateSystem:Collision_UpdateSystem_RunDynamicChecks   p  ; was: sub_13CCA
-                tst.w   (word_FF8D78).w
+                tst.w   (TargetListCountMinus1).w
                 bpl.s   Collision_CheckWeaponProjectilesAgainstEnemies_Begin
                 rts
 ; ---------------------------------------------------------------------------
@@ -194,8 +194,8 @@ Collision_CheckWeaponProjectilesAgainstEnemies_WeaponSlotLoop:  ; CODE XREF: Col
                 move.w  d2,d3
                 subq.w  #8,d2
                 addq.w  #8,d3
-                movea.w #(byte_FF8E00-M68K_RAM),a4
-                move.w  (word_FF8D78).w,d7
+                movea.w #(CollisionTargetList-M68K_RAM),a4
+                move.w  (TargetListCountMinus1).w,d7
 Collision_CheckWeaponProjectilesAgainstEnemies_TargetLoop:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies:Collision_CheckWeaponProjectilesAgainstEnemies_NextTarget   j  ; was: loc_13D04
                 movea.w (a4)+,a2
                 cmp.w   $34(a2),d1
@@ -341,8 +341,8 @@ Collision_CheckPlayerAgainstHostiles_Begin:             ; CODE XREF: Collision_C
                 move.b  $29(a0),d3
                 ext.w   d3
                 add.w   $14(a0),d3
-                movea.w #(byte_FF8D80-M68K_RAM),a1
-                move.w  (word_FF8D76).w,d7
+                movea.w #(PrimaryCollisionList-M68K_RAM),a1
+                move.w  (PrimaryListCountMinus1).w,d7
                 bmi.w   Collision_CheckPlayerAgainstHostiles_Return
 Collision_CheckPlayerAgainstHostiles_HostileLoop:       ; CODE XREF: Collision_CheckPlayerAgainstHostiles:Collision_CheckPlayerAgainstHostiles_NextHostile   j  ; was: loc_13EF4
                 movea.w (a1)+,a2
@@ -458,8 +458,8 @@ Collision_CheckSpecialAttackTargets:                    ; CODE XREF: Collision_U
                 add.w   $14(a0),d2
                 moveq   #$1E,d3
                 add.w   $14(a0),d3
-                movea.w #(byte_FF8D80-M68K_RAM),a1
-                move.w  (word_FF8D76).w,d7
+                movea.w #(PrimaryCollisionList-M68K_RAM),a1
+                move.w  (PrimaryListCountMinus1).w,d7
                 bmi.w   Collision_CheckSpecialAttackTargets_CheckTargets
 Collision_CheckSpecialAttackTargets_PrimaryLoop:        ; CODE XREF: Collision_CheckSpecialAttackTargets:Collision_CheckSpecialAttackTargets_NextPrimary   j  ; was: loc_14042
                 movea.w (a1)+,a2
@@ -477,9 +477,9 @@ Collision_CheckSpecialAttackTargets_NextPrimary:        ; CODE XREF: Collision_C
                 dbf     d7,Collision_CheckSpecialAttackTargets_PrimaryLoop
 Collision_CheckSpecialAttackTargets_CheckTargets:       ; CODE XREF: Collision_CheckSpecialAttackTargets+32   j  ; was: loc_14066
                 movea.w #(word_FFC5C0-M68K_RAM),a3
-                movea.w #(byte_FF8E00-M68K_RAM),a4
+                movea.w #(CollisionTargetList-M68K_RAM),a4
                 moveq   #4,d5
-                move.w  (word_FF8D78).w,d7
+                move.w  (TargetListCountMinus1).w,d7
                 bmi.w   Collision_CheckSpecialAttackTargets_Return
 Collision_CheckSpecialAttackTargets_TargetLoop:         ; CODE XREF: Collision_CheckSpecialAttackTargets:Collision_CheckSpecialAttackTargets_NextTarget   j  ; was: loc_14078
                 movea.w (a4)+,a2

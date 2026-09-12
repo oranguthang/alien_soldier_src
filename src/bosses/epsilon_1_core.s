@@ -7,9 +7,9 @@ Boss_Epsilon1Main:                                      ; DATA XREF: ROM:Entity_
                 cmpi.w  #$C,d0
                 bhi.s   Boss_Epsilon1UpdatePeriodicSharedOffset
 Boss_Epsilon1UpdateProximityTimer:                      ; CODE XREF: Boss_Epsilon1Main+10   j  ; was: loc_45AEE
-                tst.w   (word_FF9474).w
+                tst.w   (Epsilon1ProximityFlag).w
                 bne.s   Boss_Epsilon1UpdatePeriodicSharedOffset
-                addq.w  #1,(word_FF9472).w
+                addq.w  #1,(Epsilon1ProximityTimer).w
                 tst.w   (DifficultyMode).w
                 bne.s   Boss_Epsilon1UseShortProximityLimit
                 move.w  #$80,d0
@@ -18,9 +18,9 @@ Boss_Epsilon1UpdateProximityTimer:                      ; CODE XREF: Boss_Epsilo
 Boss_Epsilon1UseShortProximityLimit:                    ; CODE XREF: Boss_Epsilon1Main+2C   j  ; was: loc_45B04
                 move.w  #$40,d0                         ; '@'
 Boss_Epsilon1CheckProximityLimit:                       ; CODE XREF: Boss_Epsilon1Main+32   j  ; was: loc_45B08
-                cmp.w   (word_FF9472).w,d0
+                cmp.w   (Epsilon1ProximityTimer).w,d0
                 bhi.s   Boss_Epsilon1UpdatePeriodicSharedOffset
-                move.w  #1,(word_FF9474).w
+                move.w  #1,(Epsilon1ProximityFlag).w
 Boss_Epsilon1UpdatePeriodicSharedOffset:                ; CODE XREF: Boss_Epsilon1Main+1C   j  ; was: loc_45B14
                                         ; Boss_Epsilon1Main+22   j
                 btst    #1,$4C(a5)
@@ -271,7 +271,7 @@ Boss_Epsilon1InitializeBattleObjectsState:              ; DATA XREF: ROM:00045CF
                 clr.l   (dword_FF9466).w
                 clr.l   (dword_FF946A).w
                 clr.l   (dword_FF946E).w
-                clr.l   (dword_FF9478).w
+                clr.l   (Epsilon1VerticalAccel).w
                 moveq   #0,d0
                 lea     (word_FF9480).w,a0
                 move.w  #5,d7

@@ -96,7 +96,7 @@ RasterBuffer_CopyGameOverLayout:                        ; DATA XREF: ROM:00029E5
                 movea.w #(word_FF9C00-M68K_RAM),a3
                 moveq   #6,d7
                 bsr.w   RasterBuffer_Copy64ByteBlocks
-                movea.w #(byte_FF9000-M68K_RAM),a2
+                movea.w #(GameOverRasterBuffer-M68K_RAM),a2
                 movea.w #(HScrollBuffer-M68K_RAM),a3
                 moveq   #$D,d7
                 bra.w   RasterBuffer_Copy64ByteBlocks

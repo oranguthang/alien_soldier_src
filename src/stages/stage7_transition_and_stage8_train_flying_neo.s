@@ -90,19 +90,19 @@ Stage8_UpdateTrainEffectsAndVerticalOscillation_Return:  ; CODE XREF: Stage8_Upd
 ; Update the four repeating Stage 8 train parallax values
 Midgame_UpdateTrainAndFlyCorridorParallaxRows:          ; CODE XREF: Stage8_UpdateTrainEffectsAndVerticalOscillation+C   p  ; was: sub_CEFA
                                         ; Stage8_UpdateFlyingNeoVerticalScrollAndEffects+2E   p
-                movea.w #(byte_FF8800-M68K_RAM),a5
-                subi.l  #$28000,(dword_FF8A00).w
+                movea.w #(HorizontalScrollProfile-M68K_RAM),a5
+                subi.l  #$28000,(VerticalScrollProfile).w
                 move.w  (RandomNumberState).w,d0
                 andi.w  #7,d0
                 addq.w  #8,d0
-                subi.w  #$41,(word_FF8A04).w            ; 'A'
-                sub.w   d0,(word_FF8A08).w
-                subi.w  #$10,(word_FF8A0C).w
-                subi.w  #$13,(word_FF8A10).w
+                subi.w  #$41,(MidgameParallaxValue0).w  ; 'A'
+                sub.w   d0,(MidgameParallaxValue1).w
+                subi.w  #$10,(MidgameParallaxValue2).w
+                subi.w  #$13,(MidgameParallaxValue3).w
                 move.w  #$C,d6
                 move.w  (FrameCounter).w,d0
                 asl.w   #2,d0
-                movea.w #(word_FF8A04-M68K_RAM),a0
+                movea.w #(MidgameParallaxValue0-M68K_RAM),a0
                 and.w   d6,d0
                 move.w  (a0,d0.w),d1
                 addq.w  #4,d0
@@ -115,7 +115,7 @@ Midgame_UpdateTrainAndFlyCorridorParallaxRows:          ; CODE XREF: Stage8_Upda
                 and.w   d6,d0
                 move.w  (a0,d0.w),d4
                 addq.w  #4,d0
-                movea.w #(byte_FF8800-M68K_RAM),a5
+                movea.w #(HorizontalScrollProfile-M68K_RAM),a5
                 move.w  #$2F,d7                         ; '/'
 Midgame_UpdateTrainAndFlyCorridorParallaxRows_FillBuffer:  ; CODE XREF: Midgame_UpdateTrainAndFlyCorridorParallaxRows+6A   j  ; was: loc_CF5C
                 move.w  d1,(a5)+

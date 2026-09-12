@@ -437,9 +437,9 @@ Weapon_State8NextIndicator:                             ; CODE XREF: Weapon_Conf
                 lea     $C0(a0),a0
                 dbf     d7,Weapon_State8IndicatorInitLoop
                 clr.w   (word_FF801C).w
-                move.w  (word_FF8D7A).w,d7
+                move.w  (LockOnListCountMinus1).w,d7
                 bmi.s   Weapon_State8SelectLowestValueTarget
-                movea.w #(byte_FF8E80-M68K_RAM),a1
+                movea.w #(LockOnTargetList-M68K_RAM),a1
 Weapon_State8FindFlaggedTarget:                         ; CODE XREF: Weapon_ConfigureState8Targeting+6E   j  ; was: loc_17DAA
                 movea.w (a1)+,a0
                 btst    #7,$23(a0)
@@ -455,9 +455,9 @@ Weapon_State8UseFlaggedTarget:                          ; CODE XREF: Weapon_Conf
                 bra.w   Weapon_AppendTargetingReticleForObject
 ; ---------------------------------------------------------------------------
 Weapon_State8SelectLowestValueTarget:                   ; CODE XREF: Weapon_ConfigureState8Targeting+5E   j  ; was: loc_17DCE
-                move.w  (word_FF8D78).w,d7
+                move.w  (TargetListCountMinus1).w,d7
                 bmi.s   Weapon_State8TargetSelectionReturn
-                movea.w #(byte_FF8E00-M68K_RAM),a0
+                movea.w #(CollisionTargetList-M68K_RAM),a0
                 movea.w (a0)+,a1
                 move.w  $24(a1),d0
 Weapon_State8CompareTargetValue:                        ; CODE XREF: Weapon_ConfigureState8Targeting+A8   j  ; was: loc_17DDE

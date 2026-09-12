@@ -102,7 +102,7 @@ Boss_ViblackUpdateScrollAndCompanion:                   ; CODE XREF: Boss_Viblac
 Boss_ViblackBuildScrollProfile:                         ; CODE XREF: Boss_ViblackInit+E0   j  ; was: sub_43FEA
                                         ; Boss_ViblackUpdateScrollAndCompanion   p
                 movea.w #(word_FF9480-M68K_RAM),a0
-                movea.w #(dword_FF8A00-M68K_RAM),a1
+                movea.w #(VerticalScrollProfile-M68K_RAM),a1
                 moveq   #9,d7
 Boss_ViblackCopyPreviousScrollSamplesLoop:              ; CODE XREF: Boss_ViblackBuildScrollProfile+C   j  ; was: loc_43FF4
                 move.l  (a0)+,(a1)+

@@ -319,7 +319,7 @@ Stage4_UpdateShiperEncounterCamera:                     ; CODE XREF: Stage4_Upda
 ; Clamps camera position to boundaries
 Stage4_FillShiperHorizontalRasterOffsets:               ; CODE XREF: Stage4_InitializeShiperEncounter+40   p  ; was: sub_CB56
                                         ; Camera_SetBounds+A   j
-                movea.w #(byte_FF8800-M68K_RAM),a0
+                movea.w #(HorizontalScrollProfile-M68K_RAM),a0
                 move.w  (dword_FFA908).w,d0
                 neg.w   d0
                 moveq   #$7F,d7

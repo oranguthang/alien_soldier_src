@@ -5847,3 +5847,47 @@ Provenance rises from 15,312 to 15,319 mappings and the audit registry from
 12,442 to 12,449. The semantic review upper bound remains 3,170 because every
 new provenance mapping has a matching audit record. The enforced address-
 derived ceiling falls from 739 to 732, all still confined to RAM equates.
+
+The collision pointer-list RAM pass replaces ten raw equates. One producer
+builds five adjacent `$80`-byte arrays of 16-bit object pointers for primary
+collision entries, general targets, the lock-on target subset, moving
+platforms, and player weapons. Each paired word starts at minus one, increments
+once per appended pointer, and is consumed directly by a `DBF` loop, proving
+the `CountMinus1` representation as well as the relationship between each
+list and its counter.
+
+All ten fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,319 to 15,329 mappings and the audit registry from
+12,449 to 12,459. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 732 to 722, all still confined to RAM equates.
+
+The sprite-piece and scroll-profile RAM pass replaces seven raw equates. Player
+composite rendering expands two frame streams into its private piece buffer.
+The shared horizontal profile is filled by multiple stage producers and copied
+into alternating scroll-output words, while Caterpillar, Viblack, and Epsilon 1
+build twenty-word vertical profiles in the adjacent scratch region. Stage 8
+overlays four independently stepped parallax values there, rotates their order
+from the frame counter, and repeats the group into the horizontal profile.
+
+All seven fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,329 to 15,336 mappings and the audit registry from
+12,459 to 12,466. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 722 to 715, all still confined to RAM equates.
+
+The encounter raster, timing, and trail RAM pass replaces five raw equates.
+The Game Over perspective projector and raster-layout copier establish the
+producer/consumer boundary of its interleaved row buffer. Epsilon 1 maintains
+a sustained-proximity timer and flag that alter attack and ring selection, plus
+a signed vertical acceleration consumed by its shared motion helper. Shield
+Viper separately owns an angle-history region used for delayed and interpolated
+linked-body poses. The nearby six-word Epsilon 1 row-offset area remains raw:
+it is cleared and read by the scroll-profile builder, but reconstructed source
+contains no nonzero producer.
+
+All five fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,336 to 15,341 mappings and the audit registry from
+12,466 to 12,471. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 715 to 710, all still confined to RAM equates.

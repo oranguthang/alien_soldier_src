@@ -12,9 +12,9 @@ Weapon_UpdateTargetingReticle_CheckProjectileSlot:      ; CODE XREF: Weapon_Upda
                 bne.s   Weapon_UpdateTargetingReticle_ResetDelay
                 lea     $60(a0),a0
                 dbf     d7,Weapon_UpdateTargetingReticle_CheckProjectileSlot
-                move.w  (word_FF8D7A).w,d7
+                move.w  (LockOnListCountMinus1).w,d7
                 bmi.s   Weapon_UpdateTargetingReticle_Return
-                movea.w #(byte_FF8E80-M68K_RAM),a1
+                movea.w #(LockOnTargetList-M68K_RAM),a1
 Weapon_UpdateTargetingReticle_CheckLockOnTarget:        ; CODE XREF: Weapon_UpdateTargetingReticle+32   j  ; was: loc_192BA
                 movea.w (a1)+,a0
                 btst    #7,$23(a0)

@@ -124,14 +124,14 @@ Boss_Epsilon1PaletteColorCycle: dc.w    $E, $C, $A, 8, 6, 4, 2, 0, 2, 4, 6, 8, $
 
 ; Builds the twenty-word horizontal-scroll profile and six rotating-row samples
 Boss_Epsilon1BuildScrollProfile:                        ; CODE XREF: Boss_Epsilon1Main+B0   p  ; was: sub_47906
-                lea     (dword_FF8A00).w,a1
+                lea     (VerticalScrollProfile).w,a1
                 move.w  #$13,d7
                 move.w  #$30,d0                         ; '0'
 Boss_Epsilon1InitializeScrollProfileLoop:               ; CODE XREF: Boss_Epsilon1BuildScrollProfile+E   j  ; was: loc_47912
                 move.w  d0,(a1)+
                 dbf     d7,Boss_Epsilon1InitializeScrollProfileLoop
                 move.w  (dword_FFA90C).w,d2
-                lea     (dword_FF8A00).w,a1
+                lea     (VerticalScrollProfile).w,a1
                 lea     (Math_SineTable).l,a2
                 lea     (dword_FF942C).w,a3
                 lea     (dword_FF9466).w,a4

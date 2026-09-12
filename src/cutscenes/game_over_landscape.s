@@ -232,7 +232,7 @@ GameOver_BuildPerspectiveBuffers:                       ; CODE XREF: GameOver_Up
                 addi.l  #GameOver_PerspectiveLookupTable,d0
                 movea.l d0,a0
                 movea.w #(word_FF9800-M68K_RAM),a1
-                movea.w #(byte_FF9000-M68K_RAM),a2
+                movea.w #(GameOverRasterBuffer-M68K_RAM),a2
                 move.w  d4,d1
                 asl.w   #3,d1
                 moveq   #0,d0

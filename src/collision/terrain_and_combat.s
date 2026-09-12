@@ -1,6 +1,6 @@
 Collision_PlayerWeaponVsEnemy:                          ; CODE XREF: Collision_UpdateSystem+2A   p  ; was: sub_14190
-                movea.w #(byte_FF8F80-M68K_RAM),a5
-                move.w  (word_FF8D7E).w,d7
+                movea.w #(PlayerWeaponList-M68K_RAM),a5
+                move.w  (WeaponListCountMinus1).w,d7
                 bmi.w   Collision_PlayerWeaponVsEnemy_Return
                 moveq   #4,d5
 Collision_PlayerWeaponVsEnemy_WeaponLoop:               ; CODE XREF: Collision_PlayerWeaponVsEnemy+5C   j  ; was: loc_1419E
@@ -13,8 +13,8 @@ Collision_PlayerWeaponVsEnemy_WeaponLoop:               ; CODE XREF: Collision_P
                 add.w   $14(a3),d2
                 moveq   #8,d3
                 add.w   $14(a3),d3
-                movea.w #(byte_FF8E00-M68K_RAM),a4
-                move.w  (word_FF8D78).w,d6
+                movea.w #(CollisionTargetList-M68K_RAM),a4
+                move.w  (TargetListCountMinus1).w,d6
                 bmi.w   Collision_PlayerWeaponVsEnemy_Return
 Collision_PlayerWeaponVsEnemy_TargetLoop:               ; CODE XREF: Collision_PlayerWeaponVsEnemy:Collision_PlayerWeaponVsEnemy_NextTarget   j  ; was: loc_141C4
                 movea.w (a4)+,a2
@@ -100,8 +100,8 @@ Collision_PlayerWeaponVsEnemy_FinishStandardDefeat:     ; CODE XREF: Collision_P
 ; Checks the player against objects registered as moving platforms
 Collision_CheckPlayerPlatforms:                         ; CODE XREF: Physics_LowerTerrainCheckWrapper+A   p  ; was: sub_142D8
                                         ; Physics_DescendingTerrainCheckWrapper+A   p
-                movea.w #(byte_FF8F00-M68K_RAM),a4
-                move.w  (word_FF8D7C).w,d7
+                movea.w #(MovingPlatformList-M68K_RAM),a4
+                move.w  (PlatformListCountMinus1).w,d7
                 bmi.s   Collision_CheckPlayerPlatforms_Return
 ; Processes one entry in the moving-platform collision list
 Collision_PlayerPlatformLoop:                           ; CODE XREF: Collision_CheckPlayerPlatforms+E   j  ; was: loc_142E2

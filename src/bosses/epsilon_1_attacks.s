@@ -82,7 +82,7 @@ Boss_Epsilon1SelectAttackState:                         ; DATA XREF: ROM:00045D0
                 clr.l   (dword_FFC698).w
                 tst.w   (word_FFC7A4).w
                 bne.s   Boss_Epsilon1SelectAttackReturn
-                tst.w   (word_FF9474).w
+                tst.w   (Epsilon1ProximityFlag).w
                 bne.s   Boss_Epsilon1SelectVerticalSweepAttack
                 move.w  (RandomNumberState).w,d0
                 andi.w  #1,d0
@@ -433,7 +433,7 @@ Boss_Epsilon1StartAlignedVerticalSweepState:            ; DATA XREF: ROM:00045D3
                 bne.s   Boss_Epsilon1StartAlignedVerticalSweepReturn
                 addq.w  #2,4(a5)
                 move.l  #$20000,(dword_FFC69C).w
-                move.l  #$4000,(dword_FF9478).w
+                move.l  #$4000,(Epsilon1VerticalAccel).w
                 move.w  #$120,(dword_FFC690).w
                 move.b  (RandomNumberState).w,d0
                 andi.w  #3,d0
@@ -476,7 +476,7 @@ Boss_Epsilon1ApplyVerticalAcceleration:                 ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1RiseAfterRingReleaseState+A   p
                                         ; Boss_Epsilon1WaitForReleasedRingObjectsState   p
                                         ; Boss_Epsilon1RecoverBattleCenterState+6   p
-                move.l  (dword_FF9478).w,d0
+                move.l  (Epsilon1VerticalAccel).w,d0
                 add.l   d0,(dword_FFC69C).w
                 rts
 ; End of function Boss_Epsilon1ApplyVerticalAcceleration
@@ -486,7 +486,7 @@ Boss_Epsilon1DescendAndReleaseRingState:                ; DATA XREF: ROM:00045D3
                 cmpi.w  #$90,(dword_FFC694).w
                 bcs.s   Boss_Epsilon1DescendAndReleaseRingReturn
                 bclr    #4,$23(a5)
-                move.l  #$FFFFC000,(dword_FF9478).w
+                move.l  #$FFFFC000,(Epsilon1VerticalAccel).w
                 move.w  #6,(dword_FF9410).w
                 move.w  $10(a5),d0
                 addq.w  #8,d0
@@ -525,7 +525,7 @@ Boss_Epsilon1CheckRingReleaseTurnAngle:                 ; CODE XREF: Boss_Epsilo
                 bcs.s   Boss_Epsilon1RiseAfterRingReleaseReturn
                 move.w  #6,(dword_FF9414+2).w
                 clr.w   (dword_FF9410).w
-                move.l  #$800,(dword_FF9478).w
+                move.l  #$800,(Epsilon1VerticalAccel).w
                 addq.w  #2,4(a5)
 Boss_Epsilon1RiseAfterRingReleaseReturn:                ; CODE XREF: Boss_Epsilon1RiseAfterRingReleaseState+14   j  ; was: locret_4673C
                 rts
@@ -558,7 +558,7 @@ Boss_Epsilon1PrepareSweepRecoveryState:                 ; DATA XREF: ROM:00045D3
                 move.w  #1,(dword_FF9414+2).w
                 move.w  #$10,(dword_FF9410).w
                 move.w  #0,$58(a5)
-                move.l  #$3000,(dword_FF9478).w
+                move.l  #$3000,(Epsilon1VerticalAccel).w
                 move.w  #$20,$48(a5)                    ; ' '
                 addq.w  #2,4(a5)
 Boss_Epsilon1PrepareSweepRecoveryReturn:                ; CODE XREF: Boss_Epsilon1PrepareSweepRecoveryState+4   j  ; was: locret_4679A
@@ -579,8 +579,8 @@ Boss_Epsilon1MoveToRecoveryHeight:                      ; CODE XREF: Boss_Epsilo
                 bgt.s   Boss_Epsilon1RecoverBattleCenterReturn
                 move.w  #4,(dword_FF9414+2).w
                 move.w  #4,(dword_FF9410).w
-                clr.w   (word_FF9474).w
-                clr.w   (word_FF9472).w
+                clr.w   (Epsilon1ProximityFlag).w
+                clr.w   (Epsilon1ProximityTimer).w
                 move.w  #$12,4(a5)
 Boss_Epsilon1RecoverBattleCenterReturn:                 ; CODE XREF: Boss_Epsilon1RecoverBattleCenterState+1E   j  ; was: locret_467D6
                 rts

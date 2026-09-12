@@ -94,7 +94,7 @@ Boss_ShieldViperEnableTrailGeometry:                    ; CODE XREF: Boss_Shield
                 bclr    #0,(dword_FF9414+1).w
                 move.w  #$18,d7
                 lea     (a5),a0
-                lea     (word_FF94A0).w,a1
+                lea     (ShieldViperTrailAngles).w,a1
                 lea     (dword_FF9700).w,a2
 Boss_ShieldViperSeedNextTrailInterval:                  ; CODE XREF: Boss_ShieldViperEnableTrailGeometry+5A   j  ; was: loc_4F2E0
                 move.w  $56(a0),d0
@@ -201,7 +201,7 @@ Boss_ShieldViperCenterTargetRotationReturn:             ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperChooseRotationTowardArenaCenterEveryEightFrames
 ; Write four wrapped-angle samples between each of sixteen adjacent body records
 Boss_ShieldViperInterpolateTrailAnglesBetweenBodyRecords:  ; was: sub_4F3EA
-                lea     (word_FF94A0).w,a1
+                lea     (ShieldViperTrailAngles).w,a1
                 move.w  #$F,d7
                 lea     $60(a5),a0
 Boss_ShieldViperInterpolateNextBodyAnglePair:           ; CODE XREF: Boss_ShieldViperInterpolateTrailAnglesBetweenBodyRecords+42   j  ; was: loc_4F3F6

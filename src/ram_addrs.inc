@@ -308,24 +308,24 @@ DebugColorChannelOffset equ     $FFFF8668               ; was: word_FF8668
 DebugMenuPreviousInput  equ     $FFFF866A               ; was: byte_FF866A
 DebugHealthSelection    equ     $FFFF866B               ; was: byte_FF866B
 DebugMenuRepeatTimer    equ     $FFFF866C               ; was: word_FF866C
-byte_FF8780             equ     $FFFF8780
-byte_FF8800             equ     $FFFF8800
-dword_FF8A00            equ     $FFFF8A00
-word_FF8A04             equ     $FFFF8A04
-word_FF8A08             equ     $FFFF8A08
-word_FF8A0C             equ     $FFFF8A0C
-word_FF8A10             equ     $FFFF8A10
-word_FF8D76             equ     $FFFF8D76
-word_FF8D78             equ     $FFFF8D78
-word_FF8D7A             equ     $FFFF8D7A
-word_FF8D7C             equ     $FFFF8D7C
-word_FF8D7E             equ     $FFFF8D7E
-byte_FF8D80             equ     $FFFF8D80
-byte_FF8E00             equ     $FFFF8E00
-byte_FF8E80             equ     $FFFF8E80
-byte_FF8F00             equ     $FFFF8F00
-byte_FF8F80             equ     $FFFF8F80
-byte_FF9000             equ     $FFFF9000
+PlayerSpritePieceBuffer equ     $FFFF8780               ; was: byte_FF8780
+HorizontalScrollProfile equ     $FFFF8800               ; was: byte_FF8800
+VerticalScrollProfile   equ     $FFFF8A00               ; was: dword_FF8A00
+MidgameParallaxValue0   equ     $FFFF8A04               ; was: word_FF8A04
+MidgameParallaxValue1   equ     $FFFF8A08               ; was: word_FF8A08
+MidgameParallaxValue2   equ     $FFFF8A0C               ; was: word_FF8A0C
+MidgameParallaxValue3   equ     $FFFF8A10               ; was: word_FF8A10
+PrimaryListCountMinus1  equ     $FFFF8D76               ; was: word_FF8D76
+TargetListCountMinus1   equ     $FFFF8D78               ; was: word_FF8D78
+LockOnListCountMinus1   equ     $FFFF8D7A               ; was: word_FF8D7A
+PlatformListCountMinus1 equ     $FFFF8D7C               ; was: word_FF8D7C
+WeaponListCountMinus1   equ     $FFFF8D7E               ; was: word_FF8D7E
+PrimaryCollisionList    equ     $FFFF8D80               ; was: byte_FF8D80
+CollisionTargetList     equ     $FFFF8E00               ; was: byte_FF8E00
+LockOnTargetList        equ     $FFFF8E80               ; was: byte_FF8E80
+MovingPlatformList      equ     $FFFF8F00               ; was: byte_FF8F00
+PlayerWeaponList        equ     $FFFF8F80               ; was: byte_FF8F80
+GameOverRasterBuffer    equ     $FFFF9000               ; was: byte_FF9000
 dword_FF9400            equ     $FFFF9400
 dword_FF9404            equ     $FFFF9404
 dword_FF9408            equ     $FFFF9408
@@ -355,11 +355,11 @@ word_FF9460             equ     $FFFF9460
 dword_FF9466            equ     $FFFF9466
 dword_FF946A            equ     $FFFF946A
 dword_FF946E            equ     $FFFF946E
-word_FF9472             equ     $FFFF9472
-word_FF9474             equ     $FFFF9474
-dword_FF9478            equ     $FFFF9478
+Epsilon1ProximityTimer  equ     $FFFF9472               ; was: word_FF9472
+Epsilon1ProximityFlag   equ     $FFFF9474               ; was: word_FF9474
+Epsilon1VerticalAccel   equ     $FFFF9478               ; was: dword_FF9478
 word_FF9480             equ     $FFFF9480
-word_FF94A0             equ     $FFFF94A0
+ShieldViperTrailAngles  equ     $FFFF94A0               ; was: word_FF94A0
 word_FF9500             equ     $FFFF9500
 word_FF9502             equ     $FFFF9502
 byte_FF9506             equ     $FFFF9506

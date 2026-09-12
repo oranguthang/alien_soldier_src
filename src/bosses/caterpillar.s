@@ -58,7 +58,7 @@ Boss_CaterpillarWriteTrailingPhaseRamp:                 ; CODE XREF: Boss_Caterp
                 asr.w   #3,d0
                 addi.w  #-$6800,d0
                 movea.w d0,a0
-                movea.w #(dword_FF8A00-M68K_RAM),a1
+                movea.w #(VerticalScrollProfile-M68K_RAM),a1
                 lea     (Math_SineTable).l,a2
                 move.w  #$1FE,d2
                 move.w  #$10,d3
