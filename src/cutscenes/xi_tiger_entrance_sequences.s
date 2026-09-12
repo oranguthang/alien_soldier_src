@@ -109,7 +109,7 @@ Cutscene_XiTigerTrainEntranceFinish:                    ; DATA XREF: ROM:0002EF4
                 subq.w  #1,$48(a5)
                 bne.s   Cutscene_XiTigerTrainEntranceFinish_Return
                 move.w  #$1000,2(a5)
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 lea     (SharedStagePaletteCommand).l,a0
                 jmp     Gfx_LoadPaletteCommand
 ; ---------------------------------------------------------------------------

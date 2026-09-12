@@ -36,8 +36,8 @@ Boss_ZLeoSpawnOrb:                                      ; CODE XREF: Boss_ZLeoWa
                 move.w  (FrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Boss_ZLeoSpawnOrbReturn
-                move.w  #4,(word_FFA010).w
-                move.w  #1,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #1,(PlaneBShakeLevel).w
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_ZLeoSpawnOrbReturn
                 move.w  #$C000,$59E(a5)
@@ -206,7 +206,7 @@ Projectile_ZLeoLaserResolveOrbitState:                  ; CODE XREF: Projectile_
                 bclr    #4,$22(a5)
                 bne.w   Projectile_ZLeoLaserLaunchHorizontal
 Projectile_ZLeoLaserConvertToParticle:                  ; CODE XREF: Projectile_ZLeoLaserMain+1C   j  ; was: loc_531B2
-                move.w  #3,(word_FFA010).w
+                move.w  #3,(PlaneAShakeLevel).w
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------
@@ -267,7 +267,7 @@ Projectile_ZLeoHorizontalLaserMain:                     ; CODE XREF: Projectile_
                 beq.s   Projectile_ZLeoHorizontalLaserTrySpawnTrail
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #3,(word_FFA010).w
+                move.w  #3,(PlaneAShakeLevel).w
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.l  #SharedCombatSpriteAnimation32,8(a5)

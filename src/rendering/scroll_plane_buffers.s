@@ -19,13 +19,13 @@ Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_Prep
                 adda.w  (ScrollPlaneBufferOffset).w,a1
                 move.w  (dword_FFA900).w,d0
                 neg.w   d0
-                move.w  (word_FFA012).w,d1
+                move.w  (PlaneAShakeOffset).w,d1
                 bsr.w   Scroll_WriteHorizontalPlaneBuffer
                 movea.w #(VScrollBuffer-M68K_RAM),a0
                 adda.w  (ScrollPlaneBufferOffset).w,a0
                 move.w  (dword_FFA904).w,d0
                 neg.w   d0
-                add.w   (word_FFA012).w,d0
+                add.w   (PlaneAShakeOffset).w,d0
                 bsr.w   Scroll_WriteVerticalPlaneBuffer
                 move.b  (byte_FFA95B).w,d5
                 movea.w #(word_FFE402-M68K_RAM),a0
@@ -34,13 +34,13 @@ Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_Prep
                 suba.w  (ScrollPlaneBufferOffset).w,a1
                 move.w  (dword_FFA908).w,d0
                 neg.w   d0
-                move.w  (word_FFA016).w,d1
+                move.w  (PlaneBShakeOffset).w,d1
                 bsr.w   Scroll_WriteHorizontalPlaneBuffer
                 movea.w #(word_FFEC02-M68K_RAM),a0
                 suba.w  (ScrollPlaneBufferOffset).w,a0
                 move.w  (dword_FFA90C).w,d0
                 neg.w   d0
-                add.w   (word_FFA016).w,d0
+                add.w   (PlaneBShakeOffset).w,d0
                 bra.w   Scroll_WriteVerticalPlaneBuffer
 ; End of function Scroll_PreparePlaneBuffersAndRegisterShadows
 ; Populate one plane's horizontal-scroll entries according to its mode flags

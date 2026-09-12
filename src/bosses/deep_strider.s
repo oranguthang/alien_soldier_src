@@ -516,8 +516,8 @@ Boss_DeepStriderDefeatFallState:                        ; CODE XREF: Boss_DeepSt
                 cmpi.w  #$150,$4F4(a5)
                 bmi.w   Boss_DeepStriderUpdateParts
                 addq.w  #2,4(a5)
-                move.w  #4,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 move.l  #$FFFEE000,$4FC(a5)
                 move.b  #$4D,d0                         ; 'M'
                 jsr     (Sound_PlaySFX).l
@@ -544,8 +544,8 @@ Boss_DeepStriderDefeatBurstState:                       ; DATA XREF: ROM:0003E5E
                 bpl.w   Boss_DeepStriderMotionStateReturn
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
-                move.w  #8,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #8,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 movea.w a5,a0
                 move.l  #$FFF80000,d4
                 move.w  $10(a5),d5
@@ -571,8 +571,8 @@ Boss_DeepStriderDefeatCompletionDelayReturn:            ; CODE XREF: Boss_DeepSt
 ; End of function Boss_DeepStriderDefeatCompletionDelayState
 ; Spawns randomized debris during the final defeat fall
 Boss_DeepStriderSpawnDefeatDebris:                      ; CODE XREF: Boss_DeepStriderBeginDefeat+6A   p  ; was: sub_3ED26
-                move.w  #2,(word_FFA010).w
-                move.w  #1,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #1,(PlaneBShakeLevel).w
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_DeepStriderSpawnDefeatDebrisReturn
                 jsr     (Projectile_FindFreeOrRecycleSlot).l

@@ -113,8 +113,8 @@ Boss_JampanRotateShieldPatternForwardState:             ; DATA XREF: ROM:0004920
                 bne.w   Boss_JampanRotateShieldPatternForwardReturn
                 move.w  #$14,$48(a5)
                 addq.w  #2,4(a5)
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$A1,d0
                 jsr     (Sound_PlaySFX).l
 Boss_JampanRotateShieldPatternForwardReturn:            ; CODE XREF: Boss_JampanRotateShieldPatternForwardState+14   j

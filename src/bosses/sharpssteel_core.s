@@ -657,8 +657,8 @@ Boss_SharpssteelBeginBladeAssemblySweep:                ; CODE XREF: Boss_Sharps
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 clr.w   $11E(a5)
-                move.w  #8,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #8,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$2F,d0                         ; '/'
                 jsr     (Sound_PlaySFX).l
                 move.l  #$20000,(dword_FFDB3C).w

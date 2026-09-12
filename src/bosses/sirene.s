@@ -77,7 +77,7 @@ Boss_InitSireneAtFixedPosition:                         ; was: sub_57568
                 move.w  #$FFFF,$C(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 move.w  #$FFF0,$3BC(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
@@ -207,7 +207,7 @@ Boss_UpdateSireneState10:                               ; DATA XREF: ROM:0005750
                 jsr     (Gfx_LoadPaletteCommand).l
                 move.b  #$F9,d0
                 jsr     (Sound_PlaySFX).l
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 subi.w  #$20,(word_FFA970).w            ; ' '
                 addi.w  #$20,(word_FFA974).w            ; ' '
                 clr.b   (byte_FF80EC).w

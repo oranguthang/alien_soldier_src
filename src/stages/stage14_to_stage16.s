@@ -109,7 +109,7 @@ Stage16_CreateViblackEncounter:                         ; DATA XREF: ROM:0000D9B
                 clr.l   (dword_FF8062+2).w
                 clr.w   (dword_FF806A).w
                 move.b  #$80,(byte_FFA959).w
-                move.w  #$2E,(word_FFA02A).w            ; '.'
+                move.w  #$2E,(PlayerScriptStateOffset).w  ; '.'
 ; End of function Stage16_BeginViblackEncounter
 ; Attributes: thunk
 ; Keep the Stage 16 encounter camera on the fixed horizontal anchor

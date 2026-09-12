@@ -4,8 +4,8 @@ Boss_TerobusterDefeatBounceState:                       ; DATA XREF: ROM:0003858
                 bmi.s   Boss_TerobusterUpdateDefeatScreenPosition
                 cmpi.w  #$142,$14(a5)
                 bmi.s   Boss_TerobusterUpdateDefeatScreenPosition
-                move.w  #6,(word_FFA010).w
-                move.w  #6,(word_FFA014).w
+                move.w  #6,(PlaneAShakeLevel).w
+                move.w  #6,(PlaneBShakeLevel).w
                 addq.w  #1,$48(a5)
                 beq.s   Boss_TerobusterBeginDefeatBounce
                 addq.w  #2,4(a5)
@@ -47,8 +47,8 @@ Boss_TerobusterUpdateDefeatDebris:                      ; CODE XREF: Boss_Terobu
                 move.w  #$FFD0,(dword_FFA90C).w
 Boss_TerobusterTrySpawnDefeatDebris:                    ; CODE XREF: Boss_TerobusterDefeatDebrisState+18   j  ; was: loc_38BE8
                                         ; Boss_TerobusterDefeatDebrisState+20   j
-                move.w  #2,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_TerobusterDefeatDebrisReturn
                 movea.l #Projectile_SpawnSpriteFrames,a1
@@ -151,8 +151,8 @@ Boss_TerobusterInitializeLandingPose:                   ; CODE XREF: Boss_Terobu
                 move.w  #$14C,$1F4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                move.w  #5,(word_FFA010).w
-                move.w  #5,(word_FFA014).w
+                move.w  #5,(PlaneAShakeLevel).w
+                move.w  #5,(PlaneBShakeLevel).w
                 move.b  #$DA,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Boss_TerobusterInitializeLandingPose

@@ -5891,3 +5891,18 @@ Provenance rises from 15,336 to 15,341 mappings and the audit registry from
 12,466 to 12,471. The semantic review upper bound remains 3,170 because every
 new provenance mapping has a matching audit record. The enforced address-
 derived ceiling falls from 715 to 710, all still confined to RAM equates.
+
+The plane-shake and player-script pass replaces seven raw RAM equates and
+corrects seven misleading Sonnet-era control-flow names. The two shake pairs
+are Plane A and Plane B state, not horizontal and vertical axis state: both
+offsets feed horizontal and vertical scroll builders for their respective
+planes. Plane A also supplies the Y compensation applied to world sprites.
+The Plane B snapshot at `$FFFF8088` has no reconstructed reader and is named as
+write-only rather than assigned an invented consumer. The final word is the
+even handler-table offset for the player's scripted-input sequence.
+
+All seven RAM fields and seven corrected code labels receive exact-address
+audit records. Provenance rises from 15,341 to 15,348 mappings and the audit
+registry from 12,471 to 12,485. Auditing the seven existing code labels reduces
+the semantic review upper bound from 3,170 to 3,163. The enforced address-
+derived ceiling falls from 710 to 703, all still confined to RAM equates.

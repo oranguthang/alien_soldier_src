@@ -12,7 +12,7 @@ Player_UpdateScriptedInput_Return:                      ; CODE XREF: Player_Upda
                 rts
 ; End of function Player_UpdateScriptedInput
 
-; Dispatches the even byte offset in word_FFA02A through the shared player
+; Dispatches the even byte offset in PlayerScriptStateOffset through the shared player
 ; script table after rebuilding the player's world-space X coordinate
 Player_DispatchScriptedInputState:                      ; CODE XREF: Player_UpdateScriptedInput   p  ; was: sub_19A10
                 clr.b   $69(a5)
@@ -20,7 +20,7 @@ Player_DispatchScriptedInputState:                      ; CODE XREF: Player_Upda
                 move.w  (dword_FFA900).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,(ScriptedPlayerWorldX).w
-                move.w  (word_FFA02A).w,d0
+                move.w  (PlayerScriptStateOffset).w,d0
                 movea.w PlayerScript_StateHandlerOffsets(pc,d0.w),a0
                 adda.l  #PlayerScript_InitializePostShiperRunState02,a0
                 jmp     (a0)
@@ -61,7 +61,7 @@ PlayerScript_InitializePostShiperRunState02:            ; DATA XREF: Player_Disp
                                         ; ROM:PlayerScript_StateHandlerOffsets   o
                 move.w  #$1BF8,(ScriptedInputTargetX).w
                 move.w  #$16,(ScriptedInputDelay).w
-                move.w  #6,(word_FFA02A).w
+                move.w  #6,(PlayerScriptStateOffset).w
                 clr.b   (byte_FFF705).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
@@ -71,7 +71,7 @@ PlayerScript_InitializePostShiperRunState02:            ; DATA XREF: Player_Disp
 PlayerScript_InitializePostTerobusterRunState04:        ; DATA XREF: ROM:00019A38   o  ; was: sub_19A90
                 move.w  #$12C0,(ScriptedInputTargetX).w
                 move.w  #$16,(ScriptedInputDelay).w
-                move.w  #6,(word_FFA02A).w
+                move.w  #6,(PlayerScriptStateOffset).w
                 clr.b   (byte_FFF705).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
@@ -81,7 +81,7 @@ PlayerScript_InitializePostTerobusterRunState04:        ; DATA XREF: ROM:00019A3
 PlayerScript_InitializePostJampanRunState32:            ; DATA XREF: ROM:00019A66   o  ; was: sub_19AB4
                 move.w  #$1640,(ScriptedInputTargetX).w
                 move.w  #$16,(ScriptedInputDelay).w
-                move.w  #6,(word_FFA02A).w
+                move.w  #6,(PlayerScriptStateOffset).w
                 clr.b   (byte_FFF705).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
@@ -92,7 +92,7 @@ PlayerScript_InitializePostJampanRunState32:            ; DATA XREF: ROM:00019A6
 ; Initialize the post-Bugmax scripted run toward world X $0690
 PlayerScript_InitializePostBugmaxRunState22:            ; DATA XREF: ROM:00019A56   o  ; was: sub_19AE4
                 move.w  #$690,(ScriptedInputTargetX).w
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
                 clr.b   (byte_FFF705).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
@@ -113,7 +113,7 @@ PlayerScript_WaitForStatusClearState06:                 ; DATA XREF: ROM:00019A3
                 bne.s   PlayerScript_EmitCPress
                 tst.b   (byte_FF8244).w
                 bne.s   PlayerScript_NoOpAndSharedReturn
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
                 move.w  #$20,(ScriptedInputStepTimer).w  ; ' '
                 bset    #3,$E(a5)
 ; Return from cutscene wait start
@@ -126,7 +126,7 @@ PlayerScript_WaitForRunDelayState08:                    ; DATA XREF: ROM:00019A3
                                         ; ROM:00019A5A   o
                 subq.w  #1,(ScriptedInputStepTimer).w
                 bpl.s   PlayerScript_WaitForRunDelayState08_Return
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
 PlayerScript_WaitForRunDelayState08_Return:             ; CODE XREF: PlayerScript_WaitForRunDelayState08+4   j  ; was: locret_19B3E
                 rts
 ; End of function PlayerScript_WaitForRunDelayState08
@@ -134,7 +134,7 @@ PlayerScript_WaitForRunDelayState08_Return:             ; CODE XREF: PlayerScrip
 PlayerScript_MoveRightPastTargetState0A:                ; DATA XREF: ROM:00019A3E   o  ; was: sub_19B40
                 btst    #1,(byte_FFA407).w
                 beq.s   PlayerScript_MoveRightPastTargetState0A_MoveRight
-                move.w  #$10,(word_FFA02A).w
+                move.w  #$10,(PlayerScriptStateOffset).w
                 move.b  #$20,$6A(a5)                    ; ' '
                 rts
 ; ---------------------------------------------------------------------------
@@ -145,7 +145,7 @@ PlayerScript_MoveRightPastTargetState0A_MoveRight:      ; CODE XREF: PlayerScrip
                 move.w  (ScriptedInputTargetX).w,d0
                 cmp.w   (ScriptedPlayerWorldX).w,d0
                 bpl.s   PlayerScript_MoveRightPastTargetState0A_Return
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
                 move.b  #$20,$6A(a5)                    ; ' '
                 move.w  (ScriptedInputDelay).w,(ScriptedInputStepTimer).w
 PlayerScript_MoveRightPastTargetState0A_Return:         ; CODE XREF: PlayerScript_MoveRightPastTargetState0A+22   j  ; was: locret_19B7E
@@ -157,7 +157,7 @@ PlayerScript_HoldRightCThenAdvanceState0C:              ; DATA XREF: ROM:00019A4
                 move.b  #$28,$69(a5)                    ; '('
                 subq.w  #1,(ScriptedInputStepTimer).w
                 bpl.s   PlayerScript_HoldRightCThenAdvanceState0C_Return
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
                 move.b  #$2A,$69(a5)                    ; '*'
                 move.b  #$20,$6A(a5)                    ; ' '
                 bset    #1,(byte_FF8245).w
@@ -187,7 +187,7 @@ PlayerScript_WaitForStatusThenResumeRunState10:         ; DATA XREF: ROM:00019A4
 PlayerScript_WaitForStatusThenResumeRunState10_CheckStatusClear:  ; CODE XREF: PlayerScript_WaitForStatusThenResumeRunState10+C   j  ; was: loc_19BE8
                 tst.b   (byte_FF8244).w
                 bne.s   PlayerScript_WaitForStatusThenResumeRunState10_Return
-                move.w  #$A,(word_FFA02A).w
+                move.w  #$A,(PlayerScriptStateOffset).w
 PlayerScript_WaitForStatusThenResumeRunState10_Return:  ; CODE XREF: PlayerScript_WaitForStatusThenResumeRunState10+18   j  ; was: locret_19BF4
                 rts
 ; End of function PlayerScript_WaitForStatusThenResumeRunState10
@@ -195,7 +195,7 @@ PlayerScript_WaitForStatusThenResumeRunState10_Return:  ; CODE XREF: PlayerScrip
 PlayerScript_MoveRightPastPostBugmaxTargetState28:      ; DATA XREF: ROM:00019A5C   o  ; was: sub_19BF6
                 btst    #1,(byte_FFA407).w
                 beq.s   PlayerScript_MoveRightPastPostBugmaxTargetState28_MoveRight
-                move.w  #$2C,(word_FFA02A).w            ; ','
+                move.w  #$2C,(PlayerScriptStateOffset).w  ; ','
                 move.b  #$20,$6A(a5)                    ; ' '
                 rts
 ; ---------------------------------------------------------------------------
@@ -206,7 +206,7 @@ PlayerScript_MoveRightPastPostBugmaxTargetState28_MoveRight:  ; CODE XREF: Playe
                 move.w  (ScriptedInputTargetX).w,d0
                 cmp.w   (ScriptedPlayerWorldX).w,d0
                 bpl.s   PlayerScript_MoveRightPastPostBugmaxTargetState28_Return
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
                 move.b  #$22,$6A(a5)                    ; '"'
 PlayerScript_MoveRightPastPostBugmaxTargetState28_Return:  ; CODE XREF: PlayerScript_MoveRightPastPostBugmaxTargetState28+22   j  ; was: locret_19C2E
                                         ; PlayerScript_MoveRightPastPostBugmaxTargetState28+2C   j
@@ -227,13 +227,13 @@ PlayerScript_WaitForPostBugmaxStatusState2C:            ; DATA XREF: ROM:00019A6
                 move.b  #$28,$69(a5)                    ; '('
                 btst    #0,(byte_FF8244).w
                 bne.s   PlayerScript_WaitForPostBugmaxStatusState2C_Return
-                move.w  #$28,(word_FFA02A).w            ; '('
+                move.w  #$28,(PlayerScriptStateOffset).w  ; '('
 PlayerScript_WaitForPostBugmaxStatusState2C_Return:     ; CODE XREF: PlayerScript_WaitForPostBugmaxStatusState2C+C   j  ; was: locret_19C5C
                 rts
 ; End of function PlayerScript_WaitForPostBugmaxStatusState2C
 ; Start the scripted Flying Neo approach and enable its player-control flags
 PlayerScript_BeginFlyingNeoApproachState16:             ; DATA XREF: ROM:00019A4A   o  ; was: sub_19C5E
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
                 bset    #4,(byte_FF8245).w
@@ -255,7 +255,7 @@ PlayerScript_MoveToFlyingNeoTargetState18:              ; CODE XREF: PlayerScrip
 ; End of function PlayerScript_BeginFlyingNeoApproachState16
 ; Initialize the Flying Neo player-entry motion and advance to state $1C
 PlayerScript_InitializeFlyingNeoEntryState1A:           ; DATA XREF: ROM:00019A4E   o  ; was: sub_19CA6
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$200,(ScriptedInputTimeout).w
                 bset    #0,(byte_FF8245).w
@@ -280,14 +280,14 @@ PlayerScript_UpdateFlyingNeoEntryState1C_WaitForVerticalMotionEnd:  ; CODE XREF:
                 tst.l   $1C(a5)
                 bmi.w   PlayerScript_NoOpAndSharedReturn
                 bset    #0,2(a5)
-                addq.w  #2,(word_FFA02A).w
+                addq.w  #2,(PlayerScriptStateOffset).w
                 clr.b   (byte_FF8245).w
 ; Finish the Flying Neo player entry once the shared status byte clears
 PlayerScript_FinishFlyingNeoEntryState1E:               ; DATA XREF: ROM:00019A52   o  ; was: loc_19D20
                 subi.l  #$28000,$10(a5)
                 tst.b   (byte_FF8244).w
                 bne.w   PlayerScript_NoOpAndSharedReturn
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 clr.w   (ScriptedInputActive).w
                 move.l  #$FFFEE000,(dword_FF8240).w
                 rts
@@ -296,7 +296,7 @@ PlayerScript_FinishFlyingNeoEntryState1E:               ; DATA XREF: ROM:00019A5
 PlayerScript_WaitForXiTigerIntroState20:                ; DATA XREF: ROM:00019A54   o  ; was: sub_19D42
                 subq.w  #1,(ScriptedInputStepTimer).w
                 bpl.s   PlayerScript_WaitForXiTigerIntroState20_Return
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
 PlayerScript_WaitForXiTigerIntroState20_Return:         ; CODE XREF: PlayerScript_WaitForXiTigerIntroState20+4   j  ; was: locret_19D4C
                 rts
 ; End of function PlayerScript_WaitForXiTigerIntroState20

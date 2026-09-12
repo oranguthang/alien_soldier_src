@@ -39,11 +39,11 @@ Boss_JetsripperMainHandler:                             ; DATA XREF: ROM:Entity_
                 bset    #0,2(a0)
                 move.w  $52(a5),d0
                 beq.s   Boss_JetsripperMainReturn
-                cmp.w   (word_FFA010).w,d0
+                cmp.w   (PlaneAShakeLevel).w,d0
                 bmi.s   Boss_JetsripperMainReturn
-                move.w  d0,(word_FFA010).w
+                move.w  d0,(PlaneAShakeLevel).w
                 asr.w   #1,d0
-                move.w  d0,(word_FFA014).w
+                move.w  d0,(PlaneBShakeLevel).w
 Boss_JetsripperMainReturn:                              ; CODE XREF: Boss_JetsripperMainHandler+8   j  ; was: locret_35680
                                         ; Boss_JetsripperMainHandler+18   j
                 rts

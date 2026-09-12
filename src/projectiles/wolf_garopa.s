@@ -11,7 +11,7 @@ Boss_WolfGaropaUpdateMetaspriteAndOrb:                  ; CODE XREF: Boss_WolfGa
                 move.w  $3BC(a5),d1
                 addi.w  #$10,d1
                 move.w  d0,(dword_FFA908).w
-                add.w   (word_FFA016).w,d0
+                add.w   (PlaneBShakeOffset).w,d0
                 move.w  d1,(dword_FFA90C).w
                 move.w  (dword_FFA908).w,d0
                 bmi.s   Boss_WolfGaropaCheckOrbScrollOffsetMinimum
@@ -581,8 +581,8 @@ Boss_WolfGaropaOrbAngleReached:                         ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaApproachOrbAngle
 ; Allocate the two records forming the orb-emitted projectile pair
 Boss_WolfGaropaSpawnOrbProjectilePair:                  ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+132   j  ; was: sub_50A14
-                move.w  #1,(word_FFA010).w
-                move.w  #1,(word_FFA014).w
+                move.w  #1,(PlaneAShakeLevel).w
+                move.w  #1,(PlaneBShakeLevel).w
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Boss_WolfGaropaOrbProjectilePairReturn
                 movea.l #Weapon_SpreadShotInitialSpriteFrame,a1

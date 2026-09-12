@@ -269,7 +269,7 @@ Stage12_YachtUpdatePlaneOffsets:                        ; CODE XREF: Stage12_Yac
                 move.w  $14(a5),d0
                 addi.w  #-$30,d0
                 neg.w   d0
-                move.w  (word_FFA012).w,d1
+                move.w  (PlaneAShakeOffset).w,d1
                 add.w   d1,d0
                 move.w  d0,(VScrollBuffer).w
 Stage12_YachtControllerReturn:                          ; CODE XREF: Stage12_YachtRevealPan+20   j

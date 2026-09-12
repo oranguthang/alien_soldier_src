@@ -168,8 +168,8 @@ Boss_SunsetStingIntroUpdate:                            ; CODE XREF: Boss_Sunset
                 addq.w  #2,$14(a3)
                 cmpi.w  #$140,$14(a3)
                 bne.s   Boss_SunsetStingIntroCheckEntryComplete
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.w  #2,$1C(a5)
 Boss_SunsetStingIntroCheckEntryComplete:                ; CODE XREF: Boss_SunsetStingIntro+5E   j  ; was: loc_42C62
                                         ; Boss_SunsetStingIntro+6A   j
@@ -315,7 +315,7 @@ Boss_SunsetStingCoreRepositionTrackX:                   ; CODE XREF: Boss_Sunset
                 bcs.w   Boss_SunsetStingCoreRepositionUpdateController
                 move.w  #$95,$26(a3)
                 move.w  #$140,$14(a3)
-                move.w  #8,(word_FFA014).w
+                move.w  #8,(PlaneBShakeLevel).w
                 clr.l   $18(a3)
                 clr.l   $1C(a3)
                 clr.l   $4A(a3)

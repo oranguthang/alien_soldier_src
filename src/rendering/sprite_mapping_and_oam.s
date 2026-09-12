@@ -54,7 +54,7 @@ Sprite_RenderSingleObjectEntry:                         ; CODE XREF: Sprite_Rend
                 add.w   $14(a5),d6
                 tst.b   3(a5)
                 bmi.s   Sprite_RenderSingleObjectEntry_CheckBounds
-                sub.w   (word_FF8086).w,d6
+                sub.w   (SpriteShakeYOffset).w,d6
 Sprite_RenderSingleObjectEntry_CheckBounds:             ; CODE XREF: Sprite_RenderSingleObjectEntry+14   j  ; was: loc_227E
                 cmpi.w  #$200,d6
                 bcc.s   Sprite_RenderSingleObjectEntry_NextObject
@@ -97,7 +97,7 @@ Sprite_RenderMapping:                                   ; CODE XREF: Sprite_Rend
                 move.w  $14(a5),d6
                 tst.b   3(a5)
                 bmi.s   Sprite_RenderMapping_CheckBounds
-                sub.w   (word_FF8086).w,d6
+                sub.w   (SpriteShakeYOffset).w,d6
 Sprite_RenderMapping_CheckBounds:                       ; CODE XREF: Sprite_RenderMapping+1A   j  ; was: loc_22E4
                 cmpi.w  #$200,d6
                 bcc.s   Sprite_RenderMappingClippedReturn
@@ -192,7 +192,7 @@ Sprite_RenderDynamicMapping:                            ; CODE XREF: Sprite_Rend
                 move.w  $14(a5),d6
                 tst.b   3(a5)
                 bmi.s   Sprite_RenderDynamicMapping_CheckBounds
-                sub.w   (word_FF8086).w,d6
+                sub.w   (SpriteShakeYOffset).w,d6
 Sprite_RenderDynamicMapping_CheckBounds:                ; CODE XREF: Sprite_RenderDynamicMapping+1A   j  ; was: loc_23A4
                 cmpi.w  #$200,d6
                 bcc.s   Sprite_RenderDynamicMappingClippedReturn
@@ -282,7 +282,7 @@ Sprite_RenderDynamicMappingWithEntryAttributes:         ; CODE XREF: Sprite_Rend
                 move.w  $14(a5),d6
                 tst.b   3(a5)
                 bmi.s   Sprite_RenderDynamicMappingWithEntryAttributes_CheckBounds
-                sub.w   (word_FF8086).w,d6
+                sub.w   (SpriteShakeYOffset).w,d6
 Sprite_RenderDynamicMappingWithEntryAttributes_CheckBounds:  ; CODE XREF: Sprite_RenderDynamicMappingWithEntryAttributes+1A   j  ; was: loc_2462
                 cmpi.w  #$200,d6
                 bcc.s   Sprite_RenderDynamicMappingWithEntryAttributesClippedReturn
@@ -463,7 +463,7 @@ Sprite_AppendWorldOAMEntries_Loop:                      ; CODE XREF: Sprite_Appe
                 movea.w -$41FA(a1),a2
                 move.b  d4,-5(a2)
                 move.w  (a0),d6
-                sub.w   (word_FF8086).w,d6
+                sub.w   (SpriteShakeYOffset).w,d6
                 cmpi.w  #$200,d6
                 bcs.s   Sprite_AppendWorldOAMEntries_WriteEntry
                 clr.w   d6

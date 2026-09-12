@@ -449,8 +449,8 @@ Projectile_BackStringerRopeSegment:                     ; DATA XREF: ROM:Entity_
                 muls.w  $5C(a5),d0
                 add.l   d0,$14(a5)
                 clr.w   $5C(a5)
-                move.w  #2,(word_FFA010).w
-                move.w  #3,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #3,(PlaneBShakeLevel).w
                 cmpi.w  #$170,$14(a5)
                 bmi.s   Projectile_BackStringerRopeSegmentUpdateSurface
                 move.w  #$1000,2(a5)

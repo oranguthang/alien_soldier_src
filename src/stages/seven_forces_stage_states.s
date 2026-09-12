@@ -3,7 +3,7 @@ Stage_SevenForcesInitializeStage20:                     ; DATA XREF: ROM:0000E4A
                 clr.b   (byte_FFA958).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 bset    #1,(PaletteFadeControlFlags).w
-                move.w  #$36,(word_FFA02A).w            ; '6'
+                move.w  #$36,(PlayerScriptStateOffset).w  ; '6'
                 bsr.w   Gfx_FillStage20PlaneBuffers
                 move.w  #$6A0,(dword_FFA900).w
                 move.w  (dword_FFA900).w,(word_FFA970).w
@@ -152,7 +152,7 @@ Stage_SevenForcesScrollArtemisForegroundReturn:         ; CODE XREF: Stage_Seven
 ; End of function Stage_SevenForcesScrollArtemisForeground
 ; Begin the Sirene transition with its countdown, sound, and camera shake
 Stage_SevenForcesBeginSireneTransition:                 ; DATA XREF: ROM:0000E4C2   o  ; was: sub_E95C
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 subq.w  #1,(dword_FFA960).w
                 bpl.s   Stage_SevenForcesUpdateSireneCamera
                 addq.w  #2,(word_FFA950).w
@@ -167,8 +167,8 @@ Stage_SevenForcesUpdateSireneShake:                     ; CODE XREF: Stage_Seven
                 move.w  (RandomNumberState).w,d0
                 andi.w  #3,d0
                 addq.w  #4,d0
-                move.w  d0,(word_FFA010).w
-                move.w  #1,(word_FFA014).w
+                move.w  d0,(PlaneAShakeLevel).w
+                move.w  #1,(PlaneBShakeLevel).w
 Stage_SevenForcesUpdateSireneCamera:                    ; CODE XREF: Stage_SevenForcesBeginSireneTransition+A   j ; was: loc_E99E
                                         ; Stage_SevenForcesWaitBeforeVictory+14   j
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
@@ -232,7 +232,7 @@ Stage_SevenForcesWaitBeforeVictory:                     ; DATA XREF: ROM:0000E4C
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA958).w
 Stage_SevenForcesWaitBeforeVictoryUpdateCamera:         ; CODE XREF: Stage_SevenForcesWaitBeforeVictory+4   j ; was: loc_EA32
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 bra.w   Stage_SevenForcesUpdateSireneCamera
 ; Initialize the tilemap and timer for the Seven Forces victory sequence
 Stage_SevenForcesInitializeVictoryTransition:           ; DATA XREF: ROM:0000E4CA   o  ; was: sub_EA3C

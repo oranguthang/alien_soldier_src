@@ -68,16 +68,16 @@ Boss_Stage3OrbitingFormationReleaseNextPart:            ; CODE XREF: Boss_Stage3
                 jsr     (Effect_SpawnEightWayExplosionParticles).l
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #4,(word_FFA010).w
-                move.w  (word_FFA010).w,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  (PlaneAShakeLevel).w,(PlaneBShakeLevel).w
                 rts
 ; End of function Boss_Stage3OrbitingFormationCheckDefeat
 ; Converts the hit flag into a four-frame palette flash
 Boss_Stage3OrbitingFormationHandleHitFlash:             ; CODE XREF: Boss_Stage3OrbitingFormationMain+20   p  ; was: sub_34028
                 bclr    #6,$22(a5)
                 beq.w   Boss_Stage3OrbitingFormationReturn
-                move.w  #4,(word_FFA010).w
-                move.w  (word_FFA010).w,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  (PlaneAShakeLevel).w,(PlaneBShakeLevel).w
                 rts
 ; End of function Boss_Stage3OrbitingFormationHandleHitFlash
 ; Advances formation angles and horizontal motion

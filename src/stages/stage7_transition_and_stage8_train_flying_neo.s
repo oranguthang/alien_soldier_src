@@ -52,14 +52,14 @@ Stage8_InitializeTrainSequence:                         ; DATA XREF: ROM:0000C89
                 lea     Stage8_TrainStridedControlBytes(pc),a1
                 bsr.s   Stage8_WriteStridedControlBytes
                 bsr.w   Stage8_InitializeFlyingNeoComposite
-                move.w  #$34,(word_FFA02A).w            ; '4'
+                move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 move.w  #$45C,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
 ; Update the Stage 8 train until camera X reaches $EC0
 Stage8_UpdateTrainSequence:                             ; DATA XREF: ROM:0000C89C   o  ; was: loc_CEA6
                 cmpi.w  #$EC0,(dword_FFA900).w
                 bmi.s   Stage8_UpdateTrainSequence_UpdateScroll
-                move.w  #$16,(word_FFA02A).w
+                move.w  #$16,(PlayerScriptStateOffset).w
                 bsr.w   Stage_TransitionToNextPhase
 Stage8_UpdateTrainSequence_UpdateScroll:                ; CODE XREF: Stage8_InitializeTrainSequence+54   j  ; was: loc_CEB8
                 bsr.w   Stage8_UpdateTrainScrollAndTilemap
@@ -174,7 +174,7 @@ Stage8_AccelerateFlyingNeoVerticalScroll_CheckPosition:  ; CODE XREF: Stage8_Acc
                 cmpi.w  #$40,(dword_FFA904).w           ; '@'
                 bmi.s   Stage8_UpdateFlyingNeoVerticalScrollAndEffects
                 addq.w  #2,(word_FFA950).w
-                move.w  #$1A,(word_FFA02A).w
+                move.w  #$1A,(PlayerScriptStateOffset).w
 Stage8_UpdateFlyingNeoVerticalScrollAndEffects:         ; CODE XREF: Stage8_DecelerateFlyingNeoVerticalScroll+8   j  ; was: loc_D000
                                         ; Stage8_DecelerateFlyingNeoVerticalScroll+1A   j
                 move.l  (dword_FFA964).w,d0

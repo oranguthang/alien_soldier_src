@@ -317,7 +317,7 @@ Boss_VictorReverseRing:                                 ; DATA XREF: ROM:0003243
                 bsr.w   Boss_VictorUpdateAnimation
                 subq.w  #1,$4A(a5)
                 bne.w   Entity_UpdateReturn
-                move.w  #3,(word_FFA010).w
+                move.w  #3,(PlaneAShakeLevel).w
                 move.b  #$53,d0                         ; 'S'
                 jsr     (Sound_PlaySFX).l
                 lea     (word_FFCDA0).w,a4

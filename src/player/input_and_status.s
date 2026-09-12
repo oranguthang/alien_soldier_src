@@ -1,5 +1,5 @@
 Input_ReadPlayerInput:                                  ; CODE XREF: Player_Update+1A   p  ; was: sub_16B04
-                tst.w   (word_FFA02A).w
+                tst.w   (PlayerScriptStateOffset).w
                 bne.s   Input_ReadPlayerInput_Return
                 move.b  (word_FFF706).w,$69(a5)
                 move.b  (word_FFF708).w,$6A(a5)

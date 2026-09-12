@@ -299,8 +299,8 @@ Boss_JampanOpeningFallState:                            ; DATA XREF: ROM:000491D
                 addi.l  #$2000,d0
                 move.l  d0,$1C(a5)
                 addq.w  #2,4(a5)
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$A1,d0
                 jsr     (Sound_PlaySFX).l
 Boss_JampanOpeningFallReturn:                           ; CODE XREF: Boss_JampanOpeningFallState+1A   j
@@ -514,8 +514,8 @@ Boss_JampanBounceUntilSettledState:                     ; DATA XREF: ROM:000491E
                 addi.l  #$2000,$1C(a5)
                 cmpi.w  #$110,$14(a5)
                 bcs.s   Boss_JampanBounceUntilSettledReturn
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$A1,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #$110,$14(a5)

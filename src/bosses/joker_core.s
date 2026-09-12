@@ -235,7 +235,7 @@ Boss_JokerUpdateDefeatPaletteFade:                      ; CODE XREF: Boss_JokerD
                 jsr     (Gfx_UpdatePaletteFade).l
 Boss_JokerUpdateDefeatFall:                             ; CODE XREF: Boss_JokerFadeOutState+E   j  ; was: loc_3B57A
                 bsr.w   Boss_JokerSpawnDefeatEffect
-                move.w  #4,(word_FFA010).w
+                move.w  #4,(PlaneAShakeLevel).w
                 addi.l  #$3000,$1C(a5)
                 bpl.s   Boss_JokerUpdateDefeatDescent
                 cmpi.w  #$48,$1DC(a5)                   ; 'H'
@@ -399,7 +399,7 @@ Boss_JokerInitializeDiveMotion:                         ; CODE XREF: Boss_JokerD
                 move.w  a5,$4A(a5)
                 move.l  #$FFFEC000,$23C(a5)
                 move.l  #$FFFB0000,$1C(a5)
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 move.b  #$44,d0                         ; 'D'
                 jsr     (Sound_PlaySFX).l
                 tst.w   $35C(a5)
@@ -530,7 +530,7 @@ Boss_JokerInitializeJumpAscent:                         ; CODE XREF: Boss_JokerJ
                 move.w  a5,$4A(a5)
                 move.l  #$FFF80000,$1C(a5)
                 subi.w  #$3E,(word_FF8234).w            ; '>'
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 move.b  #$44,d0                         ; 'D'
                 jsr     (Sound_PlaySFX).l
 ; End of function Boss_JokerJumpPreparationState
@@ -555,7 +555,7 @@ Boss_JokerBeginBodyHeightCompression:                   ; CODE XREF: Boss_JokerJ
                 move.w  #$FFFF,$C(a5)
                 move.l  #$FFFE0000,$23C(a5)
                 clr.l   $1C(a5)
-                move.w  #5,(word_FFA010).w
+                move.w  #5,(PlaneAShakeLevel).w
                 move.b  #$A1,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #$16,$26(a5)

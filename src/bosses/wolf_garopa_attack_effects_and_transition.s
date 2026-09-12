@@ -37,7 +37,7 @@ Effect_WolfGaropaBoundaryMain:                          ; DATA XREF: ROM:Entity_
                 beq.s   Effect_UpdateWolfGaropaBoundaryPosition
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #6,(word_FFA010).w
+                move.w  #6,(PlaneAShakeLevel).w
                 cmpi.w  #$1F0,(dword_FFA900).w
                 bpl.w   Effect_RemoveWolfGaropaBoundary
                 jsr     (Gfx_LoadWolfGaropaTransitionTiles).l

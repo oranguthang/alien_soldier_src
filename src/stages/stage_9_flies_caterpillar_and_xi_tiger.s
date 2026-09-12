@@ -270,7 +270,7 @@ Stage9_InitializeXiTigerEncounter:                      ; DATA XREF: ROM:0000C8C
                 move.b  #$10,(byte_FFA95A).w
                 move.b  #$40,(byte_FFF705).w            ; '@'
                 move.w  #$8000,(word_FF808A).w
-                move.w  #$20,(word_FFA02A).w            ; ' '
+                move.w  #$20,(PlayerScriptStateOffset).w  ; ' '
                 move.w  #$40,(ScriptedInputStepTimer).w  ; '@'
 Stage9_LoadXiTigerEncounterAssets:                      ; CODE XREF: Stage9_UpdateCaterpillarShipExit+68   j  ; was: loc_D450
                 move.w  #$70,(word_FFA950).w            ; 'p'

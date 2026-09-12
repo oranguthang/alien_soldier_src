@@ -135,7 +135,7 @@ Entity_UpdateValkirieBattleState6:                      ; DATA XREF: ROM:000557C
                 bne.s   Entity_RenderValkirieBattleState6
                 addq.w  #2,4(a5)
                 clr.b   (byte_FF80EC).w
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 subi.w  #$58,(word_FFA970).w            ; 'X'
                 bra.w   Entity_StartValkirieBattleState8
 ; ---------------------------------------------------------------------------
@@ -695,7 +695,7 @@ Entity_UpdateValkirieBattleState1A:                     ; DATA XREF: ROM:000557D
 Entity_AdvanceValkirieBattleState1C:                    ; CODE XREF: Entity_UpdateValkirieBattleState18+1C   j  ; was: loc_55F18
                 addq.w  #2,4(a5)
                 clr.w   $11C(a5)
-                move.w  #3,(word_FFA010).w
+                move.w  #3,(PlaneAShakeLevel).w
                 move.b  #$A0,d0
                 jsr     (Sound_PlaySFX).l
                 bsr.w   Entity_StartValkirieState1CPartFlash

@@ -235,7 +235,7 @@ WeaponSelect_Update:                                    ; DATA XREF: ROM:0001799
                 btst    #0,(byte_FF8244).w
                 bne.w   Weapon_CommitStateTransition
 WeaponSelect_UpdateOpenState:                           ; CODE XREF: WeaponSelect_Update+12   j  ; was: loc_17BA8
-                tst.w   (word_FFA02A).w
+                tst.w   (PlayerScriptStateOffset).w
                 bne.w   Weapon_CommitStateTransition
                 subi.w  #8,(WeaponMenuRadius).w
                 cmpi.w  #$20,(WeaponMenuRadius).w       ; ' '

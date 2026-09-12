@@ -592,8 +592,8 @@ Boss_MadamBarbarPublishScreenPosition:                  ; CODE XREF: Boss_MadamB
 ; End of function Boss_MadamBarbarPublishScreenPosition
 ; Spawns a type-A4 particle with randomized position and horizontal velocity
 Boss_MadamBarbarSpawnBarrageParticle:                   ; CODE XREF: Boss_MadamBarbarBulletBarrageState:Boss_MadamBarbarUpdateBulletBarrage   p  ; was: sub_3AB82
-                move.w  #6,(word_FFA010).w
-                move.w  #6,(word_FFA014).w
+                move.w  #6,(PlaneAShakeLevel).w
+                move.w  #6,(PlaneBShakeLevel).w
                 jsr     (Projectile_UpdateAfterGlobalDelay).l
                 bne.s   Boss_MadamBarbarSpawnBarrageParticleReturn
                 jsr     (Sprite_InitTypeA4FromTable).l

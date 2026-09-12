@@ -267,7 +267,7 @@ Stage_SevenForcesStoreSirenePrimaryVelocity:            ; CODE XREF: Stage_Seven
                 cmpi.w  #$E4C0,(dword_FFA904).w
                 bmi.s   Stage_SevenForcesRenderSirenePrimaryPlane
                 move.b  #1,(byte_FFA958).w
-                move.w  #8,(word_FFA010).w
+                move.w  #8,(PlaneAShakeLevel).w
                 bsr.w   Gfx_ClearSevenForcesTilemapMode
 Stage_SevenForcesRenderSirenePrimaryPlane:              ; CODE XREF: Stage_SevenForcesUpdateSirenePrimaryPlane+26   j  ; was: loc_ED6A
                 moveq   #0,d0

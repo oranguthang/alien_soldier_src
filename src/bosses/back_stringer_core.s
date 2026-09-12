@@ -162,7 +162,7 @@ Boss_BackStringerStartOpeningPose:                      ; CODE XREF: Boss_BackSt
                 move.w  #$1E,(word_FFC624).w
 ; Plays the timed opening pose while changing the first part radius
 Boss_BackStringerOpeningPoseState:                      ; DATA XREF: ROM:0004471A   o  ; was: loc_448A2
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_BackStringerStartOpeningDelay
                 move.w  (FrameCounter).w,d0
@@ -599,8 +599,8 @@ Boss_BackStringerStartTrackingAttack:                   ; CODE XREF: Boss_BackSt
 Boss_BackStringerTrackingAttackWarmupState:             ; DATA XREF: ROM:0004473C   o  ; was: loc_44D6A
                 subq.w  #1,$17C(a5)
                 bmi.s   Boss_BackStringerStartTrackingMotion
-                move.w  #2,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 lea     Boss_BackStringerCircularMotionPoseScript(pc),a1
                 nop
                 bsr.w   Boss_BackStringerAnimatePose
@@ -612,8 +612,8 @@ Boss_BackStringerStartTrackingMotion:                   ; CODE XREF: Boss_BackSt
                 move.b  #$50,$E1(a5)                    ; 'P'
 ; Chooses a target angle and turns toward it while circling
 Boss_BackStringerTrackingAttackState:                   ; DATA XREF: ROM:0004473E   o  ; was: loc_44D9A
-                move.w  #2,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 move.w  $11C(a5),d2
                 sub.w   $56(a5),d2
                 bmi.w   Boss_BackStringerCheckNegativeTargetAngleDelta
@@ -688,8 +688,8 @@ Boss_BackStringerDefeatInit:                            ; CODE XREF: Boss_BackSt
                 move.b  #2,(byte_FF80EC).w
                 move.w  #8,(word_FF808C).w
                 clr.w   8(a5)
-                move.w  #6,(word_FFA010).w
-                move.w  #6,(word_FFA014).w
+                move.w  #6,(PlaneAShakeLevel).w
+                move.w  #6,(PlaneBShakeLevel).w
                 move.w  #$28,4(a5)                      ; '('
                 clr.w   2(a5)
                 clr.b   $21(a5)

@@ -204,8 +204,8 @@ Boss_TerobusterHomingMissileAttackA:                    ; DATA XREF: ROM:0003857
 Boss_TerobusterMissileAttackAHandlePoseEvent:           ; CODE XREF: Boss_TerobusterDecisionState+A2   j  ; was: loc_3879A
                 tst.w   $1DC(a5)
                 beq.s   Boss_TerobusterMissileAttackAUpdate
-                move.w  #3,(word_FFA010).w
-                move.w  #3,(word_FFA014).w
+                move.w  #3,(PlaneAShakeLevel).w
+                move.w  #3,(PlaneBShakeLevel).w
                 move.b  #$49,d0                         ; 'I'
                 jsr     (Sound_PlaySFX).l
                 subi.w  #$80,(word_FF8234).w
@@ -271,8 +271,8 @@ Boss_TerobusterHomingMissileAttackB:                    ; DATA XREF: ROM:0003857
 Boss_TerobusterMissileAttackBHandlePoseEvent:           ; CODE XREF: Boss_TerobusterDecisionState+15C   j  ; was: loc_38854
                 tst.w   $1DC(a5)
                 beq.s   Boss_TerobusterMissileAttackBUpdate
-                move.w  #3,(word_FFA010).w
-                move.w  #3,(word_FFA014).w
+                move.w  #3,(PlaneAShakeLevel).w
+                move.w  #3,(PlaneBShakeLevel).w
                 move.b  #$49,d0                         ; 'I'
                 jsr     (Sound_PlaySFX).l
                 subi.w  #$80,(word_FF8234).w
@@ -497,8 +497,8 @@ Boss_TerobusterBeginDefeat:                             ; CODE XREF: Boss_Terobu
                 move.b  #2,(byte_FF80EC).w
                 clr.w   8(a5)
                 move.w  #4,(word_FF808C).w
-                move.w  #8,(word_FFA010).w
-                move.w  #8,(word_FFA014).w
+                move.w  #8,(PlaneAShakeLevel).w
+                move.w  #8,(PlaneBShakeLevel).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.l  #$20000,$18(a5)
                 cmpi.w  #$120,$10(a5)

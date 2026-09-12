@@ -13,7 +13,7 @@ Projectile_MadamBarbarDebrisConvertToType160:           ; CODE XREF: Projectile_
 Projectile_MadamBarbarDebrisInitializeType160:          ; CODE XREF: Projectile_MadamBarbarDebris+1E   j  ; was: loc_3AE5A
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------

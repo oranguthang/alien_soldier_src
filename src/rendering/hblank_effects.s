@@ -11,7 +11,7 @@ VBlank_Epsilon1ScrollEffect:                            ; DATA XREF: VBlank_Disp
 VBlank_Epsilon1ScrollEffect_Update:                     ; CODE XREF: VBlank_Epsilon1ScrollEffect+4   j  ; was: loc_198A
                 move.w  (dword_FF8128).w,d1
                 neg.w   d1
-                add.w   (word_FFA012).w,d1
+                add.w   (PlaneAShakeOffset).w,d1
                 move.w  d1,d0
                 neg.w   d0
                 move.w  d0,(dword_FF8134).w

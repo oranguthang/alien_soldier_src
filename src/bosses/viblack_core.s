@@ -154,12 +154,12 @@ Boss_ViblackEntranceDescentState:                       ; DATA XREF: ROM:000439E
                 bpl.s   Boss_ViblackEntranceDescentReturn
                 addq.w  #2,4(a5)
                 move.l  #$30000,$1C(a5)
-                move.w  #$30,(word_FFA02A).w            ; '0'
+                move.w  #$30,(PlayerScriptStateOffset).w  ; '0'
                 bset    #5,(byte_FF8245).w
                 bset    #4,(word_FFA40E).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$8000,(word_FF808A).w
-                move.w  #4,(word_FFA010).w
+                move.w  #4,(PlaneAShakeLevel).w
                 move.b  #$DA,d0
                 jsr     (Sound_PlaySFX).l
                 bra.s   Boss_ViblackUpdateStageSurfaceReference
@@ -182,7 +182,7 @@ Boss_ViblackFinishEntranceMotionState:                  ; DATA XREF: ROM:000439E
                 move.w  #$780,$52(a5)
                 move.w  #$C8,$54(a5)
                 clr.b   (byte_FF80EC).w
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 bclr    #5,(byte_FF8245).w
                 addq.w  #2,(word_FFA404).w
 Boss_ViblackUpdateStageSurfaceReference:                ; CODE XREF: Boss_ViblackEntranceDescentState+58   j  ; was: loc_43BD0

@@ -463,7 +463,7 @@ Boss_BugmaxEmitHitFragmentFromCurrentPart:              ; CODE XREF: Boss_Bugmax
                                         ; Boss_BugmaxEmitOpeningHitFragmentsAndSteer:Boss_BugmaxEmitOpeningPartHitFragmentLoop   p
                 bclr    #6,$22(a5)
                 beq.w   Boss_BugmaxHitFragmentEmissionReturn
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneBShakeLevel).w
                 btst    #7,(dword_FFC638).w
                 beq.s   Boss_BugmaxAcceleratePositiveHitFragmentSpawnOffset
                 addi.l  #-$4000,(dword_FFC638).w

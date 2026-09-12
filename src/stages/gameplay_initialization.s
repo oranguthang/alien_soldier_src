@@ -108,7 +108,7 @@ WeaponSetup_ActivateScreen:                             ; CODE XREF: WeaponSetup
                 move.w  d0,(BossMaxHealth).w
                 move.w  d0,(DisplayedBossHealth).w
                 move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
-                move.w  #$12,(word_FFA02A).w
+                move.w  #$12,(PlayerScriptStateOffset).w
                 move.w  #$DA,(dword_FFA410).w
                 move.w  #$130,(dword_FFA414).w
                 move.w  #$330,(StageTimeRemaining).w
@@ -280,7 +280,7 @@ WeaponSetup_HandleLoadoutState:                         ; DATA XREF: WeaponSetup
                 bsr.w   WeaponSetup_UpdateHighlightPalette
                 bsr.w   WeaponSetup_UpdateHorizontalScroll
                 bne.w   WeaponSetup_StateWaitReturn
-                move.w  #$12,(word_FFA02A).w
+                move.w  #$12,(PlayerScriptStateOffset).w
                 bsr.w   WeaponSetup_RefillAmmo
                 bsr.w   WeaponSetup_HandleLoadoutInput
                 btst    #0,(VBlankFrameCounter+1).w

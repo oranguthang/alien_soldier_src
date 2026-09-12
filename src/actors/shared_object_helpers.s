@@ -31,8 +31,8 @@ Effect_ConvertCurrentToTypeC4Burst:                     ; CODE XREF: Object_Upda
                 move.w  #3,$48(a0)
                 move.b  #$40,$21(a0)                    ; '@'
                 move.l  #$F001F010,$2C(a0)
-                move.w  #2,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 move.b  #$BC,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Effect_ConvertCurrentToTypeC4Burst
@@ -103,8 +103,8 @@ Boss_CaterpillarSpawnExplosion:                         ; CODE XREF: Boss_Caterp
                 clr.l   $18(a0)
                 move.l  #$FFFC0000,$1C(a0)
                 move.b  #4,$20(a0)
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$BC,d0
                 jmp     (Sound_PlaySFX).l
 ; End of function Boss_CaterpillarSpawnExplosion
@@ -150,8 +150,8 @@ Effect_InitSmallExplosion:
 ; End of function Effect_InitSmallExplosion
 ; Sets screen shake intensity values to 2
 Effect_SetScreenShake:
-                move.w  #2,(word_FFA010).w              ; was: sub_2A4E0
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w         ; was: sub_2A4E0
+                move.w  #2,(PlaneBShakeLevel).w
                 rts
 ; End of function Effect_SetScreenShake
 ; Spawns particle effects at intervals with random position offsets

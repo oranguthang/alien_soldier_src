@@ -27,8 +27,8 @@ Boss_DestroyerProtoScatterNextPart:                     ; CODE XREF: Boss_Destro
 ; Emits one randomized defeat particle around the boss
 Boss_DestroyerProtoEmitDefeatParticle:                  ; CODE XREF: Boss_DestroyerProtoUpdateDefeatExplosion   p  ; was: sub_31DF6
                 jsr     (Gfx_UpdatePaletteFade).l
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.w   Entity_UpdateReturn

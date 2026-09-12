@@ -27,9 +27,9 @@ Boss_ShiperUpdateActiveState:                           ; CODE XREF: Boss_Shiper
                 bmi.s   Boss_ShiperDispatchState
                 clr.l   $7C(a5)
                 move.w  #$150,$74(a5)
-                tst.w   (word_FFA010).w
+                tst.w   (PlaneAShakeLevel).w
                 bne.s   Boss_ShiperDispatchState
-                move.w  #1,(word_FFA010).w
+                move.w  #1,(PlaneAShakeLevel).w
 Boss_ShiperDispatchState:                               ; CODE XREF: Boss_ShiperMainHandler+A   j  ; was: loc_3648A
                                         ; Boss_ShiperMainHandler+10   j
                 move.w  4(a5),d0

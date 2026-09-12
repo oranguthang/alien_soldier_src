@@ -558,6 +558,23 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `Epsilon1VerticalAccel` | `$FFFF9478` | Epsilon 1 attack states load signed acceleration values here, and the shared motion helper adds the longword to the boss vertical velocity. |
 | `ShieldViperTrailAngles` | `$FFFF94A0` | Shield Viper initializes and shifts angle-history words from this base, then applies or interpolates them across linked body records. |
 
+## Reviewed screen-shake and player-script fields
+
+The shake update owns a level and current offset for each scroll plane. Both
+offsets feed the plane scroll builders; the Plane A offset additionally becomes
+the Y compensation applied to world sprites so foreground sprites remain
+aligned with the shaken plane.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `SpriteShakeYOffset` | `$FFFF8086` | Each update copies `PlaneAShakeOffset` here; every world-sprite renderer subtracts the value from its OAM Y coordinate. |
+| `PlaneBShakeWriteOnly` | `$FFFF8088` | Each update copies `PlaneBShakeOffset` here, but reconstructed source contains no reader, so no downstream purpose is claimed. |
+| `PlaneAShakeLevel` | `$FFFFA010` | Impact and explosion paths load a small level; the shake updater decrements it every eight frames and publishes it as the Plane A offset. |
+| `PlaneAShakeOffset` | `$FFFFA012` | The updater derives this offset from the Plane A level; Plane A horizontal/vertical scroll, HBlank effects, and sprite Y compensation consume it. |
+| `PlaneBShakeLevel` | `$FFFFA014` | Impact and explosion paths load a small level; the shake updater decrements it every eight frames and publishes it as the Plane B offset. |
+| `PlaneBShakeOffset` | `$FFFFA016` | The updater derives this offset from the Plane B level; Plane B horizontal and vertical scroll consumers apply it. |
+| `PlayerScriptStateOffset` | `$FFFFA02A` | The player scripted-input dispatcher uses this even word as its handler-table offset; cutscene states select offsets and completion paths clear it. |
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

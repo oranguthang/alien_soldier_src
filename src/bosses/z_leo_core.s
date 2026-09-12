@@ -309,7 +309,7 @@ Boss_ZLeoRunIntroCountdown:                             ; DATA XREF: ROM:00051B9
 Boss_ZLeoAdvanceIntroCountdown:                         ; CODE XREF: Boss_ZLeoRunIntroCountdown+6   j  ; was: loc_51EC8
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_ZLeoBeginBattleEntry
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneBShakeLevel).w
                 lea     Boss_ZLeoBattleEntryPose(pc),a1
                 nop
                 bra.w   Boss_ZLeoRenderCompositeFrame
@@ -343,8 +343,8 @@ Boss_ZLeoPulseBattleEntryFade:                          ; CODE XREF: Boss_ZLeoRu
 Boss_ZLeoRenderBattleEntry:                             ; CODE XREF: Boss_ZLeoRunBattleEntry+1C   j  ; was: loc_51F34
                                         ; Boss_ZLeoRunBattleEntry+2A   j
                 move.w  $11C(a5),$59C(a5)
-                move.w  #3,(word_FFA010).w
-                move.w  #1,(word_FFA014).w
+                move.w  #3,(PlaneAShakeLevel).w
+                move.w  #1,(PlaneBShakeLevel).w
                 lea     Boss_ZLeoBattleEntryPose(pc),a1
                 nop
                 bra.w   Boss_ZLeoRenderCompositeFrame
@@ -359,8 +359,8 @@ Boss_ZLeoFinishBattleEntry:                             ; CODE XREF: Boss_ZLeoRu
                 addq.w  #2,4(a5)
                 move.w  #$F0,$35C(a5)
                 move.w  #$20,$11C(a5)                   ; ' '
-                move.w  #4,(word_FFA010).w
-                move.w  #3,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #3,(PlaneBShakeLevel).w
 ; Hold the entry pose before enabling its animated parts
 Boss_ZLeoWaitForBattlePose:                             ; DATA XREF: ROM:00051B96   o  ; was: loc_51F76
                 subq.w  #1,$11C(a5)
@@ -374,8 +374,8 @@ Boss_ZLeoBeginBattlePose:                               ; CODE XREF: Boss_ZLeoRu
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$20,$11C(a5)                   ; ' '
-                move.w  #4,(word_FFA010).w
-                move.w  #3,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #3,(PlaneBShakeLevel).w
                 bsr.w   Boss_ZLeoLoadPrimaryTiles
 ; End of function Boss_ZLeoRunBattleEntry
 ; Run the battle pose and respond to its part-enable event
@@ -446,7 +446,7 @@ Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMa
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,(byte_FFA272).w
                 clr.b   $21(a5)
-                move.w  #$34,(word_FFA02A).w            ; '4'
+                move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 bset    #2,(word_FFDB22).w
                 move.l  #$FFFF0000,(dword_FFDB3C).w
                 clr.w   $58(a5)
@@ -458,8 +458,8 @@ Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMa
 Boss_ZLeoRunDefeatTransition:                           ; DATA XREF: ROM:00051B88   o  ; was: loc_52096
                 subq.w  #1,$11C(a5)
                 bmi.s   Boss_ZLeoBeginDefeatFade
-                move.w  #4,(word_FFA010).w
-                move.w  #1,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #1,(PlaneBShakeLevel).w
                 jsr     (Gfx_UpdatePaletteFade).l
                 bsr.w   Boss_ZLeoSpawnDefeatEffect
                 bsr.w   Boss_ZLeoUpdateDefeatStageScroll
@@ -703,7 +703,7 @@ Boss_ZLeoRunScrollingLaserEntryPose:                    ; DATA XREF: ROM:00051BA
                 bmi.s   Boss_ZLeoBeginScrollingLaserBurst
                 cmpi.w  #$40,(dword_FFDB34).w           ; '@'
                 bpl.s   Boss_ZLeoRenderScrollingLaserEntryPose
-                move.w  #$34,(word_FFA02A).w            ; '4'
+                move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 move.w  (dword_FFDB34).w,d0
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,(dword_FFA414).w
@@ -790,11 +790,11 @@ Boss_ZLeoBeginScrollReversal:                           ; CODE XREF: Boss_ZLeoRu
                 move.w  #$80,$11C(a5)
 ; Reverse the boss and stage motion, then wait before the hold state
 Boss_ZLeoRunScrollReversal:                             ; DATA XREF: ROM:00051BB2   o  ; was: loc_5248E
-                tst.w   (word_FFA02A).w
+                tst.w   (PlayerScriptStateOffset).w
                 beq.s   Boss_ZLeoUpdateStageScrollReversal
                 cmpi.w  #$C0,(dword_FFDB34).w
                 bmi.s   Boss_ZLeoUpdateStageScrollReversal
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 bclr    #2,(byte_FF8245).w
                 bclr    #0,(byte_FFA272).w
 Boss_ZLeoUpdateStageScrollReversal:                     ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+12A   j  ; was: loc_524AC
@@ -824,7 +824,7 @@ Boss_ZLeoRunDropAttackHold:                             ; DATA XREF: ROM:00051BB
                 bmi.s   Boss_ZLeoBeginRisingReturn
 Boss_ZLeoUpdateScrollingDropAttack:                     ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoFinishReverseBossMotionUpdate   j  ; was: loc_524F6
                 bsr.w   Boss_ZLeoRotateAttackPalette
-                tst.w   (word_FFA02A).w
+                tst.w   (PlayerScriptStateOffset).w
                 bne.s   Boss_ZLeoRenderScrollingDropAttack
                 move.w  (FrameCounter).w,d0
                 andi.w  #$F,d0

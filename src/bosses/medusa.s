@@ -72,7 +72,7 @@ Boss_InitMedusaState0:                                  ; DATA XREF: Boss_Update
 ; Alternate entry: initialize Medusa at a fixed position and continue in state two
 Boss_InitMedusaAtFixedPosition:                         ; was: sub_56A8A
                 move.w  #2,4(a5)
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 move.w  #$120,$10(a5)
                 move.w  #$E0,$14(a5)
                 clr.w   $58(a5)
@@ -225,7 +225,7 @@ Boss_UpdateMedusaStateC:                                ; DATA XREF: ROM:000569F
                 move.w  (dword_FFDB34).w,d0
                 cmp.w   $14(a5),d0
                 bpl.s   Boss_ProcessMedusaStateCCommand
-                move.w  #1,(word_FFA010).w
+                move.w  #1,(PlaneAShakeLevel).w
                 clr.w   $4DC(a5)
                 clr.l   $1C(a5)
 Boss_SyncMedusaStateCVerticalPosition:                  ; CODE XREF: Boss_UpdateMedusaStateC   j  ; was: loc_56C94
@@ -277,7 +277,7 @@ Boss_CheckMedusaStateEVerticalTransfer:                 ; CODE XREF: Boss_Update
                 move.w  #$FFFF,$C(a5)
                 move.b  #$48,d0                         ; 'H'
                 jsr     (Sound_PlaySFX).l
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 bra.w   Boss_EnterMedusaStateC
 ; ---------------------------------------------------------------------------
 Boss_RenderMedusaStateE:                                ; CODE XREF: Boss_UpdateMedusaStateE   j  ; was: loc_56D48
@@ -333,7 +333,7 @@ Boss_UpdateMedusaState10:                               ; DATA XREF: ROM:00056A0
                 move.l  #Medusa_State10PoseScript,$53C(a5)
                 tst.b   (byte_FFDB76).w
                 beq.w   Boss_EnterMedusaStateE
-                move.w  #1,(word_FFA010).w
+                move.w  #1,(PlaneAShakeLevel).w
                 cmpi.w  #$D0,$10(a5)
                 bpl.s   Boss_AccelerateMedusaState10Left
                 move.w  #$B0,$11E(a5)

@@ -31,7 +31,7 @@ Boss_Epsilon1WaitForHorizontalExitState:                ; DATA XREF: ROM:00045D4
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1ReverseHorizontalTransition:               ; CODE XREF: Boss_Epsilon1WaitForHorizontalExitState+6   j  ; was: loc_4682A
                                         ; Boss_Epsilon1WaitForHorizontalExitState+E   j
-                move.w  #8,(word_FFA010).w
+                move.w  #8,(PlaneAShakeLevel).w
                 move.l  (dword_FFC698).w,d0
                 asr.l   #1,d0
                 neg.l   d0

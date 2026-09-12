@@ -81,7 +81,7 @@ Boss_InitArtemisAtFixedPosition:                        ; was: sub_57FA8
                 move.w  #$130,$794(a5)
                 move.w  a5,$48(a5)
                 move.w  #$120,$10(a5)
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
 ; End of function Boss_InitArtemisAtFixedPosition
 ; State two changes the pose angle from vertical controller input
 Boss_UpdateArtemisState2:                               ; DATA XREF: ROM:00057F20   o  ; was: sub_57FDA
@@ -195,7 +195,7 @@ Boss_UpdateArtemisStateC:                               ; DATA XREF: ROM:00057F2
                 bpl.s   Boss_RenderArtemisStateC
                 clr.b   (byte_FF80EC).w
                 bclr    #0,(byte_FFA272).w
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 subi.w  #$40,(word_FFA970).w            ; '@'
                 addi.w  #$40,(word_FFA974).w            ; '@'
                 bra.s   Boss_ReturnArtemisToStateEWithRandomPose

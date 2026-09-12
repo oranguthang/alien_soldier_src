@@ -157,8 +157,8 @@ Boss_ShellshogunEntrancePoseState:                      ; DATA XREF: ROM:0003952
                 move.w  #$40,$BE(a5)                    ; '@'
 Boss_ShellshogunTriggerEntranceEffect:                  ; CODE XREF: Boss_ShellshogunEntrancePoseState+10   j  ; was: loc_39708
                                         ; Boss_ShellshogunEntrancePoseState+20   j
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$A1,d0
                 jmp     (Sound_PlaySFX).l
 ; ---------------------------------------------------------------------------
@@ -242,8 +242,8 @@ Boss_ShellshogunUpdateDefeatLaunch:                     ; CODE XREF: Boss_Shells
                 move.w  #$120,$14(a5)
 Boss_ShellshogunInitializeDefeatLaunch:                 ; CODE XREF: Boss_ShellshogunBeginDefeat+4A   j  ; was: loc_3982A
                 move.l  #$FFFBA000,$1C(a5)
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.w  (RandomNumberState).w,$1A(a5)
                 cmpi.w  #$12A8,$17E(a5)
                 bmi.s   Boss_ShellshogunSetPositiveDefeatVelocity
@@ -377,8 +377,8 @@ Boss_ShellshogunTimedStageAdvanceState:                 ; DATA XREF: ROM:0003954
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunUpdateTimedStageAdvance:                ; CODE XREF: Boss_ShellshogunDecisionState+AE   j  ; was: loc_399B8
                 addi.w  #3,(word_FF8234).w
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 lea     Boss_ShellshogunTimedStageAdvancePoseCommands(pc),a1
                 nop
                 bsr.w   Boss_ShellshogunUpdatePose
@@ -420,8 +420,8 @@ Boss_ShellshogunReturnFromPoseGate:                     ; CODE XREF: Boss_Shells
 ; ---------------------------------------------------------------------------
 Boss_ShellshogunTriggerPoseGateEffect:                  ; CODE XREF: Boss_ShellshogunPoseGateState+10   j  ; was: loc_39A3E
                                         ; Boss_ShellshogunPoseGateState+74   j
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.b  #$A1,d0
                 jmp     (Sound_PlaySFX).l
 ; ---------------------------------------------------------------------------
@@ -470,8 +470,8 @@ Boss_ShellshogunSlamFollowThroughState:                 ; DATA XREF: ROM:0003953
                 bne.s   Boss_ShellshogunUpdateSlamRotation
                 move.b  #$A1,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #8,(word_FFA010).w
-                move.w  #8,(word_FFA014).w
+                move.w  #8,(PlaneAShakeLevel).w
+                move.w  #8,(PlaneBShakeLevel).w
                 clr.b   $A41(a5)
 Boss_ShellshogunUpdateSlamRotation:                     ; CODE XREF: Boss_ShellshogunSlamFollowThroughState+6   j  ; was: loc_39AE8
                                         ; Boss_ShellshogunSlamFollowThroughState+E   j
@@ -541,8 +541,8 @@ Boss_ShellshogunCheckDirectionalAttackLaunch:           ; CODE XREF: Boss_Shells
                 move.b  #$D0,d0
                 jsr     (Sound_PlaySFX).l
                 subi.w  #$62,(word_FF8234).w            ; 'b'
-                move.w  #3,(word_FFA010).w
-                move.w  #3,(word_FFA014).w
+                move.w  #3,(PlaneAShakeLevel).w
+                move.w  #3,(PlaneBShakeLevel).w
                 addq.w  #1,$11C(a5)
                 move.l  #$FFFA4000,$18(a5)
                 tst.w   $54(a5)
@@ -666,8 +666,8 @@ Boss_ShellshogunBeginLeapFlight:                        ; CODE XREF: Boss_Shells
 Boss_ShellshogunLeapFlightState:                        ; DATA XREF: ROM:00039546   o  ; was: sub_39D44
                 subq.w  #1,$11C(a5)
                 bne.s   Boss_ShellshogunUpdateLeapFlightRotation
-                move.w  #3,(word_FFA010).w
-                move.w  #3,(word_FFA014).w
+                move.w  #3,(PlaneAShakeLevel).w
+                move.w  #3,(PlaneBShakeLevel).w
                 subi.w  #$7D,(word_FF8234).w            ; '}'
                 moveq   #0,d0
                 move.w  (RandomNumberState).w,d0
@@ -703,8 +703,8 @@ Boss_ShellshogunCompleteLeapLanding:                    ; CODE XREF: Boss_Shells
                 move.w  #$CEC0,$4A(a5)
                 move.w  #$148,$8B4(a5)
                 clr.l   $1C(a5)
-                move.w  #5,(word_FFA010).w
-                move.w  #5,(word_FFA014).w
+                move.w  #5,(PlaneAShakeLevel).w
+                move.w  #5,(PlaneBShakeLevel).w
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 move.b  #$A1,d0

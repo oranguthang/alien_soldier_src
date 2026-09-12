@@ -625,8 +625,8 @@ Boss_WolfGaropaBeginHorizontalAirborneMotion:           ; CODE XREF: Boss_WolfGa
                 move.w  #$FFFF,$C(a5)
                 move.w  #$CD40,$4A(a5)
                 move.w  #$148,$734(a5)
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
 ; Track the target X during the intermediate airborne pose sequence
 Boss_WolfGaropaUpdateHorizontalAirborneMotion:          ; DATA XREF: ROM:0004FE7A   o  ; was: loc_50060
                 move.w  $47C(a5),d0
@@ -740,8 +740,8 @@ Boss_WolfGaropaAdvanceLaunchPose:                       ; CODE XREF: Boss_WolfGa
                 bsr.w   Boss_WolfGaropaAdvancePoseScript
                 tst.w   $58(a5)
                 bpl.w   Boss_WolfGaropaUpdateMetaspriteAndOrb
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 tst.w   (BossHealth).w
                 beq.s   Boss_WolfGaropaClearLowerSequenceFlag
                 subq.w  #1,$11C(a5)

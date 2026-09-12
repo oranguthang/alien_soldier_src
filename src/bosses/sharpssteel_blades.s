@@ -10,8 +10,8 @@ Boss_SharpssteelWaitForComplexAlignmentState:           ; DATA XREF: ROM:00047C8
 ; ---------------------------------------------------------------------------
 Boss_SharpssteelInitializeComplexAcceleration:          ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState+C   j
                 addq.w  #2,4(a5)
-                move.w  #8,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #8,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 bset    #0,(byte_FFDB7A).w
                 clr.l   (dword_FFDB3C).w
                 move.l  #$8000,(dword_FFDB38).w

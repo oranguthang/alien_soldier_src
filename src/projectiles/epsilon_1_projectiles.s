@@ -142,7 +142,7 @@ Projectile_Epsilon1ConvertSpreadProjectileToDebris:     ; CODE XREF: Projectile_
                 bsr.s   Projectile_Epsilon1ReleaseSpreadAimMarker
                 tst.w   $5E(a5)
                 bne.s   Projectile_Epsilon1ConvertSpreadProjectileToDebrisReturn
-                addq.w  #2,(word_FFA010).w
+                addq.w  #2,(PlaneAShakeLevel).w
                 tst.w   $5E(a5)
                 bne.w   Projectile_Epsilon1ConvertSpreadProjectileToDebrisReturn
                 move.b  #$E1,d0
@@ -321,7 +321,7 @@ Projectile_Epsilon1ConvertBarrageRowProjectileToDebris:  ; CODE XREF: Projectile
                 add.w   d0,$18(a5)
                 tst.w   $5E(a5)
                 bne.s   Projectile_Epsilon1ConvertBarrageRowProjectileToDebrisReturn
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 move.b  #$E1,d0
                 jsr     (Sound_PlaySFX).l
 Projectile_Epsilon1ConvertBarrageRowProjectileToDebrisReturn:  ; CODE XREF: Projectile_Epsilon1ConvertBarrageRowProjectileToDebris+32   j

@@ -466,7 +466,7 @@ Stage13_UpdateBugmaxEncounter:                          ; DATA XREF: ROM:0000D99
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage13_UpdateBugmaxEncounterCamera
                 addq.w  #2,(word_FFA950).w
-                move.w  #$22,(word_FFA02A).w            ; '"'
+                move.w  #$22,(PlayerScriptStateOffset).w  ; '"'
 Stage13_UpdateBugmaxEncounterCamera:                    ; CODE XREF: Stage13_UpdateBugmaxEncounter+8   j  ; was: loc_DDFC
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage13_UpdateBugmaxEncounter

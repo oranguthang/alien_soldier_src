@@ -154,8 +154,8 @@ word_FF807A             equ     $FFFF807A
 word_FF807C             equ     $FFFF807C
 dword_FF807E            equ     $FFFF807E
 word_FF8082             equ     $FFFF8082
-word_FF8086             equ     $FFFF8086
-word_FF8088             equ     $FFFF8088
+SpriteShakeYOffset      equ     $FFFF8086               ; was: word_FF8086
+PlaneBShakeWriteOnly    equ     $FFFF8088               ; was: word_FF8088
 word_FF808A             equ     $FFFF808A
 word_FF808C             equ     $FFFF808C
 word_FF8090             equ     $FFFF8090
@@ -444,11 +444,11 @@ ScoreAddendBCD          equ     $FFFFA006               ; was: dword_FFA006
 word_FFA00A             equ     $FFFFA00A
 word_FFA00C             equ     $FFFFA00C
 word_FFA00E             equ     $FFFFA00E
-word_FFA010             equ     $FFFFA010
-word_FFA012             equ     $FFFFA012
-word_FFA014             equ     $FFFFA014
-word_FFA016             equ     $FFFFA016
-word_FFA02A             equ     $FFFFA02A
+PlaneAShakeLevel        equ     $FFFFA010               ; was: word_FFA010
+PlaneAShakeOffset       equ     $FFFFA012               ; was: word_FFA012
+PlaneBShakeLevel        equ     $FFFFA014               ; was: word_FFA014
+PlaneBShakeOffset       equ     $FFFFA016               ; was: word_FFA016
+PlayerScriptStateOffset equ     $FFFFA02A               ; was: word_FFA02A
 dword_FFA100            equ     $FFFFA100
 byte_FFA104             equ     $FFFFA104
 byte_FFA108             equ     $FFFFA108

@@ -96,7 +96,7 @@ Boss_ZLeoRenderCompositeFrame:                          ; CODE XREF: Boss_ZLeoPr
                 move.w  d0,(dword_FFA900).w
                 move.w  $14(a5),d0
                 addi.w  #-$104,d0
-                sub.w   (word_FFA012).w,d0
+                sub.w   (PlaneAShakeOffset).w,d0
                 move.w  d0,(dword_FFA904).w
                 bsr.w   Boss_ZLeoUpdateBladeSprite
                 bsr.w   Boss_ZLeoUpdateWingSprites
@@ -391,8 +391,8 @@ Boss_ZLeoApplyHeadPartPositions:                        ; CODE XREF: Boss_ZLeoUp
 ; Applies palette fade effect to Z-Leo colors - fades palettes at $FFE302 and $FFE342 towards black ($E000)
 Boss_ZLeoFadeoutPalette:                                ; CODE XREF: Boss_ZLeoBeginDefeatSequence:Boss_ZLeoUpdateDefeatFade   p  ; was: sub_52990
                                         ; Boss_ZLeoRunDefeatWhiteout:Boss_ZLeoUpdateDefeatWhiteoutFade   p
-                move.w  #6,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #6,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 move.w  $11C(a5),d0
                 asl.w   #1,d0
                 cmpi.w  #$E,d0

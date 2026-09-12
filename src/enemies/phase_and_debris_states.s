@@ -74,8 +74,8 @@ Enemy_PhasePatternAirborneState_CheckTerrain:           ; CODE XREF: Enemy_Phase
                 move.w  d2,d2
                 beq.s   Enemy_PhasePatternAirborneState_Return
                 move.w  #2,4(a5)
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 tst.l   $1C(a5)
                 bmi.s   Enemy_PhasePatternAirborneState_AlignCeiling
                 bclr    #4,$E(a5)

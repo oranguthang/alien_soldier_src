@@ -89,7 +89,7 @@ Boss_InitSylpheedInteractiveState2:                     ; was: sub_594D0
                 clr.l   $1C(a5)
                 move.w  #$1B58,(BossHealth).w
                 move.w  #$1B58,(BossMaxHealth).w
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 move.w  #$80,$11C(a5)
@@ -110,7 +110,7 @@ Boss_EnterSylpheedEntranceState12:                      ; CODE XREF: Boss_InitSy
                 move.w  #$FFE0,$50(a5)
                 move.w  #$80,$56(a5)
                 move.w  #$120,$3BC(a5)
-                move.w  #$2E,(word_FFA02A).w            ; '.'
+                move.w  #$2E,(PlayerScriptStateOffset).w  ; '.'
 ; Continue opening descent state $12
 Boss_UpdateSylpheedEntranceState12:                     ; DATA XREF: ROM:00059454   o  ; was: loc_5954E
                 cmpi.w  #$10,$14(a5)
@@ -230,7 +230,7 @@ Boss_EnterSylpheedAttackLaunchState1A:                  ; CODE XREF: Boss_Update
                 clr.b   $23E(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 bset    #0,(PlayerModeFlags).w
                 clr.w   (word_FFA404).w
                 move.b  #$20,(byte_FFA420).w            ; ' '

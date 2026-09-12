@@ -140,8 +140,8 @@ Boss_XiTigerFallingLanding:                             ; DATA XREF: ROM:0003D88
                 cmp.w   $23C(a5),d0
                 bmi.s   Boss_XiTigerUpdateFallingPose
                 addq.w  #2,4(a5)
-                move.w  #6,(word_FFA010).w
-                move.w  #6,(word_FFA014).w
+                move.w  #6,(PlaneAShakeLevel).w
+                move.w  #6,(PlaneBShakeLevel).w
                 move.l  #$C000,(dword_FFA91C).w
                 move.w  #$FFFF,(dword_FFA960).w
                 move.b  #$A1,d0
@@ -299,8 +299,8 @@ Boss_XiTigerDashPrep:                                   ; DATA XREF: ROM:0003D89
                 move.b  #$D0,d0
                 jsr     (Sound_PlaySFX).l
                 addq.w  #2,4(a5)
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 bset    #6,$261(a5)
                 move.l  #$80000,$498(a5)
                 tst.w   $54(a5)
@@ -460,8 +460,8 @@ Boss_XiTigerJumpPeak:                                   ; DATA XREF: ROM:0003D8A
                 cmp.w   $23C(a5),d0
                 bmi.s   Boss_XiTigerUpdateJumpAirbornePose
                 addq.w  #2,4(a5)
-                move.w  #6,(word_FFA010).w
-                move.w  #6,(word_FFA014).w
+                move.w  #6,(PlaneAShakeLevel).w
+                move.w  #6,(PlaneBShakeLevel).w
                 move.l  #$C000,(dword_FFA91C).w
                 move.w  #$FFFF,(dword_FFA960).w
                 move.b  #$A4,d0
@@ -538,8 +538,8 @@ Boss_XiTigerDefeatLeapState:                            ; DATA XREF: ROM:0003D8A
                 bmi.s   Boss_XiTigerUpdateDefeatLeapPose
                 addq.w  #2,4(a5)
                 move.w  #$C0,$11C(a5)
-                move.w  #8,(word_FFA010).w
-                move.w  #8,(word_FFA014).w
+                move.w  #8,(PlaneAShakeLevel).w
+                move.w  #8,(PlaneBShakeLevel).w
                 move.l  #$C000,(dword_FFA91C).w
                 move.w  #$FFFF,(dword_FFA960).w
                 clr.l   $1C(a5)
@@ -578,8 +578,8 @@ Boss_XiTigerUpdateDefeatLandingPose:                    ; CODE XREF: Boss_XiTige
                 lea     Boss_XiTigerDefeatPoseCommands(pc),a1
                 nop
 Boss_XiTigerUpdateDefeatPoseAndProjectile:              ; CODE XREF: Boss_XiTigerDefeatFadeState+40   j  ; was: loc_3DFBA
-                move.w  #2,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 bsr.w   Boss_XiTigerUpdatePoseAnimation
                 bsr.w   Boss_XiTigerUpdateSprites
                 bra.w   Boss_XiTigerSpawnDefeatParticle

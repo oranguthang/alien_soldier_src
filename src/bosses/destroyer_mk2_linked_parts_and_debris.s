@@ -723,8 +723,8 @@ Projectile_DestroyerMK2DebrisMain:                      ; CODE XREF: Boss_Destro
                                         ; DATA XREF: Boss_DestroyerMK2RunDebrisTransitionTimer   o
                 jsr     (Gfx_UpdatePaletteFade).l
                 jsr     (Projectile_UpdateWithExplosionSound).l
-                move.w  #2,(word_FFA014).w
-                move.w  #4,(word_FFA010).w
+                move.w  #2,(PlaneBShakeLevel).w
+                move.w  #4,(PlaneAShakeLevel).w
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Projectile_DestroyerMK2DebrisSpawnReturn
                 jsr     (Sprite_InitType160).l

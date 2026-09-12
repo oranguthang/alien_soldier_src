@@ -186,8 +186,8 @@ Boss_SharpssteelApplyDefeatFragmentVerticalVelocity:    ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelBeginDefeatFragmentBurst
 ; Type-$3BC defeat fragment: flashes, emits debris, and curves as X velocity changes
 Effect_SharpssteelDefeatFragmentMain:                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_49000
-                move.w  #4,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 addq.w  #1,$48(a5)
                 move.w  $48(a5),d0
                 bset    #7,2(a5)

@@ -412,7 +412,7 @@ Boss_JetsripperSegmentPhysicsBeginFall:                 ; CODE XREF: Boss_Jetsri
                 bpl.s   Boss_JetsripperSegmentPhysicsReturn
                 addq.w  #1,4(a5)
                 move.w  #$CF00,2(a5)
-                move.w  #4,(word_FFA010).w
+                move.w  #4,(PlaneAShakeLevel).w
                 move.l  #$FFFC0000,$1C(a5)
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_JetsripperSegmentPhysicsReturn

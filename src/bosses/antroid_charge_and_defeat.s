@@ -35,8 +35,8 @@ Boss_AntroidRamAttackUpdate:                            ; CODE XREF: Boss_Antroi
                 bmi.s   Boss_AntroidRamAttackReturn
                 cmpi.w  #$148,$14(a5)
                 bmi.w   Boss_AntroidRamAttackReturn
-                move.w  #5,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #5,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 subq.w  #1,$11C(a5)
                 bpl.w   Boss_AntroidRamAttackRebound
                 addq.w  #2,4(a5)
@@ -63,8 +63,8 @@ Boss_AntroidDeathFadeState:                             ; DATA XREF: ROM:0003752
                 bmi.s   Boss_AntroidDeathFadeUpdateEffects
                 bsr.w   Boss_AntroidSetDeathFadeParams
 Boss_AntroidDeathFadeUpdateEffects:                     ; CODE XREF: Boss_AntroidDeathFadeState+18   j  ; was: loc_37E1E
-                move.w  #4,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
 ; End of function Boss_AntroidDeathFadeState
 ; Updates the ram-attack pose, debris, and alternating sprite flip
 Boss_AntroidUpdateRamAttackPose:                        ; CODE XREF: Boss_AntroidRamAttack+18   p  ; was: sub_37E2A

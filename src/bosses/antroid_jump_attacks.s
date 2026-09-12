@@ -19,7 +19,7 @@ Boss_AntroidPrepareJumpAttack:                          ; DATA XREF: ROM:0003751
 Boss_AntroidJumpAttackLaunch:                           ; CODE XREF: Boss_AntroidPrepareJumpAttack+6   j  ; was: loc_379C4
                 subi.w  #$3C,(word_FF8234).w            ; '<'
                 addq.w  #2,4(a5)
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 move.l  #$FFF30000,$1C(a5)
@@ -53,7 +53,7 @@ Boss_AntroidJumpAttackAnimateAirborne:                  ; CODE XREF: Boss_Antroi
 Boss_AntroidJumpAttackBeginLandingArc:                  ; CODE XREF: Boss_AntroidPrepareJumpAttack+76   j  ; was: loc_37A30
                 move.b  #$A1,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #4,(word_FFA010).w
+                move.w  #4,(PlaneAShakeLevel).w
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
                 addq.w  #2,4(a5)
@@ -95,7 +95,7 @@ Boss_AntroidJumpSlamLaunch:                             ; CODE XREF: Boss_Antroi
                 move.b  #$D1,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #$28,4(a5)                      ; '('
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 move.l  #$FFF78000,$1C(a5)
@@ -146,7 +146,7 @@ Boss_AntroidJumpSlamBeginDeceleration:                  ; CODE XREF: Boss_Antroi
                 addq.w  #2,4(a5)
                 clr.w   $58(a5)
                 move.w  #$FFFF,$C(a5)
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 clr.w   $56(a5)
                 move.w  a5,$48(a5)
                 movea.w $17E(a5),a0
@@ -175,7 +175,7 @@ Boss_AntroidJumpSlamLaunchSecondArc:                    ; CODE XREF: Boss_Antroi
                 move.b  #$D0,d0
                 jsr     (Sound_PlaySFX).l
                 move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
-                move.w  #5,(word_FFA010).w
+                move.w  #5,(PlaneAShakeLevel).w
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)
                 move.l  #$FFF80000,$1C(a5)
@@ -228,7 +228,7 @@ Boss_AntroidJumpSlamBeginRetryWait:                     ; CODE XREF: Boss_Antroi
                                         ; Boss_AntroidJumpSlamAttack+BA   j
                 moveq   #$30,d0                         ; '0'
                 bsr.w   Boss_AntroidEnterStateWithFirstPartSlot
-                move.w  #3,(word_FFA010).w
+                move.w  #3,(PlaneAShakeLevel).w
                 move.l  #Boss_AntroidSpriteMapping00,$C8(a5)
                 clr.w   $56(a5)
 ; Waits for animation phase 3 before retrying the jump-slam launch
@@ -262,7 +262,7 @@ Boss_AntroidWaitBeginCountdown:                         ; CODE XREF: Boss_Antroi
                 move.w  a5,$48(a5)
 ; Projectile-wait countdown and active update
 Boss_AntroidWaitCountdown:                              ; DATA XREF: ROM:00037526   o  ; was: loc_37CD6
-                move.w  #1,(word_FFA010).w
+                move.w  #1,(PlaneAShakeLevel).w
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_AntroidWaitUpdateActive
                 tst.w   $23E(a5)

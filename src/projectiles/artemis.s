@@ -117,7 +117,7 @@ Projectile_ConvertArtemisEmitterToEffect:               ; CODE XREF: Projectile_
                 neg.l   d0
                 move.l  d0,$1C(a5)
 Projectile_InitArtemisEmitterEffect:                    ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+9A   j  ; was: loc_58B68
-                move.w  #3,(word_FFA010).w
+                move.w  #3,(PlaneAShakeLevel).w
                 move.l  #SharedCombatSpriteAnimation00,8(a5)
                 jmp     Sprite_InitType160FromCurrent
 ; ---------------------------------------------------------------------------

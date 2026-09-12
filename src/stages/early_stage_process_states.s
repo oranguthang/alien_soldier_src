@@ -341,7 +341,7 @@ Stage4_WaitForShiperMessage:                            ; CODE XREF: Stage4_Upda
                 tst.w   (MessageSequenceState).w
                 bne.s   Stage4_WaitForShiperMessage_Return
                 addq.w  #2,(word_FFA950).w
-                move.w  #2,(word_FFA02A).w
+                move.w  #2,(PlayerScriptStateOffset).w
 Stage4_WaitForShiperMessage_Return:                     ; CODE XREF: Stage4_WaitForShiperMessage+6   j  ; was: locret_CB8A
                 rts
 ; End of function Stage4_WaitForShiperMessage
@@ -568,7 +568,7 @@ Stage7_UpdatePostTerobusterTransition:                  ; DATA XREF: ROM:0000C89
                 tst.w   (MessageSequenceState).w
                 bne.s   Stage7_UpdatePostTerobusterTransitionCamera
                 move.b  #1,(byte_FF830E).w
-                move.w  #4,(word_FFA02A).w
+                move.w  #4,(PlayerScriptStateOffset).w
                 addq.w  #2,(word_FFA950).w
                 lea     Stage7_TerobusterIndexedRowCommandF0F1(pc),a0
                 nop

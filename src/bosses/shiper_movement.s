@@ -244,7 +244,7 @@ Boss_ShiperSpinAttackReverseRotation:                   ; CODE XREF: Boss_Shiper
                 andi.w  #$3F0,$170(a5)
                 cmpi.w  #$3A0,$170(a5)
                 bne.s   Boss_ShiperSpinAttackReturn
-                move.w  #8,(word_FFA010).w
+                move.w  #8,(PlaneAShakeLevel).w
                 move.b  #$A1,d0
                 jsr     (Sound_PlaySFX).l
                 bsr.w   Boss_ShiperSpawnCircleShot

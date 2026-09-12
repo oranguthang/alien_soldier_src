@@ -424,7 +424,7 @@ Boss_AntroidApplyAttackImpact:                          ; CODE XREF: Boss_Antroi
                                         ; Boss_AntroidLeapAttackB+24   p
                 move.b  #$AF,d0
                 jsr     (Sound_PlaySFX).l
-                move.w  #2,(word_FFA010).w
+                move.w  #2,(PlaneAShakeLevel).w
                 tst.w   $1DE(a5)
                 bne.s   Boss_AntroidApplyAttackImpactReturn
                 subi.w  #$A,(word_FF8234).w

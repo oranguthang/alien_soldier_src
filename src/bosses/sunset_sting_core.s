@@ -341,8 +341,8 @@ Boss_SunsetStingSerpentineCheckBounds:                  ; CODE XREF: Boss_Sunset
                 bcs.w   Boss_SunsetStingResetForAttack
                 cmpi.w  #$110,$14(a5)
                 bcs.w   Boss_SunsetStingUpdateGraphics
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 neg.l   $1C(a5)
                 bra.w   *+4
 ; End of function Boss_SunsetStingSerpentineAttack
@@ -546,8 +546,8 @@ Boss_SunsetStingBeginEarlyFormDefeatState:              ; CODE XREF: Boss_Sunset
                 bset    #0,(byte_FFA272).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.b  #0,$4A(a5)
                 move.w  #$26,4(a5)                      ; '&'
                 move.b  #8,$4B(a5)
@@ -614,8 +614,8 @@ Boss_SunsetStingSeedDebrisCleanupDelay:                 ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingScatterBodyPartsState
 ; Retires the controller after its defeat cleanup timer expires
 Boss_SunsetStingDefeatCleanupState:                     ; DATA XREF: ROM:00040D2C   o  ; was: sub_4143E
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 subq.b  #1,$4B(a5)
                 bne.w   Boss_SunsetStingFadeOutReturn
                 clr.w   (a5)

@@ -73,8 +73,8 @@ Effect_InitializeExplosion:                             ; CODE XREF: Effect_Spaw
                 move.w  (word_FF808A).w,d0
                 or.w    d0,$E(a0)
                 clr.b   $21(a0)
-                move.w  #2,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 rts
 ; End of function Effect_SpawnExplosionB
 ; Updates explosion variant A, including lifetime and motion pattern

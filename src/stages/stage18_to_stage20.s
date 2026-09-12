@@ -132,7 +132,7 @@ Stage19_UpdatePostJampanMessage:                        ; DATA XREF: ROM:0000E44
                 tst.w   (MessageSequenceState).w
                 bne.s   Stage19_UpdatePostJampanMessage_Return
                 addq.w  #2,(word_FFA950).w
-                move.w  #$32,(word_FFA02A).w            ; '2'
+                move.w  #$32,(PlayerScriptStateOffset).w  ; '2'
 Stage19_UpdatePostJampanMessage_Return:                 ; CODE XREF: Stage19_UpdatePostJampanMessage+4   j  ; was: locret_E654
                 rts
 ; End of function Stage19_UpdatePostJampanMessage

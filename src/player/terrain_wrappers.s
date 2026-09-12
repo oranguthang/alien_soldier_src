@@ -72,7 +72,7 @@ Physics_TerrainCheckWrappers_Return:                    ; CODE XREF: Physics_Wal
 ; Processes D-pad input for character facing direction
 Input_ProcessDirectionInput:                            ; CODE XREF: Player_Update+58   p  ; was: sub_16D80
                                         ; Player_UpdateSevenForcesBattle+6   p
-                tst.w   (word_FFA02A).w
+                tst.w   (PlayerScriptStateOffset).w
                 bne.w   Input_ProcessDirectionInput_Return
                 move.b  $69(a5),d1
                 move.w  (ShootingMode).w,d0

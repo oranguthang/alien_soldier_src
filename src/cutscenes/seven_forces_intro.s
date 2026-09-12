@@ -459,7 +459,7 @@ Entity_SevenForcesStartArtemisEntranceState22:          ; DATA XREF: ROM:00054BB
                 move.w  #$58,(word_FFA404).w            ; 'X'
                 clr.l   (dword_FFA418).w
                 clr.l   (dword_FFA41C).w
-                move.w  #$34,(word_FFA02A).w            ; '4'
+                move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 bset    #2,(byte_FF8245).w
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.l  #$38000,$1C(a5)
@@ -527,7 +527,7 @@ Entity_SevenForcesArtemisFadeOutCheckReset:             ; CODE XREF: Entity_Seve
 ; State $2A: launch the Sirene entrance trajectory
 Entity_SevenForcesStartSireneEntranceState2A:           ; DATA XREF: ROM:00054BC2   o  ; was: sub_5523C
                 addq.w  #2,4(a5)
-                move.w  #$34,(word_FFA02A).w            ; '4'
+                move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 move.l  #$FFFC8000,$1C(a5)
                 move.l  #$22000,$18(a5)
                 cmpi.w  #$120,$10(a5)
@@ -614,8 +614,8 @@ Entity_SevenForcesExplosionSequenceCheckTransition:     ; CODE XREF: Entity_Seve
                 move.w  #$C0,(word_FF809E).w
 Entity_SevenForcesSpawnRandomExplosion:                 ; CODE XREF: Entity_SevenForcesExplosionSequenceState36+20   j  ; was: loc_55352
                                         ; sub_553CC:Entity_SevenForcesExplosionWaitUpdate   p
-                move.w  #2,(word_FFA010).w
-                move.w  #2,(word_FFA014).w
+                move.w  #2,(PlaneAShakeLevel).w
+                move.w  #2,(PlaneBShakeLevel).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreeSlot).l
                 bne.s   Entity_SevenForcesSpawnRandomExplosionReturn

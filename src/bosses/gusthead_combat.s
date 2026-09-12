@@ -408,8 +408,8 @@ Boss_GustheadDefeatFallReturn:                          ; CODE XREF: Boss_Gusthe
 Boss_SpawnExplosionDebris:                              ; CODE XREF: Boss_VictorUpdateDefeatExplosion+12   p  ; was: sub_3FF46
                                         ; sub_3FF00   p
                 jsr     (Gfx_UpdatePaletteFade).l
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 jsr     (Projectile_UpdateWithExplosionSound).l
                 jsr     (Projectile_FindFreePrimarySlot).l
                 bne.s   Boss_SpawnExplosionDebrisReturn

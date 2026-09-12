@@ -341,8 +341,8 @@ Gfx_LoadIndexedAnimationTiles:                          ; CODE XREF: Boss_Sunset
 ; Resets the form controller after primary boss health reaches zero
 Boss_SunsetStingResetAfterPrimaryHealthDepletion:       ; CODE XREF: Boss_SunsetStingSecondFormUpdate+4A   j  ; was: sub_423DA
                 bset    #0,(byte_FFA272).w
-                move.w  #4,(word_FFA010).w
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w
+                move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$7FFF,(BossHealth).w
                 clr.b   (dword_FFC6DC).w
                 clr.w   4(a5)
@@ -406,8 +406,8 @@ Boss_SunsetStingAssignBodyPartRemovalDelayLoop:         ; CODE XREF: Boss_Sunset
 ; End of function Boss_SunsetStingScatterSecondFormBodyPartsState
 ; Holds the scroll mode, then removes the form controller
 Boss_SunsetStingRemoveAfterBodyPartFadeState:
-                move.w  #4,(word_FFA010).w              ; was: sub_424C0
-                move.w  #4,(word_FFA014).w
+                move.w  #4,(PlaneAShakeLevel).w         ; was: sub_424C0
+                move.w  #4,(PlaneBShakeLevel).w
                 subq.b  #1,$4B(a5)
                 bne.w   Boss_SunsetStingRemoveAfterBodyPartFadeReturn
                 clr.w   (a5)

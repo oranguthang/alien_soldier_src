@@ -12,44 +12,44 @@ Input_ToggleDebugFlag_Return:                           ; CODE XREF: Input_Toggl
                                         ; Input_ToggleDebugFlag+C   j
                 rts
 ; End of function Input_ToggleDebugFlag
-; Updates screen shake effect by modifying scroll registers with decay timer
+; Decays the Plane A/B shake levels and publishes their current offsets
 Effect_ScreenShakeUpdate:                               ; CODE XREF: Sys_GameplayMainLoop+16A   p  ; was: sub_1CB5A
                 tst.b   (FrameControlFlags).w
                 bmi.s   Effect_ScreenShakeUpdate_Return
-                move.w  (word_FFA012).w,(word_FF8086).w
-                move.w  (word_FFA016).w,(word_FF8088).w
+                move.w  (PlaneAShakeOffset).w,(SpriteShakeYOffset).w
+                move.w  (PlaneBShakeOffset).w,(PlaneBShakeWriteOnly).w
                 move.w  (FrameCounter).w,d0
-                tst.w   (word_FFA010).w
-                bne.s   Effect_ScreenShakeUpdate_UpdateHorizontal
-Effect_ScreenShakeUpdate_ClearHorizontal:               ; CODE XREF: Effect_ScreenShakeUpdate+26   j  ; was: loc_1CB76
-                clr.w   (word_FFA012).w
-                bra.s   Effect_ScreenShakeUpdate_CheckVertical
+                tst.w   (PlaneAShakeLevel).w
+                bne.s   Effect_ScreenShakeUpdate_UpdatePlaneA
+Effect_ScreenShakeUpdate_ClearPlaneA:                   ; CODE XREF: Effect_ScreenShakeUpdate+26   j  ; was: loc_1CB76
+                clr.w   (PlaneAShakeOffset).w
+                bra.s   Effect_ScreenShakeUpdate_CheckPlaneB
 ; ---------------------------------------------------------------------------
-Effect_ScreenShakeUpdate_UpdateHorizontal:              ; CODE XREF: Effect_ScreenShakeUpdate+1A   j  ; was: loc_1CB7C
+Effect_ScreenShakeUpdate_UpdatePlaneA:                  ; CODE XREF: Effect_ScreenShakeUpdate+1A   j  ; was: loc_1CB7C
                 btst    #1,d0
-                bne.s   Effect_ScreenShakeUpdate_ClearHorizontal
+                bne.s   Effect_ScreenShakeUpdate_ClearPlaneA
                 move.w  d0,d1
                 andi.w  #7,d1
-                bne.s   Effect_ScreenShakeUpdate_StoreHorizontal
-                subq.w  #1,(word_FFA010).w
-Effect_ScreenShakeUpdate_StoreHorizontal:               ; CODE XREF: Effect_ScreenShakeUpdate+2E   j  ; was: loc_1CB8E
-                move.w  (word_FFA010).w,(word_FFA012).w
-Effect_ScreenShakeUpdate_CheckVertical:                 ; CODE XREF: Effect_ScreenShakeUpdate+20   j  ; was: loc_1CB94
-                tst.w   (word_FFA014).w
-                bne.s   Effect_ScreenShakeUpdate_UpdateVertical
-Effect_ScreenShakeUpdate_ClearVertical:                 ; CODE XREF: Effect_ScreenShakeUpdate+4A   j  ; was: loc_1CB9A
-                clr.w   (word_FFA016).w
+                bne.s   Effect_ScreenShakeUpdate_StorePlaneA
+                subq.w  #1,(PlaneAShakeLevel).w
+Effect_ScreenShakeUpdate_StorePlaneA:                   ; CODE XREF: Effect_ScreenShakeUpdate+2E   j  ; was: loc_1CB8E
+                move.w  (PlaneAShakeLevel).w,(PlaneAShakeOffset).w
+Effect_ScreenShakeUpdate_CheckPlaneB:                   ; CODE XREF: Effect_ScreenShakeUpdate+20   j  ; was: loc_1CB94
+                tst.w   (PlaneBShakeLevel).w
+                bne.s   Effect_ScreenShakeUpdate_UpdatePlaneB
+Effect_ScreenShakeUpdate_ClearPlaneB:                   ; CODE XREF: Effect_ScreenShakeUpdate+4A   j  ; was: loc_1CB9A
+                clr.w   (PlaneBShakeOffset).w
                 rts
 ; ---------------------------------------------------------------------------
-Effect_ScreenShakeUpdate_UpdateVertical:                ; CODE XREF: Effect_ScreenShakeUpdate+3E   j  ; was: loc_1CBA0
+Effect_ScreenShakeUpdate_UpdatePlaneB:                  ; CODE XREF: Effect_ScreenShakeUpdate+3E   j  ; was: loc_1CBA0
                 btst    #1,d0
-                bne.s   Effect_ScreenShakeUpdate_ClearVertical
+                bne.s   Effect_ScreenShakeUpdate_ClearPlaneB
                 move.w  d0,d1
                 andi.w  #7,d1
-                bne.s   Effect_ScreenShakeUpdate_StoreVertical
-                subq.w  #1,(word_FFA014).w
-Effect_ScreenShakeUpdate_StoreVertical:                 ; CODE XREF: Effect_ScreenShakeUpdate+52   j  ; was: loc_1CBB2
-                move.w  (word_FFA014).w,(word_FFA016).w
+                bne.s   Effect_ScreenShakeUpdate_StorePlaneB
+                subq.w  #1,(PlaneBShakeLevel).w
+Effect_ScreenShakeUpdate_StorePlaneB:                   ; CODE XREF: Effect_ScreenShakeUpdate+52   j  ; was: loc_1CBB2
+                move.w  (PlaneBShakeLevel).w,(PlaneBShakeOffset).w
 Effect_ScreenShakeUpdate_Return:                        ; CODE XREF: Effect_ScreenShakeUpdate+4   j  ; was: locret_1CBB8
                 rts
 ; End of function Effect_ScreenShakeUpdate

@@ -643,7 +643,7 @@ Stage15_FallingRockCheckTerrain:
                 rts
 ; ---------------------------------------------------------------------------
 Stage15_FallingRockBounceFromTerrain:
-                move.w  #3,(word_FFA010).w
+                move.w  #3,(PlaneAShakeLevel).w
                 move.b  #$53,d0
                 jsr     (Sound_PlaySFX).l
                 move.l  $1C(a5),$40(a5)

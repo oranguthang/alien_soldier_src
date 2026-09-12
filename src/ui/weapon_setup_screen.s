@@ -41,7 +41,7 @@ WeaponSetup_CheckShootingModeReturn:                    ; CODE XREF: WeaponSetup
                 beq.w   WeaponSetup_RenderShootingModeOptions
                 subq.w  #2,(SetupTransitionIndex).w
                 clr.w   (dword_FF8128+2).w
-                move.w  #$12,(word_FFA02A).w
+                move.w  #$12,(PlayerScriptStateOffset).w
                 bra.w   WeaponSetup_RenderShootingModeOptions
 ; End of function WeaponSetup_HandleShootingModeInput
 ; Selects one of the 26 controller layouts and handles page navigation
@@ -168,7 +168,7 @@ WeaponSetup_UpdateSlotFade:                             ; DATA XREF: ROM:0001F14
                 tst.w   (word_FFA944).w
                 bpl.w   WeaponSetup_StateWaitReturn
                 addq.w  #2,(SetupTransitionIndex).w
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 clr.w   (dword_FFA90C).w
                 rts
 ; End of function WeaponSetup_UpdateSlotFade
@@ -253,7 +253,7 @@ WeaponSetup_HandleLoadoutInput:                         ; CODE XREF: WeaponSetup
                 move.w  #6,(WeaponSlotOffset).w
                 addq.w  #2,(SetupTransitionIndex).w
                 move.w  #$FFE0,(dword_FF8128+2).w
-                move.w  #$14,(word_FFA02A).w
+                move.w  #$14,(PlayerScriptStateOffset).w
 WeaponSetup_CheckPreviousSlotInput:                     ; CODE XREF: WeaponSetup_HandleLoadoutInput+8   j  ; was: loc_1F4D2
                                         ; WeaponSetup_HandleLoadoutInput+24   j
                 tst.w   (WeaponSlotOffset).w

@@ -39,7 +39,7 @@ UnreferencedIndexedPaletteWords:    dc.w    $200, $400, $622, $844, $5478, $A950
 
 ; Unreferenced type-$308 transition-object and Stage 17 parallax updater
 UnreferencedCreateType308AndUpdateStage17Parallax:
-                move.w  #$2E,(word_FFA02A).w            ; '.'  ; was: sub_E190
+                move.w  #$2E,(PlayerScriptStateOffset).w  ; '.'  ; was: sub_E190
                 move.w  #$20,(dword_FF8128).w           ; ' '
                 move.w  #$308,(word_FFC680).w
                 clr.w   (word_FFC684).w
@@ -47,7 +47,7 @@ UnreferencedCreateType308AndUpdateStage17Parallax:
                 tst.w   (word_FFC680).w
                 bne.s   UnreferencedCreateType308AndUpdateStage17Parallax_Return
                 addq.w  #2,(word_FFA950).w
-                clr.w   (word_FFA02A).w
+                clr.w   (PlayerScriptStateOffset).w
                 bclr    #0,(byte_FFA958).w
 UnreferencedCreateType308AndUpdateStage17Parallax_Return:  ; CODE XREF: UnreferencedCreateType308AndUpdateStage17Parallax+1E   j  ; was: locret_E1BE
                 rts
