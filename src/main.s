@@ -362,7 +362,7 @@
                 include "src/data/planet_cutscene_assets.s"
                 include "src/data/credits_and_menu_assets.s"
                 include "src/data/stage_object_assets.s"
-                include "src/data/flying_neo_mappings.s"
+                include "src/data/indexed_object_and_stage_effect_mappings.s"
                 include "src/data/stage10_enemy_assets.s"
                 include "src/data/shared_stage_object_sprite_mappings.s"
                 include "src/data/stage10_and_teleport_shared_asset.s"

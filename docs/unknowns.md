@@ -5339,3 +5339,52 @@ boundary. Provenance rises from 14,842 to 14,885 mappings, the audit registry
 from 12,069 to 12,094, and the enforced address-derived ceiling falls from
 1,209 to 1,166. The remaining backlog comprises 831 RAM equates and 335
 preserved-data labels.
+
+The Stage 1 and shared object-asset pass removes all 39 address-derived
+definitions from `data/stage_object_assets.s`. Audited load lists prove the
+base Stage 1 set, its three phase-specific sets, the Stage 8 reuse, the
+Shellshogun reuse, and the Stage 7 initial tile source. Numbered tile-art names
+only distinguish multiple sources in one list; compressed mapping-data names
+retain the destination that distinguishes each type-six stream.
+
+The source now named `SharedMappingData7000` is deliberately broader than a
+stage owner: twelve audited stage, teleport, story, ending, credits, and
+Xi-Tiger descriptor lists reuse it, mostly at destination `$7000` and twice at
+`$7400`. The Stage 1 phase-3 list also loads its second tile-art source at two
+destinations, so its name records shared ownership rather than one destination.
+
+All 21 unique source addresses receive exact static audit records. The 18
+exclusive-end aliases retain provenance and fold into the following asset
+boundary. Provenance rises from 14,885 to 14,924 mappings, the audit registry
+from 12,094 to 12,115, and the enforced address-derived ceiling falls from
+1,166 to 1,127. The remaining backlog comprises 831 RAM equates and 296
+preserved-data labels.
+
+The indexed-object and stage-effect mapping pass removes all 38 address-derived
+definitions from the former `data/flying_neo_mappings.s`. The ROM-adjacent
+226-line module is now `data/indexed_object_and_stage_effect_mappings.s`: the old
+filename described only one of its five statically demonstrated consumers.
+Keeping the block together preserves a naturally sized ROM-order module while
+the new name covers the indexed object selector, terrain-stamp object, Stage 8/9
+lightning effect, Flying Neo composite, and two Stage 1 mapping-data streams.
+
+The five object animation streams are selected by
+`Object_IndexedSpriteAnimationPointers`, but neither their entity identity nor the
+meaning of the field-`$5E` variants is proved by reconstructed static callers.
+Their mapping and animation names therefore remain deliberately neutral and
+address-ordered. In contrast, the four lightning streams are selected by
+`Midgame_RandomLightningMappingPointers`, and the Flying Neo stream is written
+directly to the dedicated type-`$170` high-RAM display record. The two trailing
+compressed streams are type-six records loaded by the Stage 1 base and phase-2
+asset lists at destination `$7800`.
+
+This pass also corrects five unaudited Sonnet names around the selector. The
+handler only initializes indexed sprite graphics and contains no enemy-specific
+behavior, so its routine, branch, return, animation-pointer table, and display-
+attribute table now use neutral `Object_Indexed...` names with exact static
+audit records.
+
+All 38 unique addresses receive exact static audit records. Provenance rises
+from 14,924 to 14,962 mappings, the audit registry from 12,115 to 12,158, and
+the enforced address-derived ceiling falls from 1,127 to 1,089. The remaining
+backlog comprises 831 RAM equates and 258 preserved-data labels.

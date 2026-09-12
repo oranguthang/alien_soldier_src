@@ -38,7 +38,7 @@ XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; field_0  ; was: stru_1
                 dc.l    tiles_F10A4                     ; field_2
                 dc.w    $9000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    byte_18DF92                     ; field_2

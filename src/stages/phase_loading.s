@@ -22,7 +22,7 @@ Stage16AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    byte_1A648A                     ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_13F4B0                     ; field_2
@@ -59,7 +59,7 @@ Stage2Phase1AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    byte_1A8B88                     ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2

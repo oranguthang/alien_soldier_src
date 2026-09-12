@@ -62,31 +62,31 @@ Stage_LoadStage1BaseAssets:                             ; CODE XREF: Stage_LoadS
 ; ---------------------------------------------------------------------------
 Stage1BaseAssetLoadList:    dc.w    7                   ; field_0  ; was: stru_11790
                                         ; DATA XREF: Stage_LoadStage1BaseAssets+4   o
-                dc.l    tiles_18E5D2                    ; field_2
+                dc.l    Stage1BaseTileArt0              ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19051C                    ; field_2
+                dc.l    Stage1BaseTileArt1              ; field_2
                 dc.w    $2B80                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19BAB4                    ; field_2
+                dc.l    Stage1AndShellshogunSharedTileArt  ; field_2
                 dc.w    $5AC0                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_192C38                     ; field_2
+                dc.l    Stage1BaseMappingData6000       ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_193010                     ; field_2
+                dc.l    Stage1BaseMappingData4000       ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_192F7C                     ; field_2
+                dc.l    Stage1BaseMappingData6800       ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19382C                     ; field_2
+                dc.l    Stage1BaseMappingData2000       ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19C724                     ; field_2
+                dc.l    Stage1BaseMappingData7800       ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
@@ -106,16 +106,16 @@ Stage_LoadStage1Phase1Assets:                           ; DATA XREF: ROM:0001173
 ; ---------------------------------------------------------------------------
 Stage1Phase1AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_117F6
                                         ; DATA XREF: Stage_LoadStage1Phase1Assets+8   o
-                dc.l    tiles_1912EC                    ; field_2
+                dc.l    Stage1Phase1AndShellshogunTileArt  ; field_2
                 dc.w    $2B80                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19BAB4                    ; field_2
+                dc.l    Stage1AndShellshogunSharedTileArt  ; field_2
                 dc.w    $5AC0                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_192FC6                     ; field_2
+                dc.l    Stage1Phase1AndShellshogunMappingData6800  ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_193DBE                     ; field_2
+                dc.l    Stage1Phase1AndShellshogunMappingData2000  ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
@@ -123,16 +123,16 @@ Stage1Phase1AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.w    $FFFF
 Boss_ShellshogunAssetLoadList:  dc.w    7               ; field_0  ; was: stru_11820
                                         ; DATA XREF: Camera_ShellshogunBossInit+26   o
-                dc.l    tiles_1912EC                    ; field_2
+                dc.l    Stage1Phase1AndShellshogunTileArt  ; field_2
                 dc.w    $2B80                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19BAB4                    ; field_2
+                dc.l    Stage1AndShellshogunSharedTileArt  ; field_2
                 dc.w    $5AC0                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_192FC6                     ; field_2
+                dc.l    Stage1Phase1AndShellshogunMappingData6800  ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_193DBE                     ; field_2
+                dc.l    Stage1Phase1AndShellshogunMappingData2000  ; field_2
                 dc.w    $2000                           ; field_6
                 dc.w    $FFFF
 
@@ -149,22 +149,22 @@ Stage_LoadStage1Phase2Assets:                           ; DATA XREF: ROM:0001173
 ; ---------------------------------------------------------------------------
 Stage1Phase2AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_11852
                                         ; DATA XREF: Stage_LoadStage1Phase2Assets+4   o
-                dc.l    tiles_1942B8                    ; field_2
+                dc.l    Stage1Phase2TileArt0            ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19BC68                    ; field_2
+                dc.l    Stage1Phase2TileArt1            ; field_2
                 dc.w    $5BE0                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19794C                     ; field_2
+                dc.l    Stage1Phase2MappingData6000     ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_197C28                     ; field_2
+                dc.l    Stage1Phase2MappingData4000     ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19C754                     ; field_2
+                dc.l    Stage1Phase2MappingData7800     ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
@@ -183,22 +183,22 @@ Stage_LoadStage8Assets:                                 ; DATA XREF: ROM:0001174
 ; ---------------------------------------------------------------------------
 Stage8AssetLoadList:    dc.w    7                       ; field_0  ; was: stru_1189C
                                         ; DATA XREF: Stage_LoadStage8Assets+4   o
-                dc.l    tiles_198E2C                    ; field_2
+                dc.l    Stage1Phase3AndStage8TileArt0   ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19AEA6                    ; field_2
+                dc.l    Stage1Phase3AndStage8TileArt1   ; field_2
                 dc.w    $3AC0                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19BF9E                    ; field_2
+                dc.l    Stage1Phase3AndStage8TileArt2   ; field_2
                 dc.w    $3D00                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19AF40                     ; field_2
+                dc.l    Stage1Phase3AndStage8MappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19B0F6                     ; field_2
+                dc.l    Stage1Phase3AndStage8MappingData4000  ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
@@ -217,22 +217,22 @@ Stage_LoadStage1Phase3Assets:                           ; DATA XREF: ROM:0001174
 ; ---------------------------------------------------------------------------
 Stage1Phase3AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_118E6
                                         ; DATA XREF: Stage_LoadStage1Phase3Assets+4   o
-                dc.l    tiles_198E2C                    ; field_2
+                dc.l    Stage1Phase3AndStage8TileArt0   ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19AEA6                    ; field_2
+                dc.l    Stage1Phase3AndStage8TileArt1   ; field_2
                 dc.w    $3AC0                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19BF9E                    ; field_2
+                dc.l    Stage1Phase3AndStage8TileArt2   ; field_2
                 dc.w    $3D00                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19AF40                     ; field_2
+                dc.l    Stage1Phase3AndStage8MappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19B0F6                     ; field_2
+                dc.l    Stage1Phase3AndStage8MappingData4000  ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_140B0C                     ; field_2
@@ -241,7 +241,7 @@ Stage1Phase3AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    byte_140B98                     ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    tiles_19AEA6                    ; field_2
+                dc.l    Stage1Phase3AndStage8TileArt1   ; field_2
                 dc.w    $9600                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    tiles_F10A4                     ; field_2
@@ -282,7 +282,7 @@ Stage10EnemyAssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    byte_19FF2E                     ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_1A2840                     ; field_2
@@ -291,7 +291,7 @@ Stage10EnemyAssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    byte_1A2878                     ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7400                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    Stage10TeleportSharedAssetData  ; field_2
@@ -336,7 +336,7 @@ TeleportAssetLoadList:  dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    byte_1A08DA                     ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_1A2840                     ; field_2
@@ -345,7 +345,7 @@ TeleportAssetLoadList:  dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    byte_1A2878                     ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19BA44                     ; field_2
+                dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7400                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    Stage10TeleportSharedAssetData  ; field_2

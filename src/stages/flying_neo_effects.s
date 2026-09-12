@@ -5,7 +5,7 @@ Stage8_InitializeFlyingNeoComposite:                    ; CODE XREF: Stage8_Init
                 move.w  #$170,(a0)
                 move.w  #$D00,2(a0)
                 clr.w   4(a0)
-                move.l  #off_19C720,8(a0)
+                move.l  #Stage8_FlyingNeoCompositeSpriteAnimation,8(a0)
                 clr.w   $C(a0)
                 move.w  #$81E8,$E(a0)
                 clr.b   $20(a0)
@@ -109,10 +109,10 @@ Midgame_UpdateRandomLightningEffect_Return:             ; CODE XREF: Midgame_Upd
                 rts
 ; End of function Midgame_UpdateRandomLightningEffect
 ; ---------------------------------------------------------------------------
-Midgame_RandomLightningMappingPointers: dc.l    off_19C6A0  ; was: off_D83A
-                dc.l    off_19C6BC
-                dc.l    off_19C6F0
-                dc.l    off_19C708
+Midgame_RandomLightningMappingPointers: dc.l    Midgame_LightningSpriteAnimation00  ; was: off_D83A
+                dc.l    Midgame_LightningSpriteAnimation01
+                dc.l    Midgame_LightningSpriteAnimation02
+                dc.l    Midgame_LightningSpriteAnimation03
 Stage8_TrainLightningPaletteEntryLists:
                 dc.w    0, $E308, 9, $E326, $E328, $E32A, $E32C, $E32E  ; was: word_D84A
                                         ; DATA XREF: Stage8_UpdateTrainEffectsAndVerticalOscillation   o

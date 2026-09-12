@@ -74,7 +74,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Projectile_MadamBarbarDebris
                 dc.l    Weapon_HandleProjectileHit
                 dc.l    Boss_CaterpillarMain
-                dc.l    Enemy_InitSpriteGraphics
+                dc.l    Object_InitIndexedSpriteGraphics
                 dc.l    TerrainTileAnimation_EvenFrameHandler
                 dc.l    Terrain_StampObjectPattern
                 dc.l    Projectile_TerobusterHomingMissileUpdate

@@ -600,32 +600,32 @@ Object_ClearInactiveTypes12CAnd134_NextObject:          ; CODE XREF: Object_Clea
                 rts
 ; End of function Object_ClearInactiveTypes12CAnd134
 ; Initializes enemy sprite graphics mode and animation pointer
-Enemy_InitSpriteGraphics:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A8EE
+Object_InitIndexedSpriteGraphics:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2A8EE
                 tst.w   4(a5)
-                bne.w   Enemy_InitSpriteGraphics_Return
+                bne.w   Object_InitIndexedSpriteGraphics_Return
                 addq.w  #2,4(a5)
                 move.w  #$E300,2(a5)
                 move.w  $5E(a5),d0
                 bclr    #$F,d0
-                beq.s   Enemy_InitSpriteGraphics_LoadTables
+                beq.s   Object_InitIndexedSpriteGraphics_LoadTables
                 move.w  #$E100,2(a5)
-Enemy_InitSpriteGraphics_LoadTables:                    ; CODE XREF: Enemy_InitSpriteGraphics+1A   j  ; was: loc_2A910
-                move.l  Enemy_SpriteMappingPointers(pc,d0.w),8(a5)
-                move.w  Enemy_SpriteAttributesTable(pc,d0.w),$E(a5)
-                move.b  Enemy_SpriteAttributesTable+1(pc,d0.w),$20(a5)
-Enemy_InitSpriteGraphics_Return:                        ; CODE XREF: Enemy_InitSpriteGraphics+4   j  ; was: locret_2A922
+Object_InitIndexedSpriteGraphics_LoadTables:            ; CODE XREF: Object_InitIndexedSpriteGraphics+1A   j  ; was: loc_2A910
+                move.l  Object_IndexedSpriteAnimationPointers(pc,d0.w),8(a5)
+                move.w  Object_IndexedSpriteAttributes(pc,d0.w),$E(a5)
+                move.b  Object_IndexedSpriteAttributes+1(pc,d0.w),$20(a5)
+Object_InitIndexedSpriteGraphics_Return:                ; CODE XREF: Object_InitIndexedSpriteGraphics+4   j  ; was: locret_2A922
                 rts
-; End of function Enemy_InitSpriteGraphics
+; End of function Object_InitIndexedSpriteGraphics
 ; ---------------------------------------------------------------------------
-Enemy_SpriteMappingPointers:    dc.l    off_19C4DE      ; DATA XREF: Enemy_InitSpriteGraphics:Enemy_InitSpriteGraphics_LoadTables   r  ; was: off_2A924
-Enemy_SpriteAttributesTable:    dc.l    $2DF6000        ; DATA XREF: Enemy_InitSpriteGraphics+28   r  ; was: dword_2A928
-                dc.l    off_19C4F2
+Object_IndexedSpriteAnimationPointers:  dc.l    IndexedObjectSpriteAnimation00  ; DATA XREF: Object_InitIndexedSpriteGraphics:Object_InitIndexedSpriteGraphics_LoadTables   r  ; was: off_2A924
+Object_IndexedSpriteAttributes:         dc.l    $2DF6000  ; DATA XREF: Object_InitIndexedSpriteGraphics+28   r  ; was: dword_2A928
+                dc.l    IndexedObjectSpriteAnimation01
                 dc.l    $2DF6000
-                dc.l    off_19C506
+                dc.l    IndexedObjectSpriteAnimation02
                 dc.l    $2DF6000
-                dc.l    off_19C52E
+                dc.l    IndexedObjectSpriteAnimation03
                 dc.l    $2DF6400
-                dc.l    off_19C55E
+                dc.l    IndexedObjectSpriteAnimation04
                 dc.l    $2DF6000
 
 ; Loads object graphics attributes and stamps its pattern into the terrain map
@@ -672,7 +672,7 @@ Terrain_StampObjectPattern_Return:                      ; CODE XREF: Terrain_Sta
                 rts
 ; End of function Terrain_StampObjectPattern
 ; ---------------------------------------------------------------------------
-Terrain_ObjectStampPattern: dc.l    word_19C4A4         ; DATA XREF: ROM:Terrain_ObjectStampPatternPointers   o  ; was: off_2A9D8
+Terrain_ObjectStampPattern: dc.l    Terrain_StampObjectSpriteMapping  ; DATA XREF: ROM:Terrain_ObjectStampPatternPointers   o  ; was: off_2A9D8
                 dc.l    $2D66000, $40FFE0
                 dc.l    $FFE8, $FFF0
                 dc.l    $FFF8, 0

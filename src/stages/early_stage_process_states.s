@@ -473,7 +473,7 @@ Stage7_InitializeScrollState:                           ; DATA XREF: ROM:0000C88
 ; ---------------------------------------------------------------------------
 Stage7_InitialTileAssetLoadList:    dc.w    7           ; field_0  ; was: stru_CCBE
                                         ; DATA XREF: Stage_InitStage7+E   o
-                dc.l    tiles_19BE86                    ; field_2
+                dc.l    Stage7InitialTileArt            ; field_2
                 dc.w    $5BE0                           ; field_6
                 dc.w    $FFFF
 
