@@ -462,7 +462,7 @@
     { "file": "src/data/stage2_phase2_assets.s", "subsystem": "data", "start": "0x1B10FA", "end": "0x1B3A25" },
     { "file": "src/data/shared_stage18_and_stage20_mapping_data.s", "subsystem": "data", "start": "0x1B3A26", "end": "0x1B3A9D" },
     { "file": "src/data/stage20_assets.s", "subsystem": "data", "start": "0x1B3A9E", "end": "0x1B6F85" },
-    { "file": "src/data/seven_force_cutscene_assets.s", "subsystem": "data", "start": "0x1B6F86", "end": "0x1BE761" },
+    { "file": "src/data/seven_forces_artemis_and_victory_assets.s", "subsystem": "data", "start": "0x1B6F86", "end": "0x1BE761" },
     { "file": "src/data/stage3_assets.s", "subsystem": "data", "start": "0x1BE762", "end": "0x1CE4F7" },
     { "file": "src/data/stage24_scene_sprite_mapping.s", "subsystem": "data", "start": "0x1CE4F8", "end": "0x1CE515" },
     { "file": "src/data/stage21_tile_art.s", "subsystem": "data", "start": "0x1CE516", "end": "0x1CEC6B" },

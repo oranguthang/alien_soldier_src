@@ -375,7 +375,7 @@
                 include "src/data/stage2_phase2_assets.s"
                 include "src/data/shared_stage18_and_stage20_mapping_data.s"
                 include "src/data/stage20_assets.s"
-                include "src/data/seven_force_cutscene_assets.s"
+                include "src/data/seven_forces_artemis_and_victory_assets.s"
                 include "src/data/stage3_assets.s"
                 include "src/data/stage24_scene_sprite_mapping.s"
                 include "src/data/stage21_tile_art.s"

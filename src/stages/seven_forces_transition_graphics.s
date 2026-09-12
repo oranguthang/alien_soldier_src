@@ -370,22 +370,22 @@ Stage_SevenForcesInitializeArtemisCameraAndAssets:      ; CODE XREF: Stage_Seven
 ; ---------------------------------------------------------------------------
 Gfx_ArtemisInitialAssetTransfers:   dc.w    7           ; field_0 ; was: stru_EEA6
                                         ; DATA XREF: Stage_SevenForcesInitializeArtemisCameraAndAssets+38   o
-                dc.l    tiles_1B6F86                    ; field_2
+                dc.l    SevenForcesArtemisTileArt0000   ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1B8CBC                    ; field_2
+                dc.l    SevenForcesArtemisTileArt1F00   ; field_2
                 dc.w    $1F00                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1BB632                     ; field_2
+                dc.l    SevenForcesArtemisMappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1BB6A4                     ; field_2
+                dc.l    SevenForcesArtemisMappingData4020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B82E8                     ; field_2
+                dc.l    SevenForcesArtemisMappingData6800  ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B83A8                     ; field_2
+                dc.l    SevenForcesArtemisMappingData2020  ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 
@@ -452,13 +452,13 @@ Cutscene_SevenForcesLoadGraphics:                       ; CODE XREF: Cutscene_Se
 ; ---------------------------------------------------------------------------
 Gfx_SevenForcesCutsceneAssetTransfers:  dc.w    7       ; field_0 ; was: stru_EF92
                                         ; DATA XREF: Cutscene_SevenForcesLoadGraphics+C   o
-                dc.l    tiles_1BBC4E                    ; field_2
+                dc.l    SevenForcesVictoryCutsceneTileArt1F00  ; field_2
                 dc.w    $1F00                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1BCFFE                     ; field_2
+                dc.l    SevenForcesVictoryCutsceneMappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1BD048                     ; field_2
+                dc.l    SevenForcesVictoryCutsceneMappingData4020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    $FFFF
 

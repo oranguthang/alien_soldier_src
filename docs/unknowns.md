@@ -5616,3 +5616,21 @@ the semantic review upper bound rises from 3,139 to 3,145 solely because those
 six reviewed aliases do not need duplicate address records. The enforced
 address-derived ceiling falls from 924 to 910; the remaining backlog comprises
 831 RAM equates and 79 preserved-data labels.
+
+The Seven Forces asset pass removes all fifteen address-derived definitions
+from the former `data/seven_force_cutscene_assets.s`. The first six source
+starts are selected by `Gfx_ArtemisInitialAssetTransfers`; the final three are
+selected by `Gfx_SevenForcesCutsceneAssetTransfers` during the victory scene.
+The corrected `data/seven_forces_artemis_and_victory_assets.s` filename records
+both demonstrated owners without splitting a compact, contiguous 29-line ROM
+bank into formal fragments.
+
+Each source name records only the proven consumer, data class, and type-record
+destination. Nine unique source addresses receive exact static audit records.
+Six binary-backed exclusive-end aliases retain provenance and fold into the
+following payload boundaries. Provenance rises from 15,141 to 15,156 mappings,
+the audit registry from 12,296 to 12,305, and the semantic review upper bound
+rises from 3,145 to 3,151 solely because those six reviewed aliases do not need
+duplicate address records. The enforced address-derived ceiling falls from
+910 to 895; the remaining backlog comprises 831 RAM equates and 64 preserved-
+data labels.
