@@ -1,9 +1,9 @@
 Player_SpawnCircleAttack:                               ; DATA XREF: ROM:00017F30   o  ; was: sub_18530
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
-                tst.w   (word_FF8238).w
+                tst.w   (WeaponFireCooldown).w
                 bpl.w   Weapon_FireNoOp
-                move.w  #$38,(word_FF8238).w            ; '8'
+                move.w  #$38,(WeaponFireCooldown).w     ; '8'
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_CircleAttack_CheckSlots:                         ; CODE XREF: Player_SpawnCircleAttack+26   j  ; was: loc_1854C

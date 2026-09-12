@@ -21,15 +21,15 @@ Player_SpawnProjectile:                                 ; CODE XREF: Player_Phoe
                 bne.s   Player_SpawnProjectile_UseAlternateParameters
                 move.w  #$26,$26(a0)                    ; '&'
                 subi.w  #$1E,(PlayerHealth).w
-                move.w  #$801E,(word_FF8262).w
-                move.w  #$30,(word_FF8268).w            ; '0'
+                move.w  #$801E,(HealthDeltaDisplayValue).w
+                move.w  #$30,(HealthDeltaDisplayTimer).w  ; '0'
                 rts
 ; ---------------------------------------------------------------------------
 Player_SpawnProjectile_UseAlternateParameters:          ; CODE XREF: Player_SpawnProjectile+60   j  ; was: loc_17476
                 move.w  #$23,$26(a0)                    ; '#'
                 subi.w  #$32,(PlayerHealth).w           ; '2'
-                move.w  #$8032,(word_FF8262).w
-                move.w  #$30,(word_FF8268).w            ; '0'
+                move.w  #$8032,(HealthDeltaDisplayValue).w
+                move.w  #$30,(HealthDeltaDisplayTimer).w  ; '0'
                 rts
 ; End of function Player_SpawnProjectile
 ; Calculates weapon data table offset
@@ -258,27 +258,27 @@ Player_UpperTerrainAnimationIndices:    dc.w    0, $C, $10, $C, 0, 8, 4, 8  ; wa
 
 ; Renders a transient signed three-digit value as four OAM sprites
 UI_RenderTransientValue:
-                tst.w   (word_FF8262).w                 ; was: sub_17702
+                tst.w   (HealthDeltaDisplayValue).w     ; was: sub_17702
                 beq.w   UI_RenderTransientValue_Return
                 tst.b   (FrameControlFlags).w
                 bmi.s   UI_RenderTransientValue_BuildSprites
-                subq.w  #1,(word_FF8268).w
+                subq.w  #1,(HealthDeltaDisplayTimer).w
                 bpl.s   UI_RenderTransientValue_UpdatePosition
-                clr.w   (word_FF8262).w
+                clr.w   (HealthDeltaDisplayValue).w
 UI_RenderTransientValue_Return:                         ; CODE XREF: UI_RenderTransientValue+4   j  ; was: locret_1771A
                 rts
 ; ---------------------------------------------------------------------------
 UI_RenderTransientValue_UpdatePosition:                 ; CODE XREF: UI_RenderTransientValue+12   j  ; was: loc_1771C
                 btst    #0,(FrameCounter+1).w
                 bne.s   UI_RenderTransientValue_BuildSprites
-                subq.w  #1,(word_FF8266).w
+                subq.w  #1,(TransientValueScreenY).w
 UI_RenderTransientValue_BuildSprites:                   ; CODE XREF: UI_RenderTransientValue+C   j  ; was: loc_17728
                                         ; UI_RenderTransientValue+20   j
-                move.b  (word_FF8262).w,d0
+                move.b  (HealthDeltaDisplayValue).w,d0
                 andi.w  #$10,d0
                 addi.w  #-$3841,d0
                 lea     (Math_PackedBCDLookup).l,a0
-                move.w  (word_FF8262).w,d4
+                move.w  (HealthDeltaDisplayValue).w,d4
                 andi.w  #$FFF,d4
                 asl.w   #1,d4
                 move.b  (a0,d4.w),d1
@@ -292,8 +292,8 @@ UI_RenderTransientValue_BuildSprites:                   ; CODE XREF: UI_RenderTr
                 addi.w  #-$383C,d2
                 addi.w  #-$383C,d3
                 move.w  #0,d4
-                move.w  (word_FF8264).w,d5
-                move.w  (word_FF8266).w,d6
+                move.w  (TransientValueScreenX).w,d5
+                move.w  (TransientValueScreenY).w,d6
                 cmpi.w  #$A0,d6
                 bpl.s   UI_RenderTransientValue_UseClampedY
                 move.w  #$A0,d6

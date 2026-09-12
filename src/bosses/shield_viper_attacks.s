@@ -73,8 +73,8 @@ Boss_ShieldViperUpdatePlayerTrackingPass:               ; DATA XREF: ROM:0004E01
                 bne.s   Boss_ShieldViperPlayerTrackingPassReturn
                 subq.w  #1,$4A(a5)
                 beq.s   Boss_ShieldViperFinishPlayerTrackingPass
-                move.w  (word_FF8248).w,d0
-                move.w  (word_FF824A).w,d1
+                move.w  (PlayerCenterX).w,d0
+                move.w  (PlayerCenterY).w,d1
                 move.w  #$10,$48(a5)
                 bsr.w   Boss_ShieldViperChooseRotationTowardTarget
 Boss_ShieldViperPlayerTrackingPassReturn:               ; CODE XREF: Boss_ShieldViperBeginTwoPassPlayerTrackingCycle+26   j  ; was: locret_4E68A

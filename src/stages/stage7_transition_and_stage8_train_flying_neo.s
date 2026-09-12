@@ -145,7 +145,7 @@ Stage8_InitializeFlyingNeoApproach_Return:              ; CODE XREF: Stage8_Init
 Stage8_UpdateFlyingNeoApproachDelay:                    ; DATA XREF: ROM:0000C8A0   o  ; was: sub_CF9A
                 subq.w  #1,(dword_FFA960+2).w
                 bpl.s   Stage8_UpdateFlyingNeoApproachEffects
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.s   Stage8_UpdateFlyingNeoApproachEffects
                 addq.w  #2,(word_FFA950).w
                 clr.l   (dword_FFA964).w

@@ -179,29 +179,29 @@ word_FF80D4             equ     $FFFF80D4
 word_FF80D6             equ     $FFFF80D6
 word_FF80E6             equ     $FFFF80E6
 byte_FF80EC             equ     $FFFF80EC
-word_FF80EE             equ     $FFFF80EE
+ColorFadePhase          equ     $FFFF80EE               ; was: word_FF80EE
 PaletteFadeColorOffset  equ     $FFFF80F0               ; was: word_FF80F0
 PaletteFadeMode         equ     $FFFF80F2               ; was: word_FF80F2
 PaletteFadeMaskStatus   equ     $FFFF80F4               ; was: word_FF80F4
 PaletteFadeControlFlags equ     $FFFF80F8               ; was: byte_FF80F8
 AlternateTimeBonusSound equ     $FFFF80FA               ; was: byte_FF80FA
 word_FF8100             equ     $FFFF8100
-word_FF8102             equ     $FFFF8102
-word_FF8104             equ     $FFFF8104
-word_FF8110             equ     $FFFF8110
-word_FF8112             equ     $FFFF8112
-word_FF8114             equ     $FFFF8114
-dword_FF8116            equ     $FFFF8116
-dword_FF811A            equ     $FFFF811A
-dword_FF811E            equ     $FFFF811E
-dword_FF8122            equ     $FFFF8122
-word_FF8126             equ     $FFFF8126
+WaveParameterIndex      equ     $FFFF8102               ; was: word_FF8102
+WaveStateOffset         equ     $FFFF8104               ; was: word_FF8104
+HUDDynamicStripTileAttr equ     $FFFF8110               ; was: word_FF8110
+HUDDynamicStripYOffset  equ     $FFFF8112               ; was: word_FF8112
+EnemySpawnDirectorState equ     $FFFF8114               ; was: word_FF8114
+EnemySpawnDelayTimer    equ     $FFFF8116               ; was: dword_FF8116
+EnemySpawnClearedLongA  equ     $FFFF811A               ; was: dword_FF811A
+EnemySpawnClearedLongB  equ     $FFFF811E               ; was: dword_FF811E
+EnemySpawnClearedLongC  equ     $FFFF8122               ; was: dword_FF8122
+ActivePickupCountMinus1 equ     $FFFF8126               ; was: word_FF8126
 dword_FF8128            equ     $FFFF8128
 dword_FF812C            equ     $FFFF812C
 dword_FF8130            equ     $FFFF8130
 dword_FF8134            equ     $FFFF8134
-word_FF8138             equ     $FFFF8138
-word_FF813A             equ     $FFFF813A
+ScriptedInputActive     equ     $FFFF8138               ; was: word_FF8138
+ScriptedInputTimeout    equ     $FFFF813A               ; was: word_FF813A
 FrameFreezeTimer        equ     $FFFF813C               ; was: word_FF813C
 FrameControlFlags       equ     $FFFF813E               ; was: byte_FF813E
 PaletteRGBAdjustLevel   equ     $FFFF8140               ; was: word_FF8140
@@ -214,92 +214,92 @@ FontTileDMASourceOffset equ     $FFFF814A               ; was: word_FF814A
 XiTigerConfigIndex      equ     $FFFF814C               ; was: word_FF814C
 BossHealth              equ     $FFFF8200               ; was: word_FF8200
 BossMaxHealth           equ     $FFFF8202               ; was: word_FF8202
-byte_FF8204             equ     $FFFF8204
+StageTimerFrameCounter  equ     $FFFF8204               ; was: byte_FF8204
 DisplayedBossHealth     equ     $FFFF8206               ; was: word_FF8206
 DisplayedPlayerHealth   equ     $FFFF820A               ; was: word_FF820A
-word_FF820C             equ     $FFFF820C
-word_FF8210             equ     $FFFF8210
+StatusDisplayModeOffset equ     $FFFF820C               ; was: word_FF820C
+CombatPercentIndex      equ     $FFFF8210               ; was: word_FF8210
 PaletteEffectControl    equ     $FFFF8218               ; was: word_FF8218
 PaletteEntryLists       equ     $FFFF821A               ; was: dword_FF821A
 word_FF821E             equ     $FFFF821E
 PalettePrimaryIndex     equ     $FFFF8220               ; was: word_FF8220
 PaletteSecondaryIndex   equ     $FFFF8222               ; was: word_FF8222
 word_FF8224             equ     $FFFF8224
-word_FF8226             equ     $FFFF8226
-word_FF8228             equ     $FFFF8228
-word_FF822A             equ     $FFFF822A
-word_FF822C             equ     $FFFF822C
+DebugMenuStateOffset    equ     $FFFF8226               ; was: word_FF8226
+DebugSoundRequestId     equ     $FFFF8228               ; was: word_FF8228
+DebugResourceRefill     equ     $FFFF822A               ; was: word_FF822A
+ResultsTimeBonusBCD     equ     $FFFF822C               ; was: word_FF822C
 word_FF8230             equ     $FFFF8230
-byte_FF8232             equ     $FFFF8232
+StageNumberBCD          equ     $FFFF8232               ; was: byte_FF8232
 word_FF8234             equ     $FFFF8234
 word_FF8236             equ     $FFFF8236
-word_FF8238             equ     $FFFF8238
+WeaponFireCooldown      equ     $FFFF8238               ; was: word_FF8238
 dword_FF8240            equ     $FFFF8240
 byte_FF8244             equ     $FFFF8244
 byte_FF8245             equ     $FFFF8245
 word_FF8246             equ     $FFFF8246
-word_FF8248             equ     $FFFF8248
-word_FF824A             equ     $FFFF824A
+PlayerCenterX           equ     $FFFF8248               ; was: word_FF8248
+PlayerCenterY           equ     $FFFF824A               ; was: word_FF824A
 word_FF824E             equ     $FFFF824E
 word_FF8250             equ     $FFFF8250
 word_FF8252             equ     $FFFF8252
 byte_FF825C             equ     $FFFF825C
-byte_FF825D             equ     $FFFF825D
+ContactDamageCooldown   equ     $FFFF825D               ; was: byte_FF825D
 byte_FF8260             equ     $FFFF8260
-word_FF8262             equ     $FFFF8262
-word_FF8264             equ     $FFFF8264
-word_FF8266             equ     $FFFF8266
-word_FF8268             equ     $FFFF8268
+HealthDeltaDisplayValue equ     $FFFF8262               ; was: word_FF8262
+TransientValueScreenX   equ     $FFFF8264               ; was: word_FF8264
+TransientValueScreenY   equ     $FFFF8266               ; was: word_FF8266
+HealthDeltaDisplayTimer equ     $FFFF8268               ; was: word_FF8268
 word_FF826A             equ     $FFFF826A
 byte_FF826C             equ     $FFFF826C
-word_FF826E             equ     $FFFF826E
-word_FF8270             equ     $FFFF8270
-word_FF8272             equ     $FFFF8272
-word_FF8274             equ     $FFFF8274
-word_FF8276             equ     $FFFF8276
-word_FF8278             equ     $FFFF8278
-word_FF827A             equ     $FFFF827A
+SpawnedEnemyTileAttr    equ     $FFFF826E               ; was: word_FF826E
+StandardEnemyTileAttr   equ     $FFFF8270               ; was: word_FF8270
+EnemyProjectileTileAttr equ     $FFFF8272               ; was: word_FF8272
+BirdEnemyTileAttr       equ     $FFFF8274               ; was: word_FF8274
+PhaseEnemyTileAttr      equ     $FFFF8276               ; was: word_FF8276
+Stage10WaspTileAttr     equ     $FFFF8278               ; was: word_FF8278
+CirclingEnemyTileAttr   equ     $FFFF827A               ; was: word_FF827A
 word_FF829E             equ     $FFFF829E
-byte_FF82A0             equ     $FFFF82A0
+StageAssetCommandBuffer equ     $FFFF82A0               ; was: byte_FF82A0
 dword_FF8300            equ     $FFFF8300
 word_FF8304             equ     $FFFF8304
-word_FF8306             equ     $FFFF8306
+LowTimeWarningTimer     equ     $FFFF8306               ; was: word_FF8306
 byte_FF8308             equ     $FFFF8308
 dword_FF830A            equ     $FFFF830A
 byte_FF830E             equ     $FFFF830E
-byte_FF830F             equ     $FFFF830F
+PlayerInputMask         equ     $FFFF830F               ; was: byte_FF830F
 MessageAdvanceButtons   equ     $FFFF8310               ; was: byte_FF8310
 byte_FF8311             equ     $FFFF8311
-byte_FF8478             equ     $FFFF8478
-byte_FF8488             equ     $FFFF8488
-dword_FF84A0            equ     $FFFF84A0
-byte_FF84B0             equ     $FFFF84B0
-dword_FF8500            equ     $FFFF8500
-byte_FF8510             equ     $FFFF8510
-word_FF8512             equ     $FFFF8512
-word_FF851E             equ     $FFFF851E
-word_FF8520             equ     $FFFF8520
-word_FF8522             equ     $FFFF8522
-word_FF8532             equ     $FFFF8532
-byte_FF8534             equ     $FFFF8534
-word_FF8554             equ     $FFFF8554
-dword_FF8560            equ     $FFFF8560
-byte_FF8570             equ     $FFFF8570
-word_FF8572             equ     $FFFF8572
-word_FF857E             equ     $FFFF857E
-word_FF8580             equ     $FFFF8580
-word_FF8582             equ     $FFFF8582
-word_FF858A             equ     $FFFF858A
-byte_FF85A8             equ     $FFFF85A8
-word_FF85B6             equ     $FFFF85B6
-word_FF85B8             equ     $FFFF85B8
-word_FF85BA             equ     $FFFF85BA
-word_FF8640             equ     $FFFF8640
-word_FF8642             equ     $FFFF8642
-word_FF8644             equ     $FFFF8644
-word_FF8646             equ     $FFFF8646
-word_FF8648             equ     $FFFF8648
-word_FF8652             equ     $FFFF8652
+WeaponIconDMABuffer     equ     $FFFF8478               ; was: byte_FF8478
+WeaponIconDMABufferEnd  equ     $FFFF8488               ; was: byte_FF8488
+PrimaryHUDDMABuffer     equ     $FFFF84A0               ; was: dword_FF84A0
+PrimaryHUDTileBuffer    equ     $FFFF84B0               ; was: byte_FF84B0
+WeaponDebugDMABuffer    equ     $FFFF8500               ; was: dword_FF8500
+WeaponDebugTileBuffer   equ     $FFFF8510               ; was: byte_FF8510
+DebugHealthCursorTile   equ     $FFFF8512               ; was: word_FF8512
+DebugHealthHighTile     equ     $FFFF851E               ; was: word_FF851E
+DebugHealthLowTile      equ     $FFFF8520               ; was: word_FF8520
+BossClearCursorTile     equ     $FFFF8522               ; was: word_FF8522
+PaletteEntryCursorTile  equ     $FFFF8532               ; was: word_FF8532
+PalettePreviewBuffer    equ     $FFFF8534               ; was: byte_FF8534
+ColorEditCursorTile     equ     $FFFF8554               ; was: word_FF8554
+BossDebugDMABuffer      equ     $FFFF8560               ; was: dword_FF8560
+BossDebugTileBuffer     equ     $FFFF8570               ; was: byte_FF8570
+DebugSoundCursorTile    equ     $FFFF8572               ; was: word_FF8572
+DebugSoundHighTile      equ     $FFFF857E               ; was: word_FF857E
+DebugSoundLowTile       equ     $FFFF8580               ; was: word_FF8580
+PaletteLineCursorTile   equ     $FFFF8582               ; was: word_FF8582
+PaletteLineNumberTile   equ     $FFFF858A               ; was: word_FF858A
+StageTimerTileBuffer    equ     $FFFF85A8               ; was: byte_FF85A8
+DebugColorRedTile       equ     $FFFF85B6               ; was: word_FF85B6
+DebugColorGreenTile     equ     $FFFF85B8               ; was: word_FF85B8
+DebugColorBlueTile      equ     $FFFF85BA               ; was: word_FF85BA
+ScrollPlaneBufferOffset equ     $FFFF8640               ; was: word_FF8640
+TargetReticleScanDelay  equ     $FFFF8642               ; was: word_FF8642
+ScriptedInputStepTimer  equ     $FFFF8644               ; was: word_FF8644
+ScriptedInputTargetX    equ     $FFFF8646               ; was: word_FF8646
+ScriptedInputDelay      equ     $FFFF8648               ; was: word_FF8648
+ScriptedPlayerWorldX    equ     $FFFF8652               ; was: word_FF8652
 DebugMenuPageOffset     equ     $FFFF8660               ; was: word_FF8660
 DebugPaletteLineOffset  equ     $FFFF8662               ; was: word_FF8662
 DebugPaletteEntryOffset equ     $FFFF8664               ; was: word_FF8664

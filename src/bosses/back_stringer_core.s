@@ -304,7 +304,7 @@ Boss_BackStringerStartSweepingAttack:                   ; CODE XREF: Boss_BackSt
                 beq.s   Boss_BackStringerChooseRandomSweepDirection
 Boss_BackStringerAimSweepTowardPlayerX:                 ; CODE XREF: Boss_BackStringerStartSweepingAttack+1F6   j  ; was: loc_44A54
                                         ; Boss_BackStringerStartSweepingAttack+1FE   j
-                move.w  (word_FF8248).w,d1
+                move.w  (PlayerCenterX).w,d1
                 sub.w   $10(a5),d1
                 beq.s   Boss_BackStringerChooseRandomSweepDirection
                 move.w  d1,$17E(a5)
@@ -329,7 +329,7 @@ Boss_BackStringerSweepingAttackState:                   ; CODE XREF: Boss_BackSt
                 move.w  #$C9E0,d0
                 move.w  #$C8C0,d1
                 move.w  $29C(a5),d7
-                move.w  (word_FF8248).w,d2
+                move.w  (PlayerCenterX).w,d2
                 sub.w   $10(a5),d2
                 tst.w   $56(a5)
                 beq.s   Boss_BackStringerCompareSweepDirection
@@ -369,7 +369,7 @@ Boss_BackStringerCheckSweepCompletion:                  ; CODE XREF: Boss_BackSt
                                         ; Boss_BackStringerSweepingAttackState+28A   j
                 cmpi.w  #1,d7
                 bne.s   Boss_BackStringerAnimateSweepAndRender
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 sub.w   $10(a5),d0
                 bpl.s   Boss_BackStringerNormalizeSweepTargetDistance
                 neg.w   d0

@@ -219,7 +219,7 @@ Boss_BugmaxSelectBattlePattern:                         ; DATA XREF: ROM:0004C3F
                 clr.b   (dword_FF9418+1).w
                 clr.w   (dword_FF9424).w
                 bsr.w   Boss_BugmaxUpdateBattleMovement
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 add.w   (dword_FFA900).w,d0
                 cmpi.w  #$530,d0
                 bcc.w   Boss_BugmaxChooseRetryOrChainStrikePattern
@@ -262,7 +262,7 @@ Boss_BugmaxEnterSpreadVolleyMovementPresetWhenReady:    ; DATA XREF: ROM:0004CCB
                 tst.b   (dword_FF9418+3).w
                 beq.s   Boss_BugmaxConfigureSpreadVolleyMovementPreset
                 bne.w   Boss_BugmaxBattlePatternPresetReturn
-                move.w  (word_FF824A).w,d0
+                move.w  (PlayerCenterY).w,d0
                 add.w   (dword_FFA900).w,d0
                 cmpi.w  #$530,d0
                 bcs.w   Boss_BugmaxEnterSineVolleyMovementPreset
@@ -292,7 +292,7 @@ Boss_BugmaxChooseRetryOrChainStrikePattern:             ; CODE XREF: Boss_Bugmax
 Boss_BugmaxApplyUpperMovementBandPreset:                ; DATA XREF: ROM:Boss_BugmaxBattlePatternPresetHandlers   o  ; was: sub_4CD68
                 tst.b   (dword_FF9418+3).w
                 beq.s   Boss_BugmaxConfigureUpperMovementBandPreset
-                move.w  (word_FF824A).w,d0
+                move.w  (PlayerCenterY).w,d0
                 add.w   (dword_FFA900).w,d0
                 cmpi.w  #$530,d0
                 bcs.w   Boss_BugmaxEnterSineVolleyMovementPreset
@@ -391,7 +391,7 @@ Boss_BugmaxSetChainStrikeApproachTarget:                ; DATA XREF: ROM:0004C40
                 bclr    #0,(dword_FF941C).w
                 bset    #0,(dword_FF9418+1).w
                 move.w  (dword_FFA900).w,d0
-                add.w   (word_FF8248).w,d0
+                add.w   (PlayerCenterX).w,d0
                 subi.w  #$80,d0
                 move.w  d0,(dword_FF9424).w
                 move.w  #$80,$48(a5)
@@ -623,7 +623,7 @@ Boss_BugmaxUsePlayerPositionForSineVolley:              ; CODE XREF: Boss_Bugmax
 Boss_BugmaxSetSineVolleyRightSideTarget:                ; CODE XREF: Boss_BugmaxChooseSineVolleySideTarget+36   j  ; was: loc_4D12A
                                         ; Boss_BugmaxChooseSineVolleySideTarget+46   j
                 move.w  (dword_FFA900).w,d0
-                add.w   (word_FF8248).w,d0
+                add.w   (PlayerCenterX).w,d0
                 addi.w  #$D0,d0
                 move.w  d0,(dword_FF9424).w
                 rts
@@ -631,7 +631,7 @@ Boss_BugmaxSetSineVolleyRightSideTarget:                ; CODE XREF: Boss_Bugmax
 Boss_BugmaxSetSineVolleyLeftSideTarget:                 ; CODE XREF: Boss_BugmaxChooseSineVolleySideTarget+3E   j  ; was: loc_4D13C
                                         ; Boss_BugmaxChooseSineVolleySideTarget+4E   j
                 move.w  (dword_FFA900).w,d0
-                add.w   (word_FF8248).w,d0
+                add.w   (PlayerCenterX).w,d0
                 addi.w  #-$D0,d0
                 move.w  d0,(dword_FF9424).w
                 rts

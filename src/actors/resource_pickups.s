@@ -64,7 +64,7 @@ Pickup_DeactivateTargetObject:                          ; CODE XREF: Pickup_Spaw
 ; Initializes the selected pickup size in the target object
 Pickup_InitializeSelectedSize:                          ; CODE XREF: Pickup_SpawnSmallFromCurrentObject+4   j  ; was: loc_2BD46
                                         ; Pickup_SpawnLarge+2   j
-                cmpi.w  #6,(word_FF8126).w
+                cmpi.w  #6,(ActivePickupCountMinus1).w
                 bpl.s   Pickup_DeactivateTargetObject
                 move.w  #$194,(a0)
                 move.w  #$E140,2(a0)
@@ -122,8 +122,8 @@ Pickup_CheckCollection:                                 ; CODE XREF: Pickup_Upda
 Pickup_StoreResourceValue:                              ; CODE XREF: Pickup_Update+4C   j  ; was: loc_2BE0E
                                         ; Pickup_Update+4E   j
                 move.w  d0,(PlayerHealth).w
-                move.w  $48(a5),(word_FF8262).w
-                move.w  #$30,(word_FF8268).w            ; '0'
+                move.w  $48(a5),(HealthDeltaDisplayValue).w
+                move.w  #$30,(HealthDeltaDisplayTimer).w  ; '0'
 Pickup_Remove:                                          ; CODE XREF: Pickup_Update+4   j  ; was: loc_2BE1E
                 bset    #4,2(a5)
                 rts

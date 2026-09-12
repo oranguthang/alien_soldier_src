@@ -1,9 +1,9 @@
 Weapon_UpdateTargetingReticle:                          ; CODE XREF: Weapon_ConfigureState2Damage+22   j  ; was: sub_19292
                                         ; sub_17C7C:loc_17CB0   j
-                subq.w  #1,(word_FF8642).w
+                subq.w  #1,(TargetReticleScanDelay).w
                 bpl.s   Weapon_UpdateTargetingReticle_Return
 Weapon_UpdateTargetingReticle_Scan:                     ; CODE XREF: Weapon_ConfigureState8Targeting+7E   j  ; was: loc_19298
-                clr.w   (word_FF8642).w
+                clr.w   (TargetReticleScanDelay).w
                 moveq   #0,d6
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
@@ -21,7 +21,7 @@ Weapon_UpdateTargetingReticle_CheckLockOnTarget:        ; CODE XREF: Weapon_Upda
                 bne.s   Weapon_AppendTargetingReticleForObject
                 dbf     d7,Weapon_UpdateTargetingReticle_CheckLockOnTarget
 Weapon_UpdateTargetingReticle_ResetDelay:               ; CODE XREF: Weapon_UpdateTargetingReticle+14   j  ; was: loc_192C8
-                move.w  #$80,(word_FF8642).w
+                move.w  #$80,(TargetReticleScanDelay).w
 Weapon_UpdateTargetingReticle_Return:                   ; CODE XREF: Weapon_UpdateTargetingReticle+4   j  ; was: locret_192CE
                                         ; Weapon_UpdateTargetingReticle+22   j
                 rts

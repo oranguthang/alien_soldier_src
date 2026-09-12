@@ -10,7 +10,7 @@ Gfx_ResetDefaultColorFadeState:                         ; CODE XREF: Boss_LoadAs
 ; Clears color fade state variables and status flags
 Gfx_ClearColorFadeState:                                ; CODE XREF: Boss_FlyingNeoSetup+E2   p  ; was: sub_3C0E
                                         ; Boss_ViblackInit+AC   p
-                clr.w   (word_FF80EE).w
+                clr.w   (ColorFadePhase).w
                 bclr    #0,(byte_FF80EC).w
                 bclr    #3,(byte_FF80EC).w
                 rts
@@ -27,20 +27,20 @@ Gfx_ProcessColorFade:                                   ; CODE XREF: Boss_Flying
                 moveq   #0,d1
                 moveq   #0,d2
                 moveq   #0,d3
-                tst.w   (word_FF80EE).w
+                tst.w   (ColorFadePhase).w
                 bne.s   Gfx_ProcessColorFade_AdvanceStep
                 bclr    #0,(byte_FF80EC).w
                 beq.w   Gfx_ProcessColorFade_Return
-                move.w  #$A,(word_FF80EE).w
+                move.w  #$A,(ColorFadePhase).w
                 bclr    #3,(byte_FF80EC).w
                 beq.w   Gfx_ProcessColorFade_AdvanceStep
-                move.w  #$19,(word_FF80EE).w
+                move.w  #$19,(ColorFadePhase).w
 Gfx_ProcessColorFade_AdvanceStep:                       ; CODE XREF: Gfx_ProcessColorFade+A   j  ; was: loc_3C52
                                         ; Gfx_ProcessColorFade+22   j
                 moveq   #0,d2
-                subq.w  #5,(word_FF80EE).w
+                subq.w  #5,(ColorFadePhase).w
                 beq.s   Gfx_ProcessColorFade_PrepareChannelDeltas
-                move.w  (word_FF80EE).w,d2
+                move.w  (ColorFadePhase).w,d2
 Gfx_ProcessColorFade_PrepareChannelDeltas:              ; CODE XREF: Gfx_ProcessColorFade+32   j  ; was: loc_3C5E
                 move.w  d2,d3
                 asl.w   #4,d3
@@ -104,7 +104,7 @@ Gfx_InitColorFadeState:
                 lea     PaletteFade_DefaultEntryOffsets(pc),a2  ; was: sub_3CCE
                 nop
                 clr.w   (word_FF8246).w
-                clr.w   (word_FF80EE).w
+                clr.w   (ColorFadePhase).w
                 bclr    #0,(byte_FF80EC).w
                 rts
 ; End of function Gfx_InitColorFadeState
@@ -123,7 +123,7 @@ Gfx_ProcessColorFadeEffect:
 ; ---------------------------------------------------------------------------
 Gfx_ProcessColorFadeEffect_StartRandomChannelFade:      ; CODE XREF: Gfx_ProcessColorFadeEffect+14   j  ; was: loc_3D02
                 move.w  #$FFFF,(word_FF8246).w
-                clr.w   (word_FF80EE).w
+                clr.w   (ColorFadePhase).w
                 btst    #1,(byte_FF80EC).w
                 bne.w   Gfx_ProcessColorFadeEffect_Return
                 move.w  (FrameCounter).w,d0
@@ -153,15 +153,15 @@ Gfx_ProcessColorFadeEffect_PrepareRandomDeltas:         ; CODE XREF: Gfx_Process
 Gfx_RandomFadeChannelMaskTable: dc.w    1, 2, 4, 3, 6, 5, 3, 5  ; was: word_3D4E
 ; ---------------------------------------------------------------------------
 Gfx_ProcessColorFadeEffect_AdvanceOscillation:          ; CODE XREF: Gfx_ProcessColorFadeEffect+10   j  ; was: loc_3D5E
-                tst.w   (word_FF80EE).w
+                tst.w   (ColorFadePhase).w
                 bne.s   Gfx_ProcessColorFadeEffect_PrepareOscillationDeltas
                 bclr    #0,(byte_FF80EC).w
                 beq.w   Gfx_ProcessColorFadeEffect_Return
 Gfx_ProcessColorFadeEffect_PrepareOscillationDeltas:    ; CODE XREF: Gfx_ProcessColorFadeEffect+7E   j  ; was: loc_3D6E
-                move.w  (word_FF80EE).w,d2
+                move.w  (ColorFadePhase).w,d2
                 addq.w  #2,d2
                 andi.w  #$E,d2
-                move.w  d2,(word_FF80EE).w
+                move.w  d2,(ColorFadePhase).w
                 beq.s   Gfx_ProcessColorFadeEffect_LoadOscillationTargets
                 subq.w  #6,d2
 Gfx_ProcessColorFadeEffect_LoadOscillationTargets:      ; CODE XREF: Gfx_ProcessColorFadeEffect+98   j  ; was: loc_3D80

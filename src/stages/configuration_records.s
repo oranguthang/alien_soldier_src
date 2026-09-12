@@ -19,7 +19,7 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
                                         ; Stage_ApplyStage1Configuration+6   j
                 move.w  (a0)+,(word_FFA950).w
                 move.l  (a0)+,(dword_FFA20E).w
-                move.w  (a0)+,(word_FF8114).w
+                move.w  (a0)+,(EnemySpawnDirectorState).w
                 move.b  (a0)+,(PalettePrimaryIndex+1).w
                 move.b  (a0)+,(PaletteSecondaryIndex+1).w
                 move.w  (a0)+,(word_FF808A).w
@@ -44,7 +44,7 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
 ; Stage configuration record layout:
 ; +$00 word -> word_FFA950
 ; +$02 long -> dword_FFA20E
-; +$06 word -> word_FF8114
+; +$06 word -> EnemySpawnDirectorState
 ; +$08 byte -> PalettePrimaryIndex+1
 ; +$09 byte -> PaletteSecondaryIndex+1
 ; +$0A word -> word_FF808A
@@ -55,7 +55,7 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
 Stage1ConfigRecord: dc.w    0                           ; word_FFA950  ; was: stru_127A8
                                         ; DATA XREF: Stage_ApplyStage1Configuration   o
                 dc.l    Stage1_ObjectSpawnList          ; dword_FFA20E
-                dc.w    2                               ; word_FF8114
+                dc.w    2                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -71,7 +71,7 @@ Stage1ConfigRecord: dc.w    0                           ; word_FFA950  ; was: st
 Stage2ConfigRecord: dc.w    $A                          ; word_FFA950  ; was: stru_127C6
                                         ; DATA XREF: Stage_ApplyStage2Configuration   o
                 dc.l    Stage2_ObjectSpawnList          ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -87,7 +87,7 @@ Stage2ConfigRecord: dc.w    $A                          ; word_FFA950  ; was: st
 Stage3ConfigRecord: dc.w    $12                         ; word_FFA950  ; was: stru_127E4
                                         ; DATA XREF: Stage_ApplyStage3Configuration   o
                 dc.l    Stage3_ObjectSpawnList          ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -103,7 +103,7 @@ Stage3ConfigRecord: dc.w    $12                         ; word_FFA950  ; was: st
 Stage4ConfigRecord: dc.w    $22                         ; word_FFA950  ; was: stru_12802
                                         ; DATA XREF: Stage_ApplyStage4Configuration   o
                 dc.l    Stage4_ObjectSpawnList          ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    4                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -119,7 +119,7 @@ Stage4ConfigRecord: dc.w    $22                         ; word_FFA950  ; was: st
 Stage5ConfigRecord: dc.w    $2E                         ; word_FFA950  ; was: stru_12820
                                         ; DATA XREF: Stage_ApplyStage5Configuration   o
                 dc.l    Stage5_ObjectSpawnList          ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -135,7 +135,7 @@ Stage5ConfigRecord: dc.w    $2E                         ; word_FFA950  ; was: st
 Stage6ConfigRecord: dc.w    $38                         ; word_FFA950  ; was: stru_1283E
                                         ; DATA XREF: Stage_ApplyStage6Configuration   o
                 dc.l    Stage6_ObjectSpawnList          ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -151,7 +151,7 @@ Stage6ConfigRecord: dc.w    $38                         ; word_FFA950  ; was: st
 Stage7ConfigRecord: dc.w    $40                         ; word_FFA950  ; was: stru_1285C
                                         ; DATA XREF: Stage_ApplyStage7Configuration   o
                 dc.l    Stage7_ObjectSpawnList          ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -167,7 +167,7 @@ Stage7ConfigRecord: dc.w    $40                         ; word_FFA950  ; was: st
 Stage8ConfigRecord: dc.w    $50                         ; word_FFA950  ; was: stru_1287A
                                         ; DATA XREF: Stage_InitializeStage8   o
                 dc.l    Stage8_ObjectSpawnList          ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -183,7 +183,7 @@ Stage8ConfigRecord: dc.w    $50                         ; word_FFA950  ; was: st
 Stage9ConfigRecord: dc.w    $62                         ; word_FFA950  ; was: stru_12898
                                         ; DATA XREF: Stage_InitializeStage9   o
                 dc.l    Stage9_EmptyObjectSpawnList     ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -199,7 +199,7 @@ Stage9ConfigRecord: dc.w    $62                         ; word_FFA950  ; was: st
 Stage10ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_128B6
                                         ; DATA XREF: Stage_ApplyStage10Configuration   o
                 dc.l    Stage10_ObjectSpawnList         ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -215,7 +215,7 @@ Stage10ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
 Stage11ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: stru_128D4
                                         ; DATA XREF: Stage_ApplyStage11Configuration   o
                 dc.l    Stage11_ObjectSpawnList         ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -231,7 +231,7 @@ Stage11ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: st
 Stage12ConfigRecord:    dc.w    $14                     ; word_FFA950  ; was: stru_128F2
                                         ; DATA XREF: Stage_ApplyStage12Configuration   o
                 dc.l    Stage12_ObjectSpawnList         ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -247,7 +247,7 @@ Stage12ConfigRecord:    dc.w    $14                     ; word_FFA950  ; was: st
 Stage13ConfigRecord:    dc.w    $34                     ; word_FFA950  ; was: stru_12910
                                         ; DATA XREF: Stage_ApplyStage13Configuration   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -263,7 +263,7 @@ Stage13ConfigRecord:    dc.w    $34                     ; word_FFA950  ; was: st
 Stage14ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: stru_1292E
                                         ; DATA XREF: Stage_ApplyStage14Configuration   o
                 dc.l    Stage14_ObjectSpawnList         ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    4                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -279,7 +279,7 @@ Stage14ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: st
 Stage15ConfigRecord:    dc.w    $4A                     ; word_FFA950  ; was: stru_1294C
                                         ; DATA XREF: Stage_ApplyStage15Configuration   o
                 dc.l    Stage15_ObjectSpawnList         ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    4                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -295,7 +295,7 @@ Stage15ConfigRecord:    dc.w    $4A                     ; word_FFA950  ; was: st
 Stage16ConfigRecord:    dc.w    $56                     ; word_FFA950  ; was: stru_1296A
                                         ; DATA XREF: Stage_InitializeStage16   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -311,7 +311,7 @@ Stage16ConfigRecord:    dc.w    $56                     ; word_FFA950  ; was: st
 Stage17BossConfigRecord:    dc.w    $6C                 ; word_FFA950  ; was: stru_12988
                                         ; DATA XREF: Stage_InitializeStage17Boss+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -327,7 +327,7 @@ Stage17BossConfigRecord:    dc.w    $6C                 ; word_FFA950  ; was: st
 Stage18ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_129A6
                                         ; DATA XREF: Stage_InitializeStage18   o
                 dc.l    Stage18_ObjectSpawnList         ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -343,7 +343,7 @@ Stage18ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
 Stage19ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: stru_129C4
                                         ; DATA XREF: Stage_InitializeStage19   o
                 dc.l    Stage19_ObjectSpawnList         ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -359,7 +359,7 @@ Stage19ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: st
 UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; word_FFA950  ; was: stru_129E2
                                         ; DATA XREF: UnreferencedApplyStage20Variant1Configuration   o
                 dc.l    $80000000                       ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -375,7 +375,7 @@ UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; word_FFA950  ; was: s
 UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; word_FFA950  ; was: stru_12A00
                                         ; DATA XREF: UnreferencedApplyStage20Variant2Configuration   o
                 dc.l    $80000000                       ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -391,7 +391,7 @@ UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; word_FFA950  ; was: s
 UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; word_FFA950  ; was: stru_12A1E
                                         ; DATA XREF: UnreferencedApplyStage20Variant3Configuration   o
                 dc.l    $80000000                       ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -407,7 +407,7 @@ UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; word_FFA950  ; was: s
 UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; word_FFA950  ; was: stru_12A3C
                                         ; DATA XREF: UnreferencedApplyStage20Variant4Configuration   o
                 dc.l    $80000000                       ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -423,7 +423,7 @@ UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; word_FFA950  ; was: s
 Stage20ConfigRecord:    dc.w    $70                     ; word_FFA950  ; was: stru_12A5A
                                         ; DATA XREF: Stage_InitializeStage20+18   o
                 dc.l    $80000000                       ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -439,7 +439,7 @@ Stage20ConfigRecord:    dc.w    $70                     ; word_FFA950  ; was: st
 Stage21ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_12A78
                                         ; DATA XREF: Stage_InitializeStage21+C   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $E                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -455,7 +455,7 @@ Stage21ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
 Stage22ConfigRecord:    dc.w    $2C                     ; word_FFA950  ; was: stru_12A96
                                         ; DATA XREF: Stage_InitializeStage22+C   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $E                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -471,7 +471,7 @@ Stage22ConfigRecord:    dc.w    $2C                     ; word_FFA950  ; was: st
 Stage23ConfigRecord:    dc.w    $2E                     ; word_FFA950  ; was: stru_12AB4
                                         ; DATA XREF: Stage_InitializeStage23+C   o
                 dc.l    Stage23_EmptyObjectSpawnList    ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    $12                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -487,7 +487,7 @@ Stage23ConfigRecord:    dc.w    $2E                     ; word_FFA950  ; was: st
 Stage24ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: stru_12AD2
                                         ; DATA XREF: Stage_ApplyStage24Configuration   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -503,7 +503,7 @@ Stage24ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: st
 UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; word_FFA950  ; was: stru_12AF0
                                         ; DATA XREF: UnreferencedApplyFlaggedConfigurationA+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -519,7 +519,7 @@ UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; word_FFA950  ; was: st
 UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; word_FFA950  ; was: stru_12B0E
                                         ; DATA XREF: UnreferencedApplyFlaggedConfigurationB+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
@@ -535,7 +535,7 @@ UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; word_FFA950  ; was: st
 Stage25ConfigRecord:    dc.w    $76                     ; word_FFA950  ; was: stru_12B2C
                                         ; DATA XREF: Stage_ApplyStage25Configuration   o
                 dc.l    Stage25_ObjectSpawnList         ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
@@ -551,7 +551,7 @@ Stage25ConfigRecord:    dc.w    $76                     ; word_FFA950  ; was: st
 Stage26ConfigRecord:    dc.w    $8A                     ; word_FFA950  ; was: stru_12B4A
                                         ; DATA XREF: Stage_ApplyStage26Configuration   o
                 dc.l    Stage_EmptyObjectSpawnList      ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A

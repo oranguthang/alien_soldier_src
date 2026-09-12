@@ -176,7 +176,7 @@ Enemy_Stage11FishRiseToEntryHeightState_Return:         ; CODE XREF: Enemy_Stage
 ; End of function Enemy_Stage11FishRiseToEntryHeightState
 ; Continues rising until reaching the player's vertical band
 Enemy_Stage11FishRiseTowardPlayerState:                 ; DATA XREF: ROM:0002EB78   o  ; was: sub_2EBE0
-                move.w  (word_FF824A).w,d0
+                move.w  (PlayerCenterY).w,d0
                 addi.w  #$40,d0                         ; '@'
                 cmp.w   $14(a5),d0
                 blt.s   Enemy_Stage11FishRiseTowardPlayerState_Return
@@ -197,12 +197,12 @@ Enemy_Stage11FishBrakeVerticalMotionState_Return:       ; CODE XREF: Enemy_Stage
 ; End of function Enemy_Stage11FishBrakeVerticalMotionState
 ; Tracks player height for 64 frames and snapshots the target height
 Enemy_Stage11FishTrackPlayerHeightState:                ; DATA XREF: ROM:0002EB7C   o  ; was: sub_2EC14
-                move.w  (word_FF824A).w,d0
+                move.w  (PlayerCenterY).w,d0
                 bsr.w   Enemy_AdjustStage11FishVerticalVelocity
                 subq.w  #1,$48(a5)
                 bne.s   Enemy_Stage11FishTrackPlayerHeightState_Return
                 addq.w  #2,4(a5)
-                move.w  (word_FF824A).w,$4C(a5)
+                move.w  (PlayerCenterY).w,$4C(a5)
                 move.w  #$10,$48(a5)
 Enemy_Stage11FishTrackPlayerHeightState_Return:         ; CODE XREF: Enemy_Stage11FishTrackPlayerHeightState+C   j  ; was: locret_2EC32
                 rts

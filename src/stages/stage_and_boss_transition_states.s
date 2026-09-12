@@ -194,7 +194,7 @@ StageTransition_UpdateDestroyerProtoBackdropFade:       ; DATA XREF: ROM:0000F10
 StageTransition_CompleteDestroyerProtoBackdropFade:     ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+18   j  ; was: loc_F33E
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA958).w
-                clr.w   (word_FF820C).w
+                clr.w   (StatusDisplayModeOffset).w
                 clr.b   (byte_FFA209).w
 StageTransition_DestroyerProtoBackdropFadeReturn:       ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+20   j  ; was: locret_F34E
                 rts
@@ -471,7 +471,7 @@ StageTransition_WaitForWolfGaropaTransitionTrigger:     ; DATA XREF: ROM:0000F12
                 bpl.s   StageTransition_WolfGaropaTriggerWaitReturn
                 tst.w   (word_FF8230).w
                 bne.s   StageTransition_WolfGaropaTriggerWaitReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.s   StageTransition_WolfGaropaTriggerWaitReturn
                 move.b  #$8F,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
@@ -648,7 +648,7 @@ StageTransition_WaitForMissirayExitSignals:             ; DATA XREF: ROM:0000F14
                 bne.s   StageTransition_MissirayExitWaitReturn
                 tst.w   (word_FF8230).w
                 bne.s   StageTransition_MissirayExitWaitReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.s   StageTransition_MissirayExitWaitReturn
                 move.b  #$9F,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
@@ -771,7 +771,7 @@ StageTransition_WaitForStage24CompletionSignals:        ; DATA XREF: ROM:0000F15
                 beq.s   StageTransition_Stage24CompletionWaitReturn
                 tst.w   (word_FF8230).w
                 bne.s   StageTransition_Stage24CompletionWaitReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.s   StageTransition_Stage24CompletionWaitReturn
                 addq.w  #2,(StageTableIndex).w
                 move.b  #$8F,(PendingStageBGMRequest).w

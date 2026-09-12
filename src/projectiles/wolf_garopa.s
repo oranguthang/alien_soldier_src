@@ -129,7 +129,7 @@ Boss_WolfGaropaUpdateOrbFrameAndTiles:                  ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaUpdateMetaspriteAndOrb
 ; Set the orb-facing flag from its horizontal position relative to the camera
 Boss_WolfGaropaUpdateOrbFacingFlag:                     ; CODE XREF: Boss_WolfGaropaUpdateBattleStartWait+B2   p  ; was: sub_503AC
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 sub.w   $9D0(a5),d0
                 move.w  d0,d1
                 bpl.s   Boss_WolfGaropaCheckOrbFacingDistance

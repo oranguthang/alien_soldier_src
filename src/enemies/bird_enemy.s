@@ -1,6 +1,6 @@
 Enemy_InitBirdSprite:                                   ; CODE XREF: Enemy_BirdInit+2   p  ; was: sub_2DA3A
                 move.w  #$6F00,2(a5)
-                move.w  (word_FF8274).w,d1
+                move.w  (BirdEnemyTileAttr).w,d1
                 or.w    (word_FF808A).w,d1
                 move.w  d1,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'
@@ -337,9 +337,9 @@ Enemy_BirdAITracking:                                   ; CODE XREF: Enemy_BirdA
                 subi.w  #$20,d0                         ; ' '
                 move.w  d0,$4E(a5)
 Enemy_BirdAITracking_UpdateTarget:                      ; CODE XREF: Enemy_BirdAITracking+8   j  ; was: loc_2DDDA
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 add.w   $4C(a5),d0
-                move.w  (word_FF824A).w,d1
+                move.w  (PlayerCenterY).w,d1
                 subi.w  #$60,d1                         ; '`'
                 add.w   $4E(a5),d1
                 sub.w   $10(a5),d0

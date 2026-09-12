@@ -3,7 +3,7 @@ Scroll_PreparePlaneBuffersAndRegisterShadows:           ; CODE XREF: StoryScreen
                                         ; StoryScreen_MainLoop+56   p
                 move.w  #$8230,(VDPReg2Shadow).w
                 move.w  #$8407,(VDPReg4Shadow).w
-                tst.w   (word_FF8640).w
+                tst.w   (ScrollPlaneBufferOffset).w
                 beq.s   Scroll_PreparePlaneBufferValues
                 move.w  #$8238,(VDPReg2Shadow).w
                 move.w  #$8406,(VDPReg4Shadow).w
@@ -15,14 +15,14 @@ Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_Prep
                 move.b  (byte_FFA95A).w,d5
                 movea.w #(HScrollBuffer-M68K_RAM),a0
                 movea.w #(word_FFE480-M68K_RAM),a1
-                adda.w  (word_FF8640).w,a0
-                adda.w  (word_FF8640).w,a1
+                adda.w  (ScrollPlaneBufferOffset).w,a0
+                adda.w  (ScrollPlaneBufferOffset).w,a1
                 move.w  (dword_FFA900).w,d0
                 neg.w   d0
                 move.w  (word_FFA012).w,d1
                 bsr.w   Scroll_WriteHorizontalPlaneBuffer
                 movea.w #(VScrollBuffer-M68K_RAM),a0
-                adda.w  (word_FF8640).w,a0
+                adda.w  (ScrollPlaneBufferOffset).w,a0
                 move.w  (dword_FFA904).w,d0
                 neg.w   d0
                 add.w   (word_FFA012).w,d0
@@ -30,14 +30,14 @@ Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_Prep
                 move.b  (byte_FFA95B).w,d5
                 movea.w #(word_FFE402-M68K_RAM),a0
                 movea.w #(byte_FFE482-M68K_RAM),a1
-                suba.w  (word_FF8640).w,a0
-                suba.w  (word_FF8640).w,a1
+                suba.w  (ScrollPlaneBufferOffset).w,a0
+                suba.w  (ScrollPlaneBufferOffset).w,a1
                 move.w  (dword_FFA908).w,d0
                 neg.w   d0
                 move.w  (word_FFA016).w,d1
                 bsr.w   Scroll_WriteHorizontalPlaneBuffer
                 movea.w #(word_FFEC02-M68K_RAM),a0
-                suba.w  (word_FF8640).w,a0
+                suba.w  (ScrollPlaneBufferOffset).w,a0
                 move.w  (dword_FFA90C).w,d0
                 neg.w   d0
                 add.w   (word_FFA016).w,d0

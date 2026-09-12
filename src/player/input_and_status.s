@@ -3,7 +3,7 @@ Input_ReadPlayerInput:                                  ; CODE XREF: Player_Upda
                 bne.s   Input_ReadPlayerInput_Return
                 move.b  (word_FFF706).w,$69(a5)
                 move.b  (word_FFF708).w,$6A(a5)
-                move.b  (byte_FF830F).w,d0
+                move.b  (PlayerInputMask).w,d0
                 and.b   d0,$69(a5)
                 and.b   d0,$6A(a5)
 Input_ReadPlayerInput_Return:                           ; CODE XREF: Input_ReadPlayerInput+4   j  ; was: locret_16B22
@@ -81,7 +81,7 @@ Player_CalculateCenterPosition:                         ; CODE XREF: Player_Upda
                 add.w   d1,d0
                 asr.w   #1,d0
                 add.w   $10(a5),d0
-                move.w  d0,(word_FF8248).w
+                move.w  d0,(PlayerCenterX).w
                 move.b  $28(a5),d0
                 ext.w   d0
                 move.b  $29(a5),d1
@@ -89,7 +89,7 @@ Player_CalculateCenterPosition:                         ; CODE XREF: Player_Upda
                 add.w   d1,d0
                 asr.w   #1,d0
                 add.w   $14(a5),d0
-                move.w  d0,(word_FF824A).w
+                move.w  d0,(PlayerCenterY).w
                 rts
 ; End of function Player_CalculateCenterPosition
 ; Manages player invulnerability and flash timer

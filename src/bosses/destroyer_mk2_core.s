@@ -629,7 +629,7 @@ Boss_DestroyerMK2AdvanceSineScrollWave:                 ; CODE XREF: Boss_Destro
                 clr.w   (dword_FF941C).w
                 addq.w  #2,(dword_FF9418+2).w
                 andi.w  #$1E,(dword_FF9418+2).w
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 sub.w   $10(a5),d0
                 move.w  d0,$48(a5)
 Boss_DestroyerMK2ApplySineScrollWaveReturn:             ; CODE XREF: Boss_DestroyerMK2ApplySineScrollWaveState+3A   j  ; was: locret_4AFBC

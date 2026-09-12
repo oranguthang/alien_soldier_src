@@ -1,5 +1,5 @@
 UI_RenderWeaponStatusHUD:                               ; CODE XREF: UI_UpdateGameplayHUD+108   p  ; was: sub_12E50
-                movea.w #(byte_FF8510-M68K_RAM),a0
+                movea.w #(WeaponDebugTileBuffer-M68K_RAM),a0
                 movea.w a0,a3
                 move.w  (WeaponSlotOffset).w,d0
                 addi.w  #-$5DA0,d0
@@ -70,7 +70,7 @@ UI_RenderWeaponStatusHUD_UpdateCombatPercentTimer:      ; CODE XREF: UI_RenderWe
                 bra.s   UI_RenderWeaponStatusHUD_PadRow
 ; ---------------------------------------------------------------------------
 UI_RenderWeaponStatusHUD_WriteCombatPercent:            ; CODE XREF: UI_RenderWeaponStatusHUD+A2   j  ; was: loc_12EFC
-                move.w  (word_FF8210).w,d0
+                move.w  (CombatPercentIndex).w,d0
                 move.w  #$C7BF,(a0)+
                 asr.w   #1,d0
                 lea     CombatPercentDisplayTable(pc),a3
@@ -97,7 +97,7 @@ UI_RenderWeaponStatusHUD_FillRowPadding:                ; CODE XREF: UI_RenderWe
                 move.w  d0,(a0)+
                 dbf     d7,UI_RenderWeaponStatusHUD_FillRowPadding
 UI_QueueWeaponStatusTransfer:                           ; CODE XREF: UI_RenderWeaponStatusHUD+E6   j  ; was: loc_12F42
-                movea.w #(byte_FF8510-M68K_RAM),a5
+                movea.w #(WeaponDebugTileBuffer-M68K_RAM),a5
                 move.w  #$83,-(a5)
                 move.w  #$510C,-(a5)
                 move.w  #$9588,-(a5)
@@ -118,7 +118,7 @@ CombatPercentDisplayTable:  dc.w    5, $1015, $2025, $3035, $4045, $5055, $6065,
                                         ; DATA XREF: UI_RenderWeaponStatusHUD+B6   o
 
 UI_RenderStageTimerAndBossHealth:                       ; CODE XREF: UI_UpdateGameplayHUD+104   j  ; was: sub_12FBC
-                movea.w #(byte_FF85A8-M68K_RAM),a0
+                movea.w #(StageTimerTileBuffer-M68K_RAM),a0
                 bra.s   UI_RenderStageTimerAndBossHealth_CheckTimerAlert
 ; ---------------------------------------------------------------------------
 UI_RenderStageTimerAndBossHealth_BlankTimer:            ; CODE XREF: UI_RenderStageTimerAndBossHealth+42   j  ; was: loc_12FC2
@@ -137,9 +137,9 @@ UI_RenderStageTimerAndBossHealth_CheckTimerAlert:       ; CODE XREF: UI_RenderSt
                 bpl.s   UI_RenderStageTimerAndBossHealth_WriteTimer
                 btst    #0,(byte_FFA272).w
                 bne.s   UI_RenderStageTimerAndBossHealth_WriteTimer
-                subq.w  #1,(word_FF8306).w
+                subq.w  #1,(LowTimeWarningTimer).w
                 bpl.s   UI_RenderStageTimerAndBossHealth_WriteTimer
-                move.w  #$26,(word_FF8306).w            ; '&'
+                move.w  #$26,(LowTimeWarningTimer).w    ; '&'
                 move.b  #$40,d0                         ; '@'
                 jsr     (Sound_PlaySFX).l
                 bra.s   UI_RenderStageTimerAndBossHealth_BlankTimer
@@ -162,7 +162,7 @@ UI_RenderStageTimerAndBossHealth_WriteTimer:            ; CODE XREF: UI_RenderSt
                 addi.w  #-$384C,d1
                 move.w  d1,(a0)+
 UI_RenderStageTimerAndBossHealth_RenderBossHealth:      ; CODE XREF: UI_RenderStageTimerAndBossHealth+14   j  ; was: loc_13032
-                movea.w #(byte_FF8570-M68K_RAM),a0
+                movea.w #(BossDebugTileBuffer-M68K_RAM),a0
                 btst    #3,(ControlLayoutFlags).w
                 beq.s   UI_RenderStageTimerAndBossHealth_UpdateDisplayedBossHealth
                 move.w  #$C7E2,d0
@@ -255,7 +255,7 @@ UI_RenderStageTimerAndBossHealth_FillBossHealthPadding:  ; CODE XREF: UI_RenderS
                 dbf     d7,UI_RenderStageTimerAndBossHealth_FillBossHealthPadding
 UI_RenderStageTimerAndBossHealth_QueueBossHealthTransfer:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+124   j  ; was: loc_1311E
                                         ; UI_RenderStageTimerAndBossHealth+156   j
-                movea.w #(byte_FF8570-M68K_RAM),a5
+                movea.w #(BossDebugTileBuffer-M68K_RAM),a5
                 move.w  #$83,-(a5)
                 move.w  #$518C,-(a5)
                 move.w  #$95B8,-(a5)
@@ -386,7 +386,7 @@ UI_RenderPackedBCDDigits_Advance:                       ; CODE XREF: UI_RenderPa
                 rts
 ; End of function UI_RenderPackedBCDDigits
 UI_RenderScoreDisplay:                                  ; CODE XREF: UI_UpdateGameplayHUD+122   j  ; was: sub_13246
-                movea.w #(byte_FF84B0-M68K_RAM),a0
+                movea.w #(PrimaryHUDTileBuffer-M68K_RAM),a0
                 move.w  #$C7F4,(a0)+
                 move.w  #$C7F5,(a0)+
                 move.w  #$C7F6,(a0)+

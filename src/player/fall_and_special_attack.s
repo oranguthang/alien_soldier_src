@@ -18,7 +18,7 @@ Player_InitAirDashEnd:                                  ; CODE XREF: Player_Dash
                 move.l  #$12000,$1C(a5)
                 move.w  #$FFFF,$48(a5)
                 clr.w   $4A(a5)
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 rts
 ; End of function Player_EndDashState
 ; Initializes a timed transition into the common falling state
@@ -31,7 +31,7 @@ Player_InitFallingTransition:                           ; CODE XREF: Player_Chec
                 move.w  #$FFFF,$48(a5)
                 move.w  #4,$4A(a5)
                 clr.w   (word_FF8224).w
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 rts
 ; End of function Player_InitFallingTransition
 ; Handles player falling state with gravity
@@ -214,7 +214,7 @@ Player_InitHardLanding:                                 ; CODE XREF: Player_Hand
                 move.l  #$FFF86000,$1C(a5)
                 clr.l   $18(a5)
                 move.w  #6,$52(a5)
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 rts
 ; End of function Player_InitHardLanding
 ; Handles bounce state with gravity and terrain collision checks
@@ -288,7 +288,7 @@ Player_ApplyHorizontalVelocity:                         ; CODE XREF: Player_Appl
 ; Initializes special attack state
 Player_InitSpecialAttack:                               ; CODE XREF: Player_HandleFallingState+9C   j  ; was: sub_15F6A
                 bclr    #0,(byte_FF826C).w
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #$4E,4(a5)                      ; 'N'
                 move.l  $18(a5),d0
                 asr.l   #2,d0

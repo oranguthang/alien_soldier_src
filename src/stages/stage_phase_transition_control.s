@@ -16,7 +16,7 @@ Stage_StartNextPhaseBanner:                             ; CODE XREF: Camera_Stag
                 addq.w  #2,(word_FFA950).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
 Stage_AdvancePhaseForInterstageTransition:              ; CODE XREF: Stage_StartInterstageTransition+1C   j  ; was: loc_103C0
-                clr.w   (word_FF820C).w
+                clr.w   (StatusDisplayModeOffset).w
                 addq.w  #2,(StageTableIndex).w
                 bclr    #7,(dword_FFA20E).w
                 clr.b   (byte_FFA209).w

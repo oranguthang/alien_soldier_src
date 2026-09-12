@@ -55,7 +55,7 @@ Enemy_ToggleSpriteVisibility_Set:                       ; CODE XREF: Enemy_Toggl
 ; Initializes sprite and collision parameters for the phase enemy
 Enemy_SetupPhasePatternSprite:                          ; CODE XREF: Enemy_PhasePatternInit+2   p  ; was: sub_2CF8A
                 move.w  #$EF00,2(a5)
-                move.w  (word_FF8276).w,d1
+                move.w  (PhaseEnemyTileAttr).w,d1
                 or.w    (word_FF808A).w,d1
                 move.w  d1,$E(a5)
                 btst    #7,$5F(a5)

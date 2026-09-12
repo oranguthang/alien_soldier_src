@@ -2,7 +2,7 @@ EnemySpawn_UpdateDirector:                              ; CODE XREF: Sys_Gamepla
                 tst.b   (byte_FFF705).w
                 bmi.s   EnemySpawn_DirectorReturn
                 movea.w #(word_FFA400-M68K_RAM),a5
-                move.w  (word_FF8114).w,d0
+                move.w  (EnemySpawnDirectorState).w,d0
                 movea.w EnemySpawn_DirectorHandlers(pc,d0.w),a0
                 adda.l  #EnemySpawn_ResetDirectorState,a0
                 jmp     (a0)
@@ -16,18 +16,18 @@ EnemySpawn_DirectorHandlers:    dc.w    EnemySpawn_DirectorReturn-EnemySpawn_Res
 ; Resets the enemy-spawn director state
 EnemySpawn_ResetDirectorState:                          ; DATA XREF: EnemySpawn_UpdateDirector+12   o  ; was: sub_2C35A
                                         ; ROM:EnemySpawn_DirectorHandlers   o
-                clr.w   (word_FF8114).w
+                clr.w   (EnemySpawnDirectorState).w
 EnemySpawn_DirectorReturn:                              ; CODE XREF: EnemySpawn_UpdateDirector+4   j  ; was: locret_2C35E
                                         ; EnemySpawn_StartDirectorTimer+E   j
                 rts
 ; End of function EnemySpawn_ResetDirectorState
 ; Starts a new randomized enemy-spawn delay
 EnemySpawn_StartDirectorTimer:                          ; DATA XREF: ROM:0002C356   o  ; was: sub_2C360
-                addq.w  #2,(word_FF8114).w
-                move.w  #$A0,(dword_FF8116).w
+                addq.w  #2,(EnemySpawnDirectorState).w
+                move.w  #$A0,(EnemySpawnDelayTimer).w
 ; Counts down the spawn delay and creates an enemy when space permits
 EnemySpawn_UpdateDirectorTimer:                         ; DATA XREF: ROM:0002C358   o  ; was: loc_2C36A
-                subq.w  #1,(dword_FF8116).w
+                subq.w  #1,(EnemySpawnDelayTimer).w
                 bpl.w   EnemySpawn_DirectorReturn
                 bsr.w   EnemySpawn_ResetDelay
                 bsr.w   EnemySpawn_AllocateObjectSlot
@@ -45,10 +45,10 @@ EnemySpawn_UpdateDirectorTimer:                         ; DATA XREF: ROM:0002C35
 ; Clears the enemy-spawn director's timer and search state
 EnemySpawn_ClearDirectorData:
                 moveq   #0,d0                           ; was: sub_2C3A8
-                move.l  d0,(dword_FF8116).w
-                move.l  d0,(dword_FF811A).w
-                move.l  d0,(dword_FF811E).w
-                move.l  d0,(dword_FF8122).w
+                move.l  d0,(EnemySpawnDelayTimer).w
+                move.l  d0,(EnemySpawnClearedLongA).w
+                move.l  d0,(EnemySpawnClearedLongB).w
+                move.l  d0,(EnemySpawnClearedLongC).w
                 rts
 ; End of function EnemySpawn_ClearDirectorData
 ; Chooses the next randomized spawn delay
@@ -56,7 +56,7 @@ EnemySpawn_ResetDelay:                                  ; CODE XREF: EnemySpawn_
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
                 addi.w  #$20,d0                         ; ' '
-                move.w  d0,(dword_FF8116).w
+                move.w  d0,(EnemySpawnDelayTimer).w
                 rts
 ; End of function EnemySpawn_ResetDelay
 ; Selects the vertical origin for the terrain search
@@ -178,7 +178,7 @@ EnemySpawn_InitializeObjectPosition_Return:             ; CODE XREF: EnemySpawn_
 Enemy_SetupBehaviorSprite:                              ; CODE XREF: Enemy_MainStateMachine+2   p  ; was: sub_2C4DC
                                         ; Enemy_BeginDestructionDelay+6   p
                 move.w  #$EF00,2(a5)
-                move.w  (word_FF826E).w,d1
+                move.w  (SpawnedEnemyTileAttr).w,d1
                 or.w    (word_FF808A).w,d1
                 move.w  d1,$E(a5)
                 btst    #7,$5F(a5)

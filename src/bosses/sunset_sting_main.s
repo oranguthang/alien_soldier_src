@@ -125,7 +125,7 @@ Boss_SunsetStingInitSegmentLoop:                        ; CODE XREF: Boss_Sunset
                 cmpa.l  #Boss_SunsetStingSecondarySegmentTemplate,a1
                 bne.s   Boss_SunsetStingInitSecondarySegmentGroup
                 move.w  #8,4(a4)
-                move.w  #2,(word_FF8640).w
+                move.w  #2,(ScrollPlaneBufferOffset).w
                 lea     Boss_SunsetStingInitialTileLoadCommand(pc),a0
                 jsr     (Tilemap_QueueIndexedRows).l
                 bra.w   Boss_SunsetStingNextState
@@ -666,7 +666,7 @@ Boss_SunsetStingFinalDefeatUpdate:                      ; CODE XREF: Boss_Sunset
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 jsr     (TransitionEffect_SpawnAtOwner).l
-                clr.w   (word_FF8640).w
+                clr.w   (ScrollPlaneBufferOffset).w
                 clr.l   $1C(a5)
                 addi.w  #$38,$14(a0)                    ; '8'
                 andi.w  #$FFFE,6(a5)

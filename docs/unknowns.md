@@ -5745,3 +5745,105 @@ Provenance rises from 15,244 to 15,250 mappings and the audit registry from
 12,374 to 12,380. The semantic review upper bound remains 3,170 because every
 new provenance mapping has a matching audit record. The enforced address-
 derived ceiling falls from 807 to 801, all still confined to RAM equates.
+
+The wave/HUD/enemy-spawn RAM pass replaces six address-derived equates. Two
+fields are the wave deformation's table index and handler-table byte offset;
+two directly supply the optional six-entry HUD strip's tile attribute and
+signed Y offset. The enemy-spawn director exposes a three-state handler offset
+and a randomized countdown whose low word is reloaded from `$20` through
+`$9F`. The adjacent `$FFFF8100` control word and `$FFFF811A`--`$FFFF8122`
+clear-only storage remain raw because their stronger meanings are not yet
+proved.
+
+All six fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,250 to 15,256 mappings and the audit registry from
+12,380 to 12,386. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 801 to 795, all still confined to RAM equates.
+
+The adjacent enemy-spawn/pickup/scripted-input pass replaces six more raw RAM
+equates. Three longwords are deliberately named only for their observed
+clear-only behavior because reconstructed source has no consumer. Collision
+list construction proves that `ActivePickupCountMinus1` begins at minus one
+and advances for objects carrying the same field-`$23` bit set by pickup
+initialization. The remaining pair exposes the scripted-input active gate and
+its `$100`/`$200`-frame timeout, both used by post-boss movement and stage
+transition gating.
+
+All six fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,256 to 15,262 mappings and the audit registry from
+12,386 to 12,392. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 795 to 789, all still confined to RAM equates.
+
+The HUD/debug/command-buffer RAM pass replaces twelve address-derived
+equates. It identifies the color-fade phase, the 60-frame stage-timer divider,
+the transient combat-percent index, debug-menu state and request fields, two
+packed-BCD display values, the contact-damage cooldown, and the low-time
+warning cadence. Buffer bounds are established directly: compact stage asset
+commands expand from `$FFFF82A0`, while weapon-icon setup predecrements from
+exclusive end `$FFFF8488` to build the 16-byte block consumed from
+`$FFFF8478` during VBlank.
+
+All twelve fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,262 to 15,274 mappings and the audit registry from
+12,392 to 12,404. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 789 to 777, all still confined to RAM equates.
+
+The stage enemy tile-attribute pass replaces seven consecutive raw RAM
+equates. The compact stage asset expander writes shared source slots `$00`
+through `$0C` into `$FFFF826E`--`$FFFF827A`; direct consumers establish the
+slot roles for spawned and standard enemies, projectiles, birds, phase-pattern
+enemies, the Stage 10 wasp, and the circling/Stage 9 fly family. The names
+describe tile attributes rather than claiming identities for the still-
+generic compressed source assets.
+
+All seven fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,274 to 15,281 mappings and the audit registry from
+12,404 to 12,411. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 777 to 770, all still confined to RAM equates.
+
+The player targeting and health-feedback RAM pass replaces nine raw equates.
+The player hitbox calculation proves the shared center X/Y targets used by
+enemy and boss aim code. Weapon handlers and update establish the firing
+cooldown, while debug selection and collision update establish the infinite
+resource refill switch. Damage, pickup, HUD, and sprite-render paths jointly
+prove the signed health-delta value and timer; its X has no reconstructed
+writer, so the RAM map records that limitation rather than inventing one.
+
+All nine fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,281 to 15,290 mappings and the audit registry from
+12,411 to 12,420. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 770 to 761, all still confined to RAM equates.
+
+The HUD DMA/debug tile-buffer pass replaces twenty-two raw equates. Three
+16-byte VDP command blocks are proved by matching predecrement producers and
+the VBlank consumer's three-longword/two-word reads. Their adjacent tile
+regions contain primary health/score, weapon, boss, and timer output and are
+reused by the two debug pages. Direct writes identify the health, sound,
+palette-entry, palette-line, and color-component cursor/digit positions plus
+the sixteen-word palette preview.
+
+All twenty-two fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,290 to 15,312 mappings and the audit registry from
+12,420 to 12,442. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 761 to 739, all still confined to RAM equates.
+
+The player-input, scripted-movement, targeting, and scroll-buffer RAM pass
+replaces seven raw equates. `PlayerInputMask` is applied to both held and
+pressed controller bytes, while state setup selects the `$7F`, `$73`, and
+`$70` masks. The scripted-input dispatcher computes a player world-X cache;
+its movement states compare that value with fixed sequence targets and use two
+separate delay fields for step pacing. The targeting reticle has an independent
+scan delay, and the scroll-plane offset selects alternate VDP plane bases while
+shifting both horizontal and vertical buffer pairs.
+
+All seven fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,312 to 15,319 mappings and the audit registry from
+12,442 to 12,449. The semantic review upper bound remains 3,170 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 739 to 732, all still confined to RAM equates.

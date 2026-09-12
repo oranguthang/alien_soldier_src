@@ -5,7 +5,7 @@ Boss_GustheadSpawnFragmentCluster:                      ; CODE XREF: Boss_Gusthe
                 move.w  #2,d3
                 move.w  $674(a5),d6
                 move.w  $10(a5),d0
-                sub.w   (word_FF8248).w,d0
+                sub.w   (PlayerCenterX).w,d0
                 bmi.s   Boss_GustheadAimFragmentClusterRight
                 move.w  #$10,d4
                 move.w  $670(a5),d5

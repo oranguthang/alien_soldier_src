@@ -13,7 +13,7 @@ UI_InitializeGameVariables_Common:                      ; CODE XREF: UI_SetPassw
                 move.w  #$200,(PlayerHealth).w
                 move.w  #$200,(PlayerMaxHealth).w
                 clr.l   (ScoreValueBCD).w
-                clr.w   (word_FF822A).w
+                clr.w   (DebugResourceRefill).w
                 move.w  #3,(ContinueCreditsBCD).w
                 clr.w   (PostStageEntryCountBCD).w
                 clr.w   (DestroyedEnemyCountBCD).w
@@ -40,7 +40,7 @@ StageEntry_InitializeGameplayState_CopyAmmo:            ; was: loc_1CD5A
                 move.w  (word_FFA26C).w,(word_FFA264).w
                 move.w  (word_FFA26E).w,(word_FFA266).w
                 clr.l   (ScoreValueBCD).w
-                clr.w   (word_FF822A).w
+                clr.w   (DebugResourceRefill).w
                 clr.w   (DestroyedEnemyCountBCD).w
                 clr.w   (PlayerDamageBCD).w
                 clr.w   (word_FFFF3E).w
@@ -57,7 +57,7 @@ StageEntry_InitializeGameplayState_CopyAmmo:            ; was: loc_1CD5A
 
 ; Clears transient weapon and stage-entry state before reloading gameplay
 StageEntry_ClearTransientState:                         ; was: sub_1CDA8
-                clr.w   (word_FF822A).w
+                clr.w   (DebugResourceRefill).w
                 clr.w   (WeaponStateIndex).w
                 clr.w   (word_FF8090).w
 ; End of function StageEntry_ClearTransientState

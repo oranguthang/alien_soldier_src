@@ -1,7 +1,7 @@
 ; Dormant dispatcher with no reconstructed static caller
 UnreferencedDispatchStatusDisplayMode:                  ; was: sub_13488
                 move.w  #$5200,d2
-                move.w  (word_FF820C).w,d0
+                move.w  (StatusDisplayModeOffset).w,d0
                 movea.w UnreferencedStatusDisplayModeOffsets(pc,d0.w),a0
                 adda.l  #UnreferencedStatusDisplayNoOp,a0
                 jmp     (a0)
@@ -29,12 +29,12 @@ UnreferencedStatusDisplayVDPCommands:   dc.w    $5200, $5280, $5300, $5380, $521
 UnreferencedCycleStatusDisplayMode:                     ; was: sub_134C6
                 subq.w  #8,d0
                 move.w  UnreferencedStatusDisplayVDPCommands(pc,d0.w),d2
-                addq.w  #2,(word_FF820C).w
+                addq.w  #2,(StatusDisplayModeOffset).w
                 andi.w  #6,d0
                 addq.w  #2,d0
                 cmpi.w  #8,d0
                 bmi.s   UnreferencedCycleStatusDisplayMode_Return
-                clr.w   (word_FF820C).w
+                clr.w   (StatusDisplayModeOffset).w
 UnreferencedCycleStatusDisplayMode_Return:              ; was: locret_134E0
                 rts
 ; End of function UnreferencedCycleStatusDisplayMode
@@ -54,7 +54,7 @@ DebugMenu_UpdateInputRepeatTimer:                       ; was: loc_1350A
                 bpl.s   DebugMenu_DispatchState
                 clr.w   (DebugMenuRepeatTimer).w
 DebugMenu_DispatchState:                                ; was: loc_13514
-                move.w  (word_FF8226).w,d0
+                move.w  (DebugMenuStateOffset).w,d0
                 movea.w DebugMenuStateOffsets(pc,d0.w),a0
                 adda.l  #DebugMenu_Initialize,a0
                 jmp     (a0)
@@ -75,11 +75,11 @@ DebugMenu_Initialize:                                   ; was: sub_1352A
                 move.w  (PlayerHealth).w,d0
                 asr.w   #4,d0
                 move.b  d0,(DebugHealthSelection).w
-                tst.w   (word_FF822A).w
+                tst.w   (DebugResourceRefill).w
                 beq.s   DebugMenu_Activate
                 move.b  #$FF,(DebugHealthSelection).w
 DebugMenu_Activate:                                     ; was: loc_1355C
-                addq.w  #2,(word_FF8226).w
+                addq.w  #2,(DebugMenuStateOffset).w
                 movea.l #DebugMenuInitialAssetLoadList,a0
                 jmp     (LoadObjData).l
 ; ---------------------------------------------------------------------------
@@ -102,7 +102,7 @@ DebugMenuActiveAssetLoadList:   dc.w    3               ; was: stru_13578
 DebugMenu_UpdateActive:                                 ; was: sub_1358A
                 tst.b   (byte_FFF705).w
                 bmi.s   DebugMenu_UpdateActivePage
-                clr.w   (word_FF8226).w
+                clr.w   (DebugMenuStateOffset).w
                 move.b  (DebugHealthSelection).w,d0
                 cmpi.b  #$FF,d0
                 bne.s   DebugMenu_ApplySelectedPlayerHealth
@@ -147,7 +147,7 @@ DebugMenu_RenderSecondaryPage:                          ; was: loc_135FE
 ; End of function DebugMenu_UpdateActive
 DebugMenu_CopyPrimaryTilemap:                           ; was: sub_1361A
                 movea.l #DebugMenuPrimaryTilemap,a0
-                movea.w #(byte_FF8510-M68K_RAM),a1
+                movea.w #(WeaponDebugTileBuffer-M68K_RAM),a1
                 moveq   #$13,d7
 DebugMenu_CopyPrimaryTilemap_NextLong:                  ; was: loc_13626
                 move.l  (a0)+,(a1)+
@@ -155,7 +155,7 @@ DebugMenu_CopyPrimaryTilemap_NextLong:                  ; was: loc_13626
                 rts
 ; End of function DebugMenu_CopyPrimaryTilemap
 DebugMenu_QueuePrimaryTilemapTransfer:                  ; was: sub_1362E
-                movea.w #(byte_FF8510-M68K_RAM),a5
+                movea.w #(WeaponDebugTileBuffer-M68K_RAM),a5
                 move.w  #$83,-(a5)
                 move.w  #$5080,-(a5)
                 move.w  #$9588,-(a5)
@@ -173,7 +173,7 @@ DebugMenuPrimaryTilemap:    dc.w    $C7B5, $C7B5, $C7D4, $C7D5, $C7D6, $C7D7, $C
 
 DebugMenu_CopySecondaryTilemap:                         ; was: sub_136A2
                 movea.l #DebugMenuSecondaryTilemap,a0
-                movea.w #(byte_FF8570-M68K_RAM),a1
+                movea.w #(BossDebugTileBuffer-M68K_RAM),a1
                 moveq   #$13,d7
 DebugMenu_CopySecondaryTilemap_NextLong:                ; was: loc_136AE
                 move.l  (a0)+,(a1)+
@@ -181,7 +181,7 @@ DebugMenu_CopySecondaryTilemap_NextLong:                ; was: loc_136AE
                 rts
 ; End of function DebugMenu_CopySecondaryTilemap
 DebugMenu_QueueSecondaryTilemapTransfer:                ; was: sub_136B6
-                movea.w #(byte_FF8570-M68K_RAM),a5
+                movea.w #(BossDebugTileBuffer-M68K_RAM),a5
                 move.w  #$83,-(a5)
                 move.w  #$5100,-(a5)
                 move.w  #$95B8,-(a5)

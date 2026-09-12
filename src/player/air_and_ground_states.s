@@ -23,7 +23,7 @@ Player_InitDashAnimation:                               ; CODE XREF: Player_Dash
                 move.w  #$A,$4A(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #$14,$5C(a5)
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 bra.w   Player_AutoFlipDirection
 ; End of function Player_InitDashState
 Player_CeilingDashState_Return:                         ; CODE XREF: Player_CeilingDashState+20   j  ; was: nullsub_43
@@ -71,7 +71,7 @@ Player_CeilingDashState_Render:                         ; CODE XREF: Player_Ceil
 ; Initializes player crouch state
 Player_InitCrouchState:                                 ; CODE XREF: Player_CeilingLandingState+68   j  ; was: sub_165A4
                                         ; Player_InitWallKickState+3A   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 clr.w   (word_FF8224).w
                 move.w  #$1E,4(a5)
                 clr.w   $48(a5)
@@ -120,7 +120,7 @@ Player_CeilingState_Return:                             ; CODE XREF: Player_Hand
 ; Initializes the landing state for contact with upper terrain
 Player_InitCeilingLandingState:                         ; CODE XREF: Player_HandleFallingState+66   j  ; was: sub_1663A
                                         ; Player_HandleBounceState+3A   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 clr.w   (word_FF8224).w
                 move.w  #$26,4(a5)                      ; '&'
                 bset    #4,$E(a5)
@@ -185,7 +185,7 @@ Player_CheckCounterInput_NotActivated:                  ; CODE XREF: Player_Chec
 Player_CheckCounterInput_Activate:                      ; CODE XREF: Player_CheckCounterInput+16   j  ; was: loc_16706
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #0,(word_FF8032).w
                 move.w  #0,(word_FF8034).w
                 clr.l   $18(a5)
@@ -249,7 +249,7 @@ Player_InitWallKickState_CheckLeft:                     ; CODE XREF: Player_Init
 ; Initializes wall kick animation with timer and direction flip
 Player_InitWallKickAnimation:                           ; CODE XREF: Player_InitWallKickState+6   j  ; was: loc_167CA
                                         ; Player_InitWallKickState+16   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #$1A,4(a5)
                 move.w  #4,$48(a5)
                 move.w  #$FFFF,$C(a5)
@@ -373,7 +373,7 @@ Player_JumpApexState:                                   ; DATA XREF: ROM:000150A
 ; Player dash effect during teleport
 Player_TeleportDash:                                    ; DATA XREF: ROM:000150B2   o  ; was: sub_16942
                 clr.w   (word_FF80E6).w
-                move.b  #$70,(byte_FF830F).w            ; 'p'
+                move.b  #$70,(PlayerInputMask).w        ; 'p'
                 bset    #0,(byte_FF8245).w
                 move.w  #$CD00,2(a5)
                 addq.w  #2,4(a5)
@@ -434,7 +434,7 @@ Player_UpdateAnimStateMinus4:                           ; DATA XREF: ROM:000150B
 ; Initializes the return half of the teleport-dash sequence
 Player_InitTeleportDashReturnState:                     ; DATA XREF: ROM:000150BE   o  ; was: sub_16A4A
                 addq.w  #2,4(a5)
-                move.b  #$70,(byte_FF830F).w            ; 'p'
+                move.b  #$70,(PlayerInputMask).w        ; 'p'
                 bset    #0,(byte_FF8245).w
                 move.w  #$CD00,2(a5)
                 jsr     (Sys_ClearObjectBlocks17).l

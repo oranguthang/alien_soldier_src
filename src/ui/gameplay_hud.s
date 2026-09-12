@@ -1,17 +1,17 @@
 UI_UpdateGameplayHUD:                                   ; CODE XREF: Sys_GameplayMainLoop+164   p  ; was: sub_12B6A
                                         ; XiTigerCutscene_Update+6   p
-                clr.l   (dword_FF84A0).w
-                clr.l   (dword_FF8500).w
-                clr.l   (dword_FF8560).w
+                clr.l   (PrimaryHUDDMABuffer).w
+                clr.l   (WeaponDebugDMABuffer).w
+                clr.l   (BossDebugDMABuffer).w
                 bra.s   UI_UpdateGameplayHUD_UpdateStageTimer
 ; Dormant input entry skipped by UI_UpdateGameplayHUD and without a static caller
 ; It conditionally queues three sound requests, then may enter the debug menu
 Debug_HandleDormantSoundAndMenuInput:                   ; was: sub_12B78
-                tst.w   (word_FF8228).w
+                tst.w   (DebugSoundRequestId).w
                 beq.s   Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle
                 btst    #6,(word_FFF708+1).w
                 beq.s   Debug_HandleDormantSoundAndMenuInput_CheckBit4
-                move.b  (word_FF8228).w,d0
+                move.b  (DebugSoundRequestId).w,d0
                 jsr     (Sound_QueueRequest).l
                 bra.s   Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle
 ; ---------------------------------------------------------------------------
@@ -29,7 +29,7 @@ Debug_HandleDormantSoundAndMenuInput_CheckBit5:         ; CODE XREF: Debug_Handl
                 jsr     (Sound_QueueRequest).l
 Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle:   ; CODE XREF: Debug_HandleDormantSoundAndMenuInput+12   j  ; was: loc_12BB8
                                         ; Debug_HandleDormantSoundAndMenuInput+26   j
-                tst.w   (word_FF8226).w
+                tst.w   (DebugMenuStateOffset).w
                 bne.w   DebugMenu_UpdateAndDispatch
                 tst.b   (byte_FFF705).w
                 bpl.s   UI_UpdateGameplayHUD_UpdateStageTimer
@@ -37,7 +37,7 @@ Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle:   ; CODE XREF: Debug_Handl
                 beq.s   UI_UpdateGameplayHUD_UpdateStageTimer
                 btst    #6,(word_FFF708).w
                 beq.s   UI_UpdateGameplayHUD_UpdateStageTimer
-                addq.w  #2,(word_FF8226).w
+                addq.w  #2,(DebugMenuStateOffset).w
 UI_UpdateGameplayHUD_UpdateStageTimer:                  ; CODE XREF: UI_UpdateGameplayHUD+C   j  ; was: loc_12BDA
                                         ; Debug_HandleDormantSoundAndMenuInput+5A   j
                 tst.b   (byte_FFF705).w
@@ -48,9 +48,9 @@ UI_UpdateGameplayHUD_UpdateStageTimer:                  ; CODE XREF: UI_UpdateGa
                 beq.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
                 tst.w   (FrameFreezeTimer).w
                 bpl.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
-                subq.b  #1,(byte_FF8204).w
+                subq.b  #1,(StageTimerFrameCounter).w
                 bpl.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
-                move.b  #$3B,(byte_FF8204).w            ; ';'
+                move.b  #$3B,(StageTimerFrameCounter).w  ; ';'
                 moveq   #1,d0
                 move.b  (StageTimeRemaining+1).w,d2
                 sub.w   d4,d4
@@ -106,7 +106,7 @@ UI_UpdateGameplayHUD_SelectAlternatingSection:          ; CODE XREF: UI_UpdateGa
 ; ---------------------------------------------------------------------------
 UI_UpdateGameplayHUD_RenderPlayerHealth:                ; CODE XREF: UI_UpdateGameplayHUD+110   j  ; was: loc_12C90
                                         ; UI_UpdateGameplayHUD+118   j
-                movea.w #(byte_FF84B0-M68K_RAM),a0
+                movea.w #(PrimaryHUDTileBuffer-M68K_RAM),a0
                 btst    #4,(ControlLayoutFlags).w
                 beq.s   UI_UpdateGameplayHUD_UpdateDisplayedPlayerHealth
                 move.w  #$C7E2,d0
@@ -118,9 +118,9 @@ UI_UpdateGameplayHUD_RenderPlayerHealth:                ; CODE XREF: UI_UpdateGa
                 bra.w   UI_UpdateGameplayHUD_PadPrimaryStatusRow
 ; ---------------------------------------------------------------------------
 UI_UpdateGameplayHUD_UpdateDisplayedPlayerHealth:       ; CODE XREF: UI_UpdateGameplayHUD+130   j  ; was: loc_12CAE
-                subq.w  #1,(word_FF8268).w
+                subq.w  #1,(HealthDeltaDisplayTimer).w
                 bpl.s   UI_UpdateGameplayHUD_ApproachCurrentPlayerHealth
-                move.w  #$FFFF,(word_FF8268).w
+                move.w  #$FFFF,(HealthDeltaDisplayTimer).w
 UI_UpdateGameplayHUD_ApproachCurrentPlayerHealth:       ; CODE XREF: UI_UpdateGameplayHUD+148   j  ; was: loc_12CBA
                 move.w  (DisplayedPlayerHealth).w,d0
                 move.w  d0,d1
@@ -221,16 +221,16 @@ UI_UpdateGameplayHUD_FillEmptyHealthSegments:           ; CODE XREF: UI_UpdateGa
                 dbf     d7,UI_UpdateGameplayHUD_FillEmptyHealthSegments
 UI_UpdateGameplayHUD_RenderHealthChange:                ; CODE XREF: UI_UpdateGameplayHUD+20A   j  ; was: loc_12DB4
                                         ; UI_UpdateGameplayHUD+23E   j
-                tst.w   (word_FF8268).w
+                tst.w   (HealthDeltaDisplayTimer).w
                 bmi.s   UI_UpdateGameplayHUD_PadPrimaryStatusRow
-                move.w  (word_FF8268).w,d0
+                move.w  (HealthDeltaDisplayTimer).w,d0
                 cmpi.w  #$12,d0
                 bmi.s   UI_UpdateGameplayHUD_WriteHealthChange
                 btst    #2,(VBlankFrameCounter+1).w
                 bne.s   UI_UpdateGameplayHUD_PadPrimaryStatusRow
 UI_UpdateGameplayHUD_WriteHealthChange:                 ; CODE XREF: UI_UpdateGameplayHUD+258   j  ; was: loc_12DCC
                 move.w  #$C7BF,d2
-                move.w  (word_FF8262).w,d0
+                move.w  (HealthDeltaDisplayValue).w,d0
                 bclr    #$F,d0
                 bne.s   UI_UpdateGameplayHUD_WriteHealthChangeSign
                 move.w  #$C7E1,d2
@@ -272,7 +272,7 @@ UI_UpdateGameplayHUD_FillPrimaryStatusRowPadding:       ; CODE XREF: UI_UpdateGa
                 dbf     d7,UI_UpdateGameplayHUD_FillPrimaryStatusRowPadding
 UI_UpdateGameplayHUD_QueuePrimaryStatusTransfer:        ; CODE XREF: UI_UpdateGameplayHUD+1A2   j  ; was: loc_12E2C
                                         ; UI_UpdateGameplayHUD+1BE   j
-                movea.w #(byte_FF84B0-M68K_RAM),a5
+                movea.w #(PrimaryHUDTileBuffer-M68K_RAM),a5
                 move.w  #$83,-(a5)
                 move.w  #$508C,-(a5)
                 move.w  #$9558,-(a5)

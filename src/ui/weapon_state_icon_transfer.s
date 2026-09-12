@@ -4,7 +4,7 @@ UI_QueuePendingWeaponStateIconTransfer:                 ; was: sub_133D4
                 cmpi.w  #1,d0
                 beq.s   UI_QueuePendingWeaponStateIconTransfer_Return
                 move.w  #1,(WeaponIconTransferState).w
-                movea.w #(byte_FF8488-M68K_RAM),a5
+                movea.w #(WeaponIconDMABufferEnd-M68K_RAM),a5
                 move.w  #$82,-(a5)
                 move.w  #$7400,-(a5)
                 lea     WeaponStateIconSourceTable(pc),a0
@@ -38,7 +38,7 @@ WeaponStateIconSourceTable: dc.l    WeaponStateIconSpriteArtA  ; was: off_1342A
 
 UI_QueueWeaponStateIconTransferFromSource:              ; was: sub_1344A
                 move.w  #1,(WeaponIconTransferState).w
-                movea.w #(byte_FF8488-M68K_RAM),a0
+                movea.w #(WeaponIconDMABufferEnd-M68K_RAM),a0
                 move.w  #$82,-(a0)
                 move.w  #$7400,-(a0)
                 lsr.l   #1,d0

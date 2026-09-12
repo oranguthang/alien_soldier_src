@@ -46,9 +46,9 @@ Weapon_DirectionIndexTable: dc.b    0, 1, 2, 3, 4, 5, 6, 7  ; was: byte_17F3A
 Weapon_FireProjectile:                                  ; DATA XREF: ROM:00017F26   o  ; was: sub_17F42
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
-                tst.w   (word_FF8238).w
+                tst.w   (WeaponFireCooldown).w
                 bpl.s   Weapon_FireProjectile_Return
-                move.w  #2,(word_FF8238).w
+                move.w  #2,(WeaponFireCooldown).w
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_FireProjectile_FindSlot:                         ; CODE XREF: Weapon_FireProjectile+22   j  ; was: loc_17F5C
@@ -140,9 +140,9 @@ Weapon_ProjectileSpriteOffsets: dc.w    $F0F8, $F4F4    ; DATA XREF: Weapon_Init
 
 ; Spawns homing projectile effect
 Weapon_SpawnHomingEffect:
-                tst.w   (word_FF8238).w                 ; was: sub_1808C
+                tst.w   (WeaponFireCooldown).w          ; was: sub_1808C
                 bpl.s   Weapon_SpawnHomingEffect_Return
-                move.w  #2,(word_FF8238).w
+                move.w  #2,(WeaponFireCooldown).w
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_SpawnHomingEffect_FindSlot:                      ; CODE XREF: Weapon_SpawnHomingEffect+1A   j  ; was: loc_1809E
@@ -226,7 +226,7 @@ Weapon_HomingEffectSpriteData:  dc.w    $457E, $5580, $557C, $5D80, $4D7E, $4D80
 Weapon_FireMultipleShots:                               ; DATA XREF: ROM:00017F28   o  ; was: sub_181BE
                 tst.w   $10(a4)
                 beq.w   Effect_SpawnRandomDebris
-                tst.w   (word_FF8238).w
+                tst.w   (WeaponFireCooldown).w
                 bpl.w   Weapon_InitSpreadShot_Return
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1
@@ -259,7 +259,7 @@ Weapon_ConsumeAmmoForSpread:
                 move.w  #$80,(PaletteRGBAdjustLevel).w  ; was: sub_18218
                 move.b  #$E0,(PaletteRGBChannelMask).w
                 move.b  #4,(PaletteRGBAdjustStep).w
-                move.w  #2,(word_FF8238).w
+                move.w  #2,(WeaponFireCooldown).w
                 subi.w  #$12,$10(a4)
                 bpl.s   Weapon_InitSpreadShot
                 clr.w   $10(a4)
@@ -313,7 +313,7 @@ Weapon_FireFourShotSpread:                              ; CODE XREF: Weapon_Fire
                 bne.s   Weapon_FireFourShotSpread_SelectAmmoCost
                 subq.w  #8,$10(a4)
 Weapon_FireFourShotSpread_SelectAmmoCost:               ; CODE XREF: Weapon_FireFourShotSpread+16   j  ; was: loc_182D8
-                move.w  #4,(word_FF8238).w
+                move.w  #4,(WeaponFireCooldown).w
                 move.w  #$14,d0
                 tst.b   (DifficultyMode).w
                 bne.s   Weapon_FireFourShotSpread_SubtractAmmo
@@ -421,9 +421,9 @@ Weapon_FireBeamWeapon:                                  ; DATA XREF: ROM:00017F2
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
                 move.b  #$C,(PaletteRGBAdjustStep).w
-                tst.w   (word_FF8238).w
+                tst.w   (WeaponFireCooldown).w
                 bpl.w   Weapon_FireBeamWeapon_Return
-                move.w  #1,(word_FF8238).w
+                move.w  #1,(WeaponFireCooldown).w
                 movea.w #(dword_FFBFC0-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_FireBeamWeapon_FindSlot:                         ; CODE XREF: Weapon_FireBeamWeapon+40   j  ; was: loc_18436

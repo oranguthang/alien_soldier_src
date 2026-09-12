@@ -1,7 +1,7 @@
 Math_CalculateAngleToPlayer:                            ; CODE XREF: Math_CalculateAngleBetween+4   p  ; was: sub_354A
                                         ; sub_2BFD0   p
-                move.w  (word_FF8248).w,d0
-                move.w  (word_FF824A).w,d1
+                move.w  (PlayerCenterX).w,d0
+                move.w  (PlayerCenterY).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1
 Math_CalculateDirectionIndex:                           ; CODE XREF: Boss_CaterpillarUpdateShipSteering+1E   p  ; was: loc_355A

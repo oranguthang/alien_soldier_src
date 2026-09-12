@@ -271,7 +271,7 @@ WeaponSetup_LoadPreviousSlotSelection:                  ; CODE XREF: WeaponSetup
                 adda.w  #$A250,a0
                 move.w  (a0),(dword_FF8128).w
                 move.w  (WeaponSlotOffset).w,(WeaponMenuSlotOffset).w
-                clr.w   (word_FF8238).w
+                clr.w   (WeaponFireCooldown).w
                 jsr     (Weapon_AdvanceCurrentState).l
                 bra.w   WeaponSetup_RenderLoadout
 ; ---------------------------------------------------------------------------
@@ -328,7 +328,7 @@ WeaponSetup_CommitForceSelection:                       ; CODE XREF: WeaponSetup
                 beq.s   WeaponSetup_RenderLoadout
                 move.b  #$DB,d0
                 jsr     (Sound_PlaySFX).l
-                clr.w   (word_FF8238).w
+                clr.w   (WeaponFireCooldown).w
                 jsr     (Weapon_AdvanceCurrentState).l
 WeaponSetup_RenderLoadout:                              ; CODE XREF: WeaponSetup_HandleShootingModeInput+8   j  ; was: loc_1F5AE
                                         ; WeaponSetup_HandleLoadoutInput+80   j

@@ -296,7 +296,7 @@ Stage12_StartTeleportTransitionToStage13:               ; DATA XREF: ROM:0000D98
                 tst.w   (MessageSequenceState).w
                 bne.w   Stage_MidgameStateReturn
                 addq.w  #2,(word_FFA950).w
-                clr.w   (word_FF820C).w
+                clr.w   (StatusDisplayModeOffset).w
                 addq.w  #2,(StageTableIndex).w
                 clr.b   (byte_FFA209).w
                 clr.w   (dword_FF806A+2).w
@@ -476,7 +476,7 @@ Stage13_StartPostBugmaxTransition:                      ; DATA XREF: ROM:0000D99
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 tst.w   (word_FF8230).w
                 bne.w   Stage_MidgameStateReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.w   Stage_MidgameStateReturn
                 move.b  #$92,d0
                 jsr     (Sound_QueueBGMOrStop).l

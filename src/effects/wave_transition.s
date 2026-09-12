@@ -19,7 +19,7 @@ UnreferencedWave_RenderTilemapToVRAM_BuildTileLoop:     ; CODE XREF: Unreference
                 movea.l d0,a2
                 dbf     d7,UnreferencedWave_RenderTilemapToVRAM_BuildTileLoop
                 movea.l #Gfx_WaveParameterTableD,a0
-                move.w  (word_FF8102).w,d0
+                move.w  (WaveParameterIndex).w,d0
                 move.w  (a0,d0.w),d0
                 move.w  #$1400,d1
                 move.w  d0,d2
@@ -39,7 +39,7 @@ UnreferencedWave_RenderTilemapToVRAM_TransferLongwordLoop:  ; CODE XREF: Unrefer
                 move.l  (a0)+,(a1)
                 dbf     d1,UnreferencedWave_RenderTilemapToVRAM_TransferLongwordLoop
                 move    #$2300,sr
-                addq.w  #2,(word_FF8102).w
+                addq.w  #2,(WaveParameterIndex).w
 UnreferencedWave_RenderTilemapToVRAM_Return:            ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+4   j  ; was: locret_2626A
                 rts
 ; End of function UnreferencedWave_RenderTilemapToVRAM
@@ -47,8 +47,8 @@ UnreferencedWave_RenderTilemapToVRAM_Return:            ; CODE XREF: Unreference
 ; Initializes the wave-scroll state and horizontal range
 Effect_InitWaveScroll:
                 move.w  #2,(word_FF8100).w              ; was: sub_2626C
-                move.w  #0,(word_FF8102).w
-                move.w  #0,(word_FF8104).w
+                move.w  #0,(WaveParameterIndex).w
+                move.w  #0,(WaveStateOffset).w
                 move.w  #$70,(word_FFEC02).w            ; 'p'
                 rts
 ; End of function Effect_InitWaveScroll
@@ -63,7 +63,7 @@ Stage_StopScrollEffect:
 ; Main controller for wave/distortion effect, dispatches to state handlers
 Effect_WaveController:
                 bsr.w   Effect_ClearWaveOutputBuffer    ; was: sub_262A0
-                movea.w (word_FF8104).w,a0
+                movea.w (WaveStateOffset).w,a0
                 movea.l Effect_WaveStateHandlers(pc,a0.w),a0
                 jmp     (a0)
 ; End of function Effect_WaveController
@@ -80,10 +80,10 @@ Effect_WaveInitialize:                                  ; DATA XREF: ROM:Effect_
                 movea.l #$FFFF9E40,a6
                 bsr.w   Gfx_GenerateWaveDeformation
                 bsr.w   Effect_WavePostUpdateNoOp
-                addq.w  #2,(word_FF8102).w
-                cmpi.w  #$1C,(word_FF8102).w
+                addq.w  #2,(WaveParameterIndex).w
+                cmpi.w  #$1C,(WaveParameterIndex).w
                 bne.w   Effect_WaveInitialize_Return
-                addq.w  #4,(word_FF8104).w
+                addq.w  #4,(WaveStateOffset).w
                 move.w  #$78,(dword_FF8040).w           ; 'x'
 Effect_WaveInitialize_Return:                           ; CODE XREF: Effect_WaveInitialize+18   j  ; was: locret_262EC
                 rts
@@ -94,7 +94,7 @@ Effect_WaveHoldState:                                   ; DATA XREF: ROM:000262B
                 bsr.w   Gfx_GenerateWaveDeformation
                 subq.w  #1,(dword_FF8040).w
                 bne.w   Effect_WaveHoldState_Return
-                addq.w  #4,(word_FF8104).w
+                addq.w  #4,(WaveStateOffset).w
                 move.w  #1,(dword_FF8040).w
 Effect_WaveHoldState_Return:                            ; CODE XREF: Effect_WaveHoldState+E   j  ; was: locret_2630A
                 rts
@@ -103,10 +103,10 @@ Effect_WaveHoldState_Return:                            ; CODE XREF: Effect_Wave
 Effect_WaveFadeOut:                                     ; DATA XREF: ROM:000262B6   o  ; was: sub_2630C
                 movea.l #$FFFF9E80,a6
                 bsr.w   Gfx_GenerateWaveDeformation
-                subq.w  #2,(word_FF8102).w
-                cmpi.w  #6,(word_FF8102).w
+                subq.w  #2,(WaveParameterIndex).w
+                cmpi.w  #6,(WaveParameterIndex).w
                 bne.w   Effect_WaveFadeOut_Return
-                addq.w  #4,(word_FF8104).w
+                addq.w  #4,(WaveStateOffset).w
 Effect_WaveFadeOut_Return:                              ; CODE XREF: Effect_WaveFadeOut+14   j  ; was: locret_26328
                 rts
 ; End of function Effect_WaveFadeOut
@@ -114,16 +114,16 @@ Effect_WaveFadeOut_Return:                              ; CODE XREF: Effect_Wave
 Effect_WaveLoopOrEnd:                                   ; DATA XREF: ROM:000262BA   o  ; was: sub_2632A
                 movea.l #$FFFF9E00,a6
                 bsr.w   Gfx_GenerateWaveDeformation
-                addq.w  #2,(word_FF8102).w
-                cmpi.w  #$1C,(word_FF8102).w
+                addq.w  #2,(WaveParameterIndex).w
+                cmpi.w  #$1C,(WaveParameterIndex).w
                 bne.w   Effect_WaveLoopOrEnd_Return
                 subq.w  #1,(dword_FF8040).w
                 bpl.w   Effect_WaveLoopOrEnd_Repeat
-                addq.w  #4,(word_FF8104).w
+                addq.w  #4,(WaveStateOffset).w
                 rts
 ; ---------------------------------------------------------------------------
 Effect_WaveLoopOrEnd_Repeat:                            ; CODE XREF: Effect_WaveLoopOrEnd+1C   j  ; was: loc_26350
-                subq.w  #4,(word_FF8104).w
+                subq.w  #4,(WaveStateOffset).w
 Effect_WaveLoopOrEnd_Return:                            ; CODE XREF: Effect_WaveLoopOrEnd+14   j  ; was: locret_26354
                 rts
 ; End of function Effect_WaveLoopOrEnd
@@ -132,9 +132,9 @@ Camera_UpdateAndRenderStageTilemapEffect:               ; DATA XREF: ROM:000262B
                 movea.l #$FFFF9E00,a6
                 bsr.w   Gfx_GenerateWaveDeformation
                 bsr.w   Effect_WavePostUpdateNoOp
-                subq.w  #2,(word_FF8102).w
+                subq.w  #2,(WaveParameterIndex).w
                 bne.w   Camera_UpdateAndRenderStageTilemapEffect_Return
-                addq.w  #4,(word_FF8104).w
+                addq.w  #4,(WaveStateOffset).w
 Camera_UpdateAndRenderStageTilemapEffect_Return:        ; CODE XREF: Camera_UpdateAndRenderStageTilemapEffect+12   j  ; was: locret_26370
                 rts
 ; End of function Camera_UpdateAndRenderStageTilemapEffect
@@ -162,7 +162,7 @@ Gfx_GenerateWaveDeformation:                            ; CODE XREF: Effect_Wave
                 move.b  #$14,(VDPReg0Shadow+1).w
                 move.b  #0,(VDPReg10Shadow+1).w
                 move.b  #$38,(VDPReg2Shadow+1).w        ; '8'
-                move.w  (word_FF8102).w,d0
+                move.w  (WaveParameterIndex).w,d0
                 movea.l #Effect_WaveStepTable,a0
                 move.w  (a0,d0.w),d0
                 moveq   #0,d1
@@ -182,7 +182,7 @@ Gfx_GenerateWaveDeformation_FillSineLoop:               ; CODE XREF: Gfx_Generat
                 lsr.w   #8,d6
                 move.w  d6,(a1)
                 dbf     d7,Gfx_GenerateWaveDeformation_FillSineLoop
-                move.w  (word_FF8102).w,d0
+                move.w  (WaveParameterIndex).w,d0
                 movea.l #Effect_WaveStartOffsetTable,a0
                 move.w  (a0,d0.w),d7
                 movea.l #$FFFF9800,a0
@@ -361,7 +361,7 @@ Gfx_BlendPixelsFullyShifted_Loop:                       ; CODE XREF: Gfx_BlendPi
 ; End of function Gfx_BlendPixelsFullyShifted
 ; Initializes wave deformation parameters from lookup tables
 Gfx_InitializeWaveParameters:                           ; CODE XREF: UnreferencedWave_RenderTilemapToVRAM+8   p  ; was: sub_265BA
-                move.w  (word_FF8102).w,d0
+                move.w  (WaveParameterIndex).w,d0
                 moveq   #0,d5
                 movea.l #$FFFF0000,a2
                 movea.w #0,a4

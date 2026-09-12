@@ -400,6 +400,118 @@ their runtime reachability remain unproven.
 | `PaletteRGBAdjustStep` | `$FFFF8143` | The RGB-adjust routine zero-extends this byte and subtracts it from the active level each update. |
 | `PlayerModeFlags` | `$FFFF8144` | Player update uses bit one to clear the object and bits zero/two to select the two Seven Forces processing modes. |
 
+## Reviewed wave, HUD, and enemy-spawn fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `WaveParameterIndex` | `$FFFF8102` | Wave routines use this even word to index parameter, step, and start-offset tables and move it in two-byte increments. |
+| `WaveStateOffset` | `$FFFF8104` | The wave controller uses this byte offset to select a longword handler; states move it by four bytes. |
+| `HUDDynamicStripTileAttr` | `$FFFF8110` | The HUD builder emits this word as the tile attribute of all six entries in the optional dynamic strip. |
+| `HUDDynamicStripYOffset` | `$FFFF8112` | The HUD builder adds this signed word to the strip's base Y coordinate; Caterpillar and Viblack flows move or remove the strip through it. |
+| `EnemySpawnDirectorState` | `$FFFF8114` | The enemy-spawn director uses this even word to select its idle, start, or timed-update handler. |
+| `EnemySpawnDelayTimer` | `$FFFF8116` | The director counts down its low word and reloads it with a randomized `$20`--`$9F` delay; reset clears the containing longword. |
+
+## Reviewed pickup and scripted-input fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `EnemySpawnClearedLongA` | `$FFFF811A` | The director reset clears this longword; reconstructed source has no other access, so its downstream purpose remains unknown. |
+| `EnemySpawnClearedLongB` | `$FFFF811E` | The director reset clears this longword; reconstructed source has no other access, so its downstream purpose remains unknown. |
+| `EnemySpawnClearedLongC` | `$FFFF8122` | The director reset clears this longword; reconstructed source has no other access, so its downstream purpose remains unknown. |
+| `ActivePickupCountMinus1` | `$FFFF8126` | Collision-list construction starts at minus one and increments for each primary object with field-`$23` bit five; pickup creation sets that bit and enforces its cap through this value. |
+| `ScriptedInputActive` | `$FFFF8138` | Script initializers set this word, completion and timeout paths clear it, and stage transitions wait for zero. |
+| `ScriptedInputTimeout` | `$FFFF813A` | Script initializers load `$100` or `$200`; the per-frame scripted-input update decrements it and clears the active word after expiry. |
+
+## Reviewed HUD, debug, and command-buffer fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `ColorFadePhase` | `$FFFF80EE` | The color-fade engine steps this word downward by five or advances its low phase modulo sixteen to derive RGB deltas. |
+| `StageTimerFrameCounter` | `$FFFF8204` | Active gameplay reloads this byte to `$3B`; each expiry decrements the packed-BCD stage timer once. |
+| `CombatPercentIndex` | `$FFFF8210` | Flagged hits copy the target damage-scale field here; the transient HUD halves it to index `CombatPercentDisplayTable`. |
+| `DebugMenuStateOffset` | `$FFFF8226` | The debug dispatcher uses this even word as its handler-table byte offset. |
+| `DebugSoundRequestId` | `$FFFF8228` | Debug controls edit and render its low byte, which the dormant handler can submit as a sound request. |
+| `ResultsTimeBonusBCD` | `$FFFF822C` | Results preserves the masked stage time here and renders its four packed-BCD digits. |
+| `StageNumberBCD` | `$FFFF8232` | The stage-index conversion writes a packed-BCD stage number that the message renderer splits into two digits. |
+| `ContactDamageCooldown` | `$FFFF825D` | Hostile collision permits contact damage only after this signed byte expires; cutscene exit reloads `$30`. |
+| `StageAssetCommandBuffer` | `$FFFF82A0` | The stage loader expands compact commands into terminated eight-byte load records beginning here. |
+| `LowTimeWarningTimer` | `$FFFF8306` | Below time `$30`, expiry reloads `$26`, plays the warning sound, and blanks the displayed timer for that frame. |
+| `WeaponIconDMABuffer` | `$FFFF8478` | VBlank submits the complete 16-byte weapon-icon VDP command block from this address. |
+| `WeaponIconDMABufferEnd` | `$FFFF8488` | Weapon-icon setup predecrements from this exclusive end while constructing the command block. |
+
+## Reviewed stage enemy tile-attribute slots
+
+`Stage_ExpandAndSubmitTileAssetCommands` writes these seven consecutive words
+from compact command indices `$00` through `$0C`. Each consumer combines the
+loaded tile base with the active palette or orientation bits.
+
+| Symbol | Address | Static consumer |
+|---|---:|---|
+| `SpawnedEnemyTileAttr` | `$FFFF826E` | Shared spawned-enemy setup. |
+| `StandardEnemyTileAttr` | `$FFFF8270` | Standard enemy sprite setup. |
+| `EnemyProjectileTileAttr` | `$FFFF8272` | Shared enemy-projectile setup. |
+| `BirdEnemyTileAttr` | `$FFFF8274` | Bird-family setup. |
+| `PhaseEnemyTileAttr` | `$FFFF8276` | Phase-pattern enemy setup. |
+| `Stage10WaspTileAttr` | `$FFFF8278` | Stage 10 wasp setup. |
+| `CirclingEnemyTileAttr` | `$FFFF827A` | Circling-enemy and Stage 9 fly setup. |
+
+## Reviewed player targeting and health-feedback fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `StatusDisplayModeOffset` | `$FFFF820C` | The dormant status-display dispatcher uses this even word as its four-entry handler-table offset; transitions clear it. |
+| `DebugResourceRefill` | `$FFFF822A` | Debug health selection `$FF` enables this word; collision update then restores maximum health and time `$5000`. |
+| `WeaponFireCooldown` | `$FFFF8238` | Fire handlers require a negative value and load weapon-specific delays; weapon update counts it down. |
+| `PlayerCenterX` | `$FFFF8248` | Player update computes hitbox midpoint plus object X; targeting code consumes the result. |
+| `PlayerCenterY` | `$FFFF824A` | Player update computes hitbox midpoint plus object Y; targeting code consumes the result. |
+| `HealthDeltaDisplayValue` | `$FFFF8262` | Damage sets bit 15 and pickups leave it clear; renderers consume the sign and lower three decimal digits. |
+| `TransientValueScreenX` | `$FFFF8264` | Transient-value rendering uses this as the first digit X and advances by eight; its source writer is not reconstructed. |
+| `TransientValueScreenY` | `$FFFF8266` | Rendering moves this Y upward every other frame and clamps it at `$A0`. |
+| `HealthDeltaDisplayTimer` | `$FFFF8268` | Damage and pickups load `$30`; it paces HUD health convergence and expires the transient value. |
+
+## Reviewed HUD DMA and debug tile buffers
+
+Each DMA buffer is exactly 16 bytes: its producer predecrements from the
+adjacent tile-buffer start, and VBlank consumes three longwords plus two words.
+The weapon and boss tile regions are reused by the two debug pages.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PrimaryHUDDMABuffer` | `$FFFF84A0` | Primary HUD transfer command block. |
+| `PrimaryHUDTileBuffer` | `$FFFF84B0` | Player-health and score tile words. |
+| `WeaponDebugDMABuffer` | `$FFFF8500` | Weapon HUD or primary-debug transfer command block. |
+| `WeaponDebugTileBuffer` | `$FFFF8510` | Weapon HUD and primary-debug tile words. |
+| `DebugHealthCursorTile` | `$FFFF8512` | Blinking health-selection cursor. |
+| `DebugHealthHighTile` | `$FFFF851E` | Health selection high hexadecimal digit. |
+| `DebugHealthLowTile` | `$FFFF8520` | Health selection low hexadecimal digit. |
+| `BossClearCursorTile` | `$FFFF8522` | Blinking boss-clear cursor. |
+| `PaletteEntryCursorTile` | `$FFFF8532` | Palette-entry cursor when channel edit is inactive. |
+| `PalettePreviewBuffer` | `$FFFF8534` | Sixteen-word selected palette preview. |
+| `ColorEditCursorTile` | `$FFFF8554` | Palette-channel cursor while color edit is active. |
+| `BossDebugDMABuffer` | `$FFFF8560` | Boss HUD or secondary-debug transfer command block. |
+| `BossDebugTileBuffer` | `$FFFF8570` | Boss HUD and secondary-debug tile words. |
+| `DebugSoundCursorTile` | `$FFFF8572` | Blinking sound-request cursor. |
+| `DebugSoundHighTile` | `$FFFF857E` | Sound request high hexadecimal digit. |
+| `DebugSoundLowTile` | `$FFFF8580` | Sound request low hexadecimal digit. |
+| `PaletteLineCursorTile` | `$FFFF8582` | Blinking palette-line cursor. |
+| `PaletteLineNumberTile` | `$FFFF858A` | Selected palette-line digit. |
+| `StageTimerTileBuffer` | `$FFFF85A8` | Stage timer portion of the boss/status tile row. |
+| `DebugColorRedTile` | `$FFFF85B6` | Selected color red-component digit. |
+| `DebugColorGreenTile` | `$FFFF85B8` | Selected color green-component digit. |
+| `DebugColorBlueTile` | `$FFFF85BA` | Selected color blue-component digit. |
+
+## Reviewed player input, scripted movement, and scroll fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PlayerInputMask` | `$FFFF830F` | The input reader ANDs both held and pressed controller bytes with this mask; player states select `$7F`, dash/Phoenix states `$73`, and teleport states `$70`. |
+| `ScrollPlaneBufferOffset` | `$FFFF8640` | Scroll preparation uses this word to select alternate VDP plane bases and offsets both horizontal and vertical buffer pairs; Sunset Sting sets it to two and clears it on exit. |
+| `TargetReticleScanDelay` | `$FFFF8642` | Targeting update decrements the word before each scan, clears it while scanning, and reloads `$80` after a complete pass finds no eligible target. |
+| `ScriptedInputStepTimer` | `$FFFF8644` | Scripted-input states load or copy this timer and count it down before advancing delayed run, input-hold, and Xi-Tiger intro steps. |
+| `ScriptedInputTargetX` | `$FFFF8646` | Post-boss and Flying Neo sequences load fixed world-X destinations and compare them with the computed scripted player position. |
+| `ScriptedInputDelay` | `$FFFF8648` | Post-boss runs load `$16` and copy it into the step timer; Flying Neo entry reuses the word as a direct `$0E`-tick vertical-motion delay. |
+| `ScriptedPlayerWorldX` | `$FFFF8652` | The scripted-input dispatcher adds the camera X coordinate to the player's screen X every update; movement states compare this world position with their target. |
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

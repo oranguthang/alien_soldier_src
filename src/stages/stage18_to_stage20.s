@@ -141,7 +141,7 @@ Stage19_StartPostJampanTransition:                      ; DATA XREF: ROM:0000E45
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 tst.w   (word_FF8230).w
                 bne.s   Stage19_StartPostJampanTransition_Return
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.s   Stage19_StartPostJampanTransition_Return
                 move.b  #0,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
@@ -181,7 +181,7 @@ UnreferencedStage20Variant1_UpdateJampanPhase_Camera:   ; CODE XREF: Unreference
 UnreferencedStage20Variant1_StartTransition:            ; DATA XREF: ROM:0000E464   o  ; was: sub_E6BA
                 tst.w   (word_FF8230).w
                 bne.w   Stage_LateGameStateReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
                 bra.w   Stage_StartInterstageTransition
@@ -208,7 +208,7 @@ UnreferencedStage20Variant2_UpdateEntity3ECPhase_Camera:  ; CODE XREF: Unreferen
 UnreferencedStage20Variant2_StartTransition:            ; DATA XREF: ROM:0000E46C   o  ; was: sub_E70A
                 tst.w   (word_FF8230).w
                 bne.w   Stage_LateGameStateReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn
                 move.b  #$8F,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
@@ -236,7 +236,7 @@ UnreferencedStage20Variant3_UpdateEntity3F0Phase_Camera:  ; CODE XREF: Unreferen
 UnreferencedStage20Variant3_StartTransition:            ; DATA XREF: ROM:0000E474   o  ; was: sub_E760
                 tst.w   (word_FF8230).w
                 bne.w   Stage_LateGameStateReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn
                 move.b  #$8F,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
@@ -264,7 +264,7 @@ UnreferencedStage20Variant4_UpdateEntity3F4Phase_Camera:  ; CODE XREF: Unreferen
 UnreferencedStage20Variant4_StartTransition:            ; DATA XREF: ROM:0000E47C   o  ; was: sub_E7B6
                 tst.w   (word_FF8230).w
                 bne.w   Stage_LateGameStateReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn
                 move.b  #$96,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w

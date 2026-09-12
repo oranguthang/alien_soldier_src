@@ -2,7 +2,7 @@
 Enemy_InitCirclingSprite:                               ; CODE XREF: Enemy_CirclingApproachState+2   p  ; was: sub_2D27C
                                         ; Enemy_Stage9FlyInit+2   p
                 move.w  #$ED00,2(a5)
-                move.w  (word_FF827A).w,d1
+                move.w  (CirclingEnemyTileAttr).w,d1
                 or.w    (word_FF808A).w,d1
                 move.w  d1,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'
@@ -47,7 +47,7 @@ Enemy_UpdateCirclingRotationSprite:                     ; CODE XREF: Enemy_Circl
                 move.l  Enemy_CirclingRotationMappings(pc,d0.w),8(a5)
                 clr.w   $C(a5)
                 lsr.w   #1,d0
-                move.w  (word_FF827A).w,d1
+                move.w  (CirclingEnemyTileAttr).w,d1
                 andi.w  #$F7FF,d1
                 or.w    (word_FF808A).w,d1
                 or.w    Enemy_CirclingRotationAttributes(pc,d0.w),d1

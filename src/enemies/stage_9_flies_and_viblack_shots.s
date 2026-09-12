@@ -131,7 +131,7 @@ Projectile_ViblackSideShotInitState:                    ; DATA XREF: ROM:Project
                 addq.w  #2,4(a5)
                 bsr.w   Enemy_UpdateCirclingRotationSprite
                 move.w  #2,$1C(a5)
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 sub.w   $10(a5),d0
                 bmi.s   Projectile_ViblackSideShotInitState_SetPositiveTurn
                 move.w  #$FFF8,$4E(a5)
@@ -144,7 +144,7 @@ Projectile_ViblackSideShotInitState_SetPositiveTurn:    ; CODE XREF: Projectile_
 ; Waits until the side shot has descended below Viblack's stored Y position
 Projectile_ViblackSideShotApproachState:                ; DATA XREF: ROM:0002D7C0   o  ; was: sub_2D802
                 move.w  $14(a5),d0
-                sub.w   (word_FF824A).w,d0
+                sub.w   (PlayerCenterY).w,d0
                 tst.w   d0
                 bmi.s   Projectile_ViblackSideShotState_Return
                 cmpi.w  #$20,d0                         ; ' '
@@ -200,7 +200,7 @@ Projectile_ViblackSideShotTrackAltitudeState_Return:    ; CODE XREF: Projectile_
 ; End of function Projectile_ViblackSideShotTrackAltitudeState
 ; Accelerates vertically toward Viblack's stored altitude
 Projectile_ViblackSideShotSteerTowardBossAltitude:      ; CODE XREF: Projectile_ViblackSideShotTrackAltitudeState   p  ; was: sub_2D886
-                move.w  (word_FF824A).w,d0
+                move.w  (PlayerCenterY).w,d0
                 sub.w   $14(a5),d0
                 beq.s   Projectile_ViblackSideShotSteerTowardBossAltitude_Return
                 tst.w   d0

@@ -83,7 +83,7 @@ Player_CheckAlternateSpecialActivation_NotActivated:    ; CODE XREF: Player_Chec
 Player_InitAlternateSpecialState:                       ; CODE XREF: Player_CheckAlternateSpecialActivation+1C   j  ; was: loc_1617E
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #0,(word_FF8032).w
                 move.w  #$FFEE,(word_FF8034).w
                 move.w  #$54,4(a5)                      ; 'T'
@@ -121,7 +121,7 @@ Player_AlternateSpecialState_SelectFrame:               ; CODE XREF: Player_Alte
 ; End of function Player_AlternateSpecialState
 ; Initializes player cutscene state clearing velocities and flags
 Player_InitCutsceneState:                               ; CODE XREF: Player_Update+72   p  ; was: sub_16210
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #$8000,(word_FF80E6).w
                 move.w  #$32,4(a5)                      ; '2'
                 move.b  #$80,$21(a5)
@@ -166,13 +166,13 @@ Player_HandleCutsceneControl_ApplyPosition:             ; CODE XREF: Player_Hand
 ; ---------------------------------------------------------------------------
 Player_HandleCutsceneControl_Finish:                    ; CODE XREF: Player_HandleCutsceneControl+E   j  ; was: loc_1629E
                                         ; Player_HandleCutsceneControl+38   j
-                move.b  #$30,(byte_FF825D).w            ; '0'
+                move.b  #$30,(ContactDamageCooldown).w  ; '0'
                 bra.w   *+4
 ; End of function Player_HandleCutsceneControl
 ; Initializes player knockback/damaged state with sound and velocity
 Player_InitKnockbackState:                              ; CODE XREF: Player_Update+64   p  ; was: sub_162A8
                                         ; Player_HandleCutsceneControl+5A   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 bclr    #4,$E(a5)
                 move.w  #$8000,(word_FF80E6).w
                 jsr     (Sys_ClearObjectBlocks17).l
@@ -279,7 +279,7 @@ Player_UnusedStateReturn:                               ; was: nullsub_41
 ; Initializes the idle state used while attached to upper terrain
 Player_InitCeilingIdleState:                            ; CODE XREF: Player_CeilingDamageState+1A   j  ; was: sub_163D2
                                         ; Player_CeilingDashState+66   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 bclr    #0,(byte_FF826C).w
                 clr.w   (word_FF8224).w
                 move.w  #$18,4(a5)
@@ -329,7 +329,7 @@ Player_CeilingIdleState_Render:                         ; CODE XREF: Player_Ceil
 Player_InitCeilingDamageKnockback:                      ; CODE XREF: Player_CeilingIdleState+2C   j  ; was: loc_1646C
                                         ; Player_CeilingDashState+3E   j
                 bsr.w   Player_SpawnDamageImpactEffect
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$3E,4(a5)                      ; '>'
                 move.w  #$FFFC,$48(a5)

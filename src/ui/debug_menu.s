@@ -17,7 +17,7 @@ DebugMenu_UpdateHealthSelection:                        ; was: sub_13748
                 clr.w   (DebugColorEditActive).w
                 btst    #3,(VBlankFrameCounter+1).w
                 bne.s   DebugMenu_UpdateHealthSelection_ReadInput
-                move.w  #$C7E5,(word_FF8512).w
+                move.w  #$C7E5,(DebugHealthCursorTile).w
 DebugMenu_UpdateHealthSelection_ReadInput:              ; was: loc_1375A
                 move.b  (DebugHealthSelection).w,d0
                 moveq   #1,d1
@@ -57,20 +57,20 @@ DebugMenu_UpdateHealthSelection_IncrementBCD:           ; was: loc_1379C
                 bmi.s   DebugMenu_UpdateHealthSelection_Commit
                 move.b  d1,d0
 DebugMenu_UpdateHealthSelection_Commit:                 ; was: loc_137AC
-                clr.w   (word_FF822A).w
+                clr.w   (DebugResourceRefill).w
                 move.b  d0,(DebugHealthSelection).w
                 cmpi.b  #$FF,d0
                 bne.s   DebugMenu_UpdateHealthSelection_Return
-                addq.w  #2,(word_FF822A).w
+                addq.w  #2,(DebugResourceRefill).w
 DebugMenu_UpdateHealthSelection_Return:                 ; was: locret_137BE
                 rts
 ; End of function DebugMenu_UpdateHealthSelection
 DebugMenu_UpdateSoundRequestSelection:                  ; was: sub_137C0
                 btst    #3,(VBlankFrameCounter+1).w
                 bne.s   DebugMenu_UpdateSoundRequestSelection_ReadInput
-                move.w  #$C7E5,(word_FF8572).w
+                move.w  #$C7E5,(DebugSoundCursorTile).w
 DebugMenu_UpdateSoundRequestSelection_ReadInput:        ; was: loc_137CE
-                move.b  (word_FF8228).w,d0
+                move.b  (DebugSoundRequestId).w,d0
                 movea.w #(word_FFF706-M68K_RAM),a0
                 tst.w   (DebugMenuRepeatTimer).w
                 beq.s   DebugMenu_UpdateSoundRequestSelection_CheckDecrease
@@ -79,14 +79,14 @@ DebugMenu_UpdateSoundRequestSelection_CheckDecrease:    ; was: loc_137E0
                 btst    #2,(a0)
                 beq.s   DebugMenu_UpdateSoundRequestSelection_CheckIncrease
                 subq.b  #1,d0
-                move.b  d0,(word_FF8228).w
+                move.b  d0,(DebugSoundRequestId).w
                 rts
 ; ---------------------------------------------------------------------------
 DebugMenu_UpdateSoundRequestSelection_CheckIncrease:    ; was: loc_137EE
                 btst    #3,(a0)
                 beq.s   DebugMenu_UpdateSoundRequestSelection_Return
                 addq.w  #1,d0
-                move.b  d0,(word_FF8228).w
+                move.b  d0,(DebugSoundRequestId).w
 DebugMenu_UpdateSoundRequestSelection_Return:           ; was: locret_137FA
                 rts
 ; End of function DebugMenu_UpdateSoundRequestSelection
@@ -97,14 +97,14 @@ DebugMenu_UpdateBossHealthClear:                        ; was: sub_137FC
 DebugMenu_UpdateBossHealthClear_UpdateCursor:           ; was: loc_13808
                 btst    #3,(VBlankFrameCounter+1).w
                 bne.s   DebugMenu_UpdateBossHealthClear_Return
-                move.w  #$C7E5,(word_FF8522).w
+                move.w  #$C7E5,(BossClearCursorTile).w
 DebugMenu_UpdateBossHealthClear_Return:                 ; was: locret_13816
                 rts
 ; End of function DebugMenu_UpdateBossHealthClear
 DebugMenu_UpdatePaletteLineSelection:                   ; was: sub_13818
                 btst    #3,(VBlankFrameCounter+1).w
                 bne.s   DebugMenu_UpdatePaletteLineSelection_ReadInput
-                move.w  #$C7E5,(word_FF8582).w
+                move.w  #$C7E5,(PaletteLineCursorTile).w
 DebugMenu_UpdatePaletteLineSelection_ReadInput:         ; was: loc_13826
                 move.b  (word_FFF708).w,d0
                 andi.b  #$C,d0
@@ -119,11 +119,11 @@ DebugMenu_UpdatePaletteColorSelection:                  ; was: sub_1383C
                 bne.s   DebugMenu_UpdatePaletteColorSelection_SelectMode
                 tst.w   (DebugColorEditActive).w
                 beq.s   DebugMenu_UpdatePaletteColorSelection_DrawEntryCursor
-                move.w  #$C7E5,(word_FF8554).w
+                move.w  #$C7E5,(ColorEditCursorTile).w
                 bra.s   DebugMenu_UpdatePaletteColorSelection_SelectMode
 ; ---------------------------------------------------------------------------
 DebugMenu_UpdatePaletteColorSelection_DrawEntryCursor:  ; was: loc_13852
-                move.w  #$C7E5,(word_FF8532).w
+                move.w  #$C7E5,(PaletteEntryCursorTile).w
 DebugMenu_UpdatePaletteColorSelection_SelectMode:       ; was: loc_13858
                 tst.w   (DebugColorEditActive).w
                 beq.w   DebugMenu_UpdatePaletteColorSelection_SelectEntry
@@ -198,31 +198,31 @@ DebugMenu_RenderHealthSelection:                        ; CODE XREF: DebugMenu_U
                 move.b  (DebugHealthSelection).w,d0
                 cmpi.b  #$FF,d0
                 bne.s   DebugMenu_RenderHealthSelectionDigits
-                move.w  #$C7E2,(word_FF851E).w
-                move.w  #$C7DE,(word_FF8520).w
+                move.w  #$C7E2,(DebugHealthHighTile).w
+                move.w  #$C7DE,(DebugHealthLowTile).w
                 rts
 ; ---------------------------------------------------------------------------
 DebugMenu_RenderHealthSelectionDigits:                  ; was: loc_13924
                 move.b  d0,d1
                 andi.w  #$F,d0
                 addi.w  #-$383C,d0
-                move.w  d0,(word_FF8520).w
+                move.w  d0,(DebugHealthLowTile).w
                 asr.w   #4,d1
                 andi.w  #$F,d1
                 addi.w  #-$383C,d1
-                move.w  d1,(word_FF851E).w
+                move.w  d1,(DebugHealthHighTile).w
                 rts
 ; End of function DebugMenu_RenderHealthSelection
 DebugMenu_RenderSoundRequestNumber:                     ; CODE XREF: DebugMenu_UpdateActive+88   p  ; was: sub_13942
-                move.b  (word_FF8228).w,d0
+                move.b  (DebugSoundRequestId).w,d0
                 move.b  d0,d1
                 andi.w  #$F,d0
                 addi.w  #-$383C,d0
-                move.w  d0,(word_FF8580).w
+                move.w  d0,(DebugSoundLowTile).w
                 asr.w   #4,d1
                 andi.w  #$F,d1
                 addi.w  #-$383C,d1
-                move.w  d1,(word_FF857E).w
+                move.w  d1,(DebugSoundHighTile).w
                 rts
 ; End of function DebugMenu_RenderSoundRequestNumber
 DebugMenu_CopySelectedPalettePreviewTiles:              ; CODE XREF: DebugMenu_UpdateActive+68   p  ; was: sub_13964
@@ -231,7 +231,7 @@ DebugMenu_CopySelectedPalettePreviewTiles:              ; CODE XREF: DebugMenu_U
                 asl.w   #4,d0
                 addi.l  #DebugMenuPalettePreviewTiles,d0
                 movea.l d0,a0
-                movea.w #(byte_FF8534-M68K_RAM),a1
+                movea.w #(PalettePreviewBuffer-M68K_RAM),a1
                 moveq   #$F,d7
 DebugMenu_CopySelectedPalettePreviewTiles_NextWord:     ; was: loc_1397A
                 move.w  (a0)+,(a1)+
@@ -242,7 +242,7 @@ DebugMenu_RenderPaletteLineNumber:                      ; CODE XREF: DebugMenu_U
                 move.w  (DebugPaletteLineOffset).w,d0
                 asr.w   #1,d0
                 addi.w  #-$383C,d0
-                move.w  d0,(word_FF858A).w
+                move.w  d0,(PaletteLineNumberTile).w
                 rts
 ; End of function DebugMenu_RenderPaletteLineNumber
 ; ---------------------------------------------------------------------------
@@ -267,14 +267,14 @@ DebugMenu_RenderSelectedColorValue:                     ; CODE XREF: DebugMenu_U
                 andi.w  #$E00,d0
                 asr.w   #8,d0
                 addi.w  #-$383C,d0
-                move.w  d0,(word_FF85B6).w
+                move.w  d0,(DebugColorRedTile).w
                 andi.w  #$E0,d1
                 asr.w   #4,d1
                 addi.w  #-$383C,d1
-                move.w  d1,(word_FF85B8).w
+                move.w  d1,(DebugColorGreenTile).w
                 andi.w  #$E,d2
                 addi.w  #-$383C,d2
-                move.w  d2,(word_FF85BA).w
+                move.w  d2,(DebugColorBlueTile).w
                 rts
 ; End of function DebugMenu_RenderSelectedColorValue
 DebugMenu_UpdateSelectedPaletteColor:                   ; CODE XREF: DebugMenu_UpdatePaletteColorSelection+24   p  ; was: sub_13A52

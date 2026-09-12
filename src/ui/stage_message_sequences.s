@@ -42,7 +42,7 @@ StageIntro_RenderStageNumberBanner:                     ; CODE XREF: StageIntro_
                 bsr.w   Message_LoadSpriteTileIndices
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 move.w  #$EC,d0
-                move.b  (byte_FF8232).w,d2
+                move.b  (StageNumberBCD).w,d2
                 move.w  d2,d3
                 asr.w   #4,d3
                 andi.w  #$F,d2
@@ -208,8 +208,8 @@ Results_StoreTimeBonus:                                 ; CODE XREF: Results_Fin
                 beq.s   Results_SkipZeroTimeBonus
                 addq.w  #2,(MessageSequenceState).w
                 move.w  #$F0,(word_FF80D4).w
-                move.w  (StageTimeRemaining).w,(word_FF822C).w
-                andi.w  #$FFF0,(word_FF822C).w
+                move.w  (StageTimeRemaining).w,(ResultsTimeBonusBCD).w
+                andi.w  #$FFF0,(ResultsTimeBonusBCD).w
                 rts
 ; ---------------------------------------------------------------------------
 Results_SkipZeroTimeBonus:                              ; CODE XREF: Results_FinishTimeBonusSpin+30   j  ; was: loc_B122
@@ -409,7 +409,7 @@ Message_WriteLinearSpritePositions:                     ; CODE XREF: Message_Cal
 ; Applies four packed-BCD timer digits to the bonus sprite tile words
 Results_ApplyTimeDigitTileOffsets:                      ; CODE XREF: Results_RenderLinearTimeBonus+A   p  ; was: sub_B2EA
                 movea.w #(byte_FFA17C-M68K_RAM),a0
-                move.b  (word_FF822C).w,d0
+                move.b  (ResultsTimeBonusBCD).w,d0
                 move.b  d0,d1
                 asr.w   #4,d1
                 andi.w  #$F,d0
@@ -418,7 +418,7 @@ Results_ApplyTimeDigitTileOffsets:                      ; CODE XREF: Results_Ren
                 add.w   d1,d1
                 add.w   d1,(a0)
                 add.w   d0,8(a0)
-                move.b  (word_FF822C+1).w,d0
+                move.b  (ResultsTimeBonusBCD+1).w,d0
                 move.b  d0,d1
                 asr.w   #4,d1
                 andi.w  #$F,d0

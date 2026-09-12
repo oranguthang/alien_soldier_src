@@ -124,7 +124,7 @@ Boss_SharpssteelUpdateVerticalOscillationReturn:        ; CODE XREF: Boss_Sharps
 ; End of function Boss_SharpssteelUpdateVerticalOscillation
 ; Accelerates horizontal velocity toward the shared target, with speed limits
 Boss_SharpssteelSteerTowardSharedHorizontalTarget:      ; CODE XREF: Boss_SharpssteelWaitForComplexAlignmentState:Boss_SharpssteelUpdateBladeShotBurstMotion   p  ; was: sub_48652
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 sub.w   $10(a5),d0
                 bpl.s   Boss_SharpssteelHandleRightTarget
                 move.l  $18(a5),d0

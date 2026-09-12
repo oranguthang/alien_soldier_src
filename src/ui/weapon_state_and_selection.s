@@ -41,9 +41,9 @@ Weapon_UpdateCurrentState:                              ; CODE XREF: Weapon_Upda
                 adda.w  #$A250,a1
                 lea     Weapon_DirectionVectorPointerBias(pc),a2
                 nop
-                tst.w   (word_FF8238).w
+                tst.w   (WeaponFireCooldown).w
                 bmi.s   Weapon_UpdateStateCooldown
-                subq.w  #1,(word_FF8238).w
+                subq.w  #1,(WeaponFireCooldown).w
 Weapon_UpdateStateCooldown:                             ; CODE XREF: Weapon_UpdateCurrentState+12   j  ; was: loc_1796A
                 tst.w   (WeaponStateCooldown).w
                 bmi.s   Weapon_DispatchCurrentState
@@ -101,7 +101,7 @@ WeaponSelect_Initialize:                                ; DATA XREF: ROM:0001799
                 andi.w  #$1FF,d1
                 move.w  d1,(WeaponMenuAngle).w
                 move.w  #$A0,(WeaponMenuRadius).w
-                move.w  d0,(word_FF8238).w
+                move.w  d0,(WeaponFireCooldown).w
                 bsr.w   Sys_ClearObjectBlocks17
                 movea.w #(byte_FFC2C0-M68K_RAM),a0
                 move.w  #$10,(a0)

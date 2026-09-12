@@ -2,8 +2,8 @@ Sys_GameplayMainLoop:                                   ; DATA XREF: Sys_Dispatc
                 bsr.w   Sys_GameplayPreUpdateNoOp
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_UpdateCamera
-                move.w  #$C7F0,(word_FF8110).w
-                move.w  #$20,(word_FF8112).w            ; ' '
+                move.w  #$C7F0,(HUDDynamicStripTileAttr).w
+                move.w  #$20,(HUDDynamicStripYOffset).w  ; ' '
 Sys_GameplayMainLoop_UpdateCamera:                      ; CODE XREF: Sys_GameplayMainLoop+8   j  ; was: loc_1C672
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_ApplyCameraMotion
@@ -153,7 +153,7 @@ Sys_SetState3CWithInput:
 UI_UpdateStageNumberBCD:                                ; CODE XREF: Sys_GameplayMainLoop+72   p  ; was: sub_1C8B2
                 move.w  (StageTableIndex).w,d0
                 asr.w   #1,d0
-                move.b  UI_StageNumberBcdTable(pc,d0.w),(byte_FF8232).w
+                move.b  UI_StageNumberBcdTable(pc,d0.w),(StageNumberBCD).w
                 rts
 ; End of function UI_UpdateStageNumberBCD
 ; ---------------------------------------------------------------------------

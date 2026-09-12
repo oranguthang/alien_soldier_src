@@ -81,7 +81,7 @@ Player_GroundWeaponState_CheckRightFacing:              ; CODE XREF: Player_Grou
 Player_InitPhoenixAttack:
                 move.w  #$56,4(a5)                      ; 'V'  ; was: sub_157BE
                 move.w  #8,$4E(a5)
-                move.b  #$73,(byte_FF830F).w            ; 's'
+                move.b  #$73,(PlayerInputMask).w        ; 's'
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #1,(word_FF8224).w
                 move.b  #1,(word_FF8224+1).w
@@ -197,7 +197,7 @@ Player_InitiateDashAttack_UseGroundState:               ; CODE XREF: Player_Grou
                                         ; Player_CheckSpecialMoveActivation+1A   j
                 move.w  #$10,4(a5)
 Player_InitiateDashAttack_Initialize:                   ; CODE XREF: Player_InitiateDashAttack+6   j  ; was: loc_1593C
-                move.b  #$73,(byte_FF830F).w            ; 's'
+                move.b  #$73,(PlayerInputMask).w        ; 's'
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #1,(word_FF8224).w
                 move.b  #1,(word_FF8224+1).w
@@ -347,7 +347,7 @@ Player_ApplyHorizontalMovement_Return:                  ; CODE XREF: Player_Appl
 ; Initializes player slide knockback state
 Player_InitSlideState:                                  ; CODE XREF: Player_DashAttackState+76   j  ; was: sub_15AF4
                                         ; Player_DashAttackState+7A   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #$40,4(a5)                      ; '@'
                 move.w  #4,$5C(a5)
                 move.l  #$FFFE0000,$18(a5)
@@ -442,7 +442,7 @@ Player_CheckSpecialMoveActivation_InitAirState:         ; CODE XREF: Player_Chec
                 clr.w   $4A(a5)
                 clr.w   (word_FF8224).w
                 clr.w   $52(a5)
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
 Player_CheckSpecialMoveActivation_Return:               ; CODE XREF: Player_CheckSpecialMoveActivation+6   j  ; was: locret_15C1E
                                         ; Player_CheckDashInput+6   j
                 rts
@@ -469,6 +469,6 @@ Player_InitFallState_Finish:                            ; CODE XREF: Player_Dama
                 move.w  #$C,$5C(a5)
                 move.w  #$FFFF,$48(a5)
                 clr.w   $4A(a5)
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 rts
 ; End of function Player_InitFallState

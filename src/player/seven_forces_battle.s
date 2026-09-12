@@ -46,7 +46,7 @@ Player_SevenForcesBattleStateOffsets:   dc.w    Player_SevenForcesState0-Player_
 ; Restore the base Seven Forces player state
 Player_ResetSevenForcesBattleState:                     ; CODE XREF: Player_SevenForcesState4+6   j  ; was: sub_19E24
                                         ; Player_SevenForcesState2+22   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 bclr    #0,(byte_FF826C).w
                 clr.w   (word_FF8224).w
                 move.w  #0,4(a5)
@@ -99,7 +99,7 @@ Player_CheckSevenForcesSpecialActivationNotActivated:   ; CODE XREF: Player_Chec
 Player_ActivateSevenForcesSpecialState4:                ; CODE XREF: Player_CheckSevenForcesSpecialActivation+16   j  ; was: loc_19EB6
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #0,(word_FF8032).w
                 move.w  #$FFEE,(word_FF8034).w
                 move.w  #4,4(a5)
@@ -116,7 +116,7 @@ Player_SevenForcesState4:                               ; DATA XREF: ROM:00019E1
 ; End of function Player_SevenForcesState4
 ; Toggle the selected weapon mode and play its feedback sound
 Player_ToggleSevenForcesWeaponMode:                     ; CODE XREF: Player_CheckSevenForcesSpecialActivation+E   j  ; was: sub_19EF6
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
                 jsr     (Sound_PlaySFX).l
@@ -125,7 +125,7 @@ Player_ToggleSevenForcesWeaponMode:                     ; CODE XREF: Player_Chec
 ; End of function Player_ToggleSevenForcesWeaponMode
 ; Enter directional-movement state 2
 Player_EnterSevenForcesState2:                          ; CODE XREF: Player_SevenForcesState0+3C   j  ; was: sub_19F10
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #2,4(a5)
                 move.w  #4,$48(a5)
                 move.w  #$FFFF,$C(a5)
@@ -162,7 +162,7 @@ Player_TryStartSevenForcesDash:                         ; CODE XREF: Player_Seve
                 btst    #5,$6A(a5)
                 beq.w   Player_TryStartSevenForcesDashReturn
                 move.w  #6,4(a5)
-                move.b  #$73,(byte_FF830F).w            ; 's'
+                move.b  #$73,(PlayerInputMask).w        ; 's'
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.b  #$A6,d0
                 jsr     (Sound_PlaySFX).l
@@ -240,7 +240,7 @@ Player_ApplySevenForcesDashVelocity:                    ; CODE XREF: Player_Seve
 Player_EnterSevenForcesDamageState8:                    ; CODE XREF: Player_SevenForcesState0+22   j  ; was: sub_1A074
                                         ; Player_SevenForcesState2+12   j
                 jsr     (Player_SpawnDamageImpactEffect).l
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #8,4(a5)
                 move.w  #$FFFC,$48(a5)
@@ -264,7 +264,7 @@ Player_SevenForcesDamageState8:                         ; DATA XREF: ROM:00019E1
 Player_EnterSevenForcesDefeatStateA:                    ; CODE XREF: Player_UpdateSevenForcesBattle+14   p  ; was: sub_1A0C8
                 move.b  #$19,d0
                 jsr     (Sound_PlaySFX).l
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #$8000,(word_FF80E6).w
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.w  #$A,4(a5)

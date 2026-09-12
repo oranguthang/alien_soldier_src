@@ -359,7 +359,7 @@ Stage4_CheckShiperTransitionReady:                      ; DATA XREF: ROM:0000C87
                 bsr.s   Stage4_UpdateShiperCameraAndRasterRows
                 tst.w   (word_FF8230).w
                 bne.s   Stage4_CheckShiperTransitionReady_Return
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.s   Stage4_CheckShiperTransitionReady_Return
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w
                 bra.w   Stage_StartInterstageTransition

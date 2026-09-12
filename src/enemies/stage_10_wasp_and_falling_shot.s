@@ -70,7 +70,7 @@ Projectile_FallingShotUpdate_Return:                    ; CODE XREF: Projectile_
 ; Initializes Stage 10 wasp enemy sprite
 Enemy_Stage10WaspInit:                                  ; CODE XREF: Enemy_Stage10WaspInitState+2   p  ; was: sub_2E048
                 move.w  #$EF00,2(a5)
-                move.w  (word_FF8278).w,d1
+                move.w  (Stage10WaspTileAttr).w,d1
                 or.w    (word_FF808A).w,d1
                 move.w  d1,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'

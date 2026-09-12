@@ -17,7 +17,7 @@ Collision_UpdateSystem_RunDynamicChecks:                ; CODE XREF: Collision_U
                 bpl.s   Collision_UpdateSystem_CheckResourceRefill
                 clr.w   (PlayerHealth).w
 Collision_UpdateSystem_CheckResourceRefill:             ; CODE XREF: Collision_UpdateSystem+32   j  ; was: loc_13B16
-                tst.w   (word_FF822A).w
+                tst.w   (DebugResourceRefill).w
                 beq.s   Collision_UpdateSystem_Return
                 move.w  (PlayerMaxHealth).w,(PlayerHealth).w
                 move.w  #$5000,(StageTimeRemaining).w
@@ -38,7 +38,7 @@ Collision_BuildEntityLists:                             ; CODE XREF: Collision_U
                 move.w  d0,(word_FF8D7A).w
                 move.w  d0,(word_FF8D7C).w
                 move.w  d0,(word_FF8D7E).w
-                move.w  d0,(word_FF8126).w
+                move.w  d0,(ActivePickupCountMinus1).w
                 movea.w #(Entity_ObjectPool-M68K_RAM),a4
                 moveq   #$3B,d7                         ; ';'
 Collision_BuildEntityLists_ScanLoop:                    ; CODE XREF: Collision_BuildEntityLists+120   j  ; was: loc_13B5E
@@ -64,7 +64,7 @@ Collision_BuildEntityLists_AddPrimaryEntry:             ; CODE XREF: Collision_B
                 addq.w  #1,(word_FF8D76).w
                 btst    #5,$23(a4)
                 beq.s   Collision_BuildEntityLists_StorePrimaryBounds
-                addq.w  #1,(word_FF8126).w
+                addq.w  #1,(ActivePickupCountMinus1).w
 Collision_BuildEntityLists_StorePrimaryBounds:          ; CODE XREF: Collision_BuildEntityLists+70   j  ; was: loc_13BA0
                 move.b  $2E(a4),d4
                 ext.w   d4
@@ -255,7 +255,7 @@ Collision_CheckWeaponProjectilesAgainstEnemies_MarkFlaggedHit:  ; CODE XREF: Col
 Collision_CheckWeaponProjectilesAgainstEnemies_SubtractFlaggedHealth:  ; CODE XREF: Collision_CheckWeaponProjectilesAgainstEnemies+DE   j  ; was: loc_13DB2
                 move.w  $26(a3),d4
                 move.w  #$FFFF,$26(a3)
-                move.w  $24(a2),(word_FF8210).w
+                move.w  $24(a2),(CombatPercentIndex).w
                 move.w  #$20,(word_FF809A).w            ; ' '
                 mulu.w  $24(a2),d4
                 sub.w   d4,(BossHealth).w
@@ -321,9 +321,9 @@ Collision_CheckWeaponProjectilesAgainstEnemies_ResolveBlockedHit:  ; CODE XREF: 
 Collision_CheckPlayerAgainstHostiles:                   ; CODE XREF: Collision_UpdateSystem+22   p  ; was: sub_13E9A
                 btst    #4,(byte_FF8245).w
                 bne.w   Collision_CheckPlayerAgainstHostiles_Return
-                subq.b  #1,(byte_FF825D).w
+                subq.b  #1,(ContactDamageCooldown).w
                 bpl.s   Collision_CheckPlayerAgainstHostiles_Begin
-                move.b  #$FF,(byte_FF825D).w
+                move.b  #$FF,(ContactDamageCooldown).w
 Collision_CheckPlayerAgainstHostiles_Begin:             ; CODE XREF: Collision_CheckPlayerAgainstHostiles+E   j  ; was: loc_13EB0
                 clr.l   (dword_FF8300).w
                 movea.w #(word_FFA400-M68K_RAM),a0
@@ -384,7 +384,7 @@ Collision_CheckPlayerAgainstHostiles_SubtractResource:  ; CODE XREF: Collision_C
 Collision_CheckPlayerAgainstHostiles_CheckContactDamage:  ; CODE XREF: Collision_CheckPlayerAgainstHostiles+A2   j  ; was: loc_13F6A
                 btst    #1,d6
                 beq.s   Collision_CheckPlayerAgainstHostiles_NextHostile
-                tst.b   (byte_FF825D).w
+                tst.b   (ContactDamageCooldown).w
                 bpl.s   Collision_CheckPlayerAgainstHostiles_NextHostile
                 btst    #0,$21(a0)
                 bne.s   Collision_CheckPlayerAgainstHostiles_MarkContactDamage
@@ -414,9 +414,9 @@ Collision_CheckPlayerAgainstHostiles_ApplyDamage:       ; CODE XREF: Collision_C
                 move.w  #$9999,(PlayerDamageBCD).w
 Collision_CheckPlayerAgainstHostiles_StoreDamageFeedback:  ; CODE XREF: Collision_CheckPlayerAgainstHostiles+116   j  ; was: loc_13FB8
                 move.l  $18(a2),(dword_FF8300).w
-                move.w  d4,(word_FF8262).w
-                ori.w   #$8000,(word_FF8262).w
-                move.w  #$30,(word_FF8268).w            ; '0'
+                move.w  d4,(HealthDeltaDisplayValue).w
+                ori.w   #$8000,(HealthDeltaDisplayValue).w
+                move.w  #$30,(HealthDeltaDisplayTimer).w  ; '0'
                 btst    #1,$21(a2)
                 bne.s   Collision_CheckPlayerAgainstHostiles_DamageReturn
                 move.w  #4,(FrameFreezeTimer).w
@@ -522,7 +522,7 @@ Collision_CheckSpecialAttackTargets_ApplyFlaggedDamage:  ; CODE XREF: Collision_
                 bset    #0,(byte_FF80EC).w
                 or.b    d4,$22(a2)
                 move.w  $26(a3),d4
-                move.w  $24(a2),(word_FF8210).w
+                move.w  $24(a2),(CombatPercentIndex).w
                 move.w  #$20,(word_FF809A).w            ; ' '
                 mulu.w  $24(a2),d4
                 sub.w   d4,(BossHealth).w

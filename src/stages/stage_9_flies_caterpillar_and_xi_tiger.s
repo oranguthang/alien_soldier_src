@@ -147,8 +147,8 @@ Stage9_InitializeCaterpillarEncounter:                  ; CODE XREF: Stage9_Init
                 clr.l   (dword_FFA91C).w
                 move.w  #$8000,(word_FF808A).w
                 move.w  #$128,(Entity_ObjectPool).w
-                move.w  #$C470,(word_FF8110).w
-                clr.w   (word_FF8112).w
+                move.w  #$C470,(HUDDynamicStripTileAttr).w
+                clr.w   (HUDDynamicStripYOffset).w
                 move.b  #9,(byte_FFA95A).w
                 move.b  #$24,(byte_FFA95B).w            ; '$'
                 bra.s   Stage9_UpdateCaterpillarShipTraversal_Camera
@@ -159,9 +159,9 @@ Stage9_UpdateCaterpillarShipTraversal:                  ; DATA XREF: ROM:0000C8B
 Stage9_UpdateCaterpillarShipTraversal_Camera:           ; CODE XREF: Stage9_InitializeCaterpillarEncounter+2E   j  ; was: loc_D2BC
                 tst.b   (word_FFF720).w
                 bmi.s   Stage9_UpdateCaterpillarShipTraversal_Position
-                cmpi.w  #$20,(word_FF8112).w            ; ' '
+                cmpi.w  #$20,(HUDDynamicStripYOffset).w  ; ' '
                 bpl.s   Stage9_UpdateCaterpillarShipTraversal_Position
-                addq.w  #2,(word_FF8112).w
+                addq.w  #2,(HUDDynamicStripYOffset).w
 Stage9_UpdateCaterpillarShipTraversal_Position:         ; CODE XREF: Stage9_UpdateCaterpillarShipTraversal+A   j  ; was: loc_D2CE
                                         ; Stage9_UpdateCaterpillarShipTraversal+12   j
                 move.l  (dword_FFA900).w,(dword_FF8040).w
@@ -223,7 +223,7 @@ Stage9_XiTigerEntranceTileAssetLoadList:    dc.w    7   ; field_0  ; was: stru_D
 
 ; Scroll the Caterpillar ship out, then select the Xi-Tiger transition route
 Stage9_UpdateCaterpillarShipExit:                       ; DATA XREF: ROM:0000C8B6   o  ; was: sub_D3A6
-                subq.w  #1,(word_FF8112).w
+                subq.w  #1,(HUDDynamicStripYOffset).w
                 jsr     (Tilemap_QueueNextConstantRow).l
                 addi.l  #-$10000,(dword_FFA900).w
                 bsr.w   Stage9_UpdateCaterpillarOscillationAndRasterRows
@@ -271,7 +271,7 @@ Stage9_InitializeXiTigerEncounter:                      ; DATA XREF: ROM:0000C8C
                 move.b  #$40,(byte_FFF705).w            ; '@'
                 move.w  #$8000,(word_FF808A).w
                 move.w  #$20,(word_FFA02A).w            ; ' '
-                move.w  #$40,(word_FF8644).w            ; '@'
+                move.w  #$40,(ScriptedInputStepTimer).w  ; '@'
 Stage9_LoadXiTigerEncounterAssets:                      ; CODE XREF: Stage9_UpdateCaterpillarShipExit+68   j  ; was: loc_D450
                 move.w  #$70,(word_FFA950).w            ; 'p'
                 move.w  #$10,(dword_FF8062).w

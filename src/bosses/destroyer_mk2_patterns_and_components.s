@@ -15,7 +15,7 @@ Boss_DestroyerMK2LinkedActivationPatternHandlers:   dc.w    Boss_DestroyerMK2Act
 ; Activate the nearer linked part on the player's side
 Boss_DestroyerMK2ActivateNearLinkedPart:                ; DATA XREF: ROM:Boss_DestroyerMK2LinkedActivationPatternHandlers   o  ; was: sub_4B060
                 addq.w  #2,(dword_FF941C).w
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightNearLinkedPart
                 movea.w #(word_FFC7A0-M68K_RAM),a0
@@ -33,7 +33,7 @@ Boss_DestroyerMK2WaitThenActivateFarLinkedPart:         ; DATA XREF: ROM:0004B05
                 subq.w  #1,$48(a5)
                 bne.s   Boss_DestroyerMK2FarLinkedActivationReturn
                 addq.w  #2,(dword_FF941C).w
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightFarLinkedPart
                 movea.w #(word_FFC860-M68K_RAM),a0
@@ -52,7 +52,7 @@ Boss_DestroyerMK2WaitThenActivateLinkedPair:            ; DATA XREF: ROM:0004B05
                 subq.w  #1,$48(a5)
                 bne.s   Boss_DestroyerMK2LinkedPairActivationReturn
                 addq.w  #2,(dword_FF941C).w
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 cmp.w   $10(a5),d0
                 bgt.s   Boss_DestroyerMK2SelectRightLinkedPair
                 movea.w #(word_FFC7A0-M68K_RAM),a0
@@ -107,7 +107,7 @@ Boss_DestroyerMK2ProjectedSweepPatternHandlers: dc.w    Boss_DestroyerMK2Initial
 
 ; Initialize sweep origin, direction, angle, and four-step counter
 Boss_DestroyerMK2InitializeProjectedSweep:              ; DATA XREF: ROM:Boss_DestroyerMK2ProjectedSweepPatternHandlers   o  ; was: sub_4B118
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 sub.w   $10(a5),d0
                 bmi.s   Boss_DestroyerMK2InitializeLeftwardProjectedSweep
                 move.w  #$30,$58(a5)                    ; '0'
@@ -381,7 +381,7 @@ Boss_DestroyerMK2LinkedPartActivationReturn:            ; CODE XREF: Boss_Destro
 ; End of function Boss_DestroyerMK2ActivateLinkedPartIfIdle
 ; Project four effects at successive angles and play sound $E9
 Boss_DestroyerMK2EmitFourProjectedEffects:
-                move.w  (word_FF8248).w,d0              ; was: sub_4B40C
+                move.w  (PlayerCenterX).w,d0            ; was: sub_4B40C
                 sub.w   $10(a5),d0
                 bmi.s   Boss_DestroyerMK2InitializeLeftwardEffectProjection
                 move.w  #$30,$58(a5)                    ; '0'

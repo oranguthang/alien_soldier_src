@@ -89,19 +89,19 @@ UI_AppendHUDSpriteList_AppendCommonEntry:               ; CODE XREF: UI_BuildHUD
                 move.w  #$300,(a1)+
                 move.w  d0,(a1)+
                 clr.w   (a1)+
-                move.w  (word_FF8110).w,d2
+                move.w  (HUDDynamicStripTileAttr).w,d2
                 beq.s   UI_SubmitHUDSpriteList
-                tst.w   (word_FF8112).w
+                tst.w   (HUDDynamicStripYOffset).w
                 bpl.s   UI_AppendHUDSpriteList_AppendDynamicStrip
-                clr.w   (word_FF8110).w
-                clr.w   (word_FF8112).w
+                clr.w   (HUDDynamicStripTileAttr).w
+                clr.w   (HUDDynamicStripYOffset).w
                 bra.s   UI_SubmitHUDSpriteList
 ; ---------------------------------------------------------------------------
 UI_AppendHUDSpriteList_AppendDynamicStrip:              ; CODE XREF: UI_BuildHUDSpriteList+11C   j  ; was: loc_133A0
                 move.w  #$A0,d0
                 move.w  #$700,d1
                 move.w  #$60,d3                         ; '`'
-                add.w   (word_FF8112).w,d3
+                add.w   (HUDDynamicStripYOffset).w,d3
                 moveq   #5,d7
 UI_AppendHUDSpriteList_DynamicStripLoop:                ; CODE XREF: UI_BuildHUDSpriteList+146   j  ; was: loc_133B2
                 move.w  d0,(a1)+

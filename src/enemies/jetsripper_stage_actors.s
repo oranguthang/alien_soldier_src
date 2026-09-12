@@ -237,7 +237,7 @@ Enemy_UpdateDestructionDelay_Return:                    ; CODE XREF: Enemy_Begin
 ; Initializes sprite properties for enemy object
 Sprite_InitializeEnemySprite:                           ; CODE XREF: Enemy_InitializeWithHealth+6   p  ; was: sub_2C93A
                 move.w  #$E300,2(a5)
-                move.w  (word_FF8270).w,d0
+                move.w  (StandardEnemyTileAttr).w,d0
                 or.w    (word_FF808A).w,d0
                 move.w  d0,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'
@@ -345,7 +345,7 @@ Enemy_TryPeriodicShot_Return:                           ; CODE XREF: Enemy_Updat
 Sprite_InitializeProjectileSprite:                      ; CODE XREF: Enemy_ProjectileAttackInit+6   p  ; was: sub_2CA40
                                         ; Enemy_HomingAttackInit+6   p
                 move.w  #$EF00,2(a5)
-                move.w  (word_FF8272).w,d0
+                move.w  (EnemyProjectileTileAttr).w,d0
                 or.w    (word_FF808A).w,d0
                 move.w  d0,$E(a5)
                 move.b  #$48,$20(a5)                    ; 'H'

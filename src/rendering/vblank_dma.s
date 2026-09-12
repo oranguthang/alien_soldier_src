@@ -88,7 +88,7 @@ Gfx_RunVBlankTransfers_StartVerticalScrollDMA:          ; CODE XREF: Gfx_RunVBla
                                         ; DO_OPERATION_USING_DMA
                 move.w  (VDPCommand).w,(a0)
                 move.w  (VDPCommand+2).w,(a0)
-                movea.w #(dword_FF84A0-M68K_RAM),a3
+                movea.w #(PrimaryHUDDMABuffer-M68K_RAM),a3
                 tst.w   (a3)
                 beq.s   Gfx_RunVBlankTransfers_CheckOptionalCommandBlock2
                 move.l  (a3)+,(a0)
@@ -97,7 +97,7 @@ Gfx_RunVBlankTransfers_StartVerticalScrollDMA:          ; CODE XREF: Gfx_RunVBla
                 move.w  (a3)+,(a0)
                 move.w  (a3)+,(a0)
 Gfx_RunVBlankTransfers_CheckOptionalCommandBlock2:      ; CODE XREF: Gfx_RunVBlankTransfers+128   j  ; was: loc_E46
-                movea.w #(dword_FF8560-M68K_RAM),a3
+                movea.w #(BossDebugDMABuffer-M68K_RAM),a3
                 tst.w   (a3)
                 beq.s   Gfx_RunVBlankTransfers_CheckOptionalCommandBlock3
                 move.l  (a3)+,(a0)
@@ -106,7 +106,7 @@ Gfx_RunVBlankTransfers_CheckOptionalCommandBlock2:      ; CODE XREF: Gfx_RunVBla
                 move.w  (a3)+,(a0)
                 move.w  (a3)+,(a0)
 Gfx_RunVBlankTransfers_CheckOptionalCommandBlock3:      ; CODE XREF: Gfx_RunVBlankTransfers+13A   j  ; was: loc_E58
-                movea.w #(dword_FF8500-M68K_RAM),a3
+                movea.w #(WeaponDebugDMABuffer-M68K_RAM),a3
                 tst.w   (a3)
                 beq.s   Gfx_RunVBlankTransfers_CheckConditionalCommandBlock
                 move.l  (a3)+,(a0)
@@ -120,7 +120,7 @@ Gfx_RunVBlankTransfers_CheckConditionalCommandBlock:    ; CODE XREF: Gfx_RunVBla
                 cmpi.w  #1,(WeaponIconTransferState).w
                 bne.s   Gfx_RunVBlankTransfers_Finish
                 clr.w   (WeaponIconTransferState).w
-                movea.w #(byte_FF8478-M68K_RAM),a3
+                movea.w #(WeaponIconDMABuffer-M68K_RAM),a3
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)

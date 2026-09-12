@@ -57,7 +57,7 @@ Collision_PlayerWeaponVsEnemy_ApplyFlaggedDamage:       ; CODE XREF: Collision_P
                 move.b  $21(a3),d4
                 or.b    d4,$22(a2)
                 move.w  $26(a3),d4
-                move.w  $24(a2),(word_FF8210).w
+                move.w  $24(a2),(CombatPercentIndex).w
                 move.w  #$20,(word_FF809A).w            ; ' '
                 mulu.w  $24(a2),d4
                 sub.w   d4,(BossHealth).w

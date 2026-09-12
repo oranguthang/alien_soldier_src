@@ -50,14 +50,14 @@ Boss_Epsilon1InitializeTrackingRingState:               ; DATA XREF: ROM:00046DA
 ; Steers toward the player until close enough or the tracking timeout expires
 Boss_Epsilon1TrackPlayerWithRingState:                  ; DATA XREF: ROM:00046DB0   o  ; was: sub_46DE6
                 bsr.w   Boss_Epsilon1SteerRingTowardPlayer
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
                 sub.w   $10(a5),d0
                 bpl.s   Boss_Epsilon1UseAbsoluteRingTrackingXDelta
                 neg.w   d0
 Boss_Epsilon1UseAbsoluteRingTrackingXDelta:             ; CODE XREF: Boss_Epsilon1TrackPlayerWithRingState+C   j  ; was: loc_46DF6
                 cmpi.w  #$10,d0
                 bcc.s   Boss_Epsilon1TickRingTrackingTimeout
-                move.w  (word_FF824A).w,d0
+                move.w  (PlayerCenterY).w,d0
                 sub.w   $14(a5),d0
                 bpl.s   Boss_Epsilon1UseAbsoluteRingTrackingYDelta
                 neg.w   d0
@@ -284,7 +284,7 @@ Boss_Epsilon1PositionBarrageRingState:                  ; CODE XREF: Boss_Epsilo
                 sub.w   (dword_FFA900).w,d0
                 add.w   $4E(a5),d0
                 move.w  d0,$10(a5)
-                move.w  (word_FF824A).w,$14(a5)
+                move.w  (PlayerCenterY).w,$14(a5)
 Boss_Epsilon1PositionBarrageRingReturn:                 ; CODE XREF: Boss_Epsilon1ReserveBarrageEmitterState+2E   j  ; was: locret_4704E
                 rts
 ; End of function Boss_Epsilon1ReserveBarrageEmitterState

@@ -223,7 +223,7 @@ Boss_BugmaxSelectHorizontalSteeringTarget:              ; CODE XREF: Boss_Bugmax
                 bra.s   Boss_BugmaxMeasureHorizontalTargetDelta
 ; ---------------------------------------------------------------------------
 Boss_BugmaxUsePlayerHorizontalTarget:                   ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+90   j  ; was: loc_4DC76
-                move.w  (word_FF8248).w,d0
+                move.w  (PlayerCenterX).w,d0
 Boss_BugmaxMeasureHorizontalTargetDelta:                ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+96   j  ; was: loc_4DC7A
                 sub.w   $10(a5),d0
                 move.w  d0,d1

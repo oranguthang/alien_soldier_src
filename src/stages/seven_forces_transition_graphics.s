@@ -107,7 +107,7 @@ UnreferencedSevenForcesCameraScrollUpdate:
 UnreferencedSevenForcesBossTransitionCheck:
                 tst.w   (word_FF8230).w                 ; was: sub_EB7C
                 bne.w   Stage_LateGameStateReturn
-                tst.w   (word_FF8138).w
+                tst.w   (ScriptedInputActive).w
                 bne.w   Stage_LateGameStateReturn
                 move.b  #$93,(PendingStageBGMRequest).w
                 move.l  #StageTransitionMessageSequence_Shared,(StageMessageCursor).w

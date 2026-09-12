@@ -84,9 +84,9 @@ Results_InitializeFinalSummary:                         ; was: sub_1DD2E
                 lea     ResultsFinalSummaryDataLoadRequest(pc),a0
                 nop
                 jsr     (Data_ProcessPointer).l
-                clr.w   (dword_FF84A0).w
-                clr.w   (dword_FF8500).w
-                clr.w   (dword_FF8560).w
+                clr.w   (PrimaryHUDDMABuffer).w
+                clr.w   (WeaponDebugDMABuffer).w
+                clr.w   (BossDebugDMABuffer).w
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w

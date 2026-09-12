@@ -38,8 +38,8 @@ Stage_VisualAssetLoaderOffsets: dc.w    Stage_LoadStage1VisualAssets-Stage_Expan
 ; Expands compact tile commands into load records and submits the resulting list
 Stage_ExpandAndSubmitTileAssetCommands:                 ; CODE XREF: Stage_LoadStage1VisualAssets+12   j  ; was: sub_11E1A
                                         ; Stage_LoadStage2VisualAssets+12   j
-                movea.w #(byte_FF82A0-M68K_RAM),a1
-                movea.w #(word_FF826E-M68K_RAM),a2
+                movea.w #(StageAssetCommandBuffer-M68K_RAM),a1
+                movea.w #(SpawnedEnemyTileAttr-M68K_RAM),a2
                 lea     Stage_SharedTileSourceTable(pc),a3
                 nop
 Stage_ReadNextTileAssetCommand:                         ; CODE XREF: Stage_ExpandAndSubmitTileAssetCommands+1E   j  ; was: loc_11E28
@@ -68,7 +68,7 @@ Stage_ExpandIndexedTileAssetCommand:                    ; CODE XREF: Stage_Expan
 ; Terminates the expanded record list and submits it to the pointer processor
 Stage_TerminateAndSubmitExpandedAssetList:              ; CODE XREF: Stage_ExpandAndSubmitTileAssetCommands+10   j  ; was: loc_11E5C
                 move.w  #$FFFF,(a1)
-                movea.w #(byte_FF82A0-M68K_RAM),a0
+                movea.w #(StageAssetCommandBuffer-M68K_RAM),a0
                 jmp     (Data_ProcessPointer).l
 ; End of function Stage_ExpandAndSubmitTileAssetCommands
 ; ---------------------------------------------------------------------------
@@ -452,7 +452,7 @@ Stage_ApplyXiTigerConfiguration:                        ; DATA XREF: Stage_Dispa
 XiTigerStageConfigRecord:   dc.w    $76                 ; word_FFA950  ; was: stru_121FE
                                         ; DATA XREF: Stage_ApplyXiTigerConfiguration   o
                 dc.l    $80000000                       ; dword_FFA20E
-                dc.w    0                               ; word_FF8114
+                dc.w    0                               ; EnemySpawnDirectorState
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A

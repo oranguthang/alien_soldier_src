@@ -182,8 +182,8 @@ Boss_ShieldViperChooseRotationTowardPlayerEveryEightFrames:  ; was: sub_4F3BA
                 move.w  (FrameCounter).w,d7
                 andi.w  #7,d7
                 bne.s   Boss_ShieldViperPlayerTargetRotationReturn
-                move.w  (word_FF8248).w,d0
-                move.w  (word_FF824A).w,d1
+                move.w  (PlayerCenterX).w,d0
+                move.w  (PlayerCenterY).w,d1
                 bsr.w   Boss_ShieldViperChooseRotationTowardTarget
 Boss_ShieldViperPlayerTargetRotationReturn:             ; CODE XREF: Boss_ShieldViperChooseRotationTowardPlayerEveryEightFrames+8   j  ; was: locret_4F3D0
                 rts

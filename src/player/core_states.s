@@ -1,7 +1,7 @@
 Player_InitializeStats:                                 ; CODE XREF: Stage_InitializeXiTigerState+3A   j  ; was: sub_14F06
                                         ; Sys_InitStageState+3A   j
                 lea     (word_FFA400).w,a5
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  (dword_FFA900).w,(word_FFA928).w
                 move.w  (dword_FFA904).w,(word_FFA92C).w
                 move.w  #8,(a5)
@@ -162,7 +162,7 @@ Player_HandleDeathSequence:                             ; CODE XREF: Player_Upda
                                         ; DATA XREF: Player_UpdateState+8   o
                 move.b  #$2B,d0                         ; '+'
                 jsr     (Sound_PlaySFX).l
-                move.b  #$73,(byte_FF830F).w            ; 's'
+                move.b  #$73,(PlayerInputMask).w        ; 's'
                 move.w  #$8000,(word_FF80E6).w
                 jsr     (Sys_ClearObjectBlocks17).l
                 move.b  #1,(word_FF8224).w
@@ -209,7 +209,7 @@ Player_HandleDeathSequence_RenderParticles:             ; CODE XREF: Player_Hand
 Player_HandleDeathSequence_BeginRespawn:                ; CODE XREF: Player_HandleDeathSequence+A4   j  ; was: loc_15186
                                         ; Player_HandleDeathSequence+BE   j
                 clr.w   (word_FF80E6).w
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #$38,4(a5)                      ; '8'
                 move.w  #$CD00,2(a5)
                 move.w  #$C,$5C(a5)
@@ -233,7 +233,7 @@ Player_HandleRespawnGravity:                            ; DATA XREF: ROM:0001509
 ; Initializes player air movement state
 Player_InitAirState:                                    ; CODE XREF: Player_GroundedDamageState+18   j  ; was: sub_151EE
                                         ; Player_DamageLandingRecoveryState+10   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 bclr    #0,(byte_FF826C).w
                 clr.w   (word_FF8224).w
                 move.w  #0,4(a5)
@@ -282,7 +282,7 @@ Player_HandleJump_Render:                               ; CODE XREF: Player_Hand
 Player_HandleDamageKnockback:                           ; CODE XREF: Player_HandleJump+2A   j  ; was: loc_15286
                                         ; Player_HandleAirState+2C   j
                 bsr.w   Player_SpawnDamageImpactEffect
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$3A,4(a5)                      ; ':'
                 move.w  #$FFFC,$48(a5)
@@ -315,7 +315,7 @@ Player_GroundedDamageState:                             ; DATA XREF: ROM:0001509
 Player_InitAirborneDamageKnockback:                     ; CODE XREF: Player_HandleFallingState+82   j  ; was: sub_152FC
                                         ; Player_HandleSpecialAttack+64   j
                 bsr.w   Player_SpawnDamageImpactEffect
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$FFFC,$48(a5)
                 move.w  #$A,$4A(a5)
@@ -403,7 +403,7 @@ Player_InitJumpCancelCleanup:                           ; CODE XREF: Player_Dash
                 move.w  #$A,$4A(a5)
                 move.w  #$FFFF,$C(a5)
                 move.w  #8,$5C(a5)
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 bra.w   Player_AutoFlipDirection
 ; End of function Player_InitJumpCancelState
 Player_HandleAirState_Return:                           ; CODE XREF: Player_HandleAirState+1E   j  ; was: nullsub_37
@@ -446,7 +446,7 @@ Player_CheckAirStateTransition:                         ; CODE XREF: Player_Hand
 ; Initializes player air state with parameters
 Player_InitAirJumpState:                                ; CODE XREF: Player_HandleLandingState+6C   j  ; was: sub_1546E
                                         ; Player_CheckWallCollisionJump+3A   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 clr.w   (word_FF8224).w
                 move.w  #$A,4(a5)
                 clr.w   $48(a5)
@@ -494,7 +494,7 @@ Player_AirMovement_Return:                              ; CODE XREF: Player_Hand
 ; Initializes player landing state
 Player_InitLandingState:                                ; CODE XREF: Player_AirborneDamageState+1E   j  ; was: sub_15502
                                         ; Player_HandleFallingState+50   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 clr.w   (word_FF8224).w
                 move.w  #$16,4(a5)
                 move.w  #2,$48(a5)
@@ -558,7 +558,7 @@ Player_HandleSpecialMove_NotActivated:                  ; CODE XREF: Player_Hand
 Player_HandleSpecialMove_Activate:                      ; CODE XREF: Player_HandleSpecialMove+16   j  ; was: loc_155CC
                 move.w  (WeaponSlotOffset).w,(WeaponSavedSlotOffset).w
                 move.w  #$12,(WeaponStateIndex).w
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #0,(word_FF8032).w
                 move.w  #$FFEE,(word_FF8034).w
                 clr.l   $18(a5)
@@ -587,7 +587,7 @@ Player_HandleGroundedState:                             ; DATA XREF: ROM:0001506
 ; Masks input, toggles the shared alternate-mode flag, and plays its sound
 Player_ToggleAlternateModeWithInputMask:                ; CODE XREF: Player_HandleSpecialMove+E   j  ; was: sub_15632
                                         ; Player_CheckAlternateSpecialActivation+10   p
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 eori.w  #2,(ShootingMode).w
                 move.b  #$A3,d0
                 jsr     (Sound_PlaySFX).l
@@ -624,7 +624,7 @@ Player_CheckWallCollisionJump_CheckLeft:                ; CODE XREF: Player_Chec
 ; Initializes wall bounce state with velocity and direction flip
 Player_InitWallBounceState:                             ; CODE XREF: Player_CheckWallCollisionJump+6   j  ; was: loc_15694
                                         ; Player_CheckWallCollisionJump+16   j
-                move.b  #$7F,(byte_FF830F).w
+                move.b  #$7F,(PlayerInputMask).w
                 move.w  #2,4(a5)
                 move.w  #4,$48(a5)
                 move.w  #$FFFF,$C(a5)
