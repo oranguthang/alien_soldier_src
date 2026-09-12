@@ -1,6 +1,6 @@
 ; Initialize the Stage 8 Flying Neo composite rendered from the shared
 ; high-RAM display record
-Stage8_InitializeFlyingNeoComposite:                    ; CODE XREF: Stage_InitStage8Train+3A   p  ; was: sub_D6D6
+Stage8_InitializeFlyingNeoComposite:                    ; CODE XREF: Stage8_InitializeTrainSequence+3A   p  ; was: sub_D6D6
                 movea.w #(word_FFDC40-M68K_RAM),a0
                 move.w  #$170,(a0)
                 move.w  #$D00,2(a0)
@@ -16,7 +16,7 @@ Stage8_InitializeFlyingNeoComposite:                    ; CODE XREF: Stage_InitS
                 rts
 ; End of function Stage8_InitializeFlyingNeoComposite
 ; Spawn Flying Neo and queue its initial tile columns
-Stage8_StartFlyingNeoCompositeAndQueueTiles:            ; CODE XREF: Stage_FlyingNeoScrollUpdate+14   p  ; was: sub_D714
+Stage8_StartFlyingNeoCompositeAndQueueTiles:            ; CODE XREF: Stage8_UpdateFlyingNeoApproachDelay+14   p  ; was: sub_D714
                 movea.w #(word_FFDC40-M68K_RAM),a0
                 addq.w  #2,4(a0)
                 move.w  #$EF00,2(a0)
@@ -40,14 +40,14 @@ Stage8_FlyingNeoInitialIndexedColumnDescriptor:
                                         ; DATA XREF: Stage8_StartFlyingNeoCompositeAndQueueTiles+1E   o
 
 ; Load the shared Flying Neo/midgame palette command bank
-Midgame_LoadFlyingNeoPaletteCommands:                   ; CODE XREF: Stage_FlyingNeoBattleStart+1E   p  ; was: sub_D75A
+Midgame_LoadFlyingNeoPaletteCommands:                   ; CODE XREF: Stage8_InitializeFlyingNeoEncounter+1E   p  ; was: sub_D75A
                                         ; Stage9_InitializeFlyCorridor+24   p
                 lea     (FlyingNeoAndMidgamePaletteCommandBank).l,a0
                 jmp     Gfx_LoadPaletteCommand
 ; End of function Midgame_LoadFlyingNeoPaletteCommands
 ; Update the random Stage 8/9 lightning palette effect and optional composite
-Midgame_UpdateRandomLightningEffect:                    ; CODE XREF: Stage_TrainScrollPhysics+8   p  ; was: sub_D766
-                                        ; Stage_FlyingNeoVerticalScroll+3A   p
+Midgame_UpdateRandomLightningEffect:                    ; CODE XREF: Stage8_UpdateTrainEffectsAndVerticalOscillation+8   p  ; was: sub_D766
+                                        ; Stage8_UpdateFlyingNeoVerticalScrollAndEffects+3A   p
                 move.w  (word_FF821E).w,d7
                 bmi.w   Midgame_UpdateRandomLightningEffect_Return
                 tst.w   (PalettePrimaryIndex).w
@@ -115,11 +115,11 @@ Midgame_RandomLightningMappingPointers: dc.l    off_19C6A0  ; was: off_D83A
                 dc.l    off_19C708
 Stage8_TrainLightningPaletteEntryLists:
                 dc.w    0, $E308, 9, $E326, $E328, $E32A, $E32C, $E32E  ; was: word_D84A
-                                        ; DATA XREF: Stage_TrainScrollPhysics   o
+                                        ; DATA XREF: Stage8_UpdateTrainEffectsAndVerticalOscillation   o
                 dc.w    $E330, $E332, $E334, $E336, $E324
 Stage8_FlyingNeoLightningPaletteEntryLists:
                 dc.w    1, $E308, $E36E, $22, $E324, $E326, $E328, $E32A  ; was: word_D864
-                                        ; DATA XREF: Stage_FlyingNeoVerticalScroll+32   o
+                                        ; DATA XREF: Stage8_UpdateFlyingNeoVerticalScrollAndEffects+32   o
                                         ; sub_D01E:loc_D040   o
                 dc.w    $E32C, $E32E, $E330, $E332, $E344, $E346, $E348, $E34A
                 dc.w    $E34C, $E34E, $E350, $E352, $E354, $E356, $E358, $E35A

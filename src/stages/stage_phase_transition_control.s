@@ -1,6 +1,6 @@
 ; Starts the fade into the interstage transition
 Stage_StartInterstageTransition:                        ; CODE XREF: Stage_CheckTransitionReady+16   j  ; was: sub_10390
-                                        ; Stage_WaitAndTransition+1C   j
+                                        ; Stage7_StartTransitionToStage8+1C   j
                 move.w  #3,(word_FF8230).w
                 move.w  #2,(word_FF80F2).w
                 clr.w   (word_FF80F0).w

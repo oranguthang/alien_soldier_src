@@ -85,7 +85,7 @@ Boss_TerobusterGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_FlyingNeoAssetSet: dc.w    $154                    ; field_0  ; was: stru_11408
-                                        ; DATA XREF: Stage_FlyingNeoBattleStart+A   o
+                                        ; DATA XREF: Stage8_InitializeFlyingNeoEncounter+A   o
                 dc.l    Boss_FlyingNeoGraphicsLoadList  ; field_2
                 dc.l    0                               ; field_6
 Boss_FlyingNeoGraphicsLoadList: dc.w    7               ; field_0  ; was: stru_11412

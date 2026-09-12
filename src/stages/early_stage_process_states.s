@@ -43,17 +43,17 @@ EarlyStage_StateHandlerOffsets: dc.w    Stage1_InitializeScrollState-Stage1_Init
                 dc.w    Stage7_UpdatePostTerobusterIntro-Stage1_InitializeScrollState
                 dc.w    Stage7_UpdatePostTerobusterTransition-Stage1_InitializeScrollState
                 dc.w    Stage7_UpdateScrollToStage8-Stage1_InitializeScrollState
-                dc.w    Stage_CheckPlayerPosTrigger-Stage1_InitializeScrollState
-                dc.w    Stage_WaitAndTransition-Stage1_InitializeScrollState
-                dc.w    Stage_InitStage8Train-Stage1_InitializeScrollState
-                dc.w    Stage_InitStage8Train_ScrollCheck-Stage1_InitializeScrollState
-                dc.w    Stage_TrainToFlyingNeoTransition-Stage1_InitializeScrollState
-                dc.w    Stage_FlyingNeoScrollUpdate-Stage1_InitializeScrollState
-                dc.w    Stage_FlyingNeoVerticalScroll-Stage1_InitializeScrollState
-                dc.w    Stage_FlyingNeoScrollDecel-Stage1_InitializeScrollState
-                dc.w    Stage_FlyingNeoBattleStart-Stage1_InitializeScrollState
-                dc.w    Stage_FlyingNeoBattleUpdate-Stage1_InitializeScrollState
-                dc.w    Stage_PostFlyingNeoTransition-Stage1_InitializeScrollState
+                dc.w    Stage7_WaitForPlayerStage8Trigger-Stage1_InitializeScrollState
+                dc.w    Stage7_StartTransitionToStage8-Stage1_InitializeScrollState
+                dc.w    Stage8_InitializeTrainSequence-Stage1_InitializeScrollState
+                dc.w    Stage8_UpdateTrainSequence-Stage1_InitializeScrollState
+                dc.w    Stage8_InitializeFlyingNeoApproach-Stage1_InitializeScrollState
+                dc.w    Stage8_UpdateFlyingNeoApproachDelay-Stage1_InitializeScrollState
+                dc.w    Stage8_AccelerateFlyingNeoVerticalScroll-Stage1_InitializeScrollState
+                dc.w    Stage8_DecelerateFlyingNeoVerticalScroll-Stage1_InitializeScrollState
+                dc.w    Stage8_InitializeFlyingNeoEncounter-Stage1_InitializeScrollState
+                dc.w    Stage8_UpdateFlyingNeoEncounter-Stage1_InitializeScrollState
+                dc.w    Stage8_StartPostFlyingNeoTransition-Stage1_InitializeScrollState
                 dc.w    Stage9_InitializeFlyCorridor-Stage1_InitializeScrollState
                 dc.w    Stage9_UpdateFlyCorridor-Stage1_InitializeScrollState
                 dc.w    Stage9_InitializeCaterpillarCamera-Stage1_InitializeScrollState

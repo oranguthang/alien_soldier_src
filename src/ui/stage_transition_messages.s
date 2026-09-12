@@ -183,7 +183,7 @@ StageTransitionMessageSequence_Shared:  dc.b    3, $DA, 0, $3B, $48, $6D, $5A, $
 StageTransitionMessageSequence_TrainAndBugmax:  binclude "data/other/stage_transition_message_sequence_train_and_bugmax.bin"  ; was: byte_1E587
 byte_1E587_End:
 StageTransitionMessageSequence_PostFlyingNeo:   dc.b    3, $DA, 0, $39, $32, $6B, $31, $40, $4E, $5C, $A0, $DA, $92, $A4, $48, 0  ; was: byte_1E6C6
-                                        ; DATA XREF: Stage_PostFlyingNeoTransition+E   o
+                                        ; DATA XREF: Stage8_StartPostFlyingNeoTransition+E   o
                 dc.b    $A7, $BF, $81, 0, $DA, $FF, 6, $3A, $7A, $D8, $48, $39, $55, $49, 0, $7F
                 dc.b    $94, $9D, $A4, $AD, $C5, $AB, $AE, $48, $BA, $AB, $D8, $FF, 8, $AA, $AB, $B6
                 dc.b    $BB, $E2, 0, $3F, $34, $3C, $67, $38, $DB, $DB, $FF, $B, $63, $6B, $32, $3E

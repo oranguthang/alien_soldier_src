@@ -49,7 +49,7 @@
                 include "src/ui/stage_message_sequences.s"
                 include "src/rendering/palettes.s"
                 include "src/stages/early_stage_process_states.s"
-                include "src/stages/train_and_flying_neo.s"
+                include "src/stages/stage7_transition_and_stage8_train_flying_neo.s"
                 include "src/stages/stage_9_flies_caterpillar_and_xi_tiger.s"
                 include "src/stages/terobuster_intro_projectiles.s"
                 include "src/stages/flying_neo_effects.s"

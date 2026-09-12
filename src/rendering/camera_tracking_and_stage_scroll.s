@@ -278,7 +278,7 @@ UnreferencedCameraCheckSecondaryStateAnchor:            ; CODE XREF: Unreference
                 bra.s   UnreferencedCameraClampPlayerStateDelta
 ; End of function UnreferencedCameraAdjustForPlayerState
 ; Updates the Stage 8 train scroll and renders its tilemap
-Stage8_UpdateTrainScrollAndTilemap:                     ; CODE XREF: Stage_InitStage8Train:loc_CEB8   p  ; was: sub_10286
+Stage8_UpdateTrainScrollAndTilemap:                     ; CODE XREF: Stage8_UpdateTrainSequence_UpdateScroll   p  ; was: sub_10286
                 bsr.w   Camera_FollowPlayerBeyondHorizontalThreshold
 Scroll_SynchronizePlanesAndRenderTrainTilemap:          ; CODE XREF: Scroll_AdvanceTrainHorizontalAndRenderTilemap+8   j  ; was: loc_1028A
                 move.w  (dword_FFA900).w,(dword_FFA908).w
@@ -295,12 +295,12 @@ UnreferencedAdvanceTrainScrollWithNop:
                 nop                                     ; was: sub_102AC
 ; End of function UnreferencedAdvanceTrainScrollWithNop
 ; Advances train-scene horizontal scroll by one pixel and renders the tilemap
-Scroll_AdvanceTrainHorizontalAndRenderTilemap:          ; CODE XREF: Stage_TrainToFlyingNeoTransition   p  ; was: sub_102AE
+Scroll_AdvanceTrainHorizontalAndRenderTilemap:          ; CODE XREF: Stage8_InitializeFlyingNeoApproach   p  ; was: sub_102AE
                 addi.l  #$10000,(dword_FFA900).w
                 bra.s   Scroll_SynchronizePlanesAndRenderTrainTilemap
 ; End of function Scroll_AdvanceTrainHorizontalAndRenderTilemap
 ; Synchronizes the Flying Neo transition scroll and renders its tilemap
-Stage8_UpdateFlyingNeoScrollAndTilemap:                 ; CODE XREF: Stage_FlyingNeoVerticalScroll+2A   p  ; was: sub_102B8
+Stage8_UpdateFlyingNeoScrollAndTilemap:                 ; CODE XREF: Stage8_UpdateFlyingNeoVerticalScrollAndEffects+2A   p  ; was: sub_102B8
                 move.w  (dword_FFA900).w,(dword_FFA908).w
                 move.w  (dword_FFA904).w,(dword_FFA90C).w
                 move.w  (dword_FFA900).w,d0

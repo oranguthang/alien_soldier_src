@@ -46,7 +46,7 @@ Stage9_UpdateFlyCorridorScroll:                         ; CODE XREF: Stage9_Upda
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 bsr.w   Stage9_WriteVerticalRasterOffsets
-                bsr.w   Stage_TrainParallaxCalc
+                bsr.w   Midgame_UpdateTrainAndFlyCorridorParallaxRows
                 cmpi.w  #$60,(dword_FFA960+2).w         ; '`'
                 bmi.s   Stage9_FlyCorridor_AdvanceVerticalPosition
                 bsr.w   Stage9_UpdateFlyCorridorRevealColumns

@@ -5147,3 +5147,30 @@ records. The ten formerly address-derived definitions gain provenance,
 raising provenance from 14,008 to 14,018 and the audit registry from 11,535
 to 11,572. The enforced live address-derived ceiling falls from 2,043 to
 2,033; module count remains 368.
+
+The Stage 7-to-8 transition and Stage 8 train/Flying Neo pass uses the early
+state table together with `Stage8ConfigRecord` offset `$50` and
+`Stage9ConfigRecord` offset `$62`. Offsets `$4C/$4E` are therefore the final
+Stage 7 player-position trigger and delayed interstage transition. Stage 8
+then occupies `$50-$60`: train initialization and scroll, Flying Neo approach,
+vertical acceleration/deceleration, encounter initialization/update, and the
+post-encounter transition. The module is accordingly renamed from the
+incomplete `stages/train_and_flying_neo.s` to
+`stages/stage7_transition_and_stage8_train_flying_neo.s`.
+
+Static consumers correct the former generic helper names. The six-byte writer
+copies three strided byte pairs into the `$FF615D` control region; neither the
+RAM map nor its two callers prove a general boss-parameter structure, so its
+name now states only that operation. The former train-only parallax helper is
+also called from the Stage 9 fly corridor: it is now the shared
+`Midgame_UpdateTrainAndFlyCorridorParallaxRows` routine. Its inner loop repeats
+four selected scroll values across 48 raster rows. Flying Neo's approach and
+encounter states retain separate lifecycle names instead of conflating scroll,
+asset submission, and recurring vertical oscillation.
+
+All 30 imported definitions in the module now have exact-address static audit
+records. The twelve formerly address-derived definitions gain provenance,
+raising provenance from 14,018 to 14,030 and the audit registry from 11,572
+to 11,602. The enforced live address-derived ceiling falls from 2,033 to
+2,021; only 44 address-derived definitions remain outside data modules and
+include files.
