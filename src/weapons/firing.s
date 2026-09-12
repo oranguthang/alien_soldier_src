@@ -49,7 +49,7 @@ Weapon_FireProjectile:                                  ; DATA XREF: ROM:00017F2
                 tst.w   (WeaponFireCooldown).w
                 bpl.s   Weapon_FireProjectile_Return
                 move.w  #2,(WeaponFireCooldown).w
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_FireProjectile_FindSlot:                         ; CODE XREF: Weapon_FireProjectile+22   j  ; was: loc_17F5C
                 tst.w   (a0)
@@ -143,7 +143,7 @@ Weapon_SpawnHomingEffect:
                 tst.w   (WeaponFireCooldown).w          ; was: sub_1808C
                 bpl.s   Weapon_SpawnHomingEffect_Return
                 move.w  #2,(WeaponFireCooldown).w
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_SpawnHomingEffect_FindSlot:                      ; CODE XREF: Weapon_SpawnHomingEffect+1A   j  ; was: loc_1809E
                 move.w  (a0),d0
@@ -190,7 +190,7 @@ Weapon_SpawnHomingEffect_Initialize:                    ; CODE XREF: Weapon_Spaw
                 move.w  d0,$E(a0)
                 move.w  $10(a1,d6.w),8(a0)
                 move.w  $20(a1,d6.w),$A(a0)
-                movea.w #(byte_FFC2C0-M68K_RAM),a1
+                movea.w #(PlayerEffectObjectPool-M68K_RAM),a1
                 moveq   #2,d7
 Weapon_SpawnHomingEffect_FindCompanion:                 ; CODE XREF: Weapon_SpawnHomingEffect+BE   j  ; was: loc_18142
                 tst.w   (a1)
@@ -228,7 +228,7 @@ Weapon_FireMultipleShots:                               ; DATA XREF: ROM:00017F2
                 beq.w   Effect_SpawnRandomDebris
                 tst.w   (WeaponFireCooldown).w
                 bpl.w   Weapon_InitSpreadShot_Return
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1
                 moveq   #0,d3
                 moveq   #7,d7
@@ -353,7 +353,7 @@ Weapon_FireBulletHandler:                               ; DATA XREF: ROM:00017F2
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
                 move.b  #8,(PaletteRGBAdjustStep).w
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_FireBulletHandler_FindSlot:                      ; CODE XREF: Weapon_FireBulletHandler+32   j  ; was: loc_18352
                 move.w  (a0),d0
@@ -424,7 +424,7 @@ Weapon_FireBeamWeapon:                                  ; DATA XREF: ROM:00017F2
                 tst.w   (WeaponFireCooldown).w
                 bpl.w   Weapon_FireBeamWeapon_Return
                 move.w  #1,(WeaponFireCooldown).w
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_FireBeamWeapon_FindSlot:                         ; CODE XREF: Weapon_FireBeamWeapon+40   j  ; was: loc_18436
                 move.w  (a0),d0

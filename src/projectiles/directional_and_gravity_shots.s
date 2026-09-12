@@ -450,10 +450,10 @@ Projectile_UpdateArmedDelayedCollisionShot:             ; CODE XREF: Projectile_
                 add.w   $10(a5),d0
                 move.w  d0,d1
                 subi.w  #$80,d0
-                cmp.w   (word_FFA970).w,d0
+                cmp.w   (CameraXLowerBound).w,d0
                 bmi.s   Projectile_RetireDelayedCollisionShot
                 subi.w  #$1C0,d1
-                cmp.w   (word_FFA974).w,d1
+                cmp.w   (CameraXUpperBound).w,d1
                 bpl.s   Projectile_RetireDelayedCollisionShot
                 cmpi.w  #$A0,$14(a5)
                 bmi.s   Projectile_RetireDelayedCollisionShot

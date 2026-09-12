@@ -110,7 +110,7 @@ Boss_AntroidWaitForStageReady:                          ; DATA XREF: ROM:0003752
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_AntroidWaitForStageReadyAnimate
                 clr.b   (byte_FF80EC).w
-                subi.w  #$40,(word_FFA970).w            ; '@'
+                subi.w  #$40,(CameraXLowerBound).w      ; '@'
                 clr.w   $1DE(a5)
                 move.w  #6,4(a5)
                 move.w  #$30,$11C(a5)                   ; '0'

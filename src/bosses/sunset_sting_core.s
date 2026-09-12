@@ -94,7 +94,7 @@ Boss_SunsetStingWaitForIntroMessageState:               ; DATA XREF: ROM:00040D0
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_SunsetStingIntroUpdateMotion
                 clr.b   (byte_FF80EC).w
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 addq.w  #2,4(a5)
 Boss_SunsetStingIntroUpdateMotion:                      ; CODE XREF: Boss_SunsetStingQueueIntroMessageState+C   j  ; was: loc_40E48
                                         ; Boss_SunsetStingWaitForIntroMessageState+4   j

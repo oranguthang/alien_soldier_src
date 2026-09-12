@@ -188,7 +188,7 @@ Stage20AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
 Stage_LoadStage3Phase1Assets:                           ; DATA XREF: ROM:00011762   o  ; was: sub_11C00
                 move.w  #$C,(StageProcessTableOffset).w
                 bset    #0,(PlayerModeFlags).w
-                bset    #7,(byte_FFA959).w
+                bset    #7,(CameraMotionLockFlags).w
                 bra.s   Stage_SubmitStage3Phase12SharedAssetList
 ; End of function Stage_LoadStage3Phase1Assets
 ; Prepares resampled tiles and loads the shared Stage 3 phase 1/2 asset list
@@ -196,7 +196,7 @@ Stage_LoadStage3Phase2Assets:                           ; DATA XREF: ROM:0001175
                                         ; ROM:00011760   o
                 move.w  #$C,(StageProcessTableOffset).w
                 bset    #0,(PlayerModeFlags).w
-                bset    #7,(byte_FFA959).w
+                bset    #7,(CameraMotionLockFlags).w
                 bsr.w   Gfx_PrepareStage3Phase2ResampledTiles
 Stage_SubmitStage3Phase12SharedAssetList:               ; CODE XREF: Stage_LoadStage3Phase1Assets+12   j  ; was: loc_11C2A
                 lea     Stage3Phase12SharedAssetLoadList(pc),a0

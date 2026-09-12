@@ -203,8 +203,8 @@ Stage_InitializeStage16:                                ; DATA XREF: ROM:0001228
                 lea     Stage16ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-                move.w  #$620,(word_FFA970).w
-                move.w  #$6A0,(word_FFA974).w
+                move.w  #$620,(CameraXLowerBound).w
+                move.w  #$6A0,(CameraXUpperBound).w
                 bset    #6,(byte_FF8245).w
                 rts
 ; End of function Stage_InitializeStage16
@@ -229,8 +229,8 @@ Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_Initi
                 move.b  #$82,(byte_FF7AFF).l
                 move.b  #4,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95B).w
-                clr.w   (word_FFA970).w
-                clr.w   (word_FFA974).w
+                clr.w   (CameraXLowerBound).w
+                clr.w   (CameraXUpperBound).w
                 move.w  #$A,(PalettePrimaryIndex).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  #$40,(RasterEffectIndex).w      ; '@'
@@ -343,24 +343,24 @@ Stage_InitializeStage20:                                ; DATA XREF: ROM:0001229
 ; End of function Stage_InitializeStage20
 ; Initializes the Stage 21 configuration and flags
 Stage_InitializeStage21:                                ; DATA XREF: ROM:00012294   o  ; was: sub_1256E
-                bset    #7,(byte_FFA959).w
-                bset    #6,(byte_FFA959).w
+                bset    #7,(CameraMotionLockFlags).w
+                bset    #6,(CameraMotionLockFlags).w
                 lea     Stage21ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
 ; End of function Stage_InitializeStage21
 ; Initializes the Stage 22 configuration and flags
 Stage_InitializeStage22:                                ; DATA XREF: ROM:00012296   o  ; was: sub_12584
-                bset    #7,(byte_FFA959).w
-                bset    #6,(byte_FFA959).w
+                bset    #7,(CameraMotionLockFlags).w
+                bset    #6,(CameraMotionLockFlags).w
                 lea     Stage22ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
 ; End of function Stage_InitializeStage22
 ; Initializes the Stage 23 configuration and flags
 Stage_InitializeStage23:                                ; DATA XREF: ROM:00012298   o  ; was: sub_1259A
-                bset    #7,(byte_FFA959).w
-                bset    #6,(byte_FFA959).w
+                bset    #7,(CameraMotionLockFlags).w
+                bset    #6,(CameraMotionLockFlags).w
                 lea     Stage23ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord

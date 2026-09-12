@@ -189,7 +189,7 @@ Boss_DeepStriderBattleEntryPoseState:                   ; CODE XREF: Boss_DeepSt
                 addq.w  #2,4(a5)
                 move.w  #$40,$17E(a5)                   ; '@'
                 clr.b   (byte_FF80EC).w
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
 Boss_DeepStriderUpdateBattleEntryPose:                  ; CODE XREF: Boss_DeepStriderBattleEntryDelayState+4   j  ; was: loc_3E80C
                                         ; Boss_DeepStriderBattleEntryPoseState+4   j
                 andi.w  #$1FC,$1DE(a5)

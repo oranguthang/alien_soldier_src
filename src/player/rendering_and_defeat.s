@@ -399,7 +399,7 @@ Player_CreateDamageImpactObject:                        ; CODE XREF: Player_Spaw
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$E0,(PaletteRGBChannelMask).w
                 move.b  #8,(PaletteRGBAdjustStep).w
-                movea.w #(word_FFC5C0-M68K_RAM),a0
+                movea.w #(PlayerSpecialObjectSlot-M68K_RAM),a0
                 move.w  #$1CC,(a0)
                 move.w  #$E900,2(a0)
                 move.b  #$50,$21(a0)                    ; 'P'

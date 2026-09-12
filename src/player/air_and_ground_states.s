@@ -385,7 +385,7 @@ Player_TeleportDash:                                    ; DATA XREF: ROM:000150B
                 move.l  #$18000,$1C(a5)
                 bset    #3,$E(a5)
                 bclr    #4,$E(a5)
-                movea.w #(word_FFC5C0-M68K_RAM),a0
+                movea.w #(PlayerSpecialObjectSlot-M68K_RAM),a0
                 move.w  #$230,(a0)
                 move.b  #$54,$21(a0)                    ; 'T'
                 move.w  #$4000,2(a0)

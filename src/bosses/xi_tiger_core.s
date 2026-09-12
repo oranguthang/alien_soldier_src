@@ -142,7 +142,7 @@ Boss_XiTigerFallingLanding:                             ; DATA XREF: ROM:0003D88
                 addq.w  #2,4(a5)
                 move.w  #6,(PlaneAShakeLevel).w
                 move.w  #6,(PlaneBShakeLevel).w
-                move.l  #$C000,(dword_FFA91C).w
+                move.l  #$C000,(StageCameraYVelocity).w
                 move.w  #$FFFF,(dword_FFA960).w
                 move.b  #$A1,d0
                 jsr     (Sound_PlaySFX).l
@@ -199,7 +199,7 @@ Boss_XiTigerWaitForSequenceState:                       ; DATA XREF: ROM:0003D89
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_XiTigerUpdateActiveBattlePose
                 clr.b   (byte_FF80EC).w
-                addi.w  #$40,(word_FFA974).w            ; '@'
+                addi.w  #$40,(CameraXUpperBound).w      ; '@'
                 bra.w   Boss_XiTigerSetIdleState
 ; End of function Boss_XiTigerWaitForSequenceState
 ; Check recovery conditions and transition Xi-Tiger state
@@ -462,7 +462,7 @@ Boss_XiTigerJumpPeak:                                   ; DATA XREF: ROM:0003D8A
                 addq.w  #2,4(a5)
                 move.w  #6,(PlaneAShakeLevel).w
                 move.w  #6,(PlaneBShakeLevel).w
-                move.l  #$C000,(dword_FFA91C).w
+                move.l  #$C000,(StageCameraYVelocity).w
                 move.w  #$FFFF,(dword_FFA960).w
                 move.b  #$A4,d0
                 jsr     (Sound_PlaySFX).l
@@ -540,7 +540,7 @@ Boss_XiTigerDefeatLeapState:                            ; DATA XREF: ROM:0003D8A
                 move.w  #$C0,$11C(a5)
                 move.w  #8,(PlaneAShakeLevel).w
                 move.w  #8,(PlaneBShakeLevel).w
-                move.l  #$C000,(dword_FFA91C).w
+                move.l  #$C000,(StageCameraYVelocity).w
                 move.w  #$FFFF,(dword_FFA960).w
                 clr.l   $1C(a5)
                 move.w  #$CF20,$4A(a5)

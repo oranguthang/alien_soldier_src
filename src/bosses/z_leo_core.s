@@ -120,8 +120,8 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 move.w  #$54,(RasterEffectIndex).w      ; 'T'
                 clr.w   (RasterEffectInitState).w
                 move.w  #$18,(word_FF8090).w
-                bset    #7,(byte_FFA959).w
-                bset    #6,(byte_FFA959).w
+                bset    #7,(CameraMotionLockFlags).w
+                bset    #6,(CameraMotionLockFlags).w
                 movea.l #$FFFF4520,a0
                 move.w  #$A000,d0
                 moveq   #5,d7
@@ -184,8 +184,8 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 clr.w   (PrimaryCameraXPosition).w
                 move.w  #$100,(PrimaryCameraYPosition).w
                 move.w  #$100,(word_FF9602).w
-                bset    #7,(byte_FFA959).w
-                bset    #6,(byte_FFA959).w
+                bset    #7,(CameraMotionLockFlags).w
+                bset    #6,(CameraMotionLockFlags).w
                 move.w  #$10,d0
                 move.w  #$C000,d1
                 move.w  #$4B80,d2

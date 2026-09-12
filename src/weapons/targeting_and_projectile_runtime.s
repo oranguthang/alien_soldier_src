@@ -5,7 +5,7 @@ Weapon_UpdateTargetingReticle:                          ; CODE XREF: Weapon_Conf
 Weapon_UpdateTargetingReticle_Scan:                     ; CODE XREF: Weapon_ConfigureState8Targeting+7E   j  ; was: loc_19298
                 clr.w   (TargetReticleScanDelay).w
                 moveq   #0,d6
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_UpdateTargetingReticle_CheckProjectileSlot:      ; CODE XREF: Weapon_UpdateTargetingReticle+1A   j  ; was: loc_192A4
                 tst.w   (a0)
@@ -227,7 +227,7 @@ Projectile_ProcessVisiblePool:                          ; CODE XREF: Sys_Gamepla
                                         ; ZLeoEnding_UpdateScene+12   p
                 tst.b   (FrameControlFlags).w
                 bmi.w   Projectile_ProcessVisiblePool_Return
-                lea     (dword_FFBFC0).w,a5
+                lea     (SharedEffectObjectPool).w,a5
 Projectile_ProcessVisiblePool_Loop:                     ; CODE XREF: Projectile_ProcessVisiblePool+5E   j  ; was: loc_1999E
                 move.w  (a5),d0
                 beq.s   Projectile_AdvancePoolPointer

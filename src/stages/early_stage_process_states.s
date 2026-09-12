@@ -69,7 +69,7 @@ EarlyStage_StateHandlerOffsets: dc.w    Stage1_InitializeScrollState-Stage1_Init
 ; Updates stage logic and scroll
 Stage1_InitializeScrollState:                           ; DATA XREF: Stage_DispatchEarlyStageState+4   o  ; was: sub_C8C2
                                         ; ROM:off_C84A   o
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 ; Updates stage scroll position and checks for phase transition at specific coordinate
 Stage1_UpdateScrollToJetsripper:                        ; DATA XREF: ROM:0000C84C   o  ; was: loc_C8C6
                 bsr.w   Camera_UpdateAndRenderStageTilemap
@@ -88,12 +88,12 @@ Stage1_InitializeJetsripperEncounter:                   ; DATA XREF: ROM:0000C84
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$6E8,(PrimaryCameraXPosition).w
                 bmi.s   Stage1_UpdateScrollToJetsripper_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$6E8,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 lea     (Boss_JetsripperAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage1_InitializeJetsripperEncounter
@@ -131,12 +131,12 @@ Stage2_InitializeAntroidEncounter:                      ; DATA XREF: ROM:0000C85
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$BC0,(PrimaryCameraXPosition).w
                 bmi.s   Stage2_UpdateScrollToAntroid_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$BC0,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 lea     (Boss_AntroidAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage2_InitializeAntroidEncounter
@@ -159,7 +159,7 @@ Stage2_StartPostAntroidTransition:                      ; DATA XREF: ROM:0000C85
 ; End of function Stage2_StartPostAntroidTransition
 ; Stage 3 camera with scroll update and position limit
 Stage3_InitializeIntroProjectileSlots:                  ; DATA XREF: ROM:0000C85C   o  ; was: sub_C99A
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 movea.w #(word_FFC680-M68K_RAM),a0
                 moveq   #7,d7
 Stage3_InitializeIntroProjectileSlots_Loop:             ; CODE XREF: Stage3_InitializeIntroProjectileSlots+12   j  ; was: loc_C9A4
@@ -172,7 +172,7 @@ Stage3_UpdateScrollToIntroProjectile:                   ; DATA XREF: ROM:0000C85
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$FC0,(PrimaryCameraXPosition).w
                 bmi.w   Stage3_UpdateScrollToIntroProjectile_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$FC0,(PrimaryCameraXPosition).w
                 move.w  #$190,(Entity_ObjectPool).w
 Stage3_UpdateScrollToIntroProjectile_Return:            ; CODE XREF: Stage3_InitializeIntroProjectileSlots+24   j  ; was: locret_C9D2
@@ -182,7 +182,7 @@ Stage3_UpdateScrollToIntroProjectile_Return:            ; CODE XREF: Stage3_Init
 Stage3_WaitForIntroProjectile:                          ; DATA XREF: ROM:0000C860   o  ; was: sub_C9D4
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage3_WaitForIntroProjectile_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 Stage3_WaitForIntroProjectile_Return:                   ; CODE XREF: Stage3_WaitForIntroProjectile+4   j  ; was: locret_C9DE
                 rts
 ; End of function Stage3_WaitForIntroProjectile
@@ -204,12 +204,12 @@ Stage3_InitializeShellshogunEncounter:                  ; DATA XREF: ROM:0000C86
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$11E8,(PrimaryCameraXPosition).w
                 bmi.s   Stage3_UpdateScrollToShellshogun_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$11E8,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 lea     (Boss_ShellshogunAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage3_InitializeShellshogunEncounter
@@ -221,7 +221,7 @@ Stage3_InitializePostShellshogunTransition:             ; DATA XREF: ROM:0000C86
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
                 move.w  #$8000,(word_FF808A).w
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 clr.w   (SecondaryCameraYPos).w
                 lea     (Boss_ShellshogunAssetLoadList).l,a0
@@ -259,7 +259,7 @@ Stage3_WaitForPostShellshogunRows_UpdateCamera:         ; CODE XREF: Stage3_Wait
 Stage3_EnterStage4:                                     ; DATA XREF: ROM:0000C86A   o  ; was: sub_CAB4
                 move.b  #$81,d0
                 jsr     (Sound_QueueBGMRequest).l
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 jsr     (Stage_DispatchVisualAssetLoader).l
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
@@ -281,12 +281,12 @@ Stage4_InitializeShiperEncounter:                       ; DATA XREF: ROM:0000C86
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 cmpi.w  #$1AF8,(PrimaryCameraXPosition).w
                 bmi.s   Stage4_InitializeShiperEncounter_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$1AF8,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 move.b  #$10,(byte_FFA95A).w
                 move.b  #4,(byte_FFA95B).w
                 lea     (Boss_ShiperAssetSet).l,a1
@@ -305,7 +305,7 @@ Stage4_InitializeShiperRasterRows:                      ; DATA XREF: ROM:0000C87
 Stage4_UpdateShiperEncounter:                           ; DATA XREF: ROM:0000C872   o  ; was: sub_CB32
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage4_UpdateShiperEncounterCamera
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 bra.s   Stage4_WaitForShiperMessage
 ; ---------------------------------------------------------------------------
@@ -340,7 +340,7 @@ Stage4_WaitForShiperMessage:                            ; CODE XREF: Stage4_Upda
                 bsr.s   Stage4_UpdateShiperCameraAndRasterRows
                 tst.w   (MessageSequenceState).w
                 bne.s   Stage4_WaitForShiperMessage_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #2,(PlayerScriptStateOffset).w
 Stage4_WaitForShiperMessage_Return:                     ; CODE XREF: Stage4_WaitForShiperMessage+6   j  ; was: locret_CB8A
                 rts
@@ -370,7 +370,7 @@ Stage4_CheckShiperTransitionReady_Return:               ; CODE XREF: Stage4_Chec
 ; End of function Stage4_CheckShiperTransitionReady
 ; Updates automatic stage scrolling and checks for phase transition
 Stage5_InitializeScrollState:                           ; DATA XREF: ROM:0000C878   o  ; was: sub_CBBA
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 ; Updates automatic scrolling and checks for transition
 Stage5_UpdateScrollToMadamBarbar:                       ; DATA XREF: ROM:0000C87A   o  ; was: loc_CBBE
                 bsr.w   Camera_UpdateAndRenderStageTilemap
@@ -387,12 +387,12 @@ Stage5_InitializeMadamBarbarEncounter:                  ; DATA XREF: ROM:0000C87
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 cmpi.w  #$480,(PrimaryCameraXPosition).w
                 bmi.s   Stage5_UpdateScrollToMadamBarbar_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$480,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 move.w  #$8000,(word_FF808A).w
                 lea     (Boss_MadamBarbarAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -434,12 +434,12 @@ Stage6_InitializeJokerEncounter:                        ; DATA XREF: ROM:0000C88
                 bsr.w   Camera_UpdateBossApproachAndRenderTilemap
                 cmpi.w  #$A60,(PrimaryCameraXPosition).w
                 bmi.s   Stage6_UpdateScrollToJoker_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$A60,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 move.w  #$8000,(word_FF808A).w
                 lea     (Boss_JokerAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -464,7 +464,7 @@ Stage7_InitializeScrollState:                           ; DATA XREF: ROM:0000C88
                 tst.w   (word_FFF720).w
                 bmi.s   Stage7_UpdateScrollToTerobuster
                 bsr.w   Stage7_InitializeTerobusterIntroProjectiles
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 lea     Stage7_InitialTileAssetLoadList(pc),a0
                 nop
                 jsr     (Data_ProcessPointer).l
@@ -518,11 +518,11 @@ Stage7_InitializeTerobusterEncounter:                   ; DATA XREF: ROM:0000C88
                 clr.l   (CameraXDelta).w
                 move.w  #$10A0,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 tst.w   (dword_FF8062).w
                 bpl.s   Stage7_UpdateScrollToTerobuster_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$8000,(word_FF808A).w
                 lea     (Boss_TerobusterAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -557,7 +557,7 @@ Stage7_UpdatePostTerobusterIntro:                       ; DATA XREF: ROM:0000C89
                 clr.b   (VDPReg11Shadow+1).w
                 clr.b   (byte_FFA95A).w
                 clr.b   (byte_FFA95B).w
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 clr.w   (SecondaryCameraYPos).w
 Stage7_UpdatePostTerobusterIntroCamera:                 ; CODE XREF: Stage7_UpdatePostTerobusterIntro+C   j  ; was: loc_CDB8
@@ -569,7 +569,7 @@ Stage7_UpdatePostTerobusterTransition:                  ; DATA XREF: ROM:0000C89
                 bne.s   Stage7_UpdatePostTerobusterTransitionCamera
                 move.b  #1,(byte_FF830E).w
                 move.w  #4,(PlayerScriptStateOffset).w
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 lea     Stage7_TerobusterIndexedRowCommandF0F1(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedRows).l
@@ -581,7 +581,7 @@ Stage7_UpdateScrollToStage8:                            ; DATA XREF: ROM:0000C89
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$1200,(PrimaryCameraXPosition).w
                 bmi.s   Stage7_UpdateScrollToStage8_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$1200,(PrimaryCameraXPosition).w
 Stage7_UpdateScrollToStage8_Return:                     ; CODE XREF: Stage7_UpdateScrollToStage8+A   j  ; was: locret_CDF8
                 rts

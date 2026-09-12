@@ -461,7 +461,7 @@ Stage12_TeddyBearPilotStart:                            ; DATA XREF: ROM:0002F93
                 addq.w  #2,4(a5)
                 move.l  #Stage12_TeddyBearOverwrittenPilotAnimation,8(a5)
                 clr.w   $C(a5)
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 addq.w  #2,(word_FFDB24).w
                 move.w  #$F,(word_FF829E).w
                 bclr    #0,(StageTimerPauseFlag).w

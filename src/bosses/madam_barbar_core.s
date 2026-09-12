@@ -148,7 +148,7 @@ Boss_MadamBarbarWaitForPlayerSequence:                  ; DATA XREF: ROM:0003A4E
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_MadamBarbarUpdateIntroPose
                 clr.b   (byte_FF80EC).w
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 bra.w   Boss_MadamBarbarBeginAIState
 ; ---------------------------------------------------------------------------
 Boss_MadamBarbarBeginMainAttack:                        ; CODE XREF: Boss_MadamBarbarMain+42   j  ; was: loc_3A682

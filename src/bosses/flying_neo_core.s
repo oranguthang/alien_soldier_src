@@ -228,7 +228,7 @@ Boss_FlyingNeoWaitForPlayerSequenceState:               ; DATA XREF: ROM:0003C0B
                 bne.s   Boss_FlyingNeoUpdateIntroPose
                 addq.w  #2,4(a5)
                 move.w  #$30,$1DE(a5)                   ; '0'
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 clr.b   (byte_FF80EC).w
 ; Counts down the final delay before initializing the attack pattern
 Boss_FlyingNeoAttackStartDelayState:                    ; DATA XREF: ROM:0003C0B2   o  ; was: loc_3C2DA
@@ -399,7 +399,7 @@ Boss_FlyingNeoDefeatCompletionDelayState:               ; DATA XREF: ROM:0003C0B
                 subq.w  #1,$48(a5)
                 bpl.s   Boss_FlyingNeoDefeatScrollState
                 addq.w  #2,4(a5)
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$5C,(MessageSequenceState).w   ; '\'
 ; Updates scrolling after the defeat particle sequence
 Boss_FlyingNeoDefeatScrollState:                        ; CODE XREF: Boss_FlyingNeoDefeatCompletionDelayState+4   j  ; was: loc_3C4DE

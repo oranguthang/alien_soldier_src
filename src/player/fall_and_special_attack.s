@@ -299,7 +299,7 @@ Player_InitSpecialAttack:                               ; CODE XREF: Player_Hand
                 clr.w   $4A(a5)
                 move.w  #5,$4C(a5)
                 move.b  #1,(word_FF8224+1).w
-                movea.w #(byte_FFC2C0-M68K_RAM),a0
+                movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
                 jsr     (Sys_ClearObjectBlocks96).l
                 move.b  #$B0,d0

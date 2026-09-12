@@ -13,7 +13,7 @@ Stage_StartNextPhaseBanner:                             ; CODE XREF: Camera_Stag
                                         ; sub_C98E   p
                 tst.w   (MessageSequenceState).w
                 bne.s   Stage_NextPhaseBannerReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
 Stage_AdvancePhaseForInterstageTransition:              ; CODE XREF: Stage_StartInterstageTransition+1C   j  ; was: loc_103C0
                 clr.w   (StatusDisplayModeOffset).w
@@ -33,7 +33,7 @@ Stage_StartTimeBonusAndPreloadNextPhase:                ; CODE XREF: Camera_Boss
                                         ; Stage_PostJokerBoss+A   p
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
 Stage_AdvanceControllerAndPreloadNextPhase:             ; CODE XREF: Stage_StartPostBannerDelayAndPreloadNextPhase+6   j  ; was: loc_103E2
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.b   (StageRouteFlags).w
                 addq.w  #2,(StageTableIndex).w
                 jsr     (Stage_DispatchVisualAssetLoader).l

@@ -4,15 +4,15 @@ Cutscene_SevenForcesVictoryState0:                      ; DATA XREF: ROM:0000E4C
                 bsr.w   Cutscene_SevenForcesCamera1
                 tst.b   (byte_FFA958).w
                 beq.s   Cutscene_SevenForcesUpdateClosingOffsets
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.b   (byte_FFA958).w
 Cutscene_SevenForcesUpdateClosingOffsets:               ; CODE XREF: Cutscene_SevenForcesVictoryState0+C   j  ; was: loc_EA8C
                                         ; Cutscene_SevenForcesVictoryState1:Cutscene_SevenForcesVictoryState1Update   j
                 tst.w   (dword_FFA960+2).w
                 beq.s   Cutscene_SevenForcesUpdateCamera
                 subq.w  #8,(dword_FFA960+2).w
-                addq.w  #8,(word_FFA970).w
-                subq.w  #8,(word_FFA974).w
+                addq.w  #8,(CameraXLowerBound).w
+                subq.w  #8,(CameraXUpperBound).w
 Cutscene_SevenForcesUpdateCamera:                       ; CODE XREF: Cutscene_SevenForcesVictoryState0+1A   j  ; was: loc_EA9E
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 rts
@@ -22,7 +22,7 @@ Cutscene_SevenForcesVictoryState1:                      ; DATA XREF: ROM:0000E4C
                 bsr.w   Cutscene_SevenForcesCamera2
                 tst.b   (byte_FFA958).w
                 beq.s   Cutscene_SevenForcesVictoryState1Update
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.b   (byte_FFA958).w
 Cutscene_SevenForcesVictoryState1Update:                ; CODE XREF: Cutscene_SevenForcesVictoryState1+8   j  ; was: loc_EAB6
                 bra.w   Cutscene_SevenForcesUpdateClosingOffsets
@@ -33,7 +33,7 @@ Cutscene_SevenForcesVictoryState2:                      ; DATA XREF: ROM:0000E4D
                 bsr.w   Cutscene_SevenForcesUpdateClosingOffsets
                 tst.b   (byte_FFA958).w
                 beq.s   Cutscene_SevenForcesVictoryState2Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.b   (byte_FFA958).w
                 bsr.w   Cutscene_SevenForcesLoadGraphics
 Cutscene_SevenForcesVictoryState2Return:                ; CODE XREF: Cutscene_SevenForcesVictoryState2+10   j  ; was: locret_EAD8
@@ -45,7 +45,7 @@ Cutscene_SevenForcesVictoryState3:                      ; DATA XREF: ROM:0000E4D
                 bsr.w   Cutscene_SevenForcesUpdateClosingOffsets
                 bsr.w   Gfx_InitializeSevenForcesCutsceneTilemap
                 bmi.s   Cutscene_SevenForcesVictoryState3Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 Cutscene_SevenForcesVictoryState3Return:                ; CODE XREF: Cutscene_SevenForcesVictoryState3+10   j  ; was: locret_EAF0
                 rts
 ; End of function Cutscene_SevenForcesVictoryState3
@@ -55,7 +55,7 @@ Cutscene_SevenForcesVictoryState4:                      ; DATA XREF: ROM:0000E4D
                 bsr.w   Cutscene_SevenForcesUpdateClosingOffsets
                 bsr.w   Gfx_CheckSevenForcesCutsceneBackgroundComplete
                 bpl.s   Cutscene_SevenForcesVictoryState4Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.w   (PrimaryCameraXPosition).w
                 clr.w   (PreviousCameraXPosition).w
                 clr.w   (PrimaryCameraYPosition).w
@@ -71,7 +71,7 @@ Cutscene_SevenForcesVictoryState5:                      ; DATA XREF: ROM:0000E4D
                 bmi.s   Cutscene_SevenForcesVictoryState5Idle
                 andi.w  #$1FF,(SecondaryCameraYPos).w
                 addi.w  #-$1C00,(SecondaryCameraYPos).w
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.b   (byte_FFA958).w
 Cutscene_SevenForcesVictoryState5Idle:                  ; CODE XREF: Cutscene_SevenForcesVictoryState5+14   j  ; was: loc_EB44
                 bra.w   Cutscene_SevenForcesVictoryIdleState
@@ -82,7 +82,7 @@ Cutscene_SevenForcesVictoryState6:                      ; DATA XREF: ROM:0000E4D
                 bsr.w   Cutscene_SevenForcesCamera3
                 tst.b   (byte_FFA958).w
                 beq.s   Cutscene_SevenForcesVictoryState6Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 Cutscene_SevenForcesVictoryState6Return:                ; CODE XREF: Cutscene_SevenForcesVictoryState6+C   j  ; was: locret_EB5A
                 rts
 ; End of function Cutscene_SevenForcesVictoryState6
@@ -361,8 +361,8 @@ Stage_SevenForcesInitializeArtemisCameraAndAssets:      ; CODE XREF: Stage_Seven
                 move.w  #$E300,(PreviousCameraYPosition).w
                 clr.w   (SecondaryCameraXPos).w
                 move.w  #$E400,(SecondaryCameraYPos).w
-                move.w  (PrimaryCameraXPosition).w,(word_FFA970).w
-                move.w  (PrimaryCameraXPosition).w,(word_FFA974).w
+                move.w  (PrimaryCameraXPosition).w,(CameraXLowerBound).w
+                move.w  (PrimaryCameraXPosition).w,(CameraXUpperBound).w
                 lea     Gfx_ArtemisInitialAssetTransfers(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l

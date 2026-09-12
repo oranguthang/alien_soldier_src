@@ -239,11 +239,11 @@ Object_ApplyCameraMotion_Begin:                         ; CODE XREF: Object_Appl
                 move.w  d1,(CameraYDelta).w
                 move.w  (PrimaryCameraXPosition).w,(PreviousCameraXPosition).w
                 move.w  (PrimaryCameraYPosition).w,(PreviousCameraYPosition).w
-                btst    #6,(byte_FFA959).w
+                btst    #6,(CameraMotionLockFlags).w
                 beq.s   Object_ApplyCameraMotion_CheckVerticalDelta
                 moveq   #0,d0
 Object_ApplyCameraMotion_CheckVerticalDelta:            ; CODE XREF: Object_ApplyCameraMotion+48   j  ; was: loc_1C9C6
-                btst    #7,(byte_FFA959).w
+                btst    #7,(CameraMotionLockFlags).w
                 beq.s   Object_ApplyCameraMotion_CheckMotion
                 moveq   #0,d1
 Object_ApplyCameraMotion_CheckMotion:                   ; CODE XREF: Object_ApplyCameraMotion+52   j  ; was: loc_1C9D0
@@ -334,7 +334,7 @@ Physics_ApplyVelocityWithBounds:                        ; CODE XREF: Object_Appl
                 asr.l   #2,d4
 Physics_ApplyVelocityWithBounds_AddHorizontalBias:      ; CODE XREF: Physics_ApplyVelocityWithBounds+12   j  ; was: loc_1CA9C
                 add.l   d4,d3
-                move.l  (dword_FFA938).w,d4
+                move.l  (PhysicsXVelocityLimit).w,d4
                 tst.l   d3
                 bmi.s   Physics_ApplyVelocityWithBounds_ClampNegativeHorizontal
                 cmp.l   d4,d3
@@ -355,7 +355,7 @@ Physics_ApplyVelocityWithBounds_ProcessVertical:        ; CODE XREF: Physics_App
                 beq.s   Physics_ApplyVelocityWithBounds_Return
                 move.l  $1C(a5),d3
                 add.l   (dword_FF830A).w,d3
-                move.l  (dword_FFA93C).w,d4
+                move.l  (PhysicsYVelocityLimit).w,d4
                 tst.l   d3
                 bmi.s   Physics_ApplyVelocityWithBounds_ClampNegativeVertical
                 cmp.l   d4,d3

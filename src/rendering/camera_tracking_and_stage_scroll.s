@@ -68,7 +68,7 @@ UnreferencedCameraFollowWithinHorizontalBounds:
 UnreferencedCameraApplyPositiveBoundedDelta:            ; CODE XREF: UnreferencedCameraFollowWithinHorizontalBounds+14   j  ; was: loc_100BC
                 add.l   d0,d6
                 moveq   #0,d0
-                move.w  (word_FFA974).w,d0
+                move.w  (CameraXUpperBound).w,d0
                 swap    d0
                 cmp.l   d6,d0
                 beq.s   UnreferencedCameraClampToUpperHorizontalBound
@@ -95,7 +95,7 @@ UnreferencedCameraCheckNegativeBoundedDelta:            ; CODE XREF: Unreference
 UnreferencedCameraApplyNegativeBoundedDelta:            ; CODE XREF: UnreferencedCameraFollowWithinHorizontalBounds+4E   j  ; was: loc_100F6
                 add.l   d0,d6
                 moveq   #0,d0
-                move.w  (word_FFA970).w,d0
+                move.w  (CameraXLowerBound).w,d0
                 swap    d0
                 cmp.l   d6,d0
                 beq.s   UnreferencedCameraClampToLowerHorizontalBound
@@ -128,7 +128,7 @@ Camera_ApplyPositiveFollowDelta:                        ; CODE XREF: Camera_Smoo
 Camera_ApplyPositiveFollowWithinBounds:                 ; CODE XREF: Camera_SmoothHorizontalFollowPlayer+22   j  ; was: loc_1013E
                 add.l   d0,d6
                 moveq   #0,d0
-                move.w  (word_FFA974).w,d0
+                move.w  (CameraXUpperBound).w,d0
                 swap    d0
                 cmp.l   d6,d0
                 beq.s   Camera_ClampFollowToUpperHorizontalBound
@@ -157,7 +157,7 @@ Camera_ApplyNegativeFollowDelta:                        ; CODE XREF: Camera_Smoo
 Camera_ApplyNegativeFollowWithinBounds:                 ; CODE XREF: Camera_SmoothHorizontalFollowPlayer+60   j  ; was: loc_1017C
                 add.l   d0,d6
                 moveq   #0,d0
-                move.w  (word_FFA970).w,d0
+                move.w  (CameraXLowerBound).w,d0
                 swap    d0
                 cmp.l   d6,d0
                 beq.s   Camera_ClampFollowToLowerHorizontalBound
@@ -197,7 +197,7 @@ Camera_FixedAnchorApplyPositiveDelta:                   ; CODE XREF: Camera_Foll
 Camera_FixedAnchorApplyPositiveWithinBounds:            ; CODE XREF: Camera_FollowPlayerFromFixedHorizontalAnchor+38   j  ; was: loc_101DA
                 add.l   d0,d6
                 moveq   #0,d0
-                move.w  (word_FFA974).w,d0
+                move.w  (CameraXUpperBound).w,d0
                 swap    d0
                 cmp.l   d6,d0
                 beq.s   Camera_FixedAnchorClampToUpperBound
@@ -226,7 +226,7 @@ Camera_FixedAnchorApplyNegativeDelta:                   ; CODE XREF: Camera_Foll
 Camera_FixedAnchorApplyNegativeWithinBounds:            ; CODE XREF: Camera_FollowPlayerFromFixedHorizontalAnchor+76   j  ; was: loc_10218
                 add.l   d0,d6
                 moveq   #0,d0
-                move.w  (word_FFA970).w,d0
+                move.w  (CameraXLowerBound).w,d0
                 swap    d0
                 cmp.l   d6,d0
                 beq.s   Camera_FixedAnchorClampToLowerBound

@@ -530,32 +530,32 @@ SecondaryCameraXPos     equ     $FFFFA908               ; was: dword_FFA908
 SecondaryCameraYPos     equ     $FFFFA90C               ; was: dword_FFA90C
 CameraXDelta            equ     $FFFFA910               ; was: dword_FFA910
 CameraYDelta            equ     $FFFFA914               ; was: word_FFA914
-dword_FFA918            equ     $FFFFA918
-dword_FFA91C            equ     $FFFFA91C
+Stage9RasterScrollPhase equ     $FFFFA918               ; was: dword_FFA918
+StageCameraYVelocity    equ     $FFFFA91C               ; was: dword_FFA91C
 PreviousCameraXPosition equ     $FFFFA928               ; was: word_FFA928
 PreviousCameraYPosition equ     $FFFFA92C               ; was: word_FFA92C
 dword_FFA930            equ     $FFFFA930
-dword_FFA938            equ     $FFFFA938
-dword_FFA93C            equ     $FFFFA93C
+PhysicsXVelocityLimit   equ     $FFFFA938               ; was: dword_FFA938
+PhysicsYVelocityLimit   equ     $FFFFA93C               ; was: dword_FFA93C
 TilemapTransferBase     equ     $FFFFA940               ; was: dword_FFA940
 TilemapRowCountdown     equ     $FFFFA944               ; was: word_FFA944
 TilemapRowXOrFillWord   equ     $FFFFA946               ; was: word_FFA946
 TilemapRowYPosition     equ     $FFFFA948               ; was: word_FFA948
-word_FFA950             equ     $FFFFA950
+StageStateOffset        equ     $FFFFA950               ; was: word_FFA950
 byte_FFA958             equ     $FFFFA958
-byte_FFA959             equ     $FFFFA959
+CameraMotionLockFlags   equ     $FFFFA959               ; was: byte_FFA959
 byte_FFA95A             equ     $FFFFA95A
 byte_FFA95B             equ     $FFFFA95B
 dword_FFA960            equ     $FFFFA960
 dword_FFA964            equ     $FFFFA964
 word_FFA968             equ     $FFFFA968
 byte_FFA96A             equ     $FFFFA96A
-word_FFA970             equ     $FFFFA970
-word_FFA974             equ     $FFFFA974
-word_FFA980             equ     $FFFFA980
-word_FFA9C0             equ     $FFFFA9C0
-dword_FFA9D0            equ     $FFFFA9D0
-dword_FFA9D4            equ     $FFFFA9D4
+CameraXLowerBound       equ     $FFFFA970               ; was: word_FFA970
+CameraXUpperBound       equ     $FFFFA974               ; was: word_FFA974
+DebugJumpInput          equ     $FFFFA980               ; was: word_FFA980
+DebugAttackInput        equ     $FFFFA9C0               ; was: word_FFA9C0
+DebugInputXDirection    equ     $FFFFA9D0               ; was: dword_FFA9D0
+DebugInputYDirection    equ     $FFFFA9D4               ; was: dword_FFA9D4
 StagePhaseSplitTimes    equ     $FFFFAA00               ; was: word_FFAA00
 StageCompletionTimes    equ     $FFFFAA80               ; was: word_FFAA80
 StageResultVisits       equ     $FFFFAB00               ; was: word_FFAB00
@@ -568,11 +568,11 @@ SpriteOAMEntryCount     equ     $FFFFBE00               ; was: byte_FFBE00
 SpriteOAMFreeSlots      equ     $FFFFBE01               ; was: byte_FFBE01
 SpriteOAMWritePointer   equ     $FFFFBE02               ; was: word_FFBE02
 SpritePriorityBuckets   equ     $FFFFBE04               ; was: dword_FFBE04
-dword_FFBFC0            equ     $FFFFBFC0
-byte_FFC020             equ     $FFFFC020
-byte_FFC2C0             equ     $FFFFC2C0
-byte_FFC320             equ     $FFFFC320
-word_FFC5C0             equ     $FFFFC5C0
+SharedEffectObjectPool  equ     $FFFFBFC0               ; was: dword_FFBFC0
+EffectCollisionOddStart equ     $FFFFC020               ; was: byte_FFC020
+PlayerEffectObjectPool  equ     $FFFFC2C0               ; was: byte_FFC2C0
+PlayerEffectAllocStart  equ     $FFFFC320               ; was: byte_FFC320
+PlayerSpecialObjectSlot equ     $FFFFC5C0               ; was: word_FFC5C0
 Entity_ObjectPool       equ     $FFFFC620               ; was: word_FFC620
 word_FFC622             equ     $FFFFC622
 word_FFC624             equ     $FFFFC624

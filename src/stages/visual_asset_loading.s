@@ -449,7 +449,7 @@ Stage_ApplyXiTigerConfiguration:                        ; DATA XREF: Stage_Dispa
                 bra.w   Stage_ClearPaletteHighBitsBeforeFourRangeFill
 ; End of function Stage_ApplyXiTigerConfiguration
 ; ---------------------------------------------------------------------------
-XiTigerStageConfigRecord:   dc.w    $76                 ; word_FFA950  ; was: stru_121FE
+XiTigerStageConfigRecord:   dc.w    $76                 ; StageStateOffset  ; was: stru_121FE
                                         ; DATA XREF: Stage_ApplyXiTigerConfiguration   o
                 dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState

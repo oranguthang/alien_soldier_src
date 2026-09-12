@@ -746,7 +746,7 @@ Boss_BackStringerUpdateDefeatFade:                      ; CODE XREF: Boss_BackSt
 ; ---------------------------------------------------------------------------
 Boss_BackStringerCompleteDefeat:                        ; CODE XREF: Boss_BackStringerDefeatFadeOutState+A   j  ; was: loc_44F44
                 bset    #4,2(a5)
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 rts
 ; End of function Boss_BackStringerDefeatFadeOutState
 ; Updates boss rendering

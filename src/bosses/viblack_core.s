@@ -176,7 +176,7 @@ Boss_ViblackFinishEntranceMotionState:                  ; DATA XREF: ROM:000439E
                 cmpi.w  #$FFFA,$1C(a5)
                 bpl.s   Boss_ViblackUpdateStageSurfaceReference
                 addq.w  #2,4(a5)
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$C,$5A(a5)
                 move.w  #$FFFF,$50(a5)
                 move.w  #$780,$52(a5)
@@ -347,7 +347,7 @@ Boss_ViblackDefeatMoveToTargetState:                    ; DATA XREF: ROM:000439E
                 bsr.w   Boss_ViblackMoveToTarget
                 bne.s   Boss_ViblackDefeatMoveToTargetReturn
                 addq.w  #2,4(a5)
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$80,$48(a5)
 Boss_ViblackDefeatMoveToTargetReturn:                   ; CODE XREF: Boss_ViblackDefeatInit+36   j  ; was: locret_43DA8
                 rts
@@ -369,7 +369,7 @@ Boss_ViblackDefeatDescendState:                         ; DATA XREF: ROM:000439F
                 cmpi.w  #$100,$14(a5)
                 bmi.s   Boss_ViblackDefeatDescendReturn
                 addq.w  #2,4(a5)
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 Boss_ViblackDefeatDescendReturn:                        ; CODE XREF: Boss_ViblackDefeatDescendState+12   j  ; was: locret_43DDC
                 rts
 ; End of function Boss_ViblackDefeatDescendState

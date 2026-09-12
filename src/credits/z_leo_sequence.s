@@ -422,7 +422,7 @@ Boss_ZLeoSpawnImpactObject:                             ; CODE XREF: Boss_ZLeoIn
                 lea     (PlayerObjectType).w,a5
                 move.b  #$41,d0                         ; 'A'
                 jsr     (Sound_PlaySFX).l
-                movea.w #(word_FFC5C0-M68K_RAM),a0
+                movea.w #(PlayerSpecialObjectSlot-M68K_RAM),a0
                 move.w  #$230,(a0)
                 move.b  #$54,$21(a0)                    ; 'T'
                 move.w  #$4000,2(a0)

@@ -6031,3 +6031,92 @@ Provenance rises from 15,390 to 15,394 mappings and the audit registry from
 12,530 to 12,534. The semantic review upper bound remains 3,160 because every
 new mapping has a matching audit record. The enforced address-derived ceiling
 falls from 661 to 657, all still confined to RAM equates.
+
+The stage-dispatch and camera-motion-control pass replaces two raw RAM
+equates. Stage configuration records install an even `StageStateOffset`;
+`Stage_RunSelectedProcess` passes it to the subsystem selected by
+`StageProcessTableOffset`, and stage transitions advance it by two.
+`CameraMotionLockFlags` bit 6 suppresses `CameraXDelta` and bit 7 suppresses
+`CameraYDelta` before camera-relative object movement.
+
+The adjacent `$FFFFA958`, `$FFFFA95A`, and `$FFFFA95B` bytes remain raw because
+their stage, boss, and transition consumers do not yet prove one stable shared
+meaning. Both renamed fields receive exact-address audit records and RAM-map
+entries. Provenance rises from 15,394 to 15,396 mappings and the audit registry
+from 12,534 to 12,536. The semantic review upper bound remains 3,160 because
+both new mappings have matching audit records. The enforced address-derived
+ceiling falls from 657 to 655, all still confined to RAM equates.
+
+The horizontal-camera-bound and second-controller debug-command pass replaces
+six raw RAM equates and corrects seven inherited code labels. Horizontal camera
+follow clamps `PrimaryCameraXPosition` between `CameraXLowerBound` and
+`CameraXUpperBound`; stage and boss transitions move those limits, while a
+projectile bounds path independently consumes both. The debug routine reads
+controller two rather than player input and emits X/Y direction plus attack and
+jump fields, so `Debug_BuildControllerCommands` replaces the narrower inherited
+movement name.
+
+The four debug fields are write-only in reconstructed source. Their names state
+only the commands written from the controller bits; neither runtime reachability
+nor a downstream consumer is claimed. All six RAM fields and seven corrected
+code labels receive exact-address audit records. Provenance rises from 15,396 to
+15,402 mappings and the audit registry from 12,536 to 12,549. Auditing the seven
+existing code labels reduces the semantic review upper bound from 3,160 to
+3,153. The enforced address-derived ceiling falls from 655 to 649, all still
+confined to RAM equates.
+
+The camera-motion and physics-limit follow-up replaces four raw RAM equates.
+Stage 9 advances `Stage9RasterScrollPhase` as a 16.16 value and combines it
+with secondary-camera X before writing its raster rows. The Caterpillar camera
+path accelerates `StageCameraYVelocity` and integrates it into primary-camera
+Y; Xi-Tiger landing paths load the initial positive impulse before selecting
+that bounce state. `Physics_ApplyVelocityWithBounds` clamps horizontal and
+vertical object velocity symmetrically against `PhysicsXVelocityLimit` and
+`PhysicsYVelocityLimit`, both initialized to `$74000` with player state.
+
+All four fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,402 to 15,406 mappings and the audit registry from
+12,549 to 12,553. The semantic review upper bound remains 3,153 because every
+new provenance mapping has a matching audit record. The enforced address-
+derived ceiling falls from 649 to 645, all still confined to RAM equates.
+
+The shared effect-object-pool pass replaces one raw RAM equate and corrects two
+address-dependent procedure labels. Weapon, projectile, player-effect, and
+collision paths all scan 96-byte records from `SharedEffectObjectPool`; common
+helpers clear between eight and seventeen records from the same base. The
+former `Sys_ClearBufferFFBFC0` writes 48 groups of sixteen zero bytes, proving
+that `Effect_ClearFirstEightObjects` clears exactly eight such records rather
+than an untyped address-named buffer.
+
+The pool and both corrected code labels receive exact-address audit records.
+Provenance rises from 15,406 to 15,407 mappings and the audit registry from
+12,553 to 12,556. Auditing the two existing code labels reduces the semantic
+review upper bound from 3,153 to 3,151. The enforced address-derived ceiling
+falls from 645 to 644, all still confined to RAM equates.
+
+The effect-pool boundary follow-up replaces two raw RAM equates. Collision
+processing alternates its starting pointer between `SharedEffectObjectPool`
+and `EffectCollisionOddStart`; their `$60`-byte separation is exactly one
+object record. `PlayerSpecialObjectSlot` is initialized or cleared by player
+dash, teleport, projectile, damage-impact, and Seven Forces paths, while the
+collision system checks it separately as the active player special object.
+
+Both fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,407 to 15,409 mappings and the audit registry from
+12,556 to 12,558. The semantic review upper bound remains 3,151 because both
+new mappings have matching records. The enforced address-derived ceiling
+falls from 644 to 642, all still confined to RAM equates.
+
+The player-effect subpool pass replaces two raw RAM equates and corrects one
+overbroad Sonnet procedure name. Special-attack setup clears eight consecutive
+96-byte records from `PlayerEffectObjectPool`; weapon indicators, target sight,
+homing companions, Phoenix trails, and triple shots initialize records in that
+range. `PlayerEffectAllocStart` lies one record later, and
+`PlayerEffect_FindFreeSlot` scans the remaining seven records rather than an
+arbitrary sprite buffer.
+
+Both fields and the corrected procedure receive exact-address audit records.
+Provenance rises from 15,409 to 15,411 mappings and the audit registry from
+12,558 to 12,561. Auditing the existing procedure reduces the semantic review
+upper bound from 3,151 to 3,150. The enforced address-derived ceiling falls
+from 642 to 640, all still confined to RAM equates.

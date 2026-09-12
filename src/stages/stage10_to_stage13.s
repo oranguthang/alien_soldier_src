@@ -1,6 +1,6 @@
 ; Dispatch the shared midgame state selected by the configuration-seeded offset
 Stage_DispatchMidgameState:                             ; DATA XREF: ROM:0000FF3A   o  ; was: sub_D90E
-                cmpi.w  #$40,(word_FFA950).w            ; '@'
+                cmpi.w  #$40,(StageStateOffset).w       ; '@'
                 bpl.s   Stage_DispatchMidgameState_Handler
                 btst    #0,(FrameCounter+1).w
                 bne.s   Stage_DispatchMidgameState_Handler
@@ -19,7 +19,7 @@ Stage_DispatchMidgameState:                             ; DATA XREF: ROM:0000FF3
 ; Dispatch the selected state after the early-state diagnostic OAM marker
 Stage_DispatchMidgameState_Handler:                     ; CODE XREF: Stage_DispatchMidgameState+6   j  ; was: loc_D94C
                                         ; Stage_DispatchMidgameState+E   j
-                move.w  (word_FFA950).w,d0
+                move.w  (StageStateOffset).w,d0
                 movea.w Stage_MidgameStateHandlerOffsets(pc,d0.w),a0
                 adda.l  #Stage10_Initialize,a0
                 jmp     (a0)
@@ -111,11 +111,11 @@ Stage10_InitializeDeepStriderEncounter:                 ; DATA XREF: ROM:0000D96
                 move.w  #$7B0,d0
                 cmp.w   (PrimaryCameraXPosition).w,d0
                 bpl.s   Stage_MidgameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 lea     (Boss_DeepStriderAssetSet).l,a1
                 bra.w   Boss_LoadAssetSet
 ; End of function Stage10_InitializeDeepStriderEncounter
@@ -156,11 +156,11 @@ Stage11_InitializeGustheadEncounter:                    ; DATA XREF: ROM:0000D96
                 move.w  #$10C0,d0
                 cmp.w   (PrimaryCameraXPosition).w,d0
                 bpl.s   Stage11_InitializeGustheadEncounter_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 lea     (Boss_GustheadAssetSet).l,a1
                 bsr.w   Boss_LoadAssetSet
                 clr.l   (dword_FFA960).w
@@ -221,7 +221,7 @@ Stage12_UpdateScrollToExit:                             ; DATA XREF: ROM:0000D97
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$1580,(PrimaryCameraXPosition).w
                 bmi.w   Stage_MidgameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$80,(word_FF806E).w
                 move.w  #$8000,(word_FF808A).w
                 move.b  #1,(byte_FF830E).w
@@ -234,7 +234,7 @@ Stage12_UpdateScrollToExitTiles:                        ; DATA XREF: ROM:0000D97
                 bsr.w   Stage12_DecrementExitTimer
                 cmpi.w  #$15E0,(PrimaryCameraXPosition).w
                 bmi.w   Stage_MidgameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 jsr     (Stage_ClearSharedStateBuffer).l
                 lea     Stage12_ExitTileAssetLoadList(pc),a0
                 nop
@@ -254,7 +254,7 @@ Stage12_UpdateScrollToSharpssteel:                      ; DATA XREF: ROM:0000D97
                 bsr.w   Stage12_DecrementExitTimer
                 cmpi.w  #$1760,(PrimaryCameraXPosition).w
                 bmi.s   Stage12_UpdateScrollToSharpssteel_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 Stage12_UpdateScrollToSharpssteel_Return:               ; CODE XREF: Stage12_UpdateScrollToSharpssteel+12   j  ; was: locret_DB7C
                 rts
 ; End of function Stage12_UpdateScrollToSharpssteel
@@ -265,7 +265,7 @@ Stage12_InitializeSharpssteelArena:                     ; DATA XREF: ROM:0000D97
                 move.w  #$17A0,d0
                 cmp.w   (PrimaryCameraXPosition).w,d0
                 bpl.s   Stage12_InitializeSharpssteelArena_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  d0,(PrimaryCameraXPosition).w
 Stage12_InitializeSharpssteelArena_Return:              ; CODE XREF: Stage12_InitializeSharpssteelArena+10   j  ; was: locret_DB9C
@@ -295,7 +295,7 @@ Stage12_UpdatePostSharpssteel:                          ; DATA XREF: ROM:0000D97
 Stage12_StartTeleportTransitionToStage13:               ; DATA XREF: ROM:0000D980   o  ; was: sub_DBCE
                 tst.w   (MessageSequenceState).w
                 bne.w   Stage_MidgameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.w   (StatusDisplayModeOffset).w
                 addq.w  #2,(StageTableIndex).w
                 clr.b   (StageRouteFlags).w
@@ -312,7 +312,7 @@ Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13
                 addq.w  #1,(dword_FF806A+2).w
                 cmpi.w  #$3C,(dword_FF806A+2).w         ; '<'
                 bne.s   Stage12To13_ApplyTeleportFadeLevel
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$FCE0,(PrimaryCameraXPosition).w
                 clr.w   (PrimaryCameraYPosition).w
                 move.w  #$1C,(dword_FF806A+2).w
@@ -321,7 +321,7 @@ Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                bset    #6,(byte_FFA959).w
+                bset    #6,(CameraMotionLockFlags).w
                 move.w  #$50,(PlayerStateOffset).w      ; 'P'
                 clr.l   (dword_FF8240).w
                 clr.l   (dword_FF830A).w
@@ -345,15 +345,15 @@ Stage12To13_UpdateTeleportFadeOut:                      ; DATA XREF: ROM:0000D98
                 addq.w  #6,(PrimaryCameraXPosition).w
                 subq.w  #1,(dword_FF806A+2).w
                 bpl.s   Stage12To13_UpdateTeleportScroll
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 ; Continue the teleport scroll until its signed position crosses zero
 Stage12To13_AdvanceTeleportScroll:                      ; DATA XREF: ROM:0000D986   o  ; was: loc_DC88
                 addq.w  #6,(PrimaryCameraXPosition).w
                 bmi.s   Stage12To13_UpdateTeleportScroll
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$60,(dword_FF806A+2).w         ; '`'
                 clr.w   (PrimaryCameraXPosition).w
-                bclr    #6,(byte_FFA959).w
+                bclr    #6,(CameraMotionLockFlags).w
                 move.w  #1,(word_FFA448).w
 Stage12To13_UpdateTeleportScroll:                       ; CODE XREF: Stage12To13_UpdateTeleportFadeOut+12   j  ; was: loc_DCA8
                                         ; Stage12To13_UpdateTeleportFadeOut+1C   j
@@ -402,7 +402,7 @@ Stage12_DecrementExitTimer:                             ; CODE XREF: Stage12_Upd
 ; Initialize Stage 13's Snake object, raster effect, and state offset $36
 Stage13_InitializeSnakeEncounter:                       ; CODE XREF: Stage13_UpdateSnakeIntroTransition+2A   j  ; was: sub_DD0E
                                         ; DATA XREF: ROM:0000D990   o
-                move.w  #$36,(word_FFA950).w            ; '6'
+                move.w  #$36,(StageStateOffset).w       ; '6'
                 move.w  #$298,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
                 move.w  #$30,(RasterEffectIndex).w      ; '0'
@@ -430,11 +430,11 @@ Stage13_InitializeBugmaxApproach:                       ; DATA XREF: ROM:0000D99
                 cmp.w   (PrimaryCameraXPosition).w,d0
                 bpl.w   Stage_MidgameStateReturn
                 move.w  #$100,(word_FF806E).w
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.w  #$1F,(TilemapRowCountdown).w
@@ -452,7 +452,7 @@ Stage13_UpdateBugmaxApproach:                           ; DATA XREF: ROM:0000D99
                 tst.w   (Entity_ObjectPool).w
                 bne.w   Stage_MidgameStateReturn
 Stage13_InitializeBugmaxEncounter:                      ; CODE XREF: Stage13_UpdateBugmaxApproach+12   j  ; was: loc_DDC2
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$7000,(BossHealth).w
                 move.w  #$7000,(BossMaxHealth).w
                 move.w  #$1E0,(word_FF8234).w
@@ -465,7 +465,7 @@ Stage13_UpdateBugmaxEncounter:                          ; DATA XREF: ROM:0000D99
                 bsr.w   Scroll_UpdateSnakeBackground
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage13_UpdateBugmaxEncounterCamera
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$22,(PlayerScriptStateOffset).w  ; '"'
 Stage13_UpdateBugmaxEncounterCamera:                    ; CODE XREF: Stage13_UpdateBugmaxEncounter+8   j  ; was: loc_DDFC
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
@@ -489,7 +489,7 @@ Midgame_InitializeRasterAndAmbientEffects:              ; CODE XREF: Stage10_Ini
                 move.w  #$30,(RasterEffectIndex).w      ; '0'
                 clr.w   (RasterEffectInitState).w
                 jsr     (Midgame_InitializeAmbientParticles).l
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 rts
 ; End of function Midgame_InitializeRasterAndAmbientEffects
 ; Stage 14 scroll handler

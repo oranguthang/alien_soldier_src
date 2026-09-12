@@ -9,7 +9,7 @@ Stage18_UpdateInitialScroll:                            ; DATA XREF: ROM:Stage_L
                 bsr.w   Stage18And19_UpdateHorizontalParallax
                 cmpi.w  #$820,(PrimaryCameraXPosition).w
                 bmi.s   Stage_LateGameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 Stage18And19_SharedReturn:                              ; CODE XREF: Stage_InitializeStage19+A   p  ; was: locret_E4FA
                 rts
 ; End of function Stage18_UpdateInitialScroll
@@ -27,12 +27,12 @@ Stage18_InitializeDestroyerMk2Encounter:                ; DATA XREF: ROM:0000E43
                 bsr.w   Stage18And19_UpdateHorizontalParallax
                 cmpi.w  #$C70,(PrimaryCameraXPosition).w
                 bmi.s   Stage_LateGameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$C70,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 move.w  #$8000,(word_FF808A).w
                 lea     (Boss_DestroyerMK2AssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -58,7 +58,7 @@ Stage19_UpdateInitialScrollAndLoadTiles:                ; DATA XREF: ROM:0000E44
                 bsr.w   Stage18And19_UpdateHorizontalParallax
                 cmpi.w  #$D80,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 lea     Stage19_InitialTileAssetLoadList(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l
@@ -85,7 +85,7 @@ Stage19_UpdateScrollToJampanApproach:                   ; DATA XREF: ROM:0000E44
                 bsr.w   Stage18And19_UpdateHorizontalParallax
                 cmpi.w  #$1120,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 rts
 ; End of function Stage19_UpdateScrollToJampanApproach
 ; Continue Stage 19 to Jampan's arena boundary
@@ -94,7 +94,7 @@ Stage19_UpdateScrollToJampanArena:                      ; DATA XREF: ROM:0000E44
                 bsr.w   Stage18And19_UpdateHorizontalParallax
                 cmpi.w  #$1200,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 rts
 ; End of function Stage19_UpdateScrollToJampanArena
 ; Enter the shared phase transition at Jampan's arena boundary
@@ -110,12 +110,12 @@ Stage19_InitializeJampanEncounter:                      ; DATA XREF: ROM:0000E44
                 jsr     (Camera_UpdateBossApproachAndRenderTilemap).l
                 cmpi.w  #$1280,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  #$1280,d0
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 lea     (Boss_JampanAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
 ; End of function Stage19_InitializeJampanEncounter
@@ -123,7 +123,7 @@ Stage19_InitializeJampanEncounter:                      ; DATA XREF: ROM:0000E44
 Stage19_UpdateJampanEncounter:                          ; DATA XREF: ROM:0000E44C   o  ; was: sub_E636
                 tst.b   (byte_FFA958).w
                 beq.s   Stage19_UpdateJampanEncounter_UpdateCamera
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 Stage19_UpdateJampanEncounter_UpdateCamera:             ; CODE XREF: Stage19_UpdateJampanEncounter+4   j  ; was: loc_E640
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function Stage19_UpdateJampanEncounter
@@ -131,7 +131,7 @@ Stage19_UpdateJampanEncounter_UpdateCamera:             ; CODE XREF: Stage19_Upd
 Stage19_UpdatePostJampanMessage:                        ; DATA XREF: ROM:0000E44E   o  ; was: sub_E644
                 tst.w   (MessageSequenceState).w
                 bne.s   Stage19_UpdatePostJampanMessage_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$32,(PlayerScriptStateOffset).w  ; '2'
 Stage19_UpdatePostJampanMessage_Return:                 ; CODE XREF: Stage19_UpdatePostJampanMessage+4   j  ; was: locret_E654
                 rts
@@ -163,8 +163,8 @@ Stage18And19_UpdateHorizontalParallax:                  ; CODE XREF: Stage18_Upd
 UnreferencedStage20Variant1_InitializeJampanPhase:      ; DATA XREF: ROM:0000E460   o  ; was: sub_E686
                 bsr.w   Stage_TransitionToNextPhase
                 clr.b   (byte_FFA958).w
-                move.w  #$40,(word_FFA970).w            ; '@'
-                move.w  #$80,(word_FFA974).w
+                move.w  #$40,(CameraXLowerBound).w      ; '@'
+                move.w  #$80,(CameraXUpperBound).w
                 move.b  #1,(byte_FF830E).w
                 lea     (Boss_JampanAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -173,7 +173,7 @@ UnreferencedStage20Variant1_InitializeJampanPhase:      ; DATA XREF: ROM:0000E46
 UnreferencedStage20Variant1_UpdateJampanPhase:          ; DATA XREF: ROM:0000E462   o  ; was: sub_E6AC
                 tst.b   (byte_FFA958).w
                 beq.s   UnreferencedStage20Variant1_UpdateJampanPhase_Camera
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 UnreferencedStage20Variant1_UpdateJampanPhase_Camera:   ; CODE XREF: UnreferencedStage20Variant1_UpdateJampanPhase+4   j  ; was: loc_E6B6
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function UnreferencedStage20Variant1_UpdateJampanPhase
@@ -190,8 +190,8 @@ UnreferencedStage20Variant1_StartTransition:            ; DATA XREF: ROM:0000E46
 UnreferencedStage20Variant2_InitializeEntity3ECPhase:   ; DATA XREF: ROM:0000E468   o  ; was: sub_E6D6
                 bsr.w   Stage_TransitionToNextPhase
                 clr.b   (byte_FFA958).w
-                move.w  #$40,(word_FFA970).w            ; '@'
-                move.w  #$80,(word_FFA974).w
+                move.w  #$40,(CameraXLowerBound).w      ; '@'
+                move.w  #$80,(CameraXUpperBound).w
                 move.b  #1,(byte_FF830E).w
                 lea     (EntityType3ECAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -200,7 +200,7 @@ UnreferencedStage20Variant2_InitializeEntity3ECPhase:   ; DATA XREF: ROM:0000E46
 UnreferencedStage20Variant2_UpdateEntity3ECPhase:       ; DATA XREF: ROM:0000E46A   o  ; was: sub_E6FC
                 tst.b   (byte_FFA958).w
                 beq.s   UnreferencedStage20Variant2_UpdateEntity3ECPhase_Camera
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 UnreferencedStage20Variant2_UpdateEntity3ECPhase_Camera:  ; CODE XREF: UnreferencedStage20Variant2_UpdateEntity3ECPhase+4   j  ; was: loc_E706
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function UnreferencedStage20Variant2_UpdateEntity3ECPhase
@@ -218,8 +218,8 @@ UnreferencedStage20Variant2_StartTransition:            ; DATA XREF: ROM:0000E46
 UnreferencedStage20Variant3_InitializeEntity3F0Phase:   ; DATA XREF: ROM:0000E470   o  ; was: sub_E72C
                 bsr.w   Stage_TransitionToNextPhase
                 clr.b   (byte_FFA958).w
-                move.w  #$40,(word_FFA970).w            ; '@'
-                move.w  #$80,(word_FFA974).w
+                move.w  #$40,(CameraXLowerBound).w      ; '@'
+                move.w  #$80,(CameraXUpperBound).w
                 move.b  #1,(byte_FF830E).w
                 lea     (EntityType3F0AssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -228,7 +228,7 @@ UnreferencedStage20Variant3_InitializeEntity3F0Phase:   ; DATA XREF: ROM:0000E47
 UnreferencedStage20Variant3_UpdateEntity3F0Phase:       ; DATA XREF: ROM:0000E472   o  ; was: sub_E752
                 tst.b   (byte_FFA958).w
                 beq.s   UnreferencedStage20Variant3_UpdateEntity3F0Phase_Camera
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 UnreferencedStage20Variant3_UpdateEntity3F0Phase_Camera:  ; CODE XREF: UnreferencedStage20Variant3_UpdateEntity3F0Phase+4   j  ; was: loc_E75C
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function UnreferencedStage20Variant3_UpdateEntity3F0Phase
@@ -246,8 +246,8 @@ UnreferencedStage20Variant3_StartTransition:            ; DATA XREF: ROM:0000E47
 UnreferencedStage20Variant4_InitializeEntity3F4Phase:   ; DATA XREF: ROM:0000E478   o  ; was: sub_E782
                 bsr.w   Stage_TransitionToNextPhase
                 clr.b   (byte_FFA958).w
-                move.w  #$40,(word_FFA970).w            ; '@'
-                move.w  #$80,(word_FFA974).w
+                move.w  #$40,(CameraXLowerBound).w      ; '@'
+                move.w  #$80,(CameraXUpperBound).w
                 move.b  #1,(byte_FF830E).w
                 lea     (EntityType3F4AssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -256,7 +256,7 @@ UnreferencedStage20Variant4_InitializeEntity3F4Phase:   ; DATA XREF: ROM:0000E47
 UnreferencedStage20Variant4_UpdateEntity3F4Phase:       ; DATA XREF: ROM:0000E47A   o  ; was: sub_E7A8
                 tst.b   (byte_FFA958).w
                 beq.s   UnreferencedStage20Variant4_UpdateEntity3F4Phase_Camera
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 UnreferencedStage20Variant4_UpdateEntity3F4Phase_Camera:  ; CODE XREF: UnreferencedStage20Variant4_UpdateEntity3F4Phase+4   j  ; was: loc_E7B2
                 bra.w   Camera_UpdateHorizontalTowardsPlayer
 ; End of function UnreferencedStage20Variant4_UpdateEntity3F4Phase

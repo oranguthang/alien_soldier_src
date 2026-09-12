@@ -10,13 +10,13 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
                 move.w  #$2AC,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
                 move.l  #$FFFEE000,(dword_FF8240).w
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #1,(word_FF821E).w
                 clr.w   (dword_FF8058).w
                 clr.w   (dword_FFA960).w
                 move.l  #$180000,(dword_FFA960+2).w
-                clr.w   (word_FFA970).w
-                move.w  #$A0,(word_FFA974).w
+                clr.w   (CameraXLowerBound).w
+                move.w  #$A0,(CameraXUpperBound).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 move.b  #4,(byte_FFA95A).w
                 move.b  #$30,(byte_FFA95B).w            ; '0'
@@ -33,7 +33,7 @@ Stage9_UpdateFlyCorridor:                               ; DATA XREF: ROM:0000C8A
                 lea     Stage9_CaterpillarTileAssetLoadList(pc),a0
                 nop
                 jsr     (Data_ProcessPointer).l
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 clr.w   (word_FF8090).w
@@ -142,9 +142,9 @@ UnreferencedStage9IndexPermutation: binclude "data/other/unreferenced_stage_9_in
 ; Initialize the Caterpillar encounter and enter its scrolling update path
 Stage9_InitializeCaterpillarEncounter:                  ; CODE XREF: Stage9_InitializeCaterpillarCamera+C   j  ; was: sub_D286
                                         ; DATA XREF: ROM:0000C8B2   o
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.w   (word_FF821E).w
-                clr.l   (dword_FFA91C).w
+                clr.l   (StageCameraYVelocity).w
                 move.w  #$8000,(word_FF808A).w
                 move.w  #$128,(Entity_ObjectPool).w
                 move.w  #$C470,(HUDDynamicStripTileAttr).w
@@ -237,9 +237,9 @@ Stage9_UpdateCaterpillarShipExit:                       ; DATA XREF: ROM:0000C8B
                 bpl.s   Stage9_UpdateCaterpillarShipExit_Return
                 subq.w  #1,(dword_FF8128).w
                 bpl.s   Stage9_UpdateCaterpillarShipExit_Return
-                addq.w  #2,(word_FFA950).w
-                clr.w   (word_FFA970).w
-                clr.w   (word_FFA974).w
+                addq.w  #2,(StageStateOffset).w
+                clr.w   (CameraXLowerBound).w
+                clr.w   (CameraXUpperBound).w
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
@@ -273,7 +273,7 @@ Stage9_InitializeXiTigerEncounter:                      ; DATA XREF: ROM:0000C8C
                 move.w  #$20,(PlayerScriptStateOffset).w  ; ' '
                 move.w  #$40,(ScriptedInputStepTimer).w  ; '@'
 Stage9_LoadXiTigerEncounterAssets:                      ; CODE XREF: Stage9_UpdateCaterpillarShipExit+68   j  ; was: loc_D450
-                move.w  #$70,(word_FFA950).w            ; 'p'
+                move.w  #$70,(StageStateOffset).w       ; 'p'
                 move.w  #$10,(dword_FF8062).w
                 lea     (Boss_XiTigerAssetSet).l,a1
                 jmp     Boss_LoadAssetSet
@@ -286,7 +286,7 @@ Stage9_UpdateXiTigerEntranceDelay:                      ; DATA XREF: ROM:0000C8B
                 subq.w  #1,(dword_FF8062).w
                 bpl.w   Stage9_XiTigerEntranceDelay_Return
                 move.b  #$41,(byte_FFF705).w            ; 'A'
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.b  #2,(VDPReg11Shadow+1).w
                 move.b  #1,(byte_FFA95A).w
                 move.b  #4,(byte_FFA95B).w
@@ -294,7 +294,7 @@ Stage9_UpdateXiTigerEntranceDelay:                      ; DATA XREF: ROM:0000C8B
 Stage9_WaitForXiTigerEntranceObject:                    ; DATA XREF: ROM:0000C8BC   o  ; was: loc_D49E
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage9_UpdateCaterpillarCameraAndScroll
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 move.b  #1,(AlternateTimeBonusSound).w
                 move.w  #$1C0,(word_FF806E).w
@@ -325,17 +325,17 @@ Stage9_CheckCaterpillarVerticalBounce:                  ; CODE XREF: Stage9_Upda
                                         ; Stage9_UpdateCaterpillarOscillationAndRasterRows+20   j
                 tst.w   (dword_FFA960).w
                 bpl.s   Stage9_WriteVerticalRasterOffsets
-                move.l  (dword_FFA91C).w,d0
+                move.l  (StageCameraYVelocity).w,d0
                 bpl.s   Stage9_AccelerateCaterpillarVerticalBounce
                 cmpi.l  #$FFFF8000,d0
                 bmi.s   Stage9_ApplyCaterpillarVerticalBounce
 Stage9_AccelerateCaterpillarVerticalBounce:             ; CODE XREF: Stage9_UpdateCaterpillarOscillationAndRasterRows+46   j  ; was: loc_D50E
                 subi.l  #$800,d0
 Stage9_ApplyCaterpillarVerticalBounce:                  ; CODE XREF: Stage9_UpdateCaterpillarOscillationAndRasterRows+4E   j  ; was: loc_D514
-                move.l  d0,(dword_FFA91C).w
+                move.l  d0,(StageCameraYVelocity).w
                 add.l   d0,(PrimaryCameraYPosition).w
                 bpl.s   Stage9_ClampCaterpillarVerticalOffset
-                clr.l   (dword_FFA91C).w
+                clr.l   (StageCameraYVelocity).w
                 clr.l   (PrimaryCameraYPosition).w
                 clr.w   (dword_FFA960).w
 Stage9_ClampCaterpillarVerticalOffset:                  ; CODE XREF: Stage9_UpdateCaterpillarOscillationAndRasterRows+5E   j  ; was: loc_D52A
@@ -347,9 +347,9 @@ Stage9_ClampCaterpillarVerticalOffset:                  ; CODE XREF: Stage9_Upda
 Stage9_WriteVerticalRasterOffsets:                      ; CODE XREF: Stage9_UpdateFlyCorridorScroll+14   p  ; was: sub_D538
                                         ; Stage9_UpdateCaterpillarOscillationAndRasterRows+40   j
                 movea.w #(word_FFE480-M68K_RAM),a0
-                addi.l  #$8000,(dword_FFA918).w
+                addi.l  #$8000,(Stage9RasterScrollPhase).w
                 move.l  (SecondaryCameraXPos).w,d0
-                add.l   (dword_FFA918).w,d0
+                add.l   (Stage9RasterScrollPhase).w,d0
                 swap    d0
                 neg.w   d0
                 cmpi.b  #3,(VDPReg11Shadow+1).w

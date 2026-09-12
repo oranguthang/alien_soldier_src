@@ -481,7 +481,7 @@ Boss_TerobusterWaitForStageReady:                       ; DATA XREF: ROM:0003859
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_TerobusterWaitForStageReadyAnimate
                 clr.b   (byte_FF80EC).w
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 bra.w   Boss_TerobusterSelectPartOrderA
 ; ---------------------------------------------------------------------------
 Boss_TerobusterWaitForStageReadyAnimate:                ; CODE XREF: Boss_TerobusterWaitForStageReady+4   j  ; was: loc_38AC4

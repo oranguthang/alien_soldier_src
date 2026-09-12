@@ -321,7 +321,7 @@ Boss_DestroyerMK2WaitForExternalEffectState:            ; DATA XREF: ROM:0004A91
                 tst.w   (MessageSequenceState).w
                 bne.s   Boss_DestroyerMK2WaitForExternalEffectReturn
                 addq.w  #2,4(a5)
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 clr.b   (byte_FF80EC).w
                 movea.w #(word_FFC920-M68K_RAM),a0
                 move.w  #8,d7

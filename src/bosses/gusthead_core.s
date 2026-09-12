@@ -276,7 +276,7 @@ Boss_GustheadWaitForBattleBannerState:                  ; DATA XREF: ROM:0003F25
                 bne.s   Boss_GustheadWaitForBattleBannerReturn
                 clr.b   (byte_FF80EC).w
                 ori.w   #$100,2(a5)
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 addq.w  #2,4(a5)
 Boss_GustheadWaitForBattleBannerReturn:                 ; CODE XREF: Boss_GustheadWaitForBattleBannerState+10   j  ; was: locret_3F4E8
                 rts

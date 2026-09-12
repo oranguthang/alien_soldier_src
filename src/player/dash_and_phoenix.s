@@ -154,7 +154,7 @@ Player_PhoenixAttackUpdate_UpdateCollision:             ; CODE XREF: Player_Phoe
 ; End of function Player_PhoenixAttackUpdate
 ; Spawns two Phoenix trail objects
 Player_SpawnPhoenixTrails:                              ; CODE XREF: Player_InitPhoenixAttack+74   p  ; was: sub_158C6
-                movea.w #(byte_FFC2C0-M68K_RAM),a0
+                movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 moveq   #0,d7
                 bsr.s   Player_InitPhoenixTrail
                 lea     $60(a0),a0
@@ -255,7 +255,7 @@ Player_DashAttackState_Finish:                          ; CODE XREF: Player_Dash
                                         ; Player_DashAttackState+A   j
                 bsr.w   Physics_FacingTerrainCheckWrapper
 Player_DashAttackState_Cleanup:                         ; CODE XREF: Player_DashAttackState:Player_DashAttackState_CleanupAfterMovement   j  ; was: loc_159F4
-                clr.w   (word_FFC5C0).w
+                clr.w   (PlayerSpecialObjectSlot).w
                 bclr    #0,(byte_FF826C).w
                 bclr    #6,$21(a5)
                 bclr    #4,$23(a5)

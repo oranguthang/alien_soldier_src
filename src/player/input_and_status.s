@@ -133,7 +133,7 @@ Player_UpdateHorizontalFacing_Return:                   ; CODE XREF: Player_Upda
 ; Finds free object slot for dash trail effect
 Effect_FindDashTrailSlot:                               ; CODE XREF: Effect_CreateDashTrail:Effect_CreateDashTrail_AllocateObjects   p  ; was: sub_16C62
                                         ; Effect_CreateDashTrail+7A   p
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #$B,d7
                 jmp     Sys_FindFreeObjectSlot
 ; End of function Effect_FindDashTrailSlot

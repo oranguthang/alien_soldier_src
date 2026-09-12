@@ -1,5 +1,5 @@
 Stage14_InitializeVictorApproach:                       ; DATA XREF: ROM:0000D99C   o  ; was: sub_DE44
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
 ; Update Stage 14 scroll to the Victor approach boundary
 Stage14_UpdateScrollToVictor:                           ; DATA XREF: ROM:0000D99E   o  ; was: loc_DE4E
@@ -14,11 +14,11 @@ Stage14_InitializeVictorEncounter:                      ; DATA XREF: ROM:0000D9A
                 move.w  #$480,d0
                 cmp.w   (PrimaryCameraXPosition).w,d0
                 bpl.w   Stage_MidgameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.l   (CameraXDelta).w
                 move.w  d0,(PrimaryCameraXPosition).w
-                move.w  d0,(word_FFA970).w
-                move.w  d0,(word_FFA974).w
+                move.w  d0,(CameraXLowerBound).w
+                move.w  d0,(CameraXUpperBound).w
                 lea     (Boss_VictorAssetSet).l,a1
                 bra.w   Boss_LoadAssetSet
 ; End of function Stage14_InitializeVictorEncounter
@@ -42,7 +42,7 @@ Stage15_UpdateScrollToSunsetSting:                      ; DATA XREF: ROM:0000D9A
                 bsr.w   Camera_UpdateAndRenderStageTilemap
                 cmpi.w  #$660,(PrimaryCameraXPosition).w
                 bmi.w   Stage_MidgameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$660,(PrimaryCameraXPosition).w
                 bset    #6,(byte_FF8245).w
                 rts
@@ -63,10 +63,10 @@ Stage15_InitializeSunsetStingEncounter:                 ; DATA XREF: ROM:0000D9A
                 move.w  #$E420,d0
                 cmp.w   (PrimaryCameraYPosition).w,d0
                 bpl.w   Stage_MidgameStateReturn
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  d0,(PrimaryCameraYPosition).w
-                move.w  #$660,(word_FFA970).w
-                move.w  #$660,(word_FFA974).w
+                move.w  #$660,(CameraXLowerBound).w
+                move.w  #$660,(CameraXUpperBound).w
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
@@ -98,17 +98,17 @@ Stage16_UpdateScrollToViblack:                          ; DATA XREF: ROM:0000D9B
 ; End of function Stage16_UpdateScrollToViblack
 ; Start Viblack's BGM and fall through to object creation
 Stage16_BeginViblackEncounter:                          ; CODE XREF: Stage16_UpdateScrollToViblack+6   j  ; was: sub_DF5E
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.b  #$8B,d0
                 jsr     (Sound_QueueBGMOrStop).l
 ; Create Viblack and initialize the Stage 16 encounter fields
 Stage16_CreateViblackEncounter:                         ; DATA XREF: ROM:0000D9B2   o  ; was: sub_DF6C
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$2B8,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
                 clr.l   (dword_FF8062+2).w
                 clr.w   (dword_FF806A).w
-                move.b  #$80,(byte_FFA959).w
+                move.b  #$80,(CameraMotionLockFlags).w
                 move.w  #$2E,(PlayerScriptStateOffset).w  ; '.'
 ; End of function Stage16_BeginViblackEncounter
 ; Attributes: thunk
@@ -131,7 +131,7 @@ Stage16_StartPostViblackTransition_ApplyVerticalVelocity:  ; CODE XREF: Stage16_
                 bsr.w   Camera_FollowPlayerFromFixedHorizontalAnchor
                 cmpi.w  #$E620,(PrimaryCameraYPosition).w
                 bmi.s   Stage16_StartPostViblackTransition_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 Stage16_StartPostViblackTransition_Return:              ; CODE XREF: Stage16_StartPostViblackTransition+38   j  ; was: locret_DFD0
                 rts
 ; End of function Stage16_StartPostViblackTransition
@@ -153,9 +153,9 @@ Stage16_UpdatePostViblackCameraAndPalette:              ; DATA XREF: ROM:0000D9B
                 move.w  #$FFF2,(dword_FF806A).w
                 cmpi.w  #$660,(PrimaryCameraXPosition).w
                 bne.s   Stage16_UpdatePostViblackCameraAndPalette_ApplyFade
-                addq.w  #2,(word_FFA950).w
-                move.w  #$660,(word_FFA970).w
-                move.w  #$660,(word_FFA974).w
+                addq.w  #2,(StageStateOffset).w
+                move.w  #$660,(CameraXLowerBound).w
+                move.w  #$660,(CameraXUpperBound).w
                 lea     (ViblackPostBattleScrollPaletteCommand).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
 Stage16_UpdatePostViblackCameraAndPalette_ApplyFade:    ; CODE XREF: Stage16_UpdatePostViblackCameraAndPalette+1E   j  ; was: loc_E028
@@ -179,7 +179,7 @@ Stage16_UpdatePostViblackCameraAndPalette_Return:       ; CODE XREF: Stage16_Upd
 ; End of function Stage16_UpdatePostViblackCameraAndPalette
 ; Initialize the post-Viblack tilemap-row stream
 Stage16_InitializePostViblackTilemapStreaming:          ; DATA XREF: ROM:0000D9BC   o  ; was: sub_E056
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$FF80,d0
                 move.w  d0,(PrimaryCameraYPosition).w
                 move.w  d0,(PreviousCameraYPosition).w
@@ -193,7 +193,7 @@ Stage16_UpdatePostViblackTilemapStreaming:              ; DATA XREF: ROM:0000D9B
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 tst.w   (TilemapRowCountdown).w
                 bpl.s   Stage16_UpdatePostViblackTilemapStreaming_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.w   (dword_FF806A).w
 Stage16_UpdatePostViblackTilemapStreaming_Return:       ; CODE XREF: Stage16_InitializePostViblackTilemapStreaming+38   j  ; was: locret_E098
                 rts
@@ -246,7 +246,7 @@ Stage16_UpdatePostViblackPaletteTransition_NextWord:    ; CODE XREF: Stage16_Upd
                 dbf     d7,Stage16_UpdatePostViblackPaletteTransition_Loop
                 cmpi.w  #$C,d6
                 bmi.s   Stage16_UpdatePostViblackPaletteTransition_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.b  #$18,(byte_FFA420).w
 Stage16_UpdatePostViblackPaletteTransition_Return:      ; CODE XREF: Stage16_UpdatePostViblackPaletteTransition+60   j  ; was: locret_E10E
                 rts

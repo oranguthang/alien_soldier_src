@@ -3,10 +3,10 @@ Collision_UpdateSystem:                                 ; CODE XREF: Sys_Gamepla
                 tst.b   (FrameControlFlags).w
                 bmi.s   Collision_UpdateSystem_Return
                 bsr.w   Collision_BuildEntityLists
-                movea.w #(dword_FFBFC0-M68K_RAM),a5
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a5
                 btst    #0,(FrameCounter+1).w
                 bne.s   Collision_UpdateSystem_RunDynamicChecks
-                movea.w #(byte_FFC020-M68K_RAM),a5
+                movea.w #(EffectCollisionOddStart-M68K_RAM),a5
 Collision_UpdateSystem_RunDynamicChecks:                ; CODE XREF: Collision_UpdateSystem+14   j  ; was: loc_13AF8
                 bsr.w   Collision_CheckWeaponProjectilesAgainstEnemies
                 bsr.w   Collision_CheckTerrainTiles
@@ -445,7 +445,7 @@ Collision_CheckPlayerAgainstHostiles_DamageReturn:      ; CODE XREF: Collision_C
 ; End of function Collision_CheckPlayerAgainstHostiles
 ; Checks the dedicated player special-attack object against collision targets
 Collision_CheckSpecialAttackTargets:                    ; CODE XREF: Collision_UpdateSystem+26   p  ; was: sub_1400C
-                movea.w #(word_FFC5C0-M68K_RAM),a0
+                movea.w #(PlayerSpecialObjectSlot-M68K_RAM),a0
                 tst.w   (a0)
                 beq.w   Collision_CheckSpecialAttackTargets_Return
                 tst.b   $21(a0)
@@ -476,7 +476,7 @@ Collision_CheckSpecialAttackTargets_NextPrimary:        ; CODE XREF: Collision_C
                                         ; Collision_CheckSpecialAttackTargets+42   j
                 dbf     d7,Collision_CheckSpecialAttackTargets_PrimaryLoop
 Collision_CheckSpecialAttackTargets_CheckTargets:       ; CODE XREF: Collision_CheckSpecialAttackTargets+32   j  ; was: loc_14066
-                movea.w #(word_FFC5C0-M68K_RAM),a3
+                movea.w #(PlayerSpecialObjectSlot-M68K_RAM),a3
                 movea.w #(CollisionTargetList-M68K_RAM),a4
                 moveq   #4,d5
                 move.w  (TargetListCountMinus1).w,d7

@@ -144,8 +144,8 @@ Boss_JokerPhaseGateCompletionDelayState:                ; DATA XREF: ROM:0003B30
                 bpl.s   Boss_JokerUpdatePhaseGatePose
                 clr.b   (byte_FF80EC).w
                 clr.w   $35C(a5)
-                subi.w  #$60,(word_FFA970).w            ; '`'
-                addi.w  #$40,(word_FFA974).w            ; '@'
+                subi.w  #$60,(CameraXLowerBound).w      ; '`'
+                addi.w  #$40,(CameraXUpperBound).w      ; '@'
                 bra.w   Boss_JokerSelectNextState
 ; ---------------------------------------------------------------------------
 Boss_JokerUpdatePhaseGatePose:                          ; CODE XREF: Boss_JokerPhaseGateDelayState+4   j  ; was: loc_3B464

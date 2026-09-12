@@ -212,7 +212,7 @@ Player_SevenForcesDashState6:                           ; DATA XREF: ROM:00019E1
                 subq.w  #1,$50(a5)
                 bpl.s   Player_UpdateSevenForcesDash
 Player_EndSevenForcesDash:                              ; CODE XREF: Player_SevenForcesDashState6+4   j  ; was: loc_1A028
-                clr.w   (word_FFC5C0).w
+                clr.w   (PlayerSpecialObjectSlot).w
                 bclr    #0,(byte_FF826C).w
                 bclr    #6,$21(a5)
                 bclr    #4,$23(a5)

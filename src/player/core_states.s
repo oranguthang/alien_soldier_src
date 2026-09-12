@@ -19,8 +19,8 @@ Player_InitializeStats:                                 ; CODE XREF: Stage_Initi
                 clr.b   $6B(a5)
                 clr.w   $9E(a5)
                 move.w  #$40,$5E(a5)                    ; '@'
-                move.l  #$74000,(dword_FFA938).w
-                move.l  #$74000,(dword_FFA93C).w
+                move.l  #$74000,(PhysicsXVelocityLimit).w
+                move.l  #$74000,(PhysicsYVelocityLimit).w
                 jmp     Weapon_AdvanceCurrentState
 ; End of function Player_InitializeStats
 ; Clears the player's object identifier and display flags

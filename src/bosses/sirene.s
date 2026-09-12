@@ -208,8 +208,8 @@ Boss_UpdateSireneState10:                               ; DATA XREF: ROM:0005750
                 move.b  #$F9,d0
                 jsr     (Sound_PlaySFX).l
                 clr.w   (PlayerScriptStateOffset).w
-                subi.w  #$20,(word_FFA970).w            ; ' '
-                addi.w  #$20,(word_FFA974).w            ; ' '
+                subi.w  #$20,(CameraXLowerBound).w      ; ' '
+                addi.w  #$20,(CameraXUpperBound).w      ; ' '
                 clr.b   (byte_FF80EC).w
                 bclr    #0,(StageTimerPauseFlag).w
                 movea.l #Boss_SireneObjectInitTable,a1

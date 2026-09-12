@@ -5,7 +5,7 @@ Player_SpawnProjectile:                                 ; CODE XREF: Player_Phoe
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
                 move.b  #2,(PaletteRGBAdjustStep).w
-                movea.w #(word_FFC5C0-M68K_RAM),a0
+                movea.w #(PlayerSpecialObjectSlot-M68K_RAM),a0
                 move.w  #$230,(a0)
                 move.b  #$54,$21(a0)                    ; 'T'
                 move.w  #$4000,2(a0)
@@ -106,7 +106,7 @@ Effect_SpawnParticle:                                   ; CODE XREF: Player_Hand
                 move.w  (RandomNumberState+2).w,d0
                 andi.w  #$E000,d0
                 bne.w   Effect_SpawnParticle_Return
-                bsr.w   Sprite_AllocateSlot
+                bsr.w   PlayerEffect_FindFreeSlot
                 bne.w   Effect_SpawnParticle_Return
                 lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
@@ -165,7 +165,7 @@ Player_SpawnPhoenixParticles_CheckSoundFrame:           ; CODE XREF: Player_Spaw
                 move.b  #$AC,d0
                 jsr     (Sound_PlaySFX).l
 Player_SpawnPhoenixParticles_Allocate:                  ; CODE XREF: Player_SpawnPhoenixParticles+2A   j  ; was: loc_175EE
-                bsr.w   Sprite_AllocateSlot
+                bsr.w   PlayerEffect_FindFreeSlot
                 bne.w   Player_SpawnPhoenixParticles_Return
                 lea     (Effect_SharedParticleSpriteFrames).l,a1
                 jsr     (Sprite_InitFromTable).l
@@ -192,7 +192,7 @@ Player_SpawnPhoenixParticles_Return:                    ; CODE XREF: Player_Spaw
 ; End of function Player_SpawnPhoenixParticles
 ; Spawns three projectiles in spread pattern for special attack
 Player_SpawnTripleShot:                                 ; CODE XREF: Player_InitSpecialAttack+56   j  ; was: sub_17642
-                movea.w #(byte_FFC2C0-M68K_RAM),a0
+                movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 move.w  $10(a5),d4
                 moveq   #3,d5
                 moveq   #2,d7
@@ -325,7 +325,7 @@ UI_RenderTransientValue_UseClampedY:                    ; CODE XREF: UI_RenderTr
 ; Creates visual dash trail effect behind player
 Effect_CreateDashTrail:                                 ; CODE XREF: Player_DashAttackState+B8   j  ; was: sub_177B6
                                         ; Player_TeleportDash+C8   j
-                tst.w   (word_FFC5C0).w
+                tst.w   (PlayerSpecialObjectSlot).w
                 beq.s   Effect_CreateDashTrail_AllocateObjects
                 move.l  #Player_TeleportDashTrailSpriteMapping,8(a5)
                 btst    #0,(FrameCounter+1).w

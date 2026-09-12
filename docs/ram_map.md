@@ -666,8 +666,12 @@ values, but not yet a stable shared meaning.
 | `SecondaryCameraYPos` | `$FFFFA90C` | Signed 16.16 secondary-camera Y coordinate consumed by secondary tilemap streaming and Plane B vertical scroll generation. |
 | `CameraXDelta` | `$FFFFA910` | Current primary-camera X minus its previous-frame snapshot; applied to camera-relative objects and secondary scrolling. |
 | `CameraYDelta` | `$FFFFA914` | Current primary-camera Y minus its previous-frame snapshot; applied to camera-relative objects. |
+| `Stage9RasterScrollPhase` | `$FFFFA918` | Stage 9 advances this 16.16 phase by `$8000`, combines it with secondary-camera X, and emits the high word across its raster rows. |
+| `StageCameraYVelocity` | `$FFFFA91C` | Signed 16.16 velocity integrated into primary-camera Y by the Caterpillar bounce path; Xi-Tiger landing paths load its initial upward impulse. |
 | `PreviousCameraXPosition` | `$FFFFA928` | Previous high word of `PrimaryCameraXPosition`, refreshed after deriving `CameraXDelta`. |
 | `PreviousCameraYPosition` | `$FFFFA92C` | Previous high word of `PrimaryCameraYPosition`, refreshed after deriving `CameraYDelta`. |
+| `PhysicsXVelocityLimit` | `$FFFFA938` | Symmetric horizontal velocity clamp used before object X integration; player initialization loads `$74000`. |
+| `PhysicsYVelocityLimit` | `$FFFFA93C` | Symmetric vertical velocity clamp used before object Y integration; player initialization loads `$74000`. |
 
 ## Reviewed tilemap-row transfer state
 
@@ -677,6 +681,39 @@ values, but not yet a stable shared meaning.
 | `TilemapRowCountdown` | `$FFFFA944` | Initialized to rows-minus-one, decremented after each queued row, and considered complete when negative. |
 | `TilemapRowXOrFillWord` | `$FFFFA946` | Camera X in scrolling mode; repeated tile word in constant-row and direct-plane-fill modes. |
 | `TilemapRowYPosition` | `$FFFFA948` | World Y used by the scrolling row builder and reduced by eight after each row. |
+
+## Reviewed stage-dispatch and camera-motion controls
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `StageStateOffset` | `$FFFFA950` | Stage records install an even handler offset; the selected stage subsystem dispatches it and transitions advance it by two. |
+| `CameraMotionLockFlags` | `$FFFFA959` | Bit 6 suppresses X camera displacement and bit 7 suppresses Y displacement before camera-relative objects are moved. |
+
+## Reviewed horizontal-camera bounds
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `CameraXLowerBound` | `$FFFFA970` | Horizontal follow clamps the primary camera to this lower world-X limit; stage and boss transitions move it, and projectile bounds checks consume it. |
+| `CameraXUpperBound` | `$FFFFA974` | Horizontal follow clamps the primary camera to this upper world-X limit; stage and boss transitions move it, and projectile bounds checks consume it. |
+
+## Reviewed second-controller debug commands
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `DebugJumpInput` | `$FFFFA980` | Written as one for newly pressed controller-two bit 4; no reconstructed static reader proves its downstream effect. |
+| `DebugAttackInput` | `$FFFFA9C0` | Written as one for newly pressed controller-two bit 6; no reconstructed static reader proves its downstream effect. |
+| `DebugInputXDirection` | `$FFFFA9D0` | Cleared as a longword, then its leading word receives -1 or +1 for controller-two left or right; no reconstructed static reader exists. |
+| `DebugInputYDirection` | `$FFFFA9D4` | Cleared as a longword, then its leading word receives -1 or +1 for controller-two up or down; no reconstructed static reader exists. |
+
+## Reviewed shared effect-object pool
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `SharedEffectObjectPool` | `$FFFFBFC0` | Weapon, projectile, player-effect, and collision paths scan 96-byte object records from this base; common helpers clear between eight and seventeen consecutive records. |
+| `EffectCollisionOddStart` | `$FFFFC020` | Collision processing alternates between the pool base and this second 96-byte record on successive frame parities. |
+| `PlayerEffectObjectPool` | `$FFFFC2C0` | Base of eight 96-byte records used by player special attacks, weapon indicators, target sight, homing companions, Phoenix trails, and triple shots. |
+| `PlayerEffectAllocStart` | `$FFFFC320` | One record after the player-effect base; free-slot allocation scans seven records from here, and weapon selection uses the first four as indicators. |
+| `PlayerSpecialObjectSlot` | `$FFFFC5C0` | Dedicated record initialized or cleared by player dash, teleport, projectile, impact, and Seven Forces paths and checked separately for special-attack collisions. |
 
 ## Review policy
 

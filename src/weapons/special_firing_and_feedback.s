@@ -4,7 +4,7 @@ Player_SpawnCircleAttack:                               ; DATA XREF: ROM:00017F3
                 tst.w   (WeaponFireCooldown).w
                 bpl.w   Weapon_FireNoOp
                 move.w  #$38,(WeaponFireCooldown).w     ; '8'
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_CircleAttack_CheckSlots:                         ; CODE XREF: Player_SpawnCircleAttack+26   j  ; was: loc_1854C
                 move.w  (a0),d0
@@ -52,7 +52,7 @@ Weapon_CircleAttack_SetupProjectiles:                   ; CODE XREF: Player_Spaw
                 addq.w  #8,d6
                 andi.w  #$70,d6                         ; 'p'
                 asr.w   #3,d6
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
                 movea.l #Weapon_CircleAttackSpriteData,a2
                 moveq   #1,d5
@@ -122,7 +122,7 @@ Weapon_FireHomingShot:                                  ; DATA XREF: ROM:00017F2
                 move.b  #8,(PaletteRGBAdjustStep).w
                 btst    #0,(FrameCounter+1).w
                 bne.s   Weapon_FireHomingShot_Return
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
 Weapon_FireHomingShot_FindSlot:                         ; CODE XREF: Weapon_FireHomingShot+30   j  ; was: loc_1870A
                 move.w  (a0),d0
@@ -223,7 +223,7 @@ Effect_SpawnRandomDebris:                               ; CODE XREF: Weapon_Fire
                                         ; Weapon_FireMultipleShots+4   j
                 btst    #0,(FrameCounter+1).w
                 bne.s   Effect_SpawnRandomDebris_Return
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #7,d7
 Effect_SpawnRandomDebris_FindSlot:                      ; CODE XREF: Effect_SpawnRandomDebris+16   j  ; was: loc_18854
                 tst.w   (a0)
@@ -310,7 +310,7 @@ Player_UpdateTargetSight:                               ; DATA XREF: ROM:Entity_
                 move.w  (WeaponMenuSlotOffset).w,d0
                 cmp.w   $48(a5),d0
                 bne.s   Player_UpdateTargetSight_Return
-                movea.w #(byte_FFC2C0-M68K_RAM),a0
+                movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 btst    #0,(FrameCounter+1).w
                 bne.s   Player_UpdateTargetSight_ShowMarker
                 bclr    #7,2(a0)

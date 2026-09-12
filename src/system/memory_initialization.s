@@ -255,7 +255,7 @@ Sprite_ClearOAMBuildState_Loop:                         ; CODE XREF: Sprite_Clea
 Gfx_InitializeChain:                                    ; CODE XREF: Sys_InitGraphicsChain   p  ; was: sub_3084
                 bsr.w   Sys_ClearDualObjectBuffers
                 bsr.w   Sys_ClearBufferFFA800Partial
-                lea     (dword_FFBFC0).w,a0
+                lea     (SharedEffectObjectPool).w,a0
                 moveq   #0,d0
                 move.w  #$1CD,d1
 Gfx_InitializeChain_Loop:                               ; CODE XREF: Gfx_InitializeChain+1A   j  ; was: loc_3096
@@ -266,19 +266,19 @@ Gfx_InitializeChain_Loop:                               ; CODE XREF: Gfx_Initial
                 dbf     d1,Gfx_InitializeChain_Loop
                 rts
 ; End of function Gfx_InitializeChain
-; Clears FFBFC0 buffer area (768 bytes)
-Sys_ClearBufferFFBFC0:
-                lea     (dword_FFBFC0).w,a0             ; was: sub_30A4
+; Clears the first eight 96-byte objects in the shared effect pool
+Effect_ClearFirstEightObjects:
+                lea     (SharedEffectObjectPool).w,a0   ; was: sub_30A4
                 moveq   #0,d0
                 move.w  #$2F,d1                         ; '/'
-Sys_ClearBufferFFBFC0_Loop:                             ; CODE XREF: Sys_ClearBufferFFBFC0+12   j  ; was: loc_30AE
+Effect_ClearFirstEightObjects_Loop:                     ; CODE XREF: Effect_ClearFirstEightObjects+12   j  ; was: loc_30AE
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearBufferFFBFC0_Loop
+                dbf     d1,Effect_ClearFirstEightObjects_Loop
                 rts
-; End of function Sys_ClearBufferFFBFC0
+; End of function Effect_ClearFirstEightObjects
 ; Clears the 624-byte used prefix of the sprite table uploaded to VRAM $F400 each VBlank
 Sprite_ClearOAMBuffer:                                  ; CODE XREF: Sys_InitGraphicsChain+C   p  ; was: sub_30BC
                 lea     (SpriteOAMBuffer).w,a0

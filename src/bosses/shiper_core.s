@@ -124,7 +124,7 @@ Boss_ShiperTileDmaDescriptor:   dc.w    $6100, $2000, $204, $708, $90A, $B0C, $D
 Boss_ShiperSetupState:                                  ; DATA XREF: ROM:000364A0   o  ; was: sub_36578
                 move.w  #$14,4(a5)
                 move.w  #4,$174(a5)
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$24,(RasterEffectIndex).w      ; '$'
                 clr.w   (RasterEffectInitState).w
                 move.w  #$A,(word_FF8090).w
@@ -391,7 +391,7 @@ Boss_ShiperWaitForBossMessageState:                     ; DATA XREF: ROM:000364B
                 bne.s   Boss_ShiperWaitForBossMessageReturn
                 cmpi.w  #2,$174(a5)
                 bne.s   Boss_ShiperWaitForBossMessageReturn
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 clr.b   (byte_FF80EC).w
                 move.w  #$104,(word_FFDB20).w
                 bra.w   Boss_ShiperRetreatState

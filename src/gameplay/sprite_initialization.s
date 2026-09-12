@@ -261,12 +261,12 @@ Sprite_FindFreeEffectSlot_Loop:                         ; CODE XREF: Sprite_Find
 Sprite_FindFreeEffectSlot_Return:                       ; CODE XREF: Sprite_FindFreeEffectSlot+8   j  ; was: locret_1C03A
                 rts
 ; End of function Sprite_FindFreeEffectSlot
-; Allocates free sprite slot with buffer search
-Sprite_AllocateSlot:                                    ; CODE XREF: Effect_SpawnParticle+16   p  ; was: sub_1C03C
+; Finds a free slot among player-effect records one through seven
+PlayerEffect_FindFreeSlot:                              ; CODE XREF: Effect_SpawnParticle+16   p  ; was: sub_1C03C
                                         ; sub_175B8:Player_SpawnPhoenixParticles_Allocate   p
-                movea.w #(byte_FFC320-M68K_RAM),a0
+                movea.w #(PlayerEffectAllocStart-M68K_RAM),a0
                 moveq   #6,d7
-; End of function Sprite_AllocateSlot
+; End of function PlayerEffect_FindFreeSlot
 ; Finds free slot in object array
 Sys_FindFreeObjectSlot:                                 ; CODE XREF: Effect_FindDashTrailSlot+6   j  ; was: sub_1C042
                                         ; Effect_InitPlayerMotionProjectile+36   p

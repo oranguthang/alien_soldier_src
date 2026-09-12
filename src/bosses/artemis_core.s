@@ -196,8 +196,8 @@ Boss_UpdateArtemisStateC:                               ; DATA XREF: ROM:00057F2
                 clr.b   (byte_FF80EC).w
                 bclr    #0,(StageTimerPauseFlag).w
                 clr.w   (PlayerScriptStateOffset).w
-                subi.w  #$40,(word_FFA970).w            ; '@'
-                addi.w  #$40,(word_FFA974).w            ; '@'
+                subi.w  #$40,(CameraXLowerBound).w      ; '@'
+                addi.w  #$40,(CameraXUpperBound).w      ; '@'
                 bra.s   Boss_ReturnArtemisToStateEWithRandomPose
 ; ---------------------------------------------------------------------------
 Boss_RenderArtemisStateC:                               ; CODE XREF: Boss_UpdateArtemisStateC+4   j  ; was: loc_58158

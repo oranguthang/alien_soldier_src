@@ -191,7 +191,7 @@ Boss_ShellshogunWaitForStageReadyState:                 ; DATA XREF: ROM:0003952
                 bne.s   Boss_ShellshogunWaitForStageReadyReturn
                 addq.w  #2,4(a5)
                 clr.b   (byte_FF80EC).w
-                subi.w  #$40,(word_FFA970).w            ; '@'
+                subi.w  #$40,(CameraXLowerBound).w      ; '@'
 Boss_ShellshogunWaitForStageReadyReturn:                ; CODE XREF: Boss_ShellshogunWaitForStageReadyState+E   j  ; was: locret_39776
                 rts
 ; End of function Boss_ShellshogunWaitForStageReadyState

@@ -46,7 +46,7 @@ UnreferencedCreateType308AndUpdateStage17Parallax:
                 bsr.w   Stage17_UpdateEpsilon1Parallax
                 tst.w   (word_FFC680).w
                 bne.s   UnreferencedCreateType308AndUpdateStage17Parallax_Return
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 clr.w   (PlayerScriptStateOffset).w
                 bclr    #0,(byte_FFA958).w
 UnreferencedCreateType308AndUpdateStage17Parallax_Return:  ; CODE XREF: UnreferencedCreateType308AndUpdateStage17Parallax+1E   j  ; was: locret_E1BE
@@ -69,7 +69,7 @@ Stage17_UpdatePreEpsilon1Transition_Return:             ; CODE XREF: Stage17_Upd
 ; Submit Epsilon 1's assets and enter the encounter state
 Stage17_InitializeEpsilon1Encounter:                    ; DATA XREF: ROM:0000D9CC   o  ; was: sub_E1D6
                 bsr.w   Stage17_UpdateEpsilon1Parallax
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 lea     (Boss_Epsilon1AssetSet).l,a1
                 bra.w   Boss_LoadAssetSet
 ; End of function Stage17_InitializeEpsilon1Encounter
@@ -78,7 +78,7 @@ Stage17_InitializeEpsilon1Encounter:                    ; DATA XREF: ROM:0000D9C
 Stage17_UpdateEpsilon1Encounter:                        ; DATA XREF: ROM:0000D9CE   o  ; was: sub_E1E8
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage17_UpdateEpsilon1Parallax
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
 ; End of function Stage17_UpdateEpsilon1Encounter
 
 ; Update Stage 17's vertical position and eight parallax rows

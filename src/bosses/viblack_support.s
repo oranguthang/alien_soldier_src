@@ -11,7 +11,7 @@ Boss_ViblackUpdateTransitionTimerMotion:                ; CODE XREF: Boss_Viblac
                 cmpi.w  #$100,d0
                 bne.s   Boss_ViblackCheckTransitionTimerThresholds
                 jsr     (Stage_TransitionToNextPhase).l
-                subq.w  #2,(word_FFA950).w
+                subq.w  #2,(StageStateOffset).w
                 move.w  #$FFF0,$54(a5)
                 bra.s   Boss_ViblackUpdateTransitionMotion
 ; ---------------------------------------------------------------------------

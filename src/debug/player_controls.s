@@ -91,36 +91,36 @@ Camera_DebugAdjustXY_Return:                            ; CODE XREF: Camera_Debu
                                         ; Camera_DebugAdjustXY+40   j
                 rts
 ; End of function Camera_DebugAdjustXY
-; Process debug movement inputs
-Input_ProcessDebugMovement:
-                clr.l   (dword_FFA9D0).w                ; was: sub_1CC2E
-                clr.l   (dword_FFA9D4).w
+; Build second-controller debug movement, attack, and jump commands
+Debug_BuildControllerCommands:
+                clr.l   (DebugInputXDirection).w        ; was: sub_1CC2E
+                clr.l   (DebugInputYDirection).w
                 btst    #0,(ControllerHeldState+1).w
-                beq.w   Input_ProcessDebugMovement_CheckDown
-                move.w  #$FFFF,(dword_FFA9D4).w
-Input_ProcessDebugMovement_CheckDown:                   ; CODE XREF: Input_ProcessDebugMovement+E   j  ; was: loc_1CC46
+                beq.w   Debug_BuildControllerCommands_CheckDown
+                move.w  #$FFFF,(DebugInputYDirection).w
+Debug_BuildControllerCommands_CheckDown:                ; CODE XREF: Debug_BuildControllerCommands+E   j  ; was: loc_1CC46
                 btst    #1,(ControllerHeldState+1).w
-                beq.w   Input_ProcessDebugMovement_CheckLeft
-                move.w  #1,(dword_FFA9D4).w
-Input_ProcessDebugMovement_CheckLeft:                   ; CODE XREF: Input_ProcessDebugMovement+1E   j  ; was: loc_1CC56
+                beq.w   Debug_BuildControllerCommands_CheckLeft
+                move.w  #1,(DebugInputYDirection).w
+Debug_BuildControllerCommands_CheckLeft:                ; CODE XREF: Debug_BuildControllerCommands+1E   j  ; was: loc_1CC56
                 btst    #2,(ControllerHeldState+1).w
-                beq.w   Input_ProcessDebugMovement_CheckRight
-                move.w  #$FFFF,(dword_FFA9D0).w
-Input_ProcessDebugMovement_CheckRight:                  ; CODE XREF: Input_ProcessDebugMovement+2E   j  ; was: loc_1CC66
+                beq.w   Debug_BuildControllerCommands_CheckRight
+                move.w  #$FFFF,(DebugInputXDirection).w
+Debug_BuildControllerCommands_CheckRight:               ; CODE XREF: Debug_BuildControllerCommands+2E   j  ; was: loc_1CC66
                 btst    #3,(ControllerHeldState+1).w
-                beq.w   Input_ProcessDebugMovement_CheckAttack
-                move.w  #1,(dword_FFA9D0).w
-Input_ProcessDebugMovement_CheckAttack:                 ; CODE XREF: Input_ProcessDebugMovement+3E   j  ; was: loc_1CC76
+                beq.w   Debug_BuildControllerCommands_CheckAttack
+                move.w  #1,(DebugInputXDirection).w
+Debug_BuildControllerCommands_CheckAttack:              ; CODE XREF: Debug_BuildControllerCommands+3E   j  ; was: loc_1CC76
                 btst    #6,(ControllerPressedState+1).w
-                beq.w   Input_ProcessDebugMovement_CheckJump
-                move.w  #1,(word_FFA9C0).w
-Input_ProcessDebugMovement_CheckJump:                   ; CODE XREF: Input_ProcessDebugMovement+4E   j  ; was: loc_1CC86
+                beq.w   Debug_BuildControllerCommands_CheckJump
+                move.w  #1,(DebugAttackInput).w
+Debug_BuildControllerCommands_CheckJump:                ; CODE XREF: Debug_BuildControllerCommands+4E   j  ; was: loc_1CC86
                 btst    #4,(ControllerPressedState+1).w
-                beq.w   Input_ProcessDebugMovement_Return
-                move.w  #1,(word_FFA980).w
-Input_ProcessDebugMovement_Return:                      ; CODE XREF: Input_ProcessDebugMovement+5E   j  ; was: locret_1CC96
+                beq.w   Debug_BuildControllerCommands_Return
+                move.w  #1,(DebugJumpInput).w
+Debug_BuildControllerCommands_Return:                   ; CODE XREF: Debug_BuildControllerCommands+5E   j  ; was: locret_1CC96
                 rts
-; End of function Input_ProcessDebugMovement
+; End of function Debug_BuildControllerCommands
 ; Display debug marker sprites
 Sprite_DisplayDebugMarker:
                 lea     Sprite_DebugMarkerData(pc),a0   ; was: sub_1CC98

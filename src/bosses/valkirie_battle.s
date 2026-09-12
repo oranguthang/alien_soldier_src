@@ -136,7 +136,7 @@ Entity_UpdateValkirieBattleState6:                      ; DATA XREF: ROM:000557C
                 addq.w  #2,4(a5)
                 clr.b   (byte_FF80EC).w
                 clr.w   (PlayerScriptStateOffset).w
-                subi.w  #$58,(word_FFA970).w            ; 'X'
+                subi.w  #$58,(CameraXLowerBound).w      ; 'X'
                 bra.w   Entity_StartValkirieBattleState8
 ; ---------------------------------------------------------------------------
 Entity_RenderValkirieBattleState6:                      ; CODE XREF: Entity_UpdateValkirieBattleState6+4   j  ; was: loc_55926

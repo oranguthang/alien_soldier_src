@@ -634,7 +634,7 @@ Boss_BugmaxWaitForOpeningTransition:                    ; DATA XREF: ROM:0004C3E
                 move.b  #$D0,$21(a5)
                 clr.b   (byte_FF80EC).w
                 clr.w   (dword_FF9428+2).w
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 addq.w  #2,4(a5)
 Boss_BugmaxOpeningTransitionWaitReturn:                 ; CODE XREF: Boss_BugmaxWaitForOpeningTransition+8   j  ; was: locret_4C680
                 rts

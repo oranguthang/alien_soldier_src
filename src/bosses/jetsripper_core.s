@@ -184,7 +184,7 @@ Boss_JetsripperEndAttack:                               ; DATA XREF: ROM:000356E
                 move.w  #8,$5C(a5)
                 move.w  #$60,$11E(a5)                   ; '`'
                 clr.b   (byte_FF80EC).w
-                subi.w  #$A0,(word_FFA970).w
+                subi.w  #$A0,(CameraXLowerBound).w
                 bra.w   Boss_JetsripperUpdateMovement
 ; End of function Boss_JetsripperEndAttack
 ; Handles Jetsripper rotation state with angle check

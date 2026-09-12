@@ -166,7 +166,7 @@ Effect_UpdateImpactParticleSpawner_SpawnChild:          ; CODE XREF: Effect_Upda
                 move.w  a5,d0
                 btst    #5,d0
                 bne.w   Effect_UpdateImpactParticleSpawner_Deactivate
-                jsr     (Sprite_AllocateSlot).l
+                jsr     (PlayerEffect_FindFreeSlot).l
                 bne.w   Effect_UpdateImpactParticleSpawner_Deactivate
                 lea     (Effect_ParticlePrimarySpriteFrames).l,a1
                 btst    #7,(RandomNumberState).w
@@ -526,7 +526,7 @@ Effect_CreateExplosionDebris:                           ; CODE XREF: Weapon_Upda
 ; Spawns spark particle during player death sequence
 Effect_SpawnPlayerDeathSpark:                           ; CODE XREF: Player_HandleInvulnerabilityTimer:Player_HandleInvulnerabilityTimer_SpawnSpark   j  ; was: sub_190D2
                                         ; DATA XREF: ROM:Entity_UpdateHandlerTable   o
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #$F,d7
 Effect_SpawnPlayerDeathSpark_FindSlot:                  ; CODE XREF: Effect_SpawnPlayerDeathSpark+E   j  ; was: loc_190D8
                 tst.w   (a0)
@@ -602,7 +602,7 @@ Effect_InitPlayerMotionProjectile_CopyPosition:         ; CODE XREF: Effect_Init
                 beq.s   Effect_InitPlayerMotionProjectile_SpawnChild
                 move.w  #4,(FrameFreezeTimer).w
 Effect_InitPlayerMotionProjectile_SpawnChild:           ; CODE XREF: Effect_InitPlayerMotionProjectile+28   j  ; was: loc_191B8
-                movea.w #(dword_FFBFC0-M68K_RAM),a0
+                movea.w #(SharedEffectObjectPool-M68K_RAM),a0
                 moveq   #$B,d7
                 jsr     (Sys_FindFreeObjectSlot).l
                 bne.w   Effect_InitPlayerMotionProjectile_Return

@@ -103,7 +103,7 @@ WeaponSelect_Initialize:                                ; DATA XREF: ROM:0001799
                 move.w  #$A0,(WeaponMenuRadius).w
                 move.w  d0,(WeaponFireCooldown).w
                 bsr.w   Sys_ClearObjectBlocks17
-                movea.w #(byte_FFC2C0-M68K_RAM),a0
+                movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 move.w  #$10,(a0)
                 move.l  #SharedCombatSpriteAnimation13,8(a0)
                 move.w  #$E080,2(a0)
@@ -112,7 +112,7 @@ WeaponSelect_Initialize:                                ; DATA XREF: ROM:0001799
                 move.w  #$C80,$E(a0)
                 move.w  (word_FF808A).w,d6
                 or.w    d6,$E(a0)
-                movea.w #(byte_FFC320-M68K_RAM),a0
+                movea.w #(PlayerEffectAllocStart-M68K_RAM),a0
                 movea.w #(WeaponSlotConfig0-M68K_RAM),a1
                 lea     WeaponSelect_SlotInitialAngles(pc),a3
                 nop
@@ -325,7 +325,7 @@ Weapon_StoreState2Damage:                               ; CODE XREF: Weapon_Conf
 ; End of function Weapon_ConfigureState2Damage
 ; Initializes four state-four indicator objects and their threshold flag
 Weapon_ConfigureState4Indicators:                       ; DATA XREF: ROM:00017988   o  ; was: sub_17C7C
-                movea.w #(byte_FFC2C0-M68K_RAM),a0
+                movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 moveq   #3,d7
 Weapon_State4IndicatorInitLoop:                         ; CODE XREF: Weapon_ConfigureState4Indicators+1E   j  ; was: loc_17C82
                 tst.w   (a0)
@@ -425,7 +425,7 @@ Weapon_State8ClampMotionIndex:                          ; CODE XREF: Weapon_Conf
                 andi.w  #$1C,d0
 Weapon_State8StoreMotionTable:                          ; CODE XREF: Weapon_ConfigureState8Targeting+1C   j  ; was: loc_17D74
                 move.l  -$C(a2,d0.w),(dword_FF802C).w
-                movea.w #(byte_FFC2C0-M68K_RAM),a0
+                movea.w #(PlayerEffectObjectPool-M68K_RAM),a0
                 moveq   #3,d7
 Weapon_State8IndicatorInitLoop:                         ; CODE XREF: Weapon_ConfigureState8Targeting+52   j  ; was: loc_17D80
                 tst.w   (a0)

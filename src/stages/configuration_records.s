@@ -17,7 +17,7 @@ Stage_ProcessAssetListImmediately:                      ; CODE XREF: Stage_Dispa
 ; Applies one 30-byte stage configuration record and loads its palette list
 Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_ApplyXiTigerConfiguration+6   p  ; was: sub_12758
                                         ; Stage_ApplyStage1Configuration+6   j
-                move.w  (a0)+,(word_FFA950).w
+                move.w  (a0)+,(StageStateOffset).w
                 move.l  (a0)+,(StageObjectSpawnCursor).w
                 move.w  (a0)+,(EnemySpawnDirectorState).w
                 move.b  (a0)+,(PalettePrimaryIndex+1).w
@@ -42,7 +42,7 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
 ; End of function Stage_ApplyConfigurationRecord
 ; ---------------------------------------------------------------------------
 ; Stage configuration record layout:
-; +$00 word -> word_FFA950
+; +$00 word -> StageStateOffset
 ; +$02 long -> StageObjectSpawnCursor
 ; +$06 word -> EnemySpawnDirectorState
 ; +$08 byte -> PalettePrimaryIndex+1
@@ -52,7 +52,7 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
 ; +$14/+16 words -> word_FF80AA/AC
 ; +$18/+19 bytes, each biased by $80 -> words at PlayerXPosition/414
 ; +$1A long -> palette offset list passed to Gfx_LoadMultiplePalettes
-Stage1ConfigRecord: dc.w    0                           ; word_FFA950  ; was: stru_127A8
+Stage1ConfigRecord: dc.w    0                           ; StageStateOffset  ; was: stru_127A8
                                         ; DATA XREF: Stage_ApplyStage1Configuration   o
                 dc.l    Stage1_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    2                               ; EnemySpawnDirectorState
@@ -68,7 +68,7 @@ Stage1ConfigRecord: dc.w    0                           ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
-Stage2ConfigRecord: dc.w    $A                          ; word_FFA950  ; was: stru_127C6
+Stage2ConfigRecord: dc.w    $A                          ; StageStateOffset  ; was: stru_127C6
                                         ; DATA XREF: Stage_ApplyStage2Configuration   o
                 dc.l    Stage2_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -84,7 +84,7 @@ Stage2ConfigRecord: dc.w    $A                          ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
-Stage3ConfigRecord: dc.w    $12                         ; word_FFA950  ; was: stru_127E4
+Stage3ConfigRecord: dc.w    $12                         ; StageStateOffset  ; was: stru_127E4
                                         ; DATA XREF: Stage_ApplyStage3Configuration   o
                 dc.l    Stage3_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -100,7 +100,7 @@ Stage3ConfigRecord: dc.w    $12                         ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
-Stage4ConfigRecord: dc.w    $22                         ; word_FFA950  ; was: stru_12802
+Stage4ConfigRecord: dc.w    $22                         ; StageStateOffset  ; was: stru_12802
                                         ; DATA XREF: Stage_ApplyStage4Configuration   o
                 dc.l    Stage4_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -116,7 +116,7 @@ Stage4ConfigRecord: dc.w    $22                         ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    ShellshogunStagePaletteOffsetList  ; palette offset list pointer
-Stage5ConfigRecord: dc.w    $2E                         ; word_FFA950  ; was: stru_12820
+Stage5ConfigRecord: dc.w    $2E                         ; StageStateOffset  ; was: stru_12820
                                         ; DATA XREF: Stage_ApplyStage5Configuration   o
                 dc.l    Stage5_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -132,7 +132,7 @@ Stage5ConfigRecord: dc.w    $2E                         ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
-Stage6ConfigRecord: dc.w    $38                         ; word_FFA950  ; was: stru_1283E
+Stage6ConfigRecord: dc.w    $38                         ; StageStateOffset  ; was: stru_1283E
                                         ; DATA XREF: Stage_ApplyStage6Configuration   o
                 dc.l    Stage6_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -148,7 +148,7 @@ Stage6ConfigRecord: dc.w    $38                         ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
-Stage7ConfigRecord: dc.w    $40                         ; word_FFA950  ; was: stru_1285C
+Stage7ConfigRecord: dc.w    $40                         ; StageStateOffset  ; was: stru_1285C
                                         ; DATA XREF: Stage_ApplyStage7Configuration   o
                 dc.l    Stage7_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -164,7 +164,7 @@ Stage7ConfigRecord: dc.w    $40                         ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
-Stage8ConfigRecord: dc.w    $50                         ; word_FFA950  ; was: stru_1287A
+Stage8ConfigRecord: dc.w    $50                         ; StageStateOffset  ; was: stru_1287A
                                         ; DATA XREF: Stage_InitializeStage8   o
                 dc.l    Stage8_ObjectSpawnList          ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -180,7 +180,7 @@ Stage8ConfigRecord: dc.w    $50                         ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage8InitialPaletteOffsetList  ; palette offset list pointer
-Stage9ConfigRecord: dc.w    $62                         ; word_FFA950  ; was: stru_12898
+Stage9ConfigRecord: dc.w    $62                         ; StageStateOffset  ; was: stru_12898
                                         ; DATA XREF: Stage_InitializeStage9   o
                 dc.l    Stage9_EmptyObjectSpawnList     ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -196,7 +196,7 @@ Stage9ConfigRecord: dc.w    $62                         ; word_FFA950  ; was: st
                 dc.b    $60                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A8                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    XiTigerAndStage9PaletteOffsetList  ; palette offset list pointer
-Stage10ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_128B6
+Stage10ConfigRecord:    dc.w    0                       ; StageStateOffset  ; was: stru_128B6
                                         ; DATA XREF: Stage_ApplyStage10Configuration   o
                 dc.l    Stage10_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -212,7 +212,7 @@ Stage10ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $78                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
-Stage11ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: stru_128D4
+Stage11ConfigRecord:    dc.w    $A                      ; StageStateOffset  ; was: stru_128D4
                                         ; DATA XREF: Stage_ApplyStage11Configuration   o
                 dc.l    Stage11_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -228,7 +228,7 @@ Stage11ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: st
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $78                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
-Stage12ConfigRecord:    dc.w    $14                     ; word_FFA950  ; was: stru_128F2
+Stage12ConfigRecord:    dc.w    $14                     ; StageStateOffset  ; was: stru_128F2
                                         ; DATA XREF: Stage_ApplyStage12Configuration   o
                 dc.l    Stage12_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -244,7 +244,7 @@ Stage12ConfigRecord:    dc.w    $14                     ; word_FFA950  ; was: st
                 dc.b    $5C                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $70                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
-Stage13ConfigRecord:    dc.w    $34                     ; word_FFA950  ; was: stru_12910
+Stage13ConfigRecord:    dc.w    $34                     ; StageStateOffset  ; was: stru_12910
                                         ; DATA XREF: Stage_ApplyStage13Configuration   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -260,7 +260,7 @@ Stage13ConfigRecord:    dc.w    $34                     ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $80                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
-Stage14ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: stru_1292E
+Stage14ConfigRecord:    dc.w    $40                     ; StageStateOffset  ; was: stru_1292E
                                         ; DATA XREF: Stage_ApplyStage14Configuration   o
                 dc.l    Stage14_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -276,7 +276,7 @@ Stage14ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: st
                 dc.b    $58                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
-Stage15ConfigRecord:    dc.w    $4A                     ; word_FFA950  ; was: stru_1294C
+Stage15ConfigRecord:    dc.w    $4A                     ; StageStateOffset  ; was: stru_1294C
                                         ; DATA XREF: Stage_ApplyStage15Configuration   o
                 dc.l    Stage15_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -292,7 +292,7 @@ Stage15ConfigRecord:    dc.w    $4A                     ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
-Stage16ConfigRecord:    dc.w    $56                     ; word_FFA950  ; was: stru_1296A
+Stage16ConfigRecord:    dc.w    $56                     ; StageStateOffset  ; was: stru_1296A
                                         ; DATA XREF: Stage_InitializeStage16   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -308,7 +308,7 @@ Stage16ConfigRecord:    dc.w    $56                     ; word_FFA950  ; was: st
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $C0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
-Stage17BossConfigRecord:    dc.w    $6C                 ; word_FFA950  ; was: stru_12988
+Stage17BossConfigRecord:    dc.w    $6C                 ; StageStateOffset  ; was: stru_12988
                                         ; DATA XREF: Stage_InitializeStage17Boss+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -324,7 +324,7 @@ Stage17BossConfigRecord:    dc.w    $6C                 ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $80                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage17PaletteOffsetList        ; palette offset list pointer
-Stage18ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_129A6
+Stage18ConfigRecord:    dc.w    0                       ; StageStateOffset  ; was: stru_129A6
                                         ; DATA XREF: Stage_InitializeStage18   o
                 dc.l    Stage18_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -340,7 +340,7 @@ Stage18ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage18And19PaletteOffsetList   ; palette offset list pointer
-Stage19ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: stru_129C4
+Stage19ConfigRecord:    dc.w    $A                      ; StageStateOffset  ; was: stru_129C4
                                         ; DATA XREF: Stage_InitializeStage19   o
                 dc.l    Stage19_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -356,7 +356,7 @@ Stage19ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage18And19PaletteOffsetList   ; palette offset list pointer
-UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; word_FFA950  ; was: stru_129E2
+UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; StageStateOffset  ; was: stru_129E2
                                         ; DATA XREF: UnreferencedApplyStage20Variant1Configuration   o
                 dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -372,7 +372,7 @@ UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; word_FFA950  ; was: s
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
-UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; word_FFA950  ; was: stru_12A00
+UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; StageStateOffset  ; was: stru_12A00
                                         ; DATA XREF: UnreferencedApplyStage20Variant2Configuration   o
                 dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -388,7 +388,7 @@ UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; word_FFA950  ; was: s
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
-UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; word_FFA950  ; was: stru_12A1E
+UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; StageStateOffset  ; was: stru_12A1E
                                         ; DATA XREF: UnreferencedApplyStage20Variant3Configuration   o
                 dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -404,7 +404,7 @@ UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; word_FFA950  ; was: s
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
-UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; word_FFA950  ; was: stru_12A3C
+UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; StageStateOffset  ; was: stru_12A3C
                                         ; DATA XREF: UnreferencedApplyStage20Variant4Configuration   o
                 dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -420,7 +420,7 @@ UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; word_FFA950  ; was: s
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
-Stage20ConfigRecord:    dc.w    $70                     ; word_FFA950  ; was: stru_12A5A
+Stage20ConfigRecord:    dc.w    $70                     ; StageStateOffset  ; was: stru_12A5A
                                         ; DATA XREF: Stage_InitializeStage20+18   o
                 dc.l    $80000000                       ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -436,7 +436,7 @@ Stage20ConfigRecord:    dc.w    $70                     ; word_FFA950  ; was: st
                 dc.b    $80                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    0                               ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage20PaletteOffsetLists       ; palette offset list pointer
-Stage21ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_12A78
+Stage21ConfigRecord:    dc.w    0                       ; StageStateOffset  ; was: stru_12A78
                                         ; DATA XREF: Stage_InitializeStage21+C   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -452,7 +452,7 @@ Stage21ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage21And23PaletteOffsetList   ; palette offset list pointer
-Stage22ConfigRecord:    dc.w    $2C                     ; word_FFA950  ; was: stru_12A96
+Stage22ConfigRecord:    dc.w    $2C                     ; StageStateOffset  ; was: stru_12A96
                                         ; DATA XREF: Stage_InitializeStage22+C   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -468,7 +468,7 @@ Stage22ConfigRecord:    dc.w    $2C                     ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage22PaletteOffsetList        ; palette offset list pointer
-Stage23ConfigRecord:    dc.w    $2E                     ; word_FFA950  ; was: stru_12AB4
+Stage23ConfigRecord:    dc.w    $2E                     ; StageStateOffset  ; was: stru_12AB4
                                         ; DATA XREF: Stage_InitializeStage23+C   o
                 dc.l    Stage23_EmptyObjectSpawnList    ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -484,7 +484,7 @@ Stage23ConfigRecord:    dc.w    $2E                     ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage21And23PaletteOffsetList   ; palette offset list pointer
-Stage24ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: stru_12AD2
+Stage24ConfigRecord:    dc.w    $40                     ; StageStateOffset  ; was: stru_12AD2
                                         ; DATA XREF: Stage_ApplyStage24Configuration   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -500,7 +500,7 @@ Stage24ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage24PaletteOffsetList        ; palette offset list pointer
-UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; word_FFA950  ; was: stru_12AF0
+UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; StageStateOffset  ; was: stru_12AF0
                                         ; DATA XREF: UnreferencedApplyFlaggedConfigurationA+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -516,7 +516,7 @@ UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedFlaggedPaletteOffsetListA  ; palette offset list pointer
-UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; word_FFA950  ; was: stru_12B0E
+UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; StageStateOffset  ; was: stru_12B0E
                                         ; DATA XREF: UnreferencedApplyFlaggedConfigurationB+6   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -532,7 +532,7 @@ UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedFlaggedPaletteOffsetListB  ; palette offset list pointer
-Stage25ConfigRecord:    dc.w    $76                     ; word_FFA950  ; was: stru_12B2C
+Stage25ConfigRecord:    dc.w    $76                     ; StageStateOffset  ; was: stru_12B2C
                                         ; DATA XREF: Stage_ApplyStage25Configuration   o
                 dc.l    Stage25_ObjectSpawnList         ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState
@@ -548,7 +548,7 @@ Stage25ConfigRecord:    dc.w    $76                     ; word_FFA950  ; was: st
                 dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
                 dc.b    $60                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage25PaletteOffsetList        ; palette offset list pointer
-Stage26ConfigRecord:    dc.w    $8A                     ; word_FFA950  ; was: stru_12B4A
+Stage26ConfigRecord:    dc.w    $8A                     ; StageStateOffset  ; was: stru_12B4A
                                         ; DATA XREF: Stage_ApplyStage26Configuration   o
                 dc.l    Stage_EmptyObjectSpawnList      ; StageObjectSpawnCursor
                 dc.w    0                               ; EnemySpawnDirectorState

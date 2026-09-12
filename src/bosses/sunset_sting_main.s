@@ -202,8 +202,8 @@ Boss_SunsetStingIntroWaitForBanner:                     ; CODE XREF: Boss_Sunset
                 tst.w   (MessageSequenceState).w
                 bne.w   Boss_SunsetStingReturn
                 clr.b   (byte_FF80EC).w
-                move.w  #$620,(word_FFA970).w
-                move.w  #$6A0,(word_FFA974).w
+                move.w  #$620,(CameraXLowerBound).w
+                move.w  #$6A0,(CameraXUpperBound).w
                 bra.w   Boss_SunsetStingNextState
 ; End of function Boss_SunsetStingWaitForBattleBanner
 ; Active battle state

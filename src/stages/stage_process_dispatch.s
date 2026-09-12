@@ -14,7 +14,7 @@ Stage_RunSelectedProcess:                               ; CODE XREF: Stage_Dispa
                 jsr     Scroll_PreparePlaneBuffersAndRegisterShadows(pc)  ; (pc)
                 nop
                 movea.w #(PlayerObjectType-M68K_RAM),a5
-                move.w  (word_FFA950).w,d0
+                move.w  (StageStateOffset).w,d0
                 move.w  (StageProcessTableOffset).w,d1
                 movea.l Stage_ProcessHandlerTable(pc,d1.w),a0
                 jmp     (a0)
@@ -29,7 +29,7 @@ Stage_ProcessHandlerTable:  dc.l    Stage_DispatchEarlyStageState  ; was: off_FF
 ; Transitions stage to next phase or section
 Stage_TransitionToNextPhase:                            ; CODE XREF: Stage_UpdateLogic+14   j  ; was: sub_FF4A
                                         ; Camera_AutoScrollCheck+10   j
-                addq.w  #2,(word_FFA950).w
+                addq.w  #2,(StageStateOffset).w
                 move.w  #$56,(MessageSequenceState).w   ; 'V'
 ; Initializes shared boss health and combat-counter values for the next phase
 Stage_InitializeBossHealthAndCounter:                   ; CODE XREF: Stage9_InitializeXiTigerEncounter   p  ; was: loc_FF54
