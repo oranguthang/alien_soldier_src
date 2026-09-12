@@ -252,15 +252,15 @@ Anim_UpdateEnemyAnimation:                              ; CODE XREF: Enemy_Proce
                 move.w  $5C(a5),d0
                 beq.s   Anim_UpdateEnemyAnimation_Return
                 subq.w  #4,d0
-                move.l  Enemy_AnimationPointers(pc,d0.w),8(a5)
+                move.l  PeriodicShotEnemySpriteAnimationPointers(pc,d0.w),8(a5)
                 clr.w   $C(a5)
 Anim_UpdateEnemyAnimation_Return:                       ; CODE XREF: Anim_UpdateEnemyAnimation+4   j  ; was: locret_2C982
                 rts
 ; End of function Anim_UpdateEnemyAnimation
 ; ---------------------------------------------------------------------------
-Enemy_AnimationPointers:    dc.l    off_EA00E           ; DATA XREF: Anim_UpdateEnemyAnimation+8   r  ; was: off_2C984
-                dc.l    off_EA04A
-                dc.l    off_EA036
+PeriodicShotEnemySpriteAnimationPointers:   dc.l    PeriodicShotEnemyWaitSpriteAnimation  ; DATA XREF: Anim_UpdateEnemyAnimation+8   r  ; was: off_2C984
+                dc.l    PeriodicShotEnemyTransitionSpriteAnimation
+                dc.l    PeriodicShotEnemyAttackSpriteAnimation
 
 ; Main processing routine for enemy object
 Enemy_ProcessObject:                                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2C990

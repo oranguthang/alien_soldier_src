@@ -313,7 +313,7 @@
                 include "src/data/player_sprite_mappings.s"
                 include "src/data/shared_combat_sprite_mappings.s"
                 include "src/data/frontend_sprite_mappings.s"
-                include "src/data/jetsripper_and_enemy_animation_mappings.s"
+                include "src/data/weapon_select_and_enemy_sprite_mappings.s"
                 include "src/data/enemy_projectile_animation_mappings.s"
                 include "src/data/bird_animation_mappings.s"
                 include "src/data/phase_pattern_sprite_mappings.s"

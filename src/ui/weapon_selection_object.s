@@ -27,7 +27,7 @@ UI_UpdateWeaponSelectionObject_UpdateFrameTimer:        ; CODE XREF: UI_UpdateWe
                 btst    #4,$22(a5)
                 beq.s   UI_UpdateWeaponSelectionObject_SelectFrame
 UI_UpdateWeaponSelectionObject_UseIdleFrame:            ; CODE XREF: UI_UpdateWeaponSelectionObject+2A   j  ; was: loc_2BBF4
-                move.l  #word_E9952,8(a5)
+                move.l  #WeaponSelect_IdleSpriteMapping,8(a5)
                 bra.s   UI_UpdateWeaponSelectionObject_ProcessFlags
 ; ---------------------------------------------------------------------------
 UI_UpdateWeaponSelectionObject_AdvanceFrame:            ; CODE XREF: UI_UpdateWeaponSelectionObject+16   j  ; was: loc_2BBFE

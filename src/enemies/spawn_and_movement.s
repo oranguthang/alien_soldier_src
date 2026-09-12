@@ -209,17 +209,17 @@ Enemy_UpdateBehaviorAnimation:                          ; CODE XREF: Enemy_Behav
                 move.w  $5C(a5),d0
                 beq.s   Enemy_UpdateBehaviorAnimation_Return
                 subq.w  #4,d0
-                move.l  Enemy_BehaviorAnimationMappings(pc,d0.w),8(a5)
+                move.l  Enemy_BehaviorSpriteAnimationPointers(pc,d0.w),8(a5)
                 clr.w   $C(a5)
 Enemy_UpdateBehaviorAnimation_Return:                   ; CODE XREF: Enemy_UpdateBehaviorAnimation+4   j  ; was: locret_2C54E
                 rts
 ; End of function Enemy_UpdateBehaviorAnimation
 ; ---------------------------------------------------------------------------
-Enemy_BehaviorAnimationMappings:    dc.l    off_E9E1C   ; DATA XREF: Enemy_UpdateBehaviorAnimation+8   r  ; was: off_2C550
-                dc.l    off_E9E08
-                dc.l    off_E9E40
-                dc.l    off_E9E68
-                dc.l    off_E9E80
+Enemy_BehaviorSpriteAnimationPointers:  dc.l    Enemy_BehaviorWaitSpriteAnimation  ; DATA XREF: Enemy_UpdateBehaviorAnimation+8   r  ; was: off_2C550
+                dc.l    Enemy_BehaviorMovementSpriteAnimation
+                dc.l    Enemy_BehaviorGroundedSpriteAnimation
+                dc.l    Enemy_BehaviorAttackCooldownSpriteAnimation
+                dc.l    Enemy_BehaviorDefeatSpriteAnimation
 
 ; Applies horizontal acceleration with speed limits
 Enemy_AccelerateHorizontal:                             ; CODE XREF: Enemy_MainStateMachine:Enemy_MainStateMachine_Accelerate   p  ; was: sub_2C564
@@ -308,7 +308,7 @@ Enemy_ConvertToDefeatProjectile:                        ; CODE XREF: Enemy_Behav
                 clr.w   $24(a5)
                 clr.b   $21(a5)
                 clr.b   $22(a5)
-                move.l  #off_E9E80,8(a5)
+                move.l  #Enemy_BehaviorDefeatSpriteAnimation,8(a5)
                 clr.w   $C(a5)
                 move.w  #$10,$48(a5)
                 clr.w   $4A(a5)

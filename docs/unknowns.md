@@ -5388,3 +5388,29 @@ All 38 unique addresses receive exact static audit records. Provenance rises
 from 14,924 to 14,962 mappings, the audit registry from 12,115 to 12,158, and
 the enforced address-derived ceiling falls from 1,127 to 1,089. The remaining
 backlog comprises 831 RAM equates and 258 preserved-data labels.
+
+The weapon-select and enemy-sprite mapping pass removes all 38 address-derived
+definitions from the former `data/jetsripper_and_enemy_animation_mappings.s`.
+No direct Jetsripper owner exists: the 290-line ROM-order module is now
+`data/weapon_select_and_enemy_sprite_mappings.s`, matching its three proven
+consumer families instead of inheriting the neighboring code module's name.
+
+The first family contains the weapon-selection object's directly installed
+idle mapping plus the six mappings selected by
+`WeaponSelect_SpriteFramePointers`; its existing audit record is corrected from
+an inaccurate four-entry claim to the actual six entries. The second family
+contains fifteen mappings and five state-selected animations for
+`Enemy_BehaviorController`: wait, movement, grounded, attack cooldown, and the
+shared defeat conversion. The final family contains seven mappings and three
+animations selected by the wait, timed-transition, and periodic-shot states of
+the adjacent enemy state machine.
+
+Thirty-seven unique data addresses receive exact static audit records. The
+binary-backed weapon-select mapping's exclusive-end alias retains provenance
+and folds into the following mapping address. Two previously unaudited Sonnet
+table names are also made precise as animation-pointer tables and receive
+evidence records. Provenance rises from 14,962 to 15,000 mappings, the audit
+registry from 12,158 to 12,197, and the semantic review upper bound falls from
+3,104 to 3,103 after accounting for the new reviewed alias. The enforced
+address-derived ceiling falls from 1,089 to 1,051; the remaining backlog is
+831 RAM equates and 220 preserved-data labels.

@@ -1,184 +1,184 @@
-word_E9952:     dc.w    $4480, $A00, $F4F4              ; DATA XREF: UI_UpdateWeaponSelectionObject:UI_UpdateWeaponSelectionObject_UseIdleFrame   o
+WeaponSelect_IdleSpriteMapping: dc.w    $4480, $A00, $F4F4  ; DATA XREF: UI_UpdateWeaponSelectionObject:UI_UpdateWeaponSelectionObject_UseIdleFrame   o  ; was: word_E9952
                 dc.w    $47F0, $500, $F8F0
                 dc.w    $CFF0, $500, $F8FF
-word_E9964:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:WeaponSelect_SpriteFramePointers   o
+WeaponSelect_AnimatedSpriteMapping00:   dc.w    $47F0, $500, $F8F0  ; DATA XREF: ROM:WeaponSelect_SpriteFramePointers   o  ; was: word_E9964
                 dc.w    $4FF0, $500, $F8FF
                 dc.w    $C584, $500, $F8F8
-word_E9976:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:000178EA   o
+WeaponSelect_AnimatedSpriteMapping01:   dc.w    $47F0, $500, $F8F0  ; DATA XREF: ROM:000178EA   o  ; was: word_E9976
                 dc.w    $4FF0, $500, $F8FF
                 dc.w    $C588, $500, $F8F8
-word_E9988:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:000178EE   o
+WeaponSelect_AnimatedSpriteMapping02:   dc.w    $47F0, $500, $F8F0  ; DATA XREF: ROM:000178EE   o  ; was: word_E9988
                 dc.w    $4FF0, $500, $F8FF
                 dc.w    $C58C, $500, $F8F8
-word_E999A:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:000178F2   o
+WeaponSelect_AnimatedSpriteMapping03:   dc.w    $47F0, $500, $F8F0  ; DATA XREF: ROM:000178F2   o  ; was: word_E999A
                 dc.w    $4FF0, $500, $F8FF
                 dc.w    $C590, $500, $F8F8
-word_E99AC:     dc.w    $47F0, $500, $F8F0              ; DATA XREF: ROM:000178F6   o
+WeaponSelect_AnimatedSpriteMapping04:   dc.w    $47F0, $500, $F8F0  ; DATA XREF: ROM:000178F6   o  ; was: word_E99AC
                 dc.w    $4FF0, $500, $F8FF
                 dc.w    $C594, $500, $F8F8
-word_E99BE:     binclude "data/other/word_E99BE.bin"    ; DATA XREF: ROM:000178FA   o
-word_E99BE_End:
-word_E9C2E:     dc.w    $6863, $500, $10EE              ; DATA XREF: ROM:off_E9E1C   o
-                                        ; ROM:off_E9E40   o
+WeaponSelect_AnimatedSpriteMapping05:   binclude "data/other/word_E99BE.bin"  ; DATA XREF: ROM:000178FA   o  ; was: word_E99BE
+WeaponSelect_AnimatedSpriteMapping05_End:               ; was: word_E99BE_End
+Enemy_BehaviorSpriteMapping00:          dc.w    $6863, $500, $10EE  ; DATA XREF: ROM:Enemy_BehaviorWaitSpriteAnimation   o  ; was: word_E9C2E
+                                        ; ROM:Enemy_BehaviorGroundedSpriteAnimation   o
                 dc.w    $6845, $C00, $EF1
                 dc.w    $6839, $E00, $F6F1
                 dc.w    $6871, $500, $10FD
                 dc.w    $E800, $D00, $E6F1
-word_E9C4C:     dc.w    $6863, $500, $10EE              ; DATA XREF: ROM:000E9E20   o
+Enemy_BehaviorSpriteMapping01:  dc.w    $6863, $500, $10EE  ; DATA XREF: ROM:000E9E20   o  ; was: word_E9C4C
                                         ; ROM:000E9E38   o
                 dc.w    $6829, $F00, $F8F3
                 dc.w    $6871, $500, $10FD
                 dc.w    $E800, $D00, $E8F3
-word_E9C64:     dc.w    $6863, $500, $10EE              ; DATA XREF: ROM:000E9E24   o
+Enemy_BehaviorSpriteMapping02:  dc.w    $6863, $500, $10EE  ; DATA XREF: ROM:000E9E24   o  ; was: word_E9C64
                                         ; ROM:000E9E34   o
                 dc.w    $6819, $F00, $FAF3
                 dc.w    $6871, $500, $10FD
                 dc.w    $E800, $D00, $EAF3
-word_E9C7C:     dc.w    $6808, $D00, $EBF2              ; DATA XREF: ROM:000E9E28   o
+Enemy_BehaviorSpriteMapping03:  dc.w    $6808, $D00, $EBF2  ; DATA XREF: ROM:000E9E28   o  ; was: word_E9C7C
                                         ; ROM:000E9E30   o
                 dc.w    $686B, 0, $1CFB
                 dc.w    $6867, $500, $14EB
                 dc.w    $6819, $F00, $FBF2
                 dc.w    $6875, 0, $1C0A
                 dc.w    $E876, $500, $14FA
-word_E9CA0:     dc.w    $6808, $D00, $EEF0              ; DATA XREF: ROM:000E9E2C   o
+Enemy_BehaviorSpriteMapping04:  dc.w    $6808, $D00, $EEF0  ; DATA XREF: ROM:000E9E2C   o  ; was: word_E9CA0
                                         ; ROM:000E9E50   o
                 dc.w    $686B, 0, $1CFB
                 dc.w    $6867, $500, $14EB
                 dc.w    $6819, $F00, $FEF0
                 dc.w    $6875, 0, $1C0A
                 dc.w    $E876, $500, $14FA
-word_E9CC4:     dc.w    $6808, $D00, $E6F2              ; DATA XREF: ROM:off_E9E08   o
+Enemy_BehaviorSpriteMapping05:  dc.w    $6808, $D00, $E6F2  ; DATA XREF: ROM:Enemy_BehaviorMovementSpriteAnimation   o  ; was: word_E9CC4
                 dc.w    $6863, $500, $DEB
                 dc.w    $6839, $E00, $F6F2
                 dc.w    $6845, $C00, $EF2
                 dc.w    $687A, $800, $18FF
                 dc.w    $E87D, $400, $10F7
-word_E9CE8:     dc.w    $6808, $D00, $E4F4              ; DATA XREF: ROM:000E9E0C   o
+Enemy_BehaviorSpriteMapping06:  dc.w    $6808, $D00, $E4F4  ; DATA XREF: ROM:000E9E0C   o  ; was: word_E9CE8
                 dc.w    $6867, $500, $CEE
                 dc.w    $6829, $F00, $F4F4
                 dc.w    $686B, 0, $16FC
                 dc.w    $E871, $500, $10F9
-word_E9D06:     dc.w    $686F, $400, $10EE              ; DATA XREF: ROM:000E9E10   o
+Enemy_BehaviorSpriteMapping07:  dc.w    $686F, $400, $10EE  ; DATA XREF: ROM:000E9E10   o  ; was: word_E9D06
                 dc.w    $686C, $800, $18F6
                 dc.w    $6819, $F00, $F6EF
                 dc.w    $6871, $500, $EF0
                 dc.w    $E800, $D00, $E6EF
-word_E9D24:     dc.w    $6863, $500, $10EE              ; DATA XREF: ROM:000E9E14   o
+Enemy_BehaviorSpriteMapping08:  dc.w    $6863, $500, $10EE  ; DATA XREF: ROM:000E9E14   o  ; was: word_E9D24
                 dc.w    $6829, $F00, $F4F4
                 dc.w    $6875, 0, $1508
                 dc.w    $6876, $500, $DF8
                 dc.w    $E800, $D00, $E4F4
-word_E9D42:     dc.w    $6800, $D00, $E7F0              ; DATA XREF: ROM:000E9E6C   o
+Enemy_BehaviorSpriteMapping09:  dc.w    $6800, $D00, $E7F0  ; DATA XREF: ROM:000E9E6C   o  ; was: word_E9D42
                                         ; ROM:000E9E7C   o
                 dc.w    $6857, $E00, $F7F0
                 dc.w    $6863, $500, $10EE
                 dc.w    $6845, $C00, $FEF
                 dc.w    $E871, $500, $10FD
-word_E9D60:     dc.w    $6808, $D00, $E6F2              ; DATA XREF: ROM:000E9E70   o
+Enemy_BehaviorSpriteMapping10:  dc.w    $6808, $D00, $E6F2  ; DATA XREF: ROM:000E9E70   o  ; was: word_E9D60
                                         ; ROM:000E9E78   o
                 dc.w    $6857, $E00, $F6F2
                 dc.w    $6863, $500, $10EE
                 dc.w    $6845, $C00, $EF1
                 dc.w    $E871, $500, $10FD
-word_E9D7E:     dc.w    $6818, 0, $F013                 ; DATA XREF: ROM:000E9E74   o
+Enemy_BehaviorSpriteMapping11:  dc.w    $6818, 0, $F013  ; DATA XREF: ROM:000E9E74   o  ; was: word_E9D7E
                 dc.w    $6810, $D00, $E7F3
                 dc.w    $6849, $100, $F613
                 dc.w    $684B, $E00, $F6F3
                 dc.w    $6863, $500, $10EE
                 dc.w    $6845, $C00, $EF3
                 dc.w    $E871, $500, $10FD
-word_E9DA8:     dc.w    $6875, 0, $140B                 ; DATA XREF: ROM:off_E9E80   o
+Enemy_BehaviorSpriteMapping12:  dc.w    $6875, 0, $140B  ; DATA XREF: ROM:Enemy_BehaviorDefeatSpriteAnimation   o  ; was: word_E9DA8
                 dc.w    $6863, $500, $10ED
                 dc.w    $6845, $C00, $CF1
                 dc.w    $6876, $500, $CFB
                 dc.w    $6839, $E00, $F4F1
                 dc.w    $E808, $D00, $E4F2
-word_E9DCC:     dc.w    $686B, 0, $14FE                 ; DATA XREF: ROM:000E9E88   o
+Enemy_BehaviorSpriteMapping13:  dc.w    $686B, 0, $14FE  ; DATA XREF: ROM:000E9E88   o  ; was: word_E9DCC
                 dc.w    $6867, $500, $CEE
                 dc.w    $6808, $D00, $E4F2
                 dc.w    $6845, $C00, $CF1
                 dc.w    $6839, $E00, $F4F1
                 dc.w    $E871, $500, $10FD
-word_E9DF0:     dc.w    $6863, $500, $CEF               ; DATA XREF: ROM:000E9E84   o
+Enemy_BehaviorSpriteMapping14:  dc.w    $6863, $500, $CEF  ; DATA XREF: ROM:000E9E84   o  ; was: word_E9DF0
                                         ; ROM:000E9E8C   o
                 dc.w    $6829, $F00, $F4F1
                 dc.w    $6808, $D00, $E4F2
                 dc.w    $E871, $500, $CFD
-off_E9E08:      dc.w    word_E9CC4-*                    ; DATA XREF: ROM:0002C554   o
+Enemy_BehaviorMovementSpriteAnimation:  dc.w    Enemy_BehaviorSpriteMapping05-*  ; DATA XREF: ROM:0002C554   o  ; was: off_E9E08
                                         ; ROM:000E9E18   o
                 dc.w    4
-                dc.w    word_E9CE8-*
+                dc.w    Enemy_BehaviorSpriteMapping06-*
                 dc.w    4
-                dc.w    word_E9D06-*
+                dc.w    Enemy_BehaviorSpriteMapping07-*
                 dc.w    4
-                dc.w    word_E9D24-*
+                dc.w    Enemy_BehaviorSpriteMapping08-*
                 dc.w    4
-                dc.w    off_E9E08-*
+                dc.w    Enemy_BehaviorMovementSpriteAnimation-*
                 dc.w    0
-off_E9E1C:      dc.w    word_E9C2E-*                    ; DATA XREF: ROM:Enemy_BehaviorAnimationMappings   o
+Enemy_BehaviorWaitSpriteAnimation:  dc.w    Enemy_BehaviorSpriteMapping00-*  ; DATA XREF: ROM:Enemy_BehaviorSpriteAnimationPointers   o  ; was: off_E9E1C
                                         ; ROM:000E9E3C   o
                 dc.w    6
-                dc.w    word_E9C4C-*
+                dc.w    Enemy_BehaviorSpriteMapping01-*
                 dc.w    5
-                dc.w    word_E9C64-*
+                dc.w    Enemy_BehaviorSpriteMapping02-*
                 dc.w    4
-                dc.w    word_E9C7C-*
+                dc.w    Enemy_BehaviorSpriteMapping03-*
                 dc.w    5
-                dc.w    word_E9CA0-*
+                dc.w    Enemy_BehaviorSpriteMapping04-*
                 dc.w    6
-                dc.w    word_E9C7C-*
+                dc.w    Enemy_BehaviorSpriteMapping03-*
                 dc.w    5
-                dc.w    word_E9C64-*
+                dc.w    Enemy_BehaviorSpriteMapping02-*
                 dc.w    4
-                dc.w    word_E9C4C-*
+                dc.w    Enemy_BehaviorSpriteMapping01-*
                 dc.w    5
-                dc.w    off_E9E1C-*
+                dc.w    Enemy_BehaviorWaitSpriteAnimation-*
                 dc.w    0
-off_E9E40:      dc.w    word_E9C2E-*                    ; DATA XREF: ROM:0002C558   o
+Enemy_BehaviorGroundedSpriteAnimation:  dc.w    Enemy_BehaviorSpriteMapping00-*  ; DATA XREF: ROM:0002C558   o  ; was: off_E9E40
                 dc.w    1
-                dc.w    word_E9C4C-*
+                dc.w    Enemy_BehaviorSpriteMapping01-*
                 dc.w    1
-                dc.w    word_E9C64-*
+                dc.w    Enemy_BehaviorSpriteMapping02-*
                 dc.w    2
-                dc.w    word_E9C7C-*
+                dc.w    Enemy_BehaviorSpriteMapping03-*
                 dc.w    3
-                dc.w    word_E9CA0-*
+                dc.w    Enemy_BehaviorSpriteMapping04-*
                 dc.w    4
-                dc.w    word_E9CA0-*
+                dc.w    Enemy_BehaviorSpriteMapping04-*
                 dc.w    3
-                dc.w    word_E9C7C-*
+                dc.w    Enemy_BehaviorSpriteMapping03-*
                 dc.w    2
-                dc.w    word_E9C64-*
+                dc.w    Enemy_BehaviorSpriteMapping02-*
                 dc.w    1
-                dc.w    word_E9C4C-*
+                dc.w    Enemy_BehaviorSpriteMapping01-*
                 dc.w    1
-                dc.w    word_E9C2E-*
+                dc.w    Enemy_BehaviorSpriteMapping00-*
                 dc.w    $FF
-off_E9E68:      dc.w    word_E9C2E-*                    ; DATA XREF: ROM:0002C55C   o
+Enemy_BehaviorAttackCooldownSpriteAnimation:    dc.w    Enemy_BehaviorSpriteMapping00-*  ; DATA XREF: ROM:0002C55C   o  ; was: off_E9E68
                 dc.w    3
-                dc.w    word_E9D42-*
+                dc.w    Enemy_BehaviorSpriteMapping09-*
                 dc.w    6
-                dc.w    word_E9D60-*
+                dc.w    Enemy_BehaviorSpriteMapping10-*
                 dc.w    8
-                dc.w    word_E9D7E-*
+                dc.w    Enemy_BehaviorSpriteMapping11-*
                 dc.w    $10
-                dc.w    word_E9D60-*
+                dc.w    Enemy_BehaviorSpriteMapping10-*
                 dc.w    8
-                dc.w    word_E9D42-*
+                dc.w    Enemy_BehaviorSpriteMapping09-*
                 dc.w    $FF
-off_E9E80:      dc.w    word_E9DA8-*                    ; DATA XREF: ROM:0002C560   o
+Enemy_BehaviorDefeatSpriteAnimation:    dc.w    Enemy_BehaviorSpriteMapping12-*  ; DATA XREF: ROM:0002C560   o  ; was: off_E9E80
                                         ; Enemy_ConvertToDefeatProjectile+10   o
                 dc.w    3
-                dc.w    word_E9DF0-*
+                dc.w    Enemy_BehaviorSpriteMapping14-*
                 dc.w    2
-                dc.w    word_E9DCC-*
+                dc.w    Enemy_BehaviorSpriteMapping13-*
                 dc.w    3
-                dc.w    word_E9DF0-*
+                dc.w    Enemy_BehaviorSpriteMapping14-*
                 dc.w    2
-                dc.w    off_E9E80-*
+                dc.w    Enemy_BehaviorDefeatSpriteAnimation-*
                 dc.w    0
-word_E9E94:     dc.w    $606F, $500, $6E8               ; DATA XREF: ROM:000EA012   o
+PeriodicShotEnemySpriteMapping00:   dc.w    $606F, $500, $6E8  ; DATA XREF: ROM:000EA012   o  ; was: word_E9E94
                                         ; ROM:000EA02A   o
                 dc.w    $686F, $500, $608
                 dc.w    $6865, $100, $D2FC
@@ -188,7 +188,7 @@ word_E9E94:     dc.w    $606F, $500, $6E8               ; DATA XREF: ROM:000EA01
                 dc.w    $685D, $C00, $1800
                 dc.w    $682D, $F00, $F800
                 dc.w    $E800, $A00, $E000
-word_E9ECA:     dc.w    $606B, $500, $8DE               ; DATA XREF: ROM:000EA016   o
+PeriodicShotEnemySpriteMapping01:   dc.w    $606B, $500, $8DE  ; DATA XREF: ROM:000EA016   o  ; was: word_E9ECA
                                         ; ROM:000EA026   o
                 dc.w    $686B, $500, $812
                 dc.w    $6861, $500, $D2F8
@@ -198,7 +198,7 @@ word_E9ECA:     dc.w    $606B, $500, $8DE               ; DATA XREF: ROM:000EA01
                 dc.w    $603D, $F00, $F8E0
                 dc.w    $683D, $F00, $F800
                 dc.w    $E809, $A00, $E000
-word_E9F00:     dc.w    $685D, $C00, $1800              ; DATA XREF: ROM:000EA01A   o
+PeriodicShotEnemySpriteMapping02:   dc.w    $685D, $C00, $1800  ; DATA XREF: ROM:000EA01A   o  ; was: word_E9F00
                                         ; ROM:000EA022   o
                 dc.w    $605D, $C00, $18E0
                 dc.w    $6067, $500, $BDA
@@ -208,7 +208,7 @@ word_E9F00:     dc.w    $685D, $C00, $1800              ; DATA XREF: ROM:000EA01
                 dc.w    $684D, $F00, $F900
                 dc.w    $6012, $A00, $E1E8
                 dc.w    $E812, $A00, $E100
-word_E9F36:     dc.w    $606F, $500, $4EA               ; DATA XREF: ROM:off_EA00E   o
+PeriodicShotEnemySpriteMapping03:   dc.w    $606F, $500, $4EA  ; DATA XREF: ROM:PeriodicShotEnemyWaitSpriteAnimation   o  ; was: word_E9F36
                                         ; ROM:000EA02E   o
                 dc.w    $686F, $500, $406
                 dc.w    $6865, $100, $D1FC
@@ -218,7 +218,7 @@ word_E9F36:     dc.w    $606F, $500, $4EA               ; DATA XREF: ROM:off_EA0
                 dc.w    $685D, $C00, $1800
                 dc.w    $682D, $F00, $F800
                 dc.w    $E800, $A00, $E000
-word_E9F6C:     dc.w    $685D, $C00, $1800              ; DATA XREF: ROM:000EA01E   o
+PeriodicShotEnemySpriteMapping04:   dc.w    $685D, $C00, $1800  ; DATA XREF: ROM:000EA01E   o  ; was: word_E9F6C
                 dc.w    $605D, $C00, $18E0
                 dc.w    $6067, $500, $DD8
                 dc.w    $6867, $500, $D18
@@ -227,7 +227,7 @@ word_E9F6C:     dc.w    $685D, $C00, $1800              ; DATA XREF: ROM:000EA01
                 dc.w    $684D, $F00, $F900
                 dc.w    $6012, $A00, $E1E8
                 dc.w    $E812, $A00, $E100
-word_E9FA2:     dc.w    $606F, $500, $4EA               ; DATA XREF: ROM:000EA03A   o
+PeriodicShotEnemySpriteMapping05:   dc.w    $606F, $500, $4EA  ; DATA XREF: ROM:000EA03A   o  ; was: word_E9FA2
                                         ; ROM:000EA042   o
                 dc.w    $686F, $500, $406
                 dc.w    $603D, $F00, $F8E0
@@ -237,7 +237,7 @@ word_E9FA2:     dc.w    $606F, $500, $4EA               ; DATA XREF: ROM:000EA03
                 dc.w    $681B, $A00, $E000
                 dc.w    $605D, $C00, $18E0
                 dc.w    $E85D, $C00, $1800
-word_E9FD8:     dc.w    $685D, $C00, $1800              ; DATA XREF: ROM:000EA03E   o
+PeriodicShotEnemySpriteMapping06:   dc.w    $685D, $C00, $1800  ; DATA XREF: ROM:000EA03E   o  ; was: word_E9FD8
                 dc.w    $605D, $C00, $18E0
                 dc.w    $686F, $500, $FE03
                 dc.w    $606F, $500, $FEED
@@ -246,44 +246,44 @@ word_E9FD8:     dc.w    $685D, $C00, $1800              ; DATA XREF: ROM:000EA03
                 dc.w    $6024, $A00, $E1E8
                 dc.w    $6824, $A00, $E100
                 dc.w    $E861, $500, $D4F9
-off_EA00E:      dc.w    word_E9F36-*                    ; DATA XREF: ROM:Enemy_AnimationPointers   o
+PeriodicShotEnemyWaitSpriteAnimation:   dc.w    PeriodicShotEnemySpriteMapping03-*  ; DATA XREF: ROM:PeriodicShotEnemySpriteAnimationPointers   o  ; was: off_EA00E
                                         ; ROM:000EA032   o
                 dc.w    4
-                dc.w    word_E9E94-*
+                dc.w    PeriodicShotEnemySpriteMapping00-*
                 dc.w    4
-                dc.w    word_E9ECA-*
+                dc.w    PeriodicShotEnemySpriteMapping01-*
                 dc.w    4
-                dc.w    word_E9F00-*
+                dc.w    PeriodicShotEnemySpriteMapping02-*
                 dc.w    3
-                dc.w    word_E9F6C-*
+                dc.w    PeriodicShotEnemySpriteMapping04-*
                 dc.w    2
-                dc.w    word_E9F00-*
+                dc.w    PeriodicShotEnemySpriteMapping02-*
                 dc.w    3
-                dc.w    word_E9ECA-*
+                dc.w    PeriodicShotEnemySpriteMapping01-*
                 dc.w    4
-                dc.w    word_E9E94-*
+                dc.w    PeriodicShotEnemySpriteMapping00-*
                 dc.w    4
-                dc.w    word_E9F36-*
+                dc.w    PeriodicShotEnemySpriteMapping03-*
                 dc.w    4
-                dc.w    off_EA00E-*
+                dc.w    PeriodicShotEnemyWaitSpriteAnimation-*
                 dc.w    0
-off_EA036:      dc.w    word_E9E94-*                    ; DATA XREF: ROM:0002C98C   o
+PeriodicShotEnemyAttackSpriteAnimation: dc.w    PeriodicShotEnemySpriteMapping00-*  ; DATA XREF: ROM:0002C98C   o  ; was: off_EA036
                                         ; ROM:000EA046   o
                 dc.w    4
-                dc.w    word_E9FA2-*
+                dc.w    PeriodicShotEnemySpriteMapping05-*
                 dc.w    5
-                dc.w    word_E9FD8-*
+                dc.w    PeriodicShotEnemySpriteMapping06-*
                 dc.w    6
-                dc.w    word_E9FA2-*
+                dc.w    PeriodicShotEnemySpriteMapping05-*
                 dc.w    5
-                dc.w    off_EA036-*
+                dc.w    PeriodicShotEnemyAttackSpriteAnimation-*
                 dc.w    0
-off_EA04A:      dc.w    word_E9E94-*                    ; DATA XREF: ROM:0002C988   o
+PeriodicShotEnemyTransitionSpriteAnimation: dc.w    PeriodicShotEnemySpriteMapping00-*  ; DATA XREF: ROM:0002C988   o  ; was: off_EA04A
                                         ; ROM:000EA056   o
                 dc.w    4
-                dc.w    word_E9FA2-*
+                dc.w    PeriodicShotEnemySpriteMapping05-*
                 dc.w    3
-                dc.w    word_E9F36-*
+                dc.w    PeriodicShotEnemySpriteMapping03-*
                 dc.w    2
-                dc.w    off_EA04A-*
+                dc.w    PeriodicShotEnemyTransitionSpriteAnimation-*
                 dc.w    0
