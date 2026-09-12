@@ -417,16 +417,16 @@ Stage_InitializeXiTigerState:                           ; CODE XREF: Stage_XiTig
                 cmpi.w  #$10,d0
                 bpl.s   Stage_ResetXiTigerWeaponSelection
                 asl.w   #1,d0
-                move.w  d0,(word_FFA21E).w
+                move.w  d0,(WeaponIconTransferState).w
                 bra.s   Stage_ApplyXiTigerConfigurationAndInitializePlayer
 ; ---------------------------------------------------------------------------
 Stage_ResetXiTigerWeaponSelection:                      ; CODE XREF: Stage_InitializeXiTigerState+16   j  ; was: loc_121C4
                                         ; Stage_InitializeXiTigerState+1C   j
                 move.w  #2,(WeaponStateIndex).w
-                move.w  #4,(word_FFA21E).w
+                move.w  #4,(WeaponIconTransferState).w
 Stage_ApplyXiTigerConfigurationAndInitializePlayer:     ; CODE XREF: Stage_InitializeXiTigerState+24   j  ; was: loc_121D0
                 bsr.s   Stage_DispatchXiTigerConfiguration
-                jsr     (Gfx_ProcessPaletteSlots).l
+                jsr     (UI_QueueAllWeaponIconTransfers).l
                 jmp     Player_InitializeStats
 ; End of function Stage_InitializeXiTigerState
 ; Dispatches the Xi-Tiger configuration selected by word_FF814C

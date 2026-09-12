@@ -1,6 +1,6 @@
-UI_DispatchStatusUpdate:                                ; CODE XREF: UI_UpdateDebugMenu+60   p  ; was: sub_1372A
-                                        ; UI_UpdateDebugMenu+78   p
-                bsr.w   UI_SetupScoreDMA
+UI_DispatchStatusUpdate:                                ; CODE XREF: DebugMenu_UpdateActive+60   p  ; was: sub_1372A
+                                        ; DebugMenu_UpdateActive+78   p
+                bsr.w   UI_QueuePendingWeaponStateIconTransfer
                 move.w  (word_FF8660).w,d0
                 movea.w off_1373E(pc,d0.w),a0
                 adda.l  #UI_MenuSelectStage,a0
@@ -184,7 +184,7 @@ loc_138CE:                                              ; CODE XREF: UI_MenuColo
                 rts
 ; End of function UI_MenuColorPicker
 ; Renders menu selection cursor
-UI_RenderMenuSelection1:                                ; CODE XREF: UI_UpdateDebugMenu+80   p  ; was: sub_138D6
+UI_RenderMenuSelection1:                                ; CODE XREF: DebugMenu_UpdateActive+80   p  ; was: sub_138D6
                 btst    #2,(VBlankFrameCounter+1).w
                 bne.s   locret_138EC
                 move.w  (word_FF8664).w,d0
@@ -195,7 +195,7 @@ locret_138EC:                                           ; CODE XREF: UI_RenderMe
                 rts
 ; End of function UI_RenderMenuSelection1
 ; Renders color picker cursor
-UI_RenderColorCursor:                                   ; CODE XREF: UI_UpdateDebugMenu+6C   p  ; was: sub_138EE
+UI_RenderColorCursor:                                   ; CODE XREF: DebugMenu_UpdateActive+6C   p  ; was: sub_138EE
                 tst.w   (word_FF8666).w
                 beq.s   locret_1390A
                 btst    #2,(VBlankFrameCounter+1).w
@@ -209,7 +209,7 @@ locret_1390A:                                           ; CODE XREF: UI_RenderCo
                 rts
 ; End of function UI_RenderColorCursor
 ; Converts stage number to tilemap digits
-UI_RenderStageNumber:                                   ; CODE XREF: UI_UpdateDebugMenu+64   p  ; was: sub_1390C
+UI_RenderStageNumber:                                   ; CODE XREF: DebugMenu_UpdateActive+64   p  ; was: sub_1390C
                 move.b  (byte_FF866B).w,d0
                 cmpi.b  #$FF,d0
                 bne.s   loc_13924
@@ -229,7 +229,7 @@ loc_13924:                                              ; CODE XREF: UI_RenderSt
                 rts
 ; End of function UI_RenderStageNumber
 ; Converts weapon number to tilemap digits
-UI_RenderWeaponNumber:                                  ; CODE XREF: UI_UpdateDebugMenu+88   p  ; was: sub_13942
+UI_RenderWeaponNumber:                                  ; CODE XREF: DebugMenu_UpdateActive+88   p  ; was: sub_13942
                 move.b  (word_FF8228).w,d0
                 move.b  d0,d1
                 andi.w  #$F,d0
@@ -242,7 +242,7 @@ UI_RenderWeaponNumber:                                  ; CODE XREF: UI_UpdateDe
                 rts
 ; End of function UI_RenderWeaponNumber
 ; Loads weapon icon tiles
-UI_LoadWeaponTiles:                                     ; CODE XREF: UI_UpdateDebugMenu+68   p  ; was: sub_13964
+UI_LoadWeaponTiles:                                     ; CODE XREF: DebugMenu_UpdateActive+68   p  ; was: sub_13964
                 moveq   #0,d0
                 move.w  (word_FF8662).w,d0
                 asl.w   #4,d0
@@ -256,7 +256,7 @@ loc_1397A:                                              ; CODE XREF: UI_LoadWeap
                 rts
 ; End of function UI_LoadWeaponTiles
 ; Renders weapon type number as digit
-UI_RenderWeaponType:                                    ; CODE XREF: UI_UpdateDebugMenu+7C   p  ; was: sub_13982
+UI_RenderWeaponType:                                    ; CODE XREF: DebugMenu_UpdateActive+7C   p  ; was: sub_13982
                 move.w  (word_FF8662).w,d0
                 asr.w   #1,d0
                 addi.w  #-$383C,d0
@@ -275,7 +275,7 @@ word_13992:     dc.w    $87B4, $87B5, $87B6, $87B7, $87B8, $87B9, $87BA, $87BB
                 dc.w    $E7BC, $E7BD, $E7BE, $E7BF, $E7C0, $E7C1, $E7C2, $E7C3
 
 ; Decodes and displays RGB color value
-UI_DecodeColorValue:                                    ; CODE XREF: UI_UpdateDebugMenu+84   p  ; was: sub_13A12
+UI_DecodeColorValue:                                    ; CODE XREF: DebugMenu_UpdateActive+84   p  ; was: sub_13A12
                 move.w  (word_FF8662).w,d0
                 asl.w   #4,d0
                 add.w   (word_FF8664).w,d0

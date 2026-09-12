@@ -51,7 +51,7 @@ XiTigerCutscene_AssetLoadDescriptors:   dc.w    7       ; field_0  ; was: stru_1
 ; Updates the HUD and dispatches the current Xi Tiger cutscene state
 XiTigerCutscene_Update:                                 ; DATA XREF: ROM:StageTransition_UpdateHandlerTable   o  ; was: sub_1E8F6
                 jsr     (UI_BuildHUDSpriteList).l
-                jsr     (UI_RenderHUDElement1).l
+                jsr     (UI_UpdateGameplayHUD).l
                 move.w  (dword_FF8128).w,d0
                 movea.w XiTigerCutscene_StateTable(pc,d0.w),a0
                 adda.l  #XiTigerCutscene_Setup,a0

@@ -322,7 +322,7 @@ WeaponSetup_CommitForceSelection:                       ; CODE XREF: WeaponSetup
                 move.w  (dword_FF8128).w,d0
                 move.w  d0,(a0)
                 move.w  d2,(dword_FF8040).w
-                jsr     (Gfx_LoadPaletteData).l
+                jsr     (UI_QueueSelectedWeaponIconTransfer).l
                 move.w  (dword_FF8040).w,d2
                 tst.w   d2
                 beq.s   WeaponSetup_RenderLoadout

@@ -91,7 +91,7 @@ MessageSequence_FinishScript:                           ; DATA XREF: ROM:0000A9B
 MessageSequence_FinalizeScriptGraphics:                 ; CODE XREF: BattleBanner_PrepareGlyphs   p  ; was: loc_AA18
                 bclr    #7,(MessageDisplayFlags).w
                 bsr.s   Message_QueueFontBasePatternDMAs
-                jmp     Gfx_ProcessPaletteSlots
+                jmp     UI_QueueAllWeaponIconTransfers
 ; End of function MessageSequence_FinishScript
 ; Queues the three fixed six-word font-base pattern transfers
 Message_QueueFontBasePatternDMAs:                       ; CODE XREF: MessageSequence_FinishScript+A   p  ; was: sub_AA26

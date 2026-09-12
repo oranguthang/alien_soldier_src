@@ -92,7 +92,7 @@ WeaponSelect_Initialize:                                ; DATA XREF: ROM:0001799
                 move.w  d0,(WeaponMenuSlotOffset).w
                 addq.w  #2,(WeaponStateIndex).w
                 bsr.w   Weapon_ClearRuntimeParameters
-                move.w  #$14,(word_FFA21E).w
+                move.w  #$14,(WeaponIconTransferState).w
                 lea     WeaponSelect_TargetAngles(pc),a0
                 nop
                 move.w  (WeaponMenuSlotOffset).w,d1
@@ -272,7 +272,7 @@ Weapon_AdvanceCurrentState:                             ; CODE XREF: Player_Init
                 addq.w  #2,d0
                 move.w  d0,(WeaponStateIndex).w
                 asl.w   #1,d0
-                move.w  d0,(word_FFA21E).w
+                move.w  d0,(WeaponIconTransferState).w
                 bsr.w   Weapon_ClearRuntimeParameters
                 bra.w   Sys_ClearObjectBlocks16
 ; End of function Weapon_AdvanceCurrentState
@@ -296,7 +296,7 @@ Weapon_RestoreSavedSlot:                                ; CODE XREF: Weapon_Comm
                 move.w  d0,(WeaponStateIndex).w
 Weapon_CommitStateIndex:                                ; CODE XREF: Weapon_CommitStateTransition+10   j  ; was: loc_17C40
                 asl.w   #1,d0
-                move.w  d0,(word_FFA21E).w
+                move.w  d0,(WeaponIconTransferState).w
                 clr.w   (WeaponStateCooldown).w
                 bra.w   Sys_ClearObjectBlocks16
 ; End of function Weapon_CommitStateTransition
@@ -535,7 +535,7 @@ Weapon_LoadState12IconFrame:                            ; CODE XREF: Weapon_Upda
                 asl.w   #1,d0
                 move.l  (a0,d0.w),d0
                 move.l  #$94009340,d1
-                jmp     Gfx_SetupVDPDMA
+                jmp     UI_QueueWeaponStateIconTransferFromSource
 ; End of function Weapon_UpdateState12Icon
 ; ---------------------------------------------------------------------------
 Weapon_State12IconPaletteRamp:  dc.w    $EEE, $CEE, $AEE, $8EC, $6EC, $4EA, $2EA, $2E8, $2E8, $E6, $E6, $E4, $E4, $E2, $E2, $C0  ; was: word_17E98

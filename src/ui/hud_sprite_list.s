@@ -3,7 +3,7 @@ UI_BuildHUDSpriteList:                                  ; CODE XREF: Sys_Gamepla
                                         ; sub_1E8F6   p
                 movea.w #(dword_FFA100-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1
-UI_AppendHUDSpriteList:                                 ; CODE XREF: UI_RenderDebugMenu+C   p  ; was: loc_13280
+UI_AppendHUDSpriteList:                                 ; CODE XREF: DebugMenu_UpdateAndDispatch+C   p  ; was: loc_13280
                 tst.b   (byte_FFF705).w
                 bpl.w   UI_AppendHUDSpriteList_AppendBaseIndicator
                 btst    #0,(byte_FFF705).w

@@ -4494,3 +4494,56 @@ now say `Unreferenced` instead of masquerading as additional numbered stages.
 Thirteen wrapper/initializer functions and two spawn lists gain exact-address
 audit records. Provenance and the unknown ceiling remain 13,516 and 2,533,
 while the audit total rises from 10,653 to 10,668.
+
+The gameplay-HUD entry pass corrects both module ownership and inherited
+semantics across `0x012B6A-0x012E4F`. The former `debug_input_test.s` is now
+`ui/gameplay_hud.s`: its live entry coordinates the stage timer, boss-health
+clamp, alternating HUD sections, smoothed player-health bar, signed health
+change, and the final VDP transfer command. The small input routine skipped by
+the live entry has no reconstructed static caller; it is retained in ROM order
+as `Debug_HandleDormantSoundAndMenuInput` without speculating about button
+names or why it was disabled.
+
+All 35 formerly address-derived local branches and loops now describe directly
+observed timer, clamp, health-bar, digit, padding, or transfer behavior. The
+two generated entrypoint names are audited as well. Provenance rises from
+13,516 to 13,551 mappings, the name-audit registry from 10,668 to 10,705, and
+the enforced live address-derived ceiling falls from 2,533 to 2,498. The
+module remains within the project size target and has no live address-derived
+definitions.
+
+The adjacent `ui/hud_rendering.s` pass replaces its numbered HUD containers
+with the two actual responsibilities: selected-weapon energy plus a transient
+combat percentage, and the stage timer plus smoothed boss health. Direct data
+flow also disproves four generated subsystem claims. The alleged palette-slot
+pipeline queues icon-tile DMA for all four weapon slots, the alleged ship
+scroll helper renders packed-BCD digits with leading-zero suppression, and the
+alleged ship-health display reads the eight-digit `ScoreValueBCD` value.
+
+All 37 formerly address-derived branches, loops, and tables now describe their
+observed bar, timer, digit, padding, icon-transfer, or VDP-command roles. Twelve
+pre-existing semantic names are corrected in the same exact-address audit.
+Provenance rises from 13,551 to 13,588 mappings, the name-audit registry from
+10,705 to 10,754, and the enforced live address-derived ceiling falls from
+2,498 to 2,461. The module remains within the project size target and has no
+live address-derived definitions.
+
+The former `ui/status_display.s` mixed two unrelated owners across a clean ROM
+boundary. Its live first 180 bytes now form the cohesive
+`ui/weapon_state_icon_transfer.s`: pending even weapon-state selectors choose
+one of eight icon-art sources, state one marks the queued VBlank command, and
+the direct entry accepts an explicit source and destination. The remaining
+dormant developer interface is `ui/debug_status_display.s`, containing its
+own state dispatch, asset records, alternating tilemaps, and VDP transfers.
+The small live module is retained intact because splitting its procedure from
+its private source table would be artificial.
+
+This pass also promotes RAM `$FFA21E` to `WeaponIconTransferState` and
+corrects the generated score-DMA and generic-VDP names. The dormant standalone
+status dispatcher and its private table explicitly say `Unreferenced`; the
+debug-menu path remains reachable only through the previously documented
+dormant input entry. Twenty-one ROM address names plus the RAM placeholder gain
+provenance-preserving names. Provenance rises from 13,588 to 13,610 mappings,
+the name-audit registry from 10,754 to 10,788, and the enforced live
+address-derived ceiling falls from 2,461 to 2,439. Both new modules contain no
+live address-derived definitions.

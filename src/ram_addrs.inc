@@ -468,7 +468,7 @@ ScoreValueBCD           equ     $FFFFA212               ; was: dword_FFA212
 word_FFA216             equ     $FFFFA216
 word_FFA218             equ     $FFFFA218
 WeaponStateIndex        equ     $FFFFA21C               ; was: word_FFA21C
-word_FFA21E             equ     $FFFFA21E
+WeaponIconTransferState equ     $FFFFA21E               ; was: word_FFA21E
 WeaponSavedSlotOffset   equ     $FFFFA220               ; was: word_FFA220
 word_FFA228             equ     $FFFFA228
 ShootingMode            equ     $FFFFA22A               ; was: word_FFA22A

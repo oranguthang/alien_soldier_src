@@ -83,10 +83,10 @@ UI_UpdateWeaponSelectionObject_ApplySelection:          ; CODE XREF: UI_UpdateWe
                 addq.w  #2,d1
                 move.w  d1,(WeaponStateIndex).w
                 asl.w   #1,d1
-                move.w  d1,(word_FFA21E).w
+                move.w  d1,(WeaponIconTransferState).w
                 jsr     (Weapon_ClearRuntimeParameters).l
                 jsr     (Sys_ClearObjectBlocks16).l
-                jsr     (Gfx_LoadPaletteData).l
+                jsr     (UI_QueueSelectedWeaponIconTransfer).l
                 bra.s   UI_UpdateWeaponSelectionObject_SyncValue
 ; ---------------------------------------------------------------------------
 UI_UpdateWeaponSelectionObject_IncreaseValue:           ; CODE XREF: UI_UpdateWeaponSelectionObject+D6   j  ; was: loc_2BCBE

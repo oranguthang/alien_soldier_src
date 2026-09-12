@@ -1,79 +1,79 @@
-UI_RenderHUDElement2:                                   ; CODE XREF: UI_RenderHUDElement1+108   p  ; was: sub_12E50
+UI_RenderWeaponStatusHUD:                               ; CODE XREF: UI_UpdateGameplayHUD+108   p  ; was: sub_12E50
                 movea.w #(byte_FF8510-M68K_RAM),a0
                 movea.w a0,a3
                 move.w  (WeaponSlotOffset).w,d0
                 addi.w  #-$5DA0,d0
                 movea.w d0,a2
                 btst    #5,(ControlLayoutFlags).w
-                beq.s   loc_12E7A
+                beq.s   UI_RenderWeaponStatusHUD_SelectLayout
                 move.w  #$C7E2,d0
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
-                bra.w   loc_12F2C
+                bra.w   UI_RenderWeaponStatusHUD_PadRow
 ; ---------------------------------------------------------------------------
-loc_12E7A:                                              ; CODE XREF: UI_RenderHUDElement2+16   j
+UI_RenderWeaponStatusHUD_SelectLayout:                  ; CODE XREF: UI_RenderWeaponStatusHUD+16   j  ; was: loc_12E7A
                 btst    #1,(ControlLayoutFlags).w
-                beq.s   loc_12EB6
+                beq.s   UI_RenderWeaponStatusHUD_RenderSegmentedEnergy
                 move.w  #$C7B4,d5
                 move.w  (a2),d0
                 asl.w   #1,d0
                 move.w  (a4,d0.w),(dword_FF8040).w
                 movea.w #(dword_FF8040-M68K_RAM),a1
                 moveq   #1,d7
-                bsr.w   Scroll_ShipScrollPattern
+                bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7E0,(a0)+
                 move.w  8(a2),d0
                 asl.w   #1,d0
                 move.w  (a4,d0.w),(dword_FF8040).w
                 movea.w #(dword_FF8040-M68K_RAM),a1
                 moveq   #1,d7
-                bsr.w   Scroll_ShipScrollPattern
-                bra.s   loc_12EEE
+                bsr.w   UI_RenderPackedBCDDigits
+                bra.s   UI_RenderWeaponStatusHUD_UpdateCombatPercentTimer
 ; ---------------------------------------------------------------------------
-loc_12EB6:                                              ; CODE XREF: UI_RenderHUDElement2+30   j
+UI_RenderWeaponStatusHUD_RenderSegmentedEnergy:         ; CODE XREF: UI_RenderWeaponStatusHUD+30   j  ; was: loc_12EB6
                 move.w  #$FA,d1
                 move.w  8(a2),d0
-                lea     word_12F86(pc),a1
+                lea     WeaponEnergyMaximumSegmentTiles(pc),a1
                 nop
-loc_12EC4:                                              ; CODE XREF: UI_RenderHUDElement2+7A   j
+UI_RenderWeaponStatusHUD_FillMaximumEnergySegments:     ; CODE XREF: UI_RenderWeaponStatusHUD+7A   j  ; was: loc_12EC4
                 sub.w   d1,d0
-                bmi.s   loc_12ECC
+                bmi.s   UI_RenderWeaponStatusHUD_RenderCurrentEnergy
                 move.w  (a1)+,(a0)+
-                bra.s   loc_12EC4
+                bra.s   UI_RenderWeaponStatusHUD_FillMaximumEnergySegments
 ; ---------------------------------------------------------------------------
-loc_12ECC:                                              ; CODE XREF: UI_RenderHUDElement2+76   j
+UI_RenderWeaponStatusHUD_RenderCurrentEnergy:           ; CODE XREF: UI_RenderWeaponStatusHUD+76   j  ; was: loc_12ECC
                 move.w  (a2),d0
-                beq.s   loc_12EEE
+                beq.s   UI_RenderWeaponStatusHUD_UpdateCombatPercentTimer
                 addi.w  #$7C,d0                         ; '|'
-                lea     word_12F66(pc),a1
+                lea     WeaponEnergySegmentTiles(pc),a1
                 nop
-loc_12EDA:                                              ; CODE XREF: UI_RenderHUDElement2+90   j
+UI_RenderWeaponStatusHUD_FillCurrentEnergySegments:     ; CODE XREF: UI_RenderWeaponStatusHUD+90   j  ; was: loc_12EDA
                 sub.w   d1,d0
-                bmi.s   loc_12EE2
+                bmi.s   UI_RenderWeaponStatusHUD_WritePartialEnergySegment
                 move.w  (a1)+,(a3)+
-                bra.s   loc_12EDA
+                bra.s   UI_RenderWeaponStatusHUD_FillCurrentEnergySegments
 ; ---------------------------------------------------------------------------
-loc_12EE2:                                              ; CODE XREF: UI_RenderHUDElement2+8C   j
+UI_RenderWeaponStatusHUD_WritePartialEnergySegment:     ; CODE XREF: UI_RenderWeaponStatusHUD+8C   j  ; was: loc_12EE2
                 cmpi.w  #$FF83,d0
-                bmi.s   loc_12EEE
+                bmi.s   UI_RenderWeaponStatusHUD_UpdateCombatPercentTimer
                 move.w  (a1)+,d1
                 addq.w  #1,d1
                 move.w  d1,(a3)+
-loc_12EEE:                                              ; CODE XREF: UI_RenderHUDElement2+64   j
-                                        ; UI_RenderHUDElement2+7E   j
+UI_RenderWeaponStatusHUD_UpdateCombatPercentTimer:      ; CODE XREF: UI_RenderWeaponStatusHUD+64   j  ; was: loc_12EEE
+                                        ; UI_RenderWeaponStatusHUD+7E   j
                 subq.w  #1,(word_FF809A).w
-                bpl.s   loc_12EFC
+                bpl.s   UI_RenderWeaponStatusHUD_WriteCombatPercent
                 move.w  #$FFFF,(word_FF809A).w
-                bra.s   loc_12F2C
+                bra.s   UI_RenderWeaponStatusHUD_PadRow
 ; ---------------------------------------------------------------------------
-loc_12EFC:                                              ; CODE XREF: UI_RenderHUDElement2+A2   j
+UI_RenderWeaponStatusHUD_WriteCombatPercent:            ; CODE XREF: UI_RenderWeaponStatusHUD+A2   j  ; was: loc_12EFC
                 move.w  (word_FF8210).w,d0
                 move.w  #$C7BF,(a0)+
                 asr.w   #1,d0
-                lea     word_12FA6(pc),a3
+                lea     CombatPercentDisplayTable(pc),a3
                 nop
                 move.b  (a3,d0.w),d0
                 move.w  d0,d2
@@ -85,19 +85,18 @@ loc_12EFC:                                              ; CODE XREF: UI_RenderHU
                 addi.w  #-$384C,d2
                 move.w  d2,(a0)+
                 move.w  #$C7C0,(a0)+
-loc_12F2C:                                              ; CODE XREF: UI_RenderHUDElement2+26   j
-                                        ; UI_RenderHUDElement2+AA   j
+UI_RenderWeaponStatusHUD_PadRow:                        ; CODE XREF: UI_RenderWeaponStatusHUD+26   j  ; was: loc_12F2C
+                                        ; UI_RenderWeaponStatusHUD+AA   j
                 move.w  #$8538,d7
                 sub.w   a0,d7
                 lsr.w   #1,d7
                 subq.w  #1,d7
-                bmi.s   UI_QueueHUDVRAMCommand
+                bmi.s   UI_QueueWeaponStatusTransfer
                 move.w  #$C7F8,d0
-loc_12F3C:                                              ; CODE XREF: UI_RenderHUDElement2+EE   j
+UI_RenderWeaponStatusHUD_FillRowPadding:                ; CODE XREF: UI_RenderWeaponStatusHUD+EE   j  ; was: loc_12F3C
                 move.w  d0,(a0)+
-                dbf     d7,loc_12F3C
-; Queues VRAM command for HUD element rendering
-UI_QueueHUDVRAMCommand:                                 ; CODE XREF: UI_RenderHUDElement2+E6   j  ; was: loc_12F42
+                dbf     d7,UI_RenderWeaponStatusHUD_FillRowPadding
+UI_QueueWeaponStatusTransfer:                           ; CODE XREF: UI_RenderWeaponStatusHUD+E6   j  ; was: loc_12F42
                 movea.w #(byte_FF8510-M68K_RAM),a5
                 move.w  #$83,-(a5)
                 move.w  #$510C,-(a5)
@@ -107,47 +106,46 @@ UI_QueueHUDVRAMCommand:                                 ; CODE XREF: UI_RenderHU
                 move.w  #$8F02,-(a5)
                 move.l  #$94009314,-(a5)
                 rts
-; End of function UI_RenderHUDElement2
+; End of function UI_RenderWeaponStatusHUD
 ; ---------------------------------------------------------------------------
-word_12F66:     dc.w    $C7D4, $C7D4, $C7D4, $C7D4, $C7D6, $C7D6, $C7D6, $C7D6
-                                        ; DATA XREF: UI_RenderHUDElement2+84   o
+WeaponEnergySegmentTiles:   dc.w    $C7D4, $C7D4, $C7D4, $C7D4, $C7D6, $C7D6, $C7D6, $C7D6  ; was: word_12F66
+                                        ; DATA XREF: UI_RenderWeaponStatusHUD+84   o
                 dc.w    $C7D6, $C7D6, $C7D6, $C7D6, $C7D6, $C7D6, $C7D6, $C7D6
-word_12F86:     dc.w    $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2
-                                        ; DATA XREF: UI_RenderHUDElement2+6E   o
+WeaponEnergyMaximumSegmentTiles:    dc.w    $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2  ; was: word_12F86
+                                        ; DATA XREF: UI_RenderWeaponStatusHUD+6E   o
                 dc.w    $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2, $C7C2
-word_12FA6:     dc.w    5, $1015, $2025, $3035, $4045, $5055, $6065, $7075, $8085, $9095, $9900
-                                        ; DATA XREF: UI_RenderHUDElement2+B6   o
+CombatPercentDisplayTable:  dc.w    5, $1015, $2025, $3035, $4045, $5055, $6065, $7075, $8085, $9095, $9900  ; was: word_12FA6
+                                        ; DATA XREF: UI_RenderWeaponStatusHUD+B6   o
 
-; Renders HUD element variant 3
-UI_RenderHUDElement3:                                   ; CODE XREF: UI_RenderHUDElement1+104   j  ; was: sub_12FBC
+UI_RenderStageTimerAndBossHealth:                       ; CODE XREF: UI_UpdateGameplayHUD+104   j  ; was: sub_12FBC
                 movea.w #(byte_FF85A8-M68K_RAM),a0
-                bra.s   loc_12FD2
+                bra.s   UI_RenderStageTimerAndBossHealth_CheckTimerAlert
 ; ---------------------------------------------------------------------------
-loc_12FC2:                                              ; CODE XREF: UI_RenderHUDElement3+42   j
+UI_RenderStageTimerAndBossHealth_BlankTimer:            ; CODE XREF: UI_RenderStageTimerAndBossHealth+42   j  ; was: loc_12FC2
                 move.w  #$C7F8,d0
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
-                bra.s   loc_13032
+                bra.s   UI_RenderStageTimerAndBossHealth_RenderBossHealth
 ; ---------------------------------------------------------------------------
-loc_12FD2:                                              ; CODE XREF: UI_RenderHUDElement3+4   j
+UI_RenderStageTimerAndBossHealth_CheckTimerAlert:       ; CODE XREF: UI_RenderStageTimerAndBossHealth+4   j  ; was: loc_12FD2
                 tst.b   (StageTimeRemaining).w
-                bne.s   loc_13000
+                bne.s   UI_RenderStageTimerAndBossHealth_WriteTimer
                 cmpi.b  #$30,(StageTimeRemaining+1).w   ; '0'
-                bpl.s   loc_13000
+                bpl.s   UI_RenderStageTimerAndBossHealth_WriteTimer
                 btst    #0,(byte_FFA272).w
-                bne.s   loc_13000
+                bne.s   UI_RenderStageTimerAndBossHealth_WriteTimer
                 subq.w  #1,(word_FF8306).w
-                bpl.s   loc_13000
+                bpl.s   UI_RenderStageTimerAndBossHealth_WriteTimer
                 move.w  #$26,(word_FF8306).w            ; '&'
                 move.b  #$40,d0                         ; '@'
                 jsr     (Sound_PlaySFX).l
-                bra.s   loc_12FC2
+                bra.s   UI_RenderStageTimerAndBossHealth_BlankTimer
 ; ---------------------------------------------------------------------------
-loc_13000:                                              ; CODE XREF: UI_RenderHUDElement3+1A   j
-                                        ; UI_RenderHUDElement3+22   j
+UI_RenderStageTimerAndBossHealth_WriteTimer:            ; CODE XREF: UI_RenderStageTimerAndBossHealth+1A   j  ; was: loc_13000
+                                        ; UI_RenderStageTimerAndBossHealth+22   j
                 move.w  #$C7F8,(a0)+
                 move.b  (StageTimeRemaining).w,d0
                 andi.w  #$F,d0
@@ -163,10 +161,10 @@ loc_13000:                                              ; CODE XREF: UI_RenderHU
                 andi.w  #$F,d1
                 addi.w  #-$384C,d1
                 move.w  d1,(a0)+
-loc_13032:                                              ; CODE XREF: UI_RenderHUDElement3+14   j
+UI_RenderStageTimerAndBossHealth_RenderBossHealth:      ; CODE XREF: UI_RenderStageTimerAndBossHealth+14   j  ; was: loc_13032
                 movea.w #(byte_FF8570-M68K_RAM),a0
                 btst    #3,(ControlLayoutFlags).w
-                beq.s   loc_13056
+                beq.s   UI_RenderStageTimerAndBossHealth_UpdateDisplayedBossHealth
                 move.w  #$C7E2,d0
                 move.w  d0,(a0)+
                 move.w  d0,(a0)+
@@ -175,34 +173,34 @@ loc_13032:                                              ; CODE XREF: UI_RenderHU
                 move.w  d0,(a0)+
                 move.w  #$C7F8,d0
                 moveq   #$16,d7
-                bra.w   loc_13118
+                bra.w   UI_RenderStageTimerAndBossHealth_FillBossHealthPadding
 ; ---------------------------------------------------------------------------
-loc_13056:                                              ; CODE XREF: UI_RenderHUDElement3+80   j
+UI_RenderStageTimerAndBossHealth_UpdateDisplayedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+80   j  ; was: loc_13056
                 tst.b   (byte_FFF705).w
-                bmi.s   loc_13088
+                bmi.s   UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation
                 move.w  (word_FF8206).w,d0
                 sub.w   (word_FF8200).w,d0
-                bpl.s   loc_13074
+                bpl.s   UI_RenderStageTimerAndBossHealth_ApproachLowerBossHealth
                 cmpi.w  #$FF00,d0
-                bpl.s   loc_1307A
+                bpl.s   UI_RenderStageTimerAndBossHealth_SnapDisplayedBossHealth
                 addi.w  #$100,(word_FF8206).w
-                bra.s   loc_13088
+                bra.s   UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation
 ; ---------------------------------------------------------------------------
-loc_13074:                                              ; CODE XREF: UI_RenderHUDElement3+A8   j
+UI_RenderStageTimerAndBossHealth_ApproachLowerBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+A8   j  ; was: loc_13074
                 cmpi.w  #$100,d0
-                bpl.s   loc_13082
-loc_1307A:                                              ; CODE XREF: UI_RenderHUDElement3+AE   j
+                bpl.s   UI_RenderStageTimerAndBossHealth_DecreaseDisplayedBossHealth
+UI_RenderStageTimerAndBossHealth_SnapDisplayedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+AE   j  ; was: loc_1307A
                 move.w  (word_FF8200).w,(word_FF8206).w
-                bra.s   loc_13088
+                bra.s   UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation
 ; ---------------------------------------------------------------------------
-loc_13082:                                              ; CODE XREF: UI_RenderHUDElement3+BC   j
+UI_RenderStageTimerAndBossHealth_DecreaseDisplayedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+BC   j  ; was: loc_13082
                 subi.w  #$100,(word_FF8206).w
-loc_13088:                                              ; CODE XREF: UI_RenderHUDElement3+9E   j
-                                        ; UI_RenderHUDElement3+B6   j
+UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+9E   j  ; was: loc_13088
+                                        ; UI_RenderStageTimerAndBossHealth+B6   j
                 tst.w   (word_FF829E).w
-                bne.w   Scroll_UpdateShipScroll
+                bne.w   UI_RenderSpecialBossStatus
                 btst    #2,(ControlLayoutFlags).w
-                beq.s   loc_130E2
+                beq.s   UI_RenderStageTimerAndBossHealth_RenderSegmentedBossHealth
                 move.w  #$C7B4,d5
                 move.w  (word_FF8206).w,d0
                 asr.w   #2,d0
@@ -210,7 +208,7 @@ loc_13088:                                              ; CODE XREF: UI_RenderHU
                 move.w  (a4,d0.w),(dword_FF8040).w
                 movea.w #(dword_FF8040-M68K_RAM),a1
                 moveq   #1,d7
-                bsr.w   Scroll_ShipScrollPattern
+                bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7E0,(a0)+
                 move.w  (word_FF8202).w,d0
                 asr.w   #2,d0
@@ -218,19 +216,19 @@ loc_13088:                                              ; CODE XREF: UI_RenderHU
                 move.w  (a4,d0.w),(dword_FF8040).w
                 movea.w #(dword_FF8040-M68K_RAM),a1
                 moveq   #1,d7
-                bsr.w   Scroll_ShipScrollPattern
+                bsr.w   UI_RenderPackedBCDDigits
                 moveq   #$12,d7
                 move.w  #$C7F8,d0
-loc_130DA:                                              ; CODE XREF: UI_RenderHUDElement3+120   j
+UI_RenderStageTimerAndBossHealth_FillAlternatePadding:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+120   j  ; was: loc_130DA
                 move.w  d0,(a0)+
-                dbf     d7,loc_130DA
-                bra.s   loc_1311E
+                dbf     d7,UI_RenderStageTimerAndBossHealth_FillAlternatePadding
+                bra.s   UI_RenderStageTimerAndBossHealth_QueueBossHealthTransfer
 ; ---------------------------------------------------------------------------
-loc_130E2:                                              ; CODE XREF: UI_RenderHUDElement3+DA   j
+UI_RenderStageTimerAndBossHealth_RenderSegmentedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+DA   j  ; was: loc_130E2
                 moveq   #$1C,d7
                 move.w  (word_FF8206).w,d0
                 subq.w  #1,d0
-                bmi.s   loc_13110
+                bmi.s   UI_RenderStageTimerAndBossHealth_FillRemainingBossHealthSegments
                 move.w  d0,d1
                 asr.w   #8,d0
                 asr.w   #2,d0
@@ -239,24 +237,24 @@ loc_130E2:                                              ; CODE XREF: UI_RenderHU
                 andi.w  #7,d1
                 addi.w  #-$381C,d1
                 subq.w  #1,d0
-                bmi.s   loc_1310C
+                bmi.s   UI_RenderStageTimerAndBossHealth_WritePartialBossHealthSegment
                 move.w  #$C7EB,d2
-loc_13106:                                              ; CODE XREF: UI_RenderHUDElement3+14C   j
+UI_RenderStageTimerAndBossHealth_FillFullBossHealthSegments:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+14C   j  ; was: loc_13106
                 move.w  d2,(a0)+
-                dbf     d0,loc_13106
-loc_1310C:                                              ; CODE XREF: UI_RenderHUDElement3+144   j
+                dbf     d0,UI_RenderStageTimerAndBossHealth_FillFullBossHealthSegments
+UI_RenderStageTimerAndBossHealth_WritePartialBossHealthSegment:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+144   j  ; was: loc_1310C
                 move.w  d1,(a0)+
                 subq.w  #1,d7
-loc_13110:                                              ; CODE XREF: UI_RenderHUDElement3+12E   j
+UI_RenderStageTimerAndBossHealth_FillRemainingBossHealthSegments:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+12E   j  ; was: loc_13110
                 subq.w  #1,d7
-                bmi.s   loc_1311E
+                bmi.s   UI_RenderStageTimerAndBossHealth_QueueBossHealthTransfer
                 move.w  #$C7C3,d0
-loc_13118:                                              ; CODE XREF: UI_RenderHUDElement3+96   j
-                                        ; UI_RenderHUDElement3+15E   j
+UI_RenderStageTimerAndBossHealth_FillBossHealthPadding:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+96   j  ; was: loc_13118
+                                        ; UI_RenderStageTimerAndBossHealth+15E   j
                 move.w  d0,(a0)+
-                dbf     d7,loc_13118
-loc_1311E:                                              ; CODE XREF: UI_RenderHUDElement3+124   j
-                                        ; UI_RenderHUDElement3+156   j
+                dbf     d7,UI_RenderStageTimerAndBossHealth_FillBossHealthPadding
+UI_RenderStageTimerAndBossHealth_QueueBossHealthTransfer:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+124   j  ; was: loc_1311E
+                                        ; UI_RenderStageTimerAndBossHealth+156   j
                 movea.w #(byte_FF8570-M68K_RAM),a5
                 move.w  #$83,-(a5)
                 move.w  #$518C,-(a5)
@@ -266,12 +264,11 @@ loc_1311E:                                              ; CODE XREF: UI_RenderHU
                 move.w  #$8F02,-(a5)
                 move.l  #$94009321,-(a5)
                 rts
-; End of function UI_RenderHUDElement3
-; Updates scroll for ship section
-Scroll_UpdateShipScroll:                                ; CODE XREF: UI_RenderHUDElement3+D0   j  ; was: sub_13142
+; End of function UI_RenderStageTimerAndBossHealth
+UI_RenderSpecialBossStatus:                             ; CODE XREF: UI_RenderStageTimerAndBossHealth+D0   j  ; was: sub_13142
                 moveq   #$1A,d7
                 btst    #1,(VBlankFrameCounter+1).w
-                bne.s   loc_1316C
+                bne.s   UI_RenderSpecialBossStatus_PreparePadding
                 move.w  #$C7F8,(a0)+
                 move.w  #$C7B4,d5
                 move.w  (word_FF829E).w,d0
@@ -279,44 +276,40 @@ Scroll_UpdateShipScroll:                                ; CODE XREF: UI_RenderHU
                 move.w  (a4,d0.w),(dword_FF8040).w
                 movea.w #(dword_FF8040-M68K_RAM),a1
                 moveq   #1,d7
-                bsr.w   Scroll_ShipScrollPattern
+                bsr.w   UI_RenderPackedBCDDigits
                 moveq   #$16,d7
-loc_1316C:                                              ; CODE XREF: Scroll_UpdateShipScroll+8   j
+UI_RenderSpecialBossStatus_PreparePadding:              ; CODE XREF: UI_RenderSpecialBossStatus+8   j  ; was: loc_1316C
                 move.w  #$C7F8,d0
-loc_13170:                                              ; CODE XREF: Scroll_UpdateShipScroll+30   j
+UI_RenderSpecialBossStatus_FillPadding:                 ; CODE XREF: UI_RenderSpecialBossStatus+30   j  ; was: loc_13170
                 move.w  d0,(a0)+
-                dbf     d7,loc_13170
-                bra.s   loc_1311E
-; End of function Scroll_UpdateShipScroll
-; Processes multiple palette slots
-Gfx_ProcessPaletteSlots:                                ; CODE XREF: MessageSequence_FinishScript+C   j  ; was: sub_13178
+                dbf     d7,UI_RenderSpecialBossStatus_FillPadding
+                bra.s   UI_RenderStageTimerAndBossHealth_QueueBossHealthTransfer
+; End of function UI_RenderSpecialBossStatus
+UI_QueueAllWeaponIconTransfers:                         ; CODE XREF: MessageSequence_FinishScript+C   j  ; was: sub_13178
                                         ; Stage_InitializeXiTigerState+34   p
                 move.w  (WeaponSlotOffset).w,(dword_FF8040).w
                 clr.w   (WeaponSlotOffset).w
                 moveq   #3,d7
-; Processes each of 4 palette slots in sequence
-Gfx_ProcessPaletteSlotsLoop:                            ; CODE XREF: Gfx_ProcessPaletteSlots+12   j  ; was: loc_13184
-                bsr.s   Gfx_LoadPaletteData
+UI_QueueAllWeaponIconTransfers_NextSlot:                ; CODE XREF: UI_QueueAllWeaponIconTransfers+12   j  ; was: loc_13184
+                bsr.s   UI_QueueSelectedWeaponIconTransfer
                 addq.w  #2,(WeaponSlotOffset).w
-                dbf     d7,Gfx_ProcessPaletteSlotsLoop
+                dbf     d7,UI_QueueAllWeaponIconTransfers_NextSlot
                 move.w  (dword_FF8040).w,(WeaponSlotOffset).w
                 rts
-; End of function Gfx_ProcessPaletteSlots
+; End of function UI_QueueAllWeaponIconTransfers
 ; ---------------------------------------------------------------------------
-word_13196:     dc.w    $50B8, $50BE, $50C4, $50CA
-                                        ; DATA XREF: Gfx_LoadPaletteData+4   r
+WeaponIconVRAMDestinationTable: dc.w    $50B8, $50BE, $50C4, $50CA  ; was: word_13196
+                                        ; DATA XREF: UI_QueueSelectedWeaponIconTransfer+4   r
 
-; Loads palette data from offset table
-Gfx_LoadPaletteData:                                    ; CODE XREF: Gfx_ProcessPaletteSlots:loc_13184   p  ; was: sub_1319E
+UI_QueueSelectedWeaponIconTransfer:                     ; CODE XREF: UI_QueueAllWeaponIconTransfers:NextSlot   p  ; was: sub_1319E
                                         ; UI_InitializeStageStart+EC   p
                 move.w  (WeaponSlotOffset).w,d0
-                move.w  word_13196(pc,d0.w),d3
+                move.w  WeaponIconVRAMDestinationTable(pc,d0.w),d3
                 movea.w d0,a0
                 adda.w  #$A250,a0
                 move.w  (a0),d0
-; End of function Gfx_LoadPaletteData
-; Sets up VDP registers for sprite tiles
-Sprite_SetupTileVDP:                                    ; CODE XREF: WeaponSetup_InitializeTextAndTiles+20   p  ; was: sub_131AE
+; Fall through to UI_QueueWeaponIconTileTransfer
+UI_QueueWeaponIconTileTransfer:                         ; CODE XREF: WeaponSetup_InitializeTextAndTiles+20   p  ; was: sub_131AE
                 asl.w   #1,d0
                 addi.w  #-$3A7C,d0
                 movea.w (VDPStagingDataCursor).w,a1
@@ -328,15 +321,14 @@ Sprite_SetupTileVDP:                                    ; CODE XREF: WeaponSetup
                 addq.w  #1,d0
                 move.w  d0,(a1)+
                 movea.w (VDPCommandQueueHead).w,a1
-                bsr.s   Gfx_SetupTileDMA
+                bsr.s   UI_QueueWeaponIconDMAHalf
                 addq.w  #2,d3
-                bsr.s   Gfx_SetupTileDMA
+                bsr.s   UI_QueueWeaponIconDMAHalf
                 move.w  a1,(VDPCommandQueueHead).w
                 rts
-; End of function Sprite_SetupTileVDP
-; Sets up DMA for tile transfer
-Gfx_SetupTileDMA:                                       ; CODE XREF: Sprite_SetupTileVDP+1C   p  ; was: sub_131D6
-                                        ; Sprite_SetupTileVDP+20   p
+; End of function UI_QueueWeaponIconTileTransfer
+UI_QueueWeaponIconDMAHalf:                              ; CODE XREF: UI_QueueWeaponIconTileTransfer+1C   p  ; was: sub_131D6
+                                        ; UI_QueueWeaponIconTileTransfer+20   p
                 move.w  #$83,-(a1)
                 move.w  d3,-(a1)
                 move.b  (VDPStagingDataCursor).w,d1
@@ -351,51 +343,49 @@ Gfx_SetupTileDMA:                                       ; CODE XREF: Sprite_Setu
                 move.l  #$94009302,-(a1)
                 addq.w  #4,(VDPStagingDataCursor).w
                 rts
-; End of function Gfx_SetupTileDMA
-; Copies indexed word from lookup table
-Data_CopyIndexedWord:
+; End of function UI_QueueWeaponIconDMAHalf
+; Dormant alternate entry: no reconstructed static caller reaches it
+UnreferencedRenderIndexedLookupDigits:
                 asl.w   #1,d0                           ; was: sub_13206
                 move.w  (a4,d0.w),(a1)
-; End of function Data_CopyIndexedWord
-; Ship scroll movement pattern
-Scroll_ShipScrollPattern:                               ; CODE XREF: UI_RenderHUDElement1+1E4   p  ; was: sub_1320C
-                                        ; UI_RenderHUDElement1+202   p
+; Fall through to UI_RenderPackedBCDDigits
+UI_RenderPackedBCDDigits:                               ; CODE XREF: UI_UpdateGameplayHUD+1E4   p  ; was: sub_1320C
+                                        ; UI_UpdateGameplayHUD+202   p
                 moveq   #0,d1
-loc_1320E:                                              ; CODE XREF: Scroll_ShipScrollPattern+34   j
+UI_RenderPackedBCDDigits_NextByte:                      ; CODE XREF: UI_RenderPackedBCDDigits+34   j  ; was: loc_1320E
                 move.b  (a1),d0
                 lsr.b   #4,d0
                 andi.w  #$F,d0
-                bne.s   loc_13222
+                bne.s   UI_RenderPackedBCDDigits_WriteHighNibble
                 tst.w   d1
-                bne.s   loc_13222
+                bne.s   UI_RenderPackedBCDDigits_WriteHighNibble
                 move.w  #$C7BE,d0
-                bra.s   loc_13226
+                bra.s   UI_RenderPackedBCDDigits_ReadLowNibble
 ; ---------------------------------------------------------------------------
-loc_13222:                                              ; CODE XREF: Scroll_ShipScrollPattern+A   j
-                                        ; Scroll_ShipScrollPattern+E   j
+UI_RenderPackedBCDDigits_WriteHighNibble:               ; CODE XREF: UI_RenderPackedBCDDigits+A   j  ; was: loc_13222
+                                        ; UI_RenderPackedBCDDigits+E   j
                 addq.w  #1,d1
                 add.w   d5,d0
-loc_13226:                                              ; CODE XREF: Scroll_ShipScrollPattern+14   j
+UI_RenderPackedBCDDigits_ReadLowNibble:                 ; CODE XREF: UI_RenderPackedBCDDigits+14   j  ; was: loc_13226
                 move.w  d0,(a0)+
                 move.b  (a1)+,d0
                 andi.w  #$F,d0
-                bne.s   loc_1323A
+                bne.s   UI_RenderPackedBCDDigits_WriteLowNibble
                 tst.w   d1
-                bne.s   loc_1323A
+                bne.s   UI_RenderPackedBCDDigits_WriteLowNibble
                 move.w  #$C7BE,d0
-                bra.s   loc_1323E
+                bra.s   UI_RenderPackedBCDDigits_Advance
 ; ---------------------------------------------------------------------------
-loc_1323A:                                              ; CODE XREF: Scroll_ShipScrollPattern+22   j
-                                        ; Scroll_ShipScrollPattern+26   j
+UI_RenderPackedBCDDigits_WriteLowNibble:                ; CODE XREF: UI_RenderPackedBCDDigits+22   j  ; was: loc_1323A
+                                        ; UI_RenderPackedBCDDigits+26   j
                 addq.w  #1,d1
                 add.w   d5,d0
-loc_1323E:                                              ; CODE XREF: Scroll_ShipScrollPattern+2C   j
+UI_RenderPackedBCDDigits_Advance:                       ; CODE XREF: UI_RenderPackedBCDDigits+2C   j  ; was: loc_1323E
                 move.w  d0,(a0)+
-                dbf     d7,loc_1320E
+                dbf     d7,UI_RenderPackedBCDDigits_NextByte
                 rts
-; End of function Scroll_ShipScrollPattern
-; Renders ship health display with scroll pattern
-UI_RenderShipHealthDisplay:                             ; CODE XREF: UI_RenderHUDElement1+122   j  ; was: sub_13246
+; End of function UI_RenderPackedBCDDigits
+UI_RenderScoreDisplay:                                  ; CODE XREF: UI_UpdateGameplayHUD+122   j  ; was: sub_13246
                 movea.w #(byte_FF84B0-M68K_RAM),a0
                 move.w  #$C7F4,(a0)+
                 move.w  #$C7F5,(a0)+
@@ -405,9 +395,9 @@ UI_RenderShipHealthDisplay:                             ; CODE XREF: UI_RenderHU
                 move.w  #$C7B4,d5
                 movea.w #(ScoreValueBCD-M68K_RAM),a1
                 moveq   #3,d7
-                bsr.w   Scroll_ShipScrollPattern
+                bsr.w   UI_RenderPackedBCDDigits
                 move.w  #$C7D2,(a0)+
                 move.w  #$C7D3,(a0)+
-                bra.w   loc_12E16
-; End of function UI_RenderShipHealthDisplay
+                bra.w   UI_UpdateGameplayHUD_PadPrimaryStatusRow
+; End of function UI_RenderScoreDisplay
 ; Applies friction to velocity reducing speed

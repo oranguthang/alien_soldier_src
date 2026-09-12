@@ -115,11 +115,11 @@ Gfx_RunVBlankTransfers_CheckOptionalCommandBlock3:      ; CODE XREF: Gfx_RunVBla
                 move.w  (a3)+,(a0)
                 move.w  (a3)+,(a0)
 Gfx_RunVBlankTransfers_CheckConditionalCommandBlock:    ; CODE XREF: Gfx_RunVBlankTransfers+14C   j  ; was: loc_E6A
-                move.w  (word_FFA21E).w,d0
+                move.w  (WeaponIconTransferState).w,d0
                 beq.s   Gfx_RunVBlankTransfers_Finish
-                cmpi.w  #1,(word_FFA21E).w
+                cmpi.w  #1,(WeaponIconTransferState).w
                 bne.s   Gfx_RunVBlankTransfers_Finish
-                clr.w   (word_FFA21E).w
+                clr.w   (WeaponIconTransferState).w
                 movea.w #(byte_FF8478-M68K_RAM),a3
                 move.l  (a3)+,(a0)
                 move.l  (a3)+,(a0)

@@ -72,7 +72,7 @@ Sys_GameplayMainLoop_UpdateSecondaryEffects:            ; CODE XREF: Sys_Gamepla
                 jsr     (Palette_UpdateSecondaryEffect).l
                 bsr.w   Sys_UpdateObjectCount
                 jsr     (MessageSequence_Dispatch).l
-                jsr     (UI_RenderHUDElement1).l
+                jsr     (UI_UpdateGameplayHUD).l
                 bsr.w   Effect_ScreenShakeUpdate
                 tst.b   (FrameTimingDebugFlag).w
                 bpl.s   Sys_GameplayMainLoop_ProcessObjects
@@ -97,7 +97,7 @@ Sys_GameplayMainLoop_HandleTransition:                  ; CODE XREF: Sys_Gamepla
                 beq.s   Sys_GameplayMainLoop_UpdateFrameTiming
                 move.w  (word_FF8230).w,d0
                 beq.s   Sys_GameplayMainLoop_RequestExit
-                clr.w   (word_FFA21E).w
+                clr.w   (WeaponIconTransferState).w
                 cmpi.w  #1,d0
                 bne.s   Sys_GameplayMainLoop_SelectMode34
                 move.w  #$2C,(GameModeIndex).w          ; ','

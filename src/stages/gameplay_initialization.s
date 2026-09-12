@@ -117,7 +117,7 @@ UI_LoadStageGraphics:                                   ; CODE XREF: UI_Initiali
                 lea     (StageStartPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bsr.w   WeaponSetup_InitializeTextAndTiles
-                jsr     (Gfx_LoadPaletteData).l
+                jsr     (UI_QueueSelectedWeaponIconTransfer).l
                 move.b  #$8E,d0
                 jsr     (Sound_QueueBGMRequest).l
                 move.l  #$1400000,(dword_FF8130).w
@@ -185,7 +185,7 @@ WeaponSetup_InitializeForceTileLoop:                    ; CODE XREF: WeaponSetup
                 move.w  (a2,d7.w),d3
                 subq.w  #6,d3
                 move.w  d7,d0
-                jsr     (Sprite_SetupTileVDP).l
+                jsr     (UI_QueueWeaponIconTileTransfer).l
                 addq.w  #2,d7
                 cmpi.w  #$C,d7
                 bmi.s   WeaponSetup_InitializeForceTileLoop
@@ -219,7 +219,7 @@ Sys_UpdateGameplayLoop:                                 ; DATA XREF: Sys_Dispatc
                 jsr     (Sprite_InitializePriorityBuckets).l
                 jsr     (Sys_BeginVisibleObjectList).l
                 jsr     (UI_BuildHUDSpriteList).l
-                jsr     (UI_RenderHUDElement1).l
+                jsr     (UI_UpdateGameplayHUD).l
                 jsr     (Player_Update).l
                 jsr     (Weapon_UpdateStateAndSlotAnimations).l
                 jsr     (Sys_ProcessProjectiles).l

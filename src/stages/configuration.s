@@ -8,16 +8,16 @@ Sys_InitStageState:                                     ; CODE XREF: Stage_LoadB
                 cmpi.w  #$10,d0
                 bpl.s   Stage_UseDefaultWeaponState
                 asl.w   #1,d0
-                move.w  d0,(word_FFA21E).w
+                move.w  d0,(WeaponIconTransferState).w
                 bra.s   Stage_RunSelectedInitializerAndInitializePlayer
 ; ---------------------------------------------------------------------------
 Stage_UseDefaultWeaponState:                            ; CODE XREF: Sys_InitStageState+16   j  ; was: loc_12242
                                         ; Sys_InitStageState+1C   j
                 move.w  #2,(WeaponStateIndex).w
-                move.w  #4,(word_FFA21E).w
+                move.w  #4,(WeaponIconTransferState).w
 Stage_RunSelectedInitializerAndInitializePlayer:        ; CODE XREF: Sys_InitStageState+24   j  ; was: loc_1224E
                 bsr.s   Stage_DispatchInitializer
-                jsr     (Gfx_ProcessPaletteSlots).l
+                jsr     (UI_QueueAllWeaponIconTransfers).l
                 jmp     Player_InitializeStats
 ; End of function Sys_InitStageState
 ; Dispatches to stage-specific initialization routine
