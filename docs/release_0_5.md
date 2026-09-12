@@ -13,11 +13,11 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 - The ROM and all 579 extracted segments have pinned sizes, ranges, and hashes.
 - Vendored assembler/converter files and the emulator commit are pinned.
 - Ordinary cleanup preserves extracted private assets.
-- `src/main.s` is an address-ordered index over 363 modules with a checked
-  1,000-line ceiling; the current mean is 327.4 lines and no waiver is active.
+- `src/main.s` is an address-ordered index over 368 modules with a checked
+  1,000-line ceiling; the current mean is 322.8 lines and no waiver is active.
 - `config/rom_layout.json` is checked against listing addresses, landmarks,
   padding ranges, and the built image.
-- Naming/evidence rules, 13,443 provenance mappings, and the remaining 2,606
+- Naming/evidence rules, 14,031 provenance mappings, and the remaining 2,020
   address-derived definitions are policy checked.
 - Source/subsystem and RAM orientation maps exist without overstating the
   automatically generated semantic names.
@@ -39,9 +39,14 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 
 ## Reconstruction backlog after 0.5
 
-The contract does not require invented semantics. Most of the RAM inventory and
-2,606 address-derived definitions intentionally remain in the unknowns backlog.
-Promote or correct them only with recorded static/runtime evidence.
+The contract does not require invented semantics. The 2,020 address-derived
+definitions in the current backlog comprise 831 RAM equates, 1,146 preserved-
+data definitions, and 43 executable-source definitions. The exact-address
+audit registry contains 11,602 records. A further 2,729 provenance-mapped
+current names do not yet appear as dedicated current-name records; this is an
+upper-bound semantic review queue because aliases that share an address must
+be folded into one record. Promote or correct them only with recorded static
+or runtime evidence.
 The older source-mutating analysis workflows are also outside the release
 interface until made module-aware; see `docs/tooling_status.md`.
 
