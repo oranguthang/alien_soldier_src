@@ -4,31 +4,31 @@ Sys_InitStageState:                                     ; CODE XREF: Stage_LoadB
                 bsr.w   Sys_ClearRAMBuffer
                 clr.w   (word_FFFF3E).w
                 move.w  (WeaponStateIndex).w,d0
-                beq.s   loc_12242
+                beq.s   Stage_UseDefaultWeaponState
                 cmpi.w  #$10,d0
-                bpl.s   loc_12242
+                bpl.s   Stage_UseDefaultWeaponState
                 asl.w   #1,d0
                 move.w  d0,(word_FFA21E).w
-                bra.s   loc_1224E
+                bra.s   Stage_RunSelectedInitializerAndInitializePlayer
 ; ---------------------------------------------------------------------------
-loc_12242:                                              ; CODE XREF: Sys_InitStageState+16   j
+Stage_UseDefaultWeaponState:                            ; CODE XREF: Sys_InitStageState+16   j  ; was: loc_12242
                                         ; Sys_InitStageState+1C   j
                 move.w  #2,(WeaponStateIndex).w
                 move.w  #4,(word_FFA21E).w
-loc_1224E:                                              ; CODE XREF: Sys_InitStageState+24   j
+Stage_RunSelectedInitializerAndInitializePlayer:        ; CODE XREF: Sys_InitStageState+24   j  ; was: loc_1224E
                 bsr.s   Stage_DispatchInitializer
                 jsr     (Gfx_ProcessPaletteSlots).l
                 jmp     Player_InitializeStats
 ; End of function Sys_InitStageState
 ; Dispatches to stage-specific initialization routine
-Stage_DispatchInitializer:                              ; CODE XREF: Sys_InitStageState:loc_1224E   p  ; was: sub_1225C
+Stage_DispatchInitializer:                              ; CODE XREF: Sys_InitStageState:Stage_RunSelectedInitializerAndInitializePlayer   p  ; was: sub_1225C
                 move.w  (StageTableIndex).w,d0
-                movea.w off_1226C(pc,d0.w),a0
+                movea.w Stage_InitializerOffsets(pc,d0.w),a0
                 adda.l  #Sys_ClearRAMBuffer,a0
                 jmp     (a0)
 ; End of function Stage_DispatchInitializer
 ; ---------------------------------------------------------------------------
-off_1226C:      dc.w    Stage_InitStage1Data-Sys_ClearRAMBuffer
+Stage_InitializerOffsets:   dc.w    Stage_InitStage1Data-Sys_ClearRAMBuffer  ; was: off_1226C
                                         ; DATA XREF: Stage_DispatchInitializer+4   r
                 dc.w    Stage_InitStage2Data-Sys_ClearRAMBuffer
                 dc.w    Stage_LoadStage2ConfigAlt-Sys_ClearRAMBuffer
@@ -62,13 +62,13 @@ Sys_ClearRAMBuffer:                                     ; CODE XREF: Stage_Initi
                                         ; DATA XREF:
                 movea.w #(byte_FFA258-M68K_RAM),a0
                 moveq   #3,d7
-loc_122A6:                                              ; CODE XREF: Sys_ClearRAMBuffer+8   j
+Sys_ClearNextScratchWord:                               ; CODE XREF: Sys_ClearRAMBuffer+8   j  ; was: loc_122A6
                 clr.w   (a0)+
-                dbf     d7,loc_122A6
+                dbf     d7,Sys_ClearNextScratchWord
                 rts
 ; End of function Sys_ClearRAMBuffer
 ; Initializes stage 1 data structure and palette
-Stage_InitStage1Data:                                   ; DATA XREF: ROM:off_1226C   o  ; was: sub_122AE
+Stage_InitStage1Data:                                   ; DATA XREF: ROM:Stage_InitializerOffsets   o  ; was: sub_122AE
                 lea     Stage1ConfigRecord(pc),a0
                 nop
                 bra.w   Stage_ApplyConfigurationRecord
@@ -120,11 +120,11 @@ Stage_InitStage8Data:                                   ; DATA XREF: ROM:0001227
                 lea     (word_FF0C00).l,a2
                 moveq   #$C,d1
                 moveq   #$3F,d7                         ; '?'
-loc_1231C:                                              ; CODE XREF: Stage_InitStage8Data+2E   j
+Stage8_FillThreeWordRanges:                             ; CODE XREF: Stage_InitStage8Data+2E   j  ; was: loc_1231C
                 move.w  d1,(a0)+
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
-                dbf     d7,loc_1231C
+                dbf     d7,Stage8_FillThreeWordRanges
                 move.b  #$82,(byte_FF780C).l
                 rts
 ; End of function Stage_InitStage8Data
@@ -133,21 +133,21 @@ Stage_InitStage8Palettes:                               ; DATA XREF: ROM:0001227
                 lea     Stage8AlternatePaletteConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-loc_1233A:                                              ; CODE XREF: Stage_ApplyXiTigerConfiguration+A   j
+Stage_ClearPaletteHighBitsBeforeFourRangeFill:          ; CODE XREF: Stage_ApplyXiTigerConfiguration+A   j  ; was: loc_1233A
                 jsr     (Boss_FlyingNeoClearPaletteHighBits).l
-loc_12340:                                              ; CODE XREF: Stage_InitStage9Flies+86   j
+Stage_PrepareFourWordRangesWithD:                       ; CODE XREF: Stage_InitStage9Flies+86   j  ; was: loc_12340
                 lea     (word_FF0C80).l,a0
                 lea     (word_FF0D00).l,a1
                 lea     (word_FF0D80).l,a2
                 lea     (word_FF0E00).l,a3
                 moveq   #$D,d1
                 moveq   #$3F,d7                         ; '?'
-loc_1235C:                                              ; CODE XREF: Stage_InitStage8Palettes+34   j
+Stage_WriteDToFourWordRanges:                           ; CODE XREF: Stage_InitStage8Palettes+34   j  ; was: loc_1235C
                 move.w  d1,(a0)+
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
                 move.w  d1,(a3)+
-                dbf     d7,loc_1235C
+                dbf     d7,Stage_WriteDToFourWordRanges
                 move.b  #$82,(byte_FF780D).l
                 rts
 ; End of function Stage_InitStage8Palettes
@@ -181,9 +181,9 @@ Stage_LoadStage13Graphics:                              ; CODE XREF: Stage_Stage
                 lea     (dword_FF7800).l,a0
                 moveq   #0,d0
                 moveq   #$37,d7                         ; '7'
-loc_123A4:                                              ; CODE XREF: Stage_LoadStage13Graphics+C   j
+Stage13_ClearStateBufferLong:                           ; CODE XREF: Stage_LoadStage13Graphics+C   j  ; was: loc_123A4
                 move.l  d0,(a0)+
-                dbf     d7,loc_123A4
+                dbf     d7,Stage13_ClearStateBufferLong
                 rts
 ; End of function Stage_LoadStage13Graphics
 ; Loads alternate configuration for stage 13
@@ -220,12 +220,12 @@ Stage_InitStage17Boss:                                  ; DATA XREF: ROM:0001228
                 lea     (word_FF0D80).l,a3
                 move.w  #$2FF,d1
                 moveq   #$3F,d7                         ; '?'
-loc_1240C:                                              ; CODE XREF: Stage_InitStage17Boss+36   j
+Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_InitStage17Boss+36   j  ; was: loc_1240C
                 move.w  d1,(a0)+
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
                 move.w  d1,(a3)+
-                dbf     d7,loc_1240C
+                dbf     d7,Stage17_Write02FFToFourWordRanges
                 move.b  #$82,(byte_FF7AFF).l
                 move.b  #4,(VDPReg11Shadow+1).w
                 move.b  #3,(byte_FFA95B).w
@@ -238,24 +238,24 @@ loc_1240C:                                              ; CODE XREF: Stage_InitS
                 movea.w #(byte_FFEC12-M68K_RAM),a0
                 moveq   #$FFFFFFF0,d0
                 moveq   #$B,d7
-loc_12452:                                              ; CODE XREF: Stage_InitStage17Boss+78   j
+Stage17_WriteMinus16ToStridedEntityWords:               ; CODE XREF: Stage_InitStage17Boss+78   j  ; was: loc_12452
                 move.w  d0,(a0)
                 addq.w  #4,a0
-                dbf     d7,loc_12452
+                dbf     d7,Stage17_WriteMinus16ToStridedEntityWords
                 move.w  #$484,(Entity_ObjectPool).w
                 clr.w   (word_FFC624).w
-                lea     word_1249A(pc),a0
+                lea     Stage17IndexedTilemapRowData(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$81,d0
                 moveq   #3,d7
                 jsr     (VDPQueue_SetCommandHighWord).l
-                lea     stru_12488(pc),a0
+                lea     Stage17TileAssetCommands(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l
 ; End of function Stage_InitStage17Boss
 ; ---------------------------------------------------------------------------
-stru_12488:     dc.w    7                               ; field_0
+Stage17TileAssetCommands:   dc.w    7                   ; field_0  ; was: stru_12488
                                         ; DATA XREF: Stage_InitStage17Boss+9E   o
                 dc.l    tiles_1233B4                    ; field_2
                 dc.w    $6000                           ; field_6
@@ -263,7 +263,7 @@ stru_12488:     dc.w    7                               ; field_0
                 dc.l    byte_1A9AD8                     ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
-word_1249A:     dc.w    $4E00, $4000, $900, $292A, $2B2C, $2D2E, $2F30, $3132
+Stage17IndexedTilemapRowData:   dc.w    $4E00, $4000, $900, $292A, $2B2C, $2D2E, $2F30, $3132  ; was: word_1249A
                                         ; DATA XREF: Stage_InitStage17Boss+86   o
 
 ; Foreground graphics setup
@@ -271,7 +271,7 @@ Gfx_Stage18Foreground:                                  ; DATA XREF: ROM:0001228
                 lea     Stage18ForegroundConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-loc_124B4:                                              ; CODE XREF: Stage_LoadStage18ConfigAlt+10   j
+Stage18_InitializeTilemapIndices:                       ; CODE XREF: Stage_LoadStage18ConfigAlt+10   j  ; was: loc_124B4
                 movea.l #$FFFF2000,a0
                 move.w  #0,d0
                 move.w  #$150,d1
@@ -284,19 +284,19 @@ Stage_LoadStage18ConfigAlt:                             ; DATA XREF: ROM:0001229
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
                 jsr     (locret_E4FA).l
-                bra.s   loc_124B4
+                bra.s   Stage18_InitializeTilemapIndices
 ; End of function Stage_LoadStage18ConfigAlt
 ; Loads first configuration for stage 20
 Stage_LoadStage20Config1:
                 lea     Stage20FirstConfigRecord(pc),a0  ; was: sub_124DE
                 nop
-                bra.s   loc_124EC
+                bra.s   Stage20_ApplyConfigurationAndFillWordRanges
 ; End of function Stage_LoadStage20Config1
 ; Loads second configuration for stage 20
 Stage_LoadStage20Config2:
                 lea     Stage20SecondConfigRecord(pc),a0  ; was: sub_124E6
                 nop
-loc_124EC:                                              ; CODE XREF: Stage_LoadStage20Config1+6   j
+Stage20_ApplyConfigurationAndFillWordRanges:            ; CODE XREF: Stage_LoadStage20Config1+6   j  ; was: loc_124EC
                                         ; Stage_LoadStage20Config3+6   j
                 bsr.w   Stage_ApplyConfigurationRecord
                 lea     (word_FF0D00).l,a0
@@ -305,12 +305,12 @@ loc_124EC:                                              ; CODE XREF: Stage_LoadS
                 lea     (word_FF0E80).l,a3
                 move.w  #$300,d1
                 moveq   #$3F,d7                         ; '?'
-loc_1250E:                                              ; CODE XREF: Stage_LoadStage20Config2+30   j
+Stage20_Write0300ToFourWordRanges:                      ; CODE XREF: Stage_LoadStage20Config2+30   j  ; was: loc_1250E
                 move.w  d1,(a0)+
                 move.w  d1,(a1)+
                 move.w  d1,(a2)+
                 move.w  d1,(a3)+
-                dbf     d7,loc_1250E
+                dbf     d7,Stage20_Write0300ToFourWordRanges
                 move.b  #$82,(byte_FF7B00).l
                 rts
 ; End of function Stage_LoadStage20Config2
@@ -318,13 +318,13 @@ loc_1250E:                                              ; CODE XREF: Stage_LoadS
 Stage_LoadStage20Config3:
                 lea     Stage20ThirdConfigRecord(pc),a0  ; was: sub_12524
                 nop
-                bra.w   loc_124EC
+                bra.w   Stage20_ApplyConfigurationAndFillWordRanges
 ; End of function Stage_LoadStage20Config3
 ; Loads fourth configuration for stage 20
 Stage_LoadStage20Config4:
                 lea     Stage20FourthConfigRecord(pc),a0  ; was: sub_1252E
                 nop
-                bra.w   loc_124EC
+                bra.w   Stage20_ApplyConfigurationAndFillWordRanges
 ; End of function Stage_LoadStage20Config4
 ; Initializes stage 25 tilemap and camera
 Stage_InitStage25Tilemap:                               ; DATA XREF: ROM:00012292   o  ; was: sub_12538

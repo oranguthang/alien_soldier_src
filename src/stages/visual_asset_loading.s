@@ -446,7 +446,7 @@ Stage_ApplyXiTigerConfiguration:                        ; DATA XREF: Stage_Dispa
                 lea     XiTigerStageConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-                bra.w   loc_1233A
+                bra.w   Stage_ClearPaletteHighBitsBeforeFourRangeFill
 ; End of function Stage_ApplyXiTigerConfiguration
 ; ---------------------------------------------------------------------------
 XiTigerStageConfigRecord:   dc.w    $76                 ; word_FFA950  ; was: stru_121FE

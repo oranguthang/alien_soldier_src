@@ -4438,3 +4438,17 @@ records. Four control-flow, offset-table, and record labels gain provenance,
 raising the totals to 13,500 mappings and 10,596 audit records. The enforced
 live address-derived ceiling falls from 2,553 to 2,549, leaving
 `visual_asset_loading.s` with zero live address-derived definitions.
+
+The first `configuration.s` pass replaces all 16 remaining raw IDA labels in
+the module with names tied directly to control flow and observed writes. The
+stage initializer dispatch table, weapon-state convergence, scratch clearing,
+four repeated range-fill paths, the Stage 13 buffer clear, Stage 17 asset and
+tilemap data, and the shared Stage 18/20 setup blocks now have exact-address
+static audit records. Potentially generated semantic names such as the
+alternate Stage 2 configurations remain deliberately outside this package
+until their dispatch slots and referenced records are cross-checked together.
+
+Sixteen control-flow and data labels gain provenance, raising the totals to
+13,516 mappings and 10,612 audit records. The enforced live address-derived
+ceiling falls from 2,549 to 2,533, leaving `configuration.s` with zero live
+address-derived definitions.

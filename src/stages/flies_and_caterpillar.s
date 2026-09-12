@@ -23,7 +23,7 @@ Stage_InitStage9Flies:                                  ; DATA XREF: ROM:0000C8A
                 clr.w   (RasterEffectInitState).w
                 move.w  #8,(word_FF8090).w
                 clr.b   (byte_FF780C).l
-                jmp     loc_12340
+                jmp     Stage_PrepareFourWordRangesWithD
 ; End of function Stage_InitStage9Flies
 ; Checks transition condition to next stage segment
 Stage_FliesCheckTransition:                             ; DATA XREF: ROM:0000C8AE   o  ; was: sub_D140
