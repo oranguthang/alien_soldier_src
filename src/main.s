@@ -371,7 +371,7 @@
                 include "src/data/stage2_phase1_assets.s"
                 include "src/data/epsilon_1_mapping_data.s"
                 include "src/data/ship_sequence_sprite_mappings.s"
-                include "src/data/stage18_assets.s"
+                include "src/data/stage18_and_stage19_assets.s"
                 include "src/data/stage2_phase2_assets.s"
                 include "src/data/shared_stage18_and_stage20_mapping_data.s"
                 include "src/data/stage20_assets.s"

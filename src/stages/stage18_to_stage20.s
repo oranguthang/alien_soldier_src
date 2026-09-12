@@ -66,16 +66,16 @@ Stage19_UpdateInitialScrollAndLoadTiles:                ; DATA XREF: ROM:0000E44
 ; ---------------------------------------------------------------------------
 Stage19_InitialTileAssetLoadList:   dc.w    7           ; field_0  ; was: stru_E594
                                         ; DATA XREF: Stage19_UpdateInitialScrollAndLoadTiles+18   o
-                dc.l    tiles_1AF666                    ; field_2
+                dc.l    Stage19InitialTileArt0000       ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B0BE8                     ; field_2
+                dc.l    Stage19InitialMappingData6000   ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B0C64                     ; field_2
+                dc.l    Stage19InitialMappingData4020   ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B10CC                     ; field_2
+                dc.l    Stage19InitialMappingData7800   ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    $FFFF
 

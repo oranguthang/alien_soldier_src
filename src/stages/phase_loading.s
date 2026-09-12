@@ -79,34 +79,34 @@ Stage_LoadStage18Assets:                                ; DATA XREF: ROM:0001175
 ; ---------------------------------------------------------------------------
 Stage18AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_11B06
                                         ; DATA XREF: Stage_LoadStage18Assets+6   o
-                dc.l    tiles_1A9CC4                    ; field_2
+                dc.l    Stage18TileArt0000              ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1ACB68                    ; field_2
+                dc.l    Stage18TileArt2A00              ; field_2
                 dc.w    $2A00                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1ABB28                     ; field_2
+                dc.l    Stage18MappingData6000          ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1ABC72                     ; field_2
+                dc.l    Stage18MappingData6400          ; field_2
                 dc.w    $6400                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1ABCFC                     ; field_2
+                dc.l    Stage18MappingData4020          ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1AF030                     ; field_2
+                dc.l    Stage18MappingData6800          ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1AF09C                     ; field_2
+                dc.l    Stage18MappingData2020          ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedStage18AndStage20MappingData7000  ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B109C                     ; field_2
+                dc.l    Stage18MappingData7800          ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1B0F08                    ; field_2
+                dc.l    Stage18TileArt8E00              ; field_2
                 dc.w    $8E00                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    SharedSceneAndStageTileArt9000  ; field_2

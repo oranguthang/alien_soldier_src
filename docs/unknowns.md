@@ -5671,3 +5671,21 @@ and the semantic review upper bound rises from 3,161 to 3,162 solely because
 that reviewed alias does not need a duplicate address record. The enforced
 address-derived ceiling falls from 870 to 853; the remaining backlog comprises
 831 RAM equates and 22 preserved-data labels.
+
+The Stage 18/19 asset pass removes the final twenty-two address-derived
+definitions from preserved ROM data. `Stage18AssetLoadList` proves nine Stage
+18 sources and their destinations; `Stage19_InitialTileAssetLoadList` proves
+four Stage 19 sources. `Stage18_MovingPlatform` directly assigns the remaining
+two-piece sprite mapping. Because the two stage groups are physically
+interleaved, the corrected `data/stage18_and_stage19_assets.s` keeps the
+contiguous 54-line bank together instead of manufacturing misleading module
+boundaries.
+
+Fourteen unique source addresses receive exact static audit records. Eight
+binary-backed exclusive-end aliases retain provenance and fold into following
+payload boundaries. Provenance rises from 15,198 to 15,220 mappings, the audit
+registry from 12,336 to 12,350, and the semantic review upper bound rises from
+3,162 to 3,170 solely because those eight reviewed aliases do not need
+duplicate address records. The enforced address-derived ceiling falls from
+853 to 831. Every remaining address-derived definition is now a RAM equate;
+none remain in executable or preserved ROM source.
