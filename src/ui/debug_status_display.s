@@ -45,14 +45,14 @@ DebugMenu_UpdateAndDispatch:                            ; CODE XREF: Debug_Handl
                 bsr.w   UI_AppendHUDSpriteList
                 move.b  (word_FFF708).w,d0
                 andi.b  #$4F,d0                         ; 'O'
-                cmp.b   (byte_FF866A).w,d0
+                cmp.b   (DebugMenuPreviousInput).w,d0
                 beq.s   DebugMenu_UpdateInputRepeatTimer
-                move.b  d0,(byte_FF866A).w
-                move.w  #$C,(word_FF866C).w
+                move.b  d0,(DebugMenuPreviousInput).w
+                move.w  #$C,(DebugMenuRepeatTimer).w
 DebugMenu_UpdateInputRepeatTimer:                       ; was: loc_1350A
-                subq.w  #1,(word_FF866C).w
+                subq.w  #1,(DebugMenuRepeatTimer).w
                 bpl.s   DebugMenu_DispatchState
-                clr.w   (word_FF866C).w
+                clr.w   (DebugMenuRepeatTimer).w
 DebugMenu_DispatchState:                                ; was: loc_13514
                 move.w  (word_FF8226).w,d0
                 movea.w DebugMenuStateOffsets(pc,d0.w),a0
@@ -67,17 +67,17 @@ DebugMenuStateOffsets:  dc.w    DebugMenu_Return-DebugMenu_Initialize  ; was: of
 DebugMenu_Initialize:                                   ; was: sub_1352A
                 tst.w   (word_FFF720).w
                 bmi.s   DebugMenu_Return
-                clr.w   (word_FF8660).w
-                clr.w   (word_FF8664).w
-                clr.w   (word_FF8666).w
-                clr.w   (word_FF8668).w
-                move.w  #4,(word_FF8662).w
+                clr.w   (DebugMenuPageOffset).w
+                clr.w   (DebugPaletteEntryOffset).w
+                clr.w   (DebugColorEditActive).w
+                clr.w   (DebugColorChannelOffset).w
+                move.w  #4,(DebugPaletteLineOffset).w
                 move.w  (word_FFA216).w,d0
                 asr.w   #4,d0
-                move.b  d0,(byte_FF866B).w
+                move.b  d0,(DebugHealthSelection).w
                 tst.w   (word_FF822A).w
                 beq.s   DebugMenu_Activate
-                move.b  #$FF,(byte_FF866B).w
+                move.b  #$FF,(DebugHealthSelection).w
 DebugMenu_Activate:                                     ; was: loc_1355C
                 addq.w  #2,(word_FF8226).w
                 movea.l #DebugMenuInitialAssetLoadList,a0
@@ -103,7 +103,7 @@ DebugMenu_UpdateActive:                                 ; was: sub_1358A
                 tst.b   (byte_FFF705).w
                 bmi.s   DebugMenu_UpdateActivePage
                 clr.w   (word_FF8226).w
-                move.b  (byte_FF866B).w,d0
+                move.b  (DebugHealthSelection).w,d0
                 cmpi.b  #$FF,d0
                 bne.s   DebugMenu_ApplySelectedPlayerHealth
                 move.w  #$400,(word_FFA218).w
@@ -122,27 +122,27 @@ DebugMenu_ReloadActiveAssetsAndWeaponIcons:             ; was: loc_135B6
 DebugMenu_UpdateActivePage:                             ; was: loc_135C6
                 btst    #6,(word_FFF708).w
                 beq.s   DebugMenu_RenderSelectedPageHalf
-                addq.w  #2,(word_FF8660).w
-                cmpi.w  #$A,(word_FF8660).w
+                addq.w  #2,(DebugMenuPageOffset).w
+                cmpi.w  #$A,(DebugMenuPageOffset).w
                 bmi.s   DebugMenu_RenderSelectedPageHalf
-                clr.w   (word_FF8660).w
+                clr.w   (DebugMenuPageOffset).w
 DebugMenu_RenderSelectedPageHalf:                       ; was: loc_135DE
                 btst    #0,(VBlankFrameCounter+1).w
                 bne.s   DebugMenu_RenderSecondaryPage
                 bsr.w   DebugMenu_CopyPrimaryTilemap
-                bsr.w   UI_DispatchStatusUpdate
-                bsr.w   UI_RenderStageNumber
-                bsr.w   UI_LoadWeaponTiles
-                bsr.w   UI_RenderColorCursor
+                bsr.w   DebugMenu_DispatchSelectedPageAction
+                bsr.w   DebugMenu_RenderHealthSelection
+                bsr.w   DebugMenu_CopySelectedPalettePreviewTiles
+                bsr.w   DebugMenu_RenderColorChannelCursor
                 bra.w   DebugMenu_QueuePrimaryTilemapTransfer
 ; ---------------------------------------------------------------------------
 DebugMenu_RenderSecondaryPage:                          ; was: loc_135FE
                 bsr.w   DebugMenu_CopySecondaryTilemap
-                bsr.w   UI_DispatchStatusUpdate
-                bsr.w   UI_RenderWeaponType
-                bsr.w   UI_RenderMenuSelection1
-                bsr.w   UI_DecodeColorValue
-                bsr.w   UI_RenderWeaponNumber
+                bsr.w   DebugMenu_DispatchSelectedPageAction
+                bsr.w   DebugMenu_RenderPaletteLineNumber
+                bsr.w   DebugMenu_RenderPaletteEntryCursor
+                bsr.w   DebugMenu_RenderSelectedColorValue
+                bsr.w   DebugMenu_RenderSoundRequestNumber
                 bra.w   DebugMenu_QueueSecondaryTilemapTransfer
 ; End of function DebugMenu_UpdateActive
 DebugMenu_CopyPrimaryTilemap:                           ; was: sub_1361A

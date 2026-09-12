@@ -1,223 +1,208 @@
-UI_DispatchStatusUpdate:                                ; CODE XREF: DebugMenu_UpdateActive+60   p  ; was: sub_1372A
+DebugMenu_DispatchSelectedPageAction:                   ; CODE XREF: DebugMenu_UpdateActive+60   p  ; was: sub_1372A
                                         ; DebugMenu_UpdateActive+78   p
                 bsr.w   UI_QueuePendingWeaponStateIconTransfer
-                move.w  (word_FF8660).w,d0
-                movea.w off_1373E(pc,d0.w),a0
-                adda.l  #UI_MenuSelectStage,a0
+                move.w  (DebugMenuPageOffset).w,d0
+                movea.w DebugMenuPageHandlerOffsets(pc,d0.w),a0
+                adda.l  #DebugMenu_UpdateHealthSelection,a0
                 jmp     (a0)
-; End of function UI_DispatchStatusUpdate
+; End of function DebugMenu_DispatchSelectedPageAction
 ; ---------------------------------------------------------------------------
-off_1373E:      dc.w    UI_MenuSelectStage-UI_MenuSelectStage
-                                        ; DATA XREF: UI_DispatchStatusUpdate+8   r
-                dc.w    UI_MenuSelectWeapon-UI_MenuSelectStage
-                dc.w    UI_MenuResetOption-UI_MenuSelectStage
-                dc.w    UI_MenuNavigateVertical-UI_MenuSelectStage
-                dc.w    UI_MenuColorPicker-UI_MenuSelectStage
+DebugMenuPageHandlerOffsets:    dc.w    DebugMenu_UpdateHealthSelection-DebugMenu_UpdateHealthSelection  ; was: off_1373E
+                dc.w    DebugMenu_UpdateSoundRequestSelection-DebugMenu_UpdateHealthSelection
+                dc.w    DebugMenu_UpdateBossHealthClear-DebugMenu_UpdateHealthSelection
+                dc.w    DebugMenu_UpdatePaletteLineSelection-DebugMenu_UpdateHealthSelection
+                dc.w    DebugMenu_UpdatePaletteColorSelection-DebugMenu_UpdateHealthSelection
 
-; Handles stage selection menu navigation
-UI_MenuSelectStage:                                     ; DATA XREF: UI_DispatchStatusUpdate+C   o  ; was: sub_13748
-                                        ; ROM:off_1373E   o
-                clr.w   (word_FF8666).w
+DebugMenu_UpdateHealthSelection:                        ; was: sub_13748
+                clr.w   (DebugColorEditActive).w
                 btst    #3,(VBlankFrameCounter+1).w
-                bne.s   loc_1375A
+                bne.s   DebugMenu_UpdateHealthSelection_ReadInput
                 move.w  #$C7E5,(word_FF8512).w
-loc_1375A:                                              ; CODE XREF: UI_MenuSelectStage+A   j
-                move.b  (byte_FF866B).w,d0
+DebugMenu_UpdateHealthSelection_ReadInput:              ; was: loc_1375A
+                move.b  (DebugHealthSelection).w,d0
                 moveq   #1,d1
                 movea.w #(word_FFF706-M68K_RAM),a0
-                tst.w   (word_FF866C).w
-                beq.s   loc_1376E
+                tst.w   (DebugMenuRepeatTimer).w
+                beq.s   DebugMenu_UpdateHealthSelection_CheckDecrease
                 movea.w #(word_FFF708-M68K_RAM),a0
-loc_1376E:                                              ; CODE XREF: UI_MenuSelectStage+20   j
+DebugMenu_UpdateHealthSelection_CheckDecrease:          ; was: loc_1376E
                 btst    #2,(a0)
-                beq.s   loc_1378C
+                beq.s   DebugMenu_UpdateHealthSelection_CheckIncrease
                 cmpi.b  #0,d0
-                beq.s   loc_13786
+                beq.s   DebugMenu_UpdateHealthSelection_WrapBelowZero
                 cmpi.b  #$FF,d0
-                beq.s   loc_137AC
+                beq.s   DebugMenu_UpdateHealthSelection_Commit
                 sub.w   d2,d2
                 sbcd    d1,d0
-                bra.s   loc_137AC
+                bra.s   DebugMenu_UpdateHealthSelection_Commit
 ; ---------------------------------------------------------------------------
-loc_13786:                                              ; CODE XREF: UI_MenuSelectStage+30   j
+DebugMenu_UpdateHealthSelection_WrapBelowZero:          ; was: loc_13786
                 move.b  #$FF,d0
-                bra.s   loc_137AC
+                bra.s   DebugMenu_UpdateHealthSelection_Commit
 ; ---------------------------------------------------------------------------
-loc_1378C:                                              ; CODE XREF: UI_MenuSelectStage+2A   j
+DebugMenu_UpdateHealthSelection_CheckIncrease:          ; was: loc_1378C
                 btst    #3,(a0)
-                beq.s   loc_137AC
+                beq.s   DebugMenu_UpdateHealthSelection_Commit
                 cmpi.b  #$FF,d0
-                bne.s   loc_1379C
+                bne.s   DebugMenu_UpdateHealthSelection_IncrementBCD
                 moveq   #0,d0
-                bra.s   loc_137AC
+                bra.s   DebugMenu_UpdateHealthSelection_Commit
 ; ---------------------------------------------------------------------------
-loc_1379C:                                              ; CODE XREF: UI_MenuSelectStage+4E   j
+DebugMenu_UpdateHealthSelection_IncrementBCD:           ; was: loc_1379C
                 sub.w   d2,d2
                 abcd    d1,d0
                 move.w  #$400,d1
                 asr.w   #4,d1
                 cmp.b   d1,d0
-                bmi.s   loc_137AC
+                bmi.s   DebugMenu_UpdateHealthSelection_Commit
                 move.b  d1,d0
-loc_137AC:                                              ; CODE XREF: UI_MenuSelectStage+36   j
-                                        ; UI_MenuSelectStage+3C   j
+DebugMenu_UpdateHealthSelection_Commit:                 ; was: loc_137AC
                 clr.w   (word_FF822A).w
-                move.b  d0,(byte_FF866B).w
+                move.b  d0,(DebugHealthSelection).w
                 cmpi.b  #$FF,d0
-                bne.s   locret_137BE
+                bne.s   DebugMenu_UpdateHealthSelection_Return
                 addq.w  #2,(word_FF822A).w
-locret_137BE:                                           ; CODE XREF: UI_MenuSelectStage+70   j
+DebugMenu_UpdateHealthSelection_Return:                 ; was: locret_137BE
                 rts
-; End of function UI_MenuSelectStage
-; Handles weapon selection menu navigation
-UI_MenuSelectWeapon:                                    ; DATA XREF: ROM:00013740   o  ; was: sub_137C0
+; End of function DebugMenu_UpdateHealthSelection
+DebugMenu_UpdateSoundRequestSelection:                  ; was: sub_137C0
                 btst    #3,(VBlankFrameCounter+1).w
-                bne.s   loc_137CE
+                bne.s   DebugMenu_UpdateSoundRequestSelection_ReadInput
                 move.w  #$C7E5,(word_FF8572).w
-loc_137CE:                                              ; CODE XREF: UI_MenuSelectWeapon+6   j
+DebugMenu_UpdateSoundRequestSelection_ReadInput:        ; was: loc_137CE
                 move.b  (word_FF8228).w,d0
                 movea.w #(word_FFF706-M68K_RAM),a0
-                tst.w   (word_FF866C).w
-                beq.s   loc_137E0
+                tst.w   (DebugMenuRepeatTimer).w
+                beq.s   DebugMenu_UpdateSoundRequestSelection_CheckDecrease
                 movea.w #(word_FFF708-M68K_RAM),a0
-loc_137E0:                                              ; CODE XREF: UI_MenuSelectWeapon+1A   j
+DebugMenu_UpdateSoundRequestSelection_CheckDecrease:    ; was: loc_137E0
                 btst    #2,(a0)
-                beq.s   loc_137EE
+                beq.s   DebugMenu_UpdateSoundRequestSelection_CheckIncrease
                 subq.b  #1,d0
                 move.b  d0,(word_FF8228).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_137EE:                                              ; CODE XREF: UI_MenuSelectWeapon+24   j
+DebugMenu_UpdateSoundRequestSelection_CheckIncrease:    ; was: loc_137EE
                 btst    #3,(a0)
-                beq.s   locret_137FA
+                beq.s   DebugMenu_UpdateSoundRequestSelection_Return
                 addq.w  #1,d0
                 move.b  d0,(word_FF8228).w
-locret_137FA:                                           ; CODE XREF: UI_MenuSelectWeapon+32   j
+DebugMenu_UpdateSoundRequestSelection_Return:           ; was: locret_137FA
                 rts
-; End of function UI_MenuSelectWeapon
-; Handles B button press to reset option
-UI_MenuResetOption:                                     ; DATA XREF: ROM:00013742   o  ; was: sub_137FC
+; End of function DebugMenu_UpdateSoundRequestSelection
+DebugMenu_UpdateBossHealthClear:                        ; was: sub_137FC
                 btst    #4,(word_FFF708).w
-                beq.s   loc_13808
+                beq.s   DebugMenu_UpdateBossHealthClear_UpdateCursor
                 clr.w   (word_FF8200).w
-loc_13808:                                              ; CODE XREF: UI_MenuResetOption+6   j
+DebugMenu_UpdateBossHealthClear_UpdateCursor:           ; was: loc_13808
                 btst    #3,(VBlankFrameCounter+1).w
-                bne.s   locret_13816
+                bne.s   DebugMenu_UpdateBossHealthClear_Return
                 move.w  #$C7E5,(word_FF8522).w
-locret_13816:                                           ; CODE XREF: UI_MenuResetOption+12   j
+DebugMenu_UpdateBossHealthClear_Return:                 ; was: locret_13816
                 rts
-; End of function UI_MenuResetOption
-; Handles up/down menu navigation
-UI_MenuNavigateVertical:                                ; DATA XREF: ROM:00013744   o  ; was: sub_13818
+; End of function DebugMenu_UpdateBossHealthClear
+DebugMenu_UpdatePaletteLineSelection:                   ; was: sub_13818
                 btst    #3,(VBlankFrameCounter+1).w
-                bne.s   loc_13826
+                bne.s   DebugMenu_UpdatePaletteLineSelection_ReadInput
                 move.w  #$C7E5,(word_FF8582).w
-loc_13826:                                              ; CODE XREF: UI_MenuNavigateVertical+6   j
+DebugMenu_UpdatePaletteLineSelection_ReadInput:         ; was: loc_13826
                 move.b  (word_FFF708).w,d0
                 andi.b  #$C,d0
-                beq.s   locret_1383A
-                addq.w  #2,(word_FF8662).w
-                andi.w  #6,(word_FF8662).w
-locret_1383A:                                           ; CODE XREF: UI_MenuNavigateVertical+16   j
+                beq.s   DebugMenu_UpdatePaletteLineSelection_Return
+                addq.w  #2,(DebugPaletteLineOffset).w
+                andi.w  #6,(DebugPaletteLineOffset).w
+DebugMenu_UpdatePaletteLineSelection_Return:            ; was: locret_1383A
                 rts
-; End of function UI_MenuNavigateVertical
-; Handles RGB color picker navigation
-UI_MenuColorPicker:                                     ; DATA XREF: ROM:00013746   o  ; was: sub_1383C
+; End of function DebugMenu_UpdatePaletteLineSelection
+DebugMenu_UpdatePaletteColorSelection:                  ; was: sub_1383C
                 btst    #3,(VBlankFrameCounter+1).w
-                bne.s   loc_13858
-                tst.w   (word_FF8666).w
-                beq.s   loc_13852
+                bne.s   DebugMenu_UpdatePaletteColorSelection_SelectMode
+                tst.w   (DebugColorEditActive).w
+                beq.s   DebugMenu_UpdatePaletteColorSelection_DrawEntryCursor
                 move.w  #$C7E5,(word_FF8554).w
-                bra.s   loc_13858
+                bra.s   DebugMenu_UpdatePaletteColorSelection_SelectMode
 ; ---------------------------------------------------------------------------
-loc_13852:                                              ; CODE XREF: UI_MenuColorPicker+C   j
+DebugMenu_UpdatePaletteColorSelection_DrawEntryCursor:  ; was: loc_13852
                 move.w  #$C7E5,(word_FF8532).w
-loc_13858:                                              ; CODE XREF: UI_MenuColorPicker+6   j
-                                        ; UI_MenuColorPicker+14   j
-                tst.w   (word_FF8666).w
-                beq.w   loc_138A2
-                bsr.w   UI_UpdateColorValue
+DebugMenu_UpdatePaletteColorSelection_SelectMode:       ; was: loc_13858
+                tst.w   (DebugColorEditActive).w
+                beq.w   DebugMenu_UpdatePaletteColorSelection_SelectEntry
+                bsr.w   DebugMenu_UpdateSelectedPaletteColor
                 btst    #4,(word_FFF708).w
-                beq.s   loc_13872
-                clr.w   (word_FF8666).w
+                beq.s   DebugMenu_UpdatePaletteColorSelection_CheckPreviousChannel
+                clr.w   (DebugColorEditActive).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_13872:                                              ; CODE XREF: UI_MenuColorPicker+2E   j
+DebugMenu_UpdatePaletteColorSelection_CheckPreviousChannel:  ; was: loc_13872
                 btst    #2,(word_FFF708).w
-                beq.s   loc_13888
-                subq.w  #2,(word_FF8668).w
-                bpl.s   locret_138A0
-                move.w  #4,(word_FF8668).w
+                beq.s   DebugMenu_UpdatePaletteColorSelection_CheckNextChannel
+                subq.w  #2,(DebugColorChannelOffset).w
+                bpl.s   DebugMenu_UpdatePaletteColorSelection_Return
+                move.w  #4,(DebugColorChannelOffset).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_13888:                                              ; CODE XREF: UI_MenuColorPicker+3C   j
+DebugMenu_UpdatePaletteColorSelection_CheckNextChannel:  ; was: loc_13888
                 btst    #3,(word_FFF708).w
-                beq.s   locret_138A0
-                addq.w  #2,(word_FF8668).w
-                cmpi.w  #6,(word_FF8668).w
-                bmi.s   locret_138A0
-                clr.w   (word_FF8668).w
-locret_138A0:                                           ; CODE XREF: UI_MenuColorPicker+42   j
-                                        ; UI_MenuColorPicker+52   j
+                beq.s   DebugMenu_UpdatePaletteColorSelection_Return
+                addq.w  #2,(DebugColorChannelOffset).w
+                cmpi.w  #6,(DebugColorChannelOffset).w
+                bmi.s   DebugMenu_UpdatePaletteColorSelection_Return
+                clr.w   (DebugColorChannelOffset).w
+DebugMenu_UpdatePaletteColorSelection_Return:           ; was: locret_138A0
                 rts
 ; ---------------------------------------------------------------------------
-loc_138A2:                                              ; CODE XREF: UI_MenuColorPicker+20   j
+DebugMenu_UpdatePaletteColorSelection_SelectEntry:      ; was: loc_138A2
                 btst    #4,(word_FFF708).w
-                beq.s   loc_138B4
-                addq.w  #1,(word_FF8666).w
-                clr.w   (word_FF8668).w
+                beq.s   DebugMenu_UpdatePaletteColorSelection_CheckPreviousEntry
+                addq.w  #1,(DebugColorEditActive).w
+                clr.w   (DebugColorChannelOffset).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_138B4:                                              ; CODE XREF: UI_MenuColorPicker+6C   j
+DebugMenu_UpdatePaletteColorSelection_CheckPreviousEntry:  ; was: loc_138B4
                 btst    #2,(word_FFF708).w
-                beq.s   loc_138C2
-                subq.w  #2,(word_FF8664).w
-                bra.s   loc_138CE
+                beq.s   DebugMenu_UpdatePaletteColorSelection_CheckNextEntry
+                subq.w  #2,(DebugPaletteEntryOffset).w
+                bra.s   DebugMenu_UpdatePaletteColorSelection_WrapEntry
 ; ---------------------------------------------------------------------------
-loc_138C2:                                              ; CODE XREF: UI_MenuColorPicker+7E   j
+DebugMenu_UpdatePaletteColorSelection_CheckNextEntry:   ; was: loc_138C2
                 btst    #3,(word_FFF708).w
-                beq.s   loc_138CE
-                addq.w  #2,(word_FF8664).w
-loc_138CE:                                              ; CODE XREF: UI_MenuColorPicker+84   j
-                                        ; UI_MenuColorPicker+8C   j
-                andi.w  #$1E,(word_FF8664).w
+                beq.s   DebugMenu_UpdatePaletteColorSelection_WrapEntry
+                addq.w  #2,(DebugPaletteEntryOffset).w
+DebugMenu_UpdatePaletteColorSelection_WrapEntry:        ; was: loc_138CE
+                andi.w  #$1E,(DebugPaletteEntryOffset).w
                 rts
-; End of function UI_MenuColorPicker
-; Renders menu selection cursor
-UI_RenderMenuSelection1:                                ; CODE XREF: DebugMenu_UpdateActive+80   p  ; was: sub_138D6
+; End of function DebugMenu_UpdatePaletteColorSelection
+DebugMenu_RenderPaletteEntryCursor:                     ; CODE XREF: DebugMenu_UpdateActive+80   p  ; was: sub_138D6
                 btst    #2,(VBlankFrameCounter+1).w
-                bne.s   locret_138EC
-                move.w  (word_FF8664).w,d0
+                bne.s   DebugMenu_RenderPaletteEntryCursor_Return
+                move.w  (DebugPaletteEntryOffset).w,d0
                 addi.w  #-$7A6C,d0
                 movea.w d0,a0
                 move.w  #$D7E4,(a0)
-locret_138EC:                                           ; CODE XREF: UI_RenderMenuSelection1+6   j
+DebugMenu_RenderPaletteEntryCursor_Return:              ; was: locret_138EC
                 rts
-; End of function UI_RenderMenuSelection1
-; Renders color picker cursor
-UI_RenderColorCursor:                                   ; CODE XREF: DebugMenu_UpdateActive+6C   p  ; was: sub_138EE
-                tst.w   (word_FF8666).w
-                beq.s   locret_1390A
+; End of function DebugMenu_RenderPaletteEntryCursor
+DebugMenu_RenderColorChannelCursor:                     ; CODE XREF: DebugMenu_UpdateActive+6C   p  ; was: sub_138EE
+                tst.w   (DebugColorEditActive).w
+                beq.s   DebugMenu_RenderColorChannelCursor_Return
                 btst    #2,(VBlankFrameCounter+1).w
-                bne.s   locret_1390A
-                move.w  (word_FF8668).w,d0
+                bne.s   DebugMenu_RenderColorChannelCursor_Return
+                move.w  (DebugColorChannelOffset).w,d0
                 addi.w  #-$7AAA,d0
                 movea.w d0,a0
                 move.w  #$C7E4,(a0)
-locret_1390A:                                           ; CODE XREF: UI_RenderColorCursor+4   j
-                                        ; UI_RenderColorCursor+C   j
+DebugMenu_RenderColorChannelCursor_Return:              ; was: locret_1390A
                 rts
-; End of function UI_RenderColorCursor
-; Converts stage number to tilemap digits
-UI_RenderStageNumber:                                   ; CODE XREF: DebugMenu_UpdateActive+64   p  ; was: sub_1390C
-                move.b  (byte_FF866B).w,d0
+; End of function DebugMenu_RenderColorChannelCursor
+DebugMenu_RenderHealthSelection:                        ; CODE XREF: DebugMenu_UpdateActive+64   p  ; was: sub_1390C
+                move.b  (DebugHealthSelection).w,d0
                 cmpi.b  #$FF,d0
-                bne.s   loc_13924
+                bne.s   DebugMenu_RenderHealthSelectionDigits
                 move.w  #$C7E2,(word_FF851E).w
                 move.w  #$C7DE,(word_FF8520).w
                 rts
 ; ---------------------------------------------------------------------------
-loc_13924:                                              ; CODE XREF: UI_RenderStageNumber+8   j
+DebugMenu_RenderHealthSelectionDigits:                  ; was: loc_13924
                 move.b  d0,d1
                 andi.w  #$F,d0
                 addi.w  #-$383C,d0
@@ -227,9 +212,8 @@ loc_13924:                                              ; CODE XREF: UI_RenderSt
                 addi.w  #-$383C,d1
                 move.w  d1,(word_FF851E).w
                 rts
-; End of function UI_RenderStageNumber
-; Converts weapon number to tilemap digits
-UI_RenderWeaponNumber:                                  ; CODE XREF: DebugMenu_UpdateActive+88   p  ; was: sub_13942
+; End of function DebugMenu_RenderHealthSelection
+DebugMenu_RenderSoundRequestNumber:                     ; CODE XREF: DebugMenu_UpdateActive+88   p  ; was: sub_13942
                 move.b  (word_FF8228).w,d0
                 move.b  d0,d1
                 andi.w  #$F,d0
@@ -240,32 +224,29 @@ UI_RenderWeaponNumber:                                  ; CODE XREF: DebugMenu_U
                 addi.w  #-$383C,d1
                 move.w  d1,(word_FF857E).w
                 rts
-; End of function UI_RenderWeaponNumber
-; Loads weapon icon tiles
-UI_LoadWeaponTiles:                                     ; CODE XREF: DebugMenu_UpdateActive+68   p  ; was: sub_13964
+; End of function DebugMenu_RenderSoundRequestNumber
+DebugMenu_CopySelectedPalettePreviewTiles:              ; CODE XREF: DebugMenu_UpdateActive+68   p  ; was: sub_13964
                 moveq   #0,d0
-                move.w  (word_FF8662).w,d0
+                move.w  (DebugPaletteLineOffset).w,d0
                 asl.w   #4,d0
-                addi.l  #word_13992,d0
+                addi.l  #DebugMenuPalettePreviewTiles,d0
                 movea.l d0,a0
                 movea.w #(byte_FF8534-M68K_RAM),a1
                 moveq   #$F,d7
-loc_1397A:                                              ; CODE XREF: UI_LoadWeaponTiles+18   j
+DebugMenu_CopySelectedPalettePreviewTiles_NextWord:     ; was: loc_1397A
                 move.w  (a0)+,(a1)+
-                dbf     d7,loc_1397A
+                dbf     d7,DebugMenu_CopySelectedPalettePreviewTiles_NextWord
                 rts
-; End of function UI_LoadWeaponTiles
-; Renders weapon type number as digit
-UI_RenderWeaponType:                                    ; CODE XREF: DebugMenu_UpdateActive+7C   p  ; was: sub_13982
-                move.w  (word_FF8662).w,d0
+; End of function DebugMenu_CopySelectedPalettePreviewTiles
+DebugMenu_RenderPaletteLineNumber:                      ; CODE XREF: DebugMenu_UpdateActive+7C   p  ; was: sub_13982
+                move.w  (DebugPaletteLineOffset).w,d0
                 asr.w   #1,d0
                 addi.w  #-$383C,d0
                 move.w  d0,(word_FF858A).w
                 rts
-; End of function UI_RenderWeaponType
+; End of function DebugMenu_RenderPaletteLineNumber
 ; ---------------------------------------------------------------------------
-word_13992:     dc.w    $87B4, $87B5, $87B6, $87B7, $87B8, $87B9, $87BA, $87BB
-                                        ; DATA XREF: UI_LoadWeaponTiles+8   o
+DebugMenuPalettePreviewTiles:   dc.w    $87B4, $87B5, $87B6, $87B7, $87B8, $87B9, $87BA, $87BB  ; was: word_13992
                 dc.w    $87BC, $87BD, $87BE, $87BF, $87C0, $87C1, $87C2, $87C3
                 dc.w    $A7B4, $A7B5, $A7B6, $A7B7, $A7B8, $A7B9, $A7BA, $A7BB
                 dc.w    $A7BC, $A7BD, $A7BE, $A7BF, $A7C0, $A7C1, $A7C2, $A7C3
@@ -274,11 +255,10 @@ word_13992:     dc.w    $87B4, $87B5, $87B6, $87B7, $87B8, $87B9, $87BA, $87BB
                 dc.w    $E7B4, $E7B5, $E7B6, $E7B7, $E7B8, $E7B9, $E7BA, $E7BB
                 dc.w    $E7BC, $E7BD, $E7BE, $E7BF, $E7C0, $E7C1, $E7C2, $E7C3
 
-; Decodes and displays RGB color value
-UI_DecodeColorValue:                                    ; CODE XREF: DebugMenu_UpdateActive+84   p  ; was: sub_13A12
-                move.w  (word_FF8662).w,d0
+DebugMenu_RenderSelectedColorValue:                     ; CODE XREF: DebugMenu_UpdateActive+84   p  ; was: sub_13A12
+                move.w  (DebugPaletteLineOffset).w,d0
                 asl.w   #4,d0
-                add.w   (word_FF8664).w,d0
+                add.w   (DebugPaletteEntryOffset).w,d0
                 addi.w  #-$1C80,d0
                 movea.w d0,a0
                 move.w  (a0),d0
@@ -296,71 +276,66 @@ UI_DecodeColorValue:                                    ; CODE XREF: DebugMenu_U
                 addi.w  #-$383C,d2
                 move.w  d2,(word_FF85BA).w
                 rts
-; End of function UI_DecodeColorValue
-; Updates RGB color value from input
-UI_UpdateColorValue:                                    ; CODE XREF: UI_MenuColorPicker+24   p  ; was: sub_13A52
-                move.w  (word_FF8662).w,d0
+; End of function DebugMenu_RenderSelectedColorValue
+DebugMenu_UpdateSelectedPaletteColor:                   ; CODE XREF: DebugMenu_UpdatePaletteColorSelection+24   p  ; was: sub_13A52
+                move.w  (DebugPaletteLineOffset).w,d0
                 asl.w   #4,d0
-                add.w   (word_FF8664).w,d0
+                add.w   (DebugPaletteEntryOffset).w,d0
                 addi.w  #-$1C80,d0
                 movea.w d0,a0
                 move.b  (word_FFF708).w,d1
                 move.w  (a0),d0
                 move.w  d0,d2
-                move.w  (word_FF8668).w,d3
-                beq.s   loc_13AB6
+                move.w  (DebugColorChannelOffset).w,d3
+                beq.s   DebugMenu_UpdateSelectedPaletteColor_UpdateRed
                 cmpi.w  #2,d3
-                beq.s   loc_13A96
+                beq.s   DebugMenu_UpdateSelectedPaletteColor_UpdateGreen
                 andi.w  #$EE0,d0
                 btst    #0,d1
-                beq.s   loc_13A86
+                beq.s   DebugMenu_UpdateSelectedPaletteColor_CheckIncreaseBlue
                 subi.w  #2,d2
-                bra.s   loc_13A90
+                bra.s   DebugMenu_UpdateSelectedPaletteColor_MaskBlue
 ; ---------------------------------------------------------------------------
-loc_13A86:                                              ; CODE XREF: UI_UpdateColorValue+2C   j
+DebugMenu_UpdateSelectedPaletteColor_CheckIncreaseBlue:  ; was: loc_13A86
                 btst    #1,d1
-                beq.s   loc_13A90
+                beq.s   DebugMenu_UpdateSelectedPaletteColor_MaskBlue
                 addi.w  #2,d2
-loc_13A90:                                              ; CODE XREF: UI_UpdateColorValue+32   j
-                                        ; UI_UpdateColorValue+38   j
+DebugMenu_UpdateSelectedPaletteColor_MaskBlue:          ; was: loc_13A90
                 andi.w  #$E,d2
-                bra.s   loc_13AD4
+                bra.s   DebugMenu_UpdateSelectedPaletteColor_Store
 ; ---------------------------------------------------------------------------
-loc_13A96:                                              ; CODE XREF: UI_UpdateColorValue+22   j
+DebugMenu_UpdateSelectedPaletteColor_UpdateGreen:       ; was: loc_13A96
                 andi.w  #$E0E,d0
                 btst    #0,d1
-                beq.s   loc_13AA6
+                beq.s   DebugMenu_UpdateSelectedPaletteColor_CheckIncreaseGreen
                 subi.w  #$20,d2                         ; ' '
-                bra.s   loc_13AB0
+                bra.s   DebugMenu_UpdateSelectedPaletteColor_MaskGreen
 ; ---------------------------------------------------------------------------
-loc_13AA6:                                              ; CODE XREF: UI_UpdateColorValue+4C   j
+DebugMenu_UpdateSelectedPaletteColor_CheckIncreaseGreen:  ; was: loc_13AA6
                 btst    #1,d1
-                beq.s   loc_13AB0
+                beq.s   DebugMenu_UpdateSelectedPaletteColor_MaskGreen
                 addi.w  #$20,d2                         ; ' '
-loc_13AB0:                                              ; CODE XREF: UI_UpdateColorValue+52   j
-                                        ; UI_UpdateColorValue+58   j
+DebugMenu_UpdateSelectedPaletteColor_MaskGreen:         ; was: loc_13AB0
                 andi.w  #$E0,d2
-                bra.s   loc_13AD4
+                bra.s   DebugMenu_UpdateSelectedPaletteColor_Store
 ; ---------------------------------------------------------------------------
-loc_13AB6:                                              ; CODE XREF: UI_UpdateColorValue+1C   j
+DebugMenu_UpdateSelectedPaletteColor_UpdateRed:         ; was: loc_13AB6
                 andi.w  #$EE,d0
                 btst    #0,d1
-                beq.s   loc_13AC6
+                beq.s   DebugMenu_UpdateSelectedPaletteColor_CheckIncreaseRed
                 subi.w  #$200,d2
-                bra.s   loc_13AD0
+                bra.s   DebugMenu_UpdateSelectedPaletteColor_MaskRed
 ; ---------------------------------------------------------------------------
-loc_13AC6:                                              ; CODE XREF: UI_UpdateColorValue+6C   j
+DebugMenu_UpdateSelectedPaletteColor_CheckIncreaseRed:  ; was: loc_13AC6
                 btst    #1,d1
-                beq.s   loc_13AD0
+                beq.s   DebugMenu_UpdateSelectedPaletteColor_MaskRed
                 addi.w  #$200,d2
-loc_13AD0:                                              ; CODE XREF: UI_UpdateColorValue+72   j
-                                        ; UI_UpdateColorValue+78   j
+DebugMenu_UpdateSelectedPaletteColor_MaskRed:           ; was: loc_13AD0
                 andi.w  #$E00,d2
-loc_13AD4:                                              ; CODE XREF: UI_UpdateColorValue+42   j
-                                        ; UI_UpdateColorValue+62   j
+DebugMenu_UpdateSelectedPaletteColor_Store:             ; was: loc_13AD4
                 add.w   d2,d0
                 move.w  d0,-$80(a0)
                 move.w  d0,(a0)
                 rts
-; End of function UI_UpdateColorValue
+; End of function DebugMenu_UpdateSelectedPaletteColor
 ; Updates all boss collision detection systems including terrain and projectiles

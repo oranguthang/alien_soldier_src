@@ -4547,3 +4547,19 @@ provenance-preserving names. Provenance rises from 13,588 to 13,610 mappings,
 the name-audit registry from 10,754 to 10,788, and the enforced live
 address-derived ceiling falls from 2,461 to 2,439. Both new modules contain no
 live address-derived definitions.
+
+The dormant debug-menu control pass completes the adjacent developer interface
+through `0x013AD9`. Data flow disproves the remaining generated stage and weapon
+claims: the first page edits packed-BCD player health, the second edits the byte
+submitted to `Sound_QueueRequest`, the third clears shared boss health, and the
+last two select and edit a Mega Drive palette line. The color editor addresses
+`PaletteShadowBuffer` and mirrors each changed RGB word into the active palette
+buffer; the former weapon-tile table is its four-line palette preview.
+
+All 39 raw ROM labels in `ui/debug_menu.s` and the eight private RAM fields at
+`$FF8660-$FF866C` now have behavior-based, provenance-preserving names. Fourteen
+pre-existing semantic names are corrected in the same exact-address audit.
+Provenance rises from 13,610 to 13,657 mappings, the name-audit registry from
+10,788 to 10,849, and the enforced live address-derived ceiling falls from
+2,439 to 2,392. The 341-line module has no live address-derived definitions and
+remains within the project size target.

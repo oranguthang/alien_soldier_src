@@ -300,14 +300,14 @@ word_FF8644             equ     $FFFF8644
 word_FF8646             equ     $FFFF8646
 word_FF8648             equ     $FFFF8648
 word_FF8652             equ     $FFFF8652
-word_FF8660             equ     $FFFF8660
-word_FF8662             equ     $FFFF8662
-word_FF8664             equ     $FFFF8664
-word_FF8666             equ     $FFFF8666
-word_FF8668             equ     $FFFF8668
-byte_FF866A             equ     $FFFF866A
-byte_FF866B             equ     $FFFF866B
-word_FF866C             equ     $FFFF866C
+DebugMenuPageOffset     equ     $FFFF8660               ; was: word_FF8660
+DebugPaletteLineOffset  equ     $FFFF8662               ; was: word_FF8662
+DebugPaletteEntryOffset equ     $FFFF8664               ; was: word_FF8664
+DebugColorEditActive    equ     $FFFF8666               ; was: word_FF8666
+DebugColorChannelOffset equ     $FFFF8668               ; was: word_FF8668
+DebugMenuPreviousInput  equ     $FFFF866A               ; was: byte_FF866A
+DebugHealthSelection    equ     $FFFF866B               ; was: byte_FF866B
+DebugMenuRepeatTimer    equ     $FFFF866C               ; was: word_FF866C
 byte_FF8780             equ     $FFFF8780
 byte_FF8800             equ     $FFFF8800
 dword_FF8A00            equ     $FFFF8A00
