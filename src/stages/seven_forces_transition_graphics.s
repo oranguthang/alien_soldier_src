@@ -423,15 +423,15 @@ Gfx_ArtemisUpdateBackground:                            ; CODE XREF: Stage_Seven
 Gfx_ArtemisBackgroundUpdateReturn:                      ; CODE XREF: Gfx_ArtemisUpdateBackground+6   j  ; was: locret_EF4A
                 rts
 ; End of function Gfx_ArtemisUpdateBackground
-; Loads the compressed Artemis tile stream
-Gfx_LoadArtemisCompressedTiles:                         ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+20   p  ; was: sub_EF4C
-                lea     Gfx_ArtemisCompressedTileStream(pc),a0
+; Queues the Artemis indexed tilemap rows
+Gfx_QueueArtemisIndexedRows:                            ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+20   p  ; was: sub_EF4C
+                lea     Gfx_ArtemisIndexedRowTransferDescriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
-; End of function Gfx_LoadArtemisCompressedTiles
+; End of function Gfx_QueueArtemisIndexedRows
 ; ---------------------------------------------------------------------------
-Gfx_ArtemisCompressedTileStream:    dc.w    $6C00, $4000, $F00, $494A, $494A, $494A, $494A, $494A, $494A, $494A, $494A  ; was: word_EF58
-                                        ; DATA XREF: Gfx_LoadArtemisCompressedTiles   o
+Gfx_ArtemisIndexedRowTransferDescriptor:    dc.w    $6C00, $4000, $F00, $494A, $494A, $494A, $494A, $494A, $494A, $494A, $494A  ; was: word_EF58
+                                        ; DATA XREF: Gfx_QueueArtemisIndexedRows   o
 
 ; Checks whether the Seven Forces background render completed
 Gfx_CheckSevenForcesBackgroundRender:

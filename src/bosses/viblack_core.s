@@ -129,7 +129,7 @@ Boss_ViblackIntroSetup:                                 ; DATA XREF: ROM:000439D
                 move.w  #$2000,d0
                 moveq   #$49,d7                         ; 'I'
                 jsr     (Gfx_AdjustTileIndexRows).l
-                lea     Boss_ViblackCompressedTileLoadCommand(pc),a0
+                lea     Boss_ViblackIndexedRowTransferDescriptor(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedRows).l
                 bra.w   Boss_ViblackBuildScrollProfile
@@ -137,7 +137,7 @@ Boss_ViblackIntroSetup:                                 ; DATA XREF: ROM:000439D
 ; ---------------------------------------------------------------------------
 Boss_ViblackTileLoadCommand:    dc.w    $4000, $8E8F, $9091, $9293, $9899, $9A9B, $9C9D, $A2FF  ; was: word_43AE0
                                         ; DATA XREF: Boss_ViblackInit+B2   o
-Boss_ViblackCompressedTileLoadCommand:  dc.w    $6000, $4000, $901, $8E8F, $9091, $9293, $9899, $9A9B, 0, 0, $9C9D, 0, 0  ; was: word_43AF0
+Boss_ViblackIndexedRowTransferDescriptor:   dc.w    $6000, $4000, $901, $8E8F, $9091, $9293, $9899, $9A9B, 0, 0, $9C9D, 0, 0  ; was: word_43AF0
                                         ; DATA XREF: Boss_ViblackInit+D4   o
 Boss_ViblackPaletteCycleEntries:    dc.w    $D, $E302, $E304, $E306, $E30C, $E30A, $E30C, $E30E, $E310, $E312, $E314, $E316, $E318, $E31A, $E31E  ; was: word_43B0A
                                         ; DATA XREF: Boss_ViblackMain+C   o

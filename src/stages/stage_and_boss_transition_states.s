@@ -525,7 +525,7 @@ Gfx_LoadWolfGaropaTransitionTiles:                      ; CODE XREF: StageTransi
                 lea     Gfx_WolfGaropaTransitionTileDmaDescriptor(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedColumns).l
-                lea     Gfx_WolfGaropaTransitionCompressedTileCommands(pc),a0
+                lea     Gfx_WolfGaropaTransitionIndexedRowDescriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
 ; End of function Gfx_LoadWolfGaropaTransitionTiles
@@ -533,7 +533,7 @@ Gfx_LoadWolfGaropaTransitionTiles:                      ; CODE XREF: StageTransi
 Gfx_WolfGaropaTransitionTileDmaDescriptor:  dc.b    $44, $58, $40, 0, 1, 3, $1F  ; was: byte_F76A
                                         ; DATA XREF: Gfx_LoadWolfGaropaTransitionTiles   o
                 dc.b    $1E, $21, $20, $23, $22, $25, $24
-Gfx_WolfGaropaTransitionCompressedTileCommands: dc.b    $4C, $50, $40, 0, 4, 1, $26, $27  ; was: byte_F778
+Gfx_WolfGaropaTransitionIndexedRowDescriptor:   dc.b    $4C, $50, $40, 0, 4, 1, $26, $27  ; was: byte_F778
                                         ; DATA XREF: Gfx_LoadWolfGaropaTransitionTiles+C   o
                 dc.b    $26, $27, $26, $28, $29, $28, $29, $28
 

@@ -292,7 +292,7 @@ Tilemap_IndexedRowsReturn:                              ; CODE XREF: Tilemap_Que
 ; End of function Tilemap_QueueIndexedRows
 ; Rewrites the high VDP command word in consecutive queued transfers
 VDPQueue_SetCommandHighWord:                            ; CODE XREF: Stage_InitStage17Boss+98   p  ; was: sub_11046
-                                        ; Boss_ZLeoLoadInitialTilesAndPatterns+12   j
+                                        ; Boss_ZLeoLoadInitialTilesAndSetCommand81+12   j
                 movea.w (VDPCommandQueueHead).w,a0
 VDPQueue_SetCommandHighWordLoop:                        ; CODE XREF: VDPQueue_SetCommandHighWord+C   j  ; was: loc_1104A
                 move.w  d0,$E(a0)

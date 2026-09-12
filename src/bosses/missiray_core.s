@@ -87,10 +87,10 @@ Boss_MissirayDispatchState:                             ; CODE XREF: Boss_Missir
 ; End of function Boss_MissirayMain
 ; ---------------------------------------------------------------------------
 Boss_MissirayStateTable:    dc.w    Boss_MissirayInitialize-*  ; DATA XREF: Boss_MissirayMain+FA   o  ; was: off_538BA
-                dc.w    Boss_MissirayWaitForTransferAndLoadCompressedSet00-*
-                dc.w    Boss_MissirayWaitForTransferAndLoadCompressedSet03-*
+                dc.w    Boss_MissirayWaitForTransferAndQueueIndexedRowSet00-*
+                dc.w    Boss_MissirayWaitForTransferAndQueueIndexedRowSet03-*
                 dc.w    Boss_MissirayWaitForTransferAndLoadTileSet03-*
-                dc.w    Boss_MissirayRaiseAndLoadCompressedTileSet06-*
+                dc.w    Boss_MissirayRaiseAndQueueIndexedRowSet06-*
                 dc.w    Boss_MissirayFinishRiseAndInitializeCounters-*
                 dc.w    Boss_MissirayActivateLinkedSegments-*
                 dc.w    Boss_MissirayWaitForSegmentsReady-*
@@ -215,88 +215,88 @@ Boss_MissirayLoadTileTransferSet02:                     ; CODE XREF: Boss_Missir
 Boss_MissirayTileTransferSet02Descriptor:   dc.w    $6020, $2000, $102, 0, 0, 0  ; was: word_53A76
                                         ; DATA XREF: Boss_MissirayLoadTileTransferSet02   o
 
-; Waits for the previous transfer, then loads compressed tile set 00
-Boss_MissirayWaitForTransferAndLoadCompressedSet00:     ; DATA XREF: ROM:000538BC   o  ; was: sub_53A82
+; Waits for the previous transfer, then queues indexed-row set 00
+Boss_MissirayWaitForTransferAndQueueIndexedRowSet00:    ; DATA XREF: ROM:000538BC   o  ; was: sub_53A82
                 tst.b   (word_FFF720).w
-                bmi.s   Boss_MissirayWaitForCompressedSet00Return
+                bmi.s   Boss_MissirayIndexedRowSet00WaitReturn
                 addq.w  #2,4(a5)
-                bsr.s   Boss_MissirayLoadCompressedTileSet00
-Boss_MissirayWaitForCompressedSet00Return:              ; CODE XREF: Boss_MissirayWaitForTransferAndLoadCompressedSet00+4   j  ; was: locret_53A8E
+                bsr.s   Boss_MissirayQueueIndexedRowSet00
+Boss_MissirayIndexedRowSet00WaitReturn:                 ; CODE XREF: Boss_MissirayWaitForTransferAndQueueIndexedRowSet00+4   j  ; was: locret_53A8E
                 rts
-; End of function Boss_MissirayWaitForTransferAndLoadCompressedSet00
-; Starts compressed tile transfer set 00
-Boss_MissirayLoadCompressedTileSet00:                   ; CODE XREF: Boss_MissirayWaitForTransferAndLoadCompressedSet00+A   p  ; was: sub_53A90
-                                        ; Boss_MissirayWaitThenLoadPrimaryCompressedSet+E   j
-                lea     Boss_MissirayCompressedTileSet00Descriptor(pc),a0
+; End of function Boss_MissirayWaitForTransferAndQueueIndexedRowSet00
+; Queues indexed-row transfer set 00
+Boss_MissirayQueueIndexedRowSet00:                      ; CODE XREF: Boss_MissirayWaitForTransferAndQueueIndexedRowSet00+A   p  ; was: sub_53A90
+                                        ; Boss_MissirayWaitThenQueuePrimaryIndexedRowSet+E   j
+                lea     Boss_MissirayIndexedRowSet00Descriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
-; End of function Boss_MissirayLoadCompressedTileSet00
+; End of function Boss_MissirayQueueIndexedRowSet00
 ; ---------------------------------------------------------------------------
-Boss_MissirayCompressedTileSet00Descriptor: dc.w    $6200, $2000, $301, $6060, $6060, $6464, $6464  ; was: word_53A9C
-                                        ; DATA XREF: Boss_MissirayLoadCompressedTileSet00   o
+Boss_MissirayIndexedRowSet00Descriptor: dc.w    $6200, $2000, $301, $6060, $6060, $6464, $6464  ; was: word_53A9C
+                                        ; DATA XREF: Boss_MissirayQueueIndexedRowSet00   o
 
-; Starts compressed tile transfer set 01
-Boss_MissirayLoadCompressedTileSet01:                   ; CODE XREF: Boss_MissirayWaitThenLoadAlternateCompressedSet+E   j  ; was: sub_53AAA
-                lea     Boss_MissirayCompressedTileSet01Descriptor(pc),a0
+; Queues indexed-row transfer set 01
+Boss_MissirayQueueIndexedRowSet01:                      ; CODE XREF: Boss_MissirayWaitThenQueueAlternateIndexedRowSet+E   j  ; was: sub_53AAA
+                lea     Boss_MissirayIndexedRowSet01Descriptor(pc),a0
                 nop
-; End of function Boss_MissirayLoadCompressedTileSet01
-; Shared fall-through tail for compressed tile set 01
-Boss_MissirayJumpToCompressedTileLoader:
+; End of function Boss_MissirayQueueIndexedRowSet01
+; Shared fall-through tail for indexed-row set 01
+Boss_MissirayJumpToIndexedRowQueue:
                 jmp     Tilemap_QueueIndexedRows        ; was: sub_53AB0
-; End of function Boss_MissirayJumpToCompressedTileLoader
+; End of function Boss_MissirayJumpToIndexedRowQueue
 ; ---------------------------------------------------------------------------
-Boss_MissirayCompressedTileSet01Descriptor: dc.w    $6200, $2000, $301, $6868, $6868, $6C6C, $6C6C  ; was: word_53AB6
-                                        ; DATA XREF: Boss_MissirayLoadCompressedTileSet01   o
+Boss_MissirayIndexedRowSet01Descriptor: dc.w    $6200, $2000, $301, $6868, $6868, $6C6C, $6C6C  ; was: word_53AB6
+                                        ; DATA XREF: Boss_MissirayQueueIndexedRowSet01   o
 
-; Starts compressed tile transfer set 02
-Boss_MissirayLoadCompressedTileSet02:                   ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet01+A   p  ; was: sub_53AC4
-                lea     Boss_MissirayCompressedTileSet02Descriptor(pc),a0
+; Queues indexed-row transfer set 02
+Boss_MissirayQueueIndexedRowSet02:                      ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet01+A   p  ; was: sub_53AC4
+                lea     Boss_MissirayIndexedRowSet02Descriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
-; End of function Boss_MissirayLoadCompressedTileSet02
+; End of function Boss_MissirayQueueIndexedRowSet02
 ; ---------------------------------------------------------------------------
-Boss_MissirayCompressedTileSet02Descriptor: dc.w    $6200, $2000, $301, 0, 0, 0, 0  ; was: word_53AD0
-                                        ; DATA XREF: Boss_MissirayLoadCompressedTileSet02   o
+Boss_MissirayIndexedRowSet02Descriptor: dc.w    $6200, $2000, $301, 0, 0, 0, 0  ; was: word_53AD0
+                                        ; DATA XREF: Boss_MissirayQueueIndexedRowSet02   o
 
-; Waits for the previous transfer, then loads compressed tile set 03
-Boss_MissirayWaitForTransferAndLoadCompressedSet03:     ; DATA XREF: ROM:000538BE   o  ; was: sub_53ADE
+; Waits for the previous transfer, then queues indexed-row set 03
+Boss_MissirayWaitForTransferAndQueueIndexedRowSet03:    ; DATA XREF: ROM:000538BE   o  ; was: sub_53ADE
                 tst.b   (word_FFF720).w
-                bmi.s   Boss_MissirayWaitForCompressedSet03Return
+                bmi.s   Boss_MissirayIndexedRowSet03WaitReturn
                 addq.w  #2,4(a5)
-                bsr.s   Boss_MissirayLoadCompressedTileSet03
-Boss_MissirayWaitForCompressedSet03Return:              ; CODE XREF: Boss_MissirayWaitForTransferAndLoadCompressedSet03+4   j  ; was: locret_53AEA
+                bsr.s   Boss_MissirayQueueIndexedRowSet03
+Boss_MissirayIndexedRowSet03WaitReturn:                 ; CODE XREF: Boss_MissirayWaitForTransferAndQueueIndexedRowSet03+4   j  ; was: locret_53AEA
                 rts
-; End of function Boss_MissirayWaitForTransferAndLoadCompressedSet03
-; Starts compressed tile transfer set 03
-Boss_MissirayLoadCompressedTileSet03:                   ; CODE XREF: Boss_MissirayWaitForTransferAndLoadCompressedSet03+A   p  ; was: sub_53AEC
-                                        ; Boss_MissirayWaitThenLoadPrimaryFinalSet+E   p
-                lea     Boss_MissirayCompressedTileSet03Descriptor(pc),a0
+; End of function Boss_MissirayWaitForTransferAndQueueIndexedRowSet03
+; Queues indexed-row transfer set 03
+Boss_MissirayQueueIndexedRowSet03:                      ; CODE XREF: Boss_MissirayWaitForTransferAndQueueIndexedRowSet03+A   p  ; was: sub_53AEC
+                                        ; Boss_MissirayWaitThenQueuePrimaryFinalIndexedRowSet+E   p
+                lea     Boss_MissirayIndexedRowSet03Descriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
-; End of function Boss_MissirayLoadCompressedTileSet03
+; End of function Boss_MissirayQueueIndexedRowSet03
 ; ---------------------------------------------------------------------------
-Boss_MissirayCompressedTileSet03Descriptor: dc.w    $6230, $2000, $301, $6363, $6363, $6767, $6767  ; was: word_53AF8
-                                        ; DATA XREF: Boss_MissirayLoadCompressedTileSet03   o
+Boss_MissirayIndexedRowSet03Descriptor: dc.w    $6230, $2000, $301, $6363, $6363, $6767, $6767  ; was: word_53AF8
+                                        ; DATA XREF: Boss_MissirayQueueIndexedRowSet03   o
 
-; Starts compressed tile transfer set 04
-Boss_MissirayLoadCompressedTileSet04:                   ; CODE XREF: Boss_MissirayWaitThenLoadAlternateFinalSet+E   p  ; was: sub_53B06
-                lea     Boss_MissirayCompressedTileSet04Descriptor(pc),a0
+; Queues indexed-row transfer set 04
+Boss_MissirayQueueIndexedRowSet04:                      ; CODE XREF: Boss_MissirayWaitThenQueueAlternateFinalIndexedRowSet+E   p  ; was: sub_53B06
+                lea     Boss_MissirayIndexedRowSet04Descriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
-; End of function Boss_MissirayLoadCompressedTileSet04
+; End of function Boss_MissirayQueueIndexedRowSet04
 ; ---------------------------------------------------------------------------
-Boss_MissirayCompressedTileSet04Descriptor: dc.w    $6230, $2000, $301, $6B6B, $6B6B, $6F6F, $6F6F  ; was: word_53B12
-                                        ; DATA XREF: Boss_MissirayLoadCompressedTileSet04   o
+Boss_MissirayIndexedRowSet04Descriptor: dc.w    $6230, $2000, $301, $6B6B, $6B6B, $6F6F, $6F6F  ; was: word_53B12
+                                        ; DATA XREF: Boss_MissirayQueueIndexedRowSet04   o
 
-; Starts compressed tile transfer set 05
-Boss_MissirayLoadCompressedTileSet05:                   ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet02+A   p  ; was: sub_53B20
-                lea     Boss_MissirayCompressedTileSet05Descriptor(pc),a0
+; Queues indexed-row transfer set 05
+Boss_MissirayQueueIndexedRowSet05:                      ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet02+A   p  ; was: sub_53B20
+                lea     Boss_MissirayIndexedRowSet05Descriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
-; End of function Boss_MissirayLoadCompressedTileSet05
+; End of function Boss_MissirayQueueIndexedRowSet05
 ; ---------------------------------------------------------------------------
-Boss_MissirayCompressedTileSet05Descriptor: dc.w    $6230, $2000, $301, 0, 0, 0, 0  ; was: word_53B2C
-                                        ; DATA XREF: Boss_MissirayLoadCompressedTileSet05   o
+Boss_MissirayIndexedRowSet05Descriptor: dc.w    $6230, $2000, $301, 0, 0, 0, 0  ; was: word_53B2C
+                                        ; DATA XREF: Boss_MissirayQueueIndexedRowSet05   o
 
 ; Waits for the previous transfer, then loads direct tile set 03
 Boss_MissirayWaitForTransferAndLoadTileSet03:           ; DATA XREF: ROM:000538C0   o  ; was: sub_53B3A
@@ -313,23 +313,23 @@ Boss_MissirayTileTransferSet03Descriptor:   dc.w    $6020, $2000, $101, $6162, $
 Boss_MissirayWaitForTileSet03Return:                    ; CODE XREF: Boss_MissirayWaitForTransferAndLoadTileSet03+4   j  ; was: locret_53B5A
                 rts
 ; End of function Boss_MissirayWaitForTransferAndLoadTileSet03
-; Raises the boss and loads compressed tile set 06 at the first Y threshold
-Boss_MissirayRaiseAndLoadCompressedTileSet06:           ; DATA XREF: ROM:000538C2   o  ; was: sub_53B5C
+; Raises the boss and queues indexed-row set 06 at the first Y threshold
+Boss_MissirayRaiseAndQueueIndexedRowSet06:              ; DATA XREF: ROM:000538C2   o  ; was: sub_53B5C
                 subq.w  #1,$14(a5)
                 move.w  $14(a5),$4E(a5)
                 cmpi.w  #$178,$14(a5)
-                bgt.s   Boss_MissirayRaiseAndLoadCompressedSet06Return
+                bgt.s   Boss_MissirayRaiseAndQueueIndexedRowSet06Return
                 addq.w  #2,4(a5)
-                lea     Boss_MissirayCompressedTileSet06Descriptor(pc),a0
+                lea     Boss_MissirayIndexedRowSet06Descriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
 ; ---------------------------------------------------------------------------
-Boss_MissirayCompressedTileSet06Descriptor: dc.w    $6420, $2000, $100, $696A  ; was: word_53B7E
-                                        ; DATA XREF: Boss_MissirayRaiseAndLoadCompressedTileSet06+16   o
+Boss_MissirayIndexedRowSet06Descriptor: dc.w    $6420, $2000, $100, $696A  ; was: word_53B7E
+                                        ; DATA XREF: Boss_MissirayRaiseAndQueueIndexedRowSet06+16   o
 ; ---------------------------------------------------------------------------
-Boss_MissirayRaiseAndLoadCompressedSet06Return:         ; CODE XREF: Boss_MissirayRaiseAndLoadCompressedTileSet06+10   j  ; was: locret_53B86
+Boss_MissirayRaiseAndQueueIndexedRowSet06Return:        ; CODE XREF: Boss_MissirayRaiseAndQueueIndexedRowSet06+10   j  ; was: locret_53B86
                 rts
-; End of function Boss_MissirayRaiseAndLoadCompressedTileSet06
+; End of function Boss_MissirayRaiseAndQueueIndexedRowSet06
 ; Finishes the rise at Y=$0150 and initializes the next-state counters
 Boss_MissirayFinishRiseAndInitializeCounters:           ; DATA XREF: ROM:000538C4   o  ; was: sub_53B88
                 subq.w  #1,$14(a5)
@@ -561,7 +561,7 @@ Boss_MissirayWaitAndLoadDefeatTileSet01:                ; DATA XREF: ROM:000538D
                 bsr.w   Boss_MissirayApplyDefeatPaletteFade
                 tst.b   (word_FFF720).w
                 bmi.s   Boss_MissirayWaitAndLoadDefeatTileSet01Return
-                bsr.w   Boss_MissirayLoadCompressedTileSet02
+                bsr.w   Boss_MissirayQueueIndexedRowSet02
                 addq.w  #2,4(a5)
 Boss_MissirayWaitAndLoadDefeatTileSet01Return:          ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet01+8   j  ; was: locret_53DFA
                 rts
@@ -571,7 +571,7 @@ Boss_MissirayWaitAndLoadDefeatTileSet02:                ; DATA XREF: ROM:000538E
                 bsr.w   Boss_MissirayApplyDefeatPaletteFade
                 tst.b   (word_FFF720).w
                 bmi.s   Boss_MissirayWaitAndLoadDefeatTileSet02Return
-                bsr.w   Boss_MissirayLoadCompressedTileSet05
+                bsr.w   Boss_MissirayQueueIndexedRowSet05
                 addq.w  #2,4(a5)
 Boss_MissirayWaitAndLoadDefeatTileSet02Return:          ; CODE XREF: Boss_MissirayWaitAndLoadDefeatTileSet02+8   j  ; was: locret_53E0E
                 rts

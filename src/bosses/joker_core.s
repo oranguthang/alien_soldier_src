@@ -93,7 +93,7 @@ Boss_JokerInitializeAuxiliaryObjectTypes:               ; CODE XREF: Boss_JokerS
                 bset    d0,$6C2(a5)
                 movea.l #Boss_JokerObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
-                lea     Boss_JokerCompressedTileCommands(pc),a0
+                lea     Boss_JokerIndexedRowTransferDescriptor(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedRows).l
                 movea.w #(word_FFC680-M68K_RAM),a0
@@ -113,7 +113,7 @@ Boss_JokerEnableLinkedPartFlag7:                        ; CODE XREF: Boss_JokerS
                 bra.w   Boss_JokerBeginDiveState
 ; End of function Boss_JokerSetup
 ; ---------------------------------------------------------------------------
-Boss_JokerCompressedTileCommands:   dc.b    $61, 0, $20, 0, 3, 2, 0, $40, $41  ; was: byte_3B3F8
+Boss_JokerIndexedRowTransferDescriptor: dc.b    $61, 0, $20, 0, 3, 2, 0, $40, $41  ; was: byte_3B3F8
                                         ; DATA XREF: Boss_JokerSetup+7C   o
                 dc.b    0, $45, $44, $42, $43, $48, $3C, $46, $47
 

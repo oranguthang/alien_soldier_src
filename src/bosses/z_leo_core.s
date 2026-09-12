@@ -128,7 +128,7 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 jsr     (Gfx_AdjustTileIndexRows).l
                 bsr.w   Boss_ZLeoGraphicsInit1
                 bsr.w   Boss_ZLeoBuildHBlankRegisterBuffer
-                bsr.w   Boss_ZLeoLoadInitialTilesAndPatterns
+                bsr.w   Boss_ZLeoLoadInitialTilesAndSetCommand81
                 move.l  #Gfx_TitleAndZLeoVRAMTransferParameters,(dword_FFA940).w
                 move.w  #0,(word_FFA946).w
                 move.w  #$F600,(word_FFA948).w

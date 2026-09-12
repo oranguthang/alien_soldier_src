@@ -286,17 +286,17 @@ Boss_ZLeoWriteRemainingHBlankSegments:                  ; CODE XREF: Boss_ZLeoBu
                 move.w  #$8230,(a0)+
                 rts
 ; End of function Boss_ZLeoBuildHBlankRegisterBuffer
-; Load the initial composite tiles and set four queued sprite patterns
-Boss_ZLeoLoadInitialTilesAndPatterns:                   ; CODE XREF: Boss_ZLeoInit+54   p  ; was: sub_5287A
+; Load the initial composite tiles and set command word $81 on four queued transfers
+Boss_ZLeoLoadInitialTilesAndSetCommand81:               ; CODE XREF: Boss_ZLeoInit+54   p  ; was: sub_5287A
                 movea.l #Boss_ZLeoInitialTileLoadData,a0
                 jsr     (Tilemap_QueueIndexedRows).l
                 move.w  #$81,d0
                 moveq   #3,d7
                 jmp     VDPQueue_SetCommandHighWord
-; End of function Boss_ZLeoLoadInitialTilesAndPatterns
+; End of function Boss_ZLeoLoadInitialTilesAndSetCommand81
 ; ---------------------------------------------------------------------------
 Boss_ZLeoInitialTileLoadData:   dc.w    $4E00, $4000, $900, $2A2B, $2A2B, $2A2B, $2A2B, $2A2B, $4E00, $4000, $900, $2D2E, $2D2E, $2D2E, $2D2E, $2D2E  ; was: word_52892
-                                        ; DATA XREF: Boss_ZLeoLoadInitialTilesAndPatterns   o
+                                        ; DATA XREF: Boss_ZLeoLoadInitialTilesAndSetCommand81   o
 
 ; Update blade sprite
 Boss_ZLeoUpdateBladeSprite:                             ; CODE XREF: Boss_ZLeoBeginRisingReturn+106   p  ; was: sub_528B2

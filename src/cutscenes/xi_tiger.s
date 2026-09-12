@@ -87,14 +87,14 @@ XiTigerCutscene_Setup:                                  ; DATA XREF: XiTigerCuts
                 lea     XiTigerCutscene_TileTransferDescriptor(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedColumns).l
-                lea     XiTigerCutscene_CompressedTileTransferDescriptor(pc),a0
+                lea     XiTigerCutscene_IndexedRowTransferDescriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
 ; End of function XiTigerCutscene_Setup
 ; ---------------------------------------------------------------------------
 XiTigerCutscene_TileTransferDescriptor: dc.l    $44214000, $1020203, $B0C090A  ; was: dword_1E97A
                                         ; DATA XREF: XiTigerCutscene_Setup+3E   o
-XiTigerCutscene_CompressedTileTransferDescriptor:   dc.l    $68204000, $4010405, $607080D, $E0F1011  ; was: dword_1E986
+XiTigerCutscene_IndexedRowTransferDescriptor:   dc.l    $68204000, $4010405, $607080D, $E0F1011  ; was: dword_1E986
                                         ; DATA XREF: XiTigerCutscene_Setup+4A   o
 
 ; Initializes Xi-Tiger cutscene with graphics

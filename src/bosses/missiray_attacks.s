@@ -434,8 +434,8 @@ Boss_MissirayPrimaryModeTransitionDispatcher:           ; DATA XREF: ROM:00053CC
 ; ---------------------------------------------------------------------------
 Boss_MissirayPrimaryModeTransitionStates:   dc.w    Boss_MissirayInitializePrimaryModeTransition-*  ; DATA XREF: Boss_MissirayPrimaryModeTransitionDispatcher+4   o  ; was: off_542DA
                 dc.w    Boss_MissirayWaitThenLoadPrimaryTransferSet-*
-                dc.w    Boss_MissirayWaitThenLoadPrimaryCompressedSet-*
-                dc.w    Boss_MissirayWaitThenLoadPrimaryFinalSet-*
+                dc.w    Boss_MissirayWaitThenQueuePrimaryIndexedRowSet-*
+                dc.w    Boss_MissirayWaitThenQueuePrimaryFinalIndexedRowSet-*
                 dc.w    Boss_MissirayFadePrimaryModePalette-*
 
 ; Selects mode zero, its vertical target, and shared render fields
@@ -459,28 +459,28 @@ Boss_MissirayWaitThenLoadPrimaryTransferSet:            ; DATA XREF: ROM:000542D
 Boss_MissirayPrimaryTransferSetWaitReturn:              ; CODE XREF: Boss_MissirayWaitThenLoadPrimaryTransferSet+8   j  ; was: locret_5431C
                 rts
 ; End of function Boss_MissirayWaitThenLoadPrimaryTransferSet
-; Waits for the direct transfer before starting compressed tile set 00
-Boss_MissirayWaitThenLoadPrimaryCompressedSet:          ; DATA XREF: ROM:000542DE   o  ; was: sub_5431E
+; Waits for the direct transfer before queuing indexed-row set 00
+Boss_MissirayWaitThenQueuePrimaryIndexedRowSet:         ; DATA XREF: ROM:000542DE   o  ; was: sub_5431E
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   Boss_MissirayPrimaryCompressedSetWaitReturn
+                bmi.s   Boss_MissirayPrimaryIndexedRowSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bra.w   Boss_MissirayLoadCompressedTileSet00
+                bra.w   Boss_MissirayQueueIndexedRowSet00
 ; ---------------------------------------------------------------------------
-Boss_MissirayPrimaryCompressedSetWaitReturn:            ; CODE XREF: Boss_MissirayWaitThenLoadPrimaryCompressedSet+8   j  ; was: locret_54330
+Boss_MissirayPrimaryIndexedRowSetWaitReturn:            ; CODE XREF: Boss_MissirayWaitThenQueuePrimaryIndexedRowSet+8   j  ; was: locret_54330
                 rts
-; End of function Boss_MissirayWaitThenLoadPrimaryCompressedSet
-; Waits for that transfer before loading compressed tile set 03
-Boss_MissirayWaitThenLoadPrimaryFinalSet:               ; DATA XREF: ROM:000542E0   o  ; was: sub_54332
+; End of function Boss_MissirayWaitThenQueuePrimaryIndexedRowSet
+; Waits for that transfer before queuing final indexed-row set 03
+Boss_MissirayWaitThenQueuePrimaryFinalIndexedRowSet:    ; DATA XREF: ROM:000542E0   o  ; was: sub_54332
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   Boss_MissirayPrimaryFinalSetWaitReturn
+                bmi.s   Boss_MissirayPrimaryFinalIndexedRowSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bsr.w   Boss_MissirayLoadCompressedTileSet03
+                bsr.w   Boss_MissirayQueueIndexedRowSet03
                 move.w  #$E,(dword_FF940C+2).w
-Boss_MissirayPrimaryFinalSetWaitReturn:                 ; CODE XREF: Boss_MissirayWaitThenLoadPrimaryFinalSet+8   j  ; was: locret_5434A
+Boss_MissirayPrimaryFinalIndexedRowSetWaitReturn:       ; CODE XREF: Boss_MissirayWaitThenQueuePrimaryFinalIndexedRowSet+8   j  ; was: locret_5434A
                 rts
-; End of function Boss_MissirayWaitThenLoadPrimaryFinalSet
+; End of function Boss_MissirayWaitThenQueuePrimaryFinalIndexedRowSet
 ; Applies the fourteen-step mode-zero palette fade and completes the transition
 Boss_MissirayFadePrimaryModePalette:                    ; DATA XREF: ROM:000542E2   o  ; was: sub_5434C
                 bsr.w   Boss_MissirayApplyPaletteFadeStep
@@ -501,8 +501,8 @@ Boss_MissirayAlternateModeTransitionDispatcher:         ; DATA XREF: ROM:00053CC
 ; ---------------------------------------------------------------------------
 Boss_MissirayAlternateModeTransitionStates: dc.w    Boss_MissirayInitializeAlternateModeTransition-*  ; DATA XREF: Boss_MissirayAlternateModeTransitionDispatcher+4   o  ; was: off_54368
                 dc.w    Boss_MissirayWaitThenLoadAlternateTransferSet-*
-                dc.w    Boss_MissirayWaitThenLoadAlternateCompressedSet-*
-                dc.w    Boss_MissirayWaitThenLoadAlternateFinalSet-*
+                dc.w    Boss_MissirayWaitThenQueueAlternateIndexedRowSet-*
+                dc.w    Boss_MissirayWaitThenQueueAlternateFinalIndexedRowSet-*
                 dc.w    Boss_MissirayFadeAlternateModePalette-*
 
 ; Selects mode one, its vertical target, and shared render fields
@@ -525,28 +525,28 @@ Boss_MissirayWaitThenLoadAlternateTransferSet:          ; DATA XREF: ROM:0005436
 Boss_MissirayAlternateTransferSetWaitReturn:            ; CODE XREF: Boss_MissirayWaitThenLoadAlternateTransferSet+8   j  ; was: locret_543A6
                 rts
 ; End of function Boss_MissirayWaitThenLoadAlternateTransferSet
-; Waits for the direct transfer before starting compressed tile set 01
-Boss_MissirayWaitThenLoadAlternateCompressedSet:        ; DATA XREF: ROM:0005436C   o  ; was: sub_543A8
+; Waits for the direct transfer before queuing indexed-row set 01
+Boss_MissirayWaitThenQueueAlternateIndexedRowSet:       ; DATA XREF: ROM:0005436C   o  ; was: sub_543A8
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   Boss_MissirayAlternateCompressedSetWaitReturn
+                bmi.s   Boss_MissirayAlternateIndexedRowSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bra.w   Boss_MissirayLoadCompressedTileSet01
+                bra.w   Boss_MissirayQueueIndexedRowSet01
 ; ---------------------------------------------------------------------------
-Boss_MissirayAlternateCompressedSetWaitReturn:          ; CODE XREF: Boss_MissirayWaitThenLoadAlternateCompressedSet+8   j  ; was: locret_543BA
+Boss_MissirayAlternateIndexedRowSetWaitReturn:          ; CODE XREF: Boss_MissirayWaitThenQueueAlternateIndexedRowSet+8   j  ; was: locret_543BA
                 rts
-; End of function Boss_MissirayWaitThenLoadAlternateCompressedSet
-; Waits for that transfer before loading compressed tile set 04
-Boss_MissirayWaitThenLoadAlternateFinalSet:             ; DATA XREF: ROM:0005436E   o  ; was: sub_543BC
+; End of function Boss_MissirayWaitThenQueueAlternateIndexedRowSet
+; Waits for that transfer before queuing final indexed-row set 04
+Boss_MissirayWaitThenQueueAlternateFinalIndexedRowSet:  ; DATA XREF: ROM:0005436E   o  ; was: sub_543BC
                 bsr.w   Boss_MissirayAdvancePaletteWaveIndex
                 tst.b   (word_FFF720).w
-                bmi.s   Boss_MissirayAlternateFinalSetWaitReturn
+                bmi.s   Boss_MissirayAlternateFinalIndexedRowSetWaitReturn
                 addq.w  #2,(dword_FF9400).w
-                bsr.w   Boss_MissirayLoadCompressedTileSet04
+                bsr.w   Boss_MissirayQueueIndexedRowSet04
                 move.w  #$E,(dword_FF940C+2).w
-Boss_MissirayAlternateFinalSetWaitReturn:               ; CODE XREF: Boss_MissirayWaitThenLoadAlternateFinalSet+8   j  ; was: locret_543D4
+Boss_MissirayAlternateFinalIndexedRowSetWaitReturn:     ; CODE XREF: Boss_MissirayWaitThenQueueAlternateFinalIndexedRowSet+8   j  ; was: locret_543D4
                 rts
-; End of function Boss_MissirayWaitThenLoadAlternateFinalSet
+; End of function Boss_MissirayWaitThenQueueAlternateFinalIndexedRowSet
 ; Applies the fourteen-step mode-one palette fade and completes the transition
 Boss_MissirayFadeAlternateModePalette:                  ; DATA XREF: ROM:00054370   o  ; was: sub_543D6
                 bsr.w   Boss_MissirayApplyPaletteFadeStep

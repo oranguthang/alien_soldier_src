@@ -4329,3 +4329,25 @@ name-audit registry from 10,466 to 10,483, and the enforced address-derived
 ceiling falls from 2,619 to 2,606. The layout remains 363 modules with a
 327.4-line mean, zero files above 1,000 lines, and zero generic container
 filenames.
+
+The first downstream indexed-row terminology pass removes the same disproved
+compression assumption from ten already-audited callers and descriptors owned
+by Joker, Viblack, Wolf Garopa, Xi-Tiger, Artemis, and Z-Leo. These records are
+plain indexed-row descriptors consumed by `Tilemap_QueueIndexedRows`; their
+names no longer claim compressed payloads or a decoder that does not exist.
+The Z-Leo helper also now states its second observed action precisely: it sets
+VDP command high word `$81` on four queued records rather than setting sprite
+patterns. Because this pass corrects semantic names that already carried
+provenance and audit entries, the totals remain 13,443 mappings, 10,483 audit
+records, and 2,606 address-derived unknowns.
+
+The Missiray indexed-row terminology pass completes that correction across
+the boss's two graphics-transition state machines and its initialization and
+defeat paths. Seven small descriptor records are now named indexed-row sets
+00 through 06, and their helpers explicitly queue those records through
+`Tilemap_QueueIndexedRows`. Twenty-eight already-audited identifiers and two
+additional audit descriptions no longer claim that these records are
+compressed or decoded. Historical Sonnet-era names remain only in the
+`previous_name` fields needed for provenance. This semantic correction does
+not change the totals: 13,443 mappings, 10,483 audit records, and 2,606 live
+address-derived unknowns.

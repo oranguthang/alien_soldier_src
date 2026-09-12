@@ -164,14 +164,14 @@ Boss_WolfGaropaLoadAttackEffectA:                       ; CODE XREF: Boss_WolfGa
                 lea     Boss_WolfGaropaAttackEffectATileTransfer(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedColumns).l
-                lea     Boss_WolfGaropaAttackEffectACompressedTiles(pc),a0
+                lea     Boss_WolfGaropaAttackEffectAIndexedRowDescriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_WolfGaropaTryLoadAttackEffectA
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaAttackEffectATileTransfer:   dc.w    $4658, $4000, $102, $2A2B, $2C2D, $2E2F  ; was: word_50414
                                         ; DATA XREF: Boss_WolfGaropaTryLoadAttackEffectA+2A   o
-Boss_WolfGaropaAttackEffectACompressedTiles:    dc.w    $4C50, $4000, $401, $3031, $3233, $2634, $3536, $3738  ; was: word_50420
+Boss_WolfGaropaAttackEffectAIndexedRowDescriptor:   dc.w    $4C50, $4000, $401, $3031, $3233, $2634, $3536, $3738  ; was: word_50420
                                         ; DATA XREF: Boss_WolfGaropaTryLoadAttackEffectA+36   o
 
 ; Gate attack-effect-B initialization on its shared loaded flag
@@ -181,7 +181,7 @@ Boss_WolfGaropaTryLoadAttackEffectB:                    ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaAttackEffectBReturn:                     ; CODE XREF: Boss_WolfGaropaLoadAttackEffectB+6   j  ; was: locret_50436
                 rts
 ; End of function Boss_WolfGaropaTryLoadAttackEffectB
-; Initialize attack effect B and load its compressed tiles
+; Initialize attack effect B and queue its indexed tilemap rows
 Boss_WolfGaropaLoadAttackEffectB:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectB+4   j  ; was: sub_50438
                 cmpi.w  #$10,(dword_FFA900).w
                 bpl.s   Boss_WolfGaropaAttackEffectBReturn
@@ -191,12 +191,12 @@ Boss_WolfGaropaLoadAttackEffectB:                       ; CODE XREF: Boss_WolfGa
                 bsr.w   Effect_InitializeWolfGaropaBoundaryPair
                 move.b  #$D0,d0
                 jsr     (Sound_PlaySFX).l
-                lea     Boss_WolfGaropaAttackEffectBCompressedTiles(pc),a0
+                lea     Boss_WolfGaropaAttackEffectBIndexedRowDescriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_WolfGaropaLoadAttackEffectB
 ; ---------------------------------------------------------------------------
-Boss_WolfGaropaAttackEffectBCompressedTiles:    dc.w    $4458, $4000, $101, $3C3B, $3D3F  ; was: word_50466
+Boss_WolfGaropaAttackEffectBIndexedRowDescriptor:   dc.w    $4458, $4000, $101, $3C3B, $3D3F  ; was: word_50466
                                         ; DATA XREF: Boss_WolfGaropaLoadAttackEffectB+22   o
 
 ; Unreferenced loader for attack-effect graphics variant C
@@ -210,12 +210,12 @@ Boss_WolfGaropaLoadAttackEffectC:                       ; CODE XREF: Boss_WolfGa
                 cmpi.w  #$10,(dword_FFA900).w
                 bpl.s   Boss_WolfGaropaAttackEffectCReturn
                 move.b  #1,(byte_FF9DBA).w
-                lea     Boss_WolfGaropaAttackEffectCCompressedTiles(pc),a0
+                lea     Boss_WolfGaropaAttackEffectCIndexedRowDescriptor(pc),a0
                 nop
                 jmp     Tilemap_QueueIndexedRows
 ; End of function Boss_WolfGaropaTryLoadAttackEffectC
 ; ---------------------------------------------------------------------------
-Boss_WolfGaropaAttackEffectCCompressedTiles:    dc.w    $4C50, $4000, $301, $4243, $4445, $4647, $4849  ; was: word_50492
+Boss_WolfGaropaAttackEffectCIndexedRowDescriptor:   dc.w    $4C50, $4000, $301, $4243, $4445, $4647, $4849  ; was: word_50492
                                         ; DATA XREF: Boss_WolfGaropaTryLoadAttackEffectC+16   o
 
 ; Update the auxiliary orb mapping, center, radius, and attached endpoint
