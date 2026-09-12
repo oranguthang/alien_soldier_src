@@ -5121,3 +5121,29 @@ provenance, raising provenance from 13,989 to 14,008 and the audit registry
 from 11,502 to 11,535. The enforced live address-derived ceiling falls from
 2,062 to 2,043; the byte-emitting module count rises from 365 to 368 solely
 because the four coherent owners replace one mixed module.
+
+The Stage 18-19 and unused Stage 20 variant pass aligns the opening late-game
+states with their configuration offsets. `Stage18ConfigRecord` begins at
+`$00`, `Stage19ConfigRecord` at `$0A`, and the normal `Stage20ConfigRecord` at
+`$70`. Consequently, offset `$08` is the final post-Destroyer-MK2 state of
+Stage 18 rather than a Stage 19 initializer. In Stage 19, offsets `$0E` and
+`$10` only advance the camera to Jampan's arena and enter a shared transition;
+the actual Jampan asset submission occurs at offset `$12`. The old
+`Boss_DestroyerMK2UpdateHealth` name is also rejected because its stage state
+never accesses health: it waits for the primary object to clear and then
+starts the bonus/preload sequence.
+
+Four unreferenced configuration wrappers seed offsets `$28`, `$30`, `$38`,
+and `$40`, whereas normal Stage 20 skips directly to `$70`. Their twelve
+reachable state entries are therefore named as explicit
+`UnreferencedStage20Variant` phases. The first reuses Jampan's asset set and
+the other three load statically identified entity types `$3EC`, `$3F0`, and
+`$3F4`; no unsupported boss identities or normal-play reachability are
+claimed. The shared helper at `$00E67A` only stores camera X divided by eight
+as a parallax offset, disproving its former generic transition identity.
+
+All 37 imported definitions in the range now have exact-address static audit
+records. The ten formerly address-derived definitions gain provenance,
+raising provenance from 14,008 to 14,018 and the audit registry from 11,535
+to 11,572. The enforced live address-derived ceiling falls from 2,043 to
+2,033; module count remains 368.

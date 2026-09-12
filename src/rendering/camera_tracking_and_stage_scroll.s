@@ -1,5 +1,5 @@
 ; Updates Stage 18 scroll and renders both tilemap passes
-Stage18_UpdateScrollAndRenderTilemap:                   ; CODE XREF: Stage_Stage18StartBattle+6   p  ; was: sub_10026
+Stage18_UpdateScrollAndRenderTilemap:                   ; CODE XREF: Stage18_UpdateInitialScroll+6   p  ; was: sub_10026
                                         ; sub_E4FC   p
                 bsr.w   Camera_FollowPlayerBeyondHorizontalThreshold
 Stage18_RenderLockedTilemap:                            ; CODE XREF: Stage18_UpdateDestroyerMk2Scroll+1A   j  ; was: loc_1002A
@@ -12,7 +12,7 @@ Stage18_RenderLockedTilemap:                            ; CODE XREF: Stage18_Upd
                 bra.w   Tilemap_QueueColumnFromDescriptor
 ; End of function Stage18_UpdateScrollAndRenderTilemap
 ; Advances the Destroyer MK2 approach scroll and renders the Stage 18 tilemap
-Stage18_UpdateDestroyerMk2Scroll:                       ; CODE XREF: Stage_DestroyerMK2Init   p  ; was: sub_10044
+Stage18_UpdateDestroyerMk2Scroll:                       ; CODE XREF: Stage18_InitializeDestroyerMk2Encounter   p  ; was: sub_10044
                 cmpi.w  #$91,(dword_FFA410).w
                 bpl.s   Stage18_AdvanceDestroyerMk2Scroll
                 btst    #1,(byte_FFA407).w

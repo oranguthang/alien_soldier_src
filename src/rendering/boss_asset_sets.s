@@ -181,8 +181,8 @@ Boss_BackStringerGraphicsLoadList:  dc.w    7           ; field_0  ; was: stru_1
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 Boss_JampanAssetSet:    dc.w    $218                    ; field_0  ; was: stru_114E4
-                                        ; DATA XREF: Stage_JampanPostBattle+28   o
-                                        ; Stage_InitBossPhase1+1A   o
+                                        ; DATA XREF: Stage19_InitializeJampanEncounter+28   o
+                                        ; UnreferencedStage20Variant1_InitializeJampanPhase+1A   o
                 dc.l    Boss_JampanGraphicsLoadList     ; field_2
                 dc.l    Boss_JampanPaletteCommand       ; field_6
 Boss_JampanGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_114EE
@@ -206,7 +206,7 @@ Boss_Epsilon1GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_DestroyerMK2AssetSet:  dc.w    $240                ; field_0  ; was: stru_1151C
-                                        ; DATA XREF: Stage_DestroyerMK2Init+30   o
+                                        ; DATA XREF: Stage18_InitializeDestroyerMk2Encounter+30   o
                 dc.l    Boss_DestroyerMK2GraphicsLoadList  ; field_2
                 dc.l    Boss_DestroyerMK2PaletteCommand  ; field_6
 Boss_DestroyerMK2GraphicsLoadList:  dc.w    7           ; field_0  ; was: stru_11526
@@ -271,7 +271,7 @@ Boss_WolfGaropaGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1
 ; Stage 18's dormant late-phase table references this record. The ROM proves
 ; entity type $3EC and its assets, but not the imported "Lambda Bunny" identity
 EntityType3ECAssetSet:  dc.w    $3EC                    ; entity type  ; was: stru_115A8
-                                        ; DATA XREF: Stage_InitBossPhase2+1A   o
+                                        ; DATA XREF: UnreferencedStage20Variant2_InitializeEntity3ECPhase+1A   o
                 dc.l    EntityType3ECGraphicsLoadList   ; Graphics structure pointer
                 dc.l    EntityType3ECPaletteCommand     ; Palette data pointer
 EntityType3ECGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_115B2
@@ -284,7 +284,7 @@ EntityType3ECGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $FFFF
 ; Stage 18's dormant late-phase table references this identity-unknown record
 EntityType3F0AssetSet:  dc.w    $3F0                    ; entity type  ; was: stru_115C4
-                                        ; DATA XREF: Stage_InitBossPhase3+1A   o
+                                        ; DATA XREF: UnreferencedStage20Variant3_InitializeEntity3F0Phase+1A   o
                 dc.l    EntityType3F0GraphicsLoadList   ; Graphics structure pointer
                 dc.l    EntityType3F0PaletteCommand     ; Palette data pointer
 EntityType3F0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_115CE
@@ -297,7 +297,7 @@ EntityType3F0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.w    $FFFF
 ; Stage 18's dormant late-phase table references this identity-unknown record
 EntityType3F4AssetSet:  dc.w    $3F4                    ; entity type  ; was: stru_115E0
-                                        ; DATA XREF: Stage_InitBossPhase4+1A   o
+                                        ; DATA XREF: UnreferencedStage20Variant4_InitializeEntity3F4Phase+1A   o
                 dc.l    EntityType3F4GraphicsLoadList   ; Graphics structure pointer
                 dc.l    EntityType3F4PaletteCommands    ; Palette data pointer
 EntityType3F4GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_115EA

@@ -283,7 +283,7 @@ Stage_InitializeStage19:                                ; DATA XREF: ROM:0001229
                 lea     Stage19ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-                jsr     (locret_E4FA).l
+                jsr     (Stage18And19_SharedReturn).l
                 bra.s   Stage18And19_InitializeTilemapIndices
 ; End of function Stage_InitializeStage19
 ; Unreferenced wrapper for the first Stage 20 configuration variant
