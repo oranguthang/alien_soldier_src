@@ -196,7 +196,7 @@
     { "file": "src/gameplay/math_and_buffer_helpers.s", "subsystem": "gameplay", "start": "0x01B404", "end": "0x01B905" },
     { "file": "src/gameplay/sprite_initialization.s", "subsystem": "gameplay", "start": "0x01B906", "end": "0x01C04F" },
     { "file": "src/gameplay/projectile_slots.s", "subsystem": "gameplay", "start": "0x01C050", "end": "0x01C3F9" },
-    { "file": "src/stages/xi_tiger_background.s", "subsystem": "stages", "start": "0x01C3FA", "end": "0x01C65B" },
+    { "file": "src/stages/gameplay_entry_states.s", "subsystem": "stages", "start": "0x01C3FA", "end": "0x01C65B" },
     { "file": "src/gameplay/main_loop.s", "subsystem": "gameplay", "start": "0x01C65C", "end": "0x01CB31" },
     { "file": "src/debug/player_controls.s", "subsystem": "debug", "start": "0x01CB32", "end": "0x01CCB5" },
     { "file": "src/gameplay/object_copy.s", "subsystem": "gameplay", "start": "0x01CCB6", "end": "0x01CCEB" },

@@ -5006,3 +5006,27 @@ audit records. The 21 formerly address-derived definitions gain provenance,
 raising provenance from 13,918 to 13,939 and the audit registry from 11,357 to
 11,388. The enforced live address-derived ceiling falls from 2,133 to 2,112;
 the module count remains 370.
+
+The gameplay-entry pass replaces the misleading
+`stages/xi_tiger_background.s` identity with the complete 172-line
+`stages/gameplay_entry_states.s` module. Its two adjacent game-mode handlers
+are parallel entry-state machines: the normal Stage mode at `$0C` and the
+post-cutscene Xi-Tiger mode at `$80`. Both initialize their stage-specific
+state, process two configured tilemap-plane row streams, select transfer
+parameters from the same two pointer pairs, and enter gameplay mode `$10` only
+after both row counters complete. Their shared data and mirrored control flow
+make this one coherent owner rather than an address bucket.
+
+This corrects the generated `Stage_LoadBackgroundGraphics` description: the
+routine also initializes the graphics and stage chains, manages palette and
+display state, changes the top-level game mode, and enters the active stage
+process. The former `Stage_XiTigerHandler` is now explicitly the Xi-Tiger
+gameplay-entry state machine rather than an unspecified stage handler. Plane
+branches are named only for their proven order and direct row-transfer
+operations; no visual background/foreground identity is asserted.
+
+All 21 definitions in the module have exact-address static audit records. The
+18 formerly address-derived definitions gain provenance, raising provenance
+from 13,939 to 13,957 and the audit registry from 11,388 to 11,409. The
+enforced live address-derived ceiling falls from 2,112 to 2,094; module count
+remains 370.

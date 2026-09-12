@@ -109,7 +109,7 @@
                 include "src/gameplay/math_and_buffer_helpers.s"
                 include "src/gameplay/sprite_initialization.s"
                 include "src/gameplay/projectile_slots.s"
-                include "src/stages/xi_tiger_background.s"
+                include "src/stages/gameplay_entry_states.s"
                 include "src/gameplay/main_loop.s"
                 include "src/debug/player_controls.s"
                 include "src/gameplay/object_copy.s"

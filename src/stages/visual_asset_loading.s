@@ -407,7 +407,7 @@ UnreferencedSharedGameplayTileAssetLoadList:    dc.w    7  ; field_0  ; was: str
                 dc.w    $FFFF
 
 ; Initializes Xi-Tiger stage RAM, configuration, weapon selection, and player state
-Stage_InitializeXiTigerState:                           ; CODE XREF: Stage_XiTigerHandler+22   p  ; was: sub_1219E
+Stage_InitializeXiTigerState:                           ; CODE XREF: XiTigerStage_UpdateGameplayEntry+22   p  ; was: sub_1219E
                 clr.w   (word_FF807A).w
                 jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   Sys_ClearRAMBuffer

@@ -1,6 +1,6 @@
 ; Mirrors one row at Y-$1000, then queues the next row of the active scrolling transfer
-Tilemap_MirrorOffsetRowAndQueueScrollingRow:            ; CODE XREF: Stage_LoadBackgroundGraphics+82   p  ; was: sub_10D16
-                                        ; Stage_LoadBackgroundGraphics+88   p
+Tilemap_MirrorOffsetRowAndQueueScrollingRow:            ; CODE XREF: Stage_StreamGameplayEntryPrimaryPlane_Rows+82   p  ; was: sub_10D16
+                                        ; Stage_StreamGameplayEntryPrimaryPlane_Rows+88   p
                 movea.l (dword_FFA940).w,a0
                 move.w  (word_FFA946).w,d0
                 move.w  (word_FFA948).w,d1

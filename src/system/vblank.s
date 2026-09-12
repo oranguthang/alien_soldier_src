@@ -175,7 +175,7 @@ Sys_DispatchGameState_Run:                              ; CODE XREF: Sys_UpdateT
 Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    Frontend_InitializeSegaSequence
                 dc.l    Frontend_UpdateOpeningSequence
-                dc.l    Stage_LoadBackgroundGraphics
+                dc.l    Stage_UpdateGameplayEntry
                 dc.l    Sys_GameplayMainLoop
                 dc.l    TitleScreen_Initialize
                 dc.l    TitleScreen_Update
@@ -204,7 +204,7 @@ Sys_GameStateHandlers:  dc.l    Sys_CheckRegionLock     ; was: off_C7C
                 dc.l    WeaponSetup_UpdateScreen
                 dc.l    GameOver_InitializeScreen
                 dc.l    GameOver_CopyTransitionBufferAndDispatch
-                dc.l    Stage_XiTigerHandler
+                dc.l    XiTigerStage_UpdateGameplayEntry
                 dc.l    Results_InitializeFinalSummary
                 dc.l    Results_UpdateFinalSummary
                 dc.l    Credits_InitXiTiger

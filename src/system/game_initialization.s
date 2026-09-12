@@ -95,7 +95,7 @@ Gfx_LoadVDPRegistersAlt:                                ; CODE XREF: Sys_InitFul
 ; End of function Gfx_LoadVDPRegistersAlt
 ; Loads VDP register values from table
 Gfx_LoadVDPRegisters:                                   ; CODE XREF: Sys_InitGameMode+4   p  ; was: sub_2E32
-                                        ; Stage_LoadBackgroundGraphics+26   p
+                                        ; Stage_UpdateGameplayEntry+26   p
                 lea     Gfx_GameVDPRegisterValues(pc),a0
 Gfx_LoadVDPRegisters_Setup:                             ; CODE XREF: Gfx_LoadVDPRegistersAlt+4   j  ; was: loc_2E36
                 lea     (VDPReg0Shadow).w,a1
