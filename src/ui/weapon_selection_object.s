@@ -52,7 +52,7 @@ UI_UpdateWeaponSelectionObject_ProcessFlags:            ; CODE XREF: UI_UpdateWe
                 jsr     (Weapon_GetStateDisplayIndex).l
                 beq.s   UI_UpdateWeaponSelectionObject_CheckConfirm
                 movea.w (WeaponSlotOffset).w,a0
-                adda.w  #$A250,a0
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (a0),d0
                 asl.w   #5,d0
                 move.w  d0,$48(a5)
@@ -68,7 +68,7 @@ UI_UpdateWeaponSelectionObject_CheckConfirm:            ; CODE XREF: UI_UpdateWe
                 jsr     (Weapon_GetStateDisplayIndex).l
                 beq.s   UI_UpdateWeaponSelectionObject_Hide
                 movea.w (WeaponSlotOffset).w,a0
-                adda.w  #$A250,a0
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  $48(a5),d1
                 asr.w   #5,d1
                 andi.w  #$E,d1

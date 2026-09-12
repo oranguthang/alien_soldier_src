@@ -268,7 +268,7 @@ WeaponSetup_CheckPreviousSlotInput:                     ; CODE XREF: WeaponSetup
                 clr.w   (WeaponSlotOffset).w
 WeaponSetup_LoadPreviousSlotSelection:                  ; CODE XREF: WeaponSetup_HandleLoadoutInput+5E   j  ; was: loc_1F4FA
                 movea.w (WeaponSlotOffset).w,a0
-                adda.w  #$A250,a0
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (a0),(dword_FF8128).w
                 move.w  (WeaponSlotOffset).w,(WeaponMenuSlotOffset).w
                 clr.w   (WeaponFireCooldown).w
@@ -318,7 +318,7 @@ WeaponSetup_CommitForceSelection:                       ; CODE XREF: WeaponSetup
                 add.w   d0,d1
                 move.w  d1,(dword_FF8128).w
                 movea.w (WeaponSlotOffset).w,a0
-                adda.w  #$A250,a0
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (dword_FF8128).w,d0
                 move.w  d0,(a0)
                 move.w  d2,(dword_FF8040).w

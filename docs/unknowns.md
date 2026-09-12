@@ -5921,3 +5921,26 @@ records. Provenance rises from 15,348 to 15,352 mappings and the audit registry
 from 12,485 to 12,491. Auditing the two existing code labels reduces the
 semantic review upper bound from 3,163 to 3,161. The enforced address-derived
 ceiling falls from 703 to 699, all still confined to RAM equates.
+
+The weapon-loadout RAM pass replaces thirteen raw equates and corrects eight
+misleading or generic code labels. Four parallel configuration words select
+weapon type and force-direction behavior. Four timer words pace automatic
+ammunition regeneration; four current-ammunition words are consumed by firing
+handlers; and four maximum words provide the regeneration clamp and stage-entry
+value. `Weapon_UpdateStateAndAmmoRegen` skips the active slot during ordinary
+play, reloads each expired timer from a configuration-indexed delay table,
+adds two ammunition, and clamps it to the paired maximum. It changes no sprite
+or animation field, disproving the prior Sonnet “slot animation” names.
+
+The former generic `Sys_ClearRAMBuffer` and `Sys_ClearNextScratchWord` names
+are now `Weapon_ClearAmmoRegenTimers` and
+`Weapon_ClearNextAmmoRegenTimer`: all reconstructed callers and the four-word
+loop establish that exact storage role. The hard-coded `$A250` bases in weapon,
+HUD, and setup code now use `WeaponSlotConfig0-M68K_RAM`.
+
+All thirteen RAM fields and the newly covered clear routine receive
+exact-address audit records; seven existing code audit records are corrected
+in place. Provenance rises from 15,352 to 15,365 mappings and the audit registry
+from 12,491 to 12,505. The newly audited routine reduces the semantic review
+upper bound from 3,161 to 3,160. The enforced address-derived ceiling
+falls from 699 to 686, all still confined to RAM equates.

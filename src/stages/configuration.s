@@ -1,7 +1,7 @@
 Sys_InitStageState:                                     ; CODE XREF: Stage_UpdateGameplayEntry+32   p  ; was: sub_1221C
                 clr.w   (word_FF807A).w
                 jsr     (Stage_InitializationNoOpHook).l
-                bsr.w   Sys_ClearRAMBuffer
+                bsr.w   Weapon_ClearAmmoRegenTimers
                 clr.w   (word_FFFF3E).w
                 move.w  (WeaponStateIndex).w,d0
                 beq.s   Stage_UseDefaultWeaponState
@@ -24,49 +24,49 @@ Stage_RunSelectedInitializerAndInitializePlayer:        ; CODE XREF: Sys_InitSta
 Stage_DispatchInitializer:                              ; CODE XREF: Sys_InitStageState:Stage_RunSelectedInitializerAndInitializePlayer   p  ; was: sub_1225C
                 move.w  (StageTableIndex).w,d0
                 movea.w Stage_InitializerOffsets(pc,d0.w),a0
-                adda.l  #Sys_ClearRAMBuffer,a0
+                adda.l  #Weapon_ClearAmmoRegenTimers,a0
                 jmp     (a0)
 ; End of function Stage_DispatchInitializer
 ; ---------------------------------------------------------------------------
-Stage_InitializerOffsets:   dc.w    Stage_ApplyStage1Configuration-Sys_ClearRAMBuffer  ; was: off_1226C
+Stage_InitializerOffsets:   dc.w    Stage_ApplyStage1Configuration-Weapon_ClearAmmoRegenTimers  ; was: off_1226C
                                         ; DATA XREF: Stage_DispatchInitializer+4   r
-                dc.w    Stage_ApplyStage2Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage3Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage4Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage5Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage6Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage7Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage8-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage9-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage10Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage11Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage12Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage13Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage14Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage15Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage16-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage17Boss-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage18-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage19-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage20-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage21-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage22-Sys_ClearRAMBuffer
-                dc.w    Stage_InitializeStage23-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage24Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage25Configuration-Sys_ClearRAMBuffer
-                dc.w    Stage_ApplyStage26Configuration-Sys_ClearRAMBuffer
+                dc.w    Stage_ApplyStage2Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage3Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage4Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage5Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage6Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage7Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage8-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage9-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage10Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage11Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage12Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage13Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage14Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage15Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage16-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage17Boss-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage18-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage19-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage20-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage21-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage22-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_InitializeStage23-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage24Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage25Configuration-Weapon_ClearAmmoRegenTimers
+                dc.w    Stage_ApplyStage26Configuration-Weapon_ClearAmmoRegenTimers
 
-; Clears 4-word RAM buffer used for temporary data storage
-Sys_ClearRAMBuffer:                                     ; CODE XREF: Stage_InitializeXiTigerState+A   p  ; was: sub_122A0
+; Clears the four per-slot ammunition-regeneration timers
+Weapon_ClearAmmoRegenTimers:                            ; CODE XREF: Stage_InitializeXiTigerState+A   p  ; was: sub_122A0
                                         ; Sys_InitStageState+A   p
                                         ; DATA XREF:
-                movea.w #(byte_FFA258-M68K_RAM),a0
+                movea.w #(WeaponAmmoRegenTimers-M68K_RAM),a0
                 moveq   #3,d7
-Sys_ClearNextScratchWord:                               ; CODE XREF: Sys_ClearRAMBuffer+8   j  ; was: loc_122A6
+Weapon_ClearNextAmmoRegenTimer:                         ; CODE XREF: Weapon_ClearAmmoRegenTimers+8   j  ; was: loc_122A6
                 clr.w   (a0)+
-                dbf     d7,Sys_ClearNextScratchWord
+                dbf     d7,Weapon_ClearNextAmmoRegenTimer
                 rts
-; End of function Sys_ClearRAMBuffer
+; End of function Weapon_ClearAmmoRegenTimers
 ; Initializes stage 1 data structure and palette
 Stage_ApplyStage1Configuration:                         ; DATA XREF: ROM:Stage_InitializerOffsets   o  ; was: sub_122AE
                 lea     Stage1ConfigRecord(pc),a0

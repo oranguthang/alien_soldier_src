@@ -306,7 +306,7 @@ UI_QueueSelectedWeaponIconTransfer:                     ; CODE XREF: UI_QueueAll
                 move.w  (WeaponSlotOffset).w,d0
                 move.w  WeaponIconVRAMDestinationTable(pc,d0.w),d3
                 movea.w d0,a0
-                adda.w  #$A250,a0
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (a0),d0
 ; Fall through to UI_QueueWeaponIconTileTransfer
 UI_QueueWeaponIconTileTransfer:                         ; CODE XREF: WeaponSetup_InitializeTextAndTiles+20   p  ; was: sub_131AE

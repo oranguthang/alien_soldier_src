@@ -588,6 +588,34 @@ covering the adjacent stage, score, health, weapon, and route state.
 | `StageRouteFlags` | `$FFFFA209` | Bit 0 is set by password/transition entry and tested by Stage 9 and Stage 12 route logic; bit 1 is set by post-stage entry and consumed by the boss-message initializer. |
 | `StageObjectSpawnCursor` | `$FFFFA20E` | Configuration records load a spawn-list pointer; the spawner advances it over 12-byte records, while the sign bit suspends list processing. |
 
+## Reviewed weapon loadout and ammunition fields
+
+The four weapon slots use parallel word arrays. `WeaponSlotOffset` takes the
+values 0, 2, 4, or 6 and selects the same slot in each array. The first array
+stores the setup-screen configuration code; the following arrays hold a
+regeneration delay, current ammunition, and maximum ammunition.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `WeaponSlotConfig0` | `$FFFFA250` | First setup configuration word; HUD, firing, selection, and regeneration consumers select it with slot offset zero. |
+| `WeaponSlotConfig1` | `$FFFFA252` | Second setup configuration word selected with slot offset two. |
+| `WeaponSlotConfig2` | `$FFFFA254` | Third setup configuration word selected with slot offset four. |
+| `WeaponSlotConfig3` | `$FFFFA256` | Fourth setup configuration word selected with slot offset six. |
+| `WeaponAmmoRegenTimers` | `$FFFFA258` | Base of four word timers; stage initialization clears them and the regeneration loop decrements and reloads each timer. |
+| `WeaponSlotAmmo0` | `$FFFFA260` | First current-ammunition word; firing subtracts costs and inactive-slot regeneration adds two up to the paired maximum. |
+| `WeaponSlotAmmo1` | `$FFFFA262` | Second current-ammunition word. |
+| `WeaponSlotAmmo2` | `$FFFFA264` | Third current-ammunition word. |
+| `WeaponSlotAmmo3` | `$FFFFA266` | Fourth current-ammunition word. |
+| `WeaponSlotAmmoMax0` | `$FFFFA268` | First regeneration ceiling and stage-entry source for `WeaponSlotAmmo0`. |
+| `WeaponSlotAmmoMax1` | `$FFFFA26A` | Second regeneration ceiling and stage-entry source for `WeaponSlotAmmo1`. |
+| `WeaponSlotAmmoMax2` | `$FFFFA26C` | Third regeneration ceiling and stage-entry source for `WeaponSlotAmmo2`. |
+| `WeaponSlotAmmoMax3` | `$FFFFA26E` | Fourth regeneration ceiling and stage-entry source for `WeaponSlotAmmo3`. |
+
+The previously generated “slot animation” names were incorrect. The loop
+does not touch sprite-frame state: it reloads a delay from the configuration-
+indexed `Weapon_AmmoRegenStepDelays`, increments current ammunition by two,
+and clamps it to the slot maximum.
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

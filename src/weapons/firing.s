@@ -14,7 +14,7 @@ Weapon_UpdatePlayerFiring_ApplyMuzzleOffset:            ; CODE XREF: Weapon_Upda
                 add.w   $14(a5),d2
                 move.b  Weapon_DirectionIndexTable(pc,d6.w),d6
                 movea.w (WeaponSlotOffset).w,a4
-                adda.w  #$A250,a4
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a4
                 tst.w   $10(a4)
                 beq.s   Weapon_DispatchSelectedType
                 bset    #2,(byte_FF8244).w

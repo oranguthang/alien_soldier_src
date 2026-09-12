@@ -1,44 +1,44 @@
-Weapon_UpdateStateAndSlotAnimations:                    ; CODE XREF: Sys_GameplayMainLoop+B8   p  ; was: sub_178FE
+Weapon_UpdateStateAndAmmoRegen:                         ; CODE XREF: Sys_GameplayMainLoop+B8   p  ; was: sub_178FE
                                         ; WeaponSetup_UpdateScreen+2A   p
                 tst.b   (FrameControlFlags).w
-                bmi.w   Weapon_UpdateStateAndSlotAnimationsReturn
+                bmi.w   Weapon_UpdateStateAndAmmoRegenReturn
                 bsr.w   Weapon_UpdateCurrentState
                 move.w  (WeaponSlotOffset).w,d0
                 cmpi.w  #$12,(WeaponStateIndex).w
-                bmi.s   Weapon_SelectSlotAnimationStartIndex
+                bmi.s   Weapon_SelectAmmoRegenSkipSlot
                 moveq   #8,d0
-Weapon_SelectSlotAnimationStartIndex:                   ; CODE XREF: Weapon_UpdateStateAndSlotAnimations+16   j  ; was: loc_17918
-                movea.w #(word_FFA250-M68K_RAM),a0
-                lea     Weapon_SlotAnimationStepDelays(pc),a1
+Weapon_SelectAmmoRegenSkipSlot:                         ; CODE XREF: Weapon_UpdateStateAndAmmoRegen+16   j  ; was: loc_17918
+                movea.w #(WeaponSlotConfig0-M68K_RAM),a0
+                lea     Weapon_AmmoRegenStepDelays(pc),a1
                 moveq   #0,d1
                 moveq   #3,d7
-Weapon_UpdateSlotAnimationLoop:                         ; CODE XREF: Weapon_UpdateStateAndSlotAnimations+4E   j  ; was: loc_17924
+Weapon_UpdateSlotAmmoRegenLoop:                         ; CODE XREF: Weapon_UpdateStateAndAmmoRegen+4E   j  ; was: loc_17924
                 cmp.w   d0,d1
-                beq.s   Weapon_AdvanceSlotAnimationLoop
+                beq.s   Weapon_AdvanceAmmoRegenSlot
                 move.w  (a0),d2
                 subq.w  #1,8(a0)
-                bpl.s   Weapon_AdvanceSlotAnimationLoop
+                bpl.s   Weapon_AdvanceAmmoRegenSlot
                 move.w  (a1,d2.w),8(a0)
                 addq.w  #2,$10(a0)
                 move.w  $18(a0),d2
                 cmp.w   $10(a0),d2
-                bpl.s   Weapon_AdvanceSlotAnimationLoop
+                bpl.s   Weapon_AdvanceAmmoRegenSlot
                 move.w  d2,$10(a0)
-; Advances to the next of four weapon-slot animation records
-Weapon_AdvanceSlotAnimationLoop:                        ; CODE XREF: Weapon_UpdateStateAndSlotAnimations+28   j  ; was: loc_17948
-                                        ; Weapon_UpdateStateAndSlotAnimations+30   j
+; Advances to the next weapon slot in the ammunition-regeneration pass
+Weapon_AdvanceAmmoRegenSlot:                            ; CODE XREF: Weapon_UpdateStateAndAmmoRegen+28   j  ; was: loc_17948
+                                        ; Weapon_UpdateStateAndAmmoRegen+30   j
                 addq.w  #2,a0
                 addq.w  #2,d1
-                dbf     d7,Weapon_UpdateSlotAnimationLoop
-; Return after updating weapon state and slot animations
-Weapon_UpdateStateAndSlotAnimationsReturn:              ; CODE XREF: Weapon_UpdateStateAndSlotAnimations+4   j  ; was: locret_17950
+                dbf     d7,Weapon_UpdateSlotAmmoRegenLoop
+; Return after updating weapon state and inactive-slot ammunition regeneration
+Weapon_UpdateStateAndAmmoRegenReturn:                   ; CODE XREF: Weapon_UpdateStateAndAmmoRegen+4   j  ; was: locret_17950
                                         ; DATA XREF: ROM:Weapon_StateHandlerOffsets   o
                 rts
-; End of function Weapon_UpdateStateAndSlotAnimations
+; End of function Weapon_UpdateStateAndAmmoRegen
 ; Updates shared cooldowns and dispatches the current weapon state
-Weapon_UpdateCurrentState:                              ; CODE XREF: Weapon_UpdateStateAndSlotAnimations+8   p  ; was: sub_17952
+Weapon_UpdateCurrentState:                              ; CODE XREF: Weapon_UpdateStateAndAmmoRegen+8   p  ; was: sub_17952
                 movea.w (WeaponSlotOffset).w,a1
-                adda.w  #$A250,a1
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a1
                 lea     Weapon_DirectionVectorPointerBias(pc),a2
                 nop
                 tst.w   (WeaponFireCooldown).w
@@ -56,7 +56,7 @@ Weapon_DispatchCurrentState:                            ; CODE XREF: Weapon_Upda
                 jmp     (a0)
 ; End of function Weapon_UpdateCurrentState
 ; ---------------------------------------------------------------------------
-Weapon_StateHandlerOffsets: dc.w    Weapon_UpdateStateAndSlotAnimationsReturn-Weapon_GetStateDisplayIndex  ; was: off_17984
+Weapon_StateHandlerOffsets: dc.w    Weapon_UpdateStateAndAmmoRegenReturn-Weapon_GetStateDisplayIndex  ; was: off_17984
                                         ; DATA XREF: Weapon_UpdateCurrentState+26   r
                 dc.w    Weapon_ConfigureState2Damage-Weapon_GetStateDisplayIndex
                 dc.w    Weapon_ConfigureState4Indicators-Weapon_GetStateDisplayIndex
@@ -64,8 +64,8 @@ Weapon_StateHandlerOffsets: dc.w    Weapon_UpdateStateAndSlotAnimationsReturn-We
                 dc.w    Weapon_ConfigureState8Targeting-Weapon_GetStateDisplayIndex
                 dc.w    Weapon_ConfigureState10Gauge-Weapon_GetStateDisplayIndex
                 dc.w    Weapon_UpdateState12Icon-Weapon_GetStateDisplayIndex
-                dc.w    Weapon_UpdateStateAndSlotAnimationsReturn-Weapon_GetStateDisplayIndex
-                dc.w    Weapon_UpdateStateAndSlotAnimationsReturn-Weapon_GetStateDisplayIndex
+                dc.w    Weapon_UpdateStateAndAmmoRegenReturn-Weapon_GetStateDisplayIndex
+                dc.w    Weapon_UpdateStateAndAmmoRegenReturn-Weapon_GetStateDisplayIndex
                 dc.w    WeaponSelect_Initialize-Weapon_GetStateDisplayIndex
                 dc.w    WeaponSelect_Update-Weapon_GetStateDisplayIndex
 
@@ -74,7 +74,7 @@ Weapon_GetStateDisplayIndex:                            ; CODE XREF: UI_UpdateWe
                                         ; UI_UpdateWeaponSelectionObject+B2   p
                                         ; DATA XREF:
                 movea.w (WeaponSlotOffset).w,a0
-                adda.w  #$A250,a0
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (WeaponStateIndex).w,d0
                 move.w  Weapon_StateDisplayIndexTable(pc,d0.w),d0
                 rts
@@ -85,7 +85,7 @@ Weapon_StateDisplayIndexTable:  dc.w    0, 2, 4, 6, 8, $A, $C, $E, $10, 0, 0  ; 
 
 ; Initializes the circular four-slot weapon-selection overlay
 WeaponSelect_Initialize:                                ; DATA XREF: ROM:00017996   o  ; was: sub_179C2
-                movea.w #(byte_FFA258-M68K_RAM),a0
+                movea.w #(WeaponAmmoRegenTimers-M68K_RAM),a0
                 move.w  (WeaponSlotOffset).w,d0
                 move.w  #$258,(a0,d0.w)
                 move.w  (WeaponSlotOffset).w,d0
@@ -113,7 +113,7 @@ WeaponSelect_Initialize:                                ; DATA XREF: ROM:0001799
                 move.w  (word_FF808A).w,d6
                 or.w    d6,$E(a0)
                 movea.w #(byte_FFC320-M68K_RAM),a0
-                movea.w #(word_FFA250-M68K_RAM),a1
+                movea.w #(WeaponSlotConfig0-M68K_RAM),a1
                 lea     WeaponSelect_SlotInitialAngles(pc),a3
                 nop
                 lea     WeaponSelect_SpriteFramePointers(pc),a4
@@ -267,7 +267,7 @@ WeaponSelect_StartCloseDelay:                           ; CODE XREF: WeaponSelec
 Weapon_AdvanceCurrentState:                             ; CODE XREF: Player_InitializeStats+76   j  ; was: sub_17BFC
                                         ; WeaponSetup_HandleLoadoutInput+7A   p
                 movea.w (WeaponSlotOffset).w,a0
-                adda.w  #$A250,a0
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (a0),d0
                 addq.w  #2,d0
                 move.w  d0,(WeaponStateIndex).w
@@ -290,7 +290,7 @@ Weapon_CheckRestoreSavedSlot:                           ; CODE XREF: Weapon_Comm
 Weapon_RestoreSavedSlot:                                ; CODE XREF: Weapon_CommitStateTransition+A   j  ; was: loc_17C2C
                 movea.w (WeaponSavedSlotOffset).w,a0
                 move.w  a0,(WeaponSlotOffset).w
-                adda.w  #$A250,a0
+                adda.w  #(WeaponSlotConfig0-M68K_RAM),a0
                 move.w  (a0),d0
                 addq.w  #2,d0
                 move.w  d0,(WeaponStateIndex).w

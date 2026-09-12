@@ -410,7 +410,7 @@ UnreferencedSharedGameplayTileAssetLoadList:    dc.w    7  ; field_0  ; was: str
 Stage_InitializeXiTigerState:                           ; CODE XREF: XiTigerStage_UpdateGameplayEntry+22   p  ; was: sub_1219E
                 clr.w   (word_FF807A).w
                 jsr     (Stage_InitializationNoOpHook).l
-                bsr.w   Sys_ClearRAMBuffer
+                bsr.w   Weapon_ClearAmmoRegenTimers
                 clr.w   (word_FFFF3E).w
                 move.w  (WeaponStateIndex).w,d0
                 beq.s   Stage_ResetXiTigerWeaponSelection

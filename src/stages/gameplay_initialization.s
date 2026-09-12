@@ -196,15 +196,15 @@ WeaponSetup_StateWaitReturn:                            ; CODE XREF: WeaponSetup
 ; Clears all four loadout slots, then refills their runtime ammunition
 WeaponSetup_ClearLoadoutAndRefillAmmo:                  ; CODE XREF: WeaponSetup_InitializeScreen+7E   p  ; was: sub_1F05E
                 clr.w   (WeaponSlotOffset).w
-                clr.w   (word_FFA250).w
-                clr.w   (word_FFA252).w
-                clr.w   (word_FFA254).w
-                clr.w   (word_FFA256).w
+                clr.w   (WeaponSlotConfig0).w
+                clr.w   (WeaponSlotConfig1).w
+                clr.w   (WeaponSlotConfig2).w
+                clr.w   (WeaponSlotConfig3).w
 ; End of function WeaponSetup_ClearLoadoutAndRefillAmmo
 ; Refills the eight weapon-ammunition words used by the setup screen
 WeaponSetup_RefillAmmo:                                 ; CODE XREF: WeaponSetup_HandleLoadoutState+16   p  ; was: sub_1F072
                                         ; WeaponSetup_HandleShootingModeInput+C   p
-                movea.w #(word_FFA260-M68K_RAM),a0
+                movea.w #(WeaponSlotAmmo0-M68K_RAM),a0
                 move.w  #$3E8,d0
                 moveq   #7,d7
 WeaponSetup_RefillAmmoLoop:                             ; CODE XREF: WeaponSetup_RefillAmmo+C   j  ; was: loc_1F07C
@@ -221,7 +221,7 @@ WeaponSetup_UpdateScreen:                               ; DATA XREF: Sys_Dispatc
                 jsr     (UI_BuildHUDSpriteList).l
                 jsr     (UI_UpdateGameplayHUD).l
                 jsr     (Player_Update).l
-                jsr     (Weapon_UpdateStateAndSlotAnimations).l
+                jsr     (Weapon_UpdateStateAndAmmoRegen).l
                 jsr     (Projectile_ProcessVisiblePool).l
                 jsr     (Sys_ProcessVisibleObjects).l
                 bsr.w   WeaponSetup_UpdateAndDispatchState

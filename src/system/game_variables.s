@@ -30,15 +30,15 @@ StageEntry_InitializeGameplayState:                     ; was: sub_1CD3A
                 tst.w   (DifficultyMode).w
                 beq.s   StageEntry_InitializeGameplayState_CopyAmmo
                 move.w  #$3E8,d0
-                move.w  d0,(word_FFA268).w
-                move.w  d0,(word_FFA26A).w
-                move.w  d0,(word_FFA26C).w
-                move.w  d0,(word_FFA26E).w
+                move.w  d0,(WeaponSlotAmmoMax0).w
+                move.w  d0,(WeaponSlotAmmoMax1).w
+                move.w  d0,(WeaponSlotAmmoMax2).w
+                move.w  d0,(WeaponSlotAmmoMax3).w
 StageEntry_InitializeGameplayState_CopyAmmo:            ; was: loc_1CD5A
-                move.w  (word_FFA268).w,(word_FFA260).w
-                move.w  (word_FFA26A).w,(word_FFA262).w
-                move.w  (word_FFA26C).w,(word_FFA264).w
-                move.w  (word_FFA26E).w,(word_FFA266).w
+                move.w  (WeaponSlotAmmoMax0).w,(WeaponSlotAmmo0).w
+                move.w  (WeaponSlotAmmoMax1).w,(WeaponSlotAmmo1).w
+                move.w  (WeaponSlotAmmoMax2).w,(WeaponSlotAmmo2).w
+                move.w  (WeaponSlotAmmoMax3).w,(WeaponSlotAmmo3).w
                 clr.l   (ScoreValueBCD).w
                 clr.w   (DebugResourceRefill).w
                 clr.w   (DestroyedEnemyCountBCD).w

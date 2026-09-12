@@ -475,19 +475,19 @@ ShootingMode            equ     $FFFFA22A               ; was: word_FFA22A
 StageMessageCursor      equ     $FFFFA22C               ; was: dword_FFA22C
 PendingStageBGMRequest  equ     $FFFFA230               ; was: byte_FFA230
 WeaponSlotOffset        equ     $FFFFA24E               ; was: word_FFA24E
-word_FFA250             equ     $FFFFA250
-word_FFA252             equ     $FFFFA252
-word_FFA254             equ     $FFFFA254
-word_FFA256             equ     $FFFFA256
-byte_FFA258             equ     $FFFFA258
-word_FFA260             equ     $FFFFA260
-word_FFA262             equ     $FFFFA262
-word_FFA264             equ     $FFFFA264
-word_FFA266             equ     $FFFFA266
-word_FFA268             equ     $FFFFA268
-word_FFA26A             equ     $FFFFA26A
-word_FFA26C             equ     $FFFFA26C
-word_FFA26E             equ     $FFFFA26E
+WeaponSlotConfig0       equ     $FFFFA250               ; was: word_FFA250
+WeaponSlotConfig1       equ     $FFFFA252               ; was: word_FFA252
+WeaponSlotConfig2       equ     $FFFFA254               ; was: word_FFA254
+WeaponSlotConfig3       equ     $FFFFA256               ; was: word_FFA256
+WeaponAmmoRegenTimers   equ     $FFFFA258               ; was: byte_FFA258
+WeaponSlotAmmo0         equ     $FFFFA260               ; was: word_FFA260
+WeaponSlotAmmo1         equ     $FFFFA262               ; was: word_FFA262
+WeaponSlotAmmo2         equ     $FFFFA264               ; was: word_FFA264
+WeaponSlotAmmo3         equ     $FFFFA266               ; was: word_FFA266
+WeaponSlotAmmoMax0      equ     $FFFFA268               ; was: word_FFA268
+WeaponSlotAmmoMax1      equ     $FFFFA26A               ; was: word_FFA26A
+WeaponSlotAmmoMax2      equ     $FFFFA26C               ; was: word_FFA26C
+WeaponSlotAmmoMax3      equ     $FFFFA26E               ; was: word_FFA26E
 StageTimeRemaining      equ     $FFFFA270               ; was: word_FFA270
 byte_FFA272             equ     $FFFFA272
 VBlankFrameCounter      equ     $FFFFA280               ; was: word_FFA280
