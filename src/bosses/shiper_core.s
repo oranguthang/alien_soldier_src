@@ -455,7 +455,7 @@ Boss_ShiperDefeatSequenceBeginCleanup:                  ; CODE XREF: Boss_Shiper
                 move.w  #$24,d0                         ; '$'
                 move.w  #$134,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                jsr     (Boss_InitDefeatExplosion).l
+                jsr     (AlternateTransition_SpawnAtOwner).l
                 moveq   #$1C,d0
                 jmp     (Gfx_SetFadeParams).l
 ; End of function Boss_ShiperDefeatSequence

@@ -610,7 +610,7 @@ Boss_XiTigerDefeatSpawnDelayState:                      ; DATA XREF: ROM:0003D8A
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_XiTigerApplyDefeatSpawnDelayPaletteFade
                 addq.w  #2,4(a5)
-                jsr     (Effect_InitPlayerSpawn).l
+                jsr     (TransitionEffect_SpawnAtOwner).l
                 addi.w  #$20,$14(a0)                    ; ' '
 Boss_XiTigerApplyDefeatSpawnDelayPaletteFade:           ; CODE XREF: Boss_XiTigerDefeatSpawnDelayState+4   j  ; was: loc_3E02A
                 bra.w   Boss_ApplyDefeatPaletteFade

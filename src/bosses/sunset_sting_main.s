@@ -665,7 +665,7 @@ Boss_SunsetStingFinalDefeatUpdate:                      ; CODE XREF: Boss_Sunset
                 move.w  #$1EC,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                jsr     (Effect_InitPlayerSpawn).l
+                jsr     (TransitionEffect_SpawnAtOwner).l
                 clr.w   (word_FF8640).w
                 clr.l   $1C(a5)
                 addi.w  #$38,$14(a0)                    ; '8'

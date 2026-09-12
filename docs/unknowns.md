@@ -4823,3 +4823,55 @@ static audit records. Sixteen address-derived ROM/RAM names gain provenance;
 provenance rises from 13,780 to 13,796 mappings, the JSON audit registry from
 11,058 to 11,077 records, and the enforced live address-derived ceiling falls
 from 2,270 to 2,254 without changing the module count or ROM order.
+
+The defeat-transition audit replaces a set of plausible-sounding but false
+Sonnet labels. `Effect_InitPlayerSpawn` never created a player: seven boss
+defeat paths use it to create transition entity `$150` at the owner's
+coordinates. The Shiper/Terobuster helper similarly creates alternate
+transition entity `$354`, not an explosion. Their parallel five-state object
+machines are now distinguished as the standard `TransitionEffect` and the
+statically narrower `AlternateTransition` paths.
+
+The former palette dispatcher and copy helpers were also misclassified. The
+mode table builds raster transition buffers; its supposed palette copier moves
+arbitrary `d7+1` blocks of 32 bytes. The game-over caller requests sixteen
+blocks, a 512-byte transfer, proving that neither the helper nor its caller is
+a fixed palette copy. Buffer modes remain numbered zero through four because
+their arithmetic is established but final visual names are not.
+
+The corrected 340-line owner is now
+`effects/defeat_transition_control.s`. All 43 definitions in it have
+exact-address static audit records. Sixteen directly affected definitions in
+the adjacent transition-buffer implementation plus the corrected game-over
+caller are audited at the same time. This adds 60 records, raising the JSON
+name-audit registry from 11,077 to 11,137. No address-derived name was hidden
+by this semantic correction, so provenance remains 13,796 and the enforced
+live ceiling remains 2,254.
+
+The former `cutscenes/game_over_and_tunnel.s` combined three unrelated source
+owners across a large ROM span. It is now the 303-line
+`cutscenes/game_over_landscape.s`, the 90-line
+`effects/tunnel_transition.s`, and a two-line data wrapper for the 9-KiB
+perspective lookup payload. This is a semantic ROM-order split: the tunnel
+entity shares the transition-effect machinery but never calls the Game Over
+landscape builder.
+
+The Game Over audit also corrects generated behavior claims. Its first state
+reads live controller words and rebuilds perspective buffers; it is not demo
+playback. The supposed sprite-table initializer actually fills 112 pairs of
+descending row values, and the alleged 3D renderer only performs perspective
+division into RAM buffers without issuing VDP or sprite-render calls. The
+alternate dither initializer has no source caller and is explicitly marked
+`Unreferenced`.
+
+All 43 definitions across the three resulting owners have provenance. There
+are 42 distinct auditable owner addresses before the following VDP module;
+`GameOver_PerspectiveLookupTable_End` shares `$029E2E` with that module's
+first routine and therefore retains provenance without taking its future
+address-keyed audit record. One Game Over entry was audited in the preceding
+pass, so this pass adds 41 records. The 25 address-derived definitions include
+the two descriptor structures that the narrower initial count omitted.
+Provenance rises from 13,796 to 13,821,
+the JSON audit registry from 11,137 to 11,178, and the enforced live
+address-derived ceiling falls from 2,254 to 2,229. The source-module count
+rises from 368 to 370 because code and data now have honest owners.

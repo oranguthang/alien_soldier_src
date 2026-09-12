@@ -94,7 +94,7 @@ Boss_TerobusterDefeatFadeState:                         ; DATA XREF: ROM:0003858
                 move.w  #$B4,d0
                 move.w  #$12C,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                jsr     (Boss_InitDefeatExplosion).l
+                jsr     (AlternateTransition_SpawnAtOwner).l
                 move.w  $10(a5),d0
                 move.w  $14(a5),d1
                 subi.w  #$18,d0

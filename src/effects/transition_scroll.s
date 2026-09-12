@@ -1,5 +1,5 @@
 Effect_SetupScrollPointers:
-                bra.s   Effect_SetupScrollBufferPointers  ; was: sub_26C58
+                bra.s   TransitionEffect_SetOutputBufferPointers  ; was: sub_26C58
 ; End of function Effect_SetupScrollPointers
 ; Sets d5 to alternate sine table address FFFF9B00 and branches to common scroll processing
 Effect_ScrollSineTable1:
@@ -50,7 +50,7 @@ Effect_BuildSineScrollBuffer_StoreSample:               ; CODE XREF: Effect_Scro
                 rts
 ; End of function Effect_ScrollSineTable2
 ; Fills scroll buffer starting at offset -6C00 with value from dword_FF807E+2, repeating word_FF8082 times
-Effect_FillScrollBuffer:                                ; CODE XREF: Effect_InitPaletteEffect+12   p  ; was: sub_26CCA
+Effect_FillScrollBuffer:                                ; CODE XREF: TransitionEffect_UpdateMode3Buffers+12   p  ; was: sub_26CCA
                 move.w  (word_FF807C).w,d0
                 andi.w  #$1FE,d0
                 addi.w  #-$6C00,d0
@@ -140,7 +140,7 @@ Effect_ProcessHorizontalScroll_Loop:                    ; CODE XREF: Effect_Proc
                 rts
 ; End of function Effect_ProcessHorizontalScroll
 ; Processes scroll with conditional vertical calculation based on dword_FF807E flag, quadruples values if enabled
-Effect_ProcessConditionalScroll:                        ; CODE XREF: Effect_InitializePaletteEffects+8   p  ; was: sub_26D80
+Effect_ProcessConditionalScroll:                        ; CODE XREF: TransitionEffect_UpdateMode2Buffers+8   p  ; was: sub_26D80
                 moveq   #1,d1
                 move.w  #$FE,d2
                 move.w  #$A0,d4
@@ -165,7 +165,7 @@ Effect_ProcessConditionalScroll_Next:                   ; CODE XREF: Effect_Proc
                 rts
 ; End of function Effect_ProcessConditionalScroll
 ; Simple scroll processor that applies constant vertical offset from dword_FF807E to 127 horizontal scroll entries
-Effect_ProcessSimpleScroll:                             ; CODE XREF: Effect_InitPaletteEffect+16   j  ; was: sub_26DB4
+Effect_ProcessSimpleScroll:                             ; CODE XREF: TransitionEffect_UpdateMode3Buffers+16   j  ; was: sub_26DB4
                 moveq   #1,d1
                 move.w  #$FE,d2
                 moveq   #$7E,d7                         ; '~'
@@ -182,16 +182,16 @@ Effect_ProcessSimpleScroll_Loop:                        ; CODE XREF: Effect_Proc
                 dbf     d7,Effect_ProcessSimpleScroll_Loop
                 rts
 ; End of function Effect_ProcessSimpleScroll
-; Initializes palette buffer pointers
-Effect_InitPaletteBuffers:                              ; CODE XREF: Effect_PaletteUpdateMain   p  ; was: sub_26DD6
-                                        ; sub_26BAE   p
+; Copies seven 32-byte blocks from the active output buffer into its working copy
+TransitionEffect_CopyWorkingBuffer:                     ; CODE XREF: TransitionEffect_UpdateMode1Buffers   p  ; was: sub_26DD6
+                                        ; TransitionEffect_UpdateMode2Buffers   p
                 movea.w #(word_FF9500-M68K_RAM),a0
                 movea.w #(word_FF9800-M68K_RAM),a1
                 moveq   #6,d7
-; End of function Effect_InitPaletteBuffers
-; Copies palette data between buffers
-Effect_CopyPaletteData:                                 ; CODE XREF: Effect_CopyPaletteData+10   j  ; was: sub_26DE0
-                                        ; Effect_ComplexScrollWave+A   p
+; End of function TransitionEffect_CopyWorkingBuffer
+; Copies d7+1 blocks of 32 bytes from a1 to a0
+Effect_Copy32ByteBlocks:                                ; CODE XREF: Effect_Copy32ByteBlocks+10   j  ; was: sub_26DE0
+                                        ; TransitionEffect_UpdateMode4Buffers+A   p
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
@@ -200,9 +200,9 @@ Effect_CopyPaletteData:                                 ; CODE XREF: Effect_Copy
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
                 move.l  (a1)+,(a0)+
-                dbf     d7,Effect_CopyPaletteData
+                dbf     d7,Effect_Copy32ByteBlocks
                 rts
-; End of function Effect_CopyPaletteData
+; End of function Effect_Copy32ByteBlocks
 ; Applies sine wave modulation to scroll buffer using Effect_LinearScrollBaseTable table and Math_QuarterSineTable multiplier data
 Effect_ApplySineWaveScroll:
                 movea.l #Effect_LinearScrollBaseTable,a0  ; was: sub_26DF6
@@ -240,8 +240,8 @@ Effect_ApplyLinearScroll_Loop:                          ; CODE XREF: Effect_Appl
                 rts
 ; End of function Effect_ApplyLinearScroll
 ; Updates scroll position for effect
-Effect_UpdateScrollPosition:                            ; CODE XREF: Boss_DefeatScrollUpdate   p  ; was: sub_26E4C
-                                        ; sub_26A9E   p
+Effect_UpdateScrollPosition:                            ; CODE XREF: AlternateTransition_Update   p  ; was: sub_26E4C
+                                        ; TransitionEffect_Update   p
                 movea.w #(word_FFE37C-M68K_RAM),a1
                 move.w  (word_FF807C).w,d0
                 subi.w  #$40,d0                         ; '@'
@@ -271,7 +271,7 @@ Effect_TransitionPatternRamp:   dc.w    $EEE, $CEE, $AEE, $8EE, $6EE, $4CE, $2AE
                                         ; Effect_UpdateScrollPosition+3A   r
 
 ; Clears 64 longwords of scroll buffer starting at dword_FF9400 to zero
-Effect_ClearScrollBuffer:                               ; CODE XREF: Effect_InitPaletteEffect:Effect_InitPaletteEffect_Setup   p  ; was: sub_26EAC
+Effect_ClearScrollBuffer:                               ; CODE XREF: TransitionEffect_UpdateMode3Buffers:TransitionEffect_UpdateMode3Buffers_Prepare   p  ; was: sub_26EAC
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #0,d0
                 moveq   #$3F,d7                         ; '?'
@@ -287,7 +287,7 @@ Effect_TransitionSineTable:     binclude "data/other/word_26FBC.bin"  ; was: wor
 Effect_TransitionSineTable_End:                         ; was: word_26FBC_End
 
 ; Generates the transition edge and scroll output buffers in RAM
-Effect_GenerateTransitionBuffers:                       ; CODE XREF: Effect_PaletteUpdateMain+4   j  ; was: sub_271BC
+Effect_GenerateTransitionBuffers:                       ; CODE XREF: TransitionEffect_UpdateMode1Buffers+4   j  ; was: sub_271BC
                 movea.w #(byte_FF9B00-M68K_RAM),a0
                 movea.w #(byte_FF9B00-M68K_RAM),a2
                 movea.l #Effect_TransitionSineTable,a1
@@ -391,8 +391,8 @@ Effect_GenerateTransitionBuffers_StoreOutput:           ; CODE XREF: Effect_Gene
                 rts
 ; End of function Effect_GenerateTransitionBuffers
 ; Clears the transition pattern buffer and resets its progress counter
-Effect_ClearTransitionPatternBuffer:                    ; CODE XREF: Boss_DefeatInitAnimation+16   j  ; was: sub_272A8
-                                        ; Effect_TransitionInit+16   j
+Effect_ClearTransitionPatternBuffer:                    ; CODE XREF: AlternateTransition_InitializeObject+16   j  ; was: sub_272A8
+                                        ; TransitionEffect_InitializeObject+16   j
                 clr.w   (word_FF8082).w
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 moveq   #0,d0
@@ -403,8 +403,8 @@ Effect_ClearTransitionPatternBuffer_Loop:               ; CODE XREF: Effect_Clea
                 bra.w   Effect_QueueTransitionVdpRegisters
 ; End of function Effect_ClearTransitionPatternBuffer
 ; Builds the base transition pattern in the shared effect buffer
-Effect_BuildTransitionPattern:                          ; CODE XREF: Effect_SetupScroll+C   p  ; was: sub_272BE
-                                        ; Stage_TunnelSetScroll+C   p
+Effect_BuildTransitionPattern:                          ; CODE XREF: TransitionEffect_BuildInitialPattern+C   p  ; was: sub_272BE
+                                        ; TunnelTransition_BuildInitialPattern+C   p
                 moveq   #0,d0
                 move.l  #$EEEE0000,d1
                 move.l  #$EEEEEEEE,d2
@@ -436,7 +436,7 @@ Effect_BuildTransitionPattern_SuffixLoop:               ; CODE XREF: Effect_Buil
                 bra.w   Effect_QueueTransitionVdpRegisters
 ; End of function Effect_BuildTransitionPattern
 ; Initializes special scroll pattern with EEEEEEEE values for boss defeat effect, sets up 40 bytes of pattern
-Effect_InitDefeatScroll:                                ; CODE XREF: Boss_DefeatScrollInit+C   p  ; was: sub_27302
+Effect_InitDefeatScroll:                                ; CODE XREF: AlternateTransition_BuildInitialPattern+C   p  ; was: sub_27302
                 moveq   #0,d0
                 move.l  #$EEEEEEEE,d2
                 movea.w #(dword_FF9400-M68K_RAM),a0
@@ -498,8 +498,8 @@ Effect_TransitionMaskByteOffsets:   dc.w    $10, $111, $212, $313, $414, $515, $
                                         ; DATA XREF: Effect_MaskScrollByte+4   o
 
 ; Applies the current transition mask to three pattern-buffer rows
-Effect_ApplyTransitionMask:                             ; CODE XREF: Boss_DefeatScrollUpdate+1A   j  ; was: sub_273BC
-                                        ; Effect_UpdateTransition+2C   j
+Effect_ApplyTransitionMask:                             ; CODE XREF: AlternateTransition_Update+1A   j  ; was: sub_273BC
+                                        ; TransitionEffect_Update+2C   j
                 lea     Effect_TransitionMaskPatternsA(pc),a1
                 nop
                 move.w  (word_FF807C).w,d2
@@ -570,12 +570,12 @@ Effect_TransitionMaskPatternsB: dc.l    $FFFFFFFF, $FFFFFFF, $FFF0FFF, $F0F0FFF 
                 dc.l    $FFFFFFFF, $FFFFFFF0, $FFF0FFF0, $FFF0F0F0
                 dc.l    $F0F0F0F0, $F0F0F000, $F000F000, $F0000000
 
-; Complex scroll wave effect combining palette copy, sine table scrolling, and clamped vertical offset calculations
-Effect_ComplexScrollWave:                               ; DATA XREF: ROM:00026BA4   o  ; was: sub_274CA
+; Builds the denser transition output used by buffer mode four
+TransitionEffect_UpdateMode4Buffers:                    ; DATA XREF: ROM:00026BA4   o  ; was: sub_274CA
                 movea.w #(word_FF9500-M68K_RAM),a0
                 movea.w #(word_FF9800-M68K_RAM),a1
                 moveq   #3,d7
-                bsr.w   Effect_CopyPaletteData
+                bsr.w   Effect_Copy32ByteBlocks
                 movea.w #(byte_FF9A80-M68K_RAM),a0
                 movea.w #(byte_FF9A80-M68K_RAM),a2
                 movea.l #Effect_TransitionSineTable,a1
@@ -587,33 +587,33 @@ Effect_ComplexScrollWave:                               ; DATA XREF: ROM:00026BA
                 asl.w   #1,d1
                 moveq   #0,d3
                 move.w  (word_FF807C).w,d2
-                beq.s   Effect_ComplexScrollWave_BeginEdgeLoop
+                beq.s   TransitionEffect_UpdateMode4Buffers_BeginEdgeLoop
                 move.l  (dword_FF80A0).w,d3
                 divu.w  d2,d3
                 andi.l  #$FFFF,d3
                 asl.l   #1,d3
                 asl.l   #8,d3
-Effect_ComplexScrollWave_BeginEdgeLoop:                 ; CODE XREF: Effect_ComplexScrollWave+34   j  ; was: loc_27510
+TransitionEffect_UpdateMode4Buffers_BeginEdgeLoop:      ; CODE XREF: TransitionEffect_UpdateMode4Buffers+34   j  ; was: loc_27510
                 moveq   #0,d2
-Effect_ComplexScrollWave_EdgeLoop:                      ; CODE XREF: Effect_ComplexScrollWave+68   j  ; was: loc_27512
+TransitionEffect_UpdateMode4Buffers_EdgeLoop:           ; CODE XREF: TransitionEffect_UpdateMode4Buffers+68   j  ; was: loc_27512
                 sub.l   d3,d2
                 move.l  d2,d4
                 swap    d4
                 and.w   d6,d4
                 cmp.w   d5,d4
-                bpl.s   Effect_ComplexScrollWave_ReadSample
+                bpl.s   TransitionEffect_UpdateMode4Buffers_ReadSample
                 moveq   #0,d0
-                bra.s   Effect_ComplexScrollWave_StoreSample
+                bra.s   TransitionEffect_UpdateMode4Buffers_StoreSample
 ; ---------------------------------------------------------------------------
-Effect_ComplexScrollWave_ReadSample:                    ; CODE XREF: Effect_ComplexScrollWave+52   j  ; was: loc_27522
+TransitionEffect_UpdateMode4Buffers_ReadSample:         ; CODE XREF: TransitionEffect_UpdateMode4Buffers+52   j  ; was: loc_27522
                 move.w  (a1,d4.w),d0
                 mulu.w  d1,d0
                 swap    d0
                 andi.w  #$FFFC,d0
-Effect_ComplexScrollWave_StoreSample:                   ; CODE XREF: Effect_ComplexScrollWave+56   j  ; was: loc_2752E
+TransitionEffect_UpdateMode4Buffers_StoreSample:        ; CODE XREF: TransitionEffect_UpdateMode4Buffers+56   j  ; was: loc_2752E
                 move.w  d0,-(a0)
                 move.w  d0,(a2)+
-                dbf     d7,Effect_ComplexScrollWave_EdgeLoop
+                dbf     d7,TransitionEffect_UpdateMode4Buffers_EdgeLoop
                 movea.w #(dword_FF9A00-M68K_RAM),a0
                 movea.w #(word_FF9800-M68K_RAM),a2
                 movea.w #(word_FF9600-M68K_RAM),a3
@@ -628,54 +628,54 @@ Effect_ComplexScrollWave_StoreSample:                   ; CODE XREF: Effect_Comp
                 moveq   #4,d1
                 move.w  #$FC,d2
                 moveq   #$3E,d7                         ; '>'
-Effect_ComplexScrollWave_OutputLoop:                    ; CODE XREF: Effect_ComplexScrollWave+F6   j  ; was: loc_27564
+TransitionEffect_UpdateMode4Buffers_OutputLoop:         ; CODE XREF: TransitionEffect_UpdateMode4Buffers+F6   j  ; was: loc_27564
                 move.w  (a0)+,d0
                 cmpa.w  #$9A02,a0
-                bmi.s   Effect_ComplexScrollWave_ClearOutsideRange
+                bmi.s   TransitionEffect_UpdateMode4Buffers_ClearOutsideRange
                 cmpa.w  #$9B00,a0
-                bmi.s   Effect_ComplexScrollWave_CheckOffset
-Effect_ComplexScrollWave_ClearOutsideRange:             ; CODE XREF: Effect_ComplexScrollWave+A0   j  ; was: loc_27572
+                bmi.s   TransitionEffect_UpdateMode4Buffers_CheckOffset
+TransitionEffect_UpdateMode4Buffers_ClearOutsideRange:  ; CODE XREF: TransitionEffect_UpdateMode4Buffers+A0   j  ; was: loc_27572
                 moveq   #0,d0
-Effect_ComplexScrollWave_CheckOffset:                   ; CODE XREF: Effect_ComplexScrollWave+A6   j  ; was: loc_27574
+TransitionEffect_UpdateMode4Buffers_CheckOffset:        ; CODE XREF: TransitionEffect_UpdateMode4Buffers+A6   j  ; was: loc_27574
                 move.w  d4,d5
                 sub.w   d0,d5
                 move.w  d5,d6
-                bmi.s   Effect_ComplexScrollWave_AdjustOffset
+                bmi.s   TransitionEffect_UpdateMode4Buffers_AdjustOffset
                 cmpi.w  #8,d5
-                bpl.s   Effect_ComplexScrollWave_ClampSample
-Effect_ComplexScrollWave_AdjustOffset:                  ; CODE XREF: Effect_ComplexScrollWave+B0   j  ; was: loc_27582
+                bpl.s   TransitionEffect_UpdateMode4Buffers_ClampSample
+TransitionEffect_UpdateMode4Buffers_AdjustOffset:       ; CODE XREF: TransitionEffect_UpdateMode4Buffers+B0   j  ; was: loc_27582
                 asr.w   #1,d5
                 add.w   d5,d0
-                bpl.s   Effect_ComplexScrollWave_ZeroOffset
-Effect_ComplexScrollWave_ClearSample:                   ; CODE XREF: Effect_ComplexScrollWave+D8   j  ; was: loc_27588
+                bpl.s   TransitionEffect_UpdateMode4Buffers_ZeroOffset
+TransitionEffect_UpdateMode4Buffers_ClearSample:        ; CODE XREF: TransitionEffect_UpdateMode4Buffers+D8   j  ; was: loc_27588
                 moveq   #0,d0
-Effect_ComplexScrollWave_ZeroOffset:                    ; CODE XREF: Effect_ComplexScrollWave+BC   j  ; was: loc_2758A
+TransitionEffect_UpdateMode4Buffers_ZeroOffset:         ; CODE XREF: TransitionEffect_UpdateMode4Buffers+BC   j  ; was: loc_2758A
                 moveq   #0,d5
                 andi.w  #4,d6
                 add.w   d6,d5
-                bra.s   Effect_ComplexScrollWave_StoreOutput
+                bra.s   TransitionEffect_UpdateMode4Buffers_StoreOutput
 ; ---------------------------------------------------------------------------
-Effect_ComplexScrollWave_ClampSample:                   ; CODE XREF: Effect_ComplexScrollWave+B6   j  ; was: loc_27594
+TransitionEffect_UpdateMode4Buffers_ClampSample:        ; CODE XREF: TransitionEffect_UpdateMode4Buffers+B6   j  ; was: loc_27594
                 cmpi.w  #$9E,d0
-                bmi.s   Effect_ComplexScrollWave_CheckUpperBound
+                bmi.s   TransitionEffect_UpdateMode4Buffers_CheckUpperBound
                 move.w  #$9E,d0
-Effect_ComplexScrollWave_CheckUpperBound:               ; CODE XREF: Effect_ComplexScrollWave+CE   j  ; was: loc_2759E
+TransitionEffect_UpdateMode4Buffers_CheckUpperBound:    ; CODE XREF: TransitionEffect_UpdateMode4Buffers+CE   j  ; was: loc_2759E
                 cmpi.w  #$140,d5
-                bpl.s   Effect_ComplexScrollWave_ClearSample
+                bpl.s   TransitionEffect_UpdateMode4Buffers_ClearSample
                 move.w  d5,d3
                 asr.w   #1,d3
                 add.w   d0,d3
                 cmpi.w  #$100,d3
-                bmi.s   Effect_ComplexScrollWave_StoreOutput
+                bmi.s   TransitionEffect_UpdateMode4Buffers_StoreOutput
                 move.w  #$140,d0
                 sub.w   d5,d0
-Effect_ComplexScrollWave_StoreOutput:                   ; CODE XREF: Effect_ComplexScrollWave+C8   j  ; was: loc_275B6
-                                        ; Effect_ComplexScrollWave+E4   j
+TransitionEffect_UpdateMode4Buffers_StoreOutput:        ; CODE XREF: TransitionEffect_UpdateMode4Buffers+C8   j  ; was: loc_275B6
+                                        ; TransitionEffect_UpdateMode4Buffers+E4   j
                 move.w  d5,(a3)+
                 sub.w   d1,d0
                 and.w   d2,d0
                 move.w  d0,(a2)+
                 addq.w  #4,d1
-                dbf     d7,Effect_ComplexScrollWave_OutputLoop
+                dbf     d7,TransitionEffect_UpdateMode4Buffers_OutputLoop
                 rts
-; End of function Effect_ComplexScrollWave
+; End of function TransitionEffect_UpdateMode4Buffers

@@ -221,7 +221,7 @@ Boss_JokerFadeOutState:                                 ; DATA XREF: ROM:0003B30
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.b  #4,(byte_FFA95A).w
-                jsr     (Effect_InitPlayerSpawn).l
+                jsr     (TransitionEffect_SpawnAtOwner).l
                 addi.w  #$10,$14(a0)
                 rts
 ; End of function Boss_JokerFadeOutState

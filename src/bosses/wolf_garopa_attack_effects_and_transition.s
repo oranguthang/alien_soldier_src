@@ -199,7 +199,7 @@ Boss_WolfGaropaBeginPostDefeatDelay:                    ; DATA XREF: Boss_WolfGa
                 addq.w  #2,4(a5)
                 move.w  #$A0,$11C(a5)
                 move.b  #4,(byte_FFA95A).w
-                jmp     Effect_InitPlayerSpawn
+                jmp     TransitionEffect_SpawnAtOwner
 ; End of function Boss_WolfGaropaBeginPostDefeatDelay
 ; Count down the post-defeat delay while reducing the fade amount
 Boss_WolfGaropaUpdatePostDefeatDelay:                   ; DATA XREF: Boss_WolfGaropaUpdate+52   o  ; was: sub_50F54

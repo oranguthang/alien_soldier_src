@@ -83,7 +83,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Boss_CaterpillarTwoPhaseSegment
                 dc.l    Projectile_UpdateTwoSpeedShotCollision
                 dc.l    Boss_ShellshogunDecisionPoseCommands
-                dc.l    Effect_TransitionObjectDispatcher
+                dc.l    TransitionEffect_ObjectMain
                 dc.l    Boss_FlyingNeoMain
                 dc.l    Projectile_AntroidUpdate
                 dc.l    Boss_JokerMain
@@ -177,7 +177,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_FallingShotController
                 dc.l    Enemy_Stage10WaspController
                 dc.l    Enemy_UpdateStage10WaspDefeatDebris
-                dc.l    Stage_TunnelSequencer
+                dc.l    TunnelTransition_ObjectMain
                 dc.l    Enemy_Stage12FloaterController
                 dc.l    Enemy_UpdateStage12DefeatDebris
                 dc.l    Enemy_Stage10BeetleController
@@ -212,7 +212,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Sys_Process
                 dc.l    Projectile_BugmaxDebrisSpawner
                 dc.l    Boss_ShieldViperUpdate
                 dc.l    Enemy_UpdateBouncingObject
-                dc.l    Boss_DefeatStateDispatcher
+                dc.l    AlternateTransition_ObjectMain
                 dc.l    Projectile_BackStringerChainFalling
                 dc.l    Projectile_ShiperBouncingShot
                 dc.l    Projectile_BackStringerReboundShotMain

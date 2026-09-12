@@ -29,7 +29,7 @@ Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_Ini
                 clr.w   (dword_FFA904).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.w  #0,(word_FF807A).w
-                jsr     (Effect_TransitionDispatcher).l
+                jsr     (TransitionEffect_ConfigureRasterMode).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 rts
@@ -61,6 +61,6 @@ Credits_IntroVRAMTransferParameters:    dc.l    $FFFF7000, $FFFF6000, $FFFF4000,
 ; Updates credits palette effects
 Credits_UpdateEffects:                                  ; DATA XREF: Sys_DispatchGameState+BA   o  ; was: sub_1E246
                 jsr     (Gfx_FadePaletteTransition).l
-                jsr     (Effect_PaletteDispatcher).l
+                jsr     (TransitionEffect_UpdateBuffers).l
                 rts
 ; End of function Credits_UpdateEffects

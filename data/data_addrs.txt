@@ -589,4 +589,4 @@ word_5A43E,0x5A43E,0x5CB72,other
 options_bgm_test_entries,0x998C,0x9C4C,other
 word_E99BE,0xE99BE,0xE9C2E,other
 word_EC82E,0xEC82E,0xECB1C,other
-dword_27A2E,0x27A2E,0x29E2E,other
+game_over_perspective_lookup,0x27A2E,0x29E2E,cutscenes

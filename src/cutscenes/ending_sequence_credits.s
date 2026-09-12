@@ -62,7 +62,7 @@ EndingSequence_AssetLoads:  dc.w    7                   ; field_0  ; was: stru_7
 
 ; Runs the palette effect and dispatches the complete credits-to-planet sequence
 EndingSequence_Dispatch:                                ; CODE XREF: EndingSequence_UpdateFromTransition+8   j  ; was: sub_7C24
-                jsr     (Effect_PaletteDispatcher).l
+                jsr     (TransitionEffect_UpdateBuffers).l
                 move.w  (dword_FF8128+2).w,d0
                 lea     EndingSequence_States(pc,d0.w),a0
                 adda.w  (a0),a0
@@ -151,7 +151,7 @@ EndingSequence_FadeOutCredits:                          ; DATA XREF: ROM:00007C3
                 lea     (Entity_ObjectPool).w,a5
                 move.w  #$128,dword_FFC630-Entity_ObjectPool(a5)
                 move.w  #$E8,$14(a5)
-                jsr     (Object_ClearForTransition).l
+                jsr     (TransitionEffect_ReplaceOwnerAndClearObjects).l
                 move.w  #$2C8,(a5)
                 move.w  #$10,(CutsceneTimer).l
                 addq.w  #2,(dword_FF8128+2).w

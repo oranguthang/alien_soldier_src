@@ -5216,9 +5216,9 @@
       "sha1": "7d52a60fb69c741690536399720e6bf24acd4505"
     },
     {
-      "name": "dword_27A2E",
-      "path": "other/dword_27A2E.bin",
-      "region": "other",
+      "name": "game_over_perspective_lookup",
+      "path": "cutscenes/game_over_perspective_lookup.bin",
+      "region": "cutscenes",
       "address": "0x27A2E",
       "end": "0x29E2E",
       "size": 9216,

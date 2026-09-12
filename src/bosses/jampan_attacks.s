@@ -457,7 +457,7 @@ Boss_JampanResetAfterDefeatFadeState:                   ; DATA XREF: ROM:0004923
                 move.w  #$218,d0
                 move.w  #$23C,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                jsr     (Effect_InitPlayerSpawn).l
+                jsr     (TransitionEffect_SpawnAtOwner).l
                 move.b  #4,(byte_FFA95A).w
                 addq.w  #2,4(a5)
                 rts

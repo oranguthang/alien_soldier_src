@@ -272,7 +272,7 @@ Boss_ShellshogunDefeatPaletteState:                     ; DATA XREF: ROM:0003953
                 subq.w  #1,$BC(a5)
                 bpl.s   Boss_ShellshogunApplyDefeatPaletteFade
                 addq.w  #2,4(a5)
-                jsr     (Effect_InitPlayerSpawn).l
+                jsr     (TransitionEffect_SpawnAtOwner).l
                 move.b  #4,(byte_FFA95A).w
 Boss_ShellshogunApplyDefeatPaletteFade:                 ; CODE XREF: Boss_ShellshogunDefeatPaletteState+A   j  ; was: loc_39898
                 jmp     Boss_ApplyDefeatPaletteFade
