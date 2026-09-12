@@ -5533,3 +5533,28 @@ records. The enforced address-derived ceiling falls from 969 to 961; the
 remaining backlog comprises 831 RAM equates and 130 preserved-data labels. The
 source layout now contains 371 modules with a 320.2-line mean and no module-size
 waiver.
+
+The Stage 2 asset pass removes fourteen address-derived definitions and splits
+three foreign ownership ranges out of the two former phase containers.
+`stage2_phase1_assets.s` now ends with its own compressed graphics; the adjacent
+Epsilon 1 mapping payload and ship-sequence sprite frames are separate
+`epsilon_1_mapping_data.s` and `ship_sequence_sprite_mappings.s` modules. The
+shared Stage 18/20 mapping stream after the dormant Stage 2 phase-2 payloads is
+now `shared_stage18_and_stage20_mapping_data.s` rather than being mislabeled as
+Stage 2 data.
+
+All active ownership claims come directly from type-six or type-seven load
+records. The phase-2-only assets retain the `Unreferenced` qualifier because no
+reconstructed static caller reaches their loader; the shared `$7000` mapping
+stream is named from its active Stage 18 and Stage 20 consumers. The Epsilon 1
+source is selected beside `Boss_Epsilon1TileArt` by the Stage 17 command list.
+
+Nine unique source addresses receive exact static audit records. Five
+binary-backed exclusive-end aliases retain provenance and fold into following
+payload boundaries. Provenance rises from 15,090 to 15,104 mappings, the audit
+registry from 12,266 to 12,275, and the semantic review upper bound rises from
+3,124 to 3,129 solely because those five reviewed aliases do not need duplicate
+address records. The enforced address-derived ceiling falls from 961 to 947;
+the remaining backlog comprises 831 RAM equates and 116 preserved-data labels.
+The source layout now contains 374 modules with a 317.6-line mean and no module-
+size waiver.

@@ -1,69 +1,10 @@
-tiles_1A752A:   binclude "data/artcomp/tiles_1A752A.bin"
-tiles_1A752A_End:
-byte_1A8B30:    dc.b    0, $55, 2, 5, 6, 7, $40, 8, $B, 2, $C, $F, $10, $80, 7, 1, 9, $A, $80, 7, $80, $F, 5, $11, $12, $13, $14, $15, $16, $80, $F, 5
+Stage2Phase1TileArt0000:        binclude "data/artcomp/tiles_1A752A.bin"  ; was: tiles_1A752A
+Stage2Phase1TileArt0000_End:                            ; was: tiles_1A752A_End
+Stage2Phase1MappingData6000:    dc.b    0, $55, 2, 5, 6, 7, $40, 8, $B, 2, $C, $F, $10, $80, 7, 1, 9, $A, $80, 7, $80, $F, 5, $11, $12, $13, $14, $15, $16, $80, $F, 5  ; was: byte_1A8B30
                                         ; DATA XREF: ROM:00011AD2   o
                 dc.b    $19, $1A, $1B, $1C, $1D, $1E, $80, $1F, 5, $1F, $20, $21, $22, $23, $24, $80, $1F, 0, $25, $21, $26, 1, $27, $28, $80, $2F, $24, 0, $80, $2F, $90, 7
                 dc.b    1, $D, $E, $90, $F, 1, $17, $18, $B8, $F, $F8, $1F, $5F, 0, 0, $58, 0, 0, 1, 0, $34, $B0, $77, $FF
-byte_1A8B88:    binclude "data/mappings/byte_1A8B88.bin"
-byte_1A8B88_End:
-tiles_1A8F0E:   binclude "data/artcomp/tiles_1A8F0E.bin"
-tiles_1A8F0E_End:
-byte_1A9AD8:    dc.b    0, $C4, $34, 0, 1, $63, 3, $94, 7, 1, 6, $63, $98, $11, 2, 1, $63, 2, $8C, $19, 2, 4, $63, 5, $8C, $21, 2, 7, $63, 8, $A4, $2F
-                                        ; DATA XREF: ROM:00012490   o
-                dc.b    0, 9, $8C, $35, 2, $C, $63, $D, $8C, $3D, 2, $10, $63, $11, $8C, $45, 0, $14, $61, $63, $15, $A, $B, $8C, $51, 2, $E, $63, $F, $8C, $59, 2
-                dc.b    $12, $63, $13, $8C, $61, 2, $16, $63, $17, $9C, $6D, 2, $18, $63, $19, $94, $77, 0, $1D, $8C, $7D, 2, $20, $63, $21, $8C, $85, 0, $24, $61, $63, $25
-                dc.b    $1A, $1B, $8C, $91, 2, $1E, $63, $1F, $8C, $99, 2, $22, $63, $23, $8C, $A1, 2, $26, $63, $27, $94, $AB, 0, $28, $60, $63, $29, $2A, $84, $B3, 0, $2D
-                dc.b    $60, $63, $2E, $2F, $94, $BF, 0, $33, $8C, $C5, 0, $37, $61, $63, $38, $2B, $2C, $8C, $D1, 0, $30, $60, $63, $31, $32, $84, $D9, 0, $34, $60, $63, $35
-                dc.b    $36, $84, $E1, 0, $39, $61, $63, $3A, $3B, $3C, $8C, $ED, 2, $3D, $63, $3E, $36, 0, $62, $63, $3F, $40, $41, $42, $95, $17, 0, $44, $BD, $29, 0, $43
-                dc.b    $95, $31, 0, $45, $D1, $49
-ShipPiece_SpriteFrame0: dc.w    $A84F, $100, $F6FD      ; DATA XREF: ROM:ShipPiece_SpriteFrameTable   o  ; was: word_1A9B9E
-ShipPiece_SpriteFrame1: dc.w    $A851, $600, $F0F7      ; DATA XREF: ROM:00008FF2   o  ; was: word_1A9BA4
-ShipPiece_SpriteFrame2: dc.w    $28A9, 0, $E0FE         ; DATA XREF: ROM:00008FF6   o  ; was: word_1A9BAA
-                dc.w    $28A3, $600, $F8E6
-                dc.w    $2897, $E00, $8F6
-                dc.w    $A887, $F00, $E8F6
-ShipPiece_SpriteFrame3:     dc.w    $A881, $900, $FBF6  ; DATA XREF: ROM:00008FFA   o  ; was: word_1A9BC2
-ShipDebris_SpriteFrame0:    dc.w    $2847, $300, $30FC  ; DATA XREF: ROM:ShipDebris_SpriteFrameTable   o  ; was: word_1A9BC8
-                dc.w    $2847, $300, $10FC
-                dc.w    $2847, $300, $F0FC
-                dc.w    $2847, $300, $D0FC
-                dc.w    $A847, $300, $B0FC
-ShipDebris_SpriteFrame1:    dc.w    $284B, $300, $B0F5  ; DATA XREF: ROM:0000911E   o  ; was: word_1A9BE6
-                                        ; ROM:00009122   o
-                dc.w    $284B, $300, $D0F9
-                dc.w    $284B, $300, $3005
-                dc.w    $284B, $300, $1001
-                dc.w    $A84B, $300, $F0FD
-ShipDebris_SpriteFrame2:    dc.w    $2878, 0, $A8FC     ; DATA XREF: ROM:00009126   o  ; was: word_1A9C04
-                dc.w    $3878, 0, $50FC
-                dc.w    $286B, $300, $30FC
-                dc.w    $286B, $300, $B0FC
-                dc.w    $286B, $300, $10FC
-                dc.w    $286B, $300, $F0FC
-                dc.w    $A86B, $300, $D0FC
-ShipDebris_SpriteFrame3:    dc.w    $3878, 0, $5008     ; DATA XREF: ROM:0000912A   o  ; was: word_1A9C2E
-                                        ; ROM:0000912E   o
-                dc.w    $2878, 0, $A8F3
-                dc.w    $2867, $300, $B0F6
-                dc.w    $2867, $300, $3006
-                dc.w    $2867, $300, $D0FA
-                dc.w    $2867, $300, $1002
-                dc.w    $A867, $300, $F0FE
-ShipDebris_SpriteFrame4:    dc.w    $3879, $500, $A0F8  ; DATA XREF: ROM:00009132   o  ; was: word_1A9C58
-                dc.w    $2879, $500, $50F8
-                dc.w    $286F, $700, $30F8
-                dc.w    $286F, $700, $10F8
-                dc.w    $286F, $700, $F0F8
-                dc.w    $286F, $700, $D0F8
-                dc.w    $A86F, $700, $B0F8
-ShipDebris_SpriteFrame5:    dc.w    $2057, $F00, $3000  ; DATA XREF: ROM:00009136   o  ; was: word_1A9C82
-                dc.w    $2057, $F00, $1000
-                dc.w    $2857, $F00, $30E0
-                dc.w    $2857, $F00, $10E0
-                dc.w    $2057, $F00, $F000
-                dc.w    $2857, $F00, $F0E0
-                dc.w    $2057, $F00, $D000
-                dc.w    $2857, $F00, $D0E0
-                dc.w    $2057, $F00, $B000
-                dc.w    $A857, $F00, $B0E0
-                dc.w    $A87D, $500, $FAF6
+Stage2Phase1MappingData4000:    binclude "data/mappings/byte_1A8B88.bin"  ; was: byte_1A8B88
+Stage2Phase1MappingData4000_End:                        ; was: byte_1A8B88_End
+Stage2Phase1TileArt6000:        binclude "data/artcomp/tiles_1A8F0E.bin"  ; was: tiles_1A8F0E
+Stage2Phase1TileArt6000_End:                            ; was: tiles_1A8F0E_End

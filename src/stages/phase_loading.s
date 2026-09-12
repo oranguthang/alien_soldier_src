@@ -47,16 +47,16 @@ Stage_LoadStage2Phase1Assets:                           ; DATA XREF: ROM:0001175
 ; ---------------------------------------------------------------------------
 Stage2Phase1AssetLoadList:  dc.w    7                   ; field_0  ; was: stru_11AC2
                                         ; DATA XREF: Stage_LoadStage2Phase1Assets+6   o
-                dc.l    tiles_1A752A                    ; field_2
+                dc.l    Stage2Phase1TileArt0000         ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1A8F0E                    ; field_2
+                dc.l    Stage2Phase1TileArt6000         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A8B30                     ; field_2
+                dc.l    Stage2Phase1MappingData6000     ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A8B88                     ; field_2
+                dc.l    Stage2Phase1MappingData4000     ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedMappingData7000           ; field_2
@@ -100,7 +100,7 @@ Stage18AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    byte_1AF09C                     ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B3A26                     ; field_2
+                dc.l    SharedStage18AndStage20MappingData7000  ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_1B109C                     ; field_2
@@ -125,16 +125,16 @@ UnreferencedStage2Phase2AssetLoader:
 ; ---------------------------------------------------------------------------
 UnreferencedStage2Phase2AssetLoadList:  dc.w    7       ; field_0  ; was: stru_11B72
                                         ; DATA XREF: UnreferencedStage2Phase2AssetLoader+6   o
-                dc.l    tiles_1B10FA                    ; field_2
+                dc.l    UnreferencedStage2Phase2TileArt0000  ; field_2
                 dc.w    0                               ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B33E8                     ; field_2
+                dc.l    UnreferencedStage2Phase2MappingData6000  ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B3458                     ; field_2
+                dc.l    UnreferencedStage2Phase2MappingData4020  ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B3A26                     ; field_2
+                dc.l    SharedStage18AndStage20MappingData7000  ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    SharedSceneAndStageTileArt9000  ; field_2
@@ -177,7 +177,7 @@ Stage20AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    byte_1B41DA                     ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1B3A26                     ; field_2
+                dc.l    SharedStage18AndStage20MappingData7000  ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    SharedSceneAndStageTileArt9000  ; field_2
