@@ -12,7 +12,7 @@ Boss_BackStringerMain:                                  ; DATA XREF: ROM:Entity_
 Boss_BackStringerUpdateActiveFrame:                     ; CODE XREF: Boss_BackStringerMain+14   j  ; was: loc_446D4
                                         ; Boss_BackStringerMain+1C   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
                 btst    #7,2(a5)
@@ -110,20 +110,20 @@ Boss_BackStringerResetManualControlState:               ; CODE XREF: Boss_BackSt
 ; End of function Boss_BackStringerResetManualControlState
 ; Provides an otherwise unreachable controller-driven Back Stringer test state
 Boss_BackStringerManualControlState:                    ; DATA XREF: ROM:00044716   o  ; was: sub_447FA
-                btst    #6,(word_FFF708).w
+                btst    #6,(ControllerPressedState).w
                 beq.s   Boss_BackStringerCheckRetractInput
                 bra.w   Boss_BackStringerResetManualControlState
 ; ---------------------------------------------------------------------------
 Boss_BackStringerCheckRetractInput:                     ; CODE XREF: Boss_BackStringerManualControlState+6   j  ; was: loc_44806
-                btst    #5,(word_FFF708).w
+                btst    #5,(ControllerPressedState).w
                 beq.s   Boss_BackStringerCheckRaiseTailInput
                 bsr.w   Boss_BackStringerRetractTailSegments
 Boss_BackStringerCheckRaiseTailInput:                   ; CODE XREF: Boss_BackStringerManualControlState+12   j  ; was: loc_44812
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Boss_BackStringerCheckLowerTailInput
                 subi.l  #$10000,$2FC(a5)
 Boss_BackStringerCheckLowerTailInput:                   ; CODE XREF: Boss_BackStringerManualControlState+1E   j  ; was: loc_44822
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Boss_BackStringerUpdateManualControlPose
                 addi.l  #$10000,$2FC(a5)
 Boss_BackStringerUpdateManualControlPose:               ; CODE XREF: Boss_BackStringerManualControlState+2E   j  ; was: loc_44832
@@ -684,7 +684,7 @@ Boss_BackStringerApplyTrackingAngle:                    ; CODE XREF: Boss_BackSt
 ; Initializes defeat flags and emits the detached chain objects
 Boss_BackStringerDefeatInit:                            ; CODE XREF: Boss_BackStringerMain+22   j  ; was: sub_44E6E
                 move.b  #1,(byte_FF830E).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 move.w  #8,(word_FF808C).w
                 clr.w   8(a5)

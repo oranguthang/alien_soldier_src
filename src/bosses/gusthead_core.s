@@ -47,12 +47,12 @@ Boss_GustheadCheckStageExit:                            ; CODE XREF: Boss_Gusthe
                 bset    #7,$4A(a5)
                 clr.l   (dword_FF8240).w
                 move.w  #$5C,4(a5)                      ; '\'
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
 Boss_GustheadUpdatePaletteAndScreenX:                   ; CODE XREF: Boss_GustheadMain+5E   j  ; was: loc_3F22E
                                         ; Boss_GustheadMain+66   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$5C(a5)
 Boss_GustheadDispatchState:                             ; CODE XREF: Boss_GustheadMain+4   j  ; was: loc_3F240
                 move.w  4(a5),d0
@@ -346,7 +346,7 @@ Boss_GustheadAlignMiddleJointState:                     ; DATA XREF: ROM:0003F26
                 addq.w  #2,4(a5)
                 move.l  #$FFFE0000,(dword_FF9410).w
                 move.l  #$1000,(dword_FF941C).w
-                cmpi.w  #$120,(dword_FFA410).w
+                cmpi.w  #$120,(PlayerXPosition).w
                 bcc.s   Boss_GustheadAccelerateOuterJointPositive
                 move.l  #$FFFFF000,(dword_FF9418).w
                 bra.s   Boss_GustheadBeginOscillationPatternReturn
@@ -380,7 +380,7 @@ Boss_GustheadSweepOuterJointReturn:                     ; CODE XREF: Boss_Gusthe
 Boss_GustheadMoveTowardPatternTarget:                   ; CODE XREF: Boss_GustheadBeginOscillationPattern+46   p  ; was: sub_3F62C
                                         ; Boss_GustheadSweepOuterJointState+14   p
                 move.w  $10(a5),d0
-                sub.w   (dword_FFA410).w,d0
+                sub.w   (PlayerXPosition).w,d0
                 bpl.s   Boss_GustheadCheckHorizontalTargetDistance
                 neg.w   d0
 Boss_GustheadCheckHorizontalTargetDistance:             ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+8   j  ; was: loc_3F638
@@ -390,7 +390,7 @@ Boss_GustheadCheckHorizontalTargetDistance:             ; CODE XREF: Boss_Gusthe
                 bra.s   Boss_GustheadMoveTowardHorizontalTarget
 ; ---------------------------------------------------------------------------
 Boss_GustheadSelectHorizontalPatternTarget:             ; CODE XREF: Boss_GustheadMoveTowardPatternTarget+10   j  ; was: loc_3F644
-                cmpi.w  #$120,(dword_FFA410).w
+                cmpi.w  #$120,(PlayerXPosition).w
                 bcc.s   Boss_GustheadUseLeftPatternTarget
                 move.w  #$160,$50(a5)
                 bra.s   Boss_GustheadMoveTowardHorizontalTarget

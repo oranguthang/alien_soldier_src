@@ -129,10 +129,10 @@ Boss_ZLeoInit:                                          ; DATA XREF: ROM:Boss_ZL
                 bsr.w   Boss_ZLeoGraphicsInit1
                 bsr.w   Boss_ZLeoBuildHBlankRegisterBuffer
                 bsr.w   Boss_ZLeoLoadInitialTilesAndSetCommand81
-                move.l  #Gfx_TitleAndZLeoVRAMTransferParameters,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
-                move.w  #$F600,(word_FFA948).w
-                move.w  #$1F,(word_FFA944).w
+                move.l  #Gfx_TitleAndZLeoVRAMTransferParameters,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
+                move.w  #$F600,(TilemapRowYPosition).w
+                move.w  #$1F,(TilemapRowCountdown).w
 Boss_ZLeoInitReturn:                                    ; CODE XREF: Boss_ZLeoInit+4   j  ; was: locret_51C30
                 rts
 ; End of function Boss_ZLeoInit
@@ -140,7 +140,7 @@ Boss_ZLeoInitReturn:                                    ; CODE XREF: Boss_ZLeoIn
 Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B84   o  ; was: sub_51C32
                 bsr.w   Boss_ZLeoBuildHBlankRegisterBuffer
                 jsr     (Tilemap_QueueNextScrollingRow).l
-                tst.w   (word_FFA944).w
+                tst.w   (TilemapRowCountdown).w
                 bpl.w   Boss_ZLeoNoOp
                 move.w  #1,8(a5)
                 movea.w a5,a4
@@ -181,8 +181,8 @@ Boss_ZLeoIntroInit:                                     ; DATA XREF: ROM:00051B8
                 and.w   d0,$1C(a0)
                 and.w   d0,$1E(a0)
                 clr.w   (word_FF9600).w
-                clr.w   (dword_FFA900).w
-                move.w  #$100,(dword_FFA904).w
+                clr.w   (PrimaryCameraXPosition).w
+                move.w  #$100,(PrimaryCameraYPosition).w
                 move.w  #$100,(word_FF9602).w
                 bset    #7,(byte_FFA959).w
                 bset    #6,(byte_FFA959).w
@@ -264,27 +264,27 @@ Boss_ZLeoUpdateIntroDescentPose:                        ; CODE XREF: Boss_ZLeoPr
 ; End of function Boss_ZLeoPrepareIntroDescent
 ; Unreferenced controller entry for adjusting position and the shared scroll coordinate
 Debug_ZLeoPositionAndStartIntro:                        ; was: sub_51E3A
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_ZLeoCheckMoveRightInput
                 subq.w  #3,$10(a5)
 Debug_ZLeoCheckMoveRightInput:                          ; CODE XREF: Debug_ZLeoPositionAndStartIntro+6   j  ; was: loc_51E46
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_ZLeoCheckMoveUpInput
                 addq.w  #3,$10(a5)
 Debug_ZLeoCheckMoveUpInput:                             ; CODE XREF: Debug_ZLeoPositionAndStartIntro+12   j  ; was: loc_51E52
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Debug_ZLeoCheckMoveDownInput
                 subq.w  #2,$14(a5)
 Debug_ZLeoCheckMoveDownInput:                           ; CODE XREF: Debug_ZLeoPositionAndStartIntro+1E   j  ; was: loc_51E5E
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Debug_ZLeoCheckIncreaseScrollInput
                 addq.w  #2,$14(a5)
 Debug_ZLeoCheckIncreaseScrollInput:                     ; CODE XREF: Debug_ZLeoPositionAndStartIntro+2A   j  ; was: loc_51E6A
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.s   Debug_ZLeoCheckDecreaseScrollInput
                 addq.w  #2,(dword_FFDB34).w
 Debug_ZLeoCheckDecreaseScrollInput:                     ; CODE XREF: Debug_ZLeoPositionAndStartIntro+36   j  ; was: loc_51E76
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.s   Boss_ZLeoPrepareIntroMovement
                 subq.w  #2,(dword_FFDB34).w
 Boss_ZLeoPrepareIntroMovement:                          ; CODE XREF: Boss_ZLeoIntroInit+1AC   j  ; was: loc_51E82
@@ -444,7 +444,7 @@ Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMa
                 move.b  #$40,(byte_FFF705).w            ; '@'
                 move.w  #8,(word_FF808C).w
                 move.b  #2,(byte_FF80EC).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 clr.b   $21(a5)
                 move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 bset    #2,(word_FFDB22).w
@@ -675,7 +675,7 @@ Boss_ZLeoBeginScrollingLaserAttack:                     ; CODE XREF: Boss_ZLeoBe
                 clr.b   $23E(a5)
                 bset    #1,(byte_FF80EC).w
                 clr.b   $21(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
 ; Wait for the entry pose to signal the start of stage scrolling
 Boss_ZLeoWaitForScrollingLaserCue:                      ; DATA XREF: ROM:00051BA8   o  ; was: loc_5231A
                 bclr    #0,$23E(a5)
@@ -706,7 +706,7 @@ Boss_ZLeoRunScrollingLaserEntryPose:                    ; DATA XREF: ROM:00051BA
                 move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 move.w  (dword_FFDB34).w,d0
                 subi.w  #$20,d0                         ; ' '
-                move.w  d0,(dword_FFA414).w
+                move.w  d0,(PlayerYPosition).w
                 clr.l   (dword_FFDB3C).w
 Boss_ZLeoRenderScrollingLaserEntryPose:                 ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+C   j  ; was: loc_5238C
                 lea     Boss_ZLeoScrollingLaserEntryPose(pc),a1
@@ -783,10 +783,10 @@ Boss_ZLeoBeginScrollReversal:                           ; CODE XREF: Boss_ZLeoRu
                 addq.w  #2,4(a5)
                 move.l  #$FFC00000,(dword_FFDB34).w
                 move.l  #$50000,(dword_FFDB3C).w
-                move.w  #$120,(dword_FFA410).w
+                move.w  #$120,(PlayerXPosition).w
                 move.w  (dword_FFDB34).w,d0
                 subi.w  #$20,d0                         ; ' '
-                move.w  d0,(dword_FFA414).w
+                move.w  d0,(PlayerYPosition).w
                 move.w  #$80,$11C(a5)
 ; Reverse the boss and stage motion, then wait before the hold state
 Boss_ZLeoRunScrollReversal:                             ; DATA XREF: ROM:00051BB2   o  ; was: loc_5248E
@@ -796,7 +796,7 @@ Boss_ZLeoRunScrollReversal:                             ; DATA XREF: ROM:00051BB
                 bmi.s   Boss_ZLeoUpdateStageScrollReversal
                 clr.w   (PlayerScriptStateOffset).w
                 bclr    #2,(byte_FF8245).w
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
 Boss_ZLeoUpdateStageScrollReversal:                     ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose+12A   j  ; was: loc_524AC
                                         ; Boss_ZLeoRunScrollingLaserEntryPose+132   j
                 btst    #2,(word_FFDB22).w
@@ -820,7 +820,7 @@ Boss_ZLeoBeginDropAttackHold:                           ; CODE XREF: Boss_ZLeoRu
                 addq.w  #2,4(a5)
 ; Continue the drop-projectile attack until the scroll threshold is reached
 Boss_ZLeoRunDropAttackHold:                             ; DATA XREF: ROM:00051BB4   o  ; was: loc_524EE
-                cmpi.w  #$240,(dword_FFA90C).w
+                cmpi.w  #$240,(SecondaryCameraYPos).w
                 bmi.s   Boss_ZLeoBeginRisingReturn
 Boss_ZLeoUpdateScrollingDropAttack:                     ; CODE XREF: Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoFinishReverseBossMotionUpdate   j  ; was: loc_524F6
                 bsr.w   Boss_ZLeoRotateAttackPalette

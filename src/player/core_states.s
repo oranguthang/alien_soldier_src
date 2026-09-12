@@ -1,9 +1,9 @@
 Player_InitializeStats:                                 ; CODE XREF: Stage_InitializeXiTigerState+3A   j  ; was: sub_14F06
                                         ; Sys_InitStageState+3A   j
-                lea     (word_FFA400).w,a5
+                lea     (PlayerObjectType).w,a5
                 move.b  #$7F,(PlayerInputMask).w
-                move.w  (dword_FFA900).w,(word_FFA928).w
-                move.w  (dword_FFA904).w,(word_FFA92C).w
+                move.w  (PrimaryCameraXPosition).w,(PreviousCameraXPosition).w
+                move.w  (PrimaryCameraYPosition).w,(PreviousCameraYPosition).w
                 move.w  #8,(a5)
                 move.w  #$4D00,2(a5)
                 clr.w   4(a5)
@@ -42,7 +42,7 @@ Player_Update_Return:                                   ; CODE XREF: Player_SetD
 ; Main player update routine
 Player_Update:                                          ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdatePlayer   p  ; was: sub_14F98
                                         ; sub_1EE3C   p
-                movea.w #(word_FFA400-M68K_RAM),a5
+                movea.w #(PlayerObjectType-M68K_RAM),a5
                 btst    #1,(PlayerModeFlags).w
                 bne.w   Player_ClearObjectHeader
                 tst.b   (FrameControlFlags).w

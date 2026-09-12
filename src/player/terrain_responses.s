@@ -54,7 +54,7 @@ Physics_SnapToLowerSurface:                             ; CODE XREF: Physics_Han
                                         ; Physics_HandleLowerLeftOuterTerrain+1A   j
                 clr.l   $1C(a5)
                 move.w  d1,d4
-                sub.w   (dword_FFA904).w,d4
+                sub.w   (PrimaryCameraYPosition).w,d4
                 andi.w  #7,d4
                 sub.w   d4,$14(a5)
                 rts
@@ -64,7 +64,7 @@ Physics_SnapToUpperSurface:                             ; CODE XREF: Physics_Han
                                         ; Physics_HandleUpperLeftOuterTerrain+16   j
                 clr.l   $1C(a5)
                 move.w  d1,d4
-                sub.w   (dword_FFA904).w,d4
+                sub.w   (PrimaryCameraYPosition).w,d4
                 neg.w   d4
                 subq.w  #1,d4
                 andi.w  #7,d4
@@ -137,7 +137,7 @@ Physics_CalculateFloorOffset4:                          ; CODE XREF: Physics_Cal
 Physics_AlignToFloorWithOffset:                         ; CODE XREF: Physics_PrepareFloorOffset8+2   j  ; was: loc_14CEE
                 bsr.w   Physics_SnapToLowerSurface
                 move.w  d0,d4
-                add.w   (dword_FFA900).w,d4
+                add.w   (PrimaryCameraXPosition).w,d4
                 andi.w  #7,d4
                 asr.w   #1,d4
                 addq.w  #1,d4
@@ -210,7 +210,7 @@ Physics_PrepareEvenOffset0:                             ; CODE XREF: Physics_App
 Physics_AlignFloorEvenOffset:                           ; CODE XREF: Physics_PrepareEvenOffset4+2   j  ; was: loc_14D56
                 bsr.w   Physics_SnapToLowerSurface
                 move.w  d0,d4
-                add.w   (dword_FFA900).w,d4
+                add.w   (PrimaryCameraXPosition).w,d4
                 andi.w  #6,d4
                 asr.w   #1,d4
                 add.w   d4,d3
@@ -339,7 +339,7 @@ Physics_AlignFloorQuarterSubtractOffset:                ; CODE XREF: Physics_Pre
                                         ; Physics_PrepareVerticalOffset6+2   j
                 bsr.w   Physics_SnapToLowerSurface
                 move.w  d0,d4
-                add.w   (dword_FFA900).w,d4
+                add.w   (PrimaryCameraXPosition).w,d4
                 andi.w  #7,d4
                 asr.w   #2,d4
                 addq.w  #1,d4
@@ -469,7 +469,7 @@ Physics_AlignFloorQuarterAddOffset:                     ; CODE XREF: Physics_Pre
                                         ; Physics_PrepareQuarterAddOffset3+2   j
                 bsr.w   Physics_SnapToLowerSurface
                 move.w  d0,d4
-                add.w   (dword_FFA900).w,d4
+                add.w   (PrimaryCameraXPosition).w,d4
                 andi.w  #7,d4
                 asr.w   #2,d4
                 addq.w  #1,d4
@@ -482,7 +482,7 @@ Physics_ResolveRightWallCollision:                      ; CODE XREF: Physics_Ent
                                         ; Physics_EntityExtendedWallCheck+5A   j
                 bset    #1,7(a5)
                 move.w  d0,d4
-                add.w   (dword_FFA900).w,d4
+                add.w   (PrimaryCameraXPosition).w,d4
                 andi.w  #7,d4
                 addq.w  #1,d4
                 sub.w   d4,$10(a5)
@@ -493,7 +493,7 @@ Physics_ResolveLeftWallCollision:                       ; CODE XREF: Physics_Ent
                                         ; Physics_EntityExtendedWallCheck+2E   p
                 bset    #0,7(a5)
                 move.w  d0,d4
-                add.w   (dword_FFA900).w,d4
+                add.w   (PrimaryCameraXPosition).w,d4
                 neg.w   d4
                 subq.w  #1,d4
                 andi.w  #7,d4

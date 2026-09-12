@@ -126,8 +126,8 @@ Boss_SunsetStingInterpolateChainRootAnglesLoop:         ; CODE XREF: Boss_Sunset
 ; Calculates horizontal direction to player
 Boss_SunsetStingGetDirectionToPlayer:
                 move.w  #1,d1                           ; was: sub_4213A
-                lea     (word_FFA400).w,a0
-                move.w  dword_FFA410-word_FFA400(a0),d0
+                lea     (PlayerObjectType).w,a0
+                move.w  PlayerXPosition-PlayerObjectType(a0),d0
                 sub.w   $10(a5),d0
                 bhi.s   Boss_SunsetStingGetDirectionToPlayerReturn
                 neg.w   d1
@@ -195,7 +195,7 @@ Boss_SunsetStingFinishTrailTransitionState:             ; DATA XREF: ROM:0004196
 ; End of function Boss_SunsetStingFinishTrailTransitionState
 ; Calculates a direction-dependent horizontal screen offset
 Boss_SunsetStingCalculateDirectionalScreenOffset:
-                move.w  (dword_FFA900).w,d0             ; was: sub_42234
+                move.w  (PrimaryCameraXPosition).w,d0   ; was: sub_42234
                 add.w   $10(a5),d0
                 tst.w   $18(a5)
                 bpl.s   Boss_SunsetStingCalculateRightwardScreenOffset
@@ -211,7 +211,7 @@ Boss_SunsetStingCalculateRightwardScreenOffset:         ; CODE XREF: Boss_Sunset
 Boss_SunsetStingFacePlayerWithAngleOffset:
                 andi.w  #$F7FF,$E(a5)                   ; was: sub_42250
                 movem.l d3,-(sp)
-                lea     (word_FFA400).w,a4
+                lea     (PlayerObjectType).w,a4
                 jsr     (Physics_CalculateAngleToTarget).l
                 movem.l (sp)+,d3
                 move.b  d0,d2
@@ -340,7 +340,7 @@ Gfx_LoadIndexedAnimationTiles:                          ; CODE XREF: Boss_Sunset
 ; End of function Gfx_LoadIndexedAnimationTiles
 ; Resets the form controller after primary boss health reaches zero
 Boss_SunsetStingResetAfterPrimaryHealthDepletion:       ; CODE XREF: Boss_SunsetStingSecondFormUpdate+4A   j  ; was: sub_423DA
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.w  #4,(PlaneAShakeLevel).w
                 move.w  #4,(PlaneBShakeLevel).w
                 move.w  #$7FFF,(BossHealth).w
@@ -475,10 +475,10 @@ Boss_SunsetStingUpdateScreenBounds:                     ; CODE XREF: Boss_Sunset
                                         ; Boss_SunsetStingScatterSecondFormBodyPartsState+88   p
                 move.w  #$A8,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$48,d0                         ; 'H'
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_SunsetStingUpdateScreenBounds
 ; ---------------------------------------------------------------------------

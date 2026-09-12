@@ -147,7 +147,7 @@ Boss_FlyingNeoSelectPartAnchorRecord:                   ; CODE XREF: Boss_Flying
 Boss_FlyingNeoBindPartAnchorRecord:                     ; CODE XREF: Boss_FlyingNeoSelectPartAnchorRecord+C   j  ; was: loc_3C994
                 move.w  a0,$48(a5)
                 move.w  a0,$4A(a5)
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 addi.w  #$BC,d0
                 move.w  d0,$14(a0)
                 lea     Boss_FlyingNeoPartAnchorPoseCommands(pc),a1
@@ -161,7 +161,7 @@ Boss_FlyingNeoBindPartAnchorRecord:                     ; CODE XREF: Boss_Flying
 ; Selects one of two mappings for a linked anchor part from its Y position
 Boss_FlyingNeoUpdatePartAnchorMapping:                  ; CODE XREF: Boss_FlyingNeoHoverDecisionState+208   p  ; was: sub_3C9C0
                 move.l  #Boss_FlyingNeoAnchorPartMappingA,8(a0)
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 addi.w  #$B2,d0
                 cmp.w   $14(a0),d0
                 bmi.s   Boss_FlyingNeoUpdatePartAnchorMappingReturn
@@ -340,7 +340,7 @@ Boss_FlyingNeoBuildLineScrollTables:                    ; CODE XREF: Boss_Flying
 Boss_FlyingNeoBuildVerticalScrollRamp:                  ; CODE XREF: Boss_FlyingNeoBuildLineScrollTables+6   j  ; was: loc_3CBA6
                 movea.w #(byte_FF9506-M68K_RAM),a0
                 moveq   #0,d0
-                move.w  (dword_FFA904).w,d7
+                move.w  (PrimaryCameraYPosition).w,d7
                 subi.w  #$60,d7                         ; '`'
                 asr.w   #3,d7
                 moveq   #7,d6
@@ -350,7 +350,7 @@ Boss_FlyingNeoWriteVerticalScrollRamp:                  ; CODE XREF: Boss_Flying
                 move.w  d0,(a0)+
                 subq.w  #8,d0
                 dbf     d7,Boss_FlyingNeoWriteVerticalScrollRamp
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 neg.w   d0
 Boss_FlyingNeoFillVerticalScrollRampTail:               ; CODE XREF: Boss_FlyingNeoBuildLineScrollTables+36   j  ; was: loc_3CBCC
                 move.w  d0,(a0)+
@@ -378,7 +378,7 @@ Boss_FlyingNeoWriteNextBossVerticalScrollValue:         ; CODE XREF: Boss_Flying
                 dbf     d7,Boss_FlyingNeoWriteNextBossVerticalScrollValue
 Boss_FlyingNeoBuildHorizontalScrollTable:               ; CODE XREF: Boss_FlyingNeoBuildLineScrollTables+50   j  ; was: loc_3CC02
                 movea.w #(byte_FFE40A-M68K_RAM),a0
-                move.w  (dword_FFA904).w,d7
+                move.w  (PrimaryCameraYPosition).w,d7
                 subi.w  #$60,d7                         ; '`'
                 bpl.s   Boss_FlyingNeoSelectBossHorizontalScrollValue
                 moveq   #0,d7
@@ -400,7 +400,7 @@ Boss_FlyingNeoFillBossHorizontalScrollRegion:           ; CODE XREF: Boss_Flying
                 move.w  d0,(a0)
                 addq.w  #4,a0
                 dbf     d7,Boss_FlyingNeoFillBossHorizontalScrollRegion
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 neg.w   d0
 Boss_FlyingNeoFillPlaneHorizontalScrollRegion:          ; CODE XREF: Boss_FlyingNeoBuildLineScrollTables+BA   j  ; was: loc_3CC4A
                 move.w  d0,(a0)

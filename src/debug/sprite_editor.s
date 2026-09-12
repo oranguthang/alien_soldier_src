@@ -1,5 +1,5 @@
 UI_DebugSpriteEditor:                                   ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2AA08
-                btst    #7,(word_FFF706).w
+                btst    #7,(ControllerHeldState).w
                 beq.w   UI_DebugSpriteEditor_Setup
                 move.w  #$1000,2(a5)
                 rts
@@ -9,31 +9,31 @@ UI_DebugSpriteEditor_Setup:                             ; CODE XREF: UI_DebugSpr
                 move.w  #$120,$10(a5)
                 move.w  #$100,$14(a5)
                 move.w  $E(a5),d0
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.w   UI_DebugSpriteEditor_CheckPressedTileControls
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.w   UI_DebugSpriteEditor_DecrementTileHeld
                 addq.w  #1,d0
                 bra.w   UI_DebugSpriteEditor_ApplyTile
 ; ---------------------------------------------------------------------------
 UI_DebugSpriteEditor_DecrementTileHeld:                 ; CODE XREF: UI_DebugSpriteEditor+38   j  ; was: loc_2AA4A
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.w   UI_DebugSpriteEditor_ApplyTile
                 subq.w  #1,d0
                 bra.w   UI_DebugSpriteEditor_ApplyTile
 ; ---------------------------------------------------------------------------
 UI_DebugSpriteEditor_CheckPressedTileControls:          ; CODE XREF: UI_DebugSpriteEditor+2E   j  ; was: loc_2AA5A
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 bne.w   UI_DebugSpriteEditor_ApplyTile
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 bne.w   UI_DebugSpriteEditor_ApplyTile
-                btst    #0,(word_FFF708).w
+                btst    #0,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_DecrementTilePressed
                 addq.w  #1,d0
                 bra.w   UI_DebugSpriteEditor_ApplyTile
 ; ---------------------------------------------------------------------------
 UI_DebugSpriteEditor_DecrementTilePressed:              ; CODE XREF: UI_DebugSpriteEditor+6C   j  ; was: loc_2AA7E
-                btst    #1,(word_FFF708).w
+                btst    #1,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_ApplyTile
                 subq.w  #1,d0
 UI_DebugSpriteEditor_ApplyTile:                         ; CODE XREF: UI_DebugSpriteEditor+3E   j  ; was: loc_2AA8A
@@ -41,9 +41,9 @@ UI_DebugSpriteEditor_ApplyTile:                         ; CODE XREF: UI_DebugSpr
                 andi.w  #$7FF,d0
                 andi.w  #$9800,$E(a5)
                 or.w    d0,$E(a5)
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.w   UI_DebugSpriteEditor_CheckSizeControls
-                btst    #0,(word_FFF708).w
+                btst    #0,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_ApplyPaletteLine
                 addi.w  #$2000,$48(a5)
 UI_DebugSpriteEditor_ApplyPaletteLine:                  ; CODE XREF: UI_DebugSpriteEditor+A0   j  ; was: loc_2AAB2
@@ -52,23 +52,23 @@ UI_DebugSpriteEditor_ApplyPaletteLine:                  ; CODE XREF: UI_DebugSpr
                 or.w    d0,$E(a5)
                 move.w  (word_FF808A).w,d0
                 or.w    d0,$E(a5)
-                btst    #1,(word_FFF708).w
+                btst    #1,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_CheckPriorityToggle
                 eori.w  #$1000,$E(a5)
 UI_DebugSpriteEditor_CheckPriorityToggle:               ; CODE XREF: UI_DebugSpriteEditor+C6   j  ; was: loc_2AAD8
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_CheckSizeControls
                 eori.w  #$800,$E(a5)
 UI_DebugSpriteEditor_CheckSizeControls:                 ; CODE XREF: UI_DebugSpriteEditor+96   j  ; was: loc_2AAE8
                                         ; UI_DebugSpriteEditor+D6   j
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 beq.w   UI_DebugSpriteEditor_Return
-                btst    #0,(word_FFF708).w
+                btst    #0,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_ApplyWidth
                 addi.w  #$100,8(a5)
 UI_DebugSpriteEditor_ApplyWidth:                        ; CODE XREF: UI_DebugSpriteEditor+F0   j  ; was: loc_2AB02
                 andi.w  #$F00,8(a5)
-                btst    #1,(word_FFF708).w
+                btst    #1,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_CheckHeight
                 move.w  $A(a5),d0
                 andi.w  #$FF,$A(a5)
@@ -76,7 +76,7 @@ UI_DebugSpriteEditor_ApplyWidth:                        ; CODE XREF: UI_DebugSpr
                 andi.w  #$FF00,d0
                 or.w    d0,$A(a5)
 UI_DebugSpriteEditor_CheckHeight:                       ; CODE XREF: UI_DebugSpriteEditor+106   j  ; was: loc_2AB28
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.w   UI_DebugSpriteEditor_Return
                 move.w  $A(a5),d0
                 andi.w  #$FF00,$A(a5)
@@ -107,7 +107,7 @@ UI_DebugSpritePositionEditor_Update:                    ; CODE XREF: UI_DebugSpr
 UI_DebugSpritePositionEditor_UseAlternateTile:          ; CODE XREF: UI_DebugSpritePositionEditor+34   j  ; was: loc_2AB88
                 move.w  #$C4B4,$E(a5)
 UI_DebugSpritePositionEditor_CheckUp:                   ; CODE XREF: UI_DebugSpritePositionEditor+3C   j  ; was: loc_2AB8E
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   UI_DebugSpritePositionEditor_CheckDown
                 moveq   #0,d0
                 moveq   #$FFFFFFFC,d1
@@ -116,7 +116,7 @@ UI_DebugSpritePositionEditor_CheckUp:                   ; CODE XREF: UI_DebugSpr
                 subq.w  #2,$14(a5)
 UI_DebugSpritePositionEditor_CheckDown:                 ; CODE XREF: UI_DebugSpritePositionEditor+4A   j  ; was: loc_2ABA6
                                         ; UI_DebugSpritePositionEditor+56   j
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   UI_DebugSpritePositionEditor_CheckLeft
                 moveq   #0,d0
                 moveq   #4,d1
@@ -125,7 +125,7 @@ UI_DebugSpritePositionEditor_CheckDown:                 ; CODE XREF: UI_DebugSpr
                 addq.w  #2,$14(a5)
 UI_DebugSpritePositionEditor_CheckLeft:                 ; CODE XREF: UI_DebugSpritePositionEditor+62   j  ; was: loc_2ABBE
                                         ; UI_DebugSpritePositionEditor+6E   j
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   UI_DebugSpritePositionEditor_CheckRight
                 moveq   #$FFFFFFFC,d0
                 moveq   #0,d1
@@ -134,7 +134,7 @@ UI_DebugSpritePositionEditor_CheckLeft:                 ; CODE XREF: UI_DebugSpr
                 subq.w  #2,$10(a5)
 UI_DebugSpritePositionEditor_CheckRight:                ; CODE XREF: UI_DebugSpritePositionEditor+7A   j  ; was: loc_2ABD6
                                         ; UI_DebugSpritePositionEditor+86   j
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   UI_DebugSpritePositionEditor_Return
                 moveq   #4,d0
                 moveq   #0,d1

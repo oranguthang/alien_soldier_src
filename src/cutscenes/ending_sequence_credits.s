@@ -30,10 +30,10 @@ EndingSequence_Initialize:                              ; CODE XREF: EndingSeque
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 move.b  #$88,d0
                 jsr     (Sound_QueueBGMRequest).l
-                clr.w   (dword_FFA904).w
-                clr.w   (dword_FFA900).w
-                clr.w   (dword_FFA90C).w
-                clr.w   (dword_FFA908).w
+                clr.w   (PrimaryCameraYPosition).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (SecondaryCameraYPos).w
+                clr.w   (SecondaryCameraXPos).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 clr.w   (dword_FF8128+2).w
                 rts

@@ -58,11 +58,11 @@ Boss_UnidentifiedSevenForceInitState2:
 ; End of function Boss_UnidentifiedSevenForceInitState2
 ; Apply rotation input and render interactive state 2
 Boss_UnidentifiedSevenForceInteractiveState2:           ; DATA XREF: ROM:00058C96   o  ; was: sub_58D2C
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_UnidentifiedSevenForceCheckReverseRotationInput
                 addq.w  #2,$56(a5)
 Boss_UnidentifiedSevenForceCheckReverseRotationInput:   ; CODE XREF: Boss_UnidentifiedSevenForceInteractiveState2+6   j  ; was: loc_58D38
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_UnidentifiedSevenForcePreparePoseUpdate
                 subq.w  #2,$56(a5)
 Boss_UnidentifiedSevenForcePreparePoseUpdate:           ; CODE XREF: Boss_UnidentifiedSevenForceInteractiveState2+12   j  ; was: loc_58D44

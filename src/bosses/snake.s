@@ -2,7 +2,7 @@ Boss_SnakeMain:                                         ; DATA XREF: ROM:Entity_
                 tst.w   4(a5)
                 beq.w   Boss_SnakeStateDispatch
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$4E(a5)
                 btst    #1,$4C(a5)
                 bne.s   Boss_SnakeUpdateBody
@@ -16,7 +16,7 @@ Boss_SnakeUpdateBody:                                   ; CODE XREF: Boss_SnakeM
                                         ; Boss_SnakeMain+22   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 swap    d0
                 move.w  $14(a5),d0
                 lea     (dword_FF9420).w,a0
@@ -39,7 +39,7 @@ Boss_SnakeShiftTrailSampleLoop:                         ; CODE XREF: Boss_SnakeM
 Boss_SnakePlaceSegmentLoop:                             ; CODE XREF: Boss_SnakeMain+92   j  ; was: loc_40818
                 lea     (a1,d6.w),a1
                 move.w  (a1),d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a0)
                 move.w  2(a1),$14(a0)
                 lea     $60(a0),a0
@@ -121,7 +121,7 @@ Boss_SnakeBeginEncounterState:                          ; DATA XREF: ROM:0004084
                 bsr.w   Boss_SnakeSteerTowardTarget
                 clr.b   (byte_FF80EC).w
                 clr.w   $4A(a5)
-                move.w  (dword_FFA900).w,(dword_FF9404+2).w
+                move.w  (PrimaryCameraXPosition).w,(dword_FF9404+2).w
                 addi.w  #$120,(dword_FF9404+2).w
                 move.w  #$100,(dword_FF9408).w
                 move.w  #$80,$48(a5)
@@ -152,7 +152,7 @@ Boss_SnakeLoadTargetPosition:                           ; CODE XREF: Boss_SnakeS
                 andi.w  #$F,d0
                 add.w   d0,d0
                 move.w  Boss_SnakeTargetPatternOffsets(pc,d0.w),d1
-                move.w  (dword_FFA900).w,d2
+                move.w  (PrimaryCameraXPosition).w,d2
                 add.w   Boss_SnakeTargetXOffsets(pc,d1.w),d2
                 move.w  d2,(dword_FF9404+2).w
                 move.w  Boss_SnakeTargetYPositions(pc,d1.w),(dword_FF9408).w
@@ -186,7 +186,7 @@ Boss_SnakeRandomizeMotionAmplitudesReturn:              ; CODE XREF: Boss_SnakeR
 ; End of function Boss_SnakeRandomizeMotionAmplitudes
 ; Moves through the first timed departure target
 Boss_SnakeDepartureArcState:                            ; DATA XREF: ROM:0004084A   o  ; was: sub_40A20
-                move.w  (dword_FFA900).w,(dword_FF9404+2).w
+                move.w  (PrimaryCameraXPosition).w,(dword_FF9404+2).w
                 addi.w  #$160,(dword_FF9404+2).w
                 move.w  #$140,(dword_FF9408).w
                 bsr.w   Boss_SnakeSteerTowardTarget
@@ -198,7 +198,7 @@ Boss_SnakeDepartureArcReturn:                           ; CODE XREF: Boss_SnakeD
                 rts
 ; Moves below the arena, then retires the encounter object
 Boss_SnakeExitDownwardState:                            ; DATA XREF: ROM:0004084C   o  ; was: sub_40A48
-                move.w  (dword_FFA900).w,(dword_FF9404+2).w
+                move.w  (PrimaryCameraXPosition).w,(dword_FF9404+2).w
                 addi.w  #$120,(dword_FF9404+2).w
                 move.w  #$200,(dword_FF9408).w
                 bsr.w   Boss_SnakeSteerTowardTarget
@@ -357,7 +357,7 @@ Boss_SnakeSteerTowardTarget:                            ; CODE XREF: Boss_SnakeB
                 andi.w  #$F,d0
                 bne.s   Boss_SnakeApplyTurnAndVelocity
                 move.w  (dword_FF9404+2).w,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  (dword_FF9408).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1

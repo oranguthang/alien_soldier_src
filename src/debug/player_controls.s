@@ -3,8 +3,8 @@ Input_ToggleDebugFlag:
                 bpl.w   Input_ToggleDebugFlag_Return
                 btst    #6,d0
                 beq.w   Input_ToggleDebugFlag_Return
-                move.b  (word_FFF708).w,d0
-                or.b    (word_FFF708+1).w,d0
+                move.b  (ControllerPressedState).w,d0
+                or.b    (ControllerPressedState+1).w,d0
                 btst    #5,d0
                 beq.w   Input_ToggleDebugFlag_Return
                 eori.b  #$80,(FrameTimingDebugFlag).w
@@ -55,13 +55,13 @@ Effect_ScreenShakeUpdate_Return:                        ; CODE XREF: Effect_Scre
 ; End of function Effect_ScreenShakeUpdate
 ; Debug Y-axis camera adjustment
 Camera_DebugAdjustY:
-                btst    #4,(word_FFF706+1).w            ; was: sub_1CBBA
+                btst    #4,(ControllerHeldState+1).w    ; was: sub_1CBBA
                 beq.w   Camera_DebugAdjustY_Return
-                btst    #0,(word_FFF708+1).w
+                btst    #0,(ControllerPressedState+1).w
                 beq.w   Camera_DebugAdjustY_CheckDown
                 addq.w  #1,(word_FFA00E).w
 Camera_DebugAdjustY_CheckDown:                          ; CODE XREF: Camera_DebugAdjustY+10   j  ; was: loc_1CBD2
-                btst    #1,(word_FFF708+1).w
+                btst    #1,(ControllerPressedState+1).w
                 beq.w   Camera_DebugAdjustY_Return
                 subq.w  #1,(word_FFA00E).w
 Camera_DebugAdjustY_Return:                             ; CODE XREF: Camera_DebugAdjustY+6   j  ; was: locret_1CBE0
@@ -70,21 +70,21 @@ Camera_DebugAdjustY_Return:                             ; CODE XREF: Camera_Debu
 ; End of function Camera_DebugAdjustY
 ; Debug XY camera adjustment
 Camera_DebugAdjustXY:
-                btst    #4,(word_FFF706+1).w            ; was: sub_1CBE2
+                btst    #4,(ControllerHeldState+1).w    ; was: sub_1CBE2
                 bne.w   Camera_DebugAdjustXY_Return
-                btst    #0,(word_FFF708+1).w
+                btst    #0,(ControllerPressedState+1).w
                 beq.w   Camera_DebugAdjustXY_CheckDown
                 subi.w  #$20,(word_FFA00C).w            ; ' '
 Camera_DebugAdjustXY_CheckDown:                         ; CODE XREF: Camera_DebugAdjustXY+10   j  ; was: loc_1CBFC
-                btst    #1,(word_FFF708+1).w
+                btst    #1,(ControllerPressedState+1).w
                 beq.w   Camera_DebugAdjustXY_CheckLeft
                 addi.w  #$20,(word_FFA00C).w            ; ' '
 Camera_DebugAdjustXY_CheckLeft:                         ; CODE XREF: Camera_DebugAdjustXY+20   j  ; was: loc_1CC0C
-                btst    #2,(word_FFF708+1).w
+                btst    #2,(ControllerPressedState+1).w
                 beq.w   Camera_DebugAdjustXY_CheckRight
                 subi.w  #$20,(word_FFA00A).w            ; ' '
 Camera_DebugAdjustXY_CheckRight:                        ; CODE XREF: Camera_DebugAdjustXY+30   j  ; was: loc_1CC1C
-                btst    #3,(word_FFF708+1).w
+                btst    #3,(ControllerPressedState+1).w
                 beq.w   Camera_DebugAdjustXY_Return
                 addi.w  #$20,(word_FFA00A).w            ; ' '
 Camera_DebugAdjustXY_Return:                            ; CODE XREF: Camera_DebugAdjustXY+6   j  ; was: locret_1CC2C
@@ -95,27 +95,27 @@ Camera_DebugAdjustXY_Return:                            ; CODE XREF: Camera_Debu
 Input_ProcessDebugMovement:
                 clr.l   (dword_FFA9D0).w                ; was: sub_1CC2E
                 clr.l   (dword_FFA9D4).w
-                btst    #0,(word_FFF706+1).w
+                btst    #0,(ControllerHeldState+1).w
                 beq.w   Input_ProcessDebugMovement_CheckDown
                 move.w  #$FFFF,(dword_FFA9D4).w
 Input_ProcessDebugMovement_CheckDown:                   ; CODE XREF: Input_ProcessDebugMovement+E   j  ; was: loc_1CC46
-                btst    #1,(word_FFF706+1).w
+                btst    #1,(ControllerHeldState+1).w
                 beq.w   Input_ProcessDebugMovement_CheckLeft
                 move.w  #1,(dword_FFA9D4).w
 Input_ProcessDebugMovement_CheckLeft:                   ; CODE XREF: Input_ProcessDebugMovement+1E   j  ; was: loc_1CC56
-                btst    #2,(word_FFF706+1).w
+                btst    #2,(ControllerHeldState+1).w
                 beq.w   Input_ProcessDebugMovement_CheckRight
                 move.w  #$FFFF,(dword_FFA9D0).w
 Input_ProcessDebugMovement_CheckRight:                  ; CODE XREF: Input_ProcessDebugMovement+2E   j  ; was: loc_1CC66
-                btst    #3,(word_FFF706+1).w
+                btst    #3,(ControllerHeldState+1).w
                 beq.w   Input_ProcessDebugMovement_CheckAttack
                 move.w  #1,(dword_FFA9D0).w
 Input_ProcessDebugMovement_CheckAttack:                 ; CODE XREF: Input_ProcessDebugMovement+3E   j  ; was: loc_1CC76
-                btst    #6,(word_FFF708+1).w
+                btst    #6,(ControllerPressedState+1).w
                 beq.w   Input_ProcessDebugMovement_CheckJump
                 move.w  #1,(word_FFA9C0).w
 Input_ProcessDebugMovement_CheckJump:                   ; CODE XREF: Input_ProcessDebugMovement+4E   j  ; was: loc_1CC86
-                btst    #4,(word_FFF708+1).w
+                btst    #4,(ControllerPressedState+1).w
                 beq.w   Input_ProcessDebugMovement_Return
                 move.w  #1,(word_FFA980).w
 Input_ProcessDebugMovement_Return:                      ; CODE XREF: Input_ProcessDebugMovement+5E   j  ; was: locret_1CC96

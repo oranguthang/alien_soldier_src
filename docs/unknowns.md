@@ -5944,3 +5944,90 @@ in place. Provenance rises from 15,352 to 15,365 mappings and the audit registry
 from 12,491 to 12,505. The newly audited routine reduces the semantic review
 upper bound from 3,161 to 3,160. The enforced address-derived ceiling
 falls from 699 to 686, all still confined to RAM equates.
+
+The timer-control follow-up replaces two raw equates. `StageTimerPauseFlag`
+bit 0 is the common gate for both packed-BCD stage-time decrement and the
+low-time warning; setup, boss-defeat, and transition paths set it, while STAGE
+and FIGHT message paths clear it. `VBlankCountdown` is deliberately neutral:
+the VBlank handler decrements the word while nonzero, but reconstructed source
+contains no writer or completion consumer that would prove its purpose.
+
+Both fields receive exact-address audit records and RAM-map entries. Provenance
+rises from 15,365 to 15,367 mappings and the audit registry from 12,505 to
+12,507. The semantic review upper bound remains 3,160 because both new
+provenance mappings have matching records. The enforced address-derived
+ceiling falls from 686 to 684, all still confined to RAM equates.
+
+The player-object header and motion pass replaces ten raw RAM equates in the
+record beginning at `$FFFFA400`. Initialization proves object type `$0008`,
+the even state-table offset, initial display attributes, and cleared 16.16
+velocities. Player rendering and animation prove the mapping pointer,
+attribute word, and countdown timer. Shared physics plus camera, targeting,
+enemy, boss, and projectile consumers independently establish the 16.16 X/Y
+positions and velocities.
+
+The overlapping byte at `$FFFFA407` and field at `$FFFFA420` remain raw: their
+bit tests and propagated values do not yet prove one stable purpose. All ten
+renamed fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,367 to 15,377 mappings and the audit registry from
+12,507 to 12,517. The semantic review upper bound remains 3,160 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 684 to 674, all still confined to RAM equates.
+
+The controller-edge-state pass replaces four raw RAM equates. The low-level
+poller stores one active-high byte per controller in `ControllerHeldState`,
+then derives `ControllerPressedState` as `current AND changed` and
+`ControllerReleasedState` as `previous AND changed`. `Input_ReadPlayerInput`
+copies and masks the first pressed byte into `PlayerPressedInput`; scripted
+input handlers synthesize the same player-object field, and weapon-selection
+logic consumes it.
+
+All four fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,377 to 15,381 mappings and the audit registry from
+12,517 to 12,521. The semantic review upper bound remains 3,160 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 674 to 670, all still confined to RAM equates.
+
+The player-invulnerability and primary-camera pass replaces three raw RAM
+equates. `Player_UpdateInvulnerabilityTimer` directly establishes the
+countdown, expiry sentinel, and flashing role of `PlayerInvulnTimer`.
+Horizontal and vertical camera routines update the signed 16.16
+`PrimaryCameraXPosition` and `PrimaryCameraYPosition`; tilemap streaming and
+stage-transition consumers independently use their high words as world
+coordinates.
+
+The nearby player field at `$FFFFA448` remains raw because states reuse it as
+a timer, an animation selector, and the first half of a 32-bit dash velocity.
+All three renamed fields receive exact-address audit records and RAM-map
+entries. Provenance rises from 15,381 to 15,384 mappings and the audit registry
+from 12,521 to 12,524. The semantic review upper bound remains 3,160 because
+every new mapping has a matching audit record. The enforced address-derived
+ceiling falls from 670 to 667, all still confined to RAM equates.
+
+The secondary-camera and frame-delta pass replaces six raw RAM equates. Stage
+configuration, secondary tilemap wrappers, and Plane B scroll generation prove
+the signed 16.16 `SecondaryCameraXPos` and `SecondaryCameraYPos` coordinates.
+`Object_ApplyCameraMotion` forms `CameraXDelta` and `CameraYDelta` by
+subtracting `PreviousCameraXPosition` and `PreviousCameraYPosition` from the
+current primary-camera coordinates, applies the deltas to camera-relative
+objects, and refreshes both snapshots.
+
+All six fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,384 to 15,390 mappings and the audit registry from
+12,524 to 12,530. The semantic review upper bound remains 3,160 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 667 to 661, all still confined to RAM equates.
+
+The tilemap-row transfer pass replaces four raw RAM equates while preserving
+their proven mode-dependent reuse. `TilemapTransferBase` is a VRAM-parameter
+pointer for scrolling rows and a VDP destination base for constant/direct
+fills. `TilemapRowXOrFillWord` is likewise camera X in scrolling mode and the
+repeated tile word in fill mode. `TilemapRowCountdown` decrements from
+rows-minus-one to negative completion, while `TilemapRowYPosition` supplies
+the scrolling lookup Y and moves by eight pixels per queued row.
+
+All four fields receive exact-address audit records and RAM-map entries.
+Provenance rises from 15,390 to 15,394 mappings and the audit registry from
+12,530 to 12,534. The semantic review upper bound remains 3,160 because every
+new mapping has a matching audit record. The enforced address-derived ceiling
+falls from 661 to 657, all still confined to RAM equates.

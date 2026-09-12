@@ -89,7 +89,7 @@ Stage18_MovingPlatform_UpdatePosition:                  ; CODE XREF: Stage18_Mov
                 move.w  d0,$14(a5)
                 btst    #0,$5F(a5)
                 bne.w   Stage18_MovingPlatform_UpdateVisibility
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 move.w  d0,d5
                 bpl.s   Stage18_MovingPlatform_CheckHorizontalVelocity
@@ -186,7 +186,7 @@ Stage18_SegmentedWormSpawnSegments:                     ; DATA XREF: ROM:Stage18
                 beq.s   Stage18_SegmentedWormCreateChain
                 move.w  $10(a5),d0
                 addi.w  #$20,d0                         ; ' '
-                cmp.w   (dword_FFA410).w,d0
+                cmp.w   (PlayerXPosition).w,d0
                 bcc.w   Entity_UpdateReturn
                 move.w  #1,$5A(a5)
 Stage18_SegmentedWormCreateChain:                       ; CODE XREF: Stage18_SegmentedWormSpawnSegments+16   j
@@ -363,7 +363,7 @@ Stage18_SegmentedWormSetLaunchVelocity:                 ; CODE XREF: Stage18_Seg
                 move.l  $14(a5),$4C(a5)
                 move.w  #6,$52(a5)
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 cmpi.w  #$4C0,d0
                 bcc.s   Stage18_SegmentedWormLaunchLeft
                 eori.w  #1,$5A(a5)

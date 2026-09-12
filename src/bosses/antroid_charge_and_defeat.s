@@ -3,7 +3,7 @@
 ; Initializes ram-attack state $1E and selects its horizontal direction
 Boss_AntroidBeginRamAttack:                             ; CODE XREF: Boss_AntroidMainHandler+22   j  ; was: sub_37D3A
                 move.w  #$1E,4(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  a5,$48(a5)

@@ -19,7 +19,7 @@ Boss_UpdateArtemisBattleEffects:                        ; CODE XREF: Boss_Update
                 jsr     (Gfx_ProcessColorFade).l
                 moveq   #$12,d0
                 jsr     (Gfx_UpdateSevenForcesBattlePalette).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
                 clr.b   $3BD(a5)
@@ -85,11 +85,11 @@ Boss_InitArtemisAtFixedPosition:                        ; was: sub_57FA8
 ; End of function Boss_InitArtemisAtFixedPosition
 ; State two changes the pose angle from vertical controller input
 Boss_UpdateArtemisState2:                               ; DATA XREF: ROM:00057F20   o  ; was: sub_57FDA
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_CheckArtemisState2DownInput
                 addq.w  #2,$56(a5)
 Boss_CheckArtemisState2DownInput:                       ; CODE XREF: Boss_UpdateArtemisState2+6   j  ; was: loc_57FE6
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_NormalizeArtemisState2PoseAngle
                 subq.w  #2,$56(a5)
 Boss_NormalizeArtemisState2PoseAngle:                   ; CODE XREF: Boss_UpdateArtemisState2+12   j  ; was: loc_57FF2
@@ -194,7 +194,7 @@ Boss_UpdateArtemisStateC:                               ; DATA XREF: ROM:00057F2
                 tst.w   $58(a5)
                 bpl.s   Boss_RenderArtemisStateC
                 clr.b   (byte_FF80EC).w
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
                 clr.w   (PlayerScriptStateOffset).w
                 subi.w  #$40,(word_FFA970).w            ; '@'
                 addi.w  #$40,(word_FFA974).w            ; '@'
@@ -457,7 +457,7 @@ Boss_RenderArtemisState16:                              ; CODE XREF: Boss_Update
 ; Compare a requested vertical coordinate with the stage-relative target
 Boss_CompareArtemisVerticalTarget:                      ; CODE XREF: Boss_UpdateArtemisState4+86   p  ; was: sub_5844E
                 bmi.s   Boss_CompareArtemisVerticalTargetReturn
-                move.w  (dword_FFA904).w,d6
+                move.w  (PrimaryCameraYPosition).w,d6
                 subi.w  #$E200,d6
                 addi.w  #$12A,d6
                 cmp.w   d6,d0
@@ -467,7 +467,7 @@ Boss_CompareArtemisVerticalTargetReturn:                ; CODE XREF: Boss_Compar
 ; Load the current stage-relative Artemis vertical reference
 Boss_LoadArtemisStageVerticalReference:                 ; CODE XREF: Boss_PositionArtemisActivePartPair+6   p  ; was: sub_58460
                                         ; Boss_SyncArtemisLinkedPartVerticalPosition   p
-                move.w  (dword_FFA904).w,d6
+                move.w  (PrimaryCameraYPosition).w,d6
                 subi.w  #$E200,d6
                 addi.w  #$12A,d6
                 rts
@@ -494,7 +494,7 @@ Boss_RenderArtemisPose:                                 ; CODE XREF: Boss_Update
                 bsr.w   Boss_ApplyArtemisPoseToParts
                 moveq   #$1C,d7
                 jsr     (Sprite_BeginMetaspritePartTraversal).l
-                move.w  (dword_FFA904).w,d6
+                move.w  (PrimaryCameraYPosition).w,d6
                 subi.w  #$E200,d6
                 addi.w  #$12A,d6
                 btst    #0,$3BC(a5)

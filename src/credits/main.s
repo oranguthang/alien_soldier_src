@@ -86,10 +86,10 @@ Credits_InitXiTiger_InitVerticalScrollLoop:             ; CODE XREF: Credits_Ini
                 move.w  #$E000,d7
                 jsr     (Gfx_ApplyPaletteFade).l
                 move.b  #0,(VDPReg18Shadow+1).w
-                clr.w   (dword_FFA904).w
-                clr.w   (dword_FFA900).w
-                clr.w   (dword_FFA90C).w
-                clr.w   (dword_FFA908).w
+                clr.w   (PrimaryCameraYPosition).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (SecondaryCameraYPos).w
+                clr.w   (SecondaryCameraXPos).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.w  (SoundDisableFlags).w,(word_FFFF60).w
                 move.w  #0,(SoundDisableFlags).w
@@ -568,8 +568,8 @@ Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F1
                 clr.w   (word_FFC680).w
                 clr.w   (word_FFC6E0).w
                 move.b  #0,(VDPReg11Shadow+1).w
-                clr.w   (dword_FFA900).w
-                clr.w   (dword_FFA908).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (SecondaryCameraXPos).w
                 move.b  #4,(byte_FFA95A).w
                 move.b  #4,(byte_FFA95B).w
                 lea     Credits_TreasurePaletteData(pc),a0

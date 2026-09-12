@@ -166,7 +166,7 @@ Enemy_CirclingApproachState_BeginOrbit:                 ; CODE XREF: Enemy_Circl
 ; Calculates velocity vector from random angle toward player
 Enemy_CirclingInitApproachVelocity:                     ; CODE XREF: Enemy_CirclingApproachState+C   p  ; was: sub_2D474
                 move.w  $10(a5),$52(a5)
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   d0,$52(a5)
                 move.w  $14(a5),$54(a5)
                 move.w  (RandomNumberState).w,d0
@@ -191,7 +191,7 @@ Enemy_CirclingSteerTowardTarget:                        ; CODE XREF: Enemy_Circl
                 subi.w  #$20,d7                         ; ' '
                 add.w   d7,d0
                 move.w  $10(a5),d1
-                add.w   (dword_FFA900).w,d1
+                add.w   (PrimaryCameraXPosition).w,d1
                 sub.w   d1,d0
                 beq.s   Enemy_CirclingSteerTowardTarget_UpdateVertical
                 tst.w   d0

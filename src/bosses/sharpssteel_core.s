@@ -105,19 +105,19 @@ Boss_SharpssteelInitializeManualControl:
 ; End of function Boss_SharpssteelInitializeManualControl
 ; Development-style manual controls for core mode and blade angle
 Boss_SharpssteelManualControlState:                     ; DATA XREF: ROM:00047C60   o  ; was: sub_47D3C
-                btst    #5,(word_FFF708).w
+                btst    #5,(ControllerPressedState).w
                 beq.s   Boss_SharpssteelCheckManualCoreActivationInput
                 bsr.w   Boss_SharpssteelConfigureBladeGraphicsSetA
 Boss_SharpssteelCheckManualCoreActivationInput:         ; CODE XREF: Boss_SharpssteelManualControlState+6   j
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.s   Boss_SharpssteelCheckManualAngleIncreaseInput
                 bsr.w   Boss_SharpssteelConfigureBladeGraphicsSetB
 Boss_SharpssteelCheckManualAngleIncreaseInput:          ; CODE XREF: Boss_SharpssteelManualControlState+12   j
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_SharpssteelCheckManualAngleDecreaseInput
                 addq.w  #2,$56(a5)
 Boss_SharpssteelCheckManualAngleDecreaseInput:          ; CODE XREF: Boss_SharpssteelManualControlState+1E   j
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_SharpssteelApplyManualAngle
                 subq.w  #2,$56(a5)
 Boss_SharpssteelApplyManualAngle:                       ; CODE XREF: Boss_SharpssteelManualControlState+2A   j

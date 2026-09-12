@@ -138,10 +138,10 @@ EndingStarfield_FadeOutAndPreparePlanet:                ; DATA XREF: ROM:00007C4
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
                 jsr     (Sys_ClearEntityObjectPool).l
-                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
-                move.w  #$800,(word_FFA946).w
-                move.w  #0,(word_FFA948).w
-                move.w  #$1F,(word_FFA944).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(TilemapTransferBase).w
+                move.w  #$800,(TilemapRowXOrFillWord).w
+                move.w  #0,(TilemapRowYPosition).w
+                move.w  #$1F,(TilemapRowCountdown).w
                 lea     (dword_FF4000).l,a0
                 move.l  #$80008000,d1
                 move.w  #$7FF,d0
@@ -157,7 +157,7 @@ EndingPlanet_Initialize:                                ; DATA XREF: ROM:00007C4
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
-                tst.w   (word_FFA944).w
+                tst.w   (TilemapRowCountdown).w
                 bpl.w   Cutscene_Return
                 lea     (CreditsAndPlanetPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l

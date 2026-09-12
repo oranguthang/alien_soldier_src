@@ -1,10 +1,10 @@
 Results_CheckSkipButton:                                ; CODE XREF: Results_WaitForPostStageConfirmation+4   p  ; was: sub_1FBEC
                                         ; Results_UpdateFinalSummary+A   p
                 bsr.s   Results_DispatchHandler
-                move.w  (dword_FFA900).w,(dword_FFA908).w
+                move.w  (PrimaryCameraXPosition).w,(SecondaryCameraXPos).w
                 tst.w   (word_FF9442).w
                 beq.s   Results_CheckSkipButtonReturn
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   Results_CheckSkipButtonReturn
                 move.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
@@ -46,9 +46,9 @@ Results_SetExtendedScrollBounds:                        ; CODE XREF: Results_Ini
                 move.w  #$17,(dword_FF943C+2).w
                 move.w  #$FEF0,(dword_FF943C).w
 Results_ConfigureInitialViewport:                       ; CODE XREF: Results_InitializeDataDisplay+28   j  ; was: loc_1FC5C
-                move.w  #$50,(dword_FFA90C).w
-                move.w  #$F0,(dword_FFA904).w
-                clr.w   (dword_FFA900).w
+                move.w  #$50,(SecondaryCameraYPos).w
+                move.w  #$F0,(PrimaryCameraYPosition).w
+                clr.w   (PrimaryCameraXPosition).w
                 move.w  #$18,d7
                 lea     ((dword_FF944E+2)).w,a0
                 lea     (StageTimeLimitTable).l,a1
@@ -242,9 +242,9 @@ Results_RenderInitialRowReturn:                         ; CODE XREF: UI_RenderRe
 ; End of function UI_RenderResultsDataRow
 ; Handles vertical scrolling of results screen with position updates
 UI_ScrollResultsScreen:                                 ; DATA XREF: ROM:0001FC1E   o  ; was: sub_1FEAE
-                subq.w  #2,(dword_FFA90C).w
-                subq.w  #2,(dword_FFA904).w
-                cmpi.w  #$90,(dword_FFA904).w
+                subq.w  #2,(SecondaryCameraYPos).w
+                subq.w  #2,(PrimaryCameraYPosition).w
+                cmpi.w  #$90,(PrimaryCameraYPosition).w
                 bne.s   Results_InitialScrollReturn
                 addq.w  #2,(dword_FF9400).w
                 tst.w   (word_FF9442).w
@@ -265,9 +265,9 @@ Results_InitialScrollReturn:                            ; CODE XREF: UI_ScrollRe
 UI_RenderResultsRowWithScroll:                          ; DATA XREF: ROM:0001FC20   o  ; was: sub_1FEE2
                 bsr.w   Results_QueueCompletionMusicAtScrollThreshold
                 move.w  (dword_FF9408).w,d0
-                cmp.w   (dword_FFA904).w,d0
+                cmp.w   (PrimaryCameraYPosition).w,d0
                 beq.s   Results_RenderScrolledRow
-                subq.w  #2,(dword_FFA904).w
+                subq.w  #2,(PrimaryCameraYPosition).w
 Results_RenderScrolledRow:                              ; CODE XREF: UI_RenderResultsRowWithScroll+C   j  ; was: loc_1FEF4
                 lea     ((dword_FF944E+2)).w,a0
                 adda.w  (dword_FF9404+2).w,a0
@@ -351,9 +351,9 @@ Results_FinishScrollPhase:                              ; CODE XREF: UI_Complete
 UI_CheckResultsScrollBounds:                            ; CODE XREF: UI_CompleteResultsScroll+4   p  ; was: sub_1FFCA
                                         ; UI_CompleteResultsScroll+C   p
                 move.w  (dword_FF9408).w,d0
-                cmp.w   (dword_FFA904).w,d0
+                cmp.w   (PrimaryCameraYPosition).w,d0
                 beq.s   Results_StopViewportUpdate
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 cmp.w   (dword_FF943C).w,d0
                 ble.s   Results_StopViewportUpdate
                 move.w  #$FFFF,(dword_FF941C).w
@@ -372,7 +372,7 @@ Results_QueueCompletionMusicAtScrollThreshold:          ; CODE XREF: UI_RenderRe
                 bne.s   Results_CompletionMusicReturn
                 move.w  (dword_FF9408).w,d0
                 addi.w  #$48,d0
-                cmp.w   (dword_FFA904).w,d0
+                cmp.w   (PrimaryCameraYPosition).w,d0
                 blt.s   Results_CompletionMusicReturn
                 move.w  #1,(dword_FF9424).w
                 move.b  #$85,d0
@@ -391,25 +391,25 @@ Results_UpdateBrowsingState:                            ; DATA XREF: ROM:0001FC2
 ; Handles D-pad scrolling and column snapping for results screen browsing
 Results_HandleNavigation:                               ; CODE XREF: Results_UpdateBrowsingState   p  ; was: sub_20024
                                         ; Results_UpdateBrowsingState+4   p
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Results_CheckRightNavigation
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 addi.w  #-1,d0
                 cmpi.w  #0,d0
                 blt.s   Results_StopHorizontalNavigation
                 move.w  #1,(dword_FF9438+2).w
                 move.w  #$FFFF,(dword_FF9418+2).w
-                addi.w  #-1,(dword_FFA900).w
+                addi.w  #-1,(PrimaryCameraXPosition).w
 Results_CheckRightNavigation:                           ; CODE XREF: Results_HandleNavigation+6   j  ; was: loc_2004C
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Results_CheckUpNavigation
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 addq.w  #1,d0
                 cmpi.w  #$D0,d0
                 bgt.s   Results_StopHorizontalNavigation
                 move.w  #1,(dword_FF9438+2).w
                 move.w  #1,(dword_FF9418+2).w
-                addi.w  #1,(dword_FFA900).w
+                addi.w  #1,(PrimaryCameraXPosition).w
                 bra.s   Results_CheckUpNavigation
 ; ---------------------------------------------------------------------------
 Results_StopHorizontalNavigation:                       ; CODE XREF: Results_HandleNavigation+14   j  ; was: loc_20074
@@ -423,9 +423,9 @@ Results_ClearHorizontalStep:                            ; CODE XREF: Results_Han
                 clr.w   (dword_FF9418+2).w
 Results_CheckUpNavigation:                              ; CODE XREF: Results_HandleNavigation+2E   j  ; was: loc_2008C
                                         ; Results_HandleNavigation+4E   j
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Results_CheckDownNavigation
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 addq.w  #1,d0
                 cmpi.w  #$90,d0
                 bgt.s   Results_StopVerticalNavigation
@@ -433,9 +433,9 @@ Results_CheckUpNavigation:                              ; CODE XREF: Results_Han
                 bra.s   Results_UpdateVerticalViewport
 ; ---------------------------------------------------------------------------
 Results_CheckDownNavigation:                            ; CODE XREF: Results_HandleNavigation+6E   j  ; was: loc_200A8
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.w   Results_ContinueHorizontalStep
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 subq.w  #1,d0
                 cmp.w   (dword_FF943C).w,d0
                 blt.s   Results_StopVerticalNavigation
@@ -453,23 +453,23 @@ Results_ContinueHorizontalStep:                         ; CODE XREF: Results_Han
                 tst.w   (dword_FF9418+2).w
                 beq.s   Results_ClampHorizontalMaximum
                 move.w  (dword_FF9418+2).w,d0
-                add.w   d0,(dword_FFA900).w
-                move.w  (dword_FFA900).w,d0
+                add.w   d0,(PrimaryCameraXPosition).w
+                move.w  (PrimaryCameraXPosition).w,d0
                 andi.w  #$F,d0
                 bne.s   Results_ClampHorizontalMaximum
-                tst.w   (dword_FFA900).w
+                tst.w   (PrimaryCameraXPosition).w
                 beq.s   Results_HandleHorizontalSnapPoint
-                cmpi.w  #$30,(dword_FFA900).w
+                cmpi.w  #$30,(PrimaryCameraXPosition).w
                 beq.s   Results_HandleHorizontalSnapPoint
-                cmpi.w  #$60,(dword_FFA900).w
+                cmpi.w  #$60,(PrimaryCameraXPosition).w
                 beq.s   Results_HandleHorizontalSnapPoint
-                cmpi.w  #$A0,(dword_FFA900).w
+                cmpi.w  #$A0,(PrimaryCameraXPosition).w
                 beq.s   Results_HandleHorizontalSnapPoint
-                cmpi.w  #$D0,(dword_FFA900).w
+                cmpi.w  #$D0,(PrimaryCameraXPosition).w
                 bne.s   Results_ClampHorizontalMaximum
 Results_HandleHorizontalSnapPoint:                      ; CODE XREF: Results_HandleNavigation+C8   j  ; was: loc_2010E
                                         ; Results_HandleNavigation+D0   j
-                tst.b   (word_FFF706).w
+                tst.b   (ControllerHeldState).w
                 bne.s   Results_ClearHorizontalStepAtSnap
                 tst.w   (dword_FF9438+2).w
                 beq.s   Results_ClearHorizontalStepAtSnap
@@ -481,34 +481,34 @@ Results_ClearHorizontalStepAtSnap:                      ; CODE XREF: Results_Han
                 clr.w   (dword_FF9418+2).w
 Results_ClampHorizontalMaximum:                         ; CODE XREF: Results_HandleNavigation+B0   j  ; was: loc_2012C
                                         ; Results_HandleNavigation+C2   j
-                cmpi.w  #$D0,(dword_FFA900).w
+                cmpi.w  #$D0,(PrimaryCameraXPosition).w
                 blt.s   Results_ClampHorizontalMinimum
-                move.w  #$D0,(dword_FFA900).w
+                move.w  #$D0,(PrimaryCameraXPosition).w
                 clr.w   (dword_FF9418+2).w
 Results_ClampHorizontalMinimum:                         ; CODE XREF: Results_HandleNavigation+10E   j  ; was: loc_2013E
-                cmpi.w  #0,(dword_FFA900).w
+                cmpi.w  #0,(PrimaryCameraXPosition).w
                 bgt.s   Results_ContinueVerticalStep
-                move.w  #0,(dword_FFA900).w
+                move.w  #0,(PrimaryCameraXPosition).w
                 clr.w   (dword_FF9418+2).w
 Results_ContinueVerticalStep:                           ; CODE XREF: Results_HandleNavigation+120   j  ; was: loc_20150
                 tst.w   (dword_FF941C).w
                 beq.s   Results_ClampVerticalUpperBound
                 bsr.w   Results_UpdateViewport
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 andi.w  #$F,d0
                 bne.s   Results_ClampVerticalUpperBound
                 clr.w   (dword_FF941C).w
 Results_ClampVerticalUpperBound:                        ; CODE XREF: Results_HandleNavigation+130   j  ; was: loc_20168
                                         ; Results_HandleNavigation+13E   j
-                cmpi.w  #$90,(dword_FFA904).w
+                cmpi.w  #$90,(PrimaryCameraYPosition).w
                 blt.s   Results_ClampVerticalLowerBound
-                move.w  #$90,(dword_FFA904).w
+                move.w  #$90,(PrimaryCameraYPosition).w
                 clr.w   (dword_FF941C).w
 Results_ClampVerticalLowerBound:                        ; CODE XREF: Results_HandleNavigation+14A   j  ; was: loc_2017A
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 cmp.w   (dword_FF943C).w,d0
                 bgt.s   Results_NavigationReturn
-                move.w  (dword_FF943C).w,(dword_FFA904).w
+                move.w  (dword_FF943C).w,(PrimaryCameraYPosition).w
                 clr.w   (dword_FF941C).w
 Results_NavigationReturn:                               ; CODE XREF: Results_HandleNavigation+15E   j  ; was: locret_2018E
                 rts

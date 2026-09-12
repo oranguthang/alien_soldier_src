@@ -21,8 +21,8 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
-                move.w  d0,(dword_FFA908).w
-                move.w  d1,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraXPos).w
+                move.w  d1,(SecondaryCameraYPos).w
                 jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (OptionsScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
@@ -30,8 +30,8 @@ UI_InitOptionsScreenLoadDisplay:                        ; CODE XREF: UI_InitOpti
                 move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                clr.w   (dword_FFA904).w
-                clr.w   (dword_FFA900).w
+                clr.w   (PrimaryCameraYPosition).w
+                clr.w   (PrimaryCameraXPosition).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 clr.w   (dword_FF8062+2).w
                 clr.w   (dword_FF8062).w
@@ -106,7 +106,7 @@ UI_UpdateOptionsScreen:                                 ; DATA XREF: Sys_Dispatc
 UI_UpdateOptionsScreenActive:                           ; CODE XREF: UI_UpdateOptionsScreen+6   j  ; was: loc_978C
                 tst.w   (PaletteFadeMode).w
                 bne.s   UI_UpdateOptionsScreenFrame
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   UI_UpdateOptionsScreenFrame
                 move.b  #2,(byte_FF830E).w
                 move.b  #$C4,d0
@@ -132,7 +132,7 @@ UI_HandleOptionsInput:                                  ; CODE XREF: UI_UpdateOp
                 bsr.w   FrontendCursor_UpdateFlash
                 btst    #0,(dword_FF805E+2).w
                 bne.w   OptionsCursor_Animate
-                btst    #0,(word_FFF708).w
+                btst    #0,(ControllerPressedState).w
                 beq.s   UI_HandleOptionsInputCheckDown
                 move.b  #$DB,d0
                 jsr     (Sound_QueueRequest).l
@@ -144,7 +144,7 @@ UI_HandleOptionsInput:                                  ; CODE XREF: UI_UpdateOp
                 move.w  #$A,(dword_FF8062).w
 UI_HandleOptionsInputCheckDown:                         ; CODE XREF: UI_HandleOptionsInput+14   j  ; was: loc_982C
                                         ; UI_HandleOptionsInput+36   j
-                btst    #1,(word_FFF708).w
+                btst    #1,(ControllerPressedState).w
                 beq.w   UI_HandleOptionsInputUpdateCurrentRow
                 move.b  #$DB,d0
                 jsr     (Sound_QueueRequest).l
@@ -159,9 +159,9 @@ UI_HandleOptionsInputReturn:                            ; CODE XREF: UI_HandleOp
                 rts
 ; ---------------------------------------------------------------------------
 UI_HandleOptionsInputUpdateCurrentRow:                  ; CODE XREF: UI_HandleOptionsInput+44   j  ; was: loc_9864
-                move.b  (word_FFF708).w,(dword_FF806A).w
-                move.b  (word_FFF706).w,(dword_FF806A+1).w
-                move.b  (word_FFF708).w,d5
+                move.b  (ControllerPressedState).w,(dword_FF806A).w
+                move.b  (ControllerHeldState).w,(dword_FF806A+1).w
+                move.b  (ControllerPressedState).w,d5
                 btst    #4,d5
                 beq.s   UI_HandleOptionsInputCheckHorizontal
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
@@ -171,15 +171,15 @@ UI_HandleOptionsInputUpdateCurrentRow:                  ; CODE XREF: UI_HandleOp
 UI_HandleOptionsInputCheckHorizontal:                   ; CODE XREF: UI_HandleOptionsInput+8A   j  ; was: loc_988A
                 andi.b  #$60,d5                         ; '`'
 UI_ProcessSelectedOptionInput:                          ; CODE XREF: UI_HandleSecondaryOptionsInput+8A   j  ; was: loc_988E
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 andi.b  #$C,d0
                 beq.s   UI_UpdateSelectedOptionRepeatDelay
                 move.b  #$AD,d0
                 jsr     (Sound_QueueRequest).l
 UI_UpdateSelectedOptionRepeatDelay:                     ; CODE XREF: UI_HandleOptionsInput+A8   j  ; was: loc_98A2
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 bne.s   UI_DecrementSelectedOptionRepeatDelay
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 bne.s   UI_DecrementSelectedOptionRepeatDelay
                 move.w  #$20,(dword_FF8066+2).w         ; ' '
                 bra.s   UI_DispatchSelectedOption
@@ -467,8 +467,8 @@ UI_ActivateSecondaryOptionsMenu:                        ; CODE XREF: UI_InitSeco
                 move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                move.w  #$FFF0,(dword_FFA904).w
-                clr.w   (dword_FFA900).w
+                move.w  #$FFF0,(PrimaryCameraYPosition).w
+                clr.w   (PrimaryCameraXPosition).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 clr.w   (dword_FF8062+2).w
                 clr.w   (dword_FF8062).w
@@ -492,7 +492,7 @@ UI_UpdateSecondaryOptionsMenu:                          ; DATA XREF: Sys_Dispatc
 UI_UpdateSecondaryOptionsMenuActive:                    ; CODE XREF: UI_UpdateSecondaryOptionsMenu+6   j  ; was: loc_9EA0
                 tst.w   (PaletteFadeMode).w
                 bne.s   UI_UpdateSecondaryOptionsMenuFrame
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   UI_UpdateSecondaryOptionsMenuFrame
                 move.b  #$C4,d0
                 jsr     (Sound_QueueRequest).l
@@ -516,7 +516,7 @@ UI_HandleSecondaryOptionsInput:                         ; CODE XREF: UI_UpdateSe
                 btst    #0,(dword_FF805E+2).w
                 bne.w   SecondaryOptionsCursor_Animate
                 move.w  (dword_FF805E).w,d0
-                btst    #0,(word_FFF708).w
+                btst    #0,(ControllerPressedState).w
                 beq.s   UI_HandleSecondaryOptionsInputCheckDown
                 bset    #0,(dword_FF805E+2).w
                 move.w  #$10,(dword_FF8062+2).w
@@ -525,7 +525,7 @@ UI_HandleSecondaryOptionsInput:                         ; CODE XREF: UI_UpdateSe
                 bpl.s   UI_PlaySecondaryOptionsMoveSound
                 moveq   #0,d0
 UI_HandleSecondaryOptionsInputCheckDown:                ; CODE XREF: UI_HandleSecondaryOptionsInput+18   j  ; was: loc_9F28
-                btst    #1,(word_FFF708).w
+                btst    #1,(ControllerPressedState).w
                 beq.w   UI_StoreSecondaryOptionsSelection
                 bset    #0,(dword_FF805E+2).w
                 move.w  #$10,(dword_FF8062+2).w
@@ -546,9 +546,9 @@ UI_StoreSecondaryOptionsSelection:                      ; CODE XREF: UI_HandleSe
                                         ; UI_HandleSecondaryOptionsInput+58   j
                 move.w  d0,(dword_FF805E).w
                 move.w  UI_SecondaryOptionsHandlerIndices(pc,d0.w),(dword_FF8062).w
-                move.b  (word_FFF708).w,(dword_FF806A).w
-                move.b  (word_FFF706).w,(dword_FF806A+1).w
-                move.b  (word_FFF708).w,d5
+                move.b  (ControllerPressedState).w,(dword_FF806A).w
+                move.b  (ControllerHeldState).w,(dword_FF806A+1).w
+                move.b  (ControllerPressedState).w,d5
                 andi.b  #$60,d5                         ; '`'
                 bra.w   UI_ProcessSelectedOptionInput
 ; End of function UI_HandleSecondaryOptionsInput

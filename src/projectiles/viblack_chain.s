@@ -39,7 +39,7 @@ Boss_ViblackAllocateChainObjectLoop:                    ; CODE XREF: Boss_Viblac
                 movea.w a0,a1
                 movea.w a0,a2
                 adda.w  #$48,a1                         ; 'H'
-                move.w  (dword_FFA900).w,d4
+                move.w  (PrimaryCameraXPosition).w,d4
                 add.w   $10(a5),d4
                 move.w  $14(a5),d5
                 moveq   #9,d6
@@ -121,7 +121,7 @@ Projectile_ViblackChainRetireSegmentLoop:               ; CODE XREF: Projectile_
 ; ---------------------------------------------------------------------------
 Projectile_ViblackChainUpdateAttachedSegments:          ; CODE XREF: Projectile_ViblackChainMain+58   j  ; was: loc_44538
                 andi.w  #$1F8,6(a5)
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  $14(a5),d1
                 move.w  6(a5),d3
@@ -224,7 +224,7 @@ Projectile_ViblackChainSegmentLaunchDelay:              ; CODE XREF: Projectile_
 Projectile_ViblackChainSegmentFollowHistory:            ; CODE XREF: Projectile_ViblackChainSegment+4   j  ; was: loc_44648
                 movea.w 6(a5),a0
                 move.w  $4E(a5),d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 move.w  $56(a5),$14(a5)
                 move.w  $5E(a5),d3

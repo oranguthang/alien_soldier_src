@@ -616,6 +616,68 @@ does not touch sprite-frame state: it reloads a delay from the configuration-
 indexed `Weapon_AmmoRegenStepDelays`, increments current ammunition by two,
 and clamps it to the slot maximum.
 
+## Reviewed timer-control fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `StageTimerPauseFlag` | `$FFFFA272` | Bit 0 suppresses the stage-time decrement and low-time warning; boss/transition paths set it and STAGE/FIGHT message paths clear it. |
+| `VBlankCountdown` | `$FFFFA282` | Decremented once per VBlank while nonzero; no reconstructed writer or completion consumer proves a narrower role. |
+
+## Reviewed player-object header and motion fields
+
+The object record beginning at `$FFFFA400` is the live player object. Its first
+word is type `$0008`; the following fields use the same offsets as the shared
+object update and rendering machinery.
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PlayerObjectType` | `$FFFFA400` | Player initialization writes type `$0008`; disabling player processing clears this word and the adjacent flags. |
+| `PlayerObjectFlags` | `$FFFFA402` | Initialized to `$4D00`; update, renderer, camera, and cutscene paths manipulate individual control/display bits. |
+| `PlayerStateOffset` | `$FFFFA404` | Even values select the player state dispatcher; initialization clears it and transitions install later states. |
+| `PlayerSpriteMapping` | `$FFFFA408` | Player rendering consumes the pointer, the secondary-object copier preserves it, and the motion-projectile path compares it with the teleport-dash mapping. |
+| `PlayerAnimationTimer` | `$FFFFA40C` | Animation paths count it down and reload frame delays; state setup commonly primes it with `$FFFF`. |
+| `PlayerSpriteAttributes` | `$FFFFA40E` | Initialized to `$4DC0`; facing, rendering, and cutscene paths manipulate its attribute bits. |
+| `PlayerXPosition` | `$FFFFA410` | Signed 16.16 world X coordinate consumed by camera, targeting, enemies, bosses, and projectile placement. |
+| `PlayerYPosition` | `$FFFFA414` | Signed 16.16 world Y coordinate consumed by camera, targeting, bosses, and projectile placement. |
+| `PlayerXVelocity` | `$FFFFA418` | Signed 16.16 horizontal velocity integrated into the X position by shared physics. |
+| `PlayerYVelocity` | `$FFFFA41C` | Signed 16.16 vertical velocity integrated into the Y position by shared physics. |
+| `PlayerInvulnTimer` | `$FFFFA45E` | Counted down by the player invulnerability/flash updater; initialization and damage/death transitions install positive durations. |
+
+The overlapping byte at `$FFFFA407` and the following field at `$FFFFA420`
+remain address-derived. Their references establish control bits and propagated
+values, but not yet a stable shared meaning.
+
+## Reviewed controller-input fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `ControllerHeldState` | `$FFFFF706` | Two bytes hold the current active-high button masks for controller ports one and two. |
+| `ControllerPressedState` | `$FFFFF708` | Per-port `current AND (previous XOR current)` values identify newly pressed buttons. |
+| `ControllerReleasedState` | `$FFFFF70A` | Per-port `previous AND (previous XOR current)` values identify newly released buttons. |
+| `PlayerPressedInput` | `$FFFFA46A` | Player input copies and masks the first pressed-state byte here; scripted input can synthesize the same field. |
+
+## Reviewed primary-camera fields
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `PrimaryCameraXPosition` | `$FFFFA900` | Signed 16.16 X coordinate updated by horizontal follow and stage-scroll paths and consumed by primary tilemap streaming. |
+| `PrimaryCameraYPosition` | `$FFFFA904` | Signed 16.16 Y coordinate updated by vertical camera/stage paths and consumed by primary tilemap streaming. |
+| `SecondaryCameraXPos` | `$FFFFA908` | Signed 16.16 secondary-camera X coordinate consumed by secondary tilemap streaming and Plane B horizontal scroll generation. |
+| `SecondaryCameraYPos` | `$FFFFA90C` | Signed 16.16 secondary-camera Y coordinate consumed by secondary tilemap streaming and Plane B vertical scroll generation. |
+| `CameraXDelta` | `$FFFFA910` | Current primary-camera X minus its previous-frame snapshot; applied to camera-relative objects and secondary scrolling. |
+| `CameraYDelta` | `$FFFFA914` | Current primary-camera Y minus its previous-frame snapshot; applied to camera-relative objects. |
+| `PreviousCameraXPosition` | `$FFFFA928` | Previous high word of `PrimaryCameraXPosition`, refreshed after deriving `CameraXDelta`. |
+| `PreviousCameraYPosition` | `$FFFFA92C` | Previous high word of `PrimaryCameraYPosition`, refreshed after deriving `CameraYDelta`. |
+
+## Reviewed tilemap-row transfer state
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `TilemapTransferBase` | `$FFFFA940` | Scrolling mode stores a VRAM-parameter pointer; constant/direct fill modes reuse the high word as a VDP destination base. |
+| `TilemapRowCountdown` | `$FFFFA944` | Initialized to rows-minus-one, decremented after each queued row, and considered complete when negative. |
+| `TilemapRowXOrFillWord` | `$FFFFA946` | Camera X in scrolling mode; repeated tile word in constant-row and direct-plane-fill modes. |
+| `TilemapRowYPosition` | `$FFFFA948` | World Y used by the scrolling row builder and reduced by eight after each row. |
+
 ## Review policy
 
 - `byte_`, `word_`, and `dword_` state observed access width, not purpose.

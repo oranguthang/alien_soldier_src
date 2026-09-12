@@ -28,9 +28,9 @@ StoryScreen_ClearPlaneB:                                ; CODE XREF: StoryScreen
                 move.w  #$44,(RasterEffectIndex).w      ; 'D'
                 clr.w   (RasterEffectInitState).w
                 clr.w   (ScenePaletteFadeOffset).l
-                clr.w   (dword_FFA904).w
-                clr.w   (dword_FFA900).w
-                clr.w   (dword_FFA90C).w
+                clr.w   (PrimaryCameraYPosition).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (SecondaryCameraYPos).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 addq.w  #4,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
@@ -60,7 +60,7 @@ StoryScreen_MainLoop:                                   ; DATA XREF: Sys_Dispatc
                 bne.s   StoryScreen_RunFrame
                 tst.w   (word_FFF720).w
                 bmi.s   StoryScreen_RunFrame
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 bne.w   StoryScreen_StartExitFade
 StoryScreen_RunFrame:                                   ; CODE XREF: StoryScreen_MainLoop+6   j  ; was: loc_491C
                                         ; StoryScreen_MainLoop+E   j
@@ -151,12 +151,12 @@ StoryScreen_FadeInAndStartScroll:                       ; DATA XREF: ROM:0000497
                 jsr     (Gfx_ApplyPaletteFade).l
                 tst.w   (word_FFF720).w
                 bmi.w   Cutscene_Return
-                move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
-                clr.w   (dword_FFA908).w
-                clr.w   (dword_FFA90C).w
-                move.w  #0,(word_FFA948).w
-                move.w  #$1F,(word_FFA944).w
+                move.l  #Gfx_ScrollVRAMTransferParameters,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
+                clr.w   (SecondaryCameraXPos).w
+                clr.w   (SecondaryCameraYPos).w
+                move.w  #0,(TilemapRowYPosition).w
+                move.w  #$1F,(TilemapRowCountdown).w
                 addq.w  #2,(GameSubstateIndex).w
                 rts
 ; End of function StoryScreen_FadeInAndStartScroll
@@ -171,7 +171,7 @@ StoryScreen_WaitForScrollAndLoadPalette:                ; DATA XREF: ROM:0000497
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
-                tst.w   (word_FFA944).w
+                tst.w   (TilemapRowCountdown).w
                 bpl.w   Cutscene_Return
                 lea     (StoryScreenPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
@@ -223,11 +223,11 @@ StoryTitle_SetupLogoReveal:                             ; DATA XREF: ROM:0000498
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #0,(VDPReg11Shadow+1).w
-                move.w  #$4000,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
+                move.w  #$4000,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
-                move.w  #$6000,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
+                move.w  #$6000,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 lea     (VDP_CTRL).l,a0
                 lea     (VDP_DATA).l,a1

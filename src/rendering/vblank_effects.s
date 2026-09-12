@@ -344,7 +344,7 @@ VBlank_InitStage10Effect_UpdateRegisters:               ; CODE XREF: VBlank_Init
                 movea.w #(byte_FF9FF8-M68K_RAM),a0
                 move.w  (VScrollBuffer).w,(a0)+
                 move.w  (word_FFEC02).w,(a0)+
-                move.w  (word_FFA928).w,d0
+                move.w  (PreviousCameraXPosition).w,d0
                 neg.w   d0
                 cmpi.w  #$30,(RasterEffectIndex).w      ; '0'
                 beq.s   VBlank_InitStage10Effect_StoreHBlankData

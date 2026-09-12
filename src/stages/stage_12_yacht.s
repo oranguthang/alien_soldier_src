@@ -3,7 +3,7 @@
 
 Stage12_YachtControllerMain:                            ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_2F5C0
                 move.l  $54(a5),d0
-                add.l   d0,(dword_FFA908).w
+                add.l   d0,(SecondaryCameraXPos).w
                 move.w  4(a5),d0
                 movea.w Stage12_YachtControllerStateTable(pc,d0.w),a0
                 adda.l  #Stage12_YachtControllerInit,a0
@@ -42,11 +42,11 @@ Stage12_YachtControllerIdle:                            ; DATA XREF: ROM:0002F5D
 ; End of function Stage12_YachtControllerInit
 ; Reveals the yacht by rendering with a temporary camera offset
 Stage12_YachtRevealPan:                                 ; DATA XREF: ROM:0002F5DC   o  ; was: sub_2F62E
-                move.l  (dword_FFA900).w,-(sp)
+                move.l  (PrimaryCameraXPosition).w,-(sp)
                 move.w  $50(a5),d0
-                add.w   d0,(dword_FFA900).w
+                add.w   d0,(PrimaryCameraXPosition).w
                 jsr     (Tilemap_QueuePrimaryCameraColumnOffset158).l
-                move.l  (sp)+,(dword_FFA900).w
+                move.l  (sp)+,(PrimaryCameraXPosition).w
                 addq.w  #8,$50(a5)
                 cmpi.w  #$90,$50(a5)
                 bmi.w   Stage12_YachtControllerReturn
@@ -186,7 +186,7 @@ Stage12_YachtApplySteering:                             ; CODE XREF: Stage12_Yac
                 bne.w   Stage12_YachtClampHorizontalVelocity
                 btst    #0,(byte_FF8244).w
                 bne.s   Stage12_YachtClampHorizontalVelocity
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Stage12_YachtCheckSteerRight
                 cmpi.w  #$70,$10(a5)                    ; 'p'
                 bmi.s   Stage12_YachtEaseHorizontalVelocity
@@ -199,7 +199,7 @@ Stage12_YachtSteeringReturn:                            ; CODE XREF: Stage12_Yac
                 rts
 ; ---------------------------------------------------------------------------
 Stage12_YachtCheckSteerRight:                           ; CODE XREF: Stage12_YachtApplySteering+16   j
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Stage12_YachtClampHorizontalVelocity
                 cmpi.w  #$100,$10(a5)
                 bpl.s   Stage12_YachtEaseHorizontalVelocity
@@ -341,7 +341,7 @@ Stage12_TeddyBearInit:                                  ; DATA XREF: Stage12_Ted
                 move.w  #$120,$14(a5)
 ; Waits for camera position to reach threshold before activation
 Stage12_TeddyBearWaitForRescue:                         ; DATA XREF: ROM:0002F922   o  ; was: loc_2F97A
-                cmpi.w  #$17A0,(dword_FFA900).w
+                cmpi.w  #$17A0,(PrimaryCameraXPosition).w
                 bmi.s   Stage12_TeddyBearRemainCaptive
                 movea.w #(Entity_ObjectPool-M68K_RAM),a0
 Stage12_TeddyBearScanObjects:                           ; CODE XREF: Stage12_TeddyBearInit+56   j
@@ -350,7 +350,7 @@ Stage12_TeddyBearScanObjects:                           ; CODE XREF: Stage12_Ted
                 lea     $60(a0),a0
                 cmpa.w  #$DB20,a0
                 bmi.s   Stage12_TeddyBearScanObjects
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.l  #Stage12_TeddyBearRescueAnimation,8(a5)
@@ -369,7 +369,7 @@ Stage12_TeddyBearDisableCollision:                      ; CODE XREF: Stage12_Ted
                 move.w  #2,4(a5)
                 move.l  #Stage12_TeddyBearInitialPoseAnimation,8(a5)
                 clr.w   $C(a5)
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
                 rts
 ; End of function Stage12_TeddyBearInit
 ; Shared no-op state and early return for teddy-bear timing states
@@ -464,7 +464,7 @@ Stage12_TeddyBearPilotStart:                            ; DATA XREF: ROM:0002F93
                 addq.w  #2,(word_FFA950).w
                 addq.w  #2,(word_FFDB24).w
                 move.w  #$F,(word_FF829E).w
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
                 move.l  #Stage12_TeddyBearDropAndPilotAnimation,8(a5)
                 rts
 ; End of function Stage12_TeddyBearPilotStart
@@ -536,7 +536,7 @@ Stage12_TeddyBearAttachToYacht:                         ; CODE XREF: Stage12_Ted
 Stage12_TeddyBearFacePlayer:                            ; CODE XREF: Stage12_TeddyBearFacePlayerDelay   p  ; was: sub_2FC0E
                                         ; sub_2FA3E:loc_2FA5E   p
                 bclr    #3,$E(a5)
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 bpl.s   Stage12_TeddyBearFacePlayerReturn
                 bset    #3,$E(a5)

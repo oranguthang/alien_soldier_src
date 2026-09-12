@@ -13,7 +13,7 @@ Boss_JampanTrackPlayerXReturn:                          ; CODE XREF: Boss_Jampan
 ; Moves controller X one pixel toward the player's X coordinate
 Boss_JampanStepTowardPlayerX:                           ; CODE XREF: Boss_JampanTrackPlayerX   p  ; was: sub_4A08A
                                         ; Boss_JampanTrackPlayerX+8   p
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 beq.s   Boss_JampanStepTowardPlayerXReturn
                 tst.w   d0
@@ -30,7 +30,7 @@ Boss_JampanStepTowardPlayerXReturn:                     ; CODE XREF: Boss_Jampan
 ; End of function Boss_JampanStepTowardPlayerX
 ; Adjusts Y position to track player
 Boss_JampanTrackPlayerY:                                ; CODE XREF: Boss_JampanTrackPlayerDuringAlternatePatternState+8   p  ; was: sub_4A0A8
-                move.w  (dword_FFA414).w,d0
+                move.w  (PlayerYPosition).w,d0
                 sub.w   $14(a5),d0
                 beq.s   Boss_JampanTrackPlayerYReturn
                 tst.w   d0

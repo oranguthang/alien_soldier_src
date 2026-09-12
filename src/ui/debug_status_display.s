@@ -43,7 +43,7 @@ DebugMenu_UpdateAndDispatch:                            ; CODE XREF: Debug_Handl
                 movea.w #(byte_FFA108-M68K_RAM),a0
                 movea.w #(dword_FFA100-M68K_RAM),a1
                 bsr.w   UI_AppendHUDSpriteList
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 andi.b  #$4F,d0                         ; 'O'
                 cmp.b   (DebugMenuPreviousInput).w,d0
                 beq.s   DebugMenu_UpdateInputRepeatTimer
@@ -120,7 +120,7 @@ DebugMenu_ReloadActiveAssetsAndWeaponIcons:             ; was: loc_135B6
                 jmp     UI_QueueAllWeaponIconTransfers(pc)  ; (pc)
 ; ---------------------------------------------------------------------------
 DebugMenu_UpdateActivePage:                             ; was: loc_135C6
-                btst    #6,(word_FFF708).w
+                btst    #6,(ControllerPressedState).w
                 beq.s   DebugMenu_RenderSelectedPageHalf
                 addq.w  #2,(DebugMenuPageOffset).w
                 cmpi.w  #$A,(DebugMenuPageOffset).w

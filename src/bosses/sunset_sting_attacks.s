@@ -6,14 +6,14 @@ Boss_SunsetStingMainDispatcher:                         ; DATA XREF: ROM:Entity_
                 move.w  (FrameCounter).w,d0
                 andi.w  #$3F,d0                         ; '?'
                 beq.s   Boss_SunsetStingRefreshAimSample
-                lea     (word_FFA400).w,a4
+                lea     (PlayerObjectType).w,a4
                 jsr     (Physics_CalculateAngleToTarget).l
                 move.b  d0,(byte_FFC73E).w
                 move.b  d0,(dword_FFC6DC+1).w
                 bra.s   Boss_SunsetStingDispatchSecondFormState
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingRefreshAimSample:                       ; CODE XREF: Boss_SunsetStingMainDispatcher+12   j  ; was: loc_41924
-                lea     (word_FFA400).w,a4
+                lea     (PlayerObjectType).w,a4
                 jsr     (Physics_CalculateAngleToTarget).l
                 move.b  d0,(dword_FFC6DC+1).w
 Boss_SunsetStingDispatchSecondFormState:                ; CODE XREF: Boss_SunsetStingMainDispatcher+8   j  ; was: loc_41932
@@ -288,8 +288,8 @@ Boss_SunsetStingCalculateTargetDirection:               ; CODE XREF: Boss_Sunset
                 move.w  $14(a5),d0
                 cmpi.w  #$120,d0
                 bhi.s   Boss_SunsetStingTargetDirectionUseBodyAngle
-                lea     (word_FFA400).w,a4
-                move.w  dword_FFA410-word_FFA400(a4),d0
+                lea     (PlayerObjectType).w,a4
+                move.w  PlayerXPosition-PlayerObjectType(a4),d0
                 sub.w   $10(a5),d0
                 ext.l   d0
                 bpl.s   Boss_SunsetStingTargetDirectionStoreDelta
@@ -389,7 +389,7 @@ Boss_SunsetStingSpawnRandomProjectileFromPart:          ; CODE XREF: Boss_Sunset
                 movea.w (a2)+,a5
                 adda.l  (sp),a5
                 adda.w  #$1E0,a5
-                lea     (word_FFA400).w,a4
+                lea     (PlayerObjectType).w,a4
                 jsr     (Physics_CalculateAngleToTarget).l
                 movem.l d2/a2,-(sp)
                 bsr.w   Boss_SunsetStingInitHomingProjectile

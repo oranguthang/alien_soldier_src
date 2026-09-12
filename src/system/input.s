@@ -1,8 +1,8 @@
 Input_InitControllerState:                              ; CODE XREF: Sys_ClearGameBuffers+C   p  ; was: sub_33A4
                 clr.b   (byte_FFF705).w
-                move.w  #$FFFF,(word_FFF706).w
-                move.w  #0,(word_FFF708).w
-                move.w  #0,(word_FFF70A).w
+                move.w  #$FFFF,(ControllerHeldState).w
+                move.w  #0,(ControllerPressedState).w
+                move.w  #0,(ControllerReleasedState).w
 ; End of function Input_InitControllerState
 ; Acquires Z80 bus for sound operations
 Sound_AcquireZ80Bus:                                    ; CODE XREF: Sys_VBlankHandler+18   p  ; was: sub_33BA
@@ -18,7 +18,7 @@ Sound_AcquireZ80Bus_ReleaseWait:                        ; CODE XREF: Sound_Acqui
 ; End of function Sound_AcquireZ80Bus
 ; Reads controller input from I/O ports
 Input_ReadController:                                   ; CODE XREF: Sound_AcquireZ80Bus+A   p  ; was: sub_33D8
-                lea     (word_FFF706).w,a1
+                lea     (ControllerHeldState).w,a1
                 lea     ((IO_CT1_DATA+1)).l,a2
                 lea     (byte_FFFF20).w,a3
                 bsr.w   Input_ReadControllerPort
@@ -29,7 +29,7 @@ Input_ReadController:                                   ; CODE XREF: Sound_Acqui
 ; End of function Input_ReadController
 ; Reads secondary controller port processing button states
 Input_ReadSecondaryController:                          ; CODE XREF: Sound_AcquireZ80Bus+E   p  ; was: sub_33FA
-                lea     ((word_FFF706+1)).w,a1
+                lea     ((ControllerHeldState+1)).w,a1
                 lea     ((IO_CT2_DATA+1)).l,a2
                 lea     (byte_FFFF21).w,a3
                 bsr.w   Input_ReadControllerPort

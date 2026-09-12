@@ -25,10 +25,10 @@ Boss_TerobusterUpdateDefeatScreenPosition:              ; CODE XREF: Boss_Terobu
                                         ; Boss_TerobusterDefeatBounceState+10   j
                 move.w  #$CC,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$3E,d0                         ; '>'
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 rts
 ; End of function Boss_TerobusterUpdateDefeatScreenPosition
 ; Counts down while emitting randomized defeat debris around Terobuster
@@ -44,7 +44,7 @@ Boss_TerobusterUpdateDefeatDebris:                      ; CODE XREF: Boss_Terobu
                 bpl.s   Boss_TerobusterTrySpawnDefeatDebris
                 btst    #0,(FrameCounter+1).w
                 bne.s   Boss_TerobusterTrySpawnDefeatDebris
-                move.w  #$FFD0,(dword_FFA90C).w
+                move.w  #$FFD0,(SecondaryCameraYPos).w
 Boss_TerobusterTrySpawnDefeatDebris:                    ; CODE XREF: Boss_TerobusterDefeatDebrisState+18   j  ; was: loc_38BE8
                                         ; Boss_TerobusterDefeatDebrisState+20   j
                 move.w  #2,(PlaneAShakeLevel).w
@@ -89,7 +89,7 @@ Boss_TerobusterDefeatFadeState:                         ; DATA XREF: ROM:0003858
                 bmi.w   Boss_TerobusterUpdateDefeatDebris
                 move.w  #$22,4(a5)                      ; '"'
                 move.w  #8,$48(a5)
-                move.w  #$FFD0,(dword_FFA90C).w
+                move.w  #$FFD0,(SecondaryCameraYPos).w
                 move.b  #4,(byte_FFA95A).w
                 move.w  #$B4,d0
                 move.w  #$12C,d1
@@ -184,10 +184,10 @@ Boss_TerobusterStoreProjectileOffset:                   ; CODE XREF: Boss_Terobu
                 add.w   d1,$434(a5)
                 move.w  #$CC,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 add.w   $14(a5),d1
                 addi.w  #$3E,d1                         ; '>'
-                move.w  d1,(dword_FFA90C).w
+                move.w  d1,(SecondaryCameraYPos).w
                 jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_TerobusterUpdateBodyParts
 ; Spawns projectiles with trajectory and velocity updates

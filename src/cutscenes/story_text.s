@@ -50,7 +50,7 @@ StoryText_UpdateScroll:                                 ; DATA XREF: ROM:000058A
                 move.w  (VBlankFrameCounter).w,d0
                 andi.w  #3,d0
                 bne.w   Cutscene_Return
-                subq.w  #1,(dword_FFA904).w
+                subq.w  #1,(PrimaryCameraYPosition).w
                 subq.w  #1,(SharedSequenceTimer).l
                 bne.w   Cutscene_Return
                 move.w  #$18,(SharedSequenceTimer).l

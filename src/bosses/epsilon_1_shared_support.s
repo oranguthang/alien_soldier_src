@@ -130,7 +130,7 @@ Boss_Epsilon1BuildScrollProfile:                        ; CODE XREF: Boss_Epsilo
 Boss_Epsilon1InitializeScrollProfileLoop:               ; CODE XREF: Boss_Epsilon1BuildScrollProfile+E   j  ; was: loc_47912
                 move.w  d0,(a1)+
                 dbf     d7,Boss_Epsilon1InitializeScrollProfileLoop
-                move.w  (dword_FFA90C).w,d2
+                move.w  (SecondaryCameraYPos).w,d2
                 lea     (VerticalScrollProfile).w,a1
                 lea     (Math_SineTable).l,a2
                 lea     (dword_FF942C).w,a3
@@ -238,13 +238,13 @@ Boss_Epsilon1UpdateVisibleTileBands:                    ; CODE XREF: Boss_Epsilo
                 cmpi.w  #3,d0
                 beq.w   Boss_Epsilon1SelectAnimatedTilePair2
 Boss_Epsilon1SelectVisibleTileBands:                    ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+12   j  ; was: loc_47A44
-                cmpi.w  #$180,(dword_FFA908).w
+                cmpi.w  #$180,(SecondaryCameraXPos).w
                 bgt.s   Boss_Epsilon1ClearAllTileBands
-                cmpi.w  #$FF80,(dword_FFA908).w
+                cmpi.w  #$FF80,(SecondaryCameraXPos).w
                 blt.w   Boss_Epsilon1ClearAllTileBands
-                cmpi.w  #$20,(dword_FFA90C).w           ; ' '
+                cmpi.w  #$20,(SecondaryCameraYPos).w    ; ' '
                 blt.s   Boss_Epsilon1ClearFirstTileBand
-                cmpi.w  #$120,(dword_FFA90C).w
+                cmpi.w  #$120,(SecondaryCameraYPos).w
                 bgt.s   Boss_Epsilon1ClearFirstTileBand
                 bsr.w   Gfx_LoadEpsilon1TileBand1
                 bra.s   Boss_Epsilon1SelectSecondTileBand
@@ -253,9 +253,9 @@ Boss_Epsilon1ClearFirstTileBand:                        ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1UpdateVisibleTileBands+56   j
                 bsr.w   Gfx_ClearEpsilon1TileBand1
 Boss_Epsilon1SelectSecondTileBand:                      ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+5C   j  ; was: loc_47A70
-                cmpi.w  #$40,(dword_FFA90C).w           ; '@'
+                cmpi.w  #$40,(SecondaryCameraYPos).w    ; '@'
                 blt.s   Boss_Epsilon1ClearSecondTileBand
-                cmpi.w  #$140,(dword_FFA90C).w
+                cmpi.w  #$140,(SecondaryCameraYPos).w
                 bgt.s   Boss_Epsilon1ClearSecondTileBand
                 bsr.w   Gfx_LoadEpsilon1TileBand2
                 bra.s   Boss_Epsilon1SelectThirdTileBand
@@ -264,9 +264,9 @@ Boss_Epsilon1ClearSecondTileBand:                       ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1UpdateVisibleTileBands+70   j
                 bsr.w   Gfx_ClearEpsilon1TileBand2
 Boss_Epsilon1SelectThirdTileBand:                       ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+76   j  ; was: loc_47A8A
-                cmpi.w  #$60,(dword_FFA90C).w           ; '`'
+                cmpi.w  #$60,(SecondaryCameraYPos).w    ; '`'
                 blt.s   Boss_Epsilon1ClearThirdTileBand
-                cmpi.w  #$160,(dword_FFA90C).w
+                cmpi.w  #$160,(SecondaryCameraYPos).w
                 bgt.s   Boss_Epsilon1ClearThirdTileBand
                 bsr.w   Gfx_LoadEpsilon1TileBand3
                 bra.s   Boss_Epsilon1SelectFourthTileBand
@@ -275,9 +275,9 @@ Boss_Epsilon1ClearThirdTileBand:                        ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1UpdateVisibleTileBands+8A   j
                 bsr.w   Gfx_ClearEpsilon1TileBand3
 Boss_Epsilon1SelectFourthTileBand:                      ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+90   j  ; was: loc_47AA4
-                cmpi.w  #$80,(dword_FFA90C).w
+                cmpi.w  #$80,(SecondaryCameraYPos).w
                 blt.s   Boss_Epsilon1ClearFourthTileBand
-                cmpi.w  #$180,(dword_FFA90C).w
+                cmpi.w  #$180,(SecondaryCameraYPos).w
                 bgt.s   Boss_Epsilon1ClearFourthTileBand
                 bsr.w   Gfx_LoadEpsilon1TileBand4
                 rts

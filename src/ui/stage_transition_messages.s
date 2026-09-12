@@ -57,10 +57,10 @@ StageTransition_ResumeSetup_LoadPaletteAndText:         ; CODE XREF: StageTransi
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 bsr.w   StageTransition_RenderPressStart
-                clr.w   (dword_FFA904).w
-                clr.w   (dword_FFA900).w
-                clr.w   (dword_FFA90C).w
-                clr.w   (dword_FFA908).w
+                clr.w   (PrimaryCameraYPosition).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (SecondaryCameraYPos).w
+                clr.w   (SecondaryCameraXPos).w
                 jmp     Scroll_PreparePlaneBuffersAndRegisterShadows
 ; End of function StageTransition_ResumeSetup
 ; ---------------------------------------------------------------------------
@@ -79,7 +79,7 @@ StageTransition_UpdateMessageScreen:                    ; DATA XREF: Sys_Dispatc
                 bmi.w   StageTransition_UpdateMessageScreen_Return
                 tst.w   (GameSubstateIndex).w
                 beq.s   StageTransition_UpdateMessageScreen_RenderText
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   StageTransition_UpdateMessageScreen_RenderText
                 clr.w   (GameSubstateIndex).w
                 move.w  #2,(PaletteFadeMode).w
@@ -127,7 +127,7 @@ StageTransition_LoadStage:                              ; CODE XREF: StageTransi
                 move.w  (StageTableIndex).w,d0
                 asr.b   #1,d0
                 move.b  StageTransitionMessageStartStateByStage(pc,d0.w),(dword_FF80C8).w
-                clr.b   (byte_FFA272).w
+                clr.b   (StageTimerPauseFlag).w
                 jsr     (Stage_LoadAssetsForCurrentTableIndex).l
 StageTransition_LoadOrSetupReturn:                      ; CODE XREF: StageTransition_ResumeSetup+C   j  ; was: locret_1E40A
                                         ; StageTransition_ResumeSetup+16   j

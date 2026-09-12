@@ -6,16 +6,16 @@ Boss_ZLeoScrollUpdate:                                  ; CODE XREF: Boss_ZLeoRu
                                         ; Boss_ZLeoRunScrollingLaserEntryPose:Boss_ZLeoUpdateScrollingAttackFrame   p
                 move.l  $41C(a5),d0
                 bmi.s   Boss_ZLeoUpdateNegativeScroll
-                add.l   d0,(dword_FFA90C).w
-                move.w  (dword_FFA90C).w,d1
+                add.l   d0,(SecondaryCameraYPos).w
+                move.w  (SecondaryCameraYPos).w,d1
                 subi.w  #8,d1
                 bmi.s   Boss_ZLeoApplyScrollLookup
                 addi.w  #-$1FFF,d1
                 bra.s   Boss_ZLeoApplyScrollLookup
 ; ---------------------------------------------------------------------------
 Boss_ZLeoUpdateNegativeScroll:                          ; CODE XREF: Boss_ZLeoScrollUpdate+4   j  ; was: loc_52EFE
-                add.l   d0,(dword_FFA90C).w
-                move.w  (dword_FFA90C).w,d1
+                add.l   d0,(SecondaryCameraYPos).w
+                move.w  (SecondaryCameraYPos).w,d1
                 subi.w  #$E8,d1
                 cmpi.w  #$E001,d1
                 bpl.s   Boss_ZLeoApplyScrollLookup
@@ -257,7 +257,7 @@ Projectile_ZLeoLaserLaunchHorizontal:                   ; CODE XREF: Projectile_
                 move.w  #$154,$26(a5)
                 clr.l   $1C(a5)
                 move.l  #$100000,$18(a5)
-                btst    #3,(word_FFA40E).w
+                btst    #3,(PlayerSpriteAttributes).w
                 bne.s   Projectile_ZLeoHorizontalLaserMain
                 neg.l   $18(a5)
 ; Update the launched horizontal laser, converting impacts and emitting its trail
@@ -387,7 +387,7 @@ Projectile_ZLeoSpawnDropProjectile:                     ; CODE XREF: Boss_ZLeoRu
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$70,d0                         ; 'p'
                 subi.w  #$38,d0                         ; '8'
-                add.w   (dword_FFA410).w,d0
+                add.w   (PlayerXPosition).w,d0
                 move.w  d0,$10(a0)
                 move.w  d0,$10(a3)
                 cmpi.w  #$120,d0

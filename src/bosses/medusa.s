@@ -86,11 +86,11 @@ Boss_InitMedusaAtFixedPosition:                         ; was: sub_56A8A
 Boss_UpdateMedusaState2:                                ; DATA XREF: ROM:000569F2   o  ; was: sub_56ABA
                 move.w  (dword_FFDB34).w,d0
                 move.w  d0,$14(a5)
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_CheckMedusaState2RightInput
                 subq.w  #4,$10(a5)
 Boss_CheckMedusaState2RightInput:                       ; CODE XREF: Boss_UpdateMedusaState2+E   j  ; was: loc_56ACE
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_RenderMedusaState2
                 addq.w  #4,$10(a5)
 Boss_RenderMedusaState2:                                ; CODE XREF: Boss_UpdateMedusaState2+1A   j  ; was: loc_56ADA
@@ -189,7 +189,7 @@ Boss_UpdateMedusaStateA:                                ; DATA XREF: ROM:000569F
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_UpdateMedusaStateAApproach
                 clr.b   (byte_FF80EC).w
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
                 move.w  #1,(word_FF9804).w
                 move.l  #Medusa_StateASpawnSchedule,$59C(a5)
                 move.w  #$10,(word_FF9800).w
@@ -733,7 +733,7 @@ Entity_AdvanceMedusaSpawnSequenceSegment:               ; CODE XREF: Entity_Upda
                 adda.l  d1,a4
                 move.l  a4,$59C(a5)
 Entity_CheckMedusaSpawnSequenceTrigger:                 ; CODE XREF: Entity_UpdateMedusaScriptedSpawnSequence+16   j  ; was: loc_57244
-                move.w  (dword_FFA900).w,d4
+                move.w  (PrimaryCameraXPosition).w,d4
                 cmp.w   d2,d4
                 beq.s   Entity_ProcessMedusaSpawnSequenceEntry
                 bpl.s   Entity_UpdateMedusaSpawnSequenceReturn

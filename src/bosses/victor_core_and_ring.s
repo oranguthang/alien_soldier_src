@@ -22,7 +22,7 @@ Boss_VictorMain:                                        ; DATA XREF: ROM:Entity_
                 tst.w   (BossHealth).w
                 bne.s   Boss_VictorDispatchState
                 move.w  #1,(dword_FF9414+2).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.w  #$1E,4(a5)
 Boss_VictorDispatchState:                               ; CODE XREF: Boss_VictorMain+C   j  ; was: loc_32420
                                         ; Boss_VictorMain+12   j
@@ -133,10 +133,10 @@ Boss_VictorUpdateViewportOffset:                        ; CODE XREF: Boss_Victor
                                         ; Boss_VictorFlyIn+4   p
                 move.w  #$2A8,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 subi.w  #$A8,d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 rts
 ; End of function Boss_VictorUpdateViewportOffset
 ; Updates boss animation frames by loading compressed tile data on timer

@@ -49,7 +49,7 @@ Boss_FlyingNeoCheckDefeat:                              ; CODE XREF: Boss_Flying
                 beq.w   Boss_FlyingNeoDefeatInit
 Boss_FlyingNeoPublishScreenX:                           ; CODE XREF: Boss_FlyingNeoMain+2E   j  ; was: loc_3C08C
                                         ; Boss_FlyingNeoMain+36   j
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $430(a5),d0
                 move.w  d0,$BC(a5)
 ; State dispatcher for Flying Neo boss using jump table
@@ -95,10 +95,10 @@ Boss_FlyingNeoInit:                                     ; DATA XREF: Boss_Flying
                 moveq   #$C,d0
                 jsr     (Math_CalculateSineCosineTable).l
                 bsr.s   Boss_FlyingNeoClearPaletteHighBits
-                move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
-                move.w  #$F00,(word_FFA946).w
-                move.w  #$F760,(word_FFA948).w
-                move.w  #$1F,(word_FFA944).w
+                move.l  #Gfx_ScrollVRAMTransferParameters,(TilemapTransferBase).w
+                move.w  #$F00,(TilemapRowXOrFillWord).w
+                move.w  #$F760,(TilemapRowYPosition).w
+                move.w  #$1F,(TilemapRowCountdown).w
 Boss_FlyingNeoInitOrWaitReturn:                         ; CODE XREF: Boss_FlyingNeoWaitForScrollingBackground+6   j  ; was: locret_3C10E
                 rts
 ; End of function Boss_FlyingNeoInit
@@ -245,7 +245,7 @@ Boss_FlyingNeoDefeatInit:                               ; CODE XREF: Boss_Flying
                 bsr.w   Boss_FlyingNeoSetLinkedPartFlag0
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #4,(word_FF808C).w
@@ -413,23 +413,23 @@ Boss_FlyingNeoPlayerControlled:                         ; DATA XREF: ROM:0003C0C
                 clr.w   $23E(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Boss_FlyingNeoPlayerControlCheckDown
                 move.w  #$FFFF,$1C(a5)
                 move.w  #$FFE0,$23E(a5)
 Boss_FlyingNeoPlayerControlCheckDown:                   ; CODE XREF: Boss_FlyingNeoPlayerControlled+1A   j  ; was: loc_3C50A
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Boss_FlyingNeoPlayerControlCheckRight
                 move.w  #1,$1C(a5)
                 move.w  #$20,$23E(a5)                   ; ' '
 Boss_FlyingNeoPlayerControlCheckRight:                  ; CODE XREF: Boss_FlyingNeoPlayerControlled+2E   j  ; was: loc_3C51E
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_FlyingNeoPlayerControlCheckLeft
                 move.w  #2,$18(a5)
                 move.w  #$100,$54(a5)
                 bsr.w   Boss_FlyingNeoApplyFacingGraphics
 Boss_FlyingNeoPlayerControlCheckLeft:                   ; CODE XREF: Boss_FlyingNeoPlayerControlled+42   j  ; was: loc_3C536
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_FlyingNeoApplyPlayerControlPose
                 move.w  #$FFFE,$18(a5)
                 move.w  #0,$54(a5)

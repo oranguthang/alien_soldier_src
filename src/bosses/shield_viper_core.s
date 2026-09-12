@@ -3,7 +3,7 @@ Boss_ShieldViperUpdate:                                 ; DATA XREF: ROM:Entity_
                 tst.w   4(a5)
                 beq.w   Boss_ShieldViperDispatchState
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$5A(a5)
                 bsr.w   Gfx_ShieldViperUpdateBodyMappings
                 jsr     (Gfx_ProcessDefaultColorFade).l
@@ -14,7 +14,7 @@ Boss_ShieldViperUpdate:                                 ; DATA XREF: ROM:Entity_
                 move.b  #2,(byte_FF80EC).w
                 move.w  #$70,4(a5)                      ; 'p'
                 bset    #0,$58(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
 Boss_ShieldViperUpdateGeometryUnlessTransitioning:      ; CODE XREF: Boss_ShieldViperUpdate+24   j  ; was: loc_4DE16
                                         ; Boss_ShieldViperUpdate+2A   j
                 btst    #0,$58(a5)

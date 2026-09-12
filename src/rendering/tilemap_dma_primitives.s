@@ -1,9 +1,9 @@
 ; Mirrors one row at Y-$1000, then queues the next row of the active scrolling transfer
 Tilemap_MirrorOffsetRowAndQueueScrollingRow:            ; CODE XREF: Stage_StreamGameplayEntryPrimaryPlane_Rows+82   p  ; was: sub_10D16
                                         ; Stage_StreamGameplayEntryPrimaryPlane_Rows+88   p
-                movea.l (dword_FFA940).w,a0
-                move.w  (word_FFA946).w,d0
-                move.w  (word_FFA948).w,d1
+                movea.l (TilemapTransferBase).w,a0
+                move.w  (TilemapRowXOrFillWord).w,d0
+                move.w  (TilemapRowYPosition).w,d1
                 subi.w  #$1000,d1
                 neg.w   d1
                 moveq   #$F,d7
@@ -61,10 +61,10 @@ Tilemap_WriteOffsetMirrorRowSegment:                    ; CODE XREF: Tilemap_Mir
 ; Queues the next 64-word tilemap row filled with one constant value
 Tilemap_QueueNextConstantRow:                           ; CODE XREF: Stage_InitTerobusterBoss+10   p  ; was: sub_10DB2
                                         ; Stage9_UpdateCaterpillarShipExit+4   p
-                tst.w   (word_FFA944).w
+                tst.w   (TilemapRowCountdown).w
                 bmi.w   Tilemap_ConstantRowQueueReturn
                 movea.w (VDPStagingDataCursor).w,a0
-                move.w  (word_FFA946).w,d0
+                move.w  (TilemapRowXOrFillWord).w,d0
                 moveq   #$3F,d7                         ; '?'
 Tilemap_FillConstantRowLoop:                            ; CODE XREF: Tilemap_QueueNextConstantRow+14   j  ; was: loc_10DC4
                 move.w  d0,(a0)+
@@ -72,9 +72,9 @@ Tilemap_FillConstantRowLoop:                            ; CODE XREF: Tilemap_Que
                 movea.w (VDPCommandQueueHead).w,a1
                 move.w  #$83,-(a1)
                 moveq   #$1F,d0
-                sub.w   (word_FFA944).w,d0
+                sub.w   (TilemapRowCountdown).w,d0
                 asl.w   #7,d0
-                add.w   (dword_FFA940).w,d0
+                add.w   (TilemapTransferBase).w,d0
                 move.w  d0,-(a1)
                 move.b  (VDPStagingDataCursor).w,d1
                 move.b  (VDPStagingDataCursor+1).w,d2
@@ -88,7 +88,7 @@ Tilemap_FillConstantRowLoop:                            ; CODE XREF: Tilemap_Que
                 move.l  #$94009340,-(a1)
                 move.w  a1,(VDPCommandQueueHead).w
                 addi.w  #$80,(VDPStagingDataCursor).w
-                subq.w  #1,(word_FFA944).w
+                subq.w  #1,(TilemapRowCountdown).w
 Tilemap_ConstantRowQueueReturn:                         ; CODE XREF: Tilemap_QueueNextConstantRow+4   j  ; was: locret_10E12
                 rts
 ; End of function Tilemap_QueueNextConstantRow
@@ -105,7 +105,7 @@ Tilemap_WaitForPlaneFillZ80BusRequest:                  ; CODE XREF: Tilemap_Fil
                 bset    #4,d2
                 move.w  d2,(a4)
                 movea.l #$FFFF2000,a0
-                move.w  (word_FFA946).w,d0
+                move.w  (TilemapRowXOrFillWord).w,d0
                 move.w  #$7FF,d7
 Tilemap_FillPlaneStagingLoop:                           ; CODE XREF: Tilemap_FillPlaneDirectToVRAM+30   j  ; was: loc_10E42
                 move.w  d0,(a0)+
@@ -116,7 +116,7 @@ Tilemap_FillPlaneStagingLoop:                           ; CODE XREF: Tilemap_Fil
                 move.w  #$9690,(a4)
                 move.w  #$977F,(a4)
                 move.w  #$83,(VDPCommand).w
-                move.w  (dword_FFA940).w,(a4)
+                move.w  (TilemapTransferBase).w,(a4)
                 move.w  (VDPCommand).w,(a4)
                 move.w  (VDPReg1Shadow).w,d0
                 bclr    #4,d0

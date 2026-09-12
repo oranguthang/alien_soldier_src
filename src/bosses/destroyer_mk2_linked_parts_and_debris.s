@@ -114,7 +114,7 @@ Object_DestroyerMK2ReleaseCentralPartNow:               ; CODE XREF: Object_Dest
                 subq.w  #1,(dword_FF9410).w
                 addq.w  #2,4(a5)
                 move.w  #$FFFC,$1C(a5)
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 bmi.s   Object_DestroyerMK2LaunchCentralPartRight
                 move.w  #$FFFE,$18(a5)
@@ -342,7 +342,7 @@ Object_DestroyerMK2BouncingPartBFallReturn:             ; CODE XREF: Object_Dest
 ; Dispatch type-$24C horizontal motion while the object remains in bounds
 Object_DestroyerMK2HorizontalPartMain:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_4B9FC
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 cmpi.w  #$C10,d0
                 bcs.s   Object_DestroyerMK2MarkHorizontalPartOutOfBounds
                 cmpi.w  #$E70,d0
@@ -399,7 +399,7 @@ Object_DestroyerMK2FragmentGroupIdle:                   ; DATA XREF: ROM:Object_
 ; Initialize eight type-$260 fragment records with directional motion
 Object_DestroyerMK2InitializeFragmentGroup:             ; DATA XREF: ROM:0004BA5E   o  ; was: sub_4BA66
                 addq.w  #2,4(a5)
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 bmi.s   Object_DestroyerMK2SelectLeftFragmentMotion
                 move.w  #$30,d1                         ; '0'
@@ -415,7 +415,7 @@ Object_DestroyerMK2CalculateFragmentDistance:           ; CODE XREF: Object_Dest
                 neg.w   d0
 Object_DestroyerMK2ScaleFragmentDistance:               ; CODE XREF: Object_DestroyerMK2InitializeFragmentGroup+22   j  ; was: loc_4BA8C
                 lsr.w   #2,d0
-                cmpi.w  #$110,(dword_FFA414).w
+                cmpi.w  #$110,(PlayerYPosition).w
                 bcs.s   Object_DestroyerMK2SelectUpwardFragmentVelocity
                 move.w  #4,d3
                 bra.s   Object_DestroyerMK2InitializeFragmentRecords
@@ -681,23 +681,23 @@ Boss_DestroyerMK2ActivateLinkedPartsFromFlags:
                 bne.s   Boss_DestroyerMK2CheckConditionalNearPartActivation
                 move.w  #2,(word_FFC804).w
 Boss_DestroyerMK2CheckConditionalNearPartActivation:    ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+4   j  ; was: loc_4BDB8
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.s   Boss_DestroyerMK2CheckFarPartActivationFlags
                 tst.w   (word_FFC7A4).w
                 bne.s   Boss_DestroyerMK2CheckFarPartActivationFlags
                 move.w  #2,(word_FFC7A4).w
 Boss_DestroyerMK2CheckFarPartActivationFlags:           ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+12   j  ; was: loc_4BDCC
                                         ; Boss_DestroyerMK2ActivateLinkedPartsFromFlags+18   j
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 beq.s   Boss_DestroyerMK2CheckSecondFarPartActivation
                 tst.w   (word_FFC8C4).w
                 bne.s   Boss_DestroyerMK2CheckSecondFarPartActivation
                 move.w  #2,(word_FFC8C4).w
 Boss_DestroyerMK2CheckSecondFarPartActivation:          ; CODE XREF: Boss_DestroyerMK2ActivateLinkedPartsFromFlags+2E   j  ; was: loc_4BDE8
                                         ; Boss_DestroyerMK2ActivateLinkedPartsFromFlags+34   j
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
                 tst.w   (word_FFC864).w
                 bne.s   Boss_DestroyerMK2LinkedPartFlagActivationReturn
@@ -709,7 +709,7 @@ Boss_DestroyerMK2LinkedPartFlagActivationReturn:        ; CODE XREF: Boss_Destro
 ; Fills 40 foreground-scroll rows with the negated stage scroll position
 Gfx_DestroyerMK2UpdateForegroundScrollRows:             ; CODE XREF: Boss_DestroyerMK2Main+8   p  ; was: sub_4BDFE
                 lea     (word_FFE480).w,a0
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 neg.w   d0
                 move.w  #$27,d7                         ; '''
 Gfx_DestroyerMK2UpdateForegroundScrollRowsLoop:         ; CODE XREF: Gfx_DestroyerMK2UpdateForegroundScrollRows+12   j  ; was: loc_4BE0C

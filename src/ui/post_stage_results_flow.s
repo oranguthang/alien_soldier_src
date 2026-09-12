@@ -40,10 +40,10 @@ Results_InitializePostStageFlow_Activate:               ; was: loc_1D69C
                 bsr.w   Results_FadeSelectedPaletteRanges
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                move.w  #$FF00,(dword_FFA904).w
-                clr.w   (dword_FFA900).w
-                move.w  #$FF00,(dword_FFA90C).w
-                move.w  #$10,(dword_FFA908).w
+                move.w  #$FF00,(PrimaryCameraYPosition).w
+                clr.w   (PrimaryCameraXPosition).w
+                move.w  #$FF00,(SecondaryCameraYPos).w
+                move.w  #$10,(SecondaryCameraXPos).w
                 move.b  #4,(byte_FFA95B).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
 ; Finalizes post-stage display state and resets the frame counter
@@ -96,8 +96,8 @@ Results_InitializeSecondaryOptionsReturn_Activate:      ; was: loc_1D778
                 jsr     (Gfx_FadePaletteTransition).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
-                move.w  #$FF00,(dword_FFA90C).w
-                move.w  #0,(dword_FFA908).w
+                move.w  #$FF00,(SecondaryCameraYPos).w
+                move.w  #0,(SecondaryCameraXPos).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.w  #2,(dword_FF8066+2).w
                 bra.w   Results_FinalizePostStageSetup
@@ -133,7 +133,7 @@ Results_UpdateEntranceScroll_PlayCue:                   ; was: loc_1D7F6
                 move.b  #$1D,d0
                 jsr     (Sound_QueueRequest).l
 Results_UpdateEntranceScroll_CheckComplete:             ; was: loc_1D800
-                cmpi.w  #$3C0,(dword_FFA900).w
+                cmpi.w  #$3C0,(PrimaryCameraXPosition).w
                 bmi.s   Results_UpdateEntranceFrame
                 addq.w  #2,(GameSubstateIndex).w
                 move.w  #2,(PaletteFadeMode).w
@@ -152,11 +152,11 @@ Results_UpdateEntranceFade:                             ; was: sub_1D81E
                 move.w  #4,(PaletteFadeMode).w
                 move.w  #$FFF4,(PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
-                move.w  #$4000,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
+                move.w  #$4000,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
-                move.w  #$6000,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
+                move.w  #$6000,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
                 jmp     Tilemap_FillPlaneDirectToVRAM
 ; ---------------------------------------------------------------------------
 Results_UpdateEntranceFrame:                            ; was: loc_1D86A
@@ -164,22 +164,22 @@ Results_UpdateEntranceFrame:                            ; was: loc_1D86A
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.l  #$FFFF0000,d0
                 bsr.w   Results_BuildParallaxHScroll
-                addq.w  #8,(dword_FFA900).w
-                move.w  (dword_FFA900).w,d0
+                addq.w  #8,(PrimaryCameraXPosition).w
+                move.w  (PrimaryCameraXPosition).w,d0
                 addi.w  #$1C0,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 jsr     (Tilemap_QueuePrimaryPlaneColumn).l
-                addq.w  #4,(dword_FFA900).w
-                move.w  (dword_FFA900).w,d0
+                addq.w  #4,(PrimaryCameraXPosition).w
+                move.w  (PrimaryCameraXPosition).w,d0
                 addi.w  #$1C0,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 jmp     Tilemap_QueuePrimaryPlaneColumn
 ; End of function Results_UpdateEntranceFade
 
 ; Builds alternating post-stage horizontal-scroll words from two accumulators
 Results_BuildParallaxHScroll:                           ; was: sub_1D8AC
                 movea.w #(HScrollBuffer-M68K_RAM),a0
-                move.l  (dword_FFA900).w,d1
+                move.l  (PrimaryCameraXPosition).w,d1
                 neg.l   d1
                 move.w  #$6F,d7                         ; 'o'
                 move.l  d1,d2

@@ -23,7 +23,7 @@ Projectile_MadamBarbarDebrisUpdateActive:               ; CODE XREF: Projectile_
                 bne.s   Projectile_MadamBarbarDebrisDispatchMotionState
                 bset    #3,$E(a5)
 Projectile_MadamBarbarDebrisDispatchMotionState:        ; CODE XREF: Projectile_MadamBarbarDebris+4E   j  ; was: loc_3AE8C
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$5E(a5)
                 move.w  4(a5),d0

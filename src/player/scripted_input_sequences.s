@@ -17,7 +17,7 @@ Player_UpdateScriptedInput_Return:                      ; CODE XREF: Player_Upda
 Player_DispatchScriptedInputState:                      ; CODE XREF: Player_UpdateScriptedInput   p  ; was: sub_19A10
                 clr.b   $69(a5)
                 clr.b   $6A(a5)
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,(ScriptedPlayerWorldX).w
                 move.w  (PlayerScriptStateOffset).w,d0
@@ -304,7 +304,7 @@ PlayerScript_WaitForXiTigerIntroState20_Return:         ; CODE XREF: PlayerScrip
 PlayerScript_StartViblackPlayerState30:                 ; DATA XREF: ROM:00019A64   o  ; was: sub_19D4E
                 tst.w   (word_FF80E6).w
                 bne.s   PlayerScript_StartViblackPlayerState30_Return
-                move.w  #$48,(word_FFA404).w            ; 'H'
+                move.w  #$48,(PlayerStateOffset).w      ; 'H'
 PlayerScript_StartViblackPlayerState30_Return:          ; CODE XREF: PlayerScript_StartViblackPlayerState30+4   j  ; was: locret_19D5A
                 rts
 ; End of function PlayerScript_StartViblackPlayerState30

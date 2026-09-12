@@ -39,7 +39,7 @@ Enemy_PhasePatternInit:                                 ; DATA XREF: ROM:Enemy_P
 Enemy_PhasePatternWaitState:                            ; DATA XREF: ROM:0002D058   o  ; was: loc_2D07A
                 subq.w  #1,$48(a5)
                 beq.s   Enemy_PhasePatternWaitState_Timeout
-                btst    #5,(word_FFF708).w
+                btst    #5,(ControllerPressedState).w
                 beq.s   Enemy_PhasePatternWaitState_Return
                 addq.w  #2,4(a5)
                 btst    #4,$E(a5)

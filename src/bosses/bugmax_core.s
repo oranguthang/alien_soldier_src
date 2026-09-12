@@ -5,7 +5,7 @@ Boss_BugmaxMain:                                        ; DATA XREF: ROM:Entity_
                 lea     (PaletteFade_BugmaxEntryOffsets).l,a2
                 jsr     (Gfx_ProcessColorFade).l
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$58(a5)
                 move.w  $5E(a5),d0
                 lea     Boss_BugmaxGeometryModeHandlers(pc,d0.w),a0
@@ -22,11 +22,11 @@ Boss_BugmaxGeometryModeHandlers:    dc.w    Boss_BugmaxUpdateLinkedChainGeometry
 Boss_BugmaxUpdateLinkedChainGeometry:                   ; DATA XREF: ROM:Boss_BugmaxGeometryModeHandlers   o  ; was: sub_4BEF0
                 move.w  #$168,d0
                 sub.w   $5C(a5),d0
-                add.w   (dword_FFA900).w,d0
-                move.w  d0,(dword_FFA908).w
+                add.w   (PrimaryCameraXPosition).w,d0
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$128,d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 movea.w #(word_FFC680-M68K_RAM),a0
                 move.l  $10(a5),d3
                 move.l  $14(a5),d4
@@ -116,9 +116,9 @@ Boss_BugmaxCopySmoothedAnglesToLinkedPartsLoop:         ; CODE XREF: Boss_Bugmax
 Boss_BugmaxUpdateReverseLinkedChainGeometry:            ; DATA XREF: ROM:0004BEEA   o  ; was: sub_4C008
                 move.w  #$168,d0
                 sub.w   $5C(a5),d0
-                add.w   (dword_FFA900).w,d0
-                move.w  d0,(dword_FFA908).w
-                move.w  #$1F0,(dword_FFA90C).w
+                add.w   (PrimaryCameraXPosition).w,d0
+                move.w  d0,(SecondaryCameraXPos).w
+                move.w  #$1F0,(SecondaryCameraYPos).w
                 movea.w #(word_FFC860-M68K_RAM),a1
                 movea.w #(word_FFC800-M68K_RAM),a0
                 move.w  #3,d7
@@ -158,9 +158,9 @@ Boss_BugmaxProjectReverseLinkedChainLoop:               ; CODE XREF: Boss_Bugmax
 Boss_BugmaxUpdateForwardLinkedChainGeometry:            ; DATA XREF: ROM:0004BEEC   o  ; was: sub_4C09A
                 move.w  #$168,d0
                 sub.w   $5C(a5),d0
-                add.w   (dword_FFA900).w,d0
-                move.w  d0,(dword_FFA908).w
-                move.w  #$1F0,(dword_FFA90C).w
+                add.w   (PrimaryCameraXPosition).w,d0
+                move.w  d0,(SecondaryCameraXPos).w
+                move.w  #$1F0,(SecondaryCameraYPos).w
                 movea.w #(word_FFC680-M68K_RAM),a0
                 move.l  $10(a5),d3
                 move.l  $14(a5),d4
@@ -187,7 +187,7 @@ Boss_BugmaxProjectForwardChainFromPreviousPartLoop:     ; CODE XREF: Boss_Bugmax
 Boss_BugmaxUpdatePerspectiveAndLinkedGeometry:          ; DATA XREF: ROM:0004BEEE   o  ; was: sub_4C0FC
                 move.w  #$190,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  #$60,d0                         ; '`'
                 move.w  #$5F,d7                         ; '_'
                 movea.w #(byte_FF9520-M68K_RAM),a0
@@ -201,7 +201,7 @@ Boss_BugmaxInitializePerspectiveRowsLoop:               ; CODE XREF: Boss_Bugmax
                 bmi.w   Boss_BugmaxInitializeNegativePerspectiveSlope
                 move.w  #$204,d0
                 sub.w   $14(a5),d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 moveq   #0,d2
                 move.w  #$400,d2
                 move.w  (dword_FF9400).w,d0
@@ -217,7 +217,7 @@ Boss_BugmaxInitializePerspectiveRowsLoop:               ; CODE XREF: Boss_Bugmax
                 subi.w  #$A0,d0
                 andi.w  #$1FE,d0
                 adda.w  d0,a0
-                move.l  (dword_FFA90C).w,d1
+                move.l  (SecondaryCameraYPos).w,d1
                 move.w  (dword_FF9400).w,d7
 Boss_BugmaxFillPerspectiveRowsBackwardLoop:             ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+82   j  ; was: loc_4C170
                 cmpa.w  a1,a0
@@ -232,7 +232,7 @@ Boss_BugmaxFillPerspectiveRowsBackwardLoop:             ; CODE XREF: Boss_Bugmax
 Boss_BugmaxInitializeNegativePerspectiveSlope:          ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+2C   j  ; was: loc_4C184
                 move.w  #$22C,d0
                 sub.w   $14(a5),d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 moveq   #0,d2
                 move.w  #$400,d2
                 move.w  (dword_FF9400).w,d0
@@ -250,7 +250,7 @@ Boss_BugmaxInitializeNegativePerspectiveSlope:          ; CODE XREF: Boss_Bugmax
                 subi.w  #$A0,d0
                 andi.w  #$1FE,d0
                 adda.w  d0,a0
-                move.l  (dword_FFA90C).w,d1
+                move.l  (SecondaryCameraYPos).w,d1
                 move.w  (dword_FF9400).w,d7
                 neg.w   d7
 Boss_BugmaxFillPerspectiveRowsForwardLoop:              ; CODE XREF: Boss_BugmaxUpdatePerspectiveAndLinkedGeometry+E0   j  ; was: loc_4C1D0
@@ -286,7 +286,7 @@ Boss_BugmaxProjectPrimaryLinkedChainLoop:               ; CODE XREF: Boss_Bugmax
                 dbf     d7,Boss_BugmaxProjectPrimaryLinkedChainLoop
 Boss_BugmaxUpdatePositionAndAngleHistories:             ; CODE XREF: Boss_BugmaxUpdateForwardLinkedChainGeometry+5E   j  ; was: loc_4C22C
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 swap    d0
                 move.w  $14(a5),d0
                 lea     (word_FF95E0).w,a0
@@ -303,7 +303,7 @@ Boss_BugmaxShiftPositionHistoryLoop:                    ; CODE XREF: Boss_Bugmax
                 move.w  d5,d4
                 swap    d5
                 move.w  d5,d3
-                sub.w   (dword_FFA900).w,d3
+                sub.w   (PrimaryCameraXPosition).w,d3
                 swap    d3
                 swap    d4
                 movea.w #(word_FFC680-M68K_RAM),a0
@@ -322,7 +322,7 @@ Boss_BugmaxShiftPositionHistoryLoop:                    ; CODE XREF: Boss_Bugmax
                 move.w  d6,d4
                 swap    d6
                 move.w  d6,d3
-                sub.w   (dword_FFA900).w,d3
+                sub.w   (PrimaryCameraXPosition).w,d3
                 swap    d3
                 swap    d4
                 movea.w #(word_FFC6E0-M68K_RAM),a0
@@ -413,7 +413,7 @@ Boss_BugmaxEnterForcedFinalState:                       ; was: loc_4C3B0
                 bset    #0,$5A(a5)
                 move.w  #$56,4(a5)                      ; 'V'
                 move.w  #1,(dword_FF9428+2).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 bra.w   *+4
 ; ---------------------------------------------------------------------------
 ; Main state dispatcher for Bugmax boss
@@ -488,7 +488,7 @@ Boss_BugmaxInitializeEncounterState:                    ; DATA XREF: ROM:Boss_Bu
                 clr.w   $5E(a5)
                 move.w  #$604,d0
                 move.w  d0,$5C(a5)
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 move.w  #$C8,$14(a5)
                 move.b  #$40,$20(a5)                    ; '@'
@@ -543,11 +543,11 @@ Boss_BugmaxInitializeLinkedPartLoop:                    ; CODE XREF: Boss_Bugmax
                 bsr.w   Gfx_BugmaxLoadInitialTiles
                 move.w  #$168,d0
                 sub.w   $5C(a5),d0
-                add.w   (dword_FFA900).w,d0
-                move.w  d0,(dword_FFA908).w
+                add.w   (PrimaryCameraXPosition).w,d0
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$128,d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 lea     (word_FF9600).w,a0
                 move.w  #7,d7
 Boss_BugmaxClearAngleHistoryRowsLoop:                   ; CODE XREF: Boss_BugmaxInitializeEncounterState+17C   j  ; was: loc_4C5AC
@@ -875,7 +875,7 @@ Boss_BugmaxUpdateBodyAnchorFromScrollPhase:             ; CODE XREF: Boss_Bugmax
                 rts
 ; ---------------------------------------------------------------------------
 Boss_BugmaxAdjustBodyAnchorForScrollSide:               ; CODE XREF: Boss_BugmaxUpdateBodyAnchorFromScrollPhase+C   j  ; was: loc_4C920
-                cmpi.w  #$410,(dword_FFA900).w
+                cmpi.w  #$410,(PrimaryCameraXPosition).w
                 bcc.s   Boss_BugmaxStorePositiveBodyAnchorOffset
                 subi.w  #$80,d0
                 rts

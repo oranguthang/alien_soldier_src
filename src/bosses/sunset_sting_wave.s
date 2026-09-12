@@ -1,7 +1,7 @@
 ; Returns nonzero while an object remains inside the central flight bounds
 Boss_SunsetStingCheckWithinFlightBounds:                ; CODE XREF: Boss_SunsetStingSegmentFlightState:Boss_SunsetStingSegmentFlightCheckBounds   p  ; was: sub_428B4
                                         ; Boss_SunsetStingSecondarySegmentFallState:Boss_SunsetStingSecondarySegmentCheckBounds   p
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 subi.w  #$780,d0
                 bpl.s   Boss_SunsetStingCheckVerticalFlightBounds
@@ -57,7 +57,7 @@ Boss_SunsetStingGenerateWaveCurveLoop:                  ; CODE XREF: Boss_Sunset
                 move.w  $14(a5),d0
                 move.w  d0,d1
                 subi.w  #$AC,d1
-                move.w  d1,(dword_FFA90C).w
+                move.w  d1,(SecondaryCameraYPos).w
                 subi.w  #$94,d0
                 lsl.w   #2,d0
                 adda.w  d0,a0

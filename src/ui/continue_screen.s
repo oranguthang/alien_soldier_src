@@ -110,10 +110,10 @@ Continue_RenderPassword:                                ; was: sub_1DA44
 Continue_InitializeScreen:                              ; was: sub_1DA90
                 bclr    #6,(VDPReg1Shadow+1).w
                 clr.b   (PaletteDMAHIntEnabled).w
-                clr.l   (dword_FFA900).w
-                clr.l   (dword_FFA904).w
-                clr.l   (dword_FFA908).w
-                clr.l   (dword_FFA90C).w
+                clr.l   (PrimaryCameraXPosition).w
+                clr.l   (PrimaryCameraYPosition).w
+                clr.l   (SecondaryCameraXPos).w
+                clr.l   (SecondaryCameraYPos).w
                 tst.w   (ContinueCreditsBCD).w
                 bne.s   Continue_InitializeScreen_BuildScreen
                 move.w  #$14,(GameModeIndex).w
@@ -128,11 +128,11 @@ Continue_InitializeScreen_BuildScreen:                  ; was: loc_1DABC
                 jsr     (Gfx_LoadMultiplePalettes).l
                 bsr.w   Continue_RenderPrompt
                 bsr.w   Continue_RenderStageAndDifficulty
-                move.w  #$4000,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
+                move.w  #$4000,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
-                move.w  #$6000,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
+                move.w  #$6000,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 move.w  #4,(PaletteFadeMode).w
                 move.w  #$FFF4,(PaletteFadeColorOffset).w
@@ -165,7 +165,7 @@ Continue_ActivateScreen_Return:                         ; was: locret_1DB5A
 Continue_UpdateCountdownAndInput:                       ; was: sub_1DB5C
                 bsr.w   Continue_RenderCreditCount
                 bsr.w   Continue_RenderCountdownDigit
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 andi.b  #$70,d0                         ; 'p'
                 beq.s   Continue_UpdateCountdownAndInput_AdvanceCountdown
                 move.b  #$A2,d0
@@ -193,7 +193,7 @@ Continue_UpdateCountdownAndInput_CheckCountdownTick:    ; was: loc_1DBB0
                 move.b  #$A2,d0
                 jsr     (Sound_QueueRequest).l
 Continue_UpdateCountdownAndInput_CheckConfirm:          ; was: loc_1DBC0
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   Continue_UpdateFrame
                 addq.w  #2,(GameSubstateIndex).w
                 move.b  #1,d0

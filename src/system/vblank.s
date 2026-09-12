@@ -88,11 +88,11 @@ Input_HandleControllerState:                            ; CODE XREF: Sys_VBlankH
                 clr.b   d1
                 btst    #0,d0
                 beq.w   Input_HandleControllerState_CheckPort2
-                or.b    (word_FFF708).w,d1
+                or.b    (ControllerPressedState).w,d1
 Input_HandleControllerState_CheckPort2:                 ; CODE XREF: Input_HandleControllerState+12   j  ; was: loc_B9C
                 btst    #1,d0
                 beq.w   Input_HandleControllerState_CheckTransition
-                or.b    (word_FFF708+1).w,d1
+                or.b    (ControllerPressedState+1).w,d1
 Input_HandleControllerState_CheckTransition:            ; CODE XREF: Input_HandleControllerState+1E   j  ; was: loc_BA8
                 tst.b   d1
                 bpl.w   Input_HandleControllerState_Return
@@ -138,9 +138,9 @@ Sys_VBlankEventHandler_Return:                          ; CODE XREF: Sys_VBlankE
 ; End of function Sys_VBlankEventHandler
 ; Updates the global countdown and advances the VBlank frame counter
 Sys_UpdateTimers:                                       ; CODE XREF: Sys_VBlankHandler+58   p  ; was: sub_C16
-                tst.w   (word_FFA282).w
+                tst.w   (VBlankCountdown).w
                 beq.s   Sys_UpdateTimers_AdvanceFrame
-                subq.w  #1,(word_FFA282).w
+                subq.w  #1,(VBlankCountdown).w
 Sys_UpdateTimers_AdvanceFrame:                          ; CODE XREF: Sys_UpdateTimers+4   j  ; was: loc_C20
                 addq.w  #1,(VBlankFrameCounter).w
                 bra.s   Sys_DispatchGameState_Run
@@ -151,8 +151,8 @@ Sys_DispatchGameState:
                 bpl.w   Sys_DispatchGameState_Run
                 btst    #6,d0
                 beq.w   Sys_DispatchGameState_Run
-                move.b  (word_FFF706).w,d0
-                or.b    (word_FFF706+1).w,d0
+                move.b  (ControllerHeldState).w,d0
+                or.b    (ControllerHeldState+1).w,d0
                 andi.b  #$70,d0                         ; 'p'
                 cmpi.b  #$70,d0                         ; 'p'
                 bne.w   Sys_DispatchGameState_Run

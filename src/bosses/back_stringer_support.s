@@ -172,7 +172,7 @@ Boss_BackStringerUpdateTailSegmentLoop:                 ; CODE XREF: Boss_BackSt
                 move.w  #$8080,2(a0)
                 bset    #1,(byte_FF825C).w
                 move.w  #2,$29E(a5)
-                bset    #4,(word_FFA40E).w
+                bset    #4,(PlayerSpriteAttributes).w
 Boss_BackStringerCheckTailContactRelease:               ; CODE XREF: Boss_BackStringerUpdateTailSegmentPositions+46   j  ; was: loc_45176
                 bclr    #1,(byte_FF825C).w
                 bne.s   Boss_BackStringerPublishTailContact
@@ -180,7 +180,7 @@ Boss_BackStringerCheckTailContactRelease:               ; CODE XREF: Boss_BackSt
                 bra.s   Boss_BackStringerUpdateTailSegmentsReturn
 ; ---------------------------------------------------------------------------
 Boss_BackStringerPublishTailContact:                    ; CODE XREF: Boss_BackStringerUpdateTailSegmentPositions+6E   j  ; was: loc_45184
-                bset    #7,(word_FFA40E).w
+                bset    #7,(PlayerSpriteAttributes).w
                 move.w  #$C8,(word_FF824E).w
                 bset    #0,(byte_FF825C).w
                 bset    #2,(byte_FF825C).w
@@ -208,7 +208,7 @@ Boss_BackStringerRetractTailSegmentsLoop:               ; CODE XREF: Boss_BackSt
                 clr.w   $29E(a5)
                 clr.w   2(a0)
                 clr.b   $21(a0)
-                bclr    #4,(word_FFA40E).w
+                bclr    #4,(PlayerSpriteAttributes).w
                 rts
 ; End of function Boss_BackStringerRetractTailSegments
 ; Flashing effect for destroyed BackStringer segment
@@ -460,12 +460,12 @@ Projectile_BackStringerRopeSegmentUpdateSurface:        ; CODE XREF: Projectile_
                                         ; Projectile_BackStringerRopeSegment+2A   j
                 move.w  #$168,d0
                 add.w   $14(a5),d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 clr.l   $1C(a5)
-                move.w  (dword_FFA414).w,d0
+                move.w  (PlayerYPosition).w,d0
                 cmp.w   $14(a5),d0
                 bpl.s   Projectile_BackStringerRopeSegmentReturn
-                bclr    #7,(word_FFA40E).w
+                bclr    #7,(PlayerSpriteAttributes).w
 Projectile_BackStringerRopeSegmentReturn:               ; CODE XREF: Projectile_BackStringerRopeSegment+4C   j  ; was: locret_456EA
                 rts
 ; End of function Projectile_BackStringerRopeSegment

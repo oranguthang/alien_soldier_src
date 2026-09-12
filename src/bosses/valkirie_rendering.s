@@ -332,7 +332,7 @@ Entity_ClampValkirieAuxiliaryFlashTimer:                ; CODE XREF: Entity_Upda
 Entity_TrackValkirieAuxiliaryTarget:                    ; CODE XREF: Entity_UpdateValkirieAuxiliaryGroup+13C   j  ; was: loc_56860
                                         ; Entity_UpdateValkirieAuxiliaryGroup:Entity_ClampValkirieAuxiliaryFlashTimer   j
                 bsr.w   Entity_UpdateValkirieAuxiliaryAnchors
-                move.w  (dword_FFA900).w,d1
+                move.w  (PrimaryCameraXPosition).w,d1
                 add.w   $10(a5),d1
                 move.w  $23C(a5),d2
                 btst    #7,(byte_FFC9DE).w

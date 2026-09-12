@@ -47,7 +47,7 @@ Boss_ViblackMain:                                       ; DATA XREF: ROM:Entity_
                 lea     Boss_ViblackPaletteCycleEntries(pc),a2
                 nop
                 jsr     (Gfx_ProcessColorFade).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$5E(a5)
                 movea.w #(word_FFC680-M68K_RAM),a4
@@ -108,7 +108,7 @@ Boss_ViblackIntroSetup:                                 ; DATA XREF: ROM:000439D
                 move.b  #$10,$21(a5)
                 move.b  #$80,$23(a5)
                 move.l  #$F010F010,$28(a5)
-                move.w  (dword_FFA410).w,$10(a5)
+                move.w  (PlayerXPosition).w,$10(a5)
                 move.w  #$7C,$14(a5)                    ; '|'
                 move.w  #8,$1C(a5)
                 move.w  #$10,(a4)
@@ -148,7 +148,7 @@ Boss_ViblackEntranceDescentState:                       ; DATA XREF: ROM:000439E
                 bsr.w   Sound_ViblackPeriodic
                 bsr.w   Boss_ViblackUpdateScrollAndCompanion
                 subi.l  #$2000,$1C(a5)
-                move.w  (dword_FFA414).w,d0
+                move.w  (PlayerYPosition).w,d0
                 sub.w   $14(a5),d0
                 cmpi.w  #$20,d0                         ; ' '
                 bpl.s   Boss_ViblackEntranceDescentReturn
@@ -156,7 +156,7 @@ Boss_ViblackEntranceDescentState:                       ; DATA XREF: ROM:000439E
                 move.l  #$30000,$1C(a5)
                 move.w  #$30,(PlayerScriptStateOffset).w  ; '0'
                 bset    #5,(byte_FF8245).w
-                bset    #4,(word_FFA40E).w
+                bset    #4,(PlayerSpriteAttributes).w
                 jsr     (Sys_ClearObjectBlocks16).l
                 move.w  #$8000,(word_FF808A).w
                 move.w  #4,(PlaneAShakeLevel).w
@@ -184,13 +184,13 @@ Boss_ViblackFinishEntranceMotionState:                  ; DATA XREF: ROM:000439E
                 clr.b   (byte_FF80EC).w
                 clr.w   (PlayerScriptStateOffset).w
                 bclr    #5,(byte_FF8245).w
-                addq.w  #2,(word_FFA404).w
+                addq.w  #2,(PlayerStateOffset).w
 Boss_ViblackUpdateStageSurfaceReference:                ; CODE XREF: Boss_ViblackEntranceDescentState+58   j  ; was: loc_43BD0
                                         ; Boss_ViblackFinishEntranceMotionState+10   j
                 movea.w #(word_FFC680-M68K_RAM),a4
                 move.w  $14(a4),d0
                 addi.w  #$20,d0                         ; ' '
-                move.w  d0,(dword_FFA414).w
+                move.w  d0,(PlayerYPosition).w
                 rts
 ; End of function Boss_ViblackFinishEntranceMotionState
 ; Moves to the next attack target and selects chain or radial-shot activity
@@ -335,7 +335,7 @@ Boss_ViblackShotAngleSequence:  dc.b    $50, $4C, $48, $44, $40, $3C, $38, $34, 
 Boss_ViblackDefeatInit:                                 ; CODE XREF: Boss_ViblackMain+3C   j  ; was: sub_43D62
                 move.b  #1,(byte_FF830E).w
                 move.w  #$C,4(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 clr.b   $21(a5)
                 move.w  #$80,(word_FF808C).w
@@ -383,10 +383,10 @@ Boss_ViblackDefeatRiseState:                            ; DATA XREF: ROM:000439F
                 clr.l   $1C(a5)
                 clr.w   $52(a5)
                 move.w  #$FFF0,$54(a5)
-                btst    #4,(word_FFA40E).w
+                btst    #4,(PlayerSpriteAttributes).w
                 beq.s   Boss_ViblackInitializeTransitionCompanion
-                move.w  #$4C,(word_FFA404).w            ; 'L'
-                move.w  #$FFF8,(dword_FFA41C).w
+                move.w  #$4C,(PlayerStateOffset).w      ; 'L'
+                move.w  #$FFF8,(PlayerYVelocity).w
                 jsr     (Sys_ClearObjectBlocks16).l
 Boss_ViblackInitializeTransitionCompanion:              ; CODE XREF: Boss_ViblackDefeatRiseState+2E   j  ; was: loc_43E20
                 move.w  #$320,(word_FFC680).w
@@ -463,7 +463,7 @@ Boss_ViblackWriteTransitionOffsetPairs:                 ; CODE XREF: Boss_Viblac
                 asr.w   #1,d1
                 addi.w  #$C7,d1
                 move.w  d1,$14(a5)
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 neg.w   d0
                 moveq   #$18,d1
                 move.w  $52(a5),d2

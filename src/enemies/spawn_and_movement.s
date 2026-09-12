@@ -1,7 +1,7 @@
 EnemySpawn_UpdateDirector:                              ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateStageEffects   p  ; was: sub_2C33A
                 tst.b   (byte_FFF705).w
                 bmi.s   EnemySpawn_DirectorReturn
-                movea.w #(word_FFA400-M68K_RAM),a5
+                movea.w #(PlayerObjectType-M68K_RAM),a5
                 move.w  (EnemySpawnDirectorState).w,d0
                 movea.w EnemySpawn_DirectorHandlers(pc,d0.w),a0
                 adda.l  #EnemySpawn_ResetDirectorState,a0
@@ -64,9 +64,9 @@ EnemySpawn_SelectSearchOriginY:                         ; CODE XREF: EnemySpawn_
                 move.w  #$1D0,d0
                 tst.w   (DifficultyMode).w
                 beq.s   EnemySpawn_SelectSearchOriginY_Return
-                cmpi.w  #2,(dword_FFA910).w
+                cmpi.w  #2,(CameraXDelta).w
                 bpl.s   EnemySpawn_SelectSearchOriginY_Return
-                cmpi.w  #$C0,(dword_FFA410).w
+                cmpi.w  #$C0,(PlayerXPosition).w
                 bmi.s   EnemySpawn_SelectSearchOriginY_Return
                 move.b  (RandomNumberState).w,d1
                 andi.w  #3,d1
@@ -152,12 +152,12 @@ EnemySpawn_FindTerrainPosition_Found:                   ; CODE XREF: EnemySpawn_
 EnemySpawn_CalculateLayoutOffset:                       ; CODE XREF: EnemySpawn_FindTerrainPosition+18   p  ; was: sub_2C4A2
                                         ; EnemySpawn_FindTerrainPosition+24   p
                 sub.w   d7,d2
-                add.w   (dword_FFA900).w,d2
+                add.w   (PrimaryCameraXPosition).w,d2
                 asr.w   #2,d2
                 andi.w  #$7E,d2                         ; '~'
                 move.w  d1,d4
                 sub.w   d7,d4
-                sub.w   (dword_FFA904).w,d4
+                sub.w   (PrimaryCameraYPosition).w,d4
                 asl.w   #4,d4
                 andi.w  #$1F80,d4
                 add.w   d4,d2

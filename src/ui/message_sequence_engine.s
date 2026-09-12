@@ -9,7 +9,7 @@ MessageSequence_CheckActiveState:                       ; CODE XREF: MessageSequ
                 beq.s   MessageSequence_DispatchReturn
                 btst    #0,(MessageSequenceFlags).w
                 bne.s   MessageSequence_DispatchActiveState
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 andi.b  #$70,d0                         ; 'p'
                 move.b  d0,(MessageAdvanceButtons).w
 MessageSequence_DispatchActiveState:                    ; CODE XREF: MessageSequence_Dispatch+14   j  ; was: loc_A992
@@ -170,7 +170,7 @@ BattleBanner_StartFightLine:                            ; DATA XREF: ROM:0000A9C
                 move.w  #$34,(word_FF80C6).w            ; '4'
                 clr.l   (dword_FF80CE).w
                 move.l  #$20000,(dword_FF80C8).w
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
                 jsr     (Results_StorePhaseSplitTime).l
                 rts
 ; End of function BattleBanner_StartFightLine

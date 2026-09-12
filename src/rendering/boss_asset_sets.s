@@ -422,7 +422,7 @@ Boss_LoadAssetSetAtObject:                              ; CODE XREF: Boss_Viblac
                 move.b  #6,(byte_FF80EC).w
                 bset    #7,(StageObjectSpawnCursor).w
                 clr.w   (EnemySpawnDirectorState).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.l  a0,d0
                 beq.s   Boss_LoadAssetSet_LoadPalette
                 jsr     (Data_ProcessPointer).l

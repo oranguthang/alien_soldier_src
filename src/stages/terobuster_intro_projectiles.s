@@ -39,7 +39,7 @@ Projectile_TerobusterIntroBoundary:                     ; DATA XREF: ROM:Entity_
 ; ---------------------------------------------------------------------------
 Projectile_TerobusterIntroBoundary_Update:              ; CODE XREF: Projectile_TerobusterIntroBoundary+4   j  ; was: loc_D632
                 move.w  #$1114,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 bset    #7,2(a5)
                 btst    #0,(FrameCounter+1).w

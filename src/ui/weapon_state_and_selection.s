@@ -117,7 +117,7 @@ WeaponSelect_Initialize:                                ; DATA XREF: ROM:0001799
                 lea     WeaponSelect_SlotInitialAngles(pc),a3
                 nop
                 lea     WeaponSelect_SpriteFramePointers(pc),a4
-                movea.w #(word_FFA400-M68K_RAM),a5
+                movea.w #(PlayerObjectType-M68K_RAM),a5
                 move.w  (word_FF808A).w,d3
                 moveq   #0,d4
                 moveq   #3,d7
@@ -156,7 +156,7 @@ WeaponSelect_UpdateRotationInput:                       ; CODE XREF: WeaponSelec
                 rts
 ; ---------------------------------------------------------------------------
 WeaponSelect_CheckInputBit3:                            ; CODE XREF: WeaponSelect_UpdateRotationInput+C   j  ; was: loc_17AC8
-                btst    #3,(byte_FFA46A).w
+                btst    #3,(PlayerPressedInput).w
                 beq.s   WeaponSelect_CheckInputBit2
                 move.w  #$FFF0,(WeaponMenuAngularStep).w
                 addq.w  #2,(WeaponMenuSlotOffset).w
@@ -165,7 +165,7 @@ WeaponSelect_CheckInputBit3:                            ; CODE XREF: WeaponSelec
                 jmp     (Sound_PlaySFX).l
 ; ---------------------------------------------------------------------------
 WeaponSelect_CheckInputBit2:                            ; CODE XREF: WeaponSelect_UpdateRotationInput+22   j  ; was: loc_17AEA
-                btst    #2,(byte_FFA46A).w
+                btst    #2,(PlayerPressedInput).w
                 beq.s   WeaponSelect_RotationInputReturn
                 move.w  #$10,(WeaponMenuAngularStep).w
                 subq.w  #2,(WeaponMenuSlotOffset).w
@@ -178,12 +178,12 @@ WeaponSelect_RotationInputReturn:                       ; CODE XREF: WeaponSelec
 ; End of function WeaponSelect_UpdateRotationInput
 ; Maps directional input bits to one of the four weapon slots
 WeaponSelect_HandleDirectionalInput:                    ; was: sub_17B0E
-                move.b  (byte_FFA46A).w,d0
+                move.b  (PlayerPressedInput).w,d0
                 andi.b  #$F,d0
                 beq.s   WeaponSelect_DirectionalInputReturn
                 move.b  #$A8,d0
                 jsr     (Sound_PlaySFX).l
-                move.b  (byte_FFA46A).w,d0
+                move.b  (PlayerPressedInput).w,d0
                 btst    #0,d0
                 beq.s   WeaponSelect_CheckInputBit1
                 move.w  #0,(WeaponMenuSlotOffset).w
@@ -241,7 +241,7 @@ WeaponSelect_UpdateOpenState:                           ; CODE XREF: WeaponSelec
                 cmpi.w  #$20,(WeaponMenuRadius).w       ; ' '
                 bmi.s   WeaponSelect_HandleOpenInput
                 moveq   #$10,d0
-                btst    #3,(word_FFA40E).w
+                btst    #3,(PlayerSpriteAttributes).w
                 bne.s   WeaponSelect_ApplyFacingRotationStep
                 moveq   #$FFFFFFF0,d0
 WeaponSelect_ApplyFacingRotationStep:                   ; CODE XREF: WeaponSelect_Update+3C   j  ; was: loc_17BCA
@@ -252,7 +252,7 @@ WeaponSelect_ApplyFacingRotationStep:                   ; CODE XREF: WeaponSelec
 WeaponSelect_HandleOpenInput:                           ; CODE XREF: WeaponSelect_Update+32   j  ; was: loc_17BD6
                 bsr.w   WeaponSelect_UpdateRotationInput
                 move.w  #$20,(WeaponMenuRadius).w       ; ' '
-                move.b  (byte_FFA46A).w,d0
+                move.b  (PlayerPressedInput).w,d0
                 andi.b  #$70,d0                         ; 'p'
                 bne.s   WeaponSelect_StartCloseDelay
                 rts
@@ -449,7 +449,7 @@ Weapon_State8FindFlaggedTarget:                         ; CODE XREF: Weapon_Conf
 ; ---------------------------------------------------------------------------
 Weapon_State8UseFlaggedTarget:                          ; CODE XREF: Weapon_ConfigureState8Targeting+6C   j  ; was: loc_17DBA
                 move.w  a0,(word_FF801C).w
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.w   Weapon_UpdateTargetingReticle_Scan
                 moveq   #1,d6
                 bra.w   Weapon_AppendTargetingReticleForObject

@@ -1,31 +1,31 @@
 ; Unreferenced helper that restores the player's object type to $08
 UnreferencedSetPlayerObjectType08:                      ; was: sub_106C6
-                lea     (word_FFA400).w,a5
+                lea     (PlayerObjectType).w,a5
                 move.w  #8,(a5)
                 rts
 ; End of function UnreferencedSetPlayerObjectType08
 ; Unreferenced entry that queues a column from the secondary camera with a $180 X offset
 UnreferencedQueueSecondaryCameraColumnOffset180:        ; was: sub_106D0
-                move.w  (dword_FFA908).w,d0
+                move.w  (SecondaryCameraXPos).w,d0
                 addi.w  #$180,d0
-                move.w  (dword_FFA90C).w,d1
+                move.w  (SecondaryCameraYPos).w,d1
                 lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0
                 nop
                 bra.s   Tilemap_QueueColumnFromDescriptor
 ; End of function UnreferencedQueueSecondaryCameraColumnOffset180
 ; Unreferenced entry that queues a column from the primary camera with a -$58 X offset
 UnreferencedQueuePrimaryCameraColumnOffsetMinus58:      ; was: sub_106E4
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$58,d0                         ; 'X'
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 bra.s   Tilemap_QueuePrimaryPlaneColumn
 ; End of function UnreferencedQueuePrimaryCameraColumnOffsetMinus58
 ; Queue a primary-plane column from the camera with a $158 X offset
 Tilemap_QueuePrimaryCameraColumnOffset158:              ; CODE XREF: Stage_InitTerobusterBoss+1E   p  ; was: sub_106F2
                                         ; Camera_UpdateAndRenderStageTilemap+4   j
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 addi.w  #$158,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
 ; End of function Tilemap_QueuePrimaryCameraColumnOffset158
 ; Select the primary-plane descriptor and queue one streamed tilemap column
 Tilemap_QueuePrimaryPlaneColumn:                        ; CODE XREF: Stage12To13_UpdateTeleportFadeOut+4A   j  ; was: sub_106FE
@@ -172,17 +172,17 @@ Tilemap_AdvanceColumnRow:                               ; CODE XREF: Tilemap_Que
 ; End of function Tilemap_QueuePrimaryPlaneColumn
 ; Unreferenced entry that populates an unqueued column at vertical offset -$1000
 UnreferencedPopulateUnqueuedColumnOffset1000:           ; was: sub_10882
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$58,d0                         ; 'X'
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 subi.w  #$1000,d1
                 bra.s   Tilemap_PopulateUnqueuedColumnFromDescriptor
 ; End of function UnreferencedPopulateUnqueuedColumnOffset1000
 ; Populate Stage 18 column rows without adding a second DMA command
 Tilemap_PopulateStage18UnqueuedColumn:                  ; CODE XREF: Stage18_UpdateScrollAndRenderTilemap:Stage18_RenderLockedTilemap   p  ; was: sub_10894
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 addi.w  #$158,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 subi.w  #$1000,d1
 Tilemap_PopulateUnqueuedColumnFromDescriptor:           ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+62   p  ; was: loc_108A4
                                         ; UnreferencedPopulateUnqueuedColumnOffset1000+10   j

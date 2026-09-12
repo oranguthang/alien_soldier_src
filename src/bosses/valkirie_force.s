@@ -41,11 +41,11 @@ Boss_ValkirieForceInit:                                 ; DATA XREF: Boss_Valkir
                 move.w  a5,$4A(a5)
 ; Apply rotation input, update the looping pose, and render the metasprite
 Boss_ValkirieForceInteractiveState:                     ; DATA XREF: ROM:00053526   o  ; was: loc_5358A
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_ValkirieForceCheckReverseRotationInput
                 addq.w  #2,$56(a5)
 Boss_ValkirieForceCheckReverseRotationInput:            ; CODE XREF: Boss_ValkirieForceInit+68   j  ; was: loc_53596
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_ValkirieForcePreparePoseUpdate
                 subq.w  #2,$56(a5)
 Boss_ValkirieForcePreparePoseUpdate:                    ; CODE XREF: Boss_ValkirieForceInit+74   j  ; was: loc_535A2

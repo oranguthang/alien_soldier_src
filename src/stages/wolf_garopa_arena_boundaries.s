@@ -22,17 +22,17 @@ StageTransition_InitializeWolfGaropaArenaBoundary:      ; CODE XREF: StageTransi
 Stage23_UpdateWolfGaropaArenaBoundary:                  ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_FEDE
                 move.b  #$80,$21(a5)
                 move.w  #$F3E0,d0
-                sub.w   (dword_FFA904).w,d0
+                sub.w   (PrimaryCameraYPosition).w,d0
                 move.w  #$150,d1
                 sub.w   d0,d1
                 move.w  d1,$14(a5)
                 tst.w   $48(a5)
                 bne.s   Stage23_WolfGaropaArenaBoundaryReturn
                 subi.w  #$20,d1                         ; ' '
-                cmp.w   (dword_FFA414).w,d1
+                cmp.w   (PlayerYPosition).w,d1
                 bpl.s   Stage23_WolfGaropaArenaBoundaryReturn
-                move.w  d1,(dword_FFA414).w
-                subq.w  #1,(dword_FFA414).w
+                move.w  d1,(PlayerYPosition).w
+                subq.w  #1,(PlayerYPosition).w
 Stage23_WolfGaropaArenaBoundaryReturn:                  ; CODE XREF: Stage23_UpdateWolfGaropaArenaBoundary+1C   j  ; was: locret_FF0E
                                         ; Stage23_UpdateWolfGaropaArenaBoundary+26   j
                 rts

@@ -456,14 +456,14 @@ XiTigerStageConfigRecord:   dc.w    $76                 ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    $800                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $800                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    0                               ; word_FF80AC
-                dc.b    $F0                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A8                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $F0                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A8                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    XiTigerAndStage9PaletteOffsetList  ; palette offset list pointer
 
 ; Initializes stage state including RAM clear and player stats

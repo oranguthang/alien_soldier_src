@@ -151,8 +151,8 @@ Boss_EnterSylpheedPlayerTrackingState16:                ; CODE XREF: Boss_EnterS
 ; End of function Boss_EnterSylpheedEntranceState12
 ; Track the player while descending in state $16
 Boss_UpdateSylpheedPlayerTrackingState16:               ; DATA XREF: ROM:00059458   o  ; was: sub_595CA
-                move.w  (dword_FFA410).w,$10(a5)
-                move.w  (dword_FFA414).w,d0
+                move.w  (PlayerXPosition).w,$10(a5)
+                move.w  (PlayerYPosition).w,d0
                 subi.w  #$20,d0                         ; ' '
                 cmp.w   $14(a5),d0
                 bmi.w   Boss_EnterSylpheedAttackApproachState18
@@ -164,7 +164,7 @@ Boss_EnterSylpheedAttackApproachState18:                ; CODE XREF: Boss_Update
                 addq.w  #2,4(a5)
                 clr.l   $1C(a5)
                 move.b  #1,(byte_FFA958).w
-                bclr    #4,(word_FFA40E).w
+                bclr    #4,(PlayerSpriteAttributes).w
                 move.w  #$80,$11C(a5)
                 move.b  #$2B,d0                         ; '+'
                 jsr     (Sound_PlaySFX).l
@@ -175,11 +175,11 @@ Boss_UpdateSylpheedAttackApproachState18:               ; DATA XREF: ROM:0005945
                 bmi.w   Boss_EnterSylpheedAttackLaunchState1A
                 bsr.w   Boss_MoveSylpheedTowardApproachHorizontalBand
                 bsr.w   Boss_MoveSylpheedTowardApproachVerticalPosition
-                move.w  $10(a5),(dword_FFA410).w
+                move.w  $10(a5),(PlayerXPosition).w
                 move.w  $14(a5),d0
                 addi.w  #$20,d0                         ; ' '
-                move.w  d0,(dword_FFA414).w
-                clr.l   (dword_FFA41C).w
+                move.w  d0,(PlayerYPosition).w
+                clr.l   (PlayerYVelocity).w
                 lea     Sylpheed_EntrancePoseScript(pc),a1
                 nop
                 bra.w   Boss_RenderSylpheedPose
@@ -232,7 +232,7 @@ Boss_EnterSylpheedAttackLaunchState1A:                  ; CODE XREF: Boss_Update
                 move.w  #$FFFF,$C(a5)
                 clr.w   (PlayerScriptStateOffset).w
                 bset    #0,(PlayerModeFlags).w
-                clr.w   (word_FFA404).w
+                clr.w   (PlayerStateOffset).w
                 move.b  #$20,(byte_FFA420).w            ; ' '
                 move.l  #$FFFF0000,$18(a5)
                 move.l  #$28000,$1C(a5)
@@ -258,7 +258,7 @@ Boss_UpdateSylpheedAttackHoldState1C:                   ; DATA XREF: ROM:0005945
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_UpdateSylpheedAttackHoldMotion
                 clr.b   (byte_FF80EC).w
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
                 move.w  #4,4(a5)
                 bra.w   Boss_ArmSylpheedDecisionTimer
 ; ---------------------------------------------------------------------------

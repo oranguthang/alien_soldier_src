@@ -1,8 +1,8 @@
 Input_ReadPlayerInput:                                  ; CODE XREF: Player_Update+1A   p  ; was: sub_16B04
                 tst.w   (PlayerScriptStateOffset).w
                 bne.s   Input_ReadPlayerInput_Return
-                move.b  (word_FFF706).w,$69(a5)
-                move.b  (word_FFF708).w,$6A(a5)
+                move.b  (ControllerHeldState).w,$69(a5)
+                move.b  (ControllerPressedState).w,$6A(a5)
                 move.b  (PlayerInputMask).w,d0
                 and.b   d0,$69(a5)
                 and.b   d0,$6A(a5)

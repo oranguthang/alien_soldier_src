@@ -21,7 +21,7 @@ Boss_DestroyerProtoMain:                                ; DATA XREF: ROM:Entity_
                 bcc.s   Boss_DestroyerProtoDispatchState
                 tst.w   (BossHealth).w
                 bne.s   Boss_DestroyerProtoDispatchState
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.w  #1,(dword_FF9414+2).w
                 move.w  #$2E,4(a5)                      ; '.'
 Boss_DestroyerProtoDispatchState:                       ; CODE XREF: Boss_DestroyerProtoMain+10   j  ; was: loc_31502
@@ -177,10 +177,10 @@ Boss_DestroyerProtoUpdateViewportOffset:                ; CODE XREF: Boss_Destro
                                         ; Boss_DestroyerProtoIntroMove+16   p
                 move.w  #$2C0,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA900).w
+                move.w  d0,(PrimaryCameraXPosition).w
                 move.w  $14(a5),d0
                 subi.w  #$C0,d0
-                move.w  d0,(dword_FFA904).w
+                move.w  d0,(PrimaryCameraYPosition).w
                 rts
 ; End of function Boss_DestroyerProtoUpdateViewportOffset
 ; Advances the polar angles of all six linked parts

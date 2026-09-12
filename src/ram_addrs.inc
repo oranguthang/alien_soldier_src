@@ -489,29 +489,29 @@ WeaponSlotAmmoMax1      equ     $FFFFA26A               ; was: word_FFA26A
 WeaponSlotAmmoMax2      equ     $FFFFA26C               ; was: word_FFA26C
 WeaponSlotAmmoMax3      equ     $FFFFA26E               ; was: word_FFA26E
 StageTimeRemaining      equ     $FFFFA270               ; was: word_FFA270
-byte_FFA272             equ     $FFFFA272
+StageTimerPauseFlag     equ     $FFFFA272               ; was: byte_FFA272
 VBlankFrameCounter      equ     $FFFFA280               ; was: word_FFA280
-word_FFA282             equ     $FFFFA282
+VBlankCountdown         equ     $FFFFA282               ; was: word_FFA282
 GameModeIndex           equ     $FFFFA284               ; was: word_FFA284
 GameSubstateIndex       equ     $FFFFA286               ; was: word_FFA286
 SetupTransitionIndex    equ     $FFFFA29C               ; was: word_FFA29C
 byte_FFA300             equ     $FFFFA300
 byte_FFA3E0             equ     $FFFFA3E0
-word_FFA400             equ     $FFFFA400
-word_FFA402             equ     $FFFFA402
-word_FFA404             equ     $FFFFA404
+PlayerObjectType        equ     $FFFFA400               ; was: word_FFA400
+PlayerObjectFlags       equ     $FFFFA402               ; was: word_FFA402
+PlayerStateOffset       equ     $FFFFA404               ; was: word_FFA404
 byte_FFA407             equ     $FFFFA407
-dword_FFA408            equ     $FFFFA408
-word_FFA40C             equ     $FFFFA40C
-word_FFA40E             equ     $FFFFA40E
-dword_FFA410            equ     $FFFFA410
-dword_FFA414            equ     $FFFFA414
-dword_FFA418            equ     $FFFFA418
-dword_FFA41C            equ     $FFFFA41C
+PlayerSpriteMapping     equ     $FFFFA408               ; was: dword_FFA408
+PlayerAnimationTimer    equ     $FFFFA40C               ; was: word_FFA40C
+PlayerSpriteAttributes  equ     $FFFFA40E               ; was: word_FFA40E
+PlayerXPosition         equ     $FFFFA410               ; was: dword_FFA410
+PlayerYPosition         equ     $FFFFA414               ; was: dword_FFA414
+PlayerXVelocity         equ     $FFFFA418               ; was: dword_FFA418
+PlayerYVelocity         equ     $FFFFA41C               ; was: dword_FFA41C
 byte_FFA420             equ     $FFFFA420
 word_FFA448             equ     $FFFFA448
-word_FFA45E             equ     $FFFFA45E
-byte_FFA46A             equ     $FFFFA46A
+PlayerInvulnTimer       equ     $FFFFA45E               ; was: word_FFA45E
+PlayerPressedInput      equ     $FFFFA46A               ; was: byte_FFA46A
 dword_FFA600            equ     $FFFFA600
 word_FFA800             equ     $FFFFA800
 word_FFA802             equ     $FFFFA802
@@ -524,23 +524,23 @@ word_FFA814             equ     $FFFFA814
 word_FFA816             equ     $FFFFA816
 dword_FFA818            equ     $FFFFA818
 dword_FFA81C            equ     $FFFFA81C
-dword_FFA900            equ     $FFFFA900
-dword_FFA904            equ     $FFFFA904
-dword_FFA908            equ     $FFFFA908
-dword_FFA90C            equ     $FFFFA90C
-dword_FFA910            equ     $FFFFA910
-word_FFA914             equ     $FFFFA914
+PrimaryCameraXPosition  equ     $FFFFA900               ; was: dword_FFA900
+PrimaryCameraYPosition  equ     $FFFFA904               ; was: dword_FFA904
+SecondaryCameraXPos     equ     $FFFFA908               ; was: dword_FFA908
+SecondaryCameraYPos     equ     $FFFFA90C               ; was: dword_FFA90C
+CameraXDelta            equ     $FFFFA910               ; was: dword_FFA910
+CameraYDelta            equ     $FFFFA914               ; was: word_FFA914
 dword_FFA918            equ     $FFFFA918
 dword_FFA91C            equ     $FFFFA91C
-word_FFA928             equ     $FFFFA928
-word_FFA92C             equ     $FFFFA92C
+PreviousCameraXPosition equ     $FFFFA928               ; was: word_FFA928
+PreviousCameraYPosition equ     $FFFFA92C               ; was: word_FFA92C
 dword_FFA930            equ     $FFFFA930
 dword_FFA938            equ     $FFFFA938
 dword_FFA93C            equ     $FFFFA93C
-dword_FFA940            equ     $FFFFA940
-word_FFA944             equ     $FFFFA944
-word_FFA946             equ     $FFFFA946
-word_FFA948             equ     $FFFFA948
+TilemapTransferBase     equ     $FFFFA940               ; was: dword_FFA940
+TilemapRowCountdown     equ     $FFFFA944               ; was: word_FFA944
+TilemapRowXOrFillWord   equ     $FFFFA946               ; was: word_FFA946
+TilemapRowYPosition     equ     $FFFFA948               ; was: word_FFA948
 word_FFA950             equ     $FFFFA950
 byte_FFA958             equ     $FFFFA958
 byte_FFA959             equ     $FFFFA959
@@ -858,9 +858,9 @@ word_FFF400             equ     $FFFFF400
 VDPCommand              equ     $FFFFF700
 byte_FFF704             equ     $FFFFF704
 byte_FFF705             equ     $FFFFF705
-word_FFF706             equ     $FFFFF706
-word_FFF708             equ     $FFFFF708
-word_FFF70A             equ     $FFFFF70A
+ControllerHeldState     equ     $FFFFF706               ; was: word_FFF706
+ControllerPressedState  equ     $FFFFF708               ; was: word_FFF708
+ControllerReleasedState equ     $FFFFF70A               ; was: word_FFF70A
 VDPCommandQueueHead     equ     $FFFFF70C               ; was: word_FFF70C
 VDPStagingDataCursor    equ     $FFFFF70E               ; was: word_FFF70E
 HScrollDMASource        equ     $FFFFF710               ; was: dword_FFF710

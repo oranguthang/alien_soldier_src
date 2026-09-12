@@ -23,20 +23,20 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
                 move.b  (a0)+,(PalettePrimaryIndex+1).w
                 move.b  (a0)+,(PaletteSecondaryIndex+1).w
                 move.w  (a0)+,(word_FF808A).w
-                move.w  (a0)+,(dword_FFA900).w
-                move.w  (a0)+,(dword_FFA904).w
-                move.w  (a0)+,(dword_FFA908).w
-                move.w  (a0)+,(dword_FFA90C).w
+                move.w  (a0)+,(PrimaryCameraXPosition).w
+                move.w  (a0)+,(PrimaryCameraYPosition).w
+                move.w  (a0)+,(SecondaryCameraXPos).w
+                move.w  (a0)+,(SecondaryCameraYPos).w
                 move.w  (a0)+,(word_FF80AA).w
                 move.w  (a0)+,(word_FF80AC).w
                 moveq   #0,d0
                 move.b  (a0)+,d0
                 addi.w  #$80,d0
-                move.w  d0,(dword_FFA410).w
+                move.w  d0,(PlayerXPosition).w
                 moveq   #0,d0
                 move.b  (a0)+,d0
                 addi.w  #$80,d0
-                move.w  d0,(dword_FFA414).w
+                move.w  d0,(PlayerYPosition).w
                 movea.l (a0)+,a4
                 jmp     Gfx_LoadMultiplePalettes
 ; End of function Stage_ApplyConfigurationRecord
@@ -48,9 +48,9 @@ Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_Apply
 ; +$08 byte -> PalettePrimaryIndex+1
 ; +$09 byte -> PaletteSecondaryIndex+1
 ; +$0A word -> word_FF808A
-; +$0C/+0E/+10/+12 words -> dword_FFA900/904/908/90C
+; +$0C/+0E/+10/+12 words -> PrimaryCameraXPosition/904/908/90C
 ; +$14/+16 words -> word_FF80AA/AC
-; +$18/+19 bytes, each biased by $80 -> words at dword_FFA410/414
+; +$18/+19 bytes, each biased by $80 -> words at PlayerXPosition/414
 ; +$1A long -> palette offset list passed to Gfx_LoadMultiplePalettes
 Stage1ConfigRecord: dc.w    0                           ; word_FFA950  ; was: stru_127A8
                                         ; DATA XREF: Stage_ApplyStage1Configuration   o
@@ -59,14 +59,14 @@ Stage1ConfigRecord: dc.w    0                           ; word_FFA950  ; was: st
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $B0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
 Stage2ConfigRecord: dc.w    $A                          ; word_FFA950  ; was: stru_127C6
                                         ; DATA XREF: Stage_ApplyStage2Configuration   o
@@ -75,14 +75,14 @@ Stage2ConfigRecord: dc.w    $A                          ; word_FFA950  ; was: st
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    $700                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $700                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $B0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
 Stage3ConfigRecord: dc.w    $12                         ; word_FFA950  ; was: stru_127E4
                                         ; DATA XREF: Stage_ApplyStage3Configuration   o
@@ -91,14 +91,14 @@ Stage3ConfigRecord: dc.w    $12                         ; word_FFA950  ; was: st
                 dc.b    2                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    $BC0                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $BC0                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $B0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    EarlyStagePaletteOffsetList     ; palette offset list pointer
 Stage4ConfigRecord: dc.w    $22                         ; word_FFA950  ; was: stru_12802
                                         ; DATA XREF: Stage_ApplyStage4Configuration   o
@@ -107,14 +107,14 @@ Stage4ConfigRecord: dc.w    $22                         ; word_FFA950  ; was: st
                 dc.b    4                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    $1200                           ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $1200                           ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $B0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    ShellshogunStagePaletteOffsetList  ; palette offset list pointer
 Stage5ConfigRecord: dc.w    $2E                         ; word_FFA950  ; was: stru_12820
                                         ; DATA XREF: Stage_ApplyStage5Configuration   o
@@ -123,14 +123,14 @@ Stage5ConfigRecord: dc.w    $2E                         ; word_FFA950  ; was: st
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $B0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
 Stage6ConfigRecord: dc.w    $38                         ; word_FFA950  ; was: stru_1283E
                                         ; DATA XREF: Stage_ApplyStage6Configuration   o
@@ -139,14 +139,14 @@ Stage6ConfigRecord: dc.w    $38                         ; word_FFA950  ; was: st
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    $480                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $480                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $B0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
 Stage7ConfigRecord: dc.w    $40                         ; word_FFA950  ; was: stru_1285C
                                         ; DATA XREF: Stage_ApplyStage7Configuration   o
@@ -155,14 +155,14 @@ Stage7ConfigRecord: dc.w    $40                         ; word_FFA950  ; was: st
                 dc.b    6                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    $AA0                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $AA0                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $B0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $B0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage5To7PaletteOffsetList      ; palette offset list pointer
 Stage8ConfigRecord: dc.w    $50                         ; word_FFA950  ; was: stru_1287A
                                         ; DATA XREF: Stage_InitializeStage8   o
@@ -171,14 +171,14 @@ Stage8ConfigRecord: dc.w    $50                         ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    $C00                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    $730                            ; word at dword_FFA908
-                dc.w    $F700                           ; word at dword_FFA90C
+                dc.w    $C00                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    $730                            ; word at SecondaryCameraXPos
+                dc.w    $F700                           ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    8                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage8InitialPaletteOffsetList  ; palette offset list pointer
 Stage9ConfigRecord: dc.w    $62                         ; word_FFA950  ; was: stru_12898
                                         ; DATA XREF: Stage_InitializeStage9   o
@@ -187,14 +187,14 @@ Stage9ConfigRecord: dc.w    $62                         ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    $800                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    $C00                            ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $800                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    $C00                            ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    8                               ; word_FF80AC
-                dc.b    $60                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A8                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $60                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A8                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    XiTigerAndStage9PaletteOffsetList  ; palette offset list pointer
 Stage10ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_128B6
                                         ; DATA XREF: Stage_ApplyStage10Configuration   o
@@ -203,14 +203,14 @@ Stage10ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    $FC00                           ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    $FC00                           ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $78                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $78                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
 Stage11ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: stru_128D4
                                         ; DATA XREF: Stage_ApplyStage11Configuration   o
@@ -219,14 +219,14 @@ Stage11ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    $7B0                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    $FC00                           ; word at dword_FFA90C
+                dc.w    $7B0                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    $FC00                           ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $78                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $78                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
 Stage12ConfigRecord:    dc.w    $14                     ; word_FFA950  ; was: stru_128F2
                                         ; DATA XREF: Stage_ApplyStage12Configuration   o
@@ -235,14 +235,14 @@ Stage12ConfigRecord:    dc.w    $14                     ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    $10C0                           ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    $FC00                           ; word at dword_FFA90C
+                dc.w    $10C0                           ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    $FC00                           ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $5C                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $70                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $5C                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $70                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
 Stage13ConfigRecord:    dc.w    $34                     ; word_FFA950  ; was: stru_12910
                                         ; DATA XREF: Stage_ApplyStage13Configuration   o
@@ -251,14 +251,14 @@ Stage13ConfigRecord:    dc.w    $34                     ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    $FC00                           ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    $FC00                           ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $80                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $80                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage10To13PaletteOffsetList    ; palette offset list pointer
 Stage14ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: stru_1292E
                                         ; DATA XREF: Stage_ApplyStage14Configuration   o
@@ -267,14 +267,14 @@ Stage14ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: st
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    4                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    $E100                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    $E100                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $58                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $90                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $58                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
 Stage15ConfigRecord:    dc.w    $4A                     ; word_FFA950  ; was: stru_1294C
                                         ; DATA XREF: Stage_ApplyStage15Configuration   o
@@ -283,14 +283,14 @@ Stage15ConfigRecord:    dc.w    $4A                     ; word_FFA950  ; was: st
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    4                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    $480                            ; word at dword_FFA900
-                dc.w    $E100                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $480                            ; word at PrimaryCameraXPosition
+                dc.w    $E100                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $90                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
 Stage16ConfigRecord:    dc.w    $56                     ; word_FFA950  ; was: stru_1296A
                                         ; DATA XREF: Stage_InitializeStage16   o
@@ -299,14 +299,14 @@ Stage16ConfigRecord:    dc.w    $56                     ; word_FFA950  ; was: st
                 dc.b    $C                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    $620                            ; word at dword_FFA900
-                dc.w    $E440                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $620                            ; word at PrimaryCameraXPosition
+                dc.w    $E440                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $C0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $C0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage14To16PaletteOffsetList    ; palette offset list pointer
 Stage17BossConfigRecord:    dc.w    $6C                 ; word_FFA950  ; was: stru_12988
                                         ; DATA XREF: Stage_InitializeStage17Boss+6   o
@@ -315,14 +315,14 @@ Stage17BossConfigRecord:    dc.w    $6C                 ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    0                               ; word_FF80AA
                 dc.w    8                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $80                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $80                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage17PaletteOffsetList        ; palette offset list pointer
 Stage18ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_129A6
                                         ; DATA XREF: Stage_InitializeStage18   o
@@ -331,14 +331,14 @@ Stage18ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    $8008                           ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $90                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage18And19PaletteOffsetList   ; palette offset list pointer
 Stage19ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: stru_129C4
                                         ; DATA XREF: Stage_InitializeStage19   o
@@ -347,14 +347,14 @@ Stage19ConfigRecord:    dc.w    $A                      ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    $D50                            ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    $D50                            ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    $8008                           ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $90                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage18And19PaletteOffsetList   ; palette offset list pointer
 UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; word_FFA950  ; was: stru_129E2
                                         ; DATA XREF: UnreferencedApplyStage20Variant1Configuration   o
@@ -363,14 +363,14 @@ UnreferencedStage20Variant1ConfigRecord:    dc.w    $28  ; word_FFA950  ; was: s
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $90                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
 UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; word_FFA950  ; was: stru_12A00
                                         ; DATA XREF: UnreferencedApplyStage20Variant2Configuration   o
@@ -379,14 +379,14 @@ UnreferencedStage20Variant2ConfigRecord:    dc.w    $30  ; word_FFA950  ; was: s
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $90                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
 UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; word_FFA950  ; was: stru_12A1E
                                         ; DATA XREF: UnreferencedApplyStage20Variant3Configuration   o
@@ -395,14 +395,14 @@ UnreferencedStage20Variant3ConfigRecord:    dc.w    $38  ; word_FFA950  ; was: s
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $90                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
 UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; word_FFA950  ; was: stru_12A3C
                                         ; DATA XREF: UnreferencedApplyStage20Variant4Configuration   o
@@ -411,14 +411,14 @@ UnreferencedStage20Variant4ConfigRecord:    dc.w    $40  ; word_FFA950  ; was: s
                 dc.b    $10                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $90                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $90                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedStage20VariantPaletteOffsetList  ; palette offset list pointer
 Stage20ConfigRecord:    dc.w    $70                     ; word_FFA950  ; was: stru_12A5A
                                         ; DATA XREF: Stage_InitializeStage20+18   o
@@ -427,14 +427,14 @@ Stage20ConfigRecord:    dc.w    $70                     ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    $600                            ; word at dword_FFA900
-                dc.w    $F800                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    $F500                           ; word at dword_FFA90C
+                dc.w    $600                            ; word at PrimaryCameraXPosition
+                dc.w    $F800                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    $F500                           ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $80                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    0                               ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $80                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    0                               ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage20PaletteOffsetLists       ; palette offset list pointer
 Stage21ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: stru_12A78
                                         ; DATA XREF: Stage_InitializeStage21+C   o
@@ -443,14 +443,14 @@ Stage21ConfigRecord:    dc.w    0                       ; word_FFA950  ; was: st
                 dc.b    $E                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    $F800                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    $F100                           ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    $F800                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    $F100                           ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    8                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage21And23PaletteOffsetList   ; palette offset list pointer
 Stage22ConfigRecord:    dc.w    $2C                     ; word_FFA950  ; was: stru_12A96
                                         ; DATA XREF: Stage_InitializeStage22+C   o
@@ -459,14 +459,14 @@ Stage22ConfigRecord:    dc.w    $2C                     ; word_FFA950  ; was: st
                 dc.b    $E                              ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    $F600                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    $F100                           ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    $F600                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    $F100                           ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    8                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage22PaletteOffsetList        ; palette offset list pointer
 Stage23ConfigRecord:    dc.w    $2E                     ; word_FFA950  ; was: stru_12AB4
                                         ; DATA XREF: Stage_InitializeStage23+C   o
@@ -475,14 +475,14 @@ Stage23ConfigRecord:    dc.w    $2E                     ; word_FFA950  ; was: st
                 dc.b    $12                             ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    $F3E0                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    $F3E0                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    8                               ; word_FF80AA
                 dc.w    0                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage21And23PaletteOffsetList   ; palette offset list pointer
 Stage24ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: stru_12AD2
                                         ; DATA XREF: Stage_ApplyStage24Configuration   o
@@ -491,14 +491,14 @@ Stage24ConfigRecord:    dc.w    $40                     ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage24PaletteOffsetList        ; palette offset list pointer
 UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; word_FFA950  ; was: stru_12AF0
                                         ; DATA XREF: UnreferencedApplyFlaggedConfigurationA+6   o
@@ -507,14 +507,14 @@ UnreferencedFlaggedConfigRecordA:   dc.w    $4E         ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedFlaggedPaletteOffsetListA  ; palette offset list pointer
 UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; word_FFA950  ; was: stru_12B0E
                                         ; DATA XREF: UnreferencedApplyFlaggedConfigurationB+6   o
@@ -523,14 +523,14 @@ UnreferencedFlaggedConfigRecordB:   dc.w    $62         ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    0                               ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    $FF00                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    $FF00                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    UnreferencedFlaggedPaletteOffsetListB  ; palette offset list pointer
 Stage25ConfigRecord:    dc.w    $76                     ; word_FFA950  ; was: stru_12B2C
                                         ; DATA XREF: Stage_ApplyStage25Configuration   o
@@ -539,14 +539,14 @@ Stage25ConfigRecord:    dc.w    $76                     ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    $FE00                           ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    $FE00                           ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $60                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $60                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage25PaletteOffsetList        ; palette offset list pointer
 Stage26ConfigRecord:    dc.w    $8A                     ; word_FFA950  ; was: stru_12B4A
                                         ; DATA XREF: Stage_ApplyStage26Configuration   o
@@ -555,14 +555,14 @@ Stage26ConfigRecord:    dc.w    $8A                     ; word_FFA950  ; was: st
                 dc.b    0                               ; PalettePrimaryIndex+1
                 dc.b    0                               ; PaletteSecondaryIndex+1
                 dc.w    $8000                           ; word_FF808A
-                dc.w    0                               ; word at dword_FFA900
-                dc.w    0                               ; word at dword_FFA904
-                dc.w    0                               ; word at dword_FFA908
-                dc.w    0                               ; word at dword_FFA90C
+                dc.w    0                               ; word at PrimaryCameraXPosition
+                dc.w    0                               ; word at PrimaryCameraYPosition
+                dc.w    0                               ; word at SecondaryCameraXPos
+                dc.w    0                               ; word at SecondaryCameraYPos
                 dc.w    4                               ; word_FF80AA
                 dc.w    4                               ; word_FF80AC
-                dc.b    $40                             ; byte biased by $80 -> word at dword_FFA410
-                dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
+                dc.b    $40                             ; byte biased by $80 -> word at PlayerXPosition
+                dc.b    $A0                             ; byte biased by $80 -> word at PlayerYPosition
                 dc.l    Stage26PaletteOffsetList        ; palette offset list pointer
 
 Stage_InitializationNoOpHook:                           ; CODE XREF: Stage_InitializeXiTigerState+4   p  ; was: nullsub_1

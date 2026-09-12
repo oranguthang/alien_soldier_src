@@ -29,7 +29,7 @@ Cutscene_SevenForcesVictoryState1Update:                ; CODE XREF: Cutscene_Se
 ; End of function Cutscene_SevenForcesVictoryState1
 ; Cutscene state handler 2
 Cutscene_SevenForcesVictoryState2:                      ; DATA XREF: ROM:0000E4D0   o  ; was: sub_EABA
-                addi.l  #$78000,(dword_FFA90C).w
+                addi.l  #$78000,(SecondaryCameraYPos).w
                 bsr.w   Cutscene_SevenForcesUpdateClosingOffsets
                 tst.b   (byte_FFA958).w
                 beq.s   Cutscene_SevenForcesVictoryState2Return
@@ -41,7 +41,7 @@ Cutscene_SevenForcesVictoryState2Return:                ; CODE XREF: Cutscene_Se
 ; End of function Cutscene_SevenForcesVictoryState2
 ; Cutscene state handler 3
 Cutscene_SevenForcesVictoryState3:                      ; DATA XREF: ROM:0000E4D2   o  ; was: sub_EADA
-                addi.l  #$78000,(dword_FFA90C).w
+                addi.l  #$78000,(SecondaryCameraYPos).w
                 bsr.w   Cutscene_SevenForcesUpdateClosingOffsets
                 bsr.w   Gfx_InitializeSevenForcesCutsceneTilemap
                 bmi.s   Cutscene_SevenForcesVictoryState3Return
@@ -51,26 +51,26 @@ Cutscene_SevenForcesVictoryState3Return:                ; CODE XREF: Cutscene_Se
 ; End of function Cutscene_SevenForcesVictoryState3
 ; Cutscene state handler 4
 Cutscene_SevenForcesVictoryState4:                      ; DATA XREF: ROM:0000E4D4   o  ; was: sub_EAF2
-                addi.l  #$78000,(dword_FFA90C).w
+                addi.l  #$78000,(SecondaryCameraYPos).w
                 bsr.w   Cutscene_SevenForcesUpdateClosingOffsets
                 bsr.w   Gfx_CheckSevenForcesCutsceneBackgroundComplete
                 bpl.s   Cutscene_SevenForcesVictoryState4Return
                 addq.w  #2,(word_FFA950).w
-                clr.w   (dword_FFA900).w
-                clr.w   (word_FFA928).w
-                clr.w   (dword_FFA904).w
-                clr.w   (word_FFA92C).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (PreviousCameraXPosition).w
+                clr.w   (PrimaryCameraYPosition).w
+                clr.w   (PreviousCameraYPosition).w
 Cutscene_SevenForcesVictoryState4Return:                ; CODE XREF: Cutscene_SevenForcesVictoryState4+10   j  ; was: locret_EB18
                 rts
 ; End of function Cutscene_SevenForcesVictoryState4
 ; Cutscene state handler 5
 Cutscene_SevenForcesVictoryState5:                      ; DATA XREF: ROM:0000E4D6   o  ; was: sub_EB1A
-                andi.w  #$1FF,(dword_FFA90C).w
-                addi.l  #$78000,(dword_FFA90C).w
-                cmpi.w  #$200,(dword_FFA90C).w
+                andi.w  #$1FF,(SecondaryCameraYPos).w
+                addi.l  #$78000,(SecondaryCameraYPos).w
+                cmpi.w  #$200,(SecondaryCameraYPos).w
                 bmi.s   Cutscene_SevenForcesVictoryState5Idle
-                andi.w  #$1FF,(dword_FFA90C).w
-                addi.w  #-$1C00,(dword_FFA90C).w
+                andi.w  #$1FF,(SecondaryCameraYPos).w
+                addi.w  #-$1C00,(SecondaryCameraYPos).w
                 addq.w  #2,(word_FFA950).w
                 clr.b   (byte_FFA958).w
 Cutscene_SevenForcesVictoryState5Idle:                  ; CODE XREF: Cutscene_SevenForcesVictoryState5+14   j  ; was: loc_EB44
@@ -96,11 +96,11 @@ Cutscene_SevenForcesVictoryIdleState:                   ; CODE XREF: Cutscene_Se
 UnreferencedSevenForcesCameraScrollUpdate:
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer  ; was: sub_EB5E
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
-                move.w  (dword_FFA908).w,d0
+                move.w  (SecondaryCameraXPos).w,d0
                 addi.w  #$40,d0                         ; '@'
                 neg.w   d0
                 move.w  d0,(HScrollBuffer).w
-                move.w  (dword_FFA900).w,(dword_FFA908).w
+                move.w  (PrimaryCameraXPosition).w,(SecondaryCameraXPos).w
                 rts
 ; End of function UnreferencedSevenForcesCameraScrollUpdate
 ; Checks boss defeat and triggers stage transition
@@ -121,30 +121,30 @@ Stage_SevenForcesUpdateMedusaCameraAndParallax:         ; CODE XREF: Stage_Seven
                 move.l  #$20000,(dword_FF9610).w
 Stage_SevenForcesStoreMedusaCameraVelocity:             ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+E   j  ; was: loc_EBB6
                 move.l  (dword_FF9610).w,d0
-                sub.l   d0,(dword_FFA900).w
+                sub.l   d0,(PrimaryCameraXPosition).w
 Stage_SevenForcesWrapVerticalCamera:                    ; CODE XREF: Stage_SevenForcesFinishMedusaScroll+1A   j  ; was: loc_EBBE
                 bpl.s   Stage_SevenForcesPrepareMedusaPrimaryPlaneOrigin
-                addi.w  #$800,(dword_FFA900).w
-                addi.w  #$800,(word_FFA928).w
+                addi.w  #$800,(PrimaryCameraXPosition).w
+                addi.w  #$800,(PreviousCameraXPosition).w
                 move.w  #1,(word_FF9804).w
 Stage_SevenForcesPrepareMedusaPrimaryPlaneOrigin:       ; CODE XREF: Stage_SevenForcesWrapVerticalCamera   j  ; was: loc_EBD2
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$10,d0
                 bpl.s   Stage_SevenForcesRenderMedusaPrimaryPlane
                 addi.w  #$800,d0
 Stage_SevenForcesRenderMedusaPrimaryPlane:              ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+3C   j  ; was: loc_EBE0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 jsr     (Tilemap_QueuePrimaryPlaneColumn).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$10,d0
                 bpl.s   Stage_SevenForcesRenderMedusaSecondaryPlane
                 addi.w  #$800,d0
 Stage_SevenForcesRenderMedusaSecondaryPlane:            ; CODE XREF: Stage_SevenForcesUpdateMedusaCameraAndParallax+54   j  ; was: loc_EBF8
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 subi.w  #$C00,d1
                 jsr     (Tilemap_PopulateUnqueuedColumnFromDescriptor).l
 Gfx_UpdateSevenForcesParallaxRows:                      ; CODE XREF: Stage_SevenForcesUpdateStage20Scroll+12   j  ; was: loc_EC06
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 neg.w   d0
                 asr.w   #1,d0
                 move.w  d0,d1
@@ -177,17 +177,17 @@ Stage_SevenForcesUpdateSylpheedPrimaryPlane:            ; CODE XREF: Stage_Seven
                 move.l  #$FFF88000,d0
 Stage_SevenForcesStoreSylpheedPrimaryVelocity:          ; CODE XREF: Stage_SevenForcesUpdateSylpheedPrimaryPlane+10   j  ; was: loc_EC50
                 move.l  d0,(dword_FF9614).w
-                add.l   d0,(dword_FFA904).w
-                cmpi.w  #$F600,(dword_FFA904).w
+                add.l   d0,(PrimaryCameraYPosition).w
+                cmpi.w  #$F600,(PrimaryCameraYPosition).w
                 bpl.s   Stage_SevenForcesPrepareSylpheedPrimaryOrigin
                 move.b  #1,(byte_FFA958).w
 Stage_SevenForcesPrepareSylpheedPrimaryOrigin:          ; CODE XREF: Stage_SevenForcesUpdateSylpheedPrimaryPlane+26   j  ; was: loc_EC66
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$60,d0                         ; '`'
                 bpl.s   Stage_SevenForcesRenderSylpheedPrimaryPlane
                 addi.w  #$800,d0
 Stage_SevenForcesRenderSylpheedPrimaryPlane:            ; CODE XREF: Stage_SevenForcesUpdateSylpheedPrimaryPlane+36   j  ; was: loc_EC74
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 subi.w  #$F8,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -196,12 +196,12 @@ Stage_SevenForcesRenderSylpheedPrimaryPlane:            ; CODE XREF: Stage_Seven
 Stage_SevenForcesUpdateSylpheedSecondaryPlane:          ; CODE XREF: Stage_SevenForcesUpdateSylpheedScroll+4   p  ; was: sub_EC86
                                         ; sub_E8AA   p
                 bsr.s   Stage_SevenForcesAdvanceSylpheedSecondaryScroll
-                cmpi.w  #$F400,(dword_FFA90C).w
+                cmpi.w  #$F400,(SecondaryCameraYPos).w
                 bpl.s   Stage_SevenForcesRenderSylpheedSecondaryPlane
                 move.b  #1,(byte_FFA958).w
 Stage_SevenForcesRenderSylpheedSecondaryPlane:          ; CODE XREF: Stage_SevenForcesUpdateSylpheedSecondaryPlane+8   j  ; was: loc_EC96
                 moveq   #0,d0
-                move.w  (dword_FFA90C).w,d1
+                move.w  (SecondaryCameraYPos).w,d1
                 subi.w  #$F8,d1
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -216,18 +216,18 @@ Stage_SevenForcesAdvanceSylpheedSecondaryScroll:        ; CODE XREF: Stage_Seven
                 move.l  #$FFF88000,d0
 Stage_SevenForcesApplySylpheedSecondaryVelocity:        ; CODE XREF: Stage_SevenForcesAdvanceSylpheedSecondaryScroll+10   j  ; was: loc_ECC2
                 move.l  d0,(dword_FF961C).w
-                add.l   d0,(dword_FFA90C).w
+                add.l   d0,(SecondaryCameraYPos).w
                 rts
 ; End of function Stage_SevenForcesAdvanceSylpheedSecondaryScroll
 ; Advances and renders the Artemis background plane
 Stage_SevenForcesUpdateArtemisBackgroundPlane:          ; CODE XREF: Stage_SevenForcesScrollArtemisBackground   p  ; was: sub_ECCC
-                subi.w  #6,(dword_FFA904).w
-                cmpi.w  #$E200,(dword_FFA904).w
+                subi.w  #6,(PrimaryCameraYPosition).w
+                cmpi.w  #$E200,(PrimaryCameraYPosition).w
                 bpl.s   Stage_SevenForcesRenderArtemisBackgroundPlane
-                move.w  #$E200,(dword_FFA904).w
+                move.w  #$E200,(PrimaryCameraYPosition).w
 Stage_SevenForcesRenderArtemisBackgroundPlane:          ; CODE XREF: Stage_SevenForcesUpdateArtemisBackgroundPlane+C   j  ; was: loc_ECE0
                 moveq   #0,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 addi.w  #$100,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -236,8 +236,8 @@ Stage_SevenForcesRenderArtemisBackgroundPlane:          ; CODE XREF: Stage_Seven
 Stage_SevenForcesUpdateArtemisForegroundMotion:         ; CODE XREF: Stage_SevenForcesScrollArtemisForeground   p  ; was: sub_ECF4
                 tst.w   (dword_FF8066).w
                 bne.s   Stage_SevenForcesAdvanceArtemisForegroundMotion
-                subi.l  #$E00,(dword_FFA904).w
-                cmpi.w  #$E1F8,(dword_FFA904).w
+                subi.l  #$E00,(PrimaryCameraYPosition).w
+                cmpi.w  #$E1F8,(PrimaryCameraYPosition).w
                 bpl.s   Stage_SevenForcesArtemisForegroundMotionReturn
                 move.w  #2,(dword_FF8066).w
 Stage_SevenForcesArtemisForegroundMotionReturn:         ; CODE XREF: Stage_SevenForcesUpdateArtemisForegroundMotion+14   j  ; was: locret_ED10
@@ -246,10 +246,10 @@ Stage_SevenForcesArtemisForegroundMotionReturn:         ; CODE XREF: Stage_Seven
 ; ---------------------------------------------------------------------------
 Stage_SevenForcesAdvanceArtemisForegroundMotion:        ; CODE XREF: Stage_SevenForcesUpdateArtemisForegroundMotion+4   j  ; was: loc_ED12
                 bpl.s   Stage_SevenForcesCheckArtemisForegroundLimit
-                addi.l  #$12000,(dword_FFA904).w
+                addi.l  #$12000,(PrimaryCameraYPosition).w
 Stage_SevenForcesCheckArtemisForegroundLimit:           ; CODE XREF: Stage_SevenForcesAdvanceArtemisForegroundMotion   j  ; was: loc_ED1C
-                addi.l  #$E00,(dword_FFA904).w
-                cmpi.w  #$E206,(dword_FFA904).w
+                addi.l  #$E00,(PrimaryCameraYPosition).w
+                cmpi.w  #$E206,(PrimaryCameraYPosition).w
                 bmi.s   Stage_SevenForcesArtemisForegroundMotionReturn
                 clr.w   (dword_FF8066).w
                 rts
@@ -263,15 +263,15 @@ Stage_SevenForcesUpdateSirenePrimaryPlane:              ; CODE XREF: Stage_Seven
                 move.l  #$8000,d0
 Stage_SevenForcesStoreSirenePrimaryVelocity:            ; CODE XREF: Stage_SevenForcesUpdateSirenePrimaryPlane+10   j  ; was: loc_ED4A
                 move.l  d0,(dword_FF9614).w
-                add.l   d0,(dword_FFA904).w
-                cmpi.w  #$E4C0,(dword_FFA904).w
+                add.l   d0,(PrimaryCameraYPosition).w
+                cmpi.w  #$E4C0,(PrimaryCameraYPosition).w
                 bmi.s   Stage_SevenForcesRenderSirenePrimaryPlane
                 move.b  #1,(byte_FFA958).w
                 move.w  #8,(PlaneAShakeLevel).w
                 bsr.w   Gfx_ClearSevenForcesTilemapMode
 Stage_SevenForcesRenderSirenePrimaryPlane:              ; CODE XREF: Stage_SevenForcesUpdateSirenePrimaryPlane+26   j  ; was: loc_ED6A
                 moveq   #0,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 addi.w  #$100,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -279,9 +279,9 @@ Stage_SevenForcesRenderSirenePrimaryPlane:              ; CODE XREF: Stage_Seven
 ; Advances and renders the Sirene secondary plane
 Stage_SevenForcesRenderSireneSecondaryPlane:            ; CODE XREF: Stage_SevenForcesFinishSireneTransition+6   p  ; was: sub_ED7E
                 move.l  (dword_FF961C).w,d0
-                add.l   d0,(dword_FFA904).w
+                add.l   d0,(PrimaryCameraYPosition).w
                 moveq   #0,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 subi.w  #$100,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -296,13 +296,13 @@ Stage_SevenForcesUpdateSireneSecondaryScroll:           ; CODE XREF: Stage_Seven
                 move.l  #$FFFFC000,d0
 Stage_SevenForcesStoreSireneSecondaryVelocity:          ; CODE XREF: Stage_SevenForcesUpdateSireneSecondaryScroll+10   j  ; was: loc_EDB2
                 move.l  d0,(dword_FF961C).w
-                add.l   d0,(dword_FFA90C).w
-                cmpi.w  #$E340,(dword_FFA90C).w
+                add.l   d0,(SecondaryCameraYPos).w
+                cmpi.w  #$E340,(SecondaryCameraYPos).w
                 bpl.s   Stage_SevenForcesRenderSireneSecondaryScroll
                 move.b  #1,(byte_FFA958).w
 Stage_SevenForcesRenderSireneSecondaryScroll:           ; CODE XREF: Stage_SevenForcesUpdateSireneSecondaryScroll+26   j  ; was: loc_EDC8
                 move.w  #$200,d0
-                move.w  (dword_FFA90C).w,d1
+                move.w  (SecondaryCameraYPos).w,d1
                 subi.w  #$100,d1
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -313,13 +313,13 @@ UnreferencedSevenForcesEmptyHandler:                    ; was: nullsub_28
 
 ; Camera scroll handler 1
 Cutscene_SevenForcesCamera1:                            ; CODE XREF: Cutscene_SevenForcesVictoryState0+4   p  ; was: sub_EDE0
-                addi.l  #$78000,(dword_FFA904).w
-                cmpi.w  #$E520,(dword_FFA904).w
+                addi.l  #$78000,(PrimaryCameraYPosition).w
+                cmpi.w  #$E520,(PrimaryCameraYPosition).w
                 bmi.s   Cutscene_SevenForcesCamera1Render
                 move.b  #1,(byte_FFA958).w
 Cutscene_SevenForcesCamera1Render:                      ; CODE XREF: Cutscene_SevenForcesCamera1+E   j  ; was: loc_EDF6
                 moveq   #0,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 addi.w  #$F8,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -327,26 +327,26 @@ Cutscene_SevenForcesCamera1Render:                      ; CODE XREF: Cutscene_Se
 ; Camera scroll handler 2
 Cutscene_SevenForcesCamera2:                            ; CODE XREF: Cutscene_SevenForcesVictoryState0   p  ; was: sub_EE0A
                                         ; Cutscene_SevenForcesVictoryState1   p
-                addi.l  #$78000,(dword_FFA90C).w
-                cmpi.w  #$E4F8,(dword_FFA90C).w
+                addi.l  #$78000,(SecondaryCameraYPos).w
+                cmpi.w  #$E4F8,(SecondaryCameraYPos).w
                 bmi.s   Cutscene_SevenForcesCamera2Render
                 move.b  #1,(byte_FFA958).w
 Cutscene_SevenForcesCamera2Render:                      ; CODE XREF: Cutscene_SevenForcesCamera2+E   j  ; was: loc_EE20
                 move.w  #$200,d0
-                move.w  (dword_FFA90C).w,d1
+                move.w  (SecondaryCameraYPos).w,d1
                 addi.w  #$F8,d1
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
 ; End of function Cutscene_SevenForcesCamera2
 ; Camera scroll handler 3
 Cutscene_SevenForcesCamera3:                            ; CODE XREF: Cutscene_SevenForcesVictoryState6+4   p  ; was: sub_EE36
-                addi.l  #$78000,(dword_FFA90C).w
-                cmpi.w  #$E700,(dword_FFA90C).w
+                addi.l  #$78000,(SecondaryCameraYPos).w
+                cmpi.w  #$E700,(SecondaryCameraYPos).w
                 bmi.s   Cutscene_SevenForcesCamera3Render
                 move.b  #1,(byte_FFA958).w
 Cutscene_SevenForcesCamera3Render:                      ; CODE XREF: Cutscene_SevenForcesCamera3+E   j  ; was: loc_EE4C
                 move.w  #$200,d0
-                move.w  (dword_FFA90C).w,d1
+                move.w  (SecondaryCameraYPos).w,d1
                 addi.w  #$F8,d1
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -355,14 +355,14 @@ Cutscene_SevenForcesCamera3Render:                      ; CODE XREF: Cutscene_Se
 Stage_SevenForcesInitializeArtemisCameraAndAssets:      ; CODE XREF: Stage_SevenForcesFinishSylpheedForeground+10   j  ; was: sub_EE62
                 bsr.w   Gfx_InitializeArtemisTilemapRow
                 bset    #6,(byte_FF8245).w
-                move.w  #$60,(dword_FFA900).w           ; '`'
-                move.w  #$60,(word_FFA928).w            ; '`'
-                move.w  #$E300,(dword_FFA904).w
-                move.w  #$E300,(word_FFA92C).w
-                clr.w   (dword_FFA908).w
-                move.w  #$E400,(dword_FFA90C).w
-                move.w  (dword_FFA900).w,(word_FFA970).w
-                move.w  (dword_FFA900).w,(word_FFA974).w
+                move.w  #$60,(PrimaryCameraXPosition).w  ; '`'
+                move.w  #$60,(PreviousCameraXPosition).w  ; '`'
+                move.w  #$E300,(PrimaryCameraYPosition).w
+                move.w  #$E300,(PreviousCameraYPosition).w
+                clr.w   (SecondaryCameraXPos).w
+                move.w  #$E400,(SecondaryCameraYPos).w
+                move.w  (PrimaryCameraXPosition).w,(word_FFA970).w
+                move.w  (PrimaryCameraXPosition).w,(word_FFA974).w
                 lea     Gfx_ArtemisInitialAssetTransfers(pc),a0
                 nop
                 jmp     (Data_ProcessPointer).l
@@ -403,10 +403,10 @@ Gfx_ArtemisInitializeTilemap:                           ; CODE XREF: Stage_Seven
                 move.w  #$F8,d1
                 moveq   #1,d7
                 jsr     (Gfx_UpdateTilemapIndices).l
-                move.l  #Gfx_FrontendAlternateVRAMTransferParameters,(dword_FFA940).w
-                move.w  #$200,(word_FFA946).w
-                move.w  #$E400,(word_FFA948).w
-                move.w  #$1F,(word_FFA944).w
+                move.l  #Gfx_FrontendAlternateVRAMTransferParameters,(TilemapTransferBase).w
+                move.w  #$200,(TilemapRowXOrFillWord).w
+                move.w  #$E400,(TilemapRowYPosition).w
+                move.w  #$1F,(TilemapRowCountdown).w
                 moveq   #1,d0
 Gfx_ArtemisTilemapInitReturn:                           ; CODE XREF: Gfx_ArtemisInitializeTilemap+4   j  ; was: locret_EF26
                 rts
@@ -415,10 +415,10 @@ Gfx_ArtemisTilemapInitReturn:                           ; CODE XREF: Gfx_Artemis
 Gfx_ArtemisUpdateBackground:                            ; CODE XREF: Stage_SevenForcesWaitForArtemisBackground   p  ; was: sub_EF28
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.s   Gfx_ArtemisBackgroundUpdateReturn
-                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
-                clr.w   (word_FFA946).w
-                move.w  #$E400,(word_FFA948).w
-                move.w  #$1F,(word_FFA944).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(TilemapTransferBase).w
+                clr.w   (TilemapRowXOrFillWord).w
+                move.w  #$E400,(TilemapRowYPosition).w
+                move.w  #$1F,(TilemapRowCountdown).w
                 moveq   #$FFFFFFFF,d0
 Gfx_ArtemisBackgroundUpdateReturn:                      ; CODE XREF: Gfx_ArtemisUpdateBackground+6   j  ; was: locret_EF4A
                 rts
@@ -471,10 +471,10 @@ Gfx_InitializeSevenForcesCutsceneTilemap:               ; CODE XREF: Cutscene_Se
                 move.w  #$F8,d1
                 moveq   #$7E,d7                         ; '~'
                 jsr     (Gfx_UpdateTilemapIndices).l
-                move.l  #Gfx_DefaultVRAMTransferParameters,(dword_FFA940).w
-                clr.w   (word_FFA946).w
-                clr.w   (word_FFA948).w
-                move.w  #$1F,(word_FFA944).w
+                move.l  #Gfx_DefaultVRAMTransferParameters,(TilemapTransferBase).w
+                clr.w   (TilemapRowXOrFillWord).w
+                clr.w   (TilemapRowYPosition).w
+                move.w  #$1F,(TilemapRowCountdown).w
                 moveq   #1,d0
 Gfx_SevenForcesCutsceneTilemapInitReturn:               ; CODE XREF: Gfx_InitializeSevenForcesCutsceneTilemap+4   j  ; was: locret_EFE0
                 rts
@@ -566,7 +566,7 @@ Stage_SevenForcesHorizontalVelocityDampingReturn:       ; CODE XREF: Stage_Seven
 ; End of function Stage_SevenForcesDampenHorizontalVelocity
 ; Updates the Sylpheed foreground scroll velocity and position
 Stage_SevenForcesUpdateSylpheedForegroundScroll:        ; CODE XREF: Stage_SevenForcesAdvanceSylpheedForeground:Stage_SevenForcesUpdateSylpheedForeground   j  ; was: sub_F0B4
-                btst    #3,(word_FFA40E).w
+                btst    #3,(PlayerSpriteAttributes).w
                 bne.s   Stage_SevenForcesIncreaseSylpheedForegroundVelocity
                 subi.l  #$1000,(dword_FF8240).w
                 bpl.s   Stage_SevenForcesApplySylpheedForegroundVelocity
@@ -582,6 +582,6 @@ Stage_SevenForcesApplySylpheedForegroundVelocity:       ; CODE XREF: Stage_Seven
                                         ; Stage_SevenForcesUpdateSylpheedForegroundScroll+16   j
                 move.l  (dword_FF8240).w,d0
                 asl.l   #1,d0
-                add.l   d0,(dword_FFA908).w
+                add.l   d0,(SecondaryCameraXPos).w
                 rts
 ; End of function Stage_SevenForcesUpdateSylpheedForegroundScroll

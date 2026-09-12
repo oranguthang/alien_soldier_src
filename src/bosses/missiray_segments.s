@@ -272,14 +272,14 @@ Segment_MissirayDefeatNoOpState:                        ; DATA XREF: ROM:0005465
 
 ; Unreferenced helper that adjusts object Y while input modifier bit 6 is held
 Orphaned_AdjustObjectVerticalPositionFromInput:
-                btst    #6,(word_FFF706).w              ; was: sub_54700
+                btst    #6,(ControllerHeldState).w      ; was: sub_54700
                 beq.s   Orphaned_ObjectVerticalPositionAdjustmentReturn
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Orphaned_CheckObjectVerticalPositionIncreaseInput
                 subq.w  #2,$14(a5)
                 move.w  $14(a5),$4E(a5)
 Orphaned_CheckObjectVerticalPositionIncreaseInput:      ; CODE XREF: Orphaned_AdjustObjectVerticalPositionFromInput+E   j  ; was: loc_5471A
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Orphaned_ObjectVerticalPositionAdjustmentReturn
                 addq.w  #2,$14(a5)
                 move.w  $14(a5),$4E(a5)

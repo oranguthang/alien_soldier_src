@@ -181,7 +181,7 @@ Results_WritePackedBCDByteFromLookup:                   ; CODE XREF: Results_Wri
 Results_UpdateViewport:                                 ; CODE XREF: UI_CheckResultsScrollBounds+1A   p  ; was: sub_2042E
                                         ; sub_20024:Results_UpdateVerticalViewport   p
                 move.w  #$90,d1
-                sub.w   (dword_FFA904).w,d1
+                sub.w   (PrimaryCameraYPosition).w,d1
                 andi.w  #$FFF0,d1
                 lsr.w   #4,d1
                 move.w  d1,d4
@@ -306,8 +306,8 @@ Results_RenderEnteringDetailLine:                       ; CODE XREF: Results_Upd
                 jsr     (Text_QueueDoubleHeightStringWrapped).l
 Results_ApplyVerticalScrollStep:                        ; CODE XREF: Results_UpdateViewport+26   j  ; was: loc_20578
                 move.w  (dword_FF941C).w,d0
-                add.w   d0,(dword_FFA904).w
-                move.w  (dword_FFA904).w,d0
+                add.w   d0,(PrimaryCameraYPosition).w
+                move.w  (PrimaryCameraYPosition).w,d0
                 cmpi.w  #$A,(dword_FF9400).w
                 bne.s   Results_UpdateViewportReturn
                 bsr.w   Results_QueuePeriodicScrollSound
@@ -374,19 +374,19 @@ Results_RenderSelectedRowHighlightReturn:               ; CODE XREF: Results_Ren
 ; End of function Results_RenderSelectedRowHighlight
 ; Direct two-pixel vertical-scroll helper; no static caller is currently known
 Results_HandleDirectVerticalScroll:                     ; was: sub_20624
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Results_CheckDirectScrollDown
-                cmpi.w  #$90,(dword_FFA904).w
+                cmpi.w  #$90,(PrimaryCameraYPosition).w
                 bge.s   Results_CheckDirectScrollDown
-                addq.w  #2,(dword_FFA904).w
+                addq.w  #2,(PrimaryCameraYPosition).w
 Results_CheckDirectScrollDown:                          ; CODE XREF: Results_HandleDirectVerticalScroll+6   j  ; was: loc_20638
                                         ; Results_HandleDirectVerticalScroll+E   j
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Results_DirectVerticalScrollReturn
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 cmp.w   (dword_FF943C).w,d0
                 ble.s   Results_DirectVerticalScrollReturn
-                subq.w  #2,(dword_FFA904).w
+                subq.w  #2,(PrimaryCameraYPosition).w
 Results_DirectVerticalScrollReturn:                     ; CODE XREF: Results_HandleDirectVerticalScroll+1A   j  ; was: locret_2064E
                                         ; Results_HandleDirectVerticalScroll+24   j
                 rts

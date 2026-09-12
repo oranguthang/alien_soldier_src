@@ -11,14 +11,14 @@ Boss_ShiperMainHandler:                                 ; DATA XREF: ROM:Entity_
                 bne.s   Boss_ShiperUpdateActiveState
                 tst.w   (BossHealth).w
                 bne.s   Boss_ShiperUpdateActiveState
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 bra.w   Boss_ShiperInitDefeat
 ; ---------------------------------------------------------------------------
 Boss_ShiperUpdateActiveState:                           ; CODE XREF: Boss_ShiperMainHandler+18   j  ; was: loc_3644C
                                         ; Boss_ShiperMainHandler+20   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 clr.b   $49(a5)
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$58(a5)
                 addi.l  #$6000,$7C(a5)
@@ -64,10 +64,10 @@ Boss_ShiperStates:  dc.w    Boss_ShiperBeginEncounter-Boss_ShiperBeginEncounter 
 Boss_ShiperBeginEncounter:                              ; DATA XREF: Boss_ShiperStates   o  ; was: sub_364C2
                 addq.w  #2,4(a5)
                 addq.w  #1,6(a5)
-                move.l  #Boss_ShiperBackgroundConfig,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
-                move.w  #0,(word_FFA948).w
-                move.w  #$13,(word_FFA944).w
+                move.l  #Boss_ShiperBackgroundConfig,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
+                move.w  #0,(TilemapRowYPosition).w
+                move.w  #$13,(TilemapRowCountdown).w
                 move.w  #$24,d0                         ; '$'
                 move.w  #$134,d1
                 jmp     Object_ClearAllExceptTypes
@@ -112,7 +112,7 @@ Boss_ShiperLoadGraphics:                                ; DATA XREF: ROM:0003649
                 addq.w  #2,4(a5)
                 movea.l #Boss_ShiperTileDmaDescriptor,a0
                 jsr     (Tilemap_QueueIndexedColumns).l
-                move.w  #$80,(dword_FFA908).w
+                move.w  #$80,(SecondaryCameraXPos).w
 Boss_ShiperLoadGraphicsReturn:                          ; CODE XREF: Boss_ShiperLoadGraphics+4   j  ; was: locret_36560
                 rts
 ; End of function Boss_ShiperLoadGraphics

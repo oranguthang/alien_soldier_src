@@ -12,7 +12,7 @@ Boss_ShellshogunMainHandler:                            ; DATA XREF: ROM:Entity_
 Boss_ShellshogunUpdatePaletteAndScreenPosition:         ; CODE XREF: Boss_ShellshogunMainHandler+16   j  ; was: loc_39500
                                         ; Boss_ShellshogunMainHandler+1E   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$17E(a5)
 Boss_ShellshogunDispatchState:                          ; CODE XREF: Boss_ShellshogunMainHandler+4   j  ; was: loc_39512
@@ -198,7 +198,7 @@ Boss_ShellshogunWaitForStageReadyReturn:                ; CODE XREF: Boss_Shells
 ; Initializes the defeat launch when shared boss health reaches zero
 Boss_ShellshogunBeginDefeat:                            ; CODE XREF: Boss_ShellshogunMainHandler+24   j  ; was: sub_39778
                 move.b  #1,(byte_FF830E).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$48,(word_FF809E).w            ; 'H'
@@ -225,7 +225,7 @@ Boss_ShellshogunDefeatLaunchState:                      ; DATA XREF: ROM:0003953
                 addq.w  #2,4(a5)
                 move.w  #$60,$BC(a5)                    ; '`'
                 clr.w   $26(a5)
-                move.w  #$FEB0,(dword_FFA908).w
+                move.w  #$FEB0,(SecondaryCameraXPos).w
                 move.w  #$F4,d0
                 moveq   #0,d1
                 jmp     Object_ClearAllExceptTypes

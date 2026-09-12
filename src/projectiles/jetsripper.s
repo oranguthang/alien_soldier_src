@@ -19,7 +19,7 @@ Boss_JetsripperSpawnProjectile:                         ; CODE XREF: Boss_Jetsri
                 move.l  #$1000,$48(a0)
                 move.l  #$2000,$50(a0)
                 move.w  #9,$58(a0)
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 cmp.w   $10(a5),d0
                 bpl.s   Boss_JetsripperSetProjectileVelocity
                 neg.l   $48(a0)
@@ -33,7 +33,7 @@ Boss_JetsripperSpawnProjectileReturn:                   ; CODE XREF: Boss_Jetsri
 ; End of function Boss_JetsripperSpawnProjectile
 ; Updates projectile with bouncing logic
 Boss_JetsripperProjectileUpdate:                        ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_36368
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$8B0,d0
                 bpl.s   Boss_JetsripperProjectileDeactivate

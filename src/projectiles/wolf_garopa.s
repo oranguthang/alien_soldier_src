@@ -10,15 +10,15 @@ Boss_WolfGaropaUpdateMetaspriteAndOrb:                  ; CODE XREF: Boss_WolfGa
                 sub.w   $35E(a5),d0
                 move.w  $3BC(a5),d1
                 addi.w  #$10,d1
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 add.w   (PlaneBShakeOffset).w,d0
-                move.w  d1,(dword_FFA90C).w
-                move.w  (dword_FFA908).w,d0
+                move.w  d1,(SecondaryCameraYPos).w
+                move.w  (SecondaryCameraXPos).w,d0
                 bmi.s   Boss_WolfGaropaCheckOrbScrollOffsetMinimum
                 cmpi.w  #$108,d0
                 bmi.s   Boss_WolfGaropaStoreOrbAttachmentOrigins
 Boss_WolfGaropaClampOrbScrollOffsetMinimum:             ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+50   j  ; was: loc_50264
-                move.w  #$FEF6,(dword_FFA908).w
+                move.w  #$FEF6,(SecondaryCameraXPos).w
                 bra.s   Boss_WolfGaropaStoreOrbAttachmentOrigins
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaCheckOrbScrollOffsetMinimum:             ; CODE XREF: Boss_WolfGaropaUpdateMetaspriteAndOrb+3C   j  ; was: loc_5026C
@@ -153,7 +153,7 @@ Boss_WolfGaropaAttackEffectAReturn:                     ; CODE XREF: Boss_WolfGa
                 rts
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaLoadAttackEffectA:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectA+4   j  ; was: loc_503DA
-                cmpi.w  #$10,(dword_FFA900).w
+                cmpi.w  #$10,(PrimaryCameraXPosition).w
                 bpl.s   Boss_WolfGaropaAttackEffectAReturn
                 move.b  #1,(byte_FF9DBA).w
                 moveq   #0,d0
@@ -183,7 +183,7 @@ Boss_WolfGaropaAttackEffectBReturn:                     ; CODE XREF: Boss_WolfGa
 ; End of function Boss_WolfGaropaTryLoadAttackEffectB
 ; Initialize attack effect B and queue its indexed tilemap rows
 Boss_WolfGaropaLoadAttackEffectB:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectB+4   j  ; was: sub_50438
-                cmpi.w  #$10,(dword_FFA900).w
+                cmpi.w  #$10,(PrimaryCameraXPosition).w
                 bpl.s   Boss_WolfGaropaAttackEffectBReturn
                 move.b  #1,(byte_FF9DBA).w
                 moveq   #1,d0
@@ -207,7 +207,7 @@ Boss_WolfGaropaAttackEffectCReturn:                     ; CODE XREF: Boss_WolfGa
                 rts
 ; ---------------------------------------------------------------------------
 Boss_WolfGaropaLoadAttackEffectC:                       ; CODE XREF: Boss_WolfGaropaTryLoadAttackEffectC+4   j  ; was: loc_50478
-                cmpi.w  #$10,(dword_FFA900).w
+                cmpi.w  #$10,(PrimaryCameraXPosition).w
                 bpl.s   Boss_WolfGaropaAttackEffectCReturn
                 move.b  #1,(byte_FF9DBA).w
                 lea     Boss_WolfGaropaAttackEffectCIndexedRowDescriptor(pc),a0

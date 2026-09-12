@@ -8,17 +8,17 @@ UI_AppendHUDSpriteList:                                 ; CODE XREF: DebugMenu_U
                 bpl.w   UI_AppendHUDSpriteList_AppendBaseIndicator
                 btst    #0,(byte_FFF705).w
                 beq.w   UI_AppendHUDSpriteList_AppendBaseIndicator
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 bne.w   UI_AppendHUDSpriteList_AppendBaseIndicator
                 tst.w   (DifficultyMode).w
                 bne.s   UI_AppendHUDSpriteList_SelectModeEntries
-                btst    #2,(word_FFF708).w
+                btst    #2,(ControllerPressedState).w
                 beq.s   UI_AppendHUDSpriteList_CheckFrameSkipIncrease
                 subq.w  #1,(word_FFFF3E).w
                 bpl.s   UI_AppendHUDSpriteList_SelectModeEntries
                 clr.w   (word_FFFF3E).w
 UI_AppendHUDSpriteList_CheckFrameSkipIncrease:          ; CODE XREF: UI_BuildHUDSpriteList+30   j  ; was: loc_132B4
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.s   UI_AppendHUDSpriteList_SelectModeEntries
                 addq.w  #1,(word_FFFF3E).w
                 cmpi.w  #4,(word_FFFF3E).w

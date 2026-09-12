@@ -6,7 +6,7 @@ Math_LookupPackedBCDWord:                               ; CODE XREF: Continue_Re
 ; Returns the player's absolute horizontal and signed vertical deltas
 Physics_GetPlayerDelta:                                 ; CODE XREF: Object_UpdateProximityPickupEmitterType48:Object_UpdateProximityPickupEmitterType48_CheckPlayerProximity   p  ; was: sub_1B410
                                         ; Projectile_UpdateOscillatingContactHazardType2B4:Projectile_UpdateOscillatingContactHazardType2B4_CheckPlayerProximity   p
-                movea.w #(word_FFA400-M68K_RAM),a0
+                movea.w #(PlayerObjectType-M68K_RAM),a0
                 move.w  $10(a0),d1
                 sub.w   $10(a5),d1
                 move.w  d1,d0

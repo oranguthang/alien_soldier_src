@@ -4,16 +4,16 @@ Stage18_UpdateScrollAndRenderTilemap:                   ; CODE XREF: Stage18_Upd
                 bsr.w   Camera_FollowPlayerBeyondHorizontalThreshold
 Stage18_RenderLockedTilemap:                            ; CODE XREF: Stage18_UpdateDestroyerMk2Scroll+1A   j  ; was: loc_1002A
                 bsr.w   Tilemap_PopulateStage18UnqueuedColumn
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 addi.w  #$158,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 lea     Gfx_DefaultVRAMTransferParameters(pc),a0
                 nop
                 bra.w   Tilemap_QueueColumnFromDescriptor
 ; End of function Stage18_UpdateScrollAndRenderTilemap
 ; Advances the Destroyer MK2 approach scroll and renders the Stage 18 tilemap
 Stage18_UpdateDestroyerMk2Scroll:                       ; CODE XREF: Stage18_InitializeDestroyerMk2Encounter   p  ; was: sub_10044
-                cmpi.w  #$91,(dword_FFA410).w
+                cmpi.w  #$91,(PlayerXPosition).w
                 bpl.s   Stage18_AdvanceDestroyerMk2Scroll
                 btst    #1,(byte_FFA407).w
                 beq.s   Stage18_AdvanceDestroyerMk2Scroll
@@ -21,7 +21,7 @@ Stage18_UpdateDestroyerMk2Scroll:                       ; CODE XREF: Stage18_Ini
 ; ---------------------------------------------------------------------------
 Stage18_AdvanceDestroyerMk2Scroll:                      ; CODE XREF: Stage18_UpdateDestroyerMk2Scroll+6   j  ; was: loc_10056
                                         ; Stage18_UpdateDestroyerMk2Scroll+E   j
-                addi.l  #$10000,(dword_FFA900).w
+                addi.l  #$10000,(PrimaryCameraXPosition).w
                 bra.s   Stage18_RenderLockedTilemap
 ; End of function Stage18_UpdateDestroyerMk2Scroll
 ; Updates horizontal camera follow and renders the stage tilemap
@@ -33,7 +33,7 @@ Camera_UpdateAndRenderStageTilemap:                     ; CODE XREF: Stage_Updat
 ; Advances boss-approach scroll when allowed and renders the stage tilemap
 Camera_UpdateBossApproachAndRenderTilemap:              ; CODE XREF: Stage_InitBossIntro   p  ; was: sub_10068
                                         ; sub_C944   p
-                cmpi.w  #$91,(dword_FFA410).w
+                cmpi.w  #$91,(PlayerXPosition).w
                 bpl.s   Camera_AdvanceBossApproachScroll
                 btst    #1,(byte_FFA407).w
                 beq.s   Camera_AdvanceBossApproachScroll
@@ -41,7 +41,7 @@ Camera_UpdateBossApproachAndRenderTilemap:              ; CODE XREF: Stage_InitB
 ; ---------------------------------------------------------------------------
 Camera_AdvanceBossApproachScroll:                       ; CODE XREF: Camera_UpdateBossApproachAndRenderTilemap+6   j  ; was: loc_1007A
                                         ; Camera_UpdateBossApproachAndRenderTilemap+E   j
-                addi.l  #$10000,(dword_FFA900).w
+                addi.l  #$10000,(PrimaryCameraXPosition).w
                 bra.w   Tilemap_QueuePrimaryCameraColumnOffset158
 ; End of function Camera_UpdateBossApproachAndRenderTilemap
 ; Updates the horizontal camera position towards the player
@@ -52,7 +52,7 @@ Camera_UpdateHorizontalTowardsPlayer:                   ; CODE XREF: Camera_Boss
                 tst.w   (a5)
                 beq.w   Camera_HorizontalUpdateReturn
                 moveq   #0,d0
-                move.l  (dword_FFA900).w,d6
+                move.l  (PrimaryCameraXPosition).w,d6
                 bra.w   Camera_SmoothHorizontalFollowPlayer
 ; End of function Camera_UpdateHorizontalTowardsPlayer
 ; Unreferenced horizontal follow variant with explicit camera bounds
@@ -73,13 +73,13 @@ UnreferencedCameraApplyPositiveBoundedDelta:            ; CODE XREF: Unreference
                 cmp.l   d6,d0
                 beq.s   UnreferencedCameraClampToUpperHorizontalBound
                 bmi.s   UnreferencedCameraClampToUpperHorizontalBound
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 UnreferencedCameraClampToUpperHorizontalBound:          ; CODE XREF: UnreferencedCameraFollowWithinHorizontalBounds+28   j  ; was: loc_100D2
                                         ; UnreferencedCameraFollowWithinHorizontalBounds+2A   j
                 move.l  d0,d6
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
 UnreferencedCameraBoundedFollowReturn:                  ; CODE XREF: UnreferencedCameraFollowWithinHorizontalBounds+42   j  ; was: locret_100D8
                 rts
 ; ---------------------------------------------------------------------------
@@ -100,13 +100,13 @@ UnreferencedCameraApplyNegativeBoundedDelta:            ; CODE XREF: Unreference
                 cmp.l   d6,d0
                 beq.s   UnreferencedCameraClampToLowerHorizontalBound
                 bpl.s   UnreferencedCameraClampToLowerHorizontalBound
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 UnreferencedCameraClampToLowerHorizontalBound:          ; CODE XREF: UnreferencedCameraFollowWithinHorizontalBounds+62   j  ; was: loc_1010C
                                         ; UnreferencedCameraFollowWithinHorizontalBounds+64   j
                 move.l  d0,d6
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; End of function UnreferencedCameraFollowWithinHorizontalBounds
 ; Smoothly follows the player horizontally with speed and camera bounds
@@ -133,13 +133,13 @@ Camera_ApplyPositiveFollowWithinBounds:                 ; CODE XREF: Camera_Smoo
                 cmp.l   d6,d0
                 beq.s   Camera_ClampFollowToUpperHorizontalBound
                 bmi.s   Camera_ClampFollowToUpperHorizontalBound
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Camera_ClampFollowToUpperHorizontalBound:               ; CODE XREF: Camera_SmoothHorizontalFollowPlayer+36   j  ; was: loc_10154
                                         ; Camera_SmoothHorizontalFollowPlayer+38   j
                 move.l  d0,d6
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Camera_SelectAlternateHorizontalAnchor:                 ; CODE XREF: Camera_SmoothHorizontalFollowPlayer+8   j  ; was: loc_1015C
@@ -162,13 +162,13 @@ Camera_ApplyNegativeFollowWithinBounds:                 ; CODE XREF: Camera_Smoo
                 cmp.l   d6,d0
                 beq.s   Camera_ClampFollowToLowerHorizontalBound
                 bpl.s   Camera_ClampFollowToLowerHorizontalBound
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Camera_ClampFollowToLowerHorizontalBound:               ; CODE XREF: Camera_SmoothHorizontalFollowPlayer+74   j  ; was: loc_10192
                                         ; Camera_SmoothHorizontalFollowPlayer+76   j
                 move.l  d0,d6
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; End of function Camera_SmoothHorizontalFollowPlayer
 ; Follows the player from a fixed horizontal anchor within camera bounds
@@ -179,7 +179,7 @@ Camera_FollowPlayerFromFixedHorizontalAnchor:           ; CODE XREF: Stage16_Upd
                 tst.w   (a5)
                 beq.w   Camera_HorizontalUpdateReturn
                 moveq   #0,d0
-                move.l  (dword_FFA900).w,d6
+                move.l  (PrimaryCameraXPosition).w,d6
                 moveq   #3,d1
                 btst    #3,$E(a5)
                 beq.s   Camera_FixedAnchorCheckNegativeDelta
@@ -202,13 +202,13 @@ Camera_FixedAnchorApplyPositiveWithinBounds:            ; CODE XREF: Camera_Foll
                 cmp.l   d6,d0
                 beq.s   Camera_FixedAnchorClampToUpperBound
                 bmi.s   Camera_FixedAnchorClampToUpperBound
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Camera_FixedAnchorClampToUpperBound:                    ; CODE XREF: Camera_FollowPlayerFromFixedHorizontalAnchor+4C   j  ; was: loc_101F0
                                         ; Camera_FollowPlayerFromFixedHorizontalAnchor+4E   j
                 move.l  d0,d6
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Camera_FixedAnchorCheckNegativeDelta:                   ; CODE XREF: Camera_FollowPlayerFromFixedHorizontalAnchor+1E   j  ; was: loc_101F8
@@ -231,13 +231,13 @@ Camera_FixedAnchorApplyNegativeWithinBounds:            ; CODE XREF: Camera_Foll
                 cmp.l   d6,d0
                 beq.s   Camera_FixedAnchorClampToLowerBound
                 bpl.s   Camera_FixedAnchorClampToLowerBound
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Camera_FixedAnchorClampToLowerBound:                    ; CODE XREF: Camera_FollowPlayerFromFixedHorizontalAnchor+8A   j  ; was: loc_1022E
                                         ; Camera_FollowPlayerFromFixedHorizontalAnchor+8C   j
                 move.l  d0,d6
-                move.l  d6,(dword_FFA900).w
+                move.l  d6,(PrimaryCameraXPosition).w
                 rts
 ; End of function Camera_FollowPlayerFromFixedHorizontalAnchor
 ; Unreferenced camera adjustment selected by player-state flags
@@ -263,7 +263,7 @@ UnreferencedCameraClampPlayerStateDelta:                ; CODE XREF: Unreference
                 bpl.s   UnreferencedCameraApplyPlayerStateDelta
                 move.l  (dword_FFA930).w,d0
 UnreferencedCameraApplyPlayerStateDelta:                ; CODE XREF: UnreferencedCameraAdjustForPlayerState+32   j  ; was: loc_1026E
-                add.l   d0,(dword_FFA900).w
+                add.l   d0,(PrimaryCameraXPosition).w
 UnreferencedCameraPlayerStateReturn:                    ; CODE XREF: UnreferencedCameraAdjustForPlayerState+C   j  ; was: locret_10272
                                         ; UnreferencedCameraAdjustForPlayerState+28   j
                 rts
@@ -281,9 +281,9 @@ UnreferencedCameraCheckSecondaryStateAnchor:            ; CODE XREF: Unreference
 Stage8_UpdateTrainScrollAndTilemap:                     ; CODE XREF: Stage8_UpdateTrainSequence_UpdateScroll   p  ; was: sub_10286
                 bsr.w   Camera_FollowPlayerBeyondHorizontalThreshold
 Scroll_SynchronizePlanesAndRenderTrainTilemap:          ; CODE XREF: Scroll_AdvanceTrainHorizontalAndRenderTilemap+8   j  ; was: loc_1028A
-                move.w  (dword_FFA900).w,(dword_FFA908).w
-                move.w  (dword_FFA904).w,(dword_FFA90C).w
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,(SecondaryCameraXPos).w
+                move.w  (PrimaryCameraYPosition).w,(SecondaryCameraYPos).w
+                move.w  (PrimaryCameraXPosition).w,d0
                 addi.w  #$158,d0
                 move.w  #$F700,d1
                 lea     Gfx_ScrollVRAMTransferParameters(pc),a0
@@ -296,16 +296,16 @@ UnreferencedAdvanceTrainScrollWithNop:
 ; End of function UnreferencedAdvanceTrainScrollWithNop
 ; Advances train-scene horizontal scroll by one pixel and renders the tilemap
 Scroll_AdvanceTrainHorizontalAndRenderTilemap:          ; CODE XREF: Stage8_InitializeFlyingNeoApproach   p  ; was: sub_102AE
-                addi.l  #$10000,(dword_FFA900).w
+                addi.l  #$10000,(PrimaryCameraXPosition).w
                 bra.s   Scroll_SynchronizePlanesAndRenderTrainTilemap
 ; End of function Scroll_AdvanceTrainHorizontalAndRenderTilemap
 ; Synchronizes the Flying Neo transition scroll and renders its tilemap
 Stage8_UpdateFlyingNeoScrollAndTilemap:                 ; CODE XREF: Stage8_UpdateFlyingNeoVerticalScrollAndEffects+2A   p  ; was: sub_102B8
-                move.w  (dword_FFA900).w,(dword_FFA908).w
-                move.w  (dword_FFA904).w,(dword_FFA90C).w
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,(SecondaryCameraXPos).w
+                move.w  (PrimaryCameraYPosition).w,(SecondaryCameraYPos).w
+                move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$60,d0                         ; '`'
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 addi.w  #-$910,d1
                 lea     Gfx_ScrollVRAMTransferParameters(pc),a0
                 nop
@@ -318,19 +318,19 @@ UnreferencedUpdateQuarterScrollWithNop:
 ; Stores one quarter of the primary horizontal scroll position
 Scroll_UpdateQuarterHorizontalPosition:                 ; CODE XREF: Stage_UpdateLogic+8   p  ; was: sub_102E0
                                         ; Stage_InitBossIntro+4   p
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 asr.w   #2,d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 rts
 ; End of function Scroll_UpdateQuarterHorizontalPosition
 ; Accumulates one quarter of the signed horizontal scroll delta
 Scroll_AccumulateQuarterHorizontalDelta:                ; CODE XREF: Stage10_UpdateScrollToDeepStrider+4   p  ; was: sub_102EC
                                         ; Stage10_InitializeDeepStriderEncounter+4   p
                 moveq   #0,d0
-                move.w  (dword_FFA910).w,d0
+                move.w  (CameraXDelta).w,d0
                 swap    d0
                 asr.l   #2,d0
-                add.l   d0,(dword_FFA908).w
+                add.l   d0,(SecondaryCameraXPos).w
                 rts
 ; End of function Scroll_AccumulateQuarterHorizontalDelta
 ; Follows the player beyond horizontal threshold $F0 at up to six pixels per update
@@ -350,7 +350,7 @@ Camera_FollowPlayerBeyondHorizontalThreshold:           ; CODE XREF: Stage18_Upd
                 bmi.s   Camera_ApplyThresholdFollowDelta
                 move.l  #$60000,d0
 Camera_ApplyThresholdFollowDelta:                       ; CODE XREF: Camera_FollowPlayerBeyondHorizontalThreshold+24   j  ; was: loc_10328
-                add.l   d0,(dword_FFA900).w
+                add.l   d0,(PrimaryCameraXPosition).w
 Camera_HorizontalUpdateReturn:                          ; CODE XREF: Camera_UpdateHorizontalTowardsPlayer+6   j  ; was: locret_1032C
                                         ; Camera_UpdateHorizontalTowardsPlayer+C   j
                 rts
@@ -367,7 +367,7 @@ UnreferencedCameraFollowRightEdge:
                 bmi.s   UnreferencedCameraApplyRightEdgeDelta
                 move.l  #$60000,d0
 UnreferencedCameraApplyRightEdgeDelta:                  ; CODE XREF: UnreferencedCameraFollowRightEdge+16   j  ; was: loc_1034C
-                add.l   d0,(dword_FFA900).w
+                add.l   d0,(PrimaryCameraXPosition).w
                 rts
 ; End of function UnreferencedCameraFollowRightEdge
 ; Updates the vertical camera and renders the shared Sylpheed backdrop
@@ -378,7 +378,7 @@ Scroll_UpdateAndRenderSylpheedBackdrop:                 ; CODE XREF: Stage15_Upd
 ; Advances vertical scroll by half a pixel and renders the shared Sylpheed backdrop
 Scroll_AdvanceVerticalAndRenderSylpheedBackdrop:        ; CODE XREF: Stage15_InitializeSunsetStingEncounter   p  ; was: sub_1035A
                                         ; Stage16_UpdateScrollToViblack+14   p
-                addi.l  #$8000,(dword_FFA904).w
+                addi.l  #$8000,(PrimaryCameraYPosition).w
                 bra.w   Tilemap_QueuePrimaryCameraRowOffset60
 ; End of function Scroll_AdvanceVerticalAndRenderSylpheedBackdrop
 ; Follows the player when above vertical threshold $108
@@ -396,7 +396,7 @@ Camera_FollowPlayerAboveVerticalThreshold:              ; CODE XREF: Scroll_Upda
                 bmi.s   Camera_ApplyVerticalThresholdDelta
                 move.l  #$60000,d0
 Camera_ApplyVerticalThresholdDelta:                     ; CODE XREF: Camera_FollowPlayerAboveVerticalThreshold+1C   j  ; was: loc_1038A
-                add.l   d0,(dword_FFA904).w
+                add.l   d0,(PrimaryCameraYPosition).w
 Camera_VerticalThresholdReturn:                         ; CODE XREF: Camera_FollowPlayerAboveVerticalThreshold+2   j  ; was: locret_1038E
                                         ; Camera_FollowPlayerAboveVerticalThreshold+E   j
                 rts

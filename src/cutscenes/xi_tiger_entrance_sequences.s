@@ -21,7 +21,7 @@ Cutscene_XiTigerTrainEntranceInit:                      ; DATA XREF: ROM:Cutscen
                 bsr.w   Cutscene_XiTigerActorSetup
                 bset    #3,$E(a5)
                 move.w  #$100,$10(a5)
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 bsr.w   Cutscene_XiTigerAlignToTrainRoof
                 move.l  #Cutscene_XiTigerEntranceGroundedMapping,8(a5)
                 clr.w   $C(a5)
@@ -44,7 +44,7 @@ Cutscene_XiTigerActorSetup:                             ; CODE XREF: Cutscene_Xi
 ; Keeps Xi-Tiger on the Stage 8 train roof while the vertical scroll changes
 Cutscene_XiTigerAlignToTrainRoof:                       ; CODE XREF: Cutscene_XiTigerTrainEntranceInit+1E   p  ; was: sub_2EFBA
                                         ; Cutscene_XiTigerTrainEntranceWait   p
-                move.w  (dword_FFA904).w,$14(a5)
+                move.w  (PrimaryCameraYPosition).w,$14(a5)
                 addi.w  #$A8,$14(a5)
                 rts
 ; End of function Cutscene_XiTigerAlignToTrainRoof
@@ -143,7 +143,7 @@ Cutscene_XiTigerBossEntranceInit:                       ; DATA XREF: ROM:Cutscen
 ; Keeps Xi-Tiger at the boss-entrance vertical offset from stage scroll
 Cutscene_XiTigerBossEntranceUpdateY:                    ; CODE XREF: Cutscene_XiTigerBossEntranceInit+8   p  ; was: sub_2F0BC
                                         ; Cutscene_XiTigerBossEntranceWaitForScroll+6   p
-                move.w  (dword_FFA904).w,$14(a5)
+                move.w  (PrimaryCameraYPosition).w,$14(a5)
                 addi.w  #$128,$14(a5)
                 rts
 ; End of function Cutscene_XiTigerBossEntranceUpdateY
@@ -151,7 +151,7 @@ Cutscene_XiTigerBossEntranceUpdateY:                    ; CODE XREF: Cutscene_Xi
 Cutscene_XiTigerBossEntranceWaitForScroll:              ; DATA XREF: ROM:0002F09E   o  ; was: sub_2F0CA
                 move.w  #$60,$10(a5)                    ; '`'
                 bsr.w   Cutscene_XiTigerBossEntranceUpdateY
-                tst.w   (dword_FFA908).w
+                tst.w   (SecondaryCameraXPos).w
                 bpl.s   Cutscene_XiTigerBossEntranceWaitForScroll_Return
                 move.l  #$FFFA0000,$1C(a5)
                 move.w  #2,$18(a5)

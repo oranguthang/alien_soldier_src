@@ -191,8 +191,8 @@ UI_DisplayPauseGraphics:
                 bpl.w   UI_DisplayPauseGraphics_Return
                 btst    #6,d0
                 beq.w   UI_DisplayPauseGraphics_Return
-                move.b  (word_FFF706).w,d0
-                or.b    (word_FFF706+1).w,d0
+                move.b  (ControllerHeldState).w,d0
+                or.b    (ControllerHeldState+1).w,d0
                 andi.b  #$40,d0                         ; '@'
                 bne.w   UI_DisplayPauseGraphics_Return
                 btst    #4,(VBlankFrameCounter+1).w
@@ -231,14 +231,14 @@ Object_ApplyCameraMotion_Begin:                         ; CODE XREF: Object_Appl
                 asl.w   #1,d0
                 andi.w  #6,d0
                 move.w  (a0,d0.w),(word_FF8092).w
-                move.w  (dword_FFA900).w,d0
-                sub.w   (word_FFA928).w,d0
-                move.w  (dword_FFA904).w,d1
-                sub.w   (word_FFA92C).w,d1
-                move.w  d0,(dword_FFA910).w
-                move.w  d1,(word_FFA914).w
-                move.w  (dword_FFA900).w,(word_FFA928).w
-                move.w  (dword_FFA904).w,(word_FFA92C).w
+                move.w  (PrimaryCameraXPosition).w,d0
+                sub.w   (PreviousCameraXPosition).w,d0
+                move.w  (PrimaryCameraYPosition).w,d1
+                sub.w   (PreviousCameraYPosition).w,d1
+                move.w  d0,(CameraXDelta).w
+                move.w  d1,(CameraYDelta).w
+                move.w  (PrimaryCameraXPosition).w,(PreviousCameraXPosition).w
+                move.w  (PrimaryCameraYPosition).w,(PreviousCameraYPosition).w
                 btst    #6,(byte_FFA959).w
                 beq.s   Object_ApplyCameraMotion_CheckVerticalDelta
                 moveq   #0,d0
@@ -255,8 +255,8 @@ Object_ApplyCameraMotion_WithCameraDelta:               ; CODE XREF: Object_Appl
                 move.b  #3,d5
                 move.b  #2,d6
                 move.b  #0,d7
-                lea     (word_FFA400).w,a5
-                move.b  word_FFA402-word_FFA400(a5),d2
+                lea     (PlayerObjectType).w,a5
+                move.b  PlayerObjectFlags-PlayerObjectType(a5),d2
                 beq.s   Object_ApplyCameraMotion_ScanVisible
                 bsr.w   Physics_ApplyVelocityWithBounds
                 bsr.w   Physics_ApplyPositionOffset
@@ -293,8 +293,8 @@ Object_ApplyCameraMotion_ReturnWithDelta:               ; CODE XREF: Object_Appl
 Object_ApplyCameraMotion_WithoutCameraDelta:            ; CODE XREF: Object_ApplyCameraMotion+5C   j  ; was: loc_1CA3A
                 move.b  #3,d5
                 move.b  #2,d6
-                lea     (word_FFA400).w,a5
-                move.b  word_FFA402-word_FFA400(a5),d2
+                lea     (PlayerObjectType).w,a5
+                move.b  PlayerObjectFlags-PlayerObjectType(a5),d2
                 beq.s   Object_ApplyCameraMotion_ScanStationary
                 bsr.w   Physics_ApplyVelocityWithBounds
                 bsr.w   Object_ClampToPlayfield

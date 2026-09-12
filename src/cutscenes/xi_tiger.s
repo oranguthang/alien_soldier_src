@@ -11,7 +11,7 @@ XiTigerCutscene_LoadAssets:                             ; DATA XREF: ROM:StageTr
                 move.w  d0,(DisplayedBossHealth).w
                 move.w  d0,(BossHealth).w
                 move.w  d0,(BossMaxHealth).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 jmp     CutsceneProjection_Initialize
 ; End of function XiTigerCutscene_LoadAssets
 ; ---------------------------------------------------------------------------
@@ -82,8 +82,8 @@ XiTigerCutscene_Setup:                                  ; DATA XREF: XiTigerCuts
                 lea     $60(a0),a0
                 bsr.w   XiTigerCutscene_InitializeDisplayObject
                 bset    #3,$E(a0)
-                move.w  #0,(dword_FFA900).w
-                move.w  #$28,(dword_FFA908).w           ; '('
+                move.w  #0,(PrimaryCameraXPosition).w
+                move.w  #$28,(SecondaryCameraXPos).w    ; '('
                 lea     XiTigerCutscene_TileTransferDescriptor(pc),a0
                 nop
                 jsr     (Tilemap_QueueIndexedColumns).l
@@ -166,12 +166,12 @@ XiTigerCutscene_InitializeReveal:                       ; DATA XREF: ROM:0001E91
                 move.b  #7,(VDPReg11Shadow+1).w
                 move.b  #6,(byte_FFA95A).w
                 move.b  #9,(byte_FFA95B).w
-                move.w  #0,(dword_FFA900).w
-                move.w  #0,(dword_FFA904).w
-                move.w  #0,(dword_FFA908).w
-                move.w  #0,(dword_FFA90C).w
+                move.w  #0,(PrimaryCameraXPosition).w
+                move.w  #0,(PrimaryCameraYPosition).w
+                move.w  #0,(SecondaryCameraXPos).w
+                move.w  #0,(SecondaryCameraYPos).w
                 jsr     (Tilemap_DirectTransferFromPrimaryCamera).l
-                move.w  #$1E0,(dword_FFA900).w
+                move.w  #$1E0,(PrimaryCameraXPosition).w
                 jmp     Tilemap_DirectTransferFromSecondaryCamera
 ; End of function XiTigerCutscene_InitializeReveal
 ; Animates the reveal's palette phase, offsets, and composition
@@ -315,7 +315,7 @@ XiTigerCutscene_ApplyActorPositions:                    ; CODE XREF: XiTigerCuts
                 move.w  d0,$10(a1)
                 asr.w   #1,d1
                 addq.w  #1,d1
-                move.w  d1,(dword_FFA90C).w
+                move.w  d1,(SecondaryCameraYPos).w
                 asr.w   #1,d1
                 subi.w  #$18,d1
                 move.w  d1,(CutsceneVerticalOffset).w
@@ -354,7 +354,7 @@ XiTigerCutscene_WriteNextWaveLine:                      ; CODE XREF: XiTigerCuts
                 swap    d0
                 addq.w  #4,a0
                 dbf     d7,XiTigerCutscene_WriteNextWaveLine
-                subq.w  #4,(dword_FFA90C).w
+                subq.w  #4,(SecondaryCameraYPos).w
                 move.w  (dword_FF8134+2).w,d7
                 asr.w   #1,d7
                 addq.w  #1,(dword_FF8130).w

@@ -653,13 +653,13 @@ Terrain_StampObjectPattern_Setup:                       ; CODE XREF: Terrain_Sta
 Terrain_StampObjectPattern_WriteLoop:                   ; CODE XREF: Terrain_StampObjectPattern+88   j  ; was: loc_2A99E
                 move.w  d0,d2
                 subi.w  #$80,d2
-                add.w   (dword_FFA900).w,d2
+                add.w   (PrimaryCameraXPosition).w,d2
                 add.w   $A(a0,d6.w),d2
                 asr.w   #2,d2
                 andi.w  #$7E,d2                         ; '~'
                 move.w  d1,d3
                 subi.w  #$80,d3
-                sub.w   (dword_FFA904).w,d3
+                sub.w   (PrimaryCameraYPosition).w,d3
                 add.w   $C(a0,d6.w),d3
                 asl.w   #4,d3
                 andi.w  #$1F80,d3

@@ -143,7 +143,7 @@ Projectile_SharpssteelCheckFallingShotDeflectionReturn:  ; CODE XREF: Projectile
 Boss_SharpssteelBeginDefeatFragmentBurst:               ; CODE XREF: Boss_SharpssteelMain+22   j  ; was: sub_48F62
                 move.b  #1,(byte_FF830E).w
                 clr.w   8(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.w  #8,(word_FF808C).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l

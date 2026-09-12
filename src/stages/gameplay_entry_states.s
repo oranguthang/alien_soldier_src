@@ -13,9 +13,9 @@ Stage_UpdateGameplayEntry:                              ; DATA XREF: Sys_Dispatc
                 jsr     (Stage_DispatchVisualAssetLoader).l
                 jsr     (Sys_InitStageState).l
                 addq.w  #2,(GameSubstateIndex).w
-                move.w  #$1F,(word_FFA944).w
-                move.w  (dword_FFA900).w,(word_FFA946).w
-                move.w  (dword_FFA904).w,(word_FFA948).w
+                move.w  #$1F,(TilemapRowCountdown).w
+                move.w  (PrimaryCameraXPosition).w,(TilemapRowXOrFillWord).w
+                move.w  (PrimaryCameraYPosition).w,(TilemapRowYPosition).w
 Stage_UpdateGameplayEntry_Return:                       ; CODE XREF: Stage_UpdateGameplayEntry+4   j  ; was: locret_1C448
                                         ; Stage_UpdateGameplayEntry+8E   j
                 rts
@@ -23,8 +23,8 @@ Stage_UpdateGameplayEntry_Return:                       ; CODE XREF: Stage_Updat
 Stage_StreamGameplayEntryPrimaryPlane:                  ; CODE XREF: Stage_UpdateGameplayEntry+14   j  ; was: loc_1C44A
                 move.w  (word_FF80AA).w,d0
                 bne.s   Stage_StreamGameplayEntryPrimaryPlane_Rows
-                clr.w   (word_FFA946).w
-                move.w  #$4000,(dword_FFA940).w
+                clr.w   (TilemapRowXOrFillWord).w
+                move.w  #$4000,(TilemapTransferBase).w
                 jsr     (Tilemap_QueueNextConstantRow).l
                 jsr     (Tilemap_QueueNextConstantRow).l
                 bmi.s   Stage_AdvanceGameplayEntryToSecondaryPlane
@@ -35,7 +35,7 @@ Stage_StreamGameplayEntryPrimaryPlane_Rows:             ; CODE XREF: Stage_Strea
                 andi.w  #$7FFF,d0
                 lea     Stage_EntryPrimaryPlaneVRAMParameterPointers(pc),a0
                 nop
-                move.l  -4(a0,d0.w),(dword_FFA940).w
+                move.l  -4(a0,d0.w),(TilemapTransferBase).w
                 jsr     (Tilemap_MirrorOffsetRowAndQueueScrollingRow).l
                 jsr     (Tilemap_MirrorOffsetRowAndQueueScrollingRow).l
                 bpl.w   Stage_UpdateGameplayEntry_Return
@@ -44,23 +44,23 @@ Stage_StreamGameplayEntryPrimaryPlane_Rows:             ; CODE XREF: Stage_Strea
 Stage_StreamGameplayEntryPrimaryPlane_DirectRows:       ; CODE XREF: Stage_StreamGameplayEntryPrimaryPlane_Rows   j  ; was: loc_1C48E
                 lea     Stage_EntryPrimaryPlaneVRAMParameterPointers(pc),a0
                 nop
-                move.l  -4(a0,d0.w),(dword_FFA940).w
+                move.l  -4(a0,d0.w),(TilemapTransferBase).w
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   Stage_UpdateGameplayEntry_Return
 Stage_AdvanceGameplayEntryToSecondaryPlane:             ; CODE XREF: Stage_StreamGameplayEntryPrimaryPlane+6C   j  ; was: loc_1C4AA
                                         ; Stage_StreamGameplayEntryPrimaryPlane_Rows+92   j
                 addq.w  #2,(GameSubstateIndex).w
-                move.w  #$1F,(word_FFA944).w
-                move.w  (dword_FFA908).w,(word_FFA946).w
-                move.w  (dword_FFA90C).w,(word_FFA948).w
+                move.w  #$1F,(TilemapRowCountdown).w
+                move.w  (SecondaryCameraXPos).w,(TilemapRowXOrFillWord).w
+                move.w  (SecondaryCameraYPos).w,(TilemapRowYPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Stage_StreamGameplayEntrySecondaryPlane:                ; CODE XREF: Stage_UpdateGameplayEntry+C   j  ; was: loc_1C4C2
                 move.w  (word_FF80AC).w,d0
                 bne.s   Stage_StreamGameplayEntrySecondaryPlane_Rows
-                clr.w   (word_FFA946).w
-                move.w  #$6000,(dword_FFA940).w
+                clr.w   (TilemapRowXOrFillWord).w
+                move.w  #$6000,(TilemapTransferBase).w
                 jsr     (Tilemap_QueueNextConstantRow).l
                 jsr     (Tilemap_QueueNextConstantRow).l
                 bmi.s   Stage_FinishGameplayEntry
@@ -69,7 +69,7 @@ Stage_StreamGameplayEntrySecondaryPlane:                ; CODE XREF: Stage_Updat
 Stage_StreamGameplayEntrySecondaryPlane_Rows:           ; CODE XREF: Stage_StreamGameplayEntrySecondaryPlane+CC   j  ; was: loc_1C4E2
                 lea     Stage_EntrySecondaryPlaneVRAMParameterPointers(pc),a0
                 nop
-                move.l  -4(a0,d0.w),(dword_FFA940).w
+                move.l  -4(a0,d0.w),(TilemapTransferBase).w
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   Stage_UpdateGameplayEntry_Return
@@ -116,9 +116,9 @@ XiTigerStage_UpdateGameplayEntry:                       ; DATA XREF: Sys_Dispatc
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
                 addq.w  #2,(GameSubstateIndex).w
-                move.w  #$1F,(word_FFA944).w
-                move.w  (dword_FFA900).w,(word_FFA946).w
-                move.w  (dword_FFA904).w,(word_FFA948).w
+                move.w  #$1F,(TilemapRowCountdown).w
+                move.w  (PrimaryCameraXPosition).w,(TilemapRowXOrFillWord).w
+                move.w  (PrimaryCameraYPosition).w,(TilemapRowYPosition).w
 XiTigerStage_UpdateGameplayEntry_Return:                ; CODE XREF: XiTigerStage_UpdateGameplayEntry+4   j  ; was: locret_1C5A8
                                         ; XiTigerStage_UpdateGameplayEntry+9A   j
                 rts
@@ -126,8 +126,8 @@ XiTigerStage_UpdateGameplayEntry_Return:                ; CODE XREF: XiTigerStag
 XiTigerStage_StreamPrimaryPlane:                        ; CODE XREF: XiTigerStage_UpdateGameplayEntry+14   j  ; was: loc_1C5AA
                 move.w  (word_FF80AA).w,d0
                 bne.s   XiTigerStage_StreamPrimaryPlane_Rows
-                clr.w   (word_FFA946).w
-                move.w  #$4000,(dword_FFA940).w
+                clr.w   (TilemapRowXOrFillWord).w
+                move.w  #$4000,(TilemapTransferBase).w
                 jsr     (Tilemap_QueueNextConstantRow).l
                 jsr     (Tilemap_QueueNextConstantRow).l
                 bmi.s   XiTigerStage_AdvanceToSecondaryPlane
@@ -135,22 +135,22 @@ XiTigerStage_StreamPrimaryPlane:                        ; CODE XREF: XiTigerStag
 ; ---------------------------------------------------------------------------
 XiTigerStage_StreamPrimaryPlane_Rows:                   ; CODE XREF: XiTigerStage_StreamPrimaryPlane+68   j  ; was: loc_1C5CA
                 lea     Stage_EntryPrimaryPlaneVRAMParameterPointers(pc),a0
-                move.l  Stage_EntryPrimaryPlaneVRAMParameterPointers-4-Stage_EntryPrimaryPlaneVRAMParameterPointers(a0,d0.w),(dword_FFA940).w
+                move.l  Stage_EntryPrimaryPlaneVRAMParameterPointers-4-Stage_EntryPrimaryPlaneVRAMParameterPointers(a0,d0.w),(TilemapTransferBase).w
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   XiTigerStage_UpdateGameplayEntry_Return
 XiTigerStage_AdvanceToSecondaryPlane:                   ; CODE XREF: XiTigerStage_StreamPrimaryPlane+80   j  ; was: loc_1C5E4
                 addq.w  #2,(GameSubstateIndex).w
-                move.w  #$1F,(word_FFA944).w
-                move.w  (dword_FFA908).w,(word_FFA946).w
-                move.w  (dword_FFA90C).w,(word_FFA948).w
+                move.w  #$1F,(TilemapRowCountdown).w
+                move.w  (SecondaryCameraXPos).w,(TilemapRowXOrFillWord).w
+                move.w  (SecondaryCameraYPos).w,(TilemapRowYPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 XiTigerStage_StreamSecondaryPlane:                      ; CODE XREF: XiTigerStage_UpdateGameplayEntry+C   j  ; was: loc_1C5FC
                 move.w  (word_FF80AC).w,d0
                 bne.s   XiTigerStage_StreamSecondaryPlane_Rows
-                clr.w   (word_FFA946).w
-                move.w  #$6000,(dword_FFA940).w
+                clr.w   (TilemapRowXOrFillWord).w
+                move.w  #$6000,(TilemapTransferBase).w
                 jsr     (Tilemap_QueueNextConstantRow).l
                 jsr     (Tilemap_QueueNextConstantRow).l
                 bmi.s   XiTigerStage_FinishGameplayEntry
@@ -158,7 +158,7 @@ XiTigerStage_StreamSecondaryPlane:                      ; CODE XREF: XiTigerStag
 ; ---------------------------------------------------------------------------
 XiTigerStage_StreamSecondaryPlane_Rows:                 ; CODE XREF: XiTigerStage_StreamSecondaryPlane+BA   j  ; was: loc_1C61C
                 lea     Stage_EntrySecondaryPlaneVRAMParameterPointers(pc),a0
-                move.l  Stage_EntryPrimaryPlaneDefaultVRAMParameterPointer-Stage_EntrySecondaryPlaneVRAMParameterPointers(a0,d0.w),(dword_FFA940).w
+                move.l  Stage_EntryPrimaryPlaneDefaultVRAMParameterPointer-Stage_EntrySecondaryPlaneVRAMParameterPointers(a0,d0.w),(TilemapTransferBase).w
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 bpl.w   XiTigerStage_UpdateGameplayEntry_Return

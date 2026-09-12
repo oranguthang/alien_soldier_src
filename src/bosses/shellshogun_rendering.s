@@ -84,10 +84,10 @@ Boss_ShellshogunSelectBodyFrameMappingReturn:           ; CODE XREF: Boss_Shells
 Boss_ShellshogunPublishScreenPosition:                  ; CODE XREF: Boss_ShellshogunRenderSprites+8   p  ; was: sub_39F3A
                 move.w  #$BC,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$50,d0                         ; 'P'
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_ShellshogunPublishScreenPosition
 ; Advances the phase and positions three orbiting auxiliary parts

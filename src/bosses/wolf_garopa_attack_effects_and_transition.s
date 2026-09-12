@@ -38,7 +38,7 @@ Effect_WolfGaropaBoundaryMain:                          ; DATA XREF: ROM:Entity_
                 move.b  #$BC,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #6,(PlaneAShakeLevel).w
-                cmpi.w  #$1F0,(dword_FFA900).w
+                cmpi.w  #$1F0,(PrimaryCameraXPosition).w
                 bpl.w   Effect_RemoveWolfGaropaBoundary
                 jsr     (Gfx_LoadWolfGaropaTransitionTiles).l
 Effect_RemoveWolfGaropaBoundary:                        ; CODE XREF: Effect_WolfGaropaBoundaryMain+4   j  ; was: loc_50D7E
@@ -48,10 +48,10 @@ Effect_RemoveWolfGaropaBoundary:                        ; CODE XREF: Effect_Wolf
 ; ---------------------------------------------------------------------------
 Effect_UpdateWolfGaropaBoundaryPosition:                ; CODE XREF: Effect_WolfGaropaBoundaryMain+C   j  ; was: loc_50D86
                 move.w  #$1F0,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
-                move.w  (dword_FFA414).w,d0
-                move.w  (dword_FFA410).w,d1
+                move.w  (PlayerYPosition).w,d0
+                move.w  (PlayerXPosition).w,d1
                 tst.w   $48(a5)
                 bne.s   Effect_CheckPlayerBelowWolfGaropaBoundaryBand
                 addi.w  #$18,d0
@@ -84,10 +84,10 @@ Effect_PushPlayerFromWolfGaropaBoundary:                ; CODE XREF: Effect_Wolf
                 bne.s   Effect_WolfGaropaBoundaryReturn
                 move.w  $10(a5),d0
                 subq.w  #2,d0
-                move.w  d0,(dword_FFA410).w
-                clr.l   (dword_FFA418).w
+                move.w  d0,(PlayerXPosition).w
+                clr.l   (PlayerXVelocity).w
                 move.b  #1,(byte_FF8311).w
-                cmpi.w  #$91,(dword_FFA410).w
+                cmpi.w  #$91,(PlayerXPosition).w
                 bpl.s   Effect_WolfGaropaBoundaryReturn
                 bset    #6,$21(a5)
                 tst.w   (word_FFDB20).w
@@ -120,7 +120,7 @@ Effect_UpdateWolfGaropaBoundaryFollowerSprite:          ; CODE XREF: Effect_Wolf
 Boss_WolfGaropaBeginDefeatTransition:                   ; CODE XREF: Boss_WolfGaropaUpdate+22   j  ; was: sub_50E3C
                 move.w  #$40,6(a5)                      ; '@'
                 clr.w   $26(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.w  #8,(word_FF808C).w
                 move.b  #2,(byte_FF80EC).w
                 jmp     Sprite_ClearObjectFlags
@@ -137,7 +137,7 @@ Boss_WolfGaropaAdvanceDefeatTimer:                      ; CODE XREF: Boss_WolfGa
                 move.w  #$10,4(a5)
                 clr.w   8(a5)
                 move.w  #$60,$11C(a5)                   ; '`'
-                move.w  #$FEB0,(dword_FFA908).w
+                move.w  #$FEB0,(SecondaryCameraXPos).w
                 move.w  #$3E8,d0
                 move.w  #$41C,d1
                 jsr     (Object_ClearAllExceptTypes).l

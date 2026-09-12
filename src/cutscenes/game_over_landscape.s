@@ -71,7 +71,7 @@ GameOver_StateOffsets:  dc.w    GameOver_UpdateInteractiveLandscape-GameOver_Upd
 ; Applies interactive angle and depth controls to the game-over landscape
 GameOver_UpdateInteractiveLandscape:                    ; DATA XREF: GameOver_Update+8   o  ; was: sub_276A8
                                         ; ROM:GameOver_StateOffsets   o
-                btst    #6,(word_FFF708).w
+                btst    #6,(ControllerPressedState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_CheckReverseAngle
                 addi.w  #$400,(word_FF807C).w
                 cmpi.w  #$2000,(word_FF807C).w
@@ -79,18 +79,18 @@ GameOver_UpdateInteractiveLandscape:                    ; DATA XREF: GameOver_Up
                 clr.w   (word_FF807C).w
 GameOver_UpdateInteractiveLandscape_CheckReverseAngle:  ; CODE XREF: GameOver_UpdateInteractiveLandscape+6   j  ; was: loc_276C2
                                         ; GameOver_UpdateInteractiveLandscape+14   j
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_CheckIncreaseDepth
                 subi.w  #$400,(word_FF807C).w
                 bpl.s   GameOver_UpdateInteractiveLandscape_CheckIncreaseDepth
                 move.w  #$2000,(word_FF807C).w
 GameOver_UpdateInteractiveLandscape_CheckIncreaseDepth:  ; CODE XREF: GameOver_UpdateInteractiveLandscape+20   j  ; was: loc_276D8
                                         ; GameOver_UpdateInteractiveLandscape+28   j
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_CheckDecreaseDepth
                 addi.w  #$10,(dword_FF807E).w
 GameOver_UpdateInteractiveLandscape_CheckDecreaseDepth:  ; CODE XREF: GameOver_UpdateInteractiveLandscape+36   j  ; was: loc_276E6
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_CheckAdvance
                 subi.w  #$10,(dword_FF807E).w
                 bmi.s   GameOver_UpdateInteractiveLandscape_ClampMinimumDepth
@@ -99,7 +99,7 @@ GameOver_UpdateInteractiveLandscape_ClampMinimumDepth:  ; CODE XREF: GameOver_Up
                 move.w  #$10,(dword_FF807E).w
 GameOver_UpdateInteractiveLandscape_CheckAdvance:       ; CODE XREF: GameOver_UpdateInteractiveLandscape+44   j  ; was: loc_276FE
                                         ; GameOver_UpdateInteractiveLandscape+4E   j
-                btst    #6,(word_FFF708).w
+                btst    #6,(ControllerPressedState).w
                 beq.s   GameOver_UpdateInteractiveLandscape_Render
                 addq.w  #2,(GameSubstateIndex).w
                 clr.w   (dword_FF8128).w

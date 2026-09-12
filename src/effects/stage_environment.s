@@ -157,7 +157,7 @@ Midgame_InitializeAmbientParticle:                      ; CODE XREF: Midgame_Ini
                 move.w  #0,8(a0)
                 move.w  #$FCFC,$A(a0)
                 move.b  #$7C,$20(a0)                    ; '|'
-                move.w  (dword_FFA900).w,$48(a0)
+                move.w  (PrimaryCameraXPosition).w,$48(a0)
                 move.w  #$44F5,$E(a0)
 ; Gives the particle a new randomized screen position and vertical motion
 Midgame_ResetAmbientParticle:                           ; CODE XREF: Midgame_UpdateAmbientParticle+8   j  ; was: loc_2F53E
@@ -170,7 +170,7 @@ Midgame_ResetAmbientParticle:                           ; CODE XREF: Midgame_Upd
                 move.b  (RandomNumberState).w,d0
                 andi.w  #$FF,d0
                 addi.w  #$A0,d0
-                move.w  (dword_FFA900).w,d1
+                move.w  (PrimaryCameraXPosition).w,d1
                 sub.w   $48(a0),d1
                 add.w   d1,d0
                 move.w  d0,$10(a0)
@@ -189,11 +189,11 @@ Midgame_UpdateAmbientParticle:                          ; DATA XREF: ROM:Entity_
                 bpl.w   Midgame_ResetAmbientParticle
                 cmpi.w  #$138,$14(a5)
                 bpl.w   Midgame_ResetAmbientParticle
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 sub.w   $48(a5),d0
                 asr.w   #1,d0
                 sub.w   d0,$10(a5)
-                move.w  (dword_FFA900).w,$48(a5)
+                move.w  (PrimaryCameraXPosition).w,$48(a5)
                 move.l  (dword_FF8240).w,d0
                 asl.l   #1,d0
                 move.l  d0,$18(a5)

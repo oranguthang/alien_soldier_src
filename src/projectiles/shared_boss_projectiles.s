@@ -156,9 +156,9 @@ Projectile_UpdateDirectionalSpawnerMotion:              ; CODE XREF: Projectile_
                 move.w  $4C(a5),d0
                 ext.l   d0
                 add.l   d0,$18(a5)
-                tst.w   (word_FFA400).w
+                tst.w   (PlayerObjectType).w
                 beq.s   Projectile_SpawnDirectionalSpawnerTrail
-                move.w  (dword_FFA414).w,d0
+                move.w  (PlayerYPosition).w,d0
                 cmp.w   $14(a5),d0
                 bmi.s   Projectile_AccelerateDirectionalSpawnerUpward
                 addi.l  #$2000,$1C(a5)

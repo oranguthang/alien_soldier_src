@@ -37,7 +37,7 @@ Demo_PlaybackSystem_Return:                             ; CODE XREF: Demo_Playba
 Demo_PlaybackSystem_Update:                             ; CODE XREF: Demo_PlaybackSystem+12   j  ; was: loc_23D48
                 tst.w   (word_FFF720).w
                 bmi.w   Demo_PlaybackSystem_UpdateTimer
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 bne.w   Demo_PlaybackSystem_Exit
 Demo_PlaybackSystem_UpdateTimer:                        ; CODE XREF: Demo_PlaybackSystem+92   j  ; was: loc_23D5A
                 tst.w   (word_FFFF58).w
@@ -49,8 +49,8 @@ Demo_PlaybackSystem_ProcessInput:                       ; CODE XREF: Demo_Playba
                 bsr.w   Demo_HandlePlaybackInput
                 tst.w   (word_FFFF56).w
                 bne.s   Demo_PlaybackSystem_DecrementTimer
-                move.b  (word_FFFF52).w,(word_FFF706).w
-                move.b  (word_FFFF52+1).w,(word_FFF708).w
+                move.b  (word_FFFF52).w,(ControllerHeldState).w
+                move.b  (word_FFFF52+1).w,(ControllerPressedState).w
 Demo_PlaybackSystem_DecrementTimer:                     ; CODE XREF: Demo_PlaybackSystem+BE   j  ; was: loc_23D86
                 subq.w  #1,(word_FFFF58).w
                 rts
@@ -100,9 +100,9 @@ Demo_HandlePlaybackInput:                               ; CODE XREF: Demo_Playba
                 rts
 ; ---------------------------------------------------------------------------
 Demo_HandlePlaybackInput_Record:                        ; CODE XREF: Demo_HandlePlaybackInput+4   j  ; was: loc_23E3E
-                move.b  (word_FFF706).w,d0
+                move.b  (ControllerHeldState).w,d0
                 lsl.w   #8,d0
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 cmp.w   (word_FFFF48).w,d0
                 bne.s   Demo_HandlePlaybackInput_AppendRecord
                 addq.w  #1,(word_FFFF4A).w
@@ -113,8 +113,8 @@ Demo_HandlePlaybackInput_AppendRecord:                  ; CODE XREF: Demo_Handle
                 movea.w (word_FFFF50).w,a0
                 move.w  (word_FFFF4A).w,(a1,a0.w)
                 move.w  d0,2(a1,a0.w)
-                move.b  (word_FFF706).w,(word_FFFF48).w
-                move.b  (word_FFF708).w,(word_FFFF48+1).w
+                move.b  (ControllerHeldState).w,(word_FFFF48).w
+                move.b  (ControllerPressedState).w,(word_FFFF48+1).w
                 move.w  #1,(word_FFFF4A).w
                 addi.w  #4,(word_FFFF50).w
                 rts

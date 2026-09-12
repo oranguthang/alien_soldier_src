@@ -43,11 +43,11 @@ Debug_ValkirieType3F0WaitReturn:                        ; CODE XREF: Debug_Valki
 ; End of function Debug_ValkirieType3F0Initialize
 ; Unreferenced controller-input entry for the secondary composite viewer
 Debug_ValkirieSecondaryViewerUpdate:                    ; was: sub_51624
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_ValkirieSecondaryViewerCheckAngleDecreaseInput
                 addq.w  #2,$56(a5)
 Debug_ValkirieSecondaryViewerCheckAngleDecreaseInput:   ; CODE XREF: Debug_ValkirieSecondaryViewerUpdate+6   j  ; was: loc_51630
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_ValkirieSecondaryViewerPreparePoseUpdate
                 subq.w  #2,$56(a5)
 Debug_ValkirieSecondaryViewerPreparePoseUpdate:         ; CODE XREF: Debug_ValkirieSecondaryViewerUpdate+12   j  ; was: loc_5163C

@@ -7,7 +7,7 @@ Stage18_UpdateInitialScroll:                            ; DATA XREF: ROM:Stage_L
                 bset    #6,(byte_FF8245).w
                 jsr     (Stage18_UpdateScrollAndRenderTilemap).l
                 bsr.w   Stage18And19_UpdateHorizontalParallax
-                cmpi.w  #$820,(dword_FFA900).w
+                cmpi.w  #$820,(PrimaryCameraXPosition).w
                 bmi.s   Stage_LateGameStateReturn
                 addq.w  #2,(word_FFA950).w
 Stage18And19_SharedReturn:                              ; CODE XREF: Stage_InitializeStage19+A   p  ; was: locret_E4FA
@@ -17,7 +17,7 @@ Stage18And19_SharedReturn:                              ; CODE XREF: Stage_Initi
 Stage18_UpdateScrollToDestroyerMk2Approach:             ; DATA XREF: ROM:0000E43A   o  ; was: sub_E4FC
                 jsr     (Stage18_UpdateScrollAndRenderTilemap).l
                 bsr.w   Stage18And19_UpdateHorizontalParallax
-                cmpi.w  #$BF0,(dword_FFA900).w
+                cmpi.w  #$BF0,(PrimaryCameraXPosition).w
                 bmi.s   Stage_LateGameStateReturn
                 bra.w   Stage_TransitionToNextPhase
 ; End of function Stage18_UpdateScrollToDestroyerMk2Approach
@@ -25,12 +25,12 @@ Stage18_UpdateScrollToDestroyerMk2Approach:             ; DATA XREF: ROM:0000E43
 Stage18_InitializeDestroyerMk2Encounter:                ; DATA XREF: ROM:0000E43C   o  ; was: sub_E512
                 jsr     (Stage18_UpdateDestroyerMk2Scroll).l
                 bsr.w   Stage18And19_UpdateHorizontalParallax
-                cmpi.w  #$C70,(dword_FFA900).w
+                cmpi.w  #$C70,(PrimaryCameraXPosition).w
                 bmi.s   Stage_LateGameStateReturn
                 addq.w  #2,(word_FFA950).w
-                clr.l   (dword_FFA910).w
+                clr.l   (CameraXDelta).w
                 move.w  #$C70,d0
-                move.w  d0,(dword_FFA900).w
+                move.w  d0,(PrimaryCameraXPosition).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
                 move.w  #$8000,(word_FF808A).w
@@ -56,7 +56,7 @@ Stage18_StartPostDestroyerMk2Transition:                ; DATA XREF: ROM:0000E44
 Stage19_UpdateInitialScrollAndLoadTiles:                ; DATA XREF: ROM:0000E442   o  ; was: sub_E570
                 jsr     (Stage18_UpdateScrollAndRenderTilemap).l
                 bsr.w   Stage18And19_UpdateHorizontalParallax
-                cmpi.w  #$D80,(dword_FFA900).w
+                cmpi.w  #$D80,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
                 addq.w  #2,(word_FFA950).w
                 lea     Stage19_InitialTileAssetLoadList(pc),a0
@@ -83,7 +83,7 @@ Stage19_InitialTileAssetLoadList:   dc.w    7           ; field_0  ; was: stru_E
 Stage19_UpdateScrollToJampanApproach:                   ; DATA XREF: ROM:0000E444   o  ; was: sub_E5B6
                 jsr     (Camera_UpdateAndRenderStageTilemap).l
                 bsr.w   Stage18And19_UpdateHorizontalParallax
-                cmpi.w  #$1120,(dword_FFA900).w
+                cmpi.w  #$1120,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
                 addq.w  #2,(word_FFA950).w
                 rts
@@ -92,7 +92,7 @@ Stage19_UpdateScrollToJampanApproach:                   ; DATA XREF: ROM:0000E44
 Stage19_UpdateScrollToJampanArena:                      ; DATA XREF: ROM:0000E446   o  ; was: sub_E5D0
                 jsr     (Camera_UpdateAndRenderStageTilemap).l
                 bsr.w   Stage18And19_UpdateHorizontalParallax
-                cmpi.w  #$1200,(dword_FFA900).w
+                cmpi.w  #$1200,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
                 addq.w  #2,(word_FFA950).w
                 rts
@@ -101,19 +101,19 @@ Stage19_UpdateScrollToJampanArena:                      ; DATA XREF: ROM:0000E44
 Stage19_StartJampanEncounterTransition:                 ; DATA XREF: ROM:0000E448   o  ; was: sub_E5EA
                 jsr     (Camera_UpdateAndRenderStageTilemap).l
                 bsr.w   Stage18And19_UpdateHorizontalParallax
-                cmpi.w  #$1200,(dword_FFA900).w
+                cmpi.w  #$1200,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
                 bra.w   Stage_TransitionToNextPhase
 ; End of function Stage19_StartJampanEncounterTransition
 ; Clamp Stage 19 and submit Jampan's asset set
 Stage19_InitializeJampanEncounter:                      ; DATA XREF: ROM:0000E44A   o  ; was: sub_E602
                 jsr     (Camera_UpdateBossApproachAndRenderTilemap).l
-                cmpi.w  #$1280,(dword_FFA900).w
+                cmpi.w  #$1280,(PrimaryCameraXPosition).w
                 bmi.w   Stage_LateGameStateReturn
                 addq.w  #2,(word_FFA950).w
-                clr.l   (dword_FFA910).w
+                clr.l   (CameraXDelta).w
                 move.w  #$1280,d0
-                move.w  d0,(dword_FFA900).w
+                move.w  d0,(PrimaryCameraXPosition).w
                 move.w  d0,(word_FFA970).w
                 move.w  d0,(word_FFA974).w
                 lea     (Boss_JampanAssetSet).l,a1
@@ -154,9 +154,9 @@ Stage19_StartPostJampanTransition_Return:               ; CODE XREF: Stage19_Sta
 ; Derive the shared Stage 18/19 horizontal parallax offset from camera X
 Stage18And19_UpdateHorizontalParallax:                  ; CODE XREF: Stage18_UpdateInitialScroll+C   p  ; was: sub_E67A
                                         ; Stage18_UpdateScrollToDestroyerMk2Approach+6   p
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 asr.w   #3,d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 rts
 ; End of function Stage18And19_UpdateHorizontalParallax
 ; Unreferenced Stage 20 variant 1 entry using Jampan's asset set

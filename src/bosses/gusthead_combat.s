@@ -55,7 +55,7 @@ Boss_GustheadFragmentPatternRepositionState:            ; DATA XREF: ROM:0003F27
                 andi.w  #$FF,d1
                 subi.w  #$80,d1
                 add.w   d1,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 move.w  #$F0,$14(a5)
 Boss_GustheadFragmentPatternRepositionReturn:           ; CODE XREF: Boss_GustheadFragmentPatternRepositionState+18   j  ; was: locret_3FB2C
@@ -325,7 +325,7 @@ Boss_GustheadFinalBattleAttackState:                    ; DATA XREF: ROM:0003F2A
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadMoveTowardVerticalTarget
-                move.w  (dword_FFA900).w,d1
+                move.w  (PrimaryCameraXPosition).w,d1
                 tst.w   (DifficultyMode).w
                 bne.s   Boss_GustheadOffsetArenaAngleForRightSide
                 addi.w  #$40,d1                         ; '@'
@@ -364,7 +364,7 @@ Boss_GustheadFinalBattleLoopState:                      ; DATA XREF: ROM:0003F2A
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadMoveTowardVerticalTarget
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$10,d0
                 andi.w  #$7E,d0                         ; '~'
                 beq.s   Boss_GustheadFinalBattleLoopReturn
@@ -496,7 +496,7 @@ Boss_GustheadDefeatPaletteReverseReturn:                ; CODE XREF: Boss_Gusthe
 Boss_GustheadDefeatWait:                                ; DATA XREF: ROM:0003F2B4   o  ; was: sub_40040
                 tst.l   (dword_FFA960).w
                 beq.s   Boss_GustheadBeginDefeatRemovalDelay
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 andi.w  #$7F,d0
                 bne.s   Boss_GustheadDefeatWaitReturn
                 clr.l   (dword_FFA960).w

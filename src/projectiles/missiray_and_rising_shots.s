@@ -220,7 +220,7 @@ Projectile_RisingShotRiseReturn:                        ; CODE XREF: Projectile_
 ; Initializes the Stage 24 arc selected by the global direction bit
 Projectile_Stage24RisingShotInitArc:                    ; DATA XREF: ROM:00033A5E   o  ; was: sub_33BEC
                 clr.l   $1C(a5)
-                btst    #3,(word_FFA40E).w
+                btst    #3,(PlayerSpriteAttributes).w
                 bne.s   Projectile_Stage24RisingShotMoveRight
                 move.w  #$FFFE,$18(a5)
                 bra.s   Projectile_Stage24RisingShotFinishArcInit

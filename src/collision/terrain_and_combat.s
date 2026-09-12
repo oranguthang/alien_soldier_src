@@ -161,7 +161,7 @@ Collision_PlayerLandOnPlatform:                         ; DATA XREF: Collision_D
                 move.w  $4C(a2),d5
                 sub.w   $48(a2),d5
                 neg.w   d5
-                add.w   (dword_FFA910).w,d5
+                add.w   (CameraXDelta).w,d5
                 add.w   d5,$10(a5)
                 move.w  $4A(a2),d0
                 subi.w  #$20,d0                         ; ' '
@@ -260,7 +260,7 @@ Collision_PlayerHitPlatformUnderside_Attach:            ; CODE XREF: Collision_P
                 move.w  $4C(a2),d5
                 sub.w   $48(a2),d5
                 neg.w   d5
-                add.w   (dword_FFA910).w,d5
+                add.w   (CameraXDelta).w,d5
                 add.w   d5,$10(a5)
                 move.w  $4A(a2),d0
                 addi.w  #$20,d0                         ; ' '
@@ -315,12 +315,12 @@ Collision_CheckTerrainTile:                             ; CODE XREF: Collision_G
                 movea.l #$FFFF7800,a1
                 move.w  d0,d2
                 subi.w  #$80,d2
-                add.w   (dword_FFA900).w,d2
+                add.w   (PrimaryCameraXPosition).w,d2
                 asr.w   #2,d2
                 andi.w  #$7E,d2                         ; '~'
                 move.w  d1,d3
                 subi.w  #$80,d3
-                sub.w   (dword_FFA904).w,d3
+                sub.w   (PrimaryCameraYPosition).w,d3
                 asl.w   #4,d3
                 andi.w  #$1F80,d3
                 add.w   d3,d2
@@ -335,7 +335,7 @@ Collision_CheckTerrainTile:                             ; CODE XREF: Collision_G
 Physics_AlignToTerrain:                                 ; CODE XREF: Player_InitHardLanding   p  ; was: sub_14534
                                         ; Enemy_PhasePatternAirborneState+52   p
                 move.w  d1,d4
-                sub.w   (dword_FFA904).w,d4
+                sub.w   (PrimaryCameraYPosition).w,d4
                 andi.w  #7,d4
                 sub.w   d4,$14(a5)
                 clr.l   $1C(a5)
@@ -344,7 +344,7 @@ Physics_AlignToTerrain:                                 ; CODE XREF: Player_Init
 ; Aligns entity to terrain surface from above
 Physics_AlignToTerrainTop:                              ; CODE XREF: Enemy_PhasePatternAirborneState+66   p  ; was: sub_14548
                 move.w  d1,d4
-                sub.w   (dword_FFA904).w,d4
+                sub.w   (PrimaryCameraYPosition).w,d4
                 neg.w   d4
                 subq.w  #1,d4
                 andi.w  #7,d4
@@ -357,14 +357,14 @@ Physics_AlignToWallSurface:
                 tst.w   $18(a5)                         ; was: sub_14560
                 bmi.s   Physics_AlignToWallSurface_AdjustOppositeDirection
                 move.w  d0,d4
-                add.w   (dword_FFA900).w,d4
+                add.w   (PrimaryCameraXPosition).w,d4
                 andi.w  #7,d4
                 sub.w   d4,$10(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Physics_AlignToWallSurface_AdjustOppositeDirection:     ; CODE XREF: Physics_AlignToWallSurface+4   j  ; was: loc_14576
                 move.w  d0,d4
-                add.w   (dword_FFA900).w,d4
+                add.w   (PrimaryCameraXPosition).w,d4
                 neg.w   d4
                 subq.w  #1,d4
                 andi.w  #7,d4
@@ -392,12 +392,12 @@ Physics_GetTerrainTileData:                             ; CODE XREF: Physics_Ent
 Physics_GetTerrainTileData_ReadTile:                    ; CODE XREF: Physics_GetTerrainTileData+C   j  ; was: loc_145AE
                 move.w  d0,d2
                 sub.w   d7,d2
-                add.w   (dword_FFA900).w,d2
+                add.w   (PrimaryCameraXPosition).w,d2
                 asr.w   #2,d2
                 andi.w  #$7E,d2                         ; '~'
                 move.w  d1,d3
                 sub.w   d7,d3
-                sub.w   (dword_FFA904).w,d3
+                sub.w   (PrimaryCameraYPosition).w,d3
                 asl.w   #4,d3
                 andi.w  #$1F80,d3
                 add.w   d3,d2
@@ -427,12 +427,12 @@ Collision_CheckProjectileTile:                          ; CODE XREF: Projectile_
                 lea     (dword_FF7800).l,a1
                 move.w  d0,d2
                 subi.w  #$80,d2
-                add.w   (dword_FFA900).w,d2
+                add.w   (PrimaryCameraXPosition).w,d2
                 asr.w   #2,d2
                 andi.w  #$7E,d2                         ; '~'
                 move.w  d1,d3
                 subi.w  #$80,d3
-                sub.w   (dword_FFA904).w,d3
+                sub.w   (PrimaryCameraYPosition).w,d3
                 asl.w   #4,d3
                 andi.w  #$1F80,d3
                 add.w   d3,d2

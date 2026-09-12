@@ -93,7 +93,7 @@ Boss_BugmaxSeedSecondaryAngleHistoryRowLoop:            ; CODE XREF: Boss_Bugmax
                 dbf     d6,Boss_BugmaxSeedSecondaryAngleHistoryRowLoop
                 dbf     d7,Boss_BugmaxSeedSecondaryAngleHistoryRowsLoop
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 swap    d0
                 move.w  $14(a5),d0
                 lea     (word_FF95E0).w,a0
@@ -220,7 +220,7 @@ Boss_BugmaxSelectBattlePattern:                         ; DATA XREF: ROM:0004C3F
                 clr.w   (dword_FF9424).w
                 bsr.w   Boss_BugmaxUpdateBattleMovement
                 move.w  (PlayerCenterX).w,d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 cmpi.w  #$530,d0
                 bcc.w   Boss_BugmaxChooseRetryOrChainStrikePattern
 Boss_BugmaxApplyNextBattlePatternPreset:                ; CODE XREF: Boss_BugmaxEnterSpreadVolleyMovementPresetWhenReady+48   j  ; was: loc_4CC8E
@@ -263,7 +263,7 @@ Boss_BugmaxEnterSpreadVolleyMovementPresetWhenReady:    ; DATA XREF: ROM:0004CCB
                 beq.s   Boss_BugmaxConfigureSpreadVolleyMovementPreset
                 bne.w   Boss_BugmaxBattlePatternPresetReturn
                 move.w  (PlayerCenterY).w,d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 cmpi.w  #$530,d0
                 bcs.w   Boss_BugmaxEnterSineVolleyMovementPreset
                 bra.w   Boss_BugmaxChooseRetryOrChainStrikePattern
@@ -293,7 +293,7 @@ Boss_BugmaxApplyUpperMovementBandPreset:                ; DATA XREF: ROM:Boss_Bu
                 tst.b   (dword_FF9418+3).w
                 beq.s   Boss_BugmaxConfigureUpperMovementBandPreset
                 move.w  (PlayerCenterY).w,d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 cmpi.w  #$530,d0
                 bcs.w   Boss_BugmaxEnterSineVolleyMovementPreset
                 bra.w   Boss_BugmaxChooseRetryOrChainStrikePattern
@@ -390,7 +390,7 @@ Boss_BugmaxSetChainStrikeApproachTarget:                ; DATA XREF: ROM:0004C40
                 clr.b   (dword_FF9418+1).w
                 bclr    #0,(dword_FF941C).w
                 bset    #0,(dword_FF9418+1).w
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   (PlayerCenterX).w,d0
                 subi.w  #$80,d0
                 move.w  d0,(dword_FF9424).w
@@ -517,11 +517,11 @@ Boss_BugmaxChainStrikeSettlementReturn:                 ; CODE XREF: Boss_Bugmax
 ; End of function Boss_BugmaxSettleChainAfterStrike
 ; Adjust and clamp the shared chain bend from directional input
 Boss_BugmaxAdjustChainBendFromInput:                    ; was: sub_4D008
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_BugmaxCheckChainBendIncreaseInput
                 addi.w  #-2,(dword_FF9410).w
 Boss_BugmaxCheckChainBendIncreaseInput:                 ; CODE XREF: Boss_BugmaxAdjustChainBendFromInput+6   j  ; was: loc_4D016
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_BugmaxClampInputChainBendRange
                 addi.w  #2,(dword_FF9410).w
 Boss_BugmaxClampInputChainBendRange:                    ; CODE XREF: Boss_BugmaxAdjustChainBendFromInput+14   j  ; was: loc_4D024
@@ -607,13 +607,13 @@ Boss_BugmaxChooseSineVolleySideTarget:                  ; DATA XREF: ROM:0004C42
                 bne.w   Boss_BugmaxUsePlayerPositionForSineVolley
                 cmpi.b  #2,(dword_FF9424+2).w
                 bne.w   Boss_BugmaxUsePlayerPositionForSineVolley
-                cmpi.w  #$3C0,(dword_FFA900).w
+                cmpi.w  #$3C0,(PrimaryCameraXPosition).w
                 beq.s   Boss_BugmaxSetSineVolleyRightSideTarget
-                cmpi.w  #$460,(dword_FFA900).w
+                cmpi.w  #$460,(PrimaryCameraXPosition).w
                 beq.s   Boss_BugmaxSetSineVolleyLeftSideTarget
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 bne.s   Boss_BugmaxSetSineVolleyRightSideTarget
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 bne.s   Boss_BugmaxSetSineVolleyLeftSideTarget
 Boss_BugmaxUsePlayerPositionForSineVolley:              ; CODE XREF: Boss_BugmaxChooseSineVolleySideTarget+22   j  ; was: loc_4D124
                                         ; Boss_BugmaxChooseSineVolleySideTarget+2C   j
@@ -622,7 +622,7 @@ Boss_BugmaxUsePlayerPositionForSineVolley:              ; CODE XREF: Boss_Bugmax
 ; ---------------------------------------------------------------------------
 Boss_BugmaxSetSineVolleyRightSideTarget:                ; CODE XREF: Boss_BugmaxChooseSineVolleySideTarget+36   j  ; was: loc_4D12A
                                         ; Boss_BugmaxChooseSineVolleySideTarget+46   j
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   (PlayerCenterX).w,d0
                 addi.w  #$D0,d0
                 move.w  d0,(dword_FF9424).w
@@ -630,7 +630,7 @@ Boss_BugmaxSetSineVolleyRightSideTarget:                ; CODE XREF: Boss_Bugmax
 ; ---------------------------------------------------------------------------
 Boss_BugmaxSetSineVolleyLeftSideTarget:                 ; CODE XREF: Boss_BugmaxChooseSineVolleySideTarget+3E   j  ; was: loc_4D13C
                                         ; Boss_BugmaxChooseSineVolleySideTarget+4E   j
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   (PlayerCenterX).w,d0
                 addi.w  #-$D0,d0
                 move.w  d0,(dword_FF9424).w
@@ -792,7 +792,7 @@ Boss_BugmaxRiseWithFinalParticles:                      ; DATA XREF: ROM:0004C43
                 cmpi.w  #$80,$14(a5)
                 bgt.w   Projectile_BugmaxEmitPeriodicTrailParticle
                 move.w  #$530,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 andi.w  #$7FFF,2(a5)
                 clr.l   $1C(a5)

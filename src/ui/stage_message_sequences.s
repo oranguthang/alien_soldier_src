@@ -2,7 +2,7 @@
 StageIntro_InitializeBanner:                            ; DATA XREF: ROM:0000A9F2   o  ; was: sub_AE9A
                 addq.w  #2,(MessageSequenceState).w
                 jsr     (Stage_LoadTimeLimit).l
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
                 move.l  #StageIntro_GlyphSourceList,(dword_FF80CE).w
                 move.w  #$5400,(word_FF80C4).w
 ; Streams the glyph set used by the stage-number banner

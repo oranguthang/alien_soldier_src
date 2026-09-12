@@ -55,14 +55,14 @@ SevenForces_SetupIntroDma:                              ; was: sub_54BDC
                 move.b  #3,(byte_FFA95B).w
                 move.w  #$58,(RasterEffectIndex).w      ; 'X'
                 clr.w   (RasterEffectInitState).w
-                move.w  #$4000,(dword_FFA940).w
-                move.w  #1,(word_FFA946).w
+                move.w  #$4000,(TilemapTransferBase).w
+                move.w  #1,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
-                move.w  #$6000,(dword_FFA940).w
-                move.w  #2,(word_FFA946).w
+                move.w  #$6000,(TilemapTransferBase).w
+                move.w  #2,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
-                move.w  #$5000,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
+                move.w  #$5000,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
                 jsr     (Tilemap_FillPlaneDirectToVRAM).l
                 rts
 ; End of function SevenForces_SetupIntroDma
@@ -87,53 +87,53 @@ Entity_SevenForcesEntranceState4:                       ; DATA XREF: ROM:00054B9
 ; Exercise paired scroll-table generators with live directional input
 ; No static caller is present in the reconstructed ROM
 Debug_SevenForcesScrollTableTest:                       ; was: sub_54C82
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckAlternateLayerInput
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckVerticalPositiveInput
                 subi.l  #$800,(dword_FF9404).w
                 subi.l  #$400,(dword_FF940C).w
 Debug_SevenForcesScrollTableTestCheckVerticalPositiveInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+E   j  ; was: loc_54CA2
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckHorizontalPositiveInput
                 addi.l  #$800,(dword_FF9404).w
                 addi.l  #$400,(dword_FF940C).w
 Debug_SevenForcesScrollTableTestCheckHorizontalPositiveInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+26   j  ; was: loc_54CBA
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckHorizontalNegativeInput
                 addi.l  #$800,(dword_FF9400).w
                 addi.l  #$400,(dword_FF9408).w
 Debug_SevenForcesScrollTableTestCheckHorizontalNegativeInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+3E   j  ; was: loc_54CD2
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckAlternateLayerInput
                 subi.l  #$800,(dword_FF9400).w
                 subi.l  #$400,(dword_FF9408).w
 Debug_SevenForcesScrollTableTestCheckAlternateLayerInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+6   j  ; was: loc_54CEA
                                         ; Debug_SevenForcesScrollTableTest+56   j
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckResetInput
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckAlternateVerticalPositiveInput
                 subi.l  #$800,(dword_FF9414).w
                 subi.l  #$400,(dword_FF941C).w
 Debug_SevenForcesScrollTableTestCheckAlternateVerticalPositiveInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+76   j  ; was: loc_54D0A
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckAlternateHorizontalPositiveInput
                 addi.l  #$800,(dword_FF9414).w
                 addi.l  #$400,(dword_FF941C).w
 Debug_SevenForcesScrollTableTestCheckAlternateHorizontalPositiveInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+8E   j  ; was: loc_54D22
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckAlternateHorizontalNegativeInput
                 addi.l  #$800,(dword_FF9410).w
                 addi.l  #$400,(dword_FF9418).w
 Debug_SevenForcesScrollTableTestCheckAlternateHorizontalNegativeInput:  ; CODE XREF: Debug_SevenForcesScrollTableTest+A6   j  ; was: loc_54D3A
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestCheckResetInput
                 subi.l  #$800,(dword_FF9410).w
                 subi.l  #$400,(dword_FF9418).w
 Debug_SevenForcesScrollTableTestCheckResetInput:        ; CODE XREF: Debug_SevenForcesScrollTableTest+6E   j  ; was: loc_54D52
                                         ; Debug_SevenForcesScrollTableTest+BE   j
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 beq.s   Debug_SevenForcesScrollTableTestAccumulateOffsets
                 clr.l   (dword_FF9400).w
                 clr.l   (dword_FF9408).w
@@ -277,7 +277,7 @@ Entity_UpdateSevenForcesEntranceState4:                 ; CODE XREF: Entity_Seve
                 bpl.s   Entity_UpdateSevenForcesEntranceState4Return
                 addq.w  #2,4(a5)
                 move.l  #$10000,$18(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 jsr     (Stage_TransitionToNextPhase).l
                 subq.w  #2,(word_FFA950).w
 Entity_UpdateSevenForcesEntranceState4Return:           ; CODE XREF: Entity_UpdateSevenForcesEntranceState4+4   j  ; was: locret_54F46
@@ -436,7 +436,7 @@ Entity_SevenForcesSylpheedHoldApplyPalette:             ; CODE XREF: Entity_Seve
 ; End of function Entity_SevenForcesSylpheedHoldState1C
 ; State $1E: wait for the Sylpheed scroll threshold
 Entity_SevenForcesWaitForSylpheedScrollState1E:         ; DATA XREF: ROM:00054BB6   o  ; was: sub_5510C
-                cmpi.w  #$F760,(dword_FFA904).w
+                cmpi.w  #$F760,(PrimaryCameraYPosition).w
                 bpl.s   Entity_SevenForcesWaitForSylpheedScrollApplyPalette
                 addq.w  #2,4(a5)
 Entity_SevenForcesWaitForSylpheedScrollApplyPalette:    ; CODE XREF: Entity_SevenForcesWaitForSylpheedScrollState1E+6   j  ; was: loc_55118
@@ -455,10 +455,10 @@ Entity_SevenForcesSylpheedFadeOutState20:               ; DATA XREF: ROM:00054BB
 Entity_SevenForcesStartArtemisEntranceState22:          ; DATA XREF: ROM:00054BBA   o  ; was: sub_55136
                 addq.w  #2,4(a5)
                 bclr    #0,(PlayerModeFlags).w
-                bclr    #4,(word_FFA40E).w
-                move.w  #$58,(word_FFA404).w            ; 'X'
-                clr.l   (dword_FFA418).w
-                clr.l   (dword_FFA41C).w
+                bclr    #4,(PlayerSpriteAttributes).w
+                move.w  #$58,(PlayerStateOffset).w      ; 'X'
+                clr.l   (PlayerXVelocity).w
+                clr.l   (PlayerYVelocity).w
                 move.w  #$34,(PlayerScriptStateOffset).w  ; '4'
                 bset    #2,(byte_FF8245).w
                 jsr     (Sys_ClearObjectBlocks17).l
@@ -470,7 +470,7 @@ Entity_SevenForcesStartArtemisEntranceState22:          ; DATA XREF: ROM:00054BB
 ; State $24: decelerate Artemis upward until it reaches the height threshold
 Entity_SevenForcesUpdateArtemisEntranceState24:         ; CODE XREF: Entity_SevenForcesStartArtemisEntranceState22+46   j  ; was: loc_55182
                                         ; DATA XREF: ROM:00054BBC   o
-                subi.l  #$1000,(dword_FFA41C).w
+                subi.l  #$1000,(PlayerYVelocity).w
                 subi.l  #$2000,$1C(a5)
                 bpl.s   Entity_SevenForcesUpdateArtemisEntrancePalette
                 cmpi.w  #$100,$14(a5)
@@ -487,16 +487,16 @@ Entity_SevenForcesUpdateArtemisEntrancePalette:         ; CODE XREF: Entity_Seve
 ; End of function Entity_SevenForcesStartArtemisEntranceState22
 ; State $26: wait for the Artemis completion signal and configure its hold
 Entity_SevenForcesWaitForArtemisSignalState26:          ; DATA XREF: ROM:00054BBE   o  ; was: sub_551BE
-                subi.l  #$1000,(dword_FFA41C).w
+                subi.l  #$1000,(PlayerYVelocity).w
                 tst.b   (byte_FFA958).w
                 bne.s   Entity_SevenForcesWaitForArtemisSignalApplyPalette
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
                 move.w  #$10,$4A(a5)
-                clr.w   (word_FFA404).w
-                move.w  #$FF84,(dword_FFA414).w
-                move.w  #$D0,(dword_FFA410).w
-                bset    #0,(word_FFA402).w
+                clr.w   (PlayerStateOffset).w
+                move.w  #$FF84,(PlayerYPosition).w
+                move.w  #$D0,(PlayerXPosition).w
+                bset    #0,(PlayerObjectFlags).w
 Entity_SevenForcesWaitForArtemisSignalApplyPalette:     ; CODE XREF: Entity_SevenForcesWaitForArtemisSignalState26+C   j  ; was: loc_551F2
                 bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
 ; End of function Entity_SevenForcesWaitForArtemisSignalState26
@@ -809,7 +809,7 @@ Effect_SpawnSevenForcesTransitionParticleReturn:        ; CODE XREF: Effect_Spaw
 ; Dispatch the post-battle transition requested by the completed boss
 Boss_QueueSevenForcesPostBattleTransition:              ; CODE XREF: Entity_UpdateValkirieBattle+26   j  ; was: sub_555C8
                                         ; Boss_UpdateMedusa+26   j
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 movea.w #(word_FFDC40-M68K_RAM),a5
                 bsr.s   Entity_DispatchSevenForcesPostBattleTransition
                 movea.w #(Entity_ObjectPool-M68K_RAM),a5
@@ -918,7 +918,7 @@ Entity_ResumeSevenForcesIntroState26:                   ; DATA XREF: ROM:000555F
 ; Start the final explosion sequence after Sirene completes
 Entity_StartSevenForcesFinalTransition:                 ; DATA XREF: ROM:000555F4   o  ; was: sub_55716
                 move.w  #$36,4(a5)                      ; '6'
-                bclr    #0,(word_FFA402).w
+                bclr    #0,(PlayerObjectFlags).w
                 bset    #0,(PlayerModeFlags).w
                 bclr    #2,(PlayerModeFlags).w
                 clr.w   $48(a5)

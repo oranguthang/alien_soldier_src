@@ -131,7 +131,7 @@ Boss_JampanRotateShieldPatternBackwardState:            ; DATA XREF: ROM:0004920
                 bset    #1,$4C(a5)
                 tst.w   (word_FF8234).w
                 ble.s   Boss_JampanFinishShieldRotationCycle
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 bpl.s   Boss_JampanUseAbsolutePlayerHorizontalDelta
                 neg.w   d0

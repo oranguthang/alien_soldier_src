@@ -346,13 +346,13 @@ Player_CeilingAirControlState_CheckRightFacing:         ; CODE XREF: Player_Ceil
 ; Updates aim direction from D-pad
 Player_UpdateAimDirection:                              ; DATA XREF: ROM:000150AA   o  ; was: sub_16902
                 bset    #4,$E(a5)
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Player_UpdateAimDirection_CheckRight
                 bclr    #3,$E(a5)
                 rts
 ; ---------------------------------------------------------------------------
 Player_UpdateAimDirection_CheckRight:                   ; CODE XREF: Player_UpdateAimDirection+C   j  ; was: loc_16918
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Player_UpdateAimDirection_Return
                 bset    #3,$E(a5)
 Player_UpdateAimDirection_Return:                       ; CODE XREF: Player_UpdateAimDirection+1C   j  ; was: locret_16926

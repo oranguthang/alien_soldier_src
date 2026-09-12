@@ -32,14 +32,14 @@ TitleScreen_FinalizeInitialization:                     ; CODE XREF: TitleScreen
                 lea     (Gfx_TitleAndZLeoVRAMTransferParameters).l,a0
                 moveq   #0,d0
                 moveq   #0,d1
-                move.w  d0,(dword_FFA900).w
-                move.w  d1,(dword_FFA904).w
+                move.w  d0,(PrimaryCameraXPosition).w
+                move.w  d1,(PrimaryCameraYPosition).w
                 jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
-                move.w  d0,(dword_FFA908).w
-                move.w  d1,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraXPos).w
+                move.w  d1,(SecondaryCameraYPos).w
                 jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 move.b  #0,(VDPReg18Shadow+1).w
                 move.w  #2,(dword_FF8066+2).w
@@ -76,20 +76,20 @@ TitleScreen_UnreferencedData:   binclude "data/other/title_screen_unreferenced.b
 TitleScreen_Update:                                     ; DATA XREF: Sys_DispatchGameState+6E   o  ; was: sub_9478
                 tst.w   (PaletteFadeColorOffset).w
                 bne.w   TitleScreen_UpdateAndRender
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 andi.b  #$C,d0
                 beq.s   TitleScreen_ReadSelection
                 move.b  #$DB,d0
                 jsr     (Sound_QueueRequest).l
 TitleScreen_ReadSelection:                              ; CODE XREF: TitleScreen_Update+10   j  ; was: loc_9494
                 move.w  (dword_FF8066+2).w,d0
-                btst    #2,(word_FFF708).w
+                btst    #2,(ControllerPressedState).w
                 beq.s   TitleScreen_CheckMoveDown
                 subq.w  #2,d0
                 bpl.s   TitleScreen_StoreSelection
                 moveq   #0,d0
 TitleScreen_CheckMoveDown:                              ; CODE XREF: TitleScreen_Update+26   j  ; was: loc_94A6
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.s   TitleScreen_StoreSelection
                 addq.w  #2,d0
                 cmpi.w  #6,d0
@@ -109,7 +109,7 @@ TitleScreen_StoreSelection:                             ; CODE XREF: TitleScreen
                 rts
 ; ---------------------------------------------------------------------------
 TitleScreen_CheckConfirm:                               ; CODE XREF: TitleScreen_Update+54   j  ; was: loc_94DA
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   TitleScreen_UpdateAndRender
                 move.b  #2,(byte_FF830E).w
                 move.b  #$C4,d0

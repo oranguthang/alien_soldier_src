@@ -295,8 +295,8 @@ OrphanedShipJitter_StartDelay:                          ; DATA XREF: ROM:00008A7
 ; End of function OrphanedShipJitter_StartDelay
 ; Alternates a shared scroll word and offsets vertical position by one pixel
 OrphanedShipJitter_Update:                              ; DATA XREF: ROM:00008A78   o  ; was: sub_8AA4
-                eori.w  #2,(dword_FFA900).w
-                tst.w   (dword_FFA900).w
+                eori.w  #2,(PrimaryCameraXPosition).w
+                tst.w   (PrimaryCameraXPosition).w
                 bne.s   OrphanedShipJitter_IncrementPosition
                 subi.w  #1,(ShipVerticalPosition).l
                 bra.s   OrphanedShipJitter_Tick
@@ -346,10 +346,10 @@ ShipSequence_RevealPattern:                             ; DATA XREF: ROM:0000881
                 movea.l #ShipSequence_ClearedArrivalTiles,a0
                 jsr     (Tilemap_QueueIndexedRows).l
                 clr.w   (word_FF808A).w
-                move.l  #Gfx_ScrollVRAMTransferParameters,(dword_FFA940).w
-                move.w  #0,(word_FFA946).w
-                move.w  #0,(word_FFA948).w
-                move.w  #$1F,(word_FFA944).w
+                move.l  #Gfx_ScrollVRAMTransferParameters,(TilemapTransferBase).w
+                move.w  #0,(TilemapRowXOrFillWord).w
+                move.w  #0,(TilemapRowYPosition).w
+                move.w  #$1F,(TilemapRowCountdown).w
                 bclr    #0,(byte_FFA958).w
                 move.w  #$10,(ShipVerticalPosition).l
                 clr.l   (ShipVerticalVelocity).l
@@ -364,7 +364,7 @@ ShipSequence_WaitForBackgroundLoad:                     ; DATA XREF: ROM:0000882
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
                 jsr     (Tilemap_QueueNextScrollingRow).l
-                tst.w   (word_FFA944).w
+                tst.w   (TilemapRowCountdown).w
                 bpl.w   Cutscene_Return
                 move.w  #$FFF2,(ShipMainFadeStep).l
                 move.w  #$E,(ShipAccentFadeStep).l

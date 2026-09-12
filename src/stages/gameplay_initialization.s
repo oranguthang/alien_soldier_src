@@ -2,17 +2,17 @@
 ZLeoEnding_InitializeScene:                             ; DATA XREF: ROM:0001E850   o  ; was: sub_1EDC2
                 move.w  #$7FFF,(StageTimeRemaining).w
                 jsr     (Player_InitializeStats).l
-                move.w  #$5C,(word_FFA404).w            ; '\'
+                move.w  #$5C,(PlayerStateOffset).w      ; '\'
                 move.b  #0,(VDPReg18Shadow+1).w
                 lea     ZLeoEnding_AssetLoadDescriptors(pc),a0
                 nop
                 jsr     (LoadObjData).l
                 lea     (Stage26PaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l
-                move.w  #$1000,(dword_FFA900).w
-                move.w  #$EC00,(dword_FFA904).w
+                move.w  #$1000,(PrimaryCameraXPosition).w
+                move.w  #$EC00,(PrimaryCameraYPosition).w
                 jsr     (Tilemap_DirectTransferFromPrimaryCamera).l
-                move.w  #$EC10,(dword_FFA904).w
+                move.w  #$EC10,(PrimaryCameraYPosition).w
                 move.w  #$8000,(word_FF808A).w
                 rts
 ; End of function ZLeoEnding_InitializeScene
@@ -109,10 +109,10 @@ WeaponSetup_ActivateScreen:                             ; CODE XREF: WeaponSetup
                 move.w  d0,(DisplayedBossHealth).w
                 move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
                 move.w  #$12,(PlayerScriptStateOffset).w
-                move.w  #$DA,(dword_FFA410).w
-                move.w  #$130,(dword_FFA414).w
+                move.w  #$DA,(PlayerXPosition).w
+                move.w  #$130,(PlayerYPosition).w
                 move.w  #$330,(StageTimeRemaining).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.w  #$8000,(word_FF808A).w
                 lea     (StageStartPaletteOffsetList).l,a4
                 jsr     (Gfx_LoadMultiplePalettes).l

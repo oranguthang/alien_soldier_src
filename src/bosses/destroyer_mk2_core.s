@@ -23,7 +23,7 @@ Boss_DestroyerMK2CheckFinalTransitionTrigger:           ; CODE XREF: Boss_Destro
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,$4C(a5)
                 move.w  #$2A,4(a5)                      ; '*'
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
 Boss_DestroyerMK2UpdateEncounterEffects:                ; CODE XREF: Boss_DestroyerMK2Main+2E   j  ; was: loc_4A8A4
                                         ; Boss_DestroyerMK2Main+36   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
@@ -31,7 +31,7 @@ Boss_DestroyerMK2UpdateEncounterEffects:                ; CODE XREF: Boss_Destro
                 btst    #3,$4C(a5)
                 beq.s   Boss_DestroyerMK2AnchorToScrollPosition
                 move.w  #$C70,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 addi.w  #-$80,d0
                 lea     (word_FFE520).w,a0
                 lea     (word_FF98B0).w,a1
@@ -48,7 +48,7 @@ Boss_DestroyerMK2AnchorToScrollPosition:                ; CODE XREF: Boss_Destro
                 addi.w  #$C0,d0
                 move.w  d0,$10(a5)
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$4E(a5)
 Boss_DestroyerMK2DispatchMainState:                     ; CODE XREF: Boss_DestroyerMK2Main+4   j  ; was: loc_4A8F4
                 move.w  4(a5),d0
@@ -109,7 +109,7 @@ Boss_DestroyerMK2ClearScrollBuffersLoop:                ; CODE XREF: Boss_Destro
                 move.w  #$3DC,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 move.w  #$C0,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 move.w  #$118,$14(a5)
                 move.b  #4,(byte_FFA95B).w

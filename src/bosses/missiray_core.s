@@ -3,7 +3,7 @@ Boss_MissirayMain:                                      ; DATA XREF: ROM:Entity_
                 beq.w   Boss_MissirayDispatchState
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$4C(a5)
                 btst    #2,(byte_FF80EC).w
                 bne.s   Boss_MissirayUpdateLinkedSegmentPositions
@@ -13,7 +13,7 @@ Boss_MissirayMain:                                      ; DATA XREF: ROM:Entity_
                 bne.s   Boss_MissirayUpdateLinkedSegmentPositions
                 move.b  #2,(byte_FF80EC).w
                 move.w  #$1A,4(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
 Boss_MissirayUpdateLinkedSegmentPositions:              ; CODE XREF: Boss_MissirayMain+20   j  ; was: loc_537FC
                                         ; Boss_MissirayMain+30   j
                 move.w  #7,d7

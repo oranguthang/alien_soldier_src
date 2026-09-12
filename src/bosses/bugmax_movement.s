@@ -1,7 +1,7 @@
 ; Steer the opening controller horizontally toward its stage-relative target
 Boss_BugmaxSteerOpeningControllerToHorizontalTarget:    ; CODE XREF: Boss_BugmaxEmitOpeningHitFragmentsAndSteer+20   j  ; was: sub_4DA22
                 move.w  #$168,d0
-                sub.w   (dword_FFA908).w,d0
+                sub.w   (SecondaryCameraXPos).w,d0
                 sub.w   $10(a5),d0
                 beq.s   Boss_BugmaxOpeningHorizontalSteeringReturn
                 tst.w   d0
@@ -33,7 +33,7 @@ Boss_BugmaxOpeningHorizontalSteeringReturn:             ; CODE XREF: Boss_Bugmax
 Boss_BugmaxClampOpeningObjectHorizontalPositions:       ; CODE XREF: Boss_BugmaxWaitAfterJitterAndStartBossMessage   p  ; was: sub_4DA8C
                                         ; Boss_BugmaxWaitForOpeningTransition   p
                 move.w  #$168,d2
-                sub.w   (dword_FFA908).w,d2
+                sub.w   (SecondaryCameraXPos).w,d2
                 lea     Boss_BugmaxOpeningObjectHorizontalBounds(pc),a2
                 nop
                 moveq   #0,d6
@@ -173,7 +173,7 @@ Boss_BugmaxUpdateHorizontalSteering:                    ; CODE XREF: Boss_Bugmax
                 neg.l   d6
 Boss_BugmaxCalculateHorizontalSteeringStep:             ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+E   j  ; was: loc_4DBF0
                 asr.l   #2,d6
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 cmpi.w  #$410,d0
                 bcc.s   Boss_BugmaxSelectRightScrollHorizontalBounds
                 cmpi.w  #$5E0,$58(a5)
@@ -219,7 +219,7 @@ Boss_BugmaxGateHorizontalTargetUpdate:                  ; CODE XREF: Boss_Bugmax
 Boss_BugmaxSelectHorizontalSteeringTarget:              ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+5C   j  ; was: loc_4DC6A
                 move.w  (dword_FF9424).w,d0
                 beq.s   Boss_BugmaxUsePlayerHorizontalTarget
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 bra.s   Boss_BugmaxMeasureHorizontalTargetDelta
 ; ---------------------------------------------------------------------------
 Boss_BugmaxUsePlayerHorizontalTarget:                   ; CODE XREF: Boss_BugmaxUpdateHorizontalSteering+90   j  ; was: loc_4DC76
@@ -317,11 +317,11 @@ Boss_BugmaxVerticalBandSteeringReturn:                  ; CODE XREF: Boss_Bugmax
 ; Unreferenced input helper for adjusting and wrapping the current part angle
 Boss_BugmaxAdjustCurrentPartAngleFromInput:             ; was: sub_4DD4A
                 movea.w a5,a0
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_BugmaxCheckPartAngleIncreaseInput
                 addi.w  #-8,$4C(a0)
 Boss_BugmaxCheckPartAngleIncreaseInput:                 ; CODE XREF: Boss_BugmaxAdjustCurrentPartAngleFromInput+8   j  ; was: loc_4DD5A
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_BugmaxWrapInputAdjustedPartAngle
                 addi.w  #8,$4C(a0)
 Boss_BugmaxWrapInputAdjustedPartAngle:                  ; CODE XREF: Boss_BugmaxAdjustCurrentPartAngleFromInput+16   j  ; was: loc_4DD68
@@ -330,17 +330,17 @@ Boss_BugmaxWrapInputAdjustedPartAngle:                  ; CODE XREF: Boss_Bugmax
 ; End of function Boss_BugmaxAdjustCurrentPartAngleFromInput
 ; Unreferenced input helper for adjusting position or the shared wave accumulator
 Boss_BugmaxAdjustPositionOrWaveFromInput:               ; was: sub_4DD70
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_BugmaxCheckPositionXIncreaseInput
                 addi.w  #-2,$10(a5)
 Boss_BugmaxCheckPositionXIncreaseInput:                 ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+6   j  ; was: loc_4DD7E
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_BugmaxCheckPositionUpOrWaveIncreaseInput
                 addi.w  #2,$10(a5)
 Boss_BugmaxCheckPositionUpOrWaveIncreaseInput:          ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+14   j  ; was: loc_4DD8C
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Boss_BugmaxCheckPositionDownOrWaveDecreaseInput
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 bne.s   Boss_BugmaxIncreaseWaveFromModifiedUpInput
                 addi.w  #-2,$14(a5)
                 bra.s   Boss_BugmaxCheckPositionDownOrWaveDecreaseInput
@@ -349,9 +349,9 @@ Boss_BugmaxIncreaseWaveFromModifiedUpInput:             ; CODE XREF: Boss_Bugmax
                 addi.l  #$A0000,(dword_FF9400).w
 Boss_BugmaxCheckPositionDownOrWaveDecreaseInput:        ; CODE XREF: Boss_BugmaxAdjustPositionOrWaveFromInput+22   j  ; was: loc_4DDAC
                                         ; Boss_BugmaxAdjustPositionOrWaveFromInput+32   j
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Boss_BugmaxInputAdjustmentReturn
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 bne.s   Boss_BugmaxDecreaseWaveFromModifiedDownInput
                 addi.w  #2,$14(a5)
                 rts

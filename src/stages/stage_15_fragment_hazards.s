@@ -21,7 +21,7 @@ Stage15_FragmentEmitterWaveInit:                        ; was: sub_304F4
 
 ; Waits until the camera reaches the next emitter entry
 Stage15_FragmentEmitterWaveWaitForScroll:               ; was: sub_30516
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 movea.l $40(a5),a4
 ; End of function Stage15_FragmentEmitterWaveWaitForScroll
 
@@ -35,7 +35,7 @@ Stage15_FragmentEmitterWaveCheckThreshold:              ; was: loc_30520
                 move.w  #$CD00,2(a0)
                 move.w  #$3A0,(a0)
                 move.w  (a4)+,d0
-                sub.w   (dword_FFA904).w,d0
+                sub.w   (PrimaryCameraYPosition).w,d0
                 neg.w   d0
                 addi.w  #$C0,d0
                 move.w  d0,$14(a0)
@@ -281,30 +281,30 @@ Projectile_FragmentClusterCopyLinksLoop:
 ; End of function Projectile_FragmentClusterCopyLinks
 ; Calculate 8-way directional index from player position flags
 Projectile_SelectFragmentImpactDirection:               ; was: sub_30868
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 bne.s   Projectile_SelectFragmentDirectionPrimaryBranch
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 bne.s   Projectile_SelectFragmentDirectionSecondaryBranch
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 bne.s   Projectile_SelectFragmentDirectionDown
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 bne.s   Projectile_SelectFragmentDirectionUp
-                move.w  (word_FFA40E).w,d0
+                move.w  (PlayerSpriteAttributes).w,d0
                 andi.w  #$800,d0
                 bne.s   Projectile_SelectFragmentDirectionLeft
                 bra.s   Projectile_SelectFragmentDirectionRight
 ; ---------------------------------------------------------------------------
 Projectile_SelectFragmentDirectionPrimaryBranch:
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 bne.s   Projectile_SelectFragmentDirectionDownLeft
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 bne.s   Projectile_SelectFragmentDirectionUpLeft
                 bra.s   Projectile_SelectFragmentDirectionLeft
 ; ---------------------------------------------------------------------------
 Projectile_SelectFragmentDirectionSecondaryBranch:
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 bne.s   Projectile_SelectFragmentDirectionDownRight
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 bne.s   Projectile_SelectFragmentDirectionUpRight
                 bra.s   Projectile_SelectFragmentDirectionRight
 ; ---------------------------------------------------------------------------
@@ -471,11 +471,11 @@ Projectile_FragmentBeginDeflectedFall:                  ; was: sub_30ABA
                 move.b  #1,$21(a5)
                 bsr.w   Projectile_SetCurrentFragmentHealth
                 move.l  #$FFFE0000,$1C(a5)
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 bne.s   Projectile_FragmentDeflectRight
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 bne.s   Projectile_FragmentDeflectLeft
-                move.w  (word_FFA40E).w,d0
+                move.w  (PlayerSpriteAttributes).w,d0
                 andi.w  #$800,d0
                 bne.s   Projectile_FragmentDeflectRight
 Projectile_FragmentDeflectLeft:
@@ -538,10 +538,10 @@ Stage15_FallingRockWaveUseAlternateSchedule:
 
 ; Creates each group of type-$384 rocks when its scroll threshold is reached
 Stage15_FallingRockWaveUpdate:                          ; was: sub_30B7E
-                tst.l   (dword_FFA41C).w
+                tst.l   (PlayerYVelocity).w
                 bne.w   Entity_UpdateReturn
-                move.w  (dword_FFA904).w,d0
-                sub.w   (dword_FFA414).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
+                sub.w   (PlayerYPosition).w,d0
                 movea.l $40(a5),a4
                 cmp.w   (a4)+,d0
                 bcs.w   Entity_UpdateReturn

@@ -309,7 +309,7 @@ Boss_SunsetStingSecondarySegmentStoreRotationStep:      ; CODE XREF: Boss_Sunset
                 rts
 ; ---------------------------------------------------------------------------
 Boss_SunsetStingSecondarySegmentCheckPlayer:            ; CODE XREF: Boss_SunsetStingSecondarySegmentFlightState+52   j  ; was: loc_436B0
-                lea     (word_FFA400).w,a0
+                lea     (PlayerObjectType).w,a0
                 bclr    #7,$22(a5)
                 beq.w   Boss_SunsetStingSecondarySegmentCheckBounds
                 bclr    #4,$22(a5)
@@ -383,7 +383,7 @@ Boss_SunsetStingAttachedSegmentUpdate:                  ; CODE XREF: Boss_Sunset
                 clr.b   $21(a5)
                 subq.w  #1,(PlayerHealth).w
 Boss_SunsetStingAttachedSegmentReadPlayer:              ; CODE XREF: Boss_SunsetStingSegmentAttachedToPlayer+18   j  ; was: loc_43786
-                lea     (word_FFA400).w,a0
+                lea     (PlayerObjectType).w,a0
                 move.b  $48(a5),d0
                 ext.w   d0
                 move.b  $E(a0),d1

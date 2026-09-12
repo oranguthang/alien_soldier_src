@@ -284,7 +284,7 @@ Object_RemoveOnFlagOrAnimationEnd_Return:               ; CODE XREF: Object_Remo
 ; End of function Object_RemoveOnFlagOrAnimationEnd
 ; Updates target sight position
 Player_UpdateTargetSight:                               ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_18906
-                movea.w #(word_FFA400-M68K_RAM),a0
+                movea.w #(PlayerObjectType-M68K_RAM),a0
                 clr.w   $56(a5)
                 move.w  $10(a0),d5
                 move.w  $14(a0),d6

@@ -135,7 +135,7 @@ UI_RenderStageTimerAndBossHealth_CheckTimerAlert:       ; CODE XREF: UI_RenderSt
                 bne.s   UI_RenderStageTimerAndBossHealth_WriteTimer
                 cmpi.b  #$30,(StageTimeRemaining+1).w   ; '0'
                 bpl.s   UI_RenderStageTimerAndBossHealth_WriteTimer
-                btst    #0,(byte_FFA272).w
+                btst    #0,(StageTimerPauseFlag).w
                 bne.s   UI_RenderStageTimerAndBossHealth_WriteTimer
                 subq.w  #1,(LowTimeWarningTimer).w
                 bpl.s   UI_RenderStageTimerAndBossHealth_WriteTimer

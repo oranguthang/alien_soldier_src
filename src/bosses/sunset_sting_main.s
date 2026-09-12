@@ -22,7 +22,7 @@ Boss_SunsetStingMainCheckDefeatTrigger:                 ; CODE XREF: Boss_Sunset
                                         ; Boss_SunsetStingMain+34   j
                 tst.w   (BossHealth).w
                 bne.s   Boss_SunsetStingMainCycleTiles
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 bset    #7,(a4)
                 move.w  #$12,4(a5)
 Boss_SunsetStingMainCycleTiles:                         ; CODE XREF: Boss_SunsetStingMain+48   j  ; was: loc_42A6A
@@ -147,7 +147,7 @@ Boss_SunsetStingIntro:                                  ; DATA XREF: ROM:00042A9
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingIntroUpdate
                 move.w  #$780,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 move.w  d0,$10(a3)
                 move.w  #$10,$14(a5)
@@ -226,7 +226,7 @@ Boss_SunsetStingBattleMoveVertically:                   ; CODE XREF: Boss_Sunset
 Boss_SunsetStingBattleApproachPlayer:                   ; CODE XREF: Boss_SunsetStingBattleActive+8   j  ; was: loc_42CE8
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingBattleBrakeRotation
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 bpl.s   Boss_SunsetStingBattleMeasureHorizontalDistance
                 neg.w   d0
@@ -332,7 +332,7 @@ Boss_SunsetStingCoreRepositionLaunchCore:               ; CODE XREF: Boss_Sunset
                 move.l  #$2000,$4A(a3)
                 move.w  $10(a5),d0
                 move.w  d0,d1
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.l  #$FFFF0000,d7
                 subi.w  #$780,d0
                 bpl.s   Boss_SunsetStingCoreRepositionSelectXVelocity
@@ -342,7 +342,7 @@ Boss_SunsetStingCoreRepositionSelectXVelocity:          ; CODE XREF: Boss_Sunset
                 subi.w  #$80,d0
                 bcc.s   Boss_SunsetStingCoreRepositionStoreXVelocity
                 move.l  #$10000,d7
-                cmp.w   (dword_FFA410).w,d1
+                cmp.w   (PlayerXPosition).w,d1
                 bpl.s   Boss_SunsetStingCoreRepositionStoreXVelocity
                 neg.l   d7
 Boss_SunsetStingCoreRepositionStoreXVelocity:           ; CODE XREF: Boss_SunsetStingCoreRepositionState+98   j  ; was: loc_42E82
@@ -427,7 +427,7 @@ Boss_SunsetStingMoveCoreTowardPlayer:                   ; CODE XREF: Boss_Sunset
                 moveq   #1,d7
                 ror.w   #3,d7
                 move.w  $10(a5),d0
-                cmp.w   (dword_FFA410).w,d0
+                cmp.w   (PlayerXPosition).w,d0
                 bpl.s   Boss_SunsetStingMoveCoreTowardPlayerApply
                 neg.l   d7
 Boss_SunsetStingMoveCoreTowardPlayerApply:              ; CODE XREF: Boss_SunsetStingMoveCoreTowardPlayer+C   j  ; was: loc_42F7C

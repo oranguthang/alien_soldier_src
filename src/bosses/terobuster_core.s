@@ -20,7 +20,7 @@ Boss_TerobusterUpdatePartOscillation:                   ; CODE XREF: Boss_Terobu
                 asr.w   #1,d0
                 andi.w  #6,d0
                 move.w  (a0,d0.w),$1DE(a5)
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
 Boss_TerobusterDispatchState:                           ; CODE XREF: Boss_TerobusterMain+4   j  ; was: loc_38566
@@ -492,7 +492,7 @@ Boss_TerobusterWaitForStageReadyAnimate:                ; CODE XREF: Boss_Terobu
 Boss_TerobusterBeginDefeat:                             ; CODE XREF: Boss_TerobusterMain+28   j  ; was: sub_38ACC
                 move.b  #$AC,d0
                 jsr     (Sound_PlaySFX).l
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.w  #$A,4(a5)
                 move.b  #2,(byte_FF80EC).w
                 clr.w   8(a5)

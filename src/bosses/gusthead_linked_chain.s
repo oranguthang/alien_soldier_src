@@ -153,7 +153,7 @@ Boss_GustheadLinkedChainEmitFragmentClusterAtAngle:     ; was: sub_3126C
                 move.w  $10(a5),d5
                 move.w  $14(a5),d6
                 move.w  #2,d3
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 cmp.w   $10(a5),d0
                 bcs.s   Boss_GustheadLinkedChainAimFragmentClusterLeft
                 clr.w   d4

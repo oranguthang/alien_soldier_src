@@ -48,8 +48,8 @@ Stage_SetupScrollPlanesThunk:                           ; DATA XREF: ROM:0001CF7
 ; End of function Stage_SetupScrollPlanesThunk
 ; Initializes cutscene with data loading
 Cutscene_InitializeScene:                               ; DATA XREF: ROM:0001CF7E   o  ; was: sub_1D450
-                clr.w   (dword_FFA900).w
-                clr.w   (dword_FFA904).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (PrimaryCameraYPosition).w
                 clr.b   (VDPReg17Shadow+1).w
                 clr.b   (VDPReg18Shadow+1).w
                 bclr    #6,(VDPReg1Shadow+1).w
@@ -79,11 +79,11 @@ CutsceneSceneAssetLoadList: dc.w    7                   ; field_0  ; was: stru_1
 
 ; Updates the cutscene-frame selector from horizontal input and loads that frame
 Cutscene_UpdateFrameSelectionFromInput:                 ; was: sub_1D4B4
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Cutscene_UpdateFrameSelectionFromInput_CheckDecrease
                 addi.l  #$1000,(dword_FF9408).w
 Cutscene_UpdateFrameSelectionFromInput_CheckDecrease:   ; was: loc_1D4C4
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Cutscene_UpdateFrameSelectionFromInput_ClampUpperBound
                 subi.l  #$1000,(dword_FF9408).w
 Cutscene_UpdateFrameSelectionFromInput_ClampUpperBound:  ; was: loc_1D4D4
@@ -112,17 +112,17 @@ Cutscene_ScrollAndPlaneUpdateCode:                      ; was: sub_1D508
 
 ; Advances wrapped cutscene scroll and queues its next primary-plane column
 Cutscene_AdvanceScrollAndQueueColumn:                   ; was: sub_1D512
-                cmpi.w  #$E00,(dword_FFA900).w
+                cmpi.w  #$E00,(PrimaryCameraXPosition).w
                 bmi.s   Cutscene_AdvanceScrollAndQueueColumn_Advance
-                subi.w  #$D00,(dword_FFA900).w
+                subi.w  #$D00,(PrimaryCameraXPosition).w
 Cutscene_AdvanceScrollAndQueueColumn_Advance:           ; was: loc_1D520
-                addi.l  #$10000,(dword_FFA900).w
-                move.w  (dword_FFA900).w,d0
+                addi.l  #$10000,(PrimaryCameraXPosition).w
+                move.w  (PrimaryCameraXPosition).w,d0
                 asr.w   #2,d0
-                move.w  d0,(dword_FFA908).w
-                move.w  (dword_FFA900).w,d0
+                move.w  d0,(SecondaryCameraXPos).w
+                move.w  (PrimaryCameraXPosition).w,d0
                 addi.w  #$180,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 jmp     Tilemap_QueuePrimaryPlaneColumn
 ; End of function Cutscene_AdvanceScrollAndQueueColumn
 ; ---------------------------------------------------------------------------

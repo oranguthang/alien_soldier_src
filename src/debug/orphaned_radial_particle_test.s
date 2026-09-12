@@ -99,11 +99,11 @@ Debug_SetupRadialTestParticleSprite:                    ; was: sub_2F2A4
 ; End of function Debug_SetupRadialTestParticleSprite
 ; Lets held left/right input decrease or increase the test radius
 Debug_AdjustRadialParticleRadius:                       ; CODE XREF: Debug_RadialParticleTestController   p  ; was: sub_2F2D2
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_AdjustRadialParticleRadius_CheckLeft
                 addq.w  #1,$50(a5)
 Debug_AdjustRadialParticleRadius_CheckLeft:             ; CODE XREF: Debug_AdjustRadialParticleRadius+6   j  ; was: loc_2F2DE
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_AdjustRadialParticleRadius_Return
                 subq.w  #1,$50(a5)
 Debug_AdjustRadialParticleRadius_Return:                ; CODE XREF: Debug_AdjustRadialParticleRadius+12   j  ; was: locret_2F2EA

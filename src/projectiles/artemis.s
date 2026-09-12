@@ -71,7 +71,7 @@ Projectile_UpdateArtemisEmitterAnchorJitter:            ; CODE XREF: Projectile_
 ; ---------------------------------------------------------------------------
 Projectile_UpdateArtemisEmitterFlight:                  ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+4   j  ; was: loc_58ADA
                                         ; Projectile_UpdateArtemisRadialEmitter+3C   j
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 subi.w  #$E200,d0
                 addi.w  #$12A,d0
                 cmp.w   $14(a5),d0
@@ -83,7 +83,7 @@ Projectile_UpdateArtemisEmitterFlight:                  ; CODE XREF: Projectile_
 Projectile_CheckArtemisEmitterHorizontalBounds:         ; CODE XREF: Projectile_UpdateArtemisRadialEmitter+8C   j  ; was: loc_58AFC
                 cmpi.w  #$80,$14(a5)
                 bmi.s   Projectile_RemoveArtemisEmitterOutsideBounds
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$26C,d0
                 bpl.s   Projectile_RemoveArtemisEmitterOutsideBounds

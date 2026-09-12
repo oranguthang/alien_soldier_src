@@ -51,7 +51,7 @@ Boss_CaterpillarWriteTrailingPhaseRamp:                 ; CODE XREF: Boss_Caterp
                 move.w  d0,(a0)+
                 addq.w  #6,d0
                 dbf     d7,Boss_CaterpillarWriteTrailingPhaseRamp
-                move.w  (dword_FFA908).w,d0
+                move.w  (SecondaryCameraXPos).w,d0
                 subi.w  #$200,d0
                 subq.w  #1,d0
                 andi.w  #$FFF0,d0
@@ -140,7 +140,7 @@ Boss_CaterpillarUpdateHomingProjectileSegment:          ; CODE XREF: Boss_Caterp
 ; ---------------------------------------------------------------------------
 Boss_CaterpillarPositionHomingProjectileSegment:        ; CODE XREF: Boss_CaterpillarHomingProjectileSegment+4A   j  ; was: loc_3D246
                 bsr.w   Boss_CaterpillarPositionSegmentOnWave
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$70,d0                         ; 'p'
                 bpl.s   Boss_CaterpillarTryHomingProjectileVolley
@@ -213,7 +213,7 @@ Boss_CaterpillarUpdateFourPhaseSegment:                 ; CODE XREF: Boss_Caterp
 ; ---------------------------------------------------------------------------
 Boss_CaterpillarPositionFourPhaseSegment:               ; CODE XREF: Boss_CaterpillarFourPhaseSegment+3E   j  ; was: loc_3D33E
                 bsr.w   Boss_CaterpillarPositionSegmentOnWave
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$70,d0                         ; 'p'
                 bpl.s   Boss_CaterpillarUpdateFourPhaseMapping
@@ -260,7 +260,7 @@ Boss_CaterpillarUpdateTwoPhaseSegment:                  ; CODE XREF: Boss_Caterp
 ; ---------------------------------------------------------------------------
 Boss_CaterpillarPositionTwoPhaseSegment:                ; CODE XREF: Boss_CaterpillarTwoPhaseSegment+3E   j  ; was: loc_3D3D0
                 bsr.w   Boss_CaterpillarPositionSegmentOnWave
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$70,d0                         ; 'p'
                 bpl.s   Boss_CaterpillarUpdateTwoPhaseMapping
@@ -306,7 +306,7 @@ Boss_CaterpillarUpdateShipTransitionSegment:            ; CODE XREF: Boss_Caterp
 Boss_CaterpillarPositionSegmentOnWave:                  ; CODE XREF: Boss_CaterpillarHomingProjectileSegment:Boss_CaterpillarPositionHomingProjectileSegment   p  ; was: sub_3D450
                                         ; Boss_CaterpillarFourPhaseSegment:Boss_CaterpillarPositionFourPhaseSegment   p
                 move.w  $58(a5),d0
-                sub.w   (dword_FFA908).w,d0
+                sub.w   (SecondaryCameraXPos).w,d0
                 move.w  d0,$10(a5)
                 bset    #7,2(a5)
                 move.b  $4E(a5),$21(a5)
@@ -342,7 +342,7 @@ Boss_CaterpillarShipController:                         ; DATA XREF: ROM:Entity_
                 tst.w   4(a5)
                 beq.w   Boss_CaterpillarDispatchShipState
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$4E(a5)
                 btst    #1,$4C(a5)
                 bne.s   Boss_CaterpillarUpdateShipTrailHistory
@@ -356,7 +356,7 @@ Boss_CaterpillarUpdateShipTrailHistory:                 ; CODE XREF: Boss_Caterp
                                         ; Boss_CaterpillarShipController+22   j
                 lea     (dword_FF9420).w,a0
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 swap    d0
                 move.w  $14(a5),d0
                 move.w  #6,d7
@@ -378,7 +378,7 @@ Boss_CaterpillarShiftShipTrailHistory:                  ; CODE XREF: Boss_Caterp
 Boss_CaterpillarPositionShipTrailParts:                 ; CODE XREF: Boss_CaterpillarShipController+8C   j  ; was: loc_3D52A
                 lea     (a1,d6.w),a1
                 move.w  (a1),d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a0)
                 move.w  2(a1),$14(a0)
                 lea     $60(a0),a0
@@ -456,7 +456,7 @@ Boss_CaterpillarShipBeginOscillationState:              ; DATA XREF: ROM:0003D55
 ; is reached
 Boss_CaterpillarShipOscillationState:                   ; DATA XREF: ROM:0003D556   o  ; was: sub_3D654
                 bsr.w   Boss_CaterpillarUpdateShipSteering
-                cmpi.w  #$880,(dword_FFA908).w
+                cmpi.w  #$880,(SecondaryCameraXPos).w
                 bcc.s   Boss_CaterpillarBeginShipCenteringDelay
                 subq.w  #1,$48(a5)
                 bne.s   Boss_CaterpillarShipOscillationReturn
@@ -561,7 +561,7 @@ Boss_CaterpillarUpdateShipSteering:                     ; CODE XREF: Boss_Caterp
                 andi.w  #$F,d0
                 bne.s   Boss_CaterpillarApplyShipPolarVelocity
                 move.w  (dword_FF9408).w,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  (dword_FF9408+2).w,d1
                 sub.w   $10(a5),d0
                 sub.w   $14(a5),d1

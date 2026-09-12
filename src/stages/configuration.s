@@ -336,9 +336,9 @@ Stage_InitializeStage20:                                ; DATA XREF: ROM:0001229
                 lea     Stage20ConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-                move.w  #$180,(dword_FFA410).w
-                addi.w  #$20,(dword_FFA900).w           ; ' '
-                move.w  (dword_FFA900).w,(word_FFA928).w
+                move.w  #$180,(PlayerXPosition).w
+                addi.w  #$20,(PrimaryCameraXPosition).w  ; ' '
+                move.w  (PrimaryCameraXPosition).w,(PreviousCameraXPosition).w
                 rts
 ; End of function Stage_InitializeStage20
 ; Initializes the Stage 21 configuration and flags

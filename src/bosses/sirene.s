@@ -88,11 +88,11 @@ Boss_InitSireneAtFixedPosition:                         ; was: sub_57568
 ; End of function Boss_InitSireneAtFixedPosition
 ; State two changes the pose angle from vertical controller input
 Boss_UpdateSireneState2:                                ; DATA XREF: ROM:000574FA   o  ; was: sub_575B6
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Boss_CheckSireneState2DownInput
                 addq.w  #2,$56(a5)
 Boss_CheckSireneState2DownInput:                        ; CODE XREF: Boss_UpdateSireneState2+6   j  ; was: loc_575C2
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_NormalizeSireneState2PoseAngle
                 subq.w  #2,$56(a5)
 Boss_NormalizeSireneState2PoseAngle:                    ; CODE XREF: Boss_UpdateSireneState2+12   j  ; was: loc_575CE
@@ -116,8 +116,8 @@ Boss_EnterSireneState4:                                 ; CODE XREF: Boss_InitSi
 ; End of function Boss_UpdateSireneState2
 ; State four tracks the shared effect coordinates during its opening delay
 Boss_UpdateSireneState4:                                ; DATA XREF: ROM:000574FC   o  ; was: sub_5761C
-                move.w  (dword_FFA410).w,$70(a5)
-                move.w  (dword_FFA904).w,d0
+                move.w  (PlayerXPosition).w,$70(a5)
+                move.w  (PrimaryCameraYPosition).w,d0
                 subi.w  #$E200,d0
                 addi.w  #$1A0,d0
                 move.w  d0,$74(a5)
@@ -130,11 +130,11 @@ Boss_UpdateSireneState4:                                ; DATA XREF: ROM:000574F
 Boss_EnterSireneState6:                                 ; CODE XREF: Boss_UpdateSireneState4+1A   j  ; was: loc_57642
                 addq.w  #2,4(a5)
                 bset    #0,(byte_FF8245).w
-                move.w  #$58,(word_FFA404).w            ; 'X'
+                move.w  #$58,(PlayerStateOffset).w      ; 'X'
 ; State six advances the opening pose before enabling the active battle phase
 Boss_UpdateSireneState6:                                ; DATA XREF: ROM:000574FE   o  ; was: loc_57652
-                move.w  $6D4(a5),(dword_FFA414).w
-                move.w  $70(a5),(dword_FFA410).w
+                move.w  $6D4(a5),(PlayerYPosition).w
+                move.w  $70(a5),(PlayerXPosition).w
                 tst.w   $58(a5)
                 bmi.s   Boss_EnterSireneState8
                 lea     Sirene_State4And6PoseScript(pc),a1
@@ -155,8 +155,8 @@ Boss_EnterSireneState8:                                 ; CODE XREF: Boss_Update
                 clr.w   2(a5)
                 clr.w   8(a5)
                 bset    #2,(PlayerModeFlags).w
-                clr.w   (word_FFA404).w
-                move.w  #$200,(dword_FFA414).w
+                clr.w   (PlayerStateOffset).w
+                move.w  #$200,(PlayerYPosition).w
 ; State eight intentionally performs no update
 Boss_UpdateSireneState8:                                ; DATA XREF: ROM:00057500   o  ; was: locret_576AE
                 rts
@@ -183,13 +183,13 @@ Boss_UpdateSireneStateC:                                ; DATA XREF: ROM:0005750
 ; ---------------------------------------------------------------------------
 Boss_EnterSireneStateE:                                 ; CODE XREF: Boss_UpdateSireneStateC   j  ; was: loc_576F4
                 addq.w  #2,4(a5)
-                move.w  #$6000,(dword_FFA940).w
-                move.w  #$1F,(word_FFA944).w
-                move.w  #$A2FF,(word_FFA946).w
+                move.w  #$6000,(TilemapTransferBase).w
+                move.w  #$1F,(TilemapRowCountdown).w
+                move.w  #$A2FF,(TilemapRowXOrFillWord).w
 ; State E waits for the queued DMA phase to complete
 Boss_UpdateSireneStateE:                                ; DATA XREF: ROM:00057506   o  ; was: loc_5770A
                 jsr     (Tilemap_QueueNextConstantRow).l
-                tst.w   (word_FFA944).w
+                tst.w   (TilemapRowCountdown).w
                 bmi.s   Boss_EnterSireneState10
                 lea     Sirene_ActivePoseScript(pc),a1
                 nop
@@ -211,7 +211,7 @@ Boss_UpdateSireneState10:                               ; DATA XREF: ROM:0005750
                 subi.w  #$20,(word_FFA970).w            ; ' '
                 addi.w  #$20,(word_FFA974).w            ; ' '
                 clr.b   (byte_FF80EC).w
-                bclr    #0,(byte_FFA272).w
+                bclr    #0,(StageTimerPauseFlag).w
                 movea.l #Boss_SireneObjectInitTable,a1
                 jsr     (Object_InitGroupFromTable).l
                 bclr    #0,2(a5)
@@ -286,8 +286,8 @@ Sirene_State14PoseScriptSet1:   dc.l    Sirene_State14PoseScript0  ; DATA XREF: 
 Boss_UpdateSireneBattleEffect:                          ; CODE XREF: Boss_UpdateSireneState12   p  ; was: sub_5783C
                                         ; Boss_RenderSireneState14   p
                 bsr.w   Gfx_UpdateSireneBattleEffectPattern
-                move.w  (dword_FFA410).w,d0
-                move.w  (dword_FFA414).w,d1
+                move.w  (PlayerXPosition).w,d0
+                move.w  (PlayerYPosition).w,d1
                 sub.w   (dword_FFDB30).w,d0
                 sub.w   (dword_FFDB34).w,d1
                 jsr     (Math_Arctan2Lookup).l
@@ -299,11 +299,11 @@ Boss_UpdateSireneBattleEffect:                          ; CODE XREF: Boss_Update
                 move.w  (a0,d2.w),d1
                 muls.w  #5,d0
                 muls.w  #$C,d1
-                add.l   d0,(dword_FFA414).w
-                add.l   d1,(dword_FFA410).w
-                cmpi.w  #$159,(dword_FFA414).w
+                add.l   d0,(PlayerYPosition).w
+                add.l   d1,(PlayerXPosition).w
+                cmpi.w  #$159,(PlayerYPosition).w
                 bmi.s   Boss_ClampSireneEffectPrimaryYMaximum
-                move.w  #$158,(dword_FFA414).w
+                move.w  #$158,(PlayerYPosition).w
 Boss_ClampSireneEffectPrimaryYMaximum:                  ; CODE XREF: Boss_UpdateSireneBattleEffect+48   j  ; was: loc_5788C
                 move.w  $70(a5),d0
                 move.w  $74(a5),d1
@@ -359,7 +359,7 @@ Boss_SelectSireneEffectAlternatePhase:                  ; CODE XREF: Boss_Update
                 movea.w a0,a1
                 moveq   #$B,d7
                 moveq   #0,d1
-                move.w  (dword_FFA900).w,d2
+                move.w  (PrimaryCameraXPosition).w,d2
                 subi.w  #$60,d2                         ; '`'
                 neg.w   d2
 Gfx_WriteSireneWideDistortionOffsetsLoop:               ; CODE XREF: Boss_UpdateSireneBattleEffect+150   j  ; was: loc_5796E
@@ -734,7 +734,7 @@ Projectile_UpdateSireneHoming:                          ; DATA XREF: ROM:Entity_
                 bmi.s   Projectile_RemoveSireneHomingOutsideBounds
                 cmpi.w  #$170,$14(a5)
                 bpl.s   Projectile_RemoveSireneHomingOutsideBounds
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$26C,d0
                 bpl.s   Projectile_RemoveSireneHomingOutsideBounds

@@ -469,7 +469,7 @@ Weapon_UpdateBombProjectile_TickLifetime:               ; CODE XREF: Weapon_Upda
 Weapon_UpdateBombProjectile_ApplyMotion:                ; CODE XREF: Weapon_UpdateBombProjectile+30   j  ; was: loc_1901C
                 move.w  #$8080,2(a5)
                 move.w  $58(a5),d0
-                add.w   (dword_FFA410).w,d0
+                add.w   (PlayerXPosition).w,d0
                 move.l  $50(a5),d1
                 add.l   $18(a5),d1
                 move.l  d1,$50(a5)
@@ -477,7 +477,7 @@ Weapon_UpdateBombProjectile_ApplyMotion:                ; CODE XREF: Weapon_Upda
                 add.w   d1,d0
                 move.w  d0,$10(a5)
                 move.w  $5A(a5),d0
-                add.w   (dword_FFA414).w,d0
+                add.w   (PlayerYPosition).w,d0
                 move.l  $54(a5),d1
                 add.l   $1C(a5),d1
                 move.l  d1,$54(a5)
@@ -592,12 +592,12 @@ Object_UpdateRemovalTimer_Return:                       ; CODE XREF: Object_Upda
 ; Initializes projectile sprite with position and velocity
 Effect_InitPlayerMotionProjectile:                      ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_19188
                 bset    #7,2(a5)
-                cmpi.l  #Player_TeleportDashTrailSpriteMapping,(dword_FFA408).w
+                cmpi.l  #Player_TeleportDashTrailSpriteMapping,(PlayerSpriteMapping).w
                 beq.s   Effect_InitPlayerMotionProjectile_CopyPosition
                 bclr    #7,2(a5)
 Effect_InitPlayerMotionProjectile_CopyPosition:         ; CODE XREF: Effect_InitPlayerMotionProjectile+E   j  ; was: loc_1919E
-                move.w  (dword_FFA410).w,$10(a5)
-                move.w  (dword_FFA414).w,$14(a5)
+                move.w  (PlayerXPosition).w,$10(a5)
+                move.w  (PlayerYPosition).w,$14(a5)
                 bclr    #7,$22(a5)
                 beq.s   Effect_InitPlayerMotionProjectile_SpawnChild
                 move.w  #4,(FrameFreezeTimer).w

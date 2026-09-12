@@ -446,7 +446,7 @@ Projectile_DelayedCollisionShotReturn:                  ; CODE XREF: Projectile_
                 rts
 ; ---------------------------------------------------------------------------
 Projectile_UpdateArmedDelayedCollisionShot:             ; CODE XREF: Projectile_UpdateDelayedCollisionShot+4   j  ; was: loc_2B56C
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,d1
                 subi.w  #$80,d0

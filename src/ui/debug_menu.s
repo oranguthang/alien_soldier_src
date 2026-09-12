@@ -21,10 +21,10 @@ DebugMenu_UpdateHealthSelection:                        ; was: sub_13748
 DebugMenu_UpdateHealthSelection_ReadInput:              ; was: loc_1375A
                 move.b  (DebugHealthSelection).w,d0
                 moveq   #1,d1
-                movea.w #(word_FFF706-M68K_RAM),a0
+                movea.w #(ControllerHeldState-M68K_RAM),a0
                 tst.w   (DebugMenuRepeatTimer).w
                 beq.s   DebugMenu_UpdateHealthSelection_CheckDecrease
-                movea.w #(word_FFF708-M68K_RAM),a0
+                movea.w #(ControllerPressedState-M68K_RAM),a0
 DebugMenu_UpdateHealthSelection_CheckDecrease:          ; was: loc_1376E
                 btst    #2,(a0)
                 beq.s   DebugMenu_UpdateHealthSelection_CheckIncrease
@@ -71,10 +71,10 @@ DebugMenu_UpdateSoundRequestSelection:                  ; was: sub_137C0
                 move.w  #$C7E5,(DebugSoundCursorTile).w
 DebugMenu_UpdateSoundRequestSelection_ReadInput:        ; was: loc_137CE
                 move.b  (DebugSoundRequestId).w,d0
-                movea.w #(word_FFF706-M68K_RAM),a0
+                movea.w #(ControllerHeldState-M68K_RAM),a0
                 tst.w   (DebugMenuRepeatTimer).w
                 beq.s   DebugMenu_UpdateSoundRequestSelection_CheckDecrease
-                movea.w #(word_FFF708-M68K_RAM),a0
+                movea.w #(ControllerPressedState-M68K_RAM),a0
 DebugMenu_UpdateSoundRequestSelection_CheckDecrease:    ; was: loc_137E0
                 btst    #2,(a0)
                 beq.s   DebugMenu_UpdateSoundRequestSelection_CheckIncrease
@@ -91,7 +91,7 @@ DebugMenu_UpdateSoundRequestSelection_Return:           ; was: locret_137FA
                 rts
 ; End of function DebugMenu_UpdateSoundRequestSelection
 DebugMenu_UpdateBossHealthClear:                        ; was: sub_137FC
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.s   DebugMenu_UpdateBossHealthClear_UpdateCursor
                 clr.w   (BossHealth).w
 DebugMenu_UpdateBossHealthClear_UpdateCursor:           ; was: loc_13808
@@ -106,7 +106,7 @@ DebugMenu_UpdatePaletteLineSelection:                   ; was: sub_13818
                 bne.s   DebugMenu_UpdatePaletteLineSelection_ReadInput
                 move.w  #$C7E5,(PaletteLineCursorTile).w
 DebugMenu_UpdatePaletteLineSelection_ReadInput:         ; was: loc_13826
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 andi.b  #$C,d0
                 beq.s   DebugMenu_UpdatePaletteLineSelection_Return
                 addq.w  #2,(DebugPaletteLineOffset).w
@@ -128,13 +128,13 @@ DebugMenu_UpdatePaletteColorSelection_SelectMode:       ; was: loc_13858
                 tst.w   (DebugColorEditActive).w
                 beq.w   DebugMenu_UpdatePaletteColorSelection_SelectEntry
                 bsr.w   DebugMenu_UpdateSelectedPaletteColor
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.s   DebugMenu_UpdatePaletteColorSelection_CheckPreviousChannel
                 clr.w   (DebugColorEditActive).w
                 rts
 ; ---------------------------------------------------------------------------
 DebugMenu_UpdatePaletteColorSelection_CheckPreviousChannel:  ; was: loc_13872
-                btst    #2,(word_FFF708).w
+                btst    #2,(ControllerPressedState).w
                 beq.s   DebugMenu_UpdatePaletteColorSelection_CheckNextChannel
                 subq.w  #2,(DebugColorChannelOffset).w
                 bpl.s   DebugMenu_UpdatePaletteColorSelection_Return
@@ -142,7 +142,7 @@ DebugMenu_UpdatePaletteColorSelection_CheckPreviousChannel:  ; was: loc_13872
                 rts
 ; ---------------------------------------------------------------------------
 DebugMenu_UpdatePaletteColorSelection_CheckNextChannel:  ; was: loc_13888
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.s   DebugMenu_UpdatePaletteColorSelection_Return
                 addq.w  #2,(DebugColorChannelOffset).w
                 cmpi.w  #6,(DebugColorChannelOffset).w
@@ -152,20 +152,20 @@ DebugMenu_UpdatePaletteColorSelection_Return:           ; was: locret_138A0
                 rts
 ; ---------------------------------------------------------------------------
 DebugMenu_UpdatePaletteColorSelection_SelectEntry:      ; was: loc_138A2
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.s   DebugMenu_UpdatePaletteColorSelection_CheckPreviousEntry
                 addq.w  #1,(DebugColorEditActive).w
                 clr.w   (DebugColorChannelOffset).w
                 rts
 ; ---------------------------------------------------------------------------
 DebugMenu_UpdatePaletteColorSelection_CheckPreviousEntry:  ; was: loc_138B4
-                btst    #2,(word_FFF708).w
+                btst    #2,(ControllerPressedState).w
                 beq.s   DebugMenu_UpdatePaletteColorSelection_CheckNextEntry
                 subq.w  #2,(DebugPaletteEntryOffset).w
                 bra.s   DebugMenu_UpdatePaletteColorSelection_WrapEntry
 ; ---------------------------------------------------------------------------
 DebugMenu_UpdatePaletteColorSelection_CheckNextEntry:   ; was: loc_138C2
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.s   DebugMenu_UpdatePaletteColorSelection_WrapEntry
                 addq.w  #2,(DebugPaletteEntryOffset).w
 DebugMenu_UpdatePaletteColorSelection_WrapEntry:        ; was: loc_138CE
@@ -283,7 +283,7 @@ DebugMenu_UpdateSelectedPaletteColor:                   ; CODE XREF: DebugMenu_U
                 add.w   (DebugPaletteEntryOffset).w,d0
                 addi.w  #-$1C80,d0
                 movea.w d0,a0
-                move.b  (word_FFF708).w,d1
+                move.b  (ControllerPressedState).w,d1
                 move.w  (a0),d0
                 move.w  d0,d2
                 move.w  (DebugColorChannelOffset).w,d3

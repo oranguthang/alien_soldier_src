@@ -2,7 +2,7 @@ StageTransition_RenderAsteroidField:                    ; CODE XREF: StageTransi
                                         ; StageTransition_FinishAsteroidFieldScroll+E   j
                 bsr.s   StageTransition_UpdateAsteroidFieldScroll
                 moveq   #0,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 subi.w  #$F8,d1
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 bra.w   Tilemap_QueueRowFromDescriptor
@@ -11,7 +11,7 @@ StageTransition_RenderAsteroidField:                    ; CODE XREF: StageTransi
 StageTransition_UpdateAsteroidFieldScroll:              ; CODE XREF: StageTransition_InitializeAsteroidField+70   j  ; was: sub_FB3A
                                         ; StageTransition_StartAsteroidFieldScroll+C   j
                 move.l  (dword_FFA960).w,d0
-                add.l   d0,(dword_FFA904).w
+                add.l   d0,(PrimaryCameraYPosition).w
                 add.l   d0,(dword_FFA964).w
                 clr.b   (byte_FFA96A).w
                 move.w  (dword_FFA964).w,d0
@@ -27,7 +27,7 @@ StageTransition_SharedReturn:                           ; CODE XREF: StageTransi
 ; End of function StageTransition_UpdateAsteroidFieldScroll
 ; Unreferenced input-bit test that sets the transition completion flag
 UnreferencedSetTransitionFlagFromInputBit6:
-                btst    #6,(word_FFF706).w              ; was: sub_FB62
+                btst    #6,(ControllerHeldState).w      ; was: sub_FB62
                 beq.s   UnreferencedTransitionInputCheckReturn
                 bset    #0,(byte_FFA958).w
 UnreferencedTransitionInputCheckReturn:                 ; CODE XREF: UnreferencedSetTransitionFlagFromInputBit6+6   j  ; was: locret_FB70
@@ -137,6 +137,6 @@ StageTransition_FillSegmentedBackdropVScroll:           ; CODE XREF: StageTransi
                 bne.s   StageTransition_StoreSegmentedBackdropOutput
                 asr.l   #1,d0
 StageTransition_StoreSegmentedBackdropOutput:           ; CODE XREF: StageTransition_UpdateSegmentedBackdropScroll+C2   j  ; was: loc_FC6E
-                move.l  d0,(dword_FFA90C).w
+                move.l  d0,(SecondaryCameraYPos).w
                 rts
 ; End of function StageTransition_UpdateSegmentedBackdropScroll

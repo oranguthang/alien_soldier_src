@@ -47,7 +47,7 @@ Frontend_UpdateOpeningSequence:                         ; DATA XREF: Sys_Dispatc
                 bmi.s   Frontend_UpdateOpeningSequence_RunFrame
                 cmpi.w  #4,(GameSubstateIndex).w
                 bcs.s   Frontend_UpdateOpeningSequence_RunFrame
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 bne.w   Frontend_HandleOpeningSkip
 Frontend_UpdateOpeningSequence_RunFrame:                ; was: loc_1CF2E
                 jsr     (Object_ApplyCameraMotion).l
@@ -102,8 +102,8 @@ Frontend_InitializeSegaScreen_SetHighPriorityTiles:     ; was: loc_1CFD0
                 lea     (Gfx_FrontendAlternateVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1
-                move.w  d0,(dword_FFA908).w
-                move.w  d1,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraXPos).w
+                move.w  d1,(SecondaryCameraYPos).w
                 jsr     (Tilemap_TransferFullMapDirectToVRAM).l
                 lea     (M68K_RAM).l,a0
                 moveq   #$FFFFFFFF,d0

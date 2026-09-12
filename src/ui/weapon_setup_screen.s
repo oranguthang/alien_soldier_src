@@ -6,14 +6,14 @@ WeaponSetup_HandleShootingModeInput:                    ; was: sub_1F1B2
                 bsr.w   WeaponSetup_RefillAmmo
                 move.w  (ShootingMode).w,d1
                 beq.s   WeaponSetup_CheckFixedShootingModeInput
-                btst    #2,(word_FFF708).w
+                btst    #2,(ControllerPressedState).w
                 beq.s   WeaponSetup_CheckFixedShootingModeInput
                 moveq   #0,d1
 WeaponSetup_CheckFixedShootingModeInput:                ; CODE XREF: WeaponSetup_HandleShootingModeInput+14   j  ; was: loc_1F1D2
                                         ; WeaponSetup_HandleShootingModeInput+1C   j
                 tst.w   d1
                 bne.s   WeaponSetup_CommitShootingModeInput
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.s   WeaponSetup_CommitShootingModeInput
                 moveq   #2,d1
 WeaponSetup_CommitShootingModeInput:                    ; CODE XREF: WeaponSetup_HandleShootingModeInput+22   j  ; was: loc_1F1E0
@@ -24,7 +24,7 @@ WeaponSetup_CommitShootingModeInput:                    ; CODE XREF: WeaponSetup
                 move.b  #$DB,d0
                 jsr     (Sound_PlaySFX).l
 WeaponSetup_CheckShootingModeAdvance:                   ; CODE XREF: WeaponSetup_HandleShootingModeInput+32   j  ; was: loc_1F1F4
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 btst    #1,d0
                 bne.s   WeaponSetup_AdvanceFromShootingMode
                 andi.b  #$E0,d0
@@ -37,7 +37,7 @@ WeaponSetup_AdvanceFromShootingMode:                    ; CODE XREF: WeaponSetup
                 bra.w   WeaponSetup_RenderShootingModeOptions
 ; ---------------------------------------------------------------------------
 WeaponSetup_CheckShootingModeReturn:                    ; CODE XREF: WeaponSetup_HandleShootingModeInput+50   j  ; was: loc_1F21C
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.w   WeaponSetup_RenderShootingModeOptions
                 subq.w  #2,(SetupTransitionIndex).w
                 clr.w   (dword_FF8128+2).w
@@ -53,14 +53,14 @@ WeaponSetup_HandleControlTypeInput:                     ; DATA XREF: ROM:0001F14
                 bsr.w   WeaponSetup_RefillAmmo
                 move.w  (dword_FF812C).w,d1
                 beq.s   WeaponSetup_CheckNextControlTypeInput
-                btst    #2,(word_FFF708).w
+                btst    #2,(ControllerPressedState).w
                 beq.s   WeaponSetup_CheckNextControlTypeInput
                 subq.w  #1,d1
 WeaponSetup_CheckNextControlTypeInput:                  ; CODE XREF: WeaponSetup_HandleControlTypeInput+18   j  ; was: loc_1F25C
                                         ; WeaponSetup_HandleControlTypeInput+20   j
                 cmpi.w  #$19,d1
                 bpl.s   WeaponSetup_CommitControlTypeInput
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.s   WeaponSetup_CommitControlTypeInput
                 addq.w  #1,d1
 WeaponSetup_CommitControlTypeInput:                     ; CODE XREF: WeaponSetup_HandleControlTypeInput+28   j  ; was: loc_1F26C
@@ -71,7 +71,7 @@ WeaponSetup_CommitControlTypeInput:                     ; CODE XREF: WeaponSetup
                 move.b  #$DB,d0
                 jsr     (Sound_PlaySFX).l
 WeaponSetup_CheckControlTypeAdvance:                    ; CODE XREF: WeaponSetup_HandleControlTypeInput+38   j  ; was: loc_1F280
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 btst    #1,d0
                 bne.s   WeaponSetup_AdvanceFromControlType
                 andi.b  #$E0,d0
@@ -85,9 +85,9 @@ WeaponSetup_AdvanceFromControlType:                     ; CODE XREF: WeaponSetup
                 bra.w   WeaponSetup_RenderControlTypePage
 ; ---------------------------------------------------------------------------
 WeaponSetup_CheckControlTypeReturn:                     ; CODE XREF: WeaponSetup_HandleControlTypeInput+56   j  ; was: loc_1F2AE
-                btst    #0,(word_FFF708).w
+                btst    #0,(ControllerPressedState).w
                 bne.s   WeaponSetup_ReturnFromControlType
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.w   WeaponSetup_RenderControlTypePage
 ; Returns from the controller-layout page to the previous setup page
 WeaponSetup_ReturnFromControlType:                      ; CODE XREF: WeaponSetup_HandleControlTypeInput+7C   j  ; was: loc_1F2C0
@@ -137,20 +137,20 @@ WeaponSetup_HandleExitInput:                            ; DATA XREF: ROM:0001F14
                 bsr.w   WeaponSetup_UpdateHorizontalScroll
                 bne.w   WeaponSetup_StateWaitReturn
                 bsr.w   WeaponSetup_RefillAmmo
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 andi.b  #$E0,d0
                 beq.s   WeaponSetup_CheckExitReturn
                 move.w  #$E,(dword_FF8134).w
                 addq.w  #2,(SetupTransitionIndex).w
-                move.w  #$6000,(dword_FFA940).w
-                move.w  #$1F,(word_FFA944).w
-                clr.w   (word_FFA946).w
+                move.w  #$6000,(TilemapTransferBase).w
+                move.w  #$1F,(TilemapRowCountdown).w
+                clr.w   (TilemapRowXOrFillWord).w
                 bra.w   WeaponSetup_RenderExitOption
 ; ---------------------------------------------------------------------------
 WeaponSetup_CheckExitReturn:                            ; CODE XREF: WeaponSetup_HandleExitInput+1C   j  ; was: loc_1F392
-                btst    #0,(word_FFF708).w
+                btst    #0,(ControllerPressedState).w
                 bne.s   WeaponSetup_ReturnFromExit
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.w   WeaponSetup_RenderExitOption
 ; Returns from the exit page to the controller-layout page
 WeaponSetup_ReturnFromExit:                             ; CODE XREF: WeaponSetup_HandleExitInput+42   j  ; was: loc_1F3A4
@@ -165,11 +165,11 @@ WeaponSetup_UpdateSlotFade:                             ; DATA XREF: ROM:0001F14
                 jsr     (Tilemap_QueueNextConstantRow).l
                 jsr     (Tilemap_QueueNextConstantRow).l
                 jsr     (Tilemap_QueueNextConstantRow).l
-                tst.w   (word_FFA944).w
+                tst.w   (TilemapRowCountdown).w
                 bpl.w   WeaponSetup_StateWaitReturn
                 addq.w  #2,(SetupTransitionIndex).w
                 clr.w   (PlayerScriptStateOffset).w
-                clr.w   (dword_FFA90C).w
+                clr.w   (SecondaryCameraYPos).w
                 rts
 ; End of function WeaponSetup_UpdateSlotFade
 ; Renders the control-test instructions and loads their palette
@@ -221,7 +221,7 @@ WeaponSetup_ControlTestTextLayout:  dc.w    $8100       ; field_0  ; was: stru_1
 ; Waits for confirmation before leaving the weapon-setup screen
 WeaponSetup_WaitForConfirmInput:                        ; DATA XREF: ROM:0001F14A   o  ; was: sub_1F464
                 bsr.w   WeaponSetup_RenderConfirmPromptSprites
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 bne.s   WeaponSetup_ConfirmAndBeginFade
                 rts
 ; ---------------------------------------------------------------------------
@@ -241,7 +241,7 @@ WeaponSetup_IdleState:                                  ; DATA XREF: ROM:0001F14
 ; End of function WeaponSetup_IdleState
 ; Handles four-slot loadout selection and each slot's force direction
 WeaponSetup_HandleLoadoutInput:                         ; CODE XREF: WeaponSetup_HandleLoadoutState+1A   p  ; was: sub_1F496
-                move.b  (word_FFF708).w,d0
+                move.b  (ControllerPressedState).w,d0
                 andi.b  #$E0,d0
                 beq.s   WeaponSetup_CheckPreviousSlotInput
                 move.w  #$E,(dword_FF8134).w
@@ -258,7 +258,7 @@ WeaponSetup_CheckPreviousSlotInput:                     ; CODE XREF: WeaponSetup
                                         ; WeaponSetup_HandleLoadoutInput+24   j
                 tst.w   (WeaponSlotOffset).w
                 beq.s   WeaponSetup_HandleForceDirectionInput
-                btst    #4,(word_FFF708).w
+                btst    #4,(ControllerPressedState).w
                 beq.s   WeaponSetup_HandleForceDirectionInput
                 move.w  #$E,(dword_FF8134).w
                 move.b  #$DE,d0
@@ -285,7 +285,7 @@ WeaponSetup_HandleForceDirectionInput:                  ; CODE XREF: WeaponSetup
                 moveq   #0,d2
                 tst.w   d0
                 beq.s   WeaponSetup_CheckForceDownInput
-                btst    #0,(word_FFF708).w
+                btst    #0,(ControllerPressedState).w
                 beq.s   WeaponSetup_CheckForceDownInput
                 subq.w  #4,d0
                 addq.w  #1,d2
@@ -293,7 +293,7 @@ WeaponSetup_CheckForceDownInput:                        ; CODE XREF: WeaponSetup
                                         ; WeaponSetup_HandleLoadoutInput+A6   j
                 cmpi.w  #8,d0
                 beq.s   WeaponSetup_CheckForceRightInput
-                btst    #1,(word_FFF708).w
+                btst    #1,(ControllerPressedState).w
                 beq.s   WeaponSetup_CheckForceRightInput
                 addq.w  #4,d0
                 addq.w  #1,d2
@@ -301,7 +301,7 @@ WeaponSetup_CheckForceRightInput:                       ; CODE XREF: WeaponSetup
                                         ; WeaponSetup_HandleLoadoutInput+B8   j
                 tst.w   d1
                 bne.s   WeaponSetup_CheckForceLeftInput
-                btst    #3,(word_FFF708).w
+                btst    #3,(ControllerPressedState).w
                 beq.s   WeaponSetup_CheckForceLeftInput
                 addq.w  #2,d1
                 addq.w  #1,d2
@@ -309,7 +309,7 @@ WeaponSetup_CheckForceLeftInput:                        ; CODE XREF: WeaponSetup
                                         ; WeaponSetup_HandleLoadoutInput+C8   j
                 tst.w   d1
                 beq.s   WeaponSetup_CommitForceSelection
-                btst    #2,(word_FFF708).w
+                btst    #2,(ControllerPressedState).w
                 beq.s   WeaponSetup_CommitForceSelection
                 subq.w  #2,d1
                 addq.w  #1,d2
@@ -476,16 +476,16 @@ WeaponSetup_RenderExitTextWithColor:                    ; CODE XREF: WeaponSetup
 ; Moves the weapon-setup screen toward its target horizontal scroll
 WeaponSetup_UpdateHorizontalScroll:                     ; CODE XREF: WeaponSetup_HandleLoadoutState+8   p  ; was: sub_1F720
                                         ; WeaponSetup_HandleShootingModeInput+4   p
-                move.w  (dword_FFA90C).w,d0
+                move.w  (SecondaryCameraYPos).w,d0
                 cmp.w   (dword_FF8128+2).w,d0
                 beq.s   WeaponSetup_UpdateHorizontalScrollReturn
                 bmi.s   WeaponSetup_ApplyHorizontalScrollStep
-                subq.w  #4,(dword_FFA90C).w
+                subq.w  #4,(SecondaryCameraYPos).w
                 moveq   #1,d0
                 rts
 ; ---------------------------------------------------------------------------
 WeaponSetup_ApplyHorizontalScrollStep:                  ; CODE XREF: WeaponSetup_UpdateHorizontalScroll+A   j  ; was: loc_1F734
-                addq.w  #4,(dword_FFA90C).w
+                addq.w  #4,(SecondaryCameraYPos).w
                 moveq   #1,d0
 WeaponSetup_UpdateHorizontalScrollReturn:               ; CODE XREF: WeaponSetup_UpdateHorizontalScroll+8   j  ; was: locret_1F73A
                 rts

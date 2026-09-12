@@ -62,7 +62,7 @@ Boss_ZLeoRenderRisingThresholdPose:                     ; CODE XREF: Boss_ZLeoBe
 ; ---------------------------------------------------------------------------
 Boss_ZLeoBeginPostAttackDelay:                          ; CODE XREF: Boss_ZLeoBeginRisingReturn+48   j  ; was: loc_525E4
                 addq.w  #2,4(a5)
-                move.l  #$100000,(dword_FFA90C).w
+                move.l  #$100000,(SecondaryCameraYPos).w
                 move.l  #$F00000,$35C(a5)
                 move.w  #$20,$11C(a5)                   ; ' '
                 bclr    #1,(byte_FF80EC).w
@@ -93,11 +93,11 @@ Boss_ZLeoRenderCompositeFrame:                          ; CODE XREF: Boss_ZLeoPr
                 jsr     (Sprite_BeginMetaspritePartTraversal).l
                 move.w  #$120,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA900).w
+                move.w  d0,(PrimaryCameraXPosition).w
                 move.w  $14(a5),d0
                 addi.w  #-$104,d0
                 sub.w   (PlaneAShakeOffset).w,d0
-                move.w  d0,(dword_FFA904).w
+                move.w  d0,(PrimaryCameraYPosition).w
                 bsr.w   Boss_ZLeoUpdateBladeSprite
                 bsr.w   Boss_ZLeoUpdateWingSprites
                 bsr.w   Boss_ZLeoSpriteUpdate
@@ -119,7 +119,7 @@ Boss_ZLeoTileUpdate:                                    ; CODE XREF: Boss_ZLeoRu
                 lea     Boss_ZLeoTileVramDestinations(pc),a4
                 nop
                 move.w  (word_FF9600).w,d7
-                move.w  (dword_FFA904).w,d0
+                move.w  (PrimaryCameraYPosition).w,d0
                 addi.w  #$20,d0                         ; ' '
                 bmi.w   Boss_ZLeoNoOp
                 move.w  (word_FF9602).w,d1
@@ -247,7 +247,7 @@ Boss_ZLeoPrimaryTileLoadDescriptor: dc.w    $4820, $2000, $100, $1F20  ; was: wo
 Boss_ZLeoBuildHBlankRegisterBuffer:                     ; CODE XREF: Boss_ZLeoInit+50   p  ; was: sub_52806
                                         ; Boss_ZLeoIntroInit   p
                 movea.w #(word_FF9E00-M68K_RAM),a0
-                move.w  (dword_FFA904).w,d7
+                move.w  (PrimaryCameraYPosition).w,d7
                 neg.w   d7
                 move.w  (dword_FFDB34).w,d0
                 subi.w  #$8B,d0
@@ -616,7 +616,7 @@ Boss_ZLeoApplyInterpolatedSegmentPose:                  ; CODE XREF: Boss_ZLeoUp
                 move.w  d0,$10(a5)
                 asr.w   #2,d1
                 addi.w  #$20,d1                         ; ' '
-                move.w  d1,(dword_FFA908).w
+                move.w  d1,(SecondaryCameraXPos).w
                 move.b  $30(a0),d0
                 ext.w   d0
                 move.w  d0,d1
@@ -627,7 +627,7 @@ Boss_ZLeoApplyInterpolatedSegmentPose:                  ; CODE XREF: Boss_ZLeoUp
                 asr.w   #2,d1
                 move.w  #$20,d0                         ; ' '
                 sub.w   d1,d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
 Boss_ZLeoUpdateSegmentsReturn:                          ; CODE XREF: Boss_ZLeoUpdateSegments+1A4   j  ; was: locret_52C32
                 rts
 ; End of function Boss_ZLeoUpdateSegments

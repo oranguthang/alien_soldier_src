@@ -13,7 +13,7 @@ Boss_DeepStriderMain:                                   ; DATA XREF: ROM:Entity_
 Boss_DeepStriderUpdateStageRelativeX:                   ; CODE XREF: Boss_DeepStriderMain+14   j  ; was: loc_3E5A8
                                         ; Boss_DeepStriderMain+1C   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
 ; State machine dispatcher for Deep Strider boss
@@ -490,7 +490,7 @@ Boss_DeepStriderDiveAttackStateReturn:                  ; CODE XREF: Boss_DeepSt
 Boss_DeepStriderBeginDefeat:                            ; CODE XREF: Boss_DeepStriderMain+22   j  ; was: sub_3EBCA
                 move.w  #4,(word_FF808C).w
                 move.b  #2,(byte_FF80EC).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)
                 move.w  #$CB00,$48(a5)
@@ -635,7 +635,7 @@ Boss_DeepStriderCalculatePhaseDiveX:                    ; CODE XREF: Boss_DeepSt
                 moveq   #0,d2
                 move.w  $29C(a5),d0
                 move.w  Boss_DeepStriderDiveXOffsets(pc,d0.w),d0
-                move.w  (dword_FFA900).w,d1
+                move.w  (PrimaryCameraXPosition).w,d1
                 subi.w  #$710,d1
                 sub.w   d1,d0
                 add.w   d2,d0

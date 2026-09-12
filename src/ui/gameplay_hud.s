@@ -9,21 +9,21 @@ UI_UpdateGameplayHUD:                                   ; CODE XREF: Sys_Gamepla
 Debug_HandleDormantSoundAndMenuInput:                   ; was: sub_12B78
                 tst.w   (DebugSoundRequestId).w
                 beq.s   Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle
-                btst    #6,(word_FFF708+1).w
+                btst    #6,(ControllerPressedState+1).w
                 beq.s   Debug_HandleDormantSoundAndMenuInput_CheckBit4
                 move.b  (DebugSoundRequestId).w,d0
                 jsr     (Sound_QueueRequest).l
                 bra.s   Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle
 ; ---------------------------------------------------------------------------
 Debug_HandleDormantSoundAndMenuInput_CheckBit4:         ; CODE XREF: Debug_HandleDormantSoundAndMenuInput+1A   j  ; was: loc_12B92
-                btst    #4,(word_FFF708+1).w
+                btst    #4,(ControllerPressedState+1).w
                 beq.s   Debug_HandleDormantSoundAndMenuInput_CheckBit5
                 move.b  #1,d0
                 jsr     (Sound_QueueRequest).l
                 bra.s   Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle
 ; ---------------------------------------------------------------------------
 Debug_HandleDormantSoundAndMenuInput_CheckBit5:         ; CODE XREF: Debug_HandleDormantSoundAndMenuInput+2E   j  ; was: loc_12BA6
-                btst    #5,(word_FFF708+1).w
+                btst    #5,(ControllerPressedState+1).w
                 beq.s   Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle
                 move.b  #4,d0
                 jsr     (Sound_QueueRequest).l
@@ -35,14 +35,14 @@ Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle:   ; CODE XREF: Debug_Handl
                 bpl.s   UI_UpdateGameplayHUD_UpdateStageTimer
                 btst    #0,(byte_FFF705).w
                 beq.s   UI_UpdateGameplayHUD_UpdateStageTimer
-                btst    #6,(word_FFF708).w
+                btst    #6,(ControllerPressedState).w
                 beq.s   UI_UpdateGameplayHUD_UpdateStageTimer
                 addq.w  #2,(DebugMenuStateOffset).w
 UI_UpdateGameplayHUD_UpdateStageTimer:                  ; CODE XREF: UI_UpdateGameplayHUD+C   j  ; was: loc_12BDA
                                         ; Debug_HandleDormantSoundAndMenuInput+5A   j
                 tst.b   (byte_FFF705).w
                 bmi.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
-                btst    #0,(byte_FFA272).w
+                btst    #0,(StageTimerPauseFlag).w
                 bne.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
                 tst.w   (StageTimeRemaining).w
                 beq.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
@@ -100,7 +100,7 @@ UI_UpdateGameplayHUD_SelectAlternatingSection:          ; CODE XREF: UI_UpdateGa
                 bpl.s   UI_UpdateGameplayHUD_RenderPlayerHealth
                 btst    #0,(byte_FFF705).w
                 beq.s   UI_UpdateGameplayHUD_RenderPlayerHealth
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 bne.s   UI_UpdateGameplayHUD_RenderPlayerHealth
                 bra.w   UI_RenderScoreDisplay
 ; ---------------------------------------------------------------------------

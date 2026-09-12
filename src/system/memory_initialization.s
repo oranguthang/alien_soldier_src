@@ -101,7 +101,7 @@ Sys_ClearTimerBuffer_Loop:                              ; CODE XREF: Sys_ClearTi
 ; Clears main object data buffer with zero fill
 Sys_ClearObjectBuffer:                                  ; CODE XREF: Sys_InitFullGame+28   j  ; was: sub_2F66
                                         ; Sys_InitGameMode+24   j
-                lea     (word_FFA400).w,a0
+                lea     (PlayerObjectType).w,a0
                 moveq   #0,d0
                 move.w  #$3F,d1                         ; '?'
 Sys_ClearObjectBuffer_Loop:                             ; CODE XREF: Sys_ClearObjectBuffer+12   j  ; was: loc_2F70
@@ -114,7 +114,7 @@ Sys_ClearObjectBuffer_Loop:                             ; CODE XREF: Sys_ClearOb
 ; End of function Sys_ClearObjectBuffer
 ; Clears first half of object buffer at FFA400
 Sys_ClearObjectBufferHalf:
-                lea     (word_FFA400).w,a0              ; was: sub_2F7E
+                lea     (PlayerObjectType).w,a0         ; was: sub_2F7E
                 moveq   #0,d0
                 move.w  #$1F,d1
 Sys_ClearObjectBufferHalf_Loop:                         ; CODE XREF: Sys_ClearObjectBufferHalf+12   j  ; was: loc_2F88
@@ -140,7 +140,7 @@ Sys_ClearBufferFFA600_Loop:                             ; CODE XREF: Sys_ClearBu
 ; End of function Sys_ClearBufferFFA600
 ; Clears FFA400 and FFA600 buffers (96 bytes each)
 Sys_ClearDualObjectBuffers:                             ; CODE XREF: Gfx_InitializeChain   p  ; was: sub_2FAE
-                lea     (word_FFA400).w,a0
+                lea     (PlayerObjectType).w,a0
                 moveq   #0,d0
                 move.w  #5,d1
 Sys_ClearDualObjectBuffers_FirstLoop:                   ; CODE XREF: Sys_ClearDualObjectBuffers+12   j  ; was: loc_2FB8
@@ -188,7 +188,7 @@ Sys_ClearBufferFFA800Partial_Loop:                      ; CODE XREF: Sys_ClearBu
 ; End of function Sys_ClearBufferFFA800Partial
 ; Clears scroll position buffer for stage initialization
 Sys_ClearScrollBuffer:                                  ; CODE XREF: Sys_InitSubsystems+C   p  ; was: sub_300C
-                lea     (dword_FFA900).w,a0
+                lea     (PrimaryCameraXPosition).w,a0
                 moveq   #0,d0
                 move.w  #$F,d1
 Sys_ClearScrollBuffer_Loop:                             ; CODE XREF: Sys_ClearScrollBuffer+12   j  ; was: loc_3016

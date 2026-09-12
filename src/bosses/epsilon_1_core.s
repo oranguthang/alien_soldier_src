@@ -35,7 +35,7 @@ Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilo
                                         ; Boss_Epsilon1Main+54   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  (dword_FFC690).w,d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$4E(a5)
                 move.w  (dword_FF9414).w,d0
                 lea     (Math_SineTable).l,a2
@@ -49,10 +49,10 @@ Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilo
                 move.w  (dword_FFC690).w,(dword_FF940C).w
                 move.w  #$180,d0
                 sub.w   (dword_FF940C).w,d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  #$1C8,d0
                 sub.w   (dword_FF940C+2).w,d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 bsr.w   Boss_Epsilon1BuildScrollProfile
                 bsr.w   Boss_Epsilon1UpdateVisibleTileBands
                 btst    #2,(byte_FF80EC).w
@@ -66,7 +66,7 @@ Boss_Epsilon1UpdatePresentation:                        ; CODE XREF: Boss_Epsilo
                 move.w  #$5C,4(a5)                      ; '\'
                 clr.l   (dword_FFC698).w
                 clr.l   (dword_FFC69C).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 bra.w   Boss_Epsilon1UpdateLinkedParts
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1UpdateBodyAndAngleHistory:                 ; CODE XREF: Boss_Epsilon1Main+BE   j  ; was: loc_45BC4
@@ -152,7 +152,7 @@ Boss_Epsilon1UpdateLinkedParts:                         ; CODE XREF: Boss_Epsilo
                 bsr.w   Boss_Epsilon1UpdateLinkedPart
 Boss_Epsilon1DispatchAndPublishScroll:                  ; CODE XREF: Boss_Epsilon1Main+6   j  ; was: loc_45CD4
                 bsr.w   Boss_Epsilon1DispatchState
-                move.w  (dword_FFA908).w,d0
+                move.w  (SecondaryCameraXPos).w,d0
                 neg.w   d0
                 move.w  d0,(HScrollBuffer).w
                 rts

@@ -1,32 +1,32 @@
 ; Replaces an out-of-range shared boss position with the offscreen fallback X
 Boss_ClampSharedScreenPosition:                         ; CODE XREF: Boss_TerobusterUpdateBodyParts+72   j  ; was: sub_35614
                                         ; Boss_ShellshogunPublishScreenPosition+18   j
-                tst.w   (dword_FFA908).w
+                tst.w   (SecondaryCameraXPos).w
                 bmi.s   Boss_ClampSharedScreenPositionCheckNegativeX
-                cmpi.w  #$80,(dword_FFA908).w
+                cmpi.w  #$80,(SecondaryCameraXPos).w
                 bpl.s   Boss_ClampSharedScreenPositionFallback
                 bra.s   Boss_ClampSharedScreenPositionCheckY
 ; ---------------------------------------------------------------------------
 Boss_ClampSharedScreenPositionCheckNegativeX:           ; CODE XREF: Boss_ClampSharedScreenPosition+4   j  ; was: loc_35624
-                cmpi.w  #$FEB0,(dword_FFA908).w
+                cmpi.w  #$FEB0,(SecondaryCameraXPos).w
                 bmi.s   Boss_ClampSharedScreenPositionFallback
 Boss_ClampSharedScreenPositionCheckY:                   ; CODE XREF: Boss_ClampSharedScreenPosition+E   j  ; was: loc_3562C
-                tst.w   (dword_FFA90C).w
+                tst.w   (SecondaryCameraYPos).w
                 bmi.s   Boss_ClampSharedScreenPositionCheckNegativeY
-                cmpi.w  #$E0,(dword_FFA90C).w
+                cmpi.w  #$E0,(SecondaryCameraYPos).w
                 bmi.s   Boss_ClampSharedScreenPositionFallback
-                cmpi.w  #$1D0,(dword_FFA90C).w
+                cmpi.w  #$1D0,(SecondaryCameraYPos).w
                 bpl.s   Boss_ClampSharedScreenPositionFallback
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ClampSharedScreenPositionCheckNegativeY:           ; CODE XREF: Boss_ClampSharedScreenPosition+1C   j  ; was: loc_35644
-                cmpi.w  #$FFD0,(dword_FFA90C).w
+                cmpi.w  #$FFD0,(SecondaryCameraYPos).w
                 bmi.s   Boss_ClampSharedScreenPositionFallback
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ClampSharedScreenPositionFallback:                 ; CODE XREF: Boss_ClampSharedScreenPosition+C   j  ; was: loc_3564E
                                         ; Boss_ClampSharedScreenPosition+16   j
-                move.w  #$FEB0,(dword_FFA908).w
+                move.w  #$FEB0,(SecondaryCameraXPos).w
                 rts
 ; End of function Boss_ClampSharedScreenPosition
 ; Runs the state machine and raises the shared palette-flash intensity when needed
@@ -60,12 +60,12 @@ Boss_JetsripperUpdateState:                             ; CODE XREF: Boss_Jetsri
                 bne.s   Boss_JetsripperUpdateActiveState
                 move.b  #2,(byte_FF80EC).w
                 move.w  #$1E,4(a5)
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
 Boss_JetsripperUpdateActiveState:                       ; CODE XREF: Boss_JetsripperUpdateState+E   j  ; was: loc_356B2
                                         ; Boss_JetsripperUpdateState+16   j
                 bsr.w   Boss_JetsripperUpdatePalette
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$5E(a5)
 ; Dispatches Jetsripper's state-offset jump table

@@ -172,7 +172,7 @@ Boss_SunsetStingCloseAttackChoices:
 ; Calculates horizontal screen offset based on boss position and velocity direction
 Boss_SunsetStingCalculateScreenOffset:                  ; CODE XREF: Boss_SunsetStingDashAttack+6E   p  ; was: sub_40F02
                                         ; Boss_SunsetStingDashAttack+7E   p
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 tst.w   $18(a5)
                 bpl.s   Boss_SunsetStingMeasureRightBoundary
@@ -460,7 +460,7 @@ Boss_SunsetStingCalculateAngleAndFlip:                  ; CODE XREF: Boss_Sunset
                                         ; Boss_SunsetStingDashAttack+4   p
                 andi.w  #$F7FF,$E(a5)
                 movem.l d3,-(sp)
-                lea     (word_FFA400).w,a4
+                lea     (PlayerObjectType).w,a4
                 jsr     (Physics_CalculateAngleToTarget).l
                 movem.l (sp)+,d3
                 move.b  d0,d2
@@ -543,7 +543,7 @@ Boss_SunsetStingLoadTileTableEntry:                     ; CODE XREF: Boss_Sunset
 ; Starts the early form's defeat transition when shared health reaches zero
 Boss_SunsetStingBeginEarlyFormDefeatState:              ; CODE XREF: Boss_SunsetStingUpdateGraphics+18   j  ; was: sub_4133E
                 move.b  #1,(byte_FF830E).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #4,(PlaneAShakeLevel).w
@@ -684,10 +684,10 @@ Boss_SunsetStingUpdateCameraOffset:                     ; CODE XREF: Boss_Sunset
                                         ; Boss_SunsetStingRiseAndSpawnProjectilesState+12   p
                 move.w  #$A4,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$4C,d0                         ; 'L'
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_SunsetStingUpdateCameraOffset
 ; Updates animation angles for boss body parts

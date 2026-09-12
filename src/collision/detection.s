@@ -137,8 +137,8 @@ Collision_CheckTerrainTiles:                            ; CODE XREF: Collision_U
                 movea.w a5,a2
                 moveq   #3,d6
                 moveq   #4,d1
-                move.w  (dword_FFA900).w,d4
-                move.w  (dword_FFA904).w,d5
+                move.w  (PrimaryCameraXPosition).w,d4
+                move.w  (PrimaryCameraYPosition).w,d5
                 subi.w  #$80,d4
                 addi.w  #$80,d5
 Collision_CheckTerrainTiles_ScanLoop:                   ; CODE XREF: Collision_CheckTerrainTiles+74   j  ; was: loc_13C72
@@ -326,7 +326,7 @@ Collision_CheckPlayerAgainstHostiles:                   ; CODE XREF: Collision_U
                 move.b  #$FF,(ContactDamageCooldown).w
 Collision_CheckPlayerAgainstHostiles_Begin:             ; CODE XREF: Collision_CheckPlayerAgainstHostiles+E   j  ; was: loc_13EB0
                 clr.l   (dword_FF8300).w
-                movea.w #(word_FFA400-M68K_RAM),a0
+                movea.w #(PlayerObjectType-M68K_RAM),a0
                 tst.b   $21(a0)
                 beq.w   Collision_CheckPlayerAgainstHostiles_Return
                 move.b  $2A(a0),d0

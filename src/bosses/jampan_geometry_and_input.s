@@ -29,7 +29,7 @@ Boss_JampanBackwardAngularVelocityTable:    dc.l    $800, $1000, $2000, $2000, $
 ; This remains active in the post-defeat movement states; an original debug or
 ; gameplay purpose is not claimed without runtime evidence
 ;
-; Controller Input Mapping (word_FFF706 = Controller 1 input):
+; Controller Input Mapping (ControllerHeldState = Controller 1 input):
 ; UP + A      : Decrease dword_FF9400 by 2
 ; UP + B      : Decrease dword_FF9404 by 2
 ; UP + C      : Decrease dword_FF9408 by 2
@@ -44,46 +44,46 @@ Boss_JampanBackwardAngularVelocityTable:    dc.l    $800, $1000, $2000, $2000, $
 ; Bit 4 = B, Bit 5 = C, Bit 6 = A, Bit 7 = START
 Boss_JampanAdjustOrbitParametersFromInput:              ; CODE XREF: Boss_JampanInitializePostDefeatMovementState+10   p  ; was: sub_4A65E
                                         ; Boss_JampanUpdatePostDefeatMovementState+4   p
-                btst    #2,(word_FFF706).w              ; Test UP button on controller 1
+                btst    #2,(ControllerHeldState).w      ; Test UP button on controller 1
                 beq.s   Boss_JampanCheckDownOrbitAdjustments
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckUpBOrbitAdjustment
                 subq.w  #2,(dword_FF9400).w
 Boss_JampanCheckUpBOrbitAdjustment:                     ; CODE XREF: Boss_JampanAdjustOrbitParametersFromInput+E   j  ; was: loc_4A672
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckUpCOrbitAdjustment
                 subq.w  #2,(dword_FF9404).w
 Boss_JampanCheckUpCOrbitAdjustment:                     ; CODE XREF: Boss_JampanAdjustOrbitParametersFromInput+1A   j  ; was: loc_4A67E
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckDownOrbitAdjustments
                 subq.w  #2,(dword_FF9408).w
 Boss_JampanCheckDownOrbitAdjustments:                   ; CODE XREF: Boss_JampanAdjustOrbitParametersFromInput+6   j  ; was: loc_4A68A
                                         ; Boss_JampanAdjustOrbitParametersFromInput+26   j
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckLeftStartOffsetAdjustment
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckDownBOrbitAdjustment
                 addq.w  #2,(dword_FF9400).w
 Boss_JampanCheckDownBOrbitAdjustment:                   ; CODE XREF: Boss_JampanAdjustOrbitParametersFromInput+3A   j  ; was: loc_4A69E
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckDownCOrbitAdjustment
                 addq.w  #2,(dword_FF9404).w
 Boss_JampanCheckDownCOrbitAdjustment:                   ; CODE XREF: Boss_JampanAdjustOrbitParametersFromInput+46   j  ; was: loc_4A6AA
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckLeftStartOffsetAdjustment
                 addq.w  #2,(dword_FF9408).w
 Boss_JampanCheckLeftStartOffsetAdjustment:              ; CODE XREF: Boss_JampanAdjustOrbitParametersFromInput+32   j  ; was: loc_4A6B6
                                         ; Boss_JampanAdjustOrbitParametersFromInput+52   j
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckRightStartOffsetAdjustment
-                btst    #7,(word_FFF706).w
+                btst    #7,(ControllerHeldState).w
                 beq.s   Boss_JampanCheckRightStartOffsetAdjustment
                 addq.w  #2,(dword_FF9424).w
 Boss_JampanCheckRightStartOffsetAdjustment:             ; CODE XREF: Boss_JampanAdjustOrbitParametersFromInput+5E   j  ; was: loc_4A6CA
                                         ; Boss_JampanAdjustOrbitParametersFromInput+66   j
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Boss_JampanAdjustOrbitParametersFromInputReturn
-                btst    #7,(word_FFF706).w
+                btst    #7,(ControllerHeldState).w
                 beq.s   Boss_JampanAdjustOrbitParametersFromInputReturn
                 subq.w  #2,(dword_FF9424).w
 Boss_JampanAdjustOrbitParametersFromInputReturn:        ; CODE XREF: Boss_JampanAdjustOrbitParametersFromInput+72   j  ; was: locret_4A6DE
@@ -94,10 +94,10 @@ Boss_JampanAdjustOrbitParametersFromInputReturn:        ; CODE XREF: Boss_Jampan
 Boss_JampanPublishStageCoordinates:                     ; CODE XREF: Boss_JampanMain+4   p  ; was: sub_4A6E0
                 move.w  #$A4,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$4C,d0                         ; 'L'
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 rts
 ; End of function Boss_JampanPublishStageCoordinates
 ; Advances shared angles and projects all sixteen orbiting parts

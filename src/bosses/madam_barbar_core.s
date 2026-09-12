@@ -11,7 +11,7 @@ Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_
                 tst.w   (BossHealth).w
                 bne.s   Boss_MadamBarbarPrepareStateDispatch
                 move.b  #1,(byte_FF830E).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #4,(word_FF808C).w
@@ -20,7 +20,7 @@ Boss_MadamBarbarMain:                                   ; DATA XREF: ROM:Entity_
 Boss_MadamBarbarPrepareStateDispatch:                   ; CODE XREF: Boss_MadamBarbarMain+14   j  ; was: loc_3A4C2
                                         ; Boss_MadamBarbarMain+1C   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
 Boss_MadamBarbarDispatchState:                          ; CODE XREF: Boss_MadamBarbarMain+4   j  ; was: loc_3A4D4
@@ -197,7 +197,7 @@ Boss_MadamBarbarPostBarrageCleanupState:                ; DATA XREF: ROM:0003A4F
 Boss_MadamBarbarUpdatePostBarrageParts:                 ; CODE XREF: Boss_MadamBarbarPostBarrageCleanupState+4   j  ; was: loc_3A708
                 bsr.w   Boss_MadamBarbarUpdateParts
 Boss_MadamBarbarDisableAllPartFlag7:                    ; CODE XREF: Boss_MadamBarbarBulletBarrageState+74   j  ; was: loc_3A70C
-                move.w  #$FEB0,(dword_FFA908).w
+                move.w  #$FEB0,(SecondaryCameraXPos).w
                 moveq   #7,d0
                 moveq   #$1C,d7
                 movea.w a5,a0
@@ -249,7 +249,7 @@ Boss_MadamBarbarSelectAttackState:                      ; DATA XREF: ROM:0003A4F
                 tst.w   $17E(a5)
                 bpl.s   Boss_MadamBarbarUpdateAttackSelectionPose
                 move.w  (RandomNumberState).w,d7
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 move.w  d0,d1
                 bpl.s   Boss_MadamBarbarCheckAttackDistance
@@ -290,7 +290,7 @@ Boss_MadamBarbarPlayerLeftSidePoseState:                ; DATA XREF: ROM:0003A4F
                 bpl.s   Boss_MadamBarbarUpdatePlayerLeftSidePose
                 subi.w  #0,(word_FF8234).w
                 bmi.w   Boss_MadamBarbarBeginIdleState
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 addi.w  #$60,d0                         ; '`'
                 cmp.w   $10(a5),d0
                 bpl.w   Boss_MadamBarbarPrepareAIState
@@ -327,7 +327,7 @@ Boss_MadamBarbarPlayerRightSidePoseState:               ; DATA XREF: ROM:0003A4F
                 bpl.s   Boss_MadamBarbarUpdatePlayerRightSidePose
                 subi.w  #0,(word_FF8234).w
                 bmi.w   Boss_MadamBarbarBeginIdleState
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 subi.w  #$60,d0                         ; '`'
                 cmp.w   $10(a5),d0
                 bmi.w   Boss_MadamBarbarPrepareAIState
@@ -584,10 +584,10 @@ Boss_MadamBarbarPlayRotationSound:                      ; CODE XREF: Boss_MadamB
 Boss_MadamBarbarPublishScreenPosition:                  ; CODE XREF: Boss_MadamBarbarUpdateParts+90   p  ; was: sub_3AB64
                 move.w  #$BC,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$50,d0                         ; 'P'
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_MadamBarbarPublishScreenPosition
 ; Spawns a type-A4 particle with randomized position and horizontal velocity

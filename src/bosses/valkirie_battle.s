@@ -20,7 +20,7 @@ Entity_UpdateValkirieBattleActive:                      ; CODE XREF: Entity_Upda
                 jsr     Gfx_UpdateSevenForcesBattlePalette(pc)  ; (pc)
                 nop
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$BC(a5)
 Entity_DispatchValkirieBattleState:                     ; CODE XREF: Entity_UpdateValkirieBattle+4   j  ; was: loc_557AA
                                         ; Entity_UpdateValkirieBattle+C   j
@@ -337,20 +337,20 @@ Entity_StartValkirieBattleStateE:                       ; CODE XREF: Entity_Upda
                 bsr.w   Entity_SelectValkirieActivePartPair
                 move.b  #$5A,d0                         ; 'Z'
                 jsr     (Sound_PlaySFX).l
-                cmpi.w  #$120,(dword_FFA414).w
+                cmpi.w  #$120,(PlayerYPosition).w
                 bmi.s   Entity_ValkirieBattleStateECheckMidPattern
-                tst.w   (dword_FFA41C).w
+                tst.w   (PlayerYVelocity).w
                 bmi.s   Entity_ValkirieBattleStateEUseMidPattern
 Entity_ValkirieBattleStateEUseHighPattern:              ; CODE XREF: Entity_StartValkirieBattleStateE+6E   j  ; was: loc_55B62
                 move.l  #Valkirie_AirborneHighPoseScript,$41C(a5)
                 bra.s   Entity_UpdateValkirieAirborneStateEOr16
 ; ---------------------------------------------------------------------------
 Entity_ValkirieBattleStateECheckMidPattern:             ; CODE XREF: Entity_StartValkirieBattleStateE+34   j  ; was: loc_55B6C
-                cmpi.w  #$E0,(dword_FFA414).w
+                cmpi.w  #$E0,(PlayerYPosition).w
                 bmi.s   Entity_ValkirieBattleStateEChooseRandomPattern
                 btst    #1,(FrameCounter+1).w
                 bne.s   Entity_ValkirieBattleStateEUseMidPattern
-                tst.w   (dword_FFA41C).w
+                tst.w   (PlayerYVelocity).w
                 bmi.s   Entity_ValkirieBattleStateEUseLowPattern
 Entity_ValkirieBattleStateEUseMidPattern:               ; CODE XREF: Entity_StartValkirieBattleStateE+3A   j  ; was: loc_55B82
                                         ; Entity_StartValkirieBattleStateE+54   j

@@ -61,11 +61,11 @@ Sys_ProcessSpawnList:                                   ; CODE XREF: Sys_UpdateO
                                         ; DATA XREF: Sys_UpdateObjectSpawner:Sys_UpdateObjectSpawner_ProcessList   o
                 move.l  (StageObjectSpawnCursor).w,d0
                 bmi.s   Sys_ProcessSpawnList_Return
-                tst.w   (dword_FFA910).w
+                tst.w   (CameraXDelta).w
                 bmi.s   Sys_ProcessSpawnList_Return
                 movea.l d0,a4
 Sys_ProcessSpawnList_Loop:                              ; CODE XREF: Sys_ProcessSpawnList+22   j  ; was: loc_1A308
-                move.w  (dword_FFA900).w,d7
+                move.w  (PrimaryCameraXPosition).w,d7
                 addi.w  #$140,d7
                 cmp.w   (a4),d7
                 blt.s   Sys_ProcessSpawnList_SaveCursor
@@ -108,12 +108,12 @@ Sys_SpawnObject_Populate:                               ; CODE XREF: Sys_SpawnOb
                 move.w  d0,(a5)
                 move.w  6(a4),$5E(a5)
                 move.w  (a4),d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 addi.w  #$80,d0
                 move.w  d0,$10(a5)
                 clr.w   $12(a5)
                 move.w  2(a4),d1
-                add.w   (dword_FFA904).w,d1
+                add.w   (PrimaryCameraYPosition).w,d1
                 move.w  d1,$14(a5)
                 clr.w   $16(a5)
 Sys_SpawnObject_Return:                                 ; CODE XREF: Sys_SpawnObject+16   j  ; was: locret_1A388

@@ -9,7 +9,7 @@ Sprite_RenderObjectList_Begin:                          ; CODE XREF: Sprite_Rend
                 ror.l   #8,d3
                 move.b  (SpriteOAMEntryCount).w,d4
                 movea.w (SpriteOAMWritePointer).w,a3
-                lea     (word_FFA400).w,a5
+                lea     (PlayerObjectType).w,a5
                 bsr.w   Sprite_RenderDynamicObject
                 move.w  (word_FFF75A).w,d2
                 beq.w   Sprite_RenderObjectList_Finalize

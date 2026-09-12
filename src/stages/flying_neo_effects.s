@@ -102,7 +102,7 @@ Midgame_CreateRandomLightningComposite:                 ; CODE XREF: Midgame_Upd
                 addi.w  #$A0,d0
                 move.w  d0,$10(a0)
                 move.w  #$F8,d0
-                add.w   (dword_FFA904).w,d0
+                add.w   (PrimaryCameraYPosition).w,d0
                 move.w  d0,$14(a0)
 Midgame_UpdateRandomLightningEffect_Return:             ; CODE XREF: Midgame_UpdateRandomLightningEffect+4   j  ; was: locret_D838
                                         ; Midgame_UpdateRandomLightningEffect+C   j

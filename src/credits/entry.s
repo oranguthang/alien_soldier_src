@@ -25,8 +25,8 @@ Credits_InitializeScreen_Activate:                      ; CODE XREF: Credits_Ini
                 move.w  #$800,d0
                 move.w  #$FF00,d1
                 jsr     (Tilemap_TransferFullMapDirectToVRAM).l
-                clr.w   (dword_FFA900).w
-                clr.w   (dword_FFA904).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (PrimaryCameraYPosition).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 move.w  #0,(word_FF807A).w
                 jsr     (TransitionEffect_ConfigureRasterMode).l

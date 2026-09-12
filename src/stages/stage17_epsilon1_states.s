@@ -14,11 +14,11 @@ Stage17_InitializeEpsilon1Transition_Return:            ; CODE XREF: Stage17_Ini
 
 ; Unreferenced controller-driven update of one indexed palette word
 UnreferencedUpdateIndexedPaletteWord:
-                btst    #0,(word_FFF706).w              ; was: sub_E14E
+                btst    #0,(ControllerHeldState).w      ; was: sub_E14E
                 beq.s   UnreferencedUpdateIndexedPaletteWord_CheckDecrease
                 addq.w  #2,(word_FF806E).w
 UnreferencedUpdateIndexedPaletteWord_CheckDecrease:     ; CODE XREF: UnreferencedUpdateIndexedPaletteWord+6   j  ; was: loc_E15A
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   UnreferencedUpdateIndexedPaletteWord_Select
                 subq.w  #2,(word_FF806E).w
 UnreferencedUpdateIndexedPaletteWord_Select:            ; CODE XREF: UnreferencedUpdateIndexedPaletteWord+12   j  ; was: loc_E166
@@ -92,7 +92,7 @@ Stage17_UpdateEpsilon1Parallax_Active:                  ; CODE XREF: Stage17_Upd
                 move.w  (dword_FF8128).w,d0
                 subi.w  #$28,d0                         ; '('
                 neg.w   d0
-                move.w  d0,(dword_FFA904).w
+                move.w  d0,(PrimaryCameraYPosition).w
                 move.l  #$FFFEA000,(dword_FF8130).w
                 move.l  (dword_FF812C).w,d0
                 add.l   (dword_FF8130).w,d0

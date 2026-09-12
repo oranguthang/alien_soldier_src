@@ -33,7 +33,7 @@ Boss_ZLeoStateHandlers: dc.w    Boss_ZLeoIntroSequence-*  ; DATA XREF: Boss_ZLeo
 ; Initializes the Z-Leo ending sequence, camera, and particle emitter
 Boss_ZLeoIntroSequence:                                 ; DATA XREF: ROM:Boss_ZLeoStateHandlers   o  ; was: sub_22112
                 addq.w  #2,(dword_FF9400).w
-                clr.w   (word_FFA45E).w
+                clr.w   (PlayerInvulnTimer).w
                 lea     (Entity_ObjectPool).w,a0
                 move.w  #$10,(a0)
                 move.w  #$C00,2(a0)
@@ -286,26 +286,26 @@ Credits_ApplyFadeStep:                                  ; CODE XREF: Boss_ZLeoFa
 ; Integrates the Z-Leo scroll velocity
 Boss_ZLeoUpdateScroll:                                  ; CODE XREF: Boss_ZLeoMainController+8   p  ; was: sub_223E2
                 move.l  (dword_FF9408+2).w,d0
-                add.l   d0,(dword_FFA900).w
+                add.l   d0,(PrimaryCameraXPosition).w
                 rts
 ; End of function Boss_ZLeoUpdateScroll
 ; Debug function for manual camera control using directional inputs
 Debug_CameraManualControl:
-                btst    #2,(word_FFF706).w              ; was: sub_223EC
+                btst    #2,(ControllerHeldState).w      ; was: sub_223EC
                 beq.s   Debug_CameraManualControl_CheckRight
-                subq.w  #4,(dword_FFA410).w
+                subq.w  #4,(PlayerXPosition).w
 Debug_CameraManualControl_CheckRight:                   ; CODE XREF: Debug_CameraManualControl+6   j  ; was: loc_223F8
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_CameraManualControl_CheckUp
-                addq.w  #4,(dword_FFA410).w
+                addq.w  #4,(PlayerXPosition).w
 Debug_CameraManualControl_CheckUp:                      ; CODE XREF: Debug_CameraManualControl+12   j  ; was: loc_22404
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Debug_CameraManualControl_CheckDown
-                subq.w  #4,(dword_FFA414).w
+                subq.w  #4,(PlayerYPosition).w
 Debug_CameraManualControl_CheckDown:                    ; CODE XREF: Debug_CameraManualControl+1E   j  ; was: loc_22410
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Debug_CameraManualControl_Return
-                addq.w  #4,(dword_FFA414).w
+                addq.w  #4,(PlayerYPosition).w
 Debug_CameraManualControl_Return:                       ; CODE XREF: Debug_CameraManualControl+2A   j  ; was: locret_2241C
                 rts
 ; End of function Debug_CameraManualControl
@@ -319,13 +319,13 @@ Boss_ZLeoUpdateCameraOrbit:
                 move.w  (a4,d0.w),d0
                 muls.w  #$40,d0                         ; '@'
                 addi.l  #$1200000,d0
-                move.l  d0,(dword_FFA410).w
+                move.l  d0,(PlayerXPosition).w
                 move.w  (dword_FF9404+2).w,d0
                 addi.w  #$1FE,d0
                 move.w  (a4,d0.w),d0
                 muls.w  #$20,d0                         ; ' '
                 addi.l  #$F00000,d0
-                move.l  d0,(dword_FFA414).w
+                move.l  d0,(PlayerYPosition).w
                 rts
 ; End of function Boss_ZLeoUpdateCameraOrbit
 ; Uses the Z-Leo camera position while it remains inside the active bounds
@@ -334,15 +334,15 @@ Boss_ZLeoUpdateCameraBounds:                            ; CODE XREF: Boss_ZLeoMa
                 blt.s   Boss_ZLeoUpdateCameraBounds_Reset
                 cmpi.w  #$1C0,(dword_FFC630).w
                 bgt.s   Boss_ZLeoUpdateCameraBounds_Reset
-                bset    #7,(word_FFA402).w
-                move.l  (dword_FFC630).w,(dword_FFA410).w
-                move.l  (dword_FFC634).w,(dword_FFA414).w
+                bset    #7,(PlayerObjectFlags).w
+                move.l  (dword_FFC630).w,(PlayerXPosition).w
+                move.l  (dword_FFC634).w,(PlayerYPosition).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ZLeoUpdateCameraBounds_Reset:                      ; CODE XREF: Boss_ZLeoUpdateCameraBounds+6   j  ; was: loc_2248A
                                         ; Boss_ZLeoUpdateCameraBounds+E   j
-                move.l  #$60,(dword_FFA410).w           ; '`'
-                bclr    #7,(word_FFA402).w
+                move.l  #$60,(PlayerXPosition).w        ; '`'
+                bclr    #7,(PlayerObjectFlags).w
                 rts
 ; End of function Boss_ZLeoUpdateCameraBounds
 ; Spawns randomized Z-Leo ending particles and their periodic sound
@@ -419,7 +419,7 @@ Boss_ZLeoParticleSpritePointers:    dc.l    SharedCombatSpriteAnimation00  ; DAT
 
 ; Spawns the impact object that starts the Z-Leo ending transition
 Boss_ZLeoSpawnImpactObject:                             ; CODE XREF: Boss_ZLeoIntroSequence+68   p  ; was: sub_2257C
-                lea     (word_FFA400).w,a5
+                lea     (PlayerObjectType).w,a5
                 move.b  #$41,d0                         ; 'A'
                 jsr     (Sound_PlaySFX).l
                 movea.w #(word_FFC5C0-M68K_RAM),a0

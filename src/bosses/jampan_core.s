@@ -30,12 +30,12 @@ Boss_JampanCheckDefeatTrigger:                          ; CODE XREF: Boss_Jampan
                 bset    #0,$4C(a5)
                 clr.l   (dword_FF8240).w
                 move.w  #$52,4(a5)                      ; 'R'
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
 Boss_JampanUpdateScreenPositionAndMotion:               ; CODE XREF: Boss_JampanUpdateAndDispatch+2A   j
                                         ; Boss_JampanUpdateAndDispatch+32   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$58(a5)
                 btst    #2,$4C(a5)
                 beq.s   Boss_JampanDispatchState
@@ -625,7 +625,7 @@ Boss_JampanChooseOffsetAttackDirectionState:            ; DATA XREF: ROM:000491F
                 addq.w  #2,4(a5)
                 bclr    #1,$4C(a5)
                 clr.w   (word_FFC8B2).w
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 sub.w   $10(a5),d0
                 bpl.s   Boss_JampanChooseRightOffsetAttack
                 move.w  #2,(word_FFC792).w

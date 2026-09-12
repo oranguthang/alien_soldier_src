@@ -19,21 +19,21 @@ Boss_Epsilon1OpeningFadeDelayReturn:                    ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1OpeningFadeDelayState
 ; Unreferenced input helper for manually adjusting the shared battle center
 Debug_Epsilon1AdjustBattleCenter:
-                btst    #5,(word_FFF706).w              ; was: sub_461DE
+                btst    #5,(ControllerHeldState).w      ; was: sub_461DE
                 beq.s   Debug_Epsilon1AdjustBattleCenterReturn
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_Epsilon1CheckMoveRight
                 subq.w  #2,(dword_FFC690).w
 Debug_Epsilon1CheckMoveRight:                           ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+E   j  ; was: loc_461F2
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_Epsilon1CheckMoveUp
                 addq.w  #2,(dword_FFC690).w
 Debug_Epsilon1CheckMoveUp:                              ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+1A   j  ; was: loc_461FE
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Debug_Epsilon1CheckMoveDown
                 subq.w  #2,(dword_FFC694).w
 Debug_Epsilon1CheckMoveDown:                            ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+26   j  ; was: loc_4620A
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Debug_Epsilon1AdjustBattleCenterReturn
                 addq.w  #2,(dword_FFC694).w
 Debug_Epsilon1AdjustBattleCenterReturn:                 ; CODE XREF: Debug_Epsilon1AdjustBattleCenter+6   j  ; was: locret_46216

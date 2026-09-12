@@ -73,8 +73,8 @@ RetryPrompt_Initialize:                                 ; was: sub_1E06E
 RetryPrompt_Initialize_Activate:                        ; was: loc_1E0C4
                 addq.w  #4,(GameModeIndex).w
                 jsr     (Gfx_FadePaletteTransition).l
-                clr.w   (dword_FFA900).w
-                clr.w   (dword_FFA904).w
+                clr.w   (PrimaryCameraXPosition).w
+                clr.w   (PrimaryCameraYPosition).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
@@ -106,7 +106,7 @@ RetryPrompt_Update:                                     ; was: sub_1E124
 RetryPrompt_Update_CheckConfirm:                        ; was: loc_1E14C
                 tst.w   (PaletteFadeMode).w
                 bne.s   RetryPrompt_UpdateFrame
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   RetryPrompt_UpdateFrame
                 move.w  #2,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w

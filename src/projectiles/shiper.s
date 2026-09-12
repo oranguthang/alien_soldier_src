@@ -41,7 +41,7 @@ Boss_ShiperSpawnOscillatingShotReturn:                  ; CODE XREF: Boss_Shiper
 ; End of function Boss_ShiperSpawnOscillatingShot
 ; Updates Shiper's oscillating shot, then emits its terminal projectile burst
 Projectile_ShiperOscillatingShot:                       ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_37276
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 cmpi.w  #$1AD8,d0
                 bpl.s   Projectile_ShiperOscillatingShotUpdate

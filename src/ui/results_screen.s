@@ -6,7 +6,7 @@ Results_RenderSummaryPanel:                             ; was: sub_1DC4C
 
 ; Activates the post-stage summary and installs its completion graphics
 Results_ActivatePostStageSummary:                       ; was: sub_1DC52
-                move.w  #$50,(dword_FFA90C).w           ; 'P'
+                move.w  #$50,(SecondaryCameraYPos).w    ; 'P'
                 addq.w  #1,(FrameCounter).w
                 bsr.w   Results_RenderHighScore
                 bsr.w   Results_RenderScore
@@ -25,7 +25,7 @@ Results_ActivatePostStageSummary:                       ; was: sub_1DC52
                 jsr     (Gfx_AdjustTileIndexRows).l
                 movea.l #ResultsPostStageCompletionTilemapRows,a0
                 jsr     (Tilemap_QueueIndexedRows).l
-                clr.w   (dword_FFA908).w
+                clr.w   (SecondaryCameraXPos).w
 Results_ActivatePostStageSummary_Return:                ; was: locret_1DCB0
                 rts
 ; End of function Results_ActivatePostStageSummary
@@ -49,7 +49,7 @@ Results_WaitForPostStageConfirmation:                   ; was: sub_1DCDA
                 bsr.w   Results_RenderScore
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
                 jsr     (Gfx_FadePaletteTransition).l
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   Results_WaitForPostStageConfirmation_Return
                 addq.w  #2,(GameSubstateIndex).w
                 move.w  #2,(PaletteFadeMode).w
@@ -246,7 +246,7 @@ Results_UpdateFinalSummary_Frame:                       ; was: loc_1DF52
 Results_UpdateFinalSummary_CheckInput:                  ; was: loc_1DF74
                 cmpi.w  #4,(GameSubstateIndex).w
                 beq.s   Results_UpdateFinalSummary_FinishFadeOut
-                btst    #7,(word_FFF708).w
+                btst    #7,(ControllerPressedState).w
                 beq.s   Results_UpdateFinalSummary_Return
                 tst.w   (GameSubstateIndex).w
                 beq.s   Results_UpdateFinalSummary_StartFadeOut

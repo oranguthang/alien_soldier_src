@@ -41,7 +41,7 @@ Projectile_Epsilon1InitializeSpreadCommon:              ; CODE XREF: Projectile_
 Projectile_Epsilon1SpreadProjectileMain:                ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_47146
                 bsr.w   Projectile_Epsilon1ConvertOnGlobalMode
                 move.w  $10(a5),d0
-                add.w   (dword_FFA900).w,d0
+                add.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$5C(a5)
                 cmpi.w  #$150,$14(a5)
                 bcc.w   Projectile_Epsilon1ConvertSpreadProjectileToDebris

@@ -11,7 +11,7 @@ Boss_XiTigerMain:                                       ; DATA XREF: ROM:Entity_
                 bne.s   Boss_XiTigerUpdateStageRelativeCoordinates
                 tst.w   (BossHealth).w
                 bne.s   Boss_XiTigerUpdateStageRelativeCoordinates
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 move.b  #2,(byte_FF80EC).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.b  #1,(byte_FF830E).w
@@ -21,11 +21,11 @@ Boss_XiTigerMain:                                       ; DATA XREF: ROM:Entity_
 Boss_XiTigerUpdateStageRelativeCoordinates:             ; CODE XREF: Boss_XiTigerMain+14   j  ; was: loc_3D85A
                                         ; Boss_XiTigerMain+1C   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
                 move.w  #$13E,d0
-                add.w   (dword_FFA904).w,d0
+                add.w   (PrimaryCameraYPosition).w,d0
                 move.w  d0,$23C(a5)
 Boss_XiTigerDispatchState:                              ; CODE XREF: Boss_XiTigerMain+4   j  ; was: loc_3D878
                                         ; Boss_XiTigerMain+C   j
@@ -223,7 +223,7 @@ Boss_XiTigerUpdateRecoveryPose:                         ; CODE XREF: Boss_XiTige
 ; End of function Boss_XiTigerRecoveryCheck
 ; Check button input to reverse Xi-Tiger state
 Boss_XiTigerButtonCheck:
-                btst    #6,(word_FFF708).w              ; was: sub_3DAE2
+                btst    #6,(ControllerPressedState).w   ; was: sub_3DAE2
                 beq.s   Boss_XiTigerUpdateButtonCheckPose
                 subq.w  #2,4(a5)
                 clr.w   $58(a5)
@@ -595,7 +595,7 @@ Boss_XiTigerDefeatFadeState:                            ; DATA XREF: ROM:0003D8A
                 clr.w   2(a5)
                 move.w  #$20,$11C(a5)                   ; ' '
                 clr.w   8(a5)
-                move.w  #$FEB0,(dword_FFA908).w
+                move.w  #$FEB0,(SecondaryCameraXPos).w
                 move.w  #$114,d0
                 moveq   #0,d1
                 jmp     Object_ClearAllExceptTypes
@@ -750,10 +750,10 @@ Boss_XiTigerClawMappings:   dc.l    Boss_XiTigerClawMappingA  ; DATA XREF: Boss_
 Boss_XiTigerUpdateBody:                                 ; CODE XREF: Boss_XiTigerUpdateSprites+8   p  ; was: sub_3E18C
                 move.w  #$C0,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  $14(a5),d0
                 addi.w  #$50,d0                         ; 'P'
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 jmp     Boss_ClampSharedScreenPosition
 ; End of function Boss_XiTigerUpdateBody
 ; Applies the current boss defeat counter to the shared palette buffer

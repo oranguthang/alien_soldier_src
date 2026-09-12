@@ -7,7 +7,7 @@ Debug_ShieldViperApplyManualGeometryControls:           ; was: sub_4F5D8
 ; End of function Debug_ShieldViperApplyManualGeometryControls
 ; Emit through fall-through while button bit 6 is set; otherwise hide the orbit record
 Debug_ShieldViperSelectOrbitShotAction:                 ; was: sub_4F5E6
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.w   Boss_ShieldViperHideOrbitingRecordAndForceFlip
 ; Fall through to Boss_ShieldViperEmitOrbitShotOnFrameGate
 ; On eligible frames, emit one orbit shot from the auxiliary record
@@ -48,23 +48,23 @@ Boss_ShieldViperHideOrbitingRecordAndForceFlip:         ; CODE XREF: Boss_Shield
 ; End of function Boss_ShieldViperHideOrbitingRecordAndForceFlip
 ; With modifier bit 5 held, adjust one selected record's X and another's Y
 Debug_ShieldViperMoveSelectedRecordAxesWithDPad:        ; CODE XREF: Debug_ShieldViperApplyManualGeometryControls+8   p  ; was: sub_4F658
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 beq.w   Debug_ShieldViperSelectedRecordMoveReturn
                 movea.w (dword_FF9408).w,a0
                 movea.w (dword_FF9408+2).w,a1
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperCheckSelectedRecordMoveRight
                 subi.w  #4,$10(a0)
 Debug_ShieldViperCheckSelectedRecordMoveRight:          ; CODE XREF: Debug_ShieldViperMoveSelectedRecordAxesWithDPad+18   j  ; was: loc_4F678
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperCheckSelectedRecordMoveUp
                 addi.w  #4,$10(a0)
 Debug_ShieldViperCheckSelectedRecordMoveUp:             ; CODE XREF: Debug_ShieldViperMoveSelectedRecordAxesWithDPad+26   j  ; was: loc_4F686
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperCheckSelectedRecordMoveDown
                 subi.w  #4,$14(a1)
 Debug_ShieldViperCheckSelectedRecordMoveDown:           ; CODE XREF: Debug_ShieldViperMoveSelectedRecordAxesWithDPad+34   j  ; was: loc_4F694
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperSelectedRecordMoveReturn
                 addi.w  #4,$14(a1)
 Debug_ShieldViperSelectedRecordMoveReturn:              ; CODE XREF: Debug_ShieldViperMoveSelectedRecordAxesWithDPad+6   j  ; was: locret_4F6A2
@@ -73,15 +73,15 @@ Debug_ShieldViperSelectedRecordMoveReturn:              ; CODE XREF: Debug_Shiel
 ; End of function Debug_ShieldViperMoveSelectedRecordAxesWithDPad
 ; With modifier bit 4 held, adjust the controller angle by four from left/right
 Debug_ShieldViperAdjustControllerAngleWithDPad:         ; CODE XREF: Debug_ShieldViperApplyManualGeometryControls   p  ; was: sub_4F6A4
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.w   Debug_ShieldViperControllerAngleAdjustmentReturn
                 movea.w (dword_FF9408).w,a0
                 movea.w (dword_FF9408+2).w,a1
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperCheckControllerAngleIncrease
                 subq.w  #4,$56(a5)
 Debug_ShieldViperCheckControllerAngleIncrease:          ; CODE XREF: Debug_ShieldViperAdjustControllerAngleWithDPad+18   j  ; was: loc_4F6C2
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperControllerAngleAdjustmentReturn
                 addq.w  #4,$56(a5)
 Debug_ShieldViperControllerAngleAdjustmentReturn:       ; CODE XREF: Debug_ShieldViperAdjustControllerAngleWithDPad+6   j  ; was: locret_4F6CE
@@ -90,15 +90,15 @@ Debug_ShieldViperControllerAngleAdjustmentReturn:       ; CODE XREF: Debug_Shiel
 ; End of function Debug_ShieldViperAdjustControllerAngleWithDPad
 ; With modifier bit 4 held, adjust the shared body-bend step from up/down
 Debug_ShieldViperAdjustBodyBendStepWithDPad:            ; CODE XREF: Debug_ShieldViperApplyManualGeometryControls+4   p  ; was: sub_4F6D0
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.w   Debug_ShieldViperBodyBendStepAdjustmentReturn
                 movea.w (dword_FF9408).w,a0
                 movea.w (dword_FF9408+2).w,a1
-                btst    #0,(word_FFF706).w
+                btst    #0,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperCheckBodyBendStepDecrease
                 addq.w  #1,(dword_FF9404).w
 Debug_ShieldViperCheckBodyBendStepDecrease:             ; CODE XREF: Debug_ShieldViperAdjustBodyBendStepWithDPad+18   j  ; was: loc_4F6EE
-                btst    #1,(word_FFF706).w
+                btst    #1,(ControllerHeldState).w
                 beq.s   Debug_ShieldViperBodyBendStepAdjustmentReturn
                 subq.w  #1,(dword_FF9404).w
 Debug_ShieldViperBodyBendStepAdjustmentReturn:          ; CODE XREF: Debug_ShieldViperAdjustBodyBendStepWithDPad+6   j  ; was: locret_4F6FA
@@ -107,7 +107,7 @@ Debug_ShieldViperBodyBendStepAdjustmentReturn:          ; CODE XREF: Debug_Shiel
 ; End of function Debug_ShieldViperAdjustBodyBendStepWithDPad
 ; Perform one radial movement update while input bit 4 is held
 Debug_ShieldViperMoveRadiallyWhileButtonHeld:           ; was: sub_4F6FC
-                btst    #4,(word_FFF706).w
+                btst    #4,(ControllerHeldState).w
                 beq.w   Debug_ShieldViperManualRadialMoveReturn
                 bsr.w   Boss_ShieldViperMoveRadially
 Debug_ShieldViperManualRadialMoveReturn:                ; CODE XREF: Debug_ShieldViperMoveRadiallyWhileButtonHeld+6   j  ; was: locret_4F70A

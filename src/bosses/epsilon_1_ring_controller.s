@@ -281,7 +281,7 @@ Boss_Epsilon1PositionBarrageRingState:                  ; CODE XREF: Boss_Epsilo
                 add.w   d0,d0
                 move.w  Boss_Epsilon1BarrageRingHorizontalOffsets(pc,d0.w),d0
                 addi.w  #$120,d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 add.w   $4E(a5),d0
                 move.w  d0,$10(a5)
                 move.w  (PlayerCenterY).w,$14(a5)

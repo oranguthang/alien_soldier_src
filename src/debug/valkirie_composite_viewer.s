@@ -95,19 +95,19 @@ Debug_ValkirieViewerUpdate:                             ; DATA XREF: ROM:00050FC
                 bne.s   Debug_ValkirieViewerProcessFacingInput
                 move.b  #1,(byte_FFA958).w
 Debug_ValkirieViewerProcessFacingInput:                 ; CODE XREF: Debug_ValkirieViewerInitialize+14A   j  ; was: loc_51122
-                btst    #6,(word_FFF706).w
+                btst    #6,(ControllerHeldState).w
                 beq.s   Debug_ValkirieViewerCheckFaceRightInput
                 bsr.w   Debug_ValkirieViewerFaceLeft
 Debug_ValkirieViewerCheckFaceRightInput:                ; CODE XREF: Debug_ValkirieViewerInitialize+158   j  ; was: loc_5112E
-                btst    #5,(word_FFF706).w
+                btst    #5,(ControllerHeldState).w
                 beq.s   Debug_ValkirieViewerCheckAngleIncreaseInput
                 bsr.w   Debug_ValkirieViewerFaceRight
 Debug_ValkirieViewerCheckAngleIncreaseInput:            ; CODE XREF: Debug_ValkirieViewerInitialize+164   j  ; was: loc_5113A
-                btst    #2,(word_FFF706).w
+                btst    #2,(ControllerHeldState).w
                 beq.s   Debug_ValkirieViewerCheckAngleDecreaseInput
                 addq.b  #1,$29F(a5)
 Debug_ValkirieViewerCheckAngleDecreaseInput:            ; CODE XREF: Debug_ValkirieViewerInitialize+170   j  ; was: loc_51146
-                btst    #3,(word_FFF706).w
+                btst    #3,(ControllerHeldState).w
                 beq.s   Debug_ValkirieViewerPreparePoseUpdate
                 subq.b  #1,$29F(a5)
 Debug_ValkirieViewerPreparePoseUpdate:                  ; CODE XREF: Debug_ValkirieViewerInitialize+17C   j  ; was: loc_51152
@@ -214,8 +214,8 @@ Debug_ValkirieViewerStoreScreenAnchor:                  ; CODE XREF: Debug_Valki
                 sub.w   $70(a5),d0
                 move.w  $74(a5),d1
                 addi.w  #$3C,d1                         ; '<'
-                move.w  d0,(dword_FFA908).w
-                move.w  d1,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraXPos).w
+                move.w  d1,(SecondaryCameraYPos).w
                 jsr     (Boss_ClampSharedScreenPosition).l
                 rts
 ; End of function Debug_ValkirieViewerInitialize

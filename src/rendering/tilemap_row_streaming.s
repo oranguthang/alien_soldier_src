@@ -1,26 +1,26 @@
 ; Unreferenced wrapper that queues a row from the secondary camera, offset left by $60
 UnreferencedTilemapQueueSecondaryCameraRowOffset60:
-                move.w  (dword_FFA908).w,d0             ; was: sub_109A8
+                move.w  (SecondaryCameraXPos).w,d0      ; was: sub_109A8
                 subi.w  #$60,d0                         ; '`'
-                move.w  (dword_FFA90C).w,d1
+                move.w  (SecondaryCameraYPos).w,d1
                 lea     Gfx_FrontendAlternateVRAMTransferParameters(pc),a0
                 nop
                 bra.s   Tilemap_QueueRowFromDescriptor
 ; End of function UnreferencedTilemapQueueSecondaryCameraRowOffset60
 ; Unreferenced wrapper that queues a primary-camera row with $60/$F8 offsets
 UnreferencedTilemapQueuePrimaryCameraRowOffset60F8:
-                move.w  (dword_FFA900).w,d0             ; was: sub_109BC
+                move.w  (PrimaryCameraXPosition).w,d0   ; was: sub_109BC
                 subi.w  #$60,d0                         ; '`'
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 subi.w  #$F8,d1
                 bra.s   Tilemap_SelectPrimaryRowDescriptor
 ; End of function UnreferencedTilemapQueuePrimaryCameraRowOffset60F8
 ; Queues one tilemap row from the primary camera, offset left by $60
 Tilemap_QueuePrimaryCameraRowOffset60:                  ; CODE XREF: Stage16_StartPostViblackTransition+24   p  ; was: sub_109CE
                                         ; Scroll_UpdateAndRenderSylpheedBackdrop+4   j
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$60,d0                         ; '`'
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
 Tilemap_SelectPrimaryRowDescriptor:                     ; CODE XREF: UnreferencedTilemapQueuePrimaryCameraRowOffset60F8+10   j  ; was: loc_109DA
                 lea     Gfx_TitleAndZLeoVRAMTransferParameters(pc),a0
                 nop
@@ -112,8 +112,8 @@ Tilemap_AdvanceQueuedRowSegment:                        ; CODE XREF: Tilemap_Que
 ; End of function Tilemap_QueuePrimaryCameraRowOffset60
 ; Starts a full direct tilemap transfer at the secondary-camera coordinates
 Tilemap_DirectTransferFromSecondaryCamera:              ; CODE XREF: XiTigerCutscene_InitializeReveal+72   j  ; was: sub_10ADC
-                move.w  (dword_FFA908).w,d0
-                move.w  (dword_FFA90C).w,d1
+                move.w  (SecondaryCameraXPos).w,d0
+                move.w  (SecondaryCameraYPos).w,d1
 ; End of function Tilemap_DirectTransferFromSecondaryCamera
 ; Starts a full direct tilemap transfer with the alternate frontend descriptor
 Tilemap_DirectTransferWithAlternateDescriptor:          ; CODE XREF: Frontend_ActivateSegaSequence+18   p  ; was: sub_10AE4
@@ -124,8 +124,8 @@ Tilemap_DirectTransferWithAlternateDescriptor:          ; CODE XREF: Frontend_Ac
 ; Starts a full direct tilemap transfer at the primary-camera coordinates
 Tilemap_DirectTransferFromPrimaryCamera:                ; CODE XREF: XiTigerCutscene_InitializeReveal+66   p  ; was: sub_10AEC
                                         ; ZLeoEnding_InitializeScene+3C   p
-                move.w  (dword_FFA900).w,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraXPosition).w,d0
+                move.w  (PrimaryCameraYPosition).w,d1
 ; End of function Tilemap_DirectTransferFromPrimaryCamera
 ; Starts a full direct tilemap transfer with the primary descriptor
 Tilemap_DirectTransferWithPrimaryDescriptor:            ; CODE XREF: UI_InitSecondaryOptionsMenu+50   p  ; was: sub_10AF4
@@ -235,9 +235,9 @@ Tilemap_WaitForZ80BusRelease:                           ; CODE XREF: Tilemap_Tra
 ; Builds and queues the next row of a staged scrolling tilemap transfer
 Tilemap_QueueNextScrollingRow:                          ; CODE XREF: StoryScreen_WaitForScrollAndLoadPalette+16   p  ; was: sub_10C18
                                         ; StoryScreen_WaitForScrollAndLoadPalette+1C   p
-                movea.l (dword_FFA940).w,a0
-                move.w  (word_FFA946).w,d0
-                move.w  (word_FFA948).w,d1
+                movea.l (TilemapTransferBase).w,a0
+                move.w  (TilemapRowXOrFillWord).w,d0
+                move.w  (TilemapRowYPosition).w,d1
                 neg.w   d1
                 moveq   #$F,d7
 Tilemap_BuildScrollingRowLoop:                          ; CODE XREF: Tilemap_QueueNextScrollingRow+AC   j  ; was: loc_10C28
@@ -317,7 +317,7 @@ Tilemap_AdvanceScrollingRowSegment:                     ; CODE XREF: Tilemap_Que
                 move.l  #$94009340,-(a1)
                 move.w  a1,(VDPCommandQueueHead).w
                 addi.w  #$80,(VDPStagingDataCursor).w
-                subq.w  #8,(word_FFA948).w
-                subq.w  #1,(word_FFA944).w
+                subq.w  #8,(TilemapRowYPosition).w
+                subq.w  #1,(TilemapRowCountdown).w
                 rts
 ; End of function Tilemap_QueueNextScrollingRow

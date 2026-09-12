@@ -12,7 +12,7 @@ Boss_JokerMain:                                         ; DATA XREF: ROM:Entity_
 Boss_JokerUpdatePaletteAndScreenX:                      ; CODE XREF: Boss_JokerMain+14   j  ; was: loc_3B2C4
                                         ; Boss_JokerMain+1C   j
                 jsr     (Gfx_ProcessDefaultColorFade).l
-                move.w  (dword_FFA900).w,d0
+                move.w  (PrimaryCameraXPosition).w,d0
                 add.w   $10(a5),d0
                 move.w  d0,$BC(a5)
 Boss_JokerDispatchState:                                ; CODE XREF: Boss_JokerMain+4   j  ; was: loc_3B2D6
@@ -50,7 +50,7 @@ Boss_JokerInit:                                         ; DATA XREF: Boss_JokerM
                                         ; ROM:Boss_JokerStateOffsets   o
                 addq.w  #2,4(a5)
                 clr.w   8(a5)
-                move.w  (dword_FFA900).w,$48(a5)
+                move.w  (PrimaryCameraXPosition).w,$48(a5)
                 move.w  #4,$4A(a5)
                 move.w  #$15C,d0
                 moveq   #0,d1
@@ -67,7 +67,7 @@ Boss_JokerSetup:                                        ; DATA XREF: ROM:0003B2E
                 addi.w  #8,$48(a5)
                 move.w  $48(a5),d0
                 addi.w  #$158,d0
-                move.w  (dword_FFA904).w,d1
+                move.w  (PrimaryCameraYPosition).w,d1
                 jmp     Tilemap_QueuePrimaryPlaneColumn
 ; ---------------------------------------------------------------------------
 Boss_JokerInitializeMetasprite:                         ; CODE XREF: Boss_JokerSetup+A   j  ; was: loc_3B354
@@ -192,7 +192,7 @@ Boss_JokerRenderPhaseGatePose:                          ; CODE XREF: Boss_JokerU
 Boss_JokerBeginDefeatFall:                              ; CODE XREF: Boss_JokerMain+22   j  ; was: sub_3B4D8
                 move.w  #4,(word_FF808C).w
                 move.b  #2,(byte_FF80EC).w
-                bset    #0,(byte_FFA272).w
+                bset    #0,(StageTimerPauseFlag).w
                 jsr     (Sprite_ClearObjectFlags).l
                 move.w  #$1E,4(a5)
                 clr.w   $29E(a5)

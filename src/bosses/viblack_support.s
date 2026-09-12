@@ -116,10 +116,10 @@ Boss_ViblackClearNextScrollSamplesLoop:                 ; CODE XREF: Boss_Viblac
                 moveq   #0,d0
                 move.w  #$120,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
                 move.w  #$168,d0
                 add.w   $14(a5),d0
-                move.w  d0,(dword_FFA90C).w
+                move.w  d0,(SecondaryCameraYPos).w
                 neg.w   d0
                 movea.w #(dword_FF9410-M68K_RAM),a0
                 movea.w #(dword_FF9418-M68K_RAM),a1
@@ -140,7 +140,7 @@ Boss_ViblackBuildUpperScrollProfileLoop:                ; CODE XREF: Boss_Viblac
                 movea.w #(dword_FF9410-M68K_RAM),a0
                 movea.w #(dword_FF9418-M68K_RAM),a1
                 moveq   #0,d0
-                move.w  (dword_FFA90C).w,d0
+                move.w  (SecondaryCameraYPos).w,d0
                 neg.w   d0
                 moveq   #1,d7
 Boss_ViblackBuildLowerScrollProfileLoop:                ; CODE XREF: Boss_ViblackBuildScrollProfile+84   j  ; was: loc_44064
@@ -153,7 +153,7 @@ Boss_ViblackBuildLowerScrollProfileLoop:                ; CODE XREF: Boss_Viblac
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 movea.w #(word_FF9480-M68K_RAM),a1
                 moveq   #$13,d7
-                move.w  (dword_FFA908).w,d0
+                move.w  (SecondaryCameraXPos).w,d0
                 addi.w  #$F,d0
                 move.w  d0,d1
                 asr.w   #4,d1
@@ -190,7 +190,7 @@ Boss_ViblackScrollProfileSteps: dc.l    0, $FFFE8000, $FFFE0000, $FFFF0000  ; wa
 ; Positions the companion object on the generated vertical-scroll profile
 Boss_ViblackPositionCompanionOnScrollProfile:           ; CODE XREF: Boss_ViblackUpdateScrollAndCompanion+2   j  ; was: sub_440D0
                 move.w  $10(a5),$10(a4)
-                move.w  (dword_FFA410).w,d0
+                move.w  (PlayerXPosition).w,d0
                 subi.w  #$80,d0
                 bmi.s   Boss_ViblackPositionCompanionReturn
                 cmpi.w  #$140,d0
@@ -388,7 +388,7 @@ Boss_ViblackSnapToTarget:                               ; CODE XREF: Boss_Viblac
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
                 move.w  $52(a5),d0
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 move.w  $54(a5),$14(a5)
                 moveq   #0,d0
@@ -425,6 +425,6 @@ Boss_ViblackSpawnSideShot:                              ; CODE XREF: Boss_Viblac
                 bne.s   Boss_ViblackSpawnSideShotAtSelectedX
                 move.w  #$810,d0
 Boss_ViblackSpawnSideShotAtSelectedX:                   ; CODE XREF: Boss_ViblackSpawnSideShot+2C   j  ; was: loc_4439A
-                sub.w   (dword_FFA900).w,d0
+                sub.w   (PrimaryCameraXPosition).w,d0
                 jmp     Projectile_InitViblackSideShot
 ; End of function Boss_ViblackSpawnSideShot

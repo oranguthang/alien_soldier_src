@@ -31,13 +31,13 @@ Boss_JokerPositionLinkedParts:                          ; CODE XREF: Boss_JokerR
                 cmpi.w  #$1E0,$10(a5)
                 bmi.s   Boss_JokerUseScreenRelativeHorizontalOffset
 Boss_JokerUseFixedHorizontalOffset:                     ; CODE XREF: Boss_JokerRenderBody+6A   j  ; was: loc_3BA8E
-                move.w  #$FE72,(dword_FFA908).w
+                move.w  #$FE72,(SecondaryCameraXPos).w
                 bra.s   Boss_JokerInitializeDescendingWordRamp
 ; ---------------------------------------------------------------------------
 Boss_JokerUseScreenRelativeHorizontalOffset:            ; CODE XREF: Boss_JokerRenderBody+72   j  ; was: loc_3BA96
                 move.w  #$C0,d0
                 sub.w   $10(a5),d0
-                move.w  d0,(dword_FFA908).w
+                move.w  d0,(SecondaryCameraXPos).w
 Boss_JokerInitializeDescendingWordRamp:                 ; CODE XREF: Boss_JokerRenderBody+7A   j  ; was: loc_3BAA2
                 move.w  #$80,d0
                 move.w  #$5F,d7                         ; '_'

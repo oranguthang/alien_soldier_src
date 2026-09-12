@@ -29,7 +29,7 @@ Boss_ShellshogunSpawnFallingDebrisNext:                 ; CODE XREF: Boss_Shells
                 add.w   d0,$14(a0)
                 move.w  (RandomNumberState).w,d0
                 andi.w  #$7F,d0
-                add.w   (dword_FFA410).w,d0
+                add.w   (PlayerXPosition).w,d0
                 move.w  d0,$10(a0)
                 dbf     d7,Boss_ShellshogunSpawnFallingDebrisNext
 Boss_ShellshogunSpawnFallingDebrisReturn:               ; CODE XREF: Boss_ShellshogunSpawnFallingDebris+1A   j  ; was: locret_371E6
