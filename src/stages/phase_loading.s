@@ -10,16 +10,16 @@ Stage_LoadStage16Assets:                                ; DATA XREF: ROM:0001175
 ; ---------------------------------------------------------------------------
 Stage16AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_11A6E
                                         ; DATA XREF: Stage_LoadStage16Assets+6   o
-                dc.l    tiles_1A2C46                    ; field_2
+                dc.l    Stage16TileArt0000              ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
                 dc.l    Stage16TileArt5F00              ; field_2
                 dc.w    $5F00                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A6276                     ; field_2
+                dc.l    Stage16MappingData6000          ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A648A                     ; field_2
+                dc.l    Stage16MappingData4020          ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedMappingData7000           ; field_2
@@ -28,7 +28,7 @@ Stage16AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A74F6                     ; field_2
+                dc.l    Stage16MappingData7800          ; field_2
                 dc.w    $7800                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    SharedSceneAndStageTileArt9000  ; field_2

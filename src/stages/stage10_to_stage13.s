@@ -243,7 +243,7 @@ Stage12_UpdateScrollToExitTiles:                        ; DATA XREF: ROM:0000D97
 ; ---------------------------------------------------------------------------
 Stage12_ExitTileAssetLoadList:  dc.w    7               ; field_0  ; was: stru_DB5A
                                         ; DATA XREF: Stage12_UpdateScrollToExitTiles+20   o
-                dc.l    tiles_19E8A8                    ; field_2
+                dc.l    Stage12AndTeleportTileArt0000   ; field_2
                 dc.w    0                               ; field_6
                 dc.w    $FFFF
 

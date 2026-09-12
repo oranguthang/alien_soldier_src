@@ -5558,3 +5558,45 @@ address records. The enforced address-derived ceiling falls from 961 to 947;
 the remaining backlog comprises 831 RAM equates and 116 preserved-data labels.
 The source layout now contains 374 modules with a 317.6-line mean and no module-
 size waiver.
+
+The Stage 10/12 and teleport asset pass removes all eleven address-derived
+definitions from the former `data/stage10_enemy_assets.s`. The old name omitted
+two proven consumers: one tile-art source is shared with the Stage 12 exit, and
+both tile-art banks plus two mapping streams are used by the teleport loader.
+The contiguous 19-line bank is now
+`data/stage10_stage12_and_teleport_assets.s`, preserving ROM order while naming
+every demonstrated owner.
+
+The two shared tile-art names distinguish the Stage 10/teleport and Stage
+12/teleport consumer pairs. The four mapping-data names follow their respective
+type-six Stage 10 enemy or teleport records and `$6000`/`$4020` destinations.
+No visual identity is inferred from compressed payload bytes.
+
+Six unique source addresses receive exact static audit records. Five
+binary-backed exclusive-end aliases retain provenance and fold into following
+payload boundaries. Provenance rises from 15,104 to 15,115 mappings, the audit
+registry from 12,275 to 12,281, and the semantic review upper bound rises from
+3,129 to 3,134 solely because those five reviewed aliases do not need duplicate
+address records. The enforced address-derived ceiling falls from 947 to 936;
+the remaining backlog comprises 831 RAM equates and 105 preserved-data labels.
+
+The Stage 16 boundary pass removes twelve address-derived definitions and
+separates a shared Stage 10/teleport range from the true Stage 16 assets. The
+former `stage16_assets.s` began with three sources consumed by both
+`Stage10EnemyAssetLoadList` and `TeleportAssetLoadList`; those now live in
+`stage10_and_teleport_tile_art_and_mapping_data.s`. The remaining Stage 16
+sources keep the original module name. The adjacent already audited singleton
+is renamed from generic `stage10_and_teleport_shared_asset.s` to the precise
+`stage10_and_teleport_mapping_data7800.s`.
+
+All seven source starts are identified directly by type-six or type-seven load
+records and their destinations. Five binary-backed exclusive-end aliases
+retain provenance and fold into following payload boundaries; no compressed
+payload receives an invented visual identity.
+
+Provenance rises from 15,115 to 15,127 mappings, the audit registry from 12,281
+to 12,288, and the semantic review upper bound rises from 3,134 to 3,139 solely
+because those five reviewed aliases do not need duplicate address records. The
+enforced address-derived ceiling falls from 936 to 924; the remaining backlog
+comprises 831 RAM equates and 93 preserved-data labels. The source layout now
+contains 375 modules with a 316.8-line mean and no module-size waiver.

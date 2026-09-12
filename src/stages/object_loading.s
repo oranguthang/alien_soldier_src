@@ -264,10 +264,10 @@ Stage_LoadStage10EnemyAssets:                           ; DATA XREF: ROM:0001174
 ; ---------------------------------------------------------------------------
 Stage10EnemyAssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1195A
                                         ; DATA XREF: Stage_LoadStage10EnemyAssets+6   o
-                dc.l    tiles_19C77E                    ; field_2
+                dc.l    Stage10AndTeleportTileArt0000   ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1A1026                    ; field_2
+                dc.l    Stage10AndTeleportTileArt4000   ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    7                               ; field_0
                 dc.l    Stage10EnemyTileArt0            ; field_2
@@ -276,19 +276,19 @@ Stage10EnemyAssetLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Stage10EnemyTileArt1            ; field_2
                 dc.w    $1840                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19FACA                     ; field_2
+                dc.l    Stage10EnemyMappingData6000     ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19FF2E                     ; field_2
+                dc.l    Stage10EnemyMappingData4020     ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A2840                     ; field_2
+                dc.l    Stage10AndTeleportMappingData6800  ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A2878                     ; field_2
+                dc.l    Stage10AndTeleportMappingData2020  ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedMappingData7000           ; field_2
@@ -321,28 +321,28 @@ Stage_LoadTeleportAssets:                               ; CODE XREF: Stage12To13
 ; ---------------------------------------------------------------------------
 TeleportAssetLoadList:  dc.w    7                       ; field_0  ; was: stru_119FA
                                         ; DATA XREF: Stage_LoadTeleportAssets+6   o
-                dc.l    tiles_19C77E                    ; field_2
+                dc.l    Stage10AndTeleportTileArt0000   ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_19E8A8                    ; field_2
+                dc.l    Stage12AndTeleportTileArt0000   ; field_2
                 dc.w    0                               ; field_6
                 dc.w    7                               ; field_0
-                dc.l    tiles_1A1026                    ; field_2
+                dc.l    Stage10AndTeleportTileArt4000   ; field_2
                 dc.w    $4000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_19FE62                     ; field_2
+                dc.l    TeleportMappingData6000         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A08DA                     ; field_2
+                dc.l    TeleportMappingData4020         ; field_2
                 dc.w    $4020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A2840                     ; field_2
+                dc.l    Stage10AndTeleportMappingData6800  ; field_2
                 dc.w    $6800                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1A2878                     ; field_2
+                dc.l    Stage10AndTeleportMappingData2020  ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    SharedMappingData7000           ; field_2
