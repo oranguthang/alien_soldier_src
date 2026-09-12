@@ -5174,3 +5174,12 @@ raising provenance from 14,018 to 14,030 and the audit registry from 11,572
 to 11,602. The enforced live address-derived ceiling falls from 2,033 to
 2,021; only 44 address-derived definitions remain outside data modules and
 include files.
+
+The transition-message boundary follow-up names the final live address-derived
+definition in `ui/stage_transition_messages.s`. The zero-length alias at
+`$01E6C6` is the exclusive end of the extracted Train/Bugmax message stream
+and shares the following post-Flying-Neo sequence's start address. It gains an
+exact-address provenance mapping; its evidence is folded into the existing
+audit record for the shared address, so the registry remains at 11,602 while
+provenance rises to 14,031. The enforced live address-derived ceiling falls
+from 2,021 to 2,020.
