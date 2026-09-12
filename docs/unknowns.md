@@ -5183,3 +5183,23 @@ exact-address provenance mapping; its evidence is folded into the existing
 audit record for the shared address, so the registry remains at 11,602 while
 provenance rises to 14,031. The enforced live address-derived ceiling falls
 from 2,021 to 2,020.
+
+The player scripted-input pass corrects the ownership of
+`cutscenes/stage_intros.s`: all 28 dispatch entries operate on the player
+record and synthesize controller input or control player motion. The coherent
+357-line state machine therefore moves to
+`player/scripted_input_sequences.s`. Static producers identify the post-Shiper,
+post-Terobuster, post-Bugmax, Flying Neo, Xi-Tiger, Viblack, post-Jampan, and
+Stage 20 sequences without treating the whole module as a generic cutscene
+bucket.
+
+The audit rejects two particularly misleading generated identities. The three
+former `Enemy_Stage14Debris` handlers access no enemy object or debris data;
+they form the post-Bugmax player run. `Boss_SireneShootPattern2` is selected by
+Stage 8, Seven Forces, and Z-Leo code in addition to Sirene and only forces the
+player to face right before conditionally emitting Up+C. All 49 definitions in
+the range now have exact-address static audit coverage. Eighteen raw branch and
+return labels gain provenance, raising the mapping count from 14,031 to 14,049
+and the audit registry from 11,602 to 11,647. The enforced address-derived
+ceiling falls from 2,020 to 2,002; only 25 such definitions remain outside data
+modules and `ram_addrs.inc`.

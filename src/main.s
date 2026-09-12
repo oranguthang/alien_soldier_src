@@ -106,7 +106,7 @@
                 include "src/weapons/projectile_impacts.s"
                 include "src/system/object_pool_clearing.s"
                 include "src/weapons/targeting_and_projectile_runtime.s"
-                include "src/cutscenes/stage_intros.s"
+                include "src/player/scripted_input_sequences.s"
                 include "src/player/seven_forces_battle.s"
                 include "src/gameplay/object_spawner.s"
                 include "src/gameplay/math_and_buffer_helpers.s"

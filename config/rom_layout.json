@@ -193,7 +193,7 @@
     { "file": "src/weapons/projectile_impacts.s", "subsystem": "weapons", "start": "0x018A66", "end": "0x019243" },
     { "file": "src/system/object_pool_clearing.s", "subsystem": "system", "start": "0x019244", "end": "0x019291" },
     { "file": "src/weapons/targeting_and_projectile_runtime.s", "subsystem": "weapons", "start": "0x019292", "end": "0x0199F3" },
-    { "file": "src/cutscenes/stage_intros.s", "subsystem": "cutscenes", "start": "0x0199F4", "end": "0x019DAD" },
+    { "file": "src/player/scripted_input_sequences.s", "subsystem": "player", "start": "0x0199F4", "end": "0x019DAD" },
     { "file": "src/player/seven_forces_battle.s", "subsystem": "player", "start": "0x019DAE", "end": "0x01A27F" },
     { "file": "src/gameplay/object_spawner.s", "subsystem": "gameplay", "start": "0x01A280", "end": "0x01B403" },
     { "file": "src/gameplay/math_and_buffer_helpers.s", "subsystem": "gameplay", "start": "0x01B404", "end": "0x01B905" },
