@@ -355,7 +355,7 @@
                 include "src/data/player_sprite_art.s"
                 include "src/data/gameplay_tile_art.s"
                 include "src/data/xi_tiger_and_boss_art.s"
-                include "src/data/stage_transition_mappings.s"
+                include "src/data/shared_boss_and_stage_mapping_data.s"
                 include "src/data/japanese_font_assets.s"
                 include "src/data/credits_scene_assets.s"
                 include "src/data/frontend_scene_assets.s"

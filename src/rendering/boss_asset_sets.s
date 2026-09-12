@@ -41,7 +41,7 @@ Boss_ShellshogunGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.l    Boss_ShellshogunTileArt         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_ShiperAssetSet:    dc.w    $24                     ; field_0  ; was: stru_113AA
@@ -57,7 +57,7 @@ Boss_MadamBarbarGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.l    Boss_MadamBarbarTileArt         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_JokerAssetSet: dc.w    $15C                        ; field_0  ; was: stru_113D0
@@ -69,7 +69,7 @@ Boss_JokerGraphicsLoadList: dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Boss_JokerTileArt               ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_TerobusterAssetSet:    dc.w    $B4                 ; field_0  ; was: stru_113EC
@@ -81,7 +81,7 @@ Boss_TerobusterGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1
                 dc.l    Boss_TerobusterTileArt          ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_FlyingNeoAssetSet: dc.w    $154                    ; field_0  ; was: stru_11408
@@ -93,7 +93,7 @@ Boss_FlyingNeoGraphicsLoadList: dc.w    7               ; field_0  ; was: stru_1
                 dc.l    Boss_FlyingNeoTileArt           ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_XiTigerAssetSet:   dc.w    $114                    ; field_0  ; was: stru_11424
@@ -105,7 +105,7 @@ Boss_XiTigerGraphicsLoadList:   dc.w    7               ; field_0  ; was: stru_1
                 dc.l    Boss_XiTigerTileArt             ; field_2
                 dc.w    $5000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_DeepStriderAssetSet:   dc.w    $19C                ; field_0  ; was: stru_11440
@@ -144,7 +144,7 @@ Boss_BugmaxGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.l    Boss_BugmaxTileArt              ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_VictorAssetSet:    dc.w    $3C0                    ; field_0  ; was: stru_11498
@@ -156,7 +156,7 @@ Boss_VictorGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.l    Boss_VictorTileArt              ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_SunsetStingAssetSet:   dc.w    $1EC                ; field_0  ; was: stru_114B4
@@ -168,7 +168,7 @@ Boss_SunsetStingGraphicsLoadList:   dc.w    7           ; field_0  ; was: stru_1
                 dc.l    Boss_SunsetStingTileArt         ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_BackStringerAssetSet:  dc.w    $314                ; field_0  ; was: stru_114D0
@@ -190,7 +190,7 @@ Boss_JampanGraphicsLoadList:    dc.w    7               ; field_0  ; was: stru_1
                 dc.l    Boss_JampanTileArt              ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_Epsilon1AssetSet:  dc.w    $264                    ; field_0  ; was: stru_11500
@@ -202,7 +202,7 @@ Boss_Epsilon1GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.l    Boss_Epsilon1TileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_DestroyerMK2AssetSet:  dc.w    $240                ; field_0  ; was: stru_1151C
@@ -214,7 +214,7 @@ Boss_DestroyerMK2GraphicsLoadList:  dc.w    7           ; field_0  ; was: stru_1
                 dc.l    Boss_DestroyerMK2TileArt        ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 ; No static pointer names this asset-set start. Historical material associates
@@ -229,7 +229,7 @@ EntityType1C0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.l    EntityType1C0TileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_ShieldViperAssetSet:   dc.w    $34C                ; field_0  ; was: stru_11554
@@ -250,7 +250,7 @@ Boss_DestroyerProtoGraphicsLoadList:    dc.w    7       ; field_0  ; was: stru_1
                 dc.l    Boss_DestroyerProtoTileArt      ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1402E2                     ; field_2
+                dc.l    SharedLateBossMappingData2020   ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_WolfGaropaAssetSet:    dc.w    $3E8                ; field_0  ; was: stru_11584
@@ -265,7 +265,7 @@ Boss_WolfGaropaGraphicsLoadList:    dc.w    7           ; field_0  ; was: stru_1
                 dc.l    Boss_WolfGaropaTileArt1         ; field_2
                 dc.w    $5100                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_140F00                     ; field_2
+                dc.l    WolfGaropaMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 ; Stage 18's dormant late-phase table references this record. The ROM proves
@@ -279,7 +279,7 @@ EntityType3ECGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.l    EntityType3ECTileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1402E2                     ; field_2
+                dc.l    SharedLateBossMappingData2020   ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 ; Stage 18's dormant late-phase table references this identity-unknown record
@@ -292,7 +292,7 @@ EntityType3F0GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.l    EntityType3F0TileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1402E2                     ; field_2
+                dc.l    SharedLateBossMappingData2020   ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 ; Stage 18's dormant late-phase table references this identity-unknown record
@@ -305,7 +305,7 @@ EntityType3F4GraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.l    EntityType3F4TileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1402E2                     ; field_2
+                dc.l    SharedLateBossMappingData2020   ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 ; No static pointer names this asset-set start. The ROM record establishes only
@@ -320,7 +320,7 @@ EntityType3FCGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.l    EntityType3FCTileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1402E2                     ; field_2
+                dc.l    SharedLateBossMappingData2020   ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_ZLeoAssetSet:  dc.w    $3F8                        ; field_0  ; was: stru_11618
@@ -335,7 +335,7 @@ Boss_ZLeoGraphicsLoadList:  dc.w    7                   ; field_0  ; was: stru_1
                 dc.l    Boss_ZLeoTileArt1               ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_141018                     ; field_2
+                dc.l    ZLeoMappingData2020             ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 Boss_MissirayAssetSet:  dc.w    $3D0                    ; field_0  ; was: stru_1163C
@@ -347,7 +347,7 @@ Boss_MissirayGraphicsLoadList:  dc.w    7               ; field_0  ; was: stru_1
                 dc.l    Boss_MissirayTileArt            ; field_2
                 dc.w    $6000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_1402E2                     ; field_2
+                dc.l    SharedLateBossMappingData2020   ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    $FFFF
 SevenForcesValkirieAssetSet:    dc.w    $42C            ; field_0  ; was: stru_11658

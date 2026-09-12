@@ -25,7 +25,7 @@ Stage16AssetLoadList:   dc.w    7                       ; field_0  ; was: stru_1
                 dc.l    SharedMappingData7000           ; field_2
                 dc.w    $7000                           ; field_6
                 dc.w    6                               ; field_0
-                dc.l    byte_13F4B0                     ; field_2
+                dc.l    SharedBossMappingData2020       ; field_2
                 dc.w    $2020                           ; field_6
                 dc.w    6                               ; field_0
                 dc.l    byte_1A74F6                     ; field_2

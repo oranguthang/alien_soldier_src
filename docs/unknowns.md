@@ -5458,3 +5458,25 @@ registry from 12,230 to 12,247, and the semantic review upper bound rises from
 3,103 to 3,113 solely because the ten reviewed aliases do not require duplicate
 address records. The enforced address-derived ceiling falls from 1,018 to 991;
 the remaining backlog comprises 831 RAM equates and 160 preserved-data labels.
+
+The shared boss-and-stage mapping-data pass removes all 11 address-derived
+definitions from the former `data/stage_transition_mappings.s`. The old name
+was inaccurate: the six contiguous compressed streams are selected by Stage 1
+phase 3 and Stage 16 lists, numerous concrete boss graphics lists, and four
+identity-neutral late entity records rather than by a transition engine. The
+17-line ROM block is therefore retained as
+`data/shared_boss_and_stage_mapping_data.s`; splitting six adjacent payloads
+into owner-specific one-line modules would obscure ROM order and create only
+fragments.
+
+All six source addresses are proved by type-six load descriptors and named by
+their destination plus the narrowest demonstrated consumer set. In particular,
+the two Stage 1 phase 3 payloads are not attributed to Stage 8 because its
+separate asset list does not reference them. Five binary-backed exclusive-end
+aliases retain provenance and fold into following payload boundaries.
+
+Provenance rises from 15,060 to 15,071 mappings, the audit registry from 12,247
+to 12,253, and the semantic review upper bound rises from 3,113 to 3,118 solely
+because those five reviewed aliases do not need duplicate address records. The
+enforced address-derived ceiling falls from 991 to 980; the remaining backlog
+comprises 831 RAM equates and 149 preserved-data labels.
