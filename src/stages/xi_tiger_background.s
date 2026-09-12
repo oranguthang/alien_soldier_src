@@ -104,7 +104,7 @@ Stage_XiTigerHandler:                                   ; DATA XREF: Sys_Dispatc
                 bne.s   loc_1C5AA
                 jsr     (Sys_InitGraphicsChain).l
                 jsr     (Gfx_LoadVDPRegisters).l
-                jsr     (Stage_LoadXiTigerGraphics).l
+                jsr     (Stage_InitializeXiTigerState).l
                 move.w  #$8004,(word_FF80F2).w
                 move.w  #$10,(word_FF80F0).w
                 move.w  #$E000,(word_FF80F4).w

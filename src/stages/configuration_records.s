@@ -15,7 +15,7 @@ Stage_ProcessAssetListImmediately:                      ; CODE XREF: Stage_Dispa
 ; End of function Stage_DispatchAssetListLoaderByGameMode
 
 ; Applies one 30-byte stage configuration record and loads its palette list
-Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_LoadXiTigerSprites+6   p  ; was: sub_12758
+Stage_ApplyConfigurationRecord:                         ; CODE XREF: Stage_ApplyXiTigerConfiguration+6   p  ; was: sub_12758
                                         ; Stage_InitStage1Data+6   j
                 move.w  (a0)+,(word_FFA950).w
                 move.l  (a0)+,(dword_FFA20E).w
@@ -565,7 +565,7 @@ Stage33ConfigRecord:    dc.w    $8A                     ; word_FFA950  ; was: st
                 dc.b    $A0                             ; byte biased by $80 -> word at dword_FFA414
                 dc.l    Stage33PaletteOffsetList        ; palette offset list pointer
 
-Stage_InitializationNoOpHook:                           ; CODE XREF: Stage_LoadXiTigerGraphics+4   p  ; was: nullsub_1
+Stage_InitializationNoOpHook:                           ; CODE XREF: Stage_InitializeXiTigerState+4   p  ; was: nullsub_1
                                         ; Sys_InitStageState+4   p
                 rts
 ; End of function Stage_InitializationNoOpHook

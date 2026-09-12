@@ -4423,3 +4423,18 @@ All 28 definitions from `$012046` through `$01219D` receive exact-address
 static audit records. Thirteen anonymous lists and no-op labels gain
 provenance, raising the totals to 13,496 mappings and 10,589 audit records.
 The enforced live address-derived ceiling falls from 2,566 to 2,553.
+
+The Xi-Tiger tail completes `visual_asset_loading.s`. Its entrypoint is now an
+encounter-state initializer rather than a tile-graphics loader: it clears RAM,
+normalizes weapon selection, applies a 30-byte stage configuration record,
+processes palette slots, and initializes player stats. The former palette
+loader is a one-entry configuration dispatcher selected by `word_FF814C`, and
+the alleged sprite loader applies that record before entering shared
+color-table initialization. The record's fields now document the exact layout
+consumed by `Stage_ApplyConfigurationRecord`.
+
+All seven definitions in the Xi-Tiger tail receive exact-address static audit
+records. Four control-flow, offset-table, and record labels gain provenance,
+raising the totals to 13,500 mappings and 10,596 audit records. The enforced
+live address-derived ceiling falls from 2,553 to 2,549, leaving
+`visual_asset_loading.s` with zero live address-derived definitions.

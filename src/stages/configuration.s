@@ -57,7 +57,7 @@ off_1226C:      dc.w    Stage_InitStage1Data-Sys_ClearRAMBuffer
                 dc.w    Stage_InitStage33Config-Sys_ClearRAMBuffer
 
 ; Clears 4-word RAM buffer used for temporary data storage
-Sys_ClearRAMBuffer:                                     ; CODE XREF: Stage_LoadXiTigerGraphics+A   p  ; was: sub_122A0
+Sys_ClearRAMBuffer:                                     ; CODE XREF: Stage_InitializeXiTigerState+A   p  ; was: sub_122A0
                                         ; Sys_InitStageState+A   p
                                         ; DATA XREF:
                 movea.w #(byte_FFA258-M68K_RAM),a0
@@ -133,7 +133,7 @@ Stage_InitStage8Palettes:                               ; DATA XREF: ROM:0001227
                 lea     Stage8AlternatePaletteConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
-loc_1233A:                                              ; CODE XREF: Stage_LoadXiTigerSprites+A   j
+loc_1233A:                                              ; CODE XREF: Stage_ApplyXiTigerConfiguration+A   j
                 jsr     (Boss_FlyingNeoClearPaletteHighBits).l
 loc_12340:                                              ; CODE XREF: Stage_InitStage9Flies+86   j
                 lea     (word_FF0C80).l,a0

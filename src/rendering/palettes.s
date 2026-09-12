@@ -47,7 +47,7 @@ ShellshogunStagePaletteOffsetList:  dc.w    $34C, $38E, 0  ; DATA XREF: Camera_S
 Stage2LatePaletteOffsetList:    dc.w    $3B0, 0         ; DATA XREF: ROM:Stage2ThirdConfigRecord   o  ; was: word_B992
                                         ; ROM:Stage2FourthConfigRecord   o
 Stage8InitialPaletteOffsetList:     dc.w    $3F2, 0     ; DATA XREF: ROM:Stage8ConfigRecord   o  ; was: word_B996
-Stage8AlternatePaletteOffsetList:   dc.w    $3F2, $966, 0  ; DATA XREF: ROM:stru_121FE   o  ; was: word_B99A
+Stage8AlternatePaletteOffsetList:   dc.w    $3F2, $966, 0  ; DATA XREF: ROM:XiTigerStageConfigRecord   o  ; was: word_B99A
                                         ; ROM:Stage8AlternatePaletteConfigRecord   o
 XiTigerCutscenePaletteOffsetList:   dc.w    $442, 0     ; DATA XREF: XiTigerCutscene_LoadAssets+C   o  ; was: word_B9A0
 Stage10PaletteOffsetList:           dc.w    $482, 0     ; DATA XREF: ROM:Stage10ConfigRecord   o  ; was: word_B9A4

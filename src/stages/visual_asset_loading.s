@@ -406,64 +406,64 @@ UnreferencedSharedGameplayTileAssetLoadList:    dc.w    7  ; field_0  ; was: str
                 dc.w    $6000                           ; field_6
                 dc.w    $FFFF
 
-; Loads Xi-Tiger boss tile graphics
-Stage_LoadXiTigerGraphics:                              ; CODE XREF: Stage_XiTigerHandler+22   p  ; was: sub_1219E
+; Initializes Xi-Tiger stage RAM, configuration, weapon selection, and player state
+Stage_InitializeXiTigerState:                           ; CODE XREF: Stage_XiTigerHandler+22   p  ; was: sub_1219E
                 clr.w   (word_FF807A).w
                 jsr     (Stage_InitializationNoOpHook).l
                 bsr.w   Sys_ClearRAMBuffer
                 clr.w   (word_FFFF3E).w
                 move.w  (WeaponStateIndex).w,d0
-                beq.s   loc_121C4
+                beq.s   Stage_ResetXiTigerWeaponSelection
                 cmpi.w  #$10,d0
-                bpl.s   loc_121C4
+                bpl.s   Stage_ResetXiTigerWeaponSelection
                 asl.w   #1,d0
                 move.w  d0,(word_FFA21E).w
-                bra.s   loc_121D0
+                bra.s   Stage_ApplyXiTigerConfigurationAndInitializePlayer
 ; ---------------------------------------------------------------------------
-loc_121C4:                                              ; CODE XREF: Stage_LoadXiTigerGraphics+16   j
-                                        ; Stage_LoadXiTigerGraphics+1C   j
+Stage_ResetXiTigerWeaponSelection:                      ; CODE XREF: Stage_InitializeXiTigerState+16   j  ; was: loc_121C4
+                                        ; Stage_InitializeXiTigerState+1C   j
                 move.w  #2,(WeaponStateIndex).w
                 move.w  #4,(word_FFA21E).w
-loc_121D0:                                              ; CODE XREF: Stage_LoadXiTigerGraphics+24   j
-                bsr.s   Stage_LoadXiTigerPalette
+Stage_ApplyXiTigerConfigurationAndInitializePlayer:     ; CODE XREF: Stage_InitializeXiTigerState+24   j  ; was: loc_121D0
+                bsr.s   Stage_DispatchXiTigerConfiguration
                 jsr     (Gfx_ProcessPaletteSlots).l
                 jmp     Player_InitializeStats
-; End of function Stage_LoadXiTigerGraphics
-; Loads Xi-Tiger boss palette
-Stage_LoadXiTigerPalette:                               ; CODE XREF: Stage_LoadXiTigerGraphics:loc_121D0   p  ; was: sub_121DE
+; End of function Stage_InitializeXiTigerState
+; Dispatches the Xi-Tiger configuration selected by word_FF814C
+Stage_DispatchXiTigerConfiguration:                     ; CODE XREF: Stage_InitializeXiTigerState:Stage_ApplyXiTigerConfigurationAndInitializePlayer   p  ; was: sub_121DE
                 move.w  (word_FF814C).w,d0
-                movea.w off_121EE(pc,d0.w),a0
-                adda.l  #Stage_LoadXiTigerSprites,a0
+                movea.w Stage_XiTigerConfigurationOffsets(pc,d0.w),a0
+                adda.l  #Stage_ApplyXiTigerConfiguration,a0
                 jmp     (a0)
-; End of function Stage_LoadXiTigerPalette
+; End of function Stage_DispatchXiTigerConfiguration
 ; ---------------------------------------------------------------------------
-off_121EE:      dc.w    Stage_LoadXiTigerSprites-Stage_LoadXiTigerSprites
-                                        ; DATA XREF: Stage_LoadXiTigerPalette+4   r
+Stage_XiTigerConfigurationOffsets:  dc.w    Stage_ApplyXiTigerConfiguration-Stage_ApplyXiTigerConfiguration  ; was: off_121EE
+                                        ; DATA XREF: Stage_DispatchXiTigerConfiguration+4   r
 
-; Loads Xi-Tiger sprite data to VRAM
-Stage_LoadXiTigerSprites:                               ; DATA XREF: Stage_LoadXiTigerPalette+8   o  ; was: sub_121F0
-                                        ; ROM:off_121EE   o
-                lea     stru_121FE(pc),a0
+; Applies the Xi-Tiger stage record and enters the shared color-table initializer
+Stage_ApplyXiTigerConfiguration:                        ; DATA XREF: Stage_DispatchXiTigerConfiguration+8   o  ; was: sub_121F0
+                                        ; ROM:Stage_XiTigerConfigurationOffsets   o
+                lea     XiTigerStageConfigRecord(pc),a0
                 nop
                 bsr.w   Stage_ApplyConfigurationRecord
                 bra.w   loc_1233A
-; End of function Stage_LoadXiTigerSprites
+; End of function Stage_ApplyXiTigerConfiguration
 ; ---------------------------------------------------------------------------
-stru_121FE:     dc.w    $76                             ; field_0
-                                        ; DATA XREF: Stage_LoadXiTigerSprites   o
-                dc.l    $80000000                       ; field_2
-                dc.w    0                               ; field_6
-                dc.b    0                               ; field_8
-                dc.b    0                               ; field_9
-                dc.w    $8000                           ; field_A
-                dc.w    $800                            ; field_C
-                dc.w    0                               ; field_E
-                dc.w    0                               ; field_10
-                dc.w    0                               ; field_12
-                dc.w    8                               ; field_14
-                dc.w    0                               ; field_16
-                dc.b    $F0                             ; field_18
-                dc.b    $A8                             ; field_19
-                dc.l    Stage8AlternatePaletteOffsetList  ; field_1A
+XiTigerStageConfigRecord:   dc.w    $76                 ; word_FFA950  ; was: stru_121FE
+                                        ; DATA XREF: Stage_ApplyXiTigerConfiguration   o
+                dc.l    $80000000                       ; dword_FFA20E
+                dc.w    0                               ; word_FF8114
+                dc.b    0                               ; PalettePrimaryIndex+1
+                dc.b    0                               ; PaletteSecondaryIndex+1
+                dc.w    $8000                           ; word_FF808A
+                dc.w    $800                            ; word at dword_FFA900
+                dc.w    0                               ; word at dword_FFA904
+                dc.w    0                               ; word at dword_FFA908
+                dc.w    0                               ; word at dword_FFA90C
+                dc.w    8                               ; word_FF80AA
+                dc.w    0                               ; word_FF80AC
+                dc.b    $F0                             ; byte biased by $80 -> word at dword_FFA410
+                dc.b    $A8                             ; byte biased by $80 -> word at dword_FFA414
+                dc.l    Stage8AlternatePaletteOffsetList  ; palette offset list pointer
 
 ; Initializes stage state including RAM clear and player stats

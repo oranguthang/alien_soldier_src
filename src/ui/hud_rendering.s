@@ -290,7 +290,7 @@ loc_13170:                                              ; CODE XREF: Scroll_Upda
 ; End of function Scroll_UpdateShipScroll
 ; Processes multiple palette slots
 Gfx_ProcessPaletteSlots:                                ; CODE XREF: MessageSequence_FinishScript+C   j  ; was: sub_13178
-                                        ; Stage_LoadXiTigerGraphics+34   p
+                                        ; Stage_InitializeXiTigerState+34   p
                 move.w  (WeaponSlotOffset).w,(dword_FF8040).w
                 clr.w   (WeaponSlotOffset).w
                 moveq   #3,d7

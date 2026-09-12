@@ -1,4 +1,4 @@
-Player_InitializeStats:                                 ; CODE XREF: Stage_LoadXiTigerGraphics+3A   j  ; was: sub_14F06
+Player_InitializeStats:                                 ; CODE XREF: Stage_InitializeXiTigerState+3A   j  ; was: sub_14F06
                                         ; Sys_InitStageState+3A   j
                 lea     (word_FFA400).w,a5
                 move.b  #$7F,(byte_FF830F).w
