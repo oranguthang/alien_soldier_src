@@ -23,6 +23,7 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
     assets = load(root, "assets/manifest.json")
     layout = load(root, "config/rom_layout.json")
     policy = load(root, "config/source_policy.json")
+    source_contract = load(root, "config/source_reconstruction_1_0.json")
     runtime = load(root, "config/runtime_scenarios.json")
     toolchain = load(root, "config/toolchain.json")
 
@@ -30,6 +31,8 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
         errors.append("0.5 must remain explicitly marked as a development release")
     if contract.get("target_contract") != "Source Reconstruction 1.0":
         errors.append("target contract is not Source Reconstruction 1.0")
+    if source_contract.get("release") != contract.get("target_contract"):
+        errors.append("release target differs from source reconstruction contract")
     excluded = {item["id"] for item in contract.get("excluded_profiles", [])}
     if "europe" not in excluded:
         errors.append("European profile is not explicitly excluded")
@@ -72,6 +75,21 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
         )
     if layout["target"]["max_module_lines"] != threshold["max_module_lines"]:
         errors.append("module line ceiling differs from release contract")
+    source_shape = source_contract["source_shape"]
+    strict_line_limit = source_shape["default_maximum_module_lines"]
+    if threshold["max_module_lines"] != strict_line_limit:
+        errors.append("release module line ceiling is weaker than source contract")
+    if policy["unknowns"]["maximum_address_derived_definitions"] != source_shape[
+        "maximum_address_derived_definitions"
+    ]:
+        errors.append("address-derived ceiling differs from source contract")
+    generic_pattern = re.compile(source_shape["generic_container_pattern"], re.IGNORECASE)
+    generic_modules = [
+        item["file"] for item in modules if generic_pattern.search(Path(item["file"]).stem)
+    ]
+    stats["generic_modules"] = len(generic_modules)
+    if len(generic_modules) > source_shape["maximum_generic_container_names"]:
+        errors.append(f"layout contains generic module names: {generic_modules}")
     if layout["target"]["cartridge_size"] != canonical["size"]:
         errors.append("layout cartridge size differs from canonical ROM")
     if policy["provenance"]["minimum_unique_mappings"] < threshold["minimum_provenance_mappings"]:
@@ -121,6 +139,10 @@ def audit(root: Path, contract: dict) -> tuple[list[str], dict[str, int]]:
     for target in contract["release_interface"]:
         if not re.search(rf"^{re.escape(target)}\s*:", makefile, re.MULTILINE):
             errors.append(f"release interface target missing: {target}")
+    for command in source_contract["required_commands"]:
+        target = command.removeprefix("make ")
+        if not re.search(rf"^{re.escape(target)}\s*:", makefile, re.MULTILINE):
+            errors.append(f"source reconstruction command missing: {command}")
     return errors, stats
 
 

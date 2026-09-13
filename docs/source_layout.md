@@ -22,6 +22,12 @@ split without harming readability. Exceptions are reviewed individually and
 declared in `config/source_reconstruction_1_0.json`. See
 `docs/modularization_plan.md` for the migration rules and measured baseline.
 
+The 1,000-line ceiling is now identical in `config/rom_layout.json`, the
+development release contract, and the Source Reconstruction 1.0 contract.
+`make lint` checks every declared module against it, while `make release-audit`
+rejects a release threshold that attempts to weaken the destination contract.
+The same audit rejects generic module filenames declared in the ROM layout.
+
 Definition-only `.inc` files are outside this limit. They will receive their
 own structure and policy as the RAM and hardware maps mature.
 

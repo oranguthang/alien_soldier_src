@@ -6,7 +6,7 @@
     "cartridge_size": 2097152,
     "translation_unit": "single",
     "entrypoint": "src/main.s",
-    "max_module_lines": 6000,
+    "max_module_lines": 1000,
     "entrypoint_note": "AS assembles one translation unit. Include order in src/main.s is ROM order; there is no linker script."
   },
   "memory_regions": [

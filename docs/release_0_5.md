@@ -15,6 +15,8 @@ Reconstruction 1.0 effort. It is not a released 1.0 claim yet.
 - Ordinary cleanup preserves extracted private assets.
 - `src/main.s` is an address-ordered index over 375 modules with a checked
   1,000-line ceiling; the current mean is 316.8 lines and no waiver is active.
+  Layout, release, and 1.0 contracts share that exact ceiling, and the release
+  audit rejects a weaker value or a generic declared module filename.
 - `config/rom_layout.json` is checked against listing addresses, landmarks,
   padding ranges, and the built image.
 - Naming/evidence rules, 16,051 provenance mappings, and a zero-live-

@@ -35,6 +35,15 @@ class ReleaseAuditTests(unittest.TestCase):
         self.assertTrue(any("European" in error for error in errors))
         self.assertTrue(any("asset manifest has" in error for error in errors))
 
+    def test_weakened_source_ceiling_is_rejected(self) -> None:
+        contract = json.loads(
+            (ROOT / "config/release_0_5.json").read_text(encoding="utf-8")
+        )
+        contract = copy.deepcopy(contract)
+        contract["thresholds"]["max_module_lines"] = 6000
+        errors, _ = release_audit.audit(ROOT, contract)
+        self.assertTrue(any("weaker than source contract" in error for error in errors))
+
 
 if __name__ == "__main__":
     unittest.main()

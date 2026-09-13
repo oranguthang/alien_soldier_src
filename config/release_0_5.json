@@ -19,7 +19,7 @@
   "thresholds": {
     "asset_count": 579,
     "minimum_module_count": 26,
-    "max_module_lines": 6000,
+    "max_module_lines": 1000,
     "minimum_provenance_mappings": 4822,
     "minimum_addressed_symbols": 15000,
     "runtime_scenarios": 6,
