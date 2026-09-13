@@ -1,7 +1,7 @@
 Boss_Epsilon1StartOpeningFadeDelayState:                ; DATA XREF: ROM:00045CF8   o  ; was: sub_461A6
                 bsr.w   Boss_Epsilon1ApplyPaletteFade
                 move.w  #$20,$48(a5)                    ; ' '
-                move.b  #$21,(byte_FFA95A).w            ; '!'
+                move.b  #$21,(PlaneAScrollModeFlags).w  ; '!'
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_Epsilon1StartOpeningFadeDelayState

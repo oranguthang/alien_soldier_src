@@ -189,6 +189,11 @@ fields to seed its displayed state.
 | `GameplayExitMode` | `$FFFF8230` | Palette-fade completion maps zero, one, three, and the remaining nonzero values to distinct gameplay exits; stage, defeat, and ending paths publish those values before requesting the fade. |
 | `StagePlaneAEntryMode` | `$FFFF80AA` | Stage configuration supplies zero, four, eight, or high-bit-marked eight; gameplay entry selects constant fill, direct row streaming, or mirrored Plane A streaming from that value. |
 | `StagePlaneBEntryMode` | `$FFFF80AC` | Stage configuration supplies zero, four, or eight; gameplay entry uses it to select constant fill or one of the Plane B row-stream parameter sets. |
+| `SceneSequenceFlags` | `$FFFFA958` | Scene-local objects publish milestone bits and their coordinating stage/cutscene states test and clear them. Bit zero is a common handshake; asteroid transitions additionally publish `$40` and `$80`. |
+| `StageSceneWorkLong0` | `$FFFFA960` | Physical stage workspace reused as `GustheadArenaVelocity`, `AsteroidFieldVelocity`, `MissirayParallaxSpeed`, `MidgameVerticalPhase`, and `SevenForcesTimer`. |
+| `StageSceneWorkWord1` / `Stage9FlyCorridorY` | `$FFFFA962` | Stage 8 and Seven Forces use the first word as a delay or closing span; Stage 9 instead stores a 16.16 corridor coordinate beginning here. |
+| `StageSceneWorkLong1` | `$FFFFA964` | `AsteroidFieldPosition` and `FlyingNeoYVelocity` are exclusive users; its first word is overlapped by the Stage 9 coordinate beginning at `$FFFFA962`. |
+| `StageSceneWorkWord2` | `$FFFFA968` | Asteroid scrolling uses `AsteroidBoundaryPhase`; Gusthead uses `GustheadFinalPhaseFlag`. |
 | `TransitionEdgeSpan` | `$FFFF80A0` | Standard, alternate, and tunnel transitions initialize this 16.16 numerator to `$00018000`; edge builders divide it by transition progress, while the standard effect contracts it by `$3C0` per update. |
 | `TransitionModeOffset` | `$FFFF807A` | This even byte offset selects corresponding entries in both transition raster-configuration and output-buffer dispatch tables; observed publishers choose modes zero, one, or four with values zero, two, or eight. |
 | `TransitionProgress` (`GameOverLandscapeAngle` overlay) | `$FFFF807C` | Transition effects advance this word toward `$7F` and use it for interpolation, palette, and mask phases; the mutually exclusive Game Over landscape uses the same storage as its lookup-table angle offset. |
@@ -244,6 +249,8 @@ their runtime reachability remain unproven.
 | `VScrollDMASource` | `$FFFFF714` | Initialization points this longword at `VScrollBuffer`; the vertical-scroll DMA builder encodes it as the transfer source. |
 | `FrameTimingDebugFlag` | `$FFFFF746` | A debug controller chord toggles its sign bit; the gameplay loop then emits VDP timing markers between subsystem updates and runs the debug backdrop helpers. |
 | `SnakeScrollAccumulators` | `$FFFFA3E0` | The Snake renderer updates exactly eight consecutive fixed-point values, two for each of four background row pairs, before selecting tile-index nibbles from their integer parts. |
+| `PlaneAScrollModeFlags` | `$FFFFA95A` | Plane A buffer preparation interprets bits 0/1 as scalar-write suppression, bits 2/3 as horizontal/vertical fills, and bits 4/5 as horizontal/vertical profile copies. |
+| `PlaneBScrollModeFlags` | `$FFFFA95B` | Plane B uses the same independently published bit layout before writing its horizontal and vertical buffers. |
 
 ## Reviewed object-buffer boundaries
 
@@ -779,6 +786,10 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | Symbol | Address | Static evidence |
 |---|---:|---|
 | `GameOverRasterBuffer` | `$FFFF9000` | The Game Over perspective projector writes four interleaved words per row from this base; the raster-layout copier expands fourteen 64-byte blocks into `HScrollBuffer`. |
+| `SharedPatternWorkBuffer` (`TransitionPatternRow2`, `ShieldViperBranchParity` overlays) | `$FFFF9440` | Transition masking treats this address as the third 32-byte pattern row; Shield Viper separately toggles its first word between zero and one to alternate the optional post-tracking branch. |
+| `SharedPatternWorkWord1` (`ResultsLayoutModeCopy` overlay) | `$FFFF9442` | Results copies and clears `ResultsExtendedLayout` here, then uses the copy for skip-button eligibility and extended scroll bounds; transition masking reuses the same bytes inside its third pattern row. |
+| `SharedPatternWorkWord2` (`Epsilon1TileBandIndex` overlay) | `$FFFF9444` | Epsilon 1 seeds this word with zero, two, or four and advances it while submitting paired animated tile bands; transition masking reuses the same bytes inside its third pattern row. |
+| `MedusaSpawnSequenceFlag` | `$FFFF9804` | The Seven Forces transition and Medusa state A set this word to one; the scripted-spawn handler runs only while it is nonzero and clears it when the current schedule terminates. |
 | `Epsilon1ProximityTimer` | `$FFFF9472` | Epsilon 1 increments this word while the player remains within twelve pixels and the proximity flag is clear; difficulty selects a `$40` or `$80` threshold. |
 | `Epsilon1ProximityFlag` | `$FFFF9474` | The proximity threshold sets this word; it changes attack selection and terminates ring repetitions until battle-center recovery clears it. |
 | `Epsilon1VerticalAccel` | `$FFFF9478` | Epsilon 1 attack states load signed acceleration values here, and the shared motion helper adds the longword to the boss vertical velocity. |
@@ -786,6 +797,7 @@ repeats the resulting four-word group into `HorizontalScrollProfile`.
 | `BugmaxPositionHistory` | `$FFFF95E0` | Bugmax seeds eight packed position samples, shifts a new boss X/Y pair through the history, and reads delayed endpoints for linked-chain projection. |
 | `BugmaxAuxAngleHistory` | `$FFFF9680` | Bugmax shifts eight rows of eight auxiliary-chain angle samples and copies delayed row values into the secondary linked-part records. |
 | `ShieldViperTrailAngles` | `$FFFF94A0` | Shield Viper initializes and shifts angle-history words from this base, then applies or interpolates them across linked body records. |
+| `ShieldViperPoseHistory` | `$FFFF9700` | Shield Viper shifts 24 packed X/Y longwords in parallel with its trail angles and applies the delayed coordinates to the 24 linked body records. |
 | `Epsilon1TileDMARecord` | `$FFFF9446` | The animated-tile helper builds one four-word destination/source/count/frame record here before submitting it to the indexed-column loader. |
 | `FlyingNeoVScrollRamp` | `$FFFF9506` | Flying Neo's line-scroll builder writes its descending vertical ramp and camera-relative tail from this address. |
 | `SharpssteelTargetTail` | `$FFFF960A` | The attack selector loads this sixth blade-target history word into its active target field. |

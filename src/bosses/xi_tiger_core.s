@@ -143,7 +143,7 @@ Boss_XiTigerFallingLanding:                             ; DATA XREF: ROM:0003D88
                 move.w  #6,(PlaneAShakeLevel).w
                 move.w  #6,(PlaneBShakeLevel).w
                 move.l  #$C000,(StageCameraYVelocity).w
-                move.w  #$FFFF,(dword_FFA960).w
+                move.w  #$FFFF,(MidgameVerticalPhase).w
                 move.b  #$A1,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  $23C(a5),$914(a5)
@@ -463,7 +463,7 @@ Boss_XiTigerJumpPeak:                                   ; DATA XREF: ROM:0003D8A
                 move.w  #6,(PlaneAShakeLevel).w
                 move.w  #6,(PlaneBShakeLevel).w
                 move.l  #$C000,(StageCameraYVelocity).w
-                move.w  #$FFFF,(dword_FFA960).w
+                move.w  #$FFFF,(MidgameVerticalPhase).w
                 move.b  #$A4,d0
                 jsr     (Sound_PlaySFX).l
                 bclr    #6,$261(a5)
@@ -541,7 +541,7 @@ Boss_XiTigerDefeatLeapState:                            ; DATA XREF: ROM:0003D8A
                 move.w  #8,(PlaneAShakeLevel).w
                 move.w  #8,(PlaneBShakeLevel).w
                 move.l  #$C000,(StageCameraYVelocity).w
-                move.w  #$FFFF,(dword_FFA960).w
+                move.w  #$FFFF,(MidgameVerticalPhase).w
                 clr.l   $1C(a5)
                 move.w  #$CF20,$4A(a5)
                 move.w  $23C(a5),$914(a5)

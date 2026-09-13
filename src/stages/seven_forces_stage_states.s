@@ -1,6 +1,6 @@
 Stage_SevenForcesInitializeStage20:                     ; DATA XREF: ROM:0000E4A8   o  ; was: sub_E7D8
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 bset    #1,(PaletteFadeControlFlags).w
                 move.w  #$36,(PlayerScriptStateOffset).w  ; '6'
@@ -13,26 +13,26 @@ Stage_SevenForcesInitializeStage20:                     ; DATA XREF: ROM:0000E4A
                 move.w  #$428,(a0)
                 move.w  #2,4(a0)
                 move.b  #2,(VDPReg11Shadow+1).w
-                move.b  #4,(byte_FFA95A).w
-                move.b  #3,(byte_FFA95B).w
+                move.b  #4,(PlaneAScrollModeFlags).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 rts
 ; End of function Stage_SevenForcesInitializeStage20
 ; Update the Stage 20 camera and parallax until the next transition is ready
 Stage_SevenForcesUpdateStage20Scroll:                   ; DATA XREF: ROM:0000E4AA   o  ; was: sub_E830
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesStage20UpdateCamera
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Stage_SevenForcesStage20UpdateCamera:                   ; CODE XREF: Stage_SevenForcesUpdateStage20Scroll+4   j ; was: loc_E83E
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
                 bra.w   Gfx_UpdateSevenForcesParallaxRows
 ; End of function Stage_SevenForcesUpdateStage20Scroll
 ; Transition to Medusa form
 Stage_SevenForcesAdvanceToMedusa:                       ; DATA XREF: ROM:0000E4AC   o  ; was: sub_E846
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesUpdateMedusaCamera
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Stage_SevenForcesUpdateMedusaCamera:                    ; CODE XREF: Stage_SevenForcesAdvanceToMedusa+4   j ; was: loc_E854
                 bra.w   Stage_SevenForcesUpdateMedusaCameraAndParallax
 ; End of function Stage_SevenForcesAdvanceToMedusa
@@ -49,10 +49,10 @@ Stage_SevenForcesApplyMedusaScroll:                     ; CODE XREF: Stage_Seven
 ; End of function Stage_SevenForcesFinishMedusaScroll
 ; Initialize the Sylpheed scroll velocities and plane modes
 Stage_SevenForcesInitializeSylpheedScroll:              ; DATA XREF: ROM:0000E4B0   o  ; was: sub_E876
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesInitializeSylpheedScrollReturn
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 clr.l   (dword_FF9614).w
                 clr.l   (dword_FF961C).w
                 bsr.w   Gfx_ClearSylpheedPlaneModes
@@ -63,30 +63,30 @@ Stage_SevenForcesInitializeSylpheedScrollReturn:        ; CODE XREF: Stage_Seven
 Stage_SevenForcesUpdateSylpheedScroll:                  ; DATA XREF: ROM:0000E4B2   o  ; was: sub_E892
                 bsr.w   Stage_SevenForcesUpdateSylpheedPrimaryPlane
                 bsr.w   Stage_SevenForcesUpdateSylpheedSecondaryPlane
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesUpdateSylpheedScrollReturn
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Stage_SevenForcesUpdateSylpheedScrollReturn:            ; CODE XREF: Stage_SevenForcesUpdateSylpheedScroll+C   j ; was: locret_E8A8
                 rts
 ; End of function Stage_SevenForcesUpdateSylpheedScroll
 ; Advance the Sylpheed scroll and continue its foreground update
 Stage_SevenForcesAdvanceSylpheedForeground:             ; DATA XREF: ROM:0000E4B4   o  ; was: sub_E8AA
                 bsr.w   Stage_SevenForcesUpdateSylpheedSecondaryPlane
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesUpdateSylpheedForeground
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Stage_SevenForcesUpdateSylpheedForeground:              ; CODE XREF: Stage_SevenForcesAdvanceSylpheedForeground+8   j ; was: loc_E8BC
                                         ; Stage_SevenForcesFinishSylpheedForeground+18   j
                 bra.w   Stage_SevenForcesUpdateSylpheedForegroundScroll
 ; End of function Stage_SevenForcesAdvanceSylpheedForeground
 ; Finish the Sylpheed foreground transition or continue scrolling it
 Stage_SevenForcesFinishSylpheedForeground:              ; DATA XREF: ROM:0000E4B6   o  ; was: sub_E8C0
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesContinueSylpheedForeground
                 addq.w  #2,(StageStateOffset).w
-                move.w  #$20,(dword_FFA960).w           ; ' '
+                move.w  #$20,(SevenForcesTimer).w       ; ' '
                 bra.w   Stage_SevenForcesInitializeArtemisCameraAndAssets
 ; ---------------------------------------------------------------------------
 Stage_SevenForcesContinueSylpheedForeground:            ; CODE XREF: Stage_SevenForcesFinishSylpheedForeground+4   j ; was: loc_E8D4
@@ -97,7 +97,7 @@ Stage_SevenForcesContinueSylpheedForeground:            ; CODE XREF: Stage_Seven
 Stage_SevenForcesBeginArtemisTransition:                ; DATA XREF: ROM:0000E4B8   o  ; was: sub_E8DC
                 bsr.w   Gfx_ArtemisInitializeTilemap
                 bsr.w   Stage_SevenForcesDampenHorizontalVelocity
-                subq.w  #1,(dword_FFA960).w
+                subq.w  #1,(SevenForcesTimer).w
                 bpl.s   Stage_SevenForcesBeginArtemisTransitionReturn
                 tst.w   (DataLoaderControl).w
                 bmi.s   Stage_SevenForcesBeginArtemisTransitionReturn
@@ -112,13 +112,13 @@ Stage_SevenForcesWaitForArtemisBackground:              ; DATA XREF: ROM:0000E4B
                 bsr.w   Gfx_ArtemisUpdateBackground
                 bpl.s   Stage_SevenForcesWaitForArtemisBackgroundReturn
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Stage_SevenForcesWaitForArtemisBackgroundReturn:        ; CODE XREF: Stage_SevenForcesWaitForArtemisBackground+4   j ; was: locret_E908
                 rts
 ; End of function Stage_SevenForcesWaitForArtemisBackground
 ; Wait for the shared trigger before advancing the Artemis transition
 Stage_SevenForcesWaitForArtemisTrigger:                 ; DATA XREF: ROM:0000E4BC   o  ; was: sub_E90A
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesWaitForArtemisTriggerReturn
                 addq.w  #2,(StageStateOffset).w
 Stage_SevenForcesWaitForArtemisTriggerReturn:           ; CODE XREF: Stage_SevenForcesWaitForArtemisTrigger+4   j ; was: locret_E914
@@ -130,7 +130,7 @@ Stage_SevenForcesScrollArtemisBackground:               ; DATA XREF: ROM:0000E4B
                 cmpi.w  #$E200,(PrimaryCameraYPosition).w
                 bne.s   Stage_SevenForcesScrollArtemisBackgroundReturn
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 clr.w   (dword_FF8066).w
 Stage_SevenForcesScrollArtemisBackgroundReturn:         ; CODE XREF: Stage_SevenForcesScrollArtemisBackground+A   j ; was: locret_E92E
                 rts
@@ -139,10 +139,10 @@ Stage_SevenForcesScrollArtemisBackgroundReturn:         ; CODE XREF: Stage_Seven
 Stage_SevenForcesScrollArtemisForeground:               ; DATA XREF: ROM:0000E4C0   o  ; was: sub_E930
                 bsr.w   Stage_SevenForcesUpdateArtemisForegroundMotion
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesScrollArtemisForegroundReturn
                 addq.w  #2,(StageStateOffset).w
-                move.w  #$40,(dword_FFA960).w           ; '@'
+                move.w  #$40,(SevenForcesTimer).w       ; '@'
                 clr.l   (dword_FF9614).w
                 clr.l   (dword_FF961C).w
                 move.b  #$F4,d0
@@ -153,10 +153,10 @@ Stage_SevenForcesScrollArtemisForegroundReturn:         ; CODE XREF: Stage_Seven
 ; Begin the Sirene transition with its countdown, sound, and camera shake
 Stage_SevenForcesBeginSireneTransition:                 ; DATA XREF: ROM:0000E4C2   o  ; was: sub_E95C
                 move.w  #2,(PlaneAShakeLevel).w
-                subq.w  #1,(dword_FFA960).w
+                subq.w  #1,(SevenForcesTimer).w
                 bpl.s   Stage_SevenForcesUpdateSireneCamera
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 clr.l   (dword_FF9614).w
                 move.b  #$F5,d0
                 jsr     (Sound_PlaySFX).l
@@ -201,10 +201,10 @@ Stage_SevenForcesAdvanceSireneTransition:               ; DATA XREF: ROM:0000E4C
                 bsr.s   Stage_SevenForcesCenterSireneCamera
                 bsr.w   Stage_SevenForcesUpdateSireneSecondaryScroll
                 bsr.w   Stage_SevenForcesUpdateSirenePrimaryPlane
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesAdvanceSireneShake
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 move.b  #$F6,d0
                 jsr     (Sound_PlaySFX).l
                 move.w  #$D0,(PlayerXPosition).w
@@ -218,30 +218,30 @@ Stage_SevenForcesFinishSireneTransition:                ; DATA XREF: ROM:0000E4C
                 bsr.s   Stage_SevenForcesCenterSireneCamera
                 bsr.w   Stage_SevenForcesUpdateSireneSecondaryScroll
                 bsr.w   Stage_SevenForcesRenderSireneSecondaryPlane
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesFinishSireneShake
                 addq.w  #2,(StageStateOffset).w
-                move.w  #$40,(dword_FFA960).w           ; '@'
+                move.w  #$40,(SevenForcesTimer).w       ; '@'
 Stage_SevenForcesFinishSireneShake:                     ; CODE XREF: Stage_SevenForcesFinishSireneTransition+E   j ; was: loc_EA20
                 bra.w   Stage_SevenForcesUpdateSireneShake
 ; End of function Stage_SevenForcesFinishSireneTransition
 ; Count down the final Sirene hold before the victory sequence
 Stage_SevenForcesWaitBeforeVictory:                     ; DATA XREF: ROM:0000E4C8   o  ; was: sub_EA24
-                subq.w  #1,(dword_FFA960).w
+                subq.w  #1,(SevenForcesTimer).w
                 bpl.s   Stage_SevenForcesWaitBeforeVictoryUpdateCamera
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Stage_SevenForcesWaitBeforeVictoryUpdateCamera:         ; CODE XREF: Stage_SevenForcesWaitBeforeVictory+4   j ; was: loc_EA32
                 move.w  #2,(PlaneAShakeLevel).w
                 bra.w   Stage_SevenForcesUpdateSireneCamera
 ; Initialize the tilemap and timer for the Seven Forces victory sequence
 Stage_SevenForcesInitializeVictoryTransition:           ; DATA XREF: ROM:0000E4CA   o  ; was: sub_EA3C
                 bsr.w   Camera_UpdateHorizontalTowardsPlayer
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage_SevenForcesInitializeVictoryTransitionReturn
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
-                move.w  #$40,(dword_FFA960+2).w         ; '@'
+                clr.b   (SceneSequenceFlags).w
+                move.w  #$40,(SevenForcesCloseSpan).w   ; '@'
                 clr.w   (SecondaryCameraXPos).w
                 movea.l #SharedTilemapWorkspace,a0
                 move.w  #$A000,d0

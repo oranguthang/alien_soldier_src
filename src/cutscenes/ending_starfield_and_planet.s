@@ -163,7 +163,7 @@ EndingPlanet_Initialize:                                ; DATA XREF: ROM:00007C4
                 jsr     (Gfx_LoadMultiplePalettes).l
                 move.w  #$FFF2,(CutscenePaletteStep).l
                 move.b  #6,(VDPReg11Shadow+1).w
-                move.b  #3,(byte_FFA95A).w
+                move.b  #3,(PlaneAScrollModeFlags).w
                 clr.l   (EndingScrollPhase).l
                 clr.l   (EndingScrollRate).l
                 moveq   #0,d0

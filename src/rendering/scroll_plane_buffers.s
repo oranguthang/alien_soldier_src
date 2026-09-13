@@ -12,7 +12,7 @@ Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_Prep
                 move.b  d3,d4
                 andi.w  #3,d3
                 andi.w  #4,d4
-                move.b  (byte_FFA95A).w,d5
+                move.b  (PlaneAScrollModeFlags).w,d5
                 movea.w #(HScrollBuffer-M68K_RAM),a0
                 movea.w #(HScrollPlaneARow32-M68K_RAM),a1
                 adda.w  (ScrollPlaneBufferOffset).w,a0
@@ -27,7 +27,7 @@ Scroll_PreparePlaneBufferValues:                        ; CODE XREF: Scroll_Prep
                 neg.w   d0
                 add.w   (PlaneAShakeOffset).w,d0
                 bsr.w   Scroll_WriteVerticalPlaneBuffer
-                move.b  (byte_FFA95B).w,d5
+                move.b  (PlaneBScrollModeFlags).w,d5
                 movea.w #(HScrollPlaneBRow0-M68K_RAM),a0
                 movea.w #(HScrollPlaneBRow32-M68K_RAM),a1
                 suba.w  (ScrollPlaneBufferOffset).w,a0

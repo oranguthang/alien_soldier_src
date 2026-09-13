@@ -290,9 +290,9 @@ Boss_GustheadAccelerateFinalBattleRotationState:        ; DATA XREF: ROM:0003F2A
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadMoveTowardVerticalTarget
-                cmpi.l  #$1D000,(dword_FFA960).w
+                cmpi.l  #$1D000,(GustheadArenaVelocity).w
                 beq.s   Boss_GustheadAccelerateFinalBattleSpin
-                addi.l  #$200,(dword_FFA960).w
+                addi.l  #$200,(GustheadArenaVelocity).w
 Boss_GustheadAccelerateFinalBattleSpin:                 ; CODE XREF: Boss_GustheadAccelerateFinalBattleRotationState+18   j  ; was: loc_3FE16
                 move.b  #$88,$23(a5)
                 subi.l  #$800,(dword_FF940C).w
@@ -309,9 +309,9 @@ Boss_GustheadWaitForFinalBattleScrollState:             ; DATA XREF: ROM:0003F2A
                 bsr.w   Boss_GustheadUpdateSegmentPositions
                 bsr.w   Boss_GustheadSpawnScrollingDebris
                 bsr.w   Boss_GustheadMoveTowardVerticalTarget
-                cmpi.l  #$1D000,(dword_FFA960).w
+                cmpi.l  #$1D000,(GustheadArenaVelocity).w
                 beq.s   Boss_GustheadBeginFinalBattleAttackDelay
-                addi.l  #$200,(dword_FFA960).w
+                addi.l  #$200,(GustheadArenaVelocity).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_GustheadBeginFinalBattleAttackDelay:               ; CODE XREF: Boss_GustheadWaitForFinalBattleScrollState+18   j  ; was: loc_3FE60
@@ -382,9 +382,9 @@ Boss_GustheadDefeatInitPhase:                           ; DATA XREF: ROM:0003F2A
 ; Slows scroll during defeat
 Boss_GustheadDefeatSlowScroll:                          ; DATA XREF: ROM:0003F2AA   o  ; was: sub_3FF00
                 bsr.w   Boss_SpawnExplosionDebris
-                cmpi.l  #$E800,(dword_FFA960).w
+                cmpi.l  #$E800,(GustheadArenaVelocity).w
                 bmi.s   Boss_GustheadFinishDefeatScroll
-                subi.l  #$200,(dword_FFA960).w
+                subi.l  #$200,(GustheadArenaVelocity).w
                 rts
 ; ---------------------------------------------------------------------------
 Boss_GustheadFinishDefeatScroll:                        ; CODE XREF: Boss_GustheadDefeatSlowScroll+C   j  ; was: loc_3FF18
@@ -494,12 +494,12 @@ Boss_GustheadDefeatPaletteReverseReturn:                ; CODE XREF: Boss_Gusthe
 ; End of function Boss_GustheadDefeatExit
 ; Waits during defeat sequence
 Boss_GustheadDefeatWait:                                ; DATA XREF: ROM:0003F2B4   o  ; was: sub_40040
-                tst.l   (dword_FFA960).w
+                tst.l   (GustheadArenaVelocity).w
                 beq.s   Boss_GustheadBeginDefeatRemovalDelay
                 move.w  (PrimaryCameraXPosition).w,d0
                 andi.w  #$7F,d0
                 bne.s   Boss_GustheadDefeatWaitReturn
-                clr.l   (dword_FFA960).w
+                clr.l   (GustheadArenaVelocity).w
 Boss_GustheadBeginDefeatRemovalDelay:                   ; CODE XREF: Boss_GustheadDefeatWait+4   j  ; was: loc_40054
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #2,4(a5)
@@ -574,7 +574,7 @@ Boss_GustheadSegmentShiftAngleLoop:                     ; CODE XREF: Boss_Gusthe
                 rts
 ; ---------------------------------------------------------------------------
 Boss_GustheadDispatchDetachedSegmentState:              ; CODE XREF: Boss_GustheadSegmentMain+6   j  ; was: loc_40118
-                move.l  (dword_FFA960).w,d0
+                move.l  (GustheadArenaVelocity).w,d0
                 add.l   d0,$10(a5)
                 move.w  4(a5),d0
                 lea     Boss_GustheadDetachedSegmentStates(pc,d0.w),a0

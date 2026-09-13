@@ -218,8 +218,8 @@ Stage3_InitializePostShellshogunTransition:             ; DATA XREF: ROM:0000C86
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage3_InitializePostShellshogunTransition_UpdateCamera
                 clr.b   (VDPReg11Shadow+1).w
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 move.w  #$8000,(GlobalSpritePriorityBit).w
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
@@ -287,8 +287,8 @@ Stage4_InitializeShiperEncounter:                       ; DATA XREF: ROM:0000C86
                 move.w  d0,(PrimaryCameraXPosition).w
                 move.w  d0,(CameraXLowerBound).w
                 move.w  d0,(CameraXUpperBound).w
-                move.b  #$10,(byte_FFA95A).w
-                move.b  #4,(byte_FFA95B).w
+                move.b  #$10,(PlaneAScrollModeFlags).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 lea     (Boss_ShiperAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
                 bsr.s   Stage4_FillShiperHorizontalRasterOffsets
@@ -555,8 +555,8 @@ Stage7_UpdatePostTerobusterIntro:                       ; DATA XREF: ROM:0000C89
                 tst.w   (Entity_ObjectPool).w
                 bne.s   Stage7_UpdatePostTerobusterIntroCamera
                 clr.b   (VDPReg11Shadow+1).w
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 addq.w  #2,(StageStateOffset).w
                 move.w  #$2E,(MessageSequenceState).w   ; '.'
                 clr.w   (SecondaryCameraYPos).w

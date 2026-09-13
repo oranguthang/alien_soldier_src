@@ -121,7 +121,7 @@ Stage19_InitializeJampanEncounter:                      ; DATA XREF: ROM:0000E44
 ; End of function Stage19_InitializeJampanEncounter
 ; Update the Jampan encounter camera until its completion flag is set
 Stage19_UpdateJampanEncounter:                          ; DATA XREF: ROM:0000E44C   o  ; was: sub_E636
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Stage19_UpdateJampanEncounter_UpdateCamera
                 addq.w  #2,(StageStateOffset).w
 Stage19_UpdateJampanEncounter_UpdateCamera:             ; CODE XREF: Stage19_UpdateJampanEncounter+4   j  ; was: loc_E640
@@ -162,7 +162,7 @@ Stage18And19_UpdateHorizontalParallax:                  ; CODE XREF: Stage18_Upd
 ; Unreferenced Stage 20 variant 1 entry using Jampan's asset set
 UnreferencedStage20Variant1_InitializeJampanPhase:      ; DATA XREF: ROM:0000E460   o  ; was: sub_E686
                 bsr.w   Stage_TransitionToNextPhase
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 move.w  #$40,(CameraXLowerBound).w      ; '@'
                 move.w  #$80,(CameraXUpperBound).w
                 move.b  #1,(SoundFadeOutDelay).w
@@ -171,7 +171,7 @@ UnreferencedStage20Variant1_InitializeJampanPhase:      ; DATA XREF: ROM:0000E46
 ; End of function UnreferencedStage20Variant1_InitializeJampanPhase
 ; Wait for the variant 1 completion flag while updating the camera
 UnreferencedStage20Variant1_UpdateJampanPhase:          ; DATA XREF: ROM:0000E462   o  ; was: sub_E6AC
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   UnreferencedStage20Variant1_UpdateJampanPhase_Camera
                 addq.w  #2,(StageStateOffset).w
 UnreferencedStage20Variant1_UpdateJampanPhase_Camera:   ; CODE XREF: UnreferencedStage20Variant1_UpdateJampanPhase+4   j  ; was: loc_E6B6
@@ -189,7 +189,7 @@ UnreferencedStage20Variant1_StartTransition:            ; DATA XREF: ROM:0000E46
 ; Unreferenced Stage 20 variant 2 entry using entity type $3EC
 UnreferencedStage20Variant2_InitializeEntity3ECPhase:   ; DATA XREF: ROM:0000E468   o  ; was: sub_E6D6
                 bsr.w   Stage_TransitionToNextPhase
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 move.w  #$40,(CameraXLowerBound).w      ; '@'
                 move.w  #$80,(CameraXUpperBound).w
                 move.b  #1,(SoundFadeOutDelay).w
@@ -198,7 +198,7 @@ UnreferencedStage20Variant2_InitializeEntity3ECPhase:   ; DATA XREF: ROM:0000E46
 ; End of function UnreferencedStage20Variant2_InitializeEntity3ECPhase
 ; Wait for the variant 2 completion flag while updating the camera
 UnreferencedStage20Variant2_UpdateEntity3ECPhase:       ; DATA XREF: ROM:0000E46A   o  ; was: sub_E6FC
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   UnreferencedStage20Variant2_UpdateEntity3ECPhase_Camera
                 addq.w  #2,(StageStateOffset).w
 UnreferencedStage20Variant2_UpdateEntity3ECPhase_Camera:  ; CODE XREF: UnreferencedStage20Variant2_UpdateEntity3ECPhase+4   j  ; was: loc_E706
@@ -217,7 +217,7 @@ UnreferencedStage20Variant2_StartTransition:            ; DATA XREF: ROM:0000E46
 ; Unreferenced Stage 20 variant 3 entry using entity type $3F0
 UnreferencedStage20Variant3_InitializeEntity3F0Phase:   ; DATA XREF: ROM:0000E470   o  ; was: sub_E72C
                 bsr.w   Stage_TransitionToNextPhase
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 move.w  #$40,(CameraXLowerBound).w      ; '@'
                 move.w  #$80,(CameraXUpperBound).w
                 move.b  #1,(SoundFadeOutDelay).w
@@ -226,7 +226,7 @@ UnreferencedStage20Variant3_InitializeEntity3F0Phase:   ; DATA XREF: ROM:0000E47
 ; End of function UnreferencedStage20Variant3_InitializeEntity3F0Phase
 ; Wait for the variant 3 completion flag while updating the camera
 UnreferencedStage20Variant3_UpdateEntity3F0Phase:       ; DATA XREF: ROM:0000E472   o  ; was: sub_E752
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   UnreferencedStage20Variant3_UpdateEntity3F0Phase_Camera
                 addq.w  #2,(StageStateOffset).w
 UnreferencedStage20Variant3_UpdateEntity3F0Phase_Camera:  ; CODE XREF: UnreferencedStage20Variant3_UpdateEntity3F0Phase+4   j  ; was: loc_E75C
@@ -245,7 +245,7 @@ UnreferencedStage20Variant3_StartTransition:            ; DATA XREF: ROM:0000E47
 ; Unreferenced Stage 20 variant 4 entry using entity type $3F4
 UnreferencedStage20Variant4_InitializeEntity3F4Phase:   ; DATA XREF: ROM:0000E478   o  ; was: sub_E782
                 bsr.w   Stage_TransitionToNextPhase
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 move.w  #$40,(CameraXLowerBound).w      ; '@'
                 move.w  #$80,(CameraXUpperBound).w
                 move.b  #1,(SoundFadeOutDelay).w
@@ -254,7 +254,7 @@ UnreferencedStage20Variant4_InitializeEntity3F4Phase:   ; DATA XREF: ROM:0000E47
 ; End of function UnreferencedStage20Variant4_InitializeEntity3F4Phase
 ; Wait for the variant 4 completion flag while updating the camera
 UnreferencedStage20Variant4_UpdateEntity3F4Phase:       ; DATA XREF: ROM:0000E47A   o  ; was: sub_E7A8
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   UnreferencedStage20Variant4_UpdateEntity3F4Phase_Camera
                 addq.w  #2,(StageStateOffset).w
 UnreferencedStage20Variant4_UpdateEntity3F4Phase_Camera:  ; CODE XREF: UnreferencedStage20Variant4_UpdateEntity3F4Phase+4   j  ; was: loc_E7B2

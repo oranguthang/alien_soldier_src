@@ -13,13 +13,13 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
                 addq.w  #2,(StageStateOffset).w
                 move.w  #1,(MidgameLightningMode).w
                 clr.w   (dword_FF8058).w
-                clr.w   (dword_FFA960).w
-                move.l  #$180000,(dword_FFA960+2).w
+                clr.w   (MidgameVerticalPhase).w
+                move.l  #$180000,(Stage9FlyCorridorY).w
                 clr.w   (CameraXLowerBound).w
                 move.w  #$A0,(CameraXUpperBound).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                move.b  #4,(byte_FFA95A).w
-                move.b  #$30,(byte_FFA95B).w            ; '0'
+                move.b  #4,(PlaneAScrollModeFlags).w
+                move.b  #$30,(PlaneBScrollModeFlags).w  ; '0'
                 move.w  #$2C,(RasterEffectIndex).w      ; ','
                 clr.w   (RasterEffectInitState).w
                 move.w  #8,(RasterLayoutOffset).w
@@ -28,7 +28,7 @@ Stage9_InitializeFlyCorridor:                           ; DATA XREF: ROM:0000C8A
 ; End of function Stage9_InitializeFlyCorridor
 ; Update the corridor until its vertical position reaches the ship transition
 Stage9_UpdateFlyCorridor:                               ; DATA XREF: ROM:0000C8AE   o  ; was: sub_D140
-                cmpi.w  #$B0,(dword_FFA960+2).w
+                cmpi.w  #$B0,(Stage9FlyCorridorY).w
                 bmi.s   Stage9_UpdateFlyCorridorScroll
                 lea     Stage9_CaterpillarTileAssetLoadList(pc),a0
                 nop
@@ -47,11 +47,11 @@ Stage9_UpdateFlyCorridorScroll:                         ; CODE XREF: Stage9_Upda
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 bsr.w   Stage9_WriteVerticalRasterOffsets
                 bsr.w   Midgame_UpdateTrainAndFlyCorridorParallaxRows
-                cmpi.w  #$60,(dword_FFA960+2).w         ; '`'
+                cmpi.w  #$60,(Stage9FlyCorridorY).w     ; '`'
                 bmi.s   Stage9_FlyCorridor_AdvanceVerticalPosition
                 bsr.w   Stage9_UpdateFlyCorridorRevealColumns
 Stage9_FlyCorridor_AdvanceVerticalPosition:             ; CODE XREF: Stage9_UpdateFlyCorridorScroll+22   j  ; was: loc_D18E
-                addi.l  #$4000,(dword_FFA960+2).w
+                addi.l  #$4000,(Stage9FlyCorridorY).w
                 movea.w #(FlyCorridorRasterBuffer-M68K_RAM),a0
                 moveq   #$60,d0                         ; '`'
                 moveq   #$16,d7
@@ -66,7 +66,7 @@ Stage9_FlyCorridor_ClearTrailingRowOffsets:             ; CODE XREF: Stage9_Upda
                 move.w  #0,(a0)+
                 dbf     d7,Stage9_FlyCorridor_ClearTrailingRowOffsets
                 movea.w #(FlyCorridorRasterBuffer-M68K_RAM),a0
-                move.w  (dword_FFA960+2).w,d0
+                move.w  (Stage9FlyCorridorY).w,d0
                 move.w  d0,d1
                 addi.w  #$50,d0                         ; 'P'
 Stage9_FlyCorridor_CheckVisibleRowOffset:               ; CODE XREF: Stage9_UpdateFlyCorridorScroll+68   j  ; was: loc_D1C2
@@ -149,8 +149,8 @@ Stage9_InitializeCaterpillarEncounter:                  ; CODE XREF: Stage9_Init
                 move.w  #$128,(Entity_ObjectPool).w
                 move.w  #$C470,(HUDDynamicStripTileAttr).w
                 clr.w   (HUDDynamicStripYOffset).w
-                move.b  #9,(byte_FFA95A).w
-                move.b  #$24,(byte_FFA95B).w            ; '$'
+                move.b  #9,(PlaneAScrollModeFlags).w
+                move.b  #$24,(PlaneBScrollModeFlags).w  ; '$'
                 bra.s   Stage9_UpdateCaterpillarShipTraversal_Camera
 ; End of function Stage9_InitializeCaterpillarEncounter
 ; Follow the player across the Caterpillar ship and stream its tilemap columns
@@ -194,8 +194,8 @@ Stage9_CheckCaterpillarShipTransition:                  ; CODE XREF: Stage9_Upda
                 bmi.s   Stage9_UpdateCaterpillarShipTraversal_Return
                 bsr.w   Stage_TransitionToNextPhase
                 move.b  #2,(VDPReg11Shadow+1).w
-                move.b  #$10,(byte_FFA95A).w
-                move.b  #3,(byte_FFA95B).w
+                move.b  #$10,(PlaneAScrollModeFlags).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 clr.w   (SecondaryCameraYPos).w
                 moveq   #0,d0
                 moveq   #0,d1
@@ -267,7 +267,7 @@ Stage9_InitializeXiTigerEncounter:                      ; DATA XREF: ROM:0000C8C
                 bsr.w   Stage_InitializeBossHealthAndCounter
                 move.w  (BossHealth).w,(DisplayedBossHealth).w
                 move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
-                move.b  #$10,(byte_FFA95A).w
+                move.b  #$10,(PlaneAScrollModeFlags).w
                 move.b  #$40,(GameplayControlFlags).w   ; '@'
                 move.w  #$8000,(GlobalSpritePriorityBit).w
                 move.w  #$20,(PlayerScriptStateOffset).w  ; ' '
@@ -288,8 +288,8 @@ Stage9_UpdateXiTigerEntranceDelay:                      ; DATA XREF: ROM:0000C8B
                 move.b  #$41,(GameplayControlFlags).w   ; 'A'
                 addq.w  #2,(StageStateOffset).w
                 move.b  #2,(VDPReg11Shadow+1).w
-                move.b  #1,(byte_FFA95A).w
-                move.b  #4,(byte_FFA95B).w
+                move.b  #1,(PlaneAScrollModeFlags).w
+                move.b  #4,(PlaneBScrollModeFlags).w
 ; Wait until the Xi-Tiger entrance object leaves the primary object slot
 Stage9_WaitForXiTigerEntranceObject:                    ; DATA XREF: ROM:0000C8BC   o  ; was: loc_D49E
                 tst.w   (Entity_ObjectPool).w
@@ -308,22 +308,22 @@ Stage9_UpdateCaterpillarOscillationAndRasterRows:       ; CODE XREF: Stage9_Upda
                 bsr.w   Scroll_UpdateQuarterHorizontalPosition
                 move.l  #Stage9_FlyCorridorLightningPaletteEntryLists,(PaletteEntryLists).w
                 bsr.w   Midgame_UpdateRandomLightningEffect
-                tst.w   (dword_FFA960).w
+                tst.w   (MidgameVerticalPhase).w
                 bmi.s   Stage9_CheckCaterpillarVerticalBounce
                 bne.s   Stage9_RaiseCaterpillarVerticalOffset
                 subi.l  #$1000,(PrimaryCameraYPosition).w
                 bpl.s   Stage9_CheckCaterpillarVerticalBounce
-                addq.w  #1,(dword_FFA960).w
+                addq.w  #1,(MidgameVerticalPhase).w
                 bra.s   Stage9_CheckCaterpillarVerticalBounce
 ; ---------------------------------------------------------------------------
 Stage9_RaiseCaterpillarVerticalOffset:                  ; CODE XREF: Stage9_UpdateCaterpillarOscillationAndRasterRows+16   j  ; was: loc_D4E6
                 addi.l  #$1000,(PrimaryCameraYPosition).w
                 cmpi.w  #$10,(PrimaryCameraYPosition).w
                 bmi.s   Stage9_CheckCaterpillarVerticalBounce
-                clr.w   (dword_FFA960).w
+                clr.w   (MidgameVerticalPhase).w
 Stage9_CheckCaterpillarVerticalBounce:                  ; CODE XREF: Stage9_UpdateCaterpillarOscillationAndRasterRows+14   j  ; was: loc_D4FA
                                         ; Stage9_UpdateCaterpillarOscillationAndRasterRows+20   j
-                tst.w   (dword_FFA960).w
+                tst.w   (MidgameVerticalPhase).w
                 bpl.s   Stage9_WriteVerticalRasterOffsets
                 move.l  (StageCameraYVelocity).w,d0
                 bpl.s   Stage9_AccelerateCaterpillarVerticalBounce
@@ -337,7 +337,7 @@ Stage9_ApplyCaterpillarVerticalBounce:                  ; CODE XREF: Stage9_Upda
                 bpl.s   Stage9_ClampCaterpillarVerticalOffset
                 clr.l   (StageCameraYVelocity).w
                 clr.l   (PrimaryCameraYPosition).w
-                clr.w   (dword_FFA960).w
+                clr.w   (MidgameVerticalPhase).w
 Stage9_ClampCaterpillarVerticalOffset:                  ; CODE XREF: Stage9_UpdateCaterpillarOscillationAndRasterRows+5E   j  ; was: loc_D52A
                 cmpi.w  #$18,(PrimaryCameraYPosition).w
                 bmi.s   Stage9_WriteVerticalRasterOffsets

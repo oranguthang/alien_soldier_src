@@ -175,7 +175,7 @@ Entity_ValkirieProjectileCleanup:                       ; DATA XREF: ROM:00054A0
                 clr.l   $18(a5)
                 move.l  #Entity_ValkirieProjectileCompositeSpriteFrame,8(a5)
                 clr.w   $C(a5)
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 rts
 ; End of function Entity_ValkirieProjectileCleanup
 ; Subtract from horizontal velocity until its integer part is below -1

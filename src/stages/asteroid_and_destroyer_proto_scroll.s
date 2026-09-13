@@ -10,16 +10,16 @@ StageTransition_RenderAsteroidField:                    ; CODE XREF: StageTransi
 ; Advances both asteroid-field positions and detects a $100 boundary crossing
 StageTransition_UpdateAsteroidFieldScroll:              ; CODE XREF: StageTransition_InitializeAsteroidField+70   j  ; was: sub_FB3A
                                         ; StageTransition_StartAsteroidFieldScroll+C   j
-                move.l  (dword_FFA960).w,d0
+                move.l  (AsteroidFieldVelocity).w,d0
                 add.l   d0,(PrimaryCameraYPosition).w
-                add.l   d0,(dword_FFA964).w
+                add.l   d0,(AsteroidFieldPosition).w
                 clr.b   (AsteroidBoundaryFlag).w
-                move.w  (dword_FFA964).w,d0
+                move.w  (AsteroidFieldPosition).w,d0
                 andi.w  #$100,d0
-                cmp.w   (word_FFA968).w,d0
+                cmp.w   (AsteroidBoundaryPhase).w,d0
                 beq.s   StageTransition_SharedReturn
                 addq.b  #1,(AsteroidBoundaryFlag).w
-                move.w  d0,(word_FFA968).w
+                move.w  d0,(AsteroidBoundaryPhase).w
 ; Shared return for inactive or incomplete transition states
 StageTransition_SharedReturn:                           ; CODE XREF: StageTransition_LoadDestroyerProtoAssets+8   j  ; was: locret_FB60
                                         ; StageTransition_InitializeDestroyerProtoBackdrop+8   j
@@ -29,7 +29,7 @@ StageTransition_SharedReturn:                           ; CODE XREF: StageTransi
 UnreferencedSetTransitionFlagFromInputBit6:
                 btst    #6,(ControllerHeldState).w      ; was: sub_FB62
                 beq.s   UnreferencedTransitionInputCheckReturn
-                bset    #0,(byte_FFA958).w
+                bset    #0,(SceneSequenceFlags).w
 UnreferencedTransitionInputCheckReturn:                 ; CODE XREF: UnreferencedSetTransitionFlagFromInputBit6+6   j  ; was: locret_FB70
                 rts
 ; End of function UnreferencedSetTransitionFlagFromInputBit6

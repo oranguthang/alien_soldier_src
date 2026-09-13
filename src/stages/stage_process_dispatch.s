@@ -1,6 +1,6 @@
 ; Unreferenced helper that clears the high word of shared stage scratch $FFFFA960
 UnreferencedClearStageScratchWord:
-                clr.w   (dword_FFA960).w                ; was: sub_FF10
+                clr.w   (StageSceneWorkLong0).w         ; was: sub_FF10
                 rts
 ; End of function UnreferencedClearStageScratchWord
 ; Dispatches the selected stage process while gameplay updates are active

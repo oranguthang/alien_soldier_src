@@ -109,7 +109,7 @@ Boss_JokerEnableLinkedPartFlag7:                        ; CODE XREF: Boss_JokerS
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.w  #$E,(RasterLayoutOffset).w
-                move.b  #2,(byte_FFA95B).w
+                move.b  #2,(PlaneBScrollModeFlags).w
                 bra.w   Boss_JokerBeginDiveState
 ; End of function Boss_JokerSetup
 ; ---------------------------------------------------------------------------
@@ -220,7 +220,7 @@ Boss_JokerFadeOutState:                                 ; DATA XREF: ROM:0003B30
                 move.w  #$15C,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 jsr     (TransitionEffect_SpawnAtOwner).l
                 addi.w  #$10,$14(a0)
                 rts
@@ -274,8 +274,8 @@ Boss_JokerCleanup:                                      ; DATA XREF: ROM:0003B30
                 subq.w  #1,$11C(a5)
                 bpl.s   Boss_JokerCleanupReturn
                 bset    #4,2(a5)
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 clr.b   (VDPReg11Shadow+1).w
 Boss_JokerCleanupReturn:                                ; CODE XREF: Boss_JokerCleanup+4   j  ; was: locret_3B600
                 rts

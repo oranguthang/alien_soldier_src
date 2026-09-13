@@ -51,7 +51,7 @@ Stage12_YachtRevealPan:                                 ; DATA XREF: ROM:0002F5D
                 cmpi.w  #$90,$50(a5)
                 bmi.w   Stage12_YachtControllerReturn
                 move.w  #$38,(RasterEffectIndex).w      ; '8'
-                move.b  #3,(byte_FFA95A).w
+                move.b  #3,(PlaneAScrollModeFlags).w
                 bset    #7,(StageObjectSpawnCursor).w
                 addq.w  #2,4(a5)
                 move.b  #$8B,d0

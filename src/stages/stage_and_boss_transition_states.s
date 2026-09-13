@@ -89,17 +89,17 @@ Stage_TransitionStateOffsets:   dc.w    StageTransition_InitializeAsteroidField-
 StageTransition_InitializeAsteroidField:                ; DATA XREF: Stage_DispatchTransitionState+4   o  ; was: sub_F19A
                                         ; ROM:Stage_TransitionStateOffsets   o
                 addq.w  #2,(StageStateOffset).w
-                move.b  #$80,(byte_FFA958).w
-                clr.l   (dword_FFA964).w
-                clr.w   (word_FFA968).w
+                move.b  #$80,(SceneSequenceFlags).w
+                clr.l   (AsteroidFieldPosition).w
+                clr.w   (AsteroidBoundaryPhase).w
                 clr.b   (AsteroidBoundaryFlag).w
                 move.l  #$10000,(dword_FF8062).w
-                move.l  #$10000,(dword_FFA960).w
+                move.l  #$10000,(AsteroidFieldVelocity).w
                 move.l  #$7000,(BackdropVelocityB).w
                 move.l  #$C000,(BackdropVelocityA).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                move.b  #1,(byte_FFA95A).w
-                move.b  #1,(byte_FFA95B).w
+                move.b  #1,(PlaneAScrollModeFlags).w
+                move.b  #1,(PlaneBScrollModeFlags).w
                 move.w  #$3AC,(Entity_ObjectPool).w
                 clr.w   (PrimaryEntityState).w
 ; Handles graphics transition with scroll updates
@@ -107,11 +107,11 @@ StageTransition_UpdateAsteroidFieldEntry:               ; DATA XREF: ROM:0000F0F
                 bsr.w   StageTransition_FillAsteroidFieldVScroll
                 bsr.w   StageTransition_UpdateSegmentedBackdropScroll
                 subi.l  #$100,(dword_FF8062).w
-                subi.l  #$80,(dword_FFA960).w
-                cmpi.w  #$FFFC,(dword_FFA960).w
+                subi.l  #$80,(AsteroidFieldVelocity).w
+                cmpi.w  #$FFFC,(AsteroidFieldVelocity).w
                 bpl.w   StageTransition_UpdateAsteroidFieldScroll
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 rts
 ; End of function StageTransition_InitializeAsteroidField
 ; Transition to asteroids
@@ -121,7 +121,7 @@ StageTransition_StartAsteroidFieldScroll:               ; DATA XREF: ROM:0000F10
                 tst.b   (AsteroidBoundaryFlag).w
                 beq.w   StageTransition_UpdateAsteroidFieldScroll
                 addq.w  #2,(StageStateOffset).w
-                move.b  #$40,(byte_FFA958).w            ; '@'
+                move.b  #$40,(SceneSequenceFlags).w     ; '@'
                 andi.w  #$FF,(PrimaryCameraYPosition).w
                 addi.w  #-$900,(PrimaryCameraYPosition).w
                 bra.w   StageTransition_RenderAsteroidField
@@ -133,7 +133,7 @@ StageTransition_FinishAsteroidFieldScroll:              ; DATA XREF: ROM:0000F10
                 cmpi.w  #$F600,(PrimaryCameraYPosition).w
                 bpl.w   StageTransition_RenderAsteroidField
                 move.w  #$8000,(GlobalSpritePriorityBit).w
-                move.b  #$80,(byte_FFA958).w
+                move.b  #$80,(SceneSequenceFlags).w
                 move.w  #$80,(StageSceneDelayTimer).w
                 jmp     Stage_TransitionToNextPhase
 ; End of function StageTransition_FinishAsteroidFieldScroll
@@ -157,7 +157,7 @@ StageTransition_InitializeDestroyerProtoBackdrop:       ; DATA XREF: ROM:0000F10
                 lea     (DestroyerProtoIntroPaletteCommands).l,a0
                 jsr     (Gfx_LoadPaletteCommand).l
 StageTransition_ConfigureDestroyerProtoBackdrop:        ; CODE XREF: StageTransition_RestartDestroyerProtoBackdrop+14   j  ; was: loc_F2B0
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 move.w  #$50,(RasterEffectIndex).w      ; 'P'
                 clr.w   (RasterEffectInitState).w
                 move.w  #$16,(RasterLayoutOffset).w
@@ -193,7 +193,7 @@ StageTransition_UpdateDestroyerProtoBackdropFade:       ; DATA XREF: ROM:0000F10
 ; ---------------------------------------------------------------------------
 StageTransition_CompleteDestroyerProtoBackdropFade:     ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+18   j  ; was: loc_F33E
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 clr.w   (StatusDisplayModeOffset).w
                 clr.b   (StageRouteFlags).w
 StageTransition_DestroyerProtoBackdropFadeReturn:       ; CODE XREF: StageTransition_UpdateDestroyerProtoBackdropFade+20   j  ; was: locret_F34E
@@ -207,7 +207,7 @@ StageTransition_UpdatePostDestroyerProtoScroll:         ; DATA XREF: ROM:0000F10
                 move.w  (BackdropPositionA).w,d0
                 addi.w  #$60,d0                         ; '`'
                 move.w  d0,(BackdropRasterSpan).w
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 bne.s   StageTransition_AdvancePostDestroyerProtoScroll
                 moveq   #0,d7
                 cmpi.l  #$FFFF8000,(BackdropVelocityB).w
@@ -222,7 +222,7 @@ StageTransition_CheckPostDestroyerProtoSecondarySpeed:  ; CODE XREF: StageTransi
 StageTransition_CheckPostDestroyerProtoSpeedsComplete:  ; CODE XREF: StageTransition_UpdatePostDestroyerProtoScroll+3C   j  ; was: loc_F398
                 tst.w   d7
                 bne.s   StageTransition_PostDestroyerProtoScrollReturn
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 move.w  #$50,(MessageSequenceState).w   ; 'P'
                 move.w  #$2A,(StageTableIndex).w        ; '*'
                 move.w  #$166,(BackdropLinePhase).w
@@ -256,7 +256,7 @@ StageTransition_ShieldViperEntryWaitReturn:             ; CODE XREF: StageTransi
 StageTransition_LoadShieldViperAssets:                  ; DATA XREF: ROM:0000F10E   o  ; was: sub_F402
                 bsr.w   StageTransition_ApplySegmentedBackdropMotion
                 bsr.w   StageTransition_UpdateShieldViperVScroll
-                move.b  #0,(byte_FFA958).w
+                move.b  #0,(SceneSequenceFlags).w
                 jsr     (Stage_TransitionToNextPhase).l
                 lea     (Boss_ShieldViperAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
@@ -301,7 +301,7 @@ StageTransition_CompleteShieldViperFade:                ; DATA XREF: ROM:0000F11
                 clr.w   (TilemapRowXOrFillWord).w
                 move.w  #$F400,(TilemapRowYPosition).w
                 move.w  #$1F,(TilemapRowCountdown).w
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 move.w  #$A000,d0
                 bra.w   Gfx_AdjustTransitionTileIndexRows
 ; End of function StageTransition_CompleteShieldViperFade
@@ -385,8 +385,8 @@ StageTransition_CheckWolfGaropaBackdropPosition:        ; CODE XREF: StageTransi
                 clr.w   (RasterEffectInitState).w
                 clr.w   (RasterLayoutOffset).w
                 clr.b   (VDPReg11Shadow+1).w
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 move.l  #Gfx_DefaultVRAMTransferParameters,(TilemapTransferBase).w
                 move.w  #$1F,(TilemapRowCountdown).w
                 clr.w   (TilemapRowXOrFillWord).w
@@ -560,8 +560,8 @@ Gfx_AdjustTransitionTileIndexRows:                      ; CODE XREF: StageTransi
 ; Unreferenced transition-scroll initializer
 UnreferencedInitializeTransitionScroll:
                 addq.w  #2,(StageStateOffset).w         ; was: sub_F7BA
-                move.b  #$40,(byte_FFA958).w            ; '@'
-                move.w  #$FFFE,(dword_FFA960).w
+                move.b  #$40,(SceneSequenceFlags).w     ; '@'
+                move.w  #$FFFE,(AsteroidFieldVelocity).w
                 clr.b   (VDPReg11Shadow+1).w
                 rts
 ; End of function UnreferencedInitializeTransitionScroll
@@ -572,9 +572,9 @@ UnreferencedUpdateAsteroidScrollToTarget:
                 cmpi.w  #$F3E0,(PrimaryCameraYPosition).w
                 bpl.w   StageTransition_SharedReturn
                 addq.w  #2,(StageStateOffset).w
-                move.b  #0,(byte_FFA958).w
+                move.b  #0,(SceneSequenceFlags).w
                 move.w  #$F3E0,(PrimaryCameraYPosition).w
-                clr.l   (dword_FFA960).w
+                clr.l   (AsteroidFieldVelocity).w
                 rts
 ; End of function UnreferencedUpdateAsteroidScrollToTarget
 UnreferencedEmptyTransitionHandler:
@@ -585,10 +585,10 @@ UnreferencedEmptyTransitionHandler:
 ; Stage initialization
 StageTransition_InitializeMissirayEntryScene:           ; DATA XREF: ROM:0000F13C   o  ; was: sub_F7FA
                 addq.w  #2,(StageStateOffset).w
-                move.l  #$FFFE0000,(dword_FFA960).w
+                move.l  #$FFFE0000,(MissirayParallaxSpeed).w
                 move.b  #4,(VDPReg11Shadow+1).w
-                move.b  #2,(byte_FFA95A).w
-                move.b  #8,(byte_FFA95B).w
+                move.b  #2,(PlaneAScrollModeFlags).w
+                move.b  #8,(PlaneBScrollModeFlags).w
                 move.w  #$200,(StageSceneDelayTimer).w
                 movea.w #(Entity57Type-M68K_RAM),a0
                 movea.w #(Entity58Type-M68K_RAM),a1
@@ -661,7 +661,7 @@ StageTransition_MissirayExitWaitReturn:                 ; CODE XREF: StageTransi
 ; Applies the Missiray scene's full-, half-, and quarter-speed vertical parallax
 StageTransition_UpdateMissirayParallax:                 ; CODE XREF: StageTransition_InitializeMissirayEntryScene:StageTransition_UpdateMissirayEntryDelay   p  ; was: sub_F914
                                         ; StageTransition_LoadMissirayAssets   p
-                move.l  (dword_FFA960).w,d0
+                move.l  (MissirayParallaxSpeed).w,d0
                 sub.l   d0,(PrimaryCameraYPosition).w
                 move.w  (PrimaryCameraYPosition).w,d0
                 move.w  d0,d1
@@ -718,7 +718,7 @@ StageTransition_MissiraySceneObjectReturn:              ; CODE XREF: StageTransi
 ; Initializes the Stage 24 scene objects, vertical range, and sound
 StageTransition_InitializeStage24SceneObjects:          ; DATA XREF: ROM:0000F14A   o  ; was: sub_F9B6
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  #$410,(a0)
                 move.w  #$256,$10(a0)
@@ -767,7 +767,7 @@ StageTransition_StoreStage24VerticalOffset:             ; CODE XREF: StageTransi
 ; End of function StageTransition_UpdateStage24VerticalOffset
 ; Waits for Stage 24 completion and shared activity signals before advancing
 StageTransition_WaitForStage24CompletionSignals:        ; DATA XREF: ROM:0000F150   o  ; was: sub_FA5A
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   StageTransition_Stage24CompletionWaitReturn
                 tst.w   (GameplayExitMode).w
                 bne.s   StageTransition_Stage24CompletionWaitReturn

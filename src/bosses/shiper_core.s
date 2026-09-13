@@ -128,7 +128,7 @@ Boss_ShiperSetupState:                                  ; DATA XREF: ROM:000364A
                 move.w  #$24,(RasterEffectIndex).w      ; '$'
                 clr.w   (RasterEffectInitState).w
                 move.w  #$A,(RasterLayoutOffset).w
-                move.b  #3,(byte_FFA95B).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 move.w  #8,$5A(a5)
                 move.w  #2,$5C(a5)
                 bset    #1,$5E(a5)
@@ -451,7 +451,7 @@ Boss_ShiperDefeatSequenceBeginCleanup:                  ; CODE XREF: Boss_Shiper
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 clr.w   (RasterLayoutOffset).w
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 move.w  #$24,d0                         ; '$'
                 move.w  #$134,d1
                 jsr     (Object_ClearAllExceptTypes).l

@@ -112,8 +112,8 @@ Boss_DestroyerMK2ClearScrollBuffersLoop:                ; CODE XREF: Boss_Destro
                 sub.w   (PrimaryCameraXPosition).w,d0
                 move.w  d0,$10(a5)
                 move.w  #$118,$14(a5)
-                move.b  #4,(byte_FFA95B).w
-                move.b  #1,(byte_FFA95A).w
+                move.b  #4,(PlaneBScrollModeFlags).w
+                move.b  #1,(PlaneAScrollModeFlags).w
                 lea     (HScrollPlaneARow72).w,a0
                 move.w  #$FF80,d0
                 move.w  #$B7,d7

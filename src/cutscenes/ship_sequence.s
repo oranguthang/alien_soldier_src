@@ -63,7 +63,7 @@ ShipSequence_Update:                                    ; DATA XREF: ROM:0000870
                 bsr.w   ShipSequence_UpdateStateAndScroll
                 cmpi.w  #$6C0,(ShipSequenceFrame).l
                 bmi.s   ShipSequence_UpdateReturn
-                bclr    #0,(byte_FFA958).w
+                bclr    #0,(SceneSequenceFlags).w
                 moveq   #0,d0
                 moveq   #0,d1
                 jmp     Object_ClearAllExceptTypes
@@ -107,7 +107,7 @@ ShipSequence_WaitForNameAndArrival:                     ; DATA XREF: ROM:ShipSeq
                 beq.s   ShipSequence_ShowName
                 cmpi.w  #$200,(ShipSequenceFrame).l
                 bcs.w   Cutscene_Return
-                move.b  #1,(byte_FFA95A).w
+                move.b  #1,(PlaneAScrollModeFlags).w
                 move.l  #$FFC00000,(ShipVerticalPosition).l
                 clr.l   (ShipVerticalVelocity).l
                 addq.w  #2,(ShipSequenceState).l
@@ -336,7 +336,7 @@ ShipSequence_ClearNextRowProgress:                      ; CODE XREF: ShipSequenc
                 addq.w  #2,(ShipSequenceState).l
 ; Reveals the staged pattern row by row while emitting radial star particles
 ShipSequence_RevealPattern:                             ; DATA XREF: ROM:0000881E   o  ; was: loc_8B36
-                bset    #0,(byte_FFA958).w
+                bset    #0,(SceneSequenceFlags).w
                 bsr.w   ShipSequence_ApplyPatternPalette
                 bsr.w   ShipPattern_RevealRows
                 bsr.w   ShipPattern_QueueBufferUpload
@@ -350,7 +350,7 @@ ShipSequence_RevealPattern:                             ; DATA XREF: ROM:0000881
                 move.w  #0,(TilemapRowXOrFillWord).w
                 move.w  #0,(TilemapRowYPosition).w
                 move.w  #$1F,(TilemapRowCountdown).w
-                bclr    #0,(byte_FFA958).w
+                bclr    #0,(SceneSequenceFlags).w
                 move.w  #$10,(ShipVerticalPosition).l
                 clr.l   (ShipVerticalVelocity).l
                 bsr.w   ShipSequence_UpdateVerticalScroll

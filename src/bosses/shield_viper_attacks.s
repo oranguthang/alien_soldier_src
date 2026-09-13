@@ -87,8 +87,8 @@ Boss_ShieldViperFinishPlayerTrackingPass:               ; CODE XREF: Boss_Shield
                 rts
 ; ---------------------------------------------------------------------------
 Boss_ShieldViperSelectPostTrackingBranch:               ; CODE XREF: Boss_ShieldViperBeginTwoPassPlayerTrackingCycle+46   j  ; was: loc_4E69A
-                addq.w  #1,(word_FF9440).w
-                andi.w  #1,(word_FF9440).w
+                addq.w  #1,(ShieldViperBranchParity).w
+                andi.w  #1,(ShieldViperBranchParity).w
                 beq.s   Boss_ShieldViperAdvanceAfterPlayerTracking
                 cmpi.w  #$88,$10(a5)
                 bcs.s   Boss_ShieldViperAdvanceAfterPlayerTracking

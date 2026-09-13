@@ -228,7 +228,7 @@ Stage17_Write02FFToFourWordRanges:                      ; CODE XREF: Stage_Initi
                 dbf     d7,Stage17_Write02FFToFourWordRanges
                 move.b  #$82,(Stage17TilemapMode).l
                 move.b  #4,(VDPReg11Shadow+1).w
-                move.b  #3,(byte_FFA95B).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 clr.w   (CameraXLowerBound).w
                 clr.w   (CameraXUpperBound).w
                 move.w  #$A,(PalettePrimaryIndex).w

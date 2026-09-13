@@ -65,8 +65,8 @@ Boss_ViblackCompleteStageTransition:                    ; CODE XREF: Boss_Viblac
                 move.l  #$60A45441,d0
                 jsr     (Tilemap_QueueFourRowsFromPackedCommand).l
                 clr.b   (VDPReg11Shadow+1).w
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 lea     (Boss_ViblackPostBattlePaletteCommand).l,a0
                 jmp     Gfx_LoadPaletteCommand
 ; End of function Boss_ViblackFinishTransitionState

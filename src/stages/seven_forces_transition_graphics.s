@@ -2,15 +2,15 @@
 Cutscene_SevenForcesVictoryState0:                      ; DATA XREF: ROM:0000E4CC   o  ; was: sub_EA76
                 bsr.w   Cutscene_SevenForcesCamera2
                 bsr.w   Cutscene_SevenForcesCamera1
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Cutscene_SevenForcesUpdateClosingOffsets
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Cutscene_SevenForcesUpdateClosingOffsets:               ; CODE XREF: Cutscene_SevenForcesVictoryState0+C   j  ; was: loc_EA8C
                                         ; Cutscene_SevenForcesVictoryState1:Cutscene_SevenForcesVictoryState1Update   j
-                tst.w   (dword_FFA960+2).w
+                tst.w   (SevenForcesCloseSpan).w
                 beq.s   Cutscene_SevenForcesUpdateCamera
-                subq.w  #8,(dword_FFA960+2).w
+                subq.w  #8,(SevenForcesCloseSpan).w
                 addq.w  #8,(CameraXLowerBound).w
                 subq.w  #8,(CameraXUpperBound).w
 Cutscene_SevenForcesUpdateCamera:                       ; CODE XREF: Cutscene_SevenForcesVictoryState0+1A   j  ; was: loc_EA9E
@@ -20,10 +20,10 @@ Cutscene_SevenForcesUpdateCamera:                       ; CODE XREF: Cutscene_Se
 ; Cutscene state handler 1
 Cutscene_SevenForcesVictoryState1:                      ; DATA XREF: ROM:0000E4CE   o  ; was: sub_EAA4
                 bsr.w   Cutscene_SevenForcesCamera2
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Cutscene_SevenForcesVictoryState1Update
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Cutscene_SevenForcesVictoryState1Update:                ; CODE XREF: Cutscene_SevenForcesVictoryState1+8   j  ; was: loc_EAB6
                 bra.w   Cutscene_SevenForcesUpdateClosingOffsets
 ; End of function Cutscene_SevenForcesVictoryState1
@@ -31,10 +31,10 @@ Cutscene_SevenForcesVictoryState1Update:                ; CODE XREF: Cutscene_Se
 Cutscene_SevenForcesVictoryState2:                      ; DATA XREF: ROM:0000E4D0   o  ; was: sub_EABA
                 addi.l  #$78000,(SecondaryCameraYPos).w
                 bsr.w   Cutscene_SevenForcesUpdateClosingOffsets
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Cutscene_SevenForcesVictoryState2Return
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
                 bsr.w   Cutscene_SevenForcesLoadGraphics
 Cutscene_SevenForcesVictoryState2Return:                ; CODE XREF: Cutscene_SevenForcesVictoryState2+10   j  ; was: locret_EAD8
                 rts
@@ -72,7 +72,7 @@ Cutscene_SevenForcesVictoryState5:                      ; DATA XREF: ROM:0000E4D
                 andi.w  #$1FF,(SecondaryCameraYPos).w
                 addi.w  #-$1C00,(SecondaryCameraYPos).w
                 addq.w  #2,(StageStateOffset).w
-                clr.b   (byte_FFA958).w
+                clr.b   (SceneSequenceFlags).w
 Cutscene_SevenForcesVictoryState5Idle:                  ; CODE XREF: Cutscene_SevenForcesVictoryState5+14   j  ; was: loc_EB44
                 bra.w   Cutscene_SevenForcesVictoryIdleState
 ; End of function Cutscene_SevenForcesVictoryState5
@@ -80,7 +80,7 @@ Cutscene_SevenForcesVictoryState5Idle:                  ; CODE XREF: Cutscene_Se
 Cutscene_SevenForcesVictoryState6:                      ; DATA XREF: ROM:0000E4D8   o  ; was: sub_EB48
                 bsr.w   Cutscene_SevenForcesVictoryIdleState
                 bsr.w   Cutscene_SevenForcesCamera3
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 beq.s   Cutscene_SevenForcesVictoryState6Return
                 addq.w  #2,(StageStateOffset).w
 Cutscene_SevenForcesVictoryState6Return:                ; CODE XREF: Cutscene_SevenForcesVictoryState6+C   j  ; was: locret_EB5A
@@ -126,7 +126,7 @@ Stage_SevenForcesWrapVerticalCamera:                    ; CODE XREF: Stage_Seven
                 bpl.s   Stage_SevenForcesPrepareMedusaPrimaryPlaneOrigin
                 addi.w  #$800,(PrimaryCameraXPosition).w
                 addi.w  #$800,(PreviousCameraXPosition).w
-                move.w  #1,(word_FF9804).w
+                move.w  #1,(MedusaSpawnSequenceFlag).w
 Stage_SevenForcesPrepareMedusaPrimaryPlaneOrigin:       ; CODE XREF: Stage_SevenForcesWrapVerticalCamera   j  ; was: loc_EBD2
                 move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$10,d0
@@ -180,7 +180,7 @@ Stage_SevenForcesStoreSylpheedPrimaryVelocity:          ; CODE XREF: Stage_Seven
                 add.l   d0,(PrimaryCameraYPosition).w
                 cmpi.w  #$F600,(PrimaryCameraYPosition).w
                 bpl.s   Stage_SevenForcesPrepareSylpheedPrimaryOrigin
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Stage_SevenForcesPrepareSylpheedPrimaryOrigin:          ; CODE XREF: Stage_SevenForcesUpdateSylpheedPrimaryPlane+26   j  ; was: loc_EC66
                 move.w  (PrimaryCameraXPosition).w,d0
                 subi.w  #$60,d0                         ; '`'
@@ -198,7 +198,7 @@ Stage_SevenForcesUpdateSylpheedSecondaryPlane:          ; CODE XREF: Stage_Seven
                 bsr.s   Stage_SevenForcesAdvanceSylpheedSecondaryScroll
                 cmpi.w  #$F400,(SecondaryCameraYPos).w
                 bpl.s   Stage_SevenForcesRenderSylpheedSecondaryPlane
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Stage_SevenForcesRenderSylpheedSecondaryPlane:          ; CODE XREF: Stage_SevenForcesUpdateSylpheedSecondaryPlane+8   j  ; was: loc_EC96
                 moveq   #0,d0
                 move.w  (SecondaryCameraYPos).w,d1
@@ -266,7 +266,7 @@ Stage_SevenForcesStoreSirenePrimaryVelocity:            ; CODE XREF: Stage_Seven
                 add.l   d0,(PrimaryCameraYPosition).w
                 cmpi.w  #$E4C0,(PrimaryCameraYPosition).w
                 bmi.s   Stage_SevenForcesRenderSirenePrimaryPlane
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 move.w  #8,(PlaneAShakeLevel).w
                 bsr.w   Gfx_ClearSevenForcesTilemapMode
 Stage_SevenForcesRenderSirenePrimaryPlane:              ; CODE XREF: Stage_SevenForcesUpdateSirenePrimaryPlane+26   j  ; was: loc_ED6A
@@ -299,7 +299,7 @@ Stage_SevenForcesStoreSireneSecondaryVelocity:          ; CODE XREF: Stage_Seven
                 add.l   d0,(SecondaryCameraYPos).w
                 cmpi.w  #$E340,(SecondaryCameraYPos).w
                 bpl.s   Stage_SevenForcesRenderSireneSecondaryScroll
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Stage_SevenForcesRenderSireneSecondaryScroll:           ; CODE XREF: Stage_SevenForcesUpdateSireneSecondaryScroll+26   j  ; was: loc_EDC8
                 move.w  #$200,d0
                 move.w  (SecondaryCameraYPos).w,d1
@@ -316,7 +316,7 @@ Cutscene_SevenForcesCamera1:                            ; CODE XREF: Cutscene_Se
                 addi.l  #$78000,(PrimaryCameraYPosition).w
                 cmpi.w  #$E520,(PrimaryCameraYPosition).w
                 bmi.s   Cutscene_SevenForcesCamera1Render
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Cutscene_SevenForcesCamera1Render:                      ; CODE XREF: Cutscene_SevenForcesCamera1+E   j  ; was: loc_EDF6
                 moveq   #0,d0
                 move.w  (PrimaryCameraYPosition).w,d1
@@ -330,7 +330,7 @@ Cutscene_SevenForcesCamera2:                            ; CODE XREF: Cutscene_Se
                 addi.l  #$78000,(SecondaryCameraYPos).w
                 cmpi.w  #$E4F8,(SecondaryCameraYPos).w
                 bmi.s   Cutscene_SevenForcesCamera2Render
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Cutscene_SevenForcesCamera2Render:                      ; CODE XREF: Cutscene_SevenForcesCamera2+E   j  ; was: loc_EE20
                 move.w  #$200,d0
                 move.w  (SecondaryCameraYPos).w,d1
@@ -343,7 +343,7 @@ Cutscene_SevenForcesCamera3:                            ; CODE XREF: Cutscene_Se
                 addi.l  #$78000,(SecondaryCameraYPos).w
                 cmpi.w  #$E700,(SecondaryCameraYPos).w
                 bmi.s   Cutscene_SevenForcesCamera3Render
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Cutscene_SevenForcesCamera3Render:                      ; CODE XREF: Cutscene_SevenForcesCamera3+E   j  ; was: loc_EE4C
                 move.w  #$200,d0
                 move.w  (SecondaryCameraYPos).w,d1

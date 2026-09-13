@@ -7150,3 +7150,82 @@ eight workspace anchors plus the newly audited stage-entry sound table raise
 the exact-address registry from 13,202 to 13,211. Auditing that existing table
 reduces the semantic-review upper bound from 3,062 to 3,061, and the enforced
 address-derived ceiling falls from 87 to 79 RAM equates.
+
+The plane-scroll mode pass resolves `$FFFFA95A-$FFFFA95B` as two independent
+bitfields consumed by `Scroll_PreparePlaneBuffersAndRegisterShadows`. For each
+plane, bits zero and one suppress the default scalar horizontal or vertical
+write, bits two and three select full-buffer fills, and bits four and five
+select profile copies. Stage, cutscene, boss, credits, and transition setup
+paths only publish combinations of those six proven modes.
+
+`PlaneAScrollModeFlags` and `PlaneBScrollModeFlags` add two provenance and
+exact-address audit records. Provenance rises from 15,972 to 15,974, the audit
+registry from 13,211 to 13,213, the semantic-review upper bound remains 3,061,
+and the enforced address-derived ceiling falls from 79 to 77 RAM equates.
+
+The shared scene-sequence pass resolves `$FFFFA958`. Seven Forces forms and
+cameras, asteroid and boss transitions, the ship reveal, post-defeat objects,
+and dormant Valkirie viewers publish bits when a local milestone is reached;
+their coordinating state machines test and clear the same byte before
+advancing. Bit zero is the common handshake, while asteroid transitions also
+publish the distinct `$40` and `$80` masks. `SceneSequenceFlags` therefore
+records the proven plural role without reducing every value to one completion
+claim.
+
+The field adds one provenance mapping and exact-address audit record.
+Provenance rises from 15,974 to 15,975, the audit registry from 13,213 to
+13,214, the semantic-review upper bound remains 3,061, and the enforced
+address-derived ceiling falls from 77 to 76 RAM equates.
+
+The stage-scene workspace pass resolves `$FFFFA960-$FFFFA969` while preserving
+an overlapping longword at `$FFFFA962`. Stage 11 and Gusthead use the base as
+arena velocity and the final word as a phase flag; the asteroid transition
+uses the three physical anchors as velocity, integrated position, and boundary
+phase. Stage 8 reuses the first word as vertical-phase state, `$FFFFA962` as a
+delay, and `$FFFFA964` as Flying Neo vertical velocity. Stage 9 instead stores
+its 16.16 fly-corridor coordinate beginning at `$FFFFA962`. Seven Forces uses
+the two words at `$FFFFA960/$FFFFA962` as a transition timer and closing span,
+while Missiray uses the base longword as parallax speed.
+
+Three physical anchors and contextual aliases record all of those mutually
+exclusive lifetimes. Provenance rises from 15,975 to 15,978, the exact-address
+audit registry from 13,214 to 13,217, the semantic-review upper bound remains
+3,061, and the enforced address-derived ceiling falls from 76 to 73 RAM
+equates.
+
+The shared pattern-work pass resolves `$FFFF9440-$FFFF9445` without assigning
+one scene permanent ownership of the storage. Transition masking consumes 32
+bytes from `SharedPatternWorkBuffer` as its third pattern row. Shield Viper
+separately toggles the first word as branch parity after player tracking;
+results retains its copied extended-layout mode in the second word; Epsilon 1
+uses the third word as the index advanced while submitting paired animated
+tile bands. Contextual aliases expose all four roles while the numbered
+physical words preserve the overlap.
+
+The three definitions add provenance and exact-address audit records.
+Provenance rises from 15,978 to 15,981 mappings, the audit registry from
+13,217 to 13,220, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 73 to 70 RAM equates.
+
+The Medusa scripted-spawn pass resolves `$FFFF9804`. The Seven Forces
+transition sets the word when Medusa's scrolling presentation reaches its
+wrapped camera boundary, and Medusa state A sets it before selecting a spawn
+schedule. `Entity_UpdateMedusaScriptedSpawnSequence` returns while the word is
+zero and clears it when the current schedule terminates, proving the shared
+enable/lifetime role without assigning meaning to the adjacent raw storage.
+
+The field adds one provenance mapping and exact-address audit record.
+Provenance rises from 15,981 to 15,982 mappings, the audit registry from
+13,220 to 13,221, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 70 to 69 RAM equates.
+
+The Shield Viper pose-history pass resolves `$FFFF9700`. Trail mode shifts 24
+packed X/Y longwords from the controller through this array in parallel with
+`ShieldViperTrailAngles`; the following loop reads the delayed values back and
+applies them to the corresponding 24 linked body records. Defeat setup seeds
+the same paired angle-and-position histories before enabling trail geometry.
+
+The field adds one provenance mapping and exact-address audit record.
+Provenance rises from 15,982 to 15,983 mappings, the audit registry from
+13,221 to 13,222, and the semantic-review upper bound remains 3,061. The
+enforced address-derived ceiling falls from 69 to 68 RAM equates.

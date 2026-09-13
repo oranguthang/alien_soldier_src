@@ -509,7 +509,7 @@ Effect_ApplyTransitionMask:                             ; CODE XREF: AlternateTr
                 move.l  $20(a1,d2.w),d1
                 movea.w #(dword_FF9400-M68K_RAM),a0
                 movea.w #(dword_FF9420-M68K_RAM),a1
-                movea.w #(word_FF9440-M68K_RAM),a2
+                movea.w #(TransitionPatternRow2-M68K_RAM),a2
                 moveq   #3,d7
 Effect_ApplyTransitionMask_Loop:                        ; CODE XREF: Effect_ApplyTransitionMask+4A   j  ; was: loc_273E2
                 move.l  (a0),d2

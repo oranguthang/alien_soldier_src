@@ -296,25 +296,25 @@ Boss_Epsilon1ClearAllTileBands:                         ; CODE XREF: Boss_Epsilo
                 rts
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1SelectAnimatedTilePair0:                   ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+22   j  ; was: loc_47AD2
-                move.w  #0,(word_FF9444).w
+                move.w  #0,(Epsilon1TileBandIndex).w
                 bra.s   Boss_Epsilon1QueueAnimatedTilePair
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1SelectAnimatedTilePair1:                   ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+2A   j  ; was: loc_47ADA
-                move.w  #2,(word_FF9444).w
+                move.w  #2,(Epsilon1TileBandIndex).w
                 bra.s   Boss_Epsilon1QueueAnimatedTilePair
 ; ---------------------------------------------------------------------------
 Boss_Epsilon1SelectAnimatedTilePair2:                   ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+32   j  ; was: loc_47AE2
-                move.w  #4,(word_FF9444).w
+                move.w  #4,(Epsilon1TileBandIndex).w
 Boss_Epsilon1QueueAnimatedTilePair:                     ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+CA   j  ; was: loc_47AE8
                                         ; Boss_Epsilon1UpdateVisibleTileBands+D2   j
                 move.w  #2,(dword_FF9418).w
 Boss_Epsilon1QueueAnimatedTilePairLoop:                 ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+F6   j  ; was: loc_47AEE
-                move.w  (word_FF9444).w,d0
+                move.w  (Epsilon1TileBandIndex).w,d0
                 bsr.s   Boss_Epsilon1QueueAnimatedTileTransfer
-                move.w  (word_FF9444).w,d0
+                move.w  (Epsilon1TileBandIndex).w,d0
                 addq.w  #6,d0
                 bsr.s   Boss_Epsilon1QueueAnimatedTileTransfer
-                addq.w  #1,(word_FF9444).w
+                addq.w  #1,(Epsilon1TileBandIndex).w
                 subq.w  #1,(dword_FF9418).w
                 bne.s   Boss_Epsilon1QueueAnimatedTilePairLoop
 Boss_Epsilon1TileStreamingReturn:                       ; CODE XREF: Boss_Epsilon1UpdateVisibleTileBands+4   j  ; was: locret_47B06

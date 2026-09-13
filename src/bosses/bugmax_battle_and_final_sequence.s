@@ -163,7 +163,7 @@ Boss_BugmaxEnablePrimaryLinkedPartCollisionLoop:        ; CODE XREF: Boss_Bugmax
                 move.w  #$10,$48(a5)
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                move.b  #2,(byte_FFA95B).w
+                move.b  #2,(PlaneBScrollModeFlags).w
                 move.w  #$E,(RasterLayoutOffset).w
                 move.w  #$140,(dword_FF940C).w
                 move.w  #$140,(dword_FF940C+2).w

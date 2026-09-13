@@ -17,7 +17,7 @@ TunnelTransition_InitializeObject:                      ; DATA XREF: TunnelTrans
                                         ; TunnelTransition_ObjectMain:TunnelTransition_StateOffsets   o
                 move.w  #2,4(a5)
                 move.w  #$100,2(a5)
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 clr.w   (GlobalSpritePriorityBit).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function TunnelTransition_InitializeObject
@@ -41,7 +41,7 @@ TunnelTransition_GraphicsLoadDescriptor:    dc.w    7   ; field_0  ; was: stru_2
 ; Configures the tunnel transition's raster and buffer modes
 TunnelTransition_ConfigureEffect:                       ; DATA XREF: TunnelTransition_ObjectMain+14   o  ; was: sub_2798C
                 addq.w  #2,4(a5)
-                move.b  #3,(byte_FFA95B).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 move.w  #4,(RasterLayoutOffset).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
@@ -74,7 +74,7 @@ TunnelTransition_Update:                                ; DATA XREF: TunnelTrans
                 clr.w   (RasterEffectInitState).w
                 clr.w   (RasterLayoutOffset).w
                 bset    #4,2(a5)
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; ---------------------------------------------------------------------------
 TunnelTransition_Return:                                ; CODE XREF: TunnelTransition_UpdateMask+8   j  ; was: locret_27A18

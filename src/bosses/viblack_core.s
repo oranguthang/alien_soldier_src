@@ -91,8 +91,8 @@ Boss_ViblackInit:                                       ; DATA XREF: Boss_Viblac
                 move.w  #$C2F8,(HUDDynamicStripTileAttr).w
                 move.w  #$20,(HUDDynamicStripYOffset).w  ; ' '
                 move.b  #4,(VDPReg11Shadow+1).w
-                move.b  #8,(byte_FFA95A).w
-                move.b  #$20,(byte_FFA95B).w            ; ' '
+                move.b  #8,(PlaneAScrollModeFlags).w
+                move.b  #$20,(PlaneBScrollModeFlags).w  ; ' '
                 move.w  #1,(PaletteEffectControl).w
                 move.w  #$30,$48(a5)                    ; '0'
                 move.b  #6,(BossColorEffectFlags).w
@@ -393,7 +393,7 @@ Boss_ViblackInitializeTransitionCompanion:              ; CODE XREF: Boss_Viblac
                 clr.w   (SecondaryEntityFlags).w
                 move.w  #2,(SecondaryEntityWork46).w
                 clr.l   (SecondaryEntityWork5C).w
-                move.b  #2,(byte_FFA95A).w
+                move.b  #2,(PlaneAScrollModeFlags).w
                 move.b  #$4D,d0                         ; 'M'
                 jmp     (Sound_PlaySFX).l
 ; End of function Boss_ViblackDefeatRiseState

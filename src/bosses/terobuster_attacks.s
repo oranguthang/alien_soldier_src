@@ -90,7 +90,7 @@ Boss_TerobusterDefeatFadeState:                         ; DATA XREF: ROM:0003858
                 move.w  #$22,4(a5)                      ; '"'
                 move.w  #8,$48(a5)
                 move.w  #$FFD0,(SecondaryCameraYPos).w
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 move.w  #$B4,d0
                 move.w  #$12C,d1
                 jsr     (Object_ClearAllExceptTypes).l

@@ -118,7 +118,7 @@ Boss_MissirayInitialize:                                ; DATA XREF: ROM:Boss_Mi
                 move.w  #$3D0,d0
                 move.w  #$3E0,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                move.b  #2,(byte_FFA95B).w
+                move.b  #2,(PlaneBScrollModeFlags).w
                 clr.w   (dword_FF9404).w
                 move.w  #$A0,(dword_FF9404+2).w
                 move.w  #$B8,(dword_FF9408).w

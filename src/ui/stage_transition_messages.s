@@ -51,8 +51,8 @@ StageTransition_ResumeSetup_LoadPaletteAndText:         ; CODE XREF: StageTransi
                 move.w  #$FFF4,(PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
                 jsr     (Gfx_FadePaletteTransition).l
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 move.b  #0,(VDPReg18Shadow+1).w
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w

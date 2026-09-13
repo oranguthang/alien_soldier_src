@@ -198,7 +198,7 @@ Boss_WolfGaropaDefeatTransitionReturn:                  ; CODE XREF: Boss_WolfGa
 Boss_WolfGaropaBeginPostDefeatDelay:                    ; DATA XREF: Boss_WolfGaropaUpdate+50   o  ; was: sub_50F3E
                 addq.w  #2,4(a5)
                 move.w  #$A0,$11C(a5)
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 jmp     TransitionEffect_SpawnAtOwner
 ; End of function Boss_WolfGaropaBeginPostDefeatDelay
 ; Count down the post-defeat delay while reducing the fade amount

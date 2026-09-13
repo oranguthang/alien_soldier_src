@@ -51,8 +51,8 @@ SevenForces_SetupIntroDma:                              ; was: sub_54BDC
                 move.w  #4,4(a5)
                 move.b  #6,(VDPReg11Shadow+1).w
                 move.b  #$8A,(VDPReg17Shadow+1).w
-                move.b  #3,(byte_FFA95A).w
-                move.b  #3,(byte_FFA95B).w
+                move.b  #3,(PlaneAScrollModeFlags).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 move.w  #$58,(RasterEffectIndex).w      ; 'X'
                 clr.w   (RasterEffectInitState).w
                 move.w  #$4000,(TilemapTransferBase).w
@@ -370,7 +370,7 @@ Entity_SevenForcesUpdateMedusaEntranceState12:          ; CODE XREF: Entity_Seve
                 jsr     (Sound_PlaySFX).l
                 lea     (SevenForcesMedusaAssetSet).l,a1
                 jsr     (Boss_LoadAssetSet).l
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Entity_SevenForcesUpdateMedusaEntrancePalette:          ; CODE XREF: Entity_SevenForcesStartMedusaEntranceState10+28   j  ; was: loc_55056
                                         ; Entity_SevenForcesStartMedusaEntranceState10+30   j
                 bra.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
@@ -399,7 +399,7 @@ Entity_SevenForcesMedusaFadeOutState16:                 ; DATA XREF: ROM:00054BA
 ; End of function Entity_SevenForcesMedusaFadeOutState16
 ; State $18: launch the Sylpheed entrance trajectory
 Entity_SevenForcesStartSylpheedEntranceState18:         ; DATA XREF: ROM:00054BB0   o  ; was: sub_55094
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 addq.w  #2,4(a5)
                 move.l  #$FFFC8000,$1C(a5)
                 move.l  #$18000,$18(a5)
@@ -488,7 +488,7 @@ Entity_SevenForcesUpdateArtemisEntrancePalette:         ; CODE XREF: Entity_Seve
 ; State $26: wait for the Artemis completion signal and configure its hold
 Entity_SevenForcesWaitForArtemisSignalState26:          ; DATA XREF: ROM:00054BBE   o  ; was: sub_551BE
                 subi.l  #$1000,(PlayerYVelocity).w
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 bne.s   Entity_SevenForcesWaitForArtemisSignalApplyPalette
                 addq.w  #2,4(a5)
                 move.w  #$40,$48(a5)                    ; '@'
@@ -506,7 +506,7 @@ Entity_SevenForcesArtemisFadeOutState28:                ; DATA XREF: ROM:00054BC
                 bmi.s   Entity_SevenForcesArtemisFadeOutUpdateTimer
                 subq.w  #1,$48(a5)
                 bpl.w   Gfx_UpdateSevenForcesArtemisPaletteFade
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 bclr    #2,(byte_FF8245).w
 Entity_SevenForcesArtemisFadeOutUpdateTimer:            ; CODE XREF: Entity_SevenForcesArtemisFadeOutState28+4   j  ; was: loc_55210
                 subq.w  #1,$4A(a5)
@@ -649,7 +649,7 @@ Entity_SevenForcesExplosionWaitState38:                 ; DATA XREF: ROM:00054BD
                 subq.w  #1,$48(a5)
                 bpl.s   Entity_SevenForcesExplosionWaitUpdate
                 addq.w  #2,4(a5)
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Entity_SevenForcesExplosionWaitUpdate:                  ; CODE XREF: Entity_SevenForcesExplosionWaitState38+4   j  ; was: loc_553DC
                 bsr.w   Entity_SevenForcesSpawnRandomExplosion
                 addq.w  #1,$5E(a5)
@@ -863,14 +863,14 @@ Entity_StartSevenForcesSylpheedTransition:              ; DATA XREF: ROM:000555E
                 move.w  #$FFF2,$5E(a5)
                 bsr.w   Gfx_UpdateSevenForcesMultiRangePaletteFade
                 clr.b   (VDPReg11Shadow+1).w
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 move.b  #$30,d0                         ; '0'
                 jmp     (Sound_PlaySFX).l
 ; End of function Entity_StartSevenForcesSylpheedTransition
 ; Start the Artemis form transition after Sylpheed completes
 Entity_StartSevenForcesArtemisTransition:               ; DATA XREF: ROM:000555EC   o  ; was: sub_5566C
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 move.w  #$22,4(a5)                      ; '"'
                 bsr.w   Entity_InitSevenForcesTransitionSprite
                 move.w  #$428,d0
@@ -898,7 +898,7 @@ Entity_StartSevenForcesSireneTransition:                ; DATA XREF: ROM:000555E
 ; Resume the intro controller at state $24 and clear obsolete objects
 Entity_ResumeSevenForcesIntroState24:                   ; DATA XREF: ROM:000555F0   o  ; was: sub_556D2
                 move.w  #$24,4(a5)                      ; '$'
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 move.w  #$428,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
@@ -908,7 +908,7 @@ Entity_ResumeSevenForcesIntroState24:                   ; DATA XREF: ROM:000555F
 ; Resume the intro controller at state $26 and clear obsolete objects
 Entity_ResumeSevenForcesIntroState26:                   ; DATA XREF: ROM:000555F2   o  ; was: sub_556F4
                 move.w  #$26,4(a5)                      ; '&'
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 move.w  #$428,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l
@@ -923,9 +923,9 @@ Entity_StartSevenForcesFinalTransition:                 ; DATA XREF: ROM:000555F
                 bclr    #2,(PlayerModeFlags).w
                 clr.w   $48(a5)
                 clr.b   (VDPReg11Shadow+1).w
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
-                move.b  #1,(byte_FFA958).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
+                move.b  #1,(SceneSequenceFlags).w
                 move.w  #$428,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l

@@ -37,7 +37,7 @@ Debug_ValkirieType3F0Initialize:                        ; DATA XREF: Debug_Valki
 Debug_ValkirieType3F0UpdateWaitFlag:                    ; DATA XREF: ROM:000515D4   o  ; was: loc_51616
                 tst.w   (MessageSequenceState).w
                 bne.s   Debug_ValkirieType3F0WaitReturn
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Debug_ValkirieType3F0WaitReturn:                        ; CODE XREF: Debug_ValkirieType3F0Initialize+44   j  ; was: locret_51622
                 rts
 ; End of function Debug_ValkirieType3F0Initialize

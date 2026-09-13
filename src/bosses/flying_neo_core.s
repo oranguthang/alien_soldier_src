@@ -192,7 +192,7 @@ Boss_FlyingNeoSetup:                                    ; DATA XREF: ROM:0003C0A
                 move.w  #$28,(RasterEffectIndex).w      ; '('
                 clr.w   (RasterEffectInitState).w
                 move.w  #$C,(RasterLayoutOffset).w
-                move.b  #3,(byte_FFA95B).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 move.w  #6,4(a5)
                 move.w  a5,$48(a5)
                 move.w  a5,$4A(a5)

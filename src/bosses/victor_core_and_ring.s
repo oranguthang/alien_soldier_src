@@ -60,7 +60,7 @@ Boss_VictorInit:                                        ; DATA XREF: ROM:Boss_Vi
                 bmi.w   Entity_UpdateReturn
                 move.l  #Boss_VictorAnimationTimingScript,(dword_FF9400).w
                 move.w  #1,(dword_FF9404).w
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 move.b  #$50,$21(a5)                    ; 'P'
                 move.b  #$98,$23(a5)
                 move.w  #$18,$24(a5)

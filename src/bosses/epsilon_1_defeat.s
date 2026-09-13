@@ -310,7 +310,7 @@ Boss_Epsilon1WaitForSecondPostBattleGateReturn:         ; CODE XREF: Boss_Epsilo
 ; End of function Boss_Epsilon1WaitForSecondPostBattleGateState
 ; Starts the post-battle delay
 Boss_Epsilon1StartPostBattleDelayState:                 ; DATA XREF: ROM:00045D6A   o  ; was: sub_46B2A
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 move.w  #$40,$48(a5)                    ; '@'
                 addq.w  #2,4(a5)
                 rts

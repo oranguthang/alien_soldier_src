@@ -340,8 +340,8 @@ Gfx_DestroyerMK2SecondTransitionTileLoadDescriptor: dc.w    $4490, $4000, $104, 
 Boss_DestroyerMK2ClearTransitionControlFlags:           ; DATA XREF: ROM:0004A932   o  ; was: sub_4B3B6
                 bsr.s   Gfx_DestroyerMK2ApplyTransitionPaletteFade
                 clr.b   (VDPReg11Shadow+1).w
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 bclr    #3,$4C(a5)
                 addq.w  #2,4(a5)
                 rts
@@ -352,7 +352,7 @@ Boss_DestroyerMK2ClearObjectsForNextEncounter:          ; DATA XREF: ROM:0004A93
                 move.w  #$240,d0
                 move.w  #$3DC,d1
                 jsr     (Object_ClearAllExceptTypes).l
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_DestroyerMK2ClearObjectsForNextEncounter

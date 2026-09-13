@@ -152,8 +152,8 @@ Boss_SunsetStingIntro:                                  ; DATA XREF: ROM:00042A9
                 move.w  d0,$10(a3)
                 move.w  #$10,$14(a5)
                 move.w  #$90,$14(a3)
-                clr.b   (byte_FFA95A).w
-                move.b  #1,(byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                move.b  #1,(PlaneBScrollModeFlags).w
                 move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$34,(RasterEffectIndex).w      ; '4'
                 clr.w   (RasterEffectInitState).w
@@ -283,8 +283,8 @@ Boss_SunsetStingBattleStoreAttackState:                 ; CODE XREF: Boss_Sunset
 Boss_SunsetStingBeginCoreRepositionState:               ; DATA XREF: ROM:00042AA2   o  ; was: sub_42D88
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingBeginCoreRepositionDelay
-                clr.b   (byte_FFA95A).w
-                move.b  #1,(byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                move.b  #1,(PlaneBScrollModeFlags).w
                 move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$34,(RasterEffectIndex).w      ; '4'
                 clr.w   (RasterEffectInitState).w
@@ -374,8 +374,8 @@ Boss_SunsetStingCoreRepositionFinish:                   ; CODE XREF: Boss_Sunset
 Boss_SunsetStingRotateSegmentsPositiveState:            ; DATA XREF: ROM:00042AA6   o  ; was: sub_42EC8
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingRotateSegmentsPositiveUpdate
-                move.b  #4,(byte_FFA95A).w
-                move.b  #1,(byte_FFA95B).w
+                move.b  #4,(PlaneAScrollModeFlags).w
+                move.b  #1,(PlaneBScrollModeFlags).w
                 andi.b  #$EF,(VDPReg0Shadow+1).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 bset    #0,(a4)
@@ -456,8 +456,8 @@ Boss_SunsetStingUpdateSegmentRotationReturn:            ; CODE XREF: Boss_Sunset
 Boss_SunsetStingRotateSegmentsNegativeState:            ; DATA XREF: ROM:00042AA8   o  ; was: sub_42FA6
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingRotateSegmentsNegativeUpdate
-                move.b  #4,(byte_FFA95A).w
-                move.b  #1,(byte_FFA95B).w
+                move.b  #4,(PlaneAScrollModeFlags).w
+                move.b  #1,(PlaneBScrollModeFlags).w
                 andi.b  #$EF,(VDPReg0Shadow+1).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 bset    #0,(a4)
@@ -538,8 +538,8 @@ Boss_SunsetStingBrakeSegmentRotationUpdate:             ; CODE XREF: Boss_Sunset
 Boss_SunsetStingWaitForArenaTransitionState:            ; DATA XREF: ROM:00042AAC   o  ; was: sub_4309E
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingArenaTransitionUpdate
-                clr.b   (byte_FFA95A).w
-                move.b  #1,(byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                move.b  #1,(PlaneBScrollModeFlags).w
                 move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$34,(RasterEffectIndex).w      ; '4'
                 clr.w   (RasterEffectInitState).w
@@ -574,8 +574,8 @@ Boss_SunsetStingBeginDefeatState:                       ; DATA XREF: ROM:00042AA
                 jsr     (Gfx_UpdatePaletteFade).l
                 bset    #7,4(a5)
                 bne.s   Boss_SunsetStingBeginDefeatMoveIntoPosition
-                clr.b   (byte_FFA95A).w
-                move.b  #1,(byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                move.b  #1,(PlaneBScrollModeFlags).w
                 move.b  #0,(VDPReg11Shadow+1).w
                 move.w  #$34,(RasterEffectIndex).w      ; '4'
                 clr.w   (RasterEffectInitState).w
@@ -676,7 +676,7 @@ Boss_SunsetStingFinalDefeatUpdate:                      ; CODE XREF: Boss_Sunset
 Boss_SunsetStingFinalDefeatDisableCollision:            ; CODE XREF: Boss_SunsetStingFinalDefeatState+18   j  ; was: loc_43278
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 clr.w   2(a5)
                 move.b  #$FF,(a4)
 Boss_SunsetStingFinalDefeatAdvanceFade:                 ; CODE XREF: Boss_SunsetStingFinalDefeatState+16   j  ; was: loc_4328E

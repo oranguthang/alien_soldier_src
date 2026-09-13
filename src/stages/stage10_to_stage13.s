@@ -163,8 +163,8 @@ Stage11_InitializeGustheadEncounter:                    ; DATA XREF: ROM:0000D96
                 move.w  d0,(CameraXUpperBound).w
                 lea     (Boss_GustheadAssetSet).l,a1
                 bsr.w   Boss_LoadAssetSet
-                clr.l   (dword_FFA960).w
-                clr.w   (word_FFA968).w
+                clr.l   (GustheadArenaVelocity).w
+                clr.w   (GustheadFinalPhaseFlag).w
 Stage11_InitializeGustheadEncounter_Return:             ; CODE XREF: Stage11_InitializeGustheadEncounter+10   j  ; was: locret_DA92
                 rts
 ; End of function Stage11_InitializeGustheadEncounter
@@ -180,13 +180,13 @@ Stage11_UpdatePostGustheadScroll:                       ; CODE XREF: Stage11_Upd
 Stage11_StartPostGustheadTransition:                    ; DATA XREF: ROM:0000D96E   o  ; was: sub_DAA4
                 bsr.w   Stage_StartNextPhaseBanner
 Stage11_UpdateGustheadExitScroll:                       ; CODE XREF: Stage11_UpdatePostGusthead:Stage11_UpdatePostGustheadScroll   j  ; was: loc_DAA8
-                tst.w   (word_FFA968).w
+                tst.w   (GustheadFinalPhaseFlag).w
                 beq.s   Stage11_UpdateGustheadExitCamera
                 bsr.w   Stage11_ApplyExitScrollVelocity
                 bsr.w   Scroll_AccumulateQuarterHorizontalDelta
                 cmpi.w  #$14,(StageTableIndex).w
                 beq.s   Stage11_UpdateGustheadExitScroll_Return
-                tst.w   (word_FFA968).w
+                tst.w   (GustheadFinalPhaseFlag).w
                 beq.s   Stage11_UpdateGustheadExitScroll_Return
                 move.w  (PrimaryCameraXPosition).w,d0
                 move.w  d0,d1
@@ -206,7 +206,7 @@ Stage11_UpdateGustheadExitCamera:                       ; CODE XREF: Stage11_Upd
 ; End of function Stage11_StartPostGustheadTransition
 ; Apply the signed Stage 11 exit velocity to horizontal camera position
 Stage11_ApplyExitScrollVelocity:                        ; CODE XREF: Stage11_UpdateGustheadExitScroll+A   p  ; was: sub_DAEA
-                move.l  (dword_FFA960).w,d0
+                move.l  (GustheadArenaVelocity).w,d0
                 add.l   d0,(PrimaryCameraXPosition).w
                 rts
 ; End of function Stage11_ApplyExitScrollVelocity
@@ -317,7 +317,7 @@ Stage12To13_AdvanceTeleportFadeDelay:                   ; CODE XREF: Stage12To13
                 clr.w   (PrimaryCameraYPosition).w
                 move.w  #$1C,(dword_FF806A+2).w
                 move.l  #$C0000,(dword_FF8066+2).w
-                clr.b   (byte_FFA95A).w
+                clr.b   (PlaneAScrollModeFlags).w
                 moveq   #0,d0
                 moveq   #0,d1
                 jsr     (Object_ClearAllExceptTypes).l

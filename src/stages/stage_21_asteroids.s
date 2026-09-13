@@ -2,7 +2,7 @@
 Stage21_AsteroidFieldControllerMain:                    ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: sub_330A6
                 tst.w   4(a5)
                 beq.s   Stage21_AsteroidFieldUpdateDirection
-                cmpi.b  #$80,(byte_FFA958).w
+                cmpi.b  #$80,(SceneSequenceFlags).w
                 beq.s   Stage21_AsteroidFieldUpdateDirection
                 move.w  #$1000,2(a5)
                 rts
@@ -11,7 +11,7 @@ Stage21_AsteroidFieldUpdateDirection:                   ; CODE XREF: Stage21_Ast
                                         ; Stage21_AsteroidFieldControllerMain+C   j
                 btst    #7,(dword_FF8062).w
                 beq.s   Stage21_AsteroidFieldSelectAlternateSide
-                btst    #7,(dword_FFA960).w
+                btst    #7,(AsteroidFieldVelocity).w
                 beq.s   Stage21_AsteroidFieldSelectAlternateSide
                 bclr    #0,(dword_FF9410).w
                 bra.s   Stage21_AsteroidFieldSpawnAndDispatch
@@ -288,7 +288,7 @@ Stage21_AsteroidDestructionReturn:                      ; CODE XREF: Stage21_Ast
 ; Moves an ambient rock at half the current stage scroll velocity
 Stage21_AmbientRockFollowScroll:                        ; CODE XREF: Stage21_AsteroidMain+6   j  ; was: sub_334B2
                 move.l  (dword_FF8062).w,d0
-                move.l  (dword_FFA960).w,d1
+                move.l  (AsteroidFieldVelocity).w,d1
                 asr.l   #1,d0
                 asr.l   #1,d1
                 move.l  d0,$18(a5)

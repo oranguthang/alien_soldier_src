@@ -44,7 +44,7 @@ Results_InitializePostStageFlow_Activate:               ; was: loc_1D69C
                 clr.w   (PrimaryCameraXPosition).w
                 move.w  #$FF00,(SecondaryCameraYPos).w
                 move.w  #$10,(SecondaryCameraXPos).w
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 jsr     (Scroll_PreparePlaneBuffersAndRegisterShadows).l
 ; Finalizes post-stage display state and resets the frame counter
 Results_FinalizePostStageSetup:                         ; was: loc_1D6F4

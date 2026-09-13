@@ -48,7 +48,7 @@ UnreferencedCreateType308AndUpdateStage17Parallax:
                 bne.s   UnreferencedCreateType308AndUpdateStage17Parallax_Return
                 addq.w  #2,(StageStateOffset).w
                 clr.w   (PlayerScriptStateOffset).w
-                bclr    #0,(byte_FFA958).w
+                bclr    #0,(SceneSequenceFlags).w
 UnreferencedCreateType308AndUpdateStage17Parallax_Return:  ; CODE XREF: UnreferencedCreateType308AndUpdateStage17Parallax+1E   j  ; was: locret_E1BE
                 rts
 ; End of function UnreferencedCreateType308AndUpdateStage17Parallax
@@ -84,7 +84,7 @@ Stage17_UpdateEpsilon1Encounter:                        ; DATA XREF: ROM:0000D9C
 ; Update Stage 17's vertical position and eight parallax rows
 Stage17_UpdateEpsilon1Parallax:                         ; CODE XREF: UnreferencedCreateType308AndUpdateStage17Parallax+16   p  ; was: sub_E1F2
                                         ; Stage17_UpdatePreEpsilon1Transition+6   p
-                btst    #0,(byte_FFA958).w
+                btst    #0,(SceneSequenceFlags).w
                 beq.s   Stage17_UpdateEpsilon1Parallax_Active
                 rts
 ; ---------------------------------------------------------------------------

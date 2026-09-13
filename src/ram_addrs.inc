@@ -405,9 +405,13 @@ dword_FF9430            equ     $FFFF9430
 dword_FF9434            equ     $FFFF9434
 dword_FF9438            equ     $FFFF9438
 dword_FF943C            equ     $FFFF943C
-word_FF9440             equ     $FFFF9440
-word_FF9442             equ     $FFFF9442
-word_FF9444             equ     $FFFF9444
+SharedPatternWorkBuffer equ     $FFFF9440               ; was: word_FF9440
+SharedPatternWorkWord1  equ     $FFFF9442               ; was: word_FF9442
+SharedPatternWorkWord2  equ     $FFFF9444               ; was: word_FF9444
+TransitionPatternRow2   equ     SharedPatternWorkBuffer
+ShieldViperBranchParity equ     SharedPatternWorkBuffer
+ResultsLayoutModeCopy   equ     SharedPatternWorkWord1
+Epsilon1TileBandIndex   equ     SharedPatternWorkWord2
 Epsilon1TileDMARecord   equ     $FFFF9446               ; was: word_FF9446
 dword_FF944E            equ     $FFFF944E
 dword_FF9452            equ     $FFFF9452
@@ -449,9 +453,9 @@ word_FF9628             equ     $FFFF9628
 word_FF9630             equ     $FFFF9630
 word_FF963A             equ     $FFFF963A
 BugmaxAuxAngleHistory   equ     $FFFF9680               ; was: word_FF9680
-dword_FF9700            equ     $FFFF9700
+ShieldViperPoseHistory  equ     $FFFF9700               ; was: dword_FF9700
 word_FF9800             equ     $FFFF9800
-word_FF9804             equ     $FFFF9804
+MedusaSpawnSequenceFlag equ     $FFFF9804               ; was: word_FF9804
 byte_FF9806             equ     $FFFF9806
 byte_FF9808             equ     $FFFF9808
 word_FF9810             equ     $FFFF9810
@@ -619,13 +623,27 @@ TilemapRowCountdown     equ     $FFFFA944               ; was: word_FFA944
 TilemapRowXOrFillWord   equ     $FFFFA946               ; was: word_FFA946
 TilemapRowYPosition     equ     $FFFFA948               ; was: word_FFA948
 StageStateOffset        equ     $FFFFA950               ; was: word_FFA950
-byte_FFA958             equ     $FFFFA958
+SceneSequenceFlags      equ     $FFFFA958               ; was: byte_FFA958
 CameraMotionLockFlags   equ     $FFFFA959               ; was: byte_FFA959
-byte_FFA95A             equ     $FFFFA95A
-byte_FFA95B             equ     $FFFFA95B
-dword_FFA960            equ     $FFFFA960
-dword_FFA964            equ     $FFFFA964
-word_FFA968             equ     $FFFFA968
+PlaneAScrollModeFlags   equ     $FFFFA95A               ; was: byte_FFA95A
+PlaneBScrollModeFlags   equ     $FFFFA95B               ; was: byte_FFA95B
+StageSceneWorkLong0     equ     $FFFFA960               ; was: dword_FFA960
+StageSceneWorkWord0     equ     StageSceneWorkLong0
+GustheadArenaVelocity   equ     StageSceneWorkLong0
+AsteroidFieldVelocity   equ     StageSceneWorkLong0
+MidgameVerticalPhase    equ     StageSceneWorkLong0
+SevenForcesTimer        equ     StageSceneWorkLong0
+MissirayParallaxSpeed   equ     StageSceneWorkLong0
+StageSceneWorkWord1     equ     StageSceneWorkLong0+2
+Stage8ApproachTimer     equ     StageSceneWorkLong0+2
+SevenForcesCloseSpan    equ     StageSceneWorkLong0+2
+Stage9FlyCorridorY      equ     StageSceneWorkLong0+2
+StageSceneWorkLong1     equ     $FFFFA964               ; was: dword_FFA964
+AsteroidFieldPosition   equ     StageSceneWorkLong1
+FlyingNeoYVelocity      equ     StageSceneWorkLong1
+StageSceneWorkWord2     equ     $FFFFA968               ; was: word_FFA968
+AsteroidBoundaryPhase   equ     StageSceneWorkWord2
+GustheadFinalPhaseFlag  equ     StageSceneWorkWord2
 AsteroidBoundaryFlag    equ     $FFFFA96A               ; was: byte_FFA96A
 CameraXLowerBound       equ     $FFFFA970               ; was: word_FFA970
 CameraXUpperBound       equ     $FFFFA974               ; was: word_FFA974

@@ -19,7 +19,7 @@ Boss_DestroyerProtoScatterNextPart:                     ; CODE XREF: Boss_Destro
                 move.w  #$100,$4A(a5)
                 clr.l   $18(a5)
                 clr.l   $1C(a5)
-                clr.b   (byte_FFA95A).w
+                clr.b   (PlaneAScrollModeFlags).w
                 move.b  #3,(VDPReg11Shadow+1).w
                 addq.w  #2,4(a5)
                 rts

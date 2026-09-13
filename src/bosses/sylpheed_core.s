@@ -163,7 +163,7 @@ Boss_UpdateSylpheedPlayerTrackingState16:               ; DATA XREF: ROM:0005945
 Boss_EnterSylpheedAttackApproachState18:                ; CODE XREF: Boss_UpdateSylpheedPlayerTrackingState16+12   j  ; was: loc_595EA
                 addq.w  #2,4(a5)
                 clr.l   $1C(a5)
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 bclr    #4,(PlayerSpriteAttributes).w
                 move.w  #$80,$11C(a5)
                 move.b  #$2B,d0                         ; '+'

@@ -2,7 +2,7 @@ Results_CheckSkipButton:                                ; CODE XREF: Results_Wai
                                         ; Results_UpdateFinalSummary+A   p
                 bsr.s   Results_DispatchHandler
                 move.w  (PrimaryCameraXPosition).w,(SecondaryCameraXPos).w
-                tst.w   (word_FF9442).w
+                tst.w   (ResultsLayoutModeCopy).w
                 beq.s   Results_CheckSkipButtonReturn
                 btst    #7,(ControllerPressedState).w
                 beq.s   Results_CheckSkipButtonReturn
@@ -31,9 +31,9 @@ Results_HandlerOffsets: dc.w    Results_InitializeDataDisplay-*  ; DATA XREF: Re
 Results_InitializeDataDisplay:                          ; DATA XREF: ROM:Results_HandlerOffsets   o  ; was: sub_1FC26
                 addq.w  #2,(dword_FF9400).w
                 move.w  #1,d0
-                move.w  (ResultsExtendedLayout).w,(word_FF9442).w
+                move.w  (ResultsExtendedLayout).w,(ResultsLayoutModeCopy).w
                 clr.w   (ResultsExtendedLayout).w
-                tst.w   (word_FF9442).w
+                tst.w   (ResultsLayoutModeCopy).w
                 bne.s   Results_SetExtendedScrollBounds
                 tst.w   d0
                 bne.s   Results_SetExtendedScrollBounds
@@ -247,7 +247,7 @@ UI_ScrollResultsScreen:                                 ; DATA XREF: ROM:0001FC1
                 cmpi.w  #$90,(PrimaryCameraYPosition).w
                 bne.s   Results_InitialScrollReturn
                 addq.w  #2,(dword_FF9400).w
-                tst.w   (word_FF9442).w
+                tst.w   (ResultsLayoutModeCopy).w
                 bne.s   Results_SetExtendedScrollTarget
                 move.w  (StageTableIndex).w,d0
                 lsl.w   #3,d0

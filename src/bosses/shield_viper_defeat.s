@@ -95,7 +95,7 @@ Boss_ShieldViperEnableTrailGeometry:                    ; CODE XREF: Boss_Shield
                 move.w  #$18,d7
                 lea     (a5),a0
                 lea     (ShieldViperTrailAngles).w,a1
-                lea     (dword_FF9700).w,a2
+                lea     (ShieldViperPoseHistory).w,a2
 Boss_ShieldViperSeedNextTrailInterval:                  ; CODE XREF: Boss_ShieldViperEnableTrailGeometry+5A   j  ; was: loc_4F2E0
                 move.w  $56(a0),d0
                 add.w   $52(a0),d0

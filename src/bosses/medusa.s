@@ -57,7 +57,7 @@ Boss_InitMedusaState0:                                  ; DATA XREF: Boss_Update
                 move.l  #Medusa_PoseFrameData,$35C(a5)
                 move.w  #$430,(a5)
                 move.w  #$CC00,2(a5)
-                clr.w   (word_FF9804).w
+                clr.w   (MedusaSpawnSequenceFlag).w
                 movea.w #(Entity57Type-M68K_RAM),a0
                 move.w  #$450,(a0)
                 clr.w   4(a0)
@@ -190,7 +190,7 @@ Boss_UpdateMedusaStateA:                                ; DATA XREF: ROM:000569F
                 bpl.s   Boss_UpdateMedusaStateAApproach
                 clr.b   (BossColorEffectFlags).w
                 bclr    #0,(StageTimerPauseFlag).w
-                move.w  #1,(word_FF9804).w
+                move.w  #1,(MedusaSpawnSequenceFlag).w
                 move.l  #Medusa_StateASpawnSchedule,$59C(a5)
                 move.w  #$10,(word_FF9800).w
                 move.w  #$18C,$11E(a5)
@@ -714,7 +714,7 @@ Entity_CheckMedusaFallingPartTerrain:                   ; CODE XREF: Entity_Upda
 ; End of function Entity_UpdateMedusaFallingPartState4
 ; Consume scroll-triggered spawn records and controller commands
 Entity_UpdateMedusaScriptedSpawnSequence:               ; CODE XREF: Boss_UpdateMedusa+40   p  ; was: sub_5720C
-                tst.w   (word_FF9804).w
+                tst.w   (MedusaSpawnSequenceFlag).w
                 beq.w   Entity_UpdateMedusaSpawnSequenceReturn
                 movea.l $59C(a5),a4
                 moveq   #0,d1
@@ -722,7 +722,7 @@ Entity_UpdateMedusaScriptedSpawnSequence:               ; CODE XREF: Boss_Update
                 move.w  (a4,d1.w),d2
                 bpl.s   Entity_CheckMedusaSpawnSequenceTrigger
                 clr.w   (word_FF9800).w
-                clr.w   (word_FF9804).w
+                clr.w   (MedusaSpawnSequenceFlag).w
                 cmpi.w  #$FFFE,d2
                 bne.s   Entity_AdvanceMedusaSpawnSequenceSegment
                 move.l  #Medusa_ScriptedSpawnSequenceData,$59C(a5)

@@ -145,7 +145,7 @@ Boss_EnterSireneState8:                                 ; CODE XREF: Boss_Update
                 addq.w  #2,4(a5)
                 move.w  #$7000,(BossHealth).w
                 move.w  #$7000,(BossMaxHealth).w
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
                 moveq   #0,d0
                 moveq   #0,d1
                 moveq   #0,d3
@@ -175,7 +175,7 @@ Boss_InitSireneStateA:                                  ; DATA XREF: ROM:0005750
                 move.w  #$FFFF,$C(a5)
 ; State C holds the active pose until the battle-effect gate opens
 Boss_UpdateSireneStateC:                                ; DATA XREF: ROM:00057504   o  ; was: loc_576E4
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 bne.s   Boss_EnterSireneStateE
                 lea     Sirene_ActivePoseScript(pc),a1
                 nop
@@ -404,8 +404,8 @@ Gfx_InitSireneBattleEffect:                             ; CODE XREF: Boss_Update
                 move.w  #$120,$10(a0)
                 move.w  #$F8,$14(a0)
                 move.b  #6,(VDPReg11Shadow+1).w
-                move.b  #$C,(byte_FFA95A).w
-                move.b  #3,(byte_FFA95B).w
+                move.b  #$C,(PlaneAScrollModeFlags).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 move.w  #0,(PaletteActiveColor16).w
                 move.w  #$400,(PaletteActiveColor29).w
                 rts

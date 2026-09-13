@@ -164,8 +164,8 @@ XiTigerCutscene_InitializeReveal:                       ; DATA XREF: ROM:0001E91
                 clr.w   (RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #7,(VDPReg11Shadow+1).w
-                move.b  #6,(byte_FFA95A).w
-                move.b  #9,(byte_FFA95B).w
+                move.b  #6,(PlaneAScrollModeFlags).w
+                move.b  #9,(PlaneBScrollModeFlags).w
                 move.w  #0,(PrimaryCameraXPosition).w
                 move.w  #0,(PrimaryCameraYPosition).w
                 move.w  #0,(SecondaryCameraXPos).w

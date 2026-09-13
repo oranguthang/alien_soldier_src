@@ -35,7 +35,7 @@ AlternateTransition_InitializeObject:                   ; DATA XREF: AlternateTr
                                         ; ROM:AlternateTransition_StateOffsets   o
                 move.w  #2,4(a5)
                 move.w  #$100,2(a5)
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 clr.w   (GlobalSpritePriorityBit).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function AlternateTransition_InitializeObject
@@ -59,7 +59,7 @@ AlternateTransition_GraphicsLoadDescriptor: dc.w    7   ; field_0  ; was: stru_2
 ; Configures the alternate transition's raster and buffer modes
 AlternateTransition_ConfigureEffect:                    ; DATA XREF: ROM:0002693C   o  ; was: sub_26980
                 addq.w  #2,4(a5)
-                move.b  #3,(byte_FFA95B).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 move.w  #$14,(RasterLayoutOffset).w
                 move.w  #4,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
@@ -115,7 +115,7 @@ TransitionEffect_InitializeObject:                      ; DATA XREF: TransitionE
                                         ; ROM:TransitionEffect_StateOffsets   o
                 move.w  #2,4(a5)
                 move.w  #$100,2(a5)
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 clr.w   (GlobalSpritePriorityBit).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function TransitionEffect_InitializeObject
@@ -139,7 +139,7 @@ TransitionEffect_GraphicsLoadDescriptor:    dc.w    7   ; field_0  ; was: stru_2
 ; Configures the standard transition's raster and buffer modes
 TransitionEffect_ConfigureEffect:                       ; DATA XREF: ROM:00026A14   o  ; was: sub_26A58
                 addq.w  #2,4(a5)
-                move.b  #3,(byte_FFA95B).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 move.w  #4,(RasterLayoutOffset).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
@@ -174,7 +174,7 @@ TransitionEffect_Finish:                                ; CODE XREF: AlternateTr
                 clr.w   (RasterEffectInitState).w
                 clr.w   (RasterLayoutOffset).w
                 bset    #4,2(a5)
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 bra.w   Effect_ClearTransitionPatternBuffer
 ; End of function TransitionEffect_Update
 ; Configures raster state for the selected transition buffer mode
@@ -196,7 +196,7 @@ TransitionEffect_RasterModeOffsets: dc.w    TransitionEffect_ConfigureRasterMode
 TransitionEffect_ConfigureRasterMode0:                  ; DATA XREF: TransitionEffect_ConfigureRasterMode+8   o  ; was: sub_26B08
                                         ; ROM:TransitionEffect_RasterModeOffsets   o
                 move.w  #4,(RasterLayoutOffset).w
-                move.b  #$80,(byte_FFA95B).w
+                move.b  #$80,(PlaneBScrollModeFlags).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
@@ -206,7 +206,7 @@ TransitionEffect_ConfigureRasterMode0:                  ; DATA XREF: TransitionE
 ; Configures raster registers for transition buffer mode one
 TransitionEffect_ConfigureRasterMode1:                  ; DATA XREF: ROM:00026B00   o  ; was: sub_26B2A
                 move.w  #4,(RasterLayoutOffset).w
-                move.b  #$80,(byte_FFA95B).w
+                move.b  #$80,(PlaneBScrollModeFlags).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
@@ -216,7 +216,7 @@ TransitionEffect_ConfigureRasterMode1:                  ; DATA XREF: ROM:00026B0
 ; Configures raster registers for transition buffer mode four
 TransitionEffect_ConfigureRasterMode4:                  ; DATA XREF: ROM:00026B06   o  ; was: sub_26B4C
                 move.w  #$14,(RasterLayoutOffset).w
-                move.b  #$80,(byte_FFA95B).w
+                move.b  #$80,(PlaneBScrollModeFlags).w
                 move.w  #4,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w
@@ -227,7 +227,7 @@ TransitionEffect_ConfigureRasterMode4:                  ; DATA XREF: ROM:00026B0
 TransitionEffect_ConfigureRasterModes2And3:             ; DATA XREF: ROM:00026B02   o  ; was: sub_26B6E
                                         ; ROM:00026B04   o
                 move.w  #4,(RasterLayoutOffset).w
-                move.b  #$80,(byte_FFA95B).w
+                move.b  #$80,(PlaneBScrollModeFlags).w
                 move.w  #$10,(RasterEffectIndex).w
                 clr.w   (RasterEffectInitState).w
                 move.b  #3,(VDPReg11Shadow+1).w

@@ -21,9 +21,9 @@ Boss_GustheadMain:                                      ; CODE XREF: Boss_Gusthe
                 move.l  (a1,d0.w),8(a5)
                 clr.w   $C(a5)
 Boss_GustheadAfterRootMappingToggle:                    ; CODE XREF: Boss_GustheadMain+10   j  ; was: loc_3F1D2
-                tst.w   (word_FFA968).w
+                tst.w   (GustheadFinalPhaseFlag).w
                 beq.s   Boss_GustheadSelectDebrisDrift
-                move.l  (dword_FFA960).w,d0
+                move.l  (GustheadArenaVelocity).w,d0
                 add.l   d0,$10(a5)
 Boss_GustheadSelectDebrisDrift:                         ; CODE XREF: Boss_GustheadMain+32   j  ; was: loc_3F1E0
                 cmpi.w  #$50,4(a5)                      ; 'P'
@@ -32,7 +32,7 @@ Boss_GustheadSelectDebrisDrift:                         ; CODE XREF: Boss_Gusthe
                 bra.s   Boss_GustheadCheckStageExit
 ; ---------------------------------------------------------------------------
 Boss_GustheadUseArenaMotionDebrisDrift:                 ; CODE XREF: Boss_GustheadMain+42   j  ; was: loc_3F1F0
-                move.l  (dword_FFA960).w,d0
+                move.l  (GustheadArenaVelocity).w,d0
                 asr.l   #1,d0
                 neg.l   d0
                 move.l  d0,(dword_FF9428).w
@@ -317,8 +317,8 @@ Boss_GustheadTriggerArenaTransition:                    ; was: sub_3F53A
 ; Begins the scripted transition into Gusthead's final battle phase
 Boss_GustheadTriggerFinalPhaseTransition:               ; CODE XREF: Boss_GustheadChoosePatternState+6   j  ; was: sub_3F54A
                 bset    #6,$4A(a5)
-                move.w  #1,(word_FFA968).w
-                clr.l   (dword_FFA960).w
+                move.w  #1,(GustheadFinalPhaseFlag).w
+                clr.l   (GustheadArenaVelocity).w
                 move.w  #$40,4(a5)                      ; '@'
                 bra.w   Boss_GustheadBeginFinalPhaseTransitionState
 ; End of function Boss_GustheadTriggerFinalPhaseTransition

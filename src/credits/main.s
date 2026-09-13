@@ -41,8 +41,8 @@ Credits_InitXiTiger_ClearFineLookupLoop:                ; CODE XREF: Credits_Ini
                 move.w  #$E86,(PaletteShadowColor21).w
                 move.w  #$E64,(PaletteShadowColor22).w
                 move.b  #6,(VDPReg11Shadow+1).w
-                move.b  #3,(byte_FFA95A).w
-                move.b  #3,(byte_FFA95B).w
+                move.b  #3,(PlaneAScrollModeFlags).w
+                move.b  #3,(PlaneBScrollModeFlags).w
                 clr.l   (EndingScrollPhase).l
                 move.l  #$1000,(EndingScrollRate).l
                 move.l  #$FFF80000,d0
@@ -448,8 +448,8 @@ Credits_InitializeSceneSequence:                        ; DATA XREF: ROM:Credits
                 move.b  #$60,$20(a5)                    ; '`'
                 clr.w   (PaletteActiveColor03).w
                 move.b  #3,(VDPReg11Shadow+1).w
-                move.b  #1,(byte_FFA95A).w
-                move.b  #1,(byte_FFA95B).w
+                move.b  #1,(PlaneAScrollModeFlags).w
+                move.b  #1,(PlaneBScrollModeFlags).w
                 lea     (HScrollBuffer).w,a0
                 move.l  #$7F008000,d1
                 move.w  #$EF,d0
@@ -570,8 +570,8 @@ Credits_LoadTreasureScene:                              ; DATA XREF: ROM:00020F1
                 move.b  #0,(VDPReg11Shadow+1).w
                 clr.w   (PrimaryCameraXPosition).w
                 clr.w   (SecondaryCameraXPos).w
-                move.b  #4,(byte_FFA95A).w
-                move.b  #4,(byte_FFA95B).w
+                move.b  #4,(PlaneAScrollModeFlags).w
+                move.b  #4,(PlaneBScrollModeFlags).w
                 lea     Credits_TreasurePaletteData(pc),a0
                 nop
                 lea     (PaletteShadowPair16).w,a1

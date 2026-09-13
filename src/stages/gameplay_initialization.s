@@ -59,8 +59,8 @@ EndingSequence_AdvanceStage:                            ; CODE XREF: EndingSeque
                 addq.w  #2,(StageTableIndex).w
                 bclr    #7,(StageObjectSpawnCursor).w
                 clr.b   (StageRouteFlags).w
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 move.b  #$97,d0
                 jsr     (Sound_QueueBGMRequest).l
                 jmp     StageTransition_LoadStage
@@ -102,7 +102,7 @@ WeaponSetup_ActivateScreen:                             ; CODE XREF: WeaponSetup
                 move.w  #$20,(RasterEffectIndex).w      ; ' '
                 clr.w   (RasterEffectInitState).w
                 move.w  #6,(RasterLayoutOffset).w
-                move.b  #2,(byte_FFA95A).w
+                move.b  #2,(PlaneAScrollModeFlags).w
                 move.w  #$7000,d0
                 move.w  d0,(BossHealth).w
                 move.w  d0,(BossMaxHealth).w

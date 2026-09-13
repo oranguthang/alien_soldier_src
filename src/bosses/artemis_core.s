@@ -135,7 +135,7 @@ Boss_EnterArtemisState6:                                ; CODE XREF: Boss_Update
                 clr.l   $1C(a5)
 ; State six holds the neutral pose until the battle-effect gate opens
 Boss_UpdateArtemisState6:                               ; DATA XREF: ROM:00057F24   o  ; was: loc_5807A
-                tst.b   (byte_FFA958).w
+                tst.b   (SceneSequenceFlags).w
                 bne.s   Boss_EnterArtemisState8
                 lea     Artemis_State2And4PoseScript(pc),a1
                 nop

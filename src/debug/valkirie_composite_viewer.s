@@ -93,7 +93,7 @@ Debug_ValkirieViewerConfigureInteractiveState:          ; CODE XREF: Debug_Valki
 Debug_ValkirieViewerUpdate:                             ; DATA XREF: ROM:00050FCC   o  ; was: loc_51116
                 tst.w   (MessageSequenceState).w
                 bne.s   Debug_ValkirieViewerProcessFacingInput
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Debug_ValkirieViewerProcessFacingInput:                 ; CODE XREF: Debug_ValkirieViewerInitialize+14A   j  ; was: loc_51122
                 btst    #6,(ControllerHeldState).w
                 beq.s   Debug_ValkirieViewerCheckFaceRightInput

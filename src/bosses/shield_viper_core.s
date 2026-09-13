@@ -126,7 +126,7 @@ Boss_ShieldViperApplyTrailingAngleHistoryLoop:          ; CODE XREF: Boss_Shield
 ; Trail mode: delay the controller angle and packed position across 24 records
 Boss_ShieldViperUpdateTrailGeometry:                    ; CODE XREF: Boss_ShieldViperUpdate+80   j  ; was: loc_4DF72
                 lea     (ShieldViperTrailAngles).w,a1
-                lea     (dword_FF9700).w,a2
+                lea     (ShieldViperPoseHistory).w,a2
                 move.w  $56(a5),d0
                 move.w  $10(a5),d2
                 swap    d2
@@ -145,7 +145,7 @@ Boss_ShieldViperShiftTrailPoseHistoryLoop:              ; CODE XREF: Boss_Shield
                 dbf     d7,Boss_ShieldViperShiftTrailPoseHistoryLoop
 Boss_ShieldViperApplyTrailPoseHistory:                  ; CODE XREF: Boss_ShieldViperUpdate+1BA   j  ; was: loc_4DFA6
                 lea     (ShieldViperTrailAngles).w,a1
-                lea     (dword_FF9700).w,a2
+                lea     (ShieldViperPoseHistory).w,a2
                 lea     $60(a5),a0
                 move.w  #$17,d7
 Boss_ShieldViperApplyTrailPoseHistoryLoop:              ; CODE XREF: Boss_ShieldViperUpdate+200   j  ; was: loc_4DFB6

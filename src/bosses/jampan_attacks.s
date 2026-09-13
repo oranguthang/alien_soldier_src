@@ -434,8 +434,8 @@ Boss_JampanFadeDefeatPaletteOutState:                   ; DATA XREF: ROM:0004923
                 addq.w  #1,$5C(a5)
                 cmpi.w  #$F,$5C(a5)
                 bne.s   Boss_JampanFadeDefeatPaletteOutReturn
-                clr.b   (byte_FFA95A).w
-                clr.b   (byte_FFA95B).w
+                clr.b   (PlaneAScrollModeFlags).w
+                clr.b   (PlaneBScrollModeFlags).w
                 clr.b   (VDPReg11Shadow+1).w
                 addq.w  #2,4(a5)
 Boss_JampanFadeDefeatPaletteOutReturn:                  ; CODE XREF: Boss_JampanFadeDefeatPaletteOutState+C   j
@@ -458,7 +458,7 @@ Boss_JampanResetAfterDefeatFadeState:                   ; DATA XREF: ROM:0004923
                 move.w  #$23C,d1
                 jsr     (Object_ClearAllExceptTypes).l
                 jsr     (TransitionEffect_SpawnAtOwner).l
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_JampanResetAfterDefeatFadeState
@@ -562,7 +562,7 @@ Boss_JampanUpdatePostDefeatSequenceTimer:               ; CODE XREF: Boss_Jampan
                                         ; sub_49FEE   p
                 subq.w  #1,(dword_FF942C+2).w
                 bne.s   Boss_JampanUpdatePostDefeatSequenceTimerReturn
-                move.b  #1,(byte_FFA958).w
+                move.b  #1,(SceneSequenceFlags).w
 Boss_JampanUpdatePostDefeatSequenceTimerReturn:         ; CODE XREF: Boss_JampanUpdatePostDefeatSequenceTimer+4   j
                 rts
 ; End of function Boss_JampanUpdatePostDefeatSequenceTimer

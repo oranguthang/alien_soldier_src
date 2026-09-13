@@ -88,7 +88,7 @@ Boss_DestroyerProtoIntroInit:                           ; DATA XREF: ROM:Boss_De
                 bsr.w   Boss_DestroyerProtoUpdateViewportOffset
                 tst.w   (DataLoaderControl).w
                 bmi.w   Entity_UpdateReturn
-                move.b  #4,(byte_FFA95A).w
+                move.b  #4,(PlaneAScrollModeFlags).w
                 move.b  #$50,$21(a5)                    ; 'P'
                 move.b  #$98,$23(a5)
                 move.w  #$18,$24(a5)
