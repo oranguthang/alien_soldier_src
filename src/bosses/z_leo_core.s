@@ -441,7 +441,7 @@ Boss_ZLeoRenderBossMessageWait:                         ; CODE XREF: Boss_ZLeoWa
 ; Enter the health-zero defeat sequence and initialize its transition
 Boss_ZLeoBeginDefeatSequence:                           ; CODE XREF: Boss_ZLeoMain+24   j  ; was: sub_52046
                 move.w  #6,4(a5)
-                move.b  #$40,(byte_FFF705).w            ; '@'
+                move.b  #$40,(GameplayControlFlags).w   ; '@'
                 move.w  #8,(word_FF808C).w
                 move.b  #2,(byte_FF80EC).w
                 bset    #0,(StageTimerPauseFlag).w
@@ -544,7 +544,7 @@ Boss_ZLeoRestorePostDefeatUi:                           ; CODE XREF: Boss_ZLeoRu
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
-                move.b  #$80,(byte_FFF705).w
+                move.b  #$80,(GameplayControlFlags).w
                 move.w  #2,(SetupTransitionIndex).w
                 move.w  #4,(word_FF8230).w
                 jmp     Results_StoreStageCompletionTime

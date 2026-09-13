@@ -18,15 +18,15 @@ Credits_InitXiTiger_ClearTileAttributesLoop:            ; CODE XREF: Credits_Ini
                 move.w  #0,d1
                 move.w  #2,d7
                 jsr     (Gfx_UpdateTilemapIndices).l
-                lea     (dword_FF6180).l,a0
+                lea     (XiTigerCreditsFineTable).l,a0
                 moveq   #0,d0
                 move.w  #$1F,d1
-Credits_InitXiTiger_ClearTilemapBufferLoop:             ; CODE XREF: Credits_InitXiTiger+64   j  ; was: loc_209B8
+Credits_InitXiTiger_ClearFineLookupLoop:                ; CODE XREF: Credits_InitXiTiger+64   j  ; was: loc_209B8
                 move.l  d0,(a0)+
-                dbf     d1,Credits_InitXiTiger_ClearTilemapBufferLoop
-                move.l  #$81828300,(dword_FF6194).l
-                move.l  #$85868700,(dword_FF619C).l
-                move.l  #$898A8B00,(dword_FF61A4).l
+                dbf     d1,Credits_InitXiTiger_ClearFineLookupLoop
+                move.l  #$81828300,(XiTigerCreditsPatch0).l
+                move.l  #$85868700,(XiTigerCreditsPatch1).l
+                move.l  #$898A8B00,(XiTigerCreditsPatch2).l
                 lea     (Gfx_DefaultVRAMTransferParameters).l,a0
                 move.w  #$600,d0
                 move.w  #0,d1

@@ -57,8 +57,8 @@ Sys_ClearPaletteBuffers:                                ; CODE XREF: Sys_InitFul
 Sys_ClearGameBuffers:                                   ; CODE XREF: Reset+224   p  ; was: sub_2DD0
                                         ; Sys_InitFullGame+18   p
                 bsr.w   Sys_ClearVDPCommandBuffer
-                bsr.w   Sys_ClearSpriteBuffer
-                bsr.w   Sys_ClearBufferFFB800
+                bsr.w   Sys_ClearSpriteVDPStagingBuffer
+                bsr.w   Sys_ClearWorkBuffer192
                 bsr.w   Input_InitControllerState
                 move.w  #$F400,(VDPCommandQueueHead).w
                 move.w  #$F400,(VDPStagingDataCursor).w

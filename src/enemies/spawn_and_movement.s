@@ -1,5 +1,5 @@
 EnemySpawn_UpdateDirector:                              ; CODE XREF: Sys_GameplayMainLoop:Sys_GameplayMainLoop_UpdateStageEffects   p  ; was: sub_2C33A
-                tst.b   (byte_FFF705).w
+                tst.b   (GameplayControlFlags).w
                 bmi.s   EnemySpawn_DirectorReturn
                 movea.w #(PlayerObjectType-M68K_RAM),a5
                 move.w  (EnemySpawnDirectorState).w,d0

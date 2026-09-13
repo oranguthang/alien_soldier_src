@@ -176,7 +176,7 @@ UI_RenderStageTimerAndBossHealth_RenderBossHealth:      ; CODE XREF: UI_RenderSt
                 bra.w   UI_RenderStageTimerAndBossHealth_FillBossHealthPadding
 ; ---------------------------------------------------------------------------
 UI_RenderStageTimerAndBossHealth_UpdateDisplayedBossHealth:  ; CODE XREF: UI_RenderStageTimerAndBossHealth+80   j  ; was: loc_13056
-                tst.b   (byte_FFF705).w
+                tst.b   (GameplayControlFlags).w
                 bmi.s   UI_RenderStageTimerAndBossHealth_SelectBossHealthPresentation
                 move.w  (DisplayedBossHealth).w,d0
                 sub.w   (BossHealth).w,d0

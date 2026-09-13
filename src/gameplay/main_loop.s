@@ -89,7 +89,7 @@ Sys_GameplayMainLoop_UpdateFade:                        ; CODE XREF: Sys_Gamepla
                 bclr    #0,(PaletteFadeMaskStatus).w
                 beq.s   Sys_GameplayMainLoop_HandleTransition
 Sys_GameplayMainLoop_RequestExit:                       ; CODE XREF: Sys_GameplayMainLoop+1C6   j  ; was: loc_1C80E
-                move.b  #$41,(byte_FFF705).w            ; 'A'
+                move.b  #$41,(GameplayControlFlags).w   ; 'A'
                 bra.s   Sys_GameplayMainLoop_UpdateFrameTiming
 ; ---------------------------------------------------------------------------
 Sys_GameplayMainLoop_HandleTransition:                  ; CODE XREF: Sys_GameplayMainLoop+1B0   j  ; was: loc_1C816
@@ -118,7 +118,7 @@ Sys_GameplayMainLoop_SelectMode68:                      ; CODE XREF: Sys_Gamepla
                 clr.w   (GameSubstateIndex).w
 Sys_GameplayMainLoop_UpdateFrameTiming:                 ; CODE XREF: Sys_GameplayMainLoop+1B8   j  ; was: loc_1C860
                                         ; Sys_GameplayMainLoop+1C0   j
-                tst.b   (byte_FFF705).w
+                tst.b   (GameplayControlFlags).w
                 bmi.s   Sys_GameplayMainLoop_FinishFrame
                 addq.w  #1,(FrameCounter).w
                 subq.w  #1,(FrameFreezeTimer).w
@@ -132,7 +132,7 @@ Sys_GameplayMainLoop_SetActiveFrame:                    ; CODE XREF: Sys_Gamepla
 Sys_GameplayMainLoop_StoreFrameFlag:                    ; CODE XREF: Sys_GameplayMainLoop+21E   j  ; was: loc_1C880
                 move.b  d0,(FrameControlFlags).w
 Sys_GameplayMainLoop_FinishFrame:                       ; CODE XREF: Sys_GameplayMainLoop+208   j  ; was: loc_1C884
-                move.b  (byte_FFF705).w,d0
+                move.b  (GameplayControlFlags).w,d0
                 or.b    d0,(FrameControlFlags).w
                 jmp     (Gfx_CycleBackdropColorIndices).l
 ; End of function Sys_GameplayMainLoop
@@ -187,7 +187,7 @@ Sys_UpdateObjectCount_Return:                           ; CODE XREF: Sys_UpdateO
 ; End of function Sys_UpdateObjectCount
 ; Display pause menu graphics
 UI_DisplayPauseGraphics:
-                move.b  (byte_FFF705).w,d0              ; was: sub_1C91A
+                move.b  (GameplayControlFlags).w,d0     ; was: sub_1C91A
                 bpl.w   UI_DisplayPauseGraphics_Return
                 btst    #6,d0
                 beq.w   UI_DisplayPauseGraphics_Return

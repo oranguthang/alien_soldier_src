@@ -5,7 +5,7 @@ Stage_StartInterstageTransition:                        ; CODE XREF: Stage_Check
                 move.w  #2,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
-                move.b  #$80,(byte_FFF705).w
+                move.b  #$80,(GameplayControlFlags).w
                 bra.w   Stage_AdvancePhaseForInterstageTransition
 ; End of function Stage_StartInterstageTransition
 ; Starts the next stage-number banner after the current banner has finished

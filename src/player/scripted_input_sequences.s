@@ -62,7 +62,7 @@ PlayerScript_InitializePostShiperRunState02:            ; DATA XREF: Player_Disp
                 move.w  #$1BF8,(ScriptedInputTargetX).w
                 move.w  #$16,(ScriptedInputDelay).w
                 move.w  #6,(PlayerScriptStateOffset).w
-                clr.b   (byte_FFF705).w
+                clr.b   (GameplayControlFlags).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
                 rts
@@ -72,7 +72,7 @@ PlayerScript_InitializePostTerobusterRunState04:        ; DATA XREF: ROM:00019A3
                 move.w  #$12C0,(ScriptedInputTargetX).w
                 move.w  #$16,(ScriptedInputDelay).w
                 move.w  #6,(PlayerScriptStateOffset).w
-                clr.b   (byte_FFF705).w
+                clr.b   (GameplayControlFlags).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
                 rts
@@ -82,7 +82,7 @@ PlayerScript_InitializePostJampanRunState32:            ; DATA XREF: ROM:00019A6
                 move.w  #$1640,(ScriptedInputTargetX).w
                 move.w  #$16,(ScriptedInputDelay).w
                 move.w  #6,(PlayerScriptStateOffset).w
-                clr.b   (byte_FFF705).w
+                clr.b   (GameplayControlFlags).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
                 bset    #1,(byte_FF8245).w
@@ -93,7 +93,7 @@ PlayerScript_InitializePostJampanRunState32:            ; DATA XREF: ROM:00019A6
 PlayerScript_InitializePostBugmaxRunState22:            ; DATA XREF: ROM:00019A56   o  ; was: sub_19AE4
                 move.w  #$690,(ScriptedInputTargetX).w
                 addq.w  #2,(PlayerScriptStateOffset).w
-                clr.b   (byte_FFF705).w
+                clr.b   (GameplayControlFlags).w
                 move.w  #2,(ScriptedInputActive).w
                 move.w  #$100,(ScriptedInputTimeout).w
                 bset    #1,(byte_FF8245).w

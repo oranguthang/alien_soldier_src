@@ -82,7 +82,7 @@ Sys_VBlankHandler_ReleaseZ80BusForExit:                 ; CODE XREF: Sys_VBlankH
 ; End of function Sys_VBlankHandler
 ; Handles controller port state changes and button press detection
 Input_HandleControllerState:                            ; CODE XREF: Sys_VBlankHandler+4E   p  ; was: sub_B82
-                move.b  (byte_FFF705).w,d0
+                move.b  (GameplayControlFlags).w,d0
                 btst    #6,d0
                 beq.w   Input_HandleControllerState_Return
                 clr.b   d1
@@ -99,13 +99,13 @@ Input_HandleControllerState_CheckTransition:            ; CODE XREF: Input_Handl
                 tst.b   d0
                 bmi.w   Input_HandleControllerState_ClearActiveFlag
                 bset    #7,d0
-                move.b  d0,(byte_FFF705).w
+                move.b  d0,(GameplayControlFlags).w
                 move.b  #1,(SoundPauseState).w
                 rts
 ; ---------------------------------------------------------------------------
 Input_HandleControllerState_ClearActiveFlag:            ; CODE XREF: Input_HandleControllerState+2E   j  ; was: loc_BC4
                 bclr    #7,d0
-                move.b  d0,(byte_FFF705).w
+                move.b  d0,(GameplayControlFlags).w
                 move.b  #$80,(SoundPauseState).w
 Input_HandleControllerState_Return:                     ; CODE XREF: Input_HandleControllerState+8   j  ; was: locret_BD2
                                         ; Input_HandleControllerState+28   j
@@ -147,7 +147,7 @@ Sys_UpdateTimers_AdvanceFrame:                          ; CODE XREF: Sys_UpdateT
 ; End of function Sys_UpdateTimers
 ; Checks game flags and dispatches to current game state handler via jump table
 Sys_DispatchGameState:
-                move.b  (byte_FFF705).w,d0              ; was: sub_C26
+                move.b  (GameplayControlFlags).w,d0     ; was: sub_C26
                 bpl.w   Sys_DispatchGameState_Run
                 btst    #6,d0
                 beq.w   Sys_DispatchGameState_Run

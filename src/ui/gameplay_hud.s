@@ -31,16 +31,16 @@ Debug_HandleDormantSoundAndMenuInput_CheckMenuToggle:   ; CODE XREF: Debug_Handl
                                         ; Debug_HandleDormantSoundAndMenuInput+26   j
                 tst.w   (DebugMenuStateOffset).w
                 bne.w   DebugMenu_UpdateAndDispatch
-                tst.b   (byte_FFF705).w
+                tst.b   (GameplayControlFlags).w
                 bpl.s   UI_UpdateGameplayHUD_UpdateStageTimer
-                btst    #0,(byte_FFF705).w
+                btst    #0,(GameplayControlFlags).w
                 beq.s   UI_UpdateGameplayHUD_UpdateStageTimer
                 btst    #6,(ControllerPressedState).w
                 beq.s   UI_UpdateGameplayHUD_UpdateStageTimer
                 addq.w  #2,(DebugMenuStateOffset).w
 UI_UpdateGameplayHUD_UpdateStageTimer:                  ; CODE XREF: UI_UpdateGameplayHUD+C   j  ; was: loc_12BDA
                                         ; Debug_HandleDormantSoundAndMenuInput+5A   j
-                tst.b   (byte_FFF705).w
+                tst.b   (GameplayControlFlags).w
                 bmi.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
                 btst    #0,(StageTimerPauseFlag).w
                 bne.s   UI_UpdateGameplayHUD_UpdateBossHealthClamp
@@ -96,9 +96,9 @@ UI_UpdateGameplayHUD_SelectAlternatingSection:          ; CODE XREF: UI_UpdateGa
                 btst    #0,(VBlankFrameCounter+1).w
                 bne.w   UI_RenderStageTimerAndBossHealth
                 bsr.w   UI_RenderWeaponStatusHUD
-                tst.b   (byte_FFF705).w
+                tst.b   (GameplayControlFlags).w
                 bpl.s   UI_UpdateGameplayHUD_RenderPlayerHealth
-                btst    #0,(byte_FFF705).w
+                btst    #0,(GameplayControlFlags).w
                 beq.s   UI_UpdateGameplayHUD_RenderPlayerHealth
                 btst    #4,(ControllerHeldState).w
                 bne.s   UI_UpdateGameplayHUD_RenderPlayerHealth

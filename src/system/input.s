@@ -1,5 +1,5 @@
 Input_InitControllerState:                              ; CODE XREF: Sys_ClearGameBuffers+C   p  ; was: sub_33A4
-                clr.b   (byte_FFF705).w
+                clr.b   (GameplayControlFlags).w
                 move.w  #$FFFF,(ControllerHeldState).w
                 move.w  #0,(ControllerPressedState).w
                 move.w  #0,(ControllerReleasedState).w
@@ -71,7 +71,7 @@ Input_ReadController_ReadButtons:                       ; CODE XREF: Input_ReadC
 ; End of function Input_ReadSecondaryController
 ; Maps secondary controller button bits to standard input format
 Input_MapSecondaryButtons:                              ; CODE XREF: Input_ReadSecondaryController+4E   p  ; was: sub_3462
-                btst    #6,(byte_FFF705).w
+                btst    #6,(GameplayControlFlags).w
                 beq.w   Input_MapSecondaryButtons_Return
                 move.b  d0,d1
                 move.b  #6,d2

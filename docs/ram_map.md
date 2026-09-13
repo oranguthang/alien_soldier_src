@@ -485,9 +485,11 @@ by their verified byte order rather than receiving invented codec meanings.
 
 | Symbol | Address | Static evidence |
 |---|---:|---|
+| `ClearedWorkBuffer512` | `$FFFFB200` | The standalone clear routine writes 32 groups of four longwords, covering exactly 512 bytes; no reconstructed static caller or other direct reference proves a narrower owner. |
 | `GraphicsStagingBuffer` | `$FFFFB400` | Initialization clears the full 1 KiB region. The tile codec uses its first 128 bytes as word-sized pixel output, while LZSS-to-VRAM loading uses it as a `$400`-byte staging block. |
 | `TileDecodeBufferEnd` | `$FFFFB480` | The tile decoder stops at this address, exactly 64 word-sized pixels after `GraphicsStagingBuffer`. |
 | `TileDMABatchBuffer` | `$FFFFB600` | The batched tile path packs at most 16 32-byte tiles into this 512-byte half-buffer before queuing its DMA transfer. |
+| `ClearedWorkBuffer192` | `$FFFFB800` | Game-buffer initialization clears 12 groups of four longwords, covering exactly 192 bytes; no other direct reference establishes its contents. |
 
 ## Reviewed data-loader state
 
@@ -1148,6 +1150,10 @@ every state.
 | `FlyingNeoTileAttrRangeD` | `$FFFF4400` | The fourth range contains the matching 48 tile words. |
 | `LargeTilemapPage2` | `$FFFF5000` | This address is exactly 4 KiB after the shared buffer base; Stage 8 writes its first tile and credits edits 256 words from it. |
 | `CreditsXiTigerTilemap` | `$FFFF5180` | Credits updates tile indices across three 16-word rows loaded for the Xi-Tiger scene. |
+| `XiTigerCreditsFineTable` | `$FFFF6180` | Credits clears exactly 128 bytes here; the primary tilemap descriptor consumes the enclosing `$FFFF6000` byte table as its second-level lookup. |
+| `XiTigerCreditsPatch0` | `$FFFF6194` | Credits seeds the first four-byte patch with indices `$81,$82,$83,$00`. |
+| `XiTigerCreditsPatch1` | `$FFFF619C` | The next patch is one eight-byte lookup-row stride later and contains `$85,$86,$87,$00`. |
+| `XiTigerCreditsPatch2` | `$FFFF61A4` | The third patch follows the same stride and contains `$89,$8A,$8B,$00`. |
 | `Stage8StridedControl` | `$FFFF615D` | Train and Flying Neo profiles write three byte pairs at offsets zero, eight, and sixteen from this base. |
 | `TerobusterIntroPalette` | `$FFFF644A` | Terobuster initialization writes its five-byte intro palette sequence beginning here. |
 | `WeaponSetupWriteFlag` | `$FFFF7001` | Weapon-setup initialization writes one here; no reconstructed reader supports a narrower role. |
@@ -1193,6 +1199,20 @@ ownership beyond the observed shared plane-map storage is implied.
 | `StoryTitleMirroredGlyph` | `$FFFF2380` | Glyph setup writes 128 bytes of mirrored source nibbles beginning here. |
 | `StoryTitleGlyphReadBase` | `$FFFF2384` | Both title-expansion paths begin their reverse source traversal relative to this interior glyph-buffer anchor. |
 
+## Reviewed frame, input, and system-state boundaries
+
+| Symbol | Address | Static evidence |
+|---|---:|---|
+| `SpriteVDPStagingBuffer` | `$FFFFF000` | The clear loop writes 112 groups of four longwords, covering exactly `$700` bytes through `$FFFFF6FF`; the queue cursors subsequently meet at the interior `$FFFFF400` boundary. |
+| `GameplayControlFlags` | `$FFFFF705` | Bits zero and one select the controller whose Start edge may toggle bit seven; bit six enables that pause-control path and secondary-button mapping; bit seven suppresses gameplay, HUD, spawn, and palette updates. |
+| `SystemStateBlock` | `$FFFFFF00` | Reset clears 64 longwords from this base, exactly covering the final `$100` bytes of 68000 RAM that contain controller, option, result, and demo state. Controller initialization also clears the first longword. |
+| `BootInitializedWord` | `$FFFFFF36` | Reset explicitly writes zero after the surrounding system block was cleared; no reconstructed reader establishes a narrower role. |
+| `M68K_RAM_LAST_BYTE` | `$FFFFFFFF` | This structural constant identifies the final byte of the sign-extended 64 KiB 68000 work-RAM window. |
+
+`BootInitializedWord` deliberately records only the observed initialization
+role. It must not acquire an option or gameplay meaning without a reader or
+runtime trace.
+
 ## Reviewed controller, timing, results, and demo state
 
 | Symbol | Address | Static evidence |
@@ -1221,10 +1241,6 @@ ownership beyond the observed shared plane-map storage is implied.
 | `SavedSoundDisableFlags` | `$FFFFFF60` | Demo and credits temporarily save the sound-disable options here and restore them on exit. |
 | `DemoRotationIndex` | `$FFFFFF62` | Each completed demo advances this even index modulo eight to select the next stage and input stream. |
 | `SavedControlLayoutFlags` | `$FFFFFF66` | Demo entry saves the control-layout byte here and restores it on exit. |
-
-The adjacent `$FFFFFF00` clear-only longword and `$FFFFFF36` boot-only option
-word remain raw: their exact roles are not established by the current static
-references.
 
 ## Review policy
 

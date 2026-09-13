@@ -108,10 +108,10 @@ FlyingNeoTileAttrRangeB equ     $FFFF4AC0               ; was: word_FF4AC0
 LargeTilemapPage2       equ     $FFFF5000               ; was: word_FF5000
 CreditsXiTigerTilemap   equ     $FFFF5180               ; was: dword_FF5180
 Stage8StridedControl    equ     $FFFF615D               ; was: byte_FF615D
-dword_FF6180            equ     $FFFF6180
-dword_FF6194            equ     $FFFF6194
-dword_FF619C            equ     $FFFF619C
-dword_FF61A4            equ     $FFFF61A4
+XiTigerCreditsFineTable equ     $FFFF6180               ; was: dword_FF6180
+XiTigerCreditsPatch0    equ     $FFFF6194               ; was: dword_FF6194
+XiTigerCreditsPatch1    equ     $FFFF619C               ; was: dword_FF619C
+XiTigerCreditsPatch2    equ     $FFFF61A4               ; was: dword_FF61A4
 TerobusterIntroPalette  equ     $FFFF644A               ; was: byte_FF644A
 WeaponSetupWriteFlag    equ     $FFFF7001               ; was: byte_FF7001
 TerrainCollisionBuffer  equ     $FFFF7800               ; was: dword_FF7800
@@ -559,11 +559,11 @@ DebugInputYDirection    equ     $FFFFA9D4               ; was: dword_FFA9D4
 StagePhaseSplitTimes    equ     $FFFFAA00               ; was: word_FFAA00
 StageCompletionTimes    equ     $FFFFAA80               ; was: word_FFAA80
 StageResultVisits       equ     $FFFFAB00               ; was: word_FFAB00
-dword_FFB200            equ     $FFFFB200
+ClearedWorkBuffer512    equ     $FFFFB200               ; was: dword_FFB200
 GraphicsStagingBuffer   equ     $FFFFB400               ; was: dword_FFB400
 TileDecodeBufferEnd     equ     $FFFFB480               ; was: dword_FFB480
 TileDMABatchBuffer      equ     $FFFFB600               ; was: dword_FFB600
-dword_FFB800            equ     $FFFFB800
+ClearedWorkBuffer192    equ     $FFFFB800               ; was: dword_FFB800
 SpriteOAMEntryCount     equ     $FFFFBE00               ; was: byte_FFBE00
 SpriteOAMFreeSlots      equ     $FFFFBE01               ; was: byte_FFBE01
 SpriteOAMWritePointer   equ     $FFFFBE02               ; was: word_FFBE02
@@ -853,11 +853,11 @@ VScrollPlaneAColumn19   equ     $FFFFEC4C               ; was: word_FFEC4C
 VScrollAuxBuffer        equ     $FFFFEC50               ; was: byte_FFEC50
 VisibleObjectList       equ     $FFFFED00               ; was: word_FFED00
 HBlankRAMCode           equ     $FFFFEE00               ; was: word_FFEE00
-dword_FFF000            equ     $FFFFF000
+SpriteVDPStagingBuffer  equ     $FFFFF000               ; was: dword_FFF000
 VDPQueueStagingBoundary equ     $FFFFF400               ; was: word_FFF400
 VDPCommand              equ     $FFFFF700
 VBlankUpdateReady       equ     $FFFFF704               ; was: byte_FFF704
-byte_FFF705             equ     $FFFFF705
+GameplayControlFlags    equ     $FFFFF705               ; was: byte_FFF705
 ControllerHeldState     equ     $FFFFF706               ; was: word_FFF706
 ControllerPressedState  equ     $FFFFF708               ; was: word_FFF708
 ControllerReleasedState equ     $FFFFF70A               ; was: word_FFF70A
@@ -935,7 +935,7 @@ SoundFMShadowIndexBase  equ     $FFFFFBA0               ; was: byte_FFFBA0
 SoundFMPort1IndexBase   equ     $FFFFFBB0               ; was: byte_FFFBB0
 SoundFMLevelShadows     equ     $FFFFFBE0               ; was: dword_FFFBE0
 SoundFMShadowsEnd       equ     $FFFFFC00               ; was: dword_FFFC00
-dword_FFFF00            equ     $FFFFFF00
+SystemStateBlock        equ     $FFFFFF00               ; was: dword_FFFF00
 Controller1TypeID       equ     $FFFFFF06               ; was: byte_FFFF06
 Controller2TypeID       equ     $FFFFFF07               ; was: byte_FFFF07
 RandomNumberState       equ     $FFFFFF08               ; was: dword_FFFF08
@@ -954,7 +954,7 @@ MessageMode             equ     $FFFFFF2A               ; was: word_FFFF2A
 HighScoreBCD            equ     $FFFFFF2C               ; was: dword_FFFF2C
 ControlLayoutFlags      equ     $FFFFFF30               ; was: byte_FFFF30
 MessageDisplayFlags     equ     $FFFFFF31               ; was: byte_FFFF31
-word_FFFF36             equ     $FFFFFF36
+BootInitializedWord     equ     $FFFFFF36               ; was: word_FFFF36
 SoundDisableFlags       equ     $FFFFFF38               ; was: word_FFFF38
 PasswordDigits          equ     $FFFFFF3A               ; was: dword_FFFF3A
 FrameSkipLevel          equ     $FFFFFF3E               ; was: word_FFFF3E
@@ -976,7 +976,7 @@ SavedSoundDisableFlags  equ     $FFFFFF60               ; was: word_FFFF60
 DemoRotationIndex       equ     $FFFFFF62               ; was: word_FFFF62
 DemoStageTableIndex     equ     $FFFFFF64               ; was: word_FFFF64
 SavedControlLayoutFlags equ     $FFFFFF66               ; was: byte_FFFF66
-byte_FFFFFF             equ     $FFFFFFFF
+M68K_RAM_LAST_BYTE      equ     $FFFFFFFF               ; was: byte_FFFFFF
 Z80_RAM                 equ     $A00000
 PauseMenuZ80SpriteData  equ     $A00C00                 ; was: byte_A00C00
 Z80DriverBusy           equ     $A01F2A                 ; was: byte_A01F2A

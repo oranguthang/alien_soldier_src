@@ -6,7 +6,7 @@ Stage17_InitializeEpsilon1Transition:                   ; DATA XREF: ROM:0000D9C
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
-                move.b  #$80,(byte_FFF705).w
+                move.b  #$80,(GameplayControlFlags).w
                 move.b  #$8B,(PendingStageBGMRequest).w
 Stage17_InitializeEpsilon1Transition_Return:            ; CODE XREF: Stage17_InitializeEpsilon1Transition+4   j  ; was: locret_E14C
                 rts
@@ -124,7 +124,7 @@ Stage17_StartPlanetTransition:                          ; DATA XREF: ROM:0000D9D
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
-                move.b  #$80,(byte_FFF705).w
+                move.b  #$80,(GameplayControlFlags).w
                 bset    #2,(PaletteFadeControlFlags).w
                 move.w  #4,(SetupTransitionIndex).w
                 move.w  #4,(word_FF8230).w

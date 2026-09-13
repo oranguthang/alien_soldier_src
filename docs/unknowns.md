@@ -6548,3 +6548,52 @@ Provenance rises from 15,824 to 15,833 mappings and the audit registry from
 12,974 to 12,983. The semantic review upper bound remains 3,150 because every
 new mapping has a matching audit record. The enforced address-derived ceiling
 falls from 227 to 218, all still confined to RAM equates.
+
+The frame-staging and system-boundary pass replaces five raw RAM aliases and
+corrects two inherited clear-routine names. The `$FFFFF000` loop covers exactly
+`$700` bytes: the range includes the sprite area below the queue's `$FFFFF400`
+meeting point and VDP staging above it, so the former sprite-only routine name
+was incomplete. All reads and writes of `$FFFFF705` establish a bitfield that
+selects pause controllers, enables the pause/input path, and freezes gameplay
+updates. The final `$100` bytes of RAM are cleared as one system-state block.
+Its explicitly initialized `$FFFFFF36` word remains role-neutral because no
+reader proves a meaning; `$FFFFFFFF` is retained only as the hardware-window
+last-byte constant.
+
+The five RAM aliases add provenance mappings and all seven changed definitions
+receive exact-address audit records. Provenance rises from 15,833 to 15,838
+mappings and the audit registry from 12,983 to 12,990. Auditing the two prior
+routine names reduces the semantic review upper bound from 3,150 to 3,148. The
+enforced address-derived ceiling falls from 218 to 213, all still confined to
+RAM equates.
+
+The credits Xi-Tiger lookup pass replaces four raw RAM aliases and corrects the
+old `Credits_InitXiTiger_ClearTilemapBufferLoop` name. The loop clears 128 bytes
+at `$FFFF6180`; the standard tilemap descriptor identifies the enclosing
+`$FFFF6000` byte table as the renderer's fine lookup, distinct from the actual
+tile-word buffer at `$FFFF4000`. Three longword patches at eight-byte strides
+seed the sequences `$81-$83`, `$85-$87`, and `$89-$8B`, each followed by zero.
+Their names intentionally describe lookup patches rather than guessing which
+visible Xi-Tiger glyphs those indices select.
+
+The four RAM aliases add provenance mappings and all five changed definitions
+receive exact-address audit records. Provenance rises from 15,838 to 15,842
+mappings and the audit registry from 12,990 to 12,995. Auditing the misleading
+loop name reduces the semantic review upper bound from 3,148 to 3,147. The
+enforced address-derived ceiling falls from 213 to 209, all still confined to
+RAM equates.
+
+The cleared-work-buffer pass replaces the two raw `$FFFFB200` and `$FFFFB800`
+aliases and removes their addresses from four procedure names. The first loop
+writes exactly 512 bytes but has no reconstructed static caller; the second is
+called by game-buffer initialization and writes exactly 192 bytes. Neither
+range has another direct reference, so the new names deliberately record only
+the proven clear operation and size rather than inventing an owner or data
+format.
+
+The two RAM aliases add provenance mappings and all six changed definitions
+receive exact-address audit records. Provenance rises from 15,842 to 15,844
+mappings and the audit registry from 12,995 to 13,001. Auditing the four prior
+procedure names reduces the semantic review upper bound from 3,147 to 3,143.
+The enforced address-derived ceiling falls from 209 to 207, all still confined
+to RAM equates.

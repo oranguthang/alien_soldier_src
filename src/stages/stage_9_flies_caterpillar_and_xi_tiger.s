@@ -243,7 +243,7 @@ Stage9_UpdateCaterpillarShipExit:                       ; DATA XREF: ROM:0000C8B
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
-                move.b  #$80,(byte_FFF705).w
+                move.b  #$80,(GameplayControlFlags).w
                 tst.b   (StageRouteFlags).w
                 beq.s   Stage9_SelectXiTigerTransitionRoute
                 move.b  #$82,d0
@@ -268,7 +268,7 @@ Stage9_InitializeXiTigerEncounter:                      ; DATA XREF: ROM:0000C8C
                 move.w  (BossHealth).w,(DisplayedBossHealth).w
                 move.w  (PlayerHealth).w,(DisplayedPlayerHealth).w
                 move.b  #$10,(byte_FFA95A).w
-                move.b  #$40,(byte_FFF705).w            ; '@'
+                move.b  #$40,(GameplayControlFlags).w   ; '@'
                 move.w  #$8000,(word_FF808A).w
                 move.w  #$20,(PlayerScriptStateOffset).w  ; ' '
                 move.w  #$40,(ScriptedInputStepTimer).w  ; '@'
@@ -285,7 +285,7 @@ Stage9_UpdateXiTigerEntranceDelay:                      ; DATA XREF: ROM:0000C8B
                 move.w  #$E000,(PaletteFadeMaskStatus).w
                 subq.w  #1,(dword_FF8062).w
                 bpl.w   Stage9_XiTigerEntranceDelay_Return
-                move.b  #$41,(byte_FFF705).w            ; 'A'
+                move.b  #$41,(GameplayControlFlags).w   ; 'A'
                 addq.w  #2,(StageStateOffset).w
                 move.b  #2,(VDPReg11Shadow+1).w
                 move.b  #1,(byte_FFA95A).w

@@ -100,7 +100,7 @@ DebugMenuActiveAssetLoadList:   dc.w    3               ; was: stru_13578
                 dc.w    $FFFF
 
 DebugMenu_UpdateActive:                                 ; was: sub_1358A
-                tst.b   (byte_FFF705).w
+                tst.b   (GameplayControlFlags).w
                 bmi.s   DebugMenu_UpdateActivePage
                 clr.w   (DebugMenuStateOffset).w
                 move.b  (DebugHealthSelection).w,d0

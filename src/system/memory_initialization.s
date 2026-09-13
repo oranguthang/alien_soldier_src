@@ -6,7 +6,7 @@ Input_InitControllers:                                  ; CODE XREF: Reset+21E  
                 move.b  #$40,(IO_CT2_CTRL+1).l          ; '@'
                 move.b  #0,(IO_EXT_CTRL+1).l
                 move.b  #$40,(IO_CT1_DATA+1).l          ; '@'
-                clr.l   (dword_FFFF00).w
+                clr.l   (SystemStateBlock).w
                 rts
 ; End of function Input_InitControllers
 ; Clears 32KB RAM block to zero
@@ -199,19 +199,19 @@ Sys_ClearScrollBuffer_Loop:                             ; CODE XREF: Sys_ClearSc
                 dbf     d1,Sys_ClearScrollBuffer_Loop
                 rts
 ; End of function Sys_ClearScrollBuffer
-; Clears FFB200 buffer area (512 bytes)
-Sys_ClearBufferFFB200:
-                lea     (dword_FFB200).w,a0             ; was: sub_3024
+; Clears an otherwise unreferenced 512-byte work area
+UnreferencedClearWorkBuffer512:
+                lea     (ClearedWorkBuffer512).w,a0     ; was: sub_3024
                 moveq   #0,d0
                 move.w  #$1F,d1
-Sys_ClearBufferFFB200_Loop:                             ; CODE XREF: Sys_ClearBufferFFB200+12   j  ; was: loc_302E
+UnreferencedClearWorkBuffer512_Loop:                    ; CODE XREF: UnreferencedClearWorkBuffer512+12   j  ; was: loc_302E
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearBufferFFB200_Loop
+                dbf     d1,UnreferencedClearWorkBuffer512_Loop
                 rts
-; End of function Sys_ClearBufferFFB200
+; End of function UnreferencedClearWorkBuffer512
 ; Clears the shared 1 KiB graphics staging buffer at $FFFFB400
 Gfx_ClearGraphicsStagingBuffer:                         ; CODE XREF: Gfx_InitVideoMode   p  ; was: sub_303C
                 lea     (GraphicsStagingBuffer).w,a0
@@ -225,19 +225,19 @@ Gfx_ClearGraphicsStagingBuffer_Loop:                    ; CODE XREF: Gfx_ClearGr
                 dbf     d1,Gfx_ClearGraphicsStagingBuffer_Loop
                 rts
 ; End of function Gfx_ClearGraphicsStagingBuffer
-; Clears FFB800 buffer area (192 bytes)
-Sys_ClearBufferFFB800:                                  ; CODE XREF: Sys_ClearGameBuffers+8   p  ; was: sub_3054
-                lea     (dword_FFB800).w,a0
+; Clears a 192-byte work area during game-buffer initialization
+Sys_ClearWorkBuffer192:                                 ; CODE XREF: Sys_ClearGameBuffers+8   p  ; was: sub_3054
+                lea     (ClearedWorkBuffer192).w,a0
                 moveq   #0,d0
                 move.w  #$B,d1
-Sys_ClearBufferFFB800_Loop:                             ; CODE XREF: Sys_ClearBufferFFB800+12   j  ; was: loc_305E
+Sys_ClearWorkBuffer192_Loop:                            ; CODE XREF: Sys_ClearWorkBuffer192+12   j  ; was: loc_305E
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearBufferFFB800_Loop
+                dbf     d1,Sys_ClearWorkBuffer192_Loop
                 rts
-; End of function Sys_ClearBufferFFB800
+; End of function Sys_ClearWorkBuffer192
 ; Clears the OAM-build counters and priority-bucket workspace at $FFBE00-$FFBFBF
 Sprite_ClearOAMBuildState:                              ; CODE XREF: Sys_InitGraphicsChain+8   p  ; was: sub_306C
                 lea     (SpriteOAMEntryCount).w,a0
@@ -331,17 +331,17 @@ Gfx_ClearVScrollBuffer_Loop:                            ; CODE XREF: Gfx_ClearVS
                 dbf     d1,Gfx_ClearVScrollBuffer_Loop
                 rts
 ; End of function Gfx_ClearVScrollBuffer
-; Clears sprite metasprite buffer for new stage
-Sys_ClearSpriteBuffer:                                  ; CODE XREF: Sys_ClearGameBuffers+4   p  ; was: sub_311C
-                lea     (dword_FFF000).w,a0
+; Clears the combined sprite and VDP-queue staging region through $FFFFF6FF
+Sys_ClearSpriteVDPStagingBuffer:                        ; CODE XREF: Sys_ClearGameBuffers+4   p  ; was: sub_311C
+                lea     (SpriteVDPStagingBuffer).w,a0
                 moveq   #0,d0
                 move.w  #$6F,d1                         ; 'o'
-Sys_ClearSpriteBuffer_Loop:                             ; CODE XREF: Sys_ClearSpriteBuffer+12   j  ; was: loc_3126
+Sys_ClearSpriteVDPStagingBuffer_Loop:                   ; CODE XREF: Sys_ClearSpriteVDPStagingBuffer+12   j  ; was: loc_3126
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
                 move.l  d0,(a0)+
-                dbf     d1,Sys_ClearSpriteBuffer_Loop
+                dbf     d1,Sys_ClearSpriteVDPStagingBuffer_Loop
                 rts
-; End of function Sys_ClearSpriteBuffer
+; End of function Sys_ClearSpriteVDPStagingBuffer
 ; Clears VDP command queue buffer for DMA operations

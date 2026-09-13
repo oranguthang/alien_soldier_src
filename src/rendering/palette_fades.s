@@ -2,7 +2,7 @@
 ; PaletteFillColor selects the black or white endpoint; the sign of
 ; PaletteFadeStep selects whether PaletteFadeProgress advances or retreats
 Palette_UpdateFullScreenFade:                           ; was: sub_EF4
-                tst.b   (byte_FFF705).w
+                tst.b   (GameplayControlFlags).w
                 bpl.w   Palette_UpdateFullScreenFade_SelectTarget
                 rts
 ; ---------------------------------------------------------------------------

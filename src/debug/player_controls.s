@@ -1,5 +1,5 @@
 Input_ToggleDebugFlag:
-                move.b  (byte_FFF705).w,d0              ; was: sub_1CB32
+                move.b  (GameplayControlFlags).w,d0     ; was: sub_1CB32
                 bpl.w   Input_ToggleDebugFlag_Return
                 btst    #6,d0
                 beq.w   Input_ToggleDebugFlag_Return

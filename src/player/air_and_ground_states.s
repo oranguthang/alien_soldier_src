@@ -475,7 +475,7 @@ Player_HandleInvulnerabilityTimer:                      ; CODE XREF: Player_Upda
                 move.w  #$8002,(PaletteFadeMode).w
                 clr.w   (PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w
-                move.b  #$80,(byte_FFF705).w
+                move.b  #$80,(GameplayControlFlags).w
 Player_HandleInvulnerabilityTimer_SpawnSpark:           ; CODE XREF: Player_HandleInvulnerabilityTimer+10   j  ; was: loc_16AFC
                 jmp     Effect_SpawnPlayerDeathSpark
 ; ---------------------------------------------------------------------------

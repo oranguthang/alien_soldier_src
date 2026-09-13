@@ -80,7 +80,7 @@ Stage_FinishGameplayEntry:                              ; CODE XREF: Stage_Strea
                 jsr     (Gfx_FadePaletteTransition).l
                 move.w  #$10,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                clr.b   (byte_FFF705).w
+                clr.b   (GameplayControlFlags).w
                 bset    #6,(VDPReg1Shadow+1).w
                 move.b  #$80,(PaletteDMAHIntEnabled).w
 ; Enter the selected stage-process handler after the normal setup completes
@@ -165,7 +165,7 @@ XiTigerStage_StreamSecondaryPlane_Rows:                 ; CODE XREF: XiTigerStag
 XiTigerStage_FinishGameplayEntry:                       ; CODE XREF: XiTigerStage_StreamSecondaryPlane+D2   j  ; was: loc_1C636
                 move.w  #$10,(GameModeIndex).w
                 clr.w   (GameSubstateIndex).w
-                clr.b   (byte_FFF705).w
+                clr.b   (GameplayControlFlags).w
                 move.w  #$8004,(PaletteFadeMode).w
                 move.w  #$10,(PaletteFadeColorOffset).w
                 move.w  #$E000,(PaletteFadeMaskStatus).w

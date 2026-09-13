@@ -105,7 +105,7 @@ Reset_ChecksumLoop:                                     ; CODE XREF: Reset+162  
                 movea.l #Checksum,a1
                 cmp.w   (a1),d1
                 bne.w   ShowRedScreen
-                lea     (dword_FFFF00).w,a1
+                lea     (SystemStateBlock).w,a1
                 moveq   #0,d1
                 move.w  #$3F,d0                         ; '?'
 GameProgram:                                            ; CODE XREF: Reset+17C   j
@@ -120,7 +120,7 @@ GameProgram:                                            ; CODE XREF: Reset+17C  
                 move.b  #0,(ControlLayoutFlags).w
                 clr.w   (SoundDisableFlags).w
                 clr.w   (FrameSkipLevel).w
-                move.w  #0,(word_FFFF36).w
+                move.w  #0,(BootInitializedWord).w
                 move.l  #$1010101,(PasswordDigits).w
 Reset_InitDefaults:                                     ; CODE XREF: Reset+14C   j  ; was: loc_3C8
                 move.b  #0,(MessageDisplayFlags).w
