@@ -696,10 +696,10 @@ Sirene_PoseFrameData:   dc.w    $88D2, $40F8, $2E4E, $3024, $B201, $9C00, $A0E0,
                 dc.w    $9C00, $A0E0, $E0, $1FFA, $C5EE, $80E0, $6000, $2020
                 dc.w    $4000, $C0F8, $A030, $E0E0, $D0A0, $4000, $C00C
 
-; Empty entity state handler in main dispatch table
-Entity_EmptyState9:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_9
+; Ninth no-op entity update handler in the global dispatch table
+Entity_NullUpdateHandler9:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_9
                 rts
-; End of function Entity_EmptyState9
+; End of function Entity_NullUpdateHandler9
 ; Spawn Sirene's type-$490 projectile on the 32-frame interval
 Boss_SpawnSirenePeriodicProjectile:                     ; CODE XREF: Boss_UpdateSireneState12   p  ; was: sub_57D88
                 move.w  (FrameCounter).w,d0

@@ -339,18 +339,18 @@ Boss_EnterArtemisState12:                               ; CODE XREF: Boss_Update
 Boss_UpdateArtemisState12:                              ; DATA XREF: ROM:00057F30   o  ; was: sub_582F4
                 tst.w   $58(a5)
                 bmi.w   Boss_ReturnArtemisToStateEWithRandomPose
-                bsr.w   Boss_ArtemisUpdatePaletteFlags
+                bsr.w   Boss_ArtemisMergePosePartFlags
                 lea     Artemis_State10And12PoseScript(pc),a1
                 nop
                 bra.w   Boss_SyncArtemisLinkedPartVerticalPosition
 ; End of function Boss_UpdateArtemisState12
-; Updates palette flags from animation state for Artemis
-Boss_ArtemisUpdatePaletteFlags:                         ; CODE XREF: Boss_UpdateArtemisState12+8   p  ; was: sub_5830A
+; Merges the pose command's low-nibble part flags into the active-part mask
+Boss_ArtemisMergePosePartFlags:                         ; CODE XREF: Boss_UpdateArtemisState12+8   p  ; was: sub_5830A
                 move.b  $23E(a5),d0
                 andi.b  #$F,d0
                 or.b    d0,$3BC(a5)
                 rts
-; End of function Boss_ArtemisUpdatePaletteFlags
+; End of function Boss_ArtemisMergePosePartFlags
 ; Apply a horizontal velocity with sign selected by the Artemis facing field
 Boss_SetArtemisDirectionalHorizontalVelocity:           ; CODE XREF: Boss_UpdateArtemisStateE+C2   p  ; was: sub_58318
                 tst.w   $54(a5)

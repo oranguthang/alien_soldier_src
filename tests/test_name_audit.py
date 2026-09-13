@@ -23,9 +23,12 @@ class NameAuditTests(unittest.TestCase):
         records = audit["records"]
         addresses = [record["address"] for record in records]
         names = [record["current_name"] for record in records]
+        aliases = [alias for record in records for alias in record.get("aliases", [])]
 
         self.assertEqual(len(addresses), len(set(addresses)))
         self.assertEqual(len(names), len(set(names)))
+        self.assertEqual(len(aliases), len(set(aliases)))
+        self.assertEqual(set(), set(names) & set(aliases))
         for record in records:
             self.assertRegex(
                 record["address"], r"^0x(?:[0-9A-F]{6}|FFFF[0-9A-F]{4})$"
@@ -44,9 +47,10 @@ class NameAuditTests(unittest.TestCase):
                 )
 
         missing = sorted(
-            record["current_name"]
+            name
             for record in audit["records"]
-            if record["current_name"] not in source_names
+            for name in [record["current_name"], *record.get("aliases", [])]
+            if name not in source_names
         )
         self.assertEqual([], missing)
 

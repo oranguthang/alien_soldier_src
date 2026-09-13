@@ -7538,3 +7538,40 @@ roles. The three definitions add provenance and exact-address audit records:
 provenance rises from 16,048 to 16,051 mappings, the registry from 13,287 to
 13,290, and the semantic-review upper bound remains 3,061. The enforced live
 address-derived-definition ceiling reaches zero.
+
+The first post-burn-down semantic batch checks every module that had exactly
+one actionable provenance name. `Boss_ArtemisUpdatePaletteFlags` is corrected
+to `Boss_ArtemisMergePosePartFlags`: the helper never accesses palette state,
+but merges a pose command's low nibble into the four-bit linked-part mask.
+`Entity_EmptyState9` becomes `Entity_NullUpdateHandler9` because its only owner
+is the global entity update table and its body is just `rts`.
+
+Seven exclusive-end labels share the address of the following audited symbol;
+they are recorded as aliases on that address instead of violating the audit's
+one-record-per-address rule. Seven other unchanged behavioral names plus the
+two corrected names receive nine new static records. The audit registry rises
+from 13,290 to 13,299 records, while the reproducible semantic-review queue
+falls from 3,061 to 3,045 and its actionable upper bound from 2,548 to 2,532.
+Provenance remains 16,051 because this pass audits existing mappings rather
+than importing new definitions.
+
+The next semantic batch closes every module that had exactly two actionable
+provenance names. Four inherited descriptions are corrected. Victor's helper
+at `0x0326C4` configures the palette RGB adjustment fields and never touches
+screen-shake state, so it becomes `Boss_VictorSetPaletteRGBAdjustment`.
+`Entity_EmptyState4` is a global entity-table no-op and becomes
+`Entity_NullUpdateHandler4`. The arena-bound removal helper is shared by
+projectiles and detached boss parts, so `Projectile_RemoveOutsideArena`
+becomes `Entity_RemoveOutsideArena`. The type-`$1FC` Jetsripper projectile's
+top-level update entry becomes `Projectile_JetsripperMain`, rather than being
+misidentified as a boss routine.
+
+Ten further names are confirmed from their table ownership, callers, field
+accesses, and control flow. These cover Antroid's jump-slam and wait states,
+Destroyer Proto's two palette-fade helpers and projectile main routine,
+Victor's return-to-centerline state, the global entity update table,
+Jetsripper's projectile allocator, and the shared stage-state initialization
+and initializer dispatch. The fourteen exact-address records raise the audit
+registry from 13,299 to 13,313. The reproducible semantic-review queue falls
+from 3,045 to 3,031 and its actionable upper bound from 2,532 to 2,518;
+provenance remains 16,051.

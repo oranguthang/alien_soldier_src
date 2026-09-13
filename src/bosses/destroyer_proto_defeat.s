@@ -153,7 +153,7 @@ Boss_DestroyerProtoApplyDefeatPaletteFade:              ; CODE XREF: Boss_Destro
 ; Updates an ordinary linked part, or culls it after scatter activation
 Boss_DestroyerProtoPartMain:                            ; DATA XREF: ROM:000314D0   o  ; was: sub_31F86
                 tst.w   4(a5)
-                bne.w   Projectile_RemoveOutsideArena
+                bne.w   Entity_RemoveOutsideArena
 ; End of function Boss_DestroyerProtoPartMain
 ; Recomputes an entity's position from its parent, polar angle, and radius
 Entity_UpdatePolarPositionFromParent:                   ; CODE XREF: Boss_GustheadLinkedChainBeginAttackCycle   p  ; was: sub_31F8E
@@ -192,6 +192,6 @@ Boss_DestroyerProtoAnimatedPartSelectFrame:             ; CODE XREF: Boss_Destro
 Boss_DestroyerProtoAnimatedPartAdvance:                 ; CODE XREF: Boss_DestroyerProtoAnimatedPartMain+4   j  ; was: loc_31FEA
                 addi.w  #$20,$46(a5)                    ; ' '
                 bsr.w   Boss_DestroyerProtoAnimatedPartSelectFrame
-                bra.w   Projectile_RemoveOutsideArena
+                bra.w   Entity_RemoveOutsideArena
 ; End of function Boss_DestroyerProtoAnimatedPartMain
 ; ---------------------------------------------------------------------------

@@ -1,16 +1,16 @@
-Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_ProcessVisiblePool+12   r  ; was: off_5DC
+Entity_UpdateHandlerTable:  dc.l    Entity_NullUpdateHandler4  ; DATA XREF: Projectile_ProcessVisiblePool+12   r  ; was: off_5DC
                                         ; Sys_ProcessVisibleObjects+10   r
-                dc.l    Entity_EmptyState4
+                dc.l    Entity_NullUpdateHandler4
                 dc.l    Player_Update
                 dc.l    Entity_EmptyState3
-                dc.l    Entity_EmptyState4
+                dc.l    Entity_NullUpdateHandler4
                 dc.l    Effect_UpdateKnockbackParticle
                 dc.l    Effect_UpdateImpactParticleSpawner
                 dc.l    Enemy_BehaviorController
                 dc.l    Effect_RunStage25DestructionParticle
                 dc.l    Boss_ShiperMainHandler
-                dc.l    Entity_EmptyState4
-                dc.l    Entity_EmptyState4
+                dc.l    Entity_NullUpdateHandler4
+                dc.l    Entity_NullUpdateHandler4
                 dc.l    Boss_AntroidMainHandler
                 dc.l    Boss_CaterpillarSpawnExplosion
                 dc.l    Anim_UpdateSpriteFrame
@@ -126,7 +126,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Boss_SunsetStingSegmentMain
                 dc.l    Boss_SunsetStingSecondarySegmentMain
                 dc.l    Projectile_SunsetStingSegmentShotFallAndDisable
-                dc.l    Boss_JetsripperProjectileUpdate
+                dc.l    Projectile_JetsripperMain
                 dc.l    Weapon_UpdateSeekingMissile
                 dc.l    Effect_SpawnPlayerDeathSpark
                 dc.l    Midgame_UpdateAmbientParticle
@@ -245,7 +245,7 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Projectile_MissirayBulletMain
                 dc.l    Boss_MissirayMain
                 dc.l    Segment_MissirayMain
-                dc.l    Entity_EmptyState4
+                dc.l    Entity_NullUpdateHandler4
                 dc.l    Stage18_MovingPlatform
                 dc.l    StageTransition_UpdateMissiraySceneObject
                 dc.l    StageTransition_AdvanceStateFromObject
@@ -290,12 +290,12 @@ Entity_UpdateHandlerTable:  dc.l    Entity_EmptyState4  ; DATA XREF: Projectile_
                 dc.l    Projectile_UpdateValkirieBullet
                 dc.l    Boss_Epsilon1IntroController
                 dc.l    Projectile_UpdateArtemisRadialEmitter
-                dc.l    Entity_EmptyState9
+                dc.l    Entity_NullUpdateHandler9
                 dc.l    Projectile_UpdateSireneHoming
                 dc.l    Boss_WolfGaropaRewardShowerMain
                 dc.l    Projectile_ZLeoHorizontalLaserMain
 
-; Empty entity state handler in main dispatch table
-Entity_EmptyState4:                                     ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_4
+; Fourth no-op entity update handler in the global dispatch table
+Entity_NullUpdateHandler4:                              ; DATA XREF: ROM:Entity_UpdateHandlerTable   o  ; was: nullsub_4
                 rts
-; End of function Entity_EmptyState4
+; End of function Entity_NullUpdateHandler4

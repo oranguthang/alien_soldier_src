@@ -34,7 +34,7 @@ def scan_provenance(source_root: Path) -> list[ProvenanceName]:
     records: list[ProvenanceName] = []
     for path in source_files(source_root):
         current_name: str | None = None
-        previous_nonempty = ""
+        previous_statement = ""
         for line_number, line in enumerate(
             path.read_text(encoding="utf-8").splitlines(), 1
         ):
@@ -53,18 +53,23 @@ def scan_provenance(source_root: Path) -> list[ProvenanceName]:
                         line=line_number,
                         binary_backed_end=(
                             current_name.endswith("_End")
-                            and bool(re.search(r"\bbinclude\b", previous_nonempty, re.IGNORECASE))
+                            and bool(re.search(r"\bbinclude\b", previous_statement, re.IGNORECASE))
                         ),
                     )
                 )
-            if line.strip():
-                previous_nonempty = line
+            stripped = line.lstrip()
+            if stripped and not stripped.startswith(";"):
+                previous_statement = line
     return records
 
 
 def audited_names(audit_path: Path) -> set[str]:
     audit = json.loads(audit_path.read_text(encoding="utf-8"))
-    return {record["current_name"] for record in audit["records"]}
+    names: set[str] = set()
+    for record in audit["records"]:
+        names.add(record["current_name"])
+        names.update(record.get("aliases", []))
+    return names
 
 
 def pending_records(

@@ -179,7 +179,7 @@ Boss_VictorInitialGraphicsLoadDescriptor:   dc.w    $6000, $2000, $202, $595A, $
 
 ; Handles boss flying in until X position reaches threshold
 Boss_VictorFlyIn:                                       ; DATA XREF: ROM:0003242E   o  ; was: sub_32676
-                bsr.w   Boss_VictorSetScreenShake
+                bsr.w   Boss_VictorSetPaletteRGBAdjustment
                 bsr.w   Boss_VictorUpdateViewportOffset
                 bsr.w   Boss_VictorUpdateAnimation
                 cmpi.w  #$180,$10(a5)
@@ -192,7 +192,7 @@ Boss_VictorFlyIn:                                       ; DATA XREF: ROM:0003242
 ; End of function Boss_VictorFlyIn
 ; Holds Victor's entrance until the dark arena is ready
 Boss_VictorWaitForArenaReady:                           ; DATA XREF: ROM:00032430   o  ; was: sub_326A0
-                bsr.w   Boss_VictorSetScreenShake
+                bsr.w   Boss_VictorSetPaletteRGBAdjustment
                 bsr.w   Boss_VictorUpdateViewportOffset
                 bsr.w   Boss_VictorUpdateAnimation
                 tst.w   (MessageSequenceState).w
@@ -202,14 +202,14 @@ Boss_VictorWaitForArenaReady:                           ; DATA XREF: ROM:0003243
                 addq.w  #2,4(a5)
                 rts
 ; End of function Boss_VictorWaitForArenaReady
-; Sets screen shake parameters with specific intensity and duration values
-Boss_VictorSetScreenShake:                              ; CODE XREF: Boss_VictorFlyIn   p  ; was: sub_326C4
+; Configures Victor's entrance RGB palette adjustment
+Boss_VictorSetPaletteRGBAdjustment:                     ; CODE XREF: Boss_VictorFlyIn   p  ; was: sub_326C4
                                         ; sub_326A0   p
                 move.w  #$E0,(PaletteRGBAdjustLevel).w
                 move.b  #$20,(PaletteRGBChannelMask).w  ; ' '
                 move.b  #8,(PaletteRGBAdjustStep).w
                 rts
-; End of function Boss_VictorSetScreenShake
+; End of function Boss_VictorSetPaletteRGBAdjustment
 ; Randomly selects the next ring, launched-part, or split-shot sequence
 Boss_VictorChooseAttack:                                ; DATA XREF: ROM:00032432   o  ; was: sub_326D8
                 bsr.w   Boss_VictorUpdateViewportOffset

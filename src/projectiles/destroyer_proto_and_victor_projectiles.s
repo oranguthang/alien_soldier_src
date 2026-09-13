@@ -129,7 +129,7 @@ Projectile_DestroyerProtoMain:                          ; DATA XREF: ROM:000314D
 ; End of function Projectile_DestroyerProtoMain
 ; ---------------------------------------------------------------------------
 Projectile_DestroyerProtoStates:    dc.w    Projectile_DestroyerProtoSpawnSpreadCopies-*  ; DATA XREF: Projectile_DestroyerProtoMain+8   o  ; was: off_32218
-                dc.w    Projectile_RemoveOutsideArena-*
+                dc.w    Entity_RemoveOutsideArena-*
                 dc.w    Projectile_DestroyerProtoRestoreVelocity-*
                 dc.w    Projectile_DestroyerProtoCheckHitForPickup-*
                 dc.w    Projectile_DestroyerProtoCheckHorizontalReflection-*
@@ -197,7 +197,7 @@ Projectile_DestroyerProtoMappingFrameTable: dc.l    Boss_DestroyerProtoSpriteFra
 Projectile_DestroyerProtoCheckHorizontalReflection:     ; DATA XREF: ROM:00032220   o  ; was: sub_32308
                 bclr    #4,$22(a5)
                 bne.s   Projectile_DestroyerProtoReflectHorizontal
-                bra.s   Projectile_RemoveOutsideArena
+                bra.s   Entity_RemoveOutsideArena
 ; End of function Projectile_DestroyerProtoCheckHorizontalReflection
 ; Converts a collision-flag-4 hit into the shared random-pickup response
 Projectile_DestroyerProtoCheckHitForPickup:             ; DATA XREF: ROM:0003221E   o  ; was: sub_32312
@@ -205,7 +205,7 @@ Projectile_DestroyerProtoCheckHitForPickup:             ; DATA XREF: ROM:0003221
                 bne.s   Projectile_ConvertHitToRandomPickup
 ; End of function Projectile_DestroyerProtoCheckHitForPickup
 ; Marks a projectile or scattered boss part outside the arena for removal
-Projectile_RemoveOutsideArena:                          ; CODE XREF: Boss_DestroyerProtoPartMain+4   j  ; was: sub_3231A
+Entity_RemoveOutsideArena:                              ; CODE XREF: Boss_DestroyerProtoPartMain+4   j  ; was: sub_3231A
                                         ; Boss_DestroyerProtoAnimatedPartMain+40   j
                 cmpi.w  #$60,$10(a5)                    ; '`'
                 bcs.s   Projectile_RemoveOutsideArenaNow
@@ -217,11 +217,11 @@ Projectile_RemoveOutsideArena:                          ; CODE XREF: Boss_Destro
                 bcc.s   Projectile_RemoveOutsideArenaNow
                 rts
 ; ---------------------------------------------------------------------------
-Projectile_RemoveOutsideArenaNow:                       ; CODE XREF: Projectile_RemoveOutsideArena+6   j  ; was: loc_3233C
-                                        ; Projectile_RemoveOutsideArena+E   j
+Projectile_RemoveOutsideArenaNow:                       ; CODE XREF: Entity_RemoveOutsideArena+6   j  ; was: loc_3233C
+                                        ; Entity_RemoveOutsideArena+E   j
                 move.w  #$1000,2(a5)
                 rts
-; End of function Projectile_RemoveOutsideArena
+; End of function Entity_RemoveOutsideArena
 Projectile_ConvertHitToRandomPickup:                    ; CODE XREF: Projectile_DestroyerProtoCheckHitForPickup+6   j  ; was: sub_32344
                                         ; Projectile_HitReactiveShotMain+18   j
                 jsr     (RandomNumber).l
@@ -248,7 +248,7 @@ Projectile_DestroyerProtoRestoreVelocity:               ; DATA XREF: ROM:0003221
 ; Updates a hit-reactive shot, spawning an impact object before removal
 Projectile_HitReactiveShotMain:                         ; DATA XREF: ROM:000314D6   o  ; was: sub_32382
                 bsr.w   Entity_RemoveWithExplosionWhenEnabled
-                bsr.w   Projectile_RemoveOutsideArena
+                bsr.w   Entity_RemoveOutsideArena
                 bclr    #7,$22(a5)
                 beq.w   Entity_UpdateReturn
                 bclr    #4,$22(a5)

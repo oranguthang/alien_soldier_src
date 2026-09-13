@@ -22,7 +22,7 @@ Pickup_SpawnLargeFromCurrentObject:
                 movea.w a5,a0                           ; was: sub_2BD0E
 ; End of function Pickup_SpawnLargeFromCurrentObject
 Pickup_SpawnLarge:                                      ; CODE XREF: Object_UpdateProximityPickupEmitterType48+78   p  ; was: sub_2BD10
-                                        ; Boss_JetsripperProjectileUpdate+46   p
+                                        ; Projectile_JetsripperMain+46   p
                 moveq   #1,d7
                 bra.w   Pickup_InitializeSelectedSize
 ; End of function Pickup_SpawnLarge

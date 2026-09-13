@@ -26,27 +26,30 @@ class SemanticAuditQueueTests(unittest.TestCase):
             )
             (source / "second.inc").write_text(
                 'Asset: binclude "asset.bin" ; was: byte_10\n'
+                "                ; continued evidence comment\n"
                 "Asset_End: ; was: byte_20\n",
                 encoding="utf-8",
             )
             audit = root / "audit.json"
             audit.write_text(
-                json.dumps({"records": [{"current_name": "Reviewed"}]}),
+                json.dumps(
+                    {
+                        "records": [
+                            {"current_name": "Reviewed", "aliases": ["Asset_End"]}
+                        ]
+                    }
+                ),
                 encoding="utf-8",
             )
 
             provenance, pending = semantic_audit_queue.pending_records(source, audit)
 
             self.assertEqual(4, len(provenance))
-            self.assertEqual(
-                ["Pending", "Asset", "Asset_End"],
-                [item.current_name for item in pending],
-            )
+            self.assertEqual(["Pending", "Asset"], [item.current_name for item in pending])
             self.assertFalse(pending[0].binary_backed_end)
             self.assertFalse(pending[1].binary_backed_end)
-            self.assertTrue(pending[2].binary_backed_end)
             self.assertEqual(
-                ["first.s", "second.inc", "second.inc"],
+                ["first.s", "second.inc"],
                 [Path(item.file).name for item in pending],
             )
 
